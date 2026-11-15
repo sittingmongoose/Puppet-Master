@@ -18,33 +18,59 @@ import math
 import multiprocessing
 import os
 import sys
+import pickle
+from decimal import Decimal
 from pathlib import Path
 from urllib.parse import urldefrag, unquote
 
 import jsonschema
 from referencing import Registry, Resource
 from referencing.jsonschema import DRAFT202012
+import pm_event_numbers as numbers
+import pm_event_datetime as dates
+import pm_goal_guard_tables as tables
 
 ROOT = Path(__file__).resolve().parents[1]
 FORMATS = jsonschema.FormatChecker(formats=())
+DATETIME_PROFILE = contextvars.ContextVar('goal_datetime_profile', default=dates.EVENT_RECORD)
 
 
 @FORMATS.checks("date-time")
 def utc(value):
     if not isinstance(value, str):
         return True
-    if re.fullmatch(r"\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d+)?Z", value) is None:
-        return False
     try:
-        datetime.datetime.fromisoformat(value.replace("Z", "+00:00"))
+        dates.date_time(value, profile=DATETIME_PROFILE.get())
         return True
-    except ValueError:
+    except numbers.Refusal:
         return False
 
 
 def strict_pattern(validator, pattern, value, schema):
     if isinstance(value, str) and re.fullmatch(pattern, value) is None:
         yield jsonschema.ValidationError(f"{value!r} does not fully match {pattern!r}")
+
+
+def owned_properties(v, properties, instance, schema):
+    """Select timestamp roles from the consumed schema, never input field names.
+
+    EventRecord and GenericIndexRow Storage fields use CV-253. Source timestamps
+    and E5-2 acknowledged_at_utc retain the broad EventRecord profile. All owner
+    patterns/conditionals are still evaluated unchanged.
+    """
+    if not v.is_type(instance,'object'):
+        return
+    identity = properties.get('schema_id',{}).get('const')
+    storage_fields = ('observed_at_utc','persisted_at_utc') if identity in (
+        'pm.event.v0','pm.storage_value.event_record_index.v2') else ()
+    for name, subschema in properties.items():
+        if name in instance:
+            profile = dates.STORAGE_UTC_Z if name in storage_fields else dates.EVENT_RECORD
+            token = DATETIME_PROFILE.set(profile)
+            try:
+                yield from v.descend(instance[name],subschema,path=name,schema_path=name)
+            finally:
+                DATETIME_PROFILE.reset(token)
 
 
 _SCHEMA_LOCATIONS = {}
@@ -54,6 +80,7 @@ _SCHEMA_DUPLICATES = {}
 _SCHEMA_SITES = {}
 _INVENTORIED_VALIDATORS = set()
 _SCHEMA_VALIDATOR_GUARDS = {}
+_SCHEMA_REFUSAL_GUARDS = {}
 _SCHEMA_INACTIVE_TYPES = {}
 _SCHEMA_REGISTRY_PATHS = []
 _SCHEMA_CONTEXT = contextvars.ContextVar('goal_schema_guards', default=('', frozenset()))
@@ -63,7 +90,7 @@ def schema_guard(schema, keyword):
     location = schema.get('x-pm-oracle-id')
     if location is None:
         location = json.dumps(schema, sort_keys=True)
-    name = 'closed_members' if keyword in ('additionalProperties', 'unevaluatedProperties') else keyword
+    name = 'closed_members' if keyword in ('additionalProperties','unevaluatedProperties') else keyword
     ident = 'schema/' + hashlib.sha256(location.encode()).hexdigest()[:16] + '/' + name
     _SCHEMA_LOCATIONS[ident] = location + '/' + name
     _SCHEMA_ASSERTION_LOCATIONS.setdefault(ident, set()).add(location + '/' + keyword)
@@ -97,9 +124,11 @@ def schema_type_inventory(v):
             selectors(schema.get(key))
         for key in ('allOf', 'anyOf', 'oneOf', 'prefixItems'):
             for child in schema.get(key, []): selectors(child)
-    def visit(schema, resolver, empty_domain=None):
+    def visit(schema, resolver, empty_domain=None, *, entered=False):
         if not isinstance(schema, dict):
             return
+        if not entered:
+            resolver = resolver.in_subresource(Resource.from_contents(schema, default_specification=DRAFT202012))
         location = schema.get('x-pm-oracle-id')
         if location is None:
             location = json.dumps(schema, sort_keys=True)
@@ -120,7 +149,7 @@ def schema_type_inventory(v):
                 _SCHEMA_DUPLICATES[ident] = frozenset({ident} | duplicates | set(_SCHEMA_DUPLICATES.get(ident, ())))
         if '$ref' in schema:
             resolved = resolver.lookup(schema['$ref'])
-            visit(resolved.contents, resolved.resolver)
+            visit(resolved.contents, resolved.resolver, entered=True)
         for key in ('properties', 'patternProperties', 'dependentSchemas'):
             for child in schema.get(key, {}).values():
                 visit(child, resolver)
@@ -129,7 +158,7 @@ def schema_type_inventory(v):
         for key in ('allOf', 'anyOf', 'oneOf', 'prefixItems'):
             for child in schema.get(key, []):
                 visit(child, resolver)
-    visit(v.schema, v._resolver)
+    visit(v.schema, v._resolver, entered=True)
     # A nullable declaration may be deliberately refined by both branches of
     # a conditional at the same property. Name those exact duplicate type
     # assertions together; never combine constraints on different properties.
@@ -151,19 +180,62 @@ def expanded_guards(disabled):
 def _keyword_guard(keyword, function):
     def guarded(v, expected, value, schema):
         prefix, disabled = _SCHEMA_CONTEXT.get()
-        ident = schema_guard(schema, keyword)
-        if ident in disabled:
-            return
+        ident = None
+        if disabled:
+            ident = schema_guard(schema, keyword)
+            if ident in disabled:
+                return
         for error in function(v, expected, value, schema):
             if not hasattr(error, "oracle_guard"):
+                if ident is None:
+                    ident = schema_guard(schema, keyword)
                 error.oracle_guard = ident
             yield error
     return guarded
 
 _KEYWORDS = dict(jsonschema.Draft202012Validator.VALIDATORS)
 _KEYWORDS['pattern'] = strict_pattern
+_KEYWORDS['properties'] = owned_properties
 StrictValidator = jsonschema.validators.extend(jsonschema.Draft202012Validator,
     {key:_keyword_guard(key, fn) for key,fn in _KEYWORDS.items()})
+
+
+def current_type(v, expected, value, schema):
+    kinds = [expected] if isinstance(expected, str) else expected
+    if 'integer' in kinds and 'number' not in kinds and not (value is None and 'null' in kinds):
+        try:
+            if schema.get('minimum')==0 and schema.get('maximum')==(1<<64)-1:
+                numbers.storage_uint64(value)
+            else:
+                numbers.current_integer(value)
+        except numbers.Refusal:
+            yield jsonschema.ValidationError('current integer primitive required')
+            return
+    yield from _KEYWORDS['type'](v, expected, value, schema)
+
+
+def numeric_bound(keyword):
+    def check(v, expected, value, schema):
+        # Keep owner bounds. Never stringify an arbitrary-precision integer in
+        # a diagnostic (Python's 4,300-digit rendering limit is not a rule).
+        if type(value) is int:
+            predicates = {
+                'minimum': lambda: value >= expected,
+                'maximum': lambda: value <= expected,
+                'exclusiveMinimum': lambda: value > expected,
+                'exclusiveMaximum': lambda: value < expected,
+            }
+            if not predicates[keyword]():
+                yield jsonschema.ValidationError('owner numeric bound')
+            return
+        yield from _KEYWORDS[keyword](v, expected, value, schema)
+    return check
+
+
+CurrentValidator = jsonschema.validators.extend(StrictValidator,
+    {'type': _keyword_guard('type', current_type),
+     **{key: _keyword_guard(key, numeric_bound(key)) for key in
+        ('minimum','maximum','exclusiveMinimum','exclusiveMaximum')}})
 
 
 def load(path):
@@ -174,33 +246,33 @@ def canonical(value):
     # Preserve historical numeric values, but give equal JSON numbers one form.
     # In particular, integral floats/exponents and negative zero cannot fork a
     # digest. This bounded oracle is not a general RFC 8785 binary64 codec.
-    def normalize(item):
-        if isinstance(item, float):
-            if not math.isfinite(item):
-                raise ValueError('non-finite JSON number')
-            return int(item) if item.is_integer() else item
-        if isinstance(item, dict):
-            return {key: normalize(child) for key, child in item.items()}
-        if isinstance(item, list):
-            return [normalize(child) for child in item]
-        return item
-    return json.dumps(normalize(value), sort_keys=True, ensure_ascii=False, separators=(",", ":"), allow_nan=False).encode()
+    return numbers.qualified_jcs(value)
 
 
 def revision_text(value):
-    if isinstance(value, bool) or not isinstance(value, (int, float)) or not math.isfinite(value) or int(value) != value:
-        raise ValueError('revision must be an integer JSON number')
-    return str(int(value))
+    return str(Decimal(numbers.current_integer(value)))
 
 
 def integer_number(value):
-    return (not isinstance(value, bool) and isinstance(value, (int, float))
-            and math.isfinite(value) and int(value) == value)
+    try:
+        numbers.current_integer(value)
+        return True
+    except numbers.Refusal:
+        return False
+
+
+def retained_integer_number(value):
+    """The frozen JSON-schema integer grammar; never a current-write choice."""
+    return type(value) is int or type(value) is float and value.is_integer()
 
 
 def same_json_value(left, right):
     # Python equates True with 1, including inside lists/dicts. JSON does not.
-    return canonical(left) == canonical(right)
+    # Full values also carry uint64 metadata that is outside semantic JCS.
+    try:
+        return numbers.storage_value_bytes(left) == numbers.storage_value_bytes(right)
+    except numbers.Refusal:
+        return False
 
 
 def number_codec_checks():
@@ -213,8 +285,14 @@ def number_codec_checks():
             failures.append('numeric canonical bytes: ' + spelling)
         if canonical({'nested': [value]}) != b'{"nested":[' + expected + b']}':
             failures.append('numeric nested digest bytes: ' + spelling)
-        if revision_text(value) != expected.decode():
-            failures.append('numeric identity text: ' + spelling)
+        try:
+            text = revision_text(value)
+        except numbers.Refusal as error:
+            if type(value) is int or error.reason != 'integer_type':
+                failures.append('numeric identity text: ' + spelling)
+        else:
+            if type(value) is not int or text != expected.decode():
+                failures.append('numeric identity text: ' + spelling)
     try:
         json.loads('01')
     except json.JSONDecodeError:
@@ -228,11 +306,12 @@ def sha(value):
     return hashlib.sha256(canonical(value)).hexdigest()
 
 
-def schema_registry(paths, disabled=()):
+def schema_registry(paths, disabled=(), *, aliases=None):
     """Eagerly resolve every reference, including unused definitions. No network."""
     _SCHEMA_REGISTRY_PATHS[:] = list(paths)
     docs = [load(p) for p in paths]
     by_id = {d["$id"]: d for d in docs}
+    by_id.update({uri: load(path) for uri, path in (aliases or {}).items()})
     by_name = {Path(p).name: d for p, d in zip(paths, docs)}
     for doc in docs:
         StrictValidator.check_schema(doc)
@@ -260,7 +339,10 @@ def schema_registry(paths, disabled=()):
                 for item in node:
                     visit(item,base)
         if "schema/references" not in disabled:visit(doc)
-    return Registry().with_resources((d['$id'], Resource.from_contents(runtime_schema(d), default_specification=DRAFT202012)) for d in docs)
+    resources = [(d['$id'], Resource.from_contents(runtime_schema(d), default_specification=DRAFT202012)) for d in docs]
+    resources += [(uri, Resource.from_contents(runtime_schema(load(path)), default_specification=DRAFT202012))
+                  for uri,path in (aliases or {}).items()]
+    return Registry().with_resources(resources)
 
 
 def runtime_schema(schema, path=None):
@@ -277,8 +359,9 @@ def runtime_schema(schema, path=None):
     return out
 
 
-def validator(schema, registry=None):
-    return StrictValidator(runtime_schema(schema), registry=registry or Registry(), format_checker=FORMATS)
+def validator(schema, registry=None, *, current=False):
+    cls = CurrentValidator if current else StrictValidator
+    return cls(runtime_schema(schema), registry=registry or Registry(), format_checker=FORMATS)
 
 
 _SCHEMA_CACHE = {}
@@ -288,8 +371,8 @@ def schema_guards(v, value, prefix, disabled=()):
     relevant=frozenset(expanded_guards(disabled)&_SCHEMA_VALIDATOR_GUARDS[id(v)])
     # Cache instance bytes, not the normalized semantic digest: 1 and 1.0 may
     # have different schema/type observations even when their digests agree.
-    encoded=json.dumps(value,sort_keys=True,separators=(',',':'),allow_nan=False)
-    key=(id(v),hashlib.sha256(encoded.encode()).digest(),prefix,relevant)
+    encoded=pickle.dumps(value, protocol=5)
+    key=(id(v),hashlib.sha256(encoded).digest(),prefix,relevant)
     if key in _SCHEMA_CACHE:return set(_SCHEMA_CACHE[key])
     def errors_without(disabled):
         token=_SCHEMA_CONTEXT.set((prefix,frozenset(disabled)))
@@ -313,10 +396,13 @@ def schema_guards(v, value, prefix, disabled=()):
     # can provide several witnesses for the same one-field defect.
     options=sorted(set(x for e in errors for x in candidates(e)),reverse=True)
     causal=[]
+    failing_guards={guard for _,guard in options}
     for depth,guard in options:
         if not errors_without(relevant|{guard}):causal.append((depth,guard))
     for guard, members in _SCHEMA_DUPLICATES.items():
-        if members.intersection(g for _,g in options) and not errors_without(relevant|members):
+        # A duplicate cut cannot make a *holding* type predicate fail merely
+        # because its enum/const companion rejects a same-type value.
+        if guard in failing_guards and not errors_without(relevant|members):
             causal.append((1,guard))
     if causal:
         # Composition keywords delegate rejection to their child assertions.
@@ -324,6 +410,21 @@ def schema_guards(v, value, prefix, disabled=()):
         if not out:out={causal[0][1]}
     else:
         out={e.oracle_guard for e in errors}
+    # JSON Schema's public validate boundary refuses at its first error. A
+    # union's branch types select alternatives; its complete OR is the actual
+    # refusal predicate. Keep the owner clauses and report that composed
+    # predicate rather than pretending its failed alternatives are independent.
+    union_errors=[e for e in errors if e.validator=='anyOf' and all(
+        isinstance(branch,dict) and set(branch)-{'x-pm-oracle-id'} <= {'type','minimum','minLength','required'}
+        for branch in e.schema.get('anyOf',[]))]
+    union_errors += [e for e in errors if e.validator=='anyOf' and e.schema.get('x-pm-oracle-id','').endswith('/$defs/nullable_non_empty_string')]
+    union_errors += [e for e in errors if e.validator in ('anyOf','oneOf') and not isinstance(e.instance,dict) and e.context and all(child.validator=='type' and child.validator_value=='object' for child in e.context)]
+    if union_errors:
+        out={union_errors[0].oracle_guard}
+    elif not any(name in _SCHEMA_TYPES for name in out):
+        composed=[e for e in errors if e.validator=='oneOf']
+        if composed:
+            out={composed[0].oracle_guard}
     _SCHEMA_CACHE[key]=frozenset(out)
     return out
 
@@ -339,11 +440,22 @@ class Gates:
     def require(self, name, condition):
         seen=_SEEN_GUARDS.get()
         if seen is not None:seen.add(name)
-        if name not in self.disabled and not condition:
+        if name not in self.disabled and tables.decide(name, condition) is not None:
             self.errors.add(name)
 
     def schema(self, v, value, prefix):
-        self.errors.update(schema_guards(v, value, prefix, self.disabled))
+        errors = schema_guards(v, value, prefix, self.disabled)
+        known = _SCHEMA_REFUSAL_GUARDS.setdefault(id(v),set())
+        known.update(errors)
+        if tables.COLLECTOR is not None and not errors:
+            tables.COLLECTOR.schema_seed(v, value, prefix)
+        # Preserve the original suite's declared inventory: every reachable
+        # type assertion, plus every actual non-type refusal. All owner schema
+        # keywords still execute above. Traversal/applicator observations are
+        # not fabricated independent refusal rows.
+        names = (_SCHEMA_VALIDATOR_GUARDS.get(id(v), set()) & set(_SCHEMA_TYPES)) - set(_SCHEMA_INACTIVE_TYPES)
+        names |= known
+        self.errors.update(tables.schema(names, errors))
 
 
 _GUARD_AUDIT_NEGATIVES = ()
@@ -414,6 +526,8 @@ class Audit:
         self.cases.append((name, evaluate, copy.deepcopy(value), valid, copy.deepcopy(base)))
 
     def run(self):
+        if tables.COLLECTOR is not None:
+            return tables.COLLECTOR.audit(self)
         self.failures.extend(number_codec_checks())
         paths = list(_SCHEMA_REGISTRY_PATHS)
         if paths:
@@ -517,7 +631,7 @@ SEMANTIC_FIELDS = ("event_type", "scope_kind", "project_id", "thread_id", "run_i
 
 
 def semantic_digest(event):
-    return sha({key: event[key] for key in SEMANTIC_FIELDS})
+    return numbers.producer_semantic_digest(event)
 
 
 def append_result(case, disabled=()):

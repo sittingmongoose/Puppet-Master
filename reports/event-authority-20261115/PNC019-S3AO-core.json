@@ -1,0 +1,92 @@
+{
+  "status": "PASS_CORE_BOUNDARIES",
+  "base": "2f44dc23cdc12ca49c82b43b16bd0310f8e11777",
+  "calls": 61676,
+  "guards": 867,
+  "proved": 862,
+  "unproved_with_proof": [
+    {
+      "guard": "schema/23e31dc0b8fb6a33/type",
+      "proof": {
+        "kind": "earlier_owner_union",
+        "earlier_guard": "schema/71ebd528555cf8ea/anyOf",
+        "owner": "Plans/event_record.schema.json#/$defs/nullable_non_negative_integer",
+        "owner_sha256": "bda87b247d841e058758136731734e515ae947f2261b5f90370015603d3bd353",
+        "checker": "scripts/pm_goal_oracle_common.py:422",
+        "proof": "The branch declaration selects one nullable alternative. A valid other alternative accepts without a refusal. If the complete union fails, schema_guards returns the parent anyOf refusal before branch attribution. Thus this branch row can never refuse first; the parent row is separately proved."
+      }
+    },
+    {
+      "guard": "schema/514ea0705639075d/type",
+      "proof": {
+        "kind": "earlier_owner_union",
+        "earlier_guard": "schema/71ebd528555cf8ea/anyOf",
+        "owner": "Plans/event_record.schema.json#/$defs/nullable_non_negative_integer",
+        "owner_sha256": "bda87b247d841e058758136731734e515ae947f2261b5f90370015603d3bd353",
+        "checker": "scripts/pm_goal_oracle_common.py:422",
+        "proof": "The branch declaration selects one nullable alternative. A valid other alternative accepts without a refusal. If the complete union fails, schema_guards returns the parent anyOf refusal before branch attribution. Thus this branch row can never refuse first; the parent row is separately proved."
+      }
+    },
+    {
+      "guard": "schema/98246b4781022e26/type",
+      "proof": {
+        "kind": "earlier_owner_edition_union",
+        "earlier_guard": "schema/ee57e450933a6833/oneOf",
+        "owner": "Plans/event_append_receipt_contracts.schema.json#/$defs/custody_reader",
+        "owner_sha256": "2f41d829ac0697998a9774267d44ccb10673df6b6ec26c8a0bbd5f552abf2cf3",
+        "checker": "scripts/pm_goal_oracle_common.py:schema_guards",
+        "proof": "Both supported editions require an object. On a non-object both branch types fail and schema_guards reports the complete oneOf before branch attribution. On an object both root type predicates hold. Therefore neither edition root type can refuse first; the earlier edition-union predicate is separately proved."
+      }
+    },
+    {
+      "guard": "schema/d7f4eabd194b120a/type",
+      "proof": {
+        "kind": "earlier_owner_edition_union",
+        "earlier_guard": "schema/ee57e450933a6833/oneOf",
+        "owner": "Plans/event_append_receipt_contracts.schema.json#/$defs/custody_reader",
+        "owner_sha256": "2f41d829ac0697998a9774267d44ccb10673df6b6ec26c8a0bbd5f552abf2cf3",
+        "checker": "scripts/pm_goal_oracle_common.py:schema_guards",
+        "proof": "Both supported editions require an object. On a non-object both branch types fail and schema_guards reports the complete oneOf before branch attribution. On an object both root type predicates hold. Therefore neither edition root type can refuse first; the earlier edition-union predicate is separately proved."
+      }
+    },
+    {
+      "guard": "schema/e718b5042c897bbe/type",
+      "proof": {
+        "kind": "earlier_owner_union",
+        "earlier_guard": "schema/b34f9a375418a2bc/anyOf",
+        "owner": "Plans/event_record.schema.json#/$defs/nullable_non_empty_string",
+        "owner_sha256": "bda87b247d841e058758136731734e515ae947f2261b5f90370015603d3bd353",
+        "checker": "scripts/pm_goal_oracle_common.py:422",
+        "proof": "The branch declaration selects one nullable alternative. A valid other alternative accepts without a refusal. If the complete union fails, schema_guards returns the parent anyOf refusal before branch attribution. Thus this branch row can never refuse first; the parent row is separately proved."
+      }
+    }
+  ],
+  "maximum_rows_per_table": 1,
+  "exact_expected_refusal_kills": 862,
+  "whole_checker_cut_accepts": 845,
+  "whole_checker_cut_exceptions": 2,
+  "native_execution": "NOT_RUN",
+  "proof_scope": "Boolean observation dispatch after the complete checker derives each predicate. No schema keyword occurrence proof or whole-checker cut acceptance is inferred from phase cuts.",
+  "pending": [
+    "restore_point.deleted external guard closure",
+    "run.started adoption and retention guard closure"
+  ],
+  "evidence": [
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/s3ao/core-v22/collection.json",
+      "sha256": "25988a11fdc06b35c53e990ec9a9cdb3c390a3f20675021d0fcec25754bfaf7f"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/s3ao/core-v22/tables/summary.json",
+      "sha256": "af4d6a9a63843eab7f389a02a9b12fbad8da0294a6a272b92a6ff96aef316f60"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/s3ao/core-v22/mutations.json",
+      "sha256": "fd63ca7c790f93483191d1f38f47ffbb5d90096ed3f342a43f7cdda630a7c41d"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/s3ao/core-v22/schema-inventory.json",
+      "sha256": "d15bca13217a1caa0e94f81b805672d485fa96601fb17939af919b55a0a4d07f"
+    }
+  ]
+}

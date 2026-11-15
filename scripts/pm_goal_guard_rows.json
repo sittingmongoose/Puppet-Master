@@ -1,0 +1,9937 @@
+{
+  "admission/accepted_edition": {
+    "sites": [
+      [
+        "scripts/pm_goal_own_d_oracles.py",
+        470
+      ]
+    ],
+    "table": "0271512206477ffe"
+  },
+  "admission/approved_checkpoint": {
+    "sites": [
+      [
+        "scripts/pm_goal_own_d_oracles.py",
+        471
+      ]
+    ],
+    "table": "830b0d976a968c88"
+  },
+  "admission/checkpoint/event_type": {
+    "sites": [
+      [
+        "scripts/pm_goal_own_d_oracles.py",
+        480
+      ]
+    ],
+    "table": "678fc98ba968753e"
+  },
+  "admission/checkpoint/owner_unit": {
+    "sites": [
+      [
+        "scripts/pm_goal_own_d_oracles.py",
+        480
+      ]
+    ],
+    "table": "10fdfc1d8c449261"
+  },
+  "admission/checkpoint/payload_schema_id": {
+    "sites": [
+      [
+        "scripts/pm_goal_own_d_oracles.py",
+        480
+      ]
+    ],
+    "table": "e0e629d7344bc875"
+  },
+  "admission/checkpoint/registry_checkpoint": {
+    "sites": [
+      [
+        "scripts/pm_goal_own_d_oracles.py",
+        480
+      ]
+    ],
+    "table": "9eebadf9a742ceef"
+  },
+  "admission/checkpoint/source_contract": {
+    "sites": [
+      [
+        "scripts/pm_goal_own_d_oracles.py",
+        480
+      ]
+    ],
+    "table": "d0ca310b8c786c60"
+  },
+  "admission/edition/event_type": {
+    "sites": [
+      [
+        "scripts/pm_goal_own_d_oracles.py",
+        479
+      ]
+    ],
+    "table": "8612809bd58c9e64"
+  },
+  "admission/edition/owner_unit": {
+    "sites": [
+      [
+        "scripts/pm_goal_own_d_oracles.py",
+        479
+      ]
+    ],
+    "table": "dc3edc258be86260"
+  },
+  "admission/edition/payload_schema_id": {
+    "sites": [
+      [
+        "scripts/pm_goal_own_d_oracles.py",
+        479
+      ]
+    ],
+    "table": "424ad6ab741c5266"
+  },
+  "admission/edition/registry_checkpoint": {
+    "sites": [
+      [
+        "scripts/pm_goal_own_d_oracles.py",
+        479
+      ]
+    ],
+    "table": "baae5d755623838e"
+  },
+  "admission/edition/source_contract": {
+    "sites": [
+      [
+        "scripts/pm_goal_own_d_oracles.py",
+        479
+      ]
+    ],
+    "table": "0c973e670a59701a"
+  },
+  "admission/recipe_selection": {
+    "sites": [
+      [
+        "scripts/pm_goal_own_d_oracles.py",
+        481
+      ]
+    ],
+    "table": "f1a019c64ef80152"
+  },
+  "answer_builder/final_candidate": {
+    "sites": [
+      [
+        "scripts/pm_goal_own_d_oracles.py",
+        533
+      ]
+    ],
+    "table": "d1891e3ad1892e34"
+  },
+  "answer_builder/final_owner_fence": {
+    "sites": [
+      [
+        "scripts/pm_goal_own_d_oracles.py",
+        537
+      ]
+    ],
+    "table": "e0fad37029d813a8"
+  },
+  "complete/owner_schema/Plans/event_payload_run_started.schema.json": {
+    "sites": [
+      [
+        "scripts/pm_goal_complete_oracles.py",
+        66
+      ]
+    ],
+    "table": "aad2bfaebb5dbebb"
+  },
+  "complete/owner_schema/Plans/event_payloads/goal_runtime/goal_created.schema.json#": {
+    "sites": [
+      [
+        "scripts/pm_goal_complete_oracles.py",
+        63
+      ]
+    ],
+    "table": "650bbcf07fb02f8f"
+  },
+  "complete/owner_schema/Plans/event_record.schema.json#": {
+    "sites": [
+      [
+        "scripts/pm_goal_complete_oracles.py",
+        63
+      ]
+    ],
+    "table": "60bb146c63d2d490"
+  },
+  "complete/owner_schema/Plans/goal_runtime_contracts.schema.json#/$defs/GoalStartRequestV2": {
+    "sites": [
+      [
+        "scripts/pm_goal_complete_oracles.py",
+        63
+      ]
+    ],
+    "table": "227ec8d5011204e7"
+  },
+  "complete/owner_schema/Plans/goal_runtime_contracts.schema.json#/$defs/GoalStartResultV2": {
+    "sites": [
+      [
+        "scripts/pm_goal_complete_oracles.py",
+        63
+      ]
+    ],
+    "table": "07e0e93e7ff266db"
+  },
+  "complete/owner_schema/Plans/goal_start_command_custody.schema.json#": {
+    "sites": [
+      [
+        "scripts/pm_goal_complete_oracles.py",
+        63
+      ]
+    ],
+    "table": "6451e20609b60802"
+  },
+  "complete/owner_schema/Plans/requested_effective_runtime.schema.json#": {
+    "sites": [
+      [
+        "scripts/pm_goal_complete_oracles.py",
+        63
+      ]
+    ],
+    "table": "1c966e1de102d94c"
+  },
+  "complete/owner_schema/Plans/restore_point_deleted_contracts.schema.json#/$defs/checkpoint": {
+    "sites": [
+      [
+        "scripts/pm_goal_complete_oracles.py",
+        63
+      ]
+    ],
+    "table": "0304302bbc69fd05"
+  },
+  "complete/owner_schema/Plans/restore_point_deleted_contracts.schema.json#/$defs/command_result_receipt": {
+    "sites": [
+      [
+        "scripts/pm_goal_complete_oracles.py",
+        63
+      ]
+    ],
+    "table": "a1b80dc09c740a2b"
+  },
+  "complete/owner_schema/Plans/restore_point_deleted_contracts.schema.json#/$defs/deletion_commit": {
+    "sites": [
+      [
+        "scripts/pm_goal_complete_oracles.py",
+        63
+      ]
+    ],
+    "table": "21d975d5202008a3"
+  },
+  "complete/owner_schema/Plans/run_started_consumer_contracts.schema.json#/$defs/checkpoint": {
+    "sites": [
+      [
+        "scripts/pm_goal_complete_oracles.py",
+        63
+      ]
+    ],
+    "table": "f30918601bc6c009"
+  },
+  "complete/owner_schema/Plans/storage_value_registry.json#/families/event_record_index/value_schema": {
+    "sites": [
+      [
+        "scripts/pm_goal_complete_oracles.py",
+        212
+      ]
+    ],
+    "table": "1d596f426008f7dd"
+  },
+  "current_writer/prohibited": {
+    "sites": [
+      [
+        "scripts/pm_goal_history_reader_fixtures.py",
+        176
+      ]
+    ],
+    "table": "558f8d72997c22fe"
+  },
+  "datetime/acknowledged_at_utc/event_record": {
+    "sites": [
+      [
+        "scripts/pm_goal_shared_oracles.py",
+        129
+      ]
+    ],
+    "table": "f13bb65789e77d2e"
+  },
+  "datetime/observed_at_utc/storage_utc_z": {
+    "sites": [
+      [
+        "scripts/pm_goal_shared_oracles.py",
+        129
+      ]
+    ],
+    "table": "a0119a3307bafa75"
+  },
+  "datetime/occurred_at_utc/event_record": {
+    "sites": [
+      [
+        "scripts/pm_goal_shared_oracles.py",
+        129
+      ]
+    ],
+    "table": "60c9d0736730da3d"
+  },
+  "datetime/persisted_at_utc/storage_utc_z": {
+    "sites": [
+      [
+        "scripts/pm_goal_shared_oracles.py",
+        129
+      ]
+    ],
+    "table": "5e7a04eeae5f6aa1"
+  },
+  "disclosure/final_candidate": {
+    "sites": [
+      [
+        "scripts/pm_goal_own_d_oracles.py",
+        533
+      ]
+    ],
+    "table": "d1219a181947106a"
+  },
+  "disclosure/final_owner_fence": {
+    "sites": [
+      [
+        "scripts/pm_goal_own_d_oracles.py",
+        537
+      ]
+    ],
+    "table": "3b210eccf948de6a"
+  },
+  "entry/final_candidate": {
+    "sites": [
+      [
+        "scripts/pm_goal_own_d_oracles.py",
+        533
+      ]
+    ],
+    "table": "82c247d6e1e5d747"
+  },
+  "entry/final_owner_fence": {
+    "sites": [
+      [
+        "scripts/pm_goal_own_d_oracles.py",
+        537
+      ]
+    ],
+    "table": "2b13c8cbf3623a48"
+  },
+  "evidence/content_hash": {
+    "sites": [
+      [
+        "scripts/pm_goal_own_d_oracles.py",
+        388
+      ]
+    ],
+    "table": "7315e70b3b2468d1"
+  },
+  "evidence/original/currentness_state": {
+    "sites": [
+      [
+        "scripts/pm_goal_own_d_oracles.py",
+        391
+      ]
+    ],
+    "table": "cc7f638ebdef1efa"
+  },
+  "evidence/original/evidence_ref": {
+    "sites": [
+      [
+        "scripts/pm_goal_own_d_oracles.py",
+        391
+      ]
+    ],
+    "table": "32a75f0ab699511e"
+  },
+  "evidence/original/redaction_profile": {
+    "sites": [
+      [
+        "scripts/pm_goal_own_d_oracles.py",
+        391
+      ]
+    ],
+    "table": "bfa68bc59b233ebd"
+  },
+  "evidence/original/source_spans": {
+    "sites": [
+      [
+        "scripts/pm_goal_own_d_oracles.py",
+        391
+      ]
+    ],
+    "table": "85a89e09ae2a99c2"
+  },
+  "evidence/source_line_bounds": {
+    "sites": [
+      [
+        "scripts/pm_goal_own_d_oracles.py",
+        394
+      ]
+    ],
+    "table": "1f9a205aa583412f"
+  },
+  "evidence_captured/provenance_members": {
+    "sites": [
+      [
+        "scripts/pm_goal_own_d_oracles.py",
+        384
+      ]
+    ],
+    "table": "b488194a60913657"
+  },
+  "frame/crc32": {
+    "sites": [
+      [
+        "scripts/pm_goal_own_d_oracles.py",
+        426
+      ]
+    ],
+    "table": "892df146d479e6da"
+  },
+  "frame/durable_end": {
+    "sites": [
+      [
+        "scripts/pm_goal_own_d_oracles.py",
+        441
+      ]
+    ],
+    "table": "c5aeaf7d158e82a1"
+  },
+  "frame/full_cursor": {
+    "sites": [
+      [
+        "scripts/pm_goal_own_d_oracles.py",
+        434
+      ]
+    ],
+    "table": "ebbad0623fa577af"
+  },
+  "frame/original_value": {
+    "sites": [
+      [
+        "scripts/pm_goal_own_d_oracles.py",
+        428
+      ]
+    ],
+    "table": "d50c9a3d0863beba"
+  },
+  "frame/selected_cursor": {
+    "sites": [
+      [
+        "scripts/pm_goal_own_d_oracles.py",
+        432
+      ]
+    ],
+    "table": "fec6f26d07f16955"
+  },
+  "frame/within_watermark": {
+    "sites": [
+      [
+        "scripts/pm_goal_own_d_oracles.py",
+        442
+      ]
+    ],
+    "table": "92e9d59025c7f6ae"
+  },
+  "inspection/final_candidate": {
+    "sites": [
+      [
+        "scripts/pm_goal_own_d_oracles.py",
+        533
+      ]
+    ],
+    "table": "c31c7c502b2c8a08"
+  },
+  "inspection/final_owner_fence": {
+    "sites": [
+      [
+        "scripts/pm_goal_own_d_oracles.py",
+        537
+      ]
+    ],
+    "table": "2e16332ca1f7b8eb"
+  },
+  "join/envelope/actor_ref": {
+    "sites": [
+      [
+        "scripts/pm_goal_history_reader_fixtures.py",
+        42
+      ]
+    ],
+    "table": "3179f3ddc00abb60"
+  },
+  "join/envelope/correlation_id": {
+    "sites": [
+      [
+        "scripts/pm_goal_history_reader_fixtures.py",
+        42
+      ]
+    ],
+    "table": "8661bcf480e7c47e"
+  },
+  "join/envelope/effective_account_ref": {
+    "sites": [
+      [
+        "scripts/pm_goal_history_reader_fixtures.py",
+        42
+      ]
+    ],
+    "table": "fb3b54e426e2a0e4"
+  },
+  "join/envelope/event_type": {
+    "sites": [
+      [
+        "scripts/pm_goal_history_reader_fixtures.py",
+        42
+      ]
+    ],
+    "table": "0ca2f14c225b258e"
+  },
+  "join/envelope/idempotency_key": {
+    "sites": [
+      [
+        "scripts/pm_goal_history_reader_fixtures.py",
+        42
+      ]
+    ],
+    "table": "beeb5edfa0bba433"
+  },
+  "join/envelope/occurred_at_utc": {
+    "sites": [
+      [
+        "scripts/pm_goal_history_reader_fixtures.py",
+        42
+      ]
+    ],
+    "table": "ee1aba2ef8456fff"
+  },
+  "join/envelope/payload_schema_id": {
+    "sites": [
+      [
+        "scripts/pm_goal_history_reader_fixtures.py",
+        42
+      ]
+    ],
+    "table": "7290fb8e52836772"
+  },
+  "join/envelope/project_id": {
+    "sites": [
+      [
+        "scripts/pm_goal_history_reader_fixtures.py",
+        42
+      ]
+    ],
+    "table": "8785c239b6673f80"
+  },
+  "join/envelope/requested_account_ref": {
+    "sites": [
+      [
+        "scripts/pm_goal_history_reader_fixtures.py",
+        42
+      ]
+    ],
+    "table": "b15c618f2385a1a0"
+  },
+  "join/envelope/thread_id": {
+    "sites": [
+      [
+        "scripts/pm_goal_history_reader_fixtures.py",
+        42
+      ]
+    ],
+    "table": "5ac5d93e90e5dd22"
+  },
+  "join/selector/event_id": {
+    "sites": [
+      [
+        "scripts/pm_goal_history_reader_fixtures.py",
+        39
+      ]
+    ],
+    "table": "83c2b049dee0a3cc"
+  },
+  "join/selector/goal_id": {
+    "sites": [
+      [
+        "scripts/pm_goal_history_reader_fixtures.py",
+        40
+      ]
+    ],
+    "table": "b68d17a029940a95"
+  },
+  "join/selector/project_id": {
+    "sites": [
+      [
+        "scripts/pm_goal_history_reader_fixtures.py",
+        39
+      ]
+    ],
+    "table": "f9155719bdfaf057"
+  },
+  "join/selector/sequence_id": {
+    "sites": [
+      [
+        "scripts/pm_goal_history_reader_fixtures.py",
+        39
+      ]
+    ],
+    "table": "b997448a0d5652ca"
+  },
+  "join/token/checkpoint_key": {
+    "sites": [
+      [
+        "scripts/pm_goal_history_reader_fixtures.py",
+        45
+      ]
+    ],
+    "table": "a0f11e6358f3744d"
+  },
+  "join/token/checkpoint_ref": {
+    "sites": [
+      [
+        "scripts/pm_goal_history_reader_fixtures.py",
+        47
+      ]
+    ],
+    "table": "7f37887f6cb8a905"
+  },
+  "join/token/dataset": {
+    "sites": [
+      [
+        "scripts/pm_goal_history_reader_fixtures.py",
+        49
+      ]
+    ],
+    "table": "21272f64811d44ec"
+  },
+  "join/token/source_storage": {
+    "sites": [
+      [
+        "scripts/pm_goal_history_reader_fixtures.py",
+        48
+      ]
+    ],
+    "table": "78c1f3439d6befa0"
+  },
+  "numbers/producer_representable": {
+    "sites": [
+      [
+        "scripts/pm_goal_shared_oracles.py",
+        108
+      ]
+    ],
+    "table": "ac878228203e8b38"
+  },
+  "numbers/producer_sequence_id/integer_range": {
+    "sites": [
+      [
+        "scripts/pm_goal_shared_oracles.py",
+        100
+      ]
+    ],
+    "table": "c2251d39ab69f1d9"
+  },
+  "numbers/producer_sequence_id/integer_type": {
+    "sites": [
+      [
+        "scripts/pm_goal_shared_oracles.py",
+        100
+      ]
+    ],
+    "table": "b054e2c40c10f3cc"
+  },
+  "numbers/sequence_id/integer_range": {
+    "sites": [
+      [
+        "scripts/pm_goal_shared_oracles.py",
+        100
+      ]
+    ],
+    "table": "8a4ba41bf564e315"
+  },
+  "numbers/sequence_id/integer_type": {
+    "sites": [
+      [
+        "scripts/pm_goal_shared_oracles.py",
+        100
+      ]
+    ],
+    "table": "c58f4d73f4c819fb"
+  },
+  "numbers/storage_representable": {
+    "sites": [
+      [
+        "scripts/pm_goal_shared_oracles.py",
+        116
+      ]
+    ],
+    "table": "038a8801073e9034"
+  },
+  "original/admission/event_type": {
+    "sites": [
+      [
+        "scripts/pm_goal_history_reader_fixtures.py",
+        74
+      ]
+    ],
+    "table": "28441151ef7c2dc9"
+  },
+  "original/admission/payload_schema_id": {
+    "sites": [
+      [
+        "scripts/pm_goal_history_reader_fixtures.py",
+        74
+      ]
+    ],
+    "table": "48e216d69233dd0f"
+  },
+  "original/checkpoint": {
+    "sites": [
+      [
+        "scripts/pm_goal_history_reader_fixtures.py",
+        75
+      ]
+    ],
+    "table": "1c4fc980b67c722a"
+  },
+  "original/first_receipt/event_id": {
+    "sites": [
+      [
+        "scripts/pm_goal_history_reader_fixtures.py",
+        71
+      ]
+    ],
+    "table": "f544970302d55642"
+  },
+  "original/first_receipt/event_type": {
+    "sites": [
+      [
+        "scripts/pm_goal_history_reader_fixtures.py",
+        71
+      ]
+    ],
+    "table": "b825fb979570e1ff"
+  },
+  "original/first_receipt/idempotency_key": {
+    "sites": [
+      [
+        "scripts/pm_goal_history_reader_fixtures.py",
+        71
+      ]
+    ],
+    "table": "d88279daf9704951"
+  },
+  "original/first_receipt/payload_schema_id": {
+    "sites": [
+      [
+        "scripts/pm_goal_history_reader_fixtures.py",
+        71
+      ]
+    ],
+    "table": "464ea8feb13b0ff3"
+  },
+  "original/first_receipt/storage_instance_id": {
+    "sites": [
+      [
+        "scripts/pm_goal_history_reader_fixtures.py",
+        71
+      ]
+    ],
+    "table": "871b0f2a70b558d0"
+  },
+  "original/owner/admission": {
+    "sites": [
+      [
+        "scripts/pm_goal_own_d_oracles.py",
+        462
+      ]
+    ],
+    "table": "cf72cacfd3612ea8"
+  },
+  "original/owner/facts": {
+    "sites": [
+      [
+        "scripts/pm_goal_own_d_oracles.py",
+        464
+      ]
+    ],
+    "table": "d46449a8bfb00135"
+  },
+  "original/owner/first_receipt": {
+    "sites": [
+      [
+        "scripts/pm_goal_own_d_oracles.py",
+        462
+      ]
+    ],
+    "table": "378c4838b65ceaeb"
+  },
+  "original/owner/members": {
+    "sites": [
+      [
+        "scripts/pm_goal_own_d_oracles.py",
+        460
+      ]
+    ],
+    "table": "9f362c1895b70b4b"
+  },
+  "original/owner/predecessor": {
+    "sites": [
+      [
+        "scripts/pm_goal_own_d_oracles.py",
+        462
+      ]
+    ],
+    "table": "5d1aaeb166336ef2"
+  },
+  "original/owner/producer_digest": {
+    "sites": [
+      [
+        "scripts/pm_goal_own_d_oracles.py",
+        462
+      ]
+    ],
+    "table": "aaf9c48ce274f575"
+  },
+  "original/owner/references": {
+    "sites": [
+      [
+        "scripts/pm_goal_own_d_oracles.py",
+        465
+      ]
+    ],
+    "table": "b42e880fa13d0d81"
+  },
+  "original/owner/runtime": {
+    "sites": [
+      [
+        "scripts/pm_goal_own_d_oracles.py",
+        462
+      ]
+    ],
+    "table": "ddd8f54fcbc873a5"
+  },
+  "original/owner_unit": {
+    "sites": [
+      [
+        "scripts/pm_goal_history_reader_fixtures.py",
+        76
+      ]
+    ],
+    "table": "c2b6206afd7819fb"
+  },
+  "original/predecessor/goal_id": {
+    "sites": [
+      [
+        "scripts/pm_goal_history_reader_fixtures.py",
+        80
+      ]
+    ],
+    "table": "367c933b519e3abb"
+  },
+  "original/predecessor/project_id": {
+    "sites": [
+      [
+        "scripts/pm_goal_history_reader_fixtures.py",
+        80
+      ]
+    ],
+    "table": "d6b328daf039e673"
+  },
+  "original/record/approval_subset": {
+    "sites": [
+      [
+        "scripts/pm_goal_history_reader_fixtures.py",
+        84
+      ]
+    ],
+    "table": "6c46c035e1535e35"
+  },
+  "original/record/artifact_hashes": {
+    "sites": [
+      [
+        "scripts/pm_goal_history_reader_fixtures.py",
+        84
+      ]
+    ],
+    "table": "f07899251e2cee4d"
+  },
+  "original/record/boundary": {
+    "sites": [
+      [
+        "scripts/pm_goal_history_reader_fixtures.py",
+        84
+      ]
+    ],
+    "table": "d3e9df0b0a804b7d"
+  },
+  "original/record/budget_remaining": {
+    "sites": [
+      [
+        "scripts/pm_goal_history_reader_fixtures.py",
+        84
+      ]
+    ],
+    "table": "8001f4818db76267"
+  },
+  "original/record/child_identity": {
+    "sites": [
+      [
+        "scripts/pm_goal_history_reader_fixtures.py",
+        84
+      ]
+    ],
+    "table": "a2ce16a4ff1020a1"
+  },
+  "original/record/committed_status_after": {
+    "sites": [
+      [
+        "scripts/pm_goal_history_reader_fixtures.py",
+        84
+      ]
+    ],
+    "table": "68e545e8df8cca30"
+  },
+  "original/record/committed_successor": {
+    "sites": [
+      [
+        "scripts/pm_goal_history_reader_fixtures.py",
+        84
+      ]
+    ],
+    "table": "85f862bacf7a9e1e"
+  },
+  "original/record/completion_receipt": {
+    "sites": [
+      [
+        "scripts/pm_goal_history_reader_fixtures.py",
+        84
+      ]
+    ],
+    "table": "2fda806f451b5e41"
+  },
+  "original/record/content_hash_provenance": {
+    "sites": [
+      [
+        "scripts/pm_goal_history_reader_fixtures.py",
+        84
+      ]
+    ],
+    "table": "73c56d1c7e3562a8"
+  },
+  "original/record/cycle_owner": {
+    "sites": [
+      [
+        "scripts/pm_goal_history_reader_fixtures.py",
+        84
+      ]
+    ],
+    "table": "df0e42ec0e3a241b"
+  },
+  "original/record/decision_evidence": {
+    "sites": [
+      [
+        "scripts/pm_goal_history_reader_fixtures.py",
+        84
+      ]
+    ],
+    "table": "c31e65017c1c8aae"
+  },
+  "original/record/dependency_completeness": {
+    "sites": [
+      [
+        "scripts/pm_goal_history_reader_fixtures.py",
+        84
+      ]
+    ],
+    "table": "661f73faf9bab9c1"
+  },
+  "original/record/disjoint_task_delta": {
+    "sites": [
+      [
+        "scripts/pm_goal_history_reader_fixtures.py",
+        84
+      ]
+    ],
+    "table": "34de740155a4c618"
+  },
+  "original/record/eligible_before_observation": {
+    "sites": [
+      [
+        "scripts/pm_goal_history_reader_fixtures.py",
+        84
+      ]
+    ],
+    "table": "09df21c79758a987"
+  },
+  "original/record/exact_child_decisions": {
+    "sites": [
+      [
+        "scripts/pm_goal_history_reader_fixtures.py",
+        84
+      ]
+    ],
+    "table": "cf130987fb0ddbdf"
+  },
+  "original/record/exception_evidence": {
+    "sites": [
+      [
+        "scripts/pm_goal_history_reader_fixtures.py",
+        84
+      ]
+    ],
+    "table": "62e85530084b9a0c"
+  },
+  "original/record/follow_on_separate_event": {
+    "sites": [
+      [
+        "scripts/pm_goal_history_reader_fixtures.py",
+        84
+      ]
+    ],
+    "table": "23af4d4d9b4be67e"
+  },
+  "original/record/legal_child_transition": {
+    "sites": [
+      [
+        "scripts/pm_goal_history_reader_fixtures.py",
+        84
+      ]
+    ],
+    "table": "e8a550f63eb7c8d5"
+  },
+  "original/record/legal_predecessor": {
+    "sites": [
+      [
+        "scripts/pm_goal_history_reader_fixtures.py",
+        84
+      ]
+    ],
+    "table": "385409ed98904a38"
+  },
+  "original/record/new_revision": {
+    "sites": [
+      [
+        "scripts/pm_goal_history_reader_fixtures.py",
+        84
+      ]
+    ],
+    "table": "647750181d582af1"
+  },
+  "original/record/new_settlement": {
+    "sites": [
+      [
+        "scripts/pm_goal_history_reader_fixtures.py",
+        84
+      ]
+    ],
+    "table": "5ac5f9885103be28"
+  },
+  "original/record/no_implicit_completion": {
+    "sites": [
+      [
+        "scripts/pm_goal_history_reader_fixtures.py",
+        84
+      ]
+    ],
+    "table": "8f5e3db08a1b5a1b"
+  },
+  "original/record/nonterminal_state_preserved": {
+    "sites": [
+      [
+        "scripts/pm_goal_history_reader_fixtures.py",
+        84
+      ]
+    ],
+    "table": "b9073b9ca006cfa2"
+  },
+  "original/record/original_retention_owner": {
+    "sites": [
+      [
+        "scripts/pm_goal_history_reader_fixtures.py",
+        84
+      ]
+    ],
+    "table": "a210dd4cae37008c"
+  },
+  "original/record/parent_state_preserved": {
+    "sites": [
+      [
+        "scripts/pm_goal_history_reader_fixtures.py",
+        84
+      ]
+    ],
+    "table": "45a5d0302717a615"
+  },
+  "original/record/permission_evidence": {
+    "sites": [
+      [
+        "scripts/pm_goal_history_reader_fixtures.py",
+        84
+      ]
+    ],
+    "table": "a1944aee6ced39d4"
+  },
+  "original/record/queue_admission": {
+    "sites": [
+      [
+        "scripts/pm_goal_history_reader_fixtures.py",
+        84
+      ]
+    ],
+    "table": "1014c6463d3f3811"
+  },
+  "original/record/receipt_validity": {
+    "sites": [
+      [
+        "scripts/pm_goal_history_reader_fixtures.py",
+        84
+      ]
+    ],
+    "table": "0129afbfcb20c046"
+  },
+  "original/record/recovery_authority": {
+    "sites": [
+      [
+        "scripts/pm_goal_history_reader_fixtures.py",
+        84
+      ]
+    ],
+    "table": "792d3b4c1fbd10b7"
+  },
+  "original/record/recovery_truth": {
+    "sites": [
+      [
+        "scripts/pm_goal_history_reader_fixtures.py",
+        84
+      ]
+    ],
+    "table": "76f72d6d51a986ac"
+  },
+  "original/record/redaction_equality": {
+    "sites": [
+      [
+        "scripts/pm_goal_history_reader_fixtures.py",
+        84
+      ]
+    ],
+    "table": "bc6e5dab6e3bab2d"
+  },
+  "original/record/remaining_evidence_current": {
+    "sites": [
+      [
+        "scripts/pm_goal_history_reader_fixtures.py",
+        84
+      ]
+    ],
+    "table": "c82efd10bb3675a4"
+  },
+  "original/record/repeat_and_marker": {
+    "sites": [
+      [
+        "scripts/pm_goal_history_reader_fixtures.py",
+        84
+      ]
+    ],
+    "table": "1900fd79bc521251"
+  },
+  "original/record/result_or_receipt": {
+    "sites": [
+      [
+        "scripts/pm_goal_history_reader_fixtures.py",
+        84
+      ]
+    ],
+    "table": "593e4d0c5d4f4c43"
+  },
+  "original/record/risk_currentness_change": {
+    "sites": [
+      [
+        "scripts/pm_goal_history_reader_fixtures.py",
+        84
+      ]
+    ],
+    "table": "ccbeb2efad2eab99"
+  },
+  "original/record/risk_meaning": {
+    "sites": [
+      [
+        "scripts/pm_goal_history_reader_fixtures.py",
+        84
+      ]
+    ],
+    "table": "4f3717a469d2595f"
+  },
+  "original/record/secret_safe_output": {
+    "sites": [
+      [
+        "scripts/pm_goal_history_reader_fixtures.py",
+        84
+      ]
+    ],
+    "table": "d07409aeb21c07fc"
+  },
+  "original/record/settled_children": {
+    "sites": [
+      [
+        "scripts/pm_goal_history_reader_fixtures.py",
+        84
+      ]
+    ],
+    "table": "a8fc97850f58f129"
+  },
+  "original/record/settled_tools": {
+    "sites": [
+      [
+        "scripts/pm_goal_history_reader_fixtures.py",
+        84
+      ]
+    ],
+    "table": "864e42ec6c6fcb6b"
+  },
+  "original/record/source_contract": {
+    "sites": [
+      [
+        "scripts/pm_goal_history_reader_fixtures.py",
+        84
+      ]
+    ],
+    "table": "fa091204f34d9575"
+  },
+  "original/record/source_span_bounds": {
+    "sites": [
+      [
+        "scripts/pm_goal_history_reader_fixtures.py",
+        84
+      ]
+    ],
+    "table": "271914f525f67f57"
+  },
+  "original/record/status_before": {
+    "sites": [
+      [
+        "scripts/pm_goal_history_reader_fixtures.py",
+        84
+      ]
+    ],
+    "table": "71fa1ee462c8a3bd"
+  },
+  "original/record/strong_repeat_adjudicator": {
+    "sites": [
+      [
+        "scripts/pm_goal_history_reader_fixtures.py",
+        84
+      ]
+    ],
+    "table": "feaaf36d0d344020"
+  },
+  "original/record/tier_and_required_check": {
+    "sites": [
+      [
+        "scripts/pm_goal_history_reader_fixtures.py",
+        84
+      ]
+    ],
+    "table": "612c1a1cb3677507"
+  },
+  "original/record/unchanged_fingerprint": {
+    "sites": [
+      [
+        "scripts/pm_goal_history_reader_fixtures.py",
+        84
+      ]
+    ],
+    "table": "7fa53b02d555f21e"
+  },
+  "original/record/verifier_authority": {
+    "sites": [
+      [
+        "scripts/pm_goal_history_reader_fixtures.py",
+        84
+      ]
+    ],
+    "table": "fab1a6281dafdbd7"
+  },
+  "original/revision_cas": {
+    "sites": [
+      [
+        "scripts/pm_goal_history_reader_fixtures.py",
+        77
+      ]
+    ],
+    "table": "d5926542d0024f33"
+  },
+  "original/revision_step": {
+    "sites": [
+      [
+        "scripts/pm_goal_history_reader_fixtures.py",
+        78
+      ]
+    ],
+    "table": "f9b3585fb80cd41c"
+  },
+  "original/runtime/actor_ref": {
+    "sites": [
+      [
+        "scripts/pm_goal_history_reader_fixtures.py",
+        86
+      ]
+    ],
+    "table": "bfe0d5320f2c0bc7"
+  },
+  "original/runtime/effective_account_ref": {
+    "sites": [
+      [
+        "scripts/pm_goal_history_reader_fixtures.py",
+        86
+      ]
+    ],
+    "table": "5c3c1cb1a5b38ec3"
+  },
+  "original/runtime/effective_model_ref": {
+    "sites": [
+      [
+        "scripts/pm_goal_history_reader_fixtures.py",
+        86
+      ]
+    ],
+    "table": "1a6579d0e83eee95"
+  },
+  "original/runtime/effective_provider_ref": {
+    "sites": [
+      [
+        "scripts/pm_goal_history_reader_fixtures.py",
+        86
+      ]
+    ],
+    "table": "842d5a08a52519ea"
+  },
+  "original/runtime/execution_role": {
+    "sites": [
+      [
+        "scripts/pm_goal_history_reader_fixtures.py",
+        86
+      ]
+    ],
+    "table": "81cab851284ddf04"
+  },
+  "original/runtime/requested_account_ref": {
+    "sites": [
+      [
+        "scripts/pm_goal_history_reader_fixtures.py",
+        86
+      ]
+    ],
+    "table": "16183ccfa4dffc47"
+  },
+  "original/runtime/requested_model_ref": {
+    "sites": [
+      [
+        "scripts/pm_goal_history_reader_fixtures.py",
+        86
+      ]
+    ],
+    "table": "d714cd24cef49d71"
+  },
+  "original/runtime/requested_provider_ref": {
+    "sites": [
+      [
+        "scripts/pm_goal_history_reader_fixtures.py",
+        86
+      ]
+    ],
+    "table": "8b9d97235b9b5dc7"
+  },
+  "original/semantic_digest": {
+    "sites": [
+      [
+        "scripts/pm_goal_history_reader_fixtures.py",
+        87
+      ]
+    ],
+    "table": "3c9d94063817c58e"
+  },
+  "original/writer_admission": {
+    "sites": [
+      [
+        "scripts/pm_goal_history_reader_fixtures.py",
+        72
+      ]
+    ],
+    "table": "d8228dbd5b5752be"
+  },
+  "progress/artifact_bytes/artifact:1": {
+    "sites": [
+      [
+        "scripts/pm_goal_own_d_oracles.py",
+        402
+      ]
+    ],
+    "table": "54cb661c4723e505"
+  },
+  "progress/artifact_set": {
+    "sites": [
+      [
+        "scripts/pm_goal_own_d_oracles.py",
+        397
+      ]
+    ],
+    "table": "02bbe097a2e8f613"
+  },
+  "receipt/event_id": {
+    "sites": [
+      [
+        "scripts/pm_goal_own_d_oracles.py",
+        451
+      ]
+    ],
+    "table": "96a523140237be5f"
+  },
+  "receipt/event_type": {
+    "sites": [
+      [
+        "scripts/pm_goal_own_d_oracles.py",
+        451
+      ]
+    ],
+    "table": "1431c9bedfccecdb"
+  },
+  "receipt/first/event_id": {
+    "sites": [
+      [
+        "scripts/pm_goal_own_d_oracles.py",
+        453
+      ]
+    ],
+    "table": "204ee394400f11bb"
+  },
+  "receipt/first/sequence_id": {
+    "sites": [
+      [
+        "scripts/pm_goal_own_d_oracles.py",
+        453
+      ]
+    ],
+    "table": "03c1251f608b27fb"
+  },
+  "receipt/full_value_commitment": {
+    "sites": [
+      [
+        "scripts/pm_goal_own_d_oracles.py",
+        457
+      ]
+    ],
+    "table": "fd3018d425f1021e"
+  },
+  "receipt/idempotency_key": {
+    "sites": [
+      [
+        "scripts/pm_goal_own_d_oracles.py",
+        451
+      ]
+    ],
+    "table": "413c8bee7de9124a"
+  },
+  "receipt/scope_partition": {
+    "sites": [
+      [
+        "scripts/pm_goal_own_d_oracles.py",
+        451
+      ]
+    ],
+    "table": "e95f4f7fadcb2b4a"
+  },
+  "receipt/semantic_digest": {
+    "sites": [
+      [
+        "scripts/pm_goal_own_d_oracles.py",
+        455
+      ]
+    ],
+    "table": "9ef58ed8a8b7882a"
+  },
+  "receipt/storage_instance_id": {
+    "sites": [
+      [
+        "scripts/pm_goal_own_d_oracles.py",
+        451
+      ]
+    ],
+    "table": "26c44451e8c46b9d"
+  },
+  "reference/access": {
+    "sites": [
+      [
+        "scripts/pm_goal_own_d_oracles.py",
+        416
+      ]
+    ],
+    "table": "9e447ff4b6cba17f"
+  },
+  "reference/blake3": {
+    "sites": [
+      [
+        "scripts/pm_goal_own_d_oracles.py",
+        414
+      ]
+    ],
+    "table": "ab32e2aa50e6d03a"
+  },
+  "reference/declared": {
+    "sites": [
+      [
+        "scripts/pm_goal_own_d_oracles.py",
+        409
+      ]
+    ],
+    "table": "5318b3444b82c3e1"
+  },
+  "reference/media_type": {
+    "sites": [
+      [
+        "scripts/pm_goal_own_d_oracles.py",
+        415
+      ]
+    ],
+    "table": "afd1be009e124834"
+  },
+  "reference/owner": {
+    "sites": [
+      [
+        "scripts/pm_goal_own_d_oracles.py",
+        411
+      ]
+    ],
+    "table": "4e8ff5c572fed381"
+  },
+  "reference/ref": {
+    "sites": [
+      [
+        "scripts/pm_goal_own_d_oracles.py",
+        408
+      ]
+    ],
+    "table": "d55f4a2be5dab92c"
+  },
+  "reference/retained": {
+    "sites": [
+      [
+        "scripts/pm_goal_own_d_oracles.py",
+        417
+      ]
+    ],
+    "table": "6c751fedd287078a"
+  },
+  "reference/size": {
+    "sites": [
+      [
+        "scripts/pm_goal_own_d_oracles.py",
+        413
+      ]
+    ],
+    "table": "e4d080101ed878e2"
+  },
+  "references/complete_roles": {
+    "sites": [
+      [
+        "scripts/pm_goal_own_d_oracles.py",
+        373
+      ]
+    ],
+    "table": "a2781000c9fa0825"
+  },
+  "request/binding": {
+    "sites": [
+      [
+        "scripts/pm_goal_own_d_oracles.py",
+        362
+      ]
+    ],
+    "table": "df928bacf3f02d6d"
+  },
+  "request/family_dispatch": {
+    "sites": [
+      [
+        "scripts/pm_goal_own_d_oracles.py",
+        364
+      ],
+      [
+        "scripts/pm_goal_own_d_oracles.py",
+        369
+      ]
+    ],
+    "table": "1e4be0fcd39fa3ed"
+  },
+  "request/selector": {
+    "sites": [
+      [
+        "scripts/pm_goal_own_d_oracles.py",
+        361
+      ]
+    ],
+    "table": "797835a3ea805deb"
+  },
+  "resolver/final_candidate": {
+    "sites": [
+      [
+        "scripts/pm_goal_own_d_oracles.py",
+        533
+      ]
+    ],
+    "table": "0506caf834cb935a"
+  },
+  "resolver/final_owner_fence": {
+    "sites": [
+      [
+        "scripts/pm_goal_own_d_oracles.py",
+        537
+      ]
+    ],
+    "table": "e67da21fd4b84812"
+  },
+  "retained/caller_recipe_override": {
+    "sites": [
+      [
+        "scripts/pm_goal_shared_oracles.py",
+        42
+      ]
+    ],
+    "table": "2a8c90d5020c91a0"
+  },
+  "retained/current_disclosure": {
+    "sites": [
+      [
+        "scripts/pm_goal_shared_oracles.py",
+        42
+      ]
+    ],
+    "table": "da4e0be1e78cd4b3"
+  },
+  "retained/original_binding": {
+    "sites": [
+      [
+        "scripts/pm_goal_shared_oracles.py",
+        42
+      ]
+    ],
+    "table": "b814b75f26b1d907"
+  },
+  "retained/original_receipt_ambiguous": {
+    "sites": [
+      [
+        "scripts/pm_goal_shared_oracles.py",
+        42
+      ]
+    ],
+    "table": "c302287736226018"
+  },
+  "retained/original_receipt_missing": {
+    "sites": [
+      [
+        "scripts/pm_goal_shared_oracles.py",
+        42
+      ]
+    ],
+    "table": "af9243dcfb1239cf"
+  },
+  "retained/original_receipt_seal": {
+    "sites": [
+      [
+        "scripts/pm_goal_shared_oracles.py",
+        42
+      ]
+    ],
+    "table": "4c70adb3da12cc94"
+  },
+  "retained/original_receipt_shape": {
+    "sites": [
+      [
+        "scripts/pm_goal_shared_oracles.py",
+        42
+      ]
+    ],
+    "table": "1ac3c602d8c358ea"
+  },
+  "retained/original_verification": {
+    "sites": [
+      [
+        "scripts/pm_goal_shared_oracles.py",
+        42
+      ]
+    ],
+    "table": "1358e28da62015c3"
+  },
+  "retained/recipe_unknown": {
+    "sites": [
+      [
+        "scripts/pm_goal_shared_oracles.py",
+        42
+      ]
+    ],
+    "table": "46ff22031814aa2f"
+  },
+  "retained/verified_original": {
+    "sites": [
+      [
+        "scripts/pm_goal_own_d_oracles.py",
+        500
+      ]
+    ],
+    "table": "7e70d6e17bd3ae56"
+  },
+  "row/child_identity": {
+    "sites": [
+      [
+        "scripts/pm_goal_history_reader_fixtures.py",
+        102
+      ]
+    ],
+    "table": "f539614d1d7bbbc7"
+  },
+  "row/child_legal_edge": {
+    "sites": [
+      [
+        "scripts/pm_goal_history_reader_fixtures.py",
+        105
+      ]
+    ],
+    "table": "1b899ab4f4d769b1"
+  },
+  "row/child_parent_nonterminal": {
+    "sites": [
+      [
+        "scripts/pm_goal_history_reader_fixtures.py",
+        100
+      ]
+    ],
+    "table": "925fbecf1fb347bf"
+  },
+  "row/child_parent_preserved": {
+    "sites": [
+      [
+        "scripts/pm_goal_history_reader_fixtures.py",
+        101
+      ]
+    ],
+    "table": "588d7d6630b4e905"
+  },
+  "row/child_predecessor": {
+    "sites": [
+      [
+        "scripts/pm_goal_history_reader_fixtures.py",
+        103
+      ]
+    ],
+    "table": "0a2c1bcfe8b3f7a1"
+  },
+  "row/child_successor": {
+    "sites": [
+      [
+        "scripts/pm_goal_history_reader_fixtures.py",
+        104
+      ]
+    ],
+    "table": "9ed1d7394afb4541"
+  },
+  "row/degraded_approval": {
+    "sites": [
+      [
+        "scripts/pm_goal_history_reader_fixtures.py",
+        113
+      ]
+    ],
+    "table": "b80e514552f3011b"
+  },
+  "row/degraded_boolean/exception_required": {
+    "sites": [
+      [
+        "scripts/pm_goal_history_reader_fixtures.py",
+        108
+      ]
+    ],
+    "table": "3451734cc123bde2"
+  },
+  "row/degraded_boolean/mutation_affected": {
+    "sites": [
+      [
+        "scripts/pm_goal_history_reader_fixtures.py",
+        108
+      ]
+    ],
+    "table": "4559ccbdac72e7f3"
+  },
+  "row/degraded_boolean/required_check_affected": {
+    "sites": [
+      [
+        "scripts/pm_goal_history_reader_fixtures.py",
+        108
+      ]
+    ],
+    "table": "b0ea8a9d90c30609"
+  },
+  "row/degraded_boolean/risk_accepted": {
+    "sites": [
+      [
+        "scripts/pm_goal_history_reader_fixtures.py",
+        108
+      ]
+    ],
+    "table": "2c1b3ca999149507"
+  },
+  "row/degraded_edge": {
+    "sites": [
+      [
+        "scripts/pm_goal_history_reader_fixtures.py",
+        109
+      ]
+    ],
+    "table": "3c5df190b045b815"
+  },
+  "row/degraded_exception": {
+    "sites": [
+      [
+        "scripts/pm_goal_history_reader_fixtures.py",
+        112
+      ]
+    ],
+    "table": "1ea0986c6b64e96d"
+  },
+  "row/degraded_new_risk": {
+    "sites": [
+      [
+        "scripts/pm_goal_history_reader_fixtures.py",
+        114
+      ]
+    ],
+    "table": "6e67a0a0d0898c5d"
+  },
+  "row/degraded_standard": {
+    "sites": [
+      [
+        "scripts/pm_goal_history_reader_fixtures.py",
+        111
+      ]
+    ],
+    "table": "872942f16266485c"
+  },
+  "row/degraded_tier": {
+    "sites": [
+      [
+        "scripts/pm_goal_history_reader_fixtures.py",
+        110
+      ]
+    ],
+    "table": "06481f5683e8736b"
+  },
+  "row/evidence_hash": {
+    "sites": [
+      [
+        "scripts/pm_goal_history_reader_fixtures.py",
+        158
+      ]
+    ],
+    "table": "ae440ea13e026b63"
+  },
+  "row/evidence_provenance": {
+    "sites": [
+      [
+        "scripts/pm_goal_history_reader_fixtures.py",
+        159
+      ]
+    ],
+    "table": "01adcc39ba2718f3"
+  },
+  "row/evidence_redaction": {
+    "sites": [
+      [
+        "scripts/pm_goal_history_reader_fixtures.py",
+        157
+      ]
+    ],
+    "table": "23d014b37c48ab9d"
+  },
+  "row/evidence_span": {
+    "sites": [
+      [
+        "scripts/pm_goal_history_reader_fixtures.py",
+        161
+      ]
+    ],
+    "table": "8dc062ad68a4829c"
+  },
+  "row/evidence_state": {
+    "sites": [
+      [
+        "scripts/pm_goal_history_reader_fixtures.py",
+        156
+      ]
+    ],
+    "table": "a4547b9587d52312"
+  },
+  "row/progress_artifacts": {
+    "sites": [
+      [
+        "scripts/pm_goal_history_reader_fixtures.py",
+        129
+      ]
+    ],
+    "table": "75029d312c494d2a"
+  },
+  "row/progress_disjoint_tasks": {
+    "sites": [
+      [
+        "scripts/pm_goal_history_reader_fixtures.py",
+        128
+      ]
+    ],
+    "table": "d9f490cce7520edd"
+  },
+  "row/progress_predecessor": {
+    "sites": [
+      [
+        "scripts/pm_goal_history_reader_fixtures.py",
+        125
+      ]
+    ],
+    "table": "11bec2b9bc01ad89"
+  },
+  "row/progress_repeat_count": {
+    "sites": [
+      [
+        "scripts/pm_goal_history_reader_fixtures.py",
+        131
+      ]
+    ],
+    "table": "b1d66ae98c52d08d"
+  },
+  "row/progress_repeat_evidence": {
+    "sites": [
+      [
+        "scripts/pm_goal_history_reader_fixtures.py",
+        132
+      ]
+    ],
+    "table": "9b0321e2d31dd730"
+  },
+  "row/progress_successor": {
+    "sites": [
+      [
+        "scripts/pm_goal_history_reader_fixtures.py",
+        126
+      ]
+    ],
+    "table": "4cde117f2c19688b"
+  },
+  "row/receipt_decision": {
+    "sites": [
+      [
+        "scripts/pm_goal_history_reader_fixtures.py",
+        165
+      ]
+    ],
+    "table": "5374811d798f60cb"
+  },
+  "row/receipt_dependencies": {
+    "sites": [
+      [
+        "scripts/pm_goal_history_reader_fixtures.py",
+        166
+      ]
+    ],
+    "table": "08d8e71811381b89"
+  },
+  "row/receipt_exception": {
+    "sites": [
+      [
+        "scripts/pm_goal_history_reader_fixtures.py",
+        167
+      ]
+    ],
+    "table": "4441f9be02f772ca"
+  },
+  "row/receipt_identity": {
+    "sites": [
+      [
+        "scripts/pm_goal_history_reader_fixtures.py",
+        164
+      ]
+    ],
+    "table": "26b70e7b287327b8"
+  },
+  "row/receipt_state": {
+    "sites": [
+      [
+        "scripts/pm_goal_history_reader_fixtures.py",
+        163
+      ]
+    ],
+    "table": "5da69d04a4cd2e8b"
+  },
+  "row/replanned_children": {
+    "sites": [
+      [
+        "scripts/pm_goal_history_reader_fixtures.py",
+        138
+      ]
+    ],
+    "table": "f730d69ca583fc21"
+  },
+  "row/replanned_edge": {
+    "sites": [
+      [
+        "scripts/pm_goal_history_reader_fixtures.py",
+        135
+      ]
+    ],
+    "table": "3e27f2b7d4cb9833"
+  },
+  "row/replanned_evidence": {
+    "sites": [
+      [
+        "scripts/pm_goal_history_reader_fixtures.py",
+        139
+      ]
+    ],
+    "table": "31e33a8f4d1ac0c6"
+  },
+  "row/replanned_revision": {
+    "sites": [
+      [
+        "scripts/pm_goal_history_reader_fixtures.py",
+        136
+      ]
+    ],
+    "table": "ed8024eb7f807342"
+  },
+  "row/scheduled_budget": {
+    "sites": [
+      [
+        "scripts/pm_goal_history_reader_fixtures.py",
+        120
+      ]
+    ],
+    "table": "c5af08ef2173e916"
+  },
+  "row/scheduled_edge": {
+    "sites": [
+      [
+        "scripts/pm_goal_history_reader_fixtures.py",
+        116
+      ]
+    ],
+    "table": "b93b893a7f294e93"
+  },
+  "row/scheduled_permission": {
+    "sites": [
+      [
+        "scripts/pm_goal_history_reader_fixtures.py",
+        121
+      ]
+    ],
+    "table": "af715bcf2370d045"
+  },
+  "row/scheduled_recovery": {
+    "sites": [
+      [
+        "scripts/pm_goal_history_reader_fixtures.py",
+        117
+      ]
+    ],
+    "table": "c1832a7574f490c7"
+  },
+  "row/scheduled_recovery_truth": {
+    "sites": [
+      [
+        "scripts/pm_goal_history_reader_fixtures.py",
+        123
+      ]
+    ],
+    "table": "4d06ccf1b7ff6262"
+  },
+  "row/scheduled_time": {
+    "sites": [
+      [
+        "scripts/pm_goal_history_reader_fixtures.py",
+        119
+      ]
+    ],
+    "table": "87822c42648a9185"
+  },
+  "row/scheduled_writer": {
+    "sites": [
+      [
+        "scripts/pm_goal_history_reader_fixtures.py",
+        122
+      ]
+    ],
+    "table": "759a1d90f9fa209a"
+  },
+  "row/stopped_authority": {
+    "sites": [
+      [
+        "scripts/pm_goal_history_reader_fixtures.py",
+        145
+      ]
+    ],
+    "table": "efe18cd4c052f268"
+  },
+  "row/stopped_edge": {
+    "sites": [
+      [
+        "scripts/pm_goal_history_reader_fixtures.py",
+        141
+      ]
+    ],
+    "table": "bcbf56d2b1fbaf17"
+  },
+  "row/stopped_new_boundary": {
+    "sites": [
+      [
+        "scripts/pm_goal_history_reader_fixtures.py",
+        142
+      ]
+    ],
+    "table": "ef244425fdb6c85e"
+  },
+  "row/stopped_recovery": {
+    "sites": [
+      [
+        "scripts/pm_goal_history_reader_fixtures.py",
+        144
+      ]
+    ],
+    "table": "23af77536e93a2ac"
+  },
+  "row/stopped_settlement": {
+    "sites": [
+      [
+        "scripts/pm_goal_history_reader_fixtures.py",
+        146
+      ]
+    ],
+    "table": "92edad3b807c39f9"
+  },
+  "row/tool_identity": {
+    "sites": [
+      [
+        "scripts/pm_goal_history_reader_fixtures.py",
+        170
+      ]
+    ],
+    "table": "c9035e199637f159"
+  },
+  "row/tool_permission": {
+    "sites": [
+      [
+        "scripts/pm_goal_history_reader_fixtures.py",
+        171
+      ]
+    ],
+    "table": "0fed1a85d563fd22"
+  },
+  "row/tool_state": {
+    "sites": [
+      [
+        "scripts/pm_goal_history_reader_fixtures.py",
+        169
+      ]
+    ],
+    "table": "af900fd3cf11d6dc"
+  },
+  "row/verification_adjudicator": {
+    "sites": [
+      [
+        "scripts/pm_goal_history_reader_fixtures.py",
+        154
+      ]
+    ],
+    "table": "efd41c3afc50213e"
+  },
+  "row/verification_closure": {
+    "sites": [
+      [
+        "scripts/pm_goal_history_reader_fixtures.py",
+        153
+      ]
+    ],
+    "table": "887c2e6c1282798d"
+  },
+  "row/verification_cycle": {
+    "sites": [
+      [
+        "scripts/pm_goal_history_reader_fixtures.py",
+        152
+      ]
+    ],
+    "table": "47dbde19d85d9904"
+  },
+  "row/verification_edge": {
+    "sites": [
+      [
+        "scripts/pm_goal_history_reader_fixtures.py",
+        150
+      ]
+    ],
+    "table": "ed7d1d2ee10f9a73"
+  },
+  "row/verification_owner": {
+    "sites": [
+      [
+        "scripts/pm_goal_history_reader_fixtures.py",
+        151
+      ]
+    ],
+    "table": "0b4820c655767968"
+  },
+  "row_validator/final_candidate": {
+    "sites": [
+      [
+        "scripts/pm_goal_own_d_oracles.py",
+        533
+      ]
+    ],
+    "table": "99913d958877c9ce"
+  },
+  "row_validator/final_owner_fence": {
+    "sites": [
+      [
+        "scripts/pm_goal_own_d_oracles.py",
+        537
+      ]
+    ],
+    "table": "51469b4661e82be0"
+  },
+  "run.started/checkpoint_key": {
+    "sites": [
+      [
+        "scripts/pm_goal_complete_oracles.py",
+        106
+      ]
+    ],
+    "table": "be574dec785831ae"
+  },
+  "run.started/checkpoint_scope": {
+    "sites": [
+      [
+        "scripts/pm_goal_complete_oracles.py",
+        96
+      ]
+    ],
+    "table": "954f097f7ad00920"
+  },
+  "run.started/coverage": {
+    "sites": [
+      [
+        "scripts/pm_goal_complete_oracles.py",
+        104
+      ]
+    ],
+    "table": "f834de8d26e20a76"
+  },
+  "run.started/full_index_checkpoint": {
+    "sites": [
+      [
+        "scripts/pm_goal_complete_oracles.py",
+        103
+      ]
+    ],
+    "table": "a4e3c2c1a2e44e99"
+  },
+  "run.started/index/causation_event_id": {
+    "sites": [
+      [
+        "scripts/pm_goal_complete_oracles.py",
+        93
+      ]
+    ],
+    "table": "f424159622270857"
+  },
+  "run.started/index/correlation_id": {
+    "sites": [
+      [
+        "scripts/pm_goal_complete_oracles.py",
+        93
+      ]
+    ],
+    "table": "6d030dfdb10e883c"
+  },
+  "run.started/index/event_id": {
+    "sites": [
+      [
+        "scripts/pm_goal_complete_oracles.py",
+        93
+      ]
+    ],
+    "table": "dd49fde0dfde7573"
+  },
+  "run.started/index/event_type": {
+    "sites": [
+      [
+        "scripts/pm_goal_complete_oracles.py",
+        93
+      ]
+    ],
+    "table": "8d2a53907bc5b960"
+  },
+  "run.started/index/idempotency_key": {
+    "sites": [
+      [
+        "scripts/pm_goal_complete_oracles.py",
+        93
+      ]
+    ],
+    "table": "9be611cc7bf243b6"
+  },
+  "run.started/index/persisted_at_utc": {
+    "sites": [
+      [
+        "scripts/pm_goal_complete_oracles.py",
+        93
+      ]
+    ],
+    "table": "b65c904d89b7b687"
+  },
+  "run.started/index/project_id": {
+    "sites": [
+      [
+        "scripts/pm_goal_complete_oracles.py",
+        93
+      ]
+    ],
+    "table": "f043bf77ffc7df51"
+  },
+  "run.started/index/redaction_profile": {
+    "sites": [
+      [
+        "scripts/pm_goal_complete_oracles.py",
+        93
+      ]
+    ],
+    "table": "56343a3ea6972324"
+  },
+  "run.started/index/sequence_id": {
+    "sites": [
+      [
+        "scripts/pm_goal_complete_oracles.py",
+        93
+      ]
+    ],
+    "table": "776e1cc8adc7952b"
+  },
+  "run.started/index_key": {
+    "sites": [
+      [
+        "scripts/pm_goal_complete_oracles.py",
+        105
+      ]
+    ],
+    "table": "6e1c5fbcceae266d"
+  },
+  "run.started/index_partition": {
+    "sites": [
+      [
+        "scripts/pm_goal_complete_oracles.py",
+        97
+      ]
+    ],
+    "table": "2c72bc561d1a32e4"
+  },
+  "run.started/index_payload_digest": {
+    "sites": [
+      [
+        "scripts/pm_goal_complete_oracles.py",
+        94
+      ]
+    ],
+    "table": "cf389e8f7de20528"
+  },
+  "run.started/index_producer_digest": {
+    "sites": [
+      [
+        "scripts/pm_goal_complete_oracles.py",
+        95
+      ]
+    ],
+    "table": "6454b369d7792c9b"
+  },
+  "run.started/lookup/project_id": {
+    "sites": [
+      [
+        "scripts/pm_goal_complete_oracles.py",
+        76
+      ]
+    ],
+    "table": "31a3615eb8fa25b3"
+  },
+  "run.started/lookup/run_id": {
+    "sites": [
+      [
+        "scripts/pm_goal_complete_oracles.py",
+        76
+      ]
+    ],
+    "table": "6b6e45775276a22f"
+  },
+  "run.started/payload/project_id": {
+    "sites": [
+      [
+        "scripts/pm_goal_complete_oracles.py",
+        77
+      ]
+    ],
+    "table": "9496d2044399d5ec"
+  },
+  "run.started/payload/run_id": {
+    "sites": [
+      [
+        "scripts/pm_goal_complete_oracles.py",
+        77
+      ]
+    ],
+    "table": "944c9a62f680f999"
+  },
+  "run.started/payload_snapshot_ref": {
+    "sites": [
+      [
+        "scripts/pm_goal_complete_oracles.py",
+        90
+      ]
+    ],
+    "table": "59930293149e68e6"
+  },
+  "run.started/publication/manifest_generation": {
+    "sites": [
+      [
+        "scripts/pm_goal_complete_oracles.py",
+        102
+      ]
+    ],
+    "table": "610e1ae0cf8dae42"
+  },
+  "run.started/publication/recovery_epoch": {
+    "sites": [
+      [
+        "scripts/pm_goal_complete_oracles.py",
+        102
+      ]
+    ],
+    "table": "8165d9753ab9974f"
+  },
+  "run.started/publication/survivor_prefix_sha256": {
+    "sites": [
+      [
+        "scripts/pm_goal_complete_oracles.py",
+        102
+      ]
+    ],
+    "table": "80594229e3c37d3d"
+  },
+  "run.started/runtime/effective_account_id": {
+    "sites": [
+      [
+        "scripts/pm_goal_complete_oracles.py",
+        83
+      ]
+    ],
+    "table": "21066b7328d2619d"
+  },
+  "run.started/runtime/effective_mode_overlay": {
+    "sites": [
+      [
+        "scripts/pm_goal_complete_oracles.py",
+        83
+      ]
+    ],
+    "table": "d7bead004b45bdf5"
+  },
+  "run.started/runtime/effective_model": {
+    "sites": [
+      [
+        "scripts/pm_goal_complete_oracles.py",
+        83
+      ]
+    ],
+    "table": "a671c370a03df9cd"
+  },
+  "run.started/runtime/effective_persona": {
+    "sites": [
+      [
+        "scripts/pm_goal_complete_oracles.py",
+        83
+      ]
+    ],
+    "table": "dd6d34d59c8f19b0"
+  },
+  "run.started/runtime/effective_platform": {
+    "sites": [
+      [
+        "scripts/pm_goal_complete_oracles.py",
+        83
+      ]
+    ],
+    "table": "2a2cda243b9bb617"
+  },
+  "run.started/runtime/requested_account_id": {
+    "sites": [
+      [
+        "scripts/pm_goal_complete_oracles.py",
+        83
+      ]
+    ],
+    "table": "cdb568bfbba3a6a8"
+  },
+  "run.started/runtime/requested_mode_overlay": {
+    "sites": [
+      [
+        "scripts/pm_goal_complete_oracles.py",
+        83
+      ]
+    ],
+    "table": "b7b6f1c5cda0dd12"
+  },
+  "run.started/runtime/requested_model": {
+    "sites": [
+      [
+        "scripts/pm_goal_complete_oracles.py",
+        83
+      ]
+    ],
+    "table": "e6f2e6475ab11786"
+  },
+  "run.started/runtime/requested_persona": {
+    "sites": [
+      [
+        "scripts/pm_goal_complete_oracles.py",
+        83
+      ]
+    ],
+    "table": "9f2129bfabd896cd"
+  },
+  "run.started/runtime/requested_platform": {
+    "sites": [
+      [
+        "scripts/pm_goal_complete_oracles.py",
+        83
+      ]
+    ],
+    "table": "34383c92dbcd40fe"
+  },
+  "run.started/runtime/requested_runtime_mode": {
+    "sites": [
+      [
+        "scripts/pm_goal_complete_oracles.py",
+        83
+      ]
+    ],
+    "table": "21ab4c5dea8e6846"
+  },
+  "run.started/runtime/requested_strategy": {
+    "sites": [
+      [
+        "scripts/pm_goal_complete_oracles.py",
+        83
+      ]
+    ],
+    "table": "bf84a4d5059a76a6"
+  },
+  "run.started/runtime/runtime_mode": {
+    "sites": [
+      [
+        "scripts/pm_goal_complete_oracles.py",
+        83
+      ]
+    ],
+    "table": "9c7cc6d5754a9954"
+  },
+  "run.started/runtime/strategy": {
+    "sites": [
+      [
+        "scripts/pm_goal_complete_oracles.py",
+        83
+      ]
+    ],
+    "table": "e0041872b94246b3"
+  },
+  "run.started/runtime/strategy_resolution_reason": {
+    "sites": [
+      [
+        "scripts/pm_goal_complete_oracles.py",
+        83
+      ]
+    ],
+    "table": "9c29ad37326530f9"
+  },
+  "run.started/selected_payload_schema": {
+    "sites": [
+      [
+        "scripts/pm_goal_complete_oracles.py",
+        65
+      ]
+    ],
+    "table": "e4e974030947fe43"
+  },
+  "run.started/snapshot/project_id": {
+    "sites": [
+      [
+        "scripts/pm_goal_complete_oracles.py",
+        78
+      ]
+    ],
+    "table": "b4bfa7619ba88566"
+  },
+  "run.started/snapshot/run_id": {
+    "sites": [
+      [
+        "scripts/pm_goal_complete_oracles.py",
+        78
+      ]
+    ],
+    "table": "d8191dd39fd6b956"
+  },
+  "run.started/snapshot_digest": {
+    "sites": [
+      [
+        "scripts/pm_goal_complete_oracles.py",
+        86
+      ]
+    ],
+    "table": "2d5568c240d007cc"
+  },
+  "run.started/snapshot_ref": {
+    "sites": [
+      [
+        "scripts/pm_goal_complete_oracles.py",
+        89
+      ]
+    ],
+    "table": "da5559d964bdd22b"
+  },
+  "run.started/source_cursor/byte_offset": {
+    "sites": [
+      [
+        "scripts/pm_goal_complete_oracles.py",
+        99
+      ]
+    ],
+    "table": "62f65fda41fe345f"
+  },
+  "run.started/source_cursor/segment_generation": {
+    "sites": [
+      [
+        "scripts/pm_goal_complete_oracles.py",
+        99
+      ]
+    ],
+    "table": "b0de58c4721a04d8"
+  },
+  "run.started/source_cursor/segment_name": {
+    "sites": [
+      [
+        "scripts/pm_goal_complete_oracles.py",
+        99
+      ]
+    ],
+    "table": "f59d5b09ab84c01b"
+  },
+  "run.started/source_cursor/sequence_id": {
+    "sites": [
+      [
+        "scripts/pm_goal_complete_oracles.py",
+        100
+      ]
+    ],
+    "table": "ae6a9335b01d9003"
+  },
+  "schema/010c08f0055e98d1/closed_members": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "3949ef311c55c7cb"
+  },
+  "schema/010c08f0055e98d1/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "ad4f8dd0b6ace75a"
+  },
+  "schema/0218a7e0998812cb/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "e66c31d46be0f17c"
+  },
+  "schema/0222d17f83cb4c97/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "12d5f41c15532762"
+  },
+  "schema/0295f68bf04a4780/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "7daa242df23506c6"
+  },
+  "schema/03c56171cbf52c12/maxItems": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "766c964c144bb7fa"
+  },
+  "schema/0438055a15328644/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "169b339af0ac9ad8"
+  },
+  "schema/05dafe48417b0c79/anyOf": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "1f0f9924e30f5a1b"
+  },
+  "schema/0646f37c88b98efc/maxItems": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "e363640b4c172aeb"
+  },
+  "schema/0646f37c88b98efc/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "56040ff3231253d5"
+  },
+  "schema/06649cb745a6d125/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "b824ea8303b7dd22"
+  },
+  "schema/067168ceb2608f65/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "f5363c2895b5192f"
+  },
+  "schema/0677e36fb746229b/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "d7ca74761f510751"
+  },
+  "schema/0677e36fb746229b/uniqueItems": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "1bcc51a25f665346"
+  },
+  "schema/06888da35dea8874/anyOf": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "5ca4fa4ed39f2dc0"
+  },
+  "schema/068f45a65e00549d/closed_members": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "31f3b9dd57c49453"
+  },
+  "schema/068f45a65e00549d/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "6b523f310f3afff0"
+  },
+  "schema/06c58359f2401e67/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "9d7ab949a6a531d0"
+  },
+  "schema/072286c508a4ce7d/const": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "3f3ecd6cd61b1a02"
+  },
+  "schema/0787bb7b515e547f/const": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "ab0eea1034a065df"
+  },
+  "schema/0787bb7b515e547f/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "a83440e0ecd180ef"
+  },
+  "schema/084ec6f419701e96/const": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "f87d273d444199ba"
+  },
+  "schema/084ec6f419701e96/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "74cc4dc8a8205030"
+  },
+  "schema/08ca56f5f3753a75/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "80558fed6df51b4a"
+  },
+  "schema/090a5301adfbdc4d/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "2c7e7a56ee4c25c4"
+  },
+  "schema/09d59f83a71a26ae/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "9908073f596c90a9"
+  },
+  "schema/0a0be16c018f5b14/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "8be12ecffcefbcf0"
+  },
+  "schema/0b16eeca0221eefa/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "4878195ce2ebebb7"
+  },
+  "schema/0b5c0601c7fa9934/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "c15d658430af4e41"
+  },
+  "schema/0bd35b1be71fbed3/closed_members": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "bee632edf8202f42"
+  },
+  "schema/0bd35b1be71fbed3/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "7c01c29b7b9adc5f"
+  },
+  "schema/0bef50b4756ad744/maxItems": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "08d23604862c7567"
+  },
+  "schema/0c5bb5d8020277d1/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "ae417ab3c43a77c5"
+  },
+  "schema/0cb90c16ea7f3896/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "fc23ecaf9be42aee"
+  },
+  "schema/0cfc3606d97d9c1b/pattern": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "d328dccafaa527f2"
+  },
+  "schema/0cfc3606d97d9c1b/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "355fdbf9423451dd"
+  },
+  "schema/0d094c73d829fdf5/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "2b3a101965f330e7"
+  },
+  "schema/0d8a3dee4ab0ecd0/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "5b7081439b2761b7"
+  },
+  "schema/0d94e857fcd6508e/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "c17a33f50ad97646"
+  },
+  "schema/0da7777f20319ee0/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "1a3153a21865d745"
+  },
+  "schema/0f75253fa3bf94b6/closed_members": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "4bece767c1f06473"
+  },
+  "schema/0f75253fa3bf94b6/required": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "8ff05ca9d7f01b6e"
+  },
+  "schema/0f75253fa3bf94b6/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "d2701610c21dc698"
+  },
+  "schema/13550b84b2879ab7/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "4bc5f15d12d6ba1c"
+  },
+  "schema/137c7b6c999e8621/minItems": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "b938252e01b79e66"
+  },
+  "schema/137c7b6c999e8621/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "e2bc5d9d66103c25"
+  },
+  "schema/150e1920df53a1ec/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "b5c38662238fdb33"
+  },
+  "schema/1529bca1fa23e76d/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "5ed8311cc9bcf4dc"
+  },
+  "schema/1565a4a687ca6d26/format": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "31a455c99d2a280e"
+  },
+  "schema/1565a4a687ca6d26/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "fcb9ce2ed0c583f1"
+  },
+  "schema/1567efb86d71e8ce/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "496ff68382c4e9e8"
+  },
+  "schema/1610ed4af9157b76/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "e0473f22e747b504"
+  },
+  "schema/162deb0062bfda2b/enum": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "ad62266e959c9d0d"
+  },
+  "schema/162deb0062bfda2b/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "1bbe2921f177ab1c"
+  },
+  "schema/16a86b5d4c64f830/const": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "6983340ca1624b12"
+  },
+  "schema/16a86b5d4c64f830/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "d570f0796e50971f"
+  },
+  "schema/16ff3526c6125c70/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "bb123332146ab884"
+  },
+  "schema/182abbfdf16f2287/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "8795689847e6bf07"
+  },
+  "schema/182abbfdf16f2287/uniqueItems": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "e53421e6f60cd663"
+  },
+  "schema/183ab46ef7d0452d/closed_members": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "653ebf49431d6d4f"
+  },
+  "schema/183ab46ef7d0452d/required": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "b644f390bcd04fb0"
+  },
+  "schema/183ab46ef7d0452d/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "27bd643825cca420"
+  },
+  "schema/18901d07aaa886c8/closed_members": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "c3a2f86d90b80e1e"
+  },
+  "schema/18901d07aaa886c8/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "2c20b56a837c899a"
+  },
+  "schema/1928f926fad25f16/format": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "6f27181c2bb30534"
+  },
+  "schema/1928f926fad25f16/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "2239adfff808af05"
+  },
+  "schema/19b6d9e01e8052c0/const": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "a8d97e2fe97df657"
+  },
+  "schema/19d344e6ca538adf/enum": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "84fbc224838a7a43"
+  },
+  "schema/1a01b32ca87c69f7/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "d6c0bb978cc773b5"
+  },
+  "schema/1a5067e00b9e96ea/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "7f44fae83bdab976"
+  },
+  "schema/1ad38bf51d1df809/not": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "508bde0dc359510f"
+  },
+  "schema/1afc2d2288fb5338/const": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "033eba6117fe0ee5"
+  },
+  "schema/1b672e953d628aa2/pattern": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "e29b5de18ac21ba2"
+  },
+  "schema/1b672e953d628aa2/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "ac6c0a0c9663fe7b"
+  },
+  "schema/1ba0c4e0dacc797d/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "b23511126d6b3916"
+  },
+  "schema/1ba0c4e0dacc797d/uniqueItems": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "cf46ff70fc17bc3e"
+  },
+  "schema/1d222eb444e85f21/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "b6e25021d4018e40"
+  },
+  "schema/1d3ff42c8a9da8c1/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "556ab32c6a8a9ef6"
+  },
+  "schema/1e19e55d5016989d/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "1b1446e98e547a9d"
+  },
+  "schema/1ee7fb1cbbae5378/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "387c5196cf78ea8b"
+  },
+  "schema/1f4e941c573e4b5b/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "99fd8cbcbf321a09"
+  },
+  "schema/1fdc8c1ef0b5bd17/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "055d83ce22e71896"
+  },
+  "schema/1fe7f1ad3af4a20d/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "80bb1127623095e0"
+  },
+  "schema/214974aded105362/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "91be03e0445d27b9"
+  },
+  "schema/2205c042e3cbc2a3/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "27d77803fc3f5488"
+  },
+  "schema/224446cbc292ae52/const": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "1742bb970cc2afb7"
+  },
+  "schema/22c468c72653e5de/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "f3d2b0916d387259"
+  },
+  "schema/22db90fe78294e93/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "b691232089c16342"
+  },
+  "schema/22e2d8393d828f6f/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "1fa29e1ecabdc104"
+  },
+  "schema/2303ce4298570964/enum": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "82d87cd529355d61"
+  },
+  "schema/23198f451ed11594/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "096d9163401e6ee1"
+  },
+  "schema/2341598fae4c0d0f/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "584f885ea5287e20"
+  },
+  "schema/23e31dc0b8fb6a33/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "635c8b1ad7b01c7c"
+  },
+  "schema/250ea6a34eb4f334/minItems": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "41fe8980b1c1d746"
+  },
+  "schema/252cdf77a8c85311/enum": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "048f51293562fc2d"
+  },
+  "schema/255c50959c1f46d6/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "863df4fce7e2e2df"
+  },
+  "schema/255d74b69c1b8c38/minimum": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "e64a6ea1f9430bba"
+  },
+  "schema/255d74b69c1b8c38/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "22691c6cd3a3a98c"
+  },
+  "schema/257a526d087b0b2d/format": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "2b8992d2aed93f98"
+  },
+  "schema/257a526d087b0b2d/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "5bbf7f4550b15414"
+  },
+  "schema/25c7cd82a8c74bad/format": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "f25698c6bf44d6ab"
+  },
+  "schema/25c7cd82a8c74bad/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "35b21017c907591f"
+  },
+  "schema/26aa7198c3964e42/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "578ce90884e387b1"
+  },
+  "schema/27d7930e16ca0027/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "f409a710ee0318c3"
+  },
+  "schema/2860d0a8199af9f4/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "f3518c5b4a208640"
+  },
+  "schema/2876e0e3a5a1ac7a/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "0b85eee88bcd4d14"
+  },
+  "schema/28b3f5324017017a/const": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "03f64984a4509cf1"
+  },
+  "schema/29dbd02541b22de5/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "3b7f4f38c5bb7163"
+  },
+  "schema/29e3467887cb8757/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "dd7869235a14192e"
+  },
+  "schema/29ef754620f47830/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "4101e4b8be32c6d2"
+  },
+  "schema/2a23012d5e60667c/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "4361107b35dc8d05"
+  },
+  "schema/2c41379feb545081/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "769400ce547bddde"
+  },
+  "schema/2c9bd828d49e0147/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "d304a9310b811740"
+  },
+  "schema/2d20fbaf8b6ad507/const": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "fe57037d0dba5124"
+  },
+  "schema/2d4680cd61e4d552/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "77e272dd2396882c"
+  },
+  "schema/2dedb32411a0a951/pattern": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "589bdff4dcd03ee1"
+  },
+  "schema/2dedb32411a0a951/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "8accd02f32a46e7a"
+  },
+  "schema/2e3e8ac020f1e8fc/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "1e7b6b2af260148a"
+  },
+  "schema/2fc758c583f3461c/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "1411bc7eb768c1b2"
+  },
+  "schema/2fd2619f7b6d513e/enum": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "c82ea7bb76a63ad6"
+  },
+  "schema/30136867de9b9710/format": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "61fb81fe7cbf95d8"
+  },
+  "schema/30136867de9b9710/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "527cd4803de71aa7"
+  },
+  "schema/30abb72df352d3d3/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "ddd1db48f91791fd"
+  },
+  "schema/320c802bde5c4972/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "91aac7ca9c48fc8b"
+  },
+  "schema/32a84df34c86415a/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "1295db8e963bb4c4"
+  },
+  "schema/32f0abf9dc6db4dc/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "99f9fbc388afa3ed"
+  },
+  "schema/32f0abf9dc6db4dc/uniqueItems": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "29e153d56fb7ac21"
+  },
+  "schema/33867dd84b4dba69/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "71eab6450a13b916"
+  },
+  "schema/33c172200d7e089a/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "5f46e59d25a9bfe6"
+  },
+  "schema/33d562c5139b803e/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "6bc8081ddf92169a"
+  },
+  "schema/3461e54a4d360d3b/closed_members": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "92c9f779fdb74932"
+  },
+  "schema/3461e54a4d360d3b/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "bdada0d7d58ec099"
+  },
+  "schema/34dce3a2613cb93d/closed_members": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "d5527729fc883f65"
+  },
+  "schema/34dce3a2613cb93d/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "eeb8c969130c476d"
+  },
+  "schema/36e30fef1daa1aa2/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "4a2a14df9aebcd8f"
+  },
+  "schema/36f73e8b53b4a7cf/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "b8d7945c58089258"
+  },
+  "schema/37595f91295fed35/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "ffefa9c7495c25e3"
+  },
+  "schema/38655fbaf9f09f14/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "e76711592a50dfaa"
+  },
+  "schema/39240b66024abad9/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "3ba7d3d5c8a9ca4e"
+  },
+  "schema/39362d8daa5c7115/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "2fe4dde77310477f"
+  },
+  "schema/39dff68df796fada/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "3f90264e54b14a27"
+  },
+  "schema/3a7e70b487c210ef/const": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "9bdb619ba3ca99be"
+  },
+  "schema/3b8b8871a143307d/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "33d4ff1fec6db138"
+  },
+  "schema/3ba900aa440ef54d/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "073687e85ad2efac"
+  },
+  "schema/3bc8142499123f7b/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "f9cb24fdbc53d371"
+  },
+  "schema/3c94e427cdbd83ff/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "22d9d15ae52e4294"
+  },
+  "schema/3de9618ab67646be/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "d7df24fbe5219564"
+  },
+  "schema/3edbe5ee6892743c/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "3ab529b9cab66d71"
+  },
+  "schema/3f05be4d441601c7/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "b3080bdbdb27fee8"
+  },
+  "schema/3ffbde860b0b8153/pattern": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "c8926f7c6833e90b"
+  },
+  "schema/3ffbde860b0b8153/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "d8d2767461278f2c"
+  },
+  "schema/4074f1a344854fe7/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "99084f465b4c5347"
+  },
+  "schema/4160500f0fda25d5/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "f44bc939dd174123"
+  },
+  "schema/4190ff6dd28fc140/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "a2642cbcb576d3df"
+  },
+  "schema/4199bec2db1d77ec/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "63574292e9aae68b"
+  },
+  "schema/41df28b99c6a310d/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "7ae06d77331e52cd"
+  },
+  "schema/421a3a808f87f07a/const": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "8b10be4bb07fe8ae"
+  },
+  "schema/43367c02e4c3802c/closed_members": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "a3adad694a46668a"
+  },
+  "schema/43367c02e4c3802c/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "efe450972356efef"
+  },
+  "schema/435f385466c9c051/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "d079eda8d21652ba"
+  },
+  "schema/4368655ffea4ccbc/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "1353deef776511e7"
+  },
+  "schema/442e3a6cca497f39/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "f5d1f5204f39d3f6"
+  },
+  "schema/443918470db6db3c/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "0dd686e4e5eeefa9"
+  },
+  "schema/44669c566ebec11e/closed_members": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "5e2c5a40dcfbf2e7"
+  },
+  "schema/44669c566ebec11e/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "bb542ebe7e9d47a1"
+  },
+  "schema/47408f6170eab9ce/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "733fbe2aae8c8a91"
+  },
+  "schema/49b6917bd84ddb73/maxItems": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "20df46b234939176"
+  },
+  "schema/49b6917bd84ddb73/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "11a698821d6468e6"
+  },
+  "schema/4a5372f6b58a589a/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "f446ef6c6cbb18ec"
+  },
+  "schema/4b9f9e20581832ca/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "daf42e45cf981dfa"
+  },
+  "schema/4bb41ca4861fc666/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "10c618554413f0ed"
+  },
+  "schema/4d09876b01c94846/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "209f08c61a6516c8"
+  },
+  "schema/4d69197fa9770066/pattern": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "374e048471a091dd"
+  },
+  "schema/4d69197fa9770066/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "cae18c2b663441c2"
+  },
+  "schema/4d92df1a21b5cd6f/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "aaa503b526e1756d"
+  },
+  "schema/4ee2dd22f6b071d0/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "964456adf6a93d81"
+  },
+  "schema/4f035b87a893719b/pattern": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "05d4e1389ef4e3ad"
+  },
+  "schema/4f035b87a893719b/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "830d03187ab6f670"
+  },
+  "schema/4f459e5dbb7f9e18/enum": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "bd83b34054b741c3"
+  },
+  "schema/4f459e5dbb7f9e18/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "0dafe7408e05acec"
+  },
+  "schema/4f55853b544351fa/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "fe86746f3ecbc8c3"
+  },
+  "schema/4f55853b544351fa/uniqueItems": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "42f3a1aeea3b379b"
+  },
+  "schema/4f93a291169a64db/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "a269a4631882d491"
+  },
+  "schema/500ecbff09c313df/closed_members": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "6f1b956ed3a708a9"
+  },
+  "schema/500ecbff09c313df/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "0a1758260da42e1d"
+  },
+  "schema/514ea0705639075d/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "687a0724b8c4783d"
+  },
+  "schema/51aa5424bcf7a7c6/const": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "5135523c45f2935f"
+  },
+  "schema/51aa5424bcf7a7c6/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "693a3e60f0aaa295"
+  },
+  "schema/51fcc03059bb572f/minItems": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "2d4c8f2efb7a967c"
+  },
+  "schema/53201d7c2d5e570a/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "185643c7dcf37f8d"
+  },
+  "schema/5362fdfe3006315c/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "07de5114138da82b"
+  },
+  "schema/546348657666edd1/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "19fff90ba9315e8c"
+  },
+  "schema/549da85a6289099a/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "01daf2aa4ba91f7b"
+  },
+  "schema/54de34cd8da5049c/const": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "f81eeaa0a3a82f01"
+  },
+  "schema/54de34cd8da5049c/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "9ea4edf2a336af90"
+  },
+  "schema/563b0559c00fbd3a/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "bb578427bc88715e"
+  },
+  "schema/566e687c473f730a/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "69dfdf1b0115eb57"
+  },
+  "schema/566e7a99239b5132/const": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "8bf39a7280a3ae40"
+  },
+  "schema/56928df510218ee8/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "c1685dabbdb75e11"
+  },
+  "schema/56cf92f6609ff82c/minItems": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "89fae46c1c480944"
+  },
+  "schema/56cf92f6609ff82c/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "903c9a6b9456b07c"
+  },
+  "schema/574c97b2e766e58f/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "57b310a27b62cd8a"
+  },
+  "schema/582635ad4298d12f/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "0fb0cfb4b4f8855f"
+  },
+  "schema/588f6fefacf9ace4/oneOf": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "8c151c8937901c5f"
+  },
+  "schema/588f6fefacf9ace4/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "9ffd3d446c3f57bf"
+  },
+  "schema/58c8cbe8e2e2fd85/const": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "3a14f446949e99f5"
+  },
+  "schema/58e86000200e64d4/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "c92391ec0fe53356"
+  },
+  "schema/5920a900d16f630a/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "955894dfd4ec19ab"
+  },
+  "schema/5957f50f0fdd0344/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "457ee6cad7a0b4cb"
+  },
+  "schema/5c0aac31e4bf8522/oneOf": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "ccfcc284c2a8f60f"
+  },
+  "schema/5c0aac31e4bf8522/required": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "2a5ebdb561e70df3"
+  },
+  "schema/5c0aac31e4bf8522/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "c43631f14adae7a5"
+  },
+  "schema/5c2185f2ba3c39bf/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "1a00c002009aa3cc"
+  },
+  "schema/5c387b415df1f876/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "2f14ca0a8d52170b"
+  },
+  "schema/5c8697d8763c1bae/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "c4f4568558438d5e"
+  },
+  "schema/5c90239c3d155d06/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "0faf8e469e47c9c4"
+  },
+  "schema/5c9d5c3dc5de52b2/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "3bae3a78c3a818be"
+  },
+  "schema/5ca9635a867c7ff0/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "69f55dd3f220f795"
+  },
+  "schema/5d60f4c5c68715ae/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "40bcfb27a53b2f40"
+  },
+  "schema/5de1a83473803c3a/closed_members": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "d7f8f2d915d5f52e"
+  },
+  "schema/5de1a83473803c3a/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "72c500b9b089abdf"
+  },
+  "schema/5f0289f7b9e7215a/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "5cf36140177223ca"
+  },
+  "schema/5f5bd7109c5aa390/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "1fd4f212f50c97f0"
+  },
+  "schema/5fe1e67344ec600d/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "7e6b4107b8b6ab18"
+  },
+  "schema/61712b1cb5c9d1bd/const": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "a45de937e5e83d99"
+  },
+  "schema/62c1d7e4ee2df01c/oneOf": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "06123145484451a1"
+  },
+  "schema/62c1d7e4ee2df01c/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "3363b32e2219ca1d"
+  },
+  "schema/644bccb8b07172ff/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "edf4f83b4a9e67fb"
+  },
+  "schema/648411b419a9a2e0/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "5ea72c127483ffca"
+  },
+  "schema/65621ef969b0a8e2/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "705ec88895661642"
+  },
+  "schema/666cf2859c164238/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "008f7a432af81dd2"
+  },
+  "schema/66bd2d7d9aa39364/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "c74181e3f1e26d7a"
+  },
+  "schema/688bf29f2340e03d/const": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "d1f4c3b7033c5dc7"
+  },
+  "schema/69509a0068e8794d/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "9fb6138a24b9051b"
+  },
+  "schema/6967452dba2925b7/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "f1a5c9550559acd5"
+  },
+  "schema/6974ca07ae8489ab/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "66716d33119020d6"
+  },
+  "schema/69917e2e2d4cb21e/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "2f31ed201994c079"
+  },
+  "schema/69a3fb04d2022e3a/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "6555c5395cb47127"
+  },
+  "schema/6a63d9fe4dc121d5/const": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "caf0475308c97a87"
+  },
+  "schema/6a7914ef0a8844c5/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "636e2eb5250d44b3"
+  },
+  "schema/6b85ece76a521f32/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "5e1c122f51d29be1"
+  },
+  "schema/6bb5b48c78d5b228/const": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "064dbcc99cda9c31"
+  },
+  "schema/6bb5b48c78d5b228/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "ebf606d922a57f89"
+  },
+  "schema/6c58d04d614cf4c5/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "54ad01c614bff529"
+  },
+  "schema/6c9a07ea435bfb9d/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "9a2e26a7f7e75c87"
+  },
+  "schema/6d0af5a69560dc4f/required": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "12d1e293ad662d87"
+  },
+  "schema/6d5a8b46f7c5196d/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "10acbcf4baba372e"
+  },
+  "schema/6dfa4193999cfa13/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "6b1236f665257d35"
+  },
+  "schema/702b7d661a093d3b/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "5f3df6649907772e"
+  },
+  "schema/7147606c3ff08df2/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "2b2fd6514a494429"
+  },
+  "schema/719d6f2bfdf37192/const": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "a291a3f2c7d09945"
+  },
+  "schema/71bf9bc664d20b51/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "e86648e691a4d353"
+  },
+  "schema/71bf9bc664d20b51/uniqueItems": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "ab18803545451175"
+  },
+  "schema/71dea84d1e8d9a7e/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "1ac09bb68c589ca8"
+  },
+  "schema/71ebd528555cf8ea/anyOf": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "a4485ffa6eeb491f"
+  },
+  "schema/71fde1197dab353b/minItems": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "6f6bd167c6c774c0"
+  },
+  "schema/729f5e3e081db93d/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "bf65d8eb5e9bbcac"
+  },
+  "schema/735cd249acf7dcf1/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "75340f86b5a15005"
+  },
+  "schema/7378d547be50f236/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "cffd55d31854c7bc"
+  },
+  "schema/737a1f89db35594b/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "5074aa4ee0fbc96d"
+  },
+  "schema/739a4e53040d0acc/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "46a24534d8faf385"
+  },
+  "schema/740d34febdfe28d7/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "5245d851e5bceef7"
+  },
+  "schema/760f5c5605cd7eff/minimum": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "97ab23e44e5532a3"
+  },
+  "schema/760f5c5605cd7eff/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "7049ec119c1863de"
+  },
+  "schema/7616386cdd0837c4/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "65398e9007b5d645"
+  },
+  "schema/765fee91ce902d3b/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "025426c63265d03e"
+  },
+  "schema/769137fad0b208d6/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "cf9c600620fd547d"
+  },
+  "schema/76ec76992fbd0a45/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "bf758d2c6360c26d"
+  },
+  "schema/76fbc595018e81b1/enum": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "971f6f95b7c1730f"
+  },
+  "schema/76fbc595018e81b1/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "06dd0253b830341e"
+  },
+  "schema/77e21a2326286c4e/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "303f363b2a02cfb7"
+  },
+  "schema/789647d6ed9a1291/enum": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "0fe63e0fa1ad3b5b"
+  },
+  "schema/789647d6ed9a1291/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "a008065c5a6ec068"
+  },
+  "schema/798d5c5465d1eb17/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "6aab1351f8ffb894"
+  },
+  "schema/79eece11610b5c07/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "b42196f4b52e3643"
+  },
+  "schema/79fd083e49fb5437/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "8fd5ee27291400f2"
+  },
+  "schema/7a84edfefdd1a69e/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "14013ab576bdbcd0"
+  },
+  "schema/7b341b92a5dea12b/oneOf": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "a904bd467abdc65f"
+  },
+  "schema/7bfde7bdba578a94/format": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "ce2eca199bd0535b"
+  },
+  "schema/7bfde7bdba578a94/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "27b1f192df42e914"
+  },
+  "schema/7c8af4931a8b6080/required": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "2a991335fc921840"
+  },
+  "schema/7c8af4931a8b6080/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "e3b73eea07ad1d57"
+  },
+  "schema/7d86229a9f807cb6/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "4c7d2b10a3b8e7e8"
+  },
+  "schema/7da96f2998dc0680/format": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "f35f492239a93573"
+  },
+  "schema/7da96f2998dc0680/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "b125fae65d9852f2"
+  },
+  "schema/81268c65c5252122/maxItems": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "3c8da02b827808c7"
+  },
+  "schema/812f786d7cd4d398/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "004370732a4dbc4c"
+  },
+  "schema/82ccb0656b293f30/format": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "9c66e2edbe91e68d"
+  },
+  "schema/82ccb0656b293f30/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "28c1ef8bb7094225"
+  },
+  "schema/83162c196580c934/const": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "faf405b8134d8318"
+  },
+  "schema/83f6e212caa53d88/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "077bc548815f1c49"
+  },
+  "schema/8425a63ff1600611/pattern": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "2aa2ddc8b5d224d7"
+  },
+  "schema/8425a63ff1600611/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "464aacd3dedb38ca"
+  },
+  "schema/8437078f285129d6/const": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "6c54570c1fa71438"
+  },
+  "schema/844d27346828e01c/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "d1aeb706895ac54a"
+  },
+  "schema/84b2e6afa9822c67/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "27ab284959c7d6e8"
+  },
+  "schema/84b7e068b270b08a/format": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "277e13190e32af84"
+  },
+  "schema/84b7e068b270b08a/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "befe41ac5f6f6c43"
+  },
+  "schema/850818df0cb210ce/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "8bb6452c4bb23ff9"
+  },
+  "schema/85b5dc6372d9c6a7/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "d6ff5ee2fa618de7"
+  },
+  "schema/8675a733bc9bf06c/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "9ca5077072995406"
+  },
+  "schema/8680785d7f46a8c8/closed_members": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "a43de849d6e1fce9"
+  },
+  "schema/8680785d7f46a8c8/required": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "35ee118fd71cb6da"
+  },
+  "schema/8680785d7f46a8c8/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "93e62c9a7cdcadad"
+  },
+  "schema/87215c267e3775da/const": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "13f141563fcf8583"
+  },
+  "schema/8732ac09fd329277/pattern": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "8ed9e8d4f82c5cad"
+  },
+  "schema/8732ac09fd329277/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "962d542732c8e60c"
+  },
+  "schema/88575980b122fa81/pattern": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "5d512f4d88754717"
+  },
+  "schema/88575980b122fa81/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "ad58b8255b17d53b"
+  },
+  "schema/889da67248bf4360/required": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "e93f146f66a6fbec"
+  },
+  "schema/89aaa61e6b263e19/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "e3e3cc9d7b09f0f2"
+  },
+  "schema/8ace41757981db67/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "b21eefd18a4c3407"
+  },
+  "schema/8ae9f44ff5bff2bc/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "1def11c8f1f12eb6"
+  },
+  "schema/8b849fcf4045f393/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "e5dfa7695c5f0688"
+  },
+  "schema/8ba7cfd5e532204c/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "4f35413480b470a7"
+  },
+  "schema/8e253136de4c91c4/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "87c547934a666379"
+  },
+  "schema/8e30ed4f65669dbd/closed_members": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "274397f759d433e0"
+  },
+  "schema/8e30ed4f65669dbd/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "a0235c20c97abb0b"
+  },
+  "schema/8f5112327304dacb/closed_members": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "842b985a559267b1"
+  },
+  "schema/8f5112327304dacb/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "5c622580ed3ae681"
+  },
+  "schema/908a51ddf7a52fb9/enum": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "7b5aa9b0aac197ad"
+  },
+  "schema/908a51ddf7a52fb9/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "c0b208dcd7cd6724"
+  },
+  "schema/90e1f72ffc4bace6/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "bff3a4224346c019"
+  },
+  "schema/912a99a810edafe9/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "d9fb79e1e67e2317"
+  },
+  "schema/91a315ba7844081d/const": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "9eb60ec50cd25cf1"
+  },
+  "schema/92b1833889f68c37/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "cc273156218f30a9"
+  },
+  "schema/93941fd9110f5456/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "3d699ada110fbd25"
+  },
+  "schema/9421cd7fd49a3f46/closed_members": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "820bc0799ee9c838"
+  },
+  "schema/9421cd7fd49a3f46/required": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "0e94a29152c736d1"
+  },
+  "schema/9421cd7fd49a3f46/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "6adc2b0118391aa4"
+  },
+  "schema/9514c9c5ecda87d4/format": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "9e275907f284d85b"
+  },
+  "schema/9514c9c5ecda87d4/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "682a6e114b10a0d6"
+  },
+  "schema/96315b2bbb837902/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "bcbb444965a800bc"
+  },
+  "schema/964fe698a60abcc6/const": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "e387b88eedce2a27"
+  },
+  "schema/96b723ce6dd03cc3/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "0f5c1b62053d5cb2"
+  },
+  "schema/97864ec2aecc7ec3/maxItems": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "04eb66b0967c3c3d"
+  },
+  "schema/97a8453d27db8fe1/const": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "ae24bcf91528e4ba"
+  },
+  "schema/98246b4781022e26/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "6df24e9e60923d4d"
+  },
+  "schema/983d236d9afb89a7/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "db21ebe3bbf1cc76"
+  },
+  "schema/98d8ecc30e285529/format": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "3c4dbbc9f141b273"
+  },
+  "schema/98d8ecc30e285529/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "344b81d854a44db5"
+  },
+  "schema/98defbbdca32c98a/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "61dfea5907ac28f2"
+  },
+  "schema/99088c0960754bd3/const": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "2bc37b7840aa3209"
+  },
+  "schema/992510d2247764cf/minItems": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "9ca811f5f8def12f"
+  },
+  "schema/992510d2247764cf/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "94f4b90db937c507"
+  },
+  "schema/997d8d2118d6528e/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "8f2ce4a8b5e0c42b"
+  },
+  "schema/9a5aa9db3ba5a447/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "e1cfb5d2553c5351"
+  },
+  "schema/9b68e47fbc66ea9a/pattern": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "54da9eb19bcadc0f"
+  },
+  "schema/9b68e47fbc66ea9a/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "0cfc4cf29e162e27"
+  },
+  "schema/9b848ec8c39cbf5b/required": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "b0c7e219299a6752"
+  },
+  "schema/9b848ec8c39cbf5b/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "669885d4c56cfd34"
+  },
+  "schema/9c1bc2b32bdb59b8/closed_members": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "a13795a126c1e5bf"
+  },
+  "schema/9c1bc2b32bdb59b8/required": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "44d95a235dcf6107"
+  },
+  "schema/9c1bc2b32bdb59b8/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "51d1f3595164877e"
+  },
+  "schema/9d1e69e2a25687ed/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "9d058abc214146a4"
+  },
+  "schema/9d40c6617fa0d08d/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "fb697ecdbf28777a"
+  },
+  "schema/9e49acddf6b1efa5/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "89601429cd257930"
+  },
+  "schema/9e575c3bd61a9f28/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "11baff9c38bf2800"
+  },
+  "schema/9e7a7dc4152c243e/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "ea6030ef2caf9e7d"
+  },
+  "schema/9e7d3ab390e11206/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "f98e97b0c8525d4b"
+  },
+  "schema/9ec74abb2f39a9b5/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "84c2e04a51a88631"
+  },
+  "schema/9fd1ae3d16bb2cc9/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "22b34647095daa4e"
+  },
+  "schema/a00067561de6afbd/minItems": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "bbadbadc137874fd"
+  },
+  "schema/a0c37ce340727a9e/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "303b28d32e74544d"
+  },
+  "schema/a1a31df06d252c21/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "58605c304fa855bc"
+  },
+  "schema/a1dcaefb1a045d4b/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "9d9a782833bcb5fd"
+  },
+  "schema/a241c50038741e7a/pattern": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "82987c4cb4b6ff63"
+  },
+  "schema/a241c50038741e7a/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "4c1a858b8270dd2c"
+  },
+  "schema/a28dac946619301e/closed_members": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "716f7c6753bc782d"
+  },
+  "schema/a28dac946619301e/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "1b24067410a4cd25"
+  },
+  "schema/a35cb310c3790fec/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "4f6863ffd155f3cb"
+  },
+  "schema/a412cdd3140f1fe3/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "67023062d9768120"
+  },
+  "schema/a4223877ec917385/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "f5b0db8b355f0190"
+  },
+  "schema/a4246c2ec4bf6981/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "aadf42c54368d384"
+  },
+  "schema/a43969800078e5aa/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "2c8ad082208db95a"
+  },
+  "schema/a4e87eec3f4855aa/pattern": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "25c653e59f762607"
+  },
+  "schema/a4e87eec3f4855aa/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "7c33c982adedb35b"
+  },
+  "schema/a52198601ba3d0aa/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "f99f9f5f171724ca"
+  },
+  "schema/a561d1d3e671b232/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "077a9fc01bf6de9a"
+  },
+  "schema/a5963d17ed6ed3f6/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "39120e6ba0387a3d"
+  },
+  "schema/a71537eeb4066c6f/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "5d7da4836cd7d82b"
+  },
+  "schema/a802ee97c37ac8d7/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "ebf99455632a5180"
+  },
+  "schema/a867005b4e8825b9/closed_members": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "51d0e8d17a907b5b"
+  },
+  "schema/a867005b4e8825b9/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "84f667cc1c2fb8b9"
+  },
+  "schema/a8e4a5621823d2ce/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "aba1336cbbbfe97d"
+  },
+  "schema/a8f57f13acc7cac8/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "0fc49bcdf28b15ce"
+  },
+  "schema/a9edbd31f8b5c42e/enum": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "91248baa225904c8"
+  },
+  "schema/aa175536a93828b6/minItems": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "fcc454c473391547"
+  },
+  "schema/aa27c6cac4ff637e/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "fdd6103bac3749d1"
+  },
+  "schema/aad45a423e883085/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "b0d1339ef72d064a"
+  },
+  "schema/ab42fba904cd92c2/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "47ab5f79c3faa0e6"
+  },
+  "schema/acea8ec089539f9b/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "69c14ab6e2ab9985"
+  },
+  "schema/aced6e003621a497/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "1db837c44b8b9811"
+  },
+  "schema/ad09dd280abd8e3c/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "d373968356dcb548"
+  },
+  "schema/ad21f494bbafc3c3/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "69e8893e312d3b72"
+  },
+  "schema/ad3a839597ffc7d3/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "f2b89cf3cfd3b5f4"
+  },
+  "schema/adb960552167b681/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "8c4b09eda504d313"
+  },
+  "schema/adffffa748aa57ba/maxItems": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "882466cdda89828c"
+  },
+  "schema/ae078bcda8246d41/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "683af16a0d119b8b"
+  },
+  "schema/aecca91174c4560e/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "4023813755ff6a1c"
+  },
+  "schema/af8eb9f157ea5f11/const": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "b1d4cbd157d60319"
+  },
+  "schema/afcdde07d516573b/minItems": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "9b5e3ae8721a2ef4"
+  },
+  "schema/afcdde07d516573b/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "5b531fb9e79a14cc"
+  },
+  "schema/b0d32f93838bafdf/pattern": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "7ed25ff76b3b339f"
+  },
+  "schema/b0d32f93838bafdf/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "7a4f9aed11c44fd4"
+  },
+  "schema/b12e5151c6afed7b/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "0c64dbe4725ba6f1"
+  },
+  "schema/b17e3f5628882d6c/const": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "ad352687bf2c02e7"
+  },
+  "schema/b18f8e7902317f7f/const": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "9aa2aceae53fa33c"
+  },
+  "schema/b18f8e7902317f7f/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "696b79ba390bccdc"
+  },
+  "schema/b229bc2d00df5509/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "a2eff23dd005a0a2"
+  },
+  "schema/b31b97aa81983d90/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "67d94dff4b2cc748"
+  },
+  "schema/b34f9a375418a2bc/anyOf": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "73d48cb15919fa8e"
+  },
+  "schema/b38c7148a672da41/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "43254e1639028a86"
+  },
+  "schema/b3970103c7e54f9d/const": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "d52714942ed112cb"
+  },
+  "schema/b4020bbd87e47dc5/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "56ba169ba9a6b688"
+  },
+  "schema/b43cb5dcad32eab1/const": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "e871a9eaf37b7537"
+  },
+  "schema/b4b22bad08e9ec1d/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "269caf3525cb3321"
+  },
+  "schema/b58d46c8a1ee4523/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "6e43c63aeb3728a3"
+  },
+  "schema/b5c798011d15c5d0/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "991c004d97ec390e"
+  },
+  "schema/b61826d211ba5a3f/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "f057adc0d07e1b9c"
+  },
+  "schema/b6fcb15096843e76/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "f5f072778230642e"
+  },
+  "schema/b77ca4a365f6b7be/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "30d19b6d4b978135"
+  },
+  "schema/b77cfd082e5aeccc/minimum": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ]
+    ],
+    "table": "2492a4348b9176a5"
+  },
+  "schema/b77cfd082e5aeccc/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "568117bc97393878"
+  },
+  "schema/b87df0f468699bcd/maxItems": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "8603e52c21e2727a"
+  },
+  "schema/b923f17ca3351bca/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "a7e87741612e1401"
+  },
+  "schema/b93b24e13528c270/closed_members": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "d73e1eca23395421"
+  },
+  "schema/b93b24e13528c270/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "aea1c2d79f40744c"
+  },
+  "schema/ba1962aff8607b09/const": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "0bf8af0478e919ba"
+  },
+  "schema/bb86ec36d17558af/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "4cfd6916db568eb4"
+  },
+  "schema/bb86ec36d17558af/uniqueItems": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "97b2e7211d7e4a3f"
+  },
+  "schema/bda13cf691d65776/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "64928925d9e0cad6"
+  },
+  "schema/bdb7ec9511b7482e/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "3bbc03b888f90d99"
+  },
+  "schema/be0ef119a440c655/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "d0fb9d8de7d9f314"
+  },
+  "schema/bfa552247310710a/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "33c61e60fa9aacdf"
+  },
+  "schema/c0ea9afcb41b61ee/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "ed89a4b91c34883e"
+  },
+  "schema/c13092cebe264eed/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "2822c4359089e40c"
+  },
+  "schema/c15d20a2729ae806/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "3dfd4925df59a1eb"
+  },
+  "schema/c171d87346905fca/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "54faa5d02f266030"
+  },
+  "schema/c1a12f8258255b09/const": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "c723361d11c9029f"
+  },
+  "schema/c24f4f44de9d1976/closed_members": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "4bb7acfd7c0d9b2c"
+  },
+  "schema/c24f4f44de9d1976/required": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "45da7d3b97eca05e"
+  },
+  "schema/c24f4f44de9d1976/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "f80af50a62e15967"
+  },
+  "schema/c2852f493510fe7d/enum": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "f3a635eb602e01b6"
+  },
+  "schema/c2a7acdba94ddd9a/enum": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "779b2290862b64b0"
+  },
+  "schema/c2a7acdba94ddd9a/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "6ce44868a8ed8288"
+  },
+  "schema/c3c2e98bd8c2d2ca/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "d73f6e219ad11635"
+  },
+  "schema/c40b8cff5aaeadeb/const": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "53ee8e98f396b898"
+  },
+  "schema/c46a59c385eeda5a/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "4dba94288e0d0a81"
+  },
+  "schema/c69a310271fbe9f5/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "2ad2fb22da9b3adb"
+  },
+  "schema/c73d56869f195cdd/const": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "b774fc6f93af8458"
+  },
+  "schema/c7514eb234db56a1/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "ee6f2ace954438e0"
+  },
+  "schema/c9dd6da3579d84f4/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "86b2e000437e6bee"
+  },
+  "schema/ca915ca4f4ecfecc/required": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "47cc426497b25dbe"
+  },
+  "schema/cab36dae535725ff/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "e0645b98ac2eaf7c"
+  },
+  "schema/cb7c3d700178dd7f/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "5172f221c7a7f97d"
+  },
+  "schema/cb8df877ecfea99a/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "5cd82d86efbdc542"
+  },
+  "schema/cca2567b2da0b0c7/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "0055756863b2257a"
+  },
+  "schema/cdc03574cad5f404/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "8693caac211fcedc"
+  },
+  "schema/d03269aec02c4b5e/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "88565b151e4da4d7"
+  },
+  "schema/d237427c76179d04/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "7421a88e3e8b6437"
+  },
+  "schema/d27501edb2e211c4/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "73f6d0c4791819f0"
+  },
+  "schema/d2c7e9d4b59643ed/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "e3c51abc8fa9335f"
+  },
+  "schema/d2ef31ef6c62720a/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "acab413c495c4e12"
+  },
+  "schema/d3add07c643cb8af/closed_members": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "0d169eb6c80160f9"
+  },
+  "schema/d3add07c643cb8af/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "4b2c8b174aed2342"
+  },
+  "schema/d3b3ce67f2b3cbaf/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "4ace9127a277d789"
+  },
+  "schema/d67d98296a834cb4/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "b4c92f2ed649727a"
+  },
+  "schema/d7f4eabd194b120a/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "8f940fe37f409a0a"
+  },
+  "schema/da12c74ce6120bd9/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "ca440f68840e1c30"
+  },
+  "schema/da1d5c313cb54876/maxItems": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "8fa463a1158c1056"
+  },
+  "schema/da9ac2ff087ad862/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "822415aeae06b15a"
+  },
+  "schema/da9ef42ae6033545/minItems": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "e24005ddb146f739"
+  },
+  "schema/db5700392975718f/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "24d0843614be6b5c"
+  },
+  "schema/dd637d6177bc0395/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "c2675fa9a58f5982"
+  },
+  "schema/dd89a8ba12461e58/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "f48098c452c00de9"
+  },
+  "schema/ddeba1b5b29090b9/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "3c6fb2a4f1fe568d"
+  },
+  "schema/df1e2717128dbb82/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "cb2f874647275dad"
+  },
+  "schema/df268cd8416a787f/required": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "90ffe0dd514b7094"
+  },
+  "schema/df67ee1b06898b7b/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "23e78935a570c1ed"
+  },
+  "schema/dfcff94417f7fb1a/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "5add0bc2893c3cb9"
+  },
+  "schema/e073aee707c04a23/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "e5c89e0ed8717c49"
+  },
+  "schema/e1ee39b979d8f239/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "6d53e7d36f8e1489"
+  },
+  "schema/e22c1023554dfd4f/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "f45bb534758f36d3"
+  },
+  "schema/e304ca550aa36346/minItems": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "dc2074049280d589"
+  },
+  "schema/e31f9371dcda7aff/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "db07c4ae9d2a7539"
+  },
+  "schema/e5eb0db69fca564d/closed_members": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "174e8ae9e916c131"
+  },
+  "schema/e5eb0db69fca564d/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "ed768c815ad2b857"
+  },
+  "schema/e606e07d3af97d3f/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "863080dcf7b7f219"
+  },
+  "schema/e718b5042c897bbe/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "d99fac5b75a7971b"
+  },
+  "schema/e7bc520ea14ea3a4/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "5bb5409548d6ad33"
+  },
+  "schema/e816bffb28d7d7dc/const": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "5bf207d1415c6976"
+  },
+  "schema/e816bffb28d7d7dc/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "b067c8d8a56f0acc"
+  },
+  "schema/e973dfee1334b4f4/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "fe2028182e53e846"
+  },
+  "schema/ec3d4b2eaf6273fd/closed_members": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "9f09b5f9ec300e0d"
+  },
+  "schema/ec3d4b2eaf6273fd/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "f1eb9c917b38b367"
+  },
+  "schema/ed2c8894e2c6058c/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "9ce8c106a98e43f8"
+  },
+  "schema/ed4f1101d2273ee4/enum": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "eacab9afc672fa53"
+  },
+  "schema/ed4f1101d2273ee4/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "a35364bf3d129925"
+  },
+  "schema/edfb579156aabd3e/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "e2359d0552d5675e"
+  },
+  "schema/ee57e450933a6833/oneOf": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "4fa5fe54f5d70c8a"
+  },
+  "schema/f0197a14e08805bb/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "d73ce98ea2deebcd"
+  },
+  "schema/f0b0d7e22ae14872/const": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "8d01ce3a6806b2f0"
+  },
+  "schema/f15e4ba23b8f0e29/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "baa3835d72b06c3d"
+  },
+  "schema/f184837a9f2dc8c5/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "ad45eb7b7a2564ec"
+  },
+  "schema/f1a74b6f683987eb/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "4ad0a20ad539ee7c"
+  },
+  "schema/f2c2703ea9d94312/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "e5d378593ee7b23d"
+  },
+  "schema/f2e5813130689ad9/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "2e92352424d2223a"
+  },
+  "schema/f3798b529dfb1fc6/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "d1f7cea76b3f348b"
+  },
+  "schema/f3f609b1eae87082/closed_members": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "1912cedf483cd3f6"
+  },
+  "schema/f3f609b1eae87082/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "0ef870f5b9ce47fe"
+  },
+  "schema/f4123702fb976e26/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "1bff19f2361e2963"
+  },
+  "schema/f4187c59ff853331/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "18583b2473b87ab8"
+  },
+  "schema/f4220bd15cdc83f9/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "f6e8242387c71935"
+  },
+  "schema/f4db82f20eb9e83b/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "c7adf3c936d4967a"
+  },
+  "schema/f669a6f32c57a842/const": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "8564ea01697df29f"
+  },
+  "schema/f85138585c76dae3/enum": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "52791c966ab0c7d4"
+  },
+  "schema/f85138585c76dae3/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "59ca37580fee7031"
+  },
+  "schema/f89dc0e6a07bc71f/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "05f862001cb40563"
+  },
+  "schema/f8f3d67cb780e386/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "469b8d245d9f0e95"
+  },
+  "schema/f93b4276db4f9a52/const": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "e3d2b68a0f6fb37a"
+  },
+  "schema/fa6a6ca921d74a91/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "fa32a57a81d79030"
+  },
+  "schema/fa9032500b8e0838/enum": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "bb75297b6fa43d95"
+  },
+  "schema/fb60180b5154a853/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "2fcd9caf2f1c1deb"
+  },
+  "schema/fbe677e228589def/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "ab4f0b0aa0b5f994"
+  },
+  "schema/fd3637b296c06cf2/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "1d361f977b872aaa"
+  },
+  "schema/fd4b90bea60b8c56/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "6e1fba010ac1e3e1"
+  },
+  "schema/fec87205d963cfe0/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "04030d4195d0a5b3"
+  },
+  "schema/fed52c03332b1390/minLength": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "b8e63d82962c55a6"
+  },
+  "schema/fed52c03332b1390/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "7e99da4422c5e89d"
+  },
+  "schema/ff3847d2fa30555b/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "4f95cefcc7c0da61"
+  },
+  "schema/ff7aacdaca789877/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "ab50e2bf57cf9242"
+  },
+  "schema/ffff8082cfd8205f/type": {
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        57
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        458
+      ]
+    ],
+    "table": "2349f66f8210e8e3"
+  },
+  "schema/references": {
+    "sites": [
+      [
+        "scripts/pm_goal_history_reader_fixtures.py",
+        259
+      ]
+    ],
+    "table": "16e0f3162f459964"
+  },
+  "source/actual_token": {
+    "sites": [
+      [
+        "scripts/pm_goal_history_reader_fixtures.py",
+        92
+      ]
+    ],
+    "table": "d0e9277aba7dc9dc"
+  },
+  "source/authorized": {
+    "sites": [
+      [
+        "scripts/pm_goal_history_reader_fixtures.py",
+        66
+      ]
+    ],
+    "table": "42f3ee779f3d881f"
+  },
+  "source/final_fence": {
+    "sites": [
+      [
+        "scripts/pm_goal_history_reader_fixtures.py",
+        93
+      ]
+    ],
+    "table": "2c5843e8890b1c2a"
+  },
+  "source/frame_verified": {
+    "sites": [
+      [
+        "scripts/pm_goal_history_reader_fixtures.py",
+        66
+      ]
+    ],
+    "table": "8fd7e4d9fb7f4db6"
+  },
+  "source/full_original": {
+    "sites": [
+      [
+        "scripts/pm_goal_own_d_oracles.py",
+        423
+      ]
+    ],
+    "table": "c68399e044af007f"
+  },
+  "source/index_key": {
+    "sites": [
+      [
+        "scripts/pm_goal_history_reader_fixtures.py",
+        68
+      ]
+    ],
+    "table": "7019b7aee3055221"
+  },
+  "source/owner/authorized": {
+    "sites": [
+      [
+        "scripts/pm_goal_own_d_oracles.py",
+        422
+      ]
+    ],
+    "table": "6a2ccfdc8147e9dc"
+  },
+  "source/owner/captured_fence": {
+    "sites": [
+      [
+        "scripts/pm_goal_own_d_oracles.py",
+        422
+      ]
+    ],
+    "table": "721c6a5d6ec61cb8"
+  },
+  "source/owner/event": {
+    "sites": [
+      [
+        "scripts/pm_goal_own_d_oracles.py",
+        422
+      ]
+    ],
+    "table": "a074e929c43571c9"
+  },
+  "source/owner/final_fence": {
+    "sites": [
+      [
+        "scripts/pm_goal_own_d_oracles.py",
+        422
+      ]
+    ],
+    "table": "b128dbd506e7a918"
+  },
+  "source/owner/frame_verified": {
+    "sites": [
+      [
+        "scripts/pm_goal_own_d_oracles.py",
+        422
+      ]
+    ],
+    "table": "92258fd40e4b6e6c"
+  },
+  "source/owner/index_key": {
+    "sites": [
+      [
+        "scripts/pm_goal_own_d_oracles.py",
+        422
+      ]
+    ],
+    "table": "5b427b2e2005ea3c"
+  },
+  "source/owner/members": {
+    "sites": [
+      [
+        "scripts/pm_goal_own_d_oracles.py",
+        420
+      ]
+    ],
+    "table": "014380ee70420517"
+  },
+  "source/owner/reader_available": {
+    "sites": [
+      [
+        "scripts/pm_goal_own_d_oracles.py",
+        422
+      ]
+    ],
+    "table": "9ab05a8e9766d5c1"
+  },
+  "source/owner/retained": {
+    "sites": [
+      [
+        "scripts/pm_goal_own_d_oracles.py",
+        422
+      ]
+    ],
+    "table": "9e6e6a1bd4298c49"
+  },
+  "source/owner/secret_safe": {
+    "sites": [
+      [
+        "scripts/pm_goal_own_d_oracles.py",
+        422
+      ]
+    ],
+    "table": "8632be4caeff4dfc"
+  },
+  "source/owner/token": {
+    "sites": [
+      [
+        "scripts/pm_goal_own_d_oracles.py",
+        422
+      ]
+    ],
+    "table": "fc83fc68837b2ba8"
+  },
+  "source/owner/translation_verified": {
+    "sites": [
+      [
+        "scripts/pm_goal_own_d_oracles.py",
+        422
+      ]
+    ],
+    "table": "d49cd7fa24660302"
+  },
+  "source/reader_available": {
+    "sites": [
+      [
+        "scripts/pm_goal_history_reader_fixtures.py",
+        66
+      ]
+    ],
+    "table": "f799cbdfc771842a"
+  },
+  "source/retained": {
+    "sites": [
+      [
+        "scripts/pm_goal_history_reader_fixtures.py",
+        66
+      ]
+    ],
+    "table": "0a39b924a837d1f9"
+  },
+  "source/secret_safe": {
+    "sites": [
+      [
+        "scripts/pm_goal_history_reader_fixtures.py",
+        66
+      ]
+    ],
+    "table": "2cff5814a9cfe33b"
+  },
+  "source/translation_verified": {
+    "sites": [
+      [
+        "scripts/pm_goal_history_reader_fixtures.py",
+        66
+      ]
+    ],
+    "table": "bd19a3f9b3853886"
+  },
+  "source/unchanged_event": {
+    "sites": [
+      [
+        "scripts/pm_goal_history_reader_fixtures.py",
+        91
+      ]
+    ],
+    "table": "fe77e84cc6d9cb52"
+  },
+  "stopped/original/child_settlement_refs": {
+    "sites": [
+      [
+        "scripts/pm_goal_own_d_oracles.py",
+        406
+      ]
+    ],
+    "table": "c6da7030ff211fc3"
+  },
+  "stopped/original/interruption_boundary": {
+    "sites": [
+      [
+        "scripts/pm_goal_own_d_oracles.py",
+        406
+      ]
+    ],
+    "table": "1ba4b89bf5138539"
+  },
+  "stopped/original/resumable": {
+    "sites": [
+      [
+        "scripts/pm_goal_own_d_oracles.py",
+        406
+      ]
+    ],
+    "table": "a0ec0637e3250cb3"
+  },
+  "stopped/original/safe_point_ref": {
+    "sites": [
+      [
+        "scripts/pm_goal_own_d_oracles.py",
+        406
+      ]
+    ],
+    "table": "c41a0770e365b374"
+  },
+  "stopped/original/tool_settlement_refs": {
+    "sites": [
+      [
+        "scripts/pm_goal_own_d_oracles.py",
+        406
+      ]
+    ],
+    "table": "a9654c8f5928a5aa"
+  },
+  "stopped/provenance_members": {
+    "sites": [
+      [
+        "scripts/pm_goal_own_d_oracles.py",
+        384
+      ]
+    ],
+    "table": "82085626dabb3c7e"
+  },
+  "tool_check_recorded/original/check_kind": {
+    "sites": [
+      [
+        "scripts/pm_goal_own_d_oracles.py",
+        406
+      ]
+    ],
+    "table": "44a13897e74747a2"
+  },
+  "tool_check_recorded/original/check_result": {
+    "sites": [
+      [
+        "scripts/pm_goal_own_d_oracles.py",
+        406
+      ]
+    ],
+    "table": "3fe01b4f4ddacdff"
+  },
+  "tool_check_recorded/original/policy_decision": {
+    "sites": [
+      [
+        "scripts/pm_goal_own_d_oracles.py",
+        406
+      ]
+    ],
+    "table": "6e8d72562147ff22"
+  },
+  "tool_check_recorded/original/tool_call_id": {
+    "sites": [
+      [
+        "scripts/pm_goal_own_d_oracles.py",
+        406
+      ]
+    ],
+    "table": "41f93ad84e1e3372"
+  },
+  "tool_check_recorded/original/tool_name": {
+    "sites": [
+      [
+        "scripts/pm_goal_own_d_oracles.py",
+        406
+      ]
+    ],
+    "table": "59edd63b3f7271cd"
+  },
+  "tool_check_recorded/provenance_members": {
+    "sites": [
+      [
+        "scripts/pm_goal_own_d_oracles.py",
+        384
+      ]
+    ],
+    "table": "072ed393080a7ce1"
+  },
+  "translation/original_cursor": {
+    "sites": [
+      [
+        "scripts/pm_goal_own_d_oracles.py",
+        437
+      ]
+    ],
+    "table": "4cbcf089c50c2f8e"
+  },
+  "translation/original_value": {
+    "sites": [
+      [
+        "scripts/pm_goal_own_d_oracles.py",
+        439
+      ]
+    ],
+    "table": "3fdea4152929157b"
+  },
+  "translation/selected_cursor": {
+    "sites": [
+      [
+        "scripts/pm_goal_own_d_oracles.py",
+        438
+      ]
+    ],
+    "table": "10798d1fd41033b6"
+  },
+  "translation/selected_value": {
+    "sites": [
+      [
+        "scripts/pm_goal_own_d_oracles.py",
+        440
+      ]
+    ],
+    "table": "d0a636e9ce713749"
+  }
+}

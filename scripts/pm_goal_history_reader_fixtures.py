@@ -5,12 +5,13 @@ Synthetic lawful-original fixtures test the conditional retained-reader contract
 they assert no actual admitted historical writer or native execution.
 """
 from __future__ import annotations
+from pm_goal_time import instant
 import base64
 import datetime
 import copy
 import sys
 from pathlib import Path
-from pm_goal_oracle_common import Audit, Gates, ROOT, load, validator, schema_registry, sha, semantic_digest, print_result, materialize_cases, integer_number, same_json_value
+from pm_goal_oracle_common import Audit, Gates, ROOT, load, validator, schema_registry, sha, semantic_digest, print_result, materialize_cases, retained_integer_number as integer_number, same_json_value
 
 PLANS = ROOT / 'Plans'
 OUT_SCHEMA = PLANS / 'goal_history_reader_outputs.schema.json'
@@ -115,7 +116,7 @@ def original_row_guards(ev,p,old,g):
   g.require('row/scheduled_edge',pre in {'created','paused','blocked','stopped'} and post=='scheduled')
   if pre in {'blocked','stopped'}:g.require('row/scheduled_recovery',bool(facts['recovery_receipt_ref']))
   if b['next_action']=='dispatch':
-   g.require('row/scheduled_time',datetime.datetime.fromisoformat(b['eligible_at_utc'].replace('Z','+00:00'))<=datetime.datetime.fromisoformat(ev['observed_at_utc'].replace('Z','+00:00')))
+   g.require('row/scheduled_time',instant(b['eligible_at_utc'])<=instant(ev['observed_at_utc']))
    g.require('row/scheduled_budget',type(facts['remaining_budget']) in (int,float) and facts['remaining_budget']>0)
    g.require('row/scheduled_permission',facts['permission_decision']=='allow')
    g.require('row/scheduled_writer',facts['storage_posture']=='writer')
@@ -254,10 +255,13 @@ def main():
     except ValueError:errors={'schema/references'}
    finally:common.load=old_load
    reference_cache[cache_key]=errors
-  return reference_cache[cache_key]
+  gate=Gates(disabled)
+  gate.require('schema/references',not reference_cache[cache_key])
+  return gate.errors
  audit.case('schema/resolved_all_refs',reference_guard,out_doc,True)
  dangling=copy.deepcopy(out_doc);dangling['$defs']['unused_dangling_ref']={'$ref':'#/$defs/DOES_NOT_EXIST'}
  audit.case('schema/unused_dangling_ref',reference_guard,dangling,False)
+ audit.case('current_writer/read_control',append_guards,{'mode':'read'},True)
  result=audit.run();result['families']=counts
  return print_result(result,sys.argv)
 if __name__=='__main__':sys.exit(main())
