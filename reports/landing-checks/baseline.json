@@ -256,7 +256,6 @@
     "3a148e9930cd",
     "41f4e93fb130",
     "47b0783cbeb0",
-    "48bc205c65de",
     "4f5e8df4e0a2",
     "4fdbe63645ba",
     "520d7ae4511e",
@@ -267,6 +266,7 @@
     "5c832a1ef684",
     "64392ff7cf25",
     "67573257f635",
+    "6acabd43590a",
     "6afb48172bc6",
     "6c2e3b7acc2a",
     "6da0d97c81fa",
@@ -1661,7 +1661,7 @@
  ],
  "checks": {
   "audit-governance": {
-   "failure_total": 6406,
+   "failure_total": 6407,
    "status": "fail",
    "subchecks": {
     "audit_closure": {
@@ -1674,8 +1674,8 @@
      "sampled": 100
     },
     "implementation_readiness": {
-     "exported": 130,
-     "reported": 130,
+     "exported": 131,
+     "reported": 131,
      "sampled": 100
     },
     "plan_graph": {
@@ -1704,7 +1704,7 @@
    }
   },
   "run-gates": {
-   "failure_total": 6407,
+   "failure_total": 6408,
    "status": "fail",
    "subchecks": {
     "json_syntax": {
@@ -1721,8 +1721,8 @@
      "sampled": 50
     },
     "validate_implementation_readiness": {
-     "exported": 130,
-     "reported": 130,
+     "exported": 131,
+     "reported": 131,
      "sampled": 50
     },
     "validate_plan_graph": {
@@ -1741,7 +1741,7 @@
    }
   }
  },
- "commit": "83d1c6128b246f127895117183a3b3e5d7a9933e",
+ "commit": "4a1911e8096f3c9a4ffe347e13acf0b9ac9415dd",
  "export_buckets": [
   {
    "check": "audit-governance",
@@ -1776,7 +1776,7 @@
   },
   {
    "check": "audit-governance",
-   "count": 100,
+   "count": 101,
    "error": "event_authority_currentness_source_drift",
    "fingerprints": [
     "006050d34ec8",
@@ -1821,6 +1821,7 @@
     "5c832a1ef684",
     "64392ff7cf25",
     "67573257f635",
+    "6acabd43590a",
     "6afb48172bc6",
     "6c2e3b7acc2a",
     "6da0d97c81fa",
@@ -2018,7 +2019,7 @@
   },
   {
    "check": "run-gates",
-   "count": 100,
+   "count": 101,
    "error": "event_authority_currentness_source_drift",
    "fingerprints": [
     "006050d34ec8",
@@ -2063,6 +2064,7 @@
     "5c832a1ef684",
     "64392ff7cf25",
     "67573257f635",
+    "6acabd43590a",
     "6afb48172bc6",
     "6c2e3b7acc2a",
     "6da0d97c81fa",
@@ -2249,8 +2251,8 @@
   },
   "schema_id": "pm.landing_check.readiness_audit_inputs.v1"
  },
- "recorded_at_utc": "2026-11-15T03:53:20Z",
- "run_dir": "Plans/.plan_migration/pds-20261115-001-current-planunit-snapshot",
+ "recorded_at_utc": "2026-11-15T07:18:56Z",
+ "run_dir": "Plans/.plan_migration/pds-20261115-002-current-planunit-snapshot",
  "schema_id": "pm.landing_check.baseline.v1",
  "untracked_inputs": [
   "tests/agent_packet_restrictions"
