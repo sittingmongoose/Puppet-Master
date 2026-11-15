@@ -1,29 +1,6 @@
 {
  "changed_during_run": [],
- "clause_totals": {
-  "own_a": {
-   "alternative": 506,
-   "clauses": 1961,
-   "co_located": 210,
-   "distinct": 618,
-   "distinct_isolated": 473,
-   "isolated": 1106,
-   "together": 25,
-   "unreached": 114
-  },
-  "own_b": {
-   "alternative": 1669,
-   "clauses": 4972,
-   "co_located": 298,
-   "distinct": 1800,
-   "distinct_isolated": 1239,
-   "isolated": 1710,
-   "together": 454,
-   "unreached": 841
-  }
- },
  "evidence": {
-  "clause-coverage.json": "c28f752e4e943638c04a6d48466075e5c0564698347ef1a3d094b5de58333c51",
   "ledger.json": "792d22ff130f8b5ddf2a7b51b94672fac6809f2579c97a40141be25ef169e3e7",
   "own_a-calls.json.gz": "f9f7f5de20a1e979abab47216089e6f820b8881a8fefb7f442c3c689f395b678",
   "own_a-inputs.pickle.gz": "c8c62156c1ff3c8d579200d3b307033c0843b2c65980eb9bce4f07fc64f3ba0e",
@@ -171,6 +148,8 @@
   "own_b_103.json.gz": "7da2cc72dd3ffb5079917b761ddb649eccd42d6c2baf7f90f34a46dac661552f",
   "own_b_104.json.gz": "49c0da43a9639250f035ed28072888c6782970e4f80927ee2c5e789077c6782a",
   "retained-store-snapshots.json": "9d66652431e23e183c7f6ac9e85e70c0fb6971590c6896707b2ce91d8f845c0c",
+  "schema-closure-own_a.json": "785eecf3fe1b436e5cc0fd76d13df2b7ddaf853847bc15cce4bdb4188c94965c",
+  "schema-closure-own_b.json": "09d2124e237710e8c986b79986130639673b229e43496af963199ede38771e3f",
   "summary.json": "ff50089c60a6400d95568dedf6ca434d726f90fd47d175fbc5bf093e8dec92f9",
   "tables.json": "d50ec0e3facdea8026abaf06930ada7edad42a024cd678ae76815293a7508a57"
  },
@@ -193,6 +172,10 @@
    "retained_store_owner_race_changes": 10,
    "retained_store_reads": 330,
    "rows": 120,
+   "schema_clauses_covered_later": 258,
+   "schema_clauses_killed": 1206,
+   "schema_uncovered": 0,
+   "schema_uncovered_list": [],
    "source": "own_b",
    "tool_proved": 100
   },
@@ -213,6 +196,10 @@
    "retained_store_owner_race_changes": 20,
    "retained_store_reads": 665,
    "rows": 173,
+   "schema_clauses_covered_later": 646,
+   "schema_clauses_killed": 3075,
+   "schema_uncovered": 0,
+   "schema_uncovered_list": [],
    "source": "own_b",
    "tool_proved": 149
   },
@@ -234,6 +221,10 @@
    "retained_store_owner_race_changes": 0,
    "retained_store_reads": 56,
    "rows": 150,
+   "schema_clauses_covered_later": 332,
+   "schema_clauses_killed": 1236,
+   "schema_uncovered": 0,
+   "schema_uncovered_list": [],
    "source": "own_a",
    "tool_proved": 136
   },
@@ -255,12 +246,46 @@
    "retained_store_owner_race_changes": 0,
    "retained_store_reads": 56,
    "rows": 142,
+   "schema_clauses_covered_later": 330,
+   "schema_clauses_killed": 1230,
+   "schema_uncovered": 0,
+   "schema_uncovered_list": [],
    "source": "own_a",
    "tool_proved": 128
   }
  },
  "native_execution": "NOT_RUN",
  "runner": "scripts/pm-goal-gc-guard-tables.py",
+ "schema_closure": {
+  "own_a": {
+   "distinct": {
+    "COVERED_LATER": 103,
+    "KILLED": 551,
+    "SELECTOR_OR_NEGATED": 19
+   },
+   "occurrences": {
+    "COVERED_LATER": 359,
+    "KILLED": 1561,
+    "SELECTOR_OR_NEGATED": 55
+   }
+  },
+  "own_b": {
+   "distinct": {
+    "COVERED_LATER": 384,
+    "KILLED": 1559,
+    "SELECTOR_OR_NEGATED": 33,
+    "UNREACHABLE": 8,
+    "VACUOUS": 11
+   },
+   "occurrences": {
+    "COVERED_LATER": 838,
+    "KILLED": 4006,
+    "SELECTOR_OR_NEGATED": 91,
+    "UNREACHABLE": 12,
+    "VACUOUS": 24
+   }
+  }
+ },
  "schema_id": "pm.pnc019.c12_gc.core.v1",
  "source_bindings": {
   "scripts/pm-goal-gc-guard-tables.py": "8b5e11d4f0451295f7ae1b7b542a501634b8bbaf79ca7aceb15920bb8e55a357",

@@ -4,7 +4,7 @@
 
 - **Branch:** `plans/ea-pnc-c12-gc-20261114`.
   - Base: s3ao head `29169ee19e`, then `git merge --no-ff origin/plans/ea-pnc-s3d-20261114` at `181efe951e`, giving merge `e4d188a35f`. The merge had no conflicts.
-  - Lane commits: `010a4eb3e1` (scripts) and `977bef3268` (Plans fixtures and ATS-212/213), which is the assessed tree. The bundle commit follows them.
+  - Lane commits: `010a4eb3e1` (scripts), `977bef3268` (Plans fixtures and ATS-212/213), `2a1ec5ca10` (first bundle) and `37eb6f4f5e` (schema closure tool), which is the assessed tree. The closure bundle commit follows them.
 - **Worktree:** `/home/sittingmongoose/pm-worktrees/pnc-c12-gc`, sparse without `Plans/.audits`. It is kept until the lead says the lane has merged.
 - **Not done:**
   - no registry, Decision Log, Spec Lock, `.evidence` or `auto_decisions.jsonl` edit;
@@ -23,7 +23,7 @@
 | `goal.completed` | PARTIAL (s3a 9/12) | **PASS** | `P P P p p P P P P P P P` (10/12) | 173 (149 / 24 / 0) |
 
 - **Grade file:** `reports/event-authority-20261115/PNC019-C12-GC-grades.json`.
-  - Verify with `python3 scripts/pm-pnc019-s3a-grade-check.py reports/event-authority-20261115/PNC019-C12-GC-grades.json`: `pass`, 4 rows, 162 quotes, 20 files.
+  - Verify with `python3 scripts/pm-pnc019-s3a-grade-check.py reports/event-authority-20261115/PNC019-C12-GC-grades.json`: `pass`, 4 rows, 174 quotes, 21 files.
   - A changed vector fails at `goal_run.stopped: vector`.
 - **What was re-graded:** only criterion 12. The other cells are carried from s3a/s3ao (`goal.*`) and s3d (`goal_run.*`) with every quote re-anchored to this tree.
 - **Criteria 4 and 5 of goal.blocked/goal.completed** stay PARTIAL on s3a's registered-row basis. They turn at the S5b registry switch, which is not this lane's.
@@ -109,21 +109,40 @@ Each independently held copy is changed alone and refuses at its own join row:
 - **goal_run.*:** 18 and 20 cases. The envelope copy against the payload copy for the requested and effective account, actor, correlation, `occurred_at_utc` and idempotency key; the cause-owner copy against the payload copy for evidence, settlements, block receipt and preserved work; the frame receipt against the first-custody receipt.
 - **goal.*:** 13 and 26 cases. The source fence copy against the live owner fence (manual stop, permission, and the writer, root, maintenance, deletion, hold and secret epochs); the caller record against the source for decision, stop epoch, next attempt and Goal revision.
 
-## Owner-schema keywords (G2): the W3H whole-definition route
+## Schema closure
 
-The package schema checks are whole-definition rows: one gated row per definition. Each row runs the shared validator over the whole owner definition, with every keyword, owner formats, the shared date-time profiles, CV-1100 current integers and ECMA patterns. Each row is gated-proved with a real input-side witness, or justified.
+Every reachable assertion clause of every owner definition that a checker row validates now has a witness or a checked proof. `scripts/pm-goal-gc-schema-closure.py` runs each suite's complete calls and takes their accepted boundary instances as controls. It then closes each definition root through the exact validator object the row used (every keyword, owner formats, shared date-time profiles, CV-1100 current integers, ECMA patterns). The lead's standard is the one DG6A, DCW, DR and DS15 met.
 
-Covering evidence for each reachable assertion clause is in `reports/event-authority-20261115/PNC019-C12-GC-clauses.json`, from `scripts/pm-goal-gc-clause-coverage.py`. It counts clause occurrences per definition root:
+**Classes:**
+- **KILLED:** a valid control plus one single-field defect at the clause's own instance location. The definition refuses and reports the clause. With only that clause cut (the validator's own per-keyword disable context) it accepts, and restored it refuses again.
+- **COVERED_LATER:** the clause is reported, but with it cut another named clause still refuses. That clause is named in every entry. No kill credit.
+- **UNREACHABLE:** a checked proof that no valid instance reaches the clause. Here every such clause is an item clause of an array whose owner node has `maxItems: 0`.
+- **VACUOUS:** `minItems`, `minLength` or `minProperties` of 0, which can refuse nothing (checked on the owner node).
+- **Listed apart:** clauses inside an `if` (a selector) or a `not` (whose keyword is the assertion). These never refuse on their own; DG6A grants such selectors no scalar credit either.
 
-| Checker | Clause occurrences | Isolated | Union alternative | Co-located | Together | Unreached |
-|---|---:|---:|---:|---:|---:|---:|
-| DG-OWN-A | 1,961 (618 distinct) | 1,106 | 506 | 210 | 25 | 114 |
-| DG-OWN-B | 4,972 (1,800 distinct) | 1,710 | 1,669 | 298 | 454 | 841 |
+**Branch controls** reach the branches the fixtures leave unvisited: optional members, array items, anyOf/oneOf alternatives, and forced `if`/`then`/`else` conditions (with the object's other conditionals re-applied and a sibling enum switched when needed). Every branch control is accepted by the whole definition. They are schema-boundary controls only and earn no row or lifecycle credit.
 
-- **Not claimed:** per-keyword cut isolation, the same boundary W3H states.
-- **Together:** these clauses refuse only together with clauses at other nodes. Most are own-B `origin` conditional `then`/`else` branch clauses.
-- **Unreached:** these are alternative branches and definitions that no lawful instance of these families instantiates. For example: BodyControlV2's non-null pending and cancellation objects, the other origin kinds' branches, and nullable references' string branches.
-- The residue is listed clause by clause, not waived. If a reviewer requires an isolated witness per keyword occurrence, that residue is the remaining work.
+Counts are clause occurrences: each definition root is its own whole-definition row, so a shared definition counts once per root.
+
+| Checker | Roots | KILLED | COVERED_LATER (same node / other node) | UNREACHABLE | VACUOUS | if/not (apart) | **Uncovered** | Branch controls |
+|---|---:|---:|---|---:|---:|---:|---:|---:|
+| DG-OWN-A | 25 | 1,561 | 359 (339 / 20) | 0 | 0 | 55 | **0** | 449 |
+| DG-OWN-B | 54 | 4,006 | 838 (655 / 183) | 12 | 24 | 91 | **0** | 1,966 |
+
+- **Distinct clauses:** DG-OWN-A has 551 KILLED, 103 COVERED_LATER and 19 apart. DG-OWN-B has 1,559 KILLED, 384 COVERED_LATER, 8 UNREACHABLE, 11 VACUOUS and 33 apart.
+- **Per family:** every root the family reaches has 0 uncovered (`PNC019-C12-GC-core.json` `families.*.schema_*`).
+
+| Family | Schema clauses KILLED | COVERED_LATER | Uncovered |
+|---|---:|---:|---:|
+| goal_run.stopped | 1,230 | 330 | 0 |
+| goal_run.blocked | 1,236 | 332 | 0 |
+| goal.blocked | 1,206 | 258 | 0 |
+| goal.completed | 3,075 | 646 | 0 |
+
+- **COVERED_LATER, same node:** mostly a `type` beside an `enum`/`const`; `minLength`/`maxLength` beside a fixed-width hex `pattern`; uint64 bounds beside the CV-1100 storage `type`; `minLength` beside `format: date-time`.
+- **COVERED_LATER, other node:** a conditional `then`/`else` restating a base property (for example the Projection `lifecycle_status` branches that select a row-metadata definition), or a sibling union branch.
+- **Superseded:** the earlier occurrence census (`pm-goal-gc-clause-coverage.py`, `PNC019-C12-GC-clauses.json`) is replaced by this closure.
+- **Files:** `reports/event-authority-20261115/PNC019-C12-GC-schema-closure.json` holds every clause per root with its class. That is the witness (input SHA-256 prefix, edit, control kind), the named later clause, or the proof. The full outputs, with witness paths and branch-control hashes, are `schema-closure-own_a.json` and `schema-closure-own_b.json` in the evidence folder.
 
 ## Original suite replays
 
@@ -175,7 +194,7 @@ The s3ao conformance review (`reviews/PNC019-s3ao-c12-conformance/REVIEW.md`, G1
   - the `datetime` cases at `occurred_at_utc` (EventRecord profile), at stored `observed_at_utc`/`persisted_at_utc` (Storage UTC-Z), and at `acknowledged_at_utc` (EventRecord, E5-2).
 - **Retained reads.** Retained reads select the original only through its independently sealed receipt and installed recipe (`pm_goal_retained`). A read that refuses keeps the whole store; every read records the store before and after.
 - **Joins.** Each independently held copy is changed alone and refuses at its own join row.
-- **Schema keywords (G2).** The packages' schema checks are W3H whole-definition rows, each the shared validator over the whole owner definition with every keyword. `scripts/pm-goal-gc-clause-coverage.py` lists every reachable assertion clause per definition root as isolated, union alternative, co-located, together or unreached.
+- **Schema keywords (G2).** The packages' schema checks are whole-definition rows, each the shared validator over the whole owner definition with every keyword. `scripts/pm-goal-gc-schema-closure.py` closes every reachable assertion clause per definition root (see "Schema closure").
 
 ## s3ao parts relied on
 
@@ -202,16 +221,16 @@ None. Nothing was added under `tests/`, and `.gitignore` is untouched.
 
 All were run from the worktree under `systemd-run --user --scope -p MemoryMax=2G -p MemorySwapMax=0`, each after a check for at least 12 GiB available. The long runs used `long-job`.
 - `python3 scripts/pm-goal-gc-guard-tables.py --generate --out <evidence>/final`: exit 0, 13 min 18 s.
-- `python3 scripts/pm-goal-gc-clause-coverage.py --out <evidence>/clause-coverage.json`: exit 0.
-- `python3 scripts/pm-goal-gc-report.py --run <evidence>/final --clauses <evidence>/clause-coverage.json`: exit 0.
-- `python3 scripts/pm-goal-gc-grades.py --commit 977bef3268be99e898ed339d3dccad5693c544bd`, then `python3 scripts/pm-pnc019-s3a-grade-check.py reports/event-authority-20261115/PNC019-C12-GC-grades.json`: pass.
+- `python3 scripts/pm-goal-gc-schema-closure.py --source own_a --out <evidence>/schema-closure-own_a.json` (10 min) and `--source own_b --out <evidence>/schema-closure-own_b.json` (18 min): exit 0.
+- `python3 scripts/pm-goal-gc-report.py --run <evidence>/final --closure <evidence>/schema-closure-own_a.json --closure <evidence>/schema-closure-own_b.json`: exit 0.
+- `python3 scripts/pm-goal-gc-grades.py --commit 37eb6f4f5e9e2a6c0850454bfaa68770f9588a06`, then `python3 scripts/pm-pnc019-s3a-grade-check.py reports/event-authority-20261115/PNC019-C12-GC-grades.json`: pass, 4 rows, 174 quotes, 21 files.
 - `python3 scripts/pm_goal_own_a_oracles.py`, `pm_goal_own_b_oracles.py`, `pm_goal_lifecycle_successor_oracles.py`: exit 0. `pm_goal_run_stop_block_oracles.py` and `pm_goal_current_writer_oracles.py`: exit 1, from the private-audit diagnostics only.
 
 ## Evidence
 
 - **Folder:** `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/c12-gc/`, with `SHA256SUMS` over every file.
-- **Contents:** `final/`, the tool reports `tables/*.json.gz`, the calls, sealed inputs, ledger, store snapshots and summary; plus `clause-coverage.json`.
-- **Compact bundle:** `reports/event-authority-20261115/PNC019-C12-GC-{core,coverage,ledger,clauses,grades}.json`. This report is also at `reports/event-authority-20261115/PNC019-C12-GC.md`.
+- **Contents:** `final/`, the tool reports `tables/*.json.gz`, the calls, sealed inputs, ledger, store snapshots and summary; plus `schema-closure-own_a.json` and `schema-closure-own_b.json`. The superseded `clause-coverage.json` and the pre-justification `run5/` are kept for the record.
+- **Compact bundle:** `reports/event-authority-20261115/PNC019-C12-GC-{core,coverage,ledger,schema-closure,grades}.json`. This report is also at `reports/event-authority-20261115/PNC019-C12-GC.md`.
 
 ## For Jared
 

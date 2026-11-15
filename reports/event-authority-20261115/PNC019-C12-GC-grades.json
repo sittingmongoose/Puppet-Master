@@ -2,7 +2,7 @@
  "schema_id": "pm.pnc019.c12_gc.depth_grades.v1",
  "grade": "after",
  "assessed_tree": {
-  "commit": "977bef3268be99e898ed339d3dccad5693c544bd",
+  "commit": "37eb6f4f5e9e2a6c0850454bfaa68770f9588a06",
   "branch": "plans/ea-pnc-c12-gc-20261114",
   "note": "Grades the tree at this commit; the bundle and grade file are committed after it."
  },
@@ -324,55 +324,79 @@
     },
     "positive_negative_oracles": {
      "status": "PASS",
-     "finding": "Criterion-12 re-grade (PNC-019 C12-GC). Complete checker scripts/pm_goal_own_b_oracles.py with every owner predicate a named row of a generated phase table (at most 8 rows) decided only by that table; the gated tool 004bdedd63 ran on real observation vectors (controls from accepted complete calls, negatives from cut runs in which every other row of the phase was computed on the defective input). Family rows 120: 100 tool-proved, 20 justified singletons, 0 open. Negative cases 309 (declared targets from the suites): {\"cut_exception\": 12, \"cut_refuses_later\": 60, \"duplicate_set_kill\": 36, \"kill\": 201}; a kill needs the cut checker to accept and the restored checker to refuse with the same code; duplicate-set kills are counted apart. Shared number corpus and date-time corpus through this checker (121 cases), sealed-receipt retained reads (18 cases; 330 store observations, 0 changed), distinct-copy joins (13 cases). Whole-definition schema rows (W3H route) carry the clause coverage in PNC019-C12-GC-clauses.json. Native execution NOT_RUN.",
+     "finding": "Criterion-12 re-grade (PNC-019 C12-GC). Complete checker scripts/pm_goal_own_b_oracles.py with every owner predicate a named row of a generated phase table (at most 8 rows) decided only by that table; the gated tool 004bdedd63 ran on real observation vectors (controls from accepted complete calls, negatives from cut runs in which every other row of the phase was computed on the defective input). Family rows 120: 100 tool-proved, 20 justified singletons, 0 open. Negative cases 309 (declared targets from the suites): {\"cut_exception\": 12, \"cut_refuses_later\": 60, \"duplicate_set_kill\": 36, \"kill\": 201}; a kill needs the cut checker to accept and the restored checker to refuse with the same code; duplicate-set kills are counted apart. Shared number corpus and date-time corpus through this checker (121 cases), sealed-receipt retained reads (18 cases; 330 store observations, 0 changed), distinct-copy joins (13 cases). Schema closure over every whole-definition root the family reaches (PNC019-C12-GC-schema-closure.json): 1206 clause occurrences KILLED (clause cut accepts, restored refuses), 258 COVERED_LATER with the later clause named, 0 uncovered. Native execution NOT_RUN.",
      "evidence": [
       {
        "path": "reports/event-authority-20261115/PNC019-C12-GC-core.json",
-       "line_start": 184,
-       "line_end": 184,
+       "line_start": 163,
+       "line_end": 163,
        "quote": "\"open_rows\": 0",
        "excerpt_sha256": "8317e57fa00a2a5c08c3983d0f360aee93599e775e373a19a9da25b3a2f63522",
-       "file_sha256": "1a1532b63febece6f2b0a81b6a731f22e4fd327bb562f6f56481c602ea5948f6"
-      },
-      {
-       "path": "reports/event-authority-20261115/PNC019-C12-GC-core.json",
-       "line_start": 197,
-       "line_end": 197,
-       "quote": "\"tool_proved\": 100",
-       "excerpt_sha256": "48c6c7f1d916cdfad0711d150010c39b5d2c76461e4b39012df06192eb357027",
-       "file_sha256": "1a1532b63febece6f2b0a81b6a731f22e4fd327bb562f6f56481c602ea5948f6"
-      },
-      {
-       "path": "reports/event-authority-20261115/PNC019-C12-GC-core.json",
-       "line_start": 182,
-       "line_end": 182,
-       "quote": "\"justified_singletons\": 20",
-       "excerpt_sha256": "353dadc2d5eaa3e3f00979db201adba812ef3479dbb208897b91025fbc403172",
-       "file_sha256": "1a1532b63febece6f2b0a81b6a731f22e4fd327bb562f6f56481c602ea5948f6"
-      },
-      {
-       "path": "reports/event-authority-20261115/PNC019-C12-GC-core.json",
-       "line_start": 192,
-       "line_end": 192,
-       "quote": "\"retained_store_changed\": 0",
-       "excerpt_sha256": "ea30079af2d99f4651d5d68780dbb544fc91ebdd71219917e0f68896108b9757",
-       "file_sha256": "1a1532b63febece6f2b0a81b6a731f22e4fd327bb562f6f56481c602ea5948f6"
+       "file_sha256": "e80285e238733704a301da4580388233d987277d55cdee96cd1ff2784f5cfc06"
       },
       {
        "path": "reports/event-authority-20261115/PNC019-C12-GC-core.json",
        "line_start": 180,
        "line_end": 180,
-       "quote": "\"corpus_cases\": 121",
-       "excerpt_sha256": "871ac78907d95d1e0264791b27baaa0c066a1b7e356075ec96a188eda2f2ebbb",
-       "file_sha256": "1a1532b63febece6f2b0a81b6a731f22e4fd327bb562f6f56481c602ea5948f6"
+       "quote": "\"tool_proved\": 100",
+       "excerpt_sha256": "48c6c7f1d916cdfad0711d150010c39b5d2c76461e4b39012df06192eb357027",
+       "file_sha256": "e80285e238733704a301da4580388233d987277d55cdee96cd1ff2784f5cfc06"
       },
       {
        "path": "reports/event-authority-20261115/PNC019-C12-GC-core.json",
-       "line_start": 181,
-       "line_end": 181,
+       "line_start": 161,
+       "line_end": 161,
+       "quote": "\"justified_singletons\": 20",
+       "excerpt_sha256": "353dadc2d5eaa3e3f00979db201adba812ef3479dbb208897b91025fbc403172",
+       "file_sha256": "e80285e238733704a301da4580388233d987277d55cdee96cd1ff2784f5cfc06"
+      },
+      {
+       "path": "reports/event-authority-20261115/PNC019-C12-GC-core.json",
+       "line_start": 171,
+       "line_end": 171,
+       "quote": "\"retained_store_changed\": 0",
+       "excerpt_sha256": "ea30079af2d99f4651d5d68780dbb544fc91ebdd71219917e0f68896108b9757",
+       "file_sha256": "e80285e238733704a301da4580388233d987277d55cdee96cd1ff2784f5cfc06"
+      },
+      {
+       "path": "reports/event-authority-20261115/PNC019-C12-GC-core.json",
+       "line_start": 159,
+       "line_end": 159,
+       "quote": "\"corpus_cases\": 121",
+       "excerpt_sha256": "871ac78907d95d1e0264791b27baaa0c066a1b7e356075ec96a188eda2f2ebbb",
+       "file_sha256": "e80285e238733704a301da4580388233d987277d55cdee96cd1ff2784f5cfc06"
+      },
+      {
+       "path": "reports/event-authority-20261115/PNC019-C12-GC-core.json",
+       "line_start": 160,
+       "line_end": 160,
        "quote": "\"join_cases\": 13",
        "excerpt_sha256": "26e27d6df29f71209e2899b1b089a72b6125bd66999c1a3bb9780e3da6d22965",
-       "file_sha256": "1a1532b63febece6f2b0a81b6a731f22e4fd327bb562f6f56481c602ea5948f6"
+       "file_sha256": "e80285e238733704a301da4580388233d987277d55cdee96cd1ff2784f5cfc06"
+      },
+      {
+       "path": "reports/event-authority-20261115/PNC019-C12-GC-core.json",
+       "line_start": 177,
+       "line_end": 177,
+       "quote": "\"schema_uncovered\": 0",
+       "excerpt_sha256": "b239c37db1a429e840e6806a6e9f2332a5187afcede8e7e811c3269858c24feb",
+       "file_sha256": "e80285e238733704a301da4580388233d987277d55cdee96cd1ff2784f5cfc06"
+      },
+      {
+       "path": "reports/event-authority-20261115/PNC019-C12-GC-core.json",
+       "line_start": 176,
+       "line_end": 176,
+       "quote": "\"schema_clauses_killed\": 1206",
+       "excerpt_sha256": "722b5143279bba063c541ee1551b9e0f554847c772d7b09546eda03d105f62a9",
+       "file_sha256": "e80285e238733704a301da4580388233d987277d55cdee96cd1ff2784f5cfc06"
+      },
+      {
+       "path": "scripts/pm-goal-gc-schema-closure.py",
+       "line_start": 9,
+       "line_end": 9,
+       "quote": "with only that clause cut it ACCEPTS",
+       "excerpt_sha256": "2a0b2e74b32b269c3bfc6e6c6dd241d693e3db0e1998b4f40beb1d9ee4f86e21",
+       "file_sha256": "b347d3118e977922ed3f03a0b20423e73d83c5ab3528c5b62a85b8486cdcb833"
       },
       {
        "path": "scripts/pm-goal-gc-guard-tables.py",
@@ -719,55 +743,79 @@
     },
     "positive_negative_oracles": {
      "status": "PASS",
-     "finding": "Criterion-12 re-grade (PNC-019 C12-GC). Complete checker scripts/pm_goal_own_b_oracles.py with every owner predicate a named row of a generated phase table (at most 8 rows) decided only by that table; the gated tool 004bdedd63 ran on real observation vectors (controls from accepted complete calls, negatives from cut runs in which every other row of the phase was computed on the defective input). Family rows 173: 149 tool-proved, 24 justified singletons, 0 open. Negative cases 703 (declared targets from the suites): {\"cut_exception\": 30, \"cut_refuses_later\": 141, \"duplicate_set_kill\": 79, \"kill\": 453}; a kill needs the cut checker to accept and the restored checker to refuse with the same code; duplicate-set kills are counted apart. Shared number corpus and date-time corpus through this checker (242 cases), sealed-receipt retained reads (36 cases; 665 store observations, 0 changed), distinct-copy joins (26 cases). Whole-definition schema rows (W3H route) carry the clause coverage in PNC019-C12-GC-clauses.json. Native execution NOT_RUN.",
+     "finding": "Criterion-12 re-grade (PNC-019 C12-GC). Complete checker scripts/pm_goal_own_b_oracles.py with every owner predicate a named row of a generated phase table (at most 8 rows) decided only by that table; the gated tool 004bdedd63 ran on real observation vectors (controls from accepted complete calls, negatives from cut runs in which every other row of the phase was computed on the defective input). Family rows 173: 149 tool-proved, 24 justified singletons, 0 open. Negative cases 703 (declared targets from the suites): {\"cut_exception\": 30, \"cut_refuses_later\": 141, \"duplicate_set_kill\": 79, \"kill\": 453}; a kill needs the cut checker to accept and the restored checker to refuse with the same code; duplicate-set kills are counted apart. Shared number corpus and date-time corpus through this checker (242 cases), sealed-receipt retained reads (36 cases; 665 store observations, 0 changed), distinct-copy joins (26 cases). Schema closure over every whole-definition root the family reaches (PNC019-C12-GC-schema-closure.json): 3075 clause occurrences KILLED (clause cut accepts, restored refuses), 646 COVERED_LATER with the later clause named, 0 uncovered. Native execution NOT_RUN.",
      "evidence": [
+      {
+       "path": "reports/event-authority-20261115/PNC019-C12-GC-core.json",
+       "line_start": 187,
+       "line_end": 187,
+       "quote": "\"open_rows\": 0",
+       "excerpt_sha256": "8317e57fa00a2a5c08c3983d0f360aee93599e775e373a19a9da25b3a2f63522",
+       "file_sha256": "e80285e238733704a301da4580388233d987277d55cdee96cd1ff2784f5cfc06"
+      },
       {
        "path": "reports/event-authority-20261115/PNC019-C12-GC-core.json",
        "line_start": 204,
        "line_end": 204,
-       "quote": "\"open_rows\": 0",
-       "excerpt_sha256": "8317e57fa00a2a5c08c3983d0f360aee93599e775e373a19a9da25b3a2f63522",
-       "file_sha256": "1a1532b63febece6f2b0a81b6a731f22e4fd327bb562f6f56481c602ea5948f6"
-      },
-      {
-       "path": "reports/event-authority-20261115/PNC019-C12-GC-core.json",
-       "line_start": 217,
-       "line_end": 217,
        "quote": "\"tool_proved\": 149",
        "excerpt_sha256": "0b96bef27b229c956207296a6f02756d9cd7b36cf4c34d8d36babb6581d1d16c",
-       "file_sha256": "1a1532b63febece6f2b0a81b6a731f22e4fd327bb562f6f56481c602ea5948f6"
+       "file_sha256": "e80285e238733704a301da4580388233d987277d55cdee96cd1ff2784f5cfc06"
       },
       {
        "path": "reports/event-authority-20261115/PNC019-C12-GC-core.json",
-       "line_start": 202,
-       "line_end": 202,
+       "line_start": 185,
+       "line_end": 185,
        "quote": "\"justified_singletons\": 24",
        "excerpt_sha256": "9c40c59afcecac68237c43ae62be8f8c2a6748be6a7427a5b736539020434dd7",
-       "file_sha256": "1a1532b63febece6f2b0a81b6a731f22e4fd327bb562f6f56481c602ea5948f6"
+       "file_sha256": "e80285e238733704a301da4580388233d987277d55cdee96cd1ff2784f5cfc06"
       },
       {
        "path": "reports/event-authority-20261115/PNC019-C12-GC-core.json",
-       "line_start": 212,
-       "line_end": 212,
+       "line_start": 195,
+       "line_end": 195,
        "quote": "\"retained_store_changed\": 0",
        "excerpt_sha256": "ea30079af2d99f4651d5d68780dbb544fc91ebdd71219917e0f68896108b9757",
-       "file_sha256": "1a1532b63febece6f2b0a81b6a731f22e4fd327bb562f6f56481c602ea5948f6"
+       "file_sha256": "e80285e238733704a301da4580388233d987277d55cdee96cd1ff2784f5cfc06"
       },
       {
        "path": "reports/event-authority-20261115/PNC019-C12-GC-core.json",
-       "line_start": 200,
-       "line_end": 200,
+       "line_start": 183,
+       "line_end": 183,
        "quote": "\"corpus_cases\": 242",
        "excerpt_sha256": "84ae582eb62ca21a0b73934f5e5b395a18bdaa475dbbec8e1ec020fb0372a026",
-       "file_sha256": "1a1532b63febece6f2b0a81b6a731f22e4fd327bb562f6f56481c602ea5948f6"
+       "file_sha256": "e80285e238733704a301da4580388233d987277d55cdee96cd1ff2784f5cfc06"
+      },
+      {
+       "path": "reports/event-authority-20261115/PNC019-C12-GC-core.json",
+       "line_start": 184,
+       "line_end": 184,
+       "quote": "\"join_cases\": 26",
+       "excerpt_sha256": "818fcb7074a112d49c3e297d437b7ae67b1044aa0481544211b3e451c4cca08e",
+       "file_sha256": "e80285e238733704a301da4580388233d987277d55cdee96cd1ff2784f5cfc06"
       },
       {
        "path": "reports/event-authority-20261115/PNC019-C12-GC-core.json",
        "line_start": 201,
        "line_end": 201,
-       "quote": "\"join_cases\": 26",
-       "excerpt_sha256": "818fcb7074a112d49c3e297d437b7ae67b1044aa0481544211b3e451c4cca08e",
-       "file_sha256": "1a1532b63febece6f2b0a81b6a731f22e4fd327bb562f6f56481c602ea5948f6"
+       "quote": "\"schema_uncovered\": 0",
+       "excerpt_sha256": "b239c37db1a429e840e6806a6e9f2332a5187afcede8e7e811c3269858c24feb",
+       "file_sha256": "e80285e238733704a301da4580388233d987277d55cdee96cd1ff2784f5cfc06"
+      },
+      {
+       "path": "reports/event-authority-20261115/PNC019-C12-GC-core.json",
+       "line_start": 200,
+       "line_end": 200,
+       "quote": "\"schema_clauses_killed\": 3075",
+       "excerpt_sha256": "69479ed2e5e12b3d7dae57a4354fda86414bb4cfb1ac378768d4fe8da999cdf3",
+       "file_sha256": "e80285e238733704a301da4580388233d987277d55cdee96cd1ff2784f5cfc06"
+      },
+      {
+       "path": "scripts/pm-goal-gc-schema-closure.py",
+       "line_start": 9,
+       "line_end": 9,
+       "quote": "with only that clause cut it ACCEPTS",
+       "excerpt_sha256": "2a0b2e74b32b269c3bfc6e6c6dd241d693e3db0e1998b4f40beb1d9ee4f86e21",
+       "file_sha256": "b347d3118e977922ed3f03a0b20423e73d83c5ab3528c5b62a85b8486cdcb833"
       },
       {
        "path": "scripts/pm-goal-gc-guard-tables.py",
@@ -1323,55 +1371,79 @@
     },
     "positive_negative_oracles": {
      "status": "PASS",
-     "finding": "Criterion-12 re-grade (PNC-019 C12-GC). Complete checker scripts/pm_goal_own_a_oracles.py with every owner predicate a named row of a generated phase table (at most 8 rows) decided only by that table; the gated tool 004bdedd63 ran on real observation vectors (controls from accepted complete calls, negatives from cut runs in which every other row of the phase was computed on the defective input). Family rows 142: 128 tool-proved, 14 justified singletons, 0 open. Negative cases 363 (declared targets from the suites): {\"cut_exception\": 10, \"cut_refuses_later\": 49, \"duplicate_set_kill\": 73, \"harness_only\": 1, \"kill\": 230}; a kill needs the cut checker to accept and the restored checker to refuse with the same code; duplicate-set kills are counted apart. Shared number corpus and date-time corpus through this checker (126 cases), sealed-receipt retained reads (10 cases; 56 store observations, 0 changed), distinct-copy joins (18 cases). Whole-definition schema rows (W3H route) carry the clause coverage in PNC019-C12-GC-clauses.json. Native execution NOT_RUN.",
+     "finding": "Criterion-12 re-grade (PNC-019 C12-GC). Complete checker scripts/pm_goal_own_a_oracles.py with every owner predicate a named row of a generated phase table (at most 8 rows) decided only by that table; the gated tool 004bdedd63 ran on real observation vectors (controls from accepted complete calls, negatives from cut runs in which every other row of the phase was computed on the defective input). Family rows 142: 128 tool-proved, 14 justified singletons, 0 open. Negative cases 363 (declared targets from the suites): {\"cut_exception\": 10, \"cut_refuses_later\": 49, \"duplicate_set_kill\": 73, \"harness_only\": 1, \"kill\": 230}; a kill needs the cut checker to accept and the restored checker to refuse with the same code; duplicate-set kills are counted apart. Shared number corpus and date-time corpus through this checker (126 cases), sealed-receipt retained reads (10 cases; 56 store observations, 0 changed), distinct-copy joins (18 cases). Schema closure over every whole-definition root the family reaches (PNC019-C12-GC-schema-closure.json): 1230 clause occurrences KILLED (clause cut accepts, restored refuses), 330 COVERED_LATER with the later clause named, 0 uncovered. Native execution NOT_RUN.",
      "evidence": [
       {
        "path": "reports/event-authority-20261115/PNC019-C12-GC-core.json",
-       "line_start": 245,
-       "line_end": 245,
+       "line_start": 236,
+       "line_end": 236,
        "quote": "\"open_rows\": 0",
        "excerpt_sha256": "8317e57fa00a2a5c08c3983d0f360aee93599e775e373a19a9da25b3a2f63522",
-       "file_sha256": "1a1532b63febece6f2b0a81b6a731f22e4fd327bb562f6f56481c602ea5948f6"
-      },
-      {
-       "path": "reports/event-authority-20261115/PNC019-C12-GC-core.json",
-       "line_start": 259,
-       "line_end": 259,
-       "quote": "\"tool_proved\": 128",
-       "excerpt_sha256": "be4e257a2d7d52ebd2bdb3525ab3e403b1556077071bd8faedfb21b1db59ce45",
-       "file_sha256": "1a1532b63febece6f2b0a81b6a731f22e4fd327bb562f6f56481c602ea5948f6"
-      },
-      {
-       "path": "reports/event-authority-20261115/PNC019-C12-GC-core.json",
-       "line_start": 243,
-       "line_end": 243,
-       "quote": "\"justified_singletons\": 14",
-       "excerpt_sha256": "df772be4099c82cc8e72b20e01d6f8c24a108657a294972be92e54129c251305",
-       "file_sha256": "1a1532b63febece6f2b0a81b6a731f22e4fd327bb562f6f56481c602ea5948f6"
+       "file_sha256": "e80285e238733704a301da4580388233d987277d55cdee96cd1ff2784f5cfc06"
       },
       {
        "path": "reports/event-authority-20261115/PNC019-C12-GC-core.json",
        "line_start": 254,
        "line_end": 254,
+       "quote": "\"tool_proved\": 128",
+       "excerpt_sha256": "be4e257a2d7d52ebd2bdb3525ab3e403b1556077071bd8faedfb21b1db59ce45",
+       "file_sha256": "e80285e238733704a301da4580388233d987277d55cdee96cd1ff2784f5cfc06"
+      },
+      {
+       "path": "reports/event-authority-20261115/PNC019-C12-GC-core.json",
+       "line_start": 234,
+       "line_end": 234,
+       "quote": "\"justified_singletons\": 14",
+       "excerpt_sha256": "df772be4099c82cc8e72b20e01d6f8c24a108657a294972be92e54129c251305",
+       "file_sha256": "e80285e238733704a301da4580388233d987277d55cdee96cd1ff2784f5cfc06"
+      },
+      {
+       "path": "reports/event-authority-20261115/PNC019-C12-GC-core.json",
+       "line_start": 245,
+       "line_end": 245,
        "quote": "\"retained_store_changed\": 0",
        "excerpt_sha256": "ea30079af2d99f4651d5d68780dbb544fc91ebdd71219917e0f68896108b9757",
-       "file_sha256": "1a1532b63febece6f2b0a81b6a731f22e4fd327bb562f6f56481c602ea5948f6"
+       "file_sha256": "e80285e238733704a301da4580388233d987277d55cdee96cd1ff2784f5cfc06"
       },
       {
        "path": "reports/event-authority-20261115/PNC019-C12-GC-core.json",
-       "line_start": 241,
-       "line_end": 241,
+       "line_start": 232,
+       "line_end": 232,
        "quote": "\"corpus_cases\": 126",
        "excerpt_sha256": "d1e151d6b1cbf54c136f452cf0d629bb905039b6b96082ccd2ce621cefb3216b",
-       "file_sha256": "1a1532b63febece6f2b0a81b6a731f22e4fd327bb562f6f56481c602ea5948f6"
+       "file_sha256": "e80285e238733704a301da4580388233d987277d55cdee96cd1ff2784f5cfc06"
       },
       {
        "path": "reports/event-authority-20261115/PNC019-C12-GC-core.json",
-       "line_start": 242,
-       "line_end": 242,
+       "line_start": 233,
+       "line_end": 233,
        "quote": "\"join_cases\": 18",
        "excerpt_sha256": "6ae7bf8c389a22e6023d07af8fb91ff671e84e4e0693e79beb548b1224510f59",
-       "file_sha256": "1a1532b63febece6f2b0a81b6a731f22e4fd327bb562f6f56481c602ea5948f6"
+       "file_sha256": "e80285e238733704a301da4580388233d987277d55cdee96cd1ff2784f5cfc06"
+      },
+      {
+       "path": "reports/event-authority-20261115/PNC019-C12-GC-core.json",
+       "line_start": 251,
+       "line_end": 251,
+       "quote": "\"schema_uncovered\": 0",
+       "excerpt_sha256": "b239c37db1a429e840e6806a6e9f2332a5187afcede8e7e811c3269858c24feb",
+       "file_sha256": "e80285e238733704a301da4580388233d987277d55cdee96cd1ff2784f5cfc06"
+      },
+      {
+       "path": "reports/event-authority-20261115/PNC019-C12-GC-core.json",
+       "line_start": 250,
+       "line_end": 250,
+       "quote": "\"schema_clauses_killed\": 1230",
+       "excerpt_sha256": "d05862f5fb3a10111fafa6813b7fa5094ca438e094cfa0dcad45336a6e705254",
+       "file_sha256": "e80285e238733704a301da4580388233d987277d55cdee96cd1ff2784f5cfc06"
+      },
+      {
+       "path": "scripts/pm-goal-gc-schema-closure.py",
+       "line_start": 9,
+       "line_end": 9,
+       "quote": "with only that clause cut it ACCEPTS",
+       "excerpt_sha256": "2a0b2e74b32b269c3bfc6e6c6dd241d693e3db0e1998b4f40beb1d9ee4f86e21",
+       "file_sha256": "b347d3118e977922ed3f03a0b20423e73d83c5ab3528c5b62a85b8486cdcb833"
       },
       {
        "path": "scripts/pm-goal-gc-guard-tables.py",
@@ -1906,55 +1978,79 @@
     },
     "positive_negative_oracles": {
      "status": "PASS",
-     "finding": "Criterion-12 re-grade (PNC-019 C12-GC). Complete checker scripts/pm_goal_own_a_oracles.py with every owner predicate a named row of a generated phase table (at most 8 rows) decided only by that table; the gated tool 004bdedd63 ran on real observation vectors (controls from accepted complete calls, negatives from cut runs in which every other row of the phase was computed on the defective input). Family rows 150: 136 tool-proved, 14 justified singletons, 0 open. Negative cases 368 (declared targets from the suites): {\"cut_exception\": 10, \"cut_refuses_later\": 50, \"duplicate_set_kill\": 73, \"harness_only\": 1, \"kill\": 234}; a kill needs the cut checker to accept and the restored checker to refuse with the same code; duplicate-set kills are counted apart. Shared number corpus and date-time corpus through this checker (126 cases), sealed-receipt retained reads (10 cases; 56 store observations, 0 changed), distinct-copy joins (20 cases). Whole-definition schema rows (W3H route) carry the clause coverage in PNC019-C12-GC-clauses.json. Native execution NOT_RUN.",
+     "finding": "Criterion-12 re-grade (PNC-019 C12-GC). Complete checker scripts/pm_goal_own_a_oracles.py with every owner predicate a named row of a generated phase table (at most 8 rows) decided only by that table; the gated tool 004bdedd63 ran on real observation vectors (controls from accepted complete calls, negatives from cut runs in which every other row of the phase was computed on the defective input). Family rows 150: 136 tool-proved, 14 justified singletons, 0 open. Negative cases 368 (declared targets from the suites): {\"cut_exception\": 10, \"cut_refuses_later\": 50, \"duplicate_set_kill\": 73, \"harness_only\": 1, \"kill\": 234}; a kill needs the cut checker to accept and the restored checker to refuse with the same code; duplicate-set kills are counted apart. Shared number corpus and date-time corpus through this checker (126 cases), sealed-receipt retained reads (10 cases; 56 store observations, 0 changed), distinct-copy joins (20 cases). Schema closure over every whole-definition root the family reaches (PNC019-C12-GC-schema-closure.json): 1236 clause occurrences KILLED (clause cut accepts, restored refuses), 332 COVERED_LATER with the later clause named, 0 uncovered. Native execution NOT_RUN.",
      "evidence": [
       {
        "path": "reports/event-authority-20261115/PNC019-C12-GC-core.json",
-       "line_start": 224,
-       "line_end": 224,
+       "line_start": 211,
+       "line_end": 211,
        "quote": "\"open_rows\": 0",
        "excerpt_sha256": "8317e57fa00a2a5c08c3983d0f360aee93599e775e373a19a9da25b3a2f63522",
-       "file_sha256": "1a1532b63febece6f2b0a81b6a731f22e4fd327bb562f6f56481c602ea5948f6"
+       "file_sha256": "e80285e238733704a301da4580388233d987277d55cdee96cd1ff2784f5cfc06"
       },
       {
        "path": "reports/event-authority-20261115/PNC019-C12-GC-core.json",
-       "line_start": 238,
-       "line_end": 238,
+       "line_start": 229,
+       "line_end": 229,
        "quote": "\"tool_proved\": 136",
        "excerpt_sha256": "09c1be818f555de503a4608cb87e839e12a27b144fa89297b7473b4de56d04fa",
-       "file_sha256": "1a1532b63febece6f2b0a81b6a731f22e4fd327bb562f6f56481c602ea5948f6"
+       "file_sha256": "e80285e238733704a301da4580388233d987277d55cdee96cd1ff2784f5cfc06"
       },
       {
        "path": "reports/event-authority-20261115/PNC019-C12-GC-core.json",
-       "line_start": 222,
-       "line_end": 222,
+       "line_start": 209,
+       "line_end": 209,
        "quote": "\"justified_singletons\": 14",
        "excerpt_sha256": "df772be4099c82cc8e72b20e01d6f8c24a108657a294972be92e54129c251305",
-       "file_sha256": "1a1532b63febece6f2b0a81b6a731f22e4fd327bb562f6f56481c602ea5948f6"
-      },
-      {
-       "path": "reports/event-authority-20261115/PNC019-C12-GC-core.json",
-       "line_start": 233,
-       "line_end": 233,
-       "quote": "\"retained_store_changed\": 0",
-       "excerpt_sha256": "ea30079af2d99f4651d5d68780dbb544fc91ebdd71219917e0f68896108b9757",
-       "file_sha256": "1a1532b63febece6f2b0a81b6a731f22e4fd327bb562f6f56481c602ea5948f6"
+       "file_sha256": "e80285e238733704a301da4580388233d987277d55cdee96cd1ff2784f5cfc06"
       },
       {
        "path": "reports/event-authority-20261115/PNC019-C12-GC-core.json",
        "line_start": 220,
        "line_end": 220,
-       "quote": "\"corpus_cases\": 126",
-       "excerpt_sha256": "d1e151d6b1cbf54c136f452cf0d629bb905039b6b96082ccd2ce621cefb3216b",
-       "file_sha256": "1a1532b63febece6f2b0a81b6a731f22e4fd327bb562f6f56481c602ea5948f6"
+       "quote": "\"retained_store_changed\": 0",
+       "excerpt_sha256": "ea30079af2d99f4651d5d68780dbb544fc91ebdd71219917e0f68896108b9757",
+       "file_sha256": "e80285e238733704a301da4580388233d987277d55cdee96cd1ff2784f5cfc06"
       },
       {
        "path": "reports/event-authority-20261115/PNC019-C12-GC-core.json",
-       "line_start": 221,
-       "line_end": 221,
+       "line_start": 207,
+       "line_end": 207,
+       "quote": "\"corpus_cases\": 126",
+       "excerpt_sha256": "d1e151d6b1cbf54c136f452cf0d629bb905039b6b96082ccd2ce621cefb3216b",
+       "file_sha256": "e80285e238733704a301da4580388233d987277d55cdee96cd1ff2784f5cfc06"
+      },
+      {
+       "path": "reports/event-authority-20261115/PNC019-C12-GC-core.json",
+       "line_start": 208,
+       "line_end": 208,
        "quote": "\"join_cases\": 20",
        "excerpt_sha256": "ef5efb245d0dcb4a9aa005d6f70df27fc246e84dc81f4522aea680aca47cd6ee",
-       "file_sha256": "1a1532b63febece6f2b0a81b6a731f22e4fd327bb562f6f56481c602ea5948f6"
+       "file_sha256": "e80285e238733704a301da4580388233d987277d55cdee96cd1ff2784f5cfc06"
+      },
+      {
+       "path": "reports/event-authority-20261115/PNC019-C12-GC-core.json",
+       "line_start": 226,
+       "line_end": 226,
+       "quote": "\"schema_uncovered\": 0",
+       "excerpt_sha256": "b239c37db1a429e840e6806a6e9f2332a5187afcede8e7e811c3269858c24feb",
+       "file_sha256": "e80285e238733704a301da4580388233d987277d55cdee96cd1ff2784f5cfc06"
+      },
+      {
+       "path": "reports/event-authority-20261115/PNC019-C12-GC-core.json",
+       "line_start": 225,
+       "line_end": 225,
+       "quote": "\"schema_clauses_killed\": 1236",
+       "excerpt_sha256": "09ee977fd58f6543ff7c7e67e24d264ef13082879449076381ab92b2bcf279d7",
+       "file_sha256": "e80285e238733704a301da4580388233d987277d55cdee96cd1ff2784f5cfc06"
+      },
+      {
+       "path": "scripts/pm-goal-gc-schema-closure.py",
+       "line_start": 9,
+       "line_end": 9,
+       "quote": "with only that clause cut it ACCEPTS",
+       "excerpt_sha256": "2a0b2e74b32b269c3bfc6e6c6dd241d693e3db0e1998b4f40beb1d9ee4f86e21",
+       "file_sha256": "b347d3118e977922ed3f03a0b20423e73d83c5ab3528c5b62a85b8486cdcb833"
       },
       {
        "path": "scripts/pm-goal-gc-guard-tables.py",
