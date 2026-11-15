@@ -88,10 +88,19 @@ def _top_parts(text: str, separator: str) -> list[str]:
 def _media_values(q: str) -> set[bool]:
     """Possible truth values; uncertainty is kept rather than hiding a live rule."""
     q = q.strip()
+    # A query list is the OR of its comma-separated queries, and a comma binds loosest: `not print and (hover:none),
+    # screen` is (not (print and (hover:none))) or screen (PM7PERF-LINT-MEDIA-NOT: the `not` was taken first and
+    # negated the whole list, so the screen arm's live rules were never examined).
+    arms = _top_parts(q, ',')
+    if len(arms) > 1:
+        vals = set()
+        for arm in arms:
+            vals = {a or b for a in (vals or {False}) for b in _media_values(arm)} if vals else _media_values(arm)
+        return vals
     # A media-type prefix's `not` negates the entire query, including its `and` condition.
     if re.match(r'^not\s+[a-z][\w-]*(?:\s|$)', q):
         return {not v for v in _media_values(q[4:])}
-    for word in (',', 'or', 'and'):
+    for word in ('or', 'and'):
         parts = _top_parts(q, word)
         if len(parts) > 1:
             vals = _media_values(parts[0])

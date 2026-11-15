@@ -71,6 +71,12 @@ class InvalidationSetsTests(unittest.TestCase):
         self.assertEqual(len(self.problems('@supports (display:grid) { @layer ui { .card:hover * {color:red} } }')), 1)
         self.assertEqual(self.problems('@keyframes loop { from {opacity:0} to {opacity:1} }'), [])
 
+    # PM7PERF-LINT-MEDIA-NOT (R11 F1): a comma binds loosest; `not <type>` negates its own query, not the list
+    def test_media_not_type_inside_a_list(self):
+        self.assertEqual(len(self.problems('@media not print and (hover:none), screen { .card:hover * {color:red} }')), 1)
+        self.assertEqual(len(self.problems('@media screen, not print and (hover:none) { .card:hover * {color:red} }')), 1)
+        self.assertEqual(self.problems('@media not screen, print { .card:hover * {color:red} }'), [])
+
 
 if __name__ == '__main__':
     unittest.main()
