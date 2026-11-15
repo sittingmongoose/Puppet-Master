@@ -1,7 +1,8 @@
 // Expanded real-page selector census. Uses rail_layer's review extras without replacing any builder.
 // browser-check run <this file> --config <kit config> --set page=<build URL> --set bundle=<review JSON> --set out=<JSON>
 import {readFileSync,writeFileSync} from 'node:fs';
-import {installRailReview,visitExpandedRails} from './rail_expanded_states.mjs';
+import {installRailReview,visitExpandedRails,bundleMismatch} from './rail_expanded_states.mjs';
+import {pageSource} from '../../../pm7-tools/browser-check/helpers/built-source.mjs';
 import {pickerLook,visitCursorPickers} from './cursor_picker_states.mjs';
 import {muteSound} from '../../../pm7-tools/browser-check/helpers/quiet-page.mjs';
 const RULES=JSON.parse(readFileSync(new URL('./active_descendant_rules.json',import.meta.url),'utf8')).rules;
@@ -28,18 +29,12 @@ const FORCE = [
   { attr: ['aria-selected', 'true'], sel: '[role="option"], .pm51-popout-item' },
 ];
 FORCE.push({cls:'o55np-cur-over',sel:'.pmr-cur'},{cls:'is-current',sel:'.pmr-cur'},{attr:['aria-selected','true'],sel:'.pmr-cur'});
-export default async function(t){
- await t.viewport(1920,1080);await muteSound(t.page);await t.emulate({reducedMotion:'no-preference'});
- const actualRules=t.args.rules?JSON.parse(readFileSync(String(t.args.rules),'utf8')).rules:RULES;
- const page=await t.app.open({query:'pm-warm=0',sandbox:false});
- await installRailReview(page,JSON.parse(readFileSync(String(t.args.bundle),'utf8')));
- const result={page:t.args.page,states:[],maxMatches:{},totalMatches:{},features:{},rawInherited:{},rawRestoreMax:{},rawStyleDifferences:[],mismatches:[],errors:[]};
- const save=()=>writeFileSync(String(t.args.out),JSON.stringify(result,null,1)+'\n');
- const check=async meta=>{
-  const rows=await page.evaluate(([rules,force,decls])=>{
+// In the page: every rule's original and replacement matches, as the page is and under forcing (exported for
+// active_descendant_forcing.selftest.check.mjs)
+export const CENSUS_ROWS=([rules,force,decls])=>{
    const added=[],attrs=[];
    const describe=e=>{const path=[];for(let n=e;n&&path.length<4;n=n.parentElement)path.push(n.tagName.toLowerCase()+(n.id?'#'+n.id:'')+(n.classList.length?'.'+[...n.classList].join('.'):''));return path.join(' < ')+(e.children.length?'':' ['+e.textContent.trim().slice(0,60)+']');};
-   const compare=forced=>rules.flatMap(r=>(r.variants||[r]).map((v,vi)=>{
+   const compare=(forced,only=null)=>rules.filter(r=>!only||r===only).flatMap(r=>(r.variants||[r]).map((v,vi)=>{
     const a=[...document.querySelectorAll(v.original)],b=r.omit?[]:[...document.querySelectorAll(v.replacement)],sa=new Set(a),sb=new Set(b);
     const missing=a.filter(e=>!sb.has(e)),extra=b.filter(e=>!sa.has(e));
     // A non-inherited old declaration (notably rule 10's animation) always needs a direct selector.
@@ -59,13 +54,44 @@ export default async function(t){
     return {rule:r.rule,variant:vi,forced,original:a.length,replacement:b.length,groups,raw,rawChanges,rawRestore,extra:extra.map(describe),omitted:!!r.omit};
    }));
    const rows=compare(false);
-   try{for(const f of force)for(const e of document.querySelectorAll(f.sel)){
+   const apply=(list,added,attrs)=>{for(const f of list)for(const e of document.querySelectorAll(f.sel)){
     if(f.cls&&!e.classList.contains(f.cls)){e.classList.add(f.cls);added.push([e,f.cls]);}
     if(f.attr&&e.getAttribute(f.attr[0])!==f.attr[1]){attrs.push([e,f.attr[0],e.getAttribute(f.attr[0])]);e.setAttribute(f.attr[0],f.attr[1]);}
-   }rows.push(...compare(true));}
-   finally{for(const[e,c]of added)e.classList.remove(c);for(const[e,k,v]of attrs.reverse())v===null?e.removeAttribute(k):e.setAttribute(k,v);}
+   }};
+   const undo=(added,attrs)=>{for(const[e,c]of added)e.classList.remove(c);for(const[e,k,v]of attrs.reverse())v===null?e.removeAttribute(k):e.setAttribute(k,v);};
+   try{apply(force,added,attrs);rows.push(...compare(true));}
+   finally{undo(added,attrs);}
+   // PM7PERF-CENSUS-FORCING (R27 F4): forcing every state at once lets one rule's forcing (.active, .selected,
+   // [aria-selected]) take an element out of another rule's :not(...) carrier for that pass. So each rule is also
+   // compared under only the forcings it names OUTSIDE a :not() (its own carrier states), one rule at a time; the
+   // all-at-once pass stays, so this only adds what a pass can see.
+   const bare=sel=>{let t=sel,prev;do{prev=t;t=t.replace(/:not\((?:[^()]|\([^()]*\))*\)/g,'');}while(t!==prev);return t;};
+   const token=f=>f.cls?'.'+f.cls:'['+f.attr[0]+'="'+f.attr[1]+'"]';
+   const names=(sel,tok)=>{const i=sel.indexOf(tok);return i>=0&&!/[\w-]/.test(sel[i+tok.length]||'');};
+   for(const r of rules){
+    if(r.omit)continue;
+    const text=(r.variants||[r]).map(v=>bare(v.original)).join(' , ');
+    const own=force.filter(f=>names(text,token(f)));
+    if(!own.length)continue;
+    const a2=[],t2=[];
+    try{apply(own,a2,t2);rows.push(...compare('own',r));}
+    finally{undo(a2,t2);}
+   }
    return rows;
-  },[actualRules,FORCE,DECLS]);
+  };
+export default async function(t){
+ await t.viewport(1920,1080);await muteSound(t.page);await t.emulate({reducedMotion:'no-preference'});
+ const actualRules=t.args.rules?JSON.parse(readFileSync(String(t.args.rules),'utf8')).rules:RULES;
+ const bundle=JSON.parse(readFileSync(String(t.args.bundle),'utf8'));
+ const differs=bundleMismatch(bundle,await pageSource(t));
+ await t.check('the review bundle was made from the commit the page was built from (its shared rail modules are in the page)',!differs.length,differs.length?differs.join('; ')+' (bundle head '+bundle.head+')':'00-core, 20-menu, 30-host, 90-boot identical; bundle head '+bundle.head);
+ if(differs.length)return;
+ const page=await t.app.open({query:'pm-warm=0',sandbox:false});
+ await installRailReview(page,bundle);
+ const result={page:t.args.page,states:[],maxMatches:{},totalMatches:{},features:{},rawInherited:{},rawRestoreMax:{},rawStyleDifferences:[],mismatches:[],errors:[]};
+ const save=()=>writeFileSync(String(t.args.out),JSON.stringify(result,null,1)+'\n');
+ const check=async meta=>{
+  const rows=await page.evaluate(CENSUS_ROWS,[actualRules,FORCE,DECLS]);
   const state={...meta,rules:rows.map(({rule,variant,forced,original,replacement})=>({rule,variant,forced,original,replacement}))};result.states.push(state);
   for(const row of rows){const r=row.rule;result.maxMatches[r]=Math.max(result.maxMatches[r]||0,row.original);result.totalMatches[r]=(result.totalMatches[r]||0)+row.original;
    for(const[k,n]of Object.entries(row.raw)){const raw=result.rawInherited[r]||={};raw[k]=(raw[k]||0)+n;}

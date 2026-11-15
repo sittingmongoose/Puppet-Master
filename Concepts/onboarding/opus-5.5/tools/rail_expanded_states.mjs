@@ -1,5 +1,8 @@
 // Reach every shipped rail view/detail. The review bundle comes from rail_layer's real review profile.
 // Two test-only references expose existing A/C instances; no DOM/marker writer is replaced.
+// The bundle's shared rail modules that the page under test does not carry verbatim (R27 F5): [] when they match;
+// a bundle made before the modules were recorded reads as unproven.
+export const bundleMismatch=(bundle,pageText)=>!bundle.shared||!Object.keys(bundle.shared).length?['the bundle records no shared modules (rebuild it with rail_expanded_prep.py)']:Object.entries(bundle.shared).filter(([,text])=>!pageText.includes(text.trim())).map(([name])=>name+' differs from the page');
 export async function installRailReview(page,bundle){
  await page.addStyleTag({content:bundle.css});await page.addScriptTag({content:bundle.js});
  await page.evaluate(()=>{window.__pmrExpandedAudit={queue:[],seen:new Set()};});await page.evaluate(installOriginalSelectorProbe);

@@ -79,11 +79,6 @@ export function summarise(trace, { url, allScripts = false } = {}) {
 		const end = e.ts + (e.dur || 0); if (end > t1) t1 = end;
 	}
 	const secs = Math.max(0.001, (t1 - t0) / 1e6);
-	// the renderer that holds the page: named by the trace's frame list, else the busiest renderer main thread
-	let rpid = null;
-	const frames = started?.args?.data?.frames || [];
-	const want = url ? frames.find((f) => f.url && f.url.split('?')[0] === url.split('?')[0] && !f.parent) || frames.find((f) => f.url && f.url.split('?')[0] === url.split('?')[0]) : null;
-	if (want) rpid = want.processId;
 	// time under each thread's outermost events: task events nest across categories, so summing them counts twice
 	const byThread = new Map();
 	{
@@ -99,6 +94,21 @@ export function summarise(trace, { url, allScripts = false } = {}) {
 			for (const e of a) { if (e.ts >= end) { sum += e.dur; end = e.ts + e.dur; } else if (e.ts + e.dur > end) { sum += e.ts + e.dur - end; end = e.ts + e.dur; } }
 			byThread.set(k, sum);
 		}
+	}
+	// the renderer that holds the page: named by the trace's frame list, else the busiest renderer main thread. The
+	// frame whose URL is exactly the page's (a load's cache-buster makes it unique) wins; else, among frames at the same
+	// address, the one whose renderer's main thread did the most (PM7PERF-FRAMETRACE-STALE-TOP: after a normal ->
+	// sandbox navigation in one browser the list still held the old top frame at that address, and preferring a top frame
+	// by address alone read its idle renderer: 0 main frames, where the live child frame had 289)
+	let rpid = null;
+	const frames = started?.args?.data?.frames || [];
+	if (url) {
+		const path = (u) => String(u).split(/[?#]/)[0];
+		const mainBusy = (p) => { let v = 0; for (const [k, us] of byThread) if (Number(k.split(':')[0]) === p && threads.get(k) === 'CrRendererMain') v = Math.max(v, us); return v; };
+		const exact = frames.filter((f) => f.url === url);
+		const same = exact.length ? exact : frames.filter((f) => f.url && path(f.url) === path(url));
+		const want = same.slice().sort((a, b) => mainBusy(b.processId) - mainBusy(a.processId) || (a.parent ? 1 : 0) - (b.parent ? 1 : 0))[0];
+		if (want) rpid = want.processId;
 	}
 	if (rpid == null) {
 		let best = 0;
@@ -119,9 +129,31 @@ export function summarise(trace, { url, allScripts = false } = {}) {
 	const mainKey = [...threads].find(([k, n]) => n === 'CrRendererMain' && Number(k.split(':')[0]) === rpid)?.[0];
 	const split = {}, other = new Map(); let frameMs = [], mainFrames = 0, styleCount = 0, layoutCount = 0, wholeLayouts = 0, styleElems = 0; const dispatched = {};
 	const scripts = new Map();
+	// What each main frame came to (PM7PERF-STILL-FRAMES-STARTS). A ProxyMain::BeginMainFrame is a frame START: Chrome
+	// runs the lifecycle and, when nothing changed, abandons it with an EarlyOut_NoUpdates instant inside it and commits
+	// nothing; a frame that commits holds a ProxyMain::BeginMainFrame::commit. Rendered = starts less the NoUpdates
+	// aborts, so a Chrome that stopped writing the abort event would read high (a false fail), never low. Any other early
+	// out (deferred, not visible) still counts as rendered and is named in `aborts`. Lane M's still-page traces on Alexis
+	// (2026-11-13): 282 starts, 216 NoUpdates, 66 commits in about 15 s; every start was one or the other.
+	let noUpdates = 0, commits = 0; const aborts = {};
 	if (mainKey) {
 		const [pid, tid] = mainKey.split(':').map(Number);
 		const evs = threadEvents(events, pid, tid);
+		{
+			const starts = evs.filter((e) => e.name === 'ProxyMain::BeginMainFrame');
+			const outs = [];
+			for (const e of events) {
+				if (e.pid !== pid || e.tid !== tid || typeof e.name !== 'string') continue;
+				if (e.name.startsWith('EarlyOut_') && e.ph !== 'M') outs.push(e);
+				else if (e.name === 'ProxyMain::BeginMainFrame::commit' && e.ph === 'X') commits++;
+			}
+			// one verdict per start: the first early out inside it (a start holds at most one)
+			for (const s of starts) {
+				const o = outs.find((x) => x.ts >= s.ts && x.ts <= s.ts + s.dur);
+				if (!o) continue;
+				if (o.name === 'EarlyOut_NoUpdates') noUpdates++; else aborts[o.name] = (aborts[o.name] || 0) + 1;
+			}
+		}
 		const { self } = selfTimes(evs);
 		for (const [name, us] of self) {
 			const g = groupOf(name); split[g] = (split[g] || 0) + us;
@@ -176,10 +208,14 @@ export function summarise(trace, { url, allScripts = false } = {}) {
 	return {
 		secs: r2(secs),
 		gpuPid: gpuPid ?? null,
+		// the page's renderer main thread these numbers are of (for frameStarts below)
+		renderer: mainKey ? { pid: Number(mainKey.split(':')[0]), tid: Number(mainKey.split(':')[1]) } : null,
 		cost,
 		split,
 		other: [...other].sort((a, b) => b[1] - a[1]).slice(0, 8).map(([n, us]) => [n, perSec(us)]),
-		mainFrames: { perSec: r1(mainFrames / secs), p50: r2(q(frameMs, 0.5)), p95: r2(q(frameMs, 0.95)), max: r2(frameMs[frameMs.length - 1] || 0) },
+		// perSec counts frame STARTS (what every check judged before 2026-11-15); renderedPerSec the starts that were not
+		// abandoned with nothing to update, noUpdatePerSec those that were, commitsPerSec the commit events themselves
+		mainFrames: { perSec: r1(mainFrames / secs), renderedPerSec: r1((mainFrames - noUpdates) / secs), noUpdatePerSec: r1(noUpdates / secs), commitsPerSec: r1(commits / secs), aborts, p50: r2(q(frameMs, 0.5)), p95: r2(q(frameMs, 0.95)), max: r2(frameMs[frameMs.length - 1] || 0) },
 		style: { perSec: r1(styleCount / secs), elementsPerSec: Math.round(styleElems / secs) },
 		layoutPerSec: r1(layoutCount / secs),
 		// layouts that started at the document's root rather than at a boundary inside it (a glyph's svg, a contained card)
@@ -194,6 +230,50 @@ export function summarise(trace, { url, allScripts = false } = {}) {
 		// [function@line:col of the built page, ms a second, calls a second]: the ten dearest, or every one with allScripts
 		scripts: [...scripts].sort((a, b) => b[1].ms - a[1].ms).slice(0, allScripts ? Infinity : 10).map(([k, v]) => [k, allScripts ? Math.round(v.ms / secs * 100) / 100 : r1(v.ms / secs), r1(v.n / secs)])
 	};
+}
+
+// What asked for each main frame START on one renderer main thread (`renderer`, from summarise), and what it came to:
+// [[what, starts, abandoned with nothing to update, rendered, ms]], most starts first. "What" is the first frame request
+// (LocalFrameView::ScheduleAnimation, ProxyMain::SetNeeds*, RequestAnimationFrame) after the previous start ended, else
+// the last one inside that start (a loop asking again from its own frame), named by the task around it: a timer, rAF,
+// idle callback or event with the innermost script function (function@line:col of the built page), an observer, or
+// 'in-frame' (asked from inside a frame: an animation ticking on the main thread, named by the element it restyled when
+// the trace has disabled-by-default-devtools.timeline.invalidationTracking). Diagnosis only: logged, never judged.
+const REQUESTS = new Set(['LocalFrameView::ScheduleAnimation', 'ProxyMain::SetNeedsAnimate', 'ProxyMain::SetNeedsUpdateLayers', 'ProxyMain::SetNeedsCommit', 'RequestAnimationFrame']);
+const TASKS = { TimerFire: 'timer', FireAnimationFrame: 'rAF', FireIdleCallback: 'idle', EventDispatch: 'event', 'ResizeObserverController::DeliverObservations': 'ResizeObserver', 'IntersectionObserverController::deliverNotifications': 'IntersectionObserver', 'MutationObserver::deliverMutations': 'MutationObserver', RunMicrotasks: 'microtask', 'ProxyMain::BeginMainFrame': 'in-frame' };
+export function frameStarts(events, renderer) {
+	if (!renderer) return [];
+	const xs = threadEvents(events, renderer.pid, renderer.tid);
+	const starts = xs.filter((e) => e.name === 'ProxyMain::BeginMainFrame');
+	const outs = events.filter((e) => e.pid === renderer.pid && e.tid === renderer.tid && e.name === 'EarlyOut_NoUpdates').map((e) => e.ts);
+	const reqs = xs.filter((e) => REQUESTS.has(e.name));
+	const invals = events.filter((e) => e.pid === renderer.pid && e.tid === renderer.tid && e.name === 'StyleRecalcInvalidationTracking' && /Animation/.test(e.args?.data?.reason || '')).sort((a, b) => a.ts - b.ts);
+	const around = (ts) => xs.filter((e) => e.ts <= ts && e.ts + e.dur >= ts && !REQUESTS.has(e.name));
+	const name = (ts) => {
+		const chain = around(ts);
+		const task = [...chain].reverse().find((e) => TASKS[e.name]);
+		if (!task) return 'no task';
+		const fn = [...chain].reverse().find((e) => e.name === 'FunctionCall' && e.ts >= task.ts);
+		const d = (e) => e.args?.data || {};
+		const kind = TASKS[task.name] + (task.name === 'EventDispatch' && d(task).type ? ' ' + d(task).type : '');
+		if (fn) return `${kind} ${d(fn).functionName || '(anonymous)'}@${d(fn).lineNumber ?? '?'}:${d(fn).columnNumber ?? '?'}`;
+		if (task.name !== 'ProxyMain::BeginMainFrame') return kind;
+		// with invalidation tracking on, the element an animation restyled in that frame names it
+		const inv = invals.find((e) => e.ts >= task.ts && e.ts <= task.ts + task.dur);
+		return inv ? `in-frame animation on ${String(inv.args.data.nodeName || '?').replace(/\s+/g, ' ').slice(0, 60)}` : 'in-frame';
+	};
+	const rows = new Map();
+	let prev = -Infinity, prevEnd = -Infinity;
+	for (const s of starts) {
+		const r = reqs.find((q) => q.ts >= prevEnd && q.ts < s.ts) || reqs.filter((q) => q.ts >= prev && q.ts < prevEnd).pop();
+		const what = r ? name(r.ts) : 'no request seen';
+		const row = rows.get(what) || [what, 0, 0, 0, 0];
+		row[1]++; row[4] += s.dur / 1000;
+		if (outs.some((t) => t >= s.ts && t <= s.ts + s.dur)) row[2]++; else row[3]++;
+		rows.set(what, row);
+		prev = s.ts; prevEnd = s.ts + s.dur;
+	}
+	return [...rows.values()].sort((a, b) => b[1] - a[1]).map((r) => [r[0], r[1], r[2], r[3], r2(r[4])]);
 }
 
 // Trace `ms` of whatever `during` does (or of nothing), and summarise it. One trace per window keeps each small.

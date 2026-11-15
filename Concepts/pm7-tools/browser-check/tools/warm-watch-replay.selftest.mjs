@@ -44,7 +44,51 @@ function adaptiveRows() {
  `)({ now: () => 100 });
 }
 
+// R18-4 (PM7PERF-WARMWATCH-BAR-IN-STEP), from the product's own functions: 16 steady watches at 8 ms, fourteen 30 ms
+// admission intervals (the window 16 x 8 + 14 x 30: median 8, slow bar 40), then a GPU step whose d1 is 60 ms. That
+// interval resets the count against the 40 ms bar and moves the median to 30, so the row logs slowMs 90; the queue rightly
+// watches the step. Ordinary 30 ms steps follow (16 watched, then unwatched).
+function inStepRows() {
+ const code = part('  const median = () => {', '  const pending = () =>') +
+  part('  const logStep = (st,', '  const tell = (st,') +
+  part('  const WATCH_KEEP = 16, STEADY_MS = 25;', '  /* the watch after a GPU step');
+ return new Function('performance', `
+  const warmDeltas = [], warmLog = [];
+  let warmLateAt = 0, watchClean = 0, watchResets = 0, watchUnseen = false, warmD1 = 0, warmD2 = 0;
+  ${code}
+  const gpu = (i, d1, d2, w) => {
+   const st = { owner: 'gpu', name: 'step' + i, at: i * 400 };
+   note(d1); note(d2);
+   const fm = [d1, d2];
+   if (watching()) { for (let j = 0; j < 7; j++) note(w); fm.push(w); watched(fm); }
+   else st.unwatched = true;
+   logStep(st, 0, fm, false, 'ran');
+  };
+  for (let i = 0; i < 30; i++) note(8);
+  for (let i = 0; i < 16; i++) { note(8); note(8); gpu(i, 8, 8, 8); }
+  for (let i = 0; i < 14; i++) note(30);
+  const before = { counter: watchClean, median: median(), bar: lateMs() };
+  gpu(16, 60, 30, 30);
+  const after = { counter: watchClean, median: median(), bar: lateMs(), resets: watchResets };
+  for (let i = 17; i < 42; i++) { note(30); note(30); gpu(i, 30, 30, 30); }
+  return { before, after, rows: warmLog };
+ `)({ now: () => 100 });
+}
+
 const CASES = [
+ ['R18-4 from the product: a d1 over the 40 ms bar resets the count inside the step that then logs a 90 ms bar', () => {
+  const p = inStepRows();
+  assert.deepEqual([p.before.counter, p.before.median, p.before.bar], [16, 8, 40], 'before the step: 16 watches, median 8, bar 40');
+  assert.equal(p.rows[16].watched, undefined, 'the queue watched the 60 ms step');
+  assert.deepEqual([p.rows[16].frameMs, p.rows[16].slowMs], [[60, 30, 30], 90], 'and its row logs the later 90 ms bar');
+  assert.equal(p.rows.at(-1).watched, false, '16 steady 30 ms watches later the watch is dropped');
+  console.log(`product before ${JSON.stringify(p.before)}, after the 60 ms step ${JSON.stringify(p.after)}, row ${JSON.stringify(p.rows[16])}`);
+  return p.rows;
+ }, { needless: 0, early: 0 }],
+	// control for it: the bar moved inside the step but every interval stayed under both bars, the count stood at 16, and
+	// the step was watched: needless, and still caught
+	['control: a bar that moved from 40 to 90 inside a watched step whose intervals met neither (the watch was not needed)',
+		() => log(watched(16).map((r) => ({ ...r, steadyMs: 25, slowMs: 40 })), step([30, 30, 30], { steadyMs: 45, slowMs: 90 })), { needless: 1, early: 0 }],
  ['product cadence 30ms with display sampled later at 120Hz: 16 watches then correctly unwatched', () => {
   const p = adaptiveRows();
   assert.equal(p.counter, 16); assert.equal(p.median, 30); assert.equal(p.rows.at(-1).watched, false);

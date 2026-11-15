@@ -27,7 +27,12 @@ hooks = [
 for old, new in hooks:
     assert js.count(old) == 1, (old, js.count(old))
     js = js.replace(old, new)
+# PM7PERF-CENSUS-FORCING (R27 F5): the head alone was recorded and nothing compared it with the page under test. The
+# published page carries these rail modules verbatim; the census requires each text in the page it judges, so a bundle
+# and a page from different commits fail instead of giving a clean-looking mixed result.
+SHARED = ['00-core.js', '20-menu.js', '30-host.js', '90-boot.js']
+shared = {name: (root / 'Concepts/leftrail-redesign/src/js' / name).read_text(encoding='utf-8') for name in SHARED}
 bundle = dict(head=subprocess.check_output(['git', 'rev-parse', 'HEAD'], cwd=root, text=True).strip(),
-              css=css, js=js, accessHooks=[old for old, _ in hooks], buildersUnchanged=True)
+              css=css, js=js, accessHooks=[old for old, _ in hooks], buildersUnchanged=True, shared=shared)
 args.out.write_text(json.dumps(bundle) + '\n')
 print(args.out, len(css), len(js), hashlib.sha256(args.out.read_bytes()).hexdigest())

@@ -71,6 +71,44 @@ class InvalidationSetsTests(unittest.TestCase):
         self.assertEqual(len(self.problems('@supports (display:grid) { @layer ui { .card:hover * {color:red} } }')), 1)
         self.assertEqual(self.problems('@keyframes loop { from {opacity:0} to {opacity:1} }'), [])
 
+    # PM7PERF-LINT-MEDIA-NOT (R11 F1): a comma binds loosest; `not <type>` negates its own query, not the list
+    def test_media_not_type_inside_a_list(self):
+        self.assertEqual(len(self.problems('@media not print and (hover:none), screen { .card:hover * {color:red} }')), 1)
+        self.assertEqual(len(self.problems('@media screen, not print and (hover:none) { .card:hover * {color:red} }')), 1)
+        self.assertEqual(self.problems('@media not screen, print { .card:hover * {color:red} }'), [])
+
+    # PM7PERF-LINT-ESCAPED-STATE (R12-2): escaped names are the names Chrome keys its sets on
+    def test_escaped_state_names(self):
+        self.assertEqual(len(self.problems(r'.card:hov\65 r * { color:red }')), 1)
+        self.assertEqual(len(self.problems(r'.card:HOVER * { color:red }')), 1)
+        self.assertEqual(len(self.problems(r'.card.pmh\-on * { color:red }')), 1)
+        self.assertEqual(len(self.problems(r'[aria\-selected="true"] * { color:red }')), 1)
+        self.assertEqual(len(self.problems(r'.card:hover .t\69 tle { color:red }')), 0)  # keyed on .title, escaped
+
+    # R51 F3: escapes decode in one pass; \5c is a literal backslash in the name, so ':\5c hover' is not :hover
+    def test_escape_decoded_once(self):
+        self.assertEqual(lint.css_unescape(r'\5c hover'), '\\hover')
+        self.assertEqual(lint.css_unescape(r'\\68 over'), '\\68 over')
+        self.assertEqual(lint.css_unescape(r'hov\65 r'), 'hover')
+        self.assertEqual(lint.css_unescape(r'pmh\-on'), 'pmh-on')
+        self.assertEqual(self.problems(r'.card:\5c hover * { color:red }'), [])
+        self.assertEqual(len(self.problems(r'.card:\68 over * { color:red }')), 1)
+
+    # PM7PERF-LINT-SCOPE-ROOT (R18-2): a scope root's (and limit's) state is the state of the rules inside
+    def test_scope_root_state(self):
+        self.assertEqual(len(self.problems('@scope (.card:hover) { * { color:red } }')), 1)
+        self.assertEqual(len(self.problems('@scope (.card) { :scope:hover * { color:red } }')), 1)
+        self.assertEqual(len(self.problems('@scope (.card) to (.slot:hover) { * { color:red } }')), 1)
+        self.assertEqual(len(self.problems('.list { @scope (.card:hover) { svg { color:red } } }')), 1)
+        self.assertEqual(self.problems('@scope (.card:hover) { .title { color:red } }'), [])
+
+    # PM7PERF-LINT-UPPERCASE-AT (R18-3): at-keywords are case-insensitive
+    def test_uppercase_at_rules(self):
+        self.assertEqual(len(self.problems('@MEDIA screen { .card:hover * { color:red } }')), 1)
+        self.assertEqual(len(self.problems('@Supports (display:grid) { .card:hover * { color:red } }')), 1)
+        self.assertEqual(len(self.problems('@LAYER ui { .card:hover * { color:red } }')), 1)
+        self.assertEqual(self.problems('@MEDIA (hover:none) { .card:hover * { color:red } }'), [])
+
 
 if __name__ == '__main__':
     unittest.main()

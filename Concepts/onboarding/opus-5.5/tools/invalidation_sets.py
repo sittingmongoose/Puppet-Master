@@ -56,13 +56,36 @@ def strip_comments(css: str) -> str:
 _DESKTOP = {'hover': 'hover', 'any-hover': 'hover', 'pointer': 'fine', 'forced-colors': 'none'}
 
 
+# CSS escapes (PM7PERF-LINT-ESCAPED-STATE): `.pmh\-on`, `:hov\65 r` and `[aria\-selected]` name .pmh-on, :hover and
+# [aria-selected] to Chrome, so names are decoded before they are matched. A hex escape is 1-6 hex digits and may end
+# with one whitespace character, which belongs to the escape (it never separates compounds).
+_ESC_IDENT = r'(?:\\[0-9a-fA-F]{1,6}(?:\r\n|[ \t\r\n\f])?|\\.|[\w-])+'
+
+
+def _esc_len(text: str, i: int) -> int:
+    """The length of the escape that starts at text[i] (a backslash)."""
+    m = re.match(r'\\(?:[0-9a-fA-F]{1,6}(?:\r\n|[ \t\r\n\f])?|.)', text[i:], re.S)
+    return m.end() if m else 1
+
+
+def css_unescape(name: str) -> str:
+    """Decode hex and one-character escapes in one pass: a decoded backslash (\\5c) is a literal character and is never
+    read again as the start of another escape (R51 F3: two passes turned '\\5c hover' into 'hover')."""
+    def one(m):
+        if m.group(1) is None:
+            return m.group(2)
+        v = int(m.group(1), 16)
+        return '\ufffd' if v == 0 or v > 0x10FFFF or 0xD800 <= v <= 0xDFFF else chr(v)
+    return re.sub(r'\\(?:([0-9a-fA-F]{1,6})(?:\r\n|[ \t\r\n\f])?|(.))', one, name, flags=re.S)
+
+
 def _top_parts(text: str, separator: str) -> list[str]:
     """Split at an unquoted, unescaped separator outside () and []; words need token boundaries."""
     out, start, i, depth, quote = [], 0, 0, 0, None
     while i < len(text):
         c = text[i]
         if c == '\\':
-            i += 2
+            i += _esc_len(text, i)
             continue
         if quote:
             if c == quote:
@@ -88,10 +111,19 @@ def _top_parts(text: str, separator: str) -> list[str]:
 def _media_values(q: str) -> set[bool]:
     """Possible truth values; uncertainty is kept rather than hiding a live rule."""
     q = q.strip()
+    # A query list is the OR of its comma-separated queries, and a comma binds loosest: `not print and (hover:none),
+    # screen` is (not (print and (hover:none))) or screen (PM7PERF-LINT-MEDIA-NOT: the `not` was taken first and
+    # negated the whole list, so the screen arm's live rules were never examined).
+    arms = _top_parts(q, ',')
+    if len(arms) > 1:
+        vals = set()
+        for arm in arms:
+            vals = {a or b for a in (vals or {False}) for b in _media_values(arm)} if vals else _media_values(arm)
+        return vals
     # A media-type prefix's `not` negates the entire query, including its `and` condition.
     if re.match(r'^not\s+[a-z][\w-]*(?:\s|$)', q):
         return {not v for v in _media_values(q[4:])}
-    for word in (',', 'or', 'and'):
+    for word in ('or', 'and'):
         parts = _top_parts(q, word)
         if len(parts) > 1:
             vals = _media_values(parts[0])
@@ -123,6 +155,26 @@ def _media_values(q: str) -> set[bool]:
 
 def media_inactive(prelude: str) -> bool:
     return _media_values(prelude[len('@media'):].strip().lower()) == {False}
+
+
+def _scoped(prelude: str, body: str, body_line: int, parent: str):
+    """`@scope (<root>) [to (<limit>)] { ... }`: a rule inside matches relative to the scope root, as if written
+    `:is(<root>) <rule>` (or with `:scope` / `&` standing for the root), so the root's state pseudo-classes write the same
+    sets a nested parent's do (PM7PERF-LINT-SCOPE-ROOT: the body was examined without its root, and `@scope (.card:hover)
+    { * {..} }` made the :hover set whole-subtree unseen). The limit's states change which elements match too, so the
+    body is examined under it as well (more sets, never fewer). With no root (a <style>'s parent) the body stands alone."""
+    m = re.match(r'@scope\s*(?:\((.*?)\))?\s*(?:to\s*\((.*)\))?\s*$', prelude, re.S | re.I)
+    roots = [x.strip() for x in (m.groups() if m else ()) if x and x.strip()]
+    if not roots:
+        yield from rules(body, body_line, parent)
+        return
+    for root in roots:
+        sels = split_top(root)
+        anchor = sels[0] if len(sels) == 1 else ':is(' + ', '.join(sels) + ')'
+        if parent:
+            anchor = parent + ' ' + anchor
+        scoped = re.sub(r':scope\b', '&', body, flags=re.I)
+        yield from rules(scoped, body_line, anchor)
 
 
 # Strings and escapes are atomic, so braces/commas/brackets inside attributes or strings are never delimiters.
@@ -177,9 +229,12 @@ def rules(css: str, base_line: int = 1, parent: str = ''):
         body = css[j + 1:end]
         if prelude.startswith('@'):
             match = re.match(r'@[\w-]+', prelude)
-            name = match.group() if match else ''
+            # at-keywords are ASCII case-insensitive (PM7PERF-LINT-UPPERCASE-AT: `@MEDIA` skipped its whole body)
+            name = match.group().lower() if match else ''
             if name in ('@media', '@supports', '@layer', '@container', '@scope', '@starting-style', '@document'):
-                if not (name == '@media' and media_inactive(prelude)):
+                if name == '@scope':
+                    yield from _scoped(prelude, body, body_line, parent)
+                elif not (name == '@media' and media_inactive(prelude.lower())):
                     yield from rules(body, body_line, parent)
         elif prelude and not prelude.startswith('--'):
             sels = []
@@ -212,8 +267,9 @@ def compounds(sel: str) -> list[tuple[str, str]]:
     while i < len(sel):
         c = sel[i]
         if c == '\\':
-            cur += sel[i:i + 2]
-            i += 2
+            k = _esc_len(sel, i)
+            cur += sel[i:i + k]
+            i += k
             continue
         if quote:
             cur += c
@@ -251,21 +307,22 @@ def simples(comp: str) -> list[tuple[str, str, str]]:
             i += m.end() if m else 1
             continue
         if re.match(r'[A-Za-z_\\-]', c) and not out:
-            m = re.match(r'(?:[\w-]+\|)?((?:\\.|[\w-])+)', comp[i:])
+            m = re.match(r'(?:[\w-]+\|)?(' + _ESC_IDENT + ')', comp[i:])
             if not m:
                 i += 1
                 continue
-            out.append(('tag', m.group(1).lower() if not re.search(r'[A-Z]', m.group(1)) else m.group(1), ''))
+            tag = css_unescape(m.group(1))
+            out.append(('tag', tag.lower() if not re.search(r'[A-Z]', tag) else tag, ''))
             i += m.end()
             continue
         if c == '#':
-            m = re.match(r'#((?:\\.|[\w-])+)', comp[i:])
-            out.append(('id', m.group(1) if m else '', ''))
+            m = re.match(r'#(' + _ESC_IDENT + ')', comp[i:])
+            out.append(('id', css_unescape(m.group(1)) if m else '', ''))
             i += m.end() if m else 1
             continue
         if c == '.':
-            m = re.match(r'\.((?:\\.|[\w-])+)', comp[i:])
-            out.append(('class', m.group(1) if m else '', ''))
+            m = re.match(r'\.(' + _ESC_IDENT + ')', comp[i:])
+            out.append(('class', css_unescape(m.group(1)) if m else '', ''))
             i += m.end() if m else 1
             continue
         if c == '[':
@@ -283,14 +340,14 @@ def simples(comp: str) -> list[tuple[str, str, str]]:
                     depth -= 1
                 j += 1
             inner = comp[i + 1:j - 1]
-            m = re.match(r'\s*(?:[\w-]*\|)?([\w-]+)', inner)
-            out.append(('attr', m.group(1).lower() if m else inner, inner))
+            m = re.match(r'\s*(?:[\w-]*\|)?(' + _ESC_IDENT + ')', inner)
+            out.append(('attr', css_unescape(m.group(1)).lower() if m else inner, inner))
             i = j
             continue
         if c == ':':
             element = comp[i:i + 2] == '::'
-            m = re.match(r'::?([\w-]+)', comp[i:])
-            name = m.group(1).lower() if m else ''
+            m = re.match(r'::?(' + _ESC_IDENT + ')', comp[i:])
+            name = css_unescape(m.group(1)).lower() if m else ''
             j = i + (m.end() if m else 1)
             arg = ''
             if j < n and comp[j] == '(':
@@ -567,14 +624,43 @@ _RESTORED_CURSOR_TAGS = {
        'linearGradient mask path polygon polyline rect stop svg text title use',
     6: 'b br circle div g i line path polygon polyline rect small span strong svg',
 }
-for _cursor_rule in json.loads(Path(__file__).with_name('active_descendant_rules.json').read_text())['rules']:
-    if _cursor_rule['rule'] in _RESTORED_CURSOR_TAGS:
-        _cursor_prefix, _cursor_arms = _cursor_rule['replacement'].rsplit(':where(', 1)
-        for _cursor_tag in _RESTORED_CURSOR_TAGS[_cursor_rule['rule']].split():
-            if _cursor_tag in _cursor_arms[:-1].split(','):
-                KNOWN[_cursor_prefix + ':where(' + _cursor_tag + ')'] = (
+# The approved carriers themselves, pinned by the SHA-256 of each rule's replacement prefix (the text before its last
+# :where(), main 6bd8294726 and 0d451b7ef4 alike). PM7PERF-LINT-CARRIERS-FROM-JSON (R26 F5): the prefix was read from the
+# rules JSON alone, so a carrier added there moved the excused selectors with it and the lint passed it. A prefix that
+# no longer hashes to its pin gets no exception, and the guard says so (CARRIER_DRIFT) beside the rows it then reports.
+_RESTORED_CURSOR_CARRIERS = {
+    0: '8351c262e24c42d8dd559389f90b2ace02114f3e8b63aaf2dca83b039e8309a3',
+    1: '658e5bec83ad9c8c32a022723fdd65e754c16fc45c0849e22b2dd369040dccef',
+    2: '2e6102f9ee262470c20b78f9fdd3c12280a4fd4e500586a51c79ae47d265da8e',
+    6: '4e0d1a7cd3b9924c76d1f1a7b11ca83e58f3a5764b1730e106b38c426ba37c10',
+}
+CARRIER_DRIFT: list[str] = []
+
+
+def restored_cursor_known(rules_json: dict) -> dict[str, str]:
+    """The PERF-R5 exceptions a rules JSON earns: main's restored tags under each pinned carrier; none for a carrier
+    whose prefix changed (named in CARRIER_DRIFT)."""
+    import hashlib
+    out = {}
+    for rule in rules_json['rules']:
+        if rule['rule'] not in _RESTORED_CURSOR_TAGS:
+            continue
+        prefix, arms = rule['replacement'].rsplit(':where(', 1)
+        digest = hashlib.sha256(prefix.encode()).hexdigest()
+        if digest != _RESTORED_CURSOR_CARRIERS[rule['rule']]:
+            CARRIER_DRIFT.append(f'PERF-R5 cursor rule {rule["rule"]}: its carrier (the replacement before its last :where(), '
+                                 f'sha256 {digest[:16]}) is not the approved one ({_RESTORED_CURSOR_CARRIERS[rule["rule"]][:16]}): '
+                                 'its restored-tag exception is withheld; a changed carrier needs a new review and pin')
+            continue
+        for tag in _RESTORED_CURSOR_TAGS[rule['rule']].split():
+            if tag in arms[:-1].split(','):
+                out[prefix + ':where(' + tag + ')'] = (
                     'PERF-R5: main cursor tag restored for generic carriers; guard rows main326/before0/after145; '
                     'see reviews/M-REPORT.md Seventh task and active_descendant_restore.test.mjs')
+    return out
+
+
+KNOWN.update(restored_cursor_known(json.loads(Path(__file__).with_name('active_descendant_rules.json').read_text())))
 
 CONCEPTS = Path(__file__).resolve().parents[3]
 SOURCE_ROOTS = ['onboarding/opus-5.5/src', 'onboarding/opus-5.5/base/style', 'leftrail-redesign/src',
@@ -642,9 +728,10 @@ def source_of(sel: str) -> str:
 
 def published_problems(page_text: str, known: dict | None = None) -> list[str]:
     """One problem per rule of the built page that makes a GUARDED set whole-subtree or tag-keyed, unless KNOWN."""
+    drift = known is None
     known = KNOWN if known is None else known
     res = census(page_text, list(GUARDED))
-    out, seen = [], set()
+    out, seen = (list(CARRIER_DRIFT) if drift else []), set()
     for tok in GUARDED:
         for bid, line, sel, kind, ft, sib in res.get(tok, []):
             if sel in known or (tok, sel) in seen:

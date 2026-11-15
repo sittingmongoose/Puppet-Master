@@ -16,7 +16,8 @@
 //   (a) STILL_AFTER + 3 s after the input: no endless animation is running in document.getAnimations() (the code
 //       editor's caret is exempt: it is a text cursor, in a closed shadow root no page rule reaches), every mark holds
 //       an endless loop (no stray mark), no finite animation is held; and, once no finite animation runs, the display
-//       compositor draws at most 15 frames a second (--set drawn=) and the main thread renders at most 10 (--set main=)
+//       compositor draws at most 15 frames a second (--set drawn=), the main thread renders at most 10 (--set main=:
+//       frame starts less those Chrome abandons with nothing to update) and starts at most 60 (--set starts=; Settings)
 //       in at least one of three 2 s traces (a toast leaving or a live update between them is not a loop). Usage shows
 //       live data (its numbers tween after each demo update, the demo engine ticks every 250 ms): its frames are logged
 //       with the script blocks that draw them, never judged; Home's dashboard is live too: its compositor frames are
@@ -48,8 +49,10 @@
 //
 // --set looks=<a,b|all>  default all ten; --set views=settings,dashboard,usage; --set after=<ms> (default 3000)
 // --set ms=<ms>          rest trace length (default 2000)
+// --set framesBy=1       diagnosis, off by default: each rest trace also says what asked for its main frame starts
+//                        (logged per try, and named in a failing frames row)
 // Runs on both surfaces (--set sandbox=0 and 1). Main's page (no still page) fails (a), (c), (e) and the 20 s cell.
-import { TRACE_CATEGORIES, summarise } from '../helpers/frame-trace.mjs';
+import { TRACE_CATEGORIES, summarise, frameStarts } from '../helpers/frame-trace.mjs';
 import { muteSound } from '../helpers/quiet-page.mjs';
 import { pageSource, blocksOf, blockAt } from '../helpers/built-source.mjs';
 import { writeFileSync, mkdirSync } from 'node:fs';
@@ -66,7 +69,7 @@ const ALL = ['basic-light', 'basic-dark', 'friendly-light', 'friendly-dark', 'gl
 // In the page: every animation, endless or not, with what it is; the endless ones that run are kept for (c)
 export const CENSUS = () => {
 	const desc = (el) => { if (!el) return 'none'; const c = typeof el.className === 'string' ? el.className : (el.className && el.className.baseVal) || ''; return el.tagName.toLowerCase() + (el.id ? '#' + el.id : '') + (c.trim() ? '.' + c.trim().split(/\s+/).slice(0, 3).join('.') : ''); };
-	const out = { still: document.documentElement.hasAttribute('data-pm-still'), hasScript: !!window.PM_STILL, marks: document.querySelectorAll('[data-pm-held]').length, marked: [], run: [], held: 0, exempt: [], finPaused: [], finRun: 0, finList: [], stray: [] };
+	const out = { still: document.documentElement.hasAttribute('data-pm-still'), hasScript: !!window.PM_STILL, marks: document.querySelectorAll('[data-pm-held]').length, marked: [], run: [], runAt: [], held: 0, exempt: [], finPaused: [], finRun: 0, finList: [], stray: [], now: performance.now(), stillAt: window.__stillOnAt ?? null };
 	const keep = [];
 	const catalog = new Map();
 	for (const a of document.getAnimations()) {
@@ -80,7 +83,9 @@ export const CENSUS = () => {
 			// held by the still state: paused on an element marked for the part it runs on (the page holds some loops of
 			// its own, NieR's motes on Usage for one: those stay held after the wake)
 			const markedPart = !!(el && el.getAttribute && (el.getAttribute('data-pm-held') || '').split(' ').includes(a.effect.pseudoElement ? a.effect.pseudoElement.replace(/^::?/, '') : 'self'));
-			if (a.playState === 'running') { if (caret) out.exempt.push(what); else { out.run.push(what); keep.push(a); } }
+			// each running loop's start (document timeline time, performance.now()'s clock), its mark and whether a finite
+			// animation runs on the same element (the page waits for that to end before it holds the loop)
+			if (a.playState === 'running') { if (caret) out.exempt.push(what); else { out.run.push(what); keep.push(a); out.runAt.push({ what, start: a.startTime, held: (el && el.getAttribute && el.getAttribute('data-pm-held')) || '', finite: !!(el && el.getAnimations && el.getAnimations().some((x) => { try { return x !== a && x.effect && x.effect.target === el && x.playState === 'running' && x.effect.getTiming().iterations !== Infinity; } catch (e) { return false; } })) }); } }
 			else if (a.playState === 'paused' && markedPart) { out.held++; keep.push(a); }
 		} else if (a.playState === 'paused') out.finPaused.push(what);
 		else if (a.playState === 'running') { out.finRun++; if (out.finList.length < 6) { let d = 0; try { d = Math.round(a.effect.getComputedTiming().activeDuration); } catch (e) { /* none */ } out.finList.push(`${what} (${d} ms)`); } }
@@ -100,8 +105,57 @@ export const CENSUS = () => {
 	return out;
 };
 
+// The still state's marks in a trace's events and, per mark, the style recalcs of the page's main thread after it
+// (exported for tools/still-toggle-recalc.selftest.mjs): { marks, after(first, last) }
+// The try the frame rows judge (R51 F2): the first one that meets every judged bound ends the tries and is the one judged;
+// while none has, the quietest so far (fewest drawn plus rendered frames, then fewest starts). Ranking a passing try
+// against an earlier failing one kept (drawn 1, rendered 1, starts 80) over (2, 1, 40), and the starts row then failed
+// what one of the three tries had met. meets(r) says whether trace summary r meets every bound this view judges.
+export function stillPick(x, r, meets) {
+	if (meets(r)) return { x: r, done: true };
+	if (!x) return { x: r, done: false };
+	const sum = (q) => q.drawn.perSec + q.mainFrames.renderedPerSec;
+	const quieter = sum(r) < sum(x) || (sum(r) === sum(x) && r.mainFrames.perSec < x.mainFrames.perSec);
+	return { x: quieter ? r : x, done: false };
+}
+
+export function toggleRecalcs(events, keep = null) {
+	// the marks come from the page's own main thread: its style recalcs and main frames are those of the same thread
+	const marks = {}, styles = [], frames = [];
+	let pid = null, tid = null;
+	for (const e of events) {
+		if (e.cat && e.cat.includes('blink.user_timing') && /^pm-still:/.test(e.name) && !(e.name in marks)) { marks[e.name] = e.ts; pid = e.pid; tid = e.tid; }
+	}
+	for (const e of events) {
+		if (e.pid !== pid || e.tid !== tid || e.ph !== 'X') continue;
+		// a recalc with no element count is unmeasured (null), never a measured zero (PM7PERF-STILL-MISSING-COUNT); the
+		// toggle's cost is then unjudgeable, as perf-hover-restyle treats such a sample
+		if (e.name === 'UpdateLayoutTree') { const n = e.args?.elementCount ?? e.args?.endData?.elementCount; styles.push({ ts: e.ts, dur: (e.dur || 0) / 1000, n: Number.isFinite(n) && n >= 0 ? n : null }); }
+		if (e.name === 'ProxyMain::BeginMainFrame') frames.push({ ts: e.ts, dur: (e.dur || 0) / 1000 });
+	}
+	// the style recalcs from the mark to a few frames after it: the first (the one that carries the toggle; for a wake,
+	// the first frame after the pointer move) is judged, the largest and the total are logged (a live update in Usage can
+	// land in the same frames)
+	// The first recalc after the mark is the toggle's however late it comes (the invalidation stays pending until a
+	// recalc runs), and the logged spread is the 60 ms after it (PM7PERF-PREWARM-CONTROL-NULL: the window used to end
+	// 60 ms after the MARK, and with the forced prewarm step and three browsers on Alexis one toggle's recalc came later,
+	// so it read "no recalc" (R=null) though one ran). `delayMs` says how late it was.
+	const spread = (first, last) => {
+		const a = marks[first], b = marks[last]; if (a === undefined) return null;
+		const head = styles.filter((x) => x.ts >= a).sort((p, q) => p.ts - q.ts)[0];
+		if (!head) return { found: false, markTs: a };
+		const end = Math.max(b === undefined ? a : b, head.ts) + 60000;
+		const ss = styles.filter((x) => x.ts >= a && x.ts <= end).sort((p, q) => p.ts - q.ts);
+		const big = ss.reduce((m, x) => (m.n == null || (x.n != null && x.n > m.n) ? x : m), ss[0]);
+		const fr = frames.find((f) => f.ts <= ss[0].ts && f.ts + f.dur * 1000 >= ss[0].ts);
+		const r2 = (x) => Math.round(x * 100) / 100;
+		return { found: true, steps: ss.length, max: big.n, maxMs: r2(big.dur), total: ss.some((x) => x.n == null) ? null : ss.reduce((t2, x) => t2 + x.n, 0), totalMs: r2(ss.reduce((t2, x) => t2 + x.dur, 0)), first: ss[0].n, firstFrameMs: fr ? r2(fr.dur) : null, markTs: a, recalcTs: ss[0].ts, recalcEndTs: ss[0].ts + ss[0].dur * 1000, delayMs: r2((ss[0].ts - a) / 1000), traceFile: keep, done: b !== undefined };
+	};
+	return { marks, after: spread };
+}
+
 // One trace of `ms`, with what `during` does, summarised, plus the marks and the style recalcs of the page's renderer
-export async function trace(cdp, { ms, during, url, keep, track = false }) {
+export async function trace(cdp, { ms, during, url, keep, track = false, by = false }) {
 	await cdp.send('Tracing.start', { categories: TRACE_CATEGORIES + (track ? ',disabled-by-default-devtools.timeline.invalidationTracking,disabled-by-default-devtools.timeline.stack' : ''), transferMode: 'ReturnAsStream', bufferUsageReportingInterval: 0 });
 	const until = Date.now() + ms;
 	try { if (during) await during(); } finally { const left = until - Date.now(); if (left > 0) await new Promise((r) => setTimeout(r, left)); }
@@ -116,31 +170,8 @@ export async function trace(cdp, { ms, during, url, keep, track = false }) {
 	const json = JSON.parse(raw);
 	const sum = summarise(json, { url });
 	const events = json.traceEvents || json;
-	// the marks come from the page's own main thread: its style recalcs and main frames are those of the same thread
-	const marks = {}, styles = [], frames = [];
-	let pid = null, tid = null;
-	for (const e of events) {
-		if (e.cat && e.cat.includes('blink.user_timing') && /^pm-still:/.test(e.name) && !(e.name in marks)) { marks[e.name] = e.ts; pid = e.pid; tid = e.tid; }
-	}
-	for (const e of events) {
-		if (e.pid !== pid || e.tid !== tid || e.ph !== 'X') continue;
-		if (e.name === 'UpdateLayoutTree') styles.push({ ts: e.ts, dur: (e.dur || 0) / 1000, n: (e.args && e.args.elementCount) || 0 });
-		if (e.name === 'ProxyMain::BeginMainFrame') frames.push({ ts: e.ts, dur: (e.dur || 0) / 1000 });
-	}
-	// the style recalcs from the mark to a few frames after it: the first (the one that carries the toggle; for a wake,
-	// the first frame after the pointer move) is judged, the largest and the total are logged (a live update in Usage can
-	// land in the same frames)
-	const spread = (first, last) => {
-		const a = marks[first], b = marks[last]; if (a === undefined) return null;
-		const end = (b === undefined ? a : b) + 60000;
-		const ss = styles.filter((x) => x.ts >= a && x.ts <= end).sort((p, q) => p.ts - q.ts);
-		if (!ss.length) return { found: false };
-		const big = ss.reduce((m, x) => (x.n > m.n ? x : m), ss[0]);
-		const fr = frames.find((f) => f.ts <= ss[0].ts && f.ts + f.dur * 1000 >= ss[0].ts);
-		const r2 = (x) => Math.round(x * 100) / 100;
-		return { found: true, steps: ss.length, max: big.n, maxMs: r2(big.dur), total: ss.reduce((t2, x) => t2 + x.n, 0), totalMs: r2(ss.reduce((t2, x) => t2 + x.dur, 0)), first: ss[0].n, firstFrameMs: fr ? r2(fr.dur) : null, markTs: a, recalcTs: ss[0].ts, recalcEndTs: ss[0].ts + ss[0].dur * 1000, traceFile: keep, done: b !== undefined };
-	};
-	const after = spread;
+	if (by) sum.startsBy = frameStarts(events, sum.renderer);
+	const { after, marks } = toggleRecalcs(events, keep);
 	return { sum, after, marks };
 }
 
@@ -184,7 +215,9 @@ export default async function (t) {
 	const looks = String(t.args.looks || 'all') === 'all' ? ALL : String(t.args.looks).split(',').filter(Boolean);
 	const views = String(t.args.views || 'settings,dashboard,usage').split(',').filter(Boolean);
 	const after = Number(t.args.after || 3000), ms = Number(t.args.ms || 2000);
-	const drawnMax = Number(t.args.drawn || 15), mainMax = Number(t.args.main || 10);
+	const drawnMax = Number(t.args.drawn || 15), mainMax = Number(t.args.main || 10), startsMax = Number(t.args.starts || 60);
+	// --set framesBy=1 (diagnosis, logged only): each rest trace also says what asked for its main frame starts
+	const framesBy = String(t.args.framesBy || '0') === '1';
 	const W = 1920, H = 1080;
 	const toggleRows = [];
 	let toggleTraceSeq = 0;
@@ -210,6 +243,10 @@ export default async function (t) {
 	// ---- the real wait: one cell without the hook ----
 	if (String(t.args.real ?? '1') !== '0') {
 		const f0 = await t.app.open({ query: 'pm-warm=0' });
+		// when the page went still (PM7PERF-STILL-OBS-ENDLESS-ONCE: one Alexis run read five loops running at 23 s and
+		// kept neither that time nor their starts, so loops that began after the still mark, which the page marks as
+		// they start or at its next look 4 s on, could not be told from loops it never held)
+		await f0.evaluate(() => { window.__stillOnAt = null; new MutationObserver(() => { if (window.__stillOnAt == null && document.documentElement.hasAttribute('data-pm-still')) window.__stillOnAt = performance.now(); }).observe(document.documentElement, { attributes: true, attributeFilter: ['data-pm-still'] }); });
 		await t.app.look('basic-dark');
 		await f0.evaluate(() => PM_PAGES.go('dashboard'));
 		await move();
@@ -217,8 +254,17 @@ export default async function (t) {
 		const at18 = await f0.evaluate(CENSUS);
 		await t.page.waitForTimeout(5000);
 		const at23 = await f0.evaluate(CENSUS);
+		// judged: a loop running at 23 s that began before the still mark (held at the toggle) or more than LOOK_AGAIN
+		// (4 s) + 1 s before the census (its next look would have held it); logged: one that began since, with its age
+		const lookAgain = 5000;
+		const age = (r) => r.start == null ? null : Math.round(at23.now - r.start);
+		const due = at23.runAt.filter((r) => at23.stillAt == null || r.start == null || r.start < at23.stillAt || at23.now - r.start > lookAgain);
+		const young = at23.runAt.filter((r) => !due.includes(r));
+		const fmt = (rs) => rs.slice(0, 4).map((r) => `${r.what} (started ${age(r) == null ? '?' : age(r) + ' ms'} before the census${r.held ? ', marked ' + r.held : ''}${r.finite ? ', a finite animation on it' : ''})`).join('; ');
+		const stillFor = at23.stillAt == null ? null : Math.round(at23.now - at23.stillAt);
+		if (young.length) t.log(`basic-dark Home, no hook: NOTE ${young.length} loops began after the page went still and less than ${lookAgain} ms before the 23 s census, logged, not judged: ${fmt(young)}`);
 		await t.check('basic-dark Home, no hook: not still 18 s after the last input', !at18.still && at18.run.length > 0, `still ${at18.still}, ${at18.run.length} endless running`);
-		await t.check('basic-dark Home, no hook: still 23 s after the last input, nothing endless running', at23.still && at23.run.length === 0, `still ${at23.still}${at23.hasScript ? '' : ' (no still-page script in this page)'}, ${at23.run.length} endless running${at23.run.length ? ': ' + at23.run.slice(0, 4).join('; ') : ''}`);
+		await t.check('basic-dark Home, no hook: still 23 s after the last input, nothing endless running', at23.still && due.length === 0, `still ${at23.still}${at23.hasScript ? '' : ' (no still-page script in this page)'}${stillFor == null ? '' : ` (for ${stillFor} ms)`}, ${due.length} endless running that the page should hold by now${due.length ? ': ' + fmt(due) : ''}${young.length ? `; ${young.length} younger logged` : ''}`);
 	}
 
 	const f = await t.app.open({ query: `pm-warm=0&pm-still=${after}` });
@@ -278,6 +324,16 @@ export default async function (t) {
 		document.body.append(el); PM_PIP_LOADER.mount(el);
 	});
 
+	// Red control for the rendered count: a finite main-thread animation the check runs itself (left on a fixed box,
+	// laid out and committed every frame; the Web Animations API, so the still page neither marks nor holds it) must
+	// read as more than the bound, so a trace whose frame events were renamed or lost cannot pass the row by reading 0.
+	{
+		await f.evaluate(() => { const el = document.createElement('div'); el.id = '__still_main_control'; el.style.cssText = 'position:fixed;left:0;top:0;width:40px;height:40px;background:#888;z-index:2147483000;pointer-events:none'; document.body.append(el); el.animate([{ left: '0px' }, { left: '300px' }], { duration: 2500 }); });
+		const c = (await trace(cdp, { ms, url })).sum;
+		await f.evaluate(() => document.getElementById('__still_main_control')?.remove());
+		await t.check(`control: a main-thread animation the check runs reads as more than ${mainMax} rendered main frames a second`, c.mainFrames.renderedPerSec > mainMax,
+			`${c.mainFrames.renderedPerSec}/s rendered (${c.mainFrames.perSec}/s started, ${c.mainFrames.commitsPerSec}/s commits), drawn ${c.drawn.perSec}/s`);
+	}
 	for (const look of looks) {
 		await f.evaluate((label) => { window.__stillPrewarm.label = label; }, look);
 		await t.app.look(look);
@@ -321,22 +377,36 @@ export default async function (t) {
 			await t.check(`${at}: no finite animation is held by the state`, newlyPaused.length === 0, newlyPaused.length ? newlyPaused.slice(0, 6).join('; ') : `${a.finRun} finite running`);
 			// frames while still: up to three 2 s traces, each once no finite animation runs; the quietest is judged
 			const live = view === 'usage';
+			// main frames are the RENDERED ones (PM7PERF-STILL-FRAMES-STARTS): frame starts less those Chrome abandons with
+			// nothing to update (frame-trace.mjs). Counting starts read 11-17 a second on main's own still Settings in T3's
+			// sandbox (lb3-12, 2026-11-14) where 1 to 4 frames a second rendered; the starts are logged beside it.
+			const rendered = (r) => r.mainFrames.renderedPerSec;
+			// ...and the STARTS are judged too, at most --set starts= (60) a second (the lead's ruling, 2026-11-15): a loop
+			// that asks for a frame every frame and changes no pixel is main-thread work the still page must not have, and
+			// it renders nothing. Spread on main's page (lb2), Alexis 238 Hz: sandbox 9-41 a second over 3 runs x 10 looks
+			// (the code editor's exempt caret 8-15 of them, Glass's 400 ms checkShown poll 2.5), normal 2.2-8.4 (lg1 runs);
+			// a frame-callback loop reads about the refresh rate. On a 60 Hz display such a loop reads 60: it cannot bite.
+			const judgeStarts = !live && view !== 'dashboard';
+			const askers = (r) => (r.startsBy || []).slice(0, 4).map(([w, n]) => `${w} ${Math.round(n / r.secs * 10) / 10}/s`).join(', ');
 			let x = null; const tries = [];
 			for (let k = 0; k < 3; k++) {
 				const quiet = await f.evaluate(QUIET, 3000);
-				const r = (await trace(cdp, { ms, url })).sum;
-				tries.push(`${r.drawn.perSec}/${r.mainFrames.perSec}${quiet ? '' : ' (a finite animation still ran)'}${r.drawn.perSec > drawnMax || r.mainFrames.perSec > mainMax ? ' by ' + named(r) : ''}`);
-				if (!x || r.drawn.perSec + r.mainFrames.perSec < x.drawn.perSec + x.mainFrames.perSec) x = r;
-				if (r.drawn.perSec <= drawnMax && r.mainFrames.perSec <= mainMax) break;
+				const r = (await trace(cdp, { ms, url, track: framesBy, by: framesBy })).sum;
+				if (framesBy) t.log(`${at}: NOTE try ${k + 1} main frame starts by what asked for them [what, starts, nothing to update, rendered, ms]: ${JSON.stringify(r.startsBy.slice(0, 8))}`);
+				tries.push(`${r.drawn.perSec}/${rendered(r)} (starts ${r.mainFrames.perSec}, ${r.mainFrames.noUpdatePerSec} with nothing to update)${quiet ? '' : ' (a finite animation still ran)'}${r.drawn.perSec > drawnMax || rendered(r) > mainMax ? ' by ' + named(r) : ''}`);
+				const pick = stillPick(x, r, (q) => q.drawn.perSec <= drawnMax && rendered(q) <= mainMax && (!judgeStarts || q.mainFrames.perSec <= startsMax));
+				x = pick.x;
+				if (pick.done) break;
 			}
-			t.log(`${at}: STILL drawn ${x.drawn.perSec}/s, main frames ${x.mainFrames.perSec}/s, main ${Math.round(x.cost.main)} ms/s, GPU ${Math.round(x.cost.gpuMain)} ms/s, viz ${Math.round(x.cost.viz)} ms/s (drawn/main per try: ${tries.join('; ')}); toggle ${on && on.found ? `${on.first} elements, ${on.firstFrameMs} ms frame` : 'not seen'}`);
-			if (live) t.log(`${at}: NOTE live data (Usage): frames logged, not judged; quietest try draws ${x.drawn.perSec}/s, main ${x.mainFrames.perSec}/s, by ${named(x) || 'no script'}`);
+			t.log(`${at}: STILL drawn ${x.drawn.perSec}/s, main frames rendered ${rendered(x)}/s (starts ${x.mainFrames.perSec}/s, ${x.mainFrames.noUpdatePerSec}/s with nothing to update, commits ${x.mainFrames.commitsPerSec}/s${Object.keys(x.mainFrames.aborts).length ? ', other early outs ' + JSON.stringify(x.mainFrames.aborts) : ''}), main ${Math.round(x.cost.main)} ms/s, GPU ${Math.round(x.cost.gpuMain)} ms/s, viz ${Math.round(x.cost.viz)} ms/s (drawn/rendered per try: ${tries.join('; ')}); toggle ${on && on.found ? `${on.first} elements, ${on.firstFrameMs} ms frame` : 'not seen'}`);
+			if (live) t.log(`${at}: NOTE live data (Usage): frames logged, not judged; quietest try draws ${x.drawn.perSec}/s, main renders ${rendered(x)}/s (starts ${x.mainFrames.perSec}/s), by ${named(x) || 'no script'}`);
 			else {
 				await t.check(`${at}: still, the compositor draws at most ${drawnMax} frames a second`, x.drawn.perSec <= drawnMax, `${x.drawn.perSec}/s in the quietest of ${tries.length} tries (${tries.join('; ')})`);
 				// Home's dashboard is live too (its widgets tick with the demo engine): its main frames are logged, the loops'
 				// cost is judged by what the compositor draws
-				if (view === 'dashboard') t.log(`${at}: NOTE Home is live (its widgets tick): main frames ${x.mainFrames.perSec}/s logged, not judged${named(x) ? '; by ' + named(x) : ''}`);
-				else await t.check(`${at}: still, the main thread renders at most ${mainMax} frames a second`, x.mainFrames.perSec <= mainMax, `${x.mainFrames.perSec}/s, ${Math.round(x.cost.main)} ms/s in the quietest try${named(x) ? '; by ' + named(x) : ''}`);
+				if (view === 'dashboard') t.log(`${at}: NOTE Home is live (its widgets tick): main frames rendered ${rendered(x)}/s (starts ${x.mainFrames.perSec}/s) logged, not judged${named(x) ? '; by ' + named(x) : ''}`);
+				else await t.check(`${at}: still, the main thread renders at most ${mainMax} frames a second`, rendered(x) <= mainMax, `${rendered(x)}/s rendered (${x.mainFrames.perSec}/s started, ${x.mainFrames.noUpdatePerSec}/s of them with nothing to update), ${Math.round(x.cost.main)} ms/s in the quietest try${named(x) ? '; by ' + named(x) : ''}${framesBy ? '; asked for by ' + (askers(x) || 'nothing named') : ''}`);
+				if (judgeStarts) await t.check(`${at}: still, the main thread starts at most ${startsMax} frames a second`, x.mainFrames.perSec <= startsMax, `${x.mainFrames.perSec}/s started (${x.mainFrames.noUpdatePerSec}/s of them with nothing to update, ${rendered(x)}/s rendered), ${Math.round(x.cost.main)} ms/s in the quietest try; ${framesBy ? 'asked for by ' + (askers(x) || 'nothing named') : 'run with --set framesBy=1 to name what asks for them'}`);
 			}
 			if (a.still) await t.check(`${at}: going still cost stays within its marked population`, onCost.pass, `${JSON.stringify(onCost)}; ${on?.found ? `${on.firstFrameMs} ms frame; largest following recalc ${on.max}, ${on.total} in ${on.steps}` : 'no recalc or mark: unjudgeable'}`);
 
@@ -346,13 +416,15 @@ export default async function (t) {
 
 			// (c) one real move wakes it, and each held loop goes on from where it was
 			const wakePopulation = await f.evaluate(CENSUS);
-			const held = await f.evaluate(() => { const out = []; window.__stillKeep.forEach((an, i) => { if (an.playState === 'paused') out.push([i, an.currentTime]); }); window.__stillHeld = out; window.__stillWake = 0; window.addEventListener('pointermove', (e) => { if (!window.__stillWake) window.__stillWake = e.timeStamp; }, { capture: true, once: true }); return out.length; });
-			const wk = await traceToggle({ ms: 900, url, ...toggleTraceOptions(look, view, 'off'), during: async () => { await t.page.waitForTimeout(150); await move(); } }, view);
-			const woke = await f.evaluate(() => new Promise((resolve) => {
-				const w = window.__stillWake;
-				const t1 = Math.max(0, w + 100 - performance.now());
-				setTimeout(() => {
-					const now = performance.now(), bad = [], late = [];
+			// The reading is taken in the page 100 ms after the waking move, by a timer the move's own capture listener arms,
+			// and read back after the trace (PM7PERF-STILL-OBS-WAKE-ONCE). Read only after the trace was collected, as it
+			// was, a collection over 3 s (Alexis with three browsers: 3.3 and 3.6 s in the failing cells, 2.1 and 2.6 s in
+			// passing ones) let the page go still again by design (?pm-still=3000), and the row read "still after the move".
+			const held = await f.evaluate(() => {
+				const out = []; window.__stillKeep.forEach((an, i) => { if (an.playState === 'paused') out.push([i, an.currentTime]); });
+				window.__stillHeld = out; window.__stillWake = 0; window.__stillWoke = null;
+				const read = () => {
+					const w = window.__stillWake, now = performance.now(), bad = [], late = [];
 					let worst = 0;
 					for (const [i, ct] of window.__stillHeld) {
 						const an = window.__stillKeep[i];
@@ -364,14 +436,18 @@ export default async function (t) {
 						worst = Math.max(worst, lag);
 						if (ahead < 0 || lag < -20 || lag > 100) late.push(`${an.animationName || '?'} ahead ${Math.round(ahead)} ms, ${Math.round(now - w)} ms after the wake (started ${Math.round(lag)} ms late)`);
 					}
-					resolve({ still: document.documentElement.hasAttribute('data-pm-still'), woke: w > 0, bad, late, worst: Math.round(worst), n: window.__stillHeld.length });
-				}, t1);
-			}));
+					window.__stillWoke = { still: document.documentElement.hasAttribute('data-pm-still'), woke: w > 0, bad, late, worst: Math.round(worst), n: window.__stillHeld.length, readMs: Math.round(now - w) };
+				};
+				window.addEventListener('pointermove', (e) => { if (window.__stillWake) return; window.__stillWake = e.timeStamp; setTimeout(read, Math.max(0, e.timeStamp + 100 - performance.now())); }, { capture: true, once: true });
+				return out.length;
+			});
+			const wk = await traceToggle({ ms: 900, url, ...toggleTraceOptions(look, view, 'off'), during: async () => { await t.page.waitForTimeout(150); await move(); } }, view);
+			const woke = await f.waitForFunction(() => window.__stillWoke || (!window.__stillWake ? { still: document.documentElement.hasAttribute('data-pm-still'), woke: false, bad: [], late: [], worst: 0, n: window.__stillHeld.length, readMs: null } : null), null, { timeout: 5000, polling: 50 }).then((h) => h.jsonValue(), () => ({ still: null, woke: false, bad: ['no reading 5 s after the trace'], late: [], worst: 0, n: 0, readMs: null }));
 			const off = wk.after('pm-still:off', 'pm-still:off');
 			const offCost = recordToggle(look, view, 'off', off, wakePopulation);
 			if (a.still) t.log(`${at}: WAKE ${off && off.found ? `${off.first} elements, ${off.firstFrameMs} ms first frame` : 'no recalc seen'}; loops on again at most ${woke.worst} ms after the move; wake trace longest main frame ${wk.sum.mainFrames.max} ms, by ${named(wk.sum) || 'no script'}`);
 			if (a.still) {
-				await t.check(`${at}: one pointer move wakes the page and every held loop runs again within 100 ms`, woke.woke && !woke.still && woke.bad.length === 0, `${woke.n} held; ${woke.bad.length ? 'not running: ' + woke.bad.slice(0, 5).join('; ') : 'all running'}${woke.still ? '; still after the move' : ''}`);
+				await t.check(`${at}: one pointer move wakes the page and every held loop runs again within 100 ms`, woke.woke && !woke.still && woke.bad.length === 0, `${woke.n} held; ${woke.bad.length ? 'not running: ' + woke.bad.slice(0, 5).join('; ') : 'all running'}${woke.still ? '; still after the move' : ''}; read in the page ${woke.readMs} ms after the move`);
 				await t.check(`${at}: each loop goes on from where it was held (no restart, no jump)`, woke.late.length === 0, woke.late.length ? woke.late.slice(0, 5).join('; ') : `each started again at most ${woke.worst} ms after the waking move`);
 				await t.check(`${at}: waking cost stays within its marked population`, offCost.pass, `${JSON.stringify(offCost)}; ${off?.found ? `${off.firstFrameMs} ms frame; largest following recalc ${off.max}, ${off.total} in ${off.steps}` : 'no recalc or mark: unjudgeable'}`);
 			}
