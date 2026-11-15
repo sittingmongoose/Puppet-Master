@@ -131,12 +131,21 @@ const ARM = () => {
 				if (!n.classList.contains('o55-hold')) { P.show = P.build; P.shownInClick = true; requestAnimationFrame((ts) => { P.frame = ts; }); }
 			});
 			else if (P.build && !P.show && m.target.classList.contains('o55-layer') && m.oldValue && /o55-hold/.test(m.oldValue) && !m.target.classList.contains('o55-hold') && !m.target.classList.contains('o55-out')) {
-				P.show = performance.now(); P.shownInClick = false; requestAnimationFrame((ts) => { P.frame = ts; });
+				P.show = performance.now(); P.shownInClick = false;
+				// (the entrance, read a frame after the hold came off, when its style is computed: R49-T1, it is witnessed and timed to
+				// its real end, the last tile's delay included)
+				requestAnimationFrame((ts) => {
+					P.frame = ts;
+					try {
+						const lay = m.target, an = lay.getAnimations({ subtree: true }).filter((a) => { const k = a.effect && a.effect.getComputedTiming(); return k && Number.isFinite(k.endTime) && k.endTime > 0; });
+						P.entr = an.length; P.entrEnd = an.reduce((mx, a) => { const k = a.effect.getComputedTiming(); return Math.max(mx, ts + Math.max(0, k.endTime - (k.localTime || 0))); }, 0);
+					} catch (_) { /* none */ }
+				});
 			}
 		}
 	}).observe(pane, { childList: true, subtree: true, attributes: true, attributeFilter: ['class'], attributeOldValue: true });
 };
-const START = () => { const P = window.__pos; Object.assign(P, { on: true, n: P.n + 1, ts: [], lt: [], click: 0, build: 0, show: 0, frame: 0, paint: 0, screen: null, shownInClick: null }); P.faces = P.loadedFaces(); };
+const START = () => { const P = window.__pos; Object.assign(P, { on: true, n: P.n + 1, ts: [], lt: [], click: 0, build: 0, show: 0, frame: 0, paint: 0, entr: 0, entrEnd: 0, screen: null, shownInClick: null }); P.faces = P.loadedFaces(); };
 const READ = () => {
 	const P = window.__pos, c = P.click;
 	P.on = false;
@@ -144,11 +153,11 @@ const READ = () => {
 	const ts = P.ts.filter((x) => x >= c - 40), d = ts.slice(1).map((x, i) => [ts[i], x - ts[i]]);
 	const until = P.frame || c + 2000;
 	const stall = d.filter((g) => g[0] + g[1] >= c && g[0] <= until).reduce((m, g) => Math.max(m, g[1]), 0);
-	const end = (P.frame || c) + 600;
+	const end = Math.max((P.frame || c) + 600, P.entrEnd || 0);
 	return {
 		click: true, screen: P.screen, shownInClick: P.shownInClick,
 		build: P.build ? Math.round(P.build - c) : null, show: P.show ? Math.round(P.show - c) : null, first: P.frame ? Math.round(P.frame - c) : null,
-		paint: P.paint ? Math.round(P.paint - c) : null,
+		paint: P.paint ? Math.round(P.paint - c) : null, entr: P.entr || 0, entrEnd: P.entrEnd ? Math.round(P.entrEnd - c) : null, end: Math.round(end - c),
 		newFaces: P.loadedFaces().filter((k) => P.faces.indexOf(k) < 0),
 		stall: Math.round(stall), lt: P.lt.filter((e) => e[0] + e[1] > c - 5 && e[0] < end).map((e) => [Math.round(e[0] - c), Math.round(e[1])]),
 		gapsIn: d.filter((g) => g[0] >= (P.frame || c) && g[0] <= end && g[1] > 34).map((g) => [Math.round(g[0] - c), Math.round(g[1])]),
@@ -161,7 +170,7 @@ async function surface(t, sandbox) {
 	const FIRST = +(t.args.first || 100), TASK = +(t.args.task || 50), GAP = +(t.args.gap || 50), PDGAP = +(t.args.pdgap || 80), PDFRAMES = +(t.args.pdframes || 660);
 	const open = async (reduced, o) => {
 		await t.emulate({ reducedMotion: reduced ? 'reduce' : 'no-preference' });
-		const f = await t.app.open({ onboarding: true, query: 'o55=fresh' + (t.args.q ? '&' + t.args.q : ''), sandbox });
+		const f = await t.app.open({ onboarding: true, query: 'o55=fresh' + (o && o.hold ? '&o55pdhold=1' : '') + (t.args.q ? '&' + t.args.q : ''), sandbox });
 		// every frame from the start, so the Welcome screen's idle time (and a pre-draw in it) is seen whole
 		await f.evaluate(() => { if (window.__pdf) return; window.__pdf = []; const tk = (now) => { window.__pdf.push(now); requestAnimationFrame(tk); }; requestAnimationFrame(tk); });
 		await f.waitForFunction(() => { const h = document.querySelector('#pm-o55-onboarding .o55-stage'); return !!(h && h.__pipStage && h.__pipStage.svg); }, null, { timeout: 60000 });
@@ -177,7 +186,7 @@ async function surface(t, sandbox) {
 	// one pixel inside Get Started while it runs: the rows' own red test.
 	const pixels = async (reduced) => {
 		const mode = reduced ? 'Reduced Motion' : 'motion';
-		const f = await open(reduced, { early: true });
+		const f = await open(reduced, { early: true, hold: true });
 		const pane = f.locator('#pm-o55-onboarding .o55-pane');
 		// (the window's opening over too: under Reduced Motion it is a 160 ms fade, slower in T3's sandbox frame, and a picture
 		// taken inside it is a level off everywhere)
@@ -187,15 +196,21 @@ async function surface(t, sandbox) {
 			return !!l && !r.classList.contains('o55-opening') && !l.classList.contains('o55-entering') && !l.classList.contains('o55-hold') && !moving;
 		}, null, { timeout: 15000 }).catch(() => {});
 		await f.waitForTimeout(400);
-		const before = await pane.screenshot(), phase0 = (await pdState(f) || {}).phase;
-		if (phase0 !== 'none') { await t.check(`${tag}: ${mode}: the pane pictured before the pre-draw`, false, `the pre-draw had already begun (${phase0})`); return; }
+		// R49-T3: the pre-draw held at its boundary (?o55pdhold=1: the host in place, nothing drawn in it), the settled pane
+		// pictured, then the pre-draw released: no race with its start. A page without the hold falls back to the old order.
+		const holds = await f.waitForFunction(() => { const s = window.O55.ui.prewarm && window.O55.ui.prewarm.state && window.O55.ui.prewarm.state(); return !!(s && s.held === true && s.phase === 'running' && s.slices === 0); }, null, { timeout: 20000 }).then(() => true, () => false);
+		const at = [];
+		const before = await pane.screenshot(); at.push(['before', await pdState(f)]);
+		if (holds) await f.evaluate(() => window.O55.ui.prewarm.release());
+		else if ((at[0][1] || {}).phase !== 'none') { await t.check(`${tag}: ${mode}: the pane pictured before the pre-draw`, false, `no hold on this page and the pre-draw had already begun (${JSON.stringify(at[0][1])})`); return; }
 		if (!(await pdRunning(f))) { await t.check(`${tag}: ${mode}: the pre-draw was seen running`, false, JSON.stringify(await pdState(f))); return; }
 		if (t.args.aamutant) await f.evaluate(() => { const b = document.querySelector('#pm-o55-onboarding .o55-layer:not(.o55-out) .o55-primary'); const d = document.createElement('i'); d.id = 'aa-mutant'; d.style.cssText = 'position:absolute;left:50%;top:6px;width:1px;height:1px;background:#f0f;pointer-events:none'; d.dataset.pos = b.style.position; if (getComputedStyle(b).position === 'static') b.style.position = 'relative'; b.appendChild(d); });
-		const boxes = await f.evaluate(ROUNDED), during = await pane.screenshot();
+		const boxes = await f.evaluate(ROUNDED), during = await pane.screenshot(); at.push(['during', await pdState(f)]);
 		if (t.args.aamutant) await f.evaluate(() => { const d = document.getElementById('aa-mutant'); if (d) { d.parentElement.style.position = d.dataset.pos || ''; d.remove(); } });
 		await f.waitForFunction(() => window.O55.ui.prewarm.state().phase === 'done', null, { timeout: 30000 }).catch(() => {});
 		await f.waitForTimeout(300);
-		const after = await pane.screenshot();
+		const after = await pane.screenshot(); at.push(['after', await pdState(f)]);
+		t.log(`${tag}: ${mode}: pictures at ${JSON.stringify(at.map(([k, st]) => [k, st && { phase: st.phase, slices: st.slices, held: st.held }]))} (hold ${holds ? 'used' : 'not on this page'})`);
 		if (process.env.T_DIR) [['before', before], ['during', during], ['after', after]].forEach(([k, b]) => fs.writeFileSync(`${process.env.T_DIR}/aa-${tag}-${reduced ? 'rm' : 'm'}${t.args.aamutant ? '-mut' : ''}-${k}.png`, b));
 		await t.check(`${tag}: ${mode}: the pane before and after the pre-draw, the same pixels`, before.equals(after), `${before.length} and ${after.length} bytes`);
 		const j = judgeAA(before, during, boxes);
@@ -215,7 +230,10 @@ async function surface(t, sandbox) {
 			return f;
 		};
 		// (its top within its scroller, what holdColumn holds: a look's own metrics may move the scroller itself)
-		const col = (f) => f.evaluate(() => { const c = document.querySelector('#pm-o55-onboarding .o55-pane > .o55-layer:not(.o55-out) .o55-scroll > .o55-content'), sc = c && c.parentElement; return c ? { top: c.getBoundingClientRect().top - sc.getBoundingClientRect().top, margin: parseFloat(getComputedStyle(c).marginTop) } : null; });
+		const col = (f) => f.evaluate(() => { const c = document.querySelector('#pm-o55-onboarding .o55-pane > .o55-layer:not(.o55-out) .o55-scroll > .o55-content'), sc = c && c.parentElement; return c ? { top: c.getBoundingClientRect().top - sc.getBoundingClientRect().top, margin: parseFloat(getComputedStyle(c).marginTop), stale: c.hasAttribute('data-kit-stale'), talk: window.O55.talk.mode(), look: window.O55.theme().chosen } : null; });
+		// (R49-T2: the refresh is witnessed: a mark the screen's template does not carry is put on the column first, and the
+		// morph that redraws it takes it off; the toggle and the pick must also have changed what they change)
+		const mark = (f) => f.evaluate(() => { const c = document.querySelector('#pm-o55-onboarding .o55-pane > .o55-layer:not(.o55-out) .o55-scroll > .o55-content'); if (c) c.setAttribute('data-kit-stale', ''); });
 		const pickLook = async (f) => {
 			const fam = await f.evaluate(() => (window.O55.theme().chosen === 'friendly' ? 'basic' : 'friendly'));
 			await f.locator('#pm-o55-onboarding .o55-lookslot .o55-lookbtn').click();
@@ -230,13 +248,74 @@ async function surface(t, sandbox) {
 			const f = await ready();
 			const b = await col(f);
 			if (!b || !(b.margin > 0)) { await t.check(`${tag}: ${mode}: the column keeps its held top through ${label}, to the pixel`, false, `Welcome's column is not held off the top here (${JSON.stringify(b)}): the row would prove nothing`); continue; }
+			await mark(f);
 			await act(f);
 			await f.waitForTimeout(700);
 			const a = await col(f);
+			const changed = !!a && (label.startsWith('Plain') ? a.talk !== b.talk : label.startsWith('a look') ? a.look !== b.look : true);
+			await t.check(`${tag}: ${mode}: ${label} happened and redrew the column (the mark the template lacks is gone)`, !!a && !a.stale && changed, `mark ${a && a.stale ? 'still there' : 'gone'}; talk ${b.talk} -> ${a && a.talk}; look ${b.look} -> ${a && a.look}`);
 			await t.check(`${tag}: ${mode}: the column keeps its held top through ${label}, to the pixel`, !!a && Math.round(a.top) === Math.round(b.top) && a.margin === b.margin, `column top ${b.top} -> ${a && a.top}; held margin ${b.margin} -> ${a && a.margin}`);
 			if (undo) await undo(f);
 		}
 	};
+	// R49-1: while the pre-draw's host is in the window (its copied buttons are laid out but inert), Tab still wraps at the
+	// window's real ends: Shift+Tab from the first control (the look menu's button) lands on the last one, Tab from the last on
+	// the first. The host is held in place (?o55pdhold=1) on a page that has the hold; otherwise the presses come while it is up.
+	const tabs = async () => {
+		const f = await open(false, { early: true, hold: true });
+		await f.waitForFunction(() => !!document.querySelector('#pm-o55-onboarding .o55-prewarm') && !document.getElementById('pm-o55-onboarding').classList.contains('o55-opening'), null, { timeout: 20000 }).catch(() => {});
+		const ends = () => f.evaluate(() => {
+			const win = document.querySelector('#pm-o55-onboarding .o55-win'), id = (n) => (n ? (n.getAttribute('aria-label') || n.textContent || n.className || '').trim().slice(0, 24) + '#' + Array.from(win.querySelectorAll('*')).indexOf(n) : null);
+			const all = Array.from(win.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])')).filter((n) => !n.closest('.o55-out') && !n.closest('[inert]') && !n.hasAttribute('disabled') && n.getClientRects().length);
+			const a = document.activeElement;
+			return { first: id(all[0]), last: id(all[all.length - 1]), active: id(a), activeInHost: !!(a && a.closest && a.closest('.o55-prewarm')), host: !!document.querySelector('#pm-o55-onboarding .o55-prewarm') };
+		});
+		const focusEnd = (which) => f.evaluate((w) => { const win = document.querySelector('#pm-o55-onboarding .o55-win'); const all = Array.from(win.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])')).filter((n) => !n.closest('.o55-out') && !n.closest('[inert]') && !n.hasAttribute('disabled') && n.getClientRects().length); const el = w === 'first' ? all[0] : all[all.length - 1]; el.focus(); return document.activeElement === el; }, which);
+		await focusEnd('first');
+		const e0 = await ends();
+		await t.page.keyboard.press('Shift+Tab');
+		const e1 = await ends();
+		await t.check(`${tag}: Shift+Tab from the window's first control wraps to its last while the pre-draw's host is up`, e0.host && e1.active === e0.last && !e1.activeInHost, JSON.stringify({ host: e0.host, from: e0.active, to: e1.active, last: e0.last }));
+		await focusEnd('last');
+		const e2 = await ends();
+		await t.page.keyboard.press('Tab');
+		const e3 = await ends();
+		await t.check(`${tag}: Tab from the window's last control wraps to its first while the pre-draw's host is up`, e2.host && e3.active === e2.first && !e3.activeInHost, JSON.stringify({ host: e2.host, from: e2.active, to: e3.active, first: e2.first }));
+		await f.evaluate(() => { if (window.O55.ui.prewarm.release) window.O55.ui.prewarm.release(); });
+	};
+	// R49-2: in Glass, the pre-draw's copy of the Light / Dark control is never given a lens in the real window: in a tall window
+	// (1440x1300), Glass picked at once, the window's lenses every 200 ms through the pre-draw are the ones it had before it
+	// (held at its boundary, ?o55pdhold=1).
+	const glassLens = async (mode) => {
+		const vp = t.page.viewportSize();
+		await t.viewport(1440, 1300);
+		const f = await open(false, { early: true, hold: true });
+		const pick = async (sel) => { await f.locator('#pm-o55-onboarding .o55-lookslot .o55-lookbtn').click(); await f.waitForSelector('#pm-o55-onboarding .o55-lookmenu', { timeout: 5000 }); await f.locator(sel).click(); await f.waitForFunction(() => !window.O55.S.vt, null, { timeout: 10000 }).catch(() => {}); if (await f.locator('#pm-o55-onboarding .o55-lookmenu').count()) await t.page.keyboard.press('Escape'); };
+		await pick('#pm-o55-onboarding .o55-lookmenu [data-o55-do="lookFamily"][data-arg="glass"]');
+		if (await f.evaluate((m) => window.O55.theme().mode !== m, mode)) await pick(`#pm-o55-onboarding .o55-lookmenu [data-o55-do="lookMode"][data-arg="${mode}"]`);
+		const lenses = () => f.evaluate(() => {
+			const root = document.getElementById('pm-o55-onboarding'), out = [];
+			root.querySelectorAll('.lg-lens').forEach((el) => { const r = el.getBoundingClientRect(), cs = getComputedStyle(el); if (r.width && r.height && cs.display !== 'none' && cs.visibility !== 'hidden' && +cs.opacity > 0) out.push([Math.round(r.left), Math.round(r.top), Math.round(r.width), Math.round(r.height)].join(',')); });
+			const st = window.O55.ui.prewarm.state(); return { lenses: out.sort(), phase: st.phase, slices: st.slices, held: st.held };
+		});
+		await f.waitForFunction(() => { const s = window.O55.ui.prewarm.state(); return s.phase === 'running' && s.held === true; }, null, { timeout: 20000 }).catch(() => {});
+		await f.waitForTimeout(400);
+		const b = await lenses();
+		await f.evaluate(() => window.O55.ui.prewarm.release && window.O55.ui.prewarm.release());
+		const extra = new Map(); let n = 0;
+		for (let k = 0; k < 60; k++) {
+			await f.waitForTimeout(200);
+			const s = await lenses(); n++;
+			s.lenses.filter((l) => !b.lenses.includes(l)).forEach((l) => extra.set(l, (extra.get(l) || 0) + 1));
+			if (s.phase === 'done') break;
+		}
+		await t.check(`${tag}: Glass ${mode}: the pre-draw adds no lens to the window (its copied Light / Dark control is left alone)`, b.held === true && n > 1 && extra.size === 0, JSON.stringify({ before: b, readings: n, added: Object.fromEntries(extra) }));
+		if (vp) await t.viewport(vp.width, vp.height);
+	};
+	// --set only=glass: the R49-2 rows alone
+	if (t.args.only === 'glass') { for (const m of ['dark', 'light']) await glassLens(m); return; }
+	// --set only=tab: the R49-1 rows alone
+	if (t.args.only === 'tab') { await tabs(); return; }
 	// --set only=column: the R46-1 rows alone, in both motion modes
 	if (t.args.only === 'column') { for (const reduced of [true, false]) await column(reduced); await t.emulate({ reducedMotion: 'no-preference' }); return; }
 	// --set only=pixels: the K-AA rows alone, in both motion modes
@@ -281,8 +360,9 @@ async function surface(t, sandbox) {
 	await t.check(`${tag}: Start: the press reached the window and built the Look screen`, s.click && s.screen === 'look', JSON.stringify(s));
 	if (s.click && s.screen === 'look') {
 		await t.check(`${tag}: Start: the Look screen's first frame within ${FIRST} ms of the release`, s.first != null && s.first <= FIRST, `first frame by ${s.first} ms (built ${s.build}, shown ${s.show}); longest frame gap until then ${s.stall} ms`);
+		await t.check(`${tag}: Start: the Look screen's entrance plays (its animations seen, and judged to their end)`, s.entr > 0, `${s.entr} entrance animations, ending at ${s.entrEnd} ms; the rows below judge to ${s.end} ms`);
 		const over = s.lt.filter((e) => e[1] > TASK);
-		await t.check(`${tag}: Start: no task over ${TASK} ms from the release to the end of the entrance`, over.length === 0, `long tasks ${JSON.stringify(s.lt)} (first frame by ${s.first} ms; entrance to ${s.first + 600})`);
+		await t.check(`${tag}: Start: no task over ${TASK} ms from the release to the end of the entrance`, over.length === 0, `long tasks ${JSON.stringify(s.lt)} (first frame by ${s.first} ms; entrance to ${s.end})`);
 		await t.check(`${tag}: Start: no font face loads for the first time (each one that arrives lays the whole page out again)`, s.newFaces.length === 0, `${s.newFaces.length} faces first loaded by Start: ${JSON.stringify(s.newFaces.slice(0, 12))}`);
 		const gaps = s.gapsAll.filter((g) => g[1] > GAP);
 		await t.check(`${tag}: Start: no frame gap over ${GAP} ms from the release to the end of the entrance`, gaps.length === 0, `${gaps.length} gaps: ${JSON.stringify(gaps)}`);
@@ -315,6 +395,8 @@ async function surface(t, sandbox) {
 		await t.check(`${tag}: low-resource mode: no pre-draw slice once it is on, and nothing left`, !!lr && (lr.phase === 'none' || (lr.phase === 'done' && lr.slices === lr0.slices)) && lrLeft === 0, JSON.stringify({ at: { phase: lr0.phase, slices: lr0.slices }, after: { phase: lr && lr.phase, why: lr && lr.why, slices: lr && lr.slices }, left: lrLeft }));
 		for (const reduced of [true, false]) await pixels(reduced);
 		for (const reduced of [true, false]) await column(reduced);
+		await tabs();
+		for (const m of ['dark', 'light']) await glassLens(m);
 	}
 	// Reduced Motion: unchanged (no hold): Start shows the new screen in the click's own task
 	f = await open(true);
