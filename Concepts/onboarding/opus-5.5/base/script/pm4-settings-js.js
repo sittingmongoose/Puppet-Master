@@ -7158,7 +7158,11 @@ if(state.projectSyncTab==='move')return `<div class="card-grid two"><section cla
       case 'browse-setting-path': {
         const found=findSettingGlobal(ds(el,'setting'));if(!found)return;const picker=window.PM_SETTINGS_PICK_PATH;
         if(typeof picker==='function'){const chosen=picker({project_id:window.PM7_SETTINGS_TOME.project()?.id||null,setting_id:found.setting.id,current_value:settingValue(found.setting)});if(typeof chosen==='string'&&commitSettingValue(found.setting.id,chosen)){saveState();renderApp();}return;}
-        openDialog({title:`Browse · ${found.setting.label}`,subtitle:'Type the folder\u2019s path. In the app, Choose opens your computer\u2019s own folder picker.',body:formGrid([{label:'Path',name:'path',value:settingValue(found.setting),autofocus:true}]),saveLabel:'Use path',onSave:(_v,form)=>{const value=readForm(form).path;if(!commitSettingValue(found.setting.id,value))return false;saveState();renderApp();return true;}});return;
+        /* FO-213: the fallback dialog's Path reads the same resolved path the row shows (o55Path): a structured
+           execution-host-home default reads "~/…", never its JSON; saving the field stays as it was */
+        let pathShown=settingValue(found.setting);
+        if(typeof pathShown==='string'&&pathShown.startsWith('{')){try{const d=JSON.parse(pathShown);if(d&&d.kind==='execution_host_home_relative'&&typeof d.relative_path==='string')pathShown='~/'+d.relative_path;}catch(e){/* not a structured default */}}
+        openDialog({title:`Browse · ${found.setting.label}`,subtitle:'Type the folder\u2019s path. In the app, Choose opens your computer\u2019s own folder picker.',body:formGrid([{label:'Path',name:'path',value:pathShown,autofocus:true}]),saveLabel:'Use path',onSave:(_v,form)=>{const value=readForm(form).path;if(!commitSettingValue(found.setting.id,value))return false;saveState();renderApp();return true;}});return;
       }
       case 'open-structured-setting': {
         const found=findSettingGlobal(ds(el,'setting'));if(!found)return;const current=settingValue(found.setting),kind=found.setting.control;

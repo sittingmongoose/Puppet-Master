@@ -173,7 +173,9 @@
   }
 
   function picturePanel(r) {
-    const cur = PM51.value(S.provider);
+    /* FO-212: the picture route the row saves to is the source of truth; the retired media.image.provider reads
+       undefined, so a reopen lost the chosen service and model */
+    const cur = r.primary && PICTURE[r.primary.picture] ? r.primary.picture : 'None';
     const first = Object.keys(PICTURE).find(k => !pictureBlock(PICTURE[k]));
     /* the panel opens on what is chosen now, "No service" when nothing is (lane-aimore 3: it opened on ChatGPT / Codex
        plan while the ability said "Nothing yet"); the first service that can be used is only marked as such */
