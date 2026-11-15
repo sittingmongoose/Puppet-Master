@@ -194,6 +194,10 @@
   {
    "event_type": "forge.repository.created",
    "outcome": "registered"
+  },
+  {
+   "event_type": "forge.repository.discovered",
+   "outcome": "registered"
   }
  ]
 }
