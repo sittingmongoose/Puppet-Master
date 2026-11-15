@@ -323,7 +323,10 @@ def operands(case, put, common):
             left.append(res.get('reason_code') is not None); right.append(True)
     put('sr_sru_receipt_reason', left, right)
     release_kinds = [i for i, r in enumerate(runs) if r['kind'] in ('locate', 'abandon', 'replan', 'successor')]
-    put('sr_sru_release', [runs[i].get('anchor_after') for i in release_kinds], [expected[i]['anchor'] for i in release_kinds])
+    # Anchors are compared by their complete canonical Storage value bytes (as the
+    # common copy-join rows compare event copies): same equality, compact operands.
+    put('sr_sru_release', [s.physical_hex(runs[i].get('anchor_after')) for i in release_kinds],
+        [s.physical_hex(expected[i]['anchor']) for i in release_kinds])
     left = []; right = []
     for i in commands:
         receipt = runs[i].get('receipt')
@@ -351,7 +354,7 @@ def operands(case, put, common):
     left = []; right = []
     for i, r in enumerate(runs):
         if r['kind'] in ('trigger', 'restore_retry', 'redetect'):
-            left.append(r.get('anchor_after')); right.append(r['anchor_before'])
+            left.append(s.physical_hex(r.get('anchor_after'))); right.append(s.physical_hex(r['anchor_before']))
         if r['kind'] == 'restore_retry':
             left.append(success_of(r.get('result'))); right.append('nonsuccess')
     put('sr_sru_no_release', left, right)
