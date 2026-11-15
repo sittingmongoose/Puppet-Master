@@ -3,7 +3,8 @@
 //   node tools/stage-frames-compare.mjs <base dir> <changed dir> [--also <second base dir>] [--json <file>]
 // Pixels: the PNGs decoded and compared exactly (RGB); a difference is reported with its pixel count, its largest
 // channel step and its bounding box. DOM: the .dom.txt files compared line by line; a difference is reported with its
-// first differing line from each side. A changed pixel that equals the base's pixel in another of its pictures of the
+// first differing line from each side. A capture whose first pictures differ but where one of the changed build's two
+// pictures is the same to the pixel as one of the base's is counted as the same picture (matched). A changed pixel that equals the base's pixel in another of its pictures of the
 // same state (its .b.png, 20 frames later in the same run, and, with --also, a second run's two) is within the base's own
 // variation (the compositor's: two runs of one build
 // with the same DOM differ by a level or a few in places), and the capture is reported as within the base's variation
@@ -67,23 +68,29 @@ const jsonAt = process.argv.indexOf('--json'), jsonOut = jsonAt > 0 ? process.ar
 const alsoAt = process.argv.indexOf('--also'), also = alsoAt > 0 ? process.argv[alsoAt + 1] : null;
 if (!baseDir || !changedDir) { console.error('usage: node tools/stage-frames-compare.mjs <base dir> <changed dir> [--json <file>]'); process.exit(2); }
 const index = JSON.parse(fs.readFileSync(path.join(baseDir, 'index.json'), 'utf8'));
-const rows = []; let px = 0, dm = 0, missing = 0, within = 0;
+const rows = []; let px = 0, dm = 0, missing = 0, within = 0, matched = 0;
 for (const e of index) {
 	const a = path.join(baseDir, e.look, e.file), b = path.join(changedDir, e.look, e.file);
 	if (!fs.existsSync(b + '.png') || !fs.existsSync(b + '.dom.txt')) { missing++; rows.push({ ...e, missing: true }); continue; }
 	/* the base's other pictures of this state: its second picture in the same run (.b.png) and both of the --also run's */
 	const refs = [a + '.b.png'].concat(also ? [path.join(also, e.look, e.file) + '.png', path.join(also, e.look, e.file) + '.b.png'] : []).filter((f) => fs.existsSync(f)).map((f) => fs.readFileSync(f));
 	const p = pixels(fs.readFileSync(a + '.png'), fs.readFileSync(b + '.png'), refs);
-	if (!p.same && p.within) within++;
+	/* matched: one of the changed build's pictures of the state (.png, .b.png) is the same to the pixel as one of the
+	   base's (a picture taken at a moment the compositor was still finishing differs from the one 20 frames later) */
+	if (!p.same) {
+		const mine = [b + '.png', b + '.b.png'].filter((f) => fs.existsSync(f)).map((f) => fs.readFileSync(f)), base = [fs.readFileSync(a + '.png')].concat(refs);
+		p.matched = mine.some((m) => base.some((r) => pixels(r, m).same));
+		if (p.matched) matched++; else if (p.within) within++;
+	}
 	const d = dom(fs.readFileSync(a + '.dom.txt', 'utf8'), fs.readFileSync(b + '.dom.txt', 'utf8'));
 	if (p.same) px++; if (d.same) dm++;
 	rows.push({ look: e.look, file: e.file, props: e.props, target: e.target, pixels: p, dom: d });
 }
-const bad = rows.filter((r) => r.missing || (!r.pixels.same && !r.pixels.within) || !r.dom.same);
-console.log(`${index.length} captures: pixels the same in ${px}, within the base's own variation in ${within} more, DOM the same in ${dm}, missing ${missing}`);
+const bad = rows.filter((r) => r.missing || (!r.pixels.same && !r.pixels.matched && !r.pixels.within) || !r.dom.same);
+console.log(`${index.length} captures: pixels the same in ${px} (first pictures), in ${matched} more one picture of each build is the same, within the base's own variation in ${within} more; DOM the same in ${dm}; missing ${missing}`);
 for (const r of bad) {
 	if (r.missing) { console.log(`MISSING ${r.look}/${r.file}`); continue; }
-	if (!r.pixels.same && !r.pixels.within) console.log(`PIXELS ${r.look}/${r.file}: ${r.pixels.size || `${r.pixels.n} px differ, up to ${r.pixels.max} a channel, box ${r.pixels.box.join(',')}; outside the base's variation (${r.pixels.refs} more pictures of it) ${r.pixels.outside} px, up to ${r.pixels.outsideMax}`}`);
+	if (!r.pixels.same && !r.pixels.matched && !r.pixels.within) console.log(`PIXELS ${r.look}/${r.file}: ${r.pixels.size || `${r.pixels.n} px differ, up to ${r.pixels.max} a channel, box ${r.pixels.box.join(',')}; outside the base's variation (${r.pixels.refs} more pictures of it) ${r.pixels.outside} px, up to ${r.pixels.outsideMax}`}`);
 	if (!r.dom.same) console.log(`DOM    ${r.look}/${r.file}: line ${r.dom.line} (${r.dom.lines})\n  base:    ${r.dom.base}\n  changed: ${r.dom.changed}`);
 }
 if (jsonOut) fs.writeFileSync(jsonOut, JSON.stringify(rows, null, 1));
