@@ -24,6 +24,11 @@ Clauses inside an `if` (a selector) and inside a `not` (the `not` keyword is the
 The clause cut uses the validator's own per-keyword disable context (pm_goal_oracle_common._SCHEMA_CONTEXT);
 nothing is edited. Schema-boundary controls and witnesses earn no lifecycle or row credit.
 
+Carry (GO addition): `--carry FILE@TOOL_COMMIT ...` closes the selected roots again but searches only the clauses
+that FILE left UNCOVERED; every other clause is copied with `carried_from` (report, its tool commit, its class), so a
+carried witness keeps the tool version that produced it. Provenance: `closure_tool_sha256` is the hash of this file
+when the run imported it (the code that ran), not when the run ended.
+
 Usage: python3 scripts/pm_goal_go_schema_closure.py --out FILE [--budget N]
 """
 import argparse
@@ -43,6 +48,8 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / 'scripts'))
 import pm_goal_oracle_common as common  # noqa: E402
+
+TOOL_SHA256 = hashlib.sha256(Path(__file__).read_bytes()).hexdigest()  # the code this process imported
 
 ASSERT = {'type', 'enum', 'const', 'required', 'minLength', 'maxLength', 'pattern', 'format', 'minimum', 'maximum',
           'exclusiveMinimum', 'exclusiveMaximum', 'multipleOf', 'minItems', 'maxItems', 'uniqueItems', 'minProperties',
@@ -971,7 +978,8 @@ APART = ('if', 'not', 'contains')
 COVERED_EXTRA = 120
 
 
-def close_root(root, v, seeds, budget):
+def close_root(root, v, seeds, budget, carried=None):
+    carried = carried or {}
     CURRENT[0] = v
     nodes = walk(v)
     by_ipath = collections.defaultdict(list)
@@ -988,6 +996,9 @@ def close_root(root, v, seeds, budget):
         node = info['node']
         for keyword in clauses_of(node):
             clause = location + '/' + name_of(keyword)
+            if clause in carried:  # --carry: a clause the earlier report did not leave UNCOVERED
+                entries[clause] = carried[clause]
+                continue
             ident = common.schema_guard(node, keyword)
             if all(r['empty_domain'] for r in info['reach']):
                 entries[clause] = dict(cls='UNREACHABLE', proof='every instance location of the clause is an item of an array '
@@ -1180,6 +1191,8 @@ def main():
     parser.add_argument('--roots', nargs='*', help='close only roots containing one of these substrings')
     parser.add_argument('--per-clause', type=int, default=0, help='raise a root budget to this many validations per clause')
     parser.add_argument('--seeds', choices=('controls', 'authored'), default='controls', help='seed policy (see collect)')
+    parser.add_argument('--carry', nargs='*', default=[], help='FILE@TOOL_COMMIT: for the selected roots found in FILE, '
+                        'copy every clause FILE did not leave UNCOVERED and search only the UNCOVERED ones (later files win)')
     parser.add_argument('--merge', nargs='*', help='merge reports into --out (no collection); FILE or FILE@TOOL_COMMIT; '
                         'later files replace earlier ones root by root')
     args = parser.parse_args()
@@ -1187,6 +1200,19 @@ def main():
         return merge(args.merge, args.out)
     part, total = map(int, args.shard.split('/'))
     SEED_POLICY[0] = args.seeds
+    carry = {}
+    for item in args.carry:
+        path, _, commit = item.partition('@')
+        if not commit:
+            raise SystemExit('--carry needs FILE@TOOL_COMMIT')
+        data = json.loads(Path(path).read_text())
+        for root, entry in data['roots'].items():
+            if entry.get('error'):
+                continue
+            label = dict(report=Path(path).name, report_sha256=hashlib.sha256(Path(path).read_bytes()).hexdigest(),
+                         closure_tool=entry.get('closure_tool') or commit)
+            carry[root] = (label, {c: dict(x, carried_from=dict(x.get('carried_from') or label, cls=x['cls']))
+                                   for c, x in entry['clauses'].items() if x['cls'] != 'UNCOVERED'})
     collector, roots = collect()
     families = family_roots(collector, roots)
     print(f'roots {len(roots)}; shard {part}/{total}', file=sys.stderr, flush=True)
@@ -1204,7 +1230,7 @@ def main():
             clauses = sum(len(clauses_of(info['node'])) for info in walk(v).values())
             budget = max(budget, args.per_clause * clauses)
         try:
-            entries, branch_controls, spent = close_root(root, v, seeds, budget)
+            entries, branch_controls, spent = close_root(root, v, seeds, budget, carry.get(root, (None, {}))[1])
         except Exception as exc:  # noqa: BLE001 - a root that cannot be closed is reported, never skipped
             report['roots'][root] = dict(kind=slot['kind'], rows=sorted(slot['rows']), families=sorted(families.get(root, ())),
                                          seeds=len(seeds), error=type(exc).__name__ + ': ' + str(exc)[:300],
@@ -1216,12 +1242,14 @@ def main():
                                      families=sorted(families.get(root, ())), seeds=len(seeds),
                                      branch_controls=branch_controls, validations=spent, counts=dict(counts), clauses=entries,
                                      unresolved_refs=list(UNRESOLVED))
+        if root in carry:
+            report['roots'][root]['carried'] = dict(carry[root][0], clauses=sum(1 for e in entries.values() if e.get('carried_from')))
         print(f'{root[:90]}: seeds={len(seeds)} {dict(counts)}', file=sys.stderr, flush=True)
         partial = dict(report, all_roots={r: sorted(families.get(r, ())) for r in sorted(roots)}, partial=True)
         args.out.with_suffix('.partial.json').write_text(json.dumps(partial, indent=1, sort_keys=True, default=str) + '\n')
     report['shard'] = args.shard
     report['seed_policy'] = args.seeds
-    report['closure_tool_sha256'] = hashlib.sha256(Path(__file__).read_bytes()).hexdigest()
+    report['closure_tool_sha256'] = TOOL_SHA256
     for root, entry in report['roots'].items():
         entry['seed_sha256'] = sorted(roots[root]['seeds'])
         entry['seed_policy'] = args.seeds
