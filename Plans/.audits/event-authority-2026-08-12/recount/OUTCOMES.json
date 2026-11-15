@@ -294,6 +294,10 @@
   {
    "event_type": "named_plan.created",
    "outcome": "registered"
+  },
+  {
+   "event_type": "named_plan.priority_changed",
+   "outcome": "registered"
   }
  ]
 }
