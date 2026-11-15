@@ -31,7 +31,7 @@ import pm_dt_guard_cases as corpora  # noqa: E402
 ENTRIES = ('source_valid', 'recovery', 'checkpoint_result', 'historical_read', 'transition', 'gate_score_join',
            'tool_request_join', 'usage_values_valid', 'denial_emission', 'batch_join', 'append_model', 'identity',
            'decode_source', 'accounting_totals', 'schema_accepts', 'references_refusal', 'retention_eligible',
-           'projection_outcome')
+           'projection_outcome', 'usage_retention_from_first_save')
 RETURN_SOURCE = 'return g.Case(table, check, context)'
 # Witnesses kept in the full checker (still refused there) but not used as
 # table-row proof, with the reason: each is two rows by construction, and the
