@@ -375,13 +375,15 @@ export default async function (t) {
 
 			// (c) one real move wakes it, and each held loop goes on from where it was
 			const wakePopulation = await f.evaluate(CENSUS);
-			const held = await f.evaluate(() => { const out = []; window.__stillKeep.forEach((an, i) => { if (an.playState === 'paused') out.push([i, an.currentTime]); }); window.__stillHeld = out; window.__stillWake = 0; window.addEventListener('pointermove', (e) => { if (!window.__stillWake) window.__stillWake = e.timeStamp; }, { capture: true, once: true }); return out.length; });
-			const wk = await traceToggle({ ms: 900, url, ...toggleTraceOptions(look, view, 'off'), during: async () => { await t.page.waitForTimeout(150); await move(); } }, view);
-			const woke = await f.evaluate(() => new Promise((resolve) => {
-				const w = window.__stillWake;
-				const t1 = Math.max(0, w + 100 - performance.now());
-				setTimeout(() => {
-					const now = performance.now(), bad = [], late = [];
+			// The reading is taken in the page 100 ms after the waking move, by a timer the move's own capture listener arms,
+			// and read back after the trace (PM7PERF-STILL-OBS-WAKE-ONCE). Read only after the trace was collected, as it
+			// was, a collection over 3 s (Alexis with three browsers: 3.3 and 3.6 s in the failing cells, 2.1 and 2.6 s in
+			// passing ones) let the page go still again by design (?pm-still=3000), and the row read "still after the move".
+			const held = await f.evaluate(() => {
+				const out = []; window.__stillKeep.forEach((an, i) => { if (an.playState === 'paused') out.push([i, an.currentTime]); });
+				window.__stillHeld = out; window.__stillWake = 0; window.__stillWoke = null;
+				const read = () => {
+					const w = window.__stillWake, now = performance.now(), bad = [], late = [];
 					let worst = 0;
 					for (const [i, ct] of window.__stillHeld) {
 						const an = window.__stillKeep[i];
@@ -393,14 +395,18 @@ export default async function (t) {
 						worst = Math.max(worst, lag);
 						if (ahead < 0 || lag < -20 || lag > 100) late.push(`${an.animationName || '?'} ahead ${Math.round(ahead)} ms, ${Math.round(now - w)} ms after the wake (started ${Math.round(lag)} ms late)`);
 					}
-					resolve({ still: document.documentElement.hasAttribute('data-pm-still'), woke: w > 0, bad, late, worst: Math.round(worst), n: window.__stillHeld.length });
-				}, t1);
-			}));
+					window.__stillWoke = { still: document.documentElement.hasAttribute('data-pm-still'), woke: w > 0, bad, late, worst: Math.round(worst), n: window.__stillHeld.length, readMs: Math.round(now - w) };
+				};
+				window.addEventListener('pointermove', (e) => { if (window.__stillWake) return; window.__stillWake = e.timeStamp; setTimeout(read, Math.max(0, e.timeStamp + 100 - performance.now())); }, { capture: true, once: true });
+				return out.length;
+			});
+			const wk = await traceToggle({ ms: 900, url, ...toggleTraceOptions(look, view, 'off'), during: async () => { await t.page.waitForTimeout(150); await move(); } }, view);
+			const woke = await f.waitForFunction(() => window.__stillWoke || (!window.__stillWake ? { still: document.documentElement.hasAttribute('data-pm-still'), woke: false, bad: [], late: [], worst: 0, n: window.__stillHeld.length, readMs: null } : null), null, { timeout: 5000, polling: 50 }).then((h) => h.jsonValue(), () => ({ still: null, woke: false, bad: ['no reading 5 s after the trace'], late: [], worst: 0, n: 0, readMs: null }));
 			const off = wk.after('pm-still:off', 'pm-still:off');
 			const offCost = recordToggle(look, view, 'off', off, wakePopulation);
 			if (a.still) t.log(`${at}: WAKE ${off && off.found ? `${off.first} elements, ${off.firstFrameMs} ms first frame` : 'no recalc seen'}; loops on again at most ${woke.worst} ms after the move; wake trace longest main frame ${wk.sum.mainFrames.max} ms, by ${named(wk.sum) || 'no script'}`);
 			if (a.still) {
-				await t.check(`${at}: one pointer move wakes the page and every held loop runs again within 100 ms`, woke.woke && !woke.still && woke.bad.length === 0, `${woke.n} held; ${woke.bad.length ? 'not running: ' + woke.bad.slice(0, 5).join('; ') : 'all running'}${woke.still ? '; still after the move' : ''}`);
+				await t.check(`${at}: one pointer move wakes the page and every held loop runs again within 100 ms`, woke.woke && !woke.still && woke.bad.length === 0, `${woke.n} held; ${woke.bad.length ? 'not running: ' + woke.bad.slice(0, 5).join('; ') : 'all running'}${woke.still ? '; still after the move' : ''}; read in the page ${woke.readMs} ms after the move`);
 				await t.check(`${at}: each loop goes on from where it was held (no restart, no jump)`, woke.late.length === 0, woke.late.length ? woke.late.slice(0, 5).join('; ') : `each started again at most ${woke.worst} ms after the waking move`);
 				await t.check(`${at}: waking cost stays within its marked population`, offCost.pass, `${JSON.stringify(offCost)}; ${off?.found ? `${off.firstFrameMs} ms frame; largest following recalc ${off.max}, ${off.total} in ${off.steps}` : 'no recalc or mark: unjudgeable'}`);
 			}
