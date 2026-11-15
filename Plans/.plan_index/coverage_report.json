@@ -1,31 +1,72 @@
 {
-  "blockers": [],
+  "blockers": [
+    {
+      "blocker_type": "parse_errors",
+      "items": [
+        {
+          "detail": "while parsing a block mapping\n  in \"<unicode string>\", line 1, column 1:\n    plan_unit_id: T-188\n    ^\nexpected <block end>, but found '<block sequence start>'\n  in \"<unicode string>\", line 44, column 3:\n      - 'Jared, 2026-11-15: \"I believe ... \n      ^",
+          "error": "plan_unit_yaml_parse_error",
+          "line": 13368,
+          "path": "Plans/Tools.md"
+        },
+        {
+          "detail": "while parsing a block mapping\n  in \"<unicode string>\", line 1, column 1:\n    plan_unit_id: T-190\n    ^\nexpected <block end>, but found '<block sequence start>'\n  in \"<unicode string>\", line 47, column 3:\n      - Plans/Tools.md#T-178 and secti ... \n      ^",
+          "error": "plan_unit_yaml_parse_error",
+          "line": 13498,
+          "path": "Plans/Tools.md"
+        }
+      ]
+    },
+    {
+      "blocker_type": "unresolved_dependency_references",
+      "items": [
+        {
+          "field": "depends_on",
+          "plan_unit_id": "T-189",
+          "target": "T-188"
+        }
+      ]
+    }
+  ],
   "field_coverage": {
-    "acceptance_criteria": 8969,
-    "canonical_text": 8969,
-    "context_scope": 8969,
-    "depends_on": 8969,
-    "gui_related": 8969,
-    "implementation_surfaces": 8969,
-    "node_compile_hint": 8969,
-    "owner_doc": 8969,
-    "plan_unit_id": 8969,
-    "reasoning_tier": 8969,
-    "risk_class": 8969,
-    "source_lineage": 8969,
-    "status": 8969,
-    "unblocks": 8969,
-    "unit_type": 8969,
-    "validation_surfaces": 8969
+    "acceptance_criteria": 8967,
+    "canonical_text": 8967,
+    "context_scope": 8967,
+    "depends_on": 8967,
+    "gui_related": 8967,
+    "implementation_surfaces": 8967,
+    "node_compile_hint": 8967,
+    "owner_doc": 8967,
+    "plan_unit_id": 8967,
+    "reasoning_tier": 8967,
+    "risk_class": 8967,
+    "source_lineage": 8967,
+    "status": 8967,
+    "unblocks": 8967,
+    "unit_type": 8967,
+    "validation_surfaces": 8967
   },
-  "generated_at_utc": "2026-11-15T19:40:54Z",
+  "generated_at_utc": "2026-11-15T20:00:24Z",
   "issues": {
     "docs_without_plan_units": [],
     "duplicate_plan_unit_ids": [],
     "missing_gui_related_boolean": [],
     "missing_required_metadata": [],
     "owner_doc_mismatches": [],
-    "parse_errors": []
+    "parse_errors": [
+      {
+        "detail": "while parsing a block mapping\n  in \"<unicode string>\", line 1, column 1:\n    plan_unit_id: T-188\n    ^\nexpected <block end>, but found '<block sequence start>'\n  in \"<unicode string>\", line 44, column 3:\n      - 'Jared, 2026-11-15: \"I believe ... \n      ^",
+        "error": "plan_unit_yaml_parse_error",
+        "line": 13368,
+        "path": "Plans/Tools.md"
+      },
+      {
+        "detail": "while parsing a block mapping\n  in \"<unicode string>\", line 1, column 1:\n    plan_unit_id: T-190\n    ^\nexpected <block end>, but found '<block sequence start>'\n  in \"<unicode string>\", line 47, column 3:\n      - Plans/Tools.md#T-178 and secti ... \n      ^",
+        "error": "plan_unit_yaml_parse_error",
+        "line": 13498,
+        "path": "Plans/Tools.md"
+      }
+    ]
   },
   "migration_coverage": {
     "allowed_residuals": [
@@ -469,11 +510,11 @@
         "structural_disposition": 8
       },
       "doc_count": 72,
-      "live_plan_unit_count": 8969,
+      "live_plan_unit_count": 8967,
       "source_preserving_unit_count": 0,
       "source_preserving_unit_ids": [],
       "span_count": 3933,
-      "unique_live_plan_unit_count": 8969
+      "unique_live_plan_unit_count": 8967
     },
     "coverage_rows": 3933,
     "coverage_span_ids_unique": true,
@@ -901,7 +942,7 @@
       "structural_disposition": 8
     },
     "final_status": "COMPLETE",
-    "live_plan_unit_count": 8969,
+    "live_plan_unit_count": 8967,
     "live_plan_unit_count_source": "current_live_plan_index",
     "next_batch_cursor": null,
     "nodeseeds_created": null,
@@ -931,7 +972,7 @@
   ],
   "schema_id": "pm.plan_index.coverage_report.v1",
   "source_scope": "top-level live Plans/*.md PlanUnit YAML fences",
-  "status": "pass",
+  "status": "fail",
   "summary": {
     "cycle_blocker_count": 0,
     "doc_count": 96,
@@ -940,9 +981,9 @@
     "duplicate_plan_unit_id_count": 0,
     "missing_gui_related_boolean_count": 0,
     "missing_required_metadata_count": 0,
-    "parse_error_count": 0,
-    "plan_unit_count": 8969,
-    "unique_plan_unit_count": 8969,
-    "unresolved_dependency_reference_count": 0
+    "parse_error_count": 2,
+    "plan_unit_count": 8967,
+    "unique_plan_unit_count": 8967,
+    "unresolved_dependency_reference_count": 1
   }
 }

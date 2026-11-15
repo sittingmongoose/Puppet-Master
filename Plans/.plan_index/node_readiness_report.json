@@ -1,18 +1,29 @@
 {
-  "build_order_blockers": [],
+  "build_order_blockers": [
+    {
+      "blocker_type": "unresolved_dependency_references",
+      "items": [
+        {
+          "field": "depends_on",
+          "plan_unit_id": "T-189",
+          "target": "T-188"
+        }
+      ]
+    }
+  ],
   "dependency_graph_summary": {
-    "build_order_available": true,
+    "build_order_available": false,
     "build_order_blocked_node_count": 0,
     "cycle_blocker_count": 0,
-    "depends_on_edge_count": 24539,
+    "depends_on_edge_count": 24532,
     "downstream_blocked_node_count": 0,
-    "edge_count": 27759,
-    "node_count": 8969,
+    "edge_count": 27750,
+    "node_count": 8967,
     "true_cycle_component_count": 0,
-    "unblocks_edge_count": 3220,
-    "unresolved_reference_count": 0
+    "unblocks_edge_count": 3218,
+    "unresolved_reference_count": 1
   },
-  "generated_at_utc": "2026-11-15T19:40:54Z",
+  "generated_at_utc": "2026-11-15T20:00:24Z",
   "gui_related_units": {
     "count": 3931,
     "units": [
@@ -43265,10 +43276,10 @@
   "no_final_node_queues_created": true,
   "no_worknodes_created": true,
   "nodeseed_candidates_created": false,
-  "plan_unit_count": 8969,
+  "plan_unit_count": 8967,
   "risk_and_reasoning_summary": {
     "reasoning_tier_counts": {
-      "high": 4286,
+      "high": 4284,
       "low": 9,
       "medium": 34,
       "standard": 4640
@@ -43879,7 +43890,6 @@
       "clock_skew_schedule_projection_drift": 1,
       "cluster_scope_creep": 1,
       "code_mode_carriage_overclaim": 1,
-      "code_mode_policy_bypass": 1,
       "codex_account_root_auth_family": 1,
       "codex_jsonl_subagent_output_parser_example": 1,
       "coding_plan_product_labels_picker_recommendation": 1,
@@ -47123,7 +47133,6 @@
       "tool_anchor_and_registry_drift": 1,
       "tool_artifact_attribution_gap": 1,
       "tool_boundary": 1,
-      "tool_calling_mode_truth_drift": 1,
       "tool_context": 1,
       "tool_contract_drift": 70,
       "tool_contract_preview_drift": 1,
@@ -47495,7 +47504,7 @@
     "source_preserving_unit_count": 0,
     "source_preserving_units": [],
     "status_counts": {
-      "accepted": 8689,
+      "accepted": 8687,
       "draft": 47,
       "retired": 205,
       "superseded": 28
@@ -47568,7 +47577,7 @@
       "recovery_requirement": 4,
       "reference": 5,
       "reference_formula": 1,
-      "requirement": 6094,
+      "requirement": 6092,
       "retirement_record": 3,
       "risk": 2,
       "runtime_contract": 22,
@@ -47804,6 +47813,6 @@
   },
   "schema_id": "pm.plan_index.node_readiness_report.v1",
   "source_plan_unit_index": "Plans/.plan_index/plan_units.jsonl",
-  "status": "blocked_runtime_certification_incomplete",
-  "status_reason": "Plans are indexed with required PlanUnit metadata and the PlanCompile compiler contract is accepted, but native runtime readiness remains blocked by PNC-019 until an executable lifecycle certification harness passes and records evidence for the enabled runtime boundary."
+  "status": "blocked_plans_incomplete",
+  "status_reason": "PlanUnit coverage or required metadata is incomplete; see missing_required_metadata and coverage_report blockers."
 }

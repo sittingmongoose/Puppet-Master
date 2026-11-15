@@ -22391,7 +22391,7 @@
     {
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
-        "False": 121,
+        "False": 119,
         "True": 69
       },
       "heading_count": 340,
@@ -22429,9 +22429,9 @@
         "future tool registry and shell/integration command dispatch",
         "future vision_bridge tool"
       ],
-      "line_count": 13549,
+      "line_count": 13563,
       "path": "Plans/Tools.md",
-      "plan_unit_count": 190,
+      "plan_unit_count": 188,
       "plan_unit_ids": [
         "T-002",
         "T-166",
@@ -22620,9 +22620,7 @@
         "T-185",
         "T-186",
         "T-187",
-        "T-188",
-        "T-189",
-        "T-190"
+        "T-189"
       ],
       "reasoning_tiers": [
         "high",
@@ -22635,7 +22633,6 @@
         "audit_lineage_loss",
         "browser_automation_overreach",
         "code_mode_carriage_overclaim",
-        "code_mode_policy_bypass",
         "content_search_boundary_drift",
         "crawl_scope_ambiguity",
         "debug_authorization_drift",
@@ -22684,7 +22681,6 @@
         "todo_ui_competing_state",
         "todo_whole_list_authority_drift",
         "tool_anchor_and_registry_drift",
-        "tool_calling_mode_truth_drift",
         "tool_contract_drift",
         "tool_contract_preview_drift",
         "tool_registry_drift",
@@ -22704,10 +22700,10 @@
         "workflow_local_tool_registry_drift",
         "write_atomicity_drift"
       ],
-      "sha256": "399e6b027edf4eac3f81c5c7f133462822bd884aeb925a638ef2e5b2059f8a77",
+      "sha256": "7228d7cc092de8efcada3c1238310e7d8c6599a3904a88521c954ddbf2691aa4",
       "source_preserving_unit_ids": [],
       "status_counts": {
-        "accepted": 189,
+        "accepted": 187,
         "retired": 1
       },
       "title": "Adding Tool Support -- Research & Plan",
@@ -22715,7 +22711,7 @@
         "compatibility_disposition": 2,
         "constraint": 1,
         "owner_boundary": 1,
-        "requirement": 186
+        "requirement": 184
       },
       "validation_surfaces": [
         "A length finishReason on tool-call deltas blocks/retries under typed policy, not as ordinary no-tool response.",
@@ -24332,7 +24328,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-11-15T19:40:54Z",
+  "generated_at_utc": "2026-11-15T20:00:24Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {
@@ -24340,13 +24336,13 @@
     "docs_with_plan_units": 96,
     "docs_without_plan_units": 0,
     "gui_related_counts": {
-      "False": 5038,
+      "False": 5036,
       "True": 3931
     },
-    "plan_unit_count": 8969,
+    "plan_unit_count": 8967,
     "source_preserving_unit_count": 0,
     "status_counts": {
-      "accepted": 8689,
+      "accepted": 8687,
       "draft": 47,
       "retired": 205,
       "superseded": 28
@@ -24419,7 +24415,7 @@
       "recovery_requirement": 4,
       "reference": 5,
       "reference_formula": 1,
-      "requirement": 6094,
+      "requirement": 6092,
       "retirement_record": 3,
       "risk": 2,
       "runtime_contract": 22,
