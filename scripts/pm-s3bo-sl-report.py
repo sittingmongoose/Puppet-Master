@@ -99,6 +99,15 @@ CLAUSES = {
     'sl_cmp_members': ['Settlement: eligible and forbidden detail', 'G27', 'G28'],
     'sl_cmp_retirement': ['Settlement: retirement intent id, recheck, receipt then intent clear', 'G29', 'G30'],
     'sl_cmp_backup': ['Settlement: coherent backup and restore', 'G31'],
+    'sl_cmp_role': ['SP-295 original installed role', 'G01'],
+    'sl_cmp_effect_plan': ['identity.json effect recipe', 'SP-296 effect plans before each effect', 'G05', 'G07'],
+    'sl_cmp_groups': ['G08 Shared admission (one-event barrier lifecycle groups, DL-270)'],
+    'sl_cmp_bytes': ['Source, candidate and visibility publication: scan from byte zero', 'G10', 'G12'],
+    'sl_cmp_translation': ['G14 Original translation source', 'G15 Current versus historical locators'],
+    'sl_cmp_continuation': ['Phase observations: G21 narrow internal continuation'],
+    'sl_cmp_source_successor': ['Phase observations: source-side successor after a sealed carrier', 'G23'],
+    'sl_cmp_final_fence': ['Phase observations: G24 inside every original publisher'],
+    'sl_cmp_journal': ['Settlement: mutable journal with a needed member', 'G28'],
     'sl_cmp_numbers': ['storage_uint64 (u64 detail member lengths)'],
     'sl_cmp_time': ['CV-1101 date_time (proof capture / occurrence)'],
 }
@@ -115,13 +124,13 @@ def invalid_mutations(controls):
     out = []
     specs = [
         ('storage.deletion_lifecycle_changed/sl/project-held', 'sl_del_payload', ('sl', 'runs', 1, 'events_appended'), [],
-         'Drop the appended event of an admitted step: the payload row, the identity row and the replay of that event all refuse.'),
-        ('storage.value_quarantine_changed/sl/resettable-lifecycle', 'sl_qtn_record', ('sl', 'runs', 3, 'record_after', 'transition_receipts', 1, 'receipt_ref'),
-         'qtn-receipt:other', 'Change one receipt ref in the record only: the record row refuses, and so would the payload join if it read the record.'),
+         'Drop the appended event of an admitted step: the payload row and the replay of that event both refuse.'),
+        ('storage.value_quarantine_changed/sl/resettable-lifecycle', 'sl_qtn_detect', ('sl', 'value', 'raw_sha256'), 'c' * 64,
+         'Change the held raw hash: identity, payload and record expectations all move, so several rows refuse.'),
         ('storage.compaction_lifecycle_changed/sl/recovery-to-committed', 'sl_cmp_phase', ('sl', 'runs', 5, 'facts', 'activation'), 'incomplete',
          'Withdraw the activation proof of the recovery exit: the whole later walk changes, so graph, phase, disposition and event rows refuse.'),
-        ('storage.retention_hold_changed/sl/set-clear', 'sl_hold_identity', ('sl', 'runs', 0, 'events_appended', 0, 'event_id'), 'evt_hold_' + 'e' * 64,
-         'Before the identity members were split from the producer view, this tripped identity and event rows together; kept as a regression of that split.'),
+        ('storage.retention_hold_changed/sl/set-clear', 'sl_hold_identity', ('sl', 'runs', 0, 'request', 'arguments', 'reason'), 'other reason',
+         'Change the original request reason: the transition binding, event, core and result expectations all move, so several rows refuse.'),
     ]
     for control_id, row, path, replacement, why in specs:
         value = copy.deepcopy(by_id[control_id]['value']); c.set_path(value, path, replacement)
