@@ -30,8 +30,11 @@
 //            single 35-50 ms gap on Alexis's PC is the host's, not the reveal's; gaps over --set note=34 ms and up to
 //            the bar are counted and logged per reveal as a NOTE, never failed).
 // Logged per change: click -> first frame, its parts (the click's own task, the time to ready), the reveal's length,
-// its frames, its long tasks and its longest gap; NieR's own path (into or out of NieR, no View Transition) is logged,
-// not judged. Then one change each under the system's Reduced Motion, the app's own Reduce motion (html[data-motion]) and
+// its frames, its long tasks and its longest gap. A change into or out of NieR plays NieR's own moment (no View
+// Transition) and is logged, not judged; every other change must take the View Transition (its own row, and all of them,
+// eight in the default sequence: a change that took none was once skipped as NieR's, PM7PERF-LOOKCHANGE-NULL-AS-NIER).
+// --set mutant=instant:<arg> makes that pick on the instant path (the app's Reduce motion on for it alone), the check's
+// own red test. Then one change each under the system's Reduced Motion, the app's own Reduce motion (html[data-motion]) and
 // low-resource mode: no View Transition starts, the theme is written in the click's own task, and the chat's hooks and
 // the after-layout callback run at once, as before (the hold is the reveal's only).
 //
@@ -119,13 +122,22 @@ async function surface(t, sandbox) {
 		await menuOpen();
 		const row = f.locator(`#pm-o55-onboarding .o55-lookmenu [data-o55-do="${mode ? 'lookMode' : 'lookFamily'}"][data-arg="${arg}"]`);
 		await quiet(); await f.waitForTimeout(300);
+		// (--set mutant=instant:<arg>, for the check's own red test: that pick made on the instant path, the app's Reduce
+		// motion on for it alone, as a page whose ordinary pick lost its transition)
+		const mutant = String(t.args.mutant || '') === 'instant:' + arg && !mutated.has(arg);
+		if (mutant) { mutated.add(arg); await f.evaluate(() => { const h = document.documentElement; h.__plcMut = h.getAttribute('data-motion'); h.setAttribute('data-motion', 'reduced'); }); }
 		await f.evaluate(START);
 		await press(row);
 		await f.waitForTimeout(250); await quiet();
 		await f.waitForTimeout(3200);   // the held work's 3 s after the reveal
-		return { arg, from: th.chosen + '-' + th.mode, ...(await f.evaluate(READ)) };
+		const out = { arg, from: th.chosen + '-' + th.mode, ...(await f.evaluate(READ)) };
+		if (mutant) await f.evaluate(() => { const h = document.documentElement, was = h.__plcMut; if (was == null) h.removeAttribute('data-motion'); else h.setAttribute('data-motion', was); });
+		return out;
 	};
 	const seq = t.args.seq ? String(t.args.seq).split(',') : SEQ;
+	const mutated = new Set();
+	// a change into or out of NieR plays NieR's own moment (no View Transition); every other change is ordinary
+	const nierPath = (r) => { const fam = r.from.replace(/-(light|dark)$/, ''), to = r.arg === 'light' || r.arg === 'dark' ? fam : r.arg; return (to === 'nier') !== (fam === 'nier'); };
 	const TASK = +(t.args.task || 50), GAP = +(t.args.gap || 50), NOTE = +(t.args.note || 34);
 	const rows = [];
 	for (const arg of seq) { const r = await pick(arg); if (r) { rows.push(r); await f.waitForTimeout(800); } }
@@ -133,8 +145,11 @@ async function surface(t, sandbox) {
 	for (const r of rows) {
 		const name = `${tag}: ${r.from} -> ${r.arg}`;
 		const v = r.vt;
-		t.log(`${name}: ${v ? `click->first ${v.first} ms (click task ${(r.ltAll.find((e) => e[0] <= 20) || [0, 0])[1]} ms, ready at ${v.ready}, circle played at ${v.play == null ? 'ready' : v.play}), reveal ${v.end - v.first} ms, ${r.frames} frames, longest gap ${r.maxGap} ms, long tasks in it ${JSON.stringify(r.ltIn)}` : 'no View Transition (NieR\'s own path)'}; theme written at ${r.write}, chat hook at ${JSON.stringify(r.hook)}, after-layout at ${JSON.stringify(r.after)}; all long tasks ${JSON.stringify(r.ltAll.slice(0, 10))}`);
-		if (!v) continue;
+		t.log(`${name}: ${v ? `click->first ${v.first} ms (click task ${(r.ltAll.find((e) => e[0] <= 20) || [0, 0])[1]} ms, ready at ${v.ready}, circle played at ${v.play == null ? 'ready' : v.play}), reveal ${v.end - v.first} ms, ${r.frames} frames, longest gap ${r.maxGap} ms, long tasks in it ${JSON.stringify(r.ltIn)}` : (nierPath(r) ? 'no View Transition (NieR\'s own path)' : 'NO View Transition (an ordinary change)')}; theme written at ${r.write}, chat hook at ${JSON.stringify(r.hook)}, after-layout at ${JSON.stringify(r.after)}; all long tasks ${JSON.stringify(r.ltAll.slice(0, 10))}`);
+		if (!v) {
+			if (!nierPath(r)) await t.check(`${name}: took the View Transition (an ordinary change, not into or out of NieR)`, false, `no View Transition; theme written at ${r.write} ms`);
+			continue;
+		}
 		if (!v.first || !v.end) { await t.check(`${name}: the reveal played (ready, first frame, finished)`, false, JSON.stringify(v)); continue; }
 		const circle = r.family === 'retro' ? 520 : 760, len = v.end - v.first, least = Math.ceil(circle / 100);
 		const played = v.play != null && !v.skipped && len >= circle - 50 && r.frames >= least;
@@ -154,7 +169,8 @@ async function surface(t, sandbox) {
 		await t.check(`${name}: no frame gap over ${GAP} ms in the reveal`, !v.skipped && gaps.length === 0, `${skipped}${gaps.length} of ${r.frames}: ${JSON.stringify(gaps.slice(0, 8))}; ${near.length} of ${NOTE + 1}-${GAP} ms (NOTE)`);
 	}
 	t.log(`${tag}: NOTE ${noted} frame gap(s) of ${NOTE + 1}-${GAP} ms across ${rows.filter((r) => r.vt).length} reveals`);
-	await t.check(`${tag}: at least six changes took the View Transition`, rows.filter((r) => r.vt).length >= 6, `${rows.filter((r) => r.vt).length} of ${rows.length}`);
+	const ordinary = rows.filter((r) => !nierPath(r)), took = ordinary.filter((r) => r.vt);
+	await t.check(`${tag}: every ordinary change took the View Transition (${t.args.seq ? 'all' : 'eight'} of them; only NieR's are skipped)`, took.length === ordinary.length && (t.args.seq || ordinary.length === 8), `${took.length} of ${ordinary.length} ordinary changes (${rows.length} in all)`);
 	// Reduced Motion (the system's, and the app's own switch, html[data-motion="reduced"]) and low-resource mode: unchanged
 	// (no reveal, no hold): each a change of its own
 	const instant = async (label, on, off) => {

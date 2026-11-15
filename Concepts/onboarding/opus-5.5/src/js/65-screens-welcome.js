@@ -19,6 +19,8 @@
       return out;
     },
     foot: () => ({ back: false, secondary: [{ label: T('welcome.skip'), do: 'skipAll', cls: 'o55-ghost' }], primary: { label: T('welcome.start'), do: 'start' } }),
+    /* the Look screen's fonts are loaded while Welcome is read (FO-206, 60-ui-core.js prewarm) */
+    mounted() { if (O55.ui.prewarm) O55.ui.prewarm('look'); },
     do: {
       start(S) { O55.ui.go('look'); },
       skipAll(S) { O55.ui.close('skip'); },
