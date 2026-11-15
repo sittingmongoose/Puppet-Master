@@ -97,11 +97,11 @@ def own_d_witnesses(key, base, store):
         # No later row reads an unknown member: only the member-set row refuses.
         changed['provenance']['c12_extra_member'] = 'TEST_ONLY extra provenance member'
         out.append(('provenance_extra_member', copy.deepcopy(base), changed, 'evidence_captured/provenance_members'))
-    elif key in ('stopped', 'tool_check_recorded'):
-        # An extra member whose value equals the payload's absent member (None):
-        # the per-member exact rows hold, only the member-set row refuses.
-        changed['provenance']['c12_extra_member'] = None
-        out.append(('provenance_extra_absent_member', copy.deepcopy(base), changed, key + '/provenance_members'))
+    # Not for stopped / tool_check_recorded: their checker names one row per
+    # provenance member (`<key>/original/<member>`), so an extra member would
+    # mint a row only that input evaluates (C12-GH2 run 1: two such rows, each
+    # unprovable). Their member-set row is killed by C12-GH1's missing-member
+    # negatives (pm_goal_own_d_oracles provenance_target).
     return out
 
 
