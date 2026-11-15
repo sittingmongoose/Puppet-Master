@@ -16154,7 +16154,7 @@
   "schema/5c9d5c3dc5de52b2/minimum": {
     "index": 0,
     "phase": true,
-    "rows": 6,
+    "rows": 7,
     "sites": [
       [
         "scripts/pm_goal_guard_tables.py",
@@ -16165,12 +16165,12 @@
         722
       ]
     ],
-    "table": "8a4ffdfdc61ad52f"
+    "table": "61bd6d6da513a775"
   },
   "schema/5c9d5c3dc5de52b2/type": {
     "index": 1,
     "phase": true,
-    "rows": 6,
+    "rows": 7,
     "sites": [
       [
         "scripts/pm_goal_guard_tables.py",
@@ -16181,7 +16181,7 @@
         722
       ]
     ],
-    "table": "8a4ffdfdc61ad52f"
+    "table": "61bd6d6da513a775"
   },
   "schema/5ca9635a867c7ff0/type": {
     "index": 5,
@@ -16954,7 +16954,7 @@
   "schema/6c58d04d614cf4c5/type": {
     "index": 2,
     "phase": true,
-    "rows": 6,
+    "rows": 7,
     "sites": [
       [
         "scripts/pm_goal_guard_tables.py",
@@ -16965,7 +16965,7 @@
         722
       ]
     ],
-    "table": "8a4ffdfdc61ad52f"
+    "table": "61bd6d6da513a775"
   },
   "schema/6c9a07ea435bfb9d/type": {
     "index": 0,
@@ -17834,7 +17834,7 @@
   "schema/789647d6ed9a1291/enum": {
     "index": 3,
     "phase": true,
-    "rows": 6,
+    "rows": 7,
     "sites": [
       [
         "scripts/pm_goal_guard_tables.py",
@@ -17845,12 +17845,12 @@
         722
       ]
     ],
-    "table": "8a4ffdfdc61ad52f"
+    "table": "61bd6d6da513a775"
   },
   "schema/789647d6ed9a1291/type": {
     "index": 4,
     "phase": true,
-    "rows": 6,
+    "rows": 7,
     "sites": [
       [
         "scripts/pm_goal_guard_tables.py",
@@ -17861,7 +17861,7 @@
         722
       ]
     ],
-    "table": "8a4ffdfdc61ad52f"
+    "table": "61bd6d6da513a775"
   },
   "schema/78da5ee96a0ff15d/maxItems": {
     "index": 7,
@@ -18312,9 +18312,9 @@
     "table": "fc8d5e03dc537d03"
   },
   "schema/827f4e05b8dcca0a/const": {
-    "index": 0,
+    "index": 5,
     "phase": true,
-    "rows": 1,
+    "rows": 7,
     "sites": [
       [
         "scripts/pm_goal_guard_tables.py",
@@ -18325,7 +18325,7 @@
         722
       ]
     ],
-    "table": "388ad85142e2b522"
+    "table": "61bd6d6da513a775"
   },
   "schema/82ccb0656b293f30/format": {
     "index": 0,
@@ -19032,9 +19032,9 @@
     "table": "c59085210d99b5a3"
   },
   "schema/8e253136de4c91c4/enum": {
-    "index": 5,
+    "index": 6,
     "phase": true,
-    "rows": 6,
+    "rows": 7,
     "sites": [
       [
         "scripts/pm_goal_guard_tables.py",
@@ -19045,7 +19045,7 @@
         722
       ]
     ],
-    "table": "8a4ffdfdc61ad52f"
+    "table": "61bd6d6da513a775"
   },
   "schema/8e253136de4c91c4/type": {
     "index": 0,
@@ -19850,7 +19850,7 @@
   "schema/992510d2247764cf/uniqueItems": {
     "index": 0,
     "phase": true,
-    "rows": 1,
+    "rows": 8,
     "sites": [
       [
         "scripts/pm_goal_guard_tables.py",
@@ -19861,7 +19861,7 @@
         722
       ]
     ],
-    "table": "071d123693fc931c"
+    "table": "8fcfad062fff914a"
   },
   "schema/997d8d2118d6528e/minLength": {
     "index": 3,
@@ -20904,25 +20904,9 @@
     "table": "2f163ef9afd360f1"
   },
   "schema/a5963d17ed6ed3f6/anyOf": {
-    "index": 0,
-    "phase": true,
-    "rows": 7,
-    "sites": [
-      [
-        "scripts/pm_goal_guard_tables.py",
-        92
-      ],
-      [
-        "scripts/pm_goal_oracle_common.py",
-        722
-      ]
-    ],
-    "table": "fdac8dd9f3c64eae"
-  },
-  "schema/a5963d17ed6ed3f6/closed_members": {
     "index": 1,
     "phase": true,
-    "rows": 7,
+    "rows": 8,
     "sites": [
       [
         "scripts/pm_goal_guard_tables.py",
@@ -20933,12 +20917,12 @@
         722
       ]
     ],
-    "table": "fdac8dd9f3c64eae"
+    "table": "8fcfad062fff914a"
   },
-  "schema/a5963d17ed6ed3f6/required": {
+  "schema/a5963d17ed6ed3f6/closed_members": {
     "index": 2,
     "phase": true,
-    "rows": 7,
+    "rows": 8,
     "sites": [
       [
         "scripts/pm_goal_guard_tables.py",
@@ -20949,12 +20933,12 @@
         722
       ]
     ],
-    "table": "fdac8dd9f3c64eae"
+    "table": "8fcfad062fff914a"
   },
-  "schema/a5963d17ed6ed3f6/type": {
+  "schema/a5963d17ed6ed3f6/required": {
     "index": 3,
     "phase": true,
-    "rows": 7,
+    "rows": 8,
     "sites": [
       [
         "scripts/pm_goal_guard_tables.py",
@@ -20965,7 +20949,23 @@
         722
       ]
     ],
-    "table": "fdac8dd9f3c64eae"
+    "table": "8fcfad062fff914a"
+  },
+  "schema/a5963d17ed6ed3f6/type": {
+    "index": 4,
+    "phase": true,
+    "rows": 8,
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        92
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        722
+      ]
+    ],
+    "table": "8fcfad062fff914a"
   },
   "schema/a5b52330d269e947/const": {
     "index": 2,
@@ -22120,25 +22120,9 @@
     "table": "8738ecfd59b8f42e"
   },
   "schema/b61826d211ba5a3f/minimum": {
-    "index": 4,
-    "phase": true,
-    "rows": 7,
-    "sites": [
-      [
-        "scripts/pm_goal_guard_tables.py",
-        92
-      ],
-      [
-        "scripts/pm_goal_oracle_common.py",
-        722
-      ]
-    ],
-    "table": "fdac8dd9f3c64eae"
-  },
-  "schema/b61826d211ba5a3f/type": {
     "index": 5,
     "phase": true,
-    "rows": 7,
+    "rows": 8,
     "sites": [
       [
         "scripts/pm_goal_guard_tables.py",
@@ -22149,7 +22133,23 @@
         722
       ]
     ],
-    "table": "fdac8dd9f3c64eae"
+    "table": "8fcfad062fff914a"
+  },
+  "schema/b61826d211ba5a3f/type": {
+    "index": 6,
+    "phase": true,
+    "rows": 8,
+    "sites": [
+      [
+        "scripts/pm_goal_guard_tables.py",
+        92
+      ],
+      [
+        "scripts/pm_goal_oracle_common.py",
+        722
+      ]
+    ],
+    "table": "8fcfad062fff914a"
   },
   "schema/b69a8938943e8d48/maxItems": {
     "index": 6,
@@ -22232,9 +22232,9 @@
     "table": "11ee7e6b67c7e404"
   },
   "schema/b77cfd082e5aeccc/minimum": {
-    "index": 6,
+    "index": 7,
     "phase": true,
-    "rows": 7,
+    "rows": 8,
     "sites": [
       [
         "scripts/pm_goal_guard_tables.py",
@@ -22245,7 +22245,7 @@
         722
       ]
     ],
-    "table": "fdac8dd9f3c64eae"
+    "table": "8fcfad062fff914a"
   },
   "schema/b77cfd082e5aeccc/type": {
     "index": 0,

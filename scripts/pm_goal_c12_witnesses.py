@@ -116,6 +116,23 @@ def family_witnesses(key, base):
     return []
 
 
+def payload_variants(key, payload):
+    out = []
+    if key == 'replanned':
+        variant = copy.deepcopy(payload)
+        variant['payload']['affected_child_goal_ids'] = ['child:c12-1']
+        variant['payload']['child_decisions'] = [dict(child_goal_id='child:c12-1', decision='resteer',
+            reason='Scope narrowed by the original owner.', new_scope=dict(scope_kind='external_read_only',
+            include_refs=['scope:c12-original'], exclude_refs=[], write_allowed=False))]
+        out.append(('resteer_external_read_only_scope', variant))
+    if key == 'progressed':
+        variant = copy.deepcopy(payload)
+        variant['approval_refs'] = ['approval:c12-original']
+        variant['block_refs'] = ['block:c12-original']
+        out.append(('approval_and_block_refs', variant))
+    return out
+
+
 def protocol_route(collector):
     paths = [OUT_SCHEMA, ER_SCHEMA, CKPT_SCHEMA]
     for key in FAMILIES:
@@ -147,6 +164,17 @@ def protocol_route(collector):
             collector.invoke(f'gh1/{key}/event_record/application_scope_control', record_shape, application, True, family=family)
         else:
             collector.failures.append(dict(kind='gh1_application_seed_invalid', family=family))
+        # Lawful payload variants for owner branches no authored original reaches
+        # (seeds only, kept only if the complete owner payload schema accepts).
+        for label, variant in payload_variants(key, base['answer']['original_event']['payload']):
+            if pv.is_valid(variant):
+                def payload_shape(value, pv=pv, key=key):
+                    gate = Gates()
+                    gate.schema(pv, value, key + '/payload')
+                    return gate.errors
+                collector.invoke(f'gh1/{key}/payload/{label}', payload_shape, variant, True, family=family)
+            else:
+                collector.failures.append(dict(kind='gh1_payload_variant_invalid', family=family, variant=label))
         # ATS-211's read-token boundary for every family (the fixtures author it
         # for child_status only): a lawful token as a seed, no credit.
         token_validator = validator({'$ref': load(CKPT_SCHEMA)['$id'] + '#/$defs/read_token'}, registry)

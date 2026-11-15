@@ -22,7 +22,8 @@ import pickle
 
 import pm_goal_oracle_common as common
 
-ATTEMPTS = 12
+ATTEMPTS = 12          # edits that still declare the row, per (row, family, validator)
+TOTAL_ATTEMPTS = 48    # every edit for the row, per (row, family, validator)
 JSON_VALUES = (('null', None), ('boolean', False), ('object', {}), ('array', []),
                ('string', 'c12'), ('number', 1.5), ('integer', 7))
 INVALID_FORMATS = {'date-time': '2026-02-30T12:00:00Z', 'uuid': 'c12c12c1-zzzz-4zzz-8zzz-c12c12c12c12',
@@ -625,11 +626,11 @@ def run(collector):
                     # Budget per validator, so every owner boundary that holds
                     # the row gets its own attempts; stop once one exact
                     # single-row witness exists for the family.
-                    slot = done.setdefault((ident, family, schema_digest), dict(attempts=0))
-                    if (ident, family) in exact or slot['attempts'] >= ATTEMPTS:
+                    slot = done.setdefault((ident, family, schema_digest), dict(attempts=0, total=0))
+                    if (ident, family) in exact or slot['attempts'] >= ATTEMPTS or slot['total'] >= TOTAL_ATTEMPTS:
                         continue
                     for index, edit in enumerate(edits(node, keyword, inst, pool, context, peers.get(path, ()), pools)):
-                        if (ident, family) in exact or slot['attempts'] >= ATTEMPTS:
+                        if (ident, family) in exact or slot['attempts'] >= ATTEMPTS or slot['total'] >= TOTAL_ATTEMPTS:
                             break
                         changed = apply(seed, path, edit)
                         if keyword in ('anyOf', 'oneOf') and not union_rejects(v, node, keyword, at(changed, path), context):
@@ -643,7 +644,11 @@ def run(collector):
                         declared = ident if len(target) == 1 else tuple(sorted(target))
                         stats['set_targets'] += len(target) > 1
                         stats['union_targets'] += keyword in ('anyOf', 'oneOf')
-                        slot['attempts'] += 1
+                        # The row's budget counts only edits that still declare it;
+                        # an edit reported through its union never uses it up.
+                        if ident in target:
+                            slot['attempts'] += 1
+                        slot['total'] += 1
                         stats['attempts'] += 1
                         label = f'schema-keyword/{family}/{prefix}/{keyword}/{"/".join(map(str, path))}/{edit[0]}/{index}/{number}'
                         collector.invoke(label, check, changed, False, target=declared, family=family, generated=True)
