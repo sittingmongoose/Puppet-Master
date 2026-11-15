@@ -432,64 +432,64 @@
     "table": "1cf496559ba5d5a0"
   },
   "evidence/content_hash": {
-    "index": 0,
+    "index": 1,
     "phase": true,
-    "rows": 5,
+    "rows": 6,
     "sites": [
       [
         "scripts/pm_goal_own_d_oracles.py",
         397
       ]
     ],
-    "table": "d2c7e25da632f952"
+    "table": "96d33a15b6947571"
   },
   "evidence/original/currentness_state": {
-    "index": 3,
-    "phase": true,
-    "rows": 5,
-    "sites": [
-      [
-        "scripts/pm_goal_own_d_oracles.py",
-        400
-      ]
-    ],
-    "table": "d2c7e25da632f952"
-  },
-  "evidence/original/evidence_ref": {
-    "index": 1,
-    "phase": true,
-    "rows": 5,
-    "sites": [
-      [
-        "scripts/pm_goal_own_d_oracles.py",
-        400
-      ]
-    ],
-    "table": "d2c7e25da632f952"
-  },
-  "evidence/original/redaction_profile": {
     "index": 4,
     "phase": true,
-    "rows": 5,
+    "rows": 6,
     "sites": [
       [
         "scripts/pm_goal_own_d_oracles.py",
         400
       ]
     ],
-    "table": "d2c7e25da632f952"
+    "table": "96d33a15b6947571"
   },
-  "evidence/original/source_spans": {
+  "evidence/original/evidence_ref": {
     "index": 2,
     "phase": true,
-    "rows": 5,
+    "rows": 6,
     "sites": [
       [
         "scripts/pm_goal_own_d_oracles.py",
         400
       ]
     ],
-    "table": "d2c7e25da632f952"
+    "table": "96d33a15b6947571"
+  },
+  "evidence/original/redaction_profile": {
+    "index": 5,
+    "phase": true,
+    "rows": 6,
+    "sites": [
+      [
+        "scripts/pm_goal_own_d_oracles.py",
+        400
+      ]
+    ],
+    "table": "96d33a15b6947571"
+  },
+  "evidence/original/source_spans": {
+    "index": 3,
+    "phase": true,
+    "rows": 6,
+    "sites": [
+      [
+        "scripts/pm_goal_own_d_oracles.py",
+        400
+      ]
+    ],
+    "table": "96d33a15b6947571"
   },
   "evidence/source_line_bounds": {
     "index": 0,
@@ -506,17 +506,17 @@
   "evidence_captured/provenance_members": {
     "index": 0,
     "phase": true,
-    "rows": 1,
+    "rows": 6,
     "sites": [
       [
         "scripts/pm_goal_own_d_oracles.py",
         392
       ]
     ],
-    "table": "b488194a60913657"
+    "table": "96d33a15b6947571"
   },
   "frame/crc32": {
-    "index": 7,
+    "index": 5,
     "phase": true,
     "rows": 8,
     "sites": [
@@ -525,19 +525,19 @@
         434
       ]
     ],
-    "table": "b9702eb445d8225b"
+    "table": "b50daf138f4cc93a"
   },
   "frame/durable_end": {
-    "index": 2,
+    "index": 0,
     "phase": true,
-    "rows": 8,
+    "rows": 2,
     "sites": [
       [
         "scripts/pm_goal_own_d_oracles.py",
         449
       ]
     ],
-    "table": "a9131e1412c6d56a"
+    "table": "c875fd856aeab81f"
   },
   "frame/full_cursor": {
     "index": 0,
@@ -552,7 +552,7 @@
     "table": "ebbad0623fa577af"
   },
   "frame/original_value": {
-    "index": 0,
+    "index": 6,
     "phase": true,
     "rows": 8,
     "sites": [
@@ -561,10 +561,10 @@
         436
       ]
     ],
-    "table": "a9131e1412c6d56a"
+    "table": "b50daf138f4cc93a"
   },
   "frame/selected_cursor": {
-    "index": 1,
+    "index": 7,
     "phase": true,
     "rows": 8,
     "sites": [
@@ -573,19 +573,19 @@
         440
       ]
     ],
-    "table": "a9131e1412c6d56a"
+    "table": "b50daf138f4cc93a"
   },
   "frame/within_watermark": {
-    "index": 3,
+    "index": 1,
     "phase": true,
-    "rows": 8,
+    "rows": 2,
     "sites": [
       [
         "scripts/pm_goal_own_d_oracles.py",
         450
       ]
     ],
-    "table": "a9131e1412c6d56a"
+    "table": "c875fd856aeab81f"
   },
   "inspection/final_candidate": {
     "index": 0,
@@ -996,7 +996,7 @@
     "table": "9b5a0b4d58aaa84a"
   },
   "original/owner/admission": {
-    "index": 6,
+    "index": 2,
     "phase": true,
     "rows": 8,
     "sites": [
@@ -1005,21 +1005,57 @@
         483
       ]
     ],
-    "table": "1aad145b3592a079"
+    "table": "8b86460fef5a6839"
   },
   "original/owner/facts": {
-    "index": 2,
+    "index": 6,
     "phase": true,
-    "rows": 4,
+    "rows": 8,
     "sites": [
       [
         "scripts/pm_goal_own_d_oracles.py",
         485
       ]
     ],
-    "table": "364dd643e85c81ab"
+    "table": "8b86460fef5a6839"
   },
   "original/owner/first_receipt": {
+    "index": 1,
+    "phase": true,
+    "rows": 8,
+    "sites": [
+      [
+        "scripts/pm_goal_own_d_oracles.py",
+        483
+      ]
+    ],
+    "table": "8b86460fef5a6839"
+  },
+  "original/owner/members": {
+    "index": 0,
+    "phase": true,
+    "rows": 8,
+    "sites": [
+      [
+        "scripts/pm_goal_own_d_oracles.py",
+        481
+      ]
+    ],
+    "table": "8b86460fef5a6839"
+  },
+  "original/owner/predecessor": {
+    "index": 3,
+    "phase": true,
+    "rows": 8,
+    "sites": [
+      [
+        "scripts/pm_goal_own_d_oracles.py",
+        483
+      ]
+    ],
+    "table": "8b86460fef5a6839"
+  },
+  "original/owner/producer_digest": {
     "index": 5,
     "phase": true,
     "rows": 8,
@@ -1029,67 +1065,31 @@
         483
       ]
     ],
-    "table": "1aad145b3592a079"
+    "table": "8b86460fef5a6839"
   },
-  "original/owner/members": {
-    "index": 4,
-    "phase": true,
-    "rows": 8,
-    "sites": [
-      [
-        "scripts/pm_goal_own_d_oracles.py",
-        481
-      ]
-    ],
-    "table": "1aad145b3592a079"
-  },
-  "original/owner/predecessor": {
+  "original/owner/references": {
     "index": 7,
     "phase": true,
     "rows": 8,
     "sites": [
       [
         "scripts/pm_goal_own_d_oracles.py",
-        483
-      ]
-    ],
-    "table": "1aad145b3592a079"
-  },
-  "original/owner/producer_digest": {
-    "index": 1,
-    "phase": true,
-    "rows": 4,
-    "sites": [
-      [
-        "scripts/pm_goal_own_d_oracles.py",
-        483
-      ]
-    ],
-    "table": "364dd643e85c81ab"
-  },
-  "original/owner/references": {
-    "index": 3,
-    "phase": true,
-    "rows": 4,
-    "sites": [
-      [
-        "scripts/pm_goal_own_d_oracles.py",
         486
       ]
     ],
-    "table": "364dd643e85c81ab"
+    "table": "8b86460fef5a6839"
   },
   "original/owner/runtime": {
-    "index": 0,
+    "index": 4,
     "phase": true,
-    "rows": 4,
+    "rows": 8,
     "sites": [
       [
         "scripts/pm_goal_own_d_oracles.py",
         483
       ]
     ],
-    "table": "364dd643e85c81ab"
+    "table": "8b86460fef5a6839"
   },
   "original/owner_unit": {
     "index": 0,
@@ -1848,43 +1848,31 @@
     "table": "02bbe097a2e8f613"
   },
   "receipt/event_id": {
-    "index": 5,
-    "phase": true,
-    "rows": 8,
-    "sites": [
-      [
-        "scripts/pm_goal_own_d_oracles.py",
-        463
-      ]
-    ],
-    "table": "a9131e1412c6d56a"
-  },
-  "receipt/event_type": {
-    "index": 6,
-    "phase": true,
-    "rows": 8,
-    "sites": [
-      [
-        "scripts/pm_goal_own_d_oracles.py",
-        463
-      ]
-    ],
-    "table": "a9131e1412c6d56a"
-  },
-  "receipt/first/event_id": {
     "index": 1,
     "phase": true,
     "rows": 8,
     "sites": [
       [
         "scripts/pm_goal_own_d_oracles.py",
-        465
+        463
       ]
     ],
-    "table": "1aad145b3592a079"
+    "table": "3ed0ff37eaef00df"
   },
-  "receipt/first/sequence_id": {
+  "receipt/event_type": {
     "index": 2,
+    "phase": true,
+    "rows": 8,
+    "sites": [
+      [
+        "scripts/pm_goal_own_d_oracles.py",
+        463
+      ]
+    ],
+    "table": "3ed0ff37eaef00df"
+  },
+  "receipt/first/event_id": {
+    "index": 5,
     "phase": true,
     "rows": 8,
     "sites": [
@@ -1893,7 +1881,19 @@
         465
       ]
     ],
-    "table": "1aad145b3592a079"
+    "table": "3ed0ff37eaef00df"
+  },
+  "receipt/first/sequence_id": {
+    "index": 6,
+    "phase": true,
+    "rows": 8,
+    "sites": [
+      [
+        "scripts/pm_goal_own_d_oracles.py",
+        465
+      ]
+    ],
+    "table": "3ed0ff37eaef00df"
   },
   "receipt/full_value_commitment": {
     "index": 0,
@@ -1908,42 +1908,18 @@
     "table": "fd3018d425f1021e"
   },
   "receipt/idempotency_key": {
-    "index": 7,
-    "phase": true,
-    "rows": 8,
-    "sites": [
-      [
-        "scripts/pm_goal_own_d_oracles.py",
-        463
-      ]
-    ],
-    "table": "a9131e1412c6d56a"
-  },
-  "receipt/scope_partition": {
-    "index": 0,
-    "phase": true,
-    "rows": 8,
-    "sites": [
-      [
-        "scripts/pm_goal_own_d_oracles.py",
-        463
-      ]
-    ],
-    "table": "1aad145b3592a079"
-  },
-  "receipt/semantic_digest": {
     "index": 3,
     "phase": true,
     "rows": 8,
     "sites": [
       [
         "scripts/pm_goal_own_d_oracles.py",
-        472
+        463
       ]
     ],
-    "table": "1aad145b3592a079"
+    "table": "3ed0ff37eaef00df"
   },
-  "receipt/storage_instance_id": {
+  "receipt/scope_partition": {
     "index": 4,
     "phase": true,
     "rows": 8,
@@ -1953,7 +1929,31 @@
         463
       ]
     ],
-    "table": "a9131e1412c6d56a"
+    "table": "3ed0ff37eaef00df"
+  },
+  "receipt/semantic_digest": {
+    "index": 7,
+    "phase": true,
+    "rows": 8,
+    "sites": [
+      [
+        "scripts/pm_goal_own_d_oracles.py",
+        472
+      ]
+    ],
+    "table": "3ed0ff37eaef00df"
+  },
+  "receipt/storage_instance_id": {
+    "index": 0,
+    "phase": true,
+    "rows": 8,
+    "sites": [
+      [
+        "scripts/pm_goal_own_d_oracles.py",
+        463
+      ]
+    ],
+    "table": "3ed0ff37eaef00df"
   },
   "reference/access": {
     "index": 6,
@@ -2054,14 +2054,14 @@
   "references/complete_roles": {
     "index": 1,
     "phase": true,
-    "rows": 8,
+    "rows": 2,
     "sites": [
       [
         "scripts/pm_goal_own_d_oracles.py",
         375
       ]
     ],
-    "table": "626216bd287086bd"
+    "table": "d40a279dd4b0a7d8"
   },
   "request/binding": {
     "index": 1,
@@ -2078,7 +2078,7 @@
   "request/family_dispatch": {
     "index": 0,
     "phase": true,
-    "rows": 8,
+    "rows": 2,
     "sites": [
       [
         "scripts/pm_goal_own_d_oracles.py",
@@ -2089,7 +2089,7 @@
         371
       ]
     ],
-    "table": "626216bd287086bd"
+    "table": "d40a279dd4b0a7d8"
   },
   "request/selector": {
     "index": 0,
@@ -25860,7 +25860,7 @@
     "table": "9b5a0b4d58aaa84a"
   },
   "source/full_original": {
-    "index": 6,
+    "index": 4,
     "phase": true,
     "rows": 8,
     "sites": [
@@ -25869,7 +25869,7 @@
         432
       ]
     ],
-    "table": "b9702eb445d8225b"
+    "table": "b50daf138f4cc93a"
   },
   "source/index_key": {
     "index": 6,
@@ -25884,66 +25884,6 @@
     "table": "9b5a0b4d58aaa84a"
   },
   "source/owner/authorized": {
-    "index": 6,
-    "phase": true,
-    "rows": 8,
-    "sites": [
-      [
-        "scripts/pm_goal_own_d_oracles.py",
-        431
-      ]
-    ],
-    "table": "626216bd287086bd"
-  },
-  "source/owner/captured_fence": {
-    "index": 5,
-    "phase": true,
-    "rows": 8,
-    "sites": [
-      [
-        "scripts/pm_goal_own_d_oracles.py",
-        431
-      ]
-    ],
-    "table": "626216bd287086bd"
-  },
-  "source/owner/event": {
-    "index": 3,
-    "phase": true,
-    "rows": 8,
-    "sites": [
-      [
-        "scripts/pm_goal_own_d_oracles.py",
-        431
-      ]
-    ],
-    "table": "626216bd287086bd"
-  },
-  "source/owner/final_fence": {
-    "index": 5,
-    "phase": true,
-    "rows": 8,
-    "sites": [
-      [
-        "scripts/pm_goal_own_d_oracles.py",
-        431
-      ]
-    ],
-    "table": "b9702eb445d8225b"
-  },
-  "source/owner/frame_verified": {
-    "index": 2,
-    "phase": true,
-    "rows": 8,
-    "sites": [
-      [
-        "scripts/pm_goal_own_d_oracles.py",
-        431
-      ]
-    ],
-    "table": "b9702eb445d8225b"
-  },
-  "source/owner/index_key": {
     "index": 4,
     "phase": true,
     "rows": 8,
@@ -25953,22 +25893,10 @@
         431
       ]
     ],
-    "table": "b9702eb445d8225b"
+    "table": "288a677b4317483b"
   },
-  "source/owner/members": {
-    "index": 2,
-    "phase": true,
-    "rows": 8,
-    "sites": [
-      [
-        "scripts/pm_goal_own_d_oracles.py",
-        429
-      ]
-    ],
-    "table": "626216bd287086bd"
-  },
-  "source/owner/reader_available": {
-    "index": 0,
+  "source/owner/captured_fence": {
+    "index": 3,
     "phase": true,
     "rows": 8,
     "sites": [
@@ -25977,21 +25905,9 @@
         431
       ]
     ],
-    "table": "b9702eb445d8225b"
+    "table": "288a677b4317483b"
   },
-  "source/owner/retained": {
-    "index": 7,
-    "phase": true,
-    "rows": 8,
-    "sites": [
-      [
-        "scripts/pm_goal_own_d_oracles.py",
-        431
-      ]
-    ],
-    "table": "626216bd287086bd"
-  },
-  "source/owner/secret_safe": {
+  "source/owner/event": {
     "index": 1,
     "phase": true,
     "rows": 8,
@@ -26001,21 +25917,9 @@
         431
       ]
     ],
-    "table": "b9702eb445d8225b"
+    "table": "288a677b4317483b"
   },
-  "source/owner/token": {
-    "index": 4,
-    "phase": true,
-    "rows": 8,
-    "sites": [
-      [
-        "scripts/pm_goal_own_d_oracles.py",
-        431
-      ]
-    ],
-    "table": "626216bd287086bd"
-  },
-  "source/owner/translation_verified": {
+  "source/owner/final_fence": {
     "index": 3,
     "phase": true,
     "rows": 8,
@@ -26025,7 +25929,103 @@
         431
       ]
     ],
-    "table": "b9702eb445d8225b"
+    "table": "b50daf138f4cc93a"
+  },
+  "source/owner/frame_verified": {
+    "index": 0,
+    "phase": true,
+    "rows": 8,
+    "sites": [
+      [
+        "scripts/pm_goal_own_d_oracles.py",
+        431
+      ]
+    ],
+    "table": "b50daf138f4cc93a"
+  },
+  "source/owner/index_key": {
+    "index": 2,
+    "phase": true,
+    "rows": 8,
+    "sites": [
+      [
+        "scripts/pm_goal_own_d_oracles.py",
+        431
+      ]
+    ],
+    "table": "b50daf138f4cc93a"
+  },
+  "source/owner/members": {
+    "index": 0,
+    "phase": true,
+    "rows": 8,
+    "sites": [
+      [
+        "scripts/pm_goal_own_d_oracles.py",
+        429
+      ]
+    ],
+    "table": "288a677b4317483b"
+  },
+  "source/owner/reader_available": {
+    "index": 6,
+    "phase": true,
+    "rows": 8,
+    "sites": [
+      [
+        "scripts/pm_goal_own_d_oracles.py",
+        431
+      ]
+    ],
+    "table": "288a677b4317483b"
+  },
+  "source/owner/retained": {
+    "index": 5,
+    "phase": true,
+    "rows": 8,
+    "sites": [
+      [
+        "scripts/pm_goal_own_d_oracles.py",
+        431
+      ]
+    ],
+    "table": "288a677b4317483b"
+  },
+  "source/owner/secret_safe": {
+    "index": 7,
+    "phase": true,
+    "rows": 8,
+    "sites": [
+      [
+        "scripts/pm_goal_own_d_oracles.py",
+        431
+      ]
+    ],
+    "table": "288a677b4317483b"
+  },
+  "source/owner/token": {
+    "index": 2,
+    "phase": true,
+    "rows": 8,
+    "sites": [
+      [
+        "scripts/pm_goal_own_d_oracles.py",
+        431
+      ]
+    ],
+    "table": "288a677b4317483b"
+  },
+  "source/owner/translation_verified": {
+    "index": 1,
+    "phase": true,
+    "rows": 8,
+    "sites": [
+      [
+        "scripts/pm_goal_own_d_oracles.py",
+        431
+      ]
+    ],
+    "table": "b50daf138f4cc93a"
   },
   "source/reader_available": {
     "index": 2,

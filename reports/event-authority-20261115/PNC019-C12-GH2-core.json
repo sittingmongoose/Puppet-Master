@@ -1,0 +1,1681 @@
+{
+ "schema_id": "pm.pnc019.c12_gh2.core.v1",
+ "status": "C12_GH2_RESULT",
+ "native_execution": "NOT_RUN",
+ "gated_tool": {
+  "commit": "004bdedd632d9463f3535190a6ed5772338cdce1",
+  "file": "scripts/pm_guard_isolation.py",
+  "sha256": "e8038992eabbe067c8bcba8d48824b97fbb6b5b7e69cbfe28a669f939a96c0b8"
+ },
+ "run": {
+  "calls": 89848,
+  "rows": 1855,
+  "failures": 0,
+  "signatures": 978,
+  "replay_unknown_rows": [],
+  "source_drift": []
+ },
+ "gated_proof": {
+  "tables": 868,
+  "max_rows_per_table": 8,
+  "statuses": {
+   "PASS": 762,
+   "NOT_RUN": 106
+  },
+  "rows_proved": 1749,
+  "rows_unproved": 106,
+  "rows_unproved_with_proof": 106,
+  "rows_unproved_without_proof": [],
+  "proof_kinds": {
+   "union_alternative_member": 88,
+   "earlier_owner_schema_or_checker_clause": 10,
+   "entailed_by_unconditional_required": 1,
+   "earlier_owner_union": 3,
+   "earlier_owner_edition_union": 2,
+   "earlier_frozen_checker_clauses": 2
+  },
+  "boundary": "real complete-call observation vectors (no synthetic pairs)"
+ },
+ "fabricated_row_self_test": {
+  "status": "pass",
+  "pipeline": {
+   "status": "REFUSED",
+   "reason": "row_never_observed_by_complete_checker",
+   "unobserved": [
+    "reviewer/fabricated_guard_no_checker_has_this"
+   ]
+  },
+  "gated_tool_on_real_vectors": {
+   "status": "FAIL",
+   "fabricated_proved": false,
+   "failure_kinds": [
+    "control_refused",
+    "runtime_untracked_site",
+    "table_protocol_error",
+    "untracked_refusal"
+   ],
+   "proved": []
+  },
+  "legacy_synthetic_contrast": {
+   "status": "PASS",
+   "proved": 1
+  }
+ },
+ "judge_self_test": {
+  "status": "pass",
+  "cases": 12,
+  "ecma_patterns": "pass",
+  "removal_audit_and_union_attribution": "pass"
+ },
+ "numbers_self_test": {
+  "status": "pass",
+  "corpus_cases": 580,
+  "case_passes": 580
+ },
+ "ledger": {
+  "entries": 89848,
+  "outcomes": {
+   "undeclared_accepted": 115,
+   "control": 5223,
+   "undeclared": 7796,
+   "exact_expected": 56379,
+   "other_refusal": 19142,
+   "multiple_refusals": 1119,
+   "accepted": 74
+  },
+  "replay_results": {
+   "KILLED": 5784,
+   "NOT_REPLAYED_CAP": 49771,
+   "COVERED_LATER": 297,
+   "DUPLICATE_SET_KILLED": 425,
+   "DUPLICATE_SET_SITE_FAILED": 102
+  },
+  "rule": "KILLED: declared target, exact single refusal, complete checker accepts with only that row cut, uncached restoration repeats the refusal; DUPLICATE_SET_KILLED: declared set, joint cut accepts, each site refuses alone; COVERED_LATER / CUT_EXCEPTION / RESTORATION_FAILED earn nothing."
+ },
+ "standalone_original_suites": {
+  "pm_goal_history_reader_fixtures": {
+   "status": "fail",
+   "cases": 6188,
+   "failures": 8,
+   "failure_sample": [
+    "guards without isolated negatives: schema/4b9f9e20581832ca/type",
+    "schema/39dff68df796fada/enum: surviving guard mutant; masked=['receipt_recorded/schema/type_validator_outputs_0_outcome_string_false', 'receipt_recorded/schema/type_validator_outputs_0_outcome_string_zero']",
+    "schema/588f6fefacf9ace4/oneOf: surviving guard mutant; masked=['evidence_captured/schema/type_source_spans_0_locator_kind_string_false', 'evidence_captured/schema/type_source_spans_0_locator_kind_string_zero']",
+    "schema/5c0aac31e4bf8522/oneOf: surviving guard mutant; masked=['replanned/schema/type_child_decision_string_false', 'replanned/schema/type_child_decision_string_zero']",
+    "schema/62c1d7e4ee2df01c/oneOf: surviving guard mutant; masked=['receipt_recorded/schema/type_validator_outputs_0_outcome_string_false', 'receipt_recorded/schema/type_validator_outputs_0_outcome_string_zero']",
+    "schema/b34f9a375418a2bc/anyOf: surviving guard mutant; masked=['child_status/event_record/type_envelope_application_project_id_array', 'child_status/event_record/type_envelope_application_project_id_object', 'child_statu",
+    "schema/b923f17ca3351bca/enum: surviving guard mutant; masked=['evidence_captured/schema/type_source_spans_0_locator_kind_string_false', 'evidence_captured/schema/type_source_spans_0_locator_kind_string_zero']",
+    "schema/c13092cebe264eed/enum: surviving guard mutant; masked=['replanned/schema/type_child_decision_string_false', 'replanned/schema/type_child_decision_string_zero']"
+   ],
+   "exit": "1"
+  },
+  "pm_goal_own_d_oracles": {
+   "status": "pass",
+   "cases": 54190,
+   "failures": 0,
+   "failure_sample": [],
+   "exit": "0"
+  },
+  "pm_goal_current_writer_oracles": {
+   "status": "fail",
+   "cases": 931,
+   "failures": 2,
+   "failure_sample": [
+    "schema/1a96b5023ccea052/oneOf: surviving guard mutant; masked=['goal_run.certified/payload/type_registered_validator_outputs_0_outcome_string_false', 'goal_run.certified/payload/type_registered_validator_outputs_0_outcom",
+    "schema/2dca229817013f75/enum: surviving guard mutant; masked=['goal_run.certified/payload/type_registered_validator_outputs_0_outcome_string_false', 'goal_run.certified/payload/type_registered_validator_outputs_0_outcome"
+   ],
+   "exit": "1"
+  },
+  "pm_goal_run_stop_block_oracles": {
+   "status": "pass",
+   "cases": 494,
+   "failures": 0,
+   "failure_sample": [],
+   "exit": "0"
+  },
+  "pm_goal_lifecycle_successor_oracles": {
+   "status": "pass",
+   "cases": 539,
+   "failures": 0,
+   "failure_sample": [],
+   "exit": "0"
+  }
+ },
+ "datetime_inventory": "NOT_RUN (this base predates S1 T198; NUMRULE files unchanged)",
+ "generator": {
+  "validators": 60,
+  "seeds": 11254,
+  "derived_seeds": 10504,
+  "applications": 686714,
+  "attempts": 23078,
+  "exact": 3674,
+  "rows_targeted": 988,
+  "set_targets": 1979,
+  "union_targets": 144,
+  "row_families_attempted": 2455,
+  "row_families_exact": 1828,
+  "accepted_edits": {
+   "INVALID_ENCLOSING_BRANCH_ACCEPTS": 73,
+   "INVALID_EDIT_SATISFIES_NODE": 1
+  }
+ },
+ "gh2_bank": {
+  "protocol": 20,
+  "own_d": 1,
+  "payload": 11
+ },
+ "families": [
+  {
+   "family": "goal.evidence_captured",
+   "goal.evidence_captured_matrix": "CLOSED 353 / CLOSED_BY_PROOF 64",
+   "goal.evidence_captured_closure": "uncovered 0; KILLED 271 / DUPLICATE_GROUP_KILLED 3 / DUPLICATE_SET_KILLED 5 / COVERED_BY_PROOF 68 / UNREACHABLE 0 / VACUOUS 0; lane GC classes: KILLED 271 / COVERED_LATER 76; apart: if 18, not 11",
+   "matrix_rows": 417,
+   "schema_rows": 262,
+   "checker_rows": 155,
+   "open_rows": [],
+   "proofs_by_kind": {
+    "union_alternative_member": 59,
+    "earlier_owner_union": 3,
+    "earlier_owner_edition_union": 2
+   },
+   "complete_calls": 9149,
+   "declared_negative_attempts": 7703,
+   "attempt_outcomes": {
+    "exact_expected": 5613,
+    "multiple_refusals": 146,
+    "other_refusal": 1943,
+    "accepted": 1
+   },
+   "replay_results": {
+    "KILLED": 602,
+    "NOT_REPLAYED_CAP": 4933,
+    "COVERED_LATER": 30,
+    "DUPLICATE_SET_KILLED": 41,
+    "DUPLICATE_SET_SITE_FAILED": 7
+   },
+   "invalid_attempts_listed": 2090,
+   "killed_declared_duplicate_sets": [
+    [
+     "join/envelope/event_type",
+     "request/family_dispatch",
+     "schema/6a63d9fe4dc121d5/const"
+    ],
+    [
+     "schema/0cfc3606d97d9c1b/pattern",
+     "schema/6a63d9fe4dc121d5/const"
+    ],
+    [
+     "schema/0cfc3606d97d9c1b/type",
+     "schema/6a63d9fe4dc121d5/const"
+    ],
+    [
+     "schema/1d3ff42c8a9da8c1/minLength",
+     "schema/1d3ff42c8a9da8c1/pattern"
+    ],
+    [
+     "schema/48fc952ad350b33d/enum",
+     "schema/4cfa5fd2b9ceb3da/const"
+    ],
+    [
+     "schema/48fc952ad350b33d/enum",
+     "schema/957298443a8d1ab1/const"
+    ],
+    [
+     "schema/48fc952ad350b33d/enum",
+     "schema/a0d235f317d32427/const"
+    ],
+    [
+     "schema/588f6fefacf9ace4/oneOf",
+     "schema/588f6fefacf9ace4/required"
+    ],
+    [
+     "schema/7616386cdd0837c4/type",
+     "schema/b34f9a375418a2bc/anyOf"
+    ],
+    [
+     "schema/9514c9c5ecda87d4/format",
+     "schema/9514c9c5ecda87d4/minLength"
+    ],
+    [
+     "schema/99088c0960754bd3/const",
+     "schema/9e7d3ab390e11206/enum"
+    ],
+    [
+     "source/full_original",
+     "source/unchanged_event"
+    ]
+   ],
+   "killed_registered_duplicate_groups": [
+    [
+     "schema/588f6fefacf9ace4/oneOf",
+     "schema/588f6fefacf9ace4/type"
+    ],
+    [
+     "schema/588f6fefacf9ace4/oneOf",
+     "schema/b923f17ca3351bca/enum"
+    ],
+    [
+     "schema/588f6fefacf9ace4/oneOf",
+     "schema/b923f17ca3351bca/type"
+    ]
+   ],
+   "schema_closure": {
+    "uncovered": 0,
+    "occurrences": {
+     "KILLED": 271,
+     "gc:KILLED": 271,
+     "DUPLICATE_SET_KILLED": 5,
+     "gc:COVERED_LATER": 76,
+     "COVERED_BY_PROOF": 68,
+     "DUPLICATE_GROUP_KILLED": 3,
+     "apart_if": 18,
+     "apart_not": 11
+    },
+    "distinct": {
+     "KILLED": 191,
+     "DUPLICATE_SET_KILLED": 4,
+     "COVERED_BY_PROOF": 64,
+     "DUPLICATE_GROUP_KILLED": 3
+    },
+    "unattributed_schema_rows": 0,
+    "walks_agree": true,
+    "roots": {
+     "payload": {
+      "KILLED": 48,
+      "gc:KILLED": 48,
+      "DUPLICATE_SET_KILLED": 1,
+      "gc:COVERED_LATER": 13,
+      "COVERED_BY_PROOF": 9,
+      "DUPLICATE_GROUP_KILLED": 3,
+      "apart_if": 5,
+      "apart_not": 11
+     },
+     "history_answer": {
+      "KILLED": 114,
+      "gc:KILLED": 114,
+      "COVERED_BY_PROOF": 4,
+      "gc:COVERED_LATER": 7,
+      "DUPLICATE_SET_KILLED": 3,
+      "apart_if": 9,
+      "apart_not": 0
+     },
+     "event_record": {
+      "KILLED": 28,
+      "gc:KILLED": 28,
+      "COVERED_BY_PROOF": 4,
+      "gc:COVERED_LATER": 5,
+      "DUPLICATE_SET_KILLED": 1,
+      "apart_if": 4,
+      "apart_not": 0
+     },
+     "read_token": {
+      "KILLED": 52,
+      "gc:KILLED": 52,
+      "apart_if": 0,
+      "apart_not": 0
+     },
+     "custody_reader": {
+      "COVERED_BY_PROOF": 51,
+      "gc:COVERED_LATER": 51,
+      "KILLED": 29,
+      "gc:KILLED": 29,
+      "apart_if": 0,
+      "apart_not": 0
+     }
+    }
+   },
+   "family_checker_rows": {
+    "rows": 12,
+    "missing_from_matrix": [],
+    "not_closed": []
+   },
+   "distinct_copy_joins": {
+    "rows": 97,
+    "closed": 97,
+    "by_proof": 0,
+    "open": [],
+    "witnesses": {
+     "admission/checkpoint/event_type": "own_d/evidence_captured/entry/49597",
+     "admission/checkpoint/owner_unit": "own_d/evidence_captured/entry/49596",
+     "admission/checkpoint/payload_schema_id": "own_d/evidence_captured/entry/49598",
+     "admission/checkpoint/registry_checkpoint": "own_d/evidence_captured/entry/49599",
+     "admission/checkpoint/source_contract": "own_d/evidence_captured/entry/49600",
+     "admission/edition/event_type": "own_d/evidence_captured/entry/49591",
+     "admission/edition/owner_unit": "own_d/evidence_captured/entry/49590",
+     "admission/edition/payload_schema_id": "own_d/evidence_captured/entry/49592",
+     "admission/edition/registry_checkpoint": "own_d/evidence_captured/entry/49593",
+     "admission/edition/source_contract": "own_d/evidence_captured/entry/49594",
+     "evidence/original/currentness_state": "own_d/evidence_captured/entry/44578",
+     "evidence/original/evidence_ref": "own_d/evidence_captured/entry/44576",
+     "evidence/original/redaction_profile": "own_d/evidence_captured/entry/44579",
+     "evidence/original/source_spans": "own_d/evidence_captured/entry/44577",
+     "frame/full_cursor": "own_d/evidence_captured/entry/49584",
+     "frame/original_value": "own_d/evidence_captured/entry/49581",
+     "frame/selected_cursor": "own_d/evidence_captured/entry/49579",
+     "join/envelope/actor_ref": "pm_goal_history_reader_fixtures/evidence_captured/answer_joins/outer_inner_actor_ref",
+     "join/envelope/correlation_id": "pm_goal_history_reader_fixtures/evidence_captured/answer_joins/outer_inner_correlation_id",
+     "join/envelope/effective_account_ref": "pm_goal_history_reader_fixtures/evidence_captured/answer_joins/outer_inner_effective_account_ref",
+     "join/envelope/event_type": "pm_goal_history_reader_fixtures/evidence_captured/answer_joins/outer_inner_event_type",
+     "join/envelope/occurred_at_utc": "pm_goal_history_reader_fixtures/evidence_captured/answer_joins/outer_inner_occurred_at_utc",
+     "join/envelope/payload_schema_id": "pm_goal_history_reader_fixtures/evidence_captured/answer_joins/outer_inner_payload_schema_id",
+     "join/envelope/project_id": "pm_goal_history_reader_fixtures/evidence_captured/protocol/inner_project_mismatch",
+     "join/envelope/requested_account_ref": "pm_goal_history_reader_fixtures/evidence_captured/answer_joins/outer_inner_requested_account_ref",
+     "join/selector/event_id": "gh2/evidence_captured/protocol/selector_event_id_copy",
+     "join/selector/goal_id": "pm_goal_history_reader_fixtures/evidence_captured/answer_joins/selector_goal_id_foreign",
+     "join/selector/project_id": "pm_goal_history_reader_fixtures/evidence_captured/answer_joins/selector_project_id_foreign",
+     "join/selector/sequence_id": "gh2/evidence_captured/protocol/selector_sequence_id_copy",
+     "join/token/checkpoint_key": "pm_goal_history_reader_fixtures/evidence_captured/protocol/token_checkpoint_key",
+     "join/token/checkpoint_ref": "pm_goal_history_reader_fixtures/evidence_captured/protocol/token_checkpoint_ref",
+     "join/token/dataset": "pm_goal_history_reader_fixtures/evidence_captured/protocol/token_index_dataset_name",
+     "join/token/source_storage": "pm_goal_history_reader_fixtures/evidence_captured/protocol/token_source_storage",
+     "original/admission/event_type": "pm_goal_history_reader_fixtures/evidence_captured/protocol/admission_event_type",
+     "original/admission/payload_schema_id": "pm_goal_history_reader_fixtures/evidence_captured/protocol/admission_payload_schema_id",
+     "original/checkpoint": "pm_goal_history_reader_fixtures/evidence_captured/protocol/admission_registry_checkpoint",
+     "original/first_receipt/event_id": "pm_goal_history_reader_fixtures/evidence_captured/protocol/receipt_event_id",
+     "original/first_receipt/event_type": "pm_goal_history_reader_fixtures/evidence_captured/protocol/receipt_event_type",
+     "original/first_receipt/idempotency_key": "pm_goal_history_reader_fixtures/evidence_captured/protocol/receipt_idempotency_key",
+     "original/first_receipt/payload_schema_id": "pm_goal_history_reader_fixtures/evidence_captured/protocol/receipt_payload_schema_id",
+     "original/first_receipt/storage_instance_id": "pm_goal_history_reader_fixtures/evidence_captured/protocol/receipt_storage_instance_id",
+     "original/owner/admission": "own_d/evidence_captured/entry/44677",
+     "original/owner/facts": "own_d/evidence_captured/entry/44737",
+     "original/owner/first_receipt": "own_d/evidence_captured/entry/44682",
+     "original/owner/members": "own_d/evidence_captured/entry/44741",
+     "original/owner/predecessor": "own_d/evidence_captured/entry/44689",
+     "original/owner/producer_digest": "own_d/evidence_captured/entry/44700",
+     "original/owner/references": "own_d/evidence_captured/entry/44701",
+     "original/owner/runtime": "own_d/evidence_captured/entry/44692",
+     "original/owner_unit": "pm_goal_history_reader_fixtures/evidence_captured/protocol/admission_owner_unit",
+     "original/predecessor/goal_id": "pm_goal_history_reader_fixtures/evidence_captured/protocol/predecessor_goal_id",
+     "original/predecessor/project_id": "pm_goal_history_reader_fixtures/evidence_captured/protocol/predecessor_project_id",
+     "original/record/content_hash_provenance": "pm_goal_history_reader_fixtures/evidence_captured/protocol/unresolved_content_hash_provenance",
+     "original/record/nonterminal_state_preserved": "pm_goal_history_reader_fixtures/evidence_captured/protocol/unresolved_nonterminal_state_preserved",
+     "original/record/original_retention_owner": "pm_goal_history_reader_fixtures/evidence_captured/protocol/unresolved_original_retention_owner",
+     "original/record/redaction_equality": "pm_goal_history_reader_fixtures/evidence_captured/protocol/unresolved_redaction_equality",
+     "original/record/source_contract": "pm_goal_history_reader_fixtures/evidence_captured/protocol/unresolved_source_contract",
+     "original/record/source_span_bounds": "pm_goal_history_reader_fixtures/evidence_captured/protocol/unresolved_source_span_bounds",
+     "original/runtime/actor_ref": "pm_goal_history_reader_fixtures/evidence_captured/protocol/runtime_actor_ref",
+     "original/runtime/effective_account_ref": "pm_goal_history_reader_fixtures/evidence_captured/protocol/runtime_effective_account_ref",
+     "original/runtime/effective_model_ref": "pm_goal_history_reader_fixtures/evidence_captured/protocol/runtime_effective_model_ref",
+     "original/runtime/effective_provider_ref": "pm_goal_history_reader_fixtures/evidence_captured/protocol/runtime_effective_provider_ref",
+     "original/runtime/execution_role": "pm_goal_history_reader_fixtures/evidence_captured/protocol/runtime_execution_role",
+     "original/runtime/requested_account_ref": "pm_goal_history_reader_fixtures/evidence_captured/protocol/runtime_requested_account_ref",
+     "original/runtime/requested_model_ref": "pm_goal_history_reader_fixtures/evidence_captured/protocol/runtime_requested_model_ref",
+     "original/runtime/requested_provider_ref": "pm_goal_history_reader_fixtures/evidence_captured/protocol/runtime_requested_provider_ref",
+     "original/semantic_digest": "pm_goal_history_reader_fixtures/evidence_captured/protocol/semantic_digest",
+     "receipt/event_id": "gh1/evidence_captured/own_d/resealed_custody_event_id",
+     "receipt/event_type": "gh1/evidence_captured/own_d/resealed_custody_event_type",
+     "receipt/first/event_id": "gh1/evidence_captured/own_d/resealed_first_receipt_event_id",
+     "receipt/first/sequence_id": "gh1/evidence_captured/own_d/resealed_first_receipt_sequence_id",
+     "receipt/full_value_commitment": "gh1/evidence_captured/own_d/resealed_custody_full_value_commitment",
+     "receipt/idempotency_key": "gh1/evidence_captured/own_d/resealed_custody_idempotency_key",
+     "receipt/scope_partition": "gh1/evidence_captured/own_d/resealed_custody_scope_partition",
+     "receipt/semantic_digest": "gh1/evidence_captured/own_d/resealed_custody_producer_semantic_digest",
+     "receipt/storage_instance_id": "gh1/evidence_captured/own_d/resealed_custody_storage_instance_id",
+     "request/binding": "gh1/evidence_captured/own_d/request_binding_builder_restores",
+     "request/selector": "gh1/evidence_captured/own_d/request_selector_builder_restores",
+     "retained/verified_original": "gh1/evidence_captured/own_d/custody_differs_from_sealed_receipt",
+     "row/evidence_redaction": "pm_goal_history_reader_fixtures/evidence_captured/protocol/outer_inner_redaction",
+     "source/actual_token": "pm_goal_history_reader_fixtures/evidence_captured/protocol/stale_actual_token",
+     "source/final_fence": "pm_goal_history_reader_fixtures/evidence_captured/protocol/final_fence_changed",
+     "source/full_original": "gh1/evidence_captured/own_d/source_event_not_original",
+     "source/index_key": "pm_goal_history_reader_fixtures/evidence_captured/protocol/raw_project_partition",
+     "source/owner/authorized": "own_d/evidence_captured/entry/44665",
+     "source/owner/captured_fence": "own_d/evidence_captured/entry/44661",
+     "source/owner/event": "own_d/evidence_captured/entry/44585",
+     "source/owner/final_fence": "own_d/evidence_captured/entry/44672",
+     "source/owner/frame_verified": "own_d/evidence_captured/entry/44669",
+     "source/owner/index_key": "own_d/evidence_captured/entry/44671",
+     "source/owner/members": "own_d/evidence_captured/entry/44676",
+     "source/owner/reader_available": "own_d/evidence_captured/entry/44667",
+     "source/owner/retained": "own_d/evidence_captured/entry/44666",
+     "source/owner/secret_safe": "own_d/evidence_captured/entry/44668",
+     "source/owner/token": "own_d/evidence_captured/entry/44639",
+     "source/owner/translation_verified": "own_d/evidence_captured/entry/44670",
+     "source/unchanged_event": "pm_goal_history_reader_fixtures/evidence_captured/protocol/forged_disclosed_event"
+    }
+   },
+   "number_corpus_ats211": {
+    "slots": [
+     "payload/expected_goal_revision",
+     "payload/goal_revision",
+     "event/sequence_id",
+     "payload/payload/source_spans/0/end_line",
+     "payload/payload/source_spans/0/start_line"
+    ],
+    "cases": 430,
+    "accepted": 156,
+    "refused": 274,
+    "agree": 430,
+    "disagree": 0,
+    "crashes": 0
+   },
+   "number_corpus_ats1119": {
+    "slots": [
+     "payload/expected_goal_revision",
+     "payload/goal_revision",
+     "event/sequence_id",
+     "payload/payload/source_spans/0/end_line",
+     "payload/payload/source_spans/0/start_line"
+    ],
+    "cases": 430,
+    "read": 199,
+    "accepted": 73,
+    "refused": 126,
+    "agree": 199,
+    "disagree": 0,
+    "crashes": 0,
+    "not_storable": 231,
+    "route": "ATS-1119 ReaderOracles._guarded(entry)",
+    "valid_but_not_storable": 41
+   },
+   "number_corpus_ats1119_not_storable_reasons": {
+    "codec_refusal:physical_type": 5,
+    "codec_refusal:jcs_binary64": 131,
+    "codec_refusal:jcs_decimal": 93,
+    "codec_refusal:physical_integer_range": 2
+   },
+   "retained_store_snapshots": {
+    "count": 11,
+    "unchanged": 11
+   }
+  },
+  {
+   "family": "goal.receipt_recorded",
+   "goal.receipt_recorded_matrix": "CLOSED 337 / CLOSED_BY_PROOF 59",
+   "goal.receipt_recorded_closure": "uncovered 0; KILLED 261 / DUPLICATE_GROUP_KILLED 3 / DUPLICATE_SET_KILLED 6 / COVERED_BY_PROOF 63 / UNREACHABLE 0 / VACUOUS 0; lane GC classes: KILLED 261 / COVERED_LATER 72; apart: if 23, not 4",
+   "matrix_rows": 396,
+   "schema_rows": 248,
+   "checker_rows": 148,
+   "open_rows": [],
+   "proofs_by_kind": {
+    "union_alternative_member": 54,
+    "earlier_owner_union": 3,
+    "earlier_owner_edition_union": 2
+   },
+   "complete_calls": 8800,
+   "declared_negative_attempts": 7660,
+   "attempt_outcomes": {
+    "exact_expected": 5647,
+    "multiple_refusals": 124,
+    "other_refusal": 1880,
+    "accepted": 9
+   },
+   "replay_results": {
+    "KILLED": 566,
+    "NOT_REPLAYED_CAP": 4991,
+    "COVERED_LATER": 30,
+    "DUPLICATE_SET_KILLED": 53,
+    "DUPLICATE_SET_SITE_FAILED": 7
+   },
+   "invalid_attempts_listed": 2013,
+   "killed_declared_duplicate_sets": [
+    [
+     "join/envelope/event_type",
+     "request/family_dispatch",
+     "schema/91a315ba7844081d/const"
+    ],
+    [
+     "schema/0cfc3606d97d9c1b/pattern",
+     "schema/91a315ba7844081d/const"
+    ],
+    [
+     "schema/0cfc3606d97d9c1b/type",
+     "schema/91a315ba7844081d/const"
+    ],
+    [
+     "schema/2d47a0a1b9aad4b5/const",
+     "schema/2debde7b3b1689be/enum"
+    ],
+    [
+     "schema/2debde7b3b1689be/enum",
+     "schema/c462e831cb3a4170/const"
+    ],
+    [
+     "schema/2debde7b3b1689be/enum",
+     "schema/d9e61acee3d3892a/const"
+    ],
+    [
+     "schema/39ec57bb71c316fc/required",
+     "schema/62c1d7e4ee2df01c/oneOf"
+    ],
+    [
+     "schema/3a7e70b487c210ef/const",
+     "schema/9e7d3ab390e11206/enum"
+    ],
+    [
+     "schema/4199bec2db1d77ec/type",
+     "schema/95a4062b2cbc783a/not"
+    ],
+    [
+     "schema/62c1d7e4ee2df01c/oneOf",
+     "schema/62c1d7e4ee2df01c/required"
+    ],
+    [
+     "schema/62c1d7e4ee2df01c/oneOf",
+     "schema/95a4062b2cbc783a/not"
+    ],
+    [
+     "schema/7616386cdd0837c4/type",
+     "schema/b34f9a375418a2bc/anyOf"
+    ],
+    [
+     "schema/9514c9c5ecda87d4/format",
+     "schema/9514c9c5ecda87d4/minLength"
+    ],
+    [
+     "schema/b5c798011d15c5d0/uniqueItems",
+     "schema/f2e5813130689ad9/uniqueItems"
+    ],
+    [
+     "source/full_original",
+     "source/unchanged_event"
+    ]
+   ],
+   "killed_registered_duplicate_groups": [
+    [
+     "schema/39dff68df796fada/enum",
+     "schema/62c1d7e4ee2df01c/oneOf"
+    ],
+    [
+     "schema/39dff68df796fada/type",
+     "schema/62c1d7e4ee2df01c/oneOf"
+    ]
+   ],
+   "schema_closure": {
+    "uncovered": 0,
+    "occurrences": {
+     "COVERED_BY_PROOF": 63,
+     "gc:COVERED_LATER": 72,
+     "KILLED": 261,
+     "gc:KILLED": 261,
+     "DUPLICATE_GROUP_KILLED": 3,
+     "DUPLICATE_SET_KILLED": 6,
+     "apart_if": 23,
+     "apart_not": 4
+    },
+    "distinct": {
+     "COVERED_BY_PROOF": 59,
+     "KILLED": 181,
+     "DUPLICATE_GROUP_KILLED": 3,
+     "DUPLICATE_SET_KILLED": 5
+    },
+    "unattributed_schema_rows": 0,
+    "walks_agree": true,
+    "roots": {
+     "payload": {
+      "COVERED_BY_PROOF": 4,
+      "gc:COVERED_LATER": 9,
+      "KILLED": 38,
+      "gc:KILLED": 38,
+      "DUPLICATE_GROUP_KILLED": 3,
+      "DUPLICATE_SET_KILLED": 2,
+      "apart_if": 10,
+      "apart_not": 4
+     },
+     "history_answer": {
+      "KILLED": 114,
+      "gc:KILLED": 114,
+      "COVERED_BY_PROOF": 4,
+      "gc:COVERED_LATER": 7,
+      "DUPLICATE_SET_KILLED": 3,
+      "apart_if": 9,
+      "apart_not": 0
+     },
+     "event_record": {
+      "KILLED": 28,
+      "gc:KILLED": 28,
+      "COVERED_BY_PROOF": 4,
+      "gc:COVERED_LATER": 5,
+      "DUPLICATE_SET_KILLED": 1,
+      "apart_if": 4,
+      "apart_not": 0
+     },
+     "read_token": {
+      "KILLED": 52,
+      "gc:KILLED": 52,
+      "apart_if": 0,
+      "apart_not": 0
+     },
+     "custody_reader": {
+      "COVERED_BY_PROOF": 51,
+      "gc:COVERED_LATER": 51,
+      "KILLED": 29,
+      "gc:KILLED": 29,
+      "apart_if": 0,
+      "apart_not": 0
+     }
+    }
+   },
+   "family_checker_rows": {
+    "rows": 5,
+    "missing_from_matrix": [],
+    "not_closed": []
+   },
+   "distinct_copy_joins": {
+    "rows": 92,
+    "closed": 92,
+    "by_proof": 0,
+    "open": [],
+    "witnesses": {
+     "admission/checkpoint/event_type": "own_d/receipt_recorded/entry/54937",
+     "admission/checkpoint/owner_unit": "own_d/receipt_recorded/entry/54936",
+     "admission/checkpoint/payload_schema_id": "own_d/receipt_recorded/entry/54938",
+     "admission/checkpoint/registry_checkpoint": "own_d/receipt_recorded/entry/54939",
+     "admission/checkpoint/source_contract": "own_d/receipt_recorded/entry/54940",
+     "admission/edition/event_type": "own_d/receipt_recorded/entry/54931",
+     "admission/edition/owner_unit": "own_d/receipt_recorded/entry/54930",
+     "admission/edition/payload_schema_id": "own_d/receipt_recorded/entry/54932",
+     "admission/edition/registry_checkpoint": "own_d/receipt_recorded/entry/54933",
+     "admission/edition/source_contract": "own_d/receipt_recorded/entry/54934",
+     "frame/full_cursor": "own_d/receipt_recorded/entry/54924",
+     "frame/original_value": "own_d/receipt_recorded/entry/54921",
+     "frame/selected_cursor": "own_d/receipt_recorded/entry/54919",
+     "join/envelope/actor_ref": "pm_goal_history_reader_fixtures/receipt_recorded/answer_joins/outer_inner_actor_ref",
+     "join/envelope/correlation_id": "pm_goal_history_reader_fixtures/receipt_recorded/answer_joins/outer_inner_correlation_id",
+     "join/envelope/effective_account_ref": "pm_goal_history_reader_fixtures/receipt_recorded/answer_joins/outer_inner_effective_account_ref",
+     "join/envelope/event_type": "pm_goal_history_reader_fixtures/receipt_recorded/answer_joins/outer_inner_event_type",
+     "join/envelope/occurred_at_utc": "pm_goal_history_reader_fixtures/receipt_recorded/answer_joins/outer_inner_occurred_at_utc",
+     "join/envelope/payload_schema_id": "pm_goal_history_reader_fixtures/receipt_recorded/answer_joins/outer_inner_payload_schema_id",
+     "join/envelope/project_id": "pm_goal_history_reader_fixtures/receipt_recorded/protocol/inner_project_mismatch",
+     "join/envelope/requested_account_ref": "pm_goal_history_reader_fixtures/receipt_recorded/answer_joins/outer_inner_requested_account_ref",
+     "join/selector/event_id": "gh2/receipt_recorded/protocol/selector_event_id_copy",
+     "join/selector/goal_id": "pm_goal_history_reader_fixtures/receipt_recorded/answer_joins/selector_goal_id_foreign",
+     "join/selector/project_id": "pm_goal_history_reader_fixtures/receipt_recorded/answer_joins/selector_project_id_foreign",
+     "join/selector/sequence_id": "gh2/receipt_recorded/protocol/selector_sequence_id_copy",
+     "join/token/checkpoint_key": "pm_goal_history_reader_fixtures/receipt_recorded/protocol/token_checkpoint_key",
+     "join/token/checkpoint_ref": "pm_goal_history_reader_fixtures/receipt_recorded/protocol/token_checkpoint_ref",
+     "join/token/dataset": "pm_goal_history_reader_fixtures/receipt_recorded/protocol/token_index_dataset_name",
+     "join/token/source_storage": "pm_goal_history_reader_fixtures/receipt_recorded/protocol/token_source_storage",
+     "original/admission/event_type": "pm_goal_history_reader_fixtures/receipt_recorded/protocol/admission_event_type",
+     "original/admission/payload_schema_id": "pm_goal_history_reader_fixtures/receipt_recorded/protocol/admission_payload_schema_id",
+     "original/checkpoint": "pm_goal_history_reader_fixtures/receipt_recorded/protocol/admission_registry_checkpoint",
+     "original/first_receipt/event_id": "pm_goal_history_reader_fixtures/receipt_recorded/protocol/receipt_event_id",
+     "original/first_receipt/event_type": "pm_goal_history_reader_fixtures/receipt_recorded/protocol/receipt_event_type",
+     "original/first_receipt/idempotency_key": "pm_goal_history_reader_fixtures/receipt_recorded/protocol/receipt_idempotency_key",
+     "original/first_receipt/payload_schema_id": "pm_goal_history_reader_fixtures/receipt_recorded/protocol/receipt_payload_schema_id",
+     "original/first_receipt/storage_instance_id": "pm_goal_history_reader_fixtures/receipt_recorded/protocol/receipt_storage_instance_id",
+     "original/owner/admission": "own_d/receipt_recorded/entry/50020",
+     "original/owner/facts": "own_d/receipt_recorded/entry/50080",
+     "original/owner/first_receipt": "own_d/receipt_recorded/entry/50025",
+     "original/owner/members": "own_d/receipt_recorded/entry/50086",
+     "original/owner/predecessor": "own_d/receipt_recorded/entry/50032",
+     "original/owner/producer_digest": "own_d/receipt_recorded/entry/50043",
+     "original/owner/references": "own_d/receipt_recorded/entry/50044",
+     "original/owner/runtime": "own_d/receipt_recorded/entry/50035",
+     "original/owner_unit": "pm_goal_history_reader_fixtures/receipt_recorded/protocol/admission_owner_unit",
+     "original/predecessor/goal_id": "pm_goal_history_reader_fixtures/receipt_recorded/protocol/predecessor_goal_id",
+     "original/predecessor/project_id": "pm_goal_history_reader_fixtures/receipt_recorded/protocol/predecessor_project_id",
+     "original/record/dependency_completeness": "pm_goal_history_reader_fixtures/receipt_recorded/protocol/unresolved_dependency_completeness",
+     "original/record/no_implicit_completion": "pm_goal_history_reader_fixtures/receipt_recorded/protocol/unresolved_no_implicit_completion",
+     "original/record/nonterminal_state_preserved": "pm_goal_history_reader_fixtures/receipt_recorded/protocol/unresolved_nonterminal_state_preserved",
+     "original/record/receipt_validity": "pm_goal_history_reader_fixtures/receipt_recorded/protocol/unresolved_receipt_validity",
+     "original/record/risk_meaning": "pm_goal_history_reader_fixtures/receipt_recorded/protocol/unresolved_risk_meaning",
+     "original/record/source_contract": "pm_goal_history_reader_fixtures/receipt_recorded/protocol/unresolved_source_contract",
+     "original/runtime/actor_ref": "pm_goal_history_reader_fixtures/receipt_recorded/protocol/runtime_actor_ref",
+     "original/runtime/effective_account_ref": "pm_goal_history_reader_fixtures/receipt_recorded/protocol/runtime_effective_account_ref",
+     "original/runtime/effective_model_ref": "pm_goal_history_reader_fixtures/receipt_recorded/protocol/runtime_effective_model_ref",
+     "original/runtime/effective_provider_ref": "pm_goal_history_reader_fixtures/receipt_recorded/protocol/runtime_effective_provider_ref",
+     "original/runtime/execution_role": "pm_goal_history_reader_fixtures/receipt_recorded/protocol/runtime_execution_role",
+     "original/runtime/requested_account_ref": "pm_goal_history_reader_fixtures/receipt_recorded/protocol/runtime_requested_account_ref",
+     "original/runtime/requested_model_ref": "pm_goal_history_reader_fixtures/receipt_recorded/protocol/runtime_requested_model_ref",
+     "original/runtime/requested_provider_ref": "pm_goal_history_reader_fixtures/receipt_recorded/protocol/runtime_requested_provider_ref",
+     "original/semantic_digest": "pm_goal_history_reader_fixtures/receipt_recorded/protocol/semantic_digest",
+     "receipt/event_id": "gh1/receipt_recorded/own_d/resealed_custody_event_id",
+     "receipt/event_type": "gh1/receipt_recorded/own_d/resealed_custody_event_type",
+     "receipt/first/event_id": "gh1/receipt_recorded/own_d/resealed_first_receipt_event_id",
+     "receipt/first/sequence_id": "gh1/receipt_recorded/own_d/resealed_first_receipt_sequence_id",
+     "receipt/full_value_commitment": "gh1/receipt_recorded/own_d/resealed_custody_full_value_commitment",
+     "receipt/idempotency_key": "gh1/receipt_recorded/own_d/resealed_custody_idempotency_key",
+     "receipt/scope_partition": "gh1/receipt_recorded/own_d/resealed_custody_scope_partition",
+     "receipt/semantic_digest": "gh1/receipt_recorded/own_d/resealed_custody_producer_semantic_digest",
+     "receipt/storage_instance_id": "gh1/receipt_recorded/own_d/resealed_custody_storage_instance_id",
+     "request/binding": "gh1/receipt_recorded/own_d/request_binding_builder_restores",
+     "request/selector": "gh1/receipt_recorded/own_d/request_selector_builder_restores",
+     "retained/verified_original": "gh1/receipt_recorded/own_d/custody_differs_from_sealed_receipt",
+     "source/actual_token": "pm_goal_history_reader_fixtures/receipt_recorded/protocol/stale_actual_token",
+     "source/final_fence": "pm_goal_history_reader_fixtures/receipt_recorded/protocol/final_fence_changed",
+     "source/full_original": "gh1/receipt_recorded/own_d/source_event_not_original",
+     "source/index_key": "pm_goal_history_reader_fixtures/receipt_recorded/protocol/raw_project_partition",
+     "source/owner/authorized": "own_d/receipt_recorded/entry/50008",
+     "source/owner/captured_fence": "own_d/receipt_recorded/entry/50004",
+     "source/owner/event": "own_d/receipt_recorded/entry/49927",
+     "source/owner/final_fence": "own_d/receipt_recorded/entry/50015",
+     "source/owner/frame_verified": "own_d/receipt_recorded/entry/50012",
+     "source/owner/index_key": "own_d/receipt_recorded/entry/50014",
+     "source/owner/members": "own_d/receipt_recorded/entry/50019",
+     "source/owner/reader_available": "own_d/receipt_recorded/entry/50010",
+     "source/owner/retained": "own_d/receipt_recorded/entry/50009",
+     "source/owner/secret_safe": "own_d/receipt_recorded/entry/50011",
+     "source/owner/token": "own_d/receipt_recorded/entry/49982",
+     "source/owner/translation_verified": "own_d/receipt_recorded/entry/50013",
+     "source/unchanged_event": "pm_goal_history_reader_fixtures/receipt_recorded/protocol/forged_disclosed_event"
+    }
+   },
+   "number_corpus_ats211": {
+    "slots": [
+     "payload/expected_goal_revision",
+     "payload/goal_revision",
+     "event/sequence_id"
+    ],
+    "cases": 258,
+    "accepted": 104,
+    "refused": 154,
+    "agree": 258,
+    "disagree": 0,
+    "crashes": 0
+   },
+   "number_corpus_ats1119": {
+    "slots": [
+     "payload/expected_goal_revision",
+     "payload/goal_revision",
+     "event/sequence_id"
+    ],
+    "cases": 258,
+    "read": 115,
+    "accepted": 63,
+    "refused": 52,
+    "agree": 115,
+    "disagree": 0,
+    "crashes": 0,
+    "not_storable": 143,
+    "route": "ATS-1119 ReaderOracles._guarded(entry)",
+    "valid_but_not_storable": 41
+   },
+   "number_corpus_ats1119_not_storable_reasons": {
+    "codec_refusal:physical_type": 3,
+    "codec_refusal:jcs_binary64": 87,
+    "codec_refusal:jcs_decimal": 51,
+    "codec_refusal:physical_integer_range": 2
+   },
+   "retained_store_snapshots": {
+    "count": 11,
+    "unchanged": 11
+   }
+  },
+  {
+   "family": "goal.stopped",
+   "goal.stopped_matrix": "CLOSED 341 / CLOSED_BY_PROOF 55",
+   "goal.stopped_closure": "uncovered 0; KILLED 261 / DUPLICATE_GROUP_KILLED 0 / DUPLICATE_SET_KILLED 6 / COVERED_BY_PROOF 59 / UNREACHABLE 0 / VACUOUS 0; lane GC classes: KILLED 261 / COVERED_LATER 65; apart: if 19, not 1",
+   "matrix_rows": 396,
+   "schema_rows": 241,
+   "checker_rows": 155,
+   "open_rows": [],
+   "proofs_by_kind": {
+    "union_alternative_member": 50,
+    "earlier_owner_union": 3,
+    "earlier_owner_edition_union": 2
+   },
+   "complete_calls": 8766,
+   "declared_negative_attempts": 7616,
+   "attempt_outcomes": {
+    "exact_expected": 5657,
+    "multiple_refusals": 106,
+    "other_refusal": 1853
+   },
+   "replay_results": {
+    "KILLED": 583,
+    "NOT_REPLAYED_CAP": 5001,
+    "COVERED_LATER": 30,
+    "DUPLICATE_SET_KILLED": 36,
+    "DUPLICATE_SET_SITE_FAILED": 7
+   },
+   "invalid_attempts_listed": 1959,
+   "killed_declared_duplicate_sets": [
+    [
+     "join/envelope/event_type",
+     "request/family_dispatch",
+     "schema/19b6d9e01e8052c0/const"
+    ],
+    [
+     "schema/0cfc3606d97d9c1b/pattern",
+     "schema/19b6d9e01e8052c0/const"
+    ],
+    [
+     "schema/0cfc3606d97d9c1b/type",
+     "schema/19b6d9e01e8052c0/const"
+    ],
+    [
+     "schema/1c4bd6a345fb2e0b/const",
+     "schema/dae34808945ec46f/enum"
+    ],
+    [
+     "schema/2a23012d5e60667c/uniqueItems",
+     "schema/74ce13241434d60a/anyOf"
+    ],
+    [
+     "schema/6d0af5a69560dc4f/required",
+     "schema/af8eb9f157ea5f11/const"
+    ],
+    [
+     "schema/7616386cdd0837c4/type",
+     "schema/b34f9a375418a2bc/anyOf"
+    ],
+    [
+     "schema/76f2118bfd0ba6ec/const",
+     "schema/9e7d3ab390e11206/enum"
+    ],
+    [
+     "schema/9514c9c5ecda87d4/format",
+     "schema/9514c9c5ecda87d4/minLength"
+    ],
+    [
+     "schema/c1f1793582834132/const",
+     "schema/dae34808945ec46f/enum"
+    ],
+    [
+     "schema/dae34808945ec46f/enum",
+     "schema/f2e372e3b689e5cb/const"
+    ],
+    [
+     "source/full_original",
+     "source/unchanged_event"
+    ]
+   ],
+   "killed_registered_duplicate_groups": [],
+   "schema_closure": {
+    "uncovered": 0,
+    "occurrences": {
+     "KILLED": 261,
+     "gc:KILLED": 261,
+     "DUPLICATE_SET_KILLED": 6,
+     "gc:COVERED_LATER": 65,
+     "apart_if": 19,
+     "apart_not": 1,
+     "COVERED_BY_PROOF": 59
+    },
+    "distinct": {
+     "KILLED": 181,
+     "DUPLICATE_SET_KILLED": 5,
+     "COVERED_BY_PROOF": 55
+    },
+    "unattributed_schema_rows": 0,
+    "walks_agree": true,
+    "roots": {
+     "payload": {
+      "KILLED": 38,
+      "gc:KILLED": 38,
+      "DUPLICATE_SET_KILLED": 2,
+      "gc:COVERED_LATER": 2,
+      "apart_if": 6,
+      "apart_not": 1
+     },
+     "history_answer": {
+      "KILLED": 114,
+      "gc:KILLED": 114,
+      "COVERED_BY_PROOF": 4,
+      "gc:COVERED_LATER": 7,
+      "DUPLICATE_SET_KILLED": 3,
+      "apart_if": 9,
+      "apart_not": 0
+     },
+     "event_record": {
+      "KILLED": 28,
+      "gc:KILLED": 28,
+      "COVERED_BY_PROOF": 4,
+      "gc:COVERED_LATER": 5,
+      "DUPLICATE_SET_KILLED": 1,
+      "apart_if": 4,
+      "apart_not": 0
+     },
+     "read_token": {
+      "KILLED": 52,
+      "gc:KILLED": 52,
+      "apart_if": 0,
+      "apart_not": 0
+     },
+     "custody_reader": {
+      "COVERED_BY_PROOF": 51,
+      "gc:COVERED_LATER": 51,
+      "KILLED": 29,
+      "gc:KILLED": 29,
+      "apart_if": 0,
+      "apart_not": 0
+     }
+    }
+   },
+   "family_checker_rows": {
+    "rows": 11,
+    "missing_from_matrix": [],
+    "not_closed": []
+   },
+   "distinct_copy_joins": {
+    "rows": 98,
+    "closed": 98,
+    "by_proof": 0,
+    "open": [],
+    "witnesses": {
+     "admission/checkpoint/event_type": "own_d/stopped/entry/38797",
+     "admission/checkpoint/owner_unit": "own_d/stopped/entry/38796",
+     "admission/checkpoint/payload_schema_id": "own_d/stopped/entry/38798",
+     "admission/checkpoint/registry_checkpoint": "own_d/stopped/entry/38799",
+     "admission/checkpoint/source_contract": "own_d/stopped/entry/38800",
+     "admission/edition/event_type": "own_d/stopped/entry/38791",
+     "admission/edition/owner_unit": "own_d/stopped/entry/38790",
+     "admission/edition/payload_schema_id": "own_d/stopped/entry/38792",
+     "admission/edition/registry_checkpoint": "own_d/stopped/entry/38793",
+     "admission/edition/source_contract": "own_d/stopped/entry/38794",
+     "frame/full_cursor": "own_d/stopped/entry/38784",
+     "frame/original_value": "own_d/stopped/entry/38781",
+     "frame/selected_cursor": "own_d/stopped/entry/38779",
+     "join/envelope/actor_ref": "pm_goal_history_reader_fixtures/stopped/answer_joins/outer_inner_actor_ref",
+     "join/envelope/correlation_id": "pm_goal_history_reader_fixtures/stopped/answer_joins/outer_inner_correlation_id",
+     "join/envelope/effective_account_ref": "pm_goal_history_reader_fixtures/stopped/answer_joins/outer_inner_effective_account_ref",
+     "join/envelope/event_type": "pm_goal_history_reader_fixtures/stopped/answer_joins/outer_inner_event_type",
+     "join/envelope/occurred_at_utc": "pm_goal_history_reader_fixtures/stopped/answer_joins/outer_inner_occurred_at_utc",
+     "join/envelope/payload_schema_id": "pm_goal_history_reader_fixtures/stopped/answer_joins/outer_inner_payload_schema_id",
+     "join/envelope/project_id": "pm_goal_history_reader_fixtures/stopped/protocol/inner_project_mismatch",
+     "join/envelope/requested_account_ref": "pm_goal_history_reader_fixtures/stopped/answer_joins/outer_inner_requested_account_ref",
+     "join/selector/event_id": "pm_goal_history_reader_fixtures/stopped/join/selector_event_mismatch",
+     "join/selector/goal_id": "pm_goal_history_reader_fixtures/stopped/answer_joins/selector_goal_id_foreign",
+     "join/selector/project_id": "pm_goal_history_reader_fixtures/stopped/answer_joins/selector_project_id_foreign",
+     "join/selector/sequence_id": "pm_goal_history_reader_fixtures/stopped/join/selector_sequence_mismatch",
+     "join/token/checkpoint_key": "pm_goal_history_reader_fixtures/stopped/protocol/token_checkpoint_key",
+     "join/token/checkpoint_ref": "pm_goal_history_reader_fixtures/stopped/protocol/token_checkpoint_ref",
+     "join/token/dataset": "pm_goal_history_reader_fixtures/stopped/protocol/token_index_dataset_name",
+     "join/token/source_storage": "pm_goal_history_reader_fixtures/stopped/protocol/token_source_storage",
+     "original/admission/event_type": "pm_goal_history_reader_fixtures/stopped/protocol/admission_event_type",
+     "original/admission/payload_schema_id": "pm_goal_history_reader_fixtures/stopped/protocol/admission_payload_schema_id",
+     "original/checkpoint": "pm_goal_history_reader_fixtures/stopped/protocol/admission_registry_checkpoint",
+     "original/first_receipt/event_id": "pm_goal_history_reader_fixtures/stopped/protocol/receipt_event_id",
+     "original/first_receipt/event_type": "pm_goal_history_reader_fixtures/stopped/protocol/receipt_event_type",
+     "original/first_receipt/idempotency_key": "pm_goal_history_reader_fixtures/stopped/protocol/receipt_idempotency_key",
+     "original/first_receipt/payload_schema_id": "pm_goal_history_reader_fixtures/stopped/protocol/receipt_payload_schema_id",
+     "original/first_receipt/storage_instance_id": "pm_goal_history_reader_fixtures/stopped/protocol/receipt_storage_instance_id",
+     "original/owner/admission": "own_d/stopped/entry/33715",
+     "original/owner/facts": "own_d/stopped/entry/33781",
+     "original/owner/first_receipt": "own_d/stopped/entry/33720",
+     "original/owner/members": "own_d/stopped/entry/33788",
+     "original/owner/predecessor": "own_d/stopped/entry/33727",
+     "original/owner/producer_digest": "own_d/stopped/entry/33738",
+     "original/owner/references": "own_d/stopped/entry/33739",
+     "original/owner/runtime": "own_d/stopped/entry/33730",
+     "original/owner_unit": "pm_goal_history_reader_fixtures/stopped/protocol/admission_owner_unit",
+     "original/predecessor/goal_id": "pm_goal_history_reader_fixtures/stopped/protocol/predecessor_goal_id",
+     "original/predecessor/project_id": "pm_goal_history_reader_fixtures/stopped/protocol/predecessor_project_id",
+     "original/record/boundary": "pm_goal_history_reader_fixtures/stopped/protocol/unresolved_boundary",
+     "original/record/legal_predecessor": "pm_goal_history_reader_fixtures/stopped/protocol/unresolved_legal_predecessor",
+     "original/record/new_settlement": "pm_goal_history_reader_fixtures/stopped/protocol/unresolved_new_settlement",
+     "original/record/recovery_authority": "pm_goal_history_reader_fixtures/stopped/protocol/unresolved_recovery_authority",
+     "original/record/settled_children": "pm_goal_history_reader_fixtures/stopped/protocol/unresolved_settled_children",
+     "original/record/settled_tools": "pm_goal_history_reader_fixtures/stopped/protocol/unresolved_settled_tools",
+     "original/record/source_contract": "pm_goal_history_reader_fixtures/stopped/protocol/unresolved_source_contract",
+     "original/runtime/actor_ref": "pm_goal_history_reader_fixtures/stopped/protocol/runtime_actor_ref",
+     "original/runtime/effective_account_ref": "pm_goal_history_reader_fixtures/stopped/protocol/runtime_effective_account_ref",
+     "original/runtime/effective_model_ref": "pm_goal_history_reader_fixtures/stopped/protocol/runtime_effective_model_ref",
+     "original/runtime/effective_provider_ref": "pm_goal_history_reader_fixtures/stopped/protocol/runtime_effective_provider_ref",
+     "original/runtime/execution_role": "pm_goal_history_reader_fixtures/stopped/protocol/runtime_execution_role",
+     "original/runtime/requested_account_ref": "pm_goal_history_reader_fixtures/stopped/protocol/runtime_requested_account_ref",
+     "original/runtime/requested_model_ref": "pm_goal_history_reader_fixtures/stopped/protocol/runtime_requested_model_ref",
+     "original/runtime/requested_provider_ref": "pm_goal_history_reader_fixtures/stopped/protocol/runtime_requested_provider_ref",
+     "original/semantic_digest": "pm_goal_history_reader_fixtures/stopped/protocol/semantic_digest",
+     "receipt/event_id": "gh1/stopped/own_d/resealed_custody_event_id",
+     "receipt/event_type": "gh1/stopped/own_d/resealed_custody_event_type",
+     "receipt/first/event_id": "gh1/stopped/own_d/resealed_first_receipt_event_id",
+     "receipt/first/sequence_id": "gh1/stopped/own_d/resealed_first_receipt_sequence_id",
+     "receipt/full_value_commitment": "gh1/stopped/own_d/resealed_custody_full_value_commitment",
+     "receipt/idempotency_key": "gh1/stopped/own_d/resealed_custody_idempotency_key",
+     "receipt/scope_partition": "gh1/stopped/own_d/resealed_custody_scope_partition",
+     "receipt/semantic_digest": "gh1/stopped/own_d/resealed_custody_producer_semantic_digest",
+     "receipt/storage_instance_id": "gh1/stopped/own_d/resealed_custody_storage_instance_id",
+     "request/binding": "gh1/stopped/own_d/request_binding_builder_restores",
+     "request/selector": "gh1/stopped/own_d/request_selector_builder_restores",
+     "retained/verified_original": "gh1/stopped/own_d/custody_differs_from_sealed_receipt",
+     "source/actual_token": "pm_goal_history_reader_fixtures/stopped/protocol/stale_actual_token",
+     "source/final_fence": "pm_goal_history_reader_fixtures/stopped/protocol/final_fence_changed",
+     "source/full_original": "gh1/stopped/own_d/source_event_not_original",
+     "source/index_key": "pm_goal_history_reader_fixtures/stopped/protocol/raw_project_partition",
+     "source/owner/authorized": "own_d/stopped/entry/33703",
+     "source/owner/captured_fence": "own_d/stopped/entry/33699",
+     "source/owner/event": "own_d/stopped/entry/33623",
+     "source/owner/final_fence": "own_d/stopped/entry/33710",
+     "source/owner/frame_verified": "own_d/stopped/entry/33707",
+     "source/owner/index_key": "own_d/stopped/entry/33709",
+     "source/owner/members": "own_d/stopped/entry/33714",
+     "source/owner/reader_available": "own_d/stopped/entry/33705",
+     "source/owner/retained": "own_d/stopped/entry/33704",
+     "source/owner/secret_safe": "own_d/stopped/entry/33706",
+     "source/owner/token": "own_d/stopped/entry/33677",
+     "source/owner/translation_verified": "own_d/stopped/entry/33708",
+     "source/unchanged_event": "pm_goal_history_reader_fixtures/stopped/protocol/forged_disclosed_event",
+     "stopped/original/child_settlement_refs": "own_d/stopped/entry/33616",
+     "stopped/original/interruption_boundary": "own_d/stopped/entry/33613",
+     "stopped/original/resumable": "own_d/stopped/entry/33614",
+     "stopped/original/safe_point_ref": "own_d/stopped/entry/33615",
+     "stopped/original/tool_settlement_refs": "own_d/stopped/entry/33617"
+    }
+   },
+   "number_corpus_ats211": {
+    "slots": [
+     "payload/expected_goal_revision",
+     "payload/goal_revision",
+     "event/sequence_id"
+    ],
+    "cases": 258,
+    "accepted": 104,
+    "refused": 154,
+    "agree": 258,
+    "disagree": 0,
+    "crashes": 0
+   },
+   "number_corpus_ats1119": {
+    "slots": [
+     "payload/expected_goal_revision",
+     "payload/goal_revision",
+     "event/sequence_id"
+    ],
+    "cases": 258,
+    "read": 115,
+    "accepted": 63,
+    "refused": 52,
+    "agree": 115,
+    "disagree": 0,
+    "crashes": 0,
+    "not_storable": 143,
+    "route": "ATS-1119 ReaderOracles._guarded(entry)",
+    "valid_but_not_storable": 41
+   },
+   "number_corpus_ats1119_not_storable_reasons": {
+    "codec_refusal:physical_type": 3,
+    "codec_refusal:jcs_binary64": 87,
+    "codec_refusal:jcs_decimal": 51,
+    "codec_refusal:physical_integer_range": 2
+   },
+   "retained_store_snapshots": {
+    "count": 11,
+    "unchanged": 11
+   }
+  },
+  {
+   "family": "goal.tool_check_recorded",
+   "goal.tool_check_recorded_matrix": "CLOSED 335 / CLOSED_BY_PROOF 59",
+   "goal.tool_check_recorded_closure": "uncovered 0; KILLED 259 / DUPLICATE_GROUP_KILLED 0 / DUPLICATE_SET_KILLED 6 / COVERED_BY_PROOF 63 / UNREACHABLE 0 / VACUOUS 0; lane GC classes: KILLED 259 / COVERED_LATER 69; apart: if 25, not 0",
+   "matrix_rows": 394,
+   "schema_rows": 243,
+   "checker_rows": 151,
+   "open_rows": [],
+   "proofs_by_kind": {
+    "union_alternative_member": 54,
+    "earlier_owner_union": 3,
+    "earlier_owner_edition_union": 2
+   },
+   "complete_calls": 8533,
+   "declared_negative_attempts": 7409,
+   "attempt_outcomes": {
+    "exact_expected": 5392,
+    "multiple_refusals": 106,
+    "other_refusal": 1896,
+    "accepted": 15
+   },
+   "replay_results": {
+    "KILLED": 576,
+    "NOT_REPLAYED_CAP": 4727,
+    "COVERED_LATER": 30,
+    "DUPLICATE_SET_KILLED": 37,
+    "DUPLICATE_SET_SITE_FAILED": 22
+   },
+   "invalid_attempts_listed": 2017,
+   "killed_declared_duplicate_sets": [
+    [
+     "join/envelope/event_type",
+     "request/family_dispatch",
+     "schema/f669a6f32c57a842/const"
+    ],
+    [
+     "schema/0cfc3606d97d9c1b/pattern",
+     "schema/f669a6f32c57a842/const"
+    ],
+    [
+     "schema/0cfc3606d97d9c1b/type",
+     "schema/f669a6f32c57a842/const"
+    ],
+    [
+     "schema/2c7b852e06bee468/const",
+     "schema/59c19d9dc360f556/enum"
+    ],
+    [
+     "schema/566e7a99239b5132/const",
+     "schema/9e7d3ab390e11206/enum"
+    ],
+    [
+     "schema/59c19d9dc360f556/enum",
+     "schema/9404d167f6ee250a/const"
+    ],
+    [
+     "schema/59c19d9dc360f556/enum",
+     "schema/b580462e80d7108b/const"
+    ],
+    [
+     "schema/7616386cdd0837c4/type",
+     "schema/b34f9a375418a2bc/anyOf"
+    ],
+    [
+     "schema/9514c9c5ecda87d4/format",
+     "schema/9514c9c5ecda87d4/minLength"
+    ],
+    [
+     "schema/cb3b5ed630e2cbfe/anyOf",
+     "schema/d3b3ce67f2b3cbaf/type"
+    ],
+    [
+     "source/full_original",
+     "source/unchanged_event"
+    ]
+   ],
+   "killed_registered_duplicate_groups": [],
+   "schema_closure": {
+    "uncovered": 0,
+    "occurrences": {
+     "KILLED": 259,
+     "gc:KILLED": 259,
+     "COVERED_BY_PROOF": 63,
+     "gc:COVERED_LATER": 69,
+     "DUPLICATE_SET_KILLED": 6,
+     "apart_if": 25,
+     "apart_not": 0
+    },
+    "distinct": {
+     "KILLED": 179,
+     "COVERED_BY_PROOF": 59,
+     "DUPLICATE_SET_KILLED": 5
+    },
+    "unattributed_schema_rows": 0,
+    "walks_agree": true,
+    "roots": {
+     "payload": {
+      "KILLED": 36,
+      "gc:KILLED": 36,
+      "COVERED_BY_PROOF": 4,
+      "gc:COVERED_LATER": 6,
+      "DUPLICATE_SET_KILLED": 2,
+      "apart_if": 12,
+      "apart_not": 0
+     },
+     "history_answer": {
+      "KILLED": 114,
+      "gc:KILLED": 114,
+      "COVERED_BY_PROOF": 4,
+      "gc:COVERED_LATER": 7,
+      "DUPLICATE_SET_KILLED": 3,
+      "apart_if": 9,
+      "apart_not": 0
+     },
+     "event_record": {
+      "KILLED": 28,
+      "gc:KILLED": 28,
+      "COVERED_BY_PROOF": 4,
+      "gc:COVERED_LATER": 5,
+      "DUPLICATE_SET_KILLED": 1,
+      "apart_if": 4,
+      "apart_not": 0
+     },
+     "read_token": {
+      "KILLED": 52,
+      "gc:KILLED": 52,
+      "apart_if": 0,
+      "apart_not": 0
+     },
+     "custody_reader": {
+      "COVERED_BY_PROOF": 51,
+      "gc:COVERED_LATER": 51,
+      "KILLED": 29,
+      "gc:KILLED": 29,
+      "apart_if": 0,
+      "apart_not": 0
+     }
+    }
+   },
+   "family_checker_rows": {
+    "rows": 9,
+    "missing_from_matrix": [],
+    "not_closed": []
+   },
+   "distinct_copy_joins": {
+    "rows": 96,
+    "closed": 96,
+    "by_proof": 0,
+    "open": [],
+    "witnesses": {
+     "admission/checkpoint/event_type": "own_d/tool_check_recorded/entry/60181",
+     "admission/checkpoint/owner_unit": "own_d/tool_check_recorded/entry/60180",
+     "admission/checkpoint/payload_schema_id": "own_d/tool_check_recorded/entry/60182",
+     "admission/checkpoint/registry_checkpoint": "own_d/tool_check_recorded/entry/60183",
+     "admission/checkpoint/source_contract": "own_d/tool_check_recorded/entry/60184",
+     "admission/edition/event_type": "own_d/tool_check_recorded/entry/60175",
+     "admission/edition/owner_unit": "own_d/tool_check_recorded/entry/60174",
+     "admission/edition/payload_schema_id": "own_d/tool_check_recorded/entry/60176",
+     "admission/edition/registry_checkpoint": "own_d/tool_check_recorded/entry/60177",
+     "admission/edition/source_contract": "own_d/tool_check_recorded/entry/60178",
+     "frame/full_cursor": "own_d/tool_check_recorded/entry/60168",
+     "frame/original_value": "own_d/tool_check_recorded/entry/60165",
+     "frame/selected_cursor": "own_d/tool_check_recorded/entry/60163",
+     "join/envelope/actor_ref": "pm_goal_history_reader_fixtures/tool_check_recorded/answer_joins/outer_inner_actor_ref",
+     "join/envelope/correlation_id": "pm_goal_history_reader_fixtures/tool_check_recorded/answer_joins/outer_inner_correlation_id",
+     "join/envelope/effective_account_ref": "pm_goal_history_reader_fixtures/tool_check_recorded/answer_joins/outer_inner_effective_account_ref",
+     "join/envelope/event_type": "pm_goal_history_reader_fixtures/tool_check_recorded/answer_joins/outer_inner_event_type",
+     "join/envelope/occurred_at_utc": "pm_goal_history_reader_fixtures/tool_check_recorded/answer_joins/outer_inner_occurred_at_utc",
+     "join/envelope/payload_schema_id": "pm_goal_history_reader_fixtures/tool_check_recorded/answer_joins/outer_inner_payload_schema_id",
+     "join/envelope/project_id": "pm_goal_history_reader_fixtures/tool_check_recorded/protocol/inner_project_mismatch",
+     "join/envelope/requested_account_ref": "pm_goal_history_reader_fixtures/tool_check_recorded/answer_joins/outer_inner_requested_account_ref",
+     "join/selector/event_id": "gh2/tool_check_recorded/protocol/selector_event_id_copy",
+     "join/selector/goal_id": "pm_goal_history_reader_fixtures/tool_check_recorded/answer_joins/selector_goal_id_foreign",
+     "join/selector/project_id": "pm_goal_history_reader_fixtures/tool_check_recorded/answer_joins/selector_project_id_foreign",
+     "join/selector/sequence_id": "gh2/tool_check_recorded/protocol/selector_sequence_id_copy",
+     "join/token/checkpoint_key": "pm_goal_history_reader_fixtures/tool_check_recorded/protocol/token_checkpoint_key",
+     "join/token/checkpoint_ref": "pm_goal_history_reader_fixtures/tool_check_recorded/protocol/token_checkpoint_ref",
+     "join/token/dataset": "pm_goal_history_reader_fixtures/tool_check_recorded/protocol/token_index_dataset_name",
+     "join/token/source_storage": "pm_goal_history_reader_fixtures/tool_check_recorded/protocol/token_source_storage",
+     "original/admission/event_type": "pm_goal_history_reader_fixtures/tool_check_recorded/protocol/admission_event_type",
+     "original/admission/payload_schema_id": "pm_goal_history_reader_fixtures/tool_check_recorded/protocol/admission_payload_schema_id",
+     "original/checkpoint": "pm_goal_history_reader_fixtures/tool_check_recorded/protocol/admission_registry_checkpoint",
+     "original/first_receipt/event_id": "pm_goal_history_reader_fixtures/tool_check_recorded/protocol/receipt_event_id",
+     "original/first_receipt/event_type": "pm_goal_history_reader_fixtures/tool_check_recorded/protocol/receipt_event_type",
+     "original/first_receipt/idempotency_key": "pm_goal_history_reader_fixtures/tool_check_recorded/protocol/receipt_idempotency_key",
+     "original/first_receipt/payload_schema_id": "pm_goal_history_reader_fixtures/tool_check_recorded/protocol/receipt_payload_schema_id",
+     "original/first_receipt/storage_instance_id": "pm_goal_history_reader_fixtures/tool_check_recorded/protocol/receipt_storage_instance_id",
+     "original/owner/admission": "own_d/tool_check_recorded/entry/55369",
+     "original/owner/facts": "own_d/tool_check_recorded/entry/55423",
+     "original/owner/first_receipt": "own_d/tool_check_recorded/entry/55374",
+     "original/owner/members": "own_d/tool_check_recorded/entry/55427",
+     "original/owner/predecessor": "own_d/tool_check_recorded/entry/55381",
+     "original/owner/producer_digest": "own_d/tool_check_recorded/entry/55392",
+     "original/owner/references": "own_d/tool_check_recorded/entry/55393",
+     "original/owner/runtime": "own_d/tool_check_recorded/entry/55384",
+     "original/owner_unit": "pm_goal_history_reader_fixtures/tool_check_recorded/protocol/admission_owner_unit",
+     "original/predecessor/goal_id": "pm_goal_history_reader_fixtures/tool_check_recorded/protocol/predecessor_goal_id",
+     "original/predecessor/project_id": "pm_goal_history_reader_fixtures/tool_check_recorded/protocol/predecessor_project_id",
+     "original/record/follow_on_separate_event": "pm_goal_history_reader_fixtures/tool_check_recorded/protocol/unresolved_follow_on_separate_event",
+     "original/record/nonterminal_state_preserved": "pm_goal_history_reader_fixtures/tool_check_recorded/protocol/unresolved_nonterminal_state_preserved",
+     "original/record/permission_evidence": "pm_goal_history_reader_fixtures/tool_check_recorded/protocol/unresolved_permission_evidence",
+     "original/record/secret_safe_output": "pm_goal_history_reader_fixtures/tool_check_recorded/protocol/unresolved_secret_safe_output",
+     "original/record/source_contract": "pm_goal_history_reader_fixtures/tool_check_recorded/protocol/unresolved_source_contract",
+     "original/runtime/actor_ref": "pm_goal_history_reader_fixtures/tool_check_recorded/protocol/runtime_actor_ref",
+     "original/runtime/effective_account_ref": "pm_goal_history_reader_fixtures/tool_check_recorded/protocol/runtime_effective_account_ref",
+     "original/runtime/effective_model_ref": "pm_goal_history_reader_fixtures/tool_check_recorded/protocol/runtime_effective_model_ref",
+     "original/runtime/effective_provider_ref": "pm_goal_history_reader_fixtures/tool_check_recorded/protocol/runtime_effective_provider_ref",
+     "original/runtime/execution_role": "pm_goal_history_reader_fixtures/tool_check_recorded/protocol/runtime_execution_role",
+     "original/runtime/requested_account_ref": "pm_goal_history_reader_fixtures/tool_check_recorded/protocol/runtime_requested_account_ref",
+     "original/runtime/requested_model_ref": "pm_goal_history_reader_fixtures/tool_check_recorded/protocol/runtime_requested_model_ref",
+     "original/runtime/requested_provider_ref": "pm_goal_history_reader_fixtures/tool_check_recorded/protocol/runtime_requested_provider_ref",
+     "original/semantic_digest": "pm_goal_history_reader_fixtures/tool_check_recorded/protocol/semantic_digest",
+     "receipt/event_id": "gh1/tool_check_recorded/own_d/resealed_custody_event_id",
+     "receipt/event_type": "gh1/tool_check_recorded/own_d/resealed_custody_event_type",
+     "receipt/first/event_id": "gh1/tool_check_recorded/own_d/resealed_first_receipt_event_id",
+     "receipt/first/sequence_id": "gh1/tool_check_recorded/own_d/resealed_first_receipt_sequence_id",
+     "receipt/full_value_commitment": "gh1/tool_check_recorded/own_d/resealed_custody_full_value_commitment",
+     "receipt/idempotency_key": "gh1/tool_check_recorded/own_d/resealed_custody_idempotency_key",
+     "receipt/scope_partition": "gh1/tool_check_recorded/own_d/resealed_custody_scope_partition",
+     "receipt/semantic_digest": "gh1/tool_check_recorded/own_d/resealed_custody_producer_semantic_digest",
+     "receipt/storage_instance_id": "gh1/tool_check_recorded/own_d/resealed_custody_storage_instance_id",
+     "request/binding": "gh1/tool_check_recorded/own_d/request_binding_builder_restores",
+     "request/selector": "gh1/tool_check_recorded/own_d/request_selector_builder_restores",
+     "retained/verified_original": "gh1/tool_check_recorded/own_d/custody_differs_from_sealed_receipt",
+     "source/actual_token": "pm_goal_history_reader_fixtures/tool_check_recorded/protocol/stale_actual_token",
+     "source/final_fence": "pm_goal_history_reader_fixtures/tool_check_recorded/protocol/final_fence_changed",
+     "source/full_original": "gh1/tool_check_recorded/own_d/source_event_not_original",
+     "source/index_key": "pm_goal_history_reader_fixtures/tool_check_recorded/protocol/raw_project_partition",
+     "source/owner/authorized": "own_d/tool_check_recorded/entry/55357",
+     "source/owner/captured_fence": "own_d/tool_check_recorded/entry/55353",
+     "source/owner/event": "own_d/tool_check_recorded/entry/55277",
+     "source/owner/final_fence": "own_d/tool_check_recorded/entry/55364",
+     "source/owner/frame_verified": "own_d/tool_check_recorded/entry/55361",
+     "source/owner/index_key": "own_d/tool_check_recorded/entry/55363",
+     "source/owner/members": "own_d/tool_check_recorded/entry/55368",
+     "source/owner/reader_available": "own_d/tool_check_recorded/entry/55359",
+     "source/owner/retained": "own_d/tool_check_recorded/entry/55358",
+     "source/owner/secret_safe": "own_d/tool_check_recorded/entry/55360",
+     "source/owner/token": "own_d/tool_check_recorded/entry/55331",
+     "source/owner/translation_verified": "own_d/tool_check_recorded/entry/55362",
+     "source/unchanged_event": "pm_goal_history_reader_fixtures/tool_check_recorded/protocol/forged_disclosed_event",
+     "tool_check_recorded/original/check_kind": "own_d/tool_check_recorded/entry/55269",
+     "tool_check_recorded/original/check_result": "own_d/tool_check_recorded/entry/55270",
+     "tool_check_recorded/original/policy_decision": "own_d/tool_check_recorded/entry/55271",
+     "tool_check_recorded/original/tool_call_id": "own_d/tool_check_recorded/entry/55267",
+     "tool_check_recorded/original/tool_name": "own_d/tool_check_recorded/entry/55268"
+    }
+   },
+   "number_corpus_ats211": {
+    "slots": [
+     "payload/expected_goal_revision",
+     "payload/goal_revision",
+     "event/sequence_id"
+    ],
+    "cases": 258,
+    "accepted": 104,
+    "refused": 154,
+    "agree": 258,
+    "disagree": 0,
+    "crashes": 0
+   },
+   "number_corpus_ats1119": {
+    "slots": [
+     "payload/expected_goal_revision",
+     "payload/goal_revision",
+     "event/sequence_id"
+    ],
+    "cases": 258,
+    "read": 115,
+    "accepted": 63,
+    "refused": 52,
+    "agree": 115,
+    "disagree": 0,
+    "crashes": 0,
+    "not_storable": 143,
+    "route": "ATS-1119 ReaderOracles._guarded(entry)",
+    "valid_but_not_storable": 41
+   },
+   "number_corpus_ats1119_not_storable_reasons": {
+    "codec_refusal:physical_type": 3,
+    "codec_refusal:jcs_binary64": 87,
+    "codec_refusal:jcs_decimal": 51,
+    "codec_refusal:physical_integer_range": 2
+   },
+   "retained_store_snapshots": {
+    "count": 11,
+    "unchanged": 11
+   }
+  },
+  {
+   "family": "goal.verification_decided",
+   "goal.verification_decided_matrix": "CLOSED 331 / CLOSED_BY_PROOF 58",
+   "goal.verification_decided_closure": "uncovered 0; KILLED 256 / DUPLICATE_GROUP_KILLED 0 / DUPLICATE_SET_KILLED 7 / COVERED_BY_PROOF 62 / UNREACHABLE 0 / VACUOUS 0; lane GC classes: KILLED 256 / COVERED_LATER 69; apart: if 25, not 0",
+   "matrix_rows": 389,
+   "schema_rows": 240,
+   "checker_rows": 149,
+   "open_rows": [],
+   "proofs_by_kind": {
+    "union_alternative_member": 52,
+    "earlier_owner_union": 3,
+    "entailed_by_unconditional_required": 1,
+    "earlier_owner_edition_union": 2
+   },
+   "complete_calls": 8805,
+   "declared_negative_attempts": 7684,
+   "attempt_outcomes": {
+    "exact_expected": 5665,
+    "multiple_refusals": 106,
+    "other_refusal": 1900,
+    "accepted": 13
+   },
+   "replay_results": {
+    "KILLED": 555,
+    "NOT_REPLAYED_CAP": 5019,
+    "COVERED_LATER": 30,
+    "DUPLICATE_SET_KILLED": 53,
+    "DUPLICATE_SET_SITE_FAILED": 8
+   },
+   "invalid_attempts_listed": 2019,
+   "killed_declared_duplicate_sets": [
+    [
+     "join/envelope/event_type",
+     "request/family_dispatch",
+     "schema/f93b4276db4f9a52/const"
+    ],
+    [
+     "schema/0295f68bf04a4780/uniqueItems",
+     "schema/0d40e50da155b6f2/anyOf"
+    ],
+    [
+     "schema/0295f68bf04a4780/uniqueItems",
+     "schema/afcdde07d516573b/uniqueItems"
+    ],
+    [
+     "schema/05dafe48417b0c79/anyOf",
+     "schema/18901d07aaa886c8/required"
+    ],
+    [
+     "schema/05ec2ea54e3cb899/const",
+     "schema/82e9361b1c53a297/enum"
+    ],
+    [
+     "schema/0cfc3606d97d9c1b/pattern",
+     "schema/f93b4276db4f9a52/const"
+    ],
+    [
+     "schema/0cfc3606d97d9c1b/type",
+     "schema/f93b4276db4f9a52/const"
+    ],
+    [
+     "schema/0d40e50da155b6f2/anyOf",
+     "schema/18901d07aaa886c8/required"
+    ],
+    [
+     "schema/18901d07aaa886c8/type",
+     "schema/90c3dd63646da42b/required"
+    ],
+    [
+     "schema/7616386cdd0837c4/type",
+     "schema/b34f9a375418a2bc/anyOf"
+    ],
+    [
+     "schema/82e9361b1c53a297/enum",
+     "schema/f95005624771758e/const"
+    ],
+    [
+     "schema/82e9361b1c53a297/enum",
+     "schema/fc22c004f8292929/const"
+    ],
+    [
+     "schema/9514c9c5ecda87d4/format",
+     "schema/9514c9c5ecda87d4/minLength"
+    ],
+    [
+     "schema/9e7d3ab390e11206/enum",
+     "schema/a26f164d42b9565f/const"
+    ],
+    [
+     "source/full_original",
+     "source/unchanged_event"
+    ]
+   ],
+   "killed_registered_duplicate_groups": [],
+   "schema_closure": {
+    "uncovered": 0,
+    "occurrences": {
+     "KILLED": 256,
+     "gc:KILLED": 256,
+     "DUPLICATE_SET_KILLED": 7,
+     "gc:COVERED_LATER": 69,
+     "COVERED_BY_PROOF": 62,
+     "apart_if": 25,
+     "apart_not": 0
+    },
+    "distinct": {
+     "KILLED": 176,
+     "DUPLICATE_SET_KILLED": 6,
+     "COVERED_BY_PROOF": 58
+    },
+    "unattributed_schema_rows": 0,
+    "walks_agree": true,
+    "roots": {
+     "payload": {
+      "KILLED": 33,
+      "gc:KILLED": 33,
+      "DUPLICATE_SET_KILLED": 3,
+      "gc:COVERED_LATER": 6,
+      "COVERED_BY_PROOF": 3,
+      "apart_if": 12,
+      "apart_not": 0
+     },
+     "history_answer": {
+      "KILLED": 114,
+      "gc:KILLED": 114,
+      "COVERED_BY_PROOF": 4,
+      "gc:COVERED_LATER": 7,
+      "DUPLICATE_SET_KILLED": 3,
+      "apart_if": 9,
+      "apart_not": 0
+     },
+     "event_record": {
+      "KILLED": 28,
+      "gc:KILLED": 28,
+      "COVERED_BY_PROOF": 4,
+      "gc:COVERED_LATER": 5,
+      "DUPLICATE_SET_KILLED": 1,
+      "apart_if": 4,
+      "apart_not": 0
+     },
+     "read_token": {
+      "KILLED": 52,
+      "gc:KILLED": 52,
+      "apart_if": 0,
+      "apart_not": 0
+     },
+     "custody_reader": {
+      "COVERED_BY_PROOF": 51,
+      "gc:COVERED_LATER": 51,
+      "KILLED": 29,
+      "gc:KILLED": 29,
+      "apart_if": 0,
+      "apart_not": 0
+     }
+    }
+   },
+   "family_checker_rows": {
+    "rows": 5,
+    "missing_from_matrix": [],
+    "not_closed": []
+   },
+   "distinct_copy_joins": {
+    "rows": 93,
+    "closed": 93,
+    "by_proof": 0,
+    "open": [],
+    "witnesses": {
+     "admission/checkpoint/event_type": "own_d/verification_decided/entry/44233",
+     "admission/checkpoint/owner_unit": "own_d/verification_decided/entry/44232",
+     "admission/checkpoint/payload_schema_id": "own_d/verification_decided/entry/44234",
+     "admission/checkpoint/registry_checkpoint": "own_d/verification_decided/entry/44235",
+     "admission/checkpoint/source_contract": "own_d/verification_decided/entry/44236",
+     "admission/edition/event_type": "own_d/verification_decided/entry/44227",
+     "admission/edition/owner_unit": "own_d/verification_decided/entry/44226",
+     "admission/edition/payload_schema_id": "own_d/verification_decided/entry/44228",
+     "admission/edition/registry_checkpoint": "own_d/verification_decided/entry/44229",
+     "admission/edition/source_contract": "own_d/verification_decided/entry/44230",
+     "frame/full_cursor": "own_d/verification_decided/entry/44220",
+     "frame/original_value": "own_d/verification_decided/entry/44217",
+     "frame/selected_cursor": "own_d/verification_decided/entry/44215",
+     "join/envelope/actor_ref": "pm_goal_history_reader_fixtures/verification_decided/answer_joins/outer_inner_actor_ref",
+     "join/envelope/correlation_id": "pm_goal_history_reader_fixtures/verification_decided/answer_joins/outer_inner_correlation_id",
+     "join/envelope/effective_account_ref": "pm_goal_history_reader_fixtures/verification_decided/answer_joins/outer_inner_effective_account_ref",
+     "join/envelope/event_type": "pm_goal_history_reader_fixtures/verification_decided/answer_joins/outer_inner_event_type",
+     "join/envelope/occurred_at_utc": "pm_goal_history_reader_fixtures/verification_decided/answer_joins/outer_inner_occurred_at_utc",
+     "join/envelope/payload_schema_id": "pm_goal_history_reader_fixtures/verification_decided/answer_joins/outer_inner_payload_schema_id",
+     "join/envelope/project_id": "pm_goal_history_reader_fixtures/verification_decided/protocol/inner_project_mismatch",
+     "join/envelope/requested_account_ref": "pm_goal_history_reader_fixtures/verification_decided/answer_joins/outer_inner_requested_account_ref",
+     "join/selector/event_id": "pm_goal_history_reader_fixtures/verification_decided/join/selector_event_mismatch",
+     "join/selector/goal_id": "pm_goal_history_reader_fixtures/verification_decided/answer_joins/selector_goal_id_foreign",
+     "join/selector/project_id": "pm_goal_history_reader_fixtures/verification_decided/answer_joins/selector_project_id_foreign",
+     "join/selector/sequence_id": "pm_goal_history_reader_fixtures/verification_decided/join/selector_sequence_mismatch",
+     "join/token/checkpoint_key": "pm_goal_history_reader_fixtures/verification_decided/protocol/token_checkpoint_key",
+     "join/token/checkpoint_ref": "pm_goal_history_reader_fixtures/verification_decided/protocol/token_checkpoint_ref",
+     "join/token/dataset": "pm_goal_history_reader_fixtures/verification_decided/protocol/token_index_dataset_name",
+     "join/token/source_storage": "pm_goal_history_reader_fixtures/verification_decided/protocol/token_source_storage",
+     "original/admission/event_type": "pm_goal_history_reader_fixtures/verification_decided/protocol/admission_event_type",
+     "original/admission/payload_schema_id": "pm_goal_history_reader_fixtures/verification_decided/protocol/admission_payload_schema_id",
+     "original/checkpoint": "pm_goal_history_reader_fixtures/verification_decided/protocol/admission_registry_checkpoint",
+     "original/first_receipt/event_id": "pm_goal_history_reader_fixtures/verification_decided/protocol/receipt_event_id",
+     "original/first_receipt/event_type": "pm_goal_history_reader_fixtures/verification_decided/protocol/receipt_event_type",
+     "original/first_receipt/idempotency_key": "pm_goal_history_reader_fixtures/verification_decided/protocol/receipt_idempotency_key",
+     "original/first_receipt/payload_schema_id": "pm_goal_history_reader_fixtures/verification_decided/protocol/receipt_payload_schema_id",
+     "original/first_receipt/storage_instance_id": "pm_goal_history_reader_fixtures/verification_decided/protocol/receipt_storage_instance_id",
+     "original/owner/admission": "own_d/verification_decided/entry/39207",
+     "original/owner/facts": "own_d/verification_decided/entry/39273",
+     "original/owner/first_receipt": "own_d/verification_decided/entry/39212",
+     "original/owner/members": "own_d/verification_decided/entry/39281",
+     "original/owner/predecessor": "own_d/verification_decided/entry/39219",
+     "original/owner/producer_digest": "own_d/verification_decided/entry/39230",
+     "original/owner/references": "own_d/verification_decided/entry/39231",
+     "original/owner/runtime": "own_d/verification_decided/entry/39222",
+     "original/owner_unit": "pm_goal_history_reader_fixtures/verification_decided/protocol/admission_owner_unit",
+     "original/predecessor/goal_id": "pm_goal_history_reader_fixtures/verification_decided/protocol/predecessor_goal_id",
+     "original/predecessor/project_id": "pm_goal_history_reader_fixtures/verification_decided/protocol/predecessor_project_id",
+     "original/record/committed_successor": "pm_goal_history_reader_fixtures/verification_decided/protocol/unresolved_committed_successor",
+     "original/record/cycle_owner": "pm_goal_history_reader_fixtures/verification_decided/protocol/unresolved_cycle_owner",
+     "original/record/decision_evidence": "pm_goal_history_reader_fixtures/verification_decided/protocol/unresolved_decision_evidence",
+     "original/record/legal_predecessor": "pm_goal_history_reader_fixtures/verification_decided/protocol/unresolved_legal_predecessor",
+     "original/record/source_contract": "pm_goal_history_reader_fixtures/verification_decided/protocol/unresolved_source_contract",
+     "original/record/strong_repeat_adjudicator": "pm_goal_history_reader_fixtures/verification_decided/protocol/unresolved_strong_repeat_adjudicator",
+     "original/record/verifier_authority": "pm_goal_history_reader_fixtures/verification_decided/protocol/unresolved_verifier_authority",
+     "original/runtime/actor_ref": "pm_goal_history_reader_fixtures/verification_decided/protocol/runtime_actor_ref",
+     "original/runtime/effective_account_ref": "pm_goal_history_reader_fixtures/verification_decided/protocol/runtime_effective_account_ref",
+     "original/runtime/effective_model_ref": "pm_goal_history_reader_fixtures/verification_decided/protocol/runtime_effective_model_ref",
+     "original/runtime/effective_provider_ref": "pm_goal_history_reader_fixtures/verification_decided/protocol/runtime_effective_provider_ref",
+     "original/runtime/execution_role": "pm_goal_history_reader_fixtures/verification_decided/protocol/runtime_execution_role",
+     "original/runtime/requested_account_ref": "pm_goal_history_reader_fixtures/verification_decided/protocol/runtime_requested_account_ref",
+     "original/runtime/requested_model_ref": "pm_goal_history_reader_fixtures/verification_decided/protocol/runtime_requested_model_ref",
+     "original/runtime/requested_provider_ref": "pm_goal_history_reader_fixtures/verification_decided/protocol/runtime_requested_provider_ref",
+     "original/semantic_digest": "pm_goal_history_reader_fixtures/verification_decided/protocol/semantic_digest",
+     "receipt/event_id": "gh1/verification_decided/own_d/resealed_custody_event_id",
+     "receipt/event_type": "gh1/verification_decided/own_d/resealed_custody_event_type",
+     "receipt/first/event_id": "gh1/verification_decided/own_d/resealed_first_receipt_event_id",
+     "receipt/first/sequence_id": "gh1/verification_decided/own_d/resealed_first_receipt_sequence_id",
+     "receipt/full_value_commitment": "gh1/verification_decided/own_d/resealed_custody_full_value_commitment",
+     "receipt/idempotency_key": "gh1/verification_decided/own_d/resealed_custody_idempotency_key",
+     "receipt/scope_partition": "gh1/verification_decided/own_d/resealed_custody_scope_partition",
+     "receipt/semantic_digest": "gh1/verification_decided/own_d/resealed_custody_producer_semantic_digest",
+     "receipt/storage_instance_id": "gh1/verification_decided/own_d/resealed_custody_storage_instance_id",
+     "request/binding": "gh1/verification_decided/own_d/request_binding_builder_restores",
+     "request/selector": "gh1/verification_decided/own_d/request_selector_builder_restores",
+     "retained/verified_original": "gh1/verification_decided/own_d/custody_differs_from_sealed_receipt",
+     "source/actual_token": "pm_goal_history_reader_fixtures/verification_decided/protocol/stale_actual_token",
+     "source/final_fence": "pm_goal_history_reader_fixtures/verification_decided/protocol/final_fence_changed",
+     "source/full_original": "gh1/verification_decided/own_d/source_event_not_original",
+     "source/index_key": "pm_goal_history_reader_fixtures/verification_decided/protocol/raw_project_partition",
+     "source/owner/authorized": "own_d/verification_decided/entry/39195",
+     "source/owner/captured_fence": "own_d/verification_decided/entry/39191",
+     "source/owner/event": "own_d/verification_decided/entry/39115",
+     "source/owner/final_fence": "own_d/verification_decided/entry/39202",
+     "source/owner/frame_verified": "own_d/verification_decided/entry/39199",
+     "source/owner/index_key": "own_d/verification_decided/entry/39201",
+     "source/owner/members": "own_d/verification_decided/entry/39206",
+     "source/owner/reader_available": "own_d/verification_decided/entry/39197",
+     "source/owner/retained": "own_d/verification_decided/entry/39196",
+     "source/owner/secret_safe": "own_d/verification_decided/entry/39198",
+     "source/owner/token": "own_d/verification_decided/entry/39169",
+     "source/owner/translation_verified": "own_d/verification_decided/entry/39200",
+     "source/unchanged_event": "pm_goal_history_reader_fixtures/verification_decided/protocol/forged_disclosed_event"
+    }
+   },
+   "number_corpus_ats211": {
+    "slots": [
+     "payload/expected_goal_revision",
+     "payload/goal_revision",
+     "event/sequence_id"
+    ],
+    "cases": 258,
+    "accepted": 104,
+    "refused": 154,
+    "agree": 258,
+    "disagree": 0,
+    "crashes": 0
+   },
+   "number_corpus_ats1119": {
+    "slots": [
+     "payload/expected_goal_revision",
+     "payload/goal_revision",
+     "event/sequence_id"
+    ],
+    "cases": 258,
+    "read": 115,
+    "accepted": 63,
+    "refused": 52,
+    "agree": 115,
+    "disagree": 0,
+    "crashes": 0,
+    "not_storable": 143,
+    "route": "ATS-1119 ReaderOracles._guarded(entry)",
+    "valid_but_not_storable": 41
+   },
+   "number_corpus_ats1119_not_storable_reasons": {
+    "codec_refusal:physical_type": 3,
+    "codec_refusal:jcs_binary64": 87,
+    "codec_refusal:jcs_decimal": 51,
+    "codec_refusal:physical_integer_range": 2
+   },
+   "retained_store_snapshots": {
+    "count": 11,
+    "unchanged": 11
+   }
+  }
+ ]
+}
