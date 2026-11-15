@@ -1031,6 +1031,44 @@ def run_slot(fam, boundary, slot, per_site=3, route_kills=3, progress=None, pool
                     found += 1
                     got_here = True
                     break
+    # A required member that no single deletion isolates: the member removed together with one other member whose
+    # presence another rule ties to it (a coherent removal), on the controls only.
+    sole_now = {w.get("sole") for w in witnesses}
+    for s in sites:
+        if kinds[s.key] != "clause" or s.keyword != "required" or (id(s.node), "required", s.member) in sole_now:
+            continue
+        done = False
+        for p, inst in instances:
+            if done:
+                break
+            for path, value in locations(inst, s.template):
+                if done or not isinstance(value, dict) or s.member not in value:
+                    continue
+                first = del_at(inst, path, s.member)
+                for other in [m for m in value if m != s.member]:
+                    cand = del_at(first, path, other)
+                    if cand is None:
+                        continue
+                    if edition is not None and (not isinstance(cand, dict) or dc.edition_of(cand) != edition):
+                        continue
+                    errors = list(validator.iter_errors(cand))
+                    if len(errors) != 1:
+                        continue
+                    tree, conditional = error_tree(errors[0])
+                    if (id(s.node), "required", s.member) not in tree:
+                        continue
+                    with Cut(s):
+                        if not validator.is_valid(cand):
+                            continue
+                    d = digest(cand)
+                    if d in seen:
+                        continue
+                    seen.add(d)
+                    witnesses.append(dict(target=s.key, attributed=None, attributed_node=None, exact=False, probe=p, instance=cand,
+                                          location="/" + "/".join(map(str, path)), top_error=errors[0].validator, tree=tree,
+                                          conditional=conditional, coherent=True, sole=(id(s.node), "required", s.member)))
+                    done = True
+                    break
     # Donor bases for clauses no control-derived witness reaches (neither targeted nor in any witness's error tree).
     by_template_all = {}
     for s in sites:
