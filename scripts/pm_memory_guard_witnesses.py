@@ -414,6 +414,11 @@ def maintenance(m, fixtures, families):
         add('checkpoint-event-id', 'ck_event', 'CK06_event_id', join, sealed_join({**cv, 'event_id': OTHER_EVENT_ID}))
         add('checkpoint-key', 'ck_event', 'CK07_idempotency_key', join,
             sealed_join({**cv, 'idempotency_key': 'memory-maintenance:' + OTHER_SHA}))
+        # The generic EventRecord schema now admits Application as well as
+        # Project envelopes. Change both observational scope fields together so
+        # CK01 accepts the envelope and the DMEM-specific scope row is reached.
+        add('checkpoint-application-scope', 'ck_scope', 'CK08_scope_kind', join,
+            sealed_join({**cv, 'scope_kind': 'application', 'project_id': None}))
         add('checkpoint-project', 'ck_project', 'CK09_project', join, sealed_join({**cv, 'project_id': 'other-project'}))
         add('checkpoint-payload', 'ck_project', 'CK10_payload', join,
             sealed_join(edited(cv, (['payload', 'source_revision_sha256'], OTHER_SHA))))
@@ -452,6 +457,13 @@ def archive(a, fixtures, families):
         job = base.split('.')[1]
         add = lambda name, phase, row, control, negative: expect(m, event + ':' + name, phase, row, control, negative, counts)
         good = S['started']
+        ck = next(c for c in a.checkpoint_guard_controls(fixtures) if c['event_type'] == event)
+        generic = m.load('Plans/event_record_index_checkpoint_contract_fixtures.json')['positive']['current_read_without_old_controls']
+        join = lambda value=ck['value']: m.checkpoint_check(deepcopy(generic), deepcopy(ck['operation']), deepcopy(value), event)
+        bad_scope = {**ck['value'], 'scope_kind': 'application', 'project_id': None}
+        add('checkpoint-application-scope', 'ck_scope', 'CK08_scope_kind', join,
+            lambda: with_custody(m, lambda: join(bad_scope),
+                seal=[(bad_scope, ck['operation'], event, m.RECIPE_FROZEN, None)]))
         cutoff = lambda state: a.cutoff_gate(deepcopy(state))
         ref = good['operation']['cutoff_ref']
         add('cutoff-application-scope', 'cg_body', 'CG06_scope_kind', lambda: cutoff(good),

@@ -1,6 +1,6 @@
 {
   "schema_id": "pm.assurance.event_authority.step08_current_depth.v1",
-  "assessment_id": "EA-W2-DMEM-SWEEP-P2B-SELF-GRADE-20261111",
+  "assessment_id": "EA-PNC019-C12-DMEM-20261114",
   "assessment_kind": "worker_self_grade",
   "rubric": {
     "criteria": [
@@ -30,8 +30,8 @@
   },
   "status_counts": {
     "ABSENT": 12,
-    "PASS": 108,
-    "PARTIAL": 24
+    "PARTIAL": 12,
+    "PASS": 120
   },
   "native_execution": "NOT_RUN",
   "rows": [
@@ -51,7 +51,7 @@
           "quote": "remains absent from event_family_registry.json, quarantined before append or projection. Retention is PENDING_RETENTION_DECISION: candidate ordinary telemetry (Case L-3, 90 days/2,000,000 pe"
         }
       ],
-      "pass_count": 9,
+      "pass_count": 10,
       "normative_depth_complete": false,
       "native_execution": "NOT_RUN",
       "current_owner_units": [
@@ -418,301 +418,80 @@
           "change_reason": "Sweep part 2B (S3) replaces record-selected edition dispatch with SP-1101 custody selection; the grade is carried with the new evidence."
         },
         "positive_negative_oracles": {
-          "status": "PARTIAL",
+          "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Exact-family checkers pass (12/12) with lifecycle/custody/history, CV-1101 date-time profile battery, full uint64, Card 6 policy and policy-instant, SP-1101 custody, guard-table witness and shared-number-corpus suites. Check 11 is Method B: every refusal is one row of a generated phase table and the gated shared tool proves 289 of 316 rows; the 27 unproved rows are each decided first by a named earlier row or schema (listed in the report). The timestamp review is no longer interim: every timestamp field is checked by the shared CV-1101 predicate with its owner profile. PARTIAL because each JSON Schema occurrence is one verdict row (per-keyword and format cuts are not ported to the shared tool). Native NOT_RUN.",
+          "finding": "C12 static executable oracles complete under the W3H whole-definition Method B route. Complete owner definitions and reference branches retain every keyword; 96 exact-family schema sites have authored controls, exact schema-row/code mutations, cuts and restoration, with pin-bound shared reuse. Gated tool 004bdedd63 proves 290/316 real predicates in 191 tables; 26 checked implications each occupy a singleton table. CK08 has an independent sealed Application-scope witness on every family. Full original exact-family routes, 111 applicable number-corpus cases per family, all local date-time declarations/profiles and exact policy instants pass. Retained reads have actual custody-store snapshots and no writes. Global shared date-time gate remains NOT_RUN_ADMISSION_REFUSED on the absent mainline migration citation; no global PASS or native/admission proof is claimed.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-630",
-              "line_start": 29734,
-              "line_end": 29734,
-              "quote": "Newly authored current-writer boundary for exactly memory.dedup_sweep.completed@1.0.0"
+              "line_start": 39132,
+              "line_end": 39132,
+              "quote": "Newly authored owner contract under DL-045 for exactly memory.dedup_sweep.completed@1.0.0; search scope and negative evidence are the family's row in reports/event-authority-20261104/DMEM-search.json. The family remains absent from event_family_registry.json, quarantined before append or projection. Retention is PENDING_RETENTION_DECISION: candidate ordinary telemetry (Case L-3, 90 days/2,000,000 per Project) versus audit authority (indefinite/no count eviction); neither is selected. Unknown policy is materially incomplete and permits no destructive inference. Operation custody has the same pending assignment, and actual native activation is fenced until it resolves."
             },
             {
-              "path": "Plans/Automated_Testing_System.md",
-              "unit": "ATS-315",
-              "line_start": 7251,
-              "line_end": 7251,
-              "quote": "Each exact family additionally owns an independent current-writer boundary suite using the complete canonical EventRecord 2.0.0 schema with format checking"
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-650",
+              "line_start": 35324,
+              "line_end": 35324,
+              "quote": "canonical_text: Newly authored closed payload owner contract for exactly memory.dedup_sweep.completed@1.0.0 under"
             },
             {
-              "path": "Plans/memory_maintenance_event_fixtures.json",
-              "unit": "#/writer_families/0",
-              "line_start": 49707,
-              "line_end": 49707,
-              "quote": "\"name\": \"memory.dedup_sweep.completed:append-projector-replay-only\","
+              "path": "scripts/pm_memory_c12.py",
+              "line_start": 111,
+              "line_end": 111,
+              "quote": "def schema_closure(m, path, definition):"
             },
             {
-              "path": "Plans/memory_maintenance_event_fixtures.json",
-              "unit": "#/stateful_families/0",
-              "line_start": 25897,
-              "line_end": 25897,
-              "quote": "\"name\": \"memory.dedup_sweep.completed:completed-recovery-permission-refusal\","
+              "path": "scripts/pm_memory_c12.py",
+              "line_start": 338,
+              "line_end": 338,
+              "quote": "killed=baseline == expected and cut == ['accepted'] and restored == expected,"
             },
             {
-              "path": "Plans/memory_maintenance_event_fixtures.json",
-              "unit": "#/stateful_families/0",
-              "line_start": 25917,
-              "line_end": 25917,
-              "quote": "\"name\": \"memory.dedup_sweep.completed:completed-recovery-withdrawal-refusal\","
+              "path": "scripts/pm_memory_c12.py",
+              "line_start": 402,
+              "line_end": 402,
+              "quote": "assert before == after and state == caller, (event, mode, defect, 'read changed custody/caller')"
             },
             {
-              "path": "Plans/memory_maintenance_event_fixtures.json",
-              "unit": "#/writer_families/memory.dedup_sweep.completed",
-              "quote": "\"name\": \"memory.dedup_sweep.completed:completed-retry-start-missing\",",
-              "line_start": 51052,
-              "line_end": 51052
+              "path": "scripts/pm_memory_c12_selftest.py",
+              "line_start": 103,
+              "line_end": 103,
+              "quote": "results.append({'case': '4400-digit-integer-at-complete-writer', 'result': 'exact_storage_uint64_refusal'})"
             },
             {
-              "path": "Plans/storage-plan.md",
-              "unit": "SP-630",
-              "quote": "Start custody gate for exactly memory.dedup_sweep.completed@1.0.0, newly authored owner contract (DMEM fix round 4)",
-              "line_start": 29736,
-              "line_end": 29736
+              "path": "scripts/pm_memory_c12_entailments.py",
+              "line_start": 104,
+              "line_end": 104,
+              "quote": "assert len(records) == 26 and len({r['row'] for r in records}) == 26"
             },
             {
-              "path": "Plans/Automated_Testing_System.md",
-              "unit": "ATS-315",
-              "quote": "Start custody gate oracle (fix round 4) for SP-630 to SP-637: the checker has one start_custody_gate and applies it at the commit point",
-              "line_start": 7259,
-              "line_end": 7259
-            },
-            {
-              "path": "Plans/Automated_Testing_System.md",
-              "unit": "ATS-315",
-              "quote": "reference_cases checks standing check 9: before any instance validation the checker walks every subschema",
-              "line_start": 7267,
-              "line_end": 7267
-            },
-            {
-              "path": "Plans/memory_maintenance_event_fixtures.json",
-              "unit": "#/start_custody_matrix",
-              "quote": "\"name\": \"memory.dedup_sweep.completed:phase:advance_completed@terminal_saved\",",
-              "line_start": 85602,
-              "line_end": 85602
-            },
-            {
-              "path": "Plans/memory_maintenance_event_fixtures.json",
-              "unit": "#/history_families",
-              "quote": "\"name\": \"memory.dedup_sweep.completed:history-withdrawn\",",
-              "line_start": 126643,
-              "line_end": 126643
-            },
-            {
-              "path": "Plans/memory_maintenance_event_fixtures.json",
-              "unit": "#/reference_cases",
-              "quote": "\"name\": \"memory.dedup_sweep.completed:standing9-dormant-missing-ref\",",
-              "line_start": 129475,
-              "line_end": 129475
-            },
-            {
-              "path": "scripts/pm_memory_maintenance_events.py",
-              "unit": "start_custody_gate",
-              "quote": "def start_custody_gate(state, first_start=False, writer_event=None, canonical_history=False):",
-              "line_start": 718,
-              "line_end": 718
-            },
-            {
-              "path": "scripts/pm_memory_maintenance_events.py",
-              "unit": "transition",
-              "quote": "start_custody_gate(before, first_start=action['op'] == 'append_started')",
-              "line_start": 1244,
-              "line_end": 1244
-            },
-            {
-              "path": "scripts/pm_memory_maintenance_events.py",
-              "unit": "main",
-              "quote": "mirrors = require_resolved_references()",
-              "line_start": 1934,
-              "line_end": 1934
-            },
-            {
-              "path": "Plans/memory_canonical_history_fixtures.json",
-              "unit": "#/canonical_history_families",
-              "quote": "\"name\": \"memory.dedup_sweep.completed:compatibility-replay-only\",",
-              "line_start": 754,
-              "line_end": 754
-            },
-            {
-              "path": "Plans/memory_canonical_history_fixtures.json",
-              "unit": "#/canonical_history_families",
-              "quote": "\"name\": \"memory.dedup_sweep.completed:foreign-project-compatibility_replay\",",
-              "line_start": 3299,
-              "line_end": 3299
-            },
-            {
-              "path": "Plans/memory_canonical_history_fixtures.json",
-              "unit": "#/canonical_history_families",
-              "quote": "\"name\": \"memory.dedup_sweep.completed:numeric-spelling-commitment-1e0\",",
-              "line_start": 2528,
-              "line_end": 2528
-            },
-            {
-              "path": "scripts/pm_memory_maintenance_events.py",
-              "unit": "read_canonical_history",
-              "quote": "def read_canonical_history(before, event):",
-              "line_start": 1422,
-              "line_end": 1422
-            },
-            {
-              "path": "scripts/pm_memory_maintenance_events.py",
-              "unit": "json_numbers",
-              "quote": "def json_numbers(text):",
-              "line_start": 181,
-              "line_end": 181
-            },
-            {
-              "path": "scripts/pm_memory_maintenance_events.py",
-              "unit": "flag",
-              "quote": "return type(value) is bool and value is expected",
-              "line_start": 280,
-              "line_end": 280
-            },
-            {
-              "path": "scripts/pm_memory_boundary_domains.py",
-              "unit": "domain_cases",
-              "quote": "def domain_cases(m, contexts, boundaries, archive=None):",
-              "line_start": 12,
-              "line_end": 12
-            },
-            {
-              "path": "Plans/memory_maintenance_boundary_fixtures.json",
-              "unit": "#/families",
-              "quote": "\"memory.dedup_sweep.completed\"",
-              "line_start": 5,
-              "line_end": 5
-            },
-            {
-              "path": "Plans/storage-plan.md",
-              "unit": "SP-630",
-              "line_start": 29740,
-              "line_end": 29740,
-              "quote": "Historical originals instead use their frozen write-time recipe integer-json-v1"
-            },
-            {
-              "path": "Plans/storage-plan.md",
-              "unit": "SP-630",
-              "quote": "Storage sequence_id independently adopts SP-236 exact uint64, 0 through 18446744073709551615 inclusive, with exact integer type",
-              "line_start": 29740,
-              "line_end": 29740
-            },
-            {
-              "path": "scripts/pm_memory_storage_metadata.py",
-              "unit": "run",
-              "quote": "def run(m, contexts):",
-              "line_start": 48,
-              "line_end": 48
+              "path": "scripts/pm_memory_guard_witnesses.py",
+              "line_start": 420,
+              "line_end": 420,
+              "quote": "add('checkpoint-application-scope', 'ck_scope', 'CK08_scope_kind', join,"
             },
             {
               "path": "Plans/assistant-memory-subsystem.md",
-              "unit": "AMS-100",
-              "line_start": 3186,
-              "line_end": 3186,
-              "quote": "DL-444 and DL-445 apply E-CARDS-2 Card 6.a and 6.b option A."
-            },
-            {
-              "path": "scripts/pm_memory_policy.py",
-              "unit": "run",
-              "line_start": 312,
-              "line_end": 312,
-              "quote": "def run(core, families, archive=None):"
-            },
-            {
-              "path": "Plans/memory_card6_policy_fixtures.json",
-              "unit": "#/cases",
-              "line_start": 5021,
-              "line_end": 5021,
-              "quote": "\"name\": \"dedup_sweep:creation-time-tie-stable-id\","
-            },
-            {
-              "path": "Plans/Automated_Testing_System.md",
-              "unit": "ATS-315",
-              "quote": "Round-11 preservation checks compare exact primitive types before values recursively",
-              "line_start": 7271,
-              "line_end": 7271
-            },
-            {
-              "path": "Plans/Automated_Testing_System.md",
-              "unit": "ATS-315",
-              "quote": "Minimum group size, unique IDs and original existence are separate guard-table rows",
-              "line_start": 7271,
-              "line_end": 7271
-            },
-            {
-              "path": "scripts/pm_memory_policy.py",
-              "unit": "same",
-              "quote": "if type(left) is not type(right):",
-              "line_start": 24,
-              "line_end": 24
-            },
-            {
-              "path": "scripts/pm_memory_policy.py",
-              "unit": "instant",
-              "quote": "return seconds + Fraction(Decimal('0.' + fraction)) if fraction else Fraction(seconds)",
-              "line_start": 69,
-              "line_end": 69
-            },
-            {
-              "path": "Plans/memory_card6_policy_fixtures.json",
-              "unit": "#/cases",
-              "quote": "\"name\": \"dedup_sweep:fix11-creation-40digits-late\",",
-              "line_start": 27957,
-              "line_end": 27957
-            },
-            {
-              "path": "Plans/memory_card6_policy_fixtures.json",
-              "unit": "#/cases",
-              "quote": "\"name\": \"dedup_sweep:fix11-minimum-group\",",
-              "line_start": 8749,
-              "line_end": 8749
-            },
-            {
-              "path": "Plans/memory_card6_policy_fixtures.json",
-              "unit": "#/cases",
-              "quote": "\"name\": \"dedup_sweep:fix11-unique-group\",",
-              "line_start": 8830,
-              "line_end": 8830
-            },
-            {
-              "path": "Plans/memory_card6_policy_fixtures.json",
-              "unit": "#/cases",
-              "quote": "\"name\": \"dedup_sweep:fix11-existing-group\",",
-              "line_start": 8913,
-              "line_end": 8913
-            },
-            {
-              "path": "Plans/Automated_Testing_System.md",
-              "line_start": 7261,
-              "line_end": 7261,
-              "quote": "Standing check 11 (sweep part 2A, Method B guard tables)"
-            },
-            {
-              "path": "scripts/pm_memory_maintenance_events.py",
-              "line_start": 96,
-              "line_end": 96,
-              "quote": "def table_refusal(phase, facts):"
-            },
-            {
-              "path": "scripts/pm-memory-guard-tables.py",
-              "line_start": 10,
-              "line_end": 10,
-              "quote": "Credit is copied from the tool"
-            },
-            {
-              "path": "Plans/storage-plan.md",
-              "unit": "SP-630",
-              "line_start": 29740,
-              "line_end": 29740,
-              "quote": "Every declared date-time format is enforced by the shared CV-1101 predicate"
+              "line_start": 1726,
+              "line_end": 1726,
+              "quote": "workbench or button is planned.",
+              "unit": "AMS-023"
             }
           ],
           "prior": {
-            "source": "sweep part 1 self-grade at 1abebee498",
-            "status": "PASS"
+            "source": "origin/main 7cf56368356da2b7a5ff25f6452cf753ce36bf45 DMEM-self-grade.json",
+            "status": "PARTIAL"
           },
-          "change": "carried",
-          "change_reason": "Sweep part 2B closes two of the three PARTIAL reasons (SP-1101 dispatch, interim timestamp review); the schema-keyword-cut reason remains, so the cell stays PARTIAL."
+          "change": "upgraded",
+          "change_reason": "The remaining schema-verdict limitation is closed by the source-bound whole-definition route explicitly allowed by C12 scope; no per-keyword independence claim. Existing entry points and owner schemas are preserved.",
+          "assessed_tree": {
+            "branch": "plans/ea-pnc-c12-dmem-20261114",
+            "implementation_commit": "232d40bba3d9e063c8ad860806ab17f866c43c9c",
+            "base": "7cf56368356da2b7a5ff25f6452cf753ce36bf45"
+          },
+          "evidence_bundle": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/c12-dmem/closure/memory.dedup_sweep.completed.coverage.json"
         }
       },
       "remaining_gaps": [
@@ -720,7 +499,6 @@
         "RT must resolve event/operation and rebuild selector/target retention.",
         "Native custody/atomicity/filesystem crash/backup/read-race obligations remain NOT_RUN; static success is not native proof.",
         "Independent review, separate per-family admission and unresolved operation/result retention still fence activation; Card 6 supplies no no-project writer permission.",
-        "JSON Schema keyword and format cuts are not ported to the shared guard tool; each schema occurrence is one verdict row.",
         "The shared date-time inventory and datetime_validator run at batch-2 integration (SWEEP-P2B Addendum 2); in this lane tree the inventory gate refuses on hash drift only."
       ],
       "static_checks_seen": [
@@ -756,7 +534,7 @@
           "quote": "remains absent from event_family_registry.json, quarantined before append or projection. Retention is PENDING_RETENTION_DECISION: candidate ordinary telemetry (Case L-3, 90 days/2,000,000 pe"
         }
       ],
-      "pass_count": 9,
+      "pass_count": 10,
       "normative_depth_complete": false,
       "native_execution": "NOT_RUN",
       "current_owner_units": [
@@ -1130,301 +908,80 @@
           "change_reason": "Sweep part 2B (S3) replaces record-selected edition dispatch with SP-1101 custody selection; the grade is carried with the new evidence."
         },
         "positive_negative_oracles": {
-          "status": "PARTIAL",
+          "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Exact-family checkers pass (12/12) with lifecycle/custody/history, CV-1101 date-time profile battery, full uint64, Card 6 policy and policy-instant, SP-1101 custody, guard-table witness and shared-number-corpus suites. Check 11 is Method B: every refusal is one row of a generated phase table and the gated shared tool proves 289 of 316 rows; the 27 unproved rows are each decided first by a named earlier row or schema (listed in the report). The timestamp review is no longer interim: every timestamp field is checked by the shared CV-1101 predicate with its owner profile. PARTIAL because each JSON Schema occurrence is one verdict row (per-keyword and format cuts are not ported to the shared tool). Native NOT_RUN.",
+          "finding": "C12 static executable oracles complete under the W3H whole-definition Method B route. Complete owner definitions and reference branches retain every keyword; 96 exact-family schema sites have authored controls, exact schema-row/code mutations, cuts and restoration, with pin-bound shared reuse. Gated tool 004bdedd63 proves 290/316 real predicates in 191 tables; 26 checked implications each occupy a singleton table. CK08 has an independent sealed Application-scope witness on every family. Full original exact-family routes, 111 applicable number-corpus cases per family, all local date-time declarations/profiles and exact policy instants pass. Retained reads have actual custody-store snapshots and no writes. Global shared date-time gate remains NOT_RUN_ADMISSION_REFUSED on the absent mainline migration citation; no global PASS or native/admission proof is claimed.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-631",
-              "line_start": 29793,
-              "line_end": 29793,
-              "quote": "Newly authored current-writer boundary for exactly memory.dedup_sweep.started@1.0.0"
+              "line_start": 39191,
+              "line_end": 39191,
+              "quote": "Newly authored owner contract under DL-045 for exactly memory.dedup_sweep.started@1.0.0; search scope and negative evidence are the family's row in reports/event-authority-20261104/DMEM-search.json. The family remains absent from event_family_registry.json, quarantined before append or projection. Retention is PENDING_RETENTION_DECISION: candidate ordinary telemetry (Case L-3, 90 days/2,000,000 per Project) versus audit authority (indefinite/no count eviction); neither is selected. Unknown policy is materially incomplete and permits no destructive inference. Operation custody has the same pending assignment, and actual native activation is fenced until it resolves."
             },
             {
-              "path": "Plans/Automated_Testing_System.md",
-              "unit": "ATS-315",
-              "line_start": 7251,
-              "line_end": 7251,
-              "quote": "Each exact family additionally owns an independent current-writer boundary suite using the complete canonical EventRecord 2.0.0 schema with format checking"
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-651",
+              "line_start": 35372,
+              "line_end": 35372,
+              "quote": "canonical_text: Newly authored closed payload owner contract for exactly memory.dedup_sweep.started@1.0.0 under"
             },
             {
-              "path": "Plans/memory_maintenance_event_fixtures.json",
-              "unit": "#/writer_families/1",
-              "line_start": 53818,
-              "line_end": 53818,
-              "quote": "\"name\": \"memory.dedup_sweep.started:append-projector-replay-only\","
+              "path": "scripts/pm_memory_c12.py",
+              "line_start": 111,
+              "line_end": 111,
+              "quote": "def schema_closure(m, path, definition):"
             },
             {
-              "path": "Plans/memory_maintenance_event_fixtures.json",
-              "unit": "#/stateful_families/1",
-              "line_start": 27954,
-              "line_end": 27954,
-              "quote": "\"name\": \"memory.dedup_sweep.started:completed-recovery-permission-refusal\","
+              "path": "scripts/pm_memory_c12.py",
+              "line_start": 338,
+              "line_end": 338,
+              "quote": "killed=baseline == expected and cut == ['accepted'] and restored == expected,"
             },
             {
-              "path": "Plans/memory_maintenance_event_fixtures.json",
-              "unit": "#/stateful_families/1",
-              "line_start": 27974,
-              "line_end": 27974,
-              "quote": "\"name\": \"memory.dedup_sweep.started:completed-recovery-withdrawal-refusal\","
+              "path": "scripts/pm_memory_c12.py",
+              "line_start": 402,
+              "line_end": 402,
+              "quote": "assert before == after and state == caller, (event, mode, defect, 'read changed custody/caller')"
             },
             {
-              "path": "Plans/memory_maintenance_event_fixtures.json",
-              "unit": "#/cases",
-              "line_start": 16753,
-              "line_end": 16753,
-              "quote": "\"name\": \"memory.dedup_sweep.started:completed-missing-original-start\","
+              "path": "scripts/pm_memory_c12_selftest.py",
+              "line_start": 103,
+              "line_end": 103,
+              "quote": "results.append({'case': '4400-digit-integer-at-complete-writer', 'result': 'exact_storage_uint64_refusal'})"
             },
             {
-              "path": "Plans/storage-plan.md",
-              "unit": "SP-631",
-              "quote": "Start custody gate for exactly memory.dedup_sweep.started@1.0.0, newly authored owner contract (DMEM fix round 4)",
-              "line_start": 29795,
-              "line_end": 29795
+              "path": "scripts/pm_memory_c12_entailments.py",
+              "line_start": 104,
+              "line_end": 104,
+              "quote": "assert len(records) == 26 and len({r['row'] for r in records}) == 26"
             },
             {
-              "path": "Plans/Automated_Testing_System.md",
-              "unit": "ATS-315",
-              "quote": "Start custody gate oracle (fix round 4) for SP-630 to SP-637: the checker has one start_custody_gate and applies it at the commit point",
-              "line_start": 7259,
-              "line_end": 7259
-            },
-            {
-              "path": "Plans/Automated_Testing_System.md",
-              "unit": "ATS-315",
-              "quote": "reference_cases checks standing check 9: before any instance validation the checker walks every subschema",
-              "line_start": 7267,
-              "line_end": 7267
-            },
-            {
-              "path": "Plans/memory_maintenance_event_fixtures.json",
-              "unit": "#/start_custody_matrix",
-              "quote": "\"name\": \"memory.dedup_sweep.started:phase:advance_completed@terminal_saved\",",
-              "line_start": 90189,
-              "line_end": 90189
-            },
-            {
-              "path": "Plans/memory_maintenance_event_fixtures.json",
-              "unit": "#/history_families",
-              "quote": "\"name\": \"memory.dedup_sweep.started:history-withdrawn\",",
-              "line_start": 126982,
-              "line_end": 126982
-            },
-            {
-              "path": "Plans/memory_maintenance_event_fixtures.json",
-              "unit": "#/reference_cases",
-              "quote": "\"name\": \"memory.dedup_sweep.started:standing9-dormant-missing-ref\",",
-              "line_start": 129653,
-              "line_end": 129653
-            },
-            {
-              "path": "scripts/pm_memory_maintenance_events.py",
-              "unit": "start_custody_gate",
-              "quote": "def start_custody_gate(state, first_start=False, writer_event=None, canonical_history=False):",
-              "line_start": 718,
-              "line_end": 718
-            },
-            {
-              "path": "scripts/pm_memory_maintenance_events.py",
-              "unit": "transition",
-              "quote": "start_custody_gate(before, first_start=action['op'] == 'append_started')",
-              "line_start": 1244,
-              "line_end": 1244
-            },
-            {
-              "path": "scripts/pm_memory_maintenance_events.py",
-              "unit": "main",
-              "quote": "mirrors = require_resolved_references()",
-              "line_start": 1934,
-              "line_end": 1934
-            },
-            {
-              "path": "Plans/memory_canonical_history_fixtures.json",
-              "unit": "#/canonical_history_families",
-              "quote": "\"name\": \"memory.dedup_sweep.started:compatibility-replay-only\",",
-              "line_start": 5807,
-              "line_end": 5807
-            },
-            {
-              "path": "Plans/memory_canonical_history_fixtures.json",
-              "unit": "#/canonical_history_families",
-              "quote": "\"name\": \"memory.dedup_sweep.started:foreign-project-compatibility_replay\",",
-              "line_start": 8224,
-              "line_end": 8224
-            },
-            {
-              "path": "Plans/memory_canonical_history_fixtures.json",
-              "unit": "#/canonical_history_families",
-              "quote": "\"name\": \"memory.dedup_sweep.started:numeric-spelling-commitment-1e0\",",
-              "line_start": 7489,
-              "line_end": 7489
-            },
-            {
-              "path": "scripts/pm_memory_maintenance_events.py",
-              "unit": "read_canonical_history",
-              "quote": "def read_canonical_history(before, event):",
-              "line_start": 1422,
-              "line_end": 1422
-            },
-            {
-              "path": "scripts/pm_memory_maintenance_events.py",
-              "unit": "json_numbers",
-              "quote": "def json_numbers(text):",
-              "line_start": 181,
-              "line_end": 181
-            },
-            {
-              "path": "scripts/pm_memory_maintenance_events.py",
-              "unit": "flag",
-              "quote": "return type(value) is bool and value is expected",
-              "line_start": 280,
-              "line_end": 280
-            },
-            {
-              "path": "scripts/pm_memory_boundary_domains.py",
-              "unit": "domain_cases",
-              "quote": "def domain_cases(m, contexts, boundaries, archive=None):",
-              "line_start": 12,
-              "line_end": 12
-            },
-            {
-              "path": "Plans/memory_maintenance_boundary_fixtures.json",
-              "unit": "#/families",
-              "quote": "\"memory.dedup_sweep.started\"",
-              "line_start": 6,
-              "line_end": 6
-            },
-            {
-              "path": "Plans/storage-plan.md",
-              "unit": "SP-631",
-              "line_start": 29740,
-              "line_end": 29740,
-              "quote": "Historical originals instead use their frozen write-time recipe integer-json-v1"
-            },
-            {
-              "path": "Plans/storage-plan.md",
-              "unit": "SP-631",
-              "quote": "Storage sequence_id independently adopts SP-236 exact uint64, 0 through 18446744073709551615 inclusive, with exact integer type",
-              "line_start": 29740,
-              "line_end": 29740
-            },
-            {
-              "path": "scripts/pm_memory_storage_metadata.py",
-              "unit": "run",
-              "quote": "def run(m, contexts):",
-              "line_start": 48,
-              "line_end": 48
+              "path": "scripts/pm_memory_guard_witnesses.py",
+              "line_start": 420,
+              "line_end": 420,
+              "quote": "add('checkpoint-application-scope', 'ck_scope', 'CK08_scope_kind', join,"
             },
             {
               "path": "Plans/assistant-memory-subsystem.md",
-              "unit": "AMS-101",
-              "line_start": 3238,
-              "line_end": 3238,
-              "quote": "DL-444 and DL-445 apply E-CARDS-2 Card 6.a and 6.b option A."
-            },
-            {
-              "path": "scripts/pm_memory_policy.py",
-              "unit": "run",
-              "line_start": 312,
-              "line_end": 312,
-              "quote": "def run(core, families, archive=None):"
-            },
-            {
-              "path": "Plans/memory_card6_policy_fixtures.json",
-              "unit": "#/cases",
-              "line_start": 5021,
-              "line_end": 5021,
-              "quote": "\"name\": \"dedup_sweep:creation-time-tie-stable-id\","
-            },
-            {
-              "path": "Plans/Automated_Testing_System.md",
-              "unit": "ATS-315",
-              "quote": "Round-11 preservation checks compare exact primitive types before values recursively",
-              "line_start": 7271,
-              "line_end": 7271
-            },
-            {
-              "path": "Plans/Automated_Testing_System.md",
-              "unit": "ATS-315",
-              "quote": "Minimum group size, unique IDs and original existence are separate guard-table rows",
-              "line_start": 7271,
-              "line_end": 7271
-            },
-            {
-              "path": "scripts/pm_memory_policy.py",
-              "unit": "same",
-              "quote": "if type(left) is not type(right):",
-              "line_start": 24,
-              "line_end": 24
-            },
-            {
-              "path": "scripts/pm_memory_policy.py",
-              "unit": "instant",
-              "quote": "return seconds + Fraction(Decimal('0.' + fraction)) if fraction else Fraction(seconds)",
-              "line_start": 69,
-              "line_end": 69
-            },
-            {
-              "path": "Plans/memory_card6_policy_fixtures.json",
-              "unit": "#/cases",
-              "quote": "\"name\": \"dedup_sweep:fix11-creation-40digits-late\",",
-              "line_start": 27957,
-              "line_end": 27957
-            },
-            {
-              "path": "Plans/memory_card6_policy_fixtures.json",
-              "unit": "#/cases",
-              "quote": "\"name\": \"dedup_sweep:fix11-minimum-group\",",
-              "line_start": 8749,
-              "line_end": 8749
-            },
-            {
-              "path": "Plans/memory_card6_policy_fixtures.json",
-              "unit": "#/cases",
-              "quote": "\"name\": \"dedup_sweep:fix11-unique-group\",",
-              "line_start": 8830,
-              "line_end": 8830
-            },
-            {
-              "path": "Plans/memory_card6_policy_fixtures.json",
-              "unit": "#/cases",
-              "quote": "\"name\": \"dedup_sweep:fix11-existing-group\",",
-              "line_start": 8913,
-              "line_end": 8913
-            },
-            {
-              "path": "Plans/Automated_Testing_System.md",
-              "line_start": 7261,
-              "line_end": 7261,
-              "quote": "Standing check 11 (sweep part 2A, Method B guard tables)"
-            },
-            {
-              "path": "scripts/pm_memory_maintenance_events.py",
-              "line_start": 96,
-              "line_end": 96,
-              "quote": "def table_refusal(phase, facts):"
-            },
-            {
-              "path": "scripts/pm-memory-guard-tables.py",
-              "line_start": 10,
-              "line_end": 10,
-              "quote": "Credit is copied from the tool"
-            },
-            {
-              "path": "Plans/storage-plan.md",
-              "unit": "SP-631",
-              "line_start": 29799,
-              "line_end": 29799,
-              "quote": "Every declared date-time format is enforced by the shared CV-1101 predicate"
+              "line_start": 1726,
+              "line_end": 1726,
+              "quote": "workbench or button is planned.",
+              "unit": "AMS-023"
             }
           ],
           "prior": {
-            "source": "sweep part 1 self-grade at 1abebee498",
-            "status": "PASS"
+            "source": "origin/main 7cf56368356da2b7a5ff25f6452cf753ce36bf45 DMEM-self-grade.json",
+            "status": "PARTIAL"
           },
-          "change": "carried",
-          "change_reason": "Sweep part 2B closes two of the three PARTIAL reasons (SP-1101 dispatch, interim timestamp review); the schema-keyword-cut reason remains, so the cell stays PARTIAL."
+          "change": "upgraded",
+          "change_reason": "The remaining schema-verdict limitation is closed by the source-bound whole-definition route explicitly allowed by C12 scope; no per-keyword independence claim. Existing entry points and owner schemas are preserved.",
+          "assessed_tree": {
+            "branch": "plans/ea-pnc-c12-dmem-20261114",
+            "implementation_commit": "232d40bba3d9e063c8ad860806ab17f866c43c9c",
+            "base": "7cf56368356da2b7a5ff25f6452cf753ce36bf45"
+          },
+          "evidence_bundle": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/c12-dmem/closure/memory.dedup_sweep.started.coverage.json"
         }
       },
       "remaining_gaps": [
@@ -1432,7 +989,6 @@
         "RT must resolve event/operation and rebuild selector/target retention.",
         "Native custody/atomicity/filesystem crash/backup/read-race obligations remain NOT_RUN; static success is not native proof.",
         "Independent review, separate per-family admission and unresolved operation/result retention still fence activation; Card 6 supplies no no-project writer permission.",
-        "JSON Schema keyword and format cuts are not ported to the shared guard tool; each schema occurrence is one verdict row.",
         "The shared date-time inventory and datetime_validator run at batch-2 integration (SWEEP-P2B Addendum 2); in this lane tree the inventory gate refuses on hash drift only."
       ],
       "static_checks_seen": [
@@ -1468,7 +1024,7 @@
           "quote": "remains absent from event_family_registry.json, quarantined before append or projection. Retention is PENDING_RETENTION_DECISION: candidate ordinary telemetry (Case L-3, 90 days/2,000,000 pe"
         }
       ],
-      "pass_count": 9,
+      "pass_count": 10,
       "normative_depth_complete": false,
       "native_execution": "NOT_RUN",
       "current_owner_units": [
@@ -1842,238 +1398,80 @@
           "change_reason": "Sweep part 2B (S3) replaces record-selected edition dispatch with SP-1101 custody selection; the grade is carried with the new evidence."
         },
         "positive_negative_oracles": {
-          "status": "PARTIAL",
+          "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Exact-family checkers pass (12/12) with lifecycle/custody/history, CV-1101 date-time profile battery, full uint64, Card 6 policy and policy-instant, SP-1101 custody, guard-table witness and shared-number-corpus suites. Check 11 is Method B: every refusal is one row of a generated phase table and the gated shared tool proves 289 of 316 rows; the 27 unproved rows are each decided first by a named earlier row or schema (listed in the report). The timestamp review is no longer interim: every timestamp field is checked by the shared CV-1101 predicate with its owner profile. PARTIAL because each JSON Schema occurrence is one verdict row (per-keyword and format cuts are not ported to the shared tool). Native NOT_RUN.",
+          "finding": "C12 static executable oracles complete under the W3H whole-definition Method B route. Complete owner definitions and reference branches retain every keyword; 96 exact-family schema sites have authored controls, exact schema-row/code mutations, cuts and restoration, with pin-bound shared reuse. Gated tool 004bdedd63 proves 290/316 real predicates in 191 tables; 26 checked implications each occupy a singleton table. CK08 has an independent sealed Application-scope witness on every family. Full original exact-family routes, 111 applicable number-corpus cases per family, all local date-time declarations/profiles and exact policy instants pass. Retained reads have actual custody-store snapshots and no writes. Global shared date-time gate remains NOT_RUN_ADMISSION_REFUSED on the absent mainline migration citation; no global PASS or native/admission proof is claimed.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-632",
-              "line_start": 29852,
-              "line_end": 29852,
-              "quote": "Newly authored current-writer boundary for exactly memory.index.lexical.rebuild.completed@1.0.0"
+              "line_start": 39250,
+              "line_end": 39250,
+              "quote": "Newly authored owner contract under DL-045 for exactly memory.index.lexical.rebuild.completed@1.0.0; search scope and negative evidence are the family's row in reports/event-authority-20261104/DMEM-search.json. The family remains absent from event_family_registry.json, quarantined before append or projection. Retention is PENDING_RETENTION_DECISION: candidate ordinary telemetry (Case L-3, 90 days/2,000,000 per Project) versus audit authority (indefinite/no count eviction); neither is selected. Unknown policy is materially incomplete and permits no destructive inference. Operation custody has the same pending assignment, and actual native activation is fenced until it resolves."
             },
             {
-              "path": "Plans/Automated_Testing_System.md",
-              "unit": "ATS-315",
-              "line_start": 7251,
-              "line_end": 7251,
-              "quote": "Each exact family additionally owns an independent current-writer boundary suite using the complete canonical EventRecord 2.0.0 schema with format checking"
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-652",
+              "line_start": 35419,
+              "line_end": 35419,
+              "quote": "canonical_text: Newly authored closed payload owner contract for exactly memory.index.lexical.rebuild.completed@1.0.0"
             },
             {
-              "path": "Plans/memory_maintenance_event_fixtures.json",
-              "unit": "#/writer_families/2",
-              "line_start": 56776,
-              "line_end": 56776,
-              "quote": "\"name\": \"memory.index.lexical.rebuild.completed:append-projector-replay-only\","
+              "path": "scripts/pm_memory_c12.py",
+              "line_start": 111,
+              "line_end": 111,
+              "quote": "def schema_closure(m, path, definition):"
             },
             {
-              "path": "Plans/memory_maintenance_event_fixtures.json",
-              "unit": "#/stateful_families/2",
-              "line_start": 32324,
-              "line_end": 32324,
-              "quote": "\"name\": \"memory.index.lexical.rebuild.completed:completed-recovery-permission-refusal\","
+              "path": "scripts/pm_memory_c12.py",
+              "line_start": 338,
+              "line_end": 338,
+              "quote": "killed=baseline == expected and cut == ['accepted'] and restored == expected,"
             },
             {
-              "path": "Plans/memory_maintenance_event_fixtures.json",
-              "unit": "#/stateful_families/2",
-              "line_start": 32344,
-              "line_end": 32344,
-              "quote": "\"name\": \"memory.index.lexical.rebuild.completed:completed-recovery-withdrawal-refusal\","
+              "path": "scripts/pm_memory_c12.py",
+              "line_start": 402,
+              "line_end": 402,
+              "quote": "assert before == after and state == caller, (event, mode, defect, 'read changed custody/caller')"
             },
             {
-              "path": "Plans/memory_maintenance_event_fixtures.json",
-              "unit": "#/writer_families/memory.index.lexical.rebuild.completed",
-              "quote": "\"name\": \"memory.index.lexical.rebuild.completed:completed-retry-start-missing\",",
-              "line_start": 58121,
-              "line_end": 58121
+              "path": "scripts/pm_memory_c12_selftest.py",
+              "line_start": 103,
+              "line_end": 103,
+              "quote": "results.append({'case': '4400-digit-integer-at-complete-writer', 'result': 'exact_storage_uint64_refusal'})"
             },
             {
-              "path": "Plans/storage-plan.md",
-              "unit": "SP-632",
-              "quote": "Start custody gate for exactly memory.index.lexical.rebuild.completed@1.0.0, newly authored owner contract (DMEM fix round 4)",
-              "line_start": 29854,
-              "line_end": 29854
+              "path": "scripts/pm_memory_c12_entailments.py",
+              "line_start": 104,
+              "line_end": 104,
+              "quote": "assert len(records) == 26 and len({r['row'] for r in records}) == 26"
             },
             {
-              "path": "Plans/Automated_Testing_System.md",
-              "unit": "ATS-315",
-              "quote": "Start custody gate oracle (fix round 4) for SP-630 to SP-637: the checker has one start_custody_gate and applies it at the commit point",
-              "line_start": 7259,
-              "line_end": 7259
+              "path": "scripts/pm_memory_guard_witnesses.py",
+              "line_start": 420,
+              "line_end": 420,
+              "quote": "add('checkpoint-application-scope', 'ck_scope', 'CK08_scope_kind', join,"
             },
             {
-              "path": "Plans/Automated_Testing_System.md",
-              "unit": "ATS-315",
-              "quote": "reference_cases checks standing check 9: before any instance validation the checker walks every subschema",
-              "line_start": 7267,
-              "line_end": 7267
-            },
-            {
-              "path": "Plans/memory_maintenance_event_fixtures.json",
-              "unit": "#/start_custody_matrix",
-              "quote": "\"name\": \"memory.index.lexical.rebuild.completed:phase:advance_completed@terminal_saved\",",
-              "line_start": 96644,
-              "line_end": 96644
-            },
-            {
-              "path": "Plans/memory_maintenance_event_fixtures.json",
-              "unit": "#/history_families",
-              "quote": "\"name\": \"memory.index.lexical.rebuild.completed:history-withdrawn\",",
-              "line_start": 127398,
-              "line_end": 127398
-            },
-            {
-              "path": "Plans/memory_maintenance_event_fixtures.json",
-              "unit": "#/reference_cases",
-              "quote": "\"name\": \"memory.index.lexical.rebuild.completed:standing9-dormant-missing-ref\",",
-              "line_start": 129831,
-              "line_end": 129831
-            },
-            {
-              "path": "scripts/pm_memory_maintenance_events.py",
-              "unit": "start_custody_gate",
-              "quote": "def start_custody_gate(state, first_start=False, writer_event=None, canonical_history=False):",
-              "line_start": 718,
-              "line_end": 718
-            },
-            {
-              "path": "scripts/pm_memory_maintenance_events.py",
-              "unit": "transition",
-              "quote": "start_custody_gate(before, first_start=action['op'] == 'append_started')",
-              "line_start": 1244,
-              "line_end": 1244
-            },
-            {
-              "path": "scripts/pm_memory_maintenance_events.py",
-              "unit": "main",
-              "quote": "mirrors = require_resolved_references()",
-              "line_start": 1934,
-              "line_end": 1934
-            },
-            {
-              "path": "Plans/memory_canonical_history_fixtures.json",
-              "unit": "#/canonical_history_families",
-              "quote": "\"name\": \"memory.index.lexical.rebuild.completed:compatibility-replay-only\",",
-              "line_start": 11068,
-              "line_end": 11068
-            },
-            {
-              "path": "Plans/memory_canonical_history_fixtures.json",
-              "unit": "#/canonical_history_families",
-              "quote": "\"name\": \"memory.index.lexical.rebuild.completed:foreign-project-compatibility_replay\",",
-              "line_start": 13613,
-              "line_end": 13613
-            },
-            {
-              "path": "Plans/memory_canonical_history_fixtures.json",
-              "unit": "#/canonical_history_families",
-              "quote": "\"name\": \"memory.index.lexical.rebuild.completed:numeric-spelling-commitment-1e0\",",
-              "line_start": 12842,
-              "line_end": 12842
-            },
-            {
-              "path": "scripts/pm_memory_maintenance_events.py",
-              "unit": "read_canonical_history",
-              "quote": "def read_canonical_history(before, event):",
-              "line_start": 1422,
-              "line_end": 1422
-            },
-            {
-              "path": "scripts/pm_memory_maintenance_events.py",
-              "unit": "json_numbers",
-              "quote": "def json_numbers(text):",
-              "line_start": 181,
-              "line_end": 181
-            },
-            {
-              "path": "scripts/pm_memory_maintenance_events.py",
-              "unit": "flag",
-              "quote": "return type(value) is bool and value is expected",
-              "line_start": 280,
-              "line_end": 280
-            },
-            {
-              "path": "scripts/pm_memory_boundary_domains.py",
-              "unit": "domain_cases",
-              "quote": "def domain_cases(m, contexts, boundaries, archive=None):",
-              "line_start": 12,
-              "line_end": 12
-            },
-            {
-              "path": "Plans/memory_maintenance_boundary_fixtures.json",
-              "unit": "#/families",
-              "quote": "\"memory.index.lexical.rebuild.completed\"",
-              "line_start": 7,
-              "line_end": 7
-            },
-            {
-              "path": "Plans/storage-plan.md",
-              "unit": "SP-632",
-              "line_start": 29740,
-              "line_end": 29740,
-              "quote": "Historical originals instead use their frozen write-time recipe integer-json-v1"
-            },
-            {
-              "path": "Plans/storage-plan.md",
-              "unit": "SP-632",
-              "quote": "Storage sequence_id independently adopts SP-236 exact uint64, 0 through 18446744073709551615 inclusive, with exact integer type",
-              "line_start": 29740,
-              "line_end": 29740
-            },
-            {
-              "path": "scripts/pm_memory_storage_metadata.py",
-              "unit": "run",
-              "quote": "def run(m, contexts):",
-              "line_start": 48,
-              "line_end": 48
-            },
-            {
-              "path": "Plans/Automated_Testing_System.md",
-              "unit": "ATS-315",
-              "quote": "Round-11 preservation checks compare exact primitive types before values recursively",
-              "line_start": 7271,
-              "line_end": 7271
-            },
-            {
-              "path": "Plans/Automated_Testing_System.md",
-              "unit": "ATS-315",
-              "quote": "Minimum group size, unique IDs and original existence are separate guard-table rows",
-              "line_start": 7271,
-              "line_end": 7271
-            },
-            {
-              "path": "Plans/Automated_Testing_System.md",
-              "line_start": 7261,
-              "line_end": 7261,
-              "quote": "Standing check 11 (sweep part 2A, Method B guard tables)"
-            },
-            {
-              "path": "scripts/pm_memory_maintenance_events.py",
-              "line_start": 96,
-              "line_end": 96,
-              "quote": "def table_refusal(phase, facts):"
-            },
-            {
-              "path": "scripts/pm-memory-guard-tables.py",
-              "line_start": 10,
-              "line_end": 10,
-              "quote": "Credit is copied from the tool"
-            },
-            {
-              "path": "Plans/storage-plan.md",
-              "unit": "SP-632",
-              "line_start": 29866,
-              "line_end": 29866,
-              "quote": "Every declared date-time format is enforced by the shared CV-1101 predicate"
+              "path": "Plans/assistant-memory-subsystem.md",
+              "line_start": 1726,
+              "line_end": 1726,
+              "quote": "workbench or button is planned.",
+              "unit": "AMS-023"
             }
           ],
           "prior": {
-            "source": "sweep part 1 self-grade at 1abebee498",
-            "status": "PASS"
+            "source": "origin/main 7cf56368356da2b7a5ff25f6452cf753ce36bf45 DMEM-self-grade.json",
+            "status": "PARTIAL"
           },
-          "change": "carried",
-          "change_reason": "Sweep part 2B closes two of the three PARTIAL reasons (SP-1101 dispatch, interim timestamp review); the schema-keyword-cut reason remains, so the cell stays PARTIAL."
+          "change": "upgraded",
+          "change_reason": "The remaining schema-verdict limitation is closed by the source-bound whole-definition route explicitly allowed by C12 scope; no per-keyword independence claim. Existing entry points and owner schemas are preserved.",
+          "assessed_tree": {
+            "branch": "plans/ea-pnc-c12-dmem-20261114",
+            "implementation_commit": "232d40bba3d9e063c8ad860806ab17f866c43c9c",
+            "base": "7cf56368356da2b7a5ff25f6452cf753ce36bf45"
+          },
+          "evidence_bundle": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/c12-dmem/closure/memory.index.lexical.rebuild.completed.coverage.json"
         }
       },
       "remaining_gaps": [
@@ -2081,7 +1479,6 @@
         "RT must resolve event/operation and rebuild selector/target retention.",
         "Native custody/atomicity/filesystem crash/backup/read-race obligations remain NOT_RUN; static success is not native proof.",
         "Independent review, separate per-family admission and unresolved operation/result retention still fence activation; Card 6 supplies no no-project writer permission.",
-        "JSON Schema keyword and format cuts are not ported to the shared guard tool; each schema occurrence is one verdict row.",
         "The shared date-time inventory and datetime_validator run at batch-2 integration (SWEEP-P2B Addendum 2); in this lane tree the inventory gate refuses on hash drift only."
       ],
       "static_checks_seen": [
@@ -2116,7 +1513,7 @@
           "quote": "remains absent from event_family_registry.json, quarantined before append or projection. Retention is PENDING_RETENTION_DECISION: candidate ordinary telemetry (Case L-3, 90 days/2,000,000 pe"
         }
       ],
-      "pass_count": 9,
+      "pass_count": 10,
       "normative_depth_complete": false,
       "native_execution": "NOT_RUN",
       "current_owner_units": [
@@ -2497,238 +1894,80 @@
           "change_reason": "Sweep part 2B (S3) replaces record-selected edition dispatch with SP-1101 custody selection; the grade is carried with the new evidence."
         },
         "positive_negative_oracles": {
-          "status": "PARTIAL",
+          "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Exact-family checkers pass (12/12) with lifecycle/custody/history, CV-1101 date-time profile battery, full uint64, Card 6 policy and policy-instant, SP-1101 custody, guard-table witness and shared-number-corpus suites. Check 11 is Method B: every refusal is one row of a generated phase table and the gated shared tool proves 289 of 316 rows; the 27 unproved rows are each decided first by a named earlier row or schema (listed in the report). The timestamp review is no longer interim: every timestamp field is checked by the shared CV-1101 predicate with its owner profile. PARTIAL because each JSON Schema occurrence is one verdict row (per-keyword and format cuts are not ported to the shared tool). Native NOT_RUN.",
+          "finding": "C12 static executable oracles complete under the W3H whole-definition Method B route. Complete owner definitions and reference branches retain every keyword; 96 exact-family schema sites have authored controls, exact schema-row/code mutations, cuts and restoration, with pin-bound shared reuse. Gated tool 004bdedd63 proves 290/316 real predicates in 191 tables; 26 checked implications each occupy a singleton table. CK08 has an independent sealed Application-scope witness on every family. Full original exact-family routes, 111 applicable number-corpus cases per family, all local date-time declarations/profiles and exact policy instants pass. Retained reads have actual custody-store snapshots and no writes. Global shared date-time gate remains NOT_RUN_ADMISSION_REFUSED on the absent mainline migration citation; no global PASS or native/admission proof is claimed.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-633",
-              "line_start": 29917,
-              "line_end": 29917,
-              "quote": "Newly authored current-writer boundary for exactly memory.index.lexical.rebuild.started@1.0.0"
+              "line_start": 39315,
+              "line_end": 39315,
+              "quote": "Newly authored owner contract under DL-045 for exactly memory.index.lexical.rebuild.started@1.0.0; search scope and negative evidence are the family's row in reports/event-authority-20261104/DMEM-search.json. The family remains absent from event_family_registry.json, quarantined before append or projection. Retention is PENDING_RETENTION_DECISION: candidate ordinary telemetry (Case L-3, 90 days/2,000,000 per Project) versus audit authority (indefinite/no count eviction); neither is selected. Unknown policy is materially incomplete and permits no destructive inference. Operation custody has the same pending assignment, and actual native activation is fenced until it resolves."
             },
             {
-              "path": "Plans/Automated_Testing_System.md",
-              "unit": "ATS-315",
-              "line_start": 7251,
-              "line_end": 7251,
-              "quote": "Each exact family additionally owns an independent current-writer boundary suite using the complete canonical EventRecord 2.0.0 schema with format checking"
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-653",
+              "line_start": 35465,
+              "line_end": 35465,
+              "quote": "canonical_text: Newly authored closed payload owner contract for exactly memory.index.lexical.rebuild.started@1.0.0"
             },
             {
-              "path": "Plans/memory_maintenance_event_fixtures.json",
-              "unit": "#/writer_families/3",
-              "line_start": 60918,
-              "line_end": 60918,
-              "quote": "\"name\": \"memory.index.lexical.rebuild.started:append-projector-replay-only\","
+              "path": "scripts/pm_memory_c12.py",
+              "line_start": 111,
+              "line_end": 111,
+              "quote": "def schema_closure(m, path, definition):"
             },
             {
-              "path": "Plans/memory_maintenance_event_fixtures.json",
-              "unit": "#/stateful_families/3",
-              "line_start": 36593,
-              "line_end": 36593,
-              "quote": "\"name\": \"memory.index.lexical.rebuild.started:completed-recovery-permission-refusal\","
+              "path": "scripts/pm_memory_c12.py",
+              "line_start": 338,
+              "line_end": 338,
+              "quote": "killed=baseline == expected and cut == ['accepted'] and restored == expected,"
             },
             {
-              "path": "Plans/memory_maintenance_event_fixtures.json",
-              "unit": "#/stateful_families/3",
-              "line_start": 36613,
-              "line_end": 36613,
-              "quote": "\"name\": \"memory.index.lexical.rebuild.started:completed-recovery-withdrawal-refusal\","
+              "path": "scripts/pm_memory_c12.py",
+              "line_start": 402,
+              "line_end": 402,
+              "quote": "assert before == after and state == caller, (event, mode, defect, 'read changed custody/caller')"
             },
             {
-              "path": "Plans/memory_maintenance_event_fixtures.json",
-              "unit": "#/cases",
-              "line_start": 17006,
-              "line_end": 17006,
-              "quote": "\"name\": \"memory.index.lexical.rebuild.started:completed-missing-original-start\","
+              "path": "scripts/pm_memory_c12_selftest.py",
+              "line_start": 103,
+              "line_end": 103,
+              "quote": "results.append({'case': '4400-digit-integer-at-complete-writer', 'result': 'exact_storage_uint64_refusal'})"
             },
             {
-              "path": "Plans/storage-plan.md",
-              "unit": "SP-633",
-              "quote": "Start custody gate for exactly memory.index.lexical.rebuild.started@1.0.0, newly authored owner contract (DMEM fix round 4)",
-              "line_start": 29919,
-              "line_end": 29919
+              "path": "scripts/pm_memory_c12_entailments.py",
+              "line_start": 104,
+              "line_end": 104,
+              "quote": "assert len(records) == 26 and len({r['row'] for r in records}) == 26"
             },
             {
-              "path": "Plans/Automated_Testing_System.md",
-              "unit": "ATS-315",
-              "quote": "Start custody gate oracle (fix round 4) for SP-630 to SP-637: the checker has one start_custody_gate and applies it at the commit point",
-              "line_start": 7259,
-              "line_end": 7259
+              "path": "scripts/pm_memory_guard_witnesses.py",
+              "line_start": 420,
+              "line_end": 420,
+              "quote": "add('checkpoint-application-scope', 'ck_scope', 'CK08_scope_kind', join,"
             },
             {
-              "path": "Plans/Automated_Testing_System.md",
-              "unit": "ATS-315",
-              "quote": "reference_cases checks standing check 9: before any instance validation the checker walks every subschema",
-              "line_start": 7267,
-              "line_end": 7267
-            },
-            {
-              "path": "Plans/memory_maintenance_event_fixtures.json",
-              "unit": "#/start_custody_matrix",
-              "quote": "\"name\": \"memory.index.lexical.rebuild.started:phase:advance_completed@terminal_saved\",",
-              "line_start": 102846,
-              "line_end": 102846
-            },
-            {
-              "path": "Plans/memory_maintenance_event_fixtures.json",
-              "unit": "#/history_families",
-              "quote": "\"name\": \"memory.index.lexical.rebuild.started:history-withdrawn\",",
-              "line_start": 127802,
-              "line_end": 127802
-            },
-            {
-              "path": "Plans/memory_maintenance_event_fixtures.json",
-              "unit": "#/reference_cases",
-              "quote": "\"name\": \"memory.index.lexical.rebuild.started:standing9-dormant-missing-ref\",",
-              "line_start": 130009,
-              "line_end": 130009
-            },
-            {
-              "path": "scripts/pm_memory_maintenance_events.py",
-              "unit": "start_custody_gate",
-              "quote": "def start_custody_gate(state, first_start=False, writer_event=None, canonical_history=False):",
-              "line_start": 718,
-              "line_end": 718
-            },
-            {
-              "path": "scripts/pm_memory_maintenance_events.py",
-              "unit": "transition",
-              "quote": "start_custody_gate(before, first_start=action['op'] == 'append_started')",
-              "line_start": 1244,
-              "line_end": 1244
-            },
-            {
-              "path": "scripts/pm_memory_maintenance_events.py",
-              "unit": "main",
-              "quote": "mirrors = require_resolved_references()",
-              "line_start": 1934,
-              "line_end": 1934
-            },
-            {
-              "path": "Plans/memory_canonical_history_fixtures.json",
-              "unit": "#/canonical_history_families",
-              "quote": "\"name\": \"memory.index.lexical.rebuild.started:compatibility-replay-only\",",
-              "line_start": 16545,
-              "line_end": 16545
-            },
-            {
-              "path": "Plans/memory_canonical_history_fixtures.json",
-              "unit": "#/canonical_history_families",
-              "quote": "\"name\": \"memory.index.lexical.rebuild.started:foreign-project-compatibility_replay\",",
-              "line_start": 18962,
-              "line_end": 18962
-            },
-            {
-              "path": "Plans/memory_canonical_history_fixtures.json",
-              "unit": "#/canonical_history_families",
-              "quote": "\"name\": \"memory.index.lexical.rebuild.started:numeric-spelling-commitment-1e0\",",
-              "line_start": 18227,
-              "line_end": 18227
-            },
-            {
-              "path": "scripts/pm_memory_maintenance_events.py",
-              "unit": "read_canonical_history",
-              "quote": "def read_canonical_history(before, event):",
-              "line_start": 1422,
-              "line_end": 1422
-            },
-            {
-              "path": "scripts/pm_memory_maintenance_events.py",
-              "unit": "json_numbers",
-              "quote": "def json_numbers(text):",
-              "line_start": 181,
-              "line_end": 181
-            },
-            {
-              "path": "scripts/pm_memory_maintenance_events.py",
-              "unit": "flag",
-              "quote": "return type(value) is bool and value is expected",
-              "line_start": 280,
-              "line_end": 280
-            },
-            {
-              "path": "scripts/pm_memory_boundary_domains.py",
-              "unit": "domain_cases",
-              "quote": "def domain_cases(m, contexts, boundaries, archive=None):",
-              "line_start": 12,
-              "line_end": 12
-            },
-            {
-              "path": "Plans/memory_maintenance_boundary_fixtures.json",
-              "unit": "#/families",
-              "quote": "\"memory.index.lexical.rebuild.started\"",
-              "line_start": 8,
-              "line_end": 8
-            },
-            {
-              "path": "Plans/storage-plan.md",
-              "unit": "SP-633",
-              "line_start": 29799,
-              "line_end": 29799,
-              "quote": "Historical originals instead use their frozen write-time recipe integer-json-v1"
-            },
-            {
-              "path": "Plans/storage-plan.md",
-              "unit": "SP-633",
-              "quote": "Storage sequence_id independently adopts SP-236 exact uint64, 0 through 18446744073709551615 inclusive, with exact integer type",
-              "line_start": 29799,
-              "line_end": 29799
-            },
-            {
-              "path": "scripts/pm_memory_storage_metadata.py",
-              "unit": "run",
-              "quote": "def run(m, contexts):",
-              "line_start": 48,
-              "line_end": 48
-            },
-            {
-              "path": "Plans/Automated_Testing_System.md",
-              "unit": "ATS-315",
-              "quote": "Round-11 preservation checks compare exact primitive types before values recursively",
-              "line_start": 7271,
-              "line_end": 7271
-            },
-            {
-              "path": "Plans/Automated_Testing_System.md",
-              "unit": "ATS-315",
-              "quote": "Minimum group size, unique IDs and original existence are separate guard-table rows",
-              "line_start": 7271,
-              "line_end": 7271
-            },
-            {
-              "path": "Plans/Automated_Testing_System.md",
-              "line_start": 7261,
-              "line_end": 7261,
-              "quote": "Standing check 11 (sweep part 2A, Method B guard tables)"
-            },
-            {
-              "path": "scripts/pm_memory_maintenance_events.py",
-              "line_start": 96,
-              "line_end": 96,
-              "quote": "def table_refusal(phase, facts):"
-            },
-            {
-              "path": "scripts/pm-memory-guard-tables.py",
-              "line_start": 10,
-              "line_end": 10,
-              "quote": "Credit is copied from the tool"
-            },
-            {
-              "path": "Plans/storage-plan.md",
-              "unit": "SP-633",
-              "line_start": 29931,
-              "line_end": 29931,
-              "quote": "Every declared date-time format is enforced by the shared CV-1101 predicate"
+              "path": "Plans/assistant-memory-subsystem.md",
+              "line_start": 1726,
+              "line_end": 1726,
+              "quote": "workbench or button is planned.",
+              "unit": "AMS-023"
             }
           ],
           "prior": {
-            "source": "sweep part 1 self-grade at 1abebee498",
-            "status": "PASS"
+            "source": "origin/main 7cf56368356da2b7a5ff25f6452cf753ce36bf45 DMEM-self-grade.json",
+            "status": "PARTIAL"
           },
-          "change": "carried",
-          "change_reason": "Sweep part 2B closes two of the three PARTIAL reasons (SP-1101 dispatch, interim timestamp review); the schema-keyword-cut reason remains, so the cell stays PARTIAL."
+          "change": "upgraded",
+          "change_reason": "The remaining schema-verdict limitation is closed by the source-bound whole-definition route explicitly allowed by C12 scope; no per-keyword independence claim. Existing entry points and owner schemas are preserved.",
+          "assessed_tree": {
+            "branch": "plans/ea-pnc-c12-dmem-20261114",
+            "implementation_commit": "232d40bba3d9e063c8ad860806ab17f866c43c9c",
+            "base": "7cf56368356da2b7a5ff25f6452cf753ce36bf45"
+          },
+          "evidence_bundle": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/c12-dmem/closure/memory.index.lexical.rebuild.started.coverage.json"
         }
       },
       "remaining_gaps": [
@@ -2736,7 +1975,6 @@
         "RT must resolve event/operation and rebuild selector/target retention.",
         "Native custody/atomicity/filesystem crash/backup/read-race obligations remain NOT_RUN; static success is not native proof.",
         "Independent review, separate per-family admission and unresolved operation/result retention still fence activation; Card 6 supplies no no-project writer permission.",
-        "JSON Schema keyword and format cuts are not ported to the shared guard tool; each schema occurrence is one verdict row.",
         "The shared date-time inventory and datetime_validator run at batch-2 integration (SWEEP-P2B Addendum 2); in this lane tree the inventory gate refuses on hash drift only."
       ],
       "static_checks_seen": [
@@ -2771,7 +2009,7 @@
           "quote": "remains absent from event_family_registry.json, quarantined before append or projection. Retention is PENDING_RETENTION_DECISION: candidate ordinary telemetry (Case L-3, 90 days/2,000,000 pe"
         }
       ],
-      "pass_count": 9,
+      "pass_count": 10,
       "normative_depth_complete": false,
       "native_execution": "NOT_RUN",
       "current_owner_units": [
@@ -3145,238 +2383,80 @@
           "change_reason": "Sweep part 2B (S3) replaces record-selected edition dispatch with SP-1101 custody selection; the grade is carried with the new evidence."
         },
         "positive_negative_oracles": {
-          "status": "PARTIAL",
+          "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Exact-family checkers pass (12/12) with lifecycle/custody/history, CV-1101 date-time profile battery, full uint64, Card 6 policy and policy-instant, SP-1101 custody, guard-table witness and shared-number-corpus suites. Check 11 is Method B: every refusal is one row of a generated phase table and the gated shared tool proves 289 of 316 rows; the 27 unproved rows are each decided first by a named earlier row or schema (listed in the report). The timestamp review is no longer interim: every timestamp field is checked by the shared CV-1101 predicate with its owner profile. PARTIAL because each JSON Schema occurrence is one verdict row (per-keyword and format cuts are not ported to the shared tool). Native NOT_RUN.",
+          "finding": "C12 static executable oracles complete under the W3H whole-definition Method B route. Complete owner definitions and reference branches retain every keyword; 96 exact-family schema sites have authored controls, exact schema-row/code mutations, cuts and restoration, with pin-bound shared reuse. Gated tool 004bdedd63 proves 290/316 real predicates in 191 tables; 26 checked implications each occupy a singleton table. CK08 has an independent sealed Application-scope witness on every family. Full original exact-family routes, 111 applicable number-corpus cases per family, all local date-time declarations/profiles and exact policy instants pass. Retained reads have actual custody-store snapshots and no writes. Global shared date-time gate remains NOT_RUN_ADMISSION_REFUSED on the absent mainline migration citation; no global PASS or native/admission proof is claimed.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-634",
-              "line_start": 29982,
-              "line_end": 29982,
-              "quote": "Newly authored current-writer boundary for exactly memory.index.semantic.rebuild.completed@1.0.0"
+              "line_start": 39380,
+              "line_end": 39380,
+              "quote": "Newly authored owner contract under DL-045 for exactly memory.index.semantic.rebuild.completed@1.0.0; search scope and negative evidence are the family's row in reports/event-authority-20261104/DMEM-search.json. The family remains absent from event_family_registry.json, quarantined before append or projection. Retention is PENDING_RETENTION_DECISION: candidate ordinary telemetry (Case L-3, 90 days/2,000,000 per Project) versus audit authority (indefinite/no count eviction); neither is selected. Unknown policy is materially incomplete and permits no destructive inference. Operation custody has the same pending assignment, and actual native activation is fenced until it resolves."
             },
             {
-              "path": "Plans/Automated_Testing_System.md",
-              "unit": "ATS-315",
-              "line_start": 7251,
-              "line_end": 7251,
-              "quote": "Each exact family additionally owns an independent current-writer boundary suite using the complete canonical EventRecord 2.0.0 schema with format checking"
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-654",
+              "line_start": 35510,
+              "line_end": 35510,
+              "quote": "canonical_text: Newly authored closed payload owner contract for exactly memory.index.semantic.rebuild.completed@1.0.0"
             },
             {
-              "path": "Plans/memory_maintenance_event_fixtures.json",
-              "unit": "#/writer_families/4",
-              "line_start": 63852,
-              "line_end": 63852,
-              "quote": "\"name\": \"memory.index.semantic.rebuild.completed:append-projector-replay-only\","
+              "path": "scripts/pm_memory_c12.py",
+              "line_start": 111,
+              "line_end": 111,
+              "quote": "def schema_closure(m, path, definition):"
             },
             {
-              "path": "Plans/memory_maintenance_event_fixtures.json",
-              "unit": "#/stateful_families/4",
-              "line_start": 40627,
-              "line_end": 40627,
-              "quote": "\"name\": \"memory.index.semantic.rebuild.completed:completed-recovery-permission-refusal\","
+              "path": "scripts/pm_memory_c12.py",
+              "line_start": 338,
+              "line_end": 338,
+              "quote": "killed=baseline == expected and cut == ['accepted'] and restored == expected,"
             },
             {
-              "path": "Plans/memory_maintenance_event_fixtures.json",
-              "unit": "#/stateful_families/4",
-              "line_start": 40647,
-              "line_end": 40647,
-              "quote": "\"name\": \"memory.index.semantic.rebuild.completed:completed-recovery-withdrawal-refusal\","
+              "path": "scripts/pm_memory_c12.py",
+              "line_start": 402,
+              "line_end": 402,
+              "quote": "assert before == after and state == caller, (event, mode, defect, 'read changed custody/caller')"
             },
             {
-              "path": "Plans/memory_maintenance_event_fixtures.json",
-              "unit": "#/writer_families/memory.index.semantic.rebuild.completed",
-              "quote": "\"name\": \"memory.index.semantic.rebuild.completed:completed-retry-start-missing\",",
-              "line_start": 65197,
-              "line_end": 65197
+              "path": "scripts/pm_memory_c12_selftest.py",
+              "line_start": 103,
+              "line_end": 103,
+              "quote": "results.append({'case': '4400-digit-integer-at-complete-writer', 'result': 'exact_storage_uint64_refusal'})"
             },
             {
-              "path": "Plans/storage-plan.md",
-              "unit": "SP-634",
-              "quote": "Start custody gate for exactly memory.index.semantic.rebuild.completed@1.0.0, newly authored owner contract (DMEM fix round 4)",
-              "line_start": 29984,
-              "line_end": 29984
+              "path": "scripts/pm_memory_c12_entailments.py",
+              "line_start": 104,
+              "line_end": 104,
+              "quote": "assert len(records) == 26 and len({r['row'] for r in records}) == 26"
             },
             {
-              "path": "Plans/Automated_Testing_System.md",
-              "unit": "ATS-315",
-              "quote": "Start custody gate oracle (fix round 4) for SP-630 to SP-637: the checker has one start_custody_gate and applies it at the commit point",
-              "line_start": 7259,
-              "line_end": 7259
+              "path": "scripts/pm_memory_guard_witnesses.py",
+              "line_start": 420,
+              "line_end": 420,
+              "quote": "add('checkpoint-application-scope', 'ck_scope', 'CK08_scope_kind', join,"
             },
             {
-              "path": "Plans/Automated_Testing_System.md",
-              "unit": "ATS-315",
-              "quote": "reference_cases checks standing check 9: before any instance validation the checker walks every subschema",
-              "line_start": 7267,
-              "line_end": 7267
-            },
-            {
-              "path": "Plans/memory_maintenance_event_fixtures.json",
-              "unit": "#/start_custody_matrix",
-              "quote": "\"name\": \"memory.index.semantic.rebuild.completed:phase:advance_completed@terminal_saved\",",
-              "line_start": 109297,
-              "line_end": 109297
-            },
-            {
-              "path": "Plans/memory_maintenance_event_fixtures.json",
-              "unit": "#/history_families",
-              "quote": "\"name\": \"memory.index.semantic.rebuild.completed:history-withdrawn\",",
-              "line_start": 128212,
-              "line_end": 128212
-            },
-            {
-              "path": "Plans/memory_maintenance_event_fixtures.json",
-              "unit": "#/reference_cases",
-              "quote": "\"name\": \"memory.index.semantic.rebuild.completed:standing9-dormant-missing-ref\",",
-              "line_start": 130187,
-              "line_end": 130187
-            },
-            {
-              "path": "scripts/pm_memory_maintenance_events.py",
-              "unit": "start_custody_gate",
-              "quote": "def start_custody_gate(state, first_start=False, writer_event=None, canonical_history=False):",
-              "line_start": 718,
-              "line_end": 718
-            },
-            {
-              "path": "scripts/pm_memory_maintenance_events.py",
-              "unit": "transition",
-              "quote": "start_custody_gate(before, first_start=action['op'] == 'append_started')",
-              "line_start": 1244,
-              "line_end": 1244
-            },
-            {
-              "path": "scripts/pm_memory_maintenance_events.py",
-              "unit": "main",
-              "quote": "mirrors = require_resolved_references()",
-              "line_start": 1934,
-              "line_end": 1934
-            },
-            {
-              "path": "Plans/memory_canonical_history_fixtures.json",
-              "unit": "#/canonical_history_families",
-              "quote": "\"name\": \"memory.index.semantic.rebuild.completed:compatibility-replay-only\",",
-              "line_start": 21710,
-              "line_end": 21710
-            },
-            {
-              "path": "Plans/memory_canonical_history_fixtures.json",
-              "unit": "#/canonical_history_families",
-              "quote": "\"name\": \"memory.index.semantic.rebuild.completed:foreign-project-compatibility_replay\",",
-              "line_start": 24255,
-              "line_end": 24255
-            },
-            {
-              "path": "Plans/memory_canonical_history_fixtures.json",
-              "unit": "#/canonical_history_families",
-              "quote": "\"name\": \"memory.index.semantic.rebuild.completed:numeric-spelling-commitment-1e0\",",
-              "line_start": 23484,
-              "line_end": 23484
-            },
-            {
-              "path": "scripts/pm_memory_maintenance_events.py",
-              "unit": "read_canonical_history",
-              "quote": "def read_canonical_history(before, event):",
-              "line_start": 1422,
-              "line_end": 1422
-            },
-            {
-              "path": "scripts/pm_memory_maintenance_events.py",
-              "unit": "json_numbers",
-              "quote": "def json_numbers(text):",
-              "line_start": 181,
-              "line_end": 181
-            },
-            {
-              "path": "scripts/pm_memory_maintenance_events.py",
-              "unit": "flag",
-              "quote": "return type(value) is bool and value is expected",
-              "line_start": 280,
-              "line_end": 280
-            },
-            {
-              "path": "scripts/pm_memory_boundary_domains.py",
-              "unit": "domain_cases",
-              "quote": "def domain_cases(m, contexts, boundaries, archive=None):",
-              "line_start": 12,
-              "line_end": 12
-            },
-            {
-              "path": "Plans/memory_maintenance_boundary_fixtures.json",
-              "unit": "#/families",
-              "quote": "\"memory.index.semantic.rebuild.completed\"",
-              "line_start": 9,
-              "line_end": 9
-            },
-            {
-              "path": "Plans/storage-plan.md",
-              "unit": "SP-634",
-              "line_start": 29866,
-              "line_end": 29866,
-              "quote": "Historical originals instead use their frozen write-time recipe integer-json-v1"
-            },
-            {
-              "path": "Plans/storage-plan.md",
-              "unit": "SP-634",
-              "quote": "Storage sequence_id independently adopts SP-236 exact uint64, 0 through 18446744073709551615 inclusive, with exact integer type",
-              "line_start": 29866,
-              "line_end": 29866
-            },
-            {
-              "path": "scripts/pm_memory_storage_metadata.py",
-              "unit": "run",
-              "quote": "def run(m, contexts):",
-              "line_start": 48,
-              "line_end": 48
-            },
-            {
-              "path": "Plans/Automated_Testing_System.md",
-              "unit": "ATS-315",
-              "quote": "Round-11 preservation checks compare exact primitive types before values recursively",
-              "line_start": 7271,
-              "line_end": 7271
-            },
-            {
-              "path": "Plans/Automated_Testing_System.md",
-              "unit": "ATS-315",
-              "quote": "Minimum group size, unique IDs and original existence are separate guard-table rows",
-              "line_start": 7271,
-              "line_end": 7271
-            },
-            {
-              "path": "Plans/Automated_Testing_System.md",
-              "line_start": 7261,
-              "line_end": 7261,
-              "quote": "Standing check 11 (sweep part 2A, Method B guard tables)"
-            },
-            {
-              "path": "scripts/pm_memory_maintenance_events.py",
-              "line_start": 96,
-              "line_end": 96,
-              "quote": "def table_refusal(phase, facts):"
-            },
-            {
-              "path": "scripts/pm-memory-guard-tables.py",
-              "line_start": 10,
-              "line_end": 10,
-              "quote": "Credit is copied from the tool"
-            },
-            {
-              "path": "Plans/storage-plan.md",
-              "unit": "SP-634",
-              "line_start": 29996,
-              "line_end": 29996,
-              "quote": "Every declared date-time format is enforced by the shared CV-1101 predicate"
+              "path": "Plans/assistant-memory-subsystem.md",
+              "line_start": 1726,
+              "line_end": 1726,
+              "quote": "workbench or button is planned.",
+              "unit": "AMS-023"
             }
           ],
           "prior": {
-            "source": "sweep part 1 self-grade at 1abebee498",
-            "status": "PASS"
+            "source": "origin/main 7cf56368356da2b7a5ff25f6452cf753ce36bf45 DMEM-self-grade.json",
+            "status": "PARTIAL"
           },
-          "change": "carried",
-          "change_reason": "Sweep part 2B closes two of the three PARTIAL reasons (SP-1101 dispatch, interim timestamp review); the schema-keyword-cut reason remains, so the cell stays PARTIAL."
+          "change": "upgraded",
+          "change_reason": "The remaining schema-verdict limitation is closed by the source-bound whole-definition route explicitly allowed by C12 scope; no per-keyword independence claim. Existing entry points and owner schemas are preserved.",
+          "assessed_tree": {
+            "branch": "plans/ea-pnc-c12-dmem-20261114",
+            "implementation_commit": "232d40bba3d9e063c8ad860806ab17f866c43c9c",
+            "base": "7cf56368356da2b7a5ff25f6452cf753ce36bf45"
+          },
+          "evidence_bundle": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/c12-dmem/closure/memory.index.semantic.rebuild.completed.coverage.json"
         }
       },
       "remaining_gaps": [
@@ -3384,7 +2464,6 @@
         "RT must resolve event/operation and rebuild selector/target retention.",
         "Native custody/atomicity/filesystem crash/backup/read-race obligations remain NOT_RUN; static success is not native proof.",
         "Independent review, separate per-family admission and unresolved operation/result retention still fence activation; Card 6 supplies no no-project writer permission.",
-        "JSON Schema keyword and format cuts are not ported to the shared guard tool; each schema occurrence is one verdict row.",
         "The shared date-time inventory and datetime_validator run at batch-2 integration (SWEEP-P2B Addendum 2); in this lane tree the inventory gate refuses on hash drift only."
       ],
       "static_checks_seen": [
@@ -3419,7 +2498,7 @@
           "quote": "remains absent from event_family_registry.json, quarantined before append or projection. Retention is PENDING_RETENTION_DECISION: candidate ordinary telemetry (Case L-3, 90 days/2,000,000 pe"
         }
       ],
-      "pass_count": 9,
+      "pass_count": 10,
       "normative_depth_complete": false,
       "native_execution": "NOT_RUN",
       "current_owner_units": [
@@ -3800,238 +2879,80 @@
           "change_reason": "Sweep part 2B (S3) replaces record-selected edition dispatch with SP-1101 custody selection; the grade is carried with the new evidence."
         },
         "positive_negative_oracles": {
-          "status": "PARTIAL",
+          "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Exact-family checkers pass (12/12) with lifecycle/custody/history, CV-1101 date-time profile battery, full uint64, Card 6 policy and policy-instant, SP-1101 custody, guard-table witness and shared-number-corpus suites. Check 11 is Method B: every refusal is one row of a generated phase table and the gated shared tool proves 289 of 316 rows; the 27 unproved rows are each decided first by a named earlier row or schema (listed in the report). The timestamp review is no longer interim: every timestamp field is checked by the shared CV-1101 predicate with its owner profile. PARTIAL because each JSON Schema occurrence is one verdict row (per-keyword and format cuts are not ported to the shared tool). Native NOT_RUN.",
+          "finding": "C12 static executable oracles complete under the W3H whole-definition Method B route. Complete owner definitions and reference branches retain every keyword; 96 exact-family schema sites have authored controls, exact schema-row/code mutations, cuts and restoration, with pin-bound shared reuse. Gated tool 004bdedd63 proves 290/316 real predicates in 191 tables; 26 checked implications each occupy a singleton table. CK08 has an independent sealed Application-scope witness on every family. Full original exact-family routes, 111 applicable number-corpus cases per family, all local date-time declarations/profiles and exact policy instants pass. Retained reads have actual custody-store snapshots and no writes. Global shared date-time gate remains NOT_RUN_ADMISSION_REFUSED on the absent mainline migration citation; no global PASS or native/admission proof is claimed.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-635",
-              "line_start": 30047,
-              "line_end": 30047,
-              "quote": "Newly authored current-writer boundary for exactly memory.index.semantic.rebuild.started@1.0.0"
+              "line_start": 39445,
+              "line_end": 39445,
+              "quote": "Newly authored owner contract under DL-045 for exactly memory.index.semantic.rebuild.started@1.0.0; search scope and negative evidence are the family's row in reports/event-authority-20261104/DMEM-search.json. The family remains absent from event_family_registry.json, quarantined before append or projection. Retention is PENDING_RETENTION_DECISION: candidate ordinary telemetry (Case L-3, 90 days/2,000,000 per Project) versus audit authority (indefinite/no count eviction); neither is selected. Unknown policy is materially incomplete and permits no destructive inference. Operation custody has the same pending assignment, and actual native activation is fenced until it resolves."
             },
             {
-              "path": "Plans/Automated_Testing_System.md",
-              "unit": "ATS-315",
-              "line_start": 7251,
-              "line_end": 7251,
-              "quote": "Each exact family additionally owns an independent current-writer boundary suite using the complete canonical EventRecord 2.0.0 schema with format checking"
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-655",
+              "line_start": 35556,
+              "line_end": 35556,
+              "quote": "canonical_text: Newly authored closed payload owner contract for exactly memory.index.semantic.rebuild.started@1.0.0"
             },
             {
-              "path": "Plans/memory_maintenance_event_fixtures.json",
-              "unit": "#/writer_families/5",
-              "line_start": 67988,
-              "line_end": 67988,
-              "quote": "\"name\": \"memory.index.semantic.rebuild.started:append-projector-replay-only\","
+              "path": "scripts/pm_memory_c12.py",
+              "line_start": 111,
+              "line_end": 111,
+              "quote": "def schema_closure(m, path, definition):"
             },
             {
-              "path": "Plans/memory_maintenance_event_fixtures.json",
-              "unit": "#/stateful_families/5",
-              "line_start": 44560,
-              "line_end": 44560,
-              "quote": "\"name\": \"memory.index.semantic.rebuild.started:completed-recovery-permission-refusal\","
+              "path": "scripts/pm_memory_c12.py",
+              "line_start": 338,
+              "line_end": 338,
+              "quote": "killed=baseline == expected and cut == ['accepted'] and restored == expected,"
             },
             {
-              "path": "Plans/memory_maintenance_event_fixtures.json",
-              "unit": "#/stateful_families/5",
-              "line_start": 44580,
-              "line_end": 44580,
-              "quote": "\"name\": \"memory.index.semantic.rebuild.started:completed-recovery-withdrawal-refusal\","
+              "path": "scripts/pm_memory_c12.py",
+              "line_start": 402,
+              "line_end": 402,
+              "quote": "assert before == after and state == caller, (event, mode, defect, 'read changed custody/caller')"
             },
             {
-              "path": "Plans/memory_maintenance_event_fixtures.json",
-              "unit": "#/cases",
-              "line_start": 17356,
-              "line_end": 17356,
-              "quote": "\"name\": \"memory.index.semantic.rebuild.started:completed-missing-original-start\","
+              "path": "scripts/pm_memory_c12_selftest.py",
+              "line_start": 103,
+              "line_end": 103,
+              "quote": "results.append({'case': '4400-digit-integer-at-complete-writer', 'result': 'exact_storage_uint64_refusal'})"
             },
             {
-              "path": "Plans/storage-plan.md",
-              "unit": "SP-635",
-              "quote": "Start custody gate for exactly memory.index.semantic.rebuild.started@1.0.0, newly authored owner contract (DMEM fix round 4)",
-              "line_start": 30049,
-              "line_end": 30049
+              "path": "scripts/pm_memory_c12_entailments.py",
+              "line_start": 104,
+              "line_end": 104,
+              "quote": "assert len(records) == 26 and len({r['row'] for r in records}) == 26"
             },
             {
-              "path": "Plans/Automated_Testing_System.md",
-              "unit": "ATS-315",
-              "quote": "Start custody gate oracle (fix round 4) for SP-630 to SP-637: the checker has one start_custody_gate and applies it at the commit point",
-              "line_start": 7259,
-              "line_end": 7259
+              "path": "scripts/pm_memory_guard_witnesses.py",
+              "line_start": 420,
+              "line_end": 420,
+              "quote": "add('checkpoint-application-scope', 'ck_scope', 'CK08_scope_kind', join,"
             },
             {
-              "path": "Plans/Automated_Testing_System.md",
-              "unit": "ATS-315",
-              "quote": "reference_cases checks standing check 9: before any instance validation the checker walks every subschema",
-              "line_start": 7267,
-              "line_end": 7267
-            },
-            {
-              "path": "Plans/memory_maintenance_event_fixtures.json",
-              "unit": "#/start_custody_matrix",
-              "quote": "\"name\": \"memory.index.semantic.rebuild.started:phase:advance_completed@terminal_saved\",",
-              "line_start": 115487,
-              "line_end": 115487
-            },
-            {
-              "path": "Plans/memory_maintenance_event_fixtures.json",
-              "unit": "#/history_families",
-              "quote": "\"name\": \"memory.index.semantic.rebuild.started:history-withdrawn\",",
-              "line_start": 128610,
-              "line_end": 128610
-            },
-            {
-              "path": "Plans/memory_maintenance_event_fixtures.json",
-              "unit": "#/reference_cases",
-              "quote": "\"name\": \"memory.index.semantic.rebuild.started:standing9-dormant-missing-ref\",",
-              "line_start": 130365,
-              "line_end": 130365
-            },
-            {
-              "path": "scripts/pm_memory_maintenance_events.py",
-              "unit": "start_custody_gate",
-              "quote": "def start_custody_gate(state, first_start=False, writer_event=None, canonical_history=False):",
-              "line_start": 718,
-              "line_end": 718
-            },
-            {
-              "path": "scripts/pm_memory_maintenance_events.py",
-              "unit": "transition",
-              "quote": "start_custody_gate(before, first_start=action['op'] == 'append_started')",
-              "line_start": 1244,
-              "line_end": 1244
-            },
-            {
-              "path": "scripts/pm_memory_maintenance_events.py",
-              "unit": "main",
-              "quote": "mirrors = require_resolved_references()",
-              "line_start": 1934,
-              "line_end": 1934
-            },
-            {
-              "path": "Plans/memory_canonical_history_fixtures.json",
-              "unit": "#/canonical_history_families",
-              "quote": "\"name\": \"memory.index.semantic.rebuild.started:compatibility-replay-only\",",
-              "line_start": 27091,
-              "line_end": 27091
-            },
-            {
-              "path": "Plans/memory_canonical_history_fixtures.json",
-              "unit": "#/canonical_history_families",
-              "quote": "\"name\": \"memory.index.semantic.rebuild.started:foreign-project-compatibility_replay\",",
-              "line_start": 29508,
-              "line_end": 29508
-            },
-            {
-              "path": "Plans/memory_canonical_history_fixtures.json",
-              "unit": "#/canonical_history_families",
-              "quote": "\"name\": \"memory.index.semantic.rebuild.started:numeric-spelling-commitment-1e0\",",
-              "line_start": 28773,
-              "line_end": 28773
-            },
-            {
-              "path": "scripts/pm_memory_maintenance_events.py",
-              "unit": "read_canonical_history",
-              "quote": "def read_canonical_history(before, event):",
-              "line_start": 1422,
-              "line_end": 1422
-            },
-            {
-              "path": "scripts/pm_memory_maintenance_events.py",
-              "unit": "json_numbers",
-              "quote": "def json_numbers(text):",
-              "line_start": 181,
-              "line_end": 181
-            },
-            {
-              "path": "scripts/pm_memory_maintenance_events.py",
-              "unit": "flag",
-              "quote": "return type(value) is bool and value is expected",
-              "line_start": 280,
-              "line_end": 280
-            },
-            {
-              "path": "scripts/pm_memory_boundary_domains.py",
-              "unit": "domain_cases",
-              "quote": "def domain_cases(m, contexts, boundaries, archive=None):",
-              "line_start": 12,
-              "line_end": 12
-            },
-            {
-              "path": "Plans/memory_maintenance_boundary_fixtures.json",
-              "unit": "#/families",
-              "quote": "\"memory.index.semantic.rebuild.started\"",
-              "line_start": 10,
-              "line_end": 10
-            },
-            {
-              "path": "Plans/storage-plan.md",
-              "unit": "SP-635",
-              "line_start": 29931,
-              "line_end": 29931,
-              "quote": "Historical originals instead use their frozen write-time recipe integer-json-v1"
-            },
-            {
-              "path": "Plans/storage-plan.md",
-              "unit": "SP-635",
-              "quote": "Storage sequence_id independently adopts SP-236 exact uint64, 0 through 18446744073709551615 inclusive, with exact integer type",
-              "line_start": 29931,
-              "line_end": 29931
-            },
-            {
-              "path": "scripts/pm_memory_storage_metadata.py",
-              "unit": "run",
-              "quote": "def run(m, contexts):",
-              "line_start": 48,
-              "line_end": 48
-            },
-            {
-              "path": "Plans/Automated_Testing_System.md",
-              "unit": "ATS-315",
-              "quote": "Round-11 preservation checks compare exact primitive types before values recursively",
-              "line_start": 7271,
-              "line_end": 7271
-            },
-            {
-              "path": "Plans/Automated_Testing_System.md",
-              "unit": "ATS-315",
-              "quote": "Minimum group size, unique IDs and original existence are separate guard-table rows",
-              "line_start": 7271,
-              "line_end": 7271
-            },
-            {
-              "path": "Plans/Automated_Testing_System.md",
-              "line_start": 7261,
-              "line_end": 7261,
-              "quote": "Standing check 11 (sweep part 2A, Method B guard tables)"
-            },
-            {
-              "path": "scripts/pm_memory_maintenance_events.py",
-              "line_start": 96,
-              "line_end": 96,
-              "quote": "def table_refusal(phase, facts):"
-            },
-            {
-              "path": "scripts/pm-memory-guard-tables.py",
-              "line_start": 10,
-              "line_end": 10,
-              "quote": "Credit is copied from the tool"
-            },
-            {
-              "path": "Plans/storage-plan.md",
-              "unit": "SP-635",
-              "line_start": 30061,
-              "line_end": 30061,
-              "quote": "Every declared date-time format is enforced by the shared CV-1101 predicate"
+              "path": "Plans/assistant-memory-subsystem.md",
+              "line_start": 1726,
+              "line_end": 1726,
+              "quote": "workbench or button is planned.",
+              "unit": "AMS-023"
             }
           ],
           "prior": {
-            "source": "sweep part 1 self-grade at 1abebee498",
-            "status": "PASS"
+            "source": "origin/main 7cf56368356da2b7a5ff25f6452cf753ce36bf45 DMEM-self-grade.json",
+            "status": "PARTIAL"
           },
-          "change": "carried",
-          "change_reason": "Sweep part 2B closes two of the three PARTIAL reasons (SP-1101 dispatch, interim timestamp review); the schema-keyword-cut reason remains, so the cell stays PARTIAL."
+          "change": "upgraded",
+          "change_reason": "The remaining schema-verdict limitation is closed by the source-bound whole-definition route explicitly allowed by C12 scope; no per-keyword independence claim. Existing entry points and owner schemas are preserved.",
+          "assessed_tree": {
+            "branch": "plans/ea-pnc-c12-dmem-20261114",
+            "implementation_commit": "232d40bba3d9e063c8ad860806ab17f866c43c9c",
+            "base": "7cf56368356da2b7a5ff25f6452cf753ce36bf45"
+          },
+          "evidence_bundle": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/c12-dmem/closure/memory.index.semantic.rebuild.started.coverage.json"
         }
       },
       "remaining_gaps": [
@@ -4039,7 +2960,6 @@
         "RT must resolve event/operation and rebuild selector/target retention.",
         "Native custody/atomicity/filesystem crash/backup/read-race obligations remain NOT_RUN; static success is not native proof.",
         "Independent review, separate per-family admission and unresolved operation/result retention still fence activation; Card 6 supplies no no-project writer permission.",
-        "JSON Schema keyword and format cuts are not ported to the shared guard tool; each schema occurrence is one verdict row.",
         "The shared date-time inventory and datetime_validator run at batch-2 integration (SWEEP-P2B Addendum 2); in this lane tree the inventory gate refuses on hash drift only."
       ],
       "static_checks_seen": [
@@ -4074,7 +2994,7 @@
           "quote": "remains absent from event_family_registry.json, quarantined before append or projection. Retention is PENDING_RETENTION_DECISION: candidate ordinary telemetry (Case L-3, 90 days/2,000,000 pe"
         }
       ],
-      "pass_count": 9,
+      "pass_count": 10,
       "normative_depth_complete": false,
       "native_execution": "NOT_RUN",
       "current_owner_units": [
@@ -4427,238 +3347,80 @@
           "change_reason": "Sweep part 2B (S3) replaces record-selected edition dispatch with SP-1101 custody selection; the grade is carried with the new evidence."
         },
         "positive_negative_oracles": {
-          "status": "PARTIAL",
+          "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Exact-family checkers pass (12/12) with lifecycle/custody/history, CV-1101 date-time profile battery, full uint64, Card 6 policy and policy-instant, SP-1101 custody, guard-table witness and shared-number-corpus suites. Check 11 is Method B: every refusal is one row of a generated phase table and the gated shared tool proves 289 of 316 rows; the 27 unproved rows are each decided first by a named earlier row or schema (listed in the report). The timestamp review is no longer interim: every timestamp field is checked by the shared CV-1101 predicate with its owner profile. PARTIAL because each JSON Schema occurrence is one verdict row (per-keyword and format cuts are not ported to the shared tool). Native NOT_RUN.",
+          "finding": "C12 static executable oracles complete under the W3H whole-definition Method B route. Complete owner definitions and reference branches retain every keyword; 96 exact-family schema sites have authored controls, exact schema-row/code mutations, cuts and restoration, with pin-bound shared reuse. Gated tool 004bdedd63 proves 290/316 real predicates in 191 tables; 26 checked implications each occupy a singleton table. CK08 has an independent sealed Application-scope witness on every family. Full original exact-family routes, 111 applicable number-corpus cases per family, all local date-time declarations/profiles and exact policy instants pass. Retained reads have actual custody-store snapshots and no writes. Global shared date-time gate remains NOT_RUN_ADMISSION_REFUSED on the absent mainline migration citation; no global PASS or native/admission proof is claimed.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-636",
-              "line_start": 30112,
-              "line_end": 30112,
-              "quote": "Newly authored current-writer boundary for exactly memory.verification_sweep.completed@1.0.0"
+              "line_start": 39510,
+              "line_end": 39510,
+              "quote": "Newly authored owner contract under DL-045 for exactly memory.verification_sweep.completed@1.0.0; search scope and negative evidence are the family's row in reports/event-authority-20261104/DMEM-search.json. The family remains absent from event_family_registry.json, quarantined before append or projection. Retention is PENDING_RETENTION_DECISION: candidate ordinary telemetry (Case L-3, 90 days/2,000,000 per Project) versus audit authority (indefinite/no count eviction); neither is selected. Unknown policy is materially incomplete and permits no destructive inference. Operation custody has the same pending assignment, and actual native activation is fenced until it resolves."
             },
             {
-              "path": "Plans/Automated_Testing_System.md",
-              "unit": "ATS-315",
-              "line_start": 7251,
-              "line_end": 7251,
-              "quote": "Each exact family additionally owns an independent current-writer boundary suite using the complete canonical EventRecord 2.0.0 schema with format checking"
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-656",
+              "line_start": 35601,
+              "line_end": 35601,
+              "quote": "canonical_text: Newly authored closed payload owner contract for exactly memory.verification_sweep.completed@1.0.0"
             },
             {
-              "path": "Plans/memory_maintenance_event_fixtures.json",
-              "unit": "#/writer_families/6",
-              "line_start": 70836,
-              "line_end": 70836,
-              "quote": "\"name\": \"memory.verification_sweep.completed:append-projector-replay-only\","
+              "path": "scripts/pm_memory_c12.py",
+              "line_start": 111,
+              "line_end": 111,
+              "quote": "def schema_closure(m, path, definition):"
             },
             {
-              "path": "Plans/memory_maintenance_event_fixtures.json",
-              "unit": "#/stateful_families/6",
-              "line_start": 46718,
-              "line_end": 46718,
-              "quote": "\"name\": \"memory.verification_sweep.completed:completed-recovery-permission-refusal\","
+              "path": "scripts/pm_memory_c12.py",
+              "line_start": 338,
+              "line_end": 338,
+              "quote": "killed=baseline == expected and cut == ['accepted'] and restored == expected,"
             },
             {
-              "path": "Plans/memory_maintenance_event_fixtures.json",
-              "unit": "#/stateful_families/6",
-              "line_start": 46738,
-              "line_end": 46738,
-              "quote": "\"name\": \"memory.verification_sweep.completed:completed-recovery-withdrawal-refusal\","
+              "path": "scripts/pm_memory_c12.py",
+              "line_start": 402,
+              "line_end": 402,
+              "quote": "assert before == after and state == caller, (event, mode, defect, 'read changed custody/caller')"
             },
             {
-              "path": "Plans/memory_maintenance_event_fixtures.json",
-              "unit": "#/writer_families/memory.verification_sweep.completed",
-              "quote": "\"name\": \"memory.verification_sweep.completed:completed-retry-start-missing\",",
-              "line_start": 72181,
-              "line_end": 72181
+              "path": "scripts/pm_memory_c12_selftest.py",
+              "line_start": 103,
+              "line_end": 103,
+              "quote": "results.append({'case': '4400-digit-integer-at-complete-writer', 'result': 'exact_storage_uint64_refusal'})"
             },
             {
-              "path": "Plans/storage-plan.md",
-              "unit": "SP-636",
-              "quote": "Start custody gate for exactly memory.verification_sweep.completed@1.0.0, newly authored owner contract (DMEM fix round 4)",
-              "line_start": 30114,
-              "line_end": 30114
+              "path": "scripts/pm_memory_c12_entailments.py",
+              "line_start": 104,
+              "line_end": 104,
+              "quote": "assert len(records) == 26 and len({r['row'] for r in records}) == 26"
             },
             {
-              "path": "Plans/Automated_Testing_System.md",
-              "unit": "ATS-315",
-              "quote": "Start custody gate oracle (fix round 4) for SP-630 to SP-637: the checker has one start_custody_gate and applies it at the commit point",
-              "line_start": 7259,
-              "line_end": 7259
+              "path": "scripts/pm_memory_guard_witnesses.py",
+              "line_start": 420,
+              "line_end": 420,
+              "quote": "add('checkpoint-application-scope', 'ck_scope', 'CK08_scope_kind', join,"
             },
             {
-              "path": "Plans/Automated_Testing_System.md",
-              "unit": "ATS-315",
-              "quote": "reference_cases checks standing check 9: before any instance validation the checker walks every subschema",
-              "line_start": 7267,
-              "line_end": 7267
-            },
-            {
-              "path": "Plans/memory_maintenance_event_fixtures.json",
-              "unit": "#/start_custody_matrix",
-              "quote": "\"name\": \"memory.verification_sweep.completed:phase:advance_completed@terminal_saved\",",
-              "line_start": 120335,
-              "line_end": 120335
-            },
-            {
-              "path": "Plans/memory_maintenance_event_fixtures.json",
-              "unit": "#/history_families",
-              "quote": "\"name\": \"memory.verification_sweep.completed:history-withdrawn\",",
-              "line_start": 128957,
-              "line_end": 128957
-            },
-            {
-              "path": "Plans/memory_maintenance_event_fixtures.json",
-              "unit": "#/reference_cases",
-              "quote": "\"name\": \"memory.verification_sweep.completed:standing9-dormant-missing-ref\",",
-              "line_start": 130543,
-              "line_end": 130543
-            },
-            {
-              "path": "scripts/pm_memory_maintenance_events.py",
-              "unit": "start_custody_gate",
-              "quote": "def start_custody_gate(state, first_start=False, writer_event=None, canonical_history=False):",
-              "line_start": 718,
-              "line_end": 718
-            },
-            {
-              "path": "scripts/pm_memory_maintenance_events.py",
-              "unit": "transition",
-              "quote": "start_custody_gate(before, first_start=action['op'] == 'append_started')",
-              "line_start": 1244,
-              "line_end": 1244
-            },
-            {
-              "path": "scripts/pm_memory_maintenance_events.py",
-              "unit": "main",
-              "quote": "mirrors = require_resolved_references()",
-              "line_start": 1934,
-              "line_end": 1934
-            },
-            {
-              "path": "Plans/memory_canonical_history_fixtures.json",
-              "unit": "#/canonical_history_families",
-              "quote": "\"name\": \"memory.verification_sweep.completed:compatibility-replay-only\",",
-              "line_start": 31928,
-              "line_end": 31928
-            },
-            {
-              "path": "Plans/memory_canonical_history_fixtures.json",
-              "unit": "#/canonical_history_families",
-              "quote": "\"name\": \"memory.verification_sweep.completed:foreign-project-compatibility_replay\",",
-              "line_start": 34473,
-              "line_end": 34473
-            },
-            {
-              "path": "Plans/memory_canonical_history_fixtures.json",
-              "unit": "#/canonical_history_families",
-              "quote": "\"name\": \"memory.verification_sweep.completed:numeric-spelling-commitment-1e0\",",
-              "line_start": 33702,
-              "line_end": 33702
-            },
-            {
-              "path": "scripts/pm_memory_maintenance_events.py",
-              "unit": "read_canonical_history",
-              "quote": "def read_canonical_history(before, event):",
-              "line_start": 1422,
-              "line_end": 1422
-            },
-            {
-              "path": "scripts/pm_memory_maintenance_events.py",
-              "unit": "json_numbers",
-              "quote": "def json_numbers(text):",
-              "line_start": 181,
-              "line_end": 181
-            },
-            {
-              "path": "scripts/pm_memory_maintenance_events.py",
-              "unit": "flag",
-              "quote": "return type(value) is bool and value is expected",
-              "line_start": 280,
-              "line_end": 280
-            },
-            {
-              "path": "scripts/pm_memory_boundary_domains.py",
-              "unit": "domain_cases",
-              "quote": "def domain_cases(m, contexts, boundaries, archive=None):",
-              "line_start": 12,
-              "line_end": 12
-            },
-            {
-              "path": "Plans/memory_maintenance_boundary_fixtures.json",
-              "unit": "#/families",
-              "quote": "\"memory.verification_sweep.completed\"",
-              "line_start": 15,
-              "line_end": 15
-            },
-            {
-              "path": "Plans/storage-plan.md",
-              "unit": "SP-636",
-              "line_start": 29996,
-              "line_end": 29996,
-              "quote": "Historical originals instead use their frozen write-time recipe integer-json-v1"
-            },
-            {
-              "path": "Plans/storage-plan.md",
-              "unit": "SP-636",
-              "quote": "Storage sequence_id independently adopts SP-236 exact uint64, 0 through 18446744073709551615 inclusive, with exact integer type",
-              "line_start": 29996,
-              "line_end": 29996
-            },
-            {
-              "path": "scripts/pm_memory_storage_metadata.py",
-              "unit": "run",
-              "quote": "def run(m, contexts):",
-              "line_start": 48,
-              "line_end": 48
-            },
-            {
-              "path": "Plans/Automated_Testing_System.md",
-              "unit": "ATS-315",
-              "quote": "Round-11 preservation checks compare exact primitive types before values recursively",
-              "line_start": 7271,
-              "line_end": 7271
-            },
-            {
-              "path": "Plans/Automated_Testing_System.md",
-              "unit": "ATS-315",
-              "quote": "Minimum group size, unique IDs and original existence are separate guard-table rows",
-              "line_start": 7271,
-              "line_end": 7271
-            },
-            {
-              "path": "Plans/Automated_Testing_System.md",
-              "line_start": 7261,
-              "line_end": 7261,
-              "quote": "Standing check 11 (sweep part 2A, Method B guard tables)"
-            },
-            {
-              "path": "scripts/pm_memory_maintenance_events.py",
-              "line_start": 96,
-              "line_end": 96,
-              "quote": "def table_refusal(phase, facts):"
-            },
-            {
-              "path": "scripts/pm-memory-guard-tables.py",
-              "line_start": 10,
-              "line_end": 10,
-              "quote": "Credit is copied from the tool"
-            },
-            {
-              "path": "Plans/storage-plan.md",
-              "unit": "SP-636",
-              "line_start": 30118,
-              "line_end": 30118,
-              "quote": "Every declared date-time format is enforced by the shared CV-1101 predicate"
+              "path": "Plans/assistant-memory-subsystem.md",
+              "line_start": 1726,
+              "line_end": 1726,
+              "quote": "workbench or button is planned.",
+              "unit": "AMS-023"
             }
           ],
           "prior": {
-            "source": "sweep part 1 self-grade at 1abebee498",
-            "status": "PASS"
+            "source": "origin/main 7cf56368356da2b7a5ff25f6452cf753ce36bf45 DMEM-self-grade.json",
+            "status": "PARTIAL"
           },
-          "change": "carried",
-          "change_reason": "Sweep part 2B closes two of the three PARTIAL reasons (SP-1101 dispatch, interim timestamp review); the schema-keyword-cut reason remains, so the cell stays PARTIAL."
+          "change": "upgraded",
+          "change_reason": "The remaining schema-verdict limitation is closed by the source-bound whole-definition route explicitly allowed by C12 scope; no per-keyword independence claim. Existing entry points and owner schemas are preserved.",
+          "assessed_tree": {
+            "branch": "plans/ea-pnc-c12-dmem-20261114",
+            "implementation_commit": "232d40bba3d9e063c8ad860806ab17f866c43c9c",
+            "base": "7cf56368356da2b7a5ff25f6452cf753ce36bf45"
+          },
+          "evidence_bundle": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/c12-dmem/closure/memory.verification_sweep.completed.coverage.json"
         }
       },
       "remaining_gaps": [
@@ -4666,7 +3428,6 @@
         "RT must resolve event/operation and rebuild selector/target retention.",
         "Native custody/atomicity/filesystem crash/backup/read-race obligations remain NOT_RUN; static success is not native proof.",
         "Independent review, separate per-family admission and unresolved operation/result retention still fence activation; Card 6 supplies no no-project writer permission.",
-        "JSON Schema keyword and format cuts are not ported to the shared guard tool; each schema occurrence is one verdict row.",
         "The shared date-time inventory and datetime_validator run at batch-2 integration (SWEEP-P2B Addendum 2); in this lane tree the inventory gate refuses on hash drift only."
       ],
       "static_checks_seen": [
@@ -4701,7 +3462,7 @@
           "quote": "remains absent from event_family_registry.json, quarantined before append or projection. Retention is PENDING_RETENTION_DECISION: candidate ordinary telemetry (Case L-3, 90 days/2,000,000 pe"
         }
       ],
-      "pass_count": 9,
+      "pass_count": 10,
       "normative_depth_complete": false,
       "native_execution": "NOT_RUN",
       "current_owner_units": [
@@ -5061,238 +3822,80 @@
           "change_reason": "Sweep part 2B (S3) replaces record-selected edition dispatch with SP-1101 custody selection; the grade is carried with the new evidence."
         },
         "positive_negative_oracles": {
-          "status": "PARTIAL",
+          "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Exact-family checkers pass (12/12) with lifecycle/custody/history, CV-1101 date-time profile battery, full uint64, Card 6 policy and policy-instant, SP-1101 custody, guard-table witness and shared-number-corpus suites. Check 11 is Method B: every refusal is one row of a generated phase table and the gated shared tool proves 289 of 316 rows; the 27 unproved rows are each decided first by a named earlier row or schema (listed in the report). The timestamp review is no longer interim: every timestamp field is checked by the shared CV-1101 predicate with its owner profile. PARTIAL because each JSON Schema occurrence is one verdict row (per-keyword and format cuts are not ported to the shared tool). Native NOT_RUN.",
+          "finding": "C12 static executable oracles complete under the W3H whole-definition Method B route. Complete owner definitions and reference branches retain every keyword; 96 exact-family schema sites have authored controls, exact schema-row/code mutations, cuts and restoration, with pin-bound shared reuse. Gated tool 004bdedd63 proves 290/316 real predicates in 191 tables; 26 checked implications each occupy a singleton table. CK08 has an independent sealed Application-scope witness on every family. Full original exact-family routes, 111 applicable number-corpus cases per family, all local date-time declarations/profiles and exact policy instants pass. Retained reads have actual custody-store snapshots and no writes. Global shared date-time gate remains NOT_RUN_ADMISSION_REFUSED on the absent mainline migration citation; no global PASS or native/admission proof is claimed.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-637",
-              "line_start": 30169,
-              "line_end": 30169,
-              "quote": "Newly authored current-writer boundary for exactly memory.verification_sweep.started@1.0.0"
+              "line_start": 39567,
+              "line_end": 39567,
+              "quote": "Newly authored owner contract under DL-045 for exactly memory.verification_sweep.started@1.0.0; search scope and negative evidence are the family's row in reports/event-authority-20261104/DMEM-search.json. The family remains absent from event_family_registry.json, quarantined before append or projection. Retention is PENDING_RETENTION_DECISION: candidate ordinary telemetry (Case L-3, 90 days/2,000,000 per Project) versus audit authority (indefinite/no count eviction); neither is selected. Unknown policy is materially incomplete and permits no destructive inference. Operation custody has the same pending assignment, and actual native activation is fenced until it resolves."
             },
             {
-              "path": "Plans/Automated_Testing_System.md",
-              "unit": "ATS-315",
-              "line_start": 7251,
-              "line_end": 7251,
-              "quote": "Each exact family additionally owns an independent current-writer boundary suite using the complete canonical EventRecord 2.0.0 schema with format checking"
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-657",
+              "line_start": 35647,
+              "line_end": 35647,
+              "quote": "canonical_text: Newly authored closed payload owner contract for exactly memory.verification_sweep.started@1.0.0"
             },
             {
-              "path": "Plans/memory_maintenance_event_fixtures.json",
-              "unit": "#/writer_families/7",
-              "line_start": 74947,
-              "line_end": 74947,
-              "quote": "\"name\": \"memory.verification_sweep.started:append-projector-replay-only\","
+              "path": "scripts/pm_memory_c12.py",
+              "line_start": 111,
+              "line_end": 111,
+              "quote": "def schema_closure(m, path, definition):"
             },
             {
-              "path": "Plans/memory_maintenance_event_fixtures.json",
-              "unit": "#/stateful_families/7",
-              "line_start": 48775,
-              "line_end": 48775,
-              "quote": "\"name\": \"memory.verification_sweep.started:completed-recovery-permission-refusal\","
+              "path": "scripts/pm_memory_c12.py",
+              "line_start": 338,
+              "line_end": 338,
+              "quote": "killed=baseline == expected and cut == ['accepted'] and restored == expected,"
             },
             {
-              "path": "Plans/memory_maintenance_event_fixtures.json",
-              "unit": "#/stateful_families/7",
-              "line_start": 48795,
-              "line_end": 48795,
-              "quote": "\"name\": \"memory.verification_sweep.started:completed-recovery-withdrawal-refusal\","
+              "path": "scripts/pm_memory_c12.py",
+              "line_start": 402,
+              "line_end": 402,
+              "quote": "assert before == after and state == caller, (event, mode, defect, 'read changed custody/caller')"
             },
             {
-              "path": "Plans/memory_maintenance_event_fixtures.json",
-              "unit": "#/cases",
-              "line_start": 17671,
-              "line_end": 17671,
-              "quote": "\"name\": \"memory.verification_sweep.started:completed-missing-original-start\","
+              "path": "scripts/pm_memory_c12_selftest.py",
+              "line_start": 103,
+              "line_end": 103,
+              "quote": "results.append({'case': '4400-digit-integer-at-complete-writer', 'result': 'exact_storage_uint64_refusal'})"
             },
             {
-              "path": "Plans/storage-plan.md",
-              "unit": "SP-637",
-              "quote": "Start custody gate for exactly memory.verification_sweep.started@1.0.0, newly authored owner contract (DMEM fix round 4)",
-              "line_start": 30171,
-              "line_end": 30171
+              "path": "scripts/pm_memory_c12_entailments.py",
+              "line_start": 104,
+              "line_end": 104,
+              "quote": "assert len(records) == 26 and len({r['row'] for r in records}) == 26"
             },
             {
-              "path": "Plans/Automated_Testing_System.md",
-              "unit": "ATS-315",
-              "quote": "Start custody gate oracle (fix round 4) for SP-630 to SP-637: the checker has one start_custody_gate and applies it at the commit point",
-              "line_start": 7259,
-              "line_end": 7259
+              "path": "scripts/pm_memory_guard_witnesses.py",
+              "line_start": 420,
+              "line_end": 420,
+              "quote": "add('checkpoint-application-scope', 'ck_scope', 'CK08_scope_kind', join,"
             },
             {
-              "path": "Plans/Automated_Testing_System.md",
-              "unit": "ATS-315",
-              "quote": "reference_cases checks standing check 9: before any instance validation the checker walks every subschema",
-              "line_start": 7267,
-              "line_end": 7267
-            },
-            {
-              "path": "Plans/memory_maintenance_event_fixtures.json",
-              "unit": "#/start_custody_matrix",
-              "quote": "\"name\": \"memory.verification_sweep.started:phase:advance_completed@terminal_saved\",",
-              "line_start": 124922,
-              "line_end": 124922
-            },
-            {
-              "path": "Plans/memory_maintenance_event_fixtures.json",
-              "unit": "#/history_families",
-              "quote": "\"name\": \"memory.verification_sweep.started:history-withdrawn\",",
-              "line_start": 129296,
-              "line_end": 129296
-            },
-            {
-              "path": "Plans/memory_maintenance_event_fixtures.json",
-              "unit": "#/reference_cases",
-              "quote": "\"name\": \"memory.verification_sweep.started:standing9-dormant-missing-ref\",",
-              "line_start": 130721,
-              "line_end": 130721
-            },
-            {
-              "path": "scripts/pm_memory_maintenance_events.py",
-              "unit": "start_custody_gate",
-              "quote": "def start_custody_gate(state, first_start=False, writer_event=None, canonical_history=False):",
-              "line_start": 718,
-              "line_end": 718
-            },
-            {
-              "path": "scripts/pm_memory_maintenance_events.py",
-              "unit": "transition",
-              "quote": "start_custody_gate(before, first_start=action['op'] == 'append_started')",
-              "line_start": 1244,
-              "line_end": 1244
-            },
-            {
-              "path": "scripts/pm_memory_maintenance_events.py",
-              "unit": "main",
-              "quote": "mirrors = require_resolved_references()",
-              "line_start": 1934,
-              "line_end": 1934
-            },
-            {
-              "path": "Plans/memory_canonical_history_fixtures.json",
-              "unit": "#/canonical_history_families",
-              "quote": "\"name\": \"memory.verification_sweep.started:compatibility-replay-only\",",
-              "line_start": 36981,
-              "line_end": 36981
-            },
-            {
-              "path": "Plans/memory_canonical_history_fixtures.json",
-              "unit": "#/canonical_history_families",
-              "quote": "\"name\": \"memory.verification_sweep.started:foreign-project-compatibility_replay\",",
-              "line_start": 39398,
-              "line_end": 39398
-            },
-            {
-              "path": "Plans/memory_canonical_history_fixtures.json",
-              "unit": "#/canonical_history_families",
-              "quote": "\"name\": \"memory.verification_sweep.started:numeric-spelling-commitment-1e0\",",
-              "line_start": 38663,
-              "line_end": 38663
-            },
-            {
-              "path": "scripts/pm_memory_maintenance_events.py",
-              "unit": "read_canonical_history",
-              "quote": "def read_canonical_history(before, event):",
-              "line_start": 1422,
-              "line_end": 1422
-            },
-            {
-              "path": "scripts/pm_memory_maintenance_events.py",
-              "unit": "json_numbers",
-              "quote": "def json_numbers(text):",
-              "line_start": 181,
-              "line_end": 181
-            },
-            {
-              "path": "scripts/pm_memory_maintenance_events.py",
-              "unit": "flag",
-              "quote": "return type(value) is bool and value is expected",
-              "line_start": 280,
-              "line_end": 280
-            },
-            {
-              "path": "scripts/pm_memory_boundary_domains.py",
-              "unit": "domain_cases",
-              "quote": "def domain_cases(m, contexts, boundaries, archive=None):",
-              "line_start": 12,
-              "line_end": 12
-            },
-            {
-              "path": "Plans/memory_maintenance_boundary_fixtures.json",
-              "unit": "#/families",
-              "quote": "\"memory.verification_sweep.started\"",
-              "line_start": 16,
-              "line_end": 16
-            },
-            {
-              "path": "Plans/storage-plan.md",
-              "unit": "SP-637",
-              "line_start": 30061,
-              "line_end": 30061,
-              "quote": "Historical originals instead use their frozen write-time recipe integer-json-v1"
-            },
-            {
-              "path": "Plans/storage-plan.md",
-              "unit": "SP-637",
-              "quote": "Storage sequence_id independently adopts SP-236 exact uint64, 0 through 18446744073709551615 inclusive, with exact integer type",
-              "line_start": 30061,
-              "line_end": 30061
-            },
-            {
-              "path": "scripts/pm_memory_storage_metadata.py",
-              "unit": "run",
-              "quote": "def run(m, contexts):",
-              "line_start": 48,
-              "line_end": 48
-            },
-            {
-              "path": "Plans/Automated_Testing_System.md",
-              "unit": "ATS-315",
-              "quote": "Round-11 preservation checks compare exact primitive types before values recursively",
-              "line_start": 7271,
-              "line_end": 7271
-            },
-            {
-              "path": "Plans/Automated_Testing_System.md",
-              "unit": "ATS-315",
-              "quote": "Minimum group size, unique IDs and original existence are separate guard-table rows",
-              "line_start": 7271,
-              "line_end": 7271
-            },
-            {
-              "path": "Plans/Automated_Testing_System.md",
-              "line_start": 7261,
-              "line_end": 7261,
-              "quote": "Standing check 11 (sweep part 2A, Method B guard tables)"
-            },
-            {
-              "path": "scripts/pm_memory_maintenance_events.py",
-              "line_start": 96,
-              "line_end": 96,
-              "quote": "def table_refusal(phase, facts):"
-            },
-            {
-              "path": "scripts/pm-memory-guard-tables.py",
-              "line_start": 10,
-              "line_end": 10,
-              "quote": "Credit is copied from the tool"
-            },
-            {
-              "path": "Plans/storage-plan.md",
-              "unit": "SP-637",
-              "line_start": 30175,
-              "line_end": 30175,
-              "quote": "Every declared date-time format is enforced by the shared CV-1101 predicate"
+              "path": "Plans/assistant-memory-subsystem.md",
+              "line_start": 1726,
+              "line_end": 1726,
+              "quote": "workbench or button is planned.",
+              "unit": "AMS-023"
             }
           ],
           "prior": {
-            "source": "sweep part 1 self-grade at 1abebee498",
-            "status": "PASS"
+            "source": "origin/main 7cf56368356da2b7a5ff25f6452cf753ce36bf45 DMEM-self-grade.json",
+            "status": "PARTIAL"
           },
-          "change": "carried",
-          "change_reason": "Sweep part 2B closes two of the three PARTIAL reasons (SP-1101 dispatch, interim timestamp review); the schema-keyword-cut reason remains, so the cell stays PARTIAL."
+          "change": "upgraded",
+          "change_reason": "The remaining schema-verdict limitation is closed by the source-bound whole-definition route explicitly allowed by C12 scope; no per-keyword independence claim. Existing entry points and owner schemas are preserved.",
+          "assessed_tree": {
+            "branch": "plans/ea-pnc-c12-dmem-20261114",
+            "implementation_commit": "232d40bba3d9e063c8ad860806ab17f866c43c9c",
+            "base": "7cf56368356da2b7a5ff25f6452cf753ce36bf45"
+          },
+          "evidence_bundle": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/c12-dmem/closure/memory.verification_sweep.started.coverage.json"
         }
       },
       "remaining_gaps": [
@@ -5300,7 +3903,6 @@
         "RT must resolve event/operation and rebuild selector/target retention.",
         "Native custody/atomicity/filesystem crash/backup/read-race obligations remain NOT_RUN; static success is not native proof.",
         "Independent review, separate per-family admission and unresolved operation/result retention still fence activation; Card 6 supplies no no-project writer permission.",
-        "JSON Schema keyword and format cuts are not ported to the shared guard tool; each schema occurrence is one verdict row.",
         "The shared date-time inventory and datetime_validator run at batch-2 integration (SWEEP-P2B Addendum 2); in this lane tree the inventory gate refuses on hash drift only."
       ],
       "static_checks_seen": [
@@ -5335,7 +3937,7 @@
           "quote": "negatives, unavailable buttons and guard-removal proof. Native execution is NOT_RUN. Membership is ABSENT; no"
         }
       ],
-      "pass_count": 9,
+      "pass_count": 10,
       "normative_depth_complete": false,
       "native_execution": "NOT_RUN",
       "assessed_tree": {
@@ -5602,217 +4204,80 @@
           "change_reason": "Sweep part 2B (S3) replaces record-selected edition dispatch with SP-1101 custody selection; the grade is carried with the new evidence."
         },
         "positive_negative_oracles": {
-          "status": "PARTIAL",
+          "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Exact-family checkers pass (12/12) with lifecycle/custody/history, CV-1101 date-time profile battery, full uint64, Card 6 policy and policy-instant, SP-1101 custody, guard-table witness and shared-number-corpus suites. Check 11 is Method B: every refusal is one row of a generated phase table and the gated shared tool proves 289 of 316 rows; the 27 unproved rows are each decided first by a named earlier row or schema (listed in the report). The timestamp review is no longer interim: every timestamp field is checked by the shared CV-1101 predicate with its owner profile. PARTIAL because each JSON Schema occurrence is one verdict row (per-keyword and format cuts are not ported to the shared tool). Native NOT_RUN.",
+          "finding": "C12 static executable oracles complete under the W3H whole-definition Method B route. Complete owner definitions and reference branches retain every keyword; 96 exact-family schema sites have authored controls, exact schema-row/code mutations, cuts and restoration, with pin-bound shared reuse. Gated tool 004bdedd63 proves 290/316 real predicates in 191 tables; 26 checked implications each occupy a singleton table. CK08 has an independent sealed Application-scope witness on every family. Full original exact-family routes, 111 applicable number-corpus cases per family, all local date-time declarations/profiles and exact policy instants pass. Retained reads have actual custody-store snapshots and no writes. Global shared date-time gate remains NOT_RUN_ADMISSION_REFUSED on the absent mainline migration citation; no global PASS or native/admission proof is claimed.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-638",
-              "line_start": 30305,
-              "line_end": 30305,
-              "quote": "alias or migration by resemblance. Oracles are ATS-316 and scripts/pm_memory_archive_events.py, including positive"
-            },
-            {
-              "path": "Plans/memory_canonical_history_fixtures.json",
-              "unit": "#/canonical_history_families",
-              "quote": "\"name\": \"memory.monthly_summary.completed:compatibility-replay-only\",",
-              "line_start": 42083,
-              "line_end": 42083
-            },
-            {
-              "path": "Plans/memory_canonical_history_fixtures.json",
-              "unit": "#/canonical_history_families",
-              "quote": "\"name\": \"memory.monthly_summary.completed:foreign-project-compatibility_replay\",",
-              "line_start": 44724,
-              "line_end": 44724
-            },
-            {
-              "path": "Plans/memory_canonical_history_fixtures.json",
-              "unit": "#/canonical_history_families",
-              "quote": "\"name\": \"memory.monthly_summary.completed:numeric-spelling-commitment-1e0\",",
-              "line_start": 43926,
-              "line_end": 43926
-            },
-            {
-              "path": "scripts/pm_memory_maintenance_events.py",
-              "unit": "read_canonical_history",
-              "quote": "def read_canonical_history(before, event):",
-              "line_start": 1422,
-              "line_end": 1422
-            },
-            {
-              "path": "Plans/memory_archive_event_fixtures.json",
-              "unit": "#/guard_cases",
-              "quote": "\"name\": \"memory.monthly_summary.completed:cutoff-self-reference\",",
-              "line_start": 107937,
-              "line_end": 107937
-            },
-            {
-              "path": "Plans/memory_archive_event_fixtures.json",
-              "unit": "#/guard_cases",
-              "quote": "\"name\": \"memory.monthly_summary.completed:cutoff-duplicate-reference\",",
-              "line_start": 108126,
-              "line_end": 108126
-            },
-            {
-              "path": "Plans/memory_archive_event_fixtures.json",
-              "unit": "#/guard_cases",
-              "quote": "\"name\": \"memory.monthly_summary.completed:selected-rewrite-kind\",",
-              "line_start": 108296,
-              "line_end": 108296
-            },
-            {
-              "path": "Plans/memory_archive_event_fixtures.json",
-              "unit": "#/guard_cases",
-              "quote": "\"name\": \"memory.monthly_summary.completed:selected-rewrite-pinned\",",
-              "line_start": 108474,
-              "line_end": 108474
-            },
-            {
-              "path": "scripts/pm_memory_maintenance_events.py",
-              "unit": "json_numbers",
-              "quote": "def json_numbers(text):",
-              "line_start": 181,
-              "line_end": 181
-            },
-            {
-              "path": "scripts/pm_memory_maintenance_events.py",
-              "unit": "flag",
-              "quote": "return type(value) is bool and value is expected",
-              "line_start": 280,
-              "line_end": 280
-            },
-            {
-              "path": "scripts/pm_memory_boundary_domains.py",
-              "unit": "domain_cases",
-              "quote": "def domain_cases(m, contexts, boundaries, archive=None):",
-              "line_start": 12,
-              "line_end": 12
-            },
-            {
-              "path": "Plans/memory_maintenance_boundary_fixtures.json",
-              "unit": "#/families",
-              "quote": "\"memory.monthly_summary.completed\"",
-              "line_start": 11,
-              "line_end": 11
-            },
-            {
-              "path": "scripts/pm_memory_archive_events.py",
-              "unit": "memory_flags",
-              "quote": "before_flags = memory_flags(before['memories'])",
-              "line_start": 138,
-              "line_end": 138
+              "line_start": 39623,
+              "line_end": 39623,
+              "quote": "canonical_text: 'Newly authored owner contract under DL-045 for exactly memory.monthly_summary.completed@1.0.0,"
             },
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-638",
-              "line_start": 30175,
-              "line_end": 30175,
-              "quote": "Historical originals instead use their frozen write-time recipe integer-json-v1"
+              "line_start": 39623,
+              "line_end": 39623,
+              "quote": "canonical_text: 'Newly authored owner contract under DL-045 for exactly memory.monthly_summary.completed@1.0.0,"
             },
             {
-              "path": "Plans/storage-plan.md",
-              "unit": "SP-638",
-              "quote": "Storage sequence_id independently adopts SP-236 exact uint64, 0 through 18446744073709551615 inclusive, with exact integer type",
-              "line_start": 30175,
-              "line_end": 30175
+              "path": "scripts/pm_memory_c12.py",
+              "line_start": 111,
+              "line_end": 111,
+              "quote": "def schema_closure(m, path, definition):"
             },
             {
-              "path": "scripts/pm_memory_storage_metadata.py",
-              "unit": "run",
-              "quote": "def run(m, contexts):",
-              "line_start": 48,
-              "line_end": 48
+              "path": "scripts/pm_memory_c12.py",
+              "line_start": 338,
+              "line_end": 338,
+              "quote": "killed=baseline == expected and cut == ['accepted'] and restored == expected,"
             },
             {
-              "path": "Plans/storage-plan.md",
-              "unit": "SP-638",
-              "line_start": 30272,
-              "line_end": 30272,
-              "quote": "DL-446 answers DL-403 for this exact job"
+              "path": "scripts/pm_memory_c12.py",
+              "line_start": 402,
+              "line_end": 402,
+              "quote": "assert before == after and state == caller, (event, mode, defect, 'read changed custody/caller')"
             },
             {
-              "path": "scripts/pm_memory_policy.py",
-              "unit": "run",
-              "line_start": 312,
-              "line_end": 312,
-              "quote": "def run(core, families, archive=None):"
+              "path": "scripts/pm_memory_c12_selftest.py",
+              "line_start": 103,
+              "line_end": 103,
+              "quote": "results.append({'case': '4400-digit-integer-at-complete-writer', 'result': 'exact_storage_uint64_refusal'})"
             },
             {
-              "path": "Plans/memory_card6_policy_fixtures.json",
-              "unit": "#/cases",
-              "line_start": 231,
-              "line_end": 231,
-              "quote": "\"name\": \"monthly_summary:score-at-threshold\","
+              "path": "scripts/pm_memory_c12_entailments.py",
+              "line_start": 104,
+              "line_end": 104,
+              "quote": "assert len(records) == 26 and len({r['row'] for r in records}) == 26"
             },
             {
-              "path": "Plans/Automated_Testing_System.md",
-              "unit": "ATS-316",
-              "quote": "Round-11 preservation checks compare exact primitive types before values recursively",
-              "line_start": 7330,
-              "line_end": 7330
+              "path": "scripts/pm_memory_guard_witnesses.py",
+              "line_start": 420,
+              "line_end": 420,
+              "quote": "add('checkpoint-application-scope', 'ck_scope', 'CK08_scope_kind', join,"
             },
             {
-              "path": "Plans/Automated_Testing_System.md",
-              "unit": "ATS-316",
-              "quote": "Minimum group size, unique IDs and original existence are separate guard-table rows",
-              "line_start": 7330,
-              "line_end": 7330
-            },
-            {
-              "path": "scripts/pm_memory_policy.py",
-              "unit": "same",
-              "quote": "if type(left) is not type(right):",
-              "line_start": 24,
-              "line_end": 24
-            },
-            {
-              "path": "scripts/pm_memory_policy.py",
-              "unit": "instant",
-              "quote": "return seconds + Fraction(Decimal('0.' + fraction)) if fraction else Fraction(seconds)",
-              "line_start": 69,
-              "line_end": 69
-            },
-            {
-              "path": "Plans/memory_card6_policy_fixtures.json",
-              "unit": "#/cases",
-              "quote": "\"name\": \"monthly_summary:fix11-age-updated_at-40digits-late\",",
-              "line_start": 26211,
-              "line_end": 26211
-            },
-            {
-              "path": "Plans/Automated_Testing_System.md",
-              "line_start": 7261,
-              "line_end": 7261,
-              "quote": "Standing check 11 (sweep part 2A, Method B guard tables)"
-            },
-            {
-              "path": "scripts/pm_memory_maintenance_events.py",
-              "line_start": 96,
-              "line_end": 96,
-              "quote": "def table_refusal(phase, facts):"
-            },
-            {
-              "path": "scripts/pm-memory-guard-tables.py",
-              "line_start": 10,
-              "line_end": 10,
-              "quote": "Credit is copied from the tool"
-            },
-            {
-              "path": "Plans/storage-plan.md",
-              "unit": "SP-638",
-              "line_start": 30314,
-              "line_end": 30314,
-              "quote": "Every declared date-time format is enforced by the shared CV-1101 predicate"
+              "path": "Plans/assistant-memory-subsystem.md",
+              "line_start": 1726,
+              "line_end": 1726,
+              "quote": "workbench or button is planned.",
+              "unit": "AMS-023"
             }
           ],
           "prior": {
-            "source": "sweep part 1 self-grade at 1abebee498",
-            "status": "PASS"
+            "source": "origin/main 7cf56368356da2b7a5ff25f6452cf753ce36bf45 DMEM-self-grade.json",
+            "status": "PARTIAL"
           },
-          "change": "carried",
-          "change_reason": "Sweep part 2B closes two of the three PARTIAL reasons (SP-1101 dispatch, interim timestamp review); the schema-keyword-cut reason remains, so the cell stays PARTIAL."
+          "change": "upgraded",
+          "change_reason": "The remaining schema-verdict limitation is closed by the source-bound whole-definition route explicitly allowed by C12 scope; no per-keyword independence claim. Existing entry points and owner schemas are preserved.",
+          "assessed_tree": {
+            "branch": "plans/ea-pnc-c12-dmem-20261114",
+            "implementation_commit": "232d40bba3d9e063c8ad860806ab17f866c43c9c",
+            "base": "7cf56368356da2b7a5ff25f6452cf753ce36bf45"
+          },
+          "evidence_bundle": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/c12-dmem/closure/memory.monthly_summary.completed.coverage.json"
         }
       },
       "remaining_gaps": [
@@ -5820,7 +4285,6 @@
         "Canonical operation/result custody retention is PENDING_RETENTION_DECISION.",
         "Native receipt/transaction/flush/crash/GUI proof remains NOT_RUN.",
         "Independent review, separate per-family admission and unresolved operation/result retention still fence activation; Card 6 supplies no no-project writer permission.",
-        "JSON Schema keyword and format cuts are not ported to the shared guard tool; each schema occurrence is one verdict row.",
         "The shared date-time inventory and datetime_validator run at batch-2 integration (SWEEP-P2B Addendum 2); in this lane tree the inventory gate refuses on hash drift only."
       ],
       "static_checks_seen": [
@@ -5852,7 +4316,7 @@
           "quote": "negatives, unavailable buttons and guard-removal proof. Native execution is NOT_RUN. Membership is ABSENT; no"
         }
       ],
-      "pass_count": 9,
+      "pass_count": 10,
       "normative_depth_complete": false,
       "native_execution": "NOT_RUN",
       "assessed_tree": {
@@ -6119,217 +4583,80 @@
           "change_reason": "Sweep part 2B (S3) replaces record-selected edition dispatch with SP-1101 custody selection; the grade is carried with the new evidence."
         },
         "positive_negative_oracles": {
-          "status": "PARTIAL",
+          "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Exact-family checkers pass (12/12) with lifecycle/custody/history, CV-1101 date-time profile battery, full uint64, Card 6 policy and policy-instant, SP-1101 custody, guard-table witness and shared-number-corpus suites. Check 11 is Method B: every refusal is one row of a generated phase table and the gated shared tool proves 289 of 316 rows; the 27 unproved rows are each decided first by a named earlier row or schema (listed in the report). The timestamp review is no longer interim: every timestamp field is checked by the shared CV-1101 predicate with its owner profile. PARTIAL because each JSON Schema occurrence is one verdict row (per-keyword and format cuts are not ported to the shared tool). Native NOT_RUN.",
+          "finding": "C12 static executable oracles complete under the W3H whole-definition Method B route. Complete owner definitions and reference branches retain every keyword; 96 exact-family schema sites have authored controls, exact schema-row/code mutations, cuts and restoration, with pin-bound shared reuse. Gated tool 004bdedd63 proves 290/316 real predicates in 191 tables; 26 checked implications each occupy a singleton table. CK08 has an independent sealed Application-scope witness on every family. Full original exact-family routes, 111 applicable number-corpus cases per family, all local date-time declarations/profiles and exact policy instants pass. Retained reads have actual custody-store snapshots and no writes. Global shared date-time gate remains NOT_RUN_ADMISSION_REFUSED on the absent mainline migration citation; no global PASS or native/admission proof is claimed.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-639",
-              "line_start": 30305,
-              "line_end": 30305,
-              "quote": "alias or migration by resemblance. Oracles are ATS-316 and scripts/pm_memory_archive_events.py, including positive"
-            },
-            {
-              "path": "Plans/memory_canonical_history_fixtures.json",
-              "unit": "#/canonical_history_families",
-              "quote": "\"name\": \"memory.monthly_summary.started:compatibility-replay-only\",",
-              "line_start": 47572,
-              "line_end": 47572
-            },
-            {
-              "path": "Plans/memory_canonical_history_fixtures.json",
-              "unit": "#/canonical_history_families",
-              "quote": "\"name\": \"memory.monthly_summary.started:foreign-project-compatibility_replay\",",
-              "line_start": 50085,
-              "line_end": 50085
-            },
-            {
-              "path": "Plans/memory_canonical_history_fixtures.json",
-              "unit": "#/canonical_history_families",
-              "quote": "\"name\": \"memory.monthly_summary.started:numeric-spelling-commitment-1e0\",",
-              "line_start": 49323,
-              "line_end": 49323
-            },
-            {
-              "path": "scripts/pm_memory_maintenance_events.py",
-              "unit": "read_canonical_history",
-              "quote": "def read_canonical_history(before, event):",
-              "line_start": 1422,
-              "line_end": 1422
-            },
-            {
-              "path": "Plans/memory_archive_event_fixtures.json",
-              "unit": "#/guard_cases",
-              "quote": "\"name\": \"memory.monthly_summary.started:cutoff-self-reference\",",
-              "line_start": 108831,
-              "line_end": 108831
-            },
-            {
-              "path": "Plans/memory_archive_event_fixtures.json",
-              "unit": "#/guard_cases",
-              "quote": "\"name\": \"memory.monthly_summary.started:cutoff-duplicate-reference\",",
-              "line_start": 109020,
-              "line_end": 109020
-            },
-            {
-              "path": "Plans/memory_archive_event_fixtures.json",
-              "unit": "#/guard_cases",
-              "quote": "\"name\": \"memory.monthly_summary.started:selected-rewrite-kind\",",
-              "line_start": 109190,
-              "line_end": 109190
-            },
-            {
-              "path": "Plans/memory_archive_event_fixtures.json",
-              "unit": "#/guard_cases",
-              "quote": "\"name\": \"memory.monthly_summary.started:selected-rewrite-pinned\",",
-              "line_start": 109368,
-              "line_end": 109368
-            },
-            {
-              "path": "scripts/pm_memory_maintenance_events.py",
-              "unit": "json_numbers",
-              "quote": "def json_numbers(text):",
-              "line_start": 181,
-              "line_end": 181
-            },
-            {
-              "path": "scripts/pm_memory_maintenance_events.py",
-              "unit": "flag",
-              "quote": "return type(value) is bool and value is expected",
-              "line_start": 280,
-              "line_end": 280
-            },
-            {
-              "path": "scripts/pm_memory_boundary_domains.py",
-              "unit": "domain_cases",
-              "quote": "def domain_cases(m, contexts, boundaries, archive=None):",
-              "line_start": 12,
-              "line_end": 12
-            },
-            {
-              "path": "Plans/memory_maintenance_boundary_fixtures.json",
-              "unit": "#/families",
-              "quote": "\"memory.monthly_summary.started\"",
-              "line_start": 12,
-              "line_end": 12
-            },
-            {
-              "path": "scripts/pm_memory_archive_events.py",
-              "unit": "memory_flags",
-              "quote": "before_flags = memory_flags(before['memories'])",
-              "line_start": 138,
-              "line_end": 138
+              "line_start": 39769,
+              "line_end": 39769,
+              "quote": "canonical_text: 'Newly authored owner contract under DL-045 for exactly memory.monthly_summary.started@1.0.0, prepared"
             },
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-639",
-              "line_start": 30314,
-              "line_end": 30314,
-              "quote": "Historical originals instead use their frozen write-time recipe integer-json-v1"
+              "line_start": 39769,
+              "line_end": 39769,
+              "quote": "canonical_text: 'Newly authored owner contract under DL-045 for exactly memory.monthly_summary.started@1.0.0, prepared"
             },
             {
-              "path": "Plans/storage-plan.md",
-              "unit": "SP-639",
-              "quote": "Storage sequence_id independently adopts SP-236 exact uint64, 0 through 18446744073709551615 inclusive, with exact integer type",
-              "line_start": 30314,
-              "line_end": 30314
+              "path": "scripts/pm_memory_c12.py",
+              "line_start": 111,
+              "line_end": 111,
+              "quote": "def schema_closure(m, path, definition):"
             },
             {
-              "path": "scripts/pm_memory_storage_metadata.py",
-              "unit": "run",
-              "quote": "def run(m, contexts):",
-              "line_start": 48,
-              "line_end": 48
+              "path": "scripts/pm_memory_c12.py",
+              "line_start": 338,
+              "line_end": 338,
+              "quote": "killed=baseline == expected and cut == ['accepted'] and restored == expected,"
             },
             {
-              "path": "Plans/storage-plan.md",
-              "unit": "SP-639",
-              "line_start": 30272,
-              "line_end": 30272,
-              "quote": "DL-446 answers DL-403 for this exact job"
+              "path": "scripts/pm_memory_c12.py",
+              "line_start": 402,
+              "line_end": 402,
+              "quote": "assert before == after and state == caller, (event, mode, defect, 'read changed custody/caller')"
             },
             {
-              "path": "scripts/pm_memory_policy.py",
-              "unit": "run",
-              "line_start": 312,
-              "line_end": 312,
-              "quote": "def run(core, families, archive=None):"
+              "path": "scripts/pm_memory_c12_selftest.py",
+              "line_start": 103,
+              "line_end": 103,
+              "quote": "results.append({'case': '4400-digit-integer-at-complete-writer', 'result': 'exact_storage_uint64_refusal'})"
             },
             {
-              "path": "Plans/memory_card6_policy_fixtures.json",
-              "unit": "#/cases",
-              "line_start": 231,
-              "line_end": 231,
-              "quote": "\"name\": \"monthly_summary:score-at-threshold\","
+              "path": "scripts/pm_memory_c12_entailments.py",
+              "line_start": 104,
+              "line_end": 104,
+              "quote": "assert len(records) == 26 and len({r['row'] for r in records}) == 26"
             },
             {
-              "path": "Plans/Automated_Testing_System.md",
-              "unit": "ATS-316",
-              "quote": "Round-11 preservation checks compare exact primitive types before values recursively",
-              "line_start": 7330,
-              "line_end": 7330
+              "path": "scripts/pm_memory_guard_witnesses.py",
+              "line_start": 420,
+              "line_end": 420,
+              "quote": "add('checkpoint-application-scope', 'ck_scope', 'CK08_scope_kind', join,"
             },
             {
-              "path": "Plans/Automated_Testing_System.md",
-              "unit": "ATS-316",
-              "quote": "Minimum group size, unique IDs and original existence are separate guard-table rows",
-              "line_start": 7330,
-              "line_end": 7330
-            },
-            {
-              "path": "scripts/pm_memory_policy.py",
-              "unit": "same",
-              "quote": "if type(left) is not type(right):",
-              "line_start": 24,
-              "line_end": 24
-            },
-            {
-              "path": "scripts/pm_memory_policy.py",
-              "unit": "instant",
-              "quote": "return seconds + Fraction(Decimal('0.' + fraction)) if fraction else Fraction(seconds)",
-              "line_start": 69,
-              "line_end": 69
-            },
-            {
-              "path": "Plans/memory_card6_policy_fixtures.json",
-              "unit": "#/cases",
-              "quote": "\"name\": \"monthly_summary:fix11-age-updated_at-40digits-late\",",
-              "line_start": 26211,
-              "line_end": 26211
-            },
-            {
-              "path": "Plans/Automated_Testing_System.md",
-              "line_start": 7261,
-              "line_end": 7261,
-              "quote": "Standing check 11 (sweep part 2A, Method B guard tables)"
-            },
-            {
-              "path": "scripts/pm_memory_maintenance_events.py",
-              "line_start": 96,
-              "line_end": 96,
-              "quote": "def table_refusal(phase, facts):"
-            },
-            {
-              "path": "scripts/pm-memory-guard-tables.py",
-              "line_start": 10,
-              "line_end": 10,
-              "quote": "Credit is copied from the tool"
-            },
-            {
-              "path": "Plans/storage-plan.md",
-              "unit": "SP-639",
-              "line_start": 30460,
-              "line_end": 30460,
-              "quote": "Every declared date-time format is enforced by the shared CV-1101 predicate"
+              "path": "Plans/assistant-memory-subsystem.md",
+              "line_start": 1726,
+              "line_end": 1726,
+              "quote": "workbench or button is planned.",
+              "unit": "AMS-023"
             }
           ],
           "prior": {
-            "source": "sweep part 1 self-grade at 1abebee498",
-            "status": "PASS"
+            "source": "origin/main 7cf56368356da2b7a5ff25f6452cf753ce36bf45 DMEM-self-grade.json",
+            "status": "PARTIAL"
           },
-          "change": "carried",
-          "change_reason": "Sweep part 2B closes two of the three PARTIAL reasons (SP-1101 dispatch, interim timestamp review); the schema-keyword-cut reason remains, so the cell stays PARTIAL."
+          "change": "upgraded",
+          "change_reason": "The remaining schema-verdict limitation is closed by the source-bound whole-definition route explicitly allowed by C12 scope; no per-keyword independence claim. Existing entry points and owner schemas are preserved.",
+          "assessed_tree": {
+            "branch": "plans/ea-pnc-c12-dmem-20261114",
+            "implementation_commit": "232d40bba3d9e063c8ad860806ab17f866c43c9c",
+            "base": "7cf56368356da2b7a5ff25f6452cf753ce36bf45"
+          },
+          "evidence_bundle": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/c12-dmem/closure/memory.monthly_summary.started.coverage.json"
         }
       },
       "remaining_gaps": [
@@ -6337,7 +4664,6 @@
         "Canonical operation/result custody retention is PENDING_RETENTION_DECISION.",
         "Native receipt/transaction/flush/crash/GUI proof remains NOT_RUN.",
         "Independent review, separate per-family admission and unresolved operation/result retention still fence activation; Card 6 supplies no no-project writer permission.",
-        "JSON Schema keyword and format cuts are not ported to the shared guard tool; each schema occurrence is one verdict row.",
         "The shared date-time inventory and datetime_validator run at batch-2 integration (SWEEP-P2B Addendum 2); in this lane tree the inventory gate refuses on hash drift only."
       ],
       "static_checks_seen": [
@@ -6369,7 +4695,7 @@
           "quote": "negatives, unavailable buttons and guard-removal proof. Native execution is NOT_RUN. Membership is ABSENT; no"
         }
       ],
-      "pass_count": 9,
+      "pass_count": 10,
       "normative_depth_complete": false,
       "native_execution": "NOT_RUN",
       "assessed_tree": {
@@ -6636,217 +4962,80 @@
           "change_reason": "Sweep part 2B (S3) replaces record-selected edition dispatch with SP-1101 custody selection; the grade is carried with the new evidence."
         },
         "positive_negative_oracles": {
-          "status": "PARTIAL",
+          "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Exact-family checkers pass (12/12) with lifecycle/custody/history, CV-1101 date-time profile battery, full uint64, Card 6 policy and policy-instant, SP-1101 custody, guard-table witness and shared-number-corpus suites. Check 11 is Method B: every refusal is one row of a generated phase table and the gated shared tool proves 289 of 316 rows; the 27 unproved rows are each decided first by a named earlier row or schema (listed in the report). The timestamp review is no longer interim: every timestamp field is checked by the shared CV-1101 predicate with its owner profile. PARTIAL because each JSON Schema occurrence is one verdict row (per-keyword and format cuts are not ported to the shared tool). Native NOT_RUN.",
+          "finding": "C12 static executable oracles complete under the W3H whole-definition Method B route. Complete owner definitions and reference branches retain every keyword; 96 exact-family schema sites have authored controls, exact schema-row/code mutations, cuts and restoration, with pin-bound shared reuse. Gated tool 004bdedd63 proves 290/316 real predicates in 191 tables; 26 checked implications each occupy a singleton table. CK08 has an independent sealed Application-scope witness on every family. Full original exact-family routes, 111 applicable number-corpus cases per family, all local date-time declarations/profiles and exact policy instants pass. Retained reads have actual custody-store snapshots and no writes. Global shared date-time gate remains NOT_RUN_ADMISSION_REFUSED on the absent mainline migration citation; no global PASS or native/admission proof is claimed.",
           "evidence": [
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-658",
-              "line_start": 25076,
-              "line_end": 25076,
-              "quote": "alias or migration by resemblance. Oracles are ATS-316 and scripts/pm_memory_archive_events.py, including positive"
-            },
-            {
-              "path": "Plans/memory_canonical_history_fixtures.json",
-              "unit": "#/canonical_history_families",
-              "quote": "\"name\": \"memory.prune_archive.completed:compatibility-replay-only\",",
-              "line_start": 52794,
-              "line_end": 52794
-            },
-            {
-              "path": "Plans/memory_canonical_history_fixtures.json",
-              "unit": "#/canonical_history_families",
-              "quote": "\"name\": \"memory.prune_archive.completed:foreign-project-compatibility_replay\",",
-              "line_start": 55403,
-              "line_end": 55403
-            },
-            {
-              "path": "Plans/memory_canonical_history_fixtures.json",
-              "unit": "#/canonical_history_families",
-              "quote": "\"name\": \"memory.prune_archive.completed:numeric-spelling-commitment-1e0\",",
-              "line_start": 54614,
-              "line_end": 54614
-            },
-            {
-              "path": "scripts/pm_memory_maintenance_events.py",
-              "unit": "read_canonical_history",
-              "quote": "def read_canonical_history(before, event):",
-              "line_start": 1422,
-              "line_end": 1422
-            },
-            {
-              "path": "Plans/memory_archive_event_fixtures.json",
-              "unit": "#/guard_cases",
-              "quote": "\"name\": \"memory.prune_archive.completed:cutoff-self-reference\",",
-              "line_start": 109725,
-              "line_end": 109725
-            },
-            {
-              "path": "Plans/memory_archive_event_fixtures.json",
-              "unit": "#/guard_cases",
-              "quote": "\"name\": \"memory.prune_archive.completed:cutoff-duplicate-reference\",",
-              "line_start": 109910,
-              "line_end": 109910
-            },
-            {
-              "path": "Plans/memory_archive_event_fixtures.json",
-              "unit": "#/guard_cases",
-              "quote": "\"name\": \"memory.prune_archive.completed:selected-rewrite-kind\",",
-              "line_start": 110077,
-              "line_end": 110077
-            },
-            {
-              "path": "Plans/memory_archive_event_fixtures.json",
-              "unit": "#/guard_cases",
-              "quote": "\"name\": \"memory.prune_archive.completed:selected-rewrite-pinned\",",
-              "line_start": 110239,
-              "line_end": 110239
-            },
-            {
-              "path": "scripts/pm_memory_maintenance_events.py",
-              "unit": "json_numbers",
-              "quote": "def json_numbers(text):",
-              "line_start": 181,
-              "line_end": 181
-            },
-            {
-              "path": "scripts/pm_memory_maintenance_events.py",
-              "unit": "flag",
-              "quote": "return type(value) is bool and value is expected",
-              "line_start": 280,
-              "line_end": 280
-            },
-            {
-              "path": "scripts/pm_memory_boundary_domains.py",
-              "unit": "domain_cases",
-              "quote": "def domain_cases(m, contexts, boundaries, archive=None):",
-              "line_start": 12,
-              "line_end": 12
-            },
-            {
-              "path": "Plans/memory_maintenance_boundary_fixtures.json",
-              "unit": "#/families",
-              "quote": "\"memory.prune_archive.completed\"",
-              "line_start": 13,
-              "line_end": 13
-            },
-            {
-              "path": "scripts/pm_memory_archive_events.py",
-              "unit": "memory_flags",
-              "quote": "before_flags = memory_flags(before['memories'])",
-              "line_start": 138,
-              "line_end": 138
+              "line_start": 35692,
+              "line_end": 35692,
+              "quote": "canonical_text: 'Newly authored owner contract under DL-045 for exactly memory.prune_archive.completed@1.0.0, prepared"
             },
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-658",
-              "line_start": 25083,
-              "line_end": 25083,
-              "quote": "Historical originals instead use their frozen write-time recipe integer-json-v1"
+              "line_start": 35692,
+              "line_end": 35692,
+              "quote": "canonical_text: 'Newly authored owner contract under DL-045 for exactly memory.prune_archive.completed@1.0.0, prepared"
             },
             {
-              "path": "Plans/Contracts_V0.md",
-              "unit": "CV-658",
-              "quote": "Storage sequence_id independently adopts SP-236 exact uint64, 0 through 18446744073709551615 inclusive, with exact integer type",
-              "line_start": 25083,
-              "line_end": 25083
+              "path": "scripts/pm_memory_c12.py",
+              "line_start": 111,
+              "line_end": 111,
+              "quote": "def schema_closure(m, path, definition):"
             },
             {
-              "path": "scripts/pm_memory_storage_metadata.py",
-              "unit": "run",
-              "quote": "def run(m, contexts):",
-              "line_start": 48,
-              "line_end": 48
+              "path": "scripts/pm_memory_c12.py",
+              "line_start": 338,
+              "line_end": 338,
+              "quote": "killed=baseline == expected and cut == ['accepted'] and restored == expected,"
             },
             {
-              "path": "Plans/Contracts_V0.md",
-              "unit": "CV-658",
-              "line_start": 25043,
-              "line_end": 25043,
-              "quote": "DL-447 answers DL-403 for this exact job"
+              "path": "scripts/pm_memory_c12.py",
+              "line_start": 402,
+              "line_end": 402,
+              "quote": "assert before == after and state == caller, (event, mode, defect, 'read changed custody/caller')"
             },
             {
-              "path": "scripts/pm_memory_policy.py",
-              "unit": "run",
-              "line_start": 312,
-              "line_end": 312,
-              "quote": "def run(core, families, archive=None):"
+              "path": "scripts/pm_memory_c12_selftest.py",
+              "line_start": 103,
+              "line_end": 103,
+              "quote": "results.append({'case': '4400-digit-integer-at-complete-writer', 'result': 'exact_storage_uint64_refusal'})"
             },
             {
-              "path": "Plans/memory_card6_policy_fixtures.json",
-              "unit": "#/cases",
-              "line_start": 2525,
-              "line_end": 2525,
-              "quote": "\"name\": \"prune_archive:score-at-threshold\","
+              "path": "scripts/pm_memory_c12_entailments.py",
+              "line_start": 104,
+              "line_end": 104,
+              "quote": "assert len(records) == 26 and len({r['row'] for r in records}) == 26"
             },
             {
-              "path": "Plans/Automated_Testing_System.md",
-              "unit": "ATS-316",
-              "quote": "Round-11 preservation checks compare exact primitive types before values recursively",
-              "line_start": 7330,
-              "line_end": 7330
+              "path": "scripts/pm_memory_guard_witnesses.py",
+              "line_start": 420,
+              "line_end": 420,
+              "quote": "add('checkpoint-application-scope', 'ck_scope', 'CK08_scope_kind', join,"
             },
             {
-              "path": "Plans/Automated_Testing_System.md",
-              "unit": "ATS-316",
-              "quote": "Minimum group size, unique IDs and original existence are separate guard-table rows",
-              "line_start": 7330,
-              "line_end": 7330
-            },
-            {
-              "path": "scripts/pm_memory_policy.py",
-              "unit": "same",
-              "quote": "if type(left) is not type(right):",
-              "line_start": 24,
-              "line_end": 24
-            },
-            {
-              "path": "scripts/pm_memory_policy.py",
-              "unit": "instant",
-              "quote": "return seconds + Fraction(Decimal('0.' + fraction)) if fraction else Fraction(seconds)",
-              "line_start": 69,
-              "line_end": 69
-            },
-            {
-              "path": "Plans/memory_card6_policy_fixtures.json",
-              "unit": "#/cases",
-              "quote": "\"name\": \"prune_archive:fix11-age-updated_at-40digits-late\",",
-              "line_start": 26811,
-              "line_end": 26811
-            },
-            {
-              "path": "Plans/Automated_Testing_System.md",
-              "line_start": 7261,
-              "line_end": 7261,
-              "quote": "Standing check 11 (sweep part 2A, Method B guard tables)"
-            },
-            {
-              "path": "scripts/pm_memory_maintenance_events.py",
-              "line_start": 96,
-              "line_end": 96,
-              "quote": "def table_refusal(phase, facts):"
-            },
-            {
-              "path": "scripts/pm-memory-guard-tables.py",
-              "line_start": 10,
-              "line_end": 10,
-              "quote": "Credit is copied from the tool"
-            },
-            {
-              "path": "Plans/storage-plan.md",
-              "unit": "SP-636",
-              "line_start": 30118,
-              "line_end": 30118,
-              "quote": "Every declared date-time format is enforced by the shared CV-1101 predicate"
+              "path": "Plans/assistant-memory-subsystem.md",
+              "line_start": 1726,
+              "line_end": 1726,
+              "quote": "workbench or button is planned.",
+              "unit": "AMS-023"
             }
           ],
           "prior": {
-            "source": "sweep part 1 self-grade at 1abebee498",
-            "status": "PASS"
+            "source": "origin/main 7cf56368356da2b7a5ff25f6452cf753ce36bf45 DMEM-self-grade.json",
+            "status": "PARTIAL"
           },
-          "change": "carried",
-          "change_reason": "Sweep part 2B closes two of the three PARTIAL reasons (SP-1101 dispatch, interim timestamp review); the schema-keyword-cut reason remains, so the cell stays PARTIAL."
+          "change": "upgraded",
+          "change_reason": "The remaining schema-verdict limitation is closed by the source-bound whole-definition route explicitly allowed by C12 scope; no per-keyword independence claim. Existing entry points and owner schemas are preserved.",
+          "assessed_tree": {
+            "branch": "plans/ea-pnc-c12-dmem-20261114",
+            "implementation_commit": "232d40bba3d9e063c8ad860806ab17f866c43c9c",
+            "base": "7cf56368356da2b7a5ff25f6452cf753ce36bf45"
+          },
+          "evidence_bundle": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/c12-dmem/closure/memory.prune_archive.completed.coverage.json"
         }
       },
       "remaining_gaps": [
@@ -6854,7 +5043,6 @@
         "Canonical operation/result custody retention is PENDING_RETENTION_DECISION.",
         "Native receipt/transaction/flush/crash/GUI proof remains NOT_RUN.",
         "Independent review, separate per-family admission and unresolved operation/result retention still fence activation; Card 6 supplies no no-project writer permission.",
-        "JSON Schema keyword and format cuts are not ported to the shared guard tool; each schema occurrence is one verdict row.",
         "The shared date-time inventory and datetime_validator run at batch-2 integration (SWEEP-P2B Addendum 2); in this lane tree the inventory gate refuses on hash drift only."
       ],
       "static_checks_seen": [
@@ -6886,7 +5074,7 @@
           "quote": "negatives, unavailable buttons and guard-removal proof. Native execution is NOT_RUN. Membership is ABSENT; no"
         }
       ],
-      "pass_count": 9,
+      "pass_count": 10,
       "normative_depth_complete": false,
       "native_execution": "NOT_RUN",
       "assessed_tree": {
@@ -7153,217 +5341,80 @@
           "change_reason": "Sweep part 2B (S3) replaces record-selected edition dispatch with SP-1101 custody selection; the grade is carried with the new evidence."
         },
         "positive_negative_oracles": {
-          "status": "PARTIAL",
+          "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Exact-family checkers pass (12/12) with lifecycle/custody/history, CV-1101 date-time profile battery, full uint64, Card 6 policy and policy-instant, SP-1101 custody, guard-table witness and shared-number-corpus suites. Check 11 is Method B: every refusal is one row of a generated phase table and the gated shared tool proves 289 of 316 rows; the 27 unproved rows are each decided first by a named earlier row or schema (listed in the report). The timestamp review is no longer interim: every timestamp field is checked by the shared CV-1101 predicate with its owner profile. PARTIAL because each JSON Schema occurrence is one verdict row (per-keyword and format cuts are not ported to the shared tool). Native NOT_RUN.",
+          "finding": "C12 static executable oracles complete under the W3H whole-definition Method B route. Complete owner definitions and reference branches retain every keyword; 96 exact-family schema sites have authored controls, exact schema-row/code mutations, cuts and restoration, with pin-bound shared reuse. Gated tool 004bdedd63 proves 290/316 real predicates in 191 tables; 26 checked implications each occupy a singleton table. CK08 has an independent sealed Application-scope witness on every family. Full original exact-family routes, 111 applicable number-corpus cases per family, all local date-time declarations/profiles and exact policy instants pass. Retained reads have actual custody-store snapshots and no writes. Global shared date-time gate remains NOT_RUN_ADMISSION_REFUSED on the absent mainline migration citation; no global PASS or native/admission proof is claimed.",
           "evidence": [
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-659",
-              "line_start": 25076,
-              "line_end": 25076,
-              "quote": "alias or migration by resemblance. Oracles are ATS-316 and scripts/pm_memory_archive_events.py, including positive"
-            },
-            {
-              "path": "Plans/memory_canonical_history_fixtures.json",
-              "unit": "#/canonical_history_families",
-              "quote": "\"name\": \"memory.prune_archive.started:compatibility-replay-only\",",
-              "line_start": 58175,
-              "line_end": 58175
-            },
-            {
-              "path": "Plans/memory_canonical_history_fixtures.json",
-              "unit": "#/canonical_history_families",
-              "quote": "\"name\": \"memory.prune_archive.started:foreign-project-compatibility_replay\",",
-              "line_start": 60656,
-              "line_end": 60656
-            },
-            {
-              "path": "Plans/memory_canonical_history_fixtures.json",
-              "unit": "#/canonical_history_families",
-              "quote": "\"name\": \"memory.prune_archive.started:numeric-spelling-commitment-1e0\",",
-              "line_start": 59903,
-              "line_end": 59903
-            },
-            {
-              "path": "scripts/pm_memory_maintenance_events.py",
-              "unit": "read_canonical_history",
-              "quote": "def read_canonical_history(before, event):",
-              "line_start": 1422,
-              "line_end": 1422
-            },
-            {
-              "path": "Plans/memory_archive_event_fixtures.json",
-              "unit": "#/guard_cases",
-              "quote": "\"name\": \"memory.prune_archive.started:cutoff-self-reference\",",
-              "line_start": 110564,
-              "line_end": 110564
-            },
-            {
-              "path": "Plans/memory_archive_event_fixtures.json",
-              "unit": "#/guard_cases",
-              "quote": "\"name\": \"memory.prune_archive.started:cutoff-duplicate-reference\",",
-              "line_start": 110749,
-              "line_end": 110749
-            },
-            {
-              "path": "Plans/memory_archive_event_fixtures.json",
-              "unit": "#/guard_cases",
-              "quote": "\"name\": \"memory.prune_archive.started:selected-rewrite-kind\",",
-              "line_start": 110916,
-              "line_end": 110916
-            },
-            {
-              "path": "Plans/memory_archive_event_fixtures.json",
-              "unit": "#/guard_cases",
-              "quote": "\"name\": \"memory.prune_archive.started:selected-rewrite-pinned\",",
-              "line_start": 111078,
-              "line_end": 111078
-            },
-            {
-              "path": "scripts/pm_memory_maintenance_events.py",
-              "unit": "json_numbers",
-              "quote": "def json_numbers(text):",
-              "line_start": 181,
-              "line_end": 181
-            },
-            {
-              "path": "scripts/pm_memory_maintenance_events.py",
-              "unit": "flag",
-              "quote": "return type(value) is bool and value is expected",
-              "line_start": 280,
-              "line_end": 280
-            },
-            {
-              "path": "scripts/pm_memory_boundary_domains.py",
-              "unit": "domain_cases",
-              "quote": "def domain_cases(m, contexts, boundaries, archive=None):",
-              "line_start": 12,
-              "line_end": 12
-            },
-            {
-              "path": "Plans/memory_maintenance_boundary_fixtures.json",
-              "unit": "#/families",
-              "quote": "\"memory.prune_archive.started\"",
-              "line_start": 14,
-              "line_end": 14
-            },
-            {
-              "path": "scripts/pm_memory_archive_events.py",
-              "unit": "memory_flags",
-              "quote": "before_flags = memory_flags(before['memories'])",
-              "line_start": 138,
-              "line_end": 138
+              "line_start": 35835,
+              "line_end": 35835,
+              "quote": "canonical_text: 'Newly authored owner contract under DL-045 for exactly memory.prune_archive.started@1.0.0, prepared"
             },
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-659",
-              "line_start": 25083,
-              "line_end": 25083,
-              "quote": "Historical originals instead use their frozen write-time recipe integer-json-v1"
+              "line_start": 35835,
+              "line_end": 35835,
+              "quote": "canonical_text: 'Newly authored owner contract under DL-045 for exactly memory.prune_archive.started@1.0.0, prepared"
             },
             {
-              "path": "Plans/Contracts_V0.md",
-              "unit": "CV-659",
-              "quote": "Storage sequence_id independently adopts SP-236 exact uint64, 0 through 18446744073709551615 inclusive, with exact integer type",
-              "line_start": 25083,
-              "line_end": 25083
+              "path": "scripts/pm_memory_c12.py",
+              "line_start": 111,
+              "line_end": 111,
+              "quote": "def schema_closure(m, path, definition):"
             },
             {
-              "path": "scripts/pm_memory_storage_metadata.py",
-              "unit": "run",
-              "quote": "def run(m, contexts):",
-              "line_start": 48,
-              "line_end": 48
+              "path": "scripts/pm_memory_c12.py",
+              "line_start": 338,
+              "line_end": 338,
+              "quote": "killed=baseline == expected and cut == ['accepted'] and restored == expected,"
             },
             {
-              "path": "Plans/Contracts_V0.md",
-              "unit": "CV-659",
-              "line_start": 25043,
-              "line_end": 25043,
-              "quote": "DL-447 answers DL-403 for this exact job"
+              "path": "scripts/pm_memory_c12.py",
+              "line_start": 402,
+              "line_end": 402,
+              "quote": "assert before == after and state == caller, (event, mode, defect, 'read changed custody/caller')"
             },
             {
-              "path": "scripts/pm_memory_policy.py",
-              "unit": "run",
-              "line_start": 312,
-              "line_end": 312,
-              "quote": "def run(core, families, archive=None):"
+              "path": "scripts/pm_memory_c12_selftest.py",
+              "line_start": 103,
+              "line_end": 103,
+              "quote": "results.append({'case': '4400-digit-integer-at-complete-writer', 'result': 'exact_storage_uint64_refusal'})"
             },
             {
-              "path": "Plans/memory_card6_policy_fixtures.json",
-              "unit": "#/cases",
-              "line_start": 2525,
-              "line_end": 2525,
-              "quote": "\"name\": \"prune_archive:score-at-threshold\","
+              "path": "scripts/pm_memory_c12_entailments.py",
+              "line_start": 104,
+              "line_end": 104,
+              "quote": "assert len(records) == 26 and len({r['row'] for r in records}) == 26"
             },
             {
-              "path": "Plans/Automated_Testing_System.md",
-              "unit": "ATS-316",
-              "quote": "Round-11 preservation checks compare exact primitive types before values recursively",
-              "line_start": 7330,
-              "line_end": 7330
+              "path": "scripts/pm_memory_guard_witnesses.py",
+              "line_start": 420,
+              "line_end": 420,
+              "quote": "add('checkpoint-application-scope', 'ck_scope', 'CK08_scope_kind', join,"
             },
             {
-              "path": "Plans/Automated_Testing_System.md",
-              "unit": "ATS-316",
-              "quote": "Minimum group size, unique IDs and original existence are separate guard-table rows",
-              "line_start": 7330,
-              "line_end": 7330
-            },
-            {
-              "path": "scripts/pm_memory_policy.py",
-              "unit": "same",
-              "quote": "if type(left) is not type(right):",
-              "line_start": 24,
-              "line_end": 24
-            },
-            {
-              "path": "scripts/pm_memory_policy.py",
-              "unit": "instant",
-              "quote": "return seconds + Fraction(Decimal('0.' + fraction)) if fraction else Fraction(seconds)",
-              "line_start": 69,
-              "line_end": 69
-            },
-            {
-              "path": "Plans/memory_card6_policy_fixtures.json",
-              "unit": "#/cases",
-              "quote": "\"name\": \"prune_archive:fix11-age-updated_at-40digits-late\",",
-              "line_start": 26811,
-              "line_end": 26811
-            },
-            {
-              "path": "Plans/Automated_Testing_System.md",
-              "line_start": 7261,
-              "line_end": 7261,
-              "quote": "Standing check 11 (sweep part 2A, Method B guard tables)"
-            },
-            {
-              "path": "scripts/pm_memory_maintenance_events.py",
-              "line_start": 96,
-              "line_end": 96,
-              "quote": "def table_refusal(phase, facts):"
-            },
-            {
-              "path": "scripts/pm-memory-guard-tables.py",
-              "line_start": 10,
-              "line_end": 10,
-              "quote": "Credit is copied from the tool"
-            },
-            {
-              "path": "Plans/storage-plan.md",
-              "unit": "SP-637",
-              "line_start": 30175,
-              "line_end": 30175,
-              "quote": "Every declared date-time format is enforced by the shared CV-1101 predicate"
+              "path": "Plans/assistant-memory-subsystem.md",
+              "line_start": 1726,
+              "line_end": 1726,
+              "quote": "workbench or button is planned.",
+              "unit": "AMS-023"
             }
           ],
           "prior": {
-            "source": "sweep part 1 self-grade at 1abebee498",
-            "status": "PASS"
+            "source": "origin/main 7cf56368356da2b7a5ff25f6452cf753ce36bf45 DMEM-self-grade.json",
+            "status": "PARTIAL"
           },
-          "change": "carried",
-          "change_reason": "Sweep part 2B closes two of the three PARTIAL reasons (SP-1101 dispatch, interim timestamp review); the schema-keyword-cut reason remains, so the cell stays PARTIAL."
+          "change": "upgraded",
+          "change_reason": "The remaining schema-verdict limitation is closed by the source-bound whole-definition route explicitly allowed by C12 scope; no per-keyword independence claim. Existing entry points and owner schemas are preserved.",
+          "assessed_tree": {
+            "branch": "plans/ea-pnc-c12-dmem-20261114",
+            "implementation_commit": "232d40bba3d9e063c8ad860806ab17f866c43c9c",
+            "base": "7cf56368356da2b7a5ff25f6452cf753ce36bf45"
+          },
+          "evidence_bundle": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/c12-dmem/closure/memory.prune_archive.started.coverage.json"
         }
       },
       "remaining_gaps": [
@@ -7371,7 +5422,6 @@
         "Canonical operation/result custody retention is PENDING_RETENTION_DECISION.",
         "Native receipt/transaction/flush/crash/GUI proof remains NOT_RUN.",
         "Independent review, separate per-family admission and unresolved operation/result retention still fence activation; Card 6 supplies no no-project writer permission.",
-        "JSON Schema keyword and format cuts are not ported to the shared guard tool; each schema occurrence is one verdict row.",
         "The shared date-time inventory and datetime_validator run at batch-2 integration (SWEEP-P2B Addendum 2); in this lane tree the inventory gate refuses on hash drift only."
       ],
       "static_checks_seen": [
@@ -7389,7 +5439,7 @@
     }
   ],
   "review_round": "sweep part 2B",
-  "review_scope": "Gated NUMRULE head 58c2816ff3 merged (date-time scope); CV-1101 date_time with explicit field profiles; S3 SP-1101 authenticated retained dispatch and the CV-339 current full-value commitment; guard tables rerun on the gated tool 004bdedd63.",
+  "review_scope": "Only criterion 12 positive_negative_oracles is regraded here. All other criterion cells are copied unchanged from origin/main 7cf56368356da2b7a5ff25f6452cf753ce36bf45.",
   "review_baseline_prepared_status_counts": {
     "PASS": 114,
     "PARTIAL": 18,
@@ -7575,5 +5625,42 @@
       "replaced_text": []
     },
     "grades": "every cell carried; status counts unchanged (positive_negative_oracles stays PARTIAL for the schema-keyword-cut reason only)"
+  },
+  "c12_assessed_tree": {
+    "branch": "plans/ea-pnc-c12-dmem-20261114",
+    "implementation_commit": "232d40bba3d9e063c8ad860806ab17f866c43c9c",
+    "base": "7cf56368356da2b7a5ff25f6452cf753ce36bf45"
+  },
+  "c12_evidence": {
+    "root": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/c12-dmem",
+    "verification": {
+      "authored_controls": 300,
+      "criterion_scope": "C12 only",
+      "families": 12,
+      "gated_cut_totals": {
+        "flips": 589,
+        "masked": 0,
+        "own": 589,
+        "stays": 989,
+        "unrelated_changes": 0
+      },
+      "gated_proved": 290,
+      "gated_rows": 316,
+      "global_datetime_pass_claimed": false,
+      "implied_singletons": 26,
+      "invalid_proposals_not_kills": 37541,
+      "native": "NOT_RUN",
+      "other_criteria_regraded": false,
+      "retained_store_observations": 336,
+      "schema_row_exact_kills": 101194,
+      "schema_sites": 96,
+      "shared_sites_reused": 29,
+      "status": "pass",
+      "tables": 191,
+      "witness_calls": 30948
+    },
+    "whole_definition_schema_route": true,
+    "per_keyword_independence_claimed": false,
+    "independent_review": "NOT_RUN by this implementation lane"
   }
 }
