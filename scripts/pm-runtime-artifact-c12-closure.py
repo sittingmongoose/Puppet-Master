@@ -689,6 +689,15 @@ def main():
             result[part]['seconds'] = round(time.monotonic() - started, 1)
         write('summary.json', result)
         summary['families'][family] = result
+    if args.family and 'shared' in args.family and 'pairs' in parts:
+        # Shared witnesses (toy schemas, codec and failure-oracle helpers) ride with every family's gated
+        # suites; their complete-boundary cut and restoration is recorded once here.
+        target = args.out / 'shared'
+        target.mkdir(parents=True, exist_ok=True)
+
+        def write_shared(name, value):
+            (target / name).write_text(json.dumps(value, indent=1, sort_keys=True, default=repr) + '\n')
+        summary['families']['shared'] = dict(pairs=pairs_part({'shared'}, write_shared))
     (args.out / ('summary-' + '-'.join(parts) + '.json')).write_text(json.dumps(summary, indent=1, sort_keys=True) + '\n')
     print(json.dumps(summary, indent=1, sort_keys=True))
     return 0
