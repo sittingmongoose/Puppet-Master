@@ -302,19 +302,24 @@ async function surface(t, sandbox) {
 		const lenses = () => f.evaluate(() => {
 			const root = document.getElementById('pm-o55-onboarding'), out = [];
 			root.querySelectorAll('.lg-lens').forEach((el) => { const r = el.getBoundingClientRect(), cs = getComputedStyle(el); if (r.width && r.height && cs.display !== 'none' && cs.visibility !== 'hidden' && +cs.opacity > 0) out.push([Math.round(r.left), Math.round(r.top), Math.round(r.width), Math.round(r.height)].join(',')); });
-			const st = window.O55.ui.prewarm.state(); return { lenses: out.sort(), phase: st.phase, slices: st.slices, held: st.held };
+			const st = window.O55.ui.prewarm.state(), host = root.querySelector('.o55-prewarm'); return { lenses: out.sort(), phase: st.phase, slices: st.slices, held: st.held, why: st.why, host: !!(host && host.isConnected) };
 		});
 		await f.waitForFunction(() => { const s = window.O55.ui.prewarm.state(); return s.phase === 'pending' && s.held === true; }, null, { timeout: 20000 }).catch(() => {});
 		await f.waitForTimeout(400);
 		const b = await lenses();
-		await f.evaluate(() => window.O55.ui.prewarm.release && window.O55.ui.prewarm.release());
-		const extra = new Map(); let n = 0;
+		// (--set pddead=1, the row's own red test: the hold is never released, so the pre-draw never draws: a dead sample)
+		if (!t.args.pddead) await f.evaluate(() => window.O55.ui.prewarm.release && window.O55.ui.prewarm.release());
+		// (R50, PM7PERF-ONBSTART-GLASS-DEAD-SAMPLE: the readings count only if the pre-draw really ran: a connected host held at
+		// its boundary, drawing (phase running, slices) after the release, and its end; a dead pre-draw added no lens either)
+		const extra = new Map(); let n = 0, drew = 0, end = null;
 		for (let k = 0; k < 60; k++) {
 			await f.waitForTimeout(200);
 			const s = await lenses(); n++;
+			if (s.phase === 'running' && s.slices > 0 && s.host) drew++;
 			s.lenses.filter((l) => !b.lenses.includes(l)).forEach((l) => extra.set(l, (extra.get(l) || 0) + 1));
-			if (s.phase === 'done') break;
+			if (s.phase === 'done') { end = s; break; }
 		}
+		await t.check(`${tag}: Glass ${mode}: the pre-draw ran (a connected host held at its boundary, drawing after the release, then done)`, b.held === true && b.phase === 'pending' && b.host && drew > 0 && !!end && end.why === 'done', JSON.stringify({ before: { held: b.held, phase: b.phase, host: b.host }, readingsDrawing: drew, end }));
 		await t.check(`${tag}: Glass ${mode}: the pre-draw adds no lens to the window (its copied Light / Dark control is left alone)`, b.held === true && n > 1 && extra.size === 0, JSON.stringify({ before: b, readings: n, added: Object.fromEntries(extra) }));
 		if (vp) await t.viewport(vp.width, vp.height);
 	};
