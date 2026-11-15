@@ -96,8 +96,44 @@ FAMILY = {
         'blocked_missing_recovery': 'row/scheduled_recovery',
         'not_yet_eligible': 'row/scheduled_time',
     },
-    'stopped': {}, 'verification_decided': {}, 'evidence_captured': {}, 'receipt_recorded': {},
-    'tool_check_recorded': {},
+    # C12-GH2 (lane 16): the five remaining history families. Each id names
+    # the original fact its author changed; the row is the one whose
+    # invariant reads that fact (original_row_guards).
+    'stopped': {
+        'stop_replanning': 'row/stopped_edge',              # state_before outside the stop edge set
+        'stop_recovery_unknown': 'row/stopped_recovery',    # resumable stop, recovery not resolved
+        'stop_unauthorized': 'row/stopped_authority',       # resumable stop, permission denied
+        'stop_unsettled': 'row/stopped_settlement',         # settlement refs not in settled_refs
+        # pre == 'stopped' and previous_boundary == current_boundary ('new').
+        'stop_repeated_unchanged': 'row/stopped_new_boundary',
+    },
+    'verification_decided': {
+        'verification_paused_source': 'row/verification_edge',
+        'wrong_verifier': 'row/verification_owner',
+        'wrong_cycle': 'row/verification_cycle',
+        'missing_closure': 'row/verification_closure',      # passed, closure refs not current evidence
+        'strong_third_failure_no_adjudicator': 'row/verification_adjudicator',
+    },
+    'evidence_captured': {
+        'evidence_terminal': 'row/evidence_state',
+        'evidence_hash_mismatch': 'row/evidence_hash',
+        'evidence_provenance_mismatch': 'row/evidence_provenance',
+        # Envelope redaction differs from the payload's; digest and source copy kept coherent.
+        'outer_inner_redaction': 'row/evidence_redaction',
+        'inverted_original_span': 'row/evidence_span',
+    },
+    'receipt_recorded': {
+        'receipt_paused': 'row/receipt_state',
+        'receipt_identity': 'row/receipt_identity',
+        'receipt_decision': 'row/receipt_decision',
+        'receipt_dependency_missing': 'row/receipt_dependencies',
+        'missing_original_exception_risk': 'row/receipt_exception',
+    },
+    'tool_check_recorded': {
+        'tool_terminal': 'row/tool_state',
+        'tool_call_identity': 'row/tool_identity',
+        'tool_permission_owner': 'row/tool_permission',
+    },
 }
 
 
@@ -107,6 +143,11 @@ def protocol_target(key, case):
         return FAMILY[key][ident]
     if ident in COMMON:
         return COMMON[ident]
+    # C12-GH2: a source flag of another JSON type is still not `True`; the
+    # source row `s[flag] is True` reads it (every family authors these).
+    match = re.fullmatch(r'type_(' + '|'.join(SOURCE_FLAGS) + r')_(?:string_false|string_zero|null|array|object|number)', ident)
+    if match:
+        return 'source/' + match.group(1)
     match = re.fullmatch(r'unresolved_(.+)', ident) or re.fullmatch(r'boolean_resolved_revision_(.+)', ident)
     if match:
         return 'original/record/' + match.group(1)
