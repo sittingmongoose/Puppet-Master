@@ -1796,6 +1796,14 @@
     Object.values(S.sess.drafts).forEach((d) => O55.draft.set(d, { theme_family: family, theme_mode: mode }));
     if (n && n.parts && n.background) S.sess.look = { nier, parts: n.parts().slice(), background: n.background() };
   }
+  /* a look picked in the window is the person's choice when the page goes away with the window still open too (a reload,
+     the tab closed): saved then, as an unfinished close saves it, so the page and the run's drafts agree when it comes back
+     (stream F's blind review R1 of FO-216); with nothing picked, nothing is written */
+  window.addEventListener('pagehide', () => {
+    if (!S.open || !S.lookPicked || !O55.shell || !O55.shell.commitLook) return;
+    S.lookPicked = false;
+    try { O55.shell.commitLook(S); } catch (_) { /* the page is going */ }
+  });
   /* A reopened run shows its own look again (a reload painted the saved theme while the drafts kept the pick): the
      family and mode from the drafts, and NieR Mode from the session (O55.nierLook), still previews */
   function reapplyLook() {
