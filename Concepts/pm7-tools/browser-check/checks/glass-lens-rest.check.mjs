@@ -358,7 +358,18 @@ async function heldSelectedCheck(t, f, x, tag) {
 /* R31 F2, R30 Finding 3 (2026-11-13): a press on another item, held past its travel, then abandoned with no pointerup
    reaching the page (the window's blur, the document turning hidden), the button still down: from the abandonment the
    lens comes back to the item the app has chosen (it never chose the pressed one) and rests unbent; the button is then
-   released off the item, so nothing is chosen */
+   released off the item, so nothing is chosen.
+   The frames' verdict is exported for tools/glass-abandon.selftest.mjs. */
+const boxNear = (a, b) => a && b && Math.abs(a.x - b.x) <= 1.5 && Math.abs(a.y - b.y) <= 1.5;
+export function abandonVerdict(frames, box) {
+	const ab = frames.filter((z) => z.ph === 'abandoned');
+	const lastMv = ab.reduce((k, z, n) => (z.mv ? n : k), -1), rest = ab.slice(lastMv + 1);
+	const end = ab.length ? ab[ab.length - 1].b : null;
+	const row = { abandoned: ab.length, movedAfter: ab.filter((z) => z.mv).length, movingFlat: ab.filter((z) => z.mv && !z.bend).length, restMs: rest.length > 1 ? rest[rest.length - 1].t - rest[0].t : 0,
+		restBent: rest.filter((z) => z.bend).length, backOnChosen: boxNear(end, box), end, start: box };
+	const ok = row.restMs >= 400 && row.restBent === 0 && row.movingFlat === 0 && row.backOnChosen;
+	return { ok, row };
+}
 async function abandonCheck(t, f, x, tag, how) {
 	const off = await offsetOf(t, f), o = x.other, at = (b) => ({ x: off.x + b.x + b.w / 2, y: off.y + b.y + b.h / 2 });
 	const away = x.vertical ? { x: off.x + o.x + o.w + 48, y: at(o).y } : { x: at(o).x, y: off.y + o.y + o.h + 36 };
@@ -371,14 +382,10 @@ async function abandonCheck(t, f, x, tag, how) {
 	const fr = await f.evaluate(() => window.__g.stop());
 	await t.page.mouse.move(away.x, away.y, { steps: 3 }); await t.page.mouse.up();
 	await t.page.waitForTimeout(1200); await f.evaluate(() => window.__g.settle(4000));
-	const ab = fr.filter((z) => z.ph === 'abandoned');
-	const lastMv = ab.reduce((k, z, n) => (z.mv ? n : k), -1), rest = ab.slice(lastMv + 1);
-	const end = ab.length ? ab[ab.length - 1].b : null, near = (a, b) => a && b && Math.abs(a.x - b.x) <= 1.5 && Math.abs(a.y - b.y) <= 1.5;
-	const row = { abandoned: ab.length, movedAfter: ab.filter((z) => z.mv).length, movingFlat: ab.filter((z) => z.mv && !z.bend).length, restMs: rest.length > 1 ? rest[rest.length - 1].t - rest[0].t : 0,
-		restBent: rest.filter((z) => z.bend).length, backOnChosen: near(end, x.box), end, start: x.box };
+	const judged = abandonVerdict(fr, x.box), row = judged.row;
 	const what = `${tag} ${x.strip} -> ${x.label || 'item'} (${how})`;
 	t.log(`abandon ${what}: ${JSON.stringify(row)}`);
-	await t.check(`held: a hold abandoned by ${how} with no pointerup comes back to the chosen item and rests unbent ${what}`, row.restMs >= 400 && row.restBent === 0 && row.movingFlat === 0 && row.backOnChosen, JSON.stringify(row));
+	await t.check(`held: a hold abandoned by ${how} with no pointerup comes back to the chosen item and rests unbent ${what}`, judged.ok, JSON.stringify(row));
 }
 
 /* R43 F1 (2026-11-14): two pointers. The mouse holds the chosen page tab; a CDP touch point goes down off every strip and
