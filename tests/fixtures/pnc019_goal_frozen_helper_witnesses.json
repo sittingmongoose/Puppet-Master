@@ -3936,6 +3936,1039 @@
    "operation": "coherent",
    "hash_recipe_version": 2,
    "input_sha256": "a62079c283ded3d625b1af4f9958feab8a1c9170b78960cb766d35fa7c02b647"
+  },
+  {
+   "expected_refusal": "restore_point.deleted/original/original domain request digest",
+   "seed": {
+    "manifest_file_index": 90,
+    "function_line": 27,
+    "ordinal": 1
+   },
+   "path": [
+    "args",
+    0,
+    "command_request_sha256"
+   ],
+   "operation": "coherent_hash_claim",
+   "hash_recipe_version": 3,
+   "input_digest": "frozen_function_context_v1",
+   "input_sha256": "6097676e80194339b81b1d10d3b00d233ecf23bb5cc64838bce90e60ee51d597"
+  },
+  {
+   "expected_refusal": "restore_point.deleted/original/original idempotency UTF8 hash",
+   "seed": {
+    "manifest_file_index": 90,
+    "function_line": 27,
+    "ordinal": 1
+   },
+   "path": [
+    "args",
+    0,
+    "idempotency_key_sha256"
+   ],
+   "operation": "coherent_hash_claim",
+   "hash_recipe_version": 3,
+   "input_digest": "frozen_function_context_v1",
+   "input_sha256": "3854c596b3e3cf2bf0512ab98fec66bfbad1b74fb7b7225b42e382352806772b"
+  },
+  {
+   "expected_refusal": "restore_point.deleted/original/native immutable hash",
+   "seed": {
+    "manifest_file_index": 5,
+    "function_line": 1,
+    "ordinal": 1
+   },
+   "path": [
+    "args",
+    0,
+    "companion",
+    "record_sha256"
+   ],
+   "operation": "coherent_hash_claim",
+   "hash_recipe_version": 3,
+   "input_digest": "frozen_function_context_v1",
+   "input_sha256": "c6cfaa50155f42c7a1050de68b6263ddc8cfe2673afd81f23009c50826996871"
+  },
+  {
+   "expected_refusal": "restore_point.deleted/original/reference sets",
+   "seed": {
+    "manifest_file_index": 5,
+    "function_line": 1,
+    "ordinal": 1
+   },
+   "path": [
+    "args",
+    0,
+    "record",
+    "context_provenance_refs"
+   ],
+   "operation": "coherent_value:[]",
+   "hash_recipe_version": 3,
+   "input_digest": "frozen_function_context_v1",
+   "input_sha256": "462ff2704caceded2cff04ab96c7847822fe709f8d9b6debdc23795dd0df1af8"
+  },
+  {
+   "expected_refusal": "restore_point.deleted/original/exact admitted complete hold evaluation digest",
+   "seed": {
+    "manifest_file_index": 90,
+    "function_line": 114,
+    "ordinal": 1
+   },
+   "path": [
+    "args",
+    0,
+    "admission_authority",
+    "hold_evaluation_sha256"
+   ],
+   "operation": "coherent_value:\"B1\"",
+   "hash_recipe_version": 3,
+   "input_digest": "frozen_function_context_v1",
+   "input_sha256": "5bf03e4435c2cea796bdf56892200adb947596083022edcdc74faf3cc068d3f7"
+  },
+  {
+   "expected_refusal": "restore_point.deleted/original/original content hash codec",
+   "seed": {
+    "manifest_file_index": 90,
+    "function_line": 27,
+    "ordinal": 1
+   },
+   "path": [
+    "args",
+    0,
+    "original_dispatch_custody",
+    "outcome_sha256"
+   ],
+   "operation": "coherent_hash_claim",
+   "hash_recipe_version": 4,
+   "input_digest": "frozen_function_context_v1",
+   "input_sha256": "c63346b6f9f00f7921d7c74975970a86c941ed3eaca486d07649b8e73d2899e5"
+  },
+  {
+   "expected_refusal": "restore_point.deleted/original/RFC8785 typed owner result hash",
+   "seed": {
+    "manifest_file_index": 90,
+    "function_line": 27,
+    "ordinal": 1
+   },
+   "path": [
+    "args",
+    2,
+    "command_outcome",
+    "owner_result_sha256"
+   ],
+   "operation": "coherent_hash_claim",
+   "hash_recipe_version": 4,
+   "input_digest": "frozen_function_context_v1",
+   "input_sha256": "14d84a2bc6fb7712fe3a85cbe62d9499e318cec56b7df65e3346d22ba1ee690f"
+  },
+  {
+   "expected_refusal": "restore_point.deleted/original/original native append durable end",
+   "seed": {
+    "manifest_file_index": 5,
+    "function_line": 1,
+    "ordinal": 1
+   },
+   "path": [
+    "args",
+    0,
+    "source_fixture",
+    "durable_end_offset"
+   ],
+   "operation": "coherent_value:0",
+   "hash_recipe_version": 4,
+   "input_digest": "frozen_function_context_v1",
+   "input_sha256": "0b757ef8641f7475a0a6d26ca7a1555c3e56bab264f0d4c9e53406e8f1570fa9"
+  },
+  {
+   "expected_refusal": "restore_point.deleted/original/creation original successful outcome",
+   "seed": {
+    "manifest_file_index": 90,
+    "function_line": 103,
+    "ordinal": 1
+   },
+   "path": [
+    "args",
+    1,
+    "original_ui_response",
+    "result_status"
+   ],
+   "operation": "coherent_value:\"no_op\"",
+   "hash_recipe_version": 4,
+   "input_digest": "frozen_function_context_v1",
+   "input_sha256": "077c9a5f568fd67dac25530d32ec67ecf340f1530c7f6af06571176da29382ee"
+  },
+  {
+   "expected_refusal": "restore_point.deleted/original/actual original append barriers",
+   "seed": {
+    "manifest_file_index": 39,
+    "function_line": 19,
+    "ordinal": 1
+   },
+   "path": [
+    "args",
+    0,
+    "original_owner_resolution",
+    "append_ack_control",
+    "commit_group",
+    "frame_synced"
+   ],
+   "operation": "coherent",
+   "hash_recipe_version": 4,
+   "input_digest": "frozen_function_context_v1",
+   "input_sha256": "eb04e2332f0ef89112944b9dd2b76eedb9bdc8c13b00581b47ca2a003e3ced1c"
+  },
+  {
+   "expected_refusal": "restore_point.deleted/original/terminal original result only",
+   "seed": {
+    "manifest_file_index": 90,
+    "function_line": 27,
+    "ordinal": 1
+   },
+   "path": [
+    "args",
+    0,
+    "state"
+   ],
+   "operation": "coherent_pending_delete",
+   "hash_recipe_version": 4,
+   "input_digest": "frozen_function_context_v1",
+   "input_sha256": "ee413dbc7623838a278e0ab08223135ca9b6b9293400724328fc63af021f259e"
+  },
+  {
+   "expected_refusal": "restore_point.deleted/original/full retained IdentityEnvelope equality",
+   "seed": {
+    "manifest_file_index": 90,
+    "function_line": 27,
+    "ordinal": 1
+   },
+   "path": [
+    "args",
+    2,
+    "command_outcome",
+    "identity",
+    "attempt_id"
+   ],
+   "operation": "coherent_depth3",
+   "hash_recipe_version": 4,
+   "input_digest": "frozen_function_context_v1",
+   "input_sha256": "0ea962865303b1370a72e68a1ed7b17a386d0f555aa5c2754168a1fca80d3538"
+  },
+  {
+   "expected_refusal": "restore_point.deleted/original/normalized/outcome payload_sha256",
+   "seed": {
+    "manifest_file_index": 90,
+    "function_line": 27,
+    "ordinal": 1
+   },
+   "path": [
+    "args",
+    2,
+    "command_outcome",
+    "payload_sha256"
+   ],
+   "operation": "coherent_depth3",
+   "hash_recipe_version": 4,
+   "input_digest": "frozen_function_context_v1",
+   "input_sha256": "55ad2326f006a3b19c8d03b41a4949ce6178784010b4c51876fc0836c16c5a3c"
+  },
+  {
+   "expected_refusal": "restore_point.deleted/original/exact typed result schema reference",
+   "seed": {
+    "manifest_file_index": 90,
+    "function_line": 27,
+    "ordinal": 1
+   },
+   "path": [
+    "args",
+    2,
+    "command_outcome",
+    "owner_result_schema_ref",
+    "json_pointer"
+   ],
+   "operation": "coherent_depth3",
+   "hash_recipe_version": 4,
+   "input_digest": "frozen_function_context_v1",
+   "input_sha256": "9c0da1d752a7fc744b201fd791493025222e4541686e7e3e5d44716f2df700ae"
+  },
+  {
+   "expected_refusal": "restore_point.deleted/original/actual original native capture proof",
+   "seed": {
+    "manifest_file_index": 90,
+    "function_line": 114,
+    "ordinal": 1
+   },
+   "path": [
+    "args",
+    0,
+    "operation",
+    "record_hash_verification",
+    "verification_sha256"
+   ],
+   "operation": "coherent_depth3",
+   "hash_recipe_version": 4,
+   "input_digest": "frozen_function_context_v1",
+   "input_sha256": "2401d4b8381affee7293f9c9476360cf6f36d44586668c5284de498dcff46005"
+  },
+  {
+   "expected_refusal": "restore_point.deleted/original/B1 exact available original point",
+   "seed": {
+    "manifest_file_index": 90,
+    "function_line": 114,
+    "ordinal": 1
+   },
+   "path": [
+    "args",
+    0,
+    "admission_authority",
+    "before_record",
+    "status"
+   ],
+   "operation": "coherent_value:\"expired\"",
+   "hash_recipe_version": 4,
+   "input_digest": "frozen_function_context_v1",
+   "input_sha256": "88cedd9ac2f46cf8754c895ad99d213b68043938244f5fa7e165c95bb69b6500"
+  },
+  {
+   "expected_refusal": "restore_point.deleted/original/B1 changes only status preserves every ref/hold",
+   "seed": {
+    "manifest_file_index": 90,
+    "function_line": 114,
+    "ordinal": 4
+   },
+   "path": [
+    "args",
+    0,
+    "deletion_transactions",
+    "B1",
+    "after_record",
+    "status"
+   ],
+   "operation": "coherent_value:\"available\"",
+   "hash_recipe_version": 4,
+   "input_digest": "frozen_function_context_v1",
+   "input_sha256": "4ebf790386a1c489f7b5143cf868ec2d1f41d01d840f22c3ca2c24a598ea47dd"
+  },
+  {
+   "expected_refusal": "restore_point.deleted/original/summary original original_recovery_epoch",
+   "seed": {
+    "manifest_file_index": 90,
+    "function_line": 194,
+    "ordinal": 1
+   },
+   "path": [
+    "args",
+    0,
+    "summary",
+    "terminal_event",
+    "original_recovery_epoch"
+   ],
+   "operation": "coherent_depth3",
+   "hash_recipe_version": 4,
+   "input_digest": "frozen_function_context_v1",
+   "input_sha256": "c418f9f35281363dbff5b481e0c5af2071e9d299a97e2688fd9a253c41f09622"
+  },
+  {
+   "expected_refusal": "restore_point.deleted/original/summary original segment_name",
+   "seed": {
+    "manifest_file_index": 90,
+    "function_line": 194,
+    "ordinal": 1
+   },
+   "path": [
+    "args",
+    0,
+    "summary_resolution",
+    "original_terminal_publication",
+    "source_locator",
+    "segment_name"
+   ],
+   "operation": "simple",
+   "hash_recipe_version": 4,
+   "input_digest": "frozen_function_context_v1",
+   "input_sha256": "af69416c9adcf93216cad2a9653b3e0367c555ca528534896dabbe2c61e8d335"
+  },
+  {
+   "expected_refusal": "restore_point.deleted/original/summary original durable end",
+   "seed": {
+    "manifest_file_index": 90,
+    "function_line": 194,
+    "ordinal": 1
+   },
+   "path": [
+    "args",
+    0,
+    "summary",
+    "terminal_event",
+    "original_durable_end_offset"
+   ],
+   "operation": "coherent_depth3",
+   "hash_recipe_version": 4,
+   "input_digest": "frozen_function_context_v1",
+   "input_sha256": "a9932669c338878f59e29c1107eac8852c216a6906db7d2dabebd67c8cb1e99a"
+  },
+  {
+   "expected_refusal": "restore_point.deleted/original/summary complete held/ref classes",
+   "seed": {
+    "manifest_file_index": 90,
+    "function_line": 194,
+    "ordinal": 1
+   },
+   "path": [
+    "args",
+    0,
+    "summary",
+    "hold_evaluations",
+    0,
+    "ref_kind"
+   ],
+   "operation": "coherent_value:\"application\"",
+   "hash_recipe_version": 4,
+   "input_digest": "frozen_function_context_v1",
+   "input_sha256": "192fde61b4d158fc927f26b8ff6a657ccdd41f3882d540dde91d260beea16038"
+  },
+  {
+   "expected_refusal": "restore_point.deleted/original/summary original terminal source evidence",
+   "seed": {
+    "manifest_file_index": 90,
+    "function_line": 194,
+    "ordinal": 1
+   },
+   "path": [
+    "args",
+    0,
+    "summary_resolution",
+    "original_terminal_publication",
+    "event_id"
+   ],
+   "operation": "simple",
+   "hash_recipe_version": 4,
+   "input_digest": "frozen_function_context_v1",
+   "input_sha256": "aaa321ea4391307a6c29e8875251a4be9295c57e4fc13f4069218df87add6e02"
+  },
+  {
+   "expected_refusal": "restore_point.deleted/original/actual applied step resolution",
+   "seed": {
+    "manifest_file_index": 85,
+    "function_line": 23,
+    "ordinal": 1
+   },
+   "path": [
+    "args",
+    0,
+    "receipt",
+    "applied_steps",
+    0,
+    "evidence_ref"
+   ],
+   "operation": "coherent",
+   "hash_recipe_version": 4,
+   "input_digest": "frozen_function_context_v1",
+   "input_sha256": "a98d88050756068bc2a0e51c8699b13592baa537a1b31a06f5b70de58ee19783"
+  },
+  {
+   "expected_refusal": "restore_point.deleted/original/actual committed migration receipt",
+   "seed": {
+    "manifest_file_index": 85,
+    "function_line": 23,
+    "ordinal": 1
+   },
+   "path": [
+    "args",
+    0,
+    "receipt",
+    "terminal_status"
+   ],
+   "operation": "coherent_value:\"rolled_back\"",
+   "hash_recipe_version": 4,
+   "input_digest": "frozen_function_context_v1",
+   "input_sha256": "c1aa99ba6964e6b6955d66d88dcf35f3c717d92e0436cd4104cc8e512d734328"
+  },
+  {
+   "expected_refusal": "restore_point.deleted/original/exact ordered route closure",
+   "seed": {
+    "manifest_file_index": 85,
+    "function_line": 23,
+    "ordinal": 1
+   },
+   "path": [
+    "args",
+    1,
+    0,
+    "binding_ref"
+   ],
+   "operation": "coherent_depth2",
+   "hash_recipe_version": 4,
+   "input_digest": "frozen_function_context_v1",
+   "input_sha256": "8c4a7333956497522f07eb9b5a3660f0863d0028513eb350dc245ab602929fad"
+  },
+  {
+   "expected_refusal": "restore_point.deleted/original/explicit summary writer value successor",
+   "seed": {
+    "manifest_file_index": 85,
+    "function_line": 23,
+    "ordinal": 1
+   },
+   "path": [
+    "args",
+    0,
+    "receipt",
+    "family_transitions",
+    0,
+    "from_version"
+   ],
+   "operation": "coherent",
+   "hash_recipe_version": 4,
+   "input_digest": "frozen_function_context_v1",
+   "input_sha256": "8ddb377209255849802de9d0fe52f0d92650a2e4af96985059791ef6969620ba"
+  },
+  {
+   "expected_refusal": "restore_point.deleted/original/old raw readers unchanged",
+   "seed": {
+    "manifest_file_index": 85,
+    "function_line": 23,
+    "ordinal": 1
+   },
+   "path": [
+    "args",
+    1,
+    0,
+    "role"
+   ],
+   "operation": "coherent_value:\"compatibility_only\"",
+   "hash_recipe_version": 4,
+   "input_digest": "frozen_function_context_v1",
+   "input_sha256": "2cb23375fb1203493241a4dd30bd3e46f88121dae090a2b616ea5bb87f6c484d"
+  },
+  {
+   "expected_refusal": "restore_point.deleted/original/resolved exact owner adoption pointer",
+   "seed": {
+    "manifest_file_index": 85,
+    "function_line": 23,
+    "ordinal": 1
+   },
+   "path": [
+    "args",
+    1,
+    0,
+    "codec_admission",
+    "owner_adoption_ref"
+   ],
+   "operation": "coherent_depth2",
+   "hash_recipe_version": 4,
+   "input_digest": "frozen_function_context_v1",
+   "input_sha256": "76cbe1a197b9dae64cd2bd20babd1a49c8548967187448788ae8cda35d64c651"
+  },
+  {
+   "expected_refusal": "restore_point.deleted/original/refused exact rejection mapping",
+   "seed": {
+    "manifest_file_index": 90,
+    "function_line": 27,
+    "ordinal": 2
+   },
+   "path": [
+    "args",
+    2,
+    "command_outcome",
+    "outcome"
+   ],
+   "operation": "coherent_value:\"accepted\"",
+   "hash_recipe_version": 4,
+   "input_digest": "frozen_function_context_v1",
+   "input_sha256": "9424a574fbcc07aa00b2e1d001a16552d1fb14766c6c2a2a61ef3373951f6091"
+  },
+  {
+   "expected_refusal": "restore_point.deleted/original/failed exact failure mapping",
+   "seed": {
+    "manifest_file_index": 90,
+    "function_line": 27,
+    "ordinal": 3
+   },
+   "path": [
+    "args",
+    2,
+    "command_outcome",
+    "outcome"
+   ],
+   "operation": "coherent_value:\"succeeded\"",
+   "hash_recipe_version": 4,
+   "input_digest": "frozen_function_context_v1",
+   "input_sha256": "361de8d396b02cf2f12861724954c14677ea8a49c14976a5bc3aef628e81a939"
+  },
+  {
+   "expected_refusal": "restore_point.deleted/original/one maintenance candidate",
+   "seed": {
+    "manifest_file_index": 10,
+    "function_line": 93,
+    "ordinal": 1
+   },
+   "path": [
+    "args",
+    0
+   ],
+   "operation": "generic_two_staged",
+   "input_digest": "frozen_function_context_v1",
+   "hash_recipe_version": 5,
+   "input_sha256": "27d448a987c7cd36558d9ec1af1a9bb18a40a482941eb05c7c4c7408fe22a2d6"
+  },
+  {
+   "expected_refusal": "restore_point.deleted/original/exact canonical row set",
+   "seed": {
+    "manifest_file_index": 10,
+    "function_line": 93,
+    "ordinal": 1
+   },
+   "path": [
+    "args",
+    0
+   ],
+   "operation": "generic_row_key",
+   "input_digest": "frozen_function_context_v1",
+   "hash_recipe_version": 5,
+   "input_sha256": "9946981683eb2ac41caff2169acb7df70a02b62bc01adcd50220c7cb91b89da3"
+  },
+  {
+   "expected_refusal": "restore_point.deleted/original/same source/recovery generation current_bytes_sha256",
+   "seed": {
+    "manifest_file_index": 10,
+    "function_line": 93,
+    "ordinal": 1
+   },
+   "path": [
+    "args",
+    0
+   ],
+   "operation": "generic_anchor:current_bytes_sha256",
+   "input_digest": "frozen_function_context_v1",
+   "hash_recipe_version": 5,
+   "input_sha256": "2a42154f87a707867b241db58695ca5948f383a6a23235282b75edee4ab296a0"
+  },
+  {
+   "expected_refusal": "restore_point.deleted/original/same source/recovery generation selected_segment_generation",
+   "seed": {
+    "manifest_file_index": 10,
+    "function_line": 93,
+    "ordinal": 1
+   },
+   "path": [
+    "args",
+    0
+   ],
+   "operation": "generic_anchor:selected_segment_generation",
+   "input_digest": "frozen_function_context_v1",
+   "hash_recipe_version": 5,
+   "input_sha256": "2efcad42916a2865c64c9ec882b5190c6fcf58b4d4e50531f18b344d3823df83"
+  },
+  {
+   "expected_refusal": "restore_point.deleted/original/same source/recovery generation recovery_epoch",
+   "seed": {
+    "manifest_file_index": 10,
+    "function_line": 93,
+    "ordinal": 1
+   },
+   "path": [
+    "args",
+    0
+   ],
+   "operation": "generic_anchor:recovery_epoch",
+   "input_digest": "frozen_function_context_v1",
+   "hash_recipe_version": 5,
+   "input_sha256": "930f5f3145f6eb97c11dec13928a120f8e256215eacc27ec6a613316d0a124b5"
+  },
+  {
+   "expected_refusal": "restore_point.deleted/original/legacy v2 adapter fence",
+   "seed": {
+    "manifest_file_index": 85,
+    "function_line": 23,
+    "ordinal": 1
+   },
+   "path": [
+    "args",
+    1,
+    6,
+    "codec_admission"
+   ],
+   "operation": "coherent_value:{\"capability_id\": \"restore_point_terminal_summary_codec\", \"capability_version\": \"2.0.0\", \"codec_reader\": \"reader.storage.restore_point_retention_summary@2.0.0\", \"raw_summary_schema_sha256\": \"54ab16c27c91606ee678cd358093330f259544b1a4fd37da40d59442bee75227\", \"output_kind\": \"terminal_retention_summary\", \"output_contract_owner\": \"Plans/storage-plan.md#concrete-typed-terminal-summary-result\", \"direct_reader_raw_v2\": false, \"action_authority\": \"none\", \"owner_adoption_ref\": \"journal:summary-codec-synthetic#/step_evidence/RESTORE-POINT-TERMINAL-SUMMARY-CODEC-002/route_installations/0\"}",
+   "input_digest": "frozen_function_context_v1",
+   "hash_recipe_version": 5,
+   "input_sha256": "bf83bdeee2a771fdf00ba51b53da9a52156d4dd3e6c3eefa6e388c1fc8bf128e"
+  },
+  {
+   "expected_refusal": "restore_point.deleted/original/created surviving source event",
+   "seed": {
+    "manifest_file_index": 28,
+    "function_line": 48,
+    "ordinal": 1
+   },
+   "path": [
+    "args",
+    0
+   ],
+   "operation": "creation_current_observed",
+   "hash_recipe_version": 5,
+   "input_digest": "frozen_function_context_v1",
+   "input_sha256": "b513c5231db7af7614a530664dbc38a5f07d703af61aafa377e03ddc51b0b912"
+  },
+  {
+   "expected_refusal": "restore_point.deleted/original/created original/current immutable event",
+   "seed": {
+    "manifest_file_index": 28,
+    "function_line": 48,
+    "ordinal": 1
+   },
+   "path": [
+    "args",
+    0
+   ],
+   "operation": "creation_original_observed",
+   "hash_recipe_version": 5,
+   "input_digest": "frozen_function_context_v1",
+   "input_sha256": "3d427f5f1fba81afd8cdf5091c3ae48cca9a2abb153990c1c573528cc32e1120"
+  },
+  {
+   "expected_refusal": "restore_point.deleted/original/created original locator",
+   "seed": {
+    "manifest_file_index": 28,
+    "function_line": 48,
+    "ordinal": 1
+   },
+   "path": [
+    "args",
+    0
+   ],
+   "operation": "creation_original_relocated",
+   "hash_recipe_version": 5,
+   "input_digest": "frozen_function_context_v1",
+   "input_sha256": "80ab0c64f16b131c4f896de4576daef94a19fa87eba6b72c3be464bc685b4656"
+  },
+  {
+   "expected_refusal": "restore_point.deleted/original/native deterministic identity",
+   "seed": {
+    "manifest_file_index": 5,
+    "function_line": 1,
+    "ordinal": 1
+   },
+   "path": [
+    "args",
+    0,
+    "event",
+    "idempotency_key"
+   ],
+   "operation": "coherent_scalar",
+   "hash_recipe_version": 5,
+   "input_digest": "frozen_function_context_v1",
+   "input_sha256": "0dfa8668de15064a0b25ebfa4a9c76a76423d54b950d082d2176fd78f4857ac0"
+  },
+  {
+   "expected_refusal": "restore_point.deleted/original/actual writer/permission/confirmation scope and request",
+   "seed": {
+    "manifest_file_index": 39,
+    "function_line": 19,
+    "ordinal": 1
+   },
+   "path": [
+    "args",
+    0
+   ],
+   "operation": "native_permission_scope",
+   "hash_recipe_version": 5,
+   "input_digest": "frozen_function_context_v1",
+   "input_sha256": "a4752b404db47e059c2c3d228057f5c259def304223009ada80cc419930cd061"
+  },
+  {
+   "expected_refusal": "restore_point.deleted/original/native point canonical key",
+   "seed": {
+    "manifest_file_index": 90,
+    "function_line": 114,
+    "ordinal": 1
+   },
+   "path": [
+    "args",
+    0
+   ],
+   "operation": "native_point_key",
+   "hash_recipe_version": 5,
+   "input_digest": "frozen_function_context_v1",
+   "input_sha256": "3bd9420ec58cbc896981b8787ccaefab282e8108321f728bc1f3de0fe9d39c6f"
+  },
+  {
+   "expected_refusal": "restore_point.deleted/original/actual committed operation/result identity",
+   "seed": {
+    "manifest_file_index": 90,
+    "function_line": 114,
+    "ordinal": 1
+   },
+   "path": [
+    "args",
+    0
+   ],
+   "operation": "native_operation_key",
+   "hash_recipe_version": 5,
+   "input_digest": "frozen_function_context_v1",
+   "input_sha256": "219b419d8e64e21514a7a5521a9bec62c4aab33fff947e973bb6fbddf47f429a"
+  },
+  {
+   "expected_refusal": "restore_point.deleted/original/owner preflight actual snapshot",
+   "seed": {
+    "manifest_file_index": 90,
+    "function_line": 114,
+    "ordinal": 1
+   },
+   "path": [
+    "args",
+    0
+   ],
+   "operation": "native_preflight_snapshot",
+   "hash_recipe_version": 5,
+   "input_digest": "frozen_function_context_v1",
+   "input_sha256": "7d4760f8f49686cfaa99d57f0e9b1df36eed53843afb8f92763a5e1335656793"
+  },
+  {
+   "expected_refusal": "restore_point.deleted/original/all actual owner hold/ref classes exactly once",
+   "seed": {
+    "manifest_file_index": 90,
+    "function_line": 114,
+    "ordinal": 1
+   },
+   "path": [
+    "args",
+    0
+   ],
+   "operation": "native_hold_set",
+   "hash_recipe_version": 5,
+   "input_digest": "frozen_function_context_v1",
+   "input_sha256": "2de6c845ddfc46499fb81b8fad1489b17345112c258c8d6f932d90066af19c82"
+  },
+  {
+   "expected_refusal": "restore_point.deleted/original/pre-B1 applicable owner hold scope/enumeration",
+   "seed": {
+    "manifest_file_index": 90,
+    "function_line": 114,
+    "ordinal": 1
+   },
+   "path": [
+    "args",
+    0
+   ],
+   "operation": "native_hold_scope",
+   "hash_recipe_version": 5,
+   "input_digest": "frozen_function_context_v1",
+   "input_sha256": "a3b939be5317b9c527e83509ff6e1b2e67a8ca508cad7255c8ca32d531e56700"
+  },
+  {
+   "expected_refusal": "restore_point.deleted/original/actual B1 pending original result protects identity",
+   "seed": {
+    "manifest_file_index": 90,
+    "function_line": 114,
+    "ordinal": 1
+   },
+   "path": [
+    "args",
+    0
+   ],
+   "operation": "native_pending_result",
+   "hash_recipe_version": 5,
+   "input_digest": "frozen_function_context_v1",
+   "input_sha256": "3b80ed8d7d976b8f472859310707a84ffb78023fb8995725cc4d298d959918fd"
+  },
+  {
+   "expected_refusal": "restore_point.deleted/original/actual B1/B3 operation/result and immutable point snapshot",
+   "seed": {
+    "manifest_file_index": 90,
+    "function_line": 114,
+    "ordinal": 1
+   },
+   "path": [
+    "args",
+    0
+   ],
+   "operation": "native_B3_point",
+   "hash_recipe_version": 5,
+   "input_digest": "frozen_function_context_v1",
+   "input_sha256": "70f3fff4a951a0869156b69c77ebb1e4036df5d903c560b87731be1150ec00bf"
+  },
+  {
+   "expected_refusal": "restore_point.deleted/original/target generation exact original topology",
+   "seed": {
+    "manifest_file_index": 90,
+    "function_line": 27,
+    "ordinal": 1
+   },
+   "path": [
+    "args",
+    0
+   ],
+   "operation": "original_topology",
+   "hash_recipe_version": 5,
+   "input_digest": "frozen_function_context_v1",
+   "input_sha256": "8cadd666fc3d6cba1370136d4e858dca28a73a2ba699d4af44b40772681e8600"
+  },
+  {
+   "expected_refusal": "restore_point.deleted/original/original CV333 owner response",
+   "seed": {
+    "manifest_file_index": 90,
+    "function_line": 27,
+    "ordinal": 1
+   },
+   "path": [
+    "args",
+    0
+   ],
+   "operation": "original_replay_wrapper",
+   "hash_recipe_version": 5,
+   "input_digest": "frozen_function_context_v1",
+   "input_sha256": "4ab61e52f46837b4e74e0ff1ac32d40ce5ee6b0c282e67f6f7868d5e93add763"
+  },
+  {
+   "expected_refusal": "restore_point.deleted/original/successful response exact original event",
+   "seed": {
+    "manifest_file_index": 90,
+    "function_line": 27,
+    "ordinal": 1
+   },
+   "path": [
+    "args",
+    0
+   ],
+   "operation": "original_success_event",
+   "hash_recipe_version": 5,
+   "input_digest": "frozen_function_context_v1",
+   "input_sha256": "ff057ca86ff1172b2e68b462cd8f9c1db764f57dfdfb22601ad69ea45545dc77"
+  },
+  {
+   "expected_refusal": "restore_point.deleted/original/domain request scoped identity",
+   "seed": {
+    "manifest_file_index": 90,
+    "function_line": 27,
+    "ordinal": 1
+   },
+   "path": [
+    "args",
+    0
+   ],
+   "operation": "original_scope",
+   "hash_recipe_version": 5,
+   "input_digest": "frozen_function_context_v1",
+   "input_sha256": "636c125143969ed8b7282596ee09805ee7fdfa13aba75ec667b6217803f577ed"
+  },
+  {
+   "expected_refusal": "restore_point.deleted/original/actual historical owner provenance required",
+   "seed": {
+    "manifest_file_index": 90,
+    "function_line": 141,
+    "ordinal": 1
+   },
+   "path": [
+    "args",
+    0
+   ],
+   "operation": "historical_empty_provenance",
+   "hash_recipe_version": 5,
+   "input_digest": "frozen_function_context_v1",
+   "input_sha256": "bd95459e3bc61a24f7773ca8c12450357b643248246315444b6fdfea60024dfc"
+  },
+  {
+   "expected_refusal": "restore_point.deleted/original/first initialization no fabricated history",
+   "seed": {
+    "manifest_file_index": 90,
+    "function_line": 162,
+    "ordinal": 1
+   },
+   "path": [
+    "args",
+    0
+   ],
+   "operation": "checkpoint_fabricated_history",
+   "hash_recipe_version": 5,
+   "input_digest": "frozen_function_context_v1",
+   "input_sha256": "38c2d64814ec4942620c510298a1015abb4ea84b9700429fd43553f2a68995e8"
+  },
+  {
+   "expected_refusal": "restore_point.deleted/original/summary original segment_generation",
+   "seed": {
+    "manifest_file_index": 90,
+    "function_line": 194,
+    "ordinal": 1
+   },
+   "path": [
+    "args",
+    0,
+    "summary",
+    "terminal_event",
+    "original_segment_generation"
+   ],
+   "operation": "coherent_value:2",
+   "hash_recipe_version": 5,
+   "input_digest": "frozen_function_context_v1",
+   "input_sha256": "c51f1f8a8ff1996943497e934164562e5b185db7d6521aad8555b2f60cd4597e"
+  },
+  {
+   "expected_refusal": "restore_point.deleted/original/summary original byte_offset",
+   "seed": {
+    "manifest_file_index": 90,
+    "function_line": 194,
+    "ordinal": 1
+   },
+   "path": [
+    "args",
+    0,
+    "summary",
+    "terminal_event",
+    "original_byte_offset"
+   ],
+   "operation": "coherent_value:2963",
+   "hash_recipe_version": 5,
+   "input_digest": "frozen_function_context_v1",
+   "input_sha256": "d548f42dc1cb0703dff4f52cdc505e3e2fba84c0bb45ebda97dc068a01a6b8f6"
+  },
+  {
+   "expected_refusal": "restore_point.deleted/original/result replay is content-free and does not manufacture source",
+   "seed": {
+    "manifest_file_index": 90,
+    "function_line": 230,
+    "ordinal": 9
+   },
+   "path": [
+    "args",
+    0
+   ],
+   "operation": "replay_phantom_point",
+   "hash_recipe_version": 5,
+   "input_digest": "frozen_function_context_v1",
+   "input_sha256": "7ca7691712dacacc27e2222aeaf1dd09fb11556aae8fbbbe582e3ac0b6364aae"
+  },
+  {
+   "expected_refusal": "restore_point.deleted/original/committed marker",
+   "seed": {
+    "manifest_file_index": 5,
+    "function_line": 1,
+    "ordinal": 1
+   },
+   "path": [
+    "args",
+    0,
+    "companion",
+    "state"
+   ],
+   "operation": "coherent_pending_companion",
+   "hash_recipe_version": 5,
+   "input_digest": "frozen_function_context_v1",
+   "input_sha256": "9fb83a99da4633a03664993400d28119afff23e75448d8bf1414310a4edf1b25"
+  },
+  {
+   "expected_refusal": "restore_point.deleted/original/separate app-root deletion result survives retirement",
+   "seed": {
+    "manifest_file_index": 90,
+    "function_line": 194,
+    "ordinal": 1
+   },
+   "path": [
+    "args",
+    0
+   ],
+   "operation": "summary_foreign_result",
+   "hash_recipe_version": 5,
+   "input_digest": "frozen_function_context_v1",
+   "input_sha256": "f8366e8028ae4a2a7e643e7aef1142cff3a44f6c4e37f82fcf902611b133ecfb"
   }
  ]
 }

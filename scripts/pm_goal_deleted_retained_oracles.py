@@ -16,6 +16,8 @@ import sys
 from referencing import Registry
 import pm_goal_guard_tables as tables
 import pm_goal_oracle_common as c
+import pm_goal_deleted_external_oracles as frozen
+import pm_goal_deleted_components as components
 import pm_goal_retained as retained
 from pm_goal_shared_oracles import check_read
 
@@ -23,8 +25,9 @@ ROOT=Path(__file__).resolve().parents[1]
 SNAPSHOTS=[]
 
 
-class Refused(ValueError):
-    def __init__(self,code):self.code=code
+class Refused(frozen.ExpectedRefusal):
+    def __init__(self,code):
+        super().__init__({code});self.code=code
 
 
 def need(condition,label):
@@ -38,7 +41,7 @@ def backing(store):
     # Issued read leases and the injected race callback are ephemeral. Every
     # other model field, every canonical row, source and sealed recipe is kept.
     return dict(model={k:copy.deepcopy(v)for k,v in vars(store['model']).items()
-                       if k not in ('issued','authenticate_exact_snapshot','open_read')},
+                       if k not in ('issued','authenticate_exact_snapshot','open_read','revalidate_before_disclosure')},
                 recipes=copy.deepcopy(store['recipes']))
 
 
@@ -48,11 +51,10 @@ def digest(value):return hashlib.sha256(pickle.dumps(value,protocol=5)).hexdiges
 def make_value(model):
     event=next(copy.deepcopy(f['event'])for f in model.generic['current_source']['frames']
                if f['event']['event_type']=='restore_point.deleted')
-    custody=dict(fixture='TEST_ONLY independently issued retained original',rows=copy.deepcopy(model.rows))
-    receipt=retained.issue(event,model.storage_instance_id,custody)
+    custody,receipt,native_catalog=components.issue(event,model.storage_instance_id,copy.deepcopy(model.rows),frozen.FIXTURE_CONTEXT[0].G['mp'])
     recipes=dict(original_value=copy.deepcopy(event),custody=custody,content_permitted=True,
                  storage_instance_id=model.storage_instance_id,sealed_receipts=[receipt],
-                 installed_recipes=[receipt['original']['recipe']])
+                 installed_recipes=[receipt['original']['recipe']],installed_native_component_recipes=native_catalog)
     return dict(store=dict(model=model,recipes=recipes),original=event,
                 storage=model.storage_instance_id,request=model.request(),candidate=None,late=None)
 
@@ -64,6 +66,9 @@ def apply_late(store,action,fs):
     elif action['kind']=='point_hold':
         row=model.rows['point'];value=copy.deepcopy(row['value']);value['hold_refs']=['late:actual-hold']
         model.rows['point']=fs.packrow(row['key'],value)
+    elif action['kind']=='point_immutable':
+        row=model.rows['point'];document=copy.deepcopy(row['value']);document[action['field']]=action['value']
+        model.rows['point']=fs.packrow(row['key'],document)
     elif action['kind']=='receipt_missing':store['recipes']['sealed_receipts']=[]
     elif action['kind']=='receipt_ambiguous':store['recipes']['sealed_receipts']*=2
     else:raise ValueError('unknown retained race action')
@@ -74,15 +79,17 @@ def evaluator(rr,fs,frozen):
         input_sha256=digest(value)
         store=value['store'];model=store['model'];before=backing(store)
         expected=copy.deepcopy(store);apply_late(expected,value.get('late'),fs)
-        expected=backing(expected);errors=set();changed=[False]
+        expected=backing(expected);errors=set();changed=[False];read_lease=[None]
         def recipe():
             result=check_read(dict(store=store['recipes'],event=value['original'],storage=value['storage'],
                                    **({'recipe_override':value['recipe_override']}if 'recipe_override'in value else {})))
+            if not result['errors']:components.select(store['recipes'],model,need)
             return result['errors']
         try:
             original_open=model.open_read
             def open_with_recipe(request):
                 lease=original_open(request)  # Current admission precedes original lookup.
+                read_lease[0]=lease
                 found=recipe()
                 if found:raise frozen.ExpectedRefusal(found)
                 return lease
@@ -91,9 +98,18 @@ def evaluator(rr,fs,frozen):
                 original_auth=model.authenticate_exact_snapshot
                 def auth(lease,snapshot):
                     original_auth(lease,snapshot)
-                    if not changed[0]:apply_late(store,value.get('late'),fs);changed[0]=True
+                    if not changed[0]and(value.get('late')or{}).get('stage','after_authentication')=='after_authentication':
+                        apply_late(store,value.get('late'),fs);changed[0]=True
                 model.authenticate_exact_snapshot=auth
-                rr.read_present(value['request'],model,value['candidate'])
+                original_fence=model.revalidate_before_disclosure
+                def fence(lease,token):
+                    if not changed[0]and(value.get('late')or{}).get('stage')=='before_disclosure':
+                        apply_late(store,value.get('late'),fs);changed[0]=True
+                    return original_fence(lease,token)
+                model.revalidate_before_disclosure=fence
+                native_out=rr.read_present(value['request'],model,value['candidate'])
+                if not changed[0]and(value.get('late')or{}).get('stage')=='after_read':
+                    apply_late(store,value.get('late'),fs);changed[0]=True
                 errors=recipe()  # No receipt acquisition or recipe fallback at disclosure.
                 if not errors:
                     old=store['recipes']['custody']['rows']
@@ -102,6 +118,7 @@ def evaluator(rr,fs,frozen):
                             strip=lambda x:{k:v for k,v in x.items()if k not in ('status','hold_refs')}
                             need(c.same_json_value(strip(row['value']),strip(old[name]['value'])),'full original immutable point value')
                         else:need(c.same_json_value(row,old[name]),'full original canonical companion/result '+name)
+                    model.revalidate_before_disclosure(read_lease[0],native_out['read_token'])
         except Refused as e:errors={e.code}
         except frozen.ExpectedRefusal as e:errors=e.errors
         after=backing(store)
@@ -125,6 +142,7 @@ def main():
     if collector is None:raise RuntimeError('Run through pm_goal_guard_sweep.py')
     if not hasattr(frozen,'FIXTURE_CONTEXT'):frozen.main()
     start=len(collector.failures)
+    previous_scope=collector.family_scope;collector.family_scope='restore_point.deleted'
     pin=c.load(ROOT/'Plans/restore_point_deleted_contract_fixtures.json')['retained_phase_subject']
     manifest=Path(pin['path']);raw=manifest.read_bytes()
     if hashlib.sha256(raw).hexdigest()!=pin['sha256']:raise ValueError('retained phase manifest pin')
@@ -154,6 +172,18 @@ def main():
         elif kind=='override':value['recipe_override']='caller-selected'
         elif kind=='access':recipes['content_permitted']=False
         collector.invoke('restore_point.deleted/retained/receipt/'+kind,check,value,False)
+    for kind in ('missing','ambiguous'):
+        value=copy.deepcopy(base)
+        if kind=='missing':value['store']['recipes']['installed_native_component_recipes']=[]
+        else:value['store']['recipes']['installed_native_component_recipes']*=2
+        collector.invoke('restore_point.deleted/retained/native-recipe/'+kind,check,value,False)
+    corpus=c.load(ROOT/'Plans/event_number_recipe_corpus.json')
+    from pm_event_numbers_corpus import _value
+    for case in (x for x in corpus['cases']if x['op']=='uint64'and 'value'in x and 'error'in x):
+        value=copy.deepcopy(base);value['store']['model'].rows['terminal_companion']['value']['append_receipt']['sequence_id']=_value(case['value'])
+        collector.invoke('restore_point.deleted/retained/shared-uint64/'+case['id'],check,value,False)
+    value=copy.deepcopy(base);value['store']['model'].rows['terminal_companion']['value']['append_receipt']['sequence_id']=components.n.current_integer_token('9'*4400)
+    collector.invoke('restore_point.deleted/retained/shared-uint64/4400-digits',check,value,False)
     for field,bad in [('registration_current',False),('source_origin_admitted',False),('backup_coherent',False),('migration_supported',False),('permissions_allowed',False),('quarantined',True),('installed_bindings',set())]:
         value=copy.deepcopy(base);setattr(value['store']['model'],field,bad)
         collector.invoke('restore_point.deleted/retained/entry/'+field,check,value,False)
@@ -176,4 +206,5 @@ def main():
         out.mkdir(parents=True,exist_ok=True)
         (out/'retained-store-snapshots.json').write_text(json.dumps(SNAPSHOTS,indent=1,default=snapshot_json)+'\n')
     globals()['RETAINED_CONTEXT']=(fs,rr,check,base)
+    collector.family_scope=previous_scope
     return int(len(collector.failures)>start)

@@ -100,6 +100,7 @@ def main():
     if not hasattr(frozen,'FIXTURE_CONTEXT'):frozen.main()
     dep,subject,seeds=frozen.FIXTURE_CONTEXT
     start=len(collector.failures)
+    previous_scope=collector.family_scope;collector.family_scope='run.started'
     pin=c.load(ROOT/'Plans/restore_point_deleted_contract_fixtures.json')['frozen_joined_subject']
     directory=Path(pin['path']).parent
     source=directory/'check-sources/adoption_v4_check.py'
@@ -184,9 +185,35 @@ def main():
             g=c.Gates();g.require('run.started/retention/eligible',result)
             return g.errors
         except frozen.ExpectedRefusal as e:return e.errors
+    capturing[0]=True
     for case in retention['cases']:
         collector.invoke('run.started/retention/'+case['case_id'],eligible,
                          {k:case[k]for k in ('root','selection')},case['expected_eligible'])
+    capturing[0]=False
+    first=retention['cases'][0];held=next(x for x in retention['cases']if x['case_id']=='actual-existing-project-hold-blocks')
+    for label in ('root_schema','selection_schema','root_preimage','selected_generation','hold_scope_kind','hold_key','hold_applicable','duplicate_holds'):
+        sample=held if label.startswith('hold_')or label=='duplicate_holds'else first
+        value={key:copy.deepcopy(sample[key])for key in ('root','selection')}
+        if label=='root_schema':value['root']=None
+        elif label=='selection_schema':value['selection']=None
+        elif label=='root_preimage':value['selection']['checkpoint_sha256']='0'*64
+        elif label=='selected_generation':value['selection']['selected_retired_publication_id']=value['root']['publication_id']
+        elif label=='hold_scope_kind':value['selection']['resolved_hold_records'][0]['value']['scope'].update(scope_kind='thread',thread_id='actual-thread')
+        elif label=='hold_key':value['selection']['resolved_hold_records'][0]['key']+=':foreign'
+        elif label=='hold_applicable':
+            row=value['selection']['resolved_hold_records'][0];row['value']['scope']['project_id']='other-project'
+            row['key']='retention_hold_record.v1:project~'+base64.urlsafe_b64encode(b'other-project').decode().rstrip('=')+':'+row['value']['hold_id']
+        else:value['selection']['resolved_hold_records']*=2
+        collector.invoke('run.started/retention/single-defect/'+label,eligible,value,False)
+    value=copy.deepcopy(packet['positive']['both_full_owner_joins']);ad=value['successor_handoff']['run_generation_admission'];ad['selected_predecessor_custody_id']=ad['successor_checkpoint']['publication_id']
+    def predecessor(value):
+        try:ns['check_run_generation_admission'](value)
+        except frozen.ExpectedRefusal as e:return e.errors
+        return set()
+    result=collector.invoke('run.started/adoption/single-defect/self-predecessor',predecessor,value,False)
+    if result!={'restore_point.deleted/original/run predecessor and successor differ'}:collector.failures.append(dict(case='self-predecessor',actual=sorted(result)))
+    value=copy.deepcopy(packet['positive']['both_full_owner_joins']);rows=next(iter(value['generic']['datasets'].values()));rows[next(iter(rows))]=None
+    collector.invoke('run.started/adoption/shapes/generic-row',shape,value,False)
     # Exercise the four authored retention claims as complete proposed-state
     # boundaries. The old helper's copy-preservation assertion is a harness
     # postcondition; the independent before/after checks below are product rows.
@@ -255,5 +282,17 @@ def main():
                 collector.failures.append(dict(case='adoption-bank/'+str(number),kind='refusal',expected=case['expected_refusal'],actual=sorted(result)))
     if os.environ.get('PNC019_ADOPTION_EXPLORE')=='1':
         frozen.helper_witnesses(collector,helper_seeds,files)
+    from pm_goal_deleted_creation_edits import edit as creation_edit
+    for operation,expected in [('creation_original_observed','original append/current source immutable event scope identity'),('creation_original_relocated','original source cursor/frame-end')]:
+        changed=creation_edit(dict(args=[packet['positive']['both_full_owner_joins']],kwargs={}),operation,dep)['args'][0]
+        result=collector.invoke('run.started/adoption/single-defect/'+operation,evaluate,changed,False)
+        if result!={'restore_point.deleted/original/'+expected}:collector.failures.append(dict(case=operation,actual=sorted(result)))
     globals()['ADOPTION_CONTEXT']=(ns,evaluate,eligible)
+    collector.family_scope=previous_scope
     return int(len(collector.failures)>start)
+
+
+def earlier_clause_proof(name,reports):
+    import pm_goal_deleted_external_oracles as frozen
+    from pm_goal_deleted_implications import proof
+    return frozen.earlier_clause_proof(name,reports)or proof(name,reports)

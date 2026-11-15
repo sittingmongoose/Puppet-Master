@@ -33,6 +33,24 @@ def typed_hash(value):
     return hashlib.sha256(pickle.dumps(freeze(value),protocol=5)).hexdigest()
 
 
+
+def canonical_hash(value):
+    def typed(item):
+        if isinstance(item,dict):return ('dict',sorted(((typed(k),typed(v))for k,v in item.items()),key=lambda p:json.dumps(p[0],ensure_ascii=True)))
+        if isinstance(item,(tuple,list)):return (type(item).__name__,[typed(x)for x in item])
+        if isinstance(item,(set,frozenset)):return (type(item).__name__,sorted((typed(x)for x in item),key=lambda p:json.dumps(p,ensure_ascii=True)))
+        if type(item)is bytes:return ('bytes',item.hex())
+        if type(item)is int:return ('int',hex(item))
+        if type(item)is float:return ('float',item.hex())
+        if item is None or type(item)in (str,bool):return (type(item).__name__,item)
+        import inspect
+        if inspect.isfunction(item):
+            from pathlib import Path
+            return ('frozen-function',hashlib.sha256(Path(item.__code__.co_filename).read_bytes()).hexdigest(),item.__qualname__,item.__code__.co_firstlineno)
+        raise TypeError('unsupported coherent input: '+type(item).__name__)
+    return hashlib.sha256(json.dumps(typed(value),ensure_ascii=True,separators=(',',':')).encode()).hexdigest()
+
+
 def replacement(value,backward=False):
     if type(value)is bool:return not value
     if type(value)is int:return value-1 if value>0 else 1
@@ -55,28 +73,45 @@ def replacement(value,backward=False):
 
 class Editor:
     def __init__(self,base,hash_functions,version=2):
+        self.fingerprint=canonical_hash if version>=4 else typed_hash
         self.version=version;self.immutable_matches=defaultdict(list);self.wire_fields=defaultdict(list)
         self.base=base;self.hash_functions=hash_functions;self.matches=defaultdict(list);self.hash_fields=defaultdict(list);self.old_digests={}
         for path,value in nodes(base):
-            if isinstance(value,(dict,list)) and value:self.matches[typed_hash(value)].append(path)
+            if isinstance(value,(dict,list)) and value:self.matches[self.fingerprint(value)].append(path)
             if type(value)is str and re.fullmatch('[0-9a-f]{64}',value):self.hash_fields[value].append(path)
             if version>=3 and isinstance(value,dict)and {'restore_point_id','record_sha256','source_thread_id','status','hold_refs'}<=set(value):
-                self.immutable_matches[typed_hash({k:v for k,v in value.items()if k not in ('status','hold_refs')})].append(path)
+                self.immutable_matches[self.fingerprint({k:v for k,v in value.items()if k not in ('status','hold_refs')})].append(path)
             if version>=3 and path and type(value)is str and str(path[-1]).endswith('_bytes_base64'):
                 self.wire_fields[value].append(path)
 
     def edit(self,path,mode):
-        value=copy.deepcopy(self.base);old=at(self.base,path);remove=mode.endswith('remove');rename=mode.endswith('rename')
-        new=(json.loads(mode.split('_value:',1)[1])if '_value:'in mode else None if remove or rename else replacement(old,mode.endswith('backward')))
+        value=copy.deepcopy(self.base)
+        if mode in ('coherent_replay','coherent_pending_create','coherent_pending_delete','coherent_pending_companion'):path=path[:-1]
+        old=at(self.base,path);remove=mode.endswith('remove');rename=mode.endswith('rename')
+        if mode=='coherent_replay':
+            new=copy.deepcopy(old);new.update(replayed=True,original_dispatch_id=old['dispatch_id'],dispatch_id=old['dispatch_id']+':replay')
+        elif mode=='coherent_pending_companion':
+            new=copy.deepcopy(old);new.update(state='pending_append',append_receipt=None,committed_at_utc=None)
+        elif mode=='coherent_pending_create':
+            new=copy.deepcopy(old);new.update(state='admitted_pending',original_owner_result=None,owner_result_sha256=None,terminal_at_utc=None,original_ui_response=None,original_append_receipt=None)
+            new['original_command_outcome'].update(outcome='executing',owner_result_ref=None,owner_result_schema_ref=None,owner_result_sha256=None,result_receipt_ref=None)
+        elif mode=='coherent_pending_delete':
+            new=copy.deepcopy(old);new['state']='pending'
+            for field in ('event_id','producer_semantic_digest','reason_code','result','terminal_at_utc','original_append_receipt','original_dispatch_custody'):new[field]=None
+        else:new=(json.loads(mode.split('_value:',1)[1])if '_value:'in mode else None if remove or rename else replacement(old,mode.endswith('backward')))
         edits={path}
         if mode.startswith('coherent'):
             for depth in range(1,len(path)):
+                selected_depth=re.search(r'_depth([0-9]+)',mode)if self.version>=4 else None
+                if selected_depth and depth!=int(selected_depth.group(1)):continue
                 ancestor=at(self.base,path[:depth])
                 if isinstance(ancestor,(dict,list)) and ancestor:
-                    for other in self.matches[typed_hash(ancestor)]:edits.add(other+path[depth:])
+                    for other in self.matches[self.fingerprint(ancestor)]:edits.add(other+path[depth:])
                     if self.version>=3 and isinstance(ancestor,dict)and {'restore_point_id','record_sha256','source_thread_id','status','hold_refs'}<=set(ancestor)and path[depth]not in ('status','hold_refs'):
-                        key=typed_hash({k:v for k,v in ancestor.items()if k not in ('status','hold_refs')})
+                        key=self.fingerprint({k:v for k,v in ancestor.items()if k not in ('status','hold_refs')})
                         for other in self.immutable_matches[key]:edits.add(other+path[depth:])
+        if mode=='coherent_scalar':
+            edits.update(p for p,item in nodes(self.base)if type(item)is type(old)and item==old)
         if self.version>=3 and mode=='coherent_hash_claim'and type(old)is str and re.fullmatch('[0-9a-f]{64}',old):
             edits.update(self.hash_fields[old])
         for edit in (sorted(edits,key=repr) if self.version>=3 else edits):
@@ -89,12 +124,12 @@ class Editor:
                 parent[changed_key]=parent.pop(key)
             else:put(value,edit,copy.deepcopy(new))
         if mode.startswith('coherent'):
-            affected={p[:depth]for p in edits for depth in range(1,len(p))}
+            affected={p[:depth]for p in edits for depth in range(1,len(p)+(1 if self.version>=5 and not(remove or rename)else 0))}
             for _ in range(8 if self.version>=3 else 4):
                 repaired=False
                 for parent in sorted(affected,key=lambda p:(len(p),repr(p)),reverse=True):
                     before,after=at(self.base,parent),at(value,parent)
-                    if typed_hash(before)==typed_hash(after):continue
+                    if self.fingerprint(before)==self.fingerprint(after):continue
                     for name,function in self.hash_functions.items():
                         key=(parent,name)
                         if key not in self.old_digests:

@@ -353,6 +353,45 @@
    "operation": "simple",
    "hash_recipe_version": 2,
    "input_sha256": "264922ccc37c47e11e2f4da7ade81901021446bf1227433b6a2fc90a56e90385"
+  },
+  {
+   "expected_refusal": "restore_point.deleted/original/run withdrawal clock ordering",
+   "seed": {
+    "manifest_file_index": 4,
+    "function_line": 106,
+    "ordinal": 1
+   },
+   "path": [
+    "args",
+    0,
+    "successor_handoff",
+    "run_generation_admission",
+    "predecessor_checkpoint",
+    "updated_at_utc"
+   ],
+   "operation": "simple",
+   "hash_recipe_version": 4,
+   "input_digest": "frozen_function_context_v1",
+   "input_sha256": "ea41600ad8a972f67435a08185e431287d0ac74b93a5f0f03a2c0a0e39d234de"
+  },
+  {
+   "expected_refusal": "restore_point.deleted/original/v2 original predecessor generation/holds retained",
+   "seed": {
+    "manifest_file_index": 4,
+    "function_line": 106,
+    "ordinal": 5
+   },
+   "path": [
+    "args",
+    0,
+    "successor_handoff",
+    "run_generation_admission",
+    "predecessor_hold_refs"
+   ],
+   "operation": "simple",
+   "hash_recipe_version": 4,
+   "input_digest": "frozen_function_context_v1",
+   "input_sha256": "7edad7a81c6358bd7d6a4f3d8c08cb318c797cd32b97db2004baeeb803d9a62d"
   }
  ]
 }

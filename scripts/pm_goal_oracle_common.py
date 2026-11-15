@@ -31,7 +31,7 @@ import pm_event_datetime as dates
 import pm_goal_guard_tables as tables
 
 ROOT = Path(__file__).resolve().parents[1]
-FORMATS = jsonschema.FormatChecker(formats=())
+FORMATS = jsonschema.FormatChecker()  # Preserve owner UUID/URI/etc. assertions.
 DATETIME_PROFILE = contextvars.ContextVar('goal_datetime_profile', default=dates.EVENT_RECORD)
 
 
@@ -51,26 +51,62 @@ def strict_pattern(validator, pattern, value, schema):
         yield jsonschema.ValidationError(f"{value!r} does not fully match {pattern!r}")
 
 
-def owned_properties(v, properties, instance, schema):
-    """Select timestamp roles from the consumed schema, never input field names.
+def timestamp_roles(schema):
+    """The gated inventory's source-role criteria, independent of data values.
 
-    EventRecord and GenericIndexRow Storage fields use CV-253. Source timestamps
-    and E5-2 acknowledged_at_utc retain the broad EventRecord profile. All owner
-    patterns/conditionals are still evaluated unchanged.
+    Lane trees use explicit predicates while the global inventory is stale;
+    these are the same schema identities/required markers the inventory checks.
     """
-    if not v.is_type(instance,'object'):
-        return
-    identity = properties.get('schema_id',{}).get('const')
-    storage_fields = ('observed_at_utc','persisted_at_utc') if identity in (
-        'pm.event.v0','pm.storage_value.event_record_index.v2') else ()
-    for name, subschema in properties.items():
-        if name in instance:
-            profile = dates.STORAGE_UTC_Z if name in storage_fields else dates.EVENT_RECORD
-            token = DATETIME_PROFILE.set(profile)
-            try:
-                yield from v.descend(instance[name],subschema,path=name,schema_path=name)
-            finally:
-                DATETIME_PROFILE.reset(token)
+    properties=schema.get('properties',{});required=set(schema.get('required',[]))
+    identity=properties.get('schema_id',{}).get('const')
+    event=identity=='pm.event.v0'or {'event_type','payload_schema_id','replay_policy'}<=required
+    storage=(event or identity=='pm.storage_value.event_record_index.v2'
+        or {'source_schema_id','producer_semantic_digest','publication_locator'}<=required
+        or 'original_storage_fields'in schema.get('x-pm-oracle-id','').split('/')
+        or {'first_append_receipt','original_event_value_commitment'}<=required)
+    fields={name:dates.STORAGE_UTC_Z for name in ('observed_at_utc','persisted_at_utc')if storage and name in properties}
+    if event and 'occurred_at_utc'in properties:fields['occurred_at_utc']=dates.EVENT_RECORD
+    return fields
+
+
+
+def timestamp_target(schema,resolver):
+    # A shared semantic profile and its referenced owner date-time assertion
+    # are the same effective clause under this field's profile context.
+    target=schema;seen=set()
+    while isinstance(target,dict)and '$ref'in target:
+        ref=target['$ref']
+        if ref in seen:raise ValueError('cyclic timestamp reference')
+        seen.add(ref);resolved=resolver.lookup(ref);target=resolved.contents;resolver=resolved.resolver
+    return target
+
+
+def owned_properties(v, properties, instance, schema):
+    """Compose shared metadata/source clocks even without an owner format tag.
+
+    All owner keywords still execute. E5-2 acknowledgement remains on the
+    broad EventRecord format profile; input field names never choose a role.
+    """
+    if not v.is_type(instance,'object'):return
+    profiles=timestamp_roles(schema)
+    disabled=_SCHEMA_CONTEXT.get()[1]
+    for name,subschema in properties.items():
+        if name not in instance:continue
+        profile=profiles.get(name,dates.EVENT_RECORD)
+        if name in profiles:
+            keyword='format'if v.is_type(instance[name],'string')else'type'
+            ident=schema_guard(timestamp_target(subschema,v._resolver),keyword)
+            if ident not in disabled:
+                try:dates.date_time(instance[name],profile=profile)
+                except numbers.Refusal as refusal:
+                    error=jsonschema.ValidationError('shared timestamp profile refused',validator=keyword,
+                        validator_value='date-time'if keyword=='format'else'string',instance=instance[name],schema=subschema,
+                        path=(name,),schema_path=(name,keyword),cause=refusal)
+                    error.oracle_guard=ident
+                    yield error
+        token=DATETIME_PROFILE.set(profile)
+        try:yield from v.descend(instance[name],subschema,path=name,schema_path=name)
+        finally:DATETIME_PROFILE.reset(token)
 
 
 _SCHEMA_LOCATIONS = {}
@@ -136,6 +172,8 @@ def schema_type_inventory(v):
             return
         visited.add(location)
         guards.update(schema_guard(schema, key) for key in schema if key in _KEYWORDS)
+        for field in timestamp_roles(schema):
+            guards.update(schema_guard(timestamp_target(schema['properties'][field],resolver),keyword)for keyword in ('type','format'))
         selectors(schema.get('if'))
         if 'type' in schema:
             ident = schema_guard(schema, 'type')

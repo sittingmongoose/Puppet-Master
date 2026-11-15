@@ -71,6 +71,7 @@ class Collector:
     def __init__(self):
         self.checkpoint_path = OUTPUT
         self.active = None
+        self.family_scope = None
         self.rows = {}
         self.calls = 0
         self.failures = []
@@ -181,6 +182,8 @@ class Collector:
     def observe(self, name, holds, site):
         row = self.rows.setdefault(name, dict(sites=set(), controls=[], negatives=[], later=[]))
         row['sites'].add(tuple(site))
+        scopes=row.setdefault('family_scopes',[])
+        if self.family_scope and self.family_scope not in scopes:scopes.append(self.family_scope)
         if self.active is not None:
             self.active.append((name, holds))
 
@@ -345,7 +348,10 @@ def generate(collector, *, replace=False):
             f'        table.require({name!r}, value, context)\n'
             '        return True\n'
             '    return g.Case(table, check, context)\n')
-        mapping[name] = dict(table=table, sites=sorted(collector.rows[name]['sites']))
+        def site_location(site):
+            path=Path(site[0])
+            return (str(path.relative_to(ROOT))if path.is_absolute()and path.is_relative_to(ROOT)else site[0],site[1])
+        mapping[name] = dict(table=table, sites=sorted(site_location(site)for site in collector.rows[name]['sites']))
     (ROOT / 'scripts/pm_goal_guard_rows.json').write_text(json.dumps(mapping, indent=2, sort_keys=True)+'\n')
     path = ROOT / 'scripts/pm_goal_guard_witnesses.json'
     witnesses = json.loads(path.read_text()) if path.exists() and not replace else {}
@@ -368,7 +374,7 @@ def prove(collector, out, only=None):
             continue
         slot = collector.rows.get(name, {})
         entry = dict(guard=name, table=spec['table'], controls=slot.get('controls', []),
-                     negatives=slot.get('negatives', []), sites=slot.get('sites', []))
+                     negatives=slot.get('negatives', []), sites=slot.get('sites', []),family_scopes=slot.get('family_scopes',[]))
         if entry['controls'] and entry['negatives']:
             module = importlib.import_module(tables.PREFIX + spec['table'])
             path = f'scripts/{tables.PREFIX}{spec["table"]}.py'
@@ -519,6 +525,7 @@ def mutations(collector):
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--generate', action='store_true')
+    parser.add_argument('--replace-generated',action='store_true',help='Replace only this runner’s generated inventory with all supplied sources; otherwise preserve other source tables')
     parser.add_argument('--judge-self-test',action='store_true')
     parser.add_argument('--prove-generated',action='store_true',help='Prove and replay cuts after deterministic generation in this process')
     parser.add_argument('--out', type=Path, required=True)
@@ -536,6 +543,7 @@ def main():
     source_paths=sorted((ROOT/'scripts').glob('pm_goal*.py'))+[ROOT/'scripts'/name for name in
         ('pm_guard_isolation.py','pm_event_numbers.py','pm_event_datetime.py','pm_event_numbers_corpus.py')]
     code_bindings={str(p.relative_to(ROOT)):hashlib.sha256(p.read_bytes()).hexdigest()for p in source_paths}
+    all_code_bindings=code_bindings.copy()  # Includes proof helpers imported later.
     sources = args.source or ['pm_goal_history_reader_fixtures', 'pm_goal_own_d_oracles',
                              'pm_goal_own_d_supplement','pm_goal_complete_oracles','pm_goal_shared_oracles']
     tables.DISCOVERY = True  # Identical witness collection for generation and replay.
@@ -549,7 +557,7 @@ def main():
         native_execution='NOT_RUN')
     (args.out / 'collection.json').write_text(json.dumps(summary, indent=1)+'\n')
     if args.generate:
-        generate(collector, replace=args.source is None)
+        generate(collector, replace=args.replace_generated)
         tables.DISCOVERY = False
         tables._ROWS = None
         tables._PREDICATES.clear()
@@ -576,6 +584,17 @@ def main():
     if (not args.generate or args.prove_generated) and not args.collect_only:
         proved_names={r['guard'] for r in report if r['status']=='PASS'}
         failed = failed or any(r['status'] != 'PASS' and not r.get('proof') for r in report) or any(not r['killed'] for r in mutation if r['guard'] in proved_names)
+    # A proof provider may import a source helper only during prove(). Bind it
+    # to the bytes captured before collection, not to a fresh end-of-run hash.
+    for module in tuple(sys.modules.values()):
+        filename=getattr(module,'__file__',None)
+        if not filename:continue
+        path=Path(filename).resolve()
+        if path.is_relative_to(ROOT)and path.name.startswith('pm_goal')and path.suffix=='.py':
+            relative=str(path.relative_to(ROOT))
+            if relative not in code_bindings:
+                if relative not in all_code_bindings:raise ValueError('unbound late source: '+relative)
+                code_bindings[relative]=all_code_bindings[relative]
     source_bindings={**code_bindings,**common.SOURCE_BINDINGS}
     drift=[path for path,sha in source_bindings.items()if not (ROOT/path).exists()or hashlib.sha256((ROOT/path).read_bytes()).hexdigest()!=sha]
     (args.out/'source-bindings.json').write_text(json.dumps(dict(files=source_bindings,changed_during_run=drift),indent=1,sort_keys=True)+'\n')

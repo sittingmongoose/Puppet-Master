@@ -57,6 +57,8 @@ def expect(condition, label):
 
 class Schema:
     def __init__(self, original, registry):
+        if isinstance(original,Schema):
+            self.original=original.original;self.validator=original.validator;return
         self.original = original
         base = original._resolver._base_uri
         # Preserve the original resolver's root binding as well as every
@@ -173,9 +175,23 @@ def seed_ref(function,label,files):
     return dict(manifest_file_index=files.index(path),function_line=fn.__code__.co_firstlineno,ordinal=ordinal)
 
 
-def replay_witnesses(collector,seeds,files):
+
+def fixed_context_unchanged(fn,base,changed):
+    parameters=list(inspect.signature(fn).parameters)
+    fixed={'admission_schema','receipt_schema','routes','compat','sid','mp','bdig','schema','registry'}
+    from pm_goal_deleted_case_ops import canonical_hash as digest
+    for i,name in enumerate(parameters[:len(base['args'])]):
+        if name in fixed and digest(dict(args=[base['args'][i]],kwargs={}))!=digest(dict(args=[changed['args'][i]],kwargs={})):return False
+    for name,value in base['kwargs'].items():
+        if name in fixed and digest(dict(args=[value],kwargs={}))!=digest(dict(args=[changed['kwargs'][name]],kwargs={})):return False
+    if getattr(fn,'__name__','')=='pinned_payload_validator'and base['args']and 'payload_schema'in base['args'][0]:
+        if base['args'][0]['payload_schema']!=changed['args'][0]['payload_schema']:return False
+    return True
+
+
+def replay_witnesses(collector,seeds,files,bank_path=None):
     import ast,copy,pickle
-    bank_path=ROOT/'tests/fixtures/pnc019_goal_frozen_helper_witnesses.json'
+    bank_path=bank_path or ROOT/'tests/fixtures/pnc019_goal_frozen_helper_witnesses.json'
     bank=c.load(bank_path);available={}
     for fn,base,label in seeds:
         try:ref=seed_ref(fn,label,files)
@@ -196,6 +212,15 @@ def replay_witnesses(collector,seeds,files):
         for key in case['path'][:-1]:parent=parent[key]
         if case['operation']=='legacy_other':
             parent[case['path'][-1]]=legacy_other(parent[case['path'][-1]])
+        elif case['operation'].startswith(('native_','original_','historical_','checkpoint_','replay_','summary_foreign_')):
+            from pm_goal_deleted_native_edits import edit
+            value=edit(base,case['operation'],FIXTURE_CONTEXT[1])
+        elif case['operation'].startswith('creation_'):
+            from pm_goal_deleted_creation_edits import edit
+            value=edit(base,case['operation'],FIXTURE_CONTEXT[0])
+        elif case['operation'].startswith('generic_'):
+            from pm_goal_deleted_generic_edits import edit
+            value=edit(base,case['operation'],FIXTURE_CONTEXT[0].G)
         elif case['operation'].startswith('source_'):
             from pm_goal_deleted_case_ops import source_edit
             value=source_edit(base,case['operation'],SOURCE_BUILDER,HASH_FUNCTIONS)
@@ -204,6 +229,8 @@ def replay_witnesses(collector,seeds,files):
             key=(json.dumps(case['seed'],sort_keys=True),case.get('hash_recipe_version',1))
             if key not in editors:editors[key]=Editor(base,helper_hash_functions(case.get('hash_recipe_version',1)),version=case.get('hash_recipe_version',1))
             value=editors[key].edit(tuple(case['path']),case['operation'])
+        if not fixed_context_unchanged(fn,base,value):
+            collector.failures.append(dict(case='frozen-fixture/'+str(number),kind='immutable_context_mutation'));continue
         if ( __import__('pm_goal_guard_sweep').digest(value)if case.get('input_digest')=='frozen_function_context_v1'else hashlib.sha256(pickle.dumps(value,protocol=5)).hexdigest())!=case['input_sha256']:
             collector.failures.append(dict(case='frozen-fixture/'+str(number),kind='input_sha256'));continue
         source='frozen-fixture/single-defect/'+str(number)
@@ -217,7 +244,7 @@ def replay_witnesses(collector,seeds,files):
     return found
 
 
-def helper_witnesses(collector,seeds,files):
+def legacy_helper_witnesses(collector,seeds,files):
     """Find first-refusal witnesses from real helper inputs; never credit crashes."""
     import ast,copy,os,pickle
     from pm_goal_deleted_case_ops import Editor,nodes
@@ -241,20 +268,21 @@ def helper_witnesses(collector,seeds,files):
         if inspect.ismethod(function) and isinstance(function.__self__,Schema):
             wanted={'restore_point.deleted/original/schema/'+frozen_fingerprint(function.__self__.original.schema)}-found
         if not wanted:continue
-        editor=Editor(base,helper_hash_functions(3),version=3)
+        editor=Editor(base,helper_hash_functions(4),version=4)
         seed_attempts=0
         def strings(value):
             if type(value)is str:yield value
             elif isinstance(value,tuple):
                 for child in value:yield from strings(child)
         constants=set(strings(code.co_consts))
-        enum_values=set(constants)
+        enum_values=set(constants);enum_alternatives={}
         # Candidate alternatives come from the intact owner resources and
         # actual predicate literals. They never replace an owner schema.
         def enums(document):
             if isinstance(document,dict):
-                for choice in document.get('enum',[]):
-                    if type(choice)is str:enum_values.add(choice)
+                choices={x for x in document.get('enum',[])if type(x)is str}
+                for choice in choices:
+                    enum_values.add(choice);enum_alternatives.setdefault(choice,set()).update(choices-{choice})
                 for child in document.values():enums(child)
             elif isinstance(document,list):
                 for child in document:enums(child)
@@ -280,9 +308,11 @@ def helper_witnesses(collector,seeds,files):
             if not path or path[0]=='args'and len(path)<=2 or path==('kwargs',):continue
             if seed_attempts>=limit:break
             large=isinstance(original,(dict,list))and len(pickle.dumps(original,protocol=5))>20000
-            modes=['simple','coherent','coherent_hash_claim','remove','coherent_remove','rename','coherent_rename']
+            depths=[depth for depth in range(2,len(path))if isinstance(__import__('pm_goal_deleted_case_ops').at(base,path[:depth]),(dict,list))and len(editor.matches[editor.fingerprint(__import__('pm_goal_deleted_case_ops').at(base,path[:depth]))])>1]
+            modes=['simple']+['coherent_depth'+str(depth)for depth in depths]+['coherent','coherent_hash_claim','remove','coherent_remove','rename','coherent_rename']
+            if type(original)in (int,float):modes=['coherent_value:0','coherent_value:1']+modes
             if type(original)is str and path[-1]in wanted_keys:
-                choices=sorted(enum_values-{original},key=lambda x:(x not in constants,len(x),x))[:24]
+                choices=sorted(enum_alternatives.get(original,set()),key=lambda x:(x not in constants,len(x),x))[:24]
                 modes=[('coherent_value:'+json.dumps(x))for x in choices]+modes
             elif isinstance(original,list)and original and path[-1]in wanted_keys:
                 modes=['coherent_value:[]']+modes
@@ -311,7 +341,7 @@ def helper_witnesses(collector,seeds,files):
                 collector.invoke(source,evaluate,changed,False)
                 collector.candidates[target]=(evaluate,copy.deepcopy(changed),source)
                 collector.snapshots[target]=copy.deepcopy(changed)
-                record=dict(expected_refusal=target,seed=seed_ref(function,label,files),path=list(path),operation=mode,hash_recipe_version=3,input_digest='frozen_function_context_v1',input_sha256=__import__('pm_goal_guard_sweep').digest(changed))
+                record=dict(expected_refusal=target,seed=seed_ref(function,label,files),path=list(path),operation=mode,hash_recipe_version=4,input_digest='frozen_function_context_v1',input_sha256=__import__('pm_goal_guard_sweep').digest(changed))
                 selected.append(record);found.add(target);wanted.discard(target)
                 if not wanted:break
             if not wanted:break
@@ -320,12 +350,19 @@ def helper_witnesses(collector,seeds,files):
     checkpoint()
 
 
+
+def helper_witnesses(collector,seeds,files):
+    from pm_goal_frozen_search import search
+    return search(sys.modules[__name__],collector,seeds,files)
+
+
 def main():
     global CREATED_DIGEST,HASH_FUNCTIONS,HELPER_HASH_FUNCTIONS,SOURCE_BUILDER
     collector = tables.COLLECTOR
     if collector is None:
         raise RuntimeError('Run with pm_goal_guard_sweep.py --source pm_goal_deleted_external_oracles')
     start = len(collector.failures)
+    previous_scope=collector.family_scope;collector.family_scope='restore_point.deleted'
     pin = c.load(ROOT/'Plans/restore_point_deleted_contract_fixtures.json')['frozen_joined_subject']
     manifest_path = Path(pin['path'])
     if hashlib.sha256(manifest_path.read_bytes()).hexdigest() != pin['sha256']:
@@ -389,6 +426,15 @@ def main():
                     patch(namespace,key,payload_validator)
                 elif key == 'validators' and isinstance(value,dict):
                     patch(namespace,key,{k:Schema(v,registry) for k,v in value.items()})
+        # Keep every original factory schema assertion on the same shared
+        # format boundary, including the migration receipt's timestamp fields.
+        for namespace in namespaces:
+            for key in ('Draft202012Validator','V'):
+                if key not in namespace:continue
+                original=namespace[key]
+                def factory(*args,__original=original,**kwargs):
+                    return Schema(__original(*args,**kwargs),registry)
+                patch(namespace,key,factory)
         patch(vars(subject.SC),'require',expect)
         for namespace in namespaces:
             for name in ('dt','parse','parse_time'):
@@ -416,7 +462,8 @@ def main():
                     continue
                 if fn is expect or fn.__name__=='validator':continue
                 label=fn.__code__.co_filename+':'+str(fn.__code__.co_firstlineno)
-                def wrapper(*args,__fn=fn,__label=label,**kwargs):
+                cap=16 if fn.__name__=='validate'and Path(fn.__code__.co_filename).resolve()==(directory/'validate_deleted_v3.py').resolve()else 8
+                def wrapper(*args,__fn=fn,__label=label,__cap=cap,**kwargs):
                     result=__fn(*args,**kwargs)
                     if __fn.__code__.co_filename.endswith('/created_domain_sp278.py')and __fn.__name__=='validate'and args and args[0]['kind']in ('native_completion','historical_completion'):
                         # Its summary-kind guard is inactive on these accepted
@@ -424,7 +471,7 @@ def main():
                         path=Path(__fn.__code__.co_filename)
                         line=next(i for i,text in enumerate(path.read_text().splitlines(),1)if "'result kind'"in text)
                         tables.decide('restore_point.deleted/original/result kind',True,site=(str(path),line))
-                    if capturing[0] and seed_counts.get(__label,0)<8:
+                    if capturing[0] and seed_counts.get(__label,0)<__cap:
                         try:
                             value=dict(args=list(args),kwargs=kwargs)
                             fingerprint=hashlib.sha256(pickle.dumps((__label,value),protocol=5)).hexdigest()
@@ -467,10 +514,11 @@ def main():
         # No frozen file was written, and the process owns these imports.
         sys.path[:] = old_path
         sys.dont_write_bytecode = old_bytecode
+    collector.family_scope=previous_scope
     return int(len(collector.failures)>start)
 
 
-def earlier_clause_proof(name,reports):
+def base_earlier_clause_proof(name,reports):
     """Two exact implications in the immutable generic checkpoint checker."""
     prefix='restore_point.deleted/original/'
     required={prefix+'active checkpoint':[prefix+'unique actual current generation'],
@@ -502,3 +550,8 @@ def helper_hash_functions(version):
     def immutable_record_hash(value):
         return HASH_FUNCTIONS['dig']({key:value[key]for key in dependency.immutable_fields})
     return {**HELPER_HASH_FUNCTIONS,'immutable_record':immutable_record_hash,'native_mp':dependency.G['mp']}
+
+
+def earlier_clause_proof(name,reports):
+    from pm_goal_deleted_implications import proof
+    return base_earlier_clause_proof(name,reports)or proof(name,reports)

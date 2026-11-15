@@ -1,0 +1,1072 @@
+{
+ "schema_id": "pm.pnc019.retained_helper_witnesses.v1",
+ "native_execution": "NOT_RUN",
+ "cases": [
+  {
+   "expected_refusal": "restore_point.deleted/retained/complete last global record, including nonmatching tail",
+   "seed": {
+    "manifest_file_index": 20,
+    "function_line": 34,
+    "ordinal": 1
+   },
+   "path": [
+    "args",
+    0,
+    "read_through"
+   ],
+   "operation": "simple",
+   "hash_recipe_version": 3,
+   "input_digest": "frozen_function_context_v1",
+   "input_sha256": "b075b4e0f97a5aee75750e3950528e256bc6a50e461e8cda2fe839e7894c3787"
+  },
+  {
+   "expected_refusal": "restore_point.deleted/retained/full exact current SP278 selection; snapshot authenticated by native issued lease",
+   "seed": {
+    "manifest_file_index": 20,
+    "function_line": 34,
+    "ordinal": 1
+   },
+   "path": [
+    "args",
+    0,
+    "read_token"
+   ],
+   "operation": "simple",
+   "hash_recipe_version": 3,
+   "input_digest": "frozen_function_context_v1",
+   "input_sha256": "fa125006d8af68bcacd989eefed0548010a3157e2ce2874fe37e4f133b5ca816"
+  },
+  {
+   "expected_refusal": "restore_point.deleted/retained/generic source same admitted Storage",
+   "seed": {
+    "manifest_file_index": 20,
+    "function_line": 34,
+    "ordinal": 1
+   },
+   "path": [
+    "args",
+    0,
+    "storage_instance_id"
+   ],
+   "operation": "coherent_value:\"event\"",
+   "hash_recipe_version": 3,
+   "input_digest": "frozen_function_context_v1",
+   "input_sha256": "b6545e4f713b42de7c399976ef91e0ce94aa937308d03f9130f16b5eac334dc5"
+  },
+  {
+   "expected_refusal": "restore_point.deleted/retained/actual surviving created_event",
+   "seed": {
+    "manifest_file_index": 20,
+    "function_line": 34,
+    "ordinal": 1
+   },
+   "path": [
+    "args",
+    0,
+    "created_event",
+    "event_id"
+   ],
+   "operation": "simple",
+   "hash_recipe_version": 3,
+   "input_digest": "frozen_function_context_v1",
+   "input_sha256": "34ec489dbcd1723da1f631c8823cd64b7aac76bbcab5973a50fa24ff879840da"
+  },
+  {
+   "expected_refusal": "restore_point.deleted/retained/actual complete selected created_event index",
+   "seed": {
+    "manifest_file_index": 20,
+    "function_line": 34,
+    "ordinal": 1
+   },
+   "path": [
+    "args",
+    0,
+    "created_event_index",
+    "event_id"
+   ],
+   "operation": "simple",
+   "hash_recipe_version": 3,
+   "input_digest": "frozen_function_context_v1",
+   "input_sha256": "05cf43f6df76568bc3c3a101b980458b7de7dc44ec41379a5f0984170911d206"
+  },
+  {
+   "expected_refusal": "restore_point.deleted/retained/actual surviving terminal_event",
+   "seed": {
+    "manifest_file_index": 20,
+    "function_line": 34,
+    "ordinal": 1
+   },
+   "path": [
+    "args",
+    0,
+    "terminal_event",
+    "event_id"
+   ],
+   "operation": "simple",
+   "hash_recipe_version": 3,
+   "input_digest": "frozen_function_context_v1",
+   "input_sha256": "28b9a4b1f71cd868c44ea5e797f56794e10d67ad8a078d7ec52ad8d8a4fec6e8"
+  },
+  {
+   "expected_refusal": "restore_point.deleted/retained/actual complete selected terminal_event index",
+   "seed": {
+    "manifest_file_index": 20,
+    "function_line": 34,
+    "ordinal": 1
+   },
+   "path": [
+    "args",
+    0,
+    "terminal_event_index",
+    "event_id"
+   ],
+   "operation": "simple",
+   "hash_recipe_version": 3,
+   "input_digest": "frozen_function_context_v1",
+   "input_sha256": "2eb400f2377198ec710ede80e4bb5735fba573897b18e8118e3e79fb112a46aa"
+  },
+  {
+   "expected_refusal": "restore_point.deleted/retained/creation exact project",
+   "seed": {
+    "manifest_file_index": 20,
+    "function_line": 44,
+    "ordinal": 1
+   },
+   "path": [
+    "args",
+    0,
+    "project_id"
+   ],
+   "operation": "coherent_value:\"key\"",
+   "hash_recipe_version": 3,
+   "input_digest": "frozen_function_context_v1",
+   "input_sha256": "ef024dc5859e7e207dbae9110067748042fda1fb09dd57fe2f23cf474a0b1bad"
+  },
+  {
+   "expected_refusal": "restore_point.deleted/retained/creation exact point",
+   "seed": {
+    "manifest_file_index": 20,
+    "function_line": 44,
+    "ordinal": 1
+   },
+   "path": [
+    "args",
+    0,
+    "restore_point_id"
+   ],
+   "operation": "coherent_value:\"key\"",
+   "hash_recipe_version": 3,
+   "input_digest": "frozen_function_context_v1",
+   "input_sha256": "a20f8856e7df9553db06f55b54f7f0d542f45dfe6ef706bdb1e0c1bb49799848"
+  },
+  {
+   "expected_refusal": "restore_point.deleted/retained/complete creation frozen event semantics",
+   "seed": {
+    "manifest_file_index": 20,
+    "function_line": 44,
+    "ordinal": 1
+   },
+   "path": [
+    "args",
+    0,
+    "created_event",
+    "event_id"
+   ],
+   "operation": "coherent_value:\"key\"",
+   "hash_recipe_version": 3,
+   "input_digest": "frozen_function_context_v1",
+   "input_sha256": "1ccce1d984e7049daa6ff21c5e53b4f190ce44d84a07e950f917212fdc9ce06e"
+  },
+  {
+   "expected_refusal": "restore_point.deleted/retained/created exact source envelope",
+   "seed": {
+    "manifest_file_index": 20,
+    "function_line": 44,
+    "ordinal": 1
+   },
+   "path": [
+    "args",
+    0,
+    "created_event",
+    "event_type"
+   ],
+   "operation": "coherent_value:\"key\"",
+   "hash_recipe_version": 3,
+   "input_digest": "frozen_function_context_v1",
+   "input_sha256": "6c370e6dae2511bdf31cde9154a99dcbbe3cfdb1ceafd23cdb5e1cf2a43cbb8e"
+  },
+  {
+   "expected_refusal": "restore_point.deleted/retained/original result custody times",
+   "seed": {
+    "manifest_file_index": 20,
+    "function_line": 80,
+    "ordinal": 1
+   },
+   "path": [
+    "args",
+    0,
+    "admitted_at_utc"
+   ],
+   "operation": "simple",
+   "hash_recipe_version": 3,
+   "input_digest": "frozen_function_context_v1",
+   "input_sha256": "833a6f815d7e9d46aee32efc181806ded0b5d98be0626497dafddf735bb8cb08"
+  },
+  {
+   "expected_refusal": "restore_point.deleted/retained/retained deletion source/request authority joins",
+   "seed": {
+    "manifest_file_index": 20,
+    "function_line": 80,
+    "ordinal": 1
+   },
+   "path": [
+    "args",
+    0,
+    "command_request_sha256"
+   ],
+   "operation": "simple",
+   "hash_recipe_version": 3,
+   "input_digest": "frozen_function_context_v1",
+   "input_sha256": "22e5278c20e3e743dda0eda88c23ff6eb7d4d14a149b6089fda6b9a917dbc3e4"
+  },
+  {
+   "expected_refusal": "restore_point.deleted/retained/retained original terminal digest/event/time",
+   "seed": {
+    "manifest_file_index": 20,
+    "function_line": 80,
+    "ordinal": 1
+   },
+   "path": [
+    "args",
+    0,
+    "event_id"
+   ],
+   "operation": "coherent_value:\"error\"",
+   "hash_recipe_version": 3,
+   "input_digest": "frozen_function_context_v1",
+   "input_sha256": "0fbc77ad08b661d95a067bd70c5467ada9788e62be5ac984a496c4ea7a333877"
+  },
+  {
+   "expected_refusal": "restore_point.deleted/retained/delete canonical operation/result joins",
+   "seed": {
+    "manifest_file_index": 20,
+    "function_line": 80,
+    "ordinal": 1
+   },
+   "path": [
+    "args",
+    0,
+    "operation_ref"
+   ],
+   "operation": "coherent_value:\"error\"",
+   "hash_recipe_version": 3,
+   "input_digest": "frozen_function_context_v1",
+   "input_sha256": "2cce165a484f9994f628f5fca07307a67a3d77016f7f7b9b586dd0eeb634233a"
+  },
+  {
+   "expected_refusal": "restore_point.deleted/retained/actual current terminal point/status",
+   "seed": {
+    "manifest_file_index": 20,
+    "function_line": 106,
+    "ordinal": 1
+   },
+   "path": [
+    "args",
+    0,
+    "family"
+   ],
+   "operation": "coherent_value:\"key\"",
+   "hash_recipe_version": 3,
+   "input_digest": "frozen_function_context_v1",
+   "input_sha256": "28bd9618d45fd8446b87d7548e13d5ad7a43d3d6bcd03b7bdc1d96c8c3c3f8ec"
+  },
+  {
+   "expected_refusal": "restore_point.deleted/retained/original stored receipt original-time chronology",
+   "seed": {
+    "manifest_file_index": 20,
+    "function_line": 24,
+    "ordinal": 1
+   },
+   "path": [
+    "args",
+    0,
+    "acknowledged_at_utc"
+   ],
+   "operation": "simple",
+   "hash_recipe_version": 3,
+   "input_digest": "frozen_function_context_v1",
+   "input_sha256": "e1d571b7cd0985f3fc3c4ce59447717ae9b85601a54c25fb8922bcafeb8fc08c"
+  },
+  {
+   "expected_refusal": "restore_point.deleted/retained/complete eleven-field original stored receipt",
+   "seed": {
+    "manifest_file_index": 20,
+    "function_line": 24,
+    "ordinal": 1
+   },
+   "path": [
+    "args",
+    0,
+    "acknowledged_at_utc"
+   ],
+   "operation": "remove",
+   "hash_recipe_version": 3,
+   "input_digest": "frozen_function_context_v1",
+   "input_sha256": "c6e05638cb181f6c2ed9339f356537a4f0000bea4fc9a0b81ae32c936244b7ad"
+  },
+  {
+   "expected_refusal": "restore_point.deleted/retained/original stored receipt barriers and extent",
+   "seed": {
+    "manifest_file_index": 20,
+    "function_line": 24,
+    "ordinal": 1
+   },
+   "path": [
+    "args",
+    0,
+    "durability_class"
+   ],
+   "operation": "coherent_value:\"synced\"",
+   "hash_recipe_version": 3,
+   "input_digest": "frozen_function_context_v1",
+   "input_sha256": "6a1dbcb3dfd27e77ec88f003ecb69100ada14063ce0953395fced5c19a8a65dc"
+  },
+  {
+   "expected_refusal": "restore_point.deleted/retained/original receipt surviving event identity",
+   "seed": {
+    "manifest_file_index": 20,
+    "function_line": 24,
+    "ordinal": 1
+   },
+   "path": [
+    "args",
+    0,
+    "event_id"
+   ],
+   "operation": "coherent_value:\"synced\"",
+   "hash_recipe_version": 3,
+   "input_digest": "frozen_function_context_v1",
+   "input_sha256": "1c54ca334b73afd438b486974ba6de89fdae7664ee2da408df24ca64f366ef5d"
+  },
+  {
+   "expected_refusal": "restore_point.deleted/retained/SP274 exact original command and producer",
+   "seed": {
+    "manifest_file_index": 20,
+    "function_line": 44,
+    "ordinal": 1
+   },
+   "path": [
+    "args",
+    0,
+    "created_event_index",
+    "producer_semantic_digest"
+   ],
+   "operation": "coherent_hash_claim",
+   "hash_recipe_version": 4,
+   "input_digest": "frozen_function_context_v1",
+   "input_sha256": "9994c7ddf0413a0271e38ac9174ca82d7a99ad561cf5f84f664d6ec7cb4b6885"
+  },
+  {
+   "expected_refusal": "restore_point.deleted/retained/canonical point/creation keys",
+   "seed": {
+    "manifest_file_index": 20,
+    "function_line": 44,
+    "ordinal": 1
+   },
+   "path": [
+    "args",
+    0,
+    "creation_companion",
+    "key"
+   ],
+   "operation": "simple",
+   "hash_recipe_version": 4,
+   "input_digest": "frozen_function_context_v1",
+   "input_sha256": "836e3ae8fb43198ba9831cbb7dddc40bb19188f06ced95026dc37cb579047c84"
+  },
+  {
+   "expected_refusal": "restore_point.deleted/retained/SP274 canonical key",
+   "seed": {
+    "manifest_file_index": 20,
+    "function_line": 44,
+    "ordinal": 1
+   },
+   "path": [
+    "args",
+    0,
+    "creation_result",
+    "key"
+   ],
+   "operation": "simple",
+   "hash_recipe_version": 4,
+   "input_digest": "frozen_function_context_v1",
+   "input_sha256": "23c317a69c91ea35913a3778327532926ee09387d220ab1084553c94ef22e3fd"
+  },
+  {
+   "expected_refusal": "restore_point.deleted/retained/capture attachment/citation/time",
+   "seed": {
+    "manifest_file_index": 20,
+    "function_line": 44,
+    "ordinal": 1
+   },
+   "path": [
+    "args",
+    0,
+    "created_event",
+    "payload",
+    "attachment_refs"
+   ],
+   "operation": "simple",
+   "hash_recipe_version": 4,
+   "input_digest": "frozen_function_context_v1",
+   "input_sha256": "c11941fd38db034380f0129f4b6b5dd4482776275cdafb72e39b96a173848595"
+  },
+  {
+   "expected_refusal": "restore_point.deleted/original/schema/e75d33b603a3b4caaba0a5c1fb4f796b21bf83ebb92a3679c3c92c260aca3515",
+   "seed": {
+    "manifest_file_index": 20,
+    "function_line": 44,
+    "ordinal": 1
+   },
+   "path": [
+    "args",
+    0,
+    "created_event",
+    "payload",
+    "attachment_refs"
+   ],
+   "operation": "coherent_depth4",
+   "hash_recipe_version": 4,
+   "input_digest": "frozen_function_context_v1",
+   "input_sha256": "3eac7a501af2f20f2b5b5c29a85687351b6d426d7bde3b75d62dd5a087d74a84"
+  },
+  {
+   "expected_refusal": "restore_point.deleted/retained/complete captured context/provenance refs",
+   "seed": {
+    "manifest_file_index": 20,
+    "function_line": 44,
+    "ordinal": 1
+   },
+   "path": [
+    "args",
+    0,
+    "created_event",
+    "payload",
+    "context_refs"
+   ],
+   "operation": "coherent_value:[]",
+   "hash_recipe_version": 4,
+   "input_digest": "frozen_function_context_v1",
+   "input_sha256": "721b20864452909b8000df2e56b9ec7b3feeedf8bc56721d2a9d97c14820c224"
+  },
+  {
+   "expected_refusal": "restore_point.deleted/retained/complete immutable source boundaries",
+   "seed": {
+    "manifest_file_index": 20,
+    "function_line": 44,
+    "ordinal": 1
+   },
+   "path": [
+    "args",
+    0,
+    "created_event",
+    "payload",
+    "message_boundary_ref"
+   ],
+   "operation": "simple",
+   "hash_recipe_version": 4,
+   "input_digest": "frozen_function_context_v1",
+   "input_sha256": "7079d2258b3c1b814008c6c246f8174d7042ece0cc4e4247820daa8317276a95"
+  },
+  {
+   "expected_refusal": "restore_point.deleted/retained/creation immutable hash identity",
+   "seed": {
+    "manifest_file_index": 20,
+    "function_line": 44,
+    "ordinal": 1
+   },
+   "path": [
+    "args",
+    0,
+    "created_event",
+    "payload",
+    "record_hash"
+   ],
+   "operation": "simple",
+   "hash_recipe_version": 4,
+   "input_digest": "frozen_function_context_v1",
+   "input_sha256": "ef8dedf0446e0a2fe0055cc5907db2300e370b3611ac66f94c9a1f762f8ee657"
+  },
+  {
+   "expected_refusal": "restore_point.deleted/retained/complete thirteen-field native immutable capture hash",
+   "seed": {
+    "manifest_file_index": 20,
+    "function_line": 44,
+    "ordinal": 1
+   },
+   "path": [
+    "args",
+    0,
+    "created_event",
+    "payload",
+    "record_hash"
+   ],
+   "operation": "coherent_hash_claim",
+   "hash_recipe_version": 4,
+   "input_digest": "frozen_function_context_v1",
+   "input_sha256": "b0777629a5e9ca5acd00ebbe86529c4e8a98ffdaf2ac756149f67436da34e560"
+  },
+  {
+   "expected_refusal": "restore_point.deleted/retained/created original available capture/safe-point/ref",
+   "seed": {
+    "manifest_file_index": 20,
+    "function_line": 44,
+    "ordinal": 1
+   },
+   "path": [
+    "args",
+    0,
+    "created_event",
+    "payload",
+    "record_ref"
+   ],
+   "operation": "simple",
+   "hash_recipe_version": 4,
+   "input_digest": "frozen_function_context_v1",
+   "input_sha256": "71fd3824f01c198bb5fc90126f7fb23a07fbf72259ecdbfc81cd880df7bcec84"
+  },
+  {
+   "expected_refusal": "restore_point.deleted/retained/complete creation request/frozen hashes",
+   "seed": {
+    "manifest_file_index": 20,
+    "function_line": 44,
+    "ordinal": 1
+   },
+   "path": [
+    "args",
+    0,
+    "creation_companion",
+    "value",
+    "command_request_sha256"
+   ],
+   "operation": "simple",
+   "hash_recipe_version": 4,
+   "input_digest": "frozen_function_context_v1",
+   "input_sha256": "1e8eafdc1d5c6a312235b7d4203e7abbc644d930822b0ca1d94993d98cf220d9"
+  },
+  {
+   "expected_refusal": "restore_point.deleted/retained/admitted committed creation companion",
+   "seed": {
+    "manifest_file_index": 20,
+    "function_line": 44,
+    "ordinal": 1
+   },
+   "path": [
+    "args",
+    0,
+    "creation_companion",
+    "value",
+    "record_ref"
+   ],
+   "operation": "simple",
+   "hash_recipe_version": 4,
+   "input_digest": "frozen_function_context_v1",
+   "input_sha256": "14d9b3996724f1e3bf50da79fe44aed92c42c5e6aaef39b257c8f2724ee3b6b7"
+  },
+  {
+   "expected_refusal": "restore_point.deleted/retained/complete original deletion receipt retained twice",
+   "seed": {
+    "manifest_file_index": 20,
+    "function_line": 80,
+    "ordinal": 1
+   },
+   "path": [
+    "args",
+    0,
+    "original_append_receipt",
+    "event_id"
+   ],
+   "operation": "simple",
+   "hash_recipe_version": 4,
+   "input_digest": "frozen_function_context_v1",
+   "input_sha256": "220bcb366017b01e5039910228717857c7a0c8835a5cbacaa37ede55620ba1de"
+  },
+  {
+   "expected_refusal": "restore_point.deleted/retained/exact retained logical member locators",
+   "seed": {
+    "manifest_file_index": 20,
+    "function_line": 80,
+    "ordinal": 1
+   },
+   "path": [
+    "args",
+    0,
+    "original_dispatch_custody",
+    "original_command_outcome_ref"
+   ],
+   "operation": "simple",
+   "hash_recipe_version": 4,
+   "input_digest": "frozen_function_context_v1",
+   "input_sha256": "32e79c16977795dbc67f0fcbf5679338531a90ba410e9df49733619ad42b3dfa"
+  },
+  {
+   "expected_refusal": "restore_point.deleted/retained/original outcome/response captured digests",
+   "seed": {
+    "manifest_file_index": 20,
+    "function_line": 80,
+    "ordinal": 1
+   },
+   "path": [
+    "args",
+    0,
+    "original_dispatch_custody",
+    "outcome_sha256"
+   ],
+   "operation": "simple",
+   "hash_recipe_version": 4,
+   "input_digest": "frozen_function_context_v1",
+   "input_sha256": "365fd53b54d86575086d2337e8567889debcecada631fa278c5236c445b9cd28"
+  },
+  {
+   "expected_refusal": "restore_point.deleted/retained/full exact admitted original deletion result",
+   "seed": {
+    "manifest_file_index": 20,
+    "function_line": 80,
+    "ordinal": 1
+   },
+   "path": [
+    "args",
+    0,
+    "result",
+    "event_id"
+   ],
+   "operation": "simple",
+   "hash_recipe_version": 4,
+   "input_digest": "frozen_function_context_v1",
+   "input_sha256": "d0fd4ad6c79825aad4ade1dc5601cc264a3f971e1c9a2fbcd80d0480de31d7c6"
+  },
+  {
+   "expected_refusal": "restore_point.deleted/retained/original same-frame acknowledgement",
+   "seed": {
+    "manifest_file_index": 20,
+    "function_line": 80,
+    "ordinal": 1
+   },
+   "path": [
+    "args",
+    0,
+    "original_dispatch_custody",
+    "original_command_outcome",
+    "acknowledgement_frame_id"
+   ],
+   "operation": "coherent",
+   "hash_recipe_version": 4,
+   "input_digest": "frozen_function_context_v1",
+   "input_sha256": "09808cd81db520a8641613ece9c4d4d29e04d275a294310783b5e0f2bb7eb6ff"
+  },
+  {
+   "expected_refusal": "restore_point.deleted/retained/original normalized/outcome command_id",
+   "seed": {
+    "manifest_file_index": 20,
+    "function_line": 80,
+    "ordinal": 1
+   },
+   "path": [
+    "args",
+    0,
+    "original_dispatch_custody",
+    "original_command_outcome",
+    "command_id"
+   ],
+   "operation": "simple",
+   "hash_recipe_version": 4,
+   "input_digest": "frozen_function_context_v1",
+   "input_sha256": "dae131cf9a7d7ecfe4e13d9a7289aa152d21c0f9c4ff8989487e673be3c344e9"
+  },
+  {
+   "expected_refusal": "restore_point.deleted/retained/original normalized/outcome dispatch_frame_id",
+   "seed": {
+    "manifest_file_index": 20,
+    "function_line": 80,
+    "ordinal": 1
+   },
+   "path": [
+    "args",
+    0,
+    "original_dispatch_custody",
+    "original_command_outcome",
+    "dispatch_frame_id"
+   ],
+   "operation": "simple",
+   "hash_recipe_version": 4,
+   "input_digest": "frozen_function_context_v1",
+   "input_sha256": "bfb0fdee0a88273e05f1cebfd2ccd6326cc47a346b59a954bc294c6e6eb71b6b"
+  },
+  {
+   "expected_refusal": "restore_point.deleted/retained/genuine original succeeded response",
+   "seed": {
+    "manifest_file_index": 20,
+    "function_line": 80,
+    "ordinal": 1
+   },
+   "path": [
+    "args",
+    0,
+    "original_dispatch_custody",
+    "original_command_outcome",
+    "error_ref"
+   ],
+   "operation": "coherent",
+   "hash_recipe_version": 4,
+   "input_digest": "frozen_function_context_v1",
+   "input_sha256": "d5201dba81ea815916ab4053000d1606822c45bc7540023b9271ea4d4fccc1e8"
+  },
+  {
+   "expected_refusal": "restore_point.deleted/retained/closed typed owner result schema/hash",
+   "seed": {
+    "manifest_file_index": 20,
+    "function_line": 80,
+    "ordinal": 1
+   },
+   "path": [
+    "args",
+    0,
+    "original_dispatch_custody",
+    "original_command_outcome",
+    "owner_result_sha256"
+   ],
+   "operation": "coherent_hash_claim",
+   "hash_recipe_version": 4,
+   "input_digest": "frozen_function_context_v1",
+   "input_sha256": "a5b1431628b41418cb04214196794b478530439a657b171356b7d2cb179e3257"
+  },
+  {
+   "expected_refusal": "restore_point.deleted/retained/original SIR owner receipt identity",
+   "seed": {
+    "manifest_file_index": 20,
+    "function_line": 80,
+    "ordinal": 1
+   },
+   "path": [
+    "args",
+    0,
+    "original_dispatch_custody",
+    "original_command_outcome",
+    "result_receipt_ref"
+   ],
+   "operation": "coherent",
+   "hash_recipe_version": 4,
+   "input_digest": "frozen_function_context_v1",
+   "input_sha256": "01692d897a82257d047e79a0d43f6d3504fe4b12a589af81939fc54e6a39f843"
+  },
+  {
+   "expected_refusal": "restore_point.deleted/retained/original normalized/outcome target_generation",
+   "seed": {
+    "manifest_file_index": 20,
+    "function_line": 80,
+    "ordinal": 1
+   },
+   "path": [
+    "args",
+    0,
+    "original_dispatch_custody",
+    "original_command_outcome",
+    "target_generation"
+   ],
+   "operation": "coherent_value:0",
+   "hash_recipe_version": 4,
+   "input_digest": "frozen_function_context_v1",
+   "input_sha256": "47267aa35dc39705ced160611230a4e8d7f809495ebe93a22839ccb632887cb9"
+  },
+  {
+   "expected_refusal": "restore_point.deleted/retained/original operation/instance joins",
+   "seed": {
+    "manifest_file_index": 20,
+    "function_line": 80,
+    "ordinal": 1
+   },
+   "path": [
+    "args",
+    0,
+    "original_dispatch_custody",
+    "original_normalized_request",
+    "command_instance_id"
+   ],
+   "operation": "simple",
+   "hash_recipe_version": 4,
+   "input_digest": "frozen_function_context_v1",
+   "input_sha256": "235cc955fb916f8a5f62685c27a01c8fccb4651887e3e946116669909f6150d3"
+  },
+  {
+   "expected_refusal": "restore_point.deleted/retained/original command/request",
+   "seed": {
+    "manifest_file_index": 20,
+    "function_line": 80,
+    "ordinal": 1
+   },
+   "path": [
+    "args",
+    0,
+    "original_dispatch_custody",
+    "original_normalized_request",
+    "request_ref"
+   ],
+   "operation": "simple",
+   "hash_recipe_version": 4,
+   "input_digest": "frozen_function_context_v1",
+   "input_sha256": "ed2bfb47f9f565e905b0136910604a0c71e5fd98b2cdf4131aa2dc6d143f7349"
+  },
+  {
+   "expected_refusal": "restore_point.deleted/retained/full retained SIR IdentityEnvelope",
+   "seed": {
+    "manifest_file_index": 20,
+    "function_line": 80,
+    "ordinal": 1
+   },
+   "path": [
+    "args",
+    0,
+    "original_dispatch_custody",
+    "original_command_outcome",
+    "identity",
+    "command_instance_id"
+   ],
+   "operation": "simple",
+   "hash_recipe_version": 4,
+   "input_digest": "frozen_function_context_v1",
+   "input_sha256": "b65d71e8fbcabfe4b36b4e58078b646f3b6e861d6a616f898c414d0b67c580c8"
+  },
+  {
+   "expected_refusal": "restore_point.deleted/retained/original topology/project",
+   "seed": {
+    "manifest_file_index": 20,
+    "function_line": 80,
+    "ordinal": 1
+   },
+   "path": [
+    "args",
+    0,
+    "original_dispatch_custody",
+    "original_command_outcome",
+    "identity",
+    "project_id"
+   ],
+   "operation": "coherent_depth5",
+   "hash_recipe_version": 4,
+   "input_digest": "frozen_function_context_v1",
+   "input_sha256": "55cfb1fe9b76627212398ff084cdb0d735591fb5cced56aac520acc8cfa1c00d"
+  },
+  {
+   "expected_refusal": "restore_point.deleted/retained/deletion exact companion key",
+   "seed": {
+    "manifest_file_index": 20,
+    "function_line": 106,
+    "ordinal": 1
+   },
+   "path": [
+    "args",
+    0,
+    "terminal_companion",
+    "key"
+   ],
+   "operation": "simple",
+   "hash_recipe_version": 4,
+   "input_digest": "frozen_function_context_v1",
+   "input_sha256": "45e476179fc5ba0c701d085baf17b9e886191c9ee6e423ce12b3ca71084ed08b"
+  },
+  {
+   "expected_refusal": "restore_point.deleted/retained/canonical admitted lifecycle state",
+   "seed": {
+    "manifest_file_index": 20,
+    "function_line": 106,
+    "ordinal": 1
+   },
+   "path": [
+    "args",
+    0,
+    "terminal_companion",
+    "value",
+    "after_status"
+   ],
+   "operation": "coherent_value:\"expired\"",
+   "hash_recipe_version": 4,
+   "input_digest": "frozen_function_context_v1",
+   "input_sha256": "b98456dcf640af7d5603ee86d0a101cb43d69a3ff371fc066eeacd6be43c3731"
+  },
+  {
+   "expected_refusal": "restore_point.deleted/retained/complete frozen terminal semantics unchanged by relocation",
+   "seed": {
+    "manifest_file_index": 20,
+    "function_line": 106,
+    "ordinal": 1
+   },
+   "path": [
+    "args",
+    0,
+    "terminal_companion",
+    "value",
+    "frozen_append_input"
+   ],
+   "operation": "simple",
+   "hash_recipe_version": 4,
+   "input_digest": "frozen_function_context_v1",
+   "input_sha256": "2e6e029c5afcfb6ab879cf78e872afeb87810cdc6d122514ff13b32c7f9b6a77"
+  },
+  {
+   "expected_refusal": "restore_point.deleted/retained/full terminal canonical point identity",
+   "seed": {
+    "manifest_file_index": 20,
+    "function_line": 106,
+    "ordinal": 1
+   },
+   "path": [
+    "args",
+    0,
+    "terminal_companion",
+    "value",
+    "prior_hash"
+   ],
+   "operation": "simple",
+   "hash_recipe_version": 4,
+   "input_digest": "frozen_function_context_v1",
+   "input_sha256": "7c7539b50f6471d9816f33c2002761515f73714bab0285e6300f17894907685e"
+  },
+  {
+   "expected_refusal": "restore_point.deleted/retained/SP274 complete original receipt equality",
+   "seed": {
+    "manifest_file_index": 20,
+    "function_line": 44,
+    "ordinal": 1
+   },
+   "path": [
+    "args",
+    0,
+    "creation_companion",
+    "value",
+    "append_receipt",
+    "byte_offset"
+   ],
+   "operation": "simple",
+   "hash_recipe_version": 4,
+   "input_digest": "frozen_function_context_v1",
+   "input_sha256": "f90aa9070cbe54a54d3b582617e79abc595d18a722e2f42f105597509cdc9738"
+  },
+  {
+   "expected_refusal": "restore_point.deleted/retained/SP274 original successful semantics",
+   "seed": {
+    "manifest_file_index": 20,
+    "function_line": 44,
+    "ordinal": 1
+   },
+   "path": [
+    "args",
+    0,
+    "creation_result",
+    "value",
+    "original_ui_response",
+    "result_status"
+   ],
+   "operation": "coherent_value:\"cancelled\"",
+   "hash_recipe_version": 4,
+   "input_digest": "frozen_function_context_v1",
+   "input_sha256": "1a76bda5d0253a8690d3fa1bc6c7e6732a93539516129b0c7669c49dda158697"
+  },
+  {
+   "expected_refusal": "restore_point.deleted/retained/original normalized/outcome idempotency_key",
+   "seed": {
+    "manifest_file_index": 20,
+    "function_line": 80,
+    "ordinal": 1
+   },
+   "path": [
+    "args",
+    0,
+    "original_dispatch_custody",
+    "original_command_outcome",
+    "idempotency_key"
+   ],
+   "operation": "simple",
+   "hash_recipe_version": 4,
+   "input_digest": "frozen_function_context_v1",
+   "input_sha256": "f2c5f0b990527c35b1906b4247b27151a3478be73ef3fafa151f38ff07c26167"
+  },
+  {
+   "expected_refusal": "restore_point.deleted/retained/original normalized/outcome payload_sha256",
+   "seed": {
+    "manifest_file_index": 20,
+    "function_line": 80,
+    "ordinal": 1
+   },
+   "path": [
+    "args",
+    0,
+    "original_dispatch_custody",
+    "original_command_outcome",
+    "payload_sha256"
+   ],
+   "operation": "simple",
+   "hash_recipe_version": 4,
+   "input_digest": "frozen_function_context_v1",
+   "input_sha256": "1534b1fec881ddc66eded97710e965a3c8ddcfe3f9c95f50aee4b62017bbc951"
+  },
+  {
+   "expected_refusal": "restore_point.deleted/retained/full original create result target",
+   "seed": {
+    "manifest_file_index": 20,
+    "function_line": 106,
+    "ordinal": 1
+   },
+   "path": [
+    "args",
+    0,
+    "creation_result",
+    "value",
+    "original_owner_result",
+    "record_sha256"
+   ],
+   "operation": "coherent",
+   "hash_recipe_version": 4,
+   "input_digest": "frozen_function_context_v1",
+   "input_sha256": "49a9bc86c90efcd30e319d9adbf3ecf39f6844cd2791aefd559d39e08cbdabae"
+  },
+  {
+   "expected_refusal": "restore_point.deleted/retained/retained deletion native immutable verification",
+   "seed": {
+    "manifest_file_index": 20,
+    "function_line": 106,
+    "ordinal": 1
+   },
+   "path": [
+    "args",
+    0,
+    "terminal_companion",
+    "value",
+    "record_hash_verification",
+    "verification_kind"
+   ],
+   "operation": "simple",
+   "hash_recipe_version": 4,
+   "input_digest": "frozen_function_context_v1",
+   "input_sha256": "2af1e498eb07aa4b500049a08372da46878f6e038fd5fd50b52763c9ad1d300e"
+  },
+  {
+   "expected_refusal": "restore_point.deleted/retained/SP274 admitted terminal project",
+   "seed": {
+    "manifest_file_index": 20,
+    "function_line": 44,
+    "ordinal": 1
+   },
+   "path": [
+    "args",
+    0,
+    "creation_result",
+    "value",
+    "state"
+   ],
+   "operation": "coherent_pending_create",
+   "hash_recipe_version": 4,
+   "input_digest": "frozen_function_context_v1",
+   "input_sha256": "e865e6ebf7f2d62e756469384366e2cc466027d3eec356700baa11bb276171e6"
+  }
+ ]
+}
