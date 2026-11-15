@@ -53,6 +53,16 @@ UNPROVABLE = {'override_scope_kind': 'OS01_kind is entailed by the grant and Wor
               'another family name and another operation_id are recomputed from the same positive; no input can '
               'make a deterministic function disagree with itself or collide on these distinct preimages'}
 
+# Each declared entailed row now lives in a singleton table. These labels
+# disclose missing isolation credit; the executable construction/pair proofs
+# remain mandatory and are replayed by pm-filesafe-unproved-attempts.py.
+from pm_filesafe_table_index import ENTAILED_ROWS
+for _phase in tables.PHASES:
+    _rows = tables.rows(_phase)
+    if len(_rows) == 1 and _rows[0][0] in ENTAILED_ROWS:
+        UNPROVABLE.setdefault(_phase, _rows[0][0] + ': see its exact construction/earlier-clause proof in '
+                              'pm-filesafe-unproved-attempts.py:attempts and DF.md; no isolation credit.')
+
 
 def key(value):
     return hashlib.sha256(pickle.dumps(value, protocol=5)).hexdigest()

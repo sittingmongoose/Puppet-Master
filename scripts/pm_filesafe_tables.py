@@ -15,7 +15,7 @@ import copy
 import importlib
 from pathlib import Path
 
-from pm_filesafe_table_index import PHASES
+from pm_filesafe_table_index import PHASES, GENERATED_FOLLOWERS
 
 ROOT = Path(__file__).resolve().parents[1]
 _ROWS = {}
@@ -32,6 +32,7 @@ FOLLOWERS = {
     'full_value_bytes': ('full_value_bytes_other',),
     'app_capture_scm_absent': ('app_capture_scm_absent_id',),
     'mat_capture_worktree': ('mat_capture_worktree_rest',),
+    **GENERATED_FOLLOWERS,
 }
 
 
