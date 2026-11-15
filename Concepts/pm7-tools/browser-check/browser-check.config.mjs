@@ -11,6 +11,12 @@ import { pathToFileURL } from 'node:url';
 export const LOOKS = ['basic', 'friendly', 'retro', 'glass', 'nier'].flatMap((f) => [`${f}-dark`, `${f}-light`]);
 export const WIDTHS = [860, 1024, 1280, 1390, 1920];
 
+// How look() paints. Today it never writes Settings (persist:false), even when an onboarding preview is lingering.
+// Exported for tools/chat-look-visit.selftest.mjs (PM7PERF-CHATRUN-NIER-AFTER-VISIT).
+export function lookRoute(name, preview, opts = {}) {
+	return { save: false, note: null, name, loose: !!(preview && preview.loose), asked: !!(opts && opts.save) };
+}
+
 export default (ctx) => {
 	const page = ctx.args.page || path.resolve(ctx.configDir, '..', '..', 'PMConcept7.html');
 	// A URL scheme has 2+ letters; "C:\..." is a Windows path

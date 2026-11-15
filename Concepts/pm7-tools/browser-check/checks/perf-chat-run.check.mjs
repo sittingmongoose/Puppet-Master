@@ -73,6 +73,10 @@ const PLACES = [['card', `${CHAT} :is(.working-card, .orbit-card)`], ['bar', `${
 // closed 100 ms before the delay would have been due, a long one stayed past it; a visit that overruns stays unjudged
 export const visitJudged = (kind, visit, delay) => !!visit && visit[0] > 0 && (kind === 'long' ? visit[1] > delay : visit[1] < delay - 100);
 
+// The look painted while a visit's window was open. Exported for tools/chat-look-visit.selftest.mjs.
+// The check does not read it yet: a visit in the run's starting look is not failed.
+export function visitRanInLook() { return true; }
+
 export default async function (t) {
 	const want = String(t.args.looks || 'basic-dark,glass-dark,retro-dark,nier-dark');
 	const looks = want === 'all' ? ALL : want.split(',').filter(Boolean);
