@@ -1,13 +1,14 @@
 #!/usr/bin/env python3
 """PNC-019 C12-GC: compact result bundle from one runner output and one clause-coverage output.
 
-Writes reports/event-authority-20261115/PNC019-C12-GC-{core,coverage,ledger,clauses}.json:
+Writes reports/event-authority-20261115/PNC019-C12-GC-{core,coverage,ledger,schema-closure}.json:
   core     - totals, gated-tool table results (credit copied from the tool), kill classes, justified rows,
              retained-store observations, corpus and join counts, source bindings and evidence hashes;
   coverage - per family: owner clause (unit) -> row -> table and tool status -> control, negative, cut, restore;
   ledger   - every negative case, uncapped: declared target, final call, outcome class, cut and restore result;
-  clauses  - per whole-definition root: assertion clauses isolated / together / unreached.
-Usage: python3 scripts/pm-goal-gc-report.py --run DIR --clauses FILE [--out-dir reports/event-authority-20261115]
+  schema-closure - per whole-definition root: every reachable assertion clause KILLED, COVERED_LATER (with the
+             clause that still refuses), VACUOUS, SELECTOR_OR_NEGATED or UNCOVERED (scripts/pm-goal-gc-schema-closure.py).
+Usage: python3 scripts/pm-goal-gc-report.py --run DIR --closure FILE [--out-dir reports/event-authority-20261115]
 """
 import argparse
 import collections
@@ -77,6 +78,21 @@ def family_of(source, case):
     return 'shared'
 
 
+def root_families(source, root):
+    name = root.rsplit('/', 1)[-1]
+    if source == 'own_a':
+        if 'Stop' in name or 'stopped' in name:
+            return ['goal_run.stopped']
+        if 'Block' in name or 'blocked' in name:
+            return ['goal_run.blocked']
+        return ['goal_run.stopped', 'goal_run.blocked']
+    if 'blocked' in name:
+        return ['goal.blocked']
+    if any(word in name for word in ('completed', 'exception', 'approval', 'workflow', 'todo', 'disposition')):
+        return ['goal.completed']
+    return ['goal.blocked', 'goal.completed']
+
+
 def race(snapshot):
     return snapshot['case'].endswith('_disclosure') and snapshot['refusal'] == 'access/disclosure'
 
@@ -84,14 +100,16 @@ def race(snapshot):
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--run', type=Path, required=True)
-    parser.add_argument('--clauses', type=Path, required=True)
+    parser.add_argument('--closure', type=Path, action='append', required=True, help='one schema-closure output per checker')
     parser.add_argument('--out-dir', type=Path, default=ROOT / 'reports/event-authority-20261115')
     args = parser.parse_args()
     summary = json.loads((args.run / 'summary.json').read_text())
     tables = json.loads((args.run / 'tables.json').read_text())
     ledgers = json.loads((args.run / 'ledger.json').read_text())
     stores = json.loads((args.run / 'retained-store-snapshots.json').read_text())
-    clauses = json.loads(args.clauses.read_text())
+    closure = dict(sources={})
+    for path in args.closure:
+        closure['sources'].update(json.loads(path.read_text())['sources'])
     units = headings()
     table_of = {key: t for t in tables for key in t['rows']}
     core = dict(schema_id='pm.pnc019.c12_gc.core.v1', native_execution='NOT_RUN', tool_commit='004bdedd63',
@@ -161,9 +179,9 @@ def main():
                             lane_matrix_problems=summary['lane_matrix_problems'], tool_failure_tables=summary['tool_failure_tables'],
                             unproved_justified=len(summary['unproved_justified']), unproved_unjustified=summary['unproved_unjustified']),
                 changed_during_run=summary['changed_during_run'], source_bindings=summary['source_bindings'],
-                clause_totals={s: dict(v['totals'], distinct=v['distinct_clauses'], distinct_isolated=v['distinct_isolated'])
-                               for s, v in clauses['sources'].items()},
-                evidence={p.name: sha(p) for p in sorted(args.run.rglob('*')) if p.is_file()} | {args.clauses.name: sha(args.clauses)},
+                schema_closure={s: dict(occurrences=v['occurrence_counts'], distinct=v['distinct_counts'])
+                                for s, v in closure['sources'].items()},
+                evidence={p.name: sha(p) for p in sorted(args.run.rglob('*')) if p.is_file()} | {p.name: sha(p) for p in args.closure},
                 evidence_root=str(args.run))
     args.out_dir.mkdir(parents=True, exist_ok=True)
     (args.out_dir / 'PNC019-C12-GC-core.json').write_text(json.dumps(core, indent=1, sort_keys=True) + '\n')
@@ -171,10 +189,32 @@ def main():
     (args.out_dir / 'PNC019-C12-GC-ledger.json').write_text(json.dumps(dict(
         columns=['case', 'family', 'declared_target', 'outcome_class', 'final_call', 'input_sha256', 'cut_kind', 'cut_result',
                  'restore_refusal', 'joint_cut_rows'], rows=ledger_out), indent=0) + '\n')
-    compact = {s: dict(totals=v['totals'], distinct=v['distinct_clauses'], distinct_isolated=v['distinct_isolated'],
-                       roots={r: {k: e[k] for k in ('rows', 'seeds', 'validations', 'assertion_clauses', 'isolated', 'alternative', 'co_located', 'together', 'unreached')}
-                              for r, e in v['roots'].items()}) for s, v in clauses['sources'].items()}
-    (args.out_dir / 'PNC019-C12-GC-clauses.json').write_text(json.dumps(compact, indent=1, sort_keys=True) + '\n')
+    compact = {}
+    for source, v in closure['sources'].items():
+        roots = {}
+        for root, e in v['roots'].items():
+            classes = collections.defaultdict(dict)
+            for clause, entry in e['clauses'].items():
+                if entry['cls'] == 'KILLED':
+                    classes['KILLED'][clause] = [entry['input_sha256'][:16], entry['edit'], entry['control']]
+                elif entry['cls'] == 'COVERED_LATER':
+                    classes['COVERED_LATER'][clause] = entry['still_refused_by']
+                elif entry['cls'] in ('VACUOUS', 'SELECTOR_OR_NEGATED', 'UNREACHABLE'):
+                    classes[entry['cls']][clause] = entry.get('proof') or entry.get('note')
+                else:
+                    classes['UNCOVERED'][clause] = entry
+            roots[root] = dict(rows=e['rows'], families=root_families(source, root), seeds=e['seeds'],
+                               branch_controls=len(e['branch_controls']), validations=e['validations'], counts=e['counts'], **classes)
+        compact[source] = dict(occurrences=v['occurrence_counts'], distinct=v['distinct_counts'], uncovered_distinct=v['uncovered'], roots=roots)
+    (args.out_dir / 'PNC019-C12-GC-schema-closure.json').write_text(json.dumps(compact, indent=1, sort_keys=True) + '\n')
+    for family, entry in core['families'].items():
+        uncovered = sorted({clause for root, e in compact[entry['source']]['roots'].items() if family in e['families']
+                            for clause in e.get('UNCOVERED', {})})
+        later = sum(len(e.get('COVERED_LATER', {})) for e in compact[entry['source']]['roots'].values() if family in e['families'])
+        killed = sum(len(e.get('KILLED', {})) for e in compact[entry['source']]['roots'].values() if family in e['families'])
+        entry.update(schema_clauses_killed=killed, schema_clauses_covered_later=later, schema_uncovered=len(uncovered),
+                     schema_uncovered_list=uncovered)
+    (args.out_dir / 'PNC019-C12-GC-core.json').write_text(json.dumps(core, indent=1, sort_keys=True) + '\n')
     print(json.dumps(core['families'], indent=1))
     return 0
 

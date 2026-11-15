@@ -74,7 +74,8 @@ def main():
         fam = core['families'][family]
         marker = f'  "{family}": {{'
         ok = fam['open_rows'] == 0 and core['totals']['lane_matrix_problems'] == 0 and not core['changed_during_run'] \
-            and fam['retained_store_changed'] == 0 and fam['corpus_cases'] > 0 and fam['join_cases'] > 0 and fam['retained_cases'] > 0
+            and fam['retained_store_changed'] == 0 and fam['corpus_cases'] > 0 and fam['join_cases'] > 0 and fam['retained_cases'] > 0 \
+            and fam['schema_uncovered'] == 0
         status = 'PASS' if ok else 'PARTIAL'
         checker = 'scripts/pm_goal_own_a_oracles.py' if fam['source'] == 'own_a' else 'scripts/pm_goal_own_b_oracles.py'
         evidence = [
@@ -84,6 +85,9 @@ def main():
             after(core_path, marker, f'"retained_store_changed": {fam["retained_store_changed"]}'),
             after(core_path, marker, f'"corpus_cases": {fam["corpus_cases"]}'),
             after(core_path, marker, f'"join_cases": {fam["join_cases"]}'),
+            after(core_path, marker, f'"schema_uncovered": {fam["schema_uncovered"]}'),
+            after(core_path, marker, f'"schema_clauses_killed": {fam["schema_clauses_killed"]}'),
+            anchor('scripts/pm-goal-gc-schema-closure.py', 'with only that clause cut it ACCEPTS', 1),
             anchor('scripts/pm-goal-gc-guard-tables.py', 'A kill is counted only when the cut complete checker ACCEPTS', 1),
             anchor('scripts/pm-goal-gc-guard-tables.py', 'real observation vectors: controls', 1),
             anchor('scripts/pm_goal_gc_adapter.py', 'predicate, field = _predicate(key)', 1),
@@ -100,8 +104,11 @@ def main():
                    f"and the restored checker to refuse with the same code; duplicate-set kills are counted apart. Shared number corpus "
                    f"and date-time corpus through this checker ({fam['corpus_cases']} cases), sealed-receipt retained reads "
                    f"({fam['retained_cases']} cases; {fam['retained_store_reads']} store observations, {fam['retained_store_changed']} "
-                   f"changed), distinct-copy joins ({fam['join_cases']} cases). Whole-definition schema rows (W3H route) carry the "
-                   f"clause coverage in PNC019-C12-GC-clauses.json. Native execution NOT_RUN.")
+                   f"changed), distinct-copy joins ({fam['join_cases']} cases). Schema closure over every whole-definition root the family "
+                   f"reaches (PNC019-C12-GC-schema-closure.json): {fam['schema_clauses_killed']} clause occurrences KILLED (clause cut "
+                   f"accepts, restored refuses), {fam['schema_clauses_covered_later']} COVERED_LATER with the later clause named, "
+                   f"{fam['schema_uncovered']} uncovered" + (': ' + ', '.join(fam['schema_uncovered_list']) if fam['schema_uncovered_list'] else '') +
+                   ". Native execution NOT_RUN.")
         row['cells']['positive_negative_oracles'] = dict(status=status, finding=finding, evidence=evidence,
                                                          prior_status=before, prior_source=source)
         row['vector'] = ' '.join(LETTER[row['cells'][c]['status']] for c in ORDER)
