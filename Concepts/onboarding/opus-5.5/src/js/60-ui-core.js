@@ -1847,7 +1847,10 @@
        unfinished, as the finished setup saves it (O55.shell.commitLook, written once the close has played: flushLook
        below), so the page keeps it and a reload shows it; a look the window only showed (a new install's Basic Dark, a
        resumed run's own) is not a choice and is left unsaved, as before */
-    if (S.sess.status === 'closed' && S.lookPicked && O55.shell && O55.shell.commitLook) O55.shell.commitLook(S, { defer: true });
+    /* (once written, the saved look the close noted is the one after this save, not before it: a later Settings choice
+       back to the look before it is then a choice, also over a reload, R57 F1; the save itself is no outside choice) */
+    const keepLeft = () => { if (!S.open && S.sess && S.sess.status === 'closed' && S.sess.lookLeft) { S.sess.lookLeft.stored = storedLook(); S.sess.lookLeft.painted = paintedLook(); S.save(); } };
+    if (S.sess.status === 'closed' && S.lookPicked && O55.shell && O55.shell.commitLook) O55.shell.commitLook(S, { defer: true, after: keepLeft });
     S.lookPicked = false;
     S.save();
     S.open = false; S.tip = null;
