@@ -222,6 +222,10 @@
   {
    "event_type": "forge.review.marked_ready",
    "outcome": "registered"
+  },
+  {
+   "event_type": "forge.review.merged",
+   "outcome": "registered"
   }
  ]
 }
