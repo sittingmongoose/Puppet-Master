@@ -61,9 +61,10 @@ function o55ChoicesFor(setting, current) {
    with the maker's mark (PM56_PICKERS.providerMark), where it runs, the Default/Recommended tags and the tick. Which
    lists, by id, exactly as Jared chose them: the 13 model settings (option B, 2026-11-10) and the 11 long single-choice
    lists of question 3 ("looks good, I choose all 11", 2026-11-11), those without the maker strip. No rule widens it:
-   every other list, however long (Terminal colors, How it talks and the rest), stays a tick list until he says so. */
+   every other list, however long (Terminal colors, How it talks and the rest), stays a tick list until he says so.
+   The retired media.image.provider left the set with its row (FO-220). */
 const O55_PICK_MODELS = new Set(['ai.models.default-model', 'ai.models.overseer-model', 'ai.models.worker-model', 'ai.models.gui-worker-model', 'ai.models.high-effort-worker-model', 'ai.models.auditor-model', 'ai.models.teach-model', 'ai.models.goal-worker-model', 'ai.models.goal-verifier-model', 'ai.models.subagent-model', 'ai.models.thread-title-model', 'ai.models.per-lane-model', 'personas.tuning.default-model']);
-const O55_PICK_LISTS = new Set(['code.terminal.background-image', 'code.editing.color-scheme', 'ai.models.default-provider', 'code.terminal.background-gradient', 'general.visual.theme', 'planning.verification.goal-template', 'code.terminal.bezel-material', 'personas.library.default-persona', 'personas.library.active-persona', 'general.visual.nier-background', 'media.image.provider']);
+const O55_PICK_LISTS = new Set(['code.terminal.background-image', 'code.editing.color-scheme', 'ai.models.default-provider', 'code.terminal.background-gradient', 'general.visual.theme', 'planning.verification.goal-template', 'code.terminal.bezel-material', 'personas.library.default-persona', 'personas.library.active-persona', 'general.visual.nier-background']);
 const O55_BRANDS = { anthropic: 'Anthropic', 'anthropic-api': 'Anthropic', 'claude-code': 'Anthropic', openai: 'OpenAI', 'openai-codex': 'OpenAI', gemini: 'Google', google: 'Google', 'qwen-coding': 'Alibaba', 'qwen-token': 'Alibaba', alibaba: 'Alibaba', 'kimi-coding': 'Moonshot', moonshot: 'Moonshot', 'zai-coding': 'z.ai', zai: 'z.ai', 'cursor-cli': 'Cursor', cursor: 'Cursor', 'free-models': 'Free routes', opencode: 'OpenCode' };
 const o55IsModelChoice = setting => O55_PICK_MODELS.has(setting.id);
 const o55UsesPicker = (setting, ch) => !!ch && ch.kind === 'single' && (O55_PICK_MODELS.has(setting.id) || O55_PICK_LISTS.has(setting.id));

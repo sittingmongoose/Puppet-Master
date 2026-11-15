@@ -8,6 +8,11 @@
 // FO-218 (sol-recheck-fo212-213 M2): on the normal surface a page reload keeps the chosen service and model, and the
 // stored route is unchanged. The sandbox's opaque origin has no storage; that case says so instead of asserting
 // persistence there.
+// FO-220 (sol-recheck-fo217-218, inherited source observation): the prompt-optimizer row ("Let MiniMax improve my
+// prompt") follows the picture route: it shows while the image-generation route's picture is MiniMax Image-01 and
+// hides for another service. Its when-condition read the retired media.image.provider (always undefined), so the
+// row never showed. MiniMax starts signed out in the example data and its key dialog only records a key, so the
+// sign-in is seeded as set-up (not under test); the service choice, the save and the row are visible real clicks.
 // Navigation is by visible real clicks (FO212-REOPEN-NAV-EVAL): the Settings tab, the AI & Providers chapter, the
 // Media & Output page-index entry, the Image Generation row and the Choose/Change service button — no PM51.go and
 // no in-page element.click(). The dropdown choices and "Use this service" are real clicks as before.
@@ -15,6 +20,8 @@
 const SVC_KEY = 'OpenAI/Codex subscription';
 const SVC_LABEL = 'ChatGPT / Codex plan';
 const MODEL = 'GPT Image';
+const MM_KEY = 'MiniMax Image-01';
+const MM_MODEL = 'Image-01';
 const MEDIA_MOUNTED = '[data-continuous-workspace-body="media"][data-workspace-mounted="true"]';
 
 async function settings(t, surface) {
@@ -86,6 +93,26 @@ const USES = () => {
 	const r = d && [...d.querySelectorAll('.setting-row')].find((x) => (x.querySelector('.setting-label') || {}).textContent?.trim() === 'Uses');
 	return r ? { value: (r.querySelector('.pm51-row-value') || {}).textContent?.trim() || '', help: (r.querySelector('.setting-description') || {}).textContent?.trim() || '' } : null;
 };
+
+// the prompt-optimizer row as drawn: its label, its dependent-off class and its painted box
+const OPT_ROW = () => {
+	const row = document.querySelector('[data-continuous-workspace-body="media"] .setting-row[id="setting-media.capabilities.prompt-optimizer"]');
+	if (!row) return null;
+	return { label: (row.querySelector('.setting-label') || {}).textContent?.trim() || '', depOff: row.classList.contains('o55-dep-off'), display: getComputedStyle(row).display, height: row.getBoundingClientRect().height };
+};
+// the More options disclosure and every row it holds, so a hidden optimizer row is judged beside shown siblings
+const MORE_ROWS = () => {
+	const d = document.querySelector('[data-continuous-workspace-body="media"] details.pm51-advanced');
+	if (!d) return null;
+	return { open: d.open, rows: [...d.querySelectorAll('.setting-row')].map((r) => ({ id: r.id, visible: getComputedStyle(r).display !== 'none' && r.getBoundingClientRect().height > 0 })) };
+};
+async function openMoreOptions(t, f) {
+	const det = f.locator('[data-continuous-workspace-body="media"] details.pm51-advanced').filter({ hasText: 'More options' }).first();
+	await det.scrollIntoViewIfNeeded();
+	if (!(await det.evaluate((d) => d.open))) await det.locator('summary').click();
+	await t.settle();
+	await t.page.waitForTimeout(300);
+}
 
 export const tests = {};
 for (const surface of ['normal', 'sandbox']) {
@@ -161,5 +188,58 @@ for (const surface of ['normal', 'sandbox']) {
 		await t.check(`after reload the editor shows the chosen service ("${shown.svcLabel}")`, shown.svcValue === SVC_KEY && shown.svcLabel === SVC_LABEL, JSON.stringify(shown));
 		await t.check(`after reload the editor shows the chosen model ("${shown.modelLabel}")`, shown.modelValue === MODEL, JSON.stringify(shown));
 		await t.check(`the stored route is unchanged by the reload (model "${after && after.model}")`, !!after && after.picture === SVC_KEY && after.model === MODEL, JSON.stringify(after));
+	});
+
+	T('FO-220 the prompt-optimizer row follows the picture route', async (t) => {
+		const f = await settings(t, surface);
+		await goMedia(t, f);
+		await pickRoute(t, f);
+		// (set-up, not under test: MiniMax is signed out in the example data and its key dialog only records a key,
+		// so the picture panel would grey it out. A provider's signedIn is derived from its active accounts
+		// (10-providers.js derive), so the seed gives MiniMax one active plan account; providers are not part of
+		// the saved project projection, so seed after the navigation has settled, and read back.)
+		await t.page.waitForTimeout(800);
+		const seeded = await f.evaluate(() => {
+			const S = PM12_KIMI.getState();
+			const p = (S.providers || []).find((x) => x.id === 'minimax-coding');
+			if (!p) return { found: false };
+			if (!(p.accounts || []).some((a) => a.active)) {
+				p.accounts = [{
+					id: 'minimax-plan', nickname: 'MiniMax plan', identity: 'jared', active: true, default: true,
+					method: 'Plan credential', health: 'Healthy', usage: { text: 'Plan window available', windows: {} },
+					defaultModel: (p.models && p.models[0] && p.models[0].id) || '',
+					models: (p.models || []).map((m) => ({ id: m.id, enabled: true })), props: {}
+				}];
+			}
+			PM12_KIMI.setState(S);
+			const after = PM12_KIMI.getState().providers.find((x) => x.id === 'minimax-coding');
+			return { found: true, held: !!(after && after.signedIn) };
+		});
+		await t.check('MiniMax is signed in for the case (set-up)', seeded.found && seeded.held, JSON.stringify(seeded));
+		await openPicturePanel(t, f);
+		// choose MiniMax Image-01 and its Image-01 model, and save
+		await pickOption(t, f, f.locator('.drawer-wrap select.pm51-media-svc'), MM_KEY);
+		await f.waitForSelector('.drawer-wrap select.pm51-media-model', { state: 'attached', timeout: 8000 });
+		await pickOption(t, f, f.locator('.drawer-wrap select.pm51-media-model'), MM_MODEL);
+		await f.locator('.drawer-wrap .pm51-panel-foot button.primary', { hasText: 'Use this service' }).first().click();
+		await t.settle();
+		await t.page.waitForTimeout(500);
+		const mm = await f.evaluate(STORED);
+		await t.check(`"Use this service" stores MiniMax (model "${mm && mm.model}")`, !!mm && mm.picture === MM_KEY && mm.model === MM_MODEL, JSON.stringify(mm));
+		// the row shows under More options while the route's picture is MiniMax
+		await openMoreOptions(t, f);
+		const shown = await f.evaluate(OPT_ROW);
+		await t.check(`the prompt-optimizer row shows for MiniMax ("${shown && shown.label}")`, !!shown && shown.label === 'Let MiniMax improve my prompt' && !shown.depOff && shown.display !== 'none' && shown.height > 0, JSON.stringify(shown));
+		// choose another service: the row hides again
+		await openPicturePanel(t, f);
+		await chooseAndSave(t, f);
+		const other = await f.evaluate(STORED);
+		await t.check(`"Use this service" stores the other service (model "${other && other.model}")`, !!other && other.picture === SVC_KEY && other.model === MODEL, JSON.stringify(other));
+		await openMoreOptions(t, f);
+		const hidden = await f.evaluate(OPT_ROW);
+		const more = await f.evaluate(MORE_ROWS);
+		await t.check('the prompt-optimizer row hides for the other service', !!hidden && hidden.depOff && hidden.display === 'none', JSON.stringify(hidden));
+		const siblings = (more ? more.rows : []).filter((r) => r.id !== 'setting-media.capabilities.prompt-optimizer');
+		await t.check('More options is open and its other rows still show', !!more && more.open && siblings.length >= 2 && siblings.every((r) => r.visible), JSON.stringify(more));
 	});
 }
