@@ -138,7 +138,14 @@ for (const sample of samples.filter(s => !onlySample || s.name.includes(onlySamp
   }
  }
 }
-assert.ok(coverage[only ?? 0] > 0, 'the requested rule must exercise real builder descendants');
+// PM7PERF-NODE-RAIL-COVERAGE (R27 F3): only rule 0 (or the --rule asked for) was asserted to reach any descendant, so
+// another rule's samples could fall to none unseen. Each rule this test reaches must reach at least half the descendants
+// it reached on 2026-11-15 (main 83d1c6128b: 0:505 1:17 3:4 6:444 7:177 8:1240 9:16 10:36 11:4 13:1002 14:1002). Not
+// reached here: rule 2 (rail menu items: rail_concept_descendants.test.mjs), rule 5 (Liquid Glass: the browser census,
+// active_descendant_expanded.check.mjs, only), rules 4 and 12 (omitted).
+const FLOORS = { 0: 252, 1: 8, 3: 2, 6: 222, 7: 88, 8: 620, 9: 8, 10: 18, 11: 2, 13: 501, 14: 501 };
+if (only !== undefined) assert.ok(coverage[only] > 0, 'the requested rule must exercise real builder descendants');
+else if (!onlySample) for (const [rule, floor] of Object.entries(FLOORS)) assert.ok((coverage[rule] || 0) >= floor, `rule ${rule} reached ${coverage[rule] || 0} real builder descendants, under its floor ${floor}`);
 console.log('Real builder coverage: ' + JSON.stringify(coverage));
 for (const message of failures) console.log('FAIL ' + message);
 assert.equal(failures.size, 0, `${failures.size} dropped rule/element pairs from the real builder`);

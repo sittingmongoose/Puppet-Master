@@ -30,13 +30,15 @@ vm.runInContext(read(base+'js/00-core.js')+'\n'+read(base+'js/10-glyphs.js')+'\n
 const evaluate=s=>vm.runInContext(s,ctx);
 evaluate(read(base+'js/12-rules.js'));
 ctx.PMR.concepts={register(){}};
-const aSrc=read(base+'concepts/a/00-a.js')+'\n'+read(base+'concepts/a/20-source.js');
-evaluate('(function(PMR){'+aSrc+'\nglobalThis.A6={row,detailOf,sourceRowOpts,actionRow,factsBlock};})(PMR)');
+// R23 T2: concept A's Files and Docker files too, so Docker rows take their real options (dockerRowOpts: the lead step
+// number, l2, wrap, primary:null) and the Files tree rows (.pmr-a-trow) are built by the real filesTree
+const aSrc=['00-a.js','10-files.js','20-source.js','30-docker.js'].map(p=>read(base+'concepts/a/'+p)).join('\n');
+evaluate('(function(PMR){'+aSrc+'\nglobalThis.A6={row,detailOf,sourceRowOpts,dockerRowOpts,filesTree,actionRow,factsBlock};})(PMR)');
 evaluate('(function(PMR){'+read(base+'concepts/b/00-b.js')+'\n'+read(base+'concepts/b/15-views.js')+'\nglobalThis.B6={row,itemBody,itemRow,itemDesc,areaDesc,actRow,actionList};})(PMR)');
 const cSrc=['00-c.js','05-lens.js','08-panel.js','10-files.js','20-source.js','30-docker.js'].map(p=>read(base+'concepts/c/'+p)).join('\n');
 evaluate('(function(PMR){'+cSrc+'\nglobalThis.C6={specs:C_SPECS,cDocFor,cItemRow,cLensDoc,cActRow,cRowFactory:(P,panel)=>{'+read(base+'concepts/c/08-panel.js').match(/  P\.row = o => \{[^]*?\n  };/)[0]+'return P.row;}};})(PMR)');
 const panels=evaluate('Object.values(PMR.data)');
-const cases=[], branches=Object.fromEntries(['note','preview','metrics','hunks','children','ports','facts','extra','actions','danger','primary','disabled','menu','key'].map(k=>[k,0]));
+const cases=[], branches=Object.fromEntries(['note','preview','metrics','hunks','children','ports','facts','extra','actions','danger','primary','disabled','menu','key','dockerOpts','filesTree'].map(k=>[k,0]));
 const allActions=[];
 function objects(v,out=[]){if(!v||typeof v!=='object')return out;if(!Array.isArray(v))out.push(v);for(const x of Object.values(v))if(x&&typeof x==='object')objects(x,out);return out;}
 const opened=new Set();
@@ -54,6 +56,11 @@ for(const panel of panels){
    const sec=v?.sections?.find(s=>(s.items||[]).includes(item));
    if(sec){ctx.view=v;ctx.sec=sec;ctx.opts=evaluate('A6.sourceRowOpts(inst,sec,view)');}
   }
+  if(panel.id==='docker'){
+   const v=[...(panel.views||[])].find(v=>(v.sections||[]).some(s=>(s.items||[]).includes(item)));
+   const sec=v?.sections?.find(s=>(s.items||[]).includes(item));
+   if(sec){ctx.view=v;ctx.sec=sec;ctx.opts=evaluate('A6.dockerRowOpts(inst,sec,view)');branches.dockerOpts++;}
+  }
   const opts=ctx.opts;
   for(const k of ['note','preview','metrics','hunks','children','ports','facts','actions'])if(item[k]&&(!Array.isArray(item[k])||item[k].length))branches[k]++;
   if(opts.extra)branches.extra++;
@@ -65,6 +72,11 @@ for(const panel of panels){
   const cr=evaluate('C6.cItemRow(P,item,{})');cases.push({name:'C index '+panel.id+'/'+item.id,root:cr});
   const cd=evaluate('C6.cDocFor(P,item,{})');openDisclosures(cd);cases.push({name:'C open '+panel.id+'/'+item.id,root:cd});
  }
+}
+// R23 T2: the Files explorer's tree rows (.pmr-a-trow.pmr-cur) from the real filesTree (renderFiles' explorer pane)
+for(const panel of panels.filter(p=>p.id==='files'))for(const v of (panel.views||[]).filter(v=>v.id==='explorer'))for(const sec of (v.sections||[]).slice(0,1)){
+ ctx.inst={pid:panel.id,panel,menus:panel.menus,open:{get:()=>true,has:()=>true,set(){}}};ctx.view=v;ctx.sec=sec;
+ const root=ctx.PMR.h('section.pmr-a-sec.pmr-a-kind-tree',evaluate('A6.filesTree(inst,view,sec)'));branches.filesTree++;cases.push({name:'A files tree '+v.id+'/'+sec.id,root});
 }
 // Public kit variants use real shipped actions. A child button is not itself the cursor carrier.
 for(const panel of panels)for(const menu of Object.values(panel.menus||{}))for(const group of menu.groups||[])for(const item of group.items||[]){
@@ -95,5 +107,8 @@ for(const {name,root} of cases)for(const carrier of [root,...descendants(root)])
 const result={cases:cases.length,shippedPanels:panels.map(p=>p.id),branches,openedDisclosures:opened.size,counts,inherited,missing:[...failures.values()]};
 const output=process.argv.find(x=>x.startsWith('--out='))?.slice(6);if(output)writeFileSync(output,JSON.stringify(result,null,2)+'\n');
 console.log(JSON.stringify(result,null,2));
+// PM7PERF-NODE-RAIL-COVERAGE (R27 F3): each rule must still reach at least half the descendants it reached on
+// 2026-11-15 (main 83d1c6128b: 0:1032 2:156 6:1032 13:22750 14:22750), so a shrinking sample fails instead of passing
+for(const [id,floor] of Object.entries({0:516,2:78,6:516,13:11375,14:11375}))assert((counts[id]||0)>=floor,'rule '+id+' reached '+(counts[id]||0)+' descendants, under its floor '+floor);
 assert.equal(failures.size,0,'real shipped expanded builders lost descendant features');
 console.log('PASS shipped A/B/C expanded rows, drill pages, Lens documents and shared kit variants');
