@@ -2,35 +2,39 @@
 
 This generated index separates immutable historical report headers from current presentation status. Old `FINAL_REPORT.md` files are not rewritten; finding-level closure authority remains `Plans/.audits/_semantic_closure_registry.jsonl`.
 
-- Generated: `2026-11-15T05:25:15Z`
+- Generated: `2026-11-15T12:17:16Z`
 - Reports indexed: 71
-- Current blockers: 17
+- Current blockers: 18
 - Current report blockers: 0
-- Reopened finding blockers: 17
+- Open finding blockers: 18
+- Reopened finding blockers: 18
 - Historical BLOCKED/FAIL reports indexed: 25
 - Closure registry rows: 1220
 
-## Active reopened findings
+## Active open findings
 
-| Finding key | Closure row | Registry line |
-|---|---|---:|
-| `sfk-01940353f4c656a5be5a4ffd` | `closure-reaudit-20261104--closure-audit-20260618-006-prd-planning-wizard-semantic-fidelity-repair-008` | 1046 |
-| `sfk-22c5cd3ccf834ffd403199c8` | `closure-reaudit-20261104--closure-audit-20260617-007-semantic-closure-registry-post-repair-fidelity-001` | 1202 |
-| `sfk-2498233b7721649d04d1222a` | `closure-reaudit-20261104--closure-reaudit-20261104--closure-audit-20260617-012-plans-to-code-handoff-deep-fidelity-023` | 1206 |
-| `sfk-2c2724eecefb5f4a899ed133` | `closure-reaudit-20261104--closure-audit-20260628-001-feature-intake-closed-world-semantic-fidelity-repair-003` | 1093 |
-| `sfk-4295336d87f4f0b9df21a400` | `closure-reaudit-20261104--closure-audit-20260701-003-doctor-onboarding-closed-world-semantic-fidelity-repair-011` | 1103 |
-| `sfk-5e3e2e181221c2aeea675f79` | `reopen-fable-20260706-remaining-registry-pnc019-20260810` | 736 |
-| `sfk-5efdc99245444addb8f240df` | `closure-reaudit-20261104--closure-audit-20260703-001-external-repo-import-closed-world-semantic-fidelity-repair-005` | 1105 |
-| `sfk-65dd43de0c564ca0c4e7998e` | `closure-reaudit-20261104--closure-audit-20260627-001-feature-name-closed-world-semantic-fidelity-repair-005` | 1092 |
-| `sfk-6c83df51a6d07e83416eb678` | `closure-reaudit-20261104--closure-audit-20260617-012-plans-to-code-handoff-deep-fidelity-015` | 763 |
-| `sfk-6df766d47ca025434f401848` | `closure-reaudit-20261104--closure-audit-20260618-006-prd-planning-wizard-semantic-fidelity-repair-007` | 1045 |
-| `sfk-82517a9255593eef1eeb042b` | `closure-reaudit-20261104--closure-audit-20260617-012-plans-to-code-handoff-deep-fidelity-041` | 1040 |
-| `sfk-8d83d4bcc29328c680b11986` | `reopen-fable-20260706-pnc019-currentness-20260810` | 737 |
-| `sfk-929f4dfbd5cc1201eff2a369` | `closure-reaudit-20261104--closure-audit-20260626-001-provider-updates-closed-world-semantic-fidelity-repair-005` | 1089 |
-| `sfk-93891900f1e635b8b3c4b580` | `closure-reaudit-20261104--closure-audit-20260626-001-provider-updates-closed-world-semantic-fidelity-repair-006` | 1090 |
-| `sfk-bd12e603e3d781b949823e2e` | `closure-reaudit-20261104--closure-audit-20260701-001-containerized-hosts-closed-world-semantic-fidelity-repair-001` | 1096 |
-| `sfk-e1fcd45c960c7c2508038375` | `closure-reaudit-20261104--closure-audit-20260623-001-fff-ledger-to-plans-semantic-fidelity-repair-003` | 1087 |
-| `sfk-f6f7b1a8d1ba5658b04fb84f` | `closure-reaudit-20261104--closure-audit-20260629-001-free-models-closed-world-semantic-fidelity-repair-001` | 1095 |
+Open as `scripts/pm-audit-closure.py validate` reports them: a finding stays open until an authenticated re-audit chain ends in a closed row whose hashes are current.
+
+| Finding key | Closure row | Status | Registry line |
+|---|---|---|---:|
+| `sfk-01940353f4c656a5be5a4ffd` | `closure-reaudit-20261104--closure-audit-20260618-006-prd-planning-wizard-semantic-fidelity-repair-008` | `reopened` | 1046 |
+| `sfk-22c5cd3ccf834ffd403199c8` | `closure-reaudit-20261104--closure-audit-20260617-007-semantic-closure-registry-post-repair-fidelity-001` | `reopened` | 1202 |
+| `sfk-2498233b7721649d04d1222a` | `closure-reaudit-20261104--closure-reaudit-20261104--closure-audit-20260617-012-plans-to-code-handoff-deep-fidelity-023` | `reopened` | 1206 |
+| `sfk-2c2724eecefb5f4a899ed133` | `closure-reaudit-20261104--closure-audit-20260628-001-feature-intake-closed-world-semantic-fidelity-repair-003` | `reopened` | 1093 |
+| `sfk-4295336d87f4f0b9df21a400` | `closure-reaudit-20261104--closure-audit-20260701-003-doctor-onboarding-closed-world-semantic-fidelity-repair-011` | `reopened` | 1103 |
+| `sfk-4ba329ca6a30e090a2dc305b` | `closure-reaudit-20261104--closure-audit-20260617-008-semantic-closure-registry-repair-fidelity-012` | `reopened` | 1203 |
+| `sfk-5e3e2e181221c2aeea675f79` | `reopen-fable-20260706-remaining-registry-pnc019-20260810` | `reopened` | 736 |
+| `sfk-5efdc99245444addb8f240df` | `closure-reaudit-20261104--closure-audit-20260703-001-external-repo-import-closed-world-semantic-fidelity-repair-005` | `reopened` | 1105 |
+| `sfk-65dd43de0c564ca0c4e7998e` | `closure-reaudit-20261104--closure-audit-20260627-001-feature-name-closed-world-semantic-fidelity-repair-005` | `reopened` | 1092 |
+| `sfk-6c83df51a6d07e83416eb678` | `closure-reaudit-20261104--closure-audit-20260617-012-plans-to-code-handoff-deep-fidelity-015` | `reopened` | 763 |
+| `sfk-6df766d47ca025434f401848` | `closure-reaudit-20261104--closure-audit-20260618-006-prd-planning-wizard-semantic-fidelity-repair-007` | `reopened` | 1045 |
+| `sfk-82517a9255593eef1eeb042b` | `closure-reaudit-20261104--closure-audit-20260617-012-plans-to-code-handoff-deep-fidelity-041` | `reopened` | 1040 |
+| `sfk-8d83d4bcc29328c680b11986` | `reopen-fable-20260706-pnc019-currentness-20260810` | `reopened` | 737 |
+| `sfk-929f4dfbd5cc1201eff2a369` | `closure-reaudit-20261104--closure-audit-20260626-001-provider-updates-closed-world-semantic-fidelity-repair-005` | `reopened` | 1089 |
+| `sfk-93891900f1e635b8b3c4b580` | `closure-reaudit-20261104--closure-audit-20260626-001-provider-updates-closed-world-semantic-fidelity-repair-006` | `reopened` | 1090 |
+| `sfk-bd12e603e3d781b949823e2e` | `closure-reaudit-20261104--closure-audit-20260701-001-containerized-hosts-closed-world-semantic-fidelity-repair-001` | `reopened` | 1096 |
+| `sfk-e1fcd45c960c7c2508038375` | `closure-reaudit-20261104--closure-audit-20260623-001-fff-ledger-to-plans-semantic-fidelity-repair-003` | `reopened` | 1087 |
+| `sfk-f6f7b1a8d1ba5658b04fb84f` | `closure-reaudit-20261104--closure-audit-20260629-001-free-models-closed-world-semantic-fidelity-repair-001` | `reopened` | 1095 |
 
 ## Historical audit reports
 

@@ -6,7 +6,9 @@ import copy
 import importlib.util
 import io
 import json
+import os
 import subprocess
+import sys
 import tempfile
 import time
 import unittest
@@ -20,6 +22,11 @@ SPEC = importlib.util.spec_from_file_location("pm_audit_closure", MODULE_PATH)
 assert SPEC is not None and SPEC.loader is not None
 pm_audit_closure = importlib.util.module_from_spec(SPEC)
 SPEC.loader.exec_module(pm_audit_closure)
+STATUS_INDEX_PATH = ROOT / "scripts/pm-audit-status-index.py"
+STATUS_INDEX_SPEC = importlib.util.spec_from_file_location("pm_audit_status_index", STATUS_INDEX_PATH)
+assert STATUS_INDEX_SPEC is not None and STATUS_INDEX_SPEC.loader is not None
+pm_audit_status_index = importlib.util.module_from_spec(STATUS_INDEX_SPEC)
+STATUS_INDEX_SPEC.loader.exec_module(pm_audit_status_index)
 
 
 def write_jsonl(path: Path, rows: list[dict]) -> None:
@@ -456,6 +463,54 @@ class PmAuditClosureSelfAnchorTests(unittest.TestCase):
         report = self.validated_rows(narrowed)
         self.assertTrue(any("generated fields differ" in error for error in report["errors"]), report)
         self.assertEqual(report["superseded_row_count"], 0, report)
+
+    def test_hard_link_alias_of_the_registry_is_the_same_registry(self) -> None:
+        # T236 (tool-notes Astra max finding 2): a hard link to the registry passed as --registry is the
+        # same file, so a tampered, unmarked self-dependent row is refused through either name.
+        self.prepare_record()
+        self.assertEqual(self.append()[0], 0)
+        alias = self.registry.with_name("same-registry-hardlink.jsonl")
+        os.link(self.registry, alias)
+        self.assertTrue(os.path.samefile(self.registry, alias))
+        original = pm_audit_closure.read_jsonl(self.registry, [])
+        tampered = copy.deepcopy(original)
+        tampered[-1]["hashes"].pop("registry_self_anchor")
+        tampered[-1].update(audit_ids=[tampered[-1]["closed_by_audit_id"]], closure_reason="An unreviewed fabricated closure reason.")
+        retimed = copy.deepcopy(tampered)
+        retimed[-1]["created_at"] = retimed[-1]["updated_at"] = "2000-01-01T00:00:00Z"
+        for name, rows in (("marker, audit_ids and reason", tampered), ("and both timestamps", retimed)):
+            pm_audit_closure.write_jsonl(self.registry, rows)  # rewrites the shared inode in place
+            for path in (self.registry, alias):
+                with self.subTest(tampering=name, registry=path.name):
+                    args = argparse.Namespace(registry=str(path), audit_dir=[], require_closure_matrix=False,
+                                              require_effective_status=False, source_artifact=None)
+                    with contextlib.redirect_stdout(io.StringIO()) as output:
+                        code = pm_audit_closure.cmd_validate(args)
+                    report = json.loads(output.getvalue())
+                    self.assertEqual(code, 1, report["errors"])
+                    self.assertTrue(any("so the row must carry registry_self_anchor" in error for error in report["errors"]),
+                                    report["errors"])
+                    self.assertEqual(report["registry"]["superseded_row_count"], 0, report["registry"])
+        pm_audit_closure.write_jsonl(self.registry, original)
+        self.assertEqual(pm_audit_closure.validate_registry(self.registry)["errors"], [])
+
+    def test_reaudit_append_help_states_the_author_time_rule(self) -> None:
+        # T234 (tool-notes reviews): the lander reads where marked-row timestamps come from and what keeps them.
+        # The command line, as a lander runs it; main() is left unchanged because registry rows anchor it.
+        proc = subprocess.run([sys.executable, "-B", str(MODULE_PATH), "reaudit-append", "--help"],
+                              cwd=self.root, capture_output=True, text=True)
+        self.assertEqual(proc.returncode, 0, proc.stderr)
+        text = " ".join(proc.stdout.split())
+        for phrase in (
+            "created_at and updated_at are the author time of the commit that added its re-audit record",
+            "Landings must preserve that author time. An ordinary rebase and a fast-forward do.",
+            "A squash, or a rebase with --ignore-date,",
+            "running reaudit-append again does not repair it",
+            "a branch that needs a squash or --ignore-date is rebuilt before its append",
+            "Registry rows are never edited.",
+        ):
+            with self.subTest(phrase=phrase):
+                self.assertIn(phrase, text)
 
     def test_stale_set_at_later_recheck_uses_self_exclusion(self) -> None:
         self.prepare_record()
@@ -1037,6 +1092,73 @@ class PmAuditClosureMatrixReplacementTests(unittest.TestCase):
                 record_path.write_text(json.dumps(record), encoding="utf-8")
                 self.assertEqual(self.validate()["errors"], [])
 
+    def test_pass_record_reviews_need_real_entries(self) -> None:
+        # T233 (tool-notes reviews, T230 follow-up): a non-empty container is not provenance by itself; every
+        # entry records a review or a pending state.
+        def with_reviews(reviews: object) -> dict:
+            self.write([self.frozen, self.replacing_row()])
+            record_path = self.audit_dir / self.RECORD
+            record = json.loads(record_path.read_text(encoding="utf-8"))
+            record["reviews"] = reviews
+            record_path.write_text(json.dumps(record), encoding="utf-8")
+            return self.validate()
+
+        refused = {
+            "nested null in a list": [None],
+            "nested null in an object": {"sol": None},
+            "nested blank in a list": [" "],
+            "nested blank in an object": {"sol": "\t"},
+            "nested empty object": {"sol": {}},
+            "nested empty list": {"sol": []},
+            "deeper null": [{"model": "astra", "verdict": None}],
+            "deeper blank": {"evidence": [{"model": "sol", "verdict": "PASS"}, {"model": " "}]},
+            "one real entry beside a null one": {"sol": "PASS", "astra": None},
+        }
+        for name, reviews in refused.items():
+            with self.subTest(refused=name):
+                report = with_reviews(reviews)
+                self.assertTrue(self.frozen_link_error(report), report["errors"])
+                self.assertNotIn("matrix_replacements", report)
+                self.assertTrue(any("must record its reviews" in error for error in self.refusals(report)), report["errors"])
+        # The committed forms: a pending state, a completed summary string, and audit-004's recorded object.
+        accepted = {
+            "pending state": PASS_REVIEWS_PENDING,
+            "completed summary": "Sol and Astra blind reviews are listed on the decision record (test).",
+            "object of strings": {"sol": "PASS"},
+            "list of objects": [{"model": "astra", "verdict": "PASS"}],
+            "recorded object with evidence": {
+                "decision_ref": "Plans/Decision_Log.md#DL-470",
+                "evidence": [{"assessment": "Supplemental closure assessment (test).", "model": "Sol 6.1 max",
+                              "overall_verdict": "FAIL", "path": "/reviews/V2-sol-r1.md",
+                              "reviewed_commit": "6" * 40, "sha256": "4" * 64}],
+                "original_recorded_state": "pending: Sol 6.1 max, then Astra max, blind (test)",
+                "prior_record_sha256": "1" * 64,
+                "recorded_at_utc": "2026-11-08T23:25:11Z",
+                "recorded_by": "closure-q2-audit004",
+                "scope": "Existing blind reviews (test).",
+            },
+        }
+        for name, reviews in accepted.items():
+            with self.subTest(accepted=name):
+                report = with_reviews(reviews)
+                self.assertEqual(report["errors"], [])
+                self.assertEqual(report["matrix_replacements"], [{"replaced_line": 1, "replacing_line": 2}])
+
+    def test_invalid_second_claim_still_withholds_the_replacement(self) -> None:
+        # T237 (tool-notes Sol max finding 2): PLS-026 lets no other row name a replaced frozen line, so a
+        # second claimant counts even when its own row is invalid.
+        invalid = self.replacing_row(closure_reason="second correction (test)")
+        invalid.pop("closure_evidence")
+        self.write([self.frozen, self.replacing_row(), invalid])
+        report = self.validate()
+        self.assertNotIn("matrix_replacements", report)
+        self.assertTrue(self.frozen_link_error(report), report["errors"])
+        self.assertTrue(any("is named by more than one replacing row (lines 2, 3)" in error for error in self.refusals(report)),
+                        report["errors"])
+        # The invalid claimant's own refusal still stands.
+        self.assertTrue(any(":3: does not replace" in error and "missing required fields ['closure_evidence']" in error
+                            for error in report["errors"]), report["errors"])
+
     def test_schema_invalid_replacing_row_is_not_honored(self) -> None:
         # T231 (pls026 Sol max finding 3): a replacing row that fails its own row checks replaces nothing.
         cases = {
@@ -1149,6 +1271,181 @@ class PmAuditClosureLegacyReplacementCoverageTests(unittest.TestCase):
         # The same row appended without naming the frozen row is a second, newer closure: over-coverage is kept.
         appended = self.run_case(self.corrected_row())
         self.assertTrue(self.over_coverage_kept(appended), appended["errors"])
+
+
+class PmAuditStatusIndexOpenSetTests(unittest.TestCase):
+    """T235 (tool-notes Astra max finding 1): the status index lists the closure validator's open set.
+
+    The real case: registry row 1203 is reopened, and its closing re-audit successor, row 1218, went
+    stale when a `#pydef=` anchor in its closure evidence changed. The last row of that finding is
+    the closed row 1218, so a latest-row-per-finding index, which PLS-025 forbids, drops the finding,
+    while the closure validator keeps 1203 open. Rows 1-3 of this fixture have that shape."""
+
+    FIXTURE_SCRIPT = "def f():\n    return 2\n"
+
+    def setUp(self) -> None:
+        temporary = tempfile.TemporaryDirectory(prefix="pm-status-index-")
+        self.addCleanup(temporary.cleanup)
+        self.root = Path(temporary.name).resolve()
+        for module in (pm_audit_closure, pm_audit_status_index):
+            root_patch = patch.object(module, "ROOT", self.root)
+            root_patch.start()
+            self.addCleanup(root_patch.stop)
+        audits = self.root / "Plans/.audits"
+        self.audit_dir = audits / "reaudit-fixture"
+        (self.audit_dir / "reviews").mkdir(parents=True)
+        (self.root / "scripts").mkdir()
+        self.registry = audits / "_semantic_closure_registry.jsonl"
+        for name, value in (("AUDITS", audits), ("REGISTRY", self.registry), ("INDEX", audits / "_audit_status_index.json"),
+                            ("MARKDOWN", audits / "CURRENT_AUDIT_STATUS.md")):
+            path_patch = patch.object(pm_audit_status_index, name, value)
+            path_patch.start()
+            self.addCleanup(path_patch.stop)
+        # The index reads the open set from this test's closure module, whose ROOT is the fixture.
+        validator_patch = patch.object(pm_audit_status_index, "closure_validator", lambda: pm_audit_closure, create=True)
+        validator_patch.start()
+        self.addCleanup(validator_patch.stop)
+        report_dir = audits / "audit-fixture"
+        report_dir.mkdir()
+        (report_dir / "FINAL_REPORT.md").write_text("# Fixture audit\n\nStatus: BLOCKED\n", encoding="utf-8")
+        (self.root / "Plans/Fixture.md").write_text(pm_audit_closure.SELF_TEST_DOC, encoding="utf-8")
+        self.script = self.root / "scripts/fixture.py"
+        self.script.write_text(self.FIXTURE_SCRIPT, encoding="utf-8")
+        self.unit_ref = "Plans/Fixture.md#unit=FIX-001"
+        self.pydef_ref = "scripts/fixture.py#pydef=f"
+        self.quote = "The fixture repair is present and must stay present."
+        self.counter = 0
+        self.git("init", "-q")
+
+    def git(self, *args: str) -> str:
+        return subprocess.run(
+            ["git", "-C", str(self.root), "-c", "user.name=fixture", "-c", "user.email=fixture@invalid",
+             "-c", "commit.gpgsign=false", *args],
+            check=True, capture_output=True, text=True,
+        ).stdout.strip()
+
+    def commit(self) -> str:
+        self.git("add", "-A")
+        self.git("commit", "-q", "--allow-empty", "-m", "fixture state")
+        return self.git("rev-parse", "HEAD")
+
+    def reaudit(self, rows_before: list[dict], line: int, verdict: str, *, dependencies: list[str],
+                evidence: list[dict], status_now: str | None = None) -> dict:
+        """A complete, valid re-audit row of `line`, with committed receipts (as the self-test builds them)."""
+        m = pm_audit_closure
+        pm_audit_closure.write_jsonl(self.registry, rows_before)
+        lines = m.raw_registry_lines(self.registry)
+        target = rows_before[line - 1]
+        resolver = m.AnchorResolver(self.root)
+        self.counter += 1
+        records = self.audit_dir / f"reaudit_records-{self.counter}.jsonl"
+        recheck = self.commit()
+        record = {
+            "schema_id": m.REAUDIT_RECORD_SCHEMA, "reaudit_id": "reaudit-fixture",
+            "closure_id": target["closure_id"], "line": line, "row_sha256": m.sha256_text(lines[line]),
+            "recheck_commit": recheck, "verdict": verdict,
+            "claim": "The fixture repair is present in FIX-001.",
+            "rationale": "FIX-001 canonical_text states the repair.",
+            "dependencies": dependencies, "evidence": evidence,
+            "fix": {"kind": "small_in_scope", "description": "restore it"} if verdict == "not_supported" else None,
+            "status_now": status_now, "later_closure_id": None,
+            "dependency_hashes_at_recheck": {ref: resolver.sha256(ref) for ref in dependencies},
+        }
+        stale = [{"group": g, "ref": r, "stored": h}
+                 for g, r, h in sorted(m._target_stale_refs(target, m.CommitResolver(self.root, recheck)))]
+        record["stale_hashes_at_recheck"] = stale
+        record["stale_ref_dispositions"] = [
+            {"ref": ref, "disposition": "dependency", "anchors": [self.unit_ref]} for ref in sorted({s["ref"] for s in stale})
+        ]
+        extra = {"status_now": status_now} if status_now else {}
+        reviews = {}
+        for who in m.REAUDIT_REVIEWERS:
+            judged = {"line": line, "closure_id": target["closure_id"], "verdict": verdict, **extra}
+            review: dict = {"model": f"fixture-{who}", "verdict": verdict}
+            if who == "worker":
+                judged.update({k: record.get(k) for k in m.REAUDIT_WORKER_FIELDS})
+                judged.update(row_sha256=record["row_sha256"], dependencies=list(dependencies), verdict=verdict,
+                              recheck_commit=recheck, dependency_hashes_at_recheck=dict(record["dependency_hashes_at_recheck"]))
+            else:
+                shown = {"line": line, "closure_id": target["closure_id"],
+                         "claim": {k: v for k, v in target.items() if k not in ("hashes", "_line_no")},
+                         "row_sha256": record["row_sha256"], "recheck_commit": recheck,
+                         "dependency_anchors": [{"ref": ref, "sha256": record["dependency_hashes_at_recheck"][ref],
+                                                 "text": resolver.content(ref)[1], "truncated": False} for ref in dependencies]}
+                shown["packet_row_digest"] = m.packet_row_digest(shown)
+                packet = self.audit_dir / "reviews" / f"packet-{who}-{self.counter}.jsonl"
+                packet.write_text(json.dumps(shown) + "\n", encoding="utf-8")
+                review.update(packet_path=m.rel(packet), packet_sha256=m.sha256_file(packet))
+                judged["packet_row_digest"] = shown["packet_row_digest"]
+            output = self.audit_dir / "reviews" / f"{who}-{self.counter}.jsonl"
+            output.write_text(json.dumps(judged) + "\n", encoding="utf-8")
+            review.update(evidence_path=m.rel(output), evidence_sha256=m.sha256_file(output))
+            reviews[who] = review
+        record["reviews"] = reviews
+        row = m.build_reaudit_row(target, line, lines[line], record, m.rel(records), resolver, "2026-11-04T00:00:00Z")
+        records.write_text(json.dumps(record, sort_keys=True) + "\n", encoding="utf-8")
+        self.commit()  # receipts count only once committed, after the recheck commit they judge
+        return row
+
+    def reopened_chain(self) -> list[dict]:
+        """Line 1 closed; line 2 reopens it (like row 1203); line 3 closes it again (like row 1218),
+        with the closure evidence it read anchored on scripts/fixture.py#pydef=f."""
+        legacy = pm_audit_closure._self_test_registry_row(hashes={
+            "owner_evidence_hashes": {"Plans/Fixture.md": "0" * 64},
+            "closure_evidence_hashes": {"Plans/Fixture.md": "0" * 64},
+        })
+        reopened = self.reaudit([legacy], 1, "not_supported", dependencies=[self.unit_ref],
+                                evidence=[{"ref": self.unit_ref, "absent": "a phrase the claim needs"}])
+        closing = self.reaudit([legacy, reopened], 2, "resolved_differently", status_now="repaired",
+                               dependencies=[self.unit_ref, self.pydef_ref],
+                               evidence=[{"ref": self.unit_ref, "quote": self.quote}])
+        rows = [legacy, reopened, closing]
+        pm_audit_closure.write_jsonl(self.registry, rows)
+        self.commit()
+        return rows
+
+    def generate(self) -> None:
+        with patch.object(sys, "argv", ["pm-audit-status-index.py", "generate"]), contextlib.redirect_stdout(io.StringIO()):
+            self.assertEqual(pm_audit_status_index.main(), 0)
+
+    def test_stale_closing_successor_keeps_the_reopened_finding_open(self) -> None:
+        rows = self.reopened_chain()
+        closure = pm_audit_closure.validate_registry(self.registry)
+        self.assertEqual((closure["errors"], closure["open_rows"]), ([], []), closure)
+        self.assertEqual(pm_audit_status_index.build_index()["summary"]["current_blocker_count"], 0)
+        self.generate()
+        self.assertEqual(pm_audit_status_index.validate()["status"], "pass")
+
+        # The closing successor's anchored evidence changes, as matrix_replacement_candidates did for row 1218.
+        self.script.write_text(self.FIXTURE_SCRIPT.replace("return 2", "return 3"), encoding="utf-8")
+        closure = pm_audit_closure.validate_registry(self.registry)
+        self.assertTrue(closure["errors"] and all(":3:" in error and self.pydef_ref in error and "is stale" in error
+                                                  for error in closure["errors"]), closure["errors"])
+        self.assertEqual([(row["line"], row["closure_status"]) for row in closure["open_rows"]], [(2, "reopened")])
+        # The finding's last row is the closed line 3; the open set still holds line 2.
+        self.assertEqual(rows[-1]["closure_status"], "repaired")
+
+        index = pm_audit_status_index.build_index()
+        self.assertEqual(index["summary"]["current_blocker_count"], len(closure["open_rows"]))
+        self.assertEqual(index["summary"]["current_open_finding_count"], 1)
+        self.assertEqual(index["summary"]["current_reopened_finding_count"], 1)
+        self.assertEqual([(f["line"], f["closure_id"], f["closure_status"]) for f in index["active_open_findings"]],
+                         [(2, rows[1]["closure_id"], "reopened")])
+        # The index generated before the staleness no longer validates; regenerated, it does.
+        stale = pm_audit_status_index.validate()
+        self.assertEqual(stale["status"], "fail")
+        self.assertIn({"path": "Plans/.audits/_audit_status_index.json", "error": "stale_audit_status_index"}, stale["failures"])
+        self.generate()
+        current = pm_audit_status_index.validate()
+        self.assertEqual((current["status"], current["failures"]), ("pass", []), current)
+        self.assertEqual(current["summary"]["current_open_finding_count"], current["closure_validator_open_finding_count"])
+        markdown = pm_audit_status_index.MARKDOWN.read_text(encoding="utf-8")
+        self.assertIn("- Open finding blockers: 1", markdown)
+        self.assertIn(f"| `{rows[1]['finding_key']}` | `{rows[1]['closure_id']}` | `reopened` | 2 |", markdown)
+
+        # With the anchored text back, the closing leaf is current again and the finding closes.
+        self.script.write_text(self.FIXTURE_SCRIPT, encoding="utf-8")
+        self.assertEqual(pm_audit_status_index.build_index()["summary"]["current_open_finding_count"], 0)
 
 
 if __name__ == "__main__":

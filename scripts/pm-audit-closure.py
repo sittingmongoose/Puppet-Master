@@ -1941,13 +1941,26 @@ def _bound_output_row(
     return judged
 
 
+def _is_registry_file(dependency_path: str, registry_ref: str) -> bool:
+    """Whether a dependency path names the registry file itself: the same path, or another name
+    (a hard link or symbolic link) of the same file, judged by file identity, not spelling (T236)."""
+    if dependency_path == registry_ref:
+        return True
+    try:
+        return os.path.samefile(repo_path(dependency_path), repo_path(registry_ref))
+    except (OSError, ValueError):
+        return False
+
+
 def reaudit_self_anchor(record: dict[str, Any], registry_ref: str) -> dict[str, str] | None:
     """The registry_self_anchor marker a re-audit row must carry: one exactly when its bound record
     depends on a row set of the registry the row is appended to (a row cannot hash itself)."""
     for ref in record.get("dependencies") or []:
         try:
-            if isinstance(ref, str) and parse_anchor_ref(ref)[:2] == (registry_ref, "jsonlset"):
-                return {"path": registry_ref, "scope": REGISTRY_SELF_ANCHOR_SCOPE}
+            if isinstance(ref, str):
+                path, kind = parse_anchor_ref(ref)[:2]
+                if kind == "jsonlset" and _is_registry_file(path, registry_ref):
+                    return {"path": registry_ref, "scope": REGISTRY_SELF_ANCHOR_SCOPE}
         except AnchorError:
             continue
     return None
@@ -3824,10 +3837,27 @@ def _nonempty_str(value: Any) -> bool:
     return isinstance(value, str) and bool(value.strip())
 
 
+def _review_data(value: Any) -> bool:
+    """Whether a reviews value records real review data or a pending state at every entry: a
+    non-blank string (a review, or a state such as "pending: ..."), a number or boolean, or a
+    non-empty object or list each of whose entries is itself review data. A null, blank or empty
+    entry anywhere records neither a review nor a pending state (T233)."""
+    if isinstance(value, str):
+        return bool(value.strip())
+    if isinstance(value, (bool, int, float)):
+        return True
+    if isinstance(value, dict):
+        return bool(value) and all(_review_data(child) for child in value.values())
+    if isinstance(value, list):
+        return bool(value) and all(_review_data(child) for child in value)
+    return False
+
+
 def _supplemental_pass_provenance_problem(provenance: dict[str, Any], record: dict[str, Any], name: str) -> str | None:
     """Why a pass record cannot vouch for a replacing row: its pass ID or the provenance PLS-026
     requires of every pass (its decision and its reviews) is absent, null or blank (T230). Two
-    absent pass IDs are not a match. A review state that is still pending is a string and counts."""
+    absent pass IDs are not a match. A review state that is still pending is a string and counts.
+    A reviews object or list counts only when every entry is review data (T233)."""
     if not _nonempty_str(record.get("pass_id")):
         return f"supplemental pass record {name} needs a non-empty string pass_id"
     if not _nonempty_str(provenance.get("pass_id")):
@@ -3838,7 +3868,7 @@ def _supplemental_pass_provenance_problem(provenance: dict[str, Any], record: di
     if not isinstance(decision, dict) or not all(_nonempty_str(decision.get(key)) for key in ("decision_record", "owner_unit", "source")):
         return f"supplemental pass record {name} must record its decision (decision.decision_record, decision.owner_unit, decision.source)"
     reviews = record.get("reviews")
-    if not (_nonempty_str(reviews) or (isinstance(reviews, (dict, list)) and reviews)):
+    if not isinstance(reviews, (str, dict, list)) or not _review_data(reviews):
         return f"supplemental pass record {name} must record its reviews, or that they are pending"
     return None
 
@@ -3939,6 +3969,9 @@ def matrix_replacement_candidates(
     historical = (legacy_state or {}).get("historical_matrix_lines")
     records: dict[str, Any] = {}
     by_target: dict[int, list[int]] = {}
+    # Every claim that names a target counts against it, valid or not: PLS-026 lets no other row name
+    # a replaced frozen line, so a second, invalid claim still withholds the replacement (T237).
+    named_by: dict[int, list[int]] = {}
     for row in claims:
         line = row["_line_no"]
         label = f"{rel(matrix_path)}:{line}"
@@ -3949,6 +3982,8 @@ def matrix_replacement_candidates(
         if not _is_int(target) or target < 1:
             problems.append("replaces_matrix_line must be a positive integer line number")
             target = None
+        else:
+            named_by.setdefault(target, []).append(line)
         if not _is_sha256(digest):
             problems.append("replaces_row_sha256 must be the SHA-256 of the replaced line")
         if not isinstance(reason, str) or not reason.strip():
@@ -4005,14 +4040,15 @@ def matrix_replacement_candidates(
             continue
         by_target.setdefault(target, []).append(line)
     candidates: dict[int, int] = {}
-    for target, lines in sorted(by_target.items()):
+    for target, valid_lines in sorted(by_target.items()):
+        lines = named_by[target]
         if len(lines) > 1:
             errors.append(
                 f"{rel(matrix_path)}:{target}: is named by more than one replacing row (lines {', '.join(map(str, lines))}); "
                 "a frozen row is replaced at most once, so none of them replaces it"
             )
             continue
-        candidates[target] = lines[0]
+        candidates[target] = valid_lines[0]
     return candidates
 
 
@@ -6920,6 +6956,29 @@ def cmd_self_test(args: argparse.Namespace) -> int:
     return 1 if failed else 0
 
 
+REAUDIT_APPEND_DESCRIPTION = """\
+Append one re-audit row per reviewed re-audit record (append-only migration).
+
+Timestamps of a marked row (T234). A row whose record depends on a row set of
+this registry carries hashes.registry_self_anchor. Its created_at and updated_at
+are the author time of the commit that added its re-audit record, and validation
+reads that time back from git. Commit the record before appending. The time is
+the commit's recorded author date, not a wall-clock guarantee.
+
+Landings must preserve that author time. An ordinary rebase and a fast-forward
+do. A squash, or a rebase with --ignore-date, gives the record a new adding
+commit and author time, and a row appended before it then no longer validates;
+running reaudit-append again does not repair it. So a branch that needs a squash
+or --ignore-date is rebuilt before its append: rewrite the unlanded branch up to
+and including the record's commit first, then run reaudit-append on the result.
+If the append already happened, rebuild the unlanded branch from the commit
+before the append in the same way. Registry rows are never edited.
+"""
+# Descriptions for subcommand parsers that main() builds without one. main() itself stays unchanged:
+# registry rows anchor scripts/pm-audit-closure.py#pydef=main, so an edit there would stale them.
+SUBCOMMAND_DESCRIPTIONS = {"reaudit-append": REAUDIT_APPEND_DESCRIPTION}
+
+
 def main() -> int:
     parser = argparse.ArgumentParser()
     sub = parser.add_subparsers(dest="command")
@@ -6979,5 +7038,23 @@ def main() -> int:
     return int(args.func(args))
 
 
+def run() -> int:
+    """Run main() as the command line does, with SUBCOMMAND_DESCRIPTIONS on their subcommand
+    parsers, so `reaudit-append --help` prints its description (T234)."""
+    add_parser = argparse._SubParsersAction.add_parser
+
+    def described(action: argparse._SubParsersAction, name: str, **kwargs: Any) -> argparse.ArgumentParser:
+        if name in SUBCOMMAND_DESCRIPTIONS:
+            kwargs.setdefault("description", SUBCOMMAND_DESCRIPTIONS[name])
+            kwargs.setdefault("formatter_class", argparse.RawDescriptionHelpFormatter)
+        return add_parser(action, name, **kwargs)
+
+    argparse._SubParsersAction.add_parser = described  # type: ignore[method-assign]
+    try:
+        return main()
+    finally:
+        argparse._SubParsersAction.add_parser = add_parser  # type: ignore[method-assign]
+
+
 if __name__ == "__main__":
-    raise SystemExit(main())
+    raise SystemExit(run())
