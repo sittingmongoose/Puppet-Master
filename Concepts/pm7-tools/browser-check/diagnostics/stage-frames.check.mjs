@@ -54,7 +54,9 @@ const FREEZE = (o) => {
 	};
 	park();
 	const ps = st.ps, T0 = o.t;
-	st.t = T0;
+	/* (and the loop's last time set to the stopped clock: left at the frame before, its first frozen frame stepped Pip
+	   once by the time since, a few ms that differ run to run, and two runs of one build drew Pip 0.03 units apart) */
+	st.t = T0; st.last = O55.motion.now() / 1000;
 	ps.C.x = ps.Ct.x + 1.5; ps.C.y = ps.Ct.y - .8; ps.C.vx = 0; ps.C.vy = 0;
 	ps.th = .06; ps.thv = 0; ps.dy = 0; ps.dyv = 0; ps.tilt = ps.tiltT; ps.tiltv = 0;
 	ps.phi = st.work ? Math.sin(T0 * 4.2) * (st.rockMax == null ? .12 : st.rockMax) : ps.asleep ? .08 : 0;
