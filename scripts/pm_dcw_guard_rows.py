@@ -4,6 +4,7 @@ RECORDER and DISABLED are supplementary lane diagnostics. The gated tool itself
 only swaps table entries, and neither reads nor uses these diagnostic seams.
 """
 import copy
+import pm_dcw_table_168
 import pm_dcw_table_167
 import pm_dcw_table_166
 import pm_dcw_table_165
@@ -406,6 +407,7 @@ FACTORIES = {
     'O231': pm_dcw_table_025.case,
     'O232': pm_dcw_table_025.case,
     'O233': pm_dcw_table_124.case,
+    'O234': pm_dcw_table_168.case,
     'B001': pm_dcw_table_125.case,
     'B002': pm_dcw_table_025.case,
     'B003': pm_dcw_table_025.case,
