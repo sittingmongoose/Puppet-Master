@@ -1499,6 +1499,7 @@ class ReceiptLedger:
         self._info: dict[str, dict[str, Any]] = {}
         self._ancestor: dict[tuple[str, str], bool] = {}
         self._prefetched: set[int] = set()
+        self._author_time: dict[str, str | None] = {}
 
     def _git(self, *args: str, stdin: bytes | None = None) -> bytes | None:
         import subprocess  # noqa: PLC0415
@@ -1592,6 +1593,17 @@ class ReceiptLedger:
         if not self.is_strict_ancestor(recheck_commit, added):
             return added, f"receipt {path} was committed at or before the recheck commit {recheck_commit[:12]} it claims to judge"
         return added, None
+
+    def author_time(self, commit: str) -> str | None:
+        """The author date of `commit` as YYYY-MM-DDTHH:MM:SSZ, or None. A rebase keeps the author
+        date, where it rewrites the committer date."""
+        if commit not in self._author_time:
+            out = self._git("show", "-s", "--format=%at", commit) if re.fullmatch(r"[0-9a-f]{40}", commit) else None
+            stamp = out.decode().strip() if out else ""
+            self._author_time[commit] = (
+                datetime.fromtimestamp(int(stamp), timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ") if stamp.isdigit() else None
+            )
+        return self._author_time[commit]
 
 
 def _is_int(value: Any) -> bool:
@@ -1929,6 +1941,33 @@ def _bound_output_row(
     return judged
 
 
+def reaudit_self_anchor(record: dict[str, Any], registry_ref: str) -> dict[str, str] | None:
+    """The registry_self_anchor marker a re-audit row must carry: one exactly when its bound record
+    depends on a row set of the registry the row is appended to (a row cannot hash itself)."""
+    for ref in record.get("dependencies") or []:
+        try:
+            if isinstance(ref, str) and parse_anchor_ref(ref)[:2] == (registry_ref, "jsonlset"):
+                return {"path": registry_ref, "scope": REGISTRY_SELF_ANCHOR_SCOPE}
+        except AnchorError:
+            continue
+    return None
+
+
+# The canonical SHA-256 of the seven re-audit records appended, before registry_self_anchor existed,
+# with a dependency on a row set of the registry (registry rows 963, 968, 1087, 1093, 1103, 1104 and
+# 1210). Their rows may stay unmarked, and then keep their own created_at as an input. Their other
+# generated fields are rebuilt like those of every self-dependent row. Closed: no record joins it.
+LEGACY_UNMARKED_SELF_DEPENDENT_RECORDS = frozenset({
+    "694b14f2d725c0d12f4e468c07cbea341ed1b4325587303937fa00fb68e72068",
+    "7d1c5e96c3a7acad5ff24499cb95992a7239619fa20051b2f8427eb0e0ce35b2",
+    "3220a0500f62b4a56580d9250de0b4dd8337ecc9572905712e6ca2b2243be0b5",
+    "49ce3cb63ffbe75b3b22c434e955a237a67bd3dcf40a469f1ce04573bdd96d7e",
+    "e92c80d105779ff38388ebe512cadb9a5738692777481ef2f9074f385166fc57",
+    "c80ed5f77d3eb2004a34646acbb2e5706aa875574845f62ef8e25aa54f9a5108",
+    "b54661e3184e8660e4e333802fe1d25a6f416407ccaf518c73364e2f9e083890",
+})
+
+
 def validate_reaudit_row(
     row: dict[str, Any],
     label: str,
@@ -1990,8 +2029,9 @@ def validate_reaudit_row(
         receipts = record_cache.setdefault("__receipts__", ReceiptLedger(ROOT))  # type: ignore[arg-type]
         receipts.prefetch_records(records)  # type: ignore[union-attr]
         commit_ref = record.get("recheck_commit")
+        record_commit = None
         if isinstance(commit_ref, str) and re.fullmatch(r"[0-9a-f]{40}", commit_ref):
-            _, problem = receipts.check(record_ref, commit_ref)  # type: ignore[union-attr]
+            record_commit, problem = receipts.check(record_ref, commit_ref)  # type: ignore[union-attr]
             if problem:
                 errors.append(f"{label}: re-audit record file: {problem}")
         validate_reaudit_record(
@@ -2011,17 +2051,37 @@ def validate_reaudit_row(
             errors.append(f"{label}: a not_supported re-audit appends a reopened row")
     if len(errors) != before or record is None:
         return None
-    if "registry_self_anchor" in hashes:
-        # Self-exclusion cannot authenticate this row's own claim or identity.
-        # Rebuild them from the bound record and predecessor instead. The append
-        # timestamp is an input; both generated timestamps must agree with it.
+    # A row whose record depends on a row set of its own registry is covered by no hash of its own,
+    # so its generated fields are rebuilt from the bound record and predecessor. Whether it excludes
+    # itself is decided by that committed record, not by the row's mutable marker (T219), and a
+    # self-excluding row's timestamps are the author time of the commit that added its record (T218).
+    # validate_registry labels rows '<registry>:<line>'; a candidate stands in for the real registry.
+    registry_ref = resolver.registry_ref if isinstance(resolver, _RegistryAnchorResolver) else label.rpartition(":")[0]
+    marker = reaudit_self_anchor(record, registry_ref)
+    self_dependent = marker is not None
+    marked = "registry_self_anchor" in hashes
+    now = row.get("created_at")
+    if self_dependent and not marked and reaudit_record_sha256(record) in LEGACY_UNMARKED_SELF_DEPENDENT_RECORDS:
+        marker = None  # a pre-marker row keeps its unmarked form, and its own timestamp as the input
+    elif self_dependent and not marked:
+        errors.append(f"{label}: its bound record depends on a row set of this registry, so the row must carry registry_self_anchor")
+        return None
+    elif marked and not self_dependent:
+        errors.append(f"{label}: registry_self_anchor is set, but its bound record depends on no row set of this registry")
+        return None
+    elif marked:
+        now = receipts.author_time(record_commit) if record_commit else None  # type: ignore[union-attr]
+        if now is None:
+            errors.append(f"{label}: cannot date self-excluding re-audit row: its record has no adding commit")
+            return None
+    if self_dependent:
         try:
-            expected = build_reaudit_row(target, line, raw_lines[line], record, record_ref, resolver, row["created_at"])
+            expected = build_reaudit_row(target, line, raw_lines[line], record, record_ref, resolver, now)
         except (AnchorError, KeyError, TypeError) as exc:
             errors.append(f"{label}: cannot rebuild self-excluding re-audit row: {exc}")
             return None
-        # The marker is checked separately against this registry by registry_row_resolver.
-        expected["hashes"]["registry_self_anchor"] = hashes["registry_self_anchor"]
+        if marker is not None:
+            expected["hashes"]["registry_self_anchor"] = marker
         differing = sorted(field for field, value in expected.items() if row.get(field) != value)
         if differing:
             errors.append(f"{label}: self-excluding re-audit generated fields differ from bound record and predecessor: {differing}")
@@ -3755,9 +3815,72 @@ def _supplemental_pass_record(
                            "(matrix.path, matrix.original_rows, matrix.original_sha256)")
         cache[name] = (record if problem is None else None, problem)
     record, problem = cache[name]
-    if problem is None and provenance.get("pass_id") != record.get("pass_id"):
-        problem = f"supplemental_pass.pass_id does not match the pass_id of {name}"
+    if problem is None:
+        problem = _supplemental_pass_provenance_problem(provenance, record, name)
     return (record if problem is None else None), problem
+
+
+def _nonempty_str(value: Any) -> bool:
+    return isinstance(value, str) and bool(value.strip())
+
+
+def _supplemental_pass_provenance_problem(provenance: dict[str, Any], record: dict[str, Any], name: str) -> str | None:
+    """Why a pass record cannot vouch for a replacing row: its pass ID or the provenance PLS-026
+    requires of every pass (its decision and its reviews) is absent, null or blank (T230). Two
+    absent pass IDs are not a match. A review state that is still pending is a string and counts."""
+    if not _nonempty_str(record.get("pass_id")):
+        return f"supplemental pass record {name} needs a non-empty string pass_id"
+    if not _nonempty_str(provenance.get("pass_id")):
+        return "supplemental_pass.pass_id must be a non-empty string"
+    if provenance["pass_id"] != record["pass_id"]:
+        return f"supplemental_pass.pass_id does not match the pass_id of {name}"
+    decision = record.get("decision")
+    if not isinstance(decision, dict) or not all(_nonempty_str(decision.get(key)) for key in ("decision_record", "owner_unit", "source")):
+        return f"supplemental pass record {name} must record its decision (decision.decision_record, decision.owner_unit, decision.source)"
+    reviews = record.get("reviews")
+    if not (_nonempty_str(reviews) or (isinstance(reviews, (dict, list)) and reviews)):
+        return f"supplemental pass record {name} must record its reviews, or that they are pending"
+    return None
+
+
+# PLS-026 corrects a frozen row's owner routing. A replacing row keeps every other part of the
+# finding identity of the row it replaces (T229): the fields of the deterministic finding key,
+# read as compute_finding_key reads them, less these owner fields.
+MATRIX_REPLACEMENT_OWNER_FIELDS = ("owner_docs", "plan_unit_ids")
+
+
+def _non_owner_identity(row: dict[str, Any]) -> dict[str, Any]:
+    return {
+        "finding_family": str(row.get("finding_family", "")),
+        "ledger_id": str(row.get("ledger_id", "")),
+        "source_atom_ids": stable_strings(row.get("source_atom_ids")),
+        "detail_keys": stable_strings(row.get("detail_keys")),
+        "exact_tokens": stable_strings(row.get("exact_tokens")),
+    }
+
+
+def _replacing_row_schema_problems(row: dict[str, Any], audit_dir: Path, audit_refs: dict[str, str]) -> list[str]:
+    """The row-level errors validate_audit_dir reports for a replacing row, other than its registry
+    link and deterministic finding_key, which the caller judges before it grants a replacement.
+    A replacement is granted only when there are none (T231)."""
+    problems: list[str] = []
+    missing = sorted(MATRIX_REQUIRED_FIELDS - set(row))
+    if missing:
+        problems.append(f"missing required fields {missing}")
+    validate_ref_fields(row, audit_refs, "row", problems, require=True, allow_row_scoped_refs=True)
+    status = str(row.get("closure_status", ""))
+    if status not in ALLOWED_STATUSES or status == "reopened":
+        problems.append(f"closure_status {status} does not close the item")
+    for field in ("source_atom_ids", "plan_unit_ids", "owner_docs", "detail_keys", "exact_tokens"):
+        if not isinstance(row.get(field), list):
+            problems.append(f"{field} must be a list")
+    if not _nonempty_str(row.get("closure_reason")):
+        problems.append("closure_reason must be non-empty")
+    artifact = row.get("source_artifact")
+    if not isinstance(artifact, str) or not (audit_dir / artifact).exists():
+        problems.append("source_artifact must name an existing source artifact")
+    validate_evidence_refs(row.get("closure_evidence", row.get("evidence")), "row", problems)
+    return [problem[len("row: "):] if problem.startswith("row: ") else problem for problem in problems]
 
 
 def matrix_replacement_candidates(
@@ -3778,8 +3901,9 @@ def matrix_replacement_candidates(
     row with the same closure_status, and the record lists it once (replaces_matrix_line,
     appended_line, appended_row_sha256). A frozen row is replaced at most once, and a replacing or
     appended row is never replaced, so there are no chains. Every refusal is an error and changes
-    nothing: both rows are then judged as they stand. The caller honors a candidate only when the
-    replacing row's own registry link holds.
+    nothing: both rows are then judged as they stand. The replacing row keeps the frozen row's
+    finding identity except its owner fields and meets the full matrix-row schema. The caller
+    honors a candidate only when the replacing row's own registry link holds.
     """
     claims = [row for row in rows if any(field in row for field in MATRIX_REPLACEMENT_FIELDS)]
     if not claims:
@@ -3787,11 +3911,26 @@ def matrix_replacement_candidates(
     # Bind exact bytes: split on LF only and keep any CR, so a CRLF rewrite of a pinned line
     # changes its digest instead of being normalized away (review r1 finding 1, T220).
     try:
-        raw_lines = matrix_path.read_bytes().split(b"\n")
+        data = matrix_path.read_bytes()
     except OSError:
-        raw_lines = []
+        data = b""
+    raw_lines = data.split(b"\n")
     if raw_lines and raw_lines[-1] == b"":
         raw_lines.pop()
+    # read_jsonl numbers rows after universal-newline translation, so a lone CR separates rows there
+    # but not here. Then the parsed line numbers do not name these lines, and nothing is bound (T228).
+    try:
+        parsed_lines = len(_lines(_normalized_text_bytes(data)))
+    except UnicodeDecodeError:
+        errors.append(f"{rel(matrix_path)}: is not UTF-8; no row replaces a frozen row (PLS-026)")
+        return {}
+    if parsed_lines != len(raw_lines):
+        errors.append(
+            f"{rel(matrix_path)}: separates rows with a lone CR, so its {parsed_lines} parsed row numbers do not "
+            f"name its {len(raw_lines)} LF-separated lines; no row replaces a frozen row (PLS-026)"
+        )
+        return {}
+    audit_refs = load_audit_report(audit_dir, [])[1]
 
     def line_digest(data: bytes) -> str:
         return hashlib.sha256(data).hexdigest()
@@ -3852,6 +3991,15 @@ def matrix_replacement_candidates(
                     problems.append(f"a replacing row must close the same source row as line {target}")
                 if str(row.get("closure_status", "")) != str(frozen.get("closure_status", "")):
                     problems.append(f"a replacing row must keep the closure_status of line {target}")
+                own_identity, frozen_identity = _non_owner_identity(row), _non_owner_identity(frozen)
+                changed = sorted(field for field in own_identity if own_identity[field] != frozen_identity[field])
+                if changed:
+                    problems.append(f"a replacing row may change only the owner fields "
+                                    f"({', '.join(MATRIX_REPLACEMENT_OWNER_FIELDS)}) of the finding identity of line {target}; "
+                                    f"it changes {changed}")
+        schema = _replacing_row_schema_problems(row, audit_dir, audit_refs)
+        if schema:
+            problems.append("a replacing row must meet the full matrix-row schema: " + "; ".join(schema))
         if problems:
             errors.append(f"{label}: does not replace a frozen row (PLS-026): " + "; ".join(problems))
             continue
@@ -4496,6 +4644,7 @@ def _reaudit_append(args: argparse.Namespace) -> int:
         (row.get("supersedes") or {}).get("line") for row in rows if isinstance(row.get("supersedes"), dict)
     }
     now = utc_now()
+    receipts = ReceiptLedger(ROOT)
     new_rows: list[dict[str, Any]] = []
     moved: list[dict[str, Any]] = []
     already_stale_moved: list[dict[str, Any]] = []
@@ -4545,11 +4694,22 @@ def _reaudit_append(args: argparse.Namespace) -> int:
         if changed:
             moved.append({"closure_id": closure_id, "line": line, "changed_anchors": changed})
             continue
-        row = build_reaudit_row(target, line, raw_lines[line], record, record_ref, resolver, now)
-        if any(parse_anchor_ref(ref)[:2] == (rel(registry_path), "jsonlset") for ref in record["dependencies"]):
+        marker = reaudit_self_anchor(record, rel(registry_path))
+        row_time = now
+        if marker is not None:
+            # A self-excluding row is dated by the commit that added its record, which validation
+            # reads back from git; a time the row merely states could be edited with it (T218).
+            record_commit, problem = receipts.check(record_ref, str(record.get("recheck_commit")))
+            row_time = receipts.author_time(record_commit) if record_commit and not problem else None
+            if row_time is None:
+                errors.append(f"{closure_id}: a self-excluding row is dated by the commit that added its record, "
+                              f"which must be committed first: {problem or 'no adding commit'}")
+                continue
+        row = build_reaudit_row(target, line, raw_lines[line], record, record_ref, resolver, row_time)
+        if marker is not None:
             # A row cannot hash itself recursively. Keep the reviewed pre-append
             # snapshot, excluding just this row from its own registry row-set hash.
-            row["hashes"]["registry_self_anchor"] = {"path": rel(registry_path), "scope": REGISTRY_SELF_ANCHOR_SCOPE}
+            row["hashes"]["registry_self_anchor"] = marker
         new_rows.append(row)
     if not errors and new_rows:
         raw = registry_path.read_bytes()
