@@ -42,6 +42,18 @@ def pins():
     return {p: hashlib.sha256((ROOT / p).read_bytes()).hexdigest() for p in SOURCES}
 
 
+# The tool version a run used: the commit named in <root>/.tool-commit (written when a frozen copy of a commit is
+# made for a long run; absent in a working tree) and every source pin read once at launch. A run whose sources
+# differ at the end from these launch pins records tool_changed_under_run: true and must be re-run.
+TOOL_COMMIT = (ROOT / ".tool-commit").read_text().strip() if (ROOT / ".tool-commit").exists() else None
+LAUNCH_PINS = pins()
+
+
+def tool_version():
+    end = pins()
+    return dict(tool_commit=TOOL_COMMIT, launch_pins=LAUNCH_PINS, tool_changed_under_run=end != LAUNCH_PINS)
+
+
 def families(lane):
     return clauses.DC1_FAMILIES if lane == "dc1" else clauses.DC2_FAMILIES
 
@@ -67,13 +79,15 @@ def cmd_clauses(a):
         t = time.monotonic()
         r = clauses.run_slot(fam, boundary, slot, pool=pool)
         r["seconds"] = round(time.monotonic() - t, 1)
+        r.update(tool_version())
         s = clauses.summarize(r)
+        s.update(tool_commit=r["tool_commit"], tool_changed_under_run=r["tool_changed_under_run"])
         s["sha256"] = write(a.out / "clauses", fam + "--" + boundary.replace(":", "_"), r)
         summary.append(s)
         print(json.dumps({k: s[k] for k in ("family", "boundary", "clauses", "killed", "joint_kill", "control_detected", "implied", "open", "invalid")}), flush=True)
-    data = dict(pins=pins(), slots=summary)
+    data = dict(pins=pins(), slots=summary, **tool_version())
     write(a.out, "clauses-summary" + ("-" + "_".join(a.family) if a.family else ""), data)
-    bad = [s for s in summary if s["baseline_failures"] or s["restoration_failures"] or s["control_route_failures"]]
+    bad = [s for s in summary if s["baseline_failures"] or s["restoration_failures"] or s["control_route_failures"] or s["tool_changed_under_run"]]
     return 0 if not bad else 1
 
 
