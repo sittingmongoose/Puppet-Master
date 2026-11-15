@@ -1,0 +1,5388 @@
+{
+ "bundle.selection_forward_blocked/application": [
+  {
+   "name": "expired",
+   "original": {
+    "after": {
+     "annotations": [
+      "pmref:fixture:annotation"
+     ],
+     "chips": {
+      "fixture_selection_id": {
+       "excerpt_ref": "pmref:fixture:selection_excerpt",
+       "provenance_refs": [
+        "pmref:fixture:provenance"
+       ],
+       "reason": "fixture_reason_code",
+       "state": "pending",
+       "target": "pmref:fixture:requested_target"
+      }
+     },
+     "transcript": [
+      "fixture_prior_message_id"
+     ]
+    },
+    "before": {
+     "annotations": [
+      "pmref:fixture:annotation"
+     ],
+     "chips": {
+      "fixture_selection_id": {
+       "excerpt_ref": "pmref:fixture:selection_excerpt",
+       "provenance_refs": [
+        "pmref:fixture:provenance"
+       ],
+       "reason": null,
+       "state": "pending",
+       "target": "pmref:fixture:requested_target"
+      }
+     },
+     "transcript": [
+      "fixture_prior_message_id"
+     ]
+    },
+    "commitment": {
+     "codec": "pm.seglog_frame_v2.event_value.canonical_msgpack.v1",
+     "domain": "pm.storage.original_event_value_commitment.v1",
+     "event_schema_id": "pm.event.v0",
+     "event_schema_version": "2.0.0",
+     "schema_id": "pm.storage.original_event_value_commitment.v1",
+     "schema_version": "1.0.0",
+     "sha256": "d78ffef6698ef54dc8461c002e7fa300e35b9c593d87485dd9ee2be4693964bd"
+    },
+    "first_receipt": {
+     "acknowledged_at_utc": "2026-11-04T01:00:00+01:00",
+     "byte_offset": 0,
+     "commit_group_id": "fixture_group",
+     "durability_class": "ordinary",
+     "durability_state": "synced",
+     "durable_end_offset": 1024,
+     "event_id": "evt_dch_93e3990cacb8d689045e0ebf9d5ea861bb647b94677150638f1c75acb09850ec",
+     "manifest_generation": 1,
+     "segment_generation": 1,
+     "segment_name": "seglog-1",
+     "sequence_id": 1
+    },
+    "intent": {
+     "actor_ref": "pmref:fixture:actor_ref",
+     "bundle_id": "fixture_bundle_id",
+     "computer_id": "fixture_computer_id",
+     "doc_id": "fixture_doc_id",
+     "operation_id": "fixture_operation_id",
+     "requested_target": "pmref:fixture:requested_target",
+     "scope": {
+      "named_plan_id": null,
+      "project_home_server_id": null,
+      "project_id": null,
+      "schema_id": "pm.workflow_scope.v2",
+      "schema_version": "2.0.0",
+      "scope_kind": "application",
+      "scope_partition": "app",
+      "server_id": "server1"
+     },
+     "selection_id": "fixture_selection_id",
+     "thread_id": "thr_01ARZ3NDEKTSV4RRFFQ69G5FAV"
+    },
+    "operation": {
+     "actions": [
+      "intent",
+      "effect",
+      "commit",
+      "readback",
+      "append",
+      "receipt",
+      "publish"
+     ],
+     "event_type": "bundle.selection_forward_blocked",
+     "operation_id": "fixture_operation_id",
+     "outcome": {
+      "block_class": "expired",
+      "blocked": true,
+      "created": [],
+      "handler": "document_review.selection_forward",
+      "handoff_claimed": false,
+      "reason": "fixture_reason_code"
+     }
+    },
+    "receipt": {
+     "acknowledged_at_utc": "2026-11-04T01:00:00+01:00",
+     "byte_offset": 0,
+     "commit_group_id": "fixture_group",
+     "durability_class": "ordinary",
+     "durability_state": "synced",
+     "durable_end_offset": 1024,
+     "event_id": "evt_dch_93e3990cacb8d689045e0ebf9d5ea861bb647b94677150638f1c75acb09850ec",
+     "manifest_generation": 1,
+     "segment_generation": 1,
+     "segment_name": "seglog-1",
+     "sequence_id": 1
+    },
+    "record": {
+     "actor_ref": "pmref:fixture:actor_ref",
+     "attempt_id": null,
+     "causation_event_id": null,
+     "correlation_id": "fixture_operation_id",
+     "effective_account_ref": null,
+     "event_id": "evt_dch_93e3990cacb8d689045e0ebf9d5ea861bb647b94677150638f1c75acb09850ec",
+     "event_type": "bundle.selection_forward_blocked",
+     "idempotency_key": "application@1:73657276657231:666978747572655f6f7065726174696f6e5f6964",
+     "migration": {
+      "compatibility_event_type": null,
+      "migrated_from_schema_id": null,
+      "migrated_from_schema_version": null,
+      "migration_id": null
+     },
+     "node_id": null,
+     "observed_at_utc": "2026-11-04T00:00:00Z",
+     "occurred_at_utc": "2026-11-04T00:00:00Z",
+     "parent_event_id": null,
+     "payload": {
+      "actor_ref": "pmref:fixture:actor_ref",
+      "bundle_id": "fixture_bundle_id",
+      "computer_id": "fixture_computer_id",
+      "doc_id": "fixture_doc_id",
+      "operation_id": "fixture_operation_id",
+      "reason_code": "fixture_reason_code",
+      "requested_target": "pmref:fixture:requested_target",
+      "schema_id": "pm.dch_event.bundle_selection_forward_blocked.application.v1",
+      "schema_version": "1.0.0",
+      "scope": {
+       "named_plan_id": null,
+       "project_home_server_id": null,
+       "project_id": null,
+       "schema_id": "pm.workflow_scope.v2",
+       "schema_version": "2.0.0",
+       "scope_kind": "application",
+       "scope_partition": "app",
+       "server_id": "server1"
+      },
+      "selection_id": "fixture_selection_id",
+      "thread_id": "thr_01ARZ3NDEKTSV4RRFFQ69G5FAV",
+      "ts": "2026-11-04T00:00:00Z"
+     },
+     "payload_ref": null,
+     "payload_schema_id": "pm.dch_event.bundle_selection_forward_blocked.application.v1",
+     "persisted_at_utc": "2026-11-04T00:00:00Z",
+     "producer_sequence_id": null,
+     "project_id": null,
+     "redaction_profile": "no_secrets",
+     "replay_policy": "dedupe_by_idempotency_key",
+     "requested_account_ref": null,
+     "run_id": null,
+     "schema_id": "pm.event.v0",
+     "schema_version": "2.0.0",
+     "scope_kind": "application",
+     "sequence_id": 1,
+     "thread_id": "thr_01ARZ3NDEKTSV4RRFFQ69G5FAV"
+    },
+    "result": {
+     "actor_ref": "pmref:fixture:actor_ref",
+     "bundle_id": "fixture_bundle_id",
+     "computer_id": "fixture_computer_id",
+     "doc_id": "fixture_doc_id",
+     "operation_id": "fixture_operation_id",
+     "reason_code": "fixture_reason_code",
+     "requested_target": "pmref:fixture:requested_target",
+     "schema_id": "pm.dch_event.bundle_selection_forward_blocked.application.v1",
+     "schema_version": "1.0.0",
+     "scope": {
+      "named_plan_id": null,
+      "project_home_server_id": null,
+      "project_id": null,
+      "schema_id": "pm.workflow_scope.v2",
+      "schema_version": "2.0.0",
+      "scope_kind": "application",
+      "scope_partition": "app",
+      "server_id": "server1"
+     },
+     "selection_id": "fixture_selection_id",
+     "thread_id": "thr_01ARZ3NDEKTSV4RRFFQ69G5FAV",
+     "ts": "2026-11-04T00:00:00Z"
+    },
+    "storage_instance_id": "00000000-0000-4000-8000-000000000001"
+   }
+  },
+  {
+   "name": "scrubbed",
+   "original": {
+    "after": {
+     "annotations": [
+      "pmref:fixture:annotation"
+     ],
+     "chips": {
+      "fixture_selection_id": {
+       "excerpt_ref": "pmref:fixture:selection_excerpt",
+       "provenance_refs": [
+        "pmref:fixture:provenance"
+       ],
+       "reason": "fixture_reason_code",
+       "state": "pending",
+       "target": "pmref:fixture:requested_target"
+      }
+     },
+     "transcript": [
+      "fixture_prior_message_id"
+     ]
+    },
+    "before": {
+     "annotations": [
+      "pmref:fixture:annotation"
+     ],
+     "chips": {
+      "fixture_selection_id": {
+       "excerpt_ref": "pmref:fixture:selection_excerpt",
+       "provenance_refs": [
+        "pmref:fixture:provenance"
+       ],
+       "reason": null,
+       "state": "pending",
+       "target": "pmref:fixture:requested_target"
+      }
+     },
+     "transcript": [
+      "fixture_prior_message_id"
+     ]
+    },
+    "commitment": {
+     "codec": "pm.seglog_frame_v2.event_value.canonical_msgpack.v1",
+     "domain": "pm.storage.original_event_value_commitment.v1",
+     "event_schema_id": "pm.event.v0",
+     "event_schema_version": "2.0.0",
+     "schema_id": "pm.storage.original_event_value_commitment.v1",
+     "schema_version": "1.0.0",
+     "sha256": "d78ffef6698ef54dc8461c002e7fa300e35b9c593d87485dd9ee2be4693964bd"
+    },
+    "first_receipt": {
+     "acknowledged_at_utc": "2026-11-04T01:00:00+01:00",
+     "byte_offset": 0,
+     "commit_group_id": "fixture_group",
+     "durability_class": "ordinary",
+     "durability_state": "synced",
+     "durable_end_offset": 1024,
+     "event_id": "evt_dch_93e3990cacb8d689045e0ebf9d5ea861bb647b94677150638f1c75acb09850ec",
+     "manifest_generation": 1,
+     "segment_generation": 1,
+     "segment_name": "seglog-1",
+     "sequence_id": 1
+    },
+    "intent": {
+     "actor_ref": "pmref:fixture:actor_ref",
+     "bundle_id": "fixture_bundle_id",
+     "computer_id": "fixture_computer_id",
+     "doc_id": "fixture_doc_id",
+     "operation_id": "fixture_operation_id",
+     "requested_target": "pmref:fixture:requested_target",
+     "scope": {
+      "named_plan_id": null,
+      "project_home_server_id": null,
+      "project_id": null,
+      "schema_id": "pm.workflow_scope.v2",
+      "schema_version": "2.0.0",
+      "scope_kind": "application",
+      "scope_partition": "app",
+      "server_id": "server1"
+     },
+     "selection_id": "fixture_selection_id",
+     "thread_id": "thr_01ARZ3NDEKTSV4RRFFQ69G5FAV"
+    },
+    "operation": {
+     "actions": [
+      "intent",
+      "effect",
+      "commit",
+      "readback",
+      "append",
+      "receipt",
+      "publish"
+     ],
+     "event_type": "bundle.selection_forward_blocked",
+     "operation_id": "fixture_operation_id",
+     "outcome": {
+      "block_class": "scrubbed",
+      "blocked": true,
+      "created": [],
+      "handler": "document_review.selection_forward",
+      "handoff_claimed": false,
+      "reason": "fixture_reason_code"
+     }
+    },
+    "receipt": {
+     "acknowledged_at_utc": "2026-11-04T01:00:00+01:00",
+     "byte_offset": 0,
+     "commit_group_id": "fixture_group",
+     "durability_class": "ordinary",
+     "durability_state": "synced",
+     "durable_end_offset": 1024,
+     "event_id": "evt_dch_93e3990cacb8d689045e0ebf9d5ea861bb647b94677150638f1c75acb09850ec",
+     "manifest_generation": 1,
+     "segment_generation": 1,
+     "segment_name": "seglog-1",
+     "sequence_id": 1
+    },
+    "record": {
+     "actor_ref": "pmref:fixture:actor_ref",
+     "attempt_id": null,
+     "causation_event_id": null,
+     "correlation_id": "fixture_operation_id",
+     "effective_account_ref": null,
+     "event_id": "evt_dch_93e3990cacb8d689045e0ebf9d5ea861bb647b94677150638f1c75acb09850ec",
+     "event_type": "bundle.selection_forward_blocked",
+     "idempotency_key": "application@1:73657276657231:666978747572655f6f7065726174696f6e5f6964",
+     "migration": {
+      "compatibility_event_type": null,
+      "migrated_from_schema_id": null,
+      "migrated_from_schema_version": null,
+      "migration_id": null
+     },
+     "node_id": null,
+     "observed_at_utc": "2026-11-04T00:00:00Z",
+     "occurred_at_utc": "2026-11-04T00:00:00Z",
+     "parent_event_id": null,
+     "payload": {
+      "actor_ref": "pmref:fixture:actor_ref",
+      "bundle_id": "fixture_bundle_id",
+      "computer_id": "fixture_computer_id",
+      "doc_id": "fixture_doc_id",
+      "operation_id": "fixture_operation_id",
+      "reason_code": "fixture_reason_code",
+      "requested_target": "pmref:fixture:requested_target",
+      "schema_id": "pm.dch_event.bundle_selection_forward_blocked.application.v1",
+      "schema_version": "1.0.0",
+      "scope": {
+       "named_plan_id": null,
+       "project_home_server_id": null,
+       "project_id": null,
+       "schema_id": "pm.workflow_scope.v2",
+       "schema_version": "2.0.0",
+       "scope_kind": "application",
+       "scope_partition": "app",
+       "server_id": "server1"
+      },
+      "selection_id": "fixture_selection_id",
+      "thread_id": "thr_01ARZ3NDEKTSV4RRFFQ69G5FAV",
+      "ts": "2026-11-04T00:00:00Z"
+     },
+     "payload_ref": null,
+     "payload_schema_id": "pm.dch_event.bundle_selection_forward_blocked.application.v1",
+     "persisted_at_utc": "2026-11-04T00:00:00Z",
+     "producer_sequence_id": null,
+     "project_id": null,
+     "redaction_profile": "no_secrets",
+     "replay_policy": "dedupe_by_idempotency_key",
+     "requested_account_ref": null,
+     "run_id": null,
+     "schema_id": "pm.event.v0",
+     "schema_version": "2.0.0",
+     "scope_kind": "application",
+     "sequence_id": 1,
+     "thread_id": "thr_01ARZ3NDEKTSV4RRFFQ69G5FAV"
+    },
+    "result": {
+     "actor_ref": "pmref:fixture:actor_ref",
+     "bundle_id": "fixture_bundle_id",
+     "computer_id": "fixture_computer_id",
+     "doc_id": "fixture_doc_id",
+     "operation_id": "fixture_operation_id",
+     "reason_code": "fixture_reason_code",
+     "requested_target": "pmref:fixture:requested_target",
+     "schema_id": "pm.dch_event.bundle_selection_forward_blocked.application.v1",
+     "schema_version": "1.0.0",
+     "scope": {
+      "named_plan_id": null,
+      "project_home_server_id": null,
+      "project_id": null,
+      "schema_id": "pm.workflow_scope.v2",
+      "schema_version": "2.0.0",
+      "scope_kind": "application",
+      "scope_partition": "app",
+      "server_id": "server1"
+     },
+     "selection_id": "fixture_selection_id",
+     "thread_id": "thr_01ARZ3NDEKTSV4RRFFQ69G5FAV",
+     "ts": "2026-11-04T00:00:00Z"
+    },
+    "storage_instance_id": "00000000-0000-4000-8000-000000000001"
+   }
+  }
+ ],
+ "bundle.selection_forward_blocked/project": [
+  {
+   "name": "expired",
+   "original": {
+    "after": {
+     "annotations": [
+      "pmref:fixture:annotation"
+     ],
+     "chips": {
+      "fixture_selection_id": {
+       "excerpt_ref": "pmref:fixture:selection_excerpt",
+       "provenance_refs": [
+        "pmref:fixture:provenance"
+       ],
+       "reason": "fixture_reason_code",
+       "state": "pending",
+       "target": "pmref:fixture:requested_target"
+      }
+     },
+     "transcript": [
+      "fixture_prior_message_id"
+     ]
+    },
+    "before": {
+     "annotations": [
+      "pmref:fixture:annotation"
+     ],
+     "chips": {
+      "fixture_selection_id": {
+       "excerpt_ref": "pmref:fixture:selection_excerpt",
+       "provenance_refs": [
+        "pmref:fixture:provenance"
+       ],
+       "reason": null,
+       "state": "pending",
+       "target": "pmref:fixture:requested_target"
+      }
+     },
+     "transcript": [
+      "fixture_prior_message_id"
+     ]
+    },
+    "commitment": {
+     "codec": "pm.seglog_frame_v2.event_value.canonical_msgpack.v1",
+     "domain": "pm.storage.original_event_value_commitment.v1",
+     "event_schema_id": "pm.event.v0",
+     "event_schema_version": "2.0.0",
+     "schema_id": "pm.storage.original_event_value_commitment.v1",
+     "schema_version": "1.0.0",
+     "sha256": "37e2fbee4124632e2d2b91f4e8a6b12e279854cd5834be15941876c59c0f56dd"
+    },
+    "first_receipt": {
+     "acknowledged_at_utc": "2026-11-04T01:00:00+01:00",
+     "byte_offset": 0,
+     "commit_group_id": "fixture_group",
+     "durability_class": "ordinary",
+     "durability_state": "synced",
+     "durable_end_offset": 1024,
+     "event_id": "evt_dch_5978cfc0d2317edf19ce1bad56aa876a22f187a8f3c863aaf6b364631e0034ff",
+     "manifest_generation": 1,
+     "segment_generation": 1,
+     "segment_name": "seglog-1",
+     "sequence_id": 1
+    },
+    "intent": {
+     "actor_ref": "pmref:fixture:actor_ref",
+     "bundle_id": "fixture_bundle_id",
+     "computer_id": "fixture_computer_id",
+     "doc_id": "fixture_doc_id",
+     "operation_id": "fixture_operation_id",
+     "requested_target": "pmref:fixture:requested_target",
+     "scope": {
+      "named_plan_id": null,
+      "project_home_server_id": "server1",
+      "project_id": "p1",
+      "schema_id": "pm.workflow_scope.v2",
+      "schema_version": "2.0.0",
+      "scope_kind": "project",
+      "scope_partition": "project~cDE",
+      "server_id": "server1"
+     },
+     "selection_id": "fixture_selection_id",
+     "thread_id": "thr_01ARZ3NDEKTSV4RRFFQ69G5FAV"
+    },
+    "operation": {
+     "actions": [
+      "intent",
+      "effect",
+      "commit",
+      "readback",
+      "append",
+      "receipt",
+      "publish"
+     ],
+     "event_type": "bundle.selection_forward_blocked",
+     "operation_id": "fixture_operation_id",
+     "outcome": {
+      "block_class": "expired",
+      "blocked": true,
+      "created": [],
+      "handler": "document_review.selection_forward",
+      "handoff_claimed": false,
+      "reason": "fixture_reason_code"
+     }
+    },
+    "receipt": {
+     "acknowledged_at_utc": "2026-11-04T01:00:00+01:00",
+     "byte_offset": 0,
+     "commit_group_id": "fixture_group",
+     "durability_class": "ordinary",
+     "durability_state": "synced",
+     "durable_end_offset": 1024,
+     "event_id": "evt_dch_5978cfc0d2317edf19ce1bad56aa876a22f187a8f3c863aaf6b364631e0034ff",
+     "manifest_generation": 1,
+     "segment_generation": 1,
+     "segment_name": "seglog-1",
+     "sequence_id": 1
+    },
+    "record": {
+     "actor_ref": "pmref:fixture:actor_ref",
+     "attempt_id": null,
+     "causation_event_id": null,
+     "correlation_id": "fixture_operation_id",
+     "effective_account_ref": null,
+     "event_id": "evt_dch_5978cfc0d2317edf19ce1bad56aa876a22f187a8f3c863aaf6b364631e0034ff",
+     "event_type": "bundle.selection_forward_blocked",
+     "idempotency_key": "dch:5978cfc0d2317edf19ce1bad56aa876a22f187a8f3c863aaf6b364631e0034ff",
+     "migration": {
+      "compatibility_event_type": null,
+      "migrated_from_schema_id": null,
+      "migrated_from_schema_version": null,
+      "migration_id": null
+     },
+     "node_id": null,
+     "observed_at_utc": "2026-11-04T00:00:00Z",
+     "occurred_at_utc": "2026-11-04T00:00:00Z",
+     "parent_event_id": null,
+     "payload": {
+      "actor_ref": "pmref:fixture:actor_ref",
+      "bundle_id": "fixture_bundle_id",
+      "computer_id": "fixture_computer_id",
+      "doc_id": "fixture_doc_id",
+      "operation_id": "fixture_operation_id",
+      "reason_code": "fixture_reason_code",
+      "requested_target": "pmref:fixture:requested_target",
+      "schema_id": "pm.dch_event.bundle_selection_forward_blocked.project.v1",
+      "schema_version": "1.0.0",
+      "scope": {
+       "named_plan_id": null,
+       "project_home_server_id": "server1",
+       "project_id": "p1",
+       "schema_id": "pm.workflow_scope.v2",
+       "schema_version": "2.0.0",
+       "scope_kind": "project",
+       "scope_partition": "project~cDE",
+       "server_id": "server1"
+      },
+      "selection_id": "fixture_selection_id",
+      "thread_id": "thr_01ARZ3NDEKTSV4RRFFQ69G5FAV",
+      "ts": "2026-11-04T00:00:00Z"
+     },
+     "payload_ref": null,
+     "payload_schema_id": "pm.dch_event.bundle_selection_forward_blocked.project.v1",
+     "persisted_at_utc": "2026-11-04T00:00:00Z",
+     "producer_sequence_id": null,
+     "project_id": "p1",
+     "redaction_profile": "no_secrets",
+     "replay_policy": "dedupe_by_idempotency_key",
+     "requested_account_ref": null,
+     "run_id": null,
+     "schema_id": "pm.event.v0",
+     "schema_version": "2.0.0",
+     "scope_kind": "project",
+     "sequence_id": 1,
+     "thread_id": "thr_01ARZ3NDEKTSV4RRFFQ69G5FAV"
+    },
+    "result": {
+     "actor_ref": "pmref:fixture:actor_ref",
+     "bundle_id": "fixture_bundle_id",
+     "computer_id": "fixture_computer_id",
+     "doc_id": "fixture_doc_id",
+     "operation_id": "fixture_operation_id",
+     "reason_code": "fixture_reason_code",
+     "requested_target": "pmref:fixture:requested_target",
+     "schema_id": "pm.dch_event.bundle_selection_forward_blocked.project.v1",
+     "schema_version": "1.0.0",
+     "scope": {
+      "named_plan_id": null,
+      "project_home_server_id": "server1",
+      "project_id": "p1",
+      "schema_id": "pm.workflow_scope.v2",
+      "schema_version": "2.0.0",
+      "scope_kind": "project",
+      "scope_partition": "project~cDE",
+      "server_id": "server1"
+     },
+     "selection_id": "fixture_selection_id",
+     "thread_id": "thr_01ARZ3NDEKTSV4RRFFQ69G5FAV",
+     "ts": "2026-11-04T00:00:00Z"
+    },
+    "storage_instance_id": "00000000-0000-4000-8000-000000000001"
+   }
+  },
+  {
+   "name": "scrubbed",
+   "original": {
+    "after": {
+     "annotations": [
+      "pmref:fixture:annotation"
+     ],
+     "chips": {
+      "fixture_selection_id": {
+       "excerpt_ref": "pmref:fixture:selection_excerpt",
+       "provenance_refs": [
+        "pmref:fixture:provenance"
+       ],
+       "reason": "fixture_reason_code",
+       "state": "pending",
+       "target": "pmref:fixture:requested_target"
+      }
+     },
+     "transcript": [
+      "fixture_prior_message_id"
+     ]
+    },
+    "before": {
+     "annotations": [
+      "pmref:fixture:annotation"
+     ],
+     "chips": {
+      "fixture_selection_id": {
+       "excerpt_ref": "pmref:fixture:selection_excerpt",
+       "provenance_refs": [
+        "pmref:fixture:provenance"
+       ],
+       "reason": null,
+       "state": "pending",
+       "target": "pmref:fixture:requested_target"
+      }
+     },
+     "transcript": [
+      "fixture_prior_message_id"
+     ]
+    },
+    "commitment": {
+     "codec": "pm.seglog_frame_v2.event_value.canonical_msgpack.v1",
+     "domain": "pm.storage.original_event_value_commitment.v1",
+     "event_schema_id": "pm.event.v0",
+     "event_schema_version": "2.0.0",
+     "schema_id": "pm.storage.original_event_value_commitment.v1",
+     "schema_version": "1.0.0",
+     "sha256": "37e2fbee4124632e2d2b91f4e8a6b12e279854cd5834be15941876c59c0f56dd"
+    },
+    "first_receipt": {
+     "acknowledged_at_utc": "2026-11-04T01:00:00+01:00",
+     "byte_offset": 0,
+     "commit_group_id": "fixture_group",
+     "durability_class": "ordinary",
+     "durability_state": "synced",
+     "durable_end_offset": 1024,
+     "event_id": "evt_dch_5978cfc0d2317edf19ce1bad56aa876a22f187a8f3c863aaf6b364631e0034ff",
+     "manifest_generation": 1,
+     "segment_generation": 1,
+     "segment_name": "seglog-1",
+     "sequence_id": 1
+    },
+    "intent": {
+     "actor_ref": "pmref:fixture:actor_ref",
+     "bundle_id": "fixture_bundle_id",
+     "computer_id": "fixture_computer_id",
+     "doc_id": "fixture_doc_id",
+     "operation_id": "fixture_operation_id",
+     "requested_target": "pmref:fixture:requested_target",
+     "scope": {
+      "named_plan_id": null,
+      "project_home_server_id": "server1",
+      "project_id": "p1",
+      "schema_id": "pm.workflow_scope.v2",
+      "schema_version": "2.0.0",
+      "scope_kind": "project",
+      "scope_partition": "project~cDE",
+      "server_id": "server1"
+     },
+     "selection_id": "fixture_selection_id",
+     "thread_id": "thr_01ARZ3NDEKTSV4RRFFQ69G5FAV"
+    },
+    "operation": {
+     "actions": [
+      "intent",
+      "effect",
+      "commit",
+      "readback",
+      "append",
+      "receipt",
+      "publish"
+     ],
+     "event_type": "bundle.selection_forward_blocked",
+     "operation_id": "fixture_operation_id",
+     "outcome": {
+      "block_class": "scrubbed",
+      "blocked": true,
+      "created": [],
+      "handler": "document_review.selection_forward",
+      "handoff_claimed": false,
+      "reason": "fixture_reason_code"
+     }
+    },
+    "receipt": {
+     "acknowledged_at_utc": "2026-11-04T01:00:00+01:00",
+     "byte_offset": 0,
+     "commit_group_id": "fixture_group",
+     "durability_class": "ordinary",
+     "durability_state": "synced",
+     "durable_end_offset": 1024,
+     "event_id": "evt_dch_5978cfc0d2317edf19ce1bad56aa876a22f187a8f3c863aaf6b364631e0034ff",
+     "manifest_generation": 1,
+     "segment_generation": 1,
+     "segment_name": "seglog-1",
+     "sequence_id": 1
+    },
+    "record": {
+     "actor_ref": "pmref:fixture:actor_ref",
+     "attempt_id": null,
+     "causation_event_id": null,
+     "correlation_id": "fixture_operation_id",
+     "effective_account_ref": null,
+     "event_id": "evt_dch_5978cfc0d2317edf19ce1bad56aa876a22f187a8f3c863aaf6b364631e0034ff",
+     "event_type": "bundle.selection_forward_blocked",
+     "idempotency_key": "dch:5978cfc0d2317edf19ce1bad56aa876a22f187a8f3c863aaf6b364631e0034ff",
+     "migration": {
+      "compatibility_event_type": null,
+      "migrated_from_schema_id": null,
+      "migrated_from_schema_version": null,
+      "migration_id": null
+     },
+     "node_id": null,
+     "observed_at_utc": "2026-11-04T00:00:00Z",
+     "occurred_at_utc": "2026-11-04T00:00:00Z",
+     "parent_event_id": null,
+     "payload": {
+      "actor_ref": "pmref:fixture:actor_ref",
+      "bundle_id": "fixture_bundle_id",
+      "computer_id": "fixture_computer_id",
+      "doc_id": "fixture_doc_id",
+      "operation_id": "fixture_operation_id",
+      "reason_code": "fixture_reason_code",
+      "requested_target": "pmref:fixture:requested_target",
+      "schema_id": "pm.dch_event.bundle_selection_forward_blocked.project.v1",
+      "schema_version": "1.0.0",
+      "scope": {
+       "named_plan_id": null,
+       "project_home_server_id": "server1",
+       "project_id": "p1",
+       "schema_id": "pm.workflow_scope.v2",
+       "schema_version": "2.0.0",
+       "scope_kind": "project",
+       "scope_partition": "project~cDE",
+       "server_id": "server1"
+      },
+      "selection_id": "fixture_selection_id",
+      "thread_id": "thr_01ARZ3NDEKTSV4RRFFQ69G5FAV",
+      "ts": "2026-11-04T00:00:00Z"
+     },
+     "payload_ref": null,
+     "payload_schema_id": "pm.dch_event.bundle_selection_forward_blocked.project.v1",
+     "persisted_at_utc": "2026-11-04T00:00:00Z",
+     "producer_sequence_id": null,
+     "project_id": "p1",
+     "redaction_profile": "no_secrets",
+     "replay_policy": "dedupe_by_idempotency_key",
+     "requested_account_ref": null,
+     "run_id": null,
+     "schema_id": "pm.event.v0",
+     "schema_version": "2.0.0",
+     "scope_kind": "project",
+     "sequence_id": 1,
+     "thread_id": "thr_01ARZ3NDEKTSV4RRFFQ69G5FAV"
+    },
+    "result": {
+     "actor_ref": "pmref:fixture:actor_ref",
+     "bundle_id": "fixture_bundle_id",
+     "computer_id": "fixture_computer_id",
+     "doc_id": "fixture_doc_id",
+     "operation_id": "fixture_operation_id",
+     "reason_code": "fixture_reason_code",
+     "requested_target": "pmref:fixture:requested_target",
+     "schema_id": "pm.dch_event.bundle_selection_forward_blocked.project.v1",
+     "schema_version": "1.0.0",
+     "scope": {
+      "named_plan_id": null,
+      "project_home_server_id": "server1",
+      "project_id": "p1",
+      "schema_id": "pm.workflow_scope.v2",
+      "schema_version": "2.0.0",
+      "scope_kind": "project",
+      "scope_partition": "project~cDE",
+      "server_id": "server1"
+     },
+     "selection_id": "fixture_selection_id",
+     "thread_id": "thr_01ARZ3NDEKTSV4RRFFQ69G5FAV",
+     "ts": "2026-11-04T00:00:00Z"
+    },
+    "storage_instance_id": "00000000-0000-4000-8000-000000000001"
+   }
+  }
+ ],
+ "bundle.selection_sent_to_chat/application": [
+  {
+   "name": "explicit_selection",
+   "original": {
+    "after": {
+     "chips": {
+      "fixture_other_selection": {
+       "excerpt_ref": "pmref:fixture:other_excerpt",
+       "provenance_refs": [
+        "pmref:fixture:other_provenance"
+       ],
+       "reason": null,
+       "state": "pending",
+       "target": "pmref:fixture:other_thread"
+      },
+      "fixture_selection_id": {
+       "excerpt_ref": "pmref:fixture:selection_excerpt_ref",
+       "provenance_refs": [
+        "pmref:fixture:provenance_refs"
+       ],
+       "reason": null,
+       "state": "pending",
+       "target": "pmref:fixture:requested_target"
+      }
+     },
+     "transcript": [
+      "fixture_prior_message_id"
+     ]
+    },
+    "before": {
+     "chips": {
+      "fixture_other_selection": {
+       "excerpt_ref": "pmref:fixture:other_excerpt",
+       "provenance_refs": [
+        "pmref:fixture:other_provenance"
+       ],
+       "reason": null,
+       "state": "pending",
+       "target": "pmref:fixture:other_thread"
+      }
+     },
+     "transcript": [
+      "fixture_prior_message_id"
+     ]
+    },
+    "commitment": {
+     "codec": "pm.seglog_frame_v2.event_value.canonical_msgpack.v1",
+     "domain": "pm.storage.original_event_value_commitment.v1",
+     "event_schema_id": "pm.event.v0",
+     "event_schema_version": "2.0.0",
+     "schema_id": "pm.storage.original_event_value_commitment.v1",
+     "schema_version": "1.0.0",
+     "sha256": "b4348bbc6cdd71d211a5a452eddbc6f8af965fff5dcb72843b0b7d715c659c85"
+    },
+    "first_receipt": {
+     "acknowledged_at_utc": "2026-11-04T01:00:00+01:00",
+     "byte_offset": 0,
+     "commit_group_id": "fixture_group",
+     "durability_class": "ordinary",
+     "durability_state": "synced",
+     "durable_end_offset": 1024,
+     "event_id": "evt_dch_3de97093f396dc98f7a4ba022d45fe33c79b935d5a0be7ed64f3cee1a78fe980",
+     "manifest_generation": 1,
+     "segment_generation": 1,
+     "segment_name": "seglog-1",
+     "sequence_id": 1
+    },
+    "intent": {
+     "actor_ref": "pmref:fixture:actor_ref",
+     "bundle_id": "fixture_bundle_id",
+     "computer_id": "fixture_computer_id",
+     "doc_id": "fixture_doc_id",
+     "operation_id": "fixture_operation_id",
+     "provenance_refs": [
+      "pmref:fixture:provenance_refs"
+     ],
+     "requested_target": "pmref:fixture:requested_target",
+     "scope": {
+      "named_plan_id": null,
+      "project_home_server_id": null,
+      "project_id": null,
+      "schema_id": "pm.workflow_scope.v2",
+      "schema_version": "2.0.0",
+      "scope_kind": "application",
+      "scope_partition": "app",
+      "server_id": "server1"
+     },
+     "selection_excerpt_ref": "pmref:fixture:selection_excerpt_ref",
+     "selection_id": "fixture_selection_id"
+    },
+    "operation": {
+     "actions": [
+      "intent",
+      "effect",
+      "commit",
+      "readback",
+      "append",
+      "receipt",
+      "publish"
+     ],
+     "event_type": "bundle.selection_sent_to_chat",
+     "operation_id": "fixture_operation_id",
+     "outcome": {
+      "chip": {
+       "excerpt_ref": "pmref:fixture:selection_excerpt_ref",
+       "provenance_refs": [
+        "pmref:fixture:provenance_refs"
+       ],
+       "selection_id": "fixture_selection_id",
+       "state": "pending",
+       "target": "pmref:fixture:requested_target"
+      },
+      "handler": "document_review.selection_to_chat",
+      "message_sent": false,
+      "resolution": {
+       "explicit_selection": "pmref:fixture:requested_target",
+       "new_thread": null,
+       "owning_page_surface": "pmref:fixture:owning_surface"
+      },
+      "resolutions": [
+       "fixture_resolution"
+      ],
+      "resolved_target": "pmref:fixture:requested_target"
+     }
+    },
+    "receipt": {
+     "acknowledged_at_utc": "2026-11-04T01:00:00+01:00",
+     "byte_offset": 0,
+     "commit_group_id": "fixture_group",
+     "durability_class": "ordinary",
+     "durability_state": "synced",
+     "durable_end_offset": 1024,
+     "event_id": "evt_dch_3de97093f396dc98f7a4ba022d45fe33c79b935d5a0be7ed64f3cee1a78fe980",
+     "manifest_generation": 1,
+     "segment_generation": 1,
+     "segment_name": "seglog-1",
+     "sequence_id": 1
+    },
+    "record": {
+     "actor_ref": "pmref:fixture:actor_ref",
+     "attempt_id": null,
+     "causation_event_id": null,
+     "correlation_id": "fixture_operation_id",
+     "effective_account_ref": null,
+     "event_id": "evt_dch_3de97093f396dc98f7a4ba022d45fe33c79b935d5a0be7ed64f3cee1a78fe980",
+     "event_type": "bundle.selection_sent_to_chat",
+     "idempotency_key": "application@1:73657276657231:666978747572655f6f7065726174696f6e5f6964",
+     "migration": {
+      "compatibility_event_type": null,
+      "migrated_from_schema_id": null,
+      "migrated_from_schema_version": null,
+      "migration_id": null
+     },
+     "node_id": null,
+     "observed_at_utc": "2026-11-04T00:00:00Z",
+     "occurred_at_utc": "2026-11-04T00:00:00Z",
+     "parent_event_id": null,
+     "payload": {
+      "actor_ref": "pmref:fixture:actor_ref",
+      "bundle_id": "fixture_bundle_id",
+      "computer_id": "fixture_computer_id",
+      "doc_id": "fixture_doc_id",
+      "effective_target": "pmref:fixture:requested_target",
+      "operation_id": "fixture_operation_id",
+      "provenance_refs": [
+       "pmref:fixture:provenance_refs"
+      ],
+      "requested_target": "pmref:fixture:requested_target",
+      "schema_id": "pm.dch_event.bundle_selection_sent_to_chat.application.v1",
+      "schema_version": "1.0.0",
+      "scope": {
+       "named_plan_id": null,
+       "project_home_server_id": null,
+       "project_id": null,
+       "schema_id": "pm.workflow_scope.v2",
+       "schema_version": "2.0.0",
+       "scope_kind": "application",
+       "scope_partition": "app",
+       "server_id": "server1"
+      },
+      "selection_excerpt_ref": "pmref:fixture:selection_excerpt_ref",
+      "selection_id": "fixture_selection_id",
+      "thread_id": "thr_01ARZ3NDEKTSV4RRFFQ69G5FAV",
+      "ts": "2026-11-04T00:00:00Z"
+     },
+     "payload_ref": null,
+     "payload_schema_id": "pm.dch_event.bundle_selection_sent_to_chat.application.v1",
+     "persisted_at_utc": "2026-11-04T00:00:00Z",
+     "producer_sequence_id": null,
+     "project_id": null,
+     "redaction_profile": "no_secrets",
+     "replay_policy": "dedupe_by_idempotency_key",
+     "requested_account_ref": null,
+     "run_id": null,
+     "schema_id": "pm.event.v0",
+     "schema_version": "2.0.0",
+     "scope_kind": "application",
+     "sequence_id": 1,
+     "thread_id": "thr_01ARZ3NDEKTSV4RRFFQ69G5FAV"
+    },
+    "result": {
+     "actor_ref": "pmref:fixture:actor_ref",
+     "bundle_id": "fixture_bundle_id",
+     "computer_id": "fixture_computer_id",
+     "doc_id": "fixture_doc_id",
+     "effective_target": "pmref:fixture:requested_target",
+     "operation_id": "fixture_operation_id",
+     "provenance_refs": [
+      "pmref:fixture:provenance_refs"
+     ],
+     "requested_target": "pmref:fixture:requested_target",
+     "schema_id": "pm.dch_event.bundle_selection_sent_to_chat.application.v1",
+     "schema_version": "1.0.0",
+     "scope": {
+      "named_plan_id": null,
+      "project_home_server_id": null,
+      "project_id": null,
+      "schema_id": "pm.workflow_scope.v2",
+      "schema_version": "2.0.0",
+      "scope_kind": "application",
+      "scope_partition": "app",
+      "server_id": "server1"
+     },
+     "selection_excerpt_ref": "pmref:fixture:selection_excerpt_ref",
+     "selection_id": "fixture_selection_id",
+     "thread_id": "thr_01ARZ3NDEKTSV4RRFFQ69G5FAV",
+     "ts": "2026-11-04T00:00:00Z"
+    },
+    "storage_instance_id": "00000000-0000-4000-8000-000000000001"
+   }
+  },
+  {
+   "name": "new_thread",
+   "original": {
+    "after": {
+     "chips": {
+      "fixture_other_selection": {
+       "excerpt_ref": "pmref:fixture:other_excerpt",
+       "provenance_refs": [
+        "pmref:fixture:other_provenance"
+       ],
+       "reason": null,
+       "state": "pending",
+       "target": "pmref:fixture:other_thread"
+      },
+      "fixture_selection_id": {
+       "excerpt_ref": "pmref:fixture:selection_excerpt_ref",
+       "provenance_refs": [
+        "pmref:fixture:provenance_refs"
+       ],
+       "reason": null,
+       "state": "pending",
+       "target": "pmref:fixture:new_thread"
+      }
+     },
+     "transcript": [
+      "fixture_prior_message_id"
+     ]
+    },
+    "before": {
+     "chips": {
+      "fixture_other_selection": {
+       "excerpt_ref": "pmref:fixture:other_excerpt",
+       "provenance_refs": [
+        "pmref:fixture:other_provenance"
+       ],
+       "reason": null,
+       "state": "pending",
+       "target": "pmref:fixture:other_thread"
+      }
+     },
+     "transcript": [
+      "fixture_prior_message_id"
+     ]
+    },
+    "commitment": {
+     "codec": "pm.seglog_frame_v2.event_value.canonical_msgpack.v1",
+     "domain": "pm.storage.original_event_value_commitment.v1",
+     "event_schema_id": "pm.event.v0",
+     "event_schema_version": "2.0.0",
+     "schema_id": "pm.storage.original_event_value_commitment.v1",
+     "schema_version": "1.0.0",
+     "sha256": "3ff3d222fd09972dabe419c0650b2ea5f0f440d2f741115c8ea4bfde1c2ead4b"
+    },
+    "first_receipt": {
+     "acknowledged_at_utc": "2026-11-04T01:00:00+01:00",
+     "byte_offset": 0,
+     "commit_group_id": "fixture_group",
+     "durability_class": "ordinary",
+     "durability_state": "synced",
+     "durable_end_offset": 1024,
+     "event_id": "evt_dch_3de97093f396dc98f7a4ba022d45fe33c79b935d5a0be7ed64f3cee1a78fe980",
+     "manifest_generation": 1,
+     "segment_generation": 1,
+     "segment_name": "seglog-1",
+     "sequence_id": 1
+    },
+    "intent": {
+     "actor_ref": "pmref:fixture:actor_ref",
+     "bundle_id": "fixture_bundle_id",
+     "computer_id": "fixture_computer_id",
+     "doc_id": "fixture_doc_id",
+     "operation_id": "fixture_operation_id",
+     "provenance_refs": [
+      "pmref:fixture:provenance_refs"
+     ],
+     "requested_target": "pmref:fixture:requested_target",
+     "scope": {
+      "named_plan_id": null,
+      "project_home_server_id": null,
+      "project_id": null,
+      "schema_id": "pm.workflow_scope.v2",
+      "schema_version": "2.0.0",
+      "scope_kind": "application",
+      "scope_partition": "app",
+      "server_id": "server1"
+     },
+     "selection_excerpt_ref": "pmref:fixture:selection_excerpt_ref",
+     "selection_id": "fixture_selection_id"
+    },
+    "operation": {
+     "actions": [
+      "intent",
+      "effect",
+      "commit",
+      "readback",
+      "append",
+      "receipt",
+      "publish"
+     ],
+     "event_type": "bundle.selection_sent_to_chat",
+     "operation_id": "fixture_operation_id",
+     "outcome": {
+      "chip": {
+       "excerpt_ref": "pmref:fixture:selection_excerpt_ref",
+       "provenance_refs": [
+        "pmref:fixture:provenance_refs"
+       ],
+       "selection_id": "fixture_selection_id",
+       "state": "pending",
+       "target": "pmref:fixture:new_thread"
+      },
+      "handler": "document_review.selection_to_chat",
+      "message_sent": false,
+      "resolution": {
+       "explicit_selection": null,
+       "new_thread": "pmref:fixture:new_thread",
+       "owning_page_surface": null
+      },
+      "resolutions": [
+       "fixture_resolution"
+      ],
+      "resolved_target": "pmref:fixture:new_thread"
+     }
+    },
+    "receipt": {
+     "acknowledged_at_utc": "2026-11-04T01:00:00+01:00",
+     "byte_offset": 0,
+     "commit_group_id": "fixture_group",
+     "durability_class": "ordinary",
+     "durability_state": "synced",
+     "durable_end_offset": 1024,
+     "event_id": "evt_dch_3de97093f396dc98f7a4ba022d45fe33c79b935d5a0be7ed64f3cee1a78fe980",
+     "manifest_generation": 1,
+     "segment_generation": 1,
+     "segment_name": "seglog-1",
+     "sequence_id": 1
+    },
+    "record": {
+     "actor_ref": "pmref:fixture:actor_ref",
+     "attempt_id": null,
+     "causation_event_id": null,
+     "correlation_id": "fixture_operation_id",
+     "effective_account_ref": null,
+     "event_id": "evt_dch_3de97093f396dc98f7a4ba022d45fe33c79b935d5a0be7ed64f3cee1a78fe980",
+     "event_type": "bundle.selection_sent_to_chat",
+     "idempotency_key": "application@1:73657276657231:666978747572655f6f7065726174696f6e5f6964",
+     "migration": {
+      "compatibility_event_type": null,
+      "migrated_from_schema_id": null,
+      "migrated_from_schema_version": null,
+      "migration_id": null
+     },
+     "node_id": null,
+     "observed_at_utc": "2026-11-04T00:00:00Z",
+     "occurred_at_utc": "2026-11-04T00:00:00Z",
+     "parent_event_id": null,
+     "payload": {
+      "actor_ref": "pmref:fixture:actor_ref",
+      "bundle_id": "fixture_bundle_id",
+      "computer_id": "fixture_computer_id",
+      "doc_id": "fixture_doc_id",
+      "effective_target": "pmref:fixture:new_thread",
+      "operation_id": "fixture_operation_id",
+      "provenance_refs": [
+       "pmref:fixture:provenance_refs"
+      ],
+      "requested_target": "pmref:fixture:requested_target",
+      "schema_id": "pm.dch_event.bundle_selection_sent_to_chat.application.v1",
+      "schema_version": "1.0.0",
+      "scope": {
+       "named_plan_id": null,
+       "project_home_server_id": null,
+       "project_id": null,
+       "schema_id": "pm.workflow_scope.v2",
+       "schema_version": "2.0.0",
+       "scope_kind": "application",
+       "scope_partition": "app",
+       "server_id": "server1"
+      },
+      "selection_excerpt_ref": "pmref:fixture:selection_excerpt_ref",
+      "selection_id": "fixture_selection_id",
+      "thread_id": "thr_01ARZ3NDEKTSV4RRFFQ69G5FAV",
+      "ts": "2026-11-04T00:00:00Z"
+     },
+     "payload_ref": null,
+     "payload_schema_id": "pm.dch_event.bundle_selection_sent_to_chat.application.v1",
+     "persisted_at_utc": "2026-11-04T00:00:00Z",
+     "producer_sequence_id": null,
+     "project_id": null,
+     "redaction_profile": "no_secrets",
+     "replay_policy": "dedupe_by_idempotency_key",
+     "requested_account_ref": null,
+     "run_id": null,
+     "schema_id": "pm.event.v0",
+     "schema_version": "2.0.0",
+     "scope_kind": "application",
+     "sequence_id": 1,
+     "thread_id": "thr_01ARZ3NDEKTSV4RRFFQ69G5FAV"
+    },
+    "result": {
+     "actor_ref": "pmref:fixture:actor_ref",
+     "bundle_id": "fixture_bundle_id",
+     "computer_id": "fixture_computer_id",
+     "doc_id": "fixture_doc_id",
+     "effective_target": "pmref:fixture:new_thread",
+     "operation_id": "fixture_operation_id",
+     "provenance_refs": [
+      "pmref:fixture:provenance_refs"
+     ],
+     "requested_target": "pmref:fixture:requested_target",
+     "schema_id": "pm.dch_event.bundle_selection_sent_to_chat.application.v1",
+     "schema_version": "1.0.0",
+     "scope": {
+      "named_plan_id": null,
+      "project_home_server_id": null,
+      "project_id": null,
+      "schema_id": "pm.workflow_scope.v2",
+      "schema_version": "2.0.0",
+      "scope_kind": "application",
+      "scope_partition": "app",
+      "server_id": "server1"
+     },
+     "selection_excerpt_ref": "pmref:fixture:selection_excerpt_ref",
+     "selection_id": "fixture_selection_id",
+     "thread_id": "thr_01ARZ3NDEKTSV4RRFFQ69G5FAV",
+     "ts": "2026-11-04T00:00:00Z"
+    },
+    "storage_instance_id": "00000000-0000-4000-8000-000000000001"
+   }
+  }
+ ],
+ "bundle.selection_sent_to_chat/project": [
+  {
+   "name": "explicit_selection",
+   "original": {
+    "after": {
+     "chips": {
+      "fixture_other_selection": {
+       "excerpt_ref": "pmref:fixture:other_excerpt",
+       "provenance_refs": [
+        "pmref:fixture:other_provenance"
+       ],
+       "reason": null,
+       "state": "pending",
+       "target": "pmref:fixture:other_thread"
+      },
+      "fixture_selection_id": {
+       "excerpt_ref": "pmref:fixture:selection_excerpt_ref",
+       "provenance_refs": [
+        "pmref:fixture:provenance_refs"
+       ],
+       "reason": null,
+       "state": "pending",
+       "target": "pmref:fixture:requested_target"
+      }
+     },
+     "transcript": [
+      "fixture_prior_message_id"
+     ]
+    },
+    "before": {
+     "chips": {
+      "fixture_other_selection": {
+       "excerpt_ref": "pmref:fixture:other_excerpt",
+       "provenance_refs": [
+        "pmref:fixture:other_provenance"
+       ],
+       "reason": null,
+       "state": "pending",
+       "target": "pmref:fixture:other_thread"
+      }
+     },
+     "transcript": [
+      "fixture_prior_message_id"
+     ]
+    },
+    "commitment": {
+     "codec": "pm.seglog_frame_v2.event_value.canonical_msgpack.v1",
+     "domain": "pm.storage.original_event_value_commitment.v1",
+     "event_schema_id": "pm.event.v0",
+     "event_schema_version": "2.0.0",
+     "schema_id": "pm.storage.original_event_value_commitment.v1",
+     "schema_version": "1.0.0",
+     "sha256": "3a4d22269323402aa56de8f3a5bb810b97fe2053fa5d01f8a0aa7b240f3ce513"
+    },
+    "first_receipt": {
+     "acknowledged_at_utc": "2026-11-04T01:00:00+01:00",
+     "byte_offset": 0,
+     "commit_group_id": "fixture_group",
+     "durability_class": "ordinary",
+     "durability_state": "synced",
+     "durable_end_offset": 1024,
+     "event_id": "evt_dch_f40b74981ee633871f99091a11d081ac846bcd388effe78b9f36de23ead7d78f",
+     "manifest_generation": 1,
+     "segment_generation": 1,
+     "segment_name": "seglog-1",
+     "sequence_id": 1
+    },
+    "intent": {
+     "actor_ref": "pmref:fixture:actor_ref",
+     "bundle_id": "fixture_bundle_id",
+     "computer_id": "fixture_computer_id",
+     "doc_id": "fixture_doc_id",
+     "operation_id": "fixture_operation_id",
+     "provenance_refs": [
+      "pmref:fixture:provenance_refs"
+     ],
+     "requested_target": "pmref:fixture:requested_target",
+     "scope": {
+      "named_plan_id": null,
+      "project_home_server_id": "server1",
+      "project_id": "p1",
+      "schema_id": "pm.workflow_scope.v2",
+      "schema_version": "2.0.0",
+      "scope_kind": "project",
+      "scope_partition": "project~cDE",
+      "server_id": "server1"
+     },
+     "selection_excerpt_ref": "pmref:fixture:selection_excerpt_ref",
+     "selection_id": "fixture_selection_id"
+    },
+    "operation": {
+     "actions": [
+      "intent",
+      "effect",
+      "commit",
+      "readback",
+      "append",
+      "receipt",
+      "publish"
+     ],
+     "event_type": "bundle.selection_sent_to_chat",
+     "operation_id": "fixture_operation_id",
+     "outcome": {
+      "chip": {
+       "excerpt_ref": "pmref:fixture:selection_excerpt_ref",
+       "provenance_refs": [
+        "pmref:fixture:provenance_refs"
+       ],
+       "selection_id": "fixture_selection_id",
+       "state": "pending",
+       "target": "pmref:fixture:requested_target"
+      },
+      "handler": "document_review.selection_to_chat",
+      "message_sent": false,
+      "resolution": {
+       "explicit_selection": "pmref:fixture:requested_target",
+       "new_thread": null,
+       "owning_page_surface": "pmref:fixture:owning_surface"
+      },
+      "resolutions": [
+       "fixture_resolution"
+      ],
+      "resolved_target": "pmref:fixture:requested_target"
+     }
+    },
+    "receipt": {
+     "acknowledged_at_utc": "2026-11-04T01:00:00+01:00",
+     "byte_offset": 0,
+     "commit_group_id": "fixture_group",
+     "durability_class": "ordinary",
+     "durability_state": "synced",
+     "durable_end_offset": 1024,
+     "event_id": "evt_dch_f40b74981ee633871f99091a11d081ac846bcd388effe78b9f36de23ead7d78f",
+     "manifest_generation": 1,
+     "segment_generation": 1,
+     "segment_name": "seglog-1",
+     "sequence_id": 1
+    },
+    "record": {
+     "actor_ref": "pmref:fixture:actor_ref",
+     "attempt_id": null,
+     "causation_event_id": null,
+     "correlation_id": "fixture_operation_id",
+     "effective_account_ref": null,
+     "event_id": "evt_dch_f40b74981ee633871f99091a11d081ac846bcd388effe78b9f36de23ead7d78f",
+     "event_type": "bundle.selection_sent_to_chat",
+     "idempotency_key": "dch:f40b74981ee633871f99091a11d081ac846bcd388effe78b9f36de23ead7d78f",
+     "migration": {
+      "compatibility_event_type": null,
+      "migrated_from_schema_id": null,
+      "migrated_from_schema_version": null,
+      "migration_id": null
+     },
+     "node_id": null,
+     "observed_at_utc": "2026-11-04T00:00:00Z",
+     "occurred_at_utc": "2026-11-04T00:00:00Z",
+     "parent_event_id": null,
+     "payload": {
+      "actor_ref": "pmref:fixture:actor_ref",
+      "bundle_id": "fixture_bundle_id",
+      "computer_id": "fixture_computer_id",
+      "doc_id": "fixture_doc_id",
+      "effective_target": "pmref:fixture:requested_target",
+      "operation_id": "fixture_operation_id",
+      "provenance_refs": [
+       "pmref:fixture:provenance_refs"
+      ],
+      "requested_target": "pmref:fixture:requested_target",
+      "schema_id": "pm.dch_event.bundle_selection_sent_to_chat.project.v1",
+      "schema_version": "1.0.0",
+      "scope": {
+       "named_plan_id": null,
+       "project_home_server_id": "server1",
+       "project_id": "p1",
+       "schema_id": "pm.workflow_scope.v2",
+       "schema_version": "2.0.0",
+       "scope_kind": "project",
+       "scope_partition": "project~cDE",
+       "server_id": "server1"
+      },
+      "selection_excerpt_ref": "pmref:fixture:selection_excerpt_ref",
+      "selection_id": "fixture_selection_id",
+      "thread_id": "thr_01ARZ3NDEKTSV4RRFFQ69G5FAV",
+      "ts": "2026-11-04T00:00:00Z"
+     },
+     "payload_ref": null,
+     "payload_schema_id": "pm.dch_event.bundle_selection_sent_to_chat.project.v1",
+     "persisted_at_utc": "2026-11-04T00:00:00Z",
+     "producer_sequence_id": null,
+     "project_id": "p1",
+     "redaction_profile": "no_secrets",
+     "replay_policy": "dedupe_by_idempotency_key",
+     "requested_account_ref": null,
+     "run_id": null,
+     "schema_id": "pm.event.v0",
+     "schema_version": "2.0.0",
+     "scope_kind": "project",
+     "sequence_id": 1,
+     "thread_id": "thr_01ARZ3NDEKTSV4RRFFQ69G5FAV"
+    },
+    "result": {
+     "actor_ref": "pmref:fixture:actor_ref",
+     "bundle_id": "fixture_bundle_id",
+     "computer_id": "fixture_computer_id",
+     "doc_id": "fixture_doc_id",
+     "effective_target": "pmref:fixture:requested_target",
+     "operation_id": "fixture_operation_id",
+     "provenance_refs": [
+      "pmref:fixture:provenance_refs"
+     ],
+     "requested_target": "pmref:fixture:requested_target",
+     "schema_id": "pm.dch_event.bundle_selection_sent_to_chat.project.v1",
+     "schema_version": "1.0.0",
+     "scope": {
+      "named_plan_id": null,
+      "project_home_server_id": "server1",
+      "project_id": "p1",
+      "schema_id": "pm.workflow_scope.v2",
+      "schema_version": "2.0.0",
+      "scope_kind": "project",
+      "scope_partition": "project~cDE",
+      "server_id": "server1"
+     },
+     "selection_excerpt_ref": "pmref:fixture:selection_excerpt_ref",
+     "selection_id": "fixture_selection_id",
+     "thread_id": "thr_01ARZ3NDEKTSV4RRFFQ69G5FAV",
+     "ts": "2026-11-04T00:00:00Z"
+    },
+    "storage_instance_id": "00000000-0000-4000-8000-000000000001"
+   }
+  },
+  {
+   "name": "new_thread",
+   "original": {
+    "after": {
+     "chips": {
+      "fixture_other_selection": {
+       "excerpt_ref": "pmref:fixture:other_excerpt",
+       "provenance_refs": [
+        "pmref:fixture:other_provenance"
+       ],
+       "reason": null,
+       "state": "pending",
+       "target": "pmref:fixture:other_thread"
+      },
+      "fixture_selection_id": {
+       "excerpt_ref": "pmref:fixture:selection_excerpt_ref",
+       "provenance_refs": [
+        "pmref:fixture:provenance_refs"
+       ],
+       "reason": null,
+       "state": "pending",
+       "target": "pmref:fixture:new_thread"
+      }
+     },
+     "transcript": [
+      "fixture_prior_message_id"
+     ]
+    },
+    "before": {
+     "chips": {
+      "fixture_other_selection": {
+       "excerpt_ref": "pmref:fixture:other_excerpt",
+       "provenance_refs": [
+        "pmref:fixture:other_provenance"
+       ],
+       "reason": null,
+       "state": "pending",
+       "target": "pmref:fixture:other_thread"
+      }
+     },
+     "transcript": [
+      "fixture_prior_message_id"
+     ]
+    },
+    "commitment": {
+     "codec": "pm.seglog_frame_v2.event_value.canonical_msgpack.v1",
+     "domain": "pm.storage.original_event_value_commitment.v1",
+     "event_schema_id": "pm.event.v0",
+     "event_schema_version": "2.0.0",
+     "schema_id": "pm.storage.original_event_value_commitment.v1",
+     "schema_version": "1.0.0",
+     "sha256": "c8cf33c9414e1754c38efbc2b201d1db96bbb82f0e857f0adaf77c1a9cb9ead6"
+    },
+    "first_receipt": {
+     "acknowledged_at_utc": "2026-11-04T01:00:00+01:00",
+     "byte_offset": 0,
+     "commit_group_id": "fixture_group",
+     "durability_class": "ordinary",
+     "durability_state": "synced",
+     "durable_end_offset": 1024,
+     "event_id": "evt_dch_f40b74981ee633871f99091a11d081ac846bcd388effe78b9f36de23ead7d78f",
+     "manifest_generation": 1,
+     "segment_generation": 1,
+     "segment_name": "seglog-1",
+     "sequence_id": 1
+    },
+    "intent": {
+     "actor_ref": "pmref:fixture:actor_ref",
+     "bundle_id": "fixture_bundle_id",
+     "computer_id": "fixture_computer_id",
+     "doc_id": "fixture_doc_id",
+     "operation_id": "fixture_operation_id",
+     "provenance_refs": [
+      "pmref:fixture:provenance_refs"
+     ],
+     "requested_target": "pmref:fixture:requested_target",
+     "scope": {
+      "named_plan_id": null,
+      "project_home_server_id": "server1",
+      "project_id": "p1",
+      "schema_id": "pm.workflow_scope.v2",
+      "schema_version": "2.0.0",
+      "scope_kind": "project",
+      "scope_partition": "project~cDE",
+      "server_id": "server1"
+     },
+     "selection_excerpt_ref": "pmref:fixture:selection_excerpt_ref",
+     "selection_id": "fixture_selection_id"
+    },
+    "operation": {
+     "actions": [
+      "intent",
+      "effect",
+      "commit",
+      "readback",
+      "append",
+      "receipt",
+      "publish"
+     ],
+     "event_type": "bundle.selection_sent_to_chat",
+     "operation_id": "fixture_operation_id",
+     "outcome": {
+      "chip": {
+       "excerpt_ref": "pmref:fixture:selection_excerpt_ref",
+       "provenance_refs": [
+        "pmref:fixture:provenance_refs"
+       ],
+       "selection_id": "fixture_selection_id",
+       "state": "pending",
+       "target": "pmref:fixture:new_thread"
+      },
+      "handler": "document_review.selection_to_chat",
+      "message_sent": false,
+      "resolution": {
+       "explicit_selection": null,
+       "new_thread": "pmref:fixture:new_thread",
+       "owning_page_surface": null
+      },
+      "resolutions": [
+       "fixture_resolution"
+      ],
+      "resolved_target": "pmref:fixture:new_thread"
+     }
+    },
+    "receipt": {
+     "acknowledged_at_utc": "2026-11-04T01:00:00+01:00",
+     "byte_offset": 0,
+     "commit_group_id": "fixture_group",
+     "durability_class": "ordinary",
+     "durability_state": "synced",
+     "durable_end_offset": 1024,
+     "event_id": "evt_dch_f40b74981ee633871f99091a11d081ac846bcd388effe78b9f36de23ead7d78f",
+     "manifest_generation": 1,
+     "segment_generation": 1,
+     "segment_name": "seglog-1",
+     "sequence_id": 1
+    },
+    "record": {
+     "actor_ref": "pmref:fixture:actor_ref",
+     "attempt_id": null,
+     "causation_event_id": null,
+     "correlation_id": "fixture_operation_id",
+     "effective_account_ref": null,
+     "event_id": "evt_dch_f40b74981ee633871f99091a11d081ac846bcd388effe78b9f36de23ead7d78f",
+     "event_type": "bundle.selection_sent_to_chat",
+     "idempotency_key": "dch:f40b74981ee633871f99091a11d081ac846bcd388effe78b9f36de23ead7d78f",
+     "migration": {
+      "compatibility_event_type": null,
+      "migrated_from_schema_id": null,
+      "migrated_from_schema_version": null,
+      "migration_id": null
+     },
+     "node_id": null,
+     "observed_at_utc": "2026-11-04T00:00:00Z",
+     "occurred_at_utc": "2026-11-04T00:00:00Z",
+     "parent_event_id": null,
+     "payload": {
+      "actor_ref": "pmref:fixture:actor_ref",
+      "bundle_id": "fixture_bundle_id",
+      "computer_id": "fixture_computer_id",
+      "doc_id": "fixture_doc_id",
+      "effective_target": "pmref:fixture:new_thread",
+      "operation_id": "fixture_operation_id",
+      "provenance_refs": [
+       "pmref:fixture:provenance_refs"
+      ],
+      "requested_target": "pmref:fixture:requested_target",
+      "schema_id": "pm.dch_event.bundle_selection_sent_to_chat.project.v1",
+      "schema_version": "1.0.0",
+      "scope": {
+       "named_plan_id": null,
+       "project_home_server_id": "server1",
+       "project_id": "p1",
+       "schema_id": "pm.workflow_scope.v2",
+       "schema_version": "2.0.0",
+       "scope_kind": "project",
+       "scope_partition": "project~cDE",
+       "server_id": "server1"
+      },
+      "selection_excerpt_ref": "pmref:fixture:selection_excerpt_ref",
+      "selection_id": "fixture_selection_id",
+      "thread_id": "thr_01ARZ3NDEKTSV4RRFFQ69G5FAV",
+      "ts": "2026-11-04T00:00:00Z"
+     },
+     "payload_ref": null,
+     "payload_schema_id": "pm.dch_event.bundle_selection_sent_to_chat.project.v1",
+     "persisted_at_utc": "2026-11-04T00:00:00Z",
+     "producer_sequence_id": null,
+     "project_id": "p1",
+     "redaction_profile": "no_secrets",
+     "replay_policy": "dedupe_by_idempotency_key",
+     "requested_account_ref": null,
+     "run_id": null,
+     "schema_id": "pm.event.v0",
+     "schema_version": "2.0.0",
+     "scope_kind": "project",
+     "sequence_id": 1,
+     "thread_id": "thr_01ARZ3NDEKTSV4RRFFQ69G5FAV"
+    },
+    "result": {
+     "actor_ref": "pmref:fixture:actor_ref",
+     "bundle_id": "fixture_bundle_id",
+     "computer_id": "fixture_computer_id",
+     "doc_id": "fixture_doc_id",
+     "effective_target": "pmref:fixture:new_thread",
+     "operation_id": "fixture_operation_id",
+     "provenance_refs": [
+      "pmref:fixture:provenance_refs"
+     ],
+     "requested_target": "pmref:fixture:requested_target",
+     "schema_id": "pm.dch_event.bundle_selection_sent_to_chat.project.v1",
+     "schema_version": "1.0.0",
+     "scope": {
+      "named_plan_id": null,
+      "project_home_server_id": "server1",
+      "project_id": "p1",
+      "schema_id": "pm.workflow_scope.v2",
+      "schema_version": "2.0.0",
+      "scope_kind": "project",
+      "scope_partition": "project~cDE",
+      "server_id": "server1"
+     },
+     "selection_excerpt_ref": "pmref:fixture:selection_excerpt_ref",
+     "selection_id": "fixture_selection_id",
+     "thread_id": "thr_01ARZ3NDEKTSV4RRFFQ69G5FAV",
+     "ts": "2026-11-04T00:00:00Z"
+    },
+    "storage_instance_id": "00000000-0000-4000-8000-000000000001"
+   }
+  }
+ ],
+ "chat.message/application": [
+  {
+   "name": "first_user_message",
+   "original": {
+    "after": {
+     "thread_durable": true,
+     "thread_state": "active",
+     "transcript": [
+      "fixture_message_id"
+     ]
+    },
+    "before": {
+     "thread_durable": false,
+     "thread_state": "creating",
+     "transcript": []
+    },
+    "commitment": {
+     "codec": "pm.seglog_frame_v2.event_value.canonical_msgpack.v1",
+     "domain": "pm.storage.original_event_value_commitment.v1",
+     "event_schema_id": "pm.event.v0",
+     "event_schema_version": "2.0.0",
+     "schema_id": "pm.storage.original_event_value_commitment.v1",
+     "schema_version": "1.0.0",
+     "sha256": "7d94fb1eab7548bc7eb2c7b3037ff671ea935f1f34574bec6296b2ef9f778a6a"
+    },
+    "first_receipt": {
+     "acknowledged_at_utc": "2026-11-04T01:00:00+01:00",
+     "byte_offset": 0,
+     "commit_group_id": "fixture_group",
+     "durability_class": "ordinary",
+     "durability_state": "synced",
+     "durable_end_offset": 1024,
+     "event_id": "evt_dch_273c97da3070e0acf024b0994df555f3fafb24bb66f18dd330200388185ad9de",
+     "manifest_generation": 1,
+     "segment_generation": 1,
+     "segment_name": "seglog-1",
+     "sequence_id": 1
+    },
+    "intent": {
+     "actor_ref": "pmref:fixture:actor_ref",
+     "attachment_refs": [],
+     "computer_id": "fixture_computer_id",
+     "content_ref": "pmref:fixture:content_ref",
+     "message_id": "fixture_message_id",
+     "message_type": "user",
+     "operation_id": "fixture_operation_id",
+     "role": "user",
+     "scope": {
+      "named_plan_id": null,
+      "project_home_server_id": null,
+      "project_id": null,
+      "schema_id": "pm.workflow_scope.v2",
+      "schema_version": "2.0.0",
+      "scope_kind": "application",
+      "scope_partition": "app",
+      "server_id": "server1"
+     },
+     "thread_id": "thr_01ARZ3NDEKTSV4RRFFQ69G5FAV"
+    },
+    "operation": {
+     "actions": [
+      "intent",
+      "effect",
+      "commit",
+      "readback",
+      "append",
+      "receipt",
+      "publish"
+     ],
+     "event_type": "chat.message",
+     "operation_id": "fixture_operation_id",
+     "outcome": {
+      "boundary": "durable_message",
+      "commits": [
+       "fixture_commit"
+      ],
+      "creates_thread": true,
+      "handler": "assistant_chat.transcript_commit",
+      "lineage_owner": "transcript",
+      "message": {
+       "attachment_refs": [],
+       "content_ref": "pmref:fixture:content_ref",
+       "message_id": "fixture_message_id",
+       "message_type": "user",
+       "role": "user"
+      }
+     }
+    },
+    "receipt": {
+     "acknowledged_at_utc": "2026-11-04T01:00:00+01:00",
+     "byte_offset": 0,
+     "commit_group_id": "fixture_group",
+     "durability_class": "ordinary",
+     "durability_state": "synced",
+     "durable_end_offset": 1024,
+     "event_id": "evt_dch_273c97da3070e0acf024b0994df555f3fafb24bb66f18dd330200388185ad9de",
+     "manifest_generation": 1,
+     "segment_generation": 1,
+     "segment_name": "seglog-1",
+     "sequence_id": 1
+    },
+    "record": {
+     "actor_ref": "pmref:fixture:actor_ref",
+     "attempt_id": null,
+     "causation_event_id": null,
+     "correlation_id": "fixture_operation_id",
+     "effective_account_ref": null,
+     "event_id": "evt_dch_273c97da3070e0acf024b0994df555f3fafb24bb66f18dd330200388185ad9de",
+     "event_type": "chat.message",
+     "idempotency_key": "application@1:73657276657231:666978747572655f6f7065726174696f6e5f6964",
+     "migration": {
+      "compatibility_event_type": null,
+      "migrated_from_schema_id": null,
+      "migrated_from_schema_version": null,
+      "migration_id": null
+     },
+     "node_id": null,
+     "observed_at_utc": "2026-11-04T00:00:00Z",
+     "occurred_at_utc": "2026-11-04T00:00:00Z",
+     "parent_event_id": null,
+     "payload": {
+      "actor_ref": "pmref:fixture:actor_ref",
+      "attachment_refs": [],
+      "computer_id": "fixture_computer_id",
+      "content_ref": "pmref:fixture:content_ref",
+      "message_id": "fixture_message_id",
+      "message_type": "user",
+      "operation_id": "fixture_operation_id",
+      "role": "user",
+      "schema_id": "pm.dch_event.chat_message.application.v1",
+      "schema_version": "1.0.0",
+      "scope": {
+       "named_plan_id": null,
+       "project_home_server_id": null,
+       "project_id": null,
+       "schema_id": "pm.workflow_scope.v2",
+       "schema_version": "2.0.0",
+       "scope_kind": "application",
+       "scope_partition": "app",
+       "server_id": "server1"
+      },
+      "thread_id": "thr_01ARZ3NDEKTSV4RRFFQ69G5FAV",
+      "ts": "2026-11-04T00:00:00Z"
+     },
+     "payload_ref": null,
+     "payload_schema_id": "pm.dch_event.chat_message.application.v1",
+     "persisted_at_utc": "2026-11-04T00:00:00Z",
+     "producer_sequence_id": null,
+     "project_id": null,
+     "redaction_profile": "no_secrets",
+     "replay_policy": "dedupe_by_idempotency_key",
+     "requested_account_ref": null,
+     "run_id": null,
+     "schema_id": "pm.event.v0",
+     "schema_version": "2.0.0",
+     "scope_kind": "application",
+     "sequence_id": 1,
+     "thread_id": "thr_01ARZ3NDEKTSV4RRFFQ69G5FAV"
+    },
+    "result": {
+     "actor_ref": "pmref:fixture:actor_ref",
+     "attachment_refs": [],
+     "computer_id": "fixture_computer_id",
+     "content_ref": "pmref:fixture:content_ref",
+     "message_id": "fixture_message_id",
+     "message_type": "user",
+     "operation_id": "fixture_operation_id",
+     "role": "user",
+     "schema_id": "pm.dch_event.chat_message.application.v1",
+     "schema_version": "1.0.0",
+     "scope": {
+      "named_plan_id": null,
+      "project_home_server_id": null,
+      "project_id": null,
+      "schema_id": "pm.workflow_scope.v2",
+      "schema_version": "2.0.0",
+      "scope_kind": "application",
+      "scope_partition": "app",
+      "server_id": "server1"
+     },
+     "thread_id": "thr_01ARZ3NDEKTSV4RRFFQ69G5FAV",
+     "ts": "2026-11-04T00:00:00Z"
+    },
+    "storage_instance_id": "00000000-0000-4000-8000-000000000001"
+   }
+  },
+  {
+   "name": "assistant_reply",
+   "original": {
+    "after": {
+     "thread_durable": true,
+     "thread_state": "active",
+     "transcript": [
+      "fixture_prior_message_id",
+      "fixture_message_id"
+     ]
+    },
+    "before": {
+     "thread_durable": true,
+     "thread_state": "active",
+     "transcript": [
+      "fixture_prior_message_id"
+     ]
+    },
+    "commitment": {
+     "codec": "pm.seglog_frame_v2.event_value.canonical_msgpack.v1",
+     "domain": "pm.storage.original_event_value_commitment.v1",
+     "event_schema_id": "pm.event.v0",
+     "event_schema_version": "2.0.0",
+     "schema_id": "pm.storage.original_event_value_commitment.v1",
+     "schema_version": "1.0.0",
+     "sha256": "89920a2ff8a026b985a38491205150ce8185f6c44cd4179717e50133b26825cc"
+    },
+    "first_receipt": {
+     "acknowledged_at_utc": "2026-11-04T01:00:00+01:00",
+     "byte_offset": 0,
+     "commit_group_id": "fixture_group",
+     "durability_class": "ordinary",
+     "durability_state": "synced",
+     "durable_end_offset": 1024,
+     "event_id": "evt_dch_273c97da3070e0acf024b0994df555f3fafb24bb66f18dd330200388185ad9de",
+     "manifest_generation": 1,
+     "segment_generation": 1,
+     "segment_name": "seglog-1",
+     "sequence_id": 1
+    },
+    "intent": {
+     "actor_ref": "pmref:fixture:actor_ref",
+     "attachment_refs": [],
+     "computer_id": "fixture_computer_id",
+     "content_ref": "pmref:fixture:content_ref",
+     "message_id": "fixture_message_id",
+     "message_type": "assistant",
+     "operation_id": "fixture_operation_id",
+     "role": "assistant",
+     "scope": {
+      "named_plan_id": null,
+      "project_home_server_id": null,
+      "project_id": null,
+      "schema_id": "pm.workflow_scope.v2",
+      "schema_version": "2.0.0",
+      "scope_kind": "application",
+      "scope_partition": "app",
+      "server_id": "server1"
+     },
+     "thread_id": "thr_01ARZ3NDEKTSV4RRFFQ69G5FAV"
+    },
+    "operation": {
+     "actions": [
+      "intent",
+      "effect",
+      "commit",
+      "readback",
+      "append",
+      "receipt",
+      "publish"
+     ],
+     "event_type": "chat.message",
+     "operation_id": "fixture_operation_id",
+     "outcome": {
+      "boundary": "durable_message",
+      "commits": [
+       "fixture_commit"
+      ],
+      "creates_thread": false,
+      "handler": "assistant_chat.transcript_commit",
+      "lineage_owner": "transcript",
+      "message": {
+       "attachment_refs": [],
+       "content_ref": "pmref:fixture:content_ref",
+       "message_id": "fixture_message_id",
+       "message_type": "assistant",
+       "role": "assistant"
+      }
+     }
+    },
+    "receipt": {
+     "acknowledged_at_utc": "2026-11-04T01:00:00+01:00",
+     "byte_offset": 0,
+     "commit_group_id": "fixture_group",
+     "durability_class": "ordinary",
+     "durability_state": "synced",
+     "durable_end_offset": 1024,
+     "event_id": "evt_dch_273c97da3070e0acf024b0994df555f3fafb24bb66f18dd330200388185ad9de",
+     "manifest_generation": 1,
+     "segment_generation": 1,
+     "segment_name": "seglog-1",
+     "sequence_id": 1
+    },
+    "record": {
+     "actor_ref": "pmref:fixture:actor_ref",
+     "attempt_id": null,
+     "causation_event_id": null,
+     "correlation_id": "fixture_operation_id",
+     "effective_account_ref": null,
+     "event_id": "evt_dch_273c97da3070e0acf024b0994df555f3fafb24bb66f18dd330200388185ad9de",
+     "event_type": "chat.message",
+     "idempotency_key": "application@1:73657276657231:666978747572655f6f7065726174696f6e5f6964",
+     "migration": {
+      "compatibility_event_type": null,
+      "migrated_from_schema_id": null,
+      "migrated_from_schema_version": null,
+      "migration_id": null
+     },
+     "node_id": null,
+     "observed_at_utc": "2026-11-04T00:00:00Z",
+     "occurred_at_utc": "2026-11-04T00:00:00Z",
+     "parent_event_id": null,
+     "payload": {
+      "actor_ref": "pmref:fixture:actor_ref",
+      "attachment_refs": [],
+      "computer_id": "fixture_computer_id",
+      "content_ref": "pmref:fixture:content_ref",
+      "message_id": "fixture_message_id",
+      "message_type": "assistant",
+      "operation_id": "fixture_operation_id",
+      "role": "assistant",
+      "schema_id": "pm.dch_event.chat_message.application.v1",
+      "schema_version": "1.0.0",
+      "scope": {
+       "named_plan_id": null,
+       "project_home_server_id": null,
+       "project_id": null,
+       "schema_id": "pm.workflow_scope.v2",
+       "schema_version": "2.0.0",
+       "scope_kind": "application",
+       "scope_partition": "app",
+       "server_id": "server1"
+      },
+      "thread_id": "thr_01ARZ3NDEKTSV4RRFFQ69G5FAV",
+      "ts": "2026-11-04T00:00:00Z"
+     },
+     "payload_ref": null,
+     "payload_schema_id": "pm.dch_event.chat_message.application.v1",
+     "persisted_at_utc": "2026-11-04T00:00:00Z",
+     "producer_sequence_id": null,
+     "project_id": null,
+     "redaction_profile": "no_secrets",
+     "replay_policy": "dedupe_by_idempotency_key",
+     "requested_account_ref": null,
+     "run_id": null,
+     "schema_id": "pm.event.v0",
+     "schema_version": "2.0.0",
+     "scope_kind": "application",
+     "sequence_id": 1,
+     "thread_id": "thr_01ARZ3NDEKTSV4RRFFQ69G5FAV"
+    },
+    "result": {
+     "actor_ref": "pmref:fixture:actor_ref",
+     "attachment_refs": [],
+     "computer_id": "fixture_computer_id",
+     "content_ref": "pmref:fixture:content_ref",
+     "message_id": "fixture_message_id",
+     "message_type": "assistant",
+     "operation_id": "fixture_operation_id",
+     "role": "assistant",
+     "schema_id": "pm.dch_event.chat_message.application.v1",
+     "schema_version": "1.0.0",
+     "scope": {
+      "named_plan_id": null,
+      "project_home_server_id": null,
+      "project_id": null,
+      "schema_id": "pm.workflow_scope.v2",
+      "schema_version": "2.0.0",
+      "scope_kind": "application",
+      "scope_partition": "app",
+      "server_id": "server1"
+     },
+     "thread_id": "thr_01ARZ3NDEKTSV4RRFFQ69G5FAV",
+     "ts": "2026-11-04T00:00:00Z"
+    },
+    "storage_instance_id": "00000000-0000-4000-8000-000000000001"
+   }
+  },
+  {
+   "name": "tool_result",
+   "original": {
+    "after": {
+     "thread_durable": true,
+     "thread_state": "active",
+     "transcript": [
+      "fixture_prior_message_id",
+      "fixture_message_id"
+     ]
+    },
+    "before": {
+     "thread_durable": true,
+     "thread_state": "active",
+     "transcript": [
+      "fixture_prior_message_id"
+     ]
+    },
+    "commitment": {
+     "codec": "pm.seglog_frame_v2.event_value.canonical_msgpack.v1",
+     "domain": "pm.storage.original_event_value_commitment.v1",
+     "event_schema_id": "pm.event.v0",
+     "event_schema_version": "2.0.0",
+     "schema_id": "pm.storage.original_event_value_commitment.v1",
+     "schema_version": "1.0.0",
+     "sha256": "d54212b864d2d76107c6a7bce4e301790b14e21df85680ce037ea905f1f1b4ba"
+    },
+    "first_receipt": {
+     "acknowledged_at_utc": "2026-11-04T01:00:00+01:00",
+     "byte_offset": 0,
+     "commit_group_id": "fixture_group",
+     "durability_class": "ordinary",
+     "durability_state": "synced",
+     "durable_end_offset": 1024,
+     "event_id": "evt_dch_273c97da3070e0acf024b0994df555f3fafb24bb66f18dd330200388185ad9de",
+     "manifest_generation": 1,
+     "segment_generation": 1,
+     "segment_name": "seglog-1",
+     "sequence_id": 1
+    },
+    "intent": {
+     "actor_ref": "pmref:fixture:actor_ref",
+     "attachment_refs": [],
+     "computer_id": "fixture_computer_id",
+     "content_ref": "pmref:fixture:content_ref",
+     "message_id": "fixture_message_id",
+     "message_type": "tool_result",
+     "operation_id": "fixture_operation_id",
+     "role": "tool",
+     "scope": {
+      "named_plan_id": null,
+      "project_home_server_id": null,
+      "project_id": null,
+      "schema_id": "pm.workflow_scope.v2",
+      "schema_version": "2.0.0",
+      "scope_kind": "application",
+      "scope_partition": "app",
+      "server_id": "server1"
+     },
+     "thread_id": "thr_01ARZ3NDEKTSV4RRFFQ69G5FAV"
+    },
+    "operation": {
+     "actions": [
+      "intent",
+      "effect",
+      "commit",
+      "readback",
+      "append",
+      "receipt",
+      "publish"
+     ],
+     "event_type": "chat.message",
+     "operation_id": "fixture_operation_id",
+     "outcome": {
+      "boundary": "durable_message",
+      "commits": [
+       "fixture_commit"
+      ],
+      "creates_thread": false,
+      "handler": "assistant_chat.transcript_commit",
+      "lineage_owner": "transcript",
+      "message": {
+       "attachment_refs": [],
+       "content_ref": "pmref:fixture:content_ref",
+       "message_id": "fixture_message_id",
+       "message_type": "tool_result",
+       "role": "tool"
+      }
+     }
+    },
+    "receipt": {
+     "acknowledged_at_utc": "2026-11-04T01:00:00+01:00",
+     "byte_offset": 0,
+     "commit_group_id": "fixture_group",
+     "durability_class": "ordinary",
+     "durability_state": "synced",
+     "durable_end_offset": 1024,
+     "event_id": "evt_dch_273c97da3070e0acf024b0994df555f3fafb24bb66f18dd330200388185ad9de",
+     "manifest_generation": 1,
+     "segment_generation": 1,
+     "segment_name": "seglog-1",
+     "sequence_id": 1
+    },
+    "record": {
+     "actor_ref": "pmref:fixture:actor_ref",
+     "attempt_id": null,
+     "causation_event_id": null,
+     "correlation_id": "fixture_operation_id",
+     "effective_account_ref": null,
+     "event_id": "evt_dch_273c97da3070e0acf024b0994df555f3fafb24bb66f18dd330200388185ad9de",
+     "event_type": "chat.message",
+     "idempotency_key": "application@1:73657276657231:666978747572655f6f7065726174696f6e5f6964",
+     "migration": {
+      "compatibility_event_type": null,
+      "migrated_from_schema_id": null,
+      "migrated_from_schema_version": null,
+      "migration_id": null
+     },
+     "node_id": null,
+     "observed_at_utc": "2026-11-04T00:00:00Z",
+     "occurred_at_utc": "2026-11-04T00:00:00Z",
+     "parent_event_id": null,
+     "payload": {
+      "actor_ref": "pmref:fixture:actor_ref",
+      "attachment_refs": [],
+      "computer_id": "fixture_computer_id",
+      "content_ref": "pmref:fixture:content_ref",
+      "message_id": "fixture_message_id",
+      "message_type": "tool_result",
+      "operation_id": "fixture_operation_id",
+      "role": "tool",
+      "schema_id": "pm.dch_event.chat_message.application.v1",
+      "schema_version": "1.0.0",
+      "scope": {
+       "named_plan_id": null,
+       "project_home_server_id": null,
+       "project_id": null,
+       "schema_id": "pm.workflow_scope.v2",
+       "schema_version": "2.0.0",
+       "scope_kind": "application",
+       "scope_partition": "app",
+       "server_id": "server1"
+      },
+      "thread_id": "thr_01ARZ3NDEKTSV4RRFFQ69G5FAV",
+      "ts": "2026-11-04T00:00:00Z"
+     },
+     "payload_ref": null,
+     "payload_schema_id": "pm.dch_event.chat_message.application.v1",
+     "persisted_at_utc": "2026-11-04T00:00:00Z",
+     "producer_sequence_id": null,
+     "project_id": null,
+     "redaction_profile": "no_secrets",
+     "replay_policy": "dedupe_by_idempotency_key",
+     "requested_account_ref": null,
+     "run_id": null,
+     "schema_id": "pm.event.v0",
+     "schema_version": "2.0.0",
+     "scope_kind": "application",
+     "sequence_id": 1,
+     "thread_id": "thr_01ARZ3NDEKTSV4RRFFQ69G5FAV"
+    },
+    "result": {
+     "actor_ref": "pmref:fixture:actor_ref",
+     "attachment_refs": [],
+     "computer_id": "fixture_computer_id",
+     "content_ref": "pmref:fixture:content_ref",
+     "message_id": "fixture_message_id",
+     "message_type": "tool_result",
+     "operation_id": "fixture_operation_id",
+     "role": "tool",
+     "schema_id": "pm.dch_event.chat_message.application.v1",
+     "schema_version": "1.0.0",
+     "scope": {
+      "named_plan_id": null,
+      "project_home_server_id": null,
+      "project_id": null,
+      "schema_id": "pm.workflow_scope.v2",
+      "schema_version": "2.0.0",
+      "scope_kind": "application",
+      "scope_partition": "app",
+      "server_id": "server1"
+     },
+     "thread_id": "thr_01ARZ3NDEKTSV4RRFFQ69G5FAV",
+     "ts": "2026-11-04T00:00:00Z"
+    },
+    "storage_instance_id": "00000000-0000-4000-8000-000000000001"
+   }
+  },
+  {
+   "name": "with_attachments",
+   "original": {
+    "after": {
+     "thread_durable": true,
+     "thread_state": "active",
+     "transcript": [
+      "fixture_prior_message_id",
+      "fixture_message_id"
+     ]
+    },
+    "before": {
+     "thread_durable": true,
+     "thread_state": "active",
+     "transcript": [
+      "fixture_prior_message_id"
+     ]
+    },
+    "commitment": {
+     "codec": "pm.seglog_frame_v2.event_value.canonical_msgpack.v1",
+     "domain": "pm.storage.original_event_value_commitment.v1",
+     "event_schema_id": "pm.event.v0",
+     "event_schema_version": "2.0.0",
+     "schema_id": "pm.storage.original_event_value_commitment.v1",
+     "schema_version": "1.0.0",
+     "sha256": "57d241ef2c8ac1f16644b89bb8a3910dfef43c8dae842c66d257a7bed76df9f4"
+    },
+    "first_receipt": {
+     "acknowledged_at_utc": "2026-11-04T01:00:00+01:00",
+     "byte_offset": 0,
+     "commit_group_id": "fixture_group",
+     "durability_class": "ordinary",
+     "durability_state": "synced",
+     "durable_end_offset": 1024,
+     "event_id": "evt_dch_273c97da3070e0acf024b0994df555f3fafb24bb66f18dd330200388185ad9de",
+     "manifest_generation": 1,
+     "segment_generation": 1,
+     "segment_name": "seglog-1",
+     "sequence_id": 1
+    },
+    "intent": {
+     "actor_ref": "pmref:fixture:actor_ref",
+     "attachment_refs": [
+      "pmref:fixture:attachment_1",
+      "pmref:fixture:attachment_2"
+     ],
+     "computer_id": "fixture_computer_id",
+     "content_ref": "pmref:fixture:content_ref",
+     "message_id": "fixture_message_id",
+     "message_type": "user",
+     "operation_id": "fixture_operation_id",
+     "role": "user",
+     "scope": {
+      "named_plan_id": null,
+      "project_home_server_id": null,
+      "project_id": null,
+      "schema_id": "pm.workflow_scope.v2",
+      "schema_version": "2.0.0",
+      "scope_kind": "application",
+      "scope_partition": "app",
+      "server_id": "server1"
+     },
+     "thread_id": "thr_01ARZ3NDEKTSV4RRFFQ69G5FAV"
+    },
+    "operation": {
+     "actions": [
+      "intent",
+      "effect",
+      "commit",
+      "readback",
+      "append",
+      "receipt",
+      "publish"
+     ],
+     "event_type": "chat.message",
+     "operation_id": "fixture_operation_id",
+     "outcome": {
+      "boundary": "durable_message",
+      "commits": [
+       "fixture_commit"
+      ],
+      "creates_thread": false,
+      "handler": "assistant_chat.transcript_commit",
+      "lineage_owner": "transcript",
+      "message": {
+       "attachment_refs": [
+        "pmref:fixture:attachment_1",
+        "pmref:fixture:attachment_2"
+       ],
+       "content_ref": "pmref:fixture:content_ref",
+       "message_id": "fixture_message_id",
+       "message_type": "user",
+       "role": "user"
+      }
+     }
+    },
+    "receipt": {
+     "acknowledged_at_utc": "2026-11-04T01:00:00+01:00",
+     "byte_offset": 0,
+     "commit_group_id": "fixture_group",
+     "durability_class": "ordinary",
+     "durability_state": "synced",
+     "durable_end_offset": 1024,
+     "event_id": "evt_dch_273c97da3070e0acf024b0994df555f3fafb24bb66f18dd330200388185ad9de",
+     "manifest_generation": 1,
+     "segment_generation": 1,
+     "segment_name": "seglog-1",
+     "sequence_id": 1
+    },
+    "record": {
+     "actor_ref": "pmref:fixture:actor_ref",
+     "attempt_id": null,
+     "causation_event_id": null,
+     "correlation_id": "fixture_operation_id",
+     "effective_account_ref": null,
+     "event_id": "evt_dch_273c97da3070e0acf024b0994df555f3fafb24bb66f18dd330200388185ad9de",
+     "event_type": "chat.message",
+     "idempotency_key": "application@1:73657276657231:666978747572655f6f7065726174696f6e5f6964",
+     "migration": {
+      "compatibility_event_type": null,
+      "migrated_from_schema_id": null,
+      "migrated_from_schema_version": null,
+      "migration_id": null
+     },
+     "node_id": null,
+     "observed_at_utc": "2026-11-04T00:00:00Z",
+     "occurred_at_utc": "2026-11-04T00:00:00Z",
+     "parent_event_id": null,
+     "payload": {
+      "actor_ref": "pmref:fixture:actor_ref",
+      "attachment_refs": [
+       "pmref:fixture:attachment_1",
+       "pmref:fixture:attachment_2"
+      ],
+      "computer_id": "fixture_computer_id",
+      "content_ref": "pmref:fixture:content_ref",
+      "message_id": "fixture_message_id",
+      "message_type": "user",
+      "operation_id": "fixture_operation_id",
+      "role": "user",
+      "schema_id": "pm.dch_event.chat_message.application.v1",
+      "schema_version": "1.0.0",
+      "scope": {
+       "named_plan_id": null,
+       "project_home_server_id": null,
+       "project_id": null,
+       "schema_id": "pm.workflow_scope.v2",
+       "schema_version": "2.0.0",
+       "scope_kind": "application",
+       "scope_partition": "app",
+       "server_id": "server1"
+      },
+      "thread_id": "thr_01ARZ3NDEKTSV4RRFFQ69G5FAV",
+      "ts": "2026-11-04T00:00:00Z"
+     },
+     "payload_ref": null,
+     "payload_schema_id": "pm.dch_event.chat_message.application.v1",
+     "persisted_at_utc": "2026-11-04T00:00:00Z",
+     "producer_sequence_id": null,
+     "project_id": null,
+     "redaction_profile": "no_secrets",
+     "replay_policy": "dedupe_by_idempotency_key",
+     "requested_account_ref": null,
+     "run_id": null,
+     "schema_id": "pm.event.v0",
+     "schema_version": "2.0.0",
+     "scope_kind": "application",
+     "sequence_id": 1,
+     "thread_id": "thr_01ARZ3NDEKTSV4RRFFQ69G5FAV"
+    },
+    "result": {
+     "actor_ref": "pmref:fixture:actor_ref",
+     "attachment_refs": [
+      "pmref:fixture:attachment_1",
+      "pmref:fixture:attachment_2"
+     ],
+     "computer_id": "fixture_computer_id",
+     "content_ref": "pmref:fixture:content_ref",
+     "message_id": "fixture_message_id",
+     "message_type": "user",
+     "operation_id": "fixture_operation_id",
+     "role": "user",
+     "schema_id": "pm.dch_event.chat_message.application.v1",
+     "schema_version": "1.0.0",
+     "scope": {
+      "named_plan_id": null,
+      "project_home_server_id": null,
+      "project_id": null,
+      "schema_id": "pm.workflow_scope.v2",
+      "schema_version": "2.0.0",
+      "scope_kind": "application",
+      "scope_partition": "app",
+      "server_id": "server1"
+     },
+     "thread_id": "thr_01ARZ3NDEKTSV4RRFFQ69G5FAV",
+     "ts": "2026-11-04T00:00:00Z"
+    },
+    "storage_instance_id": "00000000-0000-4000-8000-000000000001"
+   }
+  }
+ ],
+ "chat.message/project": [
+  {
+   "name": "first_user_message",
+   "original": {
+    "after": {
+     "thread_durable": true,
+     "thread_state": "active",
+     "transcript": [
+      "fixture_message_id"
+     ]
+    },
+    "before": {
+     "thread_durable": false,
+     "thread_state": "creating",
+     "transcript": []
+    },
+    "commitment": {
+     "codec": "pm.seglog_frame_v2.event_value.canonical_msgpack.v1",
+     "domain": "pm.storage.original_event_value_commitment.v1",
+     "event_schema_id": "pm.event.v0",
+     "event_schema_version": "2.0.0",
+     "schema_id": "pm.storage.original_event_value_commitment.v1",
+     "schema_version": "1.0.0",
+     "sha256": "890642c3ba88012ff9d6ec2b3c9c45a2de427a6d874a865e35aa512adb8fad98"
+    },
+    "first_receipt": {
+     "acknowledged_at_utc": "2026-11-04T01:00:00+01:00",
+     "byte_offset": 0,
+     "commit_group_id": "fixture_group",
+     "durability_class": "ordinary",
+     "durability_state": "synced",
+     "durable_end_offset": 1024,
+     "event_id": "evt_dch_fd6c1995f530cade1b24b40f02032e9108dd0d15f9b0f9030d5b8026dfc3a586",
+     "manifest_generation": 1,
+     "segment_generation": 1,
+     "segment_name": "seglog-1",
+     "sequence_id": 1
+    },
+    "intent": {
+     "actor_ref": "pmref:fixture:actor_ref",
+     "attachment_refs": [],
+     "computer_id": "fixture_computer_id",
+     "content_ref": "pmref:fixture:content_ref",
+     "message_id": "fixture_message_id",
+     "message_type": "user",
+     "operation_id": "fixture_operation_id",
+     "role": "user",
+     "scope": {
+      "named_plan_id": null,
+      "project_home_server_id": "server1",
+      "project_id": "p1",
+      "schema_id": "pm.workflow_scope.v2",
+      "schema_version": "2.0.0",
+      "scope_kind": "project",
+      "scope_partition": "project~cDE",
+      "server_id": "server1"
+     },
+     "thread_id": "thr_01ARZ3NDEKTSV4RRFFQ69G5FAV"
+    },
+    "operation": {
+     "actions": [
+      "intent",
+      "effect",
+      "commit",
+      "readback",
+      "append",
+      "receipt",
+      "publish"
+     ],
+     "event_type": "chat.message",
+     "operation_id": "fixture_operation_id",
+     "outcome": {
+      "boundary": "durable_message",
+      "commits": [
+       "fixture_commit"
+      ],
+      "creates_thread": true,
+      "handler": "assistant_chat.transcript_commit",
+      "lineage_owner": "transcript",
+      "message": {
+       "attachment_refs": [],
+       "content_ref": "pmref:fixture:content_ref",
+       "message_id": "fixture_message_id",
+       "message_type": "user",
+       "role": "user"
+      }
+     }
+    },
+    "receipt": {
+     "acknowledged_at_utc": "2026-11-04T01:00:00+01:00",
+     "byte_offset": 0,
+     "commit_group_id": "fixture_group",
+     "durability_class": "ordinary",
+     "durability_state": "synced",
+     "durable_end_offset": 1024,
+     "event_id": "evt_dch_fd6c1995f530cade1b24b40f02032e9108dd0d15f9b0f9030d5b8026dfc3a586",
+     "manifest_generation": 1,
+     "segment_generation": 1,
+     "segment_name": "seglog-1",
+     "sequence_id": 1
+    },
+    "record": {
+     "actor_ref": "pmref:fixture:actor_ref",
+     "attempt_id": null,
+     "causation_event_id": null,
+     "correlation_id": "fixture_operation_id",
+     "effective_account_ref": null,
+     "event_id": "evt_dch_fd6c1995f530cade1b24b40f02032e9108dd0d15f9b0f9030d5b8026dfc3a586",
+     "event_type": "chat.message",
+     "idempotency_key": "dch:fd6c1995f530cade1b24b40f02032e9108dd0d15f9b0f9030d5b8026dfc3a586",
+     "migration": {
+      "compatibility_event_type": null,
+      "migrated_from_schema_id": null,
+      "migrated_from_schema_version": null,
+      "migration_id": null
+     },
+     "node_id": null,
+     "observed_at_utc": "2026-11-04T00:00:00Z",
+     "occurred_at_utc": "2026-11-04T00:00:00Z",
+     "parent_event_id": null,
+     "payload": {
+      "actor_ref": "pmref:fixture:actor_ref",
+      "attachment_refs": [],
+      "computer_id": "fixture_computer_id",
+      "content_ref": "pmref:fixture:content_ref",
+      "message_id": "fixture_message_id",
+      "message_type": "user",
+      "operation_id": "fixture_operation_id",
+      "role": "user",
+      "schema_id": "pm.dch_event.chat_message.project.v1",
+      "schema_version": "1.0.0",
+      "scope": {
+       "named_plan_id": null,
+       "project_home_server_id": "server1",
+       "project_id": "p1",
+       "schema_id": "pm.workflow_scope.v2",
+       "schema_version": "2.0.0",
+       "scope_kind": "project",
+       "scope_partition": "project~cDE",
+       "server_id": "server1"
+      },
+      "thread_id": "thr_01ARZ3NDEKTSV4RRFFQ69G5FAV",
+      "ts": "2026-11-04T00:00:00Z"
+     },
+     "payload_ref": null,
+     "payload_schema_id": "pm.dch_event.chat_message.project.v1",
+     "persisted_at_utc": "2026-11-04T00:00:00Z",
+     "producer_sequence_id": null,
+     "project_id": "p1",
+     "redaction_profile": "no_secrets",
+     "replay_policy": "dedupe_by_idempotency_key",
+     "requested_account_ref": null,
+     "run_id": null,
+     "schema_id": "pm.event.v0",
+     "schema_version": "2.0.0",
+     "scope_kind": "project",
+     "sequence_id": 1,
+     "thread_id": "thr_01ARZ3NDEKTSV4RRFFQ69G5FAV"
+    },
+    "result": {
+     "actor_ref": "pmref:fixture:actor_ref",
+     "attachment_refs": [],
+     "computer_id": "fixture_computer_id",
+     "content_ref": "pmref:fixture:content_ref",
+     "message_id": "fixture_message_id",
+     "message_type": "user",
+     "operation_id": "fixture_operation_id",
+     "role": "user",
+     "schema_id": "pm.dch_event.chat_message.project.v1",
+     "schema_version": "1.0.0",
+     "scope": {
+      "named_plan_id": null,
+      "project_home_server_id": "server1",
+      "project_id": "p1",
+      "schema_id": "pm.workflow_scope.v2",
+      "schema_version": "2.0.0",
+      "scope_kind": "project",
+      "scope_partition": "project~cDE",
+      "server_id": "server1"
+     },
+     "thread_id": "thr_01ARZ3NDEKTSV4RRFFQ69G5FAV",
+     "ts": "2026-11-04T00:00:00Z"
+    },
+    "storage_instance_id": "00000000-0000-4000-8000-000000000001"
+   }
+  },
+  {
+   "name": "assistant_reply",
+   "original": {
+    "after": {
+     "thread_durable": true,
+     "thread_state": "active",
+     "transcript": [
+      "fixture_prior_message_id",
+      "fixture_message_id"
+     ]
+    },
+    "before": {
+     "thread_durable": true,
+     "thread_state": "active",
+     "transcript": [
+      "fixture_prior_message_id"
+     ]
+    },
+    "commitment": {
+     "codec": "pm.seglog_frame_v2.event_value.canonical_msgpack.v1",
+     "domain": "pm.storage.original_event_value_commitment.v1",
+     "event_schema_id": "pm.event.v0",
+     "event_schema_version": "2.0.0",
+     "schema_id": "pm.storage.original_event_value_commitment.v1",
+     "schema_version": "1.0.0",
+     "sha256": "ba0d878a41348137b088ad6637d7252f36a1fcdc41644b1ab4bd3094103449ab"
+    },
+    "first_receipt": {
+     "acknowledged_at_utc": "2026-11-04T01:00:00+01:00",
+     "byte_offset": 0,
+     "commit_group_id": "fixture_group",
+     "durability_class": "ordinary",
+     "durability_state": "synced",
+     "durable_end_offset": 1024,
+     "event_id": "evt_dch_fd6c1995f530cade1b24b40f02032e9108dd0d15f9b0f9030d5b8026dfc3a586",
+     "manifest_generation": 1,
+     "segment_generation": 1,
+     "segment_name": "seglog-1",
+     "sequence_id": 1
+    },
+    "intent": {
+     "actor_ref": "pmref:fixture:actor_ref",
+     "attachment_refs": [],
+     "computer_id": "fixture_computer_id",
+     "content_ref": "pmref:fixture:content_ref",
+     "message_id": "fixture_message_id",
+     "message_type": "assistant",
+     "operation_id": "fixture_operation_id",
+     "role": "assistant",
+     "scope": {
+      "named_plan_id": null,
+      "project_home_server_id": "server1",
+      "project_id": "p1",
+      "schema_id": "pm.workflow_scope.v2",
+      "schema_version": "2.0.0",
+      "scope_kind": "project",
+      "scope_partition": "project~cDE",
+      "server_id": "server1"
+     },
+     "thread_id": "thr_01ARZ3NDEKTSV4RRFFQ69G5FAV"
+    },
+    "operation": {
+     "actions": [
+      "intent",
+      "effect",
+      "commit",
+      "readback",
+      "append",
+      "receipt",
+      "publish"
+     ],
+     "event_type": "chat.message",
+     "operation_id": "fixture_operation_id",
+     "outcome": {
+      "boundary": "durable_message",
+      "commits": [
+       "fixture_commit"
+      ],
+      "creates_thread": false,
+      "handler": "assistant_chat.transcript_commit",
+      "lineage_owner": "transcript",
+      "message": {
+       "attachment_refs": [],
+       "content_ref": "pmref:fixture:content_ref",
+       "message_id": "fixture_message_id",
+       "message_type": "assistant",
+       "role": "assistant"
+      }
+     }
+    },
+    "receipt": {
+     "acknowledged_at_utc": "2026-11-04T01:00:00+01:00",
+     "byte_offset": 0,
+     "commit_group_id": "fixture_group",
+     "durability_class": "ordinary",
+     "durability_state": "synced",
+     "durable_end_offset": 1024,
+     "event_id": "evt_dch_fd6c1995f530cade1b24b40f02032e9108dd0d15f9b0f9030d5b8026dfc3a586",
+     "manifest_generation": 1,
+     "segment_generation": 1,
+     "segment_name": "seglog-1",
+     "sequence_id": 1
+    },
+    "record": {
+     "actor_ref": "pmref:fixture:actor_ref",
+     "attempt_id": null,
+     "causation_event_id": null,
+     "correlation_id": "fixture_operation_id",
+     "effective_account_ref": null,
+     "event_id": "evt_dch_fd6c1995f530cade1b24b40f02032e9108dd0d15f9b0f9030d5b8026dfc3a586",
+     "event_type": "chat.message",
+     "idempotency_key": "dch:fd6c1995f530cade1b24b40f02032e9108dd0d15f9b0f9030d5b8026dfc3a586",
+     "migration": {
+      "compatibility_event_type": null,
+      "migrated_from_schema_id": null,
+      "migrated_from_schema_version": null,
+      "migration_id": null
+     },
+     "node_id": null,
+     "observed_at_utc": "2026-11-04T00:00:00Z",
+     "occurred_at_utc": "2026-11-04T00:00:00Z",
+     "parent_event_id": null,
+     "payload": {
+      "actor_ref": "pmref:fixture:actor_ref",
+      "attachment_refs": [],
+      "computer_id": "fixture_computer_id",
+      "content_ref": "pmref:fixture:content_ref",
+      "message_id": "fixture_message_id",
+      "message_type": "assistant",
+      "operation_id": "fixture_operation_id",
+      "role": "assistant",
+      "schema_id": "pm.dch_event.chat_message.project.v1",
+      "schema_version": "1.0.0",
+      "scope": {
+       "named_plan_id": null,
+       "project_home_server_id": "server1",
+       "project_id": "p1",
+       "schema_id": "pm.workflow_scope.v2",
+       "schema_version": "2.0.0",
+       "scope_kind": "project",
+       "scope_partition": "project~cDE",
+       "server_id": "server1"
+      },
+      "thread_id": "thr_01ARZ3NDEKTSV4RRFFQ69G5FAV",
+      "ts": "2026-11-04T00:00:00Z"
+     },
+     "payload_ref": null,
+     "payload_schema_id": "pm.dch_event.chat_message.project.v1",
+     "persisted_at_utc": "2026-11-04T00:00:00Z",
+     "producer_sequence_id": null,
+     "project_id": "p1",
+     "redaction_profile": "no_secrets",
+     "replay_policy": "dedupe_by_idempotency_key",
+     "requested_account_ref": null,
+     "run_id": null,
+     "schema_id": "pm.event.v0",
+     "schema_version": "2.0.0",
+     "scope_kind": "project",
+     "sequence_id": 1,
+     "thread_id": "thr_01ARZ3NDEKTSV4RRFFQ69G5FAV"
+    },
+    "result": {
+     "actor_ref": "pmref:fixture:actor_ref",
+     "attachment_refs": [],
+     "computer_id": "fixture_computer_id",
+     "content_ref": "pmref:fixture:content_ref",
+     "message_id": "fixture_message_id",
+     "message_type": "assistant",
+     "operation_id": "fixture_operation_id",
+     "role": "assistant",
+     "schema_id": "pm.dch_event.chat_message.project.v1",
+     "schema_version": "1.0.0",
+     "scope": {
+      "named_plan_id": null,
+      "project_home_server_id": "server1",
+      "project_id": "p1",
+      "schema_id": "pm.workflow_scope.v2",
+      "schema_version": "2.0.0",
+      "scope_kind": "project",
+      "scope_partition": "project~cDE",
+      "server_id": "server1"
+     },
+     "thread_id": "thr_01ARZ3NDEKTSV4RRFFQ69G5FAV",
+     "ts": "2026-11-04T00:00:00Z"
+    },
+    "storage_instance_id": "00000000-0000-4000-8000-000000000001"
+   }
+  },
+  {
+   "name": "tool_result",
+   "original": {
+    "after": {
+     "thread_durable": true,
+     "thread_state": "active",
+     "transcript": [
+      "fixture_prior_message_id",
+      "fixture_message_id"
+     ]
+    },
+    "before": {
+     "thread_durable": true,
+     "thread_state": "active",
+     "transcript": [
+      "fixture_prior_message_id"
+     ]
+    },
+    "commitment": {
+     "codec": "pm.seglog_frame_v2.event_value.canonical_msgpack.v1",
+     "domain": "pm.storage.original_event_value_commitment.v1",
+     "event_schema_id": "pm.event.v0",
+     "event_schema_version": "2.0.0",
+     "schema_id": "pm.storage.original_event_value_commitment.v1",
+     "schema_version": "1.0.0",
+     "sha256": "35ebebeefb8411cdcf891b88504ed8604e07514af0b5fbddc53a56b06b3971b0"
+    },
+    "first_receipt": {
+     "acknowledged_at_utc": "2026-11-04T01:00:00+01:00",
+     "byte_offset": 0,
+     "commit_group_id": "fixture_group",
+     "durability_class": "ordinary",
+     "durability_state": "synced",
+     "durable_end_offset": 1024,
+     "event_id": "evt_dch_fd6c1995f530cade1b24b40f02032e9108dd0d15f9b0f9030d5b8026dfc3a586",
+     "manifest_generation": 1,
+     "segment_generation": 1,
+     "segment_name": "seglog-1",
+     "sequence_id": 1
+    },
+    "intent": {
+     "actor_ref": "pmref:fixture:actor_ref",
+     "attachment_refs": [],
+     "computer_id": "fixture_computer_id",
+     "content_ref": "pmref:fixture:content_ref",
+     "message_id": "fixture_message_id",
+     "message_type": "tool_result",
+     "operation_id": "fixture_operation_id",
+     "role": "tool",
+     "scope": {
+      "named_plan_id": null,
+      "project_home_server_id": "server1",
+      "project_id": "p1",
+      "schema_id": "pm.workflow_scope.v2",
+      "schema_version": "2.0.0",
+      "scope_kind": "project",
+      "scope_partition": "project~cDE",
+      "server_id": "server1"
+     },
+     "thread_id": "thr_01ARZ3NDEKTSV4RRFFQ69G5FAV"
+    },
+    "operation": {
+     "actions": [
+      "intent",
+      "effect",
+      "commit",
+      "readback",
+      "append",
+      "receipt",
+      "publish"
+     ],
+     "event_type": "chat.message",
+     "operation_id": "fixture_operation_id",
+     "outcome": {
+      "boundary": "durable_message",
+      "commits": [
+       "fixture_commit"
+      ],
+      "creates_thread": false,
+      "handler": "assistant_chat.transcript_commit",
+      "lineage_owner": "transcript",
+      "message": {
+       "attachment_refs": [],
+       "content_ref": "pmref:fixture:content_ref",
+       "message_id": "fixture_message_id",
+       "message_type": "tool_result",
+       "role": "tool"
+      }
+     }
+    },
+    "receipt": {
+     "acknowledged_at_utc": "2026-11-04T01:00:00+01:00",
+     "byte_offset": 0,
+     "commit_group_id": "fixture_group",
+     "durability_class": "ordinary",
+     "durability_state": "synced",
+     "durable_end_offset": 1024,
+     "event_id": "evt_dch_fd6c1995f530cade1b24b40f02032e9108dd0d15f9b0f9030d5b8026dfc3a586",
+     "manifest_generation": 1,
+     "segment_generation": 1,
+     "segment_name": "seglog-1",
+     "sequence_id": 1
+    },
+    "record": {
+     "actor_ref": "pmref:fixture:actor_ref",
+     "attempt_id": null,
+     "causation_event_id": null,
+     "correlation_id": "fixture_operation_id",
+     "effective_account_ref": null,
+     "event_id": "evt_dch_fd6c1995f530cade1b24b40f02032e9108dd0d15f9b0f9030d5b8026dfc3a586",
+     "event_type": "chat.message",
+     "idempotency_key": "dch:fd6c1995f530cade1b24b40f02032e9108dd0d15f9b0f9030d5b8026dfc3a586",
+     "migration": {
+      "compatibility_event_type": null,
+      "migrated_from_schema_id": null,
+      "migrated_from_schema_version": null,
+      "migration_id": null
+     },
+     "node_id": null,
+     "observed_at_utc": "2026-11-04T00:00:00Z",
+     "occurred_at_utc": "2026-11-04T00:00:00Z",
+     "parent_event_id": null,
+     "payload": {
+      "actor_ref": "pmref:fixture:actor_ref",
+      "attachment_refs": [],
+      "computer_id": "fixture_computer_id",
+      "content_ref": "pmref:fixture:content_ref",
+      "message_id": "fixture_message_id",
+      "message_type": "tool_result",
+      "operation_id": "fixture_operation_id",
+      "role": "tool",
+      "schema_id": "pm.dch_event.chat_message.project.v1",
+      "schema_version": "1.0.0",
+      "scope": {
+       "named_plan_id": null,
+       "project_home_server_id": "server1",
+       "project_id": "p1",
+       "schema_id": "pm.workflow_scope.v2",
+       "schema_version": "2.0.0",
+       "scope_kind": "project",
+       "scope_partition": "project~cDE",
+       "server_id": "server1"
+      },
+      "thread_id": "thr_01ARZ3NDEKTSV4RRFFQ69G5FAV",
+      "ts": "2026-11-04T00:00:00Z"
+     },
+     "payload_ref": null,
+     "payload_schema_id": "pm.dch_event.chat_message.project.v1",
+     "persisted_at_utc": "2026-11-04T00:00:00Z",
+     "producer_sequence_id": null,
+     "project_id": "p1",
+     "redaction_profile": "no_secrets",
+     "replay_policy": "dedupe_by_idempotency_key",
+     "requested_account_ref": null,
+     "run_id": null,
+     "schema_id": "pm.event.v0",
+     "schema_version": "2.0.0",
+     "scope_kind": "project",
+     "sequence_id": 1,
+     "thread_id": "thr_01ARZ3NDEKTSV4RRFFQ69G5FAV"
+    },
+    "result": {
+     "actor_ref": "pmref:fixture:actor_ref",
+     "attachment_refs": [],
+     "computer_id": "fixture_computer_id",
+     "content_ref": "pmref:fixture:content_ref",
+     "message_id": "fixture_message_id",
+     "message_type": "tool_result",
+     "operation_id": "fixture_operation_id",
+     "role": "tool",
+     "schema_id": "pm.dch_event.chat_message.project.v1",
+     "schema_version": "1.0.0",
+     "scope": {
+      "named_plan_id": null,
+      "project_home_server_id": "server1",
+      "project_id": "p1",
+      "schema_id": "pm.workflow_scope.v2",
+      "schema_version": "2.0.0",
+      "scope_kind": "project",
+      "scope_partition": "project~cDE",
+      "server_id": "server1"
+     },
+     "thread_id": "thr_01ARZ3NDEKTSV4RRFFQ69G5FAV",
+     "ts": "2026-11-04T00:00:00Z"
+    },
+    "storage_instance_id": "00000000-0000-4000-8000-000000000001"
+   }
+  },
+  {
+   "name": "with_attachments",
+   "original": {
+    "after": {
+     "thread_durable": true,
+     "thread_state": "active",
+     "transcript": [
+      "fixture_prior_message_id",
+      "fixture_message_id"
+     ]
+    },
+    "before": {
+     "thread_durable": true,
+     "thread_state": "active",
+     "transcript": [
+      "fixture_prior_message_id"
+     ]
+    },
+    "commitment": {
+     "codec": "pm.seglog_frame_v2.event_value.canonical_msgpack.v1",
+     "domain": "pm.storage.original_event_value_commitment.v1",
+     "event_schema_id": "pm.event.v0",
+     "event_schema_version": "2.0.0",
+     "schema_id": "pm.storage.original_event_value_commitment.v1",
+     "schema_version": "1.0.0",
+     "sha256": "c79e35becf52f67635294fe3d06f54ef1fa35036b03cb84a2dd6b9321b881124"
+    },
+    "first_receipt": {
+     "acknowledged_at_utc": "2026-11-04T01:00:00+01:00",
+     "byte_offset": 0,
+     "commit_group_id": "fixture_group",
+     "durability_class": "ordinary",
+     "durability_state": "synced",
+     "durable_end_offset": 1024,
+     "event_id": "evt_dch_fd6c1995f530cade1b24b40f02032e9108dd0d15f9b0f9030d5b8026dfc3a586",
+     "manifest_generation": 1,
+     "segment_generation": 1,
+     "segment_name": "seglog-1",
+     "sequence_id": 1
+    },
+    "intent": {
+     "actor_ref": "pmref:fixture:actor_ref",
+     "attachment_refs": [
+      "pmref:fixture:attachment_1",
+      "pmref:fixture:attachment_2"
+     ],
+     "computer_id": "fixture_computer_id",
+     "content_ref": "pmref:fixture:content_ref",
+     "message_id": "fixture_message_id",
+     "message_type": "user",
+     "operation_id": "fixture_operation_id",
+     "role": "user",
+     "scope": {
+      "named_plan_id": null,
+      "project_home_server_id": "server1",
+      "project_id": "p1",
+      "schema_id": "pm.workflow_scope.v2",
+      "schema_version": "2.0.0",
+      "scope_kind": "project",
+      "scope_partition": "project~cDE",
+      "server_id": "server1"
+     },
+     "thread_id": "thr_01ARZ3NDEKTSV4RRFFQ69G5FAV"
+    },
+    "operation": {
+     "actions": [
+      "intent",
+      "effect",
+      "commit",
+      "readback",
+      "append",
+      "receipt",
+      "publish"
+     ],
+     "event_type": "chat.message",
+     "operation_id": "fixture_operation_id",
+     "outcome": {
+      "boundary": "durable_message",
+      "commits": [
+       "fixture_commit"
+      ],
+      "creates_thread": false,
+      "handler": "assistant_chat.transcript_commit",
+      "lineage_owner": "transcript",
+      "message": {
+       "attachment_refs": [
+        "pmref:fixture:attachment_1",
+        "pmref:fixture:attachment_2"
+       ],
+       "content_ref": "pmref:fixture:content_ref",
+       "message_id": "fixture_message_id",
+       "message_type": "user",
+       "role": "user"
+      }
+     }
+    },
+    "receipt": {
+     "acknowledged_at_utc": "2026-11-04T01:00:00+01:00",
+     "byte_offset": 0,
+     "commit_group_id": "fixture_group",
+     "durability_class": "ordinary",
+     "durability_state": "synced",
+     "durable_end_offset": 1024,
+     "event_id": "evt_dch_fd6c1995f530cade1b24b40f02032e9108dd0d15f9b0f9030d5b8026dfc3a586",
+     "manifest_generation": 1,
+     "segment_generation": 1,
+     "segment_name": "seglog-1",
+     "sequence_id": 1
+    },
+    "record": {
+     "actor_ref": "pmref:fixture:actor_ref",
+     "attempt_id": null,
+     "causation_event_id": null,
+     "correlation_id": "fixture_operation_id",
+     "effective_account_ref": null,
+     "event_id": "evt_dch_fd6c1995f530cade1b24b40f02032e9108dd0d15f9b0f9030d5b8026dfc3a586",
+     "event_type": "chat.message",
+     "idempotency_key": "dch:fd6c1995f530cade1b24b40f02032e9108dd0d15f9b0f9030d5b8026dfc3a586",
+     "migration": {
+      "compatibility_event_type": null,
+      "migrated_from_schema_id": null,
+      "migrated_from_schema_version": null,
+      "migration_id": null
+     },
+     "node_id": null,
+     "observed_at_utc": "2026-11-04T00:00:00Z",
+     "occurred_at_utc": "2026-11-04T00:00:00Z",
+     "parent_event_id": null,
+     "payload": {
+      "actor_ref": "pmref:fixture:actor_ref",
+      "attachment_refs": [
+       "pmref:fixture:attachment_1",
+       "pmref:fixture:attachment_2"
+      ],
+      "computer_id": "fixture_computer_id",
+      "content_ref": "pmref:fixture:content_ref",
+      "message_id": "fixture_message_id",
+      "message_type": "user",
+      "operation_id": "fixture_operation_id",
+      "role": "user",
+      "schema_id": "pm.dch_event.chat_message.project.v1",
+      "schema_version": "1.0.0",
+      "scope": {
+       "named_plan_id": null,
+       "project_home_server_id": "server1",
+       "project_id": "p1",
+       "schema_id": "pm.workflow_scope.v2",
+       "schema_version": "2.0.0",
+       "scope_kind": "project",
+       "scope_partition": "project~cDE",
+       "server_id": "server1"
+      },
+      "thread_id": "thr_01ARZ3NDEKTSV4RRFFQ69G5FAV",
+      "ts": "2026-11-04T00:00:00Z"
+     },
+     "payload_ref": null,
+     "payload_schema_id": "pm.dch_event.chat_message.project.v1",
+     "persisted_at_utc": "2026-11-04T00:00:00Z",
+     "producer_sequence_id": null,
+     "project_id": "p1",
+     "redaction_profile": "no_secrets",
+     "replay_policy": "dedupe_by_idempotency_key",
+     "requested_account_ref": null,
+     "run_id": null,
+     "schema_id": "pm.event.v0",
+     "schema_version": "2.0.0",
+     "scope_kind": "project",
+     "sequence_id": 1,
+     "thread_id": "thr_01ARZ3NDEKTSV4RRFFQ69G5FAV"
+    },
+    "result": {
+     "actor_ref": "pmref:fixture:actor_ref",
+     "attachment_refs": [
+      "pmref:fixture:attachment_1",
+      "pmref:fixture:attachment_2"
+     ],
+     "computer_id": "fixture_computer_id",
+     "content_ref": "pmref:fixture:content_ref",
+     "message_id": "fixture_message_id",
+     "message_type": "user",
+     "operation_id": "fixture_operation_id",
+     "role": "user",
+     "schema_id": "pm.dch_event.chat_message.project.v1",
+     "schema_version": "1.0.0",
+     "scope": {
+      "named_plan_id": null,
+      "project_home_server_id": "server1",
+      "project_id": "p1",
+      "schema_id": "pm.workflow_scope.v2",
+      "schema_version": "2.0.0",
+      "scope_kind": "project",
+      "scope_partition": "project~cDE",
+      "server_id": "server1"
+     },
+     "thread_id": "thr_01ARZ3NDEKTSV4RRFFQ69G5FAV",
+     "ts": "2026-11-04T00:00:00Z"
+    },
+    "storage_instance_id": "00000000-0000-4000-8000-000000000001"
+   }
+  }
+ ],
+ "chat.thread_archived/application": [
+  {
+   "name": "from_suspended",
+   "original": {
+    "after": {
+     "listed_active": false,
+     "preserved": {
+      "attachments": [
+       "pmref:fixture:attachment"
+      ],
+      "audit_ref": "pmref:fixture:audit",
+      "citations": [
+       "pmref:fixture:citation"
+      ],
+      "folder_ref": "pmref:fixture:folder",
+      "lineage_ref": "pmref:fixture:lineage",
+      "transcript": [
+       "fixture_message_id"
+      ],
+      "worktree_ref": "pmref:fixture:worktree"
+     },
+     "thread_id": "thr_01ARZ3NDEKTSV4RRFFQ69G5FAV",
+     "transient": {
+      "cache": false,
+      "composer": false,
+      "queue": false
+     }
+    },
+    "archive": {
+     "after": {
+      "computer_id": "fixture_computer_id",
+      "operation_id": "fixture_operation_id",
+      "readback_available": true,
+      "record_ref": "pmref:fixture:thread_record_ref",
+      "revision": 5,
+      "scope": {
+       "named_plan_id": null,
+       "project_home_server_id": null,
+       "project_id": null,
+       "schema_id": "pm.workflow_scope.v2",
+       "schema_version": "2.0.0",
+       "scope_kind": "application",
+       "scope_partition": "app",
+       "server_id": "server1"
+      },
+      "state": "archived",
+      "thread_id": "thr_01ARZ3NDEKTSV4RRFFQ69G5FAV"
+     },
+     "before": {
+      "active_run": false,
+      "computer_id": "fixture_computer_id",
+      "operation_id": "fixture_operation_id",
+      "revision": 4,
+      "scope": {
+       "named_plan_id": null,
+       "project_home_server_id": null,
+       "project_id": null,
+       "schema_id": "pm.workflow_scope.v2",
+       "schema_version": "2.0.0",
+       "scope_kind": "application",
+       "scope_partition": "app",
+       "server_id": "server1"
+      },
+      "state": "suspended",
+      "thread_id": "thr_01ARZ3NDEKTSV4RRFFQ69G5FAV"
+     },
+     "request": {
+      "command_id": "cmd.chat.archive",
+      "computer_id": "fixture_computer_id",
+      "expected_revision": 4,
+      "operation_id": "fixture_operation_id",
+      "origin": "manual",
+      "permission_allowed": true,
+      "scope": {
+       "named_plan_id": null,
+       "project_home_server_id": null,
+       "project_id": null,
+       "schema_id": "pm.workflow_scope.v2",
+       "schema_version": "2.0.0",
+       "scope_kind": "application",
+       "scope_partition": "app",
+       "server_id": "server1"
+      },
+      "thread_id": "thr_01ARZ3NDEKTSV4RRFFQ69G5FAV",
+      "thread_selected": true
+     }
+    },
+    "before": {
+     "listed_active": true,
+     "preserved": {
+      "attachments": [
+       "pmref:fixture:attachment"
+      ],
+      "audit_ref": "pmref:fixture:audit",
+      "citations": [
+       "pmref:fixture:citation"
+      ],
+      "folder_ref": "pmref:fixture:folder",
+      "lineage_ref": "pmref:fixture:lineage",
+      "transcript": [
+       "fixture_message_id"
+      ],
+      "worktree_ref": "pmref:fixture:worktree"
+     },
+     "thread_id": "thr_01ARZ3NDEKTSV4RRFFQ69G5FAV",
+     "transient": {
+      "cache": true,
+      "composer": true,
+      "queue": true
+     }
+    },
+    "commitment": {
+     "codec": "pm.seglog_frame_v2.event_value.canonical_msgpack.v1",
+     "domain": "pm.storage.original_event_value_commitment.v1",
+     "event_schema_id": "pm.event.v0",
+     "event_schema_version": "2.0.0",
+     "schema_id": "pm.storage.original_event_value_commitment.v1",
+     "schema_version": "1.0.0",
+     "sha256": "6472209e43d69e684880f412b42bf6993985c96bfd8e2cbc5155b3cfe95d7afb"
+    },
+    "first_receipt": {
+     "acknowledged_at_utc": "2026-11-04T01:00:00+01:00",
+     "byte_offset": 0,
+     "commit_group_id": "fixture_group",
+     "durability_class": "ordinary",
+     "durability_state": "synced",
+     "durable_end_offset": 1024,
+     "event_id": "evt_dch_e95578dd7fe2a759e2fce1ba24a066bc934e94d18604cb780d478e1ea414753e",
+     "manifest_generation": 1,
+     "segment_generation": 1,
+     "segment_name": "seglog-1",
+     "sequence_id": 1
+    },
+    "intent": {
+     "actor_ref": "pmref:fixture:actor_ref",
+     "computer_id": "fixture_computer_id",
+     "expected_thread_revision": 4,
+     "operation_id": "fixture_operation_id",
+     "scope": {
+      "named_plan_id": null,
+      "project_home_server_id": null,
+      "project_id": null,
+      "schema_id": "pm.workflow_scope.v2",
+      "schema_version": "2.0.0",
+      "scope_kind": "application",
+      "scope_partition": "app",
+      "server_id": "server1"
+     },
+     "thread_id": "thr_01ARZ3NDEKTSV4RRFFQ69G5FAV"
+    },
+    "operation": {
+     "actions": [
+      "intent",
+      "effect",
+      "commit",
+      "readback",
+      "append",
+      "receipt",
+      "publish"
+     ],
+     "event_type": "chat.thread_archived",
+     "operation_id": "fixture_operation_id",
+     "outcome": {
+      "cas_commits": [
+       "fixture_revision_commit"
+      ],
+      "cleanup_actions": [],
+      "dispatched_by": "cmd.chat.archive",
+      "handler": "cmd.chat.thread.archive",
+      "pruned": [
+       "composer",
+       "queue",
+       "cache"
+      ]
+     }
+    },
+    "receipt": {
+     "acknowledged_at_utc": "2026-11-04T01:00:00+01:00",
+     "byte_offset": 0,
+     "commit_group_id": "fixture_group",
+     "durability_class": "ordinary",
+     "durability_state": "synced",
+     "durable_end_offset": 1024,
+     "event_id": "evt_dch_e95578dd7fe2a759e2fce1ba24a066bc934e94d18604cb780d478e1ea414753e",
+     "manifest_generation": 1,
+     "segment_generation": 1,
+     "segment_name": "seglog-1",
+     "sequence_id": 1
+    },
+    "record": {
+     "actor_ref": "pmref:fixture:actor_ref",
+     "attempt_id": null,
+     "causation_event_id": null,
+     "correlation_id": "fixture_operation_id",
+     "effective_account_ref": null,
+     "event_id": "evt_dch_e95578dd7fe2a759e2fce1ba24a066bc934e94d18604cb780d478e1ea414753e",
+     "event_type": "chat.thread_archived",
+     "idempotency_key": "application@1:73657276657231:666978747572655f6f7065726174696f6e5f6964",
+     "migration": {
+      "compatibility_event_type": null,
+      "migrated_from_schema_id": null,
+      "migrated_from_schema_version": null,
+      "migration_id": null
+     },
+     "node_id": null,
+     "observed_at_utc": "2026-11-04T00:00:00Z",
+     "occurred_at_utc": "2026-11-04T00:00:00Z",
+     "parent_event_id": null,
+     "payload": {
+      "actor_ref": "pmref:fixture:actor_ref",
+      "archive_origin": "manual",
+      "command_id": "cmd.chat.archive",
+      "committed_thread_revision": 5,
+      "computer_id": "fixture_computer_id",
+      "expected_thread_revision": 4,
+      "operation_id": "fixture_operation_id",
+      "previous_state": "suspended",
+      "schema_id": "pm.dch_event.chat_thread_archived.application.v1",
+      "schema_version": "1.0.0",
+      "scope": {
+       "named_plan_id": null,
+       "project_home_server_id": null,
+       "project_id": null,
+       "schema_id": "pm.workflow_scope.v2",
+       "schema_version": "2.0.0",
+       "scope_kind": "application",
+       "scope_partition": "app",
+       "server_id": "server1"
+      },
+      "state": "archived",
+      "thread_id": "thr_01ARZ3NDEKTSV4RRFFQ69G5FAV",
+      "thread_record_ref": "pmref:fixture:thread_record_ref",
+      "ts": "2026-11-04T00:00:00Z"
+     },
+     "payload_ref": null,
+     "payload_schema_id": "pm.dch_event.chat_thread_archived.application.v1",
+     "persisted_at_utc": "2026-11-04T00:00:00Z",
+     "producer_sequence_id": null,
+     "project_id": null,
+     "redaction_profile": "no_secrets",
+     "replay_policy": "dedupe_by_idempotency_key",
+     "requested_account_ref": null,
+     "run_id": null,
+     "schema_id": "pm.event.v0",
+     "schema_version": "2.0.0",
+     "scope_kind": "application",
+     "sequence_id": 1,
+     "thread_id": "thr_01ARZ3NDEKTSV4RRFFQ69G5FAV"
+    },
+    "result": {
+     "actor_ref": "pmref:fixture:actor_ref",
+     "archive_origin": "manual",
+     "command_id": "cmd.chat.archive",
+     "committed_thread_revision": 5,
+     "computer_id": "fixture_computer_id",
+     "expected_thread_revision": 4,
+     "operation_id": "fixture_operation_id",
+     "previous_state": "suspended",
+     "schema_id": "pm.dch_event.chat_thread_archived.application.v1",
+     "schema_version": "1.0.0",
+     "scope": {
+      "named_plan_id": null,
+      "project_home_server_id": null,
+      "project_id": null,
+      "schema_id": "pm.workflow_scope.v2",
+      "schema_version": "2.0.0",
+      "scope_kind": "application",
+      "scope_partition": "app",
+      "server_id": "server1"
+     },
+     "state": "archived",
+     "thread_id": "thr_01ARZ3NDEKTSV4RRFFQ69G5FAV",
+     "thread_record_ref": "pmref:fixture:thread_record_ref",
+     "ts": "2026-11-04T00:00:00Z"
+    },
+    "storage_instance_id": "00000000-0000-4000-8000-000000000001"
+   }
+  },
+  {
+   "name": "nothing_transient",
+   "original": {
+    "after": {
+     "listed_active": false,
+     "preserved": {
+      "attachments": [
+       "pmref:fixture:attachment"
+      ],
+      "audit_ref": "pmref:fixture:audit",
+      "citations": [
+       "pmref:fixture:citation"
+      ],
+      "folder_ref": null,
+      "lineage_ref": "pmref:fixture:lineage",
+      "transcript": [
+       "fixture_message_id"
+      ],
+      "worktree_ref": null
+     },
+     "thread_id": "thr_01ARZ3NDEKTSV4RRFFQ69G5FAV",
+     "transient": {
+      "cache": false,
+      "composer": false,
+      "queue": false
+     }
+    },
+    "archive": {
+     "after": {
+      "computer_id": "fixture_computer_id",
+      "operation_id": "fixture_operation_id",
+      "readback_available": true,
+      "record_ref": "pmref:fixture:thread_record_ref",
+      "revision": 5,
+      "scope": {
+       "named_plan_id": null,
+       "project_home_server_id": null,
+       "project_id": null,
+       "schema_id": "pm.workflow_scope.v2",
+       "schema_version": "2.0.0",
+       "scope_kind": "application",
+       "scope_partition": "app",
+       "server_id": "server1"
+      },
+      "state": "archived",
+      "thread_id": "thr_01ARZ3NDEKTSV4RRFFQ69G5FAV"
+     },
+     "before": {
+      "active_run": false,
+      "computer_id": "fixture_computer_id",
+      "operation_id": "fixture_operation_id",
+      "revision": 4,
+      "scope": {
+       "named_plan_id": null,
+       "project_home_server_id": null,
+       "project_id": null,
+       "schema_id": "pm.workflow_scope.v2",
+       "schema_version": "2.0.0",
+       "scope_kind": "application",
+       "scope_partition": "app",
+       "server_id": "server1"
+      },
+      "state": "active",
+      "thread_id": "thr_01ARZ3NDEKTSV4RRFFQ69G5FAV"
+     },
+     "request": {
+      "command_id": "cmd.chat.archive",
+      "computer_id": "fixture_computer_id",
+      "expected_revision": 4,
+      "operation_id": "fixture_operation_id",
+      "origin": "manual",
+      "permission_allowed": true,
+      "scope": {
+       "named_plan_id": null,
+       "project_home_server_id": null,
+       "project_id": null,
+       "schema_id": "pm.workflow_scope.v2",
+       "schema_version": "2.0.0",
+       "scope_kind": "application",
+       "scope_partition": "app",
+       "server_id": "server1"
+      },
+      "thread_id": "thr_01ARZ3NDEKTSV4RRFFQ69G5FAV",
+      "thread_selected": true
+     }
+    },
+    "before": {
+     "listed_active": true,
+     "preserved": {
+      "attachments": [
+       "pmref:fixture:attachment"
+      ],
+      "audit_ref": "pmref:fixture:audit",
+      "citations": [
+       "pmref:fixture:citation"
+      ],
+      "folder_ref": null,
+      "lineage_ref": "pmref:fixture:lineage",
+      "transcript": [
+       "fixture_message_id"
+      ],
+      "worktree_ref": null
+     },
+     "thread_id": "thr_01ARZ3NDEKTSV4RRFFQ69G5FAV",
+     "transient": {
+      "cache": false,
+      "composer": false,
+      "queue": false
+     }
+    },
+    "commitment": {
+     "codec": "pm.seglog_frame_v2.event_value.canonical_msgpack.v1",
+     "domain": "pm.storage.original_event_value_commitment.v1",
+     "event_schema_id": "pm.event.v0",
+     "event_schema_version": "2.0.0",
+     "schema_id": "pm.storage.original_event_value_commitment.v1",
+     "schema_version": "1.0.0",
+     "sha256": "c6fd806ea37040e1f401a5153dc8dfc2d479b79f572f91042bca2c955efc5c4f"
+    },
+    "first_receipt": {
+     "acknowledged_at_utc": "2026-11-04T01:00:00+01:00",
+     "byte_offset": 0,
+     "commit_group_id": "fixture_group",
+     "durability_class": "ordinary",
+     "durability_state": "synced",
+     "durable_end_offset": 1024,
+     "event_id": "evt_dch_e95578dd7fe2a759e2fce1ba24a066bc934e94d18604cb780d478e1ea414753e",
+     "manifest_generation": 1,
+     "segment_generation": 1,
+     "segment_name": "seglog-1",
+     "sequence_id": 1
+    },
+    "intent": {
+     "actor_ref": "pmref:fixture:actor_ref",
+     "computer_id": "fixture_computer_id",
+     "expected_thread_revision": 4,
+     "operation_id": "fixture_operation_id",
+     "scope": {
+      "named_plan_id": null,
+      "project_home_server_id": null,
+      "project_id": null,
+      "schema_id": "pm.workflow_scope.v2",
+      "schema_version": "2.0.0",
+      "scope_kind": "application",
+      "scope_partition": "app",
+      "server_id": "server1"
+     },
+     "thread_id": "thr_01ARZ3NDEKTSV4RRFFQ69G5FAV"
+    },
+    "operation": {
+     "actions": [
+      "intent",
+      "effect",
+      "commit",
+      "readback",
+      "append",
+      "receipt",
+      "publish"
+     ],
+     "event_type": "chat.thread_archived",
+     "operation_id": "fixture_operation_id",
+     "outcome": {
+      "cas_commits": [
+       "fixture_revision_commit"
+      ],
+      "cleanup_actions": [],
+      "dispatched_by": "cmd.chat.archive",
+      "handler": "cmd.chat.thread.archive",
+      "pruned": []
+     }
+    },
+    "receipt": {
+     "acknowledged_at_utc": "2026-11-04T01:00:00+01:00",
+     "byte_offset": 0,
+     "commit_group_id": "fixture_group",
+     "durability_class": "ordinary",
+     "durability_state": "synced",
+     "durable_end_offset": 1024,
+     "event_id": "evt_dch_e95578dd7fe2a759e2fce1ba24a066bc934e94d18604cb780d478e1ea414753e",
+     "manifest_generation": 1,
+     "segment_generation": 1,
+     "segment_name": "seglog-1",
+     "sequence_id": 1
+    },
+    "record": {
+     "actor_ref": "pmref:fixture:actor_ref",
+     "attempt_id": null,
+     "causation_event_id": null,
+     "correlation_id": "fixture_operation_id",
+     "effective_account_ref": null,
+     "event_id": "evt_dch_e95578dd7fe2a759e2fce1ba24a066bc934e94d18604cb780d478e1ea414753e",
+     "event_type": "chat.thread_archived",
+     "idempotency_key": "application@1:73657276657231:666978747572655f6f7065726174696f6e5f6964",
+     "migration": {
+      "compatibility_event_type": null,
+      "migrated_from_schema_id": null,
+      "migrated_from_schema_version": null,
+      "migration_id": null
+     },
+     "node_id": null,
+     "observed_at_utc": "2026-11-04T00:00:00Z",
+     "occurred_at_utc": "2026-11-04T00:00:00Z",
+     "parent_event_id": null,
+     "payload": {
+      "actor_ref": "pmref:fixture:actor_ref",
+      "archive_origin": "manual",
+      "command_id": "cmd.chat.archive",
+      "committed_thread_revision": 5,
+      "computer_id": "fixture_computer_id",
+      "expected_thread_revision": 4,
+      "operation_id": "fixture_operation_id",
+      "previous_state": "active",
+      "schema_id": "pm.dch_event.chat_thread_archived.application.v1",
+      "schema_version": "1.0.0",
+      "scope": {
+       "named_plan_id": null,
+       "project_home_server_id": null,
+       "project_id": null,
+       "schema_id": "pm.workflow_scope.v2",
+       "schema_version": "2.0.0",
+       "scope_kind": "application",
+       "scope_partition": "app",
+       "server_id": "server1"
+      },
+      "state": "archived",
+      "thread_id": "thr_01ARZ3NDEKTSV4RRFFQ69G5FAV",
+      "thread_record_ref": "pmref:fixture:thread_record_ref",
+      "ts": "2026-11-04T00:00:00Z"
+     },
+     "payload_ref": null,
+     "payload_schema_id": "pm.dch_event.chat_thread_archived.application.v1",
+     "persisted_at_utc": "2026-11-04T00:00:00Z",
+     "producer_sequence_id": null,
+     "project_id": null,
+     "redaction_profile": "no_secrets",
+     "replay_policy": "dedupe_by_idempotency_key",
+     "requested_account_ref": null,
+     "run_id": null,
+     "schema_id": "pm.event.v0",
+     "schema_version": "2.0.0",
+     "scope_kind": "application",
+     "sequence_id": 1,
+     "thread_id": "thr_01ARZ3NDEKTSV4RRFFQ69G5FAV"
+    },
+    "result": {
+     "actor_ref": "pmref:fixture:actor_ref",
+     "archive_origin": "manual",
+     "command_id": "cmd.chat.archive",
+     "committed_thread_revision": 5,
+     "computer_id": "fixture_computer_id",
+     "expected_thread_revision": 4,
+     "operation_id": "fixture_operation_id",
+     "previous_state": "active",
+     "schema_id": "pm.dch_event.chat_thread_archived.application.v1",
+     "schema_version": "1.0.0",
+     "scope": {
+      "named_plan_id": null,
+      "project_home_server_id": null,
+      "project_id": null,
+      "schema_id": "pm.workflow_scope.v2",
+      "schema_version": "2.0.0",
+      "scope_kind": "application",
+      "scope_partition": "app",
+      "server_id": "server1"
+     },
+     "state": "archived",
+     "thread_id": "thr_01ARZ3NDEKTSV4RRFFQ69G5FAV",
+     "thread_record_ref": "pmref:fixture:thread_record_ref",
+     "ts": "2026-11-04T00:00:00Z"
+    },
+    "storage_instance_id": "00000000-0000-4000-8000-000000000001"
+   }
+  }
+ ],
+ "chat.thread_archived/project": [
+  {
+   "name": "from_suspended",
+   "original": {
+    "after": {
+     "listed_active": false,
+     "preserved": {
+      "attachments": [
+       "pmref:fixture:attachment"
+      ],
+      "audit_ref": "pmref:fixture:audit",
+      "citations": [
+       "pmref:fixture:citation"
+      ],
+      "folder_ref": "pmref:fixture:folder",
+      "lineage_ref": "pmref:fixture:lineage",
+      "transcript": [
+       "fixture_message_id"
+      ],
+      "worktree_ref": "pmref:fixture:worktree"
+     },
+     "thread_id": "thr_01ARZ3NDEKTSV4RRFFQ69G5FAV",
+     "transient": {
+      "cache": false,
+      "composer": false,
+      "queue": false
+     }
+    },
+    "archive": {
+     "after": {
+      "computer_id": "fixture_computer_id",
+      "operation_id": "fixture_operation_id",
+      "readback_available": true,
+      "record_ref": "pmref:fixture:thread_record_ref",
+      "revision": 5,
+      "scope": {
+       "named_plan_id": null,
+       "project_home_server_id": "server1",
+       "project_id": "p1",
+       "schema_id": "pm.workflow_scope.v2",
+       "schema_version": "2.0.0",
+       "scope_kind": "project",
+       "scope_partition": "project~cDE",
+       "server_id": "server1"
+      },
+      "state": "archived",
+      "thread_id": "thr_01ARZ3NDEKTSV4RRFFQ69G5FAV"
+     },
+     "before": {
+      "active_run": false,
+      "computer_id": "fixture_computer_id",
+      "operation_id": "fixture_operation_id",
+      "revision": 4,
+      "scope": {
+       "named_plan_id": null,
+       "project_home_server_id": "server1",
+       "project_id": "p1",
+       "schema_id": "pm.workflow_scope.v2",
+       "schema_version": "2.0.0",
+       "scope_kind": "project",
+       "scope_partition": "project~cDE",
+       "server_id": "server1"
+      },
+      "state": "suspended",
+      "thread_id": "thr_01ARZ3NDEKTSV4RRFFQ69G5FAV"
+     },
+     "request": {
+      "command_id": "cmd.chat.archive",
+      "computer_id": "fixture_computer_id",
+      "expected_revision": 4,
+      "operation_id": "fixture_operation_id",
+      "origin": "manual",
+      "permission_allowed": true,
+      "scope": {
+       "named_plan_id": null,
+       "project_home_server_id": "server1",
+       "project_id": "p1",
+       "schema_id": "pm.workflow_scope.v2",
+       "schema_version": "2.0.0",
+       "scope_kind": "project",
+       "scope_partition": "project~cDE",
+       "server_id": "server1"
+      },
+      "thread_id": "thr_01ARZ3NDEKTSV4RRFFQ69G5FAV",
+      "thread_selected": true
+     }
+    },
+    "before": {
+     "listed_active": true,
+     "preserved": {
+      "attachments": [
+       "pmref:fixture:attachment"
+      ],
+      "audit_ref": "pmref:fixture:audit",
+      "citations": [
+       "pmref:fixture:citation"
+      ],
+      "folder_ref": "pmref:fixture:folder",
+      "lineage_ref": "pmref:fixture:lineage",
+      "transcript": [
+       "fixture_message_id"
+      ],
+      "worktree_ref": "pmref:fixture:worktree"
+     },
+     "thread_id": "thr_01ARZ3NDEKTSV4RRFFQ69G5FAV",
+     "transient": {
+      "cache": true,
+      "composer": true,
+      "queue": true
+     }
+    },
+    "commitment": {
+     "codec": "pm.seglog_frame_v2.event_value.canonical_msgpack.v1",
+     "domain": "pm.storage.original_event_value_commitment.v1",
+     "event_schema_id": "pm.event.v0",
+     "event_schema_version": "2.0.0",
+     "schema_id": "pm.storage.original_event_value_commitment.v1",
+     "schema_version": "1.0.0",
+     "sha256": "0da46112d3461bdd46aacfeed649ba8eb1aab2fa6ef73c8962e4e6e6b9021aa7"
+    },
+    "first_receipt": {
+     "acknowledged_at_utc": "2026-11-04T01:00:00+01:00",
+     "byte_offset": 0,
+     "commit_group_id": "fixture_group",
+     "durability_class": "ordinary",
+     "durability_state": "synced",
+     "durable_end_offset": 1024,
+     "event_id": "evt_dch_b9c2ab2ab653110d3733bc17f634f20ced61ff20565790c2d64741c4f0dcf8ee",
+     "manifest_generation": 1,
+     "segment_generation": 1,
+     "segment_name": "seglog-1",
+     "sequence_id": 1
+    },
+    "intent": {
+     "actor_ref": "pmref:fixture:actor_ref",
+     "computer_id": "fixture_computer_id",
+     "expected_thread_revision": 4,
+     "operation_id": "fixture_operation_id",
+     "scope": {
+      "named_plan_id": null,
+      "project_home_server_id": "server1",
+      "project_id": "p1",
+      "schema_id": "pm.workflow_scope.v2",
+      "schema_version": "2.0.0",
+      "scope_kind": "project",
+      "scope_partition": "project~cDE",
+      "server_id": "server1"
+     },
+     "thread_id": "thr_01ARZ3NDEKTSV4RRFFQ69G5FAV"
+    },
+    "operation": {
+     "actions": [
+      "intent",
+      "effect",
+      "commit",
+      "readback",
+      "append",
+      "receipt",
+      "publish"
+     ],
+     "event_type": "chat.thread_archived",
+     "operation_id": "fixture_operation_id",
+     "outcome": {
+      "cas_commits": [
+       "fixture_revision_commit"
+      ],
+      "cleanup_actions": [],
+      "dispatched_by": "cmd.chat.archive",
+      "handler": "cmd.chat.thread.archive",
+      "pruned": [
+       "composer",
+       "queue",
+       "cache"
+      ]
+     }
+    },
+    "receipt": {
+     "acknowledged_at_utc": "2026-11-04T01:00:00+01:00",
+     "byte_offset": 0,
+     "commit_group_id": "fixture_group",
+     "durability_class": "ordinary",
+     "durability_state": "synced",
+     "durable_end_offset": 1024,
+     "event_id": "evt_dch_b9c2ab2ab653110d3733bc17f634f20ced61ff20565790c2d64741c4f0dcf8ee",
+     "manifest_generation": 1,
+     "segment_generation": 1,
+     "segment_name": "seglog-1",
+     "sequence_id": 1
+    },
+    "record": {
+     "actor_ref": "pmref:fixture:actor_ref",
+     "attempt_id": null,
+     "causation_event_id": null,
+     "correlation_id": "fixture_operation_id",
+     "effective_account_ref": null,
+     "event_id": "evt_dch_b9c2ab2ab653110d3733bc17f634f20ced61ff20565790c2d64741c4f0dcf8ee",
+     "event_type": "chat.thread_archived",
+     "idempotency_key": "dch:b9c2ab2ab653110d3733bc17f634f20ced61ff20565790c2d64741c4f0dcf8ee",
+     "migration": {
+      "compatibility_event_type": null,
+      "migrated_from_schema_id": null,
+      "migrated_from_schema_version": null,
+      "migration_id": null
+     },
+     "node_id": null,
+     "observed_at_utc": "2026-11-04T00:00:00Z",
+     "occurred_at_utc": "2026-11-04T00:00:00Z",
+     "parent_event_id": null,
+     "payload": {
+      "actor_ref": "pmref:fixture:actor_ref",
+      "archive_origin": "manual",
+      "command_id": "cmd.chat.archive",
+      "committed_thread_revision": 5,
+      "computer_id": "fixture_computer_id",
+      "expected_thread_revision": 4,
+      "operation_id": "fixture_operation_id",
+      "previous_state": "suspended",
+      "schema_id": "pm.dch_event.chat_thread_archived.project.v1",
+      "schema_version": "1.0.0",
+      "scope": {
+       "named_plan_id": null,
+       "project_home_server_id": "server1",
+       "project_id": "p1",
+       "schema_id": "pm.workflow_scope.v2",
+       "schema_version": "2.0.0",
+       "scope_kind": "project",
+       "scope_partition": "project~cDE",
+       "server_id": "server1"
+      },
+      "state": "archived",
+      "thread_id": "thr_01ARZ3NDEKTSV4RRFFQ69G5FAV",
+      "thread_record_ref": "pmref:fixture:thread_record_ref",
+      "ts": "2026-11-04T00:00:00Z"
+     },
+     "payload_ref": null,
+     "payload_schema_id": "pm.dch_event.chat_thread_archived.project.v1",
+     "persisted_at_utc": "2026-11-04T00:00:00Z",
+     "producer_sequence_id": null,
+     "project_id": "p1",
+     "redaction_profile": "no_secrets",
+     "replay_policy": "dedupe_by_idempotency_key",
+     "requested_account_ref": null,
+     "run_id": null,
+     "schema_id": "pm.event.v0",
+     "schema_version": "2.0.0",
+     "scope_kind": "project",
+     "sequence_id": 1,
+     "thread_id": "thr_01ARZ3NDEKTSV4RRFFQ69G5FAV"
+    },
+    "result": {
+     "actor_ref": "pmref:fixture:actor_ref",
+     "archive_origin": "manual",
+     "command_id": "cmd.chat.archive",
+     "committed_thread_revision": 5,
+     "computer_id": "fixture_computer_id",
+     "expected_thread_revision": 4,
+     "operation_id": "fixture_operation_id",
+     "previous_state": "suspended",
+     "schema_id": "pm.dch_event.chat_thread_archived.project.v1",
+     "schema_version": "1.0.0",
+     "scope": {
+      "named_plan_id": null,
+      "project_home_server_id": "server1",
+      "project_id": "p1",
+      "schema_id": "pm.workflow_scope.v2",
+      "schema_version": "2.0.0",
+      "scope_kind": "project",
+      "scope_partition": "project~cDE",
+      "server_id": "server1"
+     },
+     "state": "archived",
+     "thread_id": "thr_01ARZ3NDEKTSV4RRFFQ69G5FAV",
+     "thread_record_ref": "pmref:fixture:thread_record_ref",
+     "ts": "2026-11-04T00:00:00Z"
+    },
+    "storage_instance_id": "00000000-0000-4000-8000-000000000001"
+   }
+  },
+  {
+   "name": "nothing_transient",
+   "original": {
+    "after": {
+     "listed_active": false,
+     "preserved": {
+      "attachments": [
+       "pmref:fixture:attachment"
+      ],
+      "audit_ref": "pmref:fixture:audit",
+      "citations": [
+       "pmref:fixture:citation"
+      ],
+      "folder_ref": null,
+      "lineage_ref": "pmref:fixture:lineage",
+      "transcript": [
+       "fixture_message_id"
+      ],
+      "worktree_ref": null
+     },
+     "thread_id": "thr_01ARZ3NDEKTSV4RRFFQ69G5FAV",
+     "transient": {
+      "cache": false,
+      "composer": false,
+      "queue": false
+     }
+    },
+    "archive": {
+     "after": {
+      "computer_id": "fixture_computer_id",
+      "operation_id": "fixture_operation_id",
+      "readback_available": true,
+      "record_ref": "pmref:fixture:thread_record_ref",
+      "revision": 5,
+      "scope": {
+       "named_plan_id": null,
+       "project_home_server_id": "server1",
+       "project_id": "p1",
+       "schema_id": "pm.workflow_scope.v2",
+       "schema_version": "2.0.0",
+       "scope_kind": "project",
+       "scope_partition": "project~cDE",
+       "server_id": "server1"
+      },
+      "state": "archived",
+      "thread_id": "thr_01ARZ3NDEKTSV4RRFFQ69G5FAV"
+     },
+     "before": {
+      "active_run": false,
+      "computer_id": "fixture_computer_id",
+      "operation_id": "fixture_operation_id",
+      "revision": 4,
+      "scope": {
+       "named_plan_id": null,
+       "project_home_server_id": "server1",
+       "project_id": "p1",
+       "schema_id": "pm.workflow_scope.v2",
+       "schema_version": "2.0.0",
+       "scope_kind": "project",
+       "scope_partition": "project~cDE",
+       "server_id": "server1"
+      },
+      "state": "active",
+      "thread_id": "thr_01ARZ3NDEKTSV4RRFFQ69G5FAV"
+     },
+     "request": {
+      "command_id": "cmd.chat.archive",
+      "computer_id": "fixture_computer_id",
+      "expected_revision": 4,
+      "operation_id": "fixture_operation_id",
+      "origin": "manual",
+      "permission_allowed": true,
+      "scope": {
+       "named_plan_id": null,
+       "project_home_server_id": "server1",
+       "project_id": "p1",
+       "schema_id": "pm.workflow_scope.v2",
+       "schema_version": "2.0.0",
+       "scope_kind": "project",
+       "scope_partition": "project~cDE",
+       "server_id": "server1"
+      },
+      "thread_id": "thr_01ARZ3NDEKTSV4RRFFQ69G5FAV",
+      "thread_selected": true
+     }
+    },
+    "before": {
+     "listed_active": true,
+     "preserved": {
+      "attachments": [
+       "pmref:fixture:attachment"
+      ],
+      "audit_ref": "pmref:fixture:audit",
+      "citations": [
+       "pmref:fixture:citation"
+      ],
+      "folder_ref": null,
+      "lineage_ref": "pmref:fixture:lineage",
+      "transcript": [
+       "fixture_message_id"
+      ],
+      "worktree_ref": null
+     },
+     "thread_id": "thr_01ARZ3NDEKTSV4RRFFQ69G5FAV",
+     "transient": {
+      "cache": false,
+      "composer": false,
+      "queue": false
+     }
+    },
+    "commitment": {
+     "codec": "pm.seglog_frame_v2.event_value.canonical_msgpack.v1",
+     "domain": "pm.storage.original_event_value_commitment.v1",
+     "event_schema_id": "pm.event.v0",
+     "event_schema_version": "2.0.0",
+     "schema_id": "pm.storage.original_event_value_commitment.v1",
+     "schema_version": "1.0.0",
+     "sha256": "2aa8a8225f207f2e8f350ff771f3544bd136f11d1a8a692f63f341e3b9d67041"
+    },
+    "first_receipt": {
+     "acknowledged_at_utc": "2026-11-04T01:00:00+01:00",
+     "byte_offset": 0,
+     "commit_group_id": "fixture_group",
+     "durability_class": "ordinary",
+     "durability_state": "synced",
+     "durable_end_offset": 1024,
+     "event_id": "evt_dch_b9c2ab2ab653110d3733bc17f634f20ced61ff20565790c2d64741c4f0dcf8ee",
+     "manifest_generation": 1,
+     "segment_generation": 1,
+     "segment_name": "seglog-1",
+     "sequence_id": 1
+    },
+    "intent": {
+     "actor_ref": "pmref:fixture:actor_ref",
+     "computer_id": "fixture_computer_id",
+     "expected_thread_revision": 4,
+     "operation_id": "fixture_operation_id",
+     "scope": {
+      "named_plan_id": null,
+      "project_home_server_id": "server1",
+      "project_id": "p1",
+      "schema_id": "pm.workflow_scope.v2",
+      "schema_version": "2.0.0",
+      "scope_kind": "project",
+      "scope_partition": "project~cDE",
+      "server_id": "server1"
+     },
+     "thread_id": "thr_01ARZ3NDEKTSV4RRFFQ69G5FAV"
+    },
+    "operation": {
+     "actions": [
+      "intent",
+      "effect",
+      "commit",
+      "readback",
+      "append",
+      "receipt",
+      "publish"
+     ],
+     "event_type": "chat.thread_archived",
+     "operation_id": "fixture_operation_id",
+     "outcome": {
+      "cas_commits": [
+       "fixture_revision_commit"
+      ],
+      "cleanup_actions": [],
+      "dispatched_by": "cmd.chat.archive",
+      "handler": "cmd.chat.thread.archive",
+      "pruned": []
+     }
+    },
+    "receipt": {
+     "acknowledged_at_utc": "2026-11-04T01:00:00+01:00",
+     "byte_offset": 0,
+     "commit_group_id": "fixture_group",
+     "durability_class": "ordinary",
+     "durability_state": "synced",
+     "durable_end_offset": 1024,
+     "event_id": "evt_dch_b9c2ab2ab653110d3733bc17f634f20ced61ff20565790c2d64741c4f0dcf8ee",
+     "manifest_generation": 1,
+     "segment_generation": 1,
+     "segment_name": "seglog-1",
+     "sequence_id": 1
+    },
+    "record": {
+     "actor_ref": "pmref:fixture:actor_ref",
+     "attempt_id": null,
+     "causation_event_id": null,
+     "correlation_id": "fixture_operation_id",
+     "effective_account_ref": null,
+     "event_id": "evt_dch_b9c2ab2ab653110d3733bc17f634f20ced61ff20565790c2d64741c4f0dcf8ee",
+     "event_type": "chat.thread_archived",
+     "idempotency_key": "dch:b9c2ab2ab653110d3733bc17f634f20ced61ff20565790c2d64741c4f0dcf8ee",
+     "migration": {
+      "compatibility_event_type": null,
+      "migrated_from_schema_id": null,
+      "migrated_from_schema_version": null,
+      "migration_id": null
+     },
+     "node_id": null,
+     "observed_at_utc": "2026-11-04T00:00:00Z",
+     "occurred_at_utc": "2026-11-04T00:00:00Z",
+     "parent_event_id": null,
+     "payload": {
+      "actor_ref": "pmref:fixture:actor_ref",
+      "archive_origin": "manual",
+      "command_id": "cmd.chat.archive",
+      "committed_thread_revision": 5,
+      "computer_id": "fixture_computer_id",
+      "expected_thread_revision": 4,
+      "operation_id": "fixture_operation_id",
+      "previous_state": "active",
+      "schema_id": "pm.dch_event.chat_thread_archived.project.v1",
+      "schema_version": "1.0.0",
+      "scope": {
+       "named_plan_id": null,
+       "project_home_server_id": "server1",
+       "project_id": "p1",
+       "schema_id": "pm.workflow_scope.v2",
+       "schema_version": "2.0.0",
+       "scope_kind": "project",
+       "scope_partition": "project~cDE",
+       "server_id": "server1"
+      },
+      "state": "archived",
+      "thread_id": "thr_01ARZ3NDEKTSV4RRFFQ69G5FAV",
+      "thread_record_ref": "pmref:fixture:thread_record_ref",
+      "ts": "2026-11-04T00:00:00Z"
+     },
+     "payload_ref": null,
+     "payload_schema_id": "pm.dch_event.chat_thread_archived.project.v1",
+     "persisted_at_utc": "2026-11-04T00:00:00Z",
+     "producer_sequence_id": null,
+     "project_id": "p1",
+     "redaction_profile": "no_secrets",
+     "replay_policy": "dedupe_by_idempotency_key",
+     "requested_account_ref": null,
+     "run_id": null,
+     "schema_id": "pm.event.v0",
+     "schema_version": "2.0.0",
+     "scope_kind": "project",
+     "sequence_id": 1,
+     "thread_id": "thr_01ARZ3NDEKTSV4RRFFQ69G5FAV"
+    },
+    "result": {
+     "actor_ref": "pmref:fixture:actor_ref",
+     "archive_origin": "manual",
+     "command_id": "cmd.chat.archive",
+     "committed_thread_revision": 5,
+     "computer_id": "fixture_computer_id",
+     "expected_thread_revision": 4,
+     "operation_id": "fixture_operation_id",
+     "previous_state": "active",
+     "schema_id": "pm.dch_event.chat_thread_archived.project.v1",
+     "schema_version": "1.0.0",
+     "scope": {
+      "named_plan_id": null,
+      "project_home_server_id": "server1",
+      "project_id": "p1",
+      "schema_id": "pm.workflow_scope.v2",
+      "schema_version": "2.0.0",
+      "scope_kind": "project",
+      "scope_partition": "project~cDE",
+      "server_id": "server1"
+     },
+     "state": "archived",
+     "thread_id": "thr_01ARZ3NDEKTSV4RRFFQ69G5FAV",
+     "thread_record_ref": "pmref:fixture:thread_record_ref",
+     "ts": "2026-11-04T00:00:00Z"
+    },
+    "storage_instance_id": "00000000-0000-4000-8000-000000000001"
+   }
+  }
+ ],
+ "chat.thread_created/application": [],
+ "chat.thread_created/project": [],
+ "chat.thread_deleted/application": [
+  {
+   "name": "from_suspended",
+   "original": {
+    "after": {
+     "deletion_record_ref": "pmref:fixture:deletion_record_ref",
+     "thread_state": "deleted",
+     "tombstone": true,
+     "visible": false,
+     "worktree_ref": "pmref:fixture:worktree"
+    },
+    "before": {
+     "deletion_record_ref": null,
+     "thread_state": "suspended",
+     "tombstone": false,
+     "visible": true,
+     "worktree_ref": "pmref:fixture:worktree"
+    },
+    "commitment": {
+     "codec": "pm.seglog_frame_v2.event_value.canonical_msgpack.v1",
+     "domain": "pm.storage.original_event_value_commitment.v1",
+     "event_schema_id": "pm.event.v0",
+     "event_schema_version": "2.0.0",
+     "schema_id": "pm.storage.original_event_value_commitment.v1",
+     "schema_version": "1.0.0",
+     "sha256": "c0dad460c10f41034b216981322338ff0b1b6b2a2fdf78b793a9a9dc6fe9b8a0"
+    },
+    "first_receipt": {
+     "acknowledged_at_utc": "2026-11-04T01:00:00+01:00",
+     "byte_offset": 0,
+     "commit_group_id": "fixture_group",
+     "durability_class": "ordinary",
+     "durability_state": "synced",
+     "durable_end_offset": 1024,
+     "event_id": "evt_dch_6940b854b13f8af808846f10d28bc3dab1389028d8cf2b9562db8925835fc0b4",
+     "manifest_generation": 1,
+     "segment_generation": 1,
+     "segment_name": "seglog-1",
+     "sequence_id": 1
+    },
+    "intent": {
+     "actor_ref": "pmref:fixture:actor_ref",
+     "computer_id": "fixture_computer_id",
+     "operation_id": "fixture_operation_id",
+     "scope": {
+      "named_plan_id": null,
+      "project_home_server_id": null,
+      "project_id": null,
+      "schema_id": "pm.workflow_scope.v2",
+      "schema_version": "2.0.0",
+      "scope_kind": "application",
+      "scope_partition": "app",
+      "server_id": "server1"
+     },
+     "thread_id": "thr_01ARZ3NDEKTSV4RRFFQ69G5FAV"
+    },
+    "operation": {
+     "actions": [
+      "intent",
+      "effect",
+      "commit",
+      "readback",
+      "append",
+      "receipt",
+      "publish"
+     ],
+     "event_type": "chat.thread_deleted",
+     "operation_id": "fixture_operation_id",
+     "outcome": {
+      "command": "cmd.chat.thread.delete",
+      "deletion_record": {
+       "content_free": true,
+       "ref": "pmref:fixture:deletion_record_ref",
+       "storage_owned": true
+      },
+      "hidden": true
+     }
+    },
+    "receipt": {
+     "acknowledged_at_utc": "2026-11-04T01:00:00+01:00",
+     "byte_offset": 0,
+     "commit_group_id": "fixture_group",
+     "durability_class": "ordinary",
+     "durability_state": "synced",
+     "durable_end_offset": 1024,
+     "event_id": "evt_dch_6940b854b13f8af808846f10d28bc3dab1389028d8cf2b9562db8925835fc0b4",
+     "manifest_generation": 1,
+     "segment_generation": 1,
+     "segment_name": "seglog-1",
+     "sequence_id": 1
+    },
+    "record": {
+     "actor_ref": "pmref:fixture:actor_ref",
+     "attempt_id": null,
+     "causation_event_id": null,
+     "correlation_id": "fixture_operation_id",
+     "effective_account_ref": null,
+     "event_id": "evt_dch_6940b854b13f8af808846f10d28bc3dab1389028d8cf2b9562db8925835fc0b4",
+     "event_type": "chat.thread_deleted",
+     "idempotency_key": "application@1:73657276657231:666978747572655f6f7065726174696f6e5f6964",
+     "migration": {
+      "compatibility_event_type": null,
+      "migrated_from_schema_id": null,
+      "migrated_from_schema_version": null,
+      "migration_id": null
+     },
+     "node_id": null,
+     "observed_at_utc": "2026-11-04T00:00:00Z",
+     "occurred_at_utc": "2026-11-04T00:00:00Z",
+     "parent_event_id": null,
+     "payload": {
+      "actor_ref": "pmref:fixture:actor_ref",
+      "computer_id": "fixture_computer_id",
+      "deletion_record_ref": "pmref:fixture:deletion_record_ref",
+      "operation_id": "fixture_operation_id",
+      "previous_state": "suspended",
+      "schema_id": "pm.dch_event.chat_thread_deleted.application.v1",
+      "schema_version": "1.0.0",
+      "scope": {
+       "named_plan_id": null,
+       "project_home_server_id": null,
+       "project_id": null,
+       "schema_id": "pm.workflow_scope.v2",
+       "schema_version": "2.0.0",
+       "scope_kind": "application",
+       "scope_partition": "app",
+       "server_id": "server1"
+      },
+      "thread_id": "thr_01ARZ3NDEKTSV4RRFFQ69G5FAV",
+      "ts": "2026-11-04T00:00:00Z"
+     },
+     "payload_ref": null,
+     "payload_schema_id": "pm.dch_event.chat_thread_deleted.application.v1",
+     "persisted_at_utc": "2026-11-04T00:00:00Z",
+     "producer_sequence_id": null,
+     "project_id": null,
+     "redaction_profile": "no_secrets",
+     "replay_policy": "dedupe_by_idempotency_key",
+     "requested_account_ref": null,
+     "run_id": null,
+     "schema_id": "pm.event.v0",
+     "schema_version": "2.0.0",
+     "scope_kind": "application",
+     "sequence_id": 1,
+     "thread_id": "thr_01ARZ3NDEKTSV4RRFFQ69G5FAV"
+    },
+    "result": {
+     "actor_ref": "pmref:fixture:actor_ref",
+     "computer_id": "fixture_computer_id",
+     "deletion_record_ref": "pmref:fixture:deletion_record_ref",
+     "operation_id": "fixture_operation_id",
+     "previous_state": "suspended",
+     "schema_id": "pm.dch_event.chat_thread_deleted.application.v1",
+     "schema_version": "1.0.0",
+     "scope": {
+      "named_plan_id": null,
+      "project_home_server_id": null,
+      "project_id": null,
+      "schema_id": "pm.workflow_scope.v2",
+      "schema_version": "2.0.0",
+      "scope_kind": "application",
+      "scope_partition": "app",
+      "server_id": "server1"
+     },
+     "thread_id": "thr_01ARZ3NDEKTSV4RRFFQ69G5FAV",
+     "ts": "2026-11-04T00:00:00Z"
+    },
+    "storage_instance_id": "00000000-0000-4000-8000-000000000001"
+   }
+  },
+  {
+   "name": "from_archived",
+   "original": {
+    "after": {
+     "deletion_record_ref": "pmref:fixture:deletion_record_ref",
+     "thread_state": "deleted",
+     "tombstone": true,
+     "visible": false,
+     "worktree_ref": "pmref:fixture:worktree"
+    },
+    "before": {
+     "deletion_record_ref": null,
+     "thread_state": "archived",
+     "tombstone": false,
+     "visible": true,
+     "worktree_ref": "pmref:fixture:worktree"
+    },
+    "commitment": {
+     "codec": "pm.seglog_frame_v2.event_value.canonical_msgpack.v1",
+     "domain": "pm.storage.original_event_value_commitment.v1",
+     "event_schema_id": "pm.event.v0",
+     "event_schema_version": "2.0.0",
+     "schema_id": "pm.storage.original_event_value_commitment.v1",
+     "schema_version": "1.0.0",
+     "sha256": "3c80f1ebdfbae92ba5902cc28370d6077ffbdc0add64e3005acc6b7cd24f4d7a"
+    },
+    "first_receipt": {
+     "acknowledged_at_utc": "2026-11-04T01:00:00+01:00",
+     "byte_offset": 0,
+     "commit_group_id": "fixture_group",
+     "durability_class": "ordinary",
+     "durability_state": "synced",
+     "durable_end_offset": 1024,
+     "event_id": "evt_dch_6940b854b13f8af808846f10d28bc3dab1389028d8cf2b9562db8925835fc0b4",
+     "manifest_generation": 1,
+     "segment_generation": 1,
+     "segment_name": "seglog-1",
+     "sequence_id": 1
+    },
+    "intent": {
+     "actor_ref": "pmref:fixture:actor_ref",
+     "computer_id": "fixture_computer_id",
+     "operation_id": "fixture_operation_id",
+     "scope": {
+      "named_plan_id": null,
+      "project_home_server_id": null,
+      "project_id": null,
+      "schema_id": "pm.workflow_scope.v2",
+      "schema_version": "2.0.0",
+      "scope_kind": "application",
+      "scope_partition": "app",
+      "server_id": "server1"
+     },
+     "thread_id": "thr_01ARZ3NDEKTSV4RRFFQ69G5FAV"
+    },
+    "operation": {
+     "actions": [
+      "intent",
+      "effect",
+      "commit",
+      "readback",
+      "append",
+      "receipt",
+      "publish"
+     ],
+     "event_type": "chat.thread_deleted",
+     "operation_id": "fixture_operation_id",
+     "outcome": {
+      "command": "cmd.chat.thread.delete",
+      "deletion_record": {
+       "content_free": true,
+       "ref": "pmref:fixture:deletion_record_ref",
+       "storage_owned": true
+      },
+      "hidden": true
+     }
+    },
+    "receipt": {
+     "acknowledged_at_utc": "2026-11-04T01:00:00+01:00",
+     "byte_offset": 0,
+     "commit_group_id": "fixture_group",
+     "durability_class": "ordinary",
+     "durability_state": "synced",
+     "durable_end_offset": 1024,
+     "event_id": "evt_dch_6940b854b13f8af808846f10d28bc3dab1389028d8cf2b9562db8925835fc0b4",
+     "manifest_generation": 1,
+     "segment_generation": 1,
+     "segment_name": "seglog-1",
+     "sequence_id": 1
+    },
+    "record": {
+     "actor_ref": "pmref:fixture:actor_ref",
+     "attempt_id": null,
+     "causation_event_id": null,
+     "correlation_id": "fixture_operation_id",
+     "effective_account_ref": null,
+     "event_id": "evt_dch_6940b854b13f8af808846f10d28bc3dab1389028d8cf2b9562db8925835fc0b4",
+     "event_type": "chat.thread_deleted",
+     "idempotency_key": "application@1:73657276657231:666978747572655f6f7065726174696f6e5f6964",
+     "migration": {
+      "compatibility_event_type": null,
+      "migrated_from_schema_id": null,
+      "migrated_from_schema_version": null,
+      "migration_id": null
+     },
+     "node_id": null,
+     "observed_at_utc": "2026-11-04T00:00:00Z",
+     "occurred_at_utc": "2026-11-04T00:00:00Z",
+     "parent_event_id": null,
+     "payload": {
+      "actor_ref": "pmref:fixture:actor_ref",
+      "computer_id": "fixture_computer_id",
+      "deletion_record_ref": "pmref:fixture:deletion_record_ref",
+      "operation_id": "fixture_operation_id",
+      "previous_state": "archived",
+      "schema_id": "pm.dch_event.chat_thread_deleted.application.v1",
+      "schema_version": "1.0.0",
+      "scope": {
+       "named_plan_id": null,
+       "project_home_server_id": null,
+       "project_id": null,
+       "schema_id": "pm.workflow_scope.v2",
+       "schema_version": "2.0.0",
+       "scope_kind": "application",
+       "scope_partition": "app",
+       "server_id": "server1"
+      },
+      "thread_id": "thr_01ARZ3NDEKTSV4RRFFQ69G5FAV",
+      "ts": "2026-11-04T00:00:00Z"
+     },
+     "payload_ref": null,
+     "payload_schema_id": "pm.dch_event.chat_thread_deleted.application.v1",
+     "persisted_at_utc": "2026-11-04T00:00:00Z",
+     "producer_sequence_id": null,
+     "project_id": null,
+     "redaction_profile": "no_secrets",
+     "replay_policy": "dedupe_by_idempotency_key",
+     "requested_account_ref": null,
+     "run_id": null,
+     "schema_id": "pm.event.v0",
+     "schema_version": "2.0.0",
+     "scope_kind": "application",
+     "sequence_id": 1,
+     "thread_id": "thr_01ARZ3NDEKTSV4RRFFQ69G5FAV"
+    },
+    "result": {
+     "actor_ref": "pmref:fixture:actor_ref",
+     "computer_id": "fixture_computer_id",
+     "deletion_record_ref": "pmref:fixture:deletion_record_ref",
+     "operation_id": "fixture_operation_id",
+     "previous_state": "archived",
+     "schema_id": "pm.dch_event.chat_thread_deleted.application.v1",
+     "schema_version": "1.0.0",
+     "scope": {
+      "named_plan_id": null,
+      "project_home_server_id": null,
+      "project_id": null,
+      "schema_id": "pm.workflow_scope.v2",
+      "schema_version": "2.0.0",
+      "scope_kind": "application",
+      "scope_partition": "app",
+      "server_id": "server1"
+     },
+     "thread_id": "thr_01ARZ3NDEKTSV4RRFFQ69G5FAV",
+     "ts": "2026-11-04T00:00:00Z"
+    },
+    "storage_instance_id": "00000000-0000-4000-8000-000000000001"
+   }
+  },
+  {
+   "name": "no_worktree",
+   "original": {
+    "after": {
+     "deletion_record_ref": "pmref:fixture:deletion_record_ref",
+     "thread_state": "deleted",
+     "tombstone": true,
+     "visible": false,
+     "worktree_ref": null
+    },
+    "before": {
+     "deletion_record_ref": null,
+     "thread_state": "active",
+     "tombstone": false,
+     "visible": true,
+     "worktree_ref": null
+    },
+    "commitment": {
+     "codec": "pm.seglog_frame_v2.event_value.canonical_msgpack.v1",
+     "domain": "pm.storage.original_event_value_commitment.v1",
+     "event_schema_id": "pm.event.v0",
+     "event_schema_version": "2.0.0",
+     "schema_id": "pm.storage.original_event_value_commitment.v1",
+     "schema_version": "1.0.0",
+     "sha256": "49e2cbda2184181febe5c4c9f1478b251b448cb7da2d297b08b176dbac4fd0a1"
+    },
+    "first_receipt": {
+     "acknowledged_at_utc": "2026-11-04T01:00:00+01:00",
+     "byte_offset": 0,
+     "commit_group_id": "fixture_group",
+     "durability_class": "ordinary",
+     "durability_state": "synced",
+     "durable_end_offset": 1024,
+     "event_id": "evt_dch_6940b854b13f8af808846f10d28bc3dab1389028d8cf2b9562db8925835fc0b4",
+     "manifest_generation": 1,
+     "segment_generation": 1,
+     "segment_name": "seglog-1",
+     "sequence_id": 1
+    },
+    "intent": {
+     "actor_ref": "pmref:fixture:actor_ref",
+     "computer_id": "fixture_computer_id",
+     "operation_id": "fixture_operation_id",
+     "scope": {
+      "named_plan_id": null,
+      "project_home_server_id": null,
+      "project_id": null,
+      "schema_id": "pm.workflow_scope.v2",
+      "schema_version": "2.0.0",
+      "scope_kind": "application",
+      "scope_partition": "app",
+      "server_id": "server1"
+     },
+     "thread_id": "thr_01ARZ3NDEKTSV4RRFFQ69G5FAV"
+    },
+    "operation": {
+     "actions": [
+      "intent",
+      "effect",
+      "commit",
+      "readback",
+      "append",
+      "receipt",
+      "publish"
+     ],
+     "event_type": "chat.thread_deleted",
+     "operation_id": "fixture_operation_id",
+     "outcome": {
+      "command": "cmd.chat.thread.delete",
+      "deletion_record": {
+       "content_free": true,
+       "ref": "pmref:fixture:deletion_record_ref",
+       "storage_owned": true
+      },
+      "hidden": true
+     }
+    },
+    "receipt": {
+     "acknowledged_at_utc": "2026-11-04T01:00:00+01:00",
+     "byte_offset": 0,
+     "commit_group_id": "fixture_group",
+     "durability_class": "ordinary",
+     "durability_state": "synced",
+     "durable_end_offset": 1024,
+     "event_id": "evt_dch_6940b854b13f8af808846f10d28bc3dab1389028d8cf2b9562db8925835fc0b4",
+     "manifest_generation": 1,
+     "segment_generation": 1,
+     "segment_name": "seglog-1",
+     "sequence_id": 1
+    },
+    "record": {
+     "actor_ref": "pmref:fixture:actor_ref",
+     "attempt_id": null,
+     "causation_event_id": null,
+     "correlation_id": "fixture_operation_id",
+     "effective_account_ref": null,
+     "event_id": "evt_dch_6940b854b13f8af808846f10d28bc3dab1389028d8cf2b9562db8925835fc0b4",
+     "event_type": "chat.thread_deleted",
+     "idempotency_key": "application@1:73657276657231:666978747572655f6f7065726174696f6e5f6964",
+     "migration": {
+      "compatibility_event_type": null,
+      "migrated_from_schema_id": null,
+      "migrated_from_schema_version": null,
+      "migration_id": null
+     },
+     "node_id": null,
+     "observed_at_utc": "2026-11-04T00:00:00Z",
+     "occurred_at_utc": "2026-11-04T00:00:00Z",
+     "parent_event_id": null,
+     "payload": {
+      "actor_ref": "pmref:fixture:actor_ref",
+      "computer_id": "fixture_computer_id",
+      "deletion_record_ref": "pmref:fixture:deletion_record_ref",
+      "operation_id": "fixture_operation_id",
+      "previous_state": "active",
+      "schema_id": "pm.dch_event.chat_thread_deleted.application.v1",
+      "schema_version": "1.0.0",
+      "scope": {
+       "named_plan_id": null,
+       "project_home_server_id": null,
+       "project_id": null,
+       "schema_id": "pm.workflow_scope.v2",
+       "schema_version": "2.0.0",
+       "scope_kind": "application",
+       "scope_partition": "app",
+       "server_id": "server1"
+      },
+      "thread_id": "thr_01ARZ3NDEKTSV4RRFFQ69G5FAV",
+      "ts": "2026-11-04T00:00:00Z"
+     },
+     "payload_ref": null,
+     "payload_schema_id": "pm.dch_event.chat_thread_deleted.application.v1",
+     "persisted_at_utc": "2026-11-04T00:00:00Z",
+     "producer_sequence_id": null,
+     "project_id": null,
+     "redaction_profile": "no_secrets",
+     "replay_policy": "dedupe_by_idempotency_key",
+     "requested_account_ref": null,
+     "run_id": null,
+     "schema_id": "pm.event.v0",
+     "schema_version": "2.0.0",
+     "scope_kind": "application",
+     "sequence_id": 1,
+     "thread_id": "thr_01ARZ3NDEKTSV4RRFFQ69G5FAV"
+    },
+    "result": {
+     "actor_ref": "pmref:fixture:actor_ref",
+     "computer_id": "fixture_computer_id",
+     "deletion_record_ref": "pmref:fixture:deletion_record_ref",
+     "operation_id": "fixture_operation_id",
+     "previous_state": "active",
+     "schema_id": "pm.dch_event.chat_thread_deleted.application.v1",
+     "schema_version": "1.0.0",
+     "scope": {
+      "named_plan_id": null,
+      "project_home_server_id": null,
+      "project_id": null,
+      "schema_id": "pm.workflow_scope.v2",
+      "schema_version": "2.0.0",
+      "scope_kind": "application",
+      "scope_partition": "app",
+      "server_id": "server1"
+     },
+     "thread_id": "thr_01ARZ3NDEKTSV4RRFFQ69G5FAV",
+     "ts": "2026-11-04T00:00:00Z"
+    },
+    "storage_instance_id": "00000000-0000-4000-8000-000000000001"
+   }
+  }
+ ],
+ "chat.thread_deleted/project": [
+  {
+   "name": "from_suspended",
+   "original": {
+    "after": {
+     "deletion_record_ref": "pmref:fixture:deletion_record_ref",
+     "thread_state": "deleted",
+     "tombstone": true,
+     "visible": false,
+     "worktree_ref": "pmref:fixture:worktree"
+    },
+    "before": {
+     "deletion_record_ref": null,
+     "thread_state": "suspended",
+     "tombstone": false,
+     "visible": true,
+     "worktree_ref": "pmref:fixture:worktree"
+    },
+    "commitment": {
+     "codec": "pm.seglog_frame_v2.event_value.canonical_msgpack.v1",
+     "domain": "pm.storage.original_event_value_commitment.v1",
+     "event_schema_id": "pm.event.v0",
+     "event_schema_version": "2.0.0",
+     "schema_id": "pm.storage.original_event_value_commitment.v1",
+     "schema_version": "1.0.0",
+     "sha256": "44dbc165a3511a22231920eace4779b9d0cc34f13486f5ff98416c0ef97a9da1"
+    },
+    "first_receipt": {
+     "acknowledged_at_utc": "2026-11-04T01:00:00+01:00",
+     "byte_offset": 0,
+     "commit_group_id": "fixture_group",
+     "durability_class": "ordinary",
+     "durability_state": "synced",
+     "durable_end_offset": 1024,
+     "event_id": "evt_dch_9f3967f83cd97e4309447835aa98535bf2af3395567a135aa5f8d8ac7ace43b7",
+     "manifest_generation": 1,
+     "segment_generation": 1,
+     "segment_name": "seglog-1",
+     "sequence_id": 1
+    },
+    "intent": {
+     "actor_ref": "pmref:fixture:actor_ref",
+     "computer_id": "fixture_computer_id",
+     "operation_id": "fixture_operation_id",
+     "scope": {
+      "named_plan_id": null,
+      "project_home_server_id": "server1",
+      "project_id": "p1",
+      "schema_id": "pm.workflow_scope.v2",
+      "schema_version": "2.0.0",
+      "scope_kind": "project",
+      "scope_partition": "project~cDE",
+      "server_id": "server1"
+     },
+     "thread_id": "thr_01ARZ3NDEKTSV4RRFFQ69G5FAV"
+    },
+    "operation": {
+     "actions": [
+      "intent",
+      "effect",
+      "commit",
+      "readback",
+      "append",
+      "receipt",
+      "publish"
+     ],
+     "event_type": "chat.thread_deleted",
+     "operation_id": "fixture_operation_id",
+     "outcome": {
+      "command": "cmd.chat.thread.delete",
+      "deletion_record": {
+       "content_free": true,
+       "ref": "pmref:fixture:deletion_record_ref",
+       "storage_owned": true
+      },
+      "hidden": true
+     }
+    },
+    "receipt": {
+     "acknowledged_at_utc": "2026-11-04T01:00:00+01:00",
+     "byte_offset": 0,
+     "commit_group_id": "fixture_group",
+     "durability_class": "ordinary",
+     "durability_state": "synced",
+     "durable_end_offset": 1024,
+     "event_id": "evt_dch_9f3967f83cd97e4309447835aa98535bf2af3395567a135aa5f8d8ac7ace43b7",
+     "manifest_generation": 1,
+     "segment_generation": 1,
+     "segment_name": "seglog-1",
+     "sequence_id": 1
+    },
+    "record": {
+     "actor_ref": "pmref:fixture:actor_ref",
+     "attempt_id": null,
+     "causation_event_id": null,
+     "correlation_id": "fixture_operation_id",
+     "effective_account_ref": null,
+     "event_id": "evt_dch_9f3967f83cd97e4309447835aa98535bf2af3395567a135aa5f8d8ac7ace43b7",
+     "event_type": "chat.thread_deleted",
+     "idempotency_key": "dch:9f3967f83cd97e4309447835aa98535bf2af3395567a135aa5f8d8ac7ace43b7",
+     "migration": {
+      "compatibility_event_type": null,
+      "migrated_from_schema_id": null,
+      "migrated_from_schema_version": null,
+      "migration_id": null
+     },
+     "node_id": null,
+     "observed_at_utc": "2026-11-04T00:00:00Z",
+     "occurred_at_utc": "2026-11-04T00:00:00Z",
+     "parent_event_id": null,
+     "payload": {
+      "actor_ref": "pmref:fixture:actor_ref",
+      "computer_id": "fixture_computer_id",
+      "deletion_record_ref": "pmref:fixture:deletion_record_ref",
+      "operation_id": "fixture_operation_id",
+      "previous_state": "suspended",
+      "schema_id": "pm.dch_event.chat_thread_deleted.project.v1",
+      "schema_version": "1.0.0",
+      "scope": {
+       "named_plan_id": null,
+       "project_home_server_id": "server1",
+       "project_id": "p1",
+       "schema_id": "pm.workflow_scope.v2",
+       "schema_version": "2.0.0",
+       "scope_kind": "project",
+       "scope_partition": "project~cDE",
+       "server_id": "server1"
+      },
+      "thread_id": "thr_01ARZ3NDEKTSV4RRFFQ69G5FAV",
+      "ts": "2026-11-04T00:00:00Z"
+     },
+     "payload_ref": null,
+     "payload_schema_id": "pm.dch_event.chat_thread_deleted.project.v1",
+     "persisted_at_utc": "2026-11-04T00:00:00Z",
+     "producer_sequence_id": null,
+     "project_id": "p1",
+     "redaction_profile": "no_secrets",
+     "replay_policy": "dedupe_by_idempotency_key",
+     "requested_account_ref": null,
+     "run_id": null,
+     "schema_id": "pm.event.v0",
+     "schema_version": "2.0.0",
+     "scope_kind": "project",
+     "sequence_id": 1,
+     "thread_id": "thr_01ARZ3NDEKTSV4RRFFQ69G5FAV"
+    },
+    "result": {
+     "actor_ref": "pmref:fixture:actor_ref",
+     "computer_id": "fixture_computer_id",
+     "deletion_record_ref": "pmref:fixture:deletion_record_ref",
+     "operation_id": "fixture_operation_id",
+     "previous_state": "suspended",
+     "schema_id": "pm.dch_event.chat_thread_deleted.project.v1",
+     "schema_version": "1.0.0",
+     "scope": {
+      "named_plan_id": null,
+      "project_home_server_id": "server1",
+      "project_id": "p1",
+      "schema_id": "pm.workflow_scope.v2",
+      "schema_version": "2.0.0",
+      "scope_kind": "project",
+      "scope_partition": "project~cDE",
+      "server_id": "server1"
+     },
+     "thread_id": "thr_01ARZ3NDEKTSV4RRFFQ69G5FAV",
+     "ts": "2026-11-04T00:00:00Z"
+    },
+    "storage_instance_id": "00000000-0000-4000-8000-000000000001"
+   }
+  },
+  {
+   "name": "from_archived",
+   "original": {
+    "after": {
+     "deletion_record_ref": "pmref:fixture:deletion_record_ref",
+     "thread_state": "deleted",
+     "tombstone": true,
+     "visible": false,
+     "worktree_ref": "pmref:fixture:worktree"
+    },
+    "before": {
+     "deletion_record_ref": null,
+     "thread_state": "archived",
+     "tombstone": false,
+     "visible": true,
+     "worktree_ref": "pmref:fixture:worktree"
+    },
+    "commitment": {
+     "codec": "pm.seglog_frame_v2.event_value.canonical_msgpack.v1",
+     "domain": "pm.storage.original_event_value_commitment.v1",
+     "event_schema_id": "pm.event.v0",
+     "event_schema_version": "2.0.0",
+     "schema_id": "pm.storage.original_event_value_commitment.v1",
+     "schema_version": "1.0.0",
+     "sha256": "6b4422f8512c2199dd720279cafcbd0ca27a2c65221538bd3cbea316f91a01ff"
+    },
+    "first_receipt": {
+     "acknowledged_at_utc": "2026-11-04T01:00:00+01:00",
+     "byte_offset": 0,
+     "commit_group_id": "fixture_group",
+     "durability_class": "ordinary",
+     "durability_state": "synced",
+     "durable_end_offset": 1024,
+     "event_id": "evt_dch_9f3967f83cd97e4309447835aa98535bf2af3395567a135aa5f8d8ac7ace43b7",
+     "manifest_generation": 1,
+     "segment_generation": 1,
+     "segment_name": "seglog-1",
+     "sequence_id": 1
+    },
+    "intent": {
+     "actor_ref": "pmref:fixture:actor_ref",
+     "computer_id": "fixture_computer_id",
+     "operation_id": "fixture_operation_id",
+     "scope": {
+      "named_plan_id": null,
+      "project_home_server_id": "server1",
+      "project_id": "p1",
+      "schema_id": "pm.workflow_scope.v2",
+      "schema_version": "2.0.0",
+      "scope_kind": "project",
+      "scope_partition": "project~cDE",
+      "server_id": "server1"
+     },
+     "thread_id": "thr_01ARZ3NDEKTSV4RRFFQ69G5FAV"
+    },
+    "operation": {
+     "actions": [
+      "intent",
+      "effect",
+      "commit",
+      "readback",
+      "append",
+      "receipt",
+      "publish"
+     ],
+     "event_type": "chat.thread_deleted",
+     "operation_id": "fixture_operation_id",
+     "outcome": {
+      "command": "cmd.chat.thread.delete",
+      "deletion_record": {
+       "content_free": true,
+       "ref": "pmref:fixture:deletion_record_ref",
+       "storage_owned": true
+      },
+      "hidden": true
+     }
+    },
+    "receipt": {
+     "acknowledged_at_utc": "2026-11-04T01:00:00+01:00",
+     "byte_offset": 0,
+     "commit_group_id": "fixture_group",
+     "durability_class": "ordinary",
+     "durability_state": "synced",
+     "durable_end_offset": 1024,
+     "event_id": "evt_dch_9f3967f83cd97e4309447835aa98535bf2af3395567a135aa5f8d8ac7ace43b7",
+     "manifest_generation": 1,
+     "segment_generation": 1,
+     "segment_name": "seglog-1",
+     "sequence_id": 1
+    },
+    "record": {
+     "actor_ref": "pmref:fixture:actor_ref",
+     "attempt_id": null,
+     "causation_event_id": null,
+     "correlation_id": "fixture_operation_id",
+     "effective_account_ref": null,
+     "event_id": "evt_dch_9f3967f83cd97e4309447835aa98535bf2af3395567a135aa5f8d8ac7ace43b7",
+     "event_type": "chat.thread_deleted",
+     "idempotency_key": "dch:9f3967f83cd97e4309447835aa98535bf2af3395567a135aa5f8d8ac7ace43b7",
+     "migration": {
+      "compatibility_event_type": null,
+      "migrated_from_schema_id": null,
+      "migrated_from_schema_version": null,
+      "migration_id": null
+     },
+     "node_id": null,
+     "observed_at_utc": "2026-11-04T00:00:00Z",
+     "occurred_at_utc": "2026-11-04T00:00:00Z",
+     "parent_event_id": null,
+     "payload": {
+      "actor_ref": "pmref:fixture:actor_ref",
+      "computer_id": "fixture_computer_id",
+      "deletion_record_ref": "pmref:fixture:deletion_record_ref",
+      "operation_id": "fixture_operation_id",
+      "previous_state": "archived",
+      "schema_id": "pm.dch_event.chat_thread_deleted.project.v1",
+      "schema_version": "1.0.0",
+      "scope": {
+       "named_plan_id": null,
+       "project_home_server_id": "server1",
+       "project_id": "p1",
+       "schema_id": "pm.workflow_scope.v2",
+       "schema_version": "2.0.0",
+       "scope_kind": "project",
+       "scope_partition": "project~cDE",
+       "server_id": "server1"
+      },
+      "thread_id": "thr_01ARZ3NDEKTSV4RRFFQ69G5FAV",
+      "ts": "2026-11-04T00:00:00Z"
+     },
+     "payload_ref": null,
+     "payload_schema_id": "pm.dch_event.chat_thread_deleted.project.v1",
+     "persisted_at_utc": "2026-11-04T00:00:00Z",
+     "producer_sequence_id": null,
+     "project_id": "p1",
+     "redaction_profile": "no_secrets",
+     "replay_policy": "dedupe_by_idempotency_key",
+     "requested_account_ref": null,
+     "run_id": null,
+     "schema_id": "pm.event.v0",
+     "schema_version": "2.0.0",
+     "scope_kind": "project",
+     "sequence_id": 1,
+     "thread_id": "thr_01ARZ3NDEKTSV4RRFFQ69G5FAV"
+    },
+    "result": {
+     "actor_ref": "pmref:fixture:actor_ref",
+     "computer_id": "fixture_computer_id",
+     "deletion_record_ref": "pmref:fixture:deletion_record_ref",
+     "operation_id": "fixture_operation_id",
+     "previous_state": "archived",
+     "schema_id": "pm.dch_event.chat_thread_deleted.project.v1",
+     "schema_version": "1.0.0",
+     "scope": {
+      "named_plan_id": null,
+      "project_home_server_id": "server1",
+      "project_id": "p1",
+      "schema_id": "pm.workflow_scope.v2",
+      "schema_version": "2.0.0",
+      "scope_kind": "project",
+      "scope_partition": "project~cDE",
+      "server_id": "server1"
+     },
+     "thread_id": "thr_01ARZ3NDEKTSV4RRFFQ69G5FAV",
+     "ts": "2026-11-04T00:00:00Z"
+    },
+    "storage_instance_id": "00000000-0000-4000-8000-000000000001"
+   }
+  },
+  {
+   "name": "no_worktree",
+   "original": {
+    "after": {
+     "deletion_record_ref": "pmref:fixture:deletion_record_ref",
+     "thread_state": "deleted",
+     "tombstone": true,
+     "visible": false,
+     "worktree_ref": null
+    },
+    "before": {
+     "deletion_record_ref": null,
+     "thread_state": "active",
+     "tombstone": false,
+     "visible": true,
+     "worktree_ref": null
+    },
+    "commitment": {
+     "codec": "pm.seglog_frame_v2.event_value.canonical_msgpack.v1",
+     "domain": "pm.storage.original_event_value_commitment.v1",
+     "event_schema_id": "pm.event.v0",
+     "event_schema_version": "2.0.0",
+     "schema_id": "pm.storage.original_event_value_commitment.v1",
+     "schema_version": "1.0.0",
+     "sha256": "3e2de59f88399e54b941644249135e4c2a88d1efebc033a3e132e25f5485de93"
+    },
+    "first_receipt": {
+     "acknowledged_at_utc": "2026-11-04T01:00:00+01:00",
+     "byte_offset": 0,
+     "commit_group_id": "fixture_group",
+     "durability_class": "ordinary",
+     "durability_state": "synced",
+     "durable_end_offset": 1024,
+     "event_id": "evt_dch_9f3967f83cd97e4309447835aa98535bf2af3395567a135aa5f8d8ac7ace43b7",
+     "manifest_generation": 1,
+     "segment_generation": 1,
+     "segment_name": "seglog-1",
+     "sequence_id": 1
+    },
+    "intent": {
+     "actor_ref": "pmref:fixture:actor_ref",
+     "computer_id": "fixture_computer_id",
+     "operation_id": "fixture_operation_id",
+     "scope": {
+      "named_plan_id": null,
+      "project_home_server_id": "server1",
+      "project_id": "p1",
+      "schema_id": "pm.workflow_scope.v2",
+      "schema_version": "2.0.0",
+      "scope_kind": "project",
+      "scope_partition": "project~cDE",
+      "server_id": "server1"
+     },
+     "thread_id": "thr_01ARZ3NDEKTSV4RRFFQ69G5FAV"
+    },
+    "operation": {
+     "actions": [
+      "intent",
+      "effect",
+      "commit",
+      "readback",
+      "append",
+      "receipt",
+      "publish"
+     ],
+     "event_type": "chat.thread_deleted",
+     "operation_id": "fixture_operation_id",
+     "outcome": {
+      "command": "cmd.chat.thread.delete",
+      "deletion_record": {
+       "content_free": true,
+       "ref": "pmref:fixture:deletion_record_ref",
+       "storage_owned": true
+      },
+      "hidden": true
+     }
+    },
+    "receipt": {
+     "acknowledged_at_utc": "2026-11-04T01:00:00+01:00",
+     "byte_offset": 0,
+     "commit_group_id": "fixture_group",
+     "durability_class": "ordinary",
+     "durability_state": "synced",
+     "durable_end_offset": 1024,
+     "event_id": "evt_dch_9f3967f83cd97e4309447835aa98535bf2af3395567a135aa5f8d8ac7ace43b7",
+     "manifest_generation": 1,
+     "segment_generation": 1,
+     "segment_name": "seglog-1",
+     "sequence_id": 1
+    },
+    "record": {
+     "actor_ref": "pmref:fixture:actor_ref",
+     "attempt_id": null,
+     "causation_event_id": null,
+     "correlation_id": "fixture_operation_id",
+     "effective_account_ref": null,
+     "event_id": "evt_dch_9f3967f83cd97e4309447835aa98535bf2af3395567a135aa5f8d8ac7ace43b7",
+     "event_type": "chat.thread_deleted",
+     "idempotency_key": "dch:9f3967f83cd97e4309447835aa98535bf2af3395567a135aa5f8d8ac7ace43b7",
+     "migration": {
+      "compatibility_event_type": null,
+      "migrated_from_schema_id": null,
+      "migrated_from_schema_version": null,
+      "migration_id": null
+     },
+     "node_id": null,
+     "observed_at_utc": "2026-11-04T00:00:00Z",
+     "occurred_at_utc": "2026-11-04T00:00:00Z",
+     "parent_event_id": null,
+     "payload": {
+      "actor_ref": "pmref:fixture:actor_ref",
+      "computer_id": "fixture_computer_id",
+      "deletion_record_ref": "pmref:fixture:deletion_record_ref",
+      "operation_id": "fixture_operation_id",
+      "previous_state": "active",
+      "schema_id": "pm.dch_event.chat_thread_deleted.project.v1",
+      "schema_version": "1.0.0",
+      "scope": {
+       "named_plan_id": null,
+       "project_home_server_id": "server1",
+       "project_id": "p1",
+       "schema_id": "pm.workflow_scope.v2",
+       "schema_version": "2.0.0",
+       "scope_kind": "project",
+       "scope_partition": "project~cDE",
+       "server_id": "server1"
+      },
+      "thread_id": "thr_01ARZ3NDEKTSV4RRFFQ69G5FAV",
+      "ts": "2026-11-04T00:00:00Z"
+     },
+     "payload_ref": null,
+     "payload_schema_id": "pm.dch_event.chat_thread_deleted.project.v1",
+     "persisted_at_utc": "2026-11-04T00:00:00Z",
+     "producer_sequence_id": null,
+     "project_id": "p1",
+     "redaction_profile": "no_secrets",
+     "replay_policy": "dedupe_by_idempotency_key",
+     "requested_account_ref": null,
+     "run_id": null,
+     "schema_id": "pm.event.v0",
+     "schema_version": "2.0.0",
+     "scope_kind": "project",
+     "sequence_id": 1,
+     "thread_id": "thr_01ARZ3NDEKTSV4RRFFQ69G5FAV"
+    },
+    "result": {
+     "actor_ref": "pmref:fixture:actor_ref",
+     "computer_id": "fixture_computer_id",
+     "deletion_record_ref": "pmref:fixture:deletion_record_ref",
+     "operation_id": "fixture_operation_id",
+     "previous_state": "active",
+     "schema_id": "pm.dch_event.chat_thread_deleted.project.v1",
+     "schema_version": "1.0.0",
+     "scope": {
+      "named_plan_id": null,
+      "project_home_server_id": "server1",
+      "project_id": "p1",
+      "schema_id": "pm.workflow_scope.v2",
+      "schema_version": "2.0.0",
+      "scope_kind": "project",
+      "scope_partition": "project~cDE",
+      "server_id": "server1"
+     },
+     "thread_id": "thr_01ARZ3NDEKTSV4RRFFQ69G5FAV",
+     "ts": "2026-11-04T00:00:00Z"
+    },
+    "storage_instance_id": "00000000-0000-4000-8000-000000000001"
+   }
+  }
+ ]
+}

@@ -172,8 +172,20 @@ class Boundary:
     validator: object
 
 
+def populate_named_plans(value):
+    """Populate every Project WorkflowScope named-plan arm in one control (all source occurrences)."""
+    if isinstance(value,dict):
+        if value.get('schema_id')=='pm.workflow_scope.v2' and value.get('scope_kind')=='project':
+            value['named_plan_id']='fixture_named_plan'
+        for child in value.values():populate_named_plans(child)
+    elif isinstance(value,list):
+        for child in value:populate_named_plans(child)
+    return value
+
+
 def boundaries(selected=None):
     import pm_dch_events as dch
+    import pm_dch_thread as thread
     from pm_dch_round7_oracles import OWNER_INVALID_ORIGINALS, OWNER_INVALID_CHECKPOINT_RETIRED
     retained=json.loads((ROOT/'Plans/dch_retained_history_fixtures.json').read_text())
     prior=json.loads((ROOT/'Plans/dch_prior_v4_checkpoint_fixtures.json').read_text())['checkpoints']
@@ -181,11 +193,18 @@ def boundaries(selected=None):
     fs=json.loads((ROOT/'Plans/dch_event_contract_fixtures.json').read_text())
     cs=json.loads((ROOT/'Plans/dch_checkpoint_fixtures.json').read_text())
     originals=fixtures()
+    # CH2: the six ordinary thread/message/bundle families use their own original store.
+    thread_originals,thread_branches=thread.fixtures(),thread.branches()
     for row in rows:
         f=row['event_type']
-        if f not in FAMILIES or selected and f!=selected:continue
+        if f not in FAMILIES+thread.FAMILIES or selected and f!=selected:continue
+        ch2=f in thread.FAMILIES
+        family_originals=thread_originals if ch2 else originals
         payload=json.loads((ROOT/row['payload_schema_ref']).read_text())
         pc=[copy.deepcopy(x['valid']) for x in fs if x['event_type']==f]
+        if ch2:
+            # Authored owner branches (attachments, roles, states, targets) are payload controls too.
+            pc+=[copy.deepcopy(b['original']['result']) for e in ('project','application') for b in thread_branches[f+'/'+e]]
         # Explicit owner-valid branches: nullable strings, enums and failure outcomes.
         for base in list(pc):
             props=payload['$defs'][base['scope']['scope_kind']]['properties']
@@ -202,6 +221,7 @@ def boundaries(selected=None):
         cp_path=cp['schema_ref'].split('#')[0];cp_schema=json.loads((ROOT/cp_path).read_text())
         env=json.loads((ROOT/'Plans/event_record.schema.json').read_text())
         ev=[copy.deepcopy(x['record']) for x in fs if x['event_type']==f]
+        if ch2:ev+=[copy.deepcopy(b['original']['record']) for e in ('project','application') for b in thread_branches[f+'/'+e]]
         # Exercise every nullable/nonempty-string and migration branch of EventRecord.
         for base in list(ev):
             for key,value in base.items():
@@ -219,6 +239,13 @@ def boundaries(selected=None):
         yield Boundary(f+'/checkpoint',f,cp_path,effective_checkpoint_schema(cp_schema),
                        checkpoint_controls,validator(cp_schema))
         for edition in ('project','application'):
+            if ch2:
+                o=thread_originals[f+'/'+edition][0]
+                s=thread.source_schema(row,edition)
+                source_controls=[o]+[b['original'] for b in thread_branches[f+'/'+edition]]
+                if edition=='project':source_controls.append(populate_named_plans(copy.deepcopy(o)))
+                yield Boundary(f+'/source/'+edition,f,'scripts/pm_dch_thread.py:source_schema('+edition+')',s,source_controls,validator(s))
+                continue
             o=originals[f+'/'+edition][0]
             s=source_schema(row,edition)
             source_controls=[o]+[v for _,v in branch_originals(o)]
@@ -272,7 +299,58 @@ def boundaries(selected=None):
         for name in ('AppendReceipt','original_event_value_commitment'):
             key='receipt' if name=='AppendReceipt' else 'commitment'
             yield Boundary(f+'/'+key,f,'Plans/event_append_receipt_contracts.schema.json#/$defs/'+name,
-                           RECEIPT_SCHEMA[name],[originals[f+'/'+e][0][key] for e in ('project','application')],validator(RECEIPT_SCHEMA[name]))
+                           RECEIPT_SCHEMA[name],[family_originals[f+'/'+e][0][key] for e in ('project','application')],validator(RECEIPT_SCHEMA[name]))
+    if selected in (None,'chat.response_stop_requested'):
+        yield from stop_boundaries()
+
+
+def stop_boundaries():
+    """CH2 Stop: every complete definition the Stop writer, sealed reader and index consumer enforce.
+
+    The Stop contract has one current edition (CV-647), so no retained recipe
+    root exists for it; the request, outcome, EventRecord, source wrapper,
+    receipt, commitment and nine-field token definitions are each one boundary.
+    """
+    import pm_dch_stop as stop
+    f='chat.response_stop_requested'
+    fixture=json.loads((ROOT/'Plans/dch_stop_contract_fixtures.json').read_text())
+    data=json.loads((ROOT/'tests/fixtures/dch_c12_ch2/stop_originals.json').read_text())
+    worlds={edition:[data['originals'][f+'/'+edition][0]]+[b['original'] for b in data['branches'][f+'/'+edition]]
+            for edition in ('project','application')}
+    def positives(surface):
+        for case in fixture['cases']:
+            if case['surface']==surface and not case['changes'] and case['expected'] is True:
+                yield copy.deepcopy(fixture['bases'][case['base_id']])
+    requests=[copy.deepcopy(o['result']) for e in worlds for o in worlds[e]]+list(positives('schema_request'))
+    for base in list(requests):
+        if base['scope']['scope_kind']=='project':requests.append(populate_named_plans(copy.deepcopy(base)))
+    outcomes=list(positives('schema_outcome'))+[b['value'] for b in fixture['bases'].values() if isinstance(b,dict) and 'value' in b and 'context' in b]
+    for base in list(outcomes):
+        if base['outcome']=='cancelled':outcomes.append({**copy.deepcopy(base),'outcome':'timeout'})
+        if base['scope']['scope_kind']=='project':outcomes.append(populate_named_plans(copy.deepcopy(base)))
+    env=json.loads((ROOT/'Plans/event_record.schema.json').read_text())
+    records=[copy.deepcopy(o['record']) for e in worlds for o in worlds[e]]
+    for base in list(records):
+        for key,value in base.items():
+            if value is None:
+                alt=copy.deepcopy(base);alt[key]=0 if key=='producer_sequence_id' else 'fixture_optional'
+                if validator(env).is_valid(alt):records.append(alt)
+        for key in base['migration']:
+            alt=copy.deepcopy(base);alt['migration'][key]='fixture_migration';records.append(alt)
+    yield Boundary(f+'/request',f,stop.REQUEST_PATH,stop.REQUEST_SCHEMA,requests,stop.REQUEST)
+    yield Boundary(f+'/outcome',f,stop.OUTCOME_PATH,stop.OUTCOME_SCHEMA,outcomes,stop.OUTCOME)
+    yield Boundary(f+'/envelope',f,'Plans/event_record.schema.json',env,records,validator(env))
+    for edition in ('project','application'):
+        s=stop.stop_source_schema(edition)
+        controls=[copy.deepcopy(o) for o in worlds[edition]]
+        if edition=='project':controls.append(populate_named_plans(copy.deepcopy(worlds[edition][0])))
+        yield Boundary(f+'/source/'+edition,f,'scripts/pm_dch_stop.py:stop_source_schema('+edition+')',s,controls,validator(s))
+    for name in ('AppendReceipt','original_event_value_commitment'):
+        key='receipt' if name=='AppendReceipt' else 'commitment'
+        yield Boundary(f+'/'+key,f,'Plans/event_append_receipt_contracts.schema.json#/$defs/'+name,RECEIPT_SCHEMA[name],
+                       [worlds[e][0][key] for e in ('project','application')],validator(RECEIPT_SCHEMA[name]))
+    tokens=[b['token'] for b in fixture['bases'].values() if isinstance(b,dict) and 'token' in b]
+    yield Boundary(f+'/token',f,'Plans/dch_checkpoint_source_constraints.json#/source_constraint_schema',stop.TOKEN_SCHEMA,tokens,stop.TOKEN)
 
 
 def run(m,selected=None):

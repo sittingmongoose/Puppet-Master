@@ -152,11 +152,16 @@ TABLE_PHASES = (
     'cp_family_entailed', 'cp_event_family_entailed', 'cp_consumer_entailed', 'cp_projector_entailed', 'cp_publication', 'cp_state',
     'cs_value', 'cs_inline', 'cs_pointer', 'cs_pointer_bounds', 'cs_pointer_size_entailed', 'cs_pack_a', 'cs_pack_b',
     'ar_request', 'ar_state', 'ar_commit', 'rf_closure',
-    'st_value', 'st_inline', 'st_ref', 'st_ref_bytes', 'st_pack_a', 'st_pack_b', 'st_pack_c', 'st_pointer_bounds',
+    'st_value', 'st_inline', 'st_ref', 'st_ref_bytes', 'st_pack_a', 'st_pack_b', 'st_pack_c', 'st_pointer_bounds', 'st_pointer_size_entailed',
     'st_request_mode', 'st_request_store', 'st_request_schema', 'st_request_access', 'st_request_writer',
     'st_request_accepted', 'st_outcome_schema', 'st_outcome_decision', 'st_outcome_join', 'st_save',
     'st_read_present', 'st_read', 'st_queue_action', 'st_queue_send', 'st_index_token', 'st_index_store',
-    'st_index_key', 'st_index_frontier', 'st_index_dataset', 'st_index_event', 'st_index_entailed', 'st_retirement',
+    'st_index_key', 'st_index_frontier', 'st_index_dataset', 'st_index_event', 'st_index_family_entailed',
+    'st_index_sequence_entailed', 'st_retirement',
+    # Criterion-12 CH2: ordinary thread/message/bundle and Stop original sources.
+    'og_presence', 'og_original', 'og_receipt', 'og_transaction', 'og_state', 'th_created', 'th_deleted',
+    'th_archived', 'th_message_a', 'th_message_b', 'bs_sent_a', 'bs_sent_b', 'bs_blocked', 'so_protocol',
+    'st_custody', 'st_custody_binding',
 )
 _TABLE_ROWS = {}
 _TABLE_FIELDS = {}
@@ -1118,6 +1123,35 @@ def worktree_checkpoint_valid(value, source, row, key, original_ref, originals):
     return True
 
 
+def thread_event_outcome(record, row, original_ref, originals, storage_instance=STORAGE_INSTANCE):
+    """CH2 exact first-refusal tuple; exceptions propagate and never earn mutation credit."""
+    try:
+        from pm_dch_thread import check_original
+        from types import SimpleNamespace
+        check_original(SimpleNamespace(**globals()), record, row, original_ref, originals, storage_instance)
+    except TableRefusal as refusal:
+        return refusal.phase, refusal.row, refusal.code
+    return None
+
+
+def thread_event_valid(record, row, original_ref, originals, storage_instance=STORAGE_INSTANCE):
+    """Complete thread/message/bundle route over an independent original operation store (CH2)."""
+    return thread_event_outcome(record, row, original_ref, originals, storage_instance) is None
+
+
+def thread_checkpoint_valid(value, source, row, key, original_ref, originals):
+    """Compose the CH2 original result/receipt custody with SP-278 publication."""
+    try:
+        from pm_dch_thread import check_original
+        from types import SimpleNamespace
+        check_original(SimpleNamespace(**globals()), source['event_record'], row, original_ref, originals,
+                       source['storage_instance_id'])
+        _checkpoint_joins(value, source, row, key)
+    except TableRefusal:
+        return False
+    return True
+
+
 def semantic_body_mutation(record, event):
     """One schema-valid result fact, preserving all envelope identity copies."""
     schema = json.loads((ROOT/'Plans/dch_event_payloads'/
@@ -1503,6 +1537,15 @@ def main():
         check(ok, label)
     from pm_dch_c12_cases import checks as closure_checks
     for label, ok in closure_checks(subject):
+        check(ok, label)
+    # Criterion-12 CH2: ordinary thread/message/bundle original sources.
+    from pm_dch_thread import checks as thread_checks, publication_checks as thread_publication_checks
+    for label, ok in thread_checks(subject):
+        check(ok, label)
+    for label, ok in thread_publication_checks(subject):
+        check(ok, label)
+    from pm_dch_c12_ch2_cases import checks as ch2_checks
+    for label, ok in ch2_checks(subject):
         check(ok, label)
     return finish()
 
