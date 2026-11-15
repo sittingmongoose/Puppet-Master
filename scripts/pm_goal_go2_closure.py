@@ -1673,6 +1673,12 @@ def close(args):
             counts = collections.Counter(e['cls'] for e in state['entries'].values())
             print(f'{root[:30]} {args.clause_shard}: {len(state["entries"])}/{len(mine)} {dict(counts)} validations '
                   f'{cl.COUNT[0] - root0} rss {rss_mb()}MB memo {dict(STATS)}', file=sys.stderr, flush=True)
+    state['validations'] = cl.COUNT[0] - root0  # the final state too: a later residual pass starts from its controls
+    state['store'] = CONTROL_STORE
+    state['seconds_at_checkpoint'] = state['seconds'] + time.monotonic() - started
+    tmp = checkpoint.with_suffix('.tmp')
+    tmp.write_bytes(pickle.dumps(state, protocol=5))
+    tmp.replace(checkpoint)
     counts = collections.Counter(e['cls'] for e in state['entries'].values())
     report = dict(tool='scripts/pm_goal_go2_closure.py', tool_sha256=TOOL_SHA256,
                   go_closure_sha256=cl.TOOL_SHA256, root=root, clause_shard=args.clause_shard, clauses_in_root=len(work),
