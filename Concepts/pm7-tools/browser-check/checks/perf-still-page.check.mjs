@@ -105,6 +105,41 @@ export const CENSUS = () => {
 	return out;
 };
 
+// The still state's marks in a trace's events and, per mark, the style recalcs of the page's main thread after it
+// (exported for tools/still-toggle-recalc.selftest.mjs): { marks, after(first, last) }
+export function toggleRecalcs(events, keep = null) {
+	// the marks come from the page's own main thread: its style recalcs and main frames are those of the same thread
+	const marks = {}, styles = [], frames = [];
+	let pid = null, tid = null;
+	for (const e of events) {
+		if (e.cat && e.cat.includes('blink.user_timing') && /^pm-still:/.test(e.name) && !(e.name in marks)) { marks[e.name] = e.ts; pid = e.pid; tid = e.tid; }
+	}
+	for (const e of events) {
+		if (e.pid !== pid || e.tid !== tid || e.ph !== 'X') continue;
+		if (e.name === 'UpdateLayoutTree') styles.push({ ts: e.ts, dur: (e.dur || 0) / 1000, n: (e.args && e.args.elementCount) || 0 });
+		if (e.name === 'ProxyMain::BeginMainFrame') frames.push({ ts: e.ts, dur: (e.dur || 0) / 1000 });
+	}
+	// the style recalcs from the mark to a few frames after it: the first (the one that carries the toggle; for a wake,
+	// the first frame after the pointer move) is judged, the largest and the total are logged (a live update in Usage can
+	// land in the same frames)
+	// The first recalc after the mark is the toggle's however late it comes (the invalidation stays pending until a
+	// recalc runs), and the logged spread is the 60 ms after it (PM7PERF-PREWARM-CONTROL-NULL: the window used to end
+	// 60 ms after the MARK, and with the forced prewarm step and three browsers on Alexis one toggle's recalc came later,
+	// so it read "no recalc" (R=null) though one ran). `delayMs` says how late it was.
+	const spread = (first, last) => {
+		const a = marks[first], b = marks[last]; if (a === undefined) return null;
+		const head = styles.filter((x) => x.ts >= a).sort((p, q) => p.ts - q.ts)[0];
+		if (!head) return { found: false, markTs: a };
+		const end = Math.max(b === undefined ? a : b, head.ts) + 60000;
+		const ss = styles.filter((x) => x.ts >= a && x.ts <= end).sort((p, q) => p.ts - q.ts);
+		const big = ss.reduce((m, x) => (x.n > m.n ? x : m), ss[0]);
+		const fr = frames.find((f) => f.ts <= ss[0].ts && f.ts + f.dur * 1000 >= ss[0].ts);
+		const r2 = (x) => Math.round(x * 100) / 100;
+		return { found: true, steps: ss.length, max: big.n, maxMs: r2(big.dur), total: ss.reduce((t2, x) => t2 + x.n, 0), totalMs: r2(ss.reduce((t2, x) => t2 + x.dur, 0)), first: ss[0].n, firstFrameMs: fr ? r2(fr.dur) : null, markTs: a, recalcTs: ss[0].ts, recalcEndTs: ss[0].ts + ss[0].dur * 1000, delayMs: r2((ss[0].ts - a) / 1000), traceFile: keep, done: b !== undefined };
+	};
+	return { marks, after: spread };
+}
+
 // One trace of `ms`, with what `during` does, summarised, plus the marks and the style recalcs of the page's renderer
 export async function trace(cdp, { ms, during, url, keep, track = false, by = false }) {
 	await cdp.send('Tracing.start', { categories: TRACE_CATEGORIES + (track ? ',disabled-by-default-devtools.timeline.invalidationTracking,disabled-by-default-devtools.timeline.stack' : ''), transferMode: 'ReturnAsStream', bufferUsageReportingInterval: 0 });
@@ -122,31 +157,7 @@ export async function trace(cdp, { ms, during, url, keep, track = false, by = fa
 	const sum = summarise(json, { url });
 	const events = json.traceEvents || json;
 	if (by) sum.startsBy = frameStarts(events, sum.renderer);
-	// the marks come from the page's own main thread: its style recalcs and main frames are those of the same thread
-	const marks = {}, styles = [], frames = [];
-	let pid = null, tid = null;
-	for (const e of events) {
-		if (e.cat && e.cat.includes('blink.user_timing') && /^pm-still:/.test(e.name) && !(e.name in marks)) { marks[e.name] = e.ts; pid = e.pid; tid = e.tid; }
-	}
-	for (const e of events) {
-		if (e.pid !== pid || e.tid !== tid || e.ph !== 'X') continue;
-		if (e.name === 'UpdateLayoutTree') styles.push({ ts: e.ts, dur: (e.dur || 0) / 1000, n: (e.args && e.args.elementCount) || 0 });
-		if (e.name === 'ProxyMain::BeginMainFrame') frames.push({ ts: e.ts, dur: (e.dur || 0) / 1000 });
-	}
-	// the style recalcs from the mark to a few frames after it: the first (the one that carries the toggle; for a wake,
-	// the first frame after the pointer move) is judged, the largest and the total are logged (a live update in Usage can
-	// land in the same frames)
-	const spread = (first, last) => {
-		const a = marks[first], b = marks[last]; if (a === undefined) return null;
-		const end = (b === undefined ? a : b) + 60000;
-		const ss = styles.filter((x) => x.ts >= a && x.ts <= end).sort((p, q) => p.ts - q.ts);
-		if (!ss.length) return { found: false };
-		const big = ss.reduce((m, x) => (x.n > m.n ? x : m), ss[0]);
-		const fr = frames.find((f) => f.ts <= ss[0].ts && f.ts + f.dur * 1000 >= ss[0].ts);
-		const r2 = (x) => Math.round(x * 100) / 100;
-		return { found: true, steps: ss.length, max: big.n, maxMs: r2(big.dur), total: ss.reduce((t2, x) => t2 + x.n, 0), totalMs: r2(ss.reduce((t2, x) => t2 + x.dur, 0)), first: ss[0].n, firstFrameMs: fr ? r2(fr.dur) : null, markTs: a, recalcTs: ss[0].ts, recalcEndTs: ss[0].ts + ss[0].dur * 1000, traceFile: keep, done: b !== undefined };
-	};
-	const after = spread;
+	const { after, marks } = toggleRecalcs(events, keep);
 	return { sum, after, marks };
 }
 
