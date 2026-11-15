@@ -1,0 +1,305 @@
+{
+ "schema_id": "pm.assurance.event_authority.admission_depth_assessment.v1",
+ "assessment_kind": "admission_twelve_criteria",
+ "writer": "pm-ea-admission-writer.v1",
+ "merge": "admission-merge-1",
+ "registry": {
+  "path": "Plans/event_family_registry.json",
+  "revision": "2026-11-15.126",
+  "sha256": "1bc0ebc638d3573c4a07542c441bc895b78c145dbf078daaa6f7a50f7fba4406",
+  "family_count": 172,
+  "row_pointer": "#/families/171"
+ },
+ "base_commit": "03a09c66360991e5fb7b5620a84bc85b681e3635",
+ "rubric": "Step 8 depth matrix, twelve criteria (DL-077); PASS needs Plans/ evidence",
+ "native_execution": "NOT_RUN",
+ "rows": [
+  {
+   "event_type": "session_prompt.admitted",
+   "family_id": "event-family-session-prompt-admitted",
+   "family_revision": "1.0.0",
+   "cells": {
+    "membership_version": {
+     "status": "PASS",
+     "representation": "exact_registry_membership",
+     "finding": "Registered at registry revision 2026-11-15.126 as #/families/171 (canonical row SHA-256 6b7d482e40a3f404922ba5a944b0ce584da99bbcce801aabe91d00c4e5126133); before this commit the family was absent.",
+     "evidence": [
+      {
+       "path": "Plans/event_family_registry.json",
+       "json_pointer": "#/families/171",
+       "line_start": 12300,
+       "line_end": 12383,
+       "quote": "\"event_type\": \"session_prompt.admitted\"",
+       "quote_line": 12303,
+       "file_sha256": "1bc0ebc638d3573c4a07542c441bc895b78c145dbf078daaa6f7a50f7fba4406",
+       "quote_check": "exact"
+      }
+     ]
+    },
+    "owner_doc": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "Exact normative phase-1 owner contract and structural schema where relevant; this grade is not runtime or phase-2 oracle evidence.",
+     "evidence": [
+      {
+       "path": "Plans/Contracts_V0.md",
+       "unit": "CV-1461",
+       "line_start": 46753,
+       "line_end": 46753,
+       "quote": "2. Owner and semantic boundary. Reuse CV-308 admission fields and CV-314 exact inbox identity. Only queued -> admitted; admitted_at_ms is non-null, duplicate_of/execution_ref/rejec",
+       "file_sha256": "4623d6a821793daf4f7eaeeecbb64981e0a86fcd21d2f483f414d14bebe1982f",
+       "quote_check": "exact",
+       "quote_scope": "unit CV-1461, Plans/Contracts_V0.md:46743-46830"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261105/W3F-self-grade.json",
+      "sha256": "026aba9b869fbfd37acd43c89e3f80e6df08d3fec88e5714647a5f87f61f7385",
+      "field": "owner_doc",
+      "status": "PASS"
+     }
+    },
+    "producer": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "Exact normative phase-1 owner contract and structural schema where relevant; this grade is not runtime or phase-2 oracle evidence.",
+     "evidence": [
+      {
+       "path": "Plans/Contracts_V0.md",
+       "unit": "CV-1461",
+       "line_start": 46755,
+       "line_end": 46755,
+       "quote": "3. Producer and publication. Only `SessionPromptInbox.admitted@1.0.0` may prepare this exact fact after the actual owner gate. Immutable original input and original owner operation",
+       "file_sha256": "4623d6a821793daf4f7eaeeecbb64981e0a86fcd21d2f483f414d14bebe1982f",
+       "quote_check": "exact",
+       "quote_scope": "unit CV-1461, Plans/Contracts_V0.md:46743-46830"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261105/W3F-self-grade.json",
+      "sha256": "026aba9b869fbfd37acd43c89e3f80e6df08d3fec88e5714647a5f87f61f7385",
+      "field": "producer",
+      "status": "PASS"
+     }
+    },
+    "closed_payload_schema": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "Exact normative phase-1 owner contract and structural schema where relevant; this grade is not runtime or phase-2 oracle evidence.",
+     "evidence": [
+      {
+       "path": "Plans/Contracts_V0.md",
+       "unit": "CV-1461",
+       "line_start": 46757,
+       "line_end": 46757,
+       "quote": "4. Closed payload. `Plans/event_payloads/w3f/session_prompt_admitted.schema.json` is the family's complete, independently closed 1.0.0 resolved-body schema. Every required-present ",
+       "file_sha256": "4623d6a821793daf4f7eaeeecbb64981e0a86fcd21d2f483f414d14bebe1982f",
+       "quote_check": "exact",
+       "quote_scope": "unit CV-1461, Plans/Contracts_V0.md:46743-46830"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261105/W3F-self-grade.json",
+      "sha256": "026aba9b869fbfd37acd43c89e3f80e6df08d3fec88e5714647a5f87f61f7385",
+      "field": "closed_payload_schema",
+      "status": "PASS"
+     }
+    },
+    "scope_identity": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "Identity, key and partition recipes are executed with the shared qualified_jcs/current_integer/storage_uint64 calls; one-defect negatives for every supported scope (operation, event id incl. a reminted recovery epoch, key recipe, raw project partition, context joins) refuse first at their rows of scripts/pm_w3f_event_oracles.py.",
+     "evidence": [
+      {
+       "path": "Plans/Contracts_V0.md",
+       "unit": "CV-1461",
+       "line_start": 46759,
+       "line_end": 46759,
+       "quote": "5. Scope and identity. This family's candidate payload is `pm.event_payload.session_prompt.admitted.v1@1.0.0` at `Plans/event_payloads/w3f/session_prompt_admitted.schema.json`. The",
+       "file_sha256": "4623d6a821793daf4f7eaeeecbb64981e0a86fcd21d2f483f414d14bebe1982f",
+       "quote_check": "exact",
+       "quote_scope": "unit CV-1461, Plans/Contracts_V0.md:46743-46830"
+      },
+      {
+       "path": "scripts/pm_w3f_event_oracles.py",
+       "unit": null,
+       "line_start": 914,
+       "line_end": 914,
+       "quote": "row('identity', 'event_identity', 'event_identity', '/event/event_id',",
+       "file_sha256": "9e8feb2434d96d52dc961b9e1ab93d145aab88f5f47af20eea84afa4a37257cb",
+       "quote_check": "exact",
+       "quote_scope": "document"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261105/W3F-self-grade.json",
+      "sha256": "026aba9b869fbfd37acd43c89e3f80e6df08d3fec88e5714647a5f87f61f7385",
+      "field": "scope_identity",
+      "status": "PASS"
+     }
+    },
+    "replay_idempotency": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "Exact normative phase-1 owner contract and structural schema where relevant; this grade is not runtime or phase-2 oracle evidence.",
+     "evidence": [
+      {
+       "path": "Plans/Contracts_V0.md",
+       "unit": "CV-1461",
+       "line_start": 46761,
+       "line_end": 46761,
+       "quote": "6. Replay and idempotency. Adopt the unchanged EventRecord producer_semantic_digest field set and SP-286 full-value comparison, never Storage-assigned sequence/timestamps as caller",
+       "file_sha256": "4623d6a821793daf4f7eaeeecbb64981e0a86fcd21d2f483f414d14bebe1982f",
+       "quote_check": "exact",
+       "quote_scope": "unit CV-1461, Plans/Contracts_V0.md:46743-46830"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261105/W3F-self-grade.json",
+      "sha256": "026aba9b869fbfd37acd43c89e3f80e6df08d3fec88e5714647a5f87f61f7385",
+      "field": "replay_idempotency",
+      "status": "PASS"
+     }
+    },
+    "retention": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "Bound by landed DL-456 to RP-CHAT-THREAD-LIFETIME@1.0.0 (target chat lifetime, 250,000-entry shared chat limit with continuation); the policy object lands with main at the batch-3 rebase.",
+     "evidence": [
+      {
+       "path": "Plans/Contracts_V0.md",
+       "unit": "CV-1461",
+       "line_start": 46763,
+       "line_end": 46763,
+       "quote": "7. Retention. `retention_policy_ref=RP-CHAT-THREAD-LIFETIME@1.0.0`, bound by DL-456 (E-CARDS-3 item 4.a, option A)",
+       "file_sha256": "4623d6a821793daf4f7eaeeecbb64981e0a86fcd21d2f483f414d14bebe1982f",
+       "quote_check": "exact",
+       "quote_scope": "unit CV-1461, Plans/Contracts_V0.md:46743-46830"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261105/W3F-self-grade.json",
+      "sha256": "026aba9b869fbfd37acd43c89e3f80e6df08d3fec88e5714647a5f87f61f7385",
+      "field": "retention",
+      "status": "PASS"
+     }
+    },
+    "redaction_custody": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "Exact normative phase-1 owner contract and structural schema where relevant; this grade is not runtime or phase-2 oracle evidence.",
+     "evidence": [
+      {
+       "path": "Plans/Contracts_V0.md",
+       "unit": "CV-1461",
+       "line_start": 46765,
+       "line_end": 46765,
+       "quote": "8. Redaction and custody. Seglog is the only canonical event history; original full-value first-receipt custody belongs to SP-286/CV-339 and survives coherent mandatory backup with",
+       "file_sha256": "4623d6a821793daf4f7eaeeecbb64981e0a86fcd21d2f483f414d14bebe1982f",
+       "quote_check": "exact",
+       "quote_scope": "unit CV-1461, Plans/Contracts_V0.md:46743-46830"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261105/W3F-self-grade.json",
+      "sha256": "026aba9b869fbfd37acd43c89e3f80e6df08d3fec88e5714647a5f87f61f7385",
+      "field": "redaction_custody",
+      "status": "PASS"
+     }
+    },
+    "transitions": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "Exact normative phase-1 owner contract and structural schema where relevant; this grade is not runtime or phase-2 oracle evidence.",
+     "evidence": [
+      {
+       "path": "Plans/Contracts_V0.md",
+       "unit": "CV-1461",
+       "line_start": 46767,
+       "line_end": 46767,
+       "quote": "9. Transitions and ordering. Use only this family's semantic predicates in paragraph 2. Source identity, state, policy, exact payload, full-value custody and current writer admissi",
+       "file_sha256": "4623d6a821793daf4f7eaeeecbb64981e0a86fcd21d2f483f414d14bebe1982f",
+       "quote_check": "exact",
+       "quote_scope": "unit CV-1461, Plans/Contracts_V0.md:46743-46830"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261105/W3F-self-grade.json",
+      "sha256": "026aba9b869fbfd37acd43c89e3f80e6df08d3fec88e5714647a5f87f61f7385",
+      "field": "transitions",
+      "status": "PASS"
+     }
+    },
+    "consumers_checkpoints": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "Exact normative phase-1 owner contract and structural schema where relevant; this grade is not runtime or phase-2 oracle evidence.",
+     "evidence": [
+      {
+       "path": "Plans/Contracts_V0.md",
+       "unit": "CV-1461",
+       "line_start": 46769,
+       "line_end": 46769,
+       "quote": "10. Consumers/checkpoints. This family explicitly adopts `SP-1461` and SP-278 `reader.storage.event_record_index@1.0.0`, including its nine-field durable token (DL-076), full ten-f",
+       "file_sha256": "4623d6a821793daf4f7eaeeecbb64981e0a86fcd21d2f483f414d14bebe1982f",
+       "quote_check": "exact",
+       "quote_scope": "unit CV-1461, Plans/Contracts_V0.md:46743-46830"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261105/W3F-self-grade.json",
+      "sha256": "026aba9b869fbfd37acd43c89e3f80e6df08d3fec88e5714647a5f87f61f7385",
+      "field": "consumers_checkpoints",
+      "status": "PASS"
+     }
+    },
+    "compatibility_withdrawal": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "Exact normative phase-1 owner contract and structural schema where relevant; this grade is not runtime or phase-2 oracle evidence.",
+     "evidence": [
+      {
+       "path": "Plans/Contracts_V0.md",
+       "unit": "CV-1461",
+       "line_start": 46771,
+       "line_end": 46771,
+       "quote": "11. Compatibility and withdrawal. Current writes require this exact family/version/schema/source grant and normal replay policy; unknown future versions are unavailable. No deploye",
+       "file_sha256": "4623d6a821793daf4f7eaeeecbb64981e0a86fcd21d2f483f414d14bebe1982f",
+       "quote_check": "exact",
+       "quote_scope": "unit CV-1461, Plans/Contracts_V0.md:46743-46830"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261105/W3F-self-grade.json",
+      "sha256": "026aba9b869fbfd37acd43c89e3f80e6df08d3fec88e5714647a5f87f61f7385",
+      "field": "compatibility_withdrawal",
+      "status": "PASS"
+     }
+    },
+    "positive_negative_oracles": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "Executable synthetic oracles (scripts/pm_w3f_event_oracles.py): every refusal is one of 288 named guard-table rows; positives and one-defect negatives for every one of the family's plan entries (Plans/w3f_event_fixtures.json, plan coverage 2,253/2,253 across the lane), each refused first at exactly its row; the gated tool 004bdedd63 proves 285/285 reachable rows across the lane with 0 masked or unrelated changes, and the 3 entailed rows sit alone with written proofs. Shared CV-1100/SP-1100 numbers and CV-1101 date-time are used at every slot and field; native execution NOT_RUN.",
+     "evidence": [
+      {
+       "path": "Plans/Contracts_V0.md",
+       "unit": "CV-1461",
+       "line_start": 46773,
+       "line_end": 46773,
+       "quote": "12. Oracles. `Plans/w3f_event_oracle_plan.json` holds this family's predicate inventory. Phase 2 (2026-11-13) implements it",
+       "file_sha256": "4623d6a821793daf4f7eaeeecbb64981e0a86fcd21d2f483f414d14bebe1982f",
+       "quote_check": "exact",
+       "quote_scope": "unit CV-1461, Plans/Contracts_V0.md:46743-46830"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261105/W3F-self-grade.json",
+      "sha256": "026aba9b869fbfd37acd43c89e3f80e6df08d3fec88e5714647a5f87f61f7385",
+      "field": "positive_negative_oracles",
+      "status": "PASS"
+     }
+    }
+   }
+  }
+ ]
+}

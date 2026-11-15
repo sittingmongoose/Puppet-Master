@@ -374,6 +374,10 @@
   {
    "event_type": "scheduled_dispatch.updated",
    "outcome": "registered"
+  },
+  {
+   "event_type": "session_prompt.admitted",
+   "outcome": "registered"
   }
  ]
 }
