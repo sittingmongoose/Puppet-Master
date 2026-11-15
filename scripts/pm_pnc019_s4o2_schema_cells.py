@@ -404,7 +404,8 @@ def main():
                for p in (ROOT / "Plans").rglob("*.schema.json")
                if not any(part.startswith(".") or part == "_shards" for part in p.relative_to(ROOT / "Plans").parts)}
     sources.update({"scripts/" + name: hashlib.sha256((ROOT / "scripts" / name).read_bytes()).hexdigest()
-                    for name in ("pm_pnc019_s4o2_schema_cells.py", "pm_event_numbers.py", "pm_event_datetime.py")})
+                    for name in ("pm_pnc019_s4o2_schema_cells.py", "pm_pnc019_s4o2_oracles.py",
+                                 "pm_event_numbers.py", "pm_event_datetime.py")})
     sources[MANIFEST] = hashlib.sha256((ROOT / MANIFEST).read_bytes()).hexdigest()
     result = []
     for row in rows:

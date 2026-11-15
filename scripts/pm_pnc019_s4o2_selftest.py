@@ -90,6 +90,8 @@ class Assignment(unittest.TestCase):
             actual = [row for part in parts for row in spec["MODULES"][part][1]]
             self.assertEqual(actual, originals)
             self.assertTrue(all(1 <= len(tables.rows(part)) <= 8 for part in parts))
+            if phase in spec['SINGLETON_PHASES']:
+                self.assertTrue(all(len(tables.rows(part)) == 1 for part in parts))
             names = tables.fields(phase)
             for bits in itertools.product((False, True), repeat=len(names)):
                 value = dict(zip(names, bits))

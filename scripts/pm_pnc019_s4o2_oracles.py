@@ -94,9 +94,9 @@ def available_gib():
     raise RuntimeError("cannot determine available memory")
 
 
-def memory_floor():
-    while available_gib() < 12:
-        print("PAUSE: waiting for 12 GiB available", file=sys.stderr, flush=True)
+def memory_floor(minimum=12):
+    while available_gib() < minimum:
+        print(f"PAUSE: waiting for {minimum} GiB available", file=sys.stderr, flush=True)
         time.sleep(15)
 
 
@@ -110,7 +110,9 @@ def proof_jobs(lane, families, out):
     }
     if lane in tools:
         if lane == "DT":
-            flags += ["--family", "shared"]
+            # Generic identity and shared-only rows need witnesses from the
+            # complete DT cohort, including six names outside this assignment.
+            flags = []
         yield lane, ["scripts/" + tools[lane], *flags, "--out", str(out / lane), *resource]
     elif lane == "DG6B":
         # The existing adapter permits precisely named donor witnesses for
@@ -162,6 +164,11 @@ def source_snapshot(root):
               if p.is_file() and not any(part.startswith(".") or part == "_shards"
                                         for part in p.relative_to(root / "Plans").parts)]
     paths += [root / MANIFEST]
+    # DR's reference closure consumes this tracked schema even in a sparse
+    # checkout. Keep the rest of the unrelated audit tree outside the snapshot.
+    graph = root / "Plans/.audits/stage-a-plan-assurance-rolling-trial-packet-v1/CAPABILITY_OBLIGATION_GRAPH.schema.json"
+    if graph.is_file():
+        paths.append(graph)
     paths += [root / row["baseline_grade_source"] for row in manifest(root)["rows"]]
     return {str(p.relative_to(root)): digest(p) for p in sorted(paths)}
 
@@ -178,7 +185,7 @@ def run_jobs(lanes, out, root=ROOT):
     for lane in lanes:
         names = [r["event_type"] for r in document["rows"] if r["lane"] == lane]
         for label, arguments in proof_jobs(lane, names, out):
-            memory_floor()
+            memory_floor(14 if lane == "DG6A" else 12)
             command = [sys.executable, *arguments]
             print("START " + label, flush=True)
             started = time.monotonic()

@@ -18,21 +18,24 @@ HANDWRITTEN = {'decision_citation', 'storage_schema', 'current_header', 'current
                'writer_policy', 'cursor', 'panel_scope', 'concern_scope'}
 MODULES = {}
 PANEL_PHASES = {'history_shape', 'history_event', 'retry_retained_panel',
-                'panel_command_keys', 'append_result'}
+                'panel_command_keys', 'append_result', 'panel_command_keys_entailed',
+                'retry_retained_panel_entailed'}
+SINGLETON_PHASES = {'panel_command_keys_entailed', 'retry_retained_panel_entailed'}
 ALIASES = {}
 PANEL_ROWS = {}
 
 
 def module(name, doc, rows):
-    assert name not in MODULES and name not in HANDWRITTEN, name
+    assert name not in MODULES and name not in HANDWRITTEN and name not in ALIASES, name
     assert 1 <= len(rows) <= 16, (name, len(rows))
     assert len({r[0] for r in rows}) == len(rows), name
-    if name in PANEL_PHASES and len(rows) > 8:
+    limit = 1 if name in SINGLETON_PHASES else 8
+    if name in PANEL_PHASES and len(rows) > limit:
         PANEL_ROWS[name] = rows
         parts = []
-        for offset in range(0, len(rows), 8):
-            part = f'{name}__{offset // 8 + 1}'
-            module(part, doc, rows[offset:offset + 8])
+        for offset in range(0, len(rows), limit):
+            part = f'{name}__{offset // limit + 1}'
+            module(part, doc, rows[offset:offset + limit])
             parts.append(part)
         ALIASES[name] = tuple(parts)
         return
