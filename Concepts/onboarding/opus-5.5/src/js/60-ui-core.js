@@ -271,6 +271,8 @@
   /* Look reveal: a circular (Retro: stepped) reveal of the new world from the chosen tile. Browser View Transitions
      when available; otherwise the scene cross-fade already covers the change. Input never waits for it. */
   function applyLook(family, mode, originEl) {
+    /* (a look picked here is the person's choice: closed unfinished, the window saves it, FO-216) */
+    S.lookPicked = true;
     const apply = () => {
       try { window.PM_THEME.setFamily(family, { persist: false }); window.PM_THEME.setMode(mode, { persist: false }); }
       catch (_) { document.documentElement.setAttribute('data-theme', (typeof window.PM_THEME_PAINT_FAMILY === 'function' ? window.PM_THEME_PAINT_FAMILY(family) : family) + '-' + mode); }
@@ -1692,6 +1694,7 @@
     const sd = opts.screen && opts.seed !== false && SCREENS.defs[S.sess.screen].seed;
     if (sd) { try { sd(S); } catch (e) { console.warn('O55 seed', S.sess.screen, e); } }
     S.resumedShownOn = S.resumed ? S.sess.screen : null;
+    S.lookPicked = false;
     returnFocus = opts.returnFocus || document.activeElement;
     S.open = true; S.save();
     if (installHold) { installHold.disconnect(); installHold = null; }
@@ -1815,6 +1818,12 @@
     S.sess.status = reason === 'skip' ? 'skipped' : reason === 'done' ? 'done' : 'closed';
     /* (the look it leaves, for a resume to tell a look chosen since: lookChosenSince, FO-216) */
     if (S.sess.status === 'closed') S.sess.lookLeft = { page: PAGE_LOAD, painted: paintedLook(), stored: storedLook() };
+    /* the look chosen last wins wherever it was chosen (pm-fo-lead, FO-216): one picked in this window is saved as it closes
+       unfinished, as the finished setup saves it (O55.shell.commitLook, written once the close has played: flushLook
+       below), so the page keeps it and a reload shows it; a look the window only showed (a new install's Basic Dark, a
+       resumed run's own) is not a choice and is left unsaved, as before */
+    if (S.sess.status === 'closed' && S.lookPicked && O55.shell && O55.shell.commitLook) O55.shell.commitLook(S, { defer: true });
+    S.lookPicked = false;
     S.save();
     S.open = false; S.tip = null;
     const r = S.root;
