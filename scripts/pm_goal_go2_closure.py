@@ -424,6 +424,7 @@ def bench(args):
 # ---------------------------------------------------------------- close (GO's loop, memoized validator, reaching controls first)
 
 SAMPLED = collections.Counter()
+DONORS = [None]  # GO2: a Donors index in the residual pass
 MISMATCHES = []
 CONTROL_STORE = {}  # GO2: sha256 -> control, for every control a witness was found on (replayed on the reference validator)
 ORDERING = collections.Counter()
@@ -490,6 +491,8 @@ def search_clause(cl, clause, keyword, location, info, node, ident, v, nodes, se
             for control in seeds[:6]:
                 pools.append((control, variant))
         pools.append((None, 'swap'))
+        if DONORS[0] is not None:
+            pools.append((None, 'donor'))  # GO2 addition (residual pass): donor constructions
         for control, variant in pools:
             if COUNT[0] - root0 > budget or COUNT[0] - start > CLAUSE_CAP[0] or (
                     covered_at is not None and COUNT[0] - covered_at > COVERED_EXTRA):
@@ -500,16 +503,21 @@ def search_clause(cl, clause, keyword, location, info, node, ident, v, nodes, se
                 if best is None:
                     pools.extend((candidate, 'swapped') for candidate in cl.swap_candidates(v, controls, reach))
                 continue
-            if variant is None or variant == 'swapped':
+            if variant == 'donor':  # GO2
+                if best is None:
+                    built = donor_controls(cl, v, reach, seeds, controls, DONORS[0], by_ipath, CLAUSE_CAP[0] - (COUNT[0] - start))
+                    pools.extend((candidate, 'donated') for candidate in built)
+                continue
+            if variant is None or variant in ('swapped', 'donated'):
                 paths = list(cl.concrete(control, reach['ipath']))
                 base = control
-                if variant == 'swapped':
+                if variant in ('swapped', 'donated'):
                     attempts += 1
                     fingerprint = hashlib.sha256(pickle.dumps(base, protocol=5)).hexdigest()
                     if fingerprint not in known:
                         known.add(fingerprint)
                         controls.append(base)
-                        branch_controls.append(dict(clause=clause, variant='swap', sha256=fingerprint))
+                        branch_controls.append(dict(clause=clause, variant='swap' if variant == 'swapped' else 'donor', sha256=fingerprint))
             else:
                 attempts += 1
                 try:
@@ -564,7 +572,7 @@ def search_clause(cl, clause, keyword, location, info, node, ident, v, nodes, se
                     control_sha = hashlib.sha256(pickle.dumps(base, protocol=5)).hexdigest()  # GO2
                     witness = dict(path=[str(p) for p in path], edit=repr(edit)[:80], top_level=tops,
                                    input_sha256=hashlib.sha256(pickle.dumps(mutated, protocol=5)).hexdigest(),
-                                   control='suite' if variant is None else 'swap' if variant == 'swapped' else 'branch',
+                                   control='suite' if variant is None else 'swap' if variant == 'swapped' else 'donor' if variant == 'donated' else 'branch',
                                    control_sha256=control_sha,  # GO2
                                    replay=base64.b64encode(pickle.dumps((tuple(path), edit), protocol=5)).decode())  # GO2
                     if not cut:
@@ -767,6 +775,128 @@ def verify(args):
     return 1 if failures else 0
 
 
+# ---------------------------------------------------------------- GO2 donor construction (residual clauses only)
+
+class Donors:
+    """Real accepted sub-values: every member value, at every depth, of every accepted authored seed of every dumped
+    root (the frozen restore_point.deleted roots share their owner definitions), indexed by member name; distinct by
+    sha256. A donor is only ever used where the owner node at that location accepts it (checked by validation)."""
+
+    def __init__(self, seed_lists):
+        self.by_name = collections.defaultdict(dict)
+        self.items = collections.defaultdict(dict)
+        for seeds in seed_lists:
+            for seed in seeds:
+                self._index(seed, None)
+
+    def _index(self, value, name):
+        if isinstance(value, dict):
+            for k, x in value.items():
+                self.by_name[k].setdefault(sha(x), x)
+                self._index(x, k)
+        elif isinstance(value, list):
+            for x in value:
+                if name is not None:
+                    self.items[name].setdefault(sha(x), x)
+                self._index(x, name)
+
+    def candidates(self, name, limit=24):
+        pool = list(self.by_name.get(name, {}).values()) if isinstance(name, str) else []
+        return pool[:limit]
+
+
+def donor_repair(cl, v, value, keep, donors, rounds=12, tries=24):
+    """GO's error_repair with donors: each round takes the deepest failing nodes the owner validator reports; a missing
+    required member is filled from donors of that member name the member's subschema accepts; an unexpected member is
+    removed; any other failing node (outside the realized member `keep` and its ancestors) is replaced by the first
+    donor of its member name the failing subschema accepts, else by GO's generated value. Returns an accepted value
+    or None."""
+    value = copy.deepcopy(value)
+    keep = tuple(keep)
+    for _ in range(rounds):
+        errs = cl.errors_of(v, value)
+        if not errs:
+            return value
+        changed = False
+        for error in sorted(errs, key=lambda e: -len(e.absolute_path))[:8]:
+            where = tuple(error.absolute_path)
+            if where == keep[:len(where)] and error.validator not in ('required', 'additionalProperties', 'unevaluatedProperties'):
+                continue
+            node = error.schema if isinstance(error.schema, dict) else {}
+            resolver = cl.RESOLVERS.get(id(node), v._resolver)
+            try:
+                target = cl.get(value, where)
+            except (KeyError, IndexError, TypeError):
+                continue
+            if error.validator == 'required' and isinstance(target, dict):
+                for name in error.validator_value:
+                    if name in target:
+                        continue
+                    sub = node.get('properties', {}).get(name, {})
+                    pick = next((d for d in donors.candidates(name, tries) if cl.holds(v, sub, d, cl.RESOLVERS.get(id(sub), resolver))), None)
+                    target[name] = copy.deepcopy(pick) if pick is not None else cl.gen(sub, resolver, 0, 0)
+                    changed = True
+            elif error.validator in ('additionalProperties', 'unevaluatedProperties') and isinstance(target, dict):
+                allowed = set(node.get('properties', {}))
+                for name in [k for k in target if k not in allowed and not any(re.search(pat, k) for pat in node.get('patternProperties', {}))]:
+                    if where + (name,) != keep[:len(where) + 1]:
+                        del target[name]
+                        changed = True
+            elif where != keep[:len(where)] and where:
+                name = where[-1]
+                pick = next((d for d in donors.candidates(name, tries) if d != target and cl.holds(v, node, d, resolver)), None)
+                replacement = copy.deepcopy(pick) if pick is not None else cl.gen(node, resolver, 0, 0)
+                if replacement != target:
+                    value = cl.put(value, where, replacement)
+                    changed = True
+        if not changed:
+            return None
+    return value if not cl.errors_of(v, value) else None
+
+
+def donor_controls(cl, v, reach, seeds, controls, donors, by_ipath, budget_left, limit=4):
+    """GO2 addition for a residual clause: GO's realize() (create the members on the way, force the conditions on the
+    way) from real controls, then donor_repair; also selector flips on the way (GO's flip candidates) then donor_repair.
+    Only values the whole definition accepts are returned."""
+    out = []
+    start = cl.COUNT[0]
+    pool = list(seeds[:8]) + [c for c in controls[-8:] if all(c is not s for s in seeds[:8])]
+    for control in pool:
+        for variant in range(4):
+            if cl.COUNT[0] - start > budget_left or len(out) >= limit:
+                return out
+            try:
+                base, path = cl.realize(control, reach, variant, v)
+                if base is None:
+                    continue
+                realized = base
+                if cl.errors_of(v, base):
+                    base = donor_repair(cl, v, base, path, donors)
+                if base is None and variant == 0:  # GO's selector flips (ancestors of the realized member), then donors
+                    for prefix, k, choices in cl.selectors_of(path, reach['ipath'], by_ipath)[:12]:
+                        for choice in choices:
+                            if cl.COUNT[0] - start > budget_left:
+                                break
+                            candidate = copy.deepcopy(realized)
+                            try:
+                                target = cl.get(candidate, prefix)
+                            except (KeyError, IndexError, TypeError):
+                                continue
+                            if not isinstance(target, dict) or target.get(k) == choice:
+                                continue
+                            target[k] = copy.deepcopy(choice)
+                            base = donor_repair(cl, v, candidate, path, donors, rounds=8)
+                            if base is not None:
+                                break
+                        if base is not None:
+                            break
+            except Exception:  # noqa: BLE001 - a failed construction attempt
+                base = None
+            if base is not None and not cl.errors_of(v, base) and any(True for _ in cl.concrete(base, reach['ipath'])):
+                out.append(base)
+    return out
+
+
 def common_locations():
     import pm_goal_oracle_common as common
     return common._SCHEMA_LOCATIONS
@@ -858,6 +988,26 @@ def close(args):
         CONTROL_STORE.update(state.get('store', {}))
         print(f'resumed {len(state["entries"])} clauses', file=sys.stderr, flush=True)
     state.setdefault('tool_history', []).append(dict(tool_sha256=TOOL_SHA256, at_clauses=len(state['entries'])))
+    residual = {}
+    if args.residual:  # GO2 residual pass: every clause the earlier report classified other than UNCOVERED is kept as is
+        earlier = json.loads(Path(args.residual).read_text())
+        if earlier['root'] != root:
+            raise SystemExit('--residual report is for another root')
+        residual = earlier['clauses']
+        mine_set = {location + '/' + cl.name_of(keyword) for location, keyword in mine}
+        for clause, x in residual.items():
+            if x['cls'] != 'UNCOVERED' and clause not in state['entries'] and clause in mine_set:
+                state['entries'][clause] = dict(x, kept_from=dict(report=Path(args.residual).name,
+                                                                  report_sha256=hashlib.sha256(Path(args.residual).read_bytes()).hexdigest()))
+        import gzip
+        store_path = Path(str(args.residual) + '.controls.pkl.gz')
+        if store_path.exists():
+            CONTROL_STORE.update(pickle.loads(gzip.decompress(store_path.read_bytes())))
+    if args.donors:
+        lists = []
+        for path in args.donors:
+            lists += [e['seeds'] for e in load(path)['roots'].values()]
+        DONORS[0] = Donors(lists)
     controls = state['controls']
     known = {sha(c) for c in controls}
     budget = 10**12  # GO's runs used --per-clause 900, so the root budget never bound; the per-clause cap does
@@ -867,7 +1017,7 @@ def close(args):
     deadline = time.monotonic() + args.root_seconds if args.root_seconds else None
     for number, (location, keyword) in enumerate(mine):
         clause = location + '/' + cl.name_of(keyword)
-        if clause in state['entries']:
+        if clause in state['entries'] or (residual and clause not in residual):
             continue
         info, node = nodes[location], nodes[location]['node']
         if clause in carried:
@@ -920,6 +1070,7 @@ def close(args):
                   go_closure_sha256=cl.TOOL_SHA256, root=root, clause_shard=args.clause_shard, clauses_in_root=len(work),
                   clauses_in_shard=len(mine), validator='reference' if args.reference else 'memo',
                   args=dict(clause_cap=args.clause_cap, carry=args.carry, distinct_from=[str(x) for x in args.distinct_from],
+                            residual=str(args.residual) if args.residual else None, donors=[str(x) for x in args.donors],
                             root_seconds=args.root_seconds, reorder=not args.no_reorder),
                   families=entry['families'], rows=entry['rows'], sites=entry['sites'][:12], kind=entry['kind'],
                   seeds=len(seeds), seed_sha256=entry['seed_sha256'], seed_policy='authored', dump_meta=data['meta'],
@@ -964,6 +1115,8 @@ def main():
     c.add_argument('--resume', action='store_true')
     c.add_argument('--reference', action='store_true', help='run on the reference validator (no memo)')
     c.add_argument('--no-reorder', action='store_true')
+    c.add_argument('--residual', type=Path, help='re-search only the clauses this earlier GO2 report left UNCOVERED')
+    c.add_argument('--donors', nargs='*', default=[], type=Path, help='root dumps whose seeds feed the donor construction')
     c.add_argument('--sample-every', type=int, default=400, help='compare every Nth memo validation with the reference')
     w = sub.add_parser('verify')
     w.add_argument('--dump', type=Path, required=True)
