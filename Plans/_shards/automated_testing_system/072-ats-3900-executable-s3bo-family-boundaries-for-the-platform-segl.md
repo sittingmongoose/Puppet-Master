@@ -4,7 +4,7 @@ Source: `Plans/Automated_Testing_System.md`
 
 Source lines: L14542-L14632
 
-Source SHA256: `b8303b0d9199aee7d0401c40fb6b8865ef9140a60c84ddb55e48a86005f26a5b`
+Source SHA256: `0a4d9955f518188db0d7dafcfa0f8fdfc2077736b1db6c51fd35b2fde068deae`
 
 ---
 
@@ -22,7 +22,7 @@ For `storage.integrity_detected`, the SP-279 producer is executed over the findi
 
 For `storage.recovery_applied`, the SP-293 capsule boundary is executed over the six action fixtures: the input, prepared-postcondition and physical-receipt MP digests and every identity derived from them; the closed phase graph with `recovery_required` keeping the last proven phase, a committed capsule never reopened and revisions advancing by one; every captured field immutable; the frozen producer input and payload derived from the physical receipt; one append at the commit step and replay of the same receipt after a durable commit frame; the exact `publish.v1` response; the SP-2207 aftermath classes (new generation, kept generation, hold) after a verified receipt with no newer block, repeating nothing on restart; and the passive read with its exact fields, freshness `current`, `refreshing` or `stale`, health `healthy` or `degraded` from the current source contract, and typed unavailable for any missing proof, permission or foreign selector.
 
-`scripts/pm-s3bo-check.py corpus` runs the whole shared number and date-time corpus through every common payload, envelope and receipt slot of these families and through each declared boundary slot. These are deterministic fixture comparisons of presented protocol outcomes against owner rules over independently held inputs, plus the replay of one frozen external package; they do not authenticate a native Store or execute native producers. Native conformance remains NOT_RUN for all five families.
+`scripts/pm-s3bo-check.py corpus` runs the whole shared number and date-time corpus through every common payload, envelope and receipt slot of these families and through each declared boundary slot; the seglog payload `seq` slot changes together with the common reference copy it is joined to, as `batteries` already does. These are deterministic fixture comparisons of presented protocol outcomes against owner rules over independently held inputs, plus the replay of one frozen external package; they do not authenticate a native Store or execute native producers. Native conformance remains NOT_RUN for all five families.
 
 ```yaml
 plan_unit_id: ATS-3900
