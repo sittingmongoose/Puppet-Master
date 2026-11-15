@@ -1770,14 +1770,18 @@
      Otherwise the run's own look comes back, as before (a reload painted the saved theme while the drafts kept the pick).
      Lane Q's probe: Settings to NieR Light after a run in Basic Light, resumed, showed Basic Light, NieR off, and left it. */
   const PAGE_LOAD = String((window.performance && performance.timeOrigin) || Date.now());
+  /* (NieR's parts and background are part of the look: a background changed alone in Settings is a choice too, R55 F2) */
   function paintedLook() {
     const th = O55.theme(), n = window.PM_NIER;
-    return [askedFamily(th), th.selectedMode, !!(n && (n.wanted ? n.wanted() : n.on()))].join('|');
+    let parts = '', bg = '';
+    try { if (n && n.parts) parts = n.parts().slice().sort().join(','); if (n && n.background) bg = String(n.background() || ''); } catch (_) { /* not ready */ }
+    return [askedFamily(th), th.selectedMode, !!(n && (n.wanted ? n.wanted() : n.on())), parts, bg].join('|');
   }
   function storedLook() {
     try {
       const P = window.PM51; if (!P || typeof P.value !== 'function') return null;
-      return ['general.visual.theme', 'general.visual.theme-mode', 'general.visual.nier-mode'].map((id) => String(P.value(id) ?? '')).concat(window.PM_ACTIVE_PROJECT_ID || '').join('|');
+      const v = (id) => { const x = P.value(id); return Array.isArray(x) ? x.slice().sort().join(',') : String(x ?? ''); };
+      return ['general.visual.theme', 'general.visual.theme-mode', 'general.visual.nier-mode', 'general.visual.nier-parts', 'general.visual.nier-background'].map(v).concat(window.PM_ACTIVE_PROJECT_ID || '').join('|');
     } catch (_) { return null; }
   }
   function lookChosenSince(left) {

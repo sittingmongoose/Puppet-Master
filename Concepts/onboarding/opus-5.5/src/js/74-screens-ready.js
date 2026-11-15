@@ -59,7 +59,9 @@
     /* the theme first (NieR is a theme since Q22: its preview follows this write), then NieR's Adjust rows, so dropping
        the preview finds the stored theme already matching what is painted */
     const d = md(S), tome = window.PM7_SETTINGS_TOME, key = [window.PM_ACTIVE_PROJECT_ID || '', d.theme_family, d.theme_mode].join('|');
-    let ok = key === lookWritten;
+    /* (written once per Project and look, while Settings still holds it: a look written here and changed in Settings since
+       is written again when it is chosen again, R55 F1 of FO-216) */
+    let ok = key === lookWritten && heldNow(d);
     if (!ok) {
       lookWritten = key;
       try { if (tome && tome.setChromeThemeFamily) { tome.setChromeThemeFamily(d.theme_family); tome.setChromeThemeMode(d.theme_mode); ok = true; } } catch (_) {}
@@ -67,6 +69,15 @@
     }
     if (O55.nierLook && O55.nierLook.commit) O55.nierLook.commit(S);
     return ok;
+  }
+  /* does Settings hold this look now (its Theme is the family's label, 'Glass Light' or 'NieR'; its mode 'Light', 'Dark' or
+     'Auto')? Without Settings' values, the write cache alone decides, as it did */
+  function heldNow(d) {
+    try {
+      const P = window.PM51; if (!P || typeof P.value !== 'function') return true;
+      const fam = String(P.value('general.visual.theme') || '').trim().split(/[\s-]+/)[0].toLowerCase(), mode = String(P.value('general.visual.theme-mode') || '').toLowerCase();
+      return fam === String(d.theme_family || '').toLowerCase() && mode === String(d.theme_mode || '').toLowerCase();
+    } catch (_) { return true; }
   }
   /* a page that goes away still saves the look it was given */
   window.addEventListener('pagehide', () => { if (look) writeLook(); });
