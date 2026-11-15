@@ -506,12 +506,14 @@ def search_clause(cl, clause, keyword, location, info, node, ident, v, nodes, se
         # adaptive shares (what one reach leaves unused flows to the next); a residual pass gives the donor stage two
         # thirds of the cap, because GO's own pools already ran in full for these clauses in the earlier pass
         total = (2 * CLAUSE_CAP[0]) // 3 if RESIDUAL[0] else CLAUSE_CAP[0] // 3
-        for number, reach in enumerate(reaches):
+        promise = {id(r): max([plausible(cl, c, r) for c in list(controls)[:120]] or [0]) for r in reaches}
+        for number, reach in enumerate(sorted(reaches, key=lambda r: -promise[id(r)])):  # most promising reach first
             left = total - (COUNT[0] - start)
             if left <= 0:
                 break
             try:
-                donated[id(reach)] = donor_controls(cl, v, reach, seeds, controls, DONORS[0], by_ipath, left // (len(reaches) - number))
+                share = min(left, max(left // (len(reaches) - number), 250))  # enough for one reach to finish an entry
+                donated[id(reach)] = donor_controls(cl, v, reach, seeds, controls, DONORS[0], by_ipath, share)
             except Exception as exc:  # noqa: BLE001 - a failed construction attempt (counted)
                 STATS['donor_error:' + type(exc).__name__] += 1
                 donated[id(reach)] = []
