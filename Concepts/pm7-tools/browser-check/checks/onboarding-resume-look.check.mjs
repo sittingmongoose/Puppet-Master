@@ -26,7 +26,8 @@
 // Stream F's blind review (sol-review-fo216 R1): (9) a reload with the resumed window still open keeps the look picked in
 // it (normal surface): NieR Light set in Settings, Basic Dark picked in the resumed window, the page reloaded with the window
 // open: the page shows Basic Dark and the run's saved drafts are Basic Dark; and the reverse, Glass Light set, NieR Dark
-// picked; and with nothing picked (a new install's Basic Dark only shown), a reload writes nothing: Settings' look stays.
+// picked, then Back to Welcome (a pick and no close); and with nothing picked (a new install's Basic Dark only shown), a
+// reload writes nothing: Settings' look stays.
 // No timing rows. --set looks=basic-light,nier-dark runs those cases alone; --set extra=0 leaves out the finish, Reduced
 // Motion, reload, pick, R55 and open-reload cases; --set only=r55 runs the R55 cases alone, --set only=openreload the
 // open-reload ones.
@@ -294,8 +295,8 @@ async function nierBackground(t, sandbox) {
 
 /* sol-review-fo216 R1: the page reloaded while the resumed window is open still shows the look picked in it, and the run's
    saved drafts agree (normal surface: nothing survives a reload in the sandbox) */
-async function openReload(t, set, pick) {
-	const tag = `normal: Settings ${set}, ${pick} picked in the resumed window, reloaded with the window open`;
+async function openReload(t, set, pick, { back = false } = {}) {
+	const tag = `normal: Settings ${set}, ${pick} picked in the resumed window${back ? ', then Back to Welcome' : ''}, reloaded with the window open`;
 	await t.emulate({ reducedMotion: 'no-preference' });
 	const f = await t.app.open({ onboarding: true, query: 'o55=fresh&o55scenario=fresh', sandbox: false, settleMs: 1500 });
 	let A = app(t, f);
@@ -307,6 +308,7 @@ async function openReload(t, set, pick) {
 	await pickIn(r.f, A, P.family, P.mode);
 	const p0 = await A.page();
 	await t.check(`${tag}: picked, the page shows ${pick}`, held(pick, p0), JSON.stringify(p0));
+	if (back) await A.click('back', null, 'welcome');
 	await t.page.reload({ waitUntil: 'domcontentloaded' });
 	const nf = t.page.mainFrame();
 	await nf.waitForFunction(() => !!(window.O55 && O55.store) && !(window.PM_LOOK_COVERED && PM_LOOK_COVERED()) && !!(window.PM_NIER && (!PM_NIER.ready || PM_NIER.ready())), null, { timeout: 30000 }).catch(() => {});
@@ -334,7 +336,7 @@ async function openReloadNoPick(t) {
 export default async function (t) {
 	await t.viewport(1440, 960);
 	const looks = t.args.looks ? String(t.args.looks).split(',') : ALL;
-	if (t.args.only === 'openreload') { if (t.app.surfaces().includes('normal')) { await openReload(t, 'nier-light', 'basic-dark'); await openReload(t, 'glass-light', 'nier-dark'); await openReloadNoPick(t); } return; }
+	if (t.args.only === 'openreload') { if (t.app.surfaces().includes('normal')) { await openReload(t, 'nier-light', 'basic-dark'); await openReload(t, 'glass-light', 'nier-dark', { back: true }); await openReloadNoPick(t); } return; }
 	if (t.args.only === 'r55') { for (const s of t.app.surfaces()) { await again(t, s === 'sandbox'); await nierBackground(t, s === 'sandbox'); } await t.emulate({ reducedMotion: 'no-preference' }); return; }
 	for (const s of t.app.surfaces()) {
 		const sandbox = s === 'sandbox';
@@ -347,7 +349,7 @@ export default async function (t) {
 			await picked(t, sandbox, 'glass-dark', 'nier-dark');
 			await again(t, sandbox);
 			await nierBackground(t, sandbox);
-			if (!sandbox) { await openReload(t, 'nier-light', 'basic-dark'); await openReload(t, 'glass-light', 'nier-dark'); await openReloadNoPick(t); }
+			if (!sandbox) { await openReload(t, 'nier-light', 'basic-dark'); await openReload(t, 'glass-light', 'nier-dark', { back: true }); await openReloadNoPick(t); }
 		}
 	}
 	await t.emulate({ reducedMotion: 'no-preference' });
