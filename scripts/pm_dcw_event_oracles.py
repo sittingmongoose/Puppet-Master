@@ -479,6 +479,7 @@ def index_read(index, reader, authority=None, event_validator=None):
     check_schema('Plans/event_record_index_checkpoint.schema.json', checkpoint, 'checkpoint')
     check_schema('Plans/event_record_index_checkpoint.schema.json', reader['live_token'], 'read_token')
     guard_rows.enforce('O115', {'site': 'O115', 'code': 'index_currentness', 'v0': generation['state']})
+    guard_rows.enforce('O234', {'site': 'O234', 'code': 'index_translation_unverified', 'v0': generation['translation']})
     guard_rows.enforce('O116', {'site': 'O116', 'code': 'index_currentness', 'v0': frontier['source_selection'], 'v1': index['current_source']['source_selection']})
     guard_rows.enforce('O117', {'site': 'O117', 'code': 'index_coverage', 'v0': frontier['coverage']['complete_to_captured_boundary']})
     rows = index['datasets'][generation['index_dataset_name']]
