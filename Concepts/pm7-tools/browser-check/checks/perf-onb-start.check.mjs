@@ -30,6 +30,8 @@
 // cache warm), neither judged. Then, under Reduced Motion (unchanged by FO-206):
 // Start shows the new screen in the click's own task (no hold, no entrance).
 // Both surfaces (--set sandbox=0 and 1). About 40 s a surface.
+import fs from 'node:fs';
+
 const ARM = () => {
 	if (window.__pos) return;
 	const P = window.__pos = { on: false, n: 0, ts: [], lt: [], click: 0, build: 0, show: 0, frame: 0, paint: 0, screen: null, shownInClick: null };
@@ -169,6 +171,8 @@ async function surface(t, sandbox) {
 			await f.waitForFunction(() => { const s = window.O55.ui.prewarm.state(); return s.phase === 'done'; }, null, { timeout: 30000 }).catch(() => {});
 			await f.waitForTimeout(300);
 			const after = await pane.screenshot();
+			// (T_DIR set: both pictures are kept when they differ, to see where)
+			if (!during.equals(after) && process.env.T_DIR) { fs.writeFileSync(`${process.env.T_DIR}/rm-${tag}-during.png`, during); fs.writeFileSync(`${process.env.T_DIR}/rm-${tag}-after.png`, after); }
 			await t.check(`${tag}: Reduced Motion: the pre-draw changes nothing on screen (the pane during it and after it, the same pixels)`, during.equals(after), `${during.length} and ${after.length} bytes; state ${JSON.stringify(await pdState(f))}`);
 		} else await t.check(`${tag}: Reduced Motion: the pre-draw was seen running`, false, JSON.stringify(await pdState(f)));
 	}
