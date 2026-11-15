@@ -130,6 +130,7 @@ def signature(v, value, cut=frozenset()):
 # ---------------------------------------------------------------- the memoizing validator
 
 MEMO_TYPES = ()
+NONE = object()  # 'no candidate' (None is a value)
 STATS = collections.Counter()
 MEMO_RSS_MB = [1650]  # safety valve: clear the memo tables (always safe) when the process grows past this
 MEMO_ENTRIES = [2500000]  # normal trigger: memo table entries
@@ -485,15 +486,31 @@ def search_clause(cl, clause, keyword, location, info, node, ident, v, nodes, se
     start = COUNT[0]
     out_of_time = deadline is not None and time.monotonic() > deadline
     covered_at = None
-    for reach in [r for r in info['reach'] if not any(c[0] in APART for c in r['ctx'])][:6] if not out_of_time else []:
-        pools = [(c, None) for c in controls[:40]]
+    reaches = [r for r in info['reach'] if not any(c[0] in APART for c in r['ctx'])][:6] if not out_of_time else []
+    donated = {}
+    if DONORS[0] is not None and reaches:  # GO2 addition (residual pass): donor constructions for every reach first
+        total = (2 * CLAUSE_CAP[0]) // 3  # adaptive shares: what one reach leaves unused flows to the next
+        for number, reach in enumerate(reaches):
+            left = total - (COUNT[0] - start)
+            if left <= 0:
+                break
+            try:
+                donated[id(reach)] = donor_controls(cl, v, reach, seeds, controls, DONORS[0], by_ipath, left // (len(reaches) - number))
+            except Exception as exc:  # noqa: BLE001 - a failed construction attempt (counted)
+                STATS['donor_error:' + type(exc).__name__] += 1
+                donated[id(reach)] = []
+            if donated[id(reach)]:
+                break  # one reach with a built control is enough to test the clause's defects
+    reaches = sorted(reaches, key=lambda r: not donated.get(id(r)))  # GO2: a reach with built controls is searched first
+    for reach in reaches:
+        pools = [(c, 'donated') for c in donated.get(id(reach), [])] + [(c, None) for c in controls[:40]]
         for variant in range(4):
             for control in seeds[:6]:
                 pools.append((control, variant))
         pools.append((None, 'swap'))
-        if DONORS[0] is not None:
-            pools.append((None, 'donor'))  # GO2 addition (residual pass): donor constructions
+        position = -1
         for control, variant in pools:
+            position += 1
             if COUNT[0] - root0 > budget or COUNT[0] - start > CLAUSE_CAP[0] or (
                     covered_at is not None and COUNT[0] - covered_at > COVERED_EXTRA):
                 break
@@ -502,11 +519,6 @@ def search_clause(cl, clause, keyword, location, info, node, ident, v, nodes, se
             if variant == 'swap':
                 if best is None:
                     pools.extend((candidate, 'swapped') for candidate in cl.swap_candidates(v, controls, reach))
-                continue
-            if variant == 'donor':  # GO2
-                if best is None:
-                    built = donor_controls(cl, v, reach, seeds, controls, DONORS[0], by_ipath, CLAUSE_CAP[0] - (COUNT[0] - start))
-                    pools.extend((candidate, 'donated') for candidate in built)
                 continue
             if variant is None or variant in ('swapped', 'donated'):
                 paths = list(cl.concrete(control, reach['ipath']))
@@ -841,8 +853,8 @@ def donor_repair(cl, v, value, keep, donors, rounds=12, tries=24):
                     if name in target:
                         continue
                     sub = node.get('properties', {}).get(name, {})
-                    pick = next((d for d in donors.candidates(name, tries) if cl.holds(v, sub, d, cl.RESOLVERS.get(id(sub), resolver))), None)
-                    target[name] = copy.deepcopy(pick) if pick is not None else cl.gen(sub, resolver, 0, 0)
+                    pick = next((d for d in donors.candidates(name, tries) if cl.holds(v, sub, d, cl.RESOLVERS.get(id(sub), resolver))), NONE)
+                    target[name] = copy.deepcopy(pick) if pick is not NONE else cl.gen(sub, resolver, 0, 0)
                     changed = True
             elif error.validator in ('additionalProperties', 'unevaluatedProperties') and isinstance(target, dict):
                 allowed = set(node.get('properties', {}))
@@ -852,14 +864,31 @@ def donor_repair(cl, v, value, keep, donors, rounds=12, tries=24):
                         changed = True
             elif where != keep[:len(where)] and where:
                 name = where[-1]
-                pick = next((d for d in donors.candidates(name, tries) if d != target and cl.holds(v, node, d, resolver)), None)
-                replacement = copy.deepcopy(pick) if pick is not None else cl.gen(node, resolver, 0, 0)
+                pick = next((d for d in donors.candidates(name, tries) if d != target and cl.holds(v, node, d, resolver)), NONE)
+                replacement = copy.deepcopy(pick) if pick is not NONE else cl.gen(node, resolver, 0, 0)
                 if replacement != target:
                     value = cl.put(value, where, replacement)
                     changed = True
         if not changed:
             return None
     return value if not cl.errors_of(v, value) else None
+
+
+def takes(cl, v, value, reach):
+    """The value holds the reach's location with every union alternative and conditional branch on the way taken."""
+    for path in cl.concrete(value, reach['ipath']):
+        ok = True
+        for kind, depth, index, owner, resolver, obj in reach['ctx']:
+            at = cl.get(value, path[:depth])
+            if kind in ('anyOf', 'oneOf'):
+                ok = cl.holds(v, owner[kind][index], at, resolver)
+            elif kind in ('then', 'else'):
+                ok = cl.holds(v, owner['if'], at, resolver) == (kind == 'then')
+            if not ok:
+                break
+        if ok:
+            return True
+    return False
 
 
 def donor_controls(cl, v, reach, seeds, controls, donors, by_ipath, budget_left, limit=4):
@@ -869,6 +898,38 @@ def donor_controls(cl, v, reach, seeds, controls, donors, by_ipath, budget_left,
     out = []
     start = cl.COUNT[0]
     pool = list(seeds[:8]) + [c for c in controls[-8:] if all(c is not s for s in seeds[:8])]
+    # GO2: branch entry from every distinct control (protected selectors), scored by the errors left; the three closest
+    # are greedily repaired. Distinct: one control per signature of the enum/boolean members on the way.
+    entered, signatures = [], set()
+    for control in diverse(cl, list(controls)[:400], reach)[:200]:
+        if cl.COUNT[0] - start > (2 * budget_left) // 3:
+            break
+        try:
+            built = enter_light(cl, v, control, reach, donors)
+        except Exception:  # noqa: BLE001 - a failed construction attempt
+            built = None
+        if not built:
+            continue
+        base, protect = built
+        signature = sha(base)
+        if signature in signatures:
+            continue
+        signatures.add(signature)
+        score, _ = _score(cl, v, base)
+        entered.append((score, len(entered), base, protect))
+        if score == (0, 0):
+            break  # an entered control the definition already accepts
+    for score, _, base, protect in sorted(entered, key=lambda x: (x[0], x[1]))[:3]:
+        if cl.COUNT[0] - start > budget_left or len(out) >= limit:
+            break
+        try:
+            built = base if score == (0, 0) else greedy_repair(cl, v, base, protect, donors,
+                                                               budget=min(300, budget_left - (cl.COUNT[0] - start)))
+        except Exception:  # noqa: BLE001
+            built = None
+        if built is not None and not cl.errors_of(v, built) and takes(cl, v, built, reach):
+            out.append(built)
+            break
     for control in pool:
         for variant in range(4):
             if cl.COUNT[0] - start > budget_left or len(out) >= limit:
@@ -900,7 +961,7 @@ def donor_controls(cl, v, reach, seeds, controls, donors, by_ipath, budget_left,
                             break
             except Exception:  # noqa: BLE001 - a failed construction attempt
                 base = None
-            if base is not None and not cl.errors_of(v, base) and any(True for _ in cl.concrete(base, reach['ipath'])):
+            if base is not None and not cl.errors_of(v, base) and takes(cl, v, base, reach):
                 out.append(base)
     return out
 
@@ -951,6 +1012,286 @@ def merge_shards(args):
     Path(str(args.out) + '.controls.pkl.gz').write_bytes(gzip.compress(pickle.dumps(store, protocol=5)))
     print(json.dumps(dict(root=root[:40], clauses=len(clauses), counts=dict(counts), controls=len(store))))
     return 0
+
+
+def _score(cl, v, value):
+    errs = cl.errors_of(v, value)
+    def size(es):
+        return sum(1 + size(e.context or ()) for e in es)
+    return (len(errs), size(errs)), errs
+
+
+def _protected(where, protect):
+    """A failing location the repair must not overwrite: a forced selector member, the realized member, or an ancestor."""
+    return any(where == p[:len(where)] for p in protect)
+
+
+def greedy_repair(cl, v, value, protect, donors, rounds=14, tries=10, budget=600):
+    """GO2 addition: repair toward a value the whole definition accepts. Each round takes the deepest failing node not
+    protected; candidates are the failing subschema's own const/enum values, null, removal of an optional member, real
+    donor values of that member name and GO's generated values; the candidate leaving the fewest errors is kept, only if
+    it lowers the error count. Returns (accepted value or None)."""
+    start = cl.COUNT[0]
+    value = copy.deepcopy(value)
+    best, errs = _score(cl, v, value)
+    for _ in range(rounds):
+        if not errs:
+            return value
+        if cl.COUNT[0] - start > budget:
+            return None
+        improved = False
+        for error in sorted(errs, key=lambda e: -len(e.absolute_path))[:6]:
+            where = tuple(error.absolute_path)
+            node = error.schema if isinstance(error.schema, dict) else {}
+            resolver = cl.RESOLVERS.get(id(node), v._resolver)
+            try:
+                target = cl.get(value, where)
+            except (KeyError, IndexError, TypeError):
+                continue
+            options = []
+            if error.validator == 'required' and isinstance(target, dict):
+                for name in error.validator_value:
+                    if name in target:
+                        continue
+                    sub = node.get('properties', {}).get(name, {})
+                    for d in donors.candidates(name, tries) + [cl.gen(sub, resolver, 0, 0), cl.gen(sub, resolver, 0, 1), None]:
+                        options.append(('set', where + (name,), d))
+            elif error.validator in ('additionalProperties', 'unevaluatedProperties') and isinstance(target, dict):
+                allowed = set(node.get('properties', {}))
+                extra = [k for k in target if k not in allowed and not any(re.search(pat, k) for pat in node.get('patternProperties', {}))]
+                options.append(('drop', where, extra))
+            elif where and not _protected(where, protect):
+                pool = []
+                for word in ('const',):
+                    if word in node:
+                        pool.append(node[word])
+                pool += list(node.get('enum', []))[:8]
+                pool += [None] + donors.candidates(where[-1], tries)
+                for variant in (0, 1):
+                    try:
+                        pool.append(cl.gen(node, resolver, 0, variant))
+                    except Exception:  # noqa: BLE001
+                        pass
+                for d in pool:
+                    if d != target:
+                        options.append(('set', where, d))
+                parent = cl.get(value, where[:-1]) if len(where) >= 1 else None
+                if isinstance(parent, dict) and isinstance(where[-1], str):
+                    options.append(('del', where, None))
+            seen = set()
+            for kind, at, payload in options[:3 * tries + 8]:
+                key = (kind, at, sha(payload))
+                if key in seen:
+                    continue
+                seen.add(key)
+                candidate = copy.deepcopy(value)
+                try:
+                    if kind == 'set':
+                        candidate = cl.put(candidate, at, copy.deepcopy(payload))
+                    elif kind == 'del':
+                        del cl.get(candidate, at[:-1])[at[-1]]
+                    else:
+                        holder = cl.get(candidate, at)
+                        for k in payload:
+                            if at + (k,) not in protect:
+                                del holder[k]
+                except (KeyError, IndexError, TypeError):
+                    continue
+                score, cerrs = _score(cl, v, candidate)
+                if score < best:
+                    best, errs, value, improved = score, cerrs, candidate, True
+                    if not cerrs:
+                        return value
+            if improved:
+                break
+        if not improved:
+            return None
+    return value if not errs else None
+
+
+def _force(cl, v, target, condition, resolver, want, donors, prefix):
+    """Set the members an `if` reads so it holds (want=True) or fails (want=False). Returns the forced member paths,
+    or None when no candidate does it."""
+    forced = []
+    props = condition.get('properties', {})
+    if want:
+        for prop, sub in props.items():
+            sub, sub_res = cl.deref(sub, resolver)
+            if isinstance(target.get(prop), (dict, list, str, int, float, bool)) or target.get(prop) is None:
+                if prop in target and cl.holds(v, sub, target.get(prop), sub_res):
+                    continue
+            if 'const' in sub or 'enum' in sub:
+                target[prop] = copy.deepcopy(sub['const'] if 'const' in sub else sub['enum'][0])
+            elif isinstance(sub.get('properties'), dict) and isinstance(target.get(prop), dict):
+                inner = _force(cl, v, target[prop], sub, sub_res, True, donors, prefix + (prop,))
+                if inner is None:
+                    return None
+                forced += inner
+            else:
+                pick = next((d for d in donors.candidates(prop) if cl.holds(v, sub, d, sub_res)), NONE)
+                if pick is NONE:
+                    return None
+                target[prop] = copy.deepcopy(pick)
+            forced.append(prefix + (prop,))
+        for prop in condition.get('required', []):
+            if prop not in target:
+                return None
+        return forced
+    # want False: break one member the `if` reads
+    for prop in list(condition.get('required', [])) + [p for p in props if p not in condition.get('required', [])]:
+        sub, sub_res = cl.deref(props.get(prop, {}), resolver)
+        for candidate in [None, '__remove__'] + donors.candidates(prop, 12):
+            trial = copy.deepcopy(target)
+            if candidate == '__remove__':
+                if prop not in trial:
+                    continue
+                del trial[prop]
+            else:
+                trial[prop] = copy.deepcopy(candidate)
+            if not cl.holds(v, condition, trial, resolver):
+                target.clear()
+                target.update(trial)
+                return [prefix + (prop,)]
+    return None
+
+
+def diverse(cl, controls, reach):
+    """Order construction starting points so each distinct selector signature comes first: the short scalar members
+    (booleans, null, short strings, small integers) of every object on the reach's path, at depth one below it too."""
+    def signature(control):
+        out = []
+        node, here = control, ()
+        for segment in (s for s, _, _ in reach['steps']):
+            if isinstance(node, dict):
+                for k, x in node.items():
+                    if x is None or isinstance(x, bool) or (isinstance(x, str) and len(x) <= 32) or (type(x) is int and abs(x) < 64):
+                        out.append((here, k, x))
+                    elif isinstance(x, dict):
+                        out += [(here + (k,), k2, y) for k2, y in x.items()
+                                if y is None or isinstance(y, bool) or (isinstance(y, str) and len(y) <= 32)]
+            if segment in ('#', '*') or not isinstance(node, (dict, list)):
+                break
+            try:
+                node = node[segment]
+            except (KeyError, IndexError, TypeError):
+                break
+            here += (segment,)
+        return sha(sorted(map(repr, out)))
+    first, rest, seen = [], [], set()
+    for control in controls:
+        key = signature(control)
+        (rest if key in seen else first).append(control)
+        seen.add(key)
+    return first + rest
+
+
+def enter_light(cl, v, control, reach, donors):
+    """GO2: the members on the way are created as GO's realize() creates them (generated from the step's subschema when
+    missing or null), without re-applying every conditional of every object; then each conditional of the reach that is
+    not yet taken is entered by _force. Returns (value, protected paths) or None."""
+    value = copy.deepcopy(control)
+    path = ()
+    steps = reach['steps']
+    for number, (segment, child, resolver) in enumerate(steps):
+        here = cl.get(value, path)
+        last = number == len(steps) - 1
+        if segment == '#':
+            if not isinstance(here, list):
+                return None
+            if not here:
+                here.append(cl.gen(child, resolver, 0, 0))
+            path += (0,)
+        elif segment == '*':
+            if not isinstance(here, dict):
+                return None
+            if not here:
+                here['gc_key'] = cl.gen(child, resolver, 0, 0)
+            path += (next(iter(here)),)
+        elif isinstance(segment, int):
+            if not isinstance(here, list) or len(here) <= segment:
+                return None
+            path += (segment,)
+        else:
+            if not isinstance(here, dict):
+                return None
+            if segment not in here or (not last and here[segment] is None):
+                here[segment] = cl.gen(child, resolver, 0, 0)
+            path += (segment,)
+    protect = {path}
+    selectors = set()
+    for kind, depth, index, owner, resolver, obj in reach['ctx']:
+        at = tuple(path[:depth])
+        target = cl.get(value, at)
+        if kind in ('then', 'else') and isinstance(target, dict):
+            condition, cres = cl.deref(owner['if'], resolver)
+            if cl.holds(v, condition, target, cres) != (kind == 'then'):
+                forced = _force(cl, v, target, condition, cres, kind == 'then', donors, at)
+                if forced is None:
+                    return None
+                protect |= set(forced)
+                selectors |= set(forced)
+            else:
+                taken = {at + (q,) for q in condition.get('properties', {}) if q in target}
+                protect |= taken
+                selectors |= taken
+            # the taken branch's own members that refuse their current value: const/enum, null, a donor, a generated value
+            branch, bres = cl.deref(owner.get(kind, {}), resolver)
+            for q, sub in (branch.get('properties', {}) if isinstance(branch, dict) else {}).items():
+                if q not in target or at + (q,) in selectors:
+                    continue
+                sub, sres = cl.deref(sub, bres)
+                if cl.holds(v, sub, target[q], sres):
+                    continue
+                if isinstance(target[q], dict) and isinstance(sub.get('properties'), dict) and 'type' not in sub:
+                    # a nested pin on an existing object: pin its members in place, never replace the object
+                    trial = copy.deepcopy(target[q])
+                    if _force(cl, v, trial, sub, sres, True, donors, at + (q,)) is not None and cl.holds(v, sub, trial, sres):
+                        target[q] = trial
+                        continue
+                pool = ([sub['const']] if 'const' in sub else []) + list(sub.get('enum', []))[:4] + [None]
+                pool += [d for d in donors.candidates(q, 8)]
+                try:
+                    pool.append(cl.gen(sub, sres, 0, 0))
+                except Exception:  # noqa: BLE001
+                    pass
+                pick = next((x for x in pool if cl.holds(v, sub, x, sres)), NONE)
+                if pick is not NONE:
+                    target[q] = copy.deepcopy(pick)
+    return value, protect
+
+
+def enter_branch(cl, v, control, reach, donors, budget, repair=True):
+    """GO2 addition: build a control holding the clause's location inside every union alternative and branch of its
+    reach: GO's realize() (members on the way), then for each conditional on the way that is not yet taken, force the
+    members its `if` reads (then: const/enum/nested pins or a donor the selector accepts; else: null, removal or a donor
+    the selector refuses), protect those members, and greedy_repair everything else."""
+    base, path = cl.realize(control, reach, 0, v)
+    if base is None:
+        return None
+    protect = {tuple(path)}
+    for kind, depth, index, owner, resolver, obj in reach['ctx']:
+        at = tuple(path[:depth])
+        try:
+            target = cl.get(base, at)
+        except (KeyError, IndexError, TypeError):
+            return None
+        if kind in ('then', 'else') and isinstance(target, dict):
+            condition, cres = cl.deref(owner['if'], resolver)
+            holds = cl.holds(v, condition, target, cres)
+            if holds != (kind == 'then'):
+                forced = _force(cl, v, target, condition, cres, kind == 'then', donors, at)
+                if forced is None:
+                    return None
+                protect |= set(forced)
+            else:
+                protect |= {at + (p,) for p in condition.get('properties', {}) if p in target}
+        # union alternatives on the way are GO's realize() business (a generated alternative when the location holds
+        # no object); replacing the alternative here would undo the members realize() set inside it
+    if not repair:
+        return base, protect
+    if not cl.errors_of(v, base):
+        return base
+    return greedy_repair(cl, v, base, protect, donors, budget=budget)
 
 
 def vacuous_go2(keyword, node):
