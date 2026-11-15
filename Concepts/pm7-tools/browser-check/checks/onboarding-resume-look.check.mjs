@@ -18,8 +18,13 @@
 // comes back); (5) a reload after any of these shows the look chosen last (normal surface: the sandbox keeps nothing over a
 // reload); (6) NieR both ways: NieR Light set in Settings, Basic Dark picked in the resumed window (no NieR preview left
 // on), and Glass Dark set in Settings, NieR Dark picked in the window.
+// R55 (the lead's quick review of ec6a3c41e3): (7) a pick that returns to a look the window had saved before is saved
+// again: Friendly Dark picked and closed (saved), Settings Glass Light, resumed, Friendly Dark picked again, closed:
+// Settings holds Friendly Dark (both surfaces) and a reload shows it; (8) a newer NieR background chosen in Settings
+// wins on resume: NieR Dark picked in the window and closed, Settings changes only NieR's background, resumed: the window
+// shows the new background, and closing again (and a reload) keeps it.
 // No timing rows. --set looks=basic-light,nier-dark runs those cases alone; --set extra=0 leaves out the finish, Reduced
-// Motion, reload and pick cases.
+// Motion, reload, pick and R55 cases; --set only=r55 runs the R55 cases alone.
 import { setLookBySetting, lookHeld } from '../helpers/settings-look.mjs';
 
 const ALL = ['basic-light', 'basic-dark', 'glass-light', 'glass-dark', 'retro-light', 'retro-dark', 'nier-light', 'nier-dark'];
@@ -215,9 +220,77 @@ async function reload(t) {
 	await A.close();
 }
 
+/* a Settings row's dropdown, picked as a person picks it (the same steps as setLookBySetting) */
+async function pickSetting(t, f, setting, name) {
+	const general = f.locator('#pm-settings-root [data-action="navigate-domain"][data-domain="general"]').first();
+	if (await general.count()) { await general.click(); await f.waitForTimeout(700); }
+	const trigger = f.locator(`select[data-setting="${setting}"]`).locator('..').locator('.pm51-dd-trigger').first();
+	await trigger.scrollIntoViewIfNeeded(); await trigger.click();
+	await f.getByRole('option', { name, exact: true }).click({ timeout: 8000 });
+	await f.locator('.pm51-dd-list').waitFor({ state: 'hidden', timeout: 8000 }).catch(() => {});
+	await f.waitForFunction(() => !(window.PM_LOOK_COVERED && PM_LOOK_COVERED()), null, { timeout: 20000 }).catch(() => {});
+	await t.page.waitForTimeout(1200);
+}
+const savedLook = (f) => f.evaluate(() => { try { const th = String(PM51.value('general.visual.theme') || ''), m = String(PM51.value('general.visual.theme-mode') || ''); return { family: th.trim().split(/[\s-]+/)[0].toLowerCase(), mode: m.toLowerCase(), background: String(PM51.value('general.visual.nier-background') || '') }; } catch (e) { return { error: String(e) }; } });
+const pickIn = async (f, A, family, mode) => {
+	const calm = () => f.waitForFunction(() => !(window.PM_LOOK_COVERED && PM_LOOK_COVERED()) && !document.documentElement.hasAttribute('data-o55-vt'), null, { timeout: 20000 }).catch(() => {});
+	await A.click('pickFamily', family); await calm(); await A.click('pickMode', mode); await calm(); await sleep(1200);
+};
+
+/* R55 F1: back to a look the window had saved once, after Settings chose another: saved again */
+async function again(t, sandbox) {
+	const tag = `${sandbox ? 'sandbox' : 'normal'}: R55 F1, Friendly Dark saved, Settings Glass Light, Friendly Dark picked again`;
+	await t.emulate({ reducedMotion: 'no-preference' });
+	const f = await t.app.open({ onboarding: true, query: 'o55=fresh&o55scenario=fresh', sandbox, settleMs: 1500 });
+	const A = app(t, f);
+	await A.screen('welcome'); await A.click('start', null, 'look');
+	await pickIn(f, A, 'friendly', 'dark');
+	await A.click('next', null, 'where'); await A.close(); await sleep(800);
+	const s0 = await savedLook(f);
+	await t.check(`${tag}: closed unfinished the first time, Settings holds Friendly Dark`, s0.family === 'friendly' && s0.mode === 'dark', JSON.stringify(s0));
+	await A.toSettings(); await setLookBySetting(t, f, 'glass-light');
+	await A.resume();
+	const w = await A.windowLook();
+	await t.check(`${tag}: resumed, the window shows Glass Light`, w.chosen === 'glass' && w.mode === 'light', JSON.stringify(w));
+	await A.click('back', null, 'look');
+	await pickIn(f, A, 'friendly', 'dark');
+	await A.close(); await sleep(800);
+	const s1 = await savedLook(f), p1 = await A.page();
+	await t.check(`${tag}: closed unfinished again, the page and Settings' saved look are Friendly Dark`, held('friendly-dark', p1) && s1.family === 'friendly' && s1.mode === 'dark', JSON.stringify({ page: p1, saved: s1 }));
+	if (sandbox) return;
+	const r = await reloaded(t), p2 = await r.A.page();
+	await t.check(`${tag}: reloaded, the page shows Friendly Dark`, held('friendly-dark', p2), JSON.stringify(p2));
+}
+
+/* R55 F2: a newer NieR background chosen in Settings wins on resume, and closing again keeps it */
+async function nierBackground(t, sandbox) {
+	const tag = `${sandbox ? 'sandbox' : 'normal'}: R55 F2, NieR Dark in the window, then only its background changed in Settings`;
+	await t.emulate({ reducedMotion: 'no-preference' });
+	const f = await t.app.open({ onboarding: true, query: 'o55=fresh&o55scenario=fresh', sandbox, settleMs: 1500 });
+	const A = app(t, f);
+	const bg = () => f.evaluate(() => ({ page: window.PM_NIER ? PM_NIER.background() : null, session: (O55.S && O55.S.sess && O55.S.sess.look) ? O55.S.sess.look.background : null, nier: !!(window.PM_NIER && PM_NIER.on()) }));
+	await A.screen('welcome'); await A.click('start', null, 'look');
+	await pickIn(f, A, 'nier', 'dark');
+	const b0 = (await bg()).page, b1 = b0 === 'Parchment' ? 'City Ruins' : 'Parchment';
+	await A.click('next', null, 'where'); await A.close(); await sleep(800);
+	await A.toSettings(); await pickSetting(t, f, 'general.visual.nier-background', b1);
+	const g0 = await bg();
+	await t.check(`${tag}: Settings set the background ${b1} (it was ${b0})`, g0.page === b1 && g0.nier, JSON.stringify(g0));
+	await A.resume();
+	const g1 = await bg();
+	await t.check(`${tag}: resumed, the window shows NieR with the background ${b1}`, g1.page === b1 && g1.session === b1 && g1.nier, JSON.stringify(g1));
+	await A.close(); await sleep(800);
+	const g2 = await bg(), s2 = await savedLook(f);
+	await t.check(`${tag}: closed unfinished again, the page and Settings keep ${b1}`, g2.page === b1 && g2.nier && s2.background === b1, JSON.stringify({ page: g2, saved: s2 }));
+	if (sandbox) return;
+	const r = await reloaded(t), g3 = await r.f.evaluate(() => ({ page: window.PM_NIER ? PM_NIER.background() : null, nier: !!(window.PM_NIER && PM_NIER.on()) }));
+	await t.check(`${tag}: reloaded, NieR with the background ${b1}`, g3.page === b1 && g3.nier, JSON.stringify(g3));
+}
+
 export default async function (t) {
 	await t.viewport(1440, 960);
 	const looks = t.args.looks ? String(t.args.looks).split(',') : ALL;
+	if (t.args.only === 'r55') { for (const s of t.app.surfaces()) { await again(t, s === 'sandbox'); await nierBackground(t, s === 'sandbox'); } await t.emulate({ reducedMotion: 'no-preference' }); return; }
 	for (const s of t.app.surfaces()) {
 		const sandbox = s === 'sandbox';
 		for (const target of looks) await run(t, sandbox, target);
@@ -227,6 +300,8 @@ export default async function (t) {
 			if (!sandbox) await reload(t);
 			await picked(t, sandbox, 'nier-light', 'basic-dark');
 			await picked(t, sandbox, 'glass-dark', 'nier-dark');
+			await again(t, sandbox);
+			await nierBackground(t, sandbox);
 		}
 	}
 	await t.emulate({ reducedMotion: 'no-preference' });
