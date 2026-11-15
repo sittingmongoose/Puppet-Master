@@ -8,6 +8,7 @@ from pathlib import Path
 from jsonschema import Draft202012Validator
 import pm_dch_events as shared
 from pm_dch_formats import refused_by_predicate, validator as current_validator
+from pm_event_numbers import full_value_commitment
 
 ROOT = Path(__file__).resolve().parents[1]
 EVENT = 'chat.response_stop_requested'
@@ -104,8 +105,9 @@ def _resolve_value(record, source=None, storage_instance=shared.STORAGE_INSTANCE
     require('st_pack_c', dict(deleted=source.get('deleted')))
     # Entailed by the exact reference above (at most 131 bytes); kept as defence in depth.
     pointer_error, pointer_raw = shared.encoded({'payload_ref': reference})
-    require('st_pointer_bounds', dict(pointer_encoding_error=pointer_error,
-                                      pointer_size=len(pointer_raw) if pointer_raw is not None else None))
+    require('st_pointer_bounds', dict(pointer_encoding_error=pointer_error))
+    require('st_pointer_size_entailed', dict(pointer_encoding_error=pointer_error,
+                                             pointer_size=len(pointer_raw) if pointer_raw is not None else None))
     return body
 
 
@@ -233,8 +235,8 @@ def _index_read_valid(record, context, token, source):
                                    row_partition=row['scope_partition'], body_partition=body['scope']['scope_partition'],
                                    row_commitment=row['source_value_sha256'],
                                    context_commitment=context['source_value_sha256']))
-    require('st_index_entailed', dict(record_event_type=record['event_type'],
-                                      row_sequence_refusal=shared.uint64_refusal(row['sequence_id'])))
+    require('st_index_family_entailed', dict(record_event_type=record['event_type']))
+    require('st_index_sequence_entailed', dict(row_sequence_refusal=shared.uint64_refusal(row['sequence_id'])))
 
 
 index_read_valid = refused(_index_read_valid)
@@ -245,6 +247,193 @@ def _retirement_ready(conditions):
 
 
 retirement_ready = refused(_retirement_ready)
+
+
+# =============================================================== Criterion-12 CH2
+# An independently held original Stop operation (ACD-627, SP-286/CV-339) and an
+# independently sealed retained store for historical request reads (ACD-628,
+# SP-627, CV-647 "one current edition"). Both are passed in by the caller that
+# holds them; readers never create, enrol or change a receipt or an original.
+STOP_EDITION = 'dch-stop-v1'
+STOP_ORDER = ['intent', 'freeze_deadline', 'append', 'receipt', 'deliver']
+CANCEL_GRACE_MS = 3000
+RECEIPT_NUMBERS = ('sequence_id', 'segment_generation', 'byte_offset', 'durable_end_offset', 'manifest_generation')
+RECEIPT_SCHEMA = json.loads((ROOT / 'Plans/event_append_receipt_contracts.schema.json').read_text())['$defs']
+STOP_RESOURCES = (REQUEST_PATH, OUTCOME_PATH, 'Plans/event_record.schema.json')
+
+
+def _closed(properties, required=None):
+    return dict(type='object', additionalProperties=False, properties=properties,
+                required=list(properties) if required is None else required)
+
+
+_TEXT = dict(type='string', minLength=1)
+_BOOLEAN = dict(type='boolean')
+_TEXTS = dict(type='array', items=_TEXT)
+_MS = dict(type='integer', minimum=0)
+
+
+def stop_resource_manifest():
+    """SHA-256 over the one Stop edition's exact schema resources (its sealed recipe pin)."""
+    return hashlib.sha256(shared.qualified_jcs([[path, hashlib.sha256((ROOT / path).read_bytes()).hexdigest()]
+                                                for path in sorted(STOP_RESOURCES)])).hexdigest()
+
+
+STOP_TUPLE = shared.RecipeTuple(
+    envelope_schema_id='pm.event.v0', envelope_schema_version='2.0.0',
+    payload_schema_id='pm.dch_stop.request.project.v1 and pm.dch_stop.request.application.v1', payload_schema_version='1.0.0',
+    owner_source_id='Plans/dch_stop_contracts.json', owner_edition=STOP_EDITION, registry_revision='prepared-unadmitted:dch-stop',
+    identity_recipe='DCH event identity and CV-366 idempotency key (ACD-627)',
+    producer_recipe='CV-317 producer projection (CV-1100 qualified JCS)', physical_profile=shared.EVENT_VALUE,
+    full_value_profile='SP-236 physical EventRecord value', local_source_profile='none (the Stop request body is the source)',
+    payload_profile='SP-337 payload:v1 application/msgpack', resource_manifest_sha256=stop_resource_manifest())
+
+
+def stop_source_schema(edition):
+    """Witness-container shape for the independently held original Stop operation; adds no product field."""
+    props = REQUEST_SCHEMA['$defs'][edition]['properties']
+    accepted = _closed({k: copy.deepcopy(props[k]) for k in ACCEPTED_FIELDS})
+    flags = ('retained', 'authorized', 'hold_access_allowed', 'deleted', 'withdrawn', 'writer_admitted', 'active_reply',
+             'dedupe_available')
+    context = _closed(dict(storage_instance_id=_TEXT, accepted=accepted, source_value_sha256=_TEXT,
+                           payload_source=dict(type='object'), **{k: _BOOLEAN for k in flags}),
+                      ['storage_instance_id', 'accepted', 'source_value_sha256', *flags])
+    reply = _closed(dict(assistant_turn_id=copy.deepcopy(props['assistant_turn_id']), active=_BOOLEAN,
+                         target_work=copy.deepcopy(props['target_work'])))
+    return _closed(dict(storage_instance_id=_TEXT, intent=copy.deepcopy(accepted), context=context, result=dict(type='object'),
+                        record=dict(type='object'), receipt=dict(type='object'), first_receipt=dict(type='object'),
+                        commitment=dict(type='object'), reply=reply,
+                        pending=_closed(dict(start_ms=_MS, deadline_ms=_MS, grace_starts=_TEXTS, queue_held=_BOOLEAN)),
+                        delivery=_closed(dict(leases=_TEXTS)),
+                        operation=_closed(dict(event_type=_TEXT, operation_id=_TEXT, actions=_TEXTS))))
+
+
+def _request_original(record, original_ref, originals):
+    """Complete current Stop writer route over one independently held original operation."""
+    matches = originals.get(original_ref, [])
+    require('og_presence', dict(original_count=len(matches)))
+    o = matches[0]
+    shared._schema_admission(record, ENVELOPE)
+    shared._schema_admission(o, current_validator(stop_source_schema(record['scope_kind'])))
+    shared._input_types({'source': {k: v for k, v in o.items() if k not in ('receipt', 'first_receipt')}})
+    body = _request_valid(record, o['context'], historical=False)
+    # The current Stop writer's producer route: the unchanged shared CV-1100
+    # semantic commitment, a separate boundary from the logical schemas above.
+    producer_refusal = None
+    try:
+        shared.semantic_commitment(record)
+    except shared.Refusal as refusal:
+        producer_refusal = refusal.reason
+    require('nw_producer', dict(producer_refusal=producer_refusal))
+    shared._schema_admission(o['record'], ENVELOPE)
+    shared._schema_admission(o['result'], REQUEST)
+    shared._schema_admission(o['receipt'], current_validator(RECEIPT_SCHEMA['AppendReceipt']))
+    shared._schema_admission(o['first_receipt'], current_validator(RECEIPT_SCHEMA['AppendReceipt']))
+    shared._schema_admission(o['commitment'], current_validator(RECEIPT_SCHEMA['original_event_value_commitment']))
+    require('og_original', dict(original_store=o['storage_instance_id'], store=o['context']['storage_instance_id'],
+                                record_equal=record == o['record'],
+                                intent_mismatches=[k for k in ACCEPTED_FIELDS if o['intent'][k] != body[k]],
+                                result_equal=body == o['result'], receipt_event=o['receipt']['event_id'],
+                                original_event=o['record']['event_id'], receipt_sequence=o['receipt']['sequence_id'],
+                                original_sequence=o['record']['sequence_id']))
+    refusals = []
+    for component in ('receipt', 'first_receipt'):
+        for k in RECEIPT_NUMBERS:
+            try:
+                shared.storage_uint64(o[component][k])
+            except shared.Refusal as e:
+                refusals.append([component + '/' + k, e.reason])
+    require('og_receipt', dict(number_refusals=refusals, commitment=o['commitment']['sha256'],
+                               expected_commitment=full_value_commitment(o['record']),
+                               receipt_equal=o['receipt'] == o['first_receipt']))
+    require('og_transaction', dict(
+        operation_identity=o['operation']['event_type'] == EVENT and o['operation']['operation_id'] == o['intent']['operation_id'],
+        operation_order=o['operation']['actions'] == STOP_ORDER))
+    pending = o['pending']
+    whole = shared.integer_refusal(pending['start_ms']) is None and shared.integer_refusal(pending['deadline_ms']) is None
+    require('so_protocol', dict(reply_active=o['reply']['active'], intent_turn=o['intent']['assistant_turn_id'],
+                                reply_turn=o['reply']['assistant_turn_id'], intent_targets=o['intent']['target_work'],
+                                reply_targets=o['reply']['target_work'],
+                                grace_ms=pending['deadline_ms'] - pending['start_ms'] if whole else None,
+                                grace_starts=len(pending['grace_starts']), delivered_leases=o['delivery']['leases'],
+                                frozen_leases=[item['lease_ref'] for item in o['intent']['target_work']],
+                                queue_held=pending['queue_held']))
+    return body
+
+
+def request_original_outcome(record, original_ref, originals):
+    """CH2 exact first-refusal tuple of the current Stop writer route; exceptions propagate uncredited."""
+    try:
+        _request_original(record, original_ref, originals)
+    except TableRefusal as refusal:
+        return refusal.phase, refusal.row, refusal.code
+    return None
+
+
+class SealedStopOwner:
+    """Static original owner over the independently sealed Stop receipt store, never request data."""
+
+    def __init__(self, receipt, store, digest):
+        self.receipt, self.store, self.digest = receipt, store, digest
+
+    def authenticated_original(self, original_ref):
+        if original_ref != self.store + '/' + self.digest:
+            raise shared.Refusal('original_missing')
+        sealed = self.receipt.get('binding')
+        if type(sealed) is not dict:
+            raise shared.Refusal('original_binding')
+        receipt_bytes = shared.qualified_jcs(self.receipt)
+        return shared.OriginalCustody(binding=shared.OriginalBinding(**sealed), recipe=STOP_TUPLE,
+                                      record_bytes=self.digest.encode('utf-8'), result_bytes=receipt_bytes,
+                                      receipt_bytes=receipt_bytes)
+
+
+def _sealed_request(record, context, custody):
+    """Select a retained Stop request only through its one sealed receipt; the frozen verifier is _request_valid.
+
+    No receipt is unavailable, several are unsupported, a receipt of another
+    edition or resource set is unsupported and a receipt bound to another
+    original is unavailable. Nothing falls back and reading never writes.
+    """
+    store, digest = context['storage_instance_id'], context['source_value_sha256']
+    in_custody = store in custody['custody_stores']
+    receipts = [r for r in custody['receipts'] if r['storage_instance_id'] == store and r['source_value_sha256'] == digest]
+    count = len(receipts) if in_custody else None
+    installed = (receipts[0].get('recipe_id') == STOP_EDITION
+                 and receipts[0].get('resource_manifest_sha256') == STOP_TUPLE.resource_manifest_sha256) if count == 1 else None
+    require('st_custody', dict(store_in_custody=in_custody, receipt_count=count, receipt_installed=installed))
+    frozen = shared.FrozenRecipe(lambda original: _request_valid(record, context, historical=True) is not None)
+    reason = None
+    try:
+        shared.RetainedDispatcher(SealedStopOwner(receipts[0], store, digest), {STOP_TUPLE: frozen}).resolve(
+            store + '/' + digest, shared.original_binding(record, store, digest), disclose=lambda binding: True)
+    except shared.Refusal as refusal:
+        reason = refusal.reason
+    require('st_custody_binding', dict(dispatch_refusal=reason))
+
+
+SEALED_SURFACES = ('history', 'outcome', 'read', 'queue', 'index')
+# SP-627 adopts DL-076's nine-field durable read token; its unchanged DCH owner
+# constraint schema (no persisted redb_snapshot_id) is the complete definition.
+TOKEN_SCHEMA = json.loads((ROOT / 'Plans/dch_checkpoint_source_constraints.json').read_text())['source_constraint_schema']
+TOKEN = current_validator(TOKEN_SCHEMA)
+
+
+def sealed_outcome(surface, data, custody):
+    """CH2 historical Stop consumers composed with the sealed retained store: first-refusal tuple or None."""
+    try:
+        if surface == 'history':
+            _sealed_request(data['record'], data['context'], custody)
+        elif surface == 'index':
+            _sealed_request(data['record'], data['context'], custody)
+            _index_read_valid(**data)
+            shared._schema_admission(data['token'], TOKEN)
+        else:
+            _sealed_request(data['context']['request'], data['context']['request_context'], custody)
+            {'outcome': _outcome_valid, 'read': _read_outcome, 'queue': _queue_can_advance}[surface](**data)
+    except TableRefusal as refusal:
+        return refusal.phase, refusal.row, refusal.code
+    return None
 
 
 def evaluate(case):
@@ -339,6 +528,10 @@ def main():
         except Exception as exc:
             check(False, case['id'] + ': exception is failure: ' + repr(exc))
         counts[case['surface']] = counts.get(case['surface'], 0) + 1
+    # Criterion-12 CH2: original Stop writer route and sealed retained-store reads.
+    from pm_dch_c12_ch2_cases import stop_checks
+    for label, ok in stop_checks():
+        check(ok, label)
     print(json.dumps({'status': 'pass' if not failures else 'fail', 'checks': checks,
                       'cases': len(fixture['cases']), 'table_witnesses': len(witnesses), 'surfaces': counts, 'failures': failures,
                       'native_execution': 'NOT_RUN',
