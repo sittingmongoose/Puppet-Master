@@ -717,8 +717,16 @@ def close_root(root, v, seeds, budget):
     return entries, branch_controls, COUNT[0] - root0
 
 
+SEED_POLICY = ['controls']
+
+
 def collect():
-    """Run the GO sources once (discovery, no judge, no witness search) to record every root and its seeds."""
+    """Run the GO sources once (discovery, no judge, no witness search) to record every root and its seeds.
+
+    Seed policy `controls` (default): accepted instances from complete calls declared valid. Policy `authored`:
+    also accepted instances of the root inside authored negative calls (lane GC's adapter seeded every accepted
+    boundary instance its suites' complete calls produced); generated calls (search, transfer, keyword edits)
+    and judge replays never seed."""
     import os
     import pm_goal_guard_sweep as sweep
     import pm_goal_guard_tables as tables
@@ -726,6 +734,36 @@ def collect():
     import pm_goal_go_sweep as go
     os.environ['PNC019_GO_NO_SEARCH'] = '1'
     go.install(prove=False)
+    if SEED_POLICY[0] == 'authored':
+        import copy as copy_module
+        import pickle as pickle_module
+        import hashlib as hashlib_module
+        import pm_goal_go_schema as schemas_module
+        authored = [False]
+        base = sweep.Collector.invoke
+
+        def seeding_invoke(self, label, evaluate, value, valid=None, **kwargs):
+            saved = authored[0]
+            authored[0] = not kwargs.get('generated') and not self.replaying
+            try:
+                return base(self, label, evaluate, value, valid, **kwargs)
+            finally:
+                authored[0] = saved
+        sweep.Collector.invoke = seeding_invoke
+
+        def record(root, v, value, *, row=None, site=None, kind='go'):
+            slot = schemas_module.ROOTS.setdefault(root, dict(validator=v, seeds={}, rows=set(), sites=set(), kind=kind))
+            if row:
+                slot['rows'].add(row)
+            if site:
+                slot['sites'].add(site)
+            if value is not None and (authored[0] or schemas_module.CONTROL[0]) and len(slot['seeds']) < schemas_module.SEED_CAP:
+                try:
+                    key = hashlib_module.sha256(pickle_module.dumps(value, protocol=5)).hexdigest()
+                except Exception:
+                    return
+                slot['seeds'].setdefault(key, copy_module.deepcopy(value))
+        schemas_module.record = record
     tables.DISCOVERY = True
     collector = sweep.collect(go.SOURCES, fuzz=False, judge=False, keyword_witnesses=False)
     return collector, schemas.ROOTS
@@ -756,11 +794,13 @@ def main():
     parser.add_argument('--shard', default='0/1', help='i/n: close only the roots whose sorted index is i mod n')
     parser.add_argument('--roots', nargs='*', help='close only roots containing one of these substrings')
     parser.add_argument('--per-clause', type=int, default=0, help='raise a root budget to this many validations per clause')
+    parser.add_argument('--seeds', choices=('controls', 'authored'), default='controls', help='seed policy (see collect)')
     parser.add_argument('--merge', type=Path, nargs='*', help='merge shard reports into --out (no collection)')
     args = parser.parse_args()
     if args.merge:
         return merge(args.merge, args.out)
     part, total = map(int, args.shard.split('/'))
+    SEED_POLICY[0] = args.seeds
     collector, roots = collect()
     families = family_roots(collector, roots)
     print(f'roots {len(roots)}; shard {part}/{total}', file=sys.stderr, flush=True)
@@ -792,6 +832,11 @@ def main():
                                      unresolved_refs=list(UNRESOLVED))
         print(f'{root[:90]}: seeds={len(seeds)} {dict(counts)}', file=sys.stderr, flush=True)
     report['shard'] = args.shard
+    report['seed_policy'] = args.seeds
+    for root, entry in report['roots'].items():
+        entry['seed_sha256'] = sorted(roots[root]['seeds'])
+        entry['seed_policy'] = args.seeds
+        entry['budget_args'] = dict(budget=args.budget, per_clause=args.per_clause)
     report['all_roots'] = {root: sorted(families.get(root, ())) for root in sorted(roots)}
     summarize(report)
     args.out.write_text(json.dumps(report, indent=1, sort_keys=True, default=str) + '\n')
