@@ -40278,6 +40278,62 @@ negative_constraints:
 - No schema, recipe, policy, admission, native execution claim or governance seal is created.
 ```
 
+### DL-694 - Merge 2 May Carry These Event Authority Test Files, And Later Lanes May Add The Same Kind (E10-2)
+
+```yaml
+plan_unit_id: DL-694
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: |-
+  Jared answered stream E's card E10-2 on the AI Account Center Status tab on 2026-11-15 at 12:51 AM EST (05:51:30Z), signed; pm7-build relayed it in mail 1115055331-5426. His answer: option A, "Allow these, and let later lanes add the same kind", with no added words.
+
+  The question, as the card asked it: "New test files from the history-check work: allow them in the repository?" Under DL-413 every new Event Authority test file came to him with its exact path. Option A promised: "Later lanes' test files are each listed by exact path in the merge record, as with history-type additions." Its stated cost: "You approve later ones after the fact." Options B, "Allow these exact files; ask me for each later one", and C, "No new test files: move them elsewhere", were not chosen.
+
+  Coordinator pm-ea-lead's reading, applied by the admission-merge-2 integrator (INT4), not Jared's words: one .gitignore commit at merge-2 integration names every new tests/ path in main's existing pattern (a !/tests/<file> line per test file; for each fixture folder !/tests/fixtures/<dir>/, /tests/fixtures/<dir>/* and one line per named file; a !/tests/fixtures/<file> line per single fixture file), and the C12-DO branch's own unapproved .gitignore line is folded into it. Every merged lane's REPORT and the integration diff (git diff --name-status 6385c1c3d3..HEAD -- tests/) were read; the merge adds exactly these 16 files, the card's list, and no later lane added another:
+  - tests/test_pm_filesafe_c12_closure.py (9,267 bytes, C12-DF)
+  - tests/test_pm_orchestrator_c12.py (6,299 bytes, C12-DO)
+  - tests/test_pm_pnc019_s4o1.py (7,915 bytes, s4o1)
+  - tests/fixtures/dch_c12_ch1/branches.json (1,631,999 bytes, C12-CH1 (via CH2))
+  - tests/fixtures/dch_c12_ch1/originals.json (179,383 bytes, C12-CH1 (via CH2))
+  - tests/fixtures/dch_c12_ch2/branches.json (174,303 bytes, C12-CH2)
+  - tests/fixtures/dch_c12_ch2/originals.json (78,186 bytes, C12-CH2)
+  - tests/fixtures/dch_c12_ch2/stop_custody.json (15,980 bytes, C12-CH2)
+  - tests/fixtures/dch_c12_ch2/stop_originals.json (51,456 bytes, C12-CH2)
+  - tests/fixtures/pnc019_s4o1/families.json (255,443 bytes, s4o1)
+  - tests/fixtures/setup_validation_history/controls.json (274,466 bytes, s6v)
+  - tests/fixtures/setup_validation_history/frozen_resources.json (33,874 bytes, s6v)
+  - tests/fixtures/setup_validation_history/generic_checkpoint_template.json (18,109 bytes, s6v)
+  - tests/fixtures/pnc019_goal_adoption_helper_witnesses.json (10,047 bytes, s3ao (via C12-GC))
+  - tests/fixtures/pnc019_goal_frozen_helper_witnesses.json (126,386 bytes, s3ao (via C12-GC))
+  - tests/fixtures/pnc019_goal_retained_helper_witnesses.json (28,298 bytes, s3ao (via C12-GC))
+
+  The two DL-413 files (tests/test_event_authority_holding_bucket.py, tests/test_pm_coordination_events.py) and tests/test_pm_browser_event_admission.py were already named; merge 2 only edits them. Any later Event Authority lane may add test files or fixtures of the same kind, each listed by exact path in its merge record. This changes no owner contract, registry, validator, admission record or governance seal.
+gui_related: false
+gui_classification_reason: Records which repository test files are tracked; no visible control or layout changes.
+depends_on: [DL-413, DL-045]
+unblocks: []
+acceptance_criteria:
+- The answer and option text match the signed card E10-2 as presented.
+- The coordinator reading is attributed separately from Jared's verbatim answer.
+- .gitignore names exactly the 16 listed paths in main's pattern, and every other path under tests/ that was ignored stays ignored.
+validation_surfaces: [git check-ignore --no-index, python3 scripts/pm-plan-index.py validate, python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json]
+risk_class: owner_decision_fidelity
+reasoning_tier: high
+context_scope: event_authority_admission_merge_2
+implementation_surfaces: [.gitignore, Plans/Decision_Log.md]
+node_compile_hint: {mode: owner_decision_record, create_worknodes: false, create_nodeseeds: false}
+source_lineage:
+- "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/ANSWERS_E-CARDS-10_20261115.md; SHA-256 9171b69a3d7a64052b72a3771b45c2757491cc07beb573357651a5842f58839d; Jared's answers to E10-1 and E10-2, relayed by pm7-build mail 1115055331-5426"
+- "/mnt/Cursor/agent-reports/v1/answers/vm.pm-ea-lead--E10-2.json; SHA-256 980695b5eeca0ef0631f02649dddefbb04d44ecd8e9e8bc6bced54c50bd2988a; Jared's signed answer A to card E10-2, 2026-11-15T05:51:30.507Z, card SHA-256 1555f7665f442004ae4028b07d4a898b6f55d965c00222ea16d73e709990cbdf"
+- "/mnt/Cursor/share/puppet-master/2026-11-04-program/streams/E-CARDS-10.md; SHA-256 955d0bccf85e990be373f32375dac7d3f55a92ec38c0f8e2b56934dfee5af484; card E10-2 text and path list"
+- Plans/Decision_Log.md#DL-413
+preserved_exact_tokens: ["Allow these, and let later lanes add the same kind", "1555f7665f442004ae4028b07d4a898b6f55d965c00222ea16d73e709990cbdf"]
+negative_constraints:
+- Do not treat the coordinator reading as Jared's quoted words.
+- No other tests/ path is un-ignored, and no owner contract, registry, validator, admission record or governance seal is created.
+```
+
 ### DL-695 - A Retried Failed Deletion Stays Hidden And Re-Checks Before Carrying On (E11-1)
 
 ```yaml

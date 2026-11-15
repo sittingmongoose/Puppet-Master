@@ -95,6 +95,10 @@ tests/
 !/tests/test_v3_residuals.js
 !/tests/test_event_authority_holding_bucket.py
 !/tests/test_pm_coordination_events.py
+# Event Authority admission merge 2 test files (DL-694, Jared's E10-2 A, 2026-11-15)
+!/tests/test_pm_filesafe_c12_closure.py
+!/tests/test_pm_orchestrator_c12.py
+!/tests/test_pm_pnc019_s4o1.py
 # Fixture files the repository-wide gates read. run-gates and audit-governance fail on missing
 # files without them, so a checkout that does not have them cannot reproduce a landing check.
 # Each directory is opened only far enough to name its files one by one, the same way the test
@@ -166,6 +170,28 @@ tests/
 !/tests/fixtures/event_record/legacy_normalization/golden/
 /tests/fixtures/event_record/legacy_normalization/golden/*
 !/tests/fixtures/event_record/legacy_normalization/golden/event_envelope_v1_to_event_record_v2.json
+# Event Authority admission merge 2 fixtures (DL-694, Jared's E10-2 A, 2026-11-15)
+!/tests/fixtures/dch_c12_ch1/
+/tests/fixtures/dch_c12_ch1/*
+!/tests/fixtures/dch_c12_ch1/branches.json
+!/tests/fixtures/dch_c12_ch1/originals.json
+!/tests/fixtures/dch_c12_ch2/
+/tests/fixtures/dch_c12_ch2/*
+!/tests/fixtures/dch_c12_ch2/branches.json
+!/tests/fixtures/dch_c12_ch2/originals.json
+!/tests/fixtures/dch_c12_ch2/stop_custody.json
+!/tests/fixtures/dch_c12_ch2/stop_originals.json
+!/tests/fixtures/pnc019_s4o1/
+/tests/fixtures/pnc019_s4o1/*
+!/tests/fixtures/pnc019_s4o1/families.json
+!/tests/fixtures/setup_validation_history/
+/tests/fixtures/setup_validation_history/*
+!/tests/fixtures/setup_validation_history/controls.json
+!/tests/fixtures/setup_validation_history/frozen_resources.json
+!/tests/fixtures/setup_validation_history/generic_checkpoint_template.json
+!/tests/fixtures/pnc019_goal_adoption_helper_witnesses.json
+!/tests/fixtures/pnc019_goal_frozen_helper_witnesses.json
+!/tests/fixtures/pnc019_goal_retained_helper_witnesses.json
 Concepts/**/evidence/
 **/simulator_runs/
 **/staged_windows_build*/
