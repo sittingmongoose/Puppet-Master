@@ -273,6 +273,7 @@ class BrowserPreparedAdmissionTests(unittest.TestCase):
         record_pinned = [row for row in central
                          if row["family_id"] not in historical and row["event_type"] not in ROWS
                          and (row["family_id"], row["event_type"]) not in coordination
+                         and row["family_id"] not in GATE.REVIEWED_DL300_FAMILIES
                          and recorded.get((row["family_id"], row["event_type"])) == GATE.dl077_row_sha256(row)]
         self.assertEqual(report["registry_family_count"],
                          40 + len(admitted) + len(coordination) + len(GATE.REVIEWED_DL300_FAMILIES) + len(record_pinned))
