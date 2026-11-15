@@ -20,8 +20,8 @@ from referencing import Registry, Resource
 
 
 ROOT = Path(__file__).resolve().parents[1]
-from pm_pnc019_currentness import event_authority_denominator_status  # noqa: E402 - the denominator state comes from the installed edition
 sys.path.insert(0, str(ROOT / "scripts"))
+from pm_pnc019_currentness import event_authority_denominator_status  # noqa: E402 - the denominator state comes from the installed edition
 from pm_contract_formats import FormatChecker
 import pm_event_payload_route as body_route
 import pm_ds_retained as retained
