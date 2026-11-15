@@ -298,6 +298,8 @@ def gen(node, resolver, depth=0, variant=0):
             if isinstance(value, str) and value in values:
                 value = value + str(i)
             values.append(value)
+        if isinstance(node.get('contains'), dict):  # GO addition: satisfy `contains` with one matching item
+            values.append(gen({**deref(item, resolver)[0], **deref(node['contains'], resolver)[0]}, resolver, depth + 1, 0))
         return values
     if kinds == 'string':
         if node.get('format') in FORMATS:
@@ -456,6 +458,8 @@ def repair(v, value, path, parents):
         for k, sub in obj_node.get('properties', {}).items():
             sub = deref(sub, resolver)[0]
             choices = sub.get('enum', [])[:8]
+            if not choices and sub.get('type') == 'boolean':
+                choices = [True, False]  # GO addition: boolean selectors switch branches as enum members do
             for choice in choices:
                 candidate = copy.deepcopy(value)
                 try:
@@ -468,6 +472,81 @@ def repair(v, value, path, parents):
                 apply_conditionals(target, (obj_node, resolver), keep={k, member})
                 if not errors_of(v, candidate):
                     return candidate
+    return None
+
+
+def error_repair(v, value, keep, rounds=16):
+    """GO addition: error-guided branch-control repair. Each round fixes the deepest failing nodes the owner
+    validator itself reports (a missing required member is generated from its owner subschema, an unexpected
+    member is removed, any other failing node is regenerated from the failing subschema), never at or above
+    the realized member `keep`. Returns a value the whole definition accepts, or None."""
+    value = copy.deepcopy(value)
+    keep = tuple(keep)
+    for _ in range(rounds):
+        errs = errors_of(v, value)
+        if not errs:
+            return value
+        leaves = []
+        def flatten(error):
+            if error.context and error.validator in ('anyOf', 'oneOf'):
+                leaves.append(error)
+                return
+            leaves.append(error)
+        for error in errs:
+            flatten(error)
+        changed = False
+        for error in sorted(leaves, key=lambda e: -len(e.absolute_path))[:8]:
+            where = tuple(error.absolute_path)
+            if where == keep[:len(where)] and error.validator not in ('required', 'additionalProperties', 'unevaluatedProperties'):
+                continue  # never regenerate the member under test or one of its ancestors
+            node = error.schema if isinstance(error.schema, dict) else {}
+            try:
+                target = get(value, where)
+            except (KeyError, IndexError, TypeError):
+                continue
+            if error.validator == 'required' and isinstance(target, dict):
+                for name in error.validator_value:
+                    if name not in target:
+                        target[name] = gen(node.get('properties', {}).get(name, {}), v._resolver, 0, 0)
+                        changed = True
+            elif error.validator in ('additionalProperties', 'unevaluatedProperties') and isinstance(target, dict):
+                allowed = set(node.get('properties', {}))
+                for name in [k for k in target if k not in allowed and not any(re.search(pat, k) for pat in node.get('patternProperties', {}))]:
+                    if where + (name,) != keep[:len(where) + 1]:
+                        del target[name]
+                        changed = True
+            elif where != keep[:len(where)]:
+                generated = gen(node, v._resolver, 0, 0)
+                if generated != target:
+                    value = put(value, where, generated)
+                    changed = True
+        if not changed:
+            return None
+    return value if not errors_of(v, value) else None
+
+
+def flip_repair(v, value, path, parents):
+    """GO addition: switch one boolean or enum sibling of the realized member (a branch selector), then
+    error-guided repair; returns a value the whole definition accepts, or None."""
+    if not path:
+        return None
+    parent_path, member = path[:-1], path[-1]
+    for obj_node, resolver in parents:
+        for k, sub in obj_node.get('properties', {}).items():
+            sub = deref(sub, resolver)[0]
+            choices = sub.get('enum', [])[:8] or ([True, False] if sub.get('type') == 'boolean' else [])
+            for choice in choices:
+                candidate = copy.deepcopy(value)
+                try:
+                    target = get(candidate, parent_path)
+                except (KeyError, IndexError, TypeError):
+                    return None
+                if not isinstance(target, dict) or k == member or target.get(k) == choice:
+                    continue
+                target[k] = copy.deepcopy(choice)
+                repaired = error_repair(v, candidate, path, rounds=8)
+                if repaired is not None:
+                    return repaired
     return None
 
 
@@ -603,6 +682,9 @@ def siblings(location, ipath, by_ipath):
 
 
 VACUOUS = {'minItems': 0, 'minLength': 0, 'minProperties': 0}
+# Clauses listed apart: inside an `if` (a selector), a `not` operand (the `not` keyword is the assertion) and,
+# GO addition, a `contains` operand (the validator reports only `contains`; operand failures never refuse).
+APART = ('if', 'not', 'contains')
 
 
 def close_root(root, v, seeds, budget):
@@ -611,7 +693,7 @@ def close_root(root, v, seeds, budget):
     by_ipath = collections.defaultdict(list)
     for location, info in nodes.items():
         for reach in info['reach']:
-            if not any(c[0] in ('if', 'not') for c in reach['ctx']):
+            if not any(c[0] in APART for c in reach['ctx']):
                 by_ipath[reach['ipath']].append((location, info['node'], info['resolver']))
     entries, controls = {}, list(seeds)
     known = {hashlib.sha256(pickle.dumps(c, protocol=5)).hexdigest() for c in controls}
@@ -627,10 +709,10 @@ def close_root(root, v, seeds, budget):
                 entries[clause] = dict(cls='UNREACHABLE', proof='every instance location of the clause is an item of an array '
                                        'whose owner node has maxItems 0 (' + info['reach'][0]['empty_domain'] + '): no valid instance holds an item')
                 continue
-            inside = sorted({c[0] for r in info['reach'] for c in r['ctx'] if c[0] in ('if', 'not')})
-            if inside and all(any(c[0] in ('if', 'not') for c in r['ctx']) for r in info['reach']):
+            inside = sorted({c[0] for r in info['reach'] for c in r['ctx'] if c[0] in APART})
+            if inside and all(any(c[0] in APART for c in r['ctx']) for r in info['reach']):
                 entries[clause] = dict(cls='SELECTOR_OR_NEGATED', inside=inside,
-                                       note='inside an `if` selector or a `not` operand: it never refuses on its own')
+                                       note='inside an `if` selector, a `not` operand or a `contains` operand: it never refuses on its own')
                 continue
             if keyword in VACUOUS and node.get(keyword) == VACUOUS[keyword]:
                 entries[clause] = dict(cls='VACUOUS', proof=f'{keyword} is 0: no instance can fail it (checked on the owner node)')
@@ -638,7 +720,7 @@ def close_root(root, v, seeds, budget):
             best = None
             attempts = 0
             start = COUNT[0]
-            for reach in [r for r in info['reach'] if not any(c[0] in ('if', 'not') for c in r['ctx'])][:6]:
+            for reach in [r for r in info['reach'] if not any(c[0] in APART for c in r['ctx'])][:6]:
                 pools = [(c, None) for c in controls[:40]]
                 for variant in range(4):
                     for control in seeds[:6]:
@@ -660,11 +742,19 @@ def close_root(root, v, seeds, budget):
                         spent += 1
                         if errors_of(v, base):
                             parents = [(n, res) for loc2, n, res in by_ipath.get(reach['ipath'][:-1], []) if 'properties' in n]
+                            realized = base
                             try:
                                 base = repair(v, base, path, parents)
                             except Exception:  # noqa: BLE001 - a failed construction attempt
                                 base = None
                             spent += 8
+                            if base is None:
+                                try:
+                                    base = error_repair(v, realized, path)
+                                    if base is None:
+                                        base = flip_repair(v, realized, path, parents)
+                                except Exception:  # noqa: BLE001 - a failed construction attempt
+                                    base = None
                             if base is None:
                                 continue
                         paths = [path]
@@ -795,7 +885,8 @@ def main():
     parser.add_argument('--roots', nargs='*', help='close only roots containing one of these substrings')
     parser.add_argument('--per-clause', type=int, default=0, help='raise a root budget to this many validations per clause')
     parser.add_argument('--seeds', choices=('controls', 'authored'), default='controls', help='seed policy (see collect)')
-    parser.add_argument('--merge', type=Path, nargs='*', help='merge shard reports into --out (no collection)')
+    parser.add_argument('--merge', nargs='*', help='merge reports into --out (no collection); FILE or FILE@TOOL_COMMIT; '
+                        'later files replace earlier ones root by root')
     args = parser.parse_args()
     if args.merge:
         return merge(args.merge, args.out)
@@ -833,6 +924,7 @@ def main():
         print(f'{root[:90]}: seeds={len(seeds)} {dict(counts)}', file=sys.stderr, flush=True)
     report['shard'] = args.shard
     report['seed_policy'] = args.seeds
+    report['closure_tool_sha256'] = hashlib.sha256(Path(__file__).read_bytes()).hexdigest()
     for root, entry in report['roots'].items():
         entry['seed_sha256'] = sorted(roots[root]['seeds'])
         entry['seed_policy'] = args.seeds
@@ -846,7 +938,15 @@ def main():
 
 
 def merge(paths, out):
-    reports = [json.loads(Path(p).read_text()) for p in paths]
+    reports = []
+    for item in paths:
+        path, _, commit = str(item).partition('@')
+        data = json.loads(Path(path).read_text())
+        for entry in data['roots'].values():
+            entry.setdefault('closure_tool', commit or data.get('closure_tool_sha256'))
+            entry.setdefault('seed_policy', data.get('seed_policy', 'controls'))
+            entry['source_report'] = Path(path).name
+        reports.append(data)
     report = dict(reports[0], roots={}, shard='merged:' + ','.join(r['shard'] for r in reports))
     for r in reports:
         report['roots'].update(r['roots'])
