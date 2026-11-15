@@ -1,0 +1,1412 @@
+{
+ "assessment_id": "PNC019-C12-DT-20261114",
+ "assessment_kind": "worker_self_grade_delta",
+ "base": "7cf56368356da2b7a5ff25f6452cf753ce36bf45",
+ "branch": "plans/ea-pnc-c12-dt-20261114",
+ "counts": {
+  "after_PASS": 17,
+  "before_PARTIAL": 17
+ },
+ "implementation_commit": "1dc60f1d5e3a49e5bc5015f23ce7fb8e458b7de3",
+ "independent_review": "NOT_RUN",
+ "membership": "ABSENT",
+ "native_execution": "NOT_RUN",
+ "other_cells": "Not regraded",
+ "rows": [
+  {
+   "after": "PASS",
+   "before": "PARTIAL",
+   "cell": "positive_negative_oracles",
+   "coverage_matrix": "coverage-matrix.json",
+   "criterion": 12,
+   "event_type": "approval.requested",
+   "evidence": [
+    {
+     "line_end": 9029,
+     "line_start": 9029,
+     "path": "Plans/Automated_Testing_System.md",
+     "quote": "For approval.requested alone, round-1 fixtures refuse",
+     "unit": "ATS-290"
+    },
+    {
+     "line_end": 8207,
+     "line_start": 8207,
+     "path": "Plans/dt_event_contract_fixtures.json",
+     "quote": "\"producer_semantic_digest\": \"be977f69cdf90e0f89f918f17a4fde8361bd58661f54483527ebf6675b105eed\"",
+     "unit": "approval.requested retry_oracle"
+    },
+    {
+     "line_end": 33476,
+     "line_start": 33476,
+     "path": "Plans/storage-plan.md",
+     "quote": "For approval.requested, boolean authority/context flags are exact booleans",
+     "unit": "SP-580"
+    },
+    {
+     "line_end": 2572,
+     "line_start": 2572,
+     "path": "scripts/pm-dt-event-contracts.py",
+     "quote": "def family_checks(c, inputs, check):",
+     "unit": "complete original suite"
+    },
+    {
+     "line_end": 1388,
+     "line_start": 1388,
+     "path": "scripts/pm-dt-event-contracts.py",
+     "quote": "def retained_custody_checks(c, f, schemas, check):",
+     "unit": "sealed receipt and store"
+    },
+    {
+     "line_end": 242,
+     "line_start": 242,
+     "path": "scripts/pm_dt_c12_schema.py",
+     "quote": "def schema_witnesses(dt, inputs, out):",
+     "unit": "whole-definition covering"
+    },
+    {
+     "line_end": 44,
+     "line_start": 44,
+     "path": "scripts/pm-dt-c12-closure.py",
+     "quote": "check(schema['uncontrolled_rules'] == 0",
+     "unit": "coverage control"
+    },
+    {
+     "line_end": 2260,
+     "line_start": 2260,
+     "path": "scripts/pm-dt-event-contracts.py",
+     "quote": "def number_corpus_checks(c, f, schemas, check):",
+     "unit": "shared numbers"
+    },
+    {
+     "line_end": 2111,
+     "line_start": 2111,
+     "path": "scripts/pm-dt-event-contracts.py",
+     "quote": "def datetime_checks(c, f, schemas, check):",
+     "unit": "shared datetime"
+    }
+   ],
+   "membership": "ABSENT",
+   "native_execution": "NOT_RUN",
+   "other_cells": "UNCHANGED",
+   "owner_units": [
+    "CV-600",
+    "SP-580",
+    "ATS-290"
+   ],
+   "scope": "Static complete-checker oracles; whole-definition Method B schema rows with explicit clause covering; independent model review NOT_RUN"
+  },
+  {
+   "after": "PASS",
+   "before": "PARTIAL",
+   "cell": "positive_negative_oracles",
+   "coverage_matrix": "coverage-matrix.json",
+   "criterion": 12,
+   "event_type": "approval.granted",
+   "evidence": [
+    {
+     "line_end": 9030,
+     "line_start": 9030,
+     "path": "Plans/Automated_Testing_System.md",
+     "quote": "For approval.granted alone, round-1 fixtures refuse",
+     "unit": "ATS-290"
+    },
+    {
+     "line_end": 17003,
+     "line_start": 17003,
+     "path": "Plans/dt_event_contract_fixtures.json",
+     "quote": "\"producer_semantic_digest\": \"b35a08f5cf9adb9213145600e6099c299f2fe5a9af36d6dcb69ea34ea0abc1e5\"",
+     "unit": "approval.granted retry_oracle"
+    },
+    {
+     "line_end": 33516,
+     "line_start": 33516,
+     "path": "Plans/storage-plan.md",
+     "quote": "For approval.granted, boolean authority/context flags are exact booleans",
+     "unit": "SP-581"
+    },
+    {
+     "line_end": 2572,
+     "line_start": 2572,
+     "path": "scripts/pm-dt-event-contracts.py",
+     "quote": "def family_checks(c, inputs, check):",
+     "unit": "complete original suite"
+    },
+    {
+     "line_end": 1388,
+     "line_start": 1388,
+     "path": "scripts/pm-dt-event-contracts.py",
+     "quote": "def retained_custody_checks(c, f, schemas, check):",
+     "unit": "sealed receipt and store"
+    },
+    {
+     "line_end": 242,
+     "line_start": 242,
+     "path": "scripts/pm_dt_c12_schema.py",
+     "quote": "def schema_witnesses(dt, inputs, out):",
+     "unit": "whole-definition covering"
+    },
+    {
+     "line_end": 44,
+     "line_start": 44,
+     "path": "scripts/pm-dt-c12-closure.py",
+     "quote": "check(schema['uncontrolled_rules'] == 0",
+     "unit": "coverage control"
+    },
+    {
+     "line_end": 2260,
+     "line_start": 2260,
+     "path": "scripts/pm-dt-event-contracts.py",
+     "quote": "def number_corpus_checks(c, f, schemas, check):",
+     "unit": "shared numbers"
+    },
+    {
+     "line_end": 2111,
+     "line_start": 2111,
+     "path": "scripts/pm-dt-event-contracts.py",
+     "quote": "def datetime_checks(c, f, schemas, check):",
+     "unit": "shared datetime"
+    }
+   ],
+   "membership": "ABSENT",
+   "native_execution": "NOT_RUN",
+   "other_cells": "UNCHANGED",
+   "owner_units": [
+    "CV-601",
+    "SP-581",
+    "ATS-290"
+   ],
+   "scope": "Static complete-checker oracles; whole-definition Method B schema rows with explicit clause covering; independent model review NOT_RUN"
+  },
+  {
+   "after": "PASS",
+   "before": "PARTIAL",
+   "cell": "positive_negative_oracles",
+   "coverage_matrix": "coverage-matrix.json",
+   "criterion": 12,
+   "event_type": "approval.denied",
+   "evidence": [
+    {
+     "line_end": 9066,
+     "line_start": 9066,
+     "path": "Plans/Automated_Testing_System.md",
+     "quote": "For approval.denied alone, round-1 fixtures refuse",
+     "unit": "ATS-291"
+    },
+    {
+     "line_end": 25717,
+     "line_start": 25717,
+     "path": "Plans/dt_event_contract_fixtures.json",
+     "quote": "\"producer_semantic_digest\": \"5335d199995d92f4019dc65f9b9598baaf06f7f6e2919ba4b8a3cae1f708ffde\"",
+     "unit": "approval.denied retry_oracle"
+    },
+    {
+     "line_end": 33556,
+     "line_start": 33556,
+     "path": "Plans/storage-plan.md",
+     "quote": "For approval.denied, boolean authority/context flags are exact booleans",
+     "unit": "SP-582"
+    },
+    {
+     "line_end": 2572,
+     "line_start": 2572,
+     "path": "scripts/pm-dt-event-contracts.py",
+     "quote": "def family_checks(c, inputs, check):",
+     "unit": "complete original suite"
+    },
+    {
+     "line_end": 1388,
+     "line_start": 1388,
+     "path": "scripts/pm-dt-event-contracts.py",
+     "quote": "def retained_custody_checks(c, f, schemas, check):",
+     "unit": "sealed receipt and store"
+    },
+    {
+     "line_end": 242,
+     "line_start": 242,
+     "path": "scripts/pm_dt_c12_schema.py",
+     "quote": "def schema_witnesses(dt, inputs, out):",
+     "unit": "whole-definition covering"
+    },
+    {
+     "line_end": 44,
+     "line_start": 44,
+     "path": "scripts/pm-dt-c12-closure.py",
+     "quote": "check(schema['uncontrolled_rules'] == 0",
+     "unit": "coverage control"
+    },
+    {
+     "line_end": 2260,
+     "line_start": 2260,
+     "path": "scripts/pm-dt-event-contracts.py",
+     "quote": "def number_corpus_checks(c, f, schemas, check):",
+     "unit": "shared numbers"
+    },
+    {
+     "line_end": 2111,
+     "line_start": 2111,
+     "path": "scripts/pm-dt-event-contracts.py",
+     "quote": "def datetime_checks(c, f, schemas, check):",
+     "unit": "shared datetime"
+    }
+   ],
+   "membership": "ABSENT",
+   "native_execution": "NOT_RUN",
+   "other_cells": "UNCHANGED",
+   "owner_units": [
+    "CV-602",
+    "SP-582",
+    "ATS-291"
+   ],
+   "scope": "Static complete-checker oracles; whole-definition Method B schema rows with explicit clause covering; independent model review NOT_RUN"
+  },
+  {
+   "after": "PASS",
+   "before": "PARTIAL",
+   "cell": "positive_negative_oracles",
+   "coverage_matrix": "coverage-matrix.json",
+   "criterion": 12,
+   "event_type": "approval.timeout",
+   "evidence": [
+    {
+     "line_end": 9067,
+     "line_start": 9067,
+     "path": "Plans/Automated_Testing_System.md",
+     "quote": "For approval.timeout alone, round-1 fixtures refuse",
+     "unit": "ATS-291"
+    },
+    {
+     "line_end": 34409,
+     "line_start": 34409,
+     "path": "Plans/dt_event_contract_fixtures.json",
+     "quote": "\"producer_semantic_digest\": \"c1146e4fe02864e5d4fe6ae1fd8de8631cf611bf76bdbf8f0b96a2a499883cea\"",
+     "unit": "approval.timeout retry_oracle"
+    },
+    {
+     "line_end": 33596,
+     "line_start": 33596,
+     "path": "Plans/storage-plan.md",
+     "quote": "For approval.timeout, boolean authority/context flags are exact booleans",
+     "unit": "SP-583"
+    },
+    {
+     "line_end": 2572,
+     "line_start": 2572,
+     "path": "scripts/pm-dt-event-contracts.py",
+     "quote": "def family_checks(c, inputs, check):",
+     "unit": "complete original suite"
+    },
+    {
+     "line_end": 1388,
+     "line_start": 1388,
+     "path": "scripts/pm-dt-event-contracts.py",
+     "quote": "def retained_custody_checks(c, f, schemas, check):",
+     "unit": "sealed receipt and store"
+    },
+    {
+     "line_end": 242,
+     "line_start": 242,
+     "path": "scripts/pm_dt_c12_schema.py",
+     "quote": "def schema_witnesses(dt, inputs, out):",
+     "unit": "whole-definition covering"
+    },
+    {
+     "line_end": 44,
+     "line_start": 44,
+     "path": "scripts/pm-dt-c12-closure.py",
+     "quote": "check(schema['uncontrolled_rules'] == 0",
+     "unit": "coverage control"
+    },
+    {
+     "line_end": 2260,
+     "line_start": 2260,
+     "path": "scripts/pm-dt-event-contracts.py",
+     "quote": "def number_corpus_checks(c, f, schemas, check):",
+     "unit": "shared numbers"
+    },
+    {
+     "line_end": 2111,
+     "line_start": 2111,
+     "path": "scripts/pm-dt-event-contracts.py",
+     "quote": "def datetime_checks(c, f, schemas, check):",
+     "unit": "shared datetime"
+    }
+   ],
+   "membership": "ABSENT",
+   "native_execution": "NOT_RUN",
+   "other_cells": "UNCHANGED",
+   "owner_units": [
+    "CV-603",
+    "SP-583",
+    "ATS-291"
+   ],
+   "scope": "Static complete-checker oracles; whole-definition Method B schema rows with explicit clause covering; independent model review NOT_RUN"
+  },
+  {
+   "after": "PASS",
+   "before": "PARTIAL",
+   "cell": "positive_negative_oracles",
+   "coverage_matrix": "coverage-matrix.json",
+   "criterion": 12,
+   "event_type": "config.migrated",
+   "evidence": [
+    {
+     "line_end": 9103,
+     "line_start": 9103,
+     "path": "Plans/Automated_Testing_System.md",
+     "quote": "For config.migrated alone, round-1 fixtures refuse",
+     "unit": "ATS-292"
+    },
+    {
+     "line_end": 43456,
+     "line_start": 43456,
+     "path": "Plans/dt_event_contract_fixtures.json",
+     "quote": "\"producer_semantic_digest\": \"5a5c4693b1e2f636801a8936bd9927474de0589fd99de28251af3a63d6b6c4b2\"",
+     "unit": "config.migrated retry_oracle"
+    },
+    {
+     "line_end": 33636,
+     "line_start": 33636,
+     "path": "Plans/storage-plan.md",
+     "quote": "For config.migrated, boolean authority/context flags are exact booleans",
+     "unit": "SP-584"
+    },
+    {
+     "line_end": 2572,
+     "line_start": 2572,
+     "path": "scripts/pm-dt-event-contracts.py",
+     "quote": "def family_checks(c, inputs, check):",
+     "unit": "complete original suite"
+    },
+    {
+     "line_end": 1388,
+     "line_start": 1388,
+     "path": "scripts/pm-dt-event-contracts.py",
+     "quote": "def retained_custody_checks(c, f, schemas, check):",
+     "unit": "sealed receipt and store"
+    },
+    {
+     "line_end": 242,
+     "line_start": 242,
+     "path": "scripts/pm_dt_c12_schema.py",
+     "quote": "def schema_witnesses(dt, inputs, out):",
+     "unit": "whole-definition covering"
+    },
+    {
+     "line_end": 44,
+     "line_start": 44,
+     "path": "scripts/pm-dt-c12-closure.py",
+     "quote": "check(schema['uncontrolled_rules'] == 0",
+     "unit": "coverage control"
+    },
+    {
+     "line_end": 2260,
+     "line_start": 2260,
+     "path": "scripts/pm-dt-event-contracts.py",
+     "quote": "def number_corpus_checks(c, f, schemas, check):",
+     "unit": "shared numbers"
+    },
+    {
+     "line_end": 2111,
+     "line_start": 2111,
+     "path": "scripts/pm-dt-event-contracts.py",
+     "quote": "def datetime_checks(c, f, schemas, check):",
+     "unit": "shared datetime"
+    }
+   ],
+   "membership": "ABSENT",
+   "native_execution": "NOT_RUN",
+   "other_cells": "UNCHANGED",
+   "owner_units": [
+    "CV-604",
+    "SP-584",
+    "ATS-292"
+   ],
+   "scope": "Static complete-checker oracles; whole-definition Method B schema rows with explicit clause covering; independent model review NOT_RUN"
+  },
+  {
+   "after": "PASS",
+   "before": "PARTIAL",
+   "cell": "positive_negative_oracles",
+   "coverage_matrix": "coverage-matrix.json",
+   "criterion": 12,
+   "event_type": "gate.evaluation_started",
+   "evidence": [
+    {
+     "line_end": 9105,
+     "line_start": 9105,
+     "path": "Plans/Automated_Testing_System.md",
+     "quote": "For gate.evaluation_started alone, round-1 fixtures refuse",
+     "unit": "ATS-292"
+    },
+    {
+     "line_end": 53605,
+     "line_start": 53605,
+     "path": "Plans/dt_event_contract_fixtures.json",
+     "quote": "\"producer_semantic_digest\": \"5ee1241f04caada2b6c92cb6257ffdaa71b36e2be31c905240691d9a8aa08760\"",
+     "unit": "gate.evaluation_started retry_oracle"
+    },
+    {
+     "line_end": 33677,
+     "line_start": 33677,
+     "path": "Plans/storage-plan.md",
+     "quote": "For gate.evaluation_started, boolean authority/context flags are exact booleans",
+     "unit": "SP-585"
+    },
+    {
+     "line_end": 2572,
+     "line_start": 2572,
+     "path": "scripts/pm-dt-event-contracts.py",
+     "quote": "def family_checks(c, inputs, check):",
+     "unit": "complete original suite"
+    },
+    {
+     "line_end": 1388,
+     "line_start": 1388,
+     "path": "scripts/pm-dt-event-contracts.py",
+     "quote": "def retained_custody_checks(c, f, schemas, check):",
+     "unit": "sealed receipt and store"
+    },
+    {
+     "line_end": 242,
+     "line_start": 242,
+     "path": "scripts/pm_dt_c12_schema.py",
+     "quote": "def schema_witnesses(dt, inputs, out):",
+     "unit": "whole-definition covering"
+    },
+    {
+     "line_end": 44,
+     "line_start": 44,
+     "path": "scripts/pm-dt-c12-closure.py",
+     "quote": "check(schema['uncontrolled_rules'] == 0",
+     "unit": "coverage control"
+    },
+    {
+     "line_end": 2260,
+     "line_start": 2260,
+     "path": "scripts/pm-dt-event-contracts.py",
+     "quote": "def number_corpus_checks(c, f, schemas, check):",
+     "unit": "shared numbers"
+    },
+    {
+     "line_end": 2111,
+     "line_start": 2111,
+     "path": "scripts/pm-dt-event-contracts.py",
+     "quote": "def datetime_checks(c, f, schemas, check):",
+     "unit": "shared datetime"
+    }
+   ],
+   "membership": "ABSENT",
+   "native_execution": "NOT_RUN",
+   "other_cells": "UNCHANGED",
+   "owner_units": [
+    "CV-605",
+    "SP-585",
+    "ATS-292"
+   ],
+   "scope": "Static complete-checker oracles; whole-definition Method B schema rows with explicit clause covering; independent model review NOT_RUN"
+  },
+  {
+   "after": "PASS",
+   "before": "PARTIAL",
+   "cell": "positive_negative_oracles",
+   "coverage_matrix": "coverage-matrix.json",
+   "criterion": 12,
+   "event_type": "gate.failed",
+   "evidence": [
+    {
+     "line_end": 9142,
+     "line_start": 9142,
+     "path": "Plans/Automated_Testing_System.md",
+     "quote": "For gate.failed alone, round-1 fixtures refuse",
+     "unit": "ATS-293"
+    },
+    {
+     "line_end": 63902,
+     "line_start": 63902,
+     "path": "Plans/dt_event_contract_fixtures.json",
+     "quote": "\"producer_semantic_digest\": \"6e31cfb4c73d84cf10a59a3da8382c045865c72975128f8f0715d291fb55cf00\"",
+     "unit": "gate.failed retry_oracle"
+    },
+    {
+     "line_end": 33718,
+     "line_start": 33718,
+     "path": "Plans/storage-plan.md",
+     "quote": "For gate.failed, boolean authority/context flags are exact booleans",
+     "unit": "SP-586"
+    },
+    {
+     "line_end": 2572,
+     "line_start": 2572,
+     "path": "scripts/pm-dt-event-contracts.py",
+     "quote": "def family_checks(c, inputs, check):",
+     "unit": "complete original suite"
+    },
+    {
+     "line_end": 1388,
+     "line_start": 1388,
+     "path": "scripts/pm-dt-event-contracts.py",
+     "quote": "def retained_custody_checks(c, f, schemas, check):",
+     "unit": "sealed receipt and store"
+    },
+    {
+     "line_end": 242,
+     "line_start": 242,
+     "path": "scripts/pm_dt_c12_schema.py",
+     "quote": "def schema_witnesses(dt, inputs, out):",
+     "unit": "whole-definition covering"
+    },
+    {
+     "line_end": 44,
+     "line_start": 44,
+     "path": "scripts/pm-dt-c12-closure.py",
+     "quote": "check(schema['uncontrolled_rules'] == 0",
+     "unit": "coverage control"
+    },
+    {
+     "line_end": 2260,
+     "line_start": 2260,
+     "path": "scripts/pm-dt-event-contracts.py",
+     "quote": "def number_corpus_checks(c, f, schemas, check):",
+     "unit": "shared numbers"
+    },
+    {
+     "line_end": 2111,
+     "line_start": 2111,
+     "path": "scripts/pm-dt-event-contracts.py",
+     "quote": "def datetime_checks(c, f, schemas, check):",
+     "unit": "shared datetime"
+    }
+   ],
+   "membership": "ABSENT",
+   "native_execution": "NOT_RUN",
+   "other_cells": "UNCHANGED",
+   "owner_units": [
+    "CV-606",
+    "SP-586",
+    "ATS-293"
+   ],
+   "scope": "Static complete-checker oracles; whole-definition Method B schema rows with explicit clause covering; independent model review NOT_RUN"
+  },
+  {
+   "after": "PASS",
+   "before": "PARTIAL",
+   "cell": "positive_negative_oracles",
+   "coverage_matrix": "coverage-matrix.json",
+   "criterion": 12,
+   "event_type": "gate.passed",
+   "evidence": [
+    {
+     "line_end": 9144,
+     "line_start": 9144,
+     "path": "Plans/Automated_Testing_System.md",
+     "quote": "For gate.passed alone, round-1 fixtures refuse",
+     "unit": "ATS-293"
+    },
+    {
+     "line_end": 74202,
+     "line_start": 74202,
+     "path": "Plans/dt_event_contract_fixtures.json",
+     "quote": "\"producer_semantic_digest\": \"3156abdc29b343f4fbc56c57fe151feef60ab24d32a0093d7440916e801f6445\"",
+     "unit": "gate.passed retry_oracle"
+    },
+    {
+     "line_end": 33759,
+     "line_start": 33759,
+     "path": "Plans/storage-plan.md",
+     "quote": "For gate.passed, boolean authority/context flags are exact booleans",
+     "unit": "SP-587"
+    },
+    {
+     "line_end": 2572,
+     "line_start": 2572,
+     "path": "scripts/pm-dt-event-contracts.py",
+     "quote": "def family_checks(c, inputs, check):",
+     "unit": "complete original suite"
+    },
+    {
+     "line_end": 1388,
+     "line_start": 1388,
+     "path": "scripts/pm-dt-event-contracts.py",
+     "quote": "def retained_custody_checks(c, f, schemas, check):",
+     "unit": "sealed receipt and store"
+    },
+    {
+     "line_end": 242,
+     "line_start": 242,
+     "path": "scripts/pm_dt_c12_schema.py",
+     "quote": "def schema_witnesses(dt, inputs, out):",
+     "unit": "whole-definition covering"
+    },
+    {
+     "line_end": 44,
+     "line_start": 44,
+     "path": "scripts/pm-dt-c12-closure.py",
+     "quote": "check(schema['uncontrolled_rules'] == 0",
+     "unit": "coverage control"
+    },
+    {
+     "line_end": 2260,
+     "line_start": 2260,
+     "path": "scripts/pm-dt-event-contracts.py",
+     "quote": "def number_corpus_checks(c, f, schemas, check):",
+     "unit": "shared numbers"
+    },
+    {
+     "line_end": 2111,
+     "line_start": 2111,
+     "path": "scripts/pm-dt-event-contracts.py",
+     "quote": "def datetime_checks(c, f, schemas, check):",
+     "unit": "shared datetime"
+    }
+   ],
+   "membership": "ABSENT",
+   "native_execution": "NOT_RUN",
+   "other_cells": "UNCHANGED",
+   "owner_units": [
+    "CV-607",
+    "SP-587",
+    "ATS-293"
+   ],
+   "scope": "Static complete-checker oracles; whole-definition Method B schema rows with explicit clause covering; independent model review NOT_RUN"
+  },
+  {
+   "after": "PASS",
+   "before": "PARTIAL",
+   "cell": "positive_negative_oracles",
+   "coverage_matrix": "coverage-matrix.json",
+   "criterion": 12,
+   "event_type": "requirements.clarification_requested",
+   "evidence": [
+    {
+     "line_end": 9181,
+     "line_start": 9181,
+     "path": "Plans/Automated_Testing_System.md",
+     "quote": "For requirements.clarification_requested alone, round-1 fixtures refuse",
+     "unit": "ATS-294"
+    },
+    {
+     "line_end": 82793,
+     "line_start": 82793,
+     "path": "Plans/dt_event_contract_fixtures.json",
+     "quote": "\"producer_semantic_digest\": \"b5f1c867432f98800f46cb5225b00dfecce0a66d5e8347139a73d05f37e8bef5\"",
+     "unit": "requirements.clarification_requested retry_oracle"
+    },
+    {
+     "line_end": 33800,
+     "line_start": 33800,
+     "path": "Plans/storage-plan.md",
+     "quote": "For requirements.clarification_requested, boolean authority/context flags are exact booleans",
+     "unit": "SP-588"
+    },
+    {
+     "line_end": 2572,
+     "line_start": 2572,
+     "path": "scripts/pm-dt-event-contracts.py",
+     "quote": "def family_checks(c, inputs, check):",
+     "unit": "complete original suite"
+    },
+    {
+     "line_end": 1388,
+     "line_start": 1388,
+     "path": "scripts/pm-dt-event-contracts.py",
+     "quote": "def retained_custody_checks(c, f, schemas, check):",
+     "unit": "sealed receipt and store"
+    },
+    {
+     "line_end": 242,
+     "line_start": 242,
+     "path": "scripts/pm_dt_c12_schema.py",
+     "quote": "def schema_witnesses(dt, inputs, out):",
+     "unit": "whole-definition covering"
+    },
+    {
+     "line_end": 44,
+     "line_start": 44,
+     "path": "scripts/pm-dt-c12-closure.py",
+     "quote": "check(schema['uncontrolled_rules'] == 0",
+     "unit": "coverage control"
+    },
+    {
+     "line_end": 2260,
+     "line_start": 2260,
+     "path": "scripts/pm-dt-event-contracts.py",
+     "quote": "def number_corpus_checks(c, f, schemas, check):",
+     "unit": "shared numbers"
+    },
+    {
+     "line_end": 2111,
+     "line_start": 2111,
+     "path": "scripts/pm-dt-event-contracts.py",
+     "quote": "def datetime_checks(c, f, schemas, check):",
+     "unit": "shared datetime"
+    }
+   ],
+   "membership": "ABSENT",
+   "native_execution": "NOT_RUN",
+   "other_cells": "UNCHANGED",
+   "owner_units": [
+    "CV-608",
+    "SP-588",
+    "ATS-294"
+   ],
+   "scope": "Static complete-checker oracles; whole-definition Method B schema rows with explicit clause covering; independent model review NOT_RUN"
+  },
+  {
+   "after": "PASS",
+   "before": "PARTIAL",
+   "cell": "positive_negative_oracles",
+   "coverage_matrix": "coverage-matrix.json",
+   "criterion": 12,
+   "event_type": "run.background_enqueued",
+   "evidence": [
+    {
+     "line_end": 9182,
+     "line_start": 9182,
+     "path": "Plans/Automated_Testing_System.md",
+     "quote": "For run.background_enqueued alone, round-1 fixtures refuse",
+     "unit": "ATS-294"
+    },
+    {
+     "line_end": 91569,
+     "line_start": 91569,
+     "path": "Plans/dt_event_contract_fixtures.json",
+     "quote": "\"producer_semantic_digest\": \"bacb547fef45a9265f2a70fb21adc7993316b6749ec40e944ea600f65e1b8ee9\"",
+     "unit": "run.background_enqueued retry_oracle"
+    },
+    {
+     "line_end": 33840,
+     "line_start": 33840,
+     "path": "Plans/storage-plan.md",
+     "quote": "For run.background_enqueued, boolean authority/context flags are exact booleans",
+     "unit": "SP-589"
+    },
+    {
+     "line_end": 2572,
+     "line_start": 2572,
+     "path": "scripts/pm-dt-event-contracts.py",
+     "quote": "def family_checks(c, inputs, check):",
+     "unit": "complete original suite"
+    },
+    {
+     "line_end": 1388,
+     "line_start": 1388,
+     "path": "scripts/pm-dt-event-contracts.py",
+     "quote": "def retained_custody_checks(c, f, schemas, check):",
+     "unit": "sealed receipt and store"
+    },
+    {
+     "line_end": 242,
+     "line_start": 242,
+     "path": "scripts/pm_dt_c12_schema.py",
+     "quote": "def schema_witnesses(dt, inputs, out):",
+     "unit": "whole-definition covering"
+    },
+    {
+     "line_end": 44,
+     "line_start": 44,
+     "path": "scripts/pm-dt-c12-closure.py",
+     "quote": "check(schema['uncontrolled_rules'] == 0",
+     "unit": "coverage control"
+    },
+    {
+     "line_end": 2260,
+     "line_start": 2260,
+     "path": "scripts/pm-dt-event-contracts.py",
+     "quote": "def number_corpus_checks(c, f, schemas, check):",
+     "unit": "shared numbers"
+    },
+    {
+     "line_end": 2111,
+     "line_start": 2111,
+     "path": "scripts/pm-dt-event-contracts.py",
+     "quote": "def datetime_checks(c, f, schemas, check):",
+     "unit": "shared datetime"
+    }
+   ],
+   "membership": "ABSENT",
+   "native_execution": "NOT_RUN",
+   "other_cells": "UNCHANGED",
+   "owner_units": [
+    "CV-609",
+    "SP-589",
+    "ATS-294"
+   ],
+   "scope": "Static complete-checker oracles; whole-definition Method B schema rows with explicit clause covering; independent model review NOT_RUN"
+  },
+  {
+   "after": "PASS",
+   "before": "PARTIAL",
+   "cell": "positive_negative_oracles",
+   "coverage_matrix": "coverage-matrix.json",
+   "criterion": 12,
+   "event_type": "tool.denied",
+   "evidence": [
+    {
+     "line_end": 9218,
+     "line_start": 9218,
+     "path": "Plans/Automated_Testing_System.md",
+     "quote": "For tool.denied alone, round-1 fixtures refuse",
+     "unit": "ATS-295"
+    },
+    {
+     "line_end": 103857,
+     "line_start": 103857,
+     "path": "Plans/dt_event_contract_fixtures.json",
+     "quote": "\"producer_semantic_digest\": \"adc41858b6ae79d17050c9606b8a0cb74c934b542b12a2cc78fe71f3626b8df4\"",
+     "unit": "tool.denied retry_oracle"
+    },
+    {
+     "line_end": 33881,
+     "line_start": 33881,
+     "path": "Plans/storage-plan.md",
+     "quote": "For tool.denied, boolean authority/context flags are exact booleans",
+     "unit": "SP-590"
+    },
+    {
+     "line_end": 2572,
+     "line_start": 2572,
+     "path": "scripts/pm-dt-event-contracts.py",
+     "quote": "def family_checks(c, inputs, check):",
+     "unit": "complete original suite"
+    },
+    {
+     "line_end": 1388,
+     "line_start": 1388,
+     "path": "scripts/pm-dt-event-contracts.py",
+     "quote": "def retained_custody_checks(c, f, schemas, check):",
+     "unit": "sealed receipt and store"
+    },
+    {
+     "line_end": 242,
+     "line_start": 242,
+     "path": "scripts/pm_dt_c12_schema.py",
+     "quote": "def schema_witnesses(dt, inputs, out):",
+     "unit": "whole-definition covering"
+    },
+    {
+     "line_end": 44,
+     "line_start": 44,
+     "path": "scripts/pm-dt-c12-closure.py",
+     "quote": "check(schema['uncontrolled_rules'] == 0",
+     "unit": "coverage control"
+    },
+    {
+     "line_end": 2260,
+     "line_start": 2260,
+     "path": "scripts/pm-dt-event-contracts.py",
+     "quote": "def number_corpus_checks(c, f, schemas, check):",
+     "unit": "shared numbers"
+    },
+    {
+     "line_end": 2111,
+     "line_start": 2111,
+     "path": "scripts/pm-dt-event-contracts.py",
+     "quote": "def datetime_checks(c, f, schemas, check):",
+     "unit": "shared datetime"
+    }
+   ],
+   "membership": "ABSENT",
+   "native_execution": "NOT_RUN",
+   "other_cells": "UNCHANGED",
+   "owner_units": [
+    "CV-610",
+    "SP-590",
+    "ATS-295"
+   ],
+   "scope": "Static complete-checker oracles; whole-definition Method B schema rows with explicit clause covering; independent model review NOT_RUN"
+  },
+  {
+   "after": "PASS",
+   "before": "PARTIAL",
+   "cell": "positive_negative_oracles",
+   "coverage_matrix": "coverage-matrix.json",
+   "criterion": 12,
+   "event_type": "tool.execution_completed",
+   "evidence": [
+    {
+     "line_end": 9221,
+     "line_start": 9221,
+     "path": "Plans/Automated_Testing_System.md",
+     "quote": "For tool.execution_completed alone, round-1 fixtures refuse",
+     "unit": "ATS-295"
+    },
+    {
+     "line_end": 113154,
+     "line_start": 113154,
+     "path": "Plans/dt_event_contract_fixtures.json",
+     "quote": "\"producer_semantic_digest\": \"b2cb5caa39956fbe53e1fde007bcc57a86152ca0617223b8f5fc5825528202b1\"",
+     "unit": "tool.execution_completed retry_oracle"
+    },
+    {
+     "line_end": 33923,
+     "line_start": 33923,
+     "path": "Plans/storage-plan.md",
+     "quote": "For tool.execution_completed, boolean authority/context flags are exact booleans",
+     "unit": "SP-591"
+    },
+    {
+     "line_end": 2572,
+     "line_start": 2572,
+     "path": "scripts/pm-dt-event-contracts.py",
+     "quote": "def family_checks(c, inputs, check):",
+     "unit": "complete original suite"
+    },
+    {
+     "line_end": 1388,
+     "line_start": 1388,
+     "path": "scripts/pm-dt-event-contracts.py",
+     "quote": "def retained_custody_checks(c, f, schemas, check):",
+     "unit": "sealed receipt and store"
+    },
+    {
+     "line_end": 242,
+     "line_start": 242,
+     "path": "scripts/pm_dt_c12_schema.py",
+     "quote": "def schema_witnesses(dt, inputs, out):",
+     "unit": "whole-definition covering"
+    },
+    {
+     "line_end": 44,
+     "line_start": 44,
+     "path": "scripts/pm-dt-c12-closure.py",
+     "quote": "check(schema['uncontrolled_rules'] == 0",
+     "unit": "coverage control"
+    },
+    {
+     "line_end": 2260,
+     "line_start": 2260,
+     "path": "scripts/pm-dt-event-contracts.py",
+     "quote": "def number_corpus_checks(c, f, schemas, check):",
+     "unit": "shared numbers"
+    },
+    {
+     "line_end": 2111,
+     "line_start": 2111,
+     "path": "scripts/pm-dt-event-contracts.py",
+     "quote": "def datetime_checks(c, f, schemas, check):",
+     "unit": "shared datetime"
+    }
+   ],
+   "membership": "ABSENT",
+   "native_execution": "NOT_RUN",
+   "other_cells": "UNCHANGED",
+   "owner_units": [
+    "CV-611",
+    "SP-591",
+    "ATS-295"
+   ],
+   "scope": "Static complete-checker oracles; whole-definition Method B schema rows with explicit clause covering; independent model review NOT_RUN"
+  },
+  {
+   "after": "PASS",
+   "before": "PARTIAL",
+   "cell": "positive_negative_oracles",
+   "coverage_matrix": "coverage-matrix.json",
+   "criterion": 12,
+   "event_type": "tool.execution_started",
+   "evidence": [
+    {
+     "line_end": 9257,
+     "line_start": 9257,
+     "path": "Plans/Automated_Testing_System.md",
+     "quote": "For tool.execution_started alone, round-1 fixtures refuse",
+     "unit": "ATS-296"
+    },
+    {
+     "line_end": 121923,
+     "line_start": 121923,
+     "path": "Plans/dt_event_contract_fixtures.json",
+     "quote": "\"producer_semantic_digest\": \"c45a2d45757e0595c24fee96845a9dfacfba4a8223384076c7aca6ed9639731d\"",
+     "unit": "tool.execution_started retry_oracle"
+    },
+    {
+     "line_end": 33964,
+     "line_start": 33964,
+     "path": "Plans/storage-plan.md",
+     "quote": "For tool.execution_started, boolean authority/context flags are exact booleans",
+     "unit": "SP-592"
+    },
+    {
+     "line_end": 2572,
+     "line_start": 2572,
+     "path": "scripts/pm-dt-event-contracts.py",
+     "quote": "def family_checks(c, inputs, check):",
+     "unit": "complete original suite"
+    },
+    {
+     "line_end": 1388,
+     "line_start": 1388,
+     "path": "scripts/pm-dt-event-contracts.py",
+     "quote": "def retained_custody_checks(c, f, schemas, check):",
+     "unit": "sealed receipt and store"
+    },
+    {
+     "line_end": 242,
+     "line_start": 242,
+     "path": "scripts/pm_dt_c12_schema.py",
+     "quote": "def schema_witnesses(dt, inputs, out):",
+     "unit": "whole-definition covering"
+    },
+    {
+     "line_end": 44,
+     "line_start": 44,
+     "path": "scripts/pm-dt-c12-closure.py",
+     "quote": "check(schema['uncontrolled_rules'] == 0",
+     "unit": "coverage control"
+    },
+    {
+     "line_end": 2260,
+     "line_start": 2260,
+     "path": "scripts/pm-dt-event-contracts.py",
+     "quote": "def number_corpus_checks(c, f, schemas, check):",
+     "unit": "shared numbers"
+    },
+    {
+     "line_end": 2111,
+     "line_start": 2111,
+     "path": "scripts/pm-dt-event-contracts.py",
+     "quote": "def datetime_checks(c, f, schemas, check):",
+     "unit": "shared datetime"
+    }
+   ],
+   "membership": "ABSENT",
+   "native_execution": "NOT_RUN",
+   "other_cells": "UNCHANGED",
+   "owner_units": [
+    "CV-612",
+    "SP-592",
+    "ATS-296"
+   ],
+   "scope": "Static complete-checker oracles; whole-definition Method B schema rows with explicit clause covering; independent model review NOT_RUN"
+  },
+  {
+   "after": "PASS",
+   "before": "PARTIAL",
+   "cell": "positive_negative_oracles",
+   "coverage_matrix": "coverage-matrix.json",
+   "criterion": 12,
+   "event_type": "tool.invoked",
+   "evidence": [
+    {
+     "line_end": 9258,
+     "line_start": 9258,
+     "path": "Plans/Automated_Testing_System.md",
+     "quote": "For tool.invoked alone, round-1 fixtures refuse",
+     "unit": "ATS-296"
+    },
+    {
+     "line_end": 136322,
+     "line_start": 136322,
+     "path": "Plans/dt_event_contract_fixtures.json",
+     "quote": "\"producer_semantic_digest\": \"eff558e25942df72c41df671e8fee6d23f1b3751a7f2108654fe86f869d1214c\"",
+     "unit": "tool.invoked retry_oracle"
+    },
+    {
+     "line_end": 34005,
+     "line_start": 34005,
+     "path": "Plans/storage-plan.md",
+     "quote": "For tool.invoked, boolean authority/context flags are exact booleans",
+     "unit": "SP-593"
+    },
+    {
+     "line_end": 2572,
+     "line_start": 2572,
+     "path": "scripts/pm-dt-event-contracts.py",
+     "quote": "def family_checks(c, inputs, check):",
+     "unit": "complete original suite"
+    },
+    {
+     "line_end": 1388,
+     "line_start": 1388,
+     "path": "scripts/pm-dt-event-contracts.py",
+     "quote": "def retained_custody_checks(c, f, schemas, check):",
+     "unit": "sealed receipt and store"
+    },
+    {
+     "line_end": 242,
+     "line_start": 242,
+     "path": "scripts/pm_dt_c12_schema.py",
+     "quote": "def schema_witnesses(dt, inputs, out):",
+     "unit": "whole-definition covering"
+    },
+    {
+     "line_end": 44,
+     "line_start": 44,
+     "path": "scripts/pm-dt-c12-closure.py",
+     "quote": "check(schema['uncontrolled_rules'] == 0",
+     "unit": "coverage control"
+    },
+    {
+     "line_end": 2260,
+     "line_start": 2260,
+     "path": "scripts/pm-dt-event-contracts.py",
+     "quote": "def number_corpus_checks(c, f, schemas, check):",
+     "unit": "shared numbers"
+    },
+    {
+     "line_end": 2111,
+     "line_start": 2111,
+     "path": "scripts/pm-dt-event-contracts.py",
+     "quote": "def datetime_checks(c, f, schemas, check):",
+     "unit": "shared datetime"
+    }
+   ],
+   "membership": "ABSENT",
+   "native_execution": "NOT_RUN",
+   "other_cells": "UNCHANGED",
+   "owner_units": [
+    "CV-613",
+    "SP-593",
+    "ATS-296"
+   ],
+   "scope": "Static complete-checker oracles; whole-definition Method B schema rows with explicit clause covering; independent model review NOT_RUN"
+  },
+  {
+   "after": "PASS",
+   "before": "PARTIAL",
+   "cell": "positive_negative_oracles",
+   "coverage_matrix": "coverage-matrix.json",
+   "criterion": 12,
+   "event_type": "usage.event",
+   "evidence": [
+    {
+     "line_end": 9296,
+     "line_start": 9296,
+     "path": "Plans/Automated_Testing_System.md",
+     "quote": "For usage.event alone, round-1 fixtures refuse",
+     "unit": "ATS-297"
+    },
+    {
+     "line_end": 157708,
+     "line_start": 157708,
+     "path": "Plans/dt_event_contract_fixtures.json",
+     "quote": "\"producer_semantic_digest\": \"254357fd3346f20821dfb45d310dd4aad1793f0c4d3df688c6ef2787f085a4d9\"",
+     "unit": "usage.event retry_oracle"
+    },
+    {
+     "line_end": 34047,
+     "line_start": 34047,
+     "path": "Plans/storage-plan.md",
+     "quote": "For usage.event, boolean authority/context flags are exact booleans",
+     "unit": "SP-594"
+    },
+    {
+     "line_end": 2572,
+     "line_start": 2572,
+     "path": "scripts/pm-dt-event-contracts.py",
+     "quote": "def family_checks(c, inputs, check):",
+     "unit": "complete original suite"
+    },
+    {
+     "line_end": 1388,
+     "line_start": 1388,
+     "path": "scripts/pm-dt-event-contracts.py",
+     "quote": "def retained_custody_checks(c, f, schemas, check):",
+     "unit": "sealed receipt and store"
+    },
+    {
+     "line_end": 242,
+     "line_start": 242,
+     "path": "scripts/pm_dt_c12_schema.py",
+     "quote": "def schema_witnesses(dt, inputs, out):",
+     "unit": "whole-definition covering"
+    },
+    {
+     "line_end": 44,
+     "line_start": 44,
+     "path": "scripts/pm-dt-c12-closure.py",
+     "quote": "check(schema['uncontrolled_rules'] == 0",
+     "unit": "coverage control"
+    },
+    {
+     "line_end": 2260,
+     "line_start": 2260,
+     "path": "scripts/pm-dt-event-contracts.py",
+     "quote": "def number_corpus_checks(c, f, schemas, check):",
+     "unit": "shared numbers"
+    },
+    {
+     "line_end": 2111,
+     "line_start": 2111,
+     "path": "scripts/pm-dt-event-contracts.py",
+     "quote": "def datetime_checks(c, f, schemas, check):",
+     "unit": "shared datetime"
+    }
+   ],
+   "membership": "ABSENT",
+   "native_execution": "NOT_RUN",
+   "other_cells": "UNCHANGED",
+   "owner_units": [
+    "CV-614",
+    "SP-594",
+    "ATS-297"
+   ],
+   "scope": "Static complete-checker oracles; whole-definition Method B schema rows with explicit clause covering; independent model review NOT_RUN"
+  },
+  {
+   "after": "PASS",
+   "before": "PARTIAL",
+   "cell": "positive_negative_oracles",
+   "coverage_matrix": "coverage-matrix.json",
+   "criterion": 12,
+   "event_type": "worktree.created",
+   "evidence": [
+    {
+     "line_end": 9299,
+     "line_start": 9299,
+     "path": "Plans/Automated_Testing_System.md",
+     "quote": "For worktree.created alone, round-1 fixtures refuse",
+     "unit": "ATS-297"
+    },
+    {
+     "line_end": 166747,
+     "line_start": 166747,
+     "path": "Plans/dt_event_contract_fixtures.json",
+     "quote": "\"producer_semantic_digest\": \"6e664227730ba54c1b4530659d51a22fccbc9c4a59e3d3c179ff0a08fe33993e\"",
+     "unit": "worktree.created retry_oracle"
+    },
+    {
+     "line_end": 34089,
+     "line_start": 34089,
+     "path": "Plans/storage-plan.md",
+     "quote": "For worktree.created, boolean authority/context flags are exact booleans",
+     "unit": "SP-595"
+    },
+    {
+     "line_end": 2572,
+     "line_start": 2572,
+     "path": "scripts/pm-dt-event-contracts.py",
+     "quote": "def family_checks(c, inputs, check):",
+     "unit": "complete original suite"
+    },
+    {
+     "line_end": 1388,
+     "line_start": 1388,
+     "path": "scripts/pm-dt-event-contracts.py",
+     "quote": "def retained_custody_checks(c, f, schemas, check):",
+     "unit": "sealed receipt and store"
+    },
+    {
+     "line_end": 242,
+     "line_start": 242,
+     "path": "scripts/pm_dt_c12_schema.py",
+     "quote": "def schema_witnesses(dt, inputs, out):",
+     "unit": "whole-definition covering"
+    },
+    {
+     "line_end": 44,
+     "line_start": 44,
+     "path": "scripts/pm-dt-c12-closure.py",
+     "quote": "check(schema['uncontrolled_rules'] == 0",
+     "unit": "coverage control"
+    },
+    {
+     "line_end": 2260,
+     "line_start": 2260,
+     "path": "scripts/pm-dt-event-contracts.py",
+     "quote": "def number_corpus_checks(c, f, schemas, check):",
+     "unit": "shared numbers"
+    },
+    {
+     "line_end": 2111,
+     "line_start": 2111,
+     "path": "scripts/pm-dt-event-contracts.py",
+     "quote": "def datetime_checks(c, f, schemas, check):",
+     "unit": "shared datetime"
+    }
+   ],
+   "membership": "ABSENT",
+   "native_execution": "NOT_RUN",
+   "other_cells": "UNCHANGED",
+   "owner_units": [
+    "CV-615",
+    "SP-595",
+    "ATS-297"
+   ],
+   "scope": "Static complete-checker oracles; whole-definition Method B schema rows with explicit clause covering; independent model review NOT_RUN"
+  },
+  {
+   "after": "PASS",
+   "before": "PARTIAL",
+   "cell": "positive_negative_oracles",
+   "coverage_matrix": "coverage-matrix.json",
+   "criterion": 12,
+   "event_type": "worktree.deleted",
+   "evidence": [
+    {
+     "line_end": 9333,
+     "line_start": 9333,
+     "path": "Plans/Automated_Testing_System.md",
+     "quote": "For worktree.deleted alone, round-1 fixtures refuse",
+     "unit": "ATS-298"
+    },
+    {
+     "line_end": 175432,
+     "line_start": 175432,
+     "path": "Plans/dt_event_contract_fixtures.json",
+     "quote": "\"producer_semantic_digest\": \"9054332c7f9ae2b49b190cbd7408cc6237313461721dd5bb715628fd4f55d436\"",
+     "unit": "worktree.deleted retry_oracle"
+    },
+    {
+     "line_end": 34129,
+     "line_start": 34129,
+     "path": "Plans/storage-plan.md",
+     "quote": "For worktree.deleted, boolean authority/context flags are exact booleans",
+     "unit": "SP-596"
+    },
+    {
+     "line_end": 2572,
+     "line_start": 2572,
+     "path": "scripts/pm-dt-event-contracts.py",
+     "quote": "def family_checks(c, inputs, check):",
+     "unit": "complete original suite"
+    },
+    {
+     "line_end": 1388,
+     "line_start": 1388,
+     "path": "scripts/pm-dt-event-contracts.py",
+     "quote": "def retained_custody_checks(c, f, schemas, check):",
+     "unit": "sealed receipt and store"
+    },
+    {
+     "line_end": 242,
+     "line_start": 242,
+     "path": "scripts/pm_dt_c12_schema.py",
+     "quote": "def schema_witnesses(dt, inputs, out):",
+     "unit": "whole-definition covering"
+    },
+    {
+     "line_end": 44,
+     "line_start": 44,
+     "path": "scripts/pm-dt-c12-closure.py",
+     "quote": "check(schema['uncontrolled_rules'] == 0",
+     "unit": "coverage control"
+    },
+    {
+     "line_end": 2260,
+     "line_start": 2260,
+     "path": "scripts/pm-dt-event-contracts.py",
+     "quote": "def number_corpus_checks(c, f, schemas, check):",
+     "unit": "shared numbers"
+    },
+    {
+     "line_end": 2111,
+     "line_start": 2111,
+     "path": "scripts/pm-dt-event-contracts.py",
+     "quote": "def datetime_checks(c, f, schemas, check):",
+     "unit": "shared datetime"
+    }
+   ],
+   "membership": "ABSENT",
+   "native_execution": "NOT_RUN",
+   "other_cells": "UNCHANGED",
+   "owner_units": [
+    "CV-616",
+    "SP-596",
+    "ATS-298"
+   ],
+   "scope": "Static complete-checker oracles; whole-definition Method B schema rows with explicit clause covering; independent model review NOT_RUN"
+  }
+ ],
+ "shared_datetime_inventory": "FAIL: stale exclusion, reported; no broad shared-suite PASS"
+}
