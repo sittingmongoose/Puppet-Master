@@ -40,15 +40,16 @@
   "validator_after_sha256": "b147459618e1c7f13ab1ba73ac03d270d40c8703690bd00239e3ac3d10ed3456",
   "prior_receipt": {
     "path": "reports/event-authority-20261105/seal-check-recount-receipt.json",
-    "sha256": "899661007cdeb012ec5254d63c36629d41dd1adafd958fb9de9ebdcb6b3739da"
+    "sha256": "af10557b124891d29adc6d838c71dcf14d226f800bc2a42140307d33a84d359d"
   },
   "decision_ref_pattern": "DL-(?:\\d{3}|[1-9][0-9]{3})",
   "decision_ref_pattern_before": "DL-\\d{3}",
   "author_task": "claude-opus-5.5:ea-pnc-s1v-20261114",
   "author_role": "The separate author DL-039 requires for a change to the frozen check: not the CA-SEAL or CA-SEAL2 author, their lander or fix workers, or pm-ea-lead.",
-  "lander_task": null,
+  "lander_task": "claude-opus-5.5:ea-s1-land-20261115",
   "seal_applier_forbidden_tasks": [
-    "claude-opus-5.5:ea-pnc-s1v-20261114"
+    "claude-opus-5.5:ea-pnc-s1v-20261114",
+    "claude-opus-5.5:ea-s1-land-20261115"
   ],
   "seal_authorized": false,
   "admission_authorized": false,
