@@ -1137,12 +1137,41 @@ class PmAuditClosureMatrixReplacementTests(unittest.TestCase):
                 "recorded_by": "closure-q2-audit004",
                 "scope": "Existing blind reviews (test).",
             },
+            # T238: a number or boolean may sit in the same object as real review text.
+            "numeric metadata beside review text": {"sol": "PASS", "round": 2},
+            "boolean and numeric metadata inside a review record": {
+                "sol": {"verdict": "PASS", "score": 0, "blocking": False},
+            },
         }
         for name, reviews in accepted.items():
             with self.subTest(accepted=name):
                 report = with_reviews(reviews)
                 self.assertEqual(report["errors"], [])
                 self.assertEqual(report["matrix_replacements"], [{"replaced_line": 1, "replacing_line": 2}])
+
+    def test_pass_record_reviews_reject_numeric_and_boolean_leaves(self) -> None:
+        # T238: reviews=[false], {"sol": 0}, [1] and {"pending": true} are not provenance.
+        # A number or boolean counts only as metadata inside a record that already has review text.
+        def with_reviews(reviews: object) -> dict:
+            self.write([self.frozen, self.replacing_row()])
+            record_path = self.audit_dir / self.RECORD
+            record = json.loads(record_path.read_text(encoding="utf-8"))
+            record["reviews"] = reviews
+            record_path.write_text(json.dumps(record), encoding="utf-8")
+            return self.validate()
+
+        refused = {
+            "boolean list": [False],
+            "numeric reviewer": {"sol": 0},
+            "numeric list": [1],
+            "boolean pending flag": {"pending": True},
+        }
+        for name, reviews in refused.items():
+            with self.subTest(refused=name):
+                report = with_reviews(reviews)
+                self.assertTrue(self.frozen_link_error(report), report["errors"])
+                self.assertNotIn("matrix_replacements", report)
+                self.assertTrue(any("must record its reviews" in error for error in self.refusals(report)), report["errors"])
 
     def test_invalid_second_claim_still_withholds_the_replacement(self) -> None:
         # T237 (tool-notes Sol max finding 2): PLS-026 lets no other row name a replaced frozen line, so a
@@ -1446,6 +1475,48 @@ class PmAuditStatusIndexOpenSetTests(unittest.TestCase):
         # With the anchored text back, the closing leaf is current again and the finding closes.
         self.script.write_text(self.FIXTURE_SCRIPT, encoding="utf-8")
         self.assertEqual(pm_audit_status_index.build_index()["summary"]["current_open_finding_count"], 0)
+
+    def test_markdown_counts_and_open_finding_rows_must_match_the_render(self) -> None:
+        # T239: changed blocker counts, or an omitted open-finding line, fail. Only the generation-time
+        # line may differ from render_markdown of the validated index.
+        rows = self.reopened_chain()
+        self.script.write_text(self.FIXTURE_SCRIPT.replace("return 2", "return 3"), encoding="utf-8")
+        self.generate()
+        current = pm_audit_status_index.validate()
+        self.assertEqual((current["status"], current["failures"]), ("pass", []), current)
+        path = pm_audit_status_index.MARKDOWN
+        original = path.read_text(encoding="utf-8")
+        finding = f"| `{rows[1]['finding_key']}` | `{rows[1]['closure_id']}` | `reopened` | 2 |"
+        self.assertEqual(original.count(finding), 1)
+
+        def expect_markdown_failure(text: str) -> None:
+            path.write_text(text, encoding="utf-8")
+            report = pm_audit_status_index.validate()
+            self.assertEqual(report["status"], "fail", report)
+            self.assertIn(
+                {"path": "Plans/.audits/CURRENT_AUDIT_STATUS.md", "error": "stale_current_audit_status_markdown"},
+                report["failures"],
+            )
+            self.assertFalse(any(item.get("error") == "stale_audit_status_index" for item in report["failures"]), report)
+
+        counted = original
+        for label in ("Current blockers", "Open finding blockers", "Reopened finding blockers"):
+            before = counted
+            counted = counted.replace(f"- {label}: 1\n", f"- {label}: 0\n", 1)
+            self.assertNotEqual(before, counted, label)
+        with self.subTest(case="changed counts"):
+            expect_markdown_failure(counted)
+        with self.subTest(case="omitted open-finding line"):
+            expect_markdown_failure(original.replace(finding + "\n", "", 1))
+        shifted = "".join(
+            "- Generated: `1999-01-01T00:00:00Z`\n" if line.startswith("- Generated: `") else line
+            for line in original.splitlines(keepends=True)
+        )
+        self.assertNotEqual(shifted, original)
+        with self.subTest(case="generation time only"):
+            path.write_text(shifted, encoding="utf-8")
+            report = pm_audit_status_index.validate()
+            self.assertEqual((report["status"], report["failures"]), ("pass", []), report)
 
 
 if __name__ == "__main__":

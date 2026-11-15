@@ -259,17 +259,14 @@ def validate() -> dict[str, Any]:
     expected = build_index()
     if strip_generated(actual) != strip_generated(expected):
         failures.append({"path": rel(INDEX), "error": "stale_audit_status_index"})
+    # T239: generate writes render_markdown of the index. The file must be that render.
+    # Only the generation-time line may differ; the counts and finding rows are part of the compare.
     markdown_text = MARKDOWN.read_text(encoding="utf-8")
-    required_phrases = [
-        "separates immutable historical report headers from current presentation status",
-        "Current blockers:",
-        "Open finding blockers:",
-        "Reopened finding blockers:",
-        "Historical BLOCKED/FAIL reports indexed:",
-    ]
-    for phrase in required_phrases:
-        if phrase not in markdown_text:
-            failures.append({"path": rel(MARKDOWN), "error": "current_status_markdown_missing_phrase", "phrase": phrase})
+    generated_line = re.compile(r"(?m)^- Generated: `[^`]*`$")
+    placeholder = "- Generated: `<generation-time>`"
+    rendered = render_markdown(expected)
+    if generated_line.sub(placeholder, markdown_text) != generated_line.sub(placeholder, rendered):
+        failures.append({"path": rel(MARKDOWN), "error": "stale_current_audit_status_markdown"})
 
     for row in actual.get("reports", []):
         if row.get("reported_status_family") == "blocked_or_fail":

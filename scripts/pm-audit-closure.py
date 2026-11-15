@@ -3839,18 +3839,34 @@ def _nonempty_str(value: Any) -> bool:
 
 def _review_data(value: Any) -> bool:
     """Whether a reviews value records real review data or a pending state at every entry: a
-    non-blank string (a review, or a state such as "pending: ..."), a number or boolean, or a
-    non-empty object or list each of whose entries is itself review data. A null, blank or empty
-    entry anywhere records neither a review nor a pending state (T233)."""
+    non-blank string (a review, or a state such as "pending: ..."), or a non-empty object or list
+    that carries such text. A number or boolean is metadata only, and only inside an object that
+    also carries that text (T238). A null, blank, empty, or scalar-only entry records neither a
+    review nor a pending state (T233, T238)."""
     if isinstance(value, str):
         return bool(value.strip())
+    # A bare number or boolean is not a review and not a pending state. bool is a subclass of int.
     if isinstance(value, (bool, int, float)):
-        return True
+        return False
     if isinstance(value, dict):
-        return bool(value) and all(_review_data(child) for child in value.values())
-    if isinstance(value, list):
-        return bool(value) and all(_review_data(child) for child in value)
-    return False
+        children = list(value.values())
+    elif isinstance(value, list):
+        children = list(value)
+    else:
+        return False
+    if not children:
+        return False
+    provenance = False
+    for child in children:
+        if isinstance(child, (bool, int, float)):
+            # Metadata may sit beside real provenance in an object. A list entry has to be provenance itself.
+            if not isinstance(value, dict):
+                return False
+            continue
+        if not _review_data(child):
+            return False
+        provenance = True
+    return provenance
 
 
 def _supplemental_pass_provenance_problem(provenance: dict[str, Any], record: dict[str, Any], name: str) -> str | None:
