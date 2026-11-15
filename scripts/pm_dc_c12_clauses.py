@@ -1127,6 +1127,57 @@ def fixture_witness(s, probe_key, instances, by_template, validator, edition, fi
     return None, attempts
 
 
+def then_violating_bases(site, instances, validator, edition, cap=6):
+    """(name, base) for a then-branch condition clause: each control with one member of the enclosing object set (or
+    removed) so that the if's then branch would refuse it while the if's condition does not hold; kept only when the
+    row accepts the base. Cutting a condition clause can only make the condition hold on more instances, so such a base
+    refused with the clause cut detects the cut (a constructed valid base, never a witness)."""
+    doc, ptr = site.loc
+    if "/if" not in ptr:
+        return []
+    holder_ptr = ptr[:ptr.rindex("/if")]
+    depth = len([t for t in ptr[ptr.rindex("/if"):].split("/") if t == "properties"])
+    holder_t = tuple(site.template[:len(site.template) - depth]) if depth else tuple(site.template)
+    try:
+        holder = _node_at((doc, holder_ptr))
+    except Exception:  # an unresolvable holder gives no base
+        return []
+    then = holder.get("then") if isinstance(holder, dict) else None
+    if not isinstance(then, dict):
+        return []
+    out = []
+    for p, inst in instances:
+        for path, obj in locations(inst, holder_t)[:1]:
+            if not isinstance(obj, dict):
+                continue
+            trials = []
+            for m, sub in (then.get("properties") or {}).items():
+                for v in [None, "", "c12", 0, True, [], {}] + ([obj[m]] if m in obj else []):
+                    try:
+                        refused = sub is False or (isinstance(sub, dict) and not node_valid((doc, holder_ptr + "/then/properties/" + _esc(m)), v))
+                    except Exception:  # an unresolvable branch member gives no base
+                        refused = False
+                    if refused:
+                        trials.append((m, "set", v))
+            for m in then.get("required", []):
+                if m in obj:
+                    trials.append((m, "drop", None))
+            for m, how, v in trials:
+                cand = copy.deepcopy(obj)
+                if how == "drop":
+                    cand.pop(m, None)
+                else:
+                    cand[m] = copy.deepcopy(v)
+                base = set_at(inst, path, cand)
+                if edition is not None and (not isinstance(base, dict) or dc.edition_of(base) != edition):
+                    continue
+                if validator.is_valid(base):
+                    out.append((p["case_id"] + "@then-violating:" + "/".join(map(str, holder_t)) + "/" + m + ":" + how + ":" + json.dumps(v), base))
+                    if len(out) >= cap:
+                        return out
+    return out
+
+
 # --- per-slot driver ----------------------------------------------------------------------------------------
 
 def run_slot(fam, boundary, slot, per_site=3, route_kills=3, progress=None, pool=None):
@@ -1428,6 +1479,7 @@ def run_slot(fam, boundary, slot, per_site=3, route_kills=3, progress=None, pool
         s0 = group[0]
         entry = dict(clause=s0.src_key[1], path=s0.src_key[0], member=member, keyword=kw, line=(s0.src or {}).get("line"),
                      kind=kinds[s0.key], eval_sites=[s.key for s in group])
+        cond_bases = then_violating_bases(s0, instances, validator, edition) if kinds[s0.key] == "condition" else []
         with Cut(s0):
             # Only a witness whose error tree holds this clause, or one with an error under then/else (an if-condition
             # cut can switch the branch), can change; every other witness keeps the error the cut does not touch.
@@ -1442,6 +1494,9 @@ def run_slot(fam, boundary, slot, per_site=3, route_kills=3, progress=None, pool
                     if any(at == t[:len(at)] or t == at[:len(t)] or (t and at[:len(t) - 1] == t[:-1]) for t in temps) for b in lst)
             # the first five refused bases, in the same order a full scan would list them (stops early)
             ctrl_broken += list(itertools.islice((name for name, base in near if not validator.is_valid(base)), 5))
+            # a then-branch condition no witness flips and no base detects: then-violating bases (C12-DC2)
+            if not flipped and not ctrl_broken:
+                ctrl_broken += [name for name, base in cond_bases if not validator.is_valid(base)][:5]
             kills = []
             for w in sorted(flipped, key=lambda w: (not (w["target"] in entry["eval_sites"]), not w["exact"]))[:route_kills]:
                 wp = with_instance(w["probe"], getter, w["instance"], None)
