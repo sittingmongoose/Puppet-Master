@@ -595,34 +595,65 @@ def error_repair(v, value, keep, rounds=16):
     return value if not errors_of(v, value) else None
 
 
-def flip_repair(v, value, path, ipath, by_ipath, limit=48):
-    """GO addition: switch one boolean or enum member (a branch selector) of the realized member's parent object or of
-    any ancestor object, never on the realized member's own path, then error-guided repair; returns a value the
-    whole definition accepts, or None. Nearest ancestors first; at most `limit` switches."""
-    tried = 0
+def selectors_of(path, ipath, by_ipath):
+    """(object prefix, member, choices) for every boolean/enum member of the realized member's ancestor objects,
+    never on the realized member's own path; nearest ancestors first."""
+    out = []
     for depth in range(len(path) - 1, -1, -1):
-        prefix = path[:depth]
-        on_path = path[depth]
+        prefix, on_path = path[:depth], path[depth]
         for obj_node, resolver in [(n, res) for _, n, res in by_ipath.get(tuple(ipath[:depth]), []) if 'properties' in n]:
             for k, sub in obj_node.get('properties', {}).items():
                 if k == on_path:
                     continue
                 sub = deref(sub, resolver)[0]
                 choices = sub.get('enum', [])[:8] or ([True, False] if sub.get('type') == 'boolean' else [])
-                for choice in choices:
+                if choices:
+                    out.append((prefix, k, choices))
+    return out
+
+
+def flip_repair(v, value, path, ipath, by_ipath, limit=48, pair_limit=96):
+    """GO addition: switch one boolean or enum member (a branch selector) of the realized member's parent object or of
+    any ancestor object, never on the realized member's own path, then error-guided repair; if no single switch
+    yields a value the whole definition accepts, try pairs of switches. Returns that value or None."""
+    selectors = selectors_of(path, ipath, by_ipath)
+
+    def apply(candidate, prefix, k, choice):
+        try:
+            target = get(candidate, prefix)
+        except (KeyError, IndexError, TypeError):
+            return False
+        if not isinstance(target, dict) or target.get(k) == choice:
+            return False
+        target[k] = copy.deepcopy(choice)
+        return True
+    tried = 0
+    for prefix, k, choices in selectors:
+        for choice in choices:
+            candidate = copy.deepcopy(value)
+            if not apply(candidate, prefix, k, choice):
+                continue
+            tried += 1
+            repaired = error_repair(v, candidate, path, rounds=8)
+            if repaired is not None:
+                return repaired
+            if tried >= limit:
+                break
+        if tried >= limit:
+            break
+    tried = 0
+    for i, (p1, k1, c1) in enumerate(selectors):
+        for p2, k2, c2 in selectors[i + 1:]:
+            for a in c1:
+                for b in c2:
                     candidate = copy.deepcopy(value)
-                    try:
-                        target = get(candidate, prefix)
-                    except (KeyError, IndexError, TypeError):
-                        return None
-                    if not isinstance(target, dict) or target.get(k) == choice:
+                    if not (apply(candidate, p1, k1, a) and apply(candidate, p2, k2, b)):
                         continue
-                    target[k] = copy.deepcopy(choice)
                     tried += 1
                     repaired = error_repair(v, candidate, path, rounds=8)
                     if repaired is not None:
                         return repaired
-                    if tried >= limit:
+                    if tried >= pair_limit:
                         return None
     return None
 
