@@ -138,14 +138,16 @@ def ctx_key(entry):
     return (entry[0], entry[1], entry[2], id(entry[3]))
 
 
-def walk(v):
-    """Every schema node with: the instance path patterns that reach it and the conditions on the way."""
+def walk(v, key_of=None):
+    """Every schema node with: the instance path patterns that reach it and the conditions on the way.
+    key_of replaces ctx_key only for --reach-audit, which re-walks with the c0482747da key to compare."""
+    key_of = key_of or ctx_key
     nodes = {}
     def visit(node, resolver, ipath, ctx, steps, depth, obj=None, empty=None):
         if not isinstance(node, dict) or depth > 40:
             return
         location = node.get('x-pm-oracle-id', json.dumps(node, sort_keys=True))
-        key = (location, ipath, tuple(ctx_key(c) for c in ctx))  # GC2: owner node in the key (shared with GO eb10b969cf)
+        key = (location, ipath, tuple(key_of(c) for c in ctx))  # GC2: owner node in the key (shared with GO eb10b969cf)
         if key in seen:
             return
         seen.add(key)
@@ -778,15 +780,49 @@ def self_test():
     got3 = static_class(n3['S2'], 'minLength')
     print('trial 3: D0 only, static class', got3 and got3['cls'])
     assert got3 and got3['cls'] == 'UNREACHABLE'
+
+    # Trial 4: --reach-audit sees trial 2's defect: under the c0482747da key S2 keeps one reach and is UNREACHABLE.
+    audit = reach_audit('trial2', v2)
+    print('trial 4: reach audit static changes', audit['static_changes'])
+    assert dict(clause='S2/minLength', before='UNREACHABLE', after=None) in audit['static_changes']
     print('closure self-test pass: two same-depth conditionals keep two reaches; no UNREACHABLE while one reach is live; '
           'UNREACHABLE kept when every reach is an empty domain')
     return 0
+
+
+def old_ctx_key(entry):
+    """The c0482747da key, kept only so --reach-audit can show what the owner-node key changes."""
+    return entry[:3]
+
+
+def reach_audit(root, v):
+    """Walk one root with the c0482747da key and with ctx_key: the nodes whose reach list grew, and for every
+    assertion clause of those nodes its static class under each walk (None: it needs a witness)."""
+    old, new = walk(v, old_ctx_key), walk(v)
+    grown = []
+    for location, info in sorted(new.items()):
+        before = old.get(location)
+        count = len(before['reach']) if before else 0
+        if len(info['reach']) == count:
+            continue
+        rows = []
+        for keyword in clauses_of(info['node']):
+            a = static_class(before, keyword) if before else None
+            b = static_class(info, keyword)
+            rows.append(dict(clause=location + '/' + name_of(keyword), before=a and a['cls'], after=b and b['cls']))
+        grown.append(dict(location=location, reaches_before=count, reaches_after=len(info['reach']),
+                          empty_domain_reaches_after=sum(1 for r in info['reach'] if r['empty_domain']), clauses=rows))
+    return dict(nodes=len(new), reaches_before=sum(len(i['reach']) for i in old.values()),
+                reaches_after=sum(len(i['reach']) for i in new.values()), grown_nodes=grown,
+                static_changes=[r for g in grown for r in g['clauses'] if r['before'] != r['after']])
 
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--out', type=Path)
     parser.add_argument('--self-test', action='store_true', help='run the walk standing trials and exit')
+    parser.add_argument('--reach-audit', action='store_true', help='collect the roots, then compare only the walks '
+                        '(c0482747da key vs owner-node key): grown reach lists and static classes under each; no closure')
     parser.add_argument('--source', action='append', choices=('own_a', 'own_b'))
     parser.add_argument('--budget', type=int, default=40000, help='validations per root')
     args = parser.parse_args()
@@ -798,6 +834,14 @@ def main():
     for source in args.source or ['own_a', 'own_b']:
         adapter.SCHEMA_SEEDS.clear(); adapter.SCHEMA_VALIDATORS.clear(); adapter.ROOT_ROWS.clear()
         code = collect(source)
+        if args.reach_audit:
+            audit = {root: reach_audit(root, v) for root, v in sorted(adapter.SCHEMA_VALIDATORS.items())}
+            report['sources'][source] = dict(suite_exit=code, roots=audit,
+                                             grown_nodes=sum(len(a['grown_nodes']) for a in audit.values()),
+                                             static_changes=sum(len(a['static_changes']) for a in audit.values()))
+            print(f'{source}: roots {len(audit)}, grown nodes {report["sources"][source]["grown_nodes"]}, '
+                  f'static class changes {report["sources"][source]["static_changes"]}', file=sys.stderr, flush=True)
+            continue
         roots = {}
         for root, v in sorted(adapter.SCHEMA_VALIDATORS.items()):
             seeds = list(adapter.SCHEMA_SEEDS.get(root, {}).values())
@@ -816,6 +860,10 @@ def main():
                                          occurrence_counts=dict(sum((collections.Counter(e['counts']) for e in roots.values()), collections.Counter())),
                                          distinct_counts=dict(collections.Counter(e['cls'] for e in distinct.values())),
                                          uncovered=sorted(c for c, e in distinct.items() if e['cls'] == 'UNCOVERED'))
+    if args.reach_audit:
+        report['method'] = 'reach audit: ' + reach_audit.__doc__.split('\n')[0]
+        args.out.write_text(json.dumps(report, indent=1, sort_keys=True, default=str) + '\n')
+        return 0
     args.out.write_text(json.dumps(report, indent=1, sort_keys=True, default=str) + '\n')
     print(json.dumps({s: dict(occurrences=v['occurrence_counts'], distinct=v['distinct_counts'], uncovered=len(v['uncovered']))
                       for s, v in report['sources'].items()}))
