@@ -1234,7 +1234,16 @@
       // props
       /* (NieR's box is fixed: its band is kept clear from when it is first seen, also while it is silent, so a stack
          that lands before it talks is already below it) */
-      if (f === 'nier') { const nb = this.boxInScene(this.bubble, 6); if (nb) this.nierBox = nb; }
+      /* (measured again only when what it is measured from changes: the box's classes and words, the fonts, and the stage's
+         map, which measure() makes anew on every resize. Read in every frame after the frame's writes, it laid the page out
+         a second time in each NieR frame: 238 layouts a second at rest on the owner's PC; pm7-perf lane W) */
+      if (f === 'nier') {
+        const b = this.bubble, k = this.nierKey, cls = b ? b.className : '', said = b ? b.textContent : '', fonts = document.fonts ? document.fonts.status : '';
+        if (!k || k[0] !== this.map || k[1] !== cls || k[2] !== said || k[3] !== fonts) {
+          const nb = this.boxInScene(b, 6); if (nb) this.nierBox = nb;
+          this.nierKey = [this.map, cls, said, fonts];
+        }
+      }
       this.keepOff = f === 'nier' ? this.nierBox || null : this.bubbleKeepOff || null;
       this.pipKeep = this.pipHead(null, { H, ang, sx, sy });
       this.renderN = (this.renderN || 0) + 1;
