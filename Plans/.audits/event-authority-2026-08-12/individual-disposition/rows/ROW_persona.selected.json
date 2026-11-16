@@ -2,68 +2,68 @@
   "event_type": "persona.selected",
   "bucket": "confirmed_persisted_unregistered",
   "july_classification": "confirmed_persisted_unregistered",
-  "disposition": "KEEP_QUARANTINED",
-  "disposition_rationale": "Plans/Decision_Log.md#DL-039: genuine J248-VETO-BATCH-252 CONFIRM_ALL_QUARANTINE_NO_ADMIT, recorded by Jared 2026-09-11T00:49:25.665050+00:00, applied 2026-09-11T15:12:51.572607+00:00 to persona.selected. Interim KEEP_QUARANTINED: counted in the working denominator, not live-registered. Supersedes the forged 2026-08-12 application claim; retained evidence supplies no new authority or depth closure. This exact row remains for the owner-batched registered/excluded/decision-card campaign.",
+  "disposition": "KEEP_REGISTERED",
+  "disposition_rationale": "Plans/Decision_Log.md#DL-039: genuine J248-VETO-BATCH-252 CONFIRM_ALL_QUARANTINE_NO_ADMIT, recorded by Jared 2026-09-11T00:49:25.665050+00:00, applied 2026-09-11T15:12:51.572607+00:00 to persona.selected. Interim KEEP_QUARANTINED: counted in the working denominator, not live-registered. Supersedes the forged 2026-08-12 application claim; retained evidence supplies no new authority or depth closure. This exact row remains for the owner-batched registered/excluded/decision-card campaign. Registered at registry revision 2026-11-16.209 in admission merge 2 under DL-078, DL-096 and DL-400 (decision Plans/Decision_Log.md#DL-2345); DL-077 admission record reports/event-authority-20260911/admission-records/persona.selected.json. Disposition KEEP_QUARANTINED -> KEEP_REGISTERED, evidence cells membership_version, owner_doc, producer, closed_payload_schema, scope_identity, replay_idempotency, retention, redaction_custody, transitions, consumers_checkpoints, compatibility_withdrawal, positive_negative_oracles projected with twelve PASS cells from the family's admission depth assessment reports/event-authority-20261116/admission-merge-2/depth/persona.selected.json (sha256 8e8be565339a5b4fb9b3728f30f8f97c7a6a26165ab0acb853914db6d30ecc5a); bucket, cohort pins, July classification and every other field are unchanged; no seal or owner choice.",
   "evidence": {
     "membership_version": {
-      "status": "OWNER_REQUIRED",
-      "citation": null,
-      "note": "The checked canonical registry declares schema_version 2.0.0, registry revision 2026-08-04.1, and unknown-event quarantine, but contains no exact `persona.selected` entry; versioned membership remains owner-required."
+      "status": "PASS",
+      "citation": "Plans/event_family_registry.json:27684-27765",
+      "note": "Registered at registry revision 2026-11-16.209 as #/families/427 (canonical row SHA-256 98e927ee1728fbf5cb2cf4f0db9f149f1254571dc0c704fdb3f5f3749da076e3); before this commit the family was absent."
     },
     "owner_doc": {
-      "status": "OWNER_REQUIRED",
-      "citation": null,
-      "note": "No checked field-local Plans citation for `persona.selected` establishes an explicitly named accountable event-contract owner; the gap remains owner-required and is not filled by namespace or family analogy."
+      "status": "PASS",
+      "citation": "Plans/Personas.md:4013",
+      "note": "P-124 governs the exact family under current P-060/UCC-214 scope; CV-691 binds the payload without admission."
     },
     "producer": {
       "status": "PASS",
-      "citation": "Plans/Wiring_Matrix.production.json:19849-19909",
-      "note": "The exact wiring record binds cmd.persona.select to handlers::persona::select and declares `persona.selected` as its expected emitted event; this is command-side producer evidence only, not owner authority."
+      "citation": "Plans/storage-plan.md:36546; Plans/storage-plan.md:36555; Plans/storage-plan.md:36553",
+      "note": "Exact selected v2 owner operation, original result/readback and event ordering; explicit SP-286/CV-339/SP-291/SP-336 first-receipt custody."
     },
     "closed_payload_schema": {
-      "status": "OWNER_REQUIRED",
-      "citation": null,
-      "note": "No checked field-local Plans citation for `persona.selected` establishes an exhaustive closed event payload schema; the gap remains owner-required and is not filled by namespace or family analogy."
+      "status": "PASS",
+      "citation": "Plans/dg6b_event_contracts.schema.json:8022; Plans/Personas.md:4020; scripts/pm-dg6b-event-contracts.py:561; scripts/pm-dg6b-event-contracts.py:189",
+      "note": "Exact closed version-1 payload and operation definitions; schema validation and secret/extension negatives pass. Timestamps use the shared CV-1101 date_time predicate (EventRecord profile) and every integer slot the shared current_integer (sweep part 2B)."
     },
     "scope_identity": {
-      "status": "OWNER_REQUIRED",
-      "citation": null,
-      "note": "No checked field-local Plans citation for `persona.selected` establishes the complete event scope and identity key; the gap remains owner-required and is not filled by namespace or family analogy."
+      "status": "PASS",
+      "citation": "Plans/storage-plan.md:36456; scripts/pm-dg6b-event-contracts.py:143; scripts/pm-dg6b-event-contracts.py:262",
+      "note": "Both source and actual inline payload validate exact JSON types before field reads; custody joins use typed canonical bytes, so boolean/integer equality cannot preserve a forged identity."
     },
     "replay_idempotency": {
-      "status": "OWNER_REQUIRED",
-      "citation": null,
-      "note": "No checked field-local Plans citation for `persona.selected` establishes replay and idempotency rules; the gap remains owner-required and is not filled by namespace or family analogy."
+      "status": "PASS",
+      "citation": "Plans/storage-plan.md:36550; scripts/pm-dg6b-event-contracts.py:143; scripts/pm-dg6b-event-contracts.py:262; scripts/pm-dg6b-event-contracts.py:968; scripts/pm-dg6b-event-contracts.py:982",
+      "note": "Retries compare the CV-317 producer semantic digest (shared producer_semantic_digest, qualified RFC 8785 JCS, PQ01 before effects). Storage-assigned sequence and timestamps stay excluded. Current replay-only writes refuse while authentic retained replay-only history remains readable."
     },
     "retention": {
-      "status": "OWNER_REQUIRED",
-      "citation": null,
-      "note": "No checked field-local Plans citation for `persona.selected` establishes retention rules; the gap remains owner-required and is not filled by namespace or family analogy."
+      "status": "PASS",
+      "citation": "Plans/storage-plan.md:36415",
+      "note": "Current exact-family BOUND retention assignment: {\"application_policy_ref\": null, \"decisions\": [\"DL-401\", \"DL-504\"], \"event_type\": \"persona.selected\", \"existing_checkpoints\": [], \"grade_source\": \"reports/event-authority-20261104/DG6B.self-grade.json\", \"history_policy_ref\": \"RP-AUTHORITY-INDEFINITE@1.0.0\", \"lane\": \"DG6B\", \"original_and_checkpoint_assignments\": [{\"decision\": \"DL-504\", \"family_id\": \"persona_created_operation\", \"policy_ref\": \"RP-CONFIG-CURRENT@1.0.0\"}, {\"decision\": \"DL-504\", \"family_id\": \"persona_deleted_operation\", \"policy_ref\": \"RP-CONFIG-CURRENT@1.0.0\"}, {\"decision\": \"DL-504\", \"family_id\": \"persona_exported_operation\", \"policy_ref\": \"RP-CONFIG-CURRENT@1.0.0\"}, {\"decision\": \"DL-504\", \"family_id\": \"persona_imported_operation\", \"policy_ref\": \"RP-CONFIG-CURRENT@1.0.0\"}, {\"decision\": \"DL-504\", \"family_id\": \"persona_selected_operation\", \"policy_ref\": \"RP-CONFIG-CURRENT@1.0.0\"}, {\"decision\": \"DL-504\", \"family_id\": \"persona_updated_operation\", \"policy_ref\": \"RP-CONFIG-CURRENT@1.0.0\"}], \"owner\": \"Plans/storage-plan.md#SP-672\", \"owner_line\": 31910, \"prior_finding\": \"Explicit PENDING_RETENTION_DECISION for history and operation; RT must assign exact class and scope/cardinality. No admission or body-lifetime decision.\", \"question\": null, \"status\": \"BOUND\"}"
     },
     "redaction_custody": {
-      "status": "OWNER_REQUIRED",
-      "citation": null,
-      "note": "No checked field-local Plans citation for `persona.selected` establishes redaction and custody rules; the gap remains owner-required and is not filled by namespace or family analogy."
+      "status": "PASS",
+      "citation": "Plans/storage-plan.md:36467; scripts/pm-dg6b-event-contracts.py:143; scripts/pm-dg6b-event-contracts.py:262; scripts/pm-dg6b-event-contracts.py:751",
+      "note": "Closed proof adapters accept only JSON booleans; every copied payload field joins exact original typed bytes. Separate selection resolution has its own bounded physical value and authenticated SP-337 route."
     },
     "transitions": {
-      "status": "OWNER_REQUIRED",
-      "citation": null,
-      "note": "No checked field-local Plans citation for `persona.selected` establishes lifecycle transition semantics; the gap remains owner-required and is not filled by namespace or family analogy."
+      "status": "PASS",
+      "citation": "Plans/storage-plan.md:36555",
+      "note": "Prepared/effect_committed/appended/withdrawn barriers and original source CAS/result predicates; no replayed owner effect or guessed completion."
     },
     "consumers_checkpoints": {
-      "status": "OWNER_REQUIRED",
-      "citation": null,
-      "note": "No checked field-local Plans citation for `persona.selected` establishes consumer and checkpoint obligations; the gap remains owner-required and is not filled by namespace or family analogy."
+      "status": "PASS",
+      "citation": "Plans/storage-plan.md:36557",
+      "note": "Exact versioned history consumer adopts SP-278 generic index/checkpoint/CAS/rebuild and DL-076 nine-field durable token; no additional filtered checkpoint."
     },
     "compatibility_withdrawal": {
-      "status": "OWNER_REQUIRED",
-      "citation": null,
-      "note": "No checked field-local Plans citation for `persona.selected` establishes compatibility and withdrawal rules; the gap remains owner-required and is not filled by namespace or family analogy."
+      "status": "PASS",
+      "citation": "Plans/storage-plan.md:36469; scripts/pm-dg6b-event-contracts.py:143; scripts/pm-dg6b-event-contracts.py:262; scripts/pm-dg6b-event-contracts.py:491; scripts/pm_dg6b_original_custody.py:192",
+      "note": "Exact at-write provenance, current reader/access and negative fences require JSON booleans; the retained original resolves through SP-1101 sealed custody and the shared RetainedDispatcher, whose frozen verifier recomputes identity and joins from the sealed bytes (HR01), before its at-write validation and the independent Storage bytes. Retained timestamps keep their owner profile."
     },
     "positive_negative_oracles": {
-      "status": "OWNER_REQUIRED",
-      "citation": null,
-      "note": "The exact wiring record supplies a positive `persona.selected` emission assertion, but its fabricated-event prohibition is generic and does not define token-specific negative cases; complete positive and negative Event Authority oracles remain owner-required."
+      "status": "PASS",
+      "citation": "Plans/Automated_Testing_System.md:7453; scripts/pm-dg6b-event-contracts.py:1081",
+      "note": "ATS-336: original exact-family suite passes with the shared inventory-authenticated datetime_validator in append/retry/history, 144 proved row cells (2 declared donors), complete owner-schema clause/cut/restoration witnesses and sealed-store receipt/result reads. Whole-definition Method B scope; no claim of universal per-keyword isolation. Global shared inventory false refusal remains separate; native NOT_RUN."
     }
   },
   "citations_checked": [
