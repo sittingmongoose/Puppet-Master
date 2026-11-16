@@ -156,6 +156,10 @@
    "outcome": "registered"
   },
   {
+   "event_type": "browser.program.segment.started",
+   "outcome": "registered"
+  },
+  {
    "event_type": "discovery.backpressure",
    "outcome": "registered"
   },
