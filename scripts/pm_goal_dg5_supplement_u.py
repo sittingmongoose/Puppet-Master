@@ -332,6 +332,24 @@ def receipt_request_schema_extra_field(d):
     return w, lambda: w.body.read_receipt(rr, g['user'], g['user_permission'])
 
 
+@case('U-DG5/N/terminal_result_schema_bogus_status', 'dgu/sir/terminal/result/schema/status',
+      ('dg5/dgu/sir/terminal/result/schema', 'dg5/dgu/sir/terminal/schema'),
+      'Single defect: terminalize is called for a no-effect progress with a status outside the '
+      'result enum. No earlier check reads status (phase, receipt-absence and event-absence all '
+      'hold), so the first schema to refuse is the whole-root NoEffectResult validation; the '
+      'identical result object is embedded verbatim in the StorageTerminal validation, so the '
+      'two schema rows are a declared duplicate set for this input.')
+def terminal_result_schema_bogus_status(d):
+    w, g = U._goal(d)
+    req = O.direct_request(w, g, 'x')
+    adm, _ = w.command.admit_and_capture(req)
+    p = U.progress(w, g, U.op_of(adm))
+    w.source.advance(g['scope'], U.op_of(adm), dict(p, progress_epoch=1, phase='no_effect'),
+                     expected_phase=('source_admitted',), where='o')
+    return w, lambda: w.sir.terminalize(req['command_instance_id'], 'no_effect', status='bogus',
+                                         error_code='manual_stop_latched')
+
+
 @case('U-DG5/N/inspect_source_defect', 'dgu/inspect/source_defect', SITE + '1867',
       'Single defect in the acquired source snapshot: first custody group_digest is substituted, so '
       'GenericSource halts before that event (a custody defect at its position) and the inspected event '
