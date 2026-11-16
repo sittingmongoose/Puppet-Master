@@ -688,6 +688,10 @@
    "outcome": "registered"
   },
   {
+   "event_type": "remote_access.public_security_violation_detected",
+   "outcome": "registered"
+  },
+  {
    "event_type": "run.graph_canonical_locked",
    "outcome": "registered"
   },
