@@ -1,0 +1,415 @@
+{
+ "schema_id": "pm.assurance.event_authority.admission_depth_assessment.v1",
+ "assessment_kind": "admission_twelve_criteria",
+ "writer": "pm-ea-admission-writer.v1",
+ "merge": "admission-merge-2",
+ "registry": {
+  "path": "Plans/event_family_registry.json",
+  "revision": "2026-11-16.89",
+  "sha256": "898b797f80997142cd47deca748db26c4170172f76f9baed3494b1ee6227c474",
+  "family_count": 308,
+  "row_pointer": "#/families/307"
+ },
+ "base_commit": "45b4ccf25270c486dbc682805cd455ce4ca25fb0",
+ "rubric": "Step 8 depth matrix, twelve criteria (DL-077); PASS needs Plans/ evidence",
+ "native_execution": "NOT_RUN",
+ "rows": [
+  {
+   "event_type": "bundle.note_created",
+   "family_id": "event-family-bundle-note-created",
+   "family_revision": "1.0.0",
+   "cells": {
+    "membership_version": {
+     "status": "PASS",
+     "representation": "exact_registry_membership",
+     "finding": "Registered at registry revision 2026-11-16.89 as #/families/307 (canonical row SHA-256 1bacce2a35120e6b59569955456000f26a71a5558fd294e56474b33e9979fc2d); before this commit the family was absent.",
+     "evidence": [
+      {
+       "path": "Plans/event_family_registry.json",
+       "json_pointer": "#/families/307",
+       "line_start": 20187,
+       "line_end": 20226,
+       "quote": "\"event_type\": \"bundle.note_created\"",
+       "quote_line": 20190,
+       "file_sha256": "898b797f80997142cd47deca748db26c4170172f76f9baed3494b1ee6227c474",
+       "quote_check": "exact"
+      }
+     ]
+    },
+    "owner_doc": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "This exact family has its own approved Card 5 owner unit, semantic-owner routes and named payload/storage bindings.",
+     "evidence": [
+      {
+       "path": "Plans/FinalGUISpec.md",
+       "unit": "F3-706",
+       "line_start": 52459,
+       "line_end": 52459,
+       "quote": "Newly authored owner contract for ",
+       "quote_check": "exact",
+       "quote_scope": "unit F3-706, Plans/FinalGUISpec.md:52452-52649",
+       "file_sha256": "483180446b9ea96a38be9d03c75a9b126212e08b8266917f8c76e1fc17f2797f"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "owner_doc",
+      "status": "PASS"
+     }
+    },
+    "producer": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "The exact owning handler and admission/atomic owner commit/append/first/full-value receipt/settlement ordering adopt SP-286/CV-339.",
+     "evidence": [
+      {
+       "path": "Plans/FinalGUISpec.md",
+       "unit": "F3-706",
+       "line_start": 52515,
+       "line_end": 52515,
+       "quote": "Explicitly adopt SP-286/CV-339",
+       "quote_check": "exact",
+       "quote_scope": "unit F3-706, Plans/FinalGUISpec.md:52452-52649",
+       "file_sha256": "483180446b9ea96a38be9d03c75a9b126212e08b8266917f8c76e1fc17f2797f"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "producer",
+      "status": "PASS"
+     }
+    },
+    "closed_payload_schema": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "The exact versioned payload schema is closed; original older schemas remain immutable and reader-only.",
+     "evidence": [
+      {
+       "path": "Plans/FinalGUISpec.md",
+       "unit": "F3-706",
+       "line_start": 52476,
+       "line_end": 52476,
+       "quote": "Payload and scope: the exact closed schema is ",
+       "quote_check": "exact",
+       "quote_scope": "unit F3-706, Plans/FinalGUISpec.md:52452-52649",
+       "file_sha256": "483180446b9ea96a38be9d03c75a9b126212e08b8266917f8c76e1fc17f2797f"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "closed_payload_schema",
+      "status": "PASS"
+     }
+    },
+    "scope_identity": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "Project-only identity joins, exact partition, original subject, event/idempotency and full immutable request digest are bound.",
+     "evidence": [
+      {
+       "path": "Plans/FinalGUISpec.md",
+       "unit": "F3-706",
+       "line_start": 52479,
+       "line_end": 52479,
+       "quote": "scope_partition is project~base64url_no_pad(UTF8(project_id))",
+       "quote_check": "exact",
+       "quote_scope": "unit F3-706, Plans/FinalGUISpec.md:52452-52649",
+       "file_sha256": "483180446b9ea96a38be9d03c75a9b126212e08b8266917f8c76e1fc17f2797f"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "scope_identity",
+      "status": "PASS"
+     }
+    },
+    "replay_idempotency": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "Same original result/receipt on exact retry; conflicts and unavailable dedupe cause zero effect. Historical replay never dispatches the action.",
+     "evidence": [
+      {
+       "path": "Plans/FinalGUISpec.md",
+       "unit": "F3-706",
+       "line_start": 52523,
+       "line_end": 52523,
+       "quote": "Same scoped key with changed caller semantic body is idempotency_conflict",
+       "quote_check": "exact",
+       "quote_scope": "unit F3-706, Plans/FinalGUISpec.md:52452-52649",
+       "file_sha256": "483180446b9ea96a38be9d03c75a9b126212e08b8266917f8c76e1fc17f2797f"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "replay_idempotency",
+      "status": "PASS"
+     }
+    },
+    "retention": {
+     "status": "PASS",
+     "representation": "integrated_retention_delta",
+     "finding": "Current exact-family BOUND retention assignment: {\"application_policy_ref\": null, \"decisions\": [\"DL-401\", \"DL-500\", \"DL-501\"], \"event_type\": \"bundle.note_created\", \"existing_checkpoints\": [{\"family_id\": \"bundle_note_created_checkpoint\", \"policy_ref\": \"RP-PROJECTION-3GEN@1.0.0\"}], \"grade_source\": \"reports/event-authority-20261104/DG6A.self-grade.json\", \"history_policy_ref\": \"RP-AUTHORITY-INDEFINITE@1.0.0\", \"lane\": \"DG6A\", \"original_and_checkpoint_assignments\": [{\"decision\": \"DL-500\", \"family_id\": \"bundle_note_created_checkpoint\", \"policy_ref\": \"RP-PROJECTION-3GEN@1.0.0\"}, {\"decision\": \"DL-501\", \"family_id\": \"bundle_note_created_operation\", \"policy_ref\": \"RP-OPERATIONAL-2555D@1.0.0\"}], \"owner\": \"Plans/FinalGUISpec.md#F3-706\", \"owner_line\": 52452, \"prior_finding\": \"Existing record groups/holds are preserved; this event, original operation/mapping custody and History checkpoint remain PENDING_RETENTION_DECISION.\", \"question\": null, \"status\": \"BOUND\"}",
+     "evidence": [
+      {
+       "path": "Plans/FinalGUISpec.md",
+       "unit": "F3-706",
+       "line_start": 52604,
+       "line_end": 52604,
+       "quote": "\\ binding for `bundle.note_created` (2026-11-14).\\n\\nEvent history `retention_policy_ref = RP-AUTHORITY-INDEFINITE@1.0.0`,\\",
+       "quote_check": "exact",
+       "quote_scope": "unit F3-706, Plans/FinalGUISpec.md:52452-52649",
+       "file_sha256": "483180446b9ea96a38be9d03c75a9b126212e08b8266917f8c76e1fc17f2797f"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "retention",
+      "status": "PASS"
+     }
+    },
+    "redaction_custody": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "Immutable original record/action/source and first/full-value receipt custody, coherent mandatory backup/restore, source access/deletion and post-helper disclosure fences are explicit.",
+     "evidence": [
+      {
+       "path": "Plans/FinalGUISpec.md",
+       "unit": "F3-706",
+       "line_start": 52561,
+       "line_end": 52561,
+       "quote": "Mandatory coherent backup/restore preserves them together",
+       "quote_check": "exact",
+       "quote_scope": "unit F3-706, Plans/FinalGUISpec.md:52452-52649",
+       "file_sha256": "483180446b9ea96a38be9d03c75a9b126212e08b8266917f8c76e1fc17f2797f"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "redaction_custody",
+      "status": "PASS"
+     }
+    },
+    "transitions": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "The exact approved Card 5 transition/effect, recorder, confirmer, reason/evidence and existing approval fences are bound without granting powers from assignment.",
+     "evidence": [
+      {
+       "path": "Plans/FinalGUISpec.md",
+       "unit": "F3-706",
+       "line_start": 52528,
+       "line_end": 52528,
+       "quote": "Exact transition:",
+       "quote_check": "exact",
+       "quote_scope": "unit F3-706, Plans/FinalGUISpec.md:52452-52649",
+       "file_sha256": "483180446b9ea96a38be9d03c75a9b126212e08b8266917f8c76e1fc17f2797f"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "transitions",
+      "status": "PASS"
+     }
+    },
+    "consumers_checkpoints": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "Exact operating History consumer, projector/reader, closed bounded checkpoint, whole-value CAS, SP-278 nine-field token and bounded rebuild/read protocol are explicit.",
+     "evidence": [
+      {
+       "path": "Plans/FinalGUISpec.md",
+       "unit": "F3-706",
+       "line_start": 52537,
+       "line_end": 52537,
+       "quote": "Explicitly adopt SP-278/DL-076:",
+       "quote_check": "exact",
+       "quote_scope": "unit F3-706, Plans/FinalGUISpec.md:52452-52649",
+       "file_sha256": "483180446b9ea96a38be9d03c75a9b126212e08b8266917f8c76e1fc17f2797f"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "consumers_checkpoints",
+      "status": "PASS"
+     }
+    },
+    "compatibility_withdrawal": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "Authenticated original editions remain read-only and retain their meaning; current-writer cutoff, in-flight settlement, publication withdrawal and rebuild fences are explicit. Sweep part 2B (gated NUMRULE head 58c2816ff3): the retained edition and its exact frozen validator are selected by SP-1101 custody (RetainedDispatcher over Storage's sealed original, exact binding, installed recipe tuple pinning the edition's schema bytes, recomputed commitment/family/identity), never by caller evidence; unavailable, unsealed, foreign or unsupported originals refuse without fallback, and a skipped format check never authenticates invalid history (CV-1101).",
+     "evidence": [
+      {
+       "path": "Plans/FinalGUISpec.md",
+       "unit": "F3-706",
+       "line_start": 52587,
+       "line_end": 52588,
+       "quote": "Close exact-family\\\n  \\ writer admission first",
+       "file_sha256": "483180446b9ea96a38be9d03c75a9b126212e08b8266917f8c76e1fc17f2797f",
+       "quote_check": "exact",
+       "quote_scope": "unit F3-706, Plans/FinalGUISpec.md:52452-52649"
+      },
+      {
+       "path": "scripts/pm_dg6a_custody.py",
+       "unit": "resolve",
+       "line_start": 324,
+       "line_end": 324,
+       "quote": "def resolve(original):",
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "file_sha256": "0012cdb6b5c8ac3243e3459e290f073daaf3da131ed37dc4598aad6c50e3793d"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "compatibility_withdrawal",
+      "status": "PASS"
+     }
+    },
+    "positive_negative_oracles": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "C12-DG6A (PNC-019 S4, 2026-11-15): PASS under the scope's whole-definition Method B route at head 6ead4f4885. Every DG6A guard table holds at most eight rows (s4o2's phase groups, generalized) and the unchanged gated tool 004bdedd63 proves every reachable row; the twenty entailed rows each sit alone in a table with a checked premise and construction attempts through the unchanged checker functions. For this family the unchanged complete checker runs under scripts/pm_dg6a_c12_closure.py: 1380 reachable owner clauses (payload, operation, checkpoint and the custody-selected frozen editions), 0 uncovered; 3205 exact clause kills at the consuming row with clause cut, whole-definition row cut and restoration (780 also first-refused at that row by the unchanged consuming function); 75 non-targeting proposals uncredited. Registry copies: 362 exact storage_schema refusals. Copy joins: 1520 exact single-row kills; multi-row and unconstrained changes listed separately, uncredited. Retained custody: 42 exact HC/RQ refusals across missing, foreign, ambiguous, replaced and foreign-recipe receipts, 2105 store snapshots, 0 changed. Timestamps: the shared CV-1101 corpus at 9 evaluated date-time clauses (EventRecord) and at the retained observed/persisted (storage_utc_z) and acknowledged_at_utc (EventRecord) instants, 0 disagreements. Numbers: the shared corpus runs with 0 disagreements and 4,400-digit integers reach every evaluated integer slot without an exception. Native NOT_RUN; admission ABSENT; independent review NOT_RUN; the shared whole-Plans date-time inventory gate stays blocked by its listed stale-citation tool issue.",
+     "evidence": [
+      {
+       "path": "Plans/FinalGUISpec.md",
+       "unit": "F3-706",
+       "line_start": 52599,
+       "line_end": 52599,
+       "quote": "C12 remains PARTIAL: JSON Schema keyword cuts are not ported to that tool,",
+       "quote_check": "exact",
+       "quote_scope": "unit F3-706, Plans/FinalGUISpec.md:52452-52649",
+       "file_sha256": "483180446b9ea96a38be9d03c75a9b126212e08b8266917f8c76e1fc17f2797f"
+      },
+      {
+       "path": "reports/event-authority-20261114/C12-DG6A.md",
+       "unit": "C12-DG6A bundle.note_created",
+       "line_start": 17,
+       "line_end": 17,
+       "quote": "| `bundle.note_created` | PARTIAL | PASS |",
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "file_sha256": "be6a9c141581982a70f84ac1ef79025683ad56d564aa6437f16998667c2bfa3e"
+      },
+      {
+       "path": "scripts/pm_dg6a_c12_closure.py",
+       "unit": "schema_coverage",
+       "line_start": 961,
+       "line_end": 961,
+       "quote": "def schema_coverage(family, out):",
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "file_sha256": "58a582bcc3bb6ff56c1cfd2c267d116d11b386e9c414b30e00cbe20fce60745d"
+      },
+      {
+       "path": "scripts/pm_dg6a_c12_closure.py",
+       "unit": "copies_mode",
+       "line_start": 1578,
+       "line_end": 1578,
+       "quote": "def copies_mode(family, out):",
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "file_sha256": "58a582bcc3bb6ff56c1cfd2c267d116d11b386e9c414b30e00cbe20fce60745d"
+      },
+      {
+       "path": "scripts/pm_dg6a_c12_closure.py",
+       "unit": "retained_variants",
+       "line_start": 1445,
+       "line_end": 1445,
+       "quote": "def retained_variants(",
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "file_sha256": "58a582bcc3bb6ff56c1cfd2c267d116d11b386e9c414b30e00cbe20fce60745d"
+      },
+      {
+       "path": "scripts/pm_dg6a_c12_closure.py",
+       "unit": "datetime_schema_corpus",
+       "line_start": 933,
+       "line_end": 933,
+       "quote": "def datetime_schema_corpus(",
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "file_sha256": "58a582bcc3bb6ff56c1cfd2c267d116d11b386e9c414b30e00cbe20fce60745d"
+      },
+      {
+       "path": "scripts/pm_dg6a_c12_closure.py",
+       "unit": "bigint_mode",
+       "line_start": 1624,
+       "line_end": 1624,
+       "quote": "def bigint_mode(family, out):",
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "file_sha256": "58a582bcc3bb6ff56c1cfd2c267d116d11b386e9c414b30e00cbe20fce60745d"
+      },
+      {
+       "path": "scripts/pm-dg6a-c12-entailed.py",
+       "unit": "command_key_rows",
+       "line_start": 109,
+       "line_end": 109,
+       "quote": "def command_key_rows(results):",
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "file_sha256": "38b022edac6573f58470bb5c8886f6741c1e2ffc75ddf9f28395ccbc0f79de8b"
+      },
+      {
+       "path": "scripts/pm-dg6a-c12-split-equivalence.py",
+       "unit": "main",
+       "line_start": 105,
+       "line_end": 105,
+       "quote": "phases['current_context'] = ('current_context', 'current_context__2')",
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "file_sha256": "4c711d116363f7e54eed524824d39840e0a1dd7d3d6375d707be89970840e1b3"
+      },
+      {
+       "path": "scripts/pm_dg6a_phase_groups.py",
+       "unit": "ALIASES",
+       "line_start": 2,
+       "line_end": 2,
+       "quote": "ALIASES = ",
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "file_sha256": "c8bd028969f102098d282a81007abf454b5eeab420eb31d2fa2a0d81243f70ff"
+      },
+      {
+       "path": "scripts/pm-alert-event-contracts-check.py",
+       "unit": "registry_mirror_errors",
+       "line_start": 575,
+       "line_end": 575,
+       "quote": "def registry_mirror_errors(",
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "file_sha256": "25f8207005bae21b3cfe94ece2b202eec86dc68ef4b1e210b27f24a71f29ba30"
+      },
+      {
+       "path": "scripts/pm-dg6a-guard-tables.py",
+       "unit": "collect_context_part",
+       "line_start": 472,
+       "line_end": 472,
+       "quote": "def collect_context_part(module):",
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "file_sha256": "6b2069bd7af8931b281bda6aba6ac462b132878d7b1a2966c2bc0b604cca0ae9"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "positive_negative_oracles",
+      "status": "PASS"
+     }
+    }
+   }
+  }
+ ]
+}
