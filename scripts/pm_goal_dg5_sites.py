@@ -79,6 +79,13 @@ def main():
                 evidence[name].append(dict(label=record['label'], kill=kill, outcome=record.get('outcome'),
                                            chain=record.get('dg5_chain'), cut_errors=record.get('cut_errors'),
                                            exception=(record.get('cut_exception_site') or {}).get('detail')))
+    def member_lines(row):
+        slot = collection['rows'].get(row, {})
+        return [dict(path=p, line=l, source=source_line(p, l)) for p, l in slot.get('sites', [])[:3]]
+    for items in evidence.values():
+        for item in items:
+            if item.get('chain'):
+                item['chain_members'] = {row: member_lines(row) for step in item['chain']['rows'] for row in step}
     owner, shared = [], []
     for name in sorted(family_rows):
         slot = collection['rows'].get(name, {})
