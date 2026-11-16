@@ -1,0 +1,365 @@
+{
+ "schema_id": "pm.assurance.event_authority.admission_depth_assessment.v1",
+ "assessment_kind": "admission_twelve_criteria",
+ "writer": "pm-ea-admission-writer.v1",
+ "merge": "admission-merge-2",
+ "registry": {
+  "path": "Plans/event_family_registry.json",
+  "revision": "2026-11-16.184",
+  "sha256": "e57a1710489e1441a211521ee6afddab4547de07e9502145184595854295412e",
+  "family_count": 403,
+  "row_pointer": "#/families/402"
+ },
+ "base_commit": "45b4ccf25270c486dbc682805cd455ce4ca25fb0",
+ "rubric": "Step 8 depth matrix, twelve criteria (DL-077); PASS needs Plans/ evidence",
+ "native_execution": "NOT_RUN",
+ "rows": [
+  {
+   "event_type": "live.session.completed",
+   "family_id": "event-family-live-session-completed",
+   "family_revision": "1.0.0",
+   "cells": {
+    "membership_version": {
+     "status": "PASS",
+     "representation": "exact_registry_membership",
+     "finding": "Registered at registry revision 2026-11-16.184 as #/families/402 (canonical row SHA-256 91cfa83c27cf5a901210a0ab91ea80f03941dd105dbafade788b28b33ae14059); before this commit the family was absent.",
+     "evidence": [
+      {
+       "path": "Plans/event_family_registry.json",
+       "json_pointer": "#/families/402",
+       "line_start": 26417,
+       "line_end": 26462,
+       "quote": "\"event_type\": \"live.session.completed\"",
+       "quote_line": 26420,
+       "file_sha256": "e57a1710489e1441a211521ee6afddab4547de07e9502145184595854295412e",
+       "quote_check": "exact"
+      }
+     ]
+    },
+    "owner_doc": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "live.session.completed has its own current owner doc contract; F1/F2/F3 and exact-type controls execute against this head.",
+     "evidence": [
+      {
+       "path": "Plans/newtools.md",
+       "unit": "N2-222",
+       "line_start": 9371,
+       "line_end": 9371,
+       "quote": "live.session.completed 1.0.0 — newly authored owner contract, prepared without admission.",
+       "quote_check": "exact",
+       "quote_scope": "unit N2-222, Plans/newtools.md:9371-9423",
+       "file_sha256": "178bb7506499c09d2b5ceb3e4658c14b098132679aa10284d8ee12dd8e7ef64e"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "owner_doc",
+      "status": "PASS"
+     }
+    },
+    "producer": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "live.session.completed has its own current producer contract; F1/F2/F3 and exact-type controls execute against this head.",
+     "evidence": [
+      {
+       "path": "Plans/newtools.md",
+       "unit": "N2-222",
+       "line_start": 9381,
+       "line_end": 9381,
+       "quote": "Producer: Unified live-visualization orchestrator finalization hook. Only after the actual manifest.json, summary.md and checks.json are finalized and durably committed may the ses",
+       "quote_check": "exact",
+       "quote_scope": "unit N2-222, Plans/newtools.md:9371-9423",
+       "file_sha256": "178bb7506499c09d2b5ceb3e4658c14b098132679aa10284d8ee12dd8e7ef64e"
+      },
+      {
+       "path": "Plans/newtools.md",
+       "unit": "N2-222",
+       "line_start": 9392,
+       "line_end": 9392,
+       "quote": "Round 7 authenticated history for live.session.completed: retained read, checkpoint and rebuild accept supported 1.0.0 originals written with projector_replay_only as well as dedup",
+       "quote_check": "exact",
+       "quote_scope": "unit N2-222, Plans/newtools.md:9371-9423",
+       "file_sha256": "178bb7506499c09d2b5ceb3e4658c14b098132679aa10284d8ee12dd8e7ef64e"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "producer",
+      "status": "PASS"
+     }
+    },
+    "closed_payload_schema": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "live.session.completed has its own current closed payload schema contract; F1/F2/F3 and exact-type controls execute against this head.",
+     "evidence": [
+      {
+       "path": "Plans/ds15_live_session_completed.schema.json",
+       "unit": "root",
+       "line_start": 3,
+       "line_end": 3,
+       "quote": "\"additionalProperties\": false,",
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "file_sha256": "aa6956b5164cc52186fd53845d153b82df7c6e13743f15c799bf9d379b2dbe47"
+      },
+      {
+       "path": "Plans/ds15_live_session_completed.schema.json",
+       "unit": "root",
+       "line_start": 15,
+       "line_end": 15,
+       "quote": "\"const\": \"1.0.0\"",
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "file_sha256": "aa6956b5164cc52186fd53845d153b82df7c6e13743f15c799bf9d379b2dbe47"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "closed_payload_schema",
+      "status": "PASS"
+     }
+    },
+    "scope_identity": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "live.session.completed has its own current scope identity contract; F1/F2/F3 and exact-type controls execute against this head.",
+     "evidence": [
+      {
+       "path": "Plans/newtools.md",
+       "unit": "N2-222",
+       "line_start": 9382,
+       "line_end": 9382,
+       "quote": "Idempotency key is sha256(canonical MessagePack array [\"live.session.completed\", \"1.0.0\", actual project_id, live_session_id]); the ordered tuple is unambiguous, never delimiter co",
+       "quote_check": "exact",
+       "quote_scope": "unit N2-222, Plans/newtools.md:9371-9423",
+       "file_sha256": "178bb7506499c09d2b5ceb3e4658c14b098132679aa10284d8ee12dd8e7ef64e"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "scope_identity",
+      "status": "PASS"
+     }
+    },
+    "replay_idempotency": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "live.session.completed has its own current replay idempotency contract; F1/F2/F3 and exact-type controls execute against this head.",
+     "evidence": [
+      {
+       "path": "Plans/newtools.md",
+       "unit": "N2-222",
+       "line_start": 9385,
+       "line_end": 9385,
+       "quote": "Replay: event delivery and passive reads execute no external action; exact duplicates leave the index state unchanged. Actual original run/Doctor source custody plus canonical even",
+       "quote_check": "exact",
+       "quote_scope": "unit N2-222, Plans/newtools.md:9371-9423",
+       "file_sha256": "178bb7506499c09d2b5ceb3e4658c14b098132679aa10284d8ee12dd8e7ef64e"
+      },
+      {
+       "path": "Plans/newtools.md",
+       "unit": "N2-222",
+       "line_start": 9392,
+       "line_end": 9392,
+       "quote": "Round 7 authenticated history for live.session.completed: retained read, checkpoint and rebuild accept supported 1.0.0 originals written with projector_replay_only as well as dedup",
+       "quote_check": "exact",
+       "quote_scope": "unit N2-222, Plans/newtools.md:9371-9423",
+       "file_sha256": "178bb7506499c09d2b5ceb3e4658c14b098132679aa10284d8ee12dd8e7ef64e"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "replay_idempotency",
+      "status": "PASS"
+     }
+    },
+    "retention": {
+     "status": "PASS",
+     "representation": "integrated_retention_delta",
+     "finding": "Current exact-family BOUND retention assignment: {\"application_policy_ref\": null, \"decisions\": [\"DL-401\", \"DL-500\"], \"event_type\": \"live.session.completed\", \"existing_checkpoints\": [{\"family_id\": \"ds15_live_session_completed_checkpoint\", \"policy_ref\": \"RP-PROJECTION-3GEN@1.0.0\"}], \"grade_source\": \"reports/event-authority-20261104/DS15-self-grade.json\", \"history_policy_ref\": \"RP-RUNTIME-365D@1.0.0\", \"lane\": \"DS15\", \"original_and_checkpoint_assignments\": [{\"decision\": \"DL-500\", \"family_id\": \"ds15_live_session_completed_checkpoint\", \"policy_ref\": \"RP-PROJECTION-3GEN@1.0.0\"}], \"owner\": \"Plans/storage-plan.md#SP-645\", \"owner_line\": 44671, \"prior_finding\": \"Event/checkpoint retention remains explicitly PENDING_RETENTION_DECISION for RT.\", \"question\": null, \"status\": \"BOUND\"}",
+     "evidence": [
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-645",
+       "line_start": 49098,
+       "line_end": 49098,
+       "quote": "\\ = RP-RUNTIME-365D@1.0.0`, under DL-401, DL-500.\\n\\nUse the existing policy object unchanged: {\\\"anchor_kind\\\"\\",
+       "quote_check": "exact",
+       "quote_scope": "unit SP-645, Plans/storage-plan.md:49076-49137",
+       "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "retention",
+      "status": "PASS"
+     }
+    },
+    "redaction_custody": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "live.session.completed has its own current redaction custody contract; F1/F2/F3 and exact-type controls execute against this head.",
+     "evidence": [
+      {
+       "path": "Plans/newtools.md",
+       "unit": "N2-222",
+       "line_start": 9387,
+       "line_end": 9387,
+       "quote": "backup/restore covers original log, receipts and the source closure; mandatory original custody missing or unverifiable fences retry and disclosure. The derived checkpoint is rebui",
+       "quote_check": "exact",
+       "quote_scope": "unit N2-222, Plans/newtools.md:9371-9423",
+       "file_sha256": "178bb7506499c09d2b5ceb3e4658c14b098132679aa10284d8ee12dd8e7ef64e"
+      },
+      {
+       "path": "Plans/newtools.md",
+       "unit": "N2-222",
+       "line_start": 9392,
+       "line_end": 9392,
+       "quote": "Round 7 authenticated history for live.session.completed: retained read, checkpoint and rebuild accept supported 1.0.0 originals written with projector_replay_only as well as dedup",
+       "quote_check": "exact",
+       "quote_scope": "unit N2-222, Plans/newtools.md:9371-9423",
+       "file_sha256": "178bb7506499c09d2b5ceb3e4658c14b098132679aa10284d8ee12dd8e7ef64e"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "redaction_custody",
+      "status": "PASS"
+     }
+    },
+    "transitions": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "live.session.completed has its own current transitions contract; F1/F2/F3 and exact-type controls execute against this head.",
+     "evidence": [
+      {
+       "path": "Plans/newtools.md",
+       "unit": "N2-222",
+       "line_start": 9381,
+       "line_end": 9381,
+       "quote": "Producer: Unified live-visualization orchestrator finalization hook. Only after the actual manifest.json, summary.md and checks.json are finalized and durably committed may the ses",
+       "quote_check": "exact",
+       "quote_scope": "unit N2-222, Plans/newtools.md:9371-9423",
+       "file_sha256": "178bb7506499c09d2b5ceb3e4658c14b098132679aa10284d8ee12dd8e7ef64e"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "transitions",
+      "status": "PASS"
+     }
+    },
+    "consumers_checkpoints": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "live.session.completed has its own current consumers checkpoints contract; F1/F2/F3 and exact-type controls execute against this head.",
+     "evidence": [
+      {
+       "path": "Plans/newtools.md",
+       "unit": "N2-222",
+       "line_start": 9386,
+       "line_end": 9386,
+       "quote": "reader.ds15.live_session_completed.v1@1.0.0, operating as Chat live_run_card completion reader, reads only this exact admitted event type at 1.0.0. It adopts SP-278 by name and DL-",
+       "quote_check": "exact",
+       "quote_scope": "unit N2-222, Plans/newtools.md:9371-9423",
+       "file_sha256": "178bb7506499c09d2b5ceb3e4658c14b098132679aa10284d8ee12dd8e7ef64e"
+      },
+      {
+       "path": "Plans/newtools.md",
+       "unit": "N2-222",
+       "line_start": 9392,
+       "line_end": 9392,
+       "quote": "Round 7 authenticated history for live.session.completed: retained read, checkpoint and rebuild accept supported 1.0.0 originals written with projector_replay_only as well as dedup",
+       "quote_check": "exact",
+       "quote_scope": "unit N2-222, Plans/newtools.md:9371-9423",
+       "file_sha256": "178bb7506499c09d2b5ceb3e4658c14b098132679aa10284d8ee12dd8e7ef64e"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "consumers_checkpoints",
+      "status": "PASS"
+     }
+    },
+    "compatibility_withdrawal": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "live.session.completed has its own current compatibility withdrawal contract; F1/F2/F3 and exact-type controls execute against this head. Sweep part 2B: retained readers select the frozen recipe only through SP-1101 (sealed write custody, then the shared RetainedDispatcher), and the frozen recipe carries the CV-1101 profiles; owner-valid history stays readable and forged, unsealed, unsupported or wrong-family selections refuse.",
+     "evidence": [
+      {
+       "path": "Plans/newtools.md",
+       "unit": "N2-222",
+       "line_start": 9380,
+       "line_end": 9380,
+       "quote": "withdrawal definition was found for live.session.completed. This family is explicitly inside DL-045's exact scope. No sibling definition is adopted.",
+       "quote_check": "exact",
+       "quote_scope": "unit N2-222, Plans/newtools.md:9371-9423",
+       "file_sha256": "178bb7506499c09d2b5ceb3e4658c14b098132679aa10284d8ee12dd8e7ef64e"
+      },
+      {
+       "path": "Plans/newtools.md",
+       "unit": "N2-222",
+       "line_start": 9392,
+       "line_end": 9392,
+       "quote": "Round 7 authenticated history for live.session.completed: retained read, checkpoint and rebuild accept supported 1.0.0 originals written with projector_replay_only as well as dedup",
+       "quote_check": "exact",
+       "quote_scope": "unit N2-222, Plans/newtools.md:9371-9423",
+       "file_sha256": "178bb7506499c09d2b5ceb3e4658c14b098132679aa10284d8ee12dd8e7ef64e"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "compatibility_withdrawal",
+      "status": "PASS"
+     }
+    },
+    "positive_negative_oracles": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "Cycle-8 independent review accepted the residual constructions. Sweep part 2A: every refusal is a guard-table row and the gated tool proves every provable row; S-N1 adopted. Sweep part 2B: S-FMT1 (CV-1101 through the shared predicate, EventRecord and storage_utc_z profiles) and S-N2 (SP-1101 selection and RetainedDispatcher resolution) adopted with their witnesses; JSON Schema keyword cuts are not ported.",
+     "evidence": [
+      {
+       "path": "Plans/newtools.md",
+       "unit": "N2-222",
+       "line_start": 9390,
+       "line_end": 9390,
+       "quote": "Oracles: ATS-325 and scripts/pm-ds15-event-contracts.py exercise this exact closed payload and checkpoint identity. Native obligations: original-outcome/append crash boundaries, re",
+       "quote_check": "exact",
+       "quote_scope": "unit N2-222, Plans/newtools.md:9371-9423",
+       "file_sha256": "178bb7506499c09d2b5ceb3e4658c14b098132679aa10284d8ee12dd8e7ef64e"
+      },
+      {
+       "path": "Plans/newtools.md",
+       "unit": "N2-222",
+       "line_start": 9392,
+       "line_end": 9392,
+       "quote": "Round 7 authenticated history for live.session.completed: retained read, checkpoint and rebuild accept supported 1.0.0 originals written with projector_replay_only as well as dedup",
+       "quote_check": "exact",
+       "quote_scope": "unit N2-222, Plans/newtools.md:9371-9423",
+       "file_sha256": "178bb7506499c09d2b5ceb3e4658c14b098132679aa10284d8ee12dd8e7ef64e"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "positive_negative_oracles",
+      "status": "PASS"
+     }
+    }
+   }
+  }
+ ]
+}
