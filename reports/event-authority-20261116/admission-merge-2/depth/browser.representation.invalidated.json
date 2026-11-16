@@ -1,0 +1,445 @@
+{
+ "schema_id": "pm.assurance.event_authority.admission_depth_assessment.v1",
+ "assessment_kind": "admission_twelve_criteria",
+ "writer": "pm-ea-admission-writer.v1",
+ "merge": "admission-merge-2",
+ "registry": {
+  "path": "Plans/event_family_registry.json",
+  "revision": "2026-11-16.56",
+  "sha256": "aafcefe9364acb1377384364123274288c63a88e6383575786890efa56d9a3d0",
+  "family_count": 275,
+  "row_pointer": "#/families/274"
+ },
+ "base_commit": "45b4ccf25270c486dbc682805cd455ce4ca25fb0",
+ "rubric": "Step 8 depth matrix, twelve criteria (DL-077); PASS needs Plans/ evidence",
+ "native_execution": "NOT_RUN",
+ "rows": [
+  {
+   "event_type": "browser.representation.invalidated",
+   "family_id": "event-family-browser-representation-invalidated",
+   "family_revision": "1.0.0",
+   "cells": {
+    "membership_version": {
+     "status": "PASS",
+     "representation": "exact_registry_membership",
+     "finding": "Registered at registry revision 2026-11-16.56 as #/families/274 (canonical row SHA-256 5edac3d28ddb33bd9c93ff7712e739215718de196b407949c098abe2d1ffa626); before this commit the family was absent.",
+     "evidence": [
+      {
+       "path": "Plans/event_family_registry.json",
+       "json_pointer": "#/families/274",
+       "line_start": 18582,
+       "line_end": 18636,
+       "quote": "\"event_type\": \"browser.representation.invalidated\"",
+       "quote_line": 18585,
+       "file_sha256": "aafcefe9364acb1377384364123274288c63a88e6383575786890efa56d9a3d0",
+       "quote_check": "exact"
+      }
+     ]
+    },
+    "owner_doc": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "The row's semantic_owner_ref now resolves to the family's own Section 15 section; Case L-5 is the payload owner route at admission.",
+     "evidence": [
+      {
+       "path": "Plans/browser_event_admission.json",
+       "unit": "#/rows/16",
+       "line_start": 855,
+       "line_end": 855,
+       "quote": "\"semantic_owner_ref\": \"Plans/Section15_MVP_Promoted_Features_Spec.md#browser-program-event-authority-representation-invalidated\"",
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "file_sha256": "670e7a606c1825295cf4c37f9eccecc65463538bdac80622fb3cd8b990b4965d"
+      },
+      {
+       "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+       "unit": "#browser-program-event-authority-representation-invalidated",
+       "line_start": 12619,
+       "line_end": 12619,
+       "quote": "**Newly authored technical owner definition under DL-046**, limited to `browser.representation.invalidated`",
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "file_sha256": "752b95d90e41b07c28e1376d0e1fdfdac2052196ca2e73e31e838f6f3124869d"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "owner_doc",
+      "status": "PASS"
+     }
+    },
+    "producer": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "Sole producer BrowserRuntimeService.representation publishes through BrowserRuntimeService.representation.publish.representation_invalidated@1.0.0 after the committed owner transition; order and SP-286/CV-339 first receipt adoption are explicit.",
+     "evidence": [
+      {
+       "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+       "unit": "#browser-program-event-authority-representation-invalidated",
+       "line_start": 12625,
+       "line_end": 12625,
+       "quote": "The sole producer is `BrowserRuntimeService.representation`, publishing through `BrowserRuntimeService.representation.publish.representation_invalidated@1.0.0`",
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "file_sha256": "752b95d90e41b07c28e1376d0e1fdfdac2052196ca2e73e31e838f6f3124869d"
+      },
+      {
+       "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+       "unit": "#browser-program-event-authority-representation-invalidated",
+       "line_start": 12625,
+       "line_end": 12625,
+       "quote": "ordinary EventRecord append, first AppendReceipt issued and synced under SP-286/CV-339",
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "file_sha256": "752b95d90e41b07c28e1376d0e1fdfdac2052196ca2e73e31e838f6f3124869d"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-2514",
+       "line_start": 21291,
+       "line_end": 21291,
+       "quote": "`storage.first_append_receipt.issue.v2` issues the eleven-field first receipt",
+       "quote_check": "exact",
+       "quote_scope": "unit SP-2514, Plans/storage-plan.md:21287-21357",
+       "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "producer",
+      "status": "PASS"
+     }
+    },
+    "closed_payload_schema": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "The existing closed payload (unevaluatedProperties false) is reused; CV text keeps the 2.0.0 inline route.",
+     "evidence": [
+      {
+       "path": "Plans/browser_event_payloads.schema.json",
+       "unit": "#/$defs/representation_invalidated",
+       "line_start": 1831,
+       "line_end": 1831,
+       "quote": "\"$id\": \"pm.browser_event.representation_invalidated.schema.v1\"",
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "file_sha256": "329f7794326afef1e8a528130877fd1f817e109c254a976fdd7d9062a96e378f"
+      },
+      {
+       "path": "Plans/Contracts_V0.md",
+       "unit": "CV-2514",
+       "line_start": 27804,
+       "line_end": 27804,
+       "quote": "`Plans/browser_event_payloads.schema.json#/$defs/representation_invalidated` (`pm.browser_event.representation_invalidated.schema.v1`) is its closed payload",
+       "quote_check": "exact",
+       "quote_scope": "unit CV-2514, Plans/Contracts_V0.md:27802-27866",
+       "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "closed_payload_schema",
+      "status": "PASS"
+     }
+    },
+    "scope_identity": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "Project scope and partition, envelope copies, and the evt_browser_/browser@1: identity over the RFC 8785 tuple.",
+     "evidence": [
+      {
+       "path": "Plans/Contracts_V0.md",
+       "unit": "CV-2514",
+       "line_start": 27806,
+       "line_end": 27806,
+       "quote": "`scope_kind=project` only, with `scope_partition=project~base64url_no_pad(UTF8(project_id))`",
+       "quote_check": "exact",
+       "quote_scope": "unit CV-2514, Plans/Contracts_V0.md:27802-27866",
+       "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a"
+      },
+      {
+       "path": "Plans/Contracts_V0.md",
+       "unit": "CV-2514",
+       "line_start": 27808,
+       "line_end": 27808,
+       "quote": "`event_id` is `evt_browser_` ",
+       "quote_check": "exact",
+       "quote_scope": "unit CV-2514, Plans/Contracts_V0.md:27802-27866",
+       "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "scope_identity",
+      "status": "PASS"
+     }
+    },
+    "replay_idempotency": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "dedupe_by_idempotency_key, projector_replay_only refused, same-digest retry returns the original receipt, conflict and dedupe_unavailable before append.",
+     "evidence": [
+      {
+       "path": "Plans/Contracts_V0.md",
+       "unit": "CV-2514",
+       "line_start": 27810,
+       "line_end": 27810,
+       "quote": "Every current write selects `replay_policy=dedupe_by_idempotency_key`",
+       "quote_check": "exact",
+       "quote_scope": "unit CV-2514, Plans/Contracts_V0.md:27802-27866",
+       "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-2514",
+       "line_start": 21291,
+       "line_end": 21291,
+       "quote": "A lost-ack retry returns the original receipt from `storage.first_append_receipt.resolve.v2`",
+       "quote_check": "exact",
+       "quote_scope": "unit SP-2514, Plans/storage-plan.md:21287-21357",
+       "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "replay_idempotency",
+      "status": "PASS"
+     }
+    },
+    "retention": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "Event RP-AUTHORITY-INDEFINITE@1.0.0 as SP-262 assigns (DL-401: SP-262's split stands); derived checkpoint RP-PROJECTION-3GEN.",
+     "evidence": [
+      {
+       "path": "Plans/browser_event_admission.json",
+       "unit": "#/rows/16",
+       "line_start": 890,
+       "line_end": 890,
+       "quote": "\"policy_id\": \"RP-AUTHORITY-INDEFINITE\"",
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "file_sha256": "670e7a606c1825295cf4c37f9eccecc65463538bdac80622fb3cd8b990b4965d"
+      },
+      {
+       "path": "Plans/Decision_Log.md",
+       "unit": "DL-401",
+       "line_start": 6425,
+       "line_end": 6425,
+       "quote": "Browser retention was not put to a ruling: SP-262’s split stands.",
+       "quote_check": "exact",
+       "quote_scope": "unit DL-401, Plans/Decision_Log.md:6290-6454",
+       "file_sha256": "a3425db1058c0bf108ce839bd8568494b38174f479529afbec403c37971da3fe"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-2514",
+       "line_start": 21297,
+       "line_end": 21297,
+       "quote": "The checkpoint uses `RP-PROJECTION-3GEN@1.0.0`",
+       "quote_check": "exact",
+       "quote_scope": "unit SP-2514, Plans/storage-plan.md:21287-21357",
+       "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "retention",
+      "status": "PASS"
+     }
+    },
+    "redaction_custody": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "Metadata-only payload with protected-auth exclusion; Storage holds original, custody v2 receipt and sealed write receipt under coherent backup; reads recheck access and tombstones.",
+     "evidence": [
+      {
+       "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+       "unit": "#browser-program-event-authority-representation-invalidated",
+       "line_start": 12631,
+       "line_end": 12631,
+       "quote": "protected `AuthBrowserSession` identity and content never appear",
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "file_sha256": "752b95d90e41b07c28e1376d0e1fdfdac2052196ca2e73e31e838f6f3124869d"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-2514",
+       "line_start": 21297,
+       "line_end": 21297,
+       "quote": "Storage holds the original record, its custody v2 first receipt and its sealed SP-1101 write receipt under",
+       "quote_check": "exact",
+       "quote_scope": "unit SP-2514, Plans/storage-plan.md:21287-21357",
+       "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "redaction_custody",
+      "status": "PASS"
+     }
+    },
+    "transitions": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "Entitling transition representation_invalidated, emission only after commit, event-silent outcomes, and the family's owner predicates.",
+     "evidence": [
+      {
+       "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+       "unit": "#browser-program-event-authority-representation-invalidated",
+       "line_start": 12623,
+       "line_end": 12623,
+       "quote": "The entitling owner transition is `representation_invalidated`",
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "file_sha256": "752b95d90e41b07c28e1376d0e1fdfdac2052196ca2e73e31e838f6f3124869d"
+      },
+      {
+       "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+       "unit": "#browser-program-event-authority-representation-invalidated",
+       "line_start": 12623,
+       "line_end": 12623,
+       "quote": "Only a transition the owner has committed emits",
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "file_sha256": "752b95d90e41b07c28e1376d0e1fdfdac2052196ca2e73e31e838f6f3124869d"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "transitions",
+      "status": "PASS"
+     }
+    },
+    "consumers_checkpoints": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "Reader browser.representation_history.representation_invalidated.v1@1.0.0 via filtered checkpoint browser_representation_invalidated_index_checkpoint explicitly adopting SP-278 with the nine-field durable token and CAS.",
+     "evidence": [
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-2514",
+       "line_start": 21293,
+       "line_end": 21293,
+       "quote": "Derived family `browser_representation_invalidated_index_checkpoint`",
+       "quote_check": "exact",
+       "quote_scope": "unit SP-2514, Plans/storage-plan.md:21287-21357",
+       "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-2514",
+       "line_start": 21293,
+       "line_end": 21293,
+       "quote": "It explicitly adopts SP-278",
+       "quote_check": "exact",
+       "quote_scope": "unit SP-2514, Plans/storage-plan.md:21287-21357",
+       "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-2514",
+       "line_start": 21293,
+       "line_end": 21293,
+       "quote": "It stores only the nine-field durable read token (DL-076), never `redb_snapshot_id`",
+       "quote_check": "exact",
+       "quote_scope": "unit SP-2514, Plans/storage-plan.md:21287-21357",
+       "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+      },
+      {
+       "path": "Plans/storage_value_registry.json",
+       "unit": "browser_representation_invalidated_index_checkpoint",
+       "line_start": 287489,
+       "line_end": 287489,
+       "quote": "\"family_id\": \"browser_representation_invalidated_index_checkpoint\"",
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "file_sha256": "5f588f0aedddefe10864c536bfeb261da5833ef1a894c3f43706e07e7c6c79da"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "consumers_checkpoints",
+      "status": "PASS"
+     }
+    },
+    "compatibility_withdrawal": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "No alias or older edition; retained originals dispatch by sealed receipt; writer cutoff before dedupe, consumer withdrawal in one CAS, rebuild after withdrawal.",
+     "evidence": [
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-2514",
+       "line_start": 21301,
+       "line_end": 21301,
+       "quote": "A reviewed withdrawal first cuts off writers (checked before dedupe",
+       "quote_check": "exact",
+       "quote_scope": "unit SP-2514, Plans/storage-plan.md:21287-21357",
+       "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-2514",
+       "line_start": 21299,
+       "line_end": 21299,
+       "quote": "A retained `browser.representation.invalidated` original is read under the recipe named by the one write",
+       "quote_check": "exact",
+       "quote_scope": "unit SP-2514, Plans/storage-plan.md:21287-21357",
+       "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "compatibility_withdrawal",
+      "status": "PASS"
+     }
+    },
+    "positive_negative_oracles": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "scripts/pm_s4b_browser_events.py executes this family's positives and single-defect negatives through generated guard tables; native execution NOT_RUN.",
+     "evidence": [
+      {
+       "path": "Plans/Automated_Testing_System.md",
+       "unit": "ATS-2500",
+       "line_start": 14916,
+       "line_end": 14916,
+       "quote": "### ATS-2500 - Browser Program prepared families criterion-12 oracles (s4b)",
+       "quote_check": "exact",
+       "quote_scope": "unit ATS-2500, Plans/Automated_Testing_System.md:14916-14973",
+       "file_sha256": "e1c8a84c145a3aaaa0738971f76db5fa0bf94f59c0149e76f4131e8579a6971d"
+      },
+      {
+       "path": "scripts/pm_s4b_browser_events.py",
+       "unit": "checker structure",
+       "line_start": 11,
+       "line_end": 11,
+       "quote": "- The checker refuses ONLY through those table predicates (evaluate()).",
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "file_sha256": "65528f01c62c5f1fd25e906122c820a61febe5748811fb669846656b2d7de8a0"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "positive_negative_oracles",
+      "status": "PASS"
+     }
+    }
+   }
+  }
+ ]
+}
