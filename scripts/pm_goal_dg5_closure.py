@@ -153,6 +153,7 @@ def hook_bank(cls, method='errors', family=None):
                                               families=set(), calls=0, refused=0))
             slot['calls'] += 1
             slot['families'].add(family or bridge_family())
+            slot.setdefault('rows', set()).add(bridge.SCHEMA_ROW[0] or '<direct errors() call>')
             refused = bool(result)
             slot['refused'] += refused
             try:
@@ -380,12 +381,14 @@ def main():
                   native_execution='NOT_RUN')
     ordered = sorted(SLOTS.items(), key=lambda item: root_id(item[0]))
     report['all_roots'] = {root_id(k): dict(bank=s['bank'], schema=k[1][:300], calls=s['calls'], refused=s['refused'],
+                                            rows=sorted(s.get('rows', ())),
                                             seeds=len(s['seeds']), families=sorted(s['families'])) for k, s in ordered}
     for number, (key, slot) in enumerate(ordered):
         ident = root_id(key)
         if number % total != part or (args.roots and not any(r in ident or r in key[1] for r in args.roots)):
             continue
         entry = dict(bank=slot['bank'], validator_class=key[0], schema=key[1], registry_sha256=key[2],
+                     rows=sorted(slot.get('rows', ())),
                      families=sorted(slot['families']), calls=slot['calls'], refused=slot['refused'],
                      seeds=len(slot['seeds']), seed_sha256=sorted(slot['seeds']))
         report['roots'][ident] = entry
