@@ -14,6 +14,8 @@ import pm_goal_dg_ca_c2_cases as C2C
 import pm_goal_dg_ca_c4_cases as C4C
 import pm_goal_dg_ca3_cases as C3C
 import pm_goal_dg_ca3_route as R3
+import pm_goal_dg_cb_migration as MB
+import pm_goal_dg_cb_owners as BO
 import pm_goal_test_storage as S
 
 C1_SITE = 'dg5/site/pm_goal_dg_ca_c1.py:'
@@ -21,6 +23,8 @@ C2_SITE = 'dg5/site/pm_goal_dg_ca_c2.py:'
 R3_SITE = 'dg5/site/pm_goal_dg_ca3_route.py:'
 N3_SITE = 'dg5/site/pm_goal_dg_ca3_native.py:'
 IX_SITE = 'dg5/site/pm_goal_dg_ca3_index.py:'
+MB_SITE = 'dg5/site/pm_goal_dg_cb_migration.py:'
+BO_SITE = 'dg5/site/pm_goal_dg_cb_owners.py:'
 AS_SITE = 'dg5/site/pm_goal_dg_ca_assignment.py:'
 OWNERS_SITE = 'dg5/site/pm_goal_dg_ca_owners.py:'
 MAX_U64 = 2 ** 64 - 1
@@ -955,19 +959,19 @@ def cases(suite):
         w, r = DGO.c1_route(suite)
         w.plan_inventory.role = 'bogus_role'
         return w, r.capture_source
-    add('shared/registry_role', registry_role, 'registry/role', AD_SITE + '247')
+    add('shared/registry_role', registry_role, 'registry/role', AD_SITE + '329')
 
     def registry_unregistered():
         w, r = DGO.c1_route(suite)
         w.plan_inventory.owner_id = O.uid('TEST_ONLY:foreign-owner')
         return w, r.capture_source
-    add('shared/registry_unregistered', registry_unregistered, 'registry/unregistered_owner', AD_SITE + '246')
+    add('shared/registry_unregistered', registry_unregistered, 'registry/unregistered_owner', AD_SITE + '328')
 
     def original_withdrawn():
         w, r = DGO.c1_route(suite)
         w.sir.withdraw(r.sir_handle)
         return w, r.capture_source
-    add('shared/original_withdrawn', original_withdrawn, 'original/withdrawn', AD_SITE + '401')
+    add('shared/original_withdrawn', original_withdrawn, 'original/withdrawn', AD_SITE + '483')
 
     def cand_setup(edits=None, first=False):
         w, r = until('append_original')
@@ -1844,16 +1848,19 @@ def cases(suite):
                  lambda w, r: w.native.writers.disable('goal_stop'),
                  'C3/capture_source/native_writer_inventory', R3_SITE + '306')
 
+    def start_scope_tamper(w, r, **scope_changes):
+        st = r.wf_run['start']
+        new = tx_edit(w, 'workflow_start_commit', st['commit_key'],
+                      lambda v: v['record']['scope'].update(scope_changes))
+        tx_edit(w, 'workflow_start_origin', st['origin_key'],
+                lambda v: v['record']['commit'].update(physical_value_sha256=O.row_sha(new)))
+
     def start_current_run():
         w, r = C3C.wf(suite)
-        st = r.wf_run['start']
-        cell = w.storage.cells['workflow_start_commit'][st['commit_key']]
-        new = copy.deepcopy(cell['value'])
-        new['record']['scope']['goal_run_id'] = O.short_id('run')
-        cell['value'] = new
-        w.write([w.put('workflow_start_commit', st['commit_key'], new, expected=cell['version'])])
+        start_scope_tamper(w, r, goal_run_id=O.short_id('run'))
         return w, r.capture_source
-    add('c3/current_start_run', start_current_run, 'C3/capture_source/current_start_run', R3_SITE + '406')
+    add('c3/native_run_scope', start_current_run, 'C3/capture_source/native_run_scope', R3_SITE + '316')
+    # current_start_run (:406): proof in proofs_ca (entailed by :351 + :316).
 
     def ack_readback_drop():
         w, r = C3C.until(suite, 'prepare')
@@ -1861,12 +1868,8 @@ def cases(suite):
         return w, r.prepare
     add('c3/acknowledgement_readback', ack_readback_drop, 'C3/prepare/acknowledgement_readback', R3_SITE + '585')
 
-    def d06_origin_publish():
-        w, r = C3C.until(suite, 'settle_owner')
-        tx_edit(w, w.native.d06.ORIGIN, r.wf_run['d06']['origin_key'],
-                lambda v: v['record'].update(issuer_method='bogus.method'))
-        return w, r.settle_owner
-    add('c3/d06_origin_publish', d06_origin_publish, 'C3/settle_owner/d06_origin_publish', R3_SITE + '802')
+    # d06_origin_publish (:802): proof in proofs_ca (issuer is a schema const and the
+    # afterimage result selector is custody-bound; tampering is refused earlier).
 
     def d05_current_resolved():
         w, r = C3C.until(suite, 'settle_owner')
@@ -1887,8 +1890,7 @@ def cases(suite):
     add('c3/d06_cancelled_body', d06_cancelled_body, 'C3/settle_owner/d06_cancelled_body', R3_SITE + '819')
 
     def d06_preserved():
-        w, r = C3C.wf(suite, run_status='failed')
-        r.run()
+        w, r = C3C.until(suite, 'settle_owner', run_status='failed')
         p = pointer(w, r)
         tx_edit(w, w.native.run.BODY, p['body_key'],
                 lambda v: v['record'].update(status='running'))
@@ -1900,9 +1902,7 @@ def cases(suite):
 
     def current_start_scope():
         w, r = C3C.until(suite, 'settle_owner')
-        st = r.wf_run['start']
-        tx_edit(w, 'workflow_start_commit', st['commit_key'],
-                lambda v: v['record']['scope'].update(goal_id=O.short_id('goal')))
+        start_scope_tamper(w, r, goal_id=O.short_id('goal'))
         return w, r.settle_owner
     add('c3/current_start', current_start_scope, 'C3/settle_owner/current_start', R3_SITE + '830')
 
@@ -1914,13 +1914,8 @@ def cases(suite):
 
     def append_lease():
         w, r = C3C.until(suite, 'append_original')
-        reserved = r.late_reservation['reserved_sequence_id']
-        key = w.storage.lease_key()
-        cell = w.storage.cells[AS.LEASE_TABLE][key]
-        new = copy.deepcopy(cell['value'])
-        new['record']['current_lease']['first_sequence_id'] = reserved + 1
-        new['record']['current_lease']['last_sequence_id'] = reserved + 4096
-        w.write([w.put(AS.LEASE_TABLE, key, new, expected=cell['version'])])
+        lease = w.assigner.read_sources()['sequence_allocator']['current_lease']
+        r.late_reservation = dict(r.late_reservation, reserved_sequence_id=lease['last_sequence_id'] + 1)
         return w, r.append_original
     add('c3/append_lease', append_lease, 'C3/append_original/append_lease', R3_SITE + '988')
 
@@ -1952,3 +1947,65 @@ def cases(suite):
         w.sir.clock.last = last
         return w, r.terminal_succeeded
     add('c3/already_issued', second_terminal_clock, 'C3/terminal_succeeded/already_issued', R3_SITE + '1260')
+
+    # ---- batch 12 (helper C): CB owner direct sites ----
+    def cb_new():
+        suite.n += 1
+        w = MB.migration_world(suite.work / ('cb%05d' % suite.n))
+        return w, BO.legacy_goal(w)
+
+    def cb_case(name, setup, act, expected, target):
+        def make():
+            w, scope = cb_new()
+            setup(w, scope)
+            return w, lambda: act(w, scope)
+        add(name, make, expected, target)
+
+    def cb_absent_scope(w, scope):
+        return dict(scope, goal_id=O.short_id('goal'), project_id=O.short_id('proj'), thread_id=O.short_id('thr'))
+
+    for _role, _code, _site in (('goal', 'goal/database_unavailable', '663'),
+                                ('host_stop', 'host_stop/database_unavailable', '776'),
+                                ('plan', 'plan/database_unavailable', '977'),
+                                ('scheduler', 'scheduler/database_unavailable', '1110'),
+                                ('workflow', 'workflow/database_unavailable', '1378'),
+                                ('sir', 'sir/database_unavailable', '1469')):
+        def _avail(_r=_role):
+            return lambda w, s: setattr(w.owner_for(_r), 'available', False)
+        cb_case('cb/%s_database_unavailable' % _role, _avail(),
+                lambda w, s: w.coordinator.capture(MB.selector(s)), _code, BO_SITE + _site)
+    cb_case('cb/goal_body_unavailable',
+            lambda w, s: drop(w, w.goal.BODY, w.goal.keys(s)['body']),
+            lambda w, s: w.goal.body_cell(s), 'goal/body_unavailable', BO_SITE + '438')
+    cb_case('cb/goal_codec_body_unavailable',
+            lambda w, s: drop(w, w.goal.BODY, w.goal.keys(s)['body']),
+            lambda w, s: w.goal.codec_of(s), 'goal/body_unavailable', BO_SITE + '425')
+    cb_case('cb/goal_control_unavailable',
+            lambda w, s: drop(w, w.goal.CONTROL, w.goal.keys(s)['control']),
+            lambda w, s: w.goal.control(s), 'goal/control_unavailable', BO_SITE + '443')
+    cb_case('cb/goal_history_unavailable',
+            lambda w, s: drop(w, w.goal.REVISION, w.goal.keys(s, 1)['revision']),
+            lambda w, s: w.goal.snapshot(s), 'goal/history_unavailable', BO_SITE + '461')
+    cb_case('cb/goal_mutation_completed',
+            lambda w, s: w.goal.mutate_state(s, 'completed'),
+            lambda w, s: w.goal.mutate_state(s, 'paused'), 'goal/mutation_completed', BO_SITE + '531')
+    cb_case('cb/host_manual_action', lambda w, s: None,
+            lambda w, s: w.host_stop.manual(s, 'bogus'), 'host_stop/manual_action', BO_SITE + '731')
+    cb_case('cb/host_already_latched', lambda w, s: w.host_stop.manual(s, 'stop'),
+            lambda w, s: w.host_stop.manual(s, 'stop'), 'host_stop/already_latched', BO_SITE + '739')
+    cb_case('cb/host_unavailable', lambda w, s: None,
+            lambda w, s: w.host_stop.current(cb_absent_scope(w, s)), 'host_stop/unavailable', BO_SITE + '759')
+    cb_case('cb/host_domain_unavailable', lambda w, s: None,
+            lambda w, s: w.host_stop.read_for_binding_migration(MB.selector(cb_absent_scope(w, s))),
+            'host_stop/domain_unavailable', BO_SITE + '778')
+    cb_case('cb/inventory_unavailable', lambda w, s: setattr(w.goal, 'available', False),
+            lambda w, s: w.goal.inventory(s), 'inventory/unavailable/goal_body', BO_SITE + '366')
+    cb_case('cb/image_unavailable', lambda w, s: drop(w, w.goal.BODY, w.goal.keys(s)['body']),
+            lambda w, s: w.goal.image(w.goal.BODY, w.goal.keys(s)['body']),
+            'image/unavailable/goal_body_record', BO_SITE + '395')
+    cb_case('cb/image_origin_unavailable',
+            lambda w, s: drop(w, BO.ORIGINS,
+                              BO.origin_key(w.goal.BODY, w.goal.keys(s)['body'],
+                                            BO.sha(BO.physical(w.cell(w.goal.BODY, w.goal.keys(s)['body'])['value'])[1]))),
+            lambda w, s: w.goal.image(w.goal.BODY, w.goal.keys(s)['body']),
+            'image/origin_unavailable/goal_body_record', BO_SITE + '402')
