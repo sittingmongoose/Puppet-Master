@@ -400,4 +400,21 @@ PROOFS = {
             'goal_update_command_custody.schema.json:708) and identical validation call as '
             'the reader receipt rows. It can refuse only where those rows refuse, so it '
             'never gates acceptance alone and closes with the reader receipt row.')),
+    'dg5/dgu/physical/row/schema': dict(
+        kind='entailed-by-physical-construction',
+        families=['goal.updated'],
+        depends_on=[],
+        sites=[(U, 656), (U, 671), (U, 1079), (U, 1081)],
+        argument=(
+            'PhysicalMixin.physical (:656-671) validates a row it has just assembled '
+            'from schema constants (schema_id, schema_version, the wrapper logical ids '
+            'from the validated wrapper itself), a computed owner-identity digest, a '
+            'lifetime taken from the owner LIFETIME table, the computed value_sha256 of '
+            'the canonical wrapper bytes, and either that wrapper verbatim (already '
+            'validated against its logical root by row() at :1081 before physical runs) '
+            'or a pack reference whose media and bytes were verified by put_pack/'
+            'read_pack in the same call plus the compact-row cap at :670. Every '
+            'physical-row schema bound is a const, a computed digest, or identical to a '
+            'bound its sources already passed, so no complete owner call can make this '
+            'row refuse alone.')),
 }
