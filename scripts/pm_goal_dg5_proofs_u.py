@@ -178,6 +178,24 @@ PROOFS = {
             'at dgu/sir/request/schema). The result dict is otherwise owner-built with literal '
             'keys, and the identity value is a list of literal and schema-validated strings with '
             'no dict at all. No complete call can present a non-string key to :165.')),
+    SITE + '683': dict(
+        kind='entailed-by-canonical-decode',
+        families=['goal.updated'],
+        depends_on=[],
+        sites=[(U, 179), (U, 682), (U, 683), ('scripts/pm_goal_test_owner_adapters.py', 70),
+               ('scripts/pm_goal_test_numrule.py', 185), ('scripts/pm_goal_test_numrule.py', 190),
+               ('scripts/pm_event_numbers.py', 309), ('scripts/pm_event_numbers.py', 400)],
+        argument=(
+            'unwrap_row at :682 obtains wrapper only from NR.decode_event_value(raw), whose '
+            'N.decode_storage_value returns a value only after requiring '
+            'storage_value_bytes(value, EVENT_VALUE) == raw (pm_event_numbers.py:400-401). '
+            'The owner msgpack at :179 is A.canonical, which is NR.event_value_bytes - the same '
+            'N.storage_value_bytes(value, EVENT_VALUE) call. So whenever :683 is reached, '
+            'msgpack(wrapper) is exactly the byte string decode already required to equal raw; '
+            ':683 can never refuse alone. The authored noncanonical_pack_bytes case witnesses '
+            'the decode refusal itself (dgu/physical/decode/numrule/physical_noncanonical); '
+            'that shared decode call is not a DG5 cuttable site row, so no duplicate-set credit '
+            'is claimed for it.')),
     SITE + '173': dict(
         kind='entailed-by-owner-schemas',
         families=['goal.updated'],
