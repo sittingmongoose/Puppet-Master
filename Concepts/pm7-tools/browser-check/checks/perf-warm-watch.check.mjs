@@ -18,7 +18,8 @@
 // Product rows carry steadyMs/slowMs from the queue's rolling median; older logs fall back to the later sampled
 // display rate. A row that also carries slow1, steady1, slow2, steady2 and resetAt is judged from those (a resetAt
 // is believed only when the interval it names reached its bar; on an unwatched row only a first-interval reset counts
-// as dropped early, because a light chain's last step is asked after its first interval only: R58); a row without
+// as dropped early, because a light chain's last step is asked after its first interval only: R58; a row that
+// logs a bar under the queue's floors, 40 ms slow or 25 ms steady, is not believed and is bracketed too); a row without
 // them is still bracketed between its slow bar and the row before. The replay keeps the highest and the lowest value the counter can have had, and fails only on what is certain.
 // Intervals the queue notes but no row shows set the counter back to zero too: the two frames it looks at before
 // admitting a step (an admission attempt, admitted or not, writes no row) and those of a step whose judging the page's

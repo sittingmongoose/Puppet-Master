@@ -331,7 +331,22 @@ const CASES = [
 	['control: 17 steady watches on rows that carry the fields (the 17th was not needed)',
 		() => log(exact(17)), { needless: 1, early: 0 }],
 	['control: a watch whose worst frame stays under every slow bar the row knows keeps the count (15 + [8, 8, 30] under bars 40, then one more is needless)',
-		() => log(exact(15), step([8, 8, 30], { ...X, steadyMs: 45, slowMs: 90 }), step([30, 30, 30], { steadyMs: 45, slowMs: 90, slow1: 90, steady1: 45, slow2: 90, steady2: 45, resetAt: 0 })), { needless: 1, early: 0 }]
+		() => log(exact(15), step([8, 8, 30], { ...X, steadyMs: 45, slowMs: 90 }), step([30, 30, 30], { steadyMs: 45, slowMs: 90, slow1: 90, steady1: 45, slow2: 90, steady2: 45, resetAt: 0 })), { needless: 1, early: 0 }],
+	// R59 C1 (PM7PERF-WARMWATCH-BARS-TRUSTED): the product's slow bar is max(40, 3 x median), so a row
+	// logging slow1 1 is impossible metadata. Believed, its resetAt 1 reads the on-time 8 ms d1 as a reset
+	// and excuses the 17th watch after 16 steady ones; the row must fall to the bracket path, as a row
+	// without the fields does, and the watch reads as needless.
+	['R59 C1: a row logging an impossible slow bar (slow1 1, under the 40 ms floor) cannot excuse a needless watch',
+		() => log(exact(16), step([8, 8, 8], { ...X, slow1: 1, resetAt: 1 })), { needless: 1, early: 0 }],
+	// control: the floors themselves are legitimate product bars (median 8 at 120 Hz). Bars exactly 40 / 25
+	// stay an exact row: d1 40 meets its bar without exceeding it, resetAt 0, so the 17th watch after 16
+	// steady ones is needless. The bracket path would not say so (40 is not under slowLo - 1).
+	['control: bars exactly at the floors (40 / 25) are still an exact row (d1 40, resetAt 0, the 17th watch needless)',
+		() => log(exact(16), step([40, 8, 8], { ...X })), { needless: 1, early: 0 }],
+	// the steady floor holds the same way: the steady bar is max(25, 1.5 x median), so steady1 1 is
+	// impossible and the row is not exact. Bracketed, its 40 ms d1 clears the count: no needless watch.
+	['R59 C1: a row logging an impossible steady bar (steady1 1, under the 25 ms floor) is not exact either',
+		() => log(exact(16), step([40, 8, 8], { ...X, steady1: 1 })), { needless: 0, early: 0 }]
 ];
 
 let failed = 0;
