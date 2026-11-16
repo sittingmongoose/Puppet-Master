@@ -306,6 +306,32 @@ def hitl_request_schema_proposal_sha(d):
     return w, lambda: w.approvals.capture(prop['command_instance_id'])
 
 
+@case('U-DG5/N/metadata_intent_schema_blocked_ref_type', 'dgu/body/metadata/intent/schema/after_record/blocked_reason_ref',
+      ('dg5/dgu/body/metadata/intent/schema', 'dg5/dgu/body/goal_body_record/schema'),
+      'Single defect: the lifecycle change carries an integer blocked_reason_ref. The state and '
+      'blocked-reason presence checks read only its presence, so the first schema to refuse is '
+      'the metadata intent whole-root pending validation over the after_record; with it cut, '
+      'the body row validation refuses the identical field by the identical type predicate, '
+      'so the two schema rows are a declared duplicate set for this input.')
+def metadata_intent_schema_blocked_ref_type(d):
+    w, g = U._goal(d)
+    U.run_direct(w, g)
+    return w, lambda: w.lifecycle.change(g['scope'], 'blocked', 1)
+
+
+@case('U-DG5/N/receipt_request_schema_extra_field', 'dgu/reader/receipt/receipt_request/schema/',
+      ('dg5/dgu/reader/receipt/receipt_request/schema', 'dg5/dgu/reader/receipt/final/receipt_request/schema'),
+      'Single defect: the caller receipt request gains one field no reader schema defines. '
+      'read_receipt_private validates the identical request object at entry and again at the '
+      'final boundary, so the two whole-root schema rows bound the same object by the same '
+      'predicate (additionalProperties) as a declared duplicate set.')
+def receipt_request_schema_extra_field(d):
+    w, g = U._goal(d)
+    req, adm = U.run_direct(w, g)
+    rr = dict(U.progress(w, g, U.op_of(adm))['body_commit']['receipt_request'], dg5_schemaless_field=1)
+    return w, lambda: w.body.read_receipt(rr, g['user'], g['user_permission'])
+
+
 @case('U-DG5/N/inspect_source_defect', 'dgu/inspect/source_defect', SITE + '1867',
       'Single defect in the acquired source snapshot: first custody group_digest is substituted, so '
       'GenericSource halts before that event (a custody defect at its position) and the inspected event '
