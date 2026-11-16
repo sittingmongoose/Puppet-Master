@@ -245,7 +245,13 @@ def main():
                 status, reason = 'OPEN', 'conflicting collection sites across proof directories'
             elif effective_gated == 'PASS' and (killed or shared_killed):
                 status, reason = 'CLOSED', None
-            elif proof_record and effective_gated in ('PASS', 'NOT_RUN'):
+            elif proof_record and (effective_gated in ('PASS', 'NOT_RUN') or
+                                   (effective_gated == 'UNPROVED' and specs and
+                                    all(spec.get('table_status') in ('NOT_RUN', 'PASS') for spec in specs))):
+                # A NOT_RUN table means the gated tool had no control/single-row vector to
+                # run on (single-outcome sites), not a disagreement; GH1 rows.json maps it
+                # to row status UNPROVED with table_status NOT_RUN. Proofs close such rows
+                # as in pm_goal_c12_matrix and pm_goal_go_matrix; FAIL tables never close.
                 status, reason = 'CLOSED_BY_PROOF', proof_record['kind']
             elif effective_gated != 'PASS':
                 status, reason = 'OPEN', 'gated ' + str(effective_gated)
