@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 import argparse
+import importlib.util
 import json
 import re
 import sys
@@ -18,6 +19,11 @@ AUDITS = ROOT / "Plans/.audits"
 REGISTRY = AUDITS / "_semantic_closure_registry.jsonl"
 INDEX = AUDITS / "_audit_status_index.json"
 MARKDOWN = AUDITS / "CURRENT_AUDIT_STATUS.md"
+CLOSURE_VALIDATOR = ROOT / "scripts/pm-audit-closure.py"
+OPEN_SET_BASIS = (
+    "scripts/pm-audit-closure.py validate_registry open_rows: a finding is open until an authenticated "
+    "supersession chain ends in a closed row whose hashes are current (PLS-025)"
+)
 
 
 def utc_now() -> str:
@@ -25,7 +31,9 @@ def utc_now() -> str:
 
 
 def rel(path: Path) -> str:
-    return path.resolve().relative_to(ROOT).as_posix()
+    # Logical in-worktree path: do not resolve symlinks, which may point at an
+    # external evidence target outside ROOT; relative_to still enforces the boundary.
+    return path.absolute().relative_to(ROOT).as_posix()
 
 
 def load_jsonl(path: Path) -> list[dict[str, Any]]:
@@ -71,25 +79,44 @@ def status_family(status: str | None) -> str:
     return "other"
 
 
+def closure_validator() -> Any:
+    """The closure validator module. Its validate_registry owns the open set."""
+    spec = importlib.util.spec_from_file_location("pm_audit_closure_for_status_index", CLOSURE_VALIDATOR)
+    assert spec is not None and spec.loader is not None
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    return module
+
+
+def closure_open_findings() -> list[dict[str, Any]]:
+    """The open findings exactly as the closure validator reports them in validate_registry's
+    open_rows (T235). PLS-025 forbids the latest-row-per-finding shortcut: a reopened row stays
+    open until a re-audit row validly supersedes it, and a closing successor whose own hashes went
+    stale leaves it open. Rows are read with the validator's own reader, so line numbers agree."""
+    closure = closure_validator()
+    report = closure.validate_registry(REGISTRY)
+    rows_by_line = {row["_line_no"]: row for row in closure.read_jsonl(REGISTRY, [], required=False)}
+    findings = []
+    for open_row in report["open_rows"]:
+        row = rows_by_line.get(open_row.get("line"), {})
+        findings.append(
+            {
+                "closure_id": open_row.get("closure_id"),
+                "finding_key": open_row.get("finding_key"),
+                "line": open_row.get("line"),
+                "closure_status": open_row.get("closure_status"),
+                "audit_ids": row.get("audit_ids", []),
+                "closure_reason": row.get("closure_reason"),
+            }
+        )
+    return findings
+
+
 def build_index() -> dict[str, Any]:
     closure_rows = load_jsonl(REGISTRY)
-    latest_closure_by_finding: dict[str, dict[str, Any]] = {}
-    for row in closure_rows:
-        finding_key = str(row.get("finding_key", "")).strip()
-        if finding_key:
-            latest_closure_by_finding[finding_key] = row
-    active_reopened_findings = [
-        {
-            "closure_id": row.get("closure_id"),
-            "finding_key": row.get("finding_key"),
-            "line": row.get("_line"),
-            "audit_ids": row.get("audit_ids", []),
-            "closure_reason": row.get("closure_reason"),
-        }
-        for row in latest_closure_by_finding.values()
-        if row.get("closure_status") == "reopened"
-    ]
-    active_reopened_findings.sort(key=lambda row: (str(row.get("finding_key")), str(row.get("closure_id"))))
+    active_open_findings = closure_open_findings()
+    active_open_findings.sort(key=lambda row: (str(row.get("finding_key")), str(row.get("closure_id"))))
+    reopened_count = sum(1 for row in active_open_findings if row.get("closure_status") == "reopened")
     closure_by_audit: dict[str, list[dict[str, Any]]] = defaultdict(list)
     for row in closure_rows:
         for audit_id in row.get("audit_ids", []) or []:
@@ -140,19 +167,21 @@ def build_index() -> dict[str, Any]:
         "source": {
             "reports_glob": "Plans/.audits/audit-*/FINAL_REPORT.md",
             "closure_registry": rel(REGISTRY),
+            "open_findings": OPEN_SET_BASIS,
         },
         "summary": {
             "report_count": len(reports),
             "reported_status_family_counts": dict(sorted(status_counts.items())),
-            "current_blocker_count": current_report_blocker_count + len(active_reopened_findings),
+            "current_blocker_count": current_report_blocker_count + len(active_open_findings),
             "current_report_blocker_count": current_report_blocker_count,
-            "current_reopened_finding_count": len(active_reopened_findings),
+            "current_open_finding_count": len(active_open_findings),
+            "current_reopened_finding_count": reopened_count,
             "historical_blocked_or_fail_report_count": sum(
                 1 for row in reports if row["reported_status_family"] == "blocked_or_fail"
             ),
             "closure_registry_row_count": len(closure_rows),
         },
-        "active_reopened_findings": active_reopened_findings,
+        "active_open_findings": active_open_findings,
         "reports": reports,
     }
 
@@ -168,23 +197,26 @@ def render_markdown(index: dict[str, Any]) -> str:
         f"- Reports indexed: {summary['report_count']}",
         f"- Current blockers: {summary['current_blocker_count']}",
         f"- Current report blockers: {summary['current_report_blocker_count']}",
+        f"- Open finding blockers: {summary['current_open_finding_count']}",
         f"- Reopened finding blockers: {summary['current_reopened_finding_count']}",
         f"- Historical BLOCKED/FAIL reports indexed: {summary['historical_blocked_or_fail_report_count']}",
         f"- Closure registry rows: {summary['closure_registry_row_count']}",
     ]
-    if index["active_reopened_findings"]:
+    if index["active_open_findings"]:
         rows.extend(
             [
                 "",
-                "## Active reopened findings",
+                "## Active open findings",
                 "",
-                "| Finding key | Closure row | Registry line |",
-                "|---|---|---:|",
+                "Open as `scripts/pm-audit-closure.py validate` reports them: a finding stays open until an authenticated re-audit chain ends in a closed row whose hashes are current.",
+                "",
+                "| Finding key | Closure row | Status | Registry line |",
+                "|---|---|---|---:|",
             ]
         )
-        for finding in index["active_reopened_findings"]:
+        for finding in index["active_open_findings"]:
             rows.append(
-                f"| `{finding['finding_key']}` | `{finding['closure_id']}` | {finding['line']} |"
+                f"| `{finding['finding_key']}` | `{finding['closure_id']}` | `{finding['closure_status']}` | {finding['line']} |"
             )
     rows.extend(
         [
@@ -227,16 +259,14 @@ def validate() -> dict[str, Any]:
     expected = build_index()
     if strip_generated(actual) != strip_generated(expected):
         failures.append({"path": rel(INDEX), "error": "stale_audit_status_index"})
+    # T239: generate writes render_markdown of the index. The file must be that render.
+    # Only the generation-time line may differ; the counts and finding rows are part of the compare.
     markdown_text = MARKDOWN.read_text(encoding="utf-8")
-    required_phrases = [
-        "separates immutable historical report headers from current presentation status",
-        "Current blockers:",
-        "Reopened finding blockers:",
-        "Historical BLOCKED/FAIL reports indexed:",
-    ]
-    for phrase in required_phrases:
-        if phrase not in markdown_text:
-            failures.append({"path": rel(MARKDOWN), "error": "current_status_markdown_missing_phrase", "phrase": phrase})
+    generated_line = re.compile(r"(?m)^- Generated: `[^`]*`$")
+    placeholder = "- Generated: `<generation-time>`"
+    rendered = render_markdown(expected)
+    if generated_line.sub(placeholder, markdown_text) != generated_line.sub(placeholder, rendered):
+        failures.append({"path": rel(MARKDOWN), "error": "stale_current_audit_status_markdown"})
 
     for row in actual.get("reports", []):
         if row.get("reported_status_family") == "blocked_or_fail":
@@ -253,6 +283,8 @@ def validate() -> dict[str, Any]:
         "status": "pass" if not failures else "fail",
         "failures": failures,
         "summary": actual.get("summary", {}),
+        # What the closure validator reports open now; a current index lists exactly these (T235).
+        "closure_validator_open_finding_count": expected["summary"]["current_open_finding_count"],
     }
 
 
