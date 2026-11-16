@@ -293,6 +293,19 @@ def hitl_resolution_schema_request_sha(d):
                                          ag['approver'])
 
 
+@case('U-DG5/N/hitl_request_schema_proposal_sha', 'dgu/hitl/request/schema/proposal_request_sha256',
+      'dg5/dgu/hitl/request/schema',
+      'Single defect: the stored SIR proposal dispatch carries a non-hex proposal_sha256 (dispatch '
+      'cells are read back with no schema), so capture copies it into the owner-built approval '
+      'request and only the whole-root ApprovalRequest validation refuses; every earlier capture '
+      'check reads the proposal target, messages and scope, never that digest.')
+def hitl_request_schema_proposal_sha(d):
+    w, g, prop, ap = U._proposal(d)
+    key = 'proposal:' + O.hexk(prop['command_instance_id'])
+    w.sir.put(key, dict(w.sir.state(key), proposal_sha256='not-hex'))
+    return w, lambda: w.approvals.capture(prop['command_instance_id'])
+
+
 @case('U-DG5/N/inspect_source_defect', 'dgu/inspect/source_defect', SITE + '1867',
       'Single defect in the acquired source snapshot: first custody group_digest is substituted, so '
       'GenericSource halts before that event (a custody defect at its position) and the inspected event '
