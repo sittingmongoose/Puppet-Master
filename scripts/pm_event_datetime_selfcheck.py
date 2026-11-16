@@ -4086,8 +4086,8 @@ def _node_controls(context):
 def _node_validator(context, row):
     """Neutral node reference with its resource and unique same-file resources preloaded.
 
-    Off-file references still refuse. A duplicated $id never selects either
-    claimant, including a nested claimant discovered by registry crawling.
+    Off-file references still refuse. Additional preloads never select a
+    duplicated $id; the original owner's already-crawled bindings stay fixed.
     """
     from referencing import Registry, Resource
     from referencing.jsonschema import DRAFT202012
@@ -4105,19 +4105,23 @@ def _node_validator(context, row):
         preload_source = (resource if row["path"] == "Plans/dch_retained_recipes.json" and
                           row["resource_pointer"] else document)
         embedded = inv.embedded_resources(preload_source)
-        if resource.get("$id") and uri not in embedded:
-            raise inv.DatetimeAdmissionError("datetime_node_resource_id_ambiguous: " + uri)
+        # Keep the original owner's already-crawled bindings. Some admitted
+        # owner schemas inline the same EventRecord in several positions.
+        original = Registry().with_resource(
+            uri, Resource.from_contents(resource, default_specification=DRAFT202012)).crawl()
         registry = Registry().with_resources(
             (identity, Resource.from_contents(inv.at(preload_source, pointer), default_specification=DRAFT202012))
-            for identity, pointer in embedded.items())
-        registry = registry.with_resource(uri, Resource.from_contents(resource, default_specification=DRAFT202012)).crawl()
-        # A unique ancestor can contain a duplicate nested $id. Remove aliases
-        # discovered by crawl too, before datetime_validator fixes the registry.
+            for identity, pointer in embedded.items()).crawl()
+        # Only additional preloads need the unique-ID rule. A unique ancestor
+        # can expose an ambiguous nested ID through an absolute or relative
+        # alias; neither alias may introduce a new binding.
         ambiguous = {node["$id"] for _, node in inv.walk(preload_source)
                      if isinstance(node.get("$id"), str) and node["$id"] not in embedded}
-        for identity in ambiguous:
-            if identity in registry:
+        for identity, loaded in list(registry.items()):
+            if (identity not in original and isinstance(loaded.contents, dict) and
+                    loaded.contents.get("$id") in ambiguous):
                 registry = registry.remove(identity)
+        registry = registry.combine(original)
         cache[key] = (uri, dt.datetime_validator({"$ref": uri}, registry=registry))
     uri, validator = cache[key]
     return validator.evolve(schema={"$ref": uri + "#" + row["pointer"][len(row["resource_pointer"]):]})
@@ -4149,9 +4153,15 @@ def _node_bank_case(context, *, duplicate=False, unmatched=False, off_file=False
         try:
             accepted = validator.is_valid({"value": "accepted"})
         except Exception as error:  # jsonschema may wrap the closed-loader refusal
-            return (duplicate or unmatched or off_file) and any(
-                isinstance(cause, inv.DatetimeAdmissionError) and
-                cause.reason == "datetime_resource_not_preloaded: " + target for cause in _chain(error))
+            # WrappedReferencingError compares equal to its wrapped exception;
+            # equality-based cycle detection would hide the actual refusal.
+            seen, refused = set(), False
+            while error is not None and id(error) not in seen:
+                seen.add(id(error))
+                refused |= (isinstance(error, inv.DatetimeAdmissionError) and
+                            error.reason == "datetime_resource_not_preloaded: " + target)
+                error = error.__cause__ or error.__context__
+            return (duplicate or unmatched or off_file) and refused
         return not (duplicate or unmatched or off_file) and accepted and not validator.is_valid({"value": "wrong"})
     finally:
         local.close()
@@ -4163,6 +4173,23 @@ check("datetime_node_nested_duplicate_resource_id_refused")(
     lambda context: _node_bank_case(context, duplicate=True, nested=True))
 check("datetime_node_unmatched_resource_id_refused")(lambda context: _node_bank_case(context, unmatched=True))
 check("datetime_node_off_file_resource_not_preloaded")(lambda context: _node_bank_case(context, off_file=True))
+
+
+@check("datetime_node_original_owner_aliases_preserved")
+def _original_owner_aliases(context):
+    from referencing import Registry, Resource
+    from referencing.jsonschema import DRAFT202012
+    _, inv, _, _ = _mods()
+    for path in ("Plans/restore_point_deleted_read_adapter.schema.json", "Plans/restore_point_retained_read.schema.json"):
+        row = next(r for r in _node_rows(context).values() if r["path"] == path)
+        document = inv._source_document(context.root, row, context.cache.setdefault("node_documents", {}))
+        resource = inv.at(document, row["resource_pointer"])
+        original = Registry().with_resource(resource["$id"], Resource.from_contents(
+            resource, default_specification=DRAFT202012)).crawl()
+        validator = _node_validator(context, row)
+        if any(validator._registry.contents(uri) != entry.contents for uri, entry in original.items()):
+            return False
+    return True
 
 
 def _leaves(error):
