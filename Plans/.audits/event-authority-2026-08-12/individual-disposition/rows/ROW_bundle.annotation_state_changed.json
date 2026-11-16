@@ -2,68 +2,68 @@
   "event_type": "bundle.annotation_state_changed",
   "bucket": "confirmed_persisted_unregistered",
   "july_classification": "confirmed_persisted_unregistered",
-  "disposition": "KEEP_QUARANTINED",
-  "disposition_rationale": "Plans/Decision_Log.md#DL-039: genuine J248-VETO-BATCH-252 CONFIRM_ALL_QUARANTINE_NO_ADMIT, recorded by Jared 2026-09-11T00:49:25.665050+00:00, applied 2026-09-11T15:12:51.572607+00:00 to bundle.annotation_state_changed. Interim KEEP_QUARANTINED: counted in the working denominator, not live-registered. Supersedes the forged 2026-08-12 application claim; retained evidence supplies no new authority or depth closure. This exact row remains for the owner-batched registered/excluded/decision-card campaign.",
+  "disposition": "KEEP_REGISTERED",
+  "disposition_rationale": "Plans/Decision_Log.md#DL-039: genuine J248-VETO-BATCH-252 CONFIRM_ALL_QUARANTINE_NO_ADMIT, recorded by Jared 2026-09-11T00:49:25.665050+00:00, applied 2026-09-11T15:12:51.572607+00:00 to bundle.annotation_state_changed. Interim KEEP_QUARANTINED: counted in the working denominator, not live-registered. Supersedes the forged 2026-08-12 application claim; retained evidence supplies no new authority or depth closure. This exact row remains for the owner-batched registered/excluded/decision-card campaign. Registered at registry revision 2026-11-16.88 in admission merge 2 under DL-078, DL-096 and DL-400 (decision Plans/Decision_Log.md#DL-2224); DL-077 admission record reports/event-authority-20260911/admission-records/bundle.annotation_state_changed.json. Disposition KEEP_QUARANTINED -> KEEP_REGISTERED, evidence cells membership_version, owner_doc, producer, closed_payload_schema, scope_identity, replay_idempotency, retention, redaction_custody, transitions, consumers_checkpoints, compatibility_withdrawal, positive_negative_oracles projected with twelve PASS cells from the family's admission depth assessment reports/event-authority-20261116/admission-merge-2/depth/bundle.annotation_state_changed.json (sha256 2c63a8695ae92c9882f0d3b5c1ada59e506205502e6357d86a0e9438a093e2aa); bucket, cohort pins, July classification and every other field are unchanged; no seal or owner choice.",
   "evidence": {
     "owner_doc": {
       "status": "PASS",
-      "citation": "Plans/Contracts_V0.md:930-949",
-      "note": "Contracts explicitly registers the persisted event and its producer/consumer boundary and payload minimum."
+      "citation": "Plans/FinalGUISpec.md:52858",
+      "note": "This exact family has its own approved Card 5 owner unit, semantic-owner routes and named payload/storage bindings."
     },
     "producer": {
       "status": "PASS",
-      "citation": "Plans/Contracts_V0.md:949",
-      "note": "The catalog explicitly names document bundle / review owner as producer."
+      "citation": "Plans/FinalGUISpec.md:52885",
+      "note": "Current generic writes/retries/dual emission are explicitly refused; independently authenticated original admission, mapping proof/owner approval and inspection quarantine define the historical read contract."
     },
     "membership_version": {
-      "status": "FAIL",
-      "citation": null,
-      "note": "The exact token is absent from the live versioned family registry; persisted documentation is not membership."
+      "status": "PASS",
+      "citation": "Plans/event_family_registry.json:20147-20186",
+      "note": "Registered at registry revision 2026-11-16.88 as #/families/306 (canonical row SHA-256 79bcbe1a2264a8c24a53edb9553c6a0a8d4179e7e81fb064d7e3ede6cab9a7db); before this commit the family was absent."
     },
     "closed_payload_schema": {
-      "status": "OWNER_REQUIRED",
-      "citation": null,
-      "note": "Cited payload fields are minima or prose, not an explicitly exhaustive closed schema."
+      "status": "PASS",
+      "citation": "Plans/FinalGUISpec.md:52875",
+      "note": "The exact versioned payload schema is closed; original older schemas remain immutable and reader-only."
     },
     "scope_identity": {
       "status": "PASS",
-      "citation": "Plans/Contracts_V0.md:949",
-      "note": "The payload minimum explicitly identifies bundle, document, and annotation."
+      "citation": "Plans/FinalGUISpec.md:52878",
+      "note": "Project-only identity joins, exact partition, original subject, event/idempotency and full immutable request digest are bound."
     },
     "replay_idempotency": {
-      "status": "OWNER_REQUIRED",
-      "citation": null,
-      "note": "No citation defines this event’s replay key, duplicate handling, and idempotency rule."
+      "status": "PASS",
+      "citation": "Plans/FinalGUISpec.md:52894-52895",
+      "note": "Retained original identity is never reminted or re-emitted; proof-backed read classification creates no split append or side effect."
     },
     "retention": {
-      "status": "OWNER_REQUIRED",
-      "citation": null,
-      "note": "No citation fixes retention class, anchor, TTL, legal-hold behavior, or cleanup for this exact token."
+      "status": "PASS",
+      "citation": "Plans/FinalGUISpec.md:52990",
+      "note": "Signed E8-3 option A assigns the existing `bundle.annotation_state_changed` compatibility mapping custody the same `RP-AUTHORITY-INDEFINITE@1.0.0` policy as the annotation history it maps, already assigned by DL-401 G16. Preserve the mapping's exact original history identity, owning scope and source relationships; no new operation value or mapping family is created. There is no age or count expiry. Ordinary deletion of a described note, object or chat does not delete this separate safe mapping custody or retain deleted content. Explicit Delete Puppet Master project data and the existing authorized application-data deletion rules remain subject to all independent holds, references, recovery and backup protections. Storage pressure refuses new writes, never evicts permanent custody. The derived History checkpoint independently retains DL-500's `RP-PROJECTION-3GEN@1.0.0`; this source-custody answer grants no longer lifetime or access to referenced bodies. The mapping retention question is resolved; admission and native conformance remain separate."
     },
     "redaction_custody": {
-      "status": "OWNER_REQUIRED",
-      "citation": null,
-      "note": "No citation assigns redaction fields, timing, and custody for this exact token."
+      "status": "PASS",
+      "citation": "Plans/FinalGUISpec.md:52931",
+      "note": "Immutable original record/action/source and first/full-value receipt custody, coherent mandatory backup/restore, source access/deletion and post-helper disclosure fences are explicit."
     },
     "transitions": {
       "status": "PASS",
-      "citation": "Plans/Contracts_V0.md:949",
-      "note": "The payload minimum explicitly carries previous_state and state for the annotation state change."
+      "citation": "Plans/FinalGUISpec.md:52885",
+      "note": "The exact approved Card 5 transition/effect, recorder, confirmer, reason/evidence and existing approval fences are bound without granting powers from assignment."
     },
     "consumers_checkpoints": {
       "status": "PASS",
-      "citation": "Plans/Contracts_V0.md:949",
-      "note": "The catalog explicitly names builder, chat, audit, and targeted revision as consumers."
+      "citation": "Plans/FinalGUISpec.md:52907",
+      "note": "Exact operating History consumer, projector/reader, closed bounded checkpoint, whole-value CAS, SP-278 nine-field token and bounded rebuild/read protocol are explicit."
     },
     "compatibility_withdrawal": {
-      "status": "OWNER_REQUIRED",
-      "citation": null,
-      "note": "No citation defines version compatibility, deprecation, aliasing, or withdrawal for this exact token."
+      "status": "PASS",
+      "citation": "Plans/FinalGUISpec.md:52957-52958; scripts/pm_dg6a_custody.py:324",
+      "note": "Authenticated original editions remain read-only and retain their meaning; current-writer cutoff, in-flight settlement, publication withdrawal and rebuild fences are explicit. Sweep part 2B (gated NUMRULE head 58c2816ff3): the retained edition and its exact frozen validator are selected by SP-1101 custody (RetainedDispatcher over Storage's sealed original, exact binding, installed recipe tuple pinning the edition's schema bytes, recomputed commitment/family/identity), never by caller evidence; unavailable, unsealed, foreign or unsupported originals refuse without fallback, and a skipped format check never authenticates invalid history (CV-1101)."
     },
     "positive_negative_oracles": {
-      "status": "OWNER_REQUIRED",
-      "citation": null,
-      "note": "No citation supplies complete positive and negative event-level acceptance oracles for this exact token."
+      "status": "PASS",
+      "citation": "Plans/FinalGUISpec.md:52969; reports/event-authority-20261114/C12-DG6A.md:16; scripts/pm_dg6a_c12_closure.py:961; scripts/pm_dg6a_c12_closure.py:1578; scripts/pm_dg6a_c12_closure.py:1445; scripts/pm_dg6a_c12_closure.py:933; scripts/pm_dg6a_c12_closure.py:1624; scripts/pm-dg6a-c12-entailed.py:109; scripts/pm-dg6a-c12-split-equivalence.py:105; scripts/pm_dg6a_phase_groups.py:2; scripts/pm-alert-event-contracts-check.py:575; scripts/pm-dg6a-guard-tables.py:472",
+      "note": "C12-DG6A (PNC-019 S4, 2026-11-15): PASS under the scope's whole-definition Method B route at head 6ead4f4885. Every DG6A guard table holds at most eight rows (s4o2's phase groups, generalized) and the unchanged gated tool 004bdedd63 proves every reachable row; the twenty entailed rows each sit alone in a table with a checked premise and construction attempts through the unchanged checker functions. For this family the unchanged complete checker runs under scripts/pm_dg6a_c12_closure.py: 398 reachable owner clauses (payload, operation, checkpoint and the custody-selected frozen editions), 0 uncovered; 973 exact clause kills at the consuming row with clause cut, whole-definition row cut and restoration (167 also first-refused at that row by the unchanged consuming function); 7 non-targeting proposals uncredited. Registry copies: 83 exact storage_schema refusals. Copy joins: 546 exact single-row kills; multi-row and unconstrained changes listed separately, uncredited. Retained custody: 21 exact HC/RQ refusals across missing, foreign, ambiguous, replaced and foreign-recipe receipts, 2083 store snapshots, 0 changed. Timestamps: the shared CV-1101 corpus at 4 evaluated date-time clauses (EventRecord) and at the retained observed/persisted (storage_utc_z) and acknowledged_at_utc (EventRecord) instants, 0 disagreements. Numbers: the shared corpus runs with 0 disagreements and 4,400-digit integers reach every evaluated integer slot without an exception. Native NOT_RUN; admission ABSENT; independent review NOT_RUN; the shared whole-Plans date-time inventory gate stays blocked by its listed stale-citation tool issue."
     }
   },
   "citations_checked": [
