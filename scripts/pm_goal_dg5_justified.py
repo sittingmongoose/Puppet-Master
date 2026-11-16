@@ -74,7 +74,7 @@ def _frames(detail):
             for f, l, fn in re.findall(r'(pm_goal\w*\.py):(\d+)\((\w+)\)', head)]
 
 
-PROOF_MODULES = ('u', 's', 'ca', 'r', 'cf')   # pm_goal_dg5_proofs_<x>.py, one owner per file (SPLIT.md)
+PROOF_MODULES = ('u', 's', 'ca', 'r', 'cf')   # pm_goal_dg5_proofs_<x>.py or pm_goal_dg5_justified_<x>.py (SPLIT.md)
 
 
 def written_proofs():
@@ -83,16 +83,17 @@ def written_proofs():
     import importlib
     out = {}
     for name in PROOF_MODULES:
-        try:
-            module = importlib.import_module('pm_goal_dg5_proofs_' + name)
-        except ModuleNotFoundError as error:
-            if error.name != 'pm_goal_dg5_proofs_' + name:
-                raise
-            continue
-        for row, proof in getattr(module, 'PROOFS', {}).items():
-            out[row] = dict(proof, module='scripts/pm_goal_dg5_proofs_%s.py' % name,
-                            bound_sites=[_bind(p, l) for p, l in proof.get('sites', [])],
-                            depends_on=list(proof.get('depends_on', [])))
+        for stem in ('pm_goal_dg5_proofs_', 'pm_goal_dg5_justified_'):  # either per-family file name
+            try:
+                module = importlib.import_module(stem + name)
+            except ModuleNotFoundError as error:
+                if error.name != stem + name:
+                    raise
+                continue
+            for row, proof in getattr(module, 'PROOFS', {}).items():
+                out[row] = dict(proof, module='scripts/%s%s.py' % (stem, name),
+                                bound_sites=[_bind(p, l) for p, l in proof.get('sites', [])],
+                                depends_on=list(proof.get('depends_on', [])))
     return out
 
 
