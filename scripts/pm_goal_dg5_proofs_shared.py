@@ -199,4 +199,55 @@ PROOFS = {
             '(the read_event_absent chain witnesses exactly this), so :1633 selects the '
             'read_event code and never gates acceptance alone. It closes by this proof '
             'once :1624 is closed.')),
+    SITE + '440': dict(
+        kind='entailed-by-event-schema',
+        families=FAMILIES,
+        depends_on=[SITE + '473'],
+        sites=[(ST, 426), (ST, 440), (ST, 1486)],
+        argument=(
+            'encode_event_frame at :440 caps the canonical header at HEADER_CAP=4096. '
+            'The header is event_header (:426): one integer plus seven EventRecord string '
+            'fields, each already bounded (maxLength 256 or a computed short string) by '
+            'the whole EventRecord validation every append runs before encoding, so the '
+            'encoded header is structurally far below the cap. It closes by this proof '
+            'once the EventRecord validation row :473 is closed.')),
+    SITE + '441': dict(
+        kind='entailed-by-stored-part-cap',
+        families=FAMILIES,
+        depends_on=[SITE + '473'],
+        sites=[(ST, 61), (ST, 441), (ST, 1486), (ST, 1487)],
+        argument=(
+            'encode_event_frame at :441 caps the canonical payload at '
+            'PAYLOAD_CAP=16777216 (ST:60). The payload bytes are canonical(event) '
+            'verbatim, and every append first requires the identical bytes to fit '
+            'STORED_PART_CAP=16384 (ST:61) at :1487, right after the whole EventRecord '
+            'validation at :1486. The tighter cap always refuses first by three orders '
+            'of magnitude, so no complete append call can make :441 refuse alone. It '
+            'closes by this proof once :473 is closed.')),
+    SITE + '187': dict(
+        kind='code-selection',
+        families=FAMILIES,
+        depends_on=[SITE + '473'],
+        sites=[(ST, 186), (ST, 187), (ST, 473)],
+        argument=(
+            'scope_partition at :187 requires an application-scoped event to carry no '
+            'project_id, during append dedupe. The whole EventRecord validation later in '
+            'the same append (:473, via validate_event_record) bounds the identical '
+            'scope_kind/project_id pair by the identical predicate (application scope '
+            'requires a null project). With :187 cut, an application candidate carrying '
+            'a project still refuses there before any frame is written (the '
+            'scope_application_project chain witnesses exactly this), so :187 selects '
+            'the precise scope code and never gates acceptance alone.')),
+    SITE + '189': dict(
+        kind='code-selection',
+        families=FAMILIES,
+        depends_on=[SITE + '473'],
+        sites=[(ST, 189), (ST, 473)],
+        argument=(
+            'scope_partition at :189 requires the candidate project_id to be a non-empty '
+            'string during append dedupe; the whole EventRecord validation later in the '
+            'same append (:473) bounds the identical project_id field by type string '
+            'plus minLength 1. With :189 cut, an empty project_id still refuses there '
+            'before any frame is written, so :189 selects the precise scope code and '
+            'never gates acceptance alone. It closes by this proof once :473 is closed.')),
 }

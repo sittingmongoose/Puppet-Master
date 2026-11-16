@@ -274,7 +274,7 @@ def _index_read_supplements(suite, work):
     (token digests repointed coherently, the authored _token_patch pattern), leaving
     every row and join genuine, so the named frontier check refuses alone.
     """
-    def snapshot_with(tag, frontier_edit):
+    def snapshot_with(tag, frontier_edit, token_edit=None):
         store = storage.TestOwnerStorage.create(work / ('indexread-' + tag), segment_target_bytes=3000)
         for i in range(3):
             selftest.append_one(store, '%s-%d' % (tag, i))
@@ -286,12 +286,19 @@ def _index_read_supplements(suite, work):
         node = ck['generations'].get(ck['current_generation_id'], node)
         raw['token']['frontier_sha256'] = storage.index_digest(node['frontier'])
         raw['token']['generation_anchor_sha256'] = storage.index_digest(node['anchor'])
+        if token_edit is not None:
+            token_edit(raw['token'])
         return source.EventRecordIndexSource(store).read(raw)
 
     suite.negative('dg5-shared', 'index_row_count_only:451',
                    lambda: snapshot_with('dg5-ix-count',
                                          lambda f: f.update(index_row_count=f['index_row_count'] + 1)),
                    'index/row_count')
+    suite.negative('dg5-shared', 'index_retained_inventory_only:202',
+                   lambda: snapshot_with('dg5-ix-retained', lambda f: None,
+                                         lambda t: t['source_selection'].update(
+                                             retained_inventory_sha256='0' * 64)),
+                   'source/retained_inventory')
     suite.negative('dg5-shared', 'index_row_set_only:452',
                    lambda: snapshot_with('dg5-ix-rowset',
                                          lambda f: f.update(index_row_set_sha256='0' * 64)),
@@ -405,6 +412,21 @@ def _guard_supplements(suite, work):
     suite.negative('dg5-shared', 'read_frame_absent:1624', read_frame_absent, 'read/event_unavailable')
     suite.negative('dg5-shared', 'read_event_absent:1633', read_event_absent, 'read/event_unavailable')
     suite.negative('dg5-shared', 'retire_empty_segment:1754', retire_empty, 'retire/nonempty')
+
+    def scope_application_project():
+        store = storage.TestOwnerStorage.create(work / 'guard-scope-app')
+        handle = store.reserve('TEST_ONLY:op:dg5-scope-app', dict(tag='dg5-scope-app'))
+        return store.append(handle, [selftest.candidate(
+            'dg5-scope-app', scope_kind='application', project_id='TEST_ONLY-project-x')])
+
+    def scope_project_empty():
+        store = storage.TestOwnerStorage.create(work / 'guard-scope-empty')
+        handle = store.reserve('TEST_ONLY:op:dg5-scope-empty', dict(tag='dg5-scope-empty'))
+        return store.append(handle, [selftest.candidate('dg5-scope-empty', project_id='')])
+
+    suite.negative('dg5-shared', 'scope_application_project:187', scope_application_project,
+                   'scope/application_project_null')
+    suite.negative('dg5-shared', 'scope_project_empty:189', scope_project_empty, 'scope/project_id')
 
 
 def _rootbank_of(entries):
@@ -656,6 +678,9 @@ def _pure_supplements(suite, work):
          'bank/uri/Plans/seglog_frame_v2_wire_fixtures.json', 'dg5/site/pm_goal_test_owner_adapters.py:267')
     pure('bank_uri_rebound:268', bank_rebound_make,
          'bank/no_rebinding/' + _bank_uri, 'dg5/site/pm_goal_test_owner_adapters.py:268')
+    pure('key_component_type:163',
+         lambda: ((lambda: storage.k_component(1)), storage.k_component, dict(args=(1,), kwargs={})),
+         'key/component_type', 'dg5/site/pm_goal_test_storage.py:163')
     pure('generic_source_storage_type:239',
          lambda: ((lambda: _generic_source_of(dict())), _generic_source_of, dict(args=(dict(),), kwargs={})),
          'source/storage_type', 'dg5/site/pm_goal_test_source.py:239')
