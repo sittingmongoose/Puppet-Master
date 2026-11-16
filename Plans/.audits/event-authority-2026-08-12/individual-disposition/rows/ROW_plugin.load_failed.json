@@ -2,68 +2,68 @@
   "event_type": "plugin.load_failed",
   "bucket": "confirmed_persisted_unregistered",
   "july_classification": "confirmed_persisted_unregistered",
-  "disposition": "KEEP_QUARANTINED",
-  "disposition_rationale": "Plans/Decision_Log.md#DL-039: genuine J248-VETO-BATCH-252 CONFIRM_ALL_QUARANTINE_NO_ADMIT, recorded by Jared 2026-09-11T00:49:25.665050+00:00, applied 2026-09-11T15:12:51.572607+00:00 to plugin.load_failed. Interim KEEP_QUARANTINED: counted in the working denominator, not live-registered. Supersedes the forged 2026-08-12 application claim; retained evidence supplies no new authority or depth closure. This exact row remains for the owner-batched registered/excluded/decision-card campaign.",
+  "disposition": "KEEP_REGISTERED",
+  "disposition_rationale": "Plans/Decision_Log.md#DL-039: genuine J248-VETO-BATCH-252 CONFIRM_ALL_QUARANTINE_NO_ADMIT, recorded by Jared 2026-09-11T00:49:25.665050+00:00, applied 2026-09-11T15:12:51.572607+00:00 to plugin.load_failed. Interim KEEP_QUARANTINED: counted in the working denominator, not live-registered. Supersedes the forged 2026-08-12 application claim; retained evidence supplies no new authority or depth closure. This exact row remains for the owner-batched registered/excluded/decision-card campaign. Registered at registry revision 2026-11-16.215 in admission merge 2 under DL-078, DL-096 and DL-400 (decision Plans/Decision_Log.md#DL-2351); DL-077 admission record reports/event-authority-20260911/admission-records/plugin.load_failed.json. Disposition KEEP_QUARANTINED -> KEEP_REGISTERED, evidence cells membership_version, owner_doc, producer, closed_payload_schema, scope_identity, replay_idempotency, retention, redaction_custody, transitions, consumers_checkpoints, compatibility_withdrawal, positive_negative_oracles projected with twelve PASS cells from the family's admission depth assessment reports/event-authority-20261116/admission-merge-2/depth/plugin.load_failed.json (sha256 90fe5be5af94617d7a4e33f037e5171964bf7c1bebb63145c11fb2f03006f6b8); bucket, cohort pins, July classification and every other field are unchanged; no seal or owner choice.",
   "evidence": {
     "owner_doc": {
       "status": "PASS",
-      "citation": "Plans/Plugins_System.md:461-467",
-      "note": "The plugin contract explicitly owns plugin event semantics and plugin-owned payload content."
+      "citation": "Plans/Plugins_System.md:4835",
+      "note": "PLUG-134 explicitly owns this exact prepared family; CV-690 routes its payload."
     },
     "producer": {
       "status": "PASS",
-      "citation": "Plans/Plugins_System.md:450-463",
-      "note": "The exact event condition is defined and plugin writers are explicitly instructed to set EventRecord.event_type to the applicable plugin value."
+      "citation": "Plans/storage-plan.md:36202; Plans/storage-plan.md:36209",
+      "note": "Exact observer and original source result ordering; explicit SP-286/CV-339/SP-291/SP-336 adoption and original receipt recovery."
     },
     "membership_version": {
-      "status": "FAIL",
-      "citation": "Plans/event_family_registry.json:3-8",
-      "note": "Exact-token search found no `plugin.load_failed` member in live registry revision `2026-08-04.1`; unknown event types are quarantined without checkpoint advance."
+      "status": "PASS",
+      "citation": "Plans/event_family_registry.json:28134-28213",
+      "note": "Registered at registry revision 2026-11-16.215 as #/families/433 (canonical row SHA-256 e00800aaeafc360372292350dcb42f5c1bb12356350fc2ab5a71363caa28a08c); before this commit the family was absent."
     },
     "closed_payload_schema": {
-      "status": "OWNER_REQUIRED",
-      "citation": null,
-      "note": "Checked sources describe occurrence semantics or minimum/example fields for `plugin.load_failed`, but do not close its payload with required/optional, nullability, enum, and additional-property rules."
+      "status": "PASS",
+      "citation": "Plans/dg6b_event_contracts.schema.json:2774; scripts/pm-dg6b-event-contracts.py:561; scripts/pm-dg6b-event-contracts.py:189",
+      "note": "Exact closed version-1 payload and operation definitions; schema validation and secret/extension negatives pass. Timestamps use the shared CV-1101 date_time predicate (EventRecord profile) and every integer slot the shared current_integer (sweep part 2B)."
     },
     "scope_identity": {
-      "status": "OWNER_REQUIRED",
-      "citation": null,
-      "note": "No checked field-local authority closes `plugin.load_failed` scope_kind plus all applicable identity, partition, and nullability rules; generic EventRecord choices do not select an event-specific value."
+      "status": "PASS",
+      "citation": "Plans/storage-plan.md:36135; scripts/pm-dg6b-event-contracts.py:143; scripts/pm-dg6b-event-contracts.py:262",
+      "note": "Both source and actual inline payload validate exact JSON types before field reads; custody joins use typed canonical bytes, so boolean/integer equality cannot preserve a forged identity."
     },
     "replay_idempotency": {
-      "status": "OWNER_REQUIRED",
-      "citation": null,
-      "note": "No checked field-local citation selects `plugin.load_failed` replay_policy and idempotency identity; generic EventRecord options were not used to infer a value."
+      "status": "PASS",
+      "citation": "Plans/storage-plan.md:36206; scripts/pm-dg6b-event-contracts.py:143; scripts/pm-dg6b-event-contracts.py:262; scripts/pm-dg6b-event-contracts.py:968; scripts/pm-dg6b-event-contracts.py:982",
+      "note": "Retries compare the CV-317 producer semantic digest (shared producer_semantic_digest, qualified RFC 8785 JCS, PQ01 before effects). Storage-assigned sequence and timestamps stay excluded. Current replay-only writes refuse while authentic retained replay-only history remains readable."
     },
     "retention": {
-      "status": "OWNER_REQUIRED",
-      "citation": null,
-      "note": "No checked citation assigns `plugin.load_failed` an event-specific retention, compaction, tombstone, or legal-hold rule."
+      "status": "PASS",
+      "citation": "Plans/storage-plan.md:36088; Plans/storage-plan.md:36104",
+      "note": "Current exact-family BOUND retention assignment: {\"application_policy_ref\": \"RP-PLUGIN-OPERATIONS-APPLICATION-2555D@1.0.0\", \"decisions\": [\"DL-401\", \"DL-418\", \"DL-503\"], \"event_type\": \"plugin.load_failed\", \"existing_checkpoints\": [], \"grade_source\": \"reports/event-authority-20261104/DG6B.self-grade.json\", \"history_policy_ref\": \"RP-OPERATIONAL-2555D@1.0.0\", \"lane\": \"DG6B\", \"original_and_checkpoint_assignments\": [{\"decision\": \"DL-503\", \"family_id\": \"plugin_hook_blocked_operation\", \"policy_ref\": \"RP-PLUGIN-HOOK-APPLICATION-90D@1.0.0\"}, {\"decision\": \"DL-503\", \"family_id\": \"plugin_hook_error_operation\", \"policy_ref\": \"RP-PLUGIN-HOOK-APPLICATION-90D@1.0.0\"}, {\"decision\": \"DL-503\", \"family_id\": \"plugin_hook_invoked_operation\", \"policy_ref\": \"RP-PLUGIN-HOOK-APPLICATION-90D@1.0.0\"}, {\"decision\": \"DL-503\", \"family_id\": \"plugin_load_failed_operation\", \"policy_ref\": \"RP-PLUGIN-OPERATIONS-APPLICATION-2555D@1.0.0\"}, {\"decision\": \"DL-503\", \"family_id\": \"plugin_loaded_operation\", \"policy_ref\": \"RP-PLUGIN-OPERATIONS-APPLICATION-2555D@1.0.0\"}, {\"decision\": \"DL-503\", \"family_id\": \"plugin_permission_override_operation\", \"policy_ref\": \"RP-PLUGIN-OPERATIONS-APPLICATION-2555D@1.0.0\"}, {\"decision\": \"DL-503\", \"family_id\": \"plugin_tool_collision_operation\", \"policy_ref\": \"RP-PLUGIN-OPERATIONS-APPLICATION-2555D@1.0.0\"}, {\"decision\": \"DL-503\", \"family_id\": \"plugin_tool_registered_operation\", \"policy_ref\": \"RP-PLUGIN-OPERATIONS-APPLICATION-2555D@1.0.0\"}], \"owner\": \"Plans/storage-plan.md#SP-671\", \"owner_line\": 31510, \"prior_finding\": \"PENDING_RETENTION_DECISION for history and operation custody; RT must assign exact classes and scope/cardinality before activation.\", \"question\": null, \"status\": \"BOUND\"}"
     },
     "redaction_custody": {
-      "status": "OWNER_REQUIRED",
-      "citation": null,
-      "note": "No checked citation closes `plugin.load_failed` redaction profile, sensitive-field treatment, payload-ref boundary, and custody authority."
+      "status": "PASS",
+      "citation": "Plans/storage-plan.md:36146; scripts/pm-dg6b-event-contracts.py:143; scripts/pm-dg6b-event-contracts.py:262",
+      "note": "Closed proof adapters accept only JSON booleans; every copied payload field joins exact original typed bytes. Separate selection resolution has its own bounded physical value and authenticated SP-337 route."
     },
     "transitions": {
-      "status": "OWNER_REQUIRED",
-      "citation": null,
-      "note": "Checked sources do not define a complete legal predecessor/successor state machine and rejection behavior for `plugin.load_failed`."
+      "status": "PASS",
+      "citation": "Plans/Plugins_System.md:4837",
+      "note": "A load attempt fails manifest validation or entry initialization. No successful loaded fact is permitted for that same terminal attempt."
     },
     "consumers_checkpoints": {
-      "status": "OWNER_REQUIRED",
-      "citation": null,
-      "note": "No checked citation names the complete consumer set and atomic success, failure, replay, and poison-record checkpoint behavior for `plugin.load_failed`."
+      "status": "PASS",
+      "citation": "Plans/storage-plan.md:36213",
+      "note": "Exact family read-through consumer adopts SP-278 generic index/checkpoint, no private projection; live snapshot fence and nine-field durable token explicitly separated."
     },
     "compatibility_withdrawal": {
-      "status": "OWNER_REQUIRED",
-      "citation": null,
-      "note": "No checked citation defines `plugin.load_failed` event-specific compatibility, migration, alias normalization, and withdrawal behavior as a versioned member."
+      "status": "PASS",
+      "citation": "Plans/storage-plan.md:36148; scripts/pm-dg6b-event-contracts.py:143; scripts/pm-dg6b-event-contracts.py:262; scripts/pm-dg6b-event-contracts.py:491; scripts/pm_dg6b_original_custody.py:192",
+      "note": "Exact at-write provenance, current reader/access and negative fences require JSON booleans; the retained original resolves through SP-1101 sealed custody and the shared RetainedDispatcher, whose frozen verifier recomputes identity and joins from the sealed bytes (HR01), before its at-write validation and the independent Storage bytes. Retained timestamps keep their owner profile."
     },
     "positive_negative_oracles": {
-      "status": "OWNER_REQUIRED",
-      "citation": null,
-      "note": "Checked sources do not provide both positive emission and negative non-emission/rejection oracles for `plugin.load_failed` across required boundary cases."
+      "status": "PASS",
+      "citation": "Plans/Automated_Testing_System.md:7408; scripts/pm-dg6b-event-contracts.py:1081",
+      "note": "ATS-335: original exact-family suite passes with the shared inventory-authenticated datetime_validator in append/retry/history, 84 proved row cells (1 declared donors), complete owner-schema clause/cut/restoration witnesses and sealed-store receipt/result reads. Whole-definition Method B scope; no claim of universal per-keyword isolation. Global shared inventory false refusal remains separate; native NOT_RUN."
     }
   },
   "citations_checked": [
