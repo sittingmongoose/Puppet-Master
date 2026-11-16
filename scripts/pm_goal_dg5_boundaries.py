@@ -848,7 +848,12 @@ def run_slots(label, original, arguments, work):
             elif outcome[0] == 'accepted':
                 verdict = 'disagree'
             else:
-                verdict = 'agree' if row_name in (slot_row, *spec.get('also_rows', ())) else 'disagree_other_row'
+                # Agree when the refusal is at the slot's own row, a declared companion row, or carries
+                # exactly the shared-call reason fixed before the call (e.g. .../jcs_binary64).
+                reason = expected.split(':', 1)[1]
+                carried = isinstance(outcome[1], str) and outcome[1].endswith('/' + reason)
+                verdict = 'agree' if row_name in (slot_row, *spec.get('also_rows', ())) or carried \
+                    else 'disagree_other_row'
             CORPUS.append(dict(slot=spec['name'], family=spec['family'], call=label, case=case_id,
                                value=repr(value)[:60] if not (type(value) is int and value > 10 ** 30) else '<4400 digits>',
                                expected=expected, outcome=outcome[0], code=outcome[1], row=row_name, verdict=verdict))
