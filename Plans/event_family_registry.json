@@ -2,7 +2,7 @@
   "$schema": "https://puppetmaster.local/schemas/event_family_registry/1.0.0/event_family_registry.schema.json",
   "schema_id": "pm.event_family_registry.v1",
   "schema_version": "2.0.0",
-  "registry_revision": "2026-11-16.78",
+  "registry_revision": "2026-11-16.79",
   "owner_doc": "Plans/storage-plan.md#case-l-5-eventrecord-persistence-legacy-normalization-and-dedupe",
   "unknown_event_disposition": "quarantine_without_checkpoint_advance",
   "families": [
@@ -19758,6 +19758,48 @@
         "Plans/Contracts_V0.md#CV-1355",
         "Plans/storage-plan.md#SP-1355",
         "Plans/bsd_event_payloads.schema.json#/$defs/finding_cleared",
+        "reports/event-authority-20261116/admission-merge-2/readiness-list.json"
+      ],
+      "retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-RUNTIME-365D",
+        "policy_version": "1.0.0"
+      }
+    },
+    {
+      "family_id": "event-family-bsd-finding-held",
+      "family_revision": "1.0.0",
+      "event_type": "bsd.finding_held",
+      "scope_policy": "project_only",
+      "semantic_owner_doc": "Plans/Back_Seat_Driver.md#BSD-1356",
+      "payload_owner_doc": "Plans/Contracts_V0.md#CV-1356",
+      "payload_schema_id": "pm.event_payload.bsd.finding_held.v1",
+      "payload_schema_ref": {
+        "path": "Plans/bsd_event_payloads.schema.json",
+        "json_pointer": "#/$defs/finding_held",
+        "schema_id": "pm.event_payload.bsd.finding_held.v1"
+      },
+      "legacy": {
+        "aliases": [],
+        "admitted_extensions": [],
+        "identity_json_pointers": {
+          "project_id": [
+            "/payload/project_id"
+          ],
+          "thread_id": []
+        },
+        "referenced_event_id_pointer": null,
+        "redaction": {
+          "mode": "reject_unhandled_secrets",
+          "transform_id": null,
+          "transform_version": null
+        }
+      },
+      "source_refs": [
+        "Plans/Back_Seat_Driver.md#BSD-1356",
+        "Plans/Contracts_V0.md#CV-1356",
+        "Plans/storage-plan.md#SP-1356",
+        "Plans/bsd_event_payloads.schema.json#/$defs/finding_held",
         "reports/event-authority-20261116/admission-merge-2/readiness-list.json"
       ],
       "retention_policy_ref": {
