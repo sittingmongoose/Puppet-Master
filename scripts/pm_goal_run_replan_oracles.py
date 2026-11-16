@@ -1824,11 +1824,41 @@ def main():
         (ROOT / CONTRACTS / 'adoption-digest.txt').write_text(adoption_digest() + '\n', encoding='utf-8')
         print(adoption_digest())
         return 0
+    assert not (refused := revision_admission_failures([FAMILY])), ('admission mode refused', refused)
     summary, results = run_all(corpus=not args.no_corpus)
     if args.outcomes:
         args.outcomes.write_text(json.dumps(results, indent=1, sort_keys=True) + '\n')
     print(json.dumps(summary, indent=1, sort_keys=True))
     return 0 if summary['status'] == 'pass' else 1
+
+
+def revision_admission_failures(event_types):
+    """S5b: pinned predecessor/successor rows, then the shared revision record proof.
+
+    Whole-row hashes are taken from the applied Merge-2 records at 8477a48c7a, independently of this run's files.
+    The pre-revision row retains its prior verdict; the successor requires its exact complete revision record.
+    """
+    import pm_ea_admission_mode as admission_mode
+    pins = {'goal_run.replanned': {'before': 'cfbe2a47bca2bbe95d8a19be881abf53760a184e00b11ea531a200d9af4beb55', 'after': 'e97d04b86e8f35883e36a5aa03fba3d61398ca9caf0397842e079ad492191d53', 'predecessor': {'family_revision': '2.0.0', 'payload_schema_id': 'pm.goal_runtime_event.goal_run_replanned.schema.v2'}}}
+    registry = admission_mode.load_registry(ROOT)
+    failures = []
+    for family in event_types:
+        rows = [r for r in registry['families'] if r['event_type'] == family]
+        if len(rows) != 1:
+            failures.append(family + ': admission mode refused: revision_family_not_registered_once')
+            continue
+        row, pin = rows[0], pins[family]
+        digest = admission_mode.canonical_sha256(row)
+        if digest not in (pin['before'], pin['after']):
+            failures.append(family + ': admission mode refused: registry_row_differs_from_pinned_revision')
+            continue
+        # For the predecessor, a non-successor placeholder makes revision_verdict exercise its unrevised branch.
+        successor = row if digest == pin['after'] else {'event_type': family, 'family_revision': '3.0.0'}
+        mode = admission_mode.revision_verdict(family, successor_row=successor, predecessor=pin['predecessor'],
+                                               root=ROOT, registry=registry)
+        if mode['mode'] == 'refused':
+            failures.append(family + ': admission mode refused: ' + mode['code'])
+    return failures
 
 
 if __name__ == '__main__':
