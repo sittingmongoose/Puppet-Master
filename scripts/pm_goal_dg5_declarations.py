@@ -37,7 +37,7 @@ DECLARED = {
         ('dg5/dgu/sir/request/schema', U_SITE + '724'),
         'GoalUpdateRequestV2 objective_text maxLength 4000 (Unicode code points) and SirOwner.admit '
         'scalars(text) <= OBJECTIVE_LIMIT (4000, len over code points) bound the same field by the same predicate.'),
-    'dg5-shared/frame_fixture:huge_declared_payload': ((
+    'adapter/dg5-shared/frame_fixture:huge_declared_payload': ((
         'dg5/site/pm_goal_test_storage.py:537', 'dg5/site/pm_goal_test_storage.py:539'),
         'decode_frame bounds the same declared payload_len prefix field twice for this input: '
         'by PAYLOAD_CAP at :537 and by the bytes actually present at :539; the fixture declared '
