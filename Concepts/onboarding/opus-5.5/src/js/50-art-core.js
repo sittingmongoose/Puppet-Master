@@ -139,6 +139,11 @@
     speed: () => { try { return typeof o55SpeedFactor === 'number' && o55SpeedFactor > 0 ? o55SpeedFactor : 1; } catch (_) { return 1; } }, // eslint-disable-line no-undef
     now: () => O55.motion.now() / 1000,
     el(tag, attrs, parent) { const e = document.createElementNS(H.NS, tag); if (attrs) for (const k in attrs) e.setAttribute(k, attrs[k]); if (parent) parent.appendChild(e); return e; },
+    /* an attribute the stage draws every frame, written only when its value changes: a write of the value it already
+       has still restyles the element and wakes every MutationObserver on the page (pm7-perf lane W, 2026-11-15) */
+    attr(e, name, v) { const s = String(v); if (e.getAttribute(name) !== s) e.setAttribute(name, s); },
+    /* a text node's words, written only when they change */
+    words(n, s) { s = String(s); if (n.data !== s) n.data = s; },
     div(cls, parent, html) { const d = document.createElement('div'); d.className = cls; if (html) d.innerHTML = html; if (parent) parent.appendChild(d); return d; },
     /* the one Pip kit (the glyph system's head module): the stage asks for it, it never draws a Pip of its own */
     kit: () => window.PMLogo || null,

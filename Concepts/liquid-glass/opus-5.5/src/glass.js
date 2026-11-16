@@ -1910,7 +1910,7 @@
   function relayerLenses() {
     /* a strip whose lens is always under (ownUnder) keeps it: its layer does not change with the look's mode */
     lenses.forEach(function (L, strip) { if (ownUnder.has(strip) && L.strip.isConnected && L.lens.isConnected) return; if (L.strip.isConnected && L.lens.isConnected) parkLens(L); else disposeLens(L); lenses.delete(strip); });
-    if (typeof hiddenLenses !== 'undefined') hiddenLenses.clear();
+    if (typeof hiddenLenses !== 'undefined') { showUnwatchAll(); hiddenLenses.clear(); }
   }
   function pruneLenses() {
     lenses.forEach(function (L, strip) {
@@ -2047,43 +2047,102 @@
     try { L.lens.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 160, delay: Math.max(0, left - 160), fill: 'backwards', easing: 'ease-out' }); } catch (e) {}
   }
   /* a lens hidden because its strip or item stopped showing comes back when they show again (Jared #23: "the page
-     selector starts out being there but goes away eventually"). A strip can be hidden and shown in ways no observed
-     mutation reports: an inline style, inert, an attribute on <html> such as the onboarding window's data-o55-open. Such
-     lenses are checked every 400 ms, and only while there are any. */
-  var hiddenLenses = new Map(), showT = 0;
+     selector starts out being there but goes away eventually"). While a lens is hidden its strip is watched by a
+     ResizeObserver (showWatch): whatever gives the strip its box back — an inline or a stylesheet display, on the
+     strip or on any ancestor — is reported after that frame's layout, and the check runs once through onLayout, the
+     same path the timer uses. What no observer reports is a visibility-only change (an inline visibility, a stylesheet
+     visibility keyed to an unobserved attribute): for those a 2000 ms safety-net timer remains, armed when the first
+     lens is hidden and re-armed only from inside the check, only while any lens is still hidden; a hidden document
+     re-arms it without reading anything. A sync that lands while that check is waiting for layout may arm a tick;
+     the check drops it before it looks, and arms the next interval if a lens is still hidden. The check's reads are stripParked (a closest(), no layout), cvSkipped (the
+     section's own style and box, never the skipped content) and visible() (the strip's and its target's rect and
+     computed visibility), all after the frame's layout, where they are free. Where ResizeObserver does not exist the
+     timer alone does the work, at the same 2000 ms. */
+  var hiddenLenses = new Map(), showT = 0, showHold = false;
+  var showSize = new WeakMap();
+  var showWatch = window.ResizeObserver ? new ResizeObserver(function (entries) {
+    var woke = false;
+    entries.forEach(function (en) {
+      var b = en.borderBoxSize && en.borderBoxSize[0];
+      var w = b ? b.inlineSize : en.contentRect.width, h = b ? b.blockSize : en.contentRect.height;
+      var was = showSize.get(en.target); showSize.set(en.target, [w, h]);
+      /* at most 1 px in either axis to more than 1 px in either: the strip may be back (visible() decides). The first
+         report of a strip queued while hidden counts too: it may have come back before the watch's first delivery */
+      if ((w > 1 || h > 1) && (!was || was[0] <= 1 || was[1] <= 1)) woke = true;
+    });
+    if (!woke || !hiddenLenses.size) return;
+    /* the pending net tick is dropped so the check runs now; the check re-arms the net from inside itself */
+    if (showT) { clearTimeout(showT); showT = 0; }
+    queueShown();
+  }) : null;
+  /* a strip is observed while any hidden lens uses it: one lens leaving does not unwatch a strip another still hides */
+  function showUnwatch(L) {
+    if (!showWatch) return;
+    var still = false;
+    hiddenLenses.forEach(function (cfg, O) { if (O !== L && O.strip === L.strip) still = true; });
+    if (!still) { showWatch.unobserve(L.strip); showSize.delete(L.strip); }
+  }
+  function showUnwatchAll() {
+    if (!showWatch) return;
+    hiddenLenses.forEach(function (cfg, L) { showWatch.unobserve(L.strip); showSize.delete(L.strip); });
+  }
   function awaitShow(L, cfg) {
-    if (!L.strip.isConnected) { hiddenLenses.delete(L); return; }
+    if (!L.strip.isConnected) { hiddenLenses.delete(L); showUnwatch(L); return; }
     hiddenLenses.set(L, cfg);
-    if (!showT) showT = setTimeout(checkShown, 400);
+    if (showWatch) showWatch.observe(L.strip);
+    /* armed even while a check is queued: the queued check drops this tick before it looks (queueShown), so it cannot
+       make that check skip; and if the queued check is ever lost (another function of the same layout delivery
+       throwing first), this tick is what starts the checking again */
+    if (!showT) showT = setTimeout(checkShown, 2000);
   }
   /* onLayout(fn): fn runs once after the frame's own style and layout, before paint, so every read in it is free (Q16).
      It is afterLayout(fn): one probe and one ResizeObserver for all of Glass. Work that a timer would otherwise run in the
      middle of an app's rebuild waits there instead: */
   function onLayout(fn) { if (!afterLayout(fn)) fn(); }
+  /* the wake and the tick share one queued check (showHold: at most one waits for layout). The queued check drops any
+     pending tick before it looks: a tick armed in the gap before it runs (a sync's awaitShow) used to trip the showT
+     guard and skip the look, so a lens already shown waited another whole interval (2351 and 3040 ms seen). */
+  function queueShown() {
+    if (showHold) return;
+    showHold = true;
+    onLayout(function () {
+      showHold = false;
+      if (document.hidden) { if (hiddenLenses.size && !showT) showT = setTimeout(checkShown, 2000); return; }
+      if (showT) { clearTimeout(showT); showT = 0; }
+      checkShownNow();
+    });
+  }
   /* - the hidden-lens check, whose tick landing on a Settings chapter change forced the half-built page through 242 ms
        of layout in Basic Dark */
   function checkShown() {
     showT = 0;
-    if (!switchOn()) { hiddenLenses.clear(); return; }
-    onLayout(checkShownNow);
+    /* a background tab never wakes layout: the tick re-arms without reading anything */
+    if (document.hidden) { if (hiddenLenses.size) showT = setTimeout(checkShown, 2000); return; }
+    if (!switchOn()) { showUnwatchAll(); hiddenLenses.clear(); return; }
+    /* a tick that finds a check still queued two seconds later takes it for lost and queues again: a second run of
+       the check is harmless, a hold that never ends would stop the checking for good */
+    showHold = false;
+    queueShown();
   }
   function checkShownNow() {
     if (showT) return;
-    if (!switchOn()) { hiddenLenses.clear(); return; }
+    if (!hiddenLenses.size) return;
+    if (!switchOn()) { showUnwatchAll(); hiddenLenses.clear(); return; }
     /* every hidden lens is looked at before any shown one is synced, and those are synced together (B6 packet 1) */
     var shown = []; cvSeen = new Map();
     try {
       hiddenLenses.forEach(function (cfg, L) {
-        if (!L.strip.isConnected || (cfg.kind === 'lensIcon' && !isGlass())) { hiddenLenses.delete(L); return; }
+        if (!L.strip.isConnected || (cfg.kind === 'lensIcon' && !isGlass())) { hiddenLenses.delete(L); showUnwatch(L); return; }
         if (stripParked(L.strip)) return;
-        if (cvSkipped(L.strip)) { hiddenLenses.delete(L); cvSkip(L.strip); return; }
+        if (cvSkipped(L.strip)) { hiddenLenses.delete(L); showUnwatch(L); cvSkip(L.strip); return; }
         if (!visible(L.strip)) return;
         var t = cfg.pick ? cfg.pick(L.strip) : L.strip.querySelector(cfg.items + (cfg.active || '.active'));
-        if (t && visible(t)) { hiddenLenses.delete(L); shown.push([cfg, L.strip]); }
+        if (t && visible(t)) { hiddenLenses.delete(L); showUnwatch(L); shown.push([cfg, L.strip]); }
       });
       syncStrips(shown);
     } finally { cvSeen = null; }
-    if (hiddenLenses.size) showT = setTimeout(checkShown, 400);
+    /* not over a tick that syncStrips' own awaitShow has just armed (one timer, not two) */
+    if (hiddenLenses.size && !showT) showT = setTimeout(checkShown, 2000);
   }
   /* A strip whose chip is its own (ownUnder, Settings' segmented choices) shows that chip only while it moves: at rest the
      chosen segment wears the material in place, exactly as it did before the chip existed, so nothing at rest changes
@@ -2204,7 +2263,7 @@
     if (P0 && P0 !== L.pending) pressMark(P0, false);
     var pre = m && m.target === target ? m : null;
     if (!target || !(pre ? pre.shown : visible(target) && visible(strip))) { stopLensTravel(L); if (L.scrubCleanup) L.scrubCleanup(); if (L.lens.style.opacity !== '0') L.lens.style.opacity = '0'; L.rect = null; awaitShow(L, cfg); return; }
-    hiddenLenses.delete(L);
+    hiddenLenses.delete(L); showUnwatch(L);
     if (L.scroller && L.scroller.isConnected) {
       var out;
       if (pre && pre.scroller === L.scroller && pre.out !== undefined) out = pre.out;

@@ -455,7 +455,20 @@ function windowSpans(R, frame) {
 	}
 	return out;
 }
-const spanOf = (spans, i) => spans.find((x) => i >= x.from && i < x.to) || null;
+// PM7PERF-STOPCHIP-OPEN-SPAN-SHADOWS-CLOSE (R64 A1): when the window closes within 3 s of opening, both spans
+// contain the close's frame, and the first match (the open) judged the close's accepted jump against the open's
+// reference frame and failed it. Among the spans that contain the sample, use the one whose reference frame
+// (otherI) is the nearest at or before the sample: the close's span for the close's own frame. A span whose
+// reference frame is later than the sample (or missing) could not waive it anyway. Nothing else about the
+// waiver changes (one jump a window, the two size caps, the NieR rules).
+const spanOf = (spans, i) => {
+	let best = null;
+	for (const x of spans) {
+		if (i < x.from || i >= x.to || x.otherI == null || x.otherI > i) continue;
+		if (!best || x.otherI > best.otherI) best = x;
+	}
+	return best;
+};
 // True only on the restyle's own frame. When both loops are drawn, both must jump by more than
 // one frame, by the same amount (within one frame of each other), on that frame exactly.
 // NieR draws no glow (send-stop.css: .ss-bl is display:none; one pulse reads 0 frames with both
@@ -541,12 +554,13 @@ export function judgeSpeed(R) {
 		if (!speed) continue;
 		const factor = SPEED_FACTOR[speed];
 		const end = s + 1 < marks.length ? marks[s + 1].i : R.rows.length;
-		const lastG = {}, lastB = {};
+		const lastG = {}, lastB = {}, lastRow = {};
 		let nier = false, glow = false;
 		for (let i = m.i; i < end && i < R.rows.length; i++) {
 			const r = R.rows[i];
 			if (!r || (r.flow !== 'waiting' && r.flow !== 'flowing')) continue;
 			if (r.nier === 'on') nier = true;
+			lastRow[r.flow] = r;
 			if (r.g && r.g.dur > 0) lastG[r.flow] = r.g;
 			if (r.b && r.b.dur > 0) { lastB[r.flow] = r.b; glow = true; }
 		}
@@ -554,6 +568,18 @@ export function judgeSpeed(R) {
 		for (const flow of ['waiting', 'flowing']) {
 			const glyph = lastG[flow], backlight = lastB[flow];
 			if (!glyph) { bad.push({ speed, flow, missing: true }); continue; }
+			// PM7PERF-STOPCHIP-SPEED-STALE-BACKLIGHT (R65 A1): the pace's terminal sample decides whether the
+			// backlight is there. An earlier scaled sample does not stand in for a later missing one: a glyph
+			// still sampled while the backlight has disappeared is a loop the run no longer shows, and a look
+			// that must draw both fails as could not judge. A terminal sample taken in NieR is exempt: NieR hides
+			// the backlight, and its Fast window can still catch a glow that the look's restyle then drops (the
+			// real page, NieR Dark, Alexis 2026-11-16: this rule first failed it), so a NieR sample with a glyph
+			// and no backlight is the look's normal state. NieR's glyph-only allowance is otherwise unchanged.
+			const term = lastRow[flow];
+			if (term && term.g && term.g.dur > 0 && !(term.b && term.b.dur > 0) && term.nier !== 'on') {
+				bad.push({ speed, flow, layer: 'backlight', missing: true });
+				continue;
+			}
 			const want = LOOP_BASE[flow] * factor;
 			if (Math.abs(glyph.dur - want) > 1) bad.push({ speed, flow, layer: 'glyph', dur: glyph.dur, want });
 			if (backlight) { if (Math.abs(backlight.dur - want) > 1) bad.push({ speed, flow, layer: 'backlight', dur: backlight.dur, want }); }

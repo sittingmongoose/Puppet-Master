@@ -117,6 +117,10 @@ by its "PM7 SECTION n/total" banner comment (names, never byte offsets).
           var o55sw = new URLSearchParams(location.search).get('o55') || '', o55rec = null;
           try { o55rec = JSON.parse(window.localStorage.getItem("pm.o55.onboarding.v1") || 'null'); } catch (e3) { o55rec = null; }
           o55b.install = o55sw === 'fresh' || (!o55rec && o55sw !== 'off' && o55sw !== 'tour' && o55sw.indexOf('screen=') !== 0);
+          /* (the Project the person was last in, as the shell keeps it, is the page's Project from here on, so Settings loads
+             it first too; a new install opens in the page's own Project: FO-222, 74-screens-ready.js) */
+          var o55last = window.localStorage.getItem("pm7:shell:active-project:v1");
+          if (o55last && !o55b.install && typeof window.PM_ACTIVE_PROJECT_ID !== 'string') window.PM_ACTIVE_PROJECT_ID = o55last;
           var o55pid = typeof window.PM_ACTIVE_PROJECT_ID === 'string' ? window.PM_ACTIVE_PROJECT_ID.trim() : "tastebook";
           o55b.project = o55pid && !/^(none|no-project)$/i.test(o55pid) ? o55pid : '';
           var o55p = o55b.project && !o55b.install ? JSON.parse(window.localStorage.getItem("pm7:settings:tome-tabs:v1:" + encodeURIComponent(o55b.project)) || 'null') : null;
@@ -7050,7 +7054,7 @@ body.pm-resizing #projectMenuBtn .pm6-tb-project-badge .nx-st::before { animatio
        Triggered by either a 4:3-or-tighter aspect ratio or reduced viewport height.
        Do NOT shrink title-bar horizontal padding or gap here — that pulled
        “Puppet Master” into the pill edge and the project control toward the brand. */
-    </style><style data-pm-split-of="style@17682" media="(max-aspect-ratio: 4/3), (max-height: 800px)">@media (max-aspect-ratio: 4/3), (max-height: 800px) {
+    </style><style data-pm-split-of="style@18129" media="(max-aspect-ratio: 4/3), (max-height: 800px)">@media (max-aspect-ratio: 4/3), (max-height: 800px) {
       .title-bar .page-tabs {
         margin-left: 1.25rem;
         font-size: 11px;
@@ -7119,7 +7123,7 @@ body.pm-resizing #projectMenuBtn .pm6-tb-project-badge .nx-st::before { animatio
 
       /* (W3 prune: dead .bento-dashboard / .bento-widget.size-* overrides removed —
          zero references in current markup + JS; dashboard uses .pm6-dash-grid.) */
-    }</style><style data-pm-split-of="style@17682">
+    }</style><style data-pm-split-of="style@18129">
 
     /* --- Basic Theme Terminal Tabs Polish --- */
     [data-theme^="basic"] .pm-term-wg-tab.pm-term-tab-active {
@@ -75238,6 +75242,44 @@ html:is([data-theme^="retro"], [data-o55-nier="on"]) .wpk-check { border-radius:
           <div class="pm6-tb-project-sep" role="separator"></div>
           <button type="button" class="pm6-tb-menu-item pm6-tb-project-all" role="menuitem" data-project-all data-ui-action-id="ui.project_switcher.all_projects" data-binding-id="shell.project.all">All projects</button>
         </div>
+        <script id="pm7-project-name">
+/* FO-222 (stream F's ruling, round 2): the Project box names the Project the page opens on as soon as its markup is parsed,
+   so no frame shows another Project's name. It follows the head's one decision (base/script/script-001.js:
+   PM_ACTIVE_PROJECT_ID, taken from the shell's record and never on a new install); the name is that Project's own menu
+   row above, or, for a Project setup made, the shell's record of them (74-screens-ready.js, pm7:shell:setup-projects:v1,
+   or an older onboarding record's finished / committed Project). An id nothing answers to, an unreadable record or a
+   storage that throws leaves the static markup. It writes only what differs: the label, the box's name and detail, the
+   selected row. restoreEarly and restoreProject (74-screens-ready.js) confirm. */
+(function () {
+  try {
+    var id = window.PM_ACTIVE_PROJECT_ID;
+    if (typeof id !== 'string' || !id) return;
+    var rows = document.querySelectorAll('#projectMenu [data-project]'), row = null, i;
+    for (i = 0; i < rows.length; i++) if (rows[i].getAttribute('data-project') === id) row = rows[i];
+    var name = '', path = '', branch = '', stack = '';
+    if (row) { name = row.getAttribute('data-project-name') || id; path = row.getAttribute('data-project-path') || ''; branch = row.getAttribute('data-project-branch') || ''; stack = row.getAttribute('data-project-stack') || ''; }
+    else {
+      var made = JSON.parse(window.localStorage.getItem('pm7:shell:setup-projects:v1') || '[]'), p = null;
+      for (i = 0; Array.isArray(made) && i < made.length; i++) if (made[i] && made[i].id === id) p = made[i];
+      if (!p) {
+        var rec = JSON.parse(window.localStorage.getItem('pm.o55.onboarding.v1') || 'null') || {}, fin = rec.finished || {}, cm = rec.commit || {}, d = (rec.drafts && rec.drafts.main) || {};
+        if (fin.project === id) p = { name: fin.name, info: fin.info };
+        else if (cm.state === 'done' && cm.projectId === id) p = { name: (cm.listed && cm.listed.name) || d.project_name, info: cm.listed && cm.listed.info };
+      }
+      if (!p) return;
+      name = p.name || id; path = (p.info && p.info.path) || ''; branch = (p.info && p.info.branch) || '';
+    }
+    var label = document.getElementById('projectMenuLabel'), btn = document.getElementById('projectMenuBtn');
+    if (label && label.textContent !== name) label.textContent = name;
+    if (btn) {
+      var detail = [path + (path && branch ? ' on ' + branch : ''), stack].filter(Boolean).join(' · ') + '. Switch project: Ctrl+Shift+P';
+      if (btn.getAttribute('data-pm-hover-label') !== name) btn.setAttribute('data-pm-hover-label', name);
+      if (btn.getAttribute('data-pm-hover-detail') !== detail) btn.setAttribute('data-pm-hover-detail', detail);
+    }
+    for (i = 0; i < rows.length; i++) { var on = rows[i] === row; if (rows[i].classList.contains('is-selected') !== on) rows[i].classList.toggle('is-selected', on); }
+  } catch (e) { /* storage that throws (a sandboxed page) or an unreadable record: the static markup stays */ }
+})();
+        </script>
       </div>
       <nav class="page-tabs" data-od-id="page-tabs">
         <span class="page-tab-ink" aria-hidden="true" data-od-id="page-tab-ink"></span>
@@ -79456,7 +79498,14 @@ html[data-pmu-soft] :is(#panel-usage,[data-pmu-host]) .pmu-menu { background: va
    three head forms (plate 52 / line 34 / tile 30), the tools cluster at the top right, hairline rows, the move and
    resize previews (landing, outline, morph), the lifted and settling states. Continuous motion is transform and opacity
    only; nothing animates at idle. */
-:is(#panel-usage,[data-pmu-host]) .pmu-scroll { position: relative; flex: 1 1 auto; min-height: 0; overflow: auto; overscroll-behavior: contain; scrollbar-gutter: stable; }
+/* will-change: scroll-position (lane V, 2026-11-15): the board scrolls on the compositor. Without it Chrome kept this
+   pane's scroll on the main thread (no opaque background, a display under 1.5x; an opaque background alone did not
+   change that): every wheel frame repainted and re-rastered the layer holding the board (Glass: the whole 1920x1080
+   app shell, 61 raster tasks a second) and re-layerized the page (3 ms a frame). Alexis, Basic Dark, 3 s wheel, A-B-B-A:
+   main thread 696/635 -> 452/422 ms/s. It changes no box and no stacking context; drawing the board into its own layer
+   rounds soft shadows a level differently (Basic Dark: 17,426 pixels by 1 level, under 60 by 2 to 10; pixel proof in
+   V-REPORT.md). */
+:is(#panel-usage,[data-pmu-host]) .pmu-scroll { position: relative; flex: 1 1 auto; min-height: 0; overflow: auto; overscroll-behavior: contain; scrollbar-gutter: stable; will-change: scroll-position; }
 :is(#panel-usage,[data-pmu-host]) .pmu-board { position: relative; display: grid; grid-template-columns: repeat(var(--pmu-tracks, 20), minmax(0, 1fr)); grid-auto-rows: var(--pmu-row);
   gap: var(--pmu-gap); padding: 10px 14px 28px; align-content: start; }
 :is(#panel-usage,[data-pmu-host]) .pmu-board[data-held] > .pmu-card { opacity: 0; }
@@ -180174,6 +180223,11 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
     speed: () => { try { return typeof o55SpeedFactor === 'number' && o55SpeedFactor > 0 ? o55SpeedFactor : 1; } catch (_) { return 1; } }, // eslint-disable-line no-undef
     now: () => O55.motion.now() / 1000,
     el(tag, attrs, parent) { const e = document.createElementNS(H.NS, tag); if (attrs) for (const k in attrs) e.setAttribute(k, attrs[k]); if (parent) parent.appendChild(e); return e; },
+    /* an attribute the stage draws every frame, written only when its value changes: a write of the value it already
+       has still restyles the element and wakes every MutationObserver on the page (pm7-perf lane W, 2026-11-15) */
+    attr(e, name, v) { const s = String(v); if (e.getAttribute(name) !== s) e.setAttribute(name, s); },
+    /* a text node's words, written only when they change */
+    words(n, s) { s = String(s); if (n.data !== s) n.data = s; },
     div(cls, parent, html) { const d = document.createElement('div'); d.className = cls; if (html) d.innerHTML = html; if (parent) parent.appendChild(d); return d; },
     /* the one Pip kit (the glyph system's head module): the stage asks for it, it never draws a Pip of its own */
     kit: () => window.PMLogo || null,
@@ -180478,7 +180532,7 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
    right on every page. The world and backdrop are here, and the stage's NieR parts as a mixin. */
 (function () {
   'use strict';
-  const O55 = window.O55, PIP = O55.pipStage, PW = O55.pipWorlds, Hp = PIP.h, R = Hp.R, ease = Hp.ease;
+  const O55 = window.O55, PIP = O55.pipStage, PW = O55.pipWorlds, Hp = PIP.h, R = Hp.R, ease = Hp.ease, attr = Hp.attr, words = Hp.words;
   Object.assign(PW.WORLDS, {
     'nier-light': {
       fam: 'nier', scheme: 'light', paper: '#CCC8B1', paper2: '#C3BFA7', ink: '#211F1B', text: '#211F1B', line: '#211F1B', grid: 'rgba(33,31,27,.07)', red: '#A94A38',
@@ -180568,9 +180622,22 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
       this.gSlice.setAttribute('transform', `translate(${step[2]} 0)`);
       this.gSlice.setAttribute('display', 'inline');
     },
+    /* The brackets' nine parts (four corners, the side ticks, the diamond, the leader, its node and its label) are made
+       once and kept in that order; a part not drawn this frame is taken out and put back in its place when it is drawn
+       again, and each value is written only when it changes. Written anew with innerHTML every frame they were
+       NieR Dark's 14,500 style elements a second at rest (owner's PC; pm7-perf lane W). */
     renderBrackets() {
-      const id = this.target, pr = id && this.props.get(id);
-      if (!pr || !pr.pos) { this.gHud.innerHTML = ''; return; }
+      const id = this.target, pr = id && this.props.get(id), g = this.gHud;
+      const B = g.__b || (g.__b = ['path', 'path', 'path', 'path', 'path', 'rect', 'path', 'rect', 'text'].map((tag) => Hp.el(tag)));
+      const show = (i, on) => {
+        const e = B[i];
+        if (on === (e.parentNode === g)) return;
+        if (!on) { e.remove(); return; }
+        let at = null; for (let j = i + 1; j < B.length && !at; j++) if (B[j].parentNode === g) at = B[j];
+        g.insertBefore(e, at);
+      };
+      const set = (i, a) => { show(i, true); for (const k in a) attr(B[i], k, a[k]); };
+      if (!pr || !pr.pos) { for (let i = 0; i < B.length; i++) show(i, false); return; }
       const sc = this.propTarget(pr).sc, x = pr.pos[0], y = pr.pos[1], Lay = this.L;
       // brackets fly in and lock when the target changes, then breathe a little
       const inK = this.reduced ? 1 : ease((this.t - (this.tgtT || 0)) / .4);
@@ -180578,25 +180645,40 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
       const pulse = this.reduced ? 0 : Math.sin(this.t * 3) * 1.2;
       const grow = (1 - inK) * 34 + lock * 14 + pulse;
       const hw = 58 * sc + grow, hh = Math.max(48, pr.foot + 8) * sc + grow, k = 12 * sc, c = this.w.ink;
-      const corner = (cx, cy, dx, dy) => `<path d="M${R(cx)} ${R(cy + dy * k)}V${R(cy)}H${R(cx + dx * k)}" fill="none" stroke="${c}" stroke-width="1.6"/>`;
-      let s = corner(x - hw, y - hh, 1, 1) + corner(x + hw, y - hh, -1, 1) + corner(x - hw, y + hh, 1, -1) + corner(x + hw, y + hh, -1, -1)
-        + `<path d="M${R(x - hw - 10)} ${R(y)}H${R(x - hw - 3)}M${R(x + hw + 3)} ${R(y)}H${R(x + hw + 10)}" stroke="${c}" stroke-width="1"/>`;
+      const corner = (i, cx, cy, dx, dy) => set(i, { d: `M${R(cx)} ${R(cy + dy * k)}V${R(cy)}H${R(cx + dx * k)}`, fill: 'none', stroke: c, 'stroke-width': '1.6' });
+      corner(0, x - hw, y - hh, 1, 1); corner(1, x + hw, y - hh, -1, 1); corner(2, x - hw, y + hh, 1, -1); corner(3, x + hw, y + hh, -1, -1);
+      set(4, { d: `M${R(x - hw - 10)} ${R(y)}H${R(x - hw - 3)}M${R(x + hw + 3)} ${R(y)}H${R(x + hw + 10)}`, stroke: c, 'stroke-width': '1' });
       // the marker: a diamond turning above the target
       const my = y - hh - 12, a = this.reduced ? 45 : (this.t * 120) % 360;
-      s += `<rect x="${R(x - 3.5)}" y="${R(my - 3.5)}" width="7" height="7" fill="none" stroke="${c}" stroke-width="1.2" transform="rotate(${R(a)} ${R(x)} ${R(my)})"/>`;
+      set(5, { x: R(x - 3.5), y: R(my - 3.5), width: '7', height: '7', fill: 'none', stroke: c, 'stroke-width': '1.2', transform: `rotate(${R(a)} ${R(x)} ${R(my)})` });
       // a leader line from Pip to the target, drawn once the brackets lock, with its label at the elbow
+      let lead = false, label = false;
       if (inK > .6 && this.H) {
         const hc = this.headXf([50, 40], this.H, this.ang || 0, 1, 1), ex = x - hw - 4, ey = y - hh;
         const mx = hc[0] + Math.min(26, Math.max(10, (ex - hc[0]) * .3)), myy = Math.min(hc[1] - 16, ey);
         const len = Math.hypot(mx - hc[0], myy - hc[1]) + Math.abs(ex - mx), drawn = this.reduced ? 1 : ease((inK - .6) / .4);
-        s += `<path d="M${R(hc[0])} ${R(hc[1])}L${R(mx)} ${R(myy)}H${R(ex)}" fill="none" stroke="${c}" stroke-width="1" stroke-dasharray="${R(len)}" stroke-dashoffset="${R(len * (1 - drawn))}"/>`;
-        s += `<rect x="${R(hc[0] - 2)}" y="${R(hc[1] - 2)}" width="4" height="4" fill="${c}"/>`;
-        const lab = (this.hudEl && this.hudEl.querySelector('.pst-target') || {}).textContent || '';
-        if (drawn > .9 && mx + 6 < ex - 20 && Lay.w > 300) s += `<text x="${R(mx + 4)}" y="${R(myy - 5)}" font-family="'PM NieR Sans','Inter',sans-serif" font-size="8.5" letter-spacing="1.4" fill="${c}">${lab.replace(/&/g, '&amp;').replace(/</g, '&lt;').slice(0, 18)}</text>`;
+        lead = true;
+        set(6, { d: `M${R(hc[0])} ${R(hc[1])}L${R(mx)} ${R(myy)}H${R(ex)}`, fill: 'none', stroke: c, 'stroke-width': '1', 'stroke-dasharray': R(len), 'stroke-dashoffset': R(len * (1 - drawn)) });
+        set(7, { x: R(hc[0] - 2), y: R(hc[1] - 2), width: '4', height: '4', fill: c });
+        const hud = this.hudEl, tg = hud && (hud.__tg !== undefined ? hud.__tg : (hud.__tg = hud.querySelector('.pst-target'))), lab = (tg && tg.textContent) || '';
+        if (drawn > .9 && mx + 6 < ex - 20 && Lay.w > 300) {
+          label = true;
+          set(8, { x: R(mx + 4), y: R(myy - 5), 'font-family': "'PM NieR Sans','Inter',sans-serif", 'font-size': '8.5', 'letter-spacing': '1.4', fill: c });
+          /* (its words as they were written, escaped and cut at 18 characters, parsed again only when they change: a target
+             changes them, a frame does not) */
+          const s = lab.replace(/&/g, '&amp;').replace(/</g, '&lt;').slice(0, 18);
+          if (B.words !== s) { B.words = s; B[8].innerHTML = s; }
+        }
       }
-      this.gHud.innerHTML = s;
-      const co = this.hudEl && this.hudEl.querySelector('.pst-ncoord');
-      if (co && this.t - (this.coT || 0) > .25) { this.coT = this.t; co.textContent = `X ${String(Math.round(x)).padStart(3, '0')} Y ${String(Math.round(y)).padStart(3, '0')}`; }
+      show(6, lead); show(7, lead); show(8, label);
+      /* (the map reference under the label, four times a second, and only when it reads differently: written with
+         textContent it was a new text node each time) */
+      const hud = this.hudEl, co = hud && (hud.__co !== undefined ? hud.__co : (hud.__co = hud.querySelector('.pst-ncoord')));
+      if (co && this.t - (this.coT || 0) > .25) {
+        this.coT = this.t;
+        const s = `X ${String(Math.round(x)).padStart(3, '0')} Y ${String(Math.round(y)).padStart(3, '0')}`, n = co.firstChild;
+        if (n && n.nodeType === 3 && !n.nextSibling) words(n, s); else co.textContent = s;
+      }
     }
   });
 })();
@@ -180786,7 +180868,7 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
       for (let i = this.ghosts.length - 1; i >= 0; i--) {
         const g = this.ghosts[i], k = (this.t - g.t) / life;
         if (k >= 1) { g.e.remove(); this.ghosts.splice(i, 1); continue; }
-        g.e.setAttribute('opacity', R(peak * (1 - k)));
+        Hp.attr(g.e, 'opacity', R(peak * (1 - k))); /* (written only when it changes: pm7-perf lane W) */
       }
     }
   });
@@ -181548,7 +181630,7 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
 (function () {
   'use strict';
   const O55 = window.O55, PIP = O55.pipStage, H = PIP.h, PW = O55.pipWorlds;
-  const { R, clamp, ease, rot, el, div, T } = H;
+  const { R, clamp, ease, rot, el, div, T, attr, words } = H;
   const now = H.now;
   const esc = (s) => String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/"/g, '&quot;');
   const KIT = () => H.kit();
@@ -182026,16 +182108,18 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
       const cv = rot([-tieMid[0] * sc, -tieMid[1] * sc], pr.a);
       pr.pos = [hang[0] + cv[0], hang[1] + cv[1]];
       const sq = this.reduced ? 0 : clamp(pr.sq || 0, -.12, .12), squash = Math.abs(sq) > .002 ? ` translate(0 ${R(pr.foot)}) scale(${R(1 + sq * .6)} ${R(1 - sq)}) translate(0 ${R(-pr.foot)})` : '';
-      pr.el.setAttribute('transform', `translate(${R(hang[0])} ${R(hang[1])}) rotate(${R(pr.a * 57.3)}) scale(${R(sc)}) translate(${R(-tieMid[0])} ${R(-tieMid[1])})${squash}`);
-      pr.el.setAttribute('opacity', R(pr.op));
+      /* (each value written only when it changes: a prop at rest is drawn where it was, and writing the same transform,
+         opacity and strings again restyled them in every frame; pm7-perf lane W) */
+      attr(pr.el, 'transform', `translate(${R(hang[0])} ${R(hang[1])}) rotate(${R(pr.a * 57.3)}) scale(${R(sc)}) translate(${R(-tieMid[0])} ${R(-tieMid[1])})${squash}`);
+      attr(pr.el, 'opacity', R(pr.op));
       // once a block is set down its strings are unhooked: they go slack, lift away and fade
       const off = pr.spec.ground && pr.landed ? clamp((this.t - pr.landT) / .55, 0, 1) : 0;
       const strOp = off ? Math.max(0, 1 - ease(off)) * pr.op : pr.op;
       pr.ties.forEach((t, i) => {
         const v = rot([(t[0] - tieMid[0]) * sc, (t[1] - tieMid[1]) * sc], pr.a), end = [hang[0] + v[0], hang[1] + v[1] - ease(off) * 70];
         const top = [pr.ax + (pr.dx || 0) + (t[0] - tieMid[0]) * sc, Lay.anchorY - 200];
-        pr.strs[i].setAttribute('d', `M${R(top[0])} ${R(top[1])}L${R(end[0])} ${R(end[1])}`);
-        pr.strs[i].setAttribute('opacity', R(strOp));
+        attr(pr.strs[i], 'd', `M${R(top[0])} ${R(top[1])}L${R(end[0])} ${R(end[1])}`);
+        attr(pr.strs[i], 'opacity', R(strOp));
         pr.strs[i].classList.toggle('pst-dash', !!pr.spec.preview);
       });
     }
@@ -182496,7 +182580,9 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
     // the note hangs under Pip and drifts after it, slowly enough to read while Pip sways
     placeTip(H, ang, dt) {
       const el = this.tipBox;
-      if (!el || !el.classList.contains('on') || this.layoutName !== 'portrait') { this.ps.liftT = 0; this.bubble.classList.remove('pst-hush'); return; }
+      /* (the bubble's class is written only when the hush is on: classList.remove writes the class attribute even when the
+         token is not there, so with no note open the bubble's class was written in every frame; pm7-perf lane W) */
+      if (!el || !el.classList.contains('on') || this.layoutName !== 'portrait') { this.ps.liftT = 0; if (this.bubble.classList.contains('pst-hush')) this.bubble.classList.remove('pst-hush'); return; }
       // it holds still while the pointer is on it, so its close button is easy to hit (once it has its place: a new note
       // that opens under a resting pointer was left at the stage's corner, past its edge in Friendly's tilt; tip_fit)
       if (this.tipXY && el.matches(':hover')) return;
@@ -182722,13 +182808,16 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
       // breathing: Pip's head swells a touch, slower when it sleeps
       const br = this.reduced || !PIP.h.part('idle-life') ? 0 : (this.fam.breathe || 0) * Math.sin(this.t * (this.sleepZ ? 1.5 : 2.2));
       const sx = ps.sx * (1 - br * .4), sy = ps.sy * (1 + br), s = Lay.s;
-      this.gCtl.setAttribute('transform', `translate(${R(ps.C.x)} ${R(ps.C.y)}) rotate(${R(ps.phi * 57.3)}) scale(${s}) translate(-32 -14.5)`);
-      this.gHead.setAttribute('transform', `translate(${R(H[0])} ${R(H[1])}) rotate(${R(ang * 57.3)}) scale(${s}) translate(-32 -31.5) translate(32 59.5) scale(${R(sx)} ${R(sy)}) translate(-32 -59.5)`);
+      /* (here and below, each value written only when it changes: the eyes once they have turned, the blink between blinks
+         and a prop at rest were written in every frame with the values they already held, each write restyling its element
+         and waking every MutationObserver on the page; pm7-perf lane W) */
+      attr(this.gCtl, 'transform', `translate(${R(ps.C.x)} ${R(ps.C.y)}) rotate(${R(ps.phi * 57.3)}) scale(${s}) translate(-32 -14.5)`);
+      attr(this.gHead, 'transform', `translate(${R(H[0])} ${R(H[1])}) rotate(${R(ang * 57.3)}) scale(${s}) translate(-32 -31.5) translate(32 59.5) scale(${R(sx)} ${R(sy)}) translate(-32 -59.5)`);
       const ends = this.solveStrings({ C: ps.C, phi: ps.phi, H, ang, sx, sy });
       ends.forEach((e, i) => {
         const l = Math.hypot(e.E[0] - e.T[0], e.E[1] - e.T[1]), slack = Math.max(0, (this.restLen[i] || l) - l);
         const d = slack > 1 ? `M${R(e.T[0])} ${R(e.T[1])}Q${R((e.T[0] + e.E[0]) / 2 + (i ? 1 : -1) * slack * .25)} ${R((e.T[1] + e.E[1]) / 2 + slack * .55)} ${R(e.E[0])} ${R(e.E[1])}` : `M${R(e.T[0])} ${R(e.T[1])}L${R(e.E[0])} ${R(e.E[1])}`;
-        this.pstrs[i].setAttribute('d', d); this.pglow[i].setAttribute('d', d);
+        attr(this.pstrs[i], 'd', d); attr(this.pglow[i], 'd', d);
       });
       // where the eyes look: at the target prop, at an idle glance, or at the pointer
       const pip = this.spec.pip || {};
@@ -182749,17 +182838,26 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
         look = [vx / l * 2.3 * k, vy / l * 1.6 * k];
       } else if (tgt && tgt.pos) look = atTarget(tgt.pos);
       ps.lookT = look;
-      if (this.eyesEl) this.eyesEl.setAttribute('transform', `translate(${R(ps.look[0])} ${R(ps.look[1])})`);
+      if (this.eyesEl) attr(this.eyesEl, 'transform', `translate(${R(ps.look[0])} ${R(ps.look[1])})`);
       // blink
       if (this.blinkEl && !this.reduced && PIP.h.part('blinks')) {
         if (this.t > ps.nextBlink) { ps.blinkAt = this.t; ps.nextBlink = this.t + 2.2 + Math.random() * 3.4; }
         const b = ps.blinkAt != null ? this.t - ps.blinkAt : 9, k = b < .16 ? Math.max(.1, Math.abs(1 - b / .08)) : 1;
-        this.blinkEl.setAttribute('transform', `translate(0 ${this.blinkY}) scale(1 ${R(k)}) translate(0 ${-this.blinkY})`);
+        attr(this.blinkEl, 'transform', `translate(0 ${this.blinkY}) scale(1 ${R(k)}) translate(0 ${-this.blinkY})`);
       }
       // props
       /* (NieR's box is fixed: its band is kept clear from when it is first seen, also while it is silent, so a stack
          that lands before it talks is already below it) */
-      if (f === 'nier') { const nb = this.boxInScene(this.bubble, 6); if (nb) this.nierBox = nb; }
+      /* (measured again only when what it is measured from changes: the box's classes and words, the fonts, and the stage's
+         map, which measure() makes anew on every resize. Read in every frame after the frame's writes, it laid the page out
+         a second time in each NieR frame: 238 layouts a second at rest on the owner's PC; pm7-perf lane W) */
+      if (f === 'nier') {
+        const b = this.bubble, k = this.nierKey, cls = b ? b.className : '', said = b ? b.textContent : '', fonts = document.fonts ? document.fonts.status : '';
+        if (!k || k[0] !== this.map || k[1] !== cls || k[2] !== said || k[3] !== fonts) {
+          const nb = this.boxInScene(b, 6); if (nb) this.nierBox = nb;
+          this.nierKey = [this.map, cls, said, fonts];
+        }
+      }
       this.keepOff = f === 'nier' ? this.nierBox || null : this.bubbleKeepOff || null;
       this.pipKeep = this.pipHead(null, { H, ang, sx, sy });
       this.renderN = (this.renderN || 0) + 1;
@@ -182769,11 +182867,11 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
       // particles
       this.fx.forEach((p) => {
         const k = p.life / p.max;
-        if (p.kind === 'ripple') { const e = ease(k), m = p.small ? .45 : 1; p.e.setAttribute('rx', R(6 + e * 90 * m)); p.e.setAttribute('ry', R(1.5 + e * 12 * m)); p.e.setAttribute('stroke-opacity', R((1 - k) * .7)); return; }
+        if (p.kind === 'ripple') { const e = ease(k), m = p.small ? .45 : 1; attr(p.e, 'rx', R(6 + e * 90 * m)); attr(p.e, 'ry', R(1.5 + e * 12 * m)); attr(p.e, 'stroke-opacity', R((1 - k) * .7)); return; }
         const op = p.kind === 'conf' ? (k > .85 ? (1 - k) / .15 : 1) : p.kind === 'check' ? (k < .75 ? 1 : (1 - k) / .25) : p.kind === 'ring' ? (1 - k) * .9 : 1 - k * k;
         const sc = p.kind === 'ring' ? Math.min(1 + ease(k) * 2.2, p.room || Infinity) : p.kind === 'check' ? (k < .1 ? k / .1 * 1.18 : k < .18 ? 1.18 - (k - .1) / .08 * .18 : 1) : 1;
-        p.e.setAttribute('transform', `translate(${R(p.x)} ${R(p.y)}) rotate(${R(p.r * 57.3 / 6)}) scale(${R(sc)})`);
-        p.e.setAttribute('opacity', R(Math.max(0, op)));
+        attr(p.e, 'transform', `translate(${R(p.x)} ${R(p.y)}) rotate(${R(p.r * 57.3 / 6)}) scale(${R(sc)})`);
+        attr(p.e, 'opacity', R(Math.max(0, op)));
       });
       // sleeping z's
       if (this.sleepZ && !this.reduced && this.t - (this.lastZ || 0) > .9 && f !== 'nier') {
@@ -182784,11 +182882,19 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
         this.fx.push({ e, kind: 'z', x: hc[0] + 40, y: hc[1] - 30, vx: 14, vy: -26, r: 0, vr: .4, life: 0, max: 2, g: 0 });
       }
       // soft shadows on the floor: Pip's and each prop's, smaller and fainter the higher they hang
+      /* (one ellipse each, kept and moved, in the order they were written: Pip's first, then each prop's; one more or one
+         fewer as props come and go. Written anew with innerHTML every frame they were new elements to style, lay out and
+         paint 119 times a second at rest: 9,400 style elements a second in Friendly Dark, 7,800 in Glass Dark,
+         pm7-perf lane W's owner's-PC table) */
       if (f === 'friendly' || f === 'glass') {
-        const sh = (x, y, r) => { const h = Math.max(0, Lay.ground - y), k = clamp(1 - h / (Lay.h * .9), .25, 1); return `<ellipse cx="${R(x)}" cy="${Lay.ground + 2}" rx="${R(r * (.6 + k * .5))}" ry="${R(r * .13 * (.6 + k * .5))}" fill="${this.w.shadow}" opacity="${R(k * .7)}"/>`; };
-        let out = sh(H[0], H[1] + 64 * Lay.s / 2.6, 46 * Lay.s / 2.6);
-        this.props.forEach((pr) => { if (pr.pos) out += sh(pr.pos[0], pr.pos[1] + pr.foot * (pr.spec.scale || 1) * Lay.propScale, 40 * (pr.spec.scale || 1) * Lay.propScale * pr.op); });
-        this.gShadow.innerHTML = out;
+        const g = this.gShadow, kids = g.children; let n = 0;
+        const sh = (x, y, r) => {
+          const h = Math.max(0, Lay.ground - y), k = clamp(1 - h / (Lay.h * .9), .25, 1), e = kids[n++] || el('ellipse', null, g);
+          attr(e, 'cx', R(x)); attr(e, 'cy', Lay.ground + 2); attr(e, 'rx', R(r * (.6 + k * .5))); attr(e, 'ry', R(r * .13 * (.6 + k * .5))); attr(e, 'fill', this.w.shadow); attr(e, 'opacity', R(k * .7));
+        };
+        sh(H[0], H[1] + 64 * Lay.s / 2.6, 46 * Lay.s / 2.6);
+        this.props.forEach((pr) => { if (pr.pos) sh(pr.pos[0], pr.pos[1] + pr.foot * (pr.spec.scale || 1) * Lay.propScale, 40 * (pr.spec.scale || 1) * Lay.propScale * pr.op); });
+        while (kids.length > n) g.lastElementChild.remove();
       }
       // Basic measures: a plumb line from Pip to the floor and a marker riding the ruler
       // and a protractor under the hand that reads Pip's swing, its marker on the angle of the string
@@ -182799,18 +182905,33 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
         for (let d = -30; d <= 30; d += 5) tk += `M${P(A(d), r)}L${P(A(d), r + (d % 15 ? 3.5 : 7))}`;
         const th = clamp(ps.th, -A(34), A(34)), deg = ps.th * 57.3, lab = `${deg < -.05 ? '-' : ''}${Math.abs(deg).toFixed(1)}`;
         const m = (q, rr) => [cx + Math.sin(q) * rr, cy + Math.cos(q) * rr], tip = m(th, r - 1), b1 = m(th - .045, r - 9), b2 = m(th + .045, r - 9), lp = m(A(-38), r + 4);
-        this.gShadow.innerHTML = `<path d="M${P(A(-30), r)}A${R(r)} ${R(r)} 0 0 0 ${P(A(30), r)}${tk}" fill="none" stroke="${ln}" stroke-opacity=".28" stroke-width="1"/>`
-          + `<path d="M${R(cx)} ${R(cy)}L${P(0, r + 7)}" stroke="${ln}" stroke-opacity=".18" stroke-dasharray="2 3"/>`
-          + `<path d="M${R(tip[0])} ${R(tip[1])}L${R(b1[0])} ${R(b1[1])}L${R(b2[0])} ${R(b2[1])}Z" fill="${c}"/>`
-          + (Lay.w > 300 ? `<text x="${R(lp[0])}" y="${R(lp[1])}" text-anchor="end" font-family="'Inter',system-ui,sans-serif" font-size="9" font-weight="600" fill="${ln}" opacity=".55">θ ${lab}<tspan dy="-3.5" font-size="6">o</tspan></text>` : '')
-          + `<path d="M${x} ${y0}V${Lay.ground - 6}" stroke="${ln}" stroke-opacity=".22" stroke-dasharray="2 4"/><path d="M${x} ${Lay.ground + 1}l-5 8h10z" fill="${c}"/><text x="${x}" y="${Lay.ground + 22}" text-anchor="middle" font-family="'Inter',system-ui,sans-serif" font-size="9" font-weight="600" fill="${ln}" opacity=".55">${Math.round(hc[0])}</text>`;
+        /* (its seven parts made once and moved, in the order they were written, each value written only when it changes:
+           written anew with innerHTML every frame they were 2,300 to 8,700 style elements a second at rest in Basic Dark,
+           pm7-perf lane W. The angle label's words are its text node's, then the degree sign's tspan) */
+        const g = this.gShadow, txt = Lay.w > 300, font = "'Inter',system-ui,sans-serif", key = `${txt}|${ln}|${c}`;
+        let pt = g.__pt;
+        if (!pt || pt.key !== key) {
+          g.textContent = '';
+          const words0 = (e) => e.appendChild(document.createTextNode(''));
+          pt = g.__pt = { key, arc: el('path', null, g), from: el('path', null, g), mark: el('path', null, g) };
+          if (txt) { pt.ang = el('text', null, g); pt.angW = words0(pt.ang); el('tspan', { dy: '-3.5', 'font-size': '6' }, pt.ang).textContent = 'o'; }
+          pt.plumb = el('path', null, g); pt.foot = el('path', null, g); pt.num = el('text', null, g); pt.numW = words0(pt.num);
+        }
+        const set = (e, a) => { for (const k in a) attr(e, k, a[k]); };
+        set(pt.arc, { d: `M${P(A(-30), r)}A${R(r)} ${R(r)} 0 0 0 ${P(A(30), r)}${tk}`, fill: 'none', stroke: ln, 'stroke-opacity': '.28', 'stroke-width': '1' });
+        set(pt.from, { d: `M${R(cx)} ${R(cy)}L${P(0, r + 7)}`, stroke: ln, 'stroke-opacity': '.18', 'stroke-dasharray': '2 3' });
+        set(pt.mark, { d: `M${R(tip[0])} ${R(tip[1])}L${R(b1[0])} ${R(b1[1])}L${R(b2[0])} ${R(b2[1])}Z`, fill: c });
+        if (txt) { set(pt.ang, { x: R(lp[0]), y: R(lp[1]), 'text-anchor': 'end', 'font-family': font, 'font-size': '9', 'font-weight': '600', fill: ln, opacity: '.55' }); words(pt.angW, `θ ${lab}`); }
+        set(pt.plumb, { d: `M${x} ${y0}V${Lay.ground - 6}`, stroke: ln, 'stroke-opacity': '.22', 'stroke-dasharray': '2 4' });
+        set(pt.foot, { d: `M${x} ${Lay.ground + 1}l-5 8h10z`, fill: c });
+        set(pt.num, { x, y: Lay.ground + 22, 'text-anchor': 'middle', 'font-family': font, 'font-size': '9', 'font-weight': '600', fill: ln, opacity: '.55' }); words(pt.numW, Math.round(hc[0]));
       }
       // Retro: the vector terrain rolls toward you, and the phosphor remembers where Pip was
       if (this.gTerrain && !this.reduced) {
         const T = this.terrain, ph = (this.t * .55) % 1, D = T.H - T.vy;
         let d = '';
         for (let k = 1; k < 16; k++) { const z = k - ph + .6, y = T.vy + D / (z * z * .45 + .2); if (y > T.vy + 1 && y < T.H) d += `M-400 ${R(y)}H${Lay.w + 400}`; }
-        this.gTerrain.setAttribute('d', d); this.gTerrain.setAttribute('stroke-opacity', '.32');
+        attr(this.gTerrain, 'd', d); attr(this.gTerrain, 'stroke-opacity', '.32');
       }
       if (this.tube === 'phosphor') this.persist();
       // NieR: target brackets, a leader line and the lock; the glitch on a chapter change
@@ -183583,6 +183704,8 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
   /* Look reveal: a circular (Retro: stepped) reveal of the new world from the chosen tile. Browser View Transitions
      when available; otherwise the scene cross-fade already covers the change. Input never waits for it. */
   function applyLook(family, mode, originEl) {
+    /* (a look picked here is the person's choice: closed unfinished, the window saves it, FO-216) */
+    S.lookPicked = true;
     const apply = () => {
       try { window.PM_THEME.setFamily(family, { persist: false }); window.PM_THEME.setMode(mode, { persist: false }); }
       catch (_) { document.documentElement.setAttribute('data-theme', (typeof window.PM_THEME_PAINT_FAMILY === 'function' ? window.PM_THEME_PAINT_FAMILY(family) : family) + '-' + mode); }
@@ -184983,6 +185106,8 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
     /* reopening the same run in the same page keeps the live session: operations still running (a Project being
        created, a key being added) report into the objects they started with */
     const live = resumable && S.sess && S.sess.started === saved.started;
+    /* (a new run replaces the record: the Projects it names are kept in setup's own record first, R87-P2) */
+    if ((opts.fresh || !resumable) && O55.shell && O55.shell.keepSetup) O55.shell.keepSetup();
     S.sess = live ? S.sess : resumable ? Object.assign(freshSession(), saved) : freshSession();
     if (opts.fresh || (saved && (saved.status === 'done' || saved.status === 'skipped'))) S.sess = freshSession();
     S.resumed = !!(saved && !opts.fresh && saved.status === 'closed');
@@ -185004,6 +185129,7 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
     const sd = opts.screen && opts.seed !== false && SCREENS.defs[S.sess.screen].seed;
     if (sd) { try { sd(S); } catch (e) { console.warn('O55 seed', S.sess.screen, e); } }
     S.resumedShownOn = S.resumed ? S.sess.screen : null;
+    S.lookPicked = false;
     returnFocus = opts.returnFocus || document.activeElement;
     S.open = true; S.save();
     if (installHold) { installHold.disconnect(); installHold = null; }
@@ -185011,6 +185137,8 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
     document.documentElement.setAttribute('data-o55-open', 'true');
     if (window.PM_DEMO && window.PM_DEMO.clock && window.PM_DEMO.clock.pause) { try { window.PM_DEMO.clock.pause(); S.pausedClock = true; } catch (_) {} }
     if (S.env.lowResource) O55.motion.setLowResource(true, 'scenario');
+    /* (the look chosen last wins, FO-216: one chosen since this run was closed is the run's now) */
+    if (resumable && !opts.fresh && S.sess.lookLeft) { if (lookChosenSince(S.sess.lookLeft)) adoptLook(); delete S.sess.lookLeft; S.save(); }
     setInert(true); reapplyLook(); syncTheme(false); layoutClass();
     if (O55.talk) O55.talk.refresh(); /* (a Project chosen since, or a mode set in Settings, is read again) */
     r.setAttribute('data-o55-ambient', 'on');
@@ -185068,6 +185196,62 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
     Object.values(S.sess.drafts).forEach((d) => O55.draft.set(d, { theme_family: 'basic', theme_mode: 'dark' }));
     if (n && n.parts && n.background) S.sess.look = { nier: false, parts: n.parts().slice(), background: n.background() };
   }
+  /* FO-216: the look chosen last wins. A run closed unfinished leaves its look on the page (an unsaved preview lingers,
+     O55.nierLook.closed) and notes it (lookLeft): the look painted then, the look Settings had saved then, and the page
+     load it was in. Resumed, it compares: in the same page a painted look that is no longer the one it left was chosen
+     since (Settings, the title bar's look menu, another Project loaded); after a reload, which drops the lingering preview
+     and is no choice, only a saved look that has changed was. Such a look is the run's now (adoptLook): its drafts, so
+     Pick a look starts on it, and NieR in the session, so it is what reapplyLook paints and what closing again leaves.
+     Otherwise the run's own look comes back, as before (a reload painted the saved theme while the drafts kept the pick).
+     Lane Q's probe: Settings to NieR Light after a run in Basic Light, resumed, showed Basic Light, NieR off, and left it. */
+  const PAGE_LOAD = String((window.performance && performance.timeOrigin) || Date.now());
+  /* (NieR's parts and background are part of the look: a background changed alone in Settings is a choice too, R55 F2) */
+  function paintedLook() {
+    const th = O55.theme(), n = window.PM_NIER;
+    let parts = '', bg = '';
+    try { if (n && n.parts) parts = n.parts().slice().sort().join(','); if (n && n.background) bg = String(n.background() || ''); } catch (_) { /* not ready */ }
+    return [askedFamily(th), th.selectedMode, !!(n && (n.wanted ? n.wanted() : n.on())), parts, bg].join('|');
+  }
+  function storedLook() {
+    try {
+      const P = window.PM51; if (!P || typeof P.value !== 'function') return null;
+      const v = (id) => { const x = P.value(id); return Array.isArray(x) ? x.slice().sort().join(',') : String(x ?? ''); };
+      return ['general.visual.theme', 'general.visual.theme-mode', 'general.visual.nier-mode', 'general.visual.nier-parts', 'general.visual.nier-background'].map(v).concat(window.PM_ACTIVE_PROJECT_ID || '').join('|');
+    } catch (_) { return null; }
+  }
+  function lookChosenSince(left) {
+    if (!left || typeof left !== 'object') return false;
+    if (left.page === PAGE_LOAD) return paintedLook() !== left.painted;
+    const now = storedLook();
+    return now != null && left.stored != null && now !== left.stored;
+  }
+  /* FO-219: a run the page left with its window open (a reload, the tab closed) was still 'active' at the next load, and
+     nothing offered it again: no window, no Resume chip, no bell entry. At load (95-boot.js) it is now what a run closed
+     unfinished is: 'closed', noting the look the page shows then (lookLeft, so a look chosen before it is resumed wins, as
+     FO-216 has it), offered by the Resume chip and the bell's entry, resumed on its step; it never opens by itself. The
+     smaller change than reopening it: a reload brings no window up over the app, and the closed run's path (chip, bell,
+     resume, the look's rules, Run Onboarding Again starting over) is the one already there. */
+  function parkStale() {
+    const saved = O55.store.get(KEY, null);
+    if (S.open || !saved || saved.v !== 1 || saved.status !== 'active') return false;
+    saved.status = 'closed';
+    saved.lookLeft = { page: PAGE_LOAD, painted: paintedLook(), stored: storedLook() };
+    return O55.store.set(KEY, saved);
+  }
+  function adoptLook() {
+    const th = O55.theme(), n = window.PM_NIER, nier = !!(n && (n.wanted ? n.wanted() : n.on()));
+    const family = nier ? 'nier' : askedFamily(th), mode = th.selectedMode;
+    Object.values(S.sess.drafts).forEach((d) => O55.draft.set(d, { theme_family: family, theme_mode: mode }));
+    if (n && n.parts && n.background) S.sess.look = { nier, parts: n.parts().slice(), background: n.background() };
+  }
+  /* a look picked in the window is the person's choice when the page goes away with the window still open too (a reload,
+     the tab closed): saved then, as an unfinished close saves it, so the page and the run's drafts agree when it comes back
+     (stream F's blind review R1 of FO-216); with nothing picked, nothing is written */
+  window.addEventListener('pagehide', () => {
+    if (!S.open || !S.lookPicked || !O55.shell || !O55.shell.commitLook) return;
+    S.lookPicked = false;
+    try { O55.shell.commitLook(S); } catch (_) { /* the page is going */ }
+  });
   /* A reopened run shows its own look again (a reload painted the saved theme while the drafts kept the pick): the
      family and mode from the drafts, and NieR Mode from the session (O55.nierLook), still previews */
   function reapplyLook() {
@@ -185092,6 +185276,17 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
     S.root.querySelectorAll('.o55-win > .o55-toast').forEach((n) => n.remove()); /* (a toast is this run's moment) */
     if (O55.nierLook && O55.nierLook.closed) O55.nierLook.closed(reason); /* an unsaved NieR preview lingers like the look's */
     S.sess.status = reason === 'skip' ? 'skipped' : reason === 'done' ? 'done' : 'closed';
+    /* (the look it leaves, for a resume to tell a look chosen since: lookChosenSince, FO-216) */
+    if (S.sess.status === 'closed') S.sess.lookLeft = { page: PAGE_LOAD, painted: paintedLook(), stored: storedLook() };
+    /* the look chosen last wins wherever it was chosen (pm-fo-lead, FO-216): one picked in this window is saved as it closes
+       unfinished, as the finished setup saves it (O55.shell.commitLook, written once the close has played: flushLook
+       below), so the page keeps it and a reload shows it; a look the window only showed (a new install's Basic Dark, a
+       resumed run's own) is not a choice and is left unsaved, as before */
+    /* (once written, the saved look the close noted is the one after this save, not before it: a later Settings choice
+       back to the look before it is then a choice, also over a reload, R57 F1; the save itself is no outside choice) */
+    const keepLeft = () => { if (!S.open && S.sess && S.sess.status === 'closed' && S.sess.lookLeft) { S.sess.lookLeft.stored = storedLook(); S.sess.lookLeft.painted = paintedLook(); S.save(); } };
+    if (S.sess.status === 'closed' && S.lookPicked && O55.shell && O55.shell.commitLook) O55.shell.commitLook(S, { defer: true, after: keepLeft });
+    S.lookPicked = false;
     S.save();
     S.open = false; S.tip = null;
     const r = S.root;
@@ -185181,7 +185376,7 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
     return true;
   }
 
-  Object.assign(O55.ui, { S, build, open, close, go, back, onBranch, refresh, transition, charm, applyLook, renderRail, renderScene, footHtml, shake, skin, tip, closeTip, act, fill, prewarm });
+  Object.assign(O55.ui, { S, build, open, close, go, back, onBranch, refresh, transition, charm, applyLook, renderRail, renderScene, footHtml, shake, skin, tip, closeTip, act, fill, prewarm, parkStale });
 })();
 
 /* ---- js/61-components.js ---- */
@@ -185740,6 +185935,17 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
     const n = N(); if (n && n.previewing && n.previewing() && n.linger) n.linger();
   }
 
+  /* a lingering preview (the window closed unfinished) is taken back before the look it shows is saved: Settings drops a
+     lingering preview at its next write, and the theme pair is written before NieR's rows, so the background and parts
+     chosen in the window went back to the stored ones (O55.shell.commitLook, FO-216 R57 F2). preview({}) keeps every value
+     and ends the lingering. */
+  function own() {
+    const n = N(), pv = n && n.previewing ? n.previewing() : null;
+    if (!pv || !pv.loose || !n.preview) return false;
+    n.preview({}, { within: null });
+    return true;
+  }
+
   /* into or out of NieR (an older caller's toggle). In the window the control shows the new state in the same frame and
      the moment plays inside the window (hero spec H1, flip below); after setup it is saved at once (Settings' own
      reboot moment, in NieR's voice). */
@@ -185949,7 +186155,9 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
     const s = N().store('preview');
     /* the session keeps every change, and each change answers in the window's voice (the chips' own clicks are
        inside the window, where the page's NieR menu sounds stay quiet) */
-    const after = (ev) => { remember(S); if (ev) O55.sound.play(ev); };
+    /* (an edit made here is the person's choice, as a pick is: closed unfinished, or the page gone with the window open,
+       the window saves it, FO-216 R57 F3) */
+    const after = (ev) => { remember(S); if (S) S.lookPicked = true; if (ev) O55.sound.play(ev); };
     return Object.freeze({
       kind: s.kind, BACKGROUNDS: s.BACKGROUNDS,
       on: () => s.on(), parts: () => s.parts(), background: () => s.background(), onChange: (cb) => s.onChange(cb),
@@ -186050,7 +186258,7 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
     if (back) try { back.focus({ preventScroll: true }); } catch (_) {}
   }
 
-  O55.nierLook = { IDS, state, toggle, pick, adjust, reapply, commit, closed, look, busy, snap, panelOpen: () => !!panel, closePanel, icon: () => U.nx('sliders', 14, 'control', 'o55-sg') || SLIDERS };
+  O55.nierLook = { IDS, state, toggle, pick, adjust, reapply, commit, own, closed, look, busy, snap, panelOpen: () => !!panel, closePanel, icon: () => U.nx('sliders', 14, 'control', 'o55-sg') || SLIDERS };
 })();
 
 /* ---- js/65-screens-welcome.js ---- */
@@ -191887,8 +192095,11 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
     cm.projectId = id; cm.publishedVia = via;
     cm.receipts = cm.receipts || {};
     cm.receipts.project = via === 'fixture' ? 'fixture:project:' + id : cm.recovery.settled_effects.registry_publication.receipt_ref;
-    /* the project box's row carries where its files are and, with an online repository, its branch (B3) */
-    if (O55.shell && O55.shell.selectProject) O55.shell.selectProject(id, d.project_name, { path: filesAt(S), branch: d.forge && d.forge !== 'none' ? d.repository_default_branch : '' });
+    /* the project box's row carries where its files are and, with an online repository, its branch (B3); kept with the
+       commit as it is listed, so a reload lists it again the same (FO-222, R80 P1) */
+    const listed = { name: d.project_name, info: { path: filesAt(S), branch: d.forge && d.forge !== 'none' ? d.repository_default_branch : '' } };
+    cm.listed = listed;
+    if (O55.shell && O55.shell.selectProject) O55.shell.selectProject(id, listed.name, listed.info);
     /* the new Project starts with the look chosen here: Settings loads a new Project's own settings as it is selected
        (after this task), so the look is saved into it once that load has run (its first write also makes the Project's
        own sound setting readable: the speaker stays silent until then) */
@@ -193319,6 +193530,93 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
   const O55 = window.O55, C = O55.c, U = O55.util, T = (k, v) => O55.t(k, v), def = (id, d) => O55.screens.define(id, d);
   const md = (S) => S.sess.drafts.main;
 
+  /* FO-222 (stream F's ruling B): the page reopens in the Project the person was last in, the look's own rule. One record,
+     the active Project's id (ACTIVE below), written in one place: where every switch shows, the title-bar menu's selected
+     row, which only selectProjectRow (pm6-js-panels.js) sets, for the menu itself and for selectProject below (setup's
+     finish, Creating and Review, the Guided Tour); the same signal Settings follows to load a Project's settings. Read at
+     load: a Project created by setup (the onboarding record's committed or finished Project) is listed again and selected
+     through selectProject; a fixture Project is selected; an id no Project answers to (a cleared record, a removed
+     fixture) is dropped and the page opens as before. A page with no storage keeps nothing, as before. The first paint
+     reads the same id (base/script/script-001.js). The Project's look stays where it is: Settings' record per Project. */
+  const ACTIVE = 'pm7:shell:active-project:v1';
+  const lsGet = () => { try { return window.localStorage.getItem(ACTIVE) || ''; } catch (_) { return ''; } };
+  const lsSet = (id) => { try { if (id) window.localStorage.setItem(ACTIVE, id); else window.localStorage.removeItem(ACTIVE); } catch (_) { /* no storage */ } };
+  const rowOf = (id) => Array.prototype.find.call(document.querySelectorAll('#projectMenu [data-project]'), (r) => r.getAttribute('data-project') === id) || null;
+  /* the Projects setup made or opened, from its own record: the committed one (Creating), and the one it finished into */
+  /* (a new install, ?o55=fresh, clears the onboarding record as it boots, 95-boot.js: the Projects it listed are gone
+     from this load on, and an active id that named one of them is stale) */
+  const freshInstall = (() => { try { return new URLSearchParams(location.search).get('o55') === 'fresh'; } catch (_) { return false; } })();
+  /* (a new install's load, as the head reads it (script-001.js o55b.install): ?o55=fresh, or no onboarding record and no
+     switch that skips or steers onboarding. It opens in the page's own Project: no stored id is taken, FO-222 round 2, F4) */
+  const installLoad = (() => {
+    try { const sw = new URLSearchParams(location.search).get('o55') || ''; return sw === 'fresh' || (!O55.store.get('onboarding', null) && sw !== 'off' && sw !== 'tour' && sw.indexOf('screen=') !== 0); } catch (_) { return false; }
+  })();
+  /* the Projects setup made stay until a new install (FO-222 round 2, F2, the lead's ruling with F's): their own record,
+     MADE ({ id, name, info } each), written as selectProject lists one, cleared only by forgetSetup (a new install, Demo
+     Studio's resets); a new run of setup keeps them. A record from before it (the Projects only in the onboarding
+     record's finished / commit) is still read below. */
+  const MADE = 'pm7:shell:setup-projects:v1';
+  const madeGet = () => { try { const v = JSON.parse(window.localStorage.getItem(MADE) || '[]'); return Array.isArray(v) ? v.filter((p) => p && typeof p.id === 'string' && p.id) : []; } catch (_) { return []; } };
+  const madeSet = (list) => { try { if (list.length) window.localStorage.setItem(MADE, JSON.stringify(list)); else window.localStorage.removeItem(MADE); } catch (_) { /* no storage */ } };
+  function madeKeep(id, name, info) {
+    const list = madeGet(), was = list.find((p) => p.id === id);
+    const next = { id, name: name || (was && was.name) || id, info: (info && (info.path || info.branch)) ? info : ((was && was.info) || info || null) };
+    madeSet(list.filter((p) => p.id !== id).concat(next));
+  }
+  function setupProjects() {
+    if (freshInstall) return [];
+    const rec = O55.store.get('onboarding', null), out = madeGet().map((p) => ({ id: p.id, name: p.name || p.id, info: p.info || null }));
+    if (!rec) return out;
+    const d = rec.drafts && rec.drafts.main, cm = rec.commit, fin = rec.finished;
+    if (fin && fin.project && !out.some((p) => p.id === fin.project)) out.push({ id: fin.project, name: fin.name || (cm && cm.projectId === fin.project && d ? d.project_name : '') || fin.project, info: fin.info || null });
+    /* (a committed Project as Review listed it: its name and location line, kept with the commit, R80 P1) */
+    if (cm && cm.state === 'done' && cm.projectId && !out.some((p) => p.id === cm.projectId)) out.push({ id: cm.projectId, name: (cm.listed && cm.listed.name) || (d && d.project_name) || cm.projectId, info: (cm.listed && cm.listed.info) || null });
+    return out;
+  }
+  let restoring = null;
+  /* (the Projects the page lists by itself, as it loads) */
+  const rowOfFixtureAtLoad = new Set(Array.prototype.map.call(document.querySelectorAll('#projectMenu [data-project]'), (r) => r.getAttribute('data-project')));
+  /* (the page's own default Project: the first row its markup lists, the one it selects, tastebook) */
+  const defaultProject = rowOfFixtureAtLoad.values().next().value || '';
+  /* early, as this script runs (the title bar is in the page, the Project box is not wired yet, Settings has not read
+     the Project): the id the page opens on */
+  let staleLoaded = false;
+  (function restoreEarly() {
+    const id = lsGet(); if (!id || installLoad) return;
+    const made = setupProjects().find((p) => p.id === id);
+    /* (an id no Project answers to: dropped, and the page is the default Project's again, as before; Settings, which the
+       head pointed at it, loads the default Project at boot) */
+    if (!rowOf(id) && !made) { lsSet(''); if (window.PM_ACTIVE_PROJECT_ID === id) { delete window.PM_ACTIVE_PROJECT_ID; staleLoaded = true; } return; }
+    window.PM_ACTIVE_PROJECT_ID = id;
+    restoring = made || { id, name: null, info: null };
+    /* the title bar names it now, not at boot: this script runs after the title bar is in the page, and the box (wired
+       at boot) would show the page's own Project until then, 4.6-5.1 s on F's films (FO-222 round 2, F1). The label, and
+       the selected row: a fixture Project's own row, or none until boot lists the setup Project's row and selects it. */
+    const fix = rowOf(id), label = document.getElementById('projectMenuLabel');
+    const name = fix ? (fix.getAttribute('data-project-name') || id) : ((made && made.name) || id);
+    if (label && label.textContent !== name) label.textContent = name;
+    /* (a setup Project's row is in the menu before the box is wired, selected, with the attributes PM_PROJECT_BOX.add
+       gives one: the box's own renderer draws it as it wires, and its badge is that Project's from its first paint, not
+       the state of an id it does not know, 'waiting' for 0.2 s on t-b63; restoreProject finds it and confirms) */
+    let own = fix;
+    if (!own && made) {
+      const menu = document.getElementById('projectMenu');
+      if (menu) {
+        own = document.createElement('button');
+        own.type = 'button'; own.className = 'pm6-tb-menu-item'; own.setAttribute('role', 'menuitem'); own.setAttribute('data-project', id);
+        if (made.name && made.name !== id) own.setAttribute('data-project-name', made.name);
+        ['path', 'branch'].forEach((k) => { if (made.info && made.info[k]) own.setAttribute('data-project-' + k, made.info[k]); });
+        own.setAttribute('data-command-id', 'cmd.project.switch_active_tab'); own.setAttribute('data-binding-id', 'shell.project.pick'); own.setAttribute('data-o55-added', '');
+        /* (its name as its text until the renderer draws it, as the page's own rows have theirs: an empty button was
+           given a title by the page's labelling pass, which a row the box adds never has) */
+        own.textContent = made.name || id;
+        menu.insertBefore(own, menu.querySelector('[data-project]') || menu.querySelector('.pm6-tb-project-sep'));
+      }
+    }
+    document.querySelectorAll('#projectMenu .pm6-tb-menu-item.is-selected[data-project]').forEach((r) => { if (r !== own) r.classList.remove('is-selected'); });
+    if (own && !own.classList.contains('is-selected')) own.classList.add('is-selected');
+  })();
+
   /* Shell helpers: select a Project in the title-bar menu (adding it when the app doesn't list it yet). The project box
      owns the menu's rows (PM_PROJECT_BOX, pm6-js-panels.js: one row renderer, the label stays the bare name). The Settings
      owner watches the menu and reloads that Project's settings. */
@@ -193327,11 +193625,59 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
       const box = window.PM_PROJECT_BOX;
       if (!box || !id) return false;
       /* info: { path, branch } from the draft, so the row and the hover tag carry the location line (B3) */
-      box.add(id, Object.assign({}, info || {}, { name: name || id }));
+      const row = box.add(id, Object.assign({}, info || {}, { name: name || id }));
+      if (row && !row.hasAttribute('data-o55-added') && !rowOfFixtureAtLoad.has(id)) row.setAttribute('data-o55-added', '');
+      /* (a Project setup made or opened: kept in MADE, with the name and location line it is listed with) */
+      if (!rowOfFixtureAtLoad.has(id)) madeKeep(id, name && name !== id ? name : null, info || (row ? { path: row.getAttribute('data-project-path') || '', branch: row.getAttribute('data-project-branch') || '' } : null));
       window.PM_ACTIVE_PROJECT_ID = id;
       box.select(id);
       if (O55.sound && O55.sound.refresh) O55.sound.refresh('project');
       return true;
+    },
+    /* at boot (the Project box wired): the restored Project's row (listed again when setup made it) and its selection;
+       then the one writer of the record follows the selected row */
+    restoreProject() {
+      /* (every Project setup made or opened is listed again while its record lasts, the active one or not) */
+      const box = window.PM_PROJECT_BOX;
+      if (box) setupProjects().forEach((p) => { if (!rowOf(p.id)) { const row = box.add(p.id, Object.assign({}, p.info || {}, { name: p.name || p.id })); if (row) row.setAttribute('data-o55-added', ''); } });
+      if (restoring && box) { const r = restoring; restoring = null; O55.shell.selectProject(r.id, r.name || r.id, r.info || undefined); }
+      /* (a setup row restoreEarly put in the page before the load's labelling pass (wireTitles: every menu row present
+         then gets its text as a title, which the hover tag reads first) is the row the box adds, which has none) */
+      document.querySelectorAll('#projectMenu [data-o55-added][title]').forEach((r) => { if (r.getAttribute('title') === r.textContent.trim().replace(/\s+/g, ' ')) r.removeAttribute('title'); });
+      if (staleLoaded) { staleLoaded = false; if (window.PM12_KIMI && window.PM12_KIMI.reloadProject) { try { window.PM12_KIMI.reloadProject(); } catch (_) {} } }
+      const menu = document.getElementById('projectMenu');
+      if (!menu || menu.__pmActive) return;
+      menu.__pmActive = true;
+      const note = () => { const sel = menu.querySelector('.pm6-tb-menu-item.is-selected[data-project]'), id = sel ? sel.getAttribute('data-project') : ''; if (id && id !== lsGet()) lsSet(id); };
+      new MutationObserver(note).observe(menu, { attributes: true, subtree: true, attributeFilter: ['class'] });
+    },
+    /* a new install or a reset of setup's progress (FO-222 round 2, F3, F4): the Projects setup made go, and an active id
+       naming one of them; with all, any active id (a new install opens in the page's own Project). Called before every
+       clear of the onboarding record for a reset or a new install (95-boot.js ?o55=fresh, 91-demo-studio.js twice). A new
+       run of setup (Start over) no longer forgets them (F2). */
+    forgetSetup(o) {
+      const ids = new Set(setupProjects().map((p) => p.id).concat(madeGet().map((p) => p.id))), id = lsGet();
+      if (id && ((o && o.all) || ids.has(id))) lsSet('');
+      madeSet([]);
+      /* the page forgets them too (R87-P1): their rows leave the title bar's menu (the page's own rows stay), and when the
+         Project on screen is one of them the page's default Project is selected through the box first, so the label,
+         Settings and its look follow, and no control is left that chooses a forgotten Project and stores its id again.
+         Returns whether the Project on screen changed: Settings loads the new one as this turn of the page ends (its
+         observer of the menu), so a caller that paints a look next lets that happen first */
+      const gone = (pid) => !!pid && ids.has(pid) && !rowOfFixtureAtLoad.has(pid);
+      const sel = document.querySelector('#projectMenu .pm6-tb-menu-item.is-selected[data-project]'), box = window.PM_PROJECT_BOX;
+      const moved = !!(sel && gone(sel.getAttribute('data-project')) && box && defaultProject && box.select(defaultProject));
+      document.querySelectorAll('#projectMenu [data-o55-added][data-project]').forEach((r) => { if (gone(r.getAttribute('data-project'))) r.remove(); });
+      return moved;
+    },
+    /* before a new run of setup replaces the onboarding record (R87-P2: Run Onboarding Again, Start over, a finished run
+       opened again; 60-ui-core.js open), every Project that record names is kept in setup's own record, so a Project an
+       older version listed only there (its finished or committed Project) outlives the new run. Reading the record
+       (setupProjects) never writes; this is the one place its Projects move */
+    keepSetup() {
+      const list = madeGet(), have = new Set(list.map((p) => p.id));
+      const add = setupProjects().filter((p) => !have.has(p.id) && !rowOfFixtureAtLoad.has(p.id));
+      if (add.length) madeSet(list.concat(add.map((p) => ({ id: p.id, name: p.name || p.id, info: p.info || null }))));
     },
     /* The look chosen in onboarding becomes the saved theme (the preview used persist:false), and NieR Mode's three
        rows, the rest of the look, are saved with it into the same Project (their preview, O55.nierLook).
@@ -193341,7 +193687,7 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
        curtain call and Pod line, the hand-over to the tour, any other close, or the page going away (flushLook). It is
        written once per Project and look; a look changed meanwhile is the one written. */
     commitLook(S, o) {
-      look = { S };
+      look = { S, after: o && typeof o.after === 'function' ? o.after : null };
       if (o && o.defer) return true;
       return writeLook();
     },
@@ -193367,20 +193713,35 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
 
   let look = null, lookTimer = null, lookWritten = '';
   function writeLook() {
-    const S = look && look.S; look = null;
+    const S = look && look.S, after = look && look.after; look = null;
     if (lookTimer) { lookTimer.cancel(); lookTimer = null; }
     if (!S || !S.sess) return false;
+    /* (a NieR preview left lingering by an unfinished close is the window's again until its rows are written: R57 F2) */
+    if (O55.nierLook && O55.nierLook.own) O55.nierLook.own();
     /* the theme first (NieR is a theme since Q22: its preview follows this write), then NieR's Adjust rows, so dropping
        the preview finds the stored theme already matching what is painted */
     const d = md(S), tome = window.PM7_SETTINGS_TOME, key = [window.PM_ACTIVE_PROJECT_ID || '', d.theme_family, d.theme_mode].join('|');
-    let ok = key === lookWritten;
+    /* (written once per Project and look, while Settings still holds it: a look written here and changed in Settings since
+       is written again when it is chosen again, R55 F1 of FO-216) */
+    let ok = key === lookWritten && heldNow(d);
     if (!ok) {
       lookWritten = key;
       try { if (tome && tome.setChromeThemeFamily) { tome.setChromeThemeFamily(d.theme_family); tome.setChromeThemeMode(d.theme_mode); ok = true; } } catch (_) {}
       if (!ok) try { window.PM_THEME.setFamily(d.theme_family); window.PM_THEME.setMode(d.theme_mode); } catch (_) {}
     }
     if (O55.nierLook && O55.nierLook.commit) O55.nierLook.commit(S);
+    /* (the caller hears once it is written: an unfinished close keeps the saved look it notes in step, R57 F1) */
+    if (after) { try { after(); } catch (_) { /* the caller's */ } }
     return ok;
+  }
+  /* does Settings hold this look now (its Theme is the family's label, 'Glass Light' or 'NieR'; its mode 'Light', 'Dark' or
+     'Auto')? Without Settings' values, the write cache alone decides, as it did */
+  function heldNow(d) {
+    try {
+      const P = window.PM51; if (!P || typeof P.value !== 'function') return true;
+      const fam = String(P.value('general.visual.theme') || '').trim().split(/[\s-]+/)[0].toLowerCase(), mode = String(P.value('general.visual.theme-mode') || '').toLowerCase();
+      return fam === String(d.theme_family || '').toLowerCase() && mode === String(d.theme_mode || '').toLowerCase();
+    } catch (_) { return true; }
   }
   /* a page that goes away still saves the look it was given */
   window.addEventListener('pagehide', () => { if (look) writeLook(); });
@@ -193407,7 +193768,10 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
        reload that selecting the Project starts already finds it (SCR-03) */
     if (O55.handoff) O55.handoff.publish(S, Object.assign({}, o, { project: projectId || null, projectName: name || null }));
     if (projectId) O55.shell.selectProject(projectId, name, o.projectInfo);
-    S.sess.finished = { at: new Date().toISOString(), tour: !!o.tour, project: projectId || null };
+    /* (with the Project's name and location line, so a reload lists it again as it is now: FO-222) */
+    const fRow = projectId ? Array.prototype.find.call(document.querySelectorAll('#projectMenu [data-project]'), (r) => r.getAttribute('data-project') === projectId) : null;
+    const fInfo = o.projectInfo || (fRow ? { path: fRow.getAttribute('data-project-path') || '', branch: fRow.getAttribute('data-project-branch') || '' } : null);
+    S.sess.finished = { at: new Date().toISOString(), tour: !!o.tour, project: projectId || null, name: name || null, info: fInfo };
     const tour = !!(o.tour && O55.tour && O55.tour.start);
     /* the tour path: the window becomes the tour's first callout (a morph from its rectangle; under NieR Mode one ink
        line carries it there, with the same Pod flying along: O55.nierWindow.handoff(), results/h4c-handover-contract.md);
@@ -196968,7 +197332,15 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
     run(s, o) {
       applySituation(s || currentSituation());
       o = o || {};
-      if (o.install) { O55.store.clear('onboarding'); return O55.ui.open({ fresh: true, install: true }); }
+      /* (a new install: setup's Projects and the active id go first, FO-222 round 2, F3/F4) */
+      if (o.install) {
+        const moved = !!(O55.shell && O55.shell.forgetSetup && O55.shell.forgetSetup({ all: true }));
+        O55.store.clear('onboarding');
+        /* (the page left a forgotten Project for its default one: Settings loads that one's look as this turn ends, and
+           the new install's Basic Dark is painted after it, so no frame shows the Project's saved look, R87-P1) */
+        if (moved) return Promise.resolve().then(() => O55.ui.open({ fresh: true, install: true }));
+        return O55.ui.open({ fresh: true, install: true });
+      }
       return W('PM_O55_ONBOARDING').replay();
     },
     resume: () => W('PM_O55_ONBOARDING').resume(),
@@ -197606,7 +197978,10 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
     ownedKeys,
     async progress() {
       if (O55.tour && O55.tour.reset) { try { await O55.tour.reset({ silent: true, force: true }); } catch (_) {} }
+      const moved = !!(O55.shell && O55.shell.forgetSetup && O55.shell.forgetSetup());
       O55.store.clear('onboarding'); O55.store.clear('tour');
+      /* (as in run's new install: Settings loads the default Project first, then Basic Dark, R87-P1) */
+      if (moved) await null;
       return onboarding.run('fresh', { install: true });
     },
     layout: () => workspace.reset(),
@@ -198982,15 +199357,20 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
        or tour bar renders its control from it */
     if (O55.sound && O55.sound.refresh) { try { O55.sound.refresh('boot'); } catch (_) {} }
     if (window.PM51 && window.PM51.refreshTourRows) { try { window.PM51.refreshTourRows(); } catch (_) {} }
+    /* the Project the person was last in (FO-222, O55.shell.restoreProject), whatever the window does */
+    if (O55.shell && O55.shell.restoreProject) { try { O55.shell.restoreProject(); } catch (_) {} }
     if (sw === 'off') return;
     /* a new install (?o55=fresh, or no onboarding record yet: the window opens by itself) starts in Basic Dark; the
        head painted Basic Dark for it too (window.PM_O55_BOOT.install) */
-    if (sw === 'fresh') { O55.store.clear('onboarding'); return O55.ui.open({ fresh: true, install: true }); }
+    if (sw === 'fresh') { if (O55.shell && O55.shell.forgetSetup) O55.shell.forgetSetup({ all: true }); O55.store.clear('onboarding'); return O55.ui.open({ fresh: true, install: true }); }
     if (sw.startsWith('screen=')) return O55.ui.open({ screen: sw.slice(7) });
     if (sw === 'tour') return O55.tour && O55.tour.start && O55.tour.start({ source: 'switch' });
     const saved = O55.store.get('onboarding', null);
     tourChip();
     if (!saved) return O55.ui.open({ install: true });
+    /* a run the page left with its window open (a reload, the tab closed) is offered again as one closed unfinished: the
+       Resume chip and the bell's entry, on its step; it does not open by itself (FO-219, 60-ui-core.js parkStale) */
+    if (saved.status === 'active' && O55.ui.parkStale && O55.ui.parkStale()) saved.status = 'closed';
     if (saved.status === 'closed') chip();
   }
   const kick = () => O55.motion.real.setTimeout(start, 140);
@@ -322928,7 +323308,7 @@ try {
   function relayerLenses() {
     /* a strip whose lens is always under (ownUnder) keeps it: its layer does not change with the look's mode */
     lenses.forEach(function (L, strip) { if (ownUnder.has(strip) && L.strip.isConnected && L.lens.isConnected) return; if (L.strip.isConnected && L.lens.isConnected) parkLens(L); else disposeLens(L); lenses.delete(strip); });
-    if (typeof hiddenLenses !== 'undefined') hiddenLenses.clear();
+    if (typeof hiddenLenses !== 'undefined') { showUnwatchAll(); hiddenLenses.clear(); }
   }
   function pruneLenses() {
     lenses.forEach(function (L, strip) {
@@ -323065,43 +323445,102 @@ try {
     try { L.lens.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 160, delay: Math.max(0, left - 160), fill: 'backwards', easing: 'ease-out' }); } catch (e) {}
   }
   /* a lens hidden because its strip or item stopped showing comes back when they show again (Jared #23: "the page
-     selector starts out being there but goes away eventually"). A strip can be hidden and shown in ways no observed
-     mutation reports: an inline style, inert, an attribute on <html> such as the onboarding window's data-o55-open. Such
-     lenses are checked every 400 ms, and only while there are any. */
-  var hiddenLenses = new Map(), showT = 0;
+     selector starts out being there but goes away eventually"). While a lens is hidden its strip is watched by a
+     ResizeObserver (showWatch): whatever gives the strip its box back — an inline or a stylesheet display, on the
+     strip or on any ancestor — is reported after that frame's layout, and the check runs once through onLayout, the
+     same path the timer uses. What no observer reports is a visibility-only change (an inline visibility, a stylesheet
+     visibility keyed to an unobserved attribute): for those a 2000 ms safety-net timer remains, armed when the first
+     lens is hidden and re-armed only from inside the check, only while any lens is still hidden; a hidden document
+     re-arms it without reading anything. A sync that lands while that check is waiting for layout may arm a tick;
+     the check drops it before it looks, and arms the next interval if a lens is still hidden. The check's reads are stripParked (a closest(), no layout), cvSkipped (the
+     section's own style and box, never the skipped content) and visible() (the strip's and its target's rect and
+     computed visibility), all after the frame's layout, where they are free. Where ResizeObserver does not exist the
+     timer alone does the work, at the same 2000 ms. */
+  var hiddenLenses = new Map(), showT = 0, showHold = false;
+  var showSize = new WeakMap();
+  var showWatch = window.ResizeObserver ? new ResizeObserver(function (entries) {
+    var woke = false;
+    entries.forEach(function (en) {
+      var b = en.borderBoxSize && en.borderBoxSize[0];
+      var w = b ? b.inlineSize : en.contentRect.width, h = b ? b.blockSize : en.contentRect.height;
+      var was = showSize.get(en.target); showSize.set(en.target, [w, h]);
+      /* at most 1 px in either axis to more than 1 px in either: the strip may be back (visible() decides). The first
+         report of a strip queued while hidden counts too: it may have come back before the watch's first delivery */
+      if ((w > 1 || h > 1) && (!was || was[0] <= 1 || was[1] <= 1)) woke = true;
+    });
+    if (!woke || !hiddenLenses.size) return;
+    /* the pending net tick is dropped so the check runs now; the check re-arms the net from inside itself */
+    if (showT) { clearTimeout(showT); showT = 0; }
+    queueShown();
+  }) : null;
+  /* a strip is observed while any hidden lens uses it: one lens leaving does not unwatch a strip another still hides */
+  function showUnwatch(L) {
+    if (!showWatch) return;
+    var still = false;
+    hiddenLenses.forEach(function (cfg, O) { if (O !== L && O.strip === L.strip) still = true; });
+    if (!still) { showWatch.unobserve(L.strip); showSize.delete(L.strip); }
+  }
+  function showUnwatchAll() {
+    if (!showWatch) return;
+    hiddenLenses.forEach(function (cfg, L) { showWatch.unobserve(L.strip); showSize.delete(L.strip); });
+  }
   function awaitShow(L, cfg) {
-    if (!L.strip.isConnected) { hiddenLenses.delete(L); return; }
+    if (!L.strip.isConnected) { hiddenLenses.delete(L); showUnwatch(L); return; }
     hiddenLenses.set(L, cfg);
-    if (!showT) showT = setTimeout(checkShown, 400);
+    if (showWatch) showWatch.observe(L.strip);
+    /* armed even while a check is queued: the queued check drops this tick before it looks (queueShown), so it cannot
+       make that check skip; and if the queued check is ever lost (another function of the same layout delivery
+       throwing first), this tick is what starts the checking again */
+    if (!showT) showT = setTimeout(checkShown, 2000);
   }
   /* onLayout(fn): fn runs once after the frame's own style and layout, before paint, so every read in it is free (Q16).
      It is afterLayout(fn): one probe and one ResizeObserver for all of Glass. Work that a timer would otherwise run in the
      middle of an app's rebuild waits there instead: */
   function onLayout(fn) { if (!afterLayout(fn)) fn(); }
+  /* the wake and the tick share one queued check (showHold: at most one waits for layout). The queued check drops any
+     pending tick before it looks: a tick armed in the gap before it runs (a sync's awaitShow) used to trip the showT
+     guard and skip the look, so a lens already shown waited another whole interval (2351 and 3040 ms seen). */
+  function queueShown() {
+    if (showHold) return;
+    showHold = true;
+    onLayout(function () {
+      showHold = false;
+      if (document.hidden) { if (hiddenLenses.size && !showT) showT = setTimeout(checkShown, 2000); return; }
+      if (showT) { clearTimeout(showT); showT = 0; }
+      checkShownNow();
+    });
+  }
   /* - the hidden-lens check, whose tick landing on a Settings chapter change forced the half-built page through 242 ms
        of layout in Basic Dark */
   function checkShown() {
     showT = 0;
-    if (!switchOn()) { hiddenLenses.clear(); return; }
-    onLayout(checkShownNow);
+    /* a background tab never wakes layout: the tick re-arms without reading anything */
+    if (document.hidden) { if (hiddenLenses.size) showT = setTimeout(checkShown, 2000); return; }
+    if (!switchOn()) { showUnwatchAll(); hiddenLenses.clear(); return; }
+    /* a tick that finds a check still queued two seconds later takes it for lost and queues again: a second run of
+       the check is harmless, a hold that never ends would stop the checking for good */
+    showHold = false;
+    queueShown();
   }
   function checkShownNow() {
     if (showT) return;
-    if (!switchOn()) { hiddenLenses.clear(); return; }
+    if (!hiddenLenses.size) return;
+    if (!switchOn()) { showUnwatchAll(); hiddenLenses.clear(); return; }
     /* every hidden lens is looked at before any shown one is synced, and those are synced together (B6 packet 1) */
     var shown = []; cvSeen = new Map();
     try {
       hiddenLenses.forEach(function (cfg, L) {
-        if (!L.strip.isConnected || (cfg.kind === 'lensIcon' && !isGlass())) { hiddenLenses.delete(L); return; }
+        if (!L.strip.isConnected || (cfg.kind === 'lensIcon' && !isGlass())) { hiddenLenses.delete(L); showUnwatch(L); return; }
         if (stripParked(L.strip)) return;
-        if (cvSkipped(L.strip)) { hiddenLenses.delete(L); cvSkip(L.strip); return; }
+        if (cvSkipped(L.strip)) { hiddenLenses.delete(L); showUnwatch(L); cvSkip(L.strip); return; }
         if (!visible(L.strip)) return;
         var t = cfg.pick ? cfg.pick(L.strip) : L.strip.querySelector(cfg.items + (cfg.active || '.active'));
-        if (t && visible(t)) { hiddenLenses.delete(L); shown.push([cfg, L.strip]); }
+        if (t && visible(t)) { hiddenLenses.delete(L); showUnwatch(L); shown.push([cfg, L.strip]); }
       });
       syncStrips(shown);
     } finally { cvSeen = null; }
-    if (hiddenLenses.size) showT = setTimeout(checkShown, 400);
+    /* not over a tick that syncStrips' own awaitShow has just armed (one timer, not two) */
+    if (hiddenLenses.size && !showT) showT = setTimeout(checkShown, 2000);
   }
   /* A strip whose chip is its own (ownUnder, Settings' segmented choices) shows that chip only while it moves: at rest the
      chosen segment wears the material in place, exactly as it did before the chip existed, so nothing at rest changes
@@ -323222,7 +323661,7 @@ try {
     if (P0 && P0 !== L.pending) pressMark(P0, false);
     var pre = m && m.target === target ? m : null;
     if (!target || !(pre ? pre.shown : visible(target) && visible(strip))) { stopLensTravel(L); if (L.scrubCleanup) L.scrubCleanup(); if (L.lens.style.opacity !== '0') L.lens.style.opacity = '0'; L.rect = null; awaitShow(L, cfg); return; }
-    hiddenLenses.delete(L);
+    hiddenLenses.delete(L); showUnwatch(L);
     if (L.scroller && L.scroller.isConnected) {
       var out;
       if (pre && pre.scroller === L.scroller && pre.out !== undefined) out = pre.out;

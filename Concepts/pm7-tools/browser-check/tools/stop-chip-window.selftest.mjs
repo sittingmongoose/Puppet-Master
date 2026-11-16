@@ -115,4 +115,50 @@ function nierBig() {
 }
 const nBig = everyFrame(nierBig());
 assert.ok(nBig.worst > 1, `a NieR glyph jump far larger than the reference's on its frame must fail (worst ${nBig.worst}; named: ${(nBig.known || []).join('; ') || 'none'})`);
-console.log('stop-chip-window: 10 cases pass');
+// R64 A1 (PM7PERF-STOPCHIP-OPEN-SPAN-SHADOWS-CLOSE): the window closes 2460 ms after it opens, inside the
+// open's 3 s span. Built from the review's witness: 230 samples, 3200 ms loops, median gap 16 ms, glyph /
+// backlight ids 1 / 2 and reference id 7. Wall time starts at 5000; each sample adds 16 ms, plus 80 ms at
+// index 5 (the open) and 60 ms at index 155 (the close); frame time is wall time minus the restyle time added
+// so far. At 5 all three loops pause at frame time 5096 (current time 5096); at 155 they resume with start
+// time 2480, so the close's wall-clock hand-over is 60 ms. Values stay constant; places follow the timing
+// fields. Marks: a word at 1, the open at 5, the close at 155. Both jumps satisfy both caps, no restarts.
+// `closeMs` scales the CHIP's close jump only (the reference keeps its 60 ms): twice the reference must fail.
+function witness(closeMs = 60) {
+	const rows = [];
+	let w = 5000;
+	const resumeS = 2540 - closeMs;
+	for (let i = 0; i < 230; i++) {
+		w += 16 + (i === 5 ? 80 : 0) + (i === 155 ? 60 : 0);
+		const t = w - (i >= 5 ? 80 : 0) - (i >= 155 ? 60 : 0);
+		const held = i >= 5 && i < 155;
+		const loop = (id, v, s) => held
+			? { id, dur: DUR, delay: 0, s: null, c: 5096, rate: 1, place: 5096 / DUR, state: 'paused', v }
+			: { id, dur: DUR, delay: 0, s, c: 0, rate: 1, place: (w - s) / DUR, state: 'running', v };
+		rows.push({
+			t, w, flow: 'waiting', win: held, th: 'basic-dark', ease: 'ease',
+			g: loop(1, 1, i >= 155 ? resumeS : 0), b: loop(2, 1, i >= 155 ? resumeS : 0), os: [loop(7, 0, i >= 155 ? 2480 : 0)],
+		});
+	}
+	return { rows, marks: [
+		{ name: 'a word arrives', i: 1, kind: 'word' },
+		{ name: OPEN, i: 5, kind: 'window' },
+		{ name: 'onboarding window closes', i: 155, kind: 'window' },
+	] };
+}
+const WR = witness();
+assert.equal(WR.rows[155].w - WR.rows[5].w, 2460, 'the close sample is 2460 ms after the open');
+const wits = everyFrame(WR);
+// the witness's shape, pinned to the review's numbers: the open's reference jump is 80 ms at index 5 and its
+// span ends at index 189; the close's is 60 ms at index 155.
+assert.deepEqual(wits.spans.map((s) => [s.what, s.from, s.to, s.otherI, Math.round(s.otherMs)]),
+	[['open', 5, 189, 5, 80], ['close', 155, 230, 155, 60]], `the spans must be the review's: ${JSON.stringify(wits.spans)}`);
+assert.ok(wits.worst <= 1 && wits.restarts.length === 0, `the close's own waiver must hold inside the open's span (worst ${wits.worst}; ${wits.where || ''})`);
+assert.equal(wits.known.length, 4, `all four jumps must be named: ${JSON.stringify(wits.known)}`);
+for (const what of ['open', 'close']) for (const layer of ['glyph', 'backlight']) {
+	assert.ok(wits.known.some((k) => k.startsWith(layer) && k.includes(`after the ${what}`)), `the ${layer}'s ${what} jump must be named: ${JSON.stringify(wits.known)}`);
+}
+// control: the chip's close jump twice the reference's (120 ms against 60) is past the reference-plus-frame
+// cap and must fail even with the right span.
+const twiceClose = everyFrame(witness(120));
+assert.ok(twiceClose.worst > 1, `a close jump twice the reference's must fail (worst ${twiceClose.worst}; named: ${(twiceClose.known || []).join('; ') || 'none'})`);
+console.log('stop-chip-window: 12 cases pass');
