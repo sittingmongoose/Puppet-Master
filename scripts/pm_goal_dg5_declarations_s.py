@@ -6,6 +6,7 @@ all members check the same field with the same predicate. Sets of the enum/const
 (lead decision 1116073727-d098) are listed apart in ENUM_CLOSED_RULES and in the handoff report.
 """
 S_READERS = 'dg5/site/pm_goal_dg_s_readers.py:'
+S_START = 'dg5/site/pm_goal_dg_s_start.py:'
 
 DECLARED = {}
 DECLARED_RULES = (
@@ -20,6 +21,14 @@ DECLARED_RULES = (
      '(pm_goal_dg_s_readers.py:593, row projector/logical/schema) bounds the same field, generations, '
      'by maxProperties 3 (Plans/goal_run_projection_reference_contracts/started.v1.schema.json '
      '$defs/LogicalCheckpoint). Same field, same bound: at most three generations.'),
+    (lambda cid: cid == 'S1/second_operation_while_candidate_pending',
+     (S_START + '973', S_START + '1004'),
+     'Both sites guard the same local (pending, prepared) pair under the same code '
+     'start/pending_other_operation: with a pending candidate present, :973 requires this '
+     "operation's prepared submission to exist, and the else branch at :1004 requires no "
+     'pending candidate before writing a new one. The defect state (pending for another '
+     'operation, no prepared submission for this one) is the single state both refuse, at '
+     'the two points where commit_start branches on prepared.'),
 )
 
 
