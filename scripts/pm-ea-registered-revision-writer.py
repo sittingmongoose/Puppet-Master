@@ -74,6 +74,126 @@ def checkpoint(before,after,event,dl,confirmation=False):
     require(golden.count(old)==1,'golden checkpoint label missing')
     w.write_text(w.LEGACY_GOLDEN,golden.replace(old,'"registry_revision": "'+after['revision']+'"'))
 
+def refresh_gc_main(argv):
+    """Carry the GC writer's current script citations into the two applied depths."""
+    p=argparse.ArgumentParser(description=refresh_gc_main.__doc__)
+    p.add_argument('--core-sha256',required=True)
+    p.add_argument('--grades-sha256',required=True)
+    p.add_argument('--check-only',action='store_true')
+    p.add_argument('--commit',action='store_true')
+    a=p.parse_args(argv)
+    require(not(a.check_only and a.commit),'check-only cannot commit')
+    folder='reports/event-authority-20261116/admission-merge-2/'
+    producer='reports/event-authority-20261115/PNC019-C12-GC-'
+    core_path=producer+'core.json';grade_path=producer+'grades.json'
+    report_path=folder+'gc-applied-evidence-maintenance.json'
+    script='scripts/pm_goal_own_a_oracles.py'
+    events={'goal_run.stopped':'DL-2437','goal_run.blocked':'DL-2438'}
+    producer_paths=[producer+name+'.json' for name in ('core','coverage','ledger','schema-closure','grades')]
+    require(not(ROOT/report_path).exists(),'GC applied-evidence maintenance already recorded')
+    require(w.sha256_file(ROOT/core_path)==a.core_sha256,'GC core bytes differ')
+    require(w.sha256_file(ROOT/grade_path)==a.grades_sha256,'GC grade bytes differ')
+    core=load(core_path);grades=load(grade_path)
+    require(core.get('schema_id')=='pm.pnc019.c12_gc.core.v1'
+            and core.get('native_execution')=='NOT_RUN','not an official GC core')
+    totals=core['totals']
+    require(not core['changed_during_run'] and totals['lane_matrix_problems']==0
+            and not totals['tool_failure_tables'] and not totals['unproved_unjustified'],
+            'GC proof is not closed')
+    bindings=core['source_bindings']
+    require(script in bindings,'GC core does not bind own_a')
+    stale=[]
+    for path,sha in bindings.items():
+        require(path.startswith('scripts/') and '..' not in Path(path).parts,'invalid GC source path')
+        if not(ROOT/path).is_file() or w.sha256_file(ROOT/path)!=sha:stale.append(path)
+    require(not stale,'GC source bindings differ: '+json.dumps(stale[:8]))
+    prior_grades=json.loads(w.git('show','HEAD:'+grade_path))
+    statuses=lambda doc:{r['event_type']:{f:c['status'] for f,c in r['cells'].items()} for r in doc['rows']}
+    require(statuses(prior_grades)==statuses(grades),'GC maintenance cannot change a source grade verdict')
+    # A subsequent Decision Log edit would invalidate a current whole-file citation.
+    require(not any(e.get('path')==w.DECISION_LOG for row in grades['rows']
+                    for cell in row['cells'].values() for e in cell.get('evidence',[])),
+            'run the GC grade writer after applied-depth maintenance when it cites Decision_Log')
+    if not a.check_only:
+        dirty=w.git('status','--porcelain','--untracked-files=no').splitlines()
+        require(all(line[3:] in producer_paths for line in dirty),'uncommitted files outside GC writer outputs')
+    helper=w.load_module('gc_applied_admission_mode','scripts/pm_ea_admission_mode.py')
+    frozen=helper.frozen_module(ROOT)
+    registry=load(w.REGISTRY)
+    checkpoint_paths=[w.REGISTRY,w.CURRENTNESS,w.LEGACY_GOLDEN]
+    checkpoint_hashes={path:w.sha256_file(ROOT/path) for path in checkpoint_paths}
+    original_log=w.read_raw(w.DECISION_LOG);updated_log=original_log
+    originals={};updates={};audit=[]
+    for event,dl in events.items():
+        family=core['families'][event]
+        require(family['source']=='own_a' and family['open_rows']==0 and family['schema_uncovered']==0
+                and family['retained_store_changed']==0
+                and all(family[name]>0 for name in ('corpus_cases','join_cases','retained_cases')),
+                event+': GC family proof is incomplete')
+        path=folder+'revisions/'+event+'.json';original=w.read_raw(path);record=json.loads(original)
+        require(record['decision_ref']=='Plans/Decision_Log.md#'+dl,'unexpected applied decision')
+        before=record['before_row'];successor=record['registry_row']
+        predecessor={k:before[k] for k in ('family_revision','payload_schema_id')}
+        require(helper.revision_verdict(event,successor_row=successor,predecessor=predecessor,
+                    root=ROOT,registry=registry)['mode']=='revised',event+': existing applied record is not valid')
+        cells=record['rows'][0]['cells']
+        require(set(cells)==set(w.EVIDENCE_FIELDS) and all(c['status']=='PASS' for c in cells.values()),
+                event+': applied assessment is not twelve PASS')
+        grade=next(row for row in grades['rows'] if row['event_type']==event)
+        require(grade['cells']['positive_negative_oracles']['status']=='PASS',event+': GC oracle verdict is not PASS')
+        evidence=cells['positive_negative_oracles']['evidence'];changed=[]
+        for index,old in enumerate(evidence):
+            if old.get('path')!=script:continue
+            matches=[e for e in grade['cells']['positive_negative_oracles']['evidence']
+                     if e.get('path')==script and e.get('quote')==old.get('quote')]
+            require(len(matches)==1,event+': GC writer must supply one unchanged script quotation')
+            current=matches[0];raw=(ROOT/script).read_text().split('\n')
+            excerpt='\n'.join(raw[current['line_start']-1:current['line_end']])
+            require(current['file_sha256']==bindings[script] and current['quote'] in excerpt
+                    and current['excerpt_sha256']==w.sha256_bytes(excerpt.encode()),
+                    event+': GC citation is not exact at the current script')
+            new=dict(old)
+            for field in ('line_start','line_end','file_sha256','excerpt_sha256'):new[field]=current[field]
+            new.update(quote_check='exact',quote_scope='document')
+            evidence[index]=new
+            changed.append(dict(index=index,old=old,new=new))
+        require(len(changed)==2,event+': expected the two existing own_a citations')
+        require(any(item['old']!=item['new'] for item in changed),event+': script citations already current')
+        rendered=json.dumps(record,indent=1,ensure_ascii=False)+'\n'
+        old_sha=w.sha256_bytes(original.encode());new_sha=w.sha256_bytes(rendered.encode())
+        section=frozen.decision_section_bytes(ROOT/w.DECISION_LOG,dl).decode()
+        require(section.count(old_sha)==1 and updated_log.count(section)==1,dl+': exact assessment pin missing')
+        updated_log=updated_log.replace(section,section.replace(old_sha,new_sha),1)
+        originals[path]=original;updates[path]=rendered
+        audit.append(dict(event_type=event,decision_ref=record['decision_ref'],assessment=path,
+            before_sha256=old_sha,after_sha256=new_sha,changed_citations=changed))
+    report=dict(schema_id='pm.ea.merge2.gc_applied_evidence_maintenance.v1',native_execution='NOT_RUN',
+        source_core=dict(path=core_path,sha256=a.core_sha256),source_grades=dict(path=grade_path,sha256=a.grades_sha256),
+        registry_and_checkpoints=checkpoint_hashes,verdicts_changed=False,registry_changed=False,
+        historical_application_provenance_preserved=True,events=audit)
+    if a.check_only:
+        print(json.dumps(dict(validated_only=True,events=len(audit),citations=sum(len(x['changed_citations']) for x in audit))))
+        return 0
+    try:
+        for path,rendered in updates.items():w.write_text(path,rendered)
+        w.write_text(w.DECISION_LOG,updated_log)
+        require(all(w.sha256_file(ROOT/path)==sha for path,sha in checkpoint_hashes.items()),'registry/checkpoint changed')
+        for event in events:
+            record=load(folder+'revisions/'+event+'.json')
+            predecessor={k:record['before_row'][k] for k in ('family_revision','payload_schema_id')}
+            require(helper.revision_verdict(event,successor_row=record['registry_row'],predecessor=predecessor,
+                        root=ROOT,registry=registry)['mode']=='revised',event+': refreshed record fails its decision binding')
+    except BaseException:
+        for path,original in originals.items():w.write_text(path,original)
+        w.write_text(w.DECISION_LOG,original_log)
+        raise
+    dump(report_path,report)
+    if a.commit:
+        w.git('add','--',*producer_paths,*updates,w.DECISION_LOG,report_path)
+        w.git('commit','-q','-m','reports: refresh applied own_a citations through the GC writer pass')
+    print(json.dumps(dict(report=report_path,events=len(audit),citations=4,registry_changed=False)))
+    return 0
+
 def main():
     p=argparse.ArgumentParser(description=__doc__)
     p.add_argument('--manifest',required=True);p.add_argument('--sha256',required=True)
@@ -225,4 +345,5 @@ def main():
         print(json.dumps(dict(event_type=event,dl=dl,registry=after,commit=w.git('rev-parse','HEAD').strip())),flush=True)
     return 0
 
-if __name__=='__main__':sys.exit(main())
+if __name__=='__main__':
+    sys.exit(refresh_gc_main(sys.argv[2:]) if sys.argv[1:2]==['refresh-gc-citations'] else main())
