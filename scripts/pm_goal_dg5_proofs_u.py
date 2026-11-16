@@ -310,4 +310,37 @@ PROOFS = {
             'that receipt plus the stored sequence. Every field is either a constant-shape '
             'storage output or copied verbatim from it, so no complete publish call can make '
             'this row refuse alone.')),
+    'dg5/dgu/inspect/event/schema': dict(
+        kind='code-selection',
+        families=['goal.updated'],
+        depends_on=[SITE + '1891'],
+        sites=[(U, 1874), (U, 1876), (U, 1891), ('scripts/pm_goal_test_storage.py', 1861),
+               ('Plans/goal_updated_consumer_contracts.schema.json', 497)],
+        argument=(
+            'inspect validates the selected event against SelectedActiveEvent (:1876: the '
+            'EventRecord root plus goal.updated consts and the payload definition, :497) only '
+            'after the const triple is required at :1874-1875, and Storage has already '
+            'frame-validated the identical EventRecord root at decode. The one tighter '
+            'part is the payload definition, and every payload or metadata byte is compared '
+            'verbatim at :1891 (producer25 of the whole event minus storage-assigned fields '
+            'against the frozen ProducerInput, pm_goal_test_storage.py:1861): a producer-issued '
+            'event carries the freeze-validated payload, and any other event differs from the '
+            'frozen input and refuses there. With this row cut, no event that would fail it '
+            'is accepted; it selects the consumer-schema code and never gates acceptance '
+            'alone. It closes by this proof once :1891 is closed.')),
+    'dg5/dgu/inspect/observation/schema': dict(
+        kind='entailed-by-inspect-construction',
+        families=['goal.updated'],
+        depends_on=['dg5/dgu/inspect/event/schema', 'dg5/dgu/inspect/request/schema'],
+        sites=[(U, 1903), (U, 1917), ('Plans/goal_updated_consumer_contracts.schema.json', 144)],
+        argument=(
+            'inspect builds the observation (:1903-1908) only from constants (reader_binding, '
+            'payload_schema_id, action_authority, checkpoint_effect), the request-validated '
+            'scope ids, and fields copied verbatim from the event just validated against '
+            'SelectedActiveEvent (event/thread/goal ids, sequence within the same uint64 '
+            'bound, occurred_at under the same date-time format, and the payload against the '
+            'identical payload reference, EventObservation :144). Every bound in the '
+            'observation definition is identical to a bound its sources already passed, so '
+            'no complete inspect call can make this row refuse alone. It closes by this '
+            'proof once the inspect event and request schema rows are closed.')),
 }
