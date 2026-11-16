@@ -73,6 +73,10 @@ DECLARED_RULES += (
      ('dg5/dgu/sir/request/schema', U_SITE + '293'),
      'GoalUpdateRequestV2 goal_id `type: string` and exact_str (pm_goal_dg_u_owners.py:293) `type(value) is str` '
      'require the same field to be a string.'),
+    (lambda cid: cid == 'U5/N/actor_object',
+     ('dg5/dgu/sir/request/schema', U_SITE + '293'),
+     'GoalUpdateRequestV2 actor_ref `type: string` and exact_str (pm_goal_dg_u_owners.py:293) `type(value) is str` '
+     'require the same field to be a string.'),
 )
 
 
