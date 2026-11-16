@@ -2,11 +2,12 @@
 // every hidden lens's strip with a per-strip ResizeObserver (showWatch): a box that goes from at most 1 px to more
 // than 1 px in either axis runs the hidden-lens check once through onLayout. A 2000 ms safety-net timer remains for
 // what no observer reports (a visibility-only change: inline visibility, a stylesheet visibility keyed to an
-// unobserved attribute), re-armed only from inside the check and only while a lens is hidden. The wake and the tick
-// share one queued check (showHold): a sync that lands while the check waits for layout does not arm an interval of
-// its own; the queued check drops any pending tick, looks, and arms the next interval itself (5ea1e87906, verified
-// in a browser by QW6: one net tick per show, no re-arm race). Spec: the share's
-// 2026-11-11-pm7-performance/followups/E3-glass-poll.md, test rows 1, 2, 3, 4, 9 and 13.
+// unobserved attribute), armed only while a lens is hidden. The wake and the tick share one queued check (showHold):
+// the queued check drops any pending tick before it looks and arms the next interval itself, so a sync that lands
+// while the check waits for layout cannot make it skip its look (5ea1e87906, verified in a browser by QW6: one net
+// tick per show, no re-arm race). Since 34b45edf15 such a sync does arm a tick of its own (awaitShow), and a tick
+// that still finds a check queued two seconds later queues again: a net for a queued check that is ever lost.
+// Spec: the share's 2026-11-11-pm7-performance/followups/E3-glass-poll.md, test rows 1, 2, 3, 4, 9 and 13.
 //
 // Rows, per Glass look (Glass Dark and Light), both surfaces, 1920x1080. Budgets are QW6's, from measurements on
 // alexis (loaded host, RTX 3080): 5 full runs per surface on the branch page (qw6.html, 5ea1e87906) and on main
