@@ -747,7 +747,7 @@ def apply_family(fam: dict, dl: str, args, state: dict) -> list[str]:
         # needs no CPU row left KEEP_QUARANTINED): KEEP_REGISTERED, provisional false and twelve PASS cells
         # projected from this commit's depth assessment, the receipted row update lane S2 used; bucket,
         # cohort pins, July classification and every other field stay as written.
-        sentence = (f" Registered at registry revision {after['revision']} in admission merge 1 under DL-078, DL-096 and DL-400 "
+        sentence = (f" Registered at registry revision {after['revision']} in admission merge {args.merge.rsplit('-', 1)[-1]} under DL-078, DL-096 and DL-400 "
                     f"(decision Plans/Decision_Log.md#{dl}); DL-077 admission record {ctx['record_path']}. Disposition "
                     "KEEP_QUARANTINED -> KEEP_REGISTERED, evidence cells " + ", ".join(EVIDENCE_FIELDS) + " projected with "
                     f"twelve PASS cells from the family's admission depth assessment {depth_rel} (sha256 "
@@ -956,7 +956,7 @@ def apply(args) -> int:
                 # Plans/.audits/* is ignored for new files; these ledger and outcome files are tracked canon.
                 git("add", "-f", "--", *audit)
             msg = commit_message(fam, dl, state["results"][-1])
-            git("commit", "-q", "-m", msg + "\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\n")
+            git("commit", "-q", "-m", msg)
             state["results"][-1]["commit"] = git("rev-parse", "HEAD").strip()
         print(json.dumps(state["results"][-1]))
     if args.results:
