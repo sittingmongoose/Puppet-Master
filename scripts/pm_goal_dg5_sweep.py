@@ -130,6 +130,7 @@ def main():
     started = time.time()
     collector = sweep.collect(sources, fuzz=False, judge=not args.generate, keyword_witnesses=False)
     import pm_goal_dg5_boundaries as bridge
+    bridge.settle_case_banks(None)
     collector.failures.extend(bridge.FAILURES)
     frozen = bridge.verify_frozen()
     if frozen['drift']:

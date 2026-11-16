@@ -80,6 +80,47 @@ def descriptor_sha256(value, world):
     return hashlib.sha256(pickle.dumps(context_value(value, world), protocol=5)).hexdigest()
 
 
+FROZEN_PARTS = {}
+# Schema-bank objects (holding a referencing Registry) built per world: bound by
+# their complete descriptor once per authored case (strong reference held, so
+# no identity reuse), then recomputed in full when the case ends.
+CASE_BANKS = {}
+CASE_BANK_STATE = [None]
+
+
+def _is_bank(value):
+    try:
+        attributes = vars(value)
+    except TypeError:
+        return False
+    for item in attributes.values():
+        if type(item).__module__ == 'referencing._core' and type(item).__name__ == 'Registry':
+            return True
+        if isinstance(item, dict) and any(type(x).__module__ == 'referencing._core' and type(x).__name__ == 'Registry'
+                                          for x in list(item.values())[:4]):
+            return True
+    return False
+
+
+def settle_case_banks(next_case):
+    """Verify every bank memoized for the finishing case, then start the next case's memo."""
+    if CASE_BANK_STATE[0] is next_case:
+        return
+    for ident, (obj, sha, label) in list(CASE_BANKS.items()):
+        again = hashlib.sha256(pickle.dumps(context_value(obj, None, {}, False), protocol=5)).hexdigest()
+        if again != sha:
+            FAILURES.append(dict(kind='schema_bank_changed_within_case', case=label, type=type(obj).__qualname__,
+                                 before=sha, after=again))
+    CASE_BANKS.clear()
+    CASE_BANK_STATE[0] = next_case
+
+
+def _parts(obj):
+    attributes = vars(obj) if hasattr(obj, '__dict__') else {}
+    return {name: hashlib.sha256(pickle.dumps(context_value(item, None, {}, False), protocol=5)).hexdigest()
+            for name, item in attributes.items()}
+
+
 def verify_frozen():
     """Recompute every memoized singleton descriptor in full (no memo)."""
     drift = []
@@ -90,7 +131,9 @@ def verify_frozen():
         finally:
             FROZEN[ident] = saved
         if again != sha:
-            drift.append(dict(type=type(obj).__qualname__, module=type(obj).__module__, before=sha, after=again))
+            now, then = _parts(obj), FROZEN_PARTS.get(ident, {})
+            drift.append(dict(type=type(obj).__qualname__, module=type(obj).__module__, before=sha, after=again,
+                              attributes=sorted(k for k in set(now) | set(then) if now.get(k) != then.get(k))))
     return dict(singletons=len(FROZEN), drift=drift)
 
 
@@ -127,7 +170,13 @@ def context_value(value, world, seen=None, frozen=True):
     seen[ident] = len(seen)
     if frozen and ident in MEMBERS:
         return ('load_once_member', type(value).__module__, type(value).__qualname__, MEMBERS[ident])
-    if isinstance(value, (dict, weakref.WeakKeyDictionary)):
+    if isinstance(value, dict) and value and all(type(v).__module__.startswith('jsonschema') and hasattr(v, 'iter_errors')
+                                                 for v in value.values()):
+        # A validator memo: each value is a pure function of its key and the
+        # pinned registry (bound separately); growth of the memo is not state,
+        # so a memo is described exactly as an empty map.
+        return ('map', ())
+    if isinstance(value, (dict, weakref.WeakKeyDictionary, types.MappingProxyType)):
         return ('map', tuple((context_value(k, world, seen, frozen), context_value(v, world, seen, frozen))
                              for k, v in value.items()))
     if isinstance(value, (tuple, list, set, frozenset)):
@@ -139,6 +188,20 @@ def context_value(value, world, seen=None, frozen=True):
                 context_value(value.__defaults__, world, seen, frozen),
                 context_value(value.__kwdefaults__, world, seen, frozen),
                 tuple(context_value(cell.cell_contents, world, seen, frozen) for cell in value.__closure__ or ()))
+    if inspect.isclass(value):
+        module = sys.modules.get(value.__module__)
+        path = Path(module.__file__) if getattr(module, '__file__', None) else None
+        return ('class', value.__module__, value.__qualname__,
+                hashlib.sha256(path.read_bytes()).hexdigest() if path and path.is_file() else None)
+    if inspect.ismethod(value):
+        return ('bound_method', context_value(value.__func__, world, seen, frozen),
+                context_value(value.__self__, world, seen, frozen))
+    if inspect.isbuiltin(value) or type(value).__name__ in ('method-wrapper', 'wrapper_descriptor',
+                                                             'method_descriptor', 'builtin_function_or_method'):
+        return ('builtin', getattr(value, '__module__', None), getattr(value, '__qualname__', repr(value)))
+    if isinstance(value, functools.partial):
+        return ('partial', context_value(value.func, world, seen, frozen), context_value(value.args, world, seen, frozen),
+                context_value(value.keywords, world, seen, frozen))
     if isinstance(value, types.ModuleType):
         path = Path(value.__file__) if getattr(value, '__file__', None) else None
         return ('module', value.__name__, hashlib.sha256(path.read_bytes()).hexdigest() if path else None)
@@ -150,17 +213,29 @@ def context_value(value, world, seen=None, frozen=True):
     if hasattr(value, 'pins') and hasattr(value, 'registry'):
         return ('whole_pinned_bank', type(value).__module__, type(value).__qualname__,
                 context_value(value.pins, world, seen, frozen))
-    if frozen and getattr(type(value), '_instance', None) is value:
+    if frozen and any(attribute is value for klass in type(value).__mro__ for attribute in vars(klass).values()):
         if ident not in FROZEN:
             inner = {}
             sha = hashlib.sha256(pickle.dumps(context_value(value, None, inner, False), protocol=5)).hexdigest()
             FROZEN[ident] = (value, sha)
+            FROZEN_PARTS[ident] = _parts(value)
             for member in inner:
                 MEMBERS.setdefault(member, sha)
         return ('load_once_singleton', type(value).__module__, type(value).__qualname__, FROZEN[ident][1])
+    if frozen and ident in CASE_BANKS:
+        return ('case_bank', type(value).__module__, type(value).__qualname__, CASE_BANKS[ident][1])
+    if frozen and CASE_BANK_STATE[0] is not None and _is_bank(value):
+        sha = hashlib.sha256(pickle.dumps(context_value(value, None, {}, False), protocol=5)).hexdigest()
+        CASE_BANKS[ident] = (value, sha, (CASE_BANK_STATE[0] or {}).get('id'))
+        return ('case_bank', type(value).__module__, type(value).__qualname__, sha)
     if hasattr(value, '__dict__'):
         return ('object', type(value).__module__, type(value).__qualname__, ident,
                 context_value(vars(value), world, seen, frozen))
+    slots = [name for klass in type(value).__mro__ for name in getattr(klass, '__slots__', ())
+             if name not in ('__weakref__', '__dict__')]
+    if slots:
+        return ('slotted', type(value).__module__, type(value).__qualname__, ident,
+                tuple((name, context_value(getattr(value, name, None), world, seen, frozen)) for name in slots))
     raise TypeError('unbound complete-call context type: ' + type(value).__qualname__)
 
 
@@ -261,13 +336,19 @@ def invoke(label, family, action, work, *, world=None, arguments=None, original=
                 try:
                     action()
                     result = dict(errors=[], original_refusal=None)
-                except Exception as error:
+                except BaseException as error:  # Storage's injected Crash is a BaseException
                     # Only owner refusal classes qualify. AssertionError,
                     # import/setup errors and arbitrary exceptions never do.
-                    if type(error).__name__ not in REFUSAL_CLASSES:
+                    # A case's injected crash point is an interrupted call:
+                    # recorded under its own non-row name, never a refusal.
+                    if type(error).__name__ == 'Crash':
+                        point = getattr(error, 'point', None) or str(error)
+                        result = dict(errors=['dg5/injected_crash/' + point], original_refusal='crash:' + point)
+                    elif not isinstance(error, Exception) or type(error).__name__ not in REFUSAL_CLASSES:
                         raise
-                    code = refusal_code(error)
-                    result = dict(errors=[row(code)], original_refusal=code)
+                    else:
+                        code = refusal_code(error)
+                        result = dict(errors=[row(code)], original_refusal=code)
                 result.update(observations=entries, after=manifest(file_state(work)),
                               replay_unknown_rows=sorted(tables.COLLECTOR.replay_unknown_rows))
             except BaseException as error:
@@ -309,30 +390,36 @@ def refusal_code(error):
 def entry_call(case, label, family, action, work, *, world, arguments, original, target):
     """One captured entry of an authored case, then the parent's own call.
 
-    Positive case: every entry is declared valid before it runs. Negative case:
-    the case's authored target (fixed before execution) is attached to the
-    entry whose own parent call ends in a refusal; entries that return are
-    recorded undeclared. The sealed child run must agree with the parent run.
+    Every entry is registered undeclared first. The sealed child run then
+    decides, before the parent advances the store: in a positive case an
+    accepting entry is declared a control; in a negative case the entry that
+    refuses is declared with the case's authored target (fixed before
+    execution), and the kill judge replays it now, against the same store.
+    Entries that do neither stay undeclared (no credit either way). The
+    parent's own run must agree with the sealed child run.
     """
     expected = case.get('expected')
     collector = tables.COLLECTOR
-    if expected is None:
-        result, child = invoke(label, family, action, work, world=world, arguments=arguments,
-                               original=original, valid=True)
-    else:
-        result, child = invoke(label, family, action, work, world=world, arguments=arguments,
-                               original=original, pending=True)
+    settle_case_banks(case)
+    result, child = invoke(label, family, action, work, world=world, arguments=arguments,
+                           original=original, pending=True)
+    if child is None and expected is None:
+        collector.declare(result, True, None)
+    elif child is not None and not child.startswith('crash:') and expected is not None:
+        collector.declare(result, None, target)
     PARENT_CALL[0] = True
     try:
         try:
             returned = action()
-        except Exception as error:
-            if type(error).__name__ in REFUSAL_CLASSES:
+        except BaseException as error:  # Storage's injected Crash is a BaseException
+            if type(error).__name__ == 'Crash':
+                code = 'crash:' + (getattr(error, 'point', None) or str(error))
+            elif isinstance(error, Exception) and type(error).__name__ in REFUSAL_CLASSES:
                 code = refusal_code(error)
-                if code != child:
-                    FAILURES.append(dict(kind='child_parent_disagree', label=label, child=child, parent=code))
-                if expected is not None:
-                    collector.declare(result, None, target)
+            else:
+                raise
+            if code != child:
+                FAILURES.append(dict(kind='child_parent_disagree', label=label, child=child, parent=code))
             raise
         if child is not None:
             FAILURES.append(dict(kind='child_parent_disagree', label=label, child=child, parent=None))
