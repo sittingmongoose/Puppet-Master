@@ -56,14 +56,24 @@ def row(code):
     return PREFIX + code.split('/schema/', 1)[0] + ('/schema' if '/schema/' in code else '')
 
 
+DIRECTORY = None  # marker value for a directory entry (empty directories are store state too)
+
+
 def file_state(root):
-    return {str(p.relative_to(root)): p.read_bytes()
-            for p in sorted(root.rglob('*')) if p.is_file()}
+    """Every file's bytes and every directory (including empty ones) under the store root."""
+    state = {}
+    for p in sorted(root.rglob('*')):
+        if p.is_dir():
+            state[str(p.relative_to(root)) + '/'] = DIRECTORY
+        elif p.is_file():
+            state[str(p.relative_to(root))] = p.read_bytes()
+    return state
 
 
 def manifest(files):
-    """Complete store binding: every durable file's path and SHA-256."""
-    return tuple((name, hashlib.sha256(raw).hexdigest(), len(raw)) for name, raw in sorted(files.items()))
+    """Complete store binding: every directory, and every durable file's path and SHA-256."""
+    return tuple((name, None, None) if raw is DIRECTORY else (name, hashlib.sha256(raw).hexdigest(), len(raw))
+                 for name, raw in sorted(files.items()))
 
 
 def descriptor_sha256(value, world):
@@ -88,8 +98,11 @@ def restore_files(root, files):
     if root.exists():
         shutil.rmtree(root)
     root.mkdir(parents=True)
-    for name, raw in files.items():
+    for name, raw in sorted(files.items()):
         path = root / name
+        if raw is DIRECTORY:
+            path.mkdir(parents=True, exist_ok=True)
+            continue
         path.parent.mkdir(parents=True, exist_ok=True)
         path.write_bytes(raw)
 
