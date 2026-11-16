@@ -455,7 +455,20 @@ function windowSpans(R, frame) {
 	}
 	return out;
 }
-const spanOf = (spans, i) => spans.find((x) => i >= x.from && i < x.to) || null;
+// PM7PERF-STOPCHIP-OPEN-SPAN-SHADOWS-CLOSE (R64 A1): when the window closes within 3 s of opening, both spans
+// contain the close's frame, and the first match (the open) judged the close's accepted jump against the open's
+// reference frame and failed it. Among the spans that contain the sample, use the one whose reference frame
+// (otherI) is the nearest at or before the sample: the close's span for the close's own frame. A span whose
+// reference frame is later than the sample (or missing) could not waive it anyway. Nothing else about the
+// waiver changes (one jump a window, the two size caps, the NieR rules).
+const spanOf = (spans, i) => {
+	let best = null;
+	for (const x of spans) {
+		if (i < x.from || i >= x.to || x.otherI == null || x.otherI > i) continue;
+		if (!best || x.otherI > best.otherI) best = x;
+	}
+	return best;
+};
 // True only on the restyle's own frame. When both loops are drawn, both must jump by more than
 // one frame, by the same amount (within one frame of each other), on that frame exactly.
 // NieR draws no glow (send-stop.css: .ss-bl is display:none; one pulse reads 0 frames with both
