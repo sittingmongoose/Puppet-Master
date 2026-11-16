@@ -574,7 +574,7 @@ def derive_row(family: dict, grade: dict, contract: dict, readiness) -> tuple[di
             project = graded.get("project") or stated.get("project")
             if project in SCOPE_SHARED_POLICIES:
                 candidates = {project}
-                provenance["retention_application"] = "shared with the Project edition (" + project + ", registry precedent)"
+                provenance["retention_application"] = "shared registered policy object under the exact owner/SP-349 counterpart binding (" + project + ")"
         if len(candidates) != 1:
             raise Gap(f"{scope} retention not stated exactly once (graded {graded.get(scope)}, lane {stated.get(scope)})")
         token = candidates.pop()
