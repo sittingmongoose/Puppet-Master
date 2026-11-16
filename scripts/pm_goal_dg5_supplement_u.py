@@ -5,6 +5,8 @@ case declares its target here, before it runs: one site, or a duplicate set whos
 same field with the same predicate (the reason is written beside it). The judge credits a set only
 when its joint cut accepts and each member, with the others cut, still refuses alone.
 """
+import copy
+
 import pm_goal_dg_u_oracles as U
 
 O = U.O
@@ -200,6 +202,82 @@ def inspect_custody_pending_issued(d):
     snap = w.storage.acquire_source()
     del snap['custody'][ev]
     return w, lambda: w.inspector.inspect(r, g['user'], g['user_permission'], snapshot=snap)
+
+
+FOREIGN = '11111111-1111-4111-8111-111111111111'
+
+
+def _foreign_copy(w, g, op, with_input=False):
+    """A coherent copy of the operation's source (and input) and head progress rows under a
+    foreign storage scope: same owner physical() rebuild at the foreign keys, snapshot and head
+    commitments rewired to the copied source wrapper."""
+    sc = g['scope']
+    fsc = dict(sc, storage_instance_id=FOREIGN)
+    owner = w.source
+    writes = []
+
+    def copied(family, key, fkey, edit):
+        cell = w.storage.cell(family, key)
+        wrapper = owner.unwrap_row(family, key, cell['value'], owner.ROOTS[family])
+        new = edit(copy.deepcopy(wrapper))
+        writes.append(dict(table=family, key=fkey, expected=None,
+                           value=owner.physical(family, fkey, new, cell['value']['source_lifetime'])))
+        return new
+
+    src = copied(O.T_SOURCE, O.upd_key(O.T_SOURCE, sc, op), O.upd_key(O.T_SOURCE, fsc, op),
+                 lambda wr: dict(wr, record=dict(wr['record'], storage_instance_id=FOREIGN)))
+    src_sha = O.wrapper_sha(src)
+    if with_input:
+        copied(O.T_INPUT, O.upd_key(O.T_INPUT, sc, op), O.upd_key(O.T_INPUT, fsc, op),
+               lambda wr: dict(wr, record=dict(wr['record'], storage_instance_id=FOREIGN,
+                                               source_audit_sha256=src_sha)))
+    head_cell = w.storage.cell(O.T_PROGRESS, O.head_key(sc, op))
+    head = owner.unwrap_row(O.T_PROGRESS, O.head_key(sc, op), head_cell['value'], owner.ROOTS[O.T_PROGRESS])
+    epoch = head['record']['progress_epoch']
+    snap = copied(O.T_PROGRESS, O.epoch_key(sc, op, epoch), O.epoch_key(fsc, op, epoch),
+                  lambda wr: dict(wr, record=dict(wr['record'], storage_instance_id=FOREIGN,
+                                                  source_audit_sha256=src_sha)))
+    snap_sha = O.wrapper_sha(snap)
+    copied(O.T_PROGRESS, O.head_key(sc, op), O.head_key(fsc, op),
+           lambda wr: dict(wr, record=dict(wr['record'], storage_instance_id=FOREIGN,
+                                           snapshot_sha256=snap_sha)))
+    w.storage.transact(writes)
+    return fsc
+
+
+@case('U-DG5/N/audit_foreign_coherent', 'dgu/reader/audit/foreign_storage', SITE + '1633',
+      'Single defect: the audit request names a foreign storage whose keys hold a coherent copy of the '
+      'operation (source, head and last snapshot rewired), so only the foreign-storage check (:1633) '
+      'refuses; the authored case names a foreign storage with no rows, so the source lookup also refuses.')
+def audit_foreign_coherent(d):
+    w, g = U._goal(d)
+    req, adm = U.run_direct(w, g)
+    fsc = _foreign_copy(w, g, U.op_of(adm))
+    r = dict(reader_binding='reader.goal.update_command_audit@1.0.0', operation_id=U.op_of(adm),
+             selection=dict(kind='current_progress'), **fsc)
+    return w, lambda: w.source.read_audit(r, g['user'], g['user_permission'])
+
+
+@case('U-DG5/N/input_foreign_coherent', 'dgu/reader/input/foreign_storage', SITE + '1685',
+      'Single defect: as audit_foreign_coherent, with the input row copied too, for the input reader '
+      'foreign-storage check (:1685).')
+def input_foreign_coherent(d):
+    w, g = U._goal(d)
+    req, adm = U.run_direct(w, g)
+    fsc = _foreign_copy(w, g, U.op_of(adm), with_input=True)
+    r = dict(reader_binding='reader.goal.update_input@1.0.0', operation_id=U.op_of(adm), **fsc)
+    return w, lambda: w.source.read_input_content(r, g['user'], g['user_permission'])
+
+
+@case('U-DG5/N/inspect_foreign_coherent', 'dgu/inspect/foreign_storage', SITE + '1851',
+      'Single defect: the inspect request is built for a foreign storage holding the coherent copy, '
+      'so only the inspector foreign-storage check (:1851) refuses; the authored case has no foreign rows.')
+def inspect_foreign_coherent(d):
+    w, g = U._goal(d)
+    req, adm = U.run_direct(w, g)
+    fsc = _foreign_copy(w, g, U.op_of(adm))
+    r = w.inspector.request_for(fsc, U.event_of(w, g, adm))
+    return w, lambda: w.inspector.inspect(r, g['user'], g['user_permission'])
 
 
 @case('U-DG5/N/inspect_progress_not_issued_coherent', 'dgu/inspect/original_custody_unavailable', SITE + '1882',
