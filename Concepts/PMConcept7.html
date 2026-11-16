@@ -79279,7 +79279,14 @@ html[data-pmu-soft] :is(#panel-usage,[data-pmu-host]) .pmu-menu { background: va
    three head forms (plate 52 / line 34 / tile 30), the tools cluster at the top right, hairline rows, the move and
    resize previews (landing, outline, morph), the lifted and settling states. Continuous motion is transform and opacity
    only; nothing animates at idle. */
-:is(#panel-usage,[data-pmu-host]) .pmu-scroll { position: relative; flex: 1 1 auto; min-height: 0; overflow: auto; overscroll-behavior: contain; scrollbar-gutter: stable; }
+/* will-change: scroll-position (lane V, 2026-11-15): the board scrolls on the compositor. Without it Chrome kept this
+   pane's scroll on the main thread (no opaque background, a display under 1.5x; an opaque background alone did not
+   change that): every wheel frame repainted and re-rastered the layer holding the board (Glass: the whole 1920x1080
+   app shell, 61 raster tasks a second) and re-layerized the page (3 ms a frame). Alexis, Basic Dark, 3 s wheel, A-B-B-A:
+   main thread 696/635 -> 452/422 ms/s. It changes no box and no stacking context; drawing the board into its own layer
+   rounds soft shadows a level differently (Basic Dark: 17,426 pixels by 1 level, under 60 by 2 to 10; pixel proof in
+   V-REPORT.md). */
+:is(#panel-usage,[data-pmu-host]) .pmu-scroll { position: relative; flex: 1 1 auto; min-height: 0; overflow: auto; overscroll-behavior: contain; scrollbar-gutter: stable; will-change: scroll-position; }
 :is(#panel-usage,[data-pmu-host]) .pmu-board { position: relative; display: grid; grid-template-columns: repeat(var(--pmu-tracks, 20), minmax(0, 1fr)); grid-auto-rows: var(--pmu-row);
   gap: var(--pmu-gap); padding: 10px 14px 28px; align-content: start; }
 :is(#panel-usage,[data-pmu-host]) .pmu-board[data-held] > .pmu-card { opacity: 0; }
