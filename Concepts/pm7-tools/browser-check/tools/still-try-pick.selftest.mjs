@@ -42,4 +42,12 @@ const homeNone = run('dashboard', [tr(18, 0, 5), tr(16, 40, 200), tr(20, 0, 0)])
 ok(homeNone.x.drawn.perSec === 16 && homeNone.n === 3 && !rowsPass('dashboard', homeNone.x), 'Home: none passing keeps the fewest drawn');
 // a 200-starts try on Home meets its bound (starts are not judged there)
 ok(run('dashboard', [tr(1, 1, 200), tr(0, 0, 10)]).n === 1, 'Home: starts are not judged');
+
+// PM7PERF-STILL-STARTS-60HZ. The bound is 0.45 starts per refresh, capped at 60 a second.
+// At 60 Hz that is 27, so a loop that starts once a refresh (60 a second, nothing rendered) must fail.
+// At 238 Hz the cap is 60, so main's measured 3 to 41 a second (lb2, Alexis) must pass.
+const at60 = stillJudged('settings', { hz: 60 });
+ok(!at60.meets(tr(0, 0, 60)), `60 starts a second at 60 Hz must fail (bound ${at60.startCap})`);
+const at238 = stillJudged('settings', { hz: 238 });
+for (const n of [3, 41]) ok(at238.meets(tr(0, 0, n)), `${n} starts a second at 238 Hz must pass (bound ${at238.startCap})`);
 console.log(`still-try-pick: ${cases} cases pass`);

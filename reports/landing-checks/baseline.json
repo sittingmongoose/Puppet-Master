@@ -160,6 +160,26 @@
   {
    "check": "audit-governance",
    "count": 1,
+   "error": "storage_value_registry_spec_lock_hash_stale",
+   "fingerprints": [
+    "d8b4141f268a"
+   ],
+   "path": "Plans/Spec_Lock.json",
+   "subcheck": "implementation_readiness"
+  },
+  {
+   "check": "audit-governance",
+   "count": 1,
+   "error": "stale_hash",
+   "fingerprints": [
+    "271f85538f3e"
+   ],
+   "path": "scripts/pm-audit-closure.py",
+   "subcheck": "spec_lock"
+  },
+  {
+   "check": "audit-governance",
+   "count": 1,
    "error": "validator_no_output",
    "fingerprints": [
     "ca2d9bc8e006"
@@ -287,17 +307,37 @@
   {
    "check": "run-gates",
    "count": 1,
+   "error": "storage_value_registry_spec_lock_hash_stale",
+   "fingerprints": [
+    "d8b4141f268a"
+   ],
+   "path": "Plans/Spec_Lock.json",
+   "subcheck": "validate_implementation_readiness"
+  },
+  {
+   "check": "run-gates",
+   "count": 1,
    "error": "validator_no_output",
    "fingerprints": [
     "ca2d9bc8e006"
    ],
    "path": "",
    "subcheck": "validate_usage_contract_drift"
+  },
+  {
+   "check": "run-gates",
+   "count": 1,
+   "error": "stale_hash",
+   "fingerprints": [
+    "271f85538f3e"
+   ],
+   "path": "scripts/pm-audit-closure.py",
+   "subcheck": "verify_spec_lock"
   }
  ],
  "checks": {
   "audit-governance": {
-   "failure_total": 225,
+   "failure_total": 227,
    "status": "fail",
    "subchecks": {
     "audit_closure": {
@@ -305,8 +345,12 @@
      "sampled": 100
     },
     "implementation_readiness": {
-     "reported": 23,
-     "sampled": 23
+     "reported": 24,
+     "sampled": 24
+    },
+    "spec_lock": {
+     "reported": 1,
+     "sampled": 1
     },
     "usage_contract_drift": {
      "reported": 1,
@@ -325,7 +369,7 @@
    }
   },
   "run-gates": {
-   "failure_total": 226,
+   "failure_total": 228,
    "status": "fail",
    "subchecks": {
     "json_syntax": {
@@ -337,17 +381,21 @@
      "sampled": 50
     },
     "validate_implementation_readiness": {
-     "reported": 23,
-     "sampled": 23
+     "reported": 24,
+     "sampled": 24
     },
     "validate_usage_contract_drift": {
+     "reported": 1,
+     "sampled": 1
+    },
+    "verify_spec_lock": {
      "reported": 1,
      "sampled": 1
     }
    }
   }
  },
- "commit": "1a109a026bed32dace11323586ad469bb8c26985",
+ "commit": "09d9b32d18fae05fda0fbaf9184f4b0ef95219cb",
  "export_buckets": [],
  "max_fingerprints_per_bucket": 200,
  "readiness_audit_inputs": {
@@ -370,8 +418,8 @@
   },
   "schema_id": "pm.landing_check.readiness_audit_inputs.v1"
  },
- "recorded_at_utc": "2026-11-15T17:25:30Z",
- "run_dir": "Plans/.plan_migration/pds-20261115-005-current-planunit-snapshot",
+ "recorded_at_utc": "2026-11-16T00:57:18Z",
+ "run_dir": "Plans/.plan_migration/pds-20261115-007-current-planunit-snapshot",
  "schema_id": "pm.landing_check.baseline.v1",
  "untracked_inputs": [
   "tests/agent_packet_restrictions"
