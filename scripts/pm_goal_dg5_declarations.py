@@ -69,9 +69,35 @@ DECLARED_RULES += (
 )
 
 
+FAMILY_MODULES = ('s', 'ca', 'r', 'cf')   # pm_goal_dg5_declarations_<x>.py, one owner per file (SPLIT.md)
+_LOADED = []
+
+
+def _family_rules():
+    """Per-family declaration files (each defines DECLARED and/or DECLARED_RULES like this module)."""
+    if not _LOADED:
+        import importlib
+        for name in FAMILY_MODULES:
+            try:
+                module = importlib.import_module('pm_goal_dg5_declarations_' + name)
+            except ModuleNotFoundError as error:
+                if error.name != 'pm_goal_dg5_declarations_' + name:
+                    raise
+                continue
+            _LOADED.append(module)
+        _LOADED.append(None)  # loaded marker
+    return [m for m in _LOADED if m is not None]
+
+
 def declared(case_id):
     if case_id in DECLARED:
         return DECLARED[case_id]
+    for module in _family_rules():
+        if case_id in getattr(module, 'DECLARED', {}):
+            return module.DECLARED[case_id]
+        for test, members, reason in getattr(module, 'DECLARED_RULES', ()):
+            if test(case_id):
+                return members, reason
     for test, members, reason in DECLARED_RULES:
         if test(case_id):
             return members, reason
