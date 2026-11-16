@@ -92,11 +92,47 @@ def check_schema_validate_routing_guard():
     assert seen['routing'] is True, seen
 
 
+def check_boundaries_schema_row_guard():
+    """install_schema_rows (the DG-U banks' path) keeps the schema row identity too."""
+    import types
+
+    import pm_goal_dg5_boundaries as bridge
+
+    seen = {}
+    fake = types.ModuleType('pm_goal_fake_bank')
+
+    class Bank:
+        def errors(self, root, value):
+            return [object()]
+
+        def validate(self, root, value, code='root'):
+            seen['routing'] = bridge.ROUTING[0]
+            raise RuntimeError('inner routed refusal')
+
+    fake.Bank = Bank
+    old_banks, old_decide, old_active = bridge.SCHEMA_BANKS, tables.decide, bridge.ACTIVE[0]
+    sys.modules['pm_goal_fake_bank'] = fake
+    bridge.SCHEMA_BANKS = (('pm_goal_fake_bank', 'Bank', 1, lambda a, k: 'x/y'),)
+    tables.decide = lambda name, holds, site=None: object()
+    bridge.ACTIVE[0] = True
+    try:
+        bridge.install_schema_rows()
+        try:
+            Bank().validate('root', {}, 'x/y')
+        except RuntimeError:
+            pass
+    finally:
+        bridge.SCHEMA_BANKS, tables.decide, bridge.ACTIVE[0] = old_banks, old_decide, old_active
+        del sys.modules['pm_goal_fake_bank']
+    assert seen['routing'] is True, seen
+
+
 def main():
     check_shard_partition()
     check_collector_releases_sealed_values()
     check_stateless_reducer_not_an_entry()
     check_schema_validate_routing_guard()
+    check_boundaries_schema_row_guard()
     print('pm_goal_dg5_collector_selftest: PASS')
     return 0
 
