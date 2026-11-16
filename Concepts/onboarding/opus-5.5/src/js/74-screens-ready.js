@@ -51,6 +51,8 @@
   let restoring = null;
   /* (the Projects the page lists by itself, as it loads) */
   const rowOfFixtureAtLoad = new Set(Array.prototype.map.call(document.querySelectorAll('#projectMenu [data-project]'), (r) => r.getAttribute('data-project')));
+  /* (the page's own default Project: the first row its markup lists, the one it selects, tastebook) */
+  const defaultProject = rowOfFixtureAtLoad.values().next().value || '';
   /* early, as this script runs (the title bar is in the page, the Project box is not wired yet, Settings has not read
      the Project): the id the page opens on */
   let staleLoaded = false;
@@ -132,6 +134,25 @@
       const ids = new Set(setupProjects().map((p) => p.id).concat(madeGet().map((p) => p.id))), id = lsGet();
       if (id && ((o && o.all) || ids.has(id))) lsSet('');
       madeSet([]);
+      /* the page forgets them too (R87-P1): their rows leave the title bar's menu (the page's own rows stay), and when the
+         Project on screen is one of them the page's default Project is selected through the box first, so the label,
+         Settings and its look follow, and no control is left that chooses a forgotten Project and stores its id again.
+         Returns whether the Project on screen changed: Settings loads the new one as this turn of the page ends (its
+         observer of the menu), so a caller that paints a look next lets that happen first */
+      const gone = (pid) => !!pid && ids.has(pid) && !rowOfFixtureAtLoad.has(pid);
+      const sel = document.querySelector('#projectMenu .pm6-tb-menu-item.is-selected[data-project]'), box = window.PM_PROJECT_BOX;
+      const moved = !!(sel && gone(sel.getAttribute('data-project')) && box && defaultProject && box.select(defaultProject));
+      document.querySelectorAll('#projectMenu [data-o55-added][data-project]').forEach((r) => { if (gone(r.getAttribute('data-project'))) r.remove(); });
+      return moved;
+    },
+    /* before a new run of setup replaces the onboarding record (R87-P2: Run Onboarding Again, Start over, a finished run
+       opened again; 60-ui-core.js open), every Project that record names is kept in setup's own record, so a Project an
+       older version listed only there (its finished or committed Project) outlives the new run. Reading the record
+       (setupProjects) never writes; this is the one place its Projects move */
+    keepSetup() {
+      const list = madeGet(), have = new Set(list.map((p) => p.id));
+      const add = setupProjects().filter((p) => !have.has(p.id) && !rowOfFixtureAtLoad.has(p.id));
+      if (add.length) madeSet(list.concat(add.map((p) => ({ id: p.id, name: p.name || p.id, info: p.info || null }))));
     },
     /* The look chosen in onboarding becomes the saved theme (the preview used persist:false), and NieR Mode's three
        rows, the rest of the look, are saved with it into the same Project (their preview, O55.nierLook).

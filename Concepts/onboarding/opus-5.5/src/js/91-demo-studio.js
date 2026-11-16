@@ -108,7 +108,14 @@
       applySituation(s || currentSituation());
       o = o || {};
       /* (a new install: setup's Projects and the active id go first, FO-222 round 2, F3/F4) */
-      if (o.install) { if (O55.shell && O55.shell.forgetSetup) O55.shell.forgetSetup({ all: true }); O55.store.clear('onboarding'); return O55.ui.open({ fresh: true, install: true }); }
+      if (o.install) {
+        const moved = !!(O55.shell && O55.shell.forgetSetup && O55.shell.forgetSetup({ all: true }));
+        O55.store.clear('onboarding');
+        /* (the page left a forgotten Project for its default one: Settings loads that one's look as this turn ends, and
+           the new install's Basic Dark is painted after it, so no frame shows the Project's saved look, R87-P1) */
+        if (moved) return Promise.resolve().then(() => O55.ui.open({ fresh: true, install: true }));
+        return O55.ui.open({ fresh: true, install: true });
+      }
       return W('PM_O55_ONBOARDING').replay();
     },
     resume: () => W('PM_O55_ONBOARDING').resume(),
@@ -746,8 +753,10 @@
     ownedKeys,
     async progress() {
       if (O55.tour && O55.tour.reset) { try { await O55.tour.reset({ silent: true, force: true }); } catch (_) {} }
-      if (O55.shell && O55.shell.forgetSetup) O55.shell.forgetSetup();
+      const moved = !!(O55.shell && O55.shell.forgetSetup && O55.shell.forgetSetup());
       O55.store.clear('onboarding'); O55.store.clear('tour');
+      /* (as in run's new install: Settings loads the default Project first, then Basic Dark, R87-P1) */
+      if (moved) await null;
       return onboarding.run('fresh', { install: true });
     },
     layout: () => workspace.reset(),
