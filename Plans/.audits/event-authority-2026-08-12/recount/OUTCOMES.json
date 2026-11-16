@@ -776,6 +776,10 @@
    "outcome": "registered"
   },
   {
+   "event_type": "server.client_pairing_state_changed",
+   "outcome": "registered"
+  },
+  {
    "event_type": "session_prompt.admitted",
    "outcome": "registered"
   },
