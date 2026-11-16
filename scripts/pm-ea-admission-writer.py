@@ -471,7 +471,12 @@ def read_raw(rel: str) -> str:
 def write_text(rel: str, text: str, *, crlf: bool = False) -> None:
     data = text.replace("\n", "\r\n") if crlf else text
     (REPO / rel).write_bytes(data.encode("utf-8"))
-    _TEXT_CACHE.pop(rel, None)
+    previous = _TEXT_CACHE.pop(rel, None)
+    if previous is not None:
+        # Decision_Log is rewritten for each family. Retaining every prior split
+        # document makes a resumed, otherwise bounded batch exceed its 2 GiB cap.
+        _SPLIT_CACHE.pop(id(previous), None)
+    _TEXT_HASH_CACHE.pop(rel, None)
 
 
 def next_revision(previous: str, date: str) -> str:
@@ -927,7 +932,7 @@ def apply(args) -> int:
     if manifest["base"] != head and not args.allow_new_base:
         raise SystemExit(f"manifest was prepared at {manifest['base']}, HEAD is {head}; prepare again")
     state = {
-        "base": head,
+        "base": manifest["base"],
         "grades": {lane: grade_rows(lane) for lane in SELF_GRADES},
         "recount": {row["name"]: row for row in load(RECOUNT_LIST)},
         "frozen": load_module("pm_ea_frozen_check_for_writer", FROZEN),
@@ -959,6 +964,8 @@ def apply(args) -> int:
             git("commit", "-q", "-m", msg)
             state["results"][-1]["commit"] = git("rev-parse", "HEAD").strip()
         print(json.dumps(state["results"][-1]))
+        if args.results:
+            Path(args.results).write_text(json.dumps(state["results"], indent=1) + "\n", encoding="utf-8")
     if args.results:
         Path(args.results).write_text(json.dumps(state["results"], indent=1) + "\n", encoding="utf-8")
     return 0
