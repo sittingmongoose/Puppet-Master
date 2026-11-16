@@ -161,7 +161,8 @@ def install():
                 setattr(module, key, originals[value])
 
 
-def invoke(label, family, action, work, *, world=None, arguments=None, original=None, valid=True, expected=None):
+def invoke(label, family, action, work, *, world=None, arguments=None, original=None, valid=True, expected=None,
+           declared_target=None):
     """One actual complete action, including its immutable issuer context.
 
     The supplied value binds all durable bytes and owner observations. Replays
@@ -242,7 +243,8 @@ def invoke(label, family, action, work, *, world=None, arguments=None, original=
     if collector is None:
         raise RuntimeError('run through pm_goal_dg5_sweep')
     outcome = collector.invoke(label, evaluate, value, valid,
-                               target=None if expected is None else row(expected), family=family)
+                               target=declared_target if declared_target is not None else
+                               None if expected is None else row(expected), family=family)
     return dict(outcome=outcome, original_refusal=actual[0] if actual else None)
 
 
@@ -314,11 +316,12 @@ def install_u_entries(module):
                     case = CASE[0]
                     world = self.world
                     expected = case.get('expected')
+                    from pm_goal_dg5_declarations import target
                     invoke(case['id'] + '/' + entry, 'goal.updated',
                            lambda: original(self, *args, **kwargs), world.root,
                            world=world, arguments=dict(receiver=self, args=args, kwargs=kwargs),
                            original=original, valid=True if expected is None else None,
-                           expected=expected)
+                           expected=expected, declared_target=target(case, None if expected is None else row(expected)))
                     PARENT_CALL[0] = True
                     try:
                         return original(self, *args, **kwargs)
