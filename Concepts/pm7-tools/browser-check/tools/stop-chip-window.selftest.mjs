@@ -131,12 +131,12 @@ function witness(closeMs = 60) {
 		w += 16 + (i === 5 ? 80 : 0) + (i === 155 ? 60 : 0);
 		const t = w - (i >= 5 ? 80 : 0) - (i >= 155 ? 60 : 0);
 		const held = i >= 5 && i < 155;
-		const loop = (id, v) => held
+		const loop = (id, v, s) => held
 			? { id, dur: DUR, delay: 0, s: null, c: 5096, rate: 1, place: 5096 / DUR, state: 'paused', v }
-			: { id, dur: DUR, delay: 0, s: i >= 155 ? resumeS : 0, c: 0, rate: 1, place: (w - (i >= 155 ? resumeS : 0)) / DUR, state: 'running', v };
+			: { id, dur: DUR, delay: 0, s, c: 0, rate: 1, place: (w - s) / DUR, state: 'running', v };
 		rows.push({
 			t, w, flow: 'waiting', win: held, th: 'basic-dark', ease: 'ease',
-			g: loop(1, 1), b: loop(2, 1), os: [loop(7, 0)],
+			g: loop(1, 1, i >= 155 ? resumeS : 0), b: loop(2, 1, i >= 155 ? resumeS : 0), os: [loop(7, 0, i >= 155 ? 2480 : 0)],
 		});
 	}
 	return { rows, marks: [
