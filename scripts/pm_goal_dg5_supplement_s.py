@@ -700,3 +700,63 @@ def _(suite):
         W.require('lower/prefix', r['classification'] == 'receipted_unpublished' and
                   world.owners['native'].current()['body']['record']['revision'] == ST.BEFORE_REVISION)
         raise error
+
+
+# ------------------------------------------------------------- batch 6 (descriptor, final fences)
+
+@negative('descriptor_before_birth_after_acquire', 'start/descriptor_before_birth', START + '822')
+def _(suite):
+    def tamper(w, src):
+        src['descriptor']['install_generation'] = src['native_birth']['birth_generation']
+    start_case(suite, start_edits=dict(after_acquire=tamper))
+
+
+@negative('birth_descriptor_tx_after_acquire', 'start/birth_descriptor', START + '823')
+def _(suite):
+    def tamper(w, src):
+        src['native_birth']['descriptor_install_tx'] = 'TEST_ONLY:tx:other-descriptor-install'
+    start_case(suite, start_edits=dict(after_acquire=tamper))
+
+
+@negative('current_final_current_start_pointer_record', 'read_current/final_current_start', READERS + '933')
+def _(suite):
+    world, projector, readers, gid = make(suite)
+
+    def move_pointer_record(w):
+        d01 = w.owners['d01']
+        fam = ST.d01_families(w.edition)
+        pointer = w.storage.cell(fam['pointer'], d01.pointer_key())
+        value = copy.deepcopy(pointer['value'])
+        value['record']['last_origin_operation_id'] = 'TEST_ONLY:later-operation'
+        w.storage.transact([dict(table=fam['pointer'], key=d01.pointer_key(),
+                                  expected=pointer['version'], value=value)])
+    readers.read_current(O.sreq(world), hooks=dict(after_current_start=move_pointer_record))
+
+
+@negative('current_final_current_goal_stop_epoch', 'read_current/final_current_goal', READERS + '934')
+def _(suite):
+    world, projector, readers, gid = make(suite)
+
+    def bump_stop_epoch(w):
+        goal = w.owners['goal']
+        key = goal.live_key()
+        cell = w.storage.cell('goal_live_stop', key)
+        w.storage.transact([dict(table='goal_live_stop', key=key,
+                                  expected=None if cell is None else cell['version'],
+                                  value=dict(qualification=ST.QUALIFICATION, latched=False,
+                                             user_stop_epoch=1 if cell is None
+                                             else cell['value']['user_stop_epoch'] + 1))])
+    readers.read_current(O.sreq(world), hooks=dict(after_current_goal=bump_stop_epoch))
+
+
+# A second birth record issued by the native owner itself (the authentic
+# record value) makes the retained birth inventory ambiguous at relations.
+@negative('retained_birth_second_record', 'retained/birth_unissued', READERS + '112')
+def _(suite):
+    world, projector, readers, gid = make(suite)
+    native = world.owners['native']
+    ref = native.inventory('birth')[0]
+    record = native.authenticate(ref, __import__('pm_goal_test_owner_adapters').CODECS['msgpack'][1](
+        native._originals[ref]['raw']))
+    native.issue(None, copy.deepcopy(record), kind='birth')
+    readers.read_historical(O.sreq(world))
