@@ -129,11 +129,16 @@ def main():
     tables.DISCOVERY = bool(args.generate or args.collect_only)
     started = time.time()
     collector = sweep.collect(sources, fuzz=False, judge=not args.generate, keyword_witnesses=False)
+    import pm_goal_dg5_boundaries as bridge
+    collector.failures.extend(bridge.FAILURES)
+    frozen = bridge.verify_frozen()
+    if frozen['drift']:
+        collector.failures.append(dict(kind='load_once_singleton_changed', drift=frozen['drift']))
     import pm_goal_oracle_common as common
     (args.out / 'schema-inventory.json').write_text(json.dumps(dict(types=common._SCHEMA_TYPES,
         inactive=common._SCHEMA_INACTIVE_TYPES, duplicates={k: sorted(v) for k, v in common._SCHEMA_DUPLICATES.items()},
         locations=common._SCHEMA_LOCATIONS, assertions=common._SCHEMA_ASSERTION_INFO), indent=1, default=str) + '\n')
-    summary = dict(calls=collector.calls, guards=len(collector.rows), failures=collector.failures,
+    summary = dict(calls=collector.calls, guards=len(collector.rows), failures=collector.failures, load_once=frozen,
         store_snapshots=collector.store_snapshots, generator_stats=collector.generator_stats,
         replay_unknown_rows=sorted(collector.replay_unknown_rows), signatures=len(collector.signature_list),
         seconds=round(time.time() - started, 1), sources=sources,

@@ -31,16 +31,11 @@ def entries(cls, methods, family):
                     raise ValueError('entry has no original world: ' + entry)
                 case = bridge.CASE[0]
                 expected = case.get('expected')
-                bridge.invoke(case['id'] + '/' + entry, family,
-                              lambda: original(self, *args, **kwargs), world_root(world),
-                              world=world, arguments=dict(receiver=self, args=args, kwargs=kwargs),
-                              original=original, valid=True if expected is None else None,
-                              expected=expected)
-                bridge.PARENT_CALL[0] = True
-                try:
-                    return original(self, *args, **kwargs)
-                finally:
-                    bridge.PARENT_CALL[0] = False
+                from pm_goal_dg5_declarations import target
+                return bridge.entry_call(case, case['id'] + '/' + entry, family,
+                                         lambda: original(self, *args, **kwargs), world_root(world), world=world,
+                                         arguments=dict(receiver=self, args=args, kwargs=kwargs), original=original,
+                                         target=target(case, None if expected is None else bridge.row(expected)))
             call._dg5_entry = True
             return call
         setattr(cls, name, bind())
