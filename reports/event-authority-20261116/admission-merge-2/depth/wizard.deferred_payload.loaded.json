@@ -1,0 +1,636 @@
+{
+ "schema_id": "pm.assurance.event_authority.admission_depth_assessment.v1",
+ "assessment_kind": "admission_twelve_criteria",
+ "writer": "pm-ea-admission-writer.v1",
+ "merge": "admission-merge-2",
+ "registry": {
+  "path": "Plans/event_family_registry.json",
+  "revision": "2026-11-16.294",
+  "sha256": "bbdd96dabae4de692ba73caf8a03281eff7363523a1b2aa2db05b6dea25f5a3b",
+  "family_count": 513,
+  "row_pointer": "#/families/512"
+ },
+ "base_commit": "45b4ccf25270c486dbc682805cd455ce4ca25fb0",
+ "rubric": "Step 8 depth matrix, twelve criteria (DL-077); PASS needs Plans/ evidence",
+ "native_execution": "NOT_RUN",
+ "rows": [
+  {
+   "event_type": "wizard.deferred_payload.loaded",
+   "family_id": "event-family-wizard-deferred-payload-loaded",
+   "family_revision": "1.0.0",
+   "cells": {
+    "membership_version": {
+     "status": "PASS",
+     "representation": "exact_registry_membership",
+     "finding": "Registered at registry revision 2026-11-16.294 as #/families/512 (canonical row SHA-256 ba4ac5c9ddacee0d8ec0709b67fc2fc62356d22851b82f13439ea8d93dd6106c); before this commit the family was absent.",
+     "evidence": [
+      {
+       "path": "Plans/event_family_registry.json",
+       "json_pointer": "#/families/512",
+       "line_start": 33275,
+       "line_end": 33317,
+       "quote": "\"event_type\": \"wizard.deferred_payload.loaded\"",
+       "quote_line": 33278,
+       "file_sha256": "bbdd96dabae4de692ba73caf8a03281eff7363523a1b2aa2db05b6dea25f5a3b",
+       "quote_check": "exact"
+      }
+     ]
+    },
+    "owner_doc": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "The exact candidate has its own current semantic, payload and Storage contract; retired CWF supplies no active authority.",
+     "evidence": [
+      {
+       "path": "Plans/Planning_Wizard.md",
+       "unit": "PWIZ-098",
+       "line_start": 4921,
+       "line_end": 4928,
+       "quote": "wizard.deferred_payload.loaded Observation\n\n```yaml\nplan_unit_id: PWIZ-098\nunit_type: requirement\nstatus: accepted\nowner_doc: Plans/Planning_Wizard.md\ncanonical_text: \"wizard.deferred_pa",
+       "file_sha256": "1ad47262e90672e8a724c242df2866d8a91a5c6f659c4f7f079582d3a38cdb7f",
+       "quote_check": "exact",
+       "quote_scope": "unit PWIZ-098, Plans/Planning_Wizard.md:4921-4992"
+      },
+      {
+       "path": "Plans/Contracts_V0.md",
+       "unit": "CV-595",
+       "line_start": 42774,
+       "line_end": 42781,
+       "quote": "wizard.deferred_payload.loaded Payload And Identity\n\n```yaml\nplan_unit_id: CV-595\nunit_type: requirement\nstatus: accepted\nowner_doc: Plans/Contracts_V0.md\ncanonical_text: 'wizard.deferr",
+       "quote_check": "exact",
+       "quote_scope": "unit CV-595, Plans/Contracts_V0.md:42774-42848",
+       "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "owner_doc",
+      "status": "PASS"
+     }
+    },
+    "producer": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "PASS: append, publish, retry, read, rebuild and compatibility read resolve and verify the original wizard.opened source, owner observations, full event, identity, semantic digest, commitment and first receipt through its historical validator.",
+     "evidence": [
+      {
+       "path": "Plans/Contracts_V0.md",
+       "unit": "CV-595",
+       "line_start": 42817,
+       "line_end": 42817,
+       "quote": "NEW SP-337 event-body binding for wizard.deferred_payload.loaded under DL-045: measure the complete logical body using the exact SP-026 canonical MessagePack bytes Storage stores, never JSON character",
+       "quote_check": "exact",
+       "quote_scope": "unit CV-595, Plans/Contracts_V0.md:42774-42848",
+       "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "Wizard Deferred Payload Loaded Original Custody",
+       "line_start": 55204,
+       "line_end": 55204,
+       "quote": "Observe the existing successful acceptance/loading result of one PWIZ-001 canonical seed into the actual current PlanningRun intake child. The original successful open event and its exact first receip",
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "Wizard Deferred Payload Loaded Original Custody",
+       "line_start": 55183,
+       "line_end": 55183,
+       "quote": "For this exact source family, SP-340 binds the canonical redb file, runs_and_goals storage group and its existing 4 GiB advisory canonical budget, with max_value_bytes=16384. The closed source schema ",
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+      },
+      {
+       "path": "Plans/Contracts_V0.md",
+       "unit": "CV-595",
+       "line_start": 42817,
+       "line_end": 42817,
+       "quote": "NEW SP-337 event-body binding for wizard.deferred_payload.loaded under DL-045: measure the complete logical body using the exact SP-026 canonical MessagePack bytes Storage stores, never JSON character",
+       "quote_check": "exact",
+       "quote_scope": "unit CV-595, Plans/Contracts_V0.md:42774-42848",
+       "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a"
+      },
+      {
+       "path": "Plans/Contracts_V0.md",
+       "unit": "CV-595",
+       "line_start": 42817,
+       "line_end": 42817,
+       "quote": "NEW SP-337 event-body binding for wizard.deferred_payload.loaded under DL-045: measure the complete logical body using the exact SP-026 canonical MessagePack bytes Storage stores, ",
+       "quote_check": "exact",
+       "quote_scope": "unit CV-595, Plans/Contracts_V0.md:42774-42848",
+       "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a"
+      },
+      {
+       "path": "scripts/pm_dcw_event_oracles.py",
+       "unit": "canonical_json/exact_equal",
+       "line_start": 788,
+       "line_end": 793,
+       "quote": "def canonical_json(value, sort_keys=False):\n\n    def domain(item):\n        guard_rows.enforce('O196', {'site': 'O196', 'code': 'integer_json_domain', 'v0': type(item).__name__, 'v1': type(None).__name__})\n        if type(item) is dict:\n            for key, child in item.items():",
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "file_sha256": "2ce4e1853f47c0821dd5676298dbeff2766eb5080bc5eb2e391502d661146599"
+      },
+      {
+       "path": "scripts/pm_dcw_event_oracles.py",
+       "unit": "opened_source_custody",
+       "line_start": 844,
+       "line_end": 844,
+       "quote": "verify(opened_row, predecessor, 'read', None)",
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "file_sha256": "2ce4e1853f47c0821dd5676298dbeff2766eb5080bc5eb2e391502d661146599"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "producer",
+      "status": "PASS"
+     }
+    },
+    "closed_payload_schema": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "Exact closed 1.0.0 payload and both inline/referenced original-source forms validate; every new SHA256/BLAKE3 pattern enforces exactly 64 lowercase hex characters and rejects trailing LF.",
+     "evidence": [
+      {
+       "path": "Plans/event_payloads/planning_wizard/wizard_deferred_payload_loaded.schema.json",
+       "unit": "closed root",
+       "line_start": 5,
+       "line_end": 14,
+       "quote": "\"additionalProperties\": false,\n  \"required\": [\n    \"schema_id\",\n    \"schema_version\",\n    \"event_type\",\n    \"project_id\",\n    \"thread_id\",\n    \"planning_run_id\",\n    \"named_plan_id\",\n  ",
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "file_sha256": "6a70558fc4c92f125bb98c7d93571d24bf990592e27d9f9c8208a3ad351aafc8"
+      },
+      {
+       "path": "Plans/event_payloads/planning_wizard/wizard_deferred_payload_loaded.schema.json",
+       "unit": "schema identity",
+       "line_start": 30,
+       "line_end": 36,
+       "quote": "\"const\": \"pm.event_payload.wizard.deferred_payload.loaded.v1\"\n    },\n    \"schema_version\": {\n      \"const\": \"1.0.0\"\n    },\n    \"event_type\": {\n      \"const\": \"wizard.deferred_payload.lo",
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "file_sha256": "6a70558fc4c92f125bb98c7d93571d24bf990592e27d9f9c8208a3ad351aafc8"
+      },
+      {
+       "path": "Plans/event_payloads/planning_wizard/wizard_deferred_payload_loaded.schema.json",
+       "unit": "exact hash guard",
+       "line_start": 97,
+       "line_end": 99,
+       "quote": "\"pattern\": \"^[0-9a-f]{64}$\",\n      \"minLength\": 64,\n      \"maxLength\": 64",
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "file_sha256": "6a70558fc4c92f125bb98c7d93571d24bf990592e27d9f9c8208a3ad351aafc8"
+      },
+      {
+       "path": "Plans/event_payloads/planning_wizard/wizard_deferred_payload_loaded.schema.json",
+       "unit": "wizard.deferred_payload.loaded",
+       "line_start": 134,
+       "line_end": 143,
+       "quote": "\"payload_reference\": {\n      \"type\": \"object\",\n      \"additionalProperties\": false,\n      \"required\": [\n        \"blake3\",\n        \"byte_size\",\n        \"media_type\"\n      ],\n      \"properties\": {\n     ",
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "file_sha256": "6a70558fc4c92f125bb98c7d93571d24bf990592e27d9f9c8208a3ad351aafc8"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "closed_payload_schema",
+      "status": "PASS"
+     }
+    },
+    "scope_identity": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "Real Project/current subject joins, frozen identity tuple and full envelope/source equality are explicit; no focus or application fallback.",
+     "evidence": [
+      {
+       "path": "Plans/Contracts_V0.md",
+       "unit": "CV-595",
+       "line_start": 42792,
+       "line_end": 42793,
+       "quote": "NEW identity recipe for this exact family: digest is lowercase SHA-256 of UTF-8 compact JSON [\"wizard.deferred_payload.loaded\",project_id,planning_run_id,thread_id,request_id]\n  with en",
+       "quote_check": "exact",
+       "quote_scope": "unit CV-595, Plans/Contracts_V0.md:42774-42848",
+       "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a"
+      },
+      {
+       "path": "Plans/Contracts_V0.md",
+       "unit": "CV-595",
+       "line_start": 42784,
+       "line_end": 42785,
+       "quote": "scope_kind=project; envelope project_id/thread_id equal the actual source child and payload; run_id/node_id/attempt_id\n  and requested/effective account refs are null because this obser",
+       "quote_check": "exact",
+       "quote_scope": "unit CV-595, Plans/Contracts_V0.md:42774-42848",
+       "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "scope_identity",
+      "status": "PASS"
+     }
+    },
+    "replay_idempotency": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "Normal append uses the existing scoped idempotency policy; lost acknowledgement resolves the original full value/receipt and compatibility replay cannot append.",
+     "evidence": [
+      {
+       "path": "Plans/Contracts_V0.md",
+       "unit": "CV-595",
+       "line_start": 42817,
+       "line_end": 42817,
+       "quote": "NEW SP-337 event-body binding for wizard.deferred_payload.loaded under DL-045: measure the complete logical body using the exact SP-026 canonical MessagePack bytes Storage stores, never JSON character",
+       "quote_check": "exact",
+       "quote_scope": "unit CV-595, Plans/Contracts_V0.md:42774-42848",
+       "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a"
+      },
+      {
+       "path": "Plans/Contracts_V0.md",
+       "unit": "CV-595",
+       "line_start": 42799,
+       "line_end": 42801,
+       "quote": "replay_only_not_appendable. Passive readers cannot emit. Observe\n  the existing successful acceptance/loading result of one PWIZ-001 canonical seed into the actual current PlanningRun\n ",
+       "quote_check": "exact",
+       "quote_scope": "unit CV-595, Plans/Contracts_V0.md:42774-42848",
+       "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "replay_idempotency",
+      "status": "PASS"
+     }
+    },
+    "retention": {
+     "status": "PASS",
+     "representation": "integrated_retention_delta",
+     "finding": "Current exact-family BOUND retention assignment: {\"application_policy_ref\": null, \"decisions\": [\"DL-401\", \"DL-508\"], \"event_type\": \"wizard.deferred_payload.loaded\", \"existing_checkpoints\": [], \"grade_source\": \"reports/event-authority-20261104/DCW.self-grade.json\", \"history_policy_ref\": \"RP-AUTHORITY-INDEFINITE@1.0.0\", \"lane\": \"DCW\", \"original_and_checkpoint_assignments\": [{\"decision\": \"DL-508\", \"family_id\": \"wizard_seed_load_evidence\", \"policy_ref\": \"RP-CHAT-THREAD-LIFETIME@1.0.0\"}], \"owner\": \"Plans/Planning_Wizard.md#PWIZ-098\", \"owner_line\": 4921, \"prior_finding\": \"PENDING_RETENTION_DECISION is the allowed lane exception; event and original source lifetimes need RT assignment before admission.\", \"question\": null, \"status\": \"BOUND\"}",
+     "evidence": [
+      {
+       "path": "Plans/Planning_Wizard.md",
+       "unit": "PWIZ-098",
+       "line_start": 4951,
+       "line_end": 4951,
+       "quote": "\\ = RP-AUTHORITY-INDEFINITE@1.0.0`, under DL-401.\\n\\nUse the existing policy object unchanged: {\\\"anchor_kind\\\"\\",
+       "quote_check": "exact",
+       "quote_scope": "unit PWIZ-098, Plans/Planning_Wizard.md:4921-4992",
+       "file_sha256": "1ad47262e90672e8a724c242df2866d8a91a5c6f659c4f7f079582d3a38cdb7f"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "retention",
+      "status": "PASS"
+     }
+    },
+    "redaction_custody": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "PASS: predecessor physical row and reachable packs, original owner observations, Storage/restore identity and inventories, read access and exact reader withdrawal authenticate independently; historical validation never uses current writer CAS/effect eligibility.",
+     "evidence": [
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "Wizard Deferred Payload Loaded Original Custody",
+       "line_start": 55189,
+       "line_end": 55189,
+       "quote": "Mandatory coherent backup includes this non-rebuildable source, original command/child/seed/context evidence, seglog permanent identities and SP-286 original full-value receipt custody at one verified",
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+      },
+      {
+       "path": "Plans/dcw/wizard_seed_load_evidence.schema.json",
+       "unit": "original source root",
+       "line_start": 23,
+       "line_end": 30,
+       "quote": "\"additionalProperties\": false,\n      \"required\": [\n        \"schema_id\",\n        \"schema_version\",\n        \"storage_instance_id\",\n        \"recovery_epoch\",\n        \"value_revision\",\n        \"source_ref",
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "file_sha256": "637368689c661e6055ee1912a7ca77c87ff32cc94b7a168fd6eadb92deeeda5d"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "Wizard Deferred Payload Loaded Original Custody",
+       "line_start": 55183,
+       "line_end": 55183,
+       "quote": "For this exact source family, SP-340 binds the canonical redb file, runs_and_goals storage group and its existing 4 GiB advisory canonical budget, with max_value_bytes=16384. The closed source schema ",
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+      },
+      {
+       "path": "scripts/pm_dcw_event_oracles.py",
+       "unit": "source_storage",
+       "line_start": 532,
+       "line_end": 532,
+       "quote": "guard_rows.enforce('O146', {'site': 'O146', 'code': 'source_payload_not_durable', 'v0': payload['durable']})",
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "file_sha256": "2ce4e1853f47c0821dd5676298dbeff2766eb5080bc5eb2e391502d661146599"
+      },
+      {
+       "path": "scripts/pm_dcw_event_oracles.py",
+       "unit": "opened_source_custody",
+       "line_start": 844,
+       "line_end": 844,
+       "quote": "verify(opened_row, predecessor, 'read', None)",
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "file_sha256": "2ce4e1853f47c0821dd5676298dbeff2766eb5080bc5eb2e391502d661146599"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "redaction_custody",
+      "status": "PASS"
+     }
+    },
+    "transitions": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "The exact existing owner success predicate, predecessor receipt and exclusive source serialization are bound; passive history cannot execute the owner.",
+     "evidence": [
+      {
+       "path": "Plans/Planning_Wizard.md",
+       "unit": "PWIZ-098",
+       "line_start": 4935,
+       "line_end": 4937,
+       "quote": "predecessor_event_id is that\\\n  \\ wizard.opened event for the same original request, child, Project, Named Plan, seed and context. Loading\\\n  \\ is distinct from opening; route-open, a stale see",
+       "file_sha256": "1ad47262e90672e8a724c242df2866d8a91a5c6f659c4f7f079582d3a38cdb7f",
+       "quote_check": "exact",
+       "quote_scope": "unit PWIZ-098, Plans/Planning_Wizard.md:4921-4992"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "transitions",
+      "status": "PASS"
+     }
+    },
+    "consumers_checkpoints": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "SP-278 complete source now resolves exact registered path/pointer/schema ID and its full offline reference closure. Genuine run.started v2 and separate owner-supported v1 originals survive read/rebuild/compatibility_read. Native source/redb adapters remain NOT_RUN.",
+     "evidence": [
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "Wizard Deferred Payload Loaded Original Custody",
+       "line_start": 55208,
+       "line_end": 55208,
+       "quote": "The independent passive consumer is `reader.wizard_deferred_payload_loaded_history@1.0.0`, selecting only this exact event/schema/version and authorized actual Project/PlanningRun/child/request. It ex",
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "Wizard Deferred Payload Loaded Original Custody",
+       "line_start": 55208,
+       "line_end": 55208,
+       "quote": "The independent passive consumer is `reader.wizard_deferred_payload_loaded_history@1.0.0`, selecting only this exact event/schema/version and authorized actual Project/PlanningRun/child/request. It ex",
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+      },
+      {
+       "path": "scripts/pm_dcw_event_oracles.py",
+       "unit": "wizard.deferred_payload.loaded",
+       "line_start": 1005,
+       "line_end": 1005,
+       "quote": "guard_rows.enforce('O232', {'site': 'O232', 'code': 'index_event_join', 'v0': selected})",
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "file_sha256": "2ce4e1853f47c0821dd5676298dbeff2766eb5080bc5eb2e391502d661146599"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "consumers_checkpoints",
+      "status": "PASS"
+     }
+    },
+    "compatibility_withdrawal": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "PASS: current caller admission stays separate from authenticated original dispatch and passive replay policy. occurred_at_utc and family ts use pm_event_datetime.date_time with the EventRecord profile; Storage observed_at_utc and persisted_at_utc use storage_utc_z. SP-1101 selects those profiles for a retained original. Native original authentication remains NOT_RUN.",
+     "evidence": [
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "Wizard Deferred Payload Loaded Original Custody",
+       "line_start": 55210,
+       "line_end": 55210,
+       "quote": "Withdrawal cuts off this exact writer admission first, drains or fences pending original slots under their original receipt gates, then withdraws `reader.wizard_deferred_payload_loaded_",
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "Wizard Deferred Payload Loaded Original Custody",
+       "line_start": 55210,
+       "line_end": 55210,
+       "quote": "Withdrawal cuts off this exact writer admission first, drains or fences pending original slots under their original receipt gates, then withdraws `reader.wizard_deferred_payload_loaded_history@1.0.0` ",
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+      },
+      {
+       "path": "scripts/pm_dcw_event_oracles.py",
+       "unit": "wizard.deferred_payload.loaded",
+       "line_start": 616,
+       "line_end": 617,
+       "quote": "        supplied_original = dict(event, replay_policy=original_event['replay_policy'])\n        guard_rows.enforce('O185', {'site': 'O185', 'code': 'original_full_value', 'v0': typed_observation(supplied_original), 'v1': typed_observation(original_event)})",
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "file_sha256": "2ce4e1853f47c0821dd5676298dbeff2766eb5080bc5eb2e391502d661146599"
+      },
+      {
+       "path": "Plans/Contracts_V0.md",
+       "unit": "CV-253",
+       "line_start": 20820,
+       "line_end": 20820,
+       "quote": "persisted timestamps are UTC ISO-8601 values with Z",
+       "quote_check": "exact",
+       "quote_scope": "unit CV-253, Plans/Contracts_V0.md:20811-20860",
+       "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a"
+      },
+      {
+       "path": "scripts/pm_dcw_event_oracles.py",
+       "unit": "require_storage_timestamps",
+       "line_start": 853,
+       "line_end": 853,
+       "quote": "event_datetime.date_time(item, profile=event_datetime.STORAGE_UTC_Z)",
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "file_sha256": "2ce4e1853f47c0821dd5676298dbeff2766eb5080bc5eb2e391502d661146599"
+      },
+      {
+       "path": "scripts/pm_dcw_number_custody.py",
+       "unit": "retained_timestamps",
+       "line_start": 41,
+       "line_end": 41,
+       "quote": "dt.date_time(event[field], profile=dt.STORAGE_UTC_Z)",
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "file_sha256": "b8887586db725c735eb814c27222e7df1798f79f74a9967117ff09abc5c97d58"
+      },
+      {
+       "path": "scripts/pm_dcw_number_custody.py",
+       "unit": "install",
+       "line_start": 72,
+       "line_end": 72,
+       "quote": "retained_timestamps(n.decode_storage_value(candidate.record_bytes, profile=n.EVENT_VALUE))",
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "file_sha256": "b8887586db725c735eb814c27222e7df1798f79f74a9967117ff09abc5c97d58"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "compatibility_withdrawal",
+      "status": "PASS"
+     }
+    },
+    "positive_negative_oracles": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "PASS (C12-DCW): all 218 named rows this family reaches run on the gated tool 004bdedd63 (lane-wide 380/394 proved; the 14 by-construction rows sit alone in their own tables with executable entailment attempts). At the complete boundary each reached row has a lane witness refused first there and accepted by the unchanged complete checker with only that row disabled, or a checked implication (by_construction 8, complete_boundary_reclassified 12, cut_accepts 165, entailed 16, precondition 17). The whole-definition OE001 schema ledger has 26513 exact kills and 11176 INVALID proposals over 23 real check_schema sites, plus 17834 exact kills from path-novel controls beyond the per-site cap; every reachable clause is witnessed with OE001 cut and restoration, witnessed at the same site in another family with identical schema pins, or vacuous (vacuous 21, witnessed 2790, witnessed_by_shared_site 13, witnessed_supplement 20); keyword independence is not claimed. Lane-wide copy-join inventory, 193 two-copy rows: 91 have each copy changed alone and refused first there, 76 have the second copy located and pinned by named earlier joins (checked), 24 carry written dispositions (derived, configuration or legacy-callback copies) and 2 are by-construction rows. Retained reads select only the sealed original store and leave it unchanged (34/34 exact). Shared numbers and date-time profiles run at every DCW boundary (EventRecord; storage_utc_z for Storage-assigned times; acknowledged_at_utc EventRecord per E5-2). New row O234 refuses unverified compaction translations. Native campaigns remain NOT_RUN.",
+     "evidence": [
+      {
+       "path": "Plans/event_payloads/planning_wizard/wizard_deferred_payload_loaded.schema.json",
+       "unit": "closed root",
+       "line_start": 5,
+       "line_end": 14,
+       "quote": "\"additionalProperties\": false,\n  \"required\": [\n    \"schema_id\",\n    \"schema_version\",\n    \"event_type\",\n    \"project_id\",\n    \"thread_id\",\n    \"planning_run_id\",\n    \"named_plan_id\",\n  ",
+       "evidence_role": "Exact canonical subject of the existing whole-definition oracle proof; test execution evidence remains the separately cited scripts.",
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "file_sha256": "6a70558fc4c92f125bb98c7d93571d24bf990592e27d9f9c8208a3ad351aafc8"
+      },
+      {
+       "path": "scripts/pm_dcw_event_oracles.py",
+       "unit": "index_read",
+       "line_start": 482,
+       "line_end": 482,
+       "quote": "guard_rows.enforce('O234', {'site': 'O234', 'code': 'index_translation_unverified', 'v0': generation['translation']})",
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "file_sha256": "2ce4e1853f47c0821dd5676298dbeff2766eb5080bc5eb2e391502d661146599"
+      },
+      {
+       "path": "scripts/pm_dcw_c12.py",
+       "unit": "schema ledger",
+       "line_start": 395,
+       "line_end": 395,
+       "quote": "EXPECTED = ['refused', 'OE001', 'schema']",
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "file_sha256": "2d9cbb9fe1b5e5972385081249e53948bf86d0ec411c47ce3310e279eddb4631"
+      },
+      {
+       "path": "scripts/pm_dcw_c12.py",
+       "unit": "schema ledger",
+       "line_start": 439,
+       "line_end": 439,
+       "quote": "killed=after_cut == ['accepted'] and restored == EXPECTED)",
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "file_sha256": "2d9cbb9fe1b5e5972385081249e53948bf86d0ec411c47ce3310e279eddb4631"
+      },
+      {
+       "path": "scripts/pm_dcw_c12_boundary.py",
+       "unit": "classify",
+       "line_start": 72,
+       "line_end": 72,
+       "quote": "return dict(status='complete_boundary', first=first, cut=single)",
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "file_sha256": "3b42dc9b8ac59d77a40ce6e37290dc6cff7fec003a37f35c30fe9b580937b6a8"
+      },
+      {
+       "path": "scripts/pm_dcw_c12_implications.py",
+       "unit": "check",
+       "line_start": 147,
+       "line_end": 147,
+       "quote": "entry['status'] = 'pass' if chains and all(set(claim['by']) & set(c) for c in chains) else 'fail'",
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "file_sha256": "101ef9b2ba3f4cdafa35e7880ae4834b42429d9cf397154f6fedfb1d684af120"
+      },
+      {
+       "path": "scripts/pm_dcw_c12_retained.py",
+       "unit": "observe",
+       "line_start": 222,
+       "line_end": 222,
+       "quote": "assert row['store_unchanged'] and row['caller_unchanged'], row",
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "file_sha256": "30f97e20d1e1bcaa57281c10f9b0933b9481727af2d346eaa413765b32623262"
+      },
+      {
+       "path": "scripts/pm_dcw_c12_datetime.py",
+       "unit": "field_profile",
+       "line_start": 50,
+       "line_end": 50,
+       "quote": "return dt.STORAGE_UTC_Z if storage else dt.EVENT_RECORD",
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "file_sha256": "2b54ba8612ef5b3b6340b6ccd8faf674f372e204cc77c5eddd95e25f03520501"
+      },
+      {
+       "path": "scripts/pm_dcw_c12_entailments.py",
+       "unit": "run_spec",
+       "line_start": 185,
+       "line_end": 185,
+       "quote": "ok = all(a['first_is_earlier'] and not a['row_refused_first'] and a['backstop_refuses'] for a in attempts)",
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "file_sha256": "f96d834622f3920fcb5b15aba3cb43539b20d8f6f59e0bac260c6b3979ded6e2"
+      },
+      {
+       "path": "scripts/pm_dcw_c12_cases.py",
+       "unit": "wizard.deferred_payload.loaded",
+       "line_start": 140,
+       "line_end": 140,
+       "quote": "yield witness('O083', 'wizard.deferred_payload.loaded', loaded, control(loaded, 'append'),",
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "file_sha256": "c86a50adbde2a1e924d71d3cb62ba0b6a26d589331e267099fe5728d71adf39c"
+      },
+      {
+       "path": "scripts/pm_dcw_c12_cases.py",
+       "unit": "wizard.deferred_payload.loaded",
+       "line_start": 270,
+       "line_end": 270,
+       "quote": "yield witness('O113', 'wizard.deferred_payload.loaded', loaded, control(loaded, 'append'), opened_other_seed,",
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "file_sha256": "c86a50adbde2a1e924d71d3cb62ba0b6a26d589331e267099fe5728d71adf39c"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "positive_negative_oracles",
+      "status": "PASS"
+     }
+    }
+   }
+  }
+ ]
+}
