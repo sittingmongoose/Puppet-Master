@@ -1,0 +1,575 @@
+{
+ "schema_id": "pm.assurance.event_authority.admission_depth_assessment.v1",
+ "assessment_kind": "admission_twelve_criteria",
+ "writer": "pm-ea-admission-writer.v1",
+ "merge": "admission-merge-2",
+ "registry": {
+  "path": "Plans/event_family_registry.json",
+  "revision": "2026-11-16.132",
+  "sha256": "b5789a3aff06fe51e39ee3e397f5e93661a0ee0a14cd2639553e1b5ecd09a0af",
+  "family_count": 351,
+  "row_pointer": "#/families/350"
+ },
+ "base_commit": "45b4ccf25270c486dbc682805cd455ce4ca25fb0",
+ "rubric": "Step 8 depth matrix, twelve criteria (DL-077); PASS needs Plans/ evidence",
+ "native_execution": "NOT_RUN",
+ "rows": [
+  {
+   "event_type": "concern.created",
+   "family_id": "event-family-concern-created",
+   "family_revision": "1.0.0",
+   "cells": {
+    "membership_version": {
+     "status": "PASS",
+     "representation": "exact_registry_membership",
+     "finding": "Registered at registry revision 2026-11-16.132 as #/families/350 (canonical row SHA-256 99327ea273530958f5d6875f2e190a3e962896093f632bb7cb89488cf221773e); before this commit the family was absent.",
+     "evidence": [
+      {
+       "path": "Plans/event_family_registry.json",
+       "json_pointer": "#/families/350",
+       "line_start": 23753,
+       "line_end": 23793,
+       "quote": "\"event_type\": \"concern.created\"",
+       "quote_line": 23756,
+       "file_sha256": "b5789a3aff06fe51e39ee3e397f5e93661a0ee0a14cd2639553e1b5ecd09a0af",
+       "quote_check": "exact"
+      }
+     ]
+    },
+    "owner_doc": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "The family has its own current semantic/payload/Storage routes, with existing creator and product authority preserved.",
+     "evidence": [
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-666",
+       "line_start": 51153,
+       "line_end": 51153,
+       "quote": "Newly authored owner contract for concern.created 1.0.0 under DL-045, prepared without admission.",
+       "quote_check": "exact",
+       "quote_scope": "unit SP-666, Plans/storage-plan.md:51146-51356",
+       "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+      },
+      {
+       "path": "Plans/Contracts_V0.md",
+       "unit": "CV-686",
+       "line_start": 40405,
+       "line_end": 40405,
+       "quote": "concern.created closed current payload and authority route",
+       "quote_check": "exact",
+       "quote_scope": "unit CV-686, Plans/Contracts_V0.md:40405-40478",
+       "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "owner_doc",
+      "status": "PASS"
+     }
+    },
+    "producer": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "The exact handler and original commit/append/first receipt/terminal ordering adopt SP-286/CV-339 full-value v2 custody; native authenticity remains NOT_RUN.",
+     "evidence": [
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-666",
+       "line_start": 51158,
+       "line_end": 51159,
+       "quote": "handlers::concern::create commits this\\\n  \\ family, after independently authenticating one of those five creator",
+       "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707",
+       "quote_check": "exact",
+       "quote_scope": "unit SP-666, Plans/storage-plan.md:51146-51356"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-666",
+       "line_start": 51209,
+       "line_end": 51209,
+       "quote": "storage.first_append_receipt.resolve.v2, including the full-value v2 successor,",
+       "quote_check": "exact",
+       "quote_scope": "unit SP-666, Plans/storage-plan.md:51146-51356",
+       "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "producer",
+      "status": "PASS"
+     }
+    },
+    "closed_payload_schema": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "The exact closed current payload and value companions are coherent; identifier patterns reject trailing LF. No historical reader authorizes current writes.",
+     "evidence": [
+      {
+       "path": "Plans/event_payloads/concern/concern_created.schema.json",
+       "unit": "closed payload schema",
+       "line_start": 8,
+       "line_end": 8,
+       "quote": "\"additionalProperties\": false,",
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "file_sha256": "583e1b5d02e78568946ac53fb66a8ec4e5ce8c9e7972c66fee01a6e918f60996"
+      },
+      {
+       "path": "Plans/event_payloads/concern/concern_created.schema.json",
+       "unit": "closed payload schema",
+       "line_start": 10,
+       "line_end": 10,
+       "quote": "\"schema_version\", \"project_id\", \"concern_id\", \"concern_revision\",",
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "file_sha256": "583e1b5d02e78568946ac53fb66a8ec4e5ce8c9e7972c66fee01a6e918f60996"
+      },
+      {
+       "path": "Plans/Contracts_V0.md",
+       "unit": "CV-686",
+       "line_start": 40405,
+       "line_end": 40405,
+       "quote": "concern.created closed current payload and authority route",
+       "quote_check": "exact",
+       "quote_scope": "unit CV-686, Plans/Contracts_V0.md:40405-40478",
+       "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "closed_payload_schema",
+      "status": "PASS"
+     }
+    },
+    "scope_identity": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "Project-only EventRecord 2.0.0, the exact original identity recipe and subject/actor/record joins are independently bound; no default or application Project is inferred.",
+     "evidence": [
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-666",
+       "line_start": 51171,
+       "line_end": 51172,
+       "quote": "Identity: Project-only EventRecord 2.0.0, scope_kind=project, envelope project_id equals payload and\\\n  \\ original",
+       "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707",
+       "quote_check": "exact",
+       "quote_scope": "unit SP-666, Plans/storage-plan.md:51146-51356"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-666",
+       "line_start": 51172,
+       "line_end": 51173,
+       "quote": "project~base64url_no_pad(UTF8(project_id)).\\\n  \\ No application/default/focus",
+       "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707",
+       "quote_check": "exact",
+       "quote_scope": "unit SP-666, Plans/storage-plan.md:51146-51356"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "scope_identity",
+      "status": "PASS"
+     }
+    },
+    "replay_idempotency": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "Full frozen semantics and original identity/receipt recovery prevent changed-key reuse, renewed timestamps or repeated effects. Current append/retry refuses projector_replay_only.",
+     "evidence": [
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-666",
+       "line_start": 51191,
+       "line_end": 51191,
+       "quote": "Request digest",
+       "quote_check": "exact",
+       "quote_scope": "unit SP-666, Plans/storage-plan.md:51146-51356",
+       "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-666",
+       "line_start": 51217,
+       "line_end": 51217,
+       "quote": "retries recover append; settled retries",
+       "quote_check": "exact",
+       "quote_scope": "unit SP-666, Plans/storage-plan.md:51146-51356",
+       "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-666",
+       "line_start": 51182,
+       "line_end": 51182,
+       "quote": "projector_replay_only",
+       "quote_check": "exact",
+       "quote_scope": "unit SP-666, Plans/storage-plan.md:51146-51356",
+       "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+      },
+      {
+       "path": "scripts/pm-concern-created-contracts-check.py",
+       "unit": "caller_body",
+       "line_start": 42,
+       "line_end": 42,
+       "quote": "def caller_body",
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "file_sha256": "e9f76bce9f436b6e39bab7fc5db221bbe00264ac531b81a73440e8fd30cffbc9"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "replay_idempotency",
+      "status": "PASS"
+     }
+    },
+    "retention": {
+     "status": "PASS",
+     "representation": "integrated_retention_delta",
+     "finding": "Current exact-family BOUND retention assignment: {\"application_policy_ref\": null, \"decisions\": [\"DL-401\", \"DL-500\", \"DL-501\"], \"event_type\": \"concern.created\", \"existing_checkpoints\": [{\"family_id\": \"concern_created_checkpoint\", \"policy_ref\": \"RP-PROJECTION-3GEN@1.0.0\"}], \"grade_source\": \"reports/event-authority-20261104/DG6A.self-grade.json\", \"history_policy_ref\": \"RP-AUTHORITY-INDEFINITE@1.0.0\", \"lane\": \"DG6A\", \"original_and_checkpoint_assignments\": [{\"decision\": \"DL-500\", \"family_id\": \"concern_created_checkpoint\", \"policy_ref\": \"RP-PROJECTION-3GEN@1.0.0\"}, {\"decision\": \"DL-501\", \"family_id\": \"concern_created_operation\", \"policy_ref\": \"RP-OPERATIONAL-2555D@1.0.0\"}], \"owner\": \"Plans/storage-plan.md#SP-666\", \"owner_line\": 46741, \"prior_finding\": \"Event, original operation and History checkpoint remain explicitly PENDING_RETENTION_DECISION; no new retention policy is chosen.\", \"question\": null, \"status\": \"BOUND\"}",
+     "evidence": [
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-666",
+       "line_start": 51301,
+       "line_end": 51301,
+       "quote": "\\ = RP-AUTHORITY-INDEFINITE@1.0.0`, under DL-401, DL-500, DL-501.\\n\\nUse the existing policy object\\",
+       "quote_check": "exact",
+       "quote_scope": "unit SP-666, Plans/storage-plan.md:51146-51356",
+       "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "retention",
+      "status": "PASS"
+     }
+    },
+    "redaction_custody": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "Original non-rebuildable evidence, coherent backup/restore and current membership/source/deletion checks are bound; immutable refs never grant access.",
+     "evidence": [
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-666",
+       "line_start": 51232,
+       "line_end": 51233,
+       "quote": "Custody: canonical record\\\n  \\ and original operation are non-rebuildable original authority. Preserve immutable original",
+       "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707",
+       "quote_check": "exact",
+       "quote_scope": "unit SP-666, Plans/storage-plan.md:51146-51356"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-666",
+       "line_start": 51235,
+       "line_end": 51236,
+       "quote": "backup/restore includes all of them with the original Storage source under one verified\\\n  \\ recovery boundary.",
+       "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707",
+       "quote_check": "exact",
+       "quote_scope": "unit SP-666, Plans/storage-plan.md:51146-51356"
+      },
+      {
+       "path": "scripts/pm-alert-event-contracts-check.py",
+       "unit": "append_result_errors",
+       "line_start": 349,
+       "line_end": 349,
+       "quote": "def append_result_errors",
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "file_sha256": "25f8207005bae21b3cfe94ece2b202eec86dc68ef4b1e210b27f24a71f29ba30"
+      },
+      {
+       "path": "Plans/concern_created_contracts/concern_created.fixtures.json",
+       "unit": "append_cases",
+       "line_start": 26941,
+       "line_end": 26941,
+       "quote": "\"name\": \"foreign_original_append_result_ref\"",
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "file_sha256": "5b63f1a803bfd335d710db6d233e0bae61898ba3ce59045dc2a008b6a3e1f693"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "redaction_custody",
+      "status": "PASS"
+     }
+    },
+    "transitions": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "Exact existing action/birth predicates, preconditions, refusal/no-change paths and original committed outcome are bound without granting sibling actions.",
+     "evidence": [
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-666",
+       "line_start": 51164,
+       "line_end": 51165,
+       "quote": "Birth is absent -> active at concern_revision=1, never acknowledged/resolved/dismissed,\\\n  \\ never a",
+       "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707",
+       "quote_check": "exact",
+       "quote_scope": "unit SP-666, Plans/storage-plan.md:51146-51356"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "transitions",
+      "status": "PASS"
+     }
+    },
+    "consumers_checkpoints": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "The exact passive History projector/reader adopts SP-278/DL-076 durable token, full-value CAS, bounded frontier and complete-response read-through/rebuild.",
+     "evidence": [
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-666",
+       "line_start": 51241,
+       "line_end": 51242,
+       "quote": "projector.concern_created.history@1.0.0\\\n  \\ and reader.concern_created.history@1.0.0 expose passive",
+       "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707",
+       "quote_check": "exact",
+       "quote_scope": "unit SP-666, Plans/storage-plan.md:51146-51356"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-666",
+       "line_start": 51244,
+       "line_end": 51244,
+       "quote": "SP-278/DL-076:",
+       "quote_check": "exact",
+       "quote_scope": "unit SP-666, Plans/storage-plan.md:51146-51356",
+       "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-666",
+       "line_start": 51201,
+       "line_end": 51201,
+       "quote": "CAS creates concern_record.v1:{project_id}:{concern_id}",
+       "quote_check": "exact",
+       "quote_scope": "unit SP-666, Plans/storage-plan.md:51146-51356",
+       "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "consumers_checkpoints",
+      "status": "PASS"
+     }
+    },
+    "compatibility_withdrawal": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "Exact version dispatch and writer-cutoff/original-obligation/checkpoint-reader withdrawal fences are explicit; unknown or stale originals remain unavailable. Sweep part 2B (gated NUMRULE head 58c2816ff3): the retained edition and its exact frozen validator are selected by SP-1101 custody (RetainedDispatcher over Storage's sealed original, exact binding, installed recipe tuple pinning the edition's schema bytes, recomputed commitment/family/identity), never by caller evidence; unavailable, unsealed, foreign or unsupported originals refuse without fallback, and a skipped format check never authenticates invalid history (CV-1101).",
+     "evidence": [
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-666",
+       "line_start": 51268,
+       "line_end": 51269,
+       "quote": "Compatibility: only the exact current payload 1.0.0 and declared value schemas\\\n  \\ are selected;",
+       "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707",
+       "quote_check": "exact",
+       "quote_scope": "unit SP-666, Plans/storage-plan.md:51146-51356"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-666",
+       "line_start": 51260,
+       "line_end": 51260,
+       "quote": "withdrawn publication or missing coverage is unavailable. Source-generation change requires",
+       "quote_check": "exact",
+       "quote_scope": "unit SP-666, Plans/storage-plan.md:51146-51356",
+       "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+      },
+      {
+       "path": "scripts/pm_dg6a_custody.py",
+       "unit": "resolve",
+       "line_start": 324,
+       "line_end": 324,
+       "quote": "def resolve(original):",
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "file_sha256": "0012cdb6b5c8ac3243e3459e290f073daaf3da131ed37dc4598aad6c50e3793d"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "compatibility_withdrawal",
+      "status": "PASS"
+     }
+    },
+    "positive_negative_oracles": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "C12-DG6A (PNC-019 S4, 2026-11-15): PASS under the scope's whole-definition Method B route at head 6ead4f4885. Every DG6A guard table holds at most eight rows (s4o2's phase groups, generalized) and the unchanged gated tool 004bdedd63 proves every reachable row; the twenty entailed rows each sit alone in a table with a checked premise and construction attempts through the unchanged checker functions. For this family the unchanged complete checker runs under scripts/pm_dg6a_c12_closure.py: 807 reachable owner clauses (payload, operation, checkpoint and the custody-selected frozen editions), 0 uncovered; 2220 exact clause kills at the consuming row with clause cut, whole-definition row cut and restoration (1862 also first-refused at that row by the unchanged consuming function); 12 non-targeting proposals uncredited. Registry copies: 549 exact storage_schema refusals. Copy joins: 1890 exact single-row kills; multi-row and unconstrained changes listed separately, uncredited. Retained custody: 42 exact HC/RQ refusals across missing, foreign, ambiguous, replaced and foreign-recipe receipts, 2108 store snapshots, 0 changed. Timestamps: the shared CV-1101 corpus at 7 evaluated date-time clauses (EventRecord) and at the retained observed/persisted (storage_utc_z) and acknowledged_at_utc (EventRecord) instants, 0 disagreements. Numbers: the shared corpus runs with 0 disagreements and 4,400-digit integers reach every evaluated integer slot without an exception. Native NOT_RUN; admission ABSENT; independent review NOT_RUN; the shared whole-Plans date-time inventory gate stays blocked by its listed stale-citation tool issue.",
+     "evidence": [
+      {
+       "path": "Plans/Automated_Testing_System.md",
+       "unit": "ATS-334",
+       "line_start": 10841,
+       "line_end": 10841,
+       "quote": "concern.created has its own independent python3 scripts/pm-concern-created-contracts-check.py and",
+       "quote_check": "exact",
+       "quote_scope": "unit ATS-334, Plans/Automated_Testing_System.md:10814-10887",
+       "file_sha256": "e1c8a84c145a3aaaa0738971f76db5fa0bf94f59c0149e76f4131e8579a6971d"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-666",
+       "line_start": 51299,
+       "line_end": 51300,
+       "quote": "NOT_RUN. Nothing here admits an event or makes a native writer\\\n  \\ available.",
+       "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707",
+       "quote_check": "exact",
+       "quote_scope": "unit SP-666, Plans/storage-plan.md:51146-51356"
+      },
+      {
+       "path": "Plans/concern_created_contracts/concern_created.fixtures.json",
+       "unit": "append_cases",
+       "line_start": 26941,
+       "line_end": 26941,
+       "quote": "\"name\": \"foreign_original_append_result_ref\"",
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "file_sha256": "5b63f1a803bfd335d710db6d233e0bae61898ba3ce59045dc2a008b6a3e1f693"
+      },
+      {
+       "path": "reports/event-authority-20261114/C12-DG6A.md",
+       "unit": "C12-DG6A concern.created",
+       "line_start": 15,
+       "line_end": 15,
+       "quote": "| `concern.created` | PARTIAL | PASS |",
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "file_sha256": "be6a9c141581982a70f84ac1ef79025683ad56d564aa6437f16998667c2bfa3e"
+      },
+      {
+       "path": "scripts/pm_dg6a_c12_closure.py",
+       "unit": "schema_coverage",
+       "line_start": 961,
+       "line_end": 961,
+       "quote": "def schema_coverage(family, out):",
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "file_sha256": "58a582bcc3bb6ff56c1cfd2c267d116d11b386e9c414b30e00cbe20fce60745d"
+      },
+      {
+       "path": "scripts/pm_dg6a_c12_closure.py",
+       "unit": "copies_mode",
+       "line_start": 1578,
+       "line_end": 1578,
+       "quote": "def copies_mode(family, out):",
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "file_sha256": "58a582bcc3bb6ff56c1cfd2c267d116d11b386e9c414b30e00cbe20fce60745d"
+      },
+      {
+       "path": "scripts/pm_dg6a_c12_closure.py",
+       "unit": "retained_variants",
+       "line_start": 1445,
+       "line_end": 1445,
+       "quote": "def retained_variants(",
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "file_sha256": "58a582bcc3bb6ff56c1cfd2c267d116d11b386e9c414b30e00cbe20fce60745d"
+      },
+      {
+       "path": "scripts/pm_dg6a_c12_closure.py",
+       "unit": "datetime_schema_corpus",
+       "line_start": 933,
+       "line_end": 933,
+       "quote": "def datetime_schema_corpus(",
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "file_sha256": "58a582bcc3bb6ff56c1cfd2c267d116d11b386e9c414b30e00cbe20fce60745d"
+      },
+      {
+       "path": "scripts/pm_dg6a_c12_closure.py",
+       "unit": "bigint_mode",
+       "line_start": 1624,
+       "line_end": 1624,
+       "quote": "def bigint_mode(family, out):",
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "file_sha256": "58a582bcc3bb6ff56c1cfd2c267d116d11b386e9c414b30e00cbe20fce60745d"
+      },
+      {
+       "path": "scripts/pm-dg6a-c12-entailed.py",
+       "unit": "command_key_rows",
+       "line_start": 109,
+       "line_end": 109,
+       "quote": "def command_key_rows(results):",
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "file_sha256": "38b022edac6573f58470bb5c8886f6741c1e2ffc75ddf9f28395ccbc0f79de8b"
+      },
+      {
+       "path": "scripts/pm-dg6a-c12-split-equivalence.py",
+       "unit": "main",
+       "line_start": 105,
+       "line_end": 105,
+       "quote": "phases['current_context'] = ('current_context', 'current_context__2')",
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "file_sha256": "4c711d116363f7e54eed524824d39840e0a1dd7d3d6375d707be89970840e1b3"
+      },
+      {
+       "path": "scripts/pm_dg6a_phase_groups.py",
+       "unit": "ALIASES",
+       "line_start": 2,
+       "line_end": 2,
+       "quote": "ALIASES = ",
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "file_sha256": "c8bd028969f102098d282a81007abf454b5eeab420eb31d2fa2a0d81243f70ff"
+      },
+      {
+       "path": "scripts/pm-alert-event-contracts-check.py",
+       "unit": "registry_mirror_errors",
+       "line_start": 575,
+       "line_end": 575,
+       "quote": "def registry_mirror_errors(",
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "file_sha256": "25f8207005bae21b3cfe94ece2b202eec86dc68ef4b1e210b27f24a71f29ba30"
+      },
+      {
+       "path": "scripts/pm-dg6a-guard-tables.py",
+       "unit": "collect_context_part",
+       "line_start": 472,
+       "line_end": 472,
+       "quote": "def collect_context_part(module):",
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "file_sha256": "6b2069bd7af8931b281bda6aba6ac462b132878d7b1a2966c2bc0b604cca0ae9"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "positive_negative_oracles",
+      "status": "PASS"
+     }
+    }
+   }
+  }
+ ]
+}
