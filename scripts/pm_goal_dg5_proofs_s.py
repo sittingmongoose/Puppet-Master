@@ -231,3 +231,33 @@ PROOFS.update({
             "(the fresh discovery chain for S1/producer_replay_only_policy stops exactly there with "
             "no_progress), so :984 has no single-defect witness.")),
 })
+
+PROOFS.update({
+    'dg5/site/pm_goal_dg_s_readers.py:77': dict(
+        kind='entailment', families=['goal_run.started'],
+        depends_on=['dg5/site/pm_goal_dg_s_world.py:458'],
+        sites=[(READERS, 77), (READERS, 79), (WORLD_PY, 458), (WORLD_PY, 459)],
+        argument=(
+            "The value guarded at :77 is the StartControl committed_start selector, resolved on the "
+            "very next acquisition step at readers:79. When it is None (the only state in which :77's "
+            "committed-start conjunct fails; the operation-id conjunct is read from the same birth "
+            "record), resolve_selector refuses at world:458 on selector type, and with that site cut "
+            "the following line subscripts the None selector. The ef0 discovery chain for "
+            "S4/retained_before_any_start stops exactly there (exception after widening to :458), so "
+            ":77 cannot be the sole refusal of a complete retained acquisition.")),
+    'dg5/site/pm_goal_dg_s_readers.py:917': dict(
+        kind='entailment', families=['goal_run.started'],
+        depends_on=['dg5/site/pm_goal_dg_s_readers.py:812', 'dg5/site/pm_goal_dg_s_readers.py:920'],
+        sites=[(READERS, 917), (READERS, 812), (READERS, 920), (SOURCE, 283), (SOURCE, 293)],
+        argument=(
+            "An incomplete generic snapshot in read_current carries a defect recorded by acquire: a "
+            "custody defect on a row returns the snapshot before that row is appended "
+            "(pm_goal_test_source.py:283-286) and a scan tail returns it at the defective segment "
+            "(:293-297). If the defect is at or before the start row, the start row is absent and "
+            ":812 refuses inside h_generic before :917 is reached. If the defect is after the start "
+            "row, the snapshot rows and coverage stop short of the projected generation's processed "
+            "prefix or its token has since moved, so the stale-generic-token comparison at :920 "
+            "refuses later in the same call. The segment-tail shape of this argument is exactly why "
+            "the garbage-tail supplement case was withdrawn: bytes past the segment watermark are "
+            "not part of the snapshot at all. Hence :917 has no single-defect witness.")),
+})
