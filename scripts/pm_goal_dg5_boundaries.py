@@ -633,7 +633,10 @@ def invoke(label, family, action, work, *, world=None, arguments=None, original=
             parent_collector.observe(name, holds, site)
         parent_collector.replay_unknown_rows.update(result.get('replay_unknown_rows', []))
         if 'exception' in result:
-            raise RuntimeError(result['exception'] + ': ' + result['detail'])
+            import re as _re
+            frames = _re.findall(r'File "[^"]*/scripts/(pm_goal[^"]+\.py)", line (\d+), in (\w+)', result.get('trace', ''))
+            where = ' @ ' + ' <- '.join('%s:%s(%s)' % f for f in reversed(frames[-2:])) if frames else ''
+            raise RuntimeError(result['exception'] + where + ': ' + result['detail'][:200])
         actual.append(result['original_refusal'])
         return dict(errors=result['errors'], store_snapshot_sha256=store_sha,
                     store_after_sha256=sweep.digest(result['after']))
@@ -894,6 +897,6 @@ def install_u_entries(module):
                     return entry_call(case, case['id'] + '/' + entry, 'goal.updated',
                                       lambda: original(self, *args, **kwargs), world.root, world=world,
                                       arguments=dict(receiver=self, args=args, kwargs=kwargs), original=original,
-                                      target=target(case, None if expected is None else row(expected)))
+                                      target=target(case, None if expected is None else row(expected), case['id'] + '/' + entry))
                 return call
             setattr(cls, method, bind())

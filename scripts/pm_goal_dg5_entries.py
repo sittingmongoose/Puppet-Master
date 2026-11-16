@@ -37,7 +37,7 @@ def entries(cls, methods, family):
                 return bridge.entry_call(case, case['id'] + '/' + entry, family,
                                          lambda: original(self, *args, **kwargs), world_root(world), world=world,
                                          arguments=dict(receiver=self, args=args, kwargs=kwargs), original=original,
-                                         target=target(case, None if expected is None else bridge.row(expected)))
+                                         target=target(case, None if expected is None else bridge.row(expected), case['id'] + '/' + entry))
             call._dg5_entry = True
             return call
         setattr(cls, name, bind())
