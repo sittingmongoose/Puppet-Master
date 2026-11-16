@@ -50628,3 +50628,47 @@ negative_constraints:
 - No producer adoption, native execution claim, readiness clearance or governance seal is granted.
 ```
 
+### DL-2370: Event Authority registers restore.state_changed (admission merge 2)
+
+```yaml
+plan_unit_id: DL-2370
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: |-
+  Event Authority registers `restore.state_changed` as family `event-family-restore-state-changed` revision 1.0.0 in admission merge 2 of PNC-019. On 2026-11-14 Jared answered card EA-P2 with option B ("Two merges: the 173 ready now, then the rest"), so the remaining prepared families are admitted in this second merge after the first 173. `restore.state_changed` is one of the 249 names of the 2026-11-04 census recount (bucket e). Jared's answer to card EA-P1, option A ("Add each once its definition passes every check"), admits each such name once its full definition, its record and both reviews pass; DL-039's no bulk registration stands. Under DL-096 ("And yes I approve the DL-093 covering the families and later") this entry is Jared's decision entry for `restore.state_changed`, and the family's DL-077 admission record cites it as its decision_ref. DL-400 keeps this family's own commit, entry, record and twelve-criterion assessment inside the batched landing.
+
+  The registry moves from revision 2026-11-16.233 (452 families, SHA-256 9c712be717d4c5d02dc6bbd1206e5ac6f2ddcaef9ac1b4197314cc3f8f0bf5c7) to 2026-11-16.234 (453 families, SHA-256 83ee98616bc80d5cf211e7ec7e6b71e27c18a0a62645eec00bd8c98d0bd422b4). The appended row, canonical SHA-256 b075b7d95e309aefe0e7a4e563930bd2d53300d8cd1b038cd92633a92f3c9281, has scope policy application_or_project, payload `https://puppetmaster.local/schemas/event_payloads/w3e/restore_state_changed/1.0.0/schema.json` at Plans/event_payloads/w3e/restore_state_changed.schema.json#, semantic owner Plans/Backup_Restore_System.md#BRS-1410, payload owner Plans/Contracts_V0.md#CV-1410 and retention RP-OPERATIONAL-2555D@1.0.0. Its payload versions are application `https://puppetmaster.local/schemas/event_payloads/w3e/restore_state_changed/1.0.0/schema.json` (RP-OPERATIONAL-SECURITY-APPLICATION-2555D@1.0.0, producer requires_owner_adoption); project `https://puppetmaster.local/schemas/event_payloads/w3e/restore_state_changed/1.0.0/schema.json` (RP-OPERATIONAL-2555D@1.0.0, producer requires_owner_adoption). Under DL-078's standing rule the PNC-019 checkpoint moves in the same commit: EVENT_FAMILY_REGISTRY_REVISION 2026-11-16.234 and EVENT_FAMILY_REGISTRY_KERNEL_ROW_COUNT 453 in scripts/pm_pnc019_currentness.py, and the approved checkpoint count in the two DL-078 test files.
+
+  Depth: reports/event-authority-20261116/admission-merge-2/depth/restore.state_changed.json (SHA-256 b0ba0749cafd9b5d8261965271c7aae8e0febc14f159fb0173cf3296ad6dadcf) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/restore.state_changed.json.
+
+  Native execution stays NOT_RUN and every payload version's producer still requires owner adoption. This entry registers only `restore.state_changed`. It changes no other family, validator, seal condition, retention assignment or holding bucket, and it grants no producer adoption, native claim, readiness clearance or governance seal. It lands only with its merge, after the merge's review pair and the coordinator's landing go.
+gui_related: false
+gui_classification_reason: Registers one event family in the Event Authority registry; no visual presentation changes.
+depends_on: [DL-039, DL-077, DL-078, DL-096, DL-400, DL-414]
+unblocks: []
+acceptance_criteria:
+- "The live registry contains exactly one row for restore.state_changed, equal to the row whose canonical SHA-256 this entry records."
+- "The DL-077 admission record reports/event-authority-20260911/admission-records/restore.state_changed.json passes the frozen seal check with no problem for this family."
+- "The checkpoint pins name revision 2026-11-16.234 and 453 families."
+validation_surfaces:
+- python3 Plans/.audits/event-authority-2026-08-12/independent-validator/pm_event_authority_independent_validator.py
+- python3 scripts/pm-implementation-readiness.py validate
+- python3 scripts/pm-ea-admission-writer.py verify
+risk_class: event_authority_admission
+reasoning_tier: high
+context_scope: event_authority_pnc019_admission_merge_2
+implementation_surfaces: [Plans/event_family_registry.json, scripts/pm_pnc019_currentness.py]
+node_compile_hint: {mode: owner_contract_only, create_worknodes: false, create_nodeseeds: false}
+source_lineage:
+- "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/ANSWERS_EA-P_20261114.md; SHA-256 8f8c89d237c83fa265aa2baeebd041b657e757014a3a806aff451efb6641f1ac (EA-P1 A, EA-P2 B, Jared 2026-11-14)"
+- "reports/event-authority-20261104/census-recount-20261104/NEW-LIST.json (recount name)"
+- "reports/event-authority-20261116/admission-merge-2/readiness-list.json; SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792"
+- "reports/event-authority-20261116/admission-merge-2/readiness-list.json; SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792"
+- "scripts/pm-ea-admission-writer.py (pm-ea-admission-writer.v1)"
+preserved_exact_tokens: ["restore.state_changed", "event-family-restore-state-changed", "2026-11-16.234", "83ee98616bc80d5cf211e7ec7e6b71e27c18a0a62645eec00bd8c98d0bd422b4", "b075b7d95e309aefe0e7a4e563930bd2d53300d8cd1b038cd92633a92f3c9281", "Add each once its definition passes every check", "Two merges: the 173 ready now, then the rest", "And yes I approve the DL-093 covering the families and later"]
+negative_constraints:
+- No other family, validator, seal condition, retention assignment or holding bucket changes.
+- No producer adoption, native execution claim, readiness clearance or governance seal is granted.
+```
+

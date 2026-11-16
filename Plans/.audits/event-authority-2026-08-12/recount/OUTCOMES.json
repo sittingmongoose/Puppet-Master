@@ -712,6 +712,10 @@
    "outcome": "registered"
   },
   {
+   "event_type": "restore.state_changed",
+   "outcome": "registered"
+  },
+  {
    "event_type": "run.graph_canonical_locked",
    "outcome": "registered"
   },
