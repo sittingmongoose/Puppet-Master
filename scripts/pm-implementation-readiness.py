@@ -3122,6 +3122,99 @@ def event_family_legacy_payload_schema(
     return None, None, "legacy_payload_schema_invalid"
 
 
+def event_family_usage_retention_ref() -> dict[str, Any]:
+    """SP-594 / E8-1 A: a selector for the existing setting, never a policy ID."""
+    return {
+        "setting_key": "ai.usage.usage-retention",
+        "anchor": "first_durable_save",
+        "anchor_immutable": True,
+        "owner_ref": "Plans/storage-plan.md#SP-594",
+    }
+
+
+def event_family_usage_retention_owner_matches() -> bool:
+    """Read the declaring unit's canonical text, without borrowing sibling prose."""
+    import yaml
+
+    try:
+        text = (PLANS / "storage-plan.md").read_text(encoding="utf-8")
+    except OSError:
+        return False
+    blocks = re.findall(r"(?ms)^```yaml\n(plan_unit_id: SP-594\n.*?)^```", text)
+    if len(blocks) != 1:
+        return False
+    try:
+        owner = yaml.safe_load(blocks[0])
+        prose = " ".join(owner["canonical_text"].split())
+    except (yaml.YAMLError, KeyError, TypeError):
+        return False
+    return all(clause in prose for clause in (
+        "Signed E8-1 option A resolves the `usage.event` history binding",
+        "`retention_binding.setting_key = ai.usage.usage-retention`, `retention_binding.anchor = first_durable_save`",
+        "save of that exact entry that survives a restart supplies the immutable anchor",
+        "This is the existing setting-driven policy selector, not a newly minted policy ID",
+        "The registry retention_policy_ref setting-selected form carries setting_key=ai.usage.usage-retention, "
+        "anchor=first_durable_save, anchor_immutable=true and owner_ref=Plans/storage-plan.md#SP-594, "
+        "with no policy_id or policy_version",
+    ))
+
+
+def event_family_setting_retention_failures(
+    event_type: Any, ref: Any, *, path_label: str,
+) -> list[dict[str, Any]]:
+    """Only usage.event may select a setting; every field must agree with SP-594."""
+    expected = event_family_usage_retention_ref()
+    is_setting = isinstance(ref, dict) and bool(set(ref) & set(expected))
+    if event_type != "usage.event" and not is_setting:
+        return []  # The unchanged fixed-policy branch is checked by JSON Schema.
+    error = None
+    if event_type != "usage.event":
+        error = "family_not_usage"
+    elif not isinstance(ref, dict):
+        error = "not_object"
+    elif "policy_id" in ref or "policy_version" in ref or "registry_schema_id" in ref:
+        error = "policy_id_forbidden"
+    elif ref.get("setting_key") != expected["setting_key"]:
+        error = "setting_key_mismatch"
+    elif "anchor" not in ref:
+        error = "anchor_missing"
+    elif ref["anchor"] != expected["anchor"]:
+        error = "anchor_mismatch"
+    elif ref.get("anchor_immutable") is not True:
+        error = "anchor_not_immutable"
+    elif ref.get("owner_ref") != expected["owner_ref"]:
+        error = "owner_ref_mismatch"
+    elif set(ref) != set(expected):
+        error = "shape_mismatch"
+    elif not event_family_usage_retention_owner_matches():
+        error = "owner_text_mismatch"
+    return ([{"path": path_label, "error": "event_family_registry_setting_retention_" + error}]
+            if error else [])
+
+
+def event_family_setting_retention_self_test_checks() -> dict[str, bool]:
+    good = event_family_usage_retention_ref()
+    checks = {"usage_setting_ref_matches_owner": not event_family_setting_retention_failures(
+        "usage.event", good, path_label="self-test:usage_setting_ref")}
+    mutations = {
+        "wrong_setting_key": (dict(good, setting_key="ai.usage.other"), "setting_key_mismatch"),
+        "missing_anchor": ({k: v for k, v in good.items() if k != "anchor"}, "anchor_missing"),
+        "mutable_anchor": (dict(good, anchor_immutable=False), "anchor_not_immutable"),
+        "new_policy_id": (dict(good, policy_id="RP-USAGE-NEW"), "policy_id_forbidden"),
+        "wrong_owner": (dict(good, owner_ref="Plans/storage-plan.md#SP-341"), "owner_ref_mismatch"),
+        "extra_field": (dict(good, ttl_days=90), "shape_mismatch"),
+        "integer_immutable": (dict(good, anchor_immutable=1), "anchor_not_immutable"),
+    }
+    for name, (ref, error) in mutations.items():
+        checks[name + "_rejected"] = event_family_setting_retention_failures(
+            "usage.event", ref, path_label="self-test:" + name
+        ) == [{"path": "self-test:" + name,
+               "error": "event_family_registry_setting_retention_" + error}]
+    checks["other_family_rejected"] = bool(event_family_setting_retention_failures(
+        "other.event", good, path_label="self-test:other_family"))
+    return checks
+
+
 def event_family_registry_data_failures(
     registry: Any,
     schema: Any,
@@ -3248,6 +3341,15 @@ def event_family_registry_data_failures(
             owner_path = ROOT / str(owner_ref).split("#", 1)[0]
             if not isinstance(owner_ref, str) or not owner_ref or not owner_path.exists():
                 failures.append({"path": row_path, "error": "event_family_registry_owner_ref_missing", "field": owner_field, "actual": owner_ref})
+
+        failures.extend(event_family_setting_retention_failures(
+            event_type, family.get("retention_policy_ref"), path_label=row_path + "/retention_policy_ref"))
+        versions = family.get("payload_versions", [])
+        for edition_index, edition in enumerate(versions if isinstance(versions, list) else []):
+            if isinstance(edition, dict):
+                failures.extend(event_family_setting_retention_failures(
+                    event_type, edition.get("retention_policy_ref"),
+                    path_label=f"{row_path}/payload_versions/{edition_index}/retention_policy_ref"))
 
         payload_schema, resolved_schema_id = event_family_payload_schema(family)
         if payload_schema is None:
@@ -9922,6 +10024,9 @@ def run_self_tests() -> dict[str, Any]:
                 "checks": storage_registry_checks,
             }
         )
+    setting_retention_checks = event_family_setting_retention_self_test_checks()
+    if not all(setting_retention_checks.values()):
+        failures.append({"scenario": "event_family_setting_retention", "checks": setting_retention_checks})
     case_l_verification_checks = case_l_verification_self_test_checks()
     if not all(case_l_verification_checks.values()):
         failures.append(
@@ -9938,6 +10043,7 @@ def run_self_tests() -> dict[str, Any]:
         "field_claim_checks": field_claim_checks,
         "event_record_checks": event_record_checks,
         "storage_registry_checks": storage_registry_checks,
+        "setting_retention_checks": setting_retention_checks,
         "case_l_verification_checks": case_l_verification_checks,
         "failures": failures,
     }
