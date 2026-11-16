@@ -1291,7 +1291,7 @@ def preparation_contract(expected, fixtures, grade, registry, values, schema):
     rows = [entries.get(name.replace('.', '_') + '_operation') for name in names]
     meta = validators.validator_for(Draft202012Validator.META_SCHEMA, default=Draft202012Validator)
     require('preparation_b', {
-        'registered': sorted(expected.intersection(r['event_type'] for r in registry['families'])),
+        'registered': unadmitted_registrations(expected, registry),
         'retention_refs': [None if r is None else r['retention_policy_ref'] for r in rows],
         'value_schema_errors': sum(sum(1 for _ in meta(meta.META_SCHEMA, format_checker=meta.FORMAT_CHECKER).iter_errors(
             r['value_schema'])) for r in rows if r is not None),
@@ -1375,6 +1375,19 @@ def run(fixtures_path=None, family=None):
     CONTEXT = 'shared'
     return {'status': 'pass', 'native_execution': 'NOT_RUN',
             'resolved_schema_references': resolved_references, 'rows': results}
+
+
+def unadmitted_registrations(expected, registry):
+    """PR05's observation: the DG6B families on `registry` other than as their exact, complete DL-077 admission.
+
+    Admission-aware mode (PNC-019 stream E; scripts/pm_ea_admission_mode.py): before admission no DG6B family may
+    be registered; after it, only each family's own record-bound admission may register it. Any other
+    registration (no record, a record that does not match, a second row) stays on the list and PR05 refuses it.
+    """
+    import pm_ea_admission_mode as admission_mode
+    named = sorted(expected.intersection(r.get('event_type') for r in registry['families']))
+    return [et for et, v in admission_mode.verdicts(named, root=ROOT, registry=registry).items() if v['mode'] != 'admitted']
+
 
 if __name__ == '__main__':
     import argparse

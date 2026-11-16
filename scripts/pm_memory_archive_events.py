@@ -429,7 +429,7 @@ def main():
                          checkpoint_guard_controls(fixtures))
     assert not core.table_order_errors(), ('table order', core.table_order_errors())
     registered = {x['event_type'] for x in core.load('Plans/event_family_registry.json')['families']}
-    assert not set(families) & registered
+    assert not (refused := core.unadmitted_registrations(registered, families)), ('registered outside DL-077 admission', refused)
     if args.family:
         assert args.family in families
         families = {args.family: families[args.family]}; fixtures = core.select_family(fixtures, args.family)

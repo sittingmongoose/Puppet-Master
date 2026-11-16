@@ -215,7 +215,7 @@ def main():
         if selected and selected != family['event_type']:
             continue
         slug, event = family['slug'], family['event_type']
-        assert event not in admitted
+        assert (refused := registration_refusal(event, admitted)) is None, refused
         fixture = load(f'Plans/panel_event_contracts/{slug}.fixtures.json')
         count += shared.isolated_cases('panel', sys.modules[__name__], family, fixture)
         schema = load(family['payload_schema'])
@@ -364,6 +364,19 @@ def main():
                          'PENDING_RETENTION_DECISION', '16384', 'host_state_persisted=false'):
             assert required in text, (event, required)
     print(json.dumps(dict(status='pass', families=1 if selected else 2, cases=count, admission='ABSENT', native='NOT_RUN', retention='PENDING_RETENTION_DECISION')))
+
+
+def registration_refusal(event, admitted):
+    """None while `event` is unregistered (prepared) or registered as its exact, complete DL-077 admission.
+
+    Admission-aware mode (PNC-019 stream E; scripts/pm_ea_admission_mode.py): any other registration keeps the
+    preparation refusal (this family on the live registry), with the admission-mode code as its message.
+    """
+    if event not in admitted:
+        return None
+    import pm_ea_admission_mode as admission_mode
+    mode = admission_mode.verdict(event, root=ROOT)
+    return None if mode['mode'] == 'admitted' else event + ': admission mode refused: ' + mode['code']
 
 
 if __name__ == '__main__':
