@@ -216,6 +216,10 @@
    "outcome": "registered"
   },
   {
+   "event_type": "browser.route.browser_escalated",
+   "outcome": "registered"
+  },
+  {
    "event_type": "discovery.backpressure",
    "outcome": "registered"
   },
