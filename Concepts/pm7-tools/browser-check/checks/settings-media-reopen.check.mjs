@@ -59,13 +59,16 @@ async function openPicturePanel(t, f) {
 	await t.settle();
 	await t.page.waitForTimeout(300);
 }
-// an upgraded dropdown: its trigger, then the option by its words (real clicks)
+// Service dropdown or shared model picker: trigger, then option by its words (real clicks).
 async function pickOption(t, f, select, label) {
-	const trigger = select.locator('..').locator('.pm51-dd-trigger').first();
+	const host = select.locator('..');
+	const shared = await host.locator('.o55-pick-trigger').count() > 0;
+	const trigger = host.locator(shared ? '.o55-pick-trigger' : '.pm51-dd-trigger').first();
+	const popup = shared ? '.o55-pick-pop.is-open' : '.pm51-dd-list';
 	await trigger.scrollIntoViewIfNeeded();
 	await trigger.click();
-	await f.locator('.pm51-dd-list [role="option"]').filter({ hasText: label }).first().click({ timeout: 8000 });
-	await f.locator('.pm51-dd-list').waitFor({ state: 'hidden', timeout: 8000 }).catch(() => {});
+	await f.locator(`${popup} [role="option"]`).filter({ hasText: label }).first().click({ timeout: 8000 });
+	await f.locator(popup).waitFor({ state: 'hidden', timeout: 8000 }).catch(() => {});
 	await t.settle();
 	await t.page.waitForTimeout(400);
 }
