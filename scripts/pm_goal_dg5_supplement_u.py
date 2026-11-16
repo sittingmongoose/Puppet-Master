@@ -691,3 +691,14 @@ def commit_after_currentness_only(d):
 
     U.tamper_pending(w, g, adm, edit)
     return w, lambda: w.command.commit(adm)
+
+
+@case('U-DG5/N/cancel_after_unknown_terminal', 'dgu/command/cancel/body_effect_exists', SITE + '2185',
+      'Single defect: an event_unknown progress with its unknown terminal already published. The '
+      'cancel else-branch refuse (:2185) is the only refusal: with it cut, the existing terminal '
+      'replays, while the authored after-commit case also breaks the no-effect phase and receipt '
+      'checks inside terminalize (:843/:844).')
+def cancel_after_unknown_terminal(d):
+    w, g, req, adm, ag = U._upto(d, 'freeze')
+    w.command.mark_unknown(req['command_instance_id'])
+    return w, lambda: w.command.cancel_before_body(req['command_instance_id'])
