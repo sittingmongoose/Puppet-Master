@@ -343,4 +343,61 @@ PROOFS = {
             'observation definition is identical to a bound its sources already passed, so '
             'no complete inspect call can make this row refuse alone. It closes by this '
             'proof once the inspect event and request schema rows are closed.')),
+    'dg5/dgu/producer/freeze/receipt_request/schema': dict(
+        kind='entailed-by-progress-schema',
+        families=['goal.updated'],
+        depends_on=[],
+        sites=[(U, 1371), (U, 1740), ('Plans/goal_update_command_custody.schema.json', 708),
+               ('Plans/goal_body_custody.schema.json', 720)],
+        argument=(
+            'freeze reads the body receipt through read_receipt_private (:1740), whose first '
+            'statement validates the request against receipt_read_request (:1371, '
+            'goal_body_custody.schema.json:720). The request object is the stored progress '
+            'body_commit.receipt_request verbatim, already validated against the identical '
+            'referenced definition (BodyCommit.receipt_request, '
+            'goal_update_command_custody.schema.json:708) when the progress snapshot was '
+            'written and on every read. The identical value cannot newly fail the identical '
+            'definition, so no complete freeze call can make this row refuse alone.')),
+    'dg5/dgu/sir/terminal/receipt_request/schema': dict(
+        kind='entailed-by-progress-schema',
+        families=['goal.updated'],
+        depends_on=[],
+        sites=[(U, 831), (U, 1371), ('Plans/goal_update_command_custody.schema.json', 708),
+               ('Plans/goal_body_custody.schema.json', 720)],
+        argument=(
+            'terminalize (succeeded) reads the body receipt through read_receipt_private '
+            '(:831) with the stored progress body_commit.receipt_request verbatim, already '
+            'validated against the identical referenced receipt_read_request definition '
+            '(BodyCommit, goal_update_command_custody.schema.json:708, referencing '
+            'goal_body_custody.schema.json:720) at progress write and on every read. The '
+            'identical value cannot newly fail the identical definition at :1371, so no '
+            'complete terminalize call can make this row refuse alone.')),
+    'dg5/dgu/inspect/receipt_request/schema': dict(
+        kind='entailed-by-selected-event-schema',
+        families=['goal.updated'],
+        depends_on=['dg5/dgu/inspect/event/schema'],
+        sites=[(U, 1371), (U, 1899)],
+        argument=(
+            'inspect reads the body receipt through read_receipt_private (:1898-1899) with '
+            'payload.body_receipt_request verbatim from the event validated moments earlier '
+            'against SelectedActiveEvent, whose payload definition carries a '
+            'body_receipt_request object byte-identical in constraints to the '
+            'receipt_read_request definition validated at :1371 (same required fields, '
+            'const reader_binding and string bounds). The identical value cannot newly fail '
+            'the identical constraints, so no complete inspect call can make this row refuse '
+            'alone. It closes by this proof once the inspect event schema row is closed.')),
+    'dg5/oracle/receipt_request/schema': dict(
+        kind='entailed-by-progress-schema',
+        families=['goal.updated'],
+        depends_on=['dg5/dgu/reader/receipt/receipt_request/schema'],
+        sites=[(U, 1371), ('scripts/pm_goal_dg_u_oracles.py', 184),
+               ('Plans/goal_update_command_custody.schema.json', 708)],
+        argument=(
+            'This row is the same read_receipt_private validation (:1371) reached only with '
+            'where=oracle from the oracle harness self-checks (pm_goal_dg_u_oracles.py:184), '
+            'always with the genuine progress body_commit.receipt_request - the identical '
+            'object class, identical referenced definition (BodyCommit, '
+            'goal_update_command_custody.schema.json:708) and identical validation call as '
+            'the reader receipt rows. It can refuse only where those rows refuse, so it '
+            'never gates acceptance alone and closes with the reader receipt row.')),
 }
