@@ -29,7 +29,8 @@
     if (!rec) return out;
     const d = rec.drafts && rec.drafts.main, cm = rec.commit, fin = rec.finished;
     if (fin && fin.project) out.push({ id: fin.project, name: fin.name || (cm && cm.projectId === fin.project && d ? d.project_name : '') || fin.project, info: fin.info || null });
-    if (cm && cm.state === 'done' && cm.projectId && !out.some((p) => p.id === cm.projectId)) out.push({ id: cm.projectId, name: (d && d.project_name) || cm.projectId, info: null });
+    /* (a committed Project as Review listed it: its name and location line, kept with the commit, R80 P1) */
+    if (cm && cm.state === 'done' && cm.projectId && !out.some((p) => p.id === cm.projectId)) out.push({ id: cm.projectId, name: (cm.listed && cm.listed.name) || (d && d.project_name) || cm.projectId, info: (cm.listed && cm.listed.info) || null });
     return out;
   }
   let restoring = null;
