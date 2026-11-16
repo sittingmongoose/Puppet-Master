@@ -1,0 +1,459 @@
+{
+ "schema_id": "pm.assurance.event_authority.admission_depth_assessment.v1",
+ "assessment_kind": "admission_twelve_criteria",
+ "writer": "pm-ea-admission-writer.v1",
+ "merge": "admission-merge-2",
+ "registry": {
+  "path": "Plans/event_family_registry.json",
+  "revision": "2026-11-16.142",
+  "sha256": "fe3eecc18bd8a5e6efa8d5a9cb43dcd5fb782f0c300cd4ab9c63c2f85fc8a09c",
+  "family_count": 361,
+  "row_pointer": "#/families/360"
+ },
+ "base_commit": "45b4ccf25270c486dbc682805cd455ce4ca25fb0",
+ "rubric": "Step 8 depth matrix, twelve criteria (DL-077); PASS needs Plans/ evidence",
+ "native_execution": "NOT_RUN",
+ "rows": [
+  {
+   "event_type": "continuity.redaction_applied",
+   "family_id": "event-family-continuity-redaction-applied",
+   "family_revision": "1.0.0",
+   "cells": {
+    "membership_version": {
+     "status": "PASS",
+     "representation": "exact_registry_membership",
+     "finding": "Registered at registry revision 2026-11-16.142 as #/families/360 (canonical row SHA-256 6f50a6f81aec5d7f3469bd8369f629719c1dbcabceb8dbf14178d8a8b40490dd); before this commit the family was absent.",
+     "evidence": [
+      {
+       "path": "Plans/event_family_registry.json",
+       "json_pointer": "#/families/360",
+       "line_start": 24203,
+       "line_end": 24243,
+       "quote": "\"event_type\": \"continuity.redaction_applied\"",
+       "quote_line": 24206,
+       "file_sha256": "fe3eecc18bd8a5e6efa8d5a9cb43dcd5fb782f0c300cd4ab9c63c2f85fc8a09c",
+       "quote_check": "exact"
+      }
+     ]
+    },
+    "owner_doc": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "Exact semantic OSI-1602, payload CV-1602, storage SP-1602 routes govern this family, separately from runtime_continuity proposals.",
+     "evidence": [
+      {
+       "path": "Plans/orchestrator-subagent-integration.md",
+       "unit": "OSI-1602",
+       "line_start": 31931,
+       "line_end": 31931,
+       "quote": "**NEWLY AUTHORED owner contract**",
+       "file_sha256": "b39393943cd0f6532f76acdc63eb4152c4cea49b337972fb49705a7e9bfc2365",
+       "quote_check": "exact",
+       "quote_scope": "unit OSI-1602, Plans/orchestrator-subagent-integration.md:31929-31982"
+      },
+      {
+       "path": "Plans/Contracts_V0.md",
+       "unit": "CV-1602",
+       "line_start": 25592,
+       "line_end": 25592,
+       "quote": "Exact payload schema:",
+       "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a",
+       "quote_check": "exact",
+       "quote_scope": "unit CV-1602, Plans/Contracts_V0.md:25590-25643"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "owner_doc",
+      "status": "PASS"
+     }
+    },
+    "producer": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "OSI-1602 names its own original-fact observer; SP-1602 orders admission/source/body/append/full v2 first issuance before success and fences uncertain recovery.",
+     "evidence": [
+      {
+       "path": "Plans/orchestrator-subagent-integration.md",
+       "unit": "OSI-1602",
+       "line_start": 31933,
+       "line_end": 31933,
+       "quote": "sole semantic producer",
+       "file_sha256": "b39393943cd0f6532f76acdc63eb4152c4cea49b337972fb49705a7e9bfc2365",
+       "quote_check": "exact",
+       "quote_scope": "unit OSI-1602, Plans/orchestrator-subagent-integration.md:31929-31982"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-1602",
+       "line_start": 76736,
+       "line_end": 76736,
+       "quote": "SP-286/CV-339 full-value v2",
+       "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707",
+       "quote_check": "exact",
+       "quote_scope": "unit SP-1602, Plans/storage-plan.md:76732-76799"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "producer",
+      "status": "PASS"
+     }
+    },
+    "closed_payload_schema": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "CV-1602 selects a closed versioned root with bounded IDs, source snapshots and exact nullable/optional rules; all references are eagerly resolved. Formats and numbers use the shared helpers; current executions are bound in pnc019_s4o3.",
+     "evidence": [
+      {
+       "path": "Plans/Contracts_V0.md",
+       "unit": "CV-1602",
+       "line_start": 25592,
+       "line_end": 25592,
+       "quote": "The root is closed.",
+       "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a",
+       "quote_check": "exact",
+       "quote_scope": "unit CV-1602, Plans/Contracts_V0.md:25590-25643"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "closed_payload_schema",
+      "status": "PASS"
+     }
+    },
+    "scope_identity": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "CV-1602 fixes original Project and envelope joins, a string-only canonical identity tuple and exact event/key formulas. Application scope is not widened.",
+     "evidence": [
+      {
+       "path": "Plans/Contracts_V0.md",
+       "unit": "CV-1602",
+       "line_start": 25594,
+       "line_end": 25594,
+       "quote": "scope_kind=project",
+       "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a",
+       "quote_check": "exact",
+       "quote_scope": "unit CV-1602, Plans/Contracts_V0.md:25590-25643"
+      },
+      {
+       "path": "Plans/Contracts_V0.md",
+       "unit": "CV-1602",
+       "line_start": 25596,
+       "line_end": 25596,
+       "quote": "identity bytes are",
+       "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a",
+       "quote_check": "exact",
+       "quote_scope": "unit CV-1602, Plans/Contracts_V0.md:25590-25643"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "scope_identity",
+      "status": "PASS"
+     }
+    },
+    "replay_idempotency": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "CV-1602 uses original semantic-field digest equality and lifetime dedupe, refuses current replay-only append, and preserves original retained recipes; SP-1602 forbids replay effects.",
+     "evidence": [
+      {
+       "path": "Plans/Contracts_V0.md",
+       "unit": "CV-1602",
+       "line_start": 25596,
+       "line_end": 25596,
+       "quote": "Same tuple and body return the original full result",
+       "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a",
+       "quote_check": "exact",
+       "quote_scope": "unit CV-1602, Plans/Contracts_V0.md:25590-25643"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-1602",
+       "line_start": 76744,
+       "line_end": 76744,
+       "quote": "Rebuild reads retained authentic originals",
+       "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707",
+       "quote_check": "exact",
+       "quote_scope": "unit SP-1602, Plans/storage-plan.md:76732-76799"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "replay_idempotency",
+      "status": "PASS"
+     }
+    },
+    "retention": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "SP-1602 assigns the existing source-lineage RP-AUTHORITY-INDEFINITE class and separate derived RP-PROJECTION-3GEN. G05 is rejected as GitHub-only; linked content keeps its own access/deletion rules.",
+     "evidence": [
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-1602",
+       "line_start": 76746,
+       "line_end": 76746,
+       "quote": "RP-AUTHORITY-INDEFINITE@1.0.0",
+       "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707",
+       "quote_check": "exact",
+       "quote_scope": "unit SP-1602, Plans/storage-plan.md:76732-76799"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-1602",
+       "line_start": 76746,
+       "line_end": 76746,
+       "quote": "RP-PROJECTION-3GEN@1.0.0",
+       "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707",
+       "quote_check": "exact",
+       "quote_scope": "unit SP-1602, Plans/storage-plan.md:76732-76799"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "retention",
+      "status": "PASS"
+     }
+    },
+    "redaction_custody": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "SP-1602 requires independently resolved original facts, full original receipt/body custody and coherent mandatory backup; missing sources refuse, and current access/tombstones still apply.",
+     "evidence": [
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-1602",
+       "line_start": 76746,
+       "line_end": 76746,
+       "quote": "mandatory coherent backup/restore",
+       "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707",
+       "quote_check": "exact",
+       "quote_scope": "unit SP-1602, Plans/storage-plan.md:76732-76799"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-1602",
+       "line_start": 76746,
+       "line_end": 76746,
+       "quote": "Raw secrets, prompts, outputs",
+       "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707",
+       "quote_check": "exact",
+       "quote_scope": "unit SP-1602, Plans/storage-plan.md:76732-76799"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "redaction_custody",
+      "status": "PASS"
+     }
+    },
+    "transitions": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "OSI-1602 records an already-completed original fact, preserves stable identity for re-observation, and SP-1602 applies matching later sequences with exact prior-value CAS; no source mutation follows.",
+     "evidence": [
+      {
+       "path": "Plans/orchestrator-subagent-integration.md",
+       "unit": "OSI-1602",
+       "line_start": 31935,
+       "line_end": 31935,
+       "quote": "Re-observing an unchanged fact is a retry",
+       "file_sha256": "b39393943cd0f6532f76acdc63eb4152c4cea49b337972fb49705a7e9bfc2365",
+       "quote_check": "exact",
+       "quote_scope": "unit OSI-1602, Plans/orchestrator-subagent-integration.md:31929-31982"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-1602",
+       "line_start": 76740,
+       "line_end": 76740,
+       "quote": "Replay of the same event is a no-op",
+       "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707",
+       "quote_check": "exact",
+       "quote_scope": "unit SP-1602, Plans/storage-plan.md:76732-76799"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "transitions",
+      "status": "PASS"
+     }
+    },
+    "consumers_checkpoints": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "SP-1602 individually adopts the exact named audit reader/projector, full current generic index and nine-field durable SP-278 token, atomic prefix CAS, rebuild and final read fences.",
+     "evidence": [
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-1602",
+       "line_start": 76734,
+       "line_end": 76734,
+       "quote": "operating audit-only reader",
+       "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707",
+       "quote_check": "exact",
+       "quote_scope": "unit SP-1602, Plans/storage-plan.md:76732-76799"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-1602",
+       "line_start": 76742,
+       "line_end": 76742,
+       "quote": "explicitly adopt SP-278",
+       "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707",
+       "quote_check": "exact",
+       "quote_scope": "unit SP-1602, Plans/storage-plan.md:76732-76799"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-1602",
+       "line_start": 76742,
+       "line_end": 76742,
+       "quote": "Persist only SP-278",
+       "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707",
+       "quote_check": "exact",
+       "quote_scope": "unit SP-1602, Plans/storage-plan.md:76732-76799"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "consumers_checkpoints",
+      "status": "PASS"
+     }
+    },
+    "compatibility_withdrawal": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "SP-1602 preserves original retained edition/recipe, rejects unknown versions/aliases, cuts writers before fencing publication/readers and rebuilding a supported successor.",
+     "evidence": [
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-1602",
+       "line_start": 76748,
+       "line_end": 76748,
+       "quote": "Unknown versions are unavailable",
+       "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707",
+       "quote_check": "exact",
+       "quote_scope": "unit SP-1602, Plans/storage-plan.md:76732-76799"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-1602",
+       "line_start": 76748,
+       "line_end": 76748,
+       "quote": "Withdrawal first cuts off",
+       "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707",
+       "quote_check": "exact",
+       "quote_scope": "unit SP-1602, Plans/storage-plan.md:76732-76799"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "compatibility_withdrawal",
+      "status": "PASS"
+     }
+    },
+    "positive_negative_oracles": {
+     "status": "PASS",
+     "representation": "executed_clean_room_reference_oracles",
+     "finding": "Provisional worker PASS for deterministic planning oracles, pending Sol high, Sol max and Astra max. The full continuity checker passes 52 controls and 1,639 negatives. Every continuity-owned payload/projection/checkpoint schema field and keyword remains enforced: 614 sites, 492 isolated witnesses and 122 separately documented implications; 492 targeted schema mutants are killed. Shared envelope/receipt schemas remain inherited. The literal source-pointer crosswalk is reports/event-authority-20261114/PNC019-s4o3-schema-bindings.json. The stateful supplement executes admission, dedupe recovery, competing publication CAS, withdrawal/successor rebuild, source relocation, held prune/capture/restore, immutable receipt joins and retained reads against actual reference-store state. Across the 39-family supplement: 41 scenarios, 311 positives, 2,489 exact-code refusals and 287 crash cuts; 109 guard rows proved. Mutation scope is 107 unsafe-acceptance kills plus two explicitly INVALID exception diagnostics (not kills), with one declared representative family per mutant and all families in the baseline. This is synthetic clean-room execution. Native execution NOT_RUN; membership ABSENT.",
+     "evidence": [
+      {
+       "path": "Plans/Automated_Testing_System.md",
+       "unit": "ATS-1282",
+       "line_start": 14403,
+       "line_end": 14403,
+       "quote": "source-frame relocation through authenticated translation, held retention/restore",
+       "file_sha256": "e1c8a84c145a3aaaa0738971f76db5fa0bf94f59c0149e76f4131e8579a6971d",
+       "quote_check": "exact",
+       "quote_scope": "unit ATS-1282, Plans/Automated_Testing_System.md:14399-14451"
+      },
+      {
+       "path": "Plans/Automated_Testing_System.md",
+       "unit": "ATS-1282",
+       "line_start": 14405,
+       "line_end": 14405,
+       "quote": "Guards include separate checks for every required property/type/const/ref/length",
+       "file_sha256": "e1c8a84c145a3aaaa0738971f76db5fa0bf94f59c0149e76f4131e8579a6971d",
+       "quote_check": "exact",
+       "quote_scope": "unit ATS-1282, Plans/Automated_Testing_System.md:14399-14451"
+      },
+      {
+       "path": "scripts/pm_pnc019_s4o3_store.py",
+       "line_start": 144,
+       "line_end": 144,
+       "quote": "class Store:",
+       "file_sha256": "10f10d033d805d9830f26d0c9c1fbe1cc8560ed5c943c81af935e56aa4684663",
+       "quote_check": "exact",
+       "quote_scope": "document"
+      },
+      {
+       "path": "scripts/pm_pnc019_s4o3_store.py",
+       "line_start": 249,
+       "line_end": 249,
+       "quote": "def read(self, generation, original_ref):",
+       "file_sha256": "10f10d033d805d9830f26d0c9c1fbe1cc8560ed5c943c81af935e56aa4684663",
+       "quote_check": "exact",
+       "quote_scope": "document"
+      },
+      {
+       "path": "scripts/pm_pnc019_s4o3_oracles.py",
+       "line_start": 142,
+       "line_end": 142,
+       "quote": "def run_family(adapter, family, trace=None, cut=None):",
+       "file_sha256": "1fea5e492c2d45f94c41d59184da26081b7b2f30833fccd5142167bcf4cb66f6",
+       "quote_check": "exact",
+       "quote_scope": "document"
+      },
+      {
+       "path": "scripts/pm-pnc019-s4o3-proof.py",
+       "line_start": 103,
+       "line_end": 103,
+       "quote": "def mutations(out):",
+       "file_sha256": "c3d51d67e679729c0bd7775e06e823726e79741566e4b4036aec04e0d6736487",
+       "quote_check": "exact",
+       "quote_scope": "document"
+      },
+      {
+       "path": "scripts/pm_pnc019_s4o3_schema.py",
+       "line_start": 160,
+       "line_end": 160,
+       "quote": "def require(subject, value, trace=None):",
+       "file_sha256": "6b383a942402c176a1ed2c3037ab76cbf8a93d4aeb024e34dae0af342d1987eb",
+       "quote_check": "exact",
+       "quote_scope": "document"
+      },
+      {
+       "path": "scripts/pm-pnc019-s4o3-schema-check.py",
+       "line_start": 103,
+       "line_end": 103,
+       "quote": "def mutations(out, blob):",
+       "file_sha256": "a277b2b2377dda0831e4cf0eb8a42f2c027498e4d1f759bb485a3d5357010e04",
+       "quote_check": "exact",
+       "quote_scope": "document"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "positive_negative_oracles",
+      "status": "PASS"
+     }
+    }
+   }
+  }
+ ]
+}
