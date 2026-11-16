@@ -16,19 +16,29 @@
   const ACTIVE = 'pm7:shell:active-project:v1';
   const lsGet = () => { try { return window.localStorage.getItem(ACTIVE) || ''; } catch (_) { return ''; } };
   const lsSet = (id) => { try { if (id) window.localStorage.setItem(ACTIVE, id); else window.localStorage.removeItem(ACTIVE); } catch (_) { /* no storage */ } };
-  /* a fixture Project's row (one the page lists itself, not added by selectProject) */
-  const rowOfFixture = (id) => { const r = rowOf(id); return !!r && !r.hasAttribute('data-o55-added'); };
   const rowOf = (id) => Array.prototype.find.call(document.querySelectorAll('#projectMenu [data-project]'), (r) => r.getAttribute('data-project') === id) || null;
   /* the Projects setup made or opened, from its own record: the committed one (Creating), and the one it finished into */
   /* (a new install, ?o55=fresh, clears the onboarding record as it boots, 95-boot.js: the Projects it listed are gone
      from this load on, and an active id that named one of them is stale) */
   const freshInstall = (() => { try { return new URLSearchParams(location.search).get('o55') === 'fresh'; } catch (_) { return false; } })();
+  /* the Projects setup made stay until a new install (FO-222 round 2, F2, the lead's ruling with F's): their own record,
+     MADE ({ id, name, info } each), written as selectProject lists one, cleared only by forgetSetup (a new install, Demo
+     Studio's resets); a new run of setup keeps them. A record from before it (the Projects only in the onboarding
+     record's finished / commit) is still read below. */
+  const MADE = 'pm7:shell:setup-projects:v1';
+  const madeGet = () => { try { const v = JSON.parse(window.localStorage.getItem(MADE) || '[]'); return Array.isArray(v) ? v.filter((p) => p && typeof p.id === 'string' && p.id) : []; } catch (_) { return []; } };
+  const madeSet = (list) => { try { if (list.length) window.localStorage.setItem(MADE, JSON.stringify(list)); else window.localStorage.removeItem(MADE); } catch (_) { /* no storage */ } };
+  function madeKeep(id, name, info) {
+    const list = madeGet(), was = list.find((p) => p.id === id);
+    const next = { id, name: name || (was && was.name) || id, info: (info && (info.path || info.branch)) ? info : ((was && was.info) || info || null) };
+    madeSet(list.filter((p) => p.id !== id).concat(next));
+  }
   function setupProjects() {
     if (freshInstall) return [];
-    const rec = O55.store.get('onboarding', null), out = [];
+    const rec = O55.store.get('onboarding', null), out = madeGet().map((p) => ({ id: p.id, name: p.name || p.id, info: p.info || null }));
     if (!rec) return out;
     const d = rec.drafts && rec.drafts.main, cm = rec.commit, fin = rec.finished;
-    if (fin && fin.project) out.push({ id: fin.project, name: fin.name || (cm && cm.projectId === fin.project && d ? d.project_name : '') || fin.project, info: fin.info || null });
+    if (fin && fin.project && !out.some((p) => p.id === fin.project)) out.push({ id: fin.project, name: fin.name || (cm && cm.projectId === fin.project && d ? d.project_name : '') || fin.project, info: fin.info || null });
     /* (a committed Project as Review listed it: its name and location line, kept with the commit, R80 P1) */
     if (cm && cm.state === 'done' && cm.projectId && !out.some((p) => p.id === cm.projectId)) out.push({ id: cm.projectId, name: (cm.listed && cm.listed.name) || (d && d.project_name) || cm.projectId, info: (cm.listed && cm.listed.info) || null });
     return out;
@@ -67,6 +77,8 @@
       /* info: { path, branch } from the draft, so the row and the hover tag carry the location line (B3) */
       const row = box.add(id, Object.assign({}, info || {}, { name: name || id }));
       if (row && !row.hasAttribute('data-o55-added') && !rowOfFixtureAtLoad.has(id)) row.setAttribute('data-o55-added', '');
+      /* (a Project setup made or opened: kept in MADE, with the name and location line it is listed with) */
+      if (!rowOfFixtureAtLoad.has(id)) madeKeep(id, name && name !== id ? name : null, info || (row ? { path: row.getAttribute('data-project-path') || '', branch: row.getAttribute('data-project-branch') || '' } : null));
       window.PM_ACTIVE_PROJECT_ID = id;
       box.select(id);
       if (O55.sound && O55.sound.refresh) O55.sound.refresh('project');
@@ -86,9 +98,15 @@
       const note = () => { const sel = menu.querySelector('.pm6-tb-menu-item.is-selected[data-project]'), id = sel ? sel.getAttribute('data-project') : ''; if (id && id !== lsGet()) lsSet(id); };
       new MutationObserver(note).observe(menu, { attributes: true, subtree: true, attributeFilter: ['class'] });
     },
-    /* a new run (Run Onboarding Again, Start over) replaces the record that lists setup's Projects: an active id that
-       named one of them would name nothing at the next load */
-    forgetSetupProjects() { const id = lsGet(); if (id && setupProjects().some((p) => p.id === id) && !rowOfFixture(id)) lsSet(''); },
+    /* a new install or a reset of setup's progress (FO-222 round 2, F3, F4): the Projects setup made go, and an active id
+       naming one of them; with all, any active id (a new install opens in the page's own Project). Called before every
+       clear of the onboarding record for a reset or a new install (95-boot.js ?o55=fresh, 91-demo-studio.js twice). A new
+       run of setup (Start over) no longer forgets them (F2). */
+    forgetSetup(o) {
+      const ids = new Set(setupProjects().map((p) => p.id).concat(madeGet().map((p) => p.id))), id = lsGet();
+      if (id && ((o && o.all) || ids.has(id))) lsSet('');
+      madeSet([]);
+    },
     /* The look chosen in onboarding becomes the saved theme (the preview used persist:false), and NieR Mode's three
        rows, the rest of the look, are saved with it into the same Project (their preview, O55.nierLook).
        Writing the theme repaints it, and the app's own theme listeners (its search width, its tab ink) then re-measure

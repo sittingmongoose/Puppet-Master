@@ -1563,7 +1563,6 @@
   /* Run Onboarding Again (the Home menu, Settings, the demo pill) starts over for real: a new run, a clean fixture
      world, no operation of the old run left running or reporting, and the Guided Tour back at its first step. */
   function startOver() {
-    if (O55.shell && O55.shell.forgetSetupProjects) O55.shell.forgetSetupProjects();
     S.epoch = (S.epoch || 0) + 1;
     O55.owners.resetOps(); O55.flow.clearInflight();
     S.env = O55.fixtures.make(O55.store.get('scenario', 'fresh'));
