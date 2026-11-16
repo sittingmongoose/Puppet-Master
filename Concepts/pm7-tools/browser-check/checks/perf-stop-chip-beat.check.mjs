@@ -571,9 +571,12 @@ export function judgeSpeed(R) {
 			// PM7PERF-STOPCHIP-SPEED-STALE-BACKLIGHT (R65 A1): the pace's terminal sample decides whether the
 			// backlight is there. An earlier scaled sample does not stand in for a later missing one: a glyph
 			// still sampled while the backlight has disappeared is a loop the run no longer shows, and a look
-			// that must draw both fails as could not judge. NieR's glyph-only allowance is unchanged.
+			// that must draw both fails as could not judge. A terminal sample taken in NieR is exempt: NieR hides
+			// the backlight, and its Fast window can still catch a glow that the look's restyle then drops (the
+			// real page, NieR Dark, Alexis 2026-11-16: this rule first failed it), so a NieR sample with a glyph
+			// and no backlight is the look's normal state. NieR's glyph-only allowance is otherwise unchanged.
 			const term = lastRow[flow];
-			if (term && term.g && term.g.dur > 0 && !(term.b && term.b.dur > 0) && !(nier && !glow)) {
+			if (term && term.g && term.g.dur > 0 && !(term.b && term.b.dur > 0) && term.nier !== 'on') {
 				bad.push({ speed, flow, layer: 'backlight', missing: true });
 				continue;
 			}
