@@ -43852,3 +43852,47 @@ negative_constraints:
 - No producer adoption, native execution claim, readiness clearance or governance seal is granted.
 ```
 
+### DL-2216: Event Authority registers bsd.finding_reconfirmed (admission merge 2)
+
+```yaml
+plan_unit_id: DL-2216
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: |-
+  Event Authority registers `bsd.finding_reconfirmed` as family `event-family-bsd-finding-reconfirmed` revision 1.0.0 in admission merge 2 of PNC-019. On 2026-11-14 Jared answered card EA-P2 with option B ("Two merges: the 173 ready now, then the rest"), so the remaining prepared families are admitted in this second merge after the first 173. `bsd.finding_reconfirmed` is one of the 249 names of the 2026-11-04 census recount (bucket e). Jared's answer to card EA-P1, option A ("Add each once its definition passes every check"), admits each such name once its full definition, its record and both reviews pass; DL-039's no bulk registration stands. Under DL-096 ("And yes I approve the DL-093 covering the families and later") this entry is Jared's decision entry for `bsd.finding_reconfirmed`, and the family's DL-077 admission record cites it as its decision_ref. DL-400 keeps this family's own commit, entry, record and twelve-criterion assessment inside the batched landing.
+
+  The registry moves from revision 2026-11-16.79 (298 families, SHA-256 37f567a3f54cddfa731d56913e2194a81517d97e15fa7670ed49e3c02a984d6b) to 2026-11-16.80 (299 families, SHA-256 2c7bd0700b31ece09b670f1fc2c1406dc31e208c0dd01ed90dab0a28f826ff2e). The appended row, canonical SHA-256 c05e5588973307f08fb27f5614ca29233dc49feaaac87347cca5dab7577d9856, has scope policy project_only, payload `pm.event_payload.bsd.finding_reconfirmed.v1` at Plans/bsd_event_payloads.schema.json#/$defs/finding_reconfirmed, semantic owner Plans/Back_Seat_Driver.md#BSD-1357, payload owner Plans/Contracts_V0.md#CV-1357 and retention RP-RUNTIME-365D@1.0.0. Under DL-078's standing rule the PNC-019 checkpoint moves in the same commit: EVENT_FAMILY_REGISTRY_REVISION 2026-11-16.80 and EVENT_FAMILY_REGISTRY_KERNEL_ROW_COUNT 299 in scripts/pm_pnc019_currentness.py, and the approved checkpoint count in the two DL-078 test files.
+
+  Depth: reports/event-authority-20261116/admission-merge-2/depth/bsd.finding_reconfirmed.json (SHA-256 4f79e6d20e9845e89a4155e50c585eb4d5cba88480a6aac5ff5828700012478c) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/bsd.finding_reconfirmed.json.
+
+  Native execution stays NOT_RUN and every payload version's producer still requires owner adoption. This entry registers only `bsd.finding_reconfirmed`. It changes no other family, validator, seal condition, retention assignment or holding bucket, and it grants no producer adoption, native claim, readiness clearance or governance seal. It lands only with its merge, after the merge's review pair and the coordinator's landing go.
+gui_related: false
+gui_classification_reason: Registers one event family in the Event Authority registry; no visual presentation changes.
+depends_on: [DL-039, DL-077, DL-078, DL-096, DL-400, DL-414]
+unblocks: []
+acceptance_criteria:
+- "The live registry contains exactly one row for bsd.finding_reconfirmed, equal to the row whose canonical SHA-256 this entry records."
+- "The DL-077 admission record reports/event-authority-20260911/admission-records/bsd.finding_reconfirmed.json passes the frozen seal check with no problem for this family."
+- "The checkpoint pins name revision 2026-11-16.80 and 299 families."
+validation_surfaces:
+- python3 Plans/.audits/event-authority-2026-08-12/independent-validator/pm_event_authority_independent_validator.py
+- python3 scripts/pm-implementation-readiness.py validate
+- python3 scripts/pm-ea-admission-writer.py verify
+risk_class: event_authority_admission
+reasoning_tier: high
+context_scope: event_authority_pnc019_admission_merge_2
+implementation_surfaces: [Plans/event_family_registry.json, scripts/pm_pnc019_currentness.py]
+node_compile_hint: {mode: owner_contract_only, create_worknodes: false, create_nodeseeds: false}
+source_lineage:
+- "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/ANSWERS_EA-P_20261114.md; SHA-256 8f8c89d237c83fa265aa2baeebd041b657e757014a3a806aff451efb6641f1ac (EA-P1 A, EA-P2 B, Jared 2026-11-14)"
+- "reports/event-authority-20261104/census-recount-20261104/NEW-LIST.json (recount name)"
+- "reports/event-authority-20261116/admission-merge-2/readiness-list.json; SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792"
+- "reports/event-authority-20261116/admission-merge-2/readiness-list.json; SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792"
+- "scripts/pm-ea-admission-writer.py (pm-ea-admission-writer.v1)"
+preserved_exact_tokens: ["bsd.finding_reconfirmed", "event-family-bsd-finding-reconfirmed", "2026-11-16.80", "2c7bd0700b31ece09b670f1fc2c1406dc31e208c0dd01ed90dab0a28f826ff2e", "c05e5588973307f08fb27f5614ca29233dc49feaaac87347cca5dab7577d9856", "Add each once its definition passes every check", "Two merges: the 173 ready now, then the rest", "And yes I approve the DL-093 covering the families and later"]
+negative_constraints:
+- No other family, validator, seal condition, retention assignment or holding bucket changes.
+- No producer adoption, native execution claim, readiness clearance or governance seal is granted.
+```
+
