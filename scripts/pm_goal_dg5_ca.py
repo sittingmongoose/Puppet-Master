@@ -83,6 +83,14 @@ def install():
         plumbing.entries(cls, tuple(name for name, value in vars(cls).items()
                                     if callable(value) and not name.startswith('_')), family)
     plumbing.entries(adapters.AppendOwner, ('append_original',), family)
+    # CB legacy owners override the DG-CA owner reads/writes; the base-class wrapping
+    # above does not cover their overrides, which authored CB negatives call directly.
+    import pm_goal_dg_cb_owners as cb_owners
+    for cls in (cb_owners.LegacyGoalOwner, cb_owners.LegacyHostStopOwner, cb_owners.LegacyPlanOwner,
+                cb_owners.LegacySchedulerOwner, cb_owners.LegacyWorkflowOwner, cb_owners.LegacySIROwner,
+                cb_owners.MigrationRegistrationOwner, cb_owners.MigrationBindingOwner, cb_owners.MaintenanceOwner):
+        plumbing.entries(cls, tuple(name for name, value in vars(cls).items()
+                                    if callable(value) and not name.startswith('_')), family)
     # C4I inspection and the event index: authored C4I negatives call these owners
     # directly, so without entries their sites are invisible to the collector
     # (same gap as the CA owners before 351f514f40). Only the actual complete-call
