@@ -264,6 +264,10 @@
    "outcome": "registered"
   },
   {
+   "event_type": "browser.session.interrupted",
+   "outcome": "registered"
+  },
+  {
    "event_type": "discovery.backpressure",
    "outcome": "registered"
   },
