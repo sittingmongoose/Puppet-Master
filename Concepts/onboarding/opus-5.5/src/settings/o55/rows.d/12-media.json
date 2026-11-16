@@ -107,7 +107,7 @@
    "label": "Let MiniMax improve my prompt",
    "help": "Off keeps your exact words.",
    "when": {
-    "id": "media.image.provider",
+    "id": "media.image.picture-route",
     "in": [
      "MiniMax Image-01"
     ]

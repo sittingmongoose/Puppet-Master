@@ -28,7 +28,7 @@
   const TAKES_IN = ['image-understanding', 'transcription'];
   const S = {
     output: 'media.io.media-output', master: 'media.capabilities.master', input: 'media.io.media-input', kinds: 'media.capabilities.enabled-types',
-    provider: 'media.image.provider', model: 'media.image.model', vision: 'media.io.vision-bridge', visionBackup: 'media.io.vision-fallback-model',
+    model: 'media.image.model', vision: 'media.io.vision-bridge', visionBackup: 'media.io.vision-fallback-model',
     folder: 'media.io.artifacts-location'
   };
   /* The inventory rows each ability draws; search and Details land on the ability that owns them. */
@@ -41,7 +41,7 @@
     'video-generation': ['media.capabilities.video-duration', 'media.capabilities.video-resolution']
   };
   const MORE = { 'image-generation': ['media.capabilities.response-format', 'media.capabilities.seed', 'media.capabilities.prompt-optimizer'] };
-  const OWNS = Object.assign({ [S.provider]: 'image-generation', [S.model]: 'image-generation', [S.visionBackup]: 'image-understanding' },
+  const OWNS = Object.assign({ [S.model]: 'image-generation', [S.visionBackup]: 'image-understanding' },
     ...Object.entries(SWITCH).map(([k, id]) => ({ [id]: k })),
     ...Object.entries(DEFAULTS).concat(Object.entries(MORE)).map(([k, ids]) => Object.fromEntries(ids.map(id => [id, k]))));
   /* The picture service is one inventory choice; each option needs a signed-in service (and, for two of them, an
@@ -106,12 +106,14 @@
 
   /* ---------- reading the state ---------------------------------------------------------------------------------- */
   const svcLabel = n => PM51.serviceName(n);
-  const pictureChoice = () => PICTURE[PM51.value(S.provider)] || null;
   const serviceOf = id => (state.providers || []).find(p => p.id === id);
+  /* FO-217: the picture route is the source of truth, as in picturePanel. The retired media.image.provider read
+     undefined, so Uses, the unset status, Check and diagnostics denied the saved selection. */
   const primaryOf = r => {
     if (r.id !== 'image-generation') return r.primary;
-    const pc = pictureChoice(); if (!pc) return { provider: 'Not configured', model: '', account: 'None' };
-    return { provider: pc.label, model: r.primary && r.primary.picture === PM51.value(S.provider) ? r.primary.model : '', account: r.primary && r.primary.account, picture: true };
+    const pc = r.primary && PICTURE[r.primary.picture];
+    if (!pc) return { provider: 'Not configured', model: '', account: 'None' };
+    return { provider: pc.label, model: r.primary.model || '', account: r.primary.account, picture: true };
   };
   const unset = r => { const p = primaryOf(r); return !p || p.provider === 'Not configured'; };
   const abilityOn = r => SWITCH[r.id] ? on(SWITCH[r.id]) : r.id === 'image-generation' ? (PM51.value(S.kinds) || []).includes('image') : r.status !== 'disabled';
@@ -178,7 +180,9 @@
   }
 
   function picturePanel(r) {
-    const cur = PM51.value(S.provider);
+    /* FO-212: the picture route the row saves to is the source of truth; the retired media.image.provider reads
+       undefined, so a reopen lost the chosen service and model */
+    const cur = r.primary && PICTURE[r.primary.picture] ? r.primary.picture : 'None';
     const first = Object.keys(PICTURE).find(k => !pictureBlock(PICTURE[k]));
     /* the panel opens on what is chosen now, "No service" when nothing is (lane-aimore 3: it opened on ChatGPT / Codex
        plan while the ability said "Nothing yet"); the first service that can be used is only marked as such */
@@ -196,7 +200,7 @@
         const p = PICTURE[v] ? serviceOf(PICTURE[v].svc) : null;
         r.primary = v === 'None' ? { provider: 'Not configured', model: '', account: 'None' } : { provider: PICTURE[v].label, picture: v, model, account: ((p && p.accounts) || []).find(x => x.active)?.nickname || '' };
         r.lastCheck = 'Not checked since the change';
-        commit(S.provider, v); syncModelMode(); save();
+        syncModelMode(); save();
         PM51.toast('Picture service saved', v === 'None' ? 'Pictures are not made until you choose a service.' : `Image Generation now uses ${PICTURE[v].label}.`);
       }
     });
@@ -315,7 +319,7 @@
     const off = !!block || !abilityOn(r);
     const p = primaryOf(r);
     const uses = orow({
-      label: 'Uses', help: accountText(p), home: r.id === 'image-generation' ? S.provider : null,
+      label: 'Uses', help: accountText(p),
       control: valueWith(endpointText(p), { label: unset(r) ? 'Choose' : 'Change', icon: 'route', action: 'pm51-media-change', data })
     });
     const backup = orow({ label: 'If that fails, use', help: fallbackText(r), home: r.id === 'image-understanding' ? S.visionBackup : null, control: PM51.btn({ label: 'Edit', icon: 'edit', small: true, action: 'pm51-media-fallbacks', data }) });
@@ -390,7 +394,7 @@
     const e = PM51.placement.byId[id]; if (e && e.tab) PM51.setTab(ID, e.tab);
     if (OWNS[id]) { PM51.setTab(ID, 'abilities'); PM51.setSel(ID, OWNS[id]); }
   });
-  [S.output, S.master, S.input, S.kinds, S.provider, S.visionBackup, S.folder, 'media.io.artifact-retention', ...Object.values(SWITCH)].forEach(id => PM51.watch(id, () => PM51.refresh(ID, { swap: false })));
+  [S.output, S.master, S.input, S.kinds, S.visionBackup, S.folder, 'media.io.artifact-retention', ...Object.values(SWITCH)].forEach(id => PM51.watch(id, () => PM51.refresh(ID, { swap: false })));
 
   /* ---------- actions ------------------------------------------------------------------------------------------- */
   const route = el => byId(ds(el, 'route'));
