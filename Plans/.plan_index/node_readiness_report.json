@@ -12,7 +12,7 @@
     "unblocks_edge_count": 3223,
     "unresolved_reference_count": 0
   },
-  "generated_at_utc": "2026-11-16T04:58:56Z",
+  "generated_at_utc": "2026-11-16T05:03:14Z",
   "gui_related_units": {
     "count": 3935,
     "units": [
@@ -36630,8 +36630,8 @@
         "source_location": {
           "heading": "SP-656 — Preview subject UI and runtime identity mapping",
           "heading_level": 3,
-          "heading_line": 49773,
-          "line": 49775,
+          "heading_line": 49774,
+          "line": 49776,
           "path": "Plans/storage-plan.md"
         }
       },
@@ -47877,6 +47877,10 @@
       {
         "error": "event_authority_currentness_source_drift",
         "source_path": "Plans/assistant-chat-design.md"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/event_family_registry.schema.json"
       },
       {
         "error": "event_authority_currentness_source_drift",
