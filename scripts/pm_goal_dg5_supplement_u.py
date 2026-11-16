@@ -238,6 +238,61 @@ def body_record_schema_empty_thread(d):
                                    'TEST_ONLY:creation-authority:dg5rec', 'context:TEST_ONLY:dg5rec')
 
 
+@case('U-DG5/N/audit_request_schema_extra_field', 'dgu/reader/audit/request/schema/',
+      ('dg5/dgu/reader/audit/request/schema', 'dg5/dgu/reader/audit/result/schema'),
+      'Single defect: the caller audit request gains one field no reader schema defines. The '
+      'request validation is the first statement of read_audit, and the identical request object '
+      'is embedded verbatim in the validated result, so the request and result whole-root schemas '
+      'bound the same object by the same predicate (additionalProperties) as a declared set.')
+def audit_request_schema_extra_field(d):
+    w, g = U._goal(d)
+    req, adm = U.run_direct(w, g)
+    r = dict(U._audit_req(g, U.op_of(adm)), dg5_schemaless_field=1)
+    return w, lambda: w.source.read_audit(r, g['user'], g['user_permission'])
+
+
+@case('U-DG5/N/input_request_schema_extra_field', 'dgu/reader/input/request/schema/',
+      ('dg5/dgu/reader/input/request/schema', 'dg5/dgu/reader/input/result/schema'),
+      'Single defect: the caller input request gains one field no reader schema defines. The '
+      'request validation is the first statement of read_input_content, and the identical request '
+      'object is embedded verbatim in the validated result, so the request and result whole-root '
+      'schemas bound the same object by the same predicate (additionalProperties) as a declared set.')
+def input_request_schema_extra_field(d):
+    w, g = U._goal(d)
+    req, adm = U.run_direct(w, g)
+    r = dict(reader_binding='reader.goal.update_input@1.0.0', operation_id=U.op_of(adm),
+             dg5_schemaless_field=1, **g['scope'])
+    return w, lambda: w.source.read_input_content(r, g['user'], g['user_permission'])
+
+
+@case('U-DG5/N/inspect_request_schema_extra_field', 'dgu/inspect/request/schema/',
+      ('dg5/dgu/inspect/request/schema', 'dg5/dgu/inspect/witness/schema'),
+      'Single defect: the caller inspect request gains one field no consumer schema defines. The '
+      'request validation is the first statement of inspect, and the identical request object is '
+      'embedded verbatim in the validated witness, so the request and witness whole-root schemas '
+      'bound the same object by the same predicate (additionalProperties) as a declared set.')
+def inspect_request_schema_extra_field(d):
+    w, g = U._goal(d)
+    req, adm = U.run_direct(w, g)
+    r = dict(w.inspector.request_for(g['scope'], U.event_of(w, g, adm)), dg5_schemaless_field=1)
+    return w, lambda: w.inspector.inspect(r, g['user'], g['user_permission'])
+
+
+@case('U-DG5/N/hitl_resolution_schema_request_sha', 'dgu/hitl/resolution/schema/request_sha256',
+      'dg5/dgu/hitl/resolution/schema',
+      'Single defect: the stored approval carries a non-hex request_sha256 (cells are read back '
+      'through _decode_cell with no schema), so decide copies it into the owner-built resolution '
+      'and only the whole-root ApprovalResolution validation refuses; the decision enum check and '
+      'person permission check never read that field.')
+def hitl_resolution_schema_request_sha(d):
+    w, g = U._goal(d)
+    req, ag = O.agent_request(w, g, 'x', decide=None)
+    cur = w.approvals.state(ag['approval_id'])
+    w.approvals.put(ag['approval_id'], dict(cur, request_sha256='not-hex'))
+    return w, lambda: w.approvals.decide(ag['approval_id'], 'approved', ag['approver_permission'],
+                                         ag['approver'])
+
+
 @case('U-DG5/N/inspect_source_defect', 'dgu/inspect/source_defect', SITE + '1867',
       'Single defect in the acquired source snapshot: first custody group_digest is substituted, so '
       'GenericSource halts before that event (a custody defect at its position) and the inspected event '

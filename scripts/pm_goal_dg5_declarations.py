@@ -58,10 +58,12 @@ DECLARED_RULES = (
      ('dg5/dgu/sir/request/schema', U_SITE + '294'),
      'GoalUpdateRequestV2 goal_id minLength 1 and exact_str (pm_goal_dg_u_owners.py:294) `value != \'\'` require the '
      'same field to be non-empty.'),
-    (lambda cid: cid.startswith('U5/F/hitl.capture/after:') and cid.endswith('/body'),
+    (lambda cid: cid.startswith('U5/F/hitl.capture/after:') and cid.endswith('/body')
+     and not cid.startswith('U5/F/hitl.capture/after:current_goal/'),
      HITL_TARGET,
      "ApprovalOwner.capture checks the Goal body's revision and currentness_hash against the proposal target at :975 "
-     'and re-reads and re-checks the identical predicate at its final boundary :998.'),
+     'and re-reads and re-checks the identical predicate at its final boundary :998. '
+     'The after:current_goal fault lands between the two checks, so that case targets :998 alone.'),
 )
 
 
