@@ -88,6 +88,10 @@
    "outcome": "registered"
   },
   {
+   "event_type": "browser.controller_lease.takeover_requested",
+   "outcome": "registered"
+  },
+  {
    "event_type": "discovery.backpressure",
    "outcome": "registered"
   },
