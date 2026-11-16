@@ -1225,10 +1225,16 @@ def u5n_agent_author(d):
     return w, lambda: w.approvals.capture(prop['command_instance_id'])
 
 
-@case('U5', 'U5/N/target_uuid_malformed', 'negative', 'dgu/hitl/capture/storage_uuid')
+@case('U5', 'U5/N/target_uuid_malformed', 'negative', 'dgu/sir/proposal/schema/target/scope/storage_instance_id')
 def u5n_uuid(d):
-    w, g, prop, ap = _proposal(d, target_storage=lambda sid: sid.replace('-', ''))
-    return w, lambda: w.approvals.capture(prop['command_instance_id'])
+    # T246: the schema-valid proposal is the control. A malformed UUID is
+    # rejected by SIR's original schema before any HITL capture can receive it;
+    # it cannot witness the downstream guard without forging an admitted source.
+    w, g, prop, ap = _proposal(d)
+    malformed = copy.deepcopy(prop)
+    malformed['command_instance_id'] += ':malformed-uuid'
+    malformed['target']['scope']['storage_instance_id'] = g['scope']['storage_instance_id'].replace('-', '')
+    return w, lambda: w.sir.admit_proposal(malformed)
 
 
 @case('U5', 'U5/N/target_uuid_case_folded', 'negative', 'dgu/hitl/capture/foreign_storage')

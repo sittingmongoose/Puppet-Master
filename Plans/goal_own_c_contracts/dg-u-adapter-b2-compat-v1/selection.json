@@ -22,7 +22,7 @@
     },
     {
       "path": "scripts/pm_goal_dg_u_oracles.py",
-      "sha256": "27dd7183c118e8434e362a57a889c946b6feb4ddc802150981bcced650e1bc4c"
+      "sha256": "1cb2f171cb5e791a46b3d477d16e1efb0973dfecef4e044959ff4969324cd6ee"
     },
     {
       "path": "scripts/pm_goal_test_numrule.py",
@@ -34,7 +34,7 @@
     },
     {
       "path": "scripts/pm_goal_test_owner_adapters.py",
-      "sha256": "f8f5b342be1629e14b21aef2f8818752ee358fea51e506e33c578eb74895fb40"
+      "sha256": "e75bb0bc7d14488f35691e7389a3d0ca909ed65393f3127c6853ab5dcd613391"
     },
     {
       "path": "scripts/pm_goal_test_source.py",
@@ -65,6 +65,10 @@
     {
       "path": "Plans/goal_updated_consumer_resources.json",
       "sha256": "5d3838be2868a7b6740de7565a2274d0bd97fb6ebe4aefaff4ee621a31e60139"
+    },
+    {
+      "path": "scripts/pm_goal_oracle_common.py",
+      "sha256": "cd08c2c5666643e576a319ca3b1cbd677761039f63d3146ef09f36ed055c7bd5"
     }
   ],
   "numrule": {

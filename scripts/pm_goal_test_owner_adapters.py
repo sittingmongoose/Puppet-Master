@@ -29,6 +29,7 @@ compose and assert a complete original path.
 from __future__ import annotations
 
 from contextlib import contextmanager
+from functools import lru_cache
 import copy
 import hashlib
 import json
@@ -174,6 +175,81 @@ def observation_digest(value):
 
 # ------------------------------------------------------------------ roots
 
+def _owner_timestamp_properties(validator, properties, instance, schema):
+    """Apply owner profiles without choosing authority from input field names.
+
+    These are the schema-role criteria used by the Goal oracles' timestamp
+    inventory. A receipt acknowledgement is deliberately not a Storage clock
+    (E5-2). All grammar and calendar decisions stay in pinned NUMRULE.
+    """
+    if validator.is_type(instance, 'object'):
+        required = set(schema.get('required', ()))
+        identity = properties.get('schema_id', {}).get('const')
+        event = identity == 'pm.event.v0' or {'event_type', 'payload_schema_id', 'replay_policy'} <= required
+        storage = (event or identity == 'pm.storage_value.event_record_index.v2'
+                   or {'source_schema_id', 'producer_semantic_digest', 'publication_locator'} <= required
+                   or {'first_append_receipt', 'original_event_value_commitment'} <= required
+                   or {'observed_at_utc', 'persisted_at_utc', 'sequence_id'} <= required)
+        profiles = {name: NR.DT.STORAGE_UTC_Z for name in ('observed_at_utc', 'persisted_at_utc')
+                    if storage and name in properties}
+        if event and 'occurred_at_utc' in properties:
+            profiles['occurred_at_utc'] = NR.DT.EVENT_RECORD
+        # Goal approval provider clocks (protocol U3), not append receipts.
+        if identity == 'pm.goal.update.approval_request.v1':
+            profiles.update({name: NR.DT.COORDINATION_UTC_Z for name in ('created_at_utc', 'expires_at_utc')})
+        if {'approval_id', 'request_sha256', 'decided_at_utc', 'protected_person_decision_ref'} <= required:
+            profiles['decided_at_utc'] = NR.DT.COORDINATION_UTC_Z
+        for name, profile in profiles.items():
+            if name not in instance:
+                continue
+            if name == 'expires_at_utc' and instance[name] is None:
+                continue  # The approval owner's nullable expiry is unchanged.
+            try:
+                NR.DT.date_time(instance[name], profile=profile)
+            except NR.NumRefusal as error:
+                is_string = validator.is_type(instance[name], 'string')
+                yield jsonschema.ValidationError(
+                    'shared timestamp profile refused', validator='format' if is_string else 'type',
+                    validator_value='date-time' if is_string else 'string', instance=instance[name],
+                    schema=properties[name], path=(name,), schema_path=(name, 'format' if is_string else 'type'),
+                    cause=error)
+    yield from jsonschema.Draft202012Validator.VALIDATORS['properties'](validator, properties, instance, schema)
+
+
+@lru_cache(maxsize=None)
+def _root_validator(base):
+    """Keep owner profiles when a referenced whole resource declares a dialect.
+
+    jsonschema's default evolve selects the stock class at a $schema boundary,
+    which would drop the properties hook while keeping the broad checker.
+    Resource bytes and the declared dialect remain unchanged.
+    """
+    from attrs import fields
+    cls = jsonschema.validators.extend(base, {'properties': _owner_timestamp_properties,
+                                            'pattern': _owner_pattern})
+
+    def evolve(self, **changes):
+        schema = changes.setdefault('schema', self.schema)
+        selected = jsonschema.validators.validator_for(schema, default=base)
+        for field in fields(type(self)):
+            if field.init and field.alias not in changes:
+                changes[field.alias] = getattr(self, field.name)
+        return _root_validator(selected)(**changes)
+
+    cls.evolve = evolve
+    return cls
+
+
+def _owner_pattern(validator, pattern, instance, schema):
+    # Reuse the Goal shared ECMA-262 search. Python re's $ also matches before
+    # a terminal LF; whole owner hashes/keys must not gain that false pass.
+    from pm_goal_oracle_common import strict_pattern
+    yield from strict_pattern(validator, pattern, instance, schema)
+
+
+_RootValidator = _root_validator(jsonschema.Draft202012Validator)
+
+
 class RootBank:
     """Pinned whole-schema bank. Files are loaded byte-exact and hash-checked."""
 
@@ -193,9 +269,13 @@ class RootBank:
             pairs.append((uri, Resource.from_contents(document, default_specification=DRAFT202012)))
         self.registry = Registry().with_resources(pairs).crawl()
 
+    def validator(self, root):
+        """The exact whole-root validator, also exposed to clause-closure tools."""
+        return _RootValidator({'$ref': root}, registry=self.registry,
+                              format_checker=NR.DT.format_checker(profile=NR.DT.EVENT_RECORD))
+
     def errors(self, root, value):
-        validator = jsonschema.Draft202012Validator({'$ref': root}, registry=self.registry)
-        return sorted(validator.iter_errors(value), key=lambda e: list(e.absolute_path))
+        return sorted(self.validator(root).iter_errors(value), key=lambda e: list(e.absolute_path))
 
     def validate(self, root, value, code='root'):
         errors = self.errors(root, value)
