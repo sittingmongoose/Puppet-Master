@@ -116,7 +116,8 @@ const rowMatch = (node, sel) => {
 const only = process.argv.find((x) => x.startsWith('--rule='))?.split('=')[1];
 const onlySample = process.argv.find(x => x.startsWith('--sample='))?.slice(9);
 const failures = new Set(), coverage = {};
-for (const sample of samples.filter(s => !onlySample || s.name.includes(onlySample))) {
+const picked = samples.filter(s => !onlySample || s.name.includes(onlySample));
+for (const sample of picked) {
  const nodes = parse(sample.html);
  if (sample.decorate) for (const n of nodes) if (rowSelectors.some(sel => rowMatch(n,sel))) n.classes.push('pmr-cur');
  for (const rule of rules.filter((r) => only === undefined || String(r.rule) === only)) for (const variant of rule.variants || [rule]) {
@@ -138,7 +139,18 @@ for (const sample of samples.filter(s => !onlySample || s.name.includes(onlySamp
   }
  }
 }
-assert.ok(coverage[only ?? 0] > 0, 'the requested rule must exercise real builder descendants');
+// PM7PERF-NODE-RAIL-COVERAGE (R27 F3): only rule 0 (or the --rule asked for) was asserted to reach any descendant, so
+// another rule's samples could fall to none unseen. Each rule this test reaches must reach at least half the descendants
+// it reached on 2026-11-15 (main 83d1c6128b: 0:505 1:17 3:4 6:444 7:177 8:1240 9:16 10:36 11:4 13:1002 14:1002). Not
+// reached here: rule 2 (rail menu items: rail_concept_descendants.test.mjs), rule 5 (Liquid Glass: the browser census,
+// active_descendant_expanded.check.mjs, only), rules 4 and 12 (omitted).
+const FLOORS = { 0: 252, 1: 8, 3: 2, 6: 222, 7: 88, 8: 620, 9: 8, 10: 18, 11: 2, 13: 501, 14: 501 };
+// A filtered run (R53-C3, R54 F4): --sample= must select a builder sample, and with no --rule= reach some descendant,
+// or a typo in the name reported success with no coverage at all; the per-rule floors stay for the full run.
+if (onlySample) assert.ok(picked.length > 0, `--sample=${onlySample} selects none of the builder samples (${samples.map((s) => s.name).join(', ')})`);
+if (onlySample && only === undefined) assert.ok(Object.values(coverage).some((n) => n > 0), `--sample=${onlySample} reached no real builder descendant for any rule`);
+if (only !== undefined) assert.ok(coverage[only] > 0, 'the requested rule must exercise real builder descendants');
+else if (!onlySample) for (const [rule, floor] of Object.entries(FLOORS)) assert.ok((coverage[rule] || 0) >= floor, `rule ${rule} reached ${coverage[rule] || 0} real builder descendants, under its floor ${floor}`);
 console.log('Real builder coverage: ' + JSON.stringify(coverage));
 for (const message of failures) console.log('FAIL ' + message);
 assert.equal(failures.size, 0, `${failures.size} dropped rule/element pairs from the real builder`);
