@@ -512,8 +512,13 @@ renderDetailInspectorBody = function (setting, section, workspace) {
   const d = setting.detail || {};
   const current = settingValue(setting);
   /* "is it the default" is decided by the value, not by whether it was ever touched: choosing the default again
-     reads as the default */
-  const isDefault = o55SameValue(current, setting.value);
+     reads as the default. FO-224: a model row's value is its model and its depth together (the depth is kept beside
+     the model, 31-model-rows.js), so the default model at another depth is not the default; the depth the default
+     record holds (its default.effort; a token default holds none) is the default depth */
+  const isModelRow = O55_PICK_MODELS.has(setting.id);
+  const defRec = isModelRow ? (O55_MODEL_CANON[setting.id] || {}).default : null;
+  const defDepth = defRec && typeof defRec === 'object' ? String(defRec.effort || '') : '';
+  const isDefault = o55SameValue(current, setting.value) && (!isModelRow || o55SameValue(o55DepthOf(setting.id, o55ModelRaw(current)), defDepth));
   const where = o55Where(setting.id, workspace);
   const label = PM51.rowLabel(setting);
   const iconName = (where.workspace && PANEL_ICONS[where.workspace.id]) || (where.domain && DOMAIN_ICONS[where.domain.id]) || 'settings';
@@ -523,7 +528,9 @@ renderDetailInspectorBody = function (setting, section, workspace) {
   const scopes = (Array.isArray(ref.scope) ? ref.scope : (setting.applicabilityMetadata || [])).map(s => O55_SCOPE[s]).filter(Boolean);
   const applies = row.applies || (scopes.length ? scopes.join('. ') + '.' : (d.applies && d.applies !== 'This project' ? d.applies : 'This project.'));
   const choices = o55ChoicesFor(setting, current);
-  const defText = PM51.valueText(setting, setting.value);
+  /* FO-224: the Default line names the default record's own depth, not the depth stored now for the default model */
+  const defResolve = isModelRow && !o55IsModelToken(setting.id, setting.value) ? o55ModelResolve(setting.id, setting.value, {}, 0) : null;
+  const defText = defResolve && !defResolve.none ? [defResolve.name, defDepth ? `${defDepth} depth` : ''].filter(Boolean).join(' · ') : PM51.valueText(setting, setting.value);
   const nowText = PM51.valueText(setting, current);
   const neighbours = (section && Array.isArray(section.settings) ? section.settings : []).filter(s => s.id !== setting.id).slice(0, 5);
   const crumbs = [where.domain && where.domain.label, where.workspace && where.workspace.label].filter(Boolean);

@@ -239,4 +239,16 @@ PM51.valueText = (setting, v) => {
 const o55ModelCommit = commitSettingValue;
 commitSettingValue = function (id) { const ok = o55ModelCommit.apply(this, arguments); if (ok) o55MselSoon(); return ok; };
 const o55ModelRestore = restoreSettingDefault;
-restoreSettingDefault = function () { const ok = o55ModelRestore.apply(this, arguments); if (ok) o55MselSoon(); return ok; };
+/* FO-224: a model row restores its depth with its model: the default record's own depth (none for a token default),
+   so a depth-only change goes back too */
+restoreSettingDefault = function (id) {
+  const ok = o55ModelRestore.apply(this, arguments);
+  if (ok) {
+    if (O55_PICK_MODELS.has(id)) {
+      const rec = (O55_MODEL_CANON[id] || {}).default, effort = rec && typeof rec === 'object' ? String(rec.effort || '') : '';
+      o55DepthPut(id, effort ? o55ModelRaw(rec) : '', effort);
+    }
+    o55MselSoon();
+  }
+  return ok;
+};
