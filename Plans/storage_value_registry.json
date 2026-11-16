@@ -23773,87 +23773,285 @@
             ],
             "properties": {
               "schema_id": {
-                "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/schema_id"
+                "type": "string",
+                "const": "pm.event.v0"
               },
               "schema_version": {
-                "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/schema_version"
+                "type": "string",
+                "const": "2.0.0"
               },
               "scope_kind": {
-                "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/scope_kind"
+                "type": "string",
+                "enum": [
+                  "application",
+                  "project"
+                ]
               },
               "event_id": {
-                "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/event_id"
+                "type": "string",
+                "minLength": 1
               },
               "event_type": {
                 "const": "storage.value_quarantine_changed"
               },
               "project_id": {
-                "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/project_id"
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
               },
               "thread_id": {
-                "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/thread_id"
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
               },
               "run_id": {
-                "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/run_id"
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
               },
               "node_id": {
-                "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/node_id"
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
               },
               "attempt_id": {
-                "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/attempt_id"
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
               },
               "actor_ref": {
-                "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/actor_ref"
+                "type": "string",
+                "minLength": 1
               },
               "requested_account_ref": {
-                "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/requested_account_ref"
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
               },
               "effective_account_ref": {
-                "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/effective_account_ref"
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
               },
               "occurred_at_utc": {
-                "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/occurred_at_utc"
+                "type": "string",
+                "format": "date-time",
+                "minLength": 1
               },
               "producer_sequence_id": {
-                "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/producer_sequence_id"
+                "anyOf": [
+                  {
+                    "type": "integer",
+                    "minimum": 0
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
               },
               "correlation_id": {
-                "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/correlation_id"
+                "type": "string",
+                "minLength": 1
               },
               "causation_event_id": {
-                "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/causation_event_id"
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
               },
               "parent_event_id": {
-                "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/parent_event_id"
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
               },
               "idempotency_key": {
-                "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/idempotency_key"
+                "type": "string",
+                "minLength": 1
               },
               "payload_schema_id": {
                 "const": "https://puppetmaster.local/schemas/event_payloads/storage_value_quarantine_changed/1.0.0"
               },
               "payload": {
-                "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/payload"
+                "type": "object",
+                "additionalProperties": true
               },
               "payload_ref": {
-                "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/payload_ref"
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
               },
               "redaction_profile": {
-                "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/redaction_profile"
+                "type": "string",
+                "enum": [
+                  "no_secrets",
+                  "redacted",
+                  "secret_refs_only"
+                ]
               },
               "replay_policy": {
-                "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/replay_policy"
+                "type": "string",
+                "enum": [
+                  "append_once",
+                  "dedupe_by_event_id",
+                  "dedupe_by_idempotency_key",
+                  "projector_replay_only"
+                ]
               },
               "migration": {
-                "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/migration"
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "migrated_from_schema_id",
+                  "migrated_from_schema_version",
+                  "migration_id",
+                  "compatibility_event_type"
+                ],
+                "properties": {
+                  "migrated_from_schema_id": {
+                    "anyOf": [
+                      {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  },
+                  "migrated_from_schema_version": {
+                    "anyOf": [
+                      {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  },
+                  "migration_id": {
+                    "anyOf": [
+                      {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  },
+                  "compatibility_event_type": {
+                    "anyOf": [
+                      {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  }
+                }
               }
             },
             "allOf": [
               {
-                "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/allOf/0"
+                "if": {
+                  "properties": {
+                    "scope_kind": {
+                      "const": "application"
+                    }
+                  },
+                  "required": [
+                    "scope_kind"
+                  ]
+                },
+                "then": {
+                  "properties": {
+                    "project_id": {
+                      "type": "null"
+                    }
+                  }
+                }
               },
               {
-                "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/allOf/1"
+                "if": {
+                  "properties": {
+                    "scope_kind": {
+                      "const": "project"
+                    }
+                  },
+                  "required": [
+                    "scope_kind"
+                  ]
+                },
+                "then": {
+                  "properties": {
+                    "project_id": {
+                      "type": "string",
+                      "minLength": 1
+                    }
+                  }
+                }
               }
             ]
           },
@@ -24324,87 +24522,285 @@
             ],
             "properties": {
               "schema_id": {
-                "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/schema_id"
+                "type": "string",
+                "const": "pm.event.v0"
               },
               "schema_version": {
-                "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/schema_version"
+                "type": "string",
+                "const": "2.0.0"
               },
               "scope_kind": {
-                "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/scope_kind"
+                "type": "string",
+                "enum": [
+                  "application",
+                  "project"
+                ]
               },
               "event_id": {
-                "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/event_id"
+                "type": "string",
+                "minLength": 1
               },
               "event_type": {
                 "const": "storage.deletion_lifecycle_changed"
               },
               "project_id": {
-                "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/project_id"
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
               },
               "thread_id": {
-                "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/thread_id"
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
               },
               "run_id": {
-                "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/run_id"
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
               },
               "node_id": {
-                "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/node_id"
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
               },
               "attempt_id": {
-                "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/attempt_id"
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
               },
               "actor_ref": {
-                "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/actor_ref"
+                "type": "string",
+                "minLength": 1
               },
               "requested_account_ref": {
-                "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/requested_account_ref"
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
               },
               "effective_account_ref": {
-                "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/effective_account_ref"
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
               },
               "occurred_at_utc": {
-                "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/occurred_at_utc"
+                "type": "string",
+                "format": "date-time",
+                "minLength": 1
               },
               "producer_sequence_id": {
-                "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/producer_sequence_id"
+                "anyOf": [
+                  {
+                    "type": "integer",
+                    "minimum": 0
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
               },
               "correlation_id": {
-                "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/correlation_id"
+                "type": "string",
+                "minLength": 1
               },
               "causation_event_id": {
-                "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/causation_event_id"
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
               },
               "parent_event_id": {
-                "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/parent_event_id"
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
               },
               "idempotency_key": {
-                "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/idempotency_key"
+                "type": "string",
+                "minLength": 1
               },
               "payload_schema_id": {
                 "const": "https://puppetmaster.local/schemas/event_payloads/storage_deletion_lifecycle_changed/1.0.0"
               },
               "payload": {
-                "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/payload"
+                "type": "object",
+                "additionalProperties": true
               },
               "payload_ref": {
-                "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/payload_ref"
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
               },
               "redaction_profile": {
-                "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/redaction_profile"
+                "type": "string",
+                "enum": [
+                  "no_secrets",
+                  "redacted",
+                  "secret_refs_only"
+                ]
               },
               "replay_policy": {
-                "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/replay_policy"
+                "type": "string",
+                "enum": [
+                  "append_once",
+                  "dedupe_by_event_id",
+                  "dedupe_by_idempotency_key",
+                  "projector_replay_only"
+                ]
               },
               "migration": {
-                "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/properties/migration"
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "migrated_from_schema_id",
+                  "migrated_from_schema_version",
+                  "migration_id",
+                  "compatibility_event_type"
+                ],
+                "properties": {
+                  "migrated_from_schema_id": {
+                    "anyOf": [
+                      {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  },
+                  "migrated_from_schema_version": {
+                    "anyOf": [
+                      {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  },
+                  "migration_id": {
+                    "anyOf": [
+                      {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  },
+                  "compatibility_event_type": {
+                    "anyOf": [
+                      {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  }
+                }
               }
             },
             "allOf": [
               {
-                "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/allOf/0"
+                "if": {
+                  "properties": {
+                    "scope_kind": {
+                      "const": "application"
+                    }
+                  },
+                  "required": [
+                    "scope_kind"
+                  ]
+                },
+                "then": {
+                  "properties": {
+                    "project_id": {
+                      "type": "null"
+                    }
+                  }
+                }
               },
               {
-                "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/allOf/1"
+                "if": {
+                  "properties": {
+                    "scope_kind": {
+                      "const": "project"
+                    }
+                  },
+                  "required": [
+                    "scope_kind"
+                  ]
+                },
+                "then": {
+                  "properties": {
+                    "project_id": {
+                      "type": "string",
+                      "minLength": 1
+                    }
+                  }
+                }
               }
             ]
           },

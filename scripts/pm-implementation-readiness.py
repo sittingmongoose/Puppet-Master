@@ -6119,11 +6119,33 @@ def case_l_verification_self_test_checks() -> dict[str, bool]:
             "storage_instance_id": "storage-1", "quarantine_id": "quarantine-1",
             "source_family_id": "event_record_index", "source_locator_ref": "event:event-42",
             "expected_schema_id": "pm.storage_value.event_record_index.v2", "expected_schema_version": "2.0.0",
-            "observed_schema_id": None, "observed_schema_version": None, "error_code": "schema_invalid",
+            "observed_schema_id": "pm.storage_value.event_record_index.v1", "observed_schema_version": "1.0.0", "error_code": "schema_invalid",
             "raw_sha256": hash_value, "raw_custody_ref": "custody:raw", "custody_manifest_ref": "custody:manifest",
             "custody_manifest_sha256": hash_value, "byte_length": 128, "detected_at_utc": "2026-07-18T03:00:00Z",
             "risk_class": risk, "state": state, "retention_policy_ref": risk,
             "transition_receipts": receipts, "related_event_refs": ["event:q1"], "redaction_profile": "no_secrets",
+            "event_obligation": {
+                "schema_id": "pm.event.v0", "schema_version": "2.0.0", "scope_kind": "application",
+                "event_id": "event:q1", "event_type": "storage.value_quarantine_changed",
+                "project_id": None, "thread_id": None, "run_id": None, "node_id": None, "attempt_id": None,
+                "actor_ref": "actor:storage", "requested_account_ref": None, "effective_account_ref": None,
+                "occurred_at_utc": "2026-07-18T03:00:00Z", "producer_sequence_id": None,
+                "correlation_id": "quarantine-1", "causation_event_id": None, "parent_event_id": None,
+                "idempotency_key": "storage-quarantine:self-test:q1",
+                "payload_schema_id": "https://puppetmaster.local/schemas/event_payloads/storage_value_quarantine_changed/1.0.0",
+                "payload": {
+                    "schema_version": "1.0.0", "quarantine_id": "quarantine-1",
+                    "source_ref": "event:event-42", "expected_schema_id": "pm.storage_value.event_record_index.v2",
+                    "observed_schema_id": "pm.storage_value.event_record_index.v1", "raw_bytes_hash": hash_value, "raw_bytes_ref": "custody:raw",
+                    "risk_class": risk, "state": state, "actor_ref": "actor:storage",
+                    "reason": "transition-self-test", "receipt_ref": receipts[-1]["receipt_ref"] if receipts else "receipt:detect",
+                }, "payload_ref": None,
+                "redaction_profile": "no_secrets", "replay_policy": "dedupe_by_idempotency_key",
+                "migration": {
+                    "migrated_from_schema_id": None, "migrated_from_schema_version": None,
+                    "migration_id": None, "compatibility_event_type": None,
+                },
+            },
         }
     resolved = quarantine(
         "Q-CRITICAL", "migrated",
@@ -6132,6 +6154,8 @@ def case_l_verification_self_test_checks() -> dict[str, bool]:
     purged = clone(resolved)
     purged["state"] = "purged"
     purged["transition_receipts"].append(transition("migrated", "purged", "3"))
+    purged["event_obligation"]["payload"]["state"] = "purged"
+    purged["event_obligation"]["payload"]["receipt_ref"] = "receipt:3"
     checks["l033_receipt_continuity_and_current_state_valid"] = not draft202012_schema_failures(
         resolved,
         quarantine_schema,
@@ -6140,6 +6164,15 @@ def case_l_verification_self_test_checks() -> dict[str, bool]:
         resolved,
         policy_elapsed=False,
         active_hold_count=1,
+    )
+    wrong_obligation_const = clone(resolved)
+    wrong_obligation_const["event_obligation"]["event_type"] = "storage.deletion_lifecycle_changed"
+    checks["l033_wrong_event_obligation_const_rejected"] = bool(
+        draft202012_schema_failures(
+            wrong_obligation_const,
+            quarantine_schema,
+            path_label="self-test:l033-wrong-obligation-const",
+        )
     )
     discontinuous = clone(resolved)
     discontinuous["transition_receipts"][1]["from_state"] = "detected"
