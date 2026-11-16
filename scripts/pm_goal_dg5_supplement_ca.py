@@ -1599,11 +1599,11 @@ def cases(suite):
     native_case('c3n/d06_control_result',
                 lambda w, r: tx_edit(w, w.native.d06.CONTROL, r.wf_run['d06']['control_key'],
                                      lambda v: v['record']['result'].update(physical_value_sha256='0' * 64)),
-                'C3/settle_owner/native_custody/d06/control_result', N3_SITE + '1069')
+                'd06/control_result', N3_SITE + '1069')
     native_case('c3n/d06_control_intent',
                 lambda w, r: tx_edit(w, w.native.d06.CONTROL, r.wf_run['d06']['control_key'],
                                      lambda v: v['record']['intent'].update(physical_value_sha256='0' * 64)),
-                'C3/settle_owner/native_custody/d06/control_intent', N3_SITE + '1071')
+                'd06/control_intent', N3_SITE + '1071')
     native_case('c3n/d06_custody_unavailable',
                 lambda w, r: drop(w, w.native.d06.INTENT, r.wf_run['d06']['intent_key']),
                 'd06/custody_unavailable', N3_SITE + '1068')
@@ -1641,17 +1641,17 @@ def cases(suite):
 
     d05_stop_case('c3n/d05_goal_stop_not_latched',
                   lambda w, r: w.host_stop.manual(r.scope, 'resume'),
-                  'C3/settle_owner/native_custody/d05/goal_stop_not_latched', N3_SITE + '756')
+                  'd05/goal_stop_not_latched', N3_SITE + '756')
     d05_stop_case('c3n/d05_goal_stop_receipt',
                   lambda w, r: stop_tx(w, r, lambda rec: rec.update(last_original_stop_receipt_sha256='0' * 64)),
-                  'C3/settle_owner/native_custody/d05/goal_stop_receipt', N3_SITE + '759')
+                  'd05/goal_stop_receipt', N3_SITE + '759')
     d05_stop_case('c3n/d05_goal_stop_progress',
                   lambda w, r: tx_edit(w, 'goal_cancel_progress',
                                        'goal_cancel_progress:' + __import__('pm_goal_own_c_source_oracles').scoped_key(r.scope)
                                        + ':' + r.operation_id.encode().hex() + ':epoch:1',
                                        lambda v: v['record']['stop_receipt'].update(
                                            original_host_transaction_ref=O.uid('TEST_ONLY:host-stop-transaction'))),
-                  'C3/settle_owner/native_custody/d05/goal_stop_progress', N3_SITE + '764')
+                  'd05/goal_stop_progress', N3_SITE + '764')
 
     def run_current_case(name, setup, expected, target):
         def make():
@@ -1683,3 +1683,272 @@ def cases(suite):
         tx_edit(w, w.native.run.CONTROL, p['control_key'],
                 lambda v: v['record'].update(body_record_sha256=__import__('pm_goal_dg_ca3_native').record_sha(body['record'])))
     run_current_case('c3n/run_owner_epoch', run_owner_epoch, 'run/owner_epoch', N3_SITE + '543')
+
+    # ---- batch 11b: writers / start / effects / d05-d06 remainder / route joins ----
+    def writers_case(name, setup, expected, target, action='capture_source'):
+        def make():
+            w, r = C3C.wf(suite)
+            setup(w, r)
+            return w, getattr(r, action)
+        add(name, make, expected, target)
+
+    writers_case('c3n/writers_inventory_unavailable',
+                 lambda w, r: drop(w, 'TEST_ONLY:native_writer_inventory', w.native.writers.inventory_key),
+                 'writers/inventory_unavailable', N3_SITE + '380')
+    writers_case('c3n/writers_registration_unavailable',
+                 lambda w, r: drop(w, 'TEST_ONLY:native_writer_registration',
+                                   w.native.writers.inventory_key and
+                                   w.value('TEST_ONLY:native_writer_inventory', w.native.writers.inventory_key)['writers'][0]['key']),
+                 'writers/registration_unavailable', N3_SITE + '384')
+
+    def birth_edit(w, r, fn):
+        key = r.wf_run['birth_key']
+
+        def apply(new):
+            fn(new['value'])   # birth cell is dict(value=<DomainBirth root>)
+        tx_edit(w, 'executor_safestop_domain_birth', key, apply)
+
+    writers_case('c3/writer_domain',
+                 lambda w, r: birth_edit(w, r, lambda v: v.update(registered_writers=[
+                     x for x in v['registered_writers'] if x['component_kind'] != 'goal_stop'])),
+                 'C3/capture_source/native_writer_domain', R3_SITE + '312')
+    def writer_principal():
+        w, r = C3C.wf(suite)
+        wr = w.native.writers
+        rkey = 'TEST_ONLY:native_writer_registration:' + wr.registrations['goal_stop']['writer_id']
+        new = tx_edit(w, 'TEST_ONLY:native_writer_registration', rkey,
+                      lambda v: v['registration']['principal'].update(native_root_ref='bogus'))
+
+        def fix_inventory(v):
+            for row in v['writers']:
+                if row['key'] == rkey:
+                    row['sha256'] = O.row_sha(new)
+        tx_edit(w, 'TEST_ONLY:native_writer_inventory', wr.inventory_key, fix_inventory)
+        birth_edit(w, r, lambda v: [x['principal'].update(native_root_ref='bogus')
+                                     for x in v['registered_writers'] if x['component_kind'] == 'goal_stop'])
+        return w, r.capture_source
+    add('c3/writer_principal', writer_principal, 'C3/capture_source/native_writer_principal', R3_SITE + '313')
+    writers_case('c3/domain_allocation',
+                 lambda w, r: birth_edit(w, r, lambda v: v.update(reservation_allocation='bogus')),
+                 'C3/capture_source/native_domain_allocation', R3_SITE + '315')
+    writers_case('c3/native_run_scope',
+                 lambda w, r: birth_edit(w, r, lambda v: v.update(scope=dict(v['scope'], goal_id=O.short_id('goal')))),
+                 'C3/capture_source/native_run_scope', R3_SITE + '316')
+    def control_plane_writer():
+        w, r = C3C.until(suite, 'commit_receipt')
+        w.native.writers.disable('goal_stop')
+        return w, r.commit_receipt
+    add('c3/control_plane_writer', control_plane_writer, 'C3/commit_receipt/control_plane_writer', R3_SITE + '327')
+
+    def start_case(name, setup, expected, target):
+        def make():
+            w, r = C3C.wf(suite)
+            setup(w, r)
+            return w, r.capture_source
+        add(name, make, expected, target)
+
+    start_case('c3n/start_not_started', lambda w, r: r.wf_run.pop('start'),
+               'start/not_started', N3_SITE + '596')
+    start_case('c3n/start_custody_unavailable',
+               lambda w, r: drop(w, 'workflow_start_commit', r.wf_run['start']['commit_key']),
+               'start/custody_unavailable', N3_SITE + '600')
+    start_case('c3n/start_first_custody',
+               lambda w, r: w.storage.custody[r.wf_run['start']['event_id']]['first_append_receipt'].update(sequence_id=999999),
+               'start/first_custody', N3_SITE + '602')
+
+    def effects_case(name, setup, expected, target):
+        def make():
+            w, r = C3C.until(suite, 'native')
+            setup(w, r)
+            return w, r.run_native
+        add(name, make, expected, target)
+
+    # effects inventory/member unavailable (:738/:741): no case - drain reads the same
+    # members/cells immediately before inventory() in one run_native call (proofs_ca).
+    def scheduler_not_latched():
+        w, r = C3C.wf(suite)
+        r.capture_source()
+        r.prepare()
+        return w, r.run_native
+    add('c3n/scheduler_goal_not_latched', scheduler_not_latched, 'scheduler_stop/goal_not_latched', N3_SITE + '628')
+
+    def d05_intent_source(name, which, expected, target):
+        def make():
+            w, r = C3C.until(suite, 'settle_owner')
+            if which == 'intent':
+                key = 'goal_cancel_progress:' + __import__('pm_goal_own_c_source_oracles').scoped_key(r.scope) \
+                    + ':' + r.operation_id.encode().hex() + ':epoch:1'
+                tx_edit(w, 'goal_cancel_progress', key,
+                        lambda v: v['record']['stop_intent'].update(expected_revision=v['record']['stop_intent']['expected_revision'] + 1))
+            else:
+                key = 'goal_cancel_source_audit:' + __import__('pm_goal_own_c_source_oracles').scoped_key(r.scope) \
+                    + ':' + r.operation_id.encode().hex()
+                tx_edit(w, 'goal_cancel_source_audit', key,
+                        lambda v: v['record'].update(captured_at='1999-01-01T00:00:00.000Z'))
+            return w, r.settle_owner
+        add(name, make, expected, target)
+    d05_intent_source('c3n/d05_goal_stop_intent', 'intent',
+                      'd05/goal_stop_intent', N3_SITE + '766')
+
+    def d05_source_audit():
+        w, r = C3C.until(suite, 'settle_owner')
+        c3_reseal_source(w, r, 'captured_at', '1999-01-01T00:00:00.000Z')
+        return w, r.settle_owner
+    add('c3n/d05_goal_source_audit', d05_source_audit, 'd05/goal_source_audit', N3_SITE + '768')
+
+    def d05_stop_changed(w, r):
+        # Copy the genuine receipt to a new key and point the stop record at it (transacted).
+        d = r.wf_run['d05']
+        old = copy.deepcopy(w.value('goal_cancel_stop_receipt', d['stop_receipt_key']))
+        new_key = d['stop_receipt_key'] + ':copy'
+        w.write([w.put('goal_cancel_stop_receipt', new_key, old)])
+        stop_tx(w, r, lambda rec: rec.update(last_original_stop_receipt_ref=new_key))
+    d05_stop_case('c3n/d05_goal_stop_changed', d05_stop_changed,
+                  'd05/goal_stop_changed', N3_SITE + '878')
+
+    def d06_retained_not_published():
+        w, r = C3C.until(suite, 'terminal_succeeded')
+        r.terminal_succeeded()
+        r.wf_run['d06'].update(phase='prepared')
+        return w, r.read_retained_success
+    add('c3n/d06_retained_not_published', d06_retained_not_published, 'd06/not_published', N3_SITE + '1105')
+    def d06_retained_unavailable():
+        w, r = C3C.until(suite, 'terminal_succeeded')
+        r.terminal_succeeded()
+        drop(w, w.native.d06.RESULT, r.wf_run['d06']['result_key'])
+        return w, r.read_retained_success
+    add('c3n/d06_retained_unavailable', d06_retained_unavailable, 'd06/retained_unavailable', N3_SITE + '1108')
+
+    # route joins in owners_native (settle action; tamper one stored record each)
+    def join_case(name, setup, expected, target):
+        def make():
+            w, r = C3C.until(suite, 'settle_owner')
+            setup(w, r)
+            return w, r.settle_owner
+        add(name, make, expected, target)
+
+    # d06 scope/operation/result-custody and d05 scope joins: proofs in proofs_ca
+    # (any result-cell tamper breaks the readback control sha at native :1069 first).
+    def d06_owner():
+        w, r = C3C.until(suite, 'settle_owner')
+        foreign = O.uid('TEST_ONLY:foreign-owner')
+        new = tx_edit(w, w.native.d06.INTENT, r.wf_run['d06']['intent_key'],
+                      lambda v: v['record'].update(workflow_owner_ref=foreign))
+        tx_edit(w, w.native.d06.CONTROL, r.wf_run['d06']['control_key'],
+                lambda v: v['record']['intent'].update(physical_value_sha256=O.row_sha(new)))
+        return w, r.settle_owner
+    add('c3/d06_owner', d06_owner, 'C3/settle_owner/d06_owner', R3_SITE + '795')
+
+    # ---- batch 11b: writers/start/effects/route joins/index readback ----
+    writers_case('c3/writer_inventory_missing',
+                 lambda w, r: w.native.writers.disable('goal_stop'),
+                 'C3/capture_source/native_writer_inventory', R3_SITE + '306')
+
+    def start_current_run():
+        w, r = C3C.wf(suite)
+        st = r.wf_run['start']
+        cell = w.storage.cells['workflow_start_commit'][st['commit_key']]
+        new = copy.deepcopy(cell['value'])
+        new['record']['scope']['goal_run_id'] = O.short_id('run')
+        cell['value'] = new
+        w.write([w.put('workflow_start_commit', st['commit_key'], new, expected=cell['version'])])
+        return w, r.capture_source
+    add('c3/current_start_run', start_current_run, 'C3/capture_source/current_start_run', R3_SITE + '406')
+
+    def ack_readback_drop():
+        w, r = C3C.until(suite, 'prepare')
+        drop(w, w.sir.OUTCOME, r.request['command_instance_id'])
+        return w, r.prepare
+    add('c3/acknowledgement_readback', ack_readback_drop, 'C3/prepare/acknowledgement_readback', R3_SITE + '585')
+
+    def d06_origin_publish():
+        w, r = C3C.until(suite, 'settle_owner')
+        tx_edit(w, w.native.d06.ORIGIN, r.wf_run['d06']['origin_key'],
+                lambda v: v['record'].update(issuer_method='bogus.method'))
+        return w, r.settle_owner
+    add('c3/d06_origin_publish', d06_origin_publish, 'C3/settle_owner/d06_origin_publish', R3_SITE + '802')
+
+    def d05_current_resolved():
+        w, r = C3C.until(suite, 'settle_owner')
+        key = w.native.effects.members[r.wf_run['run_scope']['goal_run_id']]['invocations'][0]
+        tx_edit(w, w.native.effects.INV, key, lambda v: v.update(status='failed'))
+        return w, r.settle_owner
+    add('c3n/d05_current_resolved', d05_current_resolved, 'd05/effect_failed', N3_SITE + '876')
+
+    def d06_cancelled_body():
+        w, r = C3C.until(suite, 'settle_owner')
+        p = pointer(w, r)
+        tx_edit(w, w.native.run.BODY, p['body_key'],
+                lambda v: v['record'].update(status='running'))
+        body = w.value(w.native.run.BODY, p['body_key'])
+        tx_edit(w, w.native.run.CONTROL, p['control_key'],
+                lambda v: v['record'].update(body_record_sha256=__import__('pm_goal_dg_ca3_native').record_sha(body['record'])))
+        return w, r.settle_owner
+    add('c3/d06_cancelled_body', d06_cancelled_body, 'C3/settle_owner/d06_cancelled_body', R3_SITE + '819')
+
+    def d06_preserved():
+        w, r = C3C.wf(suite, run_status='failed')
+        r.run()
+        p = pointer(w, r)
+        tx_edit(w, w.native.run.BODY, p['body_key'],
+                lambda v: v['record'].update(status='running'))
+        body = w.value(w.native.run.BODY, p['body_key'])
+        tx_edit(w, w.native.run.CONTROL, p['control_key'],
+                lambda v: v['record'].update(body_record_sha256=__import__('pm_goal_dg_ca3_native').record_sha(body['record'])))
+        return w, r.settle_owner
+    add('c3/d06_preserved', d06_preserved, 'C3/settle_owner/d06_preserved', R3_SITE + '829')
+
+    def current_start_scope():
+        w, r = C3C.until(suite, 'settle_owner')
+        st = r.wf_run['start']
+        tx_edit(w, 'workflow_start_commit', st['commit_key'],
+                lambda v: v['record']['scope'].update(goal_id=O.short_id('goal')))
+        return w, r.settle_owner
+    add('c3/current_start', current_start_scope, 'C3/settle_owner/current_start', R3_SITE + '830')
+
+    def append_source_drift():
+        w, r = C3C.until(suite, 'append_original')
+        w.storage.segments[-1]['watermark'] += 1
+        return w, r.append_original
+    add('c3/append_source_drift', append_source_drift, 'C3/append_original/append_source_drift', R3_SITE + '986')
+
+    def append_lease():
+        w, r = C3C.until(suite, 'append_original')
+        reserved = r.late_reservation['reserved_sequence_id']
+        key = w.storage.lease_key()
+        cell = w.storage.cells[AS.LEASE_TABLE][key]
+        new = copy.deepcopy(cell['value'])
+        new['record']['current_lease']['first_sequence_id'] = reserved + 1
+        new['record']['current_lease']['last_sequence_id'] = reserved + 4096
+        w.write([w.put(AS.LEASE_TABLE, key, new, expected=cell['version'])])
+        return w, r.append_original
+    add('c3/append_lease', append_lease, 'C3/append_original/append_lease', R3_SITE + '988')
+
+    def index_row_event():
+        w, r = C3C.until(suite, 'publish_control')
+        gen = w.index.current()[1]['generation_id']
+        eid = r.progress['publication']['event_id']
+        info = w.storage.events[eid]
+        key = w.index.row_key(gen, info['sequence_id'])
+        tx_edit(w, 'event_record_index', key, lambda v: v.update(sequence_id=v['sequence_id'] + 1))
+        return w, r.publish_control
+    add('c3/index_row_event', index_row_event, 'C3/publish_control/index_row_event', R3_SITE + '1083')
+
+    def index_coverage():
+        w, r = C3C.until(suite, 'publish_control')
+        key = w.index.checkpoint_key()
+        cell = w.storage.cells['event_record_index_checkpoint'][key]
+        new = copy.deepcopy(cell['value'])
+        gid = new['current_generation_id']
+        new['generations'][gid]['frontier']['coverage']['through_sequence_id'] = 0
+        w.write([w.put('event_record_index_checkpoint', key, new, expected=cell['version'])])
+        return w, r.publish_control
+    add('c3/index_coverage', index_coverage, 'C3/publish_control/index_coverage', R3_SITE + '1088')
+
+    def second_terminal_clock():
+        w, r = C3C.until(suite, 'terminal_succeeded')
+        last = w.sir.clock.last
+        r.terminal_succeeded()
+        w.sir.clock.last = last
+        return w, r.terminal_succeeded
+    add('c3/already_issued', second_terminal_clock, 'C3/terminal_succeeded/already_issued', R3_SITE + '1260')

@@ -9,7 +9,19 @@ whose sets are collected in ENUM_CLOSED_RULES and listed separately in the hando
 C1_SITE = 'dg5/site/pm_goal_dg_ca_c1.py:'
 C3_SITE = 'dg5/site/pm_goal_dg_ca3_route.py:'
 
-DECLARED = {}
+R3_SITE = 'dg5/site/pm_goal_dg_ca3_route.py:'
+ST_SITE = 'dg5/site/pm_goal_test_storage.py:'
+
+DECLARED = {
+    # prepare twice: the readiness-cell absence check and the Storage CAS-absent
+    # check on the same put are the same predicate on the same cell.
+    'C3/prepare_readiness_twice': (
+        (R3_SITE + '631', ST_SITE + '1654'),
+        'prepare requires the readiness cell absent at :631 and then puts it with '
+        'expected=None, whose transact CAS-absent check (storage :1654) requires '
+        'the identical absence of the identical cell; a second prepare is refused '
+        'by both for the same field with the same predicate.'),
+}
 
 # Enum-closed class (lead decision 1116073727-d098): the Goal body state is closed by
 # BodySelection's schema enum ['active', 'paused', 'blocked'] - exactly LEGAL_STATES -
@@ -32,6 +44,28 @@ ENUM_CLOSED_RULES = (
      "body['state'] in LEGAL_STATES (:302) and BodySelection state enum in the "
      "producer schema agree on the defect value 'completed' over the enum-closed "
      'domain. ' + LEGAL_STATE_CLOSURE),
+    (lambda cid: cid == 'C3/capture_completed_goal',
+     (R3_SITE + '392', 'dg5/roots/schema'),
+     "body['state'] in C1.LEGAL_STATES (:392) and BodySelection state enum in the "
+     "producer schema agree on the defect value 'completed' over the enum-closed "
+     'domain. ' + LEGAL_STATE_CLOSURE),
+    (lambda cid: cid == 'C3/unsettled_wrong_kind',
+     (R3_SITE + '1294', 'dg5/roots/schema'),
+     "kind in ('unknown', 'no_effect') at :1294 and the terminal result schema's "
+     'kind discrimination in _terminal_values agree on any out-of-enum kind over '
+     'the closed terminal-kind domain {succeeded, unknown, no_effect} fixed by '
+     'the GoalCancelResultV3 schema validated in _terminal_values. Out-of-enum '
+     'single-kill tried: a bogus kind falls into the unknown branch and is '
+     'refused by the result-schema/terminal-value construction for exactly the '
+     'same closed domain, so no real path reaches one check without the other.'),
+    (lambda cid: cid == 'C3/retained_unsettled_reader_on_success',
+     (R3_SITE + '1387', 'dg5/roots/schema'),
+     "terminal kind in ('no_effect', 'unknown') at :1387 and the "
+     'UnsettledRetainedEntry schema validated immediately after agree on the '
+     "defect value 'succeeded' over the closed terminal-kind domain "
+     '{succeeded, unknown, no_effect}; the retained entry is built only from '
+     'the same stored terminal record both checks read, so no real path '
+     'reaches one without the other.'),
 )
 
 DECLARED_RULES = () + ENUM_CLOSED_RULES

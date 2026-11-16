@@ -400,6 +400,165 @@ PROOFS = {
         [(R3, 866), (R3, 1189), (OWN, 478)],
         ['dg5/site/pm_goal_dg_ca3_route.py:866',
          'dg5/site/pm_goal_dg_ca_owners.py:478']),
+    'dg5/site/pm_goal_dg_ca3_native.py:738': _p(
+        "effects.inventory is called only from D05 aggregate/readback paths "
+        "inside run_native, immediately after effects.drain has read the same "
+        "members dict and capability/invocation cells in the same synchronous "
+        "call; members for the run are created at effects.birth during "
+        "attach_workflow and never removed, so inventory cannot find them "
+        "absent after drain has just used them.",
+        [(N3, 738), (N3, 741), (N3, 654)]),
+    'dg5/site/pm_goal_dg_ca3_native.py:741': _p(
+        "inventory re-reads exactly the capability/invocation cells drain has "
+        "just read and rewritten in the same run_native call (revoke/resolve "
+        "writes via _put), with no deletion path between drain and the "
+        "aggregate inventory call, so no member can be unavailable there.",
+        [(N3, 741), (N3, 654)]),
+    'dg5/site/pm_goal_dg_ca3_route.py:794': _p(
+        "The d06 scope join compares result/intent/control/origin scopes, all "
+        "issued in prepare/publish from the same run_scope variable and bound "
+        "together by the readback control/intent sha joins at native "
+        ":1069/:1071 (any later scope tamper breaks those first, witnessed "
+        "in the supplement smoke), so the four scopes cannot diverge at the "
+        "route join.",
+        [(R3, 794), (N3, 1069)],
+        ['dg5/site/pm_goal_dg_ca3_native.py:1069']),
+    'dg5/site/pm_goal_dg_ca3_route.py:797': _p(
+        "result/intent/control/origin operation ids are the single d06 "
+        "operation uid minted at prepare and written into every record from "
+        "that variable; the readback sha joins bind the records together, "
+        "so a divergent operation id cannot survive to the route join.",
+        [(R3, 797), (N3, 944), (N3, 1069)],
+        ['dg5/site/pm_goal_dg_ca3_native.py:1069']),
+    'dg5/site/pm_goal_dg_ca3_route.py:801': _p(
+        "owners_native compares the stored result cell with the result "
+        "record from d06.readback, which reads that same cell (w.value) "
+        "moments earlier in the same synchronous settle call; no write to "
+        "the result cell runs between the two reads.",
+        [(R3, 801), (N3, 1066)]),
+    'dg5/site/pm_goal_dg_ca3_route.py:812': _p(
+        "The safe-stop scope join compares the d05 readback's scopes with "
+        "the route run scope; the d05 result/origin are bound together by "
+        "the origin sha join at native :874 inside that readback, and the "
+        "result was issued by aggregate from the same run_scope variable, "
+        "so a scope divergence cannot survive the readback to reach :812 "
+        "(witnessed: tampering the result scope refuses at :874 first).",
+        [(R3, 812), (N3, 874)],
+        ['dg5/site/pm_goal_dg_ca3_native.py:874']),
+    'dg5/site/pm_goal_dg_ca3_native.py:803': _p(
+        "aggregate is called only from run_native, which is the only caller that "
+        "sets run['d05'] (at the end of aggregate itself); a second aggregate "
+        "through run_native is refused earlier by the scheduler-stop store CAS "
+        "on its fixed key, so 'd05' in run with aggregate re-entered cannot "
+        "arise through any route call.",
+        [(N3, 803), (N3, 805), (N3, 850)]),
+    'dg5/site/pm_goal_dg_ca3_native.py:805': _p(
+        "aggregate reads run['scheduler_stop_key'] only after scheduler.stop "
+        "in the same run_native call has set it unconditionally (:635) before "
+        "drain and aggregate run; the key and its cell therefore exist.",
+        [(N3, 635), (N3, 805)]),
+    'dg5/site/pm_goal_dg_ca3_native.py:938': _p(
+        "d06.prepare is called only from run_native, which aggregate-blocks a "
+        "second entry at :803 long before prepare could run twice; run['d06'] "
+        "is set only at the end of prepare itself, so a re-entered prepare "
+        "with 'd06' present cannot arise through any route call.",
+        [(N3, 803), (N3, 938), (N3, 983)],
+        ['dg5/site/pm_goal_dg_ca3_native.py:803']),
+    'dg5/site/pm_goal_dg_ca3_native.py:993': _p(
+        "publish is called only from run_native immediately after prepare in "
+        "the same synchronous sequence, and prepare always leaves "
+        "run['d06']['phase'] == 'prepared'; nothing runs between the two "
+        "calls that could change the phase.",
+        [(N3, 983), (N3, 993)]),
+    'dg5/site/pm_goal_dg_ca3_native.py:997': _p(
+        "publish compares the current body/control selectors with the "
+        "before-selectors captured in prepare in the same run_native "
+        "sequence; between prepare and publish only readback and reads run "
+        "(no body/control writer), so the selectors cannot diverge.",
+        [(N3, 948), (N3, 997)]),
+    'dg5/site/pm_goal_dg_ca3_native.py:1006': _p(
+        "The candidate's producer_semantic_digest is computed at prepare "
+        "from the exact event dict that publish appends unchanged (the "
+        "frozen producer path), and custody's digest is Storage's "
+        "producer_digest of that same stored event; both are "
+        "NR.producer_digest of one dict with no intervening edit path.",
+        [(N3, 935), (N3, 1006)]),
+    'dg5/site/pm_goal_dg_ca3_route.py:840': _p(
+        "native_selections compares the d06 origin cell with the origin "
+        "record from d06.readback, which reads that same cell moments "
+        "earlier in the same settle call (owners_native readback precedes "
+        "native_selections in settle_owner); no write intervenes.",
+        [(R3, 840), (N3, 1067)]),
+    'dg5/site/pm_goal_dg_ca3_route.py:996': _p(
+        "late_evaluate is called only from issue_assignment_audit and "
+        "append paths with slots built at the call site always containing "
+        "'sequence_id' (the reserved sequence), so the late slot is bound "
+        "at every reachable call.",
+        [(R3, 996), (R3, 1035)]),
+    'dg5/site/pm_goal_dg_ca3_route.py:1128': _p(
+        "The stored event is Storage's encoding of the frozen producer "
+        "(required at :1113) with exactly the reserved sequence and the "
+        "Storage-assigned times that late_entry's assigned_event is built "
+        "from (same reservation record and assigned times, read in the "
+        "same call); the check runs after the append, so no "
+        "preserved-effects suite negative can target it either.",
+        [(R3, 1113), (R3, 1128), (R3, 975)],
+        ['dg5/site/pm_goal_dg_ca3_route.py:1113']),
+    'dg5/site/pm_goal_dg_ca3_route.py:1113': _p(
+        "frozen_producer can refuse only via candidate_edit; the late "
+        "template is term() of the whole expected producer (from the same "
+        "captured source as the frozen producer_input), so any edited "
+        "producer field also breaks the assigned-event equality at :1128 "
+        "after the append. The producer is therefore never the sole "
+        "refusal a suite negative can preserve effects through.",
+        [(R3, 1113), (R3, 1128)],
+        ['dg5/site/pm_goal_dg_ca3_route.py:1128']),
+    'dg5/site/pm_goal_dg_ca3_route.py:1140': _p(
+        "The receipt segment name is issued by Storage for the selected "
+        "segment held under the fence, and late_reservation recorded "
+        "selected_segment_name from that same segment record at reserve; "
+        "post-append, so no preserved-effects suite negative can target it.",
+        [(R3, 1140), (AS, 461)]),
+    'dg5/site/pm_goal_dg_ca3_route.py:1145': _p(
+        "check_late_domains tests receipt fields against the late numeric "
+        "domains derived as singletons of the reserved values, and the "
+        "receipt carries those reserved values by the assigned-event "
+        "equality at :1128; post-append, so no preserved-effects suite "
+        "negative can target it.",
+        [(R3, 1145), (R3, 1128)],
+        ['dg5/site/pm_goal_dg_ca3_route.py:1128']),
+    'dg5/site/pm_goal_dg_ca3_route.py:1156': _p(
+        "Same identity-index argument as C1 :646 on the C3 resolve path: "
+        "event_by_identity misses only when no append indexed the event, "
+        "in which case append_readback's publication_from_custody refuses "
+        "at C1 :587 (witnessed there by a single-defect negative).",
+        [(R3, 1156), (C1, 587)],
+        ['dg5/site/pm_goal_dg_ca_c1.py:587']),
+    'dg5/site/pm_goal_dg_ca3_route.py:1178': _p(
+        "publish_control reads the stop record latched flag at :1178 and, "
+        "later in the same call, owners_native's d05 readback requires the "
+        "identical latched flag on the identical record at native :756; "
+        "no stop write runs between (post_owners/readback are reads), so "
+        ":1178 is never the sole refusal.",
+        [(R3, 1178), (N3, 756)],
+        ['dg5/site/pm_goal_dg_ca3_native.py:756']),
+    'dg5/site/pm_goal_dg_ca3_route.py:1348': _p(
+        "Same replay argument as C1 :823 with the added event-count term: "
+        "passing :1344 means sir.accept took its replay branch, which "
+        "performs no transact or append, so neither the cell generation "
+        "nor the event count can move before :1348.",
+        [(R3, 1342), (R3, 1348)],
+        ['dg5/site/pm_goal_dg_ca3_route.py:1344']),
+    'dg5/site/pm_goal_dg_ca3_route.py:1378': _p(
+        "read_retained_success captures the cell generation and then only "
+        "reads stored cells and schema-validates the audit record; no "
+        "transact or append runs in between, so the generation cannot move.",
+        [(R3, 1356), (R3, 1378)]),
+    'dg5/site/pm_goal_dg_ca3_route.py:1395': _p(
+        "read_retained_unsettled captures the cell generation and then only "
+        "reads stored cells and schema-validates the audit record; no "
+        "transact or append runs in between, so the generation cannot move.",
+        [(R3, 1385), (R3, 1395)]),
     'dg5/site/pm_goal_dg_ca_owners.py:176': _p(
         "World.selection is called only from install_writer_domain (with the "
         "domain wrapper it has just written in the same call) and from "
