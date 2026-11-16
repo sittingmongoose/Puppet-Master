@@ -44,7 +44,10 @@
 // Light, setup picks Glass Dark and finishes into a new Project (Ready's Enter); reloaded: the title bar names that Project
 // and the page is in Glass Dark; tastebook keeps its own Retro Light (saved, and painted when the title bar's menu switches
 // to it); switching back to the new Project paints Glass Dark; and the first paint after the reload is already Glass Dark
-// (the head's look, read as parsing ends: no tastebook look first). Because tastebook is in another look, a reload that falls
+// (the head's look, read as parsing ends: no tastebook look first); a title-bar switch to harbor (given Friendly Light in
+// Settings), then a reload: still in harbor with its look (stream F's ruling B, 2026-11-16); back in the setup's Project,
+// Run Onboarding Again (which replaces the record that listed it), closed, reloaded: tastebook in its look, as before.
+// Because tastebook is in another look, a reload that falls
 // back to it cannot pass as the new Project's look (the kit gap FO216-R3-KIT-FINISH-RELOAD-MASKED). --set only=fo222.
 // No timing rows. --set looks=basic-light,nier-dark runs those cases alone; --set extra=0 leaves out the finish, Reduced
 // Motion, reload, pick, R55 and open-reload cases; --set only=r55 runs the R55 cases alone, --set only=openreload the
@@ -527,6 +530,22 @@ async function fo222(t) {
 	await t.check(`${tag}: the title bar's menu switched to tastebook: Retro Light`, held('retro-light', p2), JSON.stringify(p2));
 	const back = await switchProject(t, r.f, q0.finished), p3 = await r.A.page(), q3 = await projectNow(r.f);
 	await t.check(`${tag}: and back to ${NAME}: Glass Dark`, back && q3.selected === q0.finished && held('glass-dark', p3), JSON.stringify({ listed: back, project: q3, page: p3 }));
+	/* F's second row: a title-bar switch to another Project, then a reload: still in it, with its look (harbor, a Project
+	   the page lists itself, given its own look in Settings first) */
+	const h = await switchProject(t, r.f, 'harbor');
+	await r.A.toSettings(); await setLookBySetting(t, r.f, 'friendly-light');
+	const r2 = await freshLoad(t), q4 = await projectNow(r2.f), p4 = await r2.A.page();
+	await t.check(`${tag}: switched to harbor in the title bar (its look Friendly Light), reloaded: still in harbor with its look`, h && q4.selected === 'harbor' && held('friendly-light', p4), JSON.stringify({ project: q4, page: p4 }));
+	/* a Project that no longer exists: back in the setup's Project, Run Onboarding Again (Settings' row) replaces the record
+	   that listed it; closed and reloaded, the page is the default Project's, in its look, as before (no stale look first) */
+	await switchProject(t, r2.f, q0.finished);
+	await r2.A.toSettings();
+	await r2.f.locator('#pm-settings-root [data-action="home"]').first().click({ timeout: 10000 }).catch(() => {}); await sleep(600);
+	await r2.f.locator('[data-action="replay-onboarding"]').first().click({ timeout: 10000 });
+	await r2.f.waitForFunction(() => document.documentElement.hasAttribute('data-o55-open'), null, { timeout: 15000 });
+	await sleep(1500); await r2.A.close();
+	const r3 = await freshLoad(t), q5 = await projectNow(r3.f), p5 = await r3.A.page(), first5 = await r3.f.evaluate(() => window.__fo222First || null);
+	await t.check(`${tag}: Run Onboarding Again after it, closed, reloaded: the page is tastebook in Retro Light, as before (first paint too)`, q5.selected === 'tastebook' && held('retro-light', p5) && first5 === 'retro-light', JSON.stringify({ project: q5, page: p5, first: first5 }));
 }
 
 export default async function (t) {
