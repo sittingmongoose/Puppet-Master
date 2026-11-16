@@ -1,0 +1,515 @@
+{
+ "schema_id": "pm.assurance.event_authority.admission_depth_assessment.v1",
+ "assessment_kind": "admission_twelve_criteria",
+ "writer": "pm-ea-admission-writer.v1",
+ "merge": "admission-merge-2",
+ "registry": {
+  "path": "Plans/event_family_registry.json",
+  "revision": "2026-11-16.74",
+  "sha256": "66b75dd127a520189f5b3de2b8b33b6babb314273da416dbe3ed89c4a27f5bf2",
+  "family_count": 293,
+  "row_pointer": "#/families/292"
+ },
+ "base_commit": "45b4ccf25270c486dbc682805cd455ce4ca25fb0",
+ "rubric": "Step 8 depth matrix, twelve criteria (DL-077); PASS needs Plans/ evidence",
+ "native_execution": "NOT_RUN",
+ "rows": [
+  {
+   "event_type": "bsd.assignment_paused",
+   "family_id": "event-family-bsd-assignment-paused",
+   "family_revision": "1.0.0",
+   "cells": {
+    "membership_version": {
+     "status": "PASS",
+     "representation": "exact_registry_membership",
+     "finding": "Registered at registry revision 2026-11-16.74 as #/families/292 (canonical row SHA-256 f85dc3293e33b09188f5a1e17f6a8d59134f7c049683ad90be220213ff26436e); before this commit the family was absent.",
+     "evidence": [
+      {
+       "path": "Plans/event_family_registry.json",
+       "json_pointer": "#/families/292",
+       "line_start": 19559,
+       "line_end": 19600,
+       "quote": "\"event_type\": \"bsd.assignment_paused\"",
+       "quote_line": 19562,
+       "file_sha256": "66b75dd127a520189f5b3de2b8b33b6babb314273da416dbe3ed89c4a27f5bf2",
+       "quote_check": "exact"
+      }
+     ]
+    },
+    "owner_doc": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "Back_Seat_Driver BSD-1351 is the semantic owner; CV-1351 binds payload/identity and SP-1351/SP-1365 bind Storage values.",
+     "evidence": [
+      {
+       "path": "Plans/Back_Seat_Driver.md",
+       "unit": "BSD-1351",
+       "line_start": 2721,
+       "line_end": 2721,
+       "quote": "2 owner: Back_Seat_Driver is the semantic owner; CV-1351 binds the closed payload/identity and SP-1351 binds proposed Storage values. Reuse BSD-012, BSD-016, BSD-033, BSD-035 rather than sibling defin",
+       "quote_check": "exact",
+       "quote_scope": "unit BSD-1351, Plans/Back_Seat_Driver.md:2711-2780",
+       "file_sha256": "41087387c3a0b1b3602e3879c2f1cbbfa0ca06d56f8b41a4b84f10a651089c3f"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "owner_doc",
+      "status": "PASS"
+     }
+    },
+    "producer": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "Exact producer and order (source+pending operation under owner CAS, packs before references, barrier first receipt, complete operation and head together, then terminal publication) with SP-286/CV-339 adopted by name; the producer crash model checks every cut and recovery (CR01-CR11, CD01 for review start).",
+     "evidence": [
+      {
+       "path": "Plans/Back_Seat_Driver.md",
+       "unit": "BSD-1351",
+       "line_start": 2722,
+       "line_end": 2722,
+       "quote": "adopt SP-286/CV-339 by name including full-value stored v2 original resolution and SP-336/SP-347 durability. This prepared family selects durability_class=barrier because its canonical lifecycle/contr",
+       "quote_check": "exact",
+       "quote_scope": "unit BSD-1351, Plans/Back_Seat_Driver.md:2711-2780",
+       "file_sha256": "41087387c3a0b1b3602e3879c2f1cbbfa0ca06d56f8b41a4b84f10a651089c3f"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-1351",
+       "line_start": 76940,
+       "line_end": 76940,
+       "quote": "It adopts SP-286/CV-339 first receipt/full-value v2 and SP-336/SP-347 durability explicitly. Coherent mandatory backup restores the operation, complete original source, receipt controls and payload pa",
+       "quote_check": "exact",
+       "quote_scope": "unit SP-1351, Plans/storage-plan.md:76931-76992",
+       "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+      },
+      {
+       "path": "scripts/pm_w3d_bsd_rows.py",
+       "unit": "ATS-1230",
+       "line_start": 512,
+       "line_end": 512,
+       "quote": "'CR02_source_op_atomic', 'The source wrapper and pending operation commit together: every cut holds both or neither.', 'crash_source_op_split'),",
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "file_sha256": "1cd341717aa70a7c5af1dde7afcd26bd01b337568ca479084947eb0edb1d5b24"
+      },
+      {
+       "path": "reports/event-authority-20261105/W3D-pnc019-s4d-summary.json",
+       "unit": "ATS-1230",
+       "line_start": 193,
+       "line_end": 193,
+       "quote": "\"crash_model\": {",
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "file_sha256": "ab5e66154d464d0db804512059282383c55c16f0e6dc587762e84ddb7b808b56"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "producer",
+      "status": "PASS"
+     }
+    },
+    "closed_payload_schema": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "Individually closed 1.0.0 payload root; every keyword is its own guard row and the payload is inline only (EventRecord 2.0.0).",
+     "evidence": [
+      {
+       "path": "Plans/Back_Seat_Driver.md",
+       "unit": "BSD-1351",
+       "line_start": 2723,
+       "line_end": 2723,
+       "quote": "4 payload: independently closed schema Plans/bsd_event_payloads.schema.json#/$defs/assignment_paused, ref-only source bodies, exact tags, no raw protected content.",
+       "quote_check": "exact",
+       "quote_scope": "unit BSD-1351, Plans/Back_Seat_Driver.md:2711-2780",
+       "file_sha256": "41087387c3a0b1b3602e3879c2f1cbbfa0ca06d56f8b41a4b84f10a651089c3f"
+      },
+      {
+       "path": "Plans/Contracts_V0.md",
+       "unit": "CV-1351",
+       "line_start": 54136,
+       "line_end": 54136,
+       "quote": "This EventRecord 2.0.0 family keeps its closed payload inline (payload_ref null): only the EventRecord 3.0.0 successor materializes the SP-337 event-payload reference route and this family has not ado",
+       "quote_check": "exact",
+       "quote_scope": "unit CV-1351, Plans/Contracts_V0.md:54126-54183",
+       "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "closed_payload_schema",
+      "status": "PASS"
+     }
+    },
+    "scope_identity": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "Project-only scope, exact operation/event/key recipes, finding-key recipe, owner joins of every payload field and reference resolution, with CV-1100/SP-1100, CV-1101 and SP-1101 adopted by name.",
+     "evidence": [
+      {
+       "path": "Plans/Contracts_V0.md",
+       "unit": "CV-1351",
+       "line_start": 54135,
+       "line_end": 54135,
+       "quote": "The canonical operation ID is bsd-op@1:<hex(original_source_id)>:<hex(transition_component)>:<hex(subject_id)>; every component is an exact string from the authentic original source, never a caller as",
+       "quote_check": "exact",
+       "quote_scope": "unit CV-1351, Plans/Contracts_V0.md:54126-54183",
+       "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a"
+      },
+      {
+       "path": "Plans/Contracts_V0.md",
+       "unit": "CV-1351",
+       "line_start": 54135,
+       "line_end": 54135,
+       "quote": "This family adopts by name the shared CV-1100/SP-1100 number rules (current_integer, storage_uint64, producer_semantic_digest, qualified_jcs, storage_value_bytes and full_value_commitment), the CV-110",
+       "quote_check": "exact",
+       "quote_scope": "unit CV-1351, Plans/Contracts_V0.md:54126-54183",
+       "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a"
+      },
+      {
+       "path": "scripts/pm_w3d_bsd_rows.py",
+       "unit": "ATS-1230",
+       "line_start": 743,
+       "line_end": 743,
+       "quote": "rows.append((f'OW_{field}_join', f'Payload {field} equals {what}.', f'owner_{field}_mismatch'))",
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "file_sha256": "1cd341717aa70a7c5af1dde7afcd26bd01b337568ca479084947eb0edb1d5b24"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "scope_identity",
+      "status": "PASS"
+     }
+    },
+    "replay_idempotency": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "Same identity returns the original result, different body conflicts, dedupe must be tail-current; the retry model (RT01-RT12) and instrumented replay model (RP01-RP08) compute the outcomes.",
+     "evidence": [
+      {
+       "path": "Plans/Back_Seat_Driver.md",
+       "unit": "BSD-1351",
+       "line_start": 2725,
+       "line_end": 2725,
+       "quote": "6 replay/idempotency: same original identity and semantic bytes returns exactly the original result; a different semantic digest conflicts, missing tail-current authoritative dedupe is dedupe_unavaila",
+       "quote_check": "exact",
+       "quote_scope": "unit BSD-1351, Plans/Back_Seat_Driver.md:2711-2780",
+       "file_sha256": "41087387c3a0b1b3602e3879c2f1cbbfa0ca06d56f8b41a4b84f10a651089c3f"
+      },
+      {
+       "path": "scripts/pm_w3d_bsd_rows.py",
+       "unit": "ATS-1230",
+       "line_start": 396,
+       "line_end": 396,
+       "quote": "('RT11_retry_no_new_event', 'Retry appends no EventRecord (Storage log snapshot unchanged).', 'retry_appended_event'),",
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "file_sha256": "1cd341717aa70a7c5af1dde7afcd26bd01b337568ca479084947eb0edb1d5b24"
+      },
+      {
+       "path": "reports/event-authority-20261105/W3D-pnc019-s4d-summary.json",
+       "unit": "ATS-1230",
+       "line_start": 209,
+       "line_end": 209,
+       "quote": "\"retry_model\": {",
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "file_sha256": "ab5e66154d464d0db804512059282383c55c16f0e6dc587762e84ddb7b808b56"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "replay_idempotency",
+      "status": "PASS"
+     }
+    },
+    "retention": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "Event history bound to RP-RUNTIME-365D@1.0.0 (Storage Case L-3 run class, run-completion anchor). Derived rows keep RP-PROJECTION-3GEN and operations RP-EVENT-IDENTITY-APPROOT; the retention model checks the binding (RN rows).",
+     "evidence": [
+      {
+       "path": "Plans/Back_Seat_Driver.md",
+       "unit": "BSD-1351",
+       "line_start": 2726,
+       "line_end": 2726,
+       "quote": "policy_id: RP-RUNTIME-365D, policy_version: 1.0.0}. This exact family belongs to the actual primary_run_id from its assignment (BSD section 16); its recorded run completion starts the 365-day clock, w",
+       "quote_check": "exact",
+       "quote_scope": "unit BSD-1351, Plans/Back_Seat_Driver.md:2711-2780",
+       "file_sha256": "41087387c3a0b1b3602e3879c2f1cbbfa0ca06d56f8b41a4b84f10a651089c3f"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-1351",
+       "line_start": 76941,
+       "line_end": 76941,
+       "quote": "RP-RUNTIME-365D\", \"policy_version\": \"1.0.0\"}. A pending retention marker is never a valid production registry reference. Every complete encoded value must stay at or below 16 KiB; SP-337 externalizes ",
+       "quote_check": "exact",
+       "quote_scope": "unit SP-1351, Plans/storage-plan.md:76931-76992",
+       "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+      },
+      {
+       "path": "reports/event-authority-20261105/W3D-pnc019-s4d-summary.json",
+       "unit": "ATS-1230",
+       "line_start": 293,
+       "line_end": 293,
+       "quote": "\"retention_model\": {",
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "file_sha256": "ab5e66154d464d0db804512059282383c55c16f0e6dc587762e84ddb7b808b56"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "retention",
+      "status": "PASS"
+     }
+    },
+    "redaction_custody": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "Ref-only event; protected owner content never enters payload or envelope (RD01/RD02); retained reads select only from the sealed receipt with store snapshots (HI01-HI14); coherent backup cut restore model (RS rows).",
+     "evidence": [
+      {
+       "path": "Plans/Back_Seat_Driver.md",
+       "unit": "BSD-1351",
+       "line_start": 2727,
+       "line_end": 2727,
+       "quote": "8 custody: the original BSD lifecycle source stays canonical under its pending physical family; the proposed operation stores only redacted refs, original identity, semantic commitment and exact first",
+       "quote_check": "exact",
+       "quote_scope": "unit BSD-1351, Plans/Back_Seat_Driver.md:2711-2780",
+       "file_sha256": "41087387c3a0b1b3602e3879c2f1cbbfa0ca06d56f8b41a4b84f10a651089c3f"
+      },
+      {
+       "path": "scripts/pm_w3d_bsd_rows.py",
+       "unit": "ATS-1230",
+       "line_start": 422,
+       "line_end": 422,
+       "quote": "('payload_no_protected', 'No protected owner content (claim, transcript, raw output, instructions, authentication session) appears in the event payload.',",
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "file_sha256": "1cd341717aa70a7c5af1dde7afcd26bd01b337568ca479084947eb0edb1d5b24"
+      },
+      {
+       "path": "reports/event-authority-20261105/W3D-pnc019-s4d-summary.json",
+       "unit": "ATS-1230",
+       "line_start": 260,
+       "line_end": 260,
+       "quote": "\"restore_model\": {",
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "file_sha256": "ab5e66154d464d0db804512059282383c55c16f0e6dc587762e84ddb7b808b56"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "redaction_custody",
+      "status": "PASS"
+     }
+    },
+    "transitions": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "This family's own transition predicates (section 9) are each a row with a single-defect witness.",
+     "evidence": [
+      {
+       "path": "Plans/Back_Seat_Driver.md",
+       "unit": "BSD-1351",
+       "line_start": 2728,
+       "line_end": 2728,
+       "quote": "9 transitions: Records an actual user or safety pause of the exact assignment; quota pause remains its distinct owner state and cannot be mislabeled user/safety. The admitted owner transition changes ",
+       "quote_check": "exact",
+       "quote_scope": "unit BSD-1351, Plans/Back_Seat_Driver.md:2711-2780",
+       "file_sha256": "41087387c3a0b1b3602e3879c2f1cbbfa0ca06d56f8b41a4b84f10a651089c3f"
+      },
+      {
+       "path": "reports/event-authority-20261105/W3D-pnc019-s4d-summary.json",
+       "unit": "ATS-1230",
+       "line_start": 9,
+       "line_end": 9,
+       "quote": "\"checker\": {",
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "file_sha256": "ab5e66154d464d0db804512059282383c55c16f0e6dc587762e84ddb7b808b56"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "transitions",
+      "status": "PASS"
+     }
+    },
+    "consumers_checkpoints": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "Exact projector/reader/operating consumer adopting SP-278 with the nine-field durable token; complete scan with zero-match, degraded survivor and inclusive restart cases; CAS; projection value joined to the original.",
+     "evidence": [
+      {
+       "path": "Plans/Back_Seat_Driver.md",
+       "unit": "BSD-1351",
+       "line_start": 2729,
+       "line_end": 2729,
+       "quote": "adopt SP-278 by name via SP-1351. They filter exactly bsd.assignment_paused, the actual Project partition and exact supported payload/version. A derived projection references the authentic original ev",
+       "quote_check": "exact",
+       "quote_scope": "unit BSD-1351, Plans/Back_Seat_Driver.md:2711-2780",
+       "file_sha256": "41087387c3a0b1b3602e3879c2f1cbbfa0ca06d56f8b41a4b84f10a651089c3f"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-1351",
+       "line_start": 76942,
+       "line_end": 76942,
+       "quote": "Inclusive restart rechecks the last exact event/frame/offset; replay produces no review, advice delivery, notification, Usage charge, canonical write or new event.",
+       "quote_check": "exact",
+       "quote_scope": "unit SP-1351, Plans/storage-plan.md:76931-76992",
+       "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+      },
+      {
+       "path": "scripts/pm_w3d_bsd_rows.py",
+       "unit": "ATS-1230",
+       "line_start": 400,
+       "line_end": 400,
+       "quote": "('SC09_degraded_state', 'An unverifiable frame in the captured range makes the publication degraded at its survivor prefix; it is never skipped as empty or current.',",
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "file_sha256": "1cd341717aa70a7c5af1dde7afcd26bd01b337568ca479084947eb0edb1d5b24"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "consumers_checkpoints",
+      "status": "PASS"
+     }
+    },
+    "compatibility_withdrawal": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "Authenticated retained reading after live changes and a full withdrawal protocol; the withdrawal model (WD01-WD07), reader selector (HI09), withdrawn-publication CAS (CS07) and successor rebuild model (RB01-RB07) compute it.",
+     "evidence": [
+      {
+       "path": "Plans/Back_Seat_Driver.md",
+       "unit": "BSD-1351",
+       "line_start": 2730,
+       "line_end": 2730,
+       "quote": "11 compatibility/withdrawal: There is no earlier admitted BSD event version to migrate or synthesize. The existing completed-review bsd_runtime_record is not this event and never expands into lifecycl",
+       "quote_check": "exact",
+       "quote_scope": "unit BSD-1351, Plans/Back_Seat_Driver.md:2711-2780",
+       "file_sha256": "41087387c3a0b1b3602e3879c2f1cbbfa0ca06d56f8b41a4b84f10a651089c3f"
+      },
+      {
+       "path": "scripts/pm_w3d_bsd_rows.py",
+       "unit": "ATS-1230",
+       "line_start": 340,
+       "line_end": 340,
+       "quote": "('drain_honest', 'Each drained operation settles with its own original receipt or is explicitly unavailable; no success is fabricated.',",
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "file_sha256": "1cd341717aa70a7c5af1dde7afcd26bd01b337568ca479084947eb0edb1d5b24"
+      },
+      {
+       "path": "reports/event-authority-20261105/W3D-pnc019-s4d-summary.json",
+       "unit": "ATS-1230",
+       "line_start": 239,
+       "line_end": 239,
+       "quote": "\"withdrawal_model\": {",
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "file_sha256": "ab5e66154d464d0db804512059282383c55c16f0e6dc587762e84ddb7b808b56"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "compatibility_withdrawal",
+      "status": "PASS"
+     }
+    },
+    "positive_negative_oracles": {
+     "status": "PASS",
+     "representation": "executable_synthetic_oracles",
+     "finding": "Complete checker, gated guard tool, strict derivation mutations, per-slot shared corpus and plan coverage all pass; see the summary for counts. Native execution NOT_RUN.",
+     "evidence": [
+      {
+       "path": "Plans/Back_Seat_Driver.md",
+       "unit": "BSD-1351",
+       "line_start": 2731,
+       "line_end": 2731,
+       "quote": "and scripts/pm_w3d_bsd_events.py executes them (phase 2 and PNC-019 lane s4d, 2026-11-14). Every refusal is one named single-predicate row of a generated Method B guard table of at most eight rows (sc",
+       "quote_check": "exact",
+       "quote_scope": "unit BSD-1351, Plans/Back_Seat_Driver.md:2711-2780",
+       "file_sha256": "41087387c3a0b1b3602e3879c2f1cbbfa0ca06d56f8b41a4b84f10a651089c3f"
+      },
+      {
+       "path": "reports/event-authority-20261105/W3D-pnc019-s4d-summary.json",
+       "unit": "ATS-1230",
+       "line_start": 5,
+       "line_end": 5,
+       "quote": "\"status\": \"pass\",",
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "file_sha256": "ab5e66154d464d0db804512059282383c55c16f0e6dc587762e84ddb7b808b56"
+      },
+      {
+       "path": "reports/event-authority-20261105/W3D-pnc019-s4d-summary.json",
+       "unit": "ATS-1230",
+       "line_start": 179,
+       "line_end": 179,
+       "quote": "\"plan_coverage\": {",
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "file_sha256": "ab5e66154d464d0db804512059282383c55c16f0e6dc587762e84ddb7b808b56"
+      },
+      {
+       "path": "reports/event-authority-20261105/W3D-pnc019-s4d-summary.json",
+       "unit": "ATS-1230",
+       "line_start": 33,
+       "line_end": 33,
+       "quote": "\"derivation_mutations\": {",
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "file_sha256": "ab5e66154d464d0db804512059282383c55c16f0e6dc587762e84ddb7b808b56"
+      },
+      {
+       "path": "reports/event-authority-20261105/W3D-pnc019-s4d-summary.json",
+       "unit": "ATS-1230",
+       "line_start": 80,
+       "line_end": 80,
+       "quote": "\"slot_corpus\": {",
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "file_sha256": "ab5e66154d464d0db804512059282383c55c16f0e6dc587762e84ddb7b808b56"
+      },
+      {
+       "path": "reports/event-authority-20261105/W3D-pnc019-s4d-summary.json",
+       "unit": "ATS-1230",
+       "line_start": 21,
+       "line_end": 21,
+       "quote": "\"guard_tool\": {",
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "file_sha256": "ab5e66154d464d0db804512059282383c55c16f0e6dc587762e84ddb7b808b56"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "positive_negative_oracles",
+      "status": "PASS"
+     }
+    }
+   }
+  }
+ ]
+}
