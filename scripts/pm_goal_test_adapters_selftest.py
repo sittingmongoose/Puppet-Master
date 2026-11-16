@@ -735,6 +735,14 @@ def main():
             test_owners(s, work)
             test_source(s, work)
         B2.run(s, work)
+        import pm_goal_dg5_format_probe as FMT
+        FMT.selftest(s, work / 'formats')
+        import pm_goal_dg5_pattern_probe as PAT
+        pattern_inventory = PAT.selftest(s, work / 'patterns')
+        import pm_goal_dg5_number_probe as NUM
+        NUM.selftest(s, work / 'numbers')
+        import pm_goal_shared_route_probe as ROUTES
+        ROUTES.selftest(s, work / 'shared_routes')
         matrix = None
         if not a.skip_matrix:
             matrix = R.run_matrix(work / 'matrix')
@@ -746,7 +754,7 @@ def main():
     failures = [c for c in s.cases if c['status'] != 'pass']
     result = dict(qualification=QUALIFICATION, native=NR.NATIVE_LINE, numrule=NR.describe(),
                   summary=s.summary(), cases=s.cases, matrix=matrix,
-                  status='pass' if not failures else 'fail', failures=failures)
+                  status='pass' if not failures else 'fail', failures=failures, pattern_inventory=pattern_inventory)
     if a.output:
         Path(a.output).write_text(json.dumps(result, indent=2, sort_keys=True) + '\n')
     print(json.dumps(dict(status=result['status'], summary=result['summary'],
