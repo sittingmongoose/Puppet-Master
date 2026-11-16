@@ -53,6 +53,10 @@
 // R80 P1 (the lead's quick review of db5211725d): a Project committed by setup (Creating done) and the setup closed on the
 // optional step after it, then a reload: the Project is listed and selected, and its title-bar row carries the same
 // location line and hover detail as before the reload (its name, path and branch, its words and its tags).
+// Round 2 (stream F's blind review of 6d160cdf1e): F1 the title bar's label is the Project's as parsing ends and in every
+// frame of a reload (into the setup's Project and into harbor); F3 Demo Studio Reset -> Progress, reloaded: every frame is
+// the default Project's look, no stored id of the removed Project; F4 harbor in Glass Dark, then ?o55=fresh twice: every
+// frame until the window is Basic Dark.
 // Because tastebook is in another look, a reload that falls
 // back to it cannot pass as the new Project's look (the kit gap FO216-R3-KIT-FINISH-RELOAD-MASKED). --set only=fo222.
 // No timing rows. --set looks=basic-light,nier-dark runs those cases alone; --set extra=0 leaves out the finish, Reduced
@@ -613,14 +617,48 @@ async function r80p1(t) {
 	await t.check(`${tag}: Creating done, closed on '${at}': the row is listed and selected before the reload`, !!at && !!before && before.selected && !!before.attrs['data-project-path'], JSON.stringify({ at, id, before }));
 	const r = await freshLoad(t), after = await rowNow(r.f, id);
 	await t.check(`${tag}: reloaded, the row is listed and selected with the same location line and hover detail`, !!after && after.selected && JSON.stringify(after.attrs) === JSON.stringify(before && before.attrs) && after.text === (before && before.text), JSON.stringify({ before, after }));
+	/* FO-222 round 2, F3: Demo Studio's Reset -> Progress (its own reset, what its button calls) while in that setup Project:
+	   the next reload paints the default Project's look (tastebook's Retro Light) from the first frame, and no stored id
+	   names the removed Project */
+	await recordFrames(t);
+	await r.f.evaluate(() => window.O55.studio.reset.progress());
+	await r.f.waitForFunction(() => document.documentElement.hasAttribute('data-o55-open'), null, { timeout: 20000 }).catch(() => {});
+	await sleep(1200);
+	const r5 = await freshLoad(t), fr5 = await frames(r5.f), th5 = runs(fr5.frames, 2), id5 = await r5.f.evaluate(() => { try { return localStorage.getItem('pm7:shell:active-project:v1'); } catch (_) { return 'no storage'; } });
+	await t.check(`${tag}: Demo Studio Reset -> Progress, reloaded: every frame from the first is tastebook's Retro Light, and no stored id names ${NAME}`, th5.length === 1 && th5[0][0] === 'retro-light' && id5 !== id, JSON.stringify({ looks: th5, stored: id5 }));
 	/* (the page's default Project again, for the cases after this one) */
-	await switchProject(t, r.f, 'tastebook');
+	await switchProject(t, r5.f, 'tastebook');
+}
+
+/* FO-222 round 2, F4: a new install (?o55=fresh) after the person was in harbor with its own look opens in the default
+   Project: every frame from the first until the window is Basic Dark, twice in a row (F saw the flip 1 of 2) */
+async function f4install(t) {
+	const tag = 'normal: FO-222 round 2 F4, harbor in Glass Dark, then a new install (?o55=fresh)';
+	await t.emulate({ reducedMotion: 'no-preference' });
+	await recordFrames(t);
+	for (let k = 1; k <= 2; k++) {
+		let f = await t.app.open({ onboarding: true, query: 'o55scenario=fresh', sandbox: false, settleMs: 1500 });
+		const A = app(t, f);
+		if (await A.open()) await A.close();
+		const sw = await switchProject(t, f, 'harbor');
+		if (k === 1) { await A.toSettings(); await setLookBySetting(t, f, 'glass-dark'); }
+		const p0 = await A.page();
+		f = await t.app.open({ onboarding: true, query: 'o55=fresh&o55scenario=fresh', sandbox: false, settleMs: 1500 });
+		await f.waitForFunction(() => document.documentElement.hasAttribute('data-o55-open'), null, { timeout: 20000 }).catch(() => {});
+		await sleep(600);
+		const fr = await frames(f), upto = fr.frames.findIndex((x) => x[3]), th = runs(upto < 0 ? fr.frames : fr.frames.slice(0, upto), 2);
+		await t.check(`${tag} (${k} of 2): every frame from the first until the window is Basic Dark (harbor was ${p0.theme})`, sw && held('glass-dark', p0) && th.length === 1 && th[0][0] === 'basic-dark', JSON.stringify({ switched: sw, before: p0, looks: th }));
+		if (await A.open().catch(() => false)) { const B = app(t, f); await B.close().catch(() => {}); }
+	}
+	const f = await t.app.open({ onboarding: true, query: 'o55scenario=fresh', sandbox: false, settleMs: 1500 });
+	if (await app(t, f).open()) await app(t, f).close();
+	await switchProject(t, f, 'tastebook');
 }
 
 export default async function (t) {
 	await t.viewport(1440, 960);
 	const looks = t.args.looks ? String(t.args.looks).split(',') : ALL;
-	if (t.args.only === 'fo222') { if (t.app.surfaces().includes('normal')) { await fo222(t); await r80p1(t); } return; }
+	if (t.args.only === 'fo222') { if (t.app.surfaces().includes('normal')) { await fo222(t); await r80p1(t); await f4install(t); } return; }
 	if (t.args.only === 'r57') { for (const sf of t.app.surfaces()) { const sb = sf === 'sandbox'; if (!sb) await r57f1(t); await r57f2(t, sb); await r57f3(t, sb); } await t.emulate({ reducedMotion: 'no-preference' }); return; }
 	if (t.args.only === 'fo219') { if (t.app.surfaces().includes('normal')) await fo219(t); return; }
 	if (t.args.only === 'openreload') { if (t.app.surfaces().includes('normal')) { await openReload(t, 'nier-light', 'basic-dark'); await openReload(t, 'glass-light', 'nier-dark', { back: true }); await openReloadNoPick(t); } return; }
@@ -638,7 +676,7 @@ export default async function (t) {
 			await nierBackground(t, sandbox);
 			if (!sandbox) await fo219(t);
 			if (!sandbox) await r57f1(t);
-			if (!sandbox) { await fo222(t); await r80p1(t); }
+			if (!sandbox) { await fo222(t); await r80p1(t); await f4install(t); }
 			await r57f2(t, sandbox); await r57f3(t, sandbox);
 			if (!sandbox) { await openReload(t, 'nier-light', 'basic-dark'); await openReload(t, 'glass-light', 'nier-dark', { back: true }); await openReloadNoPick(t); }
 		}
