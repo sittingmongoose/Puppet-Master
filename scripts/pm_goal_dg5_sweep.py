@@ -64,10 +64,13 @@ def install(prove):
                 return invoke(self, label, evaluate, value, valid, **kwargs)
             finally:
                 schemas.CONTROL[0] = saved
-                # GH1 keeps each row's first negative as (evaluate, value, label) and never reads
-                # it again; a DG5 evaluate closes over a whole world, so only the closure is released.
-                # Each store snapshot keeps its complete before/after manifest digests; the pickled
-                # manifest copy GH1 also keeps per call is dropped (DG-R holds thousands of calls).
+                # GH1 keeps each row's first negative as (evaluate, value, label) and the same
+                # sealed value again in snapshots, and never reads either again in this runner;
+                # a DG5 evaluate closes over a whole world and its sealed value can pin a large
+                # store manifest/owner state, so both are released once this invoke's judge has
+                # finished. The ledger, input digest and row/site evidence remain. Each store
+                # snapshot keeps its complete before/after manifest digests; the pickled manifest
+                # copy GH1 also keeps per call is dropped (DG-R/CB hold thousands of calls).
                 for snapshot in self.store_snapshots[getattr(self, '_dg5_slimmed', 0):]:
                     raw = snapshot.pop('snapshot_pickle_base64', None)
                     if raw is not None:
@@ -75,9 +78,12 @@ def install(prove):
                 self._dg5_slimmed = len(self.store_snapshots)
                 if len(self.candidates) != getattr(self, '_dg5_released', 0):
                     for name, candidate in list(self.candidates.items()):
-                        if candidate[0] is not None:
-                            self.candidates[name] = (None,) + tuple(candidate[1:])
+                        if candidate[0] is not None or candidate[1] is not None:
+                            self.candidates[name] = (None, None) + tuple(candidate[2:])
                     self._dg5_released = len(self.candidates)
+                for name in list(self.snapshots):
+                    if self.snapshots[name] is not None:
+                        self.snapshots[name] = None
         sweep.Collector.invoke = control_invoke
         sweep.Collector._go_controls = True
     if not getattr(sweep.Collector, '_go_cut_sites', False):
