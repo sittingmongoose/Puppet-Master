@@ -103,7 +103,7 @@
     if (sw === 'off') return;
     /* a new install (?o55=fresh, or no onboarding record yet: the window opens by itself) starts in Basic Dark; the
        head painted Basic Dark for it too (window.PM_O55_BOOT.install) */
-    if (sw === 'fresh') { O55.store.clear('onboarding'); return O55.ui.open({ fresh: true, install: true }); }
+    if (sw === 'fresh') { if (O55.shell && O55.shell.forgetSetup) O55.shell.forgetSetup({ all: true }); O55.store.clear('onboarding'); return O55.ui.open({ fresh: true, install: true }); }
     if (sw.startsWith('screen=')) return O55.ui.open({ screen: sw.slice(7) });
     if (sw === 'tour') return O55.tour && O55.tour.start && O55.tour.start({ source: 'switch' });
     const saved = O55.store.get('onboarding', null);
