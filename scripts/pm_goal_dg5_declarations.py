@@ -62,6 +62,14 @@ DECLARED = {
         'manifest retained inventory at :202, and the index read compares the identical '
         'token source_selection object to the checkpoint frontier source_selection at '
         ':446. Both refuse solely on that one substituted field value.'),
+    'U5/N/occurred_time_trailing_lf': ((
+        'dg5/dgu/source/capture/occurred_at_utc/date-time',
+        'dg5/dgu/source/capture/prepared_producer/schema', 'dg5/dgu/progress/schema'),
+        'The same metadata occurred_at_utc value is bounded by the identical NUMRULE '
+        'EVENT_RECORD date-time predicate three times in one capture call: directly by '
+        'NR.event_time, through the ProducerInput format check in prepared_event, and '
+        'through the Progress producer_metadata format check at progress write. The '
+        'trailing-LF input fails that one predicate at every member.'),
 }
 
 

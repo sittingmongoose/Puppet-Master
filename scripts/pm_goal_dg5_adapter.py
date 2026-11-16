@@ -673,6 +673,9 @@ def _pure_supplements(suite, work):
 
     pure('event_record_schema:473', event_record_make,
          'append/event/schema/', 'dg5/site/pm_goal_test_storage.py:473')
+    pure('exact_json_key_type:420',
+         lambda: ((lambda: A.exact_json({1: 'x'})), A.exact_json, dict(args=({1: 'x'},), kwargs={})),
+         'custody/exact_json/key', 'dg5/site/pm_goal_test_owner_adapters.py:420')
     pure('event_record_type:470',
          lambda: ((lambda: storage.validate_event_record('x', 'append/event')),
                   storage.validate_event_record, dict(args=('x', 'append/event'), kwargs={})),
