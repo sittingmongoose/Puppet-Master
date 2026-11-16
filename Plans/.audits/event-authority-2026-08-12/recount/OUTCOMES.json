@@ -252,6 +252,10 @@
    "outcome": "registered"
   },
   {
+   "event_type": "browser.script.compile_failed",
+   "outcome": "registered"
+  },
+  {
    "event_type": "discovery.backpressure",
    "outcome": "registered"
   },
