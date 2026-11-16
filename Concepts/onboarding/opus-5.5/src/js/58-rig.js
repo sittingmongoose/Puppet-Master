@@ -193,7 +193,8 @@
          painted there, over the page leaving with the old screen, until the stage was let go: Basic Dark at 740x768,
          Begin to Away, FO-34 R1) */
       if (this.bubbleMO) this.bubbleMO.disconnect();
-      this.bubbleMO = new MutationObserver(() => { const b = this.bubble; if (!b || this.dead) return; const w = b.offsetWidth, h = b.offsetHeight; if (w !== this.bubbleW || h !== this.bubbleH) { this.bubbleW = w; this.bubbleH = h; this.frameT = -1e9; if (this.H && this.famName !== 'nier') this.placeBubble(this.H, this.ang); this.kick(); } });
+      /* (bubbleMut counts what it hears, so placeBubble reads the bubble's size again only after a change: pm7-perf lane W) */
+      this.bubbleMO = new MutationObserver(() => { this.bubbleMut = (this.bubbleMut || 0) + 1; const b = this.bubble; if (!b || this.dead) return; const w = b.offsetWidth, h = b.offsetHeight; if (w !== this.bubbleW || h !== this.bubbleH) { this.bubbleW = w; this.bubbleH = h; this.frameT = -1e9; if (this.H && this.famName !== 'nier') this.placeBubble(this.H, this.ang); this.kick(); } });
       this.bubbleMO.observe(this.bubble, { childList: true, characterData: true, subtree: true, attributes: true, attributeFilter: ['class'] });
       if (this.tube === 'phosphor') div('pst-crt', this.screen, '<i class="pst-roll"></i><i class="pst-scan"></i><i class="pst-mask"></i><i class="pst-noise"></i><i class="pst-vig"></i><i class="pst-glare"></i>');
       if (this.tube === 'teletype') { div('pst-grain', this.screen); this.head = div('pst-printer', this.screen, '<i class="pst-bail"></i><i class="pst-platen"></i><i class="pst-head"><b></b></i>').querySelector('.pst-head'); }
@@ -983,7 +984,9 @@
     // the note hangs under Pip and drifts after it, slowly enough to read while Pip sways
     placeTip(H, ang, dt) {
       const el = this.tipBox;
-      if (!el || !el.classList.contains('on') || this.layoutName !== 'portrait') { this.ps.liftT = 0; this.bubble.classList.remove('pst-hush'); return; }
+      /* (the bubble's class is written only when the hush is on: classList.remove writes the class attribute even when the
+         token is not there, so with no note open the bubble's class was written in every frame; pm7-perf lane W) */
+      if (!el || !el.classList.contains('on') || this.layoutName !== 'portrait') { this.ps.liftT = 0; if (this.bubble.classList.contains('pst-hush')) this.bubble.classList.remove('pst-hush'); return; }
       // it holds still while the pointer is on it, so its close button is easy to hit (once it has its place: a new note
       // that opens under a resting pointer was left at the stage's corner, past its edge in Friendly's tilt; tip_fit)
       if (this.tipXY && el.matches(':hover')) return;
@@ -1314,7 +1317,14 @@
       const tall = this.layoutName === 'portrait';
       const head = this.toScreen(this.headXf([32, 34], H, ang, 1, 1));
       const sp = this.toScreen(this.headXf(tall ? [44, 30] : [58, 44], H, ang, 1, 1));
-      const bw = this.bubble.offsetWidth || 160, bh = this.bubble.offsetHeight || 34, bx = this.box ? this.box.width : 400, by = this.box ? this.box.height : 560;
+      /* (its size read again only when it can have changed: after a change to its words or classes (bubbleMO counts them), a
+         new map (measure(), on any resize) or fonts loading. Read in every frame after the stage's writes, it laid the page
+         out in every frame at rest in every look but NieR: one forced layout per drawn frame; pm7-perf lane W, step 2) */
+      const fonts = document.fonts ? document.fonts.status : '', sz = this.bubbleSz;
+      let bw, bh;
+      if (sz && sz.el === this.bubble && sz.mut === this.bubbleMut && sz.map === this.map && sz.fonts === fonts) { bw = sz.w; bh = sz.h; }
+      else { bw = this.bubble.offsetWidth || 160; bh = this.bubble.offsetHeight || 34; this.bubbleSz = { el: this.bubble, mut: this.bubbleMut, map: this.map, fonts, w: bw, h: bh }; }
+      const bx = this.box ? this.box.width : 400, by = this.box ? this.box.height : 560;
       const pad = this.tube ? 14 : 8, top = this.tube ? (tall ? 44 : 34) : 8, foot = this.tube === 'teletype' ? (tall ? 70 : 48) : this.tube ? (tall ? 44 : 34) : 8;
       let x = clamp(sp[0] + (tall ? -bw * .3 : 6), pad, bx - bw - pad), y = clamp(tall ? sp[1] - bh - 22 : sp[1] - bh / 2, top, by - bh - foot);
       /* the bubble covers no prop and never Pip's face (FO26: the name's sign on Name; RDA-01: Pip's eyes on Review). Where
@@ -1482,10 +1492,14 @@
       }
       /* (its place as `translate`: its pop's `scale` (30-art.css pstBubble) then grows it from its tail where it stands; a
          `transform` here was scaled with it, so the bubble flew in from the stage's corner, over Pip, FO-44) */
-      this.bubble.style.translate = `${R(x)}px ${R(y)}px`;
-      this.bubble.dataset.side = tall ? 'down' : 'left';
-      this.bubble.style.setProperty('--tx', R(clamp(head[0] - x, 16, bw - 16)) + 'px');
-      this.bubble.style.setProperty('--ty', R(clamp(head[1] - y, 12, bh - 12)) + 'px');
+      /* (each written only when it changes: its side was written with the same value in every frame, and its place and tail
+         again whenever Pip had not moved; pm7-perf lane W, step 2) */
+      const b = this.bubble, was = b.__placed || (b.__placed = {}), tr = `${R(x)}px ${R(y)}px`, side = tall ? 'down' : 'left';
+      const tx = R(clamp(head[0] - x, 16, bw - 16)) + 'px', ty = R(clamp(head[1] - y, 12, bh - 12)) + 'px';
+      if (was.tr !== tr) { b.style.translate = tr; was.tr = tr; }
+      if (b.dataset.side !== side) b.dataset.side = side;
+      if (was.tx !== tx) { b.style.setProperty('--tx', tx); was.tx = tx; }
+      if (was.ty !== ty) { b.style.setProperty('--ty', ty); was.ty = ty; }
     }
     /* --------------------------------------------------------------- API */
     setTheme(theme) {
