@@ -53538,3 +53538,54 @@ negative_constraints:
 - No native execution or producer adoption is claimed.
 ```
 
+### DL-2436: Event Authority revises goal.completed (S5b)
+
+```yaml
+plan_unit_id: DL-2436
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: 'Under Jared''s EA-P3 A standing rule and DL-045 and GRS-204, Event Authority updates the existing
+  `goal.completed` row at #/families/9. Select the prepared Project v3 lifecycle definition; retain the separate
+  dormant application edition exactly. Registry revision 2026-11-16.299 (SHA-256 7aa480fcc27a5c71df8ff247b32336791ce23a6c3df7146811066c3ce0cbca9d)
+  becomes 2026-11-16.300 (SHA-256 a634791fb3f7ebaaa86f5b9c37971ac150ab7454f32c92043ab9de1e308be10b); the count remains
+  517. The successor row''s canonical SHA-256 is 7061d1c3ec0ab906601288adeb4f926cdc75e0761e25258019cc3a3626f759cb.
+  The 12/12 assessment reports/event-authority-20261116/admission-merge-2/revisions/goal.completed.json (SHA-256
+  6ea09d67c4bee998bd2dc4d356717fe61f6d395c7c9bdcf49132169881e2a7ee) carries the reviewed PASS cells and records
+  the exact selector predicates completing pending schema/scope cells. Source grade verdicts are unchanged. DL-078
+  checkpoint pins and the legacy golden revision move in this commit. Historical resource bytes and dormant application
+  editions remain as specified by the pinned row. Native execution stays NOT_RUN; no source installation, producer
+  adoption or governance seal is granted.'
+gui_related: false
+gui_classification_reason: Existing event contract selector and checkpoint only.
+depends_on:
+- DL-078
+- DL-400
+unblocks: []
+acceptance_criteria:
+- The registered row equals the pinned successor and all twelve assessment cells PASS.
+validation_surfaces:
+- python3 scripts/pm-implementation-readiness.py validate
+risk_class: event_authority_revision
+reasoning_tier: high
+context_scope: event_authority_pnc019_s5b
+implementation_surfaces:
+- Plans/event_family_registry.json
+- scripts/pm_pnc019_currentness.py
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- reports/event-authority-20261116/admission-merge-2/registered-revision-input.json; SHA-256 bbf2678bacf973529a9d0597eadbad5c40f15449c7e4dd87191273c30fa3bbb5
+- reports/event-authority-20261115/PNC019-C12-GC-grades.json; SHA-256 7ed5bc9192405b6582e21184cd3d5234751dd76d377d76e08eb5c52dc85044f8
+preserved_exact_tokens:
+- goal.completed
+- event-family-goal-completed
+- 3.0.0
+- 2026-11-16.300
+- 7061d1c3ec0ab906601288adeb4f926cdc75e0761e25258019cc3a3626f759cb
+negative_constraints:
+- No native execution or producer adoption is claimed.
+```
+

@@ -477,7 +477,7 @@ EVENT_FAMILY_GOAL_PAYLOAD_SCHEMA_REFS = {
     "goal.evidence_captured": "Plans/event_payloads/goal_runtime/goal_evidence_captured.schema.json",
     "goal.verification_decided": "Plans/event_payloads/goal_runtime/goal_verification_decided.schema.json",
     "goal.receipt_recorded": "Plans/event_payloads/goal_runtime/goal_receipt_recorded.schema.json",
-    "goal.completed": "Plans/event_payloads/goal_runtime/goal_completed.schema.json",
+    "goal.completed": "Plans/event_payloads/goal_runtime/goal_completed.v3.schema.json",
     "goal.degraded": "Plans/event_payloads/goal_runtime/goal_degraded.schema.json",
     "goal.stopped": "Plans/event_payloads/goal_runtime/goal_stopped.schema.json",
     "goal.blocked": "Plans/event_payloads/goal_runtime/goal_blocked.v3.schema.json",
