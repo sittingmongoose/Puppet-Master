@@ -39,8 +39,10 @@ def main():
     work = Path(tempfile.mkdtemp(prefix='u-', dir=base))
     cases = []
     bridge.install_u_entries(original.O)
+    import pm_goal_dg5_supplement_u as supplement
+    corpus = list(original.CASES) + (supplement.SUPPLEMENT if os.environ.get('PM_DG5_SUPPLEMENT', '1') == '1' else [])
     try:
-        for case in original.CASES:
+        for case in corpus:
             if os.environ.get('PM_DG5_MATCH') and os.environ['PM_DG5_MATCH'] not in case['id']:
                 continue
             bridge.CASE[0] = case

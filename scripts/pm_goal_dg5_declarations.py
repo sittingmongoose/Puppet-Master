@@ -24,9 +24,27 @@ def chains():
     return _CHAINS
 
 
+U_SITE = 'dg5/site/pm_goal_dg_u_owners.py:'
+
+# Authored case -> (declared duplicate set, reason). Every member checks the same field with
+# the same predicate; written from the source before the judging run.
+DECLARED = {
+    'U2/N/expected_revision_bool': (
+        ('dg5/dgu/sir/request/expected_revision/number', 'dg5/dgu/sir/request/schema'),
+        'SirOwner.admit: NUMRULE current integer and the owner schema integer type both reject a Boolean '
+        'expected_revision (CV-1100 exact integer primitive).'),
+    'U1/N/objective_4001_scalars': (
+        ('dg5/dgu/sir/request/schema', U_SITE + '717'),
+        'GoalUpdateRequestV2 objective_text maxLength 4000 (Unicode code points) and SirOwner.admit '
+        'scalars(text) <= OBJECTIVE_LIMIT (4000, len over code points) bound the same field by the same predicate.'),
+}
+
+
 def target(case, ordinary, label=None):
-    if case['id'] == 'U2/N/expected_revision_bool':
-        return ('dg5/dgu/sir/request/expected_revision/number', 'dg5/dgu/sir/request/schema')
+    if case.get('dg5_target') is not None:  # a DG5 supplement case declares its own target
+        return case['dg5_target']
+    if case['id'] in DECLARED:
+        return DECLARED[case['id']][0]
     chain = chains().get(label) if label else None
     if chain and ordinary in chain:
         return tuple(sorted(chain))
