@@ -160,7 +160,14 @@ def _handle_supplements(suite, work):
         store._receipt_handles[sub] = store._receipt_handles[issued[0]]
         return store.receipt_of(sub)
 
+    def append_kind_case():
+        store = storage.TestOwnerStorage.create(work / 'handle-storage-kind')
+        genuine = store.reserve('TEST_ONLY:op:dg5-kind-handle', dict(tag='dg5-kind-handle'))
+        genuine.kind = 'other'
+        return store.append(genuine, [selftest.candidate('dg5-kind-handle')])
+
     suite.negative('dg5-shared', 'append_subclass_handle:1259', append_case, 'handle/type')
+    suite.negative('dg5-shared', 'append_wrong_kind_handle:1261', append_kind_case, 'handle/kind')
     suite.negative('dg5-shared', 'receipt_of_subclass_handle:1589', receipt_of_case, 'receipt_handle/type')
 
 
@@ -299,6 +306,10 @@ def _index_read_supplements(suite, work):
                                          lambda t: t['source_selection'].update(
                                              retained_inventory_sha256='0' * 64)),
                    'source/retained_inventory')
+    # index/source_complete (:430) has no DG5 negative: every in-watermark defect is
+    # refused earlier (segment inventory / token verification) and every post-watermark
+    # tail is trimmed by the snapshot itself; the authored corrupt-at-rest chain is the
+    # only witness and it cascades. Recorded in STATE as a genuine remaining gate.
     suite.negative('dg5-shared', 'index_row_set_only:452',
                    lambda: snapshot_with('dg5-ix-rowset',
                                          lambda f: f.update(index_row_set_sha256='0' * 64)),
@@ -662,6 +673,10 @@ def _pure_supplements(suite, work):
 
     pure('event_record_schema:473', event_record_make,
          'append/event/schema/', 'dg5/site/pm_goal_test_storage.py:473')
+    pure('event_record_type:470',
+         lambda: ((lambda: storage.validate_event_record('x', 'append/event')),
+                  storage.validate_event_record, dict(args=('x', 'append/event'), kwargs={})),
+         'append/event/type', 'dg5/site/pm_goal_test_storage.py:470')
 
     def bank_no_uri_make():
         entries = [dict(path='Plans/seglog_frame_v2_wire_fixtures.json')]
