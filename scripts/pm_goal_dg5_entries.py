@@ -33,6 +33,9 @@ def entries(cls, methods, family):
                     world = self  # a shared Storage entry: its own root is the complete store
                 if world is None and type(getattr(self, 'storage', None)).__name__ == 'TestOwnerStorage':
                     world = self.storage  # a shared owner/source entry over one Storage
+                ctx_storage = getattr(getattr(self, 'ctx', None), 'storage', None)
+                if world is None and type(ctx_storage).__name__ == 'TestOwnerStorage':
+                    world = ctx_storage  # a context-bound owner (DG-S issuance): its run's complete store
                 if world is None:
                     raise ValueError('entry has no original world: ' + entry)
                 case = bridge.CASE[0]
