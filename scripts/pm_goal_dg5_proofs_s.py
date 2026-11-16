@@ -281,3 +281,45 @@ PROOFS.update({
             "exactly that final re-acquisition, so :839 has no single-defect witness through "
             "read_current.")),
 })
+
+PROOFS.update({
+    'dg5/site/pm_goal_dg_s_readers.py:101': dict(
+        kind='construction', families=['goal_run.started'],
+        depends_on=[],
+        sites=[(READERS, 101), (READERS, 98), (START, 1020), (STORAGE, 1577)],
+        argument=(
+            "original_append is called only with the retained commit's event id, and that event "
+            "exists in Storage only because commit_start appended it through "
+            "AppendOwner.append_original (:1020), which issues and privately retains first custody "
+            "for every appended member before returning (pm_goal_test_storage.py:1577). Storage "
+            "exposes no custody-deletion operation; custody rows are only added by first-receipt "
+            "issuance and persisted in the state manifest. A retained commit for the event therefore "
+            "implies its first custody is present, so :101 cannot refuse in a complete family call.")),
+    'dg5/site/pm_goal_dg_s_readers.py:814': dict(
+        kind='construction', families=['goal_run.started'],
+        depends_on=[],
+        sites=[(READERS, 814), (SOURCE, 281), (SOURCE, 310), (STORAGE, 1594)],
+        argument=(
+            "Both sides of :814 are deep copies of the same private Storage custody row: the generic "
+            "row's custody is copied from the acquired source custody dict in GenericSource.acquire "
+            "(pm_goal_test_source.py:281), which Storage.acquire_source deep-copies from its own "
+            "custody dict, and the original's exact_custody is Storage.first_custody's deep copy of "
+            "that same entry (pm_goal_test_storage.py:1594-1596). Rows whose custody diverges from "
+            "the frame-derived receipt, group digest, identity, commitment or producer digest are "
+            "already returned as snapshot defects by _custody_defect and never reach h_generic as "
+            "rows (pm_goal_test_source.py:310-331). No modeled transition between the original and "
+            "generic acquisitions rewrites a custody row, so the copies cannot differ here.")),
+    'dg5/site/pm_goal_dg_s_readers.py:816': dict(
+        kind='construction', families=['goal_run.started'],
+        depends_on=[],
+        sites=[(READERS, 816), (SOURCE, 278), (STORAGE, 1631), (SOURCE, 200)],
+        argument=(
+            "The generic row's event is the value decoded from the segment frame during acquisition "
+            "scan (pm_goal_test_source.py:278-281), and the original's event is Storage.read_event's "
+            "decode of the same frame bytes at the same offset and length "
+            "(pm_goal_test_storage.py:1631-1635). A substituted frame at rest changes the segment "
+            "digest against the manifest retained inventory, which token recomputation refuses "
+            "unless the scan itself found a tail defect (pm_goal_test_source.py:194-202), in which "
+            "case the row is not in the snapshot at all. When the row is present, both decoders "
+            "therefore yield the identical event value, so :816 cannot refuse.")),
+})
