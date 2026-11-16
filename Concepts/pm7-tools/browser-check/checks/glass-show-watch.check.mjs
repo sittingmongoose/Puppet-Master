@@ -9,12 +9,11 @@
 // that still finds a check queued two seconds later queues again: a net for a queued check that is ever lost.
 // Spec: the share's 2026-11-11-pm7-performance/followups/E3-glass-poll.md, test rows 1, 2, 3, 4, 9 and 13.
 //
-// KNOWN GAP (R77 T1, confirmed in a browser 2026-11-16, tool-issues row PM7PERF-SHOWWATCH-LIGHT-ROWS-RUN-DARK): in the
-// second look's pass (Glass Light by default) row 9's warm-up O55.ui.open() resumes the onboarding draft the first
-// pass left, and the window repaints that draft's look (Glass Dark) and leaves it painted after the close; nothing
-// re-applies or asserts the look afterwards, so rows 9 and 13 labelled glass-light are measured in Glass Dark.
-// Rows 1-4 do run in the labelled look. Until the batch fixes it, read the glass-light rows 9 and 13 as a second
-// Glass Dark sample; run `--set looks=glass-light` for a Light-only pass (no earlier draft, so the look holds).
+// Each look's pass must run in that look (R77 T1): the onboarding window paints its draft's look and leaves it
+// painted, so row 9's warm-up starts a fresh session (the draft takes the look on screen) and rows 9 and 13 assert
+// that the look under test is still painted (after the warm-up, after the measured cycle, before the rest count).
+// Before 2026-11-16 the warm-up resumed the first pass's draft and the second pass's rows 9 and 13 ran in the
+// first look: runs older than that read glass-light's rows 9 and 13 as a second Glass Dark sample.
 //
 // Rows, per Glass look (Glass Dark and Light), both surfaces, 1920x1080. Budgets are QW6's, from measurements on
 // alexis (loaded host, RTX 3080): 5 full runs per surface on the branch page (qw6.html, 5ea1e87906) and on main
@@ -50,8 +49,13 @@
 //      the close() call is logged, not judged (532-1062 ms seen).
 //   13 resting wake count: with one strip hidden by row 1's method, a setTimeout wrapper installed before the
 //      page's scripts run counts the timers asked for from glass.js (the lg-js block's lines) with delay 400 or
-//      2000 ms over 10 s: at most 6 requests and none at 400 ms (unchanged). Branch asks 4-5, all 2000 ms; main
-//      asks 24-25, all 400 ms: FAILS on main. Then the strip is shown (with row 1's lock) and the lens must appear
+//      2000 ms over 10 s, and of those the ones that fire: none asked at 400 ms, at most 6 FIRE (the cost: one
+//      tick per 2000 ms is 5, 6 on a window edge) and at most 12 are asked. Requests are not wakes: since
+//      34b45edf15 a sync that lands while a check is queued arms a tick which that check drops, and each wake
+//      drops and re-arms one, so the count of requests moves with ambient syncs (5 on the normal surface, 5-7
+//      on the sandboxed one over the lead's runs, where 7 failed the earlier bound of 6 requests on a page that
+//      fired 5); 12 is two per interval. Main asks and fires 24-25, all at 400 ms: FAILS on main (the 400 ms row
+//      and the fire count). Then the strip is shown (with row 1's lock) and the lens must appear
 //      within 150 ms (branch 20-44 ms; main's free-phase tail reached 13 ms, so without the lock this assertion
 //      could pass on main — the counts above are row 13's unconditional separation).
 //
@@ -99,10 +103,11 @@ const repeatCount = (v) => {
 };
 const tagOf = (look, surface, rep, reps) => `${look} ${surface}` + (reps > 1 ? ` rep ${rep}` : '');
 
-/* installed before the page's scripts: counts setTimeout REQUESTS (not firings) with delay 400 or 2000 ms whose
-   asking stack's innermost page frame lies in the lg-js block (glass.js). Everything else is forwarded untouched. */
+/* installed before the page's scripts: counts setTimeout REQUESTS, and of those the ones that FIRE (a request that
+   is cleared never wakes the page), with delay 400 or 2000 ms whose asking stack's innermost page frame lies in the
+   lg-js block (glass.js). Everything else is forwarded untouched. */
 const TIMER_PROBE = (range) => {
-	const P = window.__swt = { armed: false, n400: 0, n2000: 0, sites: [], events: [], seq: 1, byId: new Map(), depth: 0 };
+	const P = window.__swt = { armed: false, n400: 0, n2000: 0, f400: 0, f2000: 0, sites: [], events: [], seq: 1, byId: new Map(), depth: 0 };
 	const realSet = window.setTimeout;
 	const realClear = window.clearTimeout;
 	const lineOf = () => {
@@ -133,6 +138,7 @@ const TIMER_PROBE = (range) => {
 		let id = 0;
 		const wrapped = function (...a) {
 			meta.fired = Math.round(performance.now());
+			if (P.armed) { if (d === 400) P.f400++; else P.f2000++; }
 			P.byId.delete(id);
 			const s = snap();
 			push({ k: 'fire', n: meta.n, d: meta.d, at: meta.fired, asked: meta.asked, g: meta.g, vis: s.vis, op: s.op, hidden: document.hidden });
@@ -146,7 +152,7 @@ const TIMER_PROBE = (range) => {
 		push({ k: 'ask', n: meta.n, d, at: meta.asked, g: meta.g, vis: s.vis, op: s.op, inFire: P.depth > 0, hidden: document.hidden });
 		if (P.armed) {
 			if (d === 400) P.n400++; else P.n2000++;
-			if (P.sites.length < 6) P.sites.push(d + 'ms@' + l);
+			if (P.sites.length < 14) P.sites.push(d + 'ms@' + l);
 		}
 		return id;
 	};
@@ -159,8 +165,8 @@ const TIMER_PROBE = (range) => {
 		}
 		return realClear.call(window, id);
 	};
-	P.arm = () => { P.n400 = 0; P.n2000 = 0; P.sites = []; P.armed = true; };
-	P.read = () => { P.armed = false; return { n400: P.n400, n2000: P.n2000, sites: P.sites.slice() }; };
+	P.arm = () => { P.n400 = 0; P.n2000 = 0; P.f400 = 0; P.f2000 = 0; P.sites = []; P.armed = true; };
+	P.read = () => { P.armed = false; return { n400: P.n400, n2000: P.n2000, f400: P.f400, f2000: P.f2000, sites: P.sites.slice() }; };
 	P.between = (a, b) => P.events.filter((e) => e.at >= a && e.at <= b);
 };
 
@@ -456,9 +462,10 @@ async function cell(t, surface, W, H) {
 			await f.evaluate(() => window.__swt.arm());
 			await t.page.waitForTimeout(10000);
 			const c = await f.evaluate(() => window.__swt.read());
-			t.log(`row 13 ${tag}: glass.js show-watch timer requests in 10 s: ${c.n400} at 400 ms, ${c.n2000} at 2000 ms [${c.sites.join(', ')}]`);
+			t.log(`row 13 ${tag}: glass.js show-watch timer requests in 10 s: ${c.n400} at 400 ms, ${c.n2000} at 2000 ms [${c.sites.join(', ')}]; fired: ${c.f400} at 400 ms, ${c.f2000} at 2000 ms`);
 			await t.check(`row 13: no 400 ms show-watch timer is asked for ${tag}`, c.n400 === 0, `${c.n400} requests at 400 ms (main asks about 25 in 10 s)`);
-			await t.check(`row 13: at most 6 show-watch timer requests in 10 s ${tag}`, c.n400 + c.n2000 <= 6, `${c.n400 + c.n2000} requests (the 2000 ms net asks about 5)`);
+			await t.check(`row 13: at most 6 show-watch timers fire in 10 s ${tag}`, c.f400 + c.f2000 <= 6, `${c.f400 + c.f2000} fired (the 2000 ms net fires about 5; main's poll about 25)`);
+			await t.check(`row 13: at most 12 show-watch timer requests in 10 s ${tag}`, c.n400 + c.n2000 <= 12, `${c.n400 + c.n2000} requests (one after each tick, and one more for each wake or sync that lands while a check is queued: 5-7 measured)`);
 			await showTabsLocked(f, 'display');
 			const back = await f.evaluate(() => window.__gsw.wait('back', 2040));
 			t.log(`row 13 ${tag}: lens back in ${Math.round(back.ms)} ms after the count (row 1's 150 ms budget)`);
