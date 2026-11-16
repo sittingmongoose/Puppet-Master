@@ -40,14 +40,15 @@ DECLARED = {
 }
 
 
-STOP_LATCHED = tuple(U_SITE + str(n) for n in (1511, 1575, 1990, 2055))
+STOP_LATCHED = tuple(U_SITE + str(n) for n in (1511, 1575))
 HITL_TARGET = (U_SITE + '968', U_SITE + '991')
 # Reviewed DG5 sets (same field, same predicate): (case-id test, set, reason).
 DECLARED_RULES = (
     (lambda cid: cid == 'U2/N/stop_at_capture' or (cid.startswith('U5/F/source.capture/after:') and cid.endswith('/stop')),
      STOP_LATCHED,
-     "Each member is `not <stop>['stop_latched']` on the Goal's current host Stop record (w.stops.current(goal_id)): "
-     'pm_goal_dg_u_owners.py:1511 (source capture), :1575 (capture final recheck), :1990 and :2055 (command boundaries).'),
+     "UpdateSourceOwner.capture checks `not stop['stop_latched']` on the Goal's current host Stop record "
+     '(w.stops.current(goal_id)) at pm_goal_dg_u_owners.py:1511 and re-reads it at its final boundary :1575 '
+     "(`not stop2['stop_latched']`): the same field, the same predicate."),
     (lambda cid: cid == 'U5/N/goal_id_empty',
      ('dg5/dgu/sir/request/schema', U_SITE + '287'),
      'GoalUpdateRequestV2 goal_id minLength 1 and exact_str (pm_goal_dg_u_owners.py:287) `value != \'\'` require the '
