@@ -350,6 +350,22 @@ def terminal_result_schema_bogus_status(d):
                                          error_code='manual_stop_latched')
 
 
+@case('U-DG5/N/progress_schema_bogus_phase', 'dgu/progress/schema/',
+      'dg5/dgu/progress/schema',
+      'Single defect: advance is asked to write the next progress epoch with a phase outside '
+      'the Progress oneOf shapes. The phase/epoch edge checks read only the stored snapshot '
+      'phase and the new epoch number, so the first check to refuse is the whole-root Progress '
+      'validation in progress_writes.')
+def progress_schema_bogus_phase(d):
+    w, g = U._goal(d)
+    req = O.direct_request(w, g, 'x')
+    adm, _ = w.command.admit_and_capture(req)
+    p = U.progress(w, g, U.op_of(adm))
+    return w, lambda: w.source.advance(g['scope'], U.op_of(adm),
+                                       dict(p, progress_epoch=p['progress_epoch'] + 1, phase='bogus'),
+                                       expected_phase=('source_admitted',), where='o')
+
+
 @case('U-DG5/N/inspect_source_defect', 'dgu/inspect/source_defect', SITE + '1867',
       'Single defect in the acquired source snapshot: first custody group_digest is substituted, so '
       'GenericSource halts before that event (a custody defect at its position) and the inspected event '
