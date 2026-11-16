@@ -127,7 +127,9 @@ def hook_bank(cls, method='errors', family=None):
 
     def errors(self, *args):
         import pm_goal_dg5_boundaries as bridge
-        if bridge.ACTIVE[0]:
+        # Only the parent's own run of a captured complete call records: child
+        # replays (ACTIVE) and fixture construction outside an entry do not.
+        if bridge.ACTIVE[0] or not bridge.PARENT_CALL[0]:
             return original(self, *args)
         patch_validator_classes()
         sink = []
@@ -165,6 +167,14 @@ def hook_bank(cls, method='errors', family=None):
         return result
     errors._dg5_closure = True
     setattr(cls, method, errors)
+
+
+def default_banks():
+    """The whole-root schema banks the DG Goal checkers validate through."""
+    import pm_goal_test_owner_adapters as adapters
+    import pm_goal_own_c_roots as own_c
+    import pm_goal_own_c3_w12_bank as w12
+    return [(adapters.RootBank, 'errors'), (own_c.OriginalBank, 'errors'), (w12.ScopedBankV2, 'errors')]
 
 
 def bridge_family():
@@ -338,9 +348,7 @@ def collect(source, family):
     tables.DISCOVERY = True
     module = __import__(source)
     hooks = getattr(module, 'closure_banks', None)
-    if hooks is None:
-        raise SystemExit(source + ' declares no closure_banks()')
-    for cls, method in hooks():
+    for cls, method in (hooks() if hooks is not None else default_banks()):
         hook_bank(cls, method, family)
     collector = sweep.collect([source], fuzz=False, judge=False, keyword_witnesses=False)
     return collector
