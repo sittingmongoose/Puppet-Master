@@ -535,6 +535,10 @@ def target_rows(code):
     most specific match. Several equally specific sites form a declared duplicate set."""
     if code is None:
         return None
+    if code.endswith('*'):
+        # An authored wildcard under a whole-root schema code still names one row: that schema row.
+        prefix = code[:-1]
+        return row(prefix + 'any') if '/schema/' in prefix else None
     if '/schema/' in code or '/numrule/' in code:
         return row(code)
     # Only code this checker process has loaded can raise the refusal.
