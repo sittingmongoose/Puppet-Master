@@ -173,14 +173,14 @@ PROOFS = {
         [(AS, 522), (AS, 750)],
         ['dg5/site/pm_goal_dg_ca_assignment.py:204',
          'dg5/site/pm_goal_dg_ca_assignment.py:205']),
-    'dg5/site/pm_goal_test_owner_adapters.py:398': _p(
+    'dg5/site/pm_goal_test_owner_adapters.py:480': _p(
         "type(handle) is OriginalHandle is entailed by the next check "
         "handle in self._handles (:399): handles enter _handles only through "
         "_issue, which mints OriginalHandle instances, so anything passing "
         ":399 has the exact type, and anything failing :398 also fails :399. "
         ":398 can therefore never refuse alone; :399 closes by presence.",
-        [(AD, 398), (AD, 399)],
-        ['dg5/site/pm_goal_test_owner_adapters.py:399']),
+        [(AD, 480), (AD, 481)],
+        ['dg5/site/pm_goal_test_owner_adapters.py:481']),
     'dg5/site/pm_goal_dg_ca_assignment.py:600': _p(
         "The header measured is S.event_header of the expected producer: exactly "
         "seven short strings (event_id, event_type, schema_id/version, "
@@ -268,22 +268,22 @@ PROOFS = {
         "check can never refuse after the issuer check passes.",
         [(ST, 1253), (ST, 1271), (ST, 1261)],
         ['dg5/site/pm_goal_test_storage.py:1260']),
-    'dg5/site/pm_goal_test_owner_adapters.py:542': _p(
+    'dg5/site/pm_goal_test_owner_adapters.py:624': _p(
         "AppendOwner.event checks type(handle) is OriginalHandle immediately "
         "before the _events membership check at :543; _events is a "
         "WeakKeyDictionary keyed only by OriginalHandle('event') instances "
         "minted in append_original, so any handle passing :543 has the exact "
         "type, and the type check can never refuse alone.",
-        [(AD, 542), (AD, 543), (AD, 525)],
-        ['dg5/site/pm_goal_test_owner_adapters.py:543']),
-    'dg5/site/pm_goal_test_owner_adapters.py:548': _p(
+        [(AD, 624), (AD, 625), (AD, 602)],
+        ['dg5/site/pm_goal_test_owner_adapters.py:625']),
+    'dg5/site/pm_goal_test_owner_adapters.py:630': _p(
         "AppendOwner.first_receipt checks type(handle) is OriginalHandle "
         "immediately before the _events membership check at :549; _events is "
         "keyed only by OriginalHandle('event') instances minted in "
         "append_original, so any handle passing :549 has the exact type, "
         "and the type check can never refuse alone.",
-        [(AD, 548), (AD, 549), (AD, 525)],
-        ['dg5/site/pm_goal_test_owner_adapters.py:549']),
+        [(AD, 630), (AD, 631), (AD, 602)],
+        ['dg5/site/pm_goal_test_owner_adapters.py:631']),
     'dg5/site/pm_goal_test_storage.py:1056': _p(
         "_index_group indexes one durable group's frames; on the append "
         "path the group's event ids were required fresh and group-unique "
@@ -356,26 +356,26 @@ PROOFS = {
         "events; no family path passes a non-str component.",
         [(ST, 163), (ST, 189)],
         ['dg5/site/pm_goal_test_storage.py:189']),
-    'dg5/site/pm_goal_test_owner_adapters.py:238': _p(
+    'dg5/site/pm_goal_test_owner_adapters.py:320': _p(
         "register is called only from TestOwner.__init__ with the owner's "
         "class-level role literal (every owner class in the DG lanes declares "
         "a non-empty str role, and AssociationOwner receives one of the three "
         "literal association roles from World), so role is always a "
         "non-empty str at registration.",
-        [(AD, 238), (OWN, 154)]),
-    'dg5/site/pm_goal_test_owner_adapters.py:239': _p(
+        [(AD, 320), (OWN, 154)]),
+    'dg5/site/pm_goal_test_owner_adapters.py:321': _p(
         "owner_id is minted per TestOwner instance at construction (uuid-"
         "based TEST_ONLY id) and register is called once per instance from "
         "__init__; two live owners cannot present the same id to one "
         "registry through any family construction path.",
-        [(AD, 239)]),
-    'dg5/site/pm_goal_test_owner_adapters.py:383': _p(
+        [(AD, 321)]),
+    'dg5/site/pm_goal_test_owner_adapters.py:465': _p(
         "Every _issue ref is either freshly minted by uid() (decision, "
         "registration, dispatch, member, receipt refs) or the sequence-"
         "formatted TEST_ONLY:original ref with a per-issue incrementing "
         "uint64 sequence, so a ref cannot already be in _originals when "
         "issued through any family owner call.",
-        [(AD, 383), (AD, 380)]),
+        [(AD, 465), (AD, 462)]),
     'dg5/C3/control_epoch/number': _p(
         "The latch control_epoch increment is unreachable at the ceiling: "
         "before_stop_entry (called at latch before the increment) builds the "
@@ -559,6 +559,23 @@ PROOFS = {
         "reads stored cells and schema-validates the audit record; no "
         "transact or append runs in between, so the generation cannot move.",
         [(R3, 1385), (R3, 1395)]),
+    'dg5/site/pm_goal_dg_ca3_route.py:406': _p(
+        "capture requires start commit scope == run_scope at :316 inside "
+        "before_stop_native and association active_run_ref == run_scope "
+        "goal_run_id at :351 immediately before it; :406 only restates the "
+        "transitive equality of the same two values read in the same call.",
+        [(R3, 316), (R3, 351), (R3, 406)],
+        ['dg5/site/pm_goal_dg_ca3_route.py:316',
+         'dg5/site/pm_goal_dg_ca3_route.py:351']),
+    'dg5/site/pm_goal_dg_ca3_route.py:802': _p(
+        "The origin issuer_method is the D06 Origin schema const written at "
+        "publish from the literal in pm_goal_dg_ca3_native.publish, and its "
+        "afterimages result selector is src_sel of the result cell in the "
+        "same publish call that writes control['result'] from the identical "
+        "src_sel; tampering either is refused earlier (seed/schema or the "
+        "readback control sha joins), witnessed in the supplement smoke.",
+        [(R3, 802), (N3, 1035)],
+        ['dg5/site/pm_goal_dg_ca3_native.py:1069']),
     'dg5/site/pm_goal_dg_ca_owners.py:176': _p(
         "World.selection is called only from install_writer_domain (with the "
         "domain wrapper it has just written in the same call) and from "
