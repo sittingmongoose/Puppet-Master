@@ -2,68 +2,68 @@
   "event_type": "runtime_artifact.cost_usage",
   "bucket": "confirmed_persisted_unregistered",
   "july_classification": "confirmed_persisted_unregistered",
-  "disposition": "KEEP_QUARANTINED",
-  "disposition_rationale": "DL-039 Step 9 individual adjudication at 2026-09-11T16:55:03.900393+00:00: Cost artifacts are attribution projections over Usage/Ledger, require usage_event_ref and usage_record_id, and must not count reasoning tokens twice. Materialized schema pm.runtime_artifact.cost_usage.schema.v1 was freshly resolved; type-specific required fields: usage_event_ref, usage_record_id, reasoning_tokens, provider, usage, cost, quota, authority, refs, flags. Retention additionally requires a genuine product choice: the owner explicitly recommends but does not assign indefinite event retention. This row is CARD for that unanswered choice; all listed technical binding gaps remain admission work after the decision. Jared answered EA-S09-EXEC-RUNTIME-ARTIFACT-RETENTION with option A on 2026-09-23 (Plans/Decision_Log.md#DL-075): the 19 runtime-artifact event histories take RP-AUTHORITY-INDEFINITE for the time their full contracts are admitted (Plans/Runtime_Artifacts_Panel.md:2472; Plans/storage-plan.md:17260). Applied at 2026-09-24T21:08:23Z: the retention cell is now PASS for that assignment and the row returns to KEEP_QUARANTINED as unfinished technical contract work. Each full contract must still make the embedded text and any applicable deletion requirement explicit before admission, and every other listed binding gap remains. No registry admission, binding definition or depth pass is inferred. Application: reports/event-authority-20260911/step-09-card-answer-application-20260924.json.",
+  "disposition": "KEEP_REGISTERED",
+  "disposition_rationale": "DL-039 Step 9 individual adjudication at 2026-09-11T16:55:03.900393+00:00: Cost artifacts are attribution projections over Usage/Ledger, require usage_event_ref and usage_record_id, and must not count reasoning tokens twice. Materialized schema pm.runtime_artifact.cost_usage.schema.v1 was freshly resolved; type-specific required fields: usage_event_ref, usage_record_id, reasoning_tokens, provider, usage, cost, quota, authority, refs, flags. Retention additionally requires a genuine product choice: the owner explicitly recommends but does not assign indefinite event retention. This row is CARD for that unanswered choice; all listed technical binding gaps remain admission work after the decision. Jared answered EA-S09-EXEC-RUNTIME-ARTIFACT-RETENTION with option A on 2026-09-23 (Plans/Decision_Log.md#DL-075): the 19 runtime-artifact event histories take RP-AUTHORITY-INDEFINITE for the time their full contracts are admitted (Plans/Runtime_Artifacts_Panel.md:2472; Plans/storage-plan.md:17260). Applied at 2026-09-24T21:08:23Z: the retention cell is now PASS for that assignment and the row returns to KEEP_QUARANTINED as unfinished technical contract work. Each full contract must still make the embedded text and any applicable deletion requirement explicit before admission, and every other listed binding gap remains. No registry admission, binding definition or depth pass is inferred. Application: reports/event-authority-20260911/step-09-card-answer-application-20260924.json. Registered at registry revision 2026-11-16.245 in admission merge 2 under DL-078, DL-096 and DL-400 (decision Plans/Decision_Log.md#DL-2381); DL-077 admission record reports/event-authority-20260911/admission-records/runtime_artifact.cost_usage.json. Disposition KEEP_QUARANTINED -> KEEP_REGISTERED, evidence cells membership_version, owner_doc, producer, closed_payload_schema, scope_identity, replay_idempotency, retention, redaction_custody, transitions, consumers_checkpoints, compatibility_withdrawal, positive_negative_oracles projected with twelve PASS cells from the family's admission depth assessment reports/event-authority-20261116/admission-merge-2/depth/runtime_artifact.cost_usage.json (sha256 b0302b5ffc8de8b29e92d14b82d36adaab7e354955b8c782aefeb6498e9c2be7); bucket, cohort pins, July classification and every other field are unchanged; no seal or owner choice.",
   "evidence": {
     "membership_version": {
-      "status": "FAIL",
-      "citation": null,
-      "note": "`runtime_artifact.cost_usage` is absent from the live Event Authority registry; the required membership/version row does not exist."
+      "status": "PASS",
+      "citation": "Plans/event_family_registry.json:29921-29974",
+      "note": "Registered at registry revision 2026-11-16.245 as #/families/463 (canonical row SHA-256 22ad6be8ef9bfa3a5c5ebc57cf8639ff52a6c3483f9dd320f9fbaf90dba4d915); before this commit the family was absent."
     },
     "owner_doc": {
-      "status": "OWNER_REQUIRED",
-      "citation": null,
-      "note": "Runtime_Artifacts_Panel explicitly limits its ownership to the payload/schema envelope and panel routing; no cited authority names the full semantic-and-payload owner for this exact event."
+      "status": "PASS",
+      "citation": "Plans/Runtime_Artifacts_Panel.md:3883",
+      "note": "RAP-106, SP-526 and CV-526 explicitly govern this exact Project-edition family and version, with ATS-260 oracles."
     },
     "producer": {
-      "status": "OWNER_REQUIRED",
-      "citation": null,
-      "note": "The panel owns schema semantics but does not explicitly bind `runtime_artifact.cost_usage` to an implementation producer; ownership is not treated as producer evidence."
+      "status": "PASS",
+      "citation": "Plans/Runtime_Artifacts_Panel.md:3884; Plans/Runtime_Artifacts_Panel.md:3886; Plans/Contracts_V0.md:41929",
+      "note": "RAP-106 binds the producer and source/append/first-receipt/publication order. CV-526 explicitly adopts SP-337 for bounded inline and external payload custody."
     },
     "closed_payload_schema": {
-      "status": "FAIL",
-      "citation": "Plans/runtime_artifact_cost_usage.schema.json:238,684-690",
-      "note": "The schema contains explicitly open nested objects (`additionalProperties: true`), so it does not satisfy the closed per-type payload requirement."
+      "status": "PASS",
+      "citation": "Plans/Contracts_V0.md:41928; Plans/Contracts_V0.md:41931; Plans/Runtime_Artifacts_Panel.md:3891",
+      "note": "CV-526/CV-537 preserve the exact closed historical schema and explicitly add the current Project-writer nullable sha256: plus 64 lowercase hex representation, exact length/full-match guard, source/null meaning and historical-reader separation; all prior schema constraints remain composed through allOf."
     },
     "scope_identity": {
       "status": "PASS",
-      "citation": "Plans/Runtime_Artifacts_Panel.md:304,308-318",
-      "note": "The panel explicitly defines the common artifact identity envelope and artifact-object identity for `runtime_artifact.cost_usage`."
+      "citation": "Plans/Runtime_Artifacts_Panel.md:3885; Plans/Contracts_V0.md:41929",
+      "note": "RAP-106 binds exact Project identity, joins and idempotency. The four-member tuple remains unchanged; CV joins resolve the logical payload."
     },
     "replay_idempotency": {
-      "status": "OWNER_REQUIRED",
-      "citation": null,
-      "note": "No cited Plans authority specifies replay, deduplication key, or idempotency behavior for this exact event."
+      "status": "PASS",
+      "citation": "Plans/Runtime_Artifacts_Panel.md:3886; Plans/Contracts_V0.md:41929",
+      "note": "RAP-106 preserves original SP-286/CV-339 full-value v2 event/eleven-field receipt and refuses changed semantic identity without a second effect."
     },
     "retention": {
       "status": "PASS",
-      "citation": "Plans/Runtime_Artifacts_Panel.md:2472",
-      "note": "DL-075 assigns RP-AUTHORITY-INDEFINITE to runtime_artifact.cost_usage for the time its full contract is admitted; Plans/storage-plan.md:17260 records the same Case L-3 assignment. Retention only: DL-075 requires the full contract to make the retained embedded text and any applicable deletion requirement explicit before admission; that precondition is still open and no evidence cell in this row records it as met. Retention grants no access to a linked body, and artifact bodies, original receipts, restore points, Usage and source records keep their own policies. No registry row, binding or admission follows."
+      "citation": "Plans/storage-plan.md:54147; Plans/Runtime_Artifacts_Panel.md:3888",
+      "note": "RAP-106 retains event history under DL-075. SP-526 preserves source-coupled index retention and applies 3GEN only to checkpoint generations."
     },
     "redaction_custody": {
-      "status": "OWNER_REQUIRED",
-      "citation": null,
-      "note": "No cited Plans authority closes field-level redaction, custody, and access-control responsibilities for this exact event."
+      "status": "PASS",
+      "citation": "Plans/Runtime_Artifacts_Panel.md:3888; Plans/Contracts_V0.md:41929",
+      "note": "RAP-106 binds original seglog/receipt custody, backup/restore and current authorization/deletion checks. CV-526 adds pack-byte durability and retention without changing linked-body policy."
     },
     "transitions": {
-      "status": "OWNER_REQUIRED",
-      "citation": null,
-      "note": "No cited Plans authority closes allowed predecessor, successor, failure, and terminal transitions for `runtime_artifact.cost_usage`."
+      "status": "PASS",
+      "citation": "Plans/Runtime_Artifacts_Panel.md:3883; Plans/Runtime_Artifacts_Panel.md:3886",
+      "note": "RAP-106 implements its exact Option 2 transition behind source/receipt/publication barriers. No source action is redispatched."
     },
     "consumers_checkpoints": {
-      "status": "OWNER_REQUIRED",
-      "citation": null,
-      "note": "No cited Plans authority names authorized consumers and checkpoint-advance or poison-record rules for this exact event."
+      "status": "PASS",
+      "citation": "Plans/storage-plan.md:54145; Plans/storage-plan.md:54146",
+      "note": "SP-526 binds this exact stateless history reader, installed SP-278 key/schema/generation and atomic CAS, plus nine-field durable-token limits; it persists no token."
     },
     "compatibility_withdrawal": {
-      "status": "OWNER_REQUIRED",
-      "citation": null,
-      "note": "No cited Plans authority defines compatibility, migration, deprecation, and withdrawal rules for this exact event."
+      "status": "PASS",
+      "citation": "Plans/Runtime_Artifacts_Panel.md:3889",
+      "note": "RAP-106 specifies exact-version refusal and writer admission cutoff, receipt preservation, reader dependency withdrawal and authorized rebuild without effects."
     },
     "positive_negative_oracles": {
-      "status": "OWNER_REQUIRED",
-      "citation": null,
-      "note": "No cited Plans authority supplies positive and negative conformance oracles for this exact event."
+      "status": "PASS",
+      "citation": "Plans/runtime_artifact_event_drafts.json:133; Plans/Runtime_Artifacts_Panel.md:3875; Plans/storage-plan.md:54136; Plans/Contracts_V0.md:41920; Plans/runtime_artifact_cost_usage.schema.json:3; Plans/Automated_Testing_System.md:11266; Plans/Automated_Testing_System.md:11267; scripts/pm-runtime-artifact-event-drafts.py:464; scripts/pm-runtime-artifact-event-drafts.py:953; scripts/pm-runtime-artifact-event-drafts.py:935; scripts/pm-runtime-artifact-event-drafts.py:1076; scripts/pm_runtime_artifact_table_history.py:21; scripts/pm_runtime_artifact_c12.py:331; scripts/pm_runtime_artifact_c12.py:418; scripts/pm_runtime_artifact_c12.py:432; scripts/pm-runtime-artifact-c12-closure.py:176; scripts/pm-runtime-artifact-c12-closure.py:378; scripts/pm-runtime-artifact-c12-closure.py:430; scripts/pm-runtime-artifact-c12-closure.py:564",
+      "note": "Exact-family C12 PASS from reports/event-authority-20261114/C12-DR-self-grade.json"
     }
   },
   "citations_checked": [
