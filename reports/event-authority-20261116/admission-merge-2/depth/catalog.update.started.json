@@ -1,0 +1,383 @@
+{
+ "schema_id": "pm.assurance.event_authority.admission_depth_assessment.v1",
+ "assessment_kind": "admission_twelve_criteria",
+ "writer": "pm-ea-admission-writer.v1",
+ "merge": "admission-merge-2",
+ "registry": {
+  "path": "Plans/event_family_registry.json",
+  "revision": "2026-11-16.102",
+  "sha256": "cf5b7c6cad2330fb06f616d117d7a2fd310cfc0b0d4626cf5f944e07fefd1c7a",
+  "family_count": 321,
+  "row_pointer": "#/families/320"
+ },
+ "base_commit": "45b4ccf25270c486dbc682805cd455ce4ca25fb0",
+ "rubric": "Step 8 depth matrix, twelve criteria (DL-077); PASS needs Plans/ evidence",
+ "native_execution": "NOT_RUN",
+ "rows": [
+  {
+   "event_type": "catalog.update.started",
+   "family_id": "event-family-catalog-update-started",
+   "family_revision": "1.0.0",
+   "cells": {
+    "membership_version": {
+     "status": "PASS",
+     "representation": "exact_registry_membership",
+     "finding": "Registered at registry revision 2026-11-16.102 as #/families/320 (canonical row SHA-256 2cb70bab7c6f6f8ee9eecf645449b6cd1b00a0880f18db2a4870efb111fcad43); before this commit the family was absent.",
+     "evidence": [
+      {
+       "path": "Plans/event_family_registry.json",
+       "json_pointer": "#/families/320",
+       "line_start": 21027,
+       "line_end": 21108,
+       "quote": "\"event_type\": \"catalog.update.started\"",
+       "quote_line": 21030,
+       "file_sha256": "cf5b7c6cad2330fb06f616d117d7a2fd310cfc0b0d4626cf5f944e07fefd1c7a",
+       "quote_check": "exact"
+      }
+     ]
+    },
+    "owner_doc": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "SMPFS-322 independently defines owner_doc for catalog.update.started@1.0.0; exact-family static checker exits 0. Shared sweep qualifications remain explicit.",
+     "evidence": [
+      {
+       "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+       "unit": "SMPFS-322",
+       "line_start": 16934,
+       "line_end": 16934,
+       "quote": "newly authored owner contract",
+       "quote_check": "exact",
+       "quote_scope": "unit SMPFS-322, Plans/Section15_MVP_Promoted_Features_Spec.md:16926-16980",
+       "file_sha256": "752b95d90e41b07c28e1376d0e1fdfdac2052196ca2e73e31e838f6f3124869d"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "owner_doc",
+      "status": "PASS"
+     }
+    },
+    "producer": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "SMPFS-322 independently defines producer for catalog.update.started@1.0.0; exact-family static checker exits 0. Shared sweep qualifications remain explicit.",
+     "evidence": [
+      {
+       "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+       "unit": "SMPFS-322",
+       "line_start": 16938,
+       "line_end": 16938,
+       "quote": "Producer:",
+       "quote_check": "exact",
+       "quote_scope": "unit SMPFS-322, Plans/Section15_MVP_Promoted_Features_Spec.md:16926-16980",
+       "file_sha256": "752b95d90e41b07c28e1376d0e1fdfdac2052196ca2e73e31e838f6f3124869d"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "producer",
+      "status": "PASS"
+     }
+    },
+    "closed_payload_schema": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "SMPFS-322 independently defines closed_payload_schema for catalog.update.started@1.0.0; exact-family static checker exits 0. Shared sweep qualifications remain explicit.",
+     "evidence": [
+      {
+       "path": "Plans/ds15_catalog_update_started.schema.json",
+       "unit": "root",
+       "line_start": 5,
+       "line_end": 5,
+       "quote": "\"additionalProperties\": false",
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "file_sha256": "df3a411339eb3a8fc87557a9c90bb3912e92e47470e59dffc4c0d0c5d10f162d"
+      },
+      {
+       "path": "Plans/ds15_catalog_update_started.schema.json",
+       "unit": "root",
+       "line_start": 21,
+       "line_end": 21,
+       "quote": "\"const\": \"1.0.0\"",
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "file_sha256": "df3a411339eb3a8fc87557a9c90bb3912e92e47470e59dffc4c0d0c5d10f162d"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "closed_payload_schema",
+      "status": "PASS"
+     }
+    },
+    "scope_identity": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "SMPFS-322 independently defines scope_identity for catalog.update.started@1.0.0; exact-family static checker exits 0. Shared sweep qualifications remain explicit.",
+     "evidence": [
+      {
+       "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+       "unit": "SMPFS-322",
+       "line_start": 16940,
+       "line_end": 16940,
+       "quote": "Scope and identity:",
+       "quote_check": "exact",
+       "quote_scope": "unit SMPFS-322, Plans/Section15_MVP_Promoted_Features_Spec.md:16926-16980",
+       "file_sha256": "752b95d90e41b07c28e1376d0e1fdfdac2052196ca2e73e31e838f6f3124869d"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "scope_identity",
+      "status": "PASS"
+     }
+    },
+    "replay_idempotency": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "SMPFS-322 independently defines replay_idempotency for catalog.update.started@1.0.0; exact-family static checker exits 0. Shared sweep qualifications remain explicit.",
+     "evidence": [
+      {
+       "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+       "unit": "SMPFS-322",
+       "line_start": 16943,
+       "line_end": 16943,
+       "quote": "Replay and transitions:",
+       "quote_check": "exact",
+       "quote_scope": "unit SMPFS-322, Plans/Section15_MVP_Promoted_Features_Spec.md:16926-16980",
+       "file_sha256": "752b95d90e41b07c28e1376d0e1fdfdac2052196ca2e73e31e838f6f3124869d"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "replay_idempotency",
+      "status": "PASS"
+     }
+    },
+    "retention": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "SMPFS-322 independently defines retention for catalog.update.started@1.0.0; exact-family static checker exits 0. Shared sweep qualifications remain explicit.",
+     "evidence": [
+      {
+       "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+       "unit": "SMPFS-322",
+       "line_start": 16945,
+       "line_end": 16945,
+       "quote": "Retention:",
+       "quote_check": "exact",
+       "quote_scope": "unit SMPFS-322, Plans/Section15_MVP_Promoted_Features_Spec.md:16926-16980",
+       "file_sha256": "752b95d90e41b07c28e1376d0e1fdfdac2052196ca2e73e31e838f6f3124869d"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "retention",
+      "status": "PASS"
+     }
+    },
+    "redaction_custody": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "SMPFS-322 independently defines redaction_custody for catalog.update.started@1.0.0; exact-family static checker exits 0. Shared sweep qualifications remain explicit.",
+     "evidence": [
+      {
+       "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+       "unit": "SMPFS-322",
+       "line_start": 16942,
+       "line_end": 16942,
+       "quote": "Original source and custody:",
+       "quote_check": "exact",
+       "quote_scope": "unit SMPFS-322, Plans/Section15_MVP_Promoted_Features_Spec.md:16926-16980",
+       "file_sha256": "752b95d90e41b07c28e1376d0e1fdfdac2052196ca2e73e31e838f6f3124869d"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "redaction_custody",
+      "status": "PASS"
+     }
+    },
+    "transitions": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "SMPFS-322 independently defines transitions for catalog.update.started@1.0.0; exact-family static checker exits 0. Shared sweep qualifications remain explicit.",
+     "evidence": [
+      {
+       "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+       "unit": "SMPFS-322",
+       "line_start": 16938,
+       "line_end": 16938,
+       "quote": "Producer:",
+       "quote_check": "exact",
+       "quote_scope": "unit SMPFS-322, Plans/Section15_MVP_Promoted_Features_Spec.md:16926-16980",
+       "file_sha256": "752b95d90e41b07c28e1376d0e1fdfdac2052196ca2e73e31e838f6f3124869d"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "transitions",
+      "status": "PASS"
+     }
+    },
+    "consumers_checkpoints": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "SMPFS-322 independently defines consumers_checkpoints for catalog.update.started@1.0.0; exact-family static checker exits 0. Shared sweep qualifications remain explicit.",
+     "evidence": [
+      {
+       "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+       "unit": "SMPFS-322",
+       "line_start": 16944,
+       "line_end": 16944,
+       "quote": "Consumer and checkpoint:",
+       "quote_check": "exact",
+       "quote_scope": "unit SMPFS-322, Plans/Section15_MVP_Promoted_Features_Spec.md:16926-16980",
+       "file_sha256": "752b95d90e41b07c28e1376d0e1fdfdac2052196ca2e73e31e838f6f3124869d"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "consumers_checkpoints",
+      "status": "PASS"
+     }
+    },
+    "compatibility_withdrawal": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "SMPFS-322 independently defines compatibility_withdrawal for catalog.update.started@1.0.0; exact-family static checker exits 0. Shared sweep qualifications remain explicit. Sweep part 2B: retained readers select the frozen recipe only through SP-1101 (sealed write custody, then the shared RetainedDispatcher), and the frozen recipe carries the CV-1101 profiles; owner-valid history stays readable and forged, unsealed, unsupported or wrong-family selections refuse.",
+     "evidence": [
+      {
+       "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+       "unit": "SMPFS-322",
+       "line_start": 16946,
+       "line_end": 16946,
+       "quote": "Compatibility and withdrawal:",
+       "quote_check": "exact",
+       "quote_scope": "unit SMPFS-322, Plans/Section15_MVP_Promoted_Features_Spec.md:16926-16980",
+       "file_sha256": "752b95d90e41b07c28e1376d0e1fdfdac2052196ca2e73e31e838f6f3124869d"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "compatibility_withdrawal",
+      "status": "PASS"
+     }
+    },
+    "positive_negative_oracles": {
+     "status": "PASS",
+     "representation": "integrated_criterion12_delta",
+     "finding": "SMPFS-322 catalog.update.started@1.0.0: every guard row the complete deck-2 checker reaches for this family (199 rows in 100 tables) is proved by the gated tool from this family's own single-defect witnesses (167 rows) or carries a checked entailment proof (17 singleton-table rows, 15 family-constant or earlier-boundary rows); 1738 evaluated schema clause sites: 1267 isolated or branch witnesses through the real validator and phase row, 1019 exact complete-boundary kills, the rest applicator, condition, sibling-entailed or co-asserted with named clauses; shared date-time battery, number corpus and edge sweep, sealed-receipt retained reads with custody snapshots, and the full original suite pass. Native execution NOT_RUN; membership ABSENT; independent review NOT_RUN.",
+     "evidence": [
+      {
+       "line": 15865,
+       "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+       "quote": "  Oracles: ",
+       "sha256": "c8c272c2affb4b2766d863f72a2baaee6f6d7e32feee1df180961a0819fc331e",
+       "line_start": 16091,
+       "line_end": 16091,
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "file_sha256": "752b95d90e41b07c28e1376d0e1fdfdac2052196ca2e73e31e838f6f3124869d"
+      },
+      {
+       "line": 15865,
+       "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+       "quote": "python3 scripts/pm-ds15-deck2-contracts.py --family catalog.update.started",
+       "sha256": "c8c272c2affb4b2766d863f72a2baaee6f6d7e32feee1df180961a0819fc331e",
+       "line_start": 16947,
+       "line_end": 16947,
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "file_sha256": "752b95d90e41b07c28e1376d0e1fdfdac2052196ca2e73e31e838f6f3124869d"
+      },
+      {
+       "line": 15859,
+       "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+       "quote": "  Closed payload: Plans/ds15_catalog_update_started.schema.json",
+       "sha256": "c8c272c2affb4b2766d863f72a2baaee6f6d7e32feee1df180961a0819fc331e",
+       "line_start": 16941,
+       "line_end": 16941,
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "file_sha256": "752b95d90e41b07c28e1376d0e1fdfdac2052196ca2e73e31e838f6f3124869d"
+      },
+      {
+       "line": 2437,
+       "path": "reports/event-authority-20261104/DS15-self-grade.json",
+       "quote": "\"status\": \"PARTIAL\"",
+       "sha256": "fe434edd4145ea5f898cff46db99a3c95183f3526cbf1ccd34a87b78cf66cd69",
+       "line_start": 184,
+       "line_end": 184,
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "file_sha256": "18a7c5c82459c8b9df297996322c3478f002c2c44816395cc83283af3037097b"
+      },
+      {
+       "line": 1356,
+       "path": "scripts/pm-ds15-event-contracts.py",
+       "quote": "def claimed_range(first, last, rows):",
+       "sha256": "c8419b67ec7bc0540e9a679ffa92fbe873ca6c0d303de4896150f0f793715a23",
+       "line_start": 1356,
+       "line_end": 1356,
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "file_sha256": "c8419b67ec7bc0540e9a679ffa92fbe873ca6c0d303de4896150f0f793715a23"
+      },
+      {
+       "line": 160,
+       "path": "scripts/pm-ds15-deck2-contracts.py",
+       "quote": "    if not retry and not context_ok(c, d.get('context')):",
+       "sha256": "b96e362a41375545398b6bb299ad372a54b4e062ee5fc30a30ad4dd326edf2fc",
+       "line_start": 160,
+       "line_end": 160,
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "file_sha256": "b96e362a41375545398b6bb299ad372a54b4e062ee5fc30a30ad4dd326edf2fc"
+      },
+      {
+       "line": 2,
+       "path": "scripts/pm_ds15_c12_cases.py",
+       "quote": "\"\"\"C12-DS15 own-family witnesses for the seven deck-2 families",
+       "sha256": "61cb2a29509cc15c759c97d32a3fcd502a1a1339e1dd5e585e575f9b0548ac32",
+       "line_start": 2,
+       "line_end": 2,
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "file_sha256": "61cb2a29509cc15c759c97d32a3fcd502a1a1339e1dd5e585e575f9b0548ac32"
+      },
+      {
+       "line": 42,
+       "path": "scripts/pm-ds15-guard-tables.py",
+       "quote": "    parser.add_argument('--family'",
+       "sha256": "5efd072ab74b8e13534808259d7d76ab6a09be55486917c75a9f1422949f3a8c",
+       "line_start": 42,
+       "line_end": 42,
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "file_sha256": "5efd072ab74b8e13534808259d7d76ab6a09be55486917c75a9f1422949f3a8c"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "positive_negative_oracles",
+      "status": "PASS"
+     }
+    }
+   }
+  }
+ ]
+}
