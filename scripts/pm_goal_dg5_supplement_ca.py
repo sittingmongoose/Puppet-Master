@@ -12,10 +12,15 @@ import pm_goal_dg_ca_assignment as AS
 import pm_goal_dg_ca_c2 as C2
 import pm_goal_dg_ca_c2_cases as C2C
 import pm_goal_dg_ca_c4_cases as C4C
+import pm_goal_dg_ca3_cases as C3C
+import pm_goal_dg_ca3_route as R3
 import pm_goal_test_storage as S
 
 C1_SITE = 'dg5/site/pm_goal_dg_ca_c1.py:'
 C2_SITE = 'dg5/site/pm_goal_dg_ca_c2.py:'
+R3_SITE = 'dg5/site/pm_goal_dg_ca3_route.py:'
+N3_SITE = 'dg5/site/pm_goal_dg_ca3_native.py:'
+IX_SITE = 'dg5/site/pm_goal_dg_ca3_index.py:'
 AS_SITE = 'dg5/site/pm_goal_dg_ca_assignment.py:'
 OWNERS_SITE = 'dg5/site/pm_goal_dg_ca_owners.py:'
 MAX_U64 = 2 ** 64 - 1
@@ -1067,3 +1072,218 @@ def cases(suite):
     # receipt_handle type/issuer (:1589/:1590): no family entry reaches receipt_of with a
     # caller handle (publish paths use custody directly); left for DG5's adapter source,
     # whose run already kills :1590 - listed in the handover.
+
+    # ---- batch 9 (helper C): C3 Workflow capture + number sites ----
+    def c3_manual():
+        suite.n += 1
+        w = R3.workflow_world(suite.work / ('c3-%05d' % suite.n))
+        return w, R3.WorkflowCancel(w, state='active')
+
+    def c3_accepted_dispatch():
+        w, r = C3C.wf(suite)
+        req = dict(r.request, return_route_ref=O.uid('TEST_ONLY:return-route'))
+        return w, lambda: r.capture_source(req)
+    add('c3/accepted_dispatch', c3_accepted_dispatch, 'C3/capture_source/accepted_dispatch', R3_SITE + '376')
+
+    def c3_accepted_custody():
+        w, r = C3C.wf(suite)
+        cell = w.storage.cells[w.sir.ACCEPTED][r.request['command_instance_id']]
+        new = copy.deepcopy(cell['value'])
+        new['acceptance_ref'] = O.uid('TEST_ONLY:foreign-acceptance')
+        cell['value'] = new
+        return w, r.capture_source
+    add('c3/accepted_custody', c3_accepted_custody, 'C3/capture_source/accepted_custody', R3_SITE + '377')
+
+    def c3_accepted_operation():
+        w, r = C3C.wf(suite)
+        r.operation_id = O.short_id('op')
+        return w, r.capture_source
+    add('c3/accepted_operation', c3_accepted_operation, 'C3/capture_source/accepted_operation', R3_SITE + '378')
+
+    def c3_sir_epoch():
+        w, r = C3C.wf(suite)
+        w.sir.restart()
+        return w, r.capture_source
+    add('c3/sir_epoch', c3_sir_epoch, 'C3/capture_source/sir_epoch', R3_SITE + '379')
+
+    def c3_retry_conflict():
+        w, r = C3C.until(suite, 'prepare')
+        key = r.key('goal_cancel_source_audit')
+        cell = w.storage.cells['goal_cancel_source_audit'][key]
+        new = copy.deepcopy(cell['value'])
+        new['record']['request']['expected_revision'] += 1
+        cell['value'] = new
+        return w, r.capture_source
+    add('c3/retry_conflict', c3_retry_conflict, 'C3/capture_source/retry_conflict', R3_SITE + '382')
+
+    def c3_permission():
+        w, r = C3C.wf(suite)
+        w.permissions.revoke(r.cancel_decision)
+        return w, r.capture_source
+    add('c3/permission', c3_permission, 'C3/capture_source/permission', R3_SITE + '386')
+
+    def c3_scope():
+        w, r = c3_manual()
+        r.dispatch(r.user_request(goal_id=r.scope['goal_id'] + '\n'))
+        return w, r.capture_source
+    add('c3/scope', c3_scope, 'C3/capture_source/scope', R3_SITE + '391')
+
+    def c3_not_cancelled():
+        w, r = C3C.wf(suite)
+        edit_record(w, w.goal.CONTROL, w.goal.keys(r.scope)['control'], 'cancellation_receipt_ref', 'x')
+        return w, r.capture_source
+    add('c3/not_cancelled', c3_not_cancelled, 'C3/capture_source/not_cancelled', R3_SITE + '393')
+
+    def c3_not_pending():
+        w, r = C3C.wf(suite)
+        edit_record(w, w.goal.CONTROL, w.goal.keys(r.scope)['control'], 'cancellation_pending',
+                    dict(operation_id=O.uid('TEST_ONLY:pending-cancel')))
+        return w, r.capture_source
+    add('c3/not_pending_cancel', c3_not_pending, 'C3/capture_source/not_pending_cancel', R3_SITE + '394')
+
+    def c3_stale_hash():
+        w, r = c3_manual()
+        old = copy.deepcopy(w.goal.body_cell(r.scope)['value']['record'])
+        w.goal.mutate_state(r.scope, 'paused')
+        cur = w.goal.body_cell(r.scope)['value']['record']
+        r.dispatch(r.user_request(expected_revision=cur['revision'],
+                                  expected_currentness_hash=old['currentness_hash']))
+        return w, r.capture_source
+    add('c3/expected_currentness', c3_stale_hash, 'C3/capture_source/expected_currentness', R3_SITE + '396')
+
+    def c3_pending():
+        w, r = C3C.wf(suite)
+        w.goal.reserve_pending(r.scope, w.host_stop.record(r.scope)['user_stop_epoch'])
+        return w, r.capture_source
+    add('c3/pending_unresolved', c3_pending, 'C3/capture_source/pending_unresolved', R3_SITE + '397')
+
+    def c3_binding_pending():
+        w, r = C3C.wf(suite)
+        edit_record(w, w.binding.CONTROL, w.binding.keys(r.scope)['control'], 'pending',
+                    dict(operation_id=O.uid('TEST_ONLY:binding-pending')))
+        return w, r.capture_source
+    add('c3/binding_pending', c3_binding_pending, 'C3/capture_source/binding_pending', R3_SITE + '402')
+
+    def c3_assoc_run():
+        w, r = C3C.wf(suite)
+        edit_binding_revision(w, r, lambda rec: rec.update(active_run_ref=O.short_id('run')))
+        return w, r.capture_source
+    add('c3/association_run', c3_assoc_run, 'C3/association/run', R3_SITE + '351')
+
+    def c3_progress_join():
+        w, r = C3C.until(suite, 'prepare')
+        edit_record(w, 'goal_cancel_progress', r.key('goal_cancel_progress') + ':head', 'snapshot_sha256', '0' * 64)
+        return w, r.prepare
+    add('c3/progress_join', c3_progress_join, 'C3/prepare/progress_join', R3_SITE + '362')
+
+    def c3_source_custody():
+        w, r = C3C.until(suite, 'prepare')
+        r.source = dict(r.source, captured_at='1999-01-01T00:00:00.000Z')
+        return w, r.prepare
+    add('c3/source_custody', c3_source_custody, 'C3/prepare/source_custody', R3_SITE + '491')
+
+    def c3_ack_identity():
+        w, r = C3C.until(suite, 'prepare')
+        cell = w.storage.cells[w.sir.OUTCOME][r.request['command_instance_id']]
+        new = copy.deepcopy(cell['value'])
+        new['record']['identity']['operation_id'] = O.short_id('op')
+        cell['value'] = new
+        return w, r.prepare
+    add('c3/acknowledged_identity', c3_ack_identity, 'C3/prepare/acknowledged_identity', R3_SITE + '587')
+
+    def c3_readiness_goal_argument():
+        w, r = C3C.until(suite, 'latch_and_reserve')
+        r.readiness = dict(r.readiness, goal_argument_sha256='0' * 64)
+        edit_record(w, R3.READINESS, r.readiness_key, 'goal_argument_sha256', '0' * 64)
+        return w, r.latch_and_reserve
+    add('c3/readiness_goal_argument', c3_readiness_goal_argument,
+        'C3/latch_and_reserve/readiness_goal_argument', R3_SITE + '652')
+
+    def c3_latch_no_fence():
+        w, r = C3C.until(suite, 'latch_and_reserve')
+        w.storage.fence = AS.Fence(O.uid('TEST_ONLY:other-op'), w.storage.boot_session)
+        return w, r.latch_and_reserve
+    add('c3/latch_no_fence', c3_latch_no_fence, 'C3/latch_and_reserve/no_fence', R3_SITE + '656')
+
+    def c3_coherent_progress(w, r):
+        cells = w.storage.cells['goal_cancel_progress']
+        cells[r.progress_key(r.progress['progress_epoch'])]['value'] = r.wrap('StorageProgress', r.progress)
+        cells[r.key('goal_cancel_progress') + ':head']['value'] = r.wrap(
+            'StorageProgress', r._head(r.progress['progress_epoch'], r.progress))
+
+    def c3_reseal_readiness(w, r):
+        """Recompute the readiness goal-argument over the edited state (both copies)."""
+        before = r.before_stop_entry('latch_and_reserve')
+        sha = r.h_arg(before)
+        r.readiness = dict(r.readiness, goal_argument_sha256=sha)
+        edit_record(w, R3.READINESS, r.readiness_key, 'goal_argument_sha256', sha)
+
+    def c3_original_stop():
+        w, r = C3C.until(suite, 'latch_and_reserve')
+        edit_record(w, w.host_stop.FAMILY, w.host_stop.key(r.scope), 'last_original_stop_receipt_ref', 'x')
+        c3_reseal_readiness(w, r)
+        return w, r.latch_and_reserve
+    add('c3/original_stop', c3_original_stop, 'C3/latch_and_reserve/original_stop', R3_SITE + '659')
+
+    def c3_original_control():
+        w, r = C3C.until(suite, 'latch_and_reserve')
+        edit_record(w, w.goal.CONTROL, w.goal.keys(r.scope)['control'], 'latest_revision_hash', '0' * 64)
+        c3_reseal_readiness(w, r)
+        return w, r.latch_and_reserve
+    add('c3/original_control', c3_original_control, 'C3/latch_and_reserve/original_control', R3_SITE + '662')
+
+    # C3 number rows (mirror the C1 ceiling constructions)
+    def c3_reseal_source(w, r, field, value):
+        """Edit one captured-source commitment field and reseal source+progress custody."""
+        key = r.key('goal_cancel_source_audit')
+        cell = w.storage.cells['goal_cancel_source_audit'][key]
+        new = copy.deepcopy(cell['value'])
+        new['record'][field] = value
+        cell['value'] = new
+        r.source = copy.deepcopy(new['record'])
+        r.progress = copy.deepcopy(r.progress)
+        r.progress['source_audit_sha256'] = O.row_sha(new)
+        c3_coherent_progress(w, r)
+
+    def c3_stop_max(field, where):
+        def make():
+            w, r = c3_manual()
+            edit_record(w, w.host_stop.FAMILY, w.host_stop.key(r.scope), field, MAX_U64)
+            r.dispatch(r.user_request())
+            r.capture_source()
+            r.prepare()
+            return w, r.latch_and_reserve
+        return make
+
+    def c3_stop_epoch_max():
+        # Editing before capture makes expected_producer refuse at prepare (C4A row);
+        # edit after prepare and reseal the source stop sha + readiness argument instead.
+        w, r = C3C.until(suite, 'latch_and_reserve')
+        edit_record(w, w.host_stop.FAMILY, w.host_stop.key(r.scope), 'user_stop_epoch', MAX_U64)
+        stop_value = w.storage.cells[w.host_stop.FAMILY][w.host_stop.key(r.scope)]['value']
+        c3_reseal_source(w, r, 'original_stop_control_sha256', O.row_sha(stop_value))
+        c3_reseal_readiness(w, r)
+        return w, r.latch_and_reserve
+    add('number/c3_stop_epoch_max', c3_stop_epoch_max,
+        'C3/stop_epoch/numrule/integer_range', 'dg5/C3/stop_epoch/number')
+    add('number/c3_continuation_epoch_max', c3_stop_max('continuation_epoch', None),
+        'C3/continuation_epoch/numrule/integer_range', 'dg5/C3/continuation_epoch/number')
+
+    def c3_progress_max():
+        w, r = C3C.until(suite, 'latch_and_reserve')
+        old = r.progress_key(r.progress['progress_epoch'])
+        r.progress = copy.deepcopy(r.progress)
+        r.progress['progress_epoch'] = MAX_U64
+        cells = w.storage.cells['goal_cancel_progress']
+        cells[r.progress_key(MAX_U64)] = copy.deepcopy(cells[old])
+        c3_coherent_progress(w, r)
+        c3_reseal_readiness(w, r)
+        return w, r.latch_and_reserve
+    add('number/c3_progress_epoch_max', c3_progress_max,
+        'C3/progress_epoch/numrule/integer_range', 'dg5/C3/progress_epoch/number')
+
+    # dg5/C3/control_epoch/number: no case. A control at the uint64 ceiling cannot be
+    # carried through before_stop_entry at latch - its numeric inventory derives
+    # control_epoch+1/+2 domains and the argument canonical refuses out-of-physical-range
+    # (witnessed in smoke: C3/argument/numrule/physical_integer_range) before the latch
+    # increment; at publish the native selector sha refuses earlier. Proof in proofs_ca.
