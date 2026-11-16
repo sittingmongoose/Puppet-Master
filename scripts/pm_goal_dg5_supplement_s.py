@@ -760,3 +760,17 @@ def _(suite):
         native._originals[ref]['raw']))
     native.issue(None, copy.deepcopy(record), kind='birth')
     readers.read_historical(O.sreq(world))
+
+
+# Decode operation size: the row's dataset_name (a plain string in the schema)
+# is padded past the operation limit before the generation suffix, so the
+# wrapper is oversize while its record, identity and commitment joins are the
+# authentic ones. Direct decode entry, as S6's forced-reference cases use.
+@negative('decode_operation_size_dataset_name', 'representation/operation_size', READERS + '472')
+def _(suite):
+    world, projector, readers, gid = make(suite)
+    original = R.original_started(world)
+    cell, logical, gen, row = projector.current_row()
+    value = copy.deepcopy(row['value'])
+    value['dataset_name'] = 'x' * 20000 + '@' + gid
+    projector.rep.decode(value, original, selection_check=False)
