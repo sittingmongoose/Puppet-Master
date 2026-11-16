@@ -35,6 +35,7 @@
 // fail on a composited build, and anything about the guards in 3 and 4 (diagnostics), goes on TOOL-ISSUES.md.
 import { traceWindow } from '../helpers/frame-trace.mjs';
 import { muteSound } from '../helpers/quiet-page.mjs';
+import { usageScrollVerdict } from '../helpers/usage-scroll-verdict.mjs';
 
 const CONTROL = '#panel-usage .pmu-scroll { will-change: auto !important; }';
 
@@ -124,28 +125,10 @@ export default async function (t) {
 			}
 			await trial('');
 			await park();
-			const judged = windows.every((w) => w.scrolls > 0 && w.whole);
-			await t.check(S + 'could judge: the wheel scrolled the board in all four windows and each trace is whole', judged, windows.map((w) => `${w.name} ${w.scrolls} scroll events${w.whole ? '' : ' (' + w.lost.join(', ') + ')'}`).join(', '));
-			if (!judged) continue;
-			const mean = (name, k) => { const v = windows.filter((w) => w.name === name).map((w) => w[k]); return v.reduce((a, b) => a + b, 0) / v.length; };
-			const [bp, cp] = [mean('as built', 'paint'), mean('control', 'paint')];
-			const detail = `as built ${Math.round(bp)} ms/s, control ${Math.round(cp)} ms/s (paint + pre-paint + layerize): ratio ${(bp / Math.max(1, cp)).toFixed(2)}`;
-			// under Reduced Motion a wheel tick is one instant step, not a smooth scroll of several frames: both builds paint about
-			// the same (Alexis Basic Dark: 55 and 56 ms/s), so the ratio is logged there and the layer check above carries the line
-			if (rm) t.log(S + 'Reduced Motion: main-thread paint while scrolling, not judged: ' + detail);
-			else await t.check(S + `main-thread paint while scrolling is at most ${ratio} of the control's`, bp <= ratio * cp, detail);
-			// Chrome's DroppedFrame events count frames that went out on time with a partial update too (the scroll shown, some
-			// main-thread change late): those are logged; the line is drawn on frames that showed nothing new
-			const [bf, cf] = [mean('as built', 'full'), mean('control', 'full')];
-			const [bpa, cpa] = [mean('as built', 'partial'), mean('control', 'partial')];
-			const [bu, cu] = [mean('as built', 'unknown'), mean('control', 'unknown')];
-			const dd = `never presented: as built ${bf.toFixed(1)}/s, control ${cf.toFixed(1)}/s; presented with a partial update: as built ${bpa.toFixed(1)}/s, control ${cpa.toFixed(1)}/s; presentation unknown: as built ${bu.toFixed(1)}/s, control ${cu.toFixed(1)}/s`;
-			// a guard, not a red/green line: on the shared Alexis GPU fully dropped frames halved with the hint in five sessions
-			// out of six and stayed level in one (kit4 fix-s1: 11.1 against 10.1 a second), and two identical windows on
-			// origin/main read 27.4 and 18.6 (kit5 main-s1): the guard catches a hint that makes drops clearly worse
-			await t.check(S + 'guard: frames fully dropped while scrolling at most 1.5 times the control\'s, plus 4 a second', bf <= 1.5 * cf + 4, dd);
-			const [br, cr] = [mean('as built', 'restFrames'), mean('control', 'restFrames')];
-			await t.check(S + 'guard: nothing new runs at rest', br <= cr + 5, `as built ${br.toFixed(1)}, control ${cr.toFixed(1)} rendered main frames a second with the pointer parked`);
+			const verdict = usageScrollVerdict(windows, { ratio, rm });
+			for (const r of verdict.rows) await t.check(S + r.name, r.ok, r.detail);
+			for (const l of verdict.logs) t.log(S + l);
+			for (const w of verdict.warnings) t.log(S + w);
 		}
 		await appCdp.detach().catch(() => {});
 		await cdp.detach().catch(() => {});
