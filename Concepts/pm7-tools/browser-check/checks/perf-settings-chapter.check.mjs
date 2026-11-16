@@ -136,6 +136,7 @@ async function projectRow(t, f, surface) {
 	const a = await f.evaluate(PROJECT_NOW);
 	const b = await f.evaluate((a0) => { const rows = [...document.querySelectorAll('#projectMenu .pm6-tb-menu-item[data-project]')].map((r) => r.dataset.project).filter((p) => p && p !== a0); return rows.includes('harbor') ? 'harbor' : rows[0] || ''; }, a);
 	if (!a || !b) { await t.check(`${surface}: could judge: two Projects in the title bar (${a || '-'}, ${b || '-'})`, false, 'no second Project'); return; }
+	await f.evaluate(PROBE);
 	await f.locator('#pm-settings-root .domain-link[data-domain="general"]').first().click(); await t.page.waitForTimeout(2500);
 	await f.evaluate(ARM_SWITCH, b);
 	await press(t, f, 'code');
@@ -148,8 +149,9 @@ async function projectRow(t, f, surface) {
 	await t.page.waitForTimeout(1500);
 	await f.evaluate((p) => { const r = document.querySelector(`#projectMenu .pm6-tb-menu-item[data-project="${p}"]`); if (r) r.click(); }, a);
 	await t.page.waitForTimeout(2500);
-	const back = await f.evaluate(() => (document.querySelector('#pm-settings-root .domain-link.active') || {}).dataset?.domain || '');
-	await t.check(`${surface}: back in ${a}, Settings is on Code & Tools`, back === 'code', `on ${back || 'Home'}`);
+	/* a Project reload opens Settings on its Home (the saved record keeps no "home"); the chapter it keeps is its place */
+	const back = await f.evaluate(() => (window.PM12_KIMI && PM12_KIMI.getState ? PM12_KIMI.getState().domain : '') || '');
+	await t.check(`${surface}: back in ${a}, Settings' place is Code & Tools`, back === 'code', `its place is ${back || 'none'}`);
 }
 
 export const tests = {};
