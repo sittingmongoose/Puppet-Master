@@ -902,7 +902,7 @@
       "event_type": "browser.script.compile_started",
       "family_id": "event-family-browser-script-compile-started",
       "family_revision": "1.0.0",
-      "admission_status": "prepared_not_admitted",
+      "admission_status": "admitted_static_contract",
       "semantic_owner_ref": "Plans/Section15_MVP_Promoted_Features_Spec.md#browser-program-event-authority-script-compile-started",
       "producer_component": "BrowserRuntimeService.compiler",
       "producer_admission": "Only the scoped ordinary BrowserRuntimeService owner may publish after the stated transition commits; Client clicks, cached projections, adapters and protected authentication are not producers.",
@@ -943,7 +943,8 @@
       "recovery_rule": "Rebuild projections from deduplicated retained facts and revalidate current owner scope/generation/lease before any new action. No restore of live browser process or authority, no silent retargeting, no retry of unknown effects.",
       "redaction_rule": "Closed metadata-only payload; reject unhandled secrets and protected-auth identities/content. No page/source/DOM text, query bodies, cookies, storage state, credentials, endpoints, inline screenshots/video, or arbitrary output fields. Referenced artifacts keep their own redaction gate.",
       "validation_case_id": "browser_event_script_compile_started",
-      "runtime_producer_status": "unimplemented_not_proven"
+      "runtime_producer_status": "unimplemented_not_proven",
+      "authority_contract_ref": "Plans/storage-plan.md#SP-2515"
     },
     {
       "event_type": "browser.script.compiled",

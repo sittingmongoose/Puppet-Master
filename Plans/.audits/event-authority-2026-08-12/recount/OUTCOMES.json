@@ -256,6 +256,10 @@
    "outcome": "registered"
   },
   {
+   "event_type": "browser.script.compile_started",
+   "outcome": "registered"
+  },
+  {
    "event_type": "discovery.backpressure",
    "outcome": "registered"
   },
