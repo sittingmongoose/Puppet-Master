@@ -736,10 +736,23 @@ def main():
     assert refs == [event['event_ref'] for event in events]
     observations.append(dict(name='complete_1000_match_traversal', expected=[], actual=[]))
     result = dict(status='pass', event_type=family['event_type'], cases=len(observations) + boundary_count, boundary_cases=boundary_count,
-                  admission='ABSENT', native='NOT_RUN', isolation='PENDING_SHARED_TOOL', observations=observations)
+                  admission=admission_label(family['event_type']), native='NOT_RUN', isolation='PENDING_SHARED_TOOL', observations=observations)
     if args.output:
         Path(args.output).write_text(json.dumps(result, indent=2) + '\n')
     print(json.dumps({k: v for k, v in result.items() if k != 'observations'}, indent=2))
+
+
+def admission_label(event_type):
+    """The result's admission label, record-guarded (PNC-019 stream E; scripts/pm_ea_admission_mode.py lane_gate).
+
+    ABSENT while the family is prepared (unregistered, no record); RECORD_BOUND when it is registered as its exact,
+    complete DL-077 admission. Any other state (registered without its record, a record that does not match, a record
+    without its registration) fails the run, naming the admission-mode code. No grade verdict changes.
+    """
+    import pm_ea_admission_mode as admission_mode
+    summary, failures = admission_mode.lane_gate([event_type], root=ROOT)
+    assert not failures, ('admission mode refused', failures)
+    return 'RECORD_BOUND' if summary['counts']['admitted'] else 'ABSENT'
 
 
 if __name__ == '__main__':

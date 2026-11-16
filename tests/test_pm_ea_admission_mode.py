@@ -419,6 +419,10 @@ LANE_CASES = [
      lambda fn, et, root, reg: fn(et, reg) == 0, None),
     ("DCW", "scripts/pm_dcw_event_oracles.py", "admission_report", "wizard.blocked",
      lambda fn, et, root, reg: _accepts(fn, [et]), None),
+    ("DG6A-card5", "scripts/pm-card5-event-contracts-check.py", "admission_label", "bundle.note_created",
+     lambda fn, et, root, reg: _accepts(fn, et), None),
+    ("DR", "scripts/pm-runtime-artifact-event-drafts.py", "admission_report", "runtime_artifact.screenshot",
+     lambda fn, et, root, reg: (lambda failures: (fn([et], failures), failures)[1] == [])([]), None),
     ("DC", "scripts/pm_collaboration_events.py", "admission_mode_failures", "collaboration.created",
      lambda fn, et, root, reg: fn(root, [et] if any(f["event_type"] == et for f in reg["families"]) else []) == [], _dc_extra),
 ]
