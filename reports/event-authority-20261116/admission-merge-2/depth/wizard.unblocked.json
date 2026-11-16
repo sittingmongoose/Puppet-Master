@@ -1,0 +1,446 @@
+{
+ "schema_id": "pm.assurance.event_authority.admission_depth_assessment.v1",
+ "assessment_kind": "admission_twelve_criteria",
+ "writer": "pm-ea-admission-writer.v1",
+ "merge": "admission-merge-2",
+ "registry": {
+  "path": "Plans/event_family_registry.json",
+  "revision": "2026-11-16.296",
+  "sha256": "cfa10c4f1f5f5d303e9d209aae38b1628a8a5c9943f1ba952526e373f3efa02b",
+  "family_count": 515,
+  "row_pointer": "#/families/514"
+ },
+ "base_commit": "45b4ccf25270c486dbc682805cd455ce4ca25fb0",
+ "rubric": "Step 8 depth matrix, twelve criteria (DL-077); PASS needs Plans/ evidence",
+ "native_execution": "NOT_RUN",
+ "rows": [
+  {
+   "event_type": "wizard.unblocked",
+   "family_id": "event-family-wizard-unblocked",
+   "family_revision": "1.0.0",
+   "cells": {
+    "membership_version": {
+     "status": "PASS",
+     "representation": "exact_registry_membership",
+     "finding": "Registered at registry revision 2026-11-16.296 as #/families/514 (canonical row SHA-256 a0a8872b36095114b6439cf24ae6569f8f07f8c8c7e4ae6de9d593c11348c68a); before this commit the family was absent.",
+     "evidence": [
+      {
+       "path": "Plans/event_family_registry.json",
+       "json_pointer": "#/families/514",
+       "line_start": 33361,
+       "line_end": 33402,
+       "quote": "\"event_type\": \"wizard.unblocked\"",
+       "quote_line": 33364,
+       "file_sha256": "cfa10c4f1f5f5d303e9d209aae38b1628a8a5c9943f1ba952526e373f3efa02b",
+       "quote_check": "exact"
+      }
+     ]
+    },
+    "owner_doc": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "CV-597 applies DL-432 to the current PlanningRun owner PWIZ-002 and preserves CV-234; the retired Chain Wizard is not restored.",
+     "evidence": [
+      {
+       "path": "Plans/Contracts_V0.md",
+       "unit": "CV-597",
+       "line_start": 43082,
+       "line_end": 43083,
+       "quote": "Semantic owner is current\\\n  \\ Plans/Planning_Wizard.md#PWIZ-002,",
+       "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a",
+       "quote_check": "exact",
+       "quote_scope": "unit CV-597, Plans/Contracts_V0.md:43073-43295"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "owner_doc",
+      "status": "PASS"
+     }
+    },
+    "producer": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "CV-597 names the responsible planning observer and exact SP-286/CV-339 full-value v2 source/append/receipt/publication order.",
+     "evidence": [
+      {
+       "path": "Plans/Contracts_V0.md",
+       "unit": "CV-597",
+       "line_start": 43104,
+       "line_end": 43105,
+       "quote": "Producer emitter.wizard_unblocked@1.0.0\\\n  \\ is the responsible Planning Wizard component's observer of its original",
+       "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a",
+       "quote_check": "exact",
+       "quote_scope": "unit CV-597, Plans/Contracts_V0.md:43073-43295"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "producer",
+      "status": "PASS"
+     }
+    },
+    "closed_payload_schema": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "CV-597 names this family's own required-present closed schema and exact version; originals, physical source wrappers and payload references are separate.",
+     "evidence": [
+      {
+       "path": "Plans/Contracts_V0.md",
+       "unit": "CV-597",
+       "line_start": 43097,
+       "line_end": 43098,
+       "quote": "All properties of Plans/event_payloads/planning_wizard/wizard_unblocked.schema.json\\\n  \\ are required-present, root",
+       "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a",
+       "quote_check": "exact",
+       "quote_scope": "unit CV-597, Plans/Contracts_V0.md:43073-43295"
+      },
+      {
+       "path": "Plans/event_payloads/planning_wizard/wizard_unblocked.schema.json",
+       "unit": "root",
+       "line_start": 5,
+       "line_end": 5,
+       "quote": "\"additionalProperties\": false,",
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "file_sha256": "ce43d4a995fca1da5597acf07d1343234787a56bccababe37a7e63e6ecee6925"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "closed_payload_schema",
+      "status": "PASS"
+     }
+    },
+    "scope_identity": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "CV-597 binds the real Project, whole PlanningRun/episode/observation and exact string-only identity; nullable thread context does not select the subject.",
+     "evidence": [
+      {
+       "path": "Plans/Contracts_V0.md",
+       "unit": "CV-597",
+       "line_start": 43121,
+       "line_end": 43121,
+       "quote": "NEW identity recipe",
+       "quote_check": "exact",
+       "quote_scope": "unit CV-597, Plans/Contracts_V0.md:43073-43295",
+       "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "scope_identity",
+      "status": "PASS"
+     }
+    },
+    "replay_idempotency": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "CV-597 freezes producer semantic inputs, excludes assigned Storage metadata, resolves original receipts on retry and refuses replay-only current append/retry.",
+     "evidence": [
+      {
+       "path": "Plans/Contracts_V0.md",
+       "unit": "CV-597",
+       "line_start": 43127,
+       "line_end": 43128,
+       "quote": "Retry compares exactly the producer-owned semantic fields enumerated\\\n  \\ by CV-339: event_type, scope_kind, project_id,",
+       "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a",
+       "quote_check": "exact",
+       "quote_scope": "unit CV-597, Plans/Contracts_V0.md:43073-43295"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "replay_idempotency",
+      "status": "PASS"
+     }
+    },
+    "retention": {
+     "status": "PASS",
+     "representation": "integrated_retention_delta",
+     "finding": "Current exact-family BOUND retention assignment: {\"application_policy_ref\": null, \"decisions\": [\"DL-401\"], \"event_type\": \"wizard.unblocked\", \"existing_checkpoints\": [], \"grade_source\": \"reports/event-authority-20261104/DCW.self-grade.json\", \"history_policy_ref\": \"RP-AUTHORITY-INDEFINITE@1.0.0\", \"lane\": \"DCW\", \"original_and_checkpoint_assignments\": [], \"owner\": \"Plans/Contracts_V0.md#CV-597\", \"owner_line\": 39752, \"prior_finding\": \"Event history remains PENDING_RETENTION_DECISION with the exact question. Original source audit custody uses existing RP-AUTHORITY-INDEFINITE; receipt/index/checkpoint policies are explicitly retained.\", \"question\": null, \"status\": \"BOUND\"}",
+     "evidence": [
+      {
+       "path": "Plans/Contracts_V0.md",
+       "unit": "CV-597",
+       "line_start": 43248,
+       "line_end": 43248,
+       "quote": "Event history `retention_policy_ref = RP-AUTHORITY-INDEFINITE@1.0.0`, under DL-401.\\n\\nUse the existing\\",
+       "quote_check": "exact",
+       "quote_scope": "unit CV-597, Plans/Contracts_V0.md:43073-43295",
+       "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "retention",
+      "status": "PASS"
+     }
+    },
+    "redaction_custody": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "CV-597 closes original observation/attempt/action/route/receipt joins, ref-only disclosure, current access/deletion, coherent backup and admitted restore inventories.",
+     "evidence": [
+      {
+       "path": "Plans/Contracts_V0.md",
+       "unit": "CV-597",
+       "line_start": 43159,
+       "line_end": 43160,
+       "quote": "NEW original custody source wizard_unblocked_evidence\\\n  \\ is materialized in Plans/storage_value_registry.json under",
+       "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a",
+       "quote_check": "exact",
+       "quote_scope": "unit CV-597, Plans/Contracts_V0.md:43073-43295"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "redaction_custody",
+      "status": "PASS"
+     }
+    },
+    "transitions": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "CV-597 enforces the approved whole-run blockage/clearance predicate, authenticated same-episode predecessor chain and current writer CAS without reviving a three-round trigger.",
+     "evidence": [
+      {
+       "path": "Plans/Contracts_V0.md",
+       "unit": "CV-597",
+       "line_start": 43142,
+       "line_end": 43143,
+       "quote": "The planning component's immutable\\\n  \\ conditions_cleared observation identifies the complete required conditions",
+       "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a",
+       "quote_check": "exact",
+       "quote_scope": "unit CV-597, Plans/Contracts_V0.md:43073-43295"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "transitions",
+      "status": "PASS"
+     }
+    },
+    "consumers_checkpoints": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "CV-597 names its passive reader and adopts the existing exact SP-278 projector/reader/checkpoint with complete mixed-source coverage, CAS and DL-076 token shape.",
+     "evidence": [
+      {
+       "path": "Plans/Contracts_V0.md",
+       "unit": "CV-597",
+       "line_start": 43193,
+       "line_end": 43194,
+       "quote": "NEW passive operating consumer\\\n  \\ reader.wizard_unblocked_history@1.0.0 selects only wizard.unblocked at this exact",
+       "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a",
+       "quote_check": "exact",
+       "quote_scope": "unit CV-597, Plans/Contracts_V0.md:43073-43295"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "consumers_checkpoints",
+      "status": "PASS"
+     }
+    },
+    "compatibility_withdrawal": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "PASS: current caller admission stays separate from authenticated original dispatch and passive replay policy. occurred_at_utc and family ts use pm_event_datetime.date_time with the EventRecord profile; Storage observed_at_utc and persisted_at_utc use storage_utc_z. SP-1101 selects those profiles for a retained original. Native original authentication remains NOT_RUN.",
+     "evidence": [
+      {
+       "path": "Plans/Contracts_V0.md",
+       "unit": "CV-597",
+       "line_start": 43218,
+       "line_end": 43218,
+       "quote": "Compatibility/withdrawal for wizard.unblocked alone: dispatch only explicitly supported exact family/schema/version;",
+       "quote_check": "exact",
+       "quote_scope": "unit CV-597, Plans/Contracts_V0.md:43073-43295",
+       "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a"
+      },
+      {
+       "path": "Plans/Contracts_V0.md",
+       "unit": "CV-597",
+       "line_start": 43190,
+       "line_end": 43191,
+       "quote": "Under CV-1101, ts and occurred_at_utc use pm_event_datetime.date_time with the EventRecord\\\n  \\ profile; under CV-253,",
+       "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a",
+       "quote_check": "exact",
+       "quote_scope": "unit CV-597, Plans/Contracts_V0.md:43073-43295"
+      },
+      {
+       "path": "scripts/pm_dcw_blockage_events.py",
+       "unit": "envelope",
+       "line_start": 24,
+       "line_end": 24,
+       "quote": "m.check_schema('Plans/event_record.schema.json', event)",
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "file_sha256": "73eb3f227285478168f9bee9265ecc1ebba9c09f7876d317498d09a3cf064771"
+      },
+      {
+       "path": "scripts/pm_dcw_event_oracles.py",
+       "unit": "require_storage_timestamps",
+       "line_start": 853,
+       "line_end": 853,
+       "quote": "event_datetime.date_time(item, profile=event_datetime.STORAGE_UTC_Z)",
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "file_sha256": "2ce4e1853f47c0821dd5676298dbeff2766eb5080bc5eb2e391502d661146599"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "compatibility_withdrawal",
+      "status": "PASS"
+     }
+    },
+    "positive_negative_oracles": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "PASS (C12-DCW): all 234 named rows this family reaches run on the gated tool 004bdedd63 (lane-wide 380/394 proved; the 14 by-construction rows sit alone in their own tables with executable entailment attempts). At the complete boundary each reached row has a lane witness refused first there and accepted by the unchanged complete checker with only that row disabled, or a checked implication (by_construction 6, complete_boundary_reclassified 11, cut_accepts 180, entailed 17, precondition 20). The whole-definition OE001 schema ledger has 24007 exact kills and 10368 INVALID proposals over 19 real check_schema sites, plus 5022 exact kills from path-novel controls beyond the per-site cap; every reachable clause is witnessed with OE001 cut and restoration, witnessed at the same site in another family with identical schema pins, or vacuous (witnessed 1729, witnessed_by_shared_site 13, witnessed_supplement 66); keyword independence is not claimed. Lane-wide copy-join inventory, 193 two-copy rows: 91 have each copy changed alone and refused first there, 76 have the second copy located and pinned by named earlier joins (checked), 24 carry written dispositions (derived, configuration or legacy-callback copies) and 2 are by-construction rows. Retained reads select only the sealed original store and leave it unchanged (34/34 exact). Shared numbers and date-time profiles run at every DCW boundary (EventRecord; storage_utc_z for Storage-assigned times; acknowledged_at_utc EventRecord per E5-2). New row O234 refuses unverified compaction translations. Native campaigns remain NOT_RUN.",
+     "evidence": [
+      {
+       "path": "Plans/Contracts_V0.md",
+       "unit": "CV-597",
+       "line_start": 43097,
+       "line_end": 43098,
+       "quote": "All properties of Plans/event_payloads/planning_wizard/wizard_unblocked.schema.json\\\n  \\ are required-present, root",
+       "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a",
+       "quote_check": "exact",
+       "evidence_role": "Exact canonical subject of the existing whole-definition oracle proof; test execution evidence remains the separately cited scripts.",
+       "quote_scope": "unit CV-597, Plans/Contracts_V0.md:43073-43295"
+      },
+      {
+       "path": "scripts/pm_dcw_event_oracles.py",
+       "unit": "index_read",
+       "line_start": 482,
+       "line_end": 482,
+       "quote": "guard_rows.enforce('O234', {'site': 'O234', 'code': 'index_translation_unverified', 'v0': generation['translation']})",
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "file_sha256": "2ce4e1853f47c0821dd5676298dbeff2766eb5080bc5eb2e391502d661146599"
+      },
+      {
+       "path": "scripts/pm_dcw_c12.py",
+       "unit": "schema ledger",
+       "line_start": 395,
+       "line_end": 395,
+       "quote": "EXPECTED = ['refused', 'OE001', 'schema']",
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "file_sha256": "2d9cbb9fe1b5e5972385081249e53948bf86d0ec411c47ce3310e279eddb4631"
+      },
+      {
+       "path": "scripts/pm_dcw_c12.py",
+       "unit": "schema ledger",
+       "line_start": 439,
+       "line_end": 439,
+       "quote": "killed=after_cut == ['accepted'] and restored == EXPECTED)",
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "file_sha256": "2d9cbb9fe1b5e5972385081249e53948bf86d0ec411c47ce3310e279eddb4631"
+      },
+      {
+       "path": "scripts/pm_dcw_c12_boundary.py",
+       "unit": "classify",
+       "line_start": 72,
+       "line_end": 72,
+       "quote": "return dict(status='complete_boundary', first=first, cut=single)",
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "file_sha256": "3b42dc9b8ac59d77a40ce6e37290dc6cff7fec003a37f35c30fe9b580937b6a8"
+      },
+      {
+       "path": "scripts/pm_dcw_c12_implications.py",
+       "unit": "check",
+       "line_start": 147,
+       "line_end": 147,
+       "quote": "entry['status'] = 'pass' if chains and all(set(claim['by']) & set(c) for c in chains) else 'fail'",
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "file_sha256": "101ef9b2ba3f4cdafa35e7880ae4834b42429d9cf397154f6fedfb1d684af120"
+      },
+      {
+       "path": "scripts/pm_dcw_c12_retained.py",
+       "unit": "observe",
+       "line_start": 222,
+       "line_end": 222,
+       "quote": "assert row['store_unchanged'] and row['caller_unchanged'], row",
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "file_sha256": "30f97e20d1e1bcaa57281c10f9b0933b9481727af2d346eaa413765b32623262"
+      },
+      {
+       "path": "scripts/pm_dcw_c12_datetime.py",
+       "unit": "field_profile",
+       "line_start": 50,
+       "line_end": 50,
+       "quote": "return dt.STORAGE_UTC_Z if storage else dt.EVENT_RECORD",
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "file_sha256": "2b54ba8612ef5b3b6340b6ccd8faf674f372e204cc77c5eddd95e25f03520501"
+      },
+      {
+       "path": "scripts/pm_dcw_c12_entailments.py",
+       "unit": "run_spec",
+       "line_start": 185,
+       "line_end": 185,
+       "quote": "ok = all(a['first_is_earlier'] and not a['row_refused_first'] and a['backstop_refuses'] for a in attempts)",
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "file_sha256": "f96d834622f3920fcb5b15aba3cb43539b20d8f6f59e0bac260c6b3979ded6e2"
+      },
+      {
+       "path": "scripts/pm_dcw_c12_cases.py",
+       "unit": "wizard.unblocked",
+       "line_start": 115,
+       "line_end": 115,
+       "quote": "yield witness('B063', 'wizard.unblocked', None, base('wizard.unblocked'), subclass_items,",
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "file_sha256": "c86a50adbde2a1e924d71d3cb62ba0b6a26d589331e267099fe5728d71adf39c"
+      },
+      {
+       "path": "scripts/pm_dcw_c12_cases.py",
+       "unit": "wizard.unblocked",
+       "line_start": 135,
+       "line_end": 135,
+       "quote": "yield witness('B093', 'wizard.unblocked', None, base('wizard.unblocked'), newer_dependency, 'restore_older_only', 'publish')",
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "file_sha256": "c86a50adbde2a1e924d71d3cb62ba0b6a26d589331e267099fe5728d71adf39c"
+      },
+      {
+       "path": "scripts/pm_dcw_c12_cases.py",
+       "unit": "wizard.unblocked",
+       "line_start": 362,
+       "line_end": 362,
+       "quote": "yield witness('B019', 'wizard.unblocked', None, base('wizard.unblocked'), second_unblock, 'blocked_original', 'append')",
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "file_sha256": "c86a50adbde2a1e924d71d3cb62ba0b6a26d589331e267099fe5728d71adf39c"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "positive_negative_oracles",
+      "status": "PASS"
+     }
+    }
+   }
+  }
+ ]
+}

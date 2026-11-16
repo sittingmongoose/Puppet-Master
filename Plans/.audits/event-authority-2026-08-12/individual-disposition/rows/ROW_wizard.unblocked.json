@@ -2,68 +2,68 @@
   "event_type": "wizard.unblocked",
   "bucket": "confirmed_persisted_unregistered",
   "july_classification": "confirmed_persisted_unregistered",
-  "disposition": "KEEP_QUARANTINED",
-  "disposition_rationale": "Plans/Decision_Log.md#DL-039: genuine J248-VETO-BATCH-252 CONFIRM_ALL_QUARANTINE_NO_ADMIT, recorded by Jared 2026-09-11T00:49:25.665050+00:00, applied 2026-09-11T15:12:51.572607+00:00 to wizard.unblocked. Interim KEEP_QUARANTINED: counted in the working denominator, not live-registered. Supersedes the forged 2026-08-12 application claim; retained evidence supplies no new authority or depth closure. This exact row remains for the owner-batched registered/excluded/decision-card campaign.",
+  "disposition": "KEEP_REGISTERED",
+  "disposition_rationale": "Plans/Decision_Log.md#DL-039: genuine J248-VETO-BATCH-252 CONFIRM_ALL_QUARANTINE_NO_ADMIT, recorded by Jared 2026-09-11T00:49:25.665050+00:00, applied 2026-09-11T15:12:51.572607+00:00 to wizard.unblocked. Interim KEEP_QUARANTINED: counted in the working denominator, not live-registered. Supersedes the forged 2026-08-12 application claim; retained evidence supplies no new authority or depth closure. This exact row remains for the owner-batched registered/excluded/decision-card campaign. Registered at registry revision 2026-11-16.296 in admission merge 2 under DL-078, DL-096 and DL-400 (decision Plans/Decision_Log.md#DL-2432); DL-077 admission record reports/event-authority-20260911/admission-records/wizard.unblocked.json. Disposition KEEP_QUARANTINED -> KEEP_REGISTERED, evidence cells membership_version, owner_doc, producer, closed_payload_schema, scope_identity, replay_idempotency, retention, redaction_custody, transitions, consumers_checkpoints, compatibility_withdrawal, positive_negative_oracles projected with twelve PASS cells from the family's admission depth assessment reports/event-authority-20261116/admission-merge-2/depth/wizard.unblocked.json (sha256 5c04873881bb17f0a5925b9704d48a7b68ef062b35b8040003e5ae344f4b902d); bucket, cohort pins, July classification and every other field are unchanged; no seal or owner choice.",
   "evidence": {
     "owner_doc": {
-      "status": "OWNER_REQUIRED",
-      "citation": null,
-      "note": "No checked citation explicitly designates the semantic Event Authority owner for `wizard.unblocked`; storage or projection ownership is not treated as event ownership."
+      "status": "PASS",
+      "citation": "Plans/Contracts_V0.md:43082-43083",
+      "note": "CV-597 applies DL-432 to the current PlanningRun owner PWIZ-002 and preserves CV-234; the retired Chain Wizard is not restored."
     },
     "producer": {
       "status": "PASS",
-      "citation": "Plans/Wiring_Matrix.md:276-281",
-      "note": "The blocked/unblocked wiring section explicitly names `wizard.unblocked` and designates the executor/orchestrator blocked-state manager as producer."
+      "citation": "Plans/Contracts_V0.md:43104-43105",
+      "note": "CV-597 names the responsible planning observer and exact SP-286/CV-339 full-value v2 source/append/receipt/publication order."
     },
     "membership_version": {
-      "status": "OWNER_REQUIRED",
-      "citation": null,
-      "note": "No checked citation gives `wizard.unblocked` an immutable versioned registry membership or withdrawal generation."
+      "status": "PASS",
+      "citation": "Plans/event_family_registry.json:33361-33402",
+      "note": "Registered at registry revision 2026-11-16.296 as #/families/514 (canonical row SHA-256 a0a8872b36095114b6439cf24ae6569f8f07f8c8c7e4ae6de9d593c11348c68a); before this commit the family was absent."
     },
     "closed_payload_schema": {
-      "status": "OWNER_REQUIRED",
-      "citation": null,
-      "note": "The checked sources provide a minimum payload for `wizard.unblocked`, not a closed event-specific payload schema with additional-property, nullability, and enum rules fully bounded."
+      "status": "PASS",
+      "citation": "Plans/Contracts_V0.md:43097-43098; Plans/event_payloads/planning_wizard/wizard_unblocked.schema.json:5",
+      "note": "CV-597 names this family's own required-present closed schema and exact version; originals, physical source wrappers and payload references are separate."
     },
     "scope_identity": {
-      "status": "OWNER_REQUIRED",
-      "citation": null,
-      "note": "Identifiers appear in the documented minimum payload for `wizard.unblocked`, but no checked field-local clause fixes the EventRecord `scope_kind` and complete identity/nullability rules for this event."
+      "status": "PASS",
+      "citation": "Plans/Contracts_V0.md:43121",
+      "note": "CV-597 binds the real Project, whole PlanningRun/episode/observation and exact string-only identity; nullable thread context does not select the subject."
     },
     "replay_idempotency": {
-      "status": "OWNER_REQUIRED",
-      "citation": null,
-      "note": "No checked field-local citation selects `wizard.unblocked`'s replay policy and idempotency identity; generic EventRecord options cannot select an event-specific value by inference."
+      "status": "PASS",
+      "citation": "Plans/Contracts_V0.md:43127-43128",
+      "note": "CV-597 freezes producer semantic inputs, excludes assigned Storage metadata, resolves original receipts on retry and refuses replay-only current append/retry."
     },
     "retention": {
-      "status": "OWNER_REQUIRED",
-      "citation": null,
-      "note": "No checked citation assigns an event-specific retention, compaction, or tombstone rule for `wizard.unblocked`."
+      "status": "PASS",
+      "citation": "Plans/Contracts_V0.md:43248",
+      "note": "Current exact-family BOUND retention assignment: {\"application_policy_ref\": null, \"decisions\": [\"DL-401\"], \"event_type\": \"wizard.unblocked\", \"existing_checkpoints\": [], \"grade_source\": \"reports/event-authority-20261104/DCW.self-grade.json\", \"history_policy_ref\": \"RP-AUTHORITY-INDEFINITE@1.0.0\", \"lane\": \"DCW\", \"original_and_checkpoint_assignments\": [], \"owner\": \"Plans/Contracts_V0.md#CV-597\", \"owner_line\": 39752, \"prior_finding\": \"Event history remains PENDING_RETENTION_DECISION with the exact question. Original source audit custody uses existing RP-AUTHORITY-INDEFINITE; receipt/index/checkpoint policies are explicitly retained.\", \"question\": null, \"status\": \"BOUND\"}"
     },
     "redaction_custody": {
-      "status": "OWNER_REQUIRED",
-      "citation": null,
-      "note": "No checked citation closes `wizard.unblocked`'s redaction profile, sensitive-field treatment, and custody authority."
+      "status": "PASS",
+      "citation": "Plans/Contracts_V0.md:43159-43160",
+      "note": "CV-597 closes original observation/attempt/action/route/receipt joins, ref-only disclosure, current access/deletion, coherent backup and admitted restore inventories."
     },
     "transitions": {
-      "status": "OWNER_REQUIRED",
-      "citation": null,
-      "note": "The checked sources describe `wizard.unblocked`'s occurrence and minimum fields but do not provide a complete legal predecessor/successor state machine for this exact event."
+      "status": "PASS",
+      "citation": "Plans/Contracts_V0.md:43142-43143",
+      "note": "CV-597 enforces the approved whole-run blockage/clearance predicate, authenticated same-episode predecessor chain and current writer CAS without reviving a three-round trigger."
     },
     "consumers_checkpoints": {
-      "status": "OWNER_REQUIRED",
-      "citation": "Plans/Wiring_Matrix.md:276-281",
-      "note": "The citation explicitly names Run Graph, assistant-chat, dashboard, and storage projection consumers for `wizard.unblocked`, but does not define their atomic success/failure checkpoint behavior; the combined obligation remains open."
+      "status": "PASS",
+      "citation": "Plans/Contracts_V0.md:43193-43194",
+      "note": "CV-597 names its passive reader and adopts the existing exact SP-278 projector/reader/checkpoint with complete mixed-source coverage, CAS and DL-076 token shape."
     },
     "compatibility_withdrawal": {
-      "status": "OWNER_REQUIRED",
-      "citation": null,
-      "note": "No checked citation defines event-specific compatibility, migration, alias normalization, and withdrawal behavior for `wizard.unblocked` as a versioned member."
+      "status": "PASS",
+      "citation": "Plans/Contracts_V0.md:43218; Plans/Contracts_V0.md:43190-43191; scripts/pm_dcw_blockage_events.py:24; scripts/pm_dcw_event_oracles.py:853",
+      "note": "PASS: current caller admission stays separate from authenticated original dispatch and passive replay policy. occurred_at_utc and family ts use pm_event_datetime.date_time with the EventRecord profile; Storage observed_at_utc and persisted_at_utc use storage_utc_z. SP-1101 selects those profiles for a retained original. Native original authentication remains NOT_RUN."
     },
     "positive_negative_oracles": {
-      "status": "OWNER_REQUIRED",
-      "citation": null,
-      "note": "The checked sources do not supply both positive emission and negative non-emission/rejection oracles for `wizard.unblocked` across required boundary cases."
+      "status": "PASS",
+      "citation": "Plans/Contracts_V0.md:43097-43098; scripts/pm_dcw_event_oracles.py:482; scripts/pm_dcw_c12.py:395; scripts/pm_dcw_c12.py:439; scripts/pm_dcw_c12_boundary.py:72; scripts/pm_dcw_c12_implications.py:147; scripts/pm_dcw_c12_retained.py:222; scripts/pm_dcw_c12_datetime.py:50; scripts/pm_dcw_c12_entailments.py:185; scripts/pm_dcw_c12_cases.py:115; scripts/pm_dcw_c12_cases.py:135; scripts/pm_dcw_c12_cases.py:362",
+      "note": "PASS (C12-DCW): all 234 named rows this family reaches run on the gated tool 004bdedd63 (lane-wide 380/394 proved; the 14 by-construction rows sit alone in their own tables with executable entailment attempts). At the complete boundary each reached row has a lane witness refused first there and accepted by the unchanged complete checker with only that row disabled, or a checked implication (by_construction 6, complete_boundary_reclassified 11, cut_accepts 180, entailed 17, precondition 20). The whole-definition OE001 schema ledger has 24007 exact kills and 10368 INVALID proposals over 19 real check_schema sites, plus 5022 exact kills from path-novel controls beyond the per-site cap; every reachable clause is witnessed with OE001 cut and restoration, witnessed at the same site in another family with identical schema pins, or vacuous (witnessed 1729, witnessed_by_shared_site 13, witnessed_supplement 66); keyword independence is not claimed. Lane-wide copy-join inventory, 193 two-copy rows: 91 have each copy changed alone and refused first there, 76 have the second copy located and pinned by named earlier joins (checked), 24 carry written dispositions (derived, configuration or legacy-callback copies) and 2 are by-construction rows. Retained reads select only the sealed original store and leave it unchanged (34/34 exact). Shared numbers and date-time profiles run at every DCW boundary (EventRecord; storage_utc_z for Storage-assigned times; acknowledged_at_utc EventRecord per E5-2). New row O234 refuses unverified compaction translations. Native campaigns remain NOT_RUN."
     }
   },
   "citations_checked": [
