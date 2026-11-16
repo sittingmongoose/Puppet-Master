@@ -1040,9 +1040,15 @@ def install_u_entries(module):
         'PlanBindingOwner': ('bind', 'advance_epoch', 'conflict', 'current'),
         'ChatOwner': ('post', 'read'),
         'LifecycleOwner': ('change',),
-        'UpdateSourceOwner': ('capture', 'read_audit', 'read_input_content'),
+        'UpdateSourceOwner': ('capture', 'read_audit', 'read_input_content', 'advance'),
         'UpdateProducer': ('freeze', 'publish'),
-        'EventInspector': ('inspect',),
+        'EventInspector': ('inspect', 'request_for'),
+        # The command composition's own guard sites (:2087/:2089 and the cancel twin) sit in
+        # GoalUpdateCommand.commit/cancel_before_body, which authored negatives call directly
+        # (U5/G/command_reservation_missing, U5/G/reserved_control_commitment,
+        # U5/G/cancel_reservation_missing); without entries those complete calls were never judged.
+        # Nested calls from command.run stay inside these entries exactly as body.commit did.
+        'GoalUpdateCommand': ('commit', 'cancel_before_body'),
     }
     for class_name, methods in entries.items():
         cls = getattr(module, class_name)
@@ -1055,7 +1061,7 @@ def install_u_entries(module):
                     if ACTIVE[0] or PARENT_CALL[0] or CASE[0] is None:
                         return original(self, *args, **kwargs)
                     case = CASE[0]
-                    world = self.world
+                    world = getattr(self, 'world', None) or self.w  # GoalUpdateCommand holds .w
                     expected = case.get('expected')
                     from pm_goal_dg5_declarations import target
                     return entry_call(case, case['id'] + '/' + entry, 'goal.updated',

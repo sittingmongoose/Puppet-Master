@@ -79,6 +79,58 @@ def approval_request_bytes_created_at(d):
     return w, U.admitted(w, req)
 
 
+@case('U-DG5/N/approval_expired_at_read', 'dgu/source/capture/acceptance/approval_expired', SITE + '1042',
+      'Single defect: the stored approval request expires in the past, with its request_sha256 recomputed in '
+      'both the cell and the resolution, so the request-bytes (:1033) and request-commitment (:1036) checks '
+      'hold and only the expiry-at-read check (:1042) refuses. No authored case sets expires_at_utc.')
+def approval_expired_at_read(d):
+    w, g = U._goal(d)
+    req, ag = O.agent_request(w, g, 'x')
+    cur = w.approvals.state(ag['approval_id'])
+    new_request = dict(cur['request'], expires_at_utc='2020-01-01T00:00:00.000Z')
+    digest = O.sha(O.msgpack(new_request))
+    w.approvals.put(ag['approval_id'], dict(cur, request=new_request, request_sha256=digest,
+                                            resolution=dict(cur['resolution'], request_sha256=digest)))
+    return w, U.admitted(w, req)
+
+
+@case('U-DG5/N/installation_graph_substituted', 'dgu/oracle/installation_graph', SITE + '496',
+      'Single defect: the installed installation cell carries a foreign resource-graph digest while its '
+      'state stays installed, so require_installed passes its presence check (:495) and only the graph '
+      'commitment (:496) refuses.')
+def installation_graph_substituted(d):
+    w, g = U._goal(d)
+    cur = w.installation.current()
+    w.installation.put('current', dict(cur, installed_resource_graph_sha256='0' * 64))
+    return w, lambda: w.installation.require_installed('dgu/oracle')
+
+
+@case('U-DG5/N/publication_event_substituted', 'dgu/inspect/publication_event', SITE + '1885',
+      'Single defect: every progress snapshot is coherently re-sealed with only its publication event_id '
+      'changed, so the frozen producer join (:1884) still holds and only the publication-to-event join '
+      '(:1885) refuses. The authored frozen-id case edits producer_input, which later joins also read.')
+def publication_event_substituted(d):
+    w, g = U._goal(d)
+    req, adm = U.run_direct(w, g)
+    r = w.inspector.request_for(g['scope'], U.event_of(w, g, adm))
+    U.rewrite_progress_all(w, g, U.op_of(adm), lambda rec: dict(
+        rec, publication=dict(rec['publication'], event_id='goal.updated.v1:' + 'a' * 64))
+        if rec['publication'] else rec)
+    return w, lambda: w.inspector.inspect(r, g['user'], g['user_permission'])
+
+
+@case('U-DG5/N/inspect_unknown_event', 'dgu/inspect/event_unavailable', SITE + '1861',
+      'The authored U4/N/unknown_event makes exactly this call, but its expected code maps by literal '
+      'template to request_for (:1835), so the inspect refusal at :1861 was recorded as another refusal '
+      'and never judged. This case declares :1861 itself.')
+def inspect_unknown_event(d):
+    w, g = U._goal(d)
+    req, adm = U.run_direct(w, g)
+    r = w.inspector.request_for(g['scope'], U.event_of(w, g, adm))
+    r['event_id'] = 'goal.updated.v1:' + '0' * 64
+    return w, lambda: w.inspector.inspect(r, g['user'], g['user_permission'])
+
+
 @case('U-DG5/N/history_without_first_revision', 'dgu/reader/body/missing_history', SITE + '1151',
       'Single defect: a two-revision history loses revision 1 (and its origin) while revision 2 is coherently '
       're-sealed with no prior and the control head names it, so the chain (:1144), origin join and accepted head '
