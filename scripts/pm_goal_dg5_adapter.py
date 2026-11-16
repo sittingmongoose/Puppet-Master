@@ -106,6 +106,7 @@ def supplements(suite, work):
     _handle_supplements(suite, work)
     _index_supplements(suite, work)
     _fence_supplements(suite, work)
+    _index_read_supplements(suite, work)
 
 
 class _HandleSubclass(A.OriginalHandle):
@@ -261,6 +262,38 @@ def _fence_supplements(suite, work):
 
     suite.negative('dg5-shared', 'retire_while_fenced_sealed:1748', retire_while_fenced_sealed,
                    'assignment/fence_held')
+
+
+def _index_read_supplements(suite, work):
+    """DG5 single-defect negatives for the index frontier rows (:451/:452).
+
+    The authored cases drop or edit an index row, which a later row-frame join also
+    refuses. Each case below instead flips exactly one frontier fact in the checkpoint
+    (token digests repointed coherently, the authored _token_patch pattern), leaving
+    every row and join genuine, so the named frontier check refuses alone.
+    """
+    def snapshot_with(tag, frontier_edit):
+        store = storage.TestOwnerStorage.create(work / ('indexread-' + tag), segment_target_bytes=3000)
+        for i in range(3):
+            selftest.append_one(store, '%s-%d' % (tag, i))
+        raw = copy.deepcopy(store.acquire_source())
+        ck = storage.decode_canonical(raw['canonical']['checkpoint_raw'])
+        node = ck['generations'][ck['current_generation_id']]
+        frontier_edit(node['frontier'])
+        raw['canonical']['checkpoint_raw'] = storage.canonical(ck)
+        node = ck['generations'].get(ck['current_generation_id'], node)
+        raw['token']['frontier_sha256'] = storage.index_digest(node['frontier'])
+        raw['token']['generation_anchor_sha256'] = storage.index_digest(node['anchor'])
+        return source.EventRecordIndexSource(store).read(raw)
+
+    suite.negative('dg5-shared', 'index_row_count_only:451',
+                   lambda: snapshot_with('dg5-ix-count',
+                                         lambda f: f.update(index_row_count=f['index_row_count'] + 1)),
+                   'index/row_count')
+    suite.negative('dg5-shared', 'index_row_set_only:452',
+                   lambda: snapshot_with('dg5-ix-rowset',
+                                         lambda f: f.update(index_row_set_sha256='0' * 64)),
+                   'index/row_set')
 
 
 class _StorageHandleSubclass(storage._Handle):
