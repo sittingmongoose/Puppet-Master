@@ -5,6 +5,45 @@
   const O55 = window.O55, C = O55.c, U = O55.util, T = (k, v) => O55.t(k, v), def = (id, d) => O55.screens.define(id, d);
   const md = (S) => S.sess.drafts.main;
 
+  /* FO-222 (stream F's ruling B): the page reopens in the Project the person was last in, the look's own rule. One record,
+     the active Project's id (ACTIVE below), written in one place: where every switch shows, the title-bar menu's selected
+     row, which only selectProjectRow (pm6-js-panels.js) sets, for the menu itself and for selectProject below (setup's
+     finish, Creating and Review, the Guided Tour); the same signal Settings follows to load a Project's settings. Read at
+     load: a Project created by setup (the onboarding record's committed or finished Project) is listed again and selected
+     through selectProject; a fixture Project is selected; an id no Project answers to (a cleared record, a removed
+     fixture) is dropped and the page opens as before. A page with no storage keeps nothing, as before. The first paint
+     reads the same id (base/script/script-001.js). The Project's look stays where it is: Settings' record per Project. */
+  const ACTIVE = 'pm7:shell:active-project:v1';
+  const lsGet = () => { try { return window.localStorage.getItem(ACTIVE) || ''; } catch (_) { return ''; } };
+  const lsSet = (id) => { try { if (id) window.localStorage.setItem(ACTIVE, id); else window.localStorage.removeItem(ACTIVE); } catch (_) { /* no storage */ } };
+  /* a fixture Project's row (one the page lists itself, not added by selectProject) */
+  const rowOfFixture = (id) => { const r = rowOf(id); return !!r && !r.hasAttribute('data-o55-added'); };
+  const rowOf = (id) => Array.prototype.find.call(document.querySelectorAll('#projectMenu [data-project]'), (r) => r.getAttribute('data-project') === id) || null;
+  /* the Projects setup made or opened, from its own record: the committed one (Creating), and the one it finished into */
+  function setupProjects() {
+    const rec = O55.store.get('onboarding', null), out = [];
+    if (!rec) return out;
+    const d = rec.drafts && rec.drafts.main, cm = rec.commit, fin = rec.finished;
+    if (fin && fin.project) out.push({ id: fin.project, name: fin.name || (cm && cm.projectId === fin.project && d ? d.project_name : '') || fin.project, info: fin.info || null });
+    if (cm && cm.state === 'done' && cm.projectId && !out.some((p) => p.id === cm.projectId)) out.push({ id: cm.projectId, name: (d && d.project_name) || cm.projectId, info: null });
+    return out;
+  }
+  let restoring = null;
+  /* (the Projects the page lists by itself, as it loads) */
+  const rowOfFixtureAtLoad = new Set(Array.prototype.map.call(document.querySelectorAll('#projectMenu [data-project]'), (r) => r.getAttribute('data-project')));
+  /* early, as this script runs (the title bar is in the page, the Project box is not wired yet, Settings has not read
+     the Project): the id the page opens on */
+  let staleLoaded = false;
+  (function restoreEarly() {
+    const id = lsGet(); if (!id) return;
+    const made = setupProjects().find((p) => p.id === id);
+    /* (an id no Project answers to: dropped, and the page is the default Project's again, as before; Settings, which the
+       head pointed at it, loads the default Project at boot) */
+    if (!rowOf(id) && !made) { lsSet(''); if (window.PM_ACTIVE_PROJECT_ID === id) { delete window.PM_ACTIVE_PROJECT_ID; staleLoaded = true; } return; }
+    window.PM_ACTIVE_PROJECT_ID = id;
+    restoring = made || { id, name: null, info: null };
+  })();
+
   /* Shell helpers: select a Project in the title-bar menu (adding it when the app doesn't list it yet). The project box
      owns the menu's rows (PM_PROJECT_BOX, pm6-js-panels.js: one row renderer, the label stays the bare name). The Settings
      owner watches the menu and reloads that Project's settings. */
@@ -13,12 +52,30 @@
       const box = window.PM_PROJECT_BOX;
       if (!box || !id) return false;
       /* info: { path, branch } from the draft, so the row and the hover tag carry the location line (B3) */
-      box.add(id, Object.assign({}, info || {}, { name: name || id }));
+      const row = box.add(id, Object.assign({}, info || {}, { name: name || id }));
+      if (row && !row.hasAttribute('data-o55-added') && !rowOfFixtureAtLoad.has(id)) row.setAttribute('data-o55-added', '');
       window.PM_ACTIVE_PROJECT_ID = id;
       box.select(id);
       if (O55.sound && O55.sound.refresh) O55.sound.refresh('project');
       return true;
     },
+    /* at boot (the Project box wired): the restored Project's row (listed again when setup made it) and its selection;
+       then the one writer of the record follows the selected row */
+    restoreProject() {
+      /* (every Project setup made or opened is listed again while its record lasts, the active one or not) */
+      const box = window.PM_PROJECT_BOX;
+      if (box) setupProjects().forEach((p) => { if (!rowOf(p.id)) { const row = box.add(p.id, Object.assign({}, p.info || {}, { name: p.name || p.id })); if (row) row.setAttribute('data-o55-added', ''); } });
+      if (restoring && box) { const r = restoring; restoring = null; O55.shell.selectProject(r.id, r.name || r.id, r.info || undefined); }
+      if (staleLoaded) { staleLoaded = false; if (window.PM12_KIMI && window.PM12_KIMI.reloadProject) { try { window.PM12_KIMI.reloadProject(); } catch (_) {} } }
+      const menu = document.getElementById('projectMenu');
+      if (!menu || menu.__pmActive) return;
+      menu.__pmActive = true;
+      const note = () => { const sel = menu.querySelector('.pm6-tb-menu-item.is-selected[data-project]'), id = sel ? sel.getAttribute('data-project') : ''; if (id && id !== lsGet()) lsSet(id); };
+      new MutationObserver(note).observe(menu, { attributes: true, subtree: true, attributeFilter: ['class'] });
+    },
+    /* a new run (Run Onboarding Again, Start over) replaces the record that lists setup's Projects: an active id that
+       named one of them would name nothing at the next load */
+    forgetSetupProjects() { const id = lsGet(); if (id && setupProjects().some((p) => p.id === id) && !rowOfFixture(id)) lsSet(''); },
     /* The look chosen in onboarding becomes the saved theme (the preview used persist:false), and NieR Mode's three
        rows, the rest of the look, are saved with it into the same Project (their preview, O55.nierLook).
        Writing the theme repaints it, and the app's own theme listeners (its search width, its tab ink) then re-measure
@@ -108,7 +165,10 @@
        reload that selecting the Project starts already finds it (SCR-03) */
     if (O55.handoff) O55.handoff.publish(S, Object.assign({}, o, { project: projectId || null, projectName: name || null }));
     if (projectId) O55.shell.selectProject(projectId, name, o.projectInfo);
-    S.sess.finished = { at: new Date().toISOString(), tour: !!o.tour, project: projectId || null };
+    /* (with the Project's name and location line, so a reload lists it again as it is now: FO-222) */
+    const fRow = projectId ? Array.prototype.find.call(document.querySelectorAll('#projectMenu [data-project]'), (r) => r.getAttribute('data-project') === projectId) : null;
+    const fInfo = o.projectInfo || (fRow ? { path: fRow.getAttribute('data-project-path') || '', branch: fRow.getAttribute('data-project-branch') || '' } : null);
+    S.sess.finished = { at: new Date().toISOString(), tour: !!o.tour, project: projectId || null, name: name || null, info: fInfo };
     const tour = !!(o.tour && O55.tour && O55.tour.start);
     /* the tour path: the window becomes the tour's first callout (a morph from its rectangle; under NieR Mode one ink
        line carries it there, with the same Pod flying along: O55.nierWindow.handoff(), results/h4c-handover-contract.md);
