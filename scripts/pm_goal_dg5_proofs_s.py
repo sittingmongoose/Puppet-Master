@@ -194,3 +194,24 @@ PROOFS.update({
             "commit_original re-reads is therefore still 'receipted', so :1406 cannot be the first "
             "refusal in a complete commit_start call.")),
 })
+
+PROOFS.update({
+    'dg5/site/pm_goal_dg_s_readers.py:516': dict(
+        kind='entailment', families=['goal_run.started'],
+        depends_on=['dg5/site/pm_goal_dg_s_readers.py:524', 'dg5/site/pm_goal_dg_s_readers.py:527',
+                    'dg5/site/pm_goal_dg_s_readers.py:511'],
+        sites=[(READERS, 516), (READERS, 500), (READERS, 511), (READERS, 524), (READERS, 527),
+               (READERS, 435)],
+        argument=(
+            "decode_checkpoint validates the wrapper, then applies the same fits_checkpoint measure "
+            "encode_checkpoint applies to the wrapper it selects for the identical logical checkpoint "
+            "(readers:500-511, :435-437). If the presented wrapper does not fit at :516, then in the "
+            "cut run one of three later sites must refuse instead: if its physical_key is not "
+            "checkpoint_key()/the logical key, :524 refuses; if the key matches and the content kind "
+            "is inline, the selected encode of the same logical under the same key has the same size "
+            "and therefore switches to payload_reference, so :527 refuses on kind; if the content "
+            "kind is payload_reference and even that wrapper does not fit (key-dominated size), the "
+            "selected encode builds the same-shaped reference wrapper and :511 refuses on it. Hence "
+            "no presented wrapper can make :516 the only refusal in a complete decode_checkpoint "
+            "call; it is entailed by the key, deterministic-kind and encode-size sites.")),
+})
