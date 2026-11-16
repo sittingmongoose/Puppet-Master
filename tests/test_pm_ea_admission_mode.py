@@ -445,6 +445,15 @@ LANE_CASES.extend(
 )
 
 
+# Missing-record sweep: all twelve FileManager families need the same record gate.
+DFM_CONTRACT_FAMILIES = tuple(r["event_type"] for r in _read(REPO, "Plans/filemanager_event_contract_fixtures.json")["rows"])
+LANE_CASES.extend(
+    ("DFM:" + family, "scripts/pm-filemanager-event-contracts.py", "admission_report", family,
+     lambda fn, et, root, reg: _accepts(fn, [et]), None)
+    for family in DFM_CONTRACT_FAMILIES
+)
+
+
 def _accepts(fn, *args):
     try:
         fn(*args)
