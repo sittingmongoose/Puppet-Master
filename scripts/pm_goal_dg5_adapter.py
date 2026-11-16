@@ -105,6 +105,7 @@ def supplements(suite, work):
     _pure_supplements(suite, work)
     _handle_supplements(suite, work)
     _index_supplements(suite, work)
+    _fence_supplements(suite, work)
 
 
 class _HandleSubclass(A.OriginalHandle):
@@ -211,6 +212,44 @@ def _index_supplements(suite, work):
                    'index/duplicate_event_id')
     suite.negative('dg5-shared', 'index_duplicate_scoped_identity:1057', duplicate_scoped_identity,
                    'index/duplicate_scoped_identity')
+
+
+def _fence_supplements(suite, work):
+    """DG5 single-defect negatives for the append fence/dedupe rows.
+
+    The authored fence cases move several selected-sink facts at once (abandon also
+    drops the fence; rotation moves segment, offset, manifest and sequence together),
+    so each row is only COVERED_LATER there. Each case below flips exactly one
+    recorded fact in the sealed reservation record, leaving every sibling check
+    holding, so the named row refuses alone.
+    """
+    def fenced(tag, edit):
+        store = storage.TestOwnerStorage.create(work / ('fence-' + tag))
+        handle, _fence, _record = store.reserve_assignment('TEST_ONLY:op:' + tag, dict(tag=tag))
+        edit(store.append_reservations['TEST_ONLY:op:' + tag])
+        return store.append(handle, [selftest.candidate(tag)])
+
+    suite.negative('dg5-shared', 'assignment_abandoned_state_only:1441',
+                   lambda: fenced('dg5-fence-abandoned', lambda r: r.update(state='abandoned')),
+                   'assignment/reservation_abandoned')
+    suite.negative('dg5-shared', 'assignment_selected_segment_only:1445',
+                   lambda: fenced('dg5-fence-segment',
+                                  lambda r: r.update(segment_generation=r['segment_generation'] + 99)),
+                   'assignment/selected_segment')
+    suite.negative('dg5-shared', 'assignment_selected_offset_only:1447',
+                   lambda: fenced('dg5-fence-offset', lambda r: r.update(byte_offset=r['byte_offset'] + 1)),
+                   'assignment/selected_offset')
+
+    def append_once_retry():
+        store = storage.TestOwnerStorage.create(work / 'fence-append-once')
+        selftest.append_one(store, 'dg5-once', selftest.candidate('dg5-once', replay_policy='append_once'),
+                            op='TEST_ONLY:op:dg5-once-1')
+        return selftest.append_one(store, 'dg5-once',
+                                   selftest.candidate('dg5-once', replay_policy='append_once'),
+                                   op='TEST_ONLY:op:dg5-once-2')
+
+    suite.negative('dg5-shared', 'append_once_identical_retry:1460', append_once_retry,
+                   'append/append_once_exists')
 
 
 class _StorageHandleSubclass(storage._Handle):

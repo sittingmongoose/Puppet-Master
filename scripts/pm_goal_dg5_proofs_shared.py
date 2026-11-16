@@ -141,4 +141,32 @@ PROOFS = {
             '(the duplicate_in_group chain witnesses exactly this), so :1477 selects the '
             'append-boundary code and never gates acceptance alone. It closes by this '
             'proof once :1056 is closed.')),
+    SITE + '1462': dict(
+        kind='code-selection',
+        families=FAMILIES,
+        depends_on=[SITE + '1464'],
+        sites=[(ST, 1462), (ST, 1464)],
+        argument=(
+            'append dedupe at :1462 requires the scoped-identity hit to be the same '
+            'event_id; the next check at :1464 requires the whole producer25 (the event '
+            'minus storage fields, event_id included) to be byte-identical. A candidate '
+            'with a different event_id under an existing scoped identity necessarily has '
+            'a different producer25, so with :1462 cut it still refuses at :1464 (the '
+            'same_key_other_event_id chain witnesses exactly this); :1462 selects the '
+            'precise conflict code and never gates acceptance alone. It closes by this '
+            'proof once :1464 is closed.')),
+    SITE + '1463': dict(
+        kind='code-selection',
+        families=FAMILIES,
+        depends_on=[SITE + '1464'],
+        sites=[(ST, 1463), (ST, 1464)],
+        argument=(
+            'append dedupe at :1463 requires the event_id hit to carry the same scoped '
+            'identity (partition, event_type, idempotency_key are producer25 fields); '
+            'the next check at :1464 requires the whole producer25 byte-identical. A '
+            'candidate with another idempotency_key under an existing event_id necessarily '
+            'differs in producer25, so with :1463 cut it still refuses at :1464 (the '
+            'same_event_id_other_key chain witnesses exactly this); :1463 selects the '
+            'precise conflict code and never gates acceptance alone. It closes by this '
+            'proof once :1464 is closed.')),
 }
