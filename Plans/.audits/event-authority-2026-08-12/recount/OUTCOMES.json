@@ -716,6 +716,10 @@
    "outcome": "registered"
   },
   {
+   "event_type": "review.artifact_finalized",
+   "outcome": "registered"
+  },
+  {
    "event_type": "run.graph_canonical_locked",
    "outcome": "registered"
   },
