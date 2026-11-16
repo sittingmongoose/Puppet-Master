@@ -1,0 +1,460 @@
+// E3 (pm7-perf stream, 2026-11-15): a hidden lens comes back by events, not by a 400 ms poll. glass.js watches
+// every hidden lens's strip with a per-strip ResizeObserver (showWatch): a box that goes from at most 1 px to more
+// than 1 px in either axis runs the hidden-lens check once through onLayout. A 2000 ms safety-net timer remains for
+// what no observer reports (a visibility-only change: inline visibility, a stylesheet visibility keyed to an
+// unobserved attribute), armed only while a lens is hidden. The wake and the tick share one queued check (showHold):
+// the queued check drops any pending tick before it looks and arms the next interval itself, so a sync that lands
+// while the check waits for layout cannot make it skip its look (5ea1e87906, verified in a browser by QW6: one net
+// tick per show, no re-arm race). Since 34b45edf15 such a sync does arm a tick of its own (awaitShow), and a tick
+// that still finds a check queued two seconds later queues again: a net for a queued check that is ever lost.
+// Spec: the share's 2026-11-11-pm7-performance/followups/E3-glass-poll.md, test rows 1, 2, 3, 4, 9 and 13.
+//
+// Rows, per Glass look (Glass Dark and Light), both surfaces, 1920x1080. Budgets are QW6's, from measurements on
+// alexis (loaded host, RTX 3080): 5 full runs per surface on the branch page (qw6.html, 5ea1e87906) and on main
+// (v-main.html), plus row 2 x20 per surface on the branch page twice (the lead's queue and QW6's own). Ranges are
+// min-max over both looks.
+//   1  inline display: nav.page-tabs style.display='none', lens out, then '' again: lens back within 150 ms
+//      (the ResizeObserver wake; one frame plus layout). Branch measured 18-88 ms. FAILS on main: its 400 ms poll
+//      answers, and the show is landed just after a poll fire (showTabsLocked below), the poll's worst case, so
+//      main reads about 350-420 ms every run. Without that lock main's free-phase tail reached 114 ms (an ambient
+//      sync or the PM_LG.sync() fallback can discover the hide at any poll phase), which no bound above the
+//      branch's 88 ms could fail every run; the lock makes the separation deterministic. The measured time is
+//      from the show write either way; the branch has no 400 ms timer, so its show is never delayed.
+//   2  inline visibility: style.visibility='hidden' then '': lens back within 2200 ms. By design no observer sees
+//      this (edit 1 of the spec was not done): the safety net answers it. The design guarantee is one 2000 ms
+//      interval plus one layout; wall time adds the loaded host's scheduling: the slowest of the 180 repetitions
+//      (the lead's queue 80, QW6's own 80, the full runs' 20) was 2110 ms (sandbox, Glass Dark) = 2000 + a
+//      callback 60 ms late (dt2060) + 43 ms to the queued check + 14 ms rAF sampling, one tick and one look, no
+//      race. Branch measured 1357-2110 ms (the short reps are phase luck: the pending tick was already part-way
+//      through its interval); main 72-446 ms (its poll is faster). Passes on main too.
+//   3  stylesheet visibility (case C): a temporary <style> nav.page-tabs { visibility: hidden } in <head>, then
+//      removed: lens back within 2200 ms (the same net; branch measured 856-2025 ms, main 181-350 ms). Documents
+//      the fallback; if the net is ever deleted by audit, remove this row on purpose, not leave it failing.
+//   4  ancestor class: the Usage page's own hiding class (.primary-content > .page loses and regains 'active',
+//      display:none via class): lens back within 600 ms. A .page class change alone is not HOT in glass.js's mo
+//      handler: it syncs through lazySync's 140 ms debounce plus the page's own transition, measured 216-478 ms on
+//      the branch and 156-380 ms on main. This change does not touch that path; the budget is main's worst x1.5
+//      rounded up, a regression guard, not the spec's 40 ms (which neither page meets).
+//   9  onboarding window: opened with data-o55-solid (the visibility:hidden sheet rule at 10-window.css:27 is
+//      asserted to apply), the behind-window lens out within 700 ms of the open call (branch 181-451 ms, main
+//      159-434 ms: the window-open path, which this change does not touch; main's worst x1.5 rounded up); on close,
+//      back within 200 ms of the removal of data-o55-open (the root observer's own trigger; branch 8-24 ms, main
+//      7-27 ms, the spec's budget kept). The window's exit animation runs before that removal; the wall time from
+//      the close() call is logged, not judged (532-1062 ms seen).
+//   13 resting wake count: with one strip hidden by row 1's method, a setTimeout wrapper installed before the
+//      page's scripts run counts the timers asked for from glass.js (the lg-js block's lines) with delay 400 or
+//      2000 ms over 10 s: at most 6 requests and none at 400 ms (unchanged). Branch asks 4-5, all 2000 ms; main
+//      asks 24-25, all 400 ms: FAILS on main. Then the strip is shown (with row 1's lock) and the lens must appear
+//      within 150 ms (branch 20-44 ms; main's free-phase tail reached 13 ms, so without the lock this assertion
+//      could pass on main — the counts above are row 13's unconditional separation).
+//
+// QW5: --set only=1,2,3,4,9,13 runs those rows and no others; --set repeat=<n> runs each of them n times
+// (default 1). Row 2 keeps a trace, times relative to the show write: each glass.js timer of 400 or 2000 ms
+// (ask, fire, and clear — a clear is the ResizeObserver wake, or the queued check, dropping the pending tick),
+// and each change of the captured lens's inline opacity. An ask's g is its line inside the lg-js block, which is
+// glass.js's own line (the block is that file). At 5ea1e87906 the ask sites are awaitShow (g2081, only when no
+// tick is pending and no check is waiting for layout), the queued check's document.hidden re-arm (g2095), the
+// tick's document.hidden re-arm (g2105, inFire and docHidden), and the re-arm at the bottom of the check (g2126;
+// inFire when onLayout ran the check at once inside the timer callback). fire dt is ms from that ask to the
+// callback: a dt well over 2000 is a late callback; a fire near +2000 whose ask is near the show is one interval;
+// a clear after the show followed by an awaitShow ask (g2081) would be the old re-arm race, fixed by showHold.
+//
+// Measured facts (QW6's runs, replacing QW4's written-without-a-browser notes):
+//   - The hide direction of rows 1-3 is discovered by the app's ambient writes (an inline style or a <head> sheet
+//     is not observed; edit 1 was deliberately not done). When no ambient sync puts the lens out within 1200 ms,
+//     the check calls PM_LG.sync() once (the spec's named hook) and logs it: 5 of the 20 row-2 hides in the
+//     branch's full runs used it, 3 of 40 in each queue run. The appearance budget is measured from the show
+//     write either way.
+//   - Timings are rAF-sampled (±1 frame) from the DOM write to the lens's inline opacity leaving '0' (or coming
+//     back with visibility not hidden), the spec's measure. On the loaded host one sampling gap measured 63 ms
+//     and one timer callback ran 60 ms late (the 2067 and 2110 ms reps): the budget, not the product, carries
+//     those gaps; both traces show one tick, one check, the lens back on that check.
+//   - Row 13's attribution is the built page's lg-js block (helpers/built-source.mjs); the counts matched on every
+//     run (branch 4-5 at 2000 ms, main 24-25 at 400 ms), and no other glass.js timer at 400/2000 ms fires at rest.
+//   --set looks=glass-dark   --set size=1920x1080   --set settle=6000   --set only=2   --set repeat=20
+import { muteSound, parkPointer } from '../helpers/quiet-page.mjs';
+import { pageSource, blocksOf } from '../helpers/built-source.mjs';
+
+const LOOKS = ['glass-dark', 'glass-light'];
+const list = (v, all) => (v ? String(v).split(',').map((s) => s.trim()).filter(Boolean) : all);
+const wanted = (v) => {
+	if (v == null || String(v).trim() === '') return null;
+	const s = new Set();
+	for (const part of String(v).split(',')) {
+		const n = Number(part.trim());
+		if (Number.isFinite(n)) s.add(n);
+	}
+	return s.size ? s : null;
+};
+const repeatCount = (v) => {
+	const n = Number(v || 1);
+	return Number.isFinite(n) && n >= 1 ? Math.floor(n) : 1;
+};
+const tagOf = (look, surface, rep, reps) => `${look} ${surface}` + (reps > 1 ? ` rep ${rep}` : '');
+
+/* installed before the page's scripts: counts setTimeout REQUESTS (not firings) with delay 400 or 2000 ms whose
+   asking stack's innermost page frame lies in the lg-js block (glass.js). Everything else is forwarded untouched. */
+const TIMER_PROBE = (range) => {
+	const P = window.__swt = { armed: false, n400: 0, n2000: 0, sites: [], events: [], seq: 1, byId: new Map(), depth: 0 };
+	const realSet = window.setTimeout;
+	const realClear = window.clearTimeout;
+	const lineOf = () => {
+		const lines = String(new Error().stack || '').split('\n');
+		for (let i = 3; i < lines.length; i++) { const m = /:(\d+):\d+/.exec(lines[i]); if (m) return Number(m[1]); }
+		return -1;
+	};
+	const push = (e) => {
+		P.events.push(e);
+		if (P.events.length > 800) P.events.splice(0, P.events.length - 800);
+	};
+	/* inline styles only: a layout read here would change the timing this trace exists to measure */
+	const snap = () => {
+		const s = document.querySelector('nav.page-tabs');
+		const lens = window.__gsw && window.__gsw.lens;
+		return { vis: s ? s.style.visibility : '', op: lens && lens.isConnected ? lens.style.opacity : '' };
+	};
+	P.note = (k) => {
+		const s = snap();
+		push({ k, at: Math.round(performance.now()), vis: s.vis, op: s.op, t0: window.__gsw ? Math.round(window.__gsw.t0) : 0 });
+	};
+	window.setTimeout = function (fn, delay, ...rest) {
+		const d = delay | 0;
+		if (typeof fn !== 'function' || (d !== 400 && d !== 2000)) return realSet.call(window, fn, delay, ...rest);
+		const l = lineOf();
+		if (l < range.from || l > range.to) return realSet.call(window, fn, delay, ...rest);
+		const meta = { n: P.seq++, d, asked: Math.round(performance.now()), line: l, g: l - range.from, fired: 0 };
+		let id = 0;
+		const wrapped = function (...a) {
+			meta.fired = Math.round(performance.now());
+			P.byId.delete(id);
+			const s = snap();
+			push({ k: 'fire', n: meta.n, d: meta.d, at: meta.fired, asked: meta.asked, g: meta.g, vis: s.vis, op: s.op, hidden: document.hidden });
+			P.depth++;
+			try { return fn.apply(this, a); }
+			finally { P.depth--; }
+		};
+		id = realSet.call(window, wrapped, delay, ...rest);
+		P.byId.set(id, meta);
+		const s = snap();
+		push({ k: 'ask', n: meta.n, d, at: meta.asked, g: meta.g, vis: s.vis, op: s.op, inFire: P.depth > 0, hidden: document.hidden });
+		if (P.armed) {
+			if (d === 400) P.n400++; else P.n2000++;
+			if (P.sites.length < 6) P.sites.push(d + 'ms@' + l);
+		}
+		return id;
+	};
+	window.clearTimeout = function (id) {
+		const meta = P.byId.get(id);
+		if (meta && !meta.fired) {
+			const s = snap();
+			push({ k: 'clear', n: meta.n, d: meta.d, at: Math.round(performance.now()), asked: meta.asked, g: meta.g, vis: s.vis, op: s.op });
+			P.byId.delete(id);
+		}
+		return realClear.call(window, id);
+	};
+	P.arm = () => { P.n400 = 0; P.n2000 = 0; P.sites = []; P.armed = true; };
+	P.read = () => { P.armed = false; return { n400: P.n400, n2000: P.n2000, sites: P.sites.slice() }; };
+	P.between = (a, b) => P.events.filter((e) => e.at >= a && e.at <= b);
+};
+
+/* in the page: the lens over a strip's chosen item, captured while shown (its box stays when it goes out), and an
+   rAF-sampled wait for its inline opacity to leave '0' or come back */
+const PROBE = () => {
+	const lensOver = (item) => {
+		const r = item.getBoundingClientRect(), cx = r.left + r.width / 2, cy = r.top + r.height / 2;
+		for (const l of document.querySelectorAll('i.lg-lens:not(.lg-bead)')) {
+			const b = l.getBoundingClientRect();
+			if (b.width < 2 || b.height < 2) continue;
+			if (cx >= b.left - 1 && cx <= b.right + 1 && cy >= b.top - 1 && cy <= b.bottom + 1) return l;
+		}
+		return null;
+	};
+	window.__gsw = {
+		lens: null, t0: 0, tGone: 0, tClose: 0,
+		capture(sel, itemSel) {
+			const strip = document.querySelector(sel);
+			const item = strip && strip.querySelector(itemSel || '.active');
+			this.lens = item ? lensOver(item) : null;
+			this.watch();
+			return !!this.lens;
+		},
+		/* inline opacity only; the observer fires after the write, in the same turn's microtasks */
+		watch() {
+			if (this.opMo) this.opMo.disconnect();
+			this.opMo = null;
+			if (!this.lens || !window.__swt) return;
+			const lens = this.lens;
+			let prev = lens.style.opacity;
+			window.__swt.note('op');
+			this.opMo = new MutationObserver(() => {
+				const op = lens.style.opacity;
+				if (op === prev) return;
+				prev = op;
+				window.__swt.note('op');
+			});
+			this.opMo.observe(lens, { attributes: true, attributeFilter: ['style'] });
+		},
+		mark() { this.t0 = performance.now(); },
+		out() { return !!this.lens && (!this.lens.isConnected || this.lens.style.opacity === '0'); },
+		back() { return !!this.lens && this.lens.isConnected && this.lens.style.opacity !== '0' && getComputedStyle(this.lens).visibility !== 'hidden'; },
+		/* ms from the last mark() (fromGone: from the recorded removal of data-o55-open instead) */
+		wait(state, timeout, fromGone) {
+			const want = state === 'out' ? () => this.out() : () => this.back();
+			return new Promise((resolve) => {
+				const start = performance.now();
+				const tick = () => {
+					const from = fromGone ? this.tGone : this.t0;
+					if (from && want()) { resolve({ ok: true, ms: performance.now() - from }); return; }
+					if (performance.now() - start > timeout) { resolve({ ok: false, ms: from ? performance.now() - from : -1 }); return; }
+					requestAnimationFrame(tick);
+				};
+				requestAnimationFrame(tick);
+			});
+		}
+	};
+};
+
+/* hide nav.page-tabs by inline display, inline visibility, or a temporary head stylesheet; wait for the lens to go
+   out (ambient app writes discover the hide; PM_LG.sync() once as the fallback, logged) */
+function formatTrace(events, origin) {
+	const rel = (at) => { const d = at - origin; return (d >= 0 ? '+' : '') + d; };
+	const vis = (v) => (v === 'hidden' ? 'hidden' : v ? v : 'clear');
+	return events.map((e) => {
+		const op = e.op === '' ? "''" : e.op;
+		if (e.k === 'ask') return `ask#${e.n}@${rel(e.at)} ${e.d}ms g${e.g}${e.inFire ? ' inFire' : ''}${e.hidden ? ' docHidden' : ''} vis=${vis(e.vis)} op=${op}`;
+		if (e.k === 'fire') return `fire#${e.n}@${rel(e.at)} dt${e.at - e.asked} g${e.g}${e.hidden ? ' docHidden' : ''} vis=${vis(e.vis)} op=${op}`;
+		if (e.k === 'clear') return `clear#${e.n}@${rel(e.at)} dt${e.at - e.asked} g${e.g} vis=${vis(e.vis)} op=${op}`;
+		if (e.k === 'op') return `op@${rel(e.at)} ${op}`;
+		return `${e.k}@${rel(e.at)} vis=${vis(e.vis)} op=${op}`;
+	}).join(' | ');
+}
+
+async function showTrace(f) {
+	return f.evaluate(() => {
+		const ev = window.__swt.events;
+		let show = null, hide = null;
+		for (let i = ev.length - 1; i >= 0; i--) {
+			if (!show && ev[i].k === 'show') show = ev[i];
+			if (!hide && ev[i].k === 'hide') hide = ev[i];
+			if (show && hide) break;
+		}
+		const origin = show ? (show.t0 || show.at) : 0;
+		const a = (hide ? hide.at : origin) - 4000;
+		const b = Math.round(performance.now()) + 20;
+		return { origin, events: window.__swt.between(a, b) };
+	});
+}
+
+async function hideTabs(f, how) {
+	await f.evaluate((h) => {
+		window.__gsw.mark();
+		const s = document.querySelector('nav.page-tabs');
+		if (h === 'display') s.style.display = 'none';
+		else if (h === 'visibility') s.style.visibility = 'hidden';
+		else { const st = document.createElement('style'); st.id = 'gsw-case-c'; st.textContent = 'nav.page-tabs { visibility: hidden }'; document.head.appendChild(st); }
+		if (window.__swt) window.__swt.note('hide');
+	}, how);
+	let out = await f.evaluate(() => window.__gsw.wait('out', 1200));
+	let hooked = false;
+	if (!out.ok) {
+		hooked = true;
+		await f.evaluate(() => { if (window.__swt) window.__swt.note('sync'); PM_LG.sync(); });
+		out = await f.evaluate(() => window.__gsw.wait('out', 600));
+	}
+	return { ...out, hooked };
+}
+
+async function showTabs(f, how) {
+	await f.evaluate((h) => {
+		window.__gsw.mark();
+		const s = document.querySelector('nav.page-tabs');
+		if (h === 'display') s.style.display = '';
+		else if (h === 'visibility') s.style.visibility = '';
+		else { const st = document.getElementById('gsw-case-c'); if (st) st.remove(); }
+		if (window.__swt) window.__swt.note('show');
+	}, how);
+}
+
+/* rows 1 and 13: on a page that still polls at 400 ms (main), land the show just after a poll fire — the poll's
+   worst case — so the separation from the event path is deterministic (main's free-phase tail reached 114 ms on
+   row 1 and 13 ms on row 13). The event path answers any phase: when no 400 ms timer is pending, the show is not
+   delayed. The measured time is from the show write either way. */
+async function showTabsLocked(f, how) {
+	await f.evaluate(async () => {
+		const P = window.__swt;
+		if (!P) return;
+		let poll = false;
+		P.byId.forEach((m) => { if (m.d === 400) poll = true; });
+		if (!poll) return;
+		const t0 = performance.now();
+		while (performance.now() - t0 < 700) {
+			if (P.events.some((e) => e.k === 'fire' && e.d === 400 && e.at >= t0)) break;
+			await new Promise((r) => setTimeout(r, 8));
+		}
+	});
+	await showTabs(f, how);
+}
+
+async function cell(t, surface, W, H) {
+	const only = wanted(t.args.only);
+	const reps = repeatCount(t.args.repeat);
+	const runRow = (row) => !only || only.has(row);
+	const src = await pageSource(t);
+	const lg = blocksOf(src).find((b) => b.id === 'lg-js');
+	await t.check(`the built page carries the lg-js block ${surface}`, !!lg, lg ? `lines ${lg.from}-${lg.to}` : 'no script#lg-js: glass.js timers cannot be attributed', { hard: true });
+	if (!lg) return;
+	await t.page.addInitScript(TIMER_PROBE, { from: lg.from, to: lg.to });
+	const f = await t.app.open({ query: 'pm-warm=0', sandbox: surface === 'sandbox' });
+	await f.evaluate(PROBE);
+	await f.evaluate(() => document.fonts.ready.then(() => true));
+	await t.page.waitForTimeout(Number(t.args.settle ?? 6000));
+	if (only || reps > 1) t.log(`glass-show-watch ${surface}: rows ${only ? [...only].sort((a, b) => a - b).join(',') : 'all'} x${reps}`);
+
+	for (const look of list(t.args.looks, LOOKS)) {
+		const base = `${look} ${surface}`;
+		await t.app.look(look);
+		await f.waitForFunction(() => !(window.PM_THEME_TRANSITION?.busy?.() || window.PM_LOOK_COVERED?.()), null, { timeout: 20000 }).catch(() => {});
+		await f.evaluate(() => PM_PAGES.go('dashboard'));
+		await parkPointer(t.page, W, H);
+		await t.page.waitForTimeout(2500);
+		const on = await f.evaluate((w) => document.documentElement.getAttribute('data-theme') === w && document.documentElement.getAttribute('data-lg') === 'on', look);
+		await t.check(`Glass is on in ${base}`, on, '', { hard: true });
+		if (!on) continue;
+
+		/* rows 1-3: nav.page-tabs, the lens captured while shown */
+		for (const [row, how, budget] of [[1, 'display', 150], [2, 'visibility', 2200], [3, 'sheet', 2200]]) {
+			if (!runRow(row)) continue;
+			for (let rep = 1; rep <= reps; rep++) {
+				const tag = tagOf(look, surface, rep, reps);
+				const cap = await f.evaluate(() => window.__gsw.capture('nav.page-tabs', '.page-tab.active'));
+				const shown = cap && await f.evaluate(() => window.__gsw.back());
+				await t.check(`row ${row}: the page-tabs lens is shown before the hide ${tag}`, shown, cap ? 'lens out already' : 'no lens over the active tab: could not judge', { hard: reps === 1 });
+				if (!shown) continue;
+				const out = await hideTabs(f, how);
+				await t.check(`row ${row}: the hide puts the lens out ${tag}`, out.ok, out.ok ? `${Math.round(out.ms)} ms${out.hooked ? ' (PM_LG.sync() fallback: no ambient sync discovered the hide in 1200 ms)' : ''}` : 'lens still shown after 1200 ms and PM_LG.sync()');
+				if (!out.ok) {
+					await showTabs(f, how);
+					if (row === 2) {
+						const traced = await showTrace(f);
+						t.log(`row 2 ${tag}: hide did not put the lens out; ${formatTrace(traced.events, traced.origin)}`);
+					}
+					continue;
+				}
+				await (row === 1 ? showTabsLocked(f, how) : showTabs(f, how));
+				const back = await f.evaluate((b) => window.__gsw.wait('back', b + 2000), budget);
+				let trace = '';
+				if (row === 2) {
+					const traced = await showTrace(f);
+					trace = formatTrace(traced.events, traced.origin);
+					t.log(`row 2 ${tag}: lens back in ${Math.round(back.ms)} ms (budget ${budget} ms)${out.hooked ? '; hide used PM_LG.sync()' : ''}; ${trace}`);
+				} else t.log(`row ${row} ${tag}: lens back in ${Math.round(back.ms)} ms (budget ${budget} ms)`);
+				await t.check(`row ${row}: the lens appears within ${budget} ms ${tag}`, back.ok && back.ms <= budget, trace ? `${Math.round(back.ms)} ms; ${trace}` : `${Math.round(back.ms)} ms`);
+				if (reps > 1 && !back.ok) {
+					await f.evaluate(() => PM_LG.sync());
+					const again = await f.evaluate(() => window.__gsw.wait('back', 2500));
+					t.log(`row ${row} ${tag}: lens was still out after the budget wait; PM_LG.sync() recovery ${again.ok ? Math.round(again.ms) + ' ms' : 'failed'}`);
+				}
+				await t.page.waitForTimeout(400);
+			}
+		}
+
+		/* row 4: the Usage page's own hiding class on .primary-content > .page (display:none via class) */
+		if (runRow(4)) {
+			await f.evaluate(() => PM_PAGES.go('usage'));
+			await t.page.waitForTimeout(2000);
+			for (let rep = 1; rep <= reps; rep++) {
+				const tag = tagOf(look, surface, rep, reps);
+				const cap = await f.evaluate(() => window.__gsw.capture('#pmuRange', ':scope > button.active'));
+				const shown = cap && await f.evaluate(() => window.__gsw.back());
+				await t.check(`row 4: the Usage range lens is shown ${tag}`, shown, cap ? 'lens out already' : 'no lens over the chosen range button: could not judge', { hard: reps === 1 });
+				if (!shown) continue;
+				await f.evaluate(() => { window.__gsw.mark(); document.querySelector('#pmuRange').closest('.primary-content > .page').classList.remove('active'); });
+				const out = await f.evaluate(() => window.__gsw.wait('out', 2000));
+				await t.check(`row 4: the page class hide puts the lens out ${tag}`, out.ok, `${Math.round(out.ms)} ms`);
+				await f.evaluate(() => { window.__gsw.mark(); document.querySelector('#pmuRange').closest('.primary-content > .page').classList.add('active'); });
+				const back = await f.evaluate(() => window.__gsw.wait('back', 2000));
+				t.log(`row 4 ${tag}: lens back in ${Math.round(back.ms)} ms (budget 600 ms; a .page class change alone syncs through lazySync's 140 ms debounce, see the header)`);
+				await t.check(`row 4: the ancestor class show returns the lens within 600 ms ${tag}`, back.ok && back.ms <= 600, `${Math.round(back.ms)} ms`);
+			}
+		}
+		if (runRow(4) && (runRow(9) || runRow(13))) {
+			await f.evaluate(() => PM_PAGES.go('dashboard'));
+			await t.page.waitForTimeout(1500);
+		}
+
+		/* row 9: the onboarding window with the solid backdrop (the stylesheet visibility rule is exercised) */
+		if (runRow(9)) for (let rep = 1; rep <= reps; rep++) {
+			const tag = tagOf(look, surface, rep, reps);
+			/* a warm-up cycle: the first open builds the window; its cost is not the row's */
+			await f.evaluate(() => O55.ui.open());
+			await f.waitForFunction(() => document.documentElement.hasAttribute('data-o55-open'), null, { timeout: 10000 });
+			await f.waitForFunction(() => !document.getElementById('pm-o55-onboarding').classList.contains('o55-opening'), null, { timeout: 10000 });
+			await f.evaluate(() => O55.ui.close());
+			await f.waitForFunction(() => !document.documentElement.hasAttribute('data-o55-open'), null, { timeout: 10000 });
+			await t.page.waitForTimeout(600);
+			const cap = await f.evaluate(() => window.__gsw.capture('nav.page-tabs', '.page-tab.active'));
+			const shown = cap && await f.evaluate(() => window.__gsw.back());
+			await t.check(`row 9: the page-tabs lens is shown before the measured open ${tag}`, shown, cap ? 'lens out already' : 'no lens over the active tab: could not judge', { hard: reps === 1 });
+			if (shown) {
+				await f.evaluate(() => { window.__gsw.mark(); O55.solid.set(true); O55.ui.open(); });
+				const out = await f.evaluate(() => window.__gsw.wait('out', 1500));
+				t.log(`row 9 ${tag}: lens out in ${Math.round(out.ms)} ms from the open call (budget 700 ms)`);
+				await t.check(`row 9: the open puts the behind-window lens out within 700 ms ${tag}`, out.ok && out.ms <= 700, `${Math.round(out.ms)} ms`);
+				await f.waitForFunction(() => document.documentElement.hasAttribute('data-o55-solid') && !document.getElementById('pm-o55-onboarding').classList.contains('o55-opening'), null, { timeout: 10000 });
+				const solid = await f.evaluate(() => getComputedStyle(document.querySelector('nav.page-tabs')).visibility === 'hidden');
+				await t.check(`row 9: the solid sheet rule hides the strip (case C exercised) ${tag}`, solid, solid ? '' : 'nav.page-tabs is not visibility:hidden under the open solid window: the row judged nothing');
+				await f.evaluate(() => {
+					window.__gsw.tGone = 0; window.__gsw.tClose = performance.now();
+					const mo = new MutationObserver(() => { if (!document.documentElement.hasAttribute('data-o55-open')) { window.__gsw.tGone = performance.now(); mo.disconnect(); } });
+					mo.observe(document.documentElement, { attributes: true, attributeFilter: ['data-o55-open'] });
+					O55.ui.close();
+				});
+				const back = await f.evaluate(() => window.__gsw.wait('back', 4000, true));
+				const wall = await f.evaluate(() => window.__gsw.tGone ? Math.round(window.__gsw.tGone - window.__gsw.tClose) : -1);
+				t.log(`row 9 ${tag}: close() to data-o55-open removal ${wall} ms (the window's exit, logged not judged); lens back in ${Math.round(back.ms)} ms from the removal (budget 200 ms)`);
+				await t.check(`row 9: the close returns the lens within 200 ms of data-o55-open's removal ${tag}`, back.ok && back.ms <= 200, `${Math.round(back.ms)} ms`);
+			}
+			await f.evaluate(() => { try { O55.solid.set(null); } catch (e) {} if (window.O55.S.open) O55.ui.close(); });
+			await f.waitForFunction(() => !document.documentElement.hasAttribute('data-o55-open'), null, { timeout: 10000 }).catch(() => {});
+			await t.page.waitForTimeout(600);
+		}
+
+		/* row 13: the resting wake count with one strip hidden (row 1's method) */
+		if (runRow(13)) for (let rep = 1; rep <= reps; rep++) {
+			const tag = tagOf(look, surface, rep, reps);
+			await f.evaluate(() => { const s = document.querySelector('nav.page-tabs'); s.style.display = ''; s.style.visibility = ''; const st = document.getElementById('gsw-case-c'); if (st) st.remove(); });
+			await parkPointer(t.page, W, H);
+			await t.page.waitForTimeout(2000);
+			const cap = await f.evaluate(() => window.__gsw.capture('nav.page-tabs', '.page-tab.active'));
+			const shown = cap && await f.evaluate(() => window.__gsw.back());
+			await t.check(`row 13: the page-tabs lens is shown before the rest count ${tag}`, shown, cap ? 'lens out already' : 'no lens over the active tab: could not judge', { hard: reps === 1 });
+			if (!shown) continue;
+			const out = await hideTabs(f, 'display');
+			await t.check(`row 13: the strip is hidden for the rest count ${tag}`, out.ok, out.ok ? `${Math.round(out.ms)} ms${out.hooked ? ' (PM_LG.sync() fallback)' : ''}` : 'lens still shown');
+			if (!out.ok) continue;
+			await f.evaluate(() => window.__swt.arm());
+			await t.page.waitForTimeout(10000);
+			const c = await f.evaluate(() => window.__swt.read());
+			t.log(`row 13 ${tag}: glass.js show-watch timer requests in 10 s: ${c.n400} at 400 ms, ${c.n2000} at 2000 ms [${c.sites.join(', ')}]`);
+			await t.check(`row 13: no 400 ms show-watch timer is asked for ${tag}`, c.n400 === 0, `${c.n400} requests at 400 ms (main asks about 25 in 10 s)`);
+			await t.check(`row 13: at most 6 show-watch timer requests in 10 s ${tag}`, c.n400 + c.n2000 <= 6, `${c.n400 + c.n2000} requests (the 2000 ms net asks about 5)`);
+			await showTabsLocked(f, 'display');
+			const back = await f.evaluate(() => window.__gsw.wait('back', 2040));
+			t.log(`row 13 ${tag}: lens back in ${Math.round(back.ms)} ms after the count (row 1's 150 ms budget)`);
+			await t.check(`row 13: the lens still appears within 150 ms once shown ${tag}`, back.ok && back.ms <= 150, `${Math.round(back.ms)} ms`);
+		}
+	}
+	await parkPointer(t.page, W, H);
+}
+
+export const tests = {};
+for (const surface of ['normal', 'sandbox']) {
+	tests[`E3 glass show-watch ${surface}`] = async (t) => {
+		if (!t.app.surfaces().includes(surface)) { t.log(`skipped: the sandbox switch leaves out the ${surface} surface`); return; }
+		const [W, H] = String(t.args.size || '1920x1080').split('x').map(Number);
+		await muteSound(t.page);
+		await t.viewport(W, H);
+		await t.emulate({ reducedMotion: 'no-preference' });
+		await cell(t, surface, W, H);
+	};
+}
