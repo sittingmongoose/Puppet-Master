@@ -9,6 +9,9 @@ here. Nothing here earns kill credit.
 """
 C1 = 'scripts/pm_goal_dg_ca_c1.py'
 C2 = 'scripts/pm_goal_dg_ca_c2.py'
+R3 = 'scripts/pm_goal_dg_ca3_route.py'
+N3 = 'scripts/pm_goal_dg_ca3_native.py'
+IX = 'scripts/pm_goal_dg_ca3_index.py'
 AS = 'scripts/pm_goal_dg_ca_assignment.py'
 OWN = 'scripts/pm_goal_dg_ca_owners.py'
 ST = 'scripts/pm_goal_test_storage.py'
@@ -373,6 +376,18 @@ PROOFS = {
         "uint64 sequence, so a ref cannot already be in _originals when "
         "issued through any family owner call.",
         [(AD, 383), (AD, 380)]),
+    'dg5/C3/control_epoch/number': _p(
+        "The latch control_epoch increment is unreachable at the ceiling: "
+        "before_stop_entry (called at latch before the increment) builds the "
+        "complete numeric inventory from the current control, deriving "
+        "control_epoch+1/+2 domains, and h_arg canonicalises that argument "
+        "through the physical-integer range - a control_epoch at uint64 max "
+        "is refused there first (witnessed in the supplement smoke: "
+        "C3/argument/numrule/physical_integer_range). At publish_control the "
+        "native selector sha over the same edited control refuses earlier. "
+        "A stored control_epoch that could overflow the increment therefore "
+        "cannot be carried to it by any coherent route state.",
+        [(R3, 516), (R3, 591), (R3, 682)]),
     'dg5/site/pm_goal_dg_ca_owners.py:176': _p(
         "World.selection is called only from install_writer_domain (with the "
         "domain wrapper it has just written in the same call) and from "
