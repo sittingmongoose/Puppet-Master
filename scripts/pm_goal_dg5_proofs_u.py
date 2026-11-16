@@ -210,4 +210,19 @@ PROOFS = {
             'objective_text refuses at dgu/sir/request/schema/objective_text), the result dict '
             'is owner-built from those validated scalars, and the identity list holds strings '
             'only. No complete call can present another Python type to :178.')),
+    SITE + '1842': dict(
+        kind='code-selection',
+        families=['goal.updated'],
+        depends_on=['dg5/site/pm_goal_test_storage.py:1633'],
+        sites=[(U, 1842), (U, 1843), ('scripts/pm_goal_test_storage.py', 1632),
+               ('scripts/pm_goal_test_storage.py', 1633)],
+        argument=(
+            'EventInspector.request_for at :1842 requires the Storage event index entry to '
+            'exist before calling storage.read_event(event_id) on the next line. read_event '
+            'looks up the same index and requires the same entry at '
+            'pm_goal_test_storage.py:1633 (read/event_unavailable). With :1842 cut, every '
+            'unknown event still refuses there (the authored inspect_request_unknown_event '
+            'chain witnesses exactly this), so :1842 selects the inspector code '
+            'dgu/inspect/event_unavailable and never gates acceptance alone. It closes by '
+            'this proof once the Storage read row is closed.')),
 }
