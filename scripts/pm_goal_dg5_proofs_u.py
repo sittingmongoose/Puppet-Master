@@ -417,4 +417,38 @@ PROOFS = {
             'physical-row schema bound is a const, a computed digest, or identical to a '
             'bound its sources already passed, so no complete owner call can make this '
             'row refuse alone.')),
+    'dg5/dgu/reader/audit/result/schema': dict(
+        kind='entailed-by-audit-construction',
+        families=['goal.updated'],
+        depends_on=[],
+        sites=[(U, 1632), (U, 1667), (U, 1674),
+               ('Plans/goal_updated_consumer_contracts.schema.json', 364),
+               ('Plans/goal_updated_consumer_contracts.schema.json', 418)],
+        argument=(
+            'read_audit builds its result (:1667-1674) only from constants '
+            '(reader_binding, action_authority, checkpoint_effect), the request just '
+            'validated against AuditReadRequest at entry, the source wrapper and '
+            'progress snapshot just read through their own whole-root validations, a '
+            'selector computed from that snapshot, and - for the terminal branch - the '
+            'terminal wrapper just unwrapped against StorageTerminal. AuditedProgress '
+            'and AuditedTerminal (:364/:418) reference exactly those validated shapes '
+            'with no tighter bound at any copied field, so no complete read_audit call '
+            'can make this row refuse alone. (Its clause-closure roots are a separate '
+            'gate.)')),
+    'dg5/dgu/inspect/witness/schema': dict(
+        kind='entailed-by-inspect-construction',
+        families=['goal.updated'],
+        depends_on=['dg5/dgu/inspect/event/schema'],
+        sites=[(U, 1909), (U, 1918), ('Plans/goal_updated_consumer_contracts.schema.json', 520)],
+        argument=(
+            'inspect builds the witness (:1909-1916) only from the request just '
+            'validated against EventReadRequest, the snapshot read token, the event '
+            'just validated against SelectedActiveEvent, the read-validated source '
+            'wrapper, progress head and selected snapshot, the body receipt wrapper '
+            'just read through its own whole-root validation, the frozen publication '
+            'already join-checked at :1891-1892, and the installed resource graph '
+            'digest. PrivateEventReadWitness (:520) references exactly those validated '
+            'shapes with no tighter bound at any copied field, so no complete inspect '
+            'call can make this row refuse alone once the inspect event row holds. '
+            '(Its clause-closure root is a separate gate.)')),
 }
