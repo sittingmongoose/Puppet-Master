@@ -20,7 +20,11 @@
   const rowOfFixture = (id) => { const r = rowOf(id); return !!r && !r.hasAttribute('data-o55-added'); };
   const rowOf = (id) => Array.prototype.find.call(document.querySelectorAll('#projectMenu [data-project]'), (r) => r.getAttribute('data-project') === id) || null;
   /* the Projects setup made or opened, from its own record: the committed one (Creating), and the one it finished into */
+  /* (a new install, ?o55=fresh, clears the onboarding record as it boots, 95-boot.js: the Projects it listed are gone
+     from this load on, and an active id that named one of them is stale) */
+  const freshInstall = (() => { try { return new URLSearchParams(location.search).get('o55') === 'fresh'; } catch (_) { return false; } })();
   function setupProjects() {
+    if (freshInstall) return [];
     const rec = O55.store.get('onboarding', null), out = [];
     if (!rec) return out;
     const d = rec.drafts && rec.drafts.main, cm = rec.commit, fin = rec.finished;
