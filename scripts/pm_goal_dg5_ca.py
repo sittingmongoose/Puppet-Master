@@ -33,7 +33,9 @@ def cases(cls):
             def call(self, group, name, fn, *args, **kwargs):
                 saved = bridge.CASE[0]
                 expected = args[0] if args else kwargs.get('expected')
-                bridge.CASE[0] = dict(id=group + '/' + name, expected=expected)
+                import pm_goal_dg5_supplement_ca as supplement
+                bridge.CASE[0] = dict(id=group + '/' + name, expected=expected,
+                                      dg5_target=supplement.TARGETS.get(group + '/' + name))
                 try:
                     return original(self, group, name, fn, *args, **kwargs)
                 finally:
@@ -69,6 +71,14 @@ def install():
 
 def main():
     install()
+    if os.environ.get('PM_DG5_SUPPLEMENT', '1') == '1':
+        import pm_goal_dg5_supplement_ca as supplement
+        original_load = ca.load_extra_groups
+
+        def load_extra_groups():
+            original_load()
+            ca.GROUPS['DG5'] = supplement.cases
+        ca.load_extra_groups = load_extra_groups
     scratch = Path(os.environ['PM_DG5_SCRATCH'])
     scratch.mkdir(parents=True, exist_ok=True)
     # Original suites own their temporary subdirectories, never the DG5 root.
