@@ -50540,3 +50540,47 @@ negative_constraints:
 - No producer adoption, native execution claim, readiness clearance or governance seal is granted.
 ```
 
+### DL-2368: Event Authority registers remote_access.route_test_completed (admission merge 2)
+
+```yaml
+plan_unit_id: DL-2368
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: |-
+  Event Authority registers `remote_access.route_test_completed` as family `event-family-remote-access-route-test-completed` revision 1.0.0 in admission merge 2 of PNC-019. On 2026-11-14 Jared answered card EA-P2 with option B ("Two merges: the 173 ready now, then the rest"), so the remaining prepared families are admitted in this second merge after the first 173. `remote_access.route_test_completed` is one of the 249 names of the 2026-11-04 census recount (bucket e). Jared's answer to card EA-P1, option A ("Add each once its definition passes every check"), admits each such name once its full definition, its record and both reviews pass; DL-039's no bulk registration stands. Under DL-096 ("And yes I approve the DL-093 covering the families and later") this entry is Jared's decision entry for `remote_access.route_test_completed`, and the family's DL-077 admission record cites it as its decision_ref. DL-400 keeps this family's own commit, entry, record and twelve-criterion assessment inside the batched landing.
+
+  The registry moves from revision 2026-11-16.231 (450 families, SHA-256 c0872dedd7fbbc06cb0900f2a3a22042af25524442a22e0bc738391e466bb387) to 2026-11-16.232 (451 families, SHA-256 9b3ddee04154b9ccba18d28a812def09d37a90cc396fe765fe7bad86a011d77e). The appended row, canonical SHA-256 7074696c01245268ccb42009354b6920d5809af44a1b52d43080005f599ad64a, has scope policy application_only, payload `https://puppetmaster.local/schemas/event_payloads/w3e/remote_access_route_test_completed/1.0.0/schema.json` at Plans/event_payloads/w3e/remote_access_route_test_completed.schema.json#, semantic owner Plans/Remote_Access_System.md#RAS-1409, payload owner Plans/Contracts_V0.md#CV-1409 and retention RP-OPERATIONAL-SECURITY-APPLICATION-2555D@1.0.0. Under DL-078's standing rule the PNC-019 checkpoint moves in the same commit: EVENT_FAMILY_REGISTRY_REVISION 2026-11-16.232 and EVENT_FAMILY_REGISTRY_KERNEL_ROW_COUNT 451 in scripts/pm_pnc019_currentness.py, and the approved checkpoint count in the two DL-078 test files.
+
+  Depth: reports/event-authority-20261116/admission-merge-2/depth/remote_access.route_test_completed.json (SHA-256 337962b520346d5ba2e9ed2c2c24f971c59f36afac7ef887e8921fd2f912855a) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/remote_access.route_test_completed.json.
+
+  Native execution stays NOT_RUN and every payload version's producer still requires owner adoption. This entry registers only `remote_access.route_test_completed`. It changes no other family, validator, seal condition, retention assignment or holding bucket, and it grants no producer adoption, native claim, readiness clearance or governance seal. It lands only with its merge, after the merge's review pair and the coordinator's landing go.
+gui_related: false
+gui_classification_reason: Registers one event family in the Event Authority registry; no visual presentation changes.
+depends_on: [DL-039, DL-077, DL-078, DL-096, DL-400, DL-414]
+unblocks: []
+acceptance_criteria:
+- "The live registry contains exactly one row for remote_access.route_test_completed, equal to the row whose canonical SHA-256 this entry records."
+- "The DL-077 admission record reports/event-authority-20260911/admission-records/remote_access.route_test_completed.json passes the frozen seal check with no problem for this family."
+- "The checkpoint pins name revision 2026-11-16.232 and 451 families."
+validation_surfaces:
+- python3 Plans/.audits/event-authority-2026-08-12/independent-validator/pm_event_authority_independent_validator.py
+- python3 scripts/pm-implementation-readiness.py validate
+- python3 scripts/pm-ea-admission-writer.py verify
+risk_class: event_authority_admission
+reasoning_tier: high
+context_scope: event_authority_pnc019_admission_merge_2
+implementation_surfaces: [Plans/event_family_registry.json, scripts/pm_pnc019_currentness.py]
+node_compile_hint: {mode: owner_contract_only, create_worknodes: false, create_nodeseeds: false}
+source_lineage:
+- "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/ANSWERS_EA-P_20261114.md; SHA-256 8f8c89d237c83fa265aa2baeebd041b657e757014a3a806aff451efb6641f1ac (EA-P1 A, EA-P2 B, Jared 2026-11-14)"
+- "reports/event-authority-20261104/census-recount-20261104/NEW-LIST.json (recount name)"
+- "reports/event-authority-20261116/admission-merge-2/readiness-list.json; SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792"
+- "reports/event-authority-20261116/admission-merge-2/readiness-list.json; SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792"
+- "scripts/pm-ea-admission-writer.py (pm-ea-admission-writer.v1)"
+preserved_exact_tokens: ["remote_access.route_test_completed", "event-family-remote-access-route-test-completed", "2026-11-16.232", "9b3ddee04154b9ccba18d28a812def09d37a90cc396fe765fe7bad86a011d77e", "7074696c01245268ccb42009354b6920d5809af44a1b52d43080005f599ad64a", "Add each once its definition passes every check", "Two merges: the 173 ready now, then the rest", "And yes I approve the DL-093 covering the families and later"]
+negative_constraints:
+- No other family, validator, seal condition, retention assignment or holding bucket changes.
+- No producer adoption, native execution claim, readiness clearance or governance seal is granted.
+```
+
