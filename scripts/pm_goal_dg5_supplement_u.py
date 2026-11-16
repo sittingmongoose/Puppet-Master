@@ -463,6 +463,23 @@ def inspect_frozen_producer_only(d):
     return w, lambda: w.inspector.inspect(r, g['user'], g['user_permission'])
 
 
+@case('U-DG5/N/freeze_final_head_only', 'dgu/producer/freeze/final_head', SITE + '1769',
+      'Single defect at the producer.freeze before_release boundary: the body_committed snapshot '
+      'pending_intent_sha256 is substituted (head rewired), so the phase and epoch edges of the '
+      'outer advance (:1481/:1482) and its CAS still hold and only final_head (:1769) refuses. The '
+      'fault-matrix progress mutation runs a nested freeze, which also breaks those edges.')
+def freeze_final_head_only(d):
+    w, g, req, adm, ag = U._upto(d, 'commit')
+    holder = {}
+
+    def mut(w_, ctx):
+        U.rewrite_progress_all(w_, g, U.op_of(adm), lambda r: dict(
+            r, pending_intent_sha256='0' * 64) if r['phase'] == 'body_committed' else r)
+
+    U.inject(w, 'producer.freeze', 'before_release', mut, holder)
+    return w, lambda: w.producer.freeze(g['scope'], U.op_of(adm)), holder
+
+
 @case('U-DG5/N/inspect_final_custody', 'dgu/inspect/final_custody', SITE + '1920',
       'Single defect: the acquired snapshot custody schema_version is substituted - a field the '
       'GenericSource custody-defect check does not bind - so every custody join holds and only the '
