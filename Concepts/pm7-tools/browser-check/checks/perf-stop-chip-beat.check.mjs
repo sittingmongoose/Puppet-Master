@@ -541,12 +541,13 @@ export function judgeSpeed(R) {
 		if (!speed) continue;
 		const factor = SPEED_FACTOR[speed];
 		const end = s + 1 < marks.length ? marks[s + 1].i : R.rows.length;
-		const lastG = {}, lastB = {};
+		const lastG = {}, lastB = {}, lastRow = {};
 		let nier = false, glow = false;
 		for (let i = m.i; i < end && i < R.rows.length; i++) {
 			const r = R.rows[i];
 			if (!r || (r.flow !== 'waiting' && r.flow !== 'flowing')) continue;
 			if (r.nier === 'on') nier = true;
+			lastRow[r.flow] = r;
 			if (r.g && r.g.dur > 0) lastG[r.flow] = r.g;
 			if (r.b && r.b.dur > 0) { lastB[r.flow] = r.b; glow = true; }
 		}
@@ -554,6 +555,15 @@ export function judgeSpeed(R) {
 		for (const flow of ['waiting', 'flowing']) {
 			const glyph = lastG[flow], backlight = lastB[flow];
 			if (!glyph) { bad.push({ speed, flow, missing: true }); continue; }
+			// PM7PERF-STOPCHIP-SPEED-STALE-BACKLIGHT (R65 A1): the pace's terminal sample decides whether the
+			// backlight is there. An earlier scaled sample does not stand in for a later missing one: a glyph
+			// still sampled while the backlight has disappeared is a loop the run no longer shows, and a look
+			// that must draw both fails as could not judge. NieR's glyph-only allowance is unchanged.
+			const term = lastRow[flow];
+			if (term && term.g && term.g.dur > 0 && !(term.b && term.b.dur > 0) && !(nier && !glow)) {
+				bad.push({ speed, flow, layer: 'backlight', missing: true });
+				continue;
+			}
 			const want = LOOP_BASE[flow] * factor;
 			if (Math.abs(glyph.dur - want) > 1) bad.push({ speed, flow, layer: 'glyph', dur: glyph.dur, want });
 			if (backlight) { if (Math.abs(backlight.dur - want) > 1) bad.push({ speed, flow, layer: 'backlight', dur: backlight.dur, want }); }
