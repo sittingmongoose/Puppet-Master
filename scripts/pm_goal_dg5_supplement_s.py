@@ -936,3 +936,20 @@ def _(suite):
         w.storage.transact([dict(table='workflow_born_worknode', key=node['physical_key'],
                                   expected=cell['version'], value=value)])
     start_case(suite, edits=dict(born_worknodes=pad), pre=pre)
+
+
+# Generic row missing: a corrupt off-run frame appended before the authentic
+# start (the S3 malformed-frame shape) truncates the generic snapshot before
+# the start row, while direct original acquisition still reads the start.
+# The guarded rows[0] dereference makes this a presence witness.
+@negative('generic_row_missing_corrupt_pre_frame', 'inspect_original/generic_row_missing', READERS + '812')
+def _(suite):
+    world, handles = O.new_world(suite)
+    event = O.extra_event(world, 'dg5pre')
+    info = world.storage.events[event['event_id']]
+    path = world.storage._segment_path(info['segment_generation'])
+    raw = bytearray(path.read_bytes())
+    raw[info['offset'] + info['length'] - 1] ^= 1
+    path.write_bytes(bytes(raw))
+    world.start.commit_start(O.request(world), handles)
+    R.StartedReaders(world.registry, world=world).inspect_original(O.sreq(world))
