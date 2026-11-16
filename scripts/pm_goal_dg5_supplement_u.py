@@ -366,6 +366,26 @@ def progress_schema_bogus_phase(d):
                                        expected_phase=('source_admitted',), where='o')
 
 
+@case('U-DG5/N/reserve_pending_schema_blocked_ref_type', 'dgu/body/reserve/pending/schema/after_record/blocked_reason_ref',
+      ('dg5/dgu/body/reserve/pending/schema', 'dg5/dgu/body/goal_body_control/schema'),
+      'Single defect: the genuine pending intent carries an integer blocked_reason_ref in its '
+      'after_record, with intent_sha256 recomputed so the intent and stale checks hold. The '
+      'first schema to refuse is the reserve pending whole-root validation; with it cut, the '
+      'control row validation refuses the identical embedded pending by the identical type '
+      'predicate, so the two schema rows are a declared duplicate set for this input.')
+def reserve_pending_schema_blocked_ref_type(d):
+    w, g = U._goal(d)
+    req = O.direct_request(w, g, 'x')
+    adm, _ = w.command.admit_and_capture(req)
+    sc = g['scope']
+    src = w.source.read_source(sc, U.op_of(adm), 'o')
+    cur = w.body.read_private(sc, 'o')
+    pending = w.command._pending(adm, src, cur, 'o')
+    pending['after_record'] = dict(pending['after_record'], blocked_reason_ref=1)
+    pending['intent_sha256'] = O.intent_sha(pending)
+    return w, lambda: w.body.reserve(sc, pending, lambda new_control: [])
+
+
 @case('U-DG5/N/inspect_source_defect', 'dgu/inspect/source_defect', SITE + '1867',
       'Single defect in the acquired source snapshot: first custody group_digest is substituted, so '
       'GenericSource halts before that event (a custody defect at its position) and the inspected event '
