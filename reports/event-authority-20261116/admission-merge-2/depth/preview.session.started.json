@@ -1,0 +1,365 @@
+{
+ "schema_id": "pm.assurance.event_authority.admission_depth_assessment.v1",
+ "assessment_kind": "admission_twelve_criteria",
+ "writer": "pm-ea-admission-writer.v1",
+ "merge": "admission-merge-2",
+ "registry": {
+  "path": "Plans/event_family_registry.json",
+  "revision": "2026-11-16.221",
+  "sha256": "698f874f4bd51501d5f47dd23ebe884f524fda545d8f172307598a236e55977e",
+  "family_count": 440,
+  "row_pointer": "#/families/439"
+ },
+ "base_commit": "45b4ccf25270c486dbc682805cd455ce4ca25fb0",
+ "rubric": "Step 8 depth matrix, twelve criteria (DL-077); PASS needs Plans/ evidence",
+ "native_execution": "NOT_RUN",
+ "rows": [
+  {
+   "event_type": "preview.session.started",
+   "family_id": "event-family-preview-session-started",
+   "family_revision": "1.0.0",
+   "cells": {
+    "membership_version": {
+     "status": "PASS",
+     "representation": "exact_registry_membership",
+     "finding": "Registered at registry revision 2026-11-16.221 as #/families/439 (canonical row SHA-256 e627698877884db59923390e84e8aaccc889c9cb827f634b3b9acf08633a1e96); before this commit the family was absent.",
+     "evidence": [
+      {
+       "path": "Plans/event_family_registry.json",
+       "json_pointer": "#/families/439",
+       "line_start": 28577,
+       "line_end": 28619,
+       "quote": "\"event_type\": \"preview.session.started\"",
+       "quote_line": 28580,
+       "file_sha256": "698f874f4bd51501d5f47dd23ebe884f524fda545d8f172307598a236e55977e",
+       "quote_check": "exact"
+      }
+     ]
+    },
+    "owner_doc": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "preview.session.started has its own current owner doc contract; F1/F2/F3 and exact-type controls execute against this head.",
+     "evidence": [
+      {
+       "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+       "unit": "SMPFS-315",
+       "line_start": 16346,
+       "line_end": 16346,
+       "quote": "preview.session.started owner contract",
+       "quote_check": "exact",
+       "quote_scope": "unit SMPFS-315, Plans/Section15_MVP_Promoted_Features_Spec.md:16346-16400",
+       "file_sha256": "752b95d90e41b07c28e1376d0e1fdfdac2052196ca2e73e31e838f6f3124869d"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "owner_doc",
+      "status": "PASS"
+     }
+    },
+    "producer": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "preview.session.started has its own current producer contract; F1/F2/F3 and exact-type controls execute against this head.",
+     "evidence": [
+      {
+       "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+       "unit": "SMPFS-315",
+       "line_start": 16356,
+       "line_end": 16356,
+       "quote": "Producer: PreviewSession owner consumes cmd.orchestrator.preview_open after resolving the document/artifact subject and actually creating/loading the runtime. Commit runtime_state ",
+       "quote_check": "exact",
+       "quote_scope": "unit SMPFS-315, Plans/Section15_MVP_Promoted_Features_Spec.md:16346-16400",
+       "file_sha256": "752b95d90e41b07c28e1376d0e1fdfdac2052196ca2e73e31e838f6f3124869d"
+      },
+      {
+       "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+       "unit": "SMPFS-315",
+       "line_start": 16369,
+       "line_end": 16369,
+       "quote": "Round 7 authenticated history for preview.session.started: retained read, checkpoint and rebuild accept supported 1.0.0 originals written with projector_replay_only as well as dedu",
+       "quote_check": "exact",
+       "quote_scope": "unit SMPFS-315, Plans/Section15_MVP_Promoted_Features_Spec.md:16346-16400",
+       "file_sha256": "752b95d90e41b07c28e1376d0e1fdfdac2052196ca2e73e31e838f6f3124869d"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "producer",
+      "status": "PASS"
+     }
+    },
+    "closed_payload_schema": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "preview.session.started has its own current closed payload schema contract; F1/F2/F3 and exact-type controls execute against this head.",
+     "evidence": [
+      {
+       "path": "Plans/ds15_preview_session_started.schema.json",
+       "unit": "root",
+       "line_start": 3,
+       "line_end": 3,
+       "quote": "\"additionalProperties\": false,",
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "file_sha256": "7b29740633f8ba5e3c6ed8e909e11cd6241ddf1038dc075bcc000d77f3f40a7c"
+      },
+      {
+       "path": "Plans/ds15_preview_session_started.schema.json",
+       "unit": "root",
+       "line_start": 21,
+       "line_end": 21,
+       "quote": "\"const\": \"1.0.0\"",
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "file_sha256": "7b29740633f8ba5e3c6ed8e909e11cd6241ddf1038dc075bcc000d77f3f40a7c"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "closed_payload_schema",
+      "status": "PASS"
+     }
+    },
+    "scope_identity": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "preview.session.started has its own current scope identity contract; F1/F2/F3 and exact-type controls execute against this head.",
+     "evidence": [
+      {
+       "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+       "unit": "SMPFS-315",
+       "line_start": 16358,
+       "line_end": 16358,
+       "quote": "Idempotency key is sha256(canonical MessagePack array [\"preview.session.started\", \"1.0.0\", actual project_id, preview_subject_id, preview_session_id, preview_revision]). Changed by",
+       "quote_check": "exact",
+       "quote_scope": "unit SMPFS-315, Plans/Section15_MVP_Promoted_Features_Spec.md:16346-16400",
+       "file_sha256": "752b95d90e41b07c28e1376d0e1fdfdac2052196ca2e73e31e838f6f3124869d"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "scope_identity",
+      "status": "PASS"
+     }
+    },
+    "replay_idempotency": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "preview.session.started has its own current replay idempotency contract; F1/F2/F3 and exact-type controls execute against this head.",
+     "evidence": [
+      {
+       "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+       "unit": "SMPFS-315",
+       "line_start": 16361,
+       "line_end": 16361,
+       "quote": "Replay: lost acknowledgement returns original receipt, event_id and frozen payload; retry uses original outcome custody without repeating capture, thread creation, launch, stop, re",
+       "quote_check": "exact",
+       "quote_scope": "unit SMPFS-315, Plans/Section15_MVP_Promoted_Features_Spec.md:16346-16400",
+       "file_sha256": "752b95d90e41b07c28e1376d0e1fdfdac2052196ca2e73e31e838f6f3124869d"
+      },
+      {
+       "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+       "unit": "SMPFS-315",
+       "line_start": 16369,
+       "line_end": 16369,
+       "quote": "Round 7 authenticated history for preview.session.started: retained read, checkpoint and rebuild accept supported 1.0.0 originals written with projector_replay_only as well as dedu",
+       "quote_check": "exact",
+       "quote_scope": "unit SMPFS-315, Plans/Section15_MVP_Promoted_Features_Spec.md:16346-16400",
+       "file_sha256": "752b95d90e41b07c28e1376d0e1fdfdac2052196ca2e73e31e838f6f3124869d"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "replay_idempotency",
+      "status": "PASS"
+     }
+    },
+    "retention": {
+     "status": "PASS",
+     "representation": "integrated_retention_delta",
+     "finding": "Current exact-family BOUND retention assignment: {\"application_policy_ref\": null, \"decisions\": [\"DL-401\", \"DL-415\", \"DL-421\", \"DL-500\"], \"event_type\": \"preview.session.started\", \"existing_checkpoints\": [{\"family_id\": \"ds15_preview_session_started_checkpoint\", \"policy_ref\": \"RP-PROJECTION-3GEN@1.0.0\"}], \"grade_source\": \"reports/event-authority-20261104/DS15-self-grade.json\", \"history_policy_ref\": \"RP-TELEMETRY-90D@1.0.0\", \"lane\": \"DS15\", \"original_and_checkpoint_assignments\": [{\"decision\": \"DL-500\", \"family_id\": \"ds15_preview_session_started_checkpoint\", \"policy_ref\": \"RP-PROJECTION-3GEN@1.0.0\"}], \"owner\": \"Plans/storage-plan.md#SP-652\", \"owner_line\": 45130, \"prior_finding\": \"Event/checkpoint retention remains explicitly PENDING_RETENTION_DECISION for RT.\", \"question\": null, \"status\": \"BOUND\"}",
+     "evidence": [
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-652",
+       "line_start": 49558,
+       "line_end": 49558,
+       "quote": "\\ = RP-TELEMETRY-90D@1.0.0`, under DL-401, DL-415, DL-421, DL-500.\\n\\nUse the existing policy object\\",
+       "quote_check": "exact",
+       "quote_scope": "unit SP-652, Plans/storage-plan.md:49535-49600",
+       "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "retention",
+      "status": "PASS"
+     }
+    },
+    "redaction_custody": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "preview.session.started has its own current redaction custody contract; F1/F2/F3 and exact-type controls execute against this head.",
+     "evidence": [
+      {
+       "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+       "unit": "SMPFS-315",
+       "line_start": 16363,
+       "line_end": 16363,
+       "quote": "backup/restore of the full original source/log/receipt closure. Checkpoints are derived and grant no access. Every read rechecks current subject/thread/Project permissions and sour",
+       "quote_check": "exact",
+       "quote_scope": "unit SMPFS-315, Plans/Section15_MVP_Promoted_Features_Spec.md:16346-16400",
+       "file_sha256": "752b95d90e41b07c28e1376d0e1fdfdac2052196ca2e73e31e838f6f3124869d"
+      },
+      {
+       "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+       "unit": "SMPFS-315",
+       "line_start": 16369,
+       "line_end": 16369,
+       "quote": "Round 7 authenticated history for preview.session.started: retained read, checkpoint and rebuild accept supported 1.0.0 originals written with projector_replay_only as well as dedu",
+       "quote_check": "exact",
+       "quote_scope": "unit SMPFS-315, Plans/Section15_MVP_Promoted_Features_Spec.md:16346-16400",
+       "file_sha256": "752b95d90e41b07c28e1376d0e1fdfdac2052196ca2e73e31e838f6f3124869d"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "redaction_custody",
+      "status": "PASS"
+     }
+    },
+    "transitions": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "preview.session.started has its own current transitions contract; F1/F2/F3 and exact-type controls execute against this head.",
+     "evidence": [
+      {
+       "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+       "unit": "SMPFS-315",
+       "line_start": 16356,
+       "line_end": 16356,
+       "quote": "Producer: PreviewSession owner consumes cmd.orchestrator.preview_open after resolving the document/artifact subject and actually creating/loading the runtime. Commit runtime_state ",
+       "quote_check": "exact",
+       "quote_scope": "unit SMPFS-315, Plans/Section15_MVP_Promoted_Features_Spec.md:16346-16400",
+       "file_sha256": "752b95d90e41b07c28e1376d0e1fdfdac2052196ca2e73e31e838f6f3124869d"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "transitions",
+      "status": "PASS"
+     }
+    },
+    "consumers_checkpoints": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "preview.session.started has its own current consumers checkpoints contract; F1/F2/F3 and exact-type controls execute against this head.",
+     "evidence": [
+      {
+       "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+       "unit": "SMPFS-315",
+       "line_start": 16362,
+       "line_end": 16362,
+       "quote": "reader.ds15.preview_session_started.v1@1.0.0, operating as Preview subject history reader, reads only preview.session.started@1.0.0. It adopts SP-278 by name and DL-076 nine-field ",
+       "quote_check": "exact",
+       "quote_scope": "unit SMPFS-315, Plans/Section15_MVP_Promoted_Features_Spec.md:16346-16400",
+       "file_sha256": "752b95d90e41b07c28e1376d0e1fdfdac2052196ca2e73e31e838f6f3124869d"
+      },
+      {
+       "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+       "unit": "SMPFS-315",
+       "line_start": 16369,
+       "line_end": 16369,
+       "quote": "Round 7 authenticated history for preview.session.started: retained read, checkpoint and rebuild accept supported 1.0.0 originals written with projector_replay_only as well as dedu",
+       "quote_check": "exact",
+       "quote_scope": "unit SMPFS-315, Plans/Section15_MVP_Promoted_Features_Spec.md:16346-16400",
+       "file_sha256": "752b95d90e41b07c28e1376d0e1fdfdac2052196ca2e73e31e838f6f3124869d"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "consumers_checkpoints",
+      "status": "PASS"
+     }
+    },
+    "compatibility_withdrawal": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "preview.session.started has its own current compatibility withdrawal contract; F1/F2/F3 and exact-type controls execute against this head. Sweep part 2B: retained readers select the frozen recipe only through SP-1101 (sealed write custody, then the shared RetainedDispatcher), and the frozen recipe carries the CV-1101 profiles; owner-valid history stays readable and forged, unsealed, unsupported or wrong-family selections refuse.",
+     "evidence": [
+      {
+       "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+       "unit": "SMPFS-315",
+       "line_start": 16366,
+       "line_end": 16366,
+       "quote": "withdrawal: exact 1.0.0 event/reader only; refuse unknown fields/version before effects or checkpoint. No alias or deployed event predecessor is assumed. Value migrations are expli",
+       "quote_check": "exact",
+       "quote_scope": "unit SMPFS-315, Plans/Section15_MVP_Promoted_Features_Spec.md:16346-16400",
+       "file_sha256": "752b95d90e41b07c28e1376d0e1fdfdac2052196ca2e73e31e838f6f3124869d"
+      },
+      {
+       "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+       "unit": "SMPFS-315",
+       "line_start": 16369,
+       "line_end": 16369,
+       "quote": "Round 7 authenticated history for preview.session.started: retained read, checkpoint and rebuild accept supported 1.0.0 originals written with projector_replay_only as well as dedu",
+       "quote_check": "exact",
+       "quote_scope": "unit SMPFS-315, Plans/Section15_MVP_Promoted_Features_Spec.md:16346-16400",
+       "file_sha256": "752b95d90e41b07c28e1376d0e1fdfdac2052196ca2e73e31e838f6f3124869d"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "compatibility_withdrawal",
+      "status": "PASS"
+     }
+    },
+    "positive_negative_oracles": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "Cycle-8 independent review accepted the residual constructions. Sweep part 2A: every refusal is a guard-table row and the gated tool proves every provable row; S-N1 adopted. Sweep part 2B: S-FMT1 (CV-1101 through the shared predicate, EventRecord and storage_utc_z profiles) and S-N2 (SP-1101 selection and RetainedDispatcher resolution) adopted with their witnesses; JSON Schema keyword cuts are not ported.",
+     "evidence": [
+      {
+       "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+       "unit": "SMPFS-315",
+       "line_start": 16367,
+       "line_end": 16367,
+       "quote": "Oracles: ATS-329 and exact family cases in Plans/ds15_event_contract_fixtures.json execute via scripts/pm-ds15-event-contracts.py: valid/invalid transition, scope joins, original r",
+       "quote_check": "exact",
+       "quote_scope": "unit SMPFS-315, Plans/Section15_MVP_Promoted_Features_Spec.md:16346-16400",
+       "file_sha256": "752b95d90e41b07c28e1376d0e1fdfdac2052196ca2e73e31e838f6f3124869d"
+      },
+      {
+       "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+       "unit": "SMPFS-315",
+       "line_start": 16369,
+       "line_end": 16369,
+       "quote": "Round 7 authenticated history for preview.session.started: retained read, checkpoint and rebuild accept supported 1.0.0 originals written with projector_replay_only as well as dedu",
+       "quote_check": "exact",
+       "quote_scope": "unit SMPFS-315, Plans/Section15_MVP_Promoted_Features_Spec.md:16346-16400",
+       "file_sha256": "752b95d90e41b07c28e1376d0e1fdfdac2052196ca2e73e31e838f6f3124869d"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "positive_negative_oracles",
+      "status": "PASS"
+     }
+    }
+   }
+  }
+ ]
+}
