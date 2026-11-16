@@ -14,6 +14,7 @@ import functools
 import inspect
 import json
 import os
+import pickle
 from binascii import crc32
 from pathlib import Path
 import sys
@@ -100,6 +101,7 @@ def supplements(suite, work):
                        fixture['expected_class'] + ':' + fixture['expected_code'])
     _read_event_supplements(suite, work, base, generation)
     _decode_supplements(suite, work, data, base, generation)
+    _pure_supplements(suite, work)
 
 
 def _read_event_supplements(suite, work, base, generation):
@@ -134,6 +136,22 @@ def _read_event_supplements(suite, work, base, generation):
     suite.negative('dg5-shared', 'frame_declared_payload_plus_one', declared_plus_one,
                    'Corrupt:frame_truncated')
 
+    def magic_resealed():
+        store = storage.TestOwnerStorage.create(work / 'magic-resealed')
+        _handle, _out, rows = selftest.append_one(store, 'dg5-magic-resealed')
+        event_id = rows[0]['event_id']
+        raw = bytearray(base)
+        raw[0] = ord('Q')
+        raw[40:44] = b'\0\0\0\0'
+        raw[40:44] = crc32(bytes(raw[:48])).to_bytes(4, 'little')
+        raw = bytes(raw)
+        store._segment_path(generation).write_bytes(raw)
+        store.events[event_id].update(offset=0, length=len(raw), frame_sha256=storage.sha256(raw),
+                                      segment_generation=generation)
+        return store.read_event(event_id)
+
+    suite.negative('dg5-shared', 'frame_magic_resealed', magic_resealed, 'Corrupt:magic')
+
 
 def _rebuild_frame(frame, header_raw=None, payload_raw=None):
     prefix = bytearray(frame[:48])
@@ -164,7 +182,7 @@ def _decode_supplements(suite, work, data, base, generation):
     commit_payload = group['commit_payload']
     last = commit_payload['last_sequence']
 
-    def decode_case(case_id, buf, offset, prior, expected, prior_control=False):
+    def decode_case(case_id, buf, offset, prior, expected, prior_control=False, target=None):
         def run():
             store = storage.TestOwnerStorage.create(work / ('decode-' + case_id.replace(':', '-')))
             kwargs = dict(generation=generation, prior_sequence=prior, prior_control=prior_control)
@@ -176,7 +194,7 @@ def _decode_supplements(suite, work, data, base, generation):
                                      store.root, world=store,
                                      arguments=dict(args=(buf, offset), kwargs=kwargs),
                                      original=storage.decode_frame,
-                                     target=bridge.target_rows(expected))
+                                     target=target if target is not None else bridge.target_rows(expected))
 
         suite.negative('dg5-shared', case_id, run, expected)
 
@@ -191,10 +209,22 @@ def _decode_supplements(suite, work, data, base, generation):
     del event['scope_kind']
     decode_case('decode_event_record', _rebuild_frame(base, payload_raw=storage.canonical(event)), 0, None,
                 'Corrupt:event_record:frame/event/schema/')
+    identity = 'dg5/site/pm_goal_test_storage.py:583'
     decode_case('decode_header_version', _rebuild_frame(base, header_raw=storage.canonical(
-        [2] + list(header[1:]))), 0, None, 'Unsupported:header_version')
+        [2] + list(header[1:]))), 0, None, 'Unsupported:header_version',
+        target=('dg5/site/pm_goal_test_storage.py:555', identity))
     decode_case('decode_header_shape', _rebuild_frame(base, header_raw=storage.canonical(
-        list(header[:7]))), 0, None, 'Corrupt:header_shape')
+        list(header[:7]))), 0, None, 'Corrupt:header_shape',
+        target=('dg5/site/pm_goal_test_storage.py:558', identity))
+    control = storage.encode_commit_frame(copy.deepcopy(commit_payload), generation, last)
+    decode_case('decode_control_header', base + _rebuild_frame(
+        control, header_raw=storage.canonical(list(header))), len(base), last,
+        'Corrupt:control_header_mismatch')
+    typed = copy.deepcopy(data['base_event'])
+    typed['event_type'] = storage.CONTROL_TYPE
+    decode_case('decode_control_type_data', _rebuild_frame(
+        base, header_raw=storage.canonical([header[0], header[1], storage.CONTROL_TYPE] + list(header[3:])),
+        payload_raw=storage.canonical(typed)), 0, None, 'Corrupt:control_header_mismatch')
     decode_case('decode_control_sequence', storage.encode_commit_frame(
         copy.deepcopy(commit_payload), generation, last), 0, None, 'Corrupt:control_sequence')
 
@@ -217,6 +247,69 @@ def _decode_supplements(suite, work, data, base, generation):
     commit_case('commit_member_shape', lambda p: p.update(members=[[1, 2]]), 'Corrupt:commit_payload_shape')
     commit_case('commit_identity', lambda p: p.update(last_sequence=last - 1),
                 'Corrupt:commit_payload_identity')
+
+
+def _pure_supplements(suite, work):
+    """DG5 negatives for routed sites in pure shared checkers (reducer/codecs/handles).
+
+    Each action is the original whole shared call itself, run through
+    bridge.entry_call over a real Storage root with the routed site declared.
+    """
+    def pure(case_id, make_action, expected, target):
+        def run():
+            store = storage.TestOwnerStorage.create(work / ('pure-' + case_id.replace(':', '-')))
+            action, original, arguments = make_action()
+            try:
+                if bridge.tables.COLLECTOR is None:
+                    return action()
+                case = bridge.CASE[0]
+                return bridge.entry_call(case, case['id'] + '/pure', FAMILY, action, store.root,
+                                         world=store, arguments=arguments, original=original, target=target)
+            except source.Halt as error:
+                # The original suite names halts by their plain reducer code (as _halt does).
+                raise source.SourceRefusal(error.code) from error
+
+        suite.negative('dg5-shared', case_id, run, expected)
+
+    def step_case(case_id, first, second, expected):
+        def make():
+            reducer = source.LifecycleReducer('run')
+            state = reducer.initial()
+            if first is not None:
+                state = reducer.step(state, first, dict(group_digest='g'))
+            return (lambda: reducer.step(state, second, dict(group_digest='g'))), \
+                source.LifecycleReducer.step, dict(args=(state, second, dict(group_digest='g')), kwargs={})
+
+        pure(case_id, make, expected, 'dg5/site/pm_goal_test_source.py:' + case_id.rsplit(':', 1)[-1])
+
+    step_case('source_step_unsupported:598', None,
+              dict(event_type='goal_run.replanned', event_id='e1', sequence_id=1),
+              'reducer/unsupported_same_run:goal_run.replanned')
+    step_case('source_step_terminal_without_start:605', None,
+              dict(event_type='goal_run.cancelled', event_id='e1', sequence_id=1),
+              'reducer/terminal_without_start')
+    step_case('source_step_duplicate_start:601',
+              dict(event_type='goal_run.started', event_id='e1', sequence_id=1),
+              dict(event_type='goal_run.started', event_id='e2', sequence_id=2),
+              'reducer/duplicate_start')
+    pure(' canonical_nonfinite:75'.strip(),
+         lambda: ((lambda: A.canonical(float('inf'))), A.canonical, dict(args=(float('inf'),), kwargs={})),
+         'adapter/canonical/numrule/physical_nonfinite', 'dg5/site/pm_goal_test_owner_adapters.py:75')
+    pure('exact_json_float:415',
+         lambda: ((lambda: A.exact_json(1.5)), A.exact_json, dict(args=(1.5,), kwargs={})),
+         'custody/exact_json/float', 'dg5/site/pm_goal_test_owner_adapters.py:415')
+    pure('storage_u64_negative:197',
+         lambda: ((lambda: storage.u64(-1, 'dg5/shared')), storage.u64, dict(args=(-1, 'dg5/shared'), kwargs={})),
+         'dg5/shared/numrule/integer_range', 'dg5/site/pm_goal_test_storage.py:197')
+    pure('handle_not_serializable:302',
+         lambda: ((lambda: pickle.dumps(A.OriginalHandle())), pickle.dumps, dict(args=(), kwargs={})),
+         'handle/not_serializable', 'dg5/site/pm_goal_test_owner_adapters.py:302')
+    pure('handle_not_copyable_copy:305',
+         lambda: ((lambda: copy.copy(A.OriginalHandle())), copy.copy, dict(args=(), kwargs={})),
+         'handle/not_copyable', 'dg5/site/pm_goal_test_owner_adapters.py:305')
+    pure('handle_not_copyable_deepcopy:308',
+         lambda: ((lambda: copy.deepcopy(A.OriginalHandle())), copy.deepcopy, dict(args=(), kwargs={})),
+         'handle/not_copyable', 'dg5/site/pm_goal_test_owner_adapters.py:308')
 
 
 def main():
