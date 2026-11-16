@@ -45744,3 +45744,47 @@ negative_constraints:
 - No producer adoption, native execution claim, readiness clearance or governance seal is granted.
 ```
 
+### DL-2259: Event Authority registers collaboration.created (admission merge 2)
+
+```yaml
+plan_unit_id: DL-2259
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: |-
+  Event Authority registers `collaboration.created` as family `event-family-collaboration-created` revision 1.0.0 in admission merge 2 of PNC-019. On 2026-11-14 Jared answered card EA-P2 with option B ("Two merges: the 173 ready now, then the rest"), so the remaining prepared families are admitted in this second merge after the first 173. `collaboration.created` is one of the 249 names of the 2026-11-04 census recount (bucket c). Jared's answer to card EA-P1, option A ("Add each once its definition passes every check"), admits each such name once its full definition, its record and both reviews pass; DL-039's no bulk registration stands. Under DL-096 ("And yes I approve the DL-093 covering the families and later") this entry is Jared's decision entry for `collaboration.created`, and the family's DL-077 admission record cites it as its decision_ref. DL-400 keeps this family's own commit, entry, record and twelve-criterion assessment inside the batched landing.
+
+  The registry moves from revision 2026-11-16.122 (341 families, SHA-256 25f3e29ba0328cf849a42aaf8ab0b8dcacf08bc487736313043c69592835ae56) to 2026-11-16.123 (342 families, SHA-256 07584144343be9e9e9e99c728cdcf21d1248fac82076f17e4b80e0b9da3742af). The appended row, canonical SHA-256 d9d72c06bbfddd1c42626d7fc3d6bcf79a1a43862249cf55e1b8c6fef1872682, has scope policy application_or_project, payload `pm.collaboration_event.collaboration_created.v1` at Plans/collaboration_event_payloads.schema.json#/$defs/collaboration_created, semantic owner Plans/Collaborative_Workflows.md#CWR-106, payload owner Plans/Contracts_V0.md#CV-461 and retention RP-CHAT-THREAD-LIFETIME@1.0.0. Its payload versions are project `pm.collaboration_event.collaboration_created.v1` (RP-CHAT-THREAD-LIFETIME@1.0.0, producer existing_project_policy); application `pm.collaboration_event.collaboration_created.application.v1` (RP-CHAT-THREAD-LIFETIME@1.0.0, producer requires_owner_adoption). Under DL-078's standing rule the PNC-019 checkpoint moves in the same commit: EVENT_FAMILY_REGISTRY_REVISION 2026-11-16.123 and EVENT_FAMILY_REGISTRY_KERNEL_ROW_COUNT 342 in scripts/pm_pnc019_currentness.py, and the approved checkpoint count in the two DL-078 test files.
+
+  Depth: reports/event-authority-20261116/admission-merge-2/depth/collaboration.created.json (SHA-256 34488b4fb32474c11db86a3991cc0fdba8f24db60f0561c97f98b076d3e4443e) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/collaboration.created.json.
+
+  Native execution stays NOT_RUN and every payload version's producer still requires owner adoption. This entry registers only `collaboration.created`. It changes no other family, validator, seal condition, retention assignment or holding bucket, and it grants no producer adoption, native claim, readiness clearance or governance seal. It lands only with its merge, after the merge's review pair and the coordinator's landing go.
+gui_related: false
+gui_classification_reason: Registers one event family in the Event Authority registry; no visual presentation changes.
+depends_on: [DL-039, DL-077, DL-078, DL-096, DL-400, DL-414]
+unblocks: []
+acceptance_criteria:
+- "The live registry contains exactly one row for collaboration.created, equal to the row whose canonical SHA-256 this entry records."
+- "The DL-077 admission record reports/event-authority-20260911/admission-records/collaboration.created.json passes the frozen seal check with no problem for this family."
+- "The checkpoint pins name revision 2026-11-16.123 and 342 families."
+validation_surfaces:
+- python3 Plans/.audits/event-authority-2026-08-12/independent-validator/pm_event_authority_independent_validator.py
+- python3 scripts/pm-implementation-readiness.py validate
+- python3 scripts/pm-ea-admission-writer.py verify
+risk_class: event_authority_admission
+reasoning_tier: high
+context_scope: event_authority_pnc019_admission_merge_2
+implementation_surfaces: [Plans/event_family_registry.json, scripts/pm_pnc019_currentness.py]
+node_compile_hint: {mode: owner_contract_only, create_worknodes: false, create_nodeseeds: false}
+source_lineage:
+- "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/ANSWERS_EA-P_20261114.md; SHA-256 8f8c89d237c83fa265aa2baeebd041b657e757014a3a806aff451efb6641f1ac (EA-P1 A, EA-P2 B, Jared 2026-11-14)"
+- "reports/event-authority-20261104/census-recount-20261104/NEW-LIST.json (recount name)"
+- "reports/event-authority-20261116/admission-merge-2/readiness-list.json; SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792"
+- "reports/event-authority-20261116/admission-merge-2/readiness-list.json; SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792"
+- "scripts/pm-ea-admission-writer.py (pm-ea-admission-writer.v1)"
+preserved_exact_tokens: ["collaboration.created", "event-family-collaboration-created", "2026-11-16.123", "07584144343be9e9e9e99c728cdcf21d1248fac82076f17e4b80e0b9da3742af", "d9d72c06bbfddd1c42626d7fc3d6bcf79a1a43862249cf55e1b8c6fef1872682", "Add each once its definition passes every check", "Two merges: the 173 ready now, then the rest", "And yes I approve the DL-093 covering the families and later"]
+negative_constraints:
+- No other family, validator, seal condition, retention assignment or holding bucket changes.
+- No producer adoption, native execution claim, readiness clearance or governance seal is granted.
+```
+
