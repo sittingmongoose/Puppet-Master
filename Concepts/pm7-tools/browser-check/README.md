@@ -258,7 +258,7 @@ export default async function (t) {
 }
 ```
 
-`t.app.open()` starts each check from the default saved look and the config viewport, 1920×1080. The next document clears its own storage before any page script, and the outgoing page's hidden writes are dropped, so a look or a viewport left by the check before it does not change this one. A reload keeps what this check saved. A `t.viewport(...)` or `page.setViewportSize(...)` earlier in the same test is kept. `t.app.look` still does not persist; `t.app.resetLayout()` is the same storage clear, for a check that reloads without opening again.
+`t.app.open()` resets the saved look and the viewport only at the boundary between checks: a test's **first** open starts from the default saved look and the config viewport, 1920×1080. The next document clears its own storage before any page script — which also removes the look the outgoing page saved on pagehide — so a look or a viewport left by the check before it does not change this one. **Later opens in the same test keep both** the storage and the viewport, so a reopen or reload stand-in still sees what the check saved (the product saves on pagehide). A size the test asks for — `t.viewport(...)`, `page.setViewportSize(...)`, or `t.newContext({ viewport })` — is kept. The previous check's media emulation (`t.emulate`) is cleared at the boundary too, so a leaked Reduced Motion does not remove the next check's transition hold. `t.app.look` still does not persist; `t.app.resetLayout()` clears the saved layout (and drops that page's hidden writes) for a check that wants a clean layout without opening again.
 
 ## Motion
 

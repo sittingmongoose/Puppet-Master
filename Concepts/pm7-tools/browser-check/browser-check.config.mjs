@@ -36,36 +36,21 @@ export default (ctx) => {
 	let cb = 0;
 	// One viewport for the run's config and for every check that does not ask for a size itself.
 	const defaultViewport = { width: 1920, height: 1080 };
-	// The outgoing page's saved settings must not boot the next load. Home writes localStorage once the
-	// document is already hidden (pagehide): clear what is stored and drop only that going-away write.
-	// The new document keeps its own Storage.prototype, so a save during the check still works
-	// (OPUS-FO163-T1). The sandbox has no storage to clear.
-	const clearSaved = async (t) => {
-		const frames = [];
-		if (t.root) frames.push(t.root);
-		const main = t.page && t.page.mainFrame();
-		if (main && main !== t.root) frames.push(main);
-		for (const frame of frames) {
-			await frame.evaluate(() => {
-				const proto = Storage.prototype, orig = proto.setItem;
-				if (typeof orig === 'function' && !orig.__pmResetLayout) {
-					proto.setItem = function (k, v) { return document.visibilityState === 'hidden' ? undefined : orig.call(this, k, v); };
-					proto.setItem.__pmResetLayout = true;
-				}
-				try { localStorage.clear(); } catch (e) { /* the sandbox: no storage */ }
-			}).catch(() => { /* about:blank, or a frame that has already gone */ });
-		}
-	};
-	// Set true when this test has asked for a size. Reset at each test; the page method is wrapped once.
+	// Set true when this test has asked for a size (t.viewport, page.setViewportSize, or t.newContext({viewport})).
+	// Reset at each test; the default page's setViewportSize is wrapped once.
 	let viewportChosen = false;
 	let sizeWrapped = false;
-	// One init script for the context. A fresh open sets __pmBcFresh on the outgoing document; the next
-	// document clears its own localStorage before any page script (the boot snippet reads the saved look
-	// there). A reload does not set the flag, so a check that saves and reloads still sees its write.
-	let freshArmed = false;
+	// True until this test's first t.app.open(): only that open resets the saved look and the viewport. Later
+	// opens in the same test keep both, so a reopen/reload stand-in still sees what the check saved.
+	let firstOpen = true;
+	// One init script per context. A test's first open sets __pmBcFresh on the outgoing document; the next
+	// document clears its own localStorage before any page script (the boot snippet reads the saved look there),
+	// which also removes the look the outgoing page saved on pagehide. A later open does not set the flag, so a
+	// check that saves and reloads still sees its write. The sandbox has no storage to clear.
+	const freshContexts = new WeakSet();
 	const armFresh = async (t) => {
-		if (!freshArmed) {
-			freshArmed = true;
+		if (!freshContexts.has(t.context)) {
+			freshContexts.add(t.context);
 			await t.context.addInitScript(() => {
 				try {
 					if (sessionStorage.getItem('__pmBcFresh') === '1') {
@@ -140,13 +125,21 @@ export default (ctx) => {
 		// mutes media elements (a JS play() at the call, a native autoplay start at its play event). The audio engine itself still runs: contexts, unlock, logs, taps and analysers
 		// ahead of the destination behave as before, so sound checks keep measuring. `--set audible=1` restores the speakers.
 		prepareContext: async (t, context) => { await silence(context); },
-		// A size the check asks for (t.viewport, or page.setViewportSize) is kept. Anything left by the
-		// previous check is not: open() puts the config viewport back when this test has not asked.
+		// A size the check asks for (t.viewport, page.setViewportSize, or t.newContext({viewport})) is kept.
+		// Anything left by the previous check is not: the test's first open() puts the config viewport back
+		// when this test has not asked for a size. The previous check's media emulation is cleared here too:
+		// t.emulate persists run-wide and is re-applied after every navigation, and a leaked Reduced Motion
+		// removes the onboarding transition's hold (screen-change-hold). A check requests its own motion itself.
 		beforeEach: async (t) => {
 			await silence(t.context);
 			viewportChosen = false;
+			firstOpen = true;
+			t.run.media = null;
+			await t.page.emulateMedia({ reducedMotion: null, colorScheme: null }).catch(() => {});
 			const orig = t.viewport.bind(t);
 			t.viewport = async (w, h) => { viewportChosen = true; return orig(w, h); };
+			const newContext = t.newContext.bind(t);
+			t.newContext = async (opts = {}) => { if (opts && 'viewport' in opts) viewportChosen = true; return newContext(opts); };
 			if (!sizeWrapped) {
 				sizeWrapped = true;
 				const setSize = t.page.setViewportSize.bind(t.page);
@@ -163,11 +156,14 @@ export default (ctx) => {
 			// switch at 1 also puts in the sandbox). Returns the frame the app is in, which t.root (what t.until, t.css and the
 			// other checks look at) also is: the page's main frame, or the sandbox's.
 			async open(t, { onboarding = false, query = '', settleMs = 300, sandbox } = {}) {
-				// Default saved look and default viewport, unless this test already asked for a size.
-				// A look asked for after the load (t.app.look, or Settings' own rows) is unchanged.
-				if (!viewportChosen) await t.viewport(defaultViewport.width, defaultViewport.height);
-				await armFresh(t);
-				await clearSaved(t);
+				// Boundary between checks: only this test's first open starts from the default saved look and the
+				// config viewport. Later opens keep both, so a reopen/reload stand-in still sees what the check
+				// saved (the product saves on pagehide). A look asked for after the load is unchanged.
+				if (firstOpen) {
+					firstOpen = false;
+					if (!viewportChosen) await t.viewport(defaultViewport.width, defaultViewport.height);
+					await armFresh(t);
+				}
 				const sep = url.includes('?') ? '&' : '?';
 				const u = `${url}${sep}cb=${Date.now()}-${++cb}${onboarding ? '' : '&o55=off'}${query ? '&' + query : ''}`;
 				if (sandbox === true || sandboxArg === true) await t.openInSandbox(u, { settleMs });
@@ -216,7 +212,14 @@ export default (ctx) => {
 			// page's life still work (OPUS-FO163-T1: with setItem a no-op for good, the FO-163 reset flows could not
 			// verify a single write). The sandbox has no storage to clear.
 			async resetLayout(t) {
-				await clearSaved(t);
+				await t.root.evaluate(() => {
+					const proto = Storage.prototype, orig = proto.setItem;
+					if (typeof orig === 'function' && !orig.__pmResetLayout) {
+						proto.setItem = function (k, v) { return document.visibilityState === 'hidden' ? undefined : orig.call(this, k, v); };
+						proto.setItem.__pmResetLayout = true;
+					}
+					try { localStorage.clear(); } catch (e) { /* the sandbox: no storage */ }
+				});
 			}
 		}
 	};
