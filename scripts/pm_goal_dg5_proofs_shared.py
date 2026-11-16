@@ -169,4 +169,21 @@ PROOFS = {
             'same_event_id_other_key chain witnesses exactly this); :1463 selects the '
             'precise conflict code and never gates acceptance alone. It closes by this '
             'proof once :1464 is closed.')),
+    SITE + '1564': dict(
+        kind='entailed-by-custody-construction',
+        families=FAMILIES,
+        depends_on=[],
+        sites=[(ST, 1544), (ST, 1564), ('Plans/event_append_receipt_contracts.schema.json', 492)],
+        argument=(
+            '_custody_row (:1544-1564) builds the custody_v2 row only from an event just '
+            'returned by read_event (frame-validated against the whole EventRecord root: '
+            'event_id, event_type, idempotency_key and redaction_profile already satisfy '
+            'the identical string bounds), the indexed scope partition and group digest, '
+            'the verbatim first_append_receipt (constructed in the AppendReceipt shape '
+            'custody_v2 references), a computed segment-ref binding, and digests computed '
+            'by NR.producer_digest / NR.full_value_commitment over that same event '
+            '(custody_v2, event_append_receipt_contracts.schema.json:492). Every field is '
+            'a schema constant, a computed digest, or a verbatim copy already bounded '
+            'identically at its source, so no complete issue_first_receipt call can make '
+            'this row refuse alone.')),
 }
