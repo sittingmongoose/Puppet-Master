@@ -907,3 +907,13 @@ def _(suite):
     cell, logical = projector.checkpoint()
     world.ctx.goal_run_id = 'TEST_ONLY:goal_run:' + 'ω' * 5200
     projector.rep.encode_checkpoint(logical, store=False)
+
+
+# Selector type: the acquired head selector carries a seventh field, so it is
+# not a selector to is_selector (exactly six fields) while its storage, cell
+# and digest all still resolve once the type site is cut.
+@negative('selector_type_extra_field_after_acquire', 'start/d01_head_body/selector_type', WORLD + '458')
+def _(suite):
+    def tamper(w, src):
+        src['d01_current']['workflow']['head']['current_body'].update(extra_field='x')
+    start_case(suite, start_edits=dict(after_acquire=tamper))

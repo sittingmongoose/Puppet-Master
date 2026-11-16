@@ -141,3 +141,17 @@ PROOFS.update({
             "measured generation movement is exactly the sum the hooks were charged, so it cannot "
             "refuse in a complete reader call.")),
 })
+
+PROOFS.update({
+    'dg5/site/pm_goal_dg_s_start.py:1360': dict(
+        kind='construction', families=['goal_run.started'],
+        depends_on=[],
+        sites=[(START, 1360), (START, 1343), (START, 1357)],
+        argument=(
+            "recover_start is passive by construction: after snapshotting commit_generation at :1342 "
+            "it only reads Storage cells, the reservation state and first custody "
+            "(pm_goal_dg_s_start.py:1343-1357), issuing no transaction, append or pack write on any "
+            "path, and its own docstring and the S1 recover cases pin that it never writes. No Storage "
+            "generation can move between the snapshot and the :1360 comparison inside one recover_start "
+            "call, so the check cannot refuse.")),
+})
