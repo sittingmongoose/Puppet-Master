@@ -32,6 +32,10 @@
           var o55sw = new URLSearchParams(location.search).get('o55') || '', o55rec = null;
           try { o55rec = JSON.parse(window.localStorage.getItem("pm.o55.onboarding.v1") || 'null'); } catch (e3) { o55rec = null; }
           o55b.install = o55sw === 'fresh' || (!o55rec && o55sw !== 'off' && o55sw !== 'tour' && o55sw.indexOf('screen=') !== 0);
+          /* (the Project the person was last in, as the shell keeps it, is the page's Project from here on, so Settings loads
+             it first too: FO-222, 74-screens-ready.js) */
+          var o55last = window.localStorage.getItem("pm7:shell:active-project:v1");
+          if (o55last && typeof window.PM_ACTIVE_PROJECT_ID !== 'string') window.PM_ACTIVE_PROJECT_ID = o55last;
           var o55pid = typeof window.PM_ACTIVE_PROJECT_ID === 'string' ? window.PM_ACTIVE_PROJECT_ID.trim() : "tastebook";
           o55b.project = o55pid && !/^(none|no-project)$/i.test(o55pid) ? o55pid : '';
           var o55p = o55b.project && !o55b.install ? JSON.parse(window.localStorage.getItem("pm7:settings:tome-tabs:v1:" + encodeURIComponent(o55b.project)) || 'null') : null;
