@@ -31,3 +31,19 @@ def stale_revision_only(d):
     cur = w.body.read_private(g['scope'], 'o')['body']
     req = O.direct_request(w, g, 'late', expected=(old['revision'], cur['currentness_hash']))
     return w, U.admitted(w, req)
+
+
+@case('U-DG5/N/direct_admission_source_message', 'dgu/source/capture/acceptance/direct_nulls',
+      (SITE + '1946', 'dg5/dgu/source/capture/input/schema'),
+      "Single defect after admission (the authored U5/G/acceptance_* pattern): the stored SIR admission's direct-route "
+      'request gains a source_message_id. Direct Save acceptance (:1946) requires source_message_id null, and the '
+      'captured input schema embeds GoalUpdateRequestV2, whose if change_source=user_direct then source_message_id '
+      'type null bounds the same field by the same predicate.')
+def direct_admission_source_message(d):
+    w, g = U._goal(d)
+    req = O.direct_request(w, g, 'x')
+    w.sir.admit(req)
+    key = O.hexk(req['command_instance_id'])
+    state = w.sir.state(key)
+    w.sir.put(key, dict(state, request=dict(state['request'], source_message_id='message:TEST_ONLY:dg5')))
+    return w, lambda: w.command.run(req)
