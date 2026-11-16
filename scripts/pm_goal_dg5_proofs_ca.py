@@ -265,6 +265,114 @@ PROOFS = {
         "check can never refuse after the issuer check passes.",
         [(ST, 1253), (ST, 1271), (ST, 1261)],
         ['dg5/site/pm_goal_test_storage.py:1260']),
+    'dg5/site/pm_goal_test_owner_adapters.py:542': _p(
+        "AppendOwner.event checks type(handle) is OriginalHandle immediately "
+        "before the _events membership check at :543; _events is a "
+        "WeakKeyDictionary keyed only by OriginalHandle('event') instances "
+        "minted in append_original, so any handle passing :543 has the exact "
+        "type, and the type check can never refuse alone.",
+        [(AD, 542), (AD, 543), (AD, 525)],
+        ['dg5/site/pm_goal_test_owner_adapters.py:543']),
+    'dg5/site/pm_goal_test_owner_adapters.py:548': _p(
+        "AppendOwner.first_receipt checks type(handle) is OriginalHandle "
+        "immediately before the _events membership check at :549; _events is "
+        "keyed only by OriginalHandle('event') instances minted in "
+        "append_original, so any handle passing :549 has the exact type, "
+        "and the type check can never refuse alone.",
+        [(AD, 548), (AD, 549), (AD, 525)],
+        ['dg5/site/pm_goal_test_owner_adapters.py:549']),
+    'dg5/site/pm_goal_test_storage.py:1056': _p(
+        "_index_group indexes one durable group's frames; on the append "
+        "path the group's event ids were required fresh and group-unique "
+        "before the write (dedupe/conflict and duplicate-in-group checks), "
+        "and on recovery each segment file is scanned once. A duplicate "
+        "event id therefore cannot reach indexing through any family call.",
+        [(ST, 1056), (ST, 1462), (ST, 1477)],
+        ['dg5/site/pm_goal_test_storage.py:1462',
+         'dg5/site/pm_goal_test_storage.py:1477']),
+    'dg5/site/pm_goal_test_storage.py:1057': _p(
+        "The scoped identity indexed at :1057 is the same (partition, type, "
+        "idempotency key) identity the append dedupe path checks before "
+        "writing (conflict/scoped_identity and partial-dedupe), so a second "
+        "event with the same scoped identity cannot have been appended to "
+        "be indexed.",
+        [(ST, 1057), (ST, 1463), (ST, 1466)],
+        ['dg5/site/pm_goal_test_storage.py:1463']),
+    'dg5/site/pm_goal_test_storage.py:1534': _p(
+        "append writes the member frames and commit frame, fsyncs, then "
+        "scans the same segment bytes back; the scan's last group commit is "
+        "decoded from the commit frame just written from the in-memory "
+        "commit dict, with no other writer able to interleave (single "
+        "synchronous call, segment truncated to the watermark first).",
+        [(ST, 1509), (ST, 1531), (ST, 1534)]),
+    'dg5/site/pm_goal_test_storage.py:1564': _p(
+        "The custody row is constructed in _custody_row entirely from the "
+        "schema-validated stored event (validate_event_record at append) "
+        "plus Storage's own digests/ids of fixed formats, then checked "
+        "against the custody schema it was constructed to satisfy; every "
+        "field is copied from an already-validated value.",
+        [(ST, 1544), (ST, 1564)]),
+    'dg5/site/pm_goal_test_storage.py:1618': _p(
+        "durable_group_value assembles the group value from the commit "
+        "record Storage itself wrote at append (commit frame fields and "
+        "member tuples from the indexed group) and checks it against the "
+        "group schema those same writers satisfy; no caller-supplied field "
+        "reaches it without append-time validation.",
+        [(ST, 254), (ST, 1618)]),
+    'dg5/site/pm_goal_test_storage.py:1624': _p(
+        "read_frame is reached only from read_event (which has just required "
+        "the same events-dict lookup at :1633) and from scan/recovery over "
+        "already-indexed ids; on the family path the :1633 check refuses "
+        "first with the identical predicate on the identical dict.",
+        [(ST, 1622), (ST, 1624), (ST, 1633)],
+        ['dg5/site/pm_goal_test_storage.py:1633']),
+    'dg5/site/pm_goal_test_storage.py:440': _p(
+        "The frame header is the 7 short strings of event_header (schema "
+        "consts and owner-minted ids of fixed short format in the validated "
+        "event); measured canonical length is 193 bytes for genuine ids and "
+        "3107 even at a uniform 512 characters per member, under the 4096 cap.",
+        [(ST, 426), (ST, 440)]),
+    'dg5/site/pm_goal_test_storage.py:441': _p(
+        "encode_event_frame is reached in append only after the stored-part "
+        "cap requires canonical(event) <= 16384 at :1487; the frame payload "
+        "is that same canonical event, three orders of magnitude under the "
+        "16777216 payload cap, so the payload cap cannot refuse after the "
+        "stored-part cap passes.",
+        [(ST, 440), (ST, 1487), (ST, 441)]),
+    'dg5/site/pm_goal_test_storage.py:470': _p(
+        "validate_event_record is called only with the event dict append "
+        " itself constructs (dict(candidate, observed/persisted/sequence)) "
+        "or with msgpack-decoded frame values, which decode_event_value "
+        "only returns as dicts for event frames; on every family path the "
+        "argument is a dict by construction at the call site.",
+        [(ST, 470), (ST, 1485)]),
+    'dg5/site/pm_goal_test_storage.py:163': _p(
+        "k_component is called only from scope_partition (whose project_id "
+        "argument is type-checked str at :189 immediately before) and from "
+        "index/key builders over schema-validated string fields of stored "
+        "events; no family path passes a non-str component.",
+        [(ST, 163), (ST, 189)],
+        ['dg5/site/pm_goal_test_storage.py:189']),
+    'dg5/site/pm_goal_test_owner_adapters.py:238': _p(
+        "register is called only from TestOwner.__init__ with the owner's "
+        "class-level role literal (every owner class in the DG lanes declares "
+        "a non-empty str role, and AssociationOwner receives one of the three "
+        "literal association roles from World), so role is always a "
+        "non-empty str at registration.",
+        [(AD, 238), (OWN, 154)]),
+    'dg5/site/pm_goal_test_owner_adapters.py:239': _p(
+        "owner_id is minted per TestOwner instance at construction (uuid-"
+        "based TEST_ONLY id) and register is called once per instance from "
+        "__init__; two live owners cannot present the same id to one "
+        "registry through any family construction path.",
+        [(AD, 239)]),
+    'dg5/site/pm_goal_test_owner_adapters.py:383': _p(
+        "Every _issue ref is either freshly minted by uid() (decision, "
+        "registration, dispatch, member, receipt refs) or the sequence-"
+        "formatted TEST_ONLY:original ref with a per-issue incrementing "
+        "uint64 sequence, so a ref cannot already be in _originals when "
+        "issued through any family owner call.",
+        [(AD, 383), (AD, 380)]),
     'dg5/site/pm_goal_dg_ca_owners.py:176': _p(
         "World.selection is called only from install_writer_domain (with the "
         "domain wrapper it has just written in the same call) and from "
