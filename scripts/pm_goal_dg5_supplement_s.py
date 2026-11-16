@@ -638,3 +638,65 @@ def _(suite):
                           event_ref=world.storage.put_pack(_S.canonical(record['original_event']),
                                                            'application/msgpack'))
     projector.rep.decode(row, original, selection_check=False)
+
+
+# ------------------------------------------------------------- number rows (owner-derived)
+MAX_U64 = 2 ** 64 - 1
+
+
+# Birth body at the uint64 ceiling: the producer's own NR.uint64(before + 1)
+# is the first refusal in commit_start (before any prepared write).
+@negative('producer_goal_run_revision_uint64_ceiling', 'producer/goal_run_revision/numrule/integer_range',
+          'dg5/producer/goal_run_revision/number')
+def _(suite):
+    def at_ceiling(v):
+        v['record']['revision'] = MAX_U64
+        v['physical_key'] = v['physical_key'].rsplit(':', 1)[0] + ':' + W.K(str(MAX_U64))
+        return v
+    world, handles = O.new_world(suite, 'v3', dict(native_body=at_ceiling))
+    world.start.commit_start(O.request(world), handles)
+
+
+@negative('native_activation_revision_uint64_ceiling', 'native/activation_revision/numrule/integer_range',
+          'dg5/native/activation_revision/number')
+def _(suite):
+    start_case(suite, edits=dict(native_body=at(['record', 'activation_state', 'revision'], MAX_U64)))
+
+
+@negative('native_advance_uint64_ceiling', 'native/advance/numrule/integer_range',
+          'dg5/native/advance/number')
+def _(suite):
+    world, projector, readers, gid = make(suite)
+    native = world.owners['native']
+    body = copy.deepcopy(native.current()['body'])
+    body['record']['revision'] = MAX_U64
+    cell = W.read_value(world.storage, 'workflow_goal_run_body', body['physical_key'])
+    world.storage.transact([dict(table='workflow_goal_run_body', key=body['physical_key'],
+                                  expected=cell['version'], value=W.cell_value(world.storage, body))])
+    readers.read_current(O.sreq(world), hooks=dict(after_projection=lambda w: w.owners['native'].advance()))
+
+
+# D01 pointer revision at the ceiling, coherent in the issued current source
+# (head and pointer copies) and the stored pointer cell: entry joins pass and
+# publication's NR.uint64(pointer revision + 1) is the first refusal, after
+# the append (receipted prefix, as in the lower cases).
+@negative('d01_pointer_revision_uint64_ceiling', 'd01/revision/numrule/integer_range',
+          'dg5/d01/revision/number')
+def _(suite):
+    edits = dict(d01_current=lambda cs: (cs['workflow']['head'].update(revision=MAX_U64),
+                                         cs['pointer'].update(revision=MAX_U64), cs)[2])
+    world, handles = O.new_world(suite, 'v3', edits)
+    d01 = world.owners['d01']
+    fam = ST.d01_families(world.edition)
+    pointer = world.storage.cell(fam['pointer'], d01.pointer_key())
+    value = copy.deepcopy(pointer['value'])
+    value['record']['revision'] = MAX_U64
+    world.storage.transact([dict(table=fam['pointer'], key=d01.pointer_key(),
+                                  expected=pointer['version'], value=value)])
+    try:
+        world.start.commit_start(O.request(world), handles)
+    except W.REFUSALS as error:
+        r = world.start.recover_start(O.OP)
+        W.require('lower/prefix', r['classification'] == 'receipted_unpublished' and
+                  world.owners['native'].current()['body']['record']['revision'] == ST.BEFORE_REVISION)
+        raise error
