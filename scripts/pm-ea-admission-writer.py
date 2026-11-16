@@ -482,6 +482,19 @@ def yaml_str(value: str) -> str:
     return json.dumps(value, ensure_ascii=False)
 
 
+def retention_label(ref: dict) -> str:
+    """Render either registry form without substituting a policy for the Usage setting."""
+    if "setting_key" in ref:
+        readiness = load_module("pm_impl_readiness_for_retention_label", "scripts/pm-implementation-readiness.py")
+        failures = readiness.event_family_setting_retention_failures(
+            "usage.event", ref, path_label="decision_entry/retention_policy_ref")
+        if failures:
+            raise Gap(failures[0]["error"])
+        return (f"setting `{ref['setting_key']}` from {ref['owner_ref']} "
+                f"(anchor `{ref['anchor']}`, immutable; no policy ID)")
+    return ref["policy_id"] + "@" + ref["policy_version"]
+
+
 def decision_entry(dl: str, fam: dict, ctx: dict) -> str:
     et, row = fam["event_type"], fam["registry_row"]
     if fam["kind"] == "cpu":
@@ -494,11 +507,11 @@ def decision_entry(dl: str, fam: dict, ctx: dict) -> str:
                      f"answer to card EA-P1, option A (\"{EA_P1}\"), admits each such name once its full definition, its "
                      "record and both reviews pass; DL-039's no bulk registration stands.")
         lineage_extra = "reports/event-authority-20261104/census-recount-20261104/NEW-LIST.json (recount name)"
-    retention = row["retention_policy_ref"]["policy_id"] + "@" + row["retention_policy_ref"]["policy_version"]
+    retention = retention_label(row["retention_policy_ref"])
     editions = ""
     if row.get("payload_versions"):
-        parts = [f"{v['scope_kind']} `{v['payload_schema_id']}` ({v['retention_policy_ref']['policy_id']}@"
-                 f"{v['retention_policy_ref']['policy_version']}, producer {v['producer_admission']})" for v in row["payload_versions"]]
+        parts = [f"{v['scope_kind']} `{v['payload_schema_id']}` ({retention_label(v['retention_policy_ref'])}, "
+                 f"producer {v['producer_admission']})" for v in row["payload_versions"]]
         editions = " Its payload versions are " + "; ".join(parts) + "."
     text = (
         f"Event Authority registers `{et}` as family `{row['family_id']}` revision {row['family_revision']} in admission merge 1 of "

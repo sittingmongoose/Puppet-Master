@@ -18,7 +18,8 @@ The rules, in order of precedence (each is a function below):
   closed_payload_schema evidence; each must resolve to the document that declares the unit.
 - retention: the graded retention cell's policy ids cross-checked with the lane contract;
   an application edition takes a named -APPLICATION- policy, else the Project policy only when
-  that policy is shared by registered application editions.
+  that policy is shared by registered application editions. usage.event alone takes SP-594's
+  setting selector and immutable first-save anchor, rechecked against its live owner text.
 - payload_versions: the DL-300 approval-pair form; legacy: no aliases, reject_unhandled_secrets,
   identity pointers from the payload's own identity fields.
 """
@@ -506,31 +507,56 @@ def derive_row(family: dict, grade: dict, contract: dict, readiness) -> tuple[di
         if not (REPO / doc).is_file() or (re.fullmatch(r"[A-Z][A-Z0-9]*-[0-9]+", unit) and unit_ref(unit) != ref):
             raise Gap(f"{key} owner ref {ref} does not resolve to its declaring document")
 
-    # Retention: the reviewed retention cell, cross-checked with the lane contract.
-    graded = graded_retention(grade)
-    stated = {s: v.split("@")[0] for s, v in contract["retention"].items()}
-    retention: dict[str, dict] = {}
-    for scope in sorted(needed):
-        candidates = {x for x in (graded.get(scope), stated.get(scope)) if x}
-        if scope == "application" and not candidates:
-            project = graded.get("project") or stated.get("project")
-            if project in SCOPE_SHARED_POLICIES:
-                candidates = {project}
-                provenance["retention_application"] = "shared with the Project edition (" + project + ", registry precedent)"
-        if len(candidates) != 1:
-            raise Gap(f"{scope} retention not stated exactly once (graded {graded.get(scope)}, lane {stated.get(scope)})")
-        token = candidates.pop()
-        version = None
-        for s, v in contract["retention"].items():
-            if v.split("@")[0] == token and "@" in v:
-                version = v.split("@")[1]
-        ref = policy_ref(token + ("@" + version if version else ""))
-        policies = {(p["policy_id"], p["policy_version"]) for p in load(STORAGE_REGISTRY)["retention_policies"]}
-        if ref is None or (ref["policy_id"], ref["policy_version"]) not in policies:
-            raise Gap(f"{scope} retention {token} is not a registered policy object")
-        retention[scope] = ref
-    provenance["retention"] = SELF_GRADES[family["lane"]] + " retention cell; " + str(contract["contract_ref"])
-
+    # SP-594 supplies usage.event's setting selector independently of source-row policies.
+    if event_type == "usage.event":
+        ref = readiness.event_family_usage_retention_ref()
+        failures = readiness.event_family_setting_retention_failures(
+            event_type, ref, path_label="derived:usage.event/retention_policy_ref")
+        if failures:
+            raise Gap(failures[0]["error"])
+        # A merge-2 lane can carry the selector explicitly; never silently repair it.
+        for stated_ref in contract["retention"].values():
+            if isinstance(stated_ref, dict):
+                failures = readiness.event_family_setting_retention_failures(
+                    event_type, stated_ref, path_label="lane:usage.event/retention_policy_ref")
+                if failures:
+                    raise Gap(failures[0]["error"])
+            elif stated_ref not in ("PENDING_RETENTION_BINDING", "ai.usage.usage-retention"):
+                raise Gap("event_family_registry_setting_retention_policy_id_forbidden")
+        delta = grade.get("retention_delta") or {}
+        if delta.get("history_policy_ref") or delta.get("application_policy_ref"):
+            raise Gap("event_family_registry_setting_retention_policy_id_forbidden")
+        for field, value in (("history_policy_setting_ref", ref["setting_key"]),
+                             ("history_anchor", ref["anchor"])):
+            if field in delta and delta[field] != value:
+                raise Gap("usage.event retention_delta " + field + " disagrees with SP-594")
+        retention = {scope: copy.deepcopy(ref) for scope in sorted(needed)}
+        provenance["retention"] = ref["owner_ref"] + " signed E8-1 A; immutable first durable save; no policy ID"
+    else:
+        # Retention: the reviewed retention cell, cross-checked with the lane contract.
+        graded = graded_retention(grade)
+        stated = {s: v.split("@")[0] for s, v in contract["retention"].items()}
+        retention: dict[str, dict] = {}
+        for scope in sorted(needed):
+            candidates = {x for x in (graded.get(scope), stated.get(scope)) if x}
+            if scope == "application" and not candidates:
+                project = graded.get("project") or stated.get("project")
+                if project in SCOPE_SHARED_POLICIES:
+                    candidates = {project}
+                    provenance["retention_application"] = "shared with the Project edition (" + project + ", registry precedent)"
+            if len(candidates) != 1:
+                raise Gap(f"{scope} retention not stated exactly once (graded {graded.get(scope)}, lane {stated.get(scope)})")
+            token = candidates.pop()
+            version = None
+            for s, v in contract["retention"].items():
+                if v.split("@")[0] == token and "@" in v:
+                    version = v.split("@")[1]
+            ref = policy_ref(token + ("@" + version if version else ""))
+            policies = {(p["policy_id"], p["policy_version"]) for p in load(STORAGE_REGISTRY)["retention_policies"]}
+            if ref is None or (ref["policy_id"], ref["policy_version"]) not in policies:
+                raise Gap(f"{scope} retention {token} is not a registered policy object")
+            retention[scope] = ref
+        provenance["retention"] = SELF_GRADES[family["lane"]] + " retention cell; " + str(contract["contract_ref"])
     top_scope = "project" if "project" in editions else "application"
     top = editions[top_scope]
     source_refs = []
