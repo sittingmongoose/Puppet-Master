@@ -2,7 +2,7 @@
   "$schema": "https://puppetmaster.local/schemas/event_family_registry/1.0.0/event_family_registry.schema.json",
   "schema_id": "pm.event_family_registry.v1",
   "schema_version": "2.0.0",
-  "registry_revision": "2026-11-16.185",
+  "registry_revision": "2026-11-16.186",
   "owner_doc": "Plans/storage-plan.md#case-l-5-eventrecord-persistence-legacy-normalization-and-dedupe",
   "unknown_event_disposition": "quarantine_without_checkpoint_advance",
   "families": [
@@ -26498,6 +26498,52 @@
         "Plans/storage-plan.md#SP-646",
         "Plans/ds15_live_session_degraded.schema.json#",
         "Plans/ds15_event_contracts.json#/5",
+        "reports/event-authority-20261116/admission-merge-2/readiness-list.json"
+      ],
+      "retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-RUNTIME-365D",
+        "policy_version": "1.0.0"
+      }
+    },
+    {
+      "family_id": "event-family-live-session-started",
+      "family_revision": "1.0.0",
+      "event_type": "live.session.started",
+      "scope_policy": "project_only",
+      "semantic_owner_doc": "Plans/newtools.md#N2-219",
+      "payload_owner_doc": "Plans/Contracts_V0.md#CV-662",
+      "payload_schema_id": "pm.ds15.live_session_started.payload.v1",
+      "payload_schema_ref": {
+        "path": "Plans/ds15_live_session_started.schema.json",
+        "json_pointer": "#",
+        "schema_id": "pm.ds15.live_session_started.payload.v1"
+      },
+      "legacy": {
+        "aliases": [],
+        "admitted_extensions": [],
+        "identity_json_pointers": {
+          "project_id": [
+            "/payload/project_id"
+          ],
+          "thread_id": [],
+          "run_id": [
+            "/payload/run_id"
+          ]
+        },
+        "referenced_event_id_pointer": null,
+        "redaction": {
+          "mode": "reject_unhandled_secrets",
+          "transform_id": null,
+          "transform_version": null
+        }
+      },
+      "source_refs": [
+        "Plans/newtools.md#N2-219",
+        "Plans/Contracts_V0.md#CV-662",
+        "Plans/storage-plan.md#SP-642",
+        "Plans/ds15_live_session_started.schema.json#",
+        "Plans/ds15_event_contracts.json#/1",
         "reports/event-authority-20261116/admission-merge-2/readiness-list.json"
       ],
       "retention_policy_ref": {
