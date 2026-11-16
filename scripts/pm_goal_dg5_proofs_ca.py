@@ -205,6 +205,66 @@ PROOFS = {
         "that handle was issued for; both sides are deepcopies of one row "
         "read in the same synchronous sequence with no intervening write.",
         [(C1, 626), (C1, 630), (ST, 1588), (ST, 1594)]),
+    'dg5/site/pm_goal_dg_ca_assignment.py:709': _p(
+        "frozen_producer can refuse only via candidate_edit diverging the "
+        "producer from progress['producer_input']; the audit template is "
+        "term() of the whole expected producer built from the same captured "
+        "source, so any divergence in a producer field also breaks the "
+        "template equality at :716 (the only template leaves not fixed by "
+        "the producer are the three slots, none of which is a producer "
+        "field). :716 is witnessed by a single-defect negative.",
+        [(AS, 706), (AS, 709), (AS, 716), (AS, 499)],
+        ['dg5/site/pm_goal_dg_ca_assignment.py:716']),
+    'dg5/site/pm_goal_dg_ca_c1.py:646': _p(
+        "event_id comes from Storage.event_by_identity over the scoped "
+        "identity index, which is written only by a successful append - the "
+        "same append that creates the event's custody row. If the lookup "
+        "misses there is no custody, so publication_from_custody refuses at "
+        ":587; if it hits, :646 passes. :646 can therefore never be the "
+        "sole refusal, and :587 is witnessed by a single-defect negative.",
+        [(C1, 644), (C1, 646), (C1, 587), (ST, 1638)],
+        ['dg5/site/pm_goal_dg_ca_c1.py:587']),
+    'dg5/site/pm_goal_dg_ca_owners.py:524': _p(
+        "domain_generation is set to 1 in the same install_writer_domain call "
+        "that writes the domain cell, and never reset; a second install that "
+        "somehow passed :524 would put the domain cell with expected=None "
+        "and refuse at the Storage CAS-absent check. The in-memory flag and "
+        "the stored cell are the same fact fixed by the first install.",
+        [(OWN, 524), (OWN, 540), (OWN, 546)],
+        ['dg5/site/pm_goal_test_storage.py:1654']),
+    'dg5/site/pm_goal_test_storage.py:1602': _p(
+        "authenticate_receipt compares the presented first-append receipt "
+        "with the custody row's receipt; publish_control then recomputes the "
+        "expected publication from that same custody row and requires the "
+        "whole presented publication (which contains the receipt) to equal "
+        "it at :667. Any receipt mismatch at :1602 is therefore also a "
+        "publication mismatch at :667 in the same call.",
+        [(ST, 1598), (ST, 1602), (C1, 665), (C1, 667)],
+        ['dg5/site/pm_goal_dg_ca_c1.py:667']),
+    'dg5/lease/last/number': _p(
+        "ensure_lease evaluates leased_through_sequence_id = uint64(sequence "
+        "+ LEASE_SIZE - 1) at :128 before current_lease.last_sequence_id = "
+        "uint64(sequence + LEASE_SIZE - 1) at :130 - the identical arithmetic "
+        "on the identical value in the same dict construction, so the "
+        "through check refuses first on every overflowing input and passes "
+        "exactly when last would pass.",
+        [(AS, 125), (AS, 128), (AS, 130)],
+        ['dg5/lease/through/number']),
+    'dg5/site/pm_goal_dg_ca_owners.py:686': _p(
+        "accept transacts the outcome value and immediately reads the same "
+        "cell back in the same synchronous call; Storage transact is "
+        "all-or-none and cell reads return the stored value just written, "
+        "with no intervening write, so the readback equality cannot fail "
+        "alone (a failed transact raises before the readback).",
+        [(OWN, 683), (OWN, 686)]),
+    'dg5/site/pm_goal_test_storage.py:1261': _p(
+        "_handles is populated only by _issue_handle, called only with kind "
+        "'reservation' (reserve/resume), and _resolve_handle is called only "
+        "with kind 'reservation'; a handle passing the issuer membership "
+        "check at :1260 therefore always has the required kind. The kind "
+        "check can never refuse after the issuer check passes.",
+        [(ST, 1253), (ST, 1271), (ST, 1261)],
+        ['dg5/site/pm_goal_test_storage.py:1260']),
     'dg5/site/pm_goal_dg_ca_owners.py:176': _p(
         "World.selection is called only from install_writer_domain (with the "
         "domain wrapper it has just written in the same call) and from "
