@@ -33,6 +33,14 @@ ACTIVE = [False]
 PATCHED = {}
 CASE = [None]
 PARENT_CALL = [False]
+REFUSAL_CLASSES = ('Refusal', 'DGRefusal', 'LaneRefusal', 'AdapterRefusal', 'StorageRefusal', 'NumruleRefusal',
+                   'SourceRefusal', 'Unavailable', 'Refused')
+# Load-once singletons (a class whose `_instance` is the object) are bound by
+# the digest of their complete descriptor, computed once; verify_frozen()
+# recomputes every one without the memo at the end of the run.
+FROZEN = {}
+MEMBERS = {}   # id of an object reachable from a memoized singleton -> that singleton's digest
+FAILURES = []
 
 
 def row(code):
@@ -53,6 +61,29 @@ def file_state(root):
             for p in sorted(root.rglob('*')) if p.is_file()}
 
 
+def manifest(files):
+    """Complete store binding: every durable file's path and SHA-256."""
+    return tuple((name, hashlib.sha256(raw).hexdigest(), len(raw)) for name, raw in sorted(files.items()))
+
+
+def descriptor_sha256(value, world):
+    return hashlib.sha256(pickle.dumps(context_value(value, world), protocol=5)).hexdigest()
+
+
+def verify_frozen():
+    """Recompute every memoized singleton descriptor in full (no memo)."""
+    drift = []
+    for ident, (obj, sha) in list(FROZEN.items()):
+        saved = FROZEN.pop(ident)
+        try:
+            again = hashlib.sha256(pickle.dumps(context_value(obj, None, frozen=False), protocol=5)).hexdigest()
+        finally:
+            FROZEN[ident] = saved
+        if again != sha:
+            drift.append(dict(type=type(obj).__qualname__, module=type(obj).__module__, before=sha, after=again))
+    return dict(singletons=len(FROZEN), drift=drift)
+
+
 def restore_files(root, files):
     if root.exists():
         shutil.rmtree(root)
@@ -63,7 +94,7 @@ def restore_files(root, files):
         path.write_bytes(raw)
 
 
-def context_value(value, world, seen=None):
+def context_value(value, world, seen=None, frozen=True):
     """Bind complete caller data without serializing an original capability.
 
     Handle identities refer only to the actual inherited object in this
@@ -81,18 +112,20 @@ def context_value(value, world, seen=None):
     if ident in seen:
         return ('reference', seen[ident])
     seen[ident] = len(seen)
+    if frozen and ident in MEMBERS:
+        return ('load_once_member', type(value).__module__, type(value).__qualname__, MEMBERS[ident])
     if isinstance(value, (dict, weakref.WeakKeyDictionary)):
-        return ('map', tuple((context_value(k, world, seen), context_value(v, world, seen))
+        return ('map', tuple((context_value(k, world, seen, frozen), context_value(v, world, seen, frozen))
                              for k, v in value.items()))
     if isinstance(value, (tuple, list, set, frozenset)):
-        return (type(value).__name__, tuple(context_value(v, world, seen) for v in value))
+        return (type(value).__name__, tuple(context_value(v, world, seen, frozen) for v in value))
     if inspect.isfunction(value):
         path = Path(value.__code__.co_filename)
         return ('function', str(path), value.__code__.co_firstlineno,
                 hashlib.sha256(path.read_bytes()).hexdigest(),
-                context_value(value.__defaults__, world, seen),
-                context_value(value.__kwdefaults__, world, seen),
-                tuple(context_value(cell.cell_contents, world, seen) for cell in value.__closure__ or ()))
+                context_value(value.__defaults__, world, seen, frozen),
+                context_value(value.__kwdefaults__, world, seen, frozen),
+                tuple(context_value(cell.cell_contents, world, seen, frozen) for cell in value.__closure__ or ()))
     if isinstance(value, types.ModuleType):
         path = Path(value.__file__) if getattr(value, '__file__', None) else None
         return ('module', value.__name__, hashlib.sha256(path.read_bytes()).hexdigest() if path else None)
@@ -103,10 +136,18 @@ def context_value(value, world, seen=None):
         return ('immutable_schema_context', type(value).__module__, type(value).__qualname__, ident)
     if hasattr(value, 'pins') and hasattr(value, 'registry'):
         return ('whole_pinned_bank', type(value).__module__, type(value).__qualname__,
-                context_value(value.pins, world, seen))
+                context_value(value.pins, world, seen, frozen))
+    if frozen and getattr(type(value), '_instance', None) is value:
+        if ident not in FROZEN:
+            inner = {}
+            sha = hashlib.sha256(pickle.dumps(context_value(value, None, inner, False), protocol=5)).hexdigest()
+            FROZEN[ident] = (value, sha)
+            for member in inner:
+                MEMBERS.setdefault(member, sha)
+        return ('load_once_singleton', type(value).__module__, type(value).__qualname__, FROZEN[ident][1])
     if hasattr(value, '__dict__'):
         return ('object', type(value).__module__, type(value).__qualname__, ident,
-                context_value(vars(value), world, seen))
+                context_value(vars(value), world, seen, frozen))
     raise TypeError('unbound complete-call context type: ' + type(value).__qualname__)
 
 
@@ -161,13 +202,16 @@ def install():
                 setattr(module, key, originals[value])
 
 
-def invoke(label, family, action, work, *, world=None, arguments=None, original=None, valid=True, expected=None,
-           declared_target=None):
+def invoke(label, family, action, work, *, world=None, arguments=None, original=None, valid=True, target=None,
+           pending=False):
     """One actual complete action, including its immutable issuer context.
 
-    The supplied value binds all durable bytes and owner observations. Replays
-    may cut predicates but cannot alter that sealed original or copy handles.
-    Defects are declared by the original authored case before this call.
+    The supplied value binds all durable bytes (per-file SHA-256 manifest),
+    owner observations, every caller argument and the nondurable world
+    context (descriptor digests). Replays may cut predicates but cannot alter
+    that sealed original or copy handles. With `pending`, the call is
+    registered without a target; `declare()` attaches the case's authored
+    target only if the case's own call then refuses (see `entry_call`).
     """
     install()
     work = Path(work)
@@ -177,15 +221,13 @@ def invoke(label, family, action, work, *, world=None, arguments=None, original=
     source = Path(original.__code__.co_filename)
     if arguments is None:
         raise ValueError('complete-call arguments were not bound')
-    # Store bytes alone do not bind a caller's substituted request or callback.
-    # Include every actual argument and all nondurable owner/world context.
-    context = context_value(arguments, world)
-    world_context = context_value(vars(world), world) if world is not None else None
-    value = dict(store=files, owners=owners, family=family, label=label,
-                 arguments=context, world_context=world_context,
+    value = dict(store=manifest(files), owners=owners, family=family, label=label,
+                 arguments_sha256=descriptor_sha256(arguments, world),
+                 world_context_sha256=descriptor_sha256(vars(world), world) if world is not None else None,
                  action=dict(path=str(source), line=original.__code__.co_firstlineno,
                              source_sha256=hashlib.sha256(source.read_bytes()).hexdigest()))
     sealed = sweep.digest(value)
+    store_sha = sweep.digest(value['store'])
     actual = []
 
     def evaluate(presented):
@@ -209,13 +251,11 @@ def invoke(label, family, action, work, *, world=None, arguments=None, original=
                 except Exception as error:
                     # Only owner refusal classes qualify. AssertionError,
                     # import/setup errors and arbitrary exceptions never do.
-                    if type(error).__name__ not in ('Refusal', 'DGRefusal', 'LaneRefusal',
-                            'AdapterRefusal', 'StorageRefusal', 'NumruleRefusal',
-                            'SourceRefusal', 'Unavailable', 'Refused'):
+                    if type(error).__name__ not in REFUSAL_CLASSES:
                         raise
-                    code = getattr(error, 'code', None) or getattr(error, 'reason', None) or str(error)
+                    code = refusal_code(error)
                     result = dict(errors=[row(code)], original_refusal=code)
-                result.update(observations=entries, after=file_state(work),
+                result.update(observations=entries, after=manifest(file_state(work)),
                               replay_unknown_rows=sorted(tables.COLLECTOR.replay_unknown_rows))
             except BaseException as error:
                 result = dict(exception=type(error).__name__, detail=str(error),
@@ -236,16 +276,56 @@ def invoke(label, family, action, work, *, world=None, arguments=None, original=
         if 'exception' in result:
             raise RuntimeError(result['exception'] + ': ' + result['detail'])
         actual.append(result['original_refusal'])
-        return dict(errors=result['errors'], store_snapshot_sha256=sweep.digest(files),
+        return dict(errors=result['errors'], store_snapshot_sha256=store_sha,
                     store_after_sha256=sweep.digest(result['after']))
 
     collector = tables.COLLECTOR
     if collector is None:
         raise RuntimeError('run through pm_goal_dg5_sweep')
-    outcome = collector.invoke(label, evaluate, value, valid,
-                               target=declared_target if declared_target is not None else
-                               None if expected is None else row(expected), family=family)
-    return dict(outcome=outcome, original_refusal=actual[0] if actual else None)
+    if pending:
+        result = collector.invoke(label, evaluate, value, None, target=None, family=family)
+    else:
+        result = collector.invoke(label, evaluate, value, valid, target=target, family=family)
+    return result, (actual[0] if actual else None)
+
+
+def refusal_code(error):
+    return getattr(error, 'code', None) or getattr(error, 'reason', None) or str(error)
+
+
+def entry_call(case, label, family, action, work, *, world, arguments, original, target):
+    """One captured entry of an authored case, then the parent's own call.
+
+    Positive case: every entry is declared valid before it runs. Negative case:
+    the case's authored target (fixed before execution) is attached to the
+    entry whose own parent call ends in a refusal; entries that return are
+    recorded undeclared. The sealed child run must agree with the parent run.
+    """
+    expected = case.get('expected')
+    collector = tables.COLLECTOR
+    if expected is None:
+        result, child = invoke(label, family, action, work, world=world, arguments=arguments,
+                               original=original, valid=True)
+    else:
+        result, child = invoke(label, family, action, work, world=world, arguments=arguments,
+                               original=original, pending=True)
+    PARENT_CALL[0] = True
+    try:
+        try:
+            returned = action()
+        except Exception as error:
+            if type(error).__name__ in REFUSAL_CLASSES:
+                code = refusal_code(error)
+                if code != child:
+                    FAILURES.append(dict(kind='child_parent_disagree', label=label, child=child, parent=code))
+                if expected is not None:
+                    collector.declare(result, None, target)
+            raise
+        if child is not None:
+            FAILURES.append(dict(kind='child_parent_disagree', label=label, child=child, parent=None))
+        return returned
+    finally:
+        PARENT_CALL[0] = False
 
 
 def helper(original, suffix):
@@ -317,15 +397,9 @@ def install_u_entries(module):
                     world = self.world
                     expected = case.get('expected')
                     from pm_goal_dg5_declarations import target
-                    invoke(case['id'] + '/' + entry, 'goal.updated',
-                           lambda: original(self, *args, **kwargs), world.root,
-                           world=world, arguments=dict(receiver=self, args=args, kwargs=kwargs),
-                           original=original, valid=True if expected is None else None,
-                           expected=expected, declared_target=target(case, None if expected is None else row(expected)))
-                    PARENT_CALL[0] = True
-                    try:
-                        return original(self, *args, **kwargs)
-                    finally:
-                        PARENT_CALL[0] = False
+                    return entry_call(case, case['id'] + '/' + entry, 'goal.updated',
+                                      lambda: original(self, *args, **kwargs), world.root, world=world,
+                                      arguments=dict(receiver=self, args=args, kwargs=kwargs), original=original,
+                                      target=target(case, None if expected is None else row(expected)))
                 return call
             setattr(cls, method, bind())
