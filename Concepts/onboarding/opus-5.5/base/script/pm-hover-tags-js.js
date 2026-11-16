@@ -542,7 +542,9 @@
     if(this.pendingOpenTarget&&(this.pendingOpenTarget===root||root.contains(this.pendingOpenTarget)))this.cancelPendingOpen();
     (this.removedQueue||(this.removedQueue=[])).push(root);if(this.removedJob)return;
     var run=function(){self.removedJob=0;var q=self.removedQueue;self.removedQueue=[];q.forEach(function(r){if(!r.isConnected)self.cleanupRemoved(r);});};
-    this.removedJob=typeof requestIdleCallback==='function'?requestIdleCallback(run,{timeout:1500}):setTimeout(run,200);
+    /* idle time is asked for after the next frame: an idle moment between the build and the new chapter's first frame
+       would otherwise run the walk before that frame */
+    this.removedJob=-1;requestAnimationFrame(function(){self.removedJob=typeof requestIdleCallback==='function'?requestIdleCallback(run,{timeout:1500}):setTimeout(run,200);});
   };
   HoverTagController.prototype.beginLive=function(){
     var self=this;if(this.pageSettling||this.overlaySettling){this.liveShallow.clear();this.liveDeep.clear();return;}if(this.scanning||this.scanFrame){this.liveFrame=censusFrame(function(){self.liveFrame=0;self.beginLive();});return;}this.pruneLiveScopes();

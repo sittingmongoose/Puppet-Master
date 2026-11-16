@@ -3140,17 +3140,22 @@ window.PM12_REFERENCE = {"version":"1.0.0","total":892,"inventory_sha256":"be85c
      36 ms of that task on a P1000 (traces) and 6 to 9 ms on an RTX 3080 (timed per press; lane U, 2026-11-14, FO-196).
      The place is saved once the new chapter is on screen and the page is idle, and at once if the page is hidden or
      left first; a save for any other reason in the meantime carries the place too. */
-  let navigationSaveJob = 0;
+  let navigationSaveJob = 0, navigationSaveFrame = 0;
   function saveNavigationSoon() {
-    if (navigationSaveJob) return;
+    if (navigationSaveJob || navigationSaveFrame) return;
     const run = () => { navigationSaveJob = 0; saveState(); };
-    navigationSaveJob = typeof requestIdleCallback === 'function' ? requestIdleCallback(run, { timeout: 1500 }) : setTimeout(run, 300);
+    /* idle time is asked for after the next frame: an idle moment between the build and the new chapter's first frame
+       would otherwise save before that frame */
+    navigationSaveFrame = requestAnimationFrame(() => {
+      navigationSaveFrame = 0;
+      navigationSaveJob = typeof requestIdleCallback === 'function' ? requestIdleCallback(run, { timeout: 1500 }) : setTimeout(run, 300);
+    });
   }
   function saveNavigationNow() {
-    if (!navigationSaveJob) return;
-    if (typeof cancelIdleCallback === 'function') cancelIdleCallback(navigationSaveJob);
-    clearTimeout(navigationSaveJob);
-    navigationSaveJob = 0;
+    if (!navigationSaveJob && !navigationSaveFrame) return;
+    if (navigationSaveFrame) cancelAnimationFrame(navigationSaveFrame);
+    if (navigationSaveJob) { if (typeof cancelIdleCallback === 'function') cancelIdleCallback(navigationSaveJob); clearTimeout(navigationSaveJob); }
+    navigationSaveJob = 0; navigationSaveFrame = 0;
     saveState();
   }
   window.addEventListener('pagehide', saveNavigationNow);
