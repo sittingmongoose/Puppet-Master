@@ -46,7 +46,9 @@
 // to it); switching back to the new Project paints Glass Dark; and the first paint after the reload is already Glass Dark
 // (the head's look, read as parsing ends: no tastebook look first); a title-bar switch to harbor (given Friendly Light in
 // Settings), then a reload: still in harbor with its look (stream F's ruling B, 2026-11-16); back in the setup's Project,
-// Run Onboarding Again (which replaces the record that listed it), closed, reloaded: tastebook in its look, as before.
+// Run Onboarding Again (which replaces the record that listed it), closed, reloaded: tastebook in its look, as before;
+// a stored id of a Project that no longer exists (written to storage: no ordinary control leaves one), reloaded: tastebook
+// in its look, the id dropped, no error (stream F's OK, 2026-11-16).
 // Because tastebook is in another look, a reload that falls
 // back to it cannot pass as the new Project's look (the kit gap FO216-R3-KIT-FINISH-RELOAD-MASKED). --set only=fo222.
 // No timing rows. --set looks=basic-light,nier-dark runs those cases alone; --set extra=0 leaves out the finish, Reduced
@@ -546,6 +548,12 @@ async function fo222(t) {
 	await sleep(1500); await r2.A.close();
 	const r3 = await freshLoad(t), q5 = await projectNow(r3.f), p5 = await r3.A.page(), first5 = await r3.f.evaluate(() => window.__fo222First || null);
 	await t.check(`${tag}: Run Onboarding Again after it, closed, reloaded: the page is tastebook in Retro Light, as before (first paint too)`, q5.selected === 'tastebook' && held('retro-light', p5) && first5 === 'retro-light', JSON.stringify({ project: q5, page: p5, first: first5 }));
+	/* stream F's stale-id row: a stored id of a Project that no longer exists (no ordinary control leaves one: Start over
+	   clears it, so the precondition is written to storage here), then a reload: the default Project in its look, the id
+	   dropped, no error (the run's console row). One load may paint that Project's stored look first (F's OK) */
+	await r3.f.evaluate(() => { try { localStorage.setItem('pm7:shell:active-project:v1', 'p-gone-project-0000'); } catch (_) { /* none */ } });
+	const r4 = await freshLoad(t), q6 = await projectNow(r4.f), p6 = await r4.A.page(), kept = await r4.f.evaluate(() => { try { return localStorage.getItem('pm7:shell:active-project:v1'); } catch (_) { return 'no storage'; } });
+	await t.check(`${tag}: a stored id of a Project that no longer exists, reloaded: tastebook in Retro Light, the id dropped`, q6.selected === 'tastebook' && q6.label === 'tastebook' && held('retro-light', p6) && kept !== 'p-gone-project-0000', JSON.stringify({ project: q6, page: p6, stored: kept }));
 }
 
 export default async function (t) {
