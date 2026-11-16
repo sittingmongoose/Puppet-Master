@@ -83,6 +83,14 @@ def install():
         plumbing.entries(cls, tuple(name for name, value in vars(cls).items()
                                     if callable(value) and not name.startswith('_')), family)
     plumbing.entries(adapters.AppendOwner, ('append_original',), family)
+    # C4I inspection and the event index: authored C4I negatives call these owners
+    # directly, so without entries their sites are invisible to the collector
+    # (same gap as the CA owners before 351f514f40). Nested calls stay nested.
+    import pm_goal_dg_ca3_inspection as inspection_owner
+    import pm_goal_dg_ca3_index as index_owner
+    for cls in (inspection_owner.Inspector, index_owner.EventIndexOwner):
+        plumbing.entries(cls, tuple(name for name, value in vars(cls).items()
+                                    if callable(value) and not name.startswith('_')), family)
 
 
 def main():
