@@ -168,9 +168,10 @@ export const tests = {
 	},
 	// (A2) The Undo dialog opens while Start is still being accepted (starting a run takes 600 ms in normal motion); the run
 	// is accepted while it is open; confirming it afterwards must not remove the Project with its run. Real presses: the
-	// window is tall enough for the report's Undo and Where work runs' Start a run… to be on screen together, and Start and
-	// Undo are pressed with the mouse one after the other. The page itself notes, when Undo's dialog appears, whether the
-	// run had been accepted yet.
+	// window is tall enough for the report's Undo and Where work runs' Start a run… to be on screen together. Start is
+	// pressed, then Undo, once Start's leaving backdrop no longer takes the hit (with motion on that backdrop covers the
+	// page for its leave, about 0.16 s, and a press in that gap lands on it). The page itself notes, when Undo's dialog
+	// appears, whether the run had been accepted yet.
 	async 'an Undo opened before the work was accepted can’t remove the Project when confirmed (Astra max A2)'(t) {
 		await t.viewport(1920, 2160);
 		const f = await t.app.open(t, { reduced: false });
@@ -193,7 +194,20 @@ export const tests = {
 			mo.observe(document.body, { childList: true, subtree: true });
 		}, pid);
 		await t.page.mouse.click(sb.x + sb.width / 2, sb.y + sb.height / 2);
-		await t.page.mouse.click(ub.x + ub.width / 2, ub.y + ub.height / 2);
+		// F1: the next press used to land on .pjx-dlg-back[data-leaving] while Start was closing. Wait until a hit at
+		// Undo is the Undo control (the backdrop is gone, or it no longer wins the point), then press that control.
+		const uncovered = await f.waitForFunction(() => {
+			const u = document.querySelector('[data-c-key="f:undochat"]');
+			if (!u) return false;
+			const r = u.getBoundingClientRect();
+			if (r.width < 2 || r.height < 2) return false;
+			const hit = document.elementFromPoint(r.left + r.width / 2, r.top + r.height / 2);
+			if (!hit || (hit.closest && hit.closest('.pjx-dlg-back'))) return false;
+			return hit === u || u.contains(hit);
+		}, null, { timeout: 3000 }).then(() => true).catch(() => false);
+		await t.check('the closing Start dialog no longer covers Undo', uncovered);
+		const ub2 = await f.locator('[data-c-key="f:undochat"]').first().boundingBox();
+		if (ub2) await t.page.mouse.click(ub2.x + ub2.width / 2, ub2.y + ub2.height / 2);
 		await t.app.until(t, f, 'the run is accepted', (id) => ((window.PJX.get(id) || {}).workers || []).some((x) => x.task === 'Run the tests'), pid, 10000);
 		const at = await ev(f, () => window.__a2race);
 		await t.check('Undo’s dialog opened before the run was accepted', at.dlgAt != null && at.acceptedAtDlg === false && (at.acceptedAt == null || at.acceptedAt > at.dlgAt), JSON.stringify(at));

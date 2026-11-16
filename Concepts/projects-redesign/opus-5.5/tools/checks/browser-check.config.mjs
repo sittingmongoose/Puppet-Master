@@ -28,7 +28,9 @@ export default (ctx) => {
 		helpers: {
 			/* Load the review page fresh, wait for the layer to answer, and return PMConcept7's frame (a Playwright Frame). */
 			async open(t, { width = null, reduced = true } = {}) {
-				if (reduced) await t.emulate({ reducedMotion: 'reduce' });
+				// P-J1113-T1: reduced:false used to skip emulate. The previous test's reduce stays on
+				// run.media, and the next goto puts it back, so "without Reduced Motion" still ran reduced.
+				await t.emulate({ reducedMotion: reduced ? 'reduce' : 'no-preference' });
 				await t.goto(`${url}${url.includes('?') ? '&' : '?'}cb=${Date.now()}-${++cb}`, { settleMs: 200 });
 				await t.until('layer ready', () => !!(window.PJX_HOST && window.PJX_HOST.isLive()), null, { timeout: 90000, hard: true });
 				if (width) await t.page.selectOption('#width', String(width));
