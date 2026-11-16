@@ -2,9 +2,9 @@
 
 Source: `Plans/Tools.md`
 
-Source lines: L13358-L13584
+Source lines: L13358-L13583
 
-Source SHA256: `3a4283f452cb961accac72aee8c0e8ed245882771fd7047ddf80c33f3ed1010e`
+Source SHA256: `c53e1f511323d2b029b93798ac3080a116f00947920912fe9c933393c4d2d22e`
 
 ---
 
@@ -103,8 +103,7 @@ canonical_text: >-
   the provider's tool-call API, and where it is false the owned in-band path below is used; on a bridged CLI under the HTE strategy it, and the directly callable tools named in T-190, travel through the
   Run_Modes hosted action loop as structured tool intents where its capability entry reports structured_tool_intents
   supported, otherwise as in-band tool calls, never as a provider tool_use; under
-  the DAE strategy, where the CLI accepts Puppet Master tools through provider-native feature projection, it is a projected Puppet Master tool beside the CLI's own
-  tools, so the run is mixed. When the script tool is offered, the request-selected registry tools other than the directly
+  the DAE strategy, where the CLI accepts Puppet Master tools through provider-native feature projection, it is a projected Puppet Master tool beside the CLI's own tools, so the run is mixed with the provider-kept native tools reason. When the script tool is offered, the request-selected registry tools other than the directly
   callable tools named in T-190 are described to the model as the
   script's callable catalog under T-176 materialization, rather than as one provider tool schema each. Wherever tool calls are carried
   in-band, including where the selected model's Models_System tool_use capability is false, the script tool and the
