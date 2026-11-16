@@ -42,3 +42,9 @@ def main():
     DG5_EVIDENCE.update(selection=selection['compatibility_selection'], cases=cases,
                         scope='Original complete actions; inherited crash matrix is separate.')
     return 0
+
+
+def closure_banks():
+    """Schema banks whose whole-root checks DG5 closes clause by clause."""
+    import pm_goal_test_owner_adapters as adapters
+    return [(adapters.RootBank, 'errors')]
