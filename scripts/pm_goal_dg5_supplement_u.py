@@ -18,3 +18,16 @@ def case(cid, expected, target, why):
                                dg5_target=target, dg5_why=why))
         return fn
     return deco
+
+
+@case('U-DG5/N/stale_revision_only', 'dgu/source/capture/stale_goal_revision', SITE + '1505',
+      'U2/N/stale_revision_coherent stales revision and currentness together, so with 1505 cut the currentness '
+      'check (1506) refuses; this single defect keeps the current currentness_hash and stales only the revision.')
+def stale_revision_only(d):
+    w = U.world(d)
+    g = O.birth_goal(w)
+    old = w.body.read_private(g['scope'], 'o')['body']
+    U.run_direct(w, g, 'moved on')
+    cur = w.body.read_private(g['scope'], 'o')['body']
+    req = O.direct_request(w, g, 'late', expected=(old['revision'], cur['currentness_hash']))
+    return w, U.admitted(w, req)
