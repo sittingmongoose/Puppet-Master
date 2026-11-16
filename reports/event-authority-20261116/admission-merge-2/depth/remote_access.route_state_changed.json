@@ -1,0 +1,398 @@
+{
+ "schema_id": "pm.assurance.event_authority.admission_depth_assessment.v1",
+ "assessment_kind": "admission_twelve_criteria",
+ "writer": "pm-ea-admission-writer.v1",
+ "merge": "admission-merge-2",
+ "registry": {
+  "path": "Plans/event_family_registry.json",
+  "revision": "2026-11-16.231",
+  "sha256": "c0872dedd7fbbc06cb0900f2a3a22042af25524442a22e0bc738391e466bb387",
+  "family_count": 450,
+  "row_pointer": "#/families/449"
+ },
+ "base_commit": "45b4ccf25270c486dbc682805cd455ce4ca25fb0",
+ "rubric": "Step 8 depth matrix, twelve criteria (DL-077); PASS needs Plans/ evidence",
+ "native_execution": "NOT_RUN",
+ "rows": [
+  {
+   "event_type": "remote_access.route_state_changed",
+   "family_id": "event-family-remote-access-route-state-changed",
+   "family_revision": "1.0.0",
+   "cells": {
+    "membership_version": {
+     "status": "PASS",
+     "representation": "exact_registry_membership",
+     "finding": "Registered at registry revision 2026-11-16.231 as #/families/449 (canonical row SHA-256 a3956980736e792a174e69494d59199dfbf636dd398a43bd6bbd82dda804284c); before this commit the family was absent.",
+     "evidence": [
+      {
+       "path": "Plans/event_family_registry.json",
+       "json_pointer": "#/families/449",
+       "line_start": 28999,
+       "line_end": 29040,
+       "quote": "\"event_type\": \"remote_access.route_state_changed\"",
+       "quote_line": 29002,
+       "file_sha256": "c0872dedd7fbbc06cb0900f2a3a22042af25524442a22e0bc738391e466bb387",
+       "quote_check": "exact"
+      }
+     ]
+    },
+    "owner_doc": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "The exact newly authored RAS-1408 contract and its own companions bind this criterion. PASS refers to normative planning text only, not runtime or executed event oracles.",
+     "evidence": [
+      {
+       "path": "Plans/Remote_Access_System.md",
+       "unit": "RAS-1408",
+       "line_start": 1716,
+       "line_end": 1716,
+       "quote": "canonical_text: 'Newly authored owner contract for remote_access.route_state_changed@1.0.0, prepared without admission,",
+       "file_sha256": "68d6c2261d6aa046c2b84333e57713c5ea43b1627f66c193a1046af60684c3cd",
+       "quote_check": "exact",
+       "quote_scope": "unit RAS-1408, Plans/Remote_Access_System.md:1709-1883"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "owner_doc",
+      "status": "PASS"
+     }
+    },
+    "producer": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "The exact newly authored RAS-1408 contract and its own companions bind this criterion. PASS refers to normative planning text only, not runtime or executed event oracles.",
+     "evidence": [
+      {
+       "path": "Plans/Remote_Access_System.md",
+       "unit": "RAS-1408",
+       "line_start": 1744,
+       "line_end": 1744,
+       "quote": "Producer: the sole newly authored RemoteAccessRouteService.route_state_commit@1.0.0 method of the existing domain",
+       "file_sha256": "68d6c2261d6aa046c2b84333e57713c5ea43b1627f66c193a1046af60684c3cd",
+       "quote_check": "exact",
+       "quote_scope": "unit RAS-1408, Plans/Remote_Access_System.md:1709-1883"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "producer",
+      "status": "PASS"
+     }
+    },
+    "closed_payload_schema": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "The exact newly authored RAS-1408 contract and its own companions bind this criterion. PASS refers to normative planning text only, not runtime or executed event oracles.",
+     "evidence": [
+      {
+       "path": "Plans/Remote_Access_System.md",
+       "unit": "RAS-1408",
+       "line_start": 1731,
+       "line_end": 1731,
+       "quote": "Historical lookup authenticates retained provenance and does not reacquire expired live authority. Payload: Plans/event_payloads/w3e/remote_access_route_state_changed.schema.json,",
+       "file_sha256": "68d6c2261d6aa046c2b84333e57713c5ea43b1627f66c193a1046af60684c3cd",
+       "quote_check": "exact",
+       "quote_scope": "unit RAS-1408, Plans/Remote_Access_System.md:1709-1883"
+      },
+      {
+       "path": "Plans/event_payloads/w3e/remote_access_route_state_changed.schema.json",
+       "unit": "#/",
+       "line_start": 3,
+       "line_end": 3,
+       "quote": "\"additionalProperties\": false,",
+       "file_sha256": "643ea62123e55e3fb5c2e522d2860e9336cef23c718f6eafd5417e4ceecc1e2f",
+       "quote_check": "exact",
+       "quote_scope": "document"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "closed_payload_schema",
+      "status": "PASS"
+     }
+    },
+    "scope_identity": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "The exact newly authored RAS-1408 contract and its own companions bind this criterion. PASS refers to normative planning text only, not runtime or executed event oracles.",
+     "evidence": [
+      {
+       "path": "Plans/Remote_Access_System.md",
+       "unit": "RAS-1408",
+       "line_start": 1760,
+       "line_end": 1760,
+       "quote": "Identity: owner_operation_id is family-operation@1: plus lowercase SHA-256 of exact UTF-8 bytes \"pm.w3e.owner_fact.v1\\0\"",
+       "file_sha256": "68d6c2261d6aa046c2b84333e57713c5ea43b1627f66c193a1046af60684c3cd",
+       "quote_check": "exact",
+       "quote_scope": "unit RAS-1408, Plans/Remote_Access_System.md:1709-1883"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "scope_identity",
+      "status": "PASS"
+     }
+    },
+    "replay_idempotency": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "The exact newly authored RAS-1408 contract and its own companions bind this criterion. PASS refers to normative planning text only, not runtime or executed event oracles.",
+     "evidence": [
+      {
+       "path": "Plans/Remote_Access_System.md",
+       "unit": "RAS-1408",
+       "line_start": 1776,
+       "line_end": 1776,
+       "quote": "Idempotency/replay: same selected identity and semantic digest returns the immutable original result and first",
+       "file_sha256": "68d6c2261d6aa046c2b84333e57713c5ea43b1627f66c193a1046af60684c3cd",
+       "quote_check": "exact",
+       "quote_scope": "unit RAS-1408, Plans/Remote_Access_System.md:1709-1883"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "replay_idempotency",
+      "status": "PASS"
+     }
+    },
+    "retention": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "Bound to DL-454 (E-CARDS-3, option A; landed on main): RP-ROUTINE-OBSERVATION-APPLICATION-90D@1.0.0. The decision names this exact family in E-CARDS-3 Appendix A and the Storage third-sitting assignment on main lists it; the owner unit, CV and SP units carry the binding.",
+     "evidence": [
+      {
+       "path": "Plans/Remote_Access_System.md",
+       "unit": "RAS-1408",
+       "line_start": 1784,
+       "line_end": 1784,
+       "quote": "Retention: retention_policy_ref=RP-ROUTINE-OBSERVATION-APPLICATION-90D@1.0.0 (DL-454, E-CARDS-3 item 2.a, option A), application editions only, kept 90 days (7,776,000 seconds) from the first successful save that survives a restart, never restarted by retry, reprocessing or restore, in the one separate 2,000,000-entry application allowance app:routine_observation (fail_closed overflow, hold eligib",
+       "file_sha256": "68d6c2261d6aa046c2b84333e57713c5ea43b1627f66c193a1046af60684c3cd",
+       "quote_check": "exact",
+       "quote_scope": "unit RAS-1408, Plans/Remote_Access_System.md:1709-1883"
+      },
+      {
+       "path": "Plans/Contracts_V0.md",
+       "unit": "CV-1408",
+       "line_start": 48789,
+       "line_end": 48789,
+       "quote": "retention_policy_ref=RP-ROUTINE-OBSERVATION-APPLICATION-90D@1.0.0 (DL-454, E-CARDS-3 item 2.a, option A), application editions only, kept 90 days (7,776,000 seconds) from the first successful save that survives a restart, never restarted by retry, reprocessing or restore, in the one separate 2,000,000-entry application allowance app:routine_observation (fail_closed overflow, hold eligible; only ex",
+       "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a",
+       "quote_check": "exact",
+       "quote_scope": "unit CV-1408, Plans/Contracts_V0.md:48771-48831"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-1408",
+       "line_start": 70745,
+       "line_end": 70745,
+       "quote": "retention_policy_ref=RP-ROUTINE-OBSERVATION-APPLICATION-90D@1.0.0 (DL-454, E-CARDS-3 item 2.a, option A), application editions only, kept 90 days (7,776,000 seconds) from the first successful save that survives a restart, never restarted by retry, reprocessing or restore, in the one separate 2,000,000-entry application allowance app:routine_observation (fail_closed overflow, hold eligible; only ex",
+       "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707",
+       "quote_check": "exact",
+       "quote_scope": "unit SP-1408, Plans/storage-plan.md:70735-70822"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "retention",
+      "status": "PASS"
+     }
+    },
+    "redaction_custody": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "The exact newly authored RAS-1408 contract and its own companions bind this criterion. PASS refers to normative planning text only, not runtime or executed event oracles.",
+     "evidence": [
+      {
+       "path": "Plans/Remote_Access_System.md",
+       "unit": "RAS-1408",
+       "line_start": 1788,
+       "line_end": 1788,
+       "quote": "Redaction/custody: RemoteAccessRouteService on the actual Server holds the original accepted intent, complete",
+       "file_sha256": "68d6c2261d6aa046c2b84333e57713c5ea43b1627f66c193a1046af60684c3cd",
+       "quote_check": "exact",
+       "quote_scope": "unit RAS-1408, Plans/Remote_Access_System.md:1709-1883"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "redaction_custody",
+      "status": "PASS"
+     }
+    },
+    "transitions": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "The exact newly authored RAS-1408 contract and its own companions bind this criterion. PASS refers to normative planning text only, not runtime or executed event oracles.",
+     "evidence": [
+      {
+       "path": "Plans/Remote_Access_System.md",
+       "unit": "RAS-1408",
+       "line_start": 1731,
+       "line_end": 1731,
+       "quote": "Historical lookup authenticates retained provenance and does not reacquire expired live authority. Payload: Plans/event_payloads/w3e/remote_access_route_state_changed.schema.json,",
+       "file_sha256": "68d6c2261d6aa046c2b84333e57713c5ea43b1627f66c193a1046af60684c3cd",
+       "quote_check": "exact",
+       "quote_scope": "unit RAS-1408, Plans/Remote_Access_System.md:1709-1883"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "transitions",
+      "status": "PASS"
+     }
+    },
+    "consumers_checkpoints": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "The exact newly authored RAS-1408 contract and its own companions bind this criterion. PASS refers to normative planning text only, not runtime or executed event oracles.",
+     "evidence": [
+      {
+       "path": "Plans/Remote_Access_System.md",
+       "unit": "RAS-1408",
+       "line_start": 1800,
+       "line_end": 1800,
+       "quote": "Consumer/checkpoint: newly authored projector.w3e.remote_access_route_state_changed.history@1.0.0 and reader.w3e.remote_access_route_state_changed.history@1.0.0",
+       "file_sha256": "68d6c2261d6aa046c2b84333e57713c5ea43b1627f66c193a1046af60684c3cd",
+       "quote_check": "exact",
+       "quote_scope": "unit RAS-1408, Plans/Remote_Access_System.md:1709-1883"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-1408",
+       "line_start": 70760,
+       "line_end": 70760,
+       "quote": "The exact checkpoint in derived redb checkpoints is w3e_remote_access_route_state_changed_checkpoint.v1:{hex(storage_instance_id)}:{scope_partition}:{hex(server_id)}",
+       "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707",
+       "quote_check": "exact",
+       "quote_scope": "unit SP-1408, Plans/storage-plan.md:70735-70822"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "consumers_checkpoints",
+      "status": "PASS"
+     }
+    },
+    "compatibility_withdrawal": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "The exact newly authored RAS-1408 contract and its own companions bind this criterion. PASS refers to normative planning text only, not runtime or executed event oracles.",
+     "evidence": [
+      {
+       "path": "Plans/Remote_Access_System.md",
+       "unit": "RAS-1408",
+       "line_start": 1813,
+       "line_end": 1813,
+       "quote": "Compatibility/withdrawal: no legacy writer or event alias is claimed for this newly authored family. Exact retained",
+       "file_sha256": "68d6c2261d6aa046c2b84333e57713c5ea43b1627f66c193a1046af60684c3cd",
+       "quote_check": "exact",
+       "quote_scope": "unit RAS-1408, Plans/Remote_Access_System.md:1709-1883"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "compatibility_withdrawal",
+      "status": "PASS"
+     }
+    },
+    "positive_negative_oracles": {
+     "status": "PASS",
+     "representation": "executed_clean_room_reference_oracles",
+     "finding": "Provisional worker PASS for deterministic planning oracles, pending Sol high, Sol max and Astra max. All nine previously unsourced payload fields are mandatory immutable owner_fact members; their copy joins, 34 additional owner-domain obligations, complete successful RestoreRun journal and ten receipt resolutions are exercised. The full W3E checker passes 307 controls and 19,483 negatives; the ten changed append_join tables freshly prove 78 rows. The remaining inherited table predicates are unchanged; no new full-lane guard proof is claimed. The stateful supplement executes admission, dedupe recovery, competing publication CAS, withdrawal/successor rebuild, source relocation, held prune/capture/restore, immutable receipt joins and retained reads against actual reference-store state. Across the 39-family supplement: 41 scenarios, 311 positives, 2,489 exact-code refusals and 287 crash cuts; 109 guard rows proved. Mutation scope is 107 unsafe-acceptance kills plus two explicitly INVALID exception diagnostics (not kills), with one declared representative family per mutant and all families in the baseline. This is synthetic clean-room execution. Native execution NOT_RUN; membership ABSENT.",
+     "evidence": [
+      {
+       "path": "Plans/Contracts_V0.md",
+       "unit": "CV-1408",
+       "line_start": 48789,
+       "line_end": 48789,
+       "quote": "Phase 2 (2026-11-13) runs the executable synthetic oracles of this family in scripts/pm_w3e_event_oracles.py; every refusal is one named single-predicate row of a generated Method B guard table (scripts/pm_w3e_table_*.py) proved by the gated shared scripts/pm_guard_isolation.py through scripts/pm-w3e-guard-proof.py, and rows no input can refuse first stay alone in their own table with a written pr",
+       "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a",
+       "quote_check": "exact",
+       "quote_scope": "unit CV-1408, Plans/Contracts_V0.md:48771-48831"
+      },
+      {
+       "path": "scripts/pm_pnc019_s4o3_store.py",
+       "line_start": 144,
+       "line_end": 144,
+       "quote": "class Store:",
+       "file_sha256": "10f10d033d805d9830f26d0c9c1fbe1cc8560ed5c943c81af935e56aa4684663",
+       "quote_check": "exact",
+       "quote_scope": "document"
+      },
+      {
+       "path": "scripts/pm_pnc019_s4o3_store.py",
+       "line_start": 249,
+       "line_end": 249,
+       "quote": "def read(self, generation, original_ref):",
+       "file_sha256": "10f10d033d805d9830f26d0c9c1fbe1cc8560ed5c943c81af935e56aa4684663",
+       "quote_check": "exact",
+       "quote_scope": "document"
+      },
+      {
+       "path": "scripts/pm_pnc019_s4o3_oracles.py",
+       "line_start": 142,
+       "line_end": 142,
+       "quote": "def run_family(adapter, family, trace=None, cut=None):",
+       "file_sha256": "1fea5e492c2d45f94c41d59184da26081b7b2f30833fccd5142167bcf4cb66f6",
+       "quote_check": "exact",
+       "quote_scope": "document"
+      },
+      {
+       "path": "scripts/pm-pnc019-s4o3-proof.py",
+       "line_start": 103,
+       "line_end": 103,
+       "quote": "def mutations(out):",
+       "file_sha256": "c3d51d67e679729c0bd7775e06e823726e79741566e4b4036aec04e0d6736487",
+       "quote_check": "exact",
+       "quote_scope": "document"
+      },
+      {
+       "path": "scripts/pm_w3e_event_oracles.py",
+       "line_start": 631,
+       "line_end": 631,
+       "quote": "RESULT_FIELDS = {",
+       "file_sha256": "cfdd3aa717c4e810169a3bd74da0cf77a43327a344daf0c02b8a019c55988f9a",
+       "quote_check": "exact",
+       "quote_scope": "document"
+      },
+      {
+       "path": "scripts/pm_pnc019_s4o3_domain_cases.py",
+       "line_start": 14,
+       "line_end": 14,
+       "quote": "RULES = (",
+       "file_sha256": "277b6d33314f4364caa287d2d6aec6f51affc193af04f9d163deedff71c05d9d",
+       "quote_check": "exact",
+       "quote_scope": "document"
+      },
+      {
+       "path": "scripts/pm_pnc019_s4o3_owner.py",
+       "line_start": 20,
+       "line_end": 20,
+       "quote": "RESTORE_REFS = (",
+       "file_sha256": "c6dcfbc63623ce82f521c89723164ba1370e01fb03a439d2cb1c392f3aed68e2",
+       "quote_check": "exact",
+       "quote_scope": "document"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "positive_negative_oracles",
+      "status": "PASS"
+     }
+    }
+   }
+  }
+ ]
+}
