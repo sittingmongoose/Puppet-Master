@@ -15,6 +15,7 @@ import inspect
 import json
 import os
 import pickle
+import tempfile
 from binascii import crc32
 from pathlib import Path
 import sys
@@ -331,8 +332,11 @@ def _pure_supplements(suite, work):
 
 def main():
     install()
-    scratch = Path(os.environ['PM_DG5_SCRATCH'])
-    scratch.mkdir(parents=True, exist_ok=True)
+    base = Path(os.environ['PM_DG5_SCRATCH'])
+    base.mkdir(parents=True, exist_ok=True)
+    # One fresh work root per main() call: generate+prove runs this source twice in
+    # one process, and fixed store dirs refuse the second pass (storage/create_empty).
+    scratch = Path(tempfile.mkdtemp(prefix='adapter-', dir=base))
     saved = sys.argv
     sys.argv = [selftest.__file__, '--output', str(scratch / 'adapter-selftest-source.json'), '--skip-matrix']
     try:
