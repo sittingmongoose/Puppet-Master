@@ -49,6 +49,10 @@ def confirmation_inputs(item,index,old,row,grade):
     require(entry.get('registry_pointer')==f'#/families/{index}','selector map family pointer differs')
     clauses=entry.get('owner_clauses',[])
     require(bool(clauses),'selector map lacks owner clauses')
+    for clause in clauses:
+        require(str(clause.get('path','')).startswith('Plans/')
+                and w.unit_ref(clause.get('unit'))==clause.get('path')+'#'+clause.get('unit',''),
+                'selector map clause must name its own declared PlanUnit')
     return [w.refresh_evidence(dict(e,line_start=e.get('line_start',e.get('line',1)))) for e in clauses]
 
 def checkpoint(before,after,event,dl,confirmation=False):
@@ -98,6 +102,10 @@ def main():
         require(action in {'revise_row','confirm_definition'},'unsupported registered-family action')
         confirmation=action=='confirm_definition'
         clauses=confirmation_inputs(item,index,old,row,grade) if confirmation else []
+        if confirmation:
+            require(w.render_registry(registry)==w.read_raw(w.REGISTRY),'confirmation requires exact registry round-trip')
+            # Keep the existing serialization order as well as every value.
+            row=copy.deepcopy(old)
         folder='definition-confirmations' if confirmation else 'revisions'
         depth_path='reports/event-authority-20261116/admission-merge-2/'+folder+'/'+event+'.json'
         require(not (ROOT/depth_path).exists(),'assessment already exists: '+depth_path)
