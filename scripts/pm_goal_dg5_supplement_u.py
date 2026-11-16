@@ -480,6 +480,67 @@ def freeze_final_head_only(d):
     return w, lambda: w.producer.freeze(g['scope'], U.op_of(adm)), holder
 
 
+@case('U-DG5/N/admission_objective_nonstring', 'dgu/text/type', SITE + '197',
+      'Single defect after admission: the stored SIR admission request objective_text becomes a '
+      'non-string (owner cells are digest-checked only), so capture reaches text_sha (:1530) and '
+      'only :197 refuses. The admit-time call (:718) sits behind the request schema.')
+def admission_objective_nonstring(d):
+    w, g = U._goal(d)
+    req = O.direct_request(w, g, 'x')
+    w.sir.admit(req)
+    key = O.hexk(req['command_instance_id'])
+    state = w.sir.state(key)
+    w.sir.put(key, dict(state, request=dict(state['request'], objective_text=123)))
+    return w, lambda: w.command.run(req)
+
+
+@case('U-DG5/N/key_type_nonstring', 'dgu/key/type', SITE + '189',
+      'Single defect: ThreadOwner.birth is called with a non-string project id, so hexk refuses at '
+      ':189 before any state read. No authored case passes a non-string key component.')
+def key_type_nonstring(d):
+    w, g = U._goal(d)
+    return w, lambda: w.threads.birth(123, 'thr_TEST_ONLY_other')
+
+
+@case('U-DG5/N/inspect_sequence_float', 'dgu/inspect/sequence_id/numrule/integer_type',
+      'dg5/dgu/inspect/sequence_id/number',
+      'Single defect: the inspect request sequence_id is an integral float, which the request '
+      'schema integer type admits, so only the exact-integer primitive at :1848 refuses.')
+def inspect_sequence_float(d):
+    w, g = U._goal(d)
+    req, adm = U.run_direct(w, g)
+    r = w.inspector.request_for(g['scope'], U.event_of(w, g, adm))
+    r['sequence_id'] = float(r['sequence_id'])
+    return w, lambda: w.inspector.inspect(r, g['user'], g['user_permission'])
+
+
+@case('U-DG5/N/progress_epoch_float', 'dgu/key/epoch/numrule/integer_type', 'dg5/dgu/key/epoch/number',
+      'Single defect: the progress head progress_epoch is resealed as an integral float (the head '
+      'schema integer type admits it), so only epoch_key exact integer refuses on the audit read.')
+def progress_epoch_float(d):
+    w, g = U._goal(d)
+    req, adm = U.run_direct(w, g)
+    U.rsrc(w, O.T_PROGRESS, O.head_key(g['scope'], U.op_of(adm)),
+           lambda rec: dict(rec, progress_epoch=float(rec['progress_epoch'])))
+    return w, U._audit_call(w, g, adm)
+
+
+@case('U-DG5/N/receipt_revision_float', 'dgu/key/revision/numrule/integer_type',
+      'dg5/dgu/key/revision/number',
+      'Single defect: the body receipt accepted_objective_revision is resealed as an integral '
+      'float and the progress body_commit receipt sha rewired to it, so the receipt join holds '
+      'and only rev_key exact integer refuses at freeze.')
+def receipt_revision_float(d):
+    w, g, req, adm, ag = U._upto(d, 'commit')
+    sc, op = g['scope'], U.op_of(adm)
+    rk = O.receipt_key(sc['project_id'], sc['goal_id'], op)
+    new = U.rbody(w, O.T_RECEIPT, rk, lambda r: dict(
+        r, accepted_objective_revision=float(r['accepted_objective_revision'])))
+    U.rewrite_progress_all(w, g, op, lambda r: dict(
+        r, body_commit=dict(r['body_commit'], receipt_sha256=O.wrapper_sha(new))) if r['body_commit'] else r)
+    return w, lambda: w.producer.freeze(sc, op)
+
+
 @case('U-DG5/N/inspect_final_custody', 'dgu/inspect/final_custody', SITE + '1920',
       'Single defect: the acquired snapshot custody schema_version is substituted - a field the '
       'GenericSource custody-defect check does not bind - so every custody join holds and only the '

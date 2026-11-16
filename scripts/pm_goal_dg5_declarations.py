@@ -105,6 +105,12 @@ DECLARED_RULES += (
      "metadata_update requires change.state in (active, paused, blocked, completed) at :1289; the intent "
      "record carries that same after_record body (pending schema, :1306 validate) and the stored body row "
      "is validated against storage_body, whose state is the same four-value enum: one field, one predicate."),
+    (lambda cid: cid == 'U1/G/noncanonical_pack_bytes',
+     ('dg5/dgu/physical/decode/numrule/physical_noncanonical', U_SITE + '683'),
+     "unwrap_row decodes the pack bytes through NR.decode_event_value, whose own canonical-bytes "
+     "predicate refuses a noncanonical MessagePack map header, and then requires "
+     "msgpack(wrapper) == raw at :683: the same bytes, the same canonical-encoding predicate, "
+     "once inside the shared decode and once on its result."),
     (lambda cid: cid == 'U5/F/producer.publish/before_release/candidate',
      (U_SITE + '1793', U_SITE + '1800'),
      "publish requires A.same(ctx candidate, frozen producer_input) at :1793 before the append and "
