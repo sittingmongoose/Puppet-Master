@@ -155,3 +155,42 @@ PROOFS.update({
             "generation can move between the snapshot and the :1360 comparison inside one recover_start "
             "call, so the check cannot refuse.")),
 })
+
+PROOFS.update({
+    'dg5/site/pm_goal_dg_s_start.py:1025': dict(
+        kind='construction', families=['goal_run.started'],
+        depends_on=[],
+        sites=[(START, 1025), (START, 980), (START, 1020), (STORAGE, 1485), (STORAGE, 65), (STORAGE, 1862)],
+        argument=(
+            "The stored event compared at :1025 is the very candidate commit_start appended at :1020, "
+            "read back through the append handle. Storage append builds the stored event as the "
+            "candidate plus exactly observed_at_utc, persisted_at_utc and sequence_id "
+            "(pm_goal_test_storage.py:1485), and producer25 drops exactly those three STORAGE_FIELDS "
+            "(:65, :1862). The candidate has just passed the TypedProducerSubmission and event-record "
+            "validations at :980-983, so every field is a plain JSON value preserved byte-for-byte by "
+            "the canonical frame encoding. producer25(stored) is therefore the submission by "
+            "construction, and :1025 cannot refuse in a complete commit_start call.")),
+    'dg5/site/pm_goal_dg_s_start.py:1326': dict(
+        kind='construction', families=['goal_run.started'],
+        depends_on=[],
+        sites=[(START, 1326), (START, 959), (START, 1020)],
+        argument=(
+            "dedupe() is entered only from commit_start's head, which has just read the same "
+            "reservation and required its state to be 'published' (:959-961); the only intervening "
+            "step is request-schema validation, which writes nothing. The reservation for a start "
+            "operation is created by the single-candidate append at :1020 ([submission]), so a "
+            "published start reservation holds exactly one event id. The re-read at :1326 therefore "
+            "always finds the published reservation with one event, and the check cannot refuse.")),
+    'dg5/site/pm_goal_dg_s_start.py:1406': dict(
+        kind='entailment', families=['goal_run.started'],
+        depends_on=['dg5/site/pm_goal_dg_s_start.py:1022'],
+        sites=[(START, 1406), (START, 1020), (START, 1022), (STORAGE, 1571), (STORAGE, 1579)],
+        argument=(
+            "commit_original is reached only after :1022 has required the append outcome 'appended' "
+            "for this operation. AppendOwner.append_original then issues first custody for the "
+            "appended reservation, and Storage.issue_first_receipt moves an appended reservation to "
+            "'receipted' before returning (pm_goal_test_storage.py:1571-1581); the first-receipt and "
+            "original_append steps in between perform no reservation transition. The reservation "
+            "commit_original re-reads is therefore still 'receipted', so :1406 cannot be the first "
+            "refusal in a complete commit_start call.")),
+})
