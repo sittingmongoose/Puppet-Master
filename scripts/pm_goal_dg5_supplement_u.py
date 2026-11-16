@@ -77,3 +77,21 @@ def approval_request_bytes_created_at(d):
     cur = w.approvals.state(ag['approval_id'])
     w.approvals.put(ag['approval_id'], dict(cur, request=dict(cur['request'], created_at_utc='2026-01-01T00:00:00.000Z')))
     return w, U.admitted(w, req)
+
+
+@case('U-DG5/N/history_without_first_revision', 'dgu/reader/body/missing_history', SITE + '1151',
+      'Single defect: a two-revision history loses revision 1 (and its origin) while revision 2 is coherently '
+      're-sealed with no prior and the control head names it, so the chain (:1144), origin join and accepted head '
+      '(:1152) all hold and only the first-revision check (:1151) refuses. The authored U5/G/reader_missing_history '
+      'empties the history, which the accepted-head check also refuses.')
+def history_without_first_revision(d):
+    w, g = U._goal(d)
+    U.run_direct(w, g)
+    sc = g['scope']
+    project, goal = sc['project_id'], sc['goal_id']
+    U.delete_cell(w, O.T_REV, O.rev_key(project, goal, 1))
+    U.delete_cell(w, O.T_ORIGIN, O.origin_key(project, goal, 1))
+    resealed = U.rbody(w, O.T_REV, O.rev_key(project, goal, 2), lambda r: (lambda x: dict(
+        x, revision_hash=O.revision_hash(x)))(dict(r, prior_revision_hash=None)))['record']
+    U.rbody(w, O.T_CONTROL, U.ctl_key(g), lambda c: dict(c, latest_revision_hash=resealed['revision_hash']))
+    return w, U.body_read(w, g)
