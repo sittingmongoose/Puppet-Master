@@ -15,7 +15,6 @@ DG5_EVIDENCE = {}
 
 def main():
     plumbing.suite_cases(source.Suite)
-    plumbing.schema_entry(world.Bank)
     family = 'goal_run.started'
     plumbing.entries(start.StartOwner, ('commit_start', 'recover_start'), family)
     plumbing.entries(readers.StartedProjector, ('install', 'withdraw', 'stage', 'replay', 'cutover'), family)

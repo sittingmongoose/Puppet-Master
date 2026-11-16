@@ -164,6 +164,9 @@ def main():
     for record in collector.ledger:
         if record.get('sig') is not None:
             family_rows[record['family']].update(collector.signature_list[record['sig']])
+    (args.out / 'number-corpus.json').write_text(json.dumps(dict(slots=bridge.SLOTS, results=bridge.CORPUS,
+        summary={slot: dict(collections.Counter(r['verdict'] for r in bridge.CORPUS if r['slot'] == slot))
+                 for slot in sorted({r['slot'] for r in bridge.CORPUS})}), indent=1, default=str) + '\n')
     (args.out / 'family-rows.json').write_text(json.dumps({f: sorted(v) for f, v in family_rows.items()}, indent=1) + '\n')
     extras = [getattr(sys.modules.get(name), 'DG5_EVIDENCE', None) for name in sources]
     (args.out / 'source-evidence.json').write_text(json.dumps({name: extra for name, extra in zip(sources, extras) if extra},
