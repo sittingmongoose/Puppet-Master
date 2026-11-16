@@ -7,8 +7,9 @@ from __future__ import annotations
 
 import hashlib
 import json
-import copy
+from dataclasses import dataclass
 from functools import lru_cache
+from types import MappingProxyType
 
 import jsonschema
 import pm_goal_test_numrule as NR
@@ -19,14 +20,24 @@ from pm_goal_own_c_oracles import ROOT, Validator, FORMAT, Refusal, require, equ
 from pm_goal_oracle_common import timestamp_roles
 
 
+@dataclass(frozen=True)
+class _OwnerFormats:
+    checkers: object
+
+    def check(self, value, format):
+        return jsonschema.FormatChecker.check(self, value, format)
+
+    def conforms(self, value, format):
+        return jsonschema.FormatChecker.conforms(self, value, format)
+
+
 @lru_cache(maxsize=None)
 def _owner_formats(profile):
     # Keep this bank's exact format inventory and UUID predicate. Only the
     # date-time entry changes; the provider's separate utc()/instant() stays.
-    checker = copy.copy(FORMAT)
-    checker.checkers = dict(FORMAT.checkers)
-    checker.checkers['date-time'] = NR.DT.format_checker(profile=profile).checkers['date-time']
-    return checker
+    checkers = dict(FORMAT.checkers)
+    checkers['date-time'] = NR.DT.format_checker(profile=profile).checkers['date-time']
+    return _OwnerFormats(MappingProxyType(checkers))
 
 
 def _timestamp_profiles(schema):

@@ -132,6 +132,23 @@ def run(work):
         validator = bank.validator(root)
         expected = [error_shape(e) for e in bank.errors(root, dict(control, occurred_at_utc='not-a-date'))]
         assert [error_shape(e) for e in validator.iter_errors(dict(control, occurred_at_utc='not-a-date'))] == expected
+        formats = validator.format_checker
+        assert set(formats.checkers) == set(FORMAT.checkers)
+        assert formats.checkers['uuid'] is FORMAT.checkers['uuid']
+        original = formats.checkers['date-time']
+        try:
+            formats.checkers['date-time'] = (lambda value: True, ())
+        except TypeError:
+            pass
+        else:
+            formats.checkers['date-time'] = original
+            raise AssertionError('factory exposes a mutable shared format table')
+        try:
+            formats.checkers = {}
+        except (AttributeError, TypeError):
+            pass
+        else:
+            raise AssertionError('factory format table can be rebound')
         return 'exact validator factory matches bank.errors'
     checks.add('diagnostic/factory_exposed', exposed)
 
