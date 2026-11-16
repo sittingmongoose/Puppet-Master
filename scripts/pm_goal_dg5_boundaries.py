@@ -997,9 +997,18 @@ def install_u_entries(module):
     # exact_int/storage_time call NR.integer/NR.storage_time, routed at those call sites.
     entries = {
         'SirOwner': ('admit', 'terminalize', 'replay'),
-        'ApprovalOwner': ('capture', 'decide', 'read_resolution'),
-        'GoalBodyOwner': ('reserve', 'commit', 'release', 'metadata_update',
-                          'read_body', 'read_history', 'read_receipt'),
+        'ApprovalOwner': ('capture', 'decide', 'revoke', 'read_resolution'),
+        'GoalBodyOwner': ('start', 'reserve', 'commit', 'release', 'metadata_update',
+                          'read_body', 'read_history', 'read_receipt', 'read_private', 'read_receipt_private'),
+        # The other DG-U owners whose methods authored cases call directly (U5/G/api_*): their
+        # refusals are complete calls of the same checker. Calls nested in another entry stay nested.
+        'InstallationOwner': ('install', 'withdraw', 'reinstall', 'current', 'require_installed'),
+        'PermissionOwner': ('grant', 'revoke', 'check'),
+        'ThreadOwner': ('birth', 'delete', 'require_content'),
+        'HostStopOwner': ('birth', 'stop', 'resume', 'current'),
+        'PlanBindingOwner': ('bind', 'advance_epoch', 'conflict', 'current'),
+        'ChatOwner': ('post', 'read'),
+        'LifecycleOwner': ('change',),
         'UpdateSourceOwner': ('capture', 'read_audit', 'read_input_content'),
         'UpdateProducer': ('freeze', 'publish'),
         'EventInspector': ('inspect',),
