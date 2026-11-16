@@ -2,7 +2,7 @@
   "$schema": "https://puppetmaster.local/schemas/event_family_registry/1.0.0/event_family_registry.schema.json",
   "schema_id": "pm.event_family_registry.v1",
   "schema_version": "2.0.0",
-  "registry_revision": "2026-11-16.229",
+  "registry_revision": "2026-11-16.230",
   "owner_doc": "Plans/storage-plan.md#case-l-5-eventrecord-persistence-legacy-normalization-and-dedupe",
   "unknown_event_disposition": "quarantine_without_checkpoint_advance",
   "families": [
@@ -28951,6 +28951,48 @@
       "retention_policy_ref": {
         "registry_schema_id": "pm.storage_value_registry.v2",
         "policy_id": "RP-OPERATIONAL-SECURITY-APPLICATION-2555D",
+        "policy_version": "1.0.0"
+      }
+    },
+    {
+      "family_id": "event-family-remote-access-route-preference-changed",
+      "family_revision": "1.0.0",
+      "event_type": "remote_access.route_preference_changed",
+      "scope_policy": "application_only",
+      "semantic_owner_doc": "Plans/Remote_Access_System.md#RAS-1407",
+      "payload_owner_doc": "Plans/Contracts_V0.md#CV-1407",
+      "payload_schema_id": "https://puppetmaster.local/schemas/event_payloads/w3e/remote_access_route_preference_changed/1.0.0/schema.json",
+      "payload_schema_ref": {
+        "path": "Plans/event_payloads/w3e/remote_access_route_preference_changed.schema.json",
+        "json_pointer": "#",
+        "schema_id": "https://puppetmaster.local/schemas/event_payloads/w3e/remote_access_route_preference_changed/1.0.0/schema.json"
+      },
+      "legacy": {
+        "aliases": [],
+        "admitted_extensions": [],
+        "identity_json_pointers": {
+          "project_id": [
+            "/payload/project_id"
+          ],
+          "thread_id": []
+        },
+        "referenced_event_id_pointer": null,
+        "redaction": {
+          "mode": "reject_unhandled_secrets",
+          "transform_id": null,
+          "transform_version": null
+        }
+      },
+      "source_refs": [
+        "Plans/Remote_Access_System.md#RAS-1407",
+        "Plans/Contracts_V0.md#CV-1407",
+        "Plans/storage-plan.md#SP-1407",
+        "Plans/event_payloads/w3e/remote_access_route_preference_changed.schema.json#",
+        "reports/event-authority-20261116/admission-merge-2/readiness-list.json"
+      ],
+      "retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-AUTHORITY-INDEFINITE",
         "policy_version": "1.0.0"
       }
     }
