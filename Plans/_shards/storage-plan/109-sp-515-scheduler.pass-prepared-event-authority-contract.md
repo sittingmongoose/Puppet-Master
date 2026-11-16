@@ -2,9 +2,9 @@
 
 Source: `Plans/storage-plan.md`
 
-Source lines: L46101-L53797
+Source lines: L46101-L53291
 
-Source SHA256: `bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707`
+Source SHA256: `039b8e82db5e324b06d6848067e8d5d2a039cffe1ba33cd45fa9d2ca37f46a37`
 
 ---
 
@@ -6634,164 +6634,36 @@ plan_unit_id: SP-601
 unit_type: event_contract
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: "lsp.server.lifecycle_changed persistence and passive reader\nlsp.server.lifecycle_changed 1.0.0 — newly\
-  \ authored owner contract under DL-045.\nPrepared without admission. Exact payload is Plans/event_payloads/lsp_server_lifecycle_changed.schema.json\
-  \ (pm.event_payload.lsp_server_lifecycle_changed.v1); no sibling or legacy spelling is admitted. Scope\
-  \ is project_only; project_id is a real immutable Project ID; application scope, null, empty and sentinel\
-  \ Project identities are forbidden. Payload project_id equals the envelope join. Existing CV-365 scope\
-  \ rules remain mandatory. Optional envelope lineage comes from the original operation, never ambient\
-  \ focus. Schema-only validity is insufficient. LSP previous_state and state must differ and the original\
-  \ supervisor observation must prove that exact Host/server/root/session edge under LSPSupport section\
-  \ 14.3. A valid enum alone never proves a transition.\nProducer: LspSupervisor lifecycle adapter. Observe\
-  \ one LspSupervisor transition for the exact Host/server/root attachment. Use canonical states Starting,\
-  \ Initializing, Ready, RestartBackoff, Degraded, ShuttingDown, Stopped (LSPSupport section 14.3); legacy\
-  \ stopped/starting/initializing/ready/degraded/stopping map by meaning, and a crash is a reason on RestartBackoff\
-  \ or Stopped rather than a new canonical state. No replay spawns a server, sends initialize, reopens\
-  \ a document or retries a crash.\nFreeze operation_id from fresh entropy in the original owning operation\
-  \ before its effect; preserve it and all source facts on retry/restart. Freeze the completion payload\
-  \ after owner success, before append. If the original operation cannot durably retain its intent/result,\
-  \ publication fails closed: never rerun the effect to reconstruct evidence. This contract creates no\
-  \ independent operation journal or stored value. The owner retains its existing intent/result and source\
-  \ refs under its existing storage contract.\nAdopt SP-286 first-AppendReceipt custody and CV-339 full-value\
-  \ v2 successor by name, including SP-336/SP-347 current group-commit rules. Validate admission before\
-  \ append; absent membership, unresolved retention or unavailable source custody prevents activation.\
-  \ Referenced bodies commit under SP-337 before append. The first original AppendReceipt is exposed only\
-  \ after the durable group frame; terminal event success publication follows that receipt. Lost acknowledgement\
-  \ returns that original full stored result and receipt, never a second effect or new receipt; equal\
-  \ identity with different semantic digest is a conflict, not a retry.\nIdentity digest is SHA-256 of\
-  \ UTF-8 compact JSON array [\"lsp.server.lifecycle_changed\", \"1.0.0\", storage_instance_id, payload.project_id,\
-  \ payload.operation_id], with ensure_ascii=false, no whitespace and array order preserved. event_id=\"\
-  evt_\"+digest; idempotency_key=\"lsp.server.lifecycle_changed:\"+digest; family_revision=1.0.0, replay_policy=dedupe_by_idempotency_key,\
-  \ redaction_profile=no_secrets. Use Contracts_V0.md#EventRecord for the closed envelope, not a local\
-  \ field list. Envelope occurred_at_utc equals payload.ts byte-for-byte from the original LspSupervisor\
-  \ Host/server/root/session observation; retry time is forbidden. Storage alone assigns sequence_id,\
-  \ observed_at_utc and persisted_at_utc. Full producer semantic digest uses EventRecord and CV-339, not\
-  \ only the identity tuple.\nExact envelope joins for lsp.server.lifecycle_changed: actor_ref is the\
-  \ non-empty non-secret actor reference retained by the original LspSupervisor Host/server/root/session\
-  \ observation identifying the actual LspSupervisor service for payload.host_id (not the focused editor\
-  \ user). correlation_id is the non-empty correlation_id frozen by that same original owner operation;\
-  \ payload.operation_id equals its immutable operation_id. Never synthesize either required value as\
-  \ null. Scope/project and the entire frozen payload must equal that original operation result. The original\
-  \ observation must join payload.host_id, server_id, root_identity, lsp_session_id, previous_state, state\
-  \ and ts exactly. Other nullable EventRecord lineage, account, causal and upstream-sequence joins copy\
-  \ the retained original operation facts, including required-present nulls only when that original has\
-  \ no such join; they are never populated from ambient focus. payload_ref is null for this bounded inline\
-  \ payload; enforce Storage's 16 KiB inline canonical MessagePack byte limit before append; new-native\
-  \ migration fields are null. Freeze all these producer values before append and resolve the complete\
-  \ original EventRecord through storage.first_append_receipt.resolve_full_value.v1 on receipt-dependent\
-  \ recovery. Required non-null fields retain their schema-required types.\nOperating consumer reader.lsp.lifecycle@1.0.0\
-  \ uses reader.storage.event_record_index@1.0.0 and projector.storage.event_record_index@1.0.0, explicitly\
-  \ adopting SP-278. It reads this exact event_type/revision/scope only after the complete CURRENT-selected\
-  \ global frontier is verified. Its checkpoint is the existing checkpoints key event_record_index_checkpoint.v1:{storage_instance_id},\
-  \ value Plans/event_record_index_checkpoint.schema.json#/$defs/checkpoint; no family-specific persisted\
-  \ cursor or projection is introduced. Generic rows and frontier advance atomically by the existing SP-278\
-  \ CAS; a failed CAS preserves the old publication and is retried from a fresh snapshot. Operating reads\
-  \ are passive with no durable progress, so their own checkpoint is explicitly none. Each read uses the\
-  \ exact live ten-field read_token in one real redb snapshot; any stored read token must instead be the\
-  \ nine-field DL-076 durable token with redb_snapshot_id removed, never a persisted snapshot identity.\
-  \ Rebuild uses original retained seglog through SP-278, preserving identity and no side effects. Unauthorized,\
-  \ deleted, unsupported, stale or unresolved source reads return unavailable; they cannot produce empty-success\
-  \ evidence.\nProfile rationale for lsp.server.lifecycle_changed: only opaque attachment identities,\
-  \ canonical states and a sanitized bounded reason code are inline; raw logs, URIs, paths and server\
-  \ stderr are forbidden; redaction_profile=no_secrets is an existing EventRecord value and does not grant\
-  \ source access.\nCustody remains with LspSupervisor lifecycle adapter and Storage's original seglog/payload\
-  \ owners. Store only bounded metadata and opaque authorized source refs; no transcript, diff body, secrets,\
-  \ provider response, private absolute path or credential content. Recheck current permission, source\
-  \ deletion/tombstone and hold gates before each disclosure; a ref is not permission. Backup captures\
-  \ coherent original events, refs and first-receipt custody under BRS-031; derived index is rebuildable,\
-  \ never backup authority. Restore verifies original identities and current source availability; missing\
-  \ originals remain unavailable rather than reconstructed from an index.\nRetention policy: PENDING_RETENTION_DECISION.\
-  \ For a PENDING marker no class is selected: candidate RP-RUNTIME-365D (runtime observation), RP-OPERATIONAL-2555D\
-  \ (operational diagnostic), or RP-AUTHORITY-INDEFINITE (audit/source lineage) per Case L-3; RT must\
-  \ settle the actual role. Existing generic checkpoint/index retain RP-PROJECTION-3GEN and SP-278 source-coupled\
-  \ constraints; no new stored derived record is owned here.\nCompatibility: only this exact 1.0.0 schema\
-  \ is a current writer candidate. Historical names/bytes remain unchanged; unknown future revisions halt\
-  \ the consumer before advance, never normalize by guessed payload. Withdrawal first disables the exact\
-  \ producer's admission, drains/fences outstanding intents and prohibits append under stale admission.\
-  \ Then reader.lsp.lifecycle@1.0.0 refuses disclosure and fences its in-memory token; generic global\
-  \ indexing remains available for other families. Re-enable only after governed schema/admission validation\
-  \ and verified SP-278 rebuild/currentness. No source deletion, history rewrite or zero-cursor substitution\
-  \ is authorized.\nExact-family oracle matrix for lsp.server.lifecycle_changed: Plans/small_owner_event_fixtures.json\
-  \ owns its full EventRecord, independent original owner operation/result, original eleven-field receipt\
-  \ and four-field append result, full-value commitment, and positive/negative vectors; scripts/pm-small-owner-events.py\
-  \ validates them without registry admission. Positive append vectors assume fixture-only resolved membership/retention;\
-  \ actual absent membership and PENDING_RETENTION_DECISION refuse activation. Every required envelope\
-  \ field, profile (including redacted_refs_only), actor/correlation/time/payload/subject join and same-identity\
-  \ changed semantic value has a refusal vector. The admission matrix cuts missing membership/schema/retention/permission/dedupe/source/original\
-  \ intent/original result/current owner acceptance/body commit/current lease/restore controls before\
-  \ append, then cuts uncommitted group, unsynced group, receipt exposure and terminal publication. A\
-  \ durable commit with lost acknowledgement or lagging custody rows returns the same original result/receipt;\
-  \ no durable commit returns no receipt. The original owner acceptance freezes its admission epoch, actual\
-  \ owner session and restore occurrence; seal compares all three to current owner/Storage controls. Re-enable\
-  \ never relabels an old intent: fresh acceptance uses a different logical operation_id. Recovery never\
-  \ reruns LspSupervisor lifecycle adapter or reconstructs old owner admission. Withdrawal vectors fence\
-  \ pending/prepared and stale-epoch intents, preserve previously issued immutable replay without effects,\
-  \ refuse the withdrawn operating reader, keep unrelated global indexing, and require governed new admission\
-  \ plus verified SP-278 rebuild/currentness before fresh work. Backup/source-deletion/unsupported-version/read-token/CAS\
-  \ negatives refuse disclosure or preserve the old complete publication; they cannot fabricate missing\
-  \ originals. Native fsync, concurrent CAS, restore authority and action-spy execution of these authored\
-  \ cases remain NOT_RUN.\nStatic schema and semantic oracles are Plans/small_owner_event_fixtures.json\
-  \ and scripts/pm-small-owner-events.py. Native append durability, crash cuts, backup/restore and live\
-  \ permission/CAS tests are authored obligations, NOT_RUN. No writer, handler or native availability\
-  \ follows from this preparation.\nlsp.server.lifecycle_changed append and current retry reject replay_policy=projector_replay_only\
-  \ as replay_only_not_appendable before semantic receipt resolution. That policy remains compatibility-reader-only;\
-  \ immutable historical semantic/full-value reads retain their separate role and unchanged digest. Before\
-  \ terminal publication validate the delivered eleven-field first AppendReceipt against protected original\
-  \ committed full-value custody and its exact EventRecord/result; a foreign, missing or mutated receipt\
-  \ publishes no success and never undoes or duplicates the already durable frame. Each identifier/path\
-  \ regex uses a full-match guard plus CR/LF refusal, with trailing-LF negatives. Its exact-family fixture\
-  \ matrix tests replay-only append/retry, every receipt-publication field, encoded project~ partitions,\
-  \ the inline byte cap and (where reachable) 16383/16384/16385-byte and SP-337 external-body boundaries.\n\
-  Checkpoint identity for lsp.server.lifecycle_changed: before atomic rebuild publication, validate the\
-  \ nine-field durable token against the SP-278 read_token schema with redb_snapshot_id removed and full-match\
-  \ identifier checks. Its storage_instance_id, source_selection.storage_instance_id and event_record_index_checkpoint.v1:{storage_instance_id}\
-  \ key must identify the Storage instance of this original event; its index_dataset_name must identify\
-  \ its generation_id. Match every durable field to the independently captured CURRENT-selected live token\
-  \ after removing only redb_snapshot_id, and match the publication frontier_revision to that token. Missing,\
-  \ malformed, foreign, coherently substituted, trailing-LF or stale tokens preserve the old rows and\
-  \ checkpoint without effects; never copy an unchecked proposed checkpoint. Passive reads validate the\
-  \ same Storage/key/generation joins before comparing the exact selected live token. Each exact-family\
-  \ oracle includes these identity failures, persisted-snapshot refusal and immutable-publication checks.\n\
-  Historical operating reads and rebuild for lsp.server.lifecycle_changed authenticate the retained EventRecord\
-  \ against Storage's protected original source and full-value commitment at the selected CURRENT frontier,\
-  \ including Storage-assigned sequence_id, observed_at_utc and persisted_at_utc. A retained event valid\
-  \ when written remains readable after live owner request/session/admission retirement, including compatibility-reader-only\
-  \ projector_replay_only history; never rerun current-writer admission or require a transient old owner\
-  \ request. Current reader withdrawal, permission, source presence/deletion/hold and supported-version\
-  \ fences still apply. Forged bytes, foreign family/Storage/source selection or missing protected originals\
-  \ refuse disclosure and preserve the old rebuild publication. Caller semantic retry continues to exclude\
-  \ Storage-assigned metadata; append/current retry still refuse replay_only_not_appendable. Check 11\
-  \ isolation is exercised by the Method B guard tables in scripts/pm_small_owner_table_*.py under the\
-  \ gated scripts/pm_guard_isolation.py: each refusal witness starts from a valid case, changes one semantic\
-  \ fact and keeps all Storage/source, generation/dataset and selected/durable observation copies coherent.\
-  \ The tool cuts each guard row in turn; its witnesses must become accepted, unrelated witnesses must\
-  \ still reject, and the complete checker must fail. Identifier grammar failures are separate from valid-grammar\
-  \ identity mismatches; no production guard is weakened.\nSweep part 2A/2B numbers for lsp.server.lifecycle_changed:\
-  \ current input uses the shared CV-1100 calls (current_integer_token/current_integer at every integer\
-  \ slot, producer_semantic_bytes/producer_semantic_digest over the unchanged full producer projection\
-  \ beside CV-317, storage_value_bytes with EVENT_VALUE beside SP-026/SP-236, and storage_uint64 beside\
-  \ SP-1100 at the Storage sequence joins); no lane-local integer cap, serializer or normalization remains.\
-  \ Retained originals verify under the write-time recipe named by the one write receipt Storage sealed\
-  \ with that exact original beside SP-1101/SP-286 (the frozen dm-retained-producer-v1 recipe for originals\
-  \ the earlier writer wrote, the current CV-1100 producer recipe for originals the current writer wrote),\
-  \ selected only through the protected original custody, never by default and never through current request\
-  \ data; an original without that receipt, or with more than one, does not resolve; full Storage uint64,\
-  \ physical float bytes and signed zero are preserved. Current and retained timestamps are checked by\
-  \ the shared CV-1101 predicate pm_event_datetime.date_time: occurred_at_utc and the family payload clock\
-  \ use the event_record profile, and Storage-assigned observed_at_utc and persisted_at_utc use the storage_utc_z\
-  \ profile beside CV-253; the recipe that receipt selects beside SP-1101 selects those profiles (both\
-  \ DM recipes bind the same ones), and request data cannot select a profile.\n\nPNC-019 s4r retention\
-  \ binding for `lsp.server.lifecycle_changed` (2026-11-14).\n\nEvent history `retention_policy_ref =\
-  \ RP-TELEMETRY-90D@1.0.0`, under DL-401, DL-415.\n\nUse the existing policy object unchanged: {\"anchor_kind\"\
-  : \"creation\", \"cardinality_scope\": \"project\", \"expiry_action\": \"compact\", \"max_cardinality\"\
-  : 2000000, \"overflow_action\": \"fail_closed\", \"ttl_seconds\": 7776000}.\n\nPreserve first successful\
-  \ restart-surviving save as the 90-day anchor; retry, replay, recovery and restore never restart it\
-  \ (DL-415).\n\nThis paragraph supersedes earlier pending statements only for the exact assigned facets\
-  \ above. All independent source, receipt, referenced-body and backup lifetimes remain with their own\
-  \ owners. Legal/investigation holds, required references, recovery, rollback, maintenance, protected\
-  \ backups and latest-25-run protection override cleanup without granting access. No unexpired/protected\
-  \ eviction for space, no retry anchor renewal, no hold release, admission, native proof or governance\
-  \ clearance is granted.\n"
+canonical_text: |
+  lsp.server.lifecycle_changed persistence and passive reader
+  lsp.server.lifecycle_changed 1.0.0 — newly authored owner contract under DL-045.
+  Prepared without admission. Exact payload is Plans/event_payloads/lsp_server_lifecycle_changed.schema.json (pm.event_payload.lsp_server_lifecycle_changed.v1); no sibling or legacy spelling is admitted. Scope is project_only; project_id is a real immutable Project ID; application scope, null, empty and sentinel Project identities are forbidden. Payload project_id equals the envelope join. Existing CV-365 scope rules remain mandatory. Optional envelope lineage comes from the original operation, never ambient focus. Schema-only validity is insufficient. LSP previous_state and state must differ and the original supervisor observation must prove that exact Host/server/root/session edge under LSPSupport section 14.3. A valid enum alone never proves a transition.
+  Producer: LspSupervisor lifecycle adapter. Observe one LspSupervisor transition for the exact Host/server/root attachment. Use canonical states Starting, Initializing, Ready, RestartBackoff, Degraded, ShuttingDown, Stopped (LSPSupport section 14.3); legacy stopped/starting/initializing/ready/degraded/stopping map by meaning, and a crash is a reason on RestartBackoff or Stopped rather than a new canonical state. No replay spawns a server, sends initialize, reopens a document or retries a crash.
+  Freeze operation_id from fresh entropy in the original owning operation before its effect; preserve it and all source facts on retry/restart. Freeze the completion payload after owner success, before append. If the original operation cannot durably retain its intent/result, publication fails closed: never rerun the effect to reconstruct evidence. This contract creates no independent operation journal or stored value. The owner retains its existing intent/result and source refs under its existing storage contract.
+  Adopt SP-286 first-AppendReceipt custody and CV-339 full-value v2 successor by name, including SP-336/SP-347 current group-commit rules. Validate admission before append; absent membership, unresolved retention or unavailable source custody prevents activation. Referenced bodies commit under SP-337 before append. The first original AppendReceipt is exposed only after the durable group frame; terminal event success publication follows that receipt. Lost acknowledgement returns that original full stored result and receipt, never a second effect or new receipt; equal identity with different semantic digest is a conflict, not a retry.
+  Identity digest is SHA-256 of UTF-8 compact JSON array ["lsp.server.lifecycle_changed", "1.0.0", storage_instance_id, payload.project_id, payload.operation_id], with ensure_ascii=false, no whitespace and array order preserved. event_id="evt_"+digest; idempotency_key="lsp.server.lifecycle_changed:"+digest; family_revision=1.0.0, replay_policy=dedupe_by_idempotency_key, redaction_profile=no_secrets. Use Contracts_V0.md#EventRecord for the closed envelope, not a local field list. Envelope occurred_at_utc equals payload.ts byte-for-byte from the original LspSupervisor Host/server/root/session observation; retry time is forbidden. Storage alone assigns sequence_id, observed_at_utc and persisted_at_utc. Full producer semantic digest uses EventRecord and CV-339, not only the identity tuple.
+  Exact envelope joins for lsp.server.lifecycle_changed: actor_ref is the non-empty non-secret actor reference retained by the original LspSupervisor Host/server/root/session observation identifying the actual LspSupervisor service for payload.host_id (not the focused editor user). correlation_id is the non-empty correlation_id frozen by that same original owner operation; payload.operation_id equals its immutable operation_id. Never synthesize either required value as null. Scope/project and the entire frozen payload must equal that original operation result. The original observation must join payload.host_id, server_id, root_identity, lsp_session_id, previous_state, state and ts exactly. Other nullable EventRecord lineage, account, causal and upstream-sequence joins copy the retained original operation facts, including required-present nulls only when that original has no such join; they are never populated from ambient focus. payload_ref is null for this bounded inline payload; enforce Storage's 16 KiB inline canonical MessagePack byte limit before append; new-native migration fields are null. Freeze all these producer values before append and resolve the complete original EventRecord through storage.first_append_receipt.resolve_full_value.v1 on receipt-dependent recovery. Required non-null fields retain their schema-required types.
+  Operating consumer reader.lsp.lifecycle@1.0.0 uses reader.storage.event_record_index@1.0.0 and projector.storage.event_record_index@1.0.0, explicitly adopting SP-278. It reads this exact event_type/revision/scope only after the complete CURRENT-selected global frontier is verified. Its checkpoint is the existing checkpoints key event_record_index_checkpoint.v1:{storage_instance_id}, value Plans/event_record_index_checkpoint.schema.json#/$defs/checkpoint; no family-specific persisted cursor or projection is introduced. Generic rows and frontier advance atomically by the existing SP-278 CAS; a failed CAS preserves the old publication and is retried from a fresh snapshot. Operating reads are passive with no durable progress, so their own checkpoint is explicitly none. Each read uses the exact live ten-field read_token in one real redb snapshot; any stored read token must instead be the nine-field DL-076 durable token with redb_snapshot_id removed, never a persisted snapshot identity. Rebuild uses original retained seglog through SP-278, preserving identity and no side effects. Unauthorized, deleted, unsupported, stale or unresolved source reads return unavailable; they cannot produce empty-success evidence.
+  Profile rationale for lsp.server.lifecycle_changed: only opaque attachment identities, canonical states and a sanitized bounded reason code are inline; raw logs, URIs, paths and server stderr are forbidden; redaction_profile=no_secrets is an existing EventRecord value and does not grant source access.
+  Custody remains with LspSupervisor lifecycle adapter and Storage's original seglog/payload owners. Store only bounded metadata and opaque authorized source refs; no transcript, diff body, secrets, provider response, private absolute path or credential content. Recheck current permission, source deletion/tombstone and hold gates before each disclosure; a ref is not permission. Backup captures coherent original events, refs and first-receipt custody under BRS-031; derived index is rebuildable, never backup authority. Restore verifies original identities and current source availability; missing originals remain unavailable rather than reconstructed from an index.
+  Retention policy: PENDING_RETENTION_DECISION. For a PENDING marker no class is selected: candidate RP-RUNTIME-365D (runtime observation), RP-OPERATIONAL-2555D (operational diagnostic), or RP-AUTHORITY-INDEFINITE (audit/source lineage) per Case L-3; RT must settle the actual role. Existing generic checkpoint/index retain RP-PROJECTION-3GEN and SP-278 source-coupled constraints; no new stored derived record is owned here.
+  Compatibility: only this exact 1.0.0 schema is a current writer candidate. Historical names/bytes remain unchanged; unknown future revisions halt the consumer before advance, never normalize by guessed payload. Withdrawal first disables the exact producer's admission, drains/fences outstanding intents and prohibits append under stale admission. Then reader.lsp.lifecycle@1.0.0 refuses disclosure and fences its in-memory token; generic global indexing remains available for other families. Re-enable only after governed schema/admission validation and verified SP-278 rebuild/currentness. No source deletion, history rewrite or zero-cursor substitution is authorized.
+  Exact-family oracle matrix for lsp.server.lifecycle_changed: Plans/small_owner_event_fixtures.json owns its full EventRecord, independent original owner operation/result, original eleven-field receipt and four-field append result, full-value commitment, and positive/negative vectors; scripts/pm-small-owner-events.py validates them without registry admission. Positive append vectors assume fixture-only resolved membership/retention; actual absent membership and PENDING_RETENTION_DECISION refuse activation. Every required envelope field, profile (including redacted_refs_only), actor/correlation/time/payload/subject join and same-identity changed semantic value has a refusal vector. The admission matrix cuts missing membership/schema/retention/permission/dedupe/source/original intent/original result/current owner acceptance/body commit/current lease/restore controls before append, then cuts uncommitted group, unsynced group, receipt exposure and terminal publication. A durable commit with lost acknowledgement or lagging custody rows returns the same original result/receipt; no durable commit returns no receipt. The original owner acceptance freezes its admission epoch, actual owner session and restore occurrence; seal compares all three to current owner/Storage controls. Re-enable never relabels an old intent: fresh acceptance uses a different logical operation_id. Recovery never reruns LspSupervisor lifecycle adapter or reconstructs old owner admission. Withdrawal vectors fence pending/prepared and stale-epoch intents, preserve previously issued immutable replay without effects, refuse the withdrawn operating reader, keep unrelated global indexing, and require governed new admission plus verified SP-278 rebuild/currentness before fresh work. Backup/source-deletion/unsupported-version/read-token/CAS negatives refuse disclosure or preserve the old complete publication; they cannot fabricate missing originals. Native fsync, concurrent CAS, restore authority and action-spy execution of these authored cases remain NOT_RUN.
+  Static schema and semantic oracles are Plans/small_owner_event_fixtures.json and scripts/pm-small-owner-events.py. Native append durability, crash cuts, backup/restore and live permission/CAS tests are authored obligations, NOT_RUN. No writer, handler or native availability follows from this preparation.
+  lsp.server.lifecycle_changed append and current retry reject replay_policy=projector_replay_only as replay_only_not_appendable before semantic receipt resolution. That policy remains compatibility-reader-only; immutable historical semantic/full-value reads retain their separate role and unchanged digest. Before terminal publication validate the delivered eleven-field first AppendReceipt against protected original committed full-value custody and its exact EventRecord/result; a foreign, missing or mutated receipt publishes no success and never undoes or duplicates the already durable frame. Each identifier/path regex uses a full-match guard plus CR/LF refusal, with trailing-LF negatives. Its exact-family fixture matrix tests replay-only append/retry, every receipt-publication field, encoded project~ partitions, the inline byte cap and (where reachable) 16383/16384/16385-byte and SP-337 external-body boundaries.
+  Checkpoint identity for lsp.server.lifecycle_changed: before atomic rebuild publication, validate the nine-field durable token against the SP-278 read_token schema with redb_snapshot_id removed and full-match identifier checks. Its storage_instance_id, source_selection.storage_instance_id and event_record_index_checkpoint.v1:{storage_instance_id} key must identify the Storage instance of this original event; its index_dataset_name must identify its generation_id. Match every durable field to the independently captured CURRENT-selected live token after removing only redb_snapshot_id, and match the publication frontier_revision to that token. Missing, malformed, foreign, coherently substituted, trailing-LF or stale tokens preserve the old rows and checkpoint without effects; never copy an unchecked proposed checkpoint. Passive reads validate the same Storage/key/generation joins before comparing the exact selected live token. Each exact-family oracle includes these identity failures, persisted-snapshot refusal and immutable-publication checks.
+  Historical operating reads and rebuild for lsp.server.lifecycle_changed authenticate the retained EventRecord against Storage's protected original source and full-value commitment at the selected CURRENT frontier, including Storage-assigned sequence_id, observed_at_utc and persisted_at_utc. A retained event valid when written remains readable after live owner request/session/admission retirement, including compatibility-reader-only projector_replay_only history; never rerun current-writer admission or require a transient old owner request. Current reader withdrawal, permission, source presence/deletion/hold and supported-version fences still apply. Forged bytes, foreign family/Storage/source selection or missing protected originals refuse disclosure and preserve the old rebuild publication. Caller semantic retry continues to exclude Storage-assigned metadata; append/current retry still refuse replay_only_not_appendable. Check 11 isolation is exercised by the Method B guard tables in scripts/pm_small_owner_table_*.py under the gated scripts/pm_guard_isolation.py: each refusal witness starts from a valid case, changes one semantic fact and keeps all Storage/source, generation/dataset and selected/durable observation copies coherent. The tool cuts each guard row in turn; its witnesses must become accepted, unrelated witnesses must still reject, and the complete checker must fail. Identifier grammar failures are separate from valid-grammar identity mismatches; no production guard is weakened.
+  Sweep part 2A/2B numbers for lsp.server.lifecycle_changed: current input uses the shared CV-1100 calls (current_integer_token/current_integer at every integer slot, producer_semantic_bytes/producer_semantic_digest over the unchanged full producer projection beside CV-317, storage_value_bytes with EVENT_VALUE beside SP-026/SP-236, and storage_uint64 beside SP-1100 at the Storage sequence joins); no lane-local integer cap, serializer or normalization remains. Retained originals verify under the write-time recipe named by the one write receipt Storage sealed with that exact original beside SP-1101/SP-286 (the frozen dm-retained-producer-v1 recipe for originals the earlier writer wrote, the current CV-1100 producer recipe for originals the current writer wrote), selected only through the protected original custody, never by default and never through current request data; an original without that receipt, or with more than one, does not resolve; full Storage uint64, physical float bytes and signed zero are preserved. Current and retained timestamps are checked by the shared CV-1101 predicate pm_event_datetime.date_time: occurred_at_utc and the family payload clock use the event_record profile, and Storage-assigned observed_at_utc and persisted_at_utc use the storage_utc_z profile beside CV-253; the recipe that receipt selects beside SP-1101 selects those profiles (both DM recipes bind the same ones), and request data cannot select a profile.
+
+  PNC-019 s4r retention binding for `lsp.server.lifecycle_changed` (2026-11-14).
+
+  Event history `retention_policy_ref = RP-TELEMETRY-90D@1.0.0`, under DL-401, DL-415.
+
+  Use the existing policy object unchanged: {"anchor_kind": "creation", "cardinality_scope": "project", "expiry_action": "compact", "max_cardinality": 2000000, "overflow_action": "fail_closed", "ttl_seconds": 7776000}.
+
+  Preserve first successful restart-surviving save as the 90-day anchor; retry, replay, recovery and restore never restart it (DL-415).
+
+  This paragraph supersedes earlier pending statements only for the exact assigned facets above. All independent source, receipt, referenced-body and backup lifetimes remain with their own owners. Legal/investigation holds, required references, recovery, rollback, maintenance, protected backups and latest-25-run protection override cleanup without granting access. No unexpired/protected eviction for space, no retry anchor renewal, no hold release, admission, native proof or governance clearance is granted.
 gui_related: false
 gui_classification_reason: Backend EventRecord contract, not a visual specification.
 depends_on:
@@ -7145,158 +7017,34 @@ plan_unit_id: SP-605
 unit_type: event_contract
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: "project.added persistence and passive reader\nproject.added 1.0.0 — newly authored owner contract under\
-  \ DL-045.\nPrepared without admission. Exact payload is Plans/event_payloads/project_added.schema.json\
-  \ (pm.event_payload.project_added.v1); no sibling or legacy spelling is admitted. Scope is project_only;\
-  \ project_id is a real immutable Project ID; application scope, null, empty and sentinel Project identities\
-  \ are forbidden. Payload project_id equals the envelope join. Existing CV-365 scope rules remain mandatory.\
-  \ Optional envelope lineage comes from the original operation, never ambient focus. Schema-only validity\
-  \ is insufficient.\nProducer: Project registration commit adapter. After cmd.project.add_existing completes\
-  \ atomic projects:v1 identity/config/permission/owner handoff and readback, record its existing-content\
-  \ registration once. A failed registration, temporary mount, list-only open/archive/remove, or unverified\
-  \ restore creates no completion. Restore-as-new requires its verified Backup terminal receipt first.\
-  \ This event observes the completed registration; it does not grant permission, create files or replace\
-  \ the Project result.\nFreeze operation_id from fresh entropy in the original owning operation before\
-  \ its effect; preserve it and all source facts on retry/restart. Freeze the completion payload after\
-  \ owner success, before append. If the original operation cannot durably retain its intent/result, publication\
-  \ fails closed: never rerun the effect to reconstruct evidence. This contract creates no independent\
-  \ operation journal or stored value. The owner retains its existing intent/result and source refs under\
-  \ its existing storage contract.\nAdopt SP-286 first-AppendReceipt custody and CV-339 full-value v2\
-  \ successor by name, including SP-336/SP-347 current group-commit rules. Validate admission before append;\
-  \ absent membership, unresolved retention or unavailable source custody prevents activation. Referenced\
-  \ bodies commit under SP-337 before append. The first original AppendReceipt is exposed only after the\
-  \ durable group frame; terminal event success publication follows that receipt. Lost acknowledgement\
-  \ returns that original full stored result and receipt, never a second effect or new receipt; equal\
-  \ identity with different semantic digest is a conflict, not a retry.\nIdentity digest is SHA-256 of\
-  \ UTF-8 compact JSON array [\"project.added\", \"1.0.0\", storage_instance_id, payload.project_id, payload.operation_id],\
-  \ with ensure_ascii=false, no whitespace and array order preserved. event_id=\"evt_\"+digest; idempotency_key=\"\
-  project.added:\"+digest; family_revision=1.0.0, replay_policy=dedupe_by_idempotency_key, redaction_profile=secret_refs_only.\
-  \ Use Contracts_V0.md#EventRecord for the closed envelope, not a local field list. Envelope occurred_at_utc\
-  \ equals payload.completed_at_utc byte-for-byte from the original completed Project existing-content\
-  \ registration; retry time is forbidden. Storage alone assigns sequence_id, observed_at_utc and persisted_at_utc.\
-  \ Full producer semantic digest uses EventRecord and CV-339, not only the identity tuple.\nExact envelope\
-  \ joins for project.added: actor_ref is the non-empty non-secret actor reference retained by the original\
-  \ completed Project existing-content registration from its accepted owner request, never the retrying\
-  \ Client. correlation_id is the non-empty correlation_id frozen by that same original owner operation;\
-  \ payload.operation_id equals its immutable operation_id. Never synthesize either required value as\
-  \ null. Scope/project and the entire frozen payload must equal that original operation result. The original\
-  \ atomic registry/readback result must join payload.project_id, project_revision, stable_config_ref\
-  \ and operation_receipt_ref exactly. Other nullable EventRecord lineage, account, causal and upstream-sequence\
-  \ joins copy the retained original operation facts, including required-present nulls only when that\
-  \ original has no such join; they are never populated from ambient focus. payload_ref is null for this\
-  \ bounded inline payload; enforce Storage's 16 KiB inline canonical MessagePack byte limit before append;\
-  \ new-native migration fields are null. Freeze all these producer values before append and resolve the\
-  \ complete original EventRecord through storage.first_append_receipt.resolve_full_value.v1 on receipt-dependent\
-  \ recovery. Required non-null fields retain their schema-required types.\nOperating consumer reader.project.added@1.0.0\
-  \ uses reader.storage.event_record_index@1.0.0 and projector.storage.event_record_index@1.0.0, explicitly\
-  \ adopting SP-278. It reads this exact event_type/revision/scope only after the complete CURRENT-selected\
-  \ global frontier is verified. Its checkpoint is the existing checkpoints key event_record_index_checkpoint.v1:{storage_instance_id},\
-  \ value Plans/event_record_index_checkpoint.schema.json#/$defs/checkpoint; no family-specific persisted\
-  \ cursor or projection is introduced. Generic rows and frontier advance atomically by the existing SP-278\
-  \ CAS; a failed CAS preserves the old publication and is retried from a fresh snapshot. Operating reads\
-  \ are passive with no durable progress, so their own checkpoint is explicitly none. Each read uses the\
-  \ exact live ten-field read_token in one real redb snapshot; any stored read token must instead be the\
-  \ nine-field DL-076 durable token with redb_snapshot_id removed, never a persisted snapshot identity.\
-  \ Rebuild uses original retained seglog through SP-278, preserving identity and no side effects. Unauthorized,\
-  \ deleted, unsupported, stale or unresolved source reads return unavailable; they cannot produce empty-success\
-  \ evidence.\nProfile rationale for project.added: stable config and original registration result remain\
-  \ behind authorized refs; redaction_profile=secret_refs_only is an existing EventRecord value and does\
-  \ not grant source access.\nCustody remains with Project registration commit adapter and Storage's original\
-  \ seglog/payload owners. Store only bounded metadata and opaque authorized source refs; no transcript,\
-  \ diff body, secrets, provider response, private absolute path or credential content. Recheck current\
-  \ permission, source deletion/tombstone and hold gates before each disclosure; a ref is not permission.\
-  \ Backup captures coherent original events, refs and first-receipt custody under BRS-031; derived index\
-  \ is rebuildable, never backup authority. Restore verifies original identities and current source availability;\
-  \ missing originals remain unavailable rather than reconstructed from an index.\nRetention policy: PENDING_RETENTION_DECISION.\
-  \ For a PENDING marker no class is selected: candidate RP-RUNTIME-365D (runtime observation), RP-OPERATIONAL-2555D\
-  \ (operational diagnostic), or RP-AUTHORITY-INDEFINITE (audit/source lineage) per Case L-3; RT must\
-  \ settle the actual role. Existing generic checkpoint/index retain RP-PROJECTION-3GEN and SP-278 source-coupled\
-  \ constraints; no new stored derived record is owned here.\nCompatibility: only this exact 1.0.0 schema\
-  \ is a current writer candidate. Historical names/bytes remain unchanged; unknown future revisions halt\
-  \ the consumer before advance, never normalize by guessed payload. Withdrawal first disables the exact\
-  \ producer's admission, drains/fences outstanding intents and prohibits append under stale admission.\
-  \ Then reader.project.added@1.0.0 refuses disclosure and fences its in-memory token; generic global\
-  \ indexing remains available for other families. Re-enable only after governed schema/admission validation\
-  \ and verified SP-278 rebuild/currentness. No source deletion, history rewrite or zero-cursor substitution\
-  \ is authorized.\nExact-family oracle matrix for project.added: Plans/small_owner_event_fixtures.json\
-  \ owns its full EventRecord, independent original owner operation/result, original eleven-field receipt\
-  \ and four-field append result, full-value commitment, and positive/negative vectors; scripts/pm-small-owner-events.py\
-  \ validates them without registry admission. Positive append vectors assume fixture-only resolved membership/retention;\
-  \ actual absent membership and PENDING_RETENTION_DECISION refuse activation. Every required envelope\
-  \ field, profile (including redacted_refs_only), actor/correlation/time/payload/subject join and same-identity\
-  \ changed semantic value has a refusal vector. The admission matrix cuts missing membership/schema/retention/permission/dedupe/source/original\
-  \ intent/original result/current owner acceptance/body commit/current lease/restore controls before\
-  \ append, then cuts uncommitted group, unsynced group, receipt exposure and terminal publication. A\
-  \ durable commit with lost acknowledgement or lagging custody rows returns the same original result/receipt;\
-  \ no durable commit returns no receipt. The original owner acceptance freezes its admission epoch, actual\
-  \ owner session and restore occurrence; seal compares all three to current owner/Storage controls. Re-enable\
-  \ never relabels an old intent: fresh acceptance uses a different logical operation_id. Recovery never\
-  \ reruns Project registration commit adapter or reconstructs old owner admission. Withdrawal vectors\
-  \ fence pending/prepared and stale-epoch intents, preserve previously issued immutable replay without\
-  \ effects, refuse the withdrawn operating reader, keep unrelated global indexing, and require governed\
-  \ new admission plus verified SP-278 rebuild/currentness before fresh work. Backup/source-deletion/unsupported-version/read-token/CAS\
-  \ negatives refuse disclosure or preserve the old complete publication; they cannot fabricate missing\
-  \ originals. Native fsync, concurrent CAS, restore authority and action-spy execution of these authored\
-  \ cases remain NOT_RUN.\nStatic schema and semantic oracles are Plans/small_owner_event_fixtures.json\
-  \ and scripts/pm-small-owner-events.py. Native append durability, crash cuts, backup/restore and live\
-  \ permission/CAS tests are authored obligations, NOT_RUN. No writer, handler or native availability\
-  \ follows from this preparation.\nproject.added append and current retry reject replay_policy=projector_replay_only\
-  \ as replay_only_not_appendable before semantic receipt resolution. That policy remains compatibility-reader-only;\
-  \ immutable historical semantic/full-value reads retain their separate role and unchanged digest. Before\
-  \ terminal publication validate the delivered eleven-field first AppendReceipt against protected original\
-  \ committed full-value custody and its exact EventRecord/result; a foreign, missing or mutated receipt\
-  \ publishes no success and never undoes or duplicates the already durable frame. Each identifier/path\
-  \ regex uses a full-match guard plus CR/LF refusal, with trailing-LF negatives. Its exact-family fixture\
-  \ matrix tests replay-only append/retry, every receipt-publication field, encoded project~ partitions,\
-  \ the inline byte cap and (where reachable) 16383/16384/16385-byte and SP-337 external-body boundaries.\n\
-  Checkpoint identity for project.added: before atomic rebuild publication, validate the nine-field durable\
-  \ token against the SP-278 read_token schema with redb_snapshot_id removed and full-match identifier\
-  \ checks. Its storage_instance_id, source_selection.storage_instance_id and event_record_index_checkpoint.v1:{storage_instance_id}\
-  \ key must identify the Storage instance of this original event; its index_dataset_name must identify\
-  \ its generation_id. Match every durable field to the independently captured CURRENT-selected live token\
-  \ after removing only redb_snapshot_id, and match the publication frontier_revision to that token. Missing,\
-  \ malformed, foreign, coherently substituted, trailing-LF or stale tokens preserve the old rows and\
-  \ checkpoint without effects; never copy an unchecked proposed checkpoint. Passive reads validate the\
-  \ same Storage/key/generation joins before comparing the exact selected live token. Each exact-family\
-  \ oracle includes these identity failures, persisted-snapshot refusal and immutable-publication checks.\n\
-  Historical operating reads and rebuild for project.added authenticate the retained EventRecord against\
-  \ Storage's protected original source and full-value commitment at the selected CURRENT frontier, including\
-  \ Storage-assigned sequence_id, observed_at_utc and persisted_at_utc. A retained event valid when written\
-  \ remains readable after live owner request/session/admission retirement, including compatibility-reader-only\
-  \ projector_replay_only history; never rerun current-writer admission or require a transient old owner\
-  \ request. Current reader withdrawal, permission, source presence/deletion/hold and supported-version\
-  \ fences still apply. Forged bytes, foreign family/Storage/source selection or missing protected originals\
-  \ refuse disclosure and preserve the old rebuild publication. Caller semantic retry continues to exclude\
-  \ Storage-assigned metadata; append/current retry still refuse replay_only_not_appendable. Check 11\
-  \ isolation is exercised by the Method B guard tables in scripts/pm_small_owner_table_*.py under the\
-  \ gated scripts/pm_guard_isolation.py: each refusal witness starts from a valid case, changes one semantic\
-  \ fact and keeps all Storage/source, generation/dataset and selected/durable observation copies coherent.\
-  \ The tool cuts each guard row in turn; its witnesses must become accepted, unrelated witnesses must\
-  \ still reject, and the complete checker must fail. Identifier grammar failures are separate from valid-grammar\
-  \ identity mismatches; no production guard is weakened.\nSweep part 2A/2B numbers for project.added:\
-  \ current input uses the shared CV-1100 calls (current_integer_token/current_integer at every integer\
-  \ slot, producer_semantic_bytes/producer_semantic_digest over the unchanged full producer projection\
-  \ beside CV-317, storage_value_bytes with EVENT_VALUE beside SP-026/SP-236, and storage_uint64 beside\
-  \ SP-1100 at the Storage sequence joins); no lane-local integer cap, serializer or normalization remains.\
-  \ Retained originals verify under the write-time recipe named by the one write receipt Storage sealed\
-  \ with that exact original beside SP-1101/SP-286 (the frozen dm-retained-producer-v1 recipe for originals\
-  \ the earlier writer wrote, the current CV-1100 producer recipe for originals the current writer wrote),\
-  \ selected only through the protected original custody, never by default and never through current request\
-  \ data; an original without that receipt, or with more than one, does not resolve; full Storage uint64,\
-  \ physical float bytes and signed zero are preserved. Current and retained timestamps are checked by\
-  \ the shared CV-1101 predicate pm_event_datetime.date_time: occurred_at_utc and the family payload clock\
-  \ use the event_record profile, and Storage-assigned observed_at_utc and persisted_at_utc use the storage_utc_z\
-  \ profile beside CV-253; the recipe that receipt selects beside SP-1101 selects those profiles (both\
-  \ DM recipes bind the same ones), and request data cannot select a profile.\n\nPNC-019 s4r retention\
-  \ binding for `project.added` (2026-11-14).\n\nEvent history `retention_policy_ref = RP-AUTHORITY-INDEFINITE@1.0.0`,\
-  \ under DL-401.\n\nUse the existing policy object unchanged: {\"anchor_kind\": \"creation\", \"cardinality_scope\"\
-  : null, \"expiry_action\": \"none\", \"max_cardinality\": null, \"overflow_action\": \"fail_closed\"\
-  , \"ttl_seconds\": null}.\n\nThis paragraph supersedes earlier pending statements only for the exact\
-  \ assigned facets above. All independent source, receipt, referenced-body and backup lifetimes remain\
-  \ with their own owners. Legal/investigation holds, required references, recovery, rollback, maintenance,\
-  \ protected backups and latest-25-run protection override cleanup without granting access. No unexpired/protected\
-  \ eviction for space, no retry anchor renewal, no hold release, admission, native proof or governance\
-  \ clearance is granted.\n"
+canonical_text: |
+  project.added persistence and passive reader
+  project.added 1.0.0 — newly authored owner contract under DL-045.
+  Prepared without admission. Exact payload is Plans/event_payloads/project_added.schema.json (pm.event_payload.project_added.v1); no sibling or legacy spelling is admitted. Scope is project_only; project_id is a real immutable Project ID; application scope, null, empty and sentinel Project identities are forbidden. Payload project_id equals the envelope join. Existing CV-365 scope rules remain mandatory. Optional envelope lineage comes from the original operation, never ambient focus. Schema-only validity is insufficient.
+  Producer: Project registration commit adapter. After cmd.project.add_existing completes atomic projects:v1 identity/config/permission/owner handoff and readback, record its existing-content registration once. A failed registration, temporary mount, list-only open/archive/remove, or unverified restore creates no completion. Restore-as-new requires its verified Backup terminal receipt first. This event observes the completed registration; it does not grant permission, create files or replace the Project result.
+  Freeze operation_id from fresh entropy in the original owning operation before its effect; preserve it and all source facts on retry/restart. Freeze the completion payload after owner success, before append. If the original operation cannot durably retain its intent/result, publication fails closed: never rerun the effect to reconstruct evidence. This contract creates no independent operation journal or stored value. The owner retains its existing intent/result and source refs under its existing storage contract.
+  Adopt SP-286 first-AppendReceipt custody and CV-339 full-value v2 successor by name, including SP-336/SP-347 current group-commit rules. Validate admission before append; absent membership, unresolved retention or unavailable source custody prevents activation. Referenced bodies commit under SP-337 before append. The first original AppendReceipt is exposed only after the durable group frame; terminal event success publication follows that receipt. Lost acknowledgement returns that original full stored result and receipt, never a second effect or new receipt; equal identity with different semantic digest is a conflict, not a retry.
+  Identity digest is SHA-256 of UTF-8 compact JSON array ["project.added", "1.0.0", storage_instance_id, payload.project_id, payload.operation_id], with ensure_ascii=false, no whitespace and array order preserved. event_id="evt_"+digest; idempotency_key="project.added:"+digest; family_revision=1.0.0, replay_policy=dedupe_by_idempotency_key, redaction_profile=secret_refs_only. Use Contracts_V0.md#EventRecord for the closed envelope, not a local field list. Envelope occurred_at_utc equals payload.completed_at_utc byte-for-byte from the original completed Project existing-content registration; retry time is forbidden. Storage alone assigns sequence_id, observed_at_utc and persisted_at_utc. Full producer semantic digest uses EventRecord and CV-339, not only the identity tuple.
+  Exact envelope joins for project.added: actor_ref is the non-empty non-secret actor reference retained by the original completed Project existing-content registration from its accepted owner request, never the retrying Client. correlation_id is the non-empty correlation_id frozen by that same original owner operation; payload.operation_id equals its immutable operation_id. Never synthesize either required value as null. Scope/project and the entire frozen payload must equal that original operation result. The original atomic registry/readback result must join payload.project_id, project_revision, stable_config_ref and operation_receipt_ref exactly. Other nullable EventRecord lineage, account, causal and upstream-sequence joins copy the retained original operation facts, including required-present nulls only when that original has no such join; they are never populated from ambient focus. payload_ref is null for this bounded inline payload; enforce Storage's 16 KiB inline canonical MessagePack byte limit before append; new-native migration fields are null. Freeze all these producer values before append and resolve the complete original EventRecord through storage.first_append_receipt.resolve_full_value.v1 on receipt-dependent recovery. Required non-null fields retain their schema-required types.
+  Operating consumer reader.project.added@1.0.0 uses reader.storage.event_record_index@1.0.0 and projector.storage.event_record_index@1.0.0, explicitly adopting SP-278. It reads this exact event_type/revision/scope only after the complete CURRENT-selected global frontier is verified. Its checkpoint is the existing checkpoints key event_record_index_checkpoint.v1:{storage_instance_id}, value Plans/event_record_index_checkpoint.schema.json#/$defs/checkpoint; no family-specific persisted cursor or projection is introduced. Generic rows and frontier advance atomically by the existing SP-278 CAS; a failed CAS preserves the old publication and is retried from a fresh snapshot. Operating reads are passive with no durable progress, so their own checkpoint is explicitly none. Each read uses the exact live ten-field read_token in one real redb snapshot; any stored read token must instead be the nine-field DL-076 durable token with redb_snapshot_id removed, never a persisted snapshot identity. Rebuild uses original retained seglog through SP-278, preserving identity and no side effects. Unauthorized, deleted, unsupported, stale or unresolved source reads return unavailable; they cannot produce empty-success evidence.
+  Profile rationale for project.added: stable config and original registration result remain behind authorized refs; redaction_profile=secret_refs_only is an existing EventRecord value and does not grant source access.
+  Custody remains with Project registration commit adapter and Storage's original seglog/payload owners. Store only bounded metadata and opaque authorized source refs; no transcript, diff body, secrets, provider response, private absolute path or credential content. Recheck current permission, source deletion/tombstone and hold gates before each disclosure; a ref is not permission. Backup captures coherent original events, refs and first-receipt custody under BRS-031; derived index is rebuildable, never backup authority. Restore verifies original identities and current source availability; missing originals remain unavailable rather than reconstructed from an index.
+  Retention policy: PENDING_RETENTION_DECISION. For a PENDING marker no class is selected: candidate RP-RUNTIME-365D (runtime observation), RP-OPERATIONAL-2555D (operational diagnostic), or RP-AUTHORITY-INDEFINITE (audit/source lineage) per Case L-3; RT must settle the actual role. Existing generic checkpoint/index retain RP-PROJECTION-3GEN and SP-278 source-coupled constraints; no new stored derived record is owned here.
+  Compatibility: only this exact 1.0.0 schema is a current writer candidate. Historical names/bytes remain unchanged; unknown future revisions halt the consumer before advance, never normalize by guessed payload. Withdrawal first disables the exact producer's admission, drains/fences outstanding intents and prohibits append under stale admission. Then reader.project.added@1.0.0 refuses disclosure and fences its in-memory token; generic global indexing remains available for other families. Re-enable only after governed schema/admission validation and verified SP-278 rebuild/currentness. No source deletion, history rewrite or zero-cursor substitution is authorized.
+  Exact-family oracle matrix for project.added: Plans/small_owner_event_fixtures.json owns its full EventRecord, independent original owner operation/result, original eleven-field receipt and four-field append result, full-value commitment, and positive/negative vectors; scripts/pm-small-owner-events.py validates them without registry admission. Positive append vectors assume fixture-only resolved membership/retention; actual absent membership and PENDING_RETENTION_DECISION refuse activation. Every required envelope field, profile (including redacted_refs_only), actor/correlation/time/payload/subject join and same-identity changed semantic value has a refusal vector. The admission matrix cuts missing membership/schema/retention/permission/dedupe/source/original intent/original result/current owner acceptance/body commit/current lease/restore controls before append, then cuts uncommitted group, unsynced group, receipt exposure and terminal publication. A durable commit with lost acknowledgement or lagging custody rows returns the same original result/receipt; no durable commit returns no receipt. The original owner acceptance freezes its admission epoch, actual owner session and restore occurrence; seal compares all three to current owner/Storage controls. Re-enable never relabels an old intent: fresh acceptance uses a different logical operation_id. Recovery never reruns Project registration commit adapter or reconstructs old owner admission. Withdrawal vectors fence pending/prepared and stale-epoch intents, preserve previously issued immutable replay without effects, refuse the withdrawn operating reader, keep unrelated global indexing, and require governed new admission plus verified SP-278 rebuild/currentness before fresh work. Backup/source-deletion/unsupported-version/read-token/CAS negatives refuse disclosure or preserve the old complete publication; they cannot fabricate missing originals. Native fsync, concurrent CAS, restore authority and action-spy execution of these authored cases remain NOT_RUN.
+  Static schema and semantic oracles are Plans/small_owner_event_fixtures.json and scripts/pm-small-owner-events.py. Native append durability, crash cuts, backup/restore and live permission/CAS tests are authored obligations, NOT_RUN. No writer, handler or native availability follows from this preparation.
+  project.added append and current retry reject replay_policy=projector_replay_only as replay_only_not_appendable before semantic receipt resolution. That policy remains compatibility-reader-only; immutable historical semantic/full-value reads retain their separate role and unchanged digest. Before terminal publication validate the delivered eleven-field first AppendReceipt against protected original committed full-value custody and its exact EventRecord/result; a foreign, missing or mutated receipt publishes no success and never undoes or duplicates the already durable frame. Each identifier/path regex uses a full-match guard plus CR/LF refusal, with trailing-LF negatives. Its exact-family fixture matrix tests replay-only append/retry, every receipt-publication field, encoded project~ partitions, the inline byte cap and (where reachable) 16383/16384/16385-byte and SP-337 external-body boundaries.
+  Checkpoint identity for project.added: before atomic rebuild publication, validate the nine-field durable token against the SP-278 read_token schema with redb_snapshot_id removed and full-match identifier checks. Its storage_instance_id, source_selection.storage_instance_id and event_record_index_checkpoint.v1:{storage_instance_id} key must identify the Storage instance of this original event; its index_dataset_name must identify its generation_id. Match every durable field to the independently captured CURRENT-selected live token after removing only redb_snapshot_id, and match the publication frontier_revision to that token. Missing, malformed, foreign, coherently substituted, trailing-LF or stale tokens preserve the old rows and checkpoint without effects; never copy an unchecked proposed checkpoint. Passive reads validate the same Storage/key/generation joins before comparing the exact selected live token. Each exact-family oracle includes these identity failures, persisted-snapshot refusal and immutable-publication checks.
+  Historical operating reads and rebuild for project.added authenticate the retained EventRecord against Storage's protected original source and full-value commitment at the selected CURRENT frontier, including Storage-assigned sequence_id, observed_at_utc and persisted_at_utc. A retained event valid when written remains readable after live owner request/session/admission retirement, including compatibility-reader-only projector_replay_only history; never rerun current-writer admission or require a transient old owner request. Current reader withdrawal, permission, source presence/deletion/hold and supported-version fences still apply. Forged bytes, foreign family/Storage/source selection or missing protected originals refuse disclosure and preserve the old rebuild publication. Caller semantic retry continues to exclude Storage-assigned metadata; append/current retry still refuse replay_only_not_appendable. Check 11 isolation is exercised by the Method B guard tables in scripts/pm_small_owner_table_*.py under the gated scripts/pm_guard_isolation.py: each refusal witness starts from a valid case, changes one semantic fact and keeps all Storage/source, generation/dataset and selected/durable observation copies coherent. The tool cuts each guard row in turn; its witnesses must become accepted, unrelated witnesses must still reject, and the complete checker must fail. Identifier grammar failures are separate from valid-grammar identity mismatches; no production guard is weakened.
+  Sweep part 2A/2B numbers for project.added: current input uses the shared CV-1100 calls (current_integer_token/current_integer at every integer slot, producer_semantic_bytes/producer_semantic_digest over the unchanged full producer projection beside CV-317, storage_value_bytes with EVENT_VALUE beside SP-026/SP-236, and storage_uint64 beside SP-1100 at the Storage sequence joins); no lane-local integer cap, serializer or normalization remains. Retained originals verify under the write-time recipe named by the one write receipt Storage sealed with that exact original beside SP-1101/SP-286 (the frozen dm-retained-producer-v1 recipe for originals the earlier writer wrote, the current CV-1100 producer recipe for originals the current writer wrote), selected only through the protected original custody, never by default and never through current request data; an original without that receipt, or with more than one, does not resolve; full Storage uint64, physical float bytes and signed zero are preserved. Current and retained timestamps are checked by the shared CV-1101 predicate pm_event_datetime.date_time: occurred_at_utc and the family payload clock use the event_record profile, and Storage-assigned observed_at_utc and persisted_at_utc use the storage_utc_z profile beside CV-253; the recipe that receipt selects beside SP-1101 selects those profiles (both DM recipes bind the same ones), and request data cannot select a profile.
+
+  PNC-019 s4r retention binding for `project.added` (2026-11-14).
+
+  Event history `retention_policy_ref = RP-AUTHORITY-INDEFINITE@1.0.0`, under DL-401.
+
+  Use the existing policy object unchanged: {"anchor_kind": "creation", "cardinality_scope": null, "expiry_action": "none", "max_cardinality": null, "overflow_action": "fail_closed", "ttl_seconds": null}.
+
+  This paragraph supersedes earlier pending statements only for the exact assigned facets above. All independent source, receipt, referenced-body and backup lifetimes remain with their own owners. Legal/investigation holds, required references, recovery, rollback, maintenance, protected backups and latest-25-run protection override cleanup without granting access. No unexpired/protected eviction for space, no retry anchor renewal, no hold release, admission, native proof or governance clearance is granted.
 gui_related: false
 gui_classification_reason: Backend EventRecord contract, not a visual specification.
 depends_on:
@@ -7332,161 +7080,34 @@ plan_unit_id: SP-606
 unit_type: event_contract
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: "project.created persistence and passive reader\nproject.created 1.0.0 — newly authored owner contract\
-  \ under DL-045.\nPrepared without admission. Exact payload is Plans/event_payloads/project_created.schema.json\
-  \ (pm.event_payload.project_created.v1); no sibling or legacy spelling is admitted. Scope is project_only;\
-  \ project_id is a real immutable Project ID; application scope, null, empty and sentinel Project identities\
-  \ are forbidden. Payload project_id equals the envelope join. Existing CV-365 scope rules remain mandatory.\
-  \ Optional envelope lineage comes from the original operation, never ambient focus. Schema-only validity\
-  \ is insufficient.\nProducer: Project creation composition terminal adapter. After cmd.project.new_local\
-  \ or an admitted current forge-create composition completes all reviewed owner steps and atomic Project\
-  \ registry/readback, capture the exact new identity and terminal receipt. Remote create alone, effect_unknown,\
-  \ partial failure and merely reserving a Project ID never produce completion. Resume publishes only\
-  \ after verified remaining steps complete under its original root creation intent; retry never repeats\
-  \ forge or filesystem effects. Existing-content add alone produces no project.created. The two Project\
-  \ event candidates are distinct by original semantic action, not command-name aliases.\nFreeze operation_id\
-  \ from fresh entropy in the original owning operation before its effect; preserve it and all source\
-  \ facts on retry/restart. Freeze the completion payload after owner success, before append. If the original\
-  \ operation cannot durably retain its intent/result, publication fails closed: never rerun the effect\
-  \ to reconstruct evidence. This contract creates no independent operation journal or stored value. The\
-  \ owner retains its existing intent/result and source refs under its existing storage contract.\nAdopt\
-  \ SP-286 first-AppendReceipt custody and CV-339 full-value v2 successor by name, including SP-336/SP-347\
-  \ current group-commit rules. Validate admission before append; absent membership, unresolved retention\
-  \ or unavailable source custody prevents activation. Referenced bodies commit under SP-337 before append.\
-  \ The first original AppendReceipt is exposed only after the durable group frame; terminal event success\
-  \ publication follows that receipt. Lost acknowledgement returns that original full stored result and\
-  \ receipt, never a second effect or new receipt; equal identity with different semantic digest is a\
-  \ conflict, not a retry.\nIdentity digest is SHA-256 of UTF-8 compact JSON array [\"project.created\"\
-  , \"1.0.0\", storage_instance_id, payload.project_id, payload.operation_id], with ensure_ascii=false,\
-  \ no whitespace and array order preserved. event_id=\"evt_\"+digest; idempotency_key=\"project.created:\"\
-  +digest; family_revision=1.0.0, replay_policy=dedupe_by_idempotency_key, redaction_profile=secret_refs_only.\
-  \ Use Contracts_V0.md#EventRecord for the closed envelope, not a local field list. Envelope occurred_at_utc\
-  \ equals payload.completed_at_utc byte-for-byte from the original root Project creation composition;\
-  \ retry time is forbidden. Storage alone assigns sequence_id, observed_at_utc and persisted_at_utc.\
-  \ Full producer semantic digest uses EventRecord and CV-339, not only the identity tuple.\nExact envelope\
-  \ joins for project.created: actor_ref is the non-empty non-secret actor reference retained by the original\
-  \ root Project creation composition from its accepted owner request, never the retrying Client. correlation_id\
-  \ is the non-empty correlation_id frozen by that same original owner operation; payload.operation_id\
-  \ equals its immutable operation_id. Never synthesize either required value as null. Scope/project and\
-  \ the entire frozen payload must equal that original operation result. The original atomic registry/readback\
-  \ result must join payload.project_id, project_revision, stable_config_ref and operation_receipt_ref\
-  \ exactly. Other nullable EventRecord lineage, account, causal and upstream-sequence joins copy the\
-  \ retained original operation facts, including required-present nulls only when that original has no\
-  \ such join; they are never populated from ambient focus. payload_ref is null for this bounded inline\
-  \ payload; enforce Storage's 16 KiB inline canonical MessagePack byte limit before append; new-native\
-  \ migration fields are null. Freeze all these producer values before append and resolve the complete\
-  \ original EventRecord through storage.first_append_receipt.resolve_full_value.v1 on receipt-dependent\
-  \ recovery. Required non-null fields retain their schema-required types.\nOperating consumer reader.project.created@1.0.0\
-  \ uses reader.storage.event_record_index@1.0.0 and projector.storage.event_record_index@1.0.0, explicitly\
-  \ adopting SP-278. It reads this exact event_type/revision/scope only after the complete CURRENT-selected\
-  \ global frontier is verified. Its checkpoint is the existing checkpoints key event_record_index_checkpoint.v1:{storage_instance_id},\
-  \ value Plans/event_record_index_checkpoint.schema.json#/$defs/checkpoint; no family-specific persisted\
-  \ cursor or projection is introduced. Generic rows and frontier advance atomically by the existing SP-278\
-  \ CAS; a failed CAS preserves the old publication and is retried from a fresh snapshot. Operating reads\
-  \ are passive with no durable progress, so their own checkpoint is explicitly none. Each read uses the\
-  \ exact live ten-field read_token in one real redb snapshot; any stored read token must instead be the\
-  \ nine-field DL-076 durable token with redb_snapshot_id removed, never a persisted snapshot identity.\
-  \ Rebuild uses original retained seglog through SP-278, preserving identity and no side effects. Unauthorized,\
-  \ deleted, unsupported, stale or unresolved source reads return unavailable; they cannot produce empty-success\
-  \ evidence.\nProfile rationale for project.created: stable config, verified creation result and original\
-  \ terminal receipt remain behind authorized refs; redaction_profile=secret_refs_only is an existing\
-  \ EventRecord value and does not grant source access.\nCustody remains with Project creation composition\
-  \ terminal adapter and Storage's original seglog/payload owners. Store only bounded metadata and opaque\
-  \ authorized source refs; no transcript, diff body, secrets, provider response, private absolute path\
-  \ or credential content. Recheck current permission, source deletion/tombstone and hold gates before\
-  \ each disclosure; a ref is not permission. Backup captures coherent original events, refs and first-receipt\
-  \ custody under BRS-031; derived index is rebuildable, never backup authority. Restore verifies original\
-  \ identities and current source availability; missing originals remain unavailable rather than reconstructed\
-  \ from an index.\nRetention policy: PENDING_RETENTION_DECISION. For a PENDING marker no class is selected:\
-  \ candidate RP-RUNTIME-365D (runtime observation), RP-OPERATIONAL-2555D (operational diagnostic), or\
-  \ RP-AUTHORITY-INDEFINITE (audit/source lineage) per Case L-3; RT must settle the actual role. Existing\
-  \ generic checkpoint/index retain RP-PROJECTION-3GEN and SP-278 source-coupled constraints; no new stored\
-  \ derived record is owned here.\nCompatibility: only this exact 1.0.0 schema is a current writer candidate.\
-  \ Historical names/bytes remain unchanged; unknown future revisions halt the consumer before advance,\
-  \ never normalize by guessed payload. Withdrawal first disables the exact producer's admission, drains/fences\
-  \ outstanding intents and prohibits append under stale admission. Then reader.project.created@1.0.0\
-  \ refuses disclosure and fences its in-memory token; generic global indexing remains available for other\
-  \ families. Re-enable only after governed schema/admission validation and verified SP-278 rebuild/currentness.\
-  \ No source deletion, history rewrite or zero-cursor substitution is authorized.\nExact-family oracle\
-  \ matrix for project.created: Plans/small_owner_event_fixtures.json owns its full EventRecord, independent\
-  \ original owner operation/result, original eleven-field receipt and four-field append result, full-value\
-  \ commitment, and positive/negative vectors; scripts/pm-small-owner-events.py validates them without\
-  \ registry admission. Positive append vectors assume fixture-only resolved membership/retention; actual\
-  \ absent membership and PENDING_RETENTION_DECISION refuse activation. Every required envelope field,\
-  \ profile (including redacted_refs_only), actor/correlation/time/payload/subject join and same-identity\
-  \ changed semantic value has a refusal vector. The admission matrix cuts missing membership/schema/retention/permission/dedupe/source/original\
-  \ intent/original result/current owner acceptance/body commit/current lease/restore controls before\
-  \ append, then cuts uncommitted group, unsynced group, receipt exposure and terminal publication. A\
-  \ durable commit with lost acknowledgement or lagging custody rows returns the same original result/receipt;\
-  \ no durable commit returns no receipt. The original owner acceptance freezes its admission epoch, actual\
-  \ owner session and restore occurrence; seal compares all three to current owner/Storage controls. Re-enable\
-  \ never relabels an old intent: fresh acceptance uses a different logical operation_id. Recovery never\
-  \ reruns Project creation composition terminal adapter or reconstructs old owner admission. Withdrawal\
-  \ vectors fence pending/prepared and stale-epoch intents, preserve previously issued immutable replay\
-  \ without effects, refuse the withdrawn operating reader, keep unrelated global indexing, and require\
-  \ governed new admission plus verified SP-278 rebuild/currentness before fresh work. Backup/source-deletion/unsupported-version/read-token/CAS\
-  \ negatives refuse disclosure or preserve the old complete publication; they cannot fabricate missing\
-  \ originals. Native fsync, concurrent CAS, restore authority and action-spy execution of these authored\
-  \ cases remain NOT_RUN.\nStatic schema and semantic oracles are Plans/small_owner_event_fixtures.json\
-  \ and scripts/pm-small-owner-events.py. Native append durability, crash cuts, backup/restore and live\
-  \ permission/CAS tests are authored obligations, NOT_RUN. No writer, handler or native availability\
-  \ follows from this preparation.\nproject.created append and current retry reject replay_policy=projector_replay_only\
-  \ as replay_only_not_appendable before semantic receipt resolution. That policy remains compatibility-reader-only;\
-  \ immutable historical semantic/full-value reads retain their separate role and unchanged digest. Before\
-  \ terminal publication validate the delivered eleven-field first AppendReceipt against protected original\
-  \ committed full-value custody and its exact EventRecord/result; a foreign, missing or mutated receipt\
-  \ publishes no success and never undoes or duplicates the already durable frame. Each identifier/path\
-  \ regex uses a full-match guard plus CR/LF refusal, with trailing-LF negatives. Its exact-family fixture\
-  \ matrix tests replay-only append/retry, every receipt-publication field, encoded project~ partitions,\
-  \ the inline byte cap and (where reachable) 16383/16384/16385-byte and SP-337 external-body boundaries.\n\
-  Checkpoint identity for project.created: before atomic rebuild publication, validate the nine-field\
-  \ durable token against the SP-278 read_token schema with redb_snapshot_id removed and full-match identifier\
-  \ checks. Its storage_instance_id, source_selection.storage_instance_id and event_record_index_checkpoint.v1:{storage_instance_id}\
-  \ key must identify the Storage instance of this original event; its index_dataset_name must identify\
-  \ its generation_id. Match every durable field to the independently captured CURRENT-selected live token\
-  \ after removing only redb_snapshot_id, and match the publication frontier_revision to that token. Missing,\
-  \ malformed, foreign, coherently substituted, trailing-LF or stale tokens preserve the old rows and\
-  \ checkpoint without effects; never copy an unchecked proposed checkpoint. Passive reads validate the\
-  \ same Storage/key/generation joins before comparing the exact selected live token. Each exact-family\
-  \ oracle includes these identity failures, persisted-snapshot refusal and immutable-publication checks.\n\
-  Historical operating reads and rebuild for project.created authenticate the retained EventRecord against\
-  \ Storage's protected original source and full-value commitment at the selected CURRENT frontier, including\
-  \ Storage-assigned sequence_id, observed_at_utc and persisted_at_utc. A retained event valid when written\
-  \ remains readable after live owner request/session/admission retirement, including compatibility-reader-only\
-  \ projector_replay_only history; never rerun current-writer admission or require a transient old owner\
-  \ request. Current reader withdrawal, permission, source presence/deletion/hold and supported-version\
-  \ fences still apply. Forged bytes, foreign family/Storage/source selection or missing protected originals\
-  \ refuse disclosure and preserve the old rebuild publication. Caller semantic retry continues to exclude\
-  \ Storage-assigned metadata; append/current retry still refuse replay_only_not_appendable. Check 11\
-  \ isolation is exercised by the Method B guard tables in scripts/pm_small_owner_table_*.py under the\
-  \ gated scripts/pm_guard_isolation.py: each refusal witness starts from a valid case, changes one semantic\
-  \ fact and keeps all Storage/source, generation/dataset and selected/durable observation copies coherent.\
-  \ The tool cuts each guard row in turn; its witnesses must become accepted, unrelated witnesses must\
-  \ still reject, and the complete checker must fail. Identifier grammar failures are separate from valid-grammar\
-  \ identity mismatches; no production guard is weakened.\nSweep part 2A/2B numbers for project.created:\
-  \ current input uses the shared CV-1100 calls (current_integer_token/current_integer at every integer\
-  \ slot, producer_semantic_bytes/producer_semantic_digest over the unchanged full producer projection\
-  \ beside CV-317, storage_value_bytes with EVENT_VALUE beside SP-026/SP-236, and storage_uint64 beside\
-  \ SP-1100 at the Storage sequence joins); no lane-local integer cap, serializer or normalization remains.\
-  \ Retained originals verify under the write-time recipe named by the one write receipt Storage sealed\
-  \ with that exact original beside SP-1101/SP-286 (the frozen dm-retained-producer-v1 recipe for originals\
-  \ the earlier writer wrote, the current CV-1100 producer recipe for originals the current writer wrote),\
-  \ selected only through the protected original custody, never by default and never through current request\
-  \ data; an original without that receipt, or with more than one, does not resolve; full Storage uint64,\
-  \ physical float bytes and signed zero are preserved. Current and retained timestamps are checked by\
-  \ the shared CV-1101 predicate pm_event_datetime.date_time: occurred_at_utc and the family payload clock\
-  \ use the event_record profile, and Storage-assigned observed_at_utc and persisted_at_utc use the storage_utc_z\
-  \ profile beside CV-253; the recipe that receipt selects beside SP-1101 selects those profiles (both\
-  \ DM recipes bind the same ones), and request data cannot select a profile.\n\nPNC-019 s4r retention\
-  \ binding for `project.created` (2026-11-14).\n\nEvent history `retention_policy_ref = RP-AUTHORITY-INDEFINITE@1.0.0`,\
-  \ under DL-401.\n\nUse the existing policy object unchanged: {\"anchor_kind\": \"creation\", \"cardinality_scope\"\
-  : null, \"expiry_action\": \"none\", \"max_cardinality\": null, \"overflow_action\": \"fail_closed\"\
-  , \"ttl_seconds\": null}.\n\nThis paragraph supersedes earlier pending statements only for the exact\
-  \ assigned facets above. All independent source, receipt, referenced-body and backup lifetimes remain\
-  \ with their own owners. Legal/investigation holds, required references, recovery, rollback, maintenance,\
-  \ protected backups and latest-25-run protection override cleanup without granting access. No unexpired/protected\
-  \ eviction for space, no retry anchor renewal, no hold release, admission, native proof or governance\
-  \ clearance is granted.\n"
+canonical_text: |
+  project.created persistence and passive reader
+  project.created 1.0.0 — newly authored owner contract under DL-045.
+  Prepared without admission. Exact payload is Plans/event_payloads/project_created.schema.json (pm.event_payload.project_created.v1); no sibling or legacy spelling is admitted. Scope is project_only; project_id is a real immutable Project ID; application scope, null, empty and sentinel Project identities are forbidden. Payload project_id equals the envelope join. Existing CV-365 scope rules remain mandatory. Optional envelope lineage comes from the original operation, never ambient focus. Schema-only validity is insufficient.
+  Producer: Project creation composition terminal adapter. After cmd.project.new_local or an admitted current forge-create composition completes all reviewed owner steps and atomic Project registry/readback, capture the exact new identity and terminal receipt. Remote create alone, effect_unknown, partial failure and merely reserving a Project ID never produce completion. Resume publishes only after verified remaining steps complete under its original root creation intent; retry never repeats forge or filesystem effects. Existing-content add alone produces no project.created. The two Project event candidates are distinct by original semantic action, not command-name aliases.
+  Freeze operation_id from fresh entropy in the original owning operation before its effect; preserve it and all source facts on retry/restart. Freeze the completion payload after owner success, before append. If the original operation cannot durably retain its intent/result, publication fails closed: never rerun the effect to reconstruct evidence. This contract creates no independent operation journal or stored value. The owner retains its existing intent/result and source refs under its existing storage contract.
+  Adopt SP-286 first-AppendReceipt custody and CV-339 full-value v2 successor by name, including SP-336/SP-347 current group-commit rules. Validate admission before append; absent membership, unresolved retention or unavailable source custody prevents activation. Referenced bodies commit under SP-337 before append. The first original AppendReceipt is exposed only after the durable group frame; terminal event success publication follows that receipt. Lost acknowledgement returns that original full stored result and receipt, never a second effect or new receipt; equal identity with different semantic digest is a conflict, not a retry.
+  Identity digest is SHA-256 of UTF-8 compact JSON array ["project.created", "1.0.0", storage_instance_id, payload.project_id, payload.operation_id], with ensure_ascii=false, no whitespace and array order preserved. event_id="evt_"+digest; idempotency_key="project.created:"+digest; family_revision=1.0.0, replay_policy=dedupe_by_idempotency_key, redaction_profile=secret_refs_only. Use Contracts_V0.md#EventRecord for the closed envelope, not a local field list. Envelope occurred_at_utc equals payload.completed_at_utc byte-for-byte from the original root Project creation composition; retry time is forbidden. Storage alone assigns sequence_id, observed_at_utc and persisted_at_utc. Full producer semantic digest uses EventRecord and CV-339, not only the identity tuple.
+  Exact envelope joins for project.created: actor_ref is the non-empty non-secret actor reference retained by the original root Project creation composition from its accepted owner request, never the retrying Client. correlation_id is the non-empty correlation_id frozen by that same original owner operation; payload.operation_id equals its immutable operation_id. Never synthesize either required value as null. Scope/project and the entire frozen payload must equal that original operation result. The original atomic registry/readback result must join payload.project_id, project_revision, stable_config_ref and operation_receipt_ref exactly. Other nullable EventRecord lineage, account, causal and upstream-sequence joins copy the retained original operation facts, including required-present nulls only when that original has no such join; they are never populated from ambient focus. payload_ref is null for this bounded inline payload; enforce Storage's 16 KiB inline canonical MessagePack byte limit before append; new-native migration fields are null. Freeze all these producer values before append and resolve the complete original EventRecord through storage.first_append_receipt.resolve_full_value.v1 on receipt-dependent recovery. Required non-null fields retain their schema-required types.
+  Operating consumer reader.project.created@1.0.0 uses reader.storage.event_record_index@1.0.0 and projector.storage.event_record_index@1.0.0, explicitly adopting SP-278. It reads this exact event_type/revision/scope only after the complete CURRENT-selected global frontier is verified. Its checkpoint is the existing checkpoints key event_record_index_checkpoint.v1:{storage_instance_id}, value Plans/event_record_index_checkpoint.schema.json#/$defs/checkpoint; no family-specific persisted cursor or projection is introduced. Generic rows and frontier advance atomically by the existing SP-278 CAS; a failed CAS preserves the old publication and is retried from a fresh snapshot. Operating reads are passive with no durable progress, so their own checkpoint is explicitly none. Each read uses the exact live ten-field read_token in one real redb snapshot; any stored read token must instead be the nine-field DL-076 durable token with redb_snapshot_id removed, never a persisted snapshot identity. Rebuild uses original retained seglog through SP-278, preserving identity and no side effects. Unauthorized, deleted, unsupported, stale or unresolved source reads return unavailable; they cannot produce empty-success evidence.
+  Profile rationale for project.created: stable config, verified creation result and original terminal receipt remain behind authorized refs; redaction_profile=secret_refs_only is an existing EventRecord value and does not grant source access.
+  Custody remains with Project creation composition terminal adapter and Storage's original seglog/payload owners. Store only bounded metadata and opaque authorized source refs; no transcript, diff body, secrets, provider response, private absolute path or credential content. Recheck current permission, source deletion/tombstone and hold gates before each disclosure; a ref is not permission. Backup captures coherent original events, refs and first-receipt custody under BRS-031; derived index is rebuildable, never backup authority. Restore verifies original identities and current source availability; missing originals remain unavailable rather than reconstructed from an index.
+  Retention policy: PENDING_RETENTION_DECISION. For a PENDING marker no class is selected: candidate RP-RUNTIME-365D (runtime observation), RP-OPERATIONAL-2555D (operational diagnostic), or RP-AUTHORITY-INDEFINITE (audit/source lineage) per Case L-3; RT must settle the actual role. Existing generic checkpoint/index retain RP-PROJECTION-3GEN and SP-278 source-coupled constraints; no new stored derived record is owned here.
+  Compatibility: only this exact 1.0.0 schema is a current writer candidate. Historical names/bytes remain unchanged; unknown future revisions halt the consumer before advance, never normalize by guessed payload. Withdrawal first disables the exact producer's admission, drains/fences outstanding intents and prohibits append under stale admission. Then reader.project.created@1.0.0 refuses disclosure and fences its in-memory token; generic global indexing remains available for other families. Re-enable only after governed schema/admission validation and verified SP-278 rebuild/currentness. No source deletion, history rewrite or zero-cursor substitution is authorized.
+  Exact-family oracle matrix for project.created: Plans/small_owner_event_fixtures.json owns its full EventRecord, independent original owner operation/result, original eleven-field receipt and four-field append result, full-value commitment, and positive/negative vectors; scripts/pm-small-owner-events.py validates them without registry admission. Positive append vectors assume fixture-only resolved membership/retention; actual absent membership and PENDING_RETENTION_DECISION refuse activation. Every required envelope field, profile (including redacted_refs_only), actor/correlation/time/payload/subject join and same-identity changed semantic value has a refusal vector. The admission matrix cuts missing membership/schema/retention/permission/dedupe/source/original intent/original result/current owner acceptance/body commit/current lease/restore controls before append, then cuts uncommitted group, unsynced group, receipt exposure and terminal publication. A durable commit with lost acknowledgement or lagging custody rows returns the same original result/receipt; no durable commit returns no receipt. The original owner acceptance freezes its admission epoch, actual owner session and restore occurrence; seal compares all three to current owner/Storage controls. Re-enable never relabels an old intent: fresh acceptance uses a different logical operation_id. Recovery never reruns Project creation composition terminal adapter or reconstructs old owner admission. Withdrawal vectors fence pending/prepared and stale-epoch intents, preserve previously issued immutable replay without effects, refuse the withdrawn operating reader, keep unrelated global indexing, and require governed new admission plus verified SP-278 rebuild/currentness before fresh work. Backup/source-deletion/unsupported-version/read-token/CAS negatives refuse disclosure or preserve the old complete publication; they cannot fabricate missing originals. Native fsync, concurrent CAS, restore authority and action-spy execution of these authored cases remain NOT_RUN.
+  Static schema and semantic oracles are Plans/small_owner_event_fixtures.json and scripts/pm-small-owner-events.py. Native append durability, crash cuts, backup/restore and live permission/CAS tests are authored obligations, NOT_RUN. No writer, handler or native availability follows from this preparation.
+  project.created append and current retry reject replay_policy=projector_replay_only as replay_only_not_appendable before semantic receipt resolution. That policy remains compatibility-reader-only; immutable historical semantic/full-value reads retain their separate role and unchanged digest. Before terminal publication validate the delivered eleven-field first AppendReceipt against protected original committed full-value custody and its exact EventRecord/result; a foreign, missing or mutated receipt publishes no success and never undoes or duplicates the already durable frame. Each identifier/path regex uses a full-match guard plus CR/LF refusal, with trailing-LF negatives. Its exact-family fixture matrix tests replay-only append/retry, every receipt-publication field, encoded project~ partitions, the inline byte cap and (where reachable) 16383/16384/16385-byte and SP-337 external-body boundaries.
+  Checkpoint identity for project.created: before atomic rebuild publication, validate the nine-field durable token against the SP-278 read_token schema with redb_snapshot_id removed and full-match identifier checks. Its storage_instance_id, source_selection.storage_instance_id and event_record_index_checkpoint.v1:{storage_instance_id} key must identify the Storage instance of this original event; its index_dataset_name must identify its generation_id. Match every durable field to the independently captured CURRENT-selected live token after removing only redb_snapshot_id, and match the publication frontier_revision to that token. Missing, malformed, foreign, coherently substituted, trailing-LF or stale tokens preserve the old rows and checkpoint without effects; never copy an unchecked proposed checkpoint. Passive reads validate the same Storage/key/generation joins before comparing the exact selected live token. Each exact-family oracle includes these identity failures, persisted-snapshot refusal and immutable-publication checks.
+  Historical operating reads and rebuild for project.created authenticate the retained EventRecord against Storage's protected original source and full-value commitment at the selected CURRENT frontier, including Storage-assigned sequence_id, observed_at_utc and persisted_at_utc. A retained event valid when written remains readable after live owner request/session/admission retirement, including compatibility-reader-only projector_replay_only history; never rerun current-writer admission or require a transient old owner request. Current reader withdrawal, permission, source presence/deletion/hold and supported-version fences still apply. Forged bytes, foreign family/Storage/source selection or missing protected originals refuse disclosure and preserve the old rebuild publication. Caller semantic retry continues to exclude Storage-assigned metadata; append/current retry still refuse replay_only_not_appendable. Check 11 isolation is exercised by the Method B guard tables in scripts/pm_small_owner_table_*.py under the gated scripts/pm_guard_isolation.py: each refusal witness starts from a valid case, changes one semantic fact and keeps all Storage/source, generation/dataset and selected/durable observation copies coherent. The tool cuts each guard row in turn; its witnesses must become accepted, unrelated witnesses must still reject, and the complete checker must fail. Identifier grammar failures are separate from valid-grammar identity mismatches; no production guard is weakened.
+  Sweep part 2A/2B numbers for project.created: current input uses the shared CV-1100 calls (current_integer_token/current_integer at every integer slot, producer_semantic_bytes/producer_semantic_digest over the unchanged full producer projection beside CV-317, storage_value_bytes with EVENT_VALUE beside SP-026/SP-236, and storage_uint64 beside SP-1100 at the Storage sequence joins); no lane-local integer cap, serializer or normalization remains. Retained originals verify under the write-time recipe named by the one write receipt Storage sealed with that exact original beside SP-1101/SP-286 (the frozen dm-retained-producer-v1 recipe for originals the earlier writer wrote, the current CV-1100 producer recipe for originals the current writer wrote), selected only through the protected original custody, never by default and never through current request data; an original without that receipt, or with more than one, does not resolve; full Storage uint64, physical float bytes and signed zero are preserved. Current and retained timestamps are checked by the shared CV-1101 predicate pm_event_datetime.date_time: occurred_at_utc and the family payload clock use the event_record profile, and Storage-assigned observed_at_utc and persisted_at_utc use the storage_utc_z profile beside CV-253; the recipe that receipt selects beside SP-1101 selects those profiles (both DM recipes bind the same ones), and request data cannot select a profile.
+
+  PNC-019 s4r retention binding for `project.created` (2026-11-14).
+
+  Event history `retention_policy_ref = RP-AUTHORITY-INDEFINITE@1.0.0`, under DL-401.
+
+  Use the existing policy object unchanged: {"anchor_kind": "creation", "cardinality_scope": null, "expiry_action": "none", "max_cardinality": null, "overflow_action": "fail_closed", "ttl_seconds": null}.
+
+  This paragraph supersedes earlier pending statements only for the exact assigned facets above. All independent source, receipt, referenced-body and backup lifetimes remain with their own owners. Legal/investigation holds, required references, recovery, rollback, maintenance, protected backups and latest-25-run protection override cleanup without granting access. No unexpired/protected eviction for space, no retry anchor renewal, no hold release, admission, native proof or governance clearance is granted.
 gui_related: false
 gui_classification_reason: Backend EventRecord contract, not a visual specification.
 depends_on:
@@ -7522,161 +7143,34 @@ plan_unit_id: SP-607
 unit_type: event_contract
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: "git.clone.completed persistence and passive reader\ngit.clone.completed 1.0.0 — newly authored owner\
-  \ contract under DL-045.\nPrepared without admission. Exact payload is Plans/event_payloads/git_clone_completed.schema.json\
-  \ (pm.event_payload.git_clone_completed.v1); no sibling or legacy spelling is admitted. Scope is project_only;\
-  \ project_id is a real immutable Project ID; application scope, null, empty and sentinel Project identities\
-  \ are forbidden. Payload project_id equals the envelope join. Existing CV-365 scope rules remain mandatory.\
-  \ Optional envelope lineage comes from the original operation, never ambient focus. Schema-only validity\
-  \ is insufficient.\nProducer: ordinary Git clone terminal adapter. Observe succeeded cmd.source_control.repository.clone\
-  \ with scm_backend=git only after owner native completion, destination verification and terminal operation\
-  \ receipt. The reserved Project/repository/workspace/Host/Environment lineage is original intent data,\
-  \ never focused Project. This precedes Project registration and cannot certify its success. Jujutsu\
-  \ cmd.jujutsu.git.clone is distinct and never normalized to this spelling. Failed, cancelled, effect_unknown\
-  \ or merely accepted ObservableWork emits no completion. Current Source_Control_System sections 7/9\
-  \ route the old catalog spelling to this ordinary Git producer without reviving cmd.git.clone.\nFreeze\
-  \ operation_id from fresh entropy in the original owning operation before its effect; preserve it and\
-  \ all source facts on retry/restart. Freeze the completion payload after owner success, before append.\
-  \ If the original operation cannot durably retain its intent/result, publication fails closed: never\
-  \ rerun the effect to reconstruct evidence. This contract creates no independent operation journal or\
-  \ stored value. The owner retains its existing intent/result and source refs under its existing storage\
-  \ contract.\nAdopt SP-286 first-AppendReceipt custody and CV-339 full-value v2 successor by name, including\
-  \ SP-336/SP-347 current group-commit rules. Validate admission before append; absent membership, unresolved\
-  \ retention or unavailable source custody prevents activation. Referenced bodies commit under SP-337\
-  \ before append. The first original AppendReceipt is exposed only after the durable group frame; terminal\
-  \ event success publication follows that receipt. Lost acknowledgement returns that original full stored\
-  \ result and receipt, never a second effect or new receipt; equal identity with different semantic digest\
-  \ is a conflict, not a retry.\nIdentity digest is SHA-256 of UTF-8 compact JSON array [\"git.clone.completed\"\
-  , \"1.0.0\", storage_instance_id, payload.project_id, payload.operation_id], with ensure_ascii=false,\
-  \ no whitespace and array order preserved. event_id=\"evt_\"+digest; idempotency_key=\"git.clone.completed:\"\
-  +digest; family_revision=1.0.0, replay_policy=dedupe_by_idempotency_key, redaction_profile=secret_refs_only.\
-  \ Use Contracts_V0.md#EventRecord for the closed envelope, not a local field list. Envelope occurred_at_utc\
-  \ equals payload.completed_at_utc byte-for-byte from the original ordinary Git clone command operation;\
-  \ retry time is forbidden. Storage alone assigns sequence_id, observed_at_utc and persisted_at_utc.\
-  \ Full producer semantic digest uses EventRecord and CV-339, not only the identity tuple.\nExact envelope\
-  \ joins for git.clone.completed: actor_ref is the non-empty non-secret actor reference retained by the\
-  \ original ordinary Git clone command operation from its accepted owner request, never the retrying\
-  \ Client. correlation_id is the non-empty correlation_id frozen by that same original owner operation;\
-  \ payload.operation_id equals its immutable operation_id. Never synthesize either required value as\
-  \ null. Scope/project and the entire frozen payload must equal that original operation result. The original\
-  \ terminal result must join payload.repo_id, workspace_id, host_id, environment_id, source_location_ref\
-  \ and operation_receipt_ref exactly, including the reserved Project identity. Other nullable EventRecord\
-  \ lineage, account, causal and upstream-sequence joins copy the retained original operation facts, including\
-  \ required-present nulls only when that original has no such join; they are never populated from ambient\
-  \ focus. payload_ref is null for this bounded inline payload; enforce Storage's 16 KiB inline canonical\
-  \ MessagePack byte limit before append; new-native migration fields are null. Freeze all these producer\
-  \ values before append and resolve the complete original EventRecord through storage.first_append_receipt.resolve_full_value.v1\
-  \ on receipt-dependent recovery. Required non-null fields retain their schema-required types.\nOperating\
-  \ consumer reader.scm.git_clone_completed@1.0.0 uses reader.storage.event_record_index@1.0.0 and projector.storage.event_record_index@1.0.0,\
-  \ explicitly adopting SP-278. It reads this exact event_type/revision/scope only after the complete\
-  \ CURRENT-selected global frontier is verified. Its checkpoint is the existing checkpoints key event_record_index_checkpoint.v1:{storage_instance_id},\
-  \ value Plans/event_record_index_checkpoint.schema.json#/$defs/checkpoint; no family-specific persisted\
-  \ cursor or projection is introduced. Generic rows and frontier advance atomically by the existing SP-278\
-  \ CAS; a failed CAS preserves the old publication and is retried from a fresh snapshot. Operating reads\
-  \ are passive with no durable progress, so their own checkpoint is explicitly none. Each read uses the\
-  \ exact live ten-field read_token in one real redb snapshot; any stored read token must instead be the\
-  \ nine-field DL-076 durable token with redb_snapshot_id removed, never a persisted snapshot identity.\
-  \ Rebuild uses original retained seglog through SP-278, preserving identity and no side effects. Unauthorized,\
-  \ deleted, unsupported, stale or unresolved source reads return unavailable; they cannot produce empty-success\
-  \ evidence.\nProfile rationale for git.clone.completed: source location and original terminal receipt\
-  \ remain behind authorized refs; URLs with credentials and private absolute destinations are forbidden;\
-  \ redaction_profile=secret_refs_only is an existing EventRecord value and does not grant source access.\n\
-  Custody remains with ordinary Git clone terminal adapter and Storage's original seglog/payload owners.\
-  \ Store only bounded metadata and opaque authorized source refs; no transcript, diff body, secrets,\
-  \ provider response, private absolute path or credential content. Recheck current permission, source\
-  \ deletion/tombstone and hold gates before each disclosure; a ref is not permission. Backup captures\
-  \ coherent original events, refs and first-receipt custody under BRS-031; derived index is rebuildable,\
-  \ never backup authority. Restore verifies original identities and current source availability; missing\
-  \ originals remain unavailable rather than reconstructed from an index.\nRetention policy: PENDING_RETENTION_DECISION.\
-  \ For a PENDING marker no class is selected: candidate RP-RUNTIME-365D (runtime observation), RP-OPERATIONAL-2555D\
-  \ (operational diagnostic), or RP-AUTHORITY-INDEFINITE (audit/source lineage) per Case L-3; RT must\
-  \ settle the actual role. Existing generic checkpoint/index retain RP-PROJECTION-3GEN and SP-278 source-coupled\
-  \ constraints; no new stored derived record is owned here.\nCompatibility: only this exact 1.0.0 schema\
-  \ is a current writer candidate. Historical names/bytes remain unchanged; unknown future revisions halt\
-  \ the consumer before advance, never normalize by guessed payload. Withdrawal first disables the exact\
-  \ producer's admission, drains/fences outstanding intents and prohibits append under stale admission.\
-  \ Then reader.scm.git_clone_completed@1.0.0 refuses disclosure and fences its in-memory token; generic\
-  \ global indexing remains available for other families. Re-enable only after governed schema/admission\
-  \ validation and verified SP-278 rebuild/currentness. No source deletion, history rewrite or zero-cursor\
-  \ substitution is authorized.\nExact-family oracle matrix for git.clone.completed: Plans/small_owner_event_fixtures.json\
-  \ owns its full EventRecord, independent original owner operation/result, original eleven-field receipt\
-  \ and four-field append result, full-value commitment, and positive/negative vectors; scripts/pm-small-owner-events.py\
-  \ validates them without registry admission. Positive append vectors assume fixture-only resolved membership/retention;\
-  \ actual absent membership and PENDING_RETENTION_DECISION refuse activation. Every required envelope\
-  \ field, profile (including redacted_refs_only), actor/correlation/time/payload/subject join and same-identity\
-  \ changed semantic value has a refusal vector. The admission matrix cuts missing membership/schema/retention/permission/dedupe/source/original\
-  \ intent/original result/current owner acceptance/body commit/current lease/restore controls before\
-  \ append, then cuts uncommitted group, unsynced group, receipt exposure and terminal publication. A\
-  \ durable commit with lost acknowledgement or lagging custody rows returns the same original result/receipt;\
-  \ no durable commit returns no receipt. The original owner acceptance freezes its admission epoch, actual\
-  \ owner session and restore occurrence; seal compares all three to current owner/Storage controls. Re-enable\
-  \ never relabels an old intent: fresh acceptance uses a different logical operation_id. Recovery never\
-  \ reruns ordinary Git clone terminal adapter or reconstructs old owner admission. Withdrawal vectors\
-  \ fence pending/prepared and stale-epoch intents, preserve previously issued immutable replay without\
-  \ effects, refuse the withdrawn operating reader, keep unrelated global indexing, and require governed\
-  \ new admission plus verified SP-278 rebuild/currentness before fresh work. Backup/source-deletion/unsupported-version/read-token/CAS\
-  \ negatives refuse disclosure or preserve the old complete publication; they cannot fabricate missing\
-  \ originals. Native fsync, concurrent CAS, restore authority and action-spy execution of these authored\
-  \ cases remain NOT_RUN.\nStatic schema and semantic oracles are Plans/small_owner_event_fixtures.json\
-  \ and scripts/pm-small-owner-events.py. Native append durability, crash cuts, backup/restore and live\
-  \ permission/CAS tests are authored obligations, NOT_RUN. No writer, handler or native availability\
-  \ follows from this preparation.\ngit.clone.completed append and current retry reject replay_policy=projector_replay_only\
-  \ as replay_only_not_appendable before semantic receipt resolution. That policy remains compatibility-reader-only;\
-  \ immutable historical semantic/full-value reads retain their separate role and unchanged digest. Before\
-  \ terminal publication validate the delivered eleven-field first AppendReceipt against protected original\
-  \ committed full-value custody and its exact EventRecord/result; a foreign, missing or mutated receipt\
-  \ publishes no success and never undoes or duplicates the already durable frame. Each identifier/path\
-  \ regex uses a full-match guard plus CR/LF refusal, with trailing-LF negatives. Its exact-family fixture\
-  \ matrix tests replay-only append/retry, every receipt-publication field, encoded project~ partitions,\
-  \ the inline byte cap and (where reachable) 16383/16384/16385-byte and SP-337 external-body boundaries.\n\
-  Checkpoint identity for git.clone.completed: before atomic rebuild publication, validate the nine-field\
-  \ durable token against the SP-278 read_token schema with redb_snapshot_id removed and full-match identifier\
-  \ checks. Its storage_instance_id, source_selection.storage_instance_id and event_record_index_checkpoint.v1:{storage_instance_id}\
-  \ key must identify the Storage instance of this original event; its index_dataset_name must identify\
-  \ its generation_id. Match every durable field to the independently captured CURRENT-selected live token\
-  \ after removing only redb_snapshot_id, and match the publication frontier_revision to that token. Missing,\
-  \ malformed, foreign, coherently substituted, trailing-LF or stale tokens preserve the old rows and\
-  \ checkpoint without effects; never copy an unchecked proposed checkpoint. Passive reads validate the\
-  \ same Storage/key/generation joins before comparing the exact selected live token. Each exact-family\
-  \ oracle includes these identity failures, persisted-snapshot refusal and immutable-publication checks.\n\
-  Historical operating reads and rebuild for git.clone.completed authenticate the retained EventRecord\
-  \ against Storage's protected original source and full-value commitment at the selected CURRENT frontier,\
-  \ including Storage-assigned sequence_id, observed_at_utc and persisted_at_utc. A retained event valid\
-  \ when written remains readable after live owner request/session/admission retirement, including compatibility-reader-only\
-  \ projector_replay_only history; never rerun current-writer admission or require a transient old owner\
-  \ request. Current reader withdrawal, permission, source presence/deletion/hold and supported-version\
-  \ fences still apply. Forged bytes, foreign family/Storage/source selection or missing protected originals\
-  \ refuse disclosure and preserve the old rebuild publication. Caller semantic retry continues to exclude\
-  \ Storage-assigned metadata; append/current retry still refuse replay_only_not_appendable. Check 11\
-  \ isolation is exercised by the Method B guard tables in scripts/pm_small_owner_table_*.py under the\
-  \ gated scripts/pm_guard_isolation.py: each refusal witness starts from a valid case, changes one semantic\
-  \ fact and keeps all Storage/source, generation/dataset and selected/durable observation copies coherent.\
-  \ The tool cuts each guard row in turn; its witnesses must become accepted, unrelated witnesses must\
-  \ still reject, and the complete checker must fail. Identifier grammar failures are separate from valid-grammar\
-  \ identity mismatches; no production guard is weakened.\nSweep part 2A/2B numbers for git.clone.completed:\
-  \ current input uses the shared CV-1100 calls (current_integer_token/current_integer at every integer\
-  \ slot, producer_semantic_bytes/producer_semantic_digest over the unchanged full producer projection\
-  \ beside CV-317, storage_value_bytes with EVENT_VALUE beside SP-026/SP-236, and storage_uint64 beside\
-  \ SP-1100 at the Storage sequence joins); no lane-local integer cap, serializer or normalization remains.\
-  \ Retained originals verify under the write-time recipe named by the one write receipt Storage sealed\
-  \ with that exact original beside SP-1101/SP-286 (the frozen dm-retained-producer-v1 recipe for originals\
-  \ the earlier writer wrote, the current CV-1100 producer recipe for originals the current writer wrote),\
-  \ selected only through the protected original custody, never by default and never through current request\
-  \ data; an original without that receipt, or with more than one, does not resolve; full Storage uint64,\
-  \ physical float bytes and signed zero are preserved. Current and retained timestamps are checked by\
-  \ the shared CV-1101 predicate pm_event_datetime.date_time: occurred_at_utc and the family payload clock\
-  \ use the event_record profile, and Storage-assigned observed_at_utc and persisted_at_utc use the storage_utc_z\
-  \ profile beside CV-253; the recipe that receipt selects beside SP-1101 selects those profiles (both\
-  \ DM recipes bind the same ones), and request data cannot select a profile.\n\nPNC-019 s4r retention\
-  \ binding for `git.clone.completed` (2026-11-14).\n\nEvent history `retention_policy_ref = RP-AUTHORITY-INDEFINITE@1.0.0`,\
-  \ under DL-401.\n\nUse the existing policy object unchanged: {\"anchor_kind\": \"creation\", \"cardinality_scope\"\
-  : null, \"expiry_action\": \"none\", \"max_cardinality\": null, \"overflow_action\": \"fail_closed\"\
-  , \"ttl_seconds\": null}.\n\nThis paragraph supersedes earlier pending statements only for the exact\
-  \ assigned facets above. All independent source, receipt, referenced-body and backup lifetimes remain\
-  \ with their own owners. Legal/investigation holds, required references, recovery, rollback, maintenance,\
-  \ protected backups and latest-25-run protection override cleanup without granting access. No unexpired/protected\
-  \ eviction for space, no retry anchor renewal, no hold release, admission, native proof or governance\
-  \ clearance is granted.\n"
+canonical_text: |
+  git.clone.completed persistence and passive reader
+  git.clone.completed 1.0.0 — newly authored owner contract under DL-045.
+  Prepared without admission. Exact payload is Plans/event_payloads/git_clone_completed.schema.json (pm.event_payload.git_clone_completed.v1); no sibling or legacy spelling is admitted. Scope is project_only; project_id is a real immutable Project ID; application scope, null, empty and sentinel Project identities are forbidden. Payload project_id equals the envelope join. Existing CV-365 scope rules remain mandatory. Optional envelope lineage comes from the original operation, never ambient focus. Schema-only validity is insufficient.
+  Producer: ordinary Git clone terminal adapter. Observe succeeded cmd.source_control.repository.clone with scm_backend=git only after owner native completion, destination verification and terminal operation receipt. The reserved Project/repository/workspace/Host/Environment lineage is original intent data, never focused Project. This precedes Project registration and cannot certify its success. Jujutsu cmd.jujutsu.git.clone is distinct and never normalized to this spelling. Failed, cancelled, effect_unknown or merely accepted ObservableWork emits no completion. Current Source_Control_System sections 7/9 route the old catalog spelling to this ordinary Git producer without reviving cmd.git.clone.
+  Freeze operation_id from fresh entropy in the original owning operation before its effect; preserve it and all source facts on retry/restart. Freeze the completion payload after owner success, before append. If the original operation cannot durably retain its intent/result, publication fails closed: never rerun the effect to reconstruct evidence. This contract creates no independent operation journal or stored value. The owner retains its existing intent/result and source refs under its existing storage contract.
+  Adopt SP-286 first-AppendReceipt custody and CV-339 full-value v2 successor by name, including SP-336/SP-347 current group-commit rules. Validate admission before append; absent membership, unresolved retention or unavailable source custody prevents activation. Referenced bodies commit under SP-337 before append. The first original AppendReceipt is exposed only after the durable group frame; terminal event success publication follows that receipt. Lost acknowledgement returns that original full stored result and receipt, never a second effect or new receipt; equal identity with different semantic digest is a conflict, not a retry.
+  Identity digest is SHA-256 of UTF-8 compact JSON array ["git.clone.completed", "1.0.0", storage_instance_id, payload.project_id, payload.operation_id], with ensure_ascii=false, no whitespace and array order preserved. event_id="evt_"+digest; idempotency_key="git.clone.completed:"+digest; family_revision=1.0.0, replay_policy=dedupe_by_idempotency_key, redaction_profile=secret_refs_only. Use Contracts_V0.md#EventRecord for the closed envelope, not a local field list. Envelope occurred_at_utc equals payload.completed_at_utc byte-for-byte from the original ordinary Git clone command operation; retry time is forbidden. Storage alone assigns sequence_id, observed_at_utc and persisted_at_utc. Full producer semantic digest uses EventRecord and CV-339, not only the identity tuple.
+  Exact envelope joins for git.clone.completed: actor_ref is the non-empty non-secret actor reference retained by the original ordinary Git clone command operation from its accepted owner request, never the retrying Client. correlation_id is the non-empty correlation_id frozen by that same original owner operation; payload.operation_id equals its immutable operation_id. Never synthesize either required value as null. Scope/project and the entire frozen payload must equal that original operation result. The original terminal result must join payload.repo_id, workspace_id, host_id, environment_id, source_location_ref and operation_receipt_ref exactly, including the reserved Project identity. Other nullable EventRecord lineage, account, causal and upstream-sequence joins copy the retained original operation facts, including required-present nulls only when that original has no such join; they are never populated from ambient focus. payload_ref is null for this bounded inline payload; enforce Storage's 16 KiB inline canonical MessagePack byte limit before append; new-native migration fields are null. Freeze all these producer values before append and resolve the complete original EventRecord through storage.first_append_receipt.resolve_full_value.v1 on receipt-dependent recovery. Required non-null fields retain their schema-required types.
+  Operating consumer reader.scm.git_clone_completed@1.0.0 uses reader.storage.event_record_index@1.0.0 and projector.storage.event_record_index@1.0.0, explicitly adopting SP-278. It reads this exact event_type/revision/scope only after the complete CURRENT-selected global frontier is verified. Its checkpoint is the existing checkpoints key event_record_index_checkpoint.v1:{storage_instance_id}, value Plans/event_record_index_checkpoint.schema.json#/$defs/checkpoint; no family-specific persisted cursor or projection is introduced. Generic rows and frontier advance atomically by the existing SP-278 CAS; a failed CAS preserves the old publication and is retried from a fresh snapshot. Operating reads are passive with no durable progress, so their own checkpoint is explicitly none. Each read uses the exact live ten-field read_token in one real redb snapshot; any stored read token must instead be the nine-field DL-076 durable token with redb_snapshot_id removed, never a persisted snapshot identity. Rebuild uses original retained seglog through SP-278, preserving identity and no side effects. Unauthorized, deleted, unsupported, stale or unresolved source reads return unavailable; they cannot produce empty-success evidence.
+  Profile rationale for git.clone.completed: source location and original terminal receipt remain behind authorized refs; URLs with credentials and private absolute destinations are forbidden; redaction_profile=secret_refs_only is an existing EventRecord value and does not grant source access.
+  Custody remains with ordinary Git clone terminal adapter and Storage's original seglog/payload owners. Store only bounded metadata and opaque authorized source refs; no transcript, diff body, secrets, provider response, private absolute path or credential content. Recheck current permission, source deletion/tombstone and hold gates before each disclosure; a ref is not permission. Backup captures coherent original events, refs and first-receipt custody under BRS-031; derived index is rebuildable, never backup authority. Restore verifies original identities and current source availability; missing originals remain unavailable rather than reconstructed from an index.
+  Retention policy: PENDING_RETENTION_DECISION. For a PENDING marker no class is selected: candidate RP-RUNTIME-365D (runtime observation), RP-OPERATIONAL-2555D (operational diagnostic), or RP-AUTHORITY-INDEFINITE (audit/source lineage) per Case L-3; RT must settle the actual role. Existing generic checkpoint/index retain RP-PROJECTION-3GEN and SP-278 source-coupled constraints; no new stored derived record is owned here.
+  Compatibility: only this exact 1.0.0 schema is a current writer candidate. Historical names/bytes remain unchanged; unknown future revisions halt the consumer before advance, never normalize by guessed payload. Withdrawal first disables the exact producer's admission, drains/fences outstanding intents and prohibits append under stale admission. Then reader.scm.git_clone_completed@1.0.0 refuses disclosure and fences its in-memory token; generic global indexing remains available for other families. Re-enable only after governed schema/admission validation and verified SP-278 rebuild/currentness. No source deletion, history rewrite or zero-cursor substitution is authorized.
+  Exact-family oracle matrix for git.clone.completed: Plans/small_owner_event_fixtures.json owns its full EventRecord, independent original owner operation/result, original eleven-field receipt and four-field append result, full-value commitment, and positive/negative vectors; scripts/pm-small-owner-events.py validates them without registry admission. Positive append vectors assume fixture-only resolved membership/retention; actual absent membership and PENDING_RETENTION_DECISION refuse activation. Every required envelope field, profile (including redacted_refs_only), actor/correlation/time/payload/subject join and same-identity changed semantic value has a refusal vector. The admission matrix cuts missing membership/schema/retention/permission/dedupe/source/original intent/original result/current owner acceptance/body commit/current lease/restore controls before append, then cuts uncommitted group, unsynced group, receipt exposure and terminal publication. A durable commit with lost acknowledgement or lagging custody rows returns the same original result/receipt; no durable commit returns no receipt. The original owner acceptance freezes its admission epoch, actual owner session and restore occurrence; seal compares all three to current owner/Storage controls. Re-enable never relabels an old intent: fresh acceptance uses a different logical operation_id. Recovery never reruns ordinary Git clone terminal adapter or reconstructs old owner admission. Withdrawal vectors fence pending/prepared and stale-epoch intents, preserve previously issued immutable replay without effects, refuse the withdrawn operating reader, keep unrelated global indexing, and require governed new admission plus verified SP-278 rebuild/currentness before fresh work. Backup/source-deletion/unsupported-version/read-token/CAS negatives refuse disclosure or preserve the old complete publication; they cannot fabricate missing originals. Native fsync, concurrent CAS, restore authority and action-spy execution of these authored cases remain NOT_RUN.
+  Static schema and semantic oracles are Plans/small_owner_event_fixtures.json and scripts/pm-small-owner-events.py. Native append durability, crash cuts, backup/restore and live permission/CAS tests are authored obligations, NOT_RUN. No writer, handler or native availability follows from this preparation.
+  git.clone.completed append and current retry reject replay_policy=projector_replay_only as replay_only_not_appendable before semantic receipt resolution. That policy remains compatibility-reader-only; immutable historical semantic/full-value reads retain their separate role and unchanged digest. Before terminal publication validate the delivered eleven-field first AppendReceipt against protected original committed full-value custody and its exact EventRecord/result; a foreign, missing or mutated receipt publishes no success and never undoes or duplicates the already durable frame. Each identifier/path regex uses a full-match guard plus CR/LF refusal, with trailing-LF negatives. Its exact-family fixture matrix tests replay-only append/retry, every receipt-publication field, encoded project~ partitions, the inline byte cap and (where reachable) 16383/16384/16385-byte and SP-337 external-body boundaries.
+  Checkpoint identity for git.clone.completed: before atomic rebuild publication, validate the nine-field durable token against the SP-278 read_token schema with redb_snapshot_id removed and full-match identifier checks. Its storage_instance_id, source_selection.storage_instance_id and event_record_index_checkpoint.v1:{storage_instance_id} key must identify the Storage instance of this original event; its index_dataset_name must identify its generation_id. Match every durable field to the independently captured CURRENT-selected live token after removing only redb_snapshot_id, and match the publication frontier_revision to that token. Missing, malformed, foreign, coherently substituted, trailing-LF or stale tokens preserve the old rows and checkpoint without effects; never copy an unchecked proposed checkpoint. Passive reads validate the same Storage/key/generation joins before comparing the exact selected live token. Each exact-family oracle includes these identity failures, persisted-snapshot refusal and immutable-publication checks.
+  Historical operating reads and rebuild for git.clone.completed authenticate the retained EventRecord against Storage's protected original source and full-value commitment at the selected CURRENT frontier, including Storage-assigned sequence_id, observed_at_utc and persisted_at_utc. A retained event valid when written remains readable after live owner request/session/admission retirement, including compatibility-reader-only projector_replay_only history; never rerun current-writer admission or require a transient old owner request. Current reader withdrawal, permission, source presence/deletion/hold and supported-version fences still apply. Forged bytes, foreign family/Storage/source selection or missing protected originals refuse disclosure and preserve the old rebuild publication. Caller semantic retry continues to exclude Storage-assigned metadata; append/current retry still refuse replay_only_not_appendable. Check 11 isolation is exercised by the Method B guard tables in scripts/pm_small_owner_table_*.py under the gated scripts/pm_guard_isolation.py: each refusal witness starts from a valid case, changes one semantic fact and keeps all Storage/source, generation/dataset and selected/durable observation copies coherent. The tool cuts each guard row in turn; its witnesses must become accepted, unrelated witnesses must still reject, and the complete checker must fail. Identifier grammar failures are separate from valid-grammar identity mismatches; no production guard is weakened.
+  Sweep part 2A/2B numbers for git.clone.completed: current input uses the shared CV-1100 calls (current_integer_token/current_integer at every integer slot, producer_semantic_bytes/producer_semantic_digest over the unchanged full producer projection beside CV-317, storage_value_bytes with EVENT_VALUE beside SP-026/SP-236, and storage_uint64 beside SP-1100 at the Storage sequence joins); no lane-local integer cap, serializer or normalization remains. Retained originals verify under the write-time recipe named by the one write receipt Storage sealed with that exact original beside SP-1101/SP-286 (the frozen dm-retained-producer-v1 recipe for originals the earlier writer wrote, the current CV-1100 producer recipe for originals the current writer wrote), selected only through the protected original custody, never by default and never through current request data; an original without that receipt, or with more than one, does not resolve; full Storage uint64, physical float bytes and signed zero are preserved. Current and retained timestamps are checked by the shared CV-1101 predicate pm_event_datetime.date_time: occurred_at_utc and the family payload clock use the event_record profile, and Storage-assigned observed_at_utc and persisted_at_utc use the storage_utc_z profile beside CV-253; the recipe that receipt selects beside SP-1101 selects those profiles (both DM recipes bind the same ones), and request data cannot select a profile.
+
+  PNC-019 s4r retention binding for `git.clone.completed` (2026-11-14).
+
+  Event history `retention_policy_ref = RP-AUTHORITY-INDEFINITE@1.0.0`, under DL-401.
+
+  Use the existing policy object unchanged: {"anchor_kind": "creation", "cardinality_scope": null, "expiry_action": "none", "max_cardinality": null, "overflow_action": "fail_closed", "ttl_seconds": null}.
+
+  This paragraph supersedes earlier pending statements only for the exact assigned facets above. All independent source, receipt, referenced-body and backup lifetimes remain with their own owners. Legal/investigation holds, required references, recovery, rollback, maintenance, protected backups and latest-25-run protection override cleanup without granting access. No unexpired/protected eviction for space, no retry anchor renewal, no hold release, admission, native proof or governance clearance is granted.
 gui_related: false
 gui_classification_reason: Backend EventRecord contract, not a visual specification.
 depends_on:
