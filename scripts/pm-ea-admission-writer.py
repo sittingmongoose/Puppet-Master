@@ -89,9 +89,32 @@ READINESS = {
 # Shared helpers live with the rules so both modules compute hashes and loads one way.
 # ---------------------------------------------------------------- inputs
 
-def readiness_families() -> list[dict]:
+def readiness_families(args=None) -> list[dict]:
     """Admission merge 1: 32 batch-2 rows at 11 PASS + membership ABSENT, then 141 batch-3 rows at 11/0/1."""
     out = []
+    if args is not None and getattr(args, "readiness_list", None):
+        source = Path(args.readiness_list)
+        if not source.is_absolute():
+            source = REPO / source
+        try:
+            relative = str(source.relative_to(REPO))
+        except ValueError:
+            raise SystemExit("readiness input must be a repository result bundle")
+        if sha256_file(source) != args.readiness_sha256:
+            raise SystemExit("readiness list bytes differ from --readiness-sha256")
+        data = json.loads(source.read_text(encoding="utf-8"))
+        if data.get("status") != "pass" or data.get("not_ready"):
+            raise SystemExit("readiness list contains blocked families")
+        names = set()
+        for row in data["ready"]:
+            event_type, lane = row["event_type"], row["lane"]
+            if event_type in names:
+                raise SystemExit("duplicate readiness family: " + event_type)
+            names.add(event_type)
+            SELF_GRADES[lane] = relative
+            out.append(dict(event_type=event_type, lane=lane, batch="batch3" if lane.startswith("W3") or lane=="S4B" else "batch2",
+                            readiness=dict(path=relative, sha256=args.readiness_sha256)))
+        return sorted(out, key=lambda row: row["event_type"])
     path2, pin2 = READINESS["batch2"]
     path3, pin3 = READINESS["batch3"]
     if sha256_file(path2) != pin2 or sha256_file(path3) != pin3:
@@ -131,8 +154,8 @@ def prepare(args) -> int:
     registry = load(REGISTRY)
     live_types = {f["event_type"] for f in registry["families"]}
     live_ids = {f["family_id"] for f in registry["families"]}
+    families = readiness_families(args)
     grades = {lane: grade_rows(lane) for lane in SELF_GRADES}
-    families = readiness_families()
     out_rows = []
     candidates = []
     for family in families:
@@ -205,12 +228,15 @@ def prepare(args) -> int:
 # ---------------------------------------------------------------- evidence currency
 
 _TEXT_CACHE: dict[str, str] = {}
+_TEXT_HASH_CACHE: dict[str, str] = {}
 
 
 def file_text(rel: str) -> str | None:
     if rel not in _TEXT_CACHE:
         path = REPO / rel
         _TEXT_CACHE[rel] = path.read_bytes().decode("utf-8") if path.is_file() else None
+        if _TEXT_CACHE[rel] is not None:
+            _TEXT_HASH_CACHE[rel] = sha256_bytes(_TEXT_CACHE[rel].encode("utf-8"))
     return _TEXT_CACHE[rel]
 
 
@@ -318,7 +344,16 @@ def relocate(text: str, quote: str, want: int, span: tuple[int, int] | None) -> 
 def refresh_evidence(item: dict) -> dict:
     """Re-read one cited quotation at the current tree; relocate it inside its own unit or fail closed."""
     rel = item.get("path")
-    if not isinstance(rel, str) or rel.startswith("/") or ".." in Path(rel).parts:
+    if isinstance(rel, str) and Path(rel).is_absolute():
+        path = Path(rel)
+        if not path.resolve().is_relative_to(EVIDENCE_ROOT.resolve()) or not path.is_file():
+            raise Gap(f"external evidence is outside the pinned campaign custody: {rel}")
+        out = dict(item)
+        if item.get("quote") and item["quote"] not in path.read_text(encoding="utf-8"):
+            raise Gap(f"external evidence quotation not present: {rel}")
+        out["file_sha256"] = sha256_file(path)
+        return out
+    if not isinstance(rel, str) or ".." in Path(rel).parts:
         raise Gap(f"evidence path is not a repository path: {rel}")
     text = file_text(rel)
     if text is None:
@@ -343,7 +378,7 @@ def refresh_evidence(item: dict) -> dict:
             raise Gap(f"cited quotation not present in {where}: {quote[:80]!r}")
         out["line_start"], out["line_end"], out["quote_check"] = found
         out["quote_scope"] = f"unit {unit}, {rel}:{span[0]}-{span[1]}" if span else "document"
-    out["file_sha256"] = sha256_bytes(text.encode("utf-8"))
+    out["file_sha256"] = _TEXT_HASH_CACHE[rel]
     return out
 
 
@@ -500,10 +535,13 @@ def decision_entry(dl: str, fam: dict, ctx: dict) -> str:
         parts = [f"{v['scope_kind']} `{v['payload_schema_id']}` ({v['retention_policy_ref']['policy_id']}@"
                  f"{v['retention_policy_ref']['policy_version']}, producer {v['producer_admission']})" for v in row["payload_versions"]]
         editions = " Its payload versions are " + "; ".join(parts) + "."
+    merge_number = ctx.get("merge", "admission-merge-1").rsplit("-", 1)[-1]
+    merge_reason = ("the families ready then are admitted in a first merge" if merge_number == "1"
+                    else "the remaining prepared families are admitted in this second merge after the first 173")
     text = (
-        f"Event Authority registers `{et}` as family `{row['family_id']}` revision {row['family_revision']} in admission merge 1 of "
-        f"PNC-019. On 2026-11-14 Jared answered card EA-P2 with option B (\"{EA_P2}\"), so the families ready then are admitted "
-        f"in a first merge. {authority} Under DL-096 (\"{DL096_WORDS}\") this entry is Jared's decision entry for `{et}`, "
+        f"Event Authority registers `{et}` as family `{row['family_id']}` revision {row['family_revision']} in admission merge {merge_number} of "
+        f"PNC-019. On 2026-11-14 Jared answered card EA-P2 with option B (\"{EA_P2}\"), so "
+        f"{merge_reason}. {authority} Under DL-096 (\"{DL096_WORDS}\") this entry is Jared's decision entry for `{et}`, "
         "and the family's DL-077 admission record cites it as its decision_ref. DL-400 keeps this family's own commit, entry, "
         "record and twelve-criterion assessment inside the batched landing.\n\n"
         f"The registry moves from revision {ctx['before']['revision']} ({ctx['before']['family_count']} families, SHA-256 "
@@ -536,7 +574,7 @@ def decision_entry(dl: str, fam: dict, ctx: dict) -> str:
         tokens.insert(5, EA_P1)
     depends = ["DL-039", "DL-077", "DL-078", "DL-096", "DL-400", "DL-414"]
     out = [
-        f"### {dl}: Event Authority registers {et} (admission merge 1)",
+        f"### {dl}: Event Authority registers {et} (admission merge {merge_number})",
         "",
         "```yaml",
         f"plan_unit_id: {dl}",
@@ -559,7 +597,7 @@ def decision_entry(dl: str, fam: dict, ctx: dict) -> str:
         "- python3 scripts/pm-ea-admission-writer.py verify",
         "risk_class: event_authority_admission",
         "reasoning_tier: high",
-        "context_scope: event_authority_pnc019_admission_merge_1",
+        f"context_scope: event_authority_pnc019_admission_merge_{merge_number}",
         "implementation_surfaces: [Plans/event_family_registry.json, scripts/pm_pnc019_currentness.py]",
         "node_compile_hint: {mode: owner_contract_only, create_worknodes: false, create_nodeseeds: false}",
         "source_lineage:",
@@ -629,7 +667,7 @@ def apply_family(fam: dict, dl: str, args, state: dict) -> list[str]:
     after = {"revision": registry["registry_revision"], "sha256": sha256_bytes(rendered.encode("utf-8")),
              "family_count": len(registry["families"])}
     ctx = {"before": before, "after": after, "row_sha256": canonical_sha256(row), "row_index": before["family_count"],
-           "row_lines": row_lines(rendered, row["family_id"]), "bucket": state["recount"].get(et, {}).get("bucket")}
+           "row_lines": row_lines(rendered, row["family_id"]), "bucket": state["recount"].get(et, {}).get("bucket"), "merge": args.merge}
     # 2. Depth assessment: membership from the row, eleven carried cells re-read now.
     grade = state["grades"][fam["lane"]][et]
     if sha256_file(REPO / fam["grade"]["path"]) != fam["grade"]["sha256"]:
@@ -689,7 +727,7 @@ def apply_family(fam: dict, dl: str, args, state: dict) -> list[str]:
         "recorded_by": args.recorded_by,
         "recorded_at_utc": args.recorded_at,
         "notes": [
-            f"Admission merge 1 (EA-P2 B), written by {WRITER_ID} from the manifest row for this family; one commit holds the registry append, this record, its Decision Log entry, its depth assessment, its {'KEEP_REGISTERED ledger row' if fam['kind'] == 'cpu' else 'recount OUTCOMES row'} and the DL-078 checkpoint pins.",
+            f"{args.merge} (EA-P2 B), written by {WRITER_ID} from the manifest row for this family; one commit holds the registry append, this record, its Decision Log entry, its depth assessment, its {'KEEP_REGISTERED ledger row' if fam['kind'] == 'cpu' else 'recount OUTCOMES row'} and the DL-078 checkpoint pins.",
             "The decision entry is " + dl + ", which DL-096 makes Jared's decision entry for this family.",
             "registry_before is the registry at this commit's parent. If main's registry moves before the landing, the writer runs again on the new base and this record, its entry and the pins are taken again.",
             "Written under DL-077. The seal check recomputes completeness from the pinned assessment; the two fields ending in _at_recording are informational only.",
@@ -785,6 +823,27 @@ def apply_family(fam: dict, dl: str, args, state: dict) -> list[str]:
         cdoc["rows"][i] = reordered
         write_text(COORDINATION_LEDGER, json.dumps(cdoc, indent=2, ensure_ascii=False) + "\n")
         touched.append(COORDINATION_LEDGER)
+    if fam["lane"] == "S4B":
+        rel = "Plans/browser_event_admission.json"
+        doc = load(rel)
+        index, admission = find_by_event(doc["rows"], et)
+        if admission["admission_status"] != "prepared_not_admitted":
+            raise SystemExit("Browser row is not prepared: " + et)
+        contract = lane_contract("S4B", et)
+        admission["admission_status"] = "admitted_static_contract"
+        admission["authority_contract_ref"] = contract["owners"]["storage"]
+        write_text(rel, json.dumps(doc, indent=2, ensure_ascii=False) + "\n")
+        touched.append(rel)
+    if fam["lane"] == "DC":
+        rel = "Plans/collaboration_event_admission.json"
+        doc = load(rel)
+        index, admission = find_by_event(doc["rows"], et)
+        if admission["admission_status"] != "prepared_not_admitted" or canonical_sha256(admission["registry_row"]) != ctx["row_sha256"]:
+            raise SystemExit("Collaboration row is not the exact prepared registry row: " + et)
+        admission["admission_status"] = "admitted_static_contract"
+        admission["authority_contract_ref"] = admission["storage_owner_unit"]
+        write_text(rel, json.dumps(doc, indent=2, ensure_ascii=False) + "\n")
+        touched.append(rel)
     # 7. DL-078 checkpoint pins.
     cur = read_raw(CURRENTNESS)
     cur, n1 = re.subn(r'(?m)^EVENT_FAMILY_REGISTRY_REVISION = "[^"]+"$', f'EVENT_FAMILY_REGISTRY_REVISION = "{after["revision"]}"', cur)
@@ -792,7 +851,7 @@ def apply_family(fam: dict, dl: str, args, state: dict) -> list[str]:
     if (n1, n2) != (1, 1):
         raise SystemExit("checkpoint pins not found exactly once in " + CURRENTNESS)
     paragraph = (
-        f"{PIN_MARKER} 1 (Jared, EA-P2 B, 2026-11-14), one family per commit, each with its own\n"
+        f"{PIN_MARKER} {args.merge.rsplit('-', 1)[-1]} (Jared, EA-P2 B, 2026-11-14), one family per commit, each with its own\n"
         f"# Decision Log entry and DL-077 admission record; latest {et} (Plans/Decision_Log.md#{dl}):\n"
         f"# registry {after['revision']}, {after['family_count']} families, SHA-256\n"
         f"# {after['sha256']} (predecessor\n"
@@ -825,7 +884,7 @@ def apply_family(fam: dict, dl: str, args, state: dict) -> list[str]:
     touched.append(LEGACY_GOLDEN)
     state["results"].append({"event_type": et, "dl": dl, "registry_after": after, "record": ctx["record_path"],
                              "depth": depth_rel, "row_sha256": ctx["row_sha256"],
-                             "record_problems": state.pop("record_problems")})
+                             "record_problems": state.pop("record_problems"), "merge": args.merge})
     return touched
 
 
@@ -833,7 +892,7 @@ def commit_message(fam: dict, dl: str, result: dict) -> str:
     et = fam["event_type"]
     what = "ledger row moved to KEEP_REGISTERED" if fam["kind"] == "cpu" else "recount OUTCOMES row"
     return (
-        f"plans: {dl} registers {et} (admission merge 1, EA-P2 B)\n\n"
+        f"plans: {dl} registers {et} ({result.get('merge', 'admission-merge-1')}, EA-P2 B)\n\n"
         f"One commit per family ({WRITER_ID}): registry {result['registry_after']['revision']} with "
         f"{result['registry_after']['family_count']} families (SHA-256 {result['registry_after']['sha256'][:12]}...), "
         f"the row appended with canonical SHA-256 {result['row_sha256'][:12]}...; its Decision Log entry {dl} "
@@ -846,6 +905,9 @@ def commit_message(fam: dict, dl: str, result: dict) -> str:
 
 def apply(args) -> int:
     manifest = json.loads(Path(args.manifest).read_text(encoding="utf-8"))
+    for family in manifest["families"]:
+        if family.get("grade"):
+            SELF_GRADES[family["lane"]] = family["grade"]["path"]
     ready = [f for f in manifest["families"] if f["status"] == "ready"]
     if args.only:
         wanted = set(args.only.split(","))
@@ -953,6 +1015,8 @@ def main(argv=None) -> int:
     p = sub.add_parser("prepare")
     p.add_argument("--merge", default="admission-merge-1")
     p.add_argument("--out", required=True)
+    p.add_argument("--readiness-list")
+    p.add_argument("--readiness-sha256")
     p.set_defaults(func=prepare)
     a = sub.add_parser("apply")
     a.add_argument("--manifest", required=True)

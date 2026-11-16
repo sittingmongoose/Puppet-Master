@@ -3037,6 +3037,7 @@ def event_family_payload_schema(
         return None, None
     try:
         schema: Any = read_json(path)
+        document_id = schema.get("$id") if isinstance(schema, dict) else None
         pointer = ref.get("json_pointer", "#")
         if pointer not in {"#", ""}:
             if not isinstance(pointer, str) or not pointer.startswith("#/"):
@@ -3058,6 +3059,10 @@ def event_family_payload_schema(
             if editions is not None:
                 edition = scope_kind or ("application" if family.get("scope_policy") == "application_only" else "project")
                 resolved = editions.get(edition)
+        if resolved is None and isinstance(document_id, str) and pointer.startswith("#/"):
+            # A JSON Pointer fragment identifies this exact anonymous subschema in its own resource.
+            # The row's claimed schema_id is never used to manufacture the resolved identity.
+            resolved = document_id.split("#", 1)[0] + pointer
         return schema, resolved
     except Exception:  # noqa: BLE001 - converted to a deterministic structural failure.
         return None, None

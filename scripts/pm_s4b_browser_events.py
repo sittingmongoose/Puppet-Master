@@ -3078,6 +3078,8 @@ def registry_row_problems(family, row_, checkpoints=None):
 def spec_consistency():
     """Each family's authored identifiers appear in its own owner text, registry row and admission row."""
     problems = []
+    from pm_ea_admission_mode import verdicts
+    admission_modes = verdicts(FAMILIES, root=ROOT)
     s15 = (ROOT / 'Plans/Section15_MVP_Promoted_Features_Spec.md').read_text()
     cv = (ROOT / 'Plans/Contracts_V0.md').read_text()
     sp = (ROOT / 'Plans/storage-plan.md').read_text()
@@ -3117,11 +3119,16 @@ def spec_consistency():
         else:
             problems.extend((f, p) for p in registry_row_problems(f, row_))
         arow = ADMISSION['rows'][spec['admission_row_index']]
-        if (arow['event_type'] != f or arow['admission_status'] != 'prepared_not_admitted'
+        mode = admission_modes[f]
+        admission_status_ok = (
+            mode['mode'] == 'prepared' and arow['admission_status'] == 'prepared_not_admitted'
+            or mode['mode'] == 'admitted' and arow['admission_status'] == 'admitted_static_contract'
+            and arow.get('authority_contract_ref') == 'Plans/storage-plan.md#' + spec['sp_unit'])
+        if (arow['event_type'] != f or not admission_status_ok
                 or arow['semantic_owner_ref'] != 'Plans/Section15_MVP_Promoted_Features_Spec.md#' + spec['semantic_anchor']
                 or 'Plans/storage-plan.md#' + spec['sp_unit'] not in arow['consumer_contract_refs']
                 or arow['retention_policy_ref']['policy_id'] + '@' + arow['retention_policy_ref']['policy_version'] != spec['retention_policy']):
-            problems.append((f, 'admission_row'))
+            problems.append((f, 'admission_row', mode.get('code')))
     return problems
 
 

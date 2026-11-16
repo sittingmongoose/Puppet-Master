@@ -66,6 +66,9 @@ SCOPE_SHARED_POLICIES = {
     # SP-351 gives the same object, with no application counterpart, to the Goal records' application
     # editions (Plans/storage-plan.md:30723-30730); the policy has no counting scope.
     "RP-GOAL-THREAD-LIFETIME",
+    # SP-349's explicit application-wide operational buckets retain these registered policy objects;
+    # DL-083/DL-089 and SP-720/OSI-681 preserve the operational and coordination assignments.
+    "RP-OPERATIONAL-2555D", "RP-COORDINATION-180D",
 }
 IDENTITY_KEYS = ("project_id", "thread_id", "run_id", "node_id", "attempt_id")
 
@@ -156,9 +159,25 @@ class Gap(Exception):
     """A field no source states, or sources that disagree. Blocks the family."""
 
 
+_GRADE_DOCS: dict[tuple, dict] = {}
+_POLICY_KEYS: dict[tuple, set] = {}
+
+def policy_keys() -> set:
+    path = REPO / STORAGE_REGISTRY
+    stat = path.stat()
+    key = (stat.st_mtime_ns, stat.st_size)
+    if key not in _POLICY_KEYS:
+        _POLICY_KEYS[key] = {(p["policy_id"], p["policy_version"]) for p in load(STORAGE_REGISTRY)["retention_policies"]}
+    return _POLICY_KEYS[key]
+
 def grade_rows(lane: str) -> dict[str, dict]:
-    doc = load(SELF_GRADES[lane])
-    rows = doc.get("rows") if isinstance(doc, dict) and "rows" in doc else doc.get("families")
+    path = REPO / SELF_GRADES[lane]
+    stat = path.stat()
+    key = (str(path), stat.st_mtime_ns, stat.st_size)
+    if key not in _GRADE_DOCS:
+        _GRADE_DOCS[key] = load(SELF_GRADES[lane])
+    doc = _GRADE_DOCS[key]
+    rows = doc.get("ready") if isinstance(doc, dict) and "ready" in doc else doc.get("rows") if isinstance(doc, dict) and "rows" in doc else doc.get("families")
     return {row["event_type"]: row for row in rows}
 
 
@@ -329,7 +348,8 @@ def lane_contract(lane: str, event_type: str) -> dict:
                    owners={"semantic": unit_ref(row["owner_unit"]), "payload": unit_ref(row["cv_unit"]),
                            "storage": unit_ref(row["sp_unit"])})
         return out
-    raise Gap("no lane adapter for " + lane)
+    from pm_ea_merge2_rows import contract
+    return contract(lane, event_type)
 
 
 # ---------------------------------------------------------------- derivation
@@ -356,7 +376,14 @@ def graded_unit(grade: dict, field: str) -> str | None:
 
 def graded_retention(grade: dict) -> dict[str, str]:
     """Project and application history policies named by the reviewed retention cell."""
+    delta = grade.get("retention_delta")
+    if delta:
+        return {scope: delta[key].split("@")[0] for scope, key in
+                (("project", "history_policy_ref"), ("application", "application_policy_ref")) if delta.get(key)}
     cell = grade["cells"]["retention"]
+    history = re.match(r"Event history bound to (RP-[A-Z0-9-]+)@", str(cell.get("finding") or ""))
+    if history:
+        return {"project": history.group(1)}
     text = json.dumps([cell.get("finding"), [e.get("quote") for e in cell.get("evidence") or []]], ensure_ascii=False)
     ids = [p for p in policy_ids(text) if p not in DERIVED_STORE_POLICIES]
     app = [p for p in ids if "-APPLICATION-" in p]
@@ -383,25 +410,31 @@ def scope_from_grade(grade: dict) -> str | None:
 def scope_object(schema: dict) -> tuple[str, dict]:
     """The payload's own scope carrier: top level, or a closed `context`/`scope` object."""
     props = schema.get("properties") or {}
-    if "scope_kind" in props:
+    if "scope_kind" in props or (isinstance(props.get("scope"), dict) and ("enum" in props["scope"] or "const" in props["scope"])):
         return "", props
     for name in ("context", "scope"):
         inner = (props.get(name) or {}).get("properties") or {}
-        if "scope_kind" in inner:
+        if "scope_kind" in inner or "kind" in inner:
             return "/" + name, inner
     return "", props
 
 
 def scope_from_schema(schema: dict) -> str | None:
-    prop = scope_object(schema)[1].get("scope_kind") or {}
+    carrier = scope_object(schema)[1]
+    prop = carrier.get("scope_kind") or carrier.get("kind") or carrier.get("scope") or {}
     values = prop.get("enum") or ([prop["const"]] if "const" in prop else [])
-    values = set(values)
+    values = {"application" if value == "app" else value for value in values}
     if values == {"project", "application"}:
         return "application_or_project"
     if values == {"project"}:
         return "project_only"
     if values == {"application"}:
         return "application_only"
+    # A closed Project payload with a required non-null Project ID cannot describe an app EventRecord.
+    # This is schema evidence, not a default for payloads with no scope field.
+    props = schema.get("properties") or {}
+    if "project_id" in (schema.get("required") or []) and (props.get("project_id") or {}).get("type") == "string":
+        return "project_only"
     return None
 
 
@@ -421,14 +454,31 @@ def identity_pointers(schema: dict) -> dict[str, list[str]]:
 def derive_row(family: dict, grade: dict, contract: dict, readiness) -> tuple[dict, dict]:
     """The registry row and the source of each of its fields."""
     event_type = family["event_type"]
+    if grade.get("retention_delta"):
+        contract = copy.deepcopy(contract)
+        delta = grade["retention_delta"]
+        contract["retention"] = {scope: delta[key] for scope, key in
+            (("project", "history_policy_ref"), ("application", "application_policy_ref")) if delta.get(key)}
     family_id, revision = grade.get("family_id"), grade.get("family_revision")
     provenance: dict[str, Any] = {"family_id": SELF_GRADES[family["lane"]], "family_revision": SELF_GRADES[family["lane"]]}
-    if family_id is None or (isinstance(family_id, str) and family_id.startswith("candidate-only:")):
+    proposed_id = "event-family-" + re.sub(r"[._]", "-", event_type)
+    if (family_id is None or (isinstance(family_id, str) and
+            (family_id.startswith("candidate-only:") or family_id == event_type.replace(".", "_")
+             or family_id.replace("_", "-") == proposed_id))):
         # Every live registry row is named event-family-<event type, dots and underscores as hyphens>.
-        family_id = "event-family-" + re.sub(r"[._]", "-", event_type)
+        family_id = proposed_id
         provenance["family_id"] = "registry naming convention (every live row); the reviewed grade minted none"
     if not isinstance(family_id, str) or not re.fullmatch(r"event-family-[a-z0-9]+(?:-[a-z0-9]+)*", family_id):
         raise Gap("reviewed grade names no registry family_id")
+    revision_match = re.match(r"([1-9][0-9]*\.[0-9]+\.[0-9]+)(?:\s|$)", str(revision or ""))
+    if revision_match:
+        revision = revision_match.group(1)
+    elif isinstance(grade.get("prepared_payload_version"), str):
+        revision = grade["prepared_payload_version"]
+        provenance["family_revision"] = SELF_GRADES[family["lane"]] + " prepared_payload_version"
+    elif contract.get("family_revision"):
+        revision = contract["family_revision"]
+        provenance["family_revision"] = contract["contract_ref"] + " exact prepared version"
     if not isinstance(revision, str):
         raise Gap("reviewed grade names no family_revision")
     if contract["prepared_row"] is not None:
@@ -453,6 +503,11 @@ def derive_row(family: dict, grade: dict, contract: dict, readiness) -> tuple[di
     provenance["payload_editions"] = contract["contract_ref"]
 
     scope_policy = contract["scope_policy"]
+    if scope_policy is None:
+        from pm_ea_merge2_rows import _owner_scope
+        scope_policy, source = _owner_scope(grade, event_type)
+        if source:
+            contract["scope_source"] = source
     graded_scope = scope_from_grade(grade)
     schema_scope = scope_from_schema(next(iter(editions.values()))["schema"])
     if scope_policy is not None:
@@ -473,6 +528,9 @@ def derive_row(family: dict, grade: dict, contract: dict, readiness) -> tuple[di
     if scope_policy == "application_or_project" and set(editions) == {"project"}:
         # One closed payload serving both scopes (the DM precedent of a nullable project_id).
         project = editions["project"]
+        editions["application"] = resolve("application", project["path"] + project["json_pointer"])
+    if scope_policy == "application_only" and set(editions) == {"project"} and contract["scope_policy"] is None:
+        project = editions.pop("project")
         editions["application"] = resolve("application", project["path"] + project["json_pointer"])
     if set(editions) != needed:
         raise Gap(f"payload editions {sorted(editions)} do not match scope policy {scope_policy}")
@@ -525,7 +583,7 @@ def derive_row(family: dict, grade: dict, contract: dict, readiness) -> tuple[di
             if v.split("@")[0] == token and "@" in v:
                 version = v.split("@")[1]
         ref = policy_ref(token + ("@" + version if version else ""))
-        policies = {(p["policy_id"], p["policy_version"]) for p in load(STORAGE_REGISTRY)["retention_policies"]}
+        policies = policy_keys()
         if ref is None or (ref["policy_id"], ref["policy_version"]) not in policies:
             raise Gap(f"{scope} retention {token} is not a registered policy object")
         retention[scope] = ref
@@ -534,7 +592,7 @@ def derive_row(family: dict, grade: dict, contract: dict, readiness) -> tuple[di
     top_scope = "project" if "project" in editions else "application"
     top = editions[top_scope]
     source_refs = []
-    for ref in (owners["semantic"], owners["payload"], owners.get("storage")):
+    for ref in (owners["semantic"], owners["payload"], owners.get("storage"), *contract.get("extra_source_refs", [])):
         if ref and ref not in source_refs:
             source_refs.append(ref)
     for scope in sorted(editions):
@@ -564,6 +622,9 @@ def derive_row(family: dict, grade: dict, contract: dict, readiness) -> tuple[di
         "source_refs": source_refs,
         "retention_policy_ref": retention[top_scope],
     }
+    if family["lane"] == "S4B":
+        # GB17 binds all five slots, including nullable linkage slots, exactly as the Browser admission row.
+        row["legacy"]["identity_json_pointers"] = {key: ["/payload/context/" + key] for key in IDENTITY_KEYS}
     if len(editions) > 1:
         row["payload_versions"] = [
             {
