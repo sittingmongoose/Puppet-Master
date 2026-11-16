@@ -175,6 +175,69 @@ def value_sha_substituted(d):
     return w, U.body_read(w, g)
 
 
+@case('U-DG5/N/logical_schema_extra_record_field', 'dgu/physical/logical/schema/record',
+      'dg5/dgu/physical/logical/schema',
+      'Single defect: the stored body record gains one field no owner schema defines, with its '
+      'currentness hash recomputed and the control body-bytes/currentness copies rewired to match, '
+      'so the physical row, value_sha256, currentness and every read join hold and only the whole-root '
+      'logical schema (additionalProperties at the record) refuses. Prototype for the whole-root schema '
+      'rows the write-time row() validations can never fail on owner-built records.')
+def logical_schema_extra_record_field(d):
+    w, g = U._goal(d)
+    U.run_direct(w, g)
+    sc = g['scope']
+    bkey = O.body_key(sc['project_id'], sc['goal_id'])
+    new = U.rbody(w, O.T_BODY, bkey, lambda r: (lambda x: dict(
+        x, currentness_hash=O.currentness(x)))(dict(r, dg5_schemaless_field=1)))['record']
+    U.rbody(w, O.T_CONTROL, U.ctl_key(g), lambda c: dict(
+        c, body_sha256=O.body_bytes_sha(new), currentness_hash=new['currentness_hash']))
+    return w, U.body_read(w, g)
+
+
+@case('U-DG5/N/body_control_schema_empty_storage', 'dgu/body/goal_body_control/schema/record/storage_instance_id',
+      ('dg5/dgu/body/goal_body_control/schema', 'dg5/dgu/body/goal_body_mutation_receipt/schema'),
+      'Single defect at the start entry: the caller scope carries an empty storage_instance_id. '
+      'No earlier row() in start reads that field (body, revision and origin records have none); '
+      'the owner-built control and mutation receipt copy the same scope field, and both whole-root '
+      'schemas bound it by the same predicate (string minLength 1), so the two schema rows are a '
+      'declared duplicate set for this input.')
+def body_control_schema_empty_storage(d):
+    w = U.world(d)
+    scope = dict(storage_instance_id='', project_id='TEST_ONLY-project-dg5ctl',
+                 thread_id='thr_TEST_ONLY_dg5ctl', goal_id='goal:TEST_ONLY:dg5ctl')
+    return w, lambda: w.body.start(scope, 'x', 'message:TEST_ONLY:dg5ctl',
+                                   'TEST_ONLY:creation-authority:dg5ctl', 'context:TEST_ONLY:dg5ctl')
+
+
+@case('U-DG5/N/body_origin_schema_empty_message_ref', 'dgu/body/goal_objective_origin/schema/record/source_message_refs/0',
+      'dg5/dgu/body/goal_objective_origin/schema',
+      'Single defect at the start entry: the caller creation_message_id is empty. The body and '
+      'revision rows built before the origin row do not carry it, so the first schema to refuse '
+      'is the whole-root origin validation (row dg5/dgu/body/goal_objective_origin/schema).')
+def body_origin_schema_empty_message_ref(d):
+    w = U.world(d)
+    scope = dict(storage_instance_id=w.storage.storage_instance_id, project_id='TEST_ONLY-project-dg5org',
+                 thread_id='thr_TEST_ONLY_dg5org', goal_id='goal:TEST_ONLY:dg5org')
+    return w, lambda: w.body.start(scope, 'x', '', 'TEST_ONLY:creation-authority:dg5org',
+                                   'context:TEST_ONLY:dg5org')
+
+
+@case('U-DG5/N/body_record_schema_empty_thread', 'dgu/body/goal_body_record/schema/record/thread_id',
+      ('dg5/dgu/body/goal_body_record/schema', 'dg5/dgu/body/goal_body_control/schema',
+       'dg5/dgu/body/goal_body_mutation_receipt/schema'),
+      'Single defect at the start entry: the caller scope carries an empty thread_id (project/goal '
+      'ids feed the row keys first, so they cannot isolate a schema). The owner-built body, control '
+      'and mutation receipt records copy the same scope field, and all three whole-root schemas '
+      'bound it by the same predicate (string minLength 1), so the three schema rows are a '
+      'declared duplicate set for this input.')
+def body_record_schema_empty_thread(d):
+    w = U.world(d)
+    scope = dict(storage_instance_id=w.storage.storage_instance_id, project_id='TEST_ONLY-project-dg5rec',
+                 thread_id='', goal_id='goal:TEST_ONLY:dg5rec')
+    return w, lambda: w.body.start(scope, 'x', 'message:TEST_ONLY:dg5rec',
+                                   'TEST_ONLY:creation-authority:dg5rec', 'context:TEST_ONLY:dg5rec')
+
+
 @case('U-DG5/N/inspect_source_defect', 'dgu/inspect/source_defect', SITE + '1867',
       'Single defect in the acquired source snapshot: first custody group_digest is substituted, so '
       'GenericSource halts before that event (a custody defect at its position) and the inspected event '
