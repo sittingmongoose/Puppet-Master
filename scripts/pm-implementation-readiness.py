@@ -480,7 +480,7 @@ EVENT_FAMILY_GOAL_PAYLOAD_SCHEMA_REFS = {
     "goal.completed": "Plans/event_payloads/goal_runtime/goal_completed.schema.json",
     "goal.degraded": "Plans/event_payloads/goal_runtime/goal_degraded.schema.json",
     "goal.stopped": "Plans/event_payloads/goal_runtime/goal_stopped.schema.json",
-    "goal.blocked": "Plans/event_payloads/goal_runtime/goal_blocked.schema.json",
+    "goal.blocked": "Plans/event_payloads/goal_runtime/goal_blocked.v3.schema.json",
     "goal.cancelled": "Plans/event_payloads/goal_runtime/goal_cancelled.schema.json",
     # The three goal_run v3 rows select whole v3 payload schemas outside event_payloads/goal_runtime,
     # as their landed adoptions registered them: started by e686963ad5 (GRS-079, SP-311), cancelled by
