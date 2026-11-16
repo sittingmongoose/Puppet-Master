@@ -386,6 +386,20 @@ def reserve_pending_schema_blocked_ref_type(d):
     return w, lambda: w.body.reserve(sc, pending, lambda new_control: [])
 
 
+@case('U-DG5/N/sir_normalized_schema_empty_environment', 'dgu/sir/normalized/schema/owner_identity/execution_environment_id',
+      ('dg5/dgu/sir/normalized/schema', 'dg5/dgu/sir/outcome/schema'),
+      'Single defect: the world config carries an empty execution environment id. The request '
+      'schema never reads it; identity_envelope copies it into both the normalized identity and '
+      'the outcome identity, and both whole-root schemas bound it by the same predicate '
+      '(string minLength 1 in IdentityEnvelope), so the two schema rows are a declared '
+      'duplicate set for this input.')
+def sir_normalized_schema_empty_environment(d):
+    w, g = U._goal(d)
+    req = O.direct_request(w, g, 'x')
+    w.config['environment_id'] = ''
+    return w, lambda: w.sir.admit(req)
+
+
 @case('U-DG5/N/inspect_source_defect', 'dgu/inspect/source_defect', SITE + '1867',
       'Single defect in the acquired source snapshot: first custody group_digest is substituted, so '
       'GenericSource halts before that event (a custody defect at its position) and the inspected event '
