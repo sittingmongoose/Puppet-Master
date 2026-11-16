@@ -722,6 +722,31 @@ def revision_verdict(event_type: str, *, successor_row: dict, predecessor: dict,
             "registry_before": copy.deepcopy(before), "registry_after": copy.deepcopy(after)}
 
 
+def revised_predecessor_rows(root: Path = ROOT, registry: dict | None = None) -> list[dict]:
+    """The predecessor row of every in-place revision whose applied revision record is exact and complete.
+
+    Each record is judged by revision_verdict against its own successor row and predecessor pins (R1-R12). A reader
+    that keeps the historically registered selections (births written under the replaced row, such as the S3 v2
+    reader) adds exactly these rows to the live ones. A revision without its exact record adds nothing.
+    """
+    root = Path(root)
+    registry = load_registry(root) if registry is None else registry
+    rows = []
+    for directory in sorted(root.glob(REVISION_DIR_GLOB)):
+        for path in sorted(directory.glob("*.json")):
+            try:
+                record = json.loads(path.read_text(encoding="utf-8"))
+                event_type, successor, before = record["registry_row"]["event_type"], record["registry_row"], record["before_row"]
+            except (OSError, ValueError, KeyError, TypeError):
+                continue
+            if not (isinstance(event_type, str) and isinstance(successor, dict) and isinstance(before, dict)):
+                continue
+            mode = revision_verdict(event_type, root=root, registry=registry, successor_row=successor, predecessor=before)
+            if mode["mode"] == "revised":
+                rows.append(mode["before_row"])
+    return rows
+
+
 def main(argv=None) -> int:
     args = list(sys.argv[1:] if argv is None else argv)
     out = None
