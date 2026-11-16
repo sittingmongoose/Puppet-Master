@@ -60,6 +60,22 @@ DECLARED_RULES = (
 )
 
 
+DECLARED_RULES += (
+    (lambda cid: cid == 'U5/G/commit_reserved_control_substituted',
+     (U_SITE + '1206', U_SITE + '1237'),
+     "GoalBodyOwner.commit requires `A.same(<current control>, reserved_control)`: :1206 on its first read and :1237 "
+     'on its final re-read of the same Goal control record (the same field, the same predicate).'),
+    (lambda cid: cid == 'U5/G/release_reserved_control_substituted',
+     (U_SITE + '1267', U_SITE + '1272'),
+     "GoalBodyOwner.release requires `A.same(<current control>, reserved_control)`: :1267 on its first read and :1272 "
+     'on its final re-read of the same Goal control record (the same field, the same predicate).'),
+    (lambda cid: cid == 'U5/N/goal_id_array',
+     ('dg5/dgu/sir/request/schema', U_SITE + '286'),
+     'GoalUpdateRequestV2 goal_id `type: string` and exact_str (pm_goal_dg_u_owners.py:286) `type(value) is str` '
+     'require the same field to be a string.'),
+)
+
+
 FAMILY_MODULES = ('s', 'ca', 'r', 'cf')   # pm_goal_dg5_declarations_<x>.py, one owner per file (SPLIT.md)
 _LOADED = []
 
