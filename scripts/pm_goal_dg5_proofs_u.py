@@ -247,4 +247,67 @@ PROOFS = {
             'references the same revision definition, :341), and the after body row() again '
             'validates first. No complete call can make this row refuse while its two '
             'dependency rows hold; it never gates acceptance alone.')),
+    'dg5/dgu/source/capture/prepared_producer/schema': dict(
+        kind='entailed-by-producer-construction',
+        families=['goal.updated'],
+        depends_on=[],
+        sites=[(U, 235), (U, 1549), (U, 1609), (U, 1621),
+               ('Plans/goal_update_command_custody.schema.json', 755),
+               ('Plans/goal_update_command_custody.schema.json', 875)],
+        argument=(
+            'prepared_event (:1609-1621) validates a ProducerInput assembled only from the '
+            'capture metadata (:1549-1559) and a placeholder payload: every metadata field '
+            'is a schema constant (schema_id, version, scope_kind, event_type, payload_schema_id, '
+            'redaction/replay policies, null run/node/attempt/causation/parent/migration), an '
+            'event_identity output (:235, computed non-empty strings), a scope or actor value '
+            'already bounded identically by the validated GoalUpdateRequestV2 (project/thread/'
+            'actor maxLength 256), or the admission clock value; the payload carries the same '
+            'bounded scope ids, integer revisions from the read-validated body, placeholder '
+            '64-hex hashes, and acceptance fields copied from the read-validated source record. '
+            'ProducerInput (:755) is ProducerMetadata (:875) plus that payload, with no bound '
+            'tighter than its sources at any copied field, so no complete capture call can make '
+            'this row refuse alone.')),
+    'dg5/dgu/producer/freeze/producer_input/schema': dict(
+        kind='entailed-by-producer-construction',
+        families=['goal.updated'],
+        depends_on=[],
+        sites=[(U, 1752), (U, 1770), ('Plans/goal_update_command_custody.schema.json', 755)],
+        argument=(
+            'freeze (:1752-1770) validates a ProducerInput whose metadata half is the stored '
+            'progress producer_metadata verbatim (validated as ProducerMetadata when the '
+            'progress snapshot was written and again on every read) and whose payload is '
+            'assembled only from the read-validated body receipt (revision integers and '
+            'pattern hashes), the read-validated accepted revision, and acceptance fields of '
+            'the read-validated source record, each bounded identically in ProducerInput '
+            '(:755). The event_identity join (:1765) has already refused any metadata/payload '
+            'identity mismatch before validation. No complete freeze call can make this row '
+            'refuse alone.')),
+    'dg5/dgu/producer/publish/producer_input/schema': dict(
+        kind='entailed-by-producer-construction',
+        families=['goal.updated'],
+        depends_on=[],
+        sites=[(U, 1793), (U, 1794), ('Plans/goal_update_command_custody.schema.json', 755)],
+        argument=(
+            'publish (:1793-1794) validates a verbatim deepcopy of the frozen progress '
+            'producer_input, which freeze already validated against the identical '
+            'ProducerInput definition (:755) before the snapshot was written and which every '
+            'progress read revalidates under the StorageProgress root. The identical value '
+            'cannot newly fail the identical root, so no complete publish call can make this '
+            'row refuse alone; it re-asserts the frozen candidate at the publish boundary.')),
+    'dg5/dgu/producer/publish/publication/schema': dict(
+        kind='entailed-by-producer-construction',
+        families=['goal.updated'],
+        depends_on=[],
+        sites=[(U, 1805), (U, 1809), (U, 1814), ('scripts/pm_goal_test_storage.py', 598),
+               ('Plans/goal_update_command_custody.schema.json', 151)],
+        argument=(
+            'publish (:1809-1814) validates an OriginalPublication assembled only from the '
+            'append result the same call just read back: event_id from the frame-validated '
+            'stored event, first_append_receipt and original_event_value_commitment verbatim '
+            'from AppendOwner.first_receipt (constructed by Storage receipts_from_commit, '
+            'pm_goal_test_storage.py:598, in exactly the AppendReceipt/commitment shapes '
+            'OriginalPublication references, :151), and original_append_result copied from '
+            'that receipt plus the stored sequence. Every field is either a constant-shape '
+            'storage output or copied verbatim from it, so no complete publish call can make '
+            'this row refuse alone.')),
 }
