@@ -6,6 +6,8 @@ dependency row is closed in the same family (matrix least fixpoint).
 """
 ST = 'scripts/pm_goal_test_storage.py'
 SITE = 'dg5/site/pm_goal_test_storage.py:'
+OA = 'scripts/pm_goal_test_owner_adapters.py'
+OSITE = 'dg5/site/pm_goal_test_owner_adapters.py:'
 FAMILIES = ['goal.updated', 'goal.cancelled', 'goal_run.started', 'goal_run.cancelled',
             'goal_run.certified', 'shared-adapter']
 
@@ -62,4 +64,41 @@ PROOFS = {
             'refusal at :581. A non-dict payload therefore still refuses at :581 with :577 '
             'cut (the decode_payload_shape chain witnesses exactly this), so :577 selects '
             'the exact payload_shape code and never gates acceptance alone.')),
+    SITE + '553': dict(
+        kind='decode-or-refuse',
+        families=FAMILIES,
+        depends_on=[],
+        sites=[(ST, 550), (ST, 551), (ST, 553), (ST, 555)],
+        argument=(
+            'decode_frame binds header only when decode_canonical(header_raw) succeeds '
+            '(:551); on StorageRefusal the except branch refuses header_codec at :553. '
+            'With :553 cut, header is unbound and the next use at :555 raises '
+            'UnboundLocalError (the decode_header_codec CUT_EXCEPTION witnesses exactly '
+            'this), so no execution accepts a frame whose header does not decode; :553 '
+            'converts the codec refusal to the exact header_codec code.')),
+    SITE + '572': dict(
+        kind='decode-or-refuse',
+        families=FAMILIES,
+        depends_on=[],
+        sites=[(ST, 569), (ST, 570), (ST, 572), (ST, 574)],
+        argument=(
+            'decode_frame binds value only when decode_canonical(payload_raw) succeeds '
+            '(:570); on StorageRefusal the except branch refuses payload_codec at :572. '
+            'With :572 cut, value is unbound and the next use (_commit_shape at :574 or '
+            'the payload checks) raises UnboundLocalError (the decode_payload_codec '
+            'CUT_EXCEPTION witnesses exactly this), so no execution accepts a frame whose '
+            'payload does not decode; :572 converts the codec refusal to the exact '
+            'payload_codec code.')),
+    OSITE + '415': dict(
+        kind='code-selection',
+        families=FAMILIES,
+        depends_on=[OSITE + '428'],
+        sites=[(OA, 407), (OA, 415), (OA, 428)],
+        argument=(
+            'exact_json check() refuses a float leaf by name at :415; with :415 cut the '
+            'same float reaches the final else require at :428 (v is None or type(v) is '
+            'bool), which no float satisfies, and refuses custody/exact_json/type (the '
+            'exact_json_float chain witnesses exactly this). Every value :415 refuses is '
+            'a float, so :415 selects the exact float code and never gates acceptance '
+            'alone.')),
 }
