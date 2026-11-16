@@ -49,6 +49,9 @@
 // Run Onboarding Again (which replaces the record that listed it), closed, reloaded: tastebook in its look, as before;
 // a stored id of a Project that no longer exists (written to storage: no ordinary control leaves one), reloaded: tastebook
 // in its look, the id dropped, no error (stream F's OK, 2026-11-16).
+// R80 P1 (the lead's quick review of db5211725d): a Project committed by setup (Creating done) and the setup closed on the
+// optional step after it, then a reload: the Project is listed and selected, and its title-bar row carries the same
+// location line and hover detail as before the reload (its name, path and branch, its words and its tags).
 // Because tastebook is in another look, a reload that falls
 // back to it cannot pass as the new Project's look (the kit gap FO216-R3-KIT-FINISH-RELOAD-MASKED). --set only=fo222.
 // No timing rows. --set looks=basic-light,nier-dark runs those cases alone; --set extra=0 leaves out the finish, Reduced
@@ -556,10 +559,45 @@ async function fo222(t) {
 	await t.check(`${tag}: a stored id of a Project that no longer exists, reloaded: tastebook in Retro Light, the id dropped`, q6.selected === 'tastebook' && q6.label === 'tastebook' && held('retro-light', p6) && kept !== 'p-gone-project-0000', JSON.stringify({ project: q6, page: p6, stored: kept }));
 }
 
+/* R80 P1: a committed Project (Creating done), the setup closed on an optional step, a reload: its row as it was */
+const rowNow = (f, id) => f.evaluate((id) => {
+	const r = Array.prototype.find.call(document.querySelectorAll('#projectMenu [data-project]'), (x) => x.getAttribute('data-project') === id);
+	if (!r) return null;
+	const a = {}; ['data-project-name', 'data-project-path', 'data-project-branch', 'data-project-stack', 'title', 'aria-label', 'data-pm-hover', 'data-tip'].forEach((k) => { if (r.hasAttribute(k)) a[k] = r.getAttribute(k); });
+	return { attrs: a, text: r.textContent.replace(/\s+/g, ' ').trim(), selected: r.classList.contains('is-selected') };
+}, id);
+async function r80p1(t) {
+	const tag = 'normal: R80 P1, a Project committed by setup, closed on the step after Creating, reloaded';
+	const NAME = 'Recipe shelf';
+	await t.emulate({ reducedMotion: 'no-preference' });
+	const f = await t.app.open({ onboarding: true, query: 'o55=fresh&o55scenario=fresh', sandbox: false, settleMs: 1500 });
+	const A = app(t, f);
+	await A.screen('welcome'); await A.click('start', null, 'look'); await A.click('next', null, 'where');
+	await A.click('pick', 'this'); await A.click('next', null, 'begin'); await A.click('pick', 'new'); await A.click('next', null, 'name');
+	await f.locator('#o55f-name').fill(NAME); await sleep(200); await A.click('next');
+	let at = '';
+	for (let i = 0; i < 30; i++) {
+		const st = await f.evaluate(() => ({ screen: O55.S.sess.screen, done: !!(O55.S.sess.commit && O55.S.sess.commit.state === 'done') }));
+		if (st.done && ['ai', 'protect', 'ready'].includes(st.screen)) { at = st.screen; break; }
+		if (st.screen === 'review') { await A.click('commit', null, 'creating'); continue; }
+		await A.settled();
+		await f.waitForFunction(() => { const b = [...document.querySelectorAll('#pm-o55-onboarding .o55-foot .o55-primary')].pop(); return !!b && !b.disabled && b.getAttribute('aria-disabled') !== 'true'; }, null, { timeout: 30000 }).catch(() => {});
+		await f.locator('#pm-o55-onboarding .o55-foot .o55-primary').filter({ visible: true }).last().click({ timeout: 15000 }); await sleep(1500);
+	}
+	const id = await f.evaluate(() => (O55.S.sess.commit || {}).projectId || null);
+	await A.close();
+	const before = await rowNow(f, id);
+	await t.check(`${tag}: Creating done, closed on '${at}': the row is listed and selected before the reload`, !!at && !!before && before.selected && !!before.attrs['data-project-path'], JSON.stringify({ at, id, before }));
+	const r = await freshLoad(t), after = await rowNow(r.f, id);
+	await t.check(`${tag}: reloaded, the row is listed and selected with the same location line and hover detail`, !!after && after.selected && JSON.stringify(after.attrs) === JSON.stringify(before && before.attrs) && after.text === (before && before.text), JSON.stringify({ before, after }));
+	/* (the page's default Project again, for the cases after this one) */
+	await switchProject(t, r.f, 'tastebook');
+}
+
 export default async function (t) {
 	await t.viewport(1440, 960);
 	const looks = t.args.looks ? String(t.args.looks).split(',') : ALL;
-	if (t.args.only === 'fo222') { if (t.app.surfaces().includes('normal')) await fo222(t); return; }
+	if (t.args.only === 'fo222') { if (t.app.surfaces().includes('normal')) { await fo222(t); await r80p1(t); } return; }
 	if (t.args.only === 'r57') { for (const sf of t.app.surfaces()) { const sb = sf === 'sandbox'; if (!sb) await r57f1(t); await r57f2(t, sb); await r57f3(t, sb); } await t.emulate({ reducedMotion: 'no-preference' }); return; }
 	if (t.args.only === 'fo219') { if (t.app.surfaces().includes('normal')) await fo219(t); return; }
 	if (t.args.only === 'openreload') { if (t.app.surfaces().includes('normal')) { await openReload(t, 'nier-light', 'basic-dark'); await openReload(t, 'glass-light', 'nier-dark', { back: true }); await openReloadNoPick(t); } return; }
@@ -577,7 +615,7 @@ export default async function (t) {
 			await nierBackground(t, sandbox);
 			if (!sandbox) await fo219(t);
 			if (!sandbox) await r57f1(t);
-			if (!sandbox) await fo222(t);
+			if (!sandbox) { await fo222(t); await r80p1(t); }
 			await r57f2(t, sandbox); await r57f3(t, sandbox);
 			if (!sandbox) { await openReload(t, 'nier-light', 'basic-dark'); await openReload(t, 'glass-light', 'nier-dark', { back: true }); await openReloadNoPick(t); }
 		}
