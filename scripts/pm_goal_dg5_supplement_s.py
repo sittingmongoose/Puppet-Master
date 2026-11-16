@@ -828,3 +828,26 @@ def _(suite):
         w.storage.transact([dict(table='workflow_goal_run_control', key=control['physical_key'],
                                   expected=cell['version'], value=W.cell_value(w.storage, control))])
     start_case(suite, edits=dict(d01_current=d01_edit), pre=pre)
+
+
+# Run cancellation present: the issued D01 current source carries a
+# schema-valid CancellationObservation specimen in run_control (the skeleton
+# the bank itself repairs to validity), so only the null check refuses.
+@negative('run_cancellation_present', 'start/run_cancellation_null', START + '843')
+def _(suite):
+    # The specimen must exist before issue_sources runs, but the edition bank
+    # is world-independent, so build the world in two steps like new_world.
+    world = ST.StartWorld(suite.tmp(), O.edition('v3')).build_owners()
+    cancellation = _cancellation_specimen(world)
+
+    def d01_edit(cs):
+        cs['run_control']['cancellation'] = copy.deepcopy(cancellation)
+        return cs
+    handles = world.issue_sources(dict(d01_current=d01_edit))
+    O.refuse_without_effect(world, lambda: world.start.commit_start(O.request(world), dict(handles)))
+
+
+def _cancellation_specimen(world):
+    return W.skeleton(world.edition.bank,
+                        'https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json'
+                        '#/$defs/CancellationObservation')
