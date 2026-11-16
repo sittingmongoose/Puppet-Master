@@ -451,3 +451,109 @@ def _(suite):
     with open(path, 'ab') as handle:
         handle.write(b'\xff' * 32)
     readers.read_current(O.sreq(world))
+
+
+# ------------------------------------------------------------- start / world single defects
+
+class _Handles(dict):
+    pass
+
+
+class _Pair(tuple):
+    pass
+
+
+# type(handles) is dict / type(entry) is tuple are exact-type predicates: a
+# dict/tuple subclass carrying the same items refuses there alone and works
+# everywhere else in acquire_all.
+@negative('handles_dict_subclass', 'start/handles_type', START + '794')
+def _(suite):
+    start_case(suite, handle_edit=lambda w, h: _Handles(h))
+
+
+@negative('handle_entry_tuple_subclass', 'start/handle_shape/d01_current', START + '798')
+def _(suite):
+    start_case(suite, handle_edit=lambda w, h: dict(h, d01_current=_Pair(h['d01_current'])))
+
+
+@negative('native_body_cell_deleted', 'native/body_unavailable', START + '227')
+def _(suite):
+    def pre(w, h):
+        _delete_cell(w, 'workflow_goal_run_body', w.owners['native'].current()['body']['physical_key'])
+    start_case(suite, pre=pre)
+
+
+@negative('native_start_control_cell_deleted', 'native/start_control_unavailable', START + '232')
+def _(suite):
+    def pre(w, h):
+        _delete_cell(w, 'workflow_start_control', w.owners['native'].start_control_key())
+    start_case(suite, pre=pre)
+
+
+@negative('staging_dispatch_released', 'start/staging_not_released', START + '880')
+def _(suite):
+    start_case(suite, edits=dict(staging=at(['record', 'dispatch_released'], True)))
+
+
+# The authentic submission appended raw first (the S3 raw-start shape), so the
+# held commit_start appends the same event identity and Storage does not append.
+@negative('append_outcome_duplicate_raw_first', 'start/dedupe_unavailable', START + '1022')
+def _(suite):
+    world, handles = O.new_world(suite)
+    sub = world.start.producer_submission(world.start.acquire_all(handles)[0],
+                                          world.owners['native'].current(), world.ctx.now())
+    world.appender.append_original('TEST_ONLY:op:dg5-raw', dict(tag='raw'), [sub])
+    O.refuse_without_effect(world, lambda: world.start.commit_start(O.request(world), handles))
+
+
+@negative('dedupe_control_operation_substituted', 'start/dedupe_unavailable', START + '1328')
+def _(suite):
+    world, handles, _ = O.started(suite)
+    cell = world.owners['native'].start_control()
+    value = copy.deepcopy(cell['value'])
+    value['record']['original_operation_id'] = 'TEST_ONLY:start-op:substituted'
+    world.storage.transact([dict(table='workflow_start_control', key=value['physical_key'],
+                                  expected=cell['version'], value=value)])
+    world.start.commit_start(O.request(world), handles)
+
+
+@negative('lower_after_control_only', 'lower/after_control', START + '1388')
+def _(suite):
+    def tamper(w, u):
+        u['after_control'] = copy.deepcopy(u['after_control'])
+        u['after_control']['record']['revision'] += 1
+        u['commit_argument']['native_candidates']['control'] = u['after_control']
+        return u
+    lower_case(suite, tamper)
+
+
+@negative('lower_candidate_control_only', 'lower/candidate_control', START + '1391')
+def _(suite):
+    def tamper(w, u):
+        u['candidate']['record']['candidate_control']['physical_value_sha256'] = Z
+        return O.rehash(w, u)
+    lower_case(suite, tamper)
+
+
+# selector_for reads the graph cell it names: rewriting that cell at rest (the
+# born_worknode_substituted_at_rest shape) fails cell_value alone, because the
+# presented graph handle value is unchanged and selector_for derives the
+# selector hash from the presented value once the site is cut.
+@negative('selector_cell_value_graph_substituted', 'selector/cell_value', WORLD + '448')
+def _(suite):
+    def pre(w, h):
+        graph = w.owners['materialization:graph'].resolve(h['installed_graph'][1])[1]
+        cell = W.read_value(w.storage, 'workflow_installed_graph', graph['physical_key'])
+        value = copy.deepcopy(cell['value'])
+        value['record']['source_dependency_edges'] = []
+        w.storage.transact([dict(table='workflow_installed_graph', key=graph['physical_key'],
+                                  expected=cell['version'], value=W.cell_value(w.storage, value))])
+    start_case(suite, pre=pre)
+
+
+@negative('selector_cell_present_graph_deleted', 'selector/cell_present', WORLD + '447')
+def _(suite):
+    def pre(w, h):
+        graph = w.owners['materialization:graph'].resolve(h['installed_graph'][1])[1]
+        _delete_cell(w, 'workflow_installed_graph', graph['physical_key'])
+    start_case(suite, pre=pre)
