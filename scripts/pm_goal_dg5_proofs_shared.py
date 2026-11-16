@@ -186,4 +186,17 @@ PROOFS = {
             'a schema constant, a computed digest, or a verbatim copy already bounded '
             'identically at its source, so no complete issue_first_receipt call can make '
             'this row refuse alone.')),
+    SITE + '1633': dict(
+        kind='code-selection',
+        families=FAMILIES,
+        depends_on=[SITE + '1624'],
+        sites=[(ST, 1622), (ST, 1624), (ST, 1630), (ST, 1633)],
+        argument=(
+            'read_event at :1633 requires the event index entry to exist, then delegates '
+            'to read_frame, whose first check at :1624 requires the identical index '
+            'entry lookup (self.events.get(event_id)) to succeed. With :1633 cut, an '
+            'absent event still refuses read/event_unavailable at :1624 in the same call '
+            '(the read_event_absent chain witnesses exactly this), so :1633 selects the '
+            'read_event code and never gates acceptance alone. It closes by this proof '
+            'once :1624 is closed.')),
 }

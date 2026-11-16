@@ -108,6 +108,7 @@ def supplements(suite, work):
     _fence_supplements(suite, work)
     _index_read_supplements(suite, work)
     _schema_assert_supplements(suite, work)
+    _guard_supplements(suite, work)
 
 
 class _HandleSubclass(A.OriginalHandle):
@@ -362,6 +363,58 @@ def _schema_assert_supplements(suite, work):
     # frame-validated event plus computed digests (see its entailed proof).
 
 
+def _guard_supplements(suite, work):
+    """DG5 negatives for guard rows whose authored cases land on a sibling site or
+    whose cut raises at the guarded read (presence at the matrix)."""
+    def foreign_first_receipt():
+        store = storage.TestOwnerStorage.create(work / 'guard-foreign-receipt')
+        registry = A.OwnerRegistry()
+        appender = A.AppendOwner(registry, store)
+        events, _reservation, _outcome = appender.append_original(
+            'TEST_ONLY:op:dg5-foreign-receipt', dict(tag='dg5-foreign-receipt'),
+            [selftest.candidate('dg5-foreign-receipt')])
+        return A.AppendOwner(registry, store).first_receipt(events[0])
+
+    def full_value_absent():
+        store = storage.TestOwnerStorage.create(work / 'guard-full-value-absent')
+        return store.full_value_result('TEST_ONLY:absent')
+
+    def withdraw_absent():
+        store = storage.TestOwnerStorage.create(work / 'guard-withdraw-absent')
+        return store.withdraw_pack('0' * 64)
+
+    def read_frame_absent():
+        store = storage.TestOwnerStorage.create(work / 'guard-read-frame')
+        return store.read_frame('TEST_ONLY:absent')
+
+    def read_event_absent():
+        store = storage.TestOwnerStorage.create(work / 'guard-read-event')
+        return store.read_event('TEST_ONLY:absent')
+
+    def retire_empty():
+        store = storage.TestOwnerStorage.create(work / 'guard-retire-empty')
+        seg = store._new_segment(2, 0, 'TEST_ONLY:segment-rotation:%s:2' % store.storage_instance_id)
+        seg['sealed'] = True
+        store.segments.append(seg)
+        store._segment_path(2).touch()
+        return store.retire_segment(2, storage.RetentionOwner(store))
+
+    suite.negative('dg5-shared', 'first_receipt_foreign_handle:631', foreign_first_receipt, 'event/issuer')
+    suite.negative('dg5-shared', 'full_value_absent:1607', full_value_absent, 'custody/unavailable')
+    suite.negative('dg5-shared', 'withdraw_pack_absent:1736', withdraw_absent, 'pack/unavailable')
+    suite.negative('dg5-shared', 'read_frame_absent:1624', read_frame_absent, 'read/event_unavailable')
+    suite.negative('dg5-shared', 'read_event_absent:1633', read_event_absent, 'read/event_unavailable')
+    suite.negative('dg5-shared', 'retire_empty_segment:1754', retire_empty, 'retire/nonempty')
+
+
+def _rootbank_of(entries):
+    return A.RootBank(entries)
+
+
+def _generic_source_of(storage_value):
+    return source.GenericSource(storage_value)
+
+
 class _StorageHandleSubclass(storage._Handle):
     """A storage handle whose exact type is not _Handle (the :1259/:1589 defect)."""
 
@@ -587,6 +640,25 @@ def _pure_supplements(suite, work):
 
     pure('event_record_schema:473', event_record_make,
          'append/event/schema/', 'dg5/site/pm_goal_test_storage.py:473')
+
+    def bank_no_uri_make():
+        entries = [dict(path='Plans/seglog_frame_v2_wire_fixtures.json')]
+        return (lambda: _rootbank_of(entries)), _rootbank_of, dict(args=(entries,), kwargs={})
+
+    _bank_path = 'Plans/goal_certified_event_coordinator_contracts/schemas/coordinator.v1.schema.json'
+    _bank_uri = json.loads((bridge.ROOT / _bank_path).read_text())['$id']
+
+    def bank_rebound_make():
+        entries = [dict(path=_bank_path), dict(path='Plans/event_record.schema.json', retrieval_uri=_bank_uri)]
+        return (lambda: _rootbank_of(entries)), _rootbank_of, dict(args=(entries,), kwargs={})
+
+    pure('bank_no_uri:267', bank_no_uri_make,
+         'bank/uri/Plans/seglog_frame_v2_wire_fixtures.json', 'dg5/site/pm_goal_test_owner_adapters.py:267')
+    pure('bank_uri_rebound:268', bank_rebound_make,
+         'bank/no_rebinding/' + _bank_uri, 'dg5/site/pm_goal_test_owner_adapters.py:268')
+    pure('generic_source_storage_type:239',
+         lambda: ((lambda: _generic_source_of(dict())), _generic_source_of, dict(args=(dict(),), kwargs={})),
+         'source/storage_type', 'dg5/site/pm_goal_test_source.py:239')
     pure('storage_u64_negative:197',
          lambda: ((lambda: storage.u64(-1, 'dg5/shared')), storage.u64, dict(args=(-1, 'dg5/shared'), kwargs={})),
          'dg5/shared/numrule/integer_range', 'dg5/site/pm_goal_test_storage.py:197')
