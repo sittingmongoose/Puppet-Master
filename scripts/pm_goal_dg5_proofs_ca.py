@@ -388,6 +388,18 @@ PROOFS = {
         "A stored control_epoch that could overflow the increment therefore "
         "cannot be carried to it by any coherent route state.",
         [(R3, 516), (R3, 591), (R3, 682)]),
+    'dg5/site/pm_goal_dg_ca3_route.py:1189': _p(
+        "control['pending'] at publish_control entails the same pending at "
+        "settle_owner: the only genuine writer is GoalOwner.reserve_pending, "
+        "which is fenced off while a cancellation is pending (owners :478) - "
+        "and cancellation_pending is set from latch until publish itself "
+        "clears it after this check - so no genuine operation can introduce "
+        "a body pending between settle and publish, and settle's identical "
+        "check at :866 refuses any pending introduced earlier. The same "
+        "field and predicate are witnessed at :866.",
+        [(R3, 866), (R3, 1189), (OWN, 478)],
+        ['dg5/site/pm_goal_dg_ca3_route.py:866',
+         'dg5/site/pm_goal_dg_ca_owners.py:478']),
     'dg5/site/pm_goal_dg_ca_owners.py:176': _p(
         "World.selection is called only from install_writer_domain (with the "
         "domain wrapper it has just written in the same call) and from "
