@@ -488,7 +488,7 @@ EVENT_FAMILY_GOAL_PAYLOAD_SCHEMA_REFS = {
     # historical v2 schema file unchanged. The identity check above still binds payload_schema_id,
     # payload_schema_ref.schema_id and the resolved schema identity for every row.
     "goal_run.started": "Plans/executor_cancellation_contracts/schemas/goal-run-started.v3.schema.json",
-    "goal_run.replanned": "Plans/event_payloads/goal_runtime/goal_run_replanned.schema.json",
+    "goal_run.replanned": "Plans/event_payloads/goal_runtime/goal_run_replanned.v3.schema.json",
     "goal_run.blocked": "Plans/executor_cancellation_contracts/schemas/goal-run-blocked.v3.schema.json",
     "goal_run.certified": "Plans/workflow_standard_source_contracts/schemas/goal-run-certified.v3.schema.json",
     "goal_run.cancelled": "Plans/executor_cancellation_contracts/schemas/goal-run-cancelled.v3.schema.json",
