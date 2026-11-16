@@ -251,6 +251,17 @@ def _fence_supplements(suite, work):
     suite.negative('dg5-shared', 'append_once_identical_retry:1460', append_once_retry,
                    'append/append_once_exists')
 
+    def retire_while_fenced_sealed():
+        store = storage.TestOwnerStorage.create(work / 'fence-retire', segment_target_bytes=2000)
+        selftest.append_one(store, 'dg5-retire-1')
+        selftest.append_one(store, 'dg5-retire-2')
+        sealed = next(x['generation'] for x in store.segments if x['sealed'] and not x['retired'])
+        store.reserve_assignment('TEST_ONLY:op:dg5-retire-fence', dict(tag='dg5-retire-fence'))
+        return store.retire_segment(sealed, storage.RetentionOwner(store))
+
+    suite.negative('dg5-shared', 'retire_while_fenced_sealed:1748', retire_while_fenced_sealed,
+                   'assignment/fence_held')
+
 
 class _StorageHandleSubclass(storage._Handle):
     """A storage handle whose exact type is not _Handle (the :1259/:1589 defect)."""
