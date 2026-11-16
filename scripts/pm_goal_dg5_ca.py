@@ -56,6 +56,15 @@ def install():
                       ('prepare', 'run_native', 'terminal_succeeded', 'terminal_unsettled',
                        'read_retained_success', 'read_retained_unsettled'), family)
     plumbing.entries(migration.Coordinator, ('capture', 'commit', 'recover', 'read_result', 'withdraw'), family)
+    # goal.cancelled's own owners and the registered append, which authored C1/C2/C4 negatives call
+    # directly (owner APIs, stop/resume, pending, domain install, append retries). Nested calls stay nested.
+    import pm_goal_dg_ca_owners as owners
+    import pm_goal_test_owner_adapters as adapters
+    for cls in (owners.PermissionOwner, owners.RegistrationOwner, owners.HostStopOwner, owners.GoalOwner,
+                owners.BindingOwner, owners.SIROwner, owners.AssociationOwner):
+        plumbing.entries(cls, tuple(name for name, value in vars(cls).items()
+                                    if callable(value) and not name.startswith('_')), family)
+    plumbing.entries(adapters.AppendOwner, ('append_original',), family)
 
 
 def main():
