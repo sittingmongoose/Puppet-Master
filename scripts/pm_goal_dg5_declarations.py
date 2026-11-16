@@ -93,6 +93,26 @@ ENUM_CLOSED_RULES = (
 )
 DECLARED_RULES += ENUM_CLOSED_RULES
 
+DECLARED_RULES += (
+    (lambda cid: cid == 'U5/G/api_body_start_existing_goal',
+     (U_SITE + '1087', 'dg5/site/pm_goal_test_storage.py:1654'),
+     "GoalBodyOwner.start requires the goal body cell absent (:1087, cell(T_BODY, body_key) is None) and "
+     "Storage's transact requires every expected=None write's current cell absent (tx/cas_absent, "
+     "pm_goal_test_storage.py:1654): the same start-bundle cells, the same absence predicate. The start "
+     "pre-check names the body key; the CAS enforces absence on it and its four sibling start keys."),
+    (lambda cid: cid == 'U5/G/api_metadata_state_unknown',
+     (U_SITE + '1289', 'dg5/dgu/body/metadata/intent/schema', 'dg5/dgu/body/goal_body_record/schema'),
+     "metadata_update requires change.state in (active, paused, blocked, completed) at :1289; the intent "
+     "record carries that same after_record body (pending schema, :1306 validate) and the stored body row "
+     "is validated against storage_body, whose state is the same four-value enum: one field, one predicate."),
+    (lambda cid: cid == 'U5/G/api_metadata_blocked_without_reason',
+     (U_SITE + '1291', 'dg5/dgu/body/metadata/intent/schema', 'dg5/dgu/body/goal_body_record/schema'),
+     "metadata_update requires (state == blocked) == (blocked_reason_ref is not None) at :1291 on the "
+     "change, then on the after body it builds from it (state and blocked_reason_ref copied at :1296-1297): "
+     "the intent pending schema over after_record and the storage_body schema encode the same equivalence "
+     "on the same two fields."),
+)
+
 
 FAMILY_MODULES = ('s', 'ca', 'r', 'cf')   # pm_goal_dg5_declarations_<x>.py, one owner per file (SPLIT.md)
 _LOADED = []
