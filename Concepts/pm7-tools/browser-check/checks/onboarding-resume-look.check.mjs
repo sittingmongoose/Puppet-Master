@@ -520,13 +520,21 @@ async function recordFrames(t) {
 	if (framesOn) return; framesOn = true;
 	await t.page.addInitScript(() => {
 		const F = window.__fr = [], t0 = performance.now();
-		const tick = () => { const l = document.getElementById('projectMenuLabel'); F.push([Math.round(performance.now() - t0), l ? l.textContent.trim() : null, document.documentElement.getAttribute('data-theme'), document.documentElement.hasAttribute('data-o55-open')]); if (performance.now() - t0 < 9000) requestAnimationFrame(tick); };
+		/* (a label kept hidden while the page parses is blank, '': not a name; no title bar yet is null. The box's painted name
+		   and badge state, once paintProjectButton has run, belong to one Project: data-pm-hover-label and data-state) */
+		const tick = () => {
+			const l = document.getElementById('projectMenuLabel'), b = document.getElementById('projectMenuBtn');
+			F.push([Math.round(performance.now() - t0), l ? (getComputedStyle(l).visibility === 'hidden' ? '' : l.textContent.trim()) : null, document.documentElement.getAttribute('data-theme'), document.documentElement.hasAttribute('data-o55-open'), b ? b.getAttribute('data-pm-hover-label') : null, b ? b.getAttribute('data-state') : null]);
+			if (performance.now() - t0 < 9000) requestAnimationFrame(tick);
+		};
 		requestAnimationFrame(tick);
 		document.addEventListener('DOMContentLoaded', () => { const l = document.getElementById('projectMenuLabel'); window.__frDcl = l ? l.textContent.trim() : null; }, { once: true, capture: true });
 	});
 }
 const frames = (f) => f.evaluate(() => ({ dcl: window.__frDcl === undefined ? null : window.__frDcl, frames: (window.__fr || []).slice() }));
 /* the labels every frame showed, as runs (label, first ms, last ms) */
+/* the box as painted (name|badge state), as runs; the badge state of the run is its last element */
+const badgeRuns = (fr) => { const out = []; fr.forEach((x) => { if (x[4] == null) return; const v = x[4] + '|' + x[5], last = out[out.length - 1]; if (last && last[0] === v) last[2] = x[0]; else out.push([v, x[0], x[0], x[5]]); }); return out; };
 const runs = (fr, k) => { const out = []; fr.forEach((x) => { const v = x[k]; if (v == null) return; const last = out[out.length - 1]; if (last && last[0] === v) last[2] = x[0]; else out.push([v, x[0], x[0]]); }); return out; };
 async function fo222(t) {
 	const tag = 'normal: FO-222, setup finished into a new Project in Glass Dark, tastebook in Retro Light, reloaded';
@@ -552,7 +560,9 @@ async function fo222(t) {
 	await t.check(`${tag}: reloaded, the title bar names ${NAME} and the page is in Glass Dark`, q1.selected === q0.finished && q1.label === NAME && held('glass-dark', p1), JSON.stringify({ project: q1, page: p1 }));
 	/* F1: the title bar names the Project from the first frame it is in the page, and as parsing ends (never tastebook) */
 	const fr1 = await frames(r.f), l1 = runs(fr1.frames, 1);
-	await t.check(`${tag}: reloaded, the title bar's label is ${NAME} as parsing ends and in every frame until boot`, fr1.dcl === NAME && l1.length === 1 && l1[0][0] === NAME, JSON.stringify({ dcl: fr1.dcl, labels: l1 }));
+	await t.check(`${tag}: reloaded, the title bar's label is blank or ${NAME} in every frame, ${NAME} as parsing ends (never tastebook)`, fr1.dcl === NAME && l1.length >= 1 && l1.every((x) => x[0] === '' || x[0] === NAME) && l1[l1.length - 1][0] === NAME, JSON.stringify({ dcl: fr1.dcl, labels: l1 }));
+	const b1 = badgeRuns(fr1.frames);
+	await t.check(`${tag}: reloaded, the box's name and badge are ${NAME}'s from the first frame it is painted`, b1.length === 1 && b1[0][0] === NAME + '|' + b1[0][3], JSON.stringify({ painted: b1 }));
 	await t.check(`${tag}: reloaded, tastebook keeps its own saved look, Retro Light`, !!q1.tastebook && String(q1.tastebook[0]).toLowerCase().startsWith('retro') && String(q1.tastebook[1]).toLowerCase() === 'light', JSON.stringify(q1.tastebook));
 	await switchProject(t, r.f, 'tastebook');
 	const p2 = await r.A.page();
@@ -566,7 +576,9 @@ async function fo222(t) {
 	const r2 = await freshLoad(t), q4 = await projectNow(r2.f), p4 = await r2.A.page();
 	await t.check(`${tag}: switched to harbor in the title bar (its look Friendly Light), reloaded: still in harbor with its look`, h && q4.selected === 'harbor' && held('friendly-light', p4), JSON.stringify({ project: q4, page: p4 }));
 	const fr4 = await frames(r2.f), l4 = runs(fr4.frames, 1);
-	await t.check(`${tag}: reloaded into harbor, the title bar's label is harbor as parsing ends and in every frame until boot`, fr4.dcl === 'harbor' && l4.length === 1 && l4[0][0] === 'harbor', JSON.stringify({ dcl: fr4.dcl, labels: l4 }));
+	await t.check(`${tag}: reloaded into harbor, the title bar's label is blank or harbor in every frame, harbor as parsing ends (never tastebook)`, fr4.dcl === 'harbor' && l4.length >= 1 && l4.every((x) => x[0] === '' || x[0] === 'harbor') && l4[l4.length - 1][0] === 'harbor', JSON.stringify({ dcl: fr4.dcl, labels: l4 }));
+	const b4 = badgeRuns(fr4.frames);
+	await t.check(`${tag}: reloaded into harbor, the box's name and badge are harbor's from the first frame it is painted`, b4.length === 1 && b4[0][0] === 'harbor|' + b4[0][3], JSON.stringify({ painted: b4 }));
 	/* a Project that no longer exists: back in the setup's Project, Run Onboarding Again (Settings' row) replaces the record
 	   that listed it; closed and reloaded, the page is the default Project's, in its look, as before (no stale look first) */
 	await switchProject(t, r2.f, q0.finished);
@@ -650,9 +662,17 @@ async function f4install(t) {
 		await t.check(`${tag} (${k} of 2): every frame from the first until the window is Basic Dark (harbor was ${p0.theme})`, sw && held('glass-dark', p0) && th.length === 1 && th[0][0] === 'basic-dark', JSON.stringify({ switched: sw, before: p0, looks: th }));
 		if (await A.open().catch(() => false)) { const B = app(t, f); await B.close().catch(() => {}); }
 	}
-	const f = await t.app.open({ onboarding: true, query: 'o55scenario=fresh', sandbox: false, settleMs: 1500 });
+	/* the label in the page's own Project is never blank (the head's mark is absent there): a load with no stored id (the new
+	   install above cleared it), then a load in tastebook (the stored id is tastebook's): 'tastebook' from the first frame */
+	let f = await t.app.open({ onboarding: true, query: 'o55scenario=fresh', sandbox: false, settleMs: 1500 });
+	let fr = await frames(f), lr = runs(fr.frames, 1), had = await f.evaluate(() => { try { return localStorage.getItem('pm7:shell:active-project:v1'); } catch (_) { return null; } });
+	await t.check(`${tag}: a load with no stored id: the label is tastebook from the first frame, never blank`, lr.length === 1 && lr[0][0] === 'tastebook', JSON.stringify({ stored: had, labels: lr }));
 	if (await app(t, f).open()) await app(t, f).close();
 	await switchProject(t, f, 'tastebook');
+	f = await t.app.open({ onboarding: true, query: 'o55scenario=fresh', sandbox: false, settleMs: 1500 });
+	fr = await frames(f); lr = runs(fr.frames, 1); had = await f.evaluate(() => { try { return localStorage.getItem('pm7:shell:active-project:v1'); } catch (_) { return null; } });
+	await t.check(`${tag}: a load in tastebook (its id stored): the label is tastebook from the first frame, never blank`, lr.length === 1 && lr[0][0] === 'tastebook', JSON.stringify({ stored: had, labels: lr }));
+	if (await app(t, f).open()) await app(t, f).close();
 }
 
 export default async function (t) {
