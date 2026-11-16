@@ -804,6 +804,10 @@
    "outcome": "registered"
   },
   {
+   "event_type": "server.identity_mismatch_detected",
+   "outcome": "registered"
+  },
+  {
    "event_type": "session_prompt.admitted",
    "outcome": "registered"
   },
