@@ -72,6 +72,10 @@
    "outcome": "registered"
   },
   {
+   "event_type": "browser.controller_lease.granted",
+   "outcome": "registered"
+  },
+  {
    "event_type": "discovery.backpressure",
    "outcome": "registered"
   },
