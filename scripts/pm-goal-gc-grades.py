@@ -4,8 +4,9 @@
 Rows start from the latest exact-family grades: goal.blocked and goal.completed from
 reports/event-authority-20261115/PNC019-S3AO-grades-core.json (s3a's cells), goal_run.stopped and goal_run.blocked
 from reports/event-authority-20261114/PNC019-S3D-grades.json. Every inherited quote is re-anchored to this tree
-(same text, nearest occurrence; excerpt and file hashes recomputed); a quote that is no longer present fails the
-build. Only the positive_negative_oracles cell is rewritten, from the committed GC bundle. Check the output with
+(same text, nearest occurrence; excerpt and file hashes recomputed). A retired registry quote retains its
+exact inherited bytes at path@assessed-commit; every other missing quote fails the build.
+Only the positive_negative_oracles cell is rewritten, from the committed GC bundle. Check the output with
 scripts/pm-pnc019-s3a-grade-check.py.
 Usage: python3 scripts/pm-goal-gc-grades.py --commit SHA [--branch NAME] [--out reports/event-authority-20261115/PNC019-C12-GC-grades.json]
 """
@@ -15,6 +16,7 @@ import hashlib
 import json
 import sys
 from pathlib import Path
+from pm_goal_grade_citations import citation_lines
 
 ROOT = Path(__file__).resolve().parents[1]
 ORDER = ['membership_version', 'owner_doc', 'producer', 'closed_payload_schema', 'scope_identity', 'replay_idempotency',
@@ -29,8 +31,7 @@ _LINES = {}
 
 def lines(path):
     if path not in _LINES:
-        raw = (ROOT / path).read_bytes()
-        _LINES[path] = (hashlib.sha256(raw).hexdigest(), raw.decode('utf-8').split('\n'))
+        _LINES[path] = citation_lines(ROOT, path)
     return _LINES[path]
 
 
@@ -45,8 +46,20 @@ def anchor(path, quote, start, span=1):
                 excerpt_sha256=hashlib.sha256(excerpt.encode()).hexdigest(), file_sha256=file_sha)
 
 
-def reanchor(e):
-    return anchor(e['path'], e['quote'], e['line_start'], e['line_end'] - e['line_start'] + 1)
+def reanchor(e, assessed_commit):
+    path = e['path']
+    span = e['line_end'] - e['line_start'] + 1
+    try:
+        return anchor(path, e['quote'], e['line_start'], span)
+    except SystemExit:
+        # The inherited verdict was made against this exact registry edition.
+        # Keep its bytes and quote historical; do not substitute today's value.
+        if path != 'Plans/event_family_registry.json':
+            raise
+        historical = path + '@' + assessed_commit
+        if lines(historical)[0] != e['file_sha256']:
+            raise SystemExit('historical registry does not match inherited evidence')
+        return anchor(historical, e['quote'], e['line_start'], span)
 
 
 def after(path, marker, quote):
@@ -70,7 +83,8 @@ def main():
         doc = json.loads((ROOT / source).read_text())
         row = copy.deepcopy(next(r for r in doc['rows'] if r['event_type'] == family))
         for name in ORDER:
-            row['cells'][name]['evidence'] = [reanchor(e) for e in row['cells'][name]['evidence']]
+            row['cells'][name]['evidence'] = [reanchor(e, doc['assessed_tree']['commit'])
+                                            for e in row['cells'][name]['evidence']]
         before = row['cells']['positive_negative_oracles']['status']
         fam = core['families'][family]
         marker = f'  "{family}": {{'

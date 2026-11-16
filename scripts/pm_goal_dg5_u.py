@@ -19,7 +19,7 @@ DG5_EVIDENCE = {}
 SLOTS = [
     dict(name='goal.updated/request.expected_revision', family='goal.updated', entry='SirOwner.admit',
          path=('args', 0, 'expected_revision'), kind='integer', minimum=1, where='dgu/sir/request/expected_revision',
-         jcs=True, also_rows=('dg5/dgu/sir/request/schema', 'dg5/dgu/jcs/jcs_binary64')),
+         jcs=True, also_rows=('dg5/dgu/sir/request/schema', 'dg5/site/pm_goal_dg_u_owners.py:183')),
     dict(name='goal.updated/read_request.sequence_id', family='goal.updated', entry='EventInspector.inspect',
          path=('args', 0, 'sequence_id'), kind='uint64', where='dgu/inspect/sequence_id',
          join_code='dgu/inspect/sequence', also_rows=('dg5/dgu/inspect/request/schema',)),

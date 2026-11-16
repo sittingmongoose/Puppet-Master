@@ -31,6 +31,8 @@ def cases(cls):
         def bind(original=original):
             @functools.wraps(original)
             def call(self, group, name, fn, *args, **kwargs):
+                if not plumbing.case_shard_selected(group + '/' + name):
+                    return None  # whole-case shard: this process never builds the case's world
                 saved = bridge.CASE[0]
                 expected = args[0] if args else kwargs.get('expected')
                 import pm_goal_dg5_supplement_ca as supplement

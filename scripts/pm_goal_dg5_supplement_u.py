@@ -22,7 +22,7 @@ def case(cid, expected, target, why):
     return deco
 
 
-@case('U-DG5/N/stale_revision_only', 'dgu/source/capture/stale_goal_revision', SITE + '1505',
+@case('U-DG5/N/stale_revision_only', 'dgu/source/capture/stale_goal_revision', SITE + '1512',
       'U2/N/stale_revision_coherent stales revision and currentness together, so with 1505 cut the currentness '
       'check (1506) refuses; this single defect keeps the current currentness_hash and stales only the revision.')
 def stale_revision_only(d):
@@ -36,9 +36,9 @@ def stale_revision_only(d):
 
 
 @case('U-DG5/N/direct_admission_source_message', 'dgu/source/capture/acceptance/direct_nulls',
-      (SITE + '1946', 'dg5/dgu/source/capture/input/schema'),
+      (SITE + '1953', 'dg5/dgu/source/capture/input/schema'),
       "Single defect after admission (the authored U5/G/acceptance_* pattern): the stored SIR admission's direct-route "
-      'request gains a source_message_id. Direct Save acceptance (:1946) requires source_message_id null, and the '
+      'request gains a source_message_id. Direct Save acceptance (:1953) requires source_message_id null, and the '
       'captured input schema embeds GoalUpdateRequestV2, whose if change_source=user_direct then source_message_id '
       'type null bounds the same field by the same predicate.')
 def direct_admission_source_message(d):
@@ -52,9 +52,9 @@ def direct_admission_source_message(d):
 
 
 def _approval_out_of_enum(d):
-    # Lead decision 1116073727-d098 condition 2: reach :1039 alone with an out-of-enum decision. ApprovalOwner
+    # Lead decision 1116073727-d098 condition 2: reach :1046 alone with an out-of-enum decision. ApprovalOwner
     # cells are read back through _decode_cell, which checks value_sha256 only (no ApprovalResolution schema),
-    # so a coherently re-put stored resolution (the authored w.sir.put pattern) skips the :1018 schema check.
+    # so a coherently re-put stored resolution (the authored w.sir.put pattern) skips the :1025 schema check.
     w = U.world(d)
     g = O.birth_goal(w)
     req, ag = O.agent_request(w, g, 'x', decide='approved')
@@ -63,15 +63,15 @@ def _approval_out_of_enum(d):
     return w, U.admitted(w, req)
 
 
-case('U-DG5/N/approval_decision_out_of_enum', 'dgu/source/capture/acceptance/approval_decision', SITE + '1039',
-     "ApprovalResolution.decision 'withheld' (outside {approved, denied, expired}) passes :1037 and :1038 and is "
-     'refused by :1039 alone; reached through a stored resolution that the owner reads without its schema.')(
+case('U-DG5/N/approval_decision_out_of_enum', 'dgu/source/capture/acceptance/approval_decision', SITE + '1046',
+     "ApprovalResolution.decision 'withheld' (outside {approved, denied, expired}) passes :1044 and :1045 and is "
+     'refused by :1046 alone; reached through a stored resolution that the owner reads without its schema.')(
     _approval_out_of_enum)
 
 
-@case('U-DG5/N/approval_request_bytes_created_at', 'dgu/source/capture/acceptance/approval_request_bytes', SITE + '1033',
+@case('U-DG5/N/approval_request_bytes_created_at', 'dgu/source/capture/acceptance/approval_request_bytes', SITE + '1040',
       "Single defect: the stored approval request's created_at_utc changes (still a valid date-time) while its "
-      'request_sha256 stays, so only the request-bytes commitment (:1033) refuses. The authored '
+      'request_sha256 stays, so only the request-bytes commitment (:1040) refuses. The authored '
       'U5/G/acceptance_approval_request_bytes changes instruction_message_id, which later checks also read.')
 def approval_request_bytes_created_at(d):
     w, g = U._goal(d)
@@ -81,10 +81,10 @@ def approval_request_bytes_created_at(d):
     return w, U.admitted(w, req)
 
 
-@case('U-DG5/N/approval_expired_at_read', 'dgu/source/capture/acceptance/approval_expired', SITE + '1042',
+@case('U-DG5/N/approval_expired_at_read', 'dgu/source/capture/acceptance/approval_expired', SITE + '1049',
       'Single defect: the stored approval request expires in the past, with its request_sha256 recomputed in '
-      'both the cell and the resolution, so the request-bytes (:1033) and request-commitment (:1036) checks '
-      'hold and only the expiry-at-read check (:1042) refuses. No authored case sets expires_at_utc.')
+      'both the cell and the resolution, so the request-bytes (:1040) and request-commitment (:1043) checks '
+      'hold and only the expiry-at-read check (:1049) refuses. No authored case sets expires_at_utc.')
 def approval_expired_at_read(d):
     w, g = U._goal(d)
     req, ag = O.agent_request(w, g, 'x')
@@ -96,10 +96,10 @@ def approval_expired_at_read(d):
     return w, U.admitted(w, req)
 
 
-@case('U-DG5/N/installation_graph_substituted', 'dgu/oracle/installation_graph', SITE + '496',
+@case('U-DG5/N/installation_graph_substituted', 'dgu/oracle/installation_graph', SITE + '503',
       'Single defect: the installed installation cell carries a foreign resource-graph digest while its '
-      'state stays installed, so require_installed passes its presence check (:495) and only the graph '
-      'commitment (:496) refuses.')
+      'state stays installed, so require_installed passes its presence check (:502) and only the graph '
+      'commitment (:503) refuses.')
 def installation_graph_substituted(d):
     w, g = U._goal(d)
     cur = w.installation.current()
@@ -107,10 +107,10 @@ def installation_graph_substituted(d):
     return w, lambda: w.installation.require_installed('dgu/oracle')
 
 
-@case('U-DG5/N/publication_event_substituted', 'dgu/inspect/publication_event', SITE + '1885',
+@case('U-DG5/N/publication_event_substituted', 'dgu/inspect/publication_event', SITE + '1892',
       'Single defect: every progress snapshot is coherently re-sealed with only its publication event_id '
-      'changed, so the frozen producer join (:1884) still holds and only the publication-to-event join '
-      '(:1885) refuses. The authored frozen-id case edits producer_input, which later joins also read.')
+      'changed, so the frozen producer join (:1891) still holds and only the publication-to-event join '
+      '(:1892) refuses. The authored frozen-id case edits producer_input, which later joins also read.')
 def publication_event_substituted(d):
     w, g = U._goal(d)
     req, adm = U.run_direct(w, g)
@@ -121,10 +121,10 @@ def publication_event_substituted(d):
     return w, lambda: w.inspector.inspect(r, g['user'], g['user_permission'])
 
 
-@case('U-DG5/N/inspect_unknown_event', 'dgu/inspect/event_unavailable', SITE + '1861',
+@case('U-DG5/N/inspect_unknown_event', 'dgu/inspect/event_unavailable', SITE + '1868',
       'The authored U4/N/unknown_event makes exactly this call, but its expected code maps by literal '
-      'template to request_for (:1835), so the inspect refusal at :1861 was recorded as another refusal '
-      'and never judged. This case declares :1861 itself.')
+      'template to request_for (:1842), so the inspect refusal at :1868 was recorded as another refusal '
+      'and never judged. This case declares :1868 itself.')
 def inspect_unknown_event(d):
     w, g = U._goal(d)
     req, adm = U.run_direct(w, g)
@@ -133,10 +133,10 @@ def inspect_unknown_event(d):
     return w, lambda: w.inspector.inspect(r, g['user'], g['user_permission'])
 
 
-@case('U-DG5/N/history_without_first_revision', 'dgu/reader/body/missing_history', SITE + '1151',
+@case('U-DG5/N/history_without_first_revision', 'dgu/reader/body/missing_history', SITE + '1158',
       'Single defect: a two-revision history loses revision 1 (and its origin) while revision 2 is coherently '
-      're-sealed with no prior and the control head names it, so the chain (:1144), origin join and accepted head '
-      '(:1152) all hold and only the first-revision check (:1151) refuses. The authored U5/G/reader_missing_history '
+      're-sealed with no prior and the control head names it, so the chain (:1151), origin join and accepted head '
+      '(:1159) all hold and only the first-revision check (:1158) refuses. The authored U5/G/reader_missing_history '
       'empties the history, which the accepted-head check also refuses.')
 def history_without_first_revision(d):
     w, g = U._goal(d)
@@ -151,9 +151,9 @@ def history_without_first_revision(d):
     return w, U.body_read(w, g)
 
 
-@case('U-DG5/N/owner_identity_substituted', 'dgu/physical/owner_identity', SITE + '674',
+@case('U-DG5/N/owner_identity_substituted', 'dgu/physical/owner_identity', SITE + '681',
       'Single defect: only the stored body row owner_identity_sha256 changes; the record, its value_sha256 '
-      'and every semantic join stay valid, so only the owner-identity commitment (:674) refuses. The authored '
+      'and every semantic join stay valid, so only the owner-identity commitment (:681) refuses. The authored '
       'row_copied_to_other_key also breaks the history joins the copied record carries.')
 def owner_identity_substituted(d):
     w, g = U._goal(d)
@@ -163,9 +163,9 @@ def owner_identity_substituted(d):
     return w, U.body_read(w, g)
 
 
-@case('U-DG5/N/value_sha_substituted', 'dgu/physical/value_sha256', SITE + '681',
+@case('U-DG5/N/value_sha_substituted', 'dgu/physical/value_sha256', SITE + '688',
       'Single defect: only the stored body row value_sha256 changes; the inline record bytes are untouched, '
-      'so with :681 cut the same record decodes and every later join holds. The authored incoherent-tamper '
+      'so with :688 cut the same record decodes and every later join holds. The authored incoherent-tamper '
       'case edits the record, which the currentness and objective joins also refuse.')
 def value_sha_substituted(d):
     w, g = U._goal(d)
@@ -175,11 +175,11 @@ def value_sha_substituted(d):
     return w, U.body_read(w, g)
 
 
-@case('U-DG5/N/inspect_source_defect', 'dgu/inspect/source_defect', SITE + '1860',
+@case('U-DG5/N/inspect_source_defect', 'dgu/inspect/source_defect', SITE + '1867',
       'Single defect in the acquired source snapshot: first custody group_digest is substituted, so '
       'GenericSource halts before that event (a custody defect at its position) and the inspected event '
-      'has no row. Only :1860 selects the source_defect code for that state; see the written proof in '
-      'pm_goal_dg5_proofs_u.py (with :1860 cut, :1861 still refuses).')
+      'has no row. Only :1867 selects the source_defect code for that state; see the written proof in '
+      'pm_goal_dg5_proofs_u.py (with :1867 cut, :1868 still refuses).')
 def inspect_source_defect(d):
     w, g = U._goal(d)
     req, adm = U.run_direct(w, g)
@@ -190,10 +190,10 @@ def inspect_source_defect(d):
     return w, lambda: w.inspector.inspect(r, g['user'], g['user_permission'], snapshot=snap)
 
 
-@case('U-DG5/N/inspect_custody_pending_issued', 'dgu/inspect/original_custody_unavailable', SITE + '1866',
+@case('U-DG5/N/inspect_custody_pending_issued', 'dgu/inspect/original_custody_unavailable', SITE + '1873',
       'Single defect: the acquired snapshot carries no first custody for an issued event (pending custody), '
-      'so the progress is event_issued and only the custody presence check (:1866) refuses. The authored '
-      'pending_first_custody case stops before publication, so the not-issued refusal (:1882) also applies.')
+      'so the progress is event_issued and only the custody presence check (:1873) refuses. The authored '
+      'pending_first_custody case stops before publication, so the not-issued refusal (:1889) also applies.')
 def inspect_custody_pending_issued(d):
     w, g = U._goal(d)
     req, adm = U.run_direct(w, g)
@@ -245,9 +245,9 @@ def _foreign_copy(w, g, op, with_input=False, **scope_override):
     return fsc
 
 
-@case('U-DG5/N/audit_foreign_coherent', 'dgu/reader/audit/foreign_storage', SITE + '1633',
+@case('U-DG5/N/audit_foreign_coherent', 'dgu/reader/audit/foreign_storage', SITE + '1640',
       'Single defect: the audit request names a foreign storage whose keys hold a coherent copy of the '
-      'operation (source, head and last snapshot rewired), so only the foreign-storage check (:1633) '
+      'operation (source, head and last snapshot rewired), so only the foreign-storage check (:1640) '
       'refuses; the authored case names a foreign storage with no rows, so the source lookup also refuses.')
 def audit_foreign_coherent(d):
     w, g = U._goal(d)
@@ -258,9 +258,9 @@ def audit_foreign_coherent(d):
     return w, lambda: w.source.read_audit(r, g['user'], g['user_permission'])
 
 
-@case('U-DG5/N/input_foreign_coherent', 'dgu/reader/input/foreign_storage', SITE + '1685',
+@case('U-DG5/N/input_foreign_coherent', 'dgu/reader/input/foreign_storage', SITE + '1692',
       'Single defect: as audit_foreign_coherent, with the input row copied too, for the input reader '
-      'foreign-storage check (:1685).')
+      'foreign-storage check (:1692).')
 def input_foreign_coherent(d):
     w, g = U._goal(d)
     req, adm = U.run_direct(w, g)
@@ -269,9 +269,9 @@ def input_foreign_coherent(d):
     return w, lambda: w.source.read_input_content(r, g['user'], g['user_permission'])
 
 
-@case('U-DG5/N/inspect_foreign_coherent', 'dgu/inspect/foreign_storage', SITE + '1851',
+@case('U-DG5/N/inspect_foreign_coherent', 'dgu/inspect/foreign_storage', SITE + '1858',
       'Single defect: the inspect request is built for a foreign storage holding the coherent copy, '
-      'so only the inspector foreign-storage check (:1851) refuses; the authored case has no foreign rows.')
+      'so only the inspector foreign-storage check (:1858) refuses; the authored case has no foreign rows.')
 def inspect_foreign_coherent(d):
     w, g = U._goal(d)
     req, adm = U.run_direct(w, g)
@@ -280,10 +280,10 @@ def inspect_foreign_coherent(d):
     return w, lambda: w.inspector.inspect(r, g['user'], g['user_permission'])
 
 
-@case('U-DG5/N/inspect_progress_not_issued_coherent', 'dgu/inspect/original_custody_unavailable', SITE + '1882',
+@case('U-DG5/N/inspect_progress_not_issued_coherent', 'dgu/inspect/original_custody_unavailable', SITE + '1889',
       'Single defect: the issued progress snapshot is coherently re-sealed back to event_ready with no '
       'publication, while the event and its first custody stay in the source, so custody is present '
-      '(:1866 holds) and only the not-issued refusal (:1882) fires.')
+      '(:1873 holds) and only the not-issued refusal (:1889) fires.')
 def inspect_progress_not_issued_coherent(d):
     w, g = U._goal(d)
     req, adm = U.run_direct(w, g)
@@ -299,10 +299,10 @@ def _latch_only(w, g):
     w.stops.put(O.hexk(goal_id), dict(cur, stop_latched=True))
 
 
-@case('U-DG5/N/body_currentness_only', 'dgu/reader/body/body_currentness', SITE + '1131',
+@case('U-DG5/N/body_currentness_only', 'dgu/reader/body/body_currentness', SITE + '1138',
       'Single defect: body objective_text changes with every other commitment rewired (control '
       'body_sha256, last revision text and hash, control latest hash), leaving currentness_hash stale, '
-      'so only :1131 refuses. The authored coherent-tamper case rewires none of them.')
+      'so only :1138 refuses. The authored coherent-tamper case rewires none of them.')
 def body_currentness_only(d):
     w, g = U._goal(d)
     U.run_direct(w, g)
@@ -317,10 +317,10 @@ def body_currentness_only(d):
     return w, U.body_read(w, g)
 
 
-@case('U-DG5/N/history_chain_prior_only', 'dgu/reader/body/history_chain', SITE + '1144',
+@case('U-DG5/N/history_chain_prior_only', 'dgu/reader/body/history_chain', SITE + '1151',
       'Single defect: revision 2 prior_revision_hash is substituted and its revision_hash resealed, '
-      'with the control latest hash rewired to the resealed hash, so the accepted-head check (:1152) '
-      'holds and only the chain link (:1144) refuses. The authored case leaves the control hash stale.')
+      'with the control latest hash rewired to the resealed hash, so the accepted-head check (:1159) '
+      'holds and only the chain link (:1151) refuses. The authored case leaves the control hash stale.')
 def history_chain_prior_only(d):
     w, g = U._goal(d)
     U.run_direct(w, g)
@@ -331,10 +331,10 @@ def history_chain_prior_only(d):
     return w, U.body_read(w, g)
 
 
-@case('U-DG5/N/audit_source_scope_only', 'dgu/reader/audit/source_scope', SITE + '1432',
+@case('U-DG5/N/audit_source_scope_only', 'dgu/reader/audit/source_scope', SITE + '1439',
       'Single defect: the source record thread_id is substituted and every progress snapshot is '
-      'rewired to the substituted source wrapper sha, so the source join (:1653) holds and only the '
-      'source scope check (:1432) refuses.')
+      'rewired to the substituted source wrapper sha, so the source join (:1660) holds and only the '
+      'source scope check (:1439) refuses.')
 def audit_source_scope_only(d):
     w, g = U._goal(d)
     req, adm = U.run_direct(w, g)
@@ -346,10 +346,10 @@ def audit_source_scope_only(d):
     return w, U._audit_call(w, g, adm)
 
 
-@case('U-DG5/N/audit_snapshot_op_only', 'dgu/reader/audit/snapshot_record', SITE + '1454',
+@case('U-DG5/N/audit_snapshot_op_only', 'dgu/reader/audit/snapshot_record', SITE + '1461',
       'Single defect: progress snapshots carry a foreign operation_id, coherently resealed with the '
-      'head rewired by rewrite_progress_all, so the head commitment (:1457) holds and only the '
-      'snapshot record check (:1454) refuses.')
+      'head rewired by rewrite_progress_all, so the head commitment (:1464) holds and only the '
+      'snapshot record check (:1461) refuses.')
 def audit_snapshot_op_only(d):
     w, g = U._goal(d)
     req, adm = U.run_direct(w, g)
@@ -358,10 +358,10 @@ def audit_snapshot_op_only(d):
     return w, U._audit_call(w, g, adm)
 
 
-@case('U-DG5/N/reserve_final_stop_latch_only', 'dgu/body/reserve/final_stop', SITE + '1184',
+@case('U-DG5/N/reserve_final_stop_latch_only', 'dgu/body/reserve/final_stop', SITE + '1191',
       'Single defect at the body.reserve after:read_private boundary: the host stop is latched '
       'without its epoch advancing (a direct cell put, not HostStopOwner.stop), so the reserve '
-      'final stop-epoch check (:1185) holds and only :1184 refuses. The fault-matrix stop mutation '
+      'final stop-epoch check (:1192) holds and only :1191 refuses. The fault-matrix stop mutation '
       'latches through HostStopOwner.stop, which also advances the epoch.')
 def reserve_final_stop_latch_only(d):
     w, g = U._goal(d)
@@ -372,10 +372,10 @@ def reserve_final_stop_latch_only(d):
     return w, lambda: w.command.reserve(adm), holder
 
 
-@case('U-DG5/N/commit_stop_latch_only', 'dgu/body/commit/manual_stop_latched', SITE + '2055',
+@case('U-DG5/N/commit_stop_latch_only', 'dgu/body/commit/manual_stop_latched', SITE + '2062',
       'Single defect: as reserve_final_stop_latch_only, after reserve, for the commit final-check '
-      'stop site (:2055); the authored stop_before_commit latches through HostStopOwner.stop, which '
-      'also advances the epoch (:2056).')
+      'stop site (:2062); the authored stop_before_commit latches through HostStopOwner.stop, which '
+      'also advances the epoch (:2063).')
 def commit_stop_latch_only(d):
     w, g = U._goal(d)
     req = O.direct_request(w, g, 'x')
@@ -384,10 +384,10 @@ def commit_stop_latch_only(d):
     return w, lambda: w.command.commit(adm)
 
 
-@case('U-DG5/N/command_reservation_missing_only', 'dgu/command/commit/reservation_missing', SITE + '2087',
+@case('U-DG5/N/command_reservation_missing_only', 'dgu/command/commit/reservation_missing', SITE + '2094',
       'Single defect: the reservation is released (pending cleared) and the progress '
       'reserved_control_sha256 is rewired to the released control wrapper, so the commitment check '
-      '(:2089) holds and only :2087 refuses. The authored case leaves the commitment stale.')
+      '(:2096) holds and only :2094 refuses. The authored case leaves the commitment stale.')
 def command_reservation_missing_only(d):
     w, g, req, adm, ag = U._upto(d, 'reserve')
     w.body.release(g['scope'], w.body.read_private(g['scope'], 'o')['control'], lambda c: [])
@@ -398,10 +398,10 @@ def command_reservation_missing_only(d):
     return w, lambda: w.command.commit(adm)
 
 
-@case('U-DG5/N/release_receipt_present', 'dgu/body/release/body_committed', SITE + '1264',
+@case('U-DG5/N/release_receipt_present', 'dgu/body/release/body_committed', SITE + '1271',
       'Single defect: a body-mutation receipt cell exists under the reserved operation receipt key '
       '(copied from a committed operation) while the control is still the exact reserved control, '
-      'so the reserved-control joins (:1267/:1272) hold and only :1264 refuses. The authored '
+      'so the reserved-control joins (:1274/:1279) hold and only :1271 refuses. The authored '
       'release_after_commit case has a committed control, which those joins also refuse.')
 def release_receipt_present(d):
     w, g = U._goal(d)
@@ -417,10 +417,10 @@ def release_receipt_present(d):
     return w, lambda: w.body.release(sc, control, lambda c: [])
 
 
-@case('U-DG5/N/inspect_event_scope_only', 'dgu/inspect/event_scope', SITE + '1871',
+@case('U-DG5/N/inspect_event_scope_only', 'dgu/inspect/event_scope', SITE + '1878',
       'Single defect: the inspect request scope names another thread whose keys hold the coherent '
       'copy (with an audit permission granted for that thread), while the event itself stays the '
-      'genuine one, so the frozen-producer and custody joins hold and only event_scope (:1871) '
+      'genuine one, so the frozen-producer and custody joins hold and only event_scope (:1878) '
       'refuses. The authored case edits the raw event payload, which the producer join also refuses.')
 def inspect_event_scope_only(d):
     w, g = U._goal(d)
@@ -432,10 +432,10 @@ def inspect_event_scope_only(d):
     return w, lambda: w.inspector.inspect(r, g['user'], ref)
 
 
-@case('U-DG5/N/inspect_source_action_only', 'dgu/inspect/source_action', SITE + '1876',
+@case('U-DG5/N/inspect_source_action_only', 'dgu/inspect/source_action', SITE + '1883',
       'Single defect: the source record normalized identity request_ref is substituted and the '
-      'progress snapshots rewired to its wrapper sha, so the source join (:1890) and producer join '
-      '(:1884) hold and only source_action (:1876) refuses.')
+      'progress snapshots rewired to its wrapper sha, so the source join (:1897) and producer join '
+      '(:1891) hold and only source_action (:1883) refuses.')
 def inspect_source_action_only(d):
     w, g = U._goal(d)
     req, adm = U.run_direct(w, g)
@@ -448,10 +448,10 @@ def inspect_source_action_only(d):
     return w, lambda: w.inspector.inspect(r, g['user'], g['user_permission'])
 
 
-@case('U-DG5/N/inspect_frozen_producer_only', 'dgu/inspect/frozen_producer', SITE + '1884',
+@case('U-DG5/N/inspect_frozen_producer_only', 'dgu/inspect/frozen_producer', SITE + '1891',
       'Single defect: the frozen producer_input payload before_revision is substituted in every '
-      'progress snapshot that carries it, so publication and custody joins (:1885/:1886/:1888) hold '
-      'and only the frozen-producer join (:1884) refuses.')
+      'progress snapshot that carries it, so publication and custody joins (:1892/:1893/:1895) hold '
+      'and only the frozen-producer join (:1891) refuses.')
 def inspect_frozen_producer_only(d):
     w, g = U._goal(d)
     req, adm = U.run_direct(w, g)
@@ -463,10 +463,10 @@ def inspect_frozen_producer_only(d):
     return w, lambda: w.inspector.inspect(r, g['user'], g['user_permission'])
 
 
-@case('U-DG5/N/freeze_final_head_only', 'dgu/producer/freeze/final_head', SITE + '1769',
+@case('U-DG5/N/freeze_final_head_only', 'dgu/producer/freeze/final_head', SITE + '1776',
       'Single defect at the producer.freeze before_release boundary: the body_committed snapshot '
       'pending_intent_sha256 is substituted (head rewired), so the phase and epoch edges of the '
-      'outer advance (:1481/:1482) and its CAS still hold and only final_head (:1769) refuses. The '
+      'outer advance (:1488/:1489) and its CAS still hold and only final_head (:1776) refuses. The '
       'fault-matrix progress mutation runs a nested freeze, which also breaks those edges.')
 def freeze_final_head_only(d):
     w, g, req, adm, ag = U._upto(d, 'commit')
@@ -480,10 +480,10 @@ def freeze_final_head_only(d):
     return w, lambda: w.producer.freeze(g['scope'], U.op_of(adm)), holder
 
 
-@case('U-DG5/N/admission_objective_nonstring', 'dgu/text/type', SITE + '197',
+@case('U-DG5/N/admission_objective_nonstring', 'dgu/text/type', SITE + '204',
       'Single defect after admission: the stored SIR admission request objective_text becomes a '
-      'non-string (owner cells are digest-checked only), so capture reaches text_sha (:1530) and '
-      'only :197 refuses. The admit-time call (:718) sits behind the request schema.')
+      'non-string (owner cells are digest-checked only), so capture reaches text_sha (:1537) and '
+      'only :204 refuses. The admit-time call (:725) sits behind the request schema.')
 def admission_objective_nonstring(d):
     w, g = U._goal(d)
     req = O.direct_request(w, g, 'x')
@@ -494,9 +494,9 @@ def admission_objective_nonstring(d):
     return w, lambda: w.command.run(req)
 
 
-@case('U-DG5/N/key_type_nonstring', 'dgu/key/type', SITE + '189',
+@case('U-DG5/N/key_type_nonstring', 'dgu/key/type', SITE + '196',
       'Single defect: ThreadOwner.birth is called with a non-string project id, so hexk refuses at '
-      ':189 before any state read. No authored case passes a non-string key component.')
+      ':196 before any state read. No authored case passes a non-string key component.')
 def key_type_nonstring(d):
     w, g = U._goal(d)
     return w, lambda: w.threads.birth(123, 'thr_TEST_ONLY_other')
@@ -505,7 +505,7 @@ def key_type_nonstring(d):
 @case('U-DG5/N/inspect_sequence_float', 'dgu/inspect/sequence_id/numrule/integer_type',
       'dg5/dgu/inspect/sequence_id/number',
       'Single defect: the inspect request sequence_id is an integral float, which the request '
-      'schema integer type admits, so only the exact-integer primitive at :1848 refuses.')
+      'schema integer type admits, so only the exact-integer primitive at :1855 refuses.')
 def inspect_sequence_float(d):
     w, g = U._goal(d)
     req, adm = U.run_direct(w, g)
@@ -541,10 +541,10 @@ def receipt_revision_float(d):
     return w, lambda: w.producer.freeze(sc, op)
 
 
-@case('U-DG5/N/inspect_final_custody', 'dgu/inspect/final_custody', SITE + '1920',
+@case('U-DG5/N/inspect_final_custody', 'dgu/inspect/final_custody', SITE + '1927',
       'Single defect: the acquired snapshot custody schema_version is substituted - a field the '
       'GenericSource custody-defect check does not bind - so every custody join holds and only the '
-      'final live-custody equality (:1920) refuses.')
+      'final live-custody equality (:1927) refuses.')
 def inspect_final_custody(d):
     w, g = U._goal(d)
     req, adm = U.run_direct(w, g)
@@ -555,9 +555,9 @@ def inspect_final_custody(d):
     return w, lambda: w.inspector.inspect(r, g['user'], g['user_permission'], snapshot=snap)
 
 
-@case('U-DG5/N/no_effect_phase_only', 'dgu/sir/terminal/no_effect_phase', SITE + '836',
+@case('U-DG5/N/no_effect_phase_only', 'dgu/sir/terminal/no_effect_phase', SITE + '843',
       'Single defect: terminalize(no_effect) at source_admitted, where no body receipt and no event '
-      'exist yet, so the no-effect receipt/event checks (:837/:839) hold and only :836 refuses. The '
+      'exist yet, so the no-effect receipt/event checks (:844/:846) hold and only :843 refuses. The '
       'authored case publishes first, so all three refuse.')
 def no_effect_phase_only(d):
     w, g = U._goal(d)
@@ -567,11 +567,11 @@ def no_effect_phase_only(d):
 
 
 @case('U-DG5/N/unknown_kind_at_unknown_phase', 'dgu/sir/terminal/unknown_kind',
-      (SITE + '855', 'dg5/dgu/sir/terminal/schema'),
-      'At a body_unknown progress the unknown-phase check (:856) holds, leaving the kind check '
-      '(:855 kind == unknown) and the StorageTerminal schema kind const (unknown branch) as the '
+      (SITE + '862', 'dg5/dgu/sir/terminal/schema'),
+      'At a body_unknown progress the unknown-phase check (:863) holds, leaving the kind check '
+      '(:862 kind == unknown) and the StorageTerminal schema kind const (unknown branch) as the '
       'same field with the same predicate over one bogus kind. The authored case runs at '
-      'event_issued, so :856 also refuses.')
+      'event_issued, so :863 also refuses.')
 def unknown_kind_at_unknown_phase(d):
     w, g, req, adm, ag = U._upto(d, 'reserve')
     p = U.progress(w, g, U.op_of(adm))
@@ -580,10 +580,10 @@ def unknown_kind_at_unknown_phase(d):
     return w, lambda: w.sir.terminalize(req['command_instance_id'], 'partially_succeeded')
 
 
-@case('U-DG5/N/hitl_agent_actor_only', 'dgu/hitl/capture/agent_actor', SITE + '955',
+@case('U-DG5/N/hitl_agent_actor_only', 'dgu/hitl/capture/agent_actor', SITE + '962',
       'Single defect: the proposal points at an agent message posted by another agent actor (same '
-      'body), so the proposal actor permission check (:527 through permissions.check on the '
-      'proposal actor) holds and only :955 refuses. The authored case changes the proposal actor, '
+      'body), so the proposal actor permission check (:534 through permissions.check on the '
+      'proposal actor) holds and only :962 refuses. The authored case changes the proposal actor, '
       'which the permission check also refuses.')
 def hitl_agent_actor_only(d):
     def edit(w, g, p):
@@ -594,10 +594,10 @@ def hitl_agent_actor_only(d):
     return U._prop_variant(d, edit)
 
 
-@case('U-DG5/N/hitl_foreign_storage_only', 'dgu/hitl/capture/foreign_storage', SITE + '963',
-      'Single defect: the proposal target scope storage id is case-folded (well-formed, so :962 '
+@case('U-DG5/N/hitl_foreign_storage_only', 'dgu/hitl/capture/foreign_storage', SITE + '970',
+      'Single defect: the proposal target scope storage id is case-folded (well-formed, so :969 '
       'holds) and the stored control storage id is rewired to the same spelling, so the '
-      'read_private control-scope join (:1133) holds and only :963 refuses.')
+      'read_private control-scope join (:1140) holds and only :970 refuses.')
 def hitl_foreign_storage_only(d):
     w, g, prop, ap = U._proposal(d, target_storage=lambda sid: sid.upper())
     U.rbody(w, O.T_CONTROL, U.ctl_key(g),
@@ -617,27 +617,27 @@ def _tamper_approval_target(d, edit):
 
 
 @case('U-DG5/N/approval_target_scope_only', 'dgu/source/capture/acceptance/approval_target_scope',
-      SITE + '1957',
+      SITE + '1964',
       'Single defect: only the stored approval request target scope goal changes (request sha '
-      'rewired), so the instruction attestation (:1966) still matches the update request and only '
-      ':1957 refuses.')
+      'rewired), so the instruction attestation (:1973) still matches the update request and only '
+      ':1964 refuses.')
 def approval_target_scope_only(d):
     return _tamper_approval_target(d, lambda t: dict(t, scope=dict(t['scope'], goal_id='goal:TEST_ONLY:other')))
 
 
 @case('U-DG5/N/approval_target_text_only', 'dgu/source/capture/acceptance/approval_target_text',
-      SITE + '1961',
+      SITE + '1968',
       'Single defect: only the stored approval request target objective text changes (request sha '
-      'rewired), so :1966 still holds and only :1961 refuses.')
+      'rewired), so :1973 still holds and only :1968 refuses.')
 def approval_target_text_only(d):
     return _tamper_approval_target(d, lambda t: dict(t, objective_text='other text'))
 
 
 @case('U-DG5/N/reserve_cancellation_pending_only', 'dgu/body/reserve/cancellation_associated',
-      SITE + '1169',
+      SITE + '1176',
       'Single defect: the control gains a schema-valid cancellation_pending with '
       'cancellation_receipt_ref still null, so the reserved control schema admits the new pending '
-      'row and only :1169 refuses. The authored case sets the receipt ref, which the schema then '
+      'row and only :1176 refuses. The authored case sets the receipt ref, which the schema then '
       'forbids beside a pending reservation.')
 def reserve_cancellation_pending_only(d):
     w, g = U._goal(d)
@@ -661,9 +661,9 @@ def reserve_cancellation_pending_only(d):
     return w, lambda: w.command.reserve(adm)
 
 
-@case('U-DG5/N/reserve_stale_revision_only', 'dgu/body/reserve/stale_goal_revision', SITE + '1172',
+@case('U-DG5/N/reserve_stale_revision_only', 'dgu/body/reserve/stale_goal_revision', SITE + '1179',
       'Single defect: a direct pending with only expected_revision stale (intent resealed, '
-      'expected_currentness current), so :1173 holds and only :1172 refuses at body.reserve.')
+      'expected_currentness current), so :1180 holds and only :1179 refuses at body.reserve.')
 def reserve_stale_revision_only(d):
     w, g = U._goal(d)
     req = O.direct_request(w, g, 'x')
@@ -678,10 +678,10 @@ def reserve_stale_revision_only(d):
     return w, lambda: w.body.reserve(g['scope'], p, lambda c: [])
 
 
-@case('U-DG5/N/commit_after_currentness_only', 'dgu/body/commit/after_currentness', SITE + '1218',
+@case('U-DG5/N/commit_after_currentness_only', 'dgu/body/commit/after_currentness', SITE + '1225',
       'Single defect: the pending after and accepted texts are substituted together (accepted '
-      'hash and intent resealed) leaving only after currentness stale, so accepted_text (:1219) '
-      'and accepted_hash (:1222) hold and only :1218 refuses.')
+      'hash and intent resealed) leaving only after currentness stale, so accepted_text (:1226) '
+      'and accepted_hash (:1229) hold and only :1225 refuses.')
 def commit_after_currentness_only(d):
     w, g, req, adm, ag = U._upto(d, 'reserve')
 
