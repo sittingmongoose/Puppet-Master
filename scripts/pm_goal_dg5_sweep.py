@@ -40,6 +40,14 @@ SOURCES = ['pm_goal_dg5_u']
 FAMILIES = ('goal.updated', 'goal.cancelled', 'goal_run.started', 'goal_run.cancelled', 'goal_run.certified')
 
 
+def namespace(name):
+    """Per-family table namespace: scripts/pm_goal_dg5_<name>_phase_<id>.py and pm_goal_dg5_<name>_rows.json."""
+    global MANIFEST, PREFIX
+    if name:
+        MANIFEST = ROOT / f'scripts/pm_goal_dg5_{name}_rows.json'
+        PREFIX = f'pm_goal_dg5_{name}_phase_'
+
+
 def install(prove):
     """Point GH1's dispatch at DG5's namespace; pass 2 reads DG5's manifest only."""
     tables.PHASE_PREFIX = PREFIX
@@ -118,7 +126,9 @@ def main():
     parser.add_argument('--prove-generated', action='store_true')
     parser.add_argument('--collect-only', action='store_true')
     parser.add_argument('--table', action='append')
+    parser.add_argument('--namespace', help='per-family table namespace (u, s, ca, r, cf)')
     args = parser.parse_args()
+    namespace(args.namespace)
     sweep.OUTPUT = args.out
     args.out.mkdir(parents=True, exist_ok=True)
     install(prove=not (args.generate or args.collect_only))
@@ -164,6 +174,8 @@ def main():
                               failures=len(collector.failures))), file=sys.stderr)
         if args.prove_generated:
             child = [sys.executable, '-B', __file__, '--out', str(args.out / 'proof')] + [x for s in sources for x in ('--source', s)]
+            if args.namespace:
+                child += ['--namespace', args.namespace]
             return subprocess.call(child)
         return int(bool(collector.failures))
     failed = bool(collector.failures)
