@@ -77,7 +77,158 @@ def manifest(files):
 
 
 def descriptor_sha256(value, world):
-    return hashlib.sha256(pickle.dumps(context_value(value, world), protocol=5)).hexdigest()
+    """Digest of the complete descriptor of `value` (see `context_value`), streamed by a pickler.
+
+    Plain data (exact dict/list/tuple/str/int/...) is serialized at C speed; every
+    other object goes through `_DescriptorPickler.reducer_override`, which applies
+    exactly the rules of `context_value` (world, handles, schema-library objects,
+    callables, classes, modules, load-once singletons, per-case schema banks) and
+    otherwise serializes the object's type and complete attribute state.
+    """
+    import io
+    sink = io.BytesIO()
+    _deep(lambda: _DescriptorPickler(sink, world).dump(value))
+    return hashlib.sha256(sink.getvalue()).hexdigest()
+
+
+def _deep(work):
+    """Run `work` on a thread with a 512 MiB stack: owner graphs nest deeper than the
+    main thread's 8 MiB C stack allows a pickler (it recurses in C). The thread is
+    joined before returning, so no thread is alive at the bridge's fork."""
+    import threading
+    outcome = []
+
+    def run():
+        try:
+            outcome.append((True, work()))
+        except BaseException as error:  # noqa: BLE001 - re-raised in the caller
+            outcome.append((False, error))
+    previous = threading.stack_size(512 * 1024 * 1024)
+    try:
+        thread = threading.Thread(target=run, name='dg5-descriptor')
+        thread.start()
+    finally:
+        threading.stack_size(previous)
+    thread.join()
+    ok, value = outcome[0]
+    if not ok:
+        raise value
+    return value
+
+
+def _token(*parts):
+    return ('dg5-descriptor',) + parts
+
+
+def _rebuild(*_):  # never called: descriptors are digested, not loaded
+    raise RuntimeError('descriptor streams are not loadable')
+
+
+class _DescriptorPickler(pickle.Pickler):
+    def __init__(self, sink, world):
+        super().__init__(sink, protocol=5)
+        self.world = world
+
+    def reducer_override(self, value):  # noqa: C901 - one rule per descriptor kind, as in context_value
+        if value is _rebuild:
+            return NotImplemented  # the stream's own reconstructor, saved by reference
+        world = self.world
+        ident = id(value)
+        if value is world and world is not None:
+            return (_rebuild, _token('original_world', ident))
+        if isinstance(value, Path):
+            return (_rebuild, _token('path', str(value)))
+        if ident in MEMBERS:
+            return (_rebuild, _token('load_once_member', type(value).__module__, type(value).__qualname__, MEMBERS[ident]))
+        module = type(value).__module__ or ''
+        if inspect.isfunction(value):
+            path = Path(value.__code__.co_filename)
+            return (_rebuild, _token('function', str(path), value.__code__.co_firstlineno,
+                                     _file_sha(path)), dict(defaults=value.__defaults__, kwdefaults=value.__kwdefaults__,
+                                                            closure=tuple(c.cell_contents for c in value.__closure__ or ())))
+        if inspect.isclass(value):
+            owner = sys.modules.get(value.__module__)
+            path = Path(owner.__file__) if getattr(owner, '__file__', None) else None
+            return (_rebuild, _token('class', value.__module__, value.__qualname__, _file_sha(path) if path else None))
+        if inspect.ismethod(value):
+            return (_rebuild, _token('bound_method'), dict(function=value.__func__, receiver=value.__self__))
+        if inspect.isbuiltin(value) or type(value).__name__ in ('method-wrapper', 'wrapper_descriptor',
+                                                                 'method_descriptor', 'builtin_function_or_method'):
+            return (_rebuild, _token('builtin', getattr(value, '__module__', None),
+                                     getattr(value, '__qualname__', repr(value))))
+        if isinstance(value, functools.partial):
+            return (_rebuild, _token('partial'), dict(function=value.func, args=value.args, keywords=value.keywords))
+        if isinstance(value, types.ModuleType):
+            path = Path(value.__file__) if getattr(value, '__file__', None) else None
+            return (_rebuild, _token('module', value.__name__, _file_sha(path) if path else None))
+        if type(value).__name__ in ('OriginalHandle', '_Handle', 'Fence'):
+            return (_rebuild, _token('original_capability_identity', module, type(value).__qualname__, ident,
+                                     getattr(value, 'kind', None)))
+        if module.startswith(('jsonschema', 'referencing', 'rpds')):
+            return (_rebuild, _token('immutable_schema_context', module, type(value).__qualname__, ident))
+        if isinstance(value, weakref.ref):
+            return (_rebuild, _token('weak_reference', id(value())))
+        if isinstance(value, weakref.WeakKeyDictionary):
+            return (_rebuild, _token('weak_map'), dict(items=[(id(k), v) for k, v in list(value.items())]))
+        if hasattr(value, 'pins') and hasattr(value, 'registry'):
+            return (_rebuild, _token('whole_pinned_bank', module, type(value).__qualname__), dict(pins=value.pins))
+        if any(attribute is value for klass in type(value).__mro__ for attribute in vars(klass).values()):
+            if ident not in FROZEN:
+                inner = {}
+                sha = hashlib.sha256(pickle.dumps(context_value(value, None, inner, False), protocol=5)).hexdigest()
+                FROZEN[ident] = (value, sha)
+                FROZEN_PARTS[ident] = _parts(value)
+                for member in inner:
+                    MEMBERS.setdefault(member, sha)
+            return (_rebuild, _token('load_once_singleton', module, type(value).__qualname__, FROZEN[ident][1]))
+        if ident in CASE_BANKS:
+            return (_rebuild, _token('case_bank', module, type(value).__qualname__, CASE_BANKS[ident][1]))
+        if CASE_BANK_STATE[0] is not None and _is_bank(value):
+            sha = _bank_sha(value)
+            CASE_BANKS[ident] = (value, sha, (CASE_BANK_STATE[0] or {}).get('id'))
+            return (_rebuild, _token('case_bank', module, type(value).__qualname__, sha))
+        if isinstance(value, dict):  # a dict subclass (exact dicts never reach here)
+            if value and all(type(v).__module__.startswith('jsonschema') and hasattr(v, 'iter_errors') for v in value.values()):
+                return (_rebuild, _token('map', ()))
+            return (_rebuild, _token('mapping', module, type(value).__qualname__), dict(items=list(value.items())))
+        if isinstance(value, (list, tuple, set, frozenset)):
+            return (_rebuild, _token('sequence', module, type(value).__qualname__), dict(items=list(value)))
+        if isinstance(value, types.MappingProxyType):
+            return (_rebuild, _token('mapping_proxy'), dict(items=list(value.items())))
+        if hasattr(value, '__dict__'):
+            return (_rebuild, _token('object', module, type(value).__qualname__, ident), dict(vars(value)))
+        slots = [name for klass in type(value).__mro__ for name in getattr(klass, '__slots__', ())
+                 if name not in ('__weakref__', '__dict__')]
+        if slots:
+            return (_rebuild, _token('slotted', module, type(value).__qualname__, ident),
+                    dict(slots=[(name, getattr(value, name, None)) for name in slots]))
+        if isinstance(value, (bool, int, float, str, bytes, bytearray, complex, type(None))):
+            return NotImplemented
+        raise TypeError('unbound complete-call context type: ' + type(value).__qualname__)
+
+
+_FILE_SHA = {}
+
+
+def _file_sha(path):
+    if path is None or not path.is_file():
+        return None
+    key = str(path)
+    if key not in _FILE_SHA:
+        _FILE_SHA[key] = hashlib.sha256(path.read_bytes()).hexdigest()
+    return _FILE_SHA[key]
+
+
+def _bank_sha(value):
+    import io
+    sink = io.BytesIO()
+    saved = CASE_BANK_STATE[0]
+    CASE_BANK_STATE[0] = None  # the bank itself is serialized in full, not as its own token
+    try:
+        _deep(lambda: _DescriptorPickler(sink, None).dump(dict(vars(value))))
+    finally:
+        CASE_BANK_STATE[0] = saved
+    return hashlib.sha256(sink.getvalue()).hexdigest()
 
 
 FROZEN_PARTS = {}
@@ -107,7 +258,7 @@ def settle_case_banks(next_case):
     if CASE_BANK_STATE[0] is next_case:
         return
     for ident, (obj, sha, label) in list(CASE_BANKS.items()):
-        again = hashlib.sha256(pickle.dumps(context_value(obj, None, {}, False), protocol=5)).hexdigest()
+        again = _bank_sha(obj)
         if again != sha:
             FAILURES.append(dict(kind='schema_bank_changed_within_case', case=label, type=type(obj).__qualname__,
                                  before=sha, after=again))
