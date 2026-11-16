@@ -1518,6 +1518,69 @@ class PmAuditStatusIndexOpenSetTests(unittest.TestCase):
             report = pm_audit_status_index.validate()
             self.assertEqual((report["status"], report["failures"]), ("pass", []), report)
 
+    def test_multiline_generation_block_cannot_hide_counts_or_findings(self) -> None:
+        # T240: the generation-time exception covers one physical line. A multi-line "Generated"
+        # value whose unclosed HTML comment hides the real counts and finding rows must fail,
+        # not normalize to the placeholder.
+        rows = self.reopened_chain()
+        self.script.write_text(self.FIXTURE_SCRIPT.replace("return 2", "return 3"), encoding="utf-8")
+        self.generate()
+        self.assertEqual(pm_audit_status_index.validate()["status"], "pass")
+        path = pm_audit_status_index.MARKDOWN
+        original = path.read_text(encoding="utf-8")
+        finding = f"| `{rows[1]['finding_key']}` | `{rows[1]['closure_id']}` | `reopened` | 2 |"
+        self.assertEqual(original.count(finding), 1)
+        injection = (
+            "- Generated: `1999-01-01T00:00:00Z\n"
+            "\n"
+            "## Current status: all findings closed\n"
+            "\n"
+            "- Current blockers: 0\n"
+            "- Open finding blockers: 0\n"
+            "- Reopened finding blockers: 0\n"
+            "\n"
+            "<!--\n"
+            "`\n"
+        )
+        injected = "".join(
+            injection if line.startswith("- Generated: `") else line
+            for line in original.splitlines(keepends=True)
+        )
+        self.assertNotEqual(injected, original)
+        path.write_text(injected, encoding="utf-8")
+        report = pm_audit_status_index.validate()
+        self.assertEqual(report["status"], "fail", report)
+        self.assertIn(
+            {"path": "Plans/.audits/CURRENT_AUDIT_STATUS.md", "error": "stale_current_audit_status_markdown"},
+            report["failures"],
+        )
+        self.assertFalse(any(item.get("error") == "stale_audit_status_index" for item in report["failures"]), report)
+
+    def test_stale_report_notes_the_full_tree_requirement(self) -> None:
+        # T241: a stale index/Markdown report adds one note line saying the committed index counts
+        # gitignored reports only full checkouts carry; a current report adds nothing. Message only.
+        self.reopened_chain()
+        self.generate()
+        self.script.write_text(self.FIXTURE_SCRIPT.replace("return 2", "return 3"), encoding="utf-8")
+        out, err = io.StringIO(), io.StringIO()
+        with patch.object(sys, "argv", ["pm-audit-status-index.py", "validate"]), \
+                contextlib.redirect_stdout(out), contextlib.redirect_stderr(err):
+            self.assertEqual(pm_audit_status_index.main(), 1)
+        report = json.loads(out.getvalue())
+        self.assertEqual(report["status"], "fail")
+        self.assertTrue(any(f.get("error") == "stale_audit_status_index" for f in report["failures"]), report)
+        note = err.getvalue()
+        self.assertEqual(len(note.splitlines()), 1, note)
+        self.assertIn("gitignored", note)
+        self.assertIn("full tree", note)
+        self.generate()
+        out, err = io.StringIO(), io.StringIO()
+        with patch.object(sys, "argv", ["pm-audit-status-index.py", "validate"]), \
+                contextlib.redirect_stdout(out), contextlib.redirect_stderr(err):
+            self.assertEqual(pm_audit_status_index.main(), 0)
+        self.assertEqual(json.loads(out.getvalue())["status"], "pass")
+        self.assertEqual(err.getvalue(), "")
+
 
 if __name__ == "__main__":
     unittest.main()
