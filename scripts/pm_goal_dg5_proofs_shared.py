@@ -113,4 +113,32 @@ PROOFS = {
             'exact_json_float chain witnesses exactly this). Every value :415 refuses is '
             'a float, so :415 selects the exact float code and never gates acceptance '
             'alone.')),
+    SITE + '1450': dict(
+        kind='code-selection',
+        families=FAMILIES,
+        depends_on=[SITE + '492'],
+        sites=[(ST, 1450), (ST, 1501), (ST, 492), (ST, 1534)],
+        argument=(
+            'append at :1450 requires durability_class in (ordinary, barrier) before '
+            'writing; the identical predicate on the identical commit field is re-checked '
+            'at :492 when the just-written commit frame is decoded by the readback scan '
+            '(:1531-1535) in the same call, before any index or state commit. With :1450 '
+            'cut, an unknown durability class still fails _commit_shape at :492 on '
+            'readback and the append raises unindexed (the durability_class_unknown chain '
+            'witnesses exactly this), so :1450 selects the append-boundary code and never '
+            'gates acceptance alone. It closes by this proof once :492 is closed.')),
+    SITE + '1477': dict(
+        kind='code-selection',
+        families=FAMILIES,
+        depends_on=[SITE + '1056'],
+        sites=[(ST, 1477), (ST, 1056), (ST, 1535)],
+        argument=(
+            'append at :1477 requires the fresh candidates event ids distinct within the '
+            'group; the same group is indexed frame by frame at :1056 (_index_group, '
+            'called from the readback at :1535 in the same call), where the second frame '
+            'with an already-indexed event_id refuses index/duplicate_event_id. With '
+            ':1477 cut, duplicate ids in one group still refuse there before _commit_state '
+            '(the duplicate_in_group chain witnesses exactly this), so :1477 selects the '
+            'append-boundary code and never gates acceptance alone. It closes by this '
+            'proof once :1056 is closed.')),
 }
