@@ -56,7 +56,26 @@ def owner_for(name, owners):
                 citations=[c for concern in concerns for c in owners['cells'].get(concern, [])][:6])
 
 
-def justification(family, name, tries):
+def _bind(path, line):
+    import hashlib
+    full = ROOT / path
+    try:
+        raw = full.read_bytes()
+        text = raw.decode().splitlines()[int(line) - 1].strip()
+    except (OSError, IndexError, ValueError):
+        return dict(path=path, line=line, source=None, file_sha256=None)
+    return dict(path=path, line=int(line), source=text[:240], file_sha256=hashlib.sha256(raw).hexdigest())
+
+
+def _frames(detail):
+    import re
+    head = detail.split(' @ ', 1)[1] if ' @ ' in detail else ''
+    return [dict(file='scripts/' + f, line=int(l), function=fn)
+            for f, l, fn in re.findall(r'(pm_goal\w*\.py):(\d+)\((\w+)\)', head)]
+
+
+def justification(family, name, tries, sites=()):
+    """Presence, bound to exact source bytes: the guarded site(s) and the frame that raises."""
     for record in tries:
         site = record.get('cut_exception_site') or {}
         if record.get('kill') != 'CUT_EXCEPTION' or site.get('exception') not in ('RuntimeError',):
@@ -67,6 +86,13 @@ def justification(family, name, tries):
             continue
         if record.get('restoration_errors') != record.get('errors'):
             continue
+        frames = _frames(detail)
+        if not frames:
+            continue
         return dict(kind='presence', witness=record['label'], input_sha256=record['input_sha256'],
-                    raised=detail[:200], restoration=record.get('restoration_errors'), depends_on=[])
+                    raised=detail[:240], restoration=record.get('restoration_errors'), depends_on=[],
+                    guarded_sites=[_bind(p, l) for p, l in sites],
+                    raising_frames=[dict(_bind(f['file'], f['line']), function=f['function']) for f in frames],
+                    claim='With only this row cut, the complete checker raises at the recorded frame (it reads the '
+                          'member the row guards) instead of accepting; the uncached restoration repeats the refusal.')
     return None
