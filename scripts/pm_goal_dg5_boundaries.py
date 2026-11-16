@@ -43,6 +43,71 @@ MEMBERS = {}   # id of an object reachable from a memoized singleton -> that sin
 FAILURES = []
 
 
+NUMRULE_ROUTES = {'integer': 'number', 'uint64': 'number', 'boolean': 'boolean',
+                  'storage_time': 'date-time', 'event_time': 'date-time'}
+_NR_PROXIES = {}
+
+
+def numrule_proxy(real):
+    """A call-site view of the NUMRULE module for the DG family modules.
+
+    Every attribute is the real NUMRULE object, except the shared number,
+    boolean and date-time calls, each wrapped as one whole-call row
+    (`<where>/number`, `/boolean`, `/date-time`). The NUMRULE module and its
+    functions are never modified; modules keep their own `NR` name.
+    """
+    if id(real) in _NR_PROXIES:
+        return _NR_PROXIES[id(real)]
+    class CallSites(types.ModuleType):
+        def __getattr__(self, name):  # every other attribute is read live from NUMRULE
+            return getattr(real, name)
+    proxy = CallSites(real.__name__ + '__dg5_call_sites')
+    for name, suffix in NUMRULE_ROUTES.items():
+        original = getattr(real, name)
+        signature = inspect.signature(original)
+
+        def bind(original=original, suffix=suffix, signature=signature):
+            @functools.wraps(original)
+            def checked(*args, **kwargs):
+                if not ACTIVE[0]:
+                    return original(*args, **kwargs)
+                bound = signature.bind(*args, **kwargs)
+                bound.apply_defaults()
+                where = bound.arguments['where']
+                error = None
+                try:
+                    result = original(*args, **kwargs)
+                except Exception as caught:
+                    if type(caught).__name__ != 'NumruleRefusal':
+                        raise
+                    error, result = caught, bound.arguments['value']
+                frame = inspect.currentframe().f_back
+                site = (str(Path(frame.f_code.co_filename).relative_to(ROOT)), frame.f_lineno)
+                if tables.decide(PREFIX + where + '/' + suffix, error is None, site=site) is not None:
+                    raise error
+                return result
+            checked._dg5_numrule = True
+            return checked
+        setattr(proxy, name, bind())
+    proxy._dg5_real = real
+    _NR_PROXIES[id(real)] = proxy
+    return proxy
+
+
+def install_numrule_call_sites():
+    real = sys.modules.get('pm_goal_test_numrule')
+    if real is None:
+        return
+    for module in tuple(sys.modules.values()):
+        name = getattr(module, '__name__', '')
+        # DG-U routes the same calls through its own exact_int/storage_time helpers.
+        if not name.startswith(('pm_goal_dg_', 'pm_goal_own_')) or name.startswith('pm_goal_dg_u_'):
+            continue
+        for key, value in list(vars(module).items()):
+            if value is real:
+                setattr(module, key, numrule_proxy(real))
+
+
 def row(code):
     # Schema errors name the failing instance in their original error code;
     # the gated predicate is the same whole-root check on both controls and
@@ -53,6 +118,8 @@ def row(code):
             return PREFIX + where + '/number'
         if reason.startswith('date_time_'):
             return PREFIX + where + '/date-time'
+        if reason.startswith('boolean_'):
+            return PREFIX + where + '/boolean'
     return PREFIX + code.split('/schema/', 1)[0] + ('/schema' if '/schema/' in code else '')
 
 
@@ -414,12 +481,50 @@ def refuse_wrapper(original):
     return refused
 
 
+# Whole-root schema rows: (module, class, row name from the call's arguments).
+# Each name equals row() of the code that bank's own validate raises.
+SCHEMA_BANKS = (
+    ('pm_goal_test_owner_adapters', 'RootBank', 1, lambda a, k: (a[2] if len(a) > 2 else k.get('code', 'root'))),
+    ('pm_goal_dg_s_world', 'Bank', 1, lambda a, k: (a[2] if len(a) > 2 else k.get('code', 'root'))),
+    ('pm_goal_own_c_roots', 'OriginalBank', 1, lambda a, k: 'roots'),
+    ('pm_goal_dg_r_world', 'Roots', 2, lambda a, k: a[3] if len(a) > 3 else k['code']),
+    ('pm_goal_dg_cf2_world', 'RealmBank', 2, lambda a, k: a[3] if len(a) > 3 else k['code']),
+)
+
+
+def install_schema_rows():
+    """Observe each whole-root owner schema check as one row; the validator and its
+    keywords are unchanged (the bank's own errors() decides, the row only routes it)."""
+    for module_name, class_name, value_index, code_of in SCHEMA_BANKS:
+        module = sys.modules.get(module_name)
+        cls = getattr(module, class_name, None) if module else None
+        if cls is None or getattr(cls.validate, '_dg5_schema', False):
+            continue
+
+        def bind(original=cls.validate, code_of=code_of, value_index=value_index):
+            @functools.wraps(original)
+            def validate(self, *args, **kwargs):
+                if not ACTIVE[0]:
+                    return original(self, *args, **kwargs)
+                errors = self.errors(*args[:value_index + 1])
+                frame = inspect.currentframe().f_back
+                site = (str(Path(frame.f_code.co_filename).relative_to(ROOT)), frame.f_lineno)
+                if tables.decide(PREFIX + code_of(args, kwargs) + '/schema', not errors, site=site) is not None:
+                    return original(self, *args, **kwargs)
+                return args[value_index]
+            validate._dg5_schema = True
+            return validate
+        cls.validate = bind()
+
+
 def install():
     """Route the original require/guard sites without changing their inputs.
 
     All imported aliases of the same guard share its original exception type.
     NUMRULE, the frozen validator and the gated tool are never patched.
     """
+    install_schema_rows()
+    install_numrule_call_sites()
     originals = {}
     for module in tuple(sys.modules.values()):
         name = getattr(module, '__name__', '')
