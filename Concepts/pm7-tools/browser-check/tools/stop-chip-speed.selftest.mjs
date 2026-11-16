@@ -81,4 +81,24 @@ assert.equal(splitOk.ok, true, `NieR Slow with no glow must still judge the glyp
 split.rows[split.rows.length - 1].g.dur = BASE.flowing;
 const splitBad = judge(split);
 assert.equal(splitBad.ok, false, `NieR Slow's glyph left unscaled must fail ${JSON.stringify(splitBad.bad)}`);
-console.log('stop-chip-speed: 8 cases pass');
+// R65 A1 (PM7PERF-STOPCHIP-SPEED-STALE-BACKLIGHT): each pace's TERMINAL sample still has the glyph but the
+// backlight has disappeared. The judge used to remember the earlier scaled backlight and pass the row; the
+// terminal sample is what the speed has settled on, and a look that is not NieR must show both loops there.
+function staleBacklightPage() {
+	const rows = [];
+	const marks = [];
+	for (const [name, factor] of [['Fast', FACTOR.Fast], ['Slow', FACTOR.Slow]]) {
+		marks.push({ name: `Animation speed ${name}`, kind: 'speed', i: rows.length });
+		for (const [flow, base] of [['waiting', BASE.waiting], ['flowing', BASE.flowing]]) {
+			const dur = base * factor;
+			rows.push({ flow, g: { dur }, b: { dur } });
+			rows.push({ flow, g: { dur } });
+		}
+	}
+	return { rows, marks };
+}
+const stale = judge(staleBacklightPage());
+assert.equal(stale.ok, false, `a backlight that disappears in each pace's terminal sample must fail ${JSON.stringify(stale)}`);
+const staleMissing = stale.bad.filter((x) => x.missing && x.layer === 'backlight').map((x) => `${x.speed}/${x.flow}`).sort();
+assert.deepEqual(staleMissing, ['Fast/flowing', 'Fast/waiting', 'Slow/flowing', 'Slow/waiting'], `every pace's terminal sample reads as backlight missing: ${JSON.stringify(stale.bad)}`);
+console.log('stop-chip-speed: 9 cases pass');
