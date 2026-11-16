@@ -64,6 +64,13 @@ def install(prove):
                 return invoke(self, label, evaluate, value, valid, **kwargs)
             finally:
                 schemas.CONTROL[0] = saved
+                # GH1 keeps each row's first negative as (evaluate, value, label) and never reads
+                # it again; a DG5 evaluate closes over a whole world, so only the closure is released.
+                if len(self.candidates) != getattr(self, '_dg5_released', 0):
+                    for name, candidate in list(self.candidates.items()):
+                        if candidate[0] is not None:
+                            self.candidates[name] = (None,) + tuple(candidate[1:])
+                    self._dg5_released = len(self.candidates)
         sweep.Collector.invoke = control_invoke
         sweep.Collector._go_controls = True
     if not getattr(sweep.Collector, '_go_cut_sites', False):
