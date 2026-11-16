@@ -128,15 +128,23 @@ def main():
                 restoration=None if witness is None else dict(errors=witness.get('restoration_errors'),
                     same_refusal=witness.get('restoration_errors') == witness.get('errors')),
                 justification=proof_record, schema_closure=schema, kills=dict(kills)))
-        status_of = {m['row']: m['status'] for m in matrix}
-        for _ in range(4):
-            for m in matrix:
-                if m['status'] == 'CLOSED_BY_PROOF':
-                    deps = (m['justification'] or {}).get('depends_on', [])
-                    pending = [d for d in deps if status_of.get(d, 'OPEN') not in ('CLOSED', 'CLOSED_BY_PROOF')]
-                    if pending:
-                        m['status'], m['reason'] = 'OPEN', 'justification dependency not closed: ' + ', '.join(pending)
-                        status_of[m['row']] = 'OPEN'
+        # A proof closes its row only once every dependency is already closed: a least fixpoint
+        # grounded in CLOSED (killed) rows, so mutually dependent proofs never close each other.
+        closed = {m['row'] for m in matrix if m['status'] == 'CLOSED'}
+        candidates = [m for m in matrix if m['status'] == 'CLOSED_BY_PROOF']
+        changed = True
+        while changed:
+            changed = False
+            for m in candidates:
+                if m['row'] in closed:
+                    continue
+                if all(d in closed for d in (m['justification'] or {}).get('depends_on', [])):
+                    closed.add(m['row'])
+                    changed = True
+        for m in candidates:
+            if m['row'] not in closed:
+                pending = [d for d in (m['justification'] or {}).get('depends_on', []) if d not in closed]
+                m['status'], m['reason'] = 'OPEN', 'justification dependency not closed (or cyclic): ' + ', '.join(pending)
         summary = collections.Counter(m['status'] for m in matrix)
         out['families'][family] = dict(rows=len(matrix), status=dict(summary),
             schema_rows=sum(1 for m in matrix if m['row'].endswith('/schema')),
