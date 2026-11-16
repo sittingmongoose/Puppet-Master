@@ -27,6 +27,8 @@ def entries(cls, methods, family):
                 if bridge.ACTIVE[0] or bridge.PARENT_CALL[0] or bridge.CASE[0] is None:
                     return original(self, *args, **kwargs)
                 world = getattr(self, 'world', None) or getattr(self, 'w', None)
+                if world is None and hasattr(self, 'storage') and hasattr(self, 'recorder'):
+                    world = self  # a world-level original method (the receiver is the world)
                 if world is None:
                     raise ValueError('entry has no original world: ' + entry)
                 case = bridge.CASE[0]
