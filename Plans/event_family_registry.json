@@ -2,7 +2,7 @@
   "$schema": "https://puppetmaster.local/schemas/event_family_registry/1.0.0/event_family_registry.schema.json",
   "schema_id": "pm.event_family_registry.v1",
   "schema_version": "2.0.0",
-  "registry_revision": "2026-11-16.203",
+  "registry_revision": "2026-11-16.204",
   "owner_doc": "Plans/storage-plan.md#case-l-5-eventrecord-persistence-legacy-normalization-and-dedupe",
   "unknown_event_disposition": "quarantine_without_checkpoint_advance",
   "families": [
@@ -27304,6 +27304,52 @@
       "retention_policy_ref": {
         "registry_schema_id": "pm.storage_value_registry.v2",
         "policy_id": "RP-AUTHORITY-INDEFINITE",
+        "policy_version": "1.0.0"
+      }
+    },
+    {
+      "family_id": "event-family-parser-error",
+      "family_revision": "1.0.0",
+      "event_type": "parser.error",
+      "scope_policy": "project_only",
+      "semantic_owner_doc": "Plans/orchestrator-subagent-integration.md#OSI-684",
+      "payload_owner_doc": "Plans/orchestrator-subagent-integration.md#OSI-684",
+      "payload_schema_id": "pm.event_payload.parser_error.v1",
+      "payload_schema_ref": {
+        "path": "Plans/orchestrator_event_payloads.schema.json",
+        "json_pointer": "#/$defs/parser_error",
+        "schema_id": "pm.event_payload.parser_error.v1"
+      },
+      "legacy": {
+        "aliases": [],
+        "admitted_extensions": [],
+        "identity_json_pointers": {
+          "project_id": [
+            "/payload/project_id"
+          ],
+          "thread_id": [
+            "/payload/thread_id"
+          ],
+          "run_id": [
+            "/payload/run_id"
+          ]
+        },
+        "referenced_event_id_pointer": null,
+        "redaction": {
+          "mode": "reject_unhandled_secrets",
+          "transform_id": null,
+          "transform_version": null
+        }
+      },
+      "source_refs": [
+        "Plans/orchestrator-subagent-integration.md#OSI-684",
+        "Plans/orchestrator_event_payloads.schema.json#/$defs/parser_error",
+        "Plans/orchestrator_event_contract_fixtures.json#/contracts/4",
+        "reports/event-authority-20261116/admission-merge-2/readiness-list.json"
+      ],
+      "retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-RUNTIME-365D",
         "policy_version": "1.0.0"
       }
     }
