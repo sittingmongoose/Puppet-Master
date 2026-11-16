@@ -38,6 +38,9 @@ def entries(cls, methods, family):
                 ctx_storage = getattr(getattr(self, 'ctx', None), 'storage', None)
                 if world is None and isinstance(ctx_storage, store_type):
                     world = ctx_storage  # a context-bound owner (DG-S issuance): its run's complete store
+                lower_storage = getattr(getattr(self, 'lower', None), 'storage', None)
+                if world is None and isinstance(lower_storage, store_type):
+                    world = lower_storage  # a projector over a lower Storage participant (DG-CF3)
                 if world is None:
                     raise ValueError('entry has no original world: ' + entry)
                 case = bridge.CASE[0]
