@@ -89,7 +89,8 @@ def main():
                                                  r.get('outcome') != 'exact_expected', r['id']))[:1]
             killed = any(r.get('kill') in ('KILLED', 'DUPLICATE_SET_KILLED') for r in tries)
             gated = row.get('status')
-            proof_record = justified.justification(family, name, tries)
+            proof_record = justified.justification(family, name, tries,
+                                                   collection['rows'].get(name, {}).get('sites', []))
             if gated == 'PASS' and killed:
                 status, reason = 'CLOSED', None
             elif proof_record and gated in ('PASS', 'NOT_RUN'):
