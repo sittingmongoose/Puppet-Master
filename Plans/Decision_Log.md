@@ -46756,3 +46756,47 @@ negative_constraints:
 - No producer adoption, native execution claim, readiness clearance or governance seal is granted.
 ```
 
+### DL-2282: Event Authority registers crew.board_messages_archived (admission merge 2)
+
+```yaml
+plan_unit_id: DL-2282
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: |-
+  Event Authority registers `crew.board_messages_archived` as family `event-family-crew-board-messages-archived` revision 1.0.0 in admission merge 2 of PNC-019. On 2026-11-14 Jared answered card EA-P2 with option B ("Two merges: the 173 ready now, then the rest"), so the remaining prepared families are admitted in this second merge after the first 173. `crew.board_messages_archived` is one of the rows DL-039 confirmed as persisted but unregistered and kept quarantined until its contract was complete; DL-414 requires every such row to reach its one outcome, and DL-039 authorized registering these rows family by family. Under DL-096 ("And yes I approve the DL-093 covering the families and later") this entry is Jared's decision entry for `crew.board_messages_archived`, and the family's DL-077 admission record cites it as its decision_ref. DL-400 keeps this family's own commit, entry, record and twelve-criterion assessment inside the batched landing.
+
+  The registry moves from revision 2026-11-16.145 (364 families, SHA-256 bb25d3e1ebbe2daba9f46a443ab2645dfce4dfacc71c03d8986493ae2033c452) to 2026-11-16.146 (365 families, SHA-256 e22bb9fc6fd8f84caba017badf8923231c87240d286881ee4374a7692d5c98c2). The appended row, canonical SHA-256 17113182526b3d0faea48419594bd8dadf233ce175e6c531fd17ebd14870f354, has scope policy application_or_project, payload `pm.event_payload.crew_board_messages_archived.v1` at Plans/event_payloads/admission_merge2/crew_board_messages_archived.schema.json#, semantic owner Plans/orchestrator-subagent-integration.md#OSI-683, payload owner Plans/orchestrator-subagent-integration.md#OSI-683 and retention RP-COORDINATION-180D@1.0.0. Its payload versions are application `pm.event_payload.crew_board_messages_archived.v1` (RP-COORDINATION-180D@1.0.0, producer requires_owner_adoption); project `pm.event_payload.crew_board_messages_archived.v1` (RP-COORDINATION-180D@1.0.0, producer requires_owner_adoption). Under DL-078's standing rule the PNC-019 checkpoint moves in the same commit: EVENT_FAMILY_REGISTRY_REVISION 2026-11-16.146 and EVENT_FAMILY_REGISTRY_KERNEL_ROW_COUNT 365 in scripts/pm_pnc019_currentness.py, and the approved checkpoint count in the two DL-078 test files.
+
+  Depth: reports/event-authority-20261116/admission-merge-2/depth/crew.board_messages_archived.json (SHA-256 7f9ff69ca5ad521133066213f260a296814b5ef9bcc7b1b3cd8186e32efba076) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/readiness-list.json (SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/crew.board_messages_archived.json.
+
+  Native execution stays NOT_RUN and every payload version's producer still requires owner adoption. This entry registers only `crew.board_messages_archived`. It changes no other family, validator, seal condition, retention assignment or holding bucket, and it grants no producer adoption, native claim, readiness clearance or governance seal. It lands only with its merge, after the merge's review pair and the coordinator's landing go.
+gui_related: false
+gui_classification_reason: Registers one event family in the Event Authority registry; no visual presentation changes.
+depends_on: [DL-039, DL-077, DL-078, DL-096, DL-400, DL-414]
+unblocks: []
+acceptance_criteria:
+- "The live registry contains exactly one row for crew.board_messages_archived, equal to the row whose canonical SHA-256 this entry records."
+- "The DL-077 admission record reports/event-authority-20260911/admission-records/crew.board_messages_archived.json passes the frozen seal check with no problem for this family."
+- "The checkpoint pins name revision 2026-11-16.146 and 365 families."
+validation_surfaces:
+- python3 Plans/.audits/event-authority-2026-08-12/independent-validator/pm_event_authority_independent_validator.py
+- python3 scripts/pm-implementation-readiness.py validate
+- python3 scripts/pm-ea-admission-writer.py verify
+risk_class: event_authority_admission
+reasoning_tier: high
+context_scope: event_authority_pnc019_admission_merge_2
+implementation_surfaces: [Plans/event_family_registry.json, scripts/pm_pnc019_currentness.py]
+node_compile_hint: {mode: owner_contract_only, create_worknodes: false, create_nodeseeds: false}
+source_lineage:
+- "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/ANSWERS_EA-P_20261114.md; SHA-256 8f8c89d237c83fa265aa2baeebd041b657e757014a3a806aff451efb6641f1ac (EA-P1 A, EA-P2 B, Jared 2026-11-14)"
+- "Plans/Decision_Log.md#DL-039 (confirmed_persisted_unregistered row, registered family by family)"
+- "reports/event-authority-20261116/admission-merge-2/readiness-list.json; SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792"
+- "reports/event-authority-20261116/admission-merge-2/readiness-list.json; SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792"
+- "scripts/pm-ea-admission-writer.py (pm-ea-admission-writer.v1)"
+preserved_exact_tokens: ["crew.board_messages_archived", "event-family-crew-board-messages-archived", "2026-11-16.146", "e22bb9fc6fd8f84caba017badf8923231c87240d286881ee4374a7692d5c98c2", "17113182526b3d0faea48419594bd8dadf233ce175e6c531fd17ebd14870f354", "Two merges: the 173 ready now, then the rest", "And yes I approve the DL-093 covering the families and later"]
+negative_constraints:
+- No other family, validator, seal condition, retention assignment or holding bucket changes.
+- No producer adoption, native execution claim, readiness clearance or governance seal is granted.
+```
+
