@@ -835,8 +835,24 @@ def run_slots(label, original, arguments, work):
             continue
         _SLOT_RUNS[spec['name']] = _SLOT_RUNS.get(spec['name'], 0) + 1
         files = file_state(work)
+        original_value = current
         for case_id, value in corpus_values(spec):
             expected = corpus_expectation(spec, value)
+            if spec.get('join_code') and expected == 'accept' and not (type(value) is type(original_value)
+                                                                       and value == original_value):
+                # A lookup/join slot: a grammatical value other than the original names nothing the
+                # owner holds, so the owner's own join must refuse it (fixed before the call).
+                expected = 'refuse:join'
+            if expected == 'refuse:join':
+                outcome = _sealed(lambda c=_with_slot(dict(arguments), spec['path'], value):
+                                  original(c['receiver'], *c['args'], **c['kwargs']), work, files)
+                verdict = 'agree' if outcome[0] == 'refused' and outcome[1] == spec['join_code'] else (
+                    'crash' if outcome[0] in ('exception', 'crash') else 'disagree')
+                CORPUS.append(dict(slot=spec['name'], family=spec['family'], call=label, case=case_id,
+                                   value=repr(value)[:60] if not (type(value) is int and value > 10 ** 30) else '<4400 digits>',
+                                   expected=expected, outcome=outcome[0], code=outcome[1],
+                                   row=outcome[2] if outcome[0] == 'refused' else None, verdict=verdict))
+                continue
             changed = _with_slot(dict(arguments), spec['path'], value)
             outcome = _sealed(lambda c=changed: original(c['receiver'], *c['args'], **c['kwargs']), work, files)
             row_name = None if outcome[0] != 'refused' else outcome[2]
