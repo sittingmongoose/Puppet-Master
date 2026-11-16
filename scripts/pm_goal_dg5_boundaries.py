@@ -457,27 +457,134 @@ def context_value(value, world, seen=None, frozen=True):
     raise TypeError('unbound complete-call context type: ' + type(value).__qualname__)
 
 
+# ---------------------------------------------------------------- site rows (lead option A)
+
+ROUTING = [False]
+LAST_REFUSAL = [None]   # (row name, code) of the routed predicate that just refused in this child
+SITE_MODULE_PREFIXES = ('pm_goal_dg_', 'pm_goal_own_', 'pm_goal_test_')
+_SITE_INDEX = {}
+
+
+def site_name(path, line):
+    return PREFIX + 'site/' + Path(path).name + ':' + str(line)
+
+
+def _template(node, source):
+    """Regex for a code expression: string literals exact, every computed part '.+'."""
+    import ast
+    import re
+    if isinstance(node, ast.Constant) and isinstance(node.value, str):
+        return re.escape(node.value), len(node.value)
+    if isinstance(node, ast.BinOp) and isinstance(node.op, ast.Add):
+        left, a = _template(node.left, source)
+        right, b = _template(node.right, source)
+        return left + right, a + b
+    if isinstance(node, ast.JoinedStr):
+        parts, size = [], 0
+        for value in node.values:
+            if isinstance(value, ast.Constant):
+                parts.append(re.escape(str(value.value)))
+                size += len(str(value.value))
+            else:
+                parts.append('.+')
+        return ''.join(parts), size
+    return '.+', 0
+
+
+def site_index():
+    """Every require/guard/refuse site of the DG, DG-OWN and adapter modules (static, by AST)."""
+    import ast
+    import re
+    if _SITE_INDEX:
+        return _SITE_INDEX
+    for path in sorted((ROOT / 'scripts').glob('pm_goal_*.py')):
+        if not path.name.startswith(SITE_MODULE_PREFIXES) or path.name == 'pm_goal_test_numrule.py':
+            continue
+        source = path.read_text()
+        try:
+            tree = ast.parse(source)
+        except SyntaxError:
+            continue
+        definitions = {n.lineno for n in ast.walk(tree) if isinstance(n, ast.FunctionDef)
+                       and n.name in ('require', 'guard', 'refuse')}
+        for node in ast.walk(tree):
+            if not isinstance(node, ast.Call) or not node.args:
+                continue
+            func = node.func
+            name = func.id if isinstance(func, ast.Name) else func.attr if isinstance(func, ast.Attribute) else None
+            if name not in ('require', 'guard', 'refuse') or node.lineno in definitions:
+                continue
+            pattern, literal = _template(node.args[0], source)
+            relative = str(path.relative_to(ROOT))
+            _SITE_INDEX[site_name(relative, node.lineno)] = dict(
+                path=relative, line=node.lineno, module=path.stem,
+                expression=ast.get_source_segment(source, node.args[0]),
+                regex=re.compile(pattern + r'\Z', re.S), literal=literal)
+    return _SITE_INDEX
+
+
+def target_rows(code):
+    """The declared target of an authored expected code, fixed before the call: a schema or
+    NUMRULE row by its boundary name; otherwise the site(s) whose static code template is the
+    most specific match. Several equally specific sites form a declared duplicate set."""
+    if code is None:
+        return None
+    if '/schema/' in code or '/numrule/' in code:
+        return row(code)
+    # Only code this checker process has loaded can raise the refusal.
+    matches = [(info['literal'], name) for name, info in site_index().items()
+               if info['module'] in sys.modules and info['regex'].match(code)]
+    if not matches:
+        return PREFIX + 'unmatched/' + code
+    best = max(literal for literal, _ in matches)
+    names = sorted(name for literal, name in matches if literal == best)
+    return names[0] if len(names) == 1 else tuple(names)
+
+
+def refusal_row(error):
+    """The row of the refusal a child run raised (the routed site that just refused)."""
+    code = refusal_code(error)
+    if LAST_REFUSAL[0] is not None and LAST_REFUSAL[0][1] == code:
+        return LAST_REFUSAL[0][0]
+    if '/schema/' in code or '/numrule/' in code:
+        return row(code)
+    return PREFIX + 'unrouted/' + code
+
+
 def guard_wrapper(original):
     @functools.wraps(original)
     def guarded(code, condition):
-        if not ACTIVE[0]:
+        if not ACTIVE[0] or ROUTING[0]:
             return original(code, condition)
         frame = inspect.currentframe().f_back
         site = (str(Path(frame.f_code.co_filename).relative_to(ROOT)), frame.f_lineno)
-        refused = tables.decide(row(code), condition, site=site)
-        return original(code, refused is None)
+        name = site_name(*site)
+        refused = tables.decide(name, condition, site=site)
+        if refused is not None:
+            LAST_REFUSAL[0] = (name, code)
+        ROUTING[0] = True
+        try:
+            return original(code, refused is None)
+        finally:
+            ROUTING[0] = False
     return guarded
 
 
 def refuse_wrapper(original):
     @functools.wraps(original)
     def refused(code):
-        if not ACTIVE[0]:
+        if not ACTIVE[0] or ROUTING[0]:
             return original(code)
         frame = inspect.currentframe().f_back
         site = (str(Path(frame.f_code.co_filename).relative_to(ROOT)), frame.f_lineno)
-        if tables.decide(row(code), False, site=site) is not None:
-            return original(code)
+        name = site_name(*site)
+        if tables.decide(name, False, site=site) is not None:
+            LAST_REFUSAL[0] = (name, code)
+            ROUTING[0] = True
+            try:
+                return original(code)
+            finally:
+                ROUTING[0] = False
     return refused
 
 
@@ -594,6 +701,7 @@ def invoke(label, family, action, work, *, world=None, arguments=None, original=
         pid = os.fork()
         if pid == 0:
             entries = []
+            LAST_REFUSAL[0] = None
             tables.COLLECTOR = SimpleNamespace(observe=lambda n, h, s: entries.append((n, h, s)),
                 replaying=parent_collector.replaying, replay_unknown_rows=set())
             ACTIVE[0] = True
@@ -613,7 +721,7 @@ def invoke(label, family, action, work, *, world=None, arguments=None, original=
                         raise
                     else:
                         code = refusal_code(error)
-                        result = dict(errors=[row(code)], original_refusal=code)
+                        result = dict(errors=[refusal_row(error)], original_refusal=code)
                 result.update(observations=entries, after=manifest(file_state(work)),
                               replay_unknown_rows=sorted(tables.COLLECTOR.replay_unknown_rows))
             except BaseException as error:
@@ -724,7 +832,7 @@ def run_slots(label, original, arguments, work):
             expected = corpus_expectation(spec, value)
             changed = _with_slot(dict(arguments), spec['path'], value)
             outcome = _sealed(lambda c=changed: original(c['receiver'], *c['args'], **c['kwargs']), work, files)
-            row_name = None if outcome[0] != 'refused' else row(outcome[1])
+            row_name = None if outcome[0] != 'refused' else outcome[2]
             slot_row = PREFIX + spec['where'] + '/' + ('date-time' if spec['kind'] == 'date-time' else 'number')
             if outcome[0] in ('exception', 'crash'):
                 verdict = 'crash'
@@ -748,6 +856,7 @@ def _sealed(action, work, files):
     if pid == 0:
         tables.COLLECTOR = SimpleNamespace(observe=lambda n, h, s: None, replaying=True, replay_unknown_rows=set())
         ACTIVE[0] = True
+        LAST_REFUSAL[0] = None
         try:
             try:
                 action()
@@ -756,7 +865,7 @@ def _sealed(action, work, files):
                 if type(error).__name__ == 'Crash':
                     result = ('crash', str(error))
                 elif isinstance(error, Exception) and type(error).__name__ in REFUSAL_CLASSES:
-                    result = ('refused', refusal_code(error))
+                    result = ('refused', refusal_code(error), refusal_row(error))
                 else:
                     frames = traceback.extract_tb(error.__traceback__)[-4:]
                     result = ('exception', type(error).__name__ + ': ' + str(error)[:160] + ' @ ' + ' <- '.join(
@@ -897,6 +1006,6 @@ def install_u_entries(module):
                     return entry_call(case, case['id'] + '/' + entry, 'goal.updated',
                                       lambda: original(self, *args, **kwargs), world.root, world=world,
                                       arguments=dict(receiver=self, args=args, kwargs=kwargs), original=original,
-                                      target=target(case, None if expected is None else row(expected), case['id'] + '/' + entry))
+                                      target=target(case, target_rows(expected), case['id'] + '/' + entry))
                 return call
             setattr(cls, method, bind())
