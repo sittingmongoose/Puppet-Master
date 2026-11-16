@@ -213,3 +213,241 @@ def _(suite):
     start_case(suite,
                edits=dict(activation_receipt=_dup_selector(['record', 'entrypoints_staged', 'source'])),
                pre=_dup_pre('materialization:staging', 'staging', 'workflow_entrypoint_staging'))
+
+
+# ------------------------------------------------------------- readers / projector helpers
+
+def make(suite):
+    world, handles, _ = O.started(suite)
+    projector, readers, gid = O.projected(world)
+    return world, projector, readers, gid
+
+
+def _delete_cell(world, table, key):
+    cell = world.storage.cell(table, key)
+    world.storage.transact([dict(table=table, key=key, expected=cell['version'], delete=True)])
+
+
+def _bump_start_control_epoch(world):
+    cell = world.owners['native'].start_control()
+    value = copy.deepcopy(cell['value'])
+    value['record']['epoch'] += 1
+    world.storage.transact([dict(table='workflow_start_control', key=value['physical_key'],
+                                  expected=cell['version'], value=value)])
+
+
+def _change_ico_time(world):
+    key = world.ctx.run_key('workflow_start_control_origin.v1')
+    cell = world.storage.cell('workflow_start_control_origin', key)
+    value = copy.deepcopy(cell['value'])
+    old = value['record']['issued_at_utc']
+    value['record']['issued_at_utc'] = ('1999' + old[4:]) if old[:4] != '1999' else ('1998' + old[4:])
+    world.storage.transact([dict(table='workflow_start_control_origin', key=key,
+                                  expected=cell['version'], value=value)])
+
+
+def _flip_dataset(value):
+    name = value['dataset_name']
+    value['dataset_name'] = name[:-1] + ('0' if name[-1] != '0' else '1')
+    return value
+
+
+def _rewrite_current_row_dataset(world, projector):
+    cell, logical, gen, row = projector.current_row()
+    value = _flip_dataset(copy.deepcopy(row['value']))
+    gens = copy.deepcopy(logical['generations'])
+    gens[logical['current_generation_id']]['processed']['row_sha256'] = W.cdigest(value)
+    ck = projector.rep.encode_checkpoint(projector._logical(gens, logical['current_generation_id']))
+    world.storage.transact([dict(table=gen['dataset_name'], key=projector.rep.projection_key(),
+                                  expected=row['version'], value=value),
+                             dict(table='checkpoints', key=projector.rep.checkpoint_key(),
+                                  expected=cell['version'], value=ck)])
+
+
+# The relations bundle at readers:258 has no authored negative. Bumping only the
+# start-control epoch fails relations (control/epoch; the origin's control
+# selector is the same require site) and nothing earlier in retained_native.
+@negative('original_relation_control_epoch', 'read_historical/original/relation/control/epoch',
+          READERS + '258')
+def _(suite):
+    world, projector, readers, gid = make(suite)
+    _bump_start_control_epoch(world)
+    readers.read_historical(O.sreq(world))
+
+
+# Native body join: revision/status/activation untouched, one identity field of
+# the stored current body substituted, so only the digest join at :837 refuses.
+@negative('current_native_body_join', 'read_current/native_body_join', READERS + '837')
+def _(suite):
+    world, projector, readers, gid = make(suite)
+    native = world.owners['native']
+    body = copy.deepcopy(native.current()['body'])
+    body['record']['identity']['workgraph_ref'] = 'TEST_ONLY:workgraph-ref:other'
+    cell = W.read_value(world.storage, 'workflow_goal_run_body', body['physical_key'])
+    world.storage.transact([dict(table='workflow_goal_run_body', key=body['physical_key'],
+                                  expected=cell['version'], value=W.cell_value(world.storage, body))])
+    readers.read_current(O.sreq(world))
+
+
+@negative('checkpoint_wrapper_storage_substituted', 'checkpoint/storage', READERS + '522')
+def _(suite):
+    world, projector, readers, gid = make(suite)
+    cell, logical = projector.checkpoint()
+    wrapper = copy.deepcopy(cell['value'])
+    wrapper['storage_instance_id'] = '00000000-0000-4000-8000-000000000000'
+    world.storage.transact([dict(table='checkpoints', key=projector.rep.checkpoint_key(),
+                                  expected=cell['version'], value=wrapper)])
+    readers.read_historical(O.sreq(world))
+
+
+# Cutover row join: the staged row's dataset name only (last hex digit), with
+# the checkpoint prefix left stale, mirroring row_without_checkpoint_join but
+# record-external so decode still passes with the site cut.
+@negative('cutover_row_join_dataset_only', 'cutover/row_missing', READERS + '709')
+def _(suite):
+    world, handles, _ = O.started(suite)
+    projector = R.StartedProjector(world.registry, world=world)
+    projector.install()
+    gid = projector.stage()
+    projector.replay(gid)
+    cell, logical = projector.checkpoint()
+    gen = logical['generations'][gid]
+    row = world.storage.cell(gen['dataset_name'], projector.rep.projection_key())
+    world.storage.transact([dict(table=gen['dataset_name'], key=projector.rep.projection_key(),
+                                  expected=row['version'], value=_flip_dataset(copy.deepcopy(row['value'])))])
+    projector.cutover(gid)
+
+
+# Presence witnesses (CUT_EXCEPTION by design): each guarded member is
+# dereferenced on the next line, which the matrix presence justification binds.
+@negative('historical_without_checkpoint', 'read_historical/no_checkpoint', READERS + '725')
+def _(suite):
+    world, handles, _ = O.started(suite)
+    projector = R.StartedProjector(world.registry, world=world)
+    projector.install()
+    R.StartedReaders(world.registry, world=world, projector=projector).read_historical(O.sreq(world))
+
+
+@negative('projector_withdraw_before_install', 'projector/not_installed', READERS + '572')
+def _(suite):
+    world, handles = O.new_world(suite)
+    R.StartedProjector(world.registry, world=world).withdraw()
+
+
+@negative('retained_control_missing', 'read_historical/original/control_missing', READERS + '74')
+def _(suite):
+    world, projector, readers, gid = make(suite)
+    _delete_cell(world, 'workflow_start_control', world.owners['native'].start_control_key())
+    readers.read_historical(O.sreq(world))
+
+
+@negative('retained_origin_missing', 'read_historical/original/origin_missing', READERS + '82')
+def _(suite):
+    world, projector, readers, gid = make(suite)
+    _delete_cell(world, 'workflow_start_origin', R.op_keys(world, O.OP)['origin'])
+    readers.read_historical(O.sreq(world))
+
+
+@negative('retained_d01_missing', 'read_historical/original/d01_missing', READERS + '87')
+def _(suite):
+    world, projector, readers, gid = make(suite)
+    fam = ST.d01_families(world.edition)
+    _delete_cell(world, fam['workflow_update'], R.op_keys(world, O.OP)['update'])
+    readers.read_historical(O.sreq(world))
+
+
+@negative('retained_initial_origin_missing', 'read_historical/original/initial_origin_missing',
+          READERS + '91')
+def _(suite):
+    world, projector, readers, gid = make(suite)
+    _delete_cell(world, 'workflow_start_control_origin',
+                 world.ctx.run_key('workflow_start_control_origin.v1'))
+    readers.read_historical(O.sreq(world))
+
+
+# Transaction id: a Storage transaction from encode_checkpoint (the
+# stale_checkpoint_cas racing shape, on the installation cell only) moves the
+# joint transaction past the id predicted at readers:681.
+@negative('projector_transaction_id_raced', 'projector/transaction_id', READERS + '690')
+def _(suite):
+    world, handles, _ = O.started(suite)
+    projector = R.StartedProjector(world.registry, world=world)
+    projector.install()
+    gid = projector.stage()
+    original = projector.rep.encode_checkpoint
+
+    def racing(logical, **kw):
+        out = original(logical, **kw)
+        if kw.get('store') is not False and not getattr(racing, 'done', False):
+            racing.done = True
+            projector.install()
+        return out
+    projector.rep.encode_checkpoint = racing
+    projector.replay(gid)
+
+
+# Final fences: one coherent change between the helper and its final
+# re-acquisition, through the suite's own hook points.
+@negative('retained_final_fence_control_epoch', 'read_retained_native/final_fence', READERS + '870')
+def _(suite):
+    world, projector, readers, gid = make(suite)
+    readers.read_retained_native(O.sreq(world), hooks=dict(after_retained=_bump_start_control_epoch))
+
+
+@negative('inspect_final_fence_origin_time', 'inspect_original/final_fence', READERS + '884')
+def _(suite):
+    world, projector, readers, gid = make(suite)
+    readers.inspect_original(O.sreq(world), hooks=dict(after_generic=_change_ico_time))
+
+
+@negative('historical_final_fence_origin_time', 'read_historical/final_fence', READERS + '902')
+def _(suite):
+    world, projector, readers, gid = make(suite)
+    readers.read_historical(O.sreq(world), hooks=dict(after_projection=_change_ico_time))
+
+
+@negative('current_final_original_origin_time', 'read_current/final_original', READERS + '928')
+def _(suite):
+    world, projector, readers, gid = make(suite)
+    readers.read_current(O.sreq(world), hooks=dict(after_current_goal=_change_ico_time))
+
+
+@negative('inspect_final_generic_extra_event', 'inspect_original/final_generic', READERS + '886')
+def _(suite):
+    world, projector, readers, gid = make(suite)
+    readers.inspect_original(O.sreq(world),
+                               hooks=dict(after_generic=lambda w: O.extra_event(w, 'dg5late')))
+
+
+@negative('current_final_generic_extra_event', 'read_current/final_generic', READERS + '930')
+def _(suite):
+    world, projector, readers, gid = make(suite)
+    readers.read_current(O.sreq(world),
+                           hooks=dict(after_current_goal=lambda w: O.extra_event(w, 'dg5late')))
+
+
+@negative('historical_final_projection_row_rewrite', 'read_historical/final_projection', READERS + '904')
+def _(suite):
+    world, projector, readers, gid = make(suite)
+    readers.read_historical(O.sreq(world),
+                              hooks=dict(after_projection=lambda w: _rewrite_current_row_dataset(w, projector)))
+
+
+@negative('current_final_projection_row_rewrite', 'read_current/final_projection', READERS + '932')
+def _(suite):
+    world, projector, readers, gid = make(suite)
+    readers.read_current(O.sreq(world),
+                           hooks=dict(after_current_goal=lambda w: _rewrite_current_row_dataset(w, projector)))
+
+
+# Incomplete generic coverage: garbage after the last valid group makes the
+# snapshot's scan tail a defect over the same rows, coverage and token.
+@negative('current_incomplete_coverage_segment_tail', 'read_current/incomplete_coverage', READERS + '917')
+def _(suite):
+    world, projector, readers, gid = make(suite)
+    event_id = R.original_started(world)['original_append']['event']['event_id']
+    generation = world.storage.events[event_id]['segment_generation']
+    path = world.storage._segment_path(generation)
+    with open(path, 'ab') as handle:
+        handle.write(b'\xff' * 32)
+    readers.read_current(O.sreq(world))
