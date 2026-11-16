@@ -20,6 +20,13 @@ def main():
     plumbing.entries(readers.StartedProjector, ('install', 'withdraw', 'stage', 'replay', 'cutover'), family)
     plumbing.entries(readers.StartedReaders, ('read_retained_native', 'inspect_original',
                                              'read_historical', 'read_current'), family)
+    # Owners that authored S1-S3/S6 negatives call directly (calls nested in another entry stay nested).
+    plumbing.entries(readers.GenericStartSource, ('acquire', 'generic_snapshot', 'project'), family)
+    plumbing.entries(readers.StartReducer, ('step',), family)
+    plumbing.entries(readers.Representation, ('validate', 'encode', 'decode', 'encode_checkpoint', 'decode_checkpoint'),
+                     family)
+    plumbing.entries(world.WholeSourceOwner, ('issue_whole',), family)
+    plumbing.entries(start.DescriptorOwner, ('install',), family)
     scratch = Path(os.environ['PM_DG5_SCRATCH'])
     scratch.mkdir(parents=True, exist_ok=True)
     output = scratch / 'started-source.json'
