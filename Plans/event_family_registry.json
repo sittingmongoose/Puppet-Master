@@ -2,7 +2,7 @@
   "$schema": "https://puppetmaster.local/schemas/event_family_registry/1.0.0/event_family_registry.schema.json",
   "schema_id": "pm.event_family_registry.v1",
   "schema_version": "2.0.0",
-  "registry_revision": "2026-11-16.304",
+  "registry_revision": "2026-11-16.305",
   "owner_doc": "Plans/storage-plan.md#case-l-5-eventrecord-persistence-legacy-normalization-and-dedupe",
   "unknown_event_disposition": "quarantine_without_checkpoint_advance",
   "families": [
@@ -1032,7 +1032,7 @@
       "family_id": "event-family-goal-receipt-recorded",
       "family_revision": "2.0.0",
       "event_type": "goal.receipt_recorded",
-      "scope_policy": "application_or_project",
+      "scope_policy": "project_only",
       "semantic_owner_doc": "Plans/Goal_Runtime_System.md#goal-and-goalrun-payload-minima",
       "payload_owner_doc": "Plans/storage-plan.md#sp-214---goal-runtime-persistence-consumer",
       "payload_schema_id": "pm.goal_runtime_event.goal_receipt_recorded.schema.v2",
@@ -1082,25 +1082,6 @@
           "producer_admission": "existing_project_policy",
           "append_owner_ref": "Plans/Goal_Runtime_System.md#goal-and-goalrun-payload-minima",
           "read_owner_ref": "Plans/storage-plan.md#sp-214---goal-runtime-persistence-consumer",
-          "backup_owner_ref": "Plans/Backup_Restore_System.md#BRS-033",
-          "retention_policy_ref": {
-            "registry_schema_id": "pm.storage_value_registry.v2",
-            "policy_id": "RP-AUTHORITY-INDEFINITE",
-            "policy_version": "1.0.0"
-          }
-        },
-        {
-          "scope_kind": "application",
-          "payload_schema_id": "pm.goal_runtime_event.goal_receipt_recorded.application.v1",
-          "payload_schema_ref": {
-            "path": "Plans/application_workflow_contracts.schema.json",
-            "json_pointer": "#/$defs/GoalReceiptRecordedEventApplicationV1",
-            "schema_id": "pm.goal_runtime_event.goal_receipt_recorded.application.v1"
-          },
-          "source_graph_ref": "Plans/application_workflow_source_graph.json",
-          "producer_admission": "requires_owner_adoption",
-          "append_owner_ref": "Plans/Goal_Runtime_System.md#GRS-086",
-          "read_owner_ref": "Plans/Goal_Runtime_System.md#GRS-086",
           "backup_owner_ref": "Plans/Backup_Restore_System.md#BRS-033",
           "retention_policy_ref": {
             "registry_schema_id": "pm.storage_value_registry.v2",

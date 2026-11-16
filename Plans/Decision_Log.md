@@ -53793,3 +53793,54 @@ negative_constraints:
 - No native execution or producer adoption is claimed.
 ```
 
+### DL-2441: Event Authority revises goal.receipt_recorded (S5b)
+
+```yaml
+plan_unit_id: DL-2441
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: 'Under Jared''s EA-P3 A standing rule and DL-409 (Jared''s Card 3 A) confirming DL-079, Event Authority
+  updates the existing `goal.receipt_recorded` row at #/families/14. Withdraw only the unused application edition
+  at the required registry checkpoint. Project payload, family revision and retention remain unchanged. Registry
+  revision 2026-11-16.304 (SHA-256 e789db00a1b974c329b420e51ade0ae3a225403988c352d60eb1971085aba1ec) becomes 2026-11-16.305
+  (SHA-256 222914703a8985ef96769e5a7d8f6558bfa09110707d424dbfabae4facc3ef40); the count remains 517. The successor
+  row''s canonical SHA-256 is c254d9f1d691c7f0c74230f1273ecfe80cd5ed661ba06d571e2c5f070b764024. The 12/12 assessment
+  reports/event-authority-20261116/admission-merge-2/revisions/goal.receipt_recorded.json (SHA-256 ad6f7c2ed6f2af575f9e97bfd74926ce7631adb063102f1d30996091840a4a1a)
+  carries the reviewed PASS cells and records the exact selector predicates completing pending schema/scope cells.
+  Source grade verdicts are unchanged. DL-078 checkpoint pins and the legacy golden revision move in this commit.
+  Historical resource bytes and dormant application editions remain as specified by the pinned row. Native execution
+  stays NOT_RUN; no source installation, producer adoption or governance seal is granted.'
+gui_related: false
+gui_classification_reason: Existing event contract selector and checkpoint only.
+depends_on:
+- DL-078
+- DL-400
+unblocks: []
+acceptance_criteria:
+- The registered row equals the pinned successor and all twelve assessment cells PASS.
+validation_surfaces:
+- python3 scripts/pm-implementation-readiness.py validate
+risk_class: event_authority_revision
+reasoning_tier: high
+context_scope: event_authority_pnc019_s5b
+implementation_surfaces:
+- Plans/event_family_registry.json
+- scripts/pm_pnc019_currentness.py
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- reports/event-authority-20261116/admission-merge-2/registered-revision-input.json; SHA-256 bbf2678bacf973529a9d0597eadbad5c40f15449c7e4dd87191273c30fa3bbb5
+- reports/event-authority-20261115/PNC019-C12-GH2-grades.json; SHA-256 03bbf66034cd0d8dc9cbcb975e2d008541a29f159b4dbf88c17572f3a599b3d5
+preserved_exact_tokens:
+- goal.receipt_recorded
+- event-family-goal-receipt-recorded
+- 2.0.0
+- 2026-11-16.305
+- c254d9f1d691c7f0c74230f1273ecfe80cd5ed661ba06d571e2c5f070b764024
+negative_constraints:
+- No native execution or producer adoption is claimed.
+```
+
