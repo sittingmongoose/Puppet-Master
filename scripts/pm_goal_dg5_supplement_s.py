@@ -953,3 +953,23 @@ def _(suite):
     path.write_bytes(bytes(raw))
     world.start.commit_start(O.request(world), handles)
     R.StartedReaders(world.registry, world=world).inspect_original(O.sreq(world))
+
+
+# Row schema only: an extra top-level wrapper field (StorageProjection is
+# additionalProperties:false) that decode otherwise ignores, presented
+# through the stored row with its checkpoint join rehashed coherently.
+@negative('representation_row_extra_field', 'representation/row/schema/:additionalProperties',
+          'dg5/representation/row/schema')
+def _(suite):
+    world, projector, readers, gid = make(suite)
+    cell, logical, gen, row = projector.current_row()
+    value = copy.deepcopy(row['value'])
+    value['extra_field'] = 'x'
+    gens = copy.deepcopy(logical['generations'])
+    gens[logical['current_generation_id']]['processed']['row_sha256'] = W.cdigest(value)
+    ck = projector.rep.encode_checkpoint(projector._logical(gens, logical['current_generation_id']))
+    world.storage.transact([dict(table=gen['dataset_name'], key=projector.rep.projection_key(),
+                                  expected=row['version'], value=value),
+                             dict(table='checkpoints', key=projector.rep.checkpoint_key(),
+                                  expected=cell['version'], value=ck)])
+    readers.read_historical(O.sreq(world))
