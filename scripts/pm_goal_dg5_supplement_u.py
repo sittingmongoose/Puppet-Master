@@ -291,3 +291,127 @@ def inspect_progress_not_issued_coherent(d):
     U.rewrite_progress_all(w, g, U.op_of(adm), lambda rec: dict(
         rec, phase='event_ready', publication=None) if rec['phase'] == 'event_issued' else rec)
     return w, lambda: w.inspector.inspect(r, g['user'], g['user_permission'])
+
+
+def _latch_only(w, g):
+    goal_id = g['scope']['goal_id']
+    cur = w.stops.current(goal_id)
+    w.stops.put(O.hexk(goal_id), dict(cur, stop_latched=True))
+
+
+@case('U-DG5/N/body_currentness_only', 'dgu/reader/body/body_currentness', SITE + '1131',
+      'Single defect: body objective_text changes with every other commitment rewired (control '
+      'body_sha256, last revision text and hash, control latest hash), leaving currentness_hash stale, '
+      'so only :1131 refuses. The authored coherent-tamper case rewires none of them.')
+def body_currentness_only(d):
+    w, g = U._goal(d)
+    U.run_direct(w, g)
+    sc = g['scope']
+    project, goal = sc['project_id'], sc['goal_id']
+    new_body = U.rbody(w, O.T_BODY, O.body_key(project, goal),
+                       lambda b: dict(b, objective_text='substituted'))['record']
+    new_rev = U.rbody(w, O.T_REV, O.rev_key(project, goal, 2), lambda r: (lambda x: dict(
+        x, revision_hash=O.revision_hash(x)))(dict(r, objective_text='substituted')))['record']
+    U.rbody(w, O.T_CONTROL, U.ctl_key(g), lambda c: dict(
+        c, body_sha256=O.body_bytes_sha(new_body), latest_revision_hash=new_rev['revision_hash']))
+    return w, U.body_read(w, g)
+
+
+@case('U-DG5/N/history_chain_prior_only', 'dgu/reader/body/history_chain', SITE + '1144',
+      'Single defect: revision 2 prior_revision_hash is substituted and its revision_hash resealed, '
+      'with the control latest hash rewired to the resealed hash, so the accepted-head check (:1152) '
+      'holds and only the chain link (:1144) refuses. The authored case leaves the control hash stale.')
+def history_chain_prior_only(d):
+    w, g = U._goal(d)
+    U.run_direct(w, g)
+    sc = g['scope']
+    new_rev = U.rbody(w, O.T_REV, O.rev_key(sc['project_id'], sc['goal_id'], 2), lambda r: (lambda x: dict(
+        x, revision_hash=O.revision_hash(x)))(dict(r, prior_revision_hash='c' * 64)))['record']
+    U.rbody(w, O.T_CONTROL, U.ctl_key(g), lambda c: dict(c, latest_revision_hash=new_rev['revision_hash']))
+    return w, U.body_read(w, g)
+
+
+@case('U-DG5/N/audit_source_scope_only', 'dgu/reader/audit/source_scope', SITE + '1432',
+      'Single defect: the source record thread_id is substituted and every progress snapshot is '
+      'rewired to the substituted source wrapper sha, so the source join (:1653) holds and only the '
+      'source scope check (:1432) refuses.')
+def audit_source_scope_only(d):
+    w, g = U._goal(d)
+    req, adm = U.run_direct(w, g)
+    op = U.op_of(adm)
+    key = O.upd_key(O.T_SOURCE, g['scope'], op)
+    new = U.rsrc(w, O.T_SOURCE, key, lambda s: dict(s, thread_id='thr_other'))
+    sha = O.wrapper_sha(new)
+    U.rewrite_progress_all(w, g, op, lambda r: dict(r, source_audit_sha256=sha))
+    return w, U._audit_call(w, g, adm)
+
+
+@case('U-DG5/N/audit_snapshot_op_only', 'dgu/reader/audit/snapshot_record', SITE + '1454',
+      'Single defect: progress snapshots carry a foreign operation_id, coherently resealed with the '
+      'head rewired by rewrite_progress_all, so the head commitment (:1457) holds and only the '
+      'snapshot record check (:1454) refuses.')
+def audit_snapshot_op_only(d):
+    w, g = U._goal(d)
+    req, adm = U.run_direct(w, g)
+    U.rewrite_progress_all(w, g, U.op_of(adm),
+                           lambda r: dict(r, operation_id='goal-operation:TEST_ONLY:other'))
+    return w, U._audit_call(w, g, adm)
+
+
+@case('U-DG5/N/reserve_final_stop_latch_only', 'dgu/body/reserve/final_stop', SITE + '1184',
+      'Single defect at the body.reserve after:read_private boundary: the host stop is latched '
+      'without its epoch advancing (a direct cell put, not HostStopOwner.stop), so the reserve '
+      'final stop-epoch check (:1185) holds and only :1184 refuses. The fault-matrix stop mutation '
+      'latches through HostStopOwner.stop, which also advances the epoch.')
+def reserve_final_stop_latch_only(d):
+    w, g = U._goal(d)
+    req = O.direct_request(w, g, 'x')
+    adm, _ = w.command.admit_and_capture(req)
+    holder = {}
+    U.inject(w, 'body.reserve', 'after:read_private', lambda w_, ctx: _latch_only(w_, g), holder)
+    return w, lambda: w.command.reserve(adm), holder
+
+
+@case('U-DG5/N/commit_stop_latch_only', 'dgu/body/commit/manual_stop_latched', SITE + '2055',
+      'Single defect: as reserve_final_stop_latch_only, after reserve, for the commit final-check '
+      'stop site (:2055); the authored stop_before_commit latches through HostStopOwner.stop, which '
+      'also advances the epoch (:2056).')
+def commit_stop_latch_only(d):
+    w, g = U._goal(d)
+    req = O.direct_request(w, g, 'x')
+    adm = w.command.run(req, stop_after='reserve')
+    _latch_only(w, g)
+    return w, lambda: w.command.commit(adm)
+
+
+@case('U-DG5/N/command_reservation_missing_only', 'dgu/command/commit/reservation_missing', SITE + '2087',
+      'Single defect: the reservation is released (pending cleared) and the progress '
+      'reserved_control_sha256 is rewired to the released control wrapper, so the commitment check '
+      '(:2089) holds and only :2087 refuses. The authored case leaves the commitment stale.')
+def command_reservation_missing_only(d):
+    w, g, req, adm, ag = U._upto(d, 'reserve')
+    w.body.release(g['scope'], w.body.read_private(g['scope'], 'o')['control'], lambda c: [])
+    control = w.body.read_private(g['scope'], 'o')['control']
+    sha = O.wrapper_sha(w.body.wrap(O.T_CONTROL, control))
+    U.rewrite_progress_all(w, g, U.op_of(adm), lambda r: dict(r, reserved_control_sha256=sha)
+                           if r['phase'] == 'body_reserved' else r)
+    return w, lambda: w.command.commit(adm)
+
+
+@case('U-DG5/N/release_receipt_present', 'dgu/body/release/body_committed', SITE + '1264',
+      'Single defect: a body-mutation receipt cell exists under the reserved operation receipt key '
+      '(copied from a committed operation) while the control is still the exact reserved control, '
+      'so the reserved-control joins (:1267/:1272) hold and only :1264 refuses. The authored '
+      'release_after_commit case has a committed control, which those joins also refuse.')
+def release_receipt_present(d):
+    w, g = U._goal(d)
+    req1, adm1 = U.run_direct(w, g)
+    req2 = O.direct_request(w, g, 'second')
+    adm2 = w.command.run(req2, stop_after='reserve')
+    sc = g['scope']
+    p, goal = sc['project_id'], sc['goal_id']
+    prior = w.storage.cell(O.T_RECEIPT, O.receipt_key(p, goal, U.op_of(adm1)))
+    w.storage.transact([dict(table=O.T_RECEIPT, key=O.receipt_key(p, goal, U.op_of(adm2)),
+                             expected=None, value=copy.deepcopy(prior['value']))])
+    control = w.body.read_private(sc, 'o')['control']
+    return w, lambda: w.body.release(sc, control, lambda c: [])
