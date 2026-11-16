@@ -668,6 +668,235 @@ PROOFS = {
         "None), so the expected-is-None absent branch of MigrationStorage."
         "transact is unreachable from any family caller.",
         [(BO, 289), ('scripts/pm_goal_dg_cb_migration.py', 613)]),
+    'dg5/site/pm_goal_dg_ca3_native.py:142': _p(
+        "verify_custody checks the selector sha against the current cell "
+        "bytes immediately before the schema check; a cell whose schema_id "
+        "differed from the selector's would have different bytes and is "
+        "refused at selector_hash first, and a sha-matching cell carries "
+        "the selector's schema_id by construction of src_sel.",
+        [(N3, 140), (N3, 142)]),
+    'dg5/site/pm_goal_dg_ca3_native.py:211': _p(
+        "make() seeds are dicts the issuing owner has just built from "
+        "stored records it validated against the same root at issuance "
+        "(issue/validate paths), then re-validates with the identical "
+        "validator; a seed leaf the specimen would not preserve cannot "
+        "have passed issuance validation in the same process.",
+        [(N3, 211), (N3, 250)]),
+    'dg5/site/pm_goal_dg_ca3_native.py:250': _p(
+        "issue() keys are fresh uid/test keys or deterministic per-run "
+        "keys issued once behind the phase guards (already_prepared / "
+        "already_aggregated refuse re-entry before any second issue to "
+        "the same key), so an occupied destination cannot reach issue().",
+        [(N3, 250), (N3, 803), (N3, 938)],
+        ['dg5/site/pm_goal_dg_ca3_native.py:803',
+         'dg5/site/pm_goal_dg_ca3_native.py:938']),
+    'dg5/run/revision/number': _p(
+        "run['revision'] is an in-memory counter starting at allocation "
+        "and incremented once per genuine run transition in the same "
+        "process; no stored input carries it, so no single-defect case "
+        "can present it at the uint64 ceiling.",
+        [(N3, 518)]),
+    'dg5/site/pm_goal_dg_ca3_route.py:807': _p(
+        "owners_native is reached only with a d06 disposition from "
+        "d06.readback, whose safe-stop seed status is the literal "
+        "'bounded_original_safe_stop_resolved' set when the aggregate "
+        "resolved (an unresolved aggregate refuses inside readback at "
+        "native :870/:876 before any disposition is returned).",
+        [(R3, 807), (N3, 870)],
+        ['dg5/site/pm_goal_dg_ca3_native.py:870']),
+    'dg5/site/pm_goal_dg_ca3_route.py:817': _p(
+        "native_after/unchanged body+control in the disposition are the "
+        "run.current() values read by d06.readback at publish/readback "
+        "time, and owners_native re-reads run.current() moments later in "
+        "the same synchronous settle call with no intervening run write.",
+        [(R3, 817), (N3, 1010)]),
+    'dg5/site/pm_goal_dg_ca3_route.py:822': _p(
+        "The disposition event is built in d06.readback from "
+        "storage.read_event of the same event id the route re-reads here, "
+        "and its type/payload goal_run_id are the frozen producer's, "
+        "bound by the append custody checks at C1 :628 (proof).",
+        [(R3, 822), (N3, 1095)],
+        ['dg5/site/pm_goal_dg_ca_c1.py:628']),
+    'dg5/site/pm_goal_dg_ca3_route.py:824': _p(
+        "Same first-custody read twice argument as C1 :630 on the C3 "
+        "readback path: both sides are deepcopies of the one custody row "
+        "for the event, read in the same synchronous sequence.",
+        [(R3, 824), (N3, 1095)]),
+    'dg5/site/pm_goal_dg_ca3_route.py:827': _p(
+        "mutation_started in the frozen producer payload is computed at "
+        "freeze from the same safe-stop settlements list the disposition "
+        "carries (safe['original_result']['settlements'] from the d05 "
+        "aggregate that froze the event), so the boolean cannot diverge "
+        "from bool(settlements) at settle.",
+        [(R3, 827), (N3, 874)],
+        ['dg5/site/pm_goal_dg_ca3_native.py:874']),
+    'dg5/site/pm_goal_dg_cb_owners.py:154': _p(
+        "CB Storage cells hold decoded dict values and every read path "
+        "re-encodes them with S.canonical (the one canonical MessagePack "
+        "encoder), so a non-canonical MessagePack byte string cannot be "
+        "presented to msgpack_decode through any stored cell in this "
+        "storage model.",
+        [(BO, 154), (BO, 169)]),
+    'dg5/site/pm_goal_dg_cb_owners.py:228': _p(
+        "schema_ref_for is called only with the owners' fixed family "
+        "names (image() families from ROLE_FAMILIES and goal families), "
+        "all present in FAMILY_SCHEMAS; no caller passes a caller-supplied "
+        "family string.",
+        [(BO, 228), (BO, 395)]),
+    'dg5/site/pm_goal_dg_cb_owners.py:230': _p(
+        "The schema ids lookup values are the stored wrappers' own "
+        "schema_id fields, written by the issuing owners from the same "
+        "FAMILY_SCHEMAS table (wrap/store_form at issuance), so a stored "
+        "original's schema_id is always a table key for its family; a "
+        "tampered wrapper is refused by its issuance-origin sha binding "
+        "before any schema_ref_for call in capture authentication.",
+        [(BO, 230), (BO, 395)]),
+    'dg5/site/pm_goal_dg_cb_migration.py:782': _p(
+        "Commit writes are the derive() candidate: manifest parts are "
+        "grouped by manifest_parts under the same PART_CAP probe size, "
+        "and every other write is a schema-bounded record (binding, "
+        "result with bounded scope/member selectors from the manifest "
+        "parts), so no single write value can exceed the cap.",
+        [('scripts/pm_goal_dg_cb_migration.py', 579), ('scripts/pm_goal_dg_cb_migration.py', 782)]),
+    'dg5/site/pm_goal_dg_cb_migration.py:783': _p(
+        "operation_cap adds only the physical_key wrapper around a write "
+        "value already bounded by stored_part_cap and the manifest "
+        "grouping probe, which sizes parts with the identical "
+        "dict(physical_key, value) measure; non-part writes are "
+        "schema-bounded records far under the cap (see :782).",
+        [('scripts/pm_goal_dg_cb_migration.py', 579), ('scripts/pm_goal_dg_cb_migration.py', 783)],
+        ['dg5/site/pm_goal_dg_cb_migration.py:782']),
+    'dg5/site/pm_goal_dg_cb_migration.py:842': _p(
+        "read_result re-measures manifest parts that manifest_parts "
+        "grouped under exactly this cap measure at commit and that are "
+        "bound by the whole-manifest sha check at :844 in the same "
+        "predicate; a part over cap cannot have been committed.",
+        [('scripts/pm_goal_dg_cb_migration.py', 579), ('scripts/pm_goal_dg_cb_migration.py', 842)]),
+    'dg5/site/pm_goal_dg_cb_migration.py:920': _p(
+        "withdraw re-reads result_selection (the stored result cell) at "
+        "the end of the same synchronous call that read it at entry as "
+        "'original'; no write to the result cell runs between (the only "
+        "writes are the withdrawal record and cutoff, after this check).",
+        [('scripts/pm_goal_dg_cb_migration.py', 920)]),
+    'dg5/site/pm_goal_dg_ca3_route.py:799': _p(
+        "The route re-checks the d06 control phase/result that "
+        "d06.readback has just required at native :1069 (committed phase "
+        "and result selector sha) in the same settle call; a control that "
+        "reached owners_native already passed that exact predicate.",
+        [(R3, 799), (N3, 1069)],
+        ['dg5/site/pm_goal_dg_ca3_native.py:1069']),
+    'dg5/site/pm_goal_dg_cb_migration.py:424': _p(
+        "derive_joins runs only after goal enumeration and authentication "
+        "succeed, which requires the goal body and control cells to be "
+        "present and imageable; cap.images therefore contains both items "
+        "when derive_joins reads them in the same capture call.",
+        [('scripts/pm_goal_dg_cb_migration.py', 424), ('scripts/pm_goal_dg_cb_migration.py', 361)]),
+    'dg5/site/pm_goal_dg_cb_migration.py:425': _p(
+        "Same enumeration argument as :424 for the body item specifically: "
+        "the goal owner's enumeration reads the body cell through "
+        "body_cell (goal/body_unavailable) before any image is "
+        "authenticated, so a missing body refuses there first.",
+        [('scripts/pm_goal_dg_cb_migration.py', 425)],
+        ['dg5/site/pm_goal_dg_cb_owners.py:438']),
+    'dg5/site/pm_goal_dg_cb_migration.py:426': _p(
+        "Same enumeration argument as :424 for the control item: the goal "
+        "owner's control() read (goal/control_unavailable) precedes "
+        "derive_joins in the same capture call.",
+        [('scripts/pm_goal_dg_cb_migration.py', 426)],
+        ['dg5/site/pm_goal_dg_cb_owners.py:443']),
+    'dg5/site/pm_goal_dg_cb_migration.py:428': _p(
+        "Body and control scope fields are written at goal birth from the "
+        "same scope the keys are scoped by (goal keys embed project/thread/"
+        "goal ids), and both cells are bound by their issuance origins in "
+        "authenticate_mapping before derive_joins; a scope-divergent body "
+        "cannot be the cell stored under this scope's body key without "
+        "breaking that origin binding first.",
+        [('scripts/pm_goal_dg_cb_migration.py', 428)]),
+    'dg5/site/pm_goal_dg_cb_migration.py:443': _p(
+        "Each receipt image in cap.images was issued by the goal owner for "
+        "this scope at mutation time (receipt record scope/owner are the "
+        "issuing mutation's scope and owner) and is bound by its issuance "
+        "origin in authenticate_mapping before derive_joins re-checks the "
+        "same fields.",
+        [('scripts/pm_goal_dg_cb_migration.py', 443)]),
+    'dg5/site/pm_goal_dg_cb_migration.py:451': _p(
+        "cap.stop is the projection returned by the host owner's "
+        "read_for_binding_migration in the same capture, built from the "
+        "same stop cell whose image stop_item carries; both reads are of "
+        "one cell in one synchronous capture with no stop write between.",
+        [('scripts/pm_goal_dg_cb_migration.py', 451), (BO, 776)]),
+    'dg5/site/pm_goal_dg_cb_migration.py:462': _p(
+        "The goal_plan_binding image is enumerated by the plan owner for "
+        "this scope (gpb_key scoped by the run id under this scope) and "
+        "its record goal_id is written by bind_goal from that scope; the "
+        "storage instance is the wrapper's own instance stamped at "
+        "issuance in this Storage.",
+        [('scripts/pm_goal_dg_cb_migration.py', 462)]),
+    'dg5/site/pm_goal_dg_cb_migration.py:920': _p(
+        "withdraw reads the stored result via result_selection at entry "
+        "as 'original' and re-reads the identical cell at :920 in the same "
+        "synchronous call; the only writes in between are the read_result "
+        "audit (passive, :868) and no result write, so the two reads "
+        "cannot differ.",
+        [('scripts/pm_goal_dg_cb_migration.py', 920)],
+        ['dg5/site/pm_goal_dg_cb_migration.py:868']),
+    'dg5/site/pm_goal_dg_cb_migration.py:922': _p(
+        "The withdrawal value is the scope + three ids + the stored "
+        "original result + fenced domain selection + preserved pending "
+        "ids; the original result is itself a commit write already bounded "
+        "by stored_part_cap as a stored part, and the remaining fields are "
+        "fixed-size ids, so the operation measure cannot reach PART_CAP "
+        "for any result commit could have written.",
+        [('scripts/pm_goal_dg_cb_migration.py', 922), ('scripts/pm_goal_dg_cb_migration.py', 782)],
+        ['dg5/site/pm_goal_dg_cb_migration.py:782']),
+    'dg5/site/pm_goal_dg_cb_owners.py:228': _p(
+        "schema_ref_for is called only from image()/physical issuance "
+        "paths with the owners' fixed family names, every one a key of "
+        "FAMILY_SCHEMAS; no caller passes a caller-supplied family.",
+        [(BO, 228), (BO, 395)]),
+    'dg5/d06/revision/number': _p(
+        "after_rev is computed only in d06.prepare, whose every refusal is "
+        "caught by run_native and recorded as d06_refusal (the route entry "
+        "accepts), so the overflow can never be the refusal of a family "
+        "entry; and the body revision it increments is the run revision "
+        "counter (see run/revision), starting at 1 and advancing once per "
+        "genuine transition in the same process.",
+        [(N3, 949)],
+        ['dg5/run/revision/number']),
+    'dg5/site/pm_goal_dg_ca3_native.py:947': _p(
+        "Same prepare-only argument as d06/revision: unsupported_status is "
+        "checked only in d06.prepare, whose refusals run_native catches and "
+        "records instead of refusing the entry; the body status itself is "
+        "written only by allocate ('running') and transition() with the "
+        "statuses its callers pass from NONTERMINAL+TERMINAL.",
+        [(N3, 947), (N3, 518)]),
+    'dg5/site/pm_goal_dg_ca3_route.py:78': _p(
+        "Same wrapper argument as C1 :56 on the C3 route wrapper: every "
+        "wrap() call site whose def requires physical_key passes a "
+        "formatted non-empty key from key()/progress_key(), and call sites "
+        "without a key use defs with no physical_key requirement.",
+        [(R3, 78), (R3, 186)]),
+    'dg5/site/pm_goal_dg_ca3_route.py:81': _p(
+        "Same wrapper argument as C1 :59: the workflow bank is hash-pinned "
+        "at Roots load and every wrapper def used by the route declares "
+        "const for its non-record/storage_instance/physical_key fields.",
+        [(R3, 81), (R3, 186)]),
+    'dg5/site/pm_goal_dg_cb_migration.py:527': _p(
+        "Run bindings are enumerated by scheduler_sources only alongside a "
+        "schedule for a run in the same run_ids set (the binding is "
+        "appended only when its schedule cell exists), and derive_joins "
+        "checks the schedule at :521 against the identical runs dict "
+        "first; a binding for a missing run is never enumerated.",
+        [('scripts/pm_goal_dg_cb_migration.py', 527), (BO, 1083)],
+        ['dg5/site/pm_goal_dg_cb_migration.py:521']),
+    'dg5/site/pm_goal_dg_cb_migration.py:532': _p(
+        "Consents and callback admissions are enumerated by "
+        "scheduler_sources filtered to the same run_ids set derive_joins "
+        "checks against (consents by run_id in run_ids, callbacks by the "
+        "scope prefix of runs in that set at schedule time); the schedule "
+        "check at :521 on the identical runs dict precedes both loops.",
+        [('scripts/pm_goal_dg_cb_migration.py', 532), (BO, 1083)],
+        ['dg5/site/pm_goal_dg_cb_migration.py:521']),
     'dg5/site/pm_goal_dg_ca_owners.py:176': _p(
         "World.selection is called only from install_writer_domain (with the "
         "domain wrapper it has just written in the same call) and from "

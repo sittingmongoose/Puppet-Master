@@ -1320,7 +1320,7 @@ def cases(suite):
         r.progress = copy.deepcopy(r.progress)
         r.progress['cancellation_receipt'] = dict(
             r.progress['cancellation_receipt'],
-            stop_receipt_ref=r.key('goal_cancel_stop_receipt') + ':foreign')
+            stop_receipt_ref=O.uid('TEST_ONLY:host-stop-receipt'))
         c3_coherent_progress(w, r)
         return w, r.settle_owner
     add('c3/settle_receipt_custody', c3_settle_receipt_custody, 'C3/settle_owner/receipt_custody', R3_SITE + '850')
@@ -2193,7 +2193,7 @@ def cases(suite):
 
     cb_run_case('cb/commit_exclusion_not_held',
                 lambda w, s, req, sel: w.coordinator.release_exclusion(s),
-                'M/commit/exclusion_not_held', MB_SITE + '613')
+                'M/commit/exclusion_not_held', MB_SITE + '764')
     cb_run_case('cb/commit_independent_capture',
                 lambda w, s, req, sel: w.host_stop.manual(s, 'stop'),
                 'M/commit/independent_capture', MB_SITE + '766')
@@ -2441,12 +2441,10 @@ def cases(suite):
                                                        expected=w.cell(w.binding.REVISION, w.binding.keys(s)['revision'])['version'], delete=True)])],
                  'M/read_result/destination_unavailable', MB_SITE + '850')
     def origin_member_setup(w, s, res, sel):
-        read = w.binding.read_current(s)
-        wrapper = read['origin']['value']
-        okey = BO.origin_key(w.binding.ORIGIN, wrapper['physical_key'], BO.row_sha(wrapper))
-        cell = w.cell(BO.ORIGINS, okey)
-        w.write([dict(table=BO.ORIGINS, key=okey, expected=cell['version'], delete=True)])
-        mark(w, BO.ORIGINS, okey)
+        tx_edit(w, MB.RESULT, w.coordinator.result_key(s, res['migration_id']),
+                lambda v: v.update(published_members=[
+                    m for m in v['published_members']
+                    if not m['physical_key'].startswith('goal_execution_binding_origin|')]))
     cb_read_case('cb/read_result_origin_member2', origin_member_setup,
                  'M/read_result/origin_member', MB_SITE + '856')
 
@@ -2475,6 +2473,20 @@ def cases(suite):
     cb_delete2('cb/plan_absent_reverse_orphan', None,
                lambda w, s: ('goal_plan_binding', w.plans.gpb_key(s, C5C.plan_bound(w, s, schedules=0, consents=0)[1])),
                'M/capture/plan_absent_reverse_row', MB_SITE + '492')
+
+
+    def cb_edit_reissue(w, family, key, fn):
+        cell = w.cell(family, key)
+        old_raw = BO.physical(cell['value'])[1]
+        old_okey = BO.origin_key(family, key, BO.sha(old_raw))
+        old_origin = copy.deepcopy(w.cell(BO.ORIGINS, old_okey)['value'])
+        new = tx_edit(w, family, key, fn)
+        new_raw = BO.physical(new)[1]
+        new_okey = BO.origin_key(family, key, BO.sha(new_raw))
+        new_origin = copy.deepcopy(old_origin)
+        new_origin['issued_physical_sha256'] = BO.sha(new_raw)
+        w.write([w.put(BO.ORIGINS, new_okey, new_origin)])
+        mark(w, BO.ORIGINS, new_okey)
 
     def cb_workflow_delete(name, which, expected, target):
         def make():
@@ -2549,9 +2561,18 @@ def cases(suite):
         route, req = C5C.cancel_request(w, s)
         route.dispatch(req)
         for k in list(w.storage.cells.get('sir_command_outcome', {}))[:1]:
+            _c, old_raw, _v = BO.decode_physical(w.cell('sir_command_outcome', k)['value'], 'cb/sir')
+            old_okey = BO.origin_key('sir_command_outcome', k, BO.sha(old_raw))
+            old_origin = copy.deepcopy(w.cell(BO.ORIGINS, old_okey)['value'])
             cb_phys_edit(w, 'sir_command_outcome', k, lambda v: v['record'].update(outcome='bogus'))
+            new_raw = BO.physical(w.cell('sir_command_outcome', k)['value'])[1]
+            new_okey = BO.origin_key('sir_command_outcome', k, BO.sha(new_raw))
+            new_origin = copy.deepcopy(old_origin)
+            new_origin['issued_physical_sha256'] = BO.sha(new_raw)
+            w.write([w.put(BO.ORIGINS, new_okey, new_origin)])
+            mark(w, BO.ORIGINS, new_okey)
     cb_capture('cb/sir_outcome_kind', sir_outcome_setup,
-               'M/capture/source_schema/sir_command_outcome/sir_outcome_kind', BO_SITE + '222')
+               'M/capture/source_schema/sir_outcome_kind', BO_SITE + '222')
     cb_case('cb/cutoff_without_domain', lambda w, s: None,
             lambda w, s: w.binding.cutoff_write(O.uid('TEST_ONLY:wd'), O.uid('TEST_ONLY:mid')),
             'domain/cutoff_without_domain', BO_SITE + '1610')
@@ -2622,3 +2643,132 @@ def cases(suite):
         w.coordinator.inject[('capture', 'after_goal')] = hook
     cb_capture('cb/origin_absent_auth', origin_absent_setup,
                'M/capture/origin_absent/goal_body_record', MB_SITE + '345')
+
+    # ---- batch 13: CA3 numbers/selectors + CB derive joins remainder ----
+    def num_case(name, setup, act, expected, target):
+        def make():
+            w, r = C3C.until(suite, 'native')
+            setup(w, r)
+            return w, lambda: act(w, r)
+        add(name, make, expected, target)
+    def cap_revision_act(w, r):
+        try:
+            return r.run_native()
+        finally:
+            for table in ('TEST_ONLY:ancillary_provenance', w.native.effects.CAP, w.native.effects.INV,
+                          'TEST_ONLY:workflow_scheduler_stop', 'executor_run_execution_control',
+                          'workflow_goal_run_control', 'workflow_goal_run_body'):
+                for key in list(w.storage.cells.get(table, {})):
+                    mark(w, table, key)
+    num_case('number/cap_revision_max',
+             lambda w, r: [tx_edit(w, w.native.effects.CAP, k, lambda v: v.update(revision=MAX_U64))
+                           for k in list(w.storage.cells.get(w.native.effects.CAP, {}))[:1]],
+             cap_revision_act, 'cap/revision/numrule/integer_range', 'dg5/cap/revision/number')
+    # d06/revision + d06/unsupported_status: proofs (prepare refusals are caught by run_native).
+
+    def index_revision_max():
+        w, r = C3C.wf(suite)
+        w.index.frontier = dict(w.index.frontier or {}, publication_revision=MAX_U64)
+        return w, w.index.publish
+    add('number/index_revision_max', index_revision_max,
+        'index/revision/numrule/integer_range', 'dg5/index/revision/number')
+
+    def selector_instance_setup(w, r):
+        new = tx_edit(w, w.native.d06.INTENT, r.wf_run['d06']['intent_key'],
+                      lambda v: v['record']['association_selection'].update(storage_instance_id='foreign'))
+        tx_edit(w, w.native.d06.CONTROL, r.wf_run['d06']['control_key'],
+                lambda v: v['record']['intent'].update(physical_value_sha256=O.row_sha(new)))
+    native_case('c3n/selector_instance', selector_instance_setup,
+                'C3/settle_owner/native_custody/selector_instance', N3_SITE + '135')
+    native_case('c3n/selector_unavailable',
+                lambda w, r: drop(w, w.native.effects.CUT if hasattr(w.native.effects, 'CUT') else 'TEST_ONLY:native_inventory_cut',
+                                  r.wf_run['d05']['cut_key'] if 'cut_key' in r.wf_run.get('d05', {}) else
+                                  [k for k in w.storage.cells.get('TEST_ONLY:native_inventory_cut', {})][0]),
+                'native/selector/unavailable', N3_SITE + '137')
+    native_case('c3n/stored_unavailable',
+                lambda w, r: drop(w, 'TEST_ONLY:workflow_scheduler_stop', r.wf_run['scheduler_stop_key']
+                                  if 'scheduler_stop_key' in r.wf_run else [k for k in w.storage.cells.get('workflow_scheduler_stop', {})][0]),
+                'native/selector/unavailable', N3_SITE + '101')
+
+    # d06_unsupported_status: proof in proofs_ca (prepare-only check, caught by run_native).
+
+    def reservation_absent():
+        w, r = C3C.until(suite, 'append_original')
+        drop(w, AS.RESERVATION_TABLE, r.operation_id)
+        return w, r.append_original
+    add('c3/reservation_absent', reservation_absent, 'assignment/reservation_absent', R3_SITE + '116')
+
+    def cb_workflow_head_chain():
+        w, scope = cb_new()
+        rid = w.workflows.attach(scope)
+        k = w.workflows.keys(scope, rid)
+        heads = w.workflows.head_keys(scope, rid) if hasattr(w.workflows, 'head_keys') else \
+            [kk for kk in w.storage.cells.get('executor_workflow_workflow_head', {}) if kk.startswith(k['head_prefix'])]
+        hk = sorted(heads)[-1]
+        cb_edit_reissue(w, 'executor_workflow_workflow_head', hk,
+                lambda v: v['record'].update(revision=v['record']['revision'] + 5))
+        return w, lambda: w.coordinator.capture(MB.selector(scope))
+    add('cb/workflow_head_chain', cb_workflow_head_chain, 'M/capture/workflow_head_chain', MB_SITE + '506')
+
+    def cb_workflow_goal_join():
+        w, scope = cb_new()
+        rid = w.workflows.attach(scope)
+        k = w.workflows.keys(scope, rid)
+        cb_edit_reissue(w, 'workflow_goal_run_body', k['body'],
+                lambda v: v['record']['identity'].update(goal_id=O.short_id('goal')))
+        return w, lambda: w.coordinator.capture(MB.selector(scope))
+    add('cb/workflow_goal_join', cb_workflow_goal_join, 'M/capture/workflow_goal_join', MB_SITE + '508')
+
+    def cb_workflow_join():
+        w, scope = cb_new()
+        rid = w.workflows.attach(scope)
+        k = w.workflows.keys(scope, rid)
+        cb_edit_reissue(w, 'workflow_goal_run_control', k['control'],
+                lambda v: v['record']['identity'].update(goal_id=O.short_id('goal')))
+        return w, lambda: w.coordinator.capture(MB.selector(scope))
+    add('cb/workflow_join', cb_workflow_join, 'M/capture/workflow_join', MB_SITE + '510')
+
+    def audit_custody_case():
+        w, r = C3C.until(suite, 'append_original')
+        r.late_audit = dict(r.late_audit, assignment_attempt=99)
+        return w, r.append_original
+    add('c3/append_audit_custody', audit_custody_case, 'C3/append_original/audit_custody', R3_SITE + '1103')
+
+    # ---- batch 14: last route joins ----
+    def d06_goal_stop():
+        w, r = C3C.until(suite, 'settle_owner')
+        intent = w.value(w.native.d06.INTENT, r.wf_run['d06']['intent_key'])['record']
+        rkey = intent['goal_stop']['physical_key']
+        cell = w.cell('goal_cancel_stop_receipt', rkey)
+        newkey = rkey + ':copy'
+        w.write([w.put('goal_cancel_stop_receipt', newkey, copy.deepcopy(cell['value']))])
+        fake = __import__('pm_goal_dg_ca3_native').src_sel(w, 'goal_cancel_stop_receipt', newkey)
+        new = tx_edit(w, w.native.d06.INTENT, r.wf_run['d06']['intent_key'],
+                      lambda v: v['record'].update(goal_stop=fake))
+        tx_edit(w, w.native.d06.CONTROL, r.wf_run['d06']['control_key'],
+                lambda v: v['record']['intent'].update(physical_value_sha256=O.row_sha(new)))
+        return w, r.settle_owner
+    add('c3/d06_goal_stop', d06_goal_stop, 'C3/settle_owner/d06_goal_stop', R3_SITE + '805')
+
+    def d05_goal_stop_route():
+        w, r = C3C.until(suite, 'settle_owner')
+        r.progress = copy.deepcopy(r.progress)
+        r.progress['stop_receipt'] = dict(r.progress['stop_receipt'],
+                                          original_host_transaction_ref=O.uid('TEST_ONLY:host-stop-transaction'))
+        c3_coherent_progress(w, r)
+        return w, r.settle_owner
+    add('c3/d05_goal_stop_route', d05_goal_stop_route, 'C3/settle_owner/d05_goal_stop', R3_SITE + '810')
+
+    def d06_d05_join():
+        w, r = C3C.until(suite, 'settle_owner')
+        safe_key = r.wf_run['d05']['result_key']
+        fake = __import__('pm_goal_dg_ca3_native').src_sel(w, w.native.d05.RESULT, safe_key)
+        fake = dict(fake, physical_key=fake['physical_key'] + ':copy')
+        cell = w.cell(w.native.d05.RESULT, safe_key)
+        w.write([w.put(w.native.d05.RESULT, fake['physical_key'], copy.deepcopy(cell['value']))])
+        new = tx_edit(w, w.native.d06.INTENT, r.wf_run['d06']['intent_key'],
+                      lambda v: v['record'].update(safe_stop_source=fake))
+        tx_edit(w, w.native.d06.CONTROL, r.wf_run['d06']['control_key'],
+                lambda v: v['record']['intent'].update(physical_value_sha256=O.row_sha(new)))
+        return w, r.settle_owner
+    add('c3/d06_d05_join', d06_d05_join, 'C3/settle_owner/d06_d05_join', R3_SITE + '813')
