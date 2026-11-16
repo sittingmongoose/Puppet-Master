@@ -2,7 +2,7 @@
   "$schema": "https://puppetmaster.local/schemas/event_family_registry/1.0.0/event_family_registry.schema.json",
   "schema_id": "pm.event_family_registry.v1",
   "schema_version": "2.0.0",
-  "registry_revision": "2026-11-16.300",
+  "registry_revision": "2026-11-16.301",
   "owner_doc": "Plans/storage-plan.md#case-l-5-eventrecord-persistence-legacy-normalization-and-dedupe",
   "unknown_event_disposition": "quarantine_without_checkpoint_advance",
   "families": [
@@ -364,16 +364,16 @@
     },
     {
       "family_id": "event-family-goal-run-stopped",
-      "family_revision": "2.0.0",
+      "family_revision": "3.0.0",
       "event_type": "goal_run.stopped",
       "scope_policy": "project_only",
-      "semantic_owner_doc": "Plans/Goal_Runtime_System.md#goal-and-goalrun-payload-minima",
-      "payload_owner_doc": "Plans/storage-plan.md#sp-214---goal-runtime-persistence-consumer",
-      "payload_schema_id": "pm.goal_runtime_event.goal_run_stopped.schema.v2",
+      "semantic_owner_doc": "Plans/Goal_Runtime_System.md#GRS-200",
+      "payload_owner_doc": "Plans/storage-plan.md#SP-426",
+      "payload_schema_id": "pm.goal_runtime_event.goal_run_stopped.schema.v3",
       "payload_schema_ref": {
-        "path": "Plans/event_payloads/goal_runtime/goal_run_stopped.schema.json",
+        "path": "Plans/executor_cancellation_contracts/schemas/goal-run-stopped.v3.schema.json",
         "json_pointer": "#",
-        "schema_id": "pm.goal_runtime_event.goal_run_stopped.schema.v2"
+        "schema_id": "pm.goal_runtime_event.goal_run_stopped.schema.v3"
       },
       "legacy": {
         "aliases": [],
@@ -384,6 +384,21 @@
           ],
           "thread_id": [
             "/payload/thread_id"
+          ],
+          "run_id": [
+            "/payload/payload/goal_run_id"
+          ],
+          "actor_ref": [
+            "/payload/actor_ref"
+          ],
+          "requested_account_ref": [
+            "/payload/requested_account_ref"
+          ],
+          "effective_account_ref": [
+            "/payload/effective_account_ref"
+          ],
+          "correlation_id": [
+            "/payload/correlation_id"
           ]
         },
         "referenced_event_id_pointer": null,
@@ -396,13 +411,50 @@
       "source_refs": [
         "Plans/event_payloads/goal_runtime/goal_run_stopped.schema.json#",
         "Plans/Goal_Runtime_System.md#goal-and-goalrun-payload-minima",
-        "Plans/Contracts_V0.md#cv-287---goal-runtime-event-schema-registration"
+        "Plans/Contracts_V0.md#cv-287---goal-runtime-event-schema-registration",
+        "Plans/executor_cancellation_contracts/schemas/goal-run-stopped.v3.schema.json#",
+        "Plans/Goal_Runtime_System.md#GRS-200",
+        "Plans/Goal_Runtime_System.md#GRS-202",
+        "Plans/Goal_Runtime_System.md#GRS-1110",
+        "Plans/Executor_Protocol.md#EP-200",
+        "Plans/Executor_Protocol.md#EP-1110",
+        "Plans/Executor_Protocol.md#EP-1111",
+        "Plans/storage-plan.md#SP-426",
+        "Plans/storage-plan.md#SP-428",
+        "Plans/storage-plan.md#SP-1110",
+        "Plans/storage-plan.md#SP-1112",
+        "Plans/Contracts_V0.md#CV-420",
+        "Plans/Contracts_V0.md#CV-1110",
+        "Plans/goal_run_stop_block_contracts/contracts.schema.json",
+        "Plans/goal_run_stop_block_contracts/methods.json"
       ],
       "retention_policy_ref": {
         "registry_schema_id": "pm.storage_value_registry.v2",
         "policy_id": "RP-AUTHORITY-INDEFINITE",
         "policy_version": "1.0.0"
-      }
+      },
+      "payload_versions": [
+        {
+          "scope_kind": "project",
+          "payload_schema_id": "pm.goal_runtime_event.goal_run_stopped.schema.v3",
+          "payload_schema_ref": {
+            "path": "Plans/executor_cancellation_contracts/schemas/goal-run-stopped.v3.schema.json",
+            "json_pointer": "#",
+            "schema_id": "pm.goal_runtime_event.goal_run_stopped.schema.v3"
+          },
+          "source_graph_ref": "Plans/goal_run_stop_block_contracts/profile.json",
+          "producer_admission": "existing_project_policy",
+          "append_owner_ref": "Plans/Goal_Runtime_System.md#GRS-200",
+          "read_owner_ref": "Plans/storage-plan.md#SP-426",
+          "backup_owner_ref": "Plans/Backup_Restore_System.md#BRS-033",
+          "retention_policy_ref": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-AUTHORITY-INDEFINITE",
+            "policy_version": "1.0.0"
+          }
+        }
+      ],
+      "payload_selection_policy": "exact_scope_and_schema_id_no_fallback"
     },
     {
       "family_id": "event-family-goal-blocked",

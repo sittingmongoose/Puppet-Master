@@ -492,7 +492,7 @@ EVENT_FAMILY_GOAL_PAYLOAD_SCHEMA_REFS = {
     "goal_run.blocked": "Plans/event_payloads/goal_runtime/goal_run_blocked.schema.json",
     "goal_run.certified": "Plans/workflow_standard_source_contracts/schemas/goal-run-certified.v3.schema.json",
     "goal_run.cancelled": "Plans/executor_cancellation_contracts/schemas/goal-run-cancelled.v3.schema.json",
-    "goal_run.stopped": "Plans/event_payloads/goal_runtime/goal_run_stopped.schema.json",
+    "goal_run.stopped": "Plans/executor_cancellation_contracts/schemas/goal-run-stopped.v3.schema.json",
 }
 EVENT_FAMILY_LEGACY_FIXTURE_PATH = (
     ROOT
