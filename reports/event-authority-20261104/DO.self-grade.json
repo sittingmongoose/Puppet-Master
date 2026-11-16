@@ -43,7 +43,7 @@
               "unit": "OSI-680",
               "line_start": 32181,
               "line_end": 32181,
-              "quote": "**OSI-680: `config.validation.failed@1.0.0` \u2014 newly authored owner contract (DL-045), prepared without admission.** This exact family alone adopts the contract below. No current ap"
+              "quote": "**OSI-680: `config.validation.failed@1.0.0` — newly authored owner contract (DL-045), prepared without admission.** This exact family alone adopts the contract below. No current ap"
             }
           ],
           "prior": {
@@ -63,7 +63,7 @@
               "unit": "OSI-680",
               "line_start": 32181,
               "line_end": 32181,
-              "quote": "**OSI-680: `config.validation.failed@1.0.0` \u2014 newly authored owner contract (DL-045), prepared without admission.** This exact family alone adopts the contract below. No current ap"
+              "quote": "**OSI-680: `config.validation.failed@1.0.0` — newly authored owner contract (DL-045), prepared without admission.** This exact family alone adopts the contract below. No current ap"
             }
           ],
           "prior": {
@@ -264,7 +264,7 @@
               "unit": "OSI-680",
               "line_start": 32195,
               "line_end": 32195,
-              "quote": "**Historical-read admission oracle \u2014 config.validation.failed.** Newly authored exact-family binding uses the closed `Plans/orchestrator_historical_read.schema.json` witness with r"
+              "quote": "**Historical-read admission oracle — config.validation.failed.** Newly authored exact-family binding uses the closed `Plans/orchestrator_historical_read.schema.json` witness with r"
             },
             {
               "path": "Plans/orchestrator-subagent-integration.md",
@@ -497,7 +497,7 @@
               "unit": "OSI-681",
               "line_start": 32231,
               "line_end": 32231,
-              "quote": "**OSI-681: `crew.board_message_posted@1.0.0` \u2014 newly authored owner contract (DL-045), prepared without admission.** This exact family alone adopts the contract below. No current a"
+              "quote": "**OSI-681: `crew.board_message_posted@1.0.0` — newly authored owner contract (DL-045), prepared without admission.** This exact family alone adopts the contract below. No current a"
             }
           ],
           "prior": {
@@ -517,7 +517,7 @@
               "unit": "OSI-681",
               "line_start": 32231,
               "line_end": 32231,
-              "quote": "**OSI-681: `crew.board_message_posted@1.0.0` \u2014 newly authored owner contract (DL-045), prepared without admission.** This exact family alone adopts the contract below. No current a"
+              "quote": "**OSI-681: `crew.board_message_posted@1.0.0` — newly authored owner contract (DL-045), prepared without admission.** This exact family alone adopts the contract below. No current a"
             }
           ],
           "prior": {
@@ -574,11 +574,35 @@
               "quote": "Its closed member `crew_board_message_posted` is copied from Plans/coordination_event_payloads.schema.json#/$defs/crew_board_message_posted, the file the row's value_schema_ref names, including schema_version and scope union;"
             },
             {
-              "path": "Plans/storage-plan.md",
-              "unit": "SP-320",
-              "line_start": 530,
-              "line_end": 530,
-              "quote": "An event-record member is an EventRecord payload: it carries `schema_version` and no `schema_id`, because the envelope's `payload_schema_id` names it."
+              "path": "Plans/orchestrator-subagent-integration.md",
+              "unit": "OSI-681",
+              "line_start": 32536,
+              "line_end": 32536,
+              "quote": "`Plans/orchestrator_event_payloads.schema.json#/$defs/crew_board_message_posted` (`pm.event_payload.crew_board_message_posted.v1@1.0.0`) is the closed payload. It carries schema_version and no stored schema_id: under SP-320 the EventRecord's payload_schema_id names it.",
+              "file_sha256": "b39393943cd0f6532f76acdc63eb4152c4cea49b337972fb49705a7e9bfc2365",
+              "quote_check": "exact",
+              "reanchor": {
+                "old_path": "Plans/storage-plan.md",
+                "old_unit": "SP-320",
+                "old_quote": "An event-record member is an EventRecord payload: it carries `schema_version` and no `schema_id`, because the envelope's `payload_schema_id` names it.",
+                "method": "recited",
+                "reason": "SP-320 is the coordination persistence unit, while the old generic keyed-composition sentence was outside its span even at the grade commit. The cell already cites its own OSI-681 exact closed-member contract, including schema_version/no stored schema_id. Re-cite that existing family-specific evidence instead of the misattributed duplicate shared sentence; no new claim or verdict.",
+                "history": {
+                  "grade_commit": "e86c1330b0d2e91f021f3ec7c350958feb2d7849",
+                  "command": [
+                    "git",
+                    "-C",
+                    "/home/sittingmongoose/pm-worktrees/merge2-apply",
+                    "log",
+                    "--format=fuller",
+                    "-L",
+                    "32532,32610:Plans/orchestrator-subagent-integration.md",
+                    "e86c1330b0d2e91f021f3ec7c350958feb2d7849..HEAD"
+                  ],
+                  "exit_code": 0,
+                  "log": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/merge2-apply/evidence/quote-history/recite-OSI-681-DO.self-grade.log"
+                }
+              }
             }
           ],
           "prior": {
@@ -739,7 +763,7 @@
               "unit": "OSI-681",
               "line_start": 32251,
               "line_end": 32251,
-              "quote": "**Historical-read admission oracle \u2014 crew.board_message_posted.** Newly authored exact-family binding uses the closed `Plans/orchestrator_historical_read.schema.json` witness with "
+              "quote": "**Historical-read admission oracle — crew.board_message_posted.** Newly authored exact-family binding uses the closed `Plans/orchestrator_historical_read.schema.json` witness with "
             },
             {
               "path": "Plans/orchestrator-subagent-integration.md",
@@ -973,7 +997,7 @@
               "unit": "OSI-682",
               "line_start": 32287,
               "line_end": 32287,
-              "quote": "**OSI-682: `crew.board_message_read@1.0.0` \u2014 newly authored owner contract (DL-045), prepared without admission.** This exact family alone adopts the contract below. No current app"
+              "quote": "**OSI-682: `crew.board_message_read@1.0.0` — newly authored owner contract (DL-045), prepared without admission.** This exact family alone adopts the contract below. No current app"
             }
           ],
           "prior": {
@@ -993,7 +1017,7 @@
               "unit": "OSI-682",
               "line_start": 32287,
               "line_end": 32287,
-              "quote": "**OSI-682: `crew.board_message_read@1.0.0` \u2014 newly authored owner contract (DL-045), prepared without admission.** This exact family alone adopts the contract below. No current app"
+              "quote": "**OSI-682: `crew.board_message_read@1.0.0` — newly authored owner contract (DL-045), prepared without admission.** This exact family alone adopts the contract below. No current app"
             }
           ],
           "prior": {
@@ -1043,11 +1067,35 @@
               "quote": "Its closed member `crew_board_message_read` is copied from Plans/coordination_event_payloads.schema.json#/$defs/crew_board_message_read, the file the row's value_schema_ref names, including schema_version and scope union;"
             },
             {
-              "path": "Plans/storage-plan.md",
-              "unit": "SP-320",
-              "line_start": 530,
-              "line_end": 530,
-              "quote": "An event-record member is an EventRecord payload: it carries `schema_version` and no `schema_id`, because the envelope's `payload_schema_id` names it."
+              "path": "Plans/orchestrator-subagent-integration.md",
+              "unit": "OSI-681",
+              "line_start": 32536,
+              "line_end": 32536,
+              "quote": "`Plans/orchestrator_event_payloads.schema.json#/$defs/crew_board_message_posted` (`pm.event_payload.crew_board_message_posted.v1@1.0.0`) is the closed payload. It carries schema_version and no stored schema_id: under SP-320 the EventRecord's payload_schema_id names it.",
+              "file_sha256": "b39393943cd0f6532f76acdc63eb4152c4cea49b337972fb49705a7e9bfc2365",
+              "quote_check": "exact",
+              "reanchor": {
+                "old_path": "Plans/storage-plan.md",
+                "old_unit": "SP-320",
+                "old_quote": "An event-record member is an EventRecord payload: it carries `schema_version` and no `schema_id`, because the envelope's `payload_schema_id` names it.",
+                "method": "recited",
+                "reason": "SP-320 is the coordination persistence unit, while the old generic keyed-composition sentence was outside its span even at the grade commit. The cell already cites its own OSI-681 exact closed-member contract, including schema_version/no stored schema_id. Re-cite that existing family-specific evidence instead of the misattributed duplicate shared sentence; no new claim or verdict.",
+                "history": {
+                  "grade_commit": "e86c1330b0d2e91f021f3ec7c350958feb2d7849",
+                  "command": [
+                    "git",
+                    "-C",
+                    "/home/sittingmongoose/pm-worktrees/merge2-apply",
+                    "log",
+                    "--format=fuller",
+                    "-L",
+                    "32532,32610:Plans/orchestrator-subagent-integration.md",
+                    "e86c1330b0d2e91f021f3ec7c350958feb2d7849..HEAD"
+                  ],
+                  "exit_code": 0,
+                  "log": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/merge2-apply/evidence/quote-history/recite-OSI-681-DO.self-grade.log"
+                }
+              }
             }
           ],
           "prior": {
@@ -1208,7 +1256,7 @@
               "unit": "OSI-682",
               "line_start": 32305,
               "line_end": 32305,
-              "quote": "**Historical-read admission oracle \u2014 crew.board_message_read.** Newly authored exact-family binding uses the closed `Plans/orchestrator_historical_read.schema.json` witness with re"
+              "quote": "**Historical-read admission oracle — crew.board_message_read.** Newly authored exact-family binding uses the closed `Plans/orchestrator_historical_read.schema.json` witness with re"
             },
             {
               "path": "Plans/orchestrator-subagent-integration.md",
@@ -1442,7 +1490,7 @@
               "unit": "OSI-683",
               "line_start": 32341,
               "line_end": 32341,
-              "quote": "**OSI-683: `crew.board_messages_archived@1.0.0` \u2014 newly authored owner contract (DL-045), prepared without admission.** This exact family alone adopts the contract below. No curren"
+              "quote": "**OSI-683: `crew.board_messages_archived@1.0.0` — newly authored owner contract (DL-045), prepared without admission.** This exact family alone adopts the contract below. No curren"
             }
           ],
           "prior": {
@@ -1462,7 +1510,7 @@
               "unit": "OSI-683",
               "line_start": 32341,
               "line_end": 32341,
-              "quote": "**OSI-683: `crew.board_messages_archived@1.0.0` \u2014 newly authored owner contract (DL-045), prepared without admission.** This exact family alone adopts the contract below. No curren"
+              "quote": "**OSI-683: `crew.board_messages_archived@1.0.0` — newly authored owner contract (DL-045), prepared without admission.** This exact family alone adopts the contract below. No curren"
             }
           ],
           "prior": {
@@ -1512,11 +1560,35 @@
               "quote": "Its closed member `crew_board_messages_archived` is copied from Plans/coordination_event_payloads.schema.json#/$defs/crew_board_messages_archived, the file the row's value_schema_ref names, including schema_version and scope union;"
             },
             {
-              "path": "Plans/storage-plan.md",
-              "unit": "SP-320",
-              "line_start": 530,
-              "line_end": 530,
-              "quote": "An event-record member is an EventRecord payload: it carries `schema_version` and no `schema_id`, because the envelope's `payload_schema_id` names it."
+              "path": "Plans/orchestrator-subagent-integration.md",
+              "unit": "OSI-681",
+              "line_start": 32536,
+              "line_end": 32536,
+              "quote": "`Plans/orchestrator_event_payloads.schema.json#/$defs/crew_board_message_posted` (`pm.event_payload.crew_board_message_posted.v1@1.0.0`) is the closed payload. It carries schema_version and no stored schema_id: under SP-320 the EventRecord's payload_schema_id names it.",
+              "file_sha256": "b39393943cd0f6532f76acdc63eb4152c4cea49b337972fb49705a7e9bfc2365",
+              "quote_check": "exact",
+              "reanchor": {
+                "old_path": "Plans/storage-plan.md",
+                "old_unit": "SP-320",
+                "old_quote": "An event-record member is an EventRecord payload: it carries `schema_version` and no `schema_id`, because the envelope's `payload_schema_id` names it.",
+                "method": "recited",
+                "reason": "SP-320 is the coordination persistence unit, while the old generic keyed-composition sentence was outside its span even at the grade commit. The cell already cites its own OSI-681 exact closed-member contract, including schema_version/no stored schema_id. Re-cite that existing family-specific evidence instead of the misattributed duplicate shared sentence; no new claim or verdict.",
+                "history": {
+                  "grade_commit": "e86c1330b0d2e91f021f3ec7c350958feb2d7849",
+                  "command": [
+                    "git",
+                    "-C",
+                    "/home/sittingmongoose/pm-worktrees/merge2-apply",
+                    "log",
+                    "--format=fuller",
+                    "-L",
+                    "32532,32610:Plans/orchestrator-subagent-integration.md",
+                    "e86c1330b0d2e91f021f3ec7c350958feb2d7849..HEAD"
+                  ],
+                  "exit_code": 0,
+                  "log": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/merge2-apply/evidence/quote-history/recite-OSI-681-DO.self-grade.log"
+                }
+              }
             }
           ],
           "prior": {
@@ -1677,7 +1749,7 @@
               "unit": "OSI-683",
               "line_start": 32359,
               "line_end": 32359,
-              "quote": "**Historical-read admission oracle \u2014 crew.board_messages_archived.** Newly authored exact-family binding uses the closed `Plans/orchestrator_historical_read.schema.json` witness wi"
+              "quote": "**Historical-read admission oracle — crew.board_messages_archived.** Newly authored exact-family binding uses the closed `Plans/orchestrator_historical_read.schema.json` witness wi"
             },
             {
               "path": "Plans/orchestrator-subagent-integration.md",
@@ -1908,7 +1980,7 @@
               "unit": "OSI-684",
               "line_start": 32395,
               "line_end": 32395,
-              "quote": "**OSI-684: `parser.error@1.0.0` \u2014 newly authored owner contract (DL-045), prepared without admission.** This exact family alone adopts the contract below. No current append is allo"
+              "quote": "**OSI-684: `parser.error@1.0.0` — newly authored owner contract (DL-045), prepared without admission.** This exact family alone adopts the contract below. No current append is allo"
             }
           ],
           "prior": {
@@ -1928,7 +2000,7 @@
               "unit": "OSI-684",
               "line_start": 32395,
               "line_end": 32395,
-              "quote": "**OSI-684: `parser.error@1.0.0` \u2014 newly authored owner contract (DL-045), prepared without admission.** This exact family alone adopts the contract below. No current append is allo"
+              "quote": "**OSI-684: `parser.error@1.0.0` — newly authored owner contract (DL-045), prepared without admission.** This exact family alone adopts the contract below. No current append is allo"
             }
           ],
           "prior": {
@@ -2129,7 +2201,7 @@
               "unit": "OSI-684",
               "line_start": 32411,
               "line_end": 32411,
-              "quote": "**Historical-read admission oracle \u2014 parser.error.** Newly authored exact-family binding uses the closed `Plans/orchestrator_historical_read.schema.json` witness with reader `reade"
+              "quote": "**Historical-read admission oracle — parser.error.** Newly authored exact-family binding uses the closed `Plans/orchestrator_historical_read.schema.json` witness with reader `reade"
             },
             {
               "path": "Plans/orchestrator-subagent-integration.md",
@@ -2359,7 +2431,7 @@
               "unit": "OSI-685",
               "line_start": 32447,
               "line_end": 32447,
-              "quote": "**OSI-685: `phase.force_completed@1.0.0` \u2014 newly authored owner contract (DL-045), prepared without admission.** This exact family alone adopts the contract below. No current appen"
+              "quote": "**OSI-685: `phase.force_completed@1.0.0` — newly authored owner contract (DL-045), prepared without admission.** This exact family alone adopts the contract below. No current appen"
             }
           ],
           "prior": {
@@ -2379,7 +2451,7 @@
               "unit": "OSI-685",
               "line_start": 32447,
               "line_end": 32447,
-              "quote": "**OSI-685: `phase.force_completed@1.0.0` \u2014 newly authored owner contract (DL-045), prepared without admission.** This exact family alone adopts the contract below. No current appen"
+              "quote": "**OSI-685: `phase.force_completed@1.0.0` — newly authored owner contract (DL-045), prepared without admission.** This exact family alone adopts the contract below. No current appen"
             }
           ],
           "prior": {
@@ -2580,7 +2652,7 @@
               "unit": "OSI-685",
               "line_start": 32461,
               "line_end": 32461,
-              "quote": "**Historical-read admission oracle \u2014 phase.force_completed.** Newly authored exact-family binding uses the closed `Plans/orchestrator_historical_read.schema.json` witness with read"
+              "quote": "**Historical-read admission oracle — phase.force_completed.** Newly authored exact-family binding uses the closed `Plans/orchestrator_historical_read.schema.json` witness with read"
             },
             {
               "path": "Plans/orchestrator-subagent-integration.md",
@@ -2810,7 +2882,7 @@
               "unit": "OSI-686",
               "line_start": 32497,
               "line_end": 32497,
-              "quote": "**OSI-686: `subagent.budget_warning@1.0.0` \u2014 newly authored owner contract (DL-045), prepared without admission.** This exact family alone adopts the contract below. No current app"
+              "quote": "**OSI-686: `subagent.budget_warning@1.0.0` — newly authored owner contract (DL-045), prepared without admission.** This exact family alone adopts the contract below. No current app"
             }
           ],
           "prior": {
@@ -2830,7 +2902,7 @@
               "unit": "OSI-686",
               "line_start": 32497,
               "line_end": 32497,
-              "quote": "**OSI-686: `subagent.budget_warning@1.0.0` \u2014 newly authored owner contract (DL-045), prepared without admission.** This exact family alone adopts the contract below. No current app"
+              "quote": "**OSI-686: `subagent.budget_warning@1.0.0` — newly authored owner contract (DL-045), prepared without admission.** This exact family alone adopts the contract below. No current app"
             }
           ],
           "prior": {
@@ -3031,7 +3103,7 @@
               "unit": "OSI-686",
               "line_start": 32511,
               "line_end": 32511,
-              "quote": "**Historical-read admission oracle \u2014 subagent.budget_warning.** Newly authored exact-family binding uses the closed `Plans/orchestrator_historical_read.schema.json` witness with re"
+              "quote": "**Historical-read admission oracle — subagent.budget_warning.** Newly authored exact-family binding uses the closed `Plans/orchestrator_historical_read.schema.json` witness with re"
             },
             {
               "path": "Plans/orchestrator-subagent-integration.md",
@@ -3261,7 +3333,7 @@
               "unit": "OSI-687",
               "line_start": 32547,
               "line_end": 32547,
-              "quote": "**OSI-687: `subagent.cancelled@1.0.0` \u2014 newly authored owner contract (DL-045), prepared without admission.** This exact family alone adopts the contract below. No current append i"
+              "quote": "**OSI-687: `subagent.cancelled@1.0.0` — newly authored owner contract (DL-045), prepared without admission.** This exact family alone adopts the contract below. No current append i"
             }
           ],
           "prior": {
@@ -3281,7 +3353,7 @@
               "unit": "OSI-687",
               "line_start": 32547,
               "line_end": 32547,
-              "quote": "**OSI-687: `subagent.cancelled@1.0.0` \u2014 newly authored owner contract (DL-045), prepared without admission.** This exact family alone adopts the contract below. No current append i"
+              "quote": "**OSI-687: `subagent.cancelled@1.0.0` — newly authored owner contract (DL-045), prepared without admission.** This exact family alone adopts the contract below. No current append i"
             }
           ],
           "prior": {
@@ -3482,7 +3554,7 @@
               "unit": "OSI-687",
               "line_start": 32561,
               "line_end": 32561,
-              "quote": "**Historical-read admission oracle \u2014 subagent.cancelled.** Newly authored exact-family binding uses the closed `Plans/orchestrator_historical_read.schema.json` witness with reader "
+              "quote": "**Historical-read admission oracle — subagent.cancelled.** Newly authored exact-family binding uses the closed `Plans/orchestrator_historical_read.schema.json` witness with reader "
             },
             {
               "path": "Plans/orchestrator-subagent-integration.md",
@@ -3712,7 +3784,7 @@
               "unit": "OSI-688",
               "line_start": 32597,
               "line_end": 32597,
-              "quote": "**OSI-688: `subagent.completed@1.0.0` \u2014 newly authored owner contract (DL-045), prepared without admission.** This exact family alone adopts the contract below. No current append i"
+              "quote": "**OSI-688: `subagent.completed@1.0.0` — newly authored owner contract (DL-045), prepared without admission.** This exact family alone adopts the contract below. No current append i"
             }
           ],
           "prior": {
@@ -3732,7 +3804,7 @@
               "unit": "OSI-688",
               "line_start": 32597,
               "line_end": 32597,
-              "quote": "**OSI-688: `subagent.completed@1.0.0` \u2014 newly authored owner contract (DL-045), prepared without admission.** This exact family alone adopts the contract below. No current append i"
+              "quote": "**OSI-688: `subagent.completed@1.0.0` — newly authored owner contract (DL-045), prepared without admission.** This exact family alone adopts the contract below. No current append i"
             }
           ],
           "prior": {
@@ -3933,7 +4005,7 @@
               "unit": "OSI-688",
               "line_start": 32611,
               "line_end": 32611,
-              "quote": "**Historical-read admission oracle \u2014 subagent.completed.** Newly authored exact-family binding uses the closed `Plans/orchestrator_historical_read.schema.json` witness with reader "
+              "quote": "**Historical-read admission oracle — subagent.completed.** Newly authored exact-family binding uses the closed `Plans/orchestrator_historical_read.schema.json` witness with reader "
             },
             {
               "path": "Plans/orchestrator-subagent-integration.md",
@@ -4163,7 +4235,7 @@
               "unit": "OSI-689",
               "line_start": 32647,
               "line_end": 32647,
-              "quote": "**OSI-689: `subagent.context_warning@1.0.0` \u2014 newly authored owner contract (DL-045), prepared without admission.** This exact family alone adopts the contract below. No current ap"
+              "quote": "**OSI-689: `subagent.context_warning@1.0.0` — newly authored owner contract (DL-045), prepared without admission.** This exact family alone adopts the contract below. No current ap"
             }
           ],
           "prior": {
@@ -4183,7 +4255,7 @@
               "unit": "OSI-689",
               "line_start": 32647,
               "line_end": 32647,
-              "quote": "**OSI-689: `subagent.context_warning@1.0.0` \u2014 newly authored owner contract (DL-045), prepared without admission.** This exact family alone adopts the contract below. No current ap"
+              "quote": "**OSI-689: `subagent.context_warning@1.0.0` — newly authored owner contract (DL-045), prepared without admission.** This exact family alone adopts the contract below. No current ap"
             }
           ],
           "prior": {
@@ -4384,7 +4456,7 @@
               "unit": "OSI-689",
               "line_start": 32661,
               "line_end": 32661,
-              "quote": "**Historical-read admission oracle \u2014 subagent.context_warning.** Newly authored exact-family binding uses the closed `Plans/orchestrator_historical_read.schema.json` witness with r"
+              "quote": "**Historical-read admission oracle — subagent.context_warning.** Newly authored exact-family binding uses the closed `Plans/orchestrator_historical_read.schema.json` witness with r"
             },
             {
               "path": "Plans/orchestrator-subagent-integration.md",
@@ -4614,7 +4686,7 @@
               "unit": "OSI-690",
               "line_start": 32697,
               "line_end": 32697,
-              "quote": "**OSI-690: `subagent.escalated@1.0.0` \u2014 newly authored owner contract (DL-045), prepared without admission.** This exact family alone adopts the contract below. No current append i"
+              "quote": "**OSI-690: `subagent.escalated@1.0.0` — newly authored owner contract (DL-045), prepared without admission.** This exact family alone adopts the contract below. No current append i"
             }
           ],
           "prior": {
@@ -4634,7 +4706,7 @@
               "unit": "OSI-690",
               "line_start": 32697,
               "line_end": 32697,
-              "quote": "**OSI-690: `subagent.escalated@1.0.0` \u2014 newly authored owner contract (DL-045), prepared without admission.** This exact family alone adopts the contract below. No current append i"
+              "quote": "**OSI-690: `subagent.escalated@1.0.0` — newly authored owner contract (DL-045), prepared without admission.** This exact family alone adopts the contract below. No current append i"
             }
           ],
           "prior": {
@@ -4835,7 +4907,7 @@
               "unit": "OSI-690",
               "line_start": 32711,
               "line_end": 32711,
-              "quote": "**Historical-read admission oracle \u2014 subagent.escalated.** Newly authored exact-family binding uses the closed `Plans/orchestrator_historical_read.schema.json` witness with reader "
+              "quote": "**Historical-read admission oracle — subagent.escalated.** Newly authored exact-family binding uses the closed `Plans/orchestrator_historical_read.schema.json` witness with reader "
             },
             {
               "path": "Plans/orchestrator-subagent-integration.md",
@@ -5065,7 +5137,7 @@
               "unit": "OSI-691",
               "line_start": 32747,
               "line_end": 32747,
-              "quote": "**OSI-691: `subagent.failed@1.0.0` \u2014 newly authored owner contract (DL-045), prepared without admission.** This exact family alone adopts the contract below. No current append is a"
+              "quote": "**OSI-691: `subagent.failed@1.0.0` — newly authored owner contract (DL-045), prepared without admission.** This exact family alone adopts the contract below. No current append is a"
             }
           ],
           "prior": {
@@ -5085,7 +5157,7 @@
               "unit": "OSI-691",
               "line_start": 32747,
               "line_end": 32747,
-              "quote": "**OSI-691: `subagent.failed@1.0.0` \u2014 newly authored owner contract (DL-045), prepared without admission.** This exact family alone adopts the contract below. No current append is a"
+              "quote": "**OSI-691: `subagent.failed@1.0.0` — newly authored owner contract (DL-045), prepared without admission.** This exact family alone adopts the contract below. No current append is a"
             }
           ],
           "prior": {
@@ -5286,7 +5358,7 @@
               "unit": "OSI-691",
               "line_start": 32761,
               "line_end": 32761,
-              "quote": "**Historical-read admission oracle \u2014 subagent.failed.** Newly authored exact-family binding uses the closed `Plans/orchestrator_historical_read.schema.json` witness with reader `re"
+              "quote": "**Historical-read admission oracle — subagent.failed.** Newly authored exact-family binding uses the closed `Plans/orchestrator_historical_read.schema.json` witness with reader `re"
             },
             {
               "path": "Plans/orchestrator-subagent-integration.md",
@@ -5516,7 +5588,7 @@
               "unit": "OSI-692",
               "line_start": 32797,
               "line_end": 32797,
-              "quote": "**OSI-692: `subagent.message_received@1.0.0` \u2014 newly authored owner contract (DL-045), prepared without admission.** This exact family alone adopts the contract below. No current a"
+              "quote": "**OSI-692: `subagent.message_received@1.0.0` — newly authored owner contract (DL-045), prepared without admission.** This exact family alone adopts the contract below. No current a"
             }
           ],
           "prior": {
@@ -5536,7 +5608,7 @@
               "unit": "OSI-692",
               "line_start": 32797,
               "line_end": 32797,
-              "quote": "**OSI-692: `subagent.message_received@1.0.0` \u2014 newly authored owner contract (DL-045), prepared without admission.** This exact family alone adopts the contract below. No current a"
+              "quote": "**OSI-692: `subagent.message_received@1.0.0` — newly authored owner contract (DL-045), prepared without admission.** This exact family alone adopts the contract below. No current a"
             }
           ],
           "prior": {
@@ -5737,7 +5809,7 @@
               "unit": "OSI-692",
               "line_start": 32811,
               "line_end": 32811,
-              "quote": "**Historical-read admission oracle \u2014 subagent.message_received.** Newly authored exact-family binding uses the closed `Plans/orchestrator_historical_read.schema.json` witness with "
+              "quote": "**Historical-read admission oracle — subagent.message_received.** Newly authored exact-family binding uses the closed `Plans/orchestrator_historical_read.schema.json` witness with "
             },
             {
               "path": "Plans/orchestrator-subagent-integration.md",
@@ -5967,7 +6039,7 @@
               "unit": "OSI-693",
               "line_start": 32847,
               "line_end": 32847,
-              "quote": "**OSI-693: `subagent.message_sent@1.0.0` \u2014 newly authored owner contract (DL-045), prepared without admission.** This exact family alone adopts the contract below. No current appen"
+              "quote": "**OSI-693: `subagent.message_sent@1.0.0` — newly authored owner contract (DL-045), prepared without admission.** This exact family alone adopts the contract below. No current appen"
             }
           ],
           "prior": {
@@ -5987,7 +6059,7 @@
               "unit": "OSI-693",
               "line_start": 32847,
               "line_end": 32847,
-              "quote": "**OSI-693: `subagent.message_sent@1.0.0` \u2014 newly authored owner contract (DL-045), prepared without admission.** This exact family alone adopts the contract below. No current appen"
+              "quote": "**OSI-693: `subagent.message_sent@1.0.0` — newly authored owner contract (DL-045), prepared without admission.** This exact family alone adopts the contract below. No current appen"
             }
           ],
           "prior": {
@@ -6188,7 +6260,7 @@
               "unit": "OSI-693",
               "line_start": 32861,
               "line_end": 32861,
-              "quote": "**Historical-read admission oracle \u2014 subagent.message_sent.** Newly authored exact-family binding uses the closed `Plans/orchestrator_historical_read.schema.json` witness with read"
+              "quote": "**Historical-read admission oracle — subagent.message_sent.** Newly authored exact-family binding uses the closed `Plans/orchestrator_historical_read.schema.json` witness with read"
             },
             {
               "path": "Plans/orchestrator-subagent-integration.md",
@@ -6418,7 +6490,7 @@
               "unit": "OSI-694",
               "line_start": 32897,
               "line_end": 32897,
-              "quote": "**OSI-694: `subagent.model_switched@1.0.0` \u2014 newly authored owner contract (DL-045), prepared without admission.** This exact family alone adopts the contract below. No current app"
+              "quote": "**OSI-694: `subagent.model_switched@1.0.0` — newly authored owner contract (DL-045), prepared without admission.** This exact family alone adopts the contract below. No current app"
             }
           ],
           "prior": {
@@ -6438,7 +6510,7 @@
               "unit": "OSI-694",
               "line_start": 32897,
               "line_end": 32897,
-              "quote": "**OSI-694: `subagent.model_switched@1.0.0` \u2014 newly authored owner contract (DL-045), prepared without admission.** This exact family alone adopts the contract below. No current app"
+              "quote": "**OSI-694: `subagent.model_switched@1.0.0` — newly authored owner contract (DL-045), prepared without admission.** This exact family alone adopts the contract below. No current app"
             }
           ],
           "prior": {
@@ -6639,7 +6711,7 @@
               "unit": "OSI-694",
               "line_start": 32911,
               "line_end": 32911,
-              "quote": "**Historical-read admission oracle \u2014 subagent.model_switched.** Newly authored exact-family binding uses the closed `Plans/orchestrator_historical_read.schema.json` witness with re"
+              "quote": "**Historical-read admission oracle — subagent.model_switched.** Newly authored exact-family binding uses the closed `Plans/orchestrator_historical_read.schema.json` witness with re"
             },
             {
               "path": "Plans/orchestrator-subagent-integration.md",
@@ -6869,7 +6941,7 @@
               "unit": "OSI-695",
               "line_start": 32947,
               "line_end": 32947,
-              "quote": "**OSI-695: `subagent.output_truncated@1.0.0` \u2014 newly authored owner contract (DL-045), prepared without admission.** This exact family alone adopts the contract below. No current a"
+              "quote": "**OSI-695: `subagent.output_truncated@1.0.0` — newly authored owner contract (DL-045), prepared without admission.** This exact family alone adopts the contract below. No current a"
             }
           ],
           "prior": {
@@ -6889,7 +6961,7 @@
               "unit": "OSI-695",
               "line_start": 32947,
               "line_end": 32947,
-              "quote": "**OSI-695: `subagent.output_truncated@1.0.0` \u2014 newly authored owner contract (DL-045), prepared without admission.** This exact family alone adopts the contract below. No current a"
+              "quote": "**OSI-695: `subagent.output_truncated@1.0.0` — newly authored owner contract (DL-045), prepared without admission.** This exact family alone adopts the contract below. No current a"
             }
           ],
           "prior": {
@@ -7090,7 +7162,7 @@
               "unit": "OSI-695",
               "line_start": 32961,
               "line_end": 32961,
-              "quote": "**Historical-read admission oracle \u2014 subagent.output_truncated.** Newly authored exact-family binding uses the closed `Plans/orchestrator_historical_read.schema.json` witness with "
+              "quote": "**Historical-read admission oracle — subagent.output_truncated.** Newly authored exact-family binding uses the closed `Plans/orchestrator_historical_read.schema.json` witness with "
             },
             {
               "path": "Plans/orchestrator-subagent-integration.md",
@@ -7320,7 +7392,7 @@
               "unit": "OSI-696",
               "line_start": 32997,
               "line_end": 32997,
-              "quote": "**OSI-696: `subagent.paused@1.0.0` \u2014 newly authored owner contract (DL-045), prepared without admission.** This exact family alone adopts the contract below. No current append is a"
+              "quote": "**OSI-696: `subagent.paused@1.0.0` — newly authored owner contract (DL-045), prepared without admission.** This exact family alone adopts the contract below. No current append is a"
             }
           ],
           "prior": {
@@ -7340,7 +7412,7 @@
               "unit": "OSI-696",
               "line_start": 32997,
               "line_end": 32997,
-              "quote": "**OSI-696: `subagent.paused@1.0.0` \u2014 newly authored owner contract (DL-045), prepared without admission.** This exact family alone adopts the contract below. No current append is a"
+              "quote": "**OSI-696: `subagent.paused@1.0.0` — newly authored owner contract (DL-045), prepared without admission.** This exact family alone adopts the contract below. No current append is a"
             }
           ],
           "prior": {
@@ -7541,7 +7613,7 @@
               "unit": "OSI-696",
               "line_start": 33011,
               "line_end": 33011,
-              "quote": "**Historical-read admission oracle \u2014 subagent.paused.** Newly authored exact-family binding uses the closed `Plans/orchestrator_historical_read.schema.json` witness with reader `re"
+              "quote": "**Historical-read admission oracle — subagent.paused.** Newly authored exact-family binding uses the closed `Plans/orchestrator_historical_read.schema.json` witness with reader `re"
             },
             {
               "path": "Plans/orchestrator-subagent-integration.md",
@@ -7771,7 +7843,7 @@
               "unit": "OSI-697",
               "line_start": 33047,
               "line_end": 33047,
-              "quote": "**OSI-697: `subagent.progress@1.0.0` \u2014 newly authored owner contract (DL-045), prepared without admission.** This exact family alone adopts the contract below. No current append is"
+              "quote": "**OSI-697: `subagent.progress@1.0.0` — newly authored owner contract (DL-045), prepared without admission.** This exact family alone adopts the contract below. No current append is"
             }
           ],
           "prior": {
@@ -7791,7 +7863,7 @@
               "unit": "OSI-697",
               "line_start": 33047,
               "line_end": 33047,
-              "quote": "**OSI-697: `subagent.progress@1.0.0` \u2014 newly authored owner contract (DL-045), prepared without admission.** This exact family alone adopts the contract below. No current append is"
+              "quote": "**OSI-697: `subagent.progress@1.0.0` — newly authored owner contract (DL-045), prepared without admission.** This exact family alone adopts the contract below. No current append is"
             }
           ],
           "prior": {
@@ -7992,7 +8064,7 @@
               "unit": "OSI-697",
               "line_start": 33061,
               "line_end": 33061,
-              "quote": "**Historical-read admission oracle \u2014 subagent.progress.** Newly authored exact-family binding uses the closed `Plans/orchestrator_historical_read.schema.json` witness with reader `"
+              "quote": "**Historical-read admission oracle — subagent.progress.** Newly authored exact-family binding uses the closed `Plans/orchestrator_historical_read.schema.json` witness with reader `"
             },
             {
               "path": "Plans/orchestrator-subagent-integration.md",
@@ -8222,7 +8294,7 @@
               "unit": "OSI-698",
               "line_start": 33097,
               "line_end": 33097,
-              "quote": "**OSI-698: `subagent.resumed@1.0.0` \u2014 newly authored owner contract (DL-045), prepared without admission.** This exact family alone adopts the contract below. No current append is "
+              "quote": "**OSI-698: `subagent.resumed@1.0.0` — newly authored owner contract (DL-045), prepared without admission.** This exact family alone adopts the contract below. No current append is "
             }
           ],
           "prior": {
@@ -8242,7 +8314,7 @@
               "unit": "OSI-698",
               "line_start": 33097,
               "line_end": 33097,
-              "quote": "**OSI-698: `subagent.resumed@1.0.0` \u2014 newly authored owner contract (DL-045), prepared without admission.** This exact family alone adopts the contract below. No current append is "
+              "quote": "**OSI-698: `subagent.resumed@1.0.0` — newly authored owner contract (DL-045), prepared without admission.** This exact family alone adopts the contract below. No current append is "
             }
           ],
           "prior": {
@@ -8443,7 +8515,7 @@
               "unit": "OSI-698",
               "line_start": 33111,
               "line_end": 33111,
-              "quote": "**Historical-read admission oracle \u2014 subagent.resumed.** Newly authored exact-family binding uses the closed `Plans/orchestrator_historical_read.schema.json` witness with reader `r"
+              "quote": "**Historical-read admission oracle — subagent.resumed.** Newly authored exact-family binding uses the closed `Plans/orchestrator_historical_read.schema.json` witness with reader `r"
             },
             {
               "path": "Plans/orchestrator-subagent-integration.md",
@@ -8673,7 +8745,7 @@
               "unit": "OSI-699",
               "line_start": 33147,
               "line_end": 33147,
-              "quote": "**OSI-699: `subagent.retried@1.0.0` \u2014 newly authored owner contract (DL-045), prepared without admission.** This exact family alone adopts the contract below. No current append is "
+              "quote": "**OSI-699: `subagent.retried@1.0.0` — newly authored owner contract (DL-045), prepared without admission.** This exact family alone adopts the contract below. No current append is "
             }
           ],
           "prior": {
@@ -8693,7 +8765,7 @@
               "unit": "OSI-699",
               "line_start": 33147,
               "line_end": 33147,
-              "quote": "**OSI-699: `subagent.retried@1.0.0` \u2014 newly authored owner contract (DL-045), prepared without admission.** This exact family alone adopts the contract below. No current append is "
+              "quote": "**OSI-699: `subagent.retried@1.0.0` — newly authored owner contract (DL-045), prepared without admission.** This exact family alone adopts the contract below. No current append is "
             }
           ],
           "prior": {
@@ -8894,7 +8966,7 @@
               "unit": "OSI-699",
               "line_start": 33161,
               "line_end": 33161,
-              "quote": "**Historical-read admission oracle \u2014 subagent.retried.** Newly authored exact-family binding uses the closed `Plans/orchestrator_historical_read.schema.json` witness with reader `r"
+              "quote": "**Historical-read admission oracle — subagent.retried.** Newly authored exact-family binding uses the closed `Plans/orchestrator_historical_read.schema.json` witness with reader `r"
             },
             {
               "path": "Plans/orchestrator-subagent-integration.md",
@@ -9124,7 +9196,7 @@
               "unit": "OSI-700",
               "line_start": 33197,
               "line_end": 33197,
-              "quote": "**OSI-700: `subagent.spawned@1.0.0` \u2014 newly authored owner contract (DL-045), prepared without admission.** This exact family alone adopts the contract below. No current append is "
+              "quote": "**OSI-700: `subagent.spawned@1.0.0` — newly authored owner contract (DL-045), prepared without admission.** This exact family alone adopts the contract below. No current append is "
             }
           ],
           "prior": {
@@ -9144,7 +9216,7 @@
               "unit": "OSI-700",
               "line_start": 33197,
               "line_end": 33197,
-              "quote": "**OSI-700: `subagent.spawned@1.0.0` \u2014 newly authored owner contract (DL-045), prepared without admission.** This exact family alone adopts the contract below. No current append is "
+              "quote": "**OSI-700: `subagent.spawned@1.0.0` — newly authored owner contract (DL-045), prepared without admission.** This exact family alone adopts the contract below. No current append is "
             }
           ],
           "prior": {
@@ -9345,7 +9417,7 @@
               "unit": "OSI-700",
               "line_start": 33211,
               "line_end": 33211,
-              "quote": "**Historical-read admission oracle \u2014 subagent.spawned.** Newly authored exact-family binding uses the closed `Plans/orchestrator_historical_read.schema.json` witness with reader `r"
+              "quote": "**Historical-read admission oracle — subagent.spawned.** Newly authored exact-family binding uses the closed `Plans/orchestrator_historical_read.schema.json` witness with reader `r"
             },
             {
               "path": "Plans/orchestrator-subagent-integration.md",
@@ -9575,7 +9647,7 @@
               "unit": "OSI-701",
               "line_start": 33247,
               "line_end": 33247,
-              "quote": "**OSI-701: `subagent.started@1.0.0` \u2014 newly authored owner contract (DL-045), prepared without admission.** This exact family alone adopts the contract below. No current append is "
+              "quote": "**OSI-701: `subagent.started@1.0.0` — newly authored owner contract (DL-045), prepared without admission.** This exact family alone adopts the contract below. No current append is "
             }
           ],
           "prior": {
@@ -9595,7 +9667,7 @@
               "unit": "OSI-701",
               "line_start": 33247,
               "line_end": 33247,
-              "quote": "**OSI-701: `subagent.started@1.0.0` \u2014 newly authored owner contract (DL-045), prepared without admission.** This exact family alone adopts the contract below. No current append is "
+              "quote": "**OSI-701: `subagent.started@1.0.0` — newly authored owner contract (DL-045), prepared without admission.** This exact family alone adopts the contract below. No current append is "
             }
           ],
           "prior": {
@@ -9796,7 +9868,7 @@
               "unit": "OSI-701",
               "line_start": 33261,
               "line_end": 33261,
-              "quote": "**Historical-read admission oracle \u2014 subagent.started.** Newly authored exact-family binding uses the closed `Plans/orchestrator_historical_read.schema.json` witness with reader `r"
+              "quote": "**Historical-read admission oracle — subagent.started.** Newly authored exact-family binding uses the closed `Plans/orchestrator_historical_read.schema.json` witness with reader `r"
             },
             {
               "path": "Plans/orchestrator-subagent-integration.md",
@@ -10026,7 +10098,7 @@
               "unit": "OSI-702",
               "line_start": 33297,
               "line_end": 33297,
-              "quote": "**OSI-702: `subagent.timeout@1.0.0` \u2014 newly authored owner contract (DL-045), prepared without admission.** This exact family alone adopts the contract below. No current append is "
+              "quote": "**OSI-702: `subagent.timeout@1.0.0` — newly authored owner contract (DL-045), prepared without admission.** This exact family alone adopts the contract below. No current append is "
             }
           ],
           "prior": {
@@ -10046,7 +10118,7 @@
               "unit": "OSI-702",
               "line_start": 33297,
               "line_end": 33297,
-              "quote": "**OSI-702: `subagent.timeout@1.0.0` \u2014 newly authored owner contract (DL-045), prepared without admission.** This exact family alone adopts the contract below. No current append is "
+              "quote": "**OSI-702: `subagent.timeout@1.0.0` — newly authored owner contract (DL-045), prepared without admission.** This exact family alone adopts the contract below. No current append is "
             }
           ],
           "prior": {
@@ -10247,7 +10319,7 @@
               "unit": "OSI-702",
               "line_start": 33311,
               "line_end": 33311,
-              "quote": "**Historical-read admission oracle \u2014 subagent.timeout.** Newly authored exact-family binding uses the closed `Plans/orchestrator_historical_read.schema.json` witness with reader `r"
+              "quote": "**Historical-read admission oracle — subagent.timeout.** Newly authored exact-family binding uses the closed `Plans/orchestrator_historical_read.schema.json` witness with reader `r"
             },
             {
               "path": "Plans/orchestrator-subagent-integration.md",
@@ -10477,7 +10549,7 @@
               "unit": "OSI-703",
               "line_start": 33347,
               "line_end": 33347,
-              "quote": "**OSI-703: `subagent.tool_called@1.0.0` \u2014 newly authored owner contract (DL-045), prepared without admission.** This exact family alone adopts the contract below. No current append"
+              "quote": "**OSI-703: `subagent.tool_called@1.0.0` — newly authored owner contract (DL-045), prepared without admission.** This exact family alone adopts the contract below. No current append"
             }
           ],
           "prior": {
@@ -10497,7 +10569,7 @@
               "unit": "OSI-703",
               "line_start": 33347,
               "line_end": 33347,
-              "quote": "**OSI-703: `subagent.tool_called@1.0.0` \u2014 newly authored owner contract (DL-045), prepared without admission.** This exact family alone adopts the contract below. No current append"
+              "quote": "**OSI-703: `subagent.tool_called@1.0.0` — newly authored owner contract (DL-045), prepared without admission.** This exact family alone adopts the contract below. No current append"
             }
           ],
           "prior": {
@@ -10698,7 +10770,7 @@
               "unit": "OSI-703",
               "line_start": 33361,
               "line_end": 33361,
-              "quote": "**Historical-read admission oracle \u2014 subagent.tool_called.** Newly authored exact-family binding uses the closed `Plans/orchestrator_historical_read.schema.json` witness with reade"
+              "quote": "**Historical-read admission oracle — subagent.tool_called.** Newly authored exact-family binding uses the closed `Plans/orchestrator_historical_read.schema.json` witness with reade"
             },
             {
               "path": "Plans/orchestrator-subagent-integration.md",
@@ -10928,7 +11000,7 @@
               "unit": "OSI-704",
               "line_start": 33397,
               "line_end": 33397,
-              "quote": "**OSI-704: `subagent.tool_completed@1.0.0` \u2014 newly authored owner contract (DL-045), prepared without admission.** This exact family alone adopts the contract below. No current app"
+              "quote": "**OSI-704: `subagent.tool_completed@1.0.0` — newly authored owner contract (DL-045), prepared without admission.** This exact family alone adopts the contract below. No current app"
             }
           ],
           "prior": {
@@ -10948,7 +11020,7 @@
               "unit": "OSI-704",
               "line_start": 33397,
               "line_end": 33397,
-              "quote": "**OSI-704: `subagent.tool_completed@1.0.0` \u2014 newly authored owner contract (DL-045), prepared without admission.** This exact family alone adopts the contract below. No current app"
+              "quote": "**OSI-704: `subagent.tool_completed@1.0.0` — newly authored owner contract (DL-045), prepared without admission.** This exact family alone adopts the contract below. No current app"
             }
           ],
           "prior": {
@@ -11149,7 +11221,7 @@
               "unit": "OSI-704",
               "line_start": 33411,
               "line_end": 33411,
-              "quote": "**Historical-read admission oracle \u2014 subagent.tool_completed.** Newly authored exact-family binding uses the closed `Plans/orchestrator_historical_read.schema.json` witness with re"
+              "quote": "**Historical-read admission oracle — subagent.tool_completed.** Newly authored exact-family binding uses the closed `Plans/orchestrator_historical_read.schema.json` witness with re"
             },
             {
               "path": "Plans/orchestrator-subagent-integration.md",
