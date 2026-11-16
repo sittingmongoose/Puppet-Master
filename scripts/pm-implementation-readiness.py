@@ -6119,7 +6119,7 @@ def case_l_verification_self_test_checks() -> dict[str, bool]:
             "storage_instance_id": "storage-1", "quarantine_id": "quarantine-1",
             "source_family_id": "event_record_index", "source_locator_ref": "event:event-42",
             "expected_schema_id": "pm.storage_value.event_record_index.v2", "expected_schema_version": "2.0.0",
-            "observed_schema_id": None, "observed_schema_version": None, "error_code": "schema_invalid",
+            "observed_schema_id": "pm.storage_value.event_record_index.v1", "observed_schema_version": "1.0.0", "error_code": "schema_invalid",
             "raw_sha256": hash_value, "raw_custody_ref": "custody:raw", "custody_manifest_ref": "custody:manifest",
             "custody_manifest_sha256": hash_value, "byte_length": 128, "detected_at_utc": "2026-07-18T03:00:00Z",
             "risk_class": risk, "state": state, "retention_policy_ref": risk,
@@ -6136,7 +6136,7 @@ def case_l_verification_self_test_checks() -> dict[str, bool]:
                 "payload": {
                     "schema_version": "1.0.0", "quarantine_id": "quarantine-1",
                     "source_ref": "event:event-42", "expected_schema_id": "pm.storage_value.event_record_index.v2",
-                    "observed_schema_id": None, "raw_bytes_hash": hash_value, "raw_bytes_ref": "custody:raw",
+                    "observed_schema_id": "pm.storage_value.event_record_index.v1", "raw_bytes_hash": hash_value, "raw_bytes_ref": "custody:raw",
                     "risk_class": risk, "state": state, "actor_ref": "actor:storage",
                     "reason": "transition-self-test", "receipt_ref": receipts[-1]["receipt_ref"] if receipts else "receipt:detect",
                 }, "payload_ref": None,
