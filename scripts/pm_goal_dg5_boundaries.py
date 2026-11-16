@@ -682,7 +682,8 @@ def invoke(label, family, action, work, *, world=None, arguments=None, original=
     install()
     work = Path(work)
     files = file_state(work)
-    owners = world.recorder.snapshot() if world is not None else {}
+    recorder = getattr(world, 'recorder', None) if world is not None else None
+    owners = recorder.snapshot() if recorder is not None else {}
     original = original or action
     source = Path(original.__code__.co_filename)
     if arguments is None:
