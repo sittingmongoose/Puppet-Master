@@ -523,6 +523,12 @@ def site_index():
     return _SITE_INDEX
 
 
+class Alternatives(tuple):
+    """Equally specific static templates for one authored code: the code identifies one of these
+    sites, not all of them (not a duplicate set). The target becomes the listed site that raised the
+    authored code in the sealed run; a refusal at any other row keeps the whole tuple (no credit)."""
+
+
 def target_rows(code):
     """The declared target of an authored expected code, fixed before the call: a schema or
     NUMRULE row by its boundary name; otherwise the site(s) whose static code template is the
@@ -538,7 +544,7 @@ def target_rows(code):
         return PREFIX + 'unmatched/' + code
     best = max(literal for literal, _ in matches)
     names = sorted(name for literal, name in matches if literal == best)
-    return names[0] if len(names) == 1 else tuple(names)
+    return names[0] if len(names) == 1 else Alternatives(names)
 
 
 def refusal_row(error):
@@ -909,6 +915,9 @@ def entry_call(case, label, family, action, work, *, world, arguments, original,
         if SLOTS:
             run_slots(label, original, arguments, Path(work))
     elif child is not None and not child.startswith('crash:') and expected is not None:
+        if isinstance(target, Alternatives):
+            raised = (result.get('errors') or [None])[0] if isinstance(result, dict) else None
+            target = raised if raised in target and child == expected else tuple(target)
         collector.declare(result, None, target)
     PARENT_CALL[0] = True
     try:
