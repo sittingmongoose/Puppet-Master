@@ -545,6 +545,41 @@ def run_goal_scenarios(module, repo: Path = REPO) -> list[dict]:
     return results
 
 
+# revised_predecessor_rows: the S3 historical reader keeps goal_run.stopped's v2 selection only while its revision
+# is record-bound ('refused' = the v2 predecessor is withheld, the protective outcome).
+PREDECESSOR_CASES = [
+    ("rev_admitted_tree_revised", "admitted"), ("rev_a_record_deleted", "refused"), ("rev_b_record_after_revision", "refused"),
+    ("rev_c_any_v3_row", "refused"), ("rev_record_without_revision", "refused"), ("rev_pre_revision_tree_unrevised", "refused"),
+]
+
+
+def run_predecessor_scenarios(module, repo: Path = REPO) -> list[dict]:
+    results = []
+    defects = {name: defect for name, defect, *_ in REVISION_SCENARIOS}
+    with tempfile.TemporaryDirectory(prefix="pm-ea-predecessor-") as scratch:
+        base = Path(scratch) / "base"
+        for rel in admission_mode.inputs([REVISED], repo) + [PREPARED_ROWS]:
+            (base / rel).parent.mkdir(parents=True, exist_ok=True)
+            shutil.copyfile(repo / rel, base / rel)
+        before = _read(base, REVISION_DIR + "/" + REVISED + ".json")["before_row"]
+        for name, expected in PREDECESSOR_CASES:
+            root = Path(scratch) / name
+            shutil.copytree(base, root)
+            if defects[name] is not None:
+                defects[name](root)
+            module.reset_caches()
+            try:
+                rows = module.revised_predecessor_rows(root)
+                kept = any(admission_mode.canonical_sha256(r) == admission_mode.canonical_sha256(before) for r in rows)
+                observed, error = {"mode": "admitted" if kept else "refused", "code": None}, None
+            except Exception as exc:  # reported, never a kill
+                observed, error = None, type(exc).__name__ + ": " + str(exc)[:300]
+            results.append({"scenario": "predecessor:" + name, "family": REVISED, "expected": {"mode": expected, "code": None},
+                            "observed": observed, "error": error, "ok": observed == {"mode": expected, "code": None}})
+            shutil.rmtree(root)
+    return results
+
+
 class AdmissionModeStandingNegatives(unittest.TestCase):
     def test_every_scenario_has_its_expected_verdict(self):
         results = run_scenarios(admission_mode)
@@ -581,6 +616,14 @@ class RevisionModeStandingNegatives(unittest.TestCase):
     def test_goal_prepared_identity_accepts_only_the_exact_selected_successor(self):
         results = run_goal_scenarios(admission_mode)
         self.assertEqual(len(results), len(GOAL_CASES))
+        for result in results:
+            with self.subTest(result["scenario"]):
+                self.assertIsNone(result["error"])
+                self.assertTrue(result["ok"], result)
+
+    def test_predecessor_rows_only_through_the_exact_revision_record(self):
+        results = run_predecessor_scenarios(admission_mode)
+        self.assertEqual(len(results), len(PREDECESSOR_CASES))
         for result in results:
             with self.subTest(result["scenario"]):
                 self.assertIsNone(result["error"])

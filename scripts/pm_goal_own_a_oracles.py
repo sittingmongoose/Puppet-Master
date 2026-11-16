@@ -135,7 +135,7 @@ def valid(ref, value):
 def selection_table():
     """Registered (event_type, scope_kind, payload_schema_id) rows plus the prepared v3 stop/block rows."""
     table = set()
-    for row in load('Plans/event_family_registry.json')['families']:
+    for row in load('Plans/event_family_registry.json')['families'] + __import__('pm_ea_admission_mode').revised_predecessor_rows(ROOT):
         for version in row.get('payload_versions') or [{'scope_kind': 'project', 'payload_schema_id': row['payload_schema_id']}]:
             table.add((row['event_type'], version['scope_kind'], version['payload_schema_id']))
     for row in load('Plans/goal_run_stop_block_contracts/prepared-registry-rows.json')['rows']:
