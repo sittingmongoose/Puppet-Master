@@ -35,7 +35,7 @@ PATCHED = {}
 CASE = [None]
 PARENT_CALL = [False]
 REFUSAL_CLASSES = ('Refusal', 'DGRefusal', 'LaneRefusal', 'AdapterRefusal', 'StorageRefusal', 'NumruleRefusal',
-                   'SourceRefusal', 'Unavailable', 'Refused')
+                   'SourceRefusal', 'Unavailable', 'Refused', 'FrameError', 'Halt')
 # Load-once singletons (a class whose `_instance` is the object) are bound by
 # the digest of their complete descriptor, computed once; verify_frozen()
 # recomputes every one without the memo at the end of the run.
@@ -491,6 +491,26 @@ def _template(node, source):
     return '.+', 0
 
 
+def _shared_template(node, source):
+    """Regex for a SHARED-ROUTE call: the code inside its exception constructor.
+
+    shared_require(shared_refuse)(FrameError(klass, code), ...) names klass + ':' + code
+    (FrameError's own string); every other routed exception names its first argument.
+    A non-constructor exception expression names no static code (wildcard)."""
+    import ast
+    import re
+    exc = node.args[0]
+    if not isinstance(exc, ast.Call) or not exc.args:
+        return '.+', 0
+    fname = exc.func.id if isinstance(exc.func, ast.Name) else \
+        exc.func.attr if isinstance(exc.func, ast.Attribute) else None
+    if fname == 'FrameError' and len(exc.args) >= 2:
+        klass, a = _template(exc.args[0], source)
+        code, b = _template(exc.args[1], source)
+        return klass + re.escape(':') + code, a + 1 + b
+    return _template(exc.args[0], source)
+
+
 def site_index():
     """Every require/guard/refuse site of the DG, DG-OWN and adapter modules (static, by AST)."""
     import ast
@@ -506,7 +526,7 @@ def site_index():
         except SyntaxError:
             continue
         definitions = {n.lineno for n in ast.walk(tree) if isinstance(n, ast.FunctionDef)
-                       and n.name in ('require', 'guard', 'refuse', 'halt')}
+                       and n.name in ('require', 'guard', 'refuse', 'halt', 'shared_require', 'shared_refuse')}
         halt_module = any(isinstance(n, ast.FunctionDef) and n.name == 'halt' and
                           [a.arg for a in n.args.args] == ['code', 'condition'] for n in tree.body)
         for node in ast.walk(tree):
@@ -514,11 +534,13 @@ def site_index():
                 continue
             func = node.func
             name = func.id if isinstance(func, ast.Name) else func.attr if isinstance(func, ast.Attribute) else None
-            if name not in ('require', 'guard', 'refuse', 'halt') or node.lineno in definitions:
+            if name not in ('require', 'guard', 'refuse', 'halt', 'shared_require', 'shared_refuse') \
+                    or node.lineno in definitions:
                 continue
             if name == 'halt' and not halt_module:
                 continue
-            pattern, literal = _template(node.args[0], source)
+            pattern, literal = _shared_template(node, source) if name.startswith('shared_') \
+                else _template(node.args[0], source)
             relative = str(path.relative_to(ROOT))
             _SITE_INDEX[site_name(relative, node.lineno)] = dict(
                 path=relative, line=node.lineno, module=path.stem,
@@ -607,6 +629,48 @@ def refuse_wrapper(original):
     return refused
 
 
+def shared_require_wrapper(original):
+    """SHARED-ROUTE (contract 1116082058-d7a6): decide on the caller site and condition.
+
+    The same exception instance is passed through; kwargs (the cause contract) are untouched,
+    so cause and implicit context are exactly the original's. With no cut the original raises
+    or not by its own condition, unchanged."""
+    @functools.wraps(original)
+    def guarded(exc, condition, **kwargs):
+        if not ACTIVE[0] or ROUTING[0]:
+            return original(exc, condition, **kwargs)
+        frame = inspect.currentframe().f_back
+        site = (str(Path(frame.f_code.co_filename).relative_to(ROOT)), frame.f_lineno)
+        name = site_name(*site)
+        refused = tables.decide(name, condition, site=site)
+        if refused is not None:
+            LAST_REFUSAL[0] = (name, refusal_code(exc))
+        ROUTING[0] = True
+        try:
+            return original(exc, refused is None, **kwargs)
+        finally:
+            ROUTING[0] = False
+    return guarded
+
+
+def shared_refuse_wrapper(original):
+    @functools.wraps(original)
+    def refused(exc, **kwargs):
+        if not ACTIVE[0] or ROUTING[0]:
+            return original(exc, **kwargs)
+        frame = inspect.currentframe().f_back
+        site = (str(Path(frame.f_code.co_filename).relative_to(ROOT)), frame.f_lineno)
+        name = site_name(*site)
+        if tables.decide(name, False, site=site) is not None:
+            LAST_REFUSAL[0] = (name, refusal_code(exc))
+            ROUTING[0] = True
+            try:
+                return original(exc, **kwargs)
+            finally:
+                ROUTING[0] = False
+    return refused
+
+
 # Whole-root schema rows: (module, class, row name from the call's arguments).
 # Each name equals row() of the code that bank's own validate raises.
 SCHEMA_BANKS = (
@@ -665,15 +729,20 @@ def install():
         name = getattr(module, '__name__', '')
         if not name.startswith(('pm_goal_dg_', 'pm_goal_test_')) or name == 'pm_goal_test_numrule':
             continue
-        for key in ('require', 'guard', 'refuse', 'halt'):
+        wrappers = {'require': guard_wrapper, 'guard': guard_wrapper, 'refuse': refuse_wrapper,
+                    'halt': guard_wrapper, 'shared_require': shared_require_wrapper,
+                    'shared_refuse': shared_refuse_wrapper}
+        for key, wrap in wrappers.items():
             fn = getattr(module, key, None)
             if not inspect.isfunction(fn) or fn in PATCHED.values():
                 continue
-            if fn.__name__ not in ('require', 'guard', 'refuse', 'halt'):
+            if fn.__name__ != key:
                 continue
             if key == 'halt' and list(inspect.signature(fn).parameters) != ['code', 'condition']:
                 continue  # only a halt(code, condition) predicate (DG-CF3 reducer) is a row
-            originals[fn] = PATCHED.setdefault(fn, refuse_wrapper(fn) if key == 'refuse' else guard_wrapper(fn))
+            if key.startswith('shared_') and list(inspect.signature(fn).parameters)[:1] != ['exc']:
+                continue  # only the SHARED-ROUTE contract shape (exc, ...) is routed
+            originals[fn] = PATCHED.setdefault(fn, wrap(fn))
     for module in tuple(sys.modules.values()):
         name = getattr(module, '__name__', '')
         if not name.startswith('pm_goal') or name == 'pm_goal_test_numrule':
@@ -928,6 +997,8 @@ def _sealed(action, work, files):
 
 
 def refusal_code(error):
+    if type(error).__name__ == 'FrameError':
+        return str(error)  # klass + ':' + code, the frame decoder's own code string
     return getattr(error, 'code', None) or getattr(error, 'reason', None) or str(error)
 
 
