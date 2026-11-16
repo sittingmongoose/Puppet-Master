@@ -2254,6 +2254,147 @@
      "compatibility_event_type": null
     }
    }
+  },
+  "053e67354166d31446f0ad9fe55641a6e01e33d5f2fdb0d4feca2653e416ff9b": {
+   "source": {
+    "path": "scripts/pm_s2_dl300_events.py",
+    "origin": "build_world",
+    "pointer": "approval.chat_tool_requested/project/settled/external/publication/prepared_event"
+   },
+   "value": {
+    "schema_id": "pm.event.v0",
+    "schema_version": "2.0.0",
+    "scope_kind": "project",
+    "event_id": "s2dl300@1:30303030303030302d303030302d343030302d383030302d303030303030303030306132:6f703a617070726f76616c2e636861745f746f6f6c5f7265717565737465642f7265712d31:617070726f76616c2e636861745f746f6f6c5f726571756573746564",
+    "event_type": "approval.chat_tool_requested",
+    "project_id": "proj-alpha",
+    "thread_id": "thread-1",
+    "run_id": "run-1",
+    "node_id": null,
+    "attempt_id": null,
+    "actor_ref": "agent:run-1",
+    "requested_account_ref": null,
+    "effective_account_ref": null,
+    "occurred_at_utc": "2026-11-14T10:00:00.250Z",
+    "observed_at_utc": "2026-11-14T10:00:01Z",
+    "persisted_at_utc": "2026-11-14T10:00:01.5Z",
+    "sequence_id": 41,
+    "producer_sequence_id": 7,
+    "correlation_id": "corr-1",
+    "causation_event_id": null,
+    "parent_event_id": null,
+    "idempotency_key": "s2dl300@1:6f703a617070726f76616c2e636861745f746f6f6c5f7265717565737465642f7265712d31",
+    "payload_schema_id": "pm.chat_tool_approval_request.v1",
+    "payload": null,
+    "payload_ref": {
+     "ref": "payload:v1:cce036122c373eb981c64ca85533dda4da6d366cebbcae0870a23eadc8cf03e2",
+     "blake3_id": "cce036122c373eb981c64ca85533dda4da6d366cebbcae0870a23eadc8cf03e2",
+     "byte_size": 1530,
+     "media_type": "application/msgpack"
+    },
+    "redaction_profile": "secret_refs_only",
+    "replay_policy": "dedupe_by_idempotency_key",
+    "migration": {
+     "migrated_from_schema_id": null,
+     "migrated_from_schema_version": null,
+     "migration_id": null,
+     "compatibility_event_type": null
+    }
+   }
+  },
+  "e502847def460d6633269b52d8baae44096d03fc884ae5e1e60545381ae6eb97": {
+   "source": {
+    "path": "scripts/pm_s2_dl300_events.py",
+    "origin": "build_world",
+    "pointer": "approval.chat_tool_resolved/project/settled/external/publication/prepared_event"
+   },
+   "value": {
+    "schema_id": "pm.event.v0",
+    "schema_version": "2.0.0",
+    "scope_kind": "project",
+    "event_id": "s2dl300@1:30303030303030302d303030302d343030302d383030302d303030303030303030306132:6f703a617070726f76616c2e636861745f746f6f6c5f7265736f6c7665642f7265712d31:617070726f76616c2e636861745f746f6f6c5f7265736f6c766564",
+    "event_type": "approval.chat_tool_resolved",
+    "project_id": "proj-alpha",
+    "thread_id": "thread-1",
+    "run_id": "run-1",
+    "node_id": null,
+    "attempt_id": null,
+    "actor_ref": "user:alice",
+    "requested_account_ref": null,
+    "effective_account_ref": null,
+    "occurred_at_utc": "2026-11-14T10:00:00.250Z",
+    "observed_at_utc": "2026-11-14T10:00:01Z",
+    "persisted_at_utc": "2026-11-14T10:00:01.5Z",
+    "sequence_id": 41,
+    "producer_sequence_id": 7,
+    "correlation_id": "corr-1",
+    "causation_event_id": "s2dl300@1:30303030303030302d303030302d343030302d383030302d303030303030303030306132:6f703a617070726f76616c2e636861745f746f6f6c5f7265717565737465642f7265712d31:617070726f76616c2e636861745f746f6f6c5f726571756573746564",
+    "parent_event_id": null,
+    "idempotency_key": "s2dl300@1:6f703a617070726f76616c2e636861745f746f6f6c5f7265736f6c7665642f7265712d31",
+    "payload_schema_id": "pm.chat_tool_approval_result.v1",
+    "payload": null,
+    "payload_ref": {
+     "ref": "payload:v1:6fc0b994807dc48081eec86eed4e0fa290547531edeea8a848fb5905842f4b32",
+     "blake3_id": "6fc0b994807dc48081eec86eed4e0fa290547531edeea8a848fb5905842f4b32",
+     "byte_size": 689,
+     "media_type": "application/msgpack"
+    },
+    "redaction_profile": "secret_refs_only",
+    "replay_policy": "dedupe_by_idempotency_key",
+    "migration": {
+     "migrated_from_schema_id": null,
+     "migrated_from_schema_version": null,
+     "migration_id": null,
+     "compatibility_event_type": null
+    }
+   }
+  },
+  "da0ea4f3d65471233be55f5cfd88af337b24e9bc21f511ec93d5f27ef2f6216d": {
+   "source": {
+    "path": "scripts/pm_s2_dl300_events.py",
+    "origin": "build_world",
+    "pointer": "settings.layer.changed/project/settled/external/publication/prepared_event"
+   },
+   "value": {
+    "schema_id": "pm.event.v0",
+    "schema_version": "2.0.0",
+    "scope_kind": "project",
+    "event_id": "s2dl300@1:30303030303030302d303030302d343030302d383030302d303030303030303030306132:6f703a73657474696e67732e6c617965722e6368616e6765642f657665727977686572652f74786e2d31:73657474696e67732e6c617965722e6368616e676564",
+    "event_type": "settings.layer.changed",
+    "project_id": "proj-alpha",
+    "thread_id": null,
+    "run_id": null,
+    "node_id": null,
+    "attempt_id": null,
+    "actor_ref": "user:alice",
+    "requested_account_ref": null,
+    "effective_account_ref": null,
+    "occurred_at_utc": "2026-11-14T10:00:00.250Z",
+    "observed_at_utc": "2026-11-14T10:00:01Z",
+    "persisted_at_utc": "2026-11-14T10:00:01.5Z",
+    "sequence_id": 41,
+    "producer_sequence_id": 7,
+    "correlation_id": "corr-1",
+    "causation_event_id": null,
+    "parent_event_id": null,
+    "idempotency_key": "s2dl300@1:6f703a73657474696e67732e6c617965722e6368616e6765642f657665727977686572652f74786e2d31",
+    "payload_schema_id": "pm.settings.layer_changed.v1",
+    "payload": null,
+    "payload_ref": {
+     "ref": "payload:v1:c5c61f5ee530cf15dfa9a82513d373b2a2c8a555d2161f11920cdc77ec2dc790",
+     "blake3_id": "c5c61f5ee530cf15dfa9a82513d373b2a2c8a555d2161f11920cdc77ec2dc790",
+     "byte_size": 809,
+     "media_type": "application/msgpack"
+    },
+    "redaction_profile": "secret_refs_only",
+    "replay_policy": "dedupe_by_idempotency_key",
+    "migration": {
+     "migrated_from_schema_id": null,
+     "migrated_from_schema_version": null,
+     "migration_id": null,
+     "compatibility_event_type": null
+    }
+   }
   }
  },
  "nodes": [
@@ -3306,6 +3447,1362 @@
    "origin": "json",
    "pointer": "/$defs/GenericIndexRow",
    "control": "cebf464ad36872826fd7b0fc256b8393501c7cd1815b720cbad8a256cfe61da0"
+  },
+  {
+   "path": "Plans/event_payloads/s2/approval_chat_tool_requested.schema.json",
+   "origin": "json",
+   "pointer": "/$defs/external_prepared_event",
+   "control": "053e67354166d31446f0ad9fe55641a6e01e33d5f2fdb0d4feca2653e416ff9b",
+   "source": {
+    "path": "Plans/event_payloads/s2/approval_chat_tool_requested.schema.json",
+    "origin": "json",
+    "pointer": "/$defs/external_prepared_event",
+    "node_sha256": "33bdcd14eafd87d4139272dfc73742d80e30fea51eae4fb25434c8f9d24aac62"
+   }
+  },
+  {
+   "path": "Plans/event_payloads/s2/approval_chat_tool_resolved.schema.json",
+   "origin": "json",
+   "pointer": "/$defs/external_prepared_event",
+   "control": "e502847def460d6633269b52d8baae44096d03fc884ae5e1e60545381ae6eb97",
+   "source": {
+    "path": "Plans/event_payloads/s2/approval_chat_tool_resolved.schema.json",
+    "origin": "json",
+    "pointer": "/$defs/external_prepared_event",
+    "node_sha256": "53de55a1c8803ed7713f20ca2ed293ddf324fa78d4db7c1016656ea92061de4a"
+   }
+  },
+  {
+   "path": "Plans/event_payloads/s2/settings_layer_changed.schema.json",
+   "origin": "json",
+   "pointer": "/$defs/external_prepared_event",
+   "control": "da0ea4f3d65471233be55f5cfd88af337b24e9bc21f511ec93d5f27ef2f6216d",
+   "source": {
+    "path": "Plans/event_payloads/s2/settings_layer_changed.schema.json",
+    "origin": "json",
+    "pointer": "/$defs/external_prepared_event",
+    "node_sha256": "8a4904d08a367de6a1348390790554951dcd9a1f1093aecf8dec1f52f9c7ec14"
+   }
+  },
+  {
+   "path": "Plans/goal_run_replan_contracts/source-v8/inputs/replan-v3/replan-source.schema.json",
+   "origin": "json",
+   "pointer": "/$defs/WholeOriginalIndexRow",
+   "control": "cebf464ad36872826fd7b0fc256b8393501c7cd1815b720cbad8a256cfe61da0",
+   "source": {
+    "path": "Plans/goal_run_replan_contracts/source-v8/inputs/replan-v3/replan-source.schema.json",
+    "origin": "json",
+    "pointer": "/$defs/WholeOriginalIndexRow",
+    "node_sha256": "c439d8ef2663d3593f7a8857532e8e6840df81d2be1ba9310ef5a5a4ccf8ba25"
+   }
+  },
+  {
+   "path": "Plans/goal_run_replan_contracts/source-v8/schemas/replan-consumer.v4.schema.json",
+   "origin": "json",
+   "pointer": "/$defs/GenericIndexRow",
+   "control": "cebf464ad36872826fd7b0fc256b8393501c7cd1815b720cbad8a256cfe61da0",
+   "source": {
+    "path": "Plans/goal_run_replan_contracts/source-v8/schemas/replan-consumer.v4.schema.json",
+    "origin": "json",
+    "pointer": "/$defs/GenericIndexRow",
+    "node_sha256": "3bbf2867e5011b64dc3bc0960e11db3f39def0d82e3b398197668e2f154825f8"
+   }
+  },
+  {
+   "path": "Plans/goal_run_replan_contracts/source-v8/schemas/replan-source.v4.schema.json",
+   "origin": "json",
+   "pointer": "/$defs/WholeOriginalIndexRow",
+   "control": "cebf464ad36872826fd7b0fc256b8393501c7cd1815b720cbad8a256cfe61da0",
+   "source": {
+    "path": "Plans/goal_run_replan_contracts/source-v8/schemas/replan-source.v4.schema.json",
+    "origin": "json",
+    "pointer": "/$defs/WholeOriginalIndexRow",
+    "node_sha256": "c439d8ef2663d3593f7a8857532e8e6840df81d2be1ba9310ef5a5a4ccf8ba25"
+   }
+  },
+  {
+   "path": "Plans/goal_run_replan_contracts/source-v8/schemas/workflow-start-custody.v7.schema.json",
+   "origin": "json",
+   "pointer": "/$defs/Event_event_record_1_0_0_compatibility_reader",
+   "control": "358cab93d41403b6571af40265be2402c61049abfe4fd3a9927de8a97c8e4f30",
+   "source": {
+    "path": "Plans/goal_run_replan_contracts/source-v8/schemas/workflow-start-custody.v7.schema.json",
+    "origin": "json",
+    "pointer": "/$defs/Event_event_record_1_0_0_compatibility_reader",
+    "node_sha256": "5df8a7700c6594bc4a4e5a53331a5939c2bdfc7fae9ad75a16353913db7a1578"
+   }
+  },
+  {
+   "path": "Plans/goal_run_replan_contracts/source-v8/schemas/workflow-start-custody.v7.schema.json",
+   "origin": "json",
+   "pointer": "/$defs/EventRecord",
+   "control": "421cf1ae4be639ef62e973e72df0a33b5181d5104a92fc5f1fff2a73018daa8e",
+   "source": {
+    "path": "Plans/goal_run_replan_contracts/source-v8/schemas/workflow-start-custody.v7.schema.json",
+    "origin": "json",
+    "pointer": "/$defs/EventRecord",
+    "node_sha256": "1f8cca86d00d426dcf906b9870e413f606aad3397d44e3912568d8c11124701d"
+   }
+  },
+  {
+   "path": "Plans/goal_run_stop_block_contracts/consumer-resource-bank.json",
+   "origin": "json",
+   "pointer": "/started_current_workflow_native_activation/resources/38/schema",
+   "control": "1e78ca11ac388bd617bcbf3111f0a253e257633ccc7b2383e523a51dcfc86deb",
+   "source": {
+    "path": "Plans/goal_run_stop_block_contracts/consumer-resource-bank.json",
+    "origin": "json",
+    "pointer": "/started_current_workflow_native_activation/resources/38/schema",
+    "node_sha256": "20b6e2d9bf6092cd7f26c6eae807fe90ce4122cd04b4828ee9aab561f15f4e0c"
+   }
+  },
+  {
+   "path": "Plans/goal_run_stop_block_contracts/consumer-resource-bank.json",
+   "origin": "json",
+   "pointer": "/started_current_workflow_native_activation/resources/38/schema/$defs/event_record_1_0_0_compatibility_reader",
+   "control": "358cab93d41403b6571af40265be2402c61049abfe4fd3a9927de8a97c8e4f30",
+   "source": {
+    "path": "Plans/goal_run_stop_block_contracts/consumer-resource-bank.json",
+    "origin": "json",
+    "pointer": "/started_current_workflow_native_activation/resources/38/schema/$defs/event_record_1_0_0_compatibility_reader",
+    "node_sha256": "c8dc1ba20441a7c357b321913f12bdb99fe784e3b98ce64251159cd766b6ffac"
+   }
+  },
+  {
+   "path": "Plans/goal_run_stop_block_contracts/consumer-resource-bank.json",
+   "origin": "json",
+   "pointer": "/started_current_workflow_native_activation/resources/59/schema/$defs/event_record_1_0_0_compatibility_reader",
+   "control": "358cab93d41403b6571af40265be2402c61049abfe4fd3a9927de8a97c8e4f30",
+   "source": {
+    "path": "Plans/goal_run_stop_block_contracts/consumer-resource-bank.json",
+    "origin": "json",
+    "pointer": "/started_current_workflow_native_activation/resources/59/schema/$defs/event_record_1_0_0_compatibility_reader",
+    "node_sha256": "bc4cd72b7a51fbcb5afbd61ecb78a30cfacf312affcc3502883cf37671284874"
+   }
+  },
+  {
+   "path": "Plans/goal_run_stop_block_contracts/consumer-resource-bank.json",
+   "origin": "json",
+   "pointer": "/started_current_workflow_native_activation/resources/60/schema",
+   "control": "1e78ca11ac388bd617bcbf3111f0a253e257633ccc7b2383e523a51dcfc86deb",
+   "source": {
+    "path": "Plans/goal_run_stop_block_contracts/consumer-resource-bank.json",
+    "origin": "json",
+    "pointer": "/started_current_workflow_native_activation/resources/60/schema",
+    "node_sha256": "f27e17a13ad91590027931c6b340b4fd47e1ad0f668d5036814f60b4a84ccce2"
+   }
+  },
+  {
+   "path": "Plans/goal_run_stop_block_contracts/consumer-resource-bank.json",
+   "origin": "json",
+   "pointer": "/started_current_workflow_native_activation/resources/60/schema/$defs/event_record_1_0_0_compatibility_reader",
+   "control": "358cab93d41403b6571af40265be2402c61049abfe4fd3a9927de8a97c8e4f30",
+   "source": {
+    "path": "Plans/goal_run_stop_block_contracts/consumer-resource-bank.json",
+    "origin": "json",
+    "pointer": "/started_current_workflow_native_activation/resources/60/schema/$defs/event_record_1_0_0_compatibility_reader",
+    "node_sha256": "c8dc1ba20441a7c357b321913f12bdb99fe784e3b98ce64251159cd766b6ffac"
+   }
+  },
+  {
+   "path": "Plans/goal_run_stop_block_contracts/consumer-resource-bank.json",
+   "origin": "json",
+   "pointer": "/started_current_workflow_native_activation/resources/63/schema/$defs/event_record_1_0_0_compatibility_reader",
+   "control": "358cab93d41403b6571af40265be2402c61049abfe4fd3a9927de8a97c8e4f30",
+   "source": {
+    "path": "Plans/goal_run_stop_block_contracts/consumer-resource-bank.json",
+    "origin": "json",
+    "pointer": "/started_current_workflow_native_activation/resources/63/schema/$defs/event_record_1_0_0_compatibility_reader",
+    "node_sha256": "bc4cd72b7a51fbcb5afbd61ecb78a30cfacf312affcc3502883cf37671284874"
+   }
+  },
+  {
+   "path": "Plans/goal_run_stop_block_contracts/consumer-resource-bank.json",
+   "origin": "json",
+   "pointer": "/started_current_workflow_native_activation/resources/67/schema/$defs/Event_event_record_1_0_0_compatibility_reader",
+   "control": "358cab93d41403b6571af40265be2402c61049abfe4fd3a9927de8a97c8e4f30",
+   "source": {
+    "path": "Plans/goal_run_stop_block_contracts/consumer-resource-bank.json",
+    "origin": "json",
+    "pointer": "/started_current_workflow_native_activation/resources/67/schema/$defs/Event_event_record_1_0_0_compatibility_reader",
+    "node_sha256": "854e174546bb4deb3a816aec3f3922910e1168147ea72265d81296f2011ec411"
+   }
+  },
+  {
+   "path": "Plans/goal_run_stop_block_contracts/consumer-resource-bank.json",
+   "origin": "json",
+   "pointer": "/started_current_workflow_native_activation/resources/67/schema/$defs/EventRecord",
+   "control": "1e78ca11ac388bd617bcbf3111f0a253e257633ccc7b2383e523a51dcfc86deb",
+   "source": {
+    "path": "Plans/goal_run_stop_block_contracts/consumer-resource-bank.json",
+    "origin": "json",
+    "pointer": "/started_current_workflow_native_activation/resources/67/schema/$defs/EventRecord",
+    "node_sha256": "42b620ca9e585cde3375eb87905205051909d23bef85df371e52a2507354f127"
+   }
+  },
+  {
+   "path": "Plans/goal_run_stop_block_contracts/consumer-resource-bank.json",
+   "origin": "json",
+   "pointer": "/started_current_workflow_native_activation/resources/72/schema/$defs/GenericIndexRow",
+   "control": "cebf464ad36872826fd7b0fc256b8393501c7cd1815b720cbad8a256cfe61da0",
+   "source": {
+    "path": "Plans/goal_run_stop_block_contracts/consumer-resource-bank.json",
+    "origin": "json",
+    "pointer": "/started_current_workflow_native_activation/resources/72/schema/$defs/GenericIndexRow",
+    "node_sha256": "3bbf2867e5011b64dc3bc0960e11db3f39def0d82e3b398197668e2f154825f8"
+   }
+  },
+  {
+   "path": "Plans/goal_run_stop_block_contracts/consumer-resource-bank.json",
+   "origin": "json",
+   "pointer": "/started_current_goal_controls/resources/4/schema",
+   "control": "1e78ca11ac388bd617bcbf3111f0a253e257633ccc7b2383e523a51dcfc86deb",
+   "source": {
+    "path": "Plans/goal_run_stop_block_contracts/consumer-resource-bank.json",
+    "origin": "json",
+    "pointer": "/started_current_goal_controls/resources/4/schema",
+    "node_sha256": "41fe097cc1d4dab1fa2e416ea4eaf5669b15a5e7956b9aba7d19e7fd8792ca9a"
+   }
+  },
+  {
+   "path": "Plans/goal_run_stop_block_contracts/consumer-resource-bank.json",
+   "origin": "json",
+   "pointer": "/started_current_goal_controls/resources/4/schema/$defs/event_record_1_0_0_compatibility_reader",
+   "control": "358cab93d41403b6571af40265be2402c61049abfe4fd3a9927de8a97c8e4f30",
+   "source": {
+    "path": "Plans/goal_run_stop_block_contracts/consumer-resource-bank.json",
+    "origin": "json",
+    "pointer": "/started_current_goal_controls/resources/4/schema/$defs/event_record_1_0_0_compatibility_reader",
+    "node_sha256": "649f03d711ec752e2be41be5f5da0879ca779dcffc175fbe172626636f62c26a"
+   }
+  },
+  {
+   "path": "Plans/goal_run_stop_block_contracts/consumer-resource-bank.json",
+   "origin": "json",
+   "pointer": "/started_current_goal_controls/resources/17/schema/$defs/existing_event__event_record_1_0_0_compatibility_reader",
+   "control": "358cab93d41403b6571af40265be2402c61049abfe4fd3a9927de8a97c8e4f30",
+   "source": {
+    "path": "Plans/goal_run_stop_block_contracts/consumer-resource-bank.json",
+    "origin": "json",
+    "pointer": "/started_current_goal_controls/resources/17/schema/$defs/existing_event__event_record_1_0_0_compatibility_reader",
+    "node_sha256": "ed81022c0a8512369455597650b08f2d8509ae193dddf564ecc011b47a067a4e"
+   }
+  },
+  {
+   "path": "Plans/goal_run_stop_block_contracts/consumer-resource-bank.json",
+   "origin": "json",
+   "pointer": "/started_current_goal_controls/resources/17/schema/$defs/existing_event",
+   "control": "1e78ca11ac388bd617bcbf3111f0a253e257633ccc7b2383e523a51dcfc86deb",
+   "source": {
+    "path": "Plans/goal_run_stop_block_contracts/consumer-resource-bank.json",
+    "origin": "json",
+    "pointer": "/started_current_goal_controls/resources/17/schema/$defs/existing_event",
+    "node_sha256": "46591d5bb7fdf14bfb8db1220fa5e07470eda31d8032a5582180469a7d9ec354"
+   }
+  },
+  {
+   "path": "Plans/goal_run_stop_block_contracts/consumer-resource-bank.json",
+   "origin": "json",
+   "pointer": "/started_current_goal_controls/resources/17/schema/$defs/existing_event_record_index",
+   "control": "cebf464ad36872826fd7b0fc256b8393501c7cd1815b720cbad8a256cfe61da0",
+   "source": {
+    "path": "Plans/goal_run_stop_block_contracts/consumer-resource-bank.json",
+    "origin": "json",
+    "pointer": "/started_current_goal_controls/resources/17/schema/$defs/existing_event_record_index",
+    "node_sha256": "3bbf2867e5011b64dc3bc0960e11db3f39def0d82e3b398197668e2f154825f8"
+   }
+  },
+  {
+   "path": "Plans/goal_run_stop_block_contracts/consumer-resource-bank.json",
+   "origin": "json",
+   "pointer": "/started_current_goal_controls/resources/17/schema/$defs/compaction_event",
+   "control": "be5c75d755c23de76ec533f89e315e264a7e63bb94d7d9b617c945cb04c6ec73",
+   "source": {
+    "path": "Plans/goal_run_stop_block_contracts/consumer-resource-bank.json",
+    "origin": "json",
+    "pointer": "/started_current_goal_controls/resources/17/schema/$defs/compaction_event",
+    "node_sha256": "ba4ceeb3e40c12ae1ebc86fd27ac92efa1513c81e500c3e6420f09b42be3fc5e"
+   }
+  },
+  {
+   "path": "Plans/goal_run_stop_block_contracts/consumer-resource-bank.json",
+   "origin": "json",
+   "pointer": "/started_current_goal_controls/resources/30/schema",
+   "control": "1e78ca11ac388bd617bcbf3111f0a253e257633ccc7b2383e523a51dcfc86deb",
+   "source": {
+    "path": "Plans/goal_run_stop_block_contracts/consumer-resource-bank.json",
+    "origin": "json",
+    "pointer": "/started_current_goal_controls/resources/30/schema",
+    "node_sha256": "9c363150db9154f4d037497ba5b3d41a50be2f2e36032e3a322723a51b203302"
+   }
+  },
+  {
+   "path": "Plans/goal_run_stop_block_contracts/consumer-resource-bank.json",
+   "origin": "json",
+   "pointer": "/started_current_goal_controls/resources/30/schema/$defs/event_record_1_0_0_compatibility_reader",
+   "control": "358cab93d41403b6571af40265be2402c61049abfe4fd3a9927de8a97c8e4f30",
+   "source": {
+    "path": "Plans/goal_run_stop_block_contracts/consumer-resource-bank.json",
+    "origin": "json",
+    "pointer": "/started_current_goal_controls/resources/30/schema/$defs/event_record_1_0_0_compatibility_reader",
+    "node_sha256": "649f03d711ec752e2be41be5f5da0879ca779dcffc175fbe172626636f62c26a"
+   }
+  },
+  {
+   "path": "Plans/goal_run_stop_block_contracts/consumer-resource-bank.json",
+   "origin": "json",
+   "pointer": "/started_current_goal_controls/resources/37/schema/$defs/existing_event__event_record_1_0_0_compatibility_reader",
+   "control": "358cab93d41403b6571af40265be2402c61049abfe4fd3a9927de8a97c8e4f30",
+   "source": {
+    "path": "Plans/goal_run_stop_block_contracts/consumer-resource-bank.json",
+    "origin": "json",
+    "pointer": "/started_current_goal_controls/resources/37/schema/$defs/existing_event__event_record_1_0_0_compatibility_reader",
+    "node_sha256": "ed81022c0a8512369455597650b08f2d8509ae193dddf564ecc011b47a067a4e"
+   }
+  },
+  {
+   "path": "Plans/goal_run_stop_block_contracts/consumer-resource-bank.json",
+   "origin": "json",
+   "pointer": "/started_current_goal_controls/resources/37/schema/$defs/existing_event",
+   "control": "1e78ca11ac388bd617bcbf3111f0a253e257633ccc7b2383e523a51dcfc86deb",
+   "source": {
+    "path": "Plans/goal_run_stop_block_contracts/consumer-resource-bank.json",
+    "origin": "json",
+    "pointer": "/started_current_goal_controls/resources/37/schema/$defs/existing_event",
+    "node_sha256": "46591d5bb7fdf14bfb8db1220fa5e07470eda31d8032a5582180469a7d9ec354"
+   }
+  },
+  {
+   "path": "Plans/goal_run_stop_block_contracts/consumer-resource-bank.json",
+   "origin": "json",
+   "pointer": "/started_current_goal_controls/resources/37/schema/$defs/existing_event_record_index",
+   "control": "cebf464ad36872826fd7b0fc256b8393501c7cd1815b720cbad8a256cfe61da0",
+   "source": {
+    "path": "Plans/goal_run_stop_block_contracts/consumer-resource-bank.json",
+    "origin": "json",
+    "pointer": "/started_current_goal_controls/resources/37/schema/$defs/existing_event_record_index",
+    "node_sha256": "3bbf2867e5011b64dc3bc0960e11db3f39def0d82e3b398197668e2f154825f8"
+   }
+  },
+  {
+   "path": "Plans/goal_run_stop_block_contracts/consumer-resource-bank.json",
+   "origin": "json",
+   "pointer": "/started_current_goal_controls/resources/37/schema/$defs/compaction_event",
+   "control": "be5c75d755c23de76ec533f89e315e264a7e63bb94d7d9b617c945cb04c6ec73",
+   "source": {
+    "path": "Plans/goal_run_stop_block_contracts/consumer-resource-bank.json",
+    "origin": "json",
+    "pointer": "/started_current_goal_controls/resources/37/schema/$defs/compaction_event",
+    "node_sha256": "ba4ceeb3e40c12ae1ebc86fd27ac92efa1513c81e500c3e6420f09b42be3fc5e"
+   }
+  },
+  {
+   "path": "Plans/goal_run_stop_block_contracts/consumer-resource-bank.json",
+   "origin": "json",
+   "pointer": "/cancelled_native_consumer/resources/38/schema",
+   "control": "1e78ca11ac388bd617bcbf3111f0a253e257633ccc7b2383e523a51dcfc86deb",
+   "source": {
+    "path": "Plans/goal_run_stop_block_contracts/consumer-resource-bank.json",
+    "origin": "json",
+    "pointer": "/cancelled_native_consumer/resources/38/schema",
+    "node_sha256": "ee6b04ac9aed49b6e575ce595058d1bf46ee74482b0d3c858f76ac2ff5e6da2c"
+   }
+  },
+  {
+   "path": "Plans/goal_run_stop_block_contracts/consumer-resource-bank.json",
+   "origin": "json",
+   "pointer": "/cancelled_native_consumer/resources/38/schema/$defs/event_record_1_0_0_compatibility_reader",
+   "control": "358cab93d41403b6571af40265be2402c61049abfe4fd3a9927de8a97c8e4f30",
+   "source": {
+    "path": "Plans/goal_run_stop_block_contracts/consumer-resource-bank.json",
+    "origin": "json",
+    "pointer": "/cancelled_native_consumer/resources/38/schema/$defs/event_record_1_0_0_compatibility_reader",
+    "node_sha256": "726c5d41febc4a975cd91205f98423e96dcf0c660109f7191343fb8eb43dd63a"
+   }
+  },
+  {
+   "path": "Plans/goal_run_stop_block_contracts/consumer-resource-bank.json",
+   "origin": "json",
+   "pointer": "/cancelled_native_consumer/resources/58/schema/$defs/event_record_1_0_0_compatibility_reader",
+   "control": "358cab93d41403b6571af40265be2402c61049abfe4fd3a9927de8a97c8e4f30",
+   "source": {
+    "path": "Plans/goal_run_stop_block_contracts/consumer-resource-bank.json",
+    "origin": "json",
+    "pointer": "/cancelled_native_consumer/resources/58/schema/$defs/event_record_1_0_0_compatibility_reader",
+    "node_sha256": "ebb66537b8c2e0fee8cf31d1e2547cbc72980fae6be10de0fb1dfa33062e2f07"
+   }
+  },
+  {
+   "path": "Plans/goal_run_stop_block_contracts/consumer-resource-bank.json",
+   "origin": "json",
+   "pointer": "/cancelled_native_consumer/resources/59/schema",
+   "control": "1e78ca11ac388bd617bcbf3111f0a253e257633ccc7b2383e523a51dcfc86deb",
+   "source": {
+    "path": "Plans/goal_run_stop_block_contracts/consumer-resource-bank.json",
+    "origin": "json",
+    "pointer": "/cancelled_native_consumer/resources/59/schema",
+    "node_sha256": "ff64abfafdb936a528aa62fb95486e6748f8ca1507510501cac0e8e8cbffbcff"
+   }
+  },
+  {
+   "path": "Plans/goal_run_stop_block_contracts/consumer-resource-bank.json",
+   "origin": "json",
+   "pointer": "/cancelled_native_consumer/resources/59/schema/$defs/event_record_1_0_0_compatibility_reader",
+   "control": "358cab93d41403b6571af40265be2402c61049abfe4fd3a9927de8a97c8e4f30",
+   "source": {
+    "path": "Plans/goal_run_stop_block_contracts/consumer-resource-bank.json",
+    "origin": "json",
+    "pointer": "/cancelled_native_consumer/resources/59/schema/$defs/event_record_1_0_0_compatibility_reader",
+    "node_sha256": "726c5d41febc4a975cd91205f98423e96dcf0c660109f7191343fb8eb43dd63a"
+   }
+  },
+  {
+   "path": "Plans/goal_run_stop_block_contracts/consumer-resource-bank.json",
+   "origin": "json",
+   "pointer": "/cancelled_native_consumer/resources/62/schema/$defs/event_record_1_0_0_compatibility_reader",
+   "control": "358cab93d41403b6571af40265be2402c61049abfe4fd3a9927de8a97c8e4f30",
+   "source": {
+    "path": "Plans/goal_run_stop_block_contracts/consumer-resource-bank.json",
+    "origin": "json",
+    "pointer": "/cancelled_native_consumer/resources/62/schema/$defs/event_record_1_0_0_compatibility_reader",
+    "node_sha256": "ebb66537b8c2e0fee8cf31d1e2547cbc72980fae6be10de0fb1dfa33062e2f07"
+   }
+  },
+  {
+   "path": "Plans/goal_run_stop_block_contracts/consumer-resource-bank.json",
+   "origin": "json",
+   "pointer": "/cancelled_native_consumer/resources/66/schema/$defs/Event_event_record_1_0_0_compatibility_reader",
+   "control": "358cab93d41403b6571af40265be2402c61049abfe4fd3a9927de8a97c8e4f30",
+   "source": {
+    "path": "Plans/goal_run_stop_block_contracts/consumer-resource-bank.json",
+    "origin": "json",
+    "pointer": "/cancelled_native_consumer/resources/66/schema/$defs/Event_event_record_1_0_0_compatibility_reader",
+    "node_sha256": "7824d5833522ddd10499cab6672c0ba67d24a9fa7ca8741dcbbf5a61cc5cfe96"
+   }
+  },
+  {
+   "path": "Plans/goal_run_stop_block_contracts/consumer-resource-bank.json",
+   "origin": "json",
+   "pointer": "/cancelled_native_consumer/resources/66/schema/$defs/EventRecord",
+   "control": "1e78ca11ac388bd617bcbf3111f0a253e257633ccc7b2383e523a51dcfc86deb",
+   "source": {
+    "path": "Plans/goal_run_stop_block_contracts/consumer-resource-bank.json",
+    "origin": "json",
+    "pointer": "/cancelled_native_consumer/resources/66/schema/$defs/EventRecord",
+    "node_sha256": "42ecd67654f44e8743ed01f187c4ae818bdc891abc428bf1dd29564791ed4587"
+   }
+  },
+  {
+   "path": "Plans/goal_run_stop_block_contracts/consumer-resource-bank.json",
+   "origin": "json",
+   "pointer": "/cancelled_native_consumer/resources/79/schema",
+   "control": "1e78ca11ac388bd617bcbf3111f0a253e257633ccc7b2383e523a51dcfc86deb",
+   "source": {
+    "path": "Plans/goal_run_stop_block_contracts/consumer-resource-bank.json",
+    "origin": "json",
+    "pointer": "/cancelled_native_consumer/resources/79/schema",
+    "node_sha256": "fc3d8fb641310aa78c4d2e0c6a2c43a90ae9788f882ff47ad046068cd166f692"
+   }
+  },
+  {
+   "path": "Plans/goal_run_stop_block_contracts/consumer-resource-bank.json",
+   "origin": "json",
+   "pointer": "/cancelled_native_consumer/resources/79/schema/$defs/event_record_1_0_0_compatibility_reader",
+   "control": "358cab93d41403b6571af40265be2402c61049abfe4fd3a9927de8a97c8e4f30",
+   "source": {
+    "path": "Plans/goal_run_stop_block_contracts/consumer-resource-bank.json",
+    "origin": "json",
+    "pointer": "/cancelled_native_consumer/resources/79/schema/$defs/event_record_1_0_0_compatibility_reader",
+    "node_sha256": "726c5d41febc4a975cd91205f98423e96dcf0c660109f7191343fb8eb43dd63a"
+   }
+  },
+  {
+   "path": "Plans/goal_run_stop_block_contracts/consumer-resource-bank.json",
+   "origin": "json",
+   "pointer": "/cancelled_native_consumer/resources/121/schema/$defs/GenericIndexRow",
+   "control": "cebf464ad36872826fd7b0fc256b8393501c7cd1815b720cbad8a256cfe61da0",
+   "source": {
+    "path": "Plans/goal_run_stop_block_contracts/consumer-resource-bank.json",
+    "origin": "json",
+    "pointer": "/cancelled_native_consumer/resources/121/schema/$defs/GenericIndexRow",
+    "node_sha256": "3bbf2867e5011b64dc3bc0960e11db3f39def0d82e3b398197668e2f154825f8"
+   }
+  },
+  {
+   "path": "Plans/goal_run_stop_block_contracts/consumer-resource-bank.json",
+   "origin": "json",
+   "pointer": "/cancelled_native_consumer/resources/123/schema/$defs/GenericIndexRow",
+   "control": "cebf464ad36872826fd7b0fc256b8393501c7cd1815b720cbad8a256cfe61da0",
+   "source": {
+    "path": "Plans/goal_run_stop_block_contracts/consumer-resource-bank.json",
+    "origin": "json",
+    "pointer": "/cancelled_native_consumer/resources/123/schema/$defs/GenericIndexRow",
+    "node_sha256": "3bbf2867e5011b64dc3bc0960e11db3f39def0d82e3b398197668e2f154825f8"
+   }
+  },
+  {
+   "path": "Plans/goal_run_stop_block_contracts/consumer-resource-bank.json",
+   "origin": "json",
+   "pointer": "/cancelled_native_consumer/resources/124/schema/$defs/existing_event__event_record_1_0_0_compatibility_reader",
+   "control": "358cab93d41403b6571af40265be2402c61049abfe4fd3a9927de8a97c8e4f30",
+   "source": {
+    "path": "Plans/goal_run_stop_block_contracts/consumer-resource-bank.json",
+    "origin": "json",
+    "pointer": "/cancelled_native_consumer/resources/124/schema/$defs/existing_event__event_record_1_0_0_compatibility_reader",
+    "node_sha256": "79a10af1e5a886d95f0813bf123b2d051ec0cb9b922211c1894480d5600e1259"
+   }
+  },
+  {
+   "path": "Plans/goal_run_stop_block_contracts/consumer-resource-bank.json",
+   "origin": "json",
+   "pointer": "/cancelled_native_consumer/resources/124/schema/$defs/existing_event",
+   "control": "1e78ca11ac388bd617bcbf3111f0a253e257633ccc7b2383e523a51dcfc86deb",
+   "source": {
+    "path": "Plans/goal_run_stop_block_contracts/consumer-resource-bank.json",
+    "origin": "json",
+    "pointer": "/cancelled_native_consumer/resources/124/schema/$defs/existing_event",
+    "node_sha256": "1e4269089ee17b33da038556a7cc8a2356c782491b20044eaace39bab5a4d981"
+   }
+  },
+  {
+   "path": "Plans/goal_run_stop_block_contracts/consumer-resource-bank.json",
+   "origin": "json",
+   "pointer": "/cancelled_native_consumer/resources/124/schema/$defs/existing_event_record_index",
+   "control": "cebf464ad36872826fd7b0fc256b8393501c7cd1815b720cbad8a256cfe61da0",
+   "source": {
+    "path": "Plans/goal_run_stop_block_contracts/consumer-resource-bank.json",
+    "origin": "json",
+    "pointer": "/cancelled_native_consumer/resources/124/schema/$defs/existing_event_record_index",
+    "node_sha256": "3bbf2867e5011b64dc3bc0960e11db3f39def0d82e3b398197668e2f154825f8"
+   }
+  },
+  {
+   "path": "Plans/goal_run_stop_block_contracts/consumer-resource-bank.json",
+   "origin": "json",
+   "pointer": "/cancelled_native_consumer/resources/124/schema/$defs/compaction_event",
+   "control": "be5c75d755c23de76ec533f89e315e264a7e63bb94d7d9b617c945cb04c6ec73",
+   "source": {
+    "path": "Plans/goal_run_stop_block_contracts/consumer-resource-bank.json",
+    "origin": "json",
+    "pointer": "/cancelled_native_consumer/resources/124/schema/$defs/compaction_event",
+    "node_sha256": "b6dc80c454cf69d55c92c518030441de616199b91d91659779866fe6f44c57bc"
+   }
+  },
+  {
+   "path": "Plans/goal_run_stop_block_contracts/consumer-resource-bank.json",
+   "origin": "json",
+   "pointer": "/cancelled_goal_consumer/resources/4/schema",
+   "control": "1e78ca11ac388bd617bcbf3111f0a253e257633ccc7b2383e523a51dcfc86deb",
+   "source": {
+    "path": "Plans/goal_run_stop_block_contracts/consumer-resource-bank.json",
+    "origin": "json",
+    "pointer": "/cancelled_goal_consumer/resources/4/schema",
+    "node_sha256": "2fe91c65b4f7f8016151e3d82c7735163627550c43a8770605c00d8bf588b4aa"
+   }
+  },
+  {
+   "path": "Plans/goal_run_stop_block_contracts/consumer-resource-bank.json",
+   "origin": "json",
+   "pointer": "/cancelled_goal_consumer/resources/4/schema/$defs/event_record_1_0_0_compatibility_reader",
+   "control": "358cab93d41403b6571af40265be2402c61049abfe4fd3a9927de8a97c8e4f30",
+   "source": {
+    "path": "Plans/goal_run_stop_block_contracts/consumer-resource-bank.json",
+    "origin": "json",
+    "pointer": "/cancelled_goal_consumer/resources/4/schema/$defs/event_record_1_0_0_compatibility_reader",
+    "node_sha256": "44327dbc40fac467d3431039ebecd09005e734befc688f52e266898a6bd912b8"
+   }
+  },
+  {
+   "path": "Plans/goal_run_stop_block_contracts/consumer-resource-bank.json",
+   "origin": "json",
+   "pointer": "/cancelled_goal_consumer/resources/17/schema/$defs/existing_event__event_record_1_0_0_compatibility_reader",
+   "control": "358cab93d41403b6571af40265be2402c61049abfe4fd3a9927de8a97c8e4f30",
+   "source": {
+    "path": "Plans/goal_run_stop_block_contracts/consumer-resource-bank.json",
+    "origin": "json",
+    "pointer": "/cancelled_goal_consumer/resources/17/schema/$defs/existing_event__event_record_1_0_0_compatibility_reader",
+    "node_sha256": "a9429bdafdf12762b91d4e719eb6639338e7d2dfede905c5e3c64f2a6e7c4ba4"
+   }
+  },
+  {
+   "path": "Plans/goal_run_stop_block_contracts/consumer-resource-bank.json",
+   "origin": "json",
+   "pointer": "/cancelled_goal_consumer/resources/17/schema/$defs/existing_event",
+   "control": "1e78ca11ac388bd617bcbf3111f0a253e257633ccc7b2383e523a51dcfc86deb",
+   "source": {
+    "path": "Plans/goal_run_stop_block_contracts/consumer-resource-bank.json",
+    "origin": "json",
+    "pointer": "/cancelled_goal_consumer/resources/17/schema/$defs/existing_event",
+    "node_sha256": "e08ce68f09fba6b40d6b3f1667abc43910503a2feac459346dda2de3457d9fba"
+   }
+  },
+  {
+   "path": "Plans/goal_run_stop_block_contracts/consumer-resource-bank.json",
+   "origin": "json",
+   "pointer": "/cancelled_goal_consumer/resources/17/schema/$defs/existing_event_record_index",
+   "control": "cebf464ad36872826fd7b0fc256b8393501c7cd1815b720cbad8a256cfe61da0",
+   "source": {
+    "path": "Plans/goal_run_stop_block_contracts/consumer-resource-bank.json",
+    "origin": "json",
+    "pointer": "/cancelled_goal_consumer/resources/17/schema/$defs/existing_event_record_index",
+    "node_sha256": "3bbf2867e5011b64dc3bc0960e11db3f39def0d82e3b398197668e2f154825f8"
+   }
+  },
+  {
+   "path": "Plans/goal_run_stop_block_contracts/consumer-resource-bank.json",
+   "origin": "json",
+   "pointer": "/cancelled_goal_consumer/resources/17/schema/$defs/compaction_event",
+   "control": "be5c75d755c23de76ec533f89e315e264a7e63bb94d7d9b617c945cb04c6ec73",
+   "source": {
+    "path": "Plans/goal_run_stop_block_contracts/consumer-resource-bank.json",
+    "origin": "json",
+    "pointer": "/cancelled_goal_consumer/resources/17/schema/$defs/compaction_event",
+    "node_sha256": "e3b5e8d1a03654a96ffa4e78a1bdb4ca4df9a01a7454ab07f5d738b77b5f7b38"
+   }
+  },
+  {
+   "path": "Plans/goal_run_stop_block_contracts/consumer-resource-bank.json",
+   "origin": "json",
+   "pointer": "/cancelled_goal_consumer/resources/27/schema",
+   "control": "1e78ca11ac388bd617bcbf3111f0a253e257633ccc7b2383e523a51dcfc86deb",
+   "source": {
+    "path": "Plans/goal_run_stop_block_contracts/consumer-resource-bank.json",
+    "origin": "json",
+    "pointer": "/cancelled_goal_consumer/resources/27/schema",
+    "node_sha256": "9a25d82c5eb28c47694424617122ca96b73055d73af3dfff0faf6fb6b494d687"
+   }
+  },
+  {
+   "path": "Plans/goal_run_stop_block_contracts/consumer-resource-bank.json",
+   "origin": "json",
+   "pointer": "/cancelled_goal_consumer/resources/27/schema/$defs/event_record_1_0_0_compatibility_reader",
+   "control": "358cab93d41403b6571af40265be2402c61049abfe4fd3a9927de8a97c8e4f30",
+   "source": {
+    "path": "Plans/goal_run_stop_block_contracts/consumer-resource-bank.json",
+    "origin": "json",
+    "pointer": "/cancelled_goal_consumer/resources/27/schema/$defs/event_record_1_0_0_compatibility_reader",
+    "node_sha256": "44327dbc40fac467d3431039ebecd09005e734befc688f52e266898a6bd912b8"
+   }
+  },
+  {
+   "path": "Plans/goal_run_stop_block_contracts/consumer-resource-bank.json",
+   "origin": "json",
+   "pointer": "/cancelled_goal_consumer/resources/34/schema/$defs/existing_event__event_record_1_0_0_compatibility_reader",
+   "control": "358cab93d41403b6571af40265be2402c61049abfe4fd3a9927de8a97c8e4f30",
+   "source": {
+    "path": "Plans/goal_run_stop_block_contracts/consumer-resource-bank.json",
+    "origin": "json",
+    "pointer": "/cancelled_goal_consumer/resources/34/schema/$defs/existing_event__event_record_1_0_0_compatibility_reader",
+    "node_sha256": "a9429bdafdf12762b91d4e719eb6639338e7d2dfede905c5e3c64f2a6e7c4ba4"
+   }
+  },
+  {
+   "path": "Plans/goal_run_stop_block_contracts/consumer-resource-bank.json",
+   "origin": "json",
+   "pointer": "/cancelled_goal_consumer/resources/34/schema/$defs/existing_event",
+   "control": "1e78ca11ac388bd617bcbf3111f0a253e257633ccc7b2383e523a51dcfc86deb",
+   "source": {
+    "path": "Plans/goal_run_stop_block_contracts/consumer-resource-bank.json",
+    "origin": "json",
+    "pointer": "/cancelled_goal_consumer/resources/34/schema/$defs/existing_event",
+    "node_sha256": "e08ce68f09fba6b40d6b3f1667abc43910503a2feac459346dda2de3457d9fba"
+   }
+  },
+  {
+   "path": "Plans/goal_run_stop_block_contracts/consumer-resource-bank.json",
+   "origin": "json",
+   "pointer": "/cancelled_goal_consumer/resources/34/schema/$defs/existing_event_record_index",
+   "control": "cebf464ad36872826fd7b0fc256b8393501c7cd1815b720cbad8a256cfe61da0",
+   "source": {
+    "path": "Plans/goal_run_stop_block_contracts/consumer-resource-bank.json",
+    "origin": "json",
+    "pointer": "/cancelled_goal_consumer/resources/34/schema/$defs/existing_event_record_index",
+    "node_sha256": "3bbf2867e5011b64dc3bc0960e11db3f39def0d82e3b398197668e2f154825f8"
+   }
+  },
+  {
+   "path": "Plans/goal_run_stop_block_contracts/consumer-resource-bank.json",
+   "origin": "json",
+   "pointer": "/cancelled_goal_consumer/resources/34/schema/$defs/compaction_event",
+   "control": "be5c75d755c23de76ec533f89e315e264a7e63bb94d7d9b617c945cb04c6ec73",
+   "source": {
+    "path": "Plans/goal_run_stop_block_contracts/consumer-resource-bank.json",
+    "origin": "json",
+    "pointer": "/cancelled_goal_consumer/resources/34/schema/$defs/compaction_event",
+    "node_sha256": "e3b5e8d1a03654a96ffa4e78a1bdb4ca4df9a01a7454ab07f5d738b77b5f7b38"
+   }
+  },
+  {
+   "path": "Plans/goal_run_stop_block_contracts/consumer-resource-bank.json",
+   "origin": "json",
+   "pointer": "/cancelled_filesafe_consumer/resources/11/schema",
+   "control": "1e78ca11ac388bd617bcbf3111f0a253e257633ccc7b2383e523a51dcfc86deb",
+   "source": {
+    "path": "Plans/goal_run_stop_block_contracts/consumer-resource-bank.json",
+    "origin": "json",
+    "pointer": "/cancelled_filesafe_consumer/resources/11/schema",
+    "node_sha256": "5e40fbf140fe625f34275c3e87e88b78eb8c35c6d184a503357170d800f638b6"
+   }
+  },
+  {
+   "path": "Plans/goal_run_stop_block_contracts/consumer-resource-bank.json",
+   "origin": "json",
+   "pointer": "/cancelled_filesafe_consumer/resources/11/schema/$defs/event_record_1_0_0_compatibility_reader",
+   "control": "358cab93d41403b6571af40265be2402c61049abfe4fd3a9927de8a97c8e4f30",
+   "source": {
+    "path": "Plans/goal_run_stop_block_contracts/consumer-resource-bank.json",
+    "origin": "json",
+    "pointer": "/cancelled_filesafe_consumer/resources/11/schema/$defs/event_record_1_0_0_compatibility_reader",
+    "node_sha256": "4e28dd325c31fc97d3ad55e24a2892368103d5aeffd9dd92516cefc32b2e3d8e"
+   }
+  },
+  {
+   "path": "Plans/goal_run_stop_block_contracts/consumer-resource-bank.json",
+   "origin": "json",
+   "pointer": "/cancelled_filesafe_consumer/resources/21/schema",
+   "control": "1e78ca11ac388bd617bcbf3111f0a253e257633ccc7b2383e523a51dcfc86deb",
+   "source": {
+    "path": "Plans/goal_run_stop_block_contracts/consumer-resource-bank.json",
+    "origin": "json",
+    "pointer": "/cancelled_filesafe_consumer/resources/21/schema",
+    "node_sha256": "9f1b8a58a0b1f1f0a91148eeaeb75d85b1baa6b948697ebf198ea36af25aaa65"
+   }
+  },
+  {
+   "path": "Plans/goal_run_stop_block_contracts/consumer-resource-bank.json",
+   "origin": "json",
+   "pointer": "/cancelled_filesafe_consumer/resources/21/schema/$defs/event_record_1_0_0_compatibility_reader",
+   "control": "358cab93d41403b6571af40265be2402c61049abfe4fd3a9927de8a97c8e4f30",
+   "source": {
+    "path": "Plans/goal_run_stop_block_contracts/consumer-resource-bank.json",
+    "origin": "json",
+    "pointer": "/cancelled_filesafe_consumer/resources/21/schema/$defs/event_record_1_0_0_compatibility_reader",
+    "node_sha256": "4e28dd325c31fc97d3ad55e24a2892368103d5aeffd9dd92516cefc32b2e3d8e"
+   }
+  },
+  {
+   "path": "Plans/goal_run_stop_block_contracts/consumer-resource-bank.json",
+   "origin": "json",
+   "pointer": "/cancelled_filesafe_consumer/resources/24/schema/$defs/event_record_1_0_0_compatibility_reader",
+   "control": "358cab93d41403b6571af40265be2402c61049abfe4fd3a9927de8a97c8e4f30",
+   "source": {
+    "path": "Plans/goal_run_stop_block_contracts/consumer-resource-bank.json",
+    "origin": "json",
+    "pointer": "/cancelled_filesafe_consumer/resources/24/schema/$defs/event_record_1_0_0_compatibility_reader",
+    "node_sha256": "38a23d3cb5e02495e498f33f9228627c5469892a99b96a9dde4828dccbd9c94d"
+   }
+  },
+  {
+   "path": "Plans/goal_run_stop_block_contracts/consumer-resource-bank.json",
+   "origin": "json",
+   "pointer": "/cancelled_filesafe_consumer/resources/33/schema",
+   "control": "1e78ca11ac388bd617bcbf3111f0a253e257633ccc7b2383e523a51dcfc86deb",
+   "source": {
+    "path": "Plans/goal_run_stop_block_contracts/consumer-resource-bank.json",
+    "origin": "json",
+    "pointer": "/cancelled_filesafe_consumer/resources/33/schema",
+    "node_sha256": "20e0d42038efed15ec9f31eccd62845262031aa5477def61cc4cc34f64bca012"
+   }
+  },
+  {
+   "path": "Plans/goal_run_stop_block_contracts/consumer-resource-bank.json",
+   "origin": "json",
+   "pointer": "/cancelled_filesafe_consumer/resources/33/schema/$defs/event_record_1_0_0_compatibility_reader",
+   "control": "358cab93d41403b6571af40265be2402c61049abfe4fd3a9927de8a97c8e4f30",
+   "source": {
+    "path": "Plans/goal_run_stop_block_contracts/consumer-resource-bank.json",
+    "origin": "json",
+    "pointer": "/cancelled_filesafe_consumer/resources/33/schema/$defs/event_record_1_0_0_compatibility_reader",
+    "node_sha256": "4e28dd325c31fc97d3ad55e24a2892368103d5aeffd9dd92516cefc32b2e3d8e"
+   }
+  },
+  {
+   "path": "Plans/goal_run_stop_block_contracts/consumer-resource-bank.json",
+   "origin": "json",
+   "pointer": "/cancelled_filesafe_consumer/resources/45/schema/$defs/event_record_1_0_0_compatibility_reader",
+   "control": "358cab93d41403b6571af40265be2402c61049abfe4fd3a9927de8a97c8e4f30",
+   "source": {
+    "path": "Plans/goal_run_stop_block_contracts/consumer-resource-bank.json",
+    "origin": "json",
+    "pointer": "/cancelled_filesafe_consumer/resources/45/schema/$defs/event_record_1_0_0_compatibility_reader",
+    "node_sha256": "38a23d3cb5e02495e498f33f9228627c5469892a99b96a9dde4828dccbd9c94d"
+   }
+  },
+  {
+   "path": "Plans/goal_run_stop_block_contracts/consumer-resource-bank.json",
+   "origin": "json",
+   "pointer": "/companions/resources/0/schema/$defs/GenericIndexRow",
+   "control": "cebf464ad36872826fd7b0fc256b8393501c7cd1815b720cbad8a256cfe61da0",
+   "source": {
+    "path": "Plans/goal_run_stop_block_contracts/consumer-resource-bank.json",
+    "origin": "json",
+    "pointer": "/companions/resources/0/schema/$defs/GenericIndexRow",
+    "node_sha256": "3bbf2867e5011b64dc3bc0960e11db3f39def0d82e3b398197668e2f154825f8"
+   }
+  },
+  {
+   "path": "Plans/goal_run_stop_block_contracts/consumer-resource-bank.json",
+   "origin": "json",
+   "pointer": "/companions/resources/1/schema/$defs/GenericIndexRow",
+   "control": "cebf464ad36872826fd7b0fc256b8393501c7cd1815b720cbad8a256cfe61da0",
+   "source": {
+    "path": "Plans/goal_run_stop_block_contracts/consumer-resource-bank.json",
+    "origin": "json",
+    "pointer": "/companions/resources/1/schema/$defs/GenericIndexRow",
+    "node_sha256": "3bbf2867e5011b64dc3bc0960e11db3f39def0d82e3b398197668e2f154825f8"
+   }
+  },
+  {
+   "path": "Plans/goal_run_stop_block_contracts/resource-bank.json",
+   "origin": "json",
+   "pointer": "/native/resources/38/schema",
+   "control": "1e78ca11ac388bd617bcbf3111f0a253e257633ccc7b2383e523a51dcfc86deb",
+   "source": {
+    "path": "Plans/goal_run_stop_block_contracts/resource-bank.json",
+    "origin": "json",
+    "pointer": "/native/resources/38/schema",
+    "node_sha256": "a1248f426b63a2a68027b5d9310432f346ef330944ac6bfce0423448a4645091"
+   }
+  },
+  {
+   "path": "Plans/goal_run_stop_block_contracts/resource-bank.json",
+   "origin": "json",
+   "pointer": "/native/resources/38/schema/$defs/event_record_1_0_0_compatibility_reader",
+   "control": "358cab93d41403b6571af40265be2402c61049abfe4fd3a9927de8a97c8e4f30",
+   "source": {
+    "path": "Plans/goal_run_stop_block_contracts/resource-bank.json",
+    "origin": "json",
+    "pointer": "/native/resources/38/schema/$defs/event_record_1_0_0_compatibility_reader",
+    "node_sha256": "9764b8d1a590d226e5a67022dd8425527feaf80da92cd3a85a3b8fd9a902cbcf"
+   }
+  },
+  {
+   "path": "Plans/goal_run_stop_block_contracts/resource-bank.json",
+   "origin": "json",
+   "pointer": "/native/resources/58/schema/$defs/event_record_1_0_0_compatibility_reader",
+   "control": "358cab93d41403b6571af40265be2402c61049abfe4fd3a9927de8a97c8e4f30",
+   "source": {
+    "path": "Plans/goal_run_stop_block_contracts/resource-bank.json",
+    "origin": "json",
+    "pointer": "/native/resources/58/schema/$defs/event_record_1_0_0_compatibility_reader",
+    "node_sha256": "7b625f6aaed2d63b8b09d3f596307d8f89daf7d1ec04a4951d44268d906551ab"
+   }
+  },
+  {
+   "path": "Plans/goal_run_stop_block_contracts/resource-bank.json",
+   "origin": "json",
+   "pointer": "/native/resources/59/schema",
+   "control": "1e78ca11ac388bd617bcbf3111f0a253e257633ccc7b2383e523a51dcfc86deb",
+   "source": {
+    "path": "Plans/goal_run_stop_block_contracts/resource-bank.json",
+    "origin": "json",
+    "pointer": "/native/resources/59/schema",
+    "node_sha256": "4cdb37472925de136376a4ba04ca766ae5b3a3053a6989c910e4153cf8bbf1a4"
+   }
+  },
+  {
+   "path": "Plans/goal_run_stop_block_contracts/resource-bank.json",
+   "origin": "json",
+   "pointer": "/native/resources/59/schema/$defs/event_record_1_0_0_compatibility_reader",
+   "control": "358cab93d41403b6571af40265be2402c61049abfe4fd3a9927de8a97c8e4f30",
+   "source": {
+    "path": "Plans/goal_run_stop_block_contracts/resource-bank.json",
+    "origin": "json",
+    "pointer": "/native/resources/59/schema/$defs/event_record_1_0_0_compatibility_reader",
+    "node_sha256": "9764b8d1a590d226e5a67022dd8425527feaf80da92cd3a85a3b8fd9a902cbcf"
+   }
+  },
+  {
+   "path": "Plans/goal_run_stop_block_contracts/resource-bank.json",
+   "origin": "json",
+   "pointer": "/native/resources/62/schema/$defs/event_record_1_0_0_compatibility_reader",
+   "control": "358cab93d41403b6571af40265be2402c61049abfe4fd3a9927de8a97c8e4f30",
+   "source": {
+    "path": "Plans/goal_run_stop_block_contracts/resource-bank.json",
+    "origin": "json",
+    "pointer": "/native/resources/62/schema/$defs/event_record_1_0_0_compatibility_reader",
+    "node_sha256": "7b625f6aaed2d63b8b09d3f596307d8f89daf7d1ec04a4951d44268d906551ab"
+   }
+  },
+  {
+   "path": "Plans/goal_run_stop_block_contracts/resource-bank.json",
+   "origin": "json",
+   "pointer": "/native/resources/66/schema/$defs/Event_event_record_1_0_0_compatibility_reader",
+   "control": "358cab93d41403b6571af40265be2402c61049abfe4fd3a9927de8a97c8e4f30",
+   "source": {
+    "path": "Plans/goal_run_stop_block_contracts/resource-bank.json",
+    "origin": "json",
+    "pointer": "/native/resources/66/schema/$defs/Event_event_record_1_0_0_compatibility_reader",
+    "node_sha256": "69716ac683223295a488793f35e55908f02d133904475d66612835723440b7c8"
+   }
+  },
+  {
+   "path": "Plans/goal_run_stop_block_contracts/resource-bank.json",
+   "origin": "json",
+   "pointer": "/native/resources/66/schema/$defs/EventRecord",
+   "control": "1e78ca11ac388bd617bcbf3111f0a253e257633ccc7b2383e523a51dcfc86deb",
+   "source": {
+    "path": "Plans/goal_run_stop_block_contracts/resource-bank.json",
+    "origin": "json",
+    "pointer": "/native/resources/66/schema/$defs/EventRecord",
+    "node_sha256": "83d4bc468bfce19a6ba04b116dfd7068d1f6a2a7954a670cf5db20c32f773234"
+   }
+  },
+  {
+   "path": "Plans/goal_run_stop_block_contracts/resource-bank.json",
+   "origin": "json",
+   "pointer": "/native/resources/72/schema/$defs/Event_event_record_1_0_0_compatibility_reader",
+   "control": "358cab93d41403b6571af40265be2402c61049abfe4fd3a9927de8a97c8e4f30",
+   "source": {
+    "path": "Plans/goal_run_stop_block_contracts/resource-bank.json",
+    "origin": "json",
+    "pointer": "/native/resources/72/schema/$defs/Event_event_record_1_0_0_compatibility_reader",
+    "node_sha256": "cc49a683961c8a9e83323052c9e039591f25d31b0bc43be5553f3163345713f6"
+   }
+  },
+  {
+   "path": "Plans/goal_run_stop_block_contracts/resource-bank.json",
+   "origin": "json",
+   "pointer": "/native/resources/72/schema/$defs/EventRecord",
+   "control": "1e78ca11ac388bd617bcbf3111f0a253e257633ccc7b2383e523a51dcfc86deb",
+   "source": {
+    "path": "Plans/goal_run_stop_block_contracts/resource-bank.json",
+    "origin": "json",
+    "pointer": "/native/resources/72/schema/$defs/EventRecord",
+    "node_sha256": "0ba747cec37e88b76c25bca9f5fdf9592e5ec1f7835f2a6bd4284ef31c3ec868"
+   }
+  },
+  {
+   "path": "Plans/goal_run_stop_block_contracts/resource-bank.json",
+   "origin": "json",
+   "pointer": "/native/resources/83/schema/$defs/Event_event_record_1_0_0_compatibility_reader",
+   "control": "358cab93d41403b6571af40265be2402c61049abfe4fd3a9927de8a97c8e4f30",
+   "source": {
+    "path": "Plans/goal_run_stop_block_contracts/resource-bank.json",
+    "origin": "json",
+    "pointer": "/native/resources/83/schema/$defs/Event_event_record_1_0_0_compatibility_reader",
+    "node_sha256": "81e62f0438c25613423b0a1741bc3699167065cb6167dd560255aed98fb5bb54"
+   }
+  },
+  {
+   "path": "Plans/goal_run_stop_block_contracts/resource-bank.json",
+   "origin": "json",
+   "pointer": "/native/resources/83/schema/$defs/EventRecord",
+   "control": "1e78ca11ac388bd617bcbf3111f0a253e257633ccc7b2383e523a51dcfc86deb",
+   "source": {
+    "path": "Plans/goal_run_stop_block_contracts/resource-bank.json",
+    "origin": "json",
+    "pointer": "/native/resources/83/schema/$defs/EventRecord",
+    "node_sha256": "e78dc27ee2f2d7430a590e1a533bb2c52840fc59e6dc4ae83e63ac2fc1476584"
+   }
+  },
+  {
+   "path": "Plans/goal_run_stop_block_contracts/resource-bank.json",
+   "origin": "json",
+   "pointer": "/native/resources/88/schema/$defs/Event_event_record_1_0_0_compatibility_reader",
+   "control": "358cab93d41403b6571af40265be2402c61049abfe4fd3a9927de8a97c8e4f30",
+   "source": {
+    "path": "Plans/goal_run_stop_block_contracts/resource-bank.json",
+    "origin": "json",
+    "pointer": "/native/resources/88/schema/$defs/Event_event_record_1_0_0_compatibility_reader",
+    "node_sha256": "763453a16585223b7ff7015e27b3bca74e43ac9356c5ef059a195d9bc1a3f4f0"
+   }
+  },
+  {
+   "path": "Plans/goal_run_stop_block_contracts/resource-bank.json",
+   "origin": "json",
+   "pointer": "/native/resources/88/schema/$defs/EventRecord",
+   "control": "1e78ca11ac388bd617bcbf3111f0a253e257633ccc7b2383e523a51dcfc86deb",
+   "source": {
+    "path": "Plans/goal_run_stop_block_contracts/resource-bank.json",
+    "origin": "json",
+    "pointer": "/native/resources/88/schema/$defs/EventRecord",
+    "node_sha256": "1e06d03350bc89e6ac9c81229acc7f0d3ebd5aeb2d7f404152249283b7e376c4"
+   }
+  },
+  {
+   "path": "Plans/goal_run_stop_block_contracts/resource-bank.json",
+   "origin": "json",
+   "pointer": "/native/resources/100/schema",
+   "control": "1e78ca11ac388bd617bcbf3111f0a253e257633ccc7b2383e523a51dcfc86deb",
+   "source": {
+    "path": "Plans/goal_run_stop_block_contracts/resource-bank.json",
+    "origin": "json",
+    "pointer": "/native/resources/100/schema",
+    "node_sha256": "2aaa010f5fb0a4eb0b27c63fbfdfd7109121f0ebad4bc06fe8445a7832f48180"
+   }
+  },
+  {
+   "path": "Plans/goal_run_stop_block_contracts/resource-bank.json",
+   "origin": "json",
+   "pointer": "/native/resources/100/schema/$defs/event_record_1_0_0_compatibility_reader",
+   "control": "358cab93d41403b6571af40265be2402c61049abfe4fd3a9927de8a97c8e4f30",
+   "source": {
+    "path": "Plans/goal_run_stop_block_contracts/resource-bank.json",
+    "origin": "json",
+    "pointer": "/native/resources/100/schema/$defs/event_record_1_0_0_compatibility_reader",
+    "node_sha256": "9764b8d1a590d226e5a67022dd8425527feaf80da92cd3a85a3b8fd9a902cbcf"
+   }
+  },
+  {
+   "path": "Plans/goal_run_stop_block_contracts/resource-bank.json",
+   "origin": "json",
+   "pointer": "/goal/resources/4/schema",
+   "control": "1e78ca11ac388bd617bcbf3111f0a253e257633ccc7b2383e523a51dcfc86deb",
+   "source": {
+    "path": "Plans/goal_run_stop_block_contracts/resource-bank.json",
+    "origin": "json",
+    "pointer": "/goal/resources/4/schema",
+    "node_sha256": "ba498a2e09ebf9b0f8f42d3c5b12ce52c062708efbdf2bb4e41b669d3a8d00b5"
+   }
+  },
+  {
+   "path": "Plans/goal_run_stop_block_contracts/resource-bank.json",
+   "origin": "json",
+   "pointer": "/goal/resources/4/schema/$defs/event_record_1_0_0_compatibility_reader",
+   "control": "358cab93d41403b6571af40265be2402c61049abfe4fd3a9927de8a97c8e4f30",
+   "source": {
+    "path": "Plans/goal_run_stop_block_contracts/resource-bank.json",
+    "origin": "json",
+    "pointer": "/goal/resources/4/schema/$defs/event_record_1_0_0_compatibility_reader",
+    "node_sha256": "04b194bb311bdeecf4f626f98fd5c7288563831b9b61feabf7c377b56ac990ed"
+   }
+  },
+  {
+   "path": "Plans/goal_run_stop_block_contracts/resource-bank.json",
+   "origin": "json",
+   "pointer": "/goal/resources/17/schema/$defs/existing_event__event_record_1_0_0_compatibility_reader",
+   "control": "358cab93d41403b6571af40265be2402c61049abfe4fd3a9927de8a97c8e4f30",
+   "source": {
+    "path": "Plans/goal_run_stop_block_contracts/resource-bank.json",
+    "origin": "json",
+    "pointer": "/goal/resources/17/schema/$defs/existing_event__event_record_1_0_0_compatibility_reader",
+    "node_sha256": "13f6798228365735ba5b985682375eda293971da09cecb87177b0a246d7d8b75"
+   }
+  },
+  {
+   "path": "Plans/goal_run_stop_block_contracts/resource-bank.json",
+   "origin": "json",
+   "pointer": "/goal/resources/17/schema/$defs/existing_event",
+   "control": "1e78ca11ac388bd617bcbf3111f0a253e257633ccc7b2383e523a51dcfc86deb",
+   "source": {
+    "path": "Plans/goal_run_stop_block_contracts/resource-bank.json",
+    "origin": "json",
+    "pointer": "/goal/resources/17/schema/$defs/existing_event",
+    "node_sha256": "271408755771c8d1df1c93d0035399cb9338b8e529607aec49ed47f54a9afb4a"
+   }
+  },
+  {
+   "path": "Plans/goal_run_stop_block_contracts/resource-bank.json",
+   "origin": "json",
+   "pointer": "/goal/resources/17/schema/$defs/existing_event_record_index",
+   "control": "cebf464ad36872826fd7b0fc256b8393501c7cd1815b720cbad8a256cfe61da0",
+   "source": {
+    "path": "Plans/goal_run_stop_block_contracts/resource-bank.json",
+    "origin": "json",
+    "pointer": "/goal/resources/17/schema/$defs/existing_event_record_index",
+    "node_sha256": "3bbf2867e5011b64dc3bc0960e11db3f39def0d82e3b398197668e2f154825f8"
+   }
+  },
+  {
+   "path": "Plans/goal_run_stop_block_contracts/resource-bank.json",
+   "origin": "json",
+   "pointer": "/goal/resources/17/schema/$defs/compaction_event",
+   "control": "be5c75d755c23de76ec533f89e315e264a7e63bb94d7d9b617c945cb04c6ec73",
+   "source": {
+    "path": "Plans/goal_run_stop_block_contracts/resource-bank.json",
+    "origin": "json",
+    "pointer": "/goal/resources/17/schema/$defs/compaction_event",
+    "node_sha256": "843a0178c7157aa6c10dfc476c5d808de3ba7120f65859893c3dfccbba5b780e"
+   }
+  },
+  {
+   "path": "Plans/goal_run_stop_block_contracts/resource-bank.json",
+   "origin": "json",
+   "pointer": "/goal/resources/27/schema",
+   "control": "1e78ca11ac388bd617bcbf3111f0a253e257633ccc7b2383e523a51dcfc86deb",
+   "source": {
+    "path": "Plans/goal_run_stop_block_contracts/resource-bank.json",
+    "origin": "json",
+    "pointer": "/goal/resources/27/schema",
+    "node_sha256": "9398db32de79efb4c0732d58228a056b7d4cc05cd197224639f6b403870b756e"
+   }
+  },
+  {
+   "path": "Plans/goal_run_stop_block_contracts/resource-bank.json",
+   "origin": "json",
+   "pointer": "/goal/resources/27/schema/$defs/event_record_1_0_0_compatibility_reader",
+   "control": "358cab93d41403b6571af40265be2402c61049abfe4fd3a9927de8a97c8e4f30",
+   "source": {
+    "path": "Plans/goal_run_stop_block_contracts/resource-bank.json",
+    "origin": "json",
+    "pointer": "/goal/resources/27/schema/$defs/event_record_1_0_0_compatibility_reader",
+    "node_sha256": "04b194bb311bdeecf4f626f98fd5c7288563831b9b61feabf7c377b56ac990ed"
+   }
+  },
+  {
+   "path": "Plans/goal_run_stop_block_contracts/resource-bank.json",
+   "origin": "json",
+   "pointer": "/goal/resources/34/schema/$defs/existing_event__event_record_1_0_0_compatibility_reader",
+   "control": "358cab93d41403b6571af40265be2402c61049abfe4fd3a9927de8a97c8e4f30",
+   "source": {
+    "path": "Plans/goal_run_stop_block_contracts/resource-bank.json",
+    "origin": "json",
+    "pointer": "/goal/resources/34/schema/$defs/existing_event__event_record_1_0_0_compatibility_reader",
+    "node_sha256": "13f6798228365735ba5b985682375eda293971da09cecb87177b0a246d7d8b75"
+   }
+  },
+  {
+   "path": "Plans/goal_run_stop_block_contracts/resource-bank.json",
+   "origin": "json",
+   "pointer": "/goal/resources/34/schema/$defs/existing_event",
+   "control": "1e78ca11ac388bd617bcbf3111f0a253e257633ccc7b2383e523a51dcfc86deb",
+   "source": {
+    "path": "Plans/goal_run_stop_block_contracts/resource-bank.json",
+    "origin": "json",
+    "pointer": "/goal/resources/34/schema/$defs/existing_event",
+    "node_sha256": "271408755771c8d1df1c93d0035399cb9338b8e529607aec49ed47f54a9afb4a"
+   }
+  },
+  {
+   "path": "Plans/goal_run_stop_block_contracts/resource-bank.json",
+   "origin": "json",
+   "pointer": "/goal/resources/34/schema/$defs/existing_event_record_index",
+   "control": "cebf464ad36872826fd7b0fc256b8393501c7cd1815b720cbad8a256cfe61da0",
+   "source": {
+    "path": "Plans/goal_run_stop_block_contracts/resource-bank.json",
+    "origin": "json",
+    "pointer": "/goal/resources/34/schema/$defs/existing_event_record_index",
+    "node_sha256": "3bbf2867e5011b64dc3bc0960e11db3f39def0d82e3b398197668e2f154825f8"
+   }
+  },
+  {
+   "path": "Plans/goal_run_stop_block_contracts/resource-bank.json",
+   "origin": "json",
+   "pointer": "/goal/resources/34/schema/$defs/compaction_event",
+   "control": "be5c75d755c23de76ec533f89e315e264a7e63bb94d7d9b617c945cb04c6ec73",
+   "source": {
+    "path": "Plans/goal_run_stop_block_contracts/resource-bank.json",
+    "origin": "json",
+    "pointer": "/goal/resources/34/schema/$defs/compaction_event",
+    "node_sha256": "843a0178c7157aa6c10dfc476c5d808de3ba7120f65859893c3dfccbba5b780e"
+   }
+  },
+  {
+   "path": "Plans/goal_run_stop_block_contracts/resource-bank.json",
+   "origin": "json",
+   "pointer": "/event/resources/38/schema",
+   "control": "1e78ca11ac388bd617bcbf3111f0a253e257633ccc7b2383e523a51dcfc86deb",
+   "source": {
+    "path": "Plans/goal_run_stop_block_contracts/resource-bank.json",
+    "origin": "json",
+    "pointer": "/event/resources/38/schema",
+    "node_sha256": "eda326a7def745599edc21f03955cd6774e28e6eab59ac7884f6330bbe5bf936"
+   }
+  },
+  {
+   "path": "Plans/goal_run_stop_block_contracts/resource-bank.json",
+   "origin": "json",
+   "pointer": "/event/resources/38/schema/$defs/event_record_1_0_0_compatibility_reader",
+   "control": "358cab93d41403b6571af40265be2402c61049abfe4fd3a9927de8a97c8e4f30",
+   "source": {
+    "path": "Plans/goal_run_stop_block_contracts/resource-bank.json",
+    "origin": "json",
+    "pointer": "/event/resources/38/schema/$defs/event_record_1_0_0_compatibility_reader",
+    "node_sha256": "2200646d99cdb549044c5b49ecada37c38e14744c86f13f58293a150100ee6b8"
+   }
+  },
+  {
+   "path": "Plans/goal_run_stop_block_contracts/resource-bank.json",
+   "origin": "json",
+   "pointer": "/event/resources/59/schema/$defs/event_record_1_0_0_compatibility_reader",
+   "control": "358cab93d41403b6571af40265be2402c61049abfe4fd3a9927de8a97c8e4f30",
+   "source": {
+    "path": "Plans/goal_run_stop_block_contracts/resource-bank.json",
+    "origin": "json",
+    "pointer": "/event/resources/59/schema/$defs/event_record_1_0_0_compatibility_reader",
+    "node_sha256": "61adfa627dfcc53430340d0213156d5eefa0dfadbd1fc89043f94ace58eaec62"
+   }
+  },
+  {
+   "path": "Plans/goal_run_stop_block_contracts/resource-bank.json",
+   "origin": "json",
+   "pointer": "/event/resources/60/schema",
+   "control": "1e78ca11ac388bd617bcbf3111f0a253e257633ccc7b2383e523a51dcfc86deb",
+   "source": {
+    "path": "Plans/goal_run_stop_block_contracts/resource-bank.json",
+    "origin": "json",
+    "pointer": "/event/resources/60/schema",
+    "node_sha256": "e58ff85c12472de979610249cf9cbf010604dd8c4cb973998fbb214bedc24e47"
+   }
+  },
+  {
+   "path": "Plans/goal_run_stop_block_contracts/resource-bank.json",
+   "origin": "json",
+   "pointer": "/event/resources/60/schema/$defs/event_record_1_0_0_compatibility_reader",
+   "control": "358cab93d41403b6571af40265be2402c61049abfe4fd3a9927de8a97c8e4f30",
+   "source": {
+    "path": "Plans/goal_run_stop_block_contracts/resource-bank.json",
+    "origin": "json",
+    "pointer": "/event/resources/60/schema/$defs/event_record_1_0_0_compatibility_reader",
+    "node_sha256": "2200646d99cdb549044c5b49ecada37c38e14744c86f13f58293a150100ee6b8"
+   }
+  },
+  {
+   "path": "Plans/goal_run_stop_block_contracts/resource-bank.json",
+   "origin": "json",
+   "pointer": "/event/resources/63/schema/$defs/event_record_1_0_0_compatibility_reader",
+   "control": "358cab93d41403b6571af40265be2402c61049abfe4fd3a9927de8a97c8e4f30",
+   "source": {
+    "path": "Plans/goal_run_stop_block_contracts/resource-bank.json",
+    "origin": "json",
+    "pointer": "/event/resources/63/schema/$defs/event_record_1_0_0_compatibility_reader",
+    "node_sha256": "61adfa627dfcc53430340d0213156d5eefa0dfadbd1fc89043f94ace58eaec62"
+   }
+  },
+  {
+   "path": "Plans/goal_run_stop_block_contracts/resource-bank.json",
+   "origin": "json",
+   "pointer": "/event/resources/67/schema/$defs/Event_event_record_1_0_0_compatibility_reader",
+   "control": "358cab93d41403b6571af40265be2402c61049abfe4fd3a9927de8a97c8e4f30",
+   "source": {
+    "path": "Plans/goal_run_stop_block_contracts/resource-bank.json",
+    "origin": "json",
+    "pointer": "/event/resources/67/schema/$defs/Event_event_record_1_0_0_compatibility_reader",
+    "node_sha256": "afbe65146bc69e30ef37029b133f25504f1e5b3241fb5caa67f3b97d954b5411"
+   }
+  },
+  {
+   "path": "Plans/goal_run_stop_block_contracts/resource-bank.json",
+   "origin": "json",
+   "pointer": "/event/resources/67/schema/$defs/EventRecord",
+   "control": "1e78ca11ac388bd617bcbf3111f0a253e257633ccc7b2383e523a51dcfc86deb",
+   "source": {
+    "path": "Plans/goal_run_stop_block_contracts/resource-bank.json",
+    "origin": "json",
+    "pointer": "/event/resources/67/schema/$defs/EventRecord",
+    "node_sha256": "857b6335f95059b9a863c99cfce3c218e400938845847023eda84d99e1d1aa12"
+   }
+  },
+  {
+   "path": "Plans/goal_run_stop_block_contracts/resource-bank.json",
+   "origin": "json",
+   "pointer": "/event/resources/72/schema/$defs/GenericIndexRow",
+   "control": "cebf464ad36872826fd7b0fc256b8393501c7cd1815b720cbad8a256cfe61da0",
+   "source": {
+    "path": "Plans/goal_run_stop_block_contracts/resource-bank.json",
+    "origin": "json",
+    "pointer": "/event/resources/72/schema/$defs/GenericIndexRow",
+    "node_sha256": "3bbf2867e5011b64dc3bc0960e11db3f39def0d82e3b398197668e2f154825f8"
+   }
+  },
+  {
+   "path": "Plans/goal_run_stop_block_contracts/resource-bank.json",
+   "origin": "json",
+   "pointer": "/event/resources/76/schema/$defs/existing_event__event_record_1_0_0_compatibility_reader",
+   "control": "358cab93d41403b6571af40265be2402c61049abfe4fd3a9927de8a97c8e4f30",
+   "source": {
+    "path": "Plans/goal_run_stop_block_contracts/resource-bank.json",
+    "origin": "json",
+    "pointer": "/event/resources/76/schema/$defs/existing_event__event_record_1_0_0_compatibility_reader",
+    "node_sha256": "31af1c12fe11fbd04429a677eef2248fa911e76d0d2e2f96bdba0b0ba26ecbfa"
+   }
+  },
+  {
+   "path": "Plans/goal_run_stop_block_contracts/resource-bank.json",
+   "origin": "json",
+   "pointer": "/event/resources/76/schema/$defs/existing_event",
+   "control": "1e78ca11ac388bd617bcbf3111f0a253e257633ccc7b2383e523a51dcfc86deb",
+   "source": {
+    "path": "Plans/goal_run_stop_block_contracts/resource-bank.json",
+    "origin": "json",
+    "pointer": "/event/resources/76/schema/$defs/existing_event",
+    "node_sha256": "b8144940b6edcad43c2e28845ba13500702468e93e0e5c88308f3c705bde4e95"
+   }
+  },
+  {
+   "path": "Plans/goal_run_stop_block_contracts/resource-bank.json",
+   "origin": "json",
+   "pointer": "/event/resources/76/schema/$defs/existing_event_record_index",
+   "control": "cebf464ad36872826fd7b0fc256b8393501c7cd1815b720cbad8a256cfe61da0",
+   "source": {
+    "path": "Plans/goal_run_stop_block_contracts/resource-bank.json",
+    "origin": "json",
+    "pointer": "/event/resources/76/schema/$defs/existing_event_record_index",
+    "node_sha256": "3bbf2867e5011b64dc3bc0960e11db3f39def0d82e3b398197668e2f154825f8"
+   }
+  },
+  {
+   "path": "Plans/goal_run_stop_block_contracts/resource-bank.json",
+   "origin": "json",
+   "pointer": "/event/resources/76/schema/$defs/compaction_event",
+   "control": "be5c75d755c23de76ec533f89e315e264a7e63bb94d7d9b617c945cb04c6ec73",
+   "source": {
+    "path": "Plans/goal_run_stop_block_contracts/resource-bank.json",
+    "origin": "json",
+    "pointer": "/event/resources/76/schema/$defs/compaction_event",
+    "node_sha256": "51be91b82b30bfa2ebe18bd255677bb873c4db920bb29525f601c4da47941588"
+   }
+  },
+  {
+   "path": "Plans/goal_run_stop_block_contracts/resource-bank.json",
+   "origin": "json",
+   "pointer": "/event/resources/78/schema/$defs/event_record_1_0_0_compatibility_reader",
+   "control": "358cab93d41403b6571af40265be2402c61049abfe4fd3a9927de8a97c8e4f30",
+   "source": {
+    "path": "Plans/goal_run_stop_block_contracts/resource-bank.json",
+    "origin": "json",
+    "pointer": "/event/resources/78/schema/$defs/event_record_1_0_0_compatibility_reader",
+    "node_sha256": "74f94668cb16efa6aec5bc9e24481ed87862d02fd873e500b5dad1a7109a5379"
+   }
+  },
+  {
+   "path": "Plans/goal_run_stop_block_contracts/resource-bank.json",
+   "origin": "json",
+   "pointer": "/producer/resources/6/schema",
+   "control": "1e78ca11ac388bd617bcbf3111f0a253e257633ccc7b2383e523a51dcfc86deb",
+   "source": {
+    "path": "Plans/goal_run_stop_block_contracts/resource-bank.json",
+    "origin": "json",
+    "pointer": "/producer/resources/6/schema",
+    "node_sha256": "e3ad0560db1491384286645133d11209de6a5de6b4344b037f7c2bcc1d33b326"
+   }
+  },
+  {
+   "path": "Plans/goal_run_stop_block_contracts/resource-bank.json",
+   "origin": "json",
+   "pointer": "/producer/resources/6/schema/$defs/event_record_1_0_0_compatibility_reader",
+   "control": "358cab93d41403b6571af40265be2402c61049abfe4fd3a9927de8a97c8e4f30",
+   "source": {
+    "path": "Plans/goal_run_stop_block_contracts/resource-bank.json",
+    "origin": "json",
+    "pointer": "/producer/resources/6/schema/$defs/event_record_1_0_0_compatibility_reader",
+    "node_sha256": "2a332c096416322b477c13de17a50c009373b928497a3ad29ca845fafb0e774b"
+   }
+  },
+  {
+   "path": "Plans/goal_run_stop_block_contracts/resource-bank.json",
+   "origin": "json",
+   "pointer": "/coordinator/resources/3/schema",
+   "control": "1e78ca11ac388bd617bcbf3111f0a253e257633ccc7b2383e523a51dcfc86deb",
+   "source": {
+    "path": "Plans/goal_run_stop_block_contracts/resource-bank.json",
+    "origin": "json",
+    "pointer": "/coordinator/resources/3/schema",
+    "node_sha256": "0d75b00eee0a410afdd53afb75d599f56d4fd1f93c617d17067fd8f2ad01b3a6"
+   }
+  },
+  {
+   "path": "Plans/goal_run_stop_block_contracts/resource-bank.json",
+   "origin": "json",
+   "pointer": "/coordinator/resources/3/schema/$defs/event_record_1_0_0_compatibility_reader",
+   "control": "358cab93d41403b6571af40265be2402c61049abfe4fd3a9927de8a97c8e4f30",
+   "source": {
+    "path": "Plans/goal_run_stop_block_contracts/resource-bank.json",
+    "origin": "json",
+    "pointer": "/coordinator/resources/3/schema/$defs/event_record_1_0_0_compatibility_reader",
+    "node_sha256": "5a145f16797fbfb4f3d0b891198848e5499075f09aae32a46b0e962c90ae17a5"
+   }
   }
  ]
 }
