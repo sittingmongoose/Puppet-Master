@@ -51,6 +51,7 @@ def closure_banks():
 def main():
     install()
     scratch = os.environ['PM_DG5_SCRATCH']
+    os.makedirs(scratch, exist_ok=True)
     output = os.path.join(scratch, 'cancelled-r-source.json')
     from pathlib import Path
     source.BASE = Path(scratch)
