@@ -104,6 +104,7 @@ def supplements(suite, work):
     _decode_supplements(suite, work, data, base, generation)
     _pure_supplements(suite, work)
     _handle_supplements(suite, work)
+    _index_supplements(suite, work)
 
 
 class _HandleSubclass(A.OriginalHandle):
@@ -157,6 +158,59 @@ def _handle_supplements(suite, work):
 
     suite.negative('dg5-shared', 'append_subclass_handle:1259', append_case, 'handle/type')
     suite.negative('dg5-shared', 'receipt_of_subclass_handle:1589', receipt_of_case, 'receipt_handle/type')
+
+
+def _index_supplements(suite, work):
+    """DG5 negatives isolating the index duplicate rows (:1056/:1057).
+
+    A second segment is crafted with one re-encoded frame (duplicate event_id with a
+    fresh idempotency key, or fresh event_id with the same scoped identity), a third
+    genuine segment is appended and sealed, and retiring it rebuilds the index over
+    both remaining segments inside the judged retire_segment entry. The authored
+    append-path cases can never reach these rows (append dedupe and :1477 refuse first).
+    """
+    def setup(tag, dup_edit):
+        store = storage.TestOwnerStorage.create(work / ('index-' + tag))
+        _handle, out, _rows = selftest.append_one(store, tag)
+        event_id = out['event_ids'][0]
+        event = store.read_event(event_id)
+        gen1 = store.segments[-1]['generation']
+        seq1 = event['sequence_id']
+        gen2 = gen1 + 1
+        dup = dup_edit(dict(event, sequence_id=seq1 + 1))
+        raw_event = storage.encode_event_frame(dup, gen2)
+        commit = dict(commit_group_id='TEST_ONLY:group:' + tag, segment_name='segment-%d' % gen2,
+                      segment_generation=gen2, manifest_generation=store.manifest_generation,
+                      durability_class='ordinary', acknowledged_at_utc=event['persisted_at_utc'],
+                      first_sequence=seq1 + 1, last_sequence=seq1 + 1,
+                      members=[[dup['event_id'], seq1 + 1, 0]], restore_admission=None)
+        raw_commit = storage.encode_commit_frame(commit, gen2, seq1 + 1)
+        seg2 = dict(store.segments[-1], generation=gen2, name='segment-%d' % gen2,
+                    watermark=len(raw_event) + len(raw_commit), sealed=True, retired=False)
+        store._segment_path(gen2).write_bytes(raw_event + raw_commit)
+        store.segments.append(seg2)
+        gen3 = gen2 + 1
+        store.segments.append(store._new_segment(
+            gen3, seq1 + 2, 'TEST_ONLY:segment-rotation:%s:%d' % (store.storage_instance_id, gen3)))
+        store._segment_path(gen3).touch()
+        store.last_sequence = seq1 + 1
+        h = store.reserve('TEST_ONLY:op:' + tag + '-third', dict(tag=tag + '-third'))
+        store.append(h, [selftest.candidate(tag + '-third')])
+        store.segments[-1]['sealed'] = True
+        return store, gen3
+
+    def duplicate_event_id():
+        store, gen3 = setup('dg5-dup-event', lambda e: dict(e, idempotency_key='TEST_ONLY:key:dup2'))
+        return store.retire_segment(gen3, storage.RetentionOwner(store))
+
+    def duplicate_scoped_identity():
+        store, gen3 = setup('dg5-dup-scoped', lambda e: dict(e, event_id='TEST_ONLY:goal_test.adapter_probe:dup-scoped'))
+        return store.retire_segment(gen3, storage.RetentionOwner(store))
+
+    suite.negative('dg5-shared', 'index_duplicate_event_id:1056', duplicate_event_id,
+                   'index/duplicate_event_id')
+    suite.negative('dg5-shared', 'index_duplicate_scoped_identity:1057', duplicate_scoped_identity,
+                   'index/duplicate_scoped_identity')
 
 
 class _StorageHandleSubclass(storage._Handle):
