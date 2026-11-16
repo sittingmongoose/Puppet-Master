@@ -2,7 +2,7 @@
   "$schema": "https://puppetmaster.local/schemas/event_family_registry/1.0.0/event_family_registry.schema.json",
   "schema_id": "pm.event_family_registry.v1",
   "schema_version": "2.0.0",
-  "registry_revision": "2026-11-16.178",
+  "registry_revision": "2026-11-16.179",
   "owner_doc": "Plans/storage-plan.md#case-l-5-eventrecord-persistence-legacy-normalization-and-dedupe",
   "unknown_event_disposition": "quarantine_without_checkpoint_advance",
   "families": [
@@ -26176,6 +26176,55 @@
       "retention_policy_ref": {
         "registry_schema_id": "pm.storage_value_registry.v2",
         "policy_id": "RP-TELEMETRY-90D",
+        "policy_version": "1.0.0"
+      }
+    },
+    {
+      "family_id": "event-family-gate-evaluation-started",
+      "family_revision": "1.0.0",
+      "event_type": "gate.evaluation_started",
+      "scope_policy": "project_only",
+      "semantic_owner_doc": "Plans/Contracts_V0.md#CV-605",
+      "payload_owner_doc": "Plans/Contracts_V0.md#CV-605",
+      "payload_schema_id": "pm.event_payload.gate_evaluation_started.v1",
+      "payload_schema_ref": {
+        "path": "Plans/dt_event_contracts.schema.json",
+        "json_pointer": "#/$defs/gate_evaluation_started",
+        "schema_id": "pm.event_payload.gate_evaluation_started.v1"
+      },
+      "legacy": {
+        "aliases": [],
+        "admitted_extensions": [],
+        "identity_json_pointers": {
+          "project_id": [],
+          "thread_id": [],
+          "run_id": [
+            "/payload/run_id"
+          ],
+          "node_id": [
+            "/payload/node_id"
+          ],
+          "attempt_id": [
+            "/payload/attempt_id"
+          ]
+        },
+        "referenced_event_id_pointer": null,
+        "redaction": {
+          "mode": "reject_unhandled_secrets",
+          "transform_id": null,
+          "transform_version": null
+        }
+      },
+      "source_refs": [
+        "Plans/Contracts_V0.md#CV-605",
+        "Plans/storage-plan.md#SP-585",
+        "Plans/dt_event_contracts.schema.json#/$defs/gate_evaluation_started",
+        "Plans/dt_event_contracts.json#/families/5",
+        "reports/event-authority-20261116/admission-merge-2/readiness-list.json"
+      ],
+      "retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-RUNTIME-365D",
         "policy_version": "1.0.0"
       }
     }
