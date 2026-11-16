@@ -261,3 +261,23 @@ PROOFS.update({
             "the garbage-tail supplement case was withdrawn: bytes past the segment watermark are "
             "not part of the snapshot at all. Hence :917 has no single-defect witness.")),
 })
+
+PROOFS.update({
+    'dg5/site/pm_goal_dg_s_readers.py:839': dict(
+        kind='entailment', families=['goal_run.started'],
+        depends_on=['dg5/site/pm_goal_dg_s_readers.py:258', 'dg5/site/pm_goal_dg_s_readers.py:928',
+                    'dg5/site/pm_goal_dg_s_readers.py:933'],
+        sites=[(READERS, 839), (READERS, 838), (READERS, 928), (READERS, 933), (READERS, 258)],
+        argument=(
+            ":839 compares the StartControl cell read in h_current_start (:838) with the retained "
+            "control from the original acquired earlier in the same read_current call, so it can "
+            "fail only if that cell changed between the two acquisitions or was substituted at rest. "
+            "A substitution at rest is caught when the final boundary re-acquires the original: "
+            "either its relations bundle refuses at :258 (epoch, owner, scope, committed and origin "
+            "selector joins on exactly this control), or the re-acquired bundle differs from the "
+            "first and :928 refuses. A transient change restored before the final boundary instead "
+            "makes the second h_current_start rebuild a different current value, so :933 refuses. "
+            "The ef0 chain for S4/current_start_control_changed (substituted operation id) stops in "
+            "exactly that final re-acquisition, so :839 has no single-defect witness through "
+            "read_current.")),
+})
