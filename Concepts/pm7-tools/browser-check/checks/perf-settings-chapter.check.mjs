@@ -37,6 +37,7 @@ const PROBE = () => {
 	const tick = () => {
 		if (P.on && !P.first && sig() !== P.old) {
 			P.first = performance.now();
+			P.rows1 = root.querySelectorAll('#workspace-stage .setting-row').length;
 			const mc = new MessageChannel(); mc.port1.onmessage = () => { P.painted = performance.now(); }; mc.port2.postMessage(0);
 		}
 		requestAnimationFrame(tick);
@@ -86,6 +87,9 @@ const COLLECT = () => {
 		savesBeforePaint: P.saves.filter((s) => P.painted && s.t < P.painted).length,
 		savedPlace: P.saves.filter((s) => s.domain === domain).length,
 		cleanupsBeforePaint: P.cleanups.filter((c) => P.painted && c < P.painted).length,
+		rowsFirst: P.rows1 || 0, rowsEnd: stage ? stage.querySelectorAll('.setting-row').length : 0,
+		pendingLeft: document.querySelectorAll('#workspace-stage [data-o55-fill="pending"]').length,
+		dupIds: (() => { const ids = [...document.querySelectorAll('#workspace-stage [id^="setting-"]')].map((n) => n.id); return ids.length - new Set(ids).size; })(),
 		taggedStill: (P.tagged || []).filter((n) => !n.isConnected && n.getAttribute('data-pm-hover-bound') === 'true').length,
 		tagged: (P.tagged || []).length
 	};
@@ -131,7 +135,7 @@ for (const surface of ['normal', 'sandbox']) {
 					const r = await f.evaluate(COLLECT);
 					r.pair = `${a}->${b}`;
 					rows.push(r);
-					t.log(`${look} ${surface} ${r.pair}: release -> painted ${r.clickToPainted} ms (commit ${r.commit}, build task ${r.build ?? '-'} ms, ${r.elements} elements); one-frame unlocks ${r.unlocks.length ? r.unlocks.join(',') : 'none'}; saves before paint ${r.savesBeforePaint}, place saved ${r.savedPlace}; tag walks before paint ${r.cleanupsBeforePaint}, old tagged nodes still tagged ${r.taggedStill}/${r.tagged}`);
+					t.log(`${look} ${surface} ${r.pair}: release -> painted ${r.clickToPainted} ms (commit ${r.commit}, build task ${r.build ?? '-'} ms, ${r.elements} elements; rows ${r.rowsFirst} in the first frame of ${r.rowsEnd}); one-frame unlocks ${r.unlocks.length ? r.unlocks.join(',') : 'none'}; saves before paint ${r.savesBeforePaint}, place saved ${r.savedPlace}; tag walks before paint ${r.cleanupsBeforePaint}, old tagged nodes still tagged ${r.taggedStill}/${r.tagged}`);
 					await t.page.waitForTimeout(500);
 				}
 				const shown = rows.filter((r) => r.clickToPainted !== null && r.to === r.pair.split('->')[1]);
@@ -141,6 +145,12 @@ for (const surface of ['normal', 'sandbox']) {
 					unlocked.map((r) => `${r.pair}: ${r.unlocks.join(', ')}`).join('; '));
 				const saved = rows.filter((r) => r.savesBeforePaint > 0);
 				await t.check(`${look} ${surface}: the place is not saved before the new chapter's first frame`, !saved.length, saved.map((r) => `${r.pair}: ${r.savesBeforePaint} save(s) before the frame`).join('; '));
+				const code = rows.filter((r) => r.to === 'code');
+				const whole = code.filter((r) => r.rowsEnd > 0 && r.rowsFirst >= r.rowsEnd);
+				await t.check(`${look} ${surface}: an arrival at Code & Tools shows its first screen before the rest of its rows`, code.length > 0 && !whole.length,
+					whole.map((r) => `${r.pair}: all ${r.rowsEnd} rows were built for the first frame`).join('; ') || 'no arrival at Code & Tools');
+				const left = rows.filter((r) => r.pendingLeft > 0 || r.dupIds > 0);
+				await t.check(`${look} ${surface}: 2.5 s after each arrival every row is drawn once`, !left.length, left.map((r) => `${r.pair}: ${r.pendingLeft} row lists still pending, ${r.dupIds} duplicate row ids`).join('; '));
 				const unsaved = rows.filter((r) => r.savedPlace < 1);
 				await t.check(`${look} ${surface}: the new place is saved within 2.5 s`, !unsaved.length, unsaved.map((r) => r.pair).join(', '));
 				const walked = rows.filter((r) => r.cleanupsBeforePaint > 0);
