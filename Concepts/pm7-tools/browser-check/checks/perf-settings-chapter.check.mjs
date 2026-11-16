@@ -91,6 +91,13 @@ const COLLECT = () => {
 		cleanupsBeforePaint: P.cleanups.filter((c) => P.painted && c < P.painted).length,
 		rowsFirst: P.rows1 || 0, rowsEnd: stage ? stage.querySelectorAll('.setting-row').length : 0,
 		pendingLeft: document.querySelectorAll('#workspace-stage [data-o55-fill="pending"]').length,
+		/* every row placement puts on the drawn plain page is drawn (a fill that cleared its marker but dropped rows) */
+		missing: (() => {
+			const body = document.querySelector('#workspace-stage [data-continuous-workspace-body][data-workspace-mounted="true"]');
+			const ws = body && body.dataset.continuousWorkspaceBody, byId = (window.PM51 && PM51.placement && PM51.placement.byId) || {};
+			const want = Object.values(byId).filter((e) => e && e.page && !e.hand && e.workspace === ws).map((e) => e.id);
+			return { ws, want: want.length, gone: want.filter((id) => !body.querySelector(`[id="setting-${CSS.escape(id)}"]`)).slice(0, 6) };
+		})(),
 		dupIds: (() => { const ids = [...document.querySelectorAll('#workspace-stage [id^="setting-"]')].map((n) => n.id); return ids.length - new Set(ids).size; })(),
 		taggedStill: (P.tagged || []).filter((n) => !n.isConnected && n.getAttribute('data-pm-hover-bound') === 'true').length,
 		tagged: (P.tagged || []).length
@@ -108,7 +115,57 @@ async function press(t, f, domain) {
 	return armed;
 }
 
+/* R89 P1: a chapter chosen right before a Project change is kept by the Project it was chosen in. The other Project is
+   picked from the title bar's own menu row in the moment the new chapter is committed, before any frame or idle time,
+   while the place's save (deferred to after the first frame) still waits. */
+const PROJECT_NOW = () => window.PM_ACTIVE_PROJECT_ID || (document.querySelector('#projectMenu .pm6-tb-menu-item.is-selected[data-project]') || {}).dataset?.project || '';
+const ARM_SWITCH = (to) => {
+	const root = document.getElementById('pm-settings-root');
+	const mo = new MutationObserver(() => {
+		const link = root.querySelector('.domain-link.active');
+		if (!link || link.dataset.domain !== 'code') return;
+		mo.disconnect();
+		const row = document.querySelector(`#projectMenu .pm6-tb-menu-item[data-project="${to}"]`);
+		window.__pscSwitched = row ? (row.click(), performance.now()) : -1;
+	});
+	mo.observe(root, { childList: true, subtree: true, attributes: true, attributeFilter: ['class'] });
+	window.__pscSwitched = 0;
+};
+const STORED = (project) => { try { const v = localStorage.getItem('pm7:settings:tome-tabs:v1:' + encodeURIComponent(project)); return v ? (JSON.parse(v).domain || '') : null; } catch (e) { return undefined; } };
+async function projectRow(t, f, surface) {
+	const a = await f.evaluate(PROJECT_NOW);
+	const b = await f.evaluate((a0) => { const rows = [...document.querySelectorAll('#projectMenu .pm6-tb-menu-item[data-project]')].map((r) => r.dataset.project).filter((p) => p && p !== a0); return rows.includes('harbor') ? 'harbor' : rows[0] || ''; }, a);
+	if (!a || !b) { await t.check(`${surface}: could judge: two Projects in the title bar (${a || '-'}, ${b || '-'})`, false, 'no second Project'); return; }
+	await f.locator('#pm-settings-root .domain-link[data-domain="general"]').first().click(); await t.page.waitForTimeout(2500);
+	await f.evaluate(ARM_SWITCH, b);
+	await press(t, f, 'code');
+	await f.waitForFunction(() => window.__pscSwitched !== 0, null, { timeout: 5000 }).catch(() => {});
+	await t.page.waitForTimeout(300);
+	const now = await f.evaluate(PROJECT_NOW), stored = await f.evaluate(STORED, a);
+	t.log(`${surface}: chose Code & Tools in ${a}, then ${b} in the same moment: now in ${now}; ${a}'s stored chapter: ${stored}`);
+	await t.check(`${surface}: the Project changed to ${b} right after the chapter was chosen`, now === b, `still in ${now}`);
+	if (stored !== undefined) await t.check(`${surface}: ${a}'s stored record names Code & Tools at once after the switch away`, stored === 'code', `${a} stores ${stored}`);
+	await t.page.waitForTimeout(1500);
+	await f.evaluate((p) => { const r = document.querySelector(`#projectMenu .pm6-tb-menu-item[data-project="${p}"]`); if (r) r.click(); }, a);
+	await t.page.waitForTimeout(2500);
+	const back = await f.evaluate(() => (document.querySelector('#pm-settings-root .domain-link.active') || {}).dataset?.domain || '');
+	await t.check(`${surface}: back in ${a}, Settings is on Code & Tools`, back === 'code', `on ${back || 'Home'}`);
+}
+
 export const tests = {};
+for (const surface of ['normal', 'sandbox']) {
+	tests[`R89 P1 a chapter chosen just before a Project change stays with its Project (${surface})`] = async (t) => {
+		if (!t.app.surfaces().includes(surface)) { await t.check(`${surface} surface not asked for`, true); return; }
+		await t.viewport(1920, 1080);
+		await muteSound(t.page);
+		const f = await t.app.open({ sandbox: surface === 'sandbox' });
+		await t.app.resetLayout().catch(() => {});
+		await f.locator('#tab-settings').click();
+		await t.settle();
+		await t.page.waitForTimeout(1500);
+		await projectRow(t, f, surface);
+	};
+}
 for (const surface of ['normal', 'sandbox']) {
 	tests[`FO-196 a Settings chapter switch leaves what can wait until the new chapter is on screen (${surface})`] = async (t) => {
 		if (!t.app.surfaces().includes(surface)) { await t.check(`${surface} surface not asked for`, true); return; }
@@ -134,6 +191,8 @@ for (const surface of ['normal', 'sandbox']) {
 					if ((await f.evaluate(ACTIVE)) !== a) { await f.locator(`#pm-settings-root .domain-link[data-domain="${a}"]`).first().click(); await t.page.waitForTimeout(2000); }
 					await press(t, f, b);
 					await t.page.waitForTimeout(2500);
+					/* the rest of the page is filled in idle slices: wait for that, with a generous cap */
+					await f.waitForFunction(() => !document.querySelector('#workspace-stage [data-o55-fill="pending"]'), null, { timeout: 10000 }).catch(() => {});
 					const r = await f.evaluate(COLLECT);
 					r.pair = `${a}->${b}`;
 					rows.push(r);
@@ -151,8 +210,9 @@ for (const surface of ['normal', 'sandbox']) {
 				const whole = code.filter((r) => r.rowsEnd > 0 && r.rowsFirst >= r.rowsEnd);
 				await t.check(`${look} ${surface}: an arrival at Code & Tools shows its first screen before the rest of its rows`, code.length > 0 && !whole.length,
 					whole.map((r) => `${r.pair}: all ${r.rowsEnd} rows were built for the first frame`).join('; ') || 'no arrival at Code & Tools');
-				const left = rows.filter((r) => r.pendingLeft > 0 || r.dupIds > 0);
-				await t.check(`${look} ${surface}: 2.5 s after each arrival every row is drawn once`, !left.length, left.map((r) => `${r.pair}: ${r.pendingLeft} row lists still pending, ${r.dupIds} duplicate row ids`).join('; '));
+				const left = rows.filter((r) => r.pendingLeft > 0 || r.dupIds > 0 || (r.missing && r.missing.gone.length) || (r.to === 'code' && !(r.missing && r.missing.want)));
+				await t.check(`${look} ${surface}: after each arrival every row placement puts on the page is drawn, once`, !left.length,
+					left.map((r) => `${r.pair}: ${r.pendingLeft} row lists still pending, ${r.dupIds} duplicate row ids, missing ${r.missing ? r.missing.gone.join(', ') || 'none' : '?'} of ${r.missing ? r.missing.want : '?'} placed on ${r.missing ? r.missing.ws : '?'}`).join('; '));
 				const unsaved = rows.filter((r) => r.savedPlace < 1);
 				await t.check(`${look} ${surface}: the new place is saved within 2.5 s`, !unsaved.length, unsaved.map((r) => r.pair).join(', '));
 				const walked = rows.filter((r) => r.cleanupsBeforePaint > 0);
