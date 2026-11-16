@@ -1573,6 +1573,8 @@ class PmAuditStatusIndexOpenSetTests(unittest.TestCase):
         self.assertEqual(len(note.splitlines()), 1, note)
         self.assertIn("gitignored", note)
         self.assertIn("full tree", note)
+        # T244: the note names both causes, so a full-tree user is told to regenerate.
+        self.assertIn("generate", note)
         self.generate()
         out, err = io.StringIO(), io.StringIO()
         with patch.object(sys, "argv", ["pm-audit-status-index.py", "validate"]), \

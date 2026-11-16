@@ -303,9 +303,11 @@ def main() -> int:
     if any(f.get("error") in ("stale_audit_status_index", "stale_current_audit_status_markdown")
            for f in report["failures"]):
         # T241: message only. The committed index counts gitignored Plans/.audits reports
-        # that only full checkouts carry, so a clean clone reports staleness by design.
-        print("note: the committed index counts gitignored reports that only full checkouts carry; "
-              "validate must run in a full tree.", file=sys.stderr)
+        # that only full checkouts carry, so a clean clone reports staleness by design; in a full
+        # tree the same staleness is real and needs `generate` (T244: the note names both causes).
+        print("note: the committed index counts gitignored reports that only full checkouts carry. "
+              "In a clean clone this staleness is expected: validate must run in a full tree. "
+              "In a full tree it is real: regenerate with `generate`.", file=sys.stderr)
     return 0 if report["status"] == "pass" else 1
 
 
