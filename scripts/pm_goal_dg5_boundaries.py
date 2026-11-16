@@ -709,7 +709,14 @@ def install_schema_rows():
                 frame = inspect.currentframe().f_back
                 site = (str(Path(frame.f_code.co_filename).relative_to(ROOT)), frame.f_lineno)
                 if tables.decide(PREFIX + code_of(args, kwargs) + '/schema', not errors, site=site) is not None:
-                    return original(self, *args, **kwargs)
+                    # The schema row is the refusing row; the bank's own routed refusal
+                    # inside validate (SHARED-ROUTE) is its mechanism and must not replace it.
+                    saved = ROUTING[0]
+                    ROUTING[0] = True
+                    try:
+                        return original(self, *args, **kwargs)
+                    finally:
+                        ROUTING[0] = saved
                 return args[value_index]
             validate._dg5_schema = True
             return validate
