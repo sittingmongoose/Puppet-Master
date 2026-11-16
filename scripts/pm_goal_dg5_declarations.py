@@ -42,6 +42,13 @@ DECLARED = {
         'decode_frame bounds the same declared payload_len prefix field twice for this input: '
         'by PAYLOAD_CAP at :537 and by the bytes actually present at :539; the fixture declared '
         'length exceeds both bounds, and with both cuts the genuine payload slice decodes.'),
+    'adapter/source/token_frontier_revision': ((
+        'dg5/site/pm_goal_test_source.py:210', 'dg5/site/pm_goal_test_source.py:227'),
+        'GenericSource token verification compares the same storage_token frontier_revision '
+        'field by equality twice for this input (only that field is mutated): against the '
+        'canonical state index_frontier_revision at :210 and against the checkpoint node '
+        'frontier publication_revision at :227. The two compared values are recordings of '
+        'the one committed frontier, cross-checked in the canonical-state rebuild.'),
 }
 
 
