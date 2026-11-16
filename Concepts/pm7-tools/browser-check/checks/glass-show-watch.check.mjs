@@ -9,6 +9,13 @@
 // that still finds a check queued two seconds later queues again: a net for a queued check that is ever lost.
 // Spec: the share's 2026-11-11-pm7-performance/followups/E3-glass-poll.md, test rows 1, 2, 3, 4, 9 and 13.
 //
+// KNOWN GAP (R77 T1, confirmed in a browser 2026-11-16, tool-issues row PM7PERF-SHOWWATCH-LIGHT-ROWS-RUN-DARK): in the
+// second look's pass (Glass Light by default) row 9's warm-up O55.ui.open() resumes the onboarding draft the first
+// pass left, and the window repaints that draft's look (Glass Dark) and leaves it painted after the close; nothing
+// re-applies or asserts the look afterwards, so rows 9 and 13 labelled glass-light are measured in Glass Dark.
+// Rows 1-4 do run in the labelled look. Until the batch fixes it, read the glass-light rows 9 and 13 as a second
+// Glass Dark sample; run `--set looks=glass-light` for a Light-only pass (no earlier draft, so the look holds).
+//
 // Rows, per Glass look (Glass Dark and Light), both surfaces, 1920x1080. Budgets are QW6's, from measurements on
 // alexis (loaded host, RTX 3080): 5 full runs per surface on the branch page (qw6.html, 5ea1e87906) and on main
 // (v-main.html), plus row 2 x20 per surface on the branch page twice (the lead's queue and QW6's own). Ranges are
