@@ -46,7 +46,8 @@
 // to it); switching back to the new Project paints Glass Dark; and the first paint after the reload is already Glass Dark
 // (the head's look, read as parsing ends: no tastebook look first); a title-bar switch to harbor (given Friendly Light in
 // Settings), then a reload: still in harbor with its look (stream F's ruling B, 2026-11-16); back in the setup's Project,
-// Run Onboarding Again (which replaces the record that listed it), closed, reloaded: tastebook in its look, as before;
+// Run Onboarding Again, closed, reloaded: still in that Project with its look (round 2, F2: a Project setup made stays
+// until a new install);
 // a stored id of a Project that no longer exists (written to storage: no ordinary control leaves one), reloaded: tastebook
 // in its look, the id dropped, no error (stream F's OK, 2026-11-16).
 // R80 P1 (the lead's quick review of db5211725d): a Project committed by setup (Creating done) and the setup closed on the
@@ -571,7 +572,8 @@ async function fo222(t) {
 	await r2.f.waitForFunction(() => document.documentElement.hasAttribute('data-o55-open'), null, { timeout: 15000 });
 	await sleep(1500); await r2.A.close();
 	const r3 = await freshLoad(t), q5 = await projectNow(r3.f), p5 = await r3.A.page(), first5 = await r3.f.evaluate(() => window.__fo222First || null);
-	await t.check(`${tag}: Run Onboarding Again after it, closed, reloaded: the page is tastebook in Retro Light, as before (first paint too)`, q5.selected === 'tastebook' && held('retro-light', p5) && first5 === 'retro-light', JSON.stringify({ project: q5, page: p5, first: first5 }));
+	/* (F2, the lead's ruling with F's: a Project setup made stays until a new install; a new run of setup keeps it) */
+	await t.check(`${tag}: Run Onboarding Again after it, closed, reloaded: still in ${NAME} in Glass Dark, listed and selected (first paint too)`, q5.selected === q0.finished && q5.label === NAME && held('glass-dark', p5) && first5 === 'glass-dark', JSON.stringify({ project: q5, page: p5, first: first5 }));
 	/* stream F's stale-id row: a stored id of a Project that no longer exists (no ordinary control leaves one: Start over
 	   clears it, so the precondition is written to storage here), then a reload: the default Project in its look, the id
 	   dropped, no error (the run's console row). One load may paint that Project's stored look first (F's OK) */
