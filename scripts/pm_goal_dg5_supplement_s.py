@@ -502,7 +502,7 @@ def _(suite):
     world, handles = O.new_world(suite)
     sub = world.start.producer_submission(world.start.acquire_all(handles)[0],
                                           world.owners['native'].current(), world.ctx.now())
-    world.appender.append_original('TEST_ONLY:op:dg5-raw', dict(tag='raw'), [sub])
+    world.appender.append_original('TEST_ONLY:op:dg5-raw', dict(tag='raw'), [sub], durability_class='barrier')
     occurred = sub['occurred_at_utc']
     same_time = O.sub_edit(lambda s: (s.update(occurred_at_utc=occurred),
                                       s['payload'].update(occurred_at_utc=occurred)), keyed=False)
@@ -543,15 +543,18 @@ def _(suite):
 # born_worknode_substituted_at_rest shape) fails cell_value alone, because the
 # presented graph handle value is unchanged and selector_for derives the
 # selector hash from the presented value once the site is cut.
-@negative('selector_cell_value_graph_substituted', 'selector/cell_value', WORLD + '448')
+@negative('selector_cell_value_goal_body_substituted', 'selector/cell_value', WORLD + '448')
 def _(suite):
+    # The graph cell is also resolved later (world :462), so this targets a
+    # goal body cell, which candidate() only passes through selector_for.
     def pre(w, h):
-        graph = w.owners['materialization:graph'].resolve(h['installed_graph'][1])[1]
-        cell = W.read_value(w.storage, 'workflow_installed_graph', graph['physical_key'])
+        goal = w.owners['goal']
+        table, key = next(iter(goal.cells.values()))['body']
+        cell = W.read_value(w.storage, table, key)
         value = copy.deepcopy(cell['value'])
-        value['record']['entrypoint_worknode_ids'] = list(reversed(value['record']['entrypoint_worknode_ids']))
-        w.storage.transact([dict(table='workflow_installed_graph', key=graph['physical_key'],
-                                  expected=cell['version'], value=W.cell_value(w.storage, value))])
+        value['record']['revision'] += 1
+        w.storage.transact([dict(table=table, key=key, expected=cell['version'],
+                                  value=W.cell_value(w.storage, value))])
     start_case(suite, pre=pre)
 
 
@@ -675,13 +678,17 @@ def _(suite):
           'dg5/native/advance/number')
 def _(suite):
     world, projector, readers, gid = make(suite)
-    native = world.owners['native']
-    body = copy.deepcopy(native.current()['body'])
-    body['record']['revision'] = MAX_U64
-    cell = W.read_value(world.storage, 'workflow_goal_run_body', body['physical_key'])
-    world.storage.transact([dict(table='workflow_goal_run_body', key=body['physical_key'],
-                                  expected=cell['version'], value=W.cell_value(world.storage, body))])
-    readers.read_current(O.sreq(world), hooks=dict(after_projection=lambda w: w.owners['native'].advance()))
+
+    def at_ceiling(w):
+        native = w.owners['native']
+        body = copy.deepcopy(native.current()['body'])
+        body['record']['revision'] = MAX_U64
+        cell = W.read_value(w.storage, 'workflow_goal_run_body', body['physical_key'])
+        w.storage.transact([dict(table='workflow_goal_run_body', key=body['physical_key'],
+                                  expected=cell['version'], value=W.cell_value(w.storage, body))])
+    readers.read_current(O.sreq(world), hooks=dict(
+        after_original=at_ceiling,
+        after_projection=lambda w: w.owners['native'].advance()))
 
 
 # D01 pointer revision at the ceiling, coherent in the issued current source
@@ -946,12 +953,12 @@ def _(suite):
 def _(suite):
     world, handles = O.new_world(suite)
     event = O.extra_event(world, 'dg5pre')
+    world.start.commit_start(O.request(world), handles)
     info = world.storage.events[event['event_id']]
     path = world.storage._segment_path(info['segment_generation'])
     raw = bytearray(path.read_bytes())
     raw[info['offset'] + info['length'] - 1] ^= 1
     path.write_bytes(bytes(raw))
-    world.start.commit_start(O.request(world), handles)
     R.StartedReaders(world.registry, world=world).inspect_original(O.sreq(world))
 
 
@@ -959,7 +966,7 @@ def _(suite):
 # additionalProperties:false) that decode otherwise ignores, presented
 # through the stored row with its checkpoint join rehashed coherently.
 @negative('representation_row_extra_field', 'representation/row/schema/:additionalProperties',
-          'dg5/representation/row/schema')
+          ('dg5/representation/row/schema', 'dg5/read_historical/root/schema'))
 def _(suite):
     world, projector, readers, gid = make(suite)
     cell, logical, gen, row = projector.current_row()

@@ -339,3 +339,43 @@ PROOFS.update({
             "chain for S1/runtime_actor_empty stops exactly through that schema row and the "
             "downstream argument schemas, so :908 has no single-defect witness.")),
 })
+
+PROOFS.update({
+    'dg5/producer/goal_run_revision/number': dict(
+        kind='entailment', families=['goal_run.started'],
+        depends_on=[],
+        sites=[(START, 931), (START, 1142), (START, 1058)],
+        argument=(
+            "producer_submission computes goal_run_revision as NR.uint64(before + 1) at :931 on a "
+            "schema-validated native body revision, so the only refusal is the uint64 ceiling "
+            "(before = 2^64-1) or a non-integer a birth schema already excludes. With :931 cut the "
+            "out-of-range integer is placed in the submission payload, and the same commit_start "
+            "call then digests that submission for the candidate producer_semantic_digest at :1142 "
+            "through the shared exact-integer/JCS route, which refuses the identical value "
+            "(smoke3 chain: jcs_binary64/jcs_decimal, no_progress). The row therefore has no "
+            "single-defect witness; its exact refusal is witnessed by the authored ceiling case.")),
+    'dg5/native/activation_revision/number': dict(
+        kind='entailment', families=['goal_run.started'],
+        depends_on=[],
+        sites=[(START, 243), (START, 1144), (WORLD_PY, 70)],
+        argument=(
+            "after_images increments the activation revision at :243 on a schema-validated body, so "
+            "only the uint64 ceiling can refuse. With :243 cut the resulting 2^64 revision sits in "
+            "the after body that candidate() immediately digests for its candidate_body selector "
+            "(:1144) through W.cdigest (world:70), whose physical canonical encoding refuses "
+            "integers outside uint64 range (smoke3 chain: physical_integer_range, no_progress). "
+            "The exact refusal is witnessed by the authored ceiling case, and no cut of :243 alone "
+            "lets the call accept.")),
+    'dg5/d01/revision/number': dict(
+        kind='entailment', families=['goal_run.started'],
+        depends_on=[],
+        sites=[(START, 1200), (START, 1207), (WORLD_PY, 70)],
+        argument=(
+            "publication_union computes the D01 update/head revision as NR.uint64(pointer revision "
+            "+ 1) at :1200 from a schema-validated pointer record, so only the ceiling can refuse. "
+            "With :1200 cut, that 2^64 revision is written into the update and head records at "
+            ":1207/:1229 and immediately digested for their selectors and the retained bundle "
+            "through W.cdigest (world:70), whose physical canonical encoding refuses integers "
+            "outside uint64 range (smoke3 chain: physical_integer_range, no_progress). No "
+            "single-defect witness exists; the authored ceiling case witnesses the exact refusal.")),
+})
