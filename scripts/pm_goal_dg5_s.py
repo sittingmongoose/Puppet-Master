@@ -32,12 +32,14 @@ DG5_EVIDENCE = {}
 # edit, never by editing a formed event (see run_corpus).
 SLOTS = [
     dict(name='goal_run.started/submission.payload.expected_goal_run_revision', family='goal_run.started',
-         entry='StartOwner.commit_start[edits]', kind='uint64', where='producer/expected_goal_run_revision',
+         entry='StartOwner.commit_start[edits]', kind='integer', minimum=1, maximum=2 ** 64 - 1,
+         where='producer/expected_goal_run_revision',
          field=('payload', 'expected_goal_run_revision'), join_code='producer/expected_revision',
          original=start.BEFORE_REVISION,
          also_rows=('dg5/start/producer/schema', 'dg5/site/pm_goal_dg_s_start.py:1056')),
     dict(name='goal_run.started/submission.payload.goal_run_revision', family='goal_run.started',
-         entry='StartOwner.commit_start[edits]', kind='uint64', where='producer/goal_run_revision',
+         entry='StartOwner.commit_start[edits]', kind='integer', minimum=1, maximum=2 ** 64 - 1,
+         where='producer/goal_run_revision',
          field=('payload', 'goal_run_revision'), join_code='producer/after_revision',
          original=start.BEFORE_REVISION + 1,
          also_rows=('dg5/start/producer/schema', 'dg5/site/pm_goal_dg_s_start.py:1058')),
@@ -72,18 +74,23 @@ def _slot_edit(spec, value):
     field = spec['field']
 
     def edit(sub):
+        # No rekey: the idempotency identity includes the revision fields, so rekeying
+        # here would move big-integer refusals into this harness's key recipe instead
+        # of the checker's own joins, which run first in _check_producer. The single
+        # accepting value of each join slot is the original, whose keys stay authentic.
         if field[0] == 'payload':
             sub['payload'][field[1]] = value
         else:  # occurred_at_utc: both copies, or producer/time_copy refuses first
             sub['occurred_at_utc'] = value
             sub['payload']['occurred_at_utc'] = value
-        return source.rekey(sub)
+        return sub
     return edit
 
 
 def run_corpus(scratch):
     """Each corpus value through the family's own checker (commit_start), sealed."""
     bridge.SLOTS[:] = SLOTS
+    bridge.install()
     suite = source.Suite(Path(tempfile.mkdtemp(prefix='started-corpus-', dir=scratch)))
     w, handles = source.new_world(suite)
     root = Path(w.work)
