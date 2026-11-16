@@ -1,0 +1,565 @@
+{
+ "schema_id": "pm.assurance.event_authority.admission_depth_assessment.v1",
+ "assessment_kind": "admission_twelve_criteria",
+ "writer": "pm-ea-admission-writer.v1",
+ "merge": "admission-merge-2",
+ "registry": {
+  "path": "Plans/event_family_registry.json",
+  "revision": "2026-11-16.241",
+  "sha256": "fcc1dbdb85ef3192706fbfcd4545dd3902a66b966f2b5e2d5c95e0e948d3bf38",
+  "family_count": 460,
+  "row_pointer": "#/families/459"
+ },
+ "base_commit": "45b4ccf25270c486dbc682805cd455ce4ca25fb0",
+ "rubric": "Step 8 depth matrix, twelve criteria (DL-077); PASS needs Plans/ evidence",
+ "native_execution": "NOT_RUN",
+ "rows": [
+  {
+   "event_type": "runtime_artifact.before_after_snapshot",
+   "family_id": "event-family-runtime-artifact-before-after-snapshot",
+   "family_revision": "1.0.0",
+   "cells": {
+    "membership_version": {
+     "status": "PASS",
+     "representation": "exact_registry_membership",
+     "finding": "Registered at registry revision 2026-11-16.241 as #/families/459 (canonical row SHA-256 d567980459942cbb08434d16d123a5069cc7ca4913fe854eb95bb3bf5a33511d); before this commit the family was absent.",
+     "evidence": [
+      {
+       "path": "Plans/event_family_registry.json",
+       "json_pointer": "#/families/459",
+       "line_start": 29705,
+       "line_end": 29758,
+       "quote": "\"event_type\": \"runtime_artifact.before_after_snapshot\"",
+       "quote_line": 29708,
+       "file_sha256": "fcc1dbdb85ef3192706fbfcd4545dd3902a66b966f2b5e2d5c95e0e948d3bf38",
+       "quote_check": "exact"
+      }
+     ]
+    },
+    "owner_doc": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "RAP-102, SP-522 and CV-522 explicitly govern this exact Project-edition family and version, with ATS-260 oracles.",
+     "evidence": [
+      {
+       "path": "Plans/Runtime_Artifacts_Panel.md",
+       "unit": "RAP-102",
+       "line_start": 3721,
+       "line_end": 3721,
+       "quote": "Newly authored owner contract under DL-045 for runtime_artifact.before_after_snapshot@1.0.0, prepared without admission. This exact family implements only the existing Option 2 transition: A",
+       "quote_check": "exact",
+       "quote_scope": "unit RAP-102, Plans/Runtime_Artifacts_Panel.md:3713-3752",
+       "file_sha256": "27d5680bbb7e65b143de99d8f12198cffadc4cb6cd207ccf58e749406862f5be"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "owner_doc",
+      "status": "PASS"
+     }
+    },
+    "producer": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "RAP-102 binds the producer and source/append/first-receipt/publication order. CV-522 explicitly adopts SP-337 for bounded inline and external payload custody.",
+     "evidence": [
+      {
+       "path": "Plans/Runtime_Artifacts_Panel.md",
+       "unit": "RAP-102",
+       "line_start": 3722,
+       "line_end": 3722,
+       "quote": "The producer is Comparison/capture writer, through the newly named handler owner.runtime_artifacts.before_after_snapshot.publish@1.0.0. This handler seals one immutable artifact metadata rec",
+       "quote_check": "exact",
+       "quote_scope": "unit RAP-102, Plans/Runtime_Artifacts_Panel.md:3713-3752",
+       "file_sha256": "27d5680bbb7e65b143de99d8f12198cffadc4cb6cd207ccf58e749406862f5be"
+      },
+      {
+       "path": "Plans/Runtime_Artifacts_Panel.md",
+       "unit": "RAP-102",
+       "line_start": 3724,
+       "line_end": 3724,
+       "quote": "No terminal artifact publication precedes authentic first-receipt custody and the final source/permission guard. No durable pending-request family is invented. After crash, retry only from t",
+       "quote_check": "exact",
+       "quote_scope": "unit RAP-102, Plans/Runtime_Artifacts_Panel.md:3713-3752",
+       "file_sha256": "27d5680bbb7e65b143de99d8f12198cffadc4cb6cd207ccf58e749406862f5be"
+      },
+      {
+       "path": "Plans/Contracts_V0.md",
+       "unit": "CV-522",
+       "line_start": 41784,
+       "line_end": 41784,
+       "quote": "Explicitly adopt SP-337 store-once packs for this family. Newly authored exact dispatch binding under DL-045: encode the unchanged logical payload as RFC 8785 canonical JSON, UTF-8 without B",
+       "quote_check": "exact",
+       "quote_scope": "unit CV-522, Plans/Contracts_V0.md:41775-41810",
+       "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "producer",
+      "status": "PASS"
+     }
+    },
+    "closed_payload_schema": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "CV-522 preserves the exact closed logical payload schema; inline or authenticated external bytes resolve to that same object.",
+     "evidence": [
+      {
+       "path": "Plans/Contracts_V0.md",
+       "unit": "CV-522",
+       "line_start": 41783,
+       "line_end": 41783,
+       "quote": "Payload dispatch prepared for runtime_artifact.before_after_snapshot@1.0.0 only: Plans/runtime_artifact_before_after_snapshot.schema.json, schema ID pm.runtime_artifact.before_after_snapshot",
+       "quote_check": "exact",
+       "quote_scope": "unit CV-522, Plans/Contracts_V0.md:41775-41810",
+       "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "closed_payload_schema",
+      "status": "PASS"
+     }
+    },
+    "scope_identity": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "RAP-102 binds exact Project identity, joins and idempotency. The four-member tuple remains unchanged; CV joins resolve the logical payload.",
+     "evidence": [
+      {
+       "path": "Plans/Runtime_Artifacts_Panel.md",
+       "unit": "RAP-102",
+       "line_start": 3723,
+       "line_end": 3723,
+       "quote": "Identity adopts the owner-recommended four-member tuple exactly: [event_type, project_id, artifact_id, schema_id]. Each member is encoded as uint32 big-endian UTF-8 byte length followed by i",
+       "quote_check": "exact",
+       "quote_scope": "unit RAP-102, Plans/Runtime_Artifacts_Panel.md:3713-3752",
+       "file_sha256": "27d5680bbb7e65b143de99d8f12198cffadc4cb6cd207ccf58e749406862f5be"
+      },
+      {
+       "path": "Plans/Contracts_V0.md",
+       "unit": "CV-522",
+       "line_start": 41784,
+       "line_end": 41784,
+       "quote": "Envelope run_id/attempt_id/thread_id/node_id equal the corresponding payload values or required-present null for absent optional fields; occurred_at_utc equals payload.created_at_utc. actor_",
+       "quote_check": "exact",
+       "quote_scope": "unit CV-522, Plans/Contracts_V0.md:41775-41810",
+       "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "scope_identity",
+      "status": "PASS"
+     }
+    },
+    "replay_idempotency": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "RAP-102 preserves original SP-286/CV-339 full-value v2 event/eleven-field receipt and refuses changed semantic identity without a second effect.",
+     "evidence": [
+      {
+       "path": "Plans/Runtime_Artifacts_Panel.md",
+       "unit": "RAP-102",
+       "line_start": 3724,
+       "line_end": 3724,
+       "quote": "Lost acknowledgements return the original EventRecord/receipt through actual first-receipt resolution; replay cannot manufacture a new event_id, body, receipt or external effect.",
+       "quote_check": "exact",
+       "quote_scope": "unit RAP-102, Plans/Runtime_Artifacts_Panel.md:3713-3752",
+       "file_sha256": "27d5680bbb7e65b143de99d8f12198cffadc4cb6cd207ccf58e749406862f5be"
+      },
+      {
+       "path": "Plans/Contracts_V0.md",
+       "unit": "CV-522",
+       "line_start": 41784,
+       "line_end": 41784,
+       "quote": "Retries freeze the original payload route/ref/bytes as producer-semantic inputs; no repacking or re-encoding may silently change the original digest or first receipt. Envelope run_id/attempt",
+       "quote_check": "exact",
+       "quote_scope": "unit CV-522, Plans/Contracts_V0.md:41775-41810",
+       "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "replay_idempotency",
+      "status": "PASS"
+     }
+    },
+    "retention": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "RAP-102 retains event history under DL-075. SP-522 preserves source-coupled index retention and applies 3GEN only to checkpoint generations.",
+     "evidence": [
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-522",
+       "line_start": 53995,
+       "line_end": 53995,
+       "quote": "The reused event_record_index rows retain RP-EVENT-INDEX-SOURCE, source-coupled to the retained EventRecord, with complete target-generation rebuild/remapping at compaction. Only event_recor",
+       "quote_check": "exact",
+       "quote_scope": "unit SP-522, Plans/storage-plan.md:53984-54021",
+       "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+      },
+      {
+       "path": "Plans/Runtime_Artifacts_Panel.md",
+       "unit": "RAP-102",
+       "line_start": 3726,
+       "line_end": 3726,
+       "quote": "Retain this event, including embedded summary/text and original provenance, under RP-AUTHORITY-INDEFINITE@1.0.0 (DL-075 and Case L-3). The payload retention_class describes the artifact/body",
+       "quote_check": "exact",
+       "quote_scope": "unit RAP-102, Plans/Runtime_Artifacts_Panel.md:3713-3752",
+       "file_sha256": "27d5680bbb7e65b143de99d8f12198cffadc4cb6cd207ccf58e749406862f5be"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "retention",
+      "status": "PASS"
+     }
+    },
+    "redaction_custody": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "RAP-102 binds original seglog/receipt custody, backup/restore and current authorization/deletion checks. CV-522 adds pack-byte durability and retention without changing linked-body policy.",
+     "evidence": [
+      {
+       "path": "Plans/Runtime_Artifacts_Panel.md",
+       "unit": "RAP-102",
+       "line_start": 3726,
+       "line_end": 3726,
+       "quote": "On each read recheck current authorization, source deletion/revocation and holds; inaccessible bodies remain unavailable and are never reconstructed from the retained event. No new deletion ",
+       "quote_check": "exact",
+       "quote_scope": "unit RAP-102, Plans/Runtime_Artifacts_Panel.md:3713-3752",
+       "file_sha256": "27d5680bbb7e65b143de99d8f12198cffadc4cb6cd207ccf58e749406862f5be"
+      },
+      {
+       "path": "Plans/Runtime_Artifacts_Panel.md",
+       "unit": "RAP-102",
+       "line_start": 3726,
+       "line_end": 3726,
+       "quote": "Redact before sealing; refs and summaries must not carry secrets, private reasoning, protected auth-session captures or raw hidden content.",
+       "quote_check": "exact",
+       "quote_scope": "unit RAP-102, Plans/Runtime_Artifacts_Panel.md:3713-3752",
+       "file_sha256": "27d5680bbb7e65b143de99d8f12198cffadc4cb6cd207ccf58e749406862f5be"
+      },
+      {
+       "path": "Plans/Contracts_V0.md",
+       "unit": "CV-522",
+       "line_start": 41784,
+       "line_end": 41784,
+       "quote": "Pack bytes and index are durable before acknowledgement through SP-337's pack-first sync or same-group segment staging/seal protocol. Retained EventRecord references keep the full logical me",
+       "quote_check": "exact",
+       "quote_scope": "unit CV-522, Plans/Contracts_V0.md:41775-41810",
+       "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "redaction_custody",
+      "status": "PASS"
+     }
+    },
+    "transitions": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "RAP-102 implements its exact Option 2 transition behind source/receipt/publication barriers. No source action is redispatched.",
+     "evidence": [
+      {
+       "path": "Plans/Runtime_Artifacts_Panel.md",
+       "unit": "RAP-102",
+       "line_start": 3721,
+       "line_end": 3721,
+       "quote": "This exact family implements only the existing Option 2 transition: A bounded before/after comparison record becomes durable with exact referenced sides and optional typed comparison results",
+       "quote_check": "exact",
+       "quote_scope": "unit RAP-102, Plans/Runtime_Artifacts_Panel.md:3713-3752",
+       "file_sha256": "27d5680bbb7e65b143de99d8f12198cffadc4cb6cd207ccf58e749406862f5be"
+      },
+      {
+       "path": "Plans/Runtime_Artifacts_Panel.md",
+       "unit": "RAP-102",
+       "line_start": 3724,
+       "line_end": 3724,
+       "quote": "No terminal artifact publication precedes authentic first-receipt custody and the final source/permission guard. No durable pending-request family is invented. After crash, retry only from t",
+       "quote_check": "exact",
+       "quote_scope": "unit RAP-102, Plans/Runtime_Artifacts_Panel.md:3713-3752",
+       "file_sha256": "27d5680bbb7e65b143de99d8f12198cffadc4cb6cd207ccf58e749406862f5be"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "transitions",
+      "status": "PASS"
+     }
+    },
+    "consumers_checkpoints": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "SP-522 binds this exact stateless history reader, installed SP-278 key/schema/generation and atomic CAS, plus nine-field durable-token limits; it persists no token.",
+     "evidence": [
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-522",
+       "line_start": 53993,
+       "line_end": 53993,
+       "quote": "The exact physical checkpoint is event_record_index_checkpoint.v1:{storage_instance_id} in the checkpoints table; value pm.storage_value.event_record_index_checkpoint.v1@1.0.0 at Plans/event",
+       "quote_check": "exact",
+       "quote_scope": "unit SP-522, Plans/storage-plan.md:53984-54021",
+       "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-522",
+       "line_start": 53994,
+       "line_end": 53994,
+       "quote": "The adopted full-index projector advances rows and frontier atomically in one redb transaction with prior-generation/frontier CAS, as SP-278 requires. The live token has ten fields; any dura",
+       "quote_check": "exact",
+       "quote_scope": "unit SP-522, Plans/storage-plan.md:53984-54021",
+       "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "consumers_checkpoints",
+      "status": "PASS"
+     }
+    },
+    "compatibility_withdrawal": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "RAP-102 specifies exact-version refusal and writer admission cutoff, receipt preservation, reader dependency withdrawal and authorized rebuild without effects.",
+     "evidence": [
+      {
+       "path": "Plans/Runtime_Artifacts_Panel.md",
+       "unit": "RAP-102",
+       "line_start": 3727,
+       "line_end": 3727,
+       "quote": "Compatibility is exact-version only: unsupported schema IDs/versions fail closed with unsupported_schema_version. Existing source-lineage values may be inspected only through their explicitl",
+       "quote_check": "exact",
+       "quote_scope": "unit RAP-102, Plans/Runtime_Artifacts_Panel.md:3713-3752",
+       "file_sha256": "27d5680bbb7e65b143de99d8f12198cffadc4cb6cd207ccf58e749406862f5be"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "compatibility_withdrawal",
+      "status": "PASS"
+     }
+    },
+    "positive_negative_oracles": {
+     "status": "PASS",
+     "representation": "integrated_criterion12_delta",
+     "finding": "Exact-family C12 PASS from reports/event-authority-20261114/C12-DR-self-grade.json",
+     "evidence": [
+      {
+       "line_end": 49,
+       "line_start": 49,
+       "path": "Plans/runtime_artifact_event_drafts.json",
+       "quote": "\"event_type\": \"runtime_artifact.before_after_snapshot\"",
+       "unit": "draft row",
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "file_sha256": "238e68373869824485d53d84b557feb5e1eadb1ccd880f37172814521fe4cb3a"
+      },
+      {
+       "line_end": 3713,
+       "line_start": 3713,
+       "path": "Plans/Runtime_Artifacts_Panel.md",
+       "quote": "### RAP-102 — runtime_artifact.before_after_snapshot",
+       "unit": "RAP-102",
+       "quote_check": "exact",
+       "quote_scope": "unit RAP-102, Plans/Runtime_Artifacts_Panel.md:3713-3752",
+       "file_sha256": "27d5680bbb7e65b143de99d8f12198cffadc4cb6cd207ccf58e749406862f5be"
+      },
+      {
+       "line_end": 53984,
+       "line_start": 53984,
+       "path": "Plans/storage-plan.md",
+       "quote": "### SP-522 — runtime_artifact.before_after_snapshot",
+       "unit": "SP-522",
+       "quote_check": "exact",
+       "quote_scope": "unit SP-522, Plans/storage-plan.md:53984-54021",
+       "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+      },
+      {
+       "line_end": 41775,
+       "line_start": 41775,
+       "path": "Plans/Contracts_V0.md",
+       "quote": "### CV-522 — runtime_artifact.before_after_snapshot",
+       "unit": "CV-522",
+       "quote_check": "exact",
+       "quote_scope": "unit CV-522, Plans/Contracts_V0.md:41775-41810",
+       "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a"
+      },
+      {
+       "line_end": 3,
+       "line_start": 3,
+       "path": "Plans/runtime_artifact_before_after_snapshot.schema.json",
+       "quote": "\"$id\": \"pm.runtime_artifact.before_after_snapshot.schema.v1\"",
+       "unit": "payload schema",
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "file_sha256": "7b48b692b360002abfeeb2ef8785e60852267220eafd99d28f3ff164a56b25ba"
+      },
+      {
+       "line_end": 11266,
+       "line_start": 11266,
+       "path": "Plans/Automated_Testing_System.md",
+       "quote": "scripts/pm-runtime-artifact-event-drafts.py checks its own closed schema",
+       "unit": "ATS-260",
+       "quote_check": "exact",
+       "quote_scope": "unit ATS-260, Plans/Automated_Testing_System.md:11258-11300",
+       "file_sha256": "e1c8a84c145a3aaaa0738971f76db5fa0bf94f59c0149e76f4131e8579a6971d"
+      },
+      {
+       "line_end": 11267,
+       "line_start": 11267,
+       "path": "Plans/Automated_Testing_System.md",
+       "quote": "every current schema integer slot of EventRecord, receipt, custody, result, checkpoint and payload values accepts only what current_integer accepts",
+       "unit": "ATS-260",
+       "quote_check": "exact",
+       "quote_scope": "unit ATS-260, Plans/Automated_Testing_System.md:11258-11300",
+       "file_sha256": "e1c8a84c145a3aaaa0738971f76db5fa0bf94f59c0149e76f4131e8579a6971d"
+      },
+      {
+       "line_end": 464,
+       "line_start": 464,
+       "path": "scripts/pm-runtime-artifact-event-drafts.py",
+       "quote": "class TableValidator:",
+       "unit": "TableValidator (schema.case rows S07/S08/S02/S04/N01)",
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "file_sha256": "fb6b914b207bf6e0999eb6f117dd8f7f472a0df3a2a4c4ab0c360970803f2f61"
+      },
+      {
+       "line_end": 953,
+       "line_start": 953,
+       "path": "scripts/pm-runtime-artifact-event-drafts.py",
+       "quote": "custody, reason = dispatch_original(row, original, source, packs, (HISTORICAL_V1,), recipe_override)",
+       "unit": "resolve_history (SP-1101 sealed recipe)",
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "file_sha256": "fb6b914b207bf6e0999eb6f117dd8f7f472a0df3a2a4c4ab0c360970803f2f61"
+      },
+      {
+       "line_end": 935,
+       "line_start": 935,
+       "path": "scripts/pm-runtime-artifact-event-drafts.py",
+       "quote": "dispatcher = RetainedDispatcher(SourceOwner(row, source), recipes)",
+       "unit": "dispatch_original",
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "file_sha256": "fb6b914b207bf6e0999eb6f117dd8f7f472a0df3a2a4c4ab0c360970803f2f61"
+      },
+      {
+       "line_end": 1076,
+       "line_start": 1076,
+       "path": "scripts/pm-runtime-artifact-event-drafts.py",
+       "quote": "if not validator(schema, 'checkpoint').is_valid(checkpoint) or not validator(schema, 'read_token').is_valid(token):",
+       "unit": "checkpoint_matches schema occurrences",
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "file_sha256": "fb6b914b207bf6e0999eb6f117dd8f7f472a0df3a2a4c4ab0c360970803f2f61"
+      },
+      {
+       "line_end": 21,
+       "line_start": 21,
+       "path": "scripts/pm_runtime_artifact_table_history.py",
+       "quote": "return 'unavailable' if value['dispatch_refusal'] == 'original_binding' else None",
+       "unit": "H05b_original_binding",
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "file_sha256": "bf62372b175c07db39c37273fc07d548e0f1dd24cbb5eb252823fd3e26b52b69"
+      },
+      {
+       "line_end": 331,
+       "line_start": 331,
+       "path": "scripts/pm_runtime_artifact_c12.py",
+       "quote": "def structural_isolated(tv, instance, keyword, location, node, branches=()):",
+       "unit": "clause isolation rule",
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "file_sha256": "5dc2e77f1918caec6889dd9701e49a4e24f8163d875a8837802d752e02275b33"
+      },
+      {
+       "line_end": 418,
+       "line_start": 418,
+       "path": "scripts/pm_runtime_artifact_c12.py",
+       "quote": "def cut_and_restore(route, phase, row, expected):",
+       "unit": "complete-boundary cut and restoration",
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "file_sha256": "5dc2e77f1918caec6889dd9701e49a4e24f8163d875a8837802d752e02275b33"
+      },
+      {
+       "line_end": 432,
+       "line_start": 432,
+       "path": "scripts/pm_runtime_artifact_c12.py",
+       "quote": "def store_digest(store):",
+       "unit": "sealed-store snapshot",
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "file_sha256": "5dc2e77f1918caec6889dd9701e49a4e24f8163d875a8837802d752e02275b33"
+      },
+      {
+       "line_end": 176,
+       "line_start": 176,
+       "path": "scripts/pm-runtime-artifact-c12-closure.py",
+       "quote": "def schema_part(ctx, references, out):",
+       "unit": "schema inventory and witnesses",
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "file_sha256": "630b436409607e116bd18ee06eb8047f03637a5f9e5682127648347cd6661f1e"
+      },
+      {
+       "line_end": 378,
+       "line_start": 378,
+       "path": "scripts/pm-runtime-artifact-c12-closure.py",
+       "quote": "def pairs_part(families, out):",
+       "unit": "complete-boundary pair ledger",
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "file_sha256": "630b436409607e116bd18ee06eb8047f03637a5f9e5682127648347cd6661f1e"
+      },
+      {
+       "line_end": 430,
+       "line_start": 430,
+       "path": "scripts/pm-runtime-artifact-c12-closure.py",
+       "quote": "def retained_part(ctx, out):",
+       "unit": "retained reads and store snapshots",
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "file_sha256": "630b436409607e116bd18ee06eb8047f03637a5f9e5682127648347cd6661f1e"
+      },
+      {
+       "line_end": 564,
+       "line_start": 564,
+       "path": "scripts/pm-runtime-artifact-c12-closure.py",
+       "quote": "def datetime_part(ctx, out):",
+       "unit": "shared date-time battery at the complete boundary",
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "file_sha256": "630b436409607e116bd18ee06eb8047f03637a5f9e5682127648347cd6661f1e"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "positive_negative_oracles",
+      "status": "PASS"
+     }
+    }
+   }
+  }
+ ]
+}
