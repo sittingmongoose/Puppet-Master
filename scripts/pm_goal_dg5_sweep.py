@@ -73,8 +73,30 @@ def install(prove):
             judge(self, record, evaluate, value)
             if record.get('kill') == 'CUT_EXCEPTION' and evaluate is not None:
                 record['cut_exception_site'] = cut_site(self, evaluate, value, record['target'])
+            if record.get('kill') == 'COVERED_LATER' and evaluate is not None:
+                record['dg5_chain'] = chain(self, evaluate, value, record['target'])
         sweep.Collector._judge = judged
         sweep.Collector._go_cut_sites = True
+
+
+def chain(collector, evaluate, value, target, depth=5):
+    """Evidence only (never credit): widen the cut by each later refusal until the complete
+    call accepts, raises, or stops progressing. A duplicate set declared from this chain is
+    credited only by a later run's judge (joint cut accepts, each site refuses alone)."""
+    cut = {target} if isinstance(target, str) else set(target)
+    steps = [sorted(cut)]
+    for _ in range(depth):
+        errors = collector._replay(evaluate, value, cut)
+        if isinstance(errors, str):
+            return dict(rows=steps, result='exception', detail=errors)
+        if not errors:
+            return dict(rows=steps, result='accepts')
+        new = set(errors) - cut
+        if not new:
+            return dict(rows=steps, result='no_progress', errors=errors)
+        cut |= new
+        steps.append(sorted(new))
+    return dict(rows=steps, result='depth_limit')
 
 
 def cut_site(collector, evaluate, value, target):
