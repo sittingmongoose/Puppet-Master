@@ -917,3 +917,22 @@ def _(suite):
     def tamper(w, src):
         src['d01_current']['workflow']['head']['current_body'].update(extra_field='x')
     start_case(suite, start_edits=dict(after_acquire=tamper))
+
+
+# Pack value hash: a born WorkNode objective past the inline cell limit makes
+# its cell pack-backed at issuance; substituting only the stored wrapper's
+# value_sha256 leaves the pack itself (and its digest check) authentic.
+@negative('pack_value_hash_substituted', 'read_value/pack_value_hash', WORLD + '439')
+def _(suite):
+    def pad(born):
+        born[0]['record']['objective'] = 'x' * 17000
+        return born
+
+    def pre(w, h):
+        node = w.owners['materialization:worknodes'].resolve(h['born_worknodes'][1])[1][0]
+        cell = w.storage.cell('workflow_born_worknode', node['physical_key'])
+        value = copy.deepcopy(cell['value'])
+        value['value_sha256'] = Z
+        w.storage.transact([dict(table='workflow_born_worknode', key=node['physical_key'],
+                                  expected=cell['version'], value=value)])
+    start_case(suite, edits=dict(born_worknodes=pad), pre=pre)
