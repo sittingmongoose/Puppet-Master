@@ -140,6 +140,10 @@ export const tests = {
 	},
 	async 'adding a folder: Done opens each next section, without Reduced Motion too'(t) {
 		const f = await startNew(t, 'folder', { reduced: false });
+		// P-J1113-T1: this case used to inherit the previous test's Reduced Motion. It has to be off here,
+		// in the browser and in the page, before any Done is judged.
+		const motion = await f.evaluate(() => ({ media: window.matchMedia('(prefers-reduced-motion: reduce)').matches, pjx: window.PJX.reduced() }));
+		await t.check('without Reduced Motion: the browser is not reducing motion and the page agrees', motion.media === false && motion.pjx === false, JSON.stringify(motion));
 		const list = (await sess(f, STATE)).list;
 		await t.check('the sections of adding a folder', list[0] === 'folder' && list.length >= 5, list.join());
 		// the folder section needs a folder first: answer it the way a person does, then walk the rest

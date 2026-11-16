@@ -4,11 +4,43 @@
 //   python3 Concepts/settings-scope/opus-5.5/tools/build_standalone.py $OUT
 //   browser-check run Concepts/pm7-tools/browser-check/checks/settings-scope.check.mjs --set page=$OUT/settings-scope-app.html
 // --set lookShots=1 lists the review images (BUILD-SPEC 16.4) under LOOK; without it they are saved for diff only.
-// --set only=rules|behaviour|fixes|yolo|looks|widths|moments runs one part. `fixes` and `yolo` assert the fix pass of
+// --set only=rules|behaviour|fixes|yolo|looks|widths|moments|strip runs one part. `fixes` and `yolo` assert the fix pass of
 // 2026-11-03 (the five reviews in pass2/reviews/: one guarded write path, Copy, batches, the run mode and the rest).
+// `strip` opens the review page Jared opens (settings-scope.html beside the app file, or --set strip=<path>).
+import path from 'node:path';
+import { pathToFileURL } from 'node:url';
 import { LOOKS } from '../browser-check.config.mjs';
 
 const want = (t, part) => !t.args.only || String(t.args.only).split(',').includes(part);
+const fileUrl = (p) => (/^[a-z][a-z0-9+.-]+:/i.test(p) ? p : pathToFileURL(path.resolve(p)).href);
+/* review A-r1 tool note A: this kit check used to open only settings-scope-app.html, so a script error that killed
+   the review strip (settings-scope.html) passed every check here. The strip must load, Moments must open a sheet,
+   and nothing on that page may throw. */
+async function stripSmoke(t) {
+	const stripPath = t.args.strip || String(t.args.page || '').replace(/settings-scope-app\.html$/, 'settings-scope.html');
+	if (!stripPath || !/settings-scope\.html$/.test(stripPath)) {
+		await t.check('the strip page is given (--set strip=<path to settings-scope.html>, or --set page= the app file beside it)', false, stripPath);
+		return;
+	}
+	const errors = [];
+	const onErr = (e) => errors.push(String(e && e.message || e));
+	const onConsole = (m) => { if (m.type() === 'error') errors.push('console.error: ' + m.text()); };
+	t.page.on('pageerror', onErr);
+	t.page.on('console', onConsole);
+	await t.goto(`${fileUrl(stripPath)}?cb=${Date.now()}`);
+	await t.until('the strip says what is shown', () => /The decided design/.test((document.getElementById('note') || {}).textContent || ''), null, { timeout: 30000 });
+	const frame = t.page.frames().find((f) => f !== t.page.mainFrame());
+	await t.check('the strip frames PMConcept7', !!frame);
+	if (frame) await frame.waitForFunction(() => !!(window.PSX && window.PSX.booted), null, { timeout: 90000 }).catch(() => {});
+	await t.check('the layer is booted inside the strip’s frame', !!frame && await frame.evaluate(() => !!(window.PSX && window.PSX.booted)).catch(() => false));
+	await t.page.selectOption('#moment', '11.18');
+	await t.until('Moments › 11.18 shows its caption', () => /11\.18 What asks you/.test((document.getElementById('note') || {}).textContent || ''), null, { timeout: 10000 });
+	const sheet = frame ? await frame.waitForFunction(() => { const s = document.querySelector('.psx-sheet'); return !!s && /What asks you/.test(s.textContent); }, null, { timeout: 15000 }).then(() => true).catch(() => false) : false;
+	await t.check('Moments › 11.18 opens its sheet in the frame', sheet);
+	t.page.off('pageerror', onErr);
+	t.page.off('console', onConsole);
+	await t.check('no uncaught error and no console.error on the strip page', errors.length === 0, errors.join(' | '));
+}
 const pic = async (t, name, why, target) => {
 	// in T3's sandbox the window takes the pictures, so a selector inside the sandboxed page can't be cropped
 	if (target && typeof t.surface === 'function' && (await t.surface()) === 'sandbox') target = null;
@@ -87,6 +119,8 @@ async function look(t, name) {
 async function reset(t) { await run(t, () => window.PSX.command({ cmd: 'reset' })); await settle(t, 600); }
 
 export default async function (t) {
+	// --set only=strip is the strip page alone: it does not boot the app file first
+	if (t.args.only && String(t.args.only).split(',').every((p) => p === 'strip')) { await stripSmoke(t); return; }
 	await t.app.open();
 	const has = await run(t, () => document.documentElement.hasAttribute('data-psx-layer'));
 	if (!has) { await t.check('settings-scope: not a settings-scope build, skipped (build it with tools/build_standalone.py)', true); return; }
@@ -691,5 +725,7 @@ export default async function (t) {
 		await reset(t);
 		await t.check('Reset puts the opening view back', () => run(t, () => window.PSX.S.ctx.project === 'tastebook' && !window.PSX.S.firstStart && !document.querySelector('.psx-sheet')));
 	});
+
+	if (want(t, 'strip')) await t.step('the review strip on settings-scope.html works', () => stripSmoke(t));
 	await t.noConsoleErrors('no console errors');
 }
