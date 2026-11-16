@@ -2040,8 +2040,8 @@
      same path the timer uses. What no observer reports is a visibility-only change (an inline visibility, a stylesheet
      visibility keyed to an unobserved attribute): for those a 2000 ms safety-net timer remains, armed when the first
      lens is hidden and re-armed only from inside the check, only while any lens is still hidden; a hidden document
-     re-arms it without reading anything. A sync that lands while that check is waiting for layout does not start an
-     interval of its own: the check still runs, and it arms the next interval if a lens is still hidden. The check's reads are stripParked (a closest(), no layout), cvSkipped (the
+     re-arms it without reading anything. A sync that lands while that check is waiting for layout may arm a tick;
+     the check drops it before it looks, and arms the next interval if a lens is still hidden. The check's reads are stripParked (a closest(), no layout), cvSkipped (the
      section's own style and box, never the skipped content) and visible() (the strip's and its target's rect and
      computed visibility), all after the frame's layout, where they are free. Where ResizeObserver does not exist the
      timer alone does the work, at the same 2000 ms. */
@@ -2077,16 +2077,18 @@
     if (!L.strip.isConnected) { hiddenLenses.delete(L); showUnwatch(L); return; }
     hiddenLenses.set(L, cfg);
     if (showWatch) showWatch.observe(L.strip);
-    /* a check already waiting for layout arms this itself if the lens is still hidden */
-    if (!showT && !showHold) showT = setTimeout(checkShown, 2000);
+    /* armed even while a check is queued: the queued check drops this tick before it looks (queueShown), so it cannot
+       make that check skip; and if the queued check is ever lost (another function of the same layout delivery
+       throwing first), this tick is what starts the checking again */
+    if (!showT) showT = setTimeout(checkShown, 2000);
   }
   /* onLayout(fn): fn runs once after the frame's own style and layout, before paint, so every read in it is free (Q16).
      It is afterLayout(fn): one probe and one ResizeObserver for all of Glass. Work that a timer would otherwise run in the
      middle of an app's rebuild waits there instead: */
   function onLayout(fn) { if (!afterLayout(fn)) fn(); }
-  /* the wake and the tick share one queued check. showHold stops awaitShow from arming a fresh 2000 ms interval in the
-     gap before it runs: that arm used to trip the showT guard and skip the look, so a lens already shown waited another
-     whole interval. */
+  /* the wake and the tick share one queued check (showHold: at most one waits for layout). The queued check drops any
+     pending tick before it looks: a tick armed in the gap before it runs (a sync's awaitShow) used to trip the showT
+     guard and skip the look, so a lens already shown waited another whole interval (2351 and 3040 ms seen). */
   function queueShown() {
     if (showHold) return;
     showHold = true;
@@ -2104,6 +2106,9 @@
     /* a background tab never wakes layout: the tick re-arms without reading anything */
     if (document.hidden) { if (hiddenLenses.size) showT = setTimeout(checkShown, 2000); return; }
     if (!switchOn()) { showUnwatchAll(); hiddenLenses.clear(); return; }
+    /* a tick that finds a check still queued two seconds later takes it for lost and queues again: a second run of
+       the check is harmless, a hold that never ends would stop the checking for good */
+    showHold = false;
     queueShown();
   }
   function checkShownNow() {
@@ -2123,7 +2128,8 @@
       });
       syncStrips(shown);
     } finally { cvSeen = null; }
-    if (hiddenLenses.size) showT = setTimeout(checkShown, 2000);
+    /* not over a tick that syncStrips' own awaitShow has just armed (one timer, not two) */
+    if (hiddenLenses.size && !showT) showT = setTimeout(checkShown, 2000);
   }
   /* A strip whose chip is its own (ownUnder, Settings' segmented choices) shows that chip only while it moves: at rest the
      chosen segment wears the material in place, exactly as it did before the chip existed, so nothing at rest changes
