@@ -506,13 +506,17 @@ def site_index():
         except SyntaxError:
             continue
         definitions = {n.lineno for n in ast.walk(tree) if isinstance(n, ast.FunctionDef)
-                       and n.name in ('require', 'guard', 'refuse')}
+                       and n.name in ('require', 'guard', 'refuse', 'halt')}
+        halt_module = any(isinstance(n, ast.FunctionDef) and n.name == 'halt' and
+                          [a.arg for a in n.args.args] == ['code', 'condition'] for n in tree.body)
         for node in ast.walk(tree):
             if not isinstance(node, ast.Call) or not node.args:
                 continue
             func = node.func
             name = func.id if isinstance(func, ast.Name) else func.attr if isinstance(func, ast.Attribute) else None
-            if name not in ('require', 'guard', 'refuse') or node.lineno in definitions:
+            if name not in ('require', 'guard', 'refuse', 'halt') or node.lineno in definitions:
+                continue
+            if name == 'halt' and not halt_module:
                 continue
             pattern, literal = _template(node.args[0], source)
             relative = str(path.relative_to(ROOT))
@@ -541,12 +545,17 @@ def target_rows(code):
         return row(prefix + 'any') if '/schema/' in prefix else None
     if '/schema/' in code or '/numrule/' in code:
         return row(code)
-    # Only code this checker process has loaded can raise the refusal.
+    # Only code this checker process has loaded can raise the refusal. A refusal re-raised under a wrapper
+    # prefix (DG-CF3: 'advance/halt/' + inner code) is matched through its suffixes too; the most specific
+    # literal template over the code and all its suffixes wins.
+    parts = code.split('/')
+    suffixes = ['/'.join(parts[i:]) for i in range(len(parts))]
     matches = [(info['literal'], name) for name, info in site_index().items()
-               if info['module'] in sys.modules and info['regex'].match(code)]
-    if not matches:
+               if info['module'] in sys.modules and any(info['regex'].match(c) for c in suffixes)]
+    best = max((literal for literal, _ in matches), default=0)
+    if best < 4:
+        # Only wildcard templates match (no literal text in common): the code names no site.
         return PREFIX + 'unmatched/' + code
-    best = max(literal for literal, _ in matches)
     names = sorted(name for literal, name in matches if literal == best)
     return names[0] if len(names) == 1 else Alternatives(names)
 
@@ -554,8 +563,8 @@ def target_rows(code):
 def refusal_row(error):
     """The row of the refusal a child run raised (the routed site that just refused)."""
     code = refusal_code(error)
-    if LAST_REFUSAL[0] is not None and LAST_REFUSAL[0][1] == code:
-        return LAST_REFUSAL[0][0]
+    if LAST_REFUSAL[0] is not None and (LAST_REFUSAL[0][1] == code or code.endswith('/' + LAST_REFUSAL[0][1])):
+        return LAST_REFUSAL[0][0]  # the routed site that refused (also when re-raised under a wrapper prefix)
     if '/schema/' in code or '/numrule/' in code:
         return row(code)
     return PREFIX + 'unrouted/' + code
@@ -656,12 +665,14 @@ def install():
         name = getattr(module, '__name__', '')
         if not name.startswith(('pm_goal_dg_', 'pm_goal_test_')) or name == 'pm_goal_test_numrule':
             continue
-        for key in ('require', 'guard', 'refuse'):
+        for key in ('require', 'guard', 'refuse', 'halt'):
             fn = getattr(module, key, None)
             if not inspect.isfunction(fn) or fn in PATCHED.values():
                 continue
-            if fn.__name__ not in ('require', 'guard', 'refuse'):
+            if fn.__name__ not in ('require', 'guard', 'refuse', 'halt'):
                 continue
+            if key == 'halt' and list(inspect.signature(fn).parameters) != ['code', 'condition']:
+                continue  # only a halt(code, condition) predicate (DG-CF3 reducer) is a row
             originals[fn] = PATCHED.setdefault(fn, refuse_wrapper(fn) if key == 'refuse' else guard_wrapper(fn))
     for module in tuple(sys.modules.values()):
         name = getattr(module, '__name__', '')
