@@ -57,7 +57,9 @@ const PROBE = () => {
 	const hover = window.PM_HOVER_TAG_CONTROLLER;
 	if (hover && typeof hover.cleanupRemoved === 'function') {
 		const cleanup = hover.cleanupRemoved;
-		hover.cleanupRemoved = function () { if (P.on) P.cleanups.push(performance.now()); return cleanup.apply(this, arguments); };
+		/* only a walk of the leaving chapter counts (a part removed at the press, a popout or a tag of the pressed link, may
+		   be walked in idle time during the hold) */
+		hover.cleanupRemoved = function (r) { if (P.on && r && (P.tagged || []).some((n) => n === r || (r.contains && r.contains(n)))) P.cleanups.push(performance.now()); return cleanup.apply(this, arguments); };
 	}
 	try { new PerformanceObserver((l) => { if (P.on) for (const e of l.getEntries()) for (const s of e.scripts || []) if (s.sourceFunctionName === 'finish') P.loaf.push(s.duration); }).observe({ type: 'long-animation-frame' }); } catch (e) { /* none */ }
 	return true;
