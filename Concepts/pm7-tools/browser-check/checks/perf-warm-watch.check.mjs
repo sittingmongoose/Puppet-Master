@@ -16,7 +16,11 @@
 // back to zero for ANY judged interval over the slow bar (max(40 ms, 3x the refresh interval)). The log does not say
 // whether a two-interval row is a cpu step (no part in the counter) or a light chain's last watched step (counted), so
 // Product rows carry steadyMs/slowMs from the queue's rolling median; older logs fall back to the later sampled
-// display rate. The replay keeps the highest and the lowest value the counter can have had, and fails only on what is certain.
+// display rate. A row that also carries slow1, steady1, slow2, steady2 and resetAt is judged from those (a resetAt
+// is believed only when the interval it names reached its bar; on an unwatched row only a first-interval reset counts
+// as dropped early, because a light chain's last step is asked after its first interval only: R58; a row that
+// logs a bar under the queue's floors, 40 ms slow or 25 ms steady, is not believed and is bracketed too); a row without
+// them is still bracketed between its slow bar and the row before. The replay keeps the highest and the lowest value the counter can have had, and fails only on what is certain.
 // Intervals the queue notes but no row shows set the counter back to zero too: the two frames it looks at before
 // admitting a step (an admission attempt, admitted or not, writes no row) and those of a step whose judging the page's
 // hiding cut short (its row has frameMs null). For those the product writes watchReset: true on the next row it logs,
@@ -53,7 +57,7 @@ export default async function (t) {
 	while (Date.now() < until) {
 		const snap = await f.evaluate(() => {
 			const w = window.PM_WARM; if (!w) return null;
-			return { state: w.state(), log: (w.log || []).map((e) => ({ t: e.t, owner: e.owner, name: e.name, frameMs: e.frameMs || null, outcome: e.outcome, watched: e.watched, watchReset: e.watchReset, steadyMs: e.steadyMs, slowMs: e.slowMs })) };
+			return { state: w.state(), log: (w.log || []).map((e) => ({ t: e.t, owner: e.owner, name: e.name, frameMs: e.frameMs || null, outcome: e.outcome, watched: e.watched, watchReset: e.watchReset, steadyMs: e.steadyMs, slowMs: e.slowMs, slow1: e.slow1, steady1: e.steady1, slow2: e.slow2, steady2: e.steady2, resetAt: e.resetAt })) };
 		});
 		if (!snap) { await t.check('the page has the warm-up queue (PM_WARM)', false, 'window.PM_WARM is missing: could not judge'); return; }
 		state = snap.state;

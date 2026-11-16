@@ -12,10 +12,15 @@
 #pm-o55-onboarding[hidden] { display: none !important; }
 html[data-o55-open] #pm-hover-tag-root { display: none !important; }
 /* the app beneath the window is inert and dimmed (its demo clock is paused too): its own loops (working pulses, status
-   dots) hold still until the window closes, so every frame's work is the window's own. Restyled in the same frame that
-   makes the app inert, which the window's first held frame already pays for. The parts are marked data-o55-held by
-   the window (60-ui-core.js setInert), so an inert toggle elsewhere (the editor's sheet) matches nothing here. */
-html[data-o55-open] body > [data-o55-held], html[data-o55-open] body > [data-o55-held] * { animation-play-state: paused !important; }
+   dots) hold still until the window closes, so every frame's work is the window's own. Each element of the app that
+   runs a CSS animation is marked data-o55-loop by js/14-window-hold.js in the frame that draws the click's dim, so the
+   loops are held there, not in the mount's long frame, and let go a frame after the close's wake: a hold or resume
+   taken in a long frame is taken by that frame's stale time, and every held loop jumped by the frame's length
+   (FO-181). Keyed on the mark alone, so only the marked elements restyle; the rule on every element of the app it
+   replaces (`html[data-o55-open] body > [data-o55-held] *`) cost about 240 ms of style at each open and close.
+   !important and the two :not(#...) (an id's weight each) because some loops are set inline or by an !important
+   shorthand, which also sets the play state (NieR Mode's diamonds, the loaders), as in 21-shell-still.css. */
+[data-o55-loop]:not(#o55-loop-a):not(#o55-loop-b) { animation-play-state: paused !important; }
 /* NieR Mode's diamond loaders (styles.d/14-nier-parts.css) set their animation with an !important shorthand, which
    resets the play state and outranks the line above: under the window they are paused here by name, so ticking NieR
    Mode in the window never wakes the app beneath (performance rule 6; review W9).
@@ -176,7 +181,12 @@ html[data-lg="on"][data-theme^="retro"]:not([data-o55-nier="on"]) #pm-o55-onboar
 .o55-content { margin-block: auto; padding: 32px var(--o55-pad) 28px; max-width: 640px; width: 100%; box-sizing: border-box; }
 /* centred as a screen comes in, then held where it opened: a line appearing or going inside it grows or shrinks the
    column downward instead of re-centring it in one frame (p76: jumps of 20-29 px; 60-ui-core.js holdColumn) */
-.o55-layer[data-col-held] .o55-scroll > .o55-content { margin-top: var(--o55-col-top, auto); margin-bottom: auto; }
+/* (the held top is written on the layer, outside what a same-screen refresh redraws, R46-1, and reaches the column through
+   its scroller only: it does not inherit anywhere else, so writing it restyles the layer, the scroller and the column, not
+   the screen's every element, 60-ui-core.js holdColumn, FO-206) */
+@property --o55-col-top { syntax: '<length>'; inherits: false; initial-value: 0px; }
+.o55-layer[data-col-held] > .o55-scroll, .o55-layer[data-col-held] > .o55-scroll > .o55-content { --o55-col-top: inherit; }
+.o55-layer[data-col-held] .o55-scroll > .o55-content { margin-top: var(--o55-col-top); margin-bottom: auto; }
 .o55-eyebrow { margin: 0 0 10px; font: 700 11.5px/1.2 var(--body-font); letter-spacing: 0.13em; text-transform: uppercase; color: var(--o55-ink-accent); }
 .o55-title { margin: 0 0 10px; font: 750 clamp(24px, 2.35vw, 31px)/1.16 var(--display-font, var(--body-font)); letter-spacing: -0.012em; color: var(--text-primary); outline: none; text-wrap: balance; }
 .o55-lead { margin: 0 0 24px; font: 400 15.5px/1.55 var(--body-font); color: var(--text-secondary); max-width: 52ch; text-wrap: pretty; }

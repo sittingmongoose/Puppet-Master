@@ -1,0 +1,114 @@
+{
+  "qualification": {
+    "w4/complete_method_roster": [
+      "routing/method/substituted_roster"
+    ],
+    "w4/method_contract": [
+      "routing/method/substituted_signature"
+    ],
+    "w4/method_identity": [
+      "routing/method/complete_method"
+    ],
+    "w4/method_routing": [
+      "routing/method/routing"
+    ],
+    "w4/method_selection": [
+      "routing/method/selection"
+    ],
+    "w4/no_merge": [
+      "routing/no_merge",
+      "routing/type/whole_bank_merge/0",
+      "routing/type/whole_bank_merge/1",
+      "routing/type/whole_bank_merge/2",
+      "routing/type/whole_bank_merge/3",
+      "routing/type/whole_bank_merge/4"
+    ],
+    "w4/no_network": [
+      "routing/no_network",
+      "routing/type/network_fallback/0",
+      "routing/type/network_fallback/1",
+      "routing/type/network_fallback/2",
+      "routing/type/network_fallback/3",
+      "routing/type/network_fallback/4"
+    ],
+    "w4/no_rebinding/hash": [
+      "routing/no_resource_rebinding"
+    ],
+    "w4/no_rebinding/pointer": [
+      "routing/no_pointer_rebinding"
+    ],
+    "w4/no_unsupported_dynamic_reference": [
+      "routing/unused_dynamic_keyword/$dynamicRef",
+      "routing/unused_dynamic_keyword/$recursiveRef",
+      "routing/unused_dynamic_keyword/$dynamicAnchor",
+      "routing/unused_dynamic_keyword/$recursiveAnchor"
+    ],
+    "w4/predecessor_selection": [
+      "routing/predecessor_selection"
+    ],
+    "w4/projection_predecessor": [
+      "routing/projection_predecessor"
+    ],
+    "w4/projection_resource_selection": [
+      "routing/projection_resource_selection"
+    ],
+    "w4/retained_realm_selection": [
+      "routing/retained_realm_selection"
+    ],
+    "w4/route_commitment": [
+      "routing/stale_new_route_commitment"
+    ],
+    "w4/route_literal": [
+      "routing/literal_declaration"
+    ],
+    "w4/route_location": [
+      "routing/unlisted_location/0",
+      "routing/unlisted_location/1",
+      "routing/missing_inactive_location"
+    ],
+    "w4/route_reference": [
+      "routing/edge/0/$defs/OriginalCompletionInput/properties/receipt/$ref/alternate_literal",
+      "routing/edge/0/$defs/OriginalCompletionInput/properties/dispatch/$ref/alternate_literal",
+      "routing/edge/0/$defs/OriginalCompletionInput/properties/changes/items/$ref/alternate_literal",
+      "routing/edge/0/$defs/OriginalCompletionInput/properties/tests/items/$ref/alternate_literal",
+      "routing/edge/0/$defs/OriginalCompletionInput/properties/auditor/$ref/alternate_literal",
+      "routing/edge/0/$defs/OriginalCompletionInput/properties/auditor_cycles/items/$ref/alternate_literal",
+      "routing/edge/0/$defs/OriginalCompletionInput/properties/source_control/items/$ref/alternate_literal",
+      "routing/edge/0/$defs/OriginalCompletionInput/properties/finalization/$ref/alternate_literal",
+      "routing/edge/0/$defs/OriginalCompletionInput/properties/validators/items/$ref/alternate_literal",
+      "routing/edge/0/$defs/OriginalCompletionInput/properties/repairs/items/$ref/alternate_literal",
+      "routing/edge/0/$defs/OriginalCompletionInput/properties/promotions/items/$ref/alternate_literal",
+      "routing/edge/1/$defs/OriginalCompletionInput/properties/receipt/$ref/alternate_literal",
+      "routing/edge/1/$defs/OriginalCompletionInput/properties/dispatch/$ref/alternate_literal",
+      "routing/edge/1/$defs/OriginalCompletionInput/properties/changes/items/$ref/alternate_literal",
+      "routing/edge/1/$defs/OriginalCompletionInput/properties/tests/items/$ref/alternate_literal",
+      "routing/edge/1/$defs/OriginalCompletionInput/properties/auditor/$ref/alternate_literal",
+      "routing/edge/1/$defs/OriginalCompletionInput/properties/auditor_cycles/items/$ref/alternate_literal",
+      "routing/edge/1/$defs/OriginalCompletionInput/properties/source_control/items/$ref/alternate_literal",
+      "routing/edge/1/$defs/OriginalCompletionInput/properties/finalization/$ref/alternate_literal",
+      "routing/edge/1/$defs/OriginalCompletionInput/properties/validators/items/$ref/alternate_literal",
+      "routing/edge/1/$defs/OriginalCompletionInput/properties/repairs/items/$ref/alternate_literal",
+      "routing/edge/1/$defs/OriginalCompletionInput/properties/promotions/items/$ref/alternate_literal"
+    ],
+    "w4/route_source": [
+      "routing/unlisted_source/0",
+      "routing/unlisted_source/1"
+    ],
+    "w4/route_source_aliases": [
+      "routing/source_alias_census"
+    ],
+    "w4/target_binding": [
+      "routing/target_whole_binding"
+    ],
+    "w4/unresolved_reference": [
+      "routing/unused_dangling_reference"
+    ],
+    "w4/whole_hash/Plans/goal_run_cancelled_consumer_schema_resources.json": [
+      "routing/substituted_predecessor_pin"
+    ]
+  },
+  "qualification_only": true,
+  "whole_original_path_positive": 0,
+  "whole_original_path_negative": 0,
+  "isolation": "Shared tool required; this inventory is not removal proof."
+}

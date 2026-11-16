@@ -1,0 +1,18 @@
+{
+ "_about": "FO-182: the thinking depths each model in this concept's Settings catalog supports, shown inside the shared model picker beside the model list (Models_System section 7.1: offer only depth levels proven for that concrete route; a model without levels shows none, and unknown capability stays unknown). Keys are the stored model values (service id / model id, and the inventory's example ids). The levels follow the chat's own catalog for the same families (5.6 Pro data.js). A model not listed here shows no depth.",
+ "levels": {
+  "claude-code/claude-opus": ["Medium", "High", "Max"],
+  "claude-code/claude-sonnet": ["Low", "Medium", "High", "Max"],
+  "claude-code/claude-haiku": ["Low", "Medium"],
+  "openai-codex/gpt-codex": ["Low", "Medium", "High", "Max"],
+  "openai-codex/gpt-general": ["Low", "Medium", "High"],
+  "kimi-coding/kimi-k3": ["Low", "Medium", "High"],
+  "kimi-coding/kimi-fast": ["Low", "Medium"],
+  "qwen-coding/qwen-coder": ["Medium", "High"],
+  "qwen-coding/qwen-vision": ["Low", "Medium", "High"],
+  "anthropic/claude-sonnet-4": ["Low", "Medium", "High", "Max"],
+  "anthropic/claude-opus-4": ["Medium", "High", "Max"],
+  "openai/gpt-5": ["Low", "Medium", "High", "Max"],
+  "gemini/gemini-2.5-pro": ["Low", "Medium", "High"]
+ }
+}

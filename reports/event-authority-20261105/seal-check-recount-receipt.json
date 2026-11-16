@@ -8,7 +8,7 @@
   "validator_after_sha256": "3e98a1651ec84de58bd101d8a45319fb6b1101598a144a08f4b4cb965ea48e72",
   "prior_receipt": {
     "path": "reports/event-authority-20261104/seal-check-multifamily-step-receipt.json",
-    "sha256": "7d57ebde79f1b5ddc5acb224d16c0133bad924259677758b1d02adbbcd2f5882"
+    "sha256": "5fa9bc51f4bfa9dfcc19cb1cc2c51ea40cbbd7a94b2c9fa339268e7d2c87245e"
   },
   "recount_receipt": {
     "path": "reports/event-authority-20261104/census-recount-20261104/RECEIPT.json",
@@ -27,8 +27,9 @@
     "single_snapshot": "diagnostic_only"
   },
   "author_task": "codex:CA-SEAL2-20261105",
-  "lander_task": null,
+  "lander_task": "claude-opus-5.5:ea-s1-land-20261115",
   "seal_applier_forbidden_tasks": [
+    "claude-opus-5.5:ea-s1-land-20261115",
     "codex:CA-SEAL2-20261105"
   ],
   "seal_authorized": false,

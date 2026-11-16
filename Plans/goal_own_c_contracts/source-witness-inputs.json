@@ -1,0 +1,66 @@
+{
+  "schema_id": "pm.goal_own_c.source_witness_inputs.v1",
+  "qualification": "TEST_ONLY retained original Direct Save source graph, not current SP-421 or native execution",
+  "original_codec": "/home/sittingmongoose/PM-Experiments/goal-update-canonical-root-20260912/canonical-copy-v2/goal_update_support.py",
+  "original_update_capture": "/mnt/Cursor/PuppetMaster-Evidence/tests/goal-update-canonical-ordinary-20260912/v2",
+  "files": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/goal-update-canonical-root-20260912/canonical-copy-v2/goal_update_support.py",
+      "sha256": "e2fdef59684047426fd2e8e0ea45c70be72c81ed68e55084a35e7e6feb4a735c"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/goal-update-canonical-ordinary-20260912/v2/00-historical-start.json",
+      "sha256": "618103ea90d55eeb0bcc716c7cdf1a176172f8977510bfe3db40784bcf4b11f3"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/goal-update-canonical-ordinary-20260912/v2/01-U0.json",
+      "sha256": "cd068e776eadb9babeb70c119e9f28147c5583fce97da4b5f2985034d99d6adb"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/goal-update-canonical-ordinary-20260912/v2/02-U1.json",
+      "sha256": "11f91dc556392a7faf2ed9a60e1f40160dec36b4662663d38aa39f5d52ef49c0"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/goal-update-canonical-ordinary-20260912/v2/03-U2.json",
+      "sha256": "7549a2caaa7db9c4594137ddabbfcb6ebbe79f5348437bcc2231357531186266"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/goal-update-canonical-ordinary-20260912/v2/04-U3.json",
+      "sha256": "e1653c6cf3202d3b706b47b6bcaf205d0888b0fba44509e9bcb5d8393f8811f8"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/goal-update-canonical-ordinary-20260912/v2/05-U4.json",
+      "sha256": "496e22b6bed064f1d508c44bf8e6e32a3c5da71297077209caec6f2d8d073bae"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/goal-update-canonical-ordinary-20260912/v2/06-physical-raw-values.json",
+      "sha256": "e9957b34a42989c4ebbfb17121625bd09b52ecc6660233d69643240000f3bbbf"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/goal-update-canonical-ordinary-20260912/v2/manifest.json",
+      "sha256": "fe3f4ee8c2688b8c47ab6deb52b8e36993c36f81ee492a54ec2304c61207afe2"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/goal-update-canonical-ordinary-20260912/v2/result.json",
+      "sha256": "3edbe856c47797f3de910090baf3d3ae45e730e8575ee71dd4d01b6be76b6c79"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/goal-update-canonical-root-20260912/canonical-copy-v2/runtime/shared/event_value_codec.py",
+      "sha256": "3a0c53aadadd0b6df21e9aca1063531c0fd31a8ffce9a35eccb009c93871d92d"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/goal-update-canonical-root-20260912/canonical-copy-v2/runtime/physical/source/model.py",
+      "sha256": "d1ec1f57059b6a42a9c96ca59e97c39243be0e9a9ad5ad938d7666c739642115"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/goal-update-canonical-root-20260912/canonical-copy-v2/runtime/physical/source/goal_body_custody.schema.json",
+      "sha256": "90b5da84466bc868e5964e41a0c282ab211f7e3b16a5c91da49e299166c1ee55"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/goal-update-canonical-root-20260912/canonical-copy-v2/goal_support.py",
+      "sha256": "0bc45cb9b5f6cd16cea7ec1c0200962a4e245039b66a39f657e2b6d9f70b5abb"
+    }
+  ],
+  "original_storage_codec": "/home/sittingmongoose/PM-Experiments/goal-update-canonical-root-20260912/canonical-copy-v2/runtime/shared/event_value_codec.py",
+  "original_goal_model": "/home/sittingmongoose/PM-Experiments/goal-update-canonical-root-20260912/canonical-copy-v2/runtime/physical/source/model.py"
+}

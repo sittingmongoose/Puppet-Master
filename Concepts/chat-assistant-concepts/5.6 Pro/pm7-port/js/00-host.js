@@ -142,11 +142,24 @@
     if (!cp || typeof MutationObserver !== 'function') return;
     new MutationObserver(function () { if (frame.parentNode !== cp) mount(); }).observe(cp, { childList: true });
   })();
+  /* FO-188: a look picked in the onboarding window is revealed over the app (PM_LOOK_HOLD, the onboarding's
+     11-motion-start.js). The hosts take the new data-theme at once, so the chat's colours change with the page's by CSS;
+     its hooks (app.js redraws the whole chat for a look: 515 ms on the VM, most of it the first read of the page's new
+     layout) wait until the reveal has ended, and then run once for the look the page has then. */
+  var toldTheme = null;
+  function tellTheme() {
+    var t = root.getAttribute('data-theme');
+    if (t === toldTheme) return;
+    toldTheme = t;
+    themeFns.forEach(function (fn) { try { fn(t); } catch (err) { console.error('[pm56] theme hook failed', err); } });
+  }
   if (typeof MutationObserver === 'function') {
+    toldTheme = root.getAttribute('data-theme');
     new MutationObserver(function () {
-      var before = root.getAttribute('data-theme');
-      var t = syncTheme();
-      if (t !== before) themeFns.forEach(function (fn) { try { fn(t); } catch (err) { console.error('[pm56] theme hook failed', err); } });
+      syncTheme();
+      var L = window.PM_LOOK_HOLD;
+      if (L && L.after && L.after(tellTheme)) return;
+      tellTheme();
     }).observe(doc.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
   }
 

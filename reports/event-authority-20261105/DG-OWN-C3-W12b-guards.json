@@ -1,0 +1,3016 @@
+{
+  "schema_version": "1.0.0",
+  "event_type": "goal.cancelled",
+  "whole_root_closure": "NOT_COMPLETE",
+  "guard_isolation": "INPUT_FOR_SHARED_TOOL_NOT_PROVEN_HERE",
+  "scope_note": "Named negatives are observations from finite TEST_ONLY components. A shared ID or dynamic-expression match does not prove every call site or branch. Original schema seams remove one top-level required member; they do not cover every effective schema assertion. Unobserved guards remain open.",
+  "oracle_sha256": "339ee1fa9e1dfccd0dce9ae648bb49a34286d581e75a9dbd31f3e60bc1da6d2e",
+  "counts": {
+    "require_sites": 157,
+    "require_sites_with_candidate_named_negative": 48,
+    "require_sites_without_dedicated_negative": 109,
+    "other_assertion_or_raise_sites": 18,
+    "schema_seam_guard_ids": 215,
+    "observed_guard_ids": 285
+  },
+  "observed_guard_negatives": {
+    "M12/database/goal": [
+      "M12/database/goal"
+    ],
+    "M12/owner_identity/goal": [
+      "M12/substituted_participant/goal"
+    ],
+    "M12/fence/goal/epoch": [
+      "M12/final/goal/epoch"
+    ],
+    "M12/database/host_stop": [
+      "M12/database/host_stop"
+    ],
+    "M12/owner_identity/host_stop": [
+      "M12/substituted_participant/host_stop"
+    ],
+    "M12/fence/host_stop/epoch": [
+      "M12/final/host_stop/epoch"
+    ],
+    "M12/database/plan": [
+      "M12/database/plan"
+    ],
+    "M12/owner_identity/plan": [
+      "M12/substituted_participant/plan"
+    ],
+    "M12/fence/plan/epoch": [
+      "M12/final/plan/epoch"
+    ],
+    "M12/database/workflow": [
+      "M12/database/workflow"
+    ],
+    "M12/owner_identity/workflow": [
+      "M12/substituted_participant/workflow"
+    ],
+    "M12/fence/workflow/epoch": [
+      "M12/final/workflow/epoch"
+    ],
+    "M12/database/scheduler": [
+      "M12/database/scheduler"
+    ],
+    "M12/owner_identity/scheduler": [
+      "M12/substituted_participant/scheduler"
+    ],
+    "M12/fence/scheduler/epoch": [
+      "M12/final/scheduler/epoch"
+    ],
+    "M12/database/sir": [
+      "M12/database/sir"
+    ],
+    "M12/owner_identity/sir": [
+      "M12/substituted_participant/sir"
+    ],
+    "M12/fence/sir/epoch": [
+      "M12/final/sir/epoch"
+    ],
+    "M12/type/root_epoch": [
+      "M12/type/root_epoch/True",
+      "M12/type/root_epoch/'1'",
+      "M12/type/root_epoch/None",
+      "M12/type/root_epoch/[]",
+      "M12/type/root_epoch/{}"
+    ],
+    "M12/fence/root_epoch": [
+      "M12/epoch/root_epoch"
+    ],
+    "M12/type/restore_epoch": [
+      "M12/type/restore_epoch/True",
+      "M12/type/restore_epoch/'1'",
+      "M12/type/restore_epoch/None",
+      "M12/type/restore_epoch/[]",
+      "M12/type/restore_epoch/{}"
+    ],
+    "M12/fence/restore_epoch": [
+      "M12/epoch/restore_epoch"
+    ],
+    "M12/type/hold_epoch": [
+      "M12/type/hold_epoch/True",
+      "M12/type/hold_epoch/'1'",
+      "M12/type/hold_epoch/None",
+      "M12/type/hold_epoch/[]",
+      "M12/type/hold_epoch/{}"
+    ],
+    "M12/fence/hold_epoch": [
+      "M12/epoch/hold_epoch"
+    ],
+    "M12/permission": [
+      "M12/final/permission"
+    ],
+    "M12/content": [
+      "M12/final/content_available"
+    ],
+    "M12/withdrawn": [
+      "M12/final/withdrawn"
+    ],
+    "M12/dispatch": [
+      "M12/dispatch_drift/native_dispatch"
+    ],
+    "M12/registered_writers": [
+      "M12/dispatch_drift/writers"
+    ],
+    "M12/all_native_writers": [
+      "M12/unlisted_native_writer"
+    ],
+    "M12/seven_categories": [
+      "M12/missing_writer_category"
+    ],
+    "M12/whole_candidate": [
+      "M12/complete_destination_splice"
+    ],
+    "M12/effective_stop": [
+      "M12/concurrent_original_stop"
+    ],
+    "M12/native_goal_image_join": [
+      "M12/coherent_snapshot_substitution"
+    ],
+    "M12/result_original_issuance": [
+      "M12/coherent_unissued_result"
+    ],
+    "M12/audit_original_root": [
+      "M12/foreign_result_root"
+    ],
+    "M12/audit_permission": [
+      "M12/result_read/M12/audit_permission"
+    ],
+    "M12/audit_fence": [
+      "M12/result_read/M12/audit_fence"
+    ],
+    "M12/result_bytes": [
+      "M12/result_read/M12/result_bytes"
+    ],
+    "M12/destination_present": [
+      "M12/result_read/M12/destination_present"
+    ],
+    "M12/destination_hash": [
+      "M12/result_read/M12/destination_hash"
+    ],
+    "C12/whole_candidate/latch_and_reserve": [
+      "C12/final_candidate/latch"
+    ],
+    "C12/whole_candidate/commit_receipt": [
+      "C12/final_candidate/commit_receipt"
+    ],
+    "C12/whole_candidate/settle_owner": [
+      "C12/final_candidate/settle"
+    ],
+    "C12/whole_candidate/freeze_event": [
+      "C12/final_candidate/freeze"
+    ],
+    "C12/whole_candidate/publish_control": [
+      "C12/final_candidate/publish"
+    ],
+    "C12/whole_candidate/terminal": [
+      "C12/final_candidate/finish"
+    ],
+    "C12/migration_not_withdrawn": [
+      "C12/withdrawn/source_admitted",
+      "C12/withdrawn/stop_reserved",
+      "C12/withdrawn/receipt_committed",
+      "C12/withdrawn/owners_settled",
+      "C12/withdrawn/event_ready"
+    ],
+    "C12/no_effect_original_phase": [
+      "C12/no_false_no_effect"
+    ],
+    "C12/permission": [
+      "C12/final_source/permission"
+    ],
+    "C12/content": [
+      "C12/final_source/content"
+    ],
+    "C12/current_source": [
+      "C12/final_source/source_current"
+    ],
+    "C12/original_registration": [
+      "C12/final_original_registration"
+    ],
+    "C12/original_binding": [
+      "C12/original_binding"
+    ],
+    "C12/binding_read_original": [
+      "C12/original_binding_read"
+    ],
+    "C12/binding_source_current": [
+      "C12/current_binding_control"
+    ],
+    "M12/live_stop_preimage": [
+      "C12/torn_native_preimage/user_stop_epoch"
+    ],
+    "M12/live_body_control_preimage": [
+      "C12/torn_native_preimage/control_epoch"
+    ],
+    "C12/graph_epoch_type": [
+      "C12/graph_epoch_type/True",
+      "C12/graph_epoch_type/'1'",
+      "C12/graph_epoch_type/None",
+      "C12/graph_epoch_type/[]",
+      "C12/graph_epoch_type/{}"
+    ],
+    "C12/graph_epoch": [
+      "C12/graph_epoch"
+    ],
+    "C12/append_family": [
+      "C12/append/event_type"
+    ],
+    "C12/append_policy": [
+      "C12/append/replay_policy"
+    ],
+    "C12/frozen_producer_original": [
+      "C12/substituted_producer_same_key"
+    ],
+    "C12/producer_owner_birth": [
+      "C12/lower_owner_without_birth"
+    ],
+    "C12/first_row_issuance": [
+      "C12/byte_equal_unissued_first_row"
+    ],
+    "C12/first_raw": [
+      "C12/lower_disclosure/raw"
+    ],
+    "C12/first_receipt": [
+      "C12/lower_disclosure/receipt"
+    ],
+    "C12/first_group": [
+      "C12/lower_disclosure/first_group"
+    ],
+    "C12/replay_original_terminal": [
+      "C12/terminal_custody/owner_result_sha256",
+      "C12/terminal_custody/terminal_authority_ref"
+    ],
+    "C12/terminal_row_issuance": [
+      "C12/coherent_unissued_terminal"
+    ],
+    "schema-seam/required/SourceAudit/schema_id": [
+      "schemas/required/SourceAudit/schema_id"
+    ],
+    "schema-seam/required/SourceAudit/schema_version": [
+      "schemas/required/SourceAudit/schema_version"
+    ],
+    "schema-seam/required/SourceAudit/storage_instance_id": [
+      "schemas/required/SourceAudit/storage_instance_id"
+    ],
+    "schema-seam/required/SourceAudit/project_id": [
+      "schemas/required/SourceAudit/project_id"
+    ],
+    "schema-seam/required/SourceAudit/thread_id": [
+      "schemas/required/SourceAudit/thread_id"
+    ],
+    "schema-seam/required/SourceAudit/goal_id": [
+      "schemas/required/SourceAudit/goal_id"
+    ],
+    "schema-seam/required/SourceAudit/request": [
+      "schemas/required/SourceAudit/request"
+    ],
+    "schema-seam/required/SourceAudit/normalized_identity": [
+      "schemas/required/SourceAudit/normalized_identity"
+    ],
+    "schema-seam/required/SourceAudit/dispatch_id": [
+      "schemas/required/SourceAudit/dispatch_id"
+    ],
+    "schema-seam/required/SourceAudit/command_outcome_ref": [
+      "schemas/required/SourceAudit/command_outcome_ref"
+    ],
+    "schema-seam/required/SourceAudit/nonterminal_outcome": [
+      "schemas/required/SourceAudit/nonterminal_outcome"
+    ],
+    "schema-seam/required/SourceAudit/original_user_cancel_acceptance_ref": [
+      "schemas/required/SourceAudit/original_user_cancel_acceptance_ref"
+    ],
+    "schema-seam/required/SourceAudit/source_authority_ref": [
+      "schemas/required/SourceAudit/source_authority_ref"
+    ],
+    "schema-seam/required/SourceAudit/source_authority_epoch": [
+      "schemas/required/SourceAudit/source_authority_epoch"
+    ],
+    "schema-seam/required/SourceAudit/original_body": [
+      "schemas/required/SourceAudit/original_body"
+    ],
+    "schema-seam/required/SourceAudit/original_execution_binding": [
+      "schemas/required/SourceAudit/original_execution_binding"
+    ],
+    "schema-seam/required/SourceAudit/original_stop_control_sha256": [
+      "schemas/required/SourceAudit/original_stop_control_sha256"
+    ],
+    "schema-seam/required/SourceAudit/captured_user_stop_epoch": [
+      "schemas/required/SourceAudit/captured_user_stop_epoch"
+    ],
+    "schema-seam/required/SourceAudit/captured_continuation_epoch": [
+      "schemas/required/SourceAudit/captured_continuation_epoch"
+    ],
+    "schema-seam/required/SourceAudit/producer_metadata": [
+      "schemas/required/SourceAudit/producer_metadata"
+    ],
+    "schema-seam/required/SourceAudit/captured_at": [
+      "schemas/required/SourceAudit/captured_at"
+    ],
+    "schema-seam/required/NormalizedIdentity/request_ref": [
+      "schemas/required/NormalizedIdentity/request_ref"
+    ],
+    "schema-seam/required/NormalizedIdentity/command_id": [
+      "schemas/required/NormalizedIdentity/command_id"
+    ],
+    "schema-seam/required/NormalizedIdentity/command_instance_id": [
+      "schemas/required/NormalizedIdentity/command_instance_id"
+    ],
+    "schema-seam/required/NormalizedIdentity/operation_id": [
+      "schemas/required/NormalizedIdentity/operation_id"
+    ],
+    "schema-seam/required/NormalizedIdentity/owner_identity": [
+      "schemas/required/NormalizedIdentity/owner_identity"
+    ],
+    "schema-seam/required/NormalizedIdentity/payload_sha256": [
+      "schemas/required/NormalizedIdentity/payload_sha256"
+    ],
+    "schema-seam/required/NormalizedIdentity/idempotency_key": [
+      "schemas/required/NormalizedIdentity/idempotency_key"
+    ],
+    "schema-seam/required/NormalizedIdentity/target_generation": [
+      "schemas/required/NormalizedIdentity/target_generation"
+    ],
+    "schema-seam/required/NormalizedIdentity/dispatch_frame_id": [
+      "schemas/required/NormalizedIdentity/dispatch_frame_id"
+    ],
+    "schema-seam/required/GoalCancelRequestV2/schema_id": [
+      "schemas/required/GoalCancelRequestV2/schema_id"
+    ],
+    "schema-seam/required/GoalCancelRequestV2/schema_version": [
+      "schemas/required/GoalCancelRequestV2/schema_version"
+    ],
+    "schema-seam/required/GoalCancelRequestV2/command_id": [
+      "schemas/required/GoalCancelRequestV2/command_id"
+    ],
+    "schema-seam/required/GoalCancelRequestV2/command_instance_id": [
+      "schemas/required/GoalCancelRequestV2/command_instance_id"
+    ],
+    "schema-seam/required/GoalCancelRequestV2/project_id": [
+      "schemas/required/GoalCancelRequestV2/project_id"
+    ],
+    "schema-seam/required/GoalCancelRequestV2/thread_id": [
+      "schemas/required/GoalCancelRequestV2/thread_id"
+    ],
+    "schema-seam/required/GoalCancelRequestV2/goal_id": [
+      "schemas/required/GoalCancelRequestV2/goal_id"
+    ],
+    "schema-seam/required/GoalCancelRequestV2/expected_revision": [
+      "schemas/required/GoalCancelRequestV2/expected_revision"
+    ],
+    "schema-seam/required/GoalCancelRequestV2/expected_currentness_hash": [
+      "schemas/required/GoalCancelRequestV2/expected_currentness_hash"
+    ],
+    "schema-seam/required/GoalCancelRequestV2/actor_ref": [
+      "schemas/required/GoalCancelRequestV2/actor_ref"
+    ],
+    "schema-seam/required/GoalCancelRequestV2/permission_snapshot_ref": [
+      "schemas/required/GoalCancelRequestV2/permission_snapshot_ref"
+    ],
+    "schema-seam/required/GoalCancelRequestV2/idempotency_key": [
+      "schemas/required/GoalCancelRequestV2/idempotency_key"
+    ],
+    "schema-seam/required/GoalCancelRequestV2/source_surface": [
+      "schemas/required/GoalCancelRequestV2/source_surface"
+    ],
+    "schema-seam/required/GoalCancelRequestV2/return_route_ref": [
+      "schemas/required/GoalCancelRequestV2/return_route_ref"
+    ],
+    "schema-seam/required/StopControl/schema_id": [
+      "schemas/required/StopControl/schema_id"
+    ],
+    "schema-seam/required/StopControl/schema_version": [
+      "schemas/required/StopControl/schema_version"
+    ],
+    "schema-seam/required/StopControl/storage_instance_id": [
+      "schemas/required/StopControl/storage_instance_id"
+    ],
+    "schema-seam/required/StopControl/project_id": [
+      "schemas/required/StopControl/project_id"
+    ],
+    "schema-seam/required/StopControl/thread_id": [
+      "schemas/required/StopControl/thread_id"
+    ],
+    "schema-seam/required/StopControl/goal_id": [
+      "schemas/required/StopControl/goal_id"
+    ],
+    "schema-seam/required/StopControl/user_stop_epoch": [
+      "schemas/required/StopControl/user_stop_epoch"
+    ],
+    "schema-seam/required/StopControl/latched": [
+      "schemas/required/StopControl/latched"
+    ],
+    "schema-seam/required/StopControl/last_original_stop_receipt_ref": [
+      "schemas/required/StopControl/last_original_stop_receipt_ref"
+    ],
+    "schema-seam/required/StopControl/last_original_stop_receipt_sha256": [
+      "schemas/required/StopControl/last_original_stop_receipt_sha256"
+    ],
+    "schema-seam/required/StopControl/original_birth_or_adoption_ref": [
+      "schemas/required/StopControl/original_birth_or_adoption_ref"
+    ],
+    "schema-seam/required/StopControl/continuation_epoch": [
+      "schemas/required/StopControl/continuation_epoch"
+    ],
+    "schema-seam/required/BodyControlV2/schema_id": [
+      "schemas/required/BodyControlV2/schema_id"
+    ],
+    "schema-seam/required/BodyControlV2/storage_instance_id": [
+      "schemas/required/BodyControlV2/storage_instance_id"
+    ],
+    "schema-seam/required/BodyControlV2/project_id": [
+      "schemas/required/BodyControlV2/project_id"
+    ],
+    "schema-seam/required/BodyControlV2/thread_id": [
+      "schemas/required/BodyControlV2/thread_id"
+    ],
+    "schema-seam/required/BodyControlV2/goal_id": [
+      "schemas/required/BodyControlV2/goal_id"
+    ],
+    "schema-seam/required/BodyControlV2/body_key": [
+      "schemas/required/BodyControlV2/body_key"
+    ],
+    "schema-seam/required/BodyControlV2/body_sha256": [
+      "schemas/required/BodyControlV2/body_sha256"
+    ],
+    "schema-seam/required/BodyControlV2/current_revision": [
+      "schemas/required/BodyControlV2/current_revision"
+    ],
+    "schema-seam/required/BodyControlV2/currentness_hash": [
+      "schemas/required/BodyControlV2/currentness_hash"
+    ],
+    "schema-seam/required/BodyControlV2/latest_objective_revision": [
+      "schemas/required/BodyControlV2/latest_objective_revision"
+    ],
+    "schema-seam/required/BodyControlV2/latest_revision_hash": [
+      "schemas/required/BodyControlV2/latest_revision_hash"
+    ],
+    "schema-seam/required/BodyControlV2/origin_key": [
+      "schemas/required/BodyControlV2/origin_key"
+    ],
+    "schema-seam/required/BodyControlV2/control_epoch": [
+      "schemas/required/BodyControlV2/control_epoch"
+    ],
+    "schema-seam/required/BodyControlV2/cancellation_receipt_ref": [
+      "schemas/required/BodyControlV2/cancellation_receipt_ref"
+    ],
+    "schema-seam/required/BodyControlV2/pending": [
+      "schemas/required/BodyControlV2/pending"
+    ],
+    "schema-seam/required/BodyControlV2/cancellation_pending": [
+      "schemas/required/BodyControlV2/cancellation_pending"
+    ],
+    "schema-seam/required/StopIntent/schema_id": [
+      "schemas/required/StopIntent/schema_id"
+    ],
+    "schema-seam/required/StopIntent/schema_version": [
+      "schemas/required/StopIntent/schema_version"
+    ],
+    "schema-seam/required/StopIntent/storage_instance_id": [
+      "schemas/required/StopIntent/storage_instance_id"
+    ],
+    "schema-seam/required/StopIntent/project_id": [
+      "schemas/required/StopIntent/project_id"
+    ],
+    "schema-seam/required/StopIntent/thread_id": [
+      "schemas/required/StopIntent/thread_id"
+    ],
+    "schema-seam/required/StopIntent/goal_id": [
+      "schemas/required/StopIntent/goal_id"
+    ],
+    "schema-seam/required/StopIntent/operation_id": [
+      "schemas/required/StopIntent/operation_id"
+    ],
+    "schema-seam/required/StopIntent/source_audit_sha256": [
+      "schemas/required/StopIntent/source_audit_sha256"
+    ],
+    "schema-seam/required/StopIntent/before_stop_control_sha256": [
+      "schemas/required/StopIntent/before_stop_control_sha256"
+    ],
+    "schema-seam/required/StopIntent/before_user_stop_epoch": [
+      "schemas/required/StopIntent/before_user_stop_epoch"
+    ],
+    "schema-seam/required/StopIntent/after_user_stop_epoch": [
+      "schemas/required/StopIntent/after_user_stop_epoch"
+    ],
+    "schema-seam/required/StopIntent/before_continuation_epoch": [
+      "schemas/required/StopIntent/before_continuation_epoch"
+    ],
+    "schema-seam/required/StopIntent/after_continuation_epoch": [
+      "schemas/required/StopIntent/after_continuation_epoch"
+    ],
+    "schema-seam/required/StopIntent/expected_revision": [
+      "schemas/required/StopIntent/expected_revision"
+    ],
+    "schema-seam/required/StopIntent/expected_currentness_hash": [
+      "schemas/required/StopIntent/expected_currentness_hash"
+    ],
+    "schema-seam/required/StopIntent/original_execution_binding": [
+      "schemas/required/StopIntent/original_execution_binding"
+    ],
+    "schema-seam/required/StopIntent/original_host_owner_epoch": [
+      "schemas/required/StopIntent/original_host_owner_epoch"
+    ],
+    "schema-seam/required/StopIntent/original_accepted_cancel_ref": [
+      "schemas/required/StopIntent/original_accepted_cancel_ref"
+    ],
+    "schema-seam/required/StopIntent/requested_at": [
+      "schemas/required/StopIntent/requested_at"
+    ],
+    "schema-seam/required/StopReceipt/schema_id": [
+      "schemas/required/StopReceipt/schema_id"
+    ],
+    "schema-seam/required/StopReceipt/schema_version": [
+      "schemas/required/StopReceipt/schema_version"
+    ],
+    "schema-seam/required/StopReceipt/storage_instance_id": [
+      "schemas/required/StopReceipt/storage_instance_id"
+    ],
+    "schema-seam/required/StopReceipt/project_id": [
+      "schemas/required/StopReceipt/project_id"
+    ],
+    "schema-seam/required/StopReceipt/thread_id": [
+      "schemas/required/StopReceipt/thread_id"
+    ],
+    "schema-seam/required/StopReceipt/goal_id": [
+      "schemas/required/StopReceipt/goal_id"
+    ],
+    "schema-seam/required/StopReceipt/operation_id": [
+      "schemas/required/StopReceipt/operation_id"
+    ],
+    "schema-seam/required/StopReceipt/stop_intent_sha256": [
+      "schemas/required/StopReceipt/stop_intent_sha256"
+    ],
+    "schema-seam/required/StopReceipt/source_audit_sha256": [
+      "schemas/required/StopReceipt/source_audit_sha256"
+    ],
+    "schema-seam/required/StopReceipt/before_user_stop_epoch": [
+      "schemas/required/StopReceipt/before_user_stop_epoch"
+    ],
+    "schema-seam/required/StopReceipt/after_user_stop_epoch": [
+      "schemas/required/StopReceipt/after_user_stop_epoch"
+    ],
+    "schema-seam/required/StopReceipt/before_continuation_epoch": [
+      "schemas/required/StopReceipt/before_continuation_epoch"
+    ],
+    "schema-seam/required/StopReceipt/after_continuation_epoch": [
+      "schemas/required/StopReceipt/after_continuation_epoch"
+    ],
+    "schema-seam/required/StopReceipt/original_host_transaction_ref": [
+      "schemas/required/StopReceipt/original_host_transaction_ref"
+    ],
+    "schema-seam/required/StopReceipt/committed_at": [
+      "schemas/required/StopReceipt/committed_at"
+    ],
+    "schema-seam/required/StopReceipt/latched": [
+      "schemas/required/StopReceipt/latched"
+    ],
+    "schema-seam/required/CancellationReceipt/schema_id": [
+      "schemas/required/CancellationReceipt/schema_id"
+    ],
+    "schema-seam/required/CancellationReceipt/schema_version": [
+      "schemas/required/CancellationReceipt/schema_version"
+    ],
+    "schema-seam/required/CancellationReceipt/storage_instance_id": [
+      "schemas/required/CancellationReceipt/storage_instance_id"
+    ],
+    "schema-seam/required/CancellationReceipt/project_id": [
+      "schemas/required/CancellationReceipt/project_id"
+    ],
+    "schema-seam/required/CancellationReceipt/thread_id": [
+      "schemas/required/CancellationReceipt/thread_id"
+    ],
+    "schema-seam/required/CancellationReceipt/goal_id": [
+      "schemas/required/CancellationReceipt/goal_id"
+    ],
+    "schema-seam/required/CancellationReceipt/operation_id": [
+      "schemas/required/CancellationReceipt/operation_id"
+    ],
+    "schema-seam/required/CancellationReceipt/cancellation_id": [
+      "schemas/required/CancellationReceipt/cancellation_id"
+    ],
+    "schema-seam/required/CancellationReceipt/source_audit_sha256": [
+      "schemas/required/CancellationReceipt/source_audit_sha256"
+    ],
+    "schema-seam/required/CancellationReceipt/original_revision": [
+      "schemas/required/CancellationReceipt/original_revision"
+    ],
+    "schema-seam/required/CancellationReceipt/original_currentness_hash": [
+      "schemas/required/CancellationReceipt/original_currentness_hash"
+    ],
+    "schema-seam/required/CancellationReceipt/stop_receipt_ref": [
+      "schemas/required/CancellationReceipt/stop_receipt_ref"
+    ],
+    "schema-seam/required/CancellationReceipt/stop_receipt_sha256": [
+      "schemas/required/CancellationReceipt/stop_receipt_sha256"
+    ],
+    "schema-seam/required/CancellationReceipt/user_stop_epoch": [
+      "schemas/required/CancellationReceipt/user_stop_epoch"
+    ],
+    "schema-seam/required/CancellationReceipt/cancel_reason": [
+      "schemas/required/CancellationReceipt/cancel_reason"
+    ],
+    "schema-seam/required/CancellationReceipt/accepted_at": [
+      "schemas/required/CancellationReceipt/accepted_at"
+    ],
+    "schema-seam/required/OwnerSettlement/kind": [
+      "schemas/required/OwnerSettlement/kind"
+    ],
+    "schema-seam/required/OwnerSettlement/original_execution_binding": [
+      "schemas/required/OwnerSettlement/original_execution_binding"
+    ],
+    "schema-seam/required/OwnerSettlement/original_scope_proof_ref": [
+      "schemas/required/OwnerSettlement/original_scope_proof_ref"
+    ],
+    "schema-seam/required/OwnerSettlement/original_scope_proof_sha256": [
+      "schemas/required/OwnerSettlement/original_scope_proof_sha256"
+    ],
+    "schema-seam/required/OwnerSettlement/original_owner_settlement_ref": [
+      "schemas/required/OwnerSettlement/original_owner_settlement_ref"
+    ],
+    "schema-seam/required/OwnerSettlement/original_owner_settlement_sha256": [
+      "schemas/required/OwnerSettlement/original_owner_settlement_sha256"
+    ],
+    "schema-seam/required/OwnerSettlement/original_schedule_quota_invalidation_ref": [
+      "schemas/required/OwnerSettlement/original_schedule_quota_invalidation_ref"
+    ],
+    "schema-seam/required/OwnerSettlement/original_schedule_quota_invalidation_sha256": [
+      "schemas/required/OwnerSettlement/original_schedule_quota_invalidation_sha256"
+    ],
+    "schema-seam/required/ProducerInput/schema_id": [
+      "schemas/required/ProducerInput/schema_id"
+    ],
+    "schema-seam/required/ProducerInput/schema_version": [
+      "schemas/required/ProducerInput/schema_version"
+    ],
+    "schema-seam/required/ProducerInput/scope_kind": [
+      "schemas/required/ProducerInput/scope_kind"
+    ],
+    "schema-seam/required/ProducerInput/event_id": [
+      "schemas/required/ProducerInput/event_id"
+    ],
+    "schema-seam/required/ProducerInput/event_type": [
+      "schemas/required/ProducerInput/event_type"
+    ],
+    "schema-seam/required/ProducerInput/project_id": [
+      "schemas/required/ProducerInput/project_id"
+    ],
+    "schema-seam/required/ProducerInput/thread_id": [
+      "schemas/required/ProducerInput/thread_id"
+    ],
+    "schema-seam/required/ProducerInput/run_id": [
+      "schemas/required/ProducerInput/run_id"
+    ],
+    "schema-seam/required/ProducerInput/node_id": [
+      "schemas/required/ProducerInput/node_id"
+    ],
+    "schema-seam/required/ProducerInput/attempt_id": [
+      "schemas/required/ProducerInput/attempt_id"
+    ],
+    "schema-seam/required/ProducerInput/actor_ref": [
+      "schemas/required/ProducerInput/actor_ref"
+    ],
+    "schema-seam/required/ProducerInput/requested_account_ref": [
+      "schemas/required/ProducerInput/requested_account_ref"
+    ],
+    "schema-seam/required/ProducerInput/effective_account_ref": [
+      "schemas/required/ProducerInput/effective_account_ref"
+    ],
+    "schema-seam/required/ProducerInput/occurred_at_utc": [
+      "schemas/required/ProducerInput/occurred_at_utc"
+    ],
+    "schema-seam/required/ProducerInput/producer_sequence_id": [
+      "schemas/required/ProducerInput/producer_sequence_id"
+    ],
+    "schema-seam/required/ProducerInput/correlation_id": [
+      "schemas/required/ProducerInput/correlation_id"
+    ],
+    "schema-seam/required/ProducerInput/causation_event_id": [
+      "schemas/required/ProducerInput/causation_event_id"
+    ],
+    "schema-seam/required/ProducerInput/parent_event_id": [
+      "schemas/required/ProducerInput/parent_event_id"
+    ],
+    "schema-seam/required/ProducerInput/idempotency_key": [
+      "schemas/required/ProducerInput/idempotency_key"
+    ],
+    "schema-seam/required/ProducerInput/payload_schema_id": [
+      "schemas/required/ProducerInput/payload_schema_id"
+    ],
+    "schema-seam/required/ProducerInput/payload_ref": [
+      "schemas/required/ProducerInput/payload_ref"
+    ],
+    "schema-seam/required/ProducerInput/redaction_profile": [
+      "schemas/required/ProducerInput/redaction_profile"
+    ],
+    "schema-seam/required/ProducerInput/replay_policy": [
+      "schemas/required/ProducerInput/replay_policy"
+    ],
+    "schema-seam/required/ProducerInput/migration": [
+      "schemas/required/ProducerInput/migration"
+    ],
+    "schema-seam/required/ProducerInput/payload": [
+      "schemas/required/ProducerInput/payload"
+    ],
+    "schema-seam/required/OriginalPublication/event_id": [
+      "schemas/required/OriginalPublication/event_id"
+    ],
+    "schema-seam/required/OriginalPublication/first_append_receipt": [
+      "schemas/required/OriginalPublication/first_append_receipt"
+    ],
+    "schema-seam/required/OriginalPublication/original_append_result": [
+      "schemas/required/OriginalPublication/original_append_result"
+    ],
+    "schema-seam/required/OriginalPublication/original_event_value_commitment": [
+      "schemas/required/OriginalPublication/original_event_value_commitment"
+    ],
+    "schema-seam/required/ControlPublication/schema_id": [
+      "schemas/required/ControlPublication/schema_id"
+    ],
+    "schema-seam/required/ControlPublication/schema_version": [
+      "schemas/required/ControlPublication/schema_version"
+    ],
+    "schema-seam/required/ControlPublication/storage_instance_id": [
+      "schemas/required/ControlPublication/storage_instance_id"
+    ],
+    "schema-seam/required/ControlPublication/project_id": [
+      "schemas/required/ControlPublication/project_id"
+    ],
+    "schema-seam/required/ControlPublication/thread_id": [
+      "schemas/required/ControlPublication/thread_id"
+    ],
+    "schema-seam/required/ControlPublication/goal_id": [
+      "schemas/required/ControlPublication/goal_id"
+    ],
+    "schema-seam/required/ControlPublication/operation_id": [
+      "schemas/required/ControlPublication/operation_id"
+    ],
+    "schema-seam/required/ControlPublication/source_audit_sha256": [
+      "schemas/required/ControlPublication/source_audit_sha256"
+    ],
+    "schema-seam/required/ControlPublication/cancellation_receipt_ref": [
+      "schemas/required/ControlPublication/cancellation_receipt_ref"
+    ],
+    "schema-seam/required/ControlPublication/cancellation_receipt_sha256": [
+      "schemas/required/ControlPublication/cancellation_receipt_sha256"
+    ],
+    "schema-seam/required/ControlPublication/original_publication": [
+      "schemas/required/ControlPublication/original_publication"
+    ],
+    "schema-seam/required/ControlPublication/before_control_sha256": [
+      "schemas/required/ControlPublication/before_control_sha256"
+    ],
+    "schema-seam/required/ControlPublication/after_control_sha256": [
+      "schemas/required/ControlPublication/after_control_sha256"
+    ],
+    "schema-seam/required/ControlPublication/before_control_epoch": [
+      "schemas/required/ControlPublication/before_control_epoch"
+    ],
+    "schema-seam/required/ControlPublication/after_control_epoch": [
+      "schemas/required/ControlPublication/after_control_epoch"
+    ],
+    "schema-seam/required/ControlPublication/body_semantic_sha256": [
+      "schemas/required/ControlPublication/body_semantic_sha256"
+    ],
+    "schema-seam/required/ControlPublication/revision": [
+      "schemas/required/ControlPublication/revision"
+    ],
+    "schema-seam/required/ControlPublication/currentness_hash": [
+      "schemas/required/ControlPublication/currentness_hash"
+    ],
+    "schema-seam/required/ControlPublication/original_owner_settlement": [
+      "schemas/required/ControlPublication/original_owner_settlement"
+    ],
+    "schema-seam/required/ControlPublication/original_transaction_ref": [
+      "schemas/required/ControlPublication/original_transaction_ref"
+    ],
+    "schema-seam/required/ControlPublication/published_at": [
+      "schemas/required/ControlPublication/published_at"
+    ],
+    "schema-seam/required/ControlPublication/active_projection_removed": [
+      "schemas/required/ControlPublication/active_projection_removed"
+    ],
+    "schema-seam/required/ControlPublication/body_history_unchanged": [
+      "schemas/required/ControlPublication/body_history_unchanged"
+    ],
+    "schema-seam/required/TerminalInput/source_audit": [
+      "schemas/required/TerminalInput/source_audit"
+    ],
+    "schema-seam/required/TerminalInput/selected_progress": [
+      "schemas/required/TerminalInput/selected_progress"
+    ],
+    "schema-seam/required/TerminalInput/selected_progress_selector": [
+      "schemas/required/TerminalInput/selected_progress_selector"
+    ],
+    "schema-seam/required/TerminalInput/selected_progress_sha256": [
+      "schemas/required/TerminalInput/selected_progress_sha256"
+    ],
+    "schema-seam/required/TerminalInput/original_current_outcome": [
+      "schemas/required/TerminalInput/original_current_outcome"
+    ],
+    "schema-seam/required/TerminalInput/result": [
+      "schemas/required/TerminalInput/result"
+    ],
+    "schema-seam/required/TerminalInput/owner_result_ref": [
+      "schemas/required/TerminalInput/owner_result_ref"
+    ],
+    "schema-seam/required/TerminalInput/owner_result_sha256": [
+      "schemas/required/TerminalInput/owner_result_sha256"
+    ],
+    "schema-seam/required/TerminalInput/expected_sir_owner_epoch": [
+      "schemas/required/TerminalInput/expected_sir_owner_epoch"
+    ],
+    "schema-seam/required/TerminalPrepared/input_sha256": [
+      "schemas/required/TerminalPrepared/input_sha256"
+    ],
+    "schema-seam/required/TerminalPrepared/candidate_terminal": [
+      "schemas/required/TerminalPrepared/candidate_terminal"
+    ],
+    "schema-seam/required/TerminalPrepared/actual_original_sir_participant_ref": [
+      "schemas/required/TerminalPrepared/actual_original_sir_participant_ref"
+    ],
+    "schema-seam/required/TerminalPrepared/expected_original_source_sha256": [
+      "schemas/required/TerminalPrepared/expected_original_source_sha256"
+    ],
+    "schema-seam/required/TerminalPrepared/publicly_released": [
+      "schemas/required/TerminalPrepared/publicly_released"
+    ],
+    "schema-seam/required/Terminal/committed_at": [
+      "schemas/required/Terminal/committed_at"
+    ],
+    "schema-seam/required/Terminal/goal_id": [
+      "schemas/required/Terminal/goal_id"
+    ],
+    "schema-seam/required/Terminal/kind": [
+      "schemas/required/Terminal/kind"
+    ],
+    "schema-seam/required/Terminal/operation_id": [
+      "schemas/required/Terminal/operation_id"
+    ],
+    "schema-seam/required/Terminal/outcome": [
+      "schemas/required/Terminal/outcome"
+    ],
+    "schema-seam/required/Terminal/owner_result_ref": [
+      "schemas/required/Terminal/owner_result_ref"
+    ],
+    "schema-seam/required/Terminal/owner_result_sha256": [
+      "schemas/required/Terminal/owner_result_sha256"
+    ],
+    "schema-seam/required/Terminal/project_id": [
+      "schemas/required/Terminal/project_id"
+    ],
+    "schema-seam/required/Terminal/response": [
+      "schemas/required/Terminal/response"
+    ],
+    "schema-seam/required/Terminal/result": [
+      "schemas/required/Terminal/result"
+    ],
+    "schema-seam/required/Terminal/schema_id": [
+      "schemas/required/Terminal/schema_id"
+    ],
+    "schema-seam/required/Terminal/schema_version": [
+      "schemas/required/Terminal/schema_version"
+    ],
+    "schema-seam/required/Terminal/source_audit_sha256": [
+      "schemas/required/Terminal/source_audit_sha256"
+    ],
+    "schema-seam/required/Terminal/storage_instance_id": [
+      "schemas/required/Terminal/storage_instance_id"
+    ],
+    "schema-seam/required/Terminal/terminal_authority_ref": [
+      "schemas/required/Terminal/terminal_authority_ref"
+    ],
+    "schema-seam/required/Terminal/terminal_progress_selector": [
+      "schemas/required/Terminal/terminal_progress_selector"
+    ],
+    "schema-seam/required/Terminal/terminal_progress_sha256": [
+      "schemas/required/Terminal/terminal_progress_sha256"
+    ],
+    "schema-seam/required/Terminal/thread_id": [
+      "schemas/required/Terminal/thread_id"
+    ]
+  },
+  "require_sites": [
+    {
+      "path": "scripts/pm_goal_own_c3_w12b_cancel.py",
+      "line": 44,
+      "guard_expression": "'C12/append_available'",
+      "predicate": "self.available is True",
+      "literal_guard": "C12/append_available",
+      "candidate_observed_guard_ids": [],
+      "negative_case_ids": [],
+      "witness_status": "NO_DEDICATED_NEGATIVE_RECORDED",
+      "scope": "runtime_or_setup_guard"
+    },
+    {
+      "path": "scripts/pm_goal_own_c3_w12b_cancel.py",
+      "line": 45,
+      "guard_expression": "'C12/reservation_absent'",
+      "predicate": "self.reservation is None",
+      "literal_guard": "C12/reservation_absent",
+      "candidate_observed_guard_ids": [],
+      "negative_case_ids": [],
+      "witness_status": "NO_DEDICATED_NEGATIVE_RECORDED",
+      "scope": "runtime_or_setup_guard"
+    },
+    {
+      "path": "scripts/pm_goal_own_c3_w12b_cancel.py",
+      "line": 55,
+      "guard_expression": "'C12/producer_owner_birth'",
+      "predicate": "source in _GRAPH_BIRTHS and source.append_owner is self",
+      "literal_guard": "C12/producer_owner_birth",
+      "candidate_observed_guard_ids": [
+        "C12/producer_owner_birth"
+      ],
+      "negative_case_ids": [
+        "C12/lower_owner_without_birth"
+      ],
+      "witness_status": "NAMED_NEGATIVE_OBSERVED_NOT_ISOLATED",
+      "scope": "runtime_or_setup_guard"
+    },
+    {
+      "path": "scripts/pm_goal_own_c3_w12b_cancel.py",
+      "line": 59,
+      "guard_expression": "'C12/frozen_progress_issued'",
+      "predicate": "raw is not None and _ISSUED_WRAPPERS.get(source, {}).get(key) == raw",
+      "literal_guard": "C12/frozen_progress_issued",
+      "candidate_observed_guard_ids": [],
+      "negative_case_ids": [],
+      "witness_status": "NO_DEDICATED_NEGATIVE_RECORDED",
+      "scope": "runtime_or_setup_guard"
+    },
+    {
+      "path": "scripts/pm_goal_own_c3_w12b_cancel.py",
+      "line": 61,
+      "guard_expression": "'C12/frozen_progress_phase'",
+      "predicate": "record['phase'] == 'event_ready'",
+      "literal_guard": "C12/frozen_progress_phase",
+      "candidate_observed_guard_ids": [],
+      "negative_case_ids": [],
+      "witness_status": "NO_DEDICATED_NEGATIVE_RECORDED",
+      "scope": "runtime_or_setup_guard"
+    },
+    {
+      "path": "scripts/pm_goal_own_c3_w12b_cancel.py",
+      "line": 62,
+      "guard_expression": "'C12/frozen_producer_original'",
+      "predicate": "equal(producer, record['producer_input'])",
+      "literal_guard": "C12/frozen_producer_original",
+      "candidate_observed_guard_ids": [
+        "C12/frozen_producer_original"
+      ],
+      "negative_case_ids": [
+        "C12/substituted_producer_same_key"
+      ],
+      "witness_status": "NAMED_NEGATIVE_OBSERVED_NOT_ISOLATED",
+      "scope": "runtime_or_setup_guard"
+    },
+    {
+      "path": "scripts/pm_goal_own_c3_w12b_cancel.py",
+      "line": 65,
+      "guard_expression": "'C12/append_available'",
+      "predicate": "self.available is True",
+      "literal_guard": "C12/append_available",
+      "candidate_observed_guard_ids": [],
+      "negative_case_ids": [],
+      "witness_status": "NO_DEDICATED_NEGATIVE_RECORDED",
+      "scope": "runtime_or_setup_guard"
+    },
+    {
+      "path": "scripts/pm_goal_own_c3_w12b_cancel.py",
+      "line": 66,
+      "guard_expression": "'C12/append_family'",
+      "predicate": "producer['event_type'] == 'goal.cancelled'",
+      "literal_guard": "C12/append_family",
+      "candidate_observed_guard_ids": [
+        "C12/append_family"
+      ],
+      "negative_case_ids": [
+        "C12/append/event_type"
+      ],
+      "witness_status": "NAMED_NEGATIVE_OBSERVED_NOT_ISOLATED",
+      "scope": "runtime_or_setup_guard"
+    },
+    {
+      "path": "scripts/pm_goal_own_c3_w12b_cancel.py",
+      "line": 67,
+      "guard_expression": "'C12/append_policy'",
+      "predicate": "producer['replay_policy'] == 'dedupe_by_idempotency_key'",
+      "literal_guard": "C12/append_policy",
+      "candidate_observed_guard_ids": [
+        "C12/append_policy"
+      ],
+      "negative_case_ids": [
+        "C12/append/replay_policy"
+      ],
+      "witness_status": "NAMED_NEGATIVE_OBSERVED_NOT_ISOLATED",
+      "scope": "runtime_or_setup_guard"
+    },
+    {
+      "path": "scripts/pm_goal_own_c3_w12b_cancel.py",
+      "line": 74,
+      "guard_expression": "'C12/semantic_retry'",
+      "predicate": "equal({k: producer[k] for k in SEMANTIC_FIELDS}, original['semantic'])",
+      "literal_guard": "C12/semantic_retry",
+      "candidate_observed_guard_ids": [],
+      "negative_case_ids": [],
+      "witness_status": "NO_DEDICATED_NEGATIVE_RECORDED",
+      "scope": "runtime_or_setup_guard"
+    },
+    {
+      "path": "scripts/pm_goal_own_c3_w12b_cancel.py",
+      "line": 81,
+      "guard_expression": "'C12/append_available'",
+      "predicate": "self.available is True",
+      "literal_guard": "C12/append_available",
+      "candidate_observed_guard_ids": [],
+      "negative_case_ids": [],
+      "witness_status": "NO_DEDICATED_NEGATIVE_RECORDED",
+      "scope": "runtime_or_setup_guard"
+    },
+    {
+      "path": "scripts/pm_goal_own_c3_w12b_cancel.py",
+      "line": 82,
+      "guard_expression": "'C12/append_owner'",
+      "predicate": "equal(before, [self.generation, self.epoch])",
+      "literal_guard": "C12/append_owner",
+      "candidate_observed_guard_ids": [],
+      "negative_case_ids": [],
+      "witness_status": "NO_DEDICATED_NEGATIVE_RECORDED",
+      "scope": "runtime_or_setup_guard"
+    },
+    {
+      "path": "scripts/pm_goal_own_c3_w12b_cancel.py",
+      "line": 83,
+      "guard_expression": "'C12/reservation'",
+      "predicate": "equal(reservation, self.reservation)",
+      "literal_guard": "C12/reservation",
+      "candidate_observed_guard_ids": [],
+      "negative_case_ids": [],
+      "witness_status": "NO_DEDICATED_NEGATIVE_RECORDED",
+      "scope": "runtime_or_setup_guard"
+    },
+    {
+      "path": "scripts/pm_goal_own_c3_w12b_cancel.py",
+      "line": 84,
+      "guard_expression": "'C12/fixed_producer'",
+      "predicate": "equal(candidate, fixed)",
+      "literal_guard": "C12/fixed_producer",
+      "candidate_observed_guard_ids": [],
+      "negative_case_ids": [],
+      "witness_status": "NO_DEDICATED_NEGATIVE_RECORDED",
+      "scope": "runtime_or_setup_guard"
+    },
+    {
+      "path": "scripts/pm_goal_own_c3_w12b_cancel.py",
+      "line": 85,
+      "guard_expression": "'C12/selector'",
+      "predicate": "candidate['payload_schema_id'] == self.registry_row['payload_schema_id']",
+      "literal_guard": "C12/selector",
+      "candidate_observed_guard_ids": [],
+      "negative_case_ids": [],
+      "witness_status": "NO_DEDICATED_NEGATIVE_RECORDED",
+      "scope": "runtime_or_setup_guard"
+    },
+    {
+      "path": "scripts/pm_goal_own_c3_w12b_cancel.py",
+      "line": 92,
+      "guard_expression": "'C12/whole_event_schema'",
+      "predicate": "not list(self.event_validator.iter_errors(event))",
+      "literal_guard": "C12/whole_event_schema",
+      "candidate_observed_guard_ids": [],
+      "negative_case_ids": [],
+      "witness_status": "NO_DEDICATED_NEGATIVE_RECORDED",
+      "scope": "runtime_or_setup_guard"
+    },
+    {
+      "path": "scripts/pm_goal_own_c3_w12b_cancel.py",
+      "line": 94,
+      "guard_expression": "'C12/event_size'",
+      "predicate": "len(raw) <= 16384",
+      "literal_guard": "C12/event_size",
+      "candidate_observed_guard_ids": [],
+      "negative_case_ids": [],
+      "witness_status": "NO_DEDICATED_NEGATIVE_RECORDED",
+      "scope": "runtime_or_setup_guard"
+    },
+    {
+      "path": "scripts/pm_goal_own_c3_w12b_cancel.py",
+      "line": 122,
+      "guard_expression": "'C12/original_append_issued'",
+      "predicate": "producer['idempotency_key'] in self.issued",
+      "literal_guard": "C12/original_append_issued",
+      "candidate_observed_guard_ids": [],
+      "negative_case_ids": [],
+      "witness_status": "NO_DEDICATED_NEGATIVE_RECORDED",
+      "scope": "runtime_or_setup_guard"
+    },
+    {
+      "path": "scripts/pm_goal_own_c3_w12b_cancel.py",
+      "line": 126,
+      "guard_expression": "'C12/read_access'",
+      "predicate": "self.available is True",
+      "literal_guard": "C12/read_access",
+      "candidate_observed_guard_ids": [],
+      "negative_case_ids": [],
+      "witness_status": "NO_DEDICATED_NEGATIVE_RECORDED",
+      "scope": "runtime_or_setup_guard"
+    },
+    {
+      "path": "scripts/pm_goal_own_c3_w12b_cancel.py",
+      "line": 128,
+      "guard_expression": "'C12/first_row_issuance'",
+      "predicate": "origin is not None and self.issued.get(producer['idempotency_key']) is origin[0] and equal(self.issued[producer['idempotency_key']], origin[1])",
+      "literal_guard": "C12/first_row_issuance",
+      "candidate_observed_guard_ids": [
+        "C12/first_row_issuance"
+      ],
+      "negative_case_ids": [
+        "C12/byte_equal_unissued_first_row"
+      ],
+      "witness_status": "NAMED_NEGATIVE_OBSERVED_NOT_ISOLATED",
+      "scope": "runtime_or_setup_guard"
+    },
+    {
+      "path": "scripts/pm_goal_own_c3_w12b_cancel.py",
+      "line": 130,
+      "guard_expression": "'C12/first_publication'",
+      "predicate": "equal(publication, issued['publication'])",
+      "literal_guard": "C12/first_publication",
+      "candidate_observed_guard_ids": [],
+      "negative_case_ids": [],
+      "witness_status": "NO_DEDICATED_NEGATIVE_RECORDED",
+      "scope": "runtime_or_setup_guard"
+    },
+    {
+      "path": "scripts/pm_goal_own_c3_w12b_cancel.py",
+      "line": 131,
+      "guard_expression": "'C12/first_event'",
+      "predicate": "equal(candidate['event'], issued['event'])",
+      "literal_guard": "C12/first_event",
+      "candidate_observed_guard_ids": [],
+      "negative_case_ids": [],
+      "witness_status": "NO_DEDICATED_NEGATIVE_RECORDED",
+      "scope": "runtime_or_setup_guard"
+    },
+    {
+      "path": "scripts/pm_goal_own_c3_w12b_cancel.py",
+      "line": 132,
+      "guard_expression": "'C12/first_raw'",
+      "predicate": "candidate['raw'] == self.codec.storage_pack(candidate['event']) == issued['raw']",
+      "literal_guard": "C12/first_raw",
+      "candidate_observed_guard_ids": [
+        "C12/first_raw"
+      ],
+      "negative_case_ids": [
+        "C12/lower_disclosure/raw"
+      ],
+      "witness_status": "NAMED_NEGATIVE_OBSERVED_NOT_ISOLATED",
+      "scope": "runtime_or_setup_guard"
+    },
+    {
+      "path": "scripts/pm_goal_own_c3_w12b_cancel.py",
+      "line": 133,
+      "guard_expression": "'C12/first_receipt'",
+      "predicate": "equal(candidate['receipt'], issued['receipt'])",
+      "literal_guard": "C12/first_receipt",
+      "candidate_observed_guard_ids": [
+        "C12/first_receipt"
+      ],
+      "negative_case_ids": [
+        "C12/lower_disclosure/receipt"
+      ],
+      "witness_status": "NAMED_NEGATIVE_OBSERVED_NOT_ISOLATED",
+      "scope": "runtime_or_setup_guard"
+    },
+    {
+      "path": "scripts/pm_goal_own_c3_w12b_cancel.py",
+      "line": 134,
+      "guard_expression": "'C12/first_group'",
+      "predicate": "equal(candidate['first_group'], issued['first_group'])",
+      "literal_guard": "C12/first_group",
+      "candidate_observed_guard_ids": [
+        "C12/first_group"
+      ],
+      "negative_case_ids": [
+        "C12/lower_disclosure/first_group"
+      ],
+      "witness_status": "NAMED_NEGATIVE_OBSERVED_NOT_ISOLATED",
+      "scope": "runtime_or_setup_guard"
+    },
+    {
+      "path": "scripts/pm_goal_own_c3_w12b_cancel.py",
+      "line": 135,
+      "guard_expression": "'C12/group_members'",
+      "predicate": "candidate['first_group']['members'] == [producer['event_id']]",
+      "literal_guard": "C12/group_members",
+      "candidate_observed_guard_ids": [],
+      "negative_case_ids": [],
+      "witness_status": "NO_DEDICATED_NEGATIVE_RECORDED",
+      "scope": "runtime_or_setup_guard"
+    },
+    {
+      "path": "scripts/pm_goal_own_c3_w12b_cancel.py",
+      "line": 136,
+      "guard_expression": "'C12/value_commitment'",
+      "predicate": "equal(self.commitment(candidate['event']), publication['original_event_value_commitment'])",
+      "literal_guard": "C12/value_commitment",
+      "candidate_observed_guard_ids": [],
+      "negative_case_ids": [],
+      "witness_status": "NO_DEDICATED_NEGATIVE_RECORDED",
+      "scope": "runtime_or_setup_guard"
+    },
+    {
+      "path": "scripts/pm_goal_own_c3_w12b_cancel.py",
+      "line": 138,
+      "guard_expression": "'C12/template_keyset'",
+      "predicate": "event_template.keys() == producer.keys()",
+      "literal_guard": "C12/template_keyset",
+      "candidate_observed_guard_ids": [],
+      "negative_case_ids": [],
+      "witness_status": "NO_DEDICATED_NEGATIVE_RECORDED",
+      "scope": "runtime_or_setup_guard"
+    },
+    {
+      "path": "scripts/pm_goal_own_c3_w12b_cancel.py",
+      "line": 139,
+      "guard_expression": "'C12/template'",
+      "predicate": "equal(event_template, producer)",
+      "literal_guard": "C12/template",
+      "candidate_observed_guard_ids": [],
+      "negative_case_ids": [],
+      "witness_status": "NO_DEDICATED_NEGATIVE_RECORDED",
+      "scope": "runtime_or_setup_guard"
+    },
+    {
+      "path": "scripts/pm_goal_own_c3_w12b_cancel.py",
+      "line": 140,
+      "guard_expression": "'C12/storage_identity'",
+      "predicate": "candidate['first_group']['storage_instance_id'] == self.storage",
+      "literal_guard": "C12/storage_identity",
+      "candidate_observed_guard_ids": [],
+      "negative_case_ids": [],
+      "witness_status": "NO_DEDICATED_NEGATIVE_RECORDED",
+      "scope": "runtime_or_setup_guard"
+    },
+    {
+      "path": "scripts/pm_goal_own_c3_w12b_cancel.py",
+      "line": 264,
+      "guard_expression": "'C12/permission'",
+      "predicate": "self.permission is True",
+      "literal_guard": "C12/permission",
+      "candidate_observed_guard_ids": [
+        "C12/permission"
+      ],
+      "negative_case_ids": [
+        "C12/final_source/permission"
+      ],
+      "witness_status": "NAMED_NEGATIVE_OBSERVED_NOT_ISOLATED",
+      "scope": "runtime_or_setup_guard"
+    },
+    {
+      "path": "scripts/pm_goal_own_c3_w12b_cancel.py",
+      "line": 265,
+      "guard_expression": "'C12/content'",
+      "predicate": "self.content is True",
+      "literal_guard": "C12/content",
+      "candidate_observed_guard_ids": [
+        "C12/content"
+      ],
+      "negative_case_ids": [
+        "C12/final_source/content"
+      ],
+      "witness_status": "NAMED_NEGATIVE_OBSERVED_NOT_ISOLATED",
+      "scope": "runtime_or_setup_guard"
+    },
+    {
+      "path": "scripts/pm_goal_own_c3_w12b_cancel.py",
+      "line": 266,
+      "guard_expression": "'C12/graph_epoch_type'",
+      "predicate": "type(self.epoch) is int",
+      "literal_guard": "C12/graph_epoch_type",
+      "candidate_observed_guard_ids": [
+        "C12/graph_epoch_type"
+      ],
+      "negative_case_ids": [
+        "C12/graph_epoch_type/'1'",
+        "C12/graph_epoch_type/None",
+        "C12/graph_epoch_type/True",
+        "C12/graph_epoch_type/[]",
+        "C12/graph_epoch_type/{}"
+      ],
+      "witness_status": "NAMED_NEGATIVE_OBSERVED_NOT_ISOLATED",
+      "scope": "runtime_or_setup_guard"
+    },
+    {
+      "path": "scripts/pm_goal_own_c3_w12b_cancel.py",
+      "line": 268,
+      "guard_expression": "'C12/graph_epoch'",
+      "predicate": "self.epoch == self.source['source_authority_epoch']",
+      "literal_guard": "C12/graph_epoch",
+      "candidate_observed_guard_ids": [
+        "C12/graph_epoch"
+      ],
+      "negative_case_ids": [
+        "C12/graph_epoch"
+      ],
+      "witness_status": "NAMED_NEGATIVE_OBSERVED_NOT_ISOLATED",
+      "scope": "runtime_or_setup_guard"
+    },
+    {
+      "path": "scripts/pm_goal_own_c3_w12b_cancel.py",
+      "line": 269,
+      "guard_expression": "'C12/migration_not_withdrawn'",
+      "predicate": "self.migration.withdrawn is False",
+      "literal_guard": "C12/migration_not_withdrawn",
+      "candidate_observed_guard_ids": [
+        "C12/migration_not_withdrawn"
+      ],
+      "negative_case_ids": [
+        "C12/withdrawn/event_ready",
+        "C12/withdrawn/owners_settled",
+        "C12/withdrawn/receipt_committed",
+        "C12/withdrawn/source_admitted",
+        "C12/withdrawn/stop_reserved"
+      ],
+      "witness_status": "NAMED_NEGATIVE_OBSERVED_NOT_ISOLATED",
+      "scope": "runtime_or_setup_guard"
+    },
+    {
+      "path": "scripts/pm_goal_own_c3_w12b_cancel.py",
+      "line": 272,
+      "guard_expression": "'C12/original_registration'",
+      "predicate": "equal(self.registration_fence, current_registration)",
+      "literal_guard": "C12/original_registration",
+      "candidate_observed_guard_ids": [
+        "C12/original_registration"
+      ],
+      "negative_case_ids": [
+        "C12/final_original_registration"
+      ],
+      "witness_status": "NAMED_NEGATIVE_OBSERVED_NOT_ISOLATED",
+      "scope": "runtime_or_setup_guard"
+    },
+    {
+      "path": "scripts/pm_goal_own_c3_w12b_cancel.py",
+      "line": 274,
+      "guard_expression": "'C12/enrolled'",
+      "predicate": "result['disposition'] == 'enrolled'",
+      "literal_guard": "C12/enrolled",
+      "candidate_observed_guard_ids": [],
+      "negative_case_ids": [],
+      "witness_status": "NO_DEDICATED_NEGATIVE_RECORDED",
+      "scope": "runtime_or_setup_guard"
+    },
+    {
+      "path": "scripts/pm_goal_own_c3_w12b_cancel.py",
+      "line": 276,
+      "guard_expression": "'C12/current_source'",
+      "predicate": "self.source_current is True",
+      "literal_guard": "C12/current_source",
+      "candidate_observed_guard_ids": [
+        "C12/current_source"
+      ],
+      "negative_case_ids": [
+        "C12/final_source/source_current"
+      ],
+      "witness_status": "NAMED_NEGATIVE_OBSERVED_NOT_ISOLATED",
+      "scope": "runtime_or_setup_guard"
+    },
+    {
+      "path": "scripts/pm_goal_own_c3_w12b_cancel.py",
+      "line": 277,
+      "guard_expression": "'C12/no_association'",
+      "predicate": "self.binding['kind'] == 'no_bound_plan' and self.binding['active_run_ref'] is None",
+      "literal_guard": "C12/no_association",
+      "candidate_observed_guard_ids": [],
+      "negative_case_ids": [],
+      "witness_status": "NO_DEDICATED_NEGATIVE_RECORDED",
+      "scope": "runtime_or_setup_guard"
+    },
+    {
+      "path": "scripts/pm_goal_own_c3_w12b_cancel.py",
+      "line": 278,
+      "guard_expression": "'C12/original_binding'",
+      "predicate": "equal(self.binding, self.original_binding_read['original_execution_binding'])",
+      "literal_guard": "C12/original_binding",
+      "candidate_observed_guard_ids": [
+        "C12/original_binding"
+      ],
+      "negative_case_ids": [
+        "C12/original_binding"
+      ],
+      "witness_status": "NAMED_NEGATIVE_OBSERVED_NOT_ISOLATED",
+      "scope": "runtime_or_setup_guard"
+    },
+    {
+      "path": "scripts/pm_goal_own_c3_w12b_cancel.py",
+      "line": 279,
+      "guard_expression": "'C12/binding_read_original'",
+      "predicate": "equal(self.binding_read, self.original_binding_read)",
+      "literal_guard": "C12/binding_read_original",
+      "candidate_observed_guard_ids": [
+        "C12/binding_read_original"
+      ],
+      "negative_case_ids": [
+        "C12/original_binding_read"
+      ],
+      "witness_status": "NAMED_NEGATIVE_OBSERVED_NOT_ISOLATED",
+      "scope": "runtime_or_setup_guard"
+    },
+    {
+      "path": "scripts/pm_goal_own_c3_w12b_cancel.py",
+      "line": 280,
+      "guard_expression": "'C12/binding_source_current'",
+      "predicate": "all((self.migration.cells.get(key) == raw for key, raw in self.binding_sources_raw.items()))",
+      "literal_guard": "C12/binding_source_current",
+      "candidate_observed_guard_ids": [
+        "C12/binding_source_current"
+      ],
+      "negative_case_ids": [
+        "C12/current_binding_control"
+      ],
+      "witness_status": "NAMED_NEGATIVE_OBSERVED_NOT_ISOLATED",
+      "scope": "runtime_or_setup_guard"
+    },
+    {
+      "path": "scripts/pm_goal_own_c3_w12b_cancel.py",
+      "line": 281,
+      "guard_expression": "'C12/body_preserved'",
+      "predicate": "equal(self.snapshot, self.migration.original_snapshot)",
+      "literal_guard": "C12/body_preserved",
+      "candidate_observed_guard_ids": [],
+      "negative_case_ids": [],
+      "witness_status": "NO_DEDICATED_NEGATIVE_RECORDED",
+      "scope": "runtime_or_setup_guard"
+    },
+    {
+      "path": "scripts/pm_goal_own_c3_w12b_cancel.py",
+      "line": 293,
+      "guard_expression": "'C12/whole_preimage/' + operation",
+      "predicate": "equal(before, self.fence())",
+      "literal_guard": null,
+      "candidate_observed_guard_ids": [],
+      "negative_case_ids": [],
+      "witness_status": "NO_DEDICATED_NEGATIVE_RECORDED",
+      "scope": "runtime_or_setup_guard"
+    },
+    {
+      "path": "scripts/pm_goal_own_c3_w12b_cancel.py",
+      "line": 294,
+      "guard_expression": "'C12/whole_candidate/' + operation",
+      "predicate": "equal(values, expected)",
+      "literal_guard": null,
+      "candidate_observed_guard_ids": [
+        "C12/whole_candidate/latch_and_reserve",
+        "C12/whole_candidate/commit_receipt",
+        "C12/whole_candidate/settle_owner",
+        "C12/whole_candidate/freeze_event",
+        "C12/whole_candidate/publish_control",
+        "C12/whole_candidate/terminal"
+      ],
+      "negative_case_ids": [
+        "C12/final_candidate/commit_receipt",
+        "C12/final_candidate/finish",
+        "C12/final_candidate/freeze",
+        "C12/final_candidate/latch",
+        "C12/final_candidate/publish",
+        "C12/final_candidate/settle"
+      ],
+      "witness_status": "NAMED_NEGATIVE_OBSERVED_NOT_ISOLATED",
+      "scope": "runtime_or_setup_guard"
+    },
+    {
+      "path": "scripts/pm_goal_own_c3_w12b_cancel.py",
+      "line": 320,
+      "guard_expression": "'C12/part_size/' + operation",
+      "predicate": "len(self.codec.storage_pack(value)) <= 16384",
+      "literal_guard": null,
+      "candidate_observed_guard_ids": [],
+      "negative_case_ids": [],
+      "witness_status": "NO_DEDICATED_NEGATIVE_RECORDED",
+      "scope": "runtime_or_setup_guard"
+    },
+    {
+      "path": "scripts/pm_goal_own_c3_w12b_cancel.py",
+      "line": 321,
+      "guard_expression": "'C12/operation_size/' + operation",
+      "predicate": "len(self.codec.storage_pack({'physical_key': key, 'value': value})) <= 16384",
+      "literal_guard": null,
+      "candidate_observed_guard_ids": [],
+      "negative_case_ids": [],
+      "witness_status": "NO_DEDICATED_NEGATIVE_RECORDED",
+      "scope": "runtime_or_setup_guard"
+    },
+    {
+      "path": "scripts/pm_goal_own_c3_w12b_cancel.py",
+      "line": 348,
+      "guard_expression": "'C12/accepted_dispatch'",
+      "predicate": "equal(request, self.accepted_request)",
+      "literal_guard": "C12/accepted_dispatch",
+      "candidate_observed_guard_ids": [],
+      "negative_case_ids": [],
+      "witness_status": "NO_DEDICATED_NEGATIVE_RECORDED",
+      "scope": "runtime_or_setup_guard"
+    },
+    {
+      "path": "scripts/pm_goal_own_c3_w12b_cancel.py",
+      "line": 349,
+      "guard_expression": "'C12/legal_state'",
+      "predicate": "self.snapshot['body']['state'] in ('active', 'paused', 'blocked')",
+      "literal_guard": "C12/legal_state",
+      "candidate_observed_guard_ids": [],
+      "negative_case_ids": [],
+      "witness_status": "NO_DEDICATED_NEGATIVE_RECORDED",
+      "scope": "runtime_or_setup_guard"
+    },
+    {
+      "path": "scripts/pm_goal_own_c3_w12b_cancel.py",
+      "line": 350,
+      "guard_expression": "'C12/not_cancelled'",
+      "predicate": "self.control['cancellation_receipt_ref'] is None",
+      "literal_guard": "C12/not_cancelled",
+      "candidate_observed_guard_ids": [],
+      "negative_case_ids": [],
+      "witness_status": "NO_DEDICATED_NEGATIVE_RECORDED",
+      "scope": "runtime_or_setup_guard"
+    },
+    {
+      "path": "scripts/pm_goal_own_c3_w12b_cancel.py",
+      "line": 393,
+      "guard_expression": "'C12/phase/latch'",
+      "predicate": "self.progress is not None and self.progress['phase'] == 'source_admitted'",
+      "literal_guard": "C12/phase/latch",
+      "candidate_observed_guard_ids": [],
+      "negative_case_ids": [],
+      "witness_status": "NO_DEDICATED_NEGATIVE_RECORDED",
+      "scope": "runtime_or_setup_guard"
+    },
+    {
+      "path": "scripts/pm_goal_own_c3_w12b_cancel.py",
+      "line": 394,
+      "guard_expression": "'C12/original_stop'",
+      "predicate": "self.row_hash('StopControl', self.stop) == self.source['original_stop_control_sha256']",
+      "literal_guard": "C12/original_stop",
+      "candidate_observed_guard_ids": [],
+      "negative_case_ids": [],
+      "witness_status": "NO_DEDICATED_NEGATIVE_RECORDED",
+      "scope": "runtime_or_setup_guard"
+    },
+    {
+      "path": "scripts/pm_goal_own_c3_w12b_cancel.py",
+      "line": 420,
+      "guard_expression": "'C12/phase/receipt'",
+      "predicate": "self.progress['phase'] == 'stop_reserved'",
+      "literal_guard": "C12/phase/receipt",
+      "candidate_observed_guard_ids": [],
+      "negative_case_ids": [],
+      "witness_status": "NO_DEDICATED_NEGATIVE_RECORDED",
+      "scope": "runtime_or_setup_guard"
+    },
+    {
+      "path": "scripts/pm_goal_own_c3_w12b_cancel.py",
+      "line": 429,
+      "guard_expression": "'C12/phase/settle'",
+      "predicate": "self.progress['phase'] == 'receipt_committed'",
+      "literal_guard": "C12/phase/settle",
+      "candidate_observed_guard_ids": [],
+      "negative_case_ids": [],
+      "witness_status": "NO_DEDICATED_NEGATIVE_RECORDED",
+      "scope": "runtime_or_setup_guard"
+    },
+    {
+      "path": "scripts/pm_goal_own_c3_w12b_cancel.py",
+      "line": 437,
+      "guard_expression": "'C12/phase/freeze'",
+      "predicate": "self.progress['phase'] == 'owners_settled'",
+      "literal_guard": "C12/phase/freeze",
+      "candidate_observed_guard_ids": [],
+      "negative_case_ids": [],
+      "witness_status": "NO_DEDICATED_NEGATIVE_RECORDED",
+      "scope": "runtime_or_setup_guard"
+    },
+    {
+      "path": "scripts/pm_goal_own_c3_w12b_cancel.py",
+      "line": 451,
+      "guard_expression": "'C12/phase/append'",
+      "predicate": "self.progress['phase'] in ('event_ready', 'event_unknown')",
+      "literal_guard": "C12/phase/append",
+      "candidate_observed_guard_ids": [],
+      "negative_case_ids": [],
+      "witness_status": "NO_DEDICATED_NEGATIVE_RECORDED",
+      "scope": "runtime_or_setup_guard"
+    },
+    {
+      "path": "scripts/pm_goal_own_c3_w12b_cancel.py",
+      "line": 468,
+      "guard_expression": "'C12/phase/resolve_append'",
+      "predicate": "self.progress['phase'] == 'event_unknown'",
+      "literal_guard": "C12/phase/resolve_append",
+      "candidate_observed_guard_ids": [],
+      "negative_case_ids": [],
+      "witness_status": "NO_DEDICATED_NEGATIVE_RECORDED",
+      "scope": "runtime_or_setup_guard"
+    },
+    {
+      "path": "scripts/pm_goal_own_c3_w12b_cancel.py",
+      "line": 471,
+      "guard_expression": "'C12/original_append_issued'",
+      "predicate": "record is not None",
+      "literal_guard": "C12/original_append_issued",
+      "candidate_observed_guard_ids": [],
+      "negative_case_ids": [],
+      "witness_status": "NO_DEDICATED_NEGATIVE_RECORDED",
+      "scope": "runtime_or_setup_guard"
+    },
+    {
+      "path": "scripts/pm_goal_own_c3_w12b_cancel.py",
+      "line": 477,
+      "guard_expression": "'C12/phase/publish'",
+      "predicate": "self.progress['phase'] == 'event_issued'",
+      "literal_guard": "C12/phase/publish",
+      "candidate_observed_guard_ids": [],
+      "negative_case_ids": [],
+      "witness_status": "NO_DEDICATED_NEGATIVE_RECORDED",
+      "scope": "runtime_or_setup_guard"
+    },
+    {
+      "path": "scripts/pm_goal_own_c3_w12b_cancel.py",
+      "line": 480,
+      "guard_expression": "'C12/no_unresolved_body_pending'",
+      "predicate": "control['pending'] is None",
+      "literal_guard": "C12/no_unresolved_body_pending",
+      "candidate_observed_guard_ids": [],
+      "negative_case_ids": [],
+      "witness_status": "NO_DEDICATED_NEGATIVE_RECORDED",
+      "scope": "runtime_or_setup_guard"
+    },
+    {
+      "path": "scripts/pm_goal_own_c3_w12b_cancel.py",
+      "line": 493,
+      "guard_expression": "'C12/terminal_not_issued'",
+      "predicate": "self.terminal is None",
+      "literal_guard": "C12/terminal_not_issued",
+      "candidate_observed_guard_ids": [],
+      "negative_case_ids": [],
+      "witness_status": "NO_DEDICATED_NEGATIVE_RECORDED",
+      "scope": "runtime_or_setup_guard"
+    },
+    {
+      "path": "scripts/pm_goal_own_c3_w12b_cancel.py",
+      "line": 494,
+      "guard_expression": "'C12/terminal_kind'",
+      "predicate": "kind in ('succeeded', 'unknown', 'no_effect')",
+      "literal_guard": "C12/terminal_kind",
+      "candidate_observed_guard_ids": [],
+      "negative_case_ids": [],
+      "witness_status": "NO_DEDICATED_NEGATIVE_RECORDED",
+      "scope": "runtime_or_setup_guard"
+    },
+    {
+      "path": "scripts/pm_goal_own_c3_w12b_cancel.py",
+      "line": 496,
+      "guard_expression": "'C12/phase/terminal'",
+      "predicate": "self.progress['phase'] == 'control_published'",
+      "literal_guard": "C12/phase/terminal",
+      "candidate_observed_guard_ids": [],
+      "negative_case_ids": [],
+      "witness_status": "NO_DEDICATED_NEGATIVE_RECORDED",
+      "scope": "runtime_or_setup_guard"
+    },
+    {
+      "path": "scripts/pm_goal_own_c3_w12b_cancel.py",
+      "line": 502,
+      "guard_expression": "'C12/no_effect_original_phase'",
+      "predicate": "self.progress['phase'] == 'source_admitted' and self.effects == ['capture_source']",
+      "literal_guard": "C12/no_effect_original_phase",
+      "candidate_observed_guard_ids": [
+        "C12/no_effect_original_phase"
+      ],
+      "negative_case_ids": [
+        "C12/no_false_no_effect"
+      ],
+      "witness_status": "NAMED_NEGATIVE_OBSERVED_NOT_ISOLATED",
+      "scope": "runtime_or_setup_guard"
+    },
+    {
+      "path": "scripts/pm_goal_own_c3_w12b_cancel.py",
+      "line": 503,
+      "guard_expression": "'C12/no_effect_stop_unchanged'",
+      "predicate": "equal(self.stop, self.initial_stop)",
+      "literal_guard": "C12/no_effect_stop_unchanged",
+      "candidate_observed_guard_ids": [],
+      "negative_case_ids": [],
+      "witness_status": "NO_DEDICATED_NEGATIVE_RECORDED",
+      "scope": "runtime_or_setup_guard"
+    },
+    {
+      "path": "scripts/pm_goal_own_c3_w12b_cancel.py",
+      "line": 509,
+      "guard_expression": "'C12/unknown_preserves_effect'",
+      "predicate": "self.progress['phase'] != 'source_admitted'",
+      "literal_guard": "C12/unknown_preserves_effect",
+      "candidate_observed_guard_ids": [],
+      "negative_case_ids": [],
+      "witness_status": "NO_DEDICATED_NEGATIVE_RECORDED",
+      "scope": "runtime_or_setup_guard"
+    },
+    {
+      "path": "scripts/pm_goal_own_c3_w12b_cancel.py",
+      "line": 544,
+      "guard_expression": "'C12/replay_issued'",
+      "predicate": "self.terminal is not None",
+      "literal_guard": "C12/replay_issued",
+      "candidate_observed_guard_ids": [],
+      "negative_case_ids": [],
+      "witness_status": "NO_DEDICATED_NEGATIVE_RECORDED",
+      "scope": "runtime_or_setup_guard"
+    },
+    {
+      "path": "scripts/pm_goal_own_c3_w12b_cancel.py",
+      "line": 547,
+      "guard_expression": "'C12/replay_audit_permission'",
+      "predicate": "self.migration.audit_permission is True",
+      "literal_guard": "C12/replay_audit_permission",
+      "candidate_observed_guard_ids": [],
+      "negative_case_ids": [],
+      "witness_status": "NO_DEDICATED_NEGATIVE_RECORDED",
+      "scope": "runtime_or_setup_guard"
+    },
+    {
+      "path": "scripts/pm_goal_own_c3_w12b_cancel.py",
+      "line": 548,
+      "guard_expression": "'C12/replay_original_terminal'",
+      "predicate": "equal(value, expected)",
+      "literal_guard": "C12/replay_original_terminal",
+      "candidate_observed_guard_ids": [
+        "C12/replay_original_terminal"
+      ],
+      "negative_case_ids": [
+        "C12/terminal_custody/owner_result_sha256",
+        "C12/terminal_custody/terminal_authority_ref"
+      ],
+      "witness_status": "NAMED_NEGATIVE_OBSERVED_NOT_ISOLATED",
+      "scope": "runtime_or_setup_guard"
+    },
+    {
+      "path": "scripts/pm_goal_own_c3_w12b_cancel.py",
+      "line": 550,
+      "guard_expression": "'C12/terminal_row_issuance'",
+      "predicate": "_ISSUED_WRAPPERS.get(self, {}).get(self.key('goal_cancel_terminal_audit')) == raw",
+      "literal_guard": "C12/terminal_row_issuance",
+      "candidate_observed_guard_ids": [
+        "C12/terminal_row_issuance"
+      ],
+      "negative_case_ids": [
+        "C12/coherent_unissued_terminal"
+      ],
+      "witness_status": "NAMED_NEGATIVE_OBSERVED_NOT_ISOLATED",
+      "scope": "runtime_or_setup_guard"
+    },
+    {
+      "path": "scripts/pm_goal_own_c3_w12b_cancel.py",
+      "line": 551,
+      "guard_expression": "'C12/replay_original_bytes'",
+      "predicate": "equal(self.codec.storage_unpack(raw)['record'], value)",
+      "literal_guard": "C12/replay_original_bytes",
+      "candidate_observed_guard_ids": [],
+      "negative_case_ids": [],
+      "witness_status": "NO_DEDICATED_NEGATIVE_RECORDED",
+      "scope": "runtime_or_setup_guard"
+    },
+    {
+      "path": "scripts/pm_goal_own_c3_w12b_migration.py",
+      "line": 41,
+      "guard_expression": "'M12/immutable_original_key'",
+      "predicate": "key not in self.rows",
+      "literal_guard": "M12/immutable_original_key",
+      "candidate_observed_guard_ids": [],
+      "negative_case_ids": [],
+      "witness_status": "NO_DEDICATED_NEGATIVE_RECORDED",
+      "scope": "runtime_or_setup_guard"
+    },
+    {
+      "path": "scripts/pm_goal_own_c3_w12b_migration.py",
+      "line": 57,
+      "guard_expression": "'M12/database/' + self.role",
+      "predicate": "self.available is True",
+      "literal_guard": null,
+      "candidate_observed_guard_ids": [
+        "M12/database/goal",
+        "M12/database/host_stop",
+        "M12/database/plan",
+        "M12/database/workflow",
+        "M12/database/scheduler",
+        "M12/database/sir"
+      ],
+      "negative_case_ids": [
+        "M12/database/goal",
+        "M12/database/host_stop",
+        "M12/database/plan",
+        "M12/database/scheduler",
+        "M12/database/sir",
+        "M12/database/workflow"
+      ],
+      "witness_status": "NAMED_NEGATIVE_OBSERVED_NOT_ISOLATED",
+      "scope": "runtime_or_setup_guard"
+    },
+    {
+      "path": "scripts/pm_goal_own_c3_w12b_migration.py",
+      "line": 62,
+      "guard_expression": "'M12/inventory/' + self.role",
+      "predicate": "equal(mapping, self.enumerate())",
+      "literal_guard": null,
+      "candidate_observed_guard_ids": [],
+      "negative_case_ids": [],
+      "witness_status": "NO_DEDICATED_NEGATIVE_RECORDED",
+      "scope": "runtime_or_setup_guard"
+    },
+    {
+      "path": "scripts/pm_goal_own_c3_w12b_migration.py",
+      "line": 67,
+      "guard_expression": "'M12/source_bytes/' + self.role",
+      "predicate": "raw == row['raw']",
+      "literal_guard": null,
+      "candidate_observed_guard_ids": [],
+      "negative_case_ids": [],
+      "witness_status": "NO_DEDICATED_NEGATIVE_RECORDED",
+      "scope": "runtime_or_setup_guard"
+    },
+    {
+      "path": "scripts/pm_goal_own_c3_w12b_migration.py",
+      "line": 68,
+      "guard_expression": "'M12/source_hash/' + self.role",
+      "predicate": "digest(raw) == image['selection']['sha256']",
+      "literal_guard": null,
+      "candidate_observed_guard_ids": [],
+      "negative_case_ids": [],
+      "witness_status": "NO_DEDICATED_NEGATIVE_RECORDED",
+      "scope": "runtime_or_setup_guard"
+    },
+    {
+      "path": "scripts/pm_goal_own_c3_w12b_migration.py",
+      "line": 70,
+      "guard_expression": "'M12/origin/' + self.role",
+      "predicate": "digest(self.origins[origin['physical_key']]) == origin['sha256']",
+      "literal_guard": null,
+      "candidate_observed_guard_ids": [],
+      "negative_case_ids": [],
+      "witness_status": "NO_DEDICATED_NEGATIVE_RECORDED",
+      "scope": "runtime_or_setup_guard"
+    },
+    {
+      "path": "scripts/pm_goal_own_c3_w12b_migration.py",
+      "line": 140,
+      "guard_expression": "'M12/retained_physical_bytes'",
+      "predicate": "image['bytes_hex'] == raw.hex()",
+      "literal_guard": "M12/retained_physical_bytes",
+      "candidate_observed_guard_ids": [],
+      "negative_case_ids": [],
+      "witness_status": "NO_DEDICATED_NEGATIVE_RECORDED",
+      "scope": "runtime_or_setup_guard"
+    },
+    {
+      "path": "scripts/pm_goal_own_c3_w12b_migration.py",
+      "line": 142,
+      "guard_expression": "'M12/whole_goal_inventory'",
+      "predicate": "bool(images)",
+      "literal_guard": "M12/whole_goal_inventory",
+      "candidate_observed_guard_ids": [],
+      "negative_case_ids": [],
+      "witness_status": "NO_DEDICATED_NEGATIVE_RECORDED",
+      "scope": "runtime_or_setup_guard"
+    },
+    {
+      "path": "scripts/pm_goal_own_c3_w12b_migration.py",
+      "line": 163,
+      "guard_expression": "'M12/selector'",
+      "predicate": "equal(selector, self.selector())",
+      "literal_guard": "M12/selector",
+      "candidate_observed_guard_ids": [],
+      "negative_case_ids": [],
+      "witness_status": "NO_DEDICATED_NEGATIVE_RECORDED",
+      "scope": "runtime_or_setup_guard"
+    },
+    {
+      "path": "scripts/pm_goal_own_c3_w12b_migration.py",
+      "line": 169,
+      "guard_expression": "'M12/selector_after_helper'",
+      "predicate": "equal(selector, expected)",
+      "literal_guard": "M12/selector_after_helper",
+      "candidate_observed_guard_ids": [],
+      "negative_case_ids": [],
+      "witness_status": "NO_DEDICATED_NEGATIVE_RECORDED",
+      "scope": "runtime_or_setup_guard"
+    },
+    {
+      "path": "scripts/pm_goal_own_c3_w12b_migration.py",
+      "line": 193,
+      "guard_expression": "'M12/permission'",
+      "predicate": "self.permission is True",
+      "literal_guard": "M12/permission",
+      "candidate_observed_guard_ids": [
+        "M12/permission"
+      ],
+      "negative_case_ids": [
+        "M12/final/permission"
+      ],
+      "witness_status": "NAMED_NEGATIVE_OBSERVED_NOT_ISOLATED",
+      "scope": "runtime_or_setup_guard"
+    },
+    {
+      "path": "scripts/pm_goal_own_c3_w12b_migration.py",
+      "line": 194,
+      "guard_expression": "'M12/content'",
+      "predicate": "self.content_available is True",
+      "literal_guard": "M12/content",
+      "candidate_observed_guard_ids": [
+        "M12/content"
+      ],
+      "negative_case_ids": [
+        "M12/final/content_available"
+      ],
+      "witness_status": "NAMED_NEGATIVE_OBSERVED_NOT_ISOLATED",
+      "scope": "runtime_or_setup_guard"
+    },
+    {
+      "path": "scripts/pm_goal_own_c3_w12b_migration.py",
+      "line": 195,
+      "guard_expression": "'M12/withdrawn'",
+      "predicate": "self.withdrawn is False",
+      "literal_guard": "M12/withdrawn",
+      "candidate_observed_guard_ids": [
+        "M12/withdrawn"
+      ],
+      "negative_case_ids": [
+        "M12/final/withdrawn"
+      ],
+      "witness_status": "NAMED_NEGATIVE_OBSERVED_NOT_ISOLATED",
+      "scope": "runtime_or_setup_guard"
+    },
+    {
+      "path": "scripts/pm_goal_own_c3_w12b_migration.py",
+      "line": 197,
+      "guard_expression": "'M12/type/' + field",
+      "predicate": "type(getattr(self, field)) is int and type(before[field]) is int",
+      "literal_guard": null,
+      "candidate_observed_guard_ids": [
+        "M12/type/root_epoch",
+        "M12/type/restore_epoch",
+        "M12/type/hold_epoch"
+      ],
+      "negative_case_ids": [
+        "M12/type/hold_epoch/'1'",
+        "M12/type/hold_epoch/None",
+        "M12/type/hold_epoch/True",
+        "M12/type/hold_epoch/[]",
+        "M12/type/hold_epoch/{}",
+        "M12/type/restore_epoch/'1'",
+        "M12/type/restore_epoch/None",
+        "M12/type/restore_epoch/True",
+        "M12/type/restore_epoch/[]",
+        "M12/type/restore_epoch/{}",
+        "M12/type/root_epoch/'1'",
+        "M12/type/root_epoch/None",
+        "M12/type/root_epoch/True",
+        "M12/type/root_epoch/[]",
+        "M12/type/root_epoch/{}"
+      ],
+      "witness_status": "NAMED_NEGATIVE_OBSERVED_NOT_ISOLATED",
+      "scope": "runtime_or_setup_guard"
+    },
+    {
+      "path": "scripts/pm_goal_own_c3_w12b_migration.py",
+      "line": 198,
+      "guard_expression": "'M12/fence/' + field",
+      "predicate": "getattr(self, field) == before[field]",
+      "literal_guard": null,
+      "candidate_observed_guard_ids": [
+        "M12/fence/goal/epoch",
+        "M12/fence/host_stop/epoch",
+        "M12/fence/plan/epoch",
+        "M12/fence/workflow/epoch",
+        "M12/fence/scheduler/epoch",
+        "M12/fence/sir/epoch",
+        "M12/fence/root_epoch",
+        "M12/fence/restore_epoch",
+        "M12/fence/hold_epoch"
+      ],
+      "negative_case_ids": [
+        "M12/epoch/hold_epoch",
+        "M12/epoch/restore_epoch",
+        "M12/epoch/root_epoch",
+        "M12/final/goal/epoch",
+        "M12/final/host_stop/epoch",
+        "M12/final/plan/epoch",
+        "M12/final/scheduler/epoch",
+        "M12/final/sir/epoch",
+        "M12/final/workflow/epoch"
+      ],
+      "witness_status": "NAMED_NEGATIVE_OBSERVED_NOT_ISOLATED",
+      "scope": "runtime_or_setup_guard"
+    },
+    {
+      "path": "scripts/pm_goal_own_c3_w12b_migration.py",
+      "line": 199,
+      "guard_expression": "'M12/fence/root'",
+      "predicate": "before['root'] == self.root",
+      "literal_guard": "M12/fence/root",
+      "candidate_observed_guard_ids": [],
+      "negative_case_ids": [],
+      "witness_status": "NO_DEDICATED_NEGATIVE_RECORDED",
+      "scope": "runtime_or_setup_guard"
+    },
+    {
+      "path": "scripts/pm_goal_own_c3_w12b_migration.py",
+      "line": 200,
+      "guard_expression": "'M12/effective_stop'",
+      "predicate": "equal(before['effective_stop'], self.stop)",
+      "literal_guard": "M12/effective_stop",
+      "candidate_observed_guard_ids": [
+        "M12/effective_stop"
+      ],
+      "negative_case_ids": [
+        "M12/concurrent_original_stop"
+      ],
+      "witness_status": "NAMED_NEGATIVE_OBSERVED_NOT_ISOLATED",
+      "scope": "runtime_or_setup_guard"
+    },
+    {
+      "path": "scripts/pm_goal_own_c3_w12b_migration.py",
+      "line": 201,
+      "guard_expression": "'M12/owner_members'",
+      "predicate": "set(self.owners) == set(ROLES)",
+      "literal_guard": "M12/owner_members",
+      "candidate_observed_guard_ids": [],
+      "negative_case_ids": [],
+      "witness_status": "NO_DEDICATED_NEGATIVE_RECORDED",
+      "scope": "runtime_or_setup_guard"
+    },
+    {
+      "path": "scripts/pm_goal_own_c3_w12b_migration.py",
+      "line": 203,
+      "guard_expression": "'M12/owner_identity/' + role",
+      "predicate": "self.owners[role] is _OWNERS[self][role]",
+      "literal_guard": null,
+      "candidate_observed_guard_ids": [
+        "M12/owner_identity/goal",
+        "M12/owner_identity/host_stop",
+        "M12/owner_identity/plan",
+        "M12/owner_identity/workflow",
+        "M12/owner_identity/scheduler",
+        "M12/owner_identity/sir"
+      ],
+      "negative_case_ids": [
+        "M12/substituted_participant/goal",
+        "M12/substituted_participant/host_stop",
+        "M12/substituted_participant/plan",
+        "M12/substituted_participant/scheduler",
+        "M12/substituted_participant/sir",
+        "M12/substituted_participant/workflow"
+      ],
+      "witness_status": "NAMED_NEGATIVE_OBSERVED_NOT_ISOLATED",
+      "scope": "runtime_or_setup_guard"
+    },
+    {
+      "path": "scripts/pm_goal_own_c3_w12b_migration.py",
+      "line": 204,
+      "guard_expression": "'M12/owner_backend/' + role",
+      "predicate": "self.owners[role].boundary is self",
+      "literal_guard": null,
+      "candidate_observed_guard_ids": [],
+      "negative_case_ids": [],
+      "witness_status": "NO_DEDICATED_NEGATIVE_RECORDED",
+      "scope": "runtime_or_setup_guard"
+    },
+    {
+      "path": "scripts/pm_goal_own_c3_w12b_migration.py",
+      "line": 205,
+      "guard_expression": "'M12/database/' + role",
+      "predicate": "self.owners[role].available is True",
+      "literal_guard": null,
+      "candidate_observed_guard_ids": [
+        "M12/database/goal",
+        "M12/database/host_stop",
+        "M12/database/plan",
+        "M12/database/workflow",
+        "M12/database/scheduler",
+        "M12/database/sir"
+      ],
+      "negative_case_ids": [
+        "M12/database/goal",
+        "M12/database/host_stop",
+        "M12/database/plan",
+        "M12/database/scheduler",
+        "M12/database/sir",
+        "M12/database/workflow"
+      ],
+      "witness_status": "NAMED_NEGATIVE_OBSERVED_NOT_ISOLATED",
+      "scope": "runtime_or_setup_guard"
+    },
+    {
+      "path": "scripts/pm_goal_own_c3_w12b_migration.py",
+      "line": 208,
+      "guard_expression": "'M12/fence/' + role + '/' + field",
+      "predicate": "equal(actual[field], before['owners'][role][field])",
+      "literal_guard": null,
+      "candidate_observed_guard_ids": [
+        "M12/fence/goal/epoch",
+        "M12/fence/host_stop/epoch",
+        "M12/fence/plan/epoch",
+        "M12/fence/workflow/epoch",
+        "M12/fence/scheduler/epoch",
+        "M12/fence/sir/epoch"
+      ],
+      "negative_case_ids": [
+        "M12/final/goal/epoch",
+        "M12/final/host_stop/epoch",
+        "M12/final/plan/epoch",
+        "M12/final/scheduler/epoch",
+        "M12/final/sir/epoch",
+        "M12/final/workflow/epoch"
+      ],
+      "witness_status": "NAMED_NEGATIVE_OBSERVED_NOT_ISOLATED",
+      "scope": "runtime_or_setup_guard"
+    },
+    {
+      "path": "scripts/pm_goal_own_c3_w12b_migration.py",
+      "line": 209,
+      "guard_expression": "'M12/dispatch'",
+      "predicate": "equal(self.native_dispatch, before['native_dispatch'])",
+      "literal_guard": "M12/dispatch",
+      "candidate_observed_guard_ids": [
+        "M12/dispatch"
+      ],
+      "negative_case_ids": [
+        "M12/dispatch_drift/native_dispatch"
+      ],
+      "witness_status": "NAMED_NEGATIVE_OBSERVED_NOT_ISOLATED",
+      "scope": "runtime_or_setup_guard"
+    },
+    {
+      "path": "scripts/pm_goal_own_c3_w12b_migration.py",
+      "line": 210,
+      "guard_expression": "'M12/registered_writers'",
+      "predicate": "equal(self.writers, before['writers'])",
+      "literal_guard": "M12/registered_writers",
+      "candidate_observed_guard_ids": [
+        "M12/registered_writers"
+      ],
+      "negative_case_ids": [
+        "M12/dispatch_drift/writers"
+      ],
+      "witness_status": "NAMED_NEGATIVE_OBSERVED_NOT_ISOLATED",
+      "scope": "runtime_or_setup_guard"
+    },
+    {
+      "path": "scripts/pm_goal_own_c3_w12b_migration.py",
+      "line": 215,
+      "guard_expression": "'M12/all_native_writers'",
+      "predicate": "matching",
+      "literal_guard": "M12/all_native_writers",
+      "candidate_observed_guard_ids": [
+        "M12/all_native_writers"
+      ],
+      "negative_case_ids": [
+        "M12/unlisted_native_writer"
+      ],
+      "witness_status": "NAMED_NEGATIVE_OBSERVED_NOT_ISOLATED",
+      "scope": "runtime_or_setup_guard"
+    },
+    {
+      "path": "scripts/pm_goal_own_c3_w12b_migration.py",
+      "line": 216,
+      "guard_expression": "'M12/seven_categories'",
+      "predicate": "[w['operation'] for w in self.writers] == list(WRITERS)",
+      "literal_guard": "M12/seven_categories",
+      "candidate_observed_guard_ids": [
+        "M12/seven_categories"
+      ],
+      "negative_case_ids": [
+        "M12/missing_writer_category"
+      ],
+      "witness_status": "NAMED_NEGATIVE_OBSERVED_NOT_ISOLATED",
+      "scope": "runtime_or_setup_guard"
+    },
+    {
+      "path": "scripts/pm_goal_own_c3_w12b_migration.py",
+      "line": 232,
+      "guard_expression": "'M12/six_mappings'",
+      "predicate": "set(current) == set(ROLES) and len(request['owner_mappings']) == len(ROLES)",
+      "literal_guard": "M12/six_mappings",
+      "candidate_observed_guard_ids": [],
+      "negative_case_ids": [],
+      "witness_status": "NO_DEDICATED_NEGATIVE_RECORDED",
+      "scope": "runtime_or_setup_guard"
+    },
+    {
+      "path": "scripts/pm_goal_own_c3_w12b_migration.py",
+      "line": 237,
+      "guard_expression": "'M12/no_association_originals'",
+      "predicate": "not current['plan']['sources'] and (not current['workflow']['sources'])",
+      "literal_guard": "M12/no_association_originals",
+      "candidate_observed_guard_ids": [],
+      "negative_case_ids": [],
+      "witness_status": "NO_DEDICATED_NEGATIVE_RECORDED",
+      "scope": "runtime_or_setup_guard"
+    },
+    {
+      "path": "scripts/pm_goal_own_c3_w12b_migration.py",
+      "line": 254,
+      "guard_expression": "'M12/native_goal_image_join'",
+      "predicate": "equal(snapshot, actual)",
+      "literal_guard": "M12/native_goal_image_join",
+      "candidate_observed_guard_ids": [
+        "M12/native_goal_image_join"
+      ],
+      "negative_case_ids": [
+        "M12/coherent_snapshot_substitution"
+      ],
+      "witness_status": "NAMED_NEGATIVE_OBSERVED_NOT_ISOLATED",
+      "scope": "runtime_or_setup_guard"
+    },
+    {
+      "path": "scripts/pm_goal_own_c3_w12b_migration.py",
+      "line": 255,
+      "guard_expression": "'M12/active_run'",
+      "predicate": "snapshot['body']['active_run_ref'] is None",
+      "literal_guard": "M12/active_run",
+      "candidate_observed_guard_ids": [],
+      "negative_case_ids": [],
+      "witness_status": "NO_DEDICATED_NEGATIVE_RECORDED",
+      "scope": "runtime_or_setup_guard"
+    },
+    {
+      "path": "scripts/pm_goal_own_c3_w12b_migration.py",
+      "line": 332,
+      "guard_expression": "'M12/retry_capture'",
+      "predicate": "digest(self.codec.storage_pack(request)) == prior['capture_sha256']",
+      "literal_guard": "M12/retry_capture",
+      "candidate_observed_guard_ids": [],
+      "negative_case_ids": [],
+      "witness_status": "NO_DEDICATED_NEGATIVE_RECORDED",
+      "scope": "runtime_or_setup_guard"
+    },
+    {
+      "path": "scripts/pm_goal_own_c3_w12b_migration.py",
+      "line": 336,
+      "guard_expression": "'M12/independent_capture'",
+      "predicate": "equal(request, expected_request)",
+      "literal_guard": "M12/independent_capture",
+      "candidate_observed_guard_ids": [],
+      "negative_case_ids": [],
+      "witness_status": "NO_DEDICATED_NEGATIVE_RECORDED",
+      "scope": "runtime_or_setup_guard"
+    },
+    {
+      "path": "scripts/pm_goal_own_c3_w12b_migration.py",
+      "line": 341,
+      "guard_expression": "'M12/whole_candidate'",
+      "predicate": "equal(values, expected)",
+      "literal_guard": "M12/whole_candidate",
+      "candidate_observed_guard_ids": [
+        "M12/whole_candidate"
+      ],
+      "negative_case_ids": [
+        "M12/complete_destination_splice"
+      ],
+      "witness_status": "NAMED_NEGATIVE_OBSERVED_NOT_ISOLATED",
+      "scope": "runtime_or_setup_guard"
+    },
+    {
+      "path": "scripts/pm_goal_own_c3_w12b_migration.py",
+      "line": 343,
+      "guard_expression": "'M12/destination_absent'",
+      "predicate": "key not in self.cells",
+      "literal_guard": "M12/destination_absent",
+      "candidate_observed_guard_ids": [],
+      "negative_case_ids": [],
+      "witness_status": "NO_DEDICATED_NEGATIVE_RECORDED",
+      "scope": "runtime_or_setup_guard"
+    },
+    {
+      "path": "scripts/pm_goal_own_c3_w12b_migration.py",
+      "line": 344,
+      "guard_expression": "'M12/stored_part_size'",
+      "predicate": "len(self.codec.storage_pack(value)) <= 16384",
+      "literal_guard": "M12/stored_part_size",
+      "candidate_observed_guard_ids": [],
+      "negative_case_ids": [],
+      "witness_status": "NO_DEDICATED_NEGATIVE_RECORDED",
+      "scope": "runtime_or_setup_guard"
+    },
+    {
+      "path": "scripts/pm_goal_own_c3_w12b_migration.py",
+      "line": 345,
+      "guard_expression": "'M12/operation_size'",
+      "predicate": "len(self.codec.storage_pack({'physical_key': key, 'value': value})) <= 16384",
+      "literal_guard": "M12/operation_size",
+      "candidate_observed_guard_ids": [],
+      "negative_case_ids": [],
+      "witness_status": "NO_DEDICATED_NEGATIVE_RECORDED",
+      "scope": "runtime_or_setup_guard"
+    },
+    {
+      "path": "scripts/pm_goal_own_c3_w12b_migration.py",
+      "line": 360,
+      "guard_expression": "'M12/read_selector'",
+      "predicate": "equal(selector, self.selector())",
+      "literal_guard": "M12/read_selector",
+      "candidate_observed_guard_ids": [],
+      "negative_case_ids": [],
+      "witness_status": "NO_DEDICATED_NEGATIVE_RECORDED",
+      "scope": "runtime_or_setup_guard"
+    },
+    {
+      "path": "scripts/pm_goal_own_c3_w12b_migration.py",
+      "line": 361,
+      "guard_expression": "'M12/audit_permission'",
+      "predicate": "self.audit_permission is True",
+      "literal_guard": "M12/audit_permission",
+      "candidate_observed_guard_ids": [
+        "M12/audit_permission"
+      ],
+      "negative_case_ids": [
+        "M12/result_read/M12/audit_permission"
+      ],
+      "witness_status": "NAMED_NEGATIVE_OBSERVED_NOT_ISOLATED",
+      "scope": "runtime_or_setup_guard"
+    },
+    {
+      "path": "scripts/pm_goal_own_c3_w12b_migration.py",
+      "line": 362,
+      "guard_expression": "'M12/result_issued'",
+      "predicate": "self.migration_id in self.results",
+      "literal_guard": "M12/result_issued",
+      "candidate_observed_guard_ids": [],
+      "negative_case_ids": [],
+      "witness_status": "NO_DEDICATED_NEGATIVE_RECORDED",
+      "scope": "runtime_or_setup_guard"
+    },
+    {
+      "path": "scripts/pm_goal_own_c3_w12b_migration.py",
+      "line": 366,
+      "guard_expression": "'M12/audit_permission'",
+      "predicate": "self.audit_permission is True",
+      "literal_guard": "M12/audit_permission",
+      "candidate_observed_guard_ids": [
+        "M12/audit_permission"
+      ],
+      "negative_case_ids": [
+        "M12/result_read/M12/audit_permission"
+      ],
+      "witness_status": "NAMED_NEGATIVE_OBSERVED_NOT_ISOLATED",
+      "scope": "runtime_or_setup_guard"
+    },
+    {
+      "path": "scripts/pm_goal_own_c3_w12b_migration.py",
+      "line": 367,
+      "guard_expression": "'M12/audit_original_root'",
+      "predicate": "self.result_origins.get(self.migration_id) == self.root",
+      "literal_guard": "M12/audit_original_root",
+      "candidate_observed_guard_ids": [
+        "M12/audit_original_root"
+      ],
+      "negative_case_ids": [
+        "M12/foreign_result_root"
+      ],
+      "witness_status": "NAMED_NEGATIVE_OBSERVED_NOT_ISOLATED",
+      "scope": "runtime_or_setup_guard"
+    },
+    {
+      "path": "scripts/pm_goal_own_c3_w12b_migration.py",
+      "line": 368,
+      "guard_expression": "'M12/audit_fence'",
+      "predicate": "equal(root, [self.root, self.root_epoch, self.restore_epoch, self.hold_epoch])",
+      "literal_guard": "M12/audit_fence",
+      "candidate_observed_guard_ids": [
+        "M12/audit_fence"
+      ],
+      "negative_case_ids": [
+        "M12/result_read/M12/audit_fence"
+      ],
+      "witness_status": "NAMED_NEGATIVE_OBSERVED_NOT_ISOLATED",
+      "scope": "runtime_or_setup_guard"
+    },
+    {
+      "path": "scripts/pm_goal_own_c3_w12b_migration.py",
+      "line": 371,
+      "guard_expression": "'M12/result_bytes'",
+      "predicate": "self.cells.get(result_key) == self.codec.storage_pack(expected)",
+      "literal_guard": "M12/result_bytes",
+      "candidate_observed_guard_ids": [
+        "M12/result_bytes"
+      ],
+      "negative_case_ids": [
+        "M12/result_read/M12/result_bytes"
+      ],
+      "witness_status": "NAMED_NEGATIVE_OBSERVED_NOT_ISOLATED",
+      "scope": "runtime_or_setup_guard"
+    },
+    {
+      "path": "scripts/pm_goal_own_c3_w12b_migration.py",
+      "line": 372,
+      "guard_expression": "'M12/result_original_issuance'",
+      "predicate": "self.installation_originals.get(result_key) == self.cells.get(result_key)",
+      "literal_guard": "M12/result_original_issuance",
+      "candidate_observed_guard_ids": [
+        "M12/result_original_issuance"
+      ],
+      "negative_case_ids": [
+        "M12/coherent_unissued_result"
+      ],
+      "witness_status": "NAMED_NEGATIVE_OBSERVED_NOT_ISOLATED",
+      "scope": "runtime_or_setup_guard"
+    },
+    {
+      "path": "scripts/pm_goal_own_c3_w12b_migration.py",
+      "line": 378,
+      "guard_expression": "'M12/destination_present'",
+      "predicate": "raw is not None",
+      "literal_guard": "M12/destination_present",
+      "candidate_observed_guard_ids": [
+        "M12/destination_present"
+      ],
+      "negative_case_ids": [
+        "M12/result_read/M12/destination_present"
+      ],
+      "witness_status": "NAMED_NEGATIVE_OBSERVED_NOT_ISOLATED",
+      "scope": "runtime_or_setup_guard"
+    },
+    {
+      "path": "scripts/pm_goal_own_c3_w12b_migration.py",
+      "line": 379,
+      "guard_expression": "'M12/destination_hash'",
+      "predicate": "digest(raw) == selection['sha256']",
+      "literal_guard": "M12/destination_hash",
+      "candidate_observed_guard_ids": [
+        "M12/destination_hash"
+      ],
+      "negative_case_ids": [
+        "M12/result_read/M12/destination_hash"
+      ],
+      "witness_status": "NAMED_NEGATIVE_OBSERVED_NOT_ISOLATED",
+      "scope": "runtime_or_setup_guard"
+    },
+    {
+      "path": "scripts/pm_goal_own_c3_w12b_migration.py",
+      "line": 383,
+      "guard_expression": "'M12/manifest_present'",
+      "predicate": "bool(parts)",
+      "literal_guard": "M12/manifest_present",
+      "candidate_observed_guard_ids": [],
+      "negative_case_ids": [],
+      "witness_status": "NO_DEDICATED_NEGATIVE_RECORDED",
+      "scope": "runtime_or_setup_guard"
+    },
+    {
+      "path": "scripts/pm_goal_own_c3_w12b_migration.py",
+      "line": 384,
+      "guard_expression": "'M12/manifest_original_bytes'",
+      "predicate": "all((raw == self.installation_originals.get(key) for key, raw in self.cells.items() if key.startswith(prefix)))",
+      "literal_guard": "M12/manifest_original_bytes",
+      "candidate_observed_guard_ids": [],
+      "negative_case_ids": [],
+      "witness_status": "NO_DEDICATED_NEGATIVE_RECORDED",
+      "scope": "runtime_or_setup_guard"
+    },
+    {
+      "path": "scripts/pm_goal_own_c3_w12b_migration.py",
+      "line": 386,
+      "guard_expression": "'M12/manifest_ordinals'",
+      "predicate": "[p['ordinal'] for p in parts] == list(range(parts[0]['part_count']))",
+      "literal_guard": "M12/manifest_ordinals",
+      "candidate_observed_guard_ids": [],
+      "negative_case_ids": [],
+      "witness_status": "NO_DEDICATED_NEGATIVE_RECORDED",
+      "scope": "runtime_or_setup_guard"
+    },
+    {
+      "path": "scripts/pm_goal_own_c3_w12b_migration.py",
+      "line": 390,
+      "guard_expression": "'M12/manifest_identity'",
+      "predicate": "equal(part['scope'], self.scope) and part['migration_id'] == self.migration_id",
+      "literal_guard": "M12/manifest_identity",
+      "candidate_observed_guard_ids": [],
+      "negative_case_ids": [],
+      "witness_status": "NO_DEDICATED_NEGATIVE_RECORDED",
+      "scope": "runtime_or_setup_guard"
+    },
+    {
+      "path": "scripts/pm_goal_own_c3_w12b_migration.py",
+      "line": 391,
+      "guard_expression": "'M12/manifest_count'",
+      "predicate": "part['part_count'] == len(parts)",
+      "literal_guard": "M12/manifest_count",
+      "candidate_observed_guard_ids": [],
+      "negative_case_ids": [],
+      "witness_status": "NO_DEDICATED_NEGATIVE_RECORDED",
+      "scope": "runtime_or_setup_guard"
+    },
+    {
+      "path": "scripts/pm_goal_own_c3_w12b_migration.py",
+      "line": 392,
+      "guard_expression": "'M12/manifest_hash'",
+      "predicate": "part['whole_manifest_sha256'] == digest(self.codec.storage_pack(members))",
+      "literal_guard": "M12/manifest_hash",
+      "candidate_observed_guard_ids": [],
+      "negative_case_ids": [],
+      "witness_status": "NO_DEDICATED_NEGATIVE_RECORDED",
+      "scope": "runtime_or_setup_guard"
+    },
+    {
+      "path": "scripts/pm_goal_own_c3_w12b_migration.py",
+      "line": 417,
+      "guard_expression": "'M12/live_stop_preimage'",
+      "predicate": "equal(record, self.stop)",
+      "literal_guard": "M12/live_stop_preimage",
+      "candidate_observed_guard_ids": [
+        "M12/live_stop_preimage"
+      ],
+      "negative_case_ids": [
+        "C12/torn_native_preimage/user_stop_epoch"
+      ],
+      "witness_status": "NAMED_NEGATIVE_OBSERVED_NOT_ISOLATED",
+      "scope": "runtime_or_setup_guard"
+    },
+    {
+      "path": "scripts/pm_goal_own_c3_w12b_migration.py",
+      "line": 421,
+      "guard_expression": "'M12/live_body_control_preimage'",
+      "predicate": "equal(record, self.current_body_control)",
+      "literal_guard": "M12/live_body_control_preimage",
+      "candidate_observed_guard_ids": [
+        "M12/live_body_control_preimage"
+      ],
+      "negative_case_ids": [
+        "C12/torn_native_preimage/control_epoch"
+      ],
+      "witness_status": "NAMED_NEGATIVE_OBSERVED_NOT_ISOLATED",
+      "scope": "runtime_or_setup_guard"
+    },
+    {
+      "path": "scripts/pm_goal_own_c3_w12b_migration.py",
+      "line": 424,
+      "guard_expression": "'M12/live_stop_control_routes'",
+      "predicate": "len(expected_keys) == 2 and set(updates) == expected_keys",
+      "literal_guard": "M12/live_stop_control_routes",
+      "candidate_observed_guard_ids": [],
+      "negative_case_ids": [],
+      "witness_status": "NO_DEDICATED_NEGATIVE_RECORDED",
+      "scope": "runtime_or_setup_guard"
+    },
+    {
+      "path": "scripts/pm_goal_own_c3_w12b_migration.py",
+      "line": 442,
+      "guard_expression": "'M12/withdraw_selector'",
+      "predicate": "equal(selector, self.selector())",
+      "literal_guard": "M12/withdraw_selector",
+      "candidate_observed_guard_ids": [],
+      "negative_case_ids": [],
+      "witness_status": "NO_DEDICATED_NEGATIVE_RECORDED",
+      "scope": "runtime_or_setup_guard"
+    },
+    {
+      "path": "scripts/pm_goal_own_c3_w12b_migration.py",
+      "line": 463,
+      "guard_expression": "'M12/withdrawal_absent'",
+      "predicate": "key not in self.cells",
+      "literal_guard": "M12/withdrawal_absent",
+      "candidate_observed_guard_ids": [],
+      "negative_case_ids": [],
+      "witness_status": "NO_DEDICATED_NEGATIVE_RECORDED",
+      "scope": "runtime_or_setup_guard"
+    },
+    {
+      "path": "scripts/pm_goal_own_c3_w12b_migration.py",
+      "line": 465,
+      "guard_expression": "'M12/withdrawal_size'",
+      "predicate": "len(self.codec.storage_pack({'physical_key': key, 'value': result})) <= 16384",
+      "literal_guard": "M12/withdrawal_size",
+      "candidate_observed_guard_ids": [],
+      "negative_case_ids": [],
+      "witness_status": "NO_DEDICATED_NEGATIVE_RECORDED",
+      "scope": "runtime_or_setup_guard"
+    },
+    {
+      "path": "scripts/pm_goal_own_c3_w12b_oracles.py",
+      "line": 97,
+      "guard_expression": "'oracle/complete_destination_members'",
+      "predicate": "len(names) == 7",
+      "literal_guard": "oracle/complete_destination_members",
+      "candidate_observed_guard_ids": [],
+      "negative_case_ids": [],
+      "witness_status": "NO_DEDICATED_NEGATIVE_RECORDED",
+      "scope": "fixture_assertion"
+    },
+    {
+      "path": "scripts/pm_goal_own_c3_w12b_oracles.py",
+      "line": 98,
+      "guard_expression": "'oracle/one_atomic_transaction'",
+      "predicate": "len(boundary.transactions) == 1",
+      "literal_guard": "oracle/one_atomic_transaction",
+      "candidate_observed_guard_ids": [],
+      "negative_case_ids": [],
+      "witness_status": "NO_DEDICATED_NEGATIVE_RECORDED",
+      "scope": "fixture_assertion"
+    },
+    {
+      "path": "scripts/pm_goal_own_c3_w12b_oracles.py",
+      "line": 99,
+      "guard_expression": "'oracle/original_stop_preserved'",
+      "predicate": "result['original_stop'] == dict(user_stop_epoch=7, continuation_epoch=11, stop_latched=True)",
+      "literal_guard": "oracle/original_stop_preserved",
+      "candidate_observed_guard_ids": [],
+      "negative_case_ids": [],
+      "witness_status": "NO_DEDICATED_NEGATIVE_RECORDED",
+      "scope": "fixture_assertion"
+    },
+    {
+      "path": "scripts/pm_goal_own_c3_w12b_oracles.py",
+      "line": 185,
+      "guard_expression": "'oracle/recaptured_original_stop'",
+      "predicate": "result['original_stop'] == dict(user_stop_epoch=8, continuation_epoch=12, stop_latched=True)",
+      "literal_guard": "oracle/recaptured_original_stop",
+      "candidate_observed_guard_ids": [],
+      "negative_case_ids": [],
+      "witness_status": "NO_DEDICATED_NEGATIVE_RECORDED",
+      "scope": "fixture_assertion"
+    },
+    {
+      "path": "scripts/pm_goal_own_c3_w12b_oracles.py",
+      "line": 204,
+      "guard_expression": "'oracle/migration_fault'",
+      "predicate": "str(error) == ('M12/before_commit' if p == 'before' else 'M12/lost_ack')",
+      "literal_guard": "oracle/migration_fault",
+      "candidate_observed_guard_ids": [],
+      "negative_case_ids": [],
+      "witness_status": "NO_DEDICATED_NEGATIVE_RECORDED",
+      "scope": "fixture_assertion"
+    },
+    {
+      "path": "scripts/pm_goal_own_c3_w12b_oracles.py",
+      "line": 208,
+      "guard_expression": "'oracle/no_partial_installation'",
+      "predicate": "boundary.cells == {} and boundary.results == {} and (boundary.transactions == [])",
+      "literal_guard": "oracle/no_partial_installation",
+      "candidate_observed_guard_ids": [],
+      "negative_case_ids": [],
+      "witness_status": "NO_DEDICATED_NEGATIVE_RECORDED",
+      "scope": "fixture_assertion"
+    },
+    {
+      "path": "scripts/pm_goal_own_c3_w12b_oracles.py",
+      "line": 213,
+      "guard_expression": "'oracle/one_installation_after_recovery'",
+      "predicate": "len(boundary.transactions) == 1",
+      "literal_guard": "oracle/one_installation_after_recovery",
+      "candidate_observed_guard_ids": [],
+      "negative_case_ids": [],
+      "witness_status": "NO_DEDICATED_NEGATIVE_RECORDED",
+      "scope": "fixture_assertion"
+    },
+    {
+      "path": "scripts/pm_goal_own_c3_w12b_oracles.py",
+      "line": 227,
+      "guard_expression": "'oracle/pending_preserved'",
+      "predicate": "result['disposition'] == 'blocked_unresolved' and result['pending_operation_ids'] == ['TEST_ONLY:unknown-original-operation']",
+      "literal_guard": "oracle/pending_preserved",
+      "candidate_observed_guard_ids": [],
+      "negative_case_ids": [],
+      "witness_status": "NO_DEDICATED_NEGATIVE_RECORDED",
+      "scope": "fixture_assertion"
+    },
+    {
+      "path": "scripts/pm_goal_own_c3_w12b_oracles.py",
+      "line": 228,
+      "guard_expression": "'oracle/no_enrollment_on_unknown'",
+      "predicate": "not result['published_members']",
+      "literal_guard": "oracle/no_enrollment_on_unknown",
+      "candidate_observed_guard_ids": [],
+      "negative_case_ids": [],
+      "witness_status": "NO_DEDICATED_NEGATIVE_RECORDED",
+      "scope": "fixture_assertion"
+    },
+    {
+      "path": "scripts/pm_goal_own_c3_w12b_oracles.py",
+      "line": 236,
+      "guard_expression": "'oracle/withdrawal_preserves_original'",
+      "predicate": "equal(boundary.results, original) and equal(boundary.stop, stop)",
+      "literal_guard": "oracle/withdrawal_preserves_original",
+      "candidate_observed_guard_ids": [],
+      "negative_case_ids": [],
+      "witness_status": "NO_DEDICATED_NEGATIVE_RECORDED",
+      "scope": "fixture_assertion"
+    },
+    {
+      "path": "scripts/pm_goal_own_c3_w12b_oracles.py",
+      "line": 241,
+      "guard_expression": "'oracle/withdrawal_blocks_capture'",
+      "predicate": "str(error) == 'M12/withdrawn'",
+      "literal_guard": "oracle/withdrawal_blocks_capture",
+      "candidate_observed_guard_ids": [],
+      "negative_case_ids": [],
+      "witness_status": "NO_DEDICATED_NEGATIVE_RECORDED",
+      "scope": "fixture_assertion"
+    },
+    {
+      "path": "scripts/pm_goal_own_c3_w12b_oracles.py",
+      "line": 275,
+      "guard_expression": "'oracle/terminal_original_identity'",
+      "predicate": "equal(terminal['response']['owner_identity'], value.identity['owner_identity']) and equal(terminal['outcome']['identity'], value.identity['owner_identity']) and (terminal['response']['operation_id'] == value.operation_id) and (terminal['response']['command_outcome_ref'] == value.source['command_outcome_ref'])",
+      "literal_guard": "oracle/terminal_original_identity",
+      "candidate_observed_guard_ids": [],
+      "negative_case_ids": [],
+      "witness_status": "NO_DEDICATED_NEGATIVE_RECORDED",
+      "scope": "fixture_assertion"
+    },
+    {
+      "path": "scripts/pm_goal_own_c3_w12b_oracles.py",
+      "line": 281,
+      "guard_expression": "'oracle/replay_no_effect'",
+      "predicate": "equal(value.effects, original_effects)",
+      "literal_guard": "oracle/replay_no_effect",
+      "candidate_observed_guard_ids": [],
+      "negative_case_ids": [],
+      "witness_status": "NO_DEDICATED_NEGATIVE_RECORDED",
+      "scope": "fixture_assertion"
+    },
+    {
+      "path": "scripts/pm_goal_own_c3_w12b_oracles.py",
+      "line": 282,
+      "guard_expression": "'oracle/cancel_preserves_body_history'",
+      "predicate": "equal(value.snapshot, value.migration.original_snapshot)",
+      "literal_guard": "oracle/cancel_preserves_body_history",
+      "candidate_observed_guard_ids": [],
+      "negative_case_ids": [],
+      "witness_status": "NO_DEDICATED_NEGATIVE_RECORDED",
+      "scope": "fixture_assertion"
+    },
+    {
+      "path": "scripts/pm_goal_own_c3_w12b_oracles.py",
+      "line": 283,
+      "guard_expression": "'oracle/one_stop'",
+      "predicate": "value.stop['user_stop_epoch'] == 8 and value.stop['continuation_epoch'] == 12",
+      "literal_guard": "oracle/one_stop",
+      "candidate_observed_guard_ids": [],
+      "negative_case_ids": [],
+      "witness_status": "NO_DEDICATED_NEGATIVE_RECORDED",
+      "scope": "fixture_assertion"
+    },
+    {
+      "path": "scripts/pm_goal_own_c3_w12b_oracles.py",
+      "line": 314,
+      "guard_expression": "'oracle/refusal_preserves_prior_effects'",
+      "predicate": "equal(value.effects, before)",
+      "literal_guard": "oracle/refusal_preserves_prior_effects",
+      "candidate_observed_guard_ids": [],
+      "negative_case_ids": [],
+      "witness_status": "NO_DEDICATED_NEGATIVE_RECORDED",
+      "scope": "fixture_assertion"
+    },
+    {
+      "path": "scripts/pm_goal_own_c3_w12b_oracles.py",
+      "line": 323,
+      "guard_expression": "'oracle/crash_refusal'",
+      "predicate": "str(error) == 'C12/' + ('before/' if t == 'before' else 'lost_ack/') + o",
+      "literal_guard": "oracle/crash_refusal",
+      "candidate_observed_guard_ids": [],
+      "negative_case_ids": [],
+      "witness_status": "NO_DEDICATED_NEGATIVE_RECORDED",
+      "scope": "fixture_assertion"
+    },
+    {
+      "path": "scripts/pm_goal_own_c3_w12b_oracles.py",
+      "line": 326,
+      "guard_expression": "'oracle/crash_prefix'",
+      "predicate": "value.effects == before + ([] if t == 'before' else [o])",
+      "literal_guard": "oracle/crash_prefix",
+      "candidate_observed_guard_ids": [],
+      "negative_case_ids": [],
+      "witness_status": "NO_DEDICATED_NEGATIVE_RECORDED",
+      "scope": "fixture_assertion"
+    },
+    {
+      "path": "scripts/pm_goal_own_c3_w12b_oracles.py",
+      "line": 327,
+      "guard_expression": "'oracle/no_body_rewrite'",
+      "predicate": "equal(value.snapshot, value.migration.original_snapshot)",
+      "literal_guard": "oracle/no_body_rewrite",
+      "candidate_observed_guard_ids": [],
+      "negative_case_ids": [],
+      "witness_status": "NO_DEDICATED_NEGATIVE_RECORDED",
+      "scope": "fixture_assertion"
+    },
+    {
+      "path": "scripts/pm_goal_own_c3_w12b_oracles.py",
+      "line": 334,
+      "guard_expression": "'oracle/withdrawal_keeps_cancellation_pending'",
+      "predicate": "value.operation_id in result['preserved_pending_operation_ids']",
+      "literal_guard": "oracle/withdrawal_keeps_cancellation_pending",
+      "candidate_observed_guard_ids": [],
+      "negative_case_ids": [],
+      "witness_status": "NO_DEDICATED_NEGATIVE_RECORDED",
+      "scope": "fixture_assertion"
+    },
+    {
+      "path": "scripts/pm_goal_own_c3_w12b_oracles.py",
+      "line": 341,
+      "guard_expression": "'oracle/no_effect_stop'",
+      "predicate": "equal(value.stop, value.initial_stop)",
+      "literal_guard": "oracle/no_effect_stop",
+      "candidate_observed_guard_ids": [],
+      "negative_case_ids": [],
+      "witness_status": "NO_DEDICATED_NEGATIVE_RECORDED",
+      "scope": "fixture_assertion"
+    },
+    {
+      "path": "scripts/pm_goal_own_c3_w12b_oracles.py",
+      "line": 355,
+      "guard_expression": "'oracle/unknown_terminal_immutable'",
+      "predicate": "equal(value.terminal, terminal)",
+      "literal_guard": "oracle/unknown_terminal_immutable",
+      "candidate_observed_guard_ids": [],
+      "negative_case_ids": [],
+      "witness_status": "NO_DEDICATED_NEGATIVE_RECORDED",
+      "scope": "fixture_assertion"
+    },
+    {
+      "path": "scripts/pm_goal_own_c3_w12b_oracles.py",
+      "line": 356,
+      "guard_expression": "'oracle/one_first_event'",
+      "predicate": "len(value.append_owner.frames) == 1",
+      "literal_guard": "oracle/one_first_event",
+      "candidate_observed_guard_ids": [],
+      "negative_case_ids": [],
+      "witness_status": "NO_DEDICATED_NEGATIVE_RECORDED",
+      "scope": "fixture_assertion"
+    },
+    {
+      "path": "scripts/pm_goal_own_c3_w12b_oracles.py",
+      "line": 397,
+      "guard_expression": "'oracle/unrelated_stop_preserved'",
+      "predicate": "value.migration.cells[key] == raw",
+      "literal_guard": "oracle/unrelated_stop_preserved",
+      "candidate_observed_guard_ids": [],
+      "negative_case_ids": [],
+      "witness_status": "NO_DEDICATED_NEGATIVE_RECORDED",
+      "scope": "fixture_assertion"
+    },
+    {
+      "path": "scripts/pm_goal_own_c3_w12b_oracles.py",
+      "line": 413,
+      "guard_expression": "'oracle/torn_native_preimage_no_own_effect'",
+      "predicate": "equal(value.effects, before)",
+      "literal_guard": "oracle/torn_native_preimage_no_own_effect",
+      "candidate_observed_guard_ids": [],
+      "negative_case_ids": [],
+      "witness_status": "NO_DEDICATED_NEGATIVE_RECORDED",
+      "scope": "fixture_assertion"
+    },
+    {
+      "path": "scripts/pm_goal_own_c3_w12b_oracles.py",
+      "line": 435,
+      "guard_expression": "'oracle/exact_first_receipt_replay'",
+      "predicate": "equal(returned, original) and len(value.append_owner.frames) == 1",
+      "literal_guard": "oracle/exact_first_receipt_replay",
+      "candidate_observed_guard_ids": [],
+      "negative_case_ids": [],
+      "witness_status": "NO_DEDICATED_NEGATIVE_RECORDED",
+      "scope": "fixture_assertion"
+    },
+    {
+      "path": "scripts/pm_goal_own_c3_w12b_roots.py",
+      "line": 26,
+      "guard_expression": "'w12b/locations_hash'",
+      "predicate": "digest(locations_raw) == self.selection['whole_resource_locations_sha256']",
+      "literal_guard": "w12b/locations_hash",
+      "candidate_observed_guard_ids": [],
+      "negative_case_ids": [],
+      "witness_status": "NO_DEDICATED_NEGATIVE_RECORDED",
+      "scope": "runtime_or_setup_guard"
+    },
+    {
+      "path": "scripts/pm_goal_own_c3_w12b_roots.py",
+      "line": 32,
+      "guard_expression": "'w12b/selection_hash/' + row['path']",
+      "predicate": "digest(raw) == row['sha256']",
+      "literal_guard": null,
+      "candidate_observed_guard_ids": [],
+      "negative_case_ids": [],
+      "witness_status": "NO_DEDICATED_NEGATIVE_RECORDED",
+      "scope": "runtime_or_setup_guard"
+    }
+  ],
+  "other_assertion_or_raise_sites": [
+    {
+      "path": "scripts/pm_goal_own_c3_w12b_cancel.py",
+      "line": 76,
+      "expression": "raise Refusal('C12/append_ack_lost')",
+      "witness_status": "NOT_INDEPENDENTLY_ISOLATED"
+    },
+    {
+      "path": "scripts/pm_goal_own_c3_w12b_cancel.py",
+      "line": 112,
+      "expression": "raise Refusal('C12/append_ack_lost')",
+      "witness_status": "NOT_INDEPENDENTLY_ISOLATED"
+    },
+    {
+      "path": "scripts/pm_goal_own_c3_w12b_cancel.py",
+      "line": 323,
+      "expression": "raise Refusal('C12/before/' + operation)",
+      "witness_status": "NOT_INDEPENDENTLY_ISOLATED"
+    },
+    {
+      "path": "scripts/pm_goal_own_c3_w12b_cancel.py",
+      "line": 342,
+      "expression": "raise Refusal('C12/lost_ack/' + operation)",
+      "witness_status": "NOT_INDEPENDENTLY_ISOLATED"
+    },
+    {
+      "path": "scripts/pm_goal_own_c3_w12b_migration.py",
+      "line": 347,
+      "expression": "raise Refusal('M12/before_commit')",
+      "witness_status": "NOT_INDEPENDENTLY_ISOLATED"
+    },
+    {
+      "path": "scripts/pm_goal_own_c3_w12b_migration.py",
+      "line": 355,
+      "expression": "raise Refusal('M12/lost_ack')",
+      "witness_status": "NOT_INDEPENDENTLY_ISOLATED"
+    },
+    {
+      "path": "scripts/pm_goal_own_c3_w12b_oracles.py",
+      "line": 206,
+      "expression": "raise AssertionError('fault did not refuse')",
+      "witness_status": "NOT_INDEPENDENTLY_ISOLATED"
+    },
+    {
+      "path": "scripts/pm_goal_own_c3_w12b_oracles.py",
+      "line": 243,
+      "expression": "raise AssertionError('withdrawal permitted capture')",
+      "witness_status": "NOT_INDEPENDENTLY_ISOLATED"
+    },
+    {
+      "path": "scripts/pm_goal_own_c3_w12b_oracles.py",
+      "line": 325,
+      "expression": "raise AssertionError('fault did not refuse')",
+      "witness_status": "NOT_INDEPENDENTLY_ISOLATED"
+    },
+    {
+      "path": "scripts/pm_goal_own_c3_w12b_oracles.py",
+      "line": 522,
+      "expression": "raise AssertionError('negative rejected for another schema defect')",
+      "witness_status": "NOT_INDEPENDENTLY_ISOLATED"
+    },
+    {
+      "path": "scripts/pm_goal_own_c3_w12b_oracles.py",
+      "line": 523,
+      "expression": "raise Refusal(g)",
+      "witness_status": "NOT_INDEPENDENTLY_ISOLATED"
+    },
+    {
+      "path": "scripts/pm_goal_own_c3_w12b_oracles.py",
+      "line": 566,
+      "expression": "raise SystemExit(main())",
+      "witness_status": "NOT_INDEPENDENTLY_ISOLATED"
+    },
+    {
+      "path": "scripts/pm_goal_own_c3_w12b_roots.py",
+      "line": 75,
+      "expression": "raise ValueError('uninhabitable specimen type conjunction')",
+      "witness_status": "NOT_INDEPENDENTLY_ISOLATED"
+    },
+    {
+      "path": "scripts/pm_goal_own_c3_w12b_roots.py",
+      "line": 109,
+      "expression": "raise ValueError('unsupported specimen regex token ' + str(op))",
+      "witness_status": "NOT_INDEPENDENTLY_ISOLATED"
+    },
+    {
+      "path": "scripts/pm_goal_own_c3_w12b_roots.py",
+      "line": 121,
+      "expression": "raise ValueError('recursive specimen requires an explicit finite seed')",
+      "witness_status": "NOT_INDEPENDENTLY_ISOLATED"
+    },
+    {
+      "path": "scripts/pm_goal_own_c3_w12b_roots.py",
+      "line": 125,
+      "expression": "raise ValueError('uninhabitable specimen')",
+      "witness_status": "NOT_INDEPENDENTLY_ISOLATED"
+    },
+    {
+      "path": "scripts/pm_goal_own_c3_w12b_roots.py",
+      "line": 184,
+      "expression": "raise ValueError('no finite specimen arm: ' + repr(errors[:3]))",
+      "witness_status": "NOT_INDEPENDENTLY_ISOLATED"
+    },
+    {
+      "path": "scripts/pm_goal_own_c3_w12b_roots.py",
+      "line": 246,
+      "expression": "raise ValueError('string specimen needs explicit seed: ' + repr(schema))",
+      "witness_status": "NOT_INDEPENDENTLY_ISOLATED"
+    }
+  ]
+}

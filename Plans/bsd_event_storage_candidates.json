@@ -1,0 +1,2285 @@
+{
+  "schema_id": "pm.bsd.event_storage_candidates.v1",
+  "schema_version": "1.0.0",
+  "status": "PREPARED_WITHOUT_ADMISSION",
+  "base_sha": "f9c5de6561dff0a53a48e530f2a5c6804a7e941d",
+  "runtime_enabled": false,
+  "registry_family_append": false,
+  "candidate_rows": [
+    {
+      "family_id": "bsd_advice_emitted_operation",
+      "status": "PREPARED_WITHOUT_ADMISSION",
+      "storage_kind": "redb",
+      "database": "canonical",
+      "key_shape": "bsd_advice_emitted_operation.v1:{scope_partition}:{hex(owner_operation_id)}",
+      "schema_version": "1.0.0",
+      "value_schema_id": "pm.bsd.event_operation.advice_emitted.v1",
+      "value_schema_ref": "Plans/bsd_event_storage_contracts.schema.json#/$defs/advice_emitted_operation",
+      "owner_doc": "Plans/storage-plan.md#SP-1350",
+      "producer": [
+        "BackSeatDriverService::deliver_advice"
+      ],
+      "consumers": [
+        "reader.bsd.advice_emitted@1.0.0",
+        "AssistantChat::bsd_advisor_note"
+      ],
+      "encoding": "messagepack_canonical",
+      "max_inline_bytes": 16384,
+      "oversize_route": "SP-337 payload references; measure the complete value, not only the event body",
+      "recovery_disposition": "canonical_non_rebuildable; coherent mandatory backup and SP-286 original receipt resolution; unavailable source never becomes success",
+      "retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-EVENT-IDENTITY-APPROOT",
+        "policy_version": "1.0.0"
+      },
+      "redaction_no_secret_rule": "IDs, digests and access-checked refs only; no original body, secret or local absolute path.",
+      "runtime_enabled": false,
+      "registration_prerequisites": [
+        "independent reviews",
+        "exact physical registry/migration/budget adoption",
+        "SP-318 lifecycle physical family registration",
+        "event admission for bsd.advice_emitted"
+      ],
+      "event_retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-RUNTIME-365D",
+        "policy_version": "1.0.0"
+      }
+    },
+    {
+      "family_id": "bsd_advice_emitted_checkpoint",
+      "status": "PREPARED_WITHOUT_ADMISSION",
+      "storage_kind": "redb",
+      "database": "derived",
+      "key_shape": "bsd_advice_emitted_checkpoint.v1:{scope_partition}:{storage_instance_id}",
+      "schema_version": "1.0.0",
+      "value_schema_id": "pm.bsd.event_checkpoint.advice_emitted.v1",
+      "value_schema_ref": "Plans/bsd_event_storage_contracts.schema.json#/$defs/advice_emitted_checkpoint",
+      "owner_doc": "Plans/storage-plan.md#SP-1350",
+      "producer": [
+        "projector.bsd.advice_emitted@1.0.0"
+      ],
+      "consumers": [
+        "reader.bsd.advice_emitted@1.0.0",
+        "AssistantChat::bsd_advisor_note"
+      ],
+      "encoding": "messagepack_canonical",
+      "max_inline_bytes": 16384,
+      "oversize_route": "SP-337 payload references; measure the complete value, not only the event body",
+      "recovery_disposition": "rebuildable from verified retained exact-family events with SP-278 source proof; source loss stays disclosed",
+      "retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-PROJECTION-3GEN",
+        "policy_version": "1.0.0"
+      },
+      "redaction_no_secret_rule": "IDs, digests and access-checked refs only; no original body, secret or local absolute path.",
+      "runtime_enabled": false,
+      "registration_prerequisites": [
+        "independent reviews",
+        "exact physical registry/migration/budget adoption",
+        "SP-318 lifecycle physical family registration",
+        "event admission for bsd.advice_emitted"
+      ],
+      "event_retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-RUNTIME-365D",
+        "policy_version": "1.0.0"
+      }
+    },
+    {
+      "family_id": "bsd_advice_emitted_projection",
+      "status": "PREPARED_WITHOUT_ADMISSION",
+      "storage_kind": "redb",
+      "database": "derived",
+      "key_shape": "bsd_advice_emitted_projection.v1:{scope_partition}:{hex(owner_operation_id)}",
+      "schema_version": "1.0.0",
+      "value_schema_id": "pm.bsd.event_projection.advice_emitted.v1",
+      "value_schema_ref": "Plans/bsd_event_storage_contracts.schema.json#/$defs/advice_emitted_projection",
+      "owner_doc": "Plans/storage-plan.md#SP-1350",
+      "producer": [
+        "projector.bsd.advice_emitted@1.0.0"
+      ],
+      "consumers": [
+        "reader.bsd.advice_emitted@1.0.0",
+        "AssistantChat::bsd_advisor_note"
+      ],
+      "encoding": "messagepack_canonical",
+      "max_inline_bytes": 16384,
+      "oversize_route": "SP-337 payload references; measure the complete value, not only the event body",
+      "recovery_disposition": "rebuildable from verified retained exact-family events with SP-278 source proof; source loss stays disclosed",
+      "retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-PROJECTION-3GEN",
+        "policy_version": "1.0.0"
+      },
+      "redaction_no_secret_rule": "IDs, digests and access-checked refs only; no original body, secret or local absolute path.",
+      "runtime_enabled": false,
+      "registration_prerequisites": [
+        "independent reviews",
+        "exact physical registry/migration/budget adoption",
+        "SP-318 lifecycle physical family registration",
+        "event admission for bsd.advice_emitted"
+      ],
+      "event_retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-RUNTIME-365D",
+        "policy_version": "1.0.0"
+      }
+    },
+    {
+      "family_id": "bsd_assignment_paused_operation",
+      "status": "PREPARED_WITHOUT_ADMISSION",
+      "storage_kind": "redb",
+      "database": "canonical",
+      "key_shape": "bsd_assignment_paused_operation.v1:{scope_partition}:{hex(owner_operation_id)}",
+      "schema_version": "1.0.0",
+      "value_schema_id": "pm.bsd.event_operation.assignment_paused.v1",
+      "value_schema_ref": "Plans/bsd_event_storage_contracts.schema.json#/$defs/assignment_paused_operation",
+      "owner_doc": "Plans/storage-plan.md#SP-1351",
+      "producer": [
+        "BackSeatDriverService::commit_assignment_pause"
+      ],
+      "consumers": [
+        "reader.bsd.assignment_paused@1.0.0",
+        "AssistantContext::bsd_pause_projection"
+      ],
+      "encoding": "messagepack_canonical",
+      "max_inline_bytes": 16384,
+      "oversize_route": "SP-337 payload references; measure the complete value, not only the event body",
+      "recovery_disposition": "canonical_non_rebuildable; coherent mandatory backup and SP-286 original receipt resolution; unavailable source never becomes success",
+      "retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-EVENT-IDENTITY-APPROOT",
+        "policy_version": "1.0.0"
+      },
+      "redaction_no_secret_rule": "IDs, digests and access-checked refs only; no original body, secret or local absolute path.",
+      "runtime_enabled": false,
+      "registration_prerequisites": [
+        "independent reviews",
+        "exact physical registry/migration/budget adoption",
+        "SP-318 lifecycle physical family registration",
+        "event admission for bsd.assignment_paused"
+      ],
+      "event_retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-RUNTIME-365D",
+        "policy_version": "1.0.0"
+      }
+    },
+    {
+      "family_id": "bsd_assignment_paused_checkpoint",
+      "status": "PREPARED_WITHOUT_ADMISSION",
+      "storage_kind": "redb",
+      "database": "derived",
+      "key_shape": "bsd_assignment_paused_checkpoint.v1:{scope_partition}:{storage_instance_id}",
+      "schema_version": "1.0.0",
+      "value_schema_id": "pm.bsd.event_checkpoint.assignment_paused.v1",
+      "value_schema_ref": "Plans/bsd_event_storage_contracts.schema.json#/$defs/assignment_paused_checkpoint",
+      "owner_doc": "Plans/storage-plan.md#SP-1351",
+      "producer": [
+        "projector.bsd.assignment_paused@1.0.0"
+      ],
+      "consumers": [
+        "reader.bsd.assignment_paused@1.0.0",
+        "AssistantContext::bsd_pause_projection"
+      ],
+      "encoding": "messagepack_canonical",
+      "max_inline_bytes": 16384,
+      "oversize_route": "SP-337 payload references; measure the complete value, not only the event body",
+      "recovery_disposition": "rebuildable from verified retained exact-family events with SP-278 source proof; source loss stays disclosed",
+      "retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-PROJECTION-3GEN",
+        "policy_version": "1.0.0"
+      },
+      "redaction_no_secret_rule": "IDs, digests and access-checked refs only; no original body, secret or local absolute path.",
+      "runtime_enabled": false,
+      "registration_prerequisites": [
+        "independent reviews",
+        "exact physical registry/migration/budget adoption",
+        "SP-318 lifecycle physical family registration",
+        "event admission for bsd.assignment_paused"
+      ],
+      "event_retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-RUNTIME-365D",
+        "policy_version": "1.0.0"
+      }
+    },
+    {
+      "family_id": "bsd_assignment_paused_projection",
+      "status": "PREPARED_WITHOUT_ADMISSION",
+      "storage_kind": "redb",
+      "database": "derived",
+      "key_shape": "bsd_assignment_paused_projection.v1:{scope_partition}:{hex(owner_operation_id)}",
+      "schema_version": "1.0.0",
+      "value_schema_id": "pm.bsd.event_projection.assignment_paused.v1",
+      "value_schema_ref": "Plans/bsd_event_storage_contracts.schema.json#/$defs/assignment_paused_projection",
+      "owner_doc": "Plans/storage-plan.md#SP-1351",
+      "producer": [
+        "projector.bsd.assignment_paused@1.0.0"
+      ],
+      "consumers": [
+        "reader.bsd.assignment_paused@1.0.0",
+        "AssistantContext::bsd_pause_projection"
+      ],
+      "encoding": "messagepack_canonical",
+      "max_inline_bytes": 16384,
+      "oversize_route": "SP-337 payload references; measure the complete value, not only the event body",
+      "recovery_disposition": "rebuildable from verified retained exact-family events with SP-278 source proof; source loss stays disclosed",
+      "retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-PROJECTION-3GEN",
+        "policy_version": "1.0.0"
+      },
+      "redaction_no_secret_rule": "IDs, digests and access-checked refs only; no original body, secret or local absolute path.",
+      "runtime_enabled": false,
+      "registration_prerequisites": [
+        "independent reviews",
+        "exact physical registry/migration/budget adoption",
+        "SP-318 lifecycle physical family registration",
+        "event admission for bsd.assignment_paused"
+      ],
+      "event_retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-RUNTIME-365D",
+        "policy_version": "1.0.0"
+      }
+    },
+    {
+      "family_id": "bsd_assignment_resumed_operation",
+      "status": "PREPARED_WITHOUT_ADMISSION",
+      "storage_kind": "redb",
+      "database": "canonical",
+      "key_shape": "bsd_assignment_resumed_operation.v1:{scope_partition}:{hex(owner_operation_id)}",
+      "schema_version": "1.0.0",
+      "value_schema_id": "pm.bsd.event_operation.assignment_resumed.v1",
+      "value_schema_ref": "Plans/bsd_event_storage_contracts.schema.json#/$defs/assignment_resumed_operation",
+      "owner_doc": "Plans/storage-plan.md#SP-1352",
+      "producer": [
+        "BackSeatDriverService::commit_assignment_resume"
+      ],
+      "consumers": [
+        "reader.bsd.assignment_resumed@1.0.0",
+        "AssistantContext::bsd_resume_projection"
+      ],
+      "encoding": "messagepack_canonical",
+      "max_inline_bytes": 16384,
+      "oversize_route": "SP-337 payload references; measure the complete value, not only the event body",
+      "recovery_disposition": "canonical_non_rebuildable; coherent mandatory backup and SP-286 original receipt resolution; unavailable source never becomes success",
+      "retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-EVENT-IDENTITY-APPROOT",
+        "policy_version": "1.0.0"
+      },
+      "redaction_no_secret_rule": "IDs, digests and access-checked refs only; no original body, secret or local absolute path.",
+      "runtime_enabled": false,
+      "registration_prerequisites": [
+        "independent reviews",
+        "exact physical registry/migration/budget adoption",
+        "SP-318 lifecycle physical family registration",
+        "event admission for bsd.assignment_resumed"
+      ],
+      "event_retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-RUNTIME-365D",
+        "policy_version": "1.0.0"
+      }
+    },
+    {
+      "family_id": "bsd_assignment_resumed_checkpoint",
+      "status": "PREPARED_WITHOUT_ADMISSION",
+      "storage_kind": "redb",
+      "database": "derived",
+      "key_shape": "bsd_assignment_resumed_checkpoint.v1:{scope_partition}:{storage_instance_id}",
+      "schema_version": "1.0.0",
+      "value_schema_id": "pm.bsd.event_checkpoint.assignment_resumed.v1",
+      "value_schema_ref": "Plans/bsd_event_storage_contracts.schema.json#/$defs/assignment_resumed_checkpoint",
+      "owner_doc": "Plans/storage-plan.md#SP-1352",
+      "producer": [
+        "projector.bsd.assignment_resumed@1.0.0"
+      ],
+      "consumers": [
+        "reader.bsd.assignment_resumed@1.0.0",
+        "AssistantContext::bsd_resume_projection"
+      ],
+      "encoding": "messagepack_canonical",
+      "max_inline_bytes": 16384,
+      "oversize_route": "SP-337 payload references; measure the complete value, not only the event body",
+      "recovery_disposition": "rebuildable from verified retained exact-family events with SP-278 source proof; source loss stays disclosed",
+      "retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-PROJECTION-3GEN",
+        "policy_version": "1.0.0"
+      },
+      "redaction_no_secret_rule": "IDs, digests and access-checked refs only; no original body, secret or local absolute path.",
+      "runtime_enabled": false,
+      "registration_prerequisites": [
+        "independent reviews",
+        "exact physical registry/migration/budget adoption",
+        "SP-318 lifecycle physical family registration",
+        "event admission for bsd.assignment_resumed"
+      ],
+      "event_retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-RUNTIME-365D",
+        "policy_version": "1.0.0"
+      }
+    },
+    {
+      "family_id": "bsd_assignment_resumed_projection",
+      "status": "PREPARED_WITHOUT_ADMISSION",
+      "storage_kind": "redb",
+      "database": "derived",
+      "key_shape": "bsd_assignment_resumed_projection.v1:{scope_partition}:{hex(owner_operation_id)}",
+      "schema_version": "1.0.0",
+      "value_schema_id": "pm.bsd.event_projection.assignment_resumed.v1",
+      "value_schema_ref": "Plans/bsd_event_storage_contracts.schema.json#/$defs/assignment_resumed_projection",
+      "owner_doc": "Plans/storage-plan.md#SP-1352",
+      "producer": [
+        "projector.bsd.assignment_resumed@1.0.0"
+      ],
+      "consumers": [
+        "reader.bsd.assignment_resumed@1.0.0",
+        "AssistantContext::bsd_resume_projection"
+      ],
+      "encoding": "messagepack_canonical",
+      "max_inline_bytes": 16384,
+      "oversize_route": "SP-337 payload references; measure the complete value, not only the event body",
+      "recovery_disposition": "rebuildable from verified retained exact-family events with SP-278 source proof; source loss stays disclosed",
+      "retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-PROJECTION-3GEN",
+        "policy_version": "1.0.0"
+      },
+      "redaction_no_secret_rule": "IDs, digests and access-checked refs only; no original body, secret or local absolute path.",
+      "runtime_enabled": false,
+      "registration_prerequisites": [
+        "independent reviews",
+        "exact physical registry/migration/budget adoption",
+        "SP-318 lifecycle physical family registration",
+        "event admission for bsd.assignment_resumed"
+      ],
+      "event_retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-RUNTIME-365D",
+        "policy_version": "1.0.0"
+      }
+    },
+    {
+      "family_id": "bsd_assignment_started_operation",
+      "status": "PREPARED_WITHOUT_ADMISSION",
+      "storage_kind": "redb",
+      "database": "canonical",
+      "key_shape": "bsd_assignment_started_operation.v1:{scope_partition}:{hex(owner_operation_id)}",
+      "schema_version": "1.0.0",
+      "value_schema_id": "pm.bsd.event_operation.assignment_started.v1",
+      "value_schema_ref": "Plans/bsd_event_storage_contracts.schema.json#/$defs/assignment_started_operation",
+      "owner_doc": "Plans/storage-plan.md#SP-1353",
+      "producer": [
+        "BackSeatDriverService::commit_assignment_start"
+      ],
+      "consumers": [
+        "reader.bsd.assignment_started@1.0.0",
+        "AssistantContext::bsd_assignment_projection"
+      ],
+      "encoding": "messagepack_canonical",
+      "max_inline_bytes": 16384,
+      "oversize_route": "SP-337 payload references; measure the complete value, not only the event body",
+      "recovery_disposition": "canonical_non_rebuildable; coherent mandatory backup and SP-286 original receipt resolution; unavailable source never becomes success",
+      "retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-EVENT-IDENTITY-APPROOT",
+        "policy_version": "1.0.0"
+      },
+      "redaction_no_secret_rule": "IDs, digests and access-checked refs only; no original body, secret or local absolute path.",
+      "runtime_enabled": false,
+      "registration_prerequisites": [
+        "independent reviews",
+        "exact physical registry/migration/budget adoption",
+        "SP-318 lifecycle physical family registration",
+        "event admission for bsd.assignment_started"
+      ],
+      "event_retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-RUNTIME-365D",
+        "policy_version": "1.0.0"
+      }
+    },
+    {
+      "family_id": "bsd_assignment_started_checkpoint",
+      "status": "PREPARED_WITHOUT_ADMISSION",
+      "storage_kind": "redb",
+      "database": "derived",
+      "key_shape": "bsd_assignment_started_checkpoint.v1:{scope_partition}:{storage_instance_id}",
+      "schema_version": "1.0.0",
+      "value_schema_id": "pm.bsd.event_checkpoint.assignment_started.v1",
+      "value_schema_ref": "Plans/bsd_event_storage_contracts.schema.json#/$defs/assignment_started_checkpoint",
+      "owner_doc": "Plans/storage-plan.md#SP-1353",
+      "producer": [
+        "projector.bsd.assignment_started@1.0.0"
+      ],
+      "consumers": [
+        "reader.bsd.assignment_started@1.0.0",
+        "AssistantContext::bsd_assignment_projection"
+      ],
+      "encoding": "messagepack_canonical",
+      "max_inline_bytes": 16384,
+      "oversize_route": "SP-337 payload references; measure the complete value, not only the event body",
+      "recovery_disposition": "rebuildable from verified retained exact-family events with SP-278 source proof; source loss stays disclosed",
+      "retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-PROJECTION-3GEN",
+        "policy_version": "1.0.0"
+      },
+      "redaction_no_secret_rule": "IDs, digests and access-checked refs only; no original body, secret or local absolute path.",
+      "runtime_enabled": false,
+      "registration_prerequisites": [
+        "independent reviews",
+        "exact physical registry/migration/budget adoption",
+        "SP-318 lifecycle physical family registration",
+        "event admission for bsd.assignment_started"
+      ],
+      "event_retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-RUNTIME-365D",
+        "policy_version": "1.0.0"
+      }
+    },
+    {
+      "family_id": "bsd_assignment_started_projection",
+      "status": "PREPARED_WITHOUT_ADMISSION",
+      "storage_kind": "redb",
+      "database": "derived",
+      "key_shape": "bsd_assignment_started_projection.v1:{scope_partition}:{hex(owner_operation_id)}",
+      "schema_version": "1.0.0",
+      "value_schema_id": "pm.bsd.event_projection.assignment_started.v1",
+      "value_schema_ref": "Plans/bsd_event_storage_contracts.schema.json#/$defs/assignment_started_projection",
+      "owner_doc": "Plans/storage-plan.md#SP-1353",
+      "producer": [
+        "projector.bsd.assignment_started@1.0.0"
+      ],
+      "consumers": [
+        "reader.bsd.assignment_started@1.0.0",
+        "AssistantContext::bsd_assignment_projection"
+      ],
+      "encoding": "messagepack_canonical",
+      "max_inline_bytes": 16384,
+      "oversize_route": "SP-337 payload references; measure the complete value, not only the event body",
+      "recovery_disposition": "rebuildable from verified retained exact-family events with SP-278 source proof; source loss stays disclosed",
+      "retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-PROJECTION-3GEN",
+        "policy_version": "1.0.0"
+      },
+      "redaction_no_secret_rule": "IDs, digests and access-checked refs only; no original body, secret or local absolute path.",
+      "runtime_enabled": false,
+      "registration_prerequisites": [
+        "independent reviews",
+        "exact physical registry/migration/budget adoption",
+        "SP-318 lifecycle physical family registration",
+        "event admission for bsd.assignment_started"
+      ],
+      "event_retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-RUNTIME-365D",
+        "policy_version": "1.0.0"
+      }
+    },
+    {
+      "family_id": "bsd_assignment_stopped_operation",
+      "status": "PREPARED_WITHOUT_ADMISSION",
+      "storage_kind": "redb",
+      "database": "canonical",
+      "key_shape": "bsd_assignment_stopped_operation.v1:{scope_partition}:{hex(owner_operation_id)}",
+      "schema_version": "1.0.0",
+      "value_schema_id": "pm.bsd.event_operation.assignment_stopped.v1",
+      "value_schema_ref": "Plans/bsd_event_storage_contracts.schema.json#/$defs/assignment_stopped_operation",
+      "owner_doc": "Plans/storage-plan.md#SP-1354",
+      "producer": [
+        "BackSeatDriverService::commit_assignment_stop"
+      ],
+      "consumers": [
+        "reader.bsd.assignment_stopped@1.0.0",
+        "AssistantContext::bsd_stopped_projection"
+      ],
+      "encoding": "messagepack_canonical",
+      "max_inline_bytes": 16384,
+      "oversize_route": "SP-337 payload references; measure the complete value, not only the event body",
+      "recovery_disposition": "canonical_non_rebuildable; coherent mandatory backup and SP-286 original receipt resolution; unavailable source never becomes success",
+      "retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-EVENT-IDENTITY-APPROOT",
+        "policy_version": "1.0.0"
+      },
+      "redaction_no_secret_rule": "IDs, digests and access-checked refs only; no original body, secret or local absolute path.",
+      "runtime_enabled": false,
+      "registration_prerequisites": [
+        "independent reviews",
+        "exact physical registry/migration/budget adoption",
+        "SP-318 lifecycle physical family registration",
+        "event admission for bsd.assignment_stopped"
+      ],
+      "event_retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-RUNTIME-365D",
+        "policy_version": "1.0.0"
+      }
+    },
+    {
+      "family_id": "bsd_assignment_stopped_checkpoint",
+      "status": "PREPARED_WITHOUT_ADMISSION",
+      "storage_kind": "redb",
+      "database": "derived",
+      "key_shape": "bsd_assignment_stopped_checkpoint.v1:{scope_partition}:{storage_instance_id}",
+      "schema_version": "1.0.0",
+      "value_schema_id": "pm.bsd.event_checkpoint.assignment_stopped.v1",
+      "value_schema_ref": "Plans/bsd_event_storage_contracts.schema.json#/$defs/assignment_stopped_checkpoint",
+      "owner_doc": "Plans/storage-plan.md#SP-1354",
+      "producer": [
+        "projector.bsd.assignment_stopped@1.0.0"
+      ],
+      "consumers": [
+        "reader.bsd.assignment_stopped@1.0.0",
+        "AssistantContext::bsd_stopped_projection"
+      ],
+      "encoding": "messagepack_canonical",
+      "max_inline_bytes": 16384,
+      "oversize_route": "SP-337 payload references; measure the complete value, not only the event body",
+      "recovery_disposition": "rebuildable from verified retained exact-family events with SP-278 source proof; source loss stays disclosed",
+      "retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-PROJECTION-3GEN",
+        "policy_version": "1.0.0"
+      },
+      "redaction_no_secret_rule": "IDs, digests and access-checked refs only; no original body, secret or local absolute path.",
+      "runtime_enabled": false,
+      "registration_prerequisites": [
+        "independent reviews",
+        "exact physical registry/migration/budget adoption",
+        "SP-318 lifecycle physical family registration",
+        "event admission for bsd.assignment_stopped"
+      ],
+      "event_retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-RUNTIME-365D",
+        "policy_version": "1.0.0"
+      }
+    },
+    {
+      "family_id": "bsd_assignment_stopped_projection",
+      "status": "PREPARED_WITHOUT_ADMISSION",
+      "storage_kind": "redb",
+      "database": "derived",
+      "key_shape": "bsd_assignment_stopped_projection.v1:{scope_partition}:{hex(owner_operation_id)}",
+      "schema_version": "1.0.0",
+      "value_schema_id": "pm.bsd.event_projection.assignment_stopped.v1",
+      "value_schema_ref": "Plans/bsd_event_storage_contracts.schema.json#/$defs/assignment_stopped_projection",
+      "owner_doc": "Plans/storage-plan.md#SP-1354",
+      "producer": [
+        "projector.bsd.assignment_stopped@1.0.0"
+      ],
+      "consumers": [
+        "reader.bsd.assignment_stopped@1.0.0",
+        "AssistantContext::bsd_stopped_projection"
+      ],
+      "encoding": "messagepack_canonical",
+      "max_inline_bytes": 16384,
+      "oversize_route": "SP-337 payload references; measure the complete value, not only the event body",
+      "recovery_disposition": "rebuildable from verified retained exact-family events with SP-278 source proof; source loss stays disclosed",
+      "retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-PROJECTION-3GEN",
+        "policy_version": "1.0.0"
+      },
+      "redaction_no_secret_rule": "IDs, digests and access-checked refs only; no original body, secret or local absolute path.",
+      "runtime_enabled": false,
+      "registration_prerequisites": [
+        "independent reviews",
+        "exact physical registry/migration/budget adoption",
+        "SP-318 lifecycle physical family registration",
+        "event admission for bsd.assignment_stopped"
+      ],
+      "event_retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-RUNTIME-365D",
+        "policy_version": "1.0.0"
+      }
+    },
+    {
+      "family_id": "bsd_finding_cleared_operation",
+      "status": "PREPARED_WITHOUT_ADMISSION",
+      "storage_kind": "redb",
+      "database": "canonical",
+      "key_shape": "bsd_finding_cleared_operation.v1:{scope_partition}:{hex(owner_operation_id)}",
+      "schema_version": "1.0.0",
+      "value_schema_id": "pm.bsd.event_operation.finding_cleared.v1",
+      "value_schema_ref": "Plans/bsd_event_storage_contracts.schema.json#/$defs/finding_cleared_operation",
+      "owner_doc": "Plans/storage-plan.md#SP-1355",
+      "producer": [
+        "BackSeatDriverService::commit_finding_clear"
+      ],
+      "consumers": [
+        "reader.bsd.finding_cleared@1.0.0",
+        "AssistantContext::bsd_finding_projection"
+      ],
+      "encoding": "messagepack_canonical",
+      "max_inline_bytes": 16384,
+      "oversize_route": "SP-337 payload references; measure the complete value, not only the event body",
+      "recovery_disposition": "canonical_non_rebuildable; coherent mandatory backup and SP-286 original receipt resolution; unavailable source never becomes success",
+      "retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-EVENT-IDENTITY-APPROOT",
+        "policy_version": "1.0.0"
+      },
+      "redaction_no_secret_rule": "IDs, digests and access-checked refs only; no original body, secret or local absolute path.",
+      "runtime_enabled": false,
+      "registration_prerequisites": [
+        "independent reviews",
+        "exact physical registry/migration/budget adoption",
+        "SP-318 lifecycle physical family registration",
+        "event admission for bsd.finding_cleared"
+      ],
+      "event_retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-RUNTIME-365D",
+        "policy_version": "1.0.0"
+      }
+    },
+    {
+      "family_id": "bsd_finding_cleared_checkpoint",
+      "status": "PREPARED_WITHOUT_ADMISSION",
+      "storage_kind": "redb",
+      "database": "derived",
+      "key_shape": "bsd_finding_cleared_checkpoint.v1:{scope_partition}:{storage_instance_id}",
+      "schema_version": "1.0.0",
+      "value_schema_id": "pm.bsd.event_checkpoint.finding_cleared.v1",
+      "value_schema_ref": "Plans/bsd_event_storage_contracts.schema.json#/$defs/finding_cleared_checkpoint",
+      "owner_doc": "Plans/storage-plan.md#SP-1355",
+      "producer": [
+        "projector.bsd.finding_cleared@1.0.0"
+      ],
+      "consumers": [
+        "reader.bsd.finding_cleared@1.0.0",
+        "AssistantContext::bsd_finding_projection"
+      ],
+      "encoding": "messagepack_canonical",
+      "max_inline_bytes": 16384,
+      "oversize_route": "SP-337 payload references; measure the complete value, not only the event body",
+      "recovery_disposition": "rebuildable from verified retained exact-family events with SP-278 source proof; source loss stays disclosed",
+      "retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-PROJECTION-3GEN",
+        "policy_version": "1.0.0"
+      },
+      "redaction_no_secret_rule": "IDs, digests and access-checked refs only; no original body, secret or local absolute path.",
+      "runtime_enabled": false,
+      "registration_prerequisites": [
+        "independent reviews",
+        "exact physical registry/migration/budget adoption",
+        "SP-318 lifecycle physical family registration",
+        "event admission for bsd.finding_cleared"
+      ],
+      "event_retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-RUNTIME-365D",
+        "policy_version": "1.0.0"
+      }
+    },
+    {
+      "family_id": "bsd_finding_cleared_projection",
+      "status": "PREPARED_WITHOUT_ADMISSION",
+      "storage_kind": "redb",
+      "database": "derived",
+      "key_shape": "bsd_finding_cleared_projection.v1:{scope_partition}:{hex(owner_operation_id)}",
+      "schema_version": "1.0.0",
+      "value_schema_id": "pm.bsd.event_projection.finding_cleared.v1",
+      "value_schema_ref": "Plans/bsd_event_storage_contracts.schema.json#/$defs/finding_cleared_projection",
+      "owner_doc": "Plans/storage-plan.md#SP-1355",
+      "producer": [
+        "projector.bsd.finding_cleared@1.0.0"
+      ],
+      "consumers": [
+        "reader.bsd.finding_cleared@1.0.0",
+        "AssistantContext::bsd_finding_projection"
+      ],
+      "encoding": "messagepack_canonical",
+      "max_inline_bytes": 16384,
+      "oversize_route": "SP-337 payload references; measure the complete value, not only the event body",
+      "recovery_disposition": "rebuildable from verified retained exact-family events with SP-278 source proof; source loss stays disclosed",
+      "retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-PROJECTION-3GEN",
+        "policy_version": "1.0.0"
+      },
+      "redaction_no_secret_rule": "IDs, digests and access-checked refs only; no original body, secret or local absolute path.",
+      "runtime_enabled": false,
+      "registration_prerequisites": [
+        "independent reviews",
+        "exact physical registry/migration/budget adoption",
+        "SP-318 lifecycle physical family registration",
+        "event admission for bsd.finding_cleared"
+      ],
+      "event_retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-RUNTIME-365D",
+        "policy_version": "1.0.0"
+      }
+    },
+    {
+      "family_id": "bsd_finding_held_operation",
+      "status": "PREPARED_WITHOUT_ADMISSION",
+      "storage_kind": "redb",
+      "database": "canonical",
+      "key_shape": "bsd_finding_held_operation.v1:{scope_partition}:{hex(owner_operation_id)}",
+      "schema_version": "1.0.0",
+      "value_schema_id": "pm.bsd.event_operation.finding_held.v1",
+      "value_schema_ref": "Plans/bsd_event_storage_contracts.schema.json#/$defs/finding_held_operation",
+      "owner_doc": "Plans/storage-plan.md#SP-1356",
+      "producer": [
+        "BackSeatDriverService::commit_finding_hold"
+      ],
+      "consumers": [
+        "reader.bsd.finding_held@1.0.0",
+        "AssistantContext::bsd_held_projection"
+      ],
+      "encoding": "messagepack_canonical",
+      "max_inline_bytes": 16384,
+      "oversize_route": "SP-337 payload references; measure the complete value, not only the event body",
+      "recovery_disposition": "canonical_non_rebuildable; coherent mandatory backup and SP-286 original receipt resolution; unavailable source never becomes success",
+      "retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-EVENT-IDENTITY-APPROOT",
+        "policy_version": "1.0.0"
+      },
+      "redaction_no_secret_rule": "IDs, digests and access-checked refs only; no original body, secret or local absolute path.",
+      "runtime_enabled": false,
+      "registration_prerequisites": [
+        "independent reviews",
+        "exact physical registry/migration/budget adoption",
+        "SP-318 lifecycle physical family registration",
+        "event admission for bsd.finding_held"
+      ],
+      "event_retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-RUNTIME-365D",
+        "policy_version": "1.0.0"
+      }
+    },
+    {
+      "family_id": "bsd_finding_held_checkpoint",
+      "status": "PREPARED_WITHOUT_ADMISSION",
+      "storage_kind": "redb",
+      "database": "derived",
+      "key_shape": "bsd_finding_held_checkpoint.v1:{scope_partition}:{storage_instance_id}",
+      "schema_version": "1.0.0",
+      "value_schema_id": "pm.bsd.event_checkpoint.finding_held.v1",
+      "value_schema_ref": "Plans/bsd_event_storage_contracts.schema.json#/$defs/finding_held_checkpoint",
+      "owner_doc": "Plans/storage-plan.md#SP-1356",
+      "producer": [
+        "projector.bsd.finding_held@1.0.0"
+      ],
+      "consumers": [
+        "reader.bsd.finding_held@1.0.0",
+        "AssistantContext::bsd_held_projection"
+      ],
+      "encoding": "messagepack_canonical",
+      "max_inline_bytes": 16384,
+      "oversize_route": "SP-337 payload references; measure the complete value, not only the event body",
+      "recovery_disposition": "rebuildable from verified retained exact-family events with SP-278 source proof; source loss stays disclosed",
+      "retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-PROJECTION-3GEN",
+        "policy_version": "1.0.0"
+      },
+      "redaction_no_secret_rule": "IDs, digests and access-checked refs only; no original body, secret or local absolute path.",
+      "runtime_enabled": false,
+      "registration_prerequisites": [
+        "independent reviews",
+        "exact physical registry/migration/budget adoption",
+        "SP-318 lifecycle physical family registration",
+        "event admission for bsd.finding_held"
+      ],
+      "event_retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-RUNTIME-365D",
+        "policy_version": "1.0.0"
+      }
+    },
+    {
+      "family_id": "bsd_finding_held_projection",
+      "status": "PREPARED_WITHOUT_ADMISSION",
+      "storage_kind": "redb",
+      "database": "derived",
+      "key_shape": "bsd_finding_held_projection.v1:{scope_partition}:{hex(owner_operation_id)}",
+      "schema_version": "1.0.0",
+      "value_schema_id": "pm.bsd.event_projection.finding_held.v1",
+      "value_schema_ref": "Plans/bsd_event_storage_contracts.schema.json#/$defs/finding_held_projection",
+      "owner_doc": "Plans/storage-plan.md#SP-1356",
+      "producer": [
+        "projector.bsd.finding_held@1.0.0"
+      ],
+      "consumers": [
+        "reader.bsd.finding_held@1.0.0",
+        "AssistantContext::bsd_held_projection"
+      ],
+      "encoding": "messagepack_canonical",
+      "max_inline_bytes": 16384,
+      "oversize_route": "SP-337 payload references; measure the complete value, not only the event body",
+      "recovery_disposition": "rebuildable from verified retained exact-family events with SP-278 source proof; source loss stays disclosed",
+      "retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-PROJECTION-3GEN",
+        "policy_version": "1.0.0"
+      },
+      "redaction_no_secret_rule": "IDs, digests and access-checked refs only; no original body, secret or local absolute path.",
+      "runtime_enabled": false,
+      "registration_prerequisites": [
+        "independent reviews",
+        "exact physical registry/migration/budget adoption",
+        "SP-318 lifecycle physical family registration",
+        "event admission for bsd.finding_held"
+      ],
+      "event_retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-RUNTIME-365D",
+        "policy_version": "1.0.0"
+      }
+    },
+    {
+      "family_id": "bsd_finding_reconfirmed_operation",
+      "status": "PREPARED_WITHOUT_ADMISSION",
+      "storage_kind": "redb",
+      "database": "canonical",
+      "key_shape": "bsd_finding_reconfirmed_operation.v1:{scope_partition}:{hex(owner_operation_id)}",
+      "schema_version": "1.0.0",
+      "value_schema_id": "pm.bsd.event_operation.finding_reconfirmed.v1",
+      "value_schema_ref": "Plans/bsd_event_storage_contracts.schema.json#/$defs/finding_reconfirmed_operation",
+      "owner_doc": "Plans/storage-plan.md#SP-1357",
+      "producer": [
+        "BackSeatDriverService::commit_finding_reconfirmation"
+      ],
+      "consumers": [
+        "reader.bsd.finding_reconfirmed@1.0.0",
+        "AssistantContext::bsd_reconfirmation_projection"
+      ],
+      "encoding": "messagepack_canonical",
+      "max_inline_bytes": 16384,
+      "oversize_route": "SP-337 payload references; measure the complete value, not only the event body",
+      "recovery_disposition": "canonical_non_rebuildable; coherent mandatory backup and SP-286 original receipt resolution; unavailable source never becomes success",
+      "retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-EVENT-IDENTITY-APPROOT",
+        "policy_version": "1.0.0"
+      },
+      "redaction_no_secret_rule": "IDs, digests and access-checked refs only; no original body, secret or local absolute path.",
+      "runtime_enabled": false,
+      "registration_prerequisites": [
+        "independent reviews",
+        "exact physical registry/migration/budget adoption",
+        "SP-318 lifecycle physical family registration",
+        "event admission for bsd.finding_reconfirmed"
+      ],
+      "event_retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-RUNTIME-365D",
+        "policy_version": "1.0.0"
+      }
+    },
+    {
+      "family_id": "bsd_finding_reconfirmed_checkpoint",
+      "status": "PREPARED_WITHOUT_ADMISSION",
+      "storage_kind": "redb",
+      "database": "derived",
+      "key_shape": "bsd_finding_reconfirmed_checkpoint.v1:{scope_partition}:{storage_instance_id}",
+      "schema_version": "1.0.0",
+      "value_schema_id": "pm.bsd.event_checkpoint.finding_reconfirmed.v1",
+      "value_schema_ref": "Plans/bsd_event_storage_contracts.schema.json#/$defs/finding_reconfirmed_checkpoint",
+      "owner_doc": "Plans/storage-plan.md#SP-1357",
+      "producer": [
+        "projector.bsd.finding_reconfirmed@1.0.0"
+      ],
+      "consumers": [
+        "reader.bsd.finding_reconfirmed@1.0.0",
+        "AssistantContext::bsd_reconfirmation_projection"
+      ],
+      "encoding": "messagepack_canonical",
+      "max_inline_bytes": 16384,
+      "oversize_route": "SP-337 payload references; measure the complete value, not only the event body",
+      "recovery_disposition": "rebuildable from verified retained exact-family events with SP-278 source proof; source loss stays disclosed",
+      "retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-PROJECTION-3GEN",
+        "policy_version": "1.0.0"
+      },
+      "redaction_no_secret_rule": "IDs, digests and access-checked refs only; no original body, secret or local absolute path.",
+      "runtime_enabled": false,
+      "registration_prerequisites": [
+        "independent reviews",
+        "exact physical registry/migration/budget adoption",
+        "SP-318 lifecycle physical family registration",
+        "event admission for bsd.finding_reconfirmed"
+      ],
+      "event_retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-RUNTIME-365D",
+        "policy_version": "1.0.0"
+      }
+    },
+    {
+      "family_id": "bsd_finding_reconfirmed_projection",
+      "status": "PREPARED_WITHOUT_ADMISSION",
+      "storage_kind": "redb",
+      "database": "derived",
+      "key_shape": "bsd_finding_reconfirmed_projection.v1:{scope_partition}:{hex(owner_operation_id)}",
+      "schema_version": "1.0.0",
+      "value_schema_id": "pm.bsd.event_projection.finding_reconfirmed.v1",
+      "value_schema_ref": "Plans/bsd_event_storage_contracts.schema.json#/$defs/finding_reconfirmed_projection",
+      "owner_doc": "Plans/storage-plan.md#SP-1357",
+      "producer": [
+        "projector.bsd.finding_reconfirmed@1.0.0"
+      ],
+      "consumers": [
+        "reader.bsd.finding_reconfirmed@1.0.0",
+        "AssistantContext::bsd_reconfirmation_projection"
+      ],
+      "encoding": "messagepack_canonical",
+      "max_inline_bytes": 16384,
+      "oversize_route": "SP-337 payload references; measure the complete value, not only the event body",
+      "recovery_disposition": "rebuildable from verified retained exact-family events with SP-278 source proof; source loss stays disclosed",
+      "retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-PROJECTION-3GEN",
+        "policy_version": "1.0.0"
+      },
+      "redaction_no_secret_rule": "IDs, digests and access-checked refs only; no original body, secret or local absolute path.",
+      "runtime_enabled": false,
+      "registration_prerequisites": [
+        "independent reviews",
+        "exact physical registry/migration/budget adoption",
+        "SP-318 lifecycle physical family registration",
+        "event admission for bsd.finding_reconfirmed"
+      ],
+      "event_retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-RUNTIME-365D",
+        "policy_version": "1.0.0"
+      }
+    },
+    {
+      "family_id": "bsd_finding_suppressed_operation",
+      "status": "PREPARED_WITHOUT_ADMISSION",
+      "storage_kind": "redb",
+      "database": "canonical",
+      "key_shape": "bsd_finding_suppressed_operation.v1:{scope_partition}:{hex(owner_operation_id)}",
+      "schema_version": "1.0.0",
+      "value_schema_id": "pm.bsd.event_operation.finding_suppressed.v1",
+      "value_schema_ref": "Plans/bsd_event_storage_contracts.schema.json#/$defs/finding_suppressed_operation",
+      "owner_doc": "Plans/storage-plan.md#SP-1358",
+      "producer": [
+        "BackSeatDriverService::commit_finding_suppression"
+      ],
+      "consumers": [
+        "reader.bsd.finding_suppressed@1.0.0",
+        "Usage::bsd_suppression_counters"
+      ],
+      "encoding": "messagepack_canonical",
+      "max_inline_bytes": 16384,
+      "oversize_route": "SP-337 payload references; measure the complete value, not only the event body",
+      "recovery_disposition": "canonical_non_rebuildable; coherent mandatory backup and SP-286 original receipt resolution; unavailable source never becomes success",
+      "retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-EVENT-IDENTITY-APPROOT",
+        "policy_version": "1.0.0"
+      },
+      "redaction_no_secret_rule": "IDs, digests and access-checked refs only; no original body, secret or local absolute path.",
+      "runtime_enabled": false,
+      "registration_prerequisites": [
+        "independent reviews",
+        "exact physical registry/migration/budget adoption",
+        "SP-318 lifecycle physical family registration",
+        "event admission for bsd.finding_suppressed"
+      ],
+      "event_retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-RUNTIME-365D",
+        "policy_version": "1.0.0"
+      }
+    },
+    {
+      "family_id": "bsd_finding_suppressed_checkpoint",
+      "status": "PREPARED_WITHOUT_ADMISSION",
+      "storage_kind": "redb",
+      "database": "derived",
+      "key_shape": "bsd_finding_suppressed_checkpoint.v1:{scope_partition}:{storage_instance_id}",
+      "schema_version": "1.0.0",
+      "value_schema_id": "pm.bsd.event_checkpoint.finding_suppressed.v1",
+      "value_schema_ref": "Plans/bsd_event_storage_contracts.schema.json#/$defs/finding_suppressed_checkpoint",
+      "owner_doc": "Plans/storage-plan.md#SP-1358",
+      "producer": [
+        "projector.bsd.finding_suppressed@1.0.0"
+      ],
+      "consumers": [
+        "reader.bsd.finding_suppressed@1.0.0",
+        "Usage::bsd_suppression_counters"
+      ],
+      "encoding": "messagepack_canonical",
+      "max_inline_bytes": 16384,
+      "oversize_route": "SP-337 payload references; measure the complete value, not only the event body",
+      "recovery_disposition": "rebuildable from verified retained exact-family events with SP-278 source proof; source loss stays disclosed",
+      "retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-PROJECTION-3GEN",
+        "policy_version": "1.0.0"
+      },
+      "redaction_no_secret_rule": "IDs, digests and access-checked refs only; no original body, secret or local absolute path.",
+      "runtime_enabled": false,
+      "registration_prerequisites": [
+        "independent reviews",
+        "exact physical registry/migration/budget adoption",
+        "SP-318 lifecycle physical family registration",
+        "event admission for bsd.finding_suppressed"
+      ],
+      "event_retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-RUNTIME-365D",
+        "policy_version": "1.0.0"
+      }
+    },
+    {
+      "family_id": "bsd_finding_suppressed_projection",
+      "status": "PREPARED_WITHOUT_ADMISSION",
+      "storage_kind": "redb",
+      "database": "derived",
+      "key_shape": "bsd_finding_suppressed_projection.v1:{scope_partition}:{hex(owner_operation_id)}",
+      "schema_version": "1.0.0",
+      "value_schema_id": "pm.bsd.event_projection.finding_suppressed.v1",
+      "value_schema_ref": "Plans/bsd_event_storage_contracts.schema.json#/$defs/finding_suppressed_projection",
+      "owner_doc": "Plans/storage-plan.md#SP-1358",
+      "producer": [
+        "projector.bsd.finding_suppressed@1.0.0"
+      ],
+      "consumers": [
+        "reader.bsd.finding_suppressed@1.0.0",
+        "Usage::bsd_suppression_counters"
+      ],
+      "encoding": "messagepack_canonical",
+      "max_inline_bytes": 16384,
+      "oversize_route": "SP-337 payload references; measure the complete value, not only the event body",
+      "recovery_disposition": "rebuildable from verified retained exact-family events with SP-278 source proof; source loss stays disclosed",
+      "retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-PROJECTION-3GEN",
+        "policy_version": "1.0.0"
+      },
+      "redaction_no_secret_rule": "IDs, digests and access-checked refs only; no original body, secret or local absolute path.",
+      "runtime_enabled": false,
+      "registration_prerequisites": [
+        "independent reviews",
+        "exact physical registry/migration/budget adoption",
+        "SP-318 lifecycle physical family registration",
+        "event admission for bsd.finding_suppressed"
+      ],
+      "event_retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-RUNTIME-365D",
+        "policy_version": "1.0.0"
+      }
+    },
+    {
+      "family_id": "bsd_output_quarantined_operation",
+      "status": "PREPARED_WITHOUT_ADMISSION",
+      "storage_kind": "redb",
+      "database": "canonical",
+      "key_shape": "bsd_output_quarantined_operation.v1:{scope_partition}:{hex(owner_operation_id)}",
+      "schema_version": "1.0.0",
+      "value_schema_id": "pm.bsd.event_operation.output_quarantined.v1",
+      "value_schema_ref": "Plans/bsd_event_storage_contracts.schema.json#/$defs/output_quarantined_operation",
+      "owner_doc": "Plans/storage-plan.md#SP-1359",
+      "producer": [
+        "BackSeatDriverService::commit_output_quarantine"
+      ],
+      "consumers": [
+        "reader.bsd.output_quarantined@1.0.0",
+        "AssistantContext::bsd_quarantine_projection"
+      ],
+      "encoding": "messagepack_canonical",
+      "max_inline_bytes": 16384,
+      "oversize_route": "SP-337 payload references; measure the complete value, not only the event body",
+      "recovery_disposition": "canonical_non_rebuildable; coherent mandatory backup and SP-286 original receipt resolution; unavailable source never becomes success",
+      "retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-EVENT-IDENTITY-APPROOT",
+        "policy_version": "1.0.0"
+      },
+      "redaction_no_secret_rule": "IDs, digests and access-checked refs only; no original body, secret or local absolute path.",
+      "runtime_enabled": false,
+      "registration_prerequisites": [
+        "independent reviews",
+        "exact physical registry/migration/budget adoption",
+        "SP-318 lifecycle physical family registration",
+        "event admission for bsd.output_quarantined"
+      ],
+      "event_retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-RUNTIME-365D",
+        "policy_version": "1.0.0"
+      }
+    },
+    {
+      "family_id": "bsd_output_quarantined_checkpoint",
+      "status": "PREPARED_WITHOUT_ADMISSION",
+      "storage_kind": "redb",
+      "database": "derived",
+      "key_shape": "bsd_output_quarantined_checkpoint.v1:{scope_partition}:{storage_instance_id}",
+      "schema_version": "1.0.0",
+      "value_schema_id": "pm.bsd.event_checkpoint.output_quarantined.v1",
+      "value_schema_ref": "Plans/bsd_event_storage_contracts.schema.json#/$defs/output_quarantined_checkpoint",
+      "owner_doc": "Plans/storage-plan.md#SP-1359",
+      "producer": [
+        "projector.bsd.output_quarantined@1.0.0"
+      ],
+      "consumers": [
+        "reader.bsd.output_quarantined@1.0.0",
+        "AssistantContext::bsd_quarantine_projection"
+      ],
+      "encoding": "messagepack_canonical",
+      "max_inline_bytes": 16384,
+      "oversize_route": "SP-337 payload references; measure the complete value, not only the event body",
+      "recovery_disposition": "rebuildable from verified retained exact-family events with SP-278 source proof; source loss stays disclosed",
+      "retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-PROJECTION-3GEN",
+        "policy_version": "1.0.0"
+      },
+      "redaction_no_secret_rule": "IDs, digests and access-checked refs only; no original body, secret or local absolute path.",
+      "runtime_enabled": false,
+      "registration_prerequisites": [
+        "independent reviews",
+        "exact physical registry/migration/budget adoption",
+        "SP-318 lifecycle physical family registration",
+        "event admission for bsd.output_quarantined"
+      ],
+      "event_retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-RUNTIME-365D",
+        "policy_version": "1.0.0"
+      }
+    },
+    {
+      "family_id": "bsd_output_quarantined_projection",
+      "status": "PREPARED_WITHOUT_ADMISSION",
+      "storage_kind": "redb",
+      "database": "derived",
+      "key_shape": "bsd_output_quarantined_projection.v1:{scope_partition}:{hex(owner_operation_id)}",
+      "schema_version": "1.0.0",
+      "value_schema_id": "pm.bsd.event_projection.output_quarantined.v1",
+      "value_schema_ref": "Plans/bsd_event_storage_contracts.schema.json#/$defs/output_quarantined_projection",
+      "owner_doc": "Plans/storage-plan.md#SP-1359",
+      "producer": [
+        "projector.bsd.output_quarantined@1.0.0"
+      ],
+      "consumers": [
+        "reader.bsd.output_quarantined@1.0.0",
+        "AssistantContext::bsd_quarantine_projection"
+      ],
+      "encoding": "messagepack_canonical",
+      "max_inline_bytes": 16384,
+      "oversize_route": "SP-337 payload references; measure the complete value, not only the event body",
+      "recovery_disposition": "rebuildable from verified retained exact-family events with SP-278 source proof; source loss stays disclosed",
+      "retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-PROJECTION-3GEN",
+        "policy_version": "1.0.0"
+      },
+      "redaction_no_secret_rule": "IDs, digests and access-checked refs only; no original body, secret or local absolute path.",
+      "runtime_enabled": false,
+      "registration_prerequisites": [
+        "independent reviews",
+        "exact physical registry/migration/budget adoption",
+        "SP-318 lifecycle physical family registration",
+        "event admission for bsd.output_quarantined"
+      ],
+      "event_retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-RUNTIME-365D",
+        "policy_version": "1.0.0"
+      }
+    },
+    {
+      "family_id": "bsd_policy_changed_operation",
+      "status": "PREPARED_WITHOUT_ADMISSION",
+      "storage_kind": "redb",
+      "database": "canonical",
+      "key_shape": "bsd_policy_changed_operation.v1:{scope_partition}:{hex(owner_operation_id)}",
+      "schema_version": "1.0.0",
+      "value_schema_id": "pm.bsd.event_operation.policy_changed.v1",
+      "value_schema_ref": "Plans/bsd_event_storage_contracts.schema.json#/$defs/policy_changed_operation",
+      "owner_doc": "Plans/storage-plan.md#SP-1360",
+      "producer": [
+        "BackSeatDriverService::commit_policy_revision"
+      ],
+      "consumers": [
+        "reader.bsd.policy_changed@1.0.0",
+        "Settings::bsd_policy_projection"
+      ],
+      "encoding": "messagepack_canonical",
+      "max_inline_bytes": 16384,
+      "oversize_route": "SP-337 payload references; measure the complete value, not only the event body",
+      "recovery_disposition": "canonical_non_rebuildable; coherent mandatory backup and SP-286 original receipt resolution; unavailable source never becomes success",
+      "retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-EVENT-IDENTITY-APPROOT",
+        "policy_version": "1.0.0"
+      },
+      "redaction_no_secret_rule": "IDs, digests and access-checked refs only; no original body, secret or local absolute path.",
+      "runtime_enabled": false,
+      "registration_prerequisites": [
+        "independent reviews",
+        "exact physical registry/migration/budget adoption",
+        "SP-318 lifecycle physical family registration",
+        "event admission for bsd.policy_changed"
+      ],
+      "event_retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-AUTHORITY-INDEFINITE",
+        "policy_version": "1.0.0"
+      }
+    },
+    {
+      "family_id": "bsd_policy_changed_checkpoint",
+      "status": "PREPARED_WITHOUT_ADMISSION",
+      "storage_kind": "redb",
+      "database": "derived",
+      "key_shape": "bsd_policy_changed_checkpoint.v1:{scope_partition}:{storage_instance_id}",
+      "schema_version": "1.0.0",
+      "value_schema_id": "pm.bsd.event_checkpoint.policy_changed.v1",
+      "value_schema_ref": "Plans/bsd_event_storage_contracts.schema.json#/$defs/policy_changed_checkpoint",
+      "owner_doc": "Plans/storage-plan.md#SP-1360",
+      "producer": [
+        "projector.bsd.policy_changed@1.0.0"
+      ],
+      "consumers": [
+        "reader.bsd.policy_changed@1.0.0",
+        "Settings::bsd_policy_projection"
+      ],
+      "encoding": "messagepack_canonical",
+      "max_inline_bytes": 16384,
+      "oversize_route": "SP-337 payload references; measure the complete value, not only the event body",
+      "recovery_disposition": "rebuildable from verified retained exact-family events with SP-278 source proof; source loss stays disclosed",
+      "retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-PROJECTION-3GEN",
+        "policy_version": "1.0.0"
+      },
+      "redaction_no_secret_rule": "IDs, digests and access-checked refs only; no original body, secret or local absolute path.",
+      "runtime_enabled": false,
+      "registration_prerequisites": [
+        "independent reviews",
+        "exact physical registry/migration/budget adoption",
+        "SP-318 lifecycle physical family registration",
+        "event admission for bsd.policy_changed"
+      ],
+      "event_retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-AUTHORITY-INDEFINITE",
+        "policy_version": "1.0.0"
+      }
+    },
+    {
+      "family_id": "bsd_policy_changed_projection",
+      "status": "PREPARED_WITHOUT_ADMISSION",
+      "storage_kind": "redb",
+      "database": "derived",
+      "key_shape": "bsd_policy_changed_projection.v1:{scope_partition}:{hex(owner_operation_id)}",
+      "schema_version": "1.0.0",
+      "value_schema_id": "pm.bsd.event_projection.policy_changed.v1",
+      "value_schema_ref": "Plans/bsd_event_storage_contracts.schema.json#/$defs/policy_changed_projection",
+      "owner_doc": "Plans/storage-plan.md#SP-1360",
+      "producer": [
+        "projector.bsd.policy_changed@1.0.0"
+      ],
+      "consumers": [
+        "reader.bsd.policy_changed@1.0.0",
+        "Settings::bsd_policy_projection"
+      ],
+      "encoding": "messagepack_canonical",
+      "max_inline_bytes": 16384,
+      "oversize_route": "SP-337 payload references; measure the complete value, not only the event body",
+      "recovery_disposition": "rebuildable from verified retained exact-family events with SP-278 source proof; source loss stays disclosed",
+      "retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-PROJECTION-3GEN",
+        "policy_version": "1.0.0"
+      },
+      "redaction_no_secret_rule": "IDs, digests and access-checked refs only; no original body, secret or local absolute path.",
+      "runtime_enabled": false,
+      "registration_prerequisites": [
+        "independent reviews",
+        "exact physical registry/migration/budget adoption",
+        "SP-318 lifecycle physical family registration",
+        "event admission for bsd.policy_changed"
+      ],
+      "event_retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-AUTHORITY-INDEFINITE",
+        "policy_version": "1.0.0"
+      }
+    },
+    {
+      "family_id": "bsd_review_failed_operation",
+      "status": "PREPARED_WITHOUT_ADMISSION",
+      "storage_kind": "redb",
+      "database": "canonical",
+      "key_shape": "bsd_review_failed_operation.v1:{scope_partition}:{hex(owner_operation_id)}",
+      "schema_version": "1.0.0",
+      "value_schema_id": "pm.bsd.event_operation.review_failed.v1",
+      "value_schema_ref": "Plans/bsd_event_storage_contracts.schema.json#/$defs/review_failed_operation",
+      "owner_doc": "Plans/storage-plan.md#SP-1361",
+      "producer": [
+        "BackSeatDriverService::commit_review_failure"
+      ],
+      "consumers": [
+        "reader.bsd.review_failed@1.0.0",
+        "Usage::bsd_failure_attribution"
+      ],
+      "encoding": "messagepack_canonical",
+      "max_inline_bytes": 16384,
+      "oversize_route": "SP-337 payload references; measure the complete value, not only the event body",
+      "recovery_disposition": "canonical_non_rebuildable; coherent mandatory backup and SP-286 original receipt resolution; unavailable source never becomes success",
+      "retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-EVENT-IDENTITY-APPROOT",
+        "policy_version": "1.0.0"
+      },
+      "redaction_no_secret_rule": "IDs, digests and access-checked refs only; no original body, secret or local absolute path.",
+      "runtime_enabled": false,
+      "registration_prerequisites": [
+        "independent reviews",
+        "exact physical registry/migration/budget adoption",
+        "SP-318 lifecycle physical family registration",
+        "event admission for bsd.review_failed"
+      ],
+      "event_retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-RUNTIME-365D",
+        "policy_version": "1.0.0"
+      }
+    },
+    {
+      "family_id": "bsd_review_failed_checkpoint",
+      "status": "PREPARED_WITHOUT_ADMISSION",
+      "storage_kind": "redb",
+      "database": "derived",
+      "key_shape": "bsd_review_failed_checkpoint.v1:{scope_partition}:{storage_instance_id}",
+      "schema_version": "1.0.0",
+      "value_schema_id": "pm.bsd.event_checkpoint.review_failed.v1",
+      "value_schema_ref": "Plans/bsd_event_storage_contracts.schema.json#/$defs/review_failed_checkpoint",
+      "owner_doc": "Plans/storage-plan.md#SP-1361",
+      "producer": [
+        "projector.bsd.review_failed@1.0.0"
+      ],
+      "consumers": [
+        "reader.bsd.review_failed@1.0.0",
+        "Usage::bsd_failure_attribution"
+      ],
+      "encoding": "messagepack_canonical",
+      "max_inline_bytes": 16384,
+      "oversize_route": "SP-337 payload references; measure the complete value, not only the event body",
+      "recovery_disposition": "rebuildable from verified retained exact-family events with SP-278 source proof; source loss stays disclosed",
+      "retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-PROJECTION-3GEN",
+        "policy_version": "1.0.0"
+      },
+      "redaction_no_secret_rule": "IDs, digests and access-checked refs only; no original body, secret or local absolute path.",
+      "runtime_enabled": false,
+      "registration_prerequisites": [
+        "independent reviews",
+        "exact physical registry/migration/budget adoption",
+        "SP-318 lifecycle physical family registration",
+        "event admission for bsd.review_failed"
+      ],
+      "event_retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-RUNTIME-365D",
+        "policy_version": "1.0.0"
+      }
+    },
+    {
+      "family_id": "bsd_review_failed_projection",
+      "status": "PREPARED_WITHOUT_ADMISSION",
+      "storage_kind": "redb",
+      "database": "derived",
+      "key_shape": "bsd_review_failed_projection.v1:{scope_partition}:{hex(owner_operation_id)}",
+      "schema_version": "1.0.0",
+      "value_schema_id": "pm.bsd.event_projection.review_failed.v1",
+      "value_schema_ref": "Plans/bsd_event_storage_contracts.schema.json#/$defs/review_failed_projection",
+      "owner_doc": "Plans/storage-plan.md#SP-1361",
+      "producer": [
+        "projector.bsd.review_failed@1.0.0"
+      ],
+      "consumers": [
+        "reader.bsd.review_failed@1.0.0",
+        "Usage::bsd_failure_attribution"
+      ],
+      "encoding": "messagepack_canonical",
+      "max_inline_bytes": 16384,
+      "oversize_route": "SP-337 payload references; measure the complete value, not only the event body",
+      "recovery_disposition": "rebuildable from verified retained exact-family events with SP-278 source proof; source loss stays disclosed",
+      "retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-PROJECTION-3GEN",
+        "policy_version": "1.0.0"
+      },
+      "redaction_no_secret_rule": "IDs, digests and access-checked refs only; no original body, secret or local absolute path.",
+      "runtime_enabled": false,
+      "registration_prerequisites": [
+        "independent reviews",
+        "exact physical registry/migration/budget adoption",
+        "SP-318 lifecycle physical family registration",
+        "event admission for bsd.review_failed"
+      ],
+      "event_retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-RUNTIME-365D",
+        "policy_version": "1.0.0"
+      }
+    },
+    {
+      "family_id": "bsd_review_started_operation",
+      "status": "PREPARED_WITHOUT_ADMISSION",
+      "storage_kind": "redb",
+      "database": "canonical",
+      "key_shape": "bsd_review_started_operation.v1:{scope_partition}:{hex(owner_operation_id)}",
+      "schema_version": "1.0.0",
+      "value_schema_id": "pm.bsd.event_operation.review_started.v1",
+      "value_schema_ref": "Plans/bsd_event_storage_contracts.schema.json#/$defs/review_started_operation",
+      "owner_doc": "Plans/storage-plan.md#SP-1362",
+      "producer": [
+        "BackSeatDriverService::commit_review_start"
+      ],
+      "consumers": [
+        "reader.bsd.review_started@1.0.0",
+        "AssistantContext::bsd_review_projection"
+      ],
+      "encoding": "messagepack_canonical",
+      "max_inline_bytes": 16384,
+      "oversize_route": "SP-337 payload references; measure the complete value, not only the event body",
+      "recovery_disposition": "canonical_non_rebuildable; coherent mandatory backup and SP-286 original receipt resolution; unavailable source never becomes success",
+      "retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-EVENT-IDENTITY-APPROOT",
+        "policy_version": "1.0.0"
+      },
+      "redaction_no_secret_rule": "IDs, digests and access-checked refs only; no original body, secret or local absolute path.",
+      "runtime_enabled": false,
+      "registration_prerequisites": [
+        "independent reviews",
+        "exact physical registry/migration/budget adoption",
+        "SP-318 lifecycle physical family registration",
+        "event admission for bsd.review_started"
+      ],
+      "event_retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-RUNTIME-365D",
+        "policy_version": "1.0.0"
+      }
+    },
+    {
+      "family_id": "bsd_review_started_checkpoint",
+      "status": "PREPARED_WITHOUT_ADMISSION",
+      "storage_kind": "redb",
+      "database": "derived",
+      "key_shape": "bsd_review_started_checkpoint.v1:{scope_partition}:{storage_instance_id}",
+      "schema_version": "1.0.0",
+      "value_schema_id": "pm.bsd.event_checkpoint.review_started.v1",
+      "value_schema_ref": "Plans/bsd_event_storage_contracts.schema.json#/$defs/review_started_checkpoint",
+      "owner_doc": "Plans/storage-plan.md#SP-1362",
+      "producer": [
+        "projector.bsd.review_started@1.0.0"
+      ],
+      "consumers": [
+        "reader.bsd.review_started@1.0.0",
+        "AssistantContext::bsd_review_projection"
+      ],
+      "encoding": "messagepack_canonical",
+      "max_inline_bytes": 16384,
+      "oversize_route": "SP-337 payload references; measure the complete value, not only the event body",
+      "recovery_disposition": "rebuildable from verified retained exact-family events with SP-278 source proof; source loss stays disclosed",
+      "retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-PROJECTION-3GEN",
+        "policy_version": "1.0.0"
+      },
+      "redaction_no_secret_rule": "IDs, digests and access-checked refs only; no original body, secret or local absolute path.",
+      "runtime_enabled": false,
+      "registration_prerequisites": [
+        "independent reviews",
+        "exact physical registry/migration/budget adoption",
+        "SP-318 lifecycle physical family registration",
+        "event admission for bsd.review_started"
+      ],
+      "event_retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-RUNTIME-365D",
+        "policy_version": "1.0.0"
+      }
+    },
+    {
+      "family_id": "bsd_review_started_projection",
+      "status": "PREPARED_WITHOUT_ADMISSION",
+      "storage_kind": "redb",
+      "database": "derived",
+      "key_shape": "bsd_review_started_projection.v1:{scope_partition}:{hex(owner_operation_id)}",
+      "schema_version": "1.0.0",
+      "value_schema_id": "pm.bsd.event_projection.review_started.v1",
+      "value_schema_ref": "Plans/bsd_event_storage_contracts.schema.json#/$defs/review_started_projection",
+      "owner_doc": "Plans/storage-plan.md#SP-1362",
+      "producer": [
+        "projector.bsd.review_started@1.0.0"
+      ],
+      "consumers": [
+        "reader.bsd.review_started@1.0.0",
+        "AssistantContext::bsd_review_projection"
+      ],
+      "encoding": "messagepack_canonical",
+      "max_inline_bytes": 16384,
+      "oversize_route": "SP-337 payload references; measure the complete value, not only the event body",
+      "recovery_disposition": "rebuildable from verified retained exact-family events with SP-278 source proof; source loss stays disclosed",
+      "retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-PROJECTION-3GEN",
+        "policy_version": "1.0.0"
+      },
+      "redaction_no_secret_rule": "IDs, digests and access-checked refs only; no original body, secret or local absolute path.",
+      "runtime_enabled": false,
+      "registration_prerequisites": [
+        "independent reviews",
+        "exact physical registry/migration/budget adoption",
+        "SP-318 lifecycle physical family registration",
+        "event admission for bsd.review_started"
+      ],
+      "event_retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-RUNTIME-365D",
+        "policy_version": "1.0.0"
+      }
+    },
+    {
+      "family_id": "bsd_review_timed_out_operation",
+      "status": "PREPARED_WITHOUT_ADMISSION",
+      "storage_kind": "redb",
+      "database": "canonical",
+      "key_shape": "bsd_review_timed_out_operation.v1:{scope_partition}:{hex(owner_operation_id)}",
+      "schema_version": "1.0.0",
+      "value_schema_id": "pm.bsd.event_operation.review_timed_out.v1",
+      "value_schema_ref": "Plans/bsd_event_storage_contracts.schema.json#/$defs/review_timed_out_operation",
+      "owner_doc": "Plans/storage-plan.md#SP-1363",
+      "producer": [
+        "BackSeatDriverService::commit_review_timeout"
+      ],
+      "consumers": [
+        "reader.bsd.review_timed_out@1.0.0",
+        "Usage::bsd_timeout_attribution"
+      ],
+      "encoding": "messagepack_canonical",
+      "max_inline_bytes": 16384,
+      "oversize_route": "SP-337 payload references; measure the complete value, not only the event body",
+      "recovery_disposition": "canonical_non_rebuildable; coherent mandatory backup and SP-286 original receipt resolution; unavailable source never becomes success",
+      "retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-EVENT-IDENTITY-APPROOT",
+        "policy_version": "1.0.0"
+      },
+      "redaction_no_secret_rule": "IDs, digests and access-checked refs only; no original body, secret or local absolute path.",
+      "runtime_enabled": false,
+      "registration_prerequisites": [
+        "independent reviews",
+        "exact physical registry/migration/budget adoption",
+        "SP-318 lifecycle physical family registration",
+        "event admission for bsd.review_timed_out"
+      ],
+      "event_retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-RUNTIME-365D",
+        "policy_version": "1.0.0"
+      }
+    },
+    {
+      "family_id": "bsd_review_timed_out_checkpoint",
+      "status": "PREPARED_WITHOUT_ADMISSION",
+      "storage_kind": "redb",
+      "database": "derived",
+      "key_shape": "bsd_review_timed_out_checkpoint.v1:{scope_partition}:{storage_instance_id}",
+      "schema_version": "1.0.0",
+      "value_schema_id": "pm.bsd.event_checkpoint.review_timed_out.v1",
+      "value_schema_ref": "Plans/bsd_event_storage_contracts.schema.json#/$defs/review_timed_out_checkpoint",
+      "owner_doc": "Plans/storage-plan.md#SP-1363",
+      "producer": [
+        "projector.bsd.review_timed_out@1.0.0"
+      ],
+      "consumers": [
+        "reader.bsd.review_timed_out@1.0.0",
+        "Usage::bsd_timeout_attribution"
+      ],
+      "encoding": "messagepack_canonical",
+      "max_inline_bytes": 16384,
+      "oversize_route": "SP-337 payload references; measure the complete value, not only the event body",
+      "recovery_disposition": "rebuildable from verified retained exact-family events with SP-278 source proof; source loss stays disclosed",
+      "retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-PROJECTION-3GEN",
+        "policy_version": "1.0.0"
+      },
+      "redaction_no_secret_rule": "IDs, digests and access-checked refs only; no original body, secret or local absolute path.",
+      "runtime_enabled": false,
+      "registration_prerequisites": [
+        "independent reviews",
+        "exact physical registry/migration/budget adoption",
+        "SP-318 lifecycle physical family registration",
+        "event admission for bsd.review_timed_out"
+      ],
+      "event_retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-RUNTIME-365D",
+        "policy_version": "1.0.0"
+      }
+    },
+    {
+      "family_id": "bsd_review_timed_out_projection",
+      "status": "PREPARED_WITHOUT_ADMISSION",
+      "storage_kind": "redb",
+      "database": "derived",
+      "key_shape": "bsd_review_timed_out_projection.v1:{scope_partition}:{hex(owner_operation_id)}",
+      "schema_version": "1.0.0",
+      "value_schema_id": "pm.bsd.event_projection.review_timed_out.v1",
+      "value_schema_ref": "Plans/bsd_event_storage_contracts.schema.json#/$defs/review_timed_out_projection",
+      "owner_doc": "Plans/storage-plan.md#SP-1363",
+      "producer": [
+        "projector.bsd.review_timed_out@1.0.0"
+      ],
+      "consumers": [
+        "reader.bsd.review_timed_out@1.0.0",
+        "Usage::bsd_timeout_attribution"
+      ],
+      "encoding": "messagepack_canonical",
+      "max_inline_bytes": 16384,
+      "oversize_route": "SP-337 payload references; measure the complete value, not only the event body",
+      "recovery_disposition": "rebuildable from verified retained exact-family events with SP-278 source proof; source loss stays disclosed",
+      "retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-PROJECTION-3GEN",
+        "policy_version": "1.0.0"
+      },
+      "redaction_no_secret_rule": "IDs, digests and access-checked refs only; no original body, secret or local absolute path.",
+      "runtime_enabled": false,
+      "registration_prerequisites": [
+        "independent reviews",
+        "exact physical registry/migration/budget adoption",
+        "SP-318 lifecycle physical family registration",
+        "event admission for bsd.review_timed_out"
+      ],
+      "event_retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-RUNTIME-365D",
+        "policy_version": "1.0.0"
+      }
+    },
+    {
+      "family_id": "bsd_workflow_binding_created_operation",
+      "status": "PREPARED_WITHOUT_ADMISSION",
+      "storage_kind": "redb",
+      "database": "canonical",
+      "key_shape": "bsd_workflow_binding_created_operation.v1:{scope_partition}:{hex(owner_operation_id)}",
+      "schema_version": "1.0.0",
+      "value_schema_id": "pm.bsd.event_operation.workflow_binding_created.v1",
+      "value_schema_ref": "Plans/bsd_event_storage_contracts.schema.json#/$defs/workflow_binding_created_operation",
+      "owner_doc": "Plans/storage-plan.md#SP-1364",
+      "producer": [
+        "BackSeatDriverService::commit_workflow_binding_revision"
+      ],
+      "consumers": [
+        "reader.bsd.workflow_binding_created@1.0.0",
+        "PlanningWorkflow::bsd_stage_binding_projection"
+      ],
+      "encoding": "messagepack_canonical",
+      "max_inline_bytes": 16384,
+      "oversize_route": "SP-337 payload references; measure the complete value, not only the event body",
+      "recovery_disposition": "canonical_non_rebuildable; coherent mandatory backup and SP-286 original receipt resolution; unavailable source never becomes success",
+      "retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-EVENT-IDENTITY-APPROOT",
+        "policy_version": "1.0.0"
+      },
+      "redaction_no_secret_rule": "IDs, digests and access-checked refs only; no original body, secret or local absolute path.",
+      "runtime_enabled": false,
+      "registration_prerequisites": [
+        "independent reviews",
+        "exact physical registry/migration/budget adoption",
+        "SP-318 lifecycle physical family registration",
+        "event admission for bsd.workflow_binding_created"
+      ],
+      "event_retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-AUTHORITY-INDEFINITE",
+        "policy_version": "1.0.0"
+      }
+    },
+    {
+      "family_id": "bsd_workflow_binding_created_checkpoint",
+      "status": "PREPARED_WITHOUT_ADMISSION",
+      "storage_kind": "redb",
+      "database": "derived",
+      "key_shape": "bsd_workflow_binding_created_checkpoint.v1:{scope_partition}:{storage_instance_id}",
+      "schema_version": "1.0.0",
+      "value_schema_id": "pm.bsd.event_checkpoint.workflow_binding_created.v1",
+      "value_schema_ref": "Plans/bsd_event_storage_contracts.schema.json#/$defs/workflow_binding_created_checkpoint",
+      "owner_doc": "Plans/storage-plan.md#SP-1364",
+      "producer": [
+        "projector.bsd.workflow_binding_created@1.0.0"
+      ],
+      "consumers": [
+        "reader.bsd.workflow_binding_created@1.0.0",
+        "PlanningWorkflow::bsd_stage_binding_projection"
+      ],
+      "encoding": "messagepack_canonical",
+      "max_inline_bytes": 16384,
+      "oversize_route": "SP-337 payload references; measure the complete value, not only the event body",
+      "recovery_disposition": "rebuildable from verified retained exact-family events with SP-278 source proof; source loss stays disclosed",
+      "retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-PROJECTION-3GEN",
+        "policy_version": "1.0.0"
+      },
+      "redaction_no_secret_rule": "IDs, digests and access-checked refs only; no original body, secret or local absolute path.",
+      "runtime_enabled": false,
+      "registration_prerequisites": [
+        "independent reviews",
+        "exact physical registry/migration/budget adoption",
+        "SP-318 lifecycle physical family registration",
+        "event admission for bsd.workflow_binding_created"
+      ],
+      "event_retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-AUTHORITY-INDEFINITE",
+        "policy_version": "1.0.0"
+      }
+    },
+    {
+      "family_id": "bsd_workflow_binding_created_projection",
+      "status": "PREPARED_WITHOUT_ADMISSION",
+      "storage_kind": "redb",
+      "database": "derived",
+      "key_shape": "bsd_workflow_binding_created_projection.v1:{scope_partition}:{hex(owner_operation_id)}",
+      "schema_version": "1.0.0",
+      "value_schema_id": "pm.bsd.event_projection.workflow_binding_created.v1",
+      "value_schema_ref": "Plans/bsd_event_storage_contracts.schema.json#/$defs/workflow_binding_created_projection",
+      "owner_doc": "Plans/storage-plan.md#SP-1364",
+      "producer": [
+        "projector.bsd.workflow_binding_created@1.0.0"
+      ],
+      "consumers": [
+        "reader.bsd.workflow_binding_created@1.0.0",
+        "PlanningWorkflow::bsd_stage_binding_projection"
+      ],
+      "encoding": "messagepack_canonical",
+      "max_inline_bytes": 16384,
+      "oversize_route": "SP-337 payload references; measure the complete value, not only the event body",
+      "recovery_disposition": "rebuildable from verified retained exact-family events with SP-278 source proof; source loss stays disclosed",
+      "retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-PROJECTION-3GEN",
+        "policy_version": "1.0.0"
+      },
+      "redaction_no_secret_rule": "IDs, digests and access-checked refs only; no original body, secret or local absolute path.",
+      "runtime_enabled": false,
+      "registration_prerequisites": [
+        "independent reviews",
+        "exact physical registry/migration/budget adoption",
+        "SP-318 lifecycle physical family registration",
+        "event admission for bsd.workflow_binding_created"
+      ],
+      "event_retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-AUTHORITY-INDEFINITE",
+        "policy_version": "1.0.0"
+      }
+    },
+    {
+      "family_id": "bsd_source_policy",
+      "status": "PREPARED_WITHOUT_ADMISSION",
+      "storage_kind": "redb",
+      "database": "canonical",
+      "key_shape": "bsd_source_policy.v1:{scope_partition}:{hex(subject_id)}:{hex(owner_operation_id)}",
+      "schema_version": "1.0.0",
+      "value_schema_id": "pm.bsd.source_wrapper.policy.v1",
+      "value_schema_ref": "Plans/bsd_event_storage_contracts.schema.json#/$defs/source_policy",
+      "logical_payload_schema_ref": "Plans/back_seat_driver_contracts.schema.json#/$defs/bsd_policy",
+      "subject_join": "project_id",
+      "owner_doc": "Plans/storage-plan.md#SP-1365",
+      "producer": [
+        "BackSeatDriverService"
+      ],
+      "consumers": [
+        "BackSeatDriverService::original_transition_source",
+        "SP-1350..SP-1364 exact-family operations"
+      ],
+      "encoding": "messagepack_canonical",
+      "max_inline_bytes": 16384,
+      "oversize_route": "SP-337 logical payload pack reference; whole wrapper measured separately",
+      "recovery_disposition": "canonical_non_rebuildable; coherent mandatory backup; no reconstruction from bsd_runtime_record, GUI or an event projection",
+      "retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-CONFIG-CURRENT",
+        "policy_version": "1.0.0"
+      },
+      "redaction_no_secret_rule": "Existing logical owner redaction rules and present access/deletion checks; reference custody grants no content access",
+      "runtime_enabled": false,
+      "registration_prerequisites": [
+        "independent reviews",
+        "SP-318 physical family admission and exact SP-340 budget/migration adoption",
+        "coherent source/operation/receipt/pack backup proof"
+      ]
+    },
+    {
+      "family_id": "bsd_source_workflow_binding",
+      "status": "PREPARED_WITHOUT_ADMISSION",
+      "storage_kind": "redb",
+      "database": "canonical",
+      "key_shape": "bsd_source_workflow_binding.v1:{scope_partition}:{hex(subject_id)}:{hex(owner_operation_id)}",
+      "schema_version": "1.0.0",
+      "value_schema_id": "pm.bsd.source_wrapper.workflow_binding.v1",
+      "value_schema_ref": "Plans/bsd_event_storage_contracts.schema.json#/$defs/source_workflow_binding",
+      "logical_payload_schema_ref": "Plans/back_seat_driver_contracts.schema.json#/$defs/bsd_workflow_binding",
+      "subject_join": "binding_id",
+      "owner_doc": "Plans/storage-plan.md#SP-1365",
+      "producer": [
+        "BackSeatDriverService"
+      ],
+      "consumers": [
+        "BackSeatDriverService::original_transition_source",
+        "SP-1350..SP-1364 exact-family operations"
+      ],
+      "encoding": "messagepack_canonical",
+      "max_inline_bytes": 16384,
+      "oversize_route": "SP-337 logical payload pack reference; whole wrapper measured separately",
+      "recovery_disposition": "canonical_non_rebuildable; coherent mandatory backup; no reconstruction from bsd_runtime_record, GUI or an event projection",
+      "retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-CONFIG-CURRENT",
+        "policy_version": "1.0.0"
+      },
+      "redaction_no_secret_rule": "Existing logical owner redaction rules and present access/deletion checks; reference custody grants no content access",
+      "runtime_enabled": false,
+      "registration_prerequisites": [
+        "independent reviews",
+        "SP-318 physical family admission and exact SP-340 budget/migration adoption",
+        "coherent source/operation/receipt/pack backup proof"
+      ]
+    },
+    {
+      "family_id": "bsd_source_assignment",
+      "status": "PREPARED_WITHOUT_ADMISSION",
+      "storage_kind": "redb",
+      "database": "canonical",
+      "key_shape": "bsd_source_assignment.v1:{scope_partition}:{hex(subject_id)}:{hex(owner_operation_id)}",
+      "schema_version": "1.0.0",
+      "value_schema_id": "pm.bsd.source_wrapper.assignment.v1",
+      "value_schema_ref": "Plans/bsd_event_storage_contracts.schema.json#/$defs/source_assignment",
+      "logical_payload_schema_ref": "Plans/back_seat_driver_contracts.schema.json#/$defs/bsd_assignment",
+      "subject_join": "bsd_assignment_id",
+      "owner_doc": "Plans/storage-plan.md#SP-1365",
+      "producer": [
+        "BackSeatDriverService"
+      ],
+      "consumers": [
+        "BackSeatDriverService::original_transition_source",
+        "SP-1350..SP-1364 exact-family operations"
+      ],
+      "encoding": "messagepack_canonical",
+      "max_inline_bytes": 16384,
+      "oversize_route": "SP-337 logical payload pack reference; whole wrapper measured separately",
+      "recovery_disposition": "canonical_non_rebuildable; coherent mandatory backup; no reconstruction from bsd_runtime_record, GUI or an event projection",
+      "retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-RUNTIME-365D",
+        "policy_version": "1.0.0"
+      },
+      "redaction_no_secret_rule": "Existing logical owner redaction rules and present access/deletion checks; reference custody grants no content access",
+      "runtime_enabled": false,
+      "registration_prerequisites": [
+        "independent reviews",
+        "SP-318 physical family admission and exact SP-340 budget/migration adoption",
+        "coherent source/operation/receipt/pack backup proof"
+      ]
+    },
+    {
+      "family_id": "bsd_source_review_cycle",
+      "status": "PREPARED_WITHOUT_ADMISSION",
+      "storage_kind": "redb",
+      "database": "canonical",
+      "key_shape": "bsd_source_review_cycle.v1:{scope_partition}:{hex(subject_id)}:{hex(owner_operation_id)}",
+      "schema_version": "1.0.0",
+      "value_schema_id": "pm.bsd.source_wrapper.review_cycle.v1",
+      "value_schema_ref": "Plans/bsd_event_storage_contracts.schema.json#/$defs/source_review_cycle",
+      "logical_payload_schema_ref": "Plans/back_seat_driver_contracts.schema.json#/$defs/bsd_review_cycle",
+      "subject_join": "review_cycle_id",
+      "owner_doc": "Plans/storage-plan.md#SP-1365",
+      "producer": [
+        "BackSeatDriverService"
+      ],
+      "consumers": [
+        "BackSeatDriverService::original_transition_source",
+        "SP-1350..SP-1364 exact-family operations"
+      ],
+      "encoding": "messagepack_canonical",
+      "max_inline_bytes": 16384,
+      "oversize_route": "SP-337 logical payload pack reference; whole wrapper measured separately",
+      "recovery_disposition": "canonical_non_rebuildable; coherent mandatory backup; no reconstruction from bsd_runtime_record, GUI or an event projection",
+      "retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-RUNTIME-365D",
+        "policy_version": "1.0.0"
+      },
+      "redaction_no_secret_rule": "Existing logical owner redaction rules and present access/deletion checks; reference custody grants no content access",
+      "runtime_enabled": false,
+      "registration_prerequisites": [
+        "independent reviews",
+        "SP-318 physical family admission and exact SP-340 budget/migration adoption",
+        "coherent source/operation/receipt/pack backup proof"
+      ],
+      "source_join": "review_start_ref resolves the authentic source_review_start; verify identical review_cycle_id, assignment, trigger, generation, input manifest and frozen boundary before accepting a later terminal result."
+    },
+    {
+      "family_id": "bsd_source_finding",
+      "status": "PREPARED_WITHOUT_ADMISSION",
+      "storage_kind": "redb",
+      "database": "canonical",
+      "key_shape": "bsd_source_finding.v1:{scope_partition}:{hex(subject_id)}:{hex(owner_operation_id)}",
+      "schema_version": "1.0.0",
+      "value_schema_id": "pm.bsd.source_wrapper.finding.v1",
+      "value_schema_ref": "Plans/bsd_event_storage_contracts.schema.json#/$defs/source_finding",
+      "logical_payload_schema_ref": "Plans/back_seat_driver_contracts.schema.json#/$defs/bsd_finding",
+      "subject_join": "bsd_finding_id",
+      "owner_doc": "Plans/storage-plan.md#SP-1365",
+      "producer": [
+        "BackSeatDriverService"
+      ],
+      "consumers": [
+        "BackSeatDriverService::original_transition_source",
+        "SP-1350..SP-1364 exact-family operations"
+      ],
+      "encoding": "messagepack_canonical",
+      "max_inline_bytes": 16384,
+      "oversize_route": "SP-337 logical payload pack reference; whole wrapper measured separately",
+      "recovery_disposition": "canonical_non_rebuildable; coherent mandatory backup; no reconstruction from bsd_runtime_record, GUI or an event projection",
+      "retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-RUNTIME-365D",
+        "policy_version": "1.0.0"
+      },
+      "redaction_no_secret_rule": "Existing logical owner redaction rules and present access/deletion checks; reference custody grants no content access",
+      "runtime_enabled": false,
+      "registration_prerequisites": [
+        "independent reviews",
+        "SP-318 physical family admission and exact SP-340 budget/migration adoption",
+        "coherent source/operation/receipt/pack backup proof"
+      ]
+    },
+    {
+      "family_id": "bsd_source_quarantine",
+      "status": "PREPARED_WITHOUT_ADMISSION",
+      "storage_kind": "redb",
+      "database": "canonical",
+      "key_shape": "bsd_source_quarantine.v1:{scope_partition}:{hex(subject_id)}:{hex(owner_operation_id)}",
+      "schema_version": "1.0.0",
+      "value_schema_id": "pm.bsd.source_wrapper.quarantine.v1",
+      "value_schema_ref": "Plans/bsd_event_storage_contracts.schema.json#/$defs/source_quarantine",
+      "logical_payload_schema_ref": "Plans/back_seat_driver_contracts.schema.json#/$defs/bsd_quarantine",
+      "subject_join": "quarantine_id",
+      "owner_doc": "Plans/storage-plan.md#SP-1365",
+      "producer": [
+        "BackSeatDriverService"
+      ],
+      "consumers": [
+        "BackSeatDriverService::original_transition_source",
+        "SP-1350..SP-1364 exact-family operations"
+      ],
+      "encoding": "messagepack_canonical",
+      "max_inline_bytes": 16384,
+      "oversize_route": "SP-337 logical payload pack reference; whole wrapper measured separately",
+      "recovery_disposition": "canonical_non_rebuildable; coherent mandatory backup; no reconstruction from bsd_runtime_record, GUI or an event projection",
+      "retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-RUNTIME-365D",
+        "policy_version": "1.0.0"
+      },
+      "redaction_no_secret_rule": "Existing logical owner redaction rules and present access/deletion checks; reference custody grants no content access",
+      "runtime_enabled": false,
+      "registration_prerequisites": [
+        "independent reviews",
+        "SP-318 physical family admission and exact SP-340 budget/migration adoption",
+        "coherent source/operation/receipt/pack backup proof"
+      ]
+    },
+    {
+      "family_id": "bsd_head_policy",
+      "status": "PREPARED_WITHOUT_ADMISSION",
+      "storage_kind": "redb",
+      "database": "canonical",
+      "key_shape": "bsd_head_policy.v1:{scope_partition}:{hex(subject_id)}",
+      "schema_version": "1.0.0",
+      "value_schema_id": "pm.bsd.source_head.policy.v1",
+      "value_schema_ref": "Plans/bsd_event_storage_contracts.schema.json#/$defs/head_policy",
+      "logical_payload_schema_ref": "Plans/back_seat_driver_contracts.schema.json#/$defs/bsd_policy",
+      "subject_join": "project_id",
+      "owner_doc": "Plans/storage-plan.md#SP-1365",
+      "producer": [
+        "BackSeatDriverService"
+      ],
+      "consumers": [
+        "BackSeatDriverService::original_transition_source",
+        "SP-1350..SP-1364 exact-family operations"
+      ],
+      "encoding": "messagepack_canonical",
+      "max_inline_bytes": 16384,
+      "oversize_route": "SP-337 logical payload pack reference; whole wrapper measured separately",
+      "recovery_disposition": "Canonical current owner head; authentic complete-source/current-operation/receipt join and exact old-value CAS, coherent mandatory backup; absence is not success",
+      "retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-CONFIG-CURRENT",
+        "policy_version": "1.0.0"
+      },
+      "redaction_no_secret_rule": "Existing logical owner redaction rules and present access/deletion checks; reference custody grants no content access",
+      "runtime_enabled": false,
+      "registration_prerequisites": [
+        "independent reviews",
+        "SP-318 physical family admission and exact SP-340 budget/migration adoption",
+        "coherent source/operation/receipt/pack backup proof"
+      ]
+    },
+    {
+      "family_id": "bsd_head_workflow_binding",
+      "status": "PREPARED_WITHOUT_ADMISSION",
+      "storage_kind": "redb",
+      "database": "canonical",
+      "key_shape": "bsd_head_workflow_binding.v1:{scope_partition}:{hex(subject_id)}",
+      "schema_version": "1.0.0",
+      "value_schema_id": "pm.bsd.source_head.workflow_binding.v1",
+      "value_schema_ref": "Plans/bsd_event_storage_contracts.schema.json#/$defs/head_workflow_binding",
+      "logical_payload_schema_ref": "Plans/back_seat_driver_contracts.schema.json#/$defs/bsd_workflow_binding",
+      "subject_join": "binding_id",
+      "owner_doc": "Plans/storage-plan.md#SP-1365",
+      "producer": [
+        "BackSeatDriverService"
+      ],
+      "consumers": [
+        "BackSeatDriverService::original_transition_source",
+        "SP-1350..SP-1364 exact-family operations"
+      ],
+      "encoding": "messagepack_canonical",
+      "max_inline_bytes": 16384,
+      "oversize_route": "SP-337 logical payload pack reference; whole wrapper measured separately",
+      "recovery_disposition": "Canonical current owner head; authentic complete-source/current-operation/receipt join and exact old-value CAS, coherent mandatory backup; absence is not success",
+      "retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-CONFIG-CURRENT",
+        "policy_version": "1.0.0"
+      },
+      "redaction_no_secret_rule": "Existing logical owner redaction rules and present access/deletion checks; reference custody grants no content access",
+      "runtime_enabled": false,
+      "registration_prerequisites": [
+        "independent reviews",
+        "SP-318 physical family admission and exact SP-340 budget/migration adoption",
+        "coherent source/operation/receipt/pack backup proof"
+      ]
+    },
+    {
+      "family_id": "bsd_head_assignment",
+      "status": "PREPARED_WITHOUT_ADMISSION",
+      "storage_kind": "redb",
+      "database": "canonical",
+      "key_shape": "bsd_head_assignment.v1:{scope_partition}:{hex(subject_id)}",
+      "schema_version": "1.0.0",
+      "value_schema_id": "pm.bsd.source_head.assignment.v1",
+      "value_schema_ref": "Plans/bsd_event_storage_contracts.schema.json#/$defs/head_assignment",
+      "logical_payload_schema_ref": "Plans/back_seat_driver_contracts.schema.json#/$defs/bsd_assignment",
+      "subject_join": "bsd_assignment_id",
+      "owner_doc": "Plans/storage-plan.md#SP-1365",
+      "producer": [
+        "BackSeatDriverService"
+      ],
+      "consumers": [
+        "BackSeatDriverService::original_transition_source",
+        "SP-1350..SP-1364 exact-family operations"
+      ],
+      "encoding": "messagepack_canonical",
+      "max_inline_bytes": 16384,
+      "oversize_route": "SP-337 logical payload pack reference; whole wrapper measured separately",
+      "recovery_disposition": "Canonical current owner head; authentic complete-source/current-operation/receipt join and exact old-value CAS, coherent mandatory backup; absence is not success",
+      "retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-RUNTIME-365D",
+        "policy_version": "1.0.0"
+      },
+      "redaction_no_secret_rule": "Existing logical owner redaction rules and present access/deletion checks; reference custody grants no content access",
+      "runtime_enabled": false,
+      "registration_prerequisites": [
+        "independent reviews",
+        "SP-318 physical family admission and exact SP-340 budget/migration adoption",
+        "coherent source/operation/receipt/pack backup proof"
+      ]
+    },
+    {
+      "family_id": "bsd_head_review_cycle",
+      "status": "PREPARED_WITHOUT_ADMISSION",
+      "storage_kind": "redb",
+      "database": "canonical",
+      "key_shape": "bsd_head_review_cycle.v1:{scope_partition}:{hex(subject_id)}",
+      "schema_version": "1.0.0",
+      "value_schema_id": "pm.bsd.source_head.review_cycle.v1",
+      "value_schema_ref": "Plans/bsd_event_storage_contracts.schema.json#/$defs/head_review_cycle",
+      "subject_join": "review_cycle_id",
+      "owner_doc": "Plans/storage-plan.md#SP-1365",
+      "producer": [
+        "BackSeatDriverService"
+      ],
+      "consumers": [
+        "BackSeatDriverService::original_transition_source",
+        "SP-1350..SP-1364 exact-family operations"
+      ],
+      "encoding": "messagepack_canonical",
+      "max_inline_bytes": 16384,
+      "oversize_route": "SP-337 logical payload pack reference; whole wrapper measured separately",
+      "recovery_disposition": "Canonical current owner head; authentic complete-source/current-operation/receipt join and exact old-value CAS, coherent mandatory backup; absence is not success",
+      "retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-RUNTIME-365D",
+        "policy_version": "1.0.0"
+      },
+      "redaction_no_secret_rule": "Existing logical owner redaction rules and present access/deletion checks; reference custody grants no content access",
+      "runtime_enabled": false,
+      "registration_prerequisites": [
+        "independent reviews",
+        "SP-318 physical family admission and exact SP-340 budget/migration adoption",
+        "coherent source/operation/receipt/pack backup proof"
+      ],
+      "logical_payload_schema_refs": [
+        "Plans/bsd_event_storage_contracts.schema.json#/$defs/review_start",
+        "Plans/back_seat_driver_contracts.schema.json#/$defs/bsd_review_cycle"
+      ],
+      "source_join": "Start head selects source_review_start after its barrier receipt; later terminal head selects source_review_cycle only with its authentic review_start_ref and matching cycle/assignment/start facts."
+    },
+    {
+      "family_id": "bsd_head_finding",
+      "status": "PREPARED_WITHOUT_ADMISSION",
+      "storage_kind": "redb",
+      "database": "canonical",
+      "key_shape": "bsd_head_finding.v1:{scope_partition}:{hex(subject_id)}",
+      "schema_version": "1.0.0",
+      "value_schema_id": "pm.bsd.source_head.finding.v1",
+      "value_schema_ref": "Plans/bsd_event_storage_contracts.schema.json#/$defs/head_finding",
+      "logical_payload_schema_ref": "Plans/back_seat_driver_contracts.schema.json#/$defs/bsd_finding",
+      "subject_join": "bsd_finding_id",
+      "owner_doc": "Plans/storage-plan.md#SP-1365",
+      "producer": [
+        "BackSeatDriverService"
+      ],
+      "consumers": [
+        "BackSeatDriverService::original_transition_source",
+        "SP-1350..SP-1364 exact-family operations"
+      ],
+      "encoding": "messagepack_canonical",
+      "max_inline_bytes": 16384,
+      "oversize_route": "SP-337 logical payload pack reference; whole wrapper measured separately",
+      "recovery_disposition": "Canonical current owner head; authentic complete-source/current-operation/receipt join and exact old-value CAS, coherent mandatory backup; absence is not success",
+      "retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-RUNTIME-365D",
+        "policy_version": "1.0.0"
+      },
+      "redaction_no_secret_rule": "Existing logical owner redaction rules and present access/deletion checks; reference custody grants no content access",
+      "runtime_enabled": false,
+      "registration_prerequisites": [
+        "independent reviews",
+        "SP-318 physical family admission and exact SP-340 budget/migration adoption",
+        "coherent source/operation/receipt/pack backup proof"
+      ]
+    },
+    {
+      "family_id": "bsd_head_quarantine",
+      "status": "PREPARED_WITHOUT_ADMISSION",
+      "storage_kind": "redb",
+      "database": "canonical",
+      "key_shape": "bsd_head_quarantine.v1:{scope_partition}:{hex(subject_id)}",
+      "schema_version": "1.0.0",
+      "value_schema_id": "pm.bsd.source_head.quarantine.v1",
+      "value_schema_ref": "Plans/bsd_event_storage_contracts.schema.json#/$defs/head_quarantine",
+      "logical_payload_schema_ref": "Plans/back_seat_driver_contracts.schema.json#/$defs/bsd_quarantine",
+      "subject_join": "quarantine_id",
+      "owner_doc": "Plans/storage-plan.md#SP-1365",
+      "producer": [
+        "BackSeatDriverService"
+      ],
+      "consumers": [
+        "BackSeatDriverService::original_transition_source",
+        "SP-1350..SP-1364 exact-family operations"
+      ],
+      "encoding": "messagepack_canonical",
+      "max_inline_bytes": 16384,
+      "oversize_route": "SP-337 logical payload pack reference; whole wrapper measured separately",
+      "recovery_disposition": "Canonical current owner head; authentic complete-source/current-operation/receipt join and exact old-value CAS, coherent mandatory backup; absence is not success",
+      "retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-RUNTIME-365D",
+        "policy_version": "1.0.0"
+      },
+      "redaction_no_secret_rule": "Existing logical owner redaction rules and present access/deletion checks; reference custody grants no content access",
+      "runtime_enabled": false,
+      "registration_prerequisites": [
+        "independent reviews",
+        "SP-318 physical family admission and exact SP-340 budget/migration adoption",
+        "coherent source/operation/receipt/pack backup proof"
+      ]
+    },
+    {
+      "family_id": "bsd_source_review_start",
+      "status": "PREPARED_WITHOUT_ADMISSION",
+      "storage_kind": "redb",
+      "database": "canonical",
+      "key_shape": "bsd_source_review_start.v1:{scope_partition}:{hex(subject_id)}:{hex(owner_operation_id)}",
+      "schema_version": "1.0.0",
+      "value_schema_id": "pm.bsd.source_wrapper.review_start.v1",
+      "value_schema_ref": "Plans/bsd_event_storage_contracts.schema.json#/$defs/source_review_start",
+      "logical_payload_schema_ref": "Plans/bsd_event_storage_contracts.schema.json#/$defs/review_start",
+      "subject_join": "review_cycle_id",
+      "owner_doc": "Plans/storage-plan.md#SP-1365",
+      "producer": [
+        "BackSeatDriverService"
+      ],
+      "consumers": [
+        "BackSeatDriverService::commit_review_start",
+        "BackSeatDriverService::original_transition_source",
+        "SP-1362 exact-family operation",
+        "terminal review-cycle start join"
+      ],
+      "encoding": "messagepack_canonical",
+      "max_inline_bytes": 16384,
+      "oversize_route": "SP-337 logical payload pack reference; whole wrapper measured separately",
+      "recovery_disposition": "Canonical immutable pre-dispatch admission custody; no result yet; preserve start through terminal/receipt/pack coherent backup; never reconstruct from a terminal outcome or redispatch on replay.",
+      "retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-RUNTIME-365D",
+        "policy_version": "1.0.0"
+      },
+      "redaction_no_secret_rule": "Existing logical owner redaction rules and present access/deletion checks; reference custody grants no content access",
+      "runtime_enabled": false,
+      "registration_prerequisites": [
+        "independent reviews",
+        "SP-318 physical family admission and exact SP-340 budget/migration adoption",
+        "coherent source/operation/receipt/pack backup proof"
+      ]
+    }
+  ]
+}

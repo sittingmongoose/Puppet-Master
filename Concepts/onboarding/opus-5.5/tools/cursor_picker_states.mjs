@@ -13,11 +13,13 @@ export async function pickerLook(page,look){
 }
 export async function visitCursorPickers(page,visit){
  await page.evaluate(()=>{
-  PM51.pick(document.querySelector('#pm-settings-root .domain-link'),{title:'Attach to which profile?',search:false,current:'one',items:[{value:'one',label:'This project',meta:'2 rules'},{value:'two',label:'Plan only',meta:'1 rule'}]});
+  // R27 F6: items with an icon, a reason (why) and a disabled one too, so the item template's conditional parts (icon,
+  // why, aria-disabled; in the menu a danger item with no icon of its own) are built, not only label and meta
+  PM51.pick(document.querySelector('#pm-settings-root .domain-link'),{title:'Attach to which profile?',search:false,current:'one',items:[{value:'one',label:'This project',meta:'2 rules'},{value:'two',label:'Plan only',meta:'1 rule'},{value:'three',label:'With an icon and a reason',icon:'arrowRight',why:'Applies to every profile',meta:'3 rules'},{value:'four',label:'Not available',disabled:true,reason:'Needs a signed-in account',why:'Needs a signed-in account'}]});
  });
  await page.waitForSelector('.pm51-dd-list .pm51-popout-meta');
  await visit({kind:'PM51 pick with side text',builder:'kit.js PM51.pick/openListPopout',target:'.pm51-dd-list [data-index="1"] .pm51-popout-meta'});
- await page.evaluate(()=>{PM51.closePopouts();PM51.menu(document.querySelector('#pm-settings-root .domain-link'),[{label:'Move to this project’s rules',icon:'arrowRight',meta:'Applies with every profile'}],'Rule actions');});
+ await page.evaluate(()=>{PM51.closePopouts();PM51.menu(document.querySelector('#pm-settings-root .domain-link'),[{label:'Move to this project’s rules',icon:'arrowRight',meta:'Applies with every profile'},{label:'Copy to another project',meta:'2 projects'},{label:'Delete these rules',danger:true,disabled:true,meta:'In use by a running agent'}],'Rule actions');});
  await page.waitForSelector('.pm51-menu .pm51-popout-meta');
  await visit({kind:'PM51 menu with side text',builder:'kit.js PM51.menu/openMenu',target:'.pm51-menu .pm51-popout-meta'});
  await page.evaluate(()=>PM51.closePopouts());

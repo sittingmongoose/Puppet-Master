@@ -1363,7 +1363,7 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     const ctx=makeWorkCtx(rec,m), step=ctx.step, pct=ctx.pct;
     const co=CHROME_OPTS[v]||{}, shut=rec.completed&&rec.openPhase==null;
     const cardId=ctx.cardId, recId=(m&&m.workId)||'primary';
-    return `<article class="working-card ${rec.completed?'is-done ':''}working-variant-${v}" data-working-variant="${v}" data-step-kind="${esc(step.kind)}" data-card="${esc(recId)}" data-card-ui="${esc(cardId)}" data-k="workcard:${esc(cardId)}"><div class="working-head"><span class="work-phase-icon" data-k="wpi:${esc(step.id)}">${icon(step.icon,14,rec.running?'nx-r-status nx-t-working':'')}</span><div><strong>${rec.ownerProjection?esc(rec.statusLabel||(rec.completed?'Completed':'Working')):(rec.completed?'Completed':'Working')}</strong>${extEach('workingHeadCaption',{message:m,rec,ctx})||''}<span class="sub"> · ${formatElapsed(rec.elapsed)}</span></div><span class="spacer"></span><div class="working-controls">${rec.ownerProjection?extRender('workingOwnerControls',{message:m,rec,ctx}):renderWorkDemoControls(rec,cardId)}</div></div><div class="working-body" data-flip data-k="wv:${v}:${esc(cardId)}">${co.noChrome?'':renderPhaseChrome(ctx,co)}${(shut&&!co.keepBody)?'':renderWorkingVariant(v,step,pct,ctx)}${renderLiveAgentInline(step)}${rec.expanded?renderWorkHistory(rec):''}</div>${renderOpenWorkTerminal(cardId,rec)}</article>`;
+    return `<article class="working-card ${rec.completed?'is-done ':''}working-variant-${v}" data-working-variant="${v}" data-step-kind="${esc(step.kind)}" data-card="${esc(recId)}" data-card-ui="${esc(cardId)}" data-k="workcard:${esc(cardId)}"><div class="working-head"><span class="work-phase-icon" data-k="wpi:${esc(step.id)}">${icon(step.icon,14,rec.running?'nx-r-status nx-t-working':'')}</span><div class="working-status-copy"><strong class="working-status-label">${rec.ownerProjection?esc(rec.statusLabel||(rec.completed?'Completed':'Working')):(rec.completed?'Completed':'Working')}</strong>${extEach('workingHeadCaption',{message:m,rec,ctx})||''}<span class="sub"> · ${formatElapsed(rec.elapsed)}</span></div><span class="spacer"></span><div class="working-controls">${rec.ownerProjection?extRender('workingOwnerControls',{message:m,rec,ctx}):renderWorkDemoControls(rec,cardId)}</div></div><div class="working-body" data-flip data-k="wv:${v}:${esc(cardId)}">${co.noChrome?'':renderPhaseChrome(ctx,co)}${(shut&&!co.keepBody)?'':renderWorkingVariant(v,step,pct,ctx)}${renderLiveAgentInline(step)}${rec.expanded?renderWorkHistory(rec):''}</div>${renderOpenWorkTerminal(cardId,rec)}</article>`;
   }
 
   /* Chat WOW M4: the lab controls (play/pause, step, complete, reset, history)
@@ -2531,7 +2531,11 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
   function armComposerObserver(){
     // The keyed shell retains these nodes. Recreating the observer every render
     // delivered another initial resize callback and repeated both forced-layout probes.
-    if(!composerRO) composerRO=new ResizeObserver(()=>{
+    // A look revealed over the onboarding window covers the chat (PM_LOOK_HOLD, 11-motion-start.js).
+    // This re-measured the hidden composer in the reveal's first frame (E4 section 3: a cache miss is
+    // getComputedStyle plus one rect for each of the five tool buttons). It waits, then runs once.
+    if(!composerRO) composerRO=new ResizeObserver(function onComposerResize(){
+      if(window.PM_LOOK_HOLD&&window.PM_LOOK_HOLD.after&&window.PM_LOOK_HOLD.after(onComposerResize))return;
       if(chromeSyncFrame!==null)return;
       chromeSyncFrame=requestAnimationFrame(runChromeSync);
     });
@@ -4074,9 +4078,39 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     const ok=new Set(r.accounts.map(a=>ONB_PICKER[a.settings_provider_id||a.provider_entry_id]).filter(Boolean));
     return D.models.filter(m=>ok.has(m.provider));
   }
+  /* FO-186 r2 (MS-052): a typed nickname finds the model it means. The map is the Settings row's own effective
+     read (PM51.modelNicknames: your lines, the retired Media box's compatibility read, the 6.8 built-ins) through
+     the page's one Settings access — no second store. Nicknames normalize as the row does (lowercase; spaces,
+     underscores and hyphens collapse) and match whole or as a prefix. A nickname's model id maps to this picker's
+     entries the way the Settings picker resolves it: a chat model id directly, else the canonical
+     provider_id/model_id through Settings' ready-model list, by its provider (ONB_PICKER) and model name. A
+     nickname whose model is not a configured chat model lists nothing. */
+  const nickNorm=s=>String(s==null?'':s).trim().toLowerCase().replace(/[\s_-]+/g,' ');
+  function modelNicknames(){ try{ return (window.PM51&&typeof PM51.modelNicknames==='function')?PM51.modelNicknames():[]; }catch(e){ return []; } }
+  function nickChatModels(value){
+    const v=String(value||''); if(!v) return [];
+    const direct=D.models.filter(x=>x.id===v); if(direct.length) return direct;
+    let ready=[]; try{ ready=(window.PM51&&PM51.readyModels)?PM51.readyModels():[]; }catch(e){}
+    const c=ready.find(x=>x.value===v); if(!c) return [];
+    const provider=ONB_PICKER[c.pid]||'', name=nickNorm(c.model); if(!name) return [];
+    return D.models.filter(x=>(!provider||x.provider===provider)&&(nickNorm(x.name)===name||nickNorm(x.name).startsWith(name+' ')));
+  }
+  /* model id -> the nickname the current search matched (whole or prefix, normalized); empty when not searching */
+  function modelNicknameHits(){
+    const nq=nickNorm(state.modelSearch), hits={};
+    if(!nq) return hits;
+    const ids=new Set(configuredModels().map(x=>x.id));
+    modelNicknames().forEach(n=>{
+      const nn=nickNorm(n.nick);
+      if(!nn||(nn!==nq&&!nn.startsWith(nq))) return;
+      nickChatModels(n.model).forEach(m=>{ if(ids.has(m.id)&&!(m.id in hits)) hits[m.id]=n.nick; });
+    });
+    return hits;
+  }
   function filteredModels(){
     const q=state.modelSearch.toLowerCase().trim();
-    let models=configuredModels().filter(x=>!q||`${x.name} ${x.provider} ${x.account}`.toLowerCase().includes(q));
+    const hits=modelNicknameHits();
+    let models=configuredModels().filter(x=>!q||`${x.name} ${x.provider} ${x.account}`.toLowerCase().includes(q)||x.id in hits);
     if(state.modelProvider==='favorites') models=models.filter(x=>isFavorite(x.id));
     else if(state.modelProvider!=='all') models=models.filter(x=>x.provider===state.modelProvider);
     return models;
@@ -4108,7 +4142,8 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
   }
   function groupModels(models){
     const by={};models.forEach(m=>(by[m.provider]??=[]).push(m));
-    return Object.entries(by).map(([p,list])=>`<div class="menu-section-label">${esc(p)}</div>${list.map(m=>`<div class="model-row ${pickerSelection().model===m.id?'active':''}" data-action="set-model" data-value="${esc(m.id)}" data-submenu="model:${esc(m.id)}"><span class="provider-mark">${providerMark(m.provider,16)}</span><span class="model-copy"><strong class="pm56-model-name">${esc(m.name)} ${pickerSelection().model===m.id&&pickerSelection().fast&&m.fast?`<span class="nx-bolt">${icon('lightning',10,'fast-bolt')}</span>`:''}</strong><span class="model-sub"><span class="model-account">${esc(D.accountNick(m.accountId,m.account))}</span>${effortWords(m)}</span></span><button class="favorite ${isFavorite(m.id)?'active':''}" data-action="toggle-favorite" data-value="${esc(m.id)}"${hoverAttrs('model-fav:'+m.id,(isFavorite(m.id)?'Remove from':'Add to')+' favorites')}>${icon('star',12)}</button></div>`).join('')}`).join('');
+    const hits=modelNicknameHits();
+    return Object.entries(by).map(([p,list])=>`<div class="menu-section-label">${esc(p)}</div>${list.map(m=>`<div class="model-row ${pickerSelection().model===m.id?'active':''}" data-action="set-model" data-value="${esc(m.id)}" data-submenu="model:${esc(m.id)}"><span class="provider-mark">${providerMark(m.provider,16)}</span><span class="model-copy"><strong class="pm56-model-name">${esc(m.name)} ${pickerSelection().model===m.id&&pickerSelection().fast&&m.fast?`<span class="nx-bolt">${icon('lightning',10,'fast-bolt')}</span>`:''}</strong><span class="model-sub"><span class="model-account">${esc(D.accountNick(m.accountId,m.account))}</span>${hits[m.id]?`<span class="effort-word model-nick">“${esc(hits[m.id])}”</span>`:''}${effortWords(m)}</span></span><button class="favorite ${isFavorite(m.id)?'active':''}" data-action="toggle-favorite" data-value="${esc(m.id)}"${hoverAttrs('model-fav:'+m.id,(isFavorite(m.id)?'Remove from':'Add to')+' favorites')}>${icon('star',12)}</button></div>`).join('')}`).join('');
   }
   /* Measured in-browser at 1440x900, not guessed: .model-row pitch is 44.03
      (min-height:44 with border-box, so its 5/6px padding is inside), a

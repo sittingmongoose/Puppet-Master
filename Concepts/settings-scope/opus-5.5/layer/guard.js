@@ -50,9 +50,18 @@
     if (x.level === 'act') return x.key;        // an action on one computer: install, sign in, set up
     return null;
   }
-  /* the row's own type, range and choices */
+  /* the row's own type, range and choices. Jared 2026-11-13 ("when i set a value for a specific project or computer, i
+     can set any value i want"): the limits come from the same source as the row's main control (places.js
+     PSX.places.check: Plans' inventory range, the base row's min, max and step, a slider's bounds, a list's choices, a
+     model row's models and depths), read at the place the write is for, so every path refuses what the row refuses */
   function invalid(x) {
     const def = DEF[x.id]; if (!def || x.value === undefined) return null;
+    if (PSX.places) {
+      const ctx = x.level ? PSX.places.ctxAt(x.level, x.key) : S.ctx;
+      const why = PSX.places.check(x.id, x.value, ctx);
+      if (why) return why;
+      if (PSX.places.limits(x.id, ctx)) return Array.isArray(PSX.DEFAULTS[x.id]) && !Array.isArray(x.value) ? 'It has to be a list' : null;
+    }
     const d = PSX.DEFAULTS[x.id], s = PSX.engineSetting(x.id);
     if (typeof d === 'number') {
       if (typeof x.value !== 'number' || !Number.isFinite(x.value)) return 'It has to be a number';

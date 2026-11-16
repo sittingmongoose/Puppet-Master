@@ -1,0 +1,315 @@
+{
+ "schema_id": "pm.assurance.event_authority.admission_depth_assessment.v1",
+ "assessment_kind": "admission_twelve_criteria",
+ "writer": "pm-ea-admission-writer.v1",
+ "merge": "admission-merge-1",
+ "registry": {
+  "path": "Plans/event_family_registry.json",
+  "revision": "2026-11-15.83",
+  "sha256": "2a847737c002058ef553e26b36b49ac3b2b5302187cc5d8893e03e054b6de6b9",
+  "family_count": 129,
+  "row_pointer": "#/families/128"
+ },
+ "base_commit": "03a09c66360991e5fb7b5620a84bc85b681e3635",
+ "rubric": "Step 8 depth matrix, twelve criteria (DL-077); PASS needs Plans/ evidence",
+ "native_execution": "NOT_RUN",
+ "rows": [
+  {
+   "event_type": "forge.review.approved",
+   "family_id": "event-family-forge-review-approved",
+   "family_revision": "1.0.0",
+   "cells": {
+    "membership_version": {
+     "status": "PASS",
+     "representation": "exact_registry_membership",
+     "finding": "Registered at registry revision 2026-11-15.83 as #/families/128 (canonical row SHA-256 8b96b1f1eb70e6f557d93c1258ae042f6aefa88b694ae5c2404e3800299cd335); before this commit the family was absent.",
+     "evidence": [
+      {
+       "path": "Plans/event_family_registry.json",
+       "json_pointer": "#/families/128",
+       "line_start": 8990,
+       "line_end": 9070,
+       "quote": "\"event_type\": \"forge.review.approved\"",
+       "quote_line": 8993,
+       "file_sha256": "2a847737c002058ef553e26b36b49ac3b2b5302187cc5d8893e03e054b6de6b9",
+       "quote_check": "exact"
+      }
+     ]
+    },
+    "owner_doc": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "FGI-1218 explicitly specifies this criterion for this exact family; native execution remains NOT_RUN.",
+     "evidence": [
+      {
+       "path": "Plans/Forge_Integrations.md",
+       "unit": "FGI-1218",
+       "line_start": 3667,
+       "line_end": 3667,
+       "quote": "canonical_text: 'Newly authored owner contract for forge.review.approved@1.0.0 under deck-2 9.a A (DL-450), preserving",
+       "quote_check": "exact",
+       "quote_scope": "unit FGI-1218, Plans/Forge_Integrations.md:3660-3829",
+       "file_sha256": "6368067f9db46d7cfca0671ea94bef2037b5ed2c2cce00e56e430ac0d75563dc"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261105/W3A-self-grade.json",
+      "sha256": "41f3bc4318ce3486b3fc52adf00a01f59f6832f2488c24c506acc321141fd6f8",
+      "field": "owner_doc",
+      "status": "PASS"
+     }
+    },
+    "producer": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "FGI-1218 explicitly specifies this criterion for this exact family; native execution remains NOT_RUN.",
+     "evidence": [
+      {
+       "path": "Plans/Forge_Integrations.md",
+       "unit": "FGI-1218",
+       "line_start": 3690,
+       "line_end": 3690,
+       "quote": "Producer and order: ForgeReviewVoteObserver.commit_approval@1.0.0 accepts only the actual native owner result/observation,",
+       "quote_check": "exact",
+       "quote_scope": "unit FGI-1218, Plans/Forge_Integrations.md:3660-3829",
+       "file_sha256": "6368067f9db46d7cfca0671ea94bef2037b5ed2c2cce00e56e430ac0d75563dc"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261105/W3A-self-grade.json",
+      "sha256": "41f3bc4318ce3486b3fc52adf00a01f59f6832f2488c24c506acc321141fd6f8",
+      "field": "producer",
+      "status": "PASS"
+     }
+    },
+    "closed_payload_schema": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "FGI-1218 explicitly specifies this criterion for this exact family; native execution remains NOT_RUN.",
+     "evidence": [
+      {
+       "path": "Plans/Forge_Integrations.md",
+       "unit": "FGI-1218",
+       "line_start": 3700,
+       "line_end": 3700,
+       "quote": "Closed payload: Plans/event_payloads/forge/forge_review_approved.schema.json# selects pm.event_payload.forge_review_approved.v1@1.0.0;",
+       "quote_check": "exact",
+       "quote_scope": "unit FGI-1218, Plans/Forge_Integrations.md:3660-3829",
+       "file_sha256": "6368067f9db46d7cfca0671ea94bef2037b5ed2c2cce00e56e430ac0d75563dc"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261105/W3A-self-grade.json",
+      "sha256": "41f3bc4318ce3486b3fc52adf00a01f59f6832f2488c24c506acc321141fd6f8",
+      "field": "closed_payload_schema",
+      "status": "PASS"
+     }
+    },
+    "scope_identity": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "FGI-1218 explicitly specifies this criterion for this exact family; native execution remains NOT_RUN.",
+     "evidence": [
+      {
+       "path": "Plans/Forge_Integrations.md",
+       "unit": "FGI-1218",
+       "line_start": 3709,
+       "line_end": 3709,
+       "quote": "Scope/identity: adopt Contracts_V0.md#EventRecord, CV-317 and CV-366. Scope policy application_or_project means",
+       "quote_check": "exact",
+       "quote_scope": "unit FGI-1218, Plans/Forge_Integrations.md:3660-3829",
+       "file_sha256": "6368067f9db46d7cfca0671ea94bef2037b5ed2c2cce00e56e430ac0d75563dc"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261105/W3A-self-grade.json",
+      "sha256": "41f3bc4318ce3486b3fc52adf00a01f59f6832f2488c24c506acc321141fd6f8",
+      "field": "scope_identity",
+      "status": "PASS"
+     }
+    },
+    "replay_idempotency": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "FGI-1218 explicitly specifies this criterion for this exact family; native execution remains NOT_RUN.",
+     "evidence": [
+      {
+       "path": "Plans/Forge_Integrations.md",
+       "unit": "FGI-1218",
+       "line_start": 3717,
+       "line_end": 3717,
+       "quote": "Replay/idempotency: replay_policy=dedupe_by_idempotency_key for future current writes; projector_replay_only is",
+       "quote_check": "exact",
+       "quote_scope": "unit FGI-1218, Plans/Forge_Integrations.md:3660-3829",
+       "file_sha256": "6368067f9db46d7cfca0671ea94bef2037b5ed2c2cce00e56e430ac0d75563dc"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261105/W3A-self-grade.json",
+      "sha256": "41f3bc4318ce3486b3fc52adf00a01f59f6832f2488c24c506acc321141fd6f8",
+      "field": "replay_idempotency",
+      "status": "PASS"
+     }
+    },
+    "retention": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "Approval class assignment is explicit under current Case L-3; linked bodies and checkpoints have separate policy.",
+     "evidence": [
+      {
+       "path": "Plans/Forge_Integrations.md",
+       "unit": "FGI-1218",
+       "line_start": 3726,
+       "line_end": 3726,
+       "quote": "Retention: event retention_policy_ref=RP-AUTHORITY-INDEFINITE@1.0.0. The current review approval is the exact",
+       "quote_check": "exact",
+       "quote_scope": "unit FGI-1218, Plans/Forge_Integrations.md:3660-3829",
+       "file_sha256": "6368067f9db46d7cfca0671ea94bef2037b5ed2c2cce00e56e430ac0d75563dc"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261105/W3A-self-grade.json",
+      "sha256": "41f3bc4318ce3486b3fc52adf00a01f59f6832f2488c24c506acc321141fd6f8",
+      "field": "retention",
+      "status": "PASS"
+     }
+    },
+    "redaction_custody": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "FGI-1218 explicitly specifies this criterion for this exact family; native execution remains NOT_RUN.",
+     "evidence": [
+      {
+       "path": "Plans/Forge_Integrations.md",
+       "unit": "FGI-1218",
+       "line_start": 3731,
+       "line_end": 3731,
+       "quote": "Custody/redaction: forge_review_approved_source is canonical non-rebuildable identity/source-lineage, coherently",
+       "quote_check": "exact",
+       "quote_scope": "unit FGI-1218, Plans/Forge_Integrations.md:3660-3829",
+       "file_sha256": "6368067f9db46d7cfca0671ea94bef2037b5ed2c2cce00e56e430ac0d75563dc"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261105/W3A-self-grade.json",
+      "sha256": "41f3bc4318ce3486b3fc52adf00a01f59f6832f2488c24c506acc321141fd6f8",
+      "field": "redaction_custody",
+      "status": "PASS"
+     }
+    },
+    "transitions": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "FGI-1218 explicitly specifies this criterion for this exact family; native execution remains NOT_RUN.",
+     "evidence": [
+      {
+       "path": "Plans/Forge_Integrations.md",
+       "unit": "FGI-1218",
+       "line_start": 3681,
+       "line_end": 3681,
+       "quote": "Semantics and transitions: One provider-native approval vote is saved for the exact reviewer and immutable review",
+       "quote_check": "exact",
+       "quote_scope": "unit FGI-1218, Plans/Forge_Integrations.md:3660-3829",
+       "file_sha256": "6368067f9db46d7cfca0671ea94bef2037b5ed2c2cce00e56e430ac0d75563dc"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261105/W3A-self-grade.json",
+      "sha256": "41f3bc4318ce3486b3fc52adf00a01f59f6832f2488c24c506acc321141fd6f8",
+      "field": "transitions",
+      "status": "PASS"
+     }
+    },
+    "consumers_checkpoints": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "SP-1218 refines recipe/issuance/membership dependencies and the exact count/resume contract; existing family consumer/SP-278 binding remains explicit. Native NOT_RUN.",
+     "evidence": [
+      {
+       "path": "Plans/Forge_Integrations.md",
+       "unit": "FGI-1218",
+       "line_start": 3741,
+       "line_end": 3741,
+       "quote": "Consumer/checkpoint: newly bind Source Control review-approval history reader as consumer.forge.review.approved.history@1.0.0,",
+       "quote_check": "exact",
+       "quote_scope": "unit FGI-1218, Plans/Forge_Integrations.md:3660-3829",
+       "file_sha256": "6368067f9db46d7cfca0671ea94bef2037b5ed2c2cce00e56e430ac0d75563dc"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-1218",
+       "line_start": 49612,
+       "line_end": 49612,
+       "quote": "Generation invariants for forge.review.approved: correct ID recipes, actual seed-issuance provenance,",
+       "quote_check": "exact",
+       "quote_scope": "unit SP-1218, Plans/storage-plan.md:49490-49691",
+       "file_sha256": "955d7fb440299fd63a0735130db45cb7b4826067df3498d471d40ffcd2c3575a"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-1218",
+       "line_start": 49557,
+       "line_end": 49557,
+       "quote": "The forge.review.approved count-equality oracle uses a completely covered prefix with one exact matching",
+       "quote_check": "exact",
+       "quote_scope": "unit SP-1218, Plans/storage-plan.md:49490-49691",
+       "file_sha256": "955d7fb440299fd63a0735130db45cb7b4826067df3498d471d40ffcd2c3575a"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261105/W3A-self-grade.json",
+      "sha256": "41f3bc4318ce3486b3fc52adf00a01f59f6832f2488c24c506acc321141fd6f8",
+      "field": "consumers_checkpoints",
+      "status": "PASS"
+     }
+    },
+    "compatibility_withdrawal": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "FGI-1218 explicitly specifies this criterion for this exact family; native execution remains NOT_RUN.",
+     "evidence": [
+      {
+       "path": "Plans/Forge_Integrations.md",
+       "unit": "FGI-1218",
+       "line_start": 3748,
+       "line_end": 3748,
+       "quote": "Compatibility/withdrawal: this new payload has no silently admitted older edition. Registry-selected retained",
+       "quote_check": "exact",
+       "quote_scope": "unit FGI-1218, Plans/Forge_Integrations.md:3660-3829",
+       "file_sha256": "6368067f9db46d7cfca0671ea94bef2037b5ed2c2cce00e56e430ac0d75563dc"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261105/W3A-self-grade.json",
+      "sha256": "41f3bc4318ce3486b3fc52adf00a01f59f6832f2488c24c506acc321141fd6f8",
+      "field": "compatibility_withdrawal",
+      "status": "PASS"
+     }
+    },
+    "positive_negative_oracles": {
+     "status": "PASS",
+     "representation": "executed_static_oracle",
+     "finding": "scripts/pm_w3a_forge_events.py runs this family in both scopes: 28 positives (append, settle, retry, publish, stage, read, replay, withdraw; both scopes) and 593 to 667 negatives, every reachable row of its tables refused first by its own single-defect witness (all 35 families: 980 positives, 21,829 negatives, 21,409 single-defect, 420 labelled multi-defect). Guard tables on the gated tool 004bdedd63: 592 tables, 2,101 rows, 2,100 proved; the one unproved row PM01_pack_media is entailed by the source-row pending_intent_ref pattern and sits alone in its own table; lane matrix 0, masked 0. Numbers: shared calls at every integer slot; shared corpus 140/140 direct and 1,624/1,624 complete-checker routes, 0 untracked; --self-test --scope numbers pass; no crash on 4,400-digit integers. Timestamps: CV-1101 date_time with the event_record / storage_utc_z owner profiles. Retained reads select only from the one sealed SP-1101 receipt. Native execution NOT_RUN.",
+     "evidence": [
+      {
+       "path": "Plans/Forge_Integrations.md",
+       "unit": "FGI-1218",
+       "line_start": 3758,
+       "line_end": 3758,
+       "quote": "Oracle obligation (criterion 12): ATS-1200 and reports/event-authority-20261105/W3A-oracle-plan.json carry this",
+       "quote_check": "exact",
+       "quote_scope": "unit FGI-1218, Plans/Forge_Integrations.md:3660-3829",
+       "file_sha256": "6368067f9db46d7cfca0671ea94bef2037b5ed2c2cce00e56e430ac0d75563dc"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261105/W3A-self-grade.json",
+      "sha256": "41f3bc4318ce3486b3fc52adf00a01f59f6832f2488c24c506acc321141fd6f8",
+      "field": "positive_negative_oracles",
+      "status": "PASS"
+     }
+    }
+   }
+  }
+ ]
+}

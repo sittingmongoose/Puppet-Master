@@ -1,0 +1,66 @@
+{
+  "application_id": "EA-W3I-DL452-EXCLUSION-PHASE1",
+  "base_sha": "f9c5de6561dff0a53a48e530f2a5c6804a7e941d",
+  "procedure": "reports/event-authority-20260911/step-09-procedure-20260924.md#Per exclusion",
+  "authority": {
+    "decision_ref": "Plans/Decision_Log.md#DL-452",
+    "branch": "plans/ea-cards2-answers-20261105",
+    "commit": "7ddbd14d27b41b29d041b9db5105ff39fc2eb350",
+    "answer_source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/ANSWERS_E-CARDS-2_20261105.md",
+    "answer_source_sha256": "e7e8d3f3a2f23737b201becddd94ff0c707815520a366ab32758088c720927fd",
+    "deck_sha256": "6db25be3dd290ab0083af482383e469a78dc109a037ad0fd0ece5d8f15679b30",
+    "item": "9.c",
+    "chosen_option": "A \u2014 Delivery only",
+    "decision_section_sha256": "630e54390163987c189b19c65a71bf35cd6982fbb833b45e585d097c81b9521e",
+    "decision_file_sha256": "c985a5f39ef84f3cb502ddbd1eddca2d4151e81eadc5e6bcec4007ffa8145f04"
+  },
+  "event_type": "subagent.cancel_requested",
+  "outcome": "excluded",
+  "owner_text_refs": [
+    "Plans/orchestrator-subagent-integration.md#Required-Subagent Criticality And Parallel Failure Policy",
+    "Plans/orchestrator-subagent-integration.md#OSI-1604"
+  ],
+  "population_handling": "No legacy row exists in either frozen-population working ledger. New-name supplemental individual row/ledger and census ledger line record this exclusion without assigning a fictitious legacy bucket/cohort, changing the frozen population, or removing a denominator member. These supplements are outside the frozen August schema. The existing LEDGER.jsonl files remain byte-identical.",
+  "files": [
+    {
+      "path": "Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_subagent.cancel_requested.json",
+      "before_sha256": null,
+      "after_sha256": "d7a742e6810209c0dd7d8818c796aa35af5aeb898635ddf5db61511f1b1574c0"
+    },
+    {
+      "path": "Plans/.audits/event-authority-2026-08-12/individual-disposition/W3I-NEW-NAMES-LEDGER.jsonl",
+      "before_sha256": null,
+      "after_sha256": "7272bc2b0c1f05f9c2abb974668e0c0934a9c2b6fdf9af82b52bc374ddec0dfd"
+    },
+    {
+      "path": "Plans/.audits/event-authority-2026-08-12/census-adjudication/W3I-NEW-NAMES-LEDGER.jsonl",
+      "before_sha256": null,
+      "after_sha256": "b1df548db36ec3afd7823343dbb125e6197ae216831797377cc20e83efd6591e"
+    }
+  ],
+  "preserved_legacy_ledgers": [
+    {
+      "path": "Plans/.audits/event-authority-2026-08-12/individual-disposition/LEDGER.jsonl",
+      "before_sha256": "37ea8147878040e62b6ff76981c440a679e002d055ffb7bc5d256573454b5265",
+      "after_sha256": "37ea8147878040e62b6ff76981c440a679e002d055ffb7bc5d256573454b5265",
+      "matching_rows_before": 0,
+      "matching_rows_after": 0
+    },
+    {
+      "path": "Plans/.audits/event-authority-2026-08-12/census-adjudication/LEDGER.jsonl",
+      "before_sha256": "83a1698ac3dfe2795fec2f10aed3eaabfae6f4074966ed5e6806f756ddf15af0",
+      "after_sha256": "83a1698ac3dfe2795fec2f10aed3eaabfae6f4074966ed5e6806f756ddf15af0",
+      "matching_rows_before": 0,
+      "matching_rows_after": 0
+    }
+  ],
+  "registry_family_append": false,
+  "admission_record": false,
+  "decision_log_entry_written": false,
+  "denominator_removal_claimed": false,
+  "owner_file": {
+    "path": "Plans/orchestrator-subagent-integration.md",
+    "before_sha256": "50897a3ae37c1829176411dbf7276fc7da1b8fc4b02ee4556631e7154378e0d7",
+    "after_sha256": "167320640f25243ff4455ee1dc78947cc43665649f631ba254ae1e46da54ef20"
+  }
+}

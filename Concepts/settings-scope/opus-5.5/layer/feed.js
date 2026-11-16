@@ -177,6 +177,12 @@
     const rule = classify(ref, s); if (!rule) return false;
     DEF[id] = Object.assign({ adopted: true }, rule);
     DEFAULTS[id] = clone(s.value);
+    /* the page's old shape for a row Plans' inventory now types otherwise (Model nicknames: the page's text box holds "",
+       the inventory's default is the empty map {}): the inventory's default, so the panel says "No nicknames yet" */
+    // only a row the inventory types as a map or a list (a path's structured default, "relative to the computer's home",
+    // still reads as the path the page holds)
+    const inv = PSX.factsOf && PSX.factsOf(id), invType = PSX.layering && PSX.layering.types[id];
+    if (inv && ['keyvalue', 'list', 'multiselect'].includes(invType) && inv.default && typeof inv.default === 'object' && !(s.value && typeof s.value === 'object') && !PSX.holds(id, inv.default)) DEFAULTS[id] = clone(inv.default);
     if (everywhereValue !== undefined && !same(everywhereValue, s.value)) {
       const seed = rule.home === 'computer' ? { level: 'computer', key: 'here' } : rule.home === 'project' ? { level: 'project', key: 'tastebook' } : { level: 'everywhere', key: null };
       SEED[id] = Object.assign(seed, { value: clone(everywhereValue) });
@@ -213,6 +219,10 @@
       const r = PSX.resolve(id, actorCtx && DEF[id].screen ? actorCtx : ctx);
       let v = r.notOffered ? DEFAULTS[id] : (r.asked !== undefined ? r.asked : r.value);
       if (id === 'general.visual.theme') { const pair = PSX.themePair(v); Object.assign(out, pair); changed['general.visual.theme'] = r.changed; changed['general.visual.theme-mode'] = r.changed; return; }
+      // a model chosen with its own thinking depth is one atomic value in the world; the engine's row keeps the model
+      if (PSX.isModel && PSX.isModel(id) && v && typeof v === 'object' && !Array.isArray(v)) v = v.model;
+      // a value the page's own control can't hold (a map for a text box) is never put into it: the row says it in words
+      else if (!PSX.holds(id, v)) return;
       out[id] = clone(v); changed[id] = !!r.changed && !r.notOffered;
     });
     return { settings: out, changed };
@@ -321,24 +331,54 @@
   /* ------------------------------------------------------------------ the router (6.3) */
   let diffTimer = 0, inputTimer = 0;
   const router = { source: null, pendingToasts: [] };
-  function schedule(src) {
+  function schedule(src, target) {
     if (feeding) return;
     if (src) router.source = src;
+    if (target) router.target = target;
     clearTimeout(diffTimer);
     requestAnimationFrame(() => { diffTimer = setTimeout(diff, 60); });
   }
   function hook(el) {
     if (!el || el.__psxRouted) return; el.__psxRouted = true;
-    el.addEventListener('change', (e) => schedule(srcOf(e.target)), true);
-    el.addEventListener('input', (e) => { clearTimeout(inputTimer); const src = srcOf(e.target); inputTimer = setTimeout(() => schedule(src), 250); }, true);
-    el.addEventListener('click', (e) => schedule(srcOf(e.target)), true);
-    el.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') schedule(srcOf(e.target)); }, true);
+    el.addEventListener('change', (e) => schedule(srcOf(e.target), e.target), true);
+    el.addEventListener('input', (e) => { clearTimeout(inputTimer); const src = srcOf(e.target), tg = e.target; inputTimer = setTimeout(() => schedule(src, tg), 250); }, true);
+    el.addEventListener('click', (e) => schedule(srcOf(e.target), e.target), true);
+    el.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') schedule(srcOf(e.target), e.target); }, true);
   }
   const srcOf = (t) => (t && t.closest && t.closest('.detail-inspector') && t.closest('.o55-insp-choice') ? 'panel' : t && t.closest && t.closest('#themeMenu') ? 'theme' : 'row');
+  /* Found while testing Jared's 2026-11-13 fixes (not on his list): a page the engine draws for the first time can fill a
+     row it held no value for (Safety › Rules fills Rules, in order), and the press that opened the page made the router
+     read that fill as a person's change: "Saved for everywhere", with a History entry. A move from "no value" that no
+     press on that row, its editor, a side panel, a list or the Details panel caused is the engine's first fill: it
+     becomes the row's starting value and nothing is written. Every later change routes as before. */
+  const FILL_SAFE = '.drawer-wrap, .pm51-popout, .pmr-menu, .detail-inspector, .psx-sheet';
+  // a press that only opens a page: a chapter, a page's tab, a manager's tab, the page index
+  const NAV = '.domain-link, .workspace-tab, .manager-tab, .page-index-title, .index-link, .pm51-index-tab, [data-action="navigate-domain"], [data-action="jump-workspace"], [data-action="pm51-tab"], [data-action="scroll-section"], [data-action="index-tab"]';
+  const isNav = (t) => !!(t && t.closest && t.closest(NAV));
+  function touched(id, t) {
+    if (!t || !t.closest) return false;
+    if (PSX.places && PSX.places.editing && PSX.places.editing.id === id) return true;
+    const q = CSS.escape(id);
+    return !!t.closest(`[id="setting-${q}"], [data-setting="${q}"], [data-setting-id="${q}"], ${FILL_SAFE}`);
+  }
   function diff() {
     const K = kimi(); if (!K || feeding) return;
     const st = K.getState().settings || {};
-    const moved = ENGINE_IDS.filter((id) => !same(st[id], PSX.last[id]));
+    let moved = ENGINE_IDS.filter((id) => !same(st[id], PSX.last[id]));
+    const tg = router.target; router.target = null;
+    const fills = moved.filter((id) => st[id] !== undefined && !touched(id, tg) && (PSX.last[id] === undefined || isNav(tg)));
+    if (fills.length) {
+      /* the fill is the page's own starting value: a row with no own value anywhere starts there (its default); a row
+         with one keeps it, and the next feed puts it back on the page */
+      fills.forEach((id) => {
+        PSX.last[id] = clone(st[id]);
+        if (DEF[id] && DEF[id].demoRow) return;
+        const r = PSX.resolve(id, S.ctx);
+        if (DEFAULTS[id] === undefined || (r && r.from && r.from.level === 'default' && !(r.varies || []).length)) DEFAULTS[id] = clone(st[id]);
+      });
+      PSX.fills = (PSX.fills || []).concat(fills);
+      moved = moved.filter((id) => !fills.includes(id));
+    }
     if (!moved.length) { router.source = null; return; }
     const src = router.source; router.source = null;
     // the theme pair is one change
@@ -357,6 +397,10 @@
   function targetFor(id, r, ctx, src) {
     const def = DEF[id], c = PSX.ctxFull(ctx);
     if (src === 'panel' && S.targets[id]) return S.targets[id];
+    /* Jared 2026-11-13: the row's own editor opened for one place (a map or a list of records, places.js openRow): its
+       Save goes to that place */
+    const pe = PSX.places && PSX.places.editing;
+    if (pe && pe.id === id) return { level: pe.level, key: pe.key };
     if (def.home === 'computer') return { level: 'computer', key: def.host ? (c.host || c.on) : c.on };
     if (def.home === 'project') return c.project ? { level: 'project', key: c.project } : null;
     if (def.home === 'everywhere') return { level: 'everywhere', key: null };
@@ -496,6 +540,9 @@
     const wrapped = function (payload) {
       try {
         const t = payload && String(payload.title || '');
+        // the row's own editor opened for one place says "Saved · <row> updated."; the layer's note names the place instead
+        const pe = PSX.places && PSX.places.editing;
+        if (pe && t === 'Saved' && String(payload.body || '').startsWith(label(pe.id))) { PSX.toastsSwallowed = (PSX.toastsSwallowed || 0) + 1; return undefined; }
         if (/^(Saved|Back to the default)$/.test(t)) {
           const body = String(payload.body || ''), map = labelIds();
           const name = Object.keys(map).find((l) => body.startsWith(l + ':'));

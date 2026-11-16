@@ -1,0 +1,697 @@
+{
+ "adapter_demo_guards": {
+  "append/conflict/producer25": [
+   "adapter_demo/retry_altered_producer"
+  ],
+  "identity/assignment_run": [
+   "adapter_demo/assignment_other_run"
+  ],
+  "identity/decision": [
+   "adapter_demo/decision_with_exception"
+  ],
+  "identity/descriptor_unavailable": [
+   "adapter_demo/descriptor_absent"
+  ],
+  "identity/expected_goal_run_revision/numrule/integer_type": [
+   "adapter_demo/revision_as_bool",
+   "adapter_demo/revision_as_float",
+   "adapter_demo/revision_as_string"
+  ],
+  "identity/goal": [
+   "adapter_demo/native_goal_differs"
+  ],
+  "identity/independent_event_id": [
+   "adapter_demo/start_identity_formula"
+  ],
+  "identity/independent_key": [
+   "adapter_demo/unprefixed_identity_key"
+  ],
+  "identity/input/schema/": [
+   "adapter_demo/identity_input_extra_member"
+  ],
+  "identity/invocation_assignment": [
+   "adapter_demo/invocation_foreign_assignment"
+  ],
+  "identity/partition_recomputed": [
+   "adapter_demo/partition_lower_hex_recipe"
+  ],
+  "identity/partition_storage": [
+   "adapter_demo/partition_other_storage"
+  ],
+  "identity/project": [
+   "adapter_demo/goal_project_differs"
+  ],
+  "identity/revision_step": [
+   "adapter_demo/revision_step_not_plus_one"
+  ],
+  "identity/standard_decision": [
+   "adapter_demo/standard_exception_decision"
+  ],
+  "identity/standard_durable": [
+   "adapter_demo/standard_receipt_not_durable"
+  ],
+  "identity/standard_run": [
+   "adapter_demo/standard_other_run"
+  ],
+  "original/handle_type": [
+   "adapter_demo/partition_caller_supplied"
+  ],
+  "original/issuer": [
+   "adapter_demo/identity_from_other_owner"
+  ],
+  "producer/codec_unavailable": [
+   "adapter_demo/revision_after_2p53_plus_1_jcs_unavailable",
+   "adapter_demo/revision_after_uint64_codec_unavailable"
+  ],
+  "producer/envelope_members": [
+   "adapter_demo/envelope_extra_member"
+  ],
+  "producer/field/actor_ref": [
+   "adapter_demo/changed_actor"
+  ],
+  "producer/field/causation_event_id": [
+   "adapter_demo/changed_cause"
+  ],
+  "producer/field/event_id": [
+   "adapter_demo/changed_event_id"
+  ],
+  "producer/field/occurred_at_utc": [
+   "adapter_demo/changed_time"
+  ],
+  "producer/field/payload.effective_model_ref": [
+   "adapter_demo/changed_effective_runtime"
+  ],
+  "producer/field/payload.idempotency_key": [
+   "adapter_demo/inner_key_alternate"
+  ],
+  "producer/field/replay_policy": [
+   "adapter_demo/replay_only_policy"
+  ],
+  "producer/field/run_id": [
+   "adapter_demo/normalized_goal_run_id"
+  ],
+  "producer/identity_handle": [
+   "adapter_demo/identity_candidate_not_issued"
+  ],
+  "producer/payload.goal_run_revision/numrule/integer_type": [
+   "adapter_demo/revision_float_in_payload"
+  ],
+  "producer/payload/schema/": [
+   "adapter_demo/payload_extra_member"
+  ],
+  "producer/payload/schema/payload": [
+   "adapter_demo/partial_payload_witness"
+  ],
+  "producer/required_present/node_id": [
+   "adapter_demo/missing_nullable_node_id"
+  ],
+  "producer/required_present/payload_ref": [
+   "adapter_demo/missing_nullable_payload_ref"
+  ],
+  "read/event_unavailable": [
+   "adapter_demo/cause_not_appended"
+  ],
+  "registry/unregistered_owner": [
+   "adapter_demo/assignment_unregistered_owner"
+  ]
+ },
+ "guard_count_with_negatives": 144,
+ "guards_with_negatives": {
+  "append/conflict/producer25": [
+   "retry_altered_producer"
+  ],
+  "birth/argument_run": [
+   "birth_argument_foreign_run"
+  ],
+  "birth/binding_run": [
+   "binding_lower_foreign_run"
+  ],
+  "birth/candidates/schema/birth": [
+   "birth_extra_member"
+  ],
+  "birth/control_selects_birth": [
+   "control_selects_other_birth"
+  ],
+  "birth/future_input": [
+   "future_standard_input_at_birth"
+  ],
+  "birth/goal_run": [
+   "goal_bound_to_other_run"
+  ],
+  "birth/goal_stop": [
+   "goal_stopped_before_birth"
+  ],
+  "birth/initial_control_key": [
+   "circular_birth_selects_own_key",
+   "control_key_base64url_codec"
+  ],
+  "birth/initial_epoch": [
+   "initial_control_epoch_nonzero"
+  ],
+  "birth/initial_phase": [
+   "initial_phase_not_empty"
+  ],
+  "birth/one_transaction": [
+   "sequential_partial_birth"
+  ],
+  "birth/original_birth_argument/schema/": [
+   "birth_argument_extra_member"
+  ],
+  "birth/profile_selected": [
+   "native_birth_other_profile"
+  ],
+  "birth/request_profile": [
+   "birth_request_profile_mismatch"
+  ],
+  "birth/selects_native": [
+   "birth_selects_other_native"
+  ],
+  "birth/writer_contract": [
+   "old_birth_native_writer_v6"
+  ],
+  "birth_final/binding": [
+   "rebind_after_helpers_before_commit"
+  ],
+  "birth_final/effective_stop": [
+   "stop_after_helpers_before_commit"
+  ],
+  "birth_final/goal_revision": [
+   "goal_edit_after_helpers_before_commit"
+  ],
+  "birth_final/occupied": [
+   "occupied_birth_key",
+   "occupied_control_key"
+  ],
+  "dispatch/assignment/unresolvable_in_realm": [
+   "method_dispatch_realm_cast"
+  ],
+  "dispatch/current_goal/unresolvable_in_realm": [
+   "method_dispatch_goal_in_standard_realm"
+  ],
+  "final/g1/all_worknodes_terminal": [
+   "required_worknode_failed_after_provisional"
+  ],
+  "final/g2/criteria_present": [
+   "no_required_criteria"
+  ],
+  "final/g2/criterion_satisfied": [
+   "criterion_waived",
+   "criterion_waived_not_applicable"
+  ],
+  "final/g2/validator_passed": [
+   "validator_failed_on_done_worknode"
+  ],
+  "final/g3/final_source_state": [
+   "source_control_blocked"
+  ],
+  "final/g3/source_control_present": [
+   "source_control_record_missing"
+  ],
+  "final/g4/no_active_blockers": [
+   "active_blocker"
+  ],
+  "final/g5/rollback": [
+   "rollback_required_unresolved"
+  ],
+  "final/g6/safe_point": [
+   "safe_point_required_unresolved"
+  ],
+  "final/g7/currentness": [
+   "stale_d01_head"
+  ],
+  "final/g8/auditor_passed": [
+   "auditor_critical_block"
+  ],
+  "final/gdoc/document_set": [
+   "document_packaging_without_document_set",
+   "document_set_missing_audit_c"
+  ],
+  "final/goal_current": [
+   "goal_edited_before_final_after_argument"
+  ],
+  "final/goal_stop": [
+   "goal_stopped_before_final"
+  ],
+  "final/gu2/d01_origin": [
+   "d01_origin_fabricated_issuer",
+   "d01_origin_missing"
+  ],
+  "final/status": [
+   "final_decision_while_running"
+  ],
+  "g/final_identity": [
+   "source_final_identity_substituted"
+  ],
+  "g/final_receipt": [
+   "source_final_receipt_substituted"
+  ],
+  "g/source_argument": [
+   "source_argument_hash_substituted"
+  ],
+  "g1/completion_done": [
+   "source_completion_not_done"
+  ],
+  "g1/required_completions": [
+   "source_completion_omitted"
+  ],
+  "g1/required_set": [
+   "source_required_set_omits_member"
+  ],
+  "goal/unavailable": [
+   "goal_control_unavailable"
+  ],
+  "i0/assignment/structured/byte_count": [
+   "structured_original_byte_count"
+  ],
+  "i0/assignment/structured/sha256": [
+   "structured_original_sha_mismatched"
+  ],
+  "i0/assignment/structured/unissued": [
+   "structured_original_substituted"
+  ],
+  "i0/assignment_owner": [
+   "assignment_owner_role_substituted"
+  ],
+  "i0/assignment_role": [
+   "assignment_role_not_verifier"
+  ],
+  "i0/assignment_target": [
+   "assignment_foreign_run"
+  ],
+  "i0/causal/structured/scope": [
+   "structured_original_foreign_scope"
+  ],
+  "i0/causal_correlation": [
+   "causal_unbound_correlation"
+  ],
+  "i0/causal_target": [
+   "causal_target_revision"
+  ],
+  "i0/effective_runtime": [
+   "effective_runtime_mismatched"
+  ],
+  "i0/invocation/structured/owner_unregistered": [
+   "structured_original_owner_unregistered"
+  ],
+  "i0/invocation_actor": [
+   "invocation_actor_mismatched"
+  ],
+  "i0/invocation_assignment": [
+   "invocation_embeds_foreign_assignment"
+  ],
+  "i0/invocation_assignment_ref": [
+   "invocation_result_other_assignment"
+  ],
+  "i0/invocation_id": [
+   "invocation_result_id_mismatched"
+  ],
+  "i0/native_goal": [
+   "source_request_goal_mismatched"
+  ],
+  "i0/reference/effective_account": [
+   "reference_account_mismatched"
+  ],
+  "i0/reference/effective_model": [
+   "reference_effective_model_mismatched"
+  ],
+  "i0/references_invocation": [
+   "references_other_invocation"
+  ],
+  "i0/resolver/structured/transaction": [
+   "structured_original_transaction_substituted"
+  ],
+  "i0/resolver_invocation": [
+   "resolver_other_invocation"
+  ],
+  "identity/decision": [
+   "decision_with_exception"
+  ],
+  "identity/expected_goal_run_revision/numrule/integer_type": [
+   "revision_as_bool",
+   "revision_as_string"
+  ],
+  "identity/future_input": [
+   "identity_input_future_intent"
+  ],
+  "identity/independent_event_id": [
+   "start_identity_formula"
+  ],
+  "identity/independent_key": [
+   "unprefixed_identity_key"
+  ],
+  "identity/input/schema/": [
+   "identity_input_extra_member"
+  ],
+  "identity/partition_recomputed": [
+   "partition_lower_hex_recipe"
+  ],
+  "identity/partition_storage": [
+   "partition_other_storage"
+  ],
+  "identity/request_profile": [
+   "request_profile_mismatched"
+  ],
+  "identity/request_scope": [
+   "request_foreign_scope"
+  ],
+  "identity/revision_step": [
+   "revision_step_not_plus_one"
+  ],
+  "identity_helper/assignment_current/assignment": [
+   "stale_assignment_superseded"
+  ],
+  "identity_helper/assignment_current/causal": [
+   "assignment_superseded_after_causal_helper"
+  ],
+  "identity_helper/assignment_current/invocation": [
+   "assignment_superseded_after_invocation_helper"
+  ],
+  "identity_helper/assignment_current/partition": [
+   "assignment_superseded_at_last_helper"
+  ],
+  "identity_helper/assignment_current/references": [
+   "assignment_superseded_after_references_helper"
+  ],
+  "identity_helper/assignment_current/resolver": [
+   "assignment_superseded_after_resolver_helper"
+  ],
+  "identity_helper/goal_current/goal": [
+   "goal_edited_after_helper"
+  ],
+  "identity_helper/goal_current/standard": [
+   "goal_stopped_after_helper"
+  ],
+  "identity_helper/native_current/native": [
+   "native_advanced_after_helper"
+  ],
+  "identity_helper/standard_durable/standard": [
+   "standard_withdrawn_after_helper"
+  ],
+  "issue/ReferenceSource/schema/bindings": [
+   "reference_member_set_substituted"
+  ],
+  "native/provisional/required_worknode": [
+   "required_worknode_never_completed",
+   "required_worknode_validator_failed"
+  ],
+  "native/status/original_start_activation": [
+   "start_twice"
+  ],
+  "native/unborn": [
+   "older_native_birth_present"
+  ],
+  "native/worknode_state/in_progress": [
+   "worknode_attempt_reentered"
+  ],
+  "native/worknode_unknown": [
+   "unregistered_worknode"
+  ],
+  "original/handle_type": [
+   "caller_census_dict",
+   "unissued_goal_argument_dict"
+  ],
+  "original/issuer": [
+   "identity_from_other_owner"
+  ],
+  "original/withdrawn": [
+   "invocation_withdrawn_before_final"
+  ],
+  "p9/event_id": [
+   "producer_source_identity_admission_substituted"
+  ],
+  "prepare/decision_current": [
+   "stale_decision_at_prepare"
+  ],
+  "producer/envelope_members": [
+   "envelope_extra_member"
+  ],
+  "producer/field/actor_ref": [
+   "changed_actor_coherent"
+  ],
+  "producer/field/causation_event_id": [
+   "changed_cause_coherent"
+  ],
+  "producer/field/event_id": [
+   "changed_event_id"
+  ],
+  "producer/field/occurred_at_utc": [
+   "changed_time_coherent"
+  ],
+  "producer/field/payload.effective_model_ref": [
+   "producer_effective_model_field"
+  ],
+  "producer/field/payload.idempotency_key": [
+   "inner_key_alternate"
+  ],
+  "producer/field/replay_policy": [
+   "replay_only_policy"
+  ],
+  "producer/field/run_id": [
+   "normalized_goal_run_id"
+  ],
+  "producer/identity_handle": [
+   "identity_candidate_not_issued"
+  ],
+  "producer/payload.goal_run_revision/numrule/integer_type": [
+   "revision_float_in_payload"
+  ],
+  "producer/payload/schema/": [
+   "payload_extra_member"
+  ],
+  "producer/required_present/node_id": [
+   "missing_nullable_node_id"
+  ],
+  "producer/required_present/payload_ref": [
+   "missing_nullable_payload_ref"
+  ],
+  "producer/source/assignment": [
+   "producer_source_embedded_assignment_substituted"
+  ],
+  "producer/whole_source/structured/unissued": [
+   "producer_source_structured_substituted"
+  ],
+  "producer_final/assignment_current/return": [
+   "assignment_superseded_before_producer_return"
+  ],
+  "producer_helper/goal_current/acquired": [
+   "goal_stopped_before_producer"
+  ],
+  "producer_helper/native_current/acquired": [
+   "native_advanced_before_producer"
+  ],
+  "profile/cycle": [
+   "descriptor_self_dependency"
+  ],
+  "profile/digest": [
+   "descriptor_digest_pretty_print_recipe",
+   "descriptor_digest_stale_after_change"
+  ],
+  "profile/member_bytes": [
+   "member_byte_count"
+  ],
+  "profile/member_duplicate": [
+   "member_duplicate"
+  ],
+  "profile/member_hash": [
+   "member_changed_resource_hash"
+  ],
+  "profile/member_missing": [
+   "member_missing_resource"
+  ],
+  "profile/network_fallback": [
+   "network_fallback"
+  ],
+  "profile/predecessor": [
+   "predecessor_relabelled"
+  ],
+  "profile/predecessor_bytes": [
+   "predecessor_whole_hash_substituted"
+  ],
+  "profile/realm_merge": [
+   "global_bank_merge"
+  ],
+  "profile/resource_closure/explicit_import_target_bytes_mismatched": [
+   "wrong_scoped_import_target_hash"
+  ],
+  "profile/subprofile_digest": [
+   "subprofile_digest_stale"
+  ],
+  "profile/subprofile_member": [
+   "subprofile_not_member"
+  ],
+  "profile/unresolved": [
+   "scoped_import_dropped"
+  ],
+  "profile/writer_contract": [
+   "v6_descriptor_old_profile",
+   "v6_header_cast_on_v7_descriptor"
+  ],
+  "read/event_unavailable": [
+   "cause_event_never_appended"
+  ],
+  "registry/role": [
+   "borrowed_owner_role"
+  ],
+  "standard/decision_certified": [
+   "decision_blocked"
+  ],
+  "standard/decision_issued": [
+   "fabricated_decision_origin"
+  ],
+  "standard/flag/auditor_passed": [
+   "receipt_flag_false"
+  ],
+  "standard/goal_current": [
+   "goal_stopped_before_standard"
+  ],
+  "standard/no_exception": [
+   "child_receipt_shortcut",
+   "unresolved_risk_exception"
+  ],
+  "standard/worknode_receipts": [
+   "worknode_receipts_substituted"
+  ],
+  "u2/body_revision": [
+   "source_body_revision_mismatched"
+  ],
+  "u2/head_revision": [
+   "source_head_revision_mismatched"
+  ],
+  "u2/status": [
+   "source_status_mismatched"
+  ]
+ },
+ "lane": "DG-CF1",
+ "native": "native evidence stays NOT_RUN and is a separate claim; a planning PASS must never read as native proof",
+ "note": "Guard code -> lane negatives that refuse with exactly that code. Adopted adapter-demo negatives are listed under adapter_demo_guards. No local guard-removal engine and no check-11 claim are made; the shared tool scripts/pm_guard_isolation.py proves isolation in the sweep.",
+ "positive_path_assertions": [
+  "cf01/custody_commitment",
+  "cf01/custody_partition",
+  "cf01/custody_producer_digest",
+  "cf01/dedupe_status",
+  "cf01/first_receipt_sequence",
+  "cf01/key_bytes",
+  "cf01/lost_ack_no_change",
+  "cf01/lost_ack_same_receipt",
+  "cf01/lost_ack_status",
+  "cf01/no_second_event",
+  "cf01/same_first_receipt",
+  "cf01/storage_assigned",
+  "cf01/stored_producer25",
+  "cf01/unicode_not_normalized",
+  "cf02/helper_acquisitions",
+  "cf02/structured_present/",
+  "cf03/after_certified",
+  "cf03/before_status",
+  "cf03/goal_unchanged",
+  "cf03/lineage",
+  "cf03/native_unchanged_by_prepare",
+  "cf03/receipt_binding",
+  "cf03/revision_plus_one",
+  "cf03/worknode_done",
+  "cf03/worknode_order",
+  "cf04/birth_selects_profile",
+  "cf04/members",
+  "cf04/profile_digest",
+  "cf04/references_resolved",
+  "cf05/birth_selects_native",
+  "cf05/birth_tx_field",
+  "cf05/chronology",
+  "cf05/coissued/",
+  "cf05/control_selects_birth",
+  "cf05/family_key_hex_roundtrip",
+  "cf05/nothing_before",
+  "cf05/one_transaction"
+ ],
+ "qualification": "TEST_ONLY",
+ "static_sites_without_dedicated_negative": [
+  {
+   "note": "duplicate of <code>1/all_worknodes_terminal: a required WorkNode without a record refuses there first",
+   "site": "<code>1/inventory"
+  },
+  {
+   "note": "duplicate of birth/initial_control_key: a key encoding other identities differs from the derived key first",
+   "site": "birth/key_identity"
+  },
+  {
+   "note": "duplicate of profile/digest: the descriptor record carries the digest the profile owner just verified",
+   "site": "birth/profile"
+  },
+  {
+   "note": "tool self-check on its own scaffold (min_items guarantees a template); unreachable from inputs",
+   "site": "compose/expand_template"
+  },
+  {
+   "note": "coding guard: every dispatched name comes from methods.json; unreachable from inputs",
+   "site": "dispatch/undeclared/"
+  },
+  {
+   "note": "duplicate of identity_helper/goal_current/goal (live binding recheck after the Goal helper) and birth/goal_run",
+   "site": "i0/goal_run_bound"
+  },
+  {
+   "note": "duplicate of identity_helper/goal_current/<stage> (live Stop recheck after each helper)",
+   "site": "i0/goal_stop"
+  },
+  {
+   "note": "duplicate of the ReferenceSource contains/maxContains schema rule enforced at issuance (issue/ReferenceSource/schema/bindings)",
+   "site": "i0/reference_member_duplicate"
+  },
+  {
+   "note": "duplicate of the same schema rule (minItems 7 plus one contains per role)",
+   "site": "i0/reference_member_set"
+  },
+  {
+   "note": "needs a second final decision for the same run; T_DECISION is CAS-from-absent, so a second issuance refuses tx/cas_absent first",
+   "site": "i0/standard_decision"
+  },
+  {
+   "note": "duplicate of identity_helper/standard_durable/standard (live recheck after the Standard helper)",
+   "site": "i0/standard_durable"
+  },
+  {
+   "note": "needs a Standard captured for another run; the Standard owner derives goal_run_id from the scope it captures for",
+   "site": "i0/standard_run"
+  },
+  {
+   "note": "duplicate of profile/digest and birth/profile: the only descriptor issuer verifies the fixed recipe and digest",
+   "site": "identity/descriptor_unavailable"
+  },
+  {
+   "note": "owner custody is immutable; a withdrawn original refuses first with original/withdrawn (negative invocation_withdrawn_before_final)",
+   "site": "identity_final/source_changed/"
+  },
+  {
+   "note": "decode self-check on keys this owner encoded; a non-hex key is caught first by birth/initial_control_key",
+   "site": "key/lowercase_even_hex"
+  },
+  {
+   "note": "self-check on the pinned physical-retention-install.json template; unreachable from inputs",
+   "site": "key/template"
+  },
+  {
+   "note": "coding guard: scope identities come from owner values that are nonempty strings; unreachable from inputs",
+   "site": "key/utf8"
+  },
+  {
+   "note": "duplicate of prepare/decision_current: any native status change advances body_revision",
+   "site": "prepare/status"
+  },
+  {
+   "note": "Storage refuses first with read/event_unavailable (negative cause_event_never_appended), as in the adapter demo",
+   "site": "producer/cause_appended"
+  },
+  {
+   "note": "duplicate of the v3 payload schema validation (producer/payload/schema/)",
+   "site": "producer/payload_type"
+  },
+  {
+   "note": "the submission is built from the prepared producer25 by the same owner; unreachable from inputs",
+   "site": "producer/submission_field/"
+  },
+  {
+   "note": "duplicate of standard/goal_current (live Goal recheck; negative goal_stopped_before_standard)",
+   "site": "standard/goal_stop"
+  }
+ ]
+}

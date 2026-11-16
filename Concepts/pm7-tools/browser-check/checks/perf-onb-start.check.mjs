@@ -1,0 +1,450 @@
+// Welcome's Start paints the first Look screen at once (FO-206, pm7-perf lane T, 2026-11-14).
+//
+// Report from another stream (main 9bfa159274, Windows RTX 3090 headless at 1694x1290 @1.5): after the press on Welcome's
+// Start no frame is painted for about 295-308 ms while the first Look screen comes in (Alexis under load 450-1000 ms);
+// the Look title's 500 ms slide-in is mostly over when painting resumes, so it reads as a cut. Later screen changes keep
+// their gaps under 83 ms.
+//
+// From a cold first open (?o55=fresh), a real press (down, 90 ms, up) on Start, timed in the page: the release (the
+// click's timeStamp), every animation frame (requestAnimationFrame), long tasks (PerformanceObserver 'longtask'), the new
+// screen's layer appended (held) and its hold removed (the entrance starts: 60-ui-core.js transition, O55.motion.release),
+// and the first animation frame after that (the new screen's first frame). Judged for Start:
+//   first    the new screen's first frame within --set first=100 ms of the release;
+//   tasks    no long task over --set task=50 ms from the release to the end of the entrance (its first frame + 600 ms: the
+//            title's slide-in is 500 ms);
+//   frames   no gap between animation frames over --set gap=50 ms in that span: a cold browser's GPU compiling the
+//            new screen's programs draws no frame, on Alexis 425-513 ms right after the first one, and no task shows it;
+//   fonts    no font face is loaded for the first time by Start: the five tiles carry the five looks, and each face that
+//            arrived laid the whole page out again (4,034 objects, "Fonts changed", in the frame after the press).
+// Welcome idle (60-ui-core.js predraw: the Look screen drawn invisibly, one or two elements a slice, so a cold browser's
+// GPU compiles its programs before Start): no frame over --set pdgap=80 ms while it draws (every gap over 34 ms is
+// logged: a single shape can need two programs, the lead's ruling C keeps those 50-75 ms stalls), no frame over --set
+// bgap=50 ms from the moment its host is built to its first slice (the host was built hidden, and an SVG filter in it, the
+// Glass tile's drop shadow, was drawn all the same: five GPU programs in one 113-129 ms raster on Alexis, 117 ms on the
+// owner's PC; the build and the first slice are seen from outside, by a MutationObserver, so main's page is judged too;
+// animation frames are begun by the compositor, which begins none while the GPU process is busy, so a GPU stall is a
+// frame gap here), the whole pre-draw
+// within --set pdms=4000 ms (on a quiet PC), and once done nothing left (no host, marked element or listener); Start
+// pressed while it runs: the Look screen comes in and it ends, leaving nothing; low-resource mode: it draws nothing once
+// on. K-AA (the lead's ruling (a)), with and without Reduced Motion: the pane before and after the pre-draw is the same to
+// the pixel; while it runs its host is a composited layer in the window (even empty), and Chrome draws the window's rounded
+// edges a little differently then, so only the
+// anti-aliased edges of rounded controls may differ: within 2.5 px of a curved outline, at most 40 levels, at most 120 pixels
+// a control (none inside a shape, on a straight edge, away from the controls); --set aamutant=1 paints one pixel inside Get
+// Started while it runs (the rows' red test); --set only=pixels runs these rows alone, --set only=predraw the pre-draw rows alone.
+// Logged: when the new screen's title was first presented (Element Timing: the check gives the title an elementtiming
+// attribute as its layer is appended; its renderTime follows the title's own staggered fade-in, so it is not the
+// screen's first frame);
+// and the longest gap between animation frames from the release to the new screen's first frame, and the same
+// numbers for one later change (Look's Continue) and for Start again in the same browser (a second open: the GPU's shader
+// cache warm), neither judged. Then, under Reduced Motion (unchanged by FO-206):
+// Start shows the new screen in the click's own task (no hold, no entrance).
+// Both surfaces (--set sandbox=0 and 1). About 40 s a surface.
+import fs from 'node:fs';
+import zlib from 'node:zlib';
+
+// A screenshot's pixels (Playwright's PNGs: 8-bit RGB or RGBA, not interlaced), with nothing but zlib.
+function png(buf) {
+	let o = 8, w = 0, h = 0, ct = 0; const idat = [];
+	while (o < buf.length) {
+		const len = buf.readUInt32BE(o), type = buf.toString('latin1', o + 4, o + 8), d = buf.subarray(o + 8, o + 8 + len);
+		if (type === 'IHDR') { w = d.readUInt32BE(0); h = d.readUInt32BE(4); if (d[8] !== 8 || d[12] !== 0) throw new Error('png: 8-bit, not interlaced only'); ct = d[9]; }
+		else if (type === 'IDAT') idat.push(d); else if (type === 'IEND') break;
+		o += 12 + len;
+	}
+	const bpp = ct === 6 ? 4 : ct === 2 ? 3 : 0; if (!bpp) throw new Error('png: RGB or RGBA only');
+	const raw = zlib.inflateSync(Buffer.concat(idat)), stride = w * bpp, out = Buffer.alloc(w * h * 3), cur = Buffer.alloc(stride), prev = Buffer.alloc(stride);
+	for (let y = 0, i = 0; y < h; y++) {
+		const f = raw[i++];
+		for (let x = 0; x < stride; x++, i++) {
+			const r = raw[i], a = x >= bpp ? cur[x - bpp] : 0, u = prev[x], c = x >= bpp ? prev[x - bpp] : 0;
+			let v = r;
+			if (f === 1) v = r + a; else if (f === 2) v = r + u; else if (f === 3) v = r + ((a + u) >> 1);
+			else if (f === 4) { const pp = a + u - c, pa = Math.abs(pp - a), pb = Math.abs(pp - u), pc = Math.abs(pp - c); v = r + (pa <= pb && pa <= pc ? a : pb <= pc ? u : c); }
+			cur[x] = v & 255;
+		}
+		for (let x = 0; x < w; x++) { out[(y * w + x) * 3] = cur[x * bpp]; out[(y * w + x) * 3 + 1] = cur[x * bpp + 1]; out[(y * w + x) * 3 + 2] = cur[x * bpp + 2]; }
+		cur.copy(prev);
+	}
+	return { w, h, px: out };
+}
+// FO-206 K-AA (the lead's ruling (a)): while the Look screen's pre-draw runs, its near-transparent host is a composited layer in
+// the window, and Chrome draws the window's rounded edges a little differently then (held before it is composited the pane is
+// the same to the pixel; held after, with nothing drawn in the host yet, the edges already differ: it is the layer, not what is
+// drawn in it). Allowed: a pixel that
+// differs by at most AA_MAX levels, in the anti-aliased band of one of the pane's rounded controls (within AA_BAND pixels of
+// its rounded outline, where that outline curves: a corner, or anywhere on a circle), at most AA_PER pixels a control.
+// Anything else fails: inside a shape, on a straight edge, away from every control, or over AA_MAX levels.
+const AA_MAX = 40, AA_PER = 120, AA_BAND = 2.5;
+// a pixel centre against a box's rounded outline: its signed distance (negative inside) and whether the outline curves there
+function outline(r, x, y) {
+	const hw = r.w / 2, hh = r.h / 2, rad = Math.min(r.r, hw, hh), qx = Math.abs(x + 0.5 - (r.x + hw)) - (hw - rad), qy = Math.abs(y + 0.5 - (r.y + hh)) - (hh - rad);
+	const sd = Math.hypot(Math.max(qx, 0), Math.max(qy, 0)) + Math.min(Math.max(qx, qy), 0) - rad;
+	/* (the curve's ends count to AA_BAND past the point where it meets a straight edge: the anti-aliasing there is the curve's) */
+	return { sd, curved: rad > 0 && qx > -AA_BAND && qy > -AA_BAND };
+}
+function judgeAA(beforeBuf, duringBuf, boxes) {
+	const A = png(beforeBuf), B = png(duringBuf);
+	if (A.w !== B.w || A.h !== B.h) return { ok: false, why: `sizes ${A.w}x${A.h} and ${B.w}x${B.h}` };
+	const per = new Map(), bad = { over: 0, inside: 0, straight: 0, outside: 0 }; let n = 0, worst = 0; const where = [];
+	for (let y = 0; y < A.h; y++) for (let x = 0; x < A.w; x++) {
+		const i = (y * A.w + x) * 3, d = Math.max(Math.abs(A.px[i] - B.px[i]), Math.abs(A.px[i + 1] - B.px[i + 1]), Math.abs(A.px[i + 2] - B.px[i + 2]));
+		if (!d) continue;
+		n++; worst = Math.max(worst, d);
+		let why = d > AA_MAX ? 'over' : null, hit = null;
+		if (!why) {
+			const near = boxes.map((r) => ({ r, o: outline(r, x, y) })).filter((c) => Math.abs(c.o.sd) <= AA_BAND).sort((p, q) => Math.abs(p.o.sd) - Math.abs(q.o.sd));
+			const curved = near.find((c) => c.o.curved);
+			if (curved) hit = curved.r;
+			else if (near.length) why = 'straight';
+			else why = boxes.some((r) => outline(r, x, y).sd < -AA_BAND) ? 'inside' : 'outside';
+		}
+		if (why) { bad[why]++; if (where.length < 8) where.push([x, y, d, why]); continue; }
+		per.set(hit.name, (per.get(hit.name) || 0) + 1);
+	}
+	const crowded = [...per.entries()].filter(([, c]) => c > AA_PER);
+	const ok = !bad.over && !bad.inside && !bad.straight && !bad.outside && !crowded.length;
+	return { ok, n, worst, bad, perControl: Object.fromEntries(per), crowded, where };
+}
+// the pane's rounded controls, in the screenshot's pixels
+const ROUNDED = () => {
+	const pane = document.querySelector('#pm-o55-onboarding .o55-pane'), pr = pane.getBoundingClientRect(), k = window.devicePixelRatio || 1, out = [];
+	pane.querySelectorAll('button, a, input, [role="radio"], .o55-card, .o55-tile, .o55-pill, .o55-tipq, .o55-banner, .o55-segmented').forEach((el, i) => {
+		if (el.closest('.o55-prewarm')) return;
+		const cs = getComputedStyle(el), r = el.getBoundingClientRect();
+		if (!r.width || !r.height || cs.visibility === 'hidden' || parseFloat(cs.borderTopLeftRadius) <= 0) return;
+		const rs = cs.borderTopLeftRadius, rad = /%$/.test(rs) ? Math.min(r.width, r.height) * parseFloat(rs) / 100 : parseFloat(rs);
+		out.push({ name: (el.className && String(el.className).split(' ')[0]) + '#' + i + (el.textContent ? ':' + el.textContent.trim().slice(0, 16) : ''), x: (r.left - pr.left) * k, y: (r.top - pr.top) * k, w: r.width * k, h: r.height * k, r: rad * k });
+	});
+	return out;
+};
+
+const ARM = () => {
+	if (window.__pos) return;
+	const P = window.__pos = { on: false, n: 0, ts: [], lt: [], click: 0, build: 0, show: 0, frame: 0, paint: 0, screen: null, shownInClick: null };
+	// the font faces loaded so far (each FontFace's own status: document.fonts' status and ready would flush style and layout)
+	P.loadedFaces = () => { const o = []; document.fonts.forEach((x) => { if (x.status === 'loaded') o.push([x.family, x.weight, x.style, x.unicodeRange].join('|')); }); return o; };
+	try { new PerformanceObserver((l) => { for (const e of l.getEntries()) if (e.identifier === 'pos-title-' + P.n && !P.paint) P.paint = e.renderTime || e.loadTime; }).observe({ type: 'element', buffered: true }); } catch (_) { /* none */ }
+	const tick = (now) => { if (P.on) P.ts.push(now); requestAnimationFrame(tick); }; requestAnimationFrame(tick);
+	try { new PerformanceObserver((l) => { for (const e of l.getEntries()) P.lt.push([e.startTime, e.duration]); }).observe({ entryTypes: ['longtask'] }); } catch (_) { /* none */ }
+	document.addEventListener('click', (e) => { if (P.on && !P.click && e.target && e.target.closest && e.target.closest('#pm-o55-onboarding')) P.click = e.timeStamp; }, true);
+	const pane = document.querySelector('#pm-o55-onboarding .o55-pane');
+	new MutationObserver((list) => {
+		if (!P.on) return;
+		for (const m of list) {
+			if (m.type === 'childList') m.addedNodes.forEach((n) => {
+				if (!(n.classList && n.classList.contains('o55-layer')) || P.build) return;
+				P.build = performance.now(); P.screen = n.dataset.screen;
+				const h = n.querySelector('.o55-title'); if (h) h.setAttribute('elementtiming', 'pos-title-' + P.n);
+				if (!n.classList.contains('o55-hold')) { P.show = P.build; P.shownInClick = true; requestAnimationFrame((ts) => { P.frame = ts; }); }
+			});
+			else if (P.build && !P.show && m.target.classList.contains('o55-layer') && m.oldValue && /o55-hold/.test(m.oldValue) && !m.target.classList.contains('o55-hold') && !m.target.classList.contains('o55-out')) {
+				P.show = performance.now(); P.shownInClick = false;
+				// (the entrance, read a frame after the hold came off, when its style is computed: R49-T1, it is witnessed and timed to
+				// its real end, the last tile's delay included)
+				requestAnimationFrame((ts) => {
+					P.frame = ts;
+					try {
+						const lay = m.target, an = lay.getAnimations({ subtree: true }).filter((a) => { const k = a.effect && a.effect.getComputedTiming(); return k && Number.isFinite(k.endTime) && k.endTime > 0; });
+						P.entr = an.length; P.entrEnd = an.reduce((mx, a) => { const k = a.effect.getComputedTiming(); return Math.max(mx, ts + Math.max(0, k.endTime - (k.localTime || 0))); }, 0);
+					} catch (_) { /* none */ }
+				});
+			}
+		}
+	}).observe(pane, { childList: true, subtree: true, attributes: true, attributeFilter: ['class'], attributeOldValue: true });
+};
+const START = () => { const P = window.__pos; Object.assign(P, { on: true, n: P.n + 1, ts: [], lt: [], click: 0, build: 0, show: 0, frame: 0, paint: 0, entr: 0, entrEnd: 0, screen: null, shownInClick: null }); P.faces = P.loadedFaces(); };
+const READ = () => {
+	const P = window.__pos, c = P.click;
+	P.on = false;
+	if (!c) return { click: false };
+	const ts = P.ts.filter((x) => x >= c - 40), d = ts.slice(1).map((x, i) => [ts[i], x - ts[i]]);
+	const until = P.frame || c + 2000;
+	const stall = d.filter((g) => g[0] + g[1] >= c && g[0] <= until).reduce((m, g) => Math.max(m, g[1]), 0);
+	const end = Math.max((P.frame || c) + 600, P.entrEnd || 0);
+	return {
+		click: true, screen: P.screen, shownInClick: P.shownInClick,
+		build: P.build ? Math.round(P.build - c) : null, show: P.show ? Math.round(P.show - c) : null, first: P.frame ? Math.round(P.frame - c) : null,
+		paint: P.paint ? Math.round(P.paint - c) : null, entr: P.entr || 0, entrEnd: P.entrEnd ? Math.round(P.entrEnd - c) : null, end: Math.round(end - c),
+		newFaces: P.loadedFaces().filter((k) => P.faces.indexOf(k) < 0),
+		stall: Math.round(stall), lt: P.lt.filter((e) => e[0] + e[1] > c - 5 && e[0] < end).map((e) => [Math.round(e[0] - c), Math.round(e[1])]),
+		gapsIn: d.filter((g) => g[0] >= (P.frame || c) && g[0] <= end && g[1] > 34).map((g) => [Math.round(g[0] - c), Math.round(g[1])]),
+		gapsAll: d.filter((g) => g[0] + g[1] >= c && g[0] <= end).map((g) => [Math.round(g[0] - c), Math.round(g[1])])
+	};
+};
+
+async function surface(t, sandbox) {
+	const tag = sandbox ? 'sandbox' : 'normal';
+	const FIRST = +(t.args.first || 100), TASK = +(t.args.task || 50), GAP = +(t.args.gap || 50), PDGAP = +(t.args.pdgap || 80), PDFRAMES = +(t.args.pdframes || 660);
+	const open = async (reduced, o) => {
+		await t.emulate({ reducedMotion: reduced ? 'reduce' : 'no-preference' });
+		const f = await t.app.open({ onboarding: true, query: 'o55=fresh' + (o && o.hold ? '&o55pdhold=1' : '') + (t.args.q ? '&' + t.args.q : ''), sandbox });
+		// every frame from the start, so the Welcome screen's idle time (and a pre-draw in it) is seen whole
+		await f.evaluate(() => {
+			if (window.__pdf) return; window.__pdf = []; const tk = (now) => { window.__pdf.push(now); requestAnimationFrame(tk); }; requestAnimationFrame(tk);
+			// the pre-draw host's build and its first slice, seen from outside (main's page names neither): the end of the task
+			// that put the host in the pane, and of the frame that marked its first element data-pd
+			const B = window.__pdb = { built: 0, first: 0 }, root = document.getElementById('pm-o55-onboarding');
+			if (!root) return;
+			const mo = new MutationObserver((ms) => {
+				const now = performance.now();
+				for (const m of ms) {
+					if (!B.built && m.type === 'childList') for (const n of m.addedNodes) { if (n.nodeType === 1 && n.classList.contains('o55-prewarm')) B.built = now; }
+					if (!B.first && m.type === 'attributes' && m.target.closest && m.target.closest('.o55-prewarm')) B.first = now;
+				}
+				if (B.built && B.first) mo.disconnect();
+			});
+			mo.observe(root, { subtree: true, childList: true, attributes: true, attributeFilter: ['data-pd'] });
+		});
+		await f.waitForFunction(() => { const h = document.querySelector('#pm-o55-onboarding .o55-stage'); return !!(h && h.__pipStage && h.__pipStage.svg); }, null, { timeout: 60000 });
+		if (o && o.early) return f;
+		await f.waitForTimeout(5000);
+		await f.evaluate(ARM);
+		return f;
+	};
+	const pdState = (f) => f.evaluate(() => (window.O55.ui.prewarm && window.O55.ui.prewarm.state ? window.O55.ui.prewarm.state() : null));
+	const pdLeft = (f) => f.evaluate(() => document.querySelectorAll('#pm-o55-onboarding .o55-prewarm, #pm-o55-onboarding [data-pd]').length);
+	// The pane before the pre-draw (Welcome's entrance over), during it and after it (K-AA, the lead's ruling (a)): before and
+	// after the same pixels; during, only anti-aliased edges of rounded controls may differ (judgeAA). --set aamutant=1 paints
+	// one pixel inside Get Started while it runs: the rows' own red test.
+	const pixels = async (reduced) => {
+		const mode = reduced ? 'Reduced Motion' : 'motion';
+		const f = await open(reduced, { early: true, hold: true });
+		const pane = f.locator('#pm-o55-onboarding .o55-pane');
+		// (the window's opening over too: under Reduced Motion it is a 160 ms fade, slower in T3's sandbox frame, and a picture
+		// taken inside it is a level off everywhere)
+		await f.waitForFunction(() => {
+			const r = document.getElementById('pm-o55-onboarding'), l = r && r.querySelector('.o55-pane > .o55-layer:not(.o55-out)'), w = r && r.querySelector('.o55-win');
+			const moving = [r, w].some((el) => el && el.getAnimations().some((a) => a.playState === 'running' && Number.isFinite(a.effect.getComputedTiming().endTime)));
+			return !!l && !r.classList.contains('o55-opening') && !l.classList.contains('o55-entering') && !l.classList.contains('o55-hold') && !moving;
+		}, null, { timeout: 15000 }).catch(() => {});
+		await f.waitForTimeout(400);
+		// R49-T3: the pre-draw held at its boundary (?o55pdhold=1: the host in place, nothing drawn in it), the settled pane
+		// pictured, then the pre-draw released: no race with its start. A page without the hold falls back to the old order.
+		const holds = await f.waitForFunction(() => { const s = window.O55.ui.prewarm && window.O55.ui.prewarm.state && window.O55.ui.prewarm.state(); return !!(s && s.held === true && s.phase === 'pending'); }, null, { timeout: 20000 }).then(() => true, () => false);
+		const at = [];
+		const before = await pane.screenshot(); at.push(['before', await pdState(f)]);
+		if (holds) await f.evaluate(() => window.O55.ui.prewarm.release());
+		else if ((at[0][1] || {}).phase !== 'none') { await t.check(`${tag}: ${mode}: the pane pictured before the pre-draw`, false, `no hold on this page and the pre-draw had already begun (${JSON.stringify(at[0][1])})`); return; }
+		if (!(await pdRunning(f))) { await t.check(`${tag}: ${mode}: the pre-draw was seen running`, false, JSON.stringify(await pdState(f))); return; }
+		if (t.args.aamutant) await f.evaluate(() => { const b = document.querySelector('#pm-o55-onboarding .o55-layer:not(.o55-out) .o55-primary'); const d = document.createElement('i'); d.id = 'aa-mutant'; d.style.cssText = 'position:absolute;left:50%;top:6px;width:1px;height:1px;background:#f0f;pointer-events:none'; d.dataset.pos = b.style.position; if (getComputedStyle(b).position === 'static') b.style.position = 'relative'; b.appendChild(d); });
+		const boxes = await f.evaluate(ROUNDED), during = await pane.screenshot(); at.push(['during', await pdState(f)]);
+		if (t.args.aamutant) await f.evaluate(() => { const d = document.getElementById('aa-mutant'); if (d) { d.parentElement.style.position = d.dataset.pos || ''; d.remove(); } });
+		await f.waitForFunction(() => window.O55.ui.prewarm.state().phase === 'done', null, { timeout: 30000 }).catch(() => {});
+		await f.waitForTimeout(300);
+		const after = await pane.screenshot(); at.push(['after', await pdState(f)]);
+		t.log(`${tag}: ${mode}: pictures at ${JSON.stringify(at.map(([k, st]) => [k, st && { phase: st.phase, slices: st.slices, held: st.held }]))} (hold ${holds ? 'used' : 'not on this page'})`);
+		if (process.env.T_DIR) [['before', before], ['during', during], ['after', after]].forEach(([k, b]) => fs.writeFileSync(`${process.env.T_DIR}/aa-${tag}-${reduced ? 'rm' : 'm'}${t.args.aamutant ? '-mut' : ''}-${k}.png`, b));
+		await t.check(`${tag}: ${mode}: the pane before and after the pre-draw, the same pixels`, before.equals(after), `${before.length} and ${after.length} bytes`);
+		const j = judgeAA(before, during, boxes);
+		await t.check(`${tag}: ${mode}: while the pre-draw runs only the anti-aliased edges of rounded controls differ (the composited host changes how Chrome draws them: at most ${AA_MAX} levels, ${AA_PER} pixels a control; none inside a shape or on a straight edge; within ${AA_BAND} px of a curved outline)`,
+			j.ok, JSON.stringify({ differing: j.n, worst: j.worst, failing: j.bad, perControl: j.perControl, crowded: j.crowded, where: j.where }));
+	};
+	const pdRunning = (f, ms) => f.waitForFunction(() => { const s = window.O55.ui.prewarm && window.O55.ui.prewarm.state && window.O55.ui.prewarm.state(); return !!(s && s.phase === 'running' && s.slices >= 2); }, null, { timeout: ms || 20000 }).then(() => true, () => false);
+	// R46-1: a screen's held column keeps its place, to the pixel, through a same-screen refresh: Plain English / Expert, a
+	// look picked on the screen, O55.ui.refresh (holdColumn's held top was lost when a refresh redrew the column).
+	const column = async (reduced) => {
+		const mode = reduced ? 'Reduced Motion' : 'motion';
+		// (each refresh on a page of its own, from a held column: one that lost it would hide the next one's loss)
+		const ready = async () => {
+			const f = await open(reduced, { early: true });
+			await f.waitForFunction(() => { const l = document.querySelector('#pm-o55-onboarding .o55-pane > .o55-layer:not(.o55-out)'); return !!l && !l.classList.contains('o55-entering') && !l.classList.contains('o55-hold') && l.hasAttribute('data-col-held'); }, null, { timeout: 15000 }).catch(() => {});
+			await f.waitForFunction(() => { const s = window.O55.ui.prewarm && window.O55.ui.prewarm.state && window.O55.ui.prewarm.state(); return !s || s.phase !== 'running'; }, null, { timeout: 30000 }).catch(() => {});
+			return f;
+		};
+		// (its top within its scroller, what holdColumn holds: a look's own metrics may move the scroller itself)
+		const col = (f) => f.evaluate(() => { const c = document.querySelector('#pm-o55-onboarding .o55-pane > .o55-layer:not(.o55-out) .o55-scroll > .o55-content'), sc = c && c.parentElement; return c ? { top: c.getBoundingClientRect().top - sc.getBoundingClientRect().top, margin: parseFloat(getComputedStyle(c).marginTop), stale: c.hasAttribute('data-kit-stale'), talk: window.O55.talk.mode(), look: window.O55.theme().chosen } : null; });
+		// (R49-T2: the refresh is witnessed: a mark the screen's template does not carry is put on the column first, and the
+		// morph that redraws it takes it off; the toggle and the pick must also have changed what they change)
+		const mark = (f) => f.evaluate(() => { const c = document.querySelector('#pm-o55-onboarding .o55-pane > .o55-layer:not(.o55-out) .o55-scroll > .o55-content'); if (c) c.setAttribute('data-kit-stale', ''); });
+		const pickLook = async (f) => {
+			const fam = await f.evaluate(() => (window.O55.theme().chosen === 'friendly' ? 'basic' : 'friendly'));
+			await f.locator('#pm-o55-onboarding .o55-lookslot .o55-lookbtn').click();
+			await f.waitForSelector('#pm-o55-onboarding .o55-lookmenu', { timeout: 5000 });
+			await f.locator(`#pm-o55-onboarding .o55-lookmenu [data-o55-do="lookFamily"][data-arg="${fam}"]`).click();
+			await f.waitForFunction(() => !window.O55.S.vt, null, { timeout: 10000 }).catch(() => {});
+			if (await f.locator('#pm-o55-onboarding .o55-lookmenu').count()) await t.page.keyboard.press('Escape');
+		};
+		const steps = [['Plain English / Expert', (f) => f.evaluate(() => window.O55.talk.toggle('check')), (f) => f.evaluate(() => window.O55.talk.toggle('check'))],
+			['a look picked on the screen', pickLook, null], ['a refresh of the screen (O55.ui.refresh)', (f) => f.evaluate(() => window.O55.ui.refresh()), null]];
+		for (const [label, act, undo] of steps) {
+			const f = await ready();
+			const b = await col(f);
+			if (!b || !(b.margin > 0)) { await t.check(`${tag}: ${mode}: the column keeps its held top through ${label}, to the pixel`, false, `Welcome's column is not held off the top here (${JSON.stringify(b)}): the row would prove nothing`); continue; }
+			await mark(f);
+			await act(f);
+			await f.waitForTimeout(700);
+			const a = await col(f);
+			const changed = !!a && (label.startsWith('Plain') ? a.talk !== b.talk : label.startsWith('a look') ? a.look !== b.look : true);
+			await t.check(`${tag}: ${mode}: ${label} happened and redrew the column (the mark the template lacks is gone)`, !!a && !a.stale && changed, `mark ${a && a.stale ? 'still there' : 'gone'}; talk ${b.talk} -> ${a && a.talk}; look ${b.look} -> ${a && a.look}`);
+			await t.check(`${tag}: ${mode}: the column keeps its held top through ${label}, to the pixel`, !!a && Math.round(a.top) === Math.round(b.top) && a.margin === b.margin, `column top ${b.top} -> ${a && a.top}; held margin ${b.margin} -> ${a && a.margin}`);
+			if (undo) await undo(f);
+		}
+	};
+	// R49-1: while the pre-draw's host is in the window (its copied buttons are laid out but inert), Tab still wraps at the
+	// window's real ends: Shift+Tab from the first control (the look menu's button) lands on the last one, Tab from the last on
+	// the first. The host is held in place (?o55pdhold=1) on a page that has the hold; otherwise the presses come while it is up.
+	const tabs = async () => {
+		const f = await open(false, { early: true, hold: true });
+		await f.waitForFunction(() => !!document.querySelector('#pm-o55-onboarding .o55-prewarm') && !document.getElementById('pm-o55-onboarding').classList.contains('o55-opening'), null, { timeout: 20000 }).catch(() => {});
+		// (the window's real ends are marked once, before the presses, and the focused element is compared by that mark: an
+		// element's place in the window moves when a focus note comes and goes)
+		const ends = () => f.evaluate(() => {
+			const win = document.querySelector('#pm-o55-onboarding .o55-win');
+			const all = Array.from(win.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])')).filter((n) => !n.closest('.o55-out') && !n.closest('[inert]') && !n.hasAttribute('disabled') && n.getClientRects().length);
+			win.querySelectorAll('[data-kit-end]').forEach((n) => n.removeAttribute('data-kit-end'));
+			if (all.length) { all[0].setAttribute('data-kit-end', 'first'); all[all.length - 1].setAttribute('data-kit-end', 'last'); }
+			const name = (n) => (n ? (n.getAttribute('aria-label') || n.textContent || '').trim().slice(0, 24) : null);
+			return { first: name(all[0]), last: name(all[all.length - 1]), host: !!document.querySelector('#pm-o55-onboarding .o55-prewarm') };
+		});
+		const focused = () => f.evaluate(() => { const a = document.activeElement; return { end: a && a.getAttribute ? a.getAttribute('data-kit-end') : null, name: a ? (a.getAttribute('aria-label') || a.textContent || '').trim().slice(0, 24) : null, inHost: !!(a && a.closest && a.closest('.o55-prewarm')), host: !!document.querySelector('#pm-o55-onboarding .o55-prewarm') }; });
+		const e0 = await ends();
+		await f.evaluate(() => document.querySelector('#pm-o55-onboarding [data-kit-end="first"]').focus());
+		await t.page.keyboard.press('Shift+Tab');
+		const e1 = await focused();
+		await t.check(`${tag}: Shift+Tab from the window's first control wraps to its last while the pre-draw's host is up`, e0.host && e1.host && e1.end === 'last' && !e1.inHost, JSON.stringify({ host: e1.host, first: e0.first, last: e0.last, to: e1.name, toEnd: e1.end }));
+		await f.evaluate(() => document.querySelector('#pm-o55-onboarding [data-kit-end="last"]').focus());
+		await t.page.keyboard.press('Tab');
+		const e3 = await focused();
+		await t.check(`${tag}: Tab from the window's last control wraps to its first while the pre-draw's host is up`, e3.host && e3.end === 'first' && !e3.inHost, JSON.stringify({ host: e3.host, first: e0.first, last: e0.last, to: e3.name, toEnd: e3.end }));
+		await f.evaluate(() => { if (window.O55.ui.prewarm.release) window.O55.ui.prewarm.release(); });
+	};
+	// R49-2: in Glass, the pre-draw's copy of the Light / Dark control is never given a lens in the real window: in a tall window
+	// (1440x1300), Glass picked at once, the window's lenses every 200 ms through the pre-draw are the ones it had before it
+	// (held at its boundary, ?o55pdhold=1).
+	const glassLens = async (mode) => {
+		const vp = t.page.viewportSize();
+		await t.viewport(1440, 1300);
+		const f = await open(false, { early: true, hold: true });
+		const pick = async (sel) => { await f.locator('#pm-o55-onboarding .o55-lookslot .o55-lookbtn').click(); await f.waitForSelector('#pm-o55-onboarding .o55-lookmenu', { timeout: 5000 }); await f.locator(sel).click(); await f.waitForFunction(() => !window.O55.S.vt, null, { timeout: 10000 }).catch(() => {}); if (await f.locator('#pm-o55-onboarding .o55-lookmenu').count()) await t.page.keyboard.press('Escape'); };
+		await pick('#pm-o55-onboarding .o55-lookmenu [data-o55-do="lookFamily"][data-arg="glass"]');
+		if (await f.evaluate((m) => window.O55.theme().mode !== m, mode)) await pick(`#pm-o55-onboarding .o55-lookmenu [data-o55-do="lookMode"][data-arg="${mode}"]`);
+		const lenses = () => f.evaluate(() => {
+			const root = document.getElementById('pm-o55-onboarding'), out = [];
+			root.querySelectorAll('.lg-lens').forEach((el) => { const r = el.getBoundingClientRect(), cs = getComputedStyle(el); if (r.width && r.height && cs.display !== 'none' && cs.visibility !== 'hidden' && +cs.opacity > 0) out.push([Math.round(r.left), Math.round(r.top), Math.round(r.width), Math.round(r.height)].join(',')); });
+			const st = window.O55.ui.prewarm.state(), host = root.querySelector('.o55-prewarm'); return { lenses: out.sort(), phase: st.phase, slices: st.slices, held: st.held, why: st.why, host: !!(host && host.isConnected) };
+		});
+		await f.waitForFunction(() => { const s = window.O55.ui.prewarm.state(); return s.phase === 'pending' && s.held === true; }, null, { timeout: 20000 }).catch(() => {});
+		await f.waitForTimeout(400);
+		const b = await lenses();
+		// (--set pddead=1, the row's own red test: the hold is never released, so the pre-draw never draws: a dead sample)
+		if (!t.args.pddead) await f.evaluate(() => window.O55.ui.prewarm.release && window.O55.ui.prewarm.release());
+		// (R50, PM7PERF-ONBSTART-GLASS-DEAD-SAMPLE: the readings count only if the pre-draw really ran: a connected host held at
+		// its boundary, drawing (phase running, slices) after the release, and its end; a dead pre-draw added no lens either)
+		const extra = new Map(); let n = 0, drew = 0, end = null;
+		for (let k = 0; k < 60; k++) {
+			await f.waitForTimeout(200);
+			const s = await lenses(); n++;
+			if (s.phase === 'running' && s.slices > 0 && s.host) drew++;
+			s.lenses.filter((l) => !b.lenses.includes(l)).forEach((l) => extra.set(l, (extra.get(l) || 0) + 1));
+			if (s.phase === 'done') { end = s; break; }
+		}
+		await t.check(`${tag}: Glass ${mode}: the pre-draw ran (a connected host held at its boundary, drawing after the release, then done)`, b.held === true && b.phase === 'pending' && b.host && drew > 0 && !!end && end.why === 'done', JSON.stringify({ before: { held: b.held, phase: b.phase, host: b.host }, readingsDrawing: drew, end }));
+		await t.check(`${tag}: Glass ${mode}: the pre-draw adds no lens to the window (its copied Light / Dark control is left alone)`, b.held === true && n > 1 && extra.size === 0, JSON.stringify({ before: b, readings: n, added: Object.fromEntries(extra) }));
+		if (vp) await t.viewport(vp.width, vp.height);
+	};
+	// --set only=glass: the R49-2 rows alone
+	if (t.args.only === 'glass') { for (const m of ['dark', 'light']) await glassLens(m); return; }
+	// --set only=tab: the R49-1 rows alone
+	if (t.args.only === 'tab') { await tabs(); return; }
+	// --set only=column: the R46-1 rows alone, in both motion modes
+	if (t.args.only === 'column') { for (const reduced of [true, false]) await column(reduced); await t.emulate({ reducedMotion: 'no-preference' }); return; }
+	// --set only=pixels: the K-AA rows alone, in both motion modes
+	if (t.args.only === 'pixels') { for (const reduced of [true, false]) await pixels(reduced); await t.emulate({ reducedMotion: 'no-preference' }); return; }
+	// FO-206 G: the Look screen drawn a piece at a time while Welcome is idle (60-ui-core.js predraw), waited for to its end
+	const predrawn = (f) => f.evaluate(async () => {
+		const st = () => (window.O55.ui.prewarm && window.O55.ui.prewarm.state ? window.O55.ui.prewarm.state() : null);
+		for (let k = 0; k < 250 && st() && st().phase === 'running'; k++) await new Promise((r) => setTimeout(r, 100));
+		const s0 = st(); if (!s0 || s0.phase === 'none') return { none: true };
+		const ts = window.__pdf.filter((x) => x >= s0.startedAt - 20 && x <= s0.endedAt + 20), d = ts.slice(1).map((x, i) => [ts[i], x - ts[i]]);
+		// (from the host's build to its first slice: every frame that ended after the build and by the first mark; the first
+		// slice's own raster comes in the frame after its mark and is judged with the slices)
+		const B = window.__pdb || {}, all = window.__pdf.slice(1).map((x, i) => [window.__pdf[i], x]).filter(([a, b]) => B.built && B.first && b > B.built && b <= B.first);
+		const build = B.built && B.first ? { ms: Math.round(B.first - B.built), frames: all.length, worst: Math.round(Math.max(0, ...all.map(([a, b]) => b - a))), gaps: all.filter(([a, b]) => b - a > 34).map(([a, b]) => [Math.round(a - B.built), Math.round(b - a)]) } : null;
+		return Object.assign({}, s0, { build, ms: Math.round(s0.endedAt - s0.startedAt), frames: d.length, worstGap: Math.round(Math.max(0, ...d.map((g) => g[1]))), gaps: d.filter((g) => g[1] > 34).map((g) => [Math.round(g[0] - s0.startedAt), Math.round(g[1])]),
+			left: document.querySelectorAll('#pm-o55-onboarding .o55-prewarm, #pm-o55-onboarding [data-pd]').length });
+	});
+	const cur = '#pm-o55-onboarding .o55-pane > .o55-layer:not(.o55-out)';
+	const change = async (f, sel) => {
+		const loc = f.locator(sel).first(); await loc.waitFor({ state: 'visible', timeout: 20000 });
+		const b = await loc.boundingBox(); if (!b) throw new Error('no box ' + sel);
+		await t.page.mouse.move(b.x + b.width / 2, b.y + b.height / 2, { steps: 4 }); await t.page.waitForTimeout(150);
+		await f.evaluate(START);
+		await t.page.mouse.down(); await t.page.waitForTimeout(90); await t.page.mouse.up();
+		await f.waitForTimeout(2500);
+		return f.evaluate(READ);
+	};
+	const say = (name, r) => t.log(`${tag}: ${name}: ${r.click ? `-> ${r.screen}: built at ${r.build} ms after the release, shown at ${r.show}, an animation frame by ${r.first}, its title presented at ${r.paint}; longest frame gap until then ${r.stall} ms; long tasks ${JSON.stringify(r.lt)}; entrance gaps over 34 ms ${JSON.stringify(r.gapsIn)}` : 'no click seen'}`);
+	let f = await open(false);
+	const pre = await predrawn(f);
+	t.log(`${tag}: Welcome's pre-draw of the Look screen: ${JSON.stringify(pre)}`);
+	// (R46-2: a page that never pre-draws skips the rows below, so on an ordinary computer it has to have run)
+	await t.check(`${tag}: Welcome idle: the Look screen's pre-draw ran (an ordinary computer, not low-resource)`, !pre.none, JSON.stringify(pre));
+	if (!pre.none) {
+		// every stall is logged (the lead's ruling C: a cold browser keeps two or three single-shape stalls of 50-75 ms)
+		if (pre.gaps.length) t.log(`${tag}: NOTE Welcome's pre-draw: ${pre.gaps.length} frame gap(s) over 34 ms ${JSON.stringify(pre.gaps)}; long slices ${JSON.stringify(pre.long || [])}`);
+		const over = pre.gaps.filter((g) => g[1] > PDGAP);
+		await t.check(`${tag}: Welcome idle: the pre-draw of the Look screen holds no frame over ${PDGAP} ms`, over.length === 0, `${pre.slices} slices of ${pre.pieces} elements in ${pre.ms} ms, ended '${pre.why}'; frame gaps over 34 ms ${JSON.stringify(pre.gaps)}`);
+		const BGAP = +(t.args.bgap || 50);
+		await t.check(`${tag}: Welcome idle: no frame over ${BGAP} ms from the pre-draw host's build to its first slice`, !!pre.build && pre.build.worst <= BGAP, pre.build ? `${pre.build.frames} frames in ${pre.build.ms} ms, the longest ${pre.build.worst} ms; gaps over 34 ms (ms after the build, length) ${JSON.stringify(pre.build.gaps)}` : 'the build or the first slice was not seen');
+		// (in frames, R46-3: a slice is one frame that draws and three that watch, so in wall time the same pre-draw took 2.7
+		// times as long at 60 Hz as at 165 Hz; a stall is one frame here, judged apart above)
+		await t.check(`${tag}: Welcome idle: the whole pre-draw takes at most ${PDFRAMES} frames (4 s at 165 Hz)`, pre.frames <= PDFRAMES, `${pre.frames} frames for ${pre.slices} slices (${pre.ms} ms)`);
+		await t.check(`${tag}: Welcome idle: the pre-draw ended and left nothing (no host, no marked element, no listener)`, pre.phase === 'done' && pre.why === 'done' && pre.left === 0 && pre.listeners === 0, JSON.stringify({ phase: pre.phase, why: pre.why, left: pre.left, listeners: pre.listeners }));
+	}
+	// --set only=predraw: Welcome's pre-draw rows alone
+	if (t.args.only === 'predraw') return;
+	const s = await change(f, `${cur} [data-o55-do="start"]`);
+	say('Start', s);
+	await t.check(`${tag}: Start: the press reached the window and built the Look screen`, s.click && s.screen === 'look', JSON.stringify(s));
+	if (s.click && s.screen === 'look') {
+		await t.check(`${tag}: Start: the Look screen's first frame within ${FIRST} ms of the release`, s.first != null && s.first <= FIRST, `first frame by ${s.first} ms (built ${s.build}, shown ${s.show}); longest frame gap until then ${s.stall} ms`);
+		await t.check(`${tag}: Start: the Look screen's entrance plays (its animations seen, and judged to their end)`, s.entr > 0, `${s.entr} entrance animations, ending at ${s.entrEnd} ms; the rows below judge to ${s.end} ms`);
+		const over = s.lt.filter((e) => e[1] > TASK);
+		await t.check(`${tag}: Start: no task over ${TASK} ms from the release to the end of the entrance`, over.length === 0, `long tasks ${JSON.stringify(s.lt)} (first frame by ${s.first} ms; entrance to ${s.end})`);
+		await t.check(`${tag}: Start: no font face loads for the first time (each one that arrives lays the whole page out again)`, s.newFaces.length === 0, `${s.newFaces.length} faces first loaded by Start: ${JSON.stringify(s.newFaces.slice(0, 12))}`);
+		const gaps = s.gapsAll.filter((g) => g[1] > GAP);
+		await t.check(`${tag}: Start: no frame gap over ${GAP} ms from the release to the end of the entrance`, gaps.length === 0, `${gaps.length} gaps: ${JSON.stringify(gaps)}`);
+	}
+	await f.waitForTimeout(1500);
+	const later = await change(f, `${cur} .o55-primary`);
+	say('Look Continue (logged, not judged)', later);
+	// the same Start again in the same browser (its GPU's shader cache and font cache now warm): logged, not judged
+	f = await open(false);
+	const warm = await change(f, `${cur} [data-o55-do="start"]`);
+	say('Start again, same browser (logged, not judged)', warm);
+	// (4) Start pressed while the pre-draw runs: the rest is paid as before, nothing breaks, nothing is left
+	if (!pre.none) {
+		f = await open(false, { early: true });
+		const running = await pdRunning(f);
+		if (running) {
+			await f.evaluate(ARM);
+			const mid = await change(f, `${cur} [data-o55-do="start"]`);
+			say('Start while the pre-draw runs', mid);
+			const st = await pdState(f), left = await pdLeft(f);
+			await t.check(`${tag}: Start while the pre-draw runs: the Look screen comes in, the pre-draw ends and leaves nothing`, mid.click && mid.screen === 'look' && mid.show != null && st.phase === 'done' && st.why === 'left' && st.listeners === 0 && left === 0, JSON.stringify({ screen: mid.screen, show: mid.show, phase: st.phase, why: st.why, listeners: st.listeners, left }));
+		} else await t.check(`${tag}: Start while the pre-draw runs: the pre-draw was seen running`, false, JSON.stringify(await pdState(f)));
+		// (5) a low-resource computer: no pre-draw (and no font host)
+		f = await open(false, { early: true });
+		const lr0 = await f.evaluate(() => { window.O55.motion.setLowResource(true, 'scenario'); const s = window.O55.ui.prewarm.state(); return s; });
+		await f.waitForTimeout(7000);
+		const lr = await pdState(f), lrLeft = await pdLeft(f);
+		await f.evaluate(() => window.O55.motion.setLowResource(false, null));
+		// (switched on as soon as the page is up: a pre-draw already going when it came ends there, and draws no more)
+		await t.check(`${tag}: low-resource mode: no pre-draw slice once it is on, and nothing left`, !!lr && (lr.phase === 'none' || (lr.phase === 'done' && lr.slices === lr0.slices)) && lrLeft === 0, JSON.stringify({ at: { phase: lr0.phase, slices: lr0.slices }, after: { phase: lr && lr.phase, why: lr && lr.why, slices: lr && lr.slices }, left: lrLeft }));
+		for (const reduced of [true, false]) await pixels(reduced);
+		for (const reduced of [true, false]) await column(reduced);
+		await tabs();
+		for (const m of ['dark', 'light']) await glassLens(m);
+	}
+	// Reduced Motion: unchanged (no hold): Start shows the new screen in the click's own task
+	f = await open(true);
+	const rm = await change(f, `${cur} [data-o55-do="start"]`);
+	say('Reduced Motion Start', rm);
+	await t.check(`${tag}: Reduced Motion: Start shows the Look screen in the click's own task (no hold, no entrance)`, rm.click && rm.screen === 'look' && rm.shownInClick === true, JSON.stringify(rm));
+	await t.emulate({ reducedMotion: 'no-preference' });
+}
+
+export default async function (t) {
+	for (const s of t.app.surfaces()) await surface(t, s === 'sandbox');
+}

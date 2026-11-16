@@ -18,7 +18,7 @@
 (function () {
   'use strict';
   const O55 = window.O55, PIP = O55.pipStage, H = PIP.h, PW = O55.pipWorlds;
-  const { R, clamp, ease, rot, el, div, T } = H;
+  const { R, clamp, ease, rot, el, div, T, attr, words } = H;
   const now = H.now;
   const esc = (s) => String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/"/g, '&quot;');
   const KIT = () => H.kit();
@@ -424,13 +424,19 @@
       const g = el('g', { class: 'pst-prop', 'data-kind': spec.kind, opacity: '0' }, this.gProps);
       const pr = { spec, el: g, strs: [], state: 'in', a: 0, av: 0, len: 0, lenv: 0, ax: 0, axv: 0, scale: spec.scale || 1, sv: 0, op: 0, born: this.t, key: '', settled: !!instant };
       this.props.set(spec.id, pr);
-      this.drawProp(pr);
+      /* FO-206: on a screen change the stage is held (renderScene) and the new screen is in the page but not laid out yet:
+         reading the new prop's box here (getBBox) laid out that whole screen inside the click's task (14 ms of Start's
+         77 ms on Alexis, 54 ms on the VM). A prop that comes in is invisible until render() gives it its opacity, and the
+         first render after the hold places every prop before that frame paints, so it is measured and placed there. */
+      const later = this.held && !instant;
+      this.drawProp(pr, later);
       const tgt = this.propTarget(pr);
       pr.ax = tgt.ax; pr.len = instant ? tgt.len : 0; pr.op = instant ? tgt.op : 0;
       if (!instant) {
         pr.av = (Math.random() - .5) * this.fam.kick * 2;
         this.sfx(spec.preview ? 'ghost' : 'lower', { x: tgt.ax, len: clamp(tgt.len, 0, 400) });
       }
+      if (later) { pr.enterTgt = tgt; return pr; }
       this.placeProp(pr);
       if (!instant) this.enterUnder(pr, tgt);
       return pr;
@@ -490,16 +496,18 @@
       const cv = rot([-tieMid[0] * sc, -tieMid[1] * sc], pr.a);
       pr.pos = [hang[0] + cv[0], hang[1] + cv[1]];
       const sq = this.reduced ? 0 : clamp(pr.sq || 0, -.12, .12), squash = Math.abs(sq) > .002 ? ` translate(0 ${R(pr.foot)}) scale(${R(1 + sq * .6)} ${R(1 - sq)}) translate(0 ${R(-pr.foot)})` : '';
-      pr.el.setAttribute('transform', `translate(${R(hang[0])} ${R(hang[1])}) rotate(${R(pr.a * 57.3)}) scale(${R(sc)}) translate(${R(-tieMid[0])} ${R(-tieMid[1])})${squash}`);
-      pr.el.setAttribute('opacity', R(pr.op));
+      /* (each value written only when it changes: a prop at rest is drawn where it was, and writing the same transform,
+         opacity and strings again restyled them in every frame; pm7-perf lane W) */
+      attr(pr.el, 'transform', `translate(${R(hang[0])} ${R(hang[1])}) rotate(${R(pr.a * 57.3)}) scale(${R(sc)}) translate(${R(-tieMid[0])} ${R(-tieMid[1])})${squash}`);
+      attr(pr.el, 'opacity', R(pr.op));
       // once a block is set down its strings are unhooked: they go slack, lift away and fade
       const off = pr.spec.ground && pr.landed ? clamp((this.t - pr.landT) / .55, 0, 1) : 0;
       const strOp = off ? Math.max(0, 1 - ease(off)) * pr.op : pr.op;
       pr.ties.forEach((t, i) => {
         const v = rot([(t[0] - tieMid[0]) * sc, (t[1] - tieMid[1]) * sc], pr.a), end = [hang[0] + v[0], hang[1] + v[1] - ease(off) * 70];
         const top = [pr.ax + (pr.dx || 0) + (t[0] - tieMid[0]) * sc, Lay.anchorY - 200];
-        pr.strs[i].setAttribute('d', `M${R(top[0])} ${R(top[1])}L${R(end[0])} ${R(end[1])}`);
-        pr.strs[i].setAttribute('opacity', R(strOp));
+        attr(pr.strs[i], 'd', `M${R(top[0])} ${R(top[1])}L${R(end[0])} ${R(end[1])}`);
+        attr(pr.strs[i], 'opacity', R(strOp));
         pr.strs[i].classList.toggle('pst-dash', !!pr.spec.preview);
       });
     }
@@ -737,13 +745,14 @@
       const a = u(c.left, c.top), z = u(c.right, c.bottom), g = (gap || 0) / m.k;
       return [a[0] - g, a[1] - g, z[0] + g, z[1] + g];
     }
-    drawProp(pr) {
+    drawProp(pr, later) {
       const key = JSON.stringify(pr.spec.params || {}) + '|' + pr.spec.kind;
       if (key === pr.key) return;
       pr.key = key;
       const d = PW.PROPS[pr.spec.kind](this.pen, pr.spec.params || {});
       pr.el.innerHTML = d.svg;
-      pr.ties = d.ties; pr.foot = d.foot; pr.bb = this.boxOf(pr.el);
+      /* (later: measured where it is first placed, fit()) */
+      pr.ties = d.ties; pr.foot = d.foot; pr.bb = later ? null : this.boxOf(pr.el);
       const n = d.ties.length;
       while (pr.strs.length < n) pr.strs.push(el('path', { class: 'pst-pstrl', fill: 'none', opacity: '0' }, this.gPropStr));
       while (pr.strs.length > n) pr.strs.pop().remove();
@@ -959,7 +968,9 @@
     // the note hangs under Pip and drifts after it, slowly enough to read while Pip sways
     placeTip(H, ang, dt) {
       const el = this.tipBox;
-      if (!el || !el.classList.contains('on') || this.layoutName !== 'portrait') { this.ps.liftT = 0; this.bubble.classList.remove('pst-hush'); return; }
+      /* (the bubble's class is written only when the hush is on: classList.remove writes the class attribute even when the
+         token is not there, so with no note open the bubble's class was written in every frame; pm7-perf lane W) */
+      if (!el || !el.classList.contains('on') || this.layoutName !== 'portrait') { this.ps.liftT = 0; if (this.bubble.classList.contains('pst-hush')) this.bubble.classList.remove('pst-hush'); return; }
       // it holds still while the pointer is on it, so its close button is easy to hit (once it has its place: a new note
       // that opens under a resting pointer was left at the stage's corner, past its edge in Friendly's tilt; tip_fit)
       if (this.tipXY && el.matches(':hover')) return;
@@ -1185,13 +1196,16 @@
       // breathing: Pip's head swells a touch, slower when it sleeps
       const br = this.reduced || !PIP.h.part('idle-life') ? 0 : (this.fam.breathe || 0) * Math.sin(this.t * (this.sleepZ ? 1.5 : 2.2));
       const sx = ps.sx * (1 - br * .4), sy = ps.sy * (1 + br), s = Lay.s;
-      this.gCtl.setAttribute('transform', `translate(${R(ps.C.x)} ${R(ps.C.y)}) rotate(${R(ps.phi * 57.3)}) scale(${s}) translate(-32 -14.5)`);
-      this.gHead.setAttribute('transform', `translate(${R(H[0])} ${R(H[1])}) rotate(${R(ang * 57.3)}) scale(${s}) translate(-32 -31.5) translate(32 59.5) scale(${R(sx)} ${R(sy)}) translate(-32 -59.5)`);
+      /* (here and below, each value written only when it changes: the eyes once they have turned, the blink between blinks
+         and a prop at rest were written in every frame with the values they already held, each write restyling its element
+         and waking every MutationObserver on the page; pm7-perf lane W) */
+      attr(this.gCtl, 'transform', `translate(${R(ps.C.x)} ${R(ps.C.y)}) rotate(${R(ps.phi * 57.3)}) scale(${s}) translate(-32 -14.5)`);
+      attr(this.gHead, 'transform', `translate(${R(H[0])} ${R(H[1])}) rotate(${R(ang * 57.3)}) scale(${s}) translate(-32 -31.5) translate(32 59.5) scale(${R(sx)} ${R(sy)}) translate(-32 -59.5)`);
       const ends = this.solveStrings({ C: ps.C, phi: ps.phi, H, ang, sx, sy });
       ends.forEach((e, i) => {
         const l = Math.hypot(e.E[0] - e.T[0], e.E[1] - e.T[1]), slack = Math.max(0, (this.restLen[i] || l) - l);
         const d = slack > 1 ? `M${R(e.T[0])} ${R(e.T[1])}Q${R((e.T[0] + e.E[0]) / 2 + (i ? 1 : -1) * slack * .25)} ${R((e.T[1] + e.E[1]) / 2 + slack * .55)} ${R(e.E[0])} ${R(e.E[1])}` : `M${R(e.T[0])} ${R(e.T[1])}L${R(e.E[0])} ${R(e.E[1])}`;
-        this.pstrs[i].setAttribute('d', d); this.pglow[i].setAttribute('d', d);
+        attr(this.pstrs[i], 'd', d); attr(this.pglow[i], 'd', d);
       });
       // where the eyes look: at the target prop, at an idle glance, or at the pointer
       const pip = this.spec.pip || {};
@@ -1212,29 +1226,40 @@
         look = [vx / l * 2.3 * k, vy / l * 1.6 * k];
       } else if (tgt && tgt.pos) look = atTarget(tgt.pos);
       ps.lookT = look;
-      if (this.eyesEl) this.eyesEl.setAttribute('transform', `translate(${R(ps.look[0])} ${R(ps.look[1])})`);
+      if (this.eyesEl) attr(this.eyesEl, 'transform', `translate(${R(ps.look[0])} ${R(ps.look[1])})`);
       // blink
       if (this.blinkEl && !this.reduced && PIP.h.part('blinks')) {
         if (this.t > ps.nextBlink) { ps.blinkAt = this.t; ps.nextBlink = this.t + 2.2 + Math.random() * 3.4; }
         const b = ps.blinkAt != null ? this.t - ps.blinkAt : 9, k = b < .16 ? Math.max(.1, Math.abs(1 - b / .08)) : 1;
-        this.blinkEl.setAttribute('transform', `translate(0 ${this.blinkY}) scale(1 ${R(k)}) translate(0 ${-this.blinkY})`);
+        attr(this.blinkEl, 'transform', `translate(0 ${this.blinkY}) scale(1 ${R(k)}) translate(0 ${-this.blinkY})`);
       }
       // props
       /* (NieR's box is fixed: its band is kept clear from when it is first seen, also while it is silent, so a stack
          that lands before it talks is already below it) */
-      if (f === 'nier') { const nb = this.boxInScene(this.bubble, 6); if (nb) this.nierBox = nb; }
+      /* (measured again only when what it is measured from changes: the box's classes and words, the fonts, and the stage's
+         map, which measure() makes anew on every resize. Read in every frame after the frame's writes, it laid the page out
+         a second time in each NieR frame: 238 layouts a second at rest on the owner's PC; pm7-perf lane W) */
+      if (f === 'nier') {
+        const b = this.bubble, k = this.nierKey, cls = b ? b.className : '', said = b ? b.textContent : '', fonts = document.fonts ? document.fonts.status : '';
+        if (!k || k[0] !== this.map || k[1] !== cls || k[2] !== said || k[3] !== fonts) {
+          const nb = this.boxInScene(b, 6); if (nb) this.nierBox = nb;
+          this.nierKey = [this.map, cls, said, fonts];
+        }
+      }
       this.keepOff = f === 'nier' ? this.nierBox || null : this.bubbleKeepOff || null;
       this.pipKeep = this.pipHead(null, { H, ang, sx, sy });
       this.renderN = (this.renderN || 0) + 1;
+      /* (a prop added while the stage was held comes in under NieR's box now, as addProp would have had it: enterUnder) */
+      this.props.forEach((pr) => { if (pr.enterTgt) { const tg = pr.enterTgt; pr.enterTgt = null; this.enterUnder(pr, tg); } });
       this.props.forEach((pr) => this.placeProp(pr));
       // particles
       this.fx.forEach((p) => {
         const k = p.life / p.max;
-        if (p.kind === 'ripple') { const e = ease(k), m = p.small ? .45 : 1; p.e.setAttribute('rx', R(6 + e * 90 * m)); p.e.setAttribute('ry', R(1.5 + e * 12 * m)); p.e.setAttribute('stroke-opacity', R((1 - k) * .7)); return; }
+        if (p.kind === 'ripple') { const e = ease(k), m = p.small ? .45 : 1; attr(p.e, 'rx', R(6 + e * 90 * m)); attr(p.e, 'ry', R(1.5 + e * 12 * m)); attr(p.e, 'stroke-opacity', R((1 - k) * .7)); return; }
         const op = p.kind === 'conf' ? (k > .85 ? (1 - k) / .15 : 1) : p.kind === 'check' ? (k < .75 ? 1 : (1 - k) / .25) : p.kind === 'ring' ? (1 - k) * .9 : 1 - k * k;
         const sc = p.kind === 'ring' ? Math.min(1 + ease(k) * 2.2, p.room || Infinity) : p.kind === 'check' ? (k < .1 ? k / .1 * 1.18 : k < .18 ? 1.18 - (k - .1) / .08 * .18 : 1) : 1;
-        p.e.setAttribute('transform', `translate(${R(p.x)} ${R(p.y)}) rotate(${R(p.r * 57.3 / 6)}) scale(${R(sc)})`);
-        p.e.setAttribute('opacity', R(Math.max(0, op)));
+        attr(p.e, 'transform', `translate(${R(p.x)} ${R(p.y)}) rotate(${R(p.r * 57.3 / 6)}) scale(${R(sc)})`);
+        attr(p.e, 'opacity', R(Math.max(0, op)));
       });
       // sleeping z's
       if (this.sleepZ && !this.reduced && this.t - (this.lastZ || 0) > .9 && f !== 'nier') {
@@ -1245,11 +1270,19 @@
         this.fx.push({ e, kind: 'z', x: hc[0] + 40, y: hc[1] - 30, vx: 14, vy: -26, r: 0, vr: .4, life: 0, max: 2, g: 0 });
       }
       // soft shadows on the floor: Pip's and each prop's, smaller and fainter the higher they hang
+      /* (one ellipse each, kept and moved, in the order they were written: Pip's first, then each prop's; one more or one
+         fewer as props come and go. Written anew with innerHTML every frame they were new elements to style, lay out and
+         paint 119 times a second at rest: 9,400 style elements a second in Friendly Dark, 7,800 in Glass Dark,
+         pm7-perf lane W's owner's-PC table) */
       if (f === 'friendly' || f === 'glass') {
-        const sh = (x, y, r) => { const h = Math.max(0, Lay.ground - y), k = clamp(1 - h / (Lay.h * .9), .25, 1); return `<ellipse cx="${R(x)}" cy="${Lay.ground + 2}" rx="${R(r * (.6 + k * .5))}" ry="${R(r * .13 * (.6 + k * .5))}" fill="${this.w.shadow}" opacity="${R(k * .7)}"/>`; };
-        let out = sh(H[0], H[1] + 64 * Lay.s / 2.6, 46 * Lay.s / 2.6);
-        this.props.forEach((pr) => { if (pr.pos) out += sh(pr.pos[0], pr.pos[1] + pr.foot * (pr.spec.scale || 1) * Lay.propScale, 40 * (pr.spec.scale || 1) * Lay.propScale * pr.op); });
-        this.gShadow.innerHTML = out;
+        const g = this.gShadow, kids = g.children; let n = 0;
+        const sh = (x, y, r) => {
+          const h = Math.max(0, Lay.ground - y), k = clamp(1 - h / (Lay.h * .9), .25, 1), e = kids[n++] || el('ellipse', null, g);
+          attr(e, 'cx', R(x)); attr(e, 'cy', Lay.ground + 2); attr(e, 'rx', R(r * (.6 + k * .5))); attr(e, 'ry', R(r * .13 * (.6 + k * .5))); attr(e, 'fill', this.w.shadow); attr(e, 'opacity', R(k * .7));
+        };
+        sh(H[0], H[1] + 64 * Lay.s / 2.6, 46 * Lay.s / 2.6);
+        this.props.forEach((pr) => { if (pr.pos) sh(pr.pos[0], pr.pos[1] + pr.foot * (pr.spec.scale || 1) * Lay.propScale, 40 * (pr.spec.scale || 1) * Lay.propScale * pr.op); });
+        while (kids.length > n) g.lastElementChild.remove();
       }
       // Basic measures: a plumb line from Pip to the floor and a marker riding the ruler
       // and a protractor under the hand that reads Pip's swing, its marker on the angle of the string
@@ -1260,18 +1293,33 @@
         for (let d = -30; d <= 30; d += 5) tk += `M${P(A(d), r)}L${P(A(d), r + (d % 15 ? 3.5 : 7))}`;
         const th = clamp(ps.th, -A(34), A(34)), deg = ps.th * 57.3, lab = `${deg < -.05 ? '-' : ''}${Math.abs(deg).toFixed(1)}`;
         const m = (q, rr) => [cx + Math.sin(q) * rr, cy + Math.cos(q) * rr], tip = m(th, r - 1), b1 = m(th - .045, r - 9), b2 = m(th + .045, r - 9), lp = m(A(-38), r + 4);
-        this.gShadow.innerHTML = `<path d="M${P(A(-30), r)}A${R(r)} ${R(r)} 0 0 0 ${P(A(30), r)}${tk}" fill="none" stroke="${ln}" stroke-opacity=".28" stroke-width="1"/>`
-          + `<path d="M${R(cx)} ${R(cy)}L${P(0, r + 7)}" stroke="${ln}" stroke-opacity=".18" stroke-dasharray="2 3"/>`
-          + `<path d="M${R(tip[0])} ${R(tip[1])}L${R(b1[0])} ${R(b1[1])}L${R(b2[0])} ${R(b2[1])}Z" fill="${c}"/>`
-          + (Lay.w > 300 ? `<text x="${R(lp[0])}" y="${R(lp[1])}" text-anchor="end" font-family="'Inter',system-ui,sans-serif" font-size="9" font-weight="600" fill="${ln}" opacity=".55">θ ${lab}<tspan dy="-3.5" font-size="6">o</tspan></text>` : '')
-          + `<path d="M${x} ${y0}V${Lay.ground - 6}" stroke="${ln}" stroke-opacity=".22" stroke-dasharray="2 4"/><path d="M${x} ${Lay.ground + 1}l-5 8h10z" fill="${c}"/><text x="${x}" y="${Lay.ground + 22}" text-anchor="middle" font-family="'Inter',system-ui,sans-serif" font-size="9" font-weight="600" fill="${ln}" opacity=".55">${Math.round(hc[0])}</text>`;
+        /* (its seven parts made once and moved, in the order they were written, each value written only when it changes:
+           written anew with innerHTML every frame they were 2,300 to 8,700 style elements a second at rest in Basic Dark,
+           pm7-perf lane W. The angle label's words are its text node's, then the degree sign's tspan) */
+        const g = this.gShadow, txt = Lay.w > 300, font = "'Inter',system-ui,sans-serif", key = `${txt}|${ln}|${c}`;
+        let pt = g.__pt;
+        if (!pt || pt.key !== key) {
+          g.textContent = '';
+          const words0 = (e) => e.appendChild(document.createTextNode(''));
+          pt = g.__pt = { key, arc: el('path', null, g), from: el('path', null, g), mark: el('path', null, g) };
+          if (txt) { pt.ang = el('text', null, g); pt.angW = words0(pt.ang); el('tspan', { dy: '-3.5', 'font-size': '6' }, pt.ang).textContent = 'o'; }
+          pt.plumb = el('path', null, g); pt.foot = el('path', null, g); pt.num = el('text', null, g); pt.numW = words0(pt.num);
+        }
+        const set = (e, a) => { for (const k in a) attr(e, k, a[k]); };
+        set(pt.arc, { d: `M${P(A(-30), r)}A${R(r)} ${R(r)} 0 0 0 ${P(A(30), r)}${tk}`, fill: 'none', stroke: ln, 'stroke-opacity': '.28', 'stroke-width': '1' });
+        set(pt.from, { d: `M${R(cx)} ${R(cy)}L${P(0, r + 7)}`, stroke: ln, 'stroke-opacity': '.18', 'stroke-dasharray': '2 3' });
+        set(pt.mark, { d: `M${R(tip[0])} ${R(tip[1])}L${R(b1[0])} ${R(b1[1])}L${R(b2[0])} ${R(b2[1])}Z`, fill: c });
+        if (txt) { set(pt.ang, { x: R(lp[0]), y: R(lp[1]), 'text-anchor': 'end', 'font-family': font, 'font-size': '9', 'font-weight': '600', fill: ln, opacity: '.55' }); words(pt.angW, `θ ${lab}`); }
+        set(pt.plumb, { d: `M${x} ${y0}V${Lay.ground - 6}`, stroke: ln, 'stroke-opacity': '.22', 'stroke-dasharray': '2 4' });
+        set(pt.foot, { d: `M${x} ${Lay.ground + 1}l-5 8h10z`, fill: c });
+        set(pt.num, { x, y: Lay.ground + 22, 'text-anchor': 'middle', 'font-family': font, 'font-size': '9', 'font-weight': '600', fill: ln, opacity: '.55' }); words(pt.numW, Math.round(hc[0]));
       }
       // Retro: the vector terrain rolls toward you, and the phosphor remembers where Pip was
       if (this.gTerrain && !this.reduced) {
         const T = this.terrain, ph = (this.t * .55) % 1, D = T.H - T.vy;
         let d = '';
         for (let k = 1; k < 16; k++) { const z = k - ph + .6, y = T.vy + D / (z * z * .45 + .2); if (y > T.vy + 1 && y < T.H) d += `M-400 ${R(y)}H${Lay.w + 400}`; }
-        this.gTerrain.setAttribute('d', d); this.gTerrain.setAttribute('stroke-opacity', '.32');
+        attr(this.gTerrain, 'd', d); attr(this.gTerrain, 'stroke-opacity', '.32');
       }
       if (this.tube === 'phosphor') this.persist();
       // NieR: target brackets, a leader line and the lock; the glitch on a chapter change

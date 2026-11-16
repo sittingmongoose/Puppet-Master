@@ -1,5 +1,5 @@
 {
-  "active_reopened_findings": [
+  "active_open_findings": [
     {
       "audit_ids": [
         "audit-20260618-006-prd-planning-wizard-semantic-fidelity",
@@ -7,6 +7,7 @@
       ],
       "closure_id": "closure-reaudit-20261104--closure-audit-20260618-006-prd-planning-wizard-semantic-fidelity-repair-008",
       "closure_reason": "Re-audit closure-reaudit-20261104 reopened this finding: Delta at 77bae0c63605d0a6f643aa3f1d8c51c2f3bb7947: base verdict not_supported; changed: scripts/pm-audit-closure.py#pydef=validate_audit_dir. validate_audit_dir still requires matrix coverage and registry_closure_id linkage, and audit-20260618-006 still has its repair_closure_matrix.jsonl, so the matrix half of the closure holds. The refresh-hashes half does not: cmd_refresh_hashes without --dry-run still refuses to write and returns 2 under DL-039, and PLS-025 still forbids restamping a row without a re-audit successor. The closure reason credits the reusable refresh-hashes command as what addresses the failed validator item. That writing mechanism is gone, the hash-currentness obligation remains, and the PLS-025 successors are not yet the registry's closing record, so the row stays not_supported with an in_stream fix.",
+      "closure_status": "reopened",
       "finding_key": "sfk-01940353f4c656a5be5a4ffd",
       "line": 1046
     },
@@ -17,6 +18,7 @@
       ],
       "closure_id": "closure-reaudit-20261104--closure-audit-20260617-007-semantic-closure-registry-post-repair-fidelity-001",
       "closure_reason": "Re-audit closure-reaudit-20261104 reopened this finding: Lead reconcile (pm-closure-lead, pm7-build decision 1112002103-d9d5): supported, as both blind max reviews judged this row at R 77bae0c636. Sol 6.1 max: The original defect was accepting previously closed findings without current owner and closure evidence checks, and both groups are still checked. PLS-025 now renews changed evidence through bound append-only re-audits; the old refresh/correction wording does not license restamping. Astra max: The finding was that stale current evidence could still pass validation and be reused as previously_closed. Current hash validation detects mismatches, and PLS-025 permits suppressing a stale predecessor only through a validated re-audit successor; this claim does not depend on the withdrawn refresh-hashes writer. The worker's and the cheap recheck's not_supported reading (renewal by restamping is withdrawn by DL-039 and PLS-025) is not adopted: both checks the original defect lacked are still enforced, and renewal now runs through PLS-025 re-audit rows, which this closure does not contradict. The not_supported fix is dropped. Evidence: the max reviewers' quotes first, then the worker's quotes, all verbatim at R; dependencies and stale-ref dispositions are the worker's, which cover exactly the stale set at R. | Lead: adopted the verdict both fresh max reviews (FU-01 rfu) agree on, per pm7-build 1112013508-4999.",
+      "closure_status": "reopened",
       "finding_key": "sfk-22c5cd3ccf834ffd403199c8",
       "line": 1202
     },
@@ -29,6 +31,7 @@
       ],
       "closure_id": "closure-reaudit-20261104--closure-reaudit-20261104--closure-audit-20260617-012-plans-to-code-handoff-deep-fidelity-023",
       "closure_reason": "Re-audit closure-reaudit-20261104 reopened this finding: Delta at 77bae0c63605d0a6f643aa3f1d8c51c2f3bb7947: base verdict supported; changed: none. No dependency anchor moved. The exact tokens all WorkNodes terminal and all automated tests passed remain in the canonical_text of EP-103, GRS-030, POA-048 and RAP-029 (RAP-029 as projections of owner receipts). Do not accept worker says done as code completion remains a negative constraint of EP-103, GRS-030 and POA-048. The stale ref is now the EP-103 unit. The exact-token body proof holds. | Lead: adopted the verdict both fresh max reviews (FU-01 rfu) agree on, per pm7-build 1112013508-4999.",
+      "closure_status": "reopened",
       "finding_key": "sfk-2498233b7721649d04d1222a",
       "line": 1206
     },
@@ -39,6 +42,7 @@
       ],
       "closure_id": "closure-reaudit-20261104--closure-audit-20260628-001-feature-intake-closed-world-semantic-fidelity-repair-003",
       "closure_reason": "Re-audit closure-reaudit-20261104 reopened this finding: Delta at 77bae0c63605d0a6f643aa3f1d8c51c2f3bb7947: base verdict not_supported; changed: none. No dependency anchor moved, and the stage-2 quotes are still in their anchors. The five feature-intake repair closure rows are still present. The second half of the reason, refreshing registry owner and closure evidence hashes through pm-audit-closure, still does not write: cmd_refresh_hashes forbids restamping without a re-audit (DL-039), and PLS-025 still forbids a refreshed hash without that re-audit. The whole script is the stale ref at this commit. The row stays not_supported, in_stream.",
+      "closure_status": "reopened",
       "finding_key": "sfk-2c2724eecefb5f4a899ed133",
       "line": 1093
     },
@@ -49,6 +53,7 @@
       ],
       "closure_id": "closure-reaudit-20261104--closure-audit-20260701-003-doctor-onboarding-closed-world-semantic-fidelity-repair-011",
       "closure_reason": "Re-audit closure-reaudit-20261104 reopened this finding: Delta at 77bae0c63605d0a6f643aa3f1d8c51c2f3bb7947: base verdict not_supported; changed: scripts/pm-audit-closure.py#pydef=validate_audit_dir, scripts/pm-audit-closure.py#pydef=actionable_json_rows. validate_audit_dir now applies an audit-correction pass, and actionable_json_rows also treats validator invalid_invocations, finding_level error or blocker, and side-effect fields as actionable. The quoted registry-link error is still in validate_audit_dir, and the twelve Doctor/onboarding closure rows and their registry links quoted at stage 2 are still present. validator_results.json for that audit has no invalid_invocations entry; its only non-passing results remain the two blocker rows the matrix already closes, both with empty side-effect lists. The widened actionable test therefore does not open a new uncovered source row here. The closure as written is still not backed, because it also credits refreshing stale registry hashes, and cmd_refresh_hashes still refuses to write under DL-039 while PLS-025 still forbids a restamp without a re-audit. The whole script is the stale ref at this commit. The row stays not_supported, in_stream.",
+      "closure_status": "reopened",
       "finding_key": "sfk-4295336d87f4f0b9df21a400",
       "line": 1103
     },
@@ -59,6 +64,7 @@
       ],
       "closure_id": "closure-reaudit-20261104--closure-audit-20260617-008-semantic-closure-registry-repair-fidelity-012",
       "closure_reason": "Re-audit closure-reaudit-20261104 reopened this finding: Lead reconcile (pm-closure-lead, FU-BRIEF item 3): not_supported, as Sol 6.1 max judged at R 77bae0c636; the worker, the cheap recheck and Astra max had said supported. Sol 6.1 max: The live registry has the corrected PDS/PLS owners, but the same finding also covered the original matrix, whose rows still declare owner_docs as scripts/pm-audit-closure.py and Plans/.audits/_semantic_closure_registry.jsonl. Their finding_keys remain sfk-8e82e431df11de56f61cbea0 and sfk-0ffa1faea828f2ca3d91480d, disagreeing with the corrected registry; current validate_audit_dir reports both linkage errors. The owner-routing repair therefore remains incomplete rather than fully closed. At R, `python3 scripts/pm-audit-closure.py validate --audit-dir Plans/.audits/audit-20260617-006-semantic-closure-registry-fidelity --require-closure-matrix` reports repair_closure_matrix.jsonl:22 and :23: \"registry row finding_key does not match matrix finding_key\". The live registry rows 22/23 name PDS/PLS owners, but the frozen matrix rows still declare scripts/pm-audit-closure.py and the registry path as owner_docs, with keys that disagree. PLS-026 freezes historical matrix rows and keeps a registry link that does not hold as an error, so the frozen-row rule does not excuse it. Added anchors: the two matrix rows and validate_audit_dir that Sol named, and PLS-026 for the frozen-row rule.",
+      "closure_status": "reopened",
       "finding_key": "sfk-4ba329ca6a30e090a2dc305b",
       "line": 1203
     },
@@ -69,6 +75,7 @@
       ],
       "closure_id": "reopen-fable-20260706-remaining-registry-pnc019-20260810",
       "closure_reason": "Reopened during the explicit 2026-08-10 governance currentness refresh because the governed PNC-019 receipt has stale source bindings, the event-family denominator is unresolved, node readiness is blocked_runtime_certification_incomplete, and buildability_gate_passed is false. Prior runtime-ready and buildable closure claims are no longer current authority.",
+      "closure_status": "reopened",
       "finding_key": "sfk-5e3e2e181221c2aeea675f79",
       "line": 736
     },
@@ -79,6 +86,7 @@
       ],
       "closure_id": "closure-reaudit-20261104--closure-audit-20260703-001-external-repo-import-closed-world-semantic-fidelity-repair-005",
       "closure_reason": "Re-audit closure-reaudit-20261104 reopened this finding: Delta at 77bae0c63605d0a6f643aa3f1d8c51c2f3bb7947: base verdict not_supported; changed: none. No dependency anchor moved, and the stage-2 quotes are still in their anchors. This closure's whole claim is the mechanism: validate reports stale owner and closure hashes, and refresh-hashes rewrites those groups. The report half still holds. cmd_refresh_hashes still does not write, and PLS-025 still forbids a refreshed evidence hash without the re-audit that justifies it. The whole script is the stale ref at this commit. The row stays not_supported, in_stream.",
+      "closure_status": "reopened",
       "finding_key": "sfk-5efdc99245444addb8f240df",
       "line": 1105
     },
@@ -89,6 +97,7 @@
       ],
       "closure_id": "closure-reaudit-20261104--closure-audit-20260627-001-feature-name-closed-world-semantic-fidelity-repair-005",
       "closure_reason": "Re-audit closure-reaudit-20261104 reopened this finding: Delta at 77bae0c63605d0a6f643aa3f1d8c51c2f3bb7947: base verdict not_supported; changed: none. No dependency anchor moved, and the stage-2 quotes are still in their anchors. This closure credits pm-audit-closure refresh-hashes completing with status pass and updating stale hashes before this audit's closure rows were added. The closure rows remain. cmd_refresh_hashes still does not write: restamping without a re-audit is forbidden (DL-039). PLS-025 still requires a re-audit before any refreshed evidence hash is written. The whole script is the stale ref at this commit. The row stays not_supported, in_stream.",
+      "closure_status": "reopened",
       "finding_key": "sfk-65dd43de0c564ca0c4e7998e",
       "line": 1092
     },
@@ -100,6 +109,7 @@
       ],
       "closure_id": "closure-reaudit-20261104--closure-audit-20260617-012-plans-to-code-handoff-deep-fidelity-015",
       "closure_reason": "Re-audit closure-reaudit-20261104 reopened this finding: atom-0031 said the built-in browser is primary and Playwright 'can be optional/fallback/project-native'. The repair put 'Playwright optional' into canonical prose. The later 2026-08-13 browser terminology correction (ATS-035, T-159) removed it on purpose. PM has no Playwright runtime, facade or fallback, and a user Project's own Playwright suite runs only as a generic external process that is 'not a fallback for BrowserRuntimeService'. ATS-004's preserved_exact_tokens dropped the token too. The finding is not open: the atom's core rule (do not default native PM web testing to Playwright) holds more strongly than before. But the detail the row repaired is now retired canon, and no active Plans text brings back an optional or fallback PM Playwright path (grep of active docs finds only provider lineage in Tools.md about Firecrawl). So the right status is stale_retired, not repaired. Round 2 (lead): kept stale_retired. The row closes an exact-token finding ('Playwright optional' missing from canonical body). That token was removed on purpose by the 2026-08-13 browser decision (ATS-035, T-159), which also dropped it from ATS-004 preserved_exact_tokens, so the detail the row repaired is retired canon. The underlying atom rule (no native Playwright default) holds more strongly; 'repaired' would claim the exact-token repair is still present, which it is not by design. Round 4 (lead): changed to not_supported. Ledger pldg-20260617-001 atom-0031 is still compiled_to_plan with exact token 'Playwright optional' (outputs ATS-004, RAP-029, T-159) and is not superseded, but no Plans document contains the phrase: the 2026-08-13 browser decision (ATS-035, T-159) removed it on purpose. Under the compile-witness rule the exact-token repair no longer holds, and the retirement is not recorded in the ledger, so the closure is not backed as either repaired or stale_retired. Round 5 (lead): anchored ledger atom-0031, which still lists the exact token with outputs ATS-004, RAP-029 and T-159.",
+      "closure_status": "reopened",
       "finding_key": "sfk-6c83df51a6d07e83416eb678",
       "line": 763
     },
@@ -110,6 +120,7 @@
       ],
       "closure_id": "closure-reaudit-20261104--closure-audit-20260618-006-prd-planning-wizard-semantic-fidelity-repair-007",
       "closure_reason": "Re-audit closure-reaudit-20261104 reopened this finding: Delta at 77bae0c63605d0a6f643aa3f1d8c51c2f3bb7947: base verdict not_supported; changed: none. No dependency anchor this row rests on moved. The row credits refresh-hashes deterministically rewriting registry evidence hashes while preserving statuses and reasons. cmd_refresh_hashes without --dry-run still fails and returns 2: restamping closure hashes without a re-audit is forbidden (DL-039). --dry-run only reports differing hashes. PLS-025 still says no refreshed evidence hash is written without the re-audit that justifies it, and no row is rewritten, restamped or deleted. Unsuperseded stale hashes still fail validation. The hash-currentness obligation survives, so this is not_supported rather than stale_retired, and it stays in_stream until the PLS-025 successors land.",
+      "closure_status": "reopened",
       "finding_key": "sfk-6df766d47ca025434f401848",
       "line": 1045
     },
@@ -120,6 +131,7 @@
       ],
       "closure_id": "closure-reaudit-20261104--closure-audit-20260617-012-plans-to-code-handoff-deep-fidelity-041",
       "closure_reason": "Re-audit closure-reaudit-20261104 reopened this finding: Delta at 78a1fd64cd: base verdict supported; changed: Plans/Planning_Ledger_System.md#unit=PLS-012, Plans/Plan_Document_System.md#unit=PDS-014, scripts/pm-audit-closure.py#pydef=validate_current_hashes, scripts/pm-audit-closure.py#pydef=validate_hashes, scripts/pm-audit-closure.py#pydef=cmd_refresh_hashes. The refresh-hashes rewriting this row credits was withdrawn between base and head. At the base, refresh_current_hashes behind the refresh-hashes command rewrote stale stored hashes, and the row was supported on that mechanism. At the head cmd_refresh_hashes never writes: without --dry-run it fails with 'refresh-hashes no longer writes the registry: restamping closure hashes without a re-audit is forbidden (DL-039)' and returns 2 (observed at the head), and --dry-run only reports which hashes differ; main's help now reads 'Report stale owner/closure evidence hashes (--dry-run only; writing is disabled by DL-039)'. PLS-025 states the replacement rule: no row is restamped and 'no refreshed evidence hash is written without the re-audit that justifies it', the successor being a hash-bound reaudit-append row. Per the worker brief, a row crediting refresh-hashes restamping is not_supported (not stale_retired - the obligation that registry hashes be current was not retired, only the mechanism), with an in_stream fix. The validator half still holds: unsuperseded stale hashes still fail validation. PLS-012/PDS-014 hash-backed reopen rules are unchanged in meaning.",
+      "closure_status": "reopened",
       "finding_key": "sfk-82517a9255593eef1eeb042b",
       "line": 1040
     },
@@ -130,6 +142,7 @@
       ],
       "closure_id": "reopen-fable-20260706-pnc019-currentness-20260810",
       "closure_reason": "Reopened during the explicit 2026-08-10 governance currentness refresh because the governed PNC-019 receipt is stale. Current Event Authority facts are 39 live registry rows, 37 evidence-registered rows, a persisted floor of >=285, an unregistered floor of >=248, an unresolved floor of >=40, and 68 excluded rows; the denominator is UNKNOWN_OPEN and material contract depth is incomplete. IRB-005 and IRB-011 are therefore effectively open, runtime remains disabled, and the prior current-receipt and buildability-pass claims are not current authority.",
+      "closure_status": "reopened",
       "finding_key": "sfk-8d83d4bcc29328c680b11986",
       "line": 737
     },
@@ -140,6 +153,7 @@
       ],
       "closure_id": "closure-reaudit-20261104--closure-audit-20260626-001-provider-updates-closed-world-semantic-fidelity-repair-005",
       "closure_reason": "Re-audit closure-reaudit-20261104 reopened this finding: Delta at 77bae0c63605d0a6f643aa3f1d8c51c2f3bb7947: base verdict not_supported; changed: none. No dependency anchor moved, and the stage-2 quotes are still in their anchors. This closure credits refresh-hashes rewriting stale owner and closure evidence hashes after the provider-updates repair. cmd_refresh_hashes still refuses to write: restamping without a re-audit is forbidden (DL-039), and the command tells the caller to append a re-audit with reaudit-append. refresh_current_hashes still only computes the hash a writer would have stored. PLS-025 still says no row is rewritten, restamped or deleted, and no refreshed evidence hash is written without the re-audit that justifies it. validate_current_hashes still reports staleness. The whole script is the stale ref at this commit; the pydef anchors replace it. Only the restamp mechanism was withdrawn, not the obligation that registry hashes be current, so the row stays not_supported with the same in_stream fix.",
+      "closure_status": "reopened",
       "finding_key": "sfk-929f4dfbd5cc1201eff2a369",
       "line": 1089
     },
@@ -150,6 +164,7 @@
       ],
       "closure_id": "closure-reaudit-20261104--closure-audit-20260626-001-provider-updates-closed-world-semantic-fidelity-repair-006",
       "closure_reason": "Re-audit closure-reaudit-20261104 reopened this finding: Delta at 77bae0c63605d0a6f643aa3f1d8c51c2f3bb7947: base verdict not_supported; changed: none. No dependency anchor moved, and the stage-2 quotes are still in their anchors. This closure credits resolving the global validator failure by refreshing current owner and closure evidence hashes. The validator still reports stale hashes, and cmd_refresh_hashes still does not write them: restamping without a re-audit is forbidden (DL-039). PLS-012 and PDS-014 still describe hash-backed evidence, and PLS-025 still forbids a refreshed hash without the re-audit that justifies it. The whole script is the stale ref at this commit. The row stays not_supported, in_stream, until append-only re-audit successors and a passing registry replace the withdrawn restamp.",
+      "closure_status": "reopened",
       "finding_key": "sfk-93891900f1e635b8b3c4b580",
       "line": 1090
     },
@@ -160,6 +175,7 @@
       ],
       "closure_id": "closure-reaudit-20261104--closure-audit-20260701-001-containerized-hosts-closed-world-semantic-fidelity-repair-001",
       "closure_reason": "Re-audit closure-reaudit-20261104 reopened this finding: Delta at 77bae0c63605d0a6f643aa3f1d8c51c2f3bb7947: base verdict not_supported; changed: scripts/pm-audit-closure.py#pydef=validate_audit_dir. validate_audit_dir now applies an audit-correction pass. That does not restore registry writes. This closure credits detecting stale whole-file hashes and refresh-hashes restamping them for the Containerized Hosts audit. validate_current_hashes still reports staleness. cmd_refresh_hashes still refuses to write under DL-039, and PLS-025 still forbids a restamp without a re-audit. The whole script is the stale ref at this commit. The row stays not_supported, in_stream.",
+      "closure_status": "reopened",
       "finding_key": "sfk-bd12e603e3d781b949823e2e",
       "line": 1096
     },
@@ -170,6 +186,7 @@
       ],
       "closure_id": "closure-reaudit-20261104--closure-audit-20260623-001-fff-ledger-to-plans-semantic-fidelity-repair-003",
       "closure_reason": "Re-audit closure-reaudit-20261104 reopened this finding: Delta at 77bae0c63605d0a6f643aa3f1d8c51c2f3bb7947: base verdict not_supported; changed: none. cmd_refresh_hashes at R still never writes: its docstring says 'It never writes: restamping closure-registry hashes without a re-audit is forbidden (DL-039). A closure whose evidence changed is re-audited and recorded with reaudit-append (PLS-025)', and the non-dry-run path fails with 'refresh-hashes no longer writes the registry'. PLS-025 still states the replacement rule quoted above. The coverage half of the row still holds (the four FFF matrix rows are unchanged), but the row as written credits restamping historical registry hashes with a withdrawn mechanism, so it stays not backed. The in_stream condition is not met at R: a validate run at R still reports unsuperseded stale registry hashes (unsuperseded_stale_hash_count 1362), so the registry does not validate yet; this final pass is producing the PLS-025 successors that will close it. Per the worker brief this remains not_supported with an in_stream fix, not stale_retired: only the mechanism was retired, not the obligation that the registry's hashes be current.",
+      "closure_status": "reopened",
       "finding_key": "sfk-e1fcd45c960c7c2508038375",
       "line": 1087
     },
@@ -180,11 +197,12 @@
       ],
       "closure_id": "closure-reaudit-20261104--closure-audit-20260629-001-free-models-closed-world-semantic-fidelity-repair-001",
       "closure_reason": "Re-audit closure-reaudit-20261104 reopened this finding: Delta at 77bae0c63605d0a6f643aa3f1d8c51c2f3bb7947: base verdict not_supported; changed: scripts/pm-audit-closure.py#pydef=validate_audit_dir. validate_audit_dir now applies an audit-correction pass. That does not restore registry writes. This closure credits detecting stale hashes and refresh-hashes restamping them for the Free Models audit. Detection remains: validate_current_hashes still reports staleness. cmd_refresh_hashes still refuses to write, and PLS-025 still says no refreshed evidence hash is written without the re-audit that justifies it. The whole script is the stale ref at this commit. The row stays not_supported, in_stream.",
+      "closure_status": "reopened",
       "finding_key": "sfk-f6f7b1a8d1ba5658b04fb84f",
       "line": 1095
     }
   ],
-  "generated_at_utc": "2026-11-14T04:56:20Z",
+  "generated_at_utc": "2026-11-15T12:17:16Z",
   "reports": [
     {
       "audit_id": "audit-20260615-001-part-3-fable-cleanup",
@@ -480,10 +498,10 @@
         "closure_status_counts": {
           "explicitly_deferred": 2,
           "not_for_plan": 6,
-          "repaired": 37,
-          "source_lineage_only": 26
+          "repaired": 39,
+          "source_lineage_only": 28
         },
-        "matching_rows": 71,
+        "matching_rows": 75,
         "registry_path": "Plans/.audits/_semantic_closure_registry.jsonl"
       },
       "current_blocker": false,
@@ -503,10 +521,10 @@
           "explicitly_deferred": 2,
           "not_for_plan": 9,
           "reopened": 1,
-          "repaired": 38,
+          "repaired": 40,
           "source_lineage_only": 30
         },
-        "matching_rows": 80,
+        "matching_rows": 82,
         "registry_path": "Plans/.audits/_semantic_closure_registry.jsonl"
       },
       "current_blocker": false,
@@ -526,10 +544,10 @@
           "explicitly_deferred": 1,
           "not_for_plan": 5,
           "reopened": 1,
-          "repaired": 15,
+          "repaired": 16,
           "source_lineage_only": 12
         },
-        "matching_rows": 34,
+        "matching_rows": 35,
         "registry_path": "Plans/.audits/_semantic_closure_registry.jsonl"
       },
       "current_blocker": false,
@@ -1535,11 +1553,13 @@
   "schema_id": "pm.audit_status_index.v1",
   "source": {
     "closure_registry": "Plans/.audits/_semantic_closure_registry.jsonl",
+    "open_findings": "scripts/pm-audit-closure.py validate_registry open_rows: a finding is open until an authenticated supersession chain ends in a closed row whose hashes are current (PLS-025)",
     "reports_glob": "Plans/.audits/audit-*/FINAL_REPORT.md"
   },
   "summary": {
-    "closure_registry_row_count": 1215,
+    "closure_registry_row_count": 1220,
     "current_blocker_count": 18,
+    "current_open_finding_count": 18,
     "current_reopened_finding_count": 18,
     "current_report_blocker_count": 0,
     "historical_blocked_or_fail_report_count": 25,

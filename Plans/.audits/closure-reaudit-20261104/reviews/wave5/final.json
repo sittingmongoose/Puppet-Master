@@ -1,0 +1,19 @@
+{
+  "worker": {
+    "file": "worker/records.jsonl",
+    "model": "gpt-6.1-sol xhigh; wave5 implementation worker"
+  },
+  "sol": [
+    {
+      "file": "review-sol-max-rw5.jsonl",
+      "model": "gpt-6.1-sol max"
+    }
+  ],
+  "astra": [
+    {
+      "file": "review-astra-max-rw5.jsonl",
+      "model": "gpt-6-astra max"
+    }
+  ],
+  "recheck_commit": "83d1c6128b246f127895117183a3b3e5d7a9933e"
+}

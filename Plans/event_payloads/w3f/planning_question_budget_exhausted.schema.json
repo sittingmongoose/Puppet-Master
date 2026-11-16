@@ -1,0 +1,307 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "pm.event_payload.planning.question_budget_exhausted.v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_id",
+    "schema_version",
+    "owner_operation_id",
+    "context",
+    "exhaustion_id",
+    "budget_run_id",
+    "workflow_kind",
+    "backend",
+    "assistant_plan_id",
+    "question_records_ref",
+    "policy_ref",
+    "strategy",
+    "base_limit",
+    "grill_me_enabled",
+    "grill_me_extension",
+    "effective_limit",
+    "questions_asked",
+    "questions_remaining",
+    "result",
+    "continuation",
+    "source_receipt_ref"
+  ],
+  "properties": {
+    "schema_id": {
+      "const": "pm.event_payload.planning.question_budget_exhausted.v1"
+    },
+    "schema_version": {
+      "const": "1.0.0"
+    },
+    "owner_operation_id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 4096,
+      "not": {
+        "pattern": "[\u0000\r\n]"
+      }
+    },
+    "context": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "scope_kind",
+        "project_id",
+        "server_id",
+        "thread_id",
+        "host_id",
+        "working_root_ref",
+        "worktree_id",
+        "remote_identity_ref"
+      ],
+      "properties": {
+        "scope_kind": {
+          "enum": [
+            "application",
+            "project"
+          ]
+        },
+        "project_id": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256,
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_.:-]*$",
+              "not": {
+                "pattern": "[\r\n]"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "server_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_.:-]*$",
+          "not": {
+            "pattern": "[\r\n]"
+          }
+        },
+        "thread_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 4096,
+          "not": {
+            "pattern": "[\u0000\r\n]"
+          }
+        },
+        "host_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_.:-]*$",
+          "not": {
+            "pattern": "[\r\n]"
+          }
+        },
+        "working_root_ref": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 2048,
+              "not": {
+                "pattern": "[\u0000\r\n]"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "worktree_id": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256,
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_.:-]*$",
+              "not": {
+                "pattern": "[\r\n]"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "remote_identity_ref": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 2048,
+              "not": {
+                "pattern": "[\u0000\r\n]"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "scope_kind": {
+                "const": "application"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "project_id": {
+                "type": "null"
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "project_id": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 256,
+                "pattern": "^[A-Za-z0-9][A-Za-z0-9_.:-]*$",
+                "not": {
+                  "pattern": "[\r\n]"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "exhaustion_id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 4096,
+      "not": {
+        "pattern": "[\u0000\r\n]"
+      }
+    },
+    "budget_run_id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 4096,
+      "not": {
+        "pattern": "[\u0000\r\n]"
+      }
+    },
+    "workflow_kind": {
+      "enum": [
+        "plan",
+        "deep_plan",
+        "brainstorm",
+        "crew",
+        "chat_room"
+      ]
+    },
+    "backend": {
+      "enum": [
+        "questionnaire",
+        "deep_ledger_session",
+        "question_bank"
+      ]
+    },
+    "assistant_plan_id": {
+      "anyOf": [
+        {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 4096,
+          "not": {
+            "pattern": "[\u0000\r\n]"
+          }
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "question_records_ref": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 2048,
+      "not": {
+        "pattern": "[\u0000\r\n]"
+      }
+    },
+    "policy_ref": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 2048,
+      "not": {
+        "pattern": "[\u0000\r\n]"
+      }
+    },
+    "strategy": {
+      "enum": [
+        "quick",
+        "standard",
+        "thorough",
+        "deep_thorough",
+        "deep_exhaustive",
+        "brainstorm",
+        null
+      ]
+    },
+    "base_limit": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "grill_me_enabled": {
+      "type": "boolean"
+    },
+    "grill_me_extension": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "effective_limit": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "questions_asked": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "questions_remaining": {
+      "type": "integer",
+      "const": 0
+    },
+    "result": {
+      "const": "question_budget_exhausted"
+    },
+    "continuation": {
+      "enum": [
+        "synthesis",
+        "await_grill_confirmation"
+      ]
+    },
+    "source_receipt_ref": {
+      "anyOf": [
+        {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 2048,
+          "not": {
+            "pattern": "[\u0000\r\n]"
+          }
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  }
+}

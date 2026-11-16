@@ -1,0 +1,880 @@
+{
+  "qualification": "INVENTORY_ONLY_NOT_REMOVAL_PROOF",
+  "script": "scripts/pm_goal_own_c3_w34a_oracles.py",
+  "source_sha256": "2d136fc0b0bdbe2db0759998be741e597fc3c0ebbb29e4c1e0237b11a995507e",
+  "new_runtime_relation_predicates": [
+    "scope/control",
+    "storage/control",
+    "key/control",
+    "storage/initial_control_origin",
+    "key/initial_control_origin",
+    "scope/candidate",
+    "storage/candidate",
+    "key/candidate",
+    "scope/commit",
+    "storage/commit",
+    "key/commit",
+    "scope/origin",
+    "storage/origin",
+    "key/origin",
+    "scope/original_d01_update",
+    "scope/original_d01_origin",
+    "scope/original_d01_head",
+    "candidate/operation_id",
+    "candidate/transaction_id",
+    "candidate/owner",
+    "commit/operation_id",
+    "commit/transaction_id",
+    "origin/operation_id",
+    "origin/transaction_id",
+    "origin/owner",
+    "original_d01_update/operation_id",
+    "original_d01_update/transaction_id",
+    "original_d01_origin/operation_id",
+    "original_d01_origin/transaction_id",
+    "original_d01_origin/owner",
+    "control/commit",
+    "control/no_pending",
+    "control/original_operation",
+    "control/owner",
+    "candidate/before_start_control",
+    "birth/key",
+    "birth/record",
+    "commit/candidate",
+    "origin/candidate",
+    "origin/commit",
+    "origin/control",
+    "commit/goal",
+    "commit/outbox",
+    "origin/source_argument",
+    "origin/goal_argument",
+    "candidate/before_body",
+    "candidate/before_control",
+    "candidate/after_body",
+    "candidate/after_control",
+    "commit/before_body",
+    "commit/before_control",
+    "commit/after_body",
+    "commit/after_control",
+    "origin/after_body",
+    "origin/after_control",
+    "d01/result",
+    "d01/origin",
+    "d01/transition_result",
+    "d01/transition_origin",
+    "head/body",
+    "head/control",
+    "head/update",
+    "d01_origin/update",
+    "d01_origin/head",
+    "d01_origin/cause",
+    "transition/from",
+    "transition/to",
+    "transition/outbox",
+    "transition/cause",
+    "d01/cause",
+    "d01/writer",
+    "d01_origin/method",
+    "native/before_status",
+    "native/before_activation",
+    "native/after_status",
+    "native/after_activation",
+    "native/body_revision",
+    "native/activation_revision",
+    "native/identity",
+    "native/workflow_owner_ref",
+    "native/workflow_owner_epoch",
+    "commit/event_commitment",
+    "commit/receipt",
+    "origin/event_commitment",
+    "origin/receipt",
+    "candidate/semantic_digest",
+    "commit/semantic_digest",
+    "commit/event_id",
+    "event/project",
+    "event/run",
+    "event/actor",
+    "event/time",
+    "event/correlation",
+    "event/requested_account_ref",
+    "event/effective_account_ref",
+    "payload/project",
+    "payload/goal",
+    "payload/goal_revision",
+    "payload/before_revision",
+    "payload/after_revision",
+    "payload/run",
+    "payload/workgraph",
+    "event/key_copy",
+    "receipt/event",
+    "receipt/sequence",
+    "receipt/durability_class",
+    "receipt/durability_state",
+    "full/receipt",
+    "full/commitment",
+    "custody/receipt",
+    "custody/commitment",
+    "custody/segment",
+    "custody/storage_instance_id",
+    "custody/event_id",
+    "custody/event_type",
+    "custody/idempotency_key",
+    "custody/producer_semantic_digest",
+    "custody/partition"
+  ],
+  "unwitnessed_relations": [],
+  "guard_negative_inventory": {
+    "tuple/transition/from": [
+      "transition/from"
+    ],
+    "tuple/transition/to": [
+      "transition/to"
+    ],
+    "tuple/transition/outbox": [
+      "transition/outbox"
+    ],
+    "tuple/transition/cause": [
+      "transition/cause"
+    ],
+    "tuple/native/before_status": [
+      "native/before_status"
+    ],
+    "tuple/native/before_activation": [
+      "native/before_activation"
+    ],
+    "tuple/native/after_status": [
+      "native/after_status"
+    ],
+    "tuple/native/after_activation": [
+      "native/after_activation"
+    ],
+    "tuple/native/body_revision": [
+      "native/body_revision"
+    ],
+    "tuple/native/activation_revision": [
+      "native/activation_revision"
+    ],
+    "tuple/native/identity": [
+      "native/identity"
+    ],
+    "tuple/native/workflow_owner_ref": [
+      "native/workflow_owner_ref"
+    ],
+    "tuple/native/workflow_owner_epoch": [
+      "native/workflow_owner_epoch"
+    ],
+    "tuple/control/no_pending": [
+      "control/no_pending"
+    ],
+    "tuple/control/original_operation": [
+      "control/original_operation"
+    ],
+    "tuple/d01/writer": [
+      "d01/writer"
+    ],
+    "tuple/head/body": [
+      "head/body"
+    ],
+    "tuple/head/control": [
+      "head/control"
+    ],
+    "tuple/birth/key": [
+      "birth/key"
+    ],
+    "tuple/birth/record": [
+      "birth/record"
+    ],
+    "tuple/origin/source_argument": [
+      "origin/source_argument"
+    ],
+    "tuple/origin/goal_argument": [
+      "origin/goal_argument"
+    ],
+    "tuple/candidate/semantic_digest": [
+      "candidate/semantic_digest"
+    ],
+    "tuple/commit/semantic_digest": [
+      "commit/semantic_digest"
+    ],
+    "tuple/commit/event_commitment": [
+      "commit/event_commitment"
+    ],
+    "tuple/origin/event_commitment": [
+      "origin/event_commitment"
+    ],
+    "tuple/commit/event_id": [
+      "commit/event_id"
+    ],
+    "tuple/control/commit": [
+      "control/commit"
+    ],
+    "tuple/commit/candidate": [
+      "commit/candidate"
+    ],
+    "tuple/origin/candidate": [
+      "origin/candidate"
+    ],
+    "tuple/origin/commit": [
+      "origin/commit"
+    ],
+    "tuple/origin/control": [
+      "origin/control"
+    ],
+    "tuple/candidate/before_body": [
+      "candidate/before_body"
+    ],
+    "tuple/candidate/before_control": [
+      "candidate/before_control"
+    ],
+    "tuple/candidate/before_start_control": [
+      "candidate/before_start_control"
+    ],
+    "tuple/candidate/after_body": [
+      "candidate/after_body"
+    ],
+    "tuple/candidate/after_control": [
+      "candidate/after_control"
+    ],
+    "tuple/commit/before_body": [
+      "commit/before_body"
+    ],
+    "tuple/commit/before_control": [
+      "commit/before_control"
+    ],
+    "tuple/commit/after_body": [
+      "commit/after_body"
+    ],
+    "tuple/commit/after_control": [
+      "commit/after_control"
+    ],
+    "tuple/origin/after_body": [
+      "origin/after_body"
+    ],
+    "tuple/origin/after_control": [
+      "origin/after_control"
+    ],
+    "tuple/d01/result": [
+      "d01/result"
+    ],
+    "tuple/d01/origin": [
+      "d01/origin"
+    ],
+    "tuple/head/update": [
+      "head/update"
+    ],
+    "tuple/d01_origin/cause": [
+      "d01_origin/cause"
+    ],
+    "tuple/scope/control": [
+      "scope/control"
+    ],
+    "tuple/storage/control": [
+      "storage/control"
+    ],
+    "tuple/key/control": [
+      "key/control"
+    ],
+    "tuple/storage/initial_control_origin": [
+      "storage/initial_control_origin"
+    ],
+    "tuple/key/initial_control_origin": [
+      "key/initial_control_origin"
+    ],
+    "tuple/scope/candidate": [
+      "scope/candidate"
+    ],
+    "tuple/storage/candidate": [
+      "storage/candidate"
+    ],
+    "tuple/key/candidate": [
+      "key/candidate"
+    ],
+    "tuple/candidate/operation_id": [
+      "candidate/operation_id"
+    ],
+    "tuple/candidate/transaction_id": [
+      "candidate/transaction_id"
+    ],
+    "tuple/candidate/owner": [
+      "candidate/owner"
+    ],
+    "tuple/scope/commit": [
+      "scope/commit"
+    ],
+    "tuple/storage/commit": [
+      "storage/commit"
+    ],
+    "tuple/key/commit": [
+      "key/commit"
+    ],
+    "tuple/commit/operation_id": [
+      "commit/operation_id"
+    ],
+    "tuple/commit/transaction_id": [
+      "commit/transaction_id"
+    ],
+    "tuple/scope/origin": [
+      "scope/origin"
+    ],
+    "tuple/storage/origin": [
+      "storage/origin"
+    ],
+    "tuple/key/origin": [
+      "key/origin"
+    ],
+    "tuple/origin/operation_id": [
+      "origin/operation_id"
+    ],
+    "tuple/origin/transaction_id": [
+      "origin/transaction_id"
+    ],
+    "tuple/origin/owner": [
+      "origin/owner"
+    ],
+    "tuple/scope/original_d01_update": [
+      "scope/original_d01_update"
+    ],
+    "tuple/original_d01_update/operation_id": [
+      "original_d01_update/operation_id"
+    ],
+    "tuple/original_d01_update/transaction_id": [
+      "original_d01_update/transaction_id"
+    ],
+    "tuple/scope/original_d01_origin": [
+      "scope/original_d01_origin"
+    ],
+    "tuple/original_d01_origin/operation_id": [
+      "original_d01_origin/operation_id"
+    ],
+    "tuple/original_d01_origin/transaction_id": [
+      "original_d01_origin/transaction_id"
+    ],
+    "tuple/original_d01_origin/owner": [
+      "original_d01_origin/owner"
+    ],
+    "tuple/scope/original_d01_head": [
+      "scope/original_d01_head"
+    ],
+    "tuple/control/owner": [
+      "control/owner"
+    ],
+    "tuple/commit/goal": [
+      "commit/goal"
+    ],
+    "tuple/commit/outbox": [
+      "commit/outbox"
+    ],
+    "tuple/d01/transition_result": [
+      "d01/transition_result"
+    ],
+    "tuple/d01/transition_origin": [
+      "d01/transition_origin"
+    ],
+    "tuple/d01_origin/update": [
+      "d01_origin/update"
+    ],
+    "tuple/d01_origin/head": [
+      "d01_origin/head"
+    ],
+    "tuple/event/project": [
+      "event/project"
+    ],
+    "tuple/event/run": [
+      "event/run"
+    ],
+    "tuple/event/actor": [
+      "event/actor"
+    ],
+    "tuple/event/time": [
+      "event/time"
+    ],
+    "tuple/event/correlation": [
+      "event/correlation"
+    ],
+    "tuple/event/requested_account_ref": [
+      "event/requested_account_ref"
+    ],
+    "tuple/event/effective_account_ref": [
+      "event/effective_account_ref"
+    ],
+    "tuple/payload/project": [
+      "payload/project"
+    ],
+    "tuple/payload/goal": [
+      "payload/goal"
+    ],
+    "tuple/payload/goal_revision": [
+      "payload/goal_revision"
+    ],
+    "tuple/payload/before_revision": [
+      "payload/before_revision"
+    ],
+    "tuple/payload/after_revision": [
+      "payload/after_revision"
+    ],
+    "tuple/payload/run": [
+      "payload/run"
+    ],
+    "tuple/payload/workgraph": [
+      "payload/workgraph"
+    ],
+    "tuple/event/key_copy": [
+      "event/key_copy"
+    ],
+    "tuple/full/receipt": [
+      "full/receipt"
+    ],
+    "tuple/full/commitment": [
+      "full/commitment"
+    ],
+    "tuple/custody/receipt": [
+      "custody/receipt"
+    ],
+    "tuple/custody/commitment": [
+      "custody/commitment"
+    ],
+    "tuple/custody/segment": [
+      "custody/segment"
+    ],
+    "tuple/custody/storage_instance_id": [
+      "custody/storage_instance_id"
+    ],
+    "tuple/custody/event_id": [
+      "custody/event_id"
+    ],
+    "tuple/custody/event_type": [
+      "custody/event_type"
+    ],
+    "tuple/custody/idempotency_key": [
+      "custody/idempotency_key"
+    ],
+    "tuple/custody/producer_semantic_digest": [
+      "custody/producer_semantic_digest"
+    ],
+    "tuple/custody/partition": [
+      "custody/partition"
+    ],
+    "tuple/receipt/event": [
+      "receipt/event"
+    ],
+    "tuple/receipt/sequence": [
+      "receipt/sequence"
+    ],
+    "tuple/commit/receipt": [
+      "commit/receipt"
+    ],
+    "tuple/origin/receipt": [
+      "origin/receipt"
+    ],
+    "tuple/d01_origin/method": [
+      "d01_origin/method"
+    ],
+    "roots/schema//$defs/OriginalStarted/native_start/original_d01_update/record/cause/const": [
+      "d01/cause"
+    ],
+    "tuple/d01/cause": [
+      "d01/cause"
+    ],
+    "roots/schema//$defs/OriginalStarted/original_append/first_append_receipt/durability_class/const": [
+      "receipt/durability_class"
+    ],
+    "tuple/receipt/durability_class": [
+      "receipt/durability_class"
+    ],
+    "roots/schema//$defs/OriginalStarted/original_append/first_append_receipt/durability_state/const": [
+      "receipt/durability_state"
+    ],
+    "tuple/receipt/durability_state": [
+      "receipt/durability_state"
+    ],
+    "schema/expected_refusal": [
+      "schema/missing/control/schema_id",
+      "schema/missing/control/schema_version",
+      "schema/missing/control/storage_instance_id",
+      "schema/missing/control/physical_key",
+      "schema/missing/control/record",
+      "schema/missing/control/record/scope",
+      "schema/missing/control/record/epoch",
+      "schema/missing/control/record/owner",
+      "schema/missing/control/record/pending_candidate",
+      "schema/missing/control/record/committed_start",
+      "schema/missing/control/record/original_operation_id",
+      "schema/missing/initial_control_origin/schema_id",
+      "schema/missing/initial_control_origin/schema_version",
+      "schema/missing/initial_control_origin/storage_instance_id",
+      "schema/missing/initial_control_origin/physical_key",
+      "schema/missing/initial_control_origin/record",
+      "schema/missing/initial_control_origin/record/issuer_method",
+      "schema/missing/initial_control_origin/record/owner_ref",
+      "schema/missing/initial_control_origin/record/owner_epoch",
+      "schema/missing/initial_control_origin/record/original_operation_id",
+      "schema/missing/initial_control_origin/record/original_causation_ref",
+      "schema/missing/initial_control_origin/record/issued_at_utc",
+      "schema/missing/initial_control_origin/record/issued_value_key",
+      "schema/missing/initial_control_origin/record/issued_record_sha256",
+      "schema/missing/initial_control_origin/record/source_bindings",
+      "schema/missing/initial_control_origin/record/actual_permission_source",
+      "schema/missing/initial_control_origin/record/actual_stop_source",
+      "schema/missing/initial_control_origin/record/actual_cancellation_source",
+      "schema/missing/candidate/schema_id",
+      "schema/missing/candidate/schema_version",
+      "schema/missing/candidate/storage_instance_id",
+      "schema/missing/candidate/physical_key",
+      "schema/missing/candidate/record",
+      "schema/missing/candidate/record/scope",
+      "schema/missing/candidate/record/operation_id",
+      "schema/missing/candidate/record/transaction_id",
+      "schema/missing/candidate/record/owner",
+      "schema/missing/candidate/record/before_body",
+      "schema/missing/candidate/record/before_control",
+      "schema/missing/candidate/record/before_d01_pointer",
+      "schema/missing/candidate/record/before_start_control",
+      "schema/missing/candidate/record/prepared_outbox",
+      "schema/missing/candidate/record/historical_intent_schema",
+      "schema/missing/candidate/record/historical_intended_payload",
+      "schema/missing/candidate/record/delivery_payload_schema",
+      "schema/missing/candidate/record/delivery_profile",
+      "schema/missing/candidate/record/goal_context",
+      "schema/missing/candidate/record/producer_semantic_digest",
+      "schema/missing/candidate/record/actual_source_argument_sha256",
+      "schema/missing/candidate/record/candidate_body",
+      "schema/missing/candidate/record/candidate_control",
+      "schema/missing/commit/schema_id",
+      "schema/missing/commit/schema_version",
+      "schema/missing/commit/storage_instance_id",
+      "schema/missing/commit/physical_key",
+      "schema/missing/commit/record",
+      "schema/missing/commit/record/scope",
+      "schema/missing/commit/record/operation_id",
+      "schema/missing/commit/record/transaction_id",
+      "schema/missing/commit/record/candidate",
+      "schema/missing/commit/record/goal_context",
+      "schema/missing/commit/record/prepared_outbox",
+      "schema/missing/commit/record/before_body",
+      "schema/missing/commit/record/before_control",
+      "schema/missing/commit/record/after_body",
+      "schema/missing/commit/record/after_control",
+      "schema/missing/commit/record/event_id",
+      "schema/missing/commit/record/event_type",
+      "schema/missing/commit/record/payload_schema_id",
+      "schema/missing/commit/record/historical_intended_payload",
+      "schema/missing/commit/record/delivery_profile",
+      "schema/missing/commit/record/event_value_commitment",
+      "schema/missing/commit/record/first_append_receipt",
+      "schema/missing/commit/record/transition",
+      "schema/missing/commit/record/producer_semantic_digest",
+      "schema/missing/commit/record/dispatch_released",
+      "schema/missing/origin/schema_id",
+      "schema/missing/origin/schema_version",
+      "schema/missing/origin/storage_instance_id",
+      "schema/missing/origin/physical_key",
+      "schema/missing/origin/record",
+      "schema/missing/origin/record/scope",
+      "schema/missing/origin/record/issuer_method",
+      "schema/missing/origin/record/storage_method",
+      "schema/missing/origin/record/coordinator_profile",
+      "schema/missing/origin/record/owner",
+      "schema/missing/origin/record/operation_id",
+      "schema/missing/origin/record/transaction_id",
+      "schema/missing/origin/record/candidate",
+      "schema/missing/origin/record/commit",
+      "schema/missing/origin/record/native_body",
+      "schema/missing/origin/record/native_control",
+      "schema/missing/origin/record/start_control",
+      "schema/missing/origin/record/original_event_value_commitment",
+      "schema/missing/origin/record/first_append_receipt",
+      "schema/missing/origin/record/actual_source_argument_sha256",
+      "schema/missing/origin/record/goal_source_argument_sha256",
+      "schema/missing/origin/record/issued_at_utc",
+      "schema/missing/original_d01_update/schema_id",
+      "schema/missing/original_d01_update/schema_version",
+      "schema/missing/original_d01_update/record",
+      "schema/missing/original_d01_update/record/scope",
+      "schema/missing/original_d01_update/record/operation_id",
+      "schema/missing/original_d01_update/record/transaction_id",
+      "schema/missing/original_d01_update/record/revision",
+      "schema/missing/original_d01_update/record/previous_head",
+      "schema/missing/original_d01_update/record/before_body",
+      "schema/missing/original_d01_update/record/before_control",
+      "schema/missing/original_d01_update/record/after_body",
+      "schema/missing/original_d01_update/record/after_control",
+      "schema/missing/original_d01_update/record/cause",
+      "schema/missing/original_d01_update/record/original_owner_result",
+      "schema/missing/original_d01_update/record/original_owner_origin",
+      "schema/missing/original_d01_update/record/transition",
+      "schema/missing/original_d01_origin/schema_id",
+      "schema/missing/original_d01_origin/schema_version",
+      "schema/missing/original_d01_origin/record",
+      "schema/missing/original_d01_origin/record/scope",
+      "schema/missing/original_d01_origin/record/method",
+      "schema/missing/original_d01_origin/record/operation_id",
+      "schema/missing/original_d01_origin/record/transaction_id",
+      "schema/missing/original_d01_origin/record/owner",
+      "schema/missing/original_d01_origin/record/causation",
+      "schema/missing/original_d01_origin/record/preimages",
+      "schema/missing/original_d01_origin/record/afterimages",
+      "schema/missing/original_d01_origin/record/issued_at_utc",
+      "schema/missing/original_d01_head/schema_id",
+      "schema/missing/original_d01_head/schema_version",
+      "schema/missing/original_d01_head/record",
+      "schema/missing/original_d01_head/record/scope",
+      "schema/missing/original_d01_head/record/revision",
+      "schema/missing/original_d01_head/record/activation_body",
+      "schema/missing/original_d01_head/record/activation_origin",
+      "schema/missing/original_d01_head/record/current_body",
+      "schema/missing/original_d01_head/record/current_control",
+      "schema/missing/original_d01_head/record/previous_head",
+      "schema/missing/original_d01_head/record/last_update",
+      "schema/missing/original_d01_head/record/workflow_owner_ref",
+      "schema/missing/original_d01_head/record/workflow_owner_epoch",
+      "schema/missing/original_d01_head/record/pending_operation_id"
+    ],
+    "representation/physical_key": [
+      "selected_successor/inline/physical_key",
+      "selected_successor/event_reference/physical_key"
+    ],
+    "representation/dataset_name": [
+      "selected_successor/inline/dataset_name",
+      "selected_successor/event_reference/dataset_name"
+    ],
+    "representation/storage_instance_id": [
+      "selected_successor/inline/storage_instance_id",
+      "selected_successor/event_reference/storage_instance_id"
+    ],
+    "representation/event_identity": [
+      "selected_successor/inline/event_identity",
+      "selected_successor/event_reference/event_identity"
+    ],
+    "representation/original_event_value_commitment": [
+      "selected_successor/inline/original_event_value_commitment",
+      "selected_successor/event_reference/original_event_value_commitment"
+    ],
+    "representation/tuple": [
+      "selected_successor/inline/metadata_substitution",
+      "selected_successor/event_reference/metadata_substitution"
+    ],
+    "representation/kind": [
+      "selected_successor/nonselected_reference"
+    ],
+    "representation/complete_operation_size": [
+      "selected_successor/unrepresentable_operation"
+    ],
+    "wire/prefix_crc": [
+      "wire/prefix_crc"
+    ],
+    "wire/header_crc": [
+      "wire/header_crc"
+    ],
+    "wire/payload_crc": [
+      "wire/payload_crc"
+    ],
+    "wire/generation_mismatch": [
+      "wire/foreign_generation"
+    ],
+    "wire/sequence_not_strict": [
+      "wire/reordered_sequence"
+    ],
+    "wire/duplicate_event_id": [
+      "wire/duplicate_event"
+    ],
+    "wire/prefix_truncated": [
+      "wire/truncated/8"
+    ],
+    "wire/frame_truncated": [
+      "wire/truncated/51",
+      "wire/truncated/1763"
+    ],
+    "wire/replay_only_not_appendable": [
+      "wire/current_replay_only",
+      "wire/retry_replay_only"
+    ]
+  },
+  "raw_schema_observations_source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG-OWN-C/C3-W34a/w3-oracles.json",
+  "raw_schema_observations_sha256": "2e23cf0cbbf65c44f84567e8dd3f043388472e1da441f3222b10e66595271ae8",
+  "raw_schema_case_ids": [
+    "schema/missing/control/schema_id",
+    "schema/missing/control/schema_version",
+    "schema/missing/control/storage_instance_id",
+    "schema/missing/control/physical_key",
+    "schema/missing/control/record",
+    "schema/missing/control/record/scope",
+    "schema/missing/control/record/epoch",
+    "schema/missing/control/record/owner",
+    "schema/missing/control/record/pending_candidate",
+    "schema/missing/control/record/committed_start",
+    "schema/missing/control/record/original_operation_id",
+    "schema/missing/initial_control_origin/schema_id",
+    "schema/missing/initial_control_origin/schema_version",
+    "schema/missing/initial_control_origin/storage_instance_id",
+    "schema/missing/initial_control_origin/physical_key",
+    "schema/missing/initial_control_origin/record",
+    "schema/missing/initial_control_origin/record/issuer_method",
+    "schema/missing/initial_control_origin/record/owner_ref",
+    "schema/missing/initial_control_origin/record/owner_epoch",
+    "schema/missing/initial_control_origin/record/original_operation_id",
+    "schema/missing/initial_control_origin/record/original_causation_ref",
+    "schema/missing/initial_control_origin/record/issued_at_utc",
+    "schema/missing/initial_control_origin/record/issued_value_key",
+    "schema/missing/initial_control_origin/record/issued_record_sha256",
+    "schema/missing/initial_control_origin/record/source_bindings",
+    "schema/missing/initial_control_origin/record/actual_permission_source",
+    "schema/missing/initial_control_origin/record/actual_stop_source",
+    "schema/missing/initial_control_origin/record/actual_cancellation_source",
+    "schema/missing/candidate/schema_id",
+    "schema/missing/candidate/schema_version",
+    "schema/missing/candidate/storage_instance_id",
+    "schema/missing/candidate/physical_key",
+    "schema/missing/candidate/record",
+    "schema/missing/candidate/record/scope",
+    "schema/missing/candidate/record/operation_id",
+    "schema/missing/candidate/record/transaction_id",
+    "schema/missing/candidate/record/owner",
+    "schema/missing/candidate/record/before_body",
+    "schema/missing/candidate/record/before_control",
+    "schema/missing/candidate/record/before_d01_pointer",
+    "schema/missing/candidate/record/before_start_control",
+    "schema/missing/candidate/record/prepared_outbox",
+    "schema/missing/candidate/record/historical_intent_schema",
+    "schema/missing/candidate/record/historical_intended_payload",
+    "schema/missing/candidate/record/delivery_payload_schema",
+    "schema/missing/candidate/record/delivery_profile",
+    "schema/missing/candidate/record/goal_context",
+    "schema/missing/candidate/record/producer_semantic_digest",
+    "schema/missing/candidate/record/actual_source_argument_sha256",
+    "schema/missing/candidate/record/candidate_body",
+    "schema/missing/candidate/record/candidate_control",
+    "schema/missing/commit/schema_id",
+    "schema/missing/commit/schema_version",
+    "schema/missing/commit/storage_instance_id",
+    "schema/missing/commit/physical_key",
+    "schema/missing/commit/record",
+    "schema/missing/commit/record/scope",
+    "schema/missing/commit/record/operation_id",
+    "schema/missing/commit/record/transaction_id",
+    "schema/missing/commit/record/candidate",
+    "schema/missing/commit/record/goal_context",
+    "schema/missing/commit/record/prepared_outbox",
+    "schema/missing/commit/record/before_body",
+    "schema/missing/commit/record/before_control",
+    "schema/missing/commit/record/after_body",
+    "schema/missing/commit/record/after_control",
+    "schema/missing/commit/record/event_id",
+    "schema/missing/commit/record/event_type",
+    "schema/missing/commit/record/payload_schema_id",
+    "schema/missing/commit/record/historical_intended_payload",
+    "schema/missing/commit/record/delivery_profile",
+    "schema/missing/commit/record/event_value_commitment",
+    "schema/missing/commit/record/first_append_receipt",
+    "schema/missing/commit/record/transition",
+    "schema/missing/commit/record/producer_semantic_digest",
+    "schema/missing/commit/record/dispatch_released",
+    "schema/missing/origin/schema_id",
+    "schema/missing/origin/schema_version",
+    "schema/missing/origin/storage_instance_id",
+    "schema/missing/origin/physical_key",
+    "schema/missing/origin/record",
+    "schema/missing/origin/record/scope",
+    "schema/missing/origin/record/issuer_method",
+    "schema/missing/origin/record/storage_method",
+    "schema/missing/origin/record/coordinator_profile",
+    "schema/missing/origin/record/owner",
+    "schema/missing/origin/record/operation_id",
+    "schema/missing/origin/record/transaction_id",
+    "schema/missing/origin/record/candidate",
+    "schema/missing/origin/record/commit",
+    "schema/missing/origin/record/native_body",
+    "schema/missing/origin/record/native_control",
+    "schema/missing/origin/record/start_control",
+    "schema/missing/origin/record/original_event_value_commitment",
+    "schema/missing/origin/record/first_append_receipt",
+    "schema/missing/origin/record/actual_source_argument_sha256",
+    "schema/missing/origin/record/goal_source_argument_sha256",
+    "schema/missing/origin/record/issued_at_utc",
+    "schema/missing/original_d01_update/schema_id",
+    "schema/missing/original_d01_update/schema_version",
+    "schema/missing/original_d01_update/record",
+    "schema/missing/original_d01_update/record/scope",
+    "schema/missing/original_d01_update/record/operation_id",
+    "schema/missing/original_d01_update/record/transaction_id",
+    "schema/missing/original_d01_update/record/revision",
+    "schema/missing/original_d01_update/record/previous_head",
+    "schema/missing/original_d01_update/record/before_body",
+    "schema/missing/original_d01_update/record/before_control",
+    "schema/missing/original_d01_update/record/after_body",
+    "schema/missing/original_d01_update/record/after_control",
+    "schema/missing/original_d01_update/record/cause",
+    "schema/missing/original_d01_update/record/original_owner_result",
+    "schema/missing/original_d01_update/record/original_owner_origin",
+    "schema/missing/original_d01_update/record/transition",
+    "schema/missing/original_d01_origin/schema_id",
+    "schema/missing/original_d01_origin/schema_version",
+    "schema/missing/original_d01_origin/record",
+    "schema/missing/original_d01_origin/record/scope",
+    "schema/missing/original_d01_origin/record/method",
+    "schema/missing/original_d01_origin/record/operation_id",
+    "schema/missing/original_d01_origin/record/transaction_id",
+    "schema/missing/original_d01_origin/record/owner",
+    "schema/missing/original_d01_origin/record/causation",
+    "schema/missing/original_d01_origin/record/preimages",
+    "schema/missing/original_d01_origin/record/afterimages",
+    "schema/missing/original_d01_origin/record/issued_at_utc",
+    "schema/missing/original_d01_head/schema_id",
+    "schema/missing/original_d01_head/schema_version",
+    "schema/missing/original_d01_head/record",
+    "schema/missing/original_d01_head/record/scope",
+    "schema/missing/original_d01_head/record/revision",
+    "schema/missing/original_d01_head/record/activation_body",
+    "schema/missing/original_d01_head/record/activation_origin",
+    "schema/missing/original_d01_head/record/current_body",
+    "schema/missing/original_d01_head/record/current_control",
+    "schema/missing/original_d01_head/record/previous_head",
+    "schema/missing/original_d01_head/record/last_update",
+    "schema/missing/original_d01_head/record/workflow_owner_ref",
+    "schema/missing/original_d01_head/record/workflow_owner_epoch",
+    "schema/missing/original_d01_head/record/pending_operation_id"
+  ],
+  "schema_runtime_site_pairs": [
+    {
+      "id": "d01/cause",
+      "expected": "roots/schema//$defs/OriginalStarted/native_start/original_d01_update/record/cause/const",
+      "observed": "roots/schema//$defs/OriginalStarted/native_start/original_d01_update/record/cause/const",
+      "pass_": true,
+      "detail": null,
+      "failed_relations": [
+        "d01/cause"
+      ],
+      "shared_isolation_sites": [
+        "tuple/d01/cause",
+        "original_schema/native_start/original_d01_update/record/cause/const"
+      ]
+    },
+    {
+      "id": "receipt/durability_class",
+      "expected": "roots/schema//$defs/OriginalStarted/original_append/first_append_receipt/durability_class/const",
+      "observed": "roots/schema//$defs/OriginalStarted/original_append/first_append_receipt/durability_class/const",
+      "pass_": true,
+      "detail": null,
+      "failed_relations": [
+        "receipt/durability_class"
+      ],
+      "shared_isolation_sites": [
+        "tuple/receipt/durability_class",
+        "original_schema/original_append/first_append_receipt/durability_class/const"
+      ]
+    },
+    {
+      "id": "receipt/durability_state",
+      "expected": "roots/schema//$defs/OriginalStarted/original_append/first_append_receipt/durability_state/const",
+      "observed": "roots/schema//$defs/OriginalStarted/original_append/first_append_receipt/durability_state/const",
+      "pass_": true,
+      "detail": null,
+      "failed_relations": [
+        "receipt/durability_state"
+      ],
+      "shared_isolation_sites": [
+        "tuple/receipt/durability_state",
+        "original_schema/original_append/first_append_receipt/durability_state/const"
+      ]
+    }
+  ]
+}

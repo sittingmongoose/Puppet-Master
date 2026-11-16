@@ -1,0 +1,478 @@
+{
+  "status": "pass",
+  "qualification": "TEST_ONLY_PARTIAL_SOURCE_CLOSURE_NATIVE_NOT_RUN",
+  "cases": 293,
+  "positives": 112,
+  "negatives": 181,
+  "new_guards_with_negatives": {
+    "source/input_hash//home/sittingmongoose/PM-Experiments/goal-update-canonical-root-20260912/canonical-copy-v2/goal_update_support.py": [
+      "inputs/committed_hash//home/sittingmongoose/PM-Experiments/goal-update-canonical-root-20260912/canonical-copy-v2/goal_update_support.py"
+    ],
+    "source/input_hash//mnt/Cursor/PuppetMaster-Evidence/tests/goal-update-canonical-ordinary-20260912/v2/00-historical-start.json": [
+      "inputs/committed_hash//mnt/Cursor/PuppetMaster-Evidence/tests/goal-update-canonical-ordinary-20260912/v2/00-historical-start.json"
+    ],
+    "source/input_hash//mnt/Cursor/PuppetMaster-Evidence/tests/goal-update-canonical-ordinary-20260912/v2/01-U0.json": [
+      "inputs/committed_hash//mnt/Cursor/PuppetMaster-Evidence/tests/goal-update-canonical-ordinary-20260912/v2/01-U0.json"
+    ],
+    "source/input_hash//mnt/Cursor/PuppetMaster-Evidence/tests/goal-update-canonical-ordinary-20260912/v2/02-U1.json": [
+      "inputs/committed_hash//mnt/Cursor/PuppetMaster-Evidence/tests/goal-update-canonical-ordinary-20260912/v2/02-U1.json"
+    ],
+    "source/input_hash//mnt/Cursor/PuppetMaster-Evidence/tests/goal-update-canonical-ordinary-20260912/v2/03-U2.json": [
+      "inputs/committed_hash//mnt/Cursor/PuppetMaster-Evidence/tests/goal-update-canonical-ordinary-20260912/v2/03-U2.json"
+    ],
+    "source/input_hash//mnt/Cursor/PuppetMaster-Evidence/tests/goal-update-canonical-ordinary-20260912/v2/04-U3.json": [
+      "inputs/committed_hash//mnt/Cursor/PuppetMaster-Evidence/tests/goal-update-canonical-ordinary-20260912/v2/04-U3.json"
+    ],
+    "source/input_hash//mnt/Cursor/PuppetMaster-Evidence/tests/goal-update-canonical-ordinary-20260912/v2/05-U4.json": [
+      "inputs/committed_hash//mnt/Cursor/PuppetMaster-Evidence/tests/goal-update-canonical-ordinary-20260912/v2/05-U4.json"
+    ],
+    "source/input_hash//mnt/Cursor/PuppetMaster-Evidence/tests/goal-update-canonical-ordinary-20260912/v2/06-physical-raw-values.json": [
+      "inputs/committed_hash//mnt/Cursor/PuppetMaster-Evidence/tests/goal-update-canonical-ordinary-20260912/v2/06-physical-raw-values.json"
+    ],
+    "source/input_hash//mnt/Cursor/PuppetMaster-Evidence/tests/goal-update-canonical-ordinary-20260912/v2/manifest.json": [
+      "inputs/committed_hash//mnt/Cursor/PuppetMaster-Evidence/tests/goal-update-canonical-ordinary-20260912/v2/manifest.json"
+    ],
+    "source/input_hash//mnt/Cursor/PuppetMaster-Evidence/tests/goal-update-canonical-ordinary-20260912/v2/result.json": [
+      "inputs/committed_hash//mnt/Cursor/PuppetMaster-Evidence/tests/goal-update-canonical-ordinary-20260912/v2/result.json"
+    ],
+    "source/input_hash//home/sittingmongoose/PM-Experiments/goal-update-canonical-root-20260912/canonical-copy-v2/runtime/shared/event_value_codec.py": [
+      "inputs/committed_hash//home/sittingmongoose/PM-Experiments/goal-update-canonical-root-20260912/canonical-copy-v2/runtime/shared/event_value_codec.py"
+    ],
+    "source/input_hash//home/sittingmongoose/PM-Experiments/goal-update-canonical-root-20260912/canonical-copy-v2/runtime/physical/source/model.py": [
+      "inputs/committed_hash//home/sittingmongoose/PM-Experiments/goal-update-canonical-root-20260912/canonical-copy-v2/runtime/physical/source/model.py"
+    ],
+    "source/input_hash//home/sittingmongoose/PM-Experiments/goal-update-canonical-root-20260912/canonical-copy-v2/runtime/physical/source/goal_body_custody.schema.json": [
+      "inputs/committed_hash//home/sittingmongoose/PM-Experiments/goal-update-canonical-root-20260912/canonical-copy-v2/runtime/physical/source/goal_body_custody.schema.json"
+    ],
+    "source/input_hash//home/sittingmongoose/PM-Experiments/goal-update-canonical-root-20260912/canonical-copy-v2/goal_support.py": [
+      "inputs/committed_hash//home/sittingmongoose/PM-Experiments/goal-update-canonical-root-20260912/canonical-copy-v2/goal_support.py"
+    ],
+    "roots/whole_resource_hash/Plans/event_append_receipt_contracts.schema.json": [
+      "banks/physical_hash/Plans/event_append_receipt_contracts.schema.json"
+    ],
+    "roots/whole_resource_hash/Plans/event_payloads/goal_runtime/goal_updated.schema.json": [
+      "banks/physical_hash/Plans/event_payloads/goal_runtime/goal_updated.schema.json",
+      "banks/physical_hash/Plans/event_payloads/goal_runtime/goal_updated.schema.json"
+    ],
+    "roots/whole_resource_hash/Plans/event_record.schema.json": [
+      "banks/physical_hash/Plans/event_record.schema.json"
+    ],
+    "roots/whole_resource_hash/Plans/full_thread_runtime_contracts.schema.json": [
+      "banks/physical_hash/Plans/full_thread_runtime_contracts.schema.json"
+    ],
+    "roots/whole_resource_hash/Plans/goal_body_custody.schema.json": [
+      "banks/physical_hash/Plans/goal_body_custody.schema.json"
+    ],
+    "roots/whole_resource_hash/Plans/goal_runtime_contracts.schema.json": [
+      "banks/physical_hash/Plans/goal_runtime_contracts.schema.json"
+    ],
+    "roots/whole_resource_hash/Plans/goal_start_command_custody.schema.json": [
+      "banks/physical_hash/Plans/goal_start_command_custody.schema.json"
+    ],
+    "roots/whole_resource_hash/Plans/goal_update_command_custody.schema.json": [
+      "banks/physical_hash/Plans/goal_update_command_custody.schema.json"
+    ],
+    "roots/whole_resource_hash/Plans/shared_runtime_command_contracts.schema.json": [
+      "banks/physical_hash/Plans/shared_runtime_command_contracts.schema.json"
+    ],
+    "roots/whole_resource_hash/Plans/ui_command_response.schema.json": [
+      "banks/physical_hash/Plans/ui_command_response.schema.json"
+    ],
+    "roots/whole_resource_hash/Plans/event_payloads/goal_runtime/goal_cancelled.schema.json": [
+      "banks/physical_hash/Plans/event_payloads/goal_runtime/goal_cancelled.schema.json"
+    ],
+    "roots/whole_resource_hash/Plans/event_payloads/goal_runtime/goal_created.schema.json": [
+      "banks/physical_hash/Plans/event_payloads/goal_runtime/goal_created.schema.json"
+    ],
+    "roots/whole_resource_hash/Plans/event_record_index_checkpoint.schema.json": [
+      "banks/physical_hash/Plans/event_record_index_checkpoint.schema.json"
+    ],
+    "roots/whole_resource_hash/Plans/goal_cancel_command_custody.schema.json": [
+      "banks/physical_hash/Plans/goal_cancel_command_custody.schema.json"
+    ],
+    "roots/whole_resource_hash/Plans/goal_execution_binding_custody.schema.json": [
+      "banks/physical_hash/Plans/goal_execution_binding_custody.schema.json"
+    ],
+    "roots/whole_resource_hash/Plans/goal_runtime_events.schema.json": [
+      "banks/physical_hash/Plans/goal_runtime_events.schema.json"
+    ],
+    "roots/whole_resource_hash/Plans/shared_integration_runtime_expansion_contracts.schema.json": [
+      "banks/physical_hash/Plans/shared_integration_runtime_expansion_contracts.schema.json"
+    ],
+    "roots/whole_resource_hash/Plans/shared_runtime_contracts.schema.json": [
+      "banks/physical_hash/Plans/shared_runtime_contracts.schema.json"
+    ],
+    "roots/whole_resource_hash/Plans/storage_compaction_native_contracts.schema.json": [
+      "banks/physical_hash/Plans/storage_compaction_native_contracts.schema.json"
+    ],
+    "roots/no_uri_rebinding": [
+      "banks/URI_conflict",
+      "banks/boolean_integer_schema_alias",
+      "banks/same_schema_different_whole_bytes"
+    ],
+    "roots/unresolved_reference": [
+      "banks/unvisited_reference"
+    ],
+    "proposal/key": [
+      "proposal/inline/physical_key",
+      "proposal/inline/omitted_storage_namespace",
+      "proposal/payload_ref/physical_key",
+      "proposal/payload_ref/omitted_storage_namespace"
+    ],
+    "proposal/identity": [
+      "proposal/inline/proposal_command_instance_id",
+      "proposal/payload_ref/proposal_command_instance_id"
+    ],
+    "proposal/request_hash": [
+      "proposal/inline/original_request_sha256",
+      "proposal/payload_ref/original_request_sha256"
+    ],
+    "proposal/scope": [
+      "proposal/inline/scope",
+      "proposal/payload_ref/scope"
+    ],
+    "proposal/original_storage_route": [
+      "proposal/inline/original_storage_route",
+      "proposal/payload_ref/original_storage_route"
+    ],
+    "proposal/resolved_original": [
+      "proposal/inline/full_request"
+    ],
+    "proposal/pack_issued": [
+      "proposal/inline/last_helper",
+      "proposal/payload_ref/last_helper"
+    ],
+    "proposal/operation_size": [
+      "proposal/complete_operation_size"
+    ],
+    "resolution/physical_key": [
+      "resolution/physical_key"
+    ],
+    "resolution/scope": [
+      "resolution/scope"
+    ],
+    "resolution/original_resolution": [
+      "resolution/foreign_decision"
+    ],
+    "resolution/permission": [
+      "resolution/audit_permission"
+    ],
+    "resolution/operation_size": [
+      "resolution/oversized_complete_operation"
+    ],
+    "physical/absent_key": [
+      "image/immutable_original_key"
+    ],
+    "image/issued_key": [
+      "image/missing_original"
+    ],
+    "image/owner": [
+      "image/owner"
+    ],
+    "image/schema_route": [
+      "image/schema_ref"
+    ],
+    "image/physical_hash": [
+      "image/sha256"
+    ],
+    "image/codec": [
+      "image/codec"
+    ],
+    "image/origin": [
+      "image/foreign_origin"
+    ],
+    "image/origin_issued": [
+      "image/missing_origin"
+    ],
+    "image/origin_hash": [
+      "image/corrupt_original_origin"
+    ],
+    "image/physical_bytes": [
+      "image/foreign_whole_body_coherent_hash"
+    ],
+    "manifest/migration/0": [
+      "manifest/0/migration_id"
+    ],
+    "manifest/ordinal/0": [
+      "manifest/0/ordinal",
+      "manifest/reordered_part"
+    ],
+    "manifest/count/0": [
+      "manifest/0/part_count"
+    ],
+    "manifest/whole_commitment/0": [
+      "manifest/0/whole_manifest_sha256"
+    ],
+    "manifest/scope/0": [
+      "manifest/0/scope"
+    ],
+    "manifest/source_bytes/0": [
+      "manifest/0/corrupt_native_bytes"
+    ],
+    "manifest/source_inventory": [
+      "manifest/0/missing_native_source",
+      "manifest/1/missing_native_source",
+      "manifest/2/missing_native_source",
+      "manifest/extra_native_source",
+      "manifest/omitted_storage_namespace"
+    ],
+    "manifest/migration/1": [
+      "manifest/1/migration_id"
+    ],
+    "manifest/ordinal/1": [
+      "manifest/1/ordinal"
+    ],
+    "manifest/count/1": [
+      "manifest/1/part_count"
+    ],
+    "manifest/whole_commitment/1": [
+      "manifest/1/whole_manifest_sha256"
+    ],
+    "manifest/scope/1": [
+      "manifest/1/scope"
+    ],
+    "manifest/source_bytes/1": [
+      "manifest/1/corrupt_native_bytes"
+    ],
+    "manifest/migration/2": [
+      "manifest/2/migration_id"
+    ],
+    "manifest/ordinal/2": [
+      "manifest/2/ordinal"
+    ],
+    "manifest/count/2": [
+      "manifest/2/part_count"
+    ],
+    "manifest/whole_commitment/2": [
+      "manifest/2/whole_manifest_sha256"
+    ],
+    "manifest/scope/2": [
+      "manifest/2/scope"
+    ],
+    "manifest/source_bytes/2": [
+      "manifest/2/corrupt_native_bytes"
+    ],
+    "manifest/part_count": [
+      "manifest/missing_part",
+      "manifest/duplicate_part"
+    ],
+    "manifest/recomputed_whole_commitment": [
+      "manifest/member_corruption_against_original_publication"
+    ],
+    "installation/root_epoch": [
+      "installation/root_epoch"
+    ],
+    "installation/owner_epoch": [
+      "installation/owner_epoch"
+    ],
+    "installation/store_selection": [
+      "installation/store_selection"
+    ],
+    "installation/inventory": [
+      "installation/inventory"
+    ],
+    "installation/pending": [
+      "installation/pending"
+    ],
+    "installation/root_epoch/source_type": [
+      "installation/root_epoch/source_boolean",
+      "installation/root_epoch/source_string",
+      "installation/root_epoch/source_null",
+      "installation/root_epoch/source_array",
+      "installation/root_epoch/source_object",
+      "installation/root_epoch/source_float"
+    ],
+    "installation/root_epoch/expected_type": [
+      "installation/root_epoch/expected_boolean",
+      "installation/root_epoch/expected_string",
+      "installation/root_epoch/expected_null",
+      "installation/root_epoch/expected_array",
+      "installation/root_epoch/expected_object",
+      "installation/root_epoch/expected_float"
+    ],
+    "installation/owner_epoch/source_type": [
+      "installation/owner_epoch/source_boolean",
+      "installation/owner_epoch/source_string",
+      "installation/owner_epoch/source_null",
+      "installation/owner_epoch/source_array",
+      "installation/owner_epoch/source_object",
+      "installation/owner_epoch/source_float"
+    ],
+    "installation/owner_epoch/expected_type": [
+      "installation/owner_epoch/expected_boolean",
+      "installation/owner_epoch/expected_string",
+      "installation/owner_epoch/expected_null",
+      "installation/owner_epoch/expected_array",
+      "installation/owner_epoch/expected_object",
+      "installation/owner_epoch/expected_float"
+    ],
+    "installation/owner_identity/goal": [
+      "installation/forged_owner/goal",
+      "installation/forged_registry_copy/goal"
+    ],
+    "installation/same_transaction/goal": [
+      "installation/foreign_native_store/goal"
+    ],
+    "installation/owner_identity/host_stop": [
+      "installation/forged_owner/host_stop",
+      "installation/forged_registry_copy/host_stop"
+    ],
+    "installation/same_transaction/host_stop": [
+      "installation/foreign_native_store/host_stop"
+    ],
+    "installation/owner_identity/plan": [
+      "installation/forged_owner/plan",
+      "installation/forged_registry_copy/plan"
+    ],
+    "installation/same_transaction/plan": [
+      "installation/foreign_native_store/plan"
+    ],
+    "installation/owner_identity/workflow": [
+      "installation/forged_owner/workflow",
+      "installation/forged_registry_copy/workflow"
+    ],
+    "installation/same_transaction/workflow": [
+      "installation/foreign_native_store/workflow"
+    ],
+    "installation/owner_identity/scheduler": [
+      "installation/forged_owner/scheduler",
+      "installation/forged_registry_copy/scheduler"
+    ],
+    "installation/same_transaction/scheduler": [
+      "installation/foreign_native_store/scheduler"
+    ],
+    "installation/owner_identity/sir": [
+      "installation/forged_owner/sir",
+      "installation/forged_registry_copy/sir"
+    ],
+    "installation/same_transaction/sir": [
+      "installation/foreign_native_store/sir"
+    ],
+    "installation/candidate": [
+      "installation/final_candidate"
+    ],
+    "installation/participants": [
+      "installation/missing_participant"
+    ],
+    "installation/withdrawn": [
+      "installation/withdrawn"
+    ],
+    "installation/source_images": [
+      "installation/source_images",
+      "installation/whole_source_image_CAS"
+    ],
+    "installation/source_origins": [
+      "installation/source_origins"
+    ],
+    "installation/destination_absent/result": [
+      "installation/occupied/result"
+    ],
+    "installation/part_size/result": [
+      "installation/oversized/result"
+    ],
+    "installation/destination_absent/manifest:0": [
+      "installation/occupied/manifest:0"
+    ],
+    "installation/part_size/manifest:0": [
+      "installation/oversized/manifest:0"
+    ],
+    "installation/destination_absent/manifest:1": [
+      "installation/occupied/manifest:1"
+    ],
+    "installation/part_size/manifest:1": [
+      "installation/oversized/manifest:1"
+    ],
+    "installation/destination_absent/manifest:2": [
+      "installation/occupied/manifest:2"
+    ],
+    "installation/part_size/manifest:2": [
+      "installation/oversized/manifest:2"
+    ],
+    "installation/before_commit": [
+      "installation/before_commit"
+    ],
+    "installation/ack_lost": [
+      "installation/after_commit"
+    ],
+    "update/original_issuance/00-historical-start": [
+      "W1/original_phase/00-historical-start"
+    ],
+    "update/original_issuance/01-U0": [
+      "W1/original_phase/01-U0"
+    ],
+    "update/original_issuance/02-U1": [
+      "W1/original_phase/02-U1"
+    ],
+    "update/original_issuance/03-U2": [
+      "W1/original_phase/03-U2"
+    ],
+    "update/original_issuance/04-U3": [
+      "W1/original_phase/04-U3"
+    ],
+    "update/original_issuance/05-U4": [
+      "W1/original_phase/05-U4"
+    ],
+    "update/original_issuance/06-physical-raw-values": [
+      "W1/original_phase/06-physical-raw-values"
+    ],
+    "update/withdrawn": [
+      "W1/last_helper_withdrawal"
+    ]
+  },
+  "inherited_provider_guards_with_negatives": {
+    "U/owner_epoch": [
+      "resolution/last_helper_epoch"
+    ],
+    "U/approved": [
+      "resolution/denied/current_refused"
+    ],
+    "U/expiry": [
+      "resolution/expired/current_refused"
+    ],
+    "U/withdrawn": [
+      "resolution/revoked/current_refused"
+    ]
+  },
+  "inherited_native_goal_guards_with_negatives": {
+    "native_goal/body_hash": [
+      "native_goal/body_hash_with_coherent_control"
+    ],
+    "native_goal/body_bytes": [
+      "native_goal/physical_body_commitment"
+    ],
+    "native_goal/scope_project_id": [
+      "native_goal/control_scope/project_id"
+    ],
+    "native_goal/scope_thread_id": [
+      "native_goal/control_scope/thread_id"
+    ],
+    "native_goal/scope_goal_id": [
+      "native_goal/control_scope/goal_id"
+    ],
+    "native_goal/body_key": [
+      "native_goal/body_key"
+    ],
+    "native_goal/history_chain": [
+      "native_goal/actual_prior_chain"
+    ],
+    "native_goal/origin_join": [
+      "native_goal/actual_origin_subject"
+    ],
+    "native_goal/future_history": [
+      "native_goal/future_history_with_recomputed_hash"
+    ],
+    "native_goal/current_objective": [
+      "native_goal/current_objective_with_recomputed_hashes"
+    ]
+  },
+  "coverage": {
+    "W1": "complete retained original direct Save U0-U4 graph; current, agent and fault graphs remain open",
+    "O4": "whole inline/reference proposal, stored resolution and provider join; retained denied/expired/revoked audit versus current refusal",
+    "O5": "one whole retained original Goal outer image and its original receipt; ordered MessagePack manifest and compact result/manifest transaction witnesses; six-owner native binding corpus remains open"
+  },
+  "source_input_manifest_sha256": "172b2e7a8daf813101e231702a2db50e3d76a158e83c507ee3e3db885f7cd435",
+  "source_oracle_sha256": "9e21d4de12b4ba4aabee0ccc8515aafd87e143c2c7558d6847bf3ecb4cbd1565",
+  "whole_resource_qualifier_sha256": "cd0b685772ff010779dd1de129bfcbecbf6083dd0662e894b5d6d274ebee1eb9",
+  "first_part_adapter_sha256": "ec8daf13cf3814e3264be408c5861fdd7d51aff2ebe62c36d9042990c61136c4",
+  "guard_isolation_proof": "NOT_CLAIMED; shared tool sweep required"
+}

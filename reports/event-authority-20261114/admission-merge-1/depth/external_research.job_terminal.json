@@ -1,0 +1,295 @@
+{
+ "schema_id": "pm.assurance.event_authority.admission_depth_assessment.v1",
+ "assessment_kind": "admission_twelve_criteria",
+ "writer": "pm-ea-admission-writer.v1",
+ "merge": "admission-merge-1",
+ "registry": {
+  "path": "Plans/event_family_registry.json",
+  "revision": "2026-11-15.62",
+  "sha256": "6d9c10e09e646d72e226c3a4b04753619a0516c7202fd3c3e8e6d2ad4fecff73",
+  "family_count": 108,
+  "row_pointer": "#/families/107"
+ },
+ "base_commit": "03a09c66360991e5fb7b5620a84bc85b681e3635",
+ "rubric": "Step 8 depth matrix, twelve criteria (DL-077); PASS needs Plans/ evidence",
+ "native_execution": "NOT_RUN",
+ "rows": [
+  {
+   "event_type": "external_research.job_terminal",
+   "family_id": "event-family-external-research-job-terminal",
+   "family_revision": "1.0.0",
+   "cells": {
+    "membership_version": {
+     "status": "PASS",
+     "representation": "exact_registry_membership",
+     "finding": "Registered at registry revision 2026-11-15.62 as #/families/107 (canonical row SHA-256 9cb5d2862e31bca24f9bf3c2b02bac1199893ca1416eb32be8fb11282ffdbce0); before this commit the family was absent.",
+     "evidence": [
+      {
+       "path": "Plans/event_family_registry.json",
+       "json_pointer": "#/families/107",
+       "line_start": 7409,
+       "line_end": 7449,
+       "quote": "\"event_type\": \"external_research.job_terminal\"",
+       "quote_line": 7412,
+       "file_sha256": "6d9c10e09e646d72e226c3a4b04753619a0516c7202fd3c3e8e6d2ad4fecff73",
+       "quote_check": "exact"
+      }
+     ]
+    },
+    "owner_doc": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "This exact newly authored owner unit governs this family; its own CV/SP companions bind the technical contract.",
+     "evidence": [
+      {
+       "path": "Plans/External_Research.md",
+       "unit": "ERS-1509",
+       "line_start": 844,
+       "line_end": 844,
+       "quote": "plan_unit_id: ERS-1509",
+       "quote_check": "exact",
+       "quote_scope": "unit ERS-1509, Plans/External_Research.md:841-898",
+       "file_sha256": "923f63287a03e5e8039947aedc61ab936a973774310e7e36fcae6d646efb4b70"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261105/W3G.self-grade.json",
+      "sha256": "6bc43bc8b4ae6e937ff0b522be97031f96747e3194e8758c2f549bc47ee8ce8a",
+      "field": "owner_doc",
+      "status": "PASS"
+     }
+    },
+    "producer": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "Exact original owning command/emitter, complete native source/result, ordering and first-receipt custody are specified. Native implementation remains unavailable until original owner and admission prerequisites exist.",
+     "evidence": [
+      {
+       "path": "Plans/External_Research.md",
+       "unit": "ERS-1509",
+       "line_start": 887,
+       "line_end": 887,
+       "quote": "**Producer and original source.** ExternalResearch job-end reconciliation owner after durable runtime result and request-meter capture. Reuse ERS-008/009/010, research_job_record, native run",
+       "quote_check": "exact",
+       "quote_scope": "unit ERS-1509, Plans/External_Research.md:841-898",
+       "file_sha256": "923f63287a03e5e8039947aedc61ab936a973774310e7e36fcae6d646efb4b70"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261105/W3G.self-grade.json",
+      "sha256": "6bc43bc8b4ae6e937ff0b522be97031f96747e3194e8758c2f549bc47ee8ce8a",
+      "field": "producer",
+      "status": "PASS"
+     }
+    },
+    "closed_payload_schema": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "Distinct closed Project/application selectors (where applicable) resolve; all 19 payload files pass structural schema validation and eager reference resolution.",
+     "evidence": [
+      {
+       "path": "Plans/External_Research.md",
+       "unit": "ERS-1509",
+       "line_start": 889,
+       "line_end": 889,
+       "quote": "**Payload and scope.** CV-1509 selects `Plans/event_authority_w3g/payloads/external_research_job_terminal.schema.json` at each named closed selector in `Plans/event_authority_w3g/contracts.j",
+       "quote_check": "exact",
+       "quote_scope": "unit ERS-1509, Plans/External_Research.md:841-898",
+       "file_sha256": "923f63287a03e5e8039947aedc61ab936a973774310e7e36fcae6d646efb4b70"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261105/W3G.self-grade.json",
+      "sha256": "6bc43bc8b4ae6e937ff0b522be97031f96747e3194e8758c2f549bc47ee8ce8a",
+      "field": "closed_payload_schema",
+      "status": "PASS"
+     }
+    },
+    "scope_identity": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "Exact source/envelope/scope/subject joins and per-family immutable original operation identity/key recipes adopt CV-317/CV-366 without a local number/timestamp implementation.",
+     "evidence": [
+      {
+       "path": "Plans/External_Research.md",
+       "unit": "ERS-1509",
+       "line_start": 889,
+       "line_end": 889,
+       "quote": "**Payload and scope.** CV-1509 selects `Plans/event_authority_w3g/payloads/external_research_job_terminal.schema.json` at each named closed selector in `Plans/event_authority_w3g/contracts.j",
+       "quote_check": "exact",
+       "quote_scope": "unit ERS-1509, Plans/External_Research.md:841-898",
+       "file_sha256": "923f63287a03e5e8039947aedc61ab936a973774310e7e36fcae6d646efb4b70"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261105/W3G.self-grade.json",
+      "sha256": "6bc43bc8b4ae6e937ff0b522be97031f96747e3194e8758c2f549bc47ee8ce8a",
+      "field": "scope_identity",
+      "status": "PASS"
+     }
+    },
+    "replay_idempotency": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "Original operation/result and first receipt replay never reexecute work; changed semantic request conflicts and historical read is separate from current append.",
+     "evidence": [
+      {
+       "path": "Plans/External_Research.md",
+       "unit": "ERS-1509",
+       "line_start": 891,
+       "line_end": 891,
+       "quote": "**Replay, consumer and checkpoints.** SP-1509 adopts SP-286/CV-339 strict stored-v2 first-receipt custody and `storage.first_append_receipt.resolve_full_value.v1`, preserving the original el",
+       "quote_check": "exact",
+       "quote_scope": "unit ERS-1509, Plans/External_Research.md:841-898",
+       "file_sha256": "923f63287a03e5e8039947aedc61ab936a973774310e7e36fcae6d646efb4b70"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261105/W3G.self-grade.json",
+      "sha256": "6bc43bc8b4ae6e937ff0b522be97031f96747e3194e8758c2f549bc47ee8ce8a",
+      "field": "replay_idempotency",
+      "status": "PASS"
+     }
+    },
+    "retention": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "Bound to {'project': 'RP-OPERATIONAL-2555D@1.0.0'} by DL-455 as recorded on main f8b2098608 (Storage third-sitting retention assignments); the runner checks each cell against that text and the policy object on main.",
+     "evidence": [
+      {
+       "path": "Plans/External_Research.md",
+       "unit": "ERS-1509",
+       "line_start": 893,
+       "line_end": 893,
+       "quote": "SP-1509 binds retention as `RP-OPERATIONAL-2555D@1.0.0` for its Project records, assign",
+       "quote_check": "exact",
+       "quote_scope": "unit ERS-1509, Plans/External_Research.md:841-898",
+       "file_sha256": "923f63287a03e5e8039947aedc61ab936a973774310e7e36fcae6d646efb4b70"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261105/W3G.self-grade.json",
+      "sha256": "6bc43bc8b4ae6e937ff0b522be97031f96747e3194e8758c2f549bc47ee8ce8a",
+      "field": "retention",
+      "status": "PASS"
+     }
+    },
+    "redaction_custody": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "Whole original source/result and first full-value receipt, no-body/ref-only disclosure, coherent backup/restore and read-time restrictions are bound without retaining source content by reference.",
+     "evidence": [
+      {
+       "path": "Plans/External_Research.md",
+       "unit": "ERS-1509",
+       "line_start": 893,
+       "line_end": 893,
+       "quote": "**Custody, retention and withdrawal.** Original custody means the genuine original owner-issued record/result and transaction, not an event-shaped caller object, digest alone, current cache ",
+       "quote_check": "exact",
+       "quote_scope": "unit ERS-1509, Plans/External_Research.md:841-898",
+       "file_sha256": "923f63287a03e5e8039947aedc61ab936a973774310e7e36fcae6d646efb4b70"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261105/W3G.self-grade.json",
+      "sha256": "6bc43bc8b4ae6e937ff0b522be97031f96747e3194e8758c2f549bc47ee8ce8a",
+      "field": "redaction_custody",
+      "status": "PASS"
+     }
+    },
+    "transitions": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "Exactly one terminal outcome finished/responses/time/budget/other names the genuine bound_by. The runtime result and durable meter determine it, never an adapter label alone. Responses already made remain recorded; missing native cost records preserve unresolved charges. Event delivery or replay never starts a replacement job.",
+     "evidence": [
+      {
+       "path": "Plans/External_Research.md",
+       "unit": "ERS-1509",
+       "line_start": 849,
+       "line_end": 849,
+       "quote": "Exactly one terminal outcome finished/responses/time/budget/other names the genuine",
+       "quote_check": "exact",
+       "quote_scope": "unit ERS-1509, Plans/External_Research.md:841-898",
+       "file_sha256": "923f63287a03e5e8039947aedc61ab936a973774310e7e36fcae6d646efb4b70"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261105/W3G.self-grade.json",
+      "sha256": "6bc43bc8b4ae6e937ff0b522be97031f96747e3194e8758c2f549bc47ee8ce8a",
+      "field": "transitions",
+      "status": "PASS"
+     }
+    },
+    "consumers_checkpoints": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "The exact named passive family reader adopts SP-278 generic projector/checkpoint and full captured-range semantics. It owns no persisted filtered projection or private checkpoint.",
+     "evidence": [
+      {
+       "path": "Plans/External_Research.md",
+       "unit": "ERS-1509",
+       "line_start": 891,
+       "line_end": 891,
+       "quote": "reader.external_research.job_terminal.history.v1@1.0.0` is the sole newly authored family history reader for External Research status/packet history under the research and chat owners. It ad",
+       "quote_check": "exact",
+       "quote_scope": "unit ERS-1509, Plans/External_Research.md:841-898",
+       "file_sha256": "923f63287a03e5e8039947aedc61ab936a973774310e7e36fcae6d646efb4b70"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261105/W3G.self-grade.json",
+      "sha256": "6bc43bc8b4ae6e937ff0b522be97031f96747e3194e8758c2f549bc47ee8ce8a",
+      "field": "consumers_checkpoints",
+      "status": "PASS"
+     }
+    },
+    "compatibility_withdrawal": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "Original recipe/edition dispatch, writer cutoff, reader withdrawal and authentic generic rebuild fences are explicit. Future/unknown/withdrawn selectors are unavailable.",
+     "evidence": [
+      {
+       "path": "Plans/External_Research.md",
+       "unit": "ERS-1509",
+       "line_start": 893,
+       "line_end": 893,
+       "quote": "Withdrawal first fences this exact producer/schema selector at append admission, drains or preserves original pending operations without undoing committed native effects, and records the cut",
+       "quote_check": "exact",
+       "quote_scope": "unit ERS-1509, Plans/External_Research.md:841-898",
+       "file_sha256": "923f63287a03e5e8039947aedc61ab936a973774310e7e36fcae6d646efb4b70"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261105/W3G.self-grade.json",
+      "sha256": "6bc43bc8b4ae6e937ff0b522be97031f96747e3194e8758c2f549bc47ee8ce8a",
+      "field": "compatibility_withdrawal",
+      "status": "PASS"
+     }
+    },
+    "positive_negative_oracles": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "Executable synthetic oracle (native NOT_RUN): 15 positives and 226 negatives through the complete checker, each negative refused first at its exact row; every applicable row witnessed; the gated guard tool (004bdedd63) PASSes every table this family uses, entailed rows by written proof in their own tables.",
+     "evidence": [
+      {
+       "path": "Plans/External_Research.md",
+       "unit": "ERS-1509",
+       "line_start": 895,
+       "line_end": 895,
+       "quote": "**Criterion 12.** `ATS-1261` and the `external_research.job_terminal` entry in `Plans/event_authority_w3g/oracle_plan.json` name each planned positive and single-defect negative. Executable ",
+       "quote_check": "exact",
+       "quote_scope": "unit ERS-1509, Plans/External_Research.md:841-898",
+       "file_sha256": "923f63287a03e5e8039947aedc61ab936a973774310e7e36fcae6d646efb4b70"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261105/W3G.self-grade.json",
+      "sha256": "6bc43bc8b4ae6e937ff0b522be97031f96747e3194e8758c2f549bc47ee8ce8a",
+      "field": "positive_negative_oracles",
+      "status": "PASS"
+     }
+    }
+   }
+  }
+ ]
+}

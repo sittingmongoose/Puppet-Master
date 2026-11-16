@@ -78,12 +78,12 @@ export function summarise(trace, { url, allScripts = false } = {}) {
 		if (e.ts < t0) t0 = e.ts;
 		const end = e.ts + (e.dur || 0); if (end > t1) t1 = end;
 	}
+	// The window starts when tracing did (TracingStartedInBrowser), not at the oldest timestamp in the trace: a renderer that
+	// draws rarely (T3's sandbox wrapper around the app's frame) reports a few async begins (PipelineReporter,
+	// BeginImplFrameToSendBeginMainFrame) seconds old, and a 3 s sandbox window read as 21.6 s, every rate about 7 times too
+	// low (lane V, 2026-11-15, Alexis; on the normal surface the two clocks agreed within 10 ms). Busy time is clipped there too.
+	if (started && started.ts > t0 && started.ts < t1) t0 = started.ts;
 	const secs = Math.max(0.001, (t1 - t0) / 1e6);
-	// the renderer that holds the page: named by the trace's frame list, else the busiest renderer main thread
-	let rpid = null;
-	const frames = started?.args?.data?.frames || [];
-	const want = url ? frames.find((f) => f.url && f.url.split('?')[0] === url.split('?')[0] && !f.parent) || frames.find((f) => f.url && f.url.split('?')[0] === url.split('?')[0]) : null;
-	if (want) rpid = want.processId;
 	// time under each thread's outermost events: task events nest across categories, so summing them counts twice
 	const byThread = new Map();
 	{
@@ -96,9 +96,27 @@ export function summarise(trace, { url, allScripts = false } = {}) {
 		for (const [k, a] of per) {
 			a.sort((x, y) => x.ts - y.ts || y.dur - x.dur);
 			let end = -Infinity, sum = 0;
-			for (const e of a) { if (e.ts >= end) { sum += e.dur; end = e.ts + e.dur; } else if (e.ts + e.dur > end) { sum += e.ts + e.dur - end; end = e.ts + e.dur; } }
+			for (const e of a) {
+				const ts = Math.max(e.ts, t0), te = e.ts + e.dur; if (te <= ts) continue;
+				if (ts >= end) { sum += te - ts; end = te; } else if (te > end) { sum += te - end; end = te; }
+			}
 			byThread.set(k, sum);
 		}
+	}
+	// the renderer that holds the page: named by the trace's frame list, else the busiest renderer main thread. The
+	// frame whose URL is exactly the page's (a load's cache-buster makes it unique) wins; else, among frames at the same
+	// address, the one whose renderer's main thread did the most (PM7PERF-FRAMETRACE-STALE-TOP: after a normal ->
+	// sandbox navigation in one browser the list still held the old top frame at that address, and preferring a top frame
+	// by address alone read its idle renderer: 0 main frames, where the live child frame had 289)
+	let rpid = null;
+	const frames = started?.args?.data?.frames || [];
+	if (url) {
+		const path = (u) => String(u).split(/[?#]/)[0];
+		const mainBusy = (p) => { let v = 0; for (const [k, us] of byThread) if (Number(k.split(':')[0]) === p && threads.get(k) === 'CrRendererMain') v = Math.max(v, us); return v; };
+		const exact = frames.filter((f) => f.url === url);
+		const same = exact.length ? exact : frames.filter((f) => f.url && path(f.url) === path(url));
+		const want = same.slice().sort((a, b) => mainBusy(b.processId) - mainBusy(a.processId) || (a.parent ? 1 : 0) - (b.parent ? 1 : 0))[0];
+		if (want) rpid = want.processId;
 	}
 	if (rpid == null) {
 		let best = 0;
@@ -119,9 +137,31 @@ export function summarise(trace, { url, allScripts = false } = {}) {
 	const mainKey = [...threads].find(([k, n]) => n === 'CrRendererMain' && Number(k.split(':')[0]) === rpid)?.[0];
 	const split = {}, other = new Map(); let frameMs = [], mainFrames = 0, styleCount = 0, layoutCount = 0, wholeLayouts = 0, styleElems = 0; const dispatched = {};
 	const scripts = new Map();
+	// What each main frame came to (PM7PERF-STILL-FRAMES-STARTS). A ProxyMain::BeginMainFrame is a frame START: Chrome
+	// runs the lifecycle and, when nothing changed, abandons it with an EarlyOut_NoUpdates instant inside it and commits
+	// nothing; a frame that commits holds a ProxyMain::BeginMainFrame::commit. Rendered = starts less the NoUpdates
+	// aborts, so a Chrome that stopped writing the abort event would read high (a false fail), never low. Any other early
+	// out (deferred, not visible) still counts as rendered and is named in `aborts`. Lane M's still-page traces on Alexis
+	// (2026-11-13): 282 starts, 216 NoUpdates, 66 commits in about 15 s; every start was one or the other.
+	let noUpdates = 0, commits = 0; const aborts = {};
 	if (mainKey) {
 		const [pid, tid] = mainKey.split(':').map(Number);
 		const evs = threadEvents(events, pid, tid);
+		{
+			const starts = evs.filter((e) => e.name === 'ProxyMain::BeginMainFrame');
+			const outs = [];
+			for (const e of events) {
+				if (e.pid !== pid || e.tid !== tid || typeof e.name !== 'string') continue;
+				if (e.name.startsWith('EarlyOut_') && e.ph !== 'M') outs.push(e);
+				else if (e.name === 'ProxyMain::BeginMainFrame::commit' && e.ph === 'X') commits++;
+			}
+			// one verdict per start: the first early out inside it (a start holds at most one)
+			for (const s of starts) {
+				const o = outs.find((x) => x.ts >= s.ts && x.ts <= s.ts + s.dur);
+				if (!o) continue;
+				if (o.name === 'EarlyOut_NoUpdates') noUpdates++; else aborts[o.name] = (aborts[o.name] || 0) + 1;
+			}
+		}
 		const { self } = selfTimes(evs);
 		for (const [name, us] of self) {
 			const g = groupOf(name); split[g] = (split[g] || 0) + us;
@@ -146,12 +186,13 @@ export function summarise(trace, { url, allScripts = false } = {}) {
 	const draws = events.filter((e) => vizKeys.has(e.pid + ':' + e.tid) && e.name === 'Display::DrawAndSwap' && (e.ph === 'X' || e.ph === 'B')).map((e) => e.ts).sort((a, b) => a - b);
 	const gaps = draws.slice(1).map((x, i) => (x - draws[i]) / 1000).sort((a, b) => a - b);
 	const drawDur = events.filter((e) => vizKeys.has(e.pid + ':' + e.tid) && e.name === 'Display::DrawAndSwap' && e.ph === 'X').map((e) => e.dur / 1000).sort((a, b) => a - b);
-	let drawFrames = 0, droppedFrames = 0, beginFrames = 0, animStarted = 0;
+	let drawFrames = 0, droppedFrames = 0, unflaggedDrops = 0, beginFrames = 0, animStarted = 0;
+	const dropKeys = [];
 	const failed = new Map(), animNode = new Map(), composited = new Set();
 	for (const e of events) {
 		if (e.pid === rpid) {
 			if (e.name === 'DrawFrame') drawFrames++;
-			else if (e.name === 'DroppedFrame') droppedFrames++;
+			else if (e.name === 'DroppedFrame') { droppedFrames++; if (!e.args?.hasPartialUpdate) unflaggedDrops++; dropKeys.push(`${e.args?.layerTreeId ?? '?'}:${e.args?.frameSeqId ?? '?'}`); }
 			else if (e.name === 'BeginFrame') beginFrames++;
 		}
 		if (e.name === 'Animation') {
@@ -166,20 +207,44 @@ export function summarise(trace, { url, allScripts = false } = {}) {
 		}
 	}
 	const states = {}; let smooth = 0, smoothDropped = 0;
+	// the page renderer's frame reporters by layer tree and frame sequence, with the final states they ended in
+	const reported = new Map();
 	for (const e of events) {
 		if (e.name !== 'PipelineReporter' || (e.ph !== 'b' && e.ph !== 'B')) continue;
-		const rep = e.args?.chrome_frame_reporter; if (!rep) continue;
+		// (Chrome 15x writes the reporter as frame_reporter; older builds as chrome_frame_reporter)
+		const rep = e.args?.frame_reporter || e.args?.chrome_frame_reporter; if (!rep) continue;
 		const s = String(rep.state || '').replace(/^STATE_/, '');
 		states[s] = (states[s] || 0) + 1;
 		if (rep.affects_smoothness) { smooth++; if (s === 'DROPPED') smoothDropped++; }
+		if (e.pid === rpid && rep.frame_sequence != null) {
+			const k = `${rep.layer_tree_host_id ?? '?'}:${rep.frame_sequence}`, set = reported.get(k) || new Set();
+			set.add(s); reported.set(k, set);
+		}
+	}
+	// R67-T2: a DroppedFrame's hasPartialUpdate says the frame depended on a partial update, not that it was shown (Chrome
+	// still reports kDropped for kDidNotPresentFrame and kReplacedByNewReporter). Each DroppedFrame is classified by the
+	// final state of its reporter: any presented state = presented (partial when a partial one is among them), only
+	// DROPPED = never presented, no reporter (or none with a final state) = unknown
+	let notPresented = 0, partialShown = 0, allShown = 0, unknownShown = 0;
+	for (const k of dropKeys) {
+		const set = reported.get(k);
+		if (!set) { unknownShown++; continue; }
+		if (set.has('PRESENTED_PARTIAL')) partialShown++;
+		else if (set.has('PRESENTED_ALL')) allShown++;
+		else if (set.has('DROPPED')) notPresented++;
+		else unknownShown++;
 	}
 	return {
 		secs: r2(secs),
 		gpuPid: gpuPid ?? null,
+		// the page's renderer main thread these numbers are of (for frameStarts below)
+		renderer: mainKey ? { pid: Number(mainKey.split(':')[0]), tid: Number(mainKey.split(':')[1]) } : null,
 		cost,
 		split,
 		other: [...other].sort((a, b) => b[1] - a[1]).slice(0, 8).map(([n, us]) => [n, perSec(us)]),
-		mainFrames: { perSec: r1(mainFrames / secs), p50: r2(q(frameMs, 0.5)), p95: r2(q(frameMs, 0.95)), max: r2(frameMs[frameMs.length - 1] || 0) },
+		// perSec counts frame STARTS (what every check judged before 2026-11-15); renderedPerSec the starts that were not
+		// abandoned with nothing to update, noUpdatePerSec those that were, commitsPerSec the commit events themselves
+		mainFrames: { perSec: r1(mainFrames / secs), renderedPerSec: r1((mainFrames - noUpdates) / secs), noUpdatePerSec: r1(noUpdates / secs), commitsPerSec: r1(commits / secs), aborts, p50: r2(q(frameMs, 0.5)), p95: r2(q(frameMs, 0.95)), max: r2(frameMs[frameMs.length - 1] || 0) },
 		style: { perSec: r1(styleCount / secs), elementsPerSec: Math.round(styleElems / secs) },
 		layoutPerSec: r1(layoutCount / secs),
 		// layouts that started at the document's root rather than at a boundary inside it (a glyph's svg, a contained card)
@@ -187,13 +252,62 @@ export function summarise(trace, { url, allScripts = false } = {}) {
 		// DOM events the page's listeners were called for, by type, in the window (Chrome dispatches one only where a listener hears it)
 		dispatched,
 		drawn: { perSec: r1(draws.length / secs), gapP50: r2(q(gaps, 0.5)), gapP95: r2(q(gaps, 0.95)), gapMax: r2(gaps[gaps.length - 1] || 0), drawP50: r2(q(drawDur, 0.5)), drawP95: r2(q(drawDur, 0.95)) },
-		frames: { beginPerSec: r1(beginFrames / secs), drawPerSec: r1(drawFrames / secs), droppedPerSec: r1(droppedFrames / secs) },
+		// droppedPerSec counts every DroppedFrame event of the page's renderer, as every table has. Each is classified by its
+		// frame reporter's final state (matched by layer tree and frame sequence): notPresentedPerSec ended DROPPED (never
+		// shown), partialPerSec ended PRESENTED_PARTIAL (the compositor's part, a scroll say, shown; a main-thread change
+		// late), presentedAllPerSec ended PRESENTED_ALL, presentationUnknownPerSec had no reporter with a final state in the
+		// trace. unflaggedPerSec counts the DroppedFrame events without hasPartialUpdate: only that, it proves no presentation
+		frames: { beginPerSec: r1(beginFrames / secs), drawPerSec: r1(drawFrames / secs), droppedPerSec: r1(droppedFrames / secs), notPresentedPerSec: r1(notPresented / secs), partialPerSec: r1(partialShown / secs), presentedAllPerSec: r1(allShown / secs), presentationUnknownPerSec: r1(unknownShown / secs), unflaggedPerSec: r1(unflaggedDrops / secs) },
 		notComposited: [...failed].sort((a, b) => b[1] - a[1]).slice(0, 12),
 		animations: { started: animStarted, composited: composited.size },
 		reporter: { states, smooth, smoothDropped },
 		// [function@line:col of the built page, ms a second, calls a second]: the ten dearest, or every one with allScripts
 		scripts: [...scripts].sort((a, b) => b[1].ms - a[1].ms).slice(0, allScripts ? Infinity : 10).map(([k, v]) => [k, allScripts ? Math.round(v.ms / secs * 100) / 100 : r1(v.ms / secs), r1(v.n / secs)])
 	};
+}
+
+// What asked for each main frame START on one renderer main thread (`renderer`, from summarise), and what it came to:
+// [[what, starts, abandoned with nothing to update, rendered, ms]], most starts first. "What" is the first frame request
+// (LocalFrameView::ScheduleAnimation, ProxyMain::SetNeeds*, RequestAnimationFrame) after the previous start ended, else
+// the last one inside that start (a loop asking again from its own frame), named by the task around it: a timer, rAF,
+// idle callback or event with the innermost script function (function@line:col of the built page), an observer, or
+// 'in-frame' (asked from inside a frame: an animation ticking on the main thread, named by the element it restyled when
+// the trace has disabled-by-default-devtools.timeline.invalidationTracking). Diagnosis only: logged, never judged.
+const REQUESTS = new Set(['LocalFrameView::ScheduleAnimation', 'ProxyMain::SetNeedsAnimate', 'ProxyMain::SetNeedsUpdateLayers', 'ProxyMain::SetNeedsCommit', 'RequestAnimationFrame']);
+const TASKS = { TimerFire: 'timer', FireAnimationFrame: 'rAF', FireIdleCallback: 'idle', EventDispatch: 'event', 'ResizeObserverController::DeliverObservations': 'ResizeObserver', 'IntersectionObserverController::deliverNotifications': 'IntersectionObserver', 'MutationObserver::deliverMutations': 'MutationObserver', RunMicrotasks: 'microtask', 'ProxyMain::BeginMainFrame': 'in-frame' };
+export function frameStarts(events, renderer) {
+	if (!renderer) return [];
+	const xs = threadEvents(events, renderer.pid, renderer.tid);
+	const starts = xs.filter((e) => e.name === 'ProxyMain::BeginMainFrame');
+	const outs = events.filter((e) => e.pid === renderer.pid && e.tid === renderer.tid && e.name === 'EarlyOut_NoUpdates').map((e) => e.ts);
+	const reqs = xs.filter((e) => REQUESTS.has(e.name));
+	const invals = events.filter((e) => e.pid === renderer.pid && e.tid === renderer.tid && e.name === 'StyleRecalcInvalidationTracking' && /Animation/.test(e.args?.data?.reason || '')).sort((a, b) => a.ts - b.ts);
+	const around = (ts) => xs.filter((e) => e.ts <= ts && e.ts + e.dur >= ts && !REQUESTS.has(e.name));
+	const name = (ts) => {
+		const chain = around(ts);
+		const task = [...chain].reverse().find((e) => TASKS[e.name]);
+		if (!task) return 'no task';
+		const fn = [...chain].reverse().find((e) => e.name === 'FunctionCall' && e.ts >= task.ts);
+		const d = (e) => e.args?.data || {};
+		const kind = TASKS[task.name] + (task.name === 'EventDispatch' && d(task).type ? ' ' + d(task).type : '');
+		if (fn) return `${kind} ${d(fn).functionName || '(anonymous)'}@${d(fn).lineNumber ?? '?'}:${d(fn).columnNumber ?? '?'}`;
+		if (task.name !== 'ProxyMain::BeginMainFrame') return kind;
+		// with invalidation tracking on, the element an animation restyled in that frame names it
+		const inv = invals.find((e) => e.ts >= task.ts && e.ts <= task.ts + task.dur);
+		return inv ? `in-frame animation on ${String(inv.args.data.nodeName || '?').replace(/\s+/g, ' ').slice(0, 60)}` : 'in-frame';
+	};
+	const rows = new Map();
+	let prev = -Infinity, prevEnd = -Infinity;
+	for (const s of starts) {
+		const r = reqs.find((q) => q.ts >= prevEnd && q.ts < s.ts) || reqs.filter((q) => q.ts >= prev && q.ts < prevEnd).pop();
+		const what = r ? name(r.ts) : 'no request seen';
+		const row = rows.get(what) || [what, 0, 0, 0, 0];
+		row[1]++; row[4] += s.dur / 1000;
+		if (outs.some((t) => t >= s.ts && t <= s.ts + s.dur)) row[2]++; else row[3]++;
+		rows.set(what, row);
+		prev = s.ts; prevEnd = s.ts + s.dur;
+	}
+	return [...rows.values()].sort((a, b) => b[1] - a[1]).map((r) => [r[0], r[1], r[2], r[3], r2(r[4])]);
 }
 
 // Trace `ms` of whatever `during` does (or of nothing), and summarise it. One trace per window keeps each small.
@@ -208,13 +322,16 @@ export async function traceWindow(cdp, { ms = 3000, during, url, keep, allScript
 	}
 	const complete = new Promise((resolve) => cdp.once('Tracing.tracingComplete', resolve));
 	await cdp.send('Tracing.end');
-	const { stream } = await complete;
+	const done = await complete, { stream } = done;
 	const parts = [];
 	for (;;) { const r = await cdp.send('IO.read', { handle: stream, size: 1 << 22 }); parts.push(r.base64Encoded ? Buffer.from(r.data, 'base64').toString('utf8') : r.data); if (r.eof) break; }
 	await cdp.send('IO.close', { handle: stream });
 	const text = parts.join('');
 	if (keep) (await import('node:fs')).writeFileSync(keep, text);
-	return { at, ...summarise(JSON.parse(text), { url, allScripts }) };
+	// dataLoss: Chrome's own word that the trace buffer filled and events were dropped (lane V, 2026-11-15: two 3 s wheel
+	// windows on Alexis came back with main 6 and 94 ms/s while the board scrolled); a caller that judges a window can
+	// refuse or repeat one that lost data
+	return { at, dataLoss: !!done.dataLossOccurred, ...summarise(JSON.parse(text), { url, allScripts }) };
 }
 
 // The trace's events, parsed, for a caller that measures windows of its own (traceWindow summarises the whole trace).

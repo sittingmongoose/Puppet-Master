@@ -6,68 +6,68 @@
     "july248"
   ],
   "july_classification": "confirmed_persisted_unregistered",
-  "disposition": "KEEP_QUARANTINED",
-  "disposition_rationale": "Plans/Decision_Log.md#DL-039: genuine J248-VETO-BATCH-252 CONFIRM_ALL_QUARANTINE_NO_ADMIT, recorded by Jared 2026-09-11T00:49:25.665050+00:00, applied 2026-09-11T15:12:51.572607+00:00 to browser.session.closed. Interim KEEP_QUARANTINED: counted in the working denominator, not live-registered. Supersedes the forged 2026-08-12 application claim; retained evidence supplies no new authority or depth closure. This exact row remains for the owner-batched registered/excluded/decision-card campaign.",
+  "disposition": "KEEP_REGISTERED",
+  "disposition_rationale": "Plans/Decision_Log.md#DL-039: genuine J248-VETO-BATCH-252 CONFIRM_ALL_QUARANTINE_NO_ADMIT, recorded by Jared 2026-09-11T00:49:25.665050+00:00, applied 2026-09-11T15:12:51.572607+00:00 to browser.session.closed. Interim KEEP_QUARANTINED: counted in the working denominator, not live-registered. Supersedes the forged 2026-08-12 application claim; retained evidence supplies no new authority or depth closure. This exact row remains for the owner-batched registered/excluded/decision-card campaign. Registered at registry revision 2026-11-15.3 in admission merge 1 under DL-078, DL-096 and DL-400 (decision Plans/Decision_Log.md#DL-522); DL-077 admission record reports/event-authority-20260911/admission-records/browser.session.closed.json. Disposition KEEP_QUARANTINED -> KEEP_REGISTERED, evidence cells membership_version, owner_doc, producer, closed_payload_schema, scope_identity, replay_idempotency, retention, redaction_custody, transitions, consumers_checkpoints, compatibility_withdrawal, positive_negative_oracles projected with twelve PASS cells from the family's admission depth assessment reports/event-authority-20261114/admission-merge-1/depth/browser.session.closed.json (sha256 3895d4929f06cd51c30f8514674162e93ada1cd3c09fb470dd4e4e0212be8bf6); bucket, cohort pins, July classification and every other field are unchanged; no seal or owner choice.",
   "evidence": {
     "owner_doc": {
-      "status": "OWNER_REQUIRED",
-      "citation": null,
-      "note": "No field-local Plans authority explicitly names the semantic owner for this exact token; owner identification cannot be inferred from namespace or document location."
+      "status": "PASS",
+      "citation": "Plans/Section15_MVP_Promoted_Features_Spec.md:16346; Plans/Automated_Testing_System.md:10896",
+      "note": "Exact per-family semantic, Contracts and Storage units govern this draft."
     },
     "producer": {
       "status": "PASS",
-      "citation": "Plans/UI_Command_Catalog.md:799,802-825",
-      "note": "The canonical browser command table explicitly maps concrete command payload(s) to emission of `browser.session.closed`, establishing the command boundary as producer evidence without inferring an organizational owner."
+      "citation": "Plans/Contracts_V0.md:37417; Plans/Contracts_V0.md:37433",
+      "note": "Exact command/RealMemoryProvider producer, original source and reservation/commit/append/first-receipt/terminal ordering are bound."
     },
     "membership_version": {
-      "status": "OWNER_REQUIRED",
-      "citation": null,
-      "note": "No field-local Plans authority gives this exact token individual versioned registry membership."
+      "status": "PASS",
+      "citation": "Plans/event_family_registry.json:3415-3500",
+      "note": "Registered at registry revision 2026-11-15.3 as #/families/48 (canonical row SHA-256 2cb37bd5dbe8e3279e8deaaabac3938256136035d134baa2875c597acf656b1b); before this commit the family was absent."
     },
     "closed_payload_schema": {
-      "status": "OWNER_REQUIRED",
-      "citation": null,
-      "note": "No field-local Plans authority closes the complete persisted payload, required/optional fields, enums, and unknown-field behavior for this exact token."
+      "status": "PASS",
+      "citation": "Plans/Contracts_V0.md:37444; scripts/pm_card2_events.py:538",
+      "note": "B1 closed for this cell: the closed payload keeps the owner u64 revision domain, every payload integer slot admits only an exact current integer (CV-1100 current_integer), and the shared qualified producer projection is checked before effects on append, retry and retained reads alike (cand_producer_route / orig_producer_route), so no value passes one path and fails another. Witnesses: p2a/producer-route-* (2^53+1, 2^60, u64 max, 4,400 digits), p2a/producer-sequence-2^53 control, p2a/revision-integral-float, p2a/pack-size-integral-float, p2a/orig-producer-2^60; corpus run through the complete checker."
     },
     "scope_identity": {
-      "status": "OWNER_REQUIRED",
-      "citation": null,
-      "note": "No field-local Plans authority closes tenant/project/thread/session identity and partition scope for this exact token."
+      "status": "PASS",
+      "citation": "Plans/Contracts_V0.md:37403; Plans/Contracts_V0.md:37433",
+      "note": "Actual source subject/scope joins, CV-366 app key, reversible project partition and global event ID recipe are bound."
     },
     "replay_idempotency": {
-      "status": "OWNER_REQUIRED",
-      "citation": null,
-      "note": "No field-local Plans authority defines replay ordering, deduplication identity, or idempotency behavior for this exact token."
+      "status": "PASS",
+      "citation": "Plans/Contracts_V0.md:37457; scripts/pm_card2_events.py:1289; scripts/pm_card2_events.py:1273",
+      "note": "B1 current routes closed in part 2A; SP-1101 closed in part 2B: a retry original is resolved once through the shared RetainedDispatcher (Card2OriginalOwner answers only from Plans/card2_original_custody.json, the installed FROZEN_RECIPES pin card2@1's schema bytes and CV-1101 profiles) before the producer-digest comparison. A Store outside custody refuses at recipe_custody, a sealed unsupported recipe at recipe_installed, a binding mismatch at the join rows with recipe_resolved entailed; each run proves that a replaced resource or weakened profile installs no verifier and a caller override refuses. Witnesses: p2b/sp1101/* on retry; controls p2b/sp1101/other-operation-control/*, p2b/sp1101/large-sequence/retry-original. Residual, stated: in this static model the binding's source commitment is computed from the single copy of the original bytes (the original's value is verified by the orig_* and historical_record rows), and an original with no sealed receipt of its own takes its Store's sealed default card2@1, the only recipe. DCN has one write-time recipe, so there is no older recipe to select. Native custody NOT_RUN."
     },
     "retention": {
-      "status": "OWNER_REQUIRED",
-      "citation": null,
-      "note": "No field-local Plans authority defines an event-specific retention class and deletion schedule for this exact token."
+      "status": "PASS",
+      "citation": "Plans/storage-plan.md:42067; Plans/storage-plan.md:42068",
+      "note": "Adopts the exact per-name G03/G10 indefinite assignment landed as Plans/Decision_Log.md#DL-401 (Case L-3, Card 1 retention assignments); lineage pin kept, integration prerequisite discharged by the batch-1 landing."
     },
     "redaction_custody": {
-      "status": "OWNER_REQUIRED",
-      "citation": null,
-      "note": "No field-local Plans authority assigns sensitive-field redaction and custody obligations for this exact token."
+      "status": "PASS",
+      "citation": "Plans/storage-plan.md:42124; scripts/pm_card2_events.py:1293",
+      "note": "B2 and the Browser numeric ranges closed in part 2A; SP-1101 retained custody closed in part 2B: retained reads resolve through the shared RetainedDispatcher from the sealed custody catalogue before any original check, the sealed card2@1 tuple pins the EventRecord and payload schema bytes and field profiles, and a Store outside custody or an unsupported sealed recipe refuses with no fallback, whatever the case's own authentic/verified flags say (p2b/sp1101/unsealed-store/*, p2b/sp1101/unsupported-recipe/*, p2b/sp1101/case-recipe-label-ignored). Large-metadata originals stay readable (p2b/sp1101/large-sequence/*, sequence_id 2^64-1). Residual, stated: in this static model the binding's source commitment is computed from the single copy of the original bytes (the original's value is verified by the orig_* and historical_record rows), and an original with no sealed receipt of its own takes its Store's sealed default card2@1, the only recipe. Native custody NOT_RUN."
     },
     "transitions": {
-      "status": "OWNER_REQUIRED",
-      "citation": null,
-      "note": "No field-local Plans authority defines the complete legal and illegal transition set for this exact token."
+      "status": "PASS",
+      "citation": "Plans/Section15_MVP_Promoted_Features_Spec.md:16370; Plans/Automated_Testing_System.md:10896",
+      "note": "Family-specific successful real-change predicates and no-op/failed/requested exclusions are specified."
     },
     "consumers_checkpoints": {
-      "status": "OWNER_REQUIRED",
-      "citation": null,
-      "note": "No field-local Plans authority names required consumers and their fail-closed checkpoint/acknowledgement behavior for this exact token."
+      "status": "PASS",
+      "citation": "Plans/storage-plan.md:42098; Plans/storage-plan.md:42109",
+      "note": "Exact ephemeral history reader adopts actual complete SP-278 index/token/fences; no independent family projection or checkpoint exists."
     },
     "compatibility_withdrawal": {
-      "status": "OWNER_REQUIRED",
-      "citation": null,
-      "note": "No field-local Plans authority defines compatibility, migration, and withdrawal criteria for this exact token."
+      "status": "PASS",
+      "citation": "Plans/Contracts_V0.md:37451; scripts/pm_card2_events.py:550; scripts/pm_card2_events.py:73",
+      "note": "SW1 closed (sweep part 2B). Every timestamp field uses the shared CV-1101 date_time with its owner profile: event_record for occurred_at_utc and ts (lowercase t/z, offsets, legitimate leap seconds and long fractions are owner-valid and stay readable with their exact spelling on retained history and retry originals), and CV-253 storage_utc_z for Storage observed_at_utc/persisted_at_utc on the current record, the retry original and retained history alike (an offset or lowercase-z Storage timestamp never becomes valid history). Retained reads and retry originals first resolve through the shared SP-1101 RetainedDispatcher from sealed custody, so a forged or unsupported recipe selection refuses without fallback. Withdrawal/retained replay policies stay bound. Witnesses: p2b/cv1101/history/*, p2b/cv1101/retry/*, p2b/cv253/history/*, p2b/cv253/retry-original/*, p2b/cv1101/history/occurred_at_utc/* (owner-invalid history refuses). datetime_validator and the inventory gate run at batch-2 integration (lead addendum 2). Native NOT_RUN."
     },
     "positive_negative_oracles": {
       "status": "PASS",
-      "citation": "Plans/Wiring_Matrix.production.json:1460-1477",
-      "note": "Production wiring requires positive emission assertions for `browser.session.closed` with correlation/session identity and a negative receipt boundary forbidding fabricated `command_applied` events."
+      "citation": "Plans/Automated_Testing_System.md:10908; scripts/pm_card2_events.py:73",
+      "note": "Every refusal is one of 569 named guard-table rows; the gated tool (004bdedd63) rerun at the part 2B head credits the proved rows exactly as reported in DCN.md \"Sweep part 2B\"; entailed rows sit alone with written proofs. The timestamp review is no longer interim: each field is checked by the shared date_time with its named profile, and each run requires every lane-recorded leak to refuse at every field with the shared Refusal reason as the validator's error cause. SP-1101 has retained positives (owner-valid lowercase, offset, leap-second, long-fraction and 2^64-1 sequence originals) and forgery negatives (unsealed Store, unsupported sealed recipe), plus replaced-resource, weakened-profile and caller-override trials. Witnesses: 112 p2b witnesses and 68 p2b controls in Plans/card2_event_p2a_cases.json."
     }
   },
   "citations_checked": [

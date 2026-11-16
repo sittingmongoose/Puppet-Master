@@ -1,0 +1,345 @@
+{
+ "schema_id": "pm.assurance.event_authority.admission_depth_assessment.v1",
+ "assessment_kind": "admission_twelve_criteria",
+ "writer": "pm-ea-admission-writer.v1",
+ "merge": "admission-merge-1",
+ "registry": {
+  "path": "Plans/event_family_registry.json",
+  "revision": "2026-11-15.14",
+  "sha256": "11903743ca35c9b74889248b61436b8325aac36dd4124bad285513499fde8252",
+  "family_count": 60,
+  "row_pointer": "#/families/59"
+ },
+ "base_commit": "03a09c66360991e5fb7b5620a84bc85b681e3635",
+ "rubric": "Step 8 depth matrix, twelve criteria (DL-077); PASS needs Plans/ evidence",
+ "native_execution": "NOT_RUN",
+ "rows": [
+  {
+   "event_type": "debug.investigation.instrumentation_state_changed",
+   "family_id": "event-family-debug-investigation-instrumentation-state-changed",
+   "family_revision": "1.0.0",
+   "cells": {
+    "membership_version": {
+     "status": "PASS",
+     "representation": "exact_registry_membership",
+     "finding": "Registered at registry revision 2026-11-15.14 as #/families/59 (canonical row SHA-256 784979e44b2f86e85da967e3e4ac1be3d4aab668c8296ec8e3e64aa9286634b9); before this commit the family was absent.",
+     "evidence": [
+      {
+       "path": "Plans/event_family_registry.json",
+       "json_pointer": "#/families/59",
+       "line_start": 4181,
+       "line_end": 4218,
+       "quote": "\"event_type\": \"debug.investigation.instrumentation_state_changed\"",
+       "quote_line": 4184,
+       "file_sha256": "11903743ca35c9b74889248b61436b8325aac36dd4124bad285513499fde8252",
+       "quote_check": "exact"
+      }
+     ]
+    },
+    "owner_doc": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "Current exact-family owner and companion explicitly bind this criterion. Static checks pass; native execution remains NOT_RUN. Shared rules adopted and guard rows proved by the shared tool (sweep parts 2A and 2B).",
+     "evidence": [
+      {
+       "path": "Plans/Contracts_V0.md",
+       "unit": "CV-574",
+       "line_start": 5710,
+       "line_end": 5710,
+       "quote": "canonical_text: 'Newly authored owner contract under DL-045 for exactly debug.investigation.instrumentation_state_changed@1.0.0,",
+       "quote_check": "exact",
+       "quote_scope": "unit CV-574, Plans/Contracts_V0.md:5703-5894",
+       "file_sha256": "4623d6a821793daf4f7eaeeecbb64981e0a86fcd21d2f483f414d14bebe1982f"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261104/DDBG.self-grade.json",
+      "sha256": "5138a5d0201e4c674b9b5f1d446f58a234852ccf3d5be005f824ceec78d5a1f1",
+      "field": "owner_doc",
+      "status": "PASS"
+     }
+    },
+    "producer": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "Current exact-family owner and companion explicitly bind this criterion. Static checks pass; native execution remains NOT_RUN. Shared rules adopted and guard rows proved by the shared tool (sweep parts 2A and 2B).",
+     "evidence": [
+      {
+       "path": "Plans/Contracts_V0.md",
+       "unit": "CV-574",
+       "line_start": 5786,
+       "line_end": 5786,
+       "quote": "Producer binding: owner.debug.investigation.instrumentation_state_changed@1.0.0 is the exact emitting",
+       "quote_check": "exact",
+       "quote_scope": "unit CV-574, Plans/Contracts_V0.md:5703-5894",
+       "file_sha256": "4623d6a821793daf4f7eaeeecbb64981e0a86fcd21d2f483f414d14bebe1982f"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261104/DDBG.self-grade.json",
+      "sha256": "5138a5d0201e4c674b9b5f1d446f58a234852ccf3d5be005f824ceec78d5a1f1",
+      "field": "producer",
+      "status": "PASS"
+     }
+    },
+    "closed_payload_schema": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "Current exact-family owner and companion explicitly bind this criterion. Static checks pass; native execution remains NOT_RUN. Shared rules adopted and guard rows proved by the shared tool (sweep parts 2A and 2B). Part 2B: every companion-schema integer slot is judged by the shared current_integer with its published bounds (a binary64 1.0 is now refused), the 16 KiB inline body and detail are measured in EVENT_VALUE bytes, and envelope timestamps by the shared date_time predicate with the EventRecord / CV-253 profiles (DDBG.md \"Sweep part 2B\").",
+     "evidence": [
+      {
+       "path": "Plans/Contracts_V0.md",
+       "unit": "CV-574",
+       "line_start": 5712,
+       "line_end": 5712,
+       "quote": "semantic and ref-only owners. Closed payload: Plans/debug_investigation_event_payloads.schema.json#/$defs/instrumentation_state_changed.",
+       "quote_check": "exact",
+       "quote_scope": "unit CV-574, Plans/Contracts_V0.md:5703-5894",
+       "file_sha256": "4623d6a821793daf4f7eaeeecbb64981e0a86fcd21d2f483f414d14bebe1982f"
+      },
+      {
+       "path": "Plans/debug_investigation_event_payloads.schema.json",
+       "unit": "#/$defs/instrumentation_state_changed",
+       "line_start": 230,
+       "line_end": 230,
+       "quote": "\"$id\": \"pm.debug_investigation.instrumentation_state_changed.schema.v1\",",
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "file_sha256": "ae5832ccea575c071892d1ec85804da05debd08c40cfd52243d5b5d13982b10d"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261104/DDBG.self-grade.json",
+      "sha256": "5138a5d0201e4c674b9b5f1d446f58a234852ccf3d5be005f824ceec78d5a1f1",
+      "field": "closed_payload_schema",
+      "status": "PASS"
+     }
+    },
+    "scope_identity": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "Current exact-family owner and companion explicitly bind this criterion. Static checks pass; native execution remains NOT_RUN. Shared rules adopted and guard rows proved by the shared tool (sweep parts 2A and 2B). Part 2B: the identity is SHA-256 of the shared qualified RFC 8785 over the unchanged preimage; every computable fixture identity is byte-identical to part 2A.",
+     "evidence": [
+      {
+       "path": "Plans/Contracts_V0.md",
+       "unit": "CV-574",
+       "line_start": 5796,
+       "line_end": 5796,
+       "quote": "Identity: idempotency_key is \"debug:\" + lowercase SHA-256 of RFC 8785 canonical JSON [\"debug.investigation.instrumentation_state_changed\",",
+       "quote_check": "exact",
+       "quote_scope": "unit CV-574, Plans/Contracts_V0.md:5703-5894",
+       "file_sha256": "4623d6a821793daf4f7eaeeecbb64981e0a86fcd21d2f483f414d14bebe1982f"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261104/DDBG.self-grade.json",
+      "sha256": "5138a5d0201e4c674b9b5f1d446f58a234852ccf3d5be005f824ceec78d5a1f1",
+      "field": "scope_identity",
+      "status": "PASS"
+     }
+    },
+    "replay_idempotency": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "Current exact-family owner and companion explicitly bind this criterion. Static checks pass; native execution remains NOT_RUN. Shared rules adopted and guard rows proved by the shared tool (sweep parts 2A and 2B). Part 2B: the semantic digest is the shared producer_semantic_digest over the unchanged CV-317 projection (type-sensitive at integer slots); the producer projection must qualify before effects; the shared number corpus runs through the append and retry routes.",
+     "evidence": [
+      {
+       "path": "Plans/Contracts_V0.md",
+       "unit": "CV-574",
+       "line_start": 5800,
+       "line_end": 5800,
+       "quote": "immutable semantic envelope and payload under Case L-5. Same identity and digest returns the original",
+       "quote_check": "exact",
+       "quote_scope": "unit CV-574, Plans/Contracts_V0.md:5703-5894",
+       "file_sha256": "4623d6a821793daf4f7eaeeecbb64981e0a86fcd21d2f483f414d14bebe1982f"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261104/DDBG.self-grade.json",
+      "sha256": "5138a5d0201e4c674b9b5f1d446f58a234852ccf3d5be005f824ceec78d5a1f1",
+      "field": "replay_idempotency",
+      "status": "PASS"
+     }
+    },
+    "retention": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "Exact family adopts current Storage G02 Project retention, original terminal-transition anchor, protected obligations, unchanged TTL/count and no derived family value.",
+     "evidence": [
+      {
+       "path": "Plans/Contracts_V0.md",
+       "unit": "CV-574",
+       "line_start": 5837,
+       "line_end": 5837,
+       "quote": "= RP-OPERATIONAL-2555D@1.0.0, explicitly assigned to all nine G02 names in current Storage Case L-3.",
+       "quote_check": "exact",
+       "quote_scope": "unit CV-574, Plans/Contracts_V0.md:5703-5894",
+       "file_sha256": "4623d6a821793daf4f7eaeeecbb64981e0a86fcd21d2f483f414d14bebe1982f"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "Case L-3 G02",
+       "line_start": 17602,
+       "line_end": 17602,
+       "quote": "- G02, debug investigations (9): `debug.investigation.started`, `debug.investigation.state_changed`, `debug.investigation.target_bound`, `debug.investigation.context_item_added`, `debug.investigation.",
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "file_sha256": "955d7fb440299fd63a0735130db45cb7b4826067df3498d471d40ffcd2c3575a"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261104/DDBG.self-grade.json",
+      "sha256": "5138a5d0201e4c674b9b5f1d446f58a234852ccf3d5be005f824ceec78d5a1f1",
+      "field": "retention",
+      "status": "PASS"
+     }
+    },
+    "redaction_custody": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "Current exact-family owner and companion explicitly bind this criterion. Static checks pass; native execution remains NOT_RUN. Shared rules adopted and guard rows proved by the shared tool (sweep parts 2A and 2B).",
+     "evidence": [
+      {
+       "path": "Plans/Contracts_V0.md",
+       "unit": "CV-574",
+       "line_start": 5829,
+       "line_end": 5829,
+       "quote": "Custody: Storage owns the immutable EventRecord and first receipt under coherent seglog/index/receipt",
+       "quote_check": "exact",
+       "quote_scope": "unit CV-574, Plans/Contracts_V0.md:5703-5894",
+       "file_sha256": "4623d6a821793daf4f7eaeeecbb64981e0a86fcd21d2f483f414d14bebe1982f"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261104/DDBG.self-grade.json",
+      "sha256": "5138a5d0201e4c674b9b5f1d446f58a234852ccf3d5be005f824ceec78d5a1f1",
+      "field": "redaction_custody",
+      "status": "PASS"
+     }
+    },
+    "transitions": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "Current exact-family owner and companion explicitly bind this criterion. Static checks pass; native execution remains NOT_RUN. Shared rules adopted and guard rows proved by the shared tool (sweep parts 2A and 2B).",
+     "evidence": [
+      {
+       "path": "Plans/Contracts_V0.md",
+       "unit": "CV-574",
+       "line_start": 5736,
+       "line_end": 5736,
+       "quote": "DL-429 is the complete transition authority. Creation is planned/not_needed and emits no change event.",
+       "quote_check": "exact",
+       "quote_scope": "unit CV-574, Plans/Contracts_V0.md:5703-5894",
+       "file_sha256": "4623d6a821793daf4f7eaeeecbb64981e0a86fcd21d2f483f414d14bebe1982f"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261104/DDBG.self-grade.json",
+      "sha256": "5138a5d0201e4c674b9b5f1d446f58a234852ccf3d5be005f824ceec78d5a1f1",
+      "field": "transitions",
+      "status": "PASS"
+     }
+    },
+    "consumers_checkpoints": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "Current exact-family owner and companion explicitly bind this criterion. Static checks pass; native execution remains NOT_RUN. Shared rules adopted and guard rows proved by the shared tool (sweep parts 2A and 2B).",
+     "evidence": [
+      {
+       "path": "Plans/Contracts_V0.md",
+       "unit": "CV-574",
+       "line_start": 5811,
+       "line_end": 5811,
+       "quote": "Consumer binding: reader.debug.investigation.instrumentation_state_changed@1.0.0 is the direct transient",
+       "quote_check": "exact",
+       "quote_scope": "unit CV-574, Plans/Contracts_V0.md:5703-5894",
+       "file_sha256": "4623d6a821793daf4f7eaeeecbb64981e0a86fcd21d2f483f414d14bebe1982f"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261104/DDBG.self-grade.json",
+      "sha256": "5138a5d0201e4c674b9b5f1d446f58a234852ccf3d5be005f824ceec78d5a1f1",
+      "field": "consumers_checkpoints",
+      "status": "PASS"
+     }
+    },
+    "compatibility_withdrawal": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "Current exact-family owner and companion explicitly bind this criterion. Static checks pass; native execution remains NOT_RUN. Shared rules adopted and guard rows proved by the shared tool (sweep parts 2A and 2B). Part 2B: the retained reader checks the original's own source time (EventRecord profile), Storage times (CV-253 storage_utc_z) and sequence_id (uint64), recomputes both identities, refuses an original the at-write recipe cannot digest and compares Storage metadata type-exactly.",
+     "evidence": [
+      {
+       "path": "Plans/Contracts_V0.md",
+       "unit": "CV-574",
+       "line_start": 5849,
+       "line_end": 5849,
+       "quote": "Compatibility and withdrawal: writers emit only 1.0.0, no alias or sibling admission. Unknown versions",
+       "quote_check": "exact",
+       "quote_scope": "unit CV-574, Plans/Contracts_V0.md:5703-5894",
+       "file_sha256": "4623d6a821793daf4f7eaeeecbb64981e0a86fcd21d2f483f414d14bebe1982f"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261104/DDBG.self-grade.json",
+      "sha256": "5138a5d0201e4c674b9b5f1d446f58a234852ccf3d5be005f824ceec78d5a1f1",
+      "field": "compatibility_withdrawal",
+      "status": "PASS"
+     }
+    },
+    "positive_negative_oracles": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "Fixture positives and single-defect negatives for every guard row; each negative names its row and is refused by exactly one phase. The shared guard-isolation tool (004bdedd63) proves every row of every phase suite: 512 of 512 rows in 33 suites, 9 suites rerun at part 2B and the rest carried with inputs, modules and tool unchanged (four with renumbered negative ids only). The shared date-time inventory gate and datetime_validator run at batch-2 integration. Native execution remains NOT_RUN.",
+     "evidence": [
+      {
+       "path": "Plans/Contracts_V0.md",
+       "unit": "CV-574",
+       "line_start": 5855,
+       "line_end": 5855,
+       "quote": "history or sibling records. Positive/negative oracles are the instrumentation_state_changed cases in",
+       "quote_check": "exact",
+       "quote_scope": "unit CV-574, Plans/Contracts_V0.md:5703-5894",
+       "file_sha256": "4623d6a821793daf4f7eaeeecbb64981e0a86fcd21d2f483f414d14bebe1982f"
+      },
+      {
+       "path": "Plans/debug_investigation_event_fixtures.json",
+       "unit": "instrumentation_state_changed",
+       "line_start": 2568,
+       "line_end": 2568,
+       "quote": "\"event_type\": \"debug.investigation.instrumentation_state_changed\",",
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "file_sha256": "bfa8b6c11c1b20f88996516e79afc7bf50578e4fad931579b4fcaaacfa5400fa"
+      },
+      {
+       "path": "reports/event-authority-20261104/DDBG.md",
+       "unit": "guard tool totals",
+       "quote": "**Totals:** 33 suites, **512 rows, 512 proved**",
+       "line_start": 106,
+       "line_end": 106,
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "file_sha256": "991b454ca465bb9feb1d45d2eaf407d45090be9e854708500491a0c77b375d38"
+      },
+      {
+       "path": "reports/event-authority-20261104/DDBG.md",
+       "unit": "lifecycle_suite",
+       "quote": "| `lifecycle_suite` | PASS | 16 | 21 / 21 |",
+       "line_start": 262,
+       "line_end": 262,
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "file_sha256": "991b454ca465bb9feb1d45d2eaf407d45090be9e854708500491a0c77b375d38"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261104/DDBG.self-grade.json",
+      "sha256": "5138a5d0201e4c674b9b5f1d446f58a234852ccf3d5be005f824ceec78d5a1f1",
+      "field": "positive_negative_oracles",
+      "status": "PASS"
+     }
+    }
+   }
+  }
+ ]
+}
