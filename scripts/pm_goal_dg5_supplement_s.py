@@ -859,3 +859,39 @@ def _cancellation_specimen(world):
     return W.skeleton(world.edition.bank,
                         'https://puppetmaster.local/proposals/native_worknode_current_activation.v1.schema.json'
                         '#/$defs/CancellationObservation')
+
+
+# ------------------------------------------------------------- batch 8 (goal current, generic frame)
+
+def _reissue_goal(world, edit):
+    goal = world.owners['goal']
+    birth = world.owners['native'].resolve(world.handles['native_birth'][1])[1]
+    goal.withdraw(world.handles['goal'][1])
+    goal.issue_goal_argument('OriginalGoalArgument', edit,
+                             native_body=birth['body'], birth_tx=birth['birth_tx'])
+
+
+@negative('current_goal_association_reissued', 'read_current/goal_association', READERS + '857')
+def _(suite):
+    world, projector, readers, gid = make(suite)
+    readers.read_current(O.sreq(world), hooks=dict(after_current_start=lambda w: _reissue_goal(
+        w, at(['binding_revision', 'record', 'active_run_ref'], 'TEST_ONLY:goal_run:other'))))
+
+
+@negative('current_goal_state_reissued', 'read_current/goal_state', READERS + '859')
+def _(suite):
+    world, projector, readers, gid = make(suite)
+    readers.read_current(O.sreq(world), hooks=dict(after_current_start=lambda w: _reissue_goal(
+        w, at(['body', 'record', 'state'], 'paused'))))
+
+
+# The presented snapshot row's frame hash is substituted (the S3 raw-snapshot
+# substitution shape); Storage.read_frame still verifies the authentic frame
+# against its own index, so only generic_snapshot's presented-row join refuses.
+@negative('generic_frame_hash_presented', 'generic/frame_hash', READERS + '343')
+def _(suite):
+    world, handles, _ = O.started(suite)
+    source = R.GenericStartSource(world)
+    snap = source.acquire()
+    snap.rows[0].frame_sha256 = Z
+    source.generic_snapshot(snap)
