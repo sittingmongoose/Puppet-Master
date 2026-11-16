@@ -40,11 +40,40 @@ DECLARED = {
 }
 
 
+STOP_LATCHED = tuple(U_SITE + str(n) for n in (1511, 1575, 1990, 2055))
+HITL_TARGET = (U_SITE + '968', U_SITE + '991')
+# Reviewed DG5 sets (same field, same predicate): (case-id test, set, reason).
+DECLARED_RULES = (
+    (lambda cid: cid == 'U2/N/stop_at_capture' or (cid.startswith('U5/F/source.capture/after:') and cid.endswith('/stop')),
+     STOP_LATCHED,
+     "Each member is `not <stop>['stop_latched']` on the Goal's current host Stop record (w.stops.current(goal_id)): "
+     'pm_goal_dg_u_owners.py:1511 (source capture), :1575 (capture final recheck), :1990 and :2055 (command boundaries).'),
+    (lambda cid: cid == 'U5/N/goal_id_empty',
+     ('dg5/dgu/sir/request/schema', U_SITE + '287'),
+     'GoalUpdateRequestV2 goal_id minLength 1 and exact_str (pm_goal_dg_u_owners.py:287) `value != \'\'` require the '
+     'same field to be non-empty.'),
+    (lambda cid: cid.startswith('U5/F/hitl.capture/after:') and cid.endswith('/body'),
+     HITL_TARGET,
+     "ApprovalOwner.capture checks the Goal body's revision and currentness_hash against the proposal target at :968 "
+     'and re-reads and re-checks the identical predicate at its final boundary :991.'),
+)
+
+
+def declared(case_id):
+    if case_id in DECLARED:
+        return DECLARED[case_id]
+    for test, members, reason in DECLARED_RULES:
+        if test(case_id):
+            return members, reason
+    return None
+
+
 def target(case, ordinary, label=None):
     if case.get('dg5_target') is not None:  # a DG5 supplement case declares its own target
         return case['dg5_target']
-    if case['id'] in DECLARED:
-        return DECLARED[case['id']][0]
+    found = declared(case['id'])
+    if found is not None:
+        return found[0]
     chain = chains().get(label) if label else None
     if chain and ordinary in chain:
         return tuple(sorted(chain))
