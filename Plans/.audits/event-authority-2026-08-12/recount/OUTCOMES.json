@@ -396,6 +396,10 @@
    "outcome": "registered"
   },
   {
+   "event_type": "continuity.replay_checkpointed",
+   "outcome": "registered"
+  },
+  {
    "event_type": "discovery.backpressure",
    "outcome": "registered"
   },
