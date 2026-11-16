@@ -895,3 +895,15 @@ def _(suite):
     snap = source.acquire()
     snap.rows[0].frame_sha256 = Z
     source.generic_snapshot(snap)
+
+
+# Checkpoint encode operation size: with an oversized goal_run_id in the
+# context (the S6 oversize shape), even the payload-reference checkpoint
+# wrapper carries a checkpoint key past the operation limit.
+@negative('encode_checkpoint_operation_size_padded_key', 'representation/checkpoint_operation_size',
+          READERS + '511')
+def _(suite):
+    world, projector, readers, gid = make(suite)
+    cell, logical = projector.checkpoint()
+    world.ctx.goal_run_id = 'TEST_ONLY:goal_run:' + 'ω' * 5200
+    projector.rep.encode_checkpoint(logical, store=False)
