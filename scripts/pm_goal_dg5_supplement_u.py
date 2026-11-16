@@ -65,3 +65,15 @@ case('U-DG5/N/approval_decision_out_of_enum', 'dgu/source/capture/acceptance/app
      "ApprovalResolution.decision 'withheld' (outside {approved, denied, expired}) passes :1037 and :1038 and is "
      'refused by :1039 alone; reached through a stored resolution that the owner reads without its schema.')(
     _approval_out_of_enum)
+
+
+@case('U-DG5/N/approval_request_bytes_created_at', 'dgu/source/capture/acceptance/approval_request_bytes', SITE + '1033',
+      "Single defect: the stored approval request's created_at_utc changes (still a valid date-time) while its "
+      'request_sha256 stays, so only the request-bytes commitment (:1033) refuses. The authored '
+      'U5/G/acceptance_approval_request_bytes changes instruction_message_id, which later checks also read.')
+def approval_request_bytes_created_at(d):
+    w, g = U._goal(d)
+    req, ag = O.agent_request(w, g, 'x')
+    cur = w.approvals.state(ag['approval_id'])
+    w.approvals.put(ag['approval_id'], dict(cur, request=dict(cur['request'], created_at_utc='2026-01-01T00:00:00.000Z')))
+    return w, U.admitted(w, req)
