@@ -16,6 +16,8 @@ import pm_goal_dg_ca3_cases as C3C
 import pm_goal_dg_ca3_route as R3
 import pm_goal_dg_cb_migration as MB
 import pm_goal_dg_cb_owners as BO
+import pm_goal_dg_cb_c5_cases as C5C
+import pm_goal_dg_cb_c6_cases as C6C
 import pm_goal_test_storage as S
 
 C1_SITE = 'dg5/site/pm_goal_dg_ca_c1.py:'
@@ -1949,10 +1951,10 @@ def cases(suite):
     add('c3/already_issued', second_terminal_clock, 'C3/terminal_succeeded/already_issued', R3_SITE + '1260')
 
     # ---- batch 12 (helper C): CB owner direct sites ----
-    def cb_new():
+    def cb_new(**goal_kw):
         suite.n += 1
         w = MB.migration_world(suite.work / ('cb%05d' % suite.n))
-        return w, BO.legacy_goal(w)
+        return w, BO.legacy_goal(w, **goal_kw)
 
     def cb_case(name, setup, act, expected, target):
         def make():
@@ -1960,6 +1962,17 @@ def cases(suite):
             setup(w, scope)
             return w, lambda: act(w, scope)
         add(name, make, expected, target)
+
+    def mark(w, table, key):
+        w.injected.append((table, key))
+
+    def cb_phys_edit(w, family, key, fn):
+        cell = w.cell(family, key)
+        codec, _raw = BO.physical(cell['value'])
+        _rt, _exp, value = BO.decode_physical(cell['value'], 'cb/edit')
+        fn(value)
+        w.write([w.put(family, key, BO.store_form(value, codec), expected=cell['version'])])
+        mark(w, family, key)
 
     def cb_absent_scope(w, scope):
         return dict(scope, goal_id=O.short_id('goal'), project_id=O.short_id('proj'), thread_id=O.short_id('thr'))
@@ -2009,3 +2022,603 @@ def cases(suite):
                                             BO.sha(BO.physical(w.cell(w.goal.BODY, w.goal.keys(s)['body'])['value'])[1]))),
             lambda w, s: w.goal.image(w.goal.BODY, w.goal.keys(s)['body']),
             'image/origin_unavailable/goal_body_record', BO_SITE + '402')
+
+    # ---- batch 12b: CB migration capture/commit/read_result/writers ----
+    def cb_capture(name, setup, expected, target):
+        def make():
+            w, scope = cb_new()
+            setup(w, scope)
+            return w, lambda: w.coordinator.capture(MB.selector(scope))
+        add(name, make, expected, target)
+
+    def stmt(attr, defect):
+        return lambda w, s: setattr(getattr(w, attr), 'statement_defect', defect)
+
+    cb_capture('cb/mapping_role', stmt('goal', lambda m: dict(m, role='plan')),
+               'M/capture/mapping_role/goal', MB_SITE + '325')
+    cb_capture('cb/foreign_family',
+               stmt('goal', lambda m: m['sources'][0]['selection'].update(
+                   physical_key='sir_command_outcome|' + MB.split(m['sources'][0]['selection']['physical_key'])[1]) or m),
+               'M/capture/foreign_family/goal', MB_SITE + '329')
+    cb_capture('cb/image_owner',
+               stmt('goal', lambda m: m['sources'][1]['selection'].update(owner='TEST_ONLY:substituted') or m),
+               'M/capture/image_owner/goal', MB_SITE + '330')
+    cb_capture('cb/source_absent',
+               stmt('goal', lambda m: m['sources'][1]['selection'].update(
+                   physical_key=m['sources'][1]['selection']['physical_key'] + ':absent') or m),
+               'M/capture/source_absent/goal_body_control', MB_SITE + '332')
+    cb_capture('cb/source_codec',
+               stmt('goal', lambda m: m['sources'][1].update(codec_id=BO.MSGPACK) or m),
+               'M/capture/source_codec/goal_body_control', MB_SITE + '335')
+    cb_capture('cb/source_bytes',
+               stmt('goal', lambda m: m['sources'][1].update(bytes_hex='00' + m['sources'][1]['bytes_hex'][2:]) or m),
+               'M/capture/source_bytes/goal_body_control', MB_SITE + '336')
+    cb_capture('cb/source_hash',
+               stmt('goal', lambda m: m['sources'][1]['selection'].update(sha256=BO.sha(b'TEST_ONLY:other')) or m),
+               'M/capture/source_hash/goal_body_control', MB_SITE + '337')
+    cb_capture('cb/schema_ref',
+               stmt('goal', lambda m: m['sources'][1]['selection'].update(schema_ref=BO.BODY + '#/$defs/storage_body') or m),
+               'M/capture/schema_ref/goal_body_control', MB_SITE + '340')
+    cb_capture('cb/origin_join',
+               stmt('goal', lambda m: m['sources'][0]['origin'].update(physical_key=m['sources'][1]['origin']['physical_key']) or m),
+               'M/capture/origin_join/goal_body_record', MB_SITE + '343')
+    cb_capture('cb/origin_hash',
+               stmt('goal', lambda m: m['sources'][1]['origin'].update(sha256=BO.sha(b'TEST_ONLY:other-origin')) or m),
+               'M/capture/origin_hash/goal_body_control', MB_SITE + '346')
+    cb_capture('cb/duplicate_image',
+               stmt('goal', lambda m: dict(m, sources=m['sources'] + [copy.deepcopy(m['sources'][0])])),
+               'M/capture/duplicate_image/goal_body_record', MB_SITE + '356')
+    cb_capture('cb/inventory_incomplete',
+               stmt('goal', lambda m: dict(m, sources=m['sources'][:-1])),
+               'M/capture/inventory_incomplete/goal', MB_SITE + '362')
+    cb_capture('cb/pending_mismatch',
+               stmt('goal', lambda m: dict(m, pending_operations=['TEST_ONLY:bogus-op'])),
+               'M/capture/pending_mismatch/goal', MB_SITE + '365')
+    cb_capture('cb/receipts_mismatch',
+               stmt('goal', lambda m: dict(m, prior_receipts=[])),
+               'M/capture/receipts_mismatch/goal', MB_SITE + '366')
+
+    def origin_cell_edit(field, value):
+        def setup(w, s):
+            k = w.goal.keys(s)
+            okey = BO.origin_key(w.goal.BODY, k['body'], BO.sha(BO.physical(w.cell(w.goal.BODY, k['body'])['value'])[1]))
+            cell = w.storage.cells[BO.ORIGINS][okey]
+            new = copy.deepcopy(cell['value'])
+            new[field] = value
+            w.write([w.put(BO.ORIGINS, okey, new, expected=cell['version'])])
+            mark(w, BO.ORIGINS, okey)
+        return setup
+    cb_capture('cb/origin_owner', origin_cell_edit('owner_ref', 'TEST_ONLY:foreign'),
+               'M/capture/origin_owner/goal_body_record', MB_SITE + '348')
+    cb_capture('cb/origin_issued', origin_cell_edit('issued_family_id', 'bogus_family'),
+               'M/capture/origin_issued/goal_body_record', MB_SITE + '350')
+    def origin_permission_setup(w, s):
+        k = w.goal.keys(s)
+        okey = BO.origin_key(w.goal.BODY, k['body'], BO.sha(BO.physical(w.cell(w.goal.BODY, k['body'])['value'])[1]))
+        cell = w.storage.cells[BO.ORIGINS][okey]
+        new = copy.deepcopy(cell['value'])
+        new['issuer'] = dict(new['issuer'], original_permission_source=dict(
+            new['issuer']['original_permission_source'], complete_value_sha256='0' * 64))
+        w.write([w.put(BO.ORIGINS, okey, new, expected=cell['version'])])
+        mark(w, BO.ORIGINS, okey)
+    cb_capture('cb/origin_permission', origin_permission_setup,
+               'M/capture/origin_permission/goal_body_record', MB_SITE + '354')
+
+    def dispatch_case(name, mutate, expected, target):
+        def make():
+            w, scope = cb_new()
+            key = w.registration.state_key()
+            cell = w.cell(BO.DISPATCH, key)
+            state = copy.deepcopy(cell['value'])
+            mutate(w, state)
+            w.write([w.put(BO.DISPATCH, key, state, expected=cell['version'])])
+            mark(w, BO.DISPATCH, key)
+            return w, lambda: w.coordinator.capture(MB.selector(scope))
+        add(name, make, expected, target)
+    dispatch_case('cb/writer_unregistered',
+                  lambda w, st: st['registrations'].pop('binding_migration'),
+                  'M/capture/writer_unregistered/binding_migration', MB_SITE + '300')
+    dispatch_case('cb/writer_missing',
+                  lambda w, st: st.update(implementations=[i for i in st['implementations']
+                                                            if i['descriptor']['operation'] != 'binding_migration']),
+                  'M/capture/writer_missing/binding_migration', MB_SITE + '302')
+    dispatch_case('cb/writer_unenrolled',
+                  lambda w, st: [i.update(enrollment='pending') for i in st['implementations']
+                                  if i['descriptor']['operation'] == 'binding_migration'],
+                  'M/capture/writer_unenrolled/binding_migration', MB_SITE + '304')
+    dispatch_case('cb/writer_registration_join',
+                  lambda w, st: [i['descriptor'].update(original_registration_ref=st['registrations']['goal_birth'])
+                                  for i in st['implementations'] if i['descriptor']['operation'] == 'binding_migration'],
+                  'M/capture/writer_registration_join/binding_migration', MB_SITE + '305')
+    dispatch_case('cb/writer_storage',
+                  lambda w, st: [i['descriptor'].update(storage_instance_id='00000000-0000-4000-8000-000000000000')
+                                  for i in st['implementations'] if i['descriptor']['operation'] == 'binding_migration'],
+                  'M/capture/writer_storage/binding_migration', MB_SITE + '306')
+
+    def deletion_case():
+        w, scope = cb_new()
+        w.maintenance.request_deletion(scope)
+        mark(w, BO.MAINTENANCE, w.maintenance.key())
+        return w, lambda: w.coordinator.capture(MB.selector(scope))
+    add('cb/deletion_requested', deletion_case, 'M/capture/deletion_requested', MB_SITE + '257')
+
+    def derivation_delete(family_key):
+        def make():
+            w, scope = cb_new()
+            fam, key = family_key(w, scope)
+            cell = w.cell(fam, key)
+            w.write([dict(table=fam, key=key, expected=cell['version'], delete=True)])
+            mark(w, fam, key)
+            return w, lambda: w.coordinator.capture(MB.selector(scope))
+        return make
+    add('cb/goal_birth_receipt',
+        derivation_delete(lambda w, s: (w.goal.RECEIPT, sorted(w.storage.cells.get(w.goal.RECEIPT, {}))[0])),
+        'M/capture/goal_birth_receipt', MB_SITE + '439')
+    def head_receipt_key(w, s):
+        body = w.goal.body_cell(s)['value']['record']
+        for k in sorted(w.storage.cells.get(w.goal.RECEIPT, {})):
+            _rt, _exp, value = BO.decode_physical(w.storage.cells[w.goal.RECEIPT][k]['value'], 'cb/head')
+            if value['record']['after_revision'] == body['revision']:
+                return w.goal.RECEIPT, k
+        raise AssertionError('head receipt not found')
+    def goal_receipt_head():
+        w, scope = cb_new(revisions=3)
+        fam, key = head_receipt_key(w, scope)
+        cell = w.cell(fam, key)
+        w.write([dict(table=fam, key=key, expected=cell['version'], delete=True)])
+        mark(w, fam, key)
+        return w, lambda: w.coordinator.capture(MB.selector(scope))
+    add('cb/goal_receipt_head', goal_receipt_head,
+        'M/capture/goal_receipt_head', MB_SITE + '440')
+
+    def cb_run_case(name, setup, expected, target, action='commit'):
+        def make():
+            w, scope = cb_new()
+            sel = MB.selector(scope)
+            req = w.coordinator.capture(sel)
+            setup(w, scope, req, sel)
+            acts = dict(commit=lambda: w.coordinator.commit(req),
+                        read_result=lambda: w.coordinator.read_result(sel),
+                        recover=lambda: w.coordinator.recover(sel))
+            return w, acts[action]
+        add(name, make, expected, target)
+
+    def cb_committed_case(name, setup, act, expected, target):
+        def make():
+            w, scope = cb_new()
+            sel, req, res = C5C.run(w, scope)
+            setup(w, scope, res, sel)
+            return w, lambda: act(w, scope, res, sel)
+        add(name, make, expected, target)
+
+    cb_run_case('cb/commit_exclusion_not_held',
+                lambda w, s, req, sel: w.coordinator.release_exclusion(s),
+                'M/commit/exclusion_not_held', MB_SITE + '613')
+    cb_run_case('cb/commit_independent_capture',
+                lambda w, s, req, sel: w.host_stop.manual(s, 'stop'),
+                'M/commit/independent_capture', MB_SITE + '766')
+    # commit replay_no_effect (:759): proof in proofs_ca (read_result passive :868).
+    cb_run_case('cb/commit_destination_present',
+                lambda w, s, req, sel: w.write([w.put(w.binding.REVISION,
+                                                       w.binding.keys(s)['revision'],
+                                                       dict(schema_id='pm.test_only.preexisting_destination.v1', record={}))]),
+                'M/commit/destination_present', MB_SITE + '785')
+
+    cb_committed_case('cb/read_result_identity',
+                      lambda w, s, res, sel: tx_edit(w, MB.RESULT, w.coordinator.result_key(s, res['migration_id']),
+                                                     lambda v: v.update(scope=dict(v['scope'], goal_id=O.short_id('goal')))),
+                      lambda w, s, res, sel: w.coordinator.read_result(sel),
+                      'M/read_result/result_identity', MB_SITE + '834')
+    cb_committed_case('cb/read_result_unknown',
+                      lambda w, s, res, sel: None,
+                      lambda w, s, res, sel: w.coordinator.read_result(MB.selector(s)),
+                      'M/read_result/result_unavailable', MB_SITE + '832')
+    cb_committed_case('cb/read_result_manifest_identity',
+                      lambda w, s, res, sel: tx_edit(w, MB.PART,
+                                                     w.coordinator.manifest_parts_of(s, res['migration_id'])[0][0],
+                                                     lambda v: v.update(scope=dict(v['scope'], goal_id=O.short_id('goal')))),
+                      lambda w, s, res, sel: w.coordinator.read_result(sel),
+                      'M/read_result/manifest_identity', MB_SITE + '840')
+    cb_committed_case('cb/read_result_manifest_ordinal',
+                      lambda w, s, res, sel: tx_edit(w, MB.PART,
+                                                     w.coordinator.manifest_parts_of(s, res['migration_id'])[0][0],
+                                                     lambda v: v.update(ordinal=99)),
+                      lambda w, s, res, sel: w.coordinator.read_result(sel),
+                      'M/read_result/manifest_ordinal', MB_SITE + '841')
+    cb_committed_case('cb/read_result_manifest_commitment',
+                      lambda w, s, res, sel: tx_edit(w, MB.PART,
+                                                     w.coordinator.manifest_parts_of(s, res['migration_id'])[0][0],
+                                                     lambda v: v.update(whole_manifest_sha256='0' * 64)),
+                      lambda w, s, res, sel: w.coordinator.read_result(sel),
+                      'M/read_result/manifest_commitment', MB_SITE + '844')
+    cb_committed_case('cb/read_result_origin_member',
+                      lambda w, s, res, sel: tx_edit(w, MB.RESULT, w.coordinator.result_key(s, res['migration_id']),
+                                                     lambda v: v.update(published_members=[])),
+                      lambda w, s, res, sel: w.coordinator.read_result(sel),
+                      'M/read_result/origin_member', MB_SITE + '856')
+
+    def cb_withdraw_case(name, setup, expected, target):
+        def make():
+            w, scope = cb_new()
+            sel, req, res = C5C.run(w, scope)
+            wreq = C6C.withdrawal_request(w, scope, res['migration_id'])
+            setup(w, scope, res, wreq)
+            return w, lambda: w.coordinator.withdraw(wreq)
+        add(name, make, expected, target)
+    def withdraw_domain_setup(w, s, res, wreq):
+        head = w.value(w.binding.HEAD, w.binding.head_key())
+        dkey = head['record']['domain']['physical_key']
+        wrapper = copy.deepcopy(w.cell(w.binding.DOMAIN, dkey)['value'])
+        newkey = dkey + ':copy'
+        w.write([w.put(w.binding.DOMAIN, newkey, wrapper)])
+        tx_edit(w, w.binding.HEAD, w.binding.head_key(),
+                lambda v: v['record']['domain'].update(physical_key=newkey))
+    cb_withdraw_case('cb/withdraw_domain_current', withdraw_domain_setup,
+                     'M/withdraw/writer_domain', MB_SITE + '913')
+
+    cb_case('cb/registration_state_unavailable',
+            lambda w, s: drop(w, BO.DISPATCH, w.registration.state_key()),
+            lambda w, s: w.coordinator.capture(MB.selector(s)), 'registration/state_unavailable', BO_SITE + '1496')
+    cb_case('cb/maintenance_unavailable',
+            lambda w, s: drop(w, BO.MAINTENANCE, w.maintenance.key()),
+            lambda w, s: w.coordinator.capture(MB.selector(s)), 'maintenance/unavailable', BO_SITE + '1634')
+    cb_case('cb/goal_mutation_cancelled',
+            lambda w, s: cb_phys_edit(w, w.goal.CONTROL, w.goal.keys(s)['control'],
+                                  lambda v: v['record'].update(cancellation_receipt_ref='x')),
+            lambda w, s: w.goal.mutate_state(s, 'paused'), 'goal/mutation_cancelled', BO_SITE + '532')
+    cb_case('cb/goal_mutation_cancel_pending',
+            lambda w, s: cb_phys_edit(w, w.goal.CONTROL, w.goal.keys(s)['control'],
+                                  lambda v: v['record'].update(cancellation_pending=dict(operation_id=O.uid('TEST_ONLY:op')))),
+            lambda w, s: w.goal.mutate_state(s, 'paused'), 'goal/mutation_cancel_pending', BO_SITE + '533')
+    def host_repr():
+        suite.n += 1
+        w = MB.migration_world(suite.work / ('cb%05d' % suite.n))
+        s = w.new_scope()
+        w.register_scope(s)
+        w.host_stop.birth_domain(s, unsupported=True)
+        BO.legacy_goal(w)
+        return w, lambda: w.host_stop.manual(s, 'stop')
+    add('cb/host_representation', host_repr, 'host_stop/representation', BO_SITE + '735')
+    cb_case('cb/host_not_latched', lambda w, s: None,
+            lambda w, s: w.host_stop.manual(s, 'resume'), 'host_stop/not_latched', BO_SITE + '742')
+    cb_case('cb/host_schema_unsupported',
+            lambda w, s: tx_edit(w, w.host_stop.FAMILY, w.host_stop.key(s),
+                                  lambda v: v.update(schema_id='bogus')),
+            lambda w, s: w.host_stop.read_for_binding_migration(MB.selector(s)),
+            'host_stop/unsupported_representation', BO_SITE + '782')
+    cb_case('cb/host_scope',
+            lambda w, s: tx_edit(w, w.host_stop.FAMILY, w.host_stop.key(s),
+                                  lambda v: v['record'].update(goal_id=O.short_id('goal'))),
+            lambda w, s: w.host_stop.read_for_binding_migration(MB.selector(s)),
+            'host_stop/scope', BO_SITE + '785')
+    # host_stop last_receipt (:798): proof in proofs_ca (genuine writers maintain
+    # epochs>0 => last receipt ref present; tampering breaks image origin first).
+
+    def cb_number(name, setup, act, expected, target):
+        def make():
+            w, scope = cb_new()
+            setup(w, scope)
+            return w, lambda: act(w, scope)
+        add(name, make, expected, target)
+    cb_number('cb/exclusion_epoch_max', lambda w, s: setattr(w.storage, 'cell_generation', MAX_U64),
+              lambda w, s: w.coordinator.capture(MB.selector(s)),
+              'M/exclusion_epoch/numrule/integer_range', 'dg5/M/exclusion_epoch/number')
+    cb_number('cb/maintenance_epoch_max',
+              lambda w, s: tx_edit(w, BO.MAINTENANCE, w.maintenance.key(),
+                                    lambda v: v.update(maintenance_epoch=MAX_U64)),
+              lambda w, s: w.maintenance.maintenance_window(),
+              'maintenance/epoch/numrule/integer_range', 'dg5/maintenance/epoch/number')
+    cb_number('cb/restore_epoch_max',
+              lambda w, s: tx_edit(w, BO.MAINTENANCE, w.maintenance.key(),
+                                    lambda v: v.update(restore_epoch=MAX_U64)),
+              lambda w, s: w.maintenance.restore(),
+              'maintenance/restore_epoch/numrule/integer_range', 'dg5/maintenance/restore_epoch/number')
+
+    # ---- batch 12c: CB derive/commit/read_result/recover + owners remainder ----
+    def cb_delete(name, family_key, expected, target, prepare=None):
+        def make():
+            w, scope = cb_new()
+            if prepare:
+                prepare(w, scope)
+            fam, key = family_key(w, scope)
+            cell = w.cell(fam, key)
+            w.write([dict(table=fam, key=key, expected=cell['version'], delete=True)])
+            mark(w, fam, key)
+            return w, lambda: w.coordinator.capture(MB.selector(scope))
+        add(name, make, expected, target)
+    cb_delete('cb/plan_absent_reverse_gpb',
+              lambda w, s: (w.plans and None) or ('assistant_plan_run', w.plans.keys(s, *C5C.plan_bound(w, s, schedules=0, consents=0))['run']),
+              'M/capture/plan_absent_reverse_row', MB_SITE + '463')
+    cb_delete('cb/plan_record_unavailable',
+              lambda w, s: ('assistant_plan_record', 'assistant_plan_record.v1:%s:%s:%s:%s' % (
+                  MB.hx(w.storage_id), MB.hx(s['project_id']), MB.hx(s['thread_id']),
+                  MB.hx(C5C.plan_bound(w, s, schedules=0, consents=0)[0]))),
+              'M/capture/plan_record_unavailable', MB_SITE + '467')
+
+    def cb_scheduler_delete(family):
+        def make():
+            w, scope = cb_new()
+            pid, rid = C5C.plan_bound(w, scope, schedules=1, consents=1, callbacks=1)
+            for fam, key in [(w.plans and 'goal_plan_binding', w.plans.gpb_key(scope, rid)),
+                             ('assistant_plan_run', w.plans.keys(scope, pid, rid)['run'])]:
+                cell = w.cell(fam, key)
+                w.write([dict(table=fam, key=key, expected=cell['version'], delete=True)])
+                mark(w, fam, key)
+            return w, lambda: w.coordinator.capture(MB.selector(scope))
+        return make
+    add('cb/scheduler_unaccounted_schedule', cb_scheduler_delete('execution_schedule'),
+        'M/capture/scheduler_unaccounted', MB_SITE + '521')
+
+    def cb_unaccounted_active():
+        w, scope = cb_new()
+        pid, rid = C5C.plan_bound(w, scope, schedules=0, consents=0)
+        for fam, key in [('goal_plan_binding', w.plans.gpb_key(scope, rid)),
+                         ('assistant_plan_run', w.plans.keys(scope, pid, rid)['run'])]:
+            cell = w.cell(fam, key)
+            w.write([dict(table=fam, key=key, expected=cell['version'], delete=True)])
+            mark(w, fam, key)
+        return w, lambda: w.coordinator.capture(MB.selector(scope))
+    add('cb/unaccounted_active_run', cb_unaccounted_active, 'M/capture/unaccounted_active_run', MB_SITE + '554')
+
+    def cb_commit_case(name, setup, expected, target):
+        def make():
+            w, scope = cb_new()
+            sel = MB.selector(scope)
+            req = w.coordinator.capture(sel)
+            setup(w, scope, req, sel)
+            return w, lambda: w.coordinator.commit(req)
+        add(name, make, expected, target)
+    cb_commit_case('cb/commit_permission',
+                   lambda w, s, req, sel: w.permissions.revoke(w.constants['decision:%s:%s' % (w.coordinator.owner_id, MB.ADOPT)]),
+                   'M/commit/permission', MB_SITE + '762')
+    def final_permission_setup(w, s, req, sel):
+        def hook(c):
+            ref = c.world.constants['decision:%s:%s' % (c.owner_id, MB.ADOPT)]
+            c.world.permissions.revoke(ref)
+            mark(c.world, 'TEST_ONLY:permission_source', ref)
+        w.coordinator.inject[('commit', 'after_derive')] = hook
+    cb_commit_case('cb/commit_final_permission', final_permission_setup,
+                   'M/commit/final_permission', MB_SITE + '776')
+    def final_capture_setup(w, s, req, sel):
+        def hook(c):
+            c.world.host_stop.manual(s, 'stop')
+            for table in (w.host_stop.FAMILY, w.host_stop.RECEIPTS, BO.ORIGINS):
+                for key in list(w.storage.cells.get(table, {})):
+                    mark(w, table, key)
+        w.coordinator.inject[('commit', 'after_derive')] = hook
+    cb_commit_case('cb/commit_final_capture', final_capture_setup,
+                   'M/commit/final_capture', MB_SITE + '774')
+    # tx/check_version (BO :291): proof in proofs_ca (final_candidate binds checks to the final capture).
+    cb_case('cb/write_permission_unavailable',
+            lambda w, s: w.constants.pop('write_permission:' + w.goal.owner_id, None),
+            lambda w, s: w.goal.mutate_state(s, 'paused'), 'owner/write_permission_unavailable', BO_SITE + '309')
+
+    def cb_recover_case(name, setup, expected, target):
+        def make():
+            w, scope = cb_new()
+            sel = MB.selector(scope)
+            setup(w, scope, sel)
+            return w, lambda: w.coordinator.recover(sel)
+        add(name, make, expected, target)
+    cb_recover_case('cb/recover_ambiguous_destination',
+                    lambda w, s, sel: w.write([w.put(w.binding.REVISION,
+                                                      w.binding.keys(s)['revision'],
+                                                      dict(schema_id='pm.test_only.ambiguous.v1', record={}))]),
+                    'M/recover/ambiguous_destination', MB_SITE + '810')
+    cb_recover_case('cb/recover_ambiguous_manifest',
+                    lambda w, s, sel: w.write([w.put(MB.PART, w.coordinator.part_key(s, sel['migration_id'], 0),
+                                                      dict(scope=dict(sel['scope']), migration_id=sel['migration_id'],
+                                                           ordinal=0, part_count=1, whole_manifest_sha256='0' * 64, members=[]))]),
+                    'M/recover/ambiguous_manifest', MB_SITE + '812')
+
+    def cb_blocked_case(name, setup, expected, target):
+        def make():
+            w, scope = cb_new()
+            C5C.plan_bound(w, scope, schedules=0, consents=0)
+            w.workflows.attach(scope)
+            sel, req, res = C5C.run(w, scope)
+            setup(w, scope, res, sel)
+            return w, lambda: w.coordinator.read_result(sel)
+        add(name, make, expected, target)
+    cb_blocked_case('cb/read_result_blocked_unpublished',
+                    lambda w, s, res, sel: tx_edit(w, MB.RESULT, w.coordinator.result_key(s, res['migration_id']),
+                                                     lambda v: v.update(published_members=[w.coordinator.manifest_parts_of(s, res['migration_id'])[0][1]['members'][0]])),
+                    'M/read_result/blocked_unpublished', MB_SITE + '861')
+
+    def cb_read_case(name, setup, expected, target):
+        def make():
+            w, scope = cb_new()
+            sel, req, res = C5C.run(w, scope)
+            setup(w, scope, res, sel)
+            return w, lambda: w.coordinator.read_result(sel)
+        add(name, make, expected, target)
+    cb_read_case('cb/read_result_manifest_unavailable',
+                 lambda w, s, res, sel: [w.write([dict(table=MB.PART, key=k, expected=w.cell(MB.PART, k)['version'], delete=True)])
+                                          for k, _p in w.coordinator.manifest_parts_of(s, res['migration_id'])],
+                 'M/read_result/manifest_unavailable', MB_SITE + '837')
+    cb_read_case('cb/read_result_destination_unavailable',
+                 lambda w, s, res, sel: [w.write([dict(table=w.binding.REVISION, key=w.binding.keys(s)['revision'],
+                                                       expected=w.cell(w.binding.REVISION, w.binding.keys(s)['revision'])['version'], delete=True)])],
+                 'M/read_result/destination_unavailable', MB_SITE + '850')
+    def origin_member_setup(w, s, res, sel):
+        read = w.binding.read_current(s)
+        wrapper = read['origin']['value']
+        okey = BO.origin_key(w.binding.ORIGIN, wrapper['physical_key'], BO.row_sha(wrapper))
+        cell = w.cell(BO.ORIGINS, okey)
+        w.write([dict(table=BO.ORIGINS, key=okey, expected=cell['version'], delete=True)])
+        mark(w, BO.ORIGINS, okey)
+    cb_read_case('cb/read_result_origin_member2', origin_member_setup,
+                 'M/read_result/origin_member', MB_SITE + '856')
+
+    # ---- batch 12c: CB derive/commit/recover/codec/tx + CA3 numbers ----
+    def cb_delete2(name, prepare, family_key, expected, target):
+        def make():
+            w, scope = cb_new()
+            if prepare:
+                prepare(w, scope)
+            fam, key = family_key(w, scope)
+            cell = w.cell(fam, key)
+            w.write([dict(table=fam, key=key, expected=cell['version'], delete=True)])
+            mark(w, fam, key)
+            return w, lambda: w.coordinator.capture(MB.selector(scope))
+        add(name, make, expected, target)
+    def plan_absent_attach():
+        w, scope = cb_new()
+        _op, pid, rid = w.plans.stage_pending_attach(scope, disposition='no_effect')
+        fam, key = 'assistant_plan_run', w.plans.keys(scope, pid, rid)['run']
+        cell = w.cell(fam, key)
+        w.write([dict(table=fam, key=key, expected=cell['version'], delete=True)])
+        mark(w, fam, key)
+        return w, lambda: w.coordinator.capture(MB.selector(scope))
+    add('cb/plan_absent_reverse_attach', plan_absent_attach,
+        'M/capture/plan_absent_reverse_row', MB_SITE + '479')
+    cb_delete2('cb/plan_absent_reverse_orphan', None,
+               lambda w, s: ('goal_plan_binding', w.plans.gpb_key(s, C5C.plan_bound(w, s, schedules=0, consents=0)[1])),
+               'M/capture/plan_absent_reverse_row', MB_SITE + '492')
+
+    def cb_workflow_delete(name, which, expected, target):
+        def make():
+            w, scope = cb_new()
+            rid = w.workflows.attach(scope)
+            k = w.workflows.keys(scope, rid)
+            fam = {'control': 'workflow_goal_run_control', 'birth': 'executor_workflow_workflow_birth',
+                   'pointer': 'executor_workflow_current_pointer'}[which]
+            key = k[which]
+            cell = w.cell(fam, key)
+            w.write([dict(table=fam, key=key, expected=cell['version'], delete=True)])
+            mark(w, fam, key)
+            return w, lambda: w.coordinator.capture(MB.selector(scope))
+        add(name, make, expected, target)
+    cb_workflow_delete('cb/workflow_member_unavailable', 'birth',
+                       'M/capture/workflow_member_unavailable', MB_SITE + '504')
+
+    def cb_sched_only(name, keep_family, expected, target):
+        def make():
+            w, scope = cb_new()
+            pid, rid = C5C.plan_bound(w, scope, schedules=1, consents=1, callbacks=1)
+            keep = {'execution_schedule': ('execution_schedule',),
+                    'execution_schedule_run_binding': ('execution_schedule_run_binding',),
+                    'quota_resume_consent': ('quota_resume_consent',),
+                    'TEST_ONLY:scheduler_callback_admission': ('TEST_ONLY:scheduler_callback_admission',)}[keep_family]
+            for fam, key in [('goal_plan_binding', w.plans.gpb_key(scope, rid)),
+                             ('assistant_plan_run', w.plans.keys(scope, pid, rid)['run'])] + \
+                            [(f, k) for f in ('execution_schedule', 'execution_schedule_run_binding',
+                                              'quota_resume_consent', 'TEST_ONLY:scheduler_callback_admission')
+                             if f != keep_family for k in list(w.storage.cells.get(f, {}))]:
+                if w.cell(fam, key) is not None:
+                    cell = w.cell(fam, key)
+                    w.write([dict(table=fam, key=key, expected=cell['version'], delete=True)])
+                    mark(w, fam, key)
+            return w, lambda: w.coordinator.capture(MB.selector(scope))
+        add(name, make, expected, target)
+    # scheduler binding/consent unaccounted (:527/:532): proofs (enumerated only for present runs).
+    cb_sched_only('cb/scheduler_unaccounted_callback', 'TEST_ONLY:scheduler_callback_admission',
+                  'M/capture/scheduler_unaccounted', MB_SITE + '534')
+
+    cb_commit_case('cb/commit_permission',
+                   lambda w, s, req, sel: w.permissions.revoke(w.constants['decision:%s:%s' % (w.coordinator.owner_id, MB.ADOPT)]),
+                   'M/commit/permission', MB_SITE + '762')
+    def derive_exclusion_setup(w, s, req, sel):
+        def hook(c):
+            c.release_exclusion(s)
+            mark(c.world, 'TEST_ONLY:migration_exclusion', c.world.exclusion_key(s))
+        w.coordinator.inject[('commit', 'after_sir')] = hook
+    cb_commit_case('cb/derive_exclusion_not_held', derive_exclusion_setup,
+                   'M/commit/exclusion_not_held', MB_SITE + '613')
+
+    def cb_codec_case(name, raw, expected, target):
+        def make():
+            w, scope = cb_new()
+            k = w.goal.keys(scope)
+            cell = w.cell(w.goal.BODY, k['body'])
+            carrier = dict(schema_id=BO.CARRIER_ID, qualification=BO.QUALIFICATION,
+                           codec_id=BO.GOAL_JSON, bytes_hex=raw.hex())
+            w.write([w.put(w.goal.BODY, k['body'], carrier, expected=cell['version'])])
+            mark(w, w.goal.BODY, k['body'])
+            return w, lambda: w.coordinator.capture(MB.selector(scope))
+        add(name, make, expected, target)
+    cb_codec_case('cb/json_duplicate_key', b'{"schema_id":"x","schema_id":"y"}',
+                  'codec/json_duplicate_key', BO_SITE + '131')
+    cb_codec_case('cb/json_noncanonical', BO.json_encode({}) + b' ',
+                  'codec/json_noncanonical', BO_SITE + '141')
+    cb_case('cb/unsupported_codec',
+            lambda w, s: tx_edit(w, w.goal.BODY, w.goal.keys(s)['body'],
+                                  lambda v: v.update(codec_id='bogus_codec')),
+            lambda w, s: w.goal.body_cell(s), 'goal/goal_body_record/unsupported_codec', BO_SITE + '178')
+    def sir_outcome_setup(w, s):
+        route, req = C5C.cancel_request(w, s)
+        route.dispatch(req)
+        for k in list(w.storage.cells.get('sir_command_outcome', {}))[:1]:
+            cb_phys_edit(w, 'sir_command_outcome', k, lambda v: v['record'].update(outcome='bogus'))
+    cb_capture('cb/sir_outcome_kind', sir_outcome_setup,
+               'M/capture/source_schema/sir_command_outcome/sir_outcome_kind', BO_SITE + '222')
+    cb_case('cb/cutoff_without_domain', lambda w, s: None,
+            lambda w, s: w.binding.cutoff_write(O.uid('TEST_ONLY:wd'), O.uid('TEST_ONLY:mid')),
+            'domain/cutoff_without_domain', BO_SITE + '1610')
+
+    def cb_stop_unstable():
+        w, scope = cb_new()
+
+        def hook(c):
+            record = c.world.host_stop.record(scope)
+            c.world.host_stop.manual(scope, 'resume' if record['latched'] else 'stop')
+            for k in c.world.storage.cells.get(c.world.host_stop.RECEIPTS, {}):
+                mark(c.world, c.world.host_stop.RECEIPTS, k)
+            for k in c.world.storage.cells.get(BO.ORIGINS, {}):
+                mark(c.world, BO.ORIGINS, k)
+            mark(c.world, c.world.host_stop.FAMILY, c.world.host_stop.key(scope))
+            c.inject[('capture', 'after_sir')] = hook
+        w.coordinator.inject[('capture', 'after_sir')] = hook
+        return w, lambda: w.coordinator.capture(MB.selector(scope))
+    add('cb/stop_unstable', cb_stop_unstable, 'M/capture/stop_unstable', MB_SITE + '247')
+
+    def cb_domain_second(name, setup, expected, target):
+        def make():
+            w, scope = cb_new()
+            C5C.run(w, scope)
+            w2scope = BO.legacy_goal(w)
+            setup(w, scope, w2scope)
+            return w, lambda: w.coordinator.capture(MB.selector(w2scope))
+        add(name, make, expected, target)
+    cb_domain_second('cb/domain_withdrawn',
+                     lambda w, s, s2: w.storage.transact(
+                         [w.binding.cutoff_write(O.uid('TEST_ONLY:wd'), O.uid('TEST_ONLY:mid'))]),
+                     'M/capture/domain_withdrawn', MB_SITE + '313')
+    cb_domain_second('cb/domain_registration_changed',
+                     lambda w, s, s2: tx_edit(w, BO.DISPATCH, w.registration.state_key(),
+                                              lambda v: v.update(root_identity=O.uid('TEST_ONLY:root'))),
+                     'M/capture/domain_registration_changed', MB_SITE + '315')
+    cb_capture('cb/selection_physical_key',
+               stmt('goal', lambda m: m['sources'][0]['selection'].update(physical_key='no-separator') or m),
+               'M/selection/physical_key', MB_SITE + '75')
+    def unsupported_codec_setup(w, s):
+        C5C.plan_bound(w, s, schedules=0, consents=0)
+        k = [k for k in w.storage.cells.get('assistant_plan_record', {})][0]
+        cell = w.cell('assistant_plan_record', k)
+        _codec, old_raw, value = BO.decode_physical(cell['value'], 'cb/codec')
+        carrier = BO.store_form(value, BO.GOAL_JSON)
+        w.write([w.put('assistant_plan_record', k, carrier, expected=cell['version'])])
+        mark(w, 'assistant_plan_record', k)
+        old_okey = BO.origin_key('assistant_plan_record', k, BO.sha(old_raw))
+        new_raw = BO.physical(carrier)[1]
+        new_okey = BO.origin_key('assistant_plan_record', k, BO.sha(new_raw))
+        ocell = w.cell(BO.ORIGINS, old_okey)
+        new_origin = copy.deepcopy(ocell['value'])
+        new_origin['issued_physical_sha256'] = BO.sha(new_raw)
+        new_origin['codec_id'] = BO.GOAL_JSON
+        w.write([w.put(BO.ORIGINS, new_okey, new_origin)])
+        mark(w, BO.ORIGINS, new_okey)
+    cb_capture('cb/unsupported_codec_auth', unsupported_codec_setup,
+               'M/capture/unsupported_codec/assistant_plan_record', MB_SITE + '334')
+
+    def origin_absent_setup(w, s):
+        k = w.goal.keys(s)
+        okey = BO.origin_key(w.goal.BODY, k['body'], BO.sha(BO.physical(w.cell(w.goal.BODY, k['body'])['value'])[1]))
+
+        def hook(c):
+            cell = c.world.cell(BO.ORIGINS, okey)
+            c.world.write([dict(table=BO.ORIGINS, key=okey, expected=cell['version'], delete=True)])
+            mark(c.world, BO.ORIGINS, okey)
+        w.coordinator.inject[('capture', 'after_goal')] = hook
+    cb_capture('cb/origin_absent_auth', origin_absent_setup,
+               'M/capture/origin_absent/goal_body_record', MB_SITE + '345')

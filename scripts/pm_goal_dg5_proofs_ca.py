@@ -14,6 +14,7 @@ N3 = 'scripts/pm_goal_dg_ca3_native.py'
 IX = 'scripts/pm_goal_dg_ca3_index.py'
 AS = 'scripts/pm_goal_dg_ca_assignment.py'
 OWN = 'scripts/pm_goal_dg_ca_owners.py'
+BO = 'scripts/pm_goal_dg_cb_owners.py'
 ST = 'scripts/pm_goal_test_storage.py'
 AD = 'scripts/pm_goal_test_owner_adapters.py'
 FAM = ['goal.cancelled']
@@ -576,6 +577,97 @@ PROOFS = {
         "readback control sha joins), witnessed in the supplement smoke.",
         [(R3, 802), (N3, 1035)],
         ['dg5/site/pm_goal_dg_ca3_native.py:1069']),
+    'dg5/site/pm_goal_dg_ca3_route.py:311': _p(
+        "native_sources reads registered writers from writers.inventory() and "
+        "before_stop_native compares each with a second inventory() call in "
+        "the same synchronous sequence; inventory() is a pure read of the "
+        "same registration cells with no intervening write, so the two "
+        "registrations cannot differ.",
+        [(R3, 298), (R3, 311)]),
+    'dg5/site/pm_goal_dg_ca3_route.py:923': _p(
+        "Same registered-selector argument as C1 :573 on the C3 freeze path: "
+        "the producer payload_schema_id is the PAYLOAD_SCHEMA literal copied "
+        "into the captured source metadata, and the registry row for "
+        "goal.cancelled records that literal; source custody binds the "
+        "metadata to the captured original.",
+        [(R3, 923), (C1, 40)],
+        ['dg5/site/pm_goal_dg_ca_c1.py:436']),
+    'dg5/site/pm_goal_dg_ca3_route.py:1086': _p(
+        "append_readback takes checkpoint/generation from index.current() "
+        "and the token from index.read_token(), which itself calls current() "
+        "again with no index publish in between (readback performs no index "
+        "write), so token, checkpoint and generation name the same generation.",
+        [(R3, 1086), (IX, 185)]),
+    'dg5/site/pm_goal_dg_ca3_route.py:1089': _p(
+        "frame['event'] is Storage's decode of the exact frame bytes whose "
+        "hash read_frame has just verified, and stored_event is read_event's "
+        "decode of the same frame; both are the same deterministic decode "
+        "of one byte string in the same call.",
+        [(R3, 1089), (IX, 212)]),
+    'dg5/site/pm_goal_dg_ca3_index.py:218': _p(
+        "source_frame's value_bytes is NUMRULE.event_value_bytes of the "
+        "event decoded from the hash-verified frame, and encode_event_frame "
+        "embeds exactly canonical(event) as the frame payload, so the "
+        "computed bytes are a substring of the same raw frame by construction.",
+        [(IX, 218), (ST, 435)]),
+    'dg5/site/pm_goal_dg_cb_migration.py:759': _p(
+        "The replay branch captures the cell generation, calls only "
+        "read_result (whose own passive check at :868 requires the "
+        "generation unchanged across its two predicate evaluations), and "
+        "compares generation again; nothing else runs between, so the "
+        "replay no-effect check restates read_result's passive guarantee.",
+        [('scripts/pm_goal_dg_cb_migration.py', 759), ('scripts/pm_goal_dg_cb_migration.py', 868)],
+        ['dg5/site/pm_goal_dg_cb_migration.py:868']),
+    'dg5/site/pm_goal_dg_cb_migration.py:868': _p(
+        "read_result captures the cell generation and then only reads "
+        "stored cells and schema-validates them (predicate run twice, both "
+        "read-only); no transact or append runs in between, so the "
+        "generation cannot move.",
+        [('scripts/pm_goal_dg_cb_migration.py', 826), ('scripts/pm_goal_dg_cb_migration.py', 868)]),
+    'dg5/site/pm_goal_dg_cb_migration.py:867': _p(
+        "read_result evaluates the identical pure predicate twice over the "
+        "same stored cells with no intervening write (its own passive check "
+        "at :868 covers the same span), so the two results cannot differ "
+        "through any genuine call (the helper test seam is not a family "
+        "entry argument).",
+        [('scripts/pm_goal_dg_cb_migration.py', 862), ('scripts/pm_goal_dg_cb_migration.py', 867)],
+        ['dg5/site/pm_goal_dg_cb_migration.py:868']),
+    'dg5/site/pm_goal_dg_cb_migration.py:790': _p(
+        "commit reads back each write from the same Storage transaction it "
+        "has just applied (transact is all-or-none and w.value returns the "
+        "stored value); a mismatch would mean the transaction did not apply "
+        "the write it reported, which the Storage transaction contract "
+        "refuses earlier.",
+        [('scripts/pm_goal_dg_cb_migration.py', 790)]),
+    'dg5/site/pm_goal_dg_cb_owners.py:798': _p(
+        "Every genuine Stop writer maintains the invariant epochs>0 implies a "
+        "last receipt: birth_domain and copy_zero_domain write epochs 0 with "
+        "last ref None (the virgin branch), and manual stop/resume always "
+        "issues a receipt and sets last_original_stop_receipt_ref/sha256 in "
+        "the same transaction as the epoch increment, so a non-virgin record "
+        "with no last receipt cannot be produced by any owner call; direct "
+        "cell tampering is refused earlier by the image origin sha binding.",
+        [(BO, 798)]),
+    'dg5/site/pm_goal_dg_cb_owners.py:291': _p(
+        "MigrationStorage.transact checks are built only in Coordinator."
+        "derive from the capture images' versions, and commit re-derives "
+        "the candidate from a final capture and requires the checks to be "
+        "identical (final_candidate) before transacting; a cell whose "
+        "version moved between capture and commit is therefore refused at "
+        "final_candidate (or independent/final capture) before any stale "
+        "check can reach transact, and no write runs between the final "
+        "derive and the transaction in the same call.",
+        [(BO, 291), ('scripts/pm_goal_dg_cb_migration.py', 778)]),
+    'dg5/site/pm_goal_dg_cb_owners.py:286': _p(
+        "Every transact check in the family is constructed in derive() as "
+        "dict(table=..., key=..., expected=...) - exactly the required key "
+        "set - so the shape check cannot refuse on any family path.",
+        [(BO, 286), ('scripts/pm_goal_dg_cb_migration.py', 613)]),
+    'dg5/site/pm_goal_dg_cb_owners.py:289': _p(
+        "Derive builds checks only with expected=<captured version> (never "
+        "None), so the expected-is-None absent branch of MigrationStorage."
+        "transact is unreachable from any family caller.",
+        [(BO, 289), ('scripts/pm_goal_dg_cb_migration.py', 613)]),
     'dg5/site/pm_goal_dg_ca_owners.py:176': _p(
         "World.selection is called only from install_writer_domain (with the "
         "domain wrapper it has just written in the same call) and from "
