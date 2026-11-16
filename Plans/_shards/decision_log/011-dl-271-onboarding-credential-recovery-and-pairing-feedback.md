@@ -4,7 +4,7 @@ Source: `Plans/Decision_Log.md`
 
 Source lines: L28747-L40377
 
-Source SHA256: `28484e523618998ea545975ef64eeab5626d22e25bd7b7e51227fe459277796f`
+Source SHA256: `9e0fd9d6d65ad0c08c1777bb29f2edc0ba0d6d610775a1ec5b35cc6d8025ed52`
 
 ---
 
@@ -11615,8 +11615,8 @@ canonical_text: |-
   This changes no payload or record field, identity recipe, deletion window, hold rule, retention policy, event admission or GUI, and claims no native execution, readiness clearance or governance seal.
 gui_related: false
 gui_classification_reason: Defines the retry successor in the Storage deletion lifecycle; no visible control or layout changes.
-depends_on: [DL-045, SP-237, SP-2200]
-unblocks: [SP-237, ATS-3920]
+depends_on: [DL-045]
+unblocks: [SP-237, SP-2200, ATS-3920]
 acceptance_criteria:
 - Plans/storage-plan.md Case L-3 Thread/project deletion states that the graph-valid successor of a revalidated retry is exactly failed -> logically_hidden, with no failed -> requested edge and no bypass to purge_pending or purged.
 - Every existing deletion rule is kept; an incomplete or failed retry revalidation refuses with zero effect and leaves the record failed.
