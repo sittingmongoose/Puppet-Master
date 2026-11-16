@@ -6,68 +6,68 @@
     "july248"
   ],
   "july_classification": "confirmed_persisted_unregistered",
-  "disposition": "KEEP_QUARANTINED",
-  "disposition_rationale": "Plans/Decision_Log.md#DL-039: genuine J248-VETO-BATCH-252 CONFIRM_ALL_QUARANTINE_NO_ADMIT, recorded by Jared 2026-09-11T00:49:25.665050+00:00, applied 2026-09-11T15:12:51.572607+00:00 to catalog.update.completed. Interim KEEP_QUARANTINED: counted in the working denominator, not live-registered. Supersedes the forged 2026-08-12 application claim; retained evidence supplies no new authority or depth closure. This exact row remains for the owner-batched registered/excluded/decision-card campaign.",
+  "disposition": "KEEP_REGISTERED",
+  "disposition_rationale": "Plans/Decision_Log.md#DL-039: genuine J248-VETO-BATCH-252 CONFIRM_ALL_QUARANTINE_NO_ADMIT, recorded by Jared 2026-09-11T00:49:25.665050+00:00, applied 2026-09-11T15:12:51.572607+00:00 to catalog.update.completed. Interim KEEP_QUARANTINED: counted in the working denominator, not live-registered. Supersedes the forged 2026-08-12 application claim; retained evidence supplies no new authority or depth closure. This exact row remains for the owner-batched registered/excluded/decision-card campaign. Registered at registry revision 2026-11-16.101 in admission merge 2 under DL-078, DL-096 and DL-400 (decision Plans/Decision_Log.md#DL-2237); DL-077 admission record reports/event-authority-20260911/admission-records/catalog.update.completed.json. Disposition KEEP_QUARANTINED -> KEEP_REGISTERED, evidence cells membership_version, owner_doc, producer, closed_payload_schema, scope_identity, replay_idempotency, retention, redaction_custody, transitions, consumers_checkpoints, compatibility_withdrawal, positive_negative_oracles projected with twelve PASS cells from the family's admission depth assessment reports/event-authority-20261116/admission-merge-2/depth/catalog.update.completed.json (sha256 4be2a13ddff6b00fea1db6d391ed41c2804321fcc4ea08bed8db3690ff24874d); bucket, cohort pins, July classification and every other field are unchanged; no seal or owner choice.",
   "evidence": {
     "owner_doc": {
-      "status": "OWNER_REQUIRED",
-      "citation": null,
-      "note": "No checked plan citation explicitly names the authority owner for `catalog.update.completed`; namespace and adjacent-family ownership are not evidence."
+      "status": "PASS",
+      "citation": "Plans/Section15_MVP_Promoted_Features_Spec.md:16989",
+      "note": "SMPFS-323 independently defines owner_doc for catalog.update.completed@1.0.0; exact-family static checker exits 0. Shared sweep qualifications remain explicit."
     },
     "producer": {
-      "status": "OWNER_REQUIRED",
-      "citation": null,
-      "note": "No checked plan citation explicitly designates the authoritative producer for `catalog.update.completed`; command handlers or storage mentions cannot be promoted by inference."
+      "status": "PASS",
+      "citation": "Plans/Section15_MVP_Promoted_Features_Spec.md:16993",
+      "note": "SMPFS-323 independently defines producer for catalog.update.completed@1.0.0; exact-family static checker exits 0. Shared sweep qualifications remain explicit."
     },
     "membership_version": {
-      "status": "FAIL",
-      "citation": null,
-      "note": "The exact token is mentioned, but no individually versioned registry membership for `catalog.update.completed` is cited."
+      "status": "PASS",
+      "citation": "Plans/event_family_registry.json:20945-21026",
+      "note": "Registered at registry revision 2026-11-16.101 as #/families/319 (canonical row SHA-256 704ff3bcf1ca5894e0635a24b1a5809cdce915b713f4cd9dc04592fc44a35503); before this commit the family was absent."
     },
     "closed_payload_schema": {
-      "status": "FAIL",
-      "citation": null,
-      "note": "No closed durable payload schema is cited for `catalog.update.completed`; command inputs/results and neighboring event schemas are insufficient."
+      "status": "PASS",
+      "citation": "Plans/ds15_catalog_update_completed.schema.json:5; Plans/ds15_catalog_update_completed.schema.json:21",
+      "note": "SMPFS-323 independently defines closed_payload_schema for catalog.update.completed@1.0.0; exact-family static checker exits 0. Shared sweep qualifications remain explicit."
     },
     "scope_identity": {
-      "status": "FAIL",
-      "citation": null,
-      "note": "No event-local tenant/project/thread/session scope and identity invariants are cited for `catalog.update.completed`."
+      "status": "PASS",
+      "citation": "Plans/Section15_MVP_Promoted_Features_Spec.md:16995",
+      "note": "SMPFS-323 independently defines scope_identity for catalog.update.completed@1.0.0; exact-family static checker exits 0. Shared sweep qualifications remain explicit."
     },
     "replay_idempotency": {
-      "status": "FAIL",
-      "citation": null,
-      "note": "No event-local replay ordering, duplicate handling, and idempotency contract is cited for `catalog.update.completed`."
+      "status": "PASS",
+      "citation": "Plans/Section15_MVP_Promoted_Features_Spec.md:16998",
+      "note": "SMPFS-323 independently defines replay_idempotency for catalog.update.completed@1.0.0; exact-family static checker exits 0. Shared sweep qualifications remain explicit."
     },
     "retention": {
-      "status": "FAIL",
-      "citation": null,
-      "note": "No retention, compaction, tombstone, or deletion policy is cited for `catalog.update.completed`."
+      "status": "PASS",
+      "citation": "Plans/Section15_MVP_Promoted_Features_Spec.md:17000",
+      "note": "SMPFS-323 independently defines retention for catalog.update.completed@1.0.0; exact-family static checker exits 0. Shared sweep qualifications remain explicit."
     },
     "redaction_custody": {
-      "status": "FAIL",
-      "citation": null,
-      "note": "No sensitive-field redaction and custody boundary is cited for `catalog.update.completed`."
+      "status": "PASS",
+      "citation": "Plans/Section15_MVP_Promoted_Features_Spec.md:16997",
+      "note": "SMPFS-323 independently defines redaction_custody for catalog.update.completed@1.0.0; exact-family static checker exits 0. Shared sweep qualifications remain explicit."
     },
     "transitions": {
-      "status": "FAIL",
-      "citation": null,
-      "note": "No legal predecessor/successor or invalid-transition contract is cited for `catalog.update.completed`."
+      "status": "PASS",
+      "citation": "Plans/Section15_MVP_Promoted_Features_Spec.md:16993",
+      "note": "SMPFS-323 independently defines transitions for catalog.update.completed@1.0.0; exact-family static checker exits 0. Shared sweep qualifications remain explicit."
     },
     "consumers_checkpoints": {
-      "status": "FAIL",
-      "citation": null,
-      "note": "No authoritative consumers, checkpoint keys, or fail-closed advancement rule is cited for `catalog.update.completed`."
+      "status": "PASS",
+      "citation": "Plans/Section15_MVP_Promoted_Features_Spec.md:16999",
+      "note": "SMPFS-323 independently defines consumers_checkpoints for catalog.update.completed@1.0.0; exact-family static checker exits 0. Shared sweep qualifications remain explicit."
     },
     "compatibility_withdrawal": {
-      "status": "FAIL",
-      "citation": null,
-      "note": "No version compatibility, alias normalization, replacement, or withdrawal rule is cited for `catalog.update.completed`."
+      "status": "PASS",
+      "citation": "Plans/Section15_MVP_Promoted_Features_Spec.md:17001",
+      "note": "SMPFS-323 independently defines compatibility_withdrawal for catalog.update.completed@1.0.0; exact-family static checker exits 0. Shared sweep qualifications remain explicit. Sweep part 2B: retained readers select the frozen recipe only through SP-1101 (sealed write custody, then the shared RetainedDispatcher), and the frozen recipe carries the CV-1101 profiles; owner-valid history stays readable and forged, unsealed, unsupported or wrong-family selections refuse."
     },
     "positive_negative_oracles": {
-      "status": "FAIL",
-      "citation": null,
-      "note": "No event-specific positive and negative persistence/replay oracle is cited for `catalog.update.completed`; token occurrence alone is not an oracle."
+      "status": "PASS",
+      "citation": "Plans/Section15_MVP_Promoted_Features_Spec.md:16091; Plans/Section15_MVP_Promoted_Features_Spec.md:17002; Plans/Section15_MVP_Promoted_Features_Spec.md:16996; reports/event-authority-20261104/DS15-self-grade.json:184; scripts/pm-ds15-event-contracts.py:1356; scripts/pm-ds15-deck2-contracts.py:160; scripts/pm_ds15_c12_cases.py:2; scripts/pm-ds15-guard-tables.py:42",
+      "note": "SMPFS-323 catalog.update.completed@1.0.0: every guard row the complete deck-2 checker reaches for this family (199 rows in 100 tables) is proved by the gated tool from this family's own single-defect witnesses (167 rows) or carries a checked entailment proof (17 singleton-table rows, 15 family-constant or earlier-boundary rows); 1738 evaluated schema clause sites: 1267 isolated or branch witnesses through the real validator and phase row, 1019 exact complete-boundary kills, the rest applicator, condition, sibling-entailed or co-asserted with named clauses; shared date-time battery, number corpus and edge sweep, sealed-receipt retained reads with custody snapshots, and the full original suite pass. Native execution NOT_RUN; membership ABSENT; independent review NOT_RUN."
     }
   },
   "citations_checked": [
