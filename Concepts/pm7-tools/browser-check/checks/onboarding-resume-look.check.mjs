@@ -39,6 +39,13 @@
 // NieR: another background and one part switched, Done, closed unfinished: the page and Settings keep that background and
 // those parts (and a reload, normal surface); (F3) NieR Dark set in Settings, resumed, Adjust NieR changing only the
 // background, closed unfinished: Settings and the page keep it (and a reload). --set only=r57.
+// FO-222 (stream F's opus-recheck-fo216-r3 P1, pre-existing): a setup finished into a new Project is still there after a
+// reload (normal surface: nothing survives a reload in the sandbox): Settings puts tastebook (the page's Project) in Retro
+// Light, setup picks Glass Dark and finishes into a new Project (Ready's Enter); reloaded: the title bar names that Project
+// and the page is in Glass Dark; tastebook keeps its own Retro Light (saved, and painted when the title bar's menu switches
+// to it); switching back to the new Project paints Glass Dark; and the first paint after the reload is already Glass Dark
+// (the head's look, read as parsing ends: no tastebook look first). Because tastebook is in another look, a reload that falls
+// back to it cannot pass as the new Project's look (the kit gap FO216-R3-KIT-FINISH-RELOAD-MASKED). --set only=fo222.
 // No timing rows. --set looks=basic-light,nier-dark runs those cases alone; --set extra=0 leaves out the finish, Reduced
 // Motion, reload, pick, R55 and open-reload cases; --set only=r55 runs the R55 cases alone, --set only=openreload the
 // open-reload ones.
@@ -358,9 +365,9 @@ async function freshLoad(t) {
 	await sleep(3000);
 	return { f: nf, A: app(t, nf) };
 }
-async function finishFromWhere(f, A) {
+async function finishFromWhere(f, A, name = 'Kept after a reload') {
 	await A.click('pick', 'this'); await A.click('next', null, 'begin'); await A.click('pick', 'new'); await A.click('next', null, 'name');
-	await f.locator('#o55f-name').fill('Kept after a reload'); await sleep(200); await A.click('next');
+	await f.locator('#o55f-name').fill(name); await sleep(200); await A.click('next');
 	for (let i = 0; i < 30; i++) {
 		const sc = await f.evaluate(() => O55.S.sess.screen);
 		if (sc === 'ready') break;
@@ -476,9 +483,56 @@ async function r57f3(t, sandbox) {
 	await t.check(`${tag}: reloaded, NieR with the background ${bg}`, n3.page.on && n3.page.background === bg, JSON.stringify(n3.page));
 }
 
+/* FO-222: the Project setup finished into, and its look, after a reload; the page's own Project keeps its look */
+const projectNow = (f) => f.evaluate(() => {
+	const sel = document.querySelector('#projectMenu .pm6-tb-menu-item.is-selected[data-project]'), lab = document.getElementById('projectMenuLabel');
+	let tb = null; try { const r = JSON.parse(localStorage.getItem('pm7:settings:tome-tabs:v1:tastebook') || 'null'); tb = r && r.settings ? [r.settings['general.visual.theme'] || null, r.settings['general.visual.theme-mode'] || null] : null; } catch (e) { tb = null; }
+	const rec = window.O55 && O55.store ? O55.store.get('onboarding', null) : null;
+	return { active: typeof window.PM_ACTIVE_PROJECT_ID === 'string' ? window.PM_ACTIVE_PROJECT_ID : null, selected: sel ? sel.getAttribute('data-project') : null, label: lab ? lab.textContent.trim() : '',
+		finished: rec && rec.finished ? rec.finished.project : null, status: rec ? rec.status : null, tastebook: tb };
+});
+async function switchProject(t, f, id) {
+	await f.locator('#projectMenuBtn').click({ timeout: 10000 });
+	const row = f.locator(`#projectMenu .pm6-tb-menu-item[data-project="${id}"]`).first();
+	if (!(await row.count())) { await t.page.keyboard.press('Escape'); return false; }
+	await row.click({ timeout: 10000 });
+	await f.waitForFunction(() => !(window.PM_LOOK_COVERED && PM_LOOK_COVERED()), null, { timeout: 20000 }).catch(() => {});
+	await sleep(2500);
+	return true;
+}
+async function fo222(t) {
+	const tag = 'normal: FO-222, setup finished into a new Project in Glass Dark, tastebook in Retro Light, reloaded';
+	const NAME = 'Garden planner';
+	await t.emulate({ reducedMotion: 'no-preference' });
+	const f = await t.app.open({ onboarding: true, query: 'o55=fresh&o55scenario=fresh', sandbox: false, settleMs: 1500 });
+	let A = app(t, f);
+	await A.screen('welcome'); await A.close();
+	await A.toSettings(); await setLookBySetting(t, f, 'retro-light');
+	await A.resume(); await A.click('start', null, 'look');
+	await pickIn(f, A, 'glass', 'dark');
+	await A.click('next', null, 'where');
+	await finishFromWhere(f, A, NAME);
+	const q0 = await projectNow(f), p0 = await A.page();
+	await t.check(`${tag}: finished, the page is in ${NAME} and Glass Dark`, !!q0.finished && q0.selected === q0.finished && q0.label === NAME && held('glass-dark', p0), JSON.stringify({ project: q0, page: p0 }));
+	/* (the look the head painted first: html[data-theme] as the document's parsing ends, before any script of the app's
+	   runs at DOMContentLoaded; a fallback to tastebook's look would show there first, then switch) */
+	await t.page.addInitScript(() => { document.addEventListener('DOMContentLoaded', () => { window.__fo222First = document.documentElement.getAttribute('data-theme'); }, { once: true, capture: true }); });
+	const r = await freshLoad(t);
+	const q1 = await projectNow(r.f), p1 = await r.A.page(), first = await r.f.evaluate(() => window.__fo222First || null);
+	await t.check(`${tag}: reloaded, the first paint is already Glass Dark (no tastebook look first)`, first === 'glass-dark', JSON.stringify({ first }));
+	await t.check(`${tag}: reloaded, the title bar names ${NAME} and the page is in Glass Dark`, q1.selected === q0.finished && q1.label === NAME && held('glass-dark', p1), JSON.stringify({ project: q1, page: p1 }));
+	await t.check(`${tag}: reloaded, tastebook keeps its own saved look, Retro Light`, !!q1.tastebook && String(q1.tastebook[0]).toLowerCase().startsWith('retro') && String(q1.tastebook[1]).toLowerCase() === 'light', JSON.stringify(q1.tastebook));
+	await switchProject(t, r.f, 'tastebook');
+	const p2 = await r.A.page();
+	await t.check(`${tag}: the title bar's menu switched to tastebook: Retro Light`, held('retro-light', p2), JSON.stringify(p2));
+	const back = await switchProject(t, r.f, q0.finished), p3 = await r.A.page(), q3 = await projectNow(r.f);
+	await t.check(`${tag}: and back to ${NAME}: Glass Dark`, back && q3.selected === q0.finished && held('glass-dark', p3), JSON.stringify({ listed: back, project: q3, page: p3 }));
+}
+
 export default async function (t) {
 	await t.viewport(1440, 960);
 	const looks = t.args.looks ? String(t.args.looks).split(',') : ALL;
+	if (t.args.only === 'fo222') { if (t.app.surfaces().includes('normal')) await fo222(t); return; }
 	if (t.args.only === 'r57') { for (const sf of t.app.surfaces()) { const sb = sf === 'sandbox'; if (!sb) await r57f1(t); await r57f2(t, sb); await r57f3(t, sb); } await t.emulate({ reducedMotion: 'no-preference' }); return; }
 	if (t.args.only === 'fo219') { if (t.app.surfaces().includes('normal')) await fo219(t); return; }
 	if (t.args.only === 'openreload') { if (t.app.surfaces().includes('normal')) { await openReload(t, 'nier-light', 'basic-dark'); await openReload(t, 'glass-light', 'nier-dark', { back: true }); await openReloadNoPick(t); } return; }
@@ -496,6 +550,7 @@ export default async function (t) {
 			await nierBackground(t, sandbox);
 			if (!sandbox) await fo219(t);
 			if (!sandbox) await r57f1(t);
+			if (!sandbox) await fo222(t);
 			await r57f2(t, sandbox); await r57f3(t, sandbox);
 			if (!sandbox) { await openReload(t, 'nier-light', 'basic-dark'); await openReload(t, 'glass-light', 'nier-dark', { back: true }); await openReloadNoPick(t); }
 		}
