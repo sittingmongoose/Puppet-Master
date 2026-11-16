@@ -436,6 +436,15 @@ LANE_CASES = [
 ]
 
 
+# T252: every family selected by DF's contract main goes through the same record gate.
+DF_CONTRACT_FAMILIES = tuple(r["event_type"] for r in _read(REPO, "Plans/filesafe_event_contract_fixtures.json")["families"])
+LANE_CASES.extend(
+    ("DF-contracts:" + family, "scripts/pm_filesafe_event_contracts.py", "admission_report", family,
+     lambda fn, et, root, reg: (lambda failures: (fn([et], failures), failures)[1] == [])([]), None)
+    for family in DF_CONTRACT_FAMILIES
+)
+
+
 def _accepts(fn, *args):
     try:
         fn(*args)

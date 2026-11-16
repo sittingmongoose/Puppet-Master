@@ -227,8 +227,25 @@ def main(families=None):
     import pm_filesafe_p2a_cases as p2a
     failures.extend(p2a.case_failures(set(families) | {'shared'} if families is not None else None,
                                       boundary=('schema_meta', 'identity_vector', 'payload_semantic')))
-    print(json.dumps({'status':'fail' if failures else 'pass','families':counts,'failures':failures,'native_execution':'NOT_RUN','membership':'ABSENT'},indent=2))
+    membership = admission_report([r['event_type'] for r in fixture['families'] if families is None or r['event_type'] in families], failures)
+    print(json.dumps({'status':'fail' if failures else 'pass','families':counts,'failures':failures,'native_execution':'NOT_RUN','membership':membership},indent=2))
     return bool(failures)
+
+
+def admission_report(event_types, failures):
+    """T252: every selected DF family must be prepared or have its exact complete DL-077 record.
+
+    This gate adds only admission failures; payload, scope, retry and guard-table verdicts are unchanged.
+    """
+    import pm_ea_admission_mode as admission_mode
+    summary, refused = admission_mode.lane_gate(event_types, root=ROOT)
+    failures.extend(refused)
+    counts = summary['counts']
+    if counts['refused']:
+        return 'REFUSED'
+    return 'ABSENT' if not counts['admitted'] else 'RECORD_BOUND' if not counts['prepared'] else 'ABSENT_AND_RECORD_BOUND'
+
+
 if __name__ == '__main__':
     import argparse
     parser=argparse.ArgumentParser(description=__doc__)
