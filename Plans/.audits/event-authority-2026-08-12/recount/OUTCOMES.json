@@ -696,6 +696,10 @@
    "outcome": "registered"
   },
   {
+   "event_type": "remote_access.route_migration_state_changed",
+   "outcome": "registered"
+  },
+  {
    "event_type": "run.graph_canonical_locked",
    "outcome": "registered"
   },
