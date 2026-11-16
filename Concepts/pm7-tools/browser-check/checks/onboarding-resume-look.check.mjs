@@ -631,17 +631,67 @@ async function r80p1(t) {
 	await t.check(`${tag}: Creating done, closed on '${at}': the row is listed and selected before the reload`, !!at && !!before && before.selected && !!before.attrs['data-project-path'], JSON.stringify({ at, id, before }));
 	const r = await freshLoad(t), after = await rowNow(r.f, id);
 	await t.check(`${tag}: reloaded, the row is listed and selected with the same location line and hover detail`, !!after && after.selected && JSON.stringify(after.attrs) === JSON.stringify(before && before.attrs) && after.text === (before && before.text), JSON.stringify({ before, after }));
+	/* R87-P2: a Project known only to an older version's storage (its entry in the shell's setup-Project record removed, so
+	   only the onboarding record names it), with a fixture Project active (harbor): Run Onboarding Again, close, reload:
+	   still listed, harbor still selected with its look */
+	await r.f.evaluate((pid) => { try { const k = 'pm7:shell:setup-projects:v1', v = JSON.parse(localStorage.getItem(k) || '[]').filter((p) => p && p.id !== pid); if (v.length) localStorage.setItem(k, JSON.stringify(v)); else localStorage.removeItem(k); } catch (_) { /* none */ } }, id);
+	await switchProject(t, r.f, 'harbor');
+	const hLook = (await r.A.page()).theme;
+	let rp = await freshLoad(t);
+	await rp.A.toSettings();
+	await rp.f.locator('#pm-settings-root [data-action="home"]').first().click({ timeout: 10000 }).catch(() => {}); await sleep(600);
+	await rp.f.locator('[data-action="replay-onboarding"]').first().click({ timeout: 10000 });
+	await rp.f.waitForFunction(() => document.documentElement.hasAttribute('data-o55-open'), null, { timeout: 15000 });
+	await sleep(1500); await rp.A.close();
+	rp = await freshLoad(t);
+	const qp = await projectNow(rp.f), pp = await rp.A.page(), listedP = !!(await rowNow(rp.f, id));
+	await t.check(`${tag}: R87-P2, ${NAME} only in an older version's storage, harbor active, Run Onboarding Again, closed, reloaded: still listed, harbor selected in its look`, listedP && qp.selected === 'harbor' && pp.theme === hLook, JSON.stringify({ listed: listedP, project: qp, page: pp, harborLook: hLook }));
+	await switchProject(t, rp.f, id);
 	/* FO-222 round 2, F3: Demo Studio's Reset -> Progress (its own reset, what its button calls) while in that setup Project:
 	   the next reload paints the default Project's look (tastebook's Retro Light) from the first frame, and no stored id
 	   names the removed Project */
 	await recordFrames(t);
-	await r.f.evaluate(() => window.O55.studio.reset.progress());
-	await r.f.waitForFunction(() => document.documentElement.hasAttribute('data-o55-open'), null, { timeout: 20000 }).catch(() => {});
+	await rp.f.evaluate(() => window.O55.studio.reset.progress());
+	await rp.f.waitForFunction(() => document.documentElement.hasAttribute('data-o55-open'), null, { timeout: 20000 }).catch(() => {});
 	await sleep(1200);
 	const r5 = await freshLoad(t), fr5 = await frames(r5.f), th5 = runs(fr5.frames, 2), id5 = await r5.f.evaluate(() => { try { return localStorage.getItem('pm7:shell:active-project:v1'); } catch (_) { return 'no storage'; } });
 	await t.check(`${tag}: Demo Studio Reset -> Progress, reloaded: every frame from the first is tastebook's Retro Light, and no stored id names ${NAME}`, th5.length === 1 && th5[0][0] === 'retro-light' && id5 !== id, JSON.stringify({ looks: th5, stored: id5 }));
+	/* R87-P1: the reset also forgets the Project on the page itself. A second Project made by setup (the reset's new run,
+	   finished into it), then Reset -> Progress again, without a reload: no setup Project left in the title bar's menu, and
+	   the title bar names the default Project with Settings holding its saved look (the new run's window is over Basic
+	   Dark, a new install's look, from the reset's first frame); then the window closed, a switch to harbor and back to
+	   the Project now selected, and a reload: the same Project and look, and no stored id of a removed Project */
+	const NAME2 = 'Bird log', B = r5.A;
+	if (!(await B.open())) {
+		await B.toSettings();
+		await r5.f.locator('#pm-settings-root [data-action="home"]').first().click({ timeout: 10000 }).catch(() => {}); await sleep(600);
+		await r5.f.locator('[data-action="replay-onboarding"]').first().click({ timeout: 10000 });
+		await r5.f.waitForFunction(() => document.documentElement.hasAttribute('data-o55-open'), null, { timeout: 15000 });
+	}
+	await B.screen('welcome'); await B.click('start', null, 'look'); await B.click('next', null, 'where');
+	await finishFromWhere(r5.f, B, NAME2);
+	const qb = await projectNow(r5.f), idB = qb.selected;
+	await t.check(`${tag}: R87-P1, a second Project made by setup: the page is in ${NAME2}`, !!idB && !['tastebook', 'harbor', 'loom'].includes(idB) && qb.label === NAME2, JSON.stringify(qb));
+	await r5.f.evaluate(() => {
+		const F = window.__rs = { frames: [], t0: performance.now() };
+		const tick = () => { F.frames.push([Math.round(performance.now() - F.t0), document.documentElement.getAttribute('data-theme'), document.documentElement.hasAttribute('data-o55-open')]); if (performance.now() - F.t0 < 3000) requestAnimationFrame(tick); };
+		window.O55.studio.reset.progress(); requestAnimationFrame(tick);
+	});
+	const opened6 = await r5.f.waitForFunction(() => document.documentElement.hasAttribute('data-o55-open'), null, { timeout: 20000 }).then(() => true, () => false);
+	await sleep(3200);
+	const rows6 = await r5.f.evaluate(() => Array.from(document.querySelectorAll('#projectMenu [data-project]')).map((x) => x.getAttribute('data-project'))), q6 = await projectNow(r5.f), s6 = await B.stored(), rs6 = await r5.f.evaluate(() => window.__rs.frames);
+	const tb6 = q6.tastebook || [], sameLook6 = !s6.error && String(s6.theme).toLowerCase() === String(tb6[0]).toLowerCase() && String(s6.mode).toLowerCase() === String(tb6[1]).toLowerCase();
+	await t.check(`${tag}: R87-P1, right after Reset -> Progress: no setup Project in the title bar's menu, the title bar names tastebook, Settings holds tastebook's saved look`, opened6 && !rows6.includes(idB) && !rows6.includes(id) && q6.label === 'tastebook' && q6.selected === 'tastebook' && (q6.active === null || q6.active === 'tastebook') && sameLook6, JSON.stringify({ opened: opened6, rows: rows6, project: q6, settings: s6 }));
+	const looks6 = [...new Set(rs6.map((x) => x[1]))];
+	await t.check(`${tag}: R87-P1 (guard), the new run's window opens over Basic Dark, a new install's look: every frame from the reset is Basic Dark`, looks6.length === 1 && looks6[0] === 'basic-dark', JSON.stringify({ looks: looks6, frames: rs6.length }));
+	await B.close();
+	const s0 = (await projectNow(r5.f)).selected;
+	const away = await switchProject(t, r5.f, 'harbor'), back7 = await switchProject(t, r5.f, s0);
+	const q7b = await projectNow(r5.f), p7b = await B.page();
+	const r7 = await freshLoad(t), q7 = await projectNow(r7.f), p7 = await r7.A.page(), id7 = await r7.f.evaluate(() => { try { return localStorage.getItem('pm7:shell:active-project:v1'); } catch (_) { return 'no storage'; } });
+	await t.check(`${tag}: R87-P1, then the window closed, the title bar's menu to harbor and back to ${s0}, reloaded: the same Project in the same look, no stored id of a removed Project`, away && back7 && q7.selected === q7b.selected && q7.label === q7b.label && p7.theme === p7b.theme && id7 !== idB && id7 !== id, JSON.stringify({ selectedAfterClose: s0, before: { project: q7b, page: p7b }, after: { project: q7, page: p7 }, stored: id7 }));
 	/* (the page's default Project again, for the cases after this one) */
-	await switchProject(t, r5.f, 'tastebook');
+	await switchProject(t, r7.f, 'tastebook');
 }
 
 /* FO-222 round 2, F4: a new install (?o55=fresh) after the person was in harbor with its own look opens in the default
@@ -658,10 +708,11 @@ async function f4install(t) {
 		if (k === 1) { await A.toSettings(); await setLookBySetting(t, f, 'glass-dark'); }
 		const p0 = await A.page();
 		f = await t.app.open({ onboarding: true, query: 'o55=fresh&o55scenario=fresh', sandbox: false, settleMs: 1500 });
-		await f.waitForFunction(() => document.documentElement.hasAttribute('data-o55-open'), null, { timeout: 20000 }).catch(() => {});
+		const opened = await f.waitForFunction(() => document.documentElement.hasAttribute('data-o55-open'), null, { timeout: 20000 }).then(() => true, () => false);
 		await sleep(600);
 		const fr = await frames(f), upto = fr.frames.findIndex((x) => x[3]), th = runs(upto < 0 ? fr.frames : fr.frames.slice(0, upto), 2);
-		await t.check(`${tag} (${k} of 2): every frame from the first until the window is Basic Dark (harbor was ${p0.theme})`, sw && held('glass-dark', p0) && th.length === 1 && th[0][0] === 'basic-dark', JSON.stringify({ switched: sw, before: p0, looks: th }));
+		/* (R87's tool note: the setup window must have opened, or there is no 'until the window') */
+		await t.check(`${tag} (${k} of 2): the setup window opened, and every frame from the first until it is Basic Dark (harbor was ${p0.theme})`, opened && upto >= 0 && sw && held('glass-dark', p0) && th.length === 1 && th[0][0] === 'basic-dark', JSON.stringify({ opened, switched: sw, before: p0, looks: th }));
 		if (await A.open().catch(() => false)) { const B = app(t, f); await B.close().catch(() => {}); }
 	}
 	/* the label in the page's own Project is never blank (the head's mark is absent there): a load with no stored id (the new
