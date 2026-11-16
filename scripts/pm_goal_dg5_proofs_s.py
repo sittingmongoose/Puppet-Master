@@ -323,3 +323,19 @@ PROOFS.update({
             "case the row is not in the snapshot at all. When the row is present, both decoders "
             "therefore yield the identical event value, so :816 cannot refuse.")),
 })
+
+PROOFS.update({
+    'dg5/site/pm_goal_dg_s_start.py:908': dict(
+        kind='entailment', families=['goal_run.started'],
+        depends_on=['dg5/start/producer/schema'],
+        sites=[(START, 908), (START, 980), (START, 1065)],
+        argument=(
+            "The runtime actor value checked at :908 is copied unchanged into both actor_ref fields "
+            "of the producer submission (producer_submission and :1065), and that submission is "
+            "validated against TypedProducerSubmission at :980 before any append. Its actor_ref "
+            "fields carry the same string/non-empty predicate (string type with minLength in the "
+            "producer and payload schemas), so an empty or non-string actor that fails :908 refuses "
+            "at the producer schema row later in the same commit_start call. The fresh discovery "
+            "chain for S1/runtime_actor_empty stops exactly through that schema row and the "
+            "downstream argument schemas, so :908 has no single-defect witness.")),
+})
