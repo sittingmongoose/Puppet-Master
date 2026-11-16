@@ -1,0 +1,365 @@
+{
+ "schema_id": "pm.assurance.event_authority.admission_depth_assessment.v1",
+ "assessment_kind": "admission_twelve_criteria",
+ "writer": "pm-ea-admission-writer.v1",
+ "merge": "admission-merge-2",
+ "registry": {
+  "path": "Plans/event_family_registry.json",
+  "revision": "2026-11-16.183",
+  "sha256": "b96d18e406d2d14e52d57829fc293b553a68e6d0ca73e0c8cdba5eaeb516010e",
+  "family_count": 402,
+  "row_pointer": "#/families/401"
+ },
+ "base_commit": "45b4ccf25270c486dbc682805cd455ce4ca25fb0",
+ "rubric": "Step 8 depth matrix, twelve criteria (DL-077); PASS needs Plans/ evidence",
+ "native_execution": "NOT_RUN",
+ "rows": [
+  {
+   "event_type": "live.artifact.created",
+   "family_id": "event-family-live-artifact-created",
+   "family_revision": "1.0.0",
+   "cells": {
+    "membership_version": {
+     "status": "PASS",
+     "representation": "exact_registry_membership",
+     "finding": "Registered at registry revision 2026-11-16.183 as #/families/401 (canonical row SHA-256 a923ee9ea95bcd7a766c4d670429990f87ab830f47f131071b1c102860c5cee0); before this commit the family was absent.",
+     "evidence": [
+      {
+       "path": "Plans/event_family_registry.json",
+       "json_pointer": "#/families/401",
+       "line_start": 26371,
+       "line_end": 26416,
+       "quote": "\"event_type\": \"live.artifact.created\"",
+       "quote_line": 26374,
+       "file_sha256": "b96d18e406d2d14e52d57829fc293b553a68e6d0ca73e0c8cdba5eaeb516010e",
+       "quote_check": "exact"
+      }
+     ]
+    },
+    "owner_doc": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "live.artifact.created has its own current owner doc contract; F1/F2/F3 and exact-type controls execute against this head.",
+     "evidence": [
+      {
+       "path": "Plans/newtools.md",
+       "unit": "N2-221",
+       "line_start": 9318,
+       "line_end": 9318,
+       "quote": "live.artifact.created 1.0.0 — newly authored owner contract, prepared without admission.",
+       "quote_check": "exact",
+       "quote_scope": "unit N2-221, Plans/newtools.md:9318-9370",
+       "file_sha256": "178bb7506499c09d2b5ceb3e4658c14b098132679aa10284d8ee12dd8e7ef64e"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "owner_doc",
+      "status": "PASS"
+     }
+    },
+    "producer": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "live.artifact.created has its own current producer contract; F1/F2/F3 and exact-type controls execute against this head.",
+     "evidence": [
+      {
+       "path": "Plans/newtools.md",
+       "unit": "N2-221",
+       "line_start": 9328,
+       "line_end": 9328,
+       "quote": "Producer: Unified live-visualization orchestrator runtime artifact completion hook. Only after the runtime artifact pipeline has committed the actual artifact and its original rece",
+       "quote_check": "exact",
+       "quote_scope": "unit N2-221, Plans/newtools.md:9318-9370",
+       "file_sha256": "178bb7506499c09d2b5ceb3e4658c14b098132679aa10284d8ee12dd8e7ef64e"
+      },
+      {
+       "path": "Plans/newtools.md",
+       "unit": "N2-221",
+       "line_start": 9339,
+       "line_end": 9339,
+       "quote": "Round 7 authenticated history for live.artifact.created: retained read, checkpoint and rebuild accept supported 1.0.0 originals written with projector_replay_only as well as dedupe",
+       "quote_check": "exact",
+       "quote_scope": "unit N2-221, Plans/newtools.md:9318-9370",
+       "file_sha256": "178bb7506499c09d2b5ceb3e4658c14b098132679aa10284d8ee12dd8e7ef64e"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "producer",
+      "status": "PASS"
+     }
+    },
+    "closed_payload_schema": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "live.artifact.created has its own current closed payload schema contract; F1/F2/F3 and exact-type controls execute against this head.",
+     "evidence": [
+      {
+       "path": "Plans/ds15_live_artifact_created.schema.json",
+       "unit": "root",
+       "line_start": 3,
+       "line_end": 3,
+       "quote": "\"additionalProperties\": false,",
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "file_sha256": "8204e5069a7c29aec3e3c02207ea492031f69176fde72bc7d8771411e9bca403"
+      },
+      {
+       "path": "Plans/ds15_live_artifact_created.schema.json",
+       "unit": "root",
+       "line_start": 15,
+       "line_end": 15,
+       "quote": "\"const\": \"1.0.0\"",
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "file_sha256": "8204e5069a7c29aec3e3c02207ea492031f69176fde72bc7d8771411e9bca403"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "closed_payload_schema",
+      "status": "PASS"
+     }
+    },
+    "scope_identity": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "live.artifact.created has its own current scope identity contract; F1/F2/F3 and exact-type controls execute against this head.",
+     "evidence": [
+      {
+       "path": "Plans/newtools.md",
+       "unit": "N2-221",
+       "line_start": 9329,
+       "line_end": 9329,
+       "quote": "Idempotency key is sha256(canonical MessagePack array [\"live.artifact.created\", \"1.0.0\", actual project_id, live_session_id,artifact_id]); the ordered tuple is unambiguous, never d",
+       "quote_check": "exact",
+       "quote_scope": "unit N2-221, Plans/newtools.md:9318-9370",
+       "file_sha256": "178bb7506499c09d2b5ceb3e4658c14b098132679aa10284d8ee12dd8e7ef64e"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "scope_identity",
+      "status": "PASS"
+     }
+    },
+    "replay_idempotency": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "live.artifact.created has its own current replay idempotency contract; F1/F2/F3 and exact-type controls execute against this head.",
+     "evidence": [
+      {
+       "path": "Plans/newtools.md",
+       "unit": "N2-221",
+       "line_start": 9332,
+       "line_end": 9332,
+       "quote": "Replay: event delivery and passive reads execute no external action; exact duplicates leave the index state unchanged. Actual original run/Doctor source custody plus canonical even",
+       "quote_check": "exact",
+       "quote_scope": "unit N2-221, Plans/newtools.md:9318-9370",
+       "file_sha256": "178bb7506499c09d2b5ceb3e4658c14b098132679aa10284d8ee12dd8e7ef64e"
+      },
+      {
+       "path": "Plans/newtools.md",
+       "unit": "N2-221",
+       "line_start": 9339,
+       "line_end": 9339,
+       "quote": "Round 7 authenticated history for live.artifact.created: retained read, checkpoint and rebuild accept supported 1.0.0 originals written with projector_replay_only as well as dedupe",
+       "quote_check": "exact",
+       "quote_scope": "unit N2-221, Plans/newtools.md:9318-9370",
+       "file_sha256": "178bb7506499c09d2b5ceb3e4658c14b098132679aa10284d8ee12dd8e7ef64e"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "replay_idempotency",
+      "status": "PASS"
+     }
+    },
+    "retention": {
+     "status": "PASS",
+     "representation": "integrated_retention_delta",
+     "finding": "Current exact-family BOUND retention assignment: {\"application_policy_ref\": null, \"decisions\": [\"DL-401\", \"DL-500\"], \"event_type\": \"live.artifact.created\", \"existing_checkpoints\": [{\"family_id\": \"ds15_live_artifact_created_checkpoint\", \"policy_ref\": \"RP-PROJECTION-3GEN@1.0.0\"}], \"grade_source\": \"reports/event-authority-20261104/DS15-self-grade.json\", \"history_policy_ref\": \"RP-RUNTIME-365D@1.0.0\", \"lane\": \"DS15\", \"original_and_checkpoint_assignments\": [{\"decision\": \"DL-500\", \"family_id\": \"ds15_live_artifact_created_checkpoint\", \"policy_ref\": \"RP-PROJECTION-3GEN@1.0.0\"}], \"owner\": \"Plans/storage-plan.md#SP-644\", \"owner_line\": 44609, \"prior_finding\": \"Event/checkpoint retention remains explicitly PENDING_RETENTION_DECISION for RT.\", \"question\": null, \"status\": \"BOUND\"}",
+     "evidence": [
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-644",
+       "line_start": 49036,
+       "line_end": 49036,
+       "quote": "\\ = RP-RUNTIME-365D@1.0.0`, under DL-401, DL-500.\\n\\nUse the existing policy object unchanged: {\\\"anchor_kind\\\"\\",
+       "quote_check": "exact",
+       "quote_scope": "unit SP-644, Plans/storage-plan.md:49014-49075",
+       "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "retention",
+      "status": "PASS"
+     }
+    },
+    "redaction_custody": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "live.artifact.created has its own current redaction custody contract; F1/F2/F3 and exact-type controls execute against this head.",
+     "evidence": [
+      {
+       "path": "Plans/newtools.md",
+       "unit": "N2-221",
+       "line_start": 9334,
+       "line_end": 9334,
+       "quote": "backup/restore covers original log, receipts and the source closure; mandatory original custody missing or unverifiable fences retry and disclosure. The derived checkpoint is rebui",
+       "quote_check": "exact",
+       "quote_scope": "unit N2-221, Plans/newtools.md:9318-9370",
+       "file_sha256": "178bb7506499c09d2b5ceb3e4658c14b098132679aa10284d8ee12dd8e7ef64e"
+      },
+      {
+       "path": "Plans/newtools.md",
+       "unit": "N2-221",
+       "line_start": 9339,
+       "line_end": 9339,
+       "quote": "Round 7 authenticated history for live.artifact.created: retained read, checkpoint and rebuild accept supported 1.0.0 originals written with projector_replay_only as well as dedupe",
+       "quote_check": "exact",
+       "quote_scope": "unit N2-221, Plans/newtools.md:9318-9370",
+       "file_sha256": "178bb7506499c09d2b5ceb3e4658c14b098132679aa10284d8ee12dd8e7ef64e"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "redaction_custody",
+      "status": "PASS"
+     }
+    },
+    "transitions": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "live.artifact.created has its own current transitions contract; F1/F2/F3 and exact-type controls execute against this head.",
+     "evidence": [
+      {
+       "path": "Plans/newtools.md",
+       "unit": "N2-221",
+       "line_start": 9328,
+       "line_end": 9328,
+       "quote": "Producer: Unified live-visualization orchestrator runtime artifact completion hook. Only after the runtime artifact pipeline has committed the actual artifact and its original rece",
+       "quote_check": "exact",
+       "quote_scope": "unit N2-221, Plans/newtools.md:9318-9370",
+       "file_sha256": "178bb7506499c09d2b5ceb3e4658c14b098132679aa10284d8ee12dd8e7ef64e"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "transitions",
+      "status": "PASS"
+     }
+    },
+    "consumers_checkpoints": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "live.artifact.created has its own current consumers checkpoints contract; F1/F2/F3 and exact-type controls execute against this head.",
+     "evidence": [
+      {
+       "path": "Plans/newtools.md",
+       "unit": "N2-221",
+       "line_start": 9333,
+       "line_end": 9333,
+       "quote": "reader.ds15.live_artifact_created.v1@1.0.0, operating as Chat live_run_card artifact reader, reads only this exact admitted event type at 1.0.0. It adopts SP-278 by name and DL-076",
+       "quote_check": "exact",
+       "quote_scope": "unit N2-221, Plans/newtools.md:9318-9370",
+       "file_sha256": "178bb7506499c09d2b5ceb3e4658c14b098132679aa10284d8ee12dd8e7ef64e"
+      },
+      {
+       "path": "Plans/newtools.md",
+       "unit": "N2-221",
+       "line_start": 9339,
+       "line_end": 9339,
+       "quote": "Round 7 authenticated history for live.artifact.created: retained read, checkpoint and rebuild accept supported 1.0.0 originals written with projector_replay_only as well as dedupe",
+       "quote_check": "exact",
+       "quote_scope": "unit N2-221, Plans/newtools.md:9318-9370",
+       "file_sha256": "178bb7506499c09d2b5ceb3e4658c14b098132679aa10284d8ee12dd8e7ef64e"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "consumers_checkpoints",
+      "status": "PASS"
+     }
+    },
+    "compatibility_withdrawal": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "live.artifact.created has its own current compatibility withdrawal contract; F1/F2/F3 and exact-type controls execute against this head. Sweep part 2B: retained readers select the frozen recipe only through SP-1101 (sealed write custody, then the shared RetainedDispatcher), and the frozen recipe carries the CV-1101 profiles; owner-valid history stays readable and forged, unsealed, unsupported or wrong-family selections refuse.",
+     "evidence": [
+      {
+       "path": "Plans/newtools.md",
+       "unit": "N2-221",
+       "line_start": 9327,
+       "line_end": 9327,
+       "quote": "withdrawal definition was found for live.artifact.created. This family is explicitly inside DL-045's exact scope. No sibling definition is adopted.",
+       "quote_check": "exact",
+       "quote_scope": "unit N2-221, Plans/newtools.md:9318-9370",
+       "file_sha256": "178bb7506499c09d2b5ceb3e4658c14b098132679aa10284d8ee12dd8e7ef64e"
+      },
+      {
+       "path": "Plans/newtools.md",
+       "unit": "N2-221",
+       "line_start": 9339,
+       "line_end": 9339,
+       "quote": "Round 7 authenticated history for live.artifact.created: retained read, checkpoint and rebuild accept supported 1.0.0 originals written with projector_replay_only as well as dedupe",
+       "quote_check": "exact",
+       "quote_scope": "unit N2-221, Plans/newtools.md:9318-9370",
+       "file_sha256": "178bb7506499c09d2b5ceb3e4658c14b098132679aa10284d8ee12dd8e7ef64e"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "compatibility_withdrawal",
+      "status": "PASS"
+     }
+    },
+    "positive_negative_oracles": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "Cycle-8 independent review accepted the residual constructions. Sweep part 2A: every refusal is a guard-table row and the gated tool proves every provable row; S-N1 adopted. Sweep part 2B: S-FMT1 (CV-1101 through the shared predicate, EventRecord and storage_utc_z profiles) and S-N2 (SP-1101 selection and RetainedDispatcher resolution) adopted with their witnesses; JSON Schema keyword cuts are not ported.",
+     "evidence": [
+      {
+       "path": "Plans/newtools.md",
+       "unit": "N2-221",
+       "line_start": 9337,
+       "line_end": 9337,
+       "quote": "Oracles: ATS-324 and scripts/pm-ds15-event-contracts.py exercise this exact closed payload and checkpoint identity. Native obligations: original-outcome/append crash boundaries, re",
+       "quote_check": "exact",
+       "quote_scope": "unit N2-221, Plans/newtools.md:9318-9370",
+       "file_sha256": "178bb7506499c09d2b5ceb3e4658c14b098132679aa10284d8ee12dd8e7ef64e"
+      },
+      {
+       "path": "Plans/newtools.md",
+       "unit": "N2-221",
+       "line_start": 9339,
+       "line_end": 9339,
+       "quote": "Round 7 authenticated history for live.artifact.created: retained read, checkpoint and rebuild accept supported 1.0.0 originals written with projector_replay_only as well as dedupe",
+       "quote_check": "exact",
+       "quote_scope": "unit N2-221, Plans/newtools.md:9318-9370",
+       "file_sha256": "178bb7506499c09d2b5ceb3e4658c14b098132679aa10284d8ee12dd8e7ef64e"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "positive_negative_oracles",
+      "status": "PASS"
+     }
+    }
+   }
+  }
+ ]
+}
