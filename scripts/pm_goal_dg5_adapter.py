@@ -103,6 +103,64 @@ def supplements(suite, work):
     _read_event_supplements(suite, work, base, generation)
     _decode_supplements(suite, work, data, base, generation)
     _pure_supplements(suite, work)
+    _handle_supplements(suite, work)
+
+
+class _HandleSubclass(A.OriginalHandle):
+    """A handle whose exact type is not OriginalHandle (the :624/:630 defect)."""
+
+
+def _handle_supplements(suite, work):
+    """DG5 negatives isolating the AppendOwner handle-type rows (:624/:630).
+
+    The authored dict-handle cases also fail the issuer check on the next line, so neither
+    row can be killed by them. A subclass handle registered in the owner's own event map
+    (the sealed world state, exactly as a stored-cell rewrite) passes the issuer check and
+    the genuine read, leaving the exact-type require as the only refusal.
+    """
+    def setup(tag):
+        registry = A.OwnerRegistry()
+        store = storage.TestOwnerStorage.create(work / ('handle-' + tag))
+        appender = A.AppendOwner(registry, store)
+        events, _reservation, _outcome = appender.append_original(
+            'TEST_ONLY:op:' + tag, dict(tag=tag), [selftest.candidate(tag)])
+        genuine = events[0]
+        sub = _HandleSubclass(genuine.kind)
+        appender._events[sub] = appender._events[genuine]
+        return appender, sub
+
+    def event_case():
+        appender, sub = setup('dg5-event-handle')
+        return appender.event(sub)
+
+    def receipt_case():
+        appender, sub = setup('dg5-receipt-handle')
+        return appender.first_receipt(sub)
+
+    suite.negative('dg5-shared', 'event_subclass_handle:624', event_case, 'event/handle_type')
+    suite.negative('dg5-shared', 'first_receipt_subclass_handle:630', receipt_case, 'event/handle_type')
+
+    def append_case():
+        store = storage.TestOwnerStorage.create(work / 'handle-storage-append')
+        genuine = store.reserve('TEST_ONLY:op:dg5-append-handle', dict(tag='dg5-append-handle'))
+        sub = _StorageHandleSubclass(genuine.kind)
+        store._handles[sub] = store._handles[genuine]
+        return store.append(sub, [selftest.candidate('dg5-append-handle')])
+
+    def receipt_of_case():
+        store = storage.TestOwnerStorage.create(work / 'handle-storage-receipt')
+        genuine, _out, _rows = selftest.append_one(store, 'dg5-receipt-handle')
+        issued = store.issue_first_receipt(genuine)
+        sub = _StorageHandleSubclass(issued[0].kind)
+        store._receipt_handles[sub] = store._receipt_handles[issued[0]]
+        return store.receipt_of(sub)
+
+    suite.negative('dg5-shared', 'append_subclass_handle:1259', append_case, 'handle/type')
+    suite.negative('dg5-shared', 'receipt_of_subclass_handle:1589', receipt_of_case, 'receipt_handle/type')
+
+
+class _StorageHandleSubclass(storage._Handle):
+    """A storage handle whose exact type is not _Handle (the :1259/:1589 defect)."""
 
 
 def _read_event_supplements(suite, work, base, generation):
