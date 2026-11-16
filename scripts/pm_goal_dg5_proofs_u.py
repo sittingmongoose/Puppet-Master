@@ -53,4 +53,38 @@ PROOFS = {
             'graph_sha256() of the loaded resource graph (:496). So whenever :1918 is reached, '
             'the witness graph and the final graph both equal that one value; no complete call '
             'can make :1918 refuse alone. It closes by this proof once :496 is closed.')),
+    SITE + '1785': dict(
+        kind='entailed-by-progress-schema',
+        families=['goal.updated'],
+        depends_on=['dg5/dgu/physical/logical/schema'],
+        sites=[(U, 1783), (U, 1785), (U, 1786), ('Plans/goal_update_command_custody.schema.json', 1279)],
+        argument=(
+            'publish at :1785 requires phase in (event_ready, event_unknown) on the head progress '
+            'record, after the event_issued replay return (:1783). The record reached publish only '
+            'through read_progress -> unwrap_row, whose whole-root StorageProgress validation '
+            '(row dg5/dgu/physical/logical/schema) admits exactly eight phase shapes '
+            '(Progress oneOf, Plans/goal_update_command_custody.schema.json:1279): producer_input '
+            'is an object only in event_ready, event_unknown and event_issued, and null in every '
+            'other phase. So a record that fails :1785 always has producer_input null and the very '
+            'next statement (:1786-1787) validates that null candidate against ProducerInput and '
+            'refuses; publish can never accept by removing :1785. The single-defect attempt '
+            '(event_ready record resealed as body_committed) is refused by that same schema shape. '
+            'It closes by this proof once the physical logical schema row is closed.')),
+    SITE + '1801': dict(
+        kind='entailed-by-storage-receipt',
+        families=['goal.updated'],
+        depends_on=[],
+        sites=[(U, 1797), (U, 1801), ('scripts/pm_goal_test_owner_adapters.py', 547),
+               ('scripts/pm_goal_test_storage.py', 1544), ('scripts/pm_goal_test_storage.py', 1567),
+               ('scripts/pm_goal_test_storage.py', 1631)],
+        argument=(
+            ':1801 compares the first receipt sequence with the stored event sequence from the '
+            'same append: AppendOwner.append_original issues the first receipt for the appended '
+            'event and binds the returned OriginalHandle to (event_id, receipt); first_receipt '
+            'and event resolve that one handle (pm_goal_test_owner_adapters.py:541-551) to '
+            'Storage.receipt_of (the custody row _custody_row built from the append frame) and '
+            'Storage.read_event (that same frame decoded). Both sequences are the append frame '
+            'sequence of one event, so no complete publish call can make them differ; a Storage '
+            'that disagreed with itself here would already refuse in its own frame/custody joins. '
+            'No boundary exists between append_original and the two reads in publish.')),
 }

@@ -105,6 +105,12 @@ DECLARED_RULES += (
      "metadata_update requires change.state in (active, paused, blocked, completed) at :1289; the intent "
      "record carries that same after_record body (pending schema, :1306 validate) and the stored body row "
      "is validated against storage_body, whose state is the same four-value enum: one field, one predicate."),
+    (lambda cid: cid == 'U5/F/producer.publish/before_release/candidate',
+     (U_SITE + '1793', U_SITE + '1800'),
+     "publish requires A.same(ctx candidate, frozen producer_input) at :1793 before the append and "
+     "A.same(producer25(stored event), frozen producer_input) at :1800 after it: the same whole "
+     "producer_input value, the same exact-equality predicate, once on the candidate and once on "
+     "its stored round-trip (producer25 is the stored event minus Storage-assigned fields)."),
     (lambda cid: cid == 'U5/G/api_metadata_blocked_without_reason',
      (U_SITE + '1291', 'dg5/dgu/body/metadata/intent/schema', 'dg5/dgu/body/goal_body_record/schema'),
      "metadata_update requires (state == blocked) == (blocked_reason_ref is not None) at :1291 on the "
