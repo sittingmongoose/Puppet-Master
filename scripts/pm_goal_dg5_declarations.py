@@ -60,6 +60,15 @@ DECLARED_RULES = (
 )
 
 
+S_READERS = 'dg5/site/pm_goal_dg_s_readers.py:'
+DECLARED_RULES += (
+    (lambda cid: cid == 'S4/historical_reader_withdrawn',
+     (S_READERS + '788', S_READERS + '790'),
+     'StartedReaders._passive checks `method not in self.withdrawn_readers` at pm_goal_dg_s_readers.py:788 and '
+     're-checks the identical predicate on the same set at its final boundary :790.'),
+)
+
+
 def declared(case_id):
     if case_id in DECLARED:
         return DECLARED[case_id]
