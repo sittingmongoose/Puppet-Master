@@ -47,3 +47,21 @@ def direct_admission_source_message(d):
     state = w.sir.state(key)
     w.sir.put(key, dict(state, request=dict(state['request'], source_message_id='message:TEST_ONLY:dg5')))
     return w, lambda: w.command.run(req)
+
+
+def _approval_out_of_enum(d):
+    # Lead decision 1116073727-d098 condition 2: reach :1039 alone with an out-of-enum decision. ApprovalOwner
+    # cells are read back through _decode_cell, which checks value_sha256 only (no ApprovalResolution schema),
+    # so a coherently re-put stored resolution (the authored w.sir.put pattern) skips the :1018 schema check.
+    w = U.world(d)
+    g = O.birth_goal(w)
+    req, ag = O.agent_request(w, g, 'x', decide='approved')
+    state = w.approvals.state(req['approval_id'])
+    w.approvals.put(req['approval_id'], dict(state, resolution=dict(state['resolution'], decision='withheld')))
+    return w, U.admitted(w, req)
+
+
+case('U-DG5/N/approval_decision_out_of_enum', 'dgu/source/capture/acceptance/approval_decision', SITE + '1039',
+     "ApprovalResolution.decision 'withheld' (outside {approved, denied, expired}) passes :1037 and :1038 and is "
+     'refused by :1039 alone; reached through a stored resolution that the owner reads without its schema.')(
+    _approval_out_of_enum)

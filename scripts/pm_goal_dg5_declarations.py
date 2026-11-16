@@ -76,6 +76,24 @@ DECLARED_RULES += (
 )
 
 
+# Enum- or const-closed equivalent checks (lead decision 1116073727-d098; listed apart in the report).
+APPROVAL_CLOSURE = ("Plans/goal_runtime_contracts.schema.json ApprovalResolution.decision is enum-closed "
+                    "{approved, denied, expired}; ApprovalOwner.decide validates the resolution against it at "
+                    "pm_goal_dg_u_owners.py:1018 before read_resolution's checks run. Path checked for :1039 alone: a "
+                    "stored resolution re-put without its schema (ApprovalOwner cells are digest-checked only) carries "
+                    "an out-of-enum decision past :1037/:1038; supplement U-DG5/N/approval_decision_out_of_enum KILLS "
+                    ":1039 alone.")
+ENUM_CLOSED_RULES = (
+    (lambda cid: cid == 'U5/N/approval_denied', (U_SITE + '1037', U_SITE + '1039'),
+     "decision != 'denied' (:1037) and decision == 'approved' (:1039) agree on the defect value 'denied' over the "
+     'enum-closed domain. ' + APPROVAL_CLOSURE),
+    (lambda cid: cid == 'U5/N/approval_expired', (U_SITE + '1038', U_SITE + '1039'),
+     "decision != 'expired' (:1038) and decision == 'approved' (:1039) agree on the defect value 'expired' over the "
+     'enum-closed domain. ' + APPROVAL_CLOSURE),
+)
+DECLARED_RULES += ENUM_CLOSED_RULES
+
+
 FAMILY_MODULES = ('s', 'ca', 'r', 'cf')   # pm_goal_dg5_declarations_<x>.py, one owner per file (SPLIT.md)
 _LOADED = []
 
