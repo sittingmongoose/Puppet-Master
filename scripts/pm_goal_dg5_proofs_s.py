@@ -109,3 +109,35 @@ PROOFS.update({
             "when the hash is already bound. No complete family call can present a Context whose "
             "workgraph_sha256 is still None, so :306 cannot refuse.")),
 })
+
+SOURCE = 'scripts/pm_goal_test_source.py'
+PROOFS.update({
+    'dg5/site/pm_goal_dg_s_readers.py:655': dict(
+        kind='entailment', families=['goal_run.started'],
+        depends_on=['dg5/site/pm_goal_dg_s_readers.py:654', R258],
+        sites=[(READERS, 655), (READERS, 654), (READERS, 651), (READERS, 321), (SOURCE, 365)],
+        argument=(
+            ":655 is evaluated only after :654 has required the projection complete. "
+            "GenericSource.project reports complete only with no halt and no snapshot defect "
+            "(pm_goal_test_source.py:365). The snapshot was acquired from the same Storage immediately "
+            "before original_started succeeded at readers:651, so the start frame is retained and "
+            "readable; acquisition scans every retained segment group in sequence and appends each "
+            "non-defect row, and any defect truncating or preceding that row makes the projection "
+            "incomplete at :654 first. The projector's select matches the event's ctx project/run, "
+            "which relations (:258) binds, the retained map is keyed by that event id, and the reducer "
+            "sets state['started'] for exactly that row (readers:321). A complete projection therefore "
+            "always has a started state, and :655 cannot be the first refusal in replay.")),
+    'dg5/site/pm_goal_dg_s_readers.py:792': dict(
+        kind='construction', families=['goal_run.started'],
+        depends_on=[],
+        sites=[(READERS, 792), (READERS, 783), (READERS, 763)],
+        argument=(
+            "In every reader body, Storage generations move only inside the named synchronous hooks: "
+            "the helpers acquire, read, decode and issue in-memory originals, and perform no Storage "
+            "transaction. StartedReaders._hook brackets each hook call with the exact commit-generation "
+            "and cell-generation deltas and adds them to self._delta (readers:763-769), and _passive "
+            "snapshots both generations before the body runs (readers:783-784). The finally comparison "
+            "at :792 is therefore an identity over the modeled hook transitions of this family: the "
+            "measured generation movement is exactly the sum the hooks were charged, so it cannot "
+            "refuse in a complete reader call.")),
+})
