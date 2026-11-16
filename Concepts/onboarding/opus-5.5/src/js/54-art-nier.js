@@ -6,7 +6,7 @@
    right on every page. The world and backdrop are here, and the stage's NieR parts as a mixin. */
 (function () {
   'use strict';
-  const O55 = window.O55, PIP = O55.pipStage, PW = O55.pipWorlds, Hp = PIP.h, R = Hp.R, ease = Hp.ease;
+  const O55 = window.O55, PIP = O55.pipStage, PW = O55.pipWorlds, Hp = PIP.h, R = Hp.R, ease = Hp.ease, attr = Hp.attr, words = Hp.words;
   Object.assign(PW.WORLDS, {
     'nier-light': {
       fam: 'nier', scheme: 'light', paper: '#CCC8B1', paper2: '#C3BFA7', ink: '#211F1B', text: '#211F1B', line: '#211F1B', grid: 'rgba(33,31,27,.07)', red: '#A94A38',
@@ -96,9 +96,22 @@
       this.gSlice.setAttribute('transform', `translate(${step[2]} 0)`);
       this.gSlice.setAttribute('display', 'inline');
     },
+    /* The brackets' nine parts (four corners, the side ticks, the diamond, the leader, its node and its label) are made
+       once and kept in that order; a part not drawn this frame is taken out and put back in its place when it is drawn
+       again, and each value is written only when it changes. Written anew with innerHTML every frame they were
+       NieR Dark's 14,500 style elements a second at rest (owner's PC; pm7-perf lane W). */
     renderBrackets() {
-      const id = this.target, pr = id && this.props.get(id);
-      if (!pr || !pr.pos) { this.gHud.innerHTML = ''; return; }
+      const id = this.target, pr = id && this.props.get(id), g = this.gHud;
+      const B = g.__b || (g.__b = ['path', 'path', 'path', 'path', 'path', 'rect', 'path', 'rect', 'text'].map((tag) => Hp.el(tag)));
+      const show = (i, on) => {
+        const e = B[i];
+        if (on === (e.parentNode === g)) return;
+        if (!on) { e.remove(); return; }
+        let at = null; for (let j = i + 1; j < B.length && !at; j++) if (B[j].parentNode === g) at = B[j];
+        g.insertBefore(e, at);
+      };
+      const set = (i, a) => { show(i, true); for (const k in a) attr(B[i], k, a[k]); };
+      if (!pr || !pr.pos) { for (let i = 0; i < B.length; i++) show(i, false); return; }
       const sc = this.propTarget(pr).sc, x = pr.pos[0], y = pr.pos[1], Lay = this.L;
       // brackets fly in and lock when the target changes, then breathe a little
       const inK = this.reduced ? 1 : ease((this.t - (this.tgtT || 0)) / .4);
@@ -106,25 +119,40 @@
       const pulse = this.reduced ? 0 : Math.sin(this.t * 3) * 1.2;
       const grow = (1 - inK) * 34 + lock * 14 + pulse;
       const hw = 58 * sc + grow, hh = Math.max(48, pr.foot + 8) * sc + grow, k = 12 * sc, c = this.w.ink;
-      const corner = (cx, cy, dx, dy) => `<path d="M${R(cx)} ${R(cy + dy * k)}V${R(cy)}H${R(cx + dx * k)}" fill="none" stroke="${c}" stroke-width="1.6"/>`;
-      let s = corner(x - hw, y - hh, 1, 1) + corner(x + hw, y - hh, -1, 1) + corner(x - hw, y + hh, 1, -1) + corner(x + hw, y + hh, -1, -1)
-        + `<path d="M${R(x - hw - 10)} ${R(y)}H${R(x - hw - 3)}M${R(x + hw + 3)} ${R(y)}H${R(x + hw + 10)}" stroke="${c}" stroke-width="1"/>`;
+      const corner = (i, cx, cy, dx, dy) => set(i, { d: `M${R(cx)} ${R(cy + dy * k)}V${R(cy)}H${R(cx + dx * k)}`, fill: 'none', stroke: c, 'stroke-width': '1.6' });
+      corner(0, x - hw, y - hh, 1, 1); corner(1, x + hw, y - hh, -1, 1); corner(2, x - hw, y + hh, 1, -1); corner(3, x + hw, y + hh, -1, -1);
+      set(4, { d: `M${R(x - hw - 10)} ${R(y)}H${R(x - hw - 3)}M${R(x + hw + 3)} ${R(y)}H${R(x + hw + 10)}`, stroke: c, 'stroke-width': '1' });
       // the marker: a diamond turning above the target
       const my = y - hh - 12, a = this.reduced ? 45 : (this.t * 120) % 360;
-      s += `<rect x="${R(x - 3.5)}" y="${R(my - 3.5)}" width="7" height="7" fill="none" stroke="${c}" stroke-width="1.2" transform="rotate(${R(a)} ${R(x)} ${R(my)})"/>`;
+      set(5, { x: R(x - 3.5), y: R(my - 3.5), width: '7', height: '7', fill: 'none', stroke: c, 'stroke-width': '1.2', transform: `rotate(${R(a)} ${R(x)} ${R(my)})` });
       // a leader line from Pip to the target, drawn once the brackets lock, with its label at the elbow
+      let lead = false, label = false;
       if (inK > .6 && this.H) {
         const hc = this.headXf([50, 40], this.H, this.ang || 0, 1, 1), ex = x - hw - 4, ey = y - hh;
         const mx = hc[0] + Math.min(26, Math.max(10, (ex - hc[0]) * .3)), myy = Math.min(hc[1] - 16, ey);
         const len = Math.hypot(mx - hc[0], myy - hc[1]) + Math.abs(ex - mx), drawn = this.reduced ? 1 : ease((inK - .6) / .4);
-        s += `<path d="M${R(hc[0])} ${R(hc[1])}L${R(mx)} ${R(myy)}H${R(ex)}" fill="none" stroke="${c}" stroke-width="1" stroke-dasharray="${R(len)}" stroke-dashoffset="${R(len * (1 - drawn))}"/>`;
-        s += `<rect x="${R(hc[0] - 2)}" y="${R(hc[1] - 2)}" width="4" height="4" fill="${c}"/>`;
-        const lab = (this.hudEl && this.hudEl.querySelector('.pst-target') || {}).textContent || '';
-        if (drawn > .9 && mx + 6 < ex - 20 && Lay.w > 300) s += `<text x="${R(mx + 4)}" y="${R(myy - 5)}" font-family="'PM NieR Sans','Inter',sans-serif" font-size="8.5" letter-spacing="1.4" fill="${c}">${lab.replace(/&/g, '&amp;').replace(/</g, '&lt;').slice(0, 18)}</text>`;
+        lead = true;
+        set(6, { d: `M${R(hc[0])} ${R(hc[1])}L${R(mx)} ${R(myy)}H${R(ex)}`, fill: 'none', stroke: c, 'stroke-width': '1', 'stroke-dasharray': R(len), 'stroke-dashoffset': R(len * (1 - drawn)) });
+        set(7, { x: R(hc[0] - 2), y: R(hc[1] - 2), width: '4', height: '4', fill: c });
+        const hud = this.hudEl, tg = hud && (hud.__tg !== undefined ? hud.__tg : (hud.__tg = hud.querySelector('.pst-target'))), lab = (tg && tg.textContent) || '';
+        if (drawn > .9 && mx + 6 < ex - 20 && Lay.w > 300) {
+          label = true;
+          set(8, { x: R(mx + 4), y: R(myy - 5), 'font-family': "'PM NieR Sans','Inter',sans-serif", 'font-size': '8.5', 'letter-spacing': '1.4', fill: c });
+          /* (its words as they were written, escaped and cut at 18 characters, parsed again only when they change: a target
+             changes them, a frame does not) */
+          const s = lab.replace(/&/g, '&amp;').replace(/</g, '&lt;').slice(0, 18);
+          if (B.words !== s) { B.words = s; B[8].innerHTML = s; }
+        }
       }
-      this.gHud.innerHTML = s;
-      const co = this.hudEl && this.hudEl.querySelector('.pst-ncoord');
-      if (co && this.t - (this.coT || 0) > .25) { this.coT = this.t; co.textContent = `X ${String(Math.round(x)).padStart(3, '0')} Y ${String(Math.round(y)).padStart(3, '0')}`; }
+      show(6, lead); show(7, lead); show(8, label);
+      /* (the map reference under the label, four times a second, and only when it reads differently: written with
+         textContent it was a new text node each time) */
+      const hud = this.hudEl, co = hud && (hud.__co !== undefined ? hud.__co : (hud.__co = hud.querySelector('.pst-ncoord')));
+      if (co && this.t - (this.coT || 0) > .25) {
+        this.coT = this.t;
+        const s = `X ${String(Math.round(x)).padStart(3, '0')} Y ${String(Math.round(y)).padStart(3, '0')}`, n = co.firstChild;
+        if (n && n.nodeType === 3 && !n.nextSibling) words(n, s); else co.textContent = s;
+      }
     }
   });
 })();
