@@ -393,8 +393,11 @@ async function cell(t, surface, W, H) {
 		/* row 9: the onboarding window with the solid backdrop (the stylesheet visibility rule is exercised) */
 		if (runRow(9)) for (let rep = 1; rep <= reps; rep++) {
 			const tag = tagOf(look, surface, rep, reps);
-			/* a warm-up cycle: the first open builds the window; its cost is not the row's */
-			await f.evaluate(() => O55.ui.open());
+			/* a warm-up cycle: the first open builds the window; its cost is not the row's. It starts a FRESH
+			   onboarding session (Run Onboarding Again: its draft takes the look on screen): a resumed draft
+			   repaints the look it was made in, the other pass's (R77 T1). The measured open below then resumes
+			   this pass's own draft, as a reopened window does */
+			await f.evaluate(() => O55.ui.open({ fresh: true }));
 			await f.waitForFunction(() => document.documentElement.hasAttribute('data-o55-open'), null, { timeout: 10000 });
 			await f.waitForFunction(() => !document.getElementById('pm-o55-onboarding').classList.contains('o55-opening'), null, { timeout: 10000 });
 			await f.evaluate(() => O55.ui.close());
