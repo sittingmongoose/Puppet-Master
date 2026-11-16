@@ -1430,7 +1430,7 @@ def main():
         fam = row['event_type']
         check(f'{fam}/prepared_row_family_schema', lambda row=row: require('prepared/row_schema', not any(True for _ in fam_validator.iter_errors(row))))
         check(f'{fam}/prepared_row_identity', lambda row=row, fam=fam: require('prepared/identity', row['family_id'] == live[fam]['family_id']
-              and row['scope_policy'] == live[fam]['scope_policy'] and prepared_replaces_ok(prepared, live[fam])))
+              and row['scope_policy'] == live[fam]['scope_policy'] and replaces_or_selected(prepared, live[fam])))
         ref = row['payload_schema_ref']
         check(f'{fam}/prepared_row_payload_ref', lambda ref=ref: require('prepared/payload_ref', load(ref['path'])['$id'] == ref['schema_id']
               and load(ref['path']).get('additionalProperties') is False))
@@ -1718,6 +1718,23 @@ for _name in ('run_writer', 'recover', 'project_prefix', 'cutover_attempt', 'roo
 for _name in ('inspect', 'read_projection'):
     globals()[_name] = adapter.complete_entry(globals()[_name], 'own_a', Refusal, store=_world_store)
 resolve_part = adapter.complete_entry(resolve_part, 'own_a', Refusal, store=lambda args: args[1])
+
+
+def replaces_or_selected(prepared, live_row):
+    """prepared_replaces_ok over the predecessor of the exact selected successor (S5b revision-aware mode).
+
+    While the family is unrevised the predecessor is the live row, judged exactly as before. Once the live row is
+    byte-equal to the pinned prepared successor and its applied revision record (DL-2435..DL-2442) exists and
+    matches (scripts/pm_ea_admission_mode.py revision_verdict), the predecessor is the row that record proves the
+    revision replaced, and prepared_replaces_ok judges it unchanged. Anything else (a successor without its
+    record, a record that does not match, a live row other than the prepared successor) has no predecessor and
+    prepared/identity refuses it.
+    """
+    import pm_ea_admission_mode as admission_mode
+    mode = admission_mode.revision_verdict(live_row['event_type'], root=ROOT, successor_row=prepared['registry_row'],
+                                           predecessor=prepared['replaces'])
+    before = {'unrevised': live_row, 'revised': mode.get('before_row')}.get(mode['mode'])
+    return before is not None and prepared_replaces_ok(prepared, before)
 
 
 if __name__ == '__main__':

@@ -272,7 +272,7 @@ def main():
     assert {c['event_type'] for c in contracts} == {f['event_type'] for f in fixtures} == DECIDED_FAMILIES
     c = next(c for c in contracts if c['event_type'] == args.family)
     f = next(f for f in fixtures if f['event_type'] == args.family)
-    assert args.family not in {r['event_type'] for r in read('Plans/event_family_registry.json')['families']}
+    assert (refused := registration_refusal(args.family, read('Plans/event_family_registry.json'))) is None, refused
     for path in (c['payload_schema_ref'], c['checkpoint_schema_ref'], 'Plans/ds15_deck2_context.schema.json', 'Plans/ds15_deck2_sources.schema.json'):
         base.validator(read(path))  # Eager reference closure, including unused branches.
     assert read(c['payload_schema_ref'])['additionalProperties'] is False
@@ -329,6 +329,19 @@ def main():
                       'negative_cases': negatives, 'policy_cases': policy_count,
                       'reference_closure_cases': len(f.get('schema_cases', [])), 'native_execution': 'NOT_RUN',
                       'membership': 'ABSENT'}))
+
+
+def registration_refusal(event, registry):
+    """None while `event` is unregistered (prepared) or registered as its exact, complete DL-077 admission.
+
+    Admission-aware mode (PNC-019 stream E; scripts/pm_ea_admission_mode.py): any other registration keeps the
+    preparation refusal, naming the admission-mode code.
+    """
+    if not any(r.get('event_type') == event for r in registry['families']):
+        return None
+    import pm_ea_admission_mode as admission_mode
+    mode = admission_mode.verdict(event, root=ROOT, registry=registry)
+    return None if mode['mode'] == 'admitted' else event + ': admission mode refused: ' + mode['code']
 
 
 if __name__ == '__main__':

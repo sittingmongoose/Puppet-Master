@@ -115,7 +115,7 @@ def main(family=None):
     full_checks = run(validate, family)
     checks += full_checks
     assert all((x['execution_status'] == 'NOT_RUN' for x in fixtures['native_oracles']))
-    print(json.dumps({'status': 'PASS', 'checks': checks, 'native': 'NOT_RUN', 'admission': 'ABSENT'}))
+    print(json.dumps({'status': 'PASS', 'checks': checks, 'native': 'NOT_RUN', 'admission': m.admission_report([r['event_type'] for r in fixtures['families'] if family is None or r['event_type'] == family])}))
 if __name__ == '__main__':
     import argparse
     parser = argparse.ArgumentParser(description=__doc__)

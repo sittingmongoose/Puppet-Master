@@ -2026,7 +2026,7 @@ def main():
     for c in contracts:
         name = c['event_type']
         assert c['numeric_schema_profile_ref'] == 'Plans/ds15_integer_domain.schema.json'
-        assert name not in json.dumps(registry), name + ' unexpectedly admitted'
+        assert (refused := admission_text_refusal(name, registry)) is None, name + ' unexpectedly admitted' + refused
         v = validator(read(c['payload_schema_ref']))
         f = next(f for f in fixtures if f['event_type'] == name)
         v.validate(f['positive']); count += 1
@@ -2105,5 +2105,23 @@ def main():
     assert not problems, ('sweep part 2B witnesses', problems)
     sealed = original_custody()
     print(json.dumps({'status':'pass','families':len(contracts),'payload_oracles':count,'semantic_oracles':semantic_count,'reference_closure_oracles':schema_count,'predicate_oracles':predicate_count,'value_oracles':value_cases,'guard_proof_oracles':guard_proofs,'numeric_oracles':numeric_cases,'sweep_p2a_witnesses':len(p2a_cases),'sweep_p2b_witnesses':len(p2b_cases),'sealed_originals':sum(len(v) for v in sealed['sealed'].values()),'custody_stores':len(sealed['stores']),'native_execution':'NOT_RUN'}))
+
+
+def admission_text_refusal(name, registry):
+    """None while `name` is nowhere in the registry, or only in its own exact, complete DL-077 admission row.
+
+    Admission-aware mode (PNC-019 stream E; scripts/pm_ea_admission_mode.py): the preparation guard refuses the
+    family name anywhere in the registry text. After admission its own record-bound row may carry it; every other
+    occurrence (another row, an alias, a registration without its record) is still refused, with the reason.
+    """
+    if name not in json.dumps(registry):
+        return None
+    import pm_ea_admission_mode as admission_mode
+    mode = admission_mode.verdict(name, root=ROOT, registry=registry)
+    if mode['mode'] != 'admitted':
+        return ' (admission mode ' + mode['mode'] + ': ' + mode.get('code', 'not_registered_under_its_event_type') + ')'
+    rest = dict(registry, families=[f for f in registry['families'] if f.get('event_type') != name])
+    return None if name not in json.dumps(rest) else ' (named outside its admitted row)'
+
 
 if __name__ == '__main__': main()

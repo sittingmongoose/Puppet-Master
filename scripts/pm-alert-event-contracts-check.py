@@ -1409,7 +1409,7 @@ def main():
             row = next(x for x in values['families'] if x['family_id'] == family[key])
             check_schema(row['value_schema'])
             count += profile_cases(values, family[key], row['storage_kind'], group)
-        assert family['event_type'] not in admitted
+        assert (refused := registration_refusal(family['event_type'], admitted)) is None, refused
         for key in ('operation', 'checkpoint'):
             row = next(x for x in load('Plans/storage_value_registry.json')['families'] if x['family_id'] == family[key])
             assert row['retention_policy_ref'] == ('RP-PROJECTION-3GEN' if key == 'checkpoint' else 'RP-OPERATIONAL-2555D')
@@ -1427,6 +1427,19 @@ def main():
     count += writer_policy_cases()
     count += cursor_cases()
     print(json.dumps({'status':'pass','cases':count,'families':1 if selected else 4,'admission':'ABSENT','native':'NOT_RUN','retention':'PENDING_RETENTION_DECISION'}))
+
+def registration_refusal(event, admitted):
+    """None while `event` is unregistered (prepared) or registered as its exact, complete DL-077 admission.
+
+    Admission-aware mode (PNC-019 stream E; scripts/pm_ea_admission_mode.py): any other registration keeps the
+    preparation refusal (this family on the live registry), with the admission-mode code as its message.
+    """
+    if event not in admitted:
+        return None
+    import pm_ea_admission_mode as admission_mode
+    mode = admission_mode.verdict(event, root=ROOT)
+    return None if mode['mode'] == 'admitted' else event + ': admission mode refused: ' + mode['code']
+
 
 if __name__ == '__main__':
     main()

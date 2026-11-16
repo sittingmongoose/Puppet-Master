@@ -2600,7 +2600,7 @@ def family_checks(c, inputs, check):
         check(standing[number] == f['standing_check_oracles'][number], name + ': standing check ' + number)
     validator = lane_validator(schemas[slug])
     check(schema_accepts(validator, p), name + ': positive payload')
-    check(name not in registered, name + ': no registry admission')
+    check((note := registration_refusal(name, registered)) is None, name + ': no registry admission' + (note or ''))
     for key in f['required_field_negatives']:
         negative = copy.deepcopy(p); del negative[key]
         check(not schema_accepts(validator, negative), name + ': missing payload ' + key)
@@ -2798,6 +2798,20 @@ def main():
                       'per_family_checks': counts, 'standing_checks': standing, 'failures': failures, 'native_execution': 'NOT_RUN',
                       'boundary': 'original-owner and SP-278 authentication are assumed adapters; no native proof'}, indent=2))
     return checker_exit_code(failures)
+
+
+
+def registration_refusal(name, registered):
+    """None while `name` is unregistered (prepared) or registered as its exact, complete DL-077 admission.
+
+    Admission-aware mode (PNC-019 stream E; scripts/pm_ea_admission_mode.py): any other registration keeps the
+    preparation refusal "<family>: no registry admission", with the admission-mode code appended.
+    """
+    if name not in registered:
+        return None
+    import pm_ea_admission_mode as admission_mode
+    mode = admission_mode.verdict(name, root=ROOT)
+    return None if mode['mode'] == 'admitted' else ' (admission mode refused: ' + mode['code'] + ')'
 
 
 if __name__ == '__main__':

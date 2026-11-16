@@ -332,7 +332,7 @@ def main():
     assert {c['event_type'] for c in fixtures['valid_payloads']} == {c['event_type'] for c in fixtures['contracts']}
     for contract in fixtures['contracts']:
         family = contract['event_type']
-        assert family not in admitted, ('unexpected_admission', family)
+        assert (refused := registration_refusal(family, admitted)) is None, ('unexpected_admission', family, refused)
         section = owner.split('### ' + contract['unit'] + ' — ' + family + '\n', 1)[1].split('\n### ', 1)[0]
         for token in [contract['reader'], contract['policy'], contract['producer'], contract['predicate'], 'SP-278', 'SP-286', 'none_required', 'withdrawal', 'NOT_RUN']:
             assert token in section, (family, token)
@@ -430,6 +430,20 @@ def main():
     checks += oracles.part_2b_checks(fixtures, schema, sys.modules[__name__])
     checks += guard_table_checks(fixtures)
     print(json.dumps({'status': 'pass', 'families': len(fixtures['contracts']), 'checks': checks, 'native': 'NOT_RUN', 'stopped_facets': []}))
+
+
+def registration_refusal(family, admitted):
+    """None while `family` is unregistered (prepared) or registered as its exact, complete DL-077 admission.
+
+    Admission-aware mode (PNC-019 stream E; scripts/pm_ea_admission_mode.py): any other registration keeps the
+    preparation refusal ('unexpected_admission', family), with the admission-mode code appended.
+    """
+    if family not in admitted:
+        return None
+    import pm_ea_admission_mode as admission_mode
+    mode = admission_mode.verdict(family, root=ROOT)
+    return None if mode['mode'] == 'admitted' else mode['code']
+
 
 if __name__ == '__main__':
     main()

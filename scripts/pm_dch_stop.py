@@ -483,7 +483,7 @@ def main():
     contract = json.loads((ROOT / 'Plans/dch_stop_contracts.json').read_text())
     check(contract['event_type'] == EVENT and contract['status'] == 'prepared_without_admission', 'exact prepared family')
     registry = json.loads((ROOT / 'Plans/event_family_registry.json').read_text())
-    check(not any(r.get('event_type') == EVENT for r in registry['families']), 'membership remains absent')
+    check((note := registration_refusal(EVENT, registry)) is None, 'membership remains absent' + (note or ''))
     applications = json.loads((ROOT / contract['retirement_application_ref']).read_text())['applications']
     check([a['event_type'] for a in applications] == ['chat_run.cancel_requested', 'chat_run.cancelled', 'chat_run.cancel_timeout'], 'three individual retirement applications')
     for application in applications:
@@ -537,6 +537,19 @@ def main():
                       'native_execution': 'NOT_RUN',
                       'claim_boundary': 'Synthetic original source/Store/decision observations. No native durability, authenticated provenance or SP-278 completeness/CAS. Every Stop refusal is a named st_* table row (or a reused shared row); check 11 is the shared guard tool run over those tables (scripts/pm-dch-guard-tables.py).'}, indent=2))
     return 1 if failures else 0
+
+
+def registration_refusal(event, registry):
+    """None while `event` is unregistered (prepared) or registered as its exact, complete DL-077 admission.
+
+    Admission-aware mode (PNC-019 stream E; scripts/pm_ea_admission_mode.py): any other registration keeps the
+    preparation refusal, with the admission-mode code appended to its message.
+    """
+    if not any(f.get('event_type') == event for f in registry['families']):
+        return None
+    import pm_ea_admission_mode as admission_mode
+    mode = admission_mode.verdict(event, root=ROOT, registry=registry)
+    return None if mode['mode'] == 'admitted' else ' (admission mode refused: ' + mode['code'] + ')'
 
 
 if __name__ == '__main__':
