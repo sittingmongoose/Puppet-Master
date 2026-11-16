@@ -324,7 +324,8 @@ async function cell(t, surface, W, H) {
 		await f.evaluate(() => PM_PAGES.go('dashboard'));
 		await parkPointer(t.page, W, H);
 		await t.page.waitForTimeout(2500);
-		const on = await f.evaluate((w) => document.documentElement.getAttribute('data-theme') === w && document.documentElement.getAttribute('data-lg') === 'on', look);
+		const painted = () => f.evaluate(() => `${document.documentElement.getAttribute('data-theme')} lg=${document.documentElement.getAttribute('data-lg')}`);
+		const on = (await painted()) === `${look} lg=on`;
 		await t.check(`Glass is on in ${base}`, on, '', { hard: true });
 		if (!on) continue;
 
@@ -399,6 +400,11 @@ async function cell(t, surface, W, H) {
 			await f.evaluate(() => O55.ui.close());
 			await f.waitForFunction(() => !document.documentElement.hasAttribute('data-o55-open'), null, { timeout: 10000 });
 			await t.page.waitForTimeout(600);
+			/* the window paints its draft's look and leaves it painted: a draft made in another look would turn this
+			   pass into that look's (R77 T1); the row judges nothing unless the look under test is still on screen */
+			const warm = await painted();
+			await t.check(`row 9: ${look} is still painted after the warm-up cycle ${tag}`, warm === `${look} lg=on`, `${warm}: the onboarding window repainted another look; the row would judge that look`, { hard: true });
+			if (warm !== `${look} lg=on`) continue;
 			const cap = await f.evaluate(() => window.__gsw.capture('nav.page-tabs', '.page-tab.active'));
 			const shown = cap && await f.evaluate(() => window.__gsw.back());
 			await t.check(`row 9: the page-tabs lens is shown before the measured open ${tag}`, shown, cap ? 'lens out already' : 'no lens over the active tab: could not judge', { hard: reps === 1 });
@@ -424,6 +430,8 @@ async function cell(t, surface, W, H) {
 			await f.evaluate(() => { try { O55.solid.set(null); } catch (e) {} if (window.O55.S.open) O55.ui.close(); });
 			await f.waitForFunction(() => !document.documentElement.hasAttribute('data-o55-open'), null, { timeout: 10000 }).catch(() => {});
 			await t.page.waitForTimeout(600);
+			const after = await painted();
+			await t.check(`row 9: ${look} is still painted after the measured cycle ${tag}`, after === `${look} lg=on`, `${after}: the measured open and close ran in another look`);
 		}
 
 		/* row 13: the resting wake count with one strip hidden (row 1's method) */
@@ -432,6 +440,9 @@ async function cell(t, surface, W, H) {
 			await f.evaluate(() => { const s = document.querySelector('nav.page-tabs'); s.style.display = ''; s.style.visibility = ''; const st = document.getElementById('gsw-case-c'); if (st) st.remove(); });
 			await parkPointer(t.page, W, H);
 			await t.page.waitForTimeout(2000);
+			const now = await painted();
+			await t.check(`row 13: ${look} is painted for the rest count ${tag}`, now === `${look} lg=on`, `${now}: the count would be another look's`, { hard: true });
+			if (now !== `${look} lg=on`) continue;
 			const cap = await f.evaluate(() => window.__gsw.capture('nav.page-tabs', '.page-tab.active'));
 			const shown = cap && await f.evaluate(() => window.__gsw.back());
 			await t.check(`row 13: the page-tabs lens is shown before the rest count ${tag}`, shown, cap ? 'lens out already' : 'no lens over the active tab: could not judge', { hard: reps === 1 });
