@@ -63,10 +63,40 @@ def check_stateless_reducer_not_an_entry():
     assert state['status'] == 'started'
 
 
+def check_schema_validate_routing_guard():
+    """A schema row's own validate must not let its inner routed refusal replace the row."""
+    import pm_goal_dg5_boundaries as bridge
+    import pm_goal_dg5_entries as plumbing
+
+    seen = {}
+
+    class Bank:
+        def errors(self, root, value):
+            return [object()]
+
+        def validate(self, root, value, code='root'):
+            seen['routing'] = bridge.ROUTING[0]
+            raise RuntimeError('inner routed refusal')
+
+    plumbing.schema_entry(Bank)
+    old_decide, old_active = tables.decide, bridge.ACTIVE[0]
+    tables.decide = lambda name, holds, site=None: object()
+    bridge.ACTIVE[0] = True
+    try:
+        try:
+            Bank().validate('root', {}, 'x/y')
+        except RuntimeError:
+            pass
+    finally:
+        tables.decide, bridge.ACTIVE[0] = old_decide, old_active
+    assert seen['routing'] is True, seen
+
+
 def main():
     check_shard_partition()
     check_collector_releases_sealed_values()
     check_stateless_reducer_not_an_entry()
+    check_schema_validate_routing_guard()
     print('pm_goal_dg5_collector_selftest: PASS')
     return 0
 
