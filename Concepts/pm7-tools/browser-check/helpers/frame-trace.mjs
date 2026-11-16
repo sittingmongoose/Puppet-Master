@@ -186,12 +186,13 @@ export function summarise(trace, { url, allScripts = false } = {}) {
 	const draws = events.filter((e) => vizKeys.has(e.pid + ':' + e.tid) && e.name === 'Display::DrawAndSwap' && (e.ph === 'X' || e.ph === 'B')).map((e) => e.ts).sort((a, b) => a - b);
 	const gaps = draws.slice(1).map((x, i) => (x - draws[i]) / 1000).sort((a, b) => a - b);
 	const drawDur = events.filter((e) => vizKeys.has(e.pid + ':' + e.tid) && e.name === 'Display::DrawAndSwap' && e.ph === 'X').map((e) => e.dur / 1000).sort((a, b) => a - b);
-	let drawFrames = 0, droppedFrames = 0, partialFrames = 0, beginFrames = 0, animStarted = 0;
+	let drawFrames = 0, droppedFrames = 0, unflaggedDrops = 0, beginFrames = 0, animStarted = 0;
+	const dropKeys = [];
 	const failed = new Map(), animNode = new Map(), composited = new Set();
 	for (const e of events) {
 		if (e.pid === rpid) {
 			if (e.name === 'DrawFrame') drawFrames++;
-			else if (e.name === 'DroppedFrame') { droppedFrames++; if (e.args?.hasPartialUpdate) partialFrames++; }
+			else if (e.name === 'DroppedFrame') { droppedFrames++; if (!e.args?.hasPartialUpdate) unflaggedDrops++; dropKeys.push(`${e.args?.layerTreeId ?? '?'}:${e.args?.frameSeqId ?? '?'}`); }
 			else if (e.name === 'BeginFrame') beginFrames++;
 		}
 		if (e.name === 'Animation') {
@@ -206,6 +207,8 @@ export function summarise(trace, { url, allScripts = false } = {}) {
 		}
 	}
 	const states = {}; let smooth = 0, smoothDropped = 0;
+	// the page renderer's frame reporters by layer tree and frame sequence, with the final states they ended in
+	const reported = new Map();
 	for (const e of events) {
 		if (e.name !== 'PipelineReporter' || (e.ph !== 'b' && e.ph !== 'B')) continue;
 		// (Chrome 15x writes the reporter as frame_reporter; older builds as chrome_frame_reporter)
@@ -213,6 +216,23 @@ export function summarise(trace, { url, allScripts = false } = {}) {
 		const s = String(rep.state || '').replace(/^STATE_/, '');
 		states[s] = (states[s] || 0) + 1;
 		if (rep.affects_smoothness) { smooth++; if (s === 'DROPPED') smoothDropped++; }
+		if (e.pid === rpid && rep.frame_sequence != null) {
+			const k = `${rep.layer_tree_host_id ?? '?'}:${rep.frame_sequence}`, set = reported.get(k) || new Set();
+			set.add(s); reported.set(k, set);
+		}
+	}
+	// R67-T2: a DroppedFrame's hasPartialUpdate says the frame depended on a partial update, not that it was shown (Chrome
+	// still reports kDropped for kDidNotPresentFrame and kReplacedByNewReporter). Each DroppedFrame is classified by the
+	// final state of its reporter: any presented state = presented (partial when a partial one is among them), only
+	// DROPPED = never presented, no reporter (or none with a final state) = unknown
+	let notPresented = 0, partialShown = 0, allShown = 0, unknownShown = 0;
+	for (const k of dropKeys) {
+		const set = reported.get(k);
+		if (!set) { unknownShown++; continue; }
+		if (set.has('PRESENTED_PARTIAL')) partialShown++;
+		else if (set.has('PRESENTED_ALL')) allShown++;
+		else if (set.has('DROPPED')) notPresented++;
+		else unknownShown++;
 	}
 	return {
 		secs: r2(secs),
@@ -232,11 +252,12 @@ export function summarise(trace, { url, allScripts = false } = {}) {
 		// DOM events the page's listeners were called for, by type, in the window (Chrome dispatches one only where a listener hears it)
 		dispatched,
 		drawn: { perSec: r1(draws.length / secs), gapP50: r2(q(gaps, 0.5)), gapP95: r2(q(gaps, 0.95)), gapMax: r2(gaps[gaps.length - 1] || 0), drawP50: r2(q(drawDur, 0.5)), drawP95: r2(q(drawDur, 0.95)) },
-		// droppedPerSec counts every DroppedFrame event, as every table has; of those, partialPerSec went out on time with a
-		// partial update (the compositor's part, a scroll say, was shown; some main-thread change missed the frame) and
-		// fullDroppedPerSec showed nothing new (lane V, 2026-11-15: a composited Usage scroll on Alexis, 238 Hz, 139 partial and
-		// 3 full a second against 59 and 8 for the same scroll on the main thread)
-		frames: { beginPerSec: r1(beginFrames / secs), drawPerSec: r1(drawFrames / secs), droppedPerSec: r1(droppedFrames / secs), partialPerSec: r1(partialFrames / secs), fullDroppedPerSec: r1((droppedFrames - partialFrames) / secs) },
+		// droppedPerSec counts every DroppedFrame event of the page's renderer, as every table has. Each is classified by its
+		// frame reporter's final state (matched by layer tree and frame sequence): notPresentedPerSec ended DROPPED (never
+		// shown), partialPerSec ended PRESENTED_PARTIAL (the compositor's part, a scroll say, shown; a main-thread change
+		// late), presentedAllPerSec ended PRESENTED_ALL, presentationUnknownPerSec had no reporter with a final state in the
+		// trace. unflaggedPerSec counts the DroppedFrame events without hasPartialUpdate: only that, it proves no presentation
+		frames: { beginPerSec: r1(beginFrames / secs), drawPerSec: r1(drawFrames / secs), droppedPerSec: r1(droppedFrames / secs), notPresentedPerSec: r1(notPresented / secs), partialPerSec: r1(partialShown / secs), presentedAllPerSec: r1(allShown / secs), presentationUnknownPerSec: r1(unknownShown / secs), unflaggedPerSec: r1(unflaggedDrops / secs) },
 		notComposited: [...failed].sort((a, b) => b[1] - a[1]).slice(0, 12),
 		animations: { started: animStarted, composited: composited.size },
 		reporter: { states, smooth, smoothDropped },

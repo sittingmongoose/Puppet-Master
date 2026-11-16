@@ -18,8 +18,8 @@
 //      scroll (the ratio sits near 1); measured with the hint: Alexis Basic Dark 95-132 against 134-203 ms/s. Under
 //      Reduced Motion (--set rm=1) a tick is one instant step and both builds paint about the same (55 and 56 ms/s): the
 //      ratio is logged there, not judged, and check 1 carries the line.
-//   3. a guard: frames fully dropped while scrolling (helpers/frame-trace.mjs fullDroppedPerSec: a DroppedFrame with no
-//      partial update) as built at most 1.5 times the control's plus 4 a second. Not a red/green line: on the shared Alexis GPU
+//   3. a guard: frames never presented while scrolling (helpers/frame-trace.mjs notPresentedPerSec: a DroppedFrame whose
+//      frame reporter ended DROPPED) as built at most 1.5 times the control's plus 4 a second. Not a red/green line: on the shared Alexis GPU
 //      the hint halved them in five sessions of six (Basic Dark, 3.3 and 0 against 7.9 and 10.3 a second) and left them
 //      level in one. Chrome's DroppedFrame count also holds frames that went out on time with a partial update (the scroll
 //      shown, a main-thread change late); those rise with the hint (139 and 136 against 59 and 61) and are logged.
@@ -118,9 +118,9 @@ export default async function (t) {
 				}
 				const whole = !x.dataLoss && x.drawn.perSec >= 10 && ticks === TICKS;
 				const paint = (x.split.paint || 0) + (x.split.prepaint || 0) + (x.split.layerize || 0);
-				const w = { name, whole, lost, ticks, secs: x.secs, renderer: x.renderer ? x.renderer.pid : null, frames: x.mainFrames.perSec, paint: Math.round(paint), main: Math.round(x.cost.main), dropped: x.frames.droppedPerSec, full: x.frames.fullDroppedPerSec, partial: x.frames.partialPerSec, drawn: x.drawn.perSec, scrolls: x.dispatched.scroll || 0, restFrames: rest.mainFrames.renderedPerSec, from: at.top, to: top };
+				const w = { name, whole, lost, ticks, secs: x.secs, renderer: x.renderer ? x.renderer.pid : null, frames: x.mainFrames.perSec, paint: Math.round(paint), main: Math.round(x.cost.main), dropped: x.frames.droppedPerSec, full: x.frames.notPresentedPerSec, partial: x.frames.partialPerSec, unknown: x.frames.presentationUnknownPerSec, drawn: x.drawn.perSec, scrolls: x.dispatched.scroll || 0, restFrames: rest.mainFrames.renderedPerSec, from: at.top, to: top };
 				windows.push(w);
-				t.log(`${S}${name}: paint ${w.paint} ms/s, main ${w.main} ms/s, dropped ${w.dropped}/s (fully ${w.full}, partial ${w.partial}), drawn ${w.drawn}/s over ${w.secs} s, main frames ${w.frames}/s (renderer ${w.renderer}), ${w.ticks} ticks, ${w.scrolls} scroll events (${w.from} -> ${w.to} px) | at rest ${w.restFrames} rendered main frames/s${lost.length ? ' | taken again: ' + lost.join(', ') : ''}`);
+				t.log(`${S}${name}: paint ${w.paint} ms/s, main ${w.main} ms/s, dropped ${w.dropped}/s (not presented ${w.full}, partial ${w.partial}, presentation unknown ${w.unknown}), drawn ${w.drawn}/s over ${w.secs} s, main frames ${w.frames}/s (renderer ${w.renderer}), ${w.ticks} ticks, ${w.scrolls} scroll events (${w.from} -> ${w.to} px) | at rest ${w.restFrames} rendered main frames/s${lost.length ? ' | taken again: ' + lost.join(', ') : ''}`);
 			}
 			await trial('');
 			await park();
@@ -138,7 +138,8 @@ export default async function (t) {
 			// main-thread change late): those are logged; the line is drawn on frames that showed nothing new
 			const [bf, cf] = [mean('as built', 'full'), mean('control', 'full')];
 			const [bpa, cpa] = [mean('as built', 'partial'), mean('control', 'partial')];
-			const dd = `fully dropped: as built ${bf.toFixed(1)}/s, control ${cf.toFixed(1)}/s; on time with a partial update: as built ${bpa.toFixed(1)}/s, control ${cpa.toFixed(1)}/s`;
+			const [bu, cu] = [mean('as built', 'unknown'), mean('control', 'unknown')];
+			const dd = `never presented: as built ${bf.toFixed(1)}/s, control ${cf.toFixed(1)}/s; presented with a partial update: as built ${bpa.toFixed(1)}/s, control ${cpa.toFixed(1)}/s; presentation unknown: as built ${bu.toFixed(1)}/s, control ${cu.toFixed(1)}/s`;
 			// a guard, not a red/green line: on the shared Alexis GPU fully dropped frames halved with the hint in five sessions
 			// out of six and stayed level in one (kit4 fix-s1: 11.1 against 10.1 a second), and two identical windows on
 			// origin/main read 27.4 and 18.6 (kit5 main-s1): the guard catches a hint that makes drops clearly worse
