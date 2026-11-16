@@ -2090,10 +2090,6 @@
      pending tick before it looks: a tick armed in the gap before it runs (a sync's awaitShow) used to trip the showT
      guard and skip the look, so a lens already shown waited another whole interval (2351 and 3040 ms seen). */
   function queueShown() {
-    /* a tick is always pending while a check waits (the wake has just dropped its tick, the tick has just fired): if
-       the queued check is ever lost (another function of the same layout delivery throwing first), that tick is
-       what starts the checking again, with no further awaitShow needed; the check drops it before it looks */
-    if (!showT && hiddenLenses.size) showT = setTimeout(checkShown, 2000);
     if (showHold) return;
     showHold = true;
     onLayout(function () {
