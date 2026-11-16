@@ -7,6 +7,8 @@
 //   --set motion=reduce (the system's Reduced Motion, emulated) or motion=app (the app's own, data-motion="reduced")
 //   --set repaint=1 (the stage rastered afresh before each capture: its root on a layer of its own for 6 frames, then off)
 //   --set nudge=1 (Pip's hand moved half a unit for 4 frames and back before each capture, as at rest)
+//   --set live=1 (no freeze: the stage as it is at rest, swaying, pictures with animations running; for how a part is
+//   drawn at rest, not for comparing pixels)
 // How a state is frozen (the hooks the motion clock and the stage already have):
 //   - O55.motion.setTimeScale(0): the motion clock stops, so the stage's loop goes on drawing every frame with dt 0 (its
 //     time, Pip's physics, the typers and the faces stand still); Retro's stepped draw is let through every frame
@@ -187,7 +189,10 @@ export default async function (t) {
 			for (const v of variants) {
 				if (v === 'quiet') await f.evaluate(() => { const host = document.querySelector('#pm-o55-onboarding .o55-stage'); host.__pipStage.say('', null, true); });
 				if (v === 'tip') await f.evaluate(() => { const host = document.querySelector('#pm-o55-onboarding .o55-stage'); host.__pipStage.tip({ id: 'stage-frames-tip', title: 'A note on this', text: 'What this choice means, written out in a few words.' }, true); });
-				const err = await f.evaluate(FREEZE, { t: 40, blink: v === 'blink', frames, cssT, repaint: t.args.repaint === '1' || t.args.repaint === 1, nudge: t.args.nudge === '1' || t.args.nudge === 1 });
+				/* (live=1: no freeze at all, the stage as it is at rest, swaying; for how a part is drawn at rest, not for a
+				   pixel comparison: two pictures of a swaying stage differ) */
+				const live = t.args.live === '1' || t.args.live === 1;
+				const err = live ? '' : await f.evaluate(FREEZE, { t: 40, blink: v === 'blink', frames, cssT, repaint: t.args.repaint === '1' || t.args.repaint === 1, nudge: t.args.nudge === '1' || t.args.nudge === 1 });
 				if (err) { await t.check(`${look} ${name} ${v}: frozen`, false, err); await f.evaluate(THAW); continue; }
 				const info = await f.evaluate(INFO), dom = await f.evaluate(DOM);
 				const file = `${String(++n).padStart(2, '0')}-${name}-${v}`;
@@ -197,15 +202,15 @@ export default async function (t) {
 				   LED and cursor and the drifting motes still came out in different phases run to run: two runs of main's page with
 				   the same DOM had the same pixels in 72 of 280 captures) */
 				const clip = { x: Math.max(0, Math.floor(b.x)), y: Math.max(0, Math.floor(b.y)), width: Math.ceil(b.w), height: Math.ceil(b.h) };
-				const png = await t.page.screenshot({ clip, animations: 'disabled' });
+				const png = await t.page.screenshot({ clip, animations: live ? 'allow' : 'disabled' });
 				fs.writeFileSync(path.join(out, look, file + '.png'), png);
 				/* (and a second picture of the same frozen state 20 frames later: the compositor's own variation, a level here
 				   and there with the same DOM, as tools/stage-frames-compare.mjs reads it) */
 				await f.evaluate(() => new Promise((r) => { let n = 0; const k = () => (++n < 20 ? requestAnimationFrame(k) : r()); requestAnimationFrame(k); }));
-				fs.writeFileSync(path.join(out, look, file + '.b.png'), await t.page.screenshot({ clip, animations: 'disabled' }));
+				fs.writeFileSync(path.join(out, look, file + '.b.png'), await t.page.screenshot({ clip, animations: live ? 'allow' : 'disabled' }));
 				fs.writeFileSync(path.join(out, look, file + '.dom.txt'), dom);
 				index.push({ look, file, screen: name, variant: v, ...info });
-				await f.evaluate(THAW, v === 'tip');
+				if (!live) await f.evaluate(THAW, v === 'tip'); else if (v === 'tip') await f.evaluate(() => { document.querySelector('#pm-o55-onboarding .o55-stage').__pipStage.tip(null); });
 			}
 			// the screen's own line back for the next screen (the quiet variant put it away)
 		}
