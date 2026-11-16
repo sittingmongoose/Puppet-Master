@@ -29,12 +29,14 @@ def entries(cls, methods, family):
                 world = getattr(self, 'world', None) or getattr(self, 'w', None)
                 if world is None and hasattr(self, 'storage') and hasattr(self, 'recorder'):
                     world = self  # a world-level original method (the receiver is the world)
-                if world is None and type(self).__name__ == 'TestOwnerStorage':
-                    world = self  # a shared Storage entry: its own root is the complete store
-                if world is None and type(getattr(self, 'storage', None)).__name__ == 'TestOwnerStorage':
+                import pm_goal_test_storage as storage_module
+                store_type = storage_module.TestOwnerStorage
+                if world is None and isinstance(self, store_type):
+                    world = self  # a shared Storage entry (or subclass): its own root is the complete store
+                if world is None and isinstance(getattr(self, 'storage', None), store_type):
                     world = self.storage  # a shared owner/source entry over one Storage
                 ctx_storage = getattr(getattr(self, 'ctx', None), 'storage', None)
-                if world is None and type(ctx_storage).__name__ == 'TestOwnerStorage':
+                if world is None and isinstance(ctx_storage, store_type):
                     world = ctx_storage  # a context-bound owner (DG-S issuance): its run's complete store
                 if world is None:
                     raise ValueError('entry has no original world: ' + entry)
