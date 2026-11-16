@@ -433,7 +433,7 @@ def main():
     for required in ('concern.created', 'cmd.concern.create', 'handlers::concern::create', 'SP-278', 'SP-286', 'CV-339',
                      'storage.first_append_receipt.resolve.v2', 'PENDING_RETENTION_DECISION', '16384', 'projector_replay_only', 'SP-337'):
         assert required in text, required
-    print(json.dumps(dict(status='pass', families=1, cases=count, admission='ABSENT', native='NOT_RUN', retention='PENDING_RETENTION_DECISION')))
+    print(json.dumps(dict(status='pass', families=1, cases=count, native='NOT_RUN', **admission_report(['concern.created']))))
 
 
 def registration_refusal(event, admitted):
@@ -447,6 +447,25 @@ def registration_refusal(event, admitted):
     import pm_ea_admission_mode as admission_mode
     mode = admission_mode.verdict(event, root=ROOT)
     return None if mode['mode'] == 'admitted' else event + ': admission mode refused: ' + mode['code']
+
+
+def admission_report(event_types):
+    """Output metadata from the exact DL-077 verdicts; preparation keeps its pending labels."""
+    import pm_ea_admission_mode as admission_mode
+    results = admission_mode.verdicts(event_types, root=ROOT)
+    failures = admission_mode.gate_failures(results)
+    assert not failures, ('admission mode refused', failures)
+    counts = admission_mode.summary(results)['counts']
+    label = 'ABSENT' if not counts['admitted'] else 'RECORD_BOUND' if not counts['prepared'] else 'ABSENT_AND_RECORD_BOUND'
+    rows = {row['event_type']: row for row in admission_mode.load_registry(ROOT)['families']}
+    retention = {}
+    for event, mode in sorted(results.items()):
+        if mode['mode'] == 'prepared':
+            retention[event] = 'PENDING_RETENTION_DECISION'
+        else:
+            ref = rows[event]['retention_policy_ref']
+            retention[event] = 'RECORD_BOUND:' + ref['policy_id'] + '@' + ref['policy_version']
+    return dict(admission=label, retention=retention, admission_counts=counts)
 
 
 if __name__ == '__main__':

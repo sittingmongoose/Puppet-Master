@@ -419,6 +419,14 @@ LANE_CASES = [
      lambda fn, et, root, reg: fn(et, reg) == 0, None),
     ("DCW", "scripts/pm_dcw_event_oracles.py", "admission_report", "wizard.blocked",
      lambda fn, et, root, reg: _accepts(fn, [et]), None),
+    ("DMEM-report", "scripts/pm_memory_maintenance_events.py", "admission_report", "memory.dedup_sweep.completed",
+     lambda fn, et, root, reg: _accepts(fn, [et]), None),
+    ("DG6A-alert-report", "scripts/pm-alert-event-contracts-check.py", "admission_report", "alert.acknowledged",
+     lambda fn, et, root, reg: _accepts(fn, [et]), None),
+    ("DG6A-concern-report", "scripts/pm-concern-created-contracts-check.py", "admission_report", "concern.created",
+     lambda fn, et, root, reg: _accepts(fn, [et]), None),
+    ("DG6A-panel-report", "scripts/pm-panel-event-contracts-check.py", "admission_report", "panel.redocked",
+     lambda fn, et, root, reg: _accepts(fn, [et]), None),
     ("DG6A-card5", "scripts/pm-card5-event-contracts-check.py", "admission_label", "bundle.note_created",
      lambda fn, et, root, reg: _accepts(fn, et), None),
     ("DR", "scripts/pm-runtime-artifact-event-drafts.py", "admission_report", "runtime_artifact.screenshot",
@@ -606,6 +614,24 @@ class LaneAdmissionFunctions(unittest.TestCase):
             with self.subTest(result["lane"] + ":" + result["scenario"]):
                 self.assertIsNone(result["error"])
                 self.assertTrue(result["ok"], result)
+
+
+    def test_output_metadata_names_record_bound_and_prepared_states(self):
+        for lane, checker, name, family, _, _ in LANE_CASES:
+            if lane not in ('DMEM-report', 'DG6A-alert-report', 'DG6A-concern-report', 'DG6A-panel-report'):
+                continue
+            with self.subTest(lane):
+                fn = lane_function(checker, name, REPO)
+                row = _row(REPO, family)
+                ref = row['retention_policy_ref']
+                policy = 'RECORD_BOUND:' + ref['policy_id'] + '@' + ref['policy_version']
+                self.assertEqual(fn([family]), dict(admission='RECORD_BOUND', retention={family: policy},
+                                                    admission_counts=dict(prepared=0, admitted=1, refused=0)))
+                self.assertEqual(fn([PREPARED]), dict(admission='ABSENT', retention={PREPARED: 'PENDING_RETENTION_DECISION'},
+                                                      admission_counts=dict(prepared=1, admitted=0, refused=0)))
+                mixed = fn([family, PREPARED])
+                self.assertEqual(mixed['admission'], 'ABSENT_AND_RECORD_BOUND')
+                self.assertEqual(mixed['retention'], {family: policy, PREPARED: 'PENDING_RETENTION_DECISION'})
 
 
 class RevisionModeStandingNegatives(unittest.TestCase):
