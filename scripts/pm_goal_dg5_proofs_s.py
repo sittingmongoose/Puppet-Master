@@ -215,3 +215,19 @@ PROOFS.update({
             "no presented wrapper can make :516 the only refusal in a complete decode_checkpoint "
             "call; it is entailed by the key, deterministic-kind and encode-size sites.")),
 })
+
+PROOFS.update({
+    'dg5/site/pm_goal_dg_s_start.py:984': dict(
+        kind='entailment', families=['goal_run.started'],
+        depends_on=[],
+        sites=[(START, 984), (START, 1020), (STORAGE, 1421), (STORAGE, 1426)],
+        argument=(
+            "The only append path in a complete commit_start is the one-event "
+            "AppendOwner.append_original at start:1020, and Storage.append validates every candidate "
+            "through _candidate (pm_goal_test_storage.py:1421), which applies the shared NUMRULE "
+            "current-append-policy predicate to replay_policy (:1426) and refuses "
+            "projector_replay_only with replay_only_not_appendable. A submission that fails :984 "
+            "therefore refuses again at that Storage candidate check later in the same complete call "
+            "(the fresh discovery chain for S1/producer_replay_only_policy stops exactly there with "
+            "no_progress), so :984 has no single-defect witness.")),
+})
