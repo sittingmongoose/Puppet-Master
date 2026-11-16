@@ -328,6 +328,39 @@ def _schema_assert_supplements(suite, work):
     suite.negative('dg5-shared', 'images_lease_schema:909', lease_schema, 'images/lease_schema')
     suite.negative('dg5-shared', 'index_checkpoint_schema:1210', checkpoint_schema, 'index/checkpoint_schema')
 
+    def candidate_type():
+        store = storage.TestOwnerStorage.create(work / 'assert-candidate-type')
+        handle = store.reserve('TEST_ONLY:op:dg5-cand-type', dict(tag='dg5-cand-type'))
+        return store.append(handle, ['x'])
+
+    def row_schema():
+        store = storage.TestOwnerStorage.create(work / 'assert-row-schema')
+        _handle, out, _rows = selftest.append_one(store, 'dg5-row-schema')
+        info = store.events[out['event_ids'][0]]
+        info['row_base'] = dict(info['row_base'], sequence_id='x')
+        rows = store.index_datasets[store.canonical['checkpoint']['current_generation_id']]
+        del rows[[k for k, r in rows.items() if r['event_id'] == out['event_ids'][0]][0]]
+        return selftest.append_one(store, 'dg5-row-schema-2')
+
+    def current_schema():
+        store = storage.TestOwnerStorage.create(work / 'assert-current-schema')
+        selftest.append_one(store, 'dg5-current-1')
+        store.birth_operation_ref = ''
+        return selftest.append_one(store, 'dg5-current-2')
+
+    def manifest_schema():
+        store = storage.TestOwnerStorage.create(work / 'assert-manifest-schema')
+        selftest.append_one(store, 'dg5-manifest-1')
+        store.segments[-1]['canonical_name'] = ''
+        return selftest.append_one(store, 'dg5-manifest-2')
+
+    suite.negative('dg5-shared', 'append_candidate_type:1422', candidate_type, 'append/candidate/type')
+    suite.negative('dg5-shared', 'index_row_schema:1200', row_schema, 'index/row_schema')
+    suite.negative('dg5-shared', 'images_current_schema:907', current_schema, 'images/current_schema')
+    suite.negative('dg5-shared', 'images_manifest_schema:908', manifest_schema, 'images/manifest_schema')
+    # custody/schema (:1564) has no judged negative: _custody_row builds only from a
+    # frame-validated event plus computed digests (see its entailed proof).
+
 
 class _StorageHandleSubclass(storage._Handle):
     """A storage handle whose exact type is not _Handle (the :1259/:1589 defect)."""
@@ -544,6 +577,16 @@ def _pure_supplements(suite, work):
     pure('exact_json_bytes:428',
          lambda: ((lambda: A.exact_json(b'x')), A.exact_json, dict(args=(b'x',), kwargs={})),
          'custody/exact_json/type', 'dg5/site/pm_goal_test_owner_adapters.py:428')
+    def event_record_make():
+        store = storage.TestOwnerStorage.create(work / 'pure-event-schema')
+        _handle, out, _rows = selftest.append_one(store, 'dg5-event-schema')
+        event = store.read_event(out['event_ids'][0])
+        bad = {k: v for k, v in event.items() if k != 'correlation_id'}
+        return (lambda: storage.validate_event_record(bad, 'append/event')), \
+            storage.validate_event_record, dict(args=(bad, 'append/event'), kwargs={})
+
+    pure('event_record_schema:473', event_record_make,
+         'append/event/schema/', 'dg5/site/pm_goal_test_storage.py:473')
     pure('storage_u64_negative:197',
          lambda: ((lambda: storage.u64(-1, 'dg5/shared')), storage.u64, dict(args=(-1, 'dg5/shared'), kwargs={})),
          'dg5/shared/numrule/integer_range', 'dg5/site/pm_goal_test_storage.py:197')
