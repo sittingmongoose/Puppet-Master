@@ -1573,3 +1573,113 @@ def cases(suite):
         cell['value'] = new
     ix_case('c3/index_row_rewritten', ix_row_rewritten,
             lambda w, r: w.index.publish(), 'index/row_rewritten', IX_SITE + '166')
+
+    # ---- batch 11 (helper C): native D05/D06/run/start/writers sites ----
+    def tx_edit(w, table, key, fn):
+        """Edit one stored cell through a genuine transaction (committed-version clean)."""
+        cell = w.storage.cells[table][key]
+        new = copy.deepcopy(cell['value'])
+        fn(new)
+        w.write([w.put(table, key, new, expected=cell['version'])])
+        return new
+
+    def native_case(name, setup, expected, target, action='settle_owner', until_step='settle_owner'):
+        def make():
+            w, r = C3C.until(suite, until_step)
+            setup(w, r)
+            return w, getattr(r, action)
+        add(name, make, expected, target)
+
+    def d06_cell(field_table):
+        def setup(w, r):
+            table, key_attr, fn = field_table(w, r)
+            tx_edit(w, table, key_attr, fn)
+        return setup
+
+    native_case('c3n/d06_control_result',
+                lambda w, r: tx_edit(w, w.native.d06.CONTROL, r.wf_run['d06']['control_key'],
+                                     lambda v: v['record']['result'].update(physical_value_sha256='0' * 64)),
+                'C3/settle_owner/native_custody/d06/control_result', N3_SITE + '1069')
+    native_case('c3n/d06_control_intent',
+                lambda w, r: tx_edit(w, w.native.d06.CONTROL, r.wf_run['d06']['control_key'],
+                                     lambda v: v['record']['intent'].update(physical_value_sha256='0' * 64)),
+                'C3/settle_owner/native_custody/d06/control_intent', N3_SITE + '1071')
+    native_case('c3n/d06_custody_unavailable',
+                lambda w, r: drop(w, w.native.d06.INTENT, r.wf_run['d06']['intent_key']),
+                'd06/custody_unavailable', N3_SITE + '1068')
+    native_case('c3n/d06_not_published',
+                lambda w, r: r.wf_run['d06'].update(phase='prepared'),
+                'd06/not_published', N3_SITE + '1062')
+    native_case('c3n/d05_origin_join',
+                lambda w, r: tx_edit(w, w.native.d05.ORIGIN, r.wf_run['d05']['origin_key'],
+                                     lambda v: v['value']['issued_records'][0].update(physical_sha256='0' * 64)
+                                     if 'value' in v else v['issued_records'][0].update(physical_sha256='0' * 64)),
+                'd05/origin_join', N3_SITE + '874')
+    native_case('c3n/d05_not_aggregated',
+                lambda w, r: r.wf_run.pop('d05'),
+                'd05/not_aggregated', N3_SITE + '869')
+    native_case('c3n/d05_unresolved',
+                lambda w, r: r.wf_run['d05'].update(resolved=False, codes=[]),
+                'd05/unresolved', N3_SITE + '870')
+    native_case('c3n/d05_result_unavailable',
+                lambda w, r: drop(w, w.native.d05.RESULT, r.wf_run['d05']['result_key']),
+                'd05/result_unavailable', N3_SITE + '873')
+
+    def d05_stop_case(name, setup, expected, target):
+        def make():
+            w, r = C3C.until(suite, 'settle_owner')
+            setup(w, r)
+            return w, r.settle_owner
+        add(name, make, expected, target)
+
+    def stop_tx(w, r, fn):
+        key = w.host_stop.key(r.scope)
+        cell = w.storage.cells[w.host_stop.FAMILY][key]
+        new = copy.deepcopy(cell['value'])
+        fn(new['record'])
+        w.write([w.put(w.host_stop.FAMILY, key, new, expected=cell['version'])])
+
+    d05_stop_case('c3n/d05_goal_stop_not_latched',
+                  lambda w, r: w.host_stop.manual(r.scope, 'resume'),
+                  'C3/settle_owner/native_custody/d05/goal_stop_not_latched', N3_SITE + '756')
+    d05_stop_case('c3n/d05_goal_stop_receipt',
+                  lambda w, r: stop_tx(w, r, lambda rec: rec.update(last_original_stop_receipt_sha256='0' * 64)),
+                  'C3/settle_owner/native_custody/d05/goal_stop_receipt', N3_SITE + '759')
+    d05_stop_case('c3n/d05_goal_stop_progress',
+                  lambda w, r: tx_edit(w, 'goal_cancel_progress',
+                                       'goal_cancel_progress:' + __import__('pm_goal_own_c_source_oracles').scoped_key(r.scope)
+                                       + ':' + r.operation_id.encode().hex() + ':epoch:1',
+                                       lambda v: v['record']['stop_receipt'].update(
+                                           original_host_transaction_ref=O.uid('TEST_ONLY:host-stop-transaction'))),
+                  'C3/settle_owner/native_custody/d05/goal_stop_progress', N3_SITE + '764')
+
+    def run_current_case(name, setup, expected, target):
+        def make():
+            w, r = C3C.until(suite, 'settle_owner')
+            setup(w, r)
+            return w, r.settle_owner
+        add(name, make, expected, target)
+
+    def pointer(w, r):
+        return w.value(w.native.run.POINTER, 'run:' + __import__('pm_goal_dg_ca3_native').k_hex(r.wf_run['run_scope']['goal_run_id']))
+
+    run_current_case('c3n/run_pointer_unavailable',
+                     lambda w, r: drop(w, w.native.run.POINTER,
+                                        'run:' + __import__('pm_goal_dg_ca3_native').k_hex(r.wf_run['run_scope']['goal_run_id'])),
+                     'run/pointer_unavailable', N3_SITE + '537')
+    run_current_case('c3n/run_body_unavailable',
+                     lambda w, r: drop(w, w.native.run.BODY, pointer(w, r)['body_key']),
+                     'run/body_unavailable', N3_SITE + '540')
+    run_current_case('c3n/run_body_join',
+                     lambda w, r: tx_edit(w, w.native.run.BODY, pointer(w, r)['body_key'],
+                                          lambda v: v['record'].update(status='paused' if v['record']['status'] != 'paused' else 'running')),
+                     'run/body_join', N3_SITE + '541')
+
+    def run_owner_epoch(w, r):
+        p = pointer(w, r)
+        tx_edit(w, w.native.run.BODY, p['body_key'],
+                lambda v: v['record'].update(execution_owner_epoch=v['record']['execution_owner_epoch'] + 1))
+        body = w.value(w.native.run.BODY, p['body_key'])
+        tx_edit(w, w.native.run.CONTROL, p['control_key'],
+                lambda v: v['record'].update(body_record_sha256=__import__('pm_goal_dg_ca3_native').record_sha(body['record'])))
+    run_current_case('c3n/run_owner_epoch', run_owner_epoch, 'run/owner_epoch', N3_SITE + '543')
