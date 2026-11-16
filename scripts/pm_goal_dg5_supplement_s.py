@@ -774,3 +774,57 @@ def _(suite):
     value = copy.deepcopy(row['value'])
     value['dataset_name'] = 'x' * 20000 + '@' + gid
     projector.rep.decode(value, original, selection_check=False)
+
+
+# Native CAS: the before_publish hook moves the current pointer to a copy of
+# the before body stored at a fresh key (the stale_native_cas shape without
+# the lawful advance), so the presented current body differs from before_body
+# only in its physical_key and the after-body key stays free for the joint tx.
+@negative('lower_native_cas_moved_body', 'lower/native_cas_body', START + '1409')
+def _(suite):
+    world, handles = O.new_world(suite)
+
+    def move(w):
+        native = w.owners['native']
+        current = native.current()
+        body = copy.deepcopy(current['body'])
+        moved_key = body['physical_key'] + ':moved'
+        body['physical_key'] = moved_key
+        pointer = copy.deepcopy(current['pointer']['value'])
+        pointer['body_key'] = moved_key
+        w.storage.transact([
+            dict(table='workflow_goal_run_body', key=moved_key, expected=None, value=body),
+            dict(table='workflow_goal_run_current', key=native.current_key(),
+                 expected=current['pointer']['version'], value=pointer)])
+    try:
+        world.start.commit_start(O.request(world), handles, edits=dict(before_publish=move))
+    except W.REFUSALS as error:
+        r = world.start.recover_start(O.OP)
+        W.require('lower/prefix', r['classification'] == 'receipted_unpublished' and
+                  world.owners['native'].current()['body']['record']['revision'] == ST.BEFORE_REVISION)
+        raise error
+
+
+# Native control join: the stored control's body-record digest is substituted,
+# with the issued D01 copies (current_control and the head selector, rebuilt
+# from its five schema fields) updated to the same tampered wrapper, so the
+# later current-control equality and selector resolution still hold.
+@negative('native_control_join_substituted_digest', 'start/native_control_join', START + '829')
+def _(suite):
+    def d01_edit(cs):
+        cs['workflow']['current_control']['body_record_sha256'] = Z
+        sel = cs['workflow']['head']['current_control']
+        wrapper = dict(schema_id='pm.storage_value.workflow_goal_run_control.v1', schema_version='1.0.0',
+                       storage_instance_id=sel['storage_instance_id'], physical_key=sel['physical_key'],
+                       record=cs['workflow']['current_control'])
+        sel['physical_value_sha256'] = W.cdigest(wrapper)
+        return cs
+
+    def pre(w, h):
+        native = w.owners['native']
+        control = copy.deepcopy(native.current()['control'])
+        control['record']['body_record_sha256'] = Z
+        cell = W.read_value(w.storage, 'workflow_goal_run_control', control['physical_key'])
+        w.storage.transact([dict(table='workflow_goal_run_control', key=control['physical_key'],
+                                  expected=cell['version'], value=W.cell_value(w.storage, control))])
+    start_case(suite, edits=dict(d01_current=d01_edit), pre=pre)
