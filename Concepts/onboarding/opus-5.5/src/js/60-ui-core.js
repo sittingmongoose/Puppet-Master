@@ -1673,6 +1673,8 @@
     /* reopening the same run in the same page keeps the live session: operations still running (a Project being
        created, a key being added) report into the objects they started with */
     const live = resumable && S.sess && S.sess.started === saved.started;
+    /* (a new run replaces the record: the Projects it names are kept in setup's own record first, R87-P2) */
+    if ((opts.fresh || !resumable) && O55.shell && O55.shell.keepSetup) O55.shell.keepSetup();
     S.sess = live ? S.sess : resumable ? Object.assign(freshSession(), saved) : freshSession();
     if (opts.fresh || (saved && (saved.status === 'done' || saved.status === 'skipped'))) S.sess = freshSession();
     S.resumed = !!(saved && !opts.fresh && saved.status === 'closed');
