@@ -2,68 +2,68 @@
   "event_type": "filesafe.command_denied",
   "bucket": "confirmed_persisted_unregistered",
   "july_classification": "confirmed_persisted_unregistered",
-  "disposition": "KEEP_QUARANTINED",
-  "disposition_rationale": "Plans/Decision_Log.md#DL-039: genuine J248-VETO-BATCH-252 CONFIRM_ALL_QUARANTINE_NO_ADMIT, recorded by Jared 2026-09-11T00:49:25.665050+00:00, applied 2026-09-11T15:12:51.572607+00:00 to filesafe.command_denied. Interim KEEP_QUARANTINED: counted in the working denominator, not live-registered. Supersedes the forged 2026-08-12 application claim; retained evidence supplies no new authority or depth closure. This exact row remains for the owner-batched registered/excluded/decision-card campaign.",
+  "disposition": "KEEP_REGISTERED",
+  "disposition_rationale": "Plans/Decision_Log.md#DL-039: genuine J248-VETO-BATCH-252 CONFIRM_ALL_QUARANTINE_NO_ADMIT, recorded by Jared 2026-09-11T00:49:25.665050+00:00, applied 2026-09-11T15:12:51.572607+00:00 to filesafe.command_denied. Interim KEEP_QUARANTINED: counted in the working denominator, not live-registered. Supersedes the forged 2026-08-12 application claim; retained evidence supplies no new authority or depth closure. This exact row remains for the owner-batched registered/excluded/decision-card campaign. Registered at registry revision 2026-11-16.165 in admission merge 2 under DL-078, DL-096 and DL-400 (decision Plans/Decision_Log.md#DL-2301); DL-077 admission record reports/event-authority-20260911/admission-records/filesafe.command_denied.json. Disposition KEEP_QUARANTINED -> KEEP_REGISTERED, evidence cells membership_version, owner_doc, producer, closed_payload_schema, scope_identity, replay_idempotency, retention, redaction_custody, transitions, consumers_checkpoints, compatibility_withdrawal, positive_negative_oracles projected with twelve PASS cells from the family's admission depth assessment reports/event-authority-20261116/admission-merge-2/depth/filesafe.command_denied.json (sha256 8cb82fb1a9d219c04b1534e5f95b67dfd1fc9fa2ad8ae85401b9e34d0fd545dc); bucket, cohort pins, July classification and every other field are unchanged; no seal or owner choice.",
   "evidence": {
     "membership_version": {
-      "status": "UNKNOWN",
-      "citation": null,
-      "note": "No checked Plans citation closes exact registry membership and version for exact token `filesafe.command_denied`; this field remains UNKNOWN without owner or producer inference."
+      "status": "PASS",
+      "citation": "Plans/event_family_registry.json:25306-25389",
+      "note": "Registered at registry revision 2026-11-16.165 as #/families/383 (canonical row SHA-256 dc5d2e57eac4127858f6f27149100664db008d7c2e0d74a286dcbb2f538e4d41); before this commit the family was absent."
     },
     "owner_doc": {
-      "status": "UNKNOWN",
-      "citation": null,
-      "note": "No checked Plans citation closes explicit semantic and payload owner authority for exact token `filesafe.command_denied`; this field remains UNKNOWN without owner or producer inference."
+      "status": "PASS",
+      "citation": "Plans/Contracts_V0.md:43335; Plans/Contracts_V0.md:43347",
+      "note": "CV-550/SP-550 explicitly own this exact family and route current FileSafe semantics through F2-213; the new original-source interfaces are separately named."
     },
     "producer": {
       "status": "PASS",
-      "citation": "Plans/FileSafe.md:111",
-      "note": "Plans/FileSafe.md:106-113 explicitly requires approved-command identity mismatches to emit `filesafe.command_denied` with the named denial_code; this is an exact emission rule."
+      "citation": "Plans/Contracts_V0.md:43347; Plans/Contracts_V0.md:43355; Plans/storage-plan.md:55274",
+      "note": "CV-550 selects its exact producer, separate Project/application original-source roots and ordered lifecycle; SP-550 explicitly adopts SP-286/CV-339 full-value v2 before terminal publication. Native methods remain specified_unimplemented."
     },
     "closed_payload_schema": {
-      "status": "UNKNOWN",
-      "citation": null,
-      "note": "No checked Plans citation closes closed exhaustive payload schema for exact token `filesafe.command_denied`; this field remains UNKNOWN without owner or producer inference."
+      "status": "PASS",
+      "citation": "Plans/event_payloads/filesafe_command_denied_v2.schema.json:3; Plans/Contracts_V0.md:43335",
+      "note": "Own closed 2.0.0 payload selects this exact family and preserves current Project/application semantics. Original Project source resources remain immutable; prepared snapshot versions retain original string types and override scopes use the current discriminated union."
     },
     "scope_identity": {
-      "status": "UNKNOWN",
-      "citation": null,
-      "note": "Plans/FileSafe.md:106-113 defines guard/request scope generally but does not specify the complete canonical scope/identity payload of exact token `filesafe.command_denied`; this dimension remains UNKNOWN."
+      "status": "PASS",
+      "citation": "Plans/Contracts_V0.md:43339; Plans/storage-plan.md:55276; Plans/Contracts_V0.md:43367",
+      "note": "CV-550/SP-550 bind exact event-id/key recipes and full envelope/source/subject/Server/Host/root joins. The closed EventRecord uses scope_kind/project_id; application never borrows a Project or node/attempt. Own full original-source join positives/negatives pass."
     },
     "replay_idempotency": {
-      "status": "UNKNOWN",
-      "citation": null,
-      "note": "No checked Plans citation closes replay ordering, dedupe, and idempotency for exact token `filesafe.command_denied`; this field remains UNKNOWN without owner or producer inference."
+      "status": "PASS",
+      "citation": "Plans/storage-plan.md:55276; Plans/storage-plan.md:55290; Plans/storage-plan.md:55286; Plans/Contracts_V0.md:43341",
+      "note": "SP-550 resolves the lifetime tuple and semantic digest to the unchanged original complete event and first receipt. Changed digest conflicts; missing authoritative dedupe/source fences with zero new effect. Own protocol cases pass."
     },
     "retention": {
-      "status": "UNKNOWN",
-      "citation": null,
-      "note": "No checked Plans citation closes retention policy and lifecycle for exact token `filesafe.command_denied`; this field remains UNKNOWN without owner or producer inference."
+      "status": "PASS",
+      "citation": "Plans/storage-plan.md:55282; Plans/storage-plan.md:55229",
+      "note": "Current exact-family BOUND retention assignment: {\"application_policy_ref\": \"RP-FILESAFE-BLOCKED-COMMAND-APPLICATION-2555D@1.0.0\", \"decisions\": [\"DL-422\", \"DL-460\"], \"event_type\": \"filesafe.command_denied\", \"existing_checkpoints\": [], \"grade_source\": \"reports/event-authority-20261104/DF.self-grade.json\", \"history_policy_ref\": \"RP-OPERATIONAL-2555D@1.0.0\", \"lane\": \"DF\", \"original_and_checkpoint_assignments\": [], \"owner\": \"Plans/storage-plan.md#SP-550\", \"owner_line\": 50810, \"prior_finding\": \"SP-550 applies Card 2 2.a/DL-422: Project history uses RP-OPERATIONAL-2555D with exact expiry/protection/deletion rules. Application counting/deletion rules remain PENDING_RETENTION_DECISION, as the answer expressly requires; no Project rule is inferred for them.\", \"question\": null, \"status\": \"BOUND\"}"
     },
     "redaction_custody": {
-      "status": "UNKNOWN",
-      "citation": null,
-      "note": "No checked Plans citation closes redaction rules and sensitive-field custody for exact token `filesafe.command_denied`; this field remains UNKNOWN without owner or producer inference."
+      "status": "PASS",
+      "citation": "Plans/storage-plan.md:55280; Plans/Contracts_V0.md:43351; Plans/Contracts_V0.md:43374",
+      "note": "CV-550 now validates the selected original itself and its own commitment before a recursive exact-type complete join, on current acceptance and body reads. Own both-scope wrong selected-bank types refuse. Issued-only history and original typed commitments are preserved; native custody/permissions/backup remain NOT_RUN."
     },
     "transitions": {
-      "status": "UNKNOWN",
-      "citation": null,
-      "note": "No checked Plans citation closes event-specific emission and state transitions for exact token `filesafe.command_denied`; this field remains UNKNOWN without owner or producer inference."
+      "status": "PASS",
+      "citation": "Plans/Contracts_V0.md:43337; Plans/Contracts_V0.md:43355",
+      "note": "CV-550 has this family's lifecycle table, concrete source/body/admission/append/first-receipt/terminal barriers and same-operation recovery. Its domain outcome is preserved; passive replay never performs the command, grant, capture, restore or hold-clear action."
     },
     "consumers_checkpoints": {
-      "status": "UNKNOWN",
-      "citation": null,
-      "note": "No checked Plans citation closes named consumers and durable checkpoint ownership for exact token `filesafe.command_denied`; this field remains UNKNOWN without owner or producer inference."
+      "status": "PASS",
+      "citation": "Plans/storage-plan.md:55278",
+      "note": "SP-550 explicitly adopts SP-278 for its exact versioned ephemeral history reader, with none_required family checkpoint, generic durable nine-field token, live snapshot, atomic projection/frontier CAS and source-generation rebuild fences."
     },
     "compatibility_withdrawal": {
-      "status": "UNKNOWN",
-      "citation": null,
-      "note": "No checked Plans citation closes alias, migration, and withdrawal rules for exact token `filesafe.command_denied`; this field remains UNKNOWN without owner or producer inference."
+      "status": "PASS",
+      "citation": "Plans/Contracts_V0.md:43345; Plans/storage-plan.md:55284; Plans/storage-plan.md:55286",
+      "note": "SP-550/CV-550 preserve old dispatch/original Project resources, cut off writer admission, reconcile original pending operations, fence own reader/index generations and require verified retained-survivor rebuild before publication. Unknown versions/sources remain unavailable."
     },
     "positive_negative_oracles": {
-      "status": "UNKNOWN",
-      "citation": null,
-      "note": "No checked Plans citation closes event-specific positive and negative acceptance oracles for exact token `filesafe.command_denied`; this field remains UNKNOWN without owner or producer inference."
+      "status": "PASS",
+      "citation": "Plans/Contracts_V0.md:43337; Plans/storage-plan.md:55290; Plans/Automated_Testing_System.md:11388",
+      "note": "Complete original DF suite, whole-definition Method B schema/branch coverage with exact refusal, clause cut/restoration and no unresolved clauses; source/tool/case-bound 355-row proof plus 48 checked singleton entailments. Independently sealed retained original/store and copy-join evidence. Shared number corpus and all DF date-time boundaries replayed. Global inventory infrastructure remains separately blocked; native NOT_RUN."
     }
   },
   "citations_checked": [
