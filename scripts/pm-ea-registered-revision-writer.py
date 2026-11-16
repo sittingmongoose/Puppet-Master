@@ -87,6 +87,16 @@ def main():
         before=dict(revision=registry['registry_revision'],family_count=len(registry['families']),sha256=w.sha256_file(ROOT/w.REGISTRY))
         registry['families'][index]=row
         registry['registry_revision']=w.next_revision(before['revision'],a.revision_date)
+        readiness_text=None
+        if old['payload_schema_ref']['path'] != row['payload_schema_ref']['path']:
+            # The kernel check pins exact paths; move this family's pin with
+            # the selector instead of allowing a second interchangeable root.
+            old_line='    '+json.dumps(event)+': '+json.dumps(old['payload_schema_ref']['path'])+','
+            new_line='    '+json.dumps(event)+': '+json.dumps(row['payload_schema_ref']['path'])+','
+            readiness_text=w.read_raw('scripts/pm-implementation-readiness.py')
+            require(readiness_text.count(old_line)==1,'exact Goal payload path pin missing')
+            readiness_text=readiness_text.replace(old_line,new_line)
+            readiness.EVENT_FAMILY_GOAL_PAYLOAD_SCHEMA_REFS[event]=row['payload_schema_ref']['path']
         diagnostics=readiness.event_family_registry_data_failures(registry,load(w.REGISTRY_SCHEMA),path_label=w.REGISTRY,include_residuals=False)
         require(not diagnostics,'successor registry diagnostics: '+json.dumps(diagnostics))
         rendered=w.render_registry(registry)
@@ -106,6 +116,8 @@ def main():
                 cells[field]=dict(status='PASS',representation=source.get('representation'),finding=source['finding'],
                     evidence=[w.refresh_evidence(e) for e in source['evidence']],carried_from=dict(grade_source,field=field,status=source['status']))
         w.write_text(w.REGISTRY,rendered)
+        if readiness_text is not None:
+            w.write_text('scripts/pm-implementation-readiness.py',readiness_text)
         ctx=dict(after=after,row_index=index,row_lines=w.row_lines(rendered,row['family_id']),row_sha256=w.canonical_sha256(row))
         cells['membership_version']=w.membership_cell(dict(event_type=event),ctx)
         cells['membership_version']['finding']=f"Existing family at #/families/{index} now selects the pinned successor; canonical row SHA-256 {ctx['row_sha256']}."
@@ -142,7 +154,7 @@ def main():
         w.write_text(w.DECISION_LOG,log+entry)
         checkpoint(before,after,event,dl)
         if a.commit:
-            w.git('add','--',w.REGISTRY,w.DECISION_LOG,w.CURRENTNESS,w.LEGACY_GOLDEN,depth_path)
+            w.git('add','--',w.REGISTRY,w.DECISION_LOG,w.CURRENTNESS,w.LEGACY_GOLDEN,depth_path,'scripts/pm-implementation-readiness.py')
             w.git('commit','-q','-m',f'plans: {dl} selects prepared {event} contract (S5b)')
         print(json.dumps(dict(event_type=event,dl=dl,registry=after,commit=w.git('rev-parse','HEAD').strip())),flush=True)
     return 0
