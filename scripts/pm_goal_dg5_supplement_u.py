@@ -147,3 +147,69 @@ def history_without_first_revision(d):
         x, revision_hash=O.revision_hash(x)))(dict(r, prior_revision_hash=None)))['record']
     U.rbody(w, O.T_CONTROL, U.ctl_key(g), lambda c: dict(c, latest_revision_hash=resealed['revision_hash']))
     return w, U.body_read(w, g)
+
+
+@case('U-DG5/N/owner_identity_substituted', 'dgu/physical/owner_identity', SITE + '674',
+      'Single defect: only the stored body row owner_identity_sha256 changes; the record, its value_sha256 '
+      'and every semantic join stay valid, so only the owner-identity commitment (:674) refuses. The authored '
+      'row_copied_to_other_key also breaks the history joins the copied record carries.')
+def owner_identity_substituted(d):
+    w, g = U._goal(d)
+    U.run_direct(w, g)
+    bkey = O.body_key(g['scope']['project_id'], g['scope']['goal_id'])
+    U.rewrite_raw(w, O.T_BODY, bkey, lambda row: dict(row, owner_identity_sha256='0' * 64))
+    return w, U.body_read(w, g)
+
+
+@case('U-DG5/N/value_sha_substituted', 'dgu/physical/value_sha256', SITE + '681',
+      'Single defect: only the stored body row value_sha256 changes; the inline record bytes are untouched, '
+      'so with :681 cut the same record decodes and every later join holds. The authored incoherent-tamper '
+      'case edits the record, which the currentness and objective joins also refuse.')
+def value_sha_substituted(d):
+    w, g = U._goal(d)
+    U.run_direct(w, g)
+    bkey = O.body_key(g['scope']['project_id'], g['scope']['goal_id'])
+    U.rewrite_raw(w, O.T_BODY, bkey, lambda row: dict(row, value_sha256='0' * 64))
+    return w, U.body_read(w, g)
+
+
+@case('U-DG5/N/inspect_source_defect', 'dgu/inspect/source_defect', SITE + '1860',
+      'Single defect in the acquired source snapshot: first custody group_digest is substituted, so '
+      'GenericSource halts before that event (a custody defect at its position) and the inspected event '
+      'has no row. Only :1860 selects the source_defect code for that state; see the written proof in '
+      'pm_goal_dg5_proofs_u.py (with :1860 cut, :1861 still refuses).')
+def inspect_source_defect(d):
+    w, g = U._goal(d)
+    req, adm = U.run_direct(w, g)
+    ev = U.event_of(w, g, adm)
+    r = w.inspector.request_for(g['scope'], ev)
+    snap = w.storage.acquire_source()
+    snap['custody'][ev] = dict(snap['custody'][ev], group_digest='0' * 64)
+    return w, lambda: w.inspector.inspect(r, g['user'], g['user_permission'], snapshot=snap)
+
+
+@case('U-DG5/N/inspect_custody_pending_issued', 'dgu/inspect/original_custody_unavailable', SITE + '1866',
+      'Single defect: the acquired snapshot carries no first custody for an issued event (pending custody), '
+      'so the progress is event_issued and only the custody presence check (:1866) refuses. The authored '
+      'pending_first_custody case stops before publication, so the not-issued refusal (:1882) also applies.')
+def inspect_custody_pending_issued(d):
+    w, g = U._goal(d)
+    req, adm = U.run_direct(w, g)
+    ev = U.event_of(w, g, adm)
+    r = w.inspector.request_for(g['scope'], ev)
+    snap = w.storage.acquire_source()
+    del snap['custody'][ev]
+    return w, lambda: w.inspector.inspect(r, g['user'], g['user_permission'], snapshot=snap)
+
+
+@case('U-DG5/N/inspect_progress_not_issued_coherent', 'dgu/inspect/original_custody_unavailable', SITE + '1882',
+      'Single defect: the issued progress snapshot is coherently re-sealed back to event_ready with no '
+      'publication, while the event and its first custody stay in the source, so custody is present '
+      '(:1866 holds) and only the not-issued refusal (:1882) fires.')
+def inspect_progress_not_issued_coherent(d):
+    w, g = U._goal(d)
+    req, adm = U.run_direct(w, g)
+    r = w.inspector.request_for(g['scope'], U.event_of(w, g, adm))
+    U.rewrite_progress_all(w, g, U.op_of(adm), lambda rec: dict(
+        rec, phase='event_ready', publication=None) if rec['phase'] == 'event_issued' else rec)
+    return w, lambda: w.inspector.inspect(r, g['user'], g['user_permission'])
