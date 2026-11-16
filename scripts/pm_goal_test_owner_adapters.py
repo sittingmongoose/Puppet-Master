@@ -72,7 +72,7 @@ def canonical(value, where='adapter/canonical'):
     try:
         return NR.event_value_bytes(value, where)
     except NR.NumruleRefusal as error:
-        raise AdapterRefusal(error.reason) from error
+        shared_refuse(AdapterRefusal(error.reason), cause=error)
 
 
 def digest(value):
@@ -282,7 +282,7 @@ class RootBank:
     def validate(self, root, value, code='root'):
         errors = self.errors(root, value)
         if errors:
-            raise AdapterRefusal(code + '/schema/' + '/'.join(str(p) for p in errors[0].absolute_path))
+            shared_refuse(AdapterRefusal(code + '/schema/' + '/'.join(str(p) for p in errors[0].absolute_path)))
         return value
 
 
@@ -299,13 +299,13 @@ class OriginalHandle:
         return '<TEST_ONLY original handle>'
 
     def __reduce__(self):
-        raise AdapterRefusal('handle/not_serializable')
+        shared_refuse(AdapterRefusal('handle/not_serializable'))
 
     def __copy__(self):
-        raise AdapterRefusal('handle/not_copyable')
+        shared_refuse(AdapterRefusal('handle/not_copyable'))
 
     def __deepcopy__(self, memo):
-        raise AdapterRefusal('handle/not_copyable')
+        shared_refuse(AdapterRefusal('handle/not_copyable'))
 
 
 class OwnerRegistry:
@@ -412,7 +412,7 @@ def exact_json(value, where='custody/exact_json'):
     """
     def check(v):
         if type(v) is float:
-            raise AdapterRefusal(where + '/float')
+            shared_refuse(AdapterRefusal(where + '/float'))
         if type(v) is int:
             NR.integer(v, where)
         elif type(v) is dict:
@@ -657,3 +657,19 @@ class PublicationOwner(TestOwner):
                 self._published[(table, key)] = handle
             slot.set(tx)
             return handle, tx
+
+
+# Routing helpers preserve the exception instance and Python chaining semantics.
+# They follow the adapters so existing predicate source locations remain stable.
+_KEEP = object()
+
+def shared_require(exc, condition, *, cause=_KEEP):
+    if not condition:
+        if cause is _KEEP:
+            raise exc
+        raise exc from cause
+
+def shared_refuse(exc, *, cause=_KEEP):
+    if cause is _KEEP:
+        raise exc
+    raise exc from cause

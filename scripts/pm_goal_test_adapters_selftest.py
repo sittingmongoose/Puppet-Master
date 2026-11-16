@@ -741,6 +741,8 @@ def main():
         pattern_inventory = PAT.selftest(s, work / 'patterns')
         import pm_goal_dg5_number_probe as NUM
         NUM.selftest(s, work / 'numbers')
+        import pm_goal_shared_route_probe as ROUTES
+        ROUTES.selftest(s, work / 'shared_routes')
         matrix = None
         if not a.skip_matrix:
             matrix = R.run_matrix(work / 'matrix')
