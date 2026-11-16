@@ -127,12 +127,46 @@ def check_boundaries_schema_row_guard():
     assert seen['routing'] is True, seen
 
 
+def check_u_bank_validate_routing_guard():
+    """install_u_entries' own RootBank wrapper (the DG-U path) keeps the schema row too."""
+    import pm_goal_dg5_boundaries as bridge
+    import pm_goal_dg_u_owners as owners
+    import pm_goal_test_owner_adapters as adapters
+
+    bridge.install_u_entries(owners)
+    seen = []
+    inst = adapters.RootBank.__new__(adapters.RootBank)
+    inst.errors = lambda root, value: (seen.append(bridge.ROUTING[0]), [object()])[1]
+    old_decide, old_active = tables.decide, bridge.ACTIVE[0]
+    tables.decide = lambda name, holds, site=None: object()
+    bridge.ACTIVE[0] = True
+    try:
+        try:
+            inst.validate('root', {}, 'x/y')
+        except Exception:
+            pass
+    finally:
+        tables.decide, bridge.ACTIVE[0] = old_decide, old_active
+    assert seen and seen[-1] is True, seen
+
+
+def check_frame_error_target_mapping():
+    """A FrameError code whose dynamic suffix contains /schema/ still names its site."""
+    import pm_goal_dg5_boundaries as bridge
+    import pm_goal_test_storage  # noqa: F401 - target_rows only matches loaded modules
+
+    assert bridge.target_rows('Corrupt:event_record:frame/event/schema/') == \
+        'dg5/site/pm_goal_test_storage.py:581'
+
+
 def main():
+    check_frame_error_target_mapping()
     check_shard_partition()
     check_collector_releases_sealed_values()
     check_stateless_reducer_not_an_entry()
     check_schema_validate_routing_guard()
     check_boundaries_schema_row_guard()
+    check_u_bank_validate_routing_guard()
     print('pm_goal_dg5_collector_selftest: PASS')
     return 0
 

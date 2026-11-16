@@ -565,7 +565,9 @@ def target_rows(code):
         # An authored wildcard under a whole-root schema code still names one row: that schema row.
         prefix = code[:-1]
         return row(prefix + 'any') if '/schema/' in prefix else None
-    if '/schema/' in code or '/numrule/' in code:
+    if ('/schema/' in code or '/numrule/' in code) and not code.startswith(('Corrupt:', 'Unsupported:')):
+        # A FrameError code is a site template (klass:code), even when its dynamic
+        # suffix happens to contain /schema/ (event_record:<schema error path>).
         return row(code)
     # Only code this checker process has loaded can raise the refusal. A refusal re-raised under a wrapper
     # prefix (DG-CF3: 'advance/halt/' + inner code) is matched through its suffixes too; the most specific
@@ -587,7 +589,7 @@ def refusal_row(error):
     code = refusal_code(error)
     if LAST_REFUSAL[0] is not None and (LAST_REFUSAL[0][1] == code or code.endswith('/' + LAST_REFUSAL[0][1])):
         return LAST_REFUSAL[0][0]  # the routed site that refused (also when re-raised under a wrapper prefix)
-    if '/schema/' in code or '/numrule/' in code:
+    if ('/schema/' in code or '/numrule/' in code) and not code.startswith(('Corrupt:', 'Unsupported:')):
         return row(code)
     return PREFIX + 'unrouted/' + code
 
@@ -1098,7 +1100,14 @@ def install_u_entries(module):
             frame = inspect.currentframe().f_back
             site = (str(Path(frame.f_code.co_filename).relative_to(ROOT)), frame.f_lineno)
             if tables.decide(PREFIX + code + '/schema', not errors, site=site) is not None:
-                return original_validate(self, root, value, code)
+                # As in install_schema_rows: the schema row is the refusing row; the
+                # bank's own routed refusal inside validate must not replace it.
+                saved = ROUTING[0]
+                ROUTING[0] = True
+                try:
+                    return original_validate(self, root, value, code)
+                finally:
+                    ROUTING[0] = saved
             return value
         validate._dg5_schema = True
         adapters.RootBank.validate = validate
