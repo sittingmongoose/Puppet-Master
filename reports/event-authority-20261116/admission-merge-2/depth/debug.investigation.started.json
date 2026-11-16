@@ -1,0 +1,345 @@
+{
+ "schema_id": "pm.assurance.event_authority.admission_depth_assessment.v1",
+ "assessment_kind": "admission_twelve_criteria",
+ "writer": "pm-ea-admission-writer.v1",
+ "merge": "admission-merge-2",
+ "registry": {
+  "path": "Plans/event_family_registry.json",
+  "revision": "2026-11-16.151",
+  "sha256": "3231e2b0c570f91e5e10692a8b9f192d1bde858b93a37f4e3dd743280810e8a3",
+  "family_count": 370,
+  "row_pointer": "#/families/369"
+ },
+ "base_commit": "45b4ccf25270c486dbc682805cd455ce4ca25fb0",
+ "rubric": "Step 8 depth matrix, twelve criteria (DL-077); PASS needs Plans/ evidence",
+ "native_execution": "NOT_RUN",
+ "rows": [
+  {
+   "event_type": "debug.investigation.started",
+   "family_id": "event-family-debug-investigation-started",
+   "family_revision": "1.0.0",
+   "cells": {
+    "membership_version": {
+     "status": "PASS",
+     "representation": "exact_registry_membership",
+     "finding": "Registered at registry revision 2026-11-16.151 as #/families/369 (canonical row SHA-256 368a012ef4af0bb969779fd599c199861943f39b8222733274cf8d37a59f7b7b); before this commit the family was absent.",
+     "evidence": [
+      {
+       "path": "Plans/event_family_registry.json",
+       "json_pointer": "#/families/369",
+       "line_start": 24704,
+       "line_end": 24748,
+       "quote": "\"event_type\": \"debug.investigation.started\"",
+       "quote_line": 24707,
+       "file_sha256": "3231e2b0c570f91e5e10692a8b9f192d1bde858b93a37f4e3dd743280810e8a3",
+       "quote_check": "exact"
+      }
+     ]
+    },
+    "owner_doc": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "Current exact-family owner and companion explicitly bind this criterion. Static checks pass; native execution remains NOT_RUN. Shared rules adopted and guard rows proved by the shared tool (sweep parts 2A and 2B).",
+     "evidence": [
+      {
+       "path": "Plans/Contracts_V0.md",
+       "unit": "CV-575",
+       "line_start": 5902,
+       "line_end": 5902,
+       "quote": "canonical_text: 'Newly authored owner contract under DL-045 for exactly debug.investigation.started@1.0.0,",
+       "quote_check": "exact",
+       "quote_scope": "unit CV-575, Plans/Contracts_V0.md:5895-6041",
+       "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "owner_doc",
+      "status": "PASS"
+     }
+    },
+    "producer": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "Current exact-family owner and companion explicitly bind this criterion. Static checks pass; native execution remains NOT_RUN. Shared rules adopted and guard rows proved by the shared tool (sweep parts 2A and 2B).",
+     "evidence": [
+      {
+       "path": "Plans/Contracts_V0.md",
+       "unit": "CV-575",
+       "line_start": 5942,
+       "line_end": 5942,
+       "quote": "Producer binding: owner.debug.investigation.started@1.0.0 is the exact emitting handler above. Under",
+       "quote_check": "exact",
+       "quote_scope": "unit CV-575, Plans/Contracts_V0.md:5895-6041",
+       "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "producer",
+      "status": "PASS"
+     }
+    },
+    "closed_payload_schema": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "Current exact-family owner and companion explicitly bind this criterion. Static checks pass; native execution remains NOT_RUN. Shared rules adopted and guard rows proved by the shared tool (sweep parts 2A and 2B). Part 2B: every companion-schema integer slot is judged by the shared current_integer with its published bounds (a binary64 1.0 is now refused), the 16 KiB inline body and detail are measured in EVENT_VALUE bytes, and envelope timestamps by the shared date_time predicate with the EventRecord / CV-253 profiles (DDBG.md \"Sweep part 2B\").",
+     "evidence": [
+      {
+       "path": "Plans/Contracts_V0.md",
+       "unit": "CV-575",
+       "line_start": 5904,
+       "line_end": 5904,
+       "quote": "Closed payload: Plans/debug_investigation_event_payloads.schema.json#/$defs/started; operation_id is",
+       "quote_check": "exact",
+       "quote_scope": "unit CV-575, Plans/Contracts_V0.md:5895-6041",
+       "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a"
+      },
+      {
+       "path": "Plans/debug_investigation_event_payloads.schema.json",
+       "unit": "#/$defs/started",
+       "line_start": 494,
+       "line_end": 494,
+       "quote": "\"$id\": \"pm.debug_investigation.started.schema.v1\"",
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "file_sha256": "ae5832ccea575c071892d1ec85804da05debd08c40cfd52243d5b5d13982b10d"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "closed_payload_schema",
+      "status": "PASS"
+     }
+    },
+    "scope_identity": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "Current exact-family owner and companion explicitly bind this criterion. Static checks pass; native execution remains NOT_RUN. Shared rules adopted and guard rows proved by the shared tool (sweep parts 2A and 2B). Part 2B: the identity is SHA-256 of the shared qualified RFC 8785 over the unchanged preimage; every computable fixture identity is byte-identical to part 2A.",
+     "evidence": [
+      {
+       "path": "Plans/Contracts_V0.md",
+       "unit": "CV-575",
+       "line_start": 5952,
+       "line_end": 5952,
+       "quote": "Identity: idempotency_key is \"debug:\" + lowercase SHA-256 of RFC 8785 canonical JSON [\"debug.investigation.started\",",
+       "quote_check": "exact",
+       "quote_scope": "unit CV-575, Plans/Contracts_V0.md:5895-6041",
+       "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "scope_identity",
+      "status": "PASS"
+     }
+    },
+    "replay_idempotency": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "Current exact-family owner and companion explicitly bind this criterion. Static checks pass; native execution remains NOT_RUN. Shared rules adopted and guard rows proved by the shared tool (sweep parts 2A and 2B). Part 2B: the semantic digest is the shared producer_semantic_digest over the unchanged CV-317 projection (type-sensitive at integer slots); the producer projection must qualify before effects; the shared number corpus runs through the append and retry routes.",
+     "evidence": [
+      {
+       "path": "Plans/Contracts_V0.md",
+       "unit": "CV-575",
+       "line_start": 5956,
+       "line_end": 5956,
+       "quote": "immutable semantic envelope and payload under Case L-5. Same identity and digest returns the original",
+       "quote_check": "exact",
+       "quote_scope": "unit CV-575, Plans/Contracts_V0.md:5895-6041",
+       "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "replay_idempotency",
+      "status": "PASS"
+     }
+    },
+    "retention": {
+     "status": "PASS",
+     "representation": "integrated_retention_delta",
+     "finding": "Current exact-family BOUND retention assignment: {\"application_policy_ref\": \"RP-DEBUG-APPLICATION-2555D@1.0.0\", \"decisions\": [\"DL-401\", \"DL-416\", \"DL-506\", \"DL-508\"], \"event_type\": \"debug.investigation.started\", \"existing_checkpoints\": [], \"grade_source\": \"reports/event-authority-20261104/DDBG.self-grade.json\", \"history_policy_ref\": \"RP-OPERATIONAL-2555D@1.0.0\", \"lane\": \"DDBG\", \"original_and_checkpoint_assignments\": [{\"decision\": \"DL-506\", \"family_id\": \"dev_session_record\", \"policy_ref\": \"RP-DEBUG-30D@1.0.0\"}, {\"decision\": \"DL-508\", \"family_id\": \"revision_run\", \"policy_ref\": \"RP-CHAT-THREAD-LIFETIME@1.0.0\"}], \"owner\": \"Plans/storage-plan.md#SP-570\", \"owner_line\": 1057, \"prior_finding\": \"Earlier lane-local PENDING_RETENTION_DECISION adoption is unchanged by this two-decision task. Current Storage G02 now assigns the policy; lane-local integration remains open.\", \"question\": null, \"status\": \"BOUND\"}",
+     "evidence": [
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-570",
+       "line_start": 1192,
+       "line_end": 1192,
+       "quote": "\\ (2026-11-14).\\n\\nEvent history `retention_policy_ref = RP-OPERATIONAL-2555D@1.0.0`, under DL-401,\\",
+       "quote_check": "exact",
+       "quote_scope": "unit SP-570, Plans/storage-plan.md:1057-1638",
+       "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-570",
+       "line_start": 1196,
+       "line_end": 1196,
+       "quote": "\\ selects `RP-DEBUG-APPLICATION-2555D@1.0.0`; Project records select the Project policy and never count\\",
+       "quote_check": "exact",
+       "quote_scope": "unit SP-570, Plans/storage-plan.md:1057-1638",
+       "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "retention",
+      "status": "PASS"
+     }
+    },
+    "redaction_custody": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "Current exact-family owner and companion explicitly bind this criterion. Static checks pass; native execution remains NOT_RUN. Shared rules adopted and guard rows proved by the shared tool (sweep parts 2A and 2B).",
+     "evidence": [
+      {
+       "path": "Plans/Contracts_V0.md",
+       "unit": "CV-575",
+       "line_start": 5985,
+       "line_end": 5985,
+       "quote": "Custody: Storage owns the immutable EventRecord and first receipt under coherent seglog/index/receipt",
+       "quote_check": "exact",
+       "quote_scope": "unit CV-575, Plans/Contracts_V0.md:5895-6041",
+       "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "redaction_custody",
+      "status": "PASS"
+     }
+    },
+    "transitions": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "Current exact-family owner and companion explicitly bind this criterion. Static checks pass; native execution remains NOT_RUN. Shared rules adopted and guard rows proved by the shared tool (sweep parts 2A and 2B).",
+     "evidence": [
+      {
+       "path": "Plans/Contracts_V0.md",
+       "unit": "CV-575",
+       "line_start": 5942,
+       "line_end": 5942,
+       "quote": "Producer binding: owner.debug.investigation.started@1.0.0 is the exact emitting handler above. Under",
+       "quote_check": "exact",
+       "quote_scope": "unit CV-575, Plans/Contracts_V0.md:5895-6041",
+       "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "transitions",
+      "status": "PASS"
+     }
+    },
+    "consumers_checkpoints": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "Current exact-family owner and companion explicitly bind this criterion. Static checks pass; native execution remains NOT_RUN. Shared rules adopted and guard rows proved by the shared tool (sweep parts 2A and 2B).",
+     "evidence": [
+      {
+       "path": "Plans/Contracts_V0.md",
+       "unit": "CV-575",
+       "line_start": 5967,
+       "line_end": 5967,
+       "quote": "Consumer binding: reader.debug.investigation.started@1.0.0 is the direct transient history reader for",
+       "quote_check": "exact",
+       "quote_scope": "unit CV-575, Plans/Contracts_V0.md:5895-6041",
+       "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "consumers_checkpoints",
+      "status": "PASS"
+     }
+    },
+    "compatibility_withdrawal": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "Current exact-family owner and companion explicitly bind this criterion. Static checks pass; native execution remains NOT_RUN. Shared rules adopted and guard rows proved by the shared tool (sweep parts 2A and 2B). Part 2B: the retained reader checks the original's own source time (EventRecord profile), Storage times (CV-253 storage_utc_z) and sequence_id (uint64), recomputes both identities, refuses an original the at-write recipe cannot digest and compares Storage metadata type-exactly.",
+     "evidence": [
+      {
+       "path": "Plans/Contracts_V0.md",
+       "unit": "CV-575",
+       "line_start": 5999,
+       "line_end": 5999,
+       "quote": "Compatibility and withdrawal: writers emit only 1.0.0, no alias or sibling admission. Unknown versions",
+       "quote_check": "exact",
+       "quote_scope": "unit CV-575, Plans/Contracts_V0.md:5895-6041",
+       "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "compatibility_withdrawal",
+      "status": "PASS"
+     }
+    },
+    "positive_negative_oracles": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "Fixture positives and single-defect negatives for every guard row; each negative names its row and is refused by exactly one phase. The shared guard-isolation tool (004bdedd63) proves every row of every phase suite: 512 of 512 rows in 33 suites, 9 suites rerun at part 2B and the rest carried with inputs, modules and tool unchanged (four with renumbered negative ids only). The shared date-time inventory gate and datetime_validator run at batch-2 integration. Native execution remains NOT_RUN.",
+     "evidence": [
+      {
+       "path": "Plans/Contracts_V0.md",
+       "unit": "CV-575",
+       "line_start": 6005,
+       "line_end": 6005,
+       "quote": "history or sibling records. Positive/negative oracles are the started cases in Plans/debug_investigation_event_fixtures.json",
+       "quote_check": "exact",
+       "quote_scope": "unit CV-575, Plans/Contracts_V0.md:5895-6041",
+       "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a"
+      },
+      {
+       "path": "Plans/debug_investigation_event_fixtures.json",
+       "unit": "started",
+       "line_start": 7559,
+       "line_end": 7559,
+       "quote": "\"event_type\": \"debug.investigation.started\",",
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "file_sha256": "bfa8b6c11c1b20f88996516e79afc7bf50578e4fad931579b4fcaaacfa5400fa"
+      },
+      {
+       "path": "reports/event-authority-20261104/DDBG.md",
+       "unit": "guard tool totals",
+       "quote": "**Totals:** 33 suites, **512 rows, 512 proved**",
+       "line_start": 106,
+       "line_end": 106,
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "file_sha256": "991b454ca465bb9feb1d45d2eaf407d45090be9e854708500491a0c77b375d38"
+      },
+      {
+       "path": "reports/event-authority-20261104/DDBG.md",
+       "unit": "lifecycle_suite",
+       "quote": "| `lifecycle_suite` | PASS | 16 | 21 / 21 |",
+       "line_start": 262,
+       "line_end": 262,
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "file_sha256": "991b454ca465bb9feb1d45d2eaf407d45090be9e854708500491a0c77b375d38"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "positive_negative_oracles",
+      "status": "PASS"
+     }
+    }
+   }
+  }
+ ]
+}
