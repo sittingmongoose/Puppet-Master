@@ -557,3 +557,84 @@ def _(suite):
         graph = w.owners['materialization:graph'].resolve(h['installed_graph'][1])[1]
         _delete_cell(w, 'workflow_installed_graph', graph['physical_key'])
     start_case(suite, pre=pre)
+
+
+# ------------------------------------------------------------- batch 4 (fresh ef0 chains)
+
+# Descriptor profile: the v7-enrollment case differs in the whole edition, so
+# its chain runs to depth limit. Tampering only the acquired descriptor's
+# profile copy after acquire leaves methods, pins and the installed cell intact.
+@negative('descriptor_profile_after_acquire', 'start/descriptor_profile', START + '811')
+def _(suite):
+    start_case(suite, start_edits=dict(
+        after_acquire=lambda w, src: src['descriptor'].update(
+            coordinator_profile='workflow_start_original.v9')))
+
+
+# Revision conflict by status alone: the birth body is not 'ready', every other
+# entry join (revision equality, activation pending, control join, D01 copies
+# issued from the same body) still holds.
+@negative('revision_conflict_body_status', 'start/revision_conflict', START + '826')
+def _(suite):
+    start_case(suite, edits=dict(native_body=at(['record', 'status'], 'blocked')))
+
+
+# Row rederive: only the row's dataset generation suffix differs from the
+# lower publisher's rederived row; decode joins the record itself.
+@negative('row_rederive_dataset_only', 'projector/row_rederive', READERS + '663')
+def _(suite):
+    world, handles, _ = O.started(suite)
+    projector = R.StartedProjector(world.registry, world=world)
+    projector.install()
+    gid = projector.stage()
+    projector.replay(gid, tamper=lambda row: _flip_dataset(copy.deepcopy(row)))
+
+
+# Row/checkpoint join: dataset suffix only, checkpoint prefix left stale
+# (the row_without_checkpoint_join shape with a record-external field).
+@negative('row_checkpoint_join_dataset_only', 'read_historical/row_checkpoint_join', READERS + '729')
+def _(suite):
+    world, projector, readers, gid = make(suite)
+    cell, logical, gen, row = projector.current_row()
+    world.storage.transact([dict(table=gen['dataset_name'], key=projector.rep.projection_key(),
+                                  expected=row['version'], value=_flip_dataset(copy.deepcopy(row['value'])))])
+    readers.read_historical(O.sreq(world))
+
+
+# D01 pointer: points at a different real stored head (revision +1) whose
+# selector resolves, so only the pointer-current hash comparison refuses.
+@negative('d01_pointer_other_stored_head', 'read_current/d01_pointer_current', READERS + '842')
+def _(suite):
+    world, projector, readers, gid = make(suite)
+    d01 = world.owners['d01']
+    fam = ST.d01_families(world.edition)
+    head_cell = world.storage.cell(fam['workflow_head'], d01.head_key(ST.D01_HEAD_REVISION))
+    new_head = copy.deepcopy(head_cell['value'])
+    new_head['record']['revision'] = ST.D01_HEAD_REVISION + 1
+    new_key = d01.head_key(ST.D01_HEAD_REVISION + 1)
+    world.storage.transact([dict(table=fam['workflow_head'], key=new_key, expected=None, value=new_head)])
+    pointer = world.storage.cell(fam['pointer'], d01.pointer_key())
+    value = copy.deepcopy(pointer['value'])
+    value['record']['workflow_head'] = dict(value['record']['workflow_head'], physical_key=new_key,
+                                            physical_value_sha256=W.cdigest(new_head))
+    world.storage.transact([dict(table=fam['pointer'], key=d01.pointer_key(),
+                                  expected=pointer['version'], value=value)])
+    readers.read_current(O.sreq(world))
+
+
+# Metadata has no event: a record_reference row whose metadata pack embeds the
+# event, decoded through the Representation entry the original S6 suite itself
+# uses for forced record_reference rows (selection_check=False there). With
+# :481 cut the event pack overwrites the embedded copy and decode accepts.
+@negative('metadata_pack_embeds_event_decode', 'representation/metadata_has_no_event', READERS + '481')
+def _(suite):
+    import pm_goal_test_storage as _S
+    world, projector, readers, gid = make(suite)
+    original = R.original_started(world)
+    record = R.projection_record(world, original)
+    row = projector.rep.encode(record, gid, force='record_reference')
+    row['content'] = dict(kind='record_reference',
+                          metadata_ref=world.storage.put_pack(_S.canonical(record), 'application/msgpack'),
+                          event_ref=world.storage.put_pack(_S.canonical(record['original_event']),
+                                                           'application/msgpack'))
+    projector.rep.decode(row, original, selection_check=False)
