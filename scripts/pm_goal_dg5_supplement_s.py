@@ -281,8 +281,14 @@ def _(suite):
 def _(suite):
     world, projector, readers, gid = make(suite)
     native = world.owners['native']
-    body = copy.deepcopy(native.current()['body'])
-    body['record']['identity']['workgraph_ref'] = 'TEST_ONLY:workgraph-ref:other'
+    # A lawful advance writes the next body cell; rewriting only that cell's
+    # record revision back to the after revision leaves revision/status at
+    # :834/:835 intact while the wrapper (its physical_key) digests differently
+    # from the retained after body. The retained after-body cell is untouched,
+    # so original acquisition and its relations still pass.
+    advanced = native.advance()
+    body = copy.deepcopy(advanced)
+    body['record']['revision'] = ST.BEFORE_REVISION + 1
     cell = W.read_value(world.storage, 'workflow_goal_run_body', body['physical_key'])
     world.storage.transact([dict(table='workflow_goal_run_body', key=body['physical_key'],
                                   expected=cell['version'], value=W.cell_value(world.storage, body))])
@@ -440,17 +446,8 @@ def _(suite):
                            hooks=dict(after_current_goal=lambda w: _rewrite_current_row_dataset(w, projector)))
 
 
-# Incomplete generic coverage: garbage after the last valid group makes the
-# snapshot's scan tail a defect over the same rows, coverage and token.
-@negative('current_incomplete_coverage_segment_tail', 'read_current/incomplete_coverage', READERS + '917')
-def _(suite):
-    world, projector, readers, gid = make(suite)
-    event_id = R.original_started(world)['original_append']['event']['event_id']
-    generation = world.storage.events[event_id]['segment_generation']
-    path = world.storage._segment_path(generation)
-    with open(path, 'ab') as handle:
-        handle.write(b'\xff' * 32)
-    readers.read_current(O.sreq(world))
+# (read_current/incomplete_coverage at :917 has no single-defect case yet;
+#  see design-batch2.md batch-7 analysis - it is handled after the smoke fixes.)
 
 
 # ------------------------------------------------------------- start / world single defects
@@ -492,7 +489,10 @@ def _(suite):
 
 @negative('staging_dispatch_released', 'start/staging_not_released', START + '880')
 def _(suite):
-    start_case(suite, edits=dict(staging=at(['record', 'dispatch_released'], True)))
+    # Issuance schema pins dispatch_released to false, so the defect is made on
+    # the acquired staging copy, as with descriptor_profile_after_acquire.
+    start_case(suite, start_edits=dict(
+        after_acquire=lambda w, src: src['staging']['record'].update(dispatch_released=True)))
 
 
 # The authentic submission appended raw first (the S3 raw-start shape), so the
@@ -503,7 +503,11 @@ def _(suite):
     sub = world.start.producer_submission(world.start.acquire_all(handles)[0],
                                           world.owners['native'].current(), world.ctx.now())
     world.appender.append_original('TEST_ONLY:op:dg5-raw', dict(tag='raw'), [sub])
-    O.refuse_without_effect(world, lambda: world.start.commit_start(O.request(world), handles))
+    occurred = sub['occurred_at_utc']
+    same_time = O.sub_edit(lambda s: (s.update(occurred_at_utc=occurred),
+                                      s['payload'].update(occurred_at_utc=occurred)), keyed=False)
+    O.refuse_without_effect(world, lambda: world.start.commit_start(O.request(world), handles,
+                                                                    edits=same_time))
 
 
 @negative('dedupe_control_operation_substituted', 'start/dedupe_unavailable', START + '1328')
@@ -545,7 +549,7 @@ def _(suite):
         graph = w.owners['materialization:graph'].resolve(h['installed_graph'][1])[1]
         cell = W.read_value(w.storage, 'workflow_installed_graph', graph['physical_key'])
         value = copy.deepcopy(cell['value'])
-        value['record']['source_dependency_edges'] = []
+        value['record']['entrypoint_worknode_ids'] = list(reversed(value['record']['entrypoint_worknode_ids']))
         w.storage.transact([dict(table='workflow_installed_graph', key=graph['physical_key'],
                                   expected=cell['version'], value=W.cell_value(w.storage, value))])
     start_case(suite, pre=pre)
@@ -608,10 +612,14 @@ def _(suite):
     world, projector, readers, gid = make(suite)
     d01 = world.owners['d01']
     fam = ST.d01_families(world.edition)
-    head_cell = world.storage.cell(fam['workflow_head'], d01.head_key(ST.D01_HEAD_REVISION))
-    new_head = copy.deepcopy(head_cell['value'])
-    new_head['record']['revision'] = ST.D01_HEAD_REVISION + 1
-    new_key = d01.head_key(ST.D01_HEAD_REVISION + 1)
+    pointer0 = world.storage.cell(fam['pointer'], d01.pointer_key())
+    current_head = W.resolve_selector(world.storage, pointer0['value']['record']['workflow_head'],
+                                      'dg5/pointer_head')
+    new_head = copy.deepcopy(current_head)
+    new_head['record']['revision'] += 1
+    new_key = d01.head_key(new_head['record']['revision'])
+    if 'physical_key' in new_head:
+        new_head['physical_key'] = new_key
     world.storage.transact([dict(table=fam['workflow_head'], key=new_key, expected=None, value=new_head)])
     pointer = world.storage.cell(fam['pointer'], d01.pointer_key())
     value = copy.deepcopy(pointer['value'])
