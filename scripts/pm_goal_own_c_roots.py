@@ -13,6 +13,7 @@ from types import MappingProxyType
 
 import jsonschema
 import pm_goal_test_numrule as NR
+from pm_goal_bank_diagnostics import integer_diagnostics
 
 from referencing import Registry, Resource
 from referencing.jsonschema import DRAFT202012
@@ -100,9 +101,9 @@ def _owned_properties(validator, properties, instance, schema):
 @lru_cache(maxsize=None)
 def _original_validator(base):
     # Preserve the selected dialect's existing keyword implementations,
-    # including its pattern route. Only the owner profile hook is added.
+    # including its pattern route. Add owner profiles and integer diagnostics.
     from attrs import fields
-    cls = jsonschema.validators.extend(base, {'properties': _owned_properties})
+    cls = jsonschema.validators.extend(base, {**integer_diagnostics(base), 'properties': _owned_properties})
 
     def evolve(self, **changes):
         schema = changes.setdefault('schema', self.schema)
