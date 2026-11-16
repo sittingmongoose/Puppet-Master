@@ -680,6 +680,10 @@
    "outcome": "registered"
   },
   {
+   "event_type": "remote_access.private_endpoint_state_changed",
+   "outcome": "registered"
+  },
+  {
    "event_type": "run.graph_canonical_locked",
    "outcome": "registered"
   },
