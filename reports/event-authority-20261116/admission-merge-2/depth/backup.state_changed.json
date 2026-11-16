@@ -1,0 +1,398 @@
+{
+ "schema_id": "pm.assurance.event_authority.admission_depth_assessment.v1",
+ "assessment_kind": "admission_twelve_criteria",
+ "writer": "pm-ea-admission-writer.v1",
+ "merge": "admission-merge-2",
+ "registry": {
+  "path": "Plans/event_family_registry.json",
+  "revision": "2026-11-16.15",
+  "sha256": "649a883bd178a82914e9a81dcf4fabad50674ea048652f8d9c0ec1a0209d6a60",
+  "family_count": 234,
+  "row_pointer": "#/families/233"
+ },
+ "base_commit": "45b4ccf25270c486dbc682805cd455ce4ca25fb0",
+ "rubric": "Step 8 depth matrix, twelve criteria (DL-077); PASS needs Plans/ evidence",
+ "native_execution": "NOT_RUN",
+ "rows": [
+  {
+   "event_type": "backup.state_changed",
+   "family_id": "event-family-backup-state-changed",
+   "family_revision": "1.0.0",
+   "cells": {
+    "membership_version": {
+     "status": "PASS",
+     "representation": "exact_registry_membership",
+     "finding": "Registered at registry revision 2026-11-16.15 as #/families/233 (canonical row SHA-256 2e26388c1d5974d5ec7c8e9bfe0d5b9460db7605c188c508d4ed30bcf708ab32); before this commit the family was absent.",
+     "evidence": [
+      {
+       "path": "Plans/event_family_registry.json",
+       "json_pointer": "#/families/233",
+       "line_start": 16072,
+       "line_end": 16154,
+       "quote": "\"event_type\": \"backup.state_changed\"",
+       "quote_line": 16075,
+       "file_sha256": "649a883bd178a82914e9a81dcf4fabad50674ea048652f8d9c0ec1a0209d6a60",
+       "quote_check": "exact"
+      }
+     ]
+    },
+    "owner_doc": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "The exact newly authored BRS-1401 contract and its own companions bind this criterion. PASS refers to normative planning text only, not runtime or executed event oracles.",
+     "evidence": [
+      {
+       "path": "Plans/Backup_Restore_System.md",
+       "unit": "BRS-1401",
+       "line_start": 999,
+       "line_end": 999,
+       "quote": "canonical_text: 'Newly authored owner contract for backup.state_changed@1.0.0, prepared without admission, authorized",
+       "file_sha256": "cafacb59720399f0a190bb0bf2905d5d47775b266496840296faff5501c5a828",
+       "quote_check": "exact",
+       "quote_scope": "unit BRS-1401, Plans/Backup_Restore_System.md:992-1168"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "owner_doc",
+      "status": "PASS"
+     }
+    },
+    "producer": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "The exact newly authored BRS-1401 contract and its own companions bind this criterion. PASS refers to normative planning text only, not runtime or executed event oracles.",
+     "evidence": [
+      {
+       "path": "Plans/Backup_Restore_System.md",
+       "unit": "BRS-1401",
+       "line_start": 1029,
+       "line_end": 1029,
+       "quote": "Producer: the sole newly authored BackupCoordinator.backup_phase_commit@1.0.0 method of the existing domain owner.",
+       "file_sha256": "cafacb59720399f0a190bb0bf2905d5d47775b266496840296faff5501c5a828",
+       "quote_check": "exact",
+       "quote_scope": "unit BRS-1401, Plans/Backup_Restore_System.md:992-1168"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "producer",
+      "status": "PASS"
+     }
+    },
+    "closed_payload_schema": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "F2: original BackupRun manifest and verification reference schemas preserve the full 512-character lexical domain and nullability. PASS covers normative/schema phase-1 readiness only; criterion 12 remains PARTIAL.",
+     "evidence": [
+      {
+       "path": "Plans/Backup_Restore_System.md",
+       "unit": "BRS-1401",
+       "line_start": 1014,
+       "line_end": 1014,
+       "quote": "Historical lookup authenticates retained provenance and does not reacquire expired live authority. Payload: Plans/event_payloads/w3e/backup_state_changed.schema.json,",
+       "file_sha256": "cafacb59720399f0a190bb0bf2905d5d47775b266496840296faff5501c5a828",
+       "quote_check": "exact",
+       "quote_scope": "unit BRS-1401, Plans/Backup_Restore_System.md:992-1168"
+      },
+      {
+       "path": "Plans/event_payloads/w3e/backup_state_changed.schema.json",
+       "unit": "#/",
+       "line_start": 3,
+       "line_end": 3,
+       "quote": "\"additionalProperties\": false,",
+       "file_sha256": "e3d1287dd532212d6e165fa863f7eb354a94cd6e891fd2fba4c076f178c34713",
+       "quote_check": "exact",
+       "quote_scope": "document"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "closed_payload_schema",
+      "status": "PASS"
+     }
+    },
+    "scope_identity": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "F1: encoded Project partitions, including the 350-character boundary, fit all stored-value schemas; raw/malformed lexical forms refuse and exact owner joins remain required. PASS covers normative/schema phase-1 readiness only; criterion 12 remains PARTIAL.",
+     "evidence": [
+      {
+       "path": "Plans/Backup_Restore_System.md",
+       "unit": "BRS-1401",
+       "line_start": 1045,
+       "line_end": 1045,
+       "quote": "Identity: owner_operation_id is family-operation@1: plus lowercase SHA-256 of exact UTF-8 bytes \"pm.w3e.owner_fact.v1\\0\"",
+       "file_sha256": "cafacb59720399f0a190bb0bf2905d5d47775b266496840296faff5501c5a828",
+       "quote_check": "exact",
+       "quote_scope": "unit BRS-1401, Plans/Backup_Restore_System.md:992-1168"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "scope_identity",
+      "status": "PASS"
+     }
+    },
+    "replay_idempotency": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "The exact newly authored BRS-1401 contract and its own companions bind this criterion. PASS refers to normative planning text only, not runtime or executed event oracles.",
+     "evidence": [
+      {
+       "path": "Plans/Backup_Restore_System.md",
+       "unit": "BRS-1401",
+       "line_start": 1062,
+       "line_end": 1062,
+       "quote": "Idempotency/replay: same selected identity and semantic digest returns the immutable original result and first",
+       "file_sha256": "cafacb59720399f0a190bb0bf2905d5d47775b266496840296faff5501c5a828",
+       "quote_check": "exact",
+       "quote_scope": "unit BRS-1401, Plans/Backup_Restore_System.md:992-1168"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "replay_idempotency",
+      "status": "PASS"
+     }
+    },
+    "retention": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "Bound to DL-455 (E-CARDS-3, option A; landed on main): project: RP-OPERATIONAL-2555D@1.0.0; application: RP-OPERATIONAL-SECURITY-APPLICATION-2555D@1.0.0. The decision names this exact family in E-CARDS-3 Appendix A and the Storage third-sitting assignment on main lists it; the owner unit, CV and SP units carry the binding.",
+     "evidence": [
+      {
+       "path": "Plans/Backup_Restore_System.md",
+       "unit": "BRS-1401",
+       "line_start": 1070,
+       "line_end": 1070,
+       "quote": "Retention: Project editions take retention_policy_ref=RP-OPERATIONAL-2555D@1.0.0 under the Storage Project first-save anchor adapter (each entry starts its clock at its own saved state change), sharing the existing 2,000,000-entry seven-year Project allowance; application editions take retention_policy_ref=RP-OPERATIONAL-SECURITY-APPLICATION-2555D@1.0.0 in the one separate 2,000,000-entry applicat",
+       "file_sha256": "cafacb59720399f0a190bb0bf2905d5d47775b266496840296faff5501c5a828",
+       "quote_check": "exact",
+       "quote_scope": "unit BRS-1401, Plans/Backup_Restore_System.md:992-1168"
+      },
+      {
+       "path": "Plans/Contracts_V0.md",
+       "unit": "CV-1401",
+       "line_start": 48359,
+       "line_end": 48359,
+       "quote": "retention_policy_ref=RP-OPERATIONAL-2555D@1.0.0 under the Storage Project first-save anchor adapter (each entry starts its clock at its own saved state change), sharing the existing 2,000,000-entry seven-year Project allowance; application editions take retention_policy_ref=RP-OPERATIONAL-SECURITY-APPLICATION-2555D@1.0.0 in the one separate 2,000,000-entry application allowance app:operational_sec",
+       "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a",
+       "quote_check": "exact",
+       "quote_scope": "unit CV-1401, Plans/Contracts_V0.md:48341-48401"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-1401",
+       "line_start": 70124,
+       "line_end": 70124,
+       "quote": "retention_policy_ref=RP-OPERATIONAL-2555D@1.0.0 under the Storage Project first-save anchor adapter (each entry starts its clock at its own saved state change), sharing the existing 2,000,000-entry seven-year Project allowance; application editions take retention_policy_ref=RP-OPERATIONAL-SECURITY-APPLICATION-2555D@1.0.0 in the one separate 2,000,000-entry application allowance app:operational_sec",
+       "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707",
+       "quote_check": "exact",
+       "quote_scope": "unit SP-1401, Plans/storage-plan.md:70112-70200"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "retention",
+      "status": "PASS"
+     }
+    },
+    "redaction_custody": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "The exact newly authored BRS-1401 contract and its own companions bind this criterion. PASS refers to normative planning text only, not runtime or executed event oracles.",
+     "evidence": [
+      {
+       "path": "Plans/Backup_Restore_System.md",
+       "unit": "BRS-1401",
+       "line_start": 1074,
+       "line_end": 1074,
+       "quote": "Redaction/custody: BackupCoordinator on the actual Server holds the original accepted intent, complete before/after",
+       "file_sha256": "cafacb59720399f0a190bb0bf2905d5d47775b266496840296faff5501c5a828",
+       "quote_check": "exact",
+       "quote_scope": "unit BRS-1401, Plans/Backup_Restore_System.md:992-1168"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "redaction_custody",
+      "status": "PASS"
+     }
+    },
+    "transitions": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "The exact newly authored BRS-1401 contract and its own companions bind this criterion. PASS refers to normative planning text only, not runtime or executed event oracles.",
+     "evidence": [
+      {
+       "path": "Plans/Backup_Restore_System.md",
+       "unit": "BRS-1401",
+       "line_start": 1014,
+       "line_end": 1014,
+       "quote": "Historical lookup authenticates retained provenance and does not reacquire expired live authority. Payload: Plans/event_payloads/w3e/backup_state_changed.schema.json,",
+       "file_sha256": "cafacb59720399f0a190bb0bf2905d5d47775b266496840296faff5501c5a828",
+       "quote_check": "exact",
+       "quote_scope": "unit BRS-1401, Plans/Backup_Restore_System.md:992-1168"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "transitions",
+      "status": "PASS"
+     }
+    },
+    "consumers_checkpoints": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "F1: custody/history/checkpoint schemas and six registry mirrors accept the full existing encoder output domain while SP-340 limits and exact joins remain in force. PASS covers normative/schema phase-1 readiness only; criterion 12 remains PARTIAL.",
+     "evidence": [
+      {
+       "path": "Plans/Backup_Restore_System.md",
+       "unit": "BRS-1401",
+       "line_start": 1086,
+       "line_end": 1086,
+       "quote": "Consumer/checkpoint: newly authored projector.w3e.backup_state_changed.history@1.0.0 and reader.w3e.backup_state_changed.history@1.0.0",
+       "file_sha256": "cafacb59720399f0a190bb0bf2905d5d47775b266496840296faff5501c5a828",
+       "quote_check": "exact",
+       "quote_scope": "unit BRS-1401, Plans/Backup_Restore_System.md:992-1168"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-1401",
+       "line_start": 70138,
+       "line_end": 70138,
+       "quote": "The exact checkpoint in derived redb checkpoints is w3e_backup_state_changed_checkpoint.v1:{hex(storage_instance_id)}:{scope_partition}:{hex(server_id)}",
+       "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707",
+       "quote_check": "exact",
+       "quote_scope": "unit SP-1401, Plans/storage-plan.md:70112-70200"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "consumers_checkpoints",
+      "status": "PASS"
+     }
+    },
+    "compatibility_withdrawal": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "The exact newly authored BRS-1401 contract and its own companions bind this criterion. PASS refers to normative planning text only, not runtime or executed event oracles.",
+     "evidence": [
+      {
+       "path": "Plans/Backup_Restore_System.md",
+       "unit": "BRS-1401",
+       "line_start": 1099,
+       "line_end": 1099,
+       "quote": "Compatibility/withdrawal: no legacy writer or event alias is claimed for this newly authored family. Exact retained",
+       "file_sha256": "cafacb59720399f0a190bb0bf2905d5d47775b266496840296faff5501c5a828",
+       "quote_check": "exact",
+       "quote_scope": "unit BRS-1401, Plans/Backup_Restore_System.md:992-1168"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "compatibility_withdrawal",
+      "status": "PASS"
+     }
+    },
+    "positive_negative_oracles": {
+     "status": "PASS",
+     "representation": "executed_clean_room_reference_oracles",
+     "finding": "Provisional worker PASS for deterministic planning oracles, pending Sol high, Sol max and Astra max. All nine previously unsourced payload fields are mandatory immutable owner_fact members; their copy joins, 34 additional owner-domain obligations, complete successful RestoreRun journal and ten receipt resolutions are exercised. The full W3E checker passes 307 controls and 19,483 negatives; the ten changed append_join tables freshly prove 78 rows. The remaining inherited table predicates are unchanged; no new full-lane guard proof is claimed. The stateful supplement executes admission, dedupe recovery, competing publication CAS, withdrawal/successor rebuild, source relocation, held prune/capture/restore, immutable receipt joins and retained reads against actual reference-store state. Across the 39-family supplement: 41 scenarios, 311 positives, 2,489 exact-code refusals and 287 crash cuts; 109 guard rows proved. Mutation scope is 107 unsafe-acceptance kills plus two explicitly INVALID exception diagnostics (not kills), with one declared representative family per mutant and all families in the baseline. This is synthetic clean-room execution. Native execution NOT_RUN; membership ABSENT.",
+     "evidence": [
+      {
+       "path": "Plans/Contracts_V0.md",
+       "unit": "CV-1401",
+       "line_start": 48359,
+       "line_end": 48359,
+       "quote": "Phase 2 (2026-11-13) runs the executable synthetic oracles of this family in scripts/pm_w3e_event_oracles.py; every refusal is one named single-predicate row of a generated Method B guard table (scripts/pm_w3e_table_*.py) proved by the gated shared scripts/pm_guard_isolation.py through scripts/pm-w3e-guard-proof.py, and rows no input can refuse first stay alone in their own table with a written pr",
+       "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a",
+       "quote_check": "exact",
+       "quote_scope": "unit CV-1401, Plans/Contracts_V0.md:48341-48401"
+      },
+      {
+       "path": "scripts/pm_pnc019_s4o3_store.py",
+       "line_start": 144,
+       "line_end": 144,
+       "quote": "class Store:",
+       "file_sha256": "10f10d033d805d9830f26d0c9c1fbe1cc8560ed5c943c81af935e56aa4684663",
+       "quote_check": "exact",
+       "quote_scope": "document"
+      },
+      {
+       "path": "scripts/pm_pnc019_s4o3_store.py",
+       "line_start": 249,
+       "line_end": 249,
+       "quote": "def read(self, generation, original_ref):",
+       "file_sha256": "10f10d033d805d9830f26d0c9c1fbe1cc8560ed5c943c81af935e56aa4684663",
+       "quote_check": "exact",
+       "quote_scope": "document"
+      },
+      {
+       "path": "scripts/pm_pnc019_s4o3_oracles.py",
+       "line_start": 142,
+       "line_end": 142,
+       "quote": "def run_family(adapter, family, trace=None, cut=None):",
+       "file_sha256": "1fea5e492c2d45f94c41d59184da26081b7b2f30833fccd5142167bcf4cb66f6",
+       "quote_check": "exact",
+       "quote_scope": "document"
+      },
+      {
+       "path": "scripts/pm-pnc019-s4o3-proof.py",
+       "line_start": 103,
+       "line_end": 103,
+       "quote": "def mutations(out):",
+       "file_sha256": "c3d51d67e679729c0bd7775e06e823726e79741566e4b4036aec04e0d6736487",
+       "quote_check": "exact",
+       "quote_scope": "document"
+      },
+      {
+       "path": "scripts/pm_w3e_event_oracles.py",
+       "line_start": 631,
+       "line_end": 631,
+       "quote": "RESULT_FIELDS = {",
+       "file_sha256": "cfdd3aa717c4e810169a3bd74da0cf77a43327a344daf0c02b8a019c55988f9a",
+       "quote_check": "exact",
+       "quote_scope": "document"
+      },
+      {
+       "path": "scripts/pm_pnc019_s4o3_domain_cases.py",
+       "line_start": 14,
+       "line_end": 14,
+       "quote": "RULES = (",
+       "file_sha256": "277b6d33314f4364caa287d2d6aec6f51affc193af04f9d163deedff71c05d9d",
+       "quote_check": "exact",
+       "quote_scope": "document"
+      },
+      {
+       "path": "scripts/pm_pnc019_s4o3_owner.py",
+       "line_start": 20,
+       "line_end": 20,
+       "quote": "RESTORE_REFS = (",
+       "file_sha256": "c6dcfbc63623ce82f521c89723164ba1370e01fb03a439d2cb1c392f3aed68e2",
+       "quote_check": "exact",
+       "quote_scope": "document"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "positive_negative_oracles",
+      "status": "PASS"
+     }
+    }
+   }
+  }
+ ]
+}

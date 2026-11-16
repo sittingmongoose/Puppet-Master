@@ -56,6 +56,10 @@
    "outcome": "registered"
   },
   {
+   "event_type": "backup.state_changed",
+   "outcome": "registered"
+  },
+  {
    "event_type": "discovery.backpressure",
    "outcome": "registered"
   },
