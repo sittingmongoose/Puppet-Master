@@ -61,6 +61,7 @@ def install():
 def main():
     install()
     scratch = Path(os.environ['PM_DG5_SCRATCH'])
+    scratch.mkdir(parents=True, exist_ok=True)
     # Original suites own their temporary subdirectories, never the DG5 root.
     os.environ['PM_DG_CA_WORK'] = str(scratch)
     os.environ['PM_DG_CB_WORK'] = str(scratch)

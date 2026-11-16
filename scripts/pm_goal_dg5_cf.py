@@ -135,6 +135,7 @@ def closure_banks():
 
 def main():
     scratch = Path(os.environ['PM_DG5_SCRATCH'])
+    scratch.mkdir(parents=True, exist_ok=True)
     selected = os.environ.get('PM_DG5_CF_SUITES', 'CF1,CF2,CF3').split(',')
     only = os.environ.get('PM_DG5_GROUPS')
     results = []
