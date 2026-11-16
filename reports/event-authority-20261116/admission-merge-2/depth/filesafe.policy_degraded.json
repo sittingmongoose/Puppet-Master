@@ -1,0 +1,526 @@
+{
+ "schema_id": "pm.assurance.event_authority.admission_depth_assessment.v1",
+ "assessment_kind": "admission_twelve_criteria",
+ "writer": "pm-ea-admission-writer.v1",
+ "merge": "admission-merge-2",
+ "registry": {
+  "path": "Plans/event_family_registry.json",
+  "revision": "2026-11-16.171",
+  "sha256": "3cd5d9943a97d76ab421adfbe5906c4d765e6821ab2b39ced85faf966a235039",
+  "family_count": 390,
+  "row_pointer": "#/families/389"
+ },
+ "base_commit": "45b4ccf25270c486dbc682805cd455ce4ca25fb0",
+ "rubric": "Step 8 depth matrix, twelve criteria (DL-077); PASS needs Plans/ evidence",
+ "native_execution": "NOT_RUN",
+ "rows": [
+  {
+   "event_type": "filesafe.policy_degraded",
+   "family_id": "event-family-filesafe-policy-degraded",
+   "family_revision": "2.0.0",
+   "cells": {
+    "membership_version": {
+     "status": "PASS",
+     "representation": "exact_registry_membership",
+     "finding": "Registered at registry revision 2026-11-16.171 as #/families/389 (canonical row SHA-256 5e86a1bddc6459c0adfe91481137086c47f34fa4431af2d85ab3123014fb53e8); before this commit the family was absent.",
+     "evidence": [
+      {
+       "path": "Plans/event_family_registry.json",
+       "json_pointer": "#/families/389",
+       "line_start": 25810,
+       "line_end": 25893,
+       "quote": "\"event_type\": \"filesafe.policy_degraded\"",
+       "quote_line": 25813,
+       "file_sha256": "3cd5d9943a97d76ab421adfbe5906c4d765e6821ab2b39ced85faf966a235039",
+       "quote_check": "exact"
+      }
+     ]
+    },
+    "owner_doc": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "CV-556/SP-556 explicitly own this exact family and route current FileSafe semantics through F2-213; the new original-source interfaces are separately named.",
+     "evidence": [
+      {
+       "path": "Plans/Contracts_V0.md",
+       "unit": "CV-556",
+       "line_start": 43840,
+       "line_end": 43840,
+       "quote": "**Newly authored owner contract",
+       "excerpt_sha256": "8ef132798eecc752105453551b6edc674e90ba76b1ce2a51462a4d44cfcc7c8c",
+       "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a",
+       "quote_check": "exact",
+       "quote_scope": "unit CV-556, Plans/Contracts_V0.md:43800-43882"
+      },
+      {
+       "path": "Plans/Contracts_V0.md",
+       "unit": "CV-556",
+       "line_start": 43852,
+       "line_end": 43852,
+       "quote": "**Exact original source graph (second pass).**",
+       "excerpt_sha256": "62b0ca804c854fa8c4203559ac9bd702e9bca0840da771a3c65cf1cbb950cdde",
+       "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a",
+       "quote_check": "exact",
+       "quote_scope": "unit CV-556, Plans/Contracts_V0.md:43800-43882"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "owner_doc",
+      "status": "PASS"
+     }
+    },
+    "producer": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "CV-556 selects its exact producer, separate Project/application original-source roots and ordered lifecycle; SP-556 explicitly adopts SP-286/CV-339 full-value v2 before terminal publication. Native methods remain specified_unimplemented.",
+     "evidence": [
+      {
+       "path": "Plans/Contracts_V0.md",
+       "unit": "CV-556",
+       "line_start": 43852,
+       "line_end": 43852,
+       "quote": "**Exact original source graph (second pass).**",
+       "excerpt_sha256": "62b0ca804c854fa8c4203559ac9bd702e9bca0840da771a3c65cf1cbb950cdde",
+       "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a",
+       "quote_check": "exact",
+       "quote_scope": "unit CV-556, Plans/Contracts_V0.md:43800-43882"
+      },
+      {
+       "path": "Plans/Contracts_V0.md",
+       "unit": "CV-556",
+       "line_start": 43860,
+       "line_end": 43860,
+       "quote": "**Lifecycle barriers for",
+       "excerpt_sha256": "5c1392ad6829f11c045389ef84f772dc37bfcdd3cc819356765055ea9b04fbfb",
+       "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a",
+       "quote_check": "exact",
+       "quote_scope": "unit CV-556, Plans/Contracts_V0.md:43800-43882"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-556",
+       "line_start": 55752,
+       "line_end": 55752,
+       "quote": "**Ordered producer and custody.**",
+       "excerpt_sha256": "231cb7973757ab8bc3a8e344fcd3b93bfcc4510cbb98bad2dc9aef6a8a073d6c",
+       "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707",
+       "quote_check": "exact",
+       "quote_scope": "unit SP-556, Plans/storage-plan.md:55709-55777"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "producer",
+      "status": "PASS"
+     }
+    },
+    "closed_payload_schema": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "Own closed 2.0.0 payload selects this exact family and preserves current Project/application semantics. Original Project source resources remain immutable; prepared snapshot versions retain original string types and override scopes use the current discriminated union.",
+     "evidence": [
+      {
+       "path": "Plans/event_payloads/filesafe_policy_degraded_v2.schema.json",
+       "unit": "CV-556",
+       "line_start": 3,
+       "line_end": 3,
+       "quote": "\"additionalProperties\": false",
+       "excerpt_sha256": "4fe655e121901a2a09025263b26e06f69e0ca93dd03150f78ec63bbf08fa421a",
+       "file_sha256": "b4f6ef8812d887f4ac8eb9e4f81e3a9f95163d3bbad5bea61be73190ab41d8a0",
+       "quote_check": "exact",
+       "quote_scope": "document"
+      },
+      {
+       "path": "Plans/Contracts_V0.md",
+       "unit": "CV-556",
+       "line_start": 43840,
+       "line_end": 43840,
+       "quote": "**Newly authored owner contract",
+       "excerpt_sha256": "8ef132798eecc752105453551b6edc674e90ba76b1ce2a51462a4d44cfcc7c8c",
+       "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a",
+       "quote_check": "exact",
+       "quote_scope": "unit CV-556, Plans/Contracts_V0.md:43800-43882"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "closed_payload_schema",
+      "status": "PASS"
+     }
+    },
+    "scope_identity": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "CV-556/SP-556 bind exact event-id/key recipes and full envelope/source/subject/Server/Host/root joins. The closed EventRecord uses scope_kind/project_id; application never borrows a Project or node/attempt. Own full original-source join positives/negatives pass.",
+     "evidence": [
+      {
+       "path": "Plans/Contracts_V0.md",
+       "unit": "CV-556",
+       "line_start": 43844,
+       "line_end": 43844,
+       "quote": "**Scope and joins.**",
+       "excerpt_sha256": "356c919262c63b2dd5a2bad6965f8004d148d8c38b97a2dbd521e7b09142b16d",
+       "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a",
+       "quote_check": "exact",
+       "quote_scope": "unit CV-556, Plans/Contracts_V0.md:43800-43882"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-556",
+       "line_start": 55754,
+       "line_end": 55754,
+       "quote": "**Identity and replay.**",
+       "excerpt_sha256": "034db3a68c887aa6cc2b0edc84154ffc1cc637de2a1eaa4193ac07fca6897749",
+       "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707",
+       "quote_check": "exact",
+       "quote_scope": "unit SP-556, Plans/storage-plan.md:55709-55777"
+      },
+      {
+       "path": "Plans/Contracts_V0.md",
+       "unit": "CV-556",
+       "line_start": 43872,
+       "line_end": 43872,
+       "quote": "For this family, event scope_kind/project_id/thread_id/run_id/node_id/attempt_id",
+       "excerpt_sha256": "f47b120453aaecf4c6f89b6cedba1f5e546b1d1a318620eab8101bb2c624a94d",
+       "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a",
+       "quote_check": "exact",
+       "quote_scope": "unit CV-556, Plans/Contracts_V0.md:43800-43882"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "scope_identity",
+      "status": "PASS"
+     }
+    },
+    "replay_idempotency": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "SP-556 resolves the lifetime tuple and semantic digest to the unchanged original complete event and first receipt. Changed digest conflicts; missing authoritative dedupe/source fences with zero new effect. Own protocol cases pass.",
+     "evidence": [
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-556",
+       "line_start": 55754,
+       "line_end": 55754,
+       "quote": "**Identity and replay.**",
+       "excerpt_sha256": "034db3a68c887aa6cc2b0edc84154ffc1cc637de2a1eaa4193ac07fca6897749",
+       "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707",
+       "quote_check": "exact",
+       "quote_scope": "unit SP-556, Plans/storage-plan.md:55709-55777"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-556",
+       "line_start": 55768,
+       "line_end": 55768,
+       "quote": "**Exact original/issued joins for",
+       "excerpt_sha256": "7d30fbf28de19e08f8c5e6fc7bd3bb139095e767453b0ece4a0b3dc7e4307b1e",
+       "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707",
+       "quote_check": "exact",
+       "quote_scope": "unit SP-556, Plans/storage-plan.md:55709-55777"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-556",
+       "line_start": 55764,
+       "line_end": 55764,
+       "quote": "**Recovery and withdrawal authority for `filesafe.policy_degraded`",
+       "excerpt_sha256": "43e7aae1d075bfcbf6677e0db902eedcaca3914d995f10eb0ef875405875d0a6",
+       "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707",
+       "quote_check": "exact",
+       "quote_scope": "unit SP-556, Plans/storage-plan.md:55709-55777"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-556",
+       "line_start": 55764,
+       "line_end": 55764,
+       "quote": "**Recovery and withdrawal authority for `filesafe.policy_degraded`",
+       "excerpt_sha256": "43e7aae1d075bfcbf6677e0db902eedcaca3914d995f10eb0ef875405875d0a6",
+       "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707",
+       "quote_check": "exact",
+       "quote_scope": "unit SP-556, Plans/storage-plan.md:55709-55777"
+      },
+      {
+       "path": "Plans/Contracts_V0.md",
+       "unit": "CV-556",
+       "quote": "**Current-writer eligibility for `filesafe.policy_degraded` (review round 2).**",
+       "line_start": 43846,
+       "line_end": 43846,
+       "excerpt_sha256": "5047872f8756a7ff9835dde7efbfbfcca9afdf31727952938315b110cdefa594",
+       "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a",
+       "quote_check": "exact",
+       "quote_scope": "unit CV-556, Plans/Contracts_V0.md:43800-43882"
+      },
+      {
+       "path": "Plans/Contracts_V0.md",
+       "unit": "CV-556",
+       "quote": "**Current-writer eligibility for `filesafe.policy_degraded` (review round 2).**",
+       "line_start": 43846,
+       "line_end": 43846,
+       "excerpt_sha256": "5047872f8756a7ff9835dde7efbfbfcca9afdf31727952938315b110cdefa594",
+       "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a",
+       "quote_check": "exact",
+       "quote_scope": "unit CV-556, Plans/Contracts_V0.md:43800-43882"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "replay_idempotency",
+      "status": "PASS"
+     }
+    },
+    "retention": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "SP-556 and its graph assign RP-OPERATIONAL-2555D from current Case L-3 non-authority-security-diagnostic defaults. Current FileSafe and CV-556 explicitly preserve advisory, non-authoritative degradation with enforcement intact. Source-body/index/checkpoint policies remain independent. No deletion choice or registry admission is made.",
+     "evidence": [
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-556",
+       "line_start": 55760,
+       "line_end": 55760,
+       "quote": "**Retention.**",
+       "excerpt_sha256": "e3b37dea46eb5c037336ebd0ac01fbdaa25d40ee8eb0f60d13fc6970139ccfba",
+       "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707",
+       "quote_check": "exact",
+       "quote_scope": "unit SP-556, Plans/storage-plan.md:55709-55777"
+      },
+      {
+       "path": "Plans/filesafe_event_sources/filesafe_policy_degraded.contract.json",
+       "unit": "CV-556",
+       "line_start": 134,
+       "line_end": 134,
+       "quote": "\"retention_policy_ref\"",
+       "excerpt_sha256": "d62fae07c239ae4e7048050b98c82f976e463a29e812fa37eefc188a19a646c0",
+       "file_sha256": "c18b98271d5f415adfb007a24e4ce5c35351f8d0e8e14feb5f42faa8c0b906fc",
+       "quote_check": "exact",
+       "quote_scope": "document"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "retention",
+      "status": "PASS"
+     }
+    },
+    "redaction_custody": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "CV-556 now validates the selected original itself and its own commitment before a recursive exact-type complete join, on current acceptance and body reads. Own both-scope wrong selected-bank types refuse. Issued-only history and original typed commitments are preserved; native custody/permissions/backup remain NOT_RUN.",
+     "evidence": [
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-556",
+       "line_start": 55758,
+       "line_end": 55758,
+       "quote": "**Redaction and custody.**",
+       "excerpt_sha256": "8296c6aac065df812febb80a254a528c45dd22d35e8bcd8004a440343a19647d",
+       "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707",
+       "quote_check": "exact",
+       "quote_scope": "unit SP-556, Plans/storage-plan.md:55709-55777"
+      },
+      {
+       "path": "Plans/Contracts_V0.md",
+       "unit": "CV-556",
+       "line_start": 43856,
+       "line_end": 43856,
+       "quote": "The source's original_request, original_result, writer_epoch",
+       "excerpt_sha256": "de1002a443a05f71d88cc27b17bbf29fb758718f7b9c1a9a14a48d3e3331133a",
+       "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a",
+       "quote_check": "exact",
+       "quote_scope": "unit CV-556, Plans/Contracts_V0.md:43800-43882"
+      },
+      {
+       "path": "Plans/Contracts_V0.md",
+       "unit": "CV-556",
+       "line_start": 43879,
+       "line_end": 43879,
+       "quote": "**Selected-original custody for `filesafe.policy_degraded` (review round 7, R6-B1).**",
+       "excerpt_sha256": "c13b849e0ddb8d424ec5045bebf93b1a982e367b0f92c73ddaedbca27d01452c",
+       "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a",
+       "quote_check": "exact",
+       "quote_scope": "unit CV-556, Plans/Contracts_V0.md:43800-43882"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "redaction_custody",
+      "status": "PASS"
+     }
+    },
+    "transitions": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "CV-556 has this family's lifecycle table, concrete source/body/admission/append/first-receipt/terminal barriers and same-operation recovery. Its domain outcome is preserved; passive replay never performs the command, grant, capture, restore or hold-clear action.",
+     "evidence": [
+      {
+       "path": "Plans/Contracts_V0.md",
+       "unit": "CV-556",
+       "line_start": 43842,
+       "line_end": 43842,
+       "quote": "**Producer and transition.**",
+       "excerpt_sha256": "ee1d0a638e1624393c06de0b82057a27503f09f98cecc617f1ce225d0529eeb1",
+       "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a",
+       "quote_check": "exact",
+       "quote_scope": "unit CV-556, Plans/Contracts_V0.md:43800-43882"
+      },
+      {
+       "path": "Plans/Contracts_V0.md",
+       "unit": "CV-556",
+       "line_start": 43860,
+       "line_end": 43860,
+       "quote": "**Lifecycle barriers for",
+       "excerpt_sha256": "5c1392ad6829f11c045389ef84f772dc37bfcdd3cc819356765055ea9b04fbfb",
+       "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a",
+       "quote_check": "exact",
+       "quote_scope": "unit CV-556, Plans/Contracts_V0.md:43800-43882"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "transitions",
+      "status": "PASS"
+     }
+    },
+    "consumers_checkpoints": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "SP-556 explicitly adopts SP-278 for its exact versioned ephemeral history reader, with none_required family checkpoint, generic durable nine-field token, live snapshot, atomic projection/frontier CAS and source-generation rebuild fences.",
+     "evidence": [
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-556",
+       "line_start": 55756,
+       "line_end": 55756,
+       "quote": "**Exact consumer and checkpoint.**",
+       "excerpt_sha256": "c24eda101413e36fba51ca3419bd8f48dd9b7412408bd931bbcb152dc6a87ff6",
+       "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707",
+       "quote_check": "exact",
+       "quote_scope": "unit SP-556, Plans/storage-plan.md:55709-55777"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "consumers_checkpoints",
+      "status": "PASS"
+     }
+    },
+    "compatibility_withdrawal": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "SP-556/CV-556 preserve old dispatch/original Project resources, cut off writer admission, reconcile original pending operations, fence own reader/index generations and require verified retained-survivor rebuild before publication. Unknown versions/sources remain unavailable.",
+     "evidence": [
+      {
+       "path": "Plans/Contracts_V0.md",
+       "unit": "CV-556",
+       "line_start": 43850,
+       "line_end": 43850,
+       "quote": "**Compatibility.**",
+       "excerpt_sha256": "1f2549a6c617bebc1dfaf68610c6d1dcf58a05ee350ae8c170ee238fece5f094",
+       "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a",
+       "quote_check": "exact",
+       "quote_scope": "unit CV-556, Plans/Contracts_V0.md:43800-43882"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-556",
+       "line_start": 55762,
+       "line_end": 55762,
+       "quote": "**Withdrawal and rebuild.**",
+       "excerpt_sha256": "de37570b4c3d81147182c5b59fa0fbebea4c6b2277b590040a69dab7ce530304",
+       "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707",
+       "quote_check": "exact",
+       "quote_scope": "unit SP-556, Plans/storage-plan.md:55709-55777"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-556",
+       "line_start": 55764,
+       "line_end": 55764,
+       "quote": "**Recovery and withdrawal authority for `filesafe.policy_degraded`",
+       "excerpt_sha256": "43e7aae1d075bfcbf6677e0db902eedcaca3914d995f10eb0ef875405875d0a6",
+       "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707",
+       "quote_check": "exact",
+       "quote_scope": "unit SP-556, Plans/storage-plan.md:55709-55777"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-556",
+       "line_start": 55764,
+       "line_end": 55764,
+       "quote": "**Recovery and withdrawal authority for `filesafe.policy_degraded`",
+       "excerpt_sha256": "43e7aae1d075bfcbf6677e0db902eedcaca3914d995f10eb0ef875405875d0a6",
+       "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707",
+       "quote_check": "exact",
+       "quote_scope": "unit SP-556, Plans/storage-plan.md:55709-55777"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "compatibility_withdrawal",
+      "status": "PASS"
+     }
+    },
+    "positive_negative_oracles": {
+     "status": "PASS",
+     "representation": "executable_static_family_oracles",
+     "finding": "Complete original DF suite, whole-definition Method B schema/branch coverage with exact refusal, clause cut/restoration and no unresolved clauses; source/tool/case-bound 355-row proof plus 48 checked singleton entailments. Independently sealed retained original/store and copy-join evidence. Shared number corpus and all DF date-time boundaries replayed. Global inventory infrastructure remains separately blocked; native NOT_RUN.",
+     "evidence": [
+      {
+       "excerpt_sha256": "1e7117e7605da5b57a2acb13dfad62b127e64a642271b1caf1f88c560aaf6b4a",
+       "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a",
+       "line_end": 43842,
+       "line_start": 43842,
+       "path": "Plans/Contracts_V0.md",
+       "quote": "**Producer and transition.** `FileSafe policy loader advisory/fallback diagnostic path` is the sole semantic producer. Valid only while authoritative enforcement is intact; an advisory failure or embedded authoritative fallback can be reported. Missing or empty allowlists, roots, unresolved canonica",
+       "quote_check": "exact",
+       "unit": "CV-556",
+       "quote_scope": "unit CV-556, Plans/Contracts_V0.md:43800-43882"
+      },
+      {
+       "excerpt_sha256": "5b8e40418bdaf3e9e4dfde74301ff2fe21bf9adbc1f5bdf0e36148f0e068ef01",
+       "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707",
+       "line_end": 55768,
+       "line_start": 55768,
+       "path": "Plans/storage-plan.md",
+       "quote": "**Exact original/issued joins for `filesafe.policy_degraded`.** Adopt the complete source graph `Plans/filesafe_event_sources/filesafe_policy_degraded.contract.json` and `CV-556` lifecycle table. Before append, resolve its own original source under the actual storage_instance_id/writer epoch and ver",
+       "quote_check": "exact",
+       "unit": "SP-556",
+       "quote_scope": "unit SP-556, Plans/storage-plan.md:55709-55777"
+      },
+      {
+       "excerpt_sha256": "df0d9dfd918cacc62aa08714fdafc8cab4365fbef740fefccac6d61a42d6a694",
+       "file_sha256": "e1c8a84c145a3aaaa0738971f76db5fa0bf94f59c0149e76f4131e8579a6971d",
+       "line_end": 11641,
+       "line_start": 11641,
+       "path": "Plans/Automated_Testing_System.md",
+       "quote": "**Sweep part 2A/2B oracle certification.** Every refusal of both complete checkers for the families above is one named row of a generated Method B guard table (204 tables, 405 rows; `python3 scripts/pm-filesafe-table-generate.py --check` keeps them current). `python3 scripts/pm-filesafe-guard-tables",
+       "quote_check": "exact",
+       "unit": "ATS-278",
+       "quote_scope": "unit ATS-278, Plans/Automated_Testing_System.md:11568-11643"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "positive_negative_oracles",
+      "status": "PASS"
+     }
+    }
+   }
+  }
+ ]
+}
