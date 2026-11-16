@@ -207,12 +207,12 @@ def inspect_custody_pending_issued(d):
 FOREIGN = '11111111-1111-4111-8111-111111111111'
 
 
-def _foreign_copy(w, g, op, with_input=False):
+def _foreign_copy(w, g, op, with_input=False, **scope_override):
     """A coherent copy of the operation's source (and input) and head progress rows under a
     foreign storage scope: same owner physical() rebuild at the foreign keys, snapshot and head
     commitments rewired to the copied source wrapper."""
     sc = g['scope']
-    fsc = dict(sc, storage_instance_id=FOREIGN)
+    fsc = dict(sc, **{'storage_instance_id': FOREIGN, **scope_override})
     owner = w.source
     writes = []
 
@@ -225,21 +225,21 @@ def _foreign_copy(w, g, op, with_input=False):
         return new
 
     src = copied(O.T_SOURCE, O.upd_key(O.T_SOURCE, sc, op), O.upd_key(O.T_SOURCE, fsc, op),
-                 lambda wr: dict(wr, record=dict(wr['record'], storage_instance_id=FOREIGN)))
+                 lambda wr: dict(wr, record=dict(wr['record'], storage_instance_id=fsc['storage_instance_id'], thread_id=fsc['thread_id'])))
     src_sha = O.wrapper_sha(src)
     if with_input:
         copied(O.T_INPUT, O.upd_key(O.T_INPUT, sc, op), O.upd_key(O.T_INPUT, fsc, op),
-               lambda wr: dict(wr, record=dict(wr['record'], storage_instance_id=FOREIGN,
+               lambda wr: dict(wr, record=dict(wr['record'], storage_instance_id=fsc['storage_instance_id'], thread_id=fsc['thread_id'],
                                                source_audit_sha256=src_sha)))
     head_cell = w.storage.cell(O.T_PROGRESS, O.head_key(sc, op))
     head = owner.unwrap_row(O.T_PROGRESS, O.head_key(sc, op), head_cell['value'], owner.ROOTS[O.T_PROGRESS])
     epoch = head['record']['progress_epoch']
     snap = copied(O.T_PROGRESS, O.epoch_key(sc, op, epoch), O.epoch_key(fsc, op, epoch),
-                  lambda wr: dict(wr, record=dict(wr['record'], storage_instance_id=FOREIGN,
+                  lambda wr: dict(wr, record=dict(wr['record'], storage_instance_id=fsc['storage_instance_id'], thread_id=fsc['thread_id'],
                                                   source_audit_sha256=src_sha)))
     snap_sha = O.wrapper_sha(snap)
     copied(O.T_PROGRESS, O.head_key(sc, op), O.head_key(fsc, op),
-           lambda wr: dict(wr, record=dict(wr['record'], storage_instance_id=FOREIGN,
+           lambda wr: dict(wr, record=dict(wr['record'], storage_instance_id=fsc['storage_instance_id'], thread_id=fsc['thread_id'],
                                            snapshot_sha256=snap_sha)))
     w.storage.transact(writes)
     return fsc
@@ -415,3 +415,63 @@ def release_receipt_present(d):
                              expected=None, value=copy.deepcopy(prior['value']))])
     control = w.body.read_private(sc, 'o')['control']
     return w, lambda: w.body.release(sc, control, lambda c: [])
+
+
+@case('U-DG5/N/inspect_event_scope_only', 'dgu/inspect/event_scope', SITE + '1871',
+      'Single defect: the inspect request scope names another thread whose keys hold the coherent '
+      'copy (with an audit permission granted for that thread), while the event itself stays the '
+      'genuine one, so the frozen-producer and custody joins hold and only event_scope (:1871) '
+      'refuses. The authored case edits the raw event payload, which the producer join also refuses.')
+def inspect_event_scope_only(d):
+    w, g = U._goal(d)
+    req, adm = U.run_direct(w, g)
+    fsc = _foreign_copy(w, g, U.op_of(adm), storage_instance_id=g['scope']['storage_instance_id'],
+                        thread_id='thr_TEST_ONLY_other')
+    ref = w.permissions.grant(g['user'], fsc, ['audit_goal'])
+    r = w.inspector.request_for(fsc, U.event_of(w, g, adm))
+    return w, lambda: w.inspector.inspect(r, g['user'], ref)
+
+
+@case('U-DG5/N/inspect_source_action_only', 'dgu/inspect/source_action', SITE + '1876',
+      'Single defect: the source record normalized identity request_ref is substituted and the '
+      'progress snapshots rewired to its wrapper sha, so the source join (:1890) and producer join '
+      '(:1884) hold and only source_action (:1876) refuses.')
+def inspect_source_action_only(d):
+    w, g = U._goal(d)
+    req, adm = U.run_direct(w, g)
+    op = U.op_of(adm)
+    key = O.upd_key(O.T_SOURCE, g['scope'], op)
+    new = U.rsrc(w, O.T_SOURCE, key, lambda s: dict(
+        s, normalized_identity=dict(s['normalized_identity'], request_ref='request:TEST_ONLY:substituted')))
+    U.rewrite_progress_all(w, g, op, lambda r: dict(r, source_audit_sha256=O.wrapper_sha(new)))
+    r = w.inspector.request_for(g['scope'], U.event_of(w, g, adm))
+    return w, lambda: w.inspector.inspect(r, g['user'], g['user_permission'])
+
+
+@case('U-DG5/N/inspect_frozen_producer_only', 'dgu/inspect/frozen_producer', SITE + '1884',
+      'Single defect: the frozen producer_input payload before_revision is substituted in every '
+      'progress snapshot that carries it, so publication and custody joins (:1885/:1886/:1888) hold '
+      'and only the frozen-producer join (:1884) refuses.')
+def inspect_frozen_producer_only(d):
+    w, g = U._goal(d)
+    req, adm = U.run_direct(w, g)
+    U.rewrite_progress_all(w, g, U.op_of(adm), lambda r: dict(
+        r, producer_input=dict(r['producer_input'],
+                               payload=dict(r['producer_input']['payload'], before_revision=99)))
+        if r['producer_input'] else r)
+    r = w.inspector.request_for(g['scope'], U.event_of(w, g, adm))
+    return w, lambda: w.inspector.inspect(r, g['user'], g['user_permission'])
+
+
+@case('U-DG5/N/inspect_final_custody', 'dgu/inspect/final_custody', SITE + '1920',
+      'Single defect: the acquired snapshot custody schema_version is substituted - a field the '
+      'GenericSource custody-defect check does not bind - so every custody join holds and only the '
+      'final live-custody equality (:1920) refuses.')
+def inspect_final_custody(d):
+    w, g = U._goal(d)
+    req, adm = U.run_direct(w, g)
+    ev = U.event_of(w, g, adm)
+    r = w.inspector.request_for(g['scope'], ev)
+    snap = w.storage.acquire_source()
+    snap['custody'][ev] = dict(snap['custody'][ev], schema_version='9.9.9')
+    return w, lambda: w.inspector.inspect(r, g['user'], g['user_permission'], snapshot=snap)
