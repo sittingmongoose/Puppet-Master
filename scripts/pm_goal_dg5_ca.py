@@ -23,6 +23,18 @@ import pm_goal_dg_cb_migration as migration
 
 DG5_EVIDENCE = {}
 
+# Number-corpus slot (HANDOFF corpus section): the caller-supplied revision on the
+# cancel request admitted by its SIR owner. The request is whole-schema checked at
+# accept (GoalCancelRequestV2 integer, minimum 1) and digested by the original
+# SP-304 Goal JSON codec, which preserves exact integers, so no JCS binary64
+# expectation is declared. Date-time: no CA entry takes a caller-supplied time
+# (all times are owner-clock or Storage-assigned), so no date-time slot is declared.
+SLOTS = [
+    dict(name='goal.cancelled/request.expected_revision', family='goal.cancelled', entry='SIROwner.accept',
+         path=('args', 0, 'expected_revision'), kind='integer', minimum=1,
+         where='ca/sir/request/expected_revision', also_rows=('dg5/roots/schema',)),
+]
+
 
 def cases(cls):
     for name in ('positive', 'negative'):
@@ -72,6 +84,7 @@ def install():
 
 
 def main():
+    bridge.SLOTS[:] = SLOTS
     install()
     if os.environ.get('PM_DG5_SUPPLEMENT', '1') == '1':
         import pm_goal_dg5_supplement_ca as supplement
