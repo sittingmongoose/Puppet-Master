@@ -784,6 +784,10 @@
    "outcome": "registered"
   },
   {
+   "event_type": "server.client_trust_changed",
+   "outcome": "registered"
+  },
+  {
    "event_type": "session_prompt.admitted",
    "outcome": "registered"
   },

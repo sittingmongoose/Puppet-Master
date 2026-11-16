@@ -1,0 +1,398 @@
+{
+ "schema_id": "pm.assurance.event_authority.admission_depth_assessment.v1",
+ "assessment_kind": "admission_twelve_criteria",
+ "writer": "pm-ea-admission-writer.v1",
+ "merge": "admission-merge-2",
+ "registry": {
+  "path": "Plans/event_family_registry.json",
+  "revision": "2026-11-16.263",
+  "sha256": "5cbecbbfead36a50c7758a0e7157dd5a4196ec9ba367bf4a0051dd72b27a48c9",
+  "family_count": 482,
+  "row_pointer": "#/families/481"
+ },
+ "base_commit": "45b4ccf25270c486dbc682805cd455ce4ca25fb0",
+ "rubric": "Step 8 depth matrix, twelve criteria (DL-077); PASS needs Plans/ evidence",
+ "native_execution": "NOT_RUN",
+ "rows": [
+  {
+   "event_type": "server.client_trust_changed",
+   "family_id": "event-family-server-client-trust-changed",
+   "family_revision": "1.0.0",
+   "cells": {
+    "membership_version": {
+     "status": "PASS",
+     "representation": "exact_registry_membership",
+     "finding": "Registered at registry revision 2026-11-16.263 as #/families/481 (canonical row SHA-256 76e7fa041a26c3087f6938c5f452b8e9afcafa677e8d62a336cfbff8883a444b); before this commit the family was absent.",
+     "evidence": [
+      {
+       "path": "Plans/event_family_registry.json",
+       "json_pointer": "#/families/481",
+       "line_start": 30925,
+       "line_end": 30966,
+       "quote": "\"event_type\": \"server.client_trust_changed\"",
+       "quote_line": 30928,
+       "file_sha256": "5cbecbbfead36a50c7758a0e7157dd5a4196ec9ba367bf4a0051dd72b27a48c9",
+       "quote_check": "exact"
+      }
+     ]
+    },
+    "owner_doc": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "The exact newly authored SRV-1414 contract and its own companions bind this criterion. PASS refers to normative planning text only, not runtime or executed event oracles.",
+     "evidence": [
+      {
+       "path": "Plans/Server_System.md",
+       "unit": "SRV-1414",
+       "line_start": 1577,
+       "line_end": 1577,
+       "quote": "canonical_text: 'Newly authored owner contract for server.client_trust_changed@1.0.0, prepared without admission,",
+       "file_sha256": "d2e77e0964bbabad5a52d2c198af2e61720a8438ddcf6449042479ff25c0dc24",
+       "quote_check": "exact",
+       "quote_scope": "unit SRV-1414, Plans/Server_System.md:1570-1743"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "owner_doc",
+      "status": "PASS"
+     }
+    },
+    "producer": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "The exact newly authored SRV-1414 contract and its own companions bind this criterion. PASS refers to normative planning text only, not runtime or executed event oracles.",
+     "evidence": [
+      {
+       "path": "Plans/Server_System.md",
+       "unit": "SRV-1414",
+       "line_start": 1606,
+       "line_end": 1606,
+       "quote": "Producer: the sole newly authored ClientTrustRegistry.trust_commit@1.0.0 method of the existing domain owner.",
+       "file_sha256": "d2e77e0964bbabad5a52d2c198af2e61720a8438ddcf6449042479ff25c0dc24",
+       "quote_check": "exact",
+       "quote_scope": "unit SRV-1414, Plans/Server_System.md:1570-1743"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "producer",
+      "status": "PASS"
+     }
+    },
+    "closed_payload_schema": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "The exact newly authored SRV-1414 contract and its own companions bind this criterion. PASS refers to normative planning text only, not runtime or executed event oracles.",
+     "evidence": [
+      {
+       "path": "Plans/Server_System.md",
+       "unit": "SRV-1414",
+       "line_start": 1592,
+       "line_end": 1592,
+       "quote": "Historical lookup authenticates retained provenance and does not reacquire expired live authority. Payload: Plans/event_payloads/w3e/server_client_trust_changed.schema.json,",
+       "file_sha256": "d2e77e0964bbabad5a52d2c198af2e61720a8438ddcf6449042479ff25c0dc24",
+       "quote_check": "exact",
+       "quote_scope": "unit SRV-1414, Plans/Server_System.md:1570-1743"
+      },
+      {
+       "path": "Plans/event_payloads/w3e/server_client_trust_changed.schema.json",
+       "unit": "#/",
+       "line_start": 3,
+       "line_end": 3,
+       "quote": "\"additionalProperties\": false,",
+       "file_sha256": "fab2b13c13831b0d3f7c7f57f5d6fac5a0f22ca4abb18d561b561ca143e6d30b",
+       "quote_check": "exact",
+       "quote_scope": "document"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "closed_payload_schema",
+      "status": "PASS"
+     }
+    },
+    "scope_identity": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "The exact newly authored SRV-1414 contract and its own companions bind this criterion. PASS refers to normative planning text only, not runtime or executed event oracles.",
+     "evidence": [
+      {
+       "path": "Plans/Server_System.md",
+       "unit": "SRV-1414",
+       "line_start": 1622,
+       "line_end": 1622,
+       "quote": "Identity: owner_operation_id is family-operation@1: plus lowercase SHA-256 of exact UTF-8 bytes \"pm.w3e.owner_fact.v1\\0\"",
+       "file_sha256": "d2e77e0964bbabad5a52d2c198af2e61720a8438ddcf6449042479ff25c0dc24",
+       "quote_check": "exact",
+       "quote_scope": "unit SRV-1414, Plans/Server_System.md:1570-1743"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "scope_identity",
+      "status": "PASS"
+     }
+    },
+    "replay_idempotency": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "The exact newly authored SRV-1414 contract and its own companions bind this criterion. PASS refers to normative planning text only, not runtime or executed event oracles.",
+     "evidence": [
+      {
+       "path": "Plans/Server_System.md",
+       "unit": "SRV-1414",
+       "line_start": 1638,
+       "line_end": 1638,
+       "quote": "Idempotency/replay: same selected identity and semantic digest returns the immutable original result and first",
+       "file_sha256": "d2e77e0964bbabad5a52d2c198af2e61720a8438ddcf6449042479ff25c0dc24",
+       "quote_check": "exact",
+       "quote_scope": "unit SRV-1414, Plans/Server_System.md:1570-1743"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "replay_idempotency",
+      "status": "PASS"
+     }
+    },
+    "retention": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "Bound to DL-453 (E-CARDS-3, option A; landed on main): RP-AUTHORITY-INDEFINITE@1.0.0. The decision names this exact family in E-CARDS-3 Appendix A and the Storage third-sitting assignment on main lists it; the owner unit, CV and SP units carry the binding.",
+     "evidence": [
+      {
+       "path": "Plans/Server_System.md",
+       "unit": "SRV-1414",
+       "line_start": 1646,
+       "line_end": 1646,
+       "quote": "Retention: retention_policy_ref=RP-AUTHORITY-INDEFINITE@1.0.0 (DL-453, E-CARDS-3 item 1.a, option A), kept permanently, application editions only, with no age or count expiry and no new count allowance; storage pressure refuses new history writes, and explicit application data deletion follows its existing authorized rules. Deleting the described object does not remove this separate history or kee",
+       "file_sha256": "d2e77e0964bbabad5a52d2c198af2e61720a8438ddcf6449042479ff25c0dc24",
+       "quote_check": "exact",
+       "quote_scope": "unit SRV-1414, Plans/Server_System.md:1570-1743"
+      },
+      {
+       "path": "Plans/Contracts_V0.md",
+       "unit": "CV-1414",
+       "line_start": 49154,
+       "line_end": 49154,
+       "quote": "retention_policy_ref=RP-AUTHORITY-INDEFINITE@1.0.0 (DL-453, E-CARDS-3 item 1.a, option A), kept permanently, application editions only, with no age or count expiry and no new count allowance; storage pressure refuses new history writes, and explicit application data deletion follows its existing authorized rules. Deleting the described object does not remove this separate history or keep the delet",
+       "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a",
+       "quote_check": "exact",
+       "quote_scope": "unit CV-1414, Plans/Contracts_V0.md:49136-49196"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-1414",
+       "line_start": 71272,
+       "line_end": 71272,
+       "quote": "retention_policy_ref=RP-AUTHORITY-INDEFINITE@1.0.0 (DL-453, E-CARDS-3 item 1.a, option A), kept permanently, application editions only, with no age or count expiry and no new count allowance; storage pressure refuses new history writes, and explicit application data deletion follows its existing authorized rules. Deleting the described object does not remove this separate history or keep the delet",
+       "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707",
+       "quote_check": "exact",
+       "quote_scope": "unit SP-1414, Plans/storage-plan.md:71262-71348"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "retention",
+      "status": "PASS"
+     }
+    },
+    "redaction_custody": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "The exact newly authored SRV-1414 contract and its own companions bind this criterion. PASS refers to normative planning text only, not runtime or executed event oracles.",
+     "evidence": [
+      {
+       "path": "Plans/Server_System.md",
+       "unit": "SRV-1414",
+       "line_start": 1650,
+       "line_end": 1650,
+       "quote": "Redaction/custody: ClientTrustRegistry on the actual Server holds the original accepted intent, complete before/after",
+       "file_sha256": "d2e77e0964bbabad5a52d2c198af2e61720a8438ddcf6449042479ff25c0dc24",
+       "quote_check": "exact",
+       "quote_scope": "unit SRV-1414, Plans/Server_System.md:1570-1743"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "redaction_custody",
+      "status": "PASS"
+     }
+    },
+    "transitions": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "The exact newly authored SRV-1414 contract and its own companions bind this criterion. PASS refers to normative planning text only, not runtime or executed event oracles.",
+     "evidence": [
+      {
+       "path": "Plans/Server_System.md",
+       "unit": "SRV-1414",
+       "line_start": 1592,
+       "line_end": 1592,
+       "quote": "Historical lookup authenticates retained provenance and does not reacquire expired live authority. Payload: Plans/event_payloads/w3e/server_client_trust_changed.schema.json,",
+       "file_sha256": "d2e77e0964bbabad5a52d2c198af2e61720a8438ddcf6449042479ff25c0dc24",
+       "quote_check": "exact",
+       "quote_scope": "unit SRV-1414, Plans/Server_System.md:1570-1743"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "transitions",
+      "status": "PASS"
+     }
+    },
+    "consumers_checkpoints": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "The exact newly authored SRV-1414 contract and its own companions bind this criterion. PASS refers to normative planning text only, not runtime or executed event oracles.",
+     "evidence": [
+      {
+       "path": "Plans/Server_System.md",
+       "unit": "SRV-1414",
+       "line_start": 1662,
+       "line_end": 1662,
+       "quote": "Consumer/checkpoint: newly authored projector.w3e.server_client_trust_changed.history@1.0.0 and reader.w3e.server_client_trust_changed.history@1.0.0",
+       "file_sha256": "d2e77e0964bbabad5a52d2c198af2e61720a8438ddcf6449042479ff25c0dc24",
+       "quote_check": "exact",
+       "quote_scope": "unit SRV-1414, Plans/Server_System.md:1570-1743"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-1414",
+       "line_start": 71286,
+       "line_end": 71286,
+       "quote": "The exact checkpoint in derived redb checkpoints is w3e_server_client_trust_changed_checkpoint.v1:{hex(storage_instance_id)}:{scope_partition}:{hex(server_id)}",
+       "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707",
+       "quote_check": "exact",
+       "quote_scope": "unit SP-1414, Plans/storage-plan.md:71262-71348"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "consumers_checkpoints",
+      "status": "PASS"
+     }
+    },
+    "compatibility_withdrawal": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "The exact newly authored SRV-1414 contract and its own companions bind this criterion. PASS refers to normative planning text only, not runtime or executed event oracles.",
+     "evidence": [
+      {
+       "path": "Plans/Server_System.md",
+       "unit": "SRV-1414",
+       "line_start": 1675,
+       "line_end": 1675,
+       "quote": "Compatibility/withdrawal: no legacy writer or event alias is claimed for this newly authored family. Exact retained",
+       "file_sha256": "d2e77e0964bbabad5a52d2c198af2e61720a8438ddcf6449042479ff25c0dc24",
+       "quote_check": "exact",
+       "quote_scope": "unit SRV-1414, Plans/Server_System.md:1570-1743"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "compatibility_withdrawal",
+      "status": "PASS"
+     }
+    },
+    "positive_negative_oracles": {
+     "status": "PASS",
+     "representation": "executed_clean_room_reference_oracles",
+     "finding": "Provisional worker PASS for deterministic planning oracles, pending Sol high, Sol max and Astra max. All nine previously unsourced payload fields are mandatory immutable owner_fact members; their copy joins, 34 additional owner-domain obligations, complete successful RestoreRun journal and ten receipt resolutions are exercised. The full W3E checker passes 307 controls and 19,483 negatives; the ten changed append_join tables freshly prove 78 rows. The remaining inherited table predicates are unchanged; no new full-lane guard proof is claimed. The stateful supplement executes admission, dedupe recovery, competing publication CAS, withdrawal/successor rebuild, source relocation, held prune/capture/restore, immutable receipt joins and retained reads against actual reference-store state. Across the 39-family supplement: 41 scenarios, 311 positives, 2,489 exact-code refusals and 287 crash cuts; 109 guard rows proved. Mutation scope is 107 unsafe-acceptance kills plus two explicitly INVALID exception diagnostics (not kills), with one declared representative family per mutant and all families in the baseline. This is synthetic clean-room execution. Native execution NOT_RUN; membership ABSENT.",
+     "evidence": [
+      {
+       "path": "Plans/Contracts_V0.md",
+       "unit": "CV-1414",
+       "line_start": 49154,
+       "line_end": 49154,
+       "quote": "Phase 2 (2026-11-13) runs the executable synthetic oracles of this family in scripts/pm_w3e_event_oracles.py; every refusal is one named single-predicate row of a generated Method B guard table (scripts/pm_w3e_table_*.py) proved by the gated shared scripts/pm_guard_isolation.py through scripts/pm-w3e-guard-proof.py, and rows no input can refuse first stay alone in their own table with a written pr",
+       "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a",
+       "quote_check": "exact",
+       "quote_scope": "unit CV-1414, Plans/Contracts_V0.md:49136-49196"
+      },
+      {
+       "path": "scripts/pm_pnc019_s4o3_store.py",
+       "line_start": 144,
+       "line_end": 144,
+       "quote": "class Store:",
+       "file_sha256": "10f10d033d805d9830f26d0c9c1fbe1cc8560ed5c943c81af935e56aa4684663",
+       "quote_check": "exact",
+       "quote_scope": "document"
+      },
+      {
+       "path": "scripts/pm_pnc019_s4o3_store.py",
+       "line_start": 249,
+       "line_end": 249,
+       "quote": "def read(self, generation, original_ref):",
+       "file_sha256": "10f10d033d805d9830f26d0c9c1fbe1cc8560ed5c943c81af935e56aa4684663",
+       "quote_check": "exact",
+       "quote_scope": "document"
+      },
+      {
+       "path": "scripts/pm_pnc019_s4o3_oracles.py",
+       "line_start": 142,
+       "line_end": 142,
+       "quote": "def run_family(adapter, family, trace=None, cut=None):",
+       "file_sha256": "1fea5e492c2d45f94c41d59184da26081b7b2f30833fccd5142167bcf4cb66f6",
+       "quote_check": "exact",
+       "quote_scope": "document"
+      },
+      {
+       "path": "scripts/pm-pnc019-s4o3-proof.py",
+       "line_start": 103,
+       "line_end": 103,
+       "quote": "def mutations(out):",
+       "file_sha256": "c3d51d67e679729c0bd7775e06e823726e79741566e4b4036aec04e0d6736487",
+       "quote_check": "exact",
+       "quote_scope": "document"
+      },
+      {
+       "path": "scripts/pm_w3e_event_oracles.py",
+       "line_start": 631,
+       "line_end": 631,
+       "quote": "RESULT_FIELDS = {",
+       "file_sha256": "cfdd3aa717c4e810169a3bd74da0cf77a43327a344daf0c02b8a019c55988f9a",
+       "quote_check": "exact",
+       "quote_scope": "document"
+      },
+      {
+       "path": "scripts/pm_pnc019_s4o3_domain_cases.py",
+       "line_start": 14,
+       "line_end": 14,
+       "quote": "RULES = (",
+       "file_sha256": "277b6d33314f4364caa287d2d6aec6f51affc193af04f9d163deedff71c05d9d",
+       "quote_check": "exact",
+       "quote_scope": "document"
+      },
+      {
+       "path": "scripts/pm_pnc019_s4o3_owner.py",
+       "line_start": 20,
+       "line_end": 20,
+       "quote": "RESTORE_REFS = (",
+       "file_sha256": "c6dcfbc63623ce82f521c89723164ba1370e01fb03a439d2cb1c392f3aed68e2",
+       "quote_check": "exact",
+       "quote_scope": "document"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "positive_negative_oracles",
+      "status": "PASS"
+     }
+    }
+   }
+  }
+ ]
+}
