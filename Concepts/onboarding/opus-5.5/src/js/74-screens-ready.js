@@ -21,6 +21,11 @@
   /* (a new install, ?o55=fresh, clears the onboarding record as it boots, 95-boot.js: the Projects it listed are gone
      from this load on, and an active id that named one of them is stale) */
   const freshInstall = (() => { try { return new URLSearchParams(location.search).get('o55') === 'fresh'; } catch (_) { return false; } })();
+  /* (a new install's load, as the head reads it (script-001.js o55b.install): ?o55=fresh, or no onboarding record and no
+     switch that skips or steers onboarding. It opens in the page's own Project: no stored id is taken, FO-222 round 2, F4) */
+  const installLoad = (() => {
+    try { const sw = new URLSearchParams(location.search).get('o55') || ''; return sw === 'fresh' || (!O55.store.get('onboarding', null) && sw !== 'off' && sw !== 'tour' && sw.indexOf('screen=') !== 0); } catch (_) { return false; }
+  })();
   /* the Projects setup made stay until a new install (FO-222 round 2, F2, the lead's ruling with F's): their own record,
      MADE ({ id, name, info } each), written as selectProject lists one, cleared only by forgetSetup (a new install, Demo
      Studio's resets); a new run of setup keeps them. A record from before it (the Projects only in the onboarding
@@ -50,7 +55,7 @@
      the Project): the id the page opens on */
   let staleLoaded = false;
   (function restoreEarly() {
-    const id = lsGet(); if (!id) return;
+    const id = lsGet(); if (!id || installLoad) return;
     const made = setupProjects().find((p) => p.id === id);
     /* (an id no Project answers to: dropped, and the page is the default Project's again, as before; Settings, which the
        head pointed at it, loads the default Project at boot) */
