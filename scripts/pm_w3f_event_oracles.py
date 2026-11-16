@@ -1908,13 +1908,19 @@ def main(argv=None):
     args = parser.parse_args(argv)
     counts, findings, firsts = run_all()
     unwitnessed = sorted([r['id'] for r in ROWS if r['id'] not in firsts and r['id'] not in ENTAILED])
+    # Admission-aware mode (T222/T225): the oracles model membership synthetically; the live registry may
+    # hold a family only as its exact, complete DL-077 admission (scripts/pm_ea_admission_mode.py).
+    import pm_ea_admission_mode as admission_mode
+    admission, refused = admission_mode.lane_gate(FAMILIES, ROOT)
+    findings.extend({'case': line.split(':', 1)[0] + '/admission_mode', 'verdict': line} for line in refused)
     status = 'pass' if not findings and not unwitnessed else 'fail'
     report = {'status': status, 'counts': counts, 'rows': len(ROWS), 'tables': len(TABLES), 'entailed': sorted(ENTAILED),
               'unwitnessed_rows': unwitnessed, 'first_refusals': dict(sorted(firsts.items())),
-              'findings': findings[:args.limit_findings], 'finding_count': len(findings)}
+              'findings': findings[:args.limit_findings], 'finding_count': len(findings), 'admission_mode': admission}
     if args.json:
         args.json.write_text(json.dumps(report, indent=2, sort_keys=True) + '\n')
-    print(json.dumps({k: report[k] for k in ('status', 'counts', 'rows', 'tables', 'unwitnessed_rows', 'finding_count')},
+    print(json.dumps({k: report[k] for k in ('status', 'counts', 'rows', 'tables', 'unwitnessed_rows', 'finding_count')}
+                     | {'admission_mode': admission['counts']},
                      indent=2, sort_keys=True))
     for f in findings[:args.limit_findings]:
         print(json.dumps(f))

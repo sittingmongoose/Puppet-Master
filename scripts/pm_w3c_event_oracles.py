@@ -1891,9 +1891,14 @@ def main(argv=None):
     counts, findings, firsts = run_all(progress=lambda n: print('case', n, file=sys.stderr, flush=True), selected=sel)
     reachable = [r['id'] for r in ROWS if r['id'] not in ENTAILED]
     unwitnessed = [r for r in reachable if r not in firsts] if sel is None else []
+    # Admission-aware mode (T222/T225): the oracles model membership synthetically; the live registry may
+    # hold a family only as its exact, complete DL-077 admission (scripts/pm_ea_admission_mode.py).
+    import pm_ea_admission_mode as admission_mode
+    admission, refused = admission_mode.lane_gate([f for f in FAMILIES if args.family is None or f == args.family], ROOT)
+    findings = findings + [{'case': line.split(':', 1)[0] + '/admission_mode', 'verdict': line} for line in refused]
     result = {'status': 'pass' if not findings and not unwitnessed else 'fail', 'counts': counts, 'rows': len(ROWS),
               'tables': len(TABLES), 'entailed': sorted(ENTAILED), 'unwitnessed_rows': unwitnessed,
-              'findings': findings[:200], 'first_rows': firsts}
+              'findings': findings[:200], 'first_rows': firsts, 'admission_mode': admission}
     text = json.dumps(result, indent=1, sort_keys=True)
     if args.json:
         args.json.write_text(text + '\n')

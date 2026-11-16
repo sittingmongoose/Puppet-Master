@@ -1700,10 +1700,10 @@ def main(family_name=None):
     p2a_cases = 0
     if (ROOT / 'Plans/executor_event_p2a_cases.json').exists():
         import pm_executor_p2a_cases as p2a
-        registry = json.loads((ROOT / 'Plans/event_family_registry.json').read_text())
+        from pm_executor_event_contracts import registry_view
         p2a_failures, p2a_cases = p2a.run(json.loads((ROOT / 'Plans/executor_event_p2a_cases.json').read_text()),
                                           {c['event_type']: c for c in contracts}, families, shapes,
-                                          {f['event_type'] for f in registry['families']}, ROOT)
+                                          registry_view([c['event_type'] for c in contracts], ROOT), ROOT)
         failures.extend(p2a_failures)
     print(json.dumps({'status': 'fail' if failures else 'pass', 'families': len(families), 'sweep_p2a_witnesses': p2a_cases, 'source_transition_cases': count, 'receipt_replay_withdrawal_traces': traces, 'source_score_domain_cases': score_cases, 'isolated_schema_cases': schema_cases, 'schema_reference_cases': ref_cases, 'historical_read_cases': history_cases, 'numeric_boundary_cases': numeric_cases, 'exact_type_cases': type_cases, 'workgraph_id_boundary_cases': workgraph_id_cases, 'canonical_golden_cases': len(fixture_doc.get('canonical_golden_cases', [])), 'helper_cases': len(helper_cases), 'failures': failures, 'native_execution': 'NOT_RUN'}, indent=2))
     return bool(failures)

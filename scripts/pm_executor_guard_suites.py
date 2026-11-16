@@ -75,7 +75,7 @@ def witnesses(root=ROOT):
     shapes_all = sem.expand_fixture_literals(load('Plans/executor_event_contract_fixtures.json', root))['cases']
     ref_fixtures = load('Plans/executor_event_schema_reference_fixtures.json', root)['families']
     registry = load('Plans/event_family_registry.json', root)
-    existing = {f['event_type'] for f in registry['families']}
+    existing = con.registry_view([c['event_type'] for c in contracts], root, registry)
     by_name = {c['event_type']: c for c in contracts}
     yield ('integrity/contract_set', 'shared', 'accept', lambda: sem.check_contract_set([c['event_type'] for c in contracts]), 'integrity')
     yield ('integrity/closure', 'shared', 'accept', lambda: sem.check_family_closure(families, by_name), 'integrity')

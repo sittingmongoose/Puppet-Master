@@ -1760,6 +1760,12 @@ def main(argv=None):
                     if f'{phase_name}/{r[0]}' not in witnessed:
                         summary['mismatches'].append(dict(family=fam['event_type'], case=f'{phase_name}/{r[0]}', why='row without a single-row witness'))
     summary['rows_witnessed'] = {k: len(v) for k, v in coverage.items()}
+    # Admission-aware mode (T222/T225): the oracles model membership synthetically; the live registry may
+    # hold a family only as its exact, complete DL-077 admission (scripts/pm_ea_admission_mode.py).
+    import pm_ea_admission_mode as admission_mode
+    summary['admission_mode'], refused = admission_mode.lane_gate(
+        [fam['event_type'] for fam in spec.FAMILIES if not only or fam['event_type'] == only], ROOT)
+    summary['mismatches'].extend(dict(family=line.split(':', 1)[0], case='admission_mode', why=line) for line in refused)
     summary['status'] = 'pass' if not summary['mismatches'] and not summary['unresolved_refs'] and summary['oracle_self_check'] else 'fail'
     text = json.dumps(summary, indent=1, sort_keys=True, default=str)
     if out_path:

@@ -231,6 +231,11 @@ def main():
     load_documents(schema)
     registry = read_json('Plans/event_family_registry.json')
     admitted = {r['event_type'] for r in registry['families']}
+    # Admission-aware mode (T222/T225): a registered family passes only as its exact, complete DL-077
+    # admission (scripts/pm_ea_admission_mode.py); any other registration keeps the preparation refusal.
+    import pm_ea_admission_mode as admission_mode
+    modes = admission_mode.verdicts([meta['event_type'] for meta in fixture['cases'] if meta['event_type'] in admitted],
+                                    root=ROOT)
     failures = []
     rows = []
     # PM_DDBG_FAMILY=<event type> runs the per-family oracles of that family
@@ -307,7 +312,9 @@ def main():
                               for row in meta['transition_cases']
                               if patched_case(case, row['patches'])['payload']['state'] == 'failed'}
             check(failed_reasons == set(FAILED_REASONS), event + ': all six Failed endings have positives')
-        check(event not in admitted, event + ': must remain unadmitted')
+        mode = modes.get(event, {'mode': 'prepared'})
+        check(event not in admitted or mode['mode'] == 'admitted',
+              event + ': must remain unadmitted' + (' (admission mode refused: ' + mode['code'] + ')' if mode['mode'] == 'refused' else ''))
         checks = 2
         for key in definition['required']:
             bad = copy.deepcopy(payload)
@@ -470,11 +477,14 @@ def main():
         check(admission_refusal(case) == 'unregistered', event + ': admission refusal')
         check(admission_refusal(case, admitted=True) == 'retention_unresolved', event + ': retention refusal')
         check(admission_refusal(case, admitted=True, retention='resolved', withdrawn=True) == 'withdrawn', event + ': withdrawal refusal')
-        rows.append({'event_type':event,'schema_checks':checks,'outcome':'prepared_without_admission','native_execution':'NOT_RUN'})
+        # A refused registration stays a prepared family; its refusal is the failure above.
+        outcome = 'admitted_with_dl077_record' if mode['mode'] == 'admitted' else 'prepared_without_admission'
+        rows.append({'event_type':event,'schema_checks':checks,'outcome':outcome,'native_execution':'NOT_RUN'})
     corpus = corpus_checks(fixture['cases'], check) if only is None else None
     expected = 9 if only is None else 1
     check(len(rows) == expected and len({r['event_type'] for r in rows}) == expected, 'nine distinct prepared families')
-    check(sum(r['outcome'] == 'prepared_without_admission' for r in rows) == expected, 'nine prepared families')
+    check(sum(r['outcome'] in ('prepared_without_admission', 'admitted_with_dl077_record') for r in rows) == expected,
+          'nine prepared families, or record-bound admissions')
     check(bool(fixture.get('native_obligations')), 'shared native obligations retained, NOT_RUN')
     scope = 'Static payload/identity/refusal oracles only; native NOT_RUN.' + ('' if only is None else ' Family ' + only + ' only.')
     print(json.dumps({'status':'FAIL' if failures else 'PASS','rows':rows,'failures':failures,'shared_corpus':corpus,'scope':scope},indent=2))
