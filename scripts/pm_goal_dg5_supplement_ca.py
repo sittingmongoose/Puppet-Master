@@ -1045,6 +1045,23 @@ def cases(suite):
         r.reservation = h
     handle_case('shared/handle_issuer', foreign_handle, 'handle/issuer', ST_SITE + '1260')
 
+    # ---- batch 8 (helper C): last chain isolations ----
+    def fence_held_own():
+        w, r = C4C.until(suite, 'append_original')
+        op = O.uid('TEST_ONLY:dg5-fenced-op')
+        w.storage.fence = AS.Fence(op, w.storage.boot_session)
+        p = copy.deepcopy(r.progress['producer_input'])
+        return w, lambda: w.appender.append_original(op, dict(kind='TEST_ONLY:dg5'), [p])
+    add('c4/fence_held', fence_held_own, 'assignment/fence_held', AS_SITE + '185')
+
+    def second_terminal_same_value():
+        w, r = until('terminal')
+        last = w.sir.clock.last
+        r.terminal()
+        w.sir.clock.last = last   # second issue recomputes byte-identical terminal value
+        return w, r.terminal
+    add('c1/already_issued', second_terminal_same_value, 'C1/terminal/already_issued', C1_SITE + '705')
+
     # handle/kind (:1261): proof in pm_goal_dg5_proofs_ca.py (_handles only ever holds
     # 'reservation' handles, the only kind _resolve_handle is called with).
     # receipt_handle type/issuer (:1589/:1590): no family entry reaches receipt_of with a
