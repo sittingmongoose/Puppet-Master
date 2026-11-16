@@ -74,8 +74,33 @@ def _frames(detail):
             for f, l, fn in re.findall(r'(pm_goal\w*\.py):(\d+)\((\w+)\)', head)]
 
 
+PROOF_MODULES = ('u', 's', 'ca', 'r', 'cf')   # pm_goal_dg5_proofs_<x>.py, one owner per file (SPLIT.md)
+
+
+def written_proofs():
+    """Per-family written proofs: PROOFS = {row: dict(kind, argument, depends_on, sites=[(path, line)])}.
+    Each proof is re-bound here to the exact source bytes of its cited sites."""
+    import importlib
+    out = {}
+    for name in PROOF_MODULES:
+        try:
+            module = importlib.import_module('pm_goal_dg5_proofs_' + name)
+        except ModuleNotFoundError as error:
+            if error.name != 'pm_goal_dg5_proofs_' + name:
+                raise
+            continue
+        for row, proof in getattr(module, 'PROOFS', {}).items():
+            out[row] = dict(proof, module='scripts/pm_goal_dg5_proofs_%s.py' % name,
+                            bound_sites=[_bind(p, l) for p, l in proof.get('sites', [])],
+                            depends_on=list(proof.get('depends_on', [])))
+    return out
+
+
 def justification(family, name, tries, sites=()):
-    """Presence, bound to exact source bytes: the guarded site(s) and the frame that raises."""
+    """A written proof for the row if one exists; else presence, bound to exact source bytes."""
+    written = written_proofs().get(name)
+    if written is not None and family in written.get('families', [family]):
+        return written
     for record in tries:
         site = record.get('cut_exception_site') or {}
         if record.get('kill') != 'CUT_EXCEPTION' or site.get('exception') not in ('RuntimeError',):
