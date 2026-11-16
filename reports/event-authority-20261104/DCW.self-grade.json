@@ -470,6 +470,14 @@
           "finding": "PASS (C12-DCW): all 238 named rows this family reaches run on the gated tool 004bdedd63 (lane-wide 380/394 proved; the 14 by-construction rows sit alone in their own tables with executable entailment attempts). At the complete boundary each reached row has a lane witness refused first there and accepted by the unchanged complete checker with only that row disabled, or a checked implication (by_construction 9, complete_boundary_reclassified 15, cut_accepts 179, entailed 17, precondition 18). The whole-definition OE001 schema ledger has 26914 exact kills and 10683 INVALID proposals over 20 real check_schema sites, plus 26891 exact kills from path-novel controls beyond the per-site cap; every reachable clause is witnessed with OE001 cut and restoration, witnessed at the same site in another family with identical schema pins, or vacuous (vacuous 16, witnessed 1924, witnessed_supplement 33); keyword independence is not claimed. Lane-wide copy-join inventory, 193 two-copy rows: 91 have each copy changed alone and refused first there, 76 have the second copy located and pinned by named earlier joins (checked), 24 carry written dispositions (derived, configuration or legacy-callback copies) and 2 are by-construction rows. Retained reads select only the sealed original store and leave it unchanged (34/34 exact). Shared numbers and date-time profiles run at every DCW boundary (EventRecord; storage_utc_z for Storage-assigned times; acknowledged_at_utc EventRecord per E5-2). New row O234 refuses unverified compaction translations. Native campaigns remain NOT_RUN.",
           "evidence": [
             {
+              "path": "Plans/event_payloads/bundle_revision/revision_requested.schema.json",
+              "unit": "closed root",
+              "line_start": 5,
+              "line_end": 13,
+              "quote": "\"additionalProperties\": false,\n  \"required\": [\n    \"project_id\",\n    \"thread_id\",\n    \"bundle_id\",\n    \"revision_id\",\n    \"requested_revision_capability\",\n    \"permission_snapshot_id\",\n",
+              "evidence_role": "Exact canonical subject of the existing whole-definition oracle proof; test execution evidence remains the separately cited scripts."
+            },
+            {
               "path": "scripts/pm_dcw_event_oracles.py",
               "unit": "index_read",
               "line_start": 482,
@@ -1070,6 +1078,14 @@
           "finding": "PASS (C12-DCW): all 235 named rows this family reaches run on the gated tool 004bdedd63 (lane-wide 380/394 proved; the 14 by-construction rows sit alone in their own tables with executable entailment attempts). At the complete boundary each reached row has a lane witness refused first there and accepted by the unchanged complete checker with only that row disabled, or a checked implication (by_construction 9, complete_boundary_reclassified 14, cut_accepts 177, entailed 17, precondition 18). The whole-definition OE001 schema ledger has 30264 exact kills and 12977 INVALID proposals over 20 real check_schema sites, plus 13450 exact kills from path-novel controls beyond the per-site cap; every reachable clause is witnessed with OE001 cut and restoration, witnessed at the same site in another family with identical schema pins, or vacuous (vacuous 16, witnessed 1924, witnessed_by_shared_site 13, witnessed_supplement 20); keyword independence is not claimed. Lane-wide copy-join inventory, 193 two-copy rows: 91 have each copy changed alone and refused first there, 76 have the second copy located and pinned by named earlier joins (checked), 24 carry written dispositions (derived, configuration or legacy-callback copies) and 2 are by-construction rows. Retained reads select only the sealed original store and leave it unchanged (34/34 exact). Shared numbers and date-time profiles run at every DCW boundary (EventRecord; storage_utc_z for Storage-assigned times; acknowledged_at_utc EventRecord per E5-2). New row O234 refuses unverified compaction translations. Native campaigns remain NOT_RUN.",
           "evidence": [
             {
+              "path": "Plans/event_payloads/bundle_revision/revision_started.schema.json",
+              "unit": "closed root",
+              "line_start": 5,
+              "line_end": 13,
+              "quote": "\"additionalProperties\": false,\n  \"required\": [\n    \"project_id\",\n    \"thread_id\",\n    \"bundle_id\",\n    \"revision_id\",\n    \"requested_revision_capability\",\n    \"permission_snapshot_id\",\n",
+              "evidence_role": "Exact canonical subject of the existing whole-definition oracle proof; test execution evidence remains the separately cited scripts."
+            },
+            {
               "path": "scripts/pm_dcw_event_oracles.py",
               "unit": "index_read",
               "line_start": 482,
@@ -1648,6 +1664,14 @@
           "representation": "exact_normative_owner",
           "finding": "PASS (C12-DCW): all 238 named rows this family reaches run on the gated tool 004bdedd63 (lane-wide 380/394 proved; the 14 by-construction rows sit alone in their own tables with executable entailment attempts). At the complete boundary each reached row has a lane witness refused first there and accepted by the unchanged complete checker with only that row disabled, or a checked implication (by_construction 9, complete_boundary_reclassified 15, cut_accepts 179, entailed 17, precondition 18). The whole-definition OE001 schema ledger has 29329 exact kills and 12664 INVALID proposals over 20 real check_schema sites, plus 13450 exact kills from path-novel controls beyond the per-site cap; every reachable clause is witnessed with OE001 cut and restoration, witnessed at the same site in another family with identical schema pins, or vacuous (vacuous 16, witnessed 1924, witnessed_by_shared_site 13, witnessed_supplement 20); keyword independence is not claimed. Lane-wide copy-join inventory, 193 two-copy rows: 91 have each copy changed alone and refused first there, 76 have the second copy located and pinned by named earlier joins (checked), 24 carry written dispositions (derived, configuration or legacy-callback copies) and 2 are by-construction rows. Retained reads select only the sealed original store and leave it unchanged (34/34 exact). Shared numbers and date-time profiles run at every DCW boundary (EventRecord; storage_utc_z for Storage-assigned times; acknowledged_at_utc EventRecord per E5-2). New row O234 refuses unverified compaction translations. Native campaigns remain NOT_RUN.",
           "evidence": [
+            {
+              "path": "Plans/event_payloads/bundle_revision/revision_completed.schema.json",
+              "unit": "closed root",
+              "line_start": 5,
+              "line_end": 13,
+              "quote": "\"additionalProperties\": false,\n  \"required\": [\n    \"project_id\",\n    \"thread_id\",\n    \"bundle_id\",\n    \"revision_id\",\n    \"requested_revision_capability\",\n    \"permission_snapshot_id\",\n",
+              "evidence_role": "Exact canonical subject of the existing whole-definition oracle proof; test execution evidence remains the separately cited scripts."
+            },
             {
               "path": "scripts/pm_dcw_event_oracles.py",
               "unit": "index_read",
@@ -2235,6 +2259,14 @@
           "finding": "PASS (C12-DCW): all 235 named rows this family reaches run on the gated tool 004bdedd63 (lane-wide 380/394 proved; the 14 by-construction rows sit alone in their own tables with executable entailment attempts). At the complete boundary each reached row has a lane witness refused first there and accepted by the unchanged complete checker with only that row disabled, or a checked implication (by_construction 9, complete_boundary_reclassified 14, cut_accepts 177, entailed 17, precondition 18). The whole-definition OE001 schema ledger has 30562 exact kills and 13226 INVALID proposals over 20 real check_schema sites, plus 13450 exact kills from path-novel controls beyond the per-site cap; every reachable clause is witnessed with OE001 cut and restoration, witnessed at the same site in another family with identical schema pins, or vacuous (vacuous 16, witnessed 1924, witnessed_by_shared_site 13, witnessed_supplement 20); keyword independence is not claimed. Lane-wide copy-join inventory, 193 two-copy rows: 91 have each copy changed alone and refused first there, 76 have the second copy located and pinned by named earlier joins (checked), 24 carry written dispositions (derived, configuration or legacy-callback copies) and 2 are by-construction rows. Retained reads select only the sealed original store and leave it unchanged (34/34 exact). Shared numbers and date-time profiles run at every DCW boundary (EventRecord; storage_utc_z for Storage-assigned times; acknowledged_at_utc EventRecord per E5-2). New row O234 refuses unverified compaction translations. Native campaigns remain NOT_RUN.",
           "evidence": [
             {
+              "path": "Plans/event_payloads/bundle_revision/revision_interrupted.schema.json",
+              "unit": "closed root",
+              "line_start": 5,
+              "line_end": 13,
+              "quote": "\"additionalProperties\": false,\n  \"required\": [\n    \"project_id\",\n    \"thread_id\",\n    \"bundle_id\",\n    \"revision_id\",\n    \"requested_revision_capability\",\n    \"permission_snapshot_id\",\n",
+              "evidence_role": "Exact canonical subject of the existing whole-definition oracle proof; test execution evidence remains the separately cited scripts."
+            },
+            {
               "path": "scripts/pm_dcw_event_oracles.py",
               "unit": "index_read",
               "line_start": 482,
@@ -2704,6 +2736,21 @@
           "representation": "exact_normative_owner",
           "finding": "PASS (C12-DCW): all 219 named rows this family reaches run on the gated tool 004bdedd63 (lane-wide 380/394 proved; the 14 by-construction rows sit alone in their own tables with executable entailment attempts). At the complete boundary each reached row has a lane witness refused first there and accepted by the unchanged complete checker with only that row disabled, or a checked implication (by_construction 5, complete_boundary_reclassified 11, cut_accepts 167, entailed 17, precondition 19). The whole-definition OE001 schema ledger has 20160 exact kills and 8428 INVALID proposals over 15 real check_schema sites, plus 3756 exact kills from path-novel controls beyond the per-site cap; every reachable clause is witnessed with OE001 cut and restoration, witnessed at the same site in another family with identical schema pins, or vacuous (witnessed 1353, witnessed_by_shared_site 13, witnessed_supplement 43); keyword independence is not claimed. Lane-wide copy-join inventory, 193 two-copy rows: 91 have each copy changed alone and refused first there, 76 have the second copy located and pinned by named earlier joins (checked), 24 carry written dispositions (derived, configuration or legacy-callback copies) and 2 are by-construction rows. Retained reads select only the sealed original store and leave it unchanged (34/34 exact). Shared numbers and date-time profiles run at every DCW boundary (EventRecord; storage_utc_z for Storage-assigned times; acknowledged_at_utc EventRecord per E5-2). New row O234 refuses unverified compaction translations. Native campaigns remain NOT_RUN.",
           "evidence": [
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-596",
+              "line_start": 42874,
+              "line_end": 42875,
+              "quote": "All properties of Plans/event_payloads/planning_wizard/wizard_blocked.schema.json\\\n  \\ are required-present, root additionalProperties=false,",
+              "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a",
+              "quote_check": "exact",
+              "reanchor": {
+                "old_quote": "All properties of Plans/event_payloads/planning_wizard/wizard_blocked.schema.json are required-present, root additionalProperties=false,",
+                "normalization": "whitespace_line_wrapping_yaml_quoting_markdown_escaping",
+                "owner_unit": "CV-596"
+              },
+              "evidence_role": "Exact canonical subject of the existing whole-definition oracle proof; test execution evidence remains the separately cited scripts."
+            },
             {
               "path": "scripts/pm_dcw_event_oracles.py",
               "unit": "index_read",
@@ -3318,6 +3365,14 @@
           "representation": "exact_normative_owner",
           "finding": "PASS (C12-DCW): all 218 named rows this family reaches run on the gated tool 004bdedd63 (lane-wide 380/394 proved; the 14 by-construction rows sit alone in their own tables with executable entailment attempts). At the complete boundary each reached row has a lane witness refused first there and accepted by the unchanged complete checker with only that row disabled, or a checked implication (by_construction 8, complete_boundary_reclassified 12, cut_accepts 165, entailed 16, precondition 17). The whole-definition OE001 schema ledger has 26513 exact kills and 11176 INVALID proposals over 23 real check_schema sites, plus 17834 exact kills from path-novel controls beyond the per-site cap; every reachable clause is witnessed with OE001 cut and restoration, witnessed at the same site in another family with identical schema pins, or vacuous (vacuous 21, witnessed 2790, witnessed_by_shared_site 13, witnessed_supplement 20); keyword independence is not claimed. Lane-wide copy-join inventory, 193 two-copy rows: 91 have each copy changed alone and refused first there, 76 have the second copy located and pinned by named earlier joins (checked), 24 carry written dispositions (derived, configuration or legacy-callback copies) and 2 are by-construction rows. Retained reads select only the sealed original store and leave it unchanged (34/34 exact). Shared numbers and date-time profiles run at every DCW boundary (EventRecord; storage_utc_z for Storage-assigned times; acknowledged_at_utc EventRecord per E5-2). New row O234 refuses unverified compaction translations. Native campaigns remain NOT_RUN.",
           "evidence": [
+            {
+              "path": "Plans/event_payloads/planning_wizard/wizard_deferred_payload_loaded.schema.json",
+              "unit": "closed root",
+              "line_start": 5,
+              "line_end": 14,
+              "quote": "\"additionalProperties\": false,\n  \"required\": [\n    \"schema_id\",\n    \"schema_version\",\n    \"event_type\",\n    \"project_id\",\n    \"thread_id\",\n    \"planning_run_id\",\n    \"named_plan_id\",\n  ",
+              "evidence_role": "Exact canonical subject of the existing whole-definition oracle proof; test execution evidence remains the separately cited scripts."
+            },
             {
               "path": "scripts/pm_dcw_event_oracles.py",
               "unit": "index_read",
@@ -3939,6 +3994,14 @@
           "finding": "PASS (C12-DCW): all 213 named rows this family reaches run on the gated tool 004bdedd63 (lane-wide 380/394 proved; the 14 by-construction rows sit alone in their own tables with executable entailment attempts). At the complete boundary each reached row has a lane witness refused first there and accepted by the unchanged complete checker with only that row disabled, or a checked implication (by_construction 7, complete_boundary_reclassified 12, cut_accepts 164, entailed 14, precondition 16). The whole-definition OE001 schema ledger has 21671 exact kills and 8464 INVALID proposals over 19 real check_schema sites, plus 15642 exact kills from path-novel controls beyond the per-site cap; every reachable clause is witnessed with OE001 cut and restoration, witnessed at the same site in another family with identical schema pins, or vacuous (vacuous 12, witnessed 1933, witnessed_by_shared_site 13, witnessed_supplement 20); keyword independence is not claimed. Lane-wide copy-join inventory, 193 two-copy rows: 91 have each copy changed alone and refused first there, 76 have the second copy located and pinned by named earlier joins (checked), 24 carry written dispositions (derived, configuration or legacy-callback copies) and 2 are by-construction rows. Retained reads select only the sealed original store and leave it unchanged (34/34 exact). Shared numbers and date-time profiles run at every DCW boundary (EventRecord; storage_utc_z for Storage-assigned times; acknowledged_at_utc EventRecord per E5-2). New row O234 refuses unverified compaction translations. Native campaigns remain NOT_RUN.",
           "evidence": [
             {
+              "path": "Plans/event_payloads/planning_wizard/wizard_opened.schema.json",
+              "unit": "closed root",
+              "line_start": 5,
+              "line_end": 14,
+              "quote": "\"additionalProperties\": false,\n  \"required\": [\n    \"schema_id\",\n    \"schema_version\",\n    \"event_type\",\n    \"project_id\",\n    \"thread_id\",\n    \"planning_run_id\",\n    \"named_plan_id\",\n  ",
+              "evidence_role": "Exact canonical subject of the existing whole-definition oracle proof; test execution evidence remains the separately cited scripts."
+            },
+            {
               "path": "scripts/pm_dcw_event_oracles.py",
               "unit": "index_read",
               "line_start": 482,
@@ -4429,6 +4492,21 @@
           "representation": "exact_normative_owner",
           "finding": "PASS (C12-DCW): all 234 named rows this family reaches run on the gated tool 004bdedd63 (lane-wide 380/394 proved; the 14 by-construction rows sit alone in their own tables with executable entailment attempts). At the complete boundary each reached row has a lane witness refused first there and accepted by the unchanged complete checker with only that row disabled, or a checked implication (by_construction 6, complete_boundary_reclassified 11, cut_accepts 180, entailed 17, precondition 20). The whole-definition OE001 schema ledger has 24007 exact kills and 10368 INVALID proposals over 19 real check_schema sites, plus 5022 exact kills from path-novel controls beyond the per-site cap; every reachable clause is witnessed with OE001 cut and restoration, witnessed at the same site in another family with identical schema pins, or vacuous (witnessed 1729, witnessed_by_shared_site 13, witnessed_supplement 66); keyword independence is not claimed. Lane-wide copy-join inventory, 193 two-copy rows: 91 have each copy changed alone and refused first there, 76 have the second copy located and pinned by named earlier joins (checked), 24 carry written dispositions (derived, configuration or legacy-callback copies) and 2 are by-construction rows. Retained reads select only the sealed original store and leave it unchanged (34/34 exact). Shared numbers and date-time profiles run at every DCW boundary (EventRecord; storage_utc_z for Storage-assigned times; acknowledged_at_utc EventRecord per E5-2). New row O234 refuses unverified compaction translations. Native campaigns remain NOT_RUN.",
           "evidence": [
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-597",
+              "line_start": 43097,
+              "line_end": 43098,
+              "quote": "All properties of Plans/event_payloads/planning_wizard/wizard_unblocked.schema.json\\\n  \\ are required-present, root",
+              "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a",
+              "quote_check": "exact",
+              "reanchor": {
+                "old_quote": "All properties of Plans/event_payloads/planning_wizard/wizard_unblocked.schema.json are required-present, root",
+                "normalization": "whitespace_line_wrapping_yaml_quoting_markdown_escaping",
+                "owner_unit": "CV-597"
+              },
+              "evidence_role": "Exact canonical subject of the existing whole-definition oracle proof; test execution evidence remains the separately cited scripts."
+            },
             {
               "path": "scripts/pm_dcw_event_oracles.py",
               "unit": "index_read",
