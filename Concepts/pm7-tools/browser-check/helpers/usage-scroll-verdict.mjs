@@ -1,7 +1,8 @@
 // The verdict of checks/perf-usage-scroll.check.mjs from its four measured windows (as built, control, control, as built),
 // kept apart from the browser so tools/usage-scroll-verdict.selftest.mjs can judge it on constructed windows.
 // A window: { name: 'as built' | 'control', scrolls, whole, lost: [why], paint, full (frames never presented a second),
-// partial, unknown, restFrames }. Returns { rows: [{ name, ok, detail }] the judged rows, logs: [text], warnings: [text] }.
+// partial, unknown, restFrames, restLost }. Returns { rows: [{ name, ok, detail }] the judged rows (could judge, the paint
+// ratio), logs: [text], warnings: [text] (a guard breached: logged as WARNING by the check, never a failed row) }.
 export function usageScrollVerdict(windows, { ratio = 0.85, rm = false } = {}) {
 	const rows = [], logs = [], warnings = [];
 	const judged = windows.length > 0 && windows.every((w) => w.scrolls > 0 && w.whole);
@@ -18,8 +19,14 @@ export function usageScrollVerdict(windows, { ratio = 0.85, rm = false } = {}) {
 	const [bpa, cpa] = [mean('as built', 'partial'), mean('control', 'partial')];
 	const [bu, cu] = [mean('as built', 'unknown'), mean('control', 'unknown')];
 	const dd = `never presented: as built ${bf.toFixed(1)}/s, control ${cf.toFixed(1)}/s; presented with a partial update: as built ${bpa.toFixed(1)}/s, control ${cpa.toFixed(1)}/s; presentation unknown: as built ${bu.toFixed(1)}/s, control ${cu.toFixed(1)}/s`;
-	rows.push({ name: 'guard: frames fully dropped while scrolling at most 1.5 times the control\'s, plus 4 a second', ok: bf <= 1.5 * cf + 4, detail: dd });
+	// the two guards are diagnostics (R67-T1): on a shared host frames never presented and resting frames swing between
+	// identical windows (two on origin/main read 27.4 and 18.6 a second), so a breach is a WARNING with its numbers, never a
+	// failed row; within them the numbers are logged
+	const dropOk = bf <= 1.5 * cf + 4;
+	(dropOk ? logs : warnings).push(`${dropOk ? '' : 'WARNING '}frames never presented while scrolling ${dropOk ? 'within' : 'past'} 1.5 times the control's plus 4 a second: ${dd}`);
 	const [br, cr] = [mean('as built', 'restFrames'), mean('control', 'restFrames')];
-	rows.push({ name: 'guard: nothing new runs at rest', ok: br <= cr + 5, detail: `as built ${br.toFixed(1)}, control ${cr.toFixed(1)} rendered main frames a second with the pointer parked` });
+	const restLost = windows.some((w) => w.restLost);
+	const restOk = br <= cr + 5;
+	(restOk ? logs : warnings).push(`${restOk ? '' : 'WARNING '}at rest ${restOk ? 'within' : 'past'} 5 rendered main frames a second over the control's: as built ${br.toFixed(1)}, control ${cr.toFixed(1)} rendered main frames a second with the pointer parked${restLost ? ' (a rest trace lost data: these numbers are partial)' : ''}`);
 	return { rows, logs, warnings };
 }

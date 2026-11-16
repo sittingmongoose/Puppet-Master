@@ -18,21 +18,23 @@
 //      scroll (the ratio sits near 1); measured with the hint: Alexis Basic Dark 95-132 against 134-203 ms/s. Under
 //      Reduced Motion (--set rm=1) a tick is one instant step and both builds paint about the same (55 and 56 ms/s): the
 //      ratio is logged there, not judged, and check 1 carries the line.
-//   3. a guard: frames never presented while scrolling (helpers/frame-trace.mjs notPresentedPerSec: a DroppedFrame whose
-//      frame reporter ended DROPPED) as built at most 1.5 times the control's plus 4 a second. Not a red/green line: on the shared Alexis GPU
-//      the hint halved them in five sessions of six (Basic Dark, 3.3 and 0 against 7.9 and 10.3 a second) and left them
-//      level in one. Chrome's DroppedFrame count also holds frames that went out on time with a partial update (the scroll
-//      shown, a main-thread change late); those rise with the hint (139 and 136 against 59 and 61) and are logged.
-//   4. a guard: at rest (the pointer parked, no input, 2 s) no more than 5 rendered main
-//      frames a second over the control's.
+//   3. a warning, not a verdict: frames never presented while scrolling (helpers/frame-trace.mjs notPresentedPerSec, a
+//      DroppedFrame whose frame reporter ended DROPPED) as built more than 1.5 times the control's plus 4 a second is
+//      logged as WARNING with the numbers, never a failed row (R67-T1): on the shared Alexis GPU the hint halved drops in
+//      five sessions of six and left them level in one, and two identical windows on origin/main read 27.4 and 18.6 a
+//      second. Frames presented with a partial update (the scroll shown, a main-thread change late) and frames whose
+//      presentation the trace cannot tell are logged beside it.
+//   4. a warning, not a verdict: at rest (the pointer parked, no input, 2 s) more than 5 rendered main frames a second over
+//      the control's is logged as WARNING (a rest trace that lost data says so).
 // A pane that did not scroll in a window, or a window that stayed partial after two retakes (Chrome reported lost trace
 // data, the compositor drew under 10 frames a second while the wheel turned, or the 48 ticks did not fit in 8 s), fails
 // as "could not judge".
 // Both surfaces (the kit's sandbox switch).   --set looks=basic-dark,glass-dark   --set ratio=0.85   --set rm=1 (Reduced
 // Motion)   --set settle=<ms> (25000)
 // Bar for this check (test-tool-bar.md, written before its first review): a finding stops work only if it is shown on
-// real inputs to pass a build whose board scrolls on the main thread (as assertions 1 and 2 must fail there); a false
-// fail on a composited build, and anything about the guards in 3 and 4 (diagnostics), goes on TOOL-ISSUES.md.
+// real inputs to pass a build whose board scrolls on the main thread (as rows 1 and 2 must fail there); a false fail on a
+// composited build goes on TOOL-ISSUES.md. The verdict is rows 1 (the layer) and 2 (the paint ratio, logged under Reduced
+// Motion); 3 and 4 are warnings (helpers/usage-scroll-verdict.mjs, tools/usage-scroll-verdict.selftest.mjs).
 import { traceWindow } from '../helpers/frame-trace.mjs';
 import { muteSound } from '../helpers/quiet-page.mjs';
 import { usageScrollVerdict } from '../helpers/usage-scroll-verdict.mjs';
@@ -119,7 +121,7 @@ export default async function (t) {
 				}
 				const whole = !x.dataLoss && x.drawn.perSec >= 10 && ticks === TICKS;
 				const paint = (x.split.paint || 0) + (x.split.prepaint || 0) + (x.split.layerize || 0);
-				const w = { name, whole, lost, ticks, secs: x.secs, renderer: x.renderer ? x.renderer.pid : null, frames: x.mainFrames.perSec, paint: Math.round(paint), main: Math.round(x.cost.main), dropped: x.frames.droppedPerSec, full: x.frames.notPresentedPerSec, partial: x.frames.partialPerSec, unknown: x.frames.presentationUnknownPerSec, drawn: x.drawn.perSec, scrolls: x.dispatched.scroll || 0, restFrames: rest.mainFrames.renderedPerSec, from: at.top, to: top };
+				const w = { name, whole, lost, ticks, secs: x.secs, renderer: x.renderer ? x.renderer.pid : null, frames: x.mainFrames.perSec, paint: Math.round(paint), main: Math.round(x.cost.main), dropped: x.frames.droppedPerSec, full: x.frames.notPresentedPerSec, partial: x.frames.partialPerSec, unknown: x.frames.presentationUnknownPerSec, drawn: x.drawn.perSec, scrolls: x.dispatched.scroll || 0, restFrames: rest.mainFrames.renderedPerSec, restLost: !!rest.dataLoss, from: at.top, to: top };
 				windows.push(w);
 				t.log(`${S}${name}: paint ${w.paint} ms/s, main ${w.main} ms/s, dropped ${w.dropped}/s (not presented ${w.full}, partial ${w.partial}, presentation unknown ${w.unknown}), drawn ${w.drawn}/s over ${w.secs} s, main frames ${w.frames}/s (renderer ${w.renderer}), ${w.ticks} ticks, ${w.scrolls} scroll events (${w.from} -> ${w.to} px) | at rest ${w.restFrames} rendered main frames/s${lost.length ? ' | taken again: ' + lost.join(', ') : ''}`);
 			}
