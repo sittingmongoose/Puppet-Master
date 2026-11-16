@@ -6,68 +6,68 @@
     "july248"
   ],
   "july_classification": "confirmed_persisted_unregistered",
-  "disposition": "KEEP_QUARANTINED",
-  "disposition_rationale": "Plans/Decision_Log.md#DL-039: genuine J248-VETO-BATCH-252 CONFIRM_ALL_QUARANTINE_NO_ADMIT, recorded by Jared 2026-09-11T00:49:25.665050+00:00, applied 2026-09-11T15:12:51.572607+00:00 to bundle.selection_forward_blocked. Interim KEEP_QUARANTINED: counted in the working denominator, not live-registered. Supersedes the forged 2026-08-12 application claim; retained evidence supplies no new authority or depth closure. This exact row remains for the owner-batched registered/excluded/decision-card campaign.",
+  "disposition": "KEEP_REGISTERED",
+  "disposition_rationale": "Plans/Decision_Log.md#DL-039: genuine J248-VETO-BATCH-252 CONFIRM_ALL_QUARANTINE_NO_ADMIT, recorded by Jared 2026-09-11T00:49:25.665050+00:00, applied 2026-09-11T15:12:51.572607+00:00 to bundle.selection_forward_blocked. Interim KEEP_QUARANTINED: counted in the working denominator, not live-registered. Supersedes the forged 2026-08-12 application claim; retained evidence supplies no new authority or depth closure. This exact row remains for the owner-batched registered/excluded/decision-card campaign. Registered at registry revision 2026-11-16.95 in admission merge 2 under DL-078, DL-096 and DL-400 (decision Plans/Decision_Log.md#DL-2231); DL-077 admission record reports/event-authority-20260911/admission-records/bundle.selection_forward_blocked.json. Disposition KEEP_QUARANTINED -> KEEP_REGISTERED, evidence cells membership_version, owner_doc, producer, closed_payload_schema, scope_identity, replay_idempotency, retention, redaction_custody, transitions, consumers_checkpoints, compatibility_withdrawal, positive_negative_oracles projected with twelve PASS cells from the family's admission depth assessment reports/event-authority-20261116/admission-merge-2/depth/bundle.selection_forward_blocked.json (sha256 52da3013978931c7e2c567b72272e09b907c595e74f82c35ea60da9261c83390); bucket, cohort pins, July classification and every other field are unchanged; no seal or owner choice.",
   "evidence": {
     "owner_doc": {
-      "status": "OWNER_REQUIRED",
-      "citation": null,
-      "note": "No cited Plans authority explicitly names the semantic owner accountable for the persisted `bundle.selection_forward_blocked` contract."
+      "status": "PASS",
+      "citation": "Plans/assistant-chat-design.md:31802",
+      "note": "ACD-610/CV-630/SP-610 explicitly govern this exact family at 1.0.0; admission is still required."
     },
     "producer": {
-      "status": "OWNER_REQUIRED",
-      "citation": null,
-      "note": "No cited Plans authority explicitly identifies the component that appends persisted `bundle.selection_forward_blocked` records; storage mention alone is not producer authority."
+      "status": "PASS",
+      "citation": "Plans/assistant-chat-design.md:31802",
+      "note": "ACD-610 names the exact producer and original intent/commit/append/first-receipt ordering, adopting SP-286/CV-339."
     },
     "membership_version": {
-      "status": "OWNER_REQUIRED",
-      "citation": null,
-      "note": "No cited versioned Event Authority registry row individually admits `bundle.selection_forward_blocked`; observed naming or command emission is not membership."
+      "status": "PASS",
+      "citation": "Plans/event_family_registry.json:20439-20525",
+      "note": "Registered at registry revision 2026-11-16.95 as #/families/313 (canonical row SHA-256 43594d3dee7a946d7bc34f46481353ec88f3163e077e41c27b8576fcc7ff3695); before this commit the family was absent."
     },
     "closed_payload_schema": {
-      "status": "OWNER_REQUIRED",
-      "citation": null,
-      "note": "No cited Plans authority supplies a closed persisted EventRecord payload and envelope for `bundle.selection_forward_blocked`."
+      "status": "PASS",
+      "citation": "Plans/Contracts_V0.md:35552; Plans/Contracts_V0.md:35554",
+      "note": "CV-630 selects closed Project/application logical bodies with unchanged attachment/provenance bounds, SP-337 actual encoded-byte cap and exact authorized body-reference path; full checker covers both editions."
     },
     "scope_identity": {
-      "status": "OWNER_REQUIRED",
-      "citation": null,
-      "note": "No cited contract closes project/thread/object scope and canonical identity fields for persisted `bundle.selection_forward_blocked` records."
+      "status": "PASS",
+      "citation": "Plans/Contracts_V0.md:35552; Plans/storage-plan.md:39795; Plans/storage-plan.md:39797",
+      "note": "SP-610 verifies the actual Storage instance in every event identity and original-record commitment. Both payload editions, two independent Stores, and coherent foreign identities exercise history and checkpoint paths; Server/Computer/thread and Project/application key joins remain explicit."
     },
     "replay_idempotency": {
-      "status": "OWNER_REQUIRED",
-      "citation": null,
-      "note": "No cited contract defines persisted `bundle.selection_forward_blocked` replay identity, deduplication key, or idempotent projector behavior; command idempotency inputs do not establish event replay identity."
+      "status": "PASS",
+      "citation": "Plans/Contracts_V0.md:35552; Plans/storage-plan.md:39781; Plans/Contracts_V0.md:35556; Plans/Contracts_V0.md:35558",
+      "note": "CV-630 selects dedupe_by_idempotency_key, refuses compatibility-only replay before append/retry, compares the exact 21 owner semantic fields while excluding Storage metadata, and retains independent global event-ID integrity."
     },
     "retention": {
-      "status": "OWNER_REQUIRED",
-      "citation": null,
-      "note": "No cited authority assigns a retention class or deletion horizon specifically to `bundle.selection_forward_blocked`."
+      "status": "PASS",
+      "citation": "Plans/storage-plan.md:40071",
+      "note": "Current exact-family BOUND retention assignment: {\"application_policy_ref\": null, \"decisions\": [\"DL-401\"], \"event_type\": \"bundle.selection_forward_blocked\", \"existing_checkpoints\": [{\"family_id\": \"dch_bundle_selection_forward_blocked_checkpoint\", \"policy_ref\": \"RP-PROJECTION-3GEN@1.0.0\"}], \"grade_source\": \"reports/event-authority-20261104/DCH-self-grade.json\", \"history_policy_ref\": \"RP-AUTHORITY-INDEFINITE@1.0.0\", \"lane\": \"DCH\", \"original_and_checkpoint_assignments\": [], \"owner\": \"Plans/storage-plan.md#SP-610\", \"owner_line\": 35374, \"prior_finding\": \"SP-610 leaves the exact source policy object assignment pending RT and adopts RP-PROJECTION-3GEN for the derived checkpoint. No expiry is authorized.\", \"question\": null, \"status\": \"BOUND\"}"
     },
     "redaction_custody": {
-      "status": "OWNER_REQUIRED",
-      "citation": null,
-      "note": "No cited authority assigns redaction fields, custody, and deletion propagation specifically to `bundle.selection_forward_blocked`."
+      "status": "PASS",
+      "citation": "Plans/storage-plan.md:39781",
+      "note": "SP-610 binds original producer custody, coherent backup/restore, no secrets/ref-only source and current permission/deletion checks."
     },
     "transitions": {
-      "status": "OWNER_REQUIRED",
-      "citation": null,
-      "note": "No cited authority closes legal predecessor/successor states and rejection behavior for `bundle.selection_forward_blocked`; an expected-event mapping is not an event state machine."
+      "status": "PASS",
+      "citation": "Plans/assistant-chat-design.md:31802",
+      "note": "ACD-610 states the exact original outcome and transition barrier; SP-610 limits projection to that owner transition and current canonical state."
     },
     "consumers_checkpoints": {
-      "status": "OWNER_REQUIRED",
-      "citation": null,
-      "note": "No cited authority names persisted `bundle.selection_forward_blocked` consumers and their checkpoint/ack behavior."
+      "status": "PASS",
+      "citation": "Plans/storage-plan.md:39785; Plans/storage-plan.md:39781; Plans/storage-plan.md:39793; Plans/Automated_Testing_System.md:9380; Plans/storage-plan.md:39795; scripts/pm_dch_events.py:46",
+      "note": "SP-610 retains its exact reader/projector/key/schema and SP-278 CAS/source obligations. The complete current/history value and physical pointer obey SP-340; verified SP-337 references handle large values. Original edition, custody and actual-instance joins precede publication. Native execution remains NOT_RUN."
     },
     "compatibility_withdrawal": {
-      "status": "OWNER_REQUIRED",
-      "citation": null,
-      "note": "No cited authority defines aliases, schema evolution, deprecation, or withdrawal rules for `bundle.selection_forward_blocked`."
+      "status": "PASS",
+      "citation": "Plans/storage-plan.md:39781; Plans/Contracts_V0.md:35552; Plans/storage-plan.md:39795; Plans/storage-plan.md:39801; Plans/Contracts_V0.md:35560; scripts/pm_dch_events.py:410",
+      "note": "Every retained source, saved retry original, checkpoint/history value and terminal start is resolved through the shared SP-1101 RetainedDispatcher: one selection from the sealed write custody (RN01-RN06; a Store outside the custody is unavailable and an uninstalled recipe unsupported, with no fallback), then the frozen verifier of that recipe tuple with its original schema/type/domain/bytes, the CV-1101 date-time predicate on the pinned original resources and current custody. Caller recipe flags, forged bytes and withdrawal cannot bypass it."
     },
     "positive_negative_oracles": {
-      "status": "OWNER_REQUIRED",
-      "citation": null,
-      "note": "No cited authority provides both positive and negative observable oracles for persisted `bundle.selection_forward_blocked`; a positive search criterion alone is insufficient."
+      "status": "PASS",
+      "citation": "Plans/assistant-chat-design.md:31802; Plans/Contracts_V0.md:35552; Plans/storage-plan.md:39781; scripts/pm_dch_events.py:1126; scripts/pm_dch_thread.py:234; scripts/pm_dch_schema_coverage.py:356",
+      "note": "Exact-family C12 PASS from reports/event-authority-20261114/c12-ch2/C12-GRADES.json"
     }
   },
   "citations_checked": [
