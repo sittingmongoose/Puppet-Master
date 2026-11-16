@@ -10,6 +10,7 @@ This module supplies observation/dispatch plumbing, not another kill judge.
 """
 from __future__ import annotations
 
+import copy
 import functools
 import hashlib
 import inspect
@@ -100,8 +101,7 @@ def install_numrule_call_sites():
         return
     for module in tuple(sys.modules.values()):
         name = getattr(module, '__name__', '')
-        # DG-U routes the same calls through its own exact_int/storage_time helpers.
-        if not name.startswith(('pm_goal_dg_', 'pm_goal_own_')) or name.startswith('pm_goal_dg_u_'):
+        if not name.startswith(('pm_goal_dg_', 'pm_goal_own_')):
             continue
         for key, value in list(vars(module).items()):
             if value is real:
@@ -492,6 +492,9 @@ SCHEMA_BANKS = (
 )
 
 
+SCHEMA_ROW = [None]
+
+
 def install_schema_rows():
     """Observe each whole-root owner schema check as one row; the validator and its
     keywords are unchanged (the bank's own errors() decides, the row only routes it)."""
@@ -505,7 +508,13 @@ def install_schema_rows():
             @functools.wraps(original)
             def validate(self, *args, **kwargs):
                 if not ACTIVE[0]:
-                    return original(self, *args, **kwargs)
+                    # Parent run: name the row for the closure's root attribution only.
+                    saved = SCHEMA_ROW[0]
+                    SCHEMA_ROW[0] = PREFIX + code_of(args, kwargs) + '/schema'
+                    try:
+                        return original(self, *args, **kwargs)
+                    finally:
+                        SCHEMA_ROW[0] = saved
                 errors = self.errors(*args[:value_index + 1])
                 frame = inspect.currentframe().f_back
                 site = (str(Path(frame.f_code.co_filename).relative_to(ROOT)), frame.f_lineno)
@@ -639,6 +648,130 @@ def invoke(label, family, action, work, *, world=None, arguments=None, original=
     return result, (actual[0] if actual else None)
 
 
+# ---------------------------------------------------------------- number / date-time corpus
+
+SLOTS = []      # declared by a family source: dict(entry, path, kind, where, minimum, maximum, profile)
+CORPUS = []     # one row per (slot, corpus value): expectation fixed before the call, then the outcome
+SLOT_CAP = 1    # accepted positive calls per slot that carry the whole corpus
+_SLOT_RUNS = {}
+HUGE = 10 ** 4400 - 1   # 4,400 digits, built without a decimal-string conversion
+
+
+def corpus_values(spec):
+    import json
+    import pm_event_numbers_corpus as codec
+    data = json.loads((ROOT / 'Plans/event_number_recipe_corpus.json').read_text())
+    if spec['kind'] in ('integer', 'uint64'):
+        out = [(c['op'] + '/' + c['id'], codec._value(c['value'])) for c in data['cases']
+               if c['op'] in ('integer', 'uint64') and 'value' in c]
+        out += [('probe/4400_digits', HUGE), ('probe/integral_float_one', 1.0), ('probe/negative_zero_float', -0.0),
+                ('probe/two_pow_53', 1 << 53), ('probe/two_pow_53_plus_one', (1 << 53) + 1), ('probe/boolean_true', True)]
+        return out
+    return [(c['op'] + '/' + c['id'], codec._value(c['value'])) for c in data['cases']
+            if c['op'] == 'datetime' and 'value' in c]
+
+
+def corpus_expectation(spec, value):
+    """Fixed before the call, from the shared NUMRULE grammar and the owner bounds."""
+    import pm_goal_test_numrule as numrule
+    try:
+        if spec['kind'] == 'integer':
+            numrule.N.current_integer(value, minimum=spec.get('minimum'), maximum=spec.get('maximum'))
+        elif spec['kind'] == 'uint64':
+            numrule.N.storage_uint64(value)
+        else:
+            numrule.DT.date_time(value, profile=getattr(numrule.DT, spec['profile']))
+        if spec.get('jcs'):
+            # CV-1100: a JCS-digested integer slot also needs the shared RFC 8785 route to
+            # preserve the exact integer (2^53 yes; 2^53+1 and 2^60 no); no safe-integer cap.
+            numrule.N.qualified_jcs({'v': value}, type_sensitive_paths=frozenset({('v',)}))
+        return 'accept'
+    except numrule.NumRefusal as error:
+        return 'refuse:' + error.reason
+
+
+def _with_slot(container, path, value):
+    """Shallow copies along `path` only (originals and handles elsewhere stay the same objects)."""
+    if not path:
+        return value
+    head, rest = path[0], path[1:]
+    if isinstance(container, (list, tuple)):
+        items = list(container)
+        items[head] = _with_slot(items[head], rest, value)
+        return type(container)(items) if isinstance(container, tuple) else items
+    out = type(container)(container) if isinstance(container, dict) else copy.copy(container)
+    out[head] = _with_slot(container[head], rest, value)
+    return out
+
+
+def run_slots(label, original, arguments, work):
+    entry = label.rsplit('/', 1)[-1]
+    for spec in SLOTS:
+        if spec['entry'] != entry or _SLOT_RUNS.get(spec['name'], 0) >= SLOT_CAP:
+            continue
+        try:
+            current = arguments
+            for part in spec['path']:
+                current = current[part]
+        except (KeyError, IndexError, TypeError):
+            continue
+        _SLOT_RUNS[spec['name']] = _SLOT_RUNS.get(spec['name'], 0) + 1
+        files = file_state(work)
+        for case_id, value in corpus_values(spec):
+            expected = corpus_expectation(spec, value)
+            changed = _with_slot(dict(arguments), spec['path'], value)
+            outcome = _sealed(lambda c=changed: original(c['receiver'], *c['args'], **c['kwargs']), work, files)
+            row_name = None if outcome[0] != 'refused' else row(outcome[1])
+            slot_row = PREFIX + spec['where'] + '/' + ('date-time' if spec['kind'] == 'date-time' else 'number')
+            if outcome[0] in ('exception', 'crash'):
+                verdict = 'crash'
+            elif expected == 'accept':
+                verdict = 'agree' if outcome[0] == 'accepted' else 'disagree'
+            elif outcome[0] == 'accepted':
+                verdict = 'disagree'
+            else:
+                verdict = 'agree' if row_name in (slot_row, *spec.get('also_rows', ())) else 'disagree_other_row'
+            CORPUS.append(dict(slot=spec['name'], family=spec['family'], call=label, case=case_id,
+                               value=repr(value)[:60] if not (type(value) is int and value > 10 ** 30) else '<4400 digits>',
+                               expected=expected, outcome=outcome[0], code=outcome[1], row=row_name, verdict=verdict))
+
+
+def _sealed(action, work, files):
+    """One complete call in a forked child from the same parent state; the store is restored."""
+    fd, output = tempfile.mkstemp(prefix='slot-', suffix='.pkl', dir=work.parent)
+    os.close(fd)
+    parent_collector = tables.COLLECTOR
+    pid = os.fork()
+    if pid == 0:
+        tables.COLLECTOR = SimpleNamespace(observe=lambda n, h, s: None, replaying=True, replay_unknown_rows=set())
+        ACTIVE[0] = True
+        try:
+            try:
+                action()
+                result = ('accepted', None)
+            except BaseException as error:
+                if type(error).__name__ == 'Crash':
+                    result = ('crash', str(error))
+                elif isinstance(error, Exception) and type(error).__name__ in REFUSAL_CLASSES:
+                    result = ('refused', refusal_code(error))
+                else:
+                    frames = traceback.extract_tb(error.__traceback__)[-4:]
+                    result = ('exception', type(error).__name__ + ': ' + str(error)[:160] + ' @ ' + ' <- '.join(
+                        '%s:%d' % (Path(f.filename).name, f.lineno) for f in reversed(frames)))
+        except BaseException as error:  # noqa: BLE001
+            result = ('exception', type(error).__name__)
+        Path(output).write_bytes(pickle.dumps(result, protocol=5))
+        os._exit(0)
+    try:
+        os.waitpid(pid, 0)
+        result = pickle.loads(Path(output).read_bytes())
+    finally:
+        Path(output).unlink(missing_ok=True)
+        restore_files(work, files)
+        tables.COLLECTOR = parent_collector
+    return result
+
+
 def refusal_code(error):
     return getattr(error, 'code', None) or getattr(error, 'reason', None) or str(error)
 
@@ -661,6 +794,8 @@ def entry_call(case, label, family, action, work, *, world, arguments, original,
                            original=original, pending=True)
     if child is None and expected is None:
         collector.declare(result, True, None)
+        if SLOTS:
+            run_slots(label, original, arguments, Path(work))
     elif child is not None and not child.startswith('crash:') and expected is not None:
         collector.declare(result, None, target)
     PARENT_CALL[0] = True
@@ -717,7 +852,12 @@ def install_u_entries(module):
         @functools.wraps(original_validate)
         def validate(self, root, value, code='root'):
             if not ACTIVE[0]:
-                return original_validate(self, root, value, code)
+                saved = SCHEMA_ROW[0]
+                SCHEMA_ROW[0] = PREFIX + code + '/schema'
+                try:
+                    return original_validate(self, root, value, code)
+                finally:
+                    SCHEMA_ROW[0] = saved
             errors = self.errors(root, value)
             frame = inspect.currentframe().f_back
             site = (str(Path(frame.f_code.co_filename).relative_to(ROOT)), frame.f_lineno)
@@ -727,9 +867,7 @@ def install_u_entries(module):
         validate._dg5_schema = True
         adapters.RootBank.validate = validate
 
-    for name, suffix in (('exact_int', 'number'), ('storage_time', 'date-time')):
-        original = getattr(module, name)
-        setattr(module, name, helper(original, suffix))
+    # exact_int/storage_time call NR.integer/NR.storage_time, routed at those call sites.
     entries = {
         'SirOwner': ('admit', 'terminalize', 'replay'),
         'ApprovalOwner': ('capture', 'decide', 'read_resolution'),
