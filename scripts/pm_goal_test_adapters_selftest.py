@@ -739,6 +739,8 @@ def main():
         FMT.selftest(s, work / 'formats')
         import pm_goal_dg5_pattern_probe as PAT
         pattern_inventory = PAT.selftest(s, work / 'patterns')
+        import pm_goal_dg5_number_probe as NUM
+        NUM.selftest(s, work / 'numbers')
         matrix = None
         if not a.skip_matrix:
             matrix = R.run_matrix(work / 'matrix')

@@ -100,7 +100,9 @@ def _observation_walk(value, out, active):
     if value is None or type(value) is bool:
         out.append(b'n' if value is None else (b't' if value else b'f'))
     elif type(value) is int:
-        text = str(value).encode()
+        # Observation must not hit Python's decimal digit-rendering limit
+        # before an owner can refuse an arbitrary-precision input (T249).
+        text = (b'-' if value < 0 else b'+') + format(abs(value), 'x').encode('ascii')
         out.append(b'i%d:' % len(text) + text)
     elif type(value) is float:
         text = value.hex().encode()

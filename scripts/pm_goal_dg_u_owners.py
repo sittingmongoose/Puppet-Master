@@ -153,27 +153,34 @@ def goal_json(value):
 
 
 def jcs(value):
-    """RFC 8785 over the owner's domain: strings, booleans, null, ASCII-keyed
-    objects, arrays and integers inside binary64's exact range."""
-    def check(v):
+    """Owner types, then the pinned CV-1100 RFC 8785 route qualification.
+
+    Logical integers have no global safe-integer ceiling. The shared call
+    checks both binary64 preservation and the decimal RFC 8785 emits.
+    """
+    integer_paths = set()
+
+    def check(v, path=()):
         if type(v) is float:
             refuse('dgu/jcs/float')
         if type(v) is int:
-            require('dgu/jcs/jcs_binary64', -(2 ** 53) < v < 2 ** 53)
+            integer_paths.add(path)
         elif type(v) is dict:
             for k, x in v.items():
                 require('dgu/jcs/key', type(k) is str)
-                check(x)
+                check(x, path + (k,))
         elif type(v) is list:
-            for x in v:
-                check(x)
+            for i, x in enumerate(v):
+                check(x, path + (i,))
         elif type(v) is str:
             v.encode('utf-8', 'strict')
         else:
             require('dgu/jcs/type', v is None or type(v) is bool)
     check(value)
-    return json.dumps(value, ensure_ascii=False, separators=(',', ':'), sort_keys=True,
-                      allow_nan=False).encode('utf-8')
+    try:
+        return NR.N.qualified_jcs(value, type_sensitive_paths=frozenset(integer_paths))
+    except NR.NumRefusal as error:
+        refuse('dgu/jcs/' + error.reason)
 
 
 def msgpack(value, where='dgu/msgpack'):

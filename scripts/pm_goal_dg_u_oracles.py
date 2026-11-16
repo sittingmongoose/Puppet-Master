@@ -418,13 +418,50 @@ def u1n_predecessor(d):
     return w, lambda: w.body.read_body(g['scope'], g['user'], g['user_permission'])
 
 
-@case('U1', 'U1/N/unrepresentable_integer', 'negative', 'dgu/jcs/jcs_binary64')
+@case('U1', 'U1/N/unrepresentable_integer', 'negative', 'dgu/jcs/jcs_decimal')
 def u1n_integer(d):
+    # T248 / CV-1100: 2^64 is exact in binary64, but its emitted JCS decimal
+    # changes the integer. Lead decision 1116065722-90e4 corrects the old
+    # safe-ceiling classification; the complete negative stays unchanged.
     w = world(d)
     g = O.birth_goal(w)
     req = O.direct_request(w, g, 'x')
     req['expected_revision'] = 2 ** 64
     return w, lambda: w.command.run(req)
+
+
+def _revision_admission(d, revision):
+    w = world(d)
+    goal = O.birth_goal(w)
+    request = O.direct_request(w, goal, 'JCS route qualification')
+    request['expected_revision'] = revision
+    return w, request
+
+
+@case('U1', 'U1/P/expected_revision_2p53', 'positive')
+def u1p_jcs_2p53(d):
+    w, request = _revision_admission(d, 2 ** 53)
+    admitted = w.sir.admit(request)
+    check('2p53/admitted_exact_revision', admitted['request']['expected_revision'] == 2 ** 53)
+    return dict(boundary='sir.admit', expected_revision=2 ** 53, accepted=True)
+
+
+@case('U1', 'U1/N/expected_revision_2p53_plus_1', 'negative', 'dgu/jcs/jcs_binary64')
+def u1n_jcs_2p53_plus_1(d):
+    w, request = _revision_admission(d, 2 ** 53 + 1)
+    return w, lambda: w.sir.admit(request)
+
+
+@case('U1', 'U1/N/expected_revision_2p60', 'negative', 'dgu/jcs/jcs_decimal')
+def u1n_jcs_2p60(d):
+    w, request = _revision_admission(d, 2 ** 60)
+    return w, lambda: w.sir.admit(request)
+
+
+@case('U1', 'U1/N/expected_revision_4400_digits', 'negative', 'dgu/jcs/jcs_binary64')
+def u1n_jcs_4400_digits(d):
+    w, request = _revision_admission(d, 10 ** 4400 - 1)
+    return w, lambda: w.sir.admit(request)
 
 
 @case('U1', 'U1/N/objective_4001_scalars', 'negative', 'dgu/sir/request/schema/objective_text')
