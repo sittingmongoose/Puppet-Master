@@ -1078,7 +1078,43 @@
   function bindTools(b) {
     var boardEl = b.scrollEl || b.el();
     if (!boardEl) return null;
+    /* PERF-USAGE-HOVER (Jared, 2026-11-16, card A: "Pause hover highlights on the Usage page while the mouse wheel
+       turns"). While the wheel turns over a board, a card or row under a resting pointer does not light up or show its
+       tool buttons: the board takes data-op="wheel" from the first wheel event until WHEEL_REST ms after the last wheel or
+       scroll event, or until the pointer really moves or presses. The shell's hover engine rests for a board with [data-op]
+       (18-hover.js: no plate light, glow, reticle or magnet on its cards) and Usage's in-board :hover rules are gated by
+       :where(.pmu-board:not([data-op="wheel"])) (20-board.css and the widget, chart and account sheets); the drag-only
+       [data-op] rules leave the wheel value out, so keyboard focus and keyboard-opened tools keep theirs. Hit-testing is
+       unchanged: a click or a press lands where it always did. When the pause ends the board drops the value, the card
+       under the pointer is fitted again and one pmu-op-end event tells the hover engine to look again at what is under
+       the resting pointer (its restEnded), so the light comes back with the highlights. Nothing runs while the page
+       rests: a timer exists only between a wheel and the pause's end. A gesture that already holds data-op keeps it. */
+    var WHEEL_REST = 150, wheelT = 0, wheelAt = null;
+    var wheelEnd = function () {
+      if (wheelT) { clearTimeout(wheelT); wheelT = 0; }
+      if (!wheelAt) return;
+      wheelAt = null;
+      var el = b.el();
+      if (el && el.getAttribute('data-op') === 'wheel') el.removeAttribute('data-op');
+      var card = el && el.querySelector(':scope > .pmu-card:hover');
+      if (card) { try { fitTools(card); } catch (error) { console.error('[pm-usage] head fit', error); } }
+      try { document.dispatchEvent(new Event('pmu-op-end')); } catch (error) { /* none */ }
+    };
+    var wheelHold = function () { if (wheelT) clearTimeout(wheelT); wheelT = setTimeout(wheelEnd, WHEEL_REST); };
+    var onWheel = function (event) {
+      var el = b.el(); if (!el) return;
+      if (!wheelAt) {
+        if (el.hasAttribute('data-op')) return;
+        el.setAttribute('data-op', 'wheel');
+      }
+      wheelAt = [event.clientX, event.clientY];
+      wheelHold();
+    };
+    var onWheelScroll = function () { if (wheelAt) wheelHold(); };
+    var onWheelMove = function (event) { if (wheelAt && (Math.abs(event.clientX - wheelAt[0]) >= 1 || Math.abs(event.clientY - wheelAt[1]) >= 1)) wheelEnd(); };
+    var onWheelPress = function () { if (wheelAt) wheelEnd(); };
     var onOver = function (event) {
+      if (wheelAt) return;   /* the pause: the tools stay hidden, so nothing is fitted until it ends (wheelEnd fits) */
       var card = event.target.closest && event.target.closest('.pmu-card');
       if (!card || card.contains(event.relatedTarget) || card.parentNode !== b.el()) return;
       try { fitTools(card); } catch (error) { console.error('[pm-usage] head fit', error); }
@@ -1117,7 +1153,16 @@
     boardEl.addEventListener('focusin', onFocusIn);
     boardEl.addEventListener('focusout', onFocusOut);
     boardEl.addEventListener('click', onClick);
+    boardEl.addEventListener('wheel', onWheel, { passive: true });
+    boardEl.addEventListener('scroll', onWheelScroll, { passive: true });
+    boardEl.addEventListener('pointermove', onWheelMove, { passive: true });
+    boardEl.addEventListener('pointerdown', onWheelPress, { passive: true });
     return function () {
+      wheelEnd();
+      boardEl.removeEventListener('wheel', onWheel, { passive: true });
+      boardEl.removeEventListener('scroll', onWheelScroll, { passive: true });
+      boardEl.removeEventListener('pointermove', onWheelMove, { passive: true });
+      boardEl.removeEventListener('pointerdown', onWheelPress, { passive: true });
       boardEl.removeEventListener('pointerover', onOver);
       boardEl.removeEventListener('pointerout', onOut);
       boardEl.removeEventListener('focusin', onFocusIn);
