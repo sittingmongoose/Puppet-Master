@@ -91,7 +91,14 @@ def schema_entry(cls):
         frame = inspect.currentframe().f_back
         site = (str(Path(frame.f_code.co_filename).relative_to(bridge.ROOT)), frame.f_lineno)
         if tables.decide(bridge.PREFIX + code + '/schema', not errors, site=site) is not None:
-            return original(self, root, value, code)
+            # The schema row is the refusing row; the bank's own routed refusal inside
+            # validate (SHARED-ROUTE) is its mechanism and must not replace it.
+            saved = bridge.ROUTING[0]
+            bridge.ROUTING[0] = True
+            try:
+                return original(self, root, value, code)
+            finally:
+                bridge.ROUTING[0] = saved
         return value
     validate._dg5_schema = True
     cls.validate = validate
