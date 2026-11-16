@@ -220,6 +220,10 @@
    "outcome": "registered"
   },
   {
+   "event_type": "browser.route.fetch_selected",
+   "outcome": "registered"
+  },
+  {
    "event_type": "discovery.backpressure",
    "outcome": "registered"
   },
