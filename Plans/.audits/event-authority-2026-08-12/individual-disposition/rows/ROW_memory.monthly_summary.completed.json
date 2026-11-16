@@ -6,68 +6,68 @@
     "july248"
   ],
   "july_classification": "confirmed_persisted_unregistered",
-  "disposition": "KEEP_QUARANTINED",
-  "disposition_rationale": "Plans/Decision_Log.md#DL-039: genuine J248-VETO-BATCH-252 CONFIRM_ALL_QUARANTINE_NO_ADMIT, recorded by Jared 2026-09-11T00:49:25.665050+00:00, applied 2026-09-11T15:12:51.572607+00:00 to memory.monthly_summary.completed. Interim KEEP_QUARANTINED: counted in the working denominator, not live-registered. Supersedes the forged 2026-08-12 application claim; retained evidence supplies no new authority or depth closure. This exact row remains for the owner-batched registered/excluded/decision-card campaign.",
+  "disposition": "KEEP_REGISTERED",
+  "disposition_rationale": "Plans/Decision_Log.md#DL-039: genuine J248-VETO-BATCH-252 CONFIRM_ALL_QUARANTINE_NO_ADMIT, recorded by Jared 2026-09-11T00:49:25.665050+00:00, applied 2026-09-11T15:12:51.572607+00:00 to memory.monthly_summary.completed. Interim KEEP_QUARANTINED: counted in the working denominator, not live-registered. Supersedes the forged 2026-08-12 application claim; retained evidence supplies no new authority or depth closure. This exact row remains for the owner-batched registered/excluded/decision-card campaign. Registered at registry revision 2026-11-16.195 in admission merge 2 under DL-078, DL-096 and DL-400 (decision Plans/Decision_Log.md#DL-2331); DL-077 admission record reports/event-authority-20260911/admission-records/memory.monthly_summary.completed.json. Disposition KEEP_QUARANTINED -> KEEP_REGISTERED, evidence cells membership_version, owner_doc, producer, closed_payload_schema, scope_identity, replay_idempotency, retention, redaction_custody, transitions, consumers_checkpoints, compatibility_withdrawal, positive_negative_oracles projected with twelve PASS cells from the family's admission depth assessment reports/event-authority-20261116/admission-merge-2/depth/memory.monthly_summary.completed.json (sha256 c9026e9e66c6452741f87942b13db39a3813954e317fe06dcfa1ced67bce2d41); bucket, cohort pins, July classification and every other field are unchanged; no seal or owner choice.",
   "evidence": {
     "membership_version": {
-      "status": "OWNER_REQUIRED",
-      "citation": null,
-      "note": "No cited Plans authority assigns `memory.monthly_summary.completed` to a named, versioned Event Authority membership."
+      "status": "PASS",
+      "citation": "Plans/event_family_registry.json:26895-26936",
+      "note": "Registered at registry revision 2026-11-16.195 as #/families/413 (canonical row SHA-256 2020a398c603184689e62a0fac3404a350fa07505ad4bb5928e50218fe1f1f6d); before this commit the family was absent."
     },
     "owner_doc": {
-      "status": "OWNER_REQUIRED",
-      "citation": null,
-      "note": "No cited Plans document explicitly names the semantic event owner for `memory.monthly_summary.completed`; namespace and proximity are not ownership evidence."
+      "status": "PASS",
+      "citation": "Plans/storage-plan.md:48328-48329; Plans/storage-plan.md:48377-48378",
+      "note": "The exact family has its own adoption unit; semantic owner section 7.2 applies DL-402/DL-403."
     },
     "producer": {
-      "status": "OWNER_REQUIRED",
-      "citation": null,
-      "note": "No cited Plans contract explicitly binds a producer to emission of `memory.monthly_summary.completed`."
+      "status": "PASS",
+      "citation": "Plans/storage-plan.md:48329; Plans/storage-plan.md:48452",
+      "note": "Own SP-286/CV-339 full-value/full-flush ordering, exact operation CAS and frozen publication values; current-writer retained EventRecords now carry the CV-339 full_value_commitment itself."
     },
     "closed_payload_schema": {
-      "status": "UNKNOWN",
-      "citation": null,
-      "note": "No closed payload schema is cited for `memory.monthly_summary.completed`."
+      "status": "PASS",
+      "citation": "Plans/storage-plan.md:48349-48350",
+      "note": "Separate closed payload and phase-valid operation definitions include frozen cutoff identity; monthly payloads also freeze month."
     },
     "scope_identity": {
-      "status": "UNKNOWN",
-      "citation": null,
-      "note": "No field-local citation defines the complete scope and identity tuple for `memory.monthly_summary.completed`."
+      "status": "PASS",
+      "citation": "Plans/storage-plan.md:48358-48359",
+      "note": "Exact Project-only identity, correlation, causation and encoded partition recipes are explicit; no app edition."
     },
     "replay_idempotency": {
-      "status": "UNKNOWN",
-      "citation": null,
-      "note": "No field-local citation defines replay or idempotency behavior for `memory.monthly_summary.completed`."
+      "status": "PASS",
+      "citation": "Plans/storage-plan.md:48362-48363",
+      "note": "Current append/retry refuses replay-only. Original-value retry excludes Storage-assigned metadata and repeats no effect."
     },
     "retention": {
-      "status": "UNKNOWN",
-      "citation": null,
-      "note": "No field-local citation defines retention for `memory.monthly_summary.completed`."
+      "status": "PASS",
+      "citation": "Plans/storage-plan.md:48544; Plans/storage-plan.md:48508",
+      "note": "Current exact-family BOUND retention assignment: {\"application_policy_ref\": \"RP-MEMORY-MAINTENANCE-APPLICATION-2555D@1.0.0\", \"decisions\": [\"DL-401\", \"DL-417\", \"DL-509\"], \"event_type\": \"memory.monthly_summary.completed\", \"existing_checkpoints\": [], \"grade_source\": \"reports/event-authority-20261104/DMEM-self-grade.json\", \"history_policy_ref\": \"RP-OPERATIONAL-2555D@1.0.0\", \"lane\": \"DMEM\", \"original_and_checkpoint_assignments\": [{\"decision\": \"DL-509\", \"family_id\": \"memory_monthly_summary_operation\", \"policy_ref\": \"RP-MEMORY-MAINTENANCE-APPLICATION-2555D@1.0.0\"}, {\"decision\": \"DL-509\", \"family_id\": \"memory_verification_sweep_operation\", \"policy_ref\": \"RP-MEMORY-MAINTENANCE-APPLICATION-2555D@1.0.0\"}], \"owner\": \"Plans/storage-plan.md#SP-638\", \"owner_line\": 43914, \"prior_finding\": \"DL-401/G04 gives this Project event seven years on the cited unlanded retention branch. Canonical operation/result custody retention remains pending; no application count bucket is invented.\", \"question\": null, \"status\": \"BOUND\"}"
     },
     "redaction_custody": {
-      "status": "UNKNOWN",
-      "citation": null,
-      "note": "No field-local citation defines redaction and custody for `memory.monthly_summary.completed`."
+      "status": "PASS",
+      "citation": "Plans/storage-plan.md:48412-48413",
+      "note": "Coherent original/operation/memory/receipt backup, current access and ref-only no-secret disclosure are explicit."
     },
     "transitions": {
-      "status": "FAIL",
-      "citation": "Plans/Wiring_Matrix.production.json:4468-4486",
-      "note": "The exact `cmd.chat.memory.summarize_monthly` production row declares expected_event_types [] and receipt-only behavior, contradicting the catalog transition to `memory.monthly_summary.completed`."
+      "status": "PASS",
+      "citation": "Plans/storage-plan.md:48348-48349; Plans/storage-plan.md:48377-48378",
+      "note": "DL-446 supplies both idle-age and strict usefulness-score thresholds per Project. Archive-only, frozen selection inputs, custody and all remaining activation gates stand; no-project writers are not admitted."
     },
     "consumers_checkpoints": {
-      "status": "UNKNOWN",
-      "citation": null,
-      "note": "No field-local citation names consumers or checkpoint behavior for `memory.monthly_summary.completed`."
+      "status": "PASS",
+      "citation": "Plans/storage-plan.md:48408-48409",
+      "note": "Exact qualified history reader adopts SP-278 generic projector, storage-qualified checkpoint and durable-token/CAS rules."
     },
     "compatibility_withdrawal": {
-      "status": "UNKNOWN",
-      "citation": null,
-      "note": "No field-local citation defines compatibility or withdrawal rules for `memory.monthly_summary.completed`."
+      "status": "PASS",
+      "citation": "Plans/storage-plan.md:48427-48428; Plans/storage-plan.md:48459-48460",
+      "note": "Both retained envelope editions verify unchanged originals through SP-1101: one RetainedDispatcher resolution from sealed custody of the exact retained record selects the write-time recipe (frozen integer-json-v1 for older originals, CV-339 for current-writer ones), never the record; unsealed, ambiguous, foreign-binding and uninstalled-recipe originals refuse at the custody guard. New Storage metadata uses owner uint64 and CV-253 storage_utc_z independently of producer rules. Unknown edition, custody loss, access denial and withdrawal refuse."
     },
     "positive_negative_oracles": {
-      "status": "FAIL",
-      "citation": "Plans/Wiring_Matrix.production.json:4508-4518",
-      "note": "The exact production oracle requires `cmd.chat.memory.summarize_monthly` to emit no unexpected persisted event, conflicting with catalog persistence of `memory.monthly_summary.completed`."
+      "status": "PASS",
+      "citation": "Plans/storage-plan.md:48326; Plans/assistant-memory-subsystem.md:1726; scripts/pm_memory_c12.py:111; scripts/pm_memory_c12.py:338; scripts/pm_memory_c12.py:402; scripts/pm_memory_c12_selftest.py:103; scripts/pm_memory_c12_entailments.py:104; scripts/pm_memory_guard_witnesses.py:420",
+      "note": "C12 static executable oracles complete under the W3H whole-definition Method B route. Complete owner definitions and reference branches retain every keyword; 96 exact-family schema sites have authored controls, exact schema-row/code mutations, cuts and restoration, with pin-bound shared reuse. Gated tool 004bdedd63 proves 290/316 real predicates in 191 tables; 26 checked implications each occupy a singleton table. CK08 has an independent sealed Application-scope witness on every family. Full original exact-family routes, 111 applicable number-corpus cases per family, all local date-time declarations/profiles and exact policy instants pass. Retained reads have actual custody-store snapshots and no writes. Global shared date-time gate remains NOT_RUN_ADMISSION_REFUSED on the absent mainline migration citation; no global PASS or native/admission proof is claimed."
     }
   },
   "citations_checked": [
