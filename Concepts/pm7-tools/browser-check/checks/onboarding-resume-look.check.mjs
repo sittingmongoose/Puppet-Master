@@ -508,10 +508,26 @@ async function switchProject(t, f, id) {
 	await sleep(2500);
 	return true;
 }
+/* every frame of a load, from the first: the title bar's label, html[data-theme], and whether the window is open (stream F's
+   FO-222 review F1, F3, F4: 'no wrong-Project or wrong-look frame on a reload'); and the label as parsing ends */
+let framesOn = false;
+async function recordFrames(t) {
+	if (framesOn) return; framesOn = true;
+	await t.page.addInitScript(() => {
+		const F = window.__fr = [], t0 = performance.now();
+		const tick = () => { const l = document.getElementById('projectMenuLabel'); F.push([Math.round(performance.now() - t0), l ? l.textContent.trim() : null, document.documentElement.getAttribute('data-theme'), document.documentElement.hasAttribute('data-o55-open')]); if (performance.now() - t0 < 9000) requestAnimationFrame(tick); };
+		requestAnimationFrame(tick);
+		document.addEventListener('DOMContentLoaded', () => { const l = document.getElementById('projectMenuLabel'); window.__frDcl = l ? l.textContent.trim() : null; }, { once: true, capture: true });
+	});
+}
+const frames = (f) => f.evaluate(() => ({ dcl: window.__frDcl === undefined ? null : window.__frDcl, frames: (window.__fr || []).slice() }));
+/* the labels every frame showed, as runs (label, first ms, last ms) */
+const runs = (fr, k) => { const out = []; fr.forEach((x) => { const v = x[k]; if (v == null) return; const last = out[out.length - 1]; if (last && last[0] === v) last[2] = x[0]; else out.push([v, x[0], x[0]]); }); return out; };
 async function fo222(t) {
 	const tag = 'normal: FO-222, setup finished into a new Project in Glass Dark, tastebook in Retro Light, reloaded';
 	const NAME = 'Garden planner';
 	await t.emulate({ reducedMotion: 'no-preference' });
+	await recordFrames(t);
 	const f = await t.app.open({ onboarding: true, query: 'o55=fresh&o55scenario=fresh', sandbox: false, settleMs: 1500 });
 	let A = app(t, f);
 	await A.screen('welcome'); await A.close();
@@ -529,6 +545,9 @@ async function fo222(t) {
 	const q1 = await projectNow(r.f), p1 = await r.A.page(), first = await r.f.evaluate(() => window.__fo222First || null);
 	await t.check(`${tag}: reloaded, the first paint is already Glass Dark (no tastebook look first)`, first === 'glass-dark', JSON.stringify({ first }));
 	await t.check(`${tag}: reloaded, the title bar names ${NAME} and the page is in Glass Dark`, q1.selected === q0.finished && q1.label === NAME && held('glass-dark', p1), JSON.stringify({ project: q1, page: p1 }));
+	/* F1: the title bar names the Project from the first frame it is in the page, and as parsing ends (never tastebook) */
+	const fr1 = await frames(r.f), l1 = runs(fr1.frames, 1);
+	await t.check(`${tag}: reloaded, the title bar's label is ${NAME} as parsing ends and in every frame until boot`, fr1.dcl === NAME && l1.length === 1 && l1[0][0] === NAME, JSON.stringify({ dcl: fr1.dcl, labels: l1 }));
 	await t.check(`${tag}: reloaded, tastebook keeps its own saved look, Retro Light`, !!q1.tastebook && String(q1.tastebook[0]).toLowerCase().startsWith('retro') && String(q1.tastebook[1]).toLowerCase() === 'light', JSON.stringify(q1.tastebook));
 	await switchProject(t, r.f, 'tastebook');
 	const p2 = await r.A.page();
@@ -541,6 +560,8 @@ async function fo222(t) {
 	await r.A.toSettings(); await setLookBySetting(t, r.f, 'friendly-light');
 	const r2 = await freshLoad(t), q4 = await projectNow(r2.f), p4 = await r2.A.page();
 	await t.check(`${tag}: switched to harbor in the title bar (its look Friendly Light), reloaded: still in harbor with its look`, h && q4.selected === 'harbor' && held('friendly-light', p4), JSON.stringify({ project: q4, page: p4 }));
+	const fr4 = await frames(r2.f), l4 = runs(fr4.frames, 1);
+	await t.check(`${tag}: reloaded into harbor, the title bar's label is harbor as parsing ends and in every frame until boot`, fr4.dcl === 'harbor' && l4.length === 1 && l4[0][0] === 'harbor', JSON.stringify({ dcl: fr4.dcl, labels: l4 }));
 	/* a Project that no longer exists: back in the setup's Project, Run Onboarding Again (Settings' row) replaces the record
 	   that listed it; closed and reloaded, the page is the default Project's, in its look, as before (no stale look first) */
 	await switchProject(t, r2.f, q0.finished);
