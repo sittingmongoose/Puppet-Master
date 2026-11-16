@@ -87,4 +87,20 @@ PROOFS = {
             'sequence of one event, so no complete publish call can make them differ; a Storage '
             'that disagreed with itself here would already refuse in its own frame/custody joins. '
             'No boundary exists between append_original and the two reads in publish.')),
+    SITE + '663': dict(
+        kind='entailed-by-compact-row-shape',
+        families=['goal.updated'],
+        depends_on=[],
+        sites=[(U, 649), (U, 663), ('scripts/pm_goal_test_storage.py', 61)],
+        argument=(
+            ':663 requires the payload_ref form of a physical row to fit CAP = STORED_PART_CAP '
+            '= 16384 (pm_goal_test_storage.py:61). That form is built only at :654-662: record is '
+            'null and every other field is a short literal or a 64-hex digest - schema_id and '
+            'schema_version consts, logical_schema_id/version from the owner wrapper (GoalBodyOwner '
+            'IDS and UpdateSourceOwner._wrap literals, each under 50 bytes), owner_identity_sha256 '
+            'and value_sha256 (64 each), source_lifetime (bound_thread/authority_indefinite '
+            'literals), and payload_ref {blake3 id 64, byte_size one uint64, the one MEDIA type}. '
+            'The whole MessagePack row is bounded under 600 bytes for every wrapper any DG-U '
+            'physical() caller builds (body row(), progress_writes, capture source/input, SIR '
+            'terminal), an order of magnitude under the cap, so :663 can never refuse alone.')),
 }
