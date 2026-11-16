@@ -107,6 +107,7 @@ def supplements(suite, work):
     _index_supplements(suite, work)
     _fence_supplements(suite, work)
     _index_read_supplements(suite, work)
+    _schema_assert_supplements(suite, work)
 
 
 class _HandleSubclass(A.OriginalHandle):
@@ -294,6 +295,38 @@ def _index_read_supplements(suite, work):
                    lambda: snapshot_with('dg5-ix-rowset',
                                          lambda f: f.update(index_row_set_sha256='0' * 64)),
                    'index/row_set')
+
+
+def _schema_assert_supplements(suite, work):
+    """DG5 single-defect negatives for Storage internal schema asserts.
+
+    Each case corrupts exactly one in-memory state field (the sealed world state,
+    exactly as a stored-cell rewrite) that only the named whole-schema assert reads,
+    leaving every earlier and later check holding.
+    """
+    def full_value():
+        store = storage.TestOwnerStorage.create(work / 'assert-full-value')
+        _handle, out, _rows = selftest.append_one(store, 'dg5-full-value')
+        store.custody[out['event_ids'][0]]['original_segment_ref'] = 1
+        return store.full_value_result(out['event_ids'][0])
+
+    def lease_schema():
+        store = storage.TestOwnerStorage.create(work / 'assert-lease')
+        selftest.append_one(store, 'dg5-lease-1')
+        store.sequence_lease['lease_revision'] = 'x'
+        return selftest.append_one(store, 'dg5-lease-2')
+
+    def checkpoint_schema():
+        store = storage.TestOwnerStorage.create(work / 'assert-checkpoint')
+        selftest.append_one(store, 'dg5-ck-1')
+        checkpoint = store.canonical['checkpoint']
+        node = checkpoint['generations'][checkpoint['current_generation_id']]
+        node['anchor'] = dict(node['anchor'], generation_seed_sha256='not-hex')
+        return selftest.append_one(store, 'dg5-ck-2')
+
+    suite.negative('dg5-shared', 'custody_full_value_schema:1611', full_value, 'custody/full_value_schema')
+    suite.negative('dg5-shared', 'images_lease_schema:909', lease_schema, 'images/lease_schema')
+    suite.negative('dg5-shared', 'index_checkpoint_schema:1210', checkpoint_schema, 'index/checkpoint_schema')
 
 
 class _StorageHandleSubclass(storage._Handle):
