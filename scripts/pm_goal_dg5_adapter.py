@@ -249,6 +249,16 @@ def _decode_supplements(suite, work, data, base, generation):
                 'Corrupt:commit_payload_identity')
 
 
+def _pickle_original_handle():
+    """Whole-call entry for the :302 handle case.
+
+    pickle.dumps is a builtin without __code__, so the bridge cannot bind it
+    as the original callable; this Python-level entry performs the identical
+    call (the bridge builtin gap is recorded as a DG5 tool issue).
+    """
+    return pickle.dumps(A.OriginalHandle())
+
+
 def _pure_supplements(suite, work):
     """DG5 negatives for routed sites in pure shared checkers (reducer/codecs/handles).
 
@@ -288,6 +298,10 @@ def _pure_supplements(suite, work):
     step_case('source_step_terminal_without_start:605', None,
               dict(event_type='goal_run.cancelled', event_id='e1', sequence_id=1),
               'reducer/terminal_without_start')
+    step_case('source_step_unsupported_after_start:598',
+              dict(event_type='goal_run.started', event_id='e1', sequence_id=1),
+              dict(event_type='goal_run.replanned', event_id='e2', sequence_id=2),
+              'reducer/unsupported_same_run:goal_run.replanned')
     step_case('source_step_duplicate_start:601',
               dict(event_type='goal_run.started', event_id='e1', sequence_id=1),
               dict(event_type='goal_run.started', event_id='e2', sequence_id=2),
@@ -298,11 +312,14 @@ def _pure_supplements(suite, work):
     pure('exact_json_float:415',
          lambda: ((lambda: A.exact_json(1.5)), A.exact_json, dict(args=(1.5,), kwargs={})),
          'custody/exact_json/float', 'dg5/site/pm_goal_test_owner_adapters.py:415')
+    pure('exact_json_bytes:428',
+         lambda: ((lambda: A.exact_json(b'x')), A.exact_json, dict(args=(b'x',), kwargs={})),
+         'custody/exact_json/type', 'dg5/site/pm_goal_test_owner_adapters.py:428')
     pure('storage_u64_negative:197',
          lambda: ((lambda: storage.u64(-1, 'dg5/shared')), storage.u64, dict(args=(-1, 'dg5/shared'), kwargs={})),
          'dg5/shared/numrule/integer_range', 'dg5/site/pm_goal_test_storage.py:197')
     pure('handle_not_serializable:302',
-         lambda: ((lambda: pickle.dumps(A.OriginalHandle())), pickle.dumps, dict(args=(), kwargs={})),
+         lambda: (_pickle_original_handle, _pickle_original_handle, dict(args=(), kwargs={})),
          'handle/not_serializable', 'dg5/site/pm_goal_test_owner_adapters.py:302')
     pure('handle_not_copyable_copy:305',
          lambda: ((lambda: copy.copy(A.OriginalHandle())), copy.copy, dict(args=(), kwargs={})),
