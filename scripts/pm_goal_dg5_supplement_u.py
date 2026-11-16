@@ -553,3 +553,141 @@ def inspect_final_custody(d):
     snap = w.storage.acquire_source()
     snap['custody'][ev] = dict(snap['custody'][ev], schema_version='9.9.9')
     return w, lambda: w.inspector.inspect(r, g['user'], g['user_permission'], snapshot=snap)
+
+
+@case('U-DG5/N/no_effect_phase_only', 'dgu/sir/terminal/no_effect_phase', SITE + '836',
+      'Single defect: terminalize(no_effect) at source_admitted, where no body receipt and no event '
+      'exist yet, so the no-effect receipt/event checks (:837/:839) hold and only :836 refuses. The '
+      'authored case publishes first, so all three refuse.')
+def no_effect_phase_only(d):
+    w, g = U._goal(d)
+    req = O.direct_request(w, g, 'x')
+    w.command.admit_and_capture(req)
+    return w, lambda: w.sir.terminalize(req['command_instance_id'], 'no_effect')
+
+
+@case('U-DG5/N/unknown_kind_at_unknown_phase', 'dgu/sir/terminal/unknown_kind',
+      (SITE + '855', 'dg5/dgu/sir/terminal/schema'),
+      'At a body_unknown progress the unknown-phase check (:856) holds, leaving the kind check '
+      '(:855 kind == unknown) and the StorageTerminal schema kind const (unknown branch) as the '
+      'same field with the same predicate over one bogus kind. The authored case runs at '
+      'event_issued, so :856 also refuses.')
+def unknown_kind_at_unknown_phase(d):
+    w, g, req, adm, ag = U._upto(d, 'reserve')
+    p = U.progress(w, g, U.op_of(adm))
+    rec = dict(p, progress_epoch=p['progress_epoch'] + 1, phase='body_unknown')
+    w.source.advance(g['scope'], U.op_of(adm), rec, expected_phase=('body_reserved',), where='dg5/probe')
+    return w, lambda: w.sir.terminalize(req['command_instance_id'], 'partially_succeeded')
+
+
+@case('U-DG5/N/hitl_agent_actor_only', 'dgu/hitl/capture/agent_actor', SITE + '955',
+      'Single defect: the proposal points at an agent message posted by another agent actor (same '
+      'body), so the proposal actor permission check (:527 through permissions.check on the '
+      'proposal actor) holds and only :955 refuses. The authored case changes the proposal actor, '
+      'which the permission check also refuses.')
+def hitl_agent_actor_only(d):
+    def edit(w, g, p):
+        am = w.chat.post(g['scope'], 'agent', 'actor:TEST_ONLY:other-agent',
+                         dict(kind='goal_update_proposal_message', goal_id=g['scope']['goal_id'],
+                              replacement_text=p['target']['objective_text']))
+        return dict(p, source_message_id=am)
+    return U._prop_variant(d, edit)
+
+
+@case('U-DG5/N/hitl_foreign_storage_only', 'dgu/hitl/capture/foreign_storage', SITE + '963',
+      'Single defect: the proposal target scope storage id is case-folded (well-formed, so :962 '
+      'holds) and the stored control storage id is rewired to the same spelling, so the '
+      'read_private control-scope join (:1133) holds and only :963 refuses.')
+def hitl_foreign_storage_only(d):
+    w, g, prop, ap = U._proposal(d, target_storage=lambda sid: sid.upper())
+    U.rbody(w, O.T_CONTROL, U.ctl_key(g),
+            lambda c: dict(c, storage_instance_id=c['storage_instance_id'].upper()))
+    return w, lambda: w.approvals.capture(prop['command_instance_id'])
+
+
+def _tamper_approval_target(d, edit):
+    w, g = U._goal(d)
+    req, ag = O.agent_request(w, g, 'x')
+    cur = w.approvals.state(ag['approval_id'])
+    new_request = dict(cur['request'], target=edit(dict(cur['request']['target'])))
+    digest = O.sha(O.msgpack(new_request))
+    w.approvals.put(ag['approval_id'], dict(cur, request=new_request, request_sha256=digest,
+                                            resolution=dict(cur['resolution'], request_sha256=digest)))
+    return w, U.admitted(w, req)
+
+
+@case('U-DG5/N/approval_target_scope_only', 'dgu/source/capture/acceptance/approval_target_scope',
+      SITE + '1957',
+      'Single defect: only the stored approval request target scope goal changes (request sha '
+      'rewired), so the instruction attestation (:1966) still matches the update request and only '
+      ':1957 refuses.')
+def approval_target_scope_only(d):
+    return _tamper_approval_target(d, lambda t: dict(t, scope=dict(t['scope'], goal_id='goal:TEST_ONLY:other')))
+
+
+@case('U-DG5/N/approval_target_text_only', 'dgu/source/capture/acceptance/approval_target_text',
+      SITE + '1961',
+      'Single defect: only the stored approval request target objective text changes (request sha '
+      'rewired), so :1966 still holds and only :1961 refuses.')
+def approval_target_text_only(d):
+    return _tamper_approval_target(d, lambda t: dict(t, objective_text='other text'))
+
+
+@case('U-DG5/N/reserve_cancellation_pending_only', 'dgu/body/reserve/cancellation_associated',
+      SITE + '1169',
+      'Single defect: the control gains a schema-valid cancellation_pending with '
+      'cancellation_receipt_ref still null, so the reserved control schema admits the new pending '
+      'row and only :1169 refuses. The authored case sets the receipt ref, which the schema then '
+      'forbids beside a pending reservation.')
+def reserve_cancellation_pending_only(d):
+    w, g = U._goal(d)
+    req = O.direct_request(w, g, 'x')
+    adm, _ = w.command.admit_and_capture(req)
+    sc = g['scope']
+    cur = w.body.read_private(sc, 'o')
+    body, control = cur['body'], cur['control']
+    cp = dict(schema_id='pm.goal.cancel.reservation.v1', schema_version='1.0.0',
+              storage_instance_id=sc['storage_instance_id'], project_id=sc['project_id'],
+              thread_id=sc['thread_id'], goal_id=sc['goal_id'],
+              operation_id='goal-operation:TEST_ONLY:cancel',
+              source_audit_sha256='a' * 64, stop_intent_sha256='b' * 64, accepted_user_stop_epoch=0,
+              accepted_continuation_epoch=0, expected_revision=body['revision'],
+              expected_currentness_hash=body['currentness_hash'], expected_body_semantic_sha256='c' * 64,
+              expected_latest_objective_revision=control['latest_objective_revision'],
+              expected_latest_revision_hash=control['latest_revision_hash'], original_goal_owner_epoch=0,
+              original_sir_source_ref='TEST_ONLY:sir-source',
+              original_cancel_authority_ref='TEST_ONLY:cancel-authority')
+    U.rbody(w, O.T_CONTROL, U.ctl_key(g), lambda c: dict(c, cancellation_pending=cp))
+    return w, lambda: w.command.reserve(adm)
+
+
+@case('U-DG5/N/reserve_stale_revision_only', 'dgu/body/reserve/stale_goal_revision', SITE + '1172',
+      'Single defect: a direct pending with only expected_revision stale (intent resealed, '
+      'expected_currentness current), so :1173 holds and only :1172 refuses at body.reserve.')
+def reserve_stale_revision_only(d):
+    w, g = U._goal(d)
+    req = O.direct_request(w, g, 'x')
+    adm, _ = w.command.admit_and_capture(req)
+
+    def edit(p):
+        p = dict(p, expected_revision=p['expected_revision'] + 9)
+        p['intent_sha256'] = O.intent_sha(p)
+        return p
+
+    p = U._direct_pending(w, g, adm, edit)
+    return w, lambda: w.body.reserve(g['scope'], p, lambda c: [])
+
+
+@case('U-DG5/N/commit_after_currentness_only', 'dgu/body/commit/after_currentness', SITE + '1218',
+      'Single defect: the pending after and accepted texts are substituted together (accepted '
+      'hash and intent resealed) leaving only after currentness stale, so accepted_text (:1219) '
+      'and accepted_hash (:1222) hold and only :1218 refuses.')
+def commit_after_currentness_only(d):
+    w, g, req, adm, ag = U._upto(d, 'reserve')
+
+    def edit(p):
+        p = U._after(lambda a: dict(a, objective_text='substituted'), recompute=False)(p)
+        return U._accepted(lambda r: dict(r, objective_text='substituted'))(p)
+
+    U.tamper_pending(w, g, adm, edit)
+    return w, lambda: w.command.commit(adm)

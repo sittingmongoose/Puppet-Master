@@ -105,6 +105,12 @@ DECLARED_RULES += (
      "metadata_update requires change.state in (active, paused, blocked, completed) at :1289; the intent "
      "record carries that same after_record body (pending schema, :1306 validate) and the stored body row "
      "is validated against storage_body, whose state is the same four-value enum: one field, one predicate."),
+    (lambda cid: cid == 'U5/G/acceptance_direct_authority_missing',
+     (U_SITE + '1947', 'dg5/dgu/source/capture/source/schema'),
+     "Direct Save acceptance requires adm.direct_save_authority_ref is not None at :1947 and copies it "
+     "into the source record acceptance original_change_authority_ref (:1951), which the StorageSourceAudit "
+     "schema requires to be a non-null string when capture validates the source wrapper: the same field, "
+     "the same non-null predicate."),
     (lambda cid: cid == 'U1/G/noncanonical_pack_bytes',
      ('dg5/dgu/physical/decode/numrule/physical_noncanonical', U_SITE + '683'),
      "unwrap_row decodes the pack bytes through NR.decode_event_value, whose own canonical-bytes "
