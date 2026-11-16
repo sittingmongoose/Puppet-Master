@@ -646,7 +646,7 @@ async function r80p1(t) {
 	rp = await freshLoad(t);
 	const qp = await projectNow(rp.f), pp = await rp.A.page(), listedP = !!(await rowNow(rp.f, id));
 	await t.check(`${tag}: R87-P2, ${NAME} only in an older version's storage, harbor active, Run Onboarding Again, closed, reloaded: still listed, harbor selected in its look`, listedP && qp.selected === 'harbor' && pp.theme === hLook, JSON.stringify({ listed: listedP, project: qp, page: pp, harborLook: hLook }));
-	await switchProject(t, rp.f, id);
+	const inA = await switchProject(t, rp.f, id);
 	/* FO-222 round 2, F3: Demo Studio's Reset -> Progress (its own reset, what its button calls) while in that setup Project:
 	   the next reload paints the default Project's look (tastebook's Retro Light) from the first frame, and no stored id
 	   names the removed Project */
@@ -655,7 +655,7 @@ async function r80p1(t) {
 	await rp.f.waitForFunction(() => document.documentElement.hasAttribute('data-o55-open'), null, { timeout: 20000 }).catch(() => {});
 	await sleep(1200);
 	const r5 = await freshLoad(t), fr5 = await frames(r5.f), th5 = runs(fr5.frames, 2), id5 = await r5.f.evaluate(() => { try { return localStorage.getItem('pm7:shell:active-project:v1'); } catch (_) { return 'no storage'; } });
-	await t.check(`${tag}: Demo Studio Reset -> Progress, reloaded: every frame from the first is tastebook's Retro Light, and no stored id names ${NAME}`, th5.length === 1 && th5[0][0] === 'retro-light' && id5 !== id, JSON.stringify({ looks: th5, stored: id5 }));
+	await t.check(`${tag}: Demo Studio Reset -> Progress, reloaded: every frame from the first is tastebook's Retro Light, and no stored id names ${NAME} (the reset made in ${NAME})`, inA && th5.length === 1 && th5[0][0] === 'retro-light' && id5 !== id, JSON.stringify({ resetIn: inA ? id : 'not listed, so not in it', looks: th5, stored: id5 }));
 	/* R87-P1: the reset also forgets the Project on the page itself. A second Project made by setup (the reset's new run,
 	   finished into it), then Reset -> Progress again, without a reload: no setup Project left in the title bar's menu, and
 	   the title bar names the default Project with Settings holding its saved look (the new run's window is over Basic
