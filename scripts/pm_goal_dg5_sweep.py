@@ -66,6 +66,13 @@ def install(prove):
                 schemas.CONTROL[0] = saved
                 # GH1 keeps each row's first negative as (evaluate, value, label) and never reads
                 # it again; a DG5 evaluate closes over a whole world, so only the closure is released.
+                # Each store snapshot keeps its complete before/after manifest digests; the pickled
+                # manifest copy GH1 also keeps per call is dropped (DG-R holds thousands of calls).
+                for snapshot in self.store_snapshots[getattr(self, '_dg5_slimmed', 0):]:
+                    raw = snapshot.pop('snapshot_pickle_base64', None)
+                    if raw is not None:
+                        snapshot['manifest_pickle_sha256'] = hashlib.sha256(raw.encode()).hexdigest()
+                self._dg5_slimmed = len(self.store_snapshots)
                 if len(self.candidates) != getattr(self, '_dg5_released', 0):
                     for name, candidate in list(self.candidates.items()):
                         if candidate[0] is not None:
@@ -193,6 +200,7 @@ def main():
     for record in collector.ledger:
         if record.get('sig') is not None:
             family_rows[record['family']].update(collector.signature_list[record['sig']])
+    (args.out / 'store-snapshots.json').write_text(json.dumps(collector.store_snapshots, indent=0) + '\n')
     (args.out / 'number-corpus.json').write_text(json.dumps(dict(slots=bridge.SLOTS, results=bridge.CORPUS,
         summary={slot: dict(collections.Counter(r['verdict'] for r in bridge.CORPUS if r['slot'] == slot))
                  for slot in sorted({r['slot'] for r in bridge.CORPUS})}), indent=1, default=str) + '\n')
