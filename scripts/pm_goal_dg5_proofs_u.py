@@ -225,4 +225,26 @@ PROOFS = {
             'chain witnesses exactly this), so :1842 selects the inspector code '
             'dgu/inspect/event_unavailable and never gates acceptance alone. It closes by '
             'this proof once the Storage read row is closed.')),
+    'dg5/dgu/body/goal_objective_revision/schema': dict(
+        kind='entailed-by-body-and-pending-schemas',
+        families=['goal.updated'],
+        depends_on=['dg5/dgu/body/goal_body_record/schema', 'dg5/dgu/body/reserve/pending/schema'],
+        sites=[(U, 1099), (U, 1114), (U, 1231), (U, 1257),
+               ('Plans/goal_body_custody.schema.json', 5), ('Plans/goal_body_custody.schema.json', 105),
+               ('Plans/goal_body_custody.schema.json', 341)],
+        argument=(
+            'The storage_revision whole-root validation in GoalBodyOwner.row (dg5/dgu/body/'
+            'goal_objective_revision/schema) is reached only from start and commit. At start '
+            '(:1099-1114) the revision record is owner-built: goal_id and objective_text are the '
+            'identical values the body record carries, bounded identically in the body and '
+            'revision definitions (goal_body_custody.schema.json body :5 vs revision :105), '
+            'and the body row() validation runs first in the same writes list; every other '
+            'revision field is a constant (revision 1, change_source user_direct, null '
+            'source/approval/prior) or computed (revision_hash, created_at from the same now '
+            'the body record carries). At commit (:1231-1257) the record is the pending '
+            'accepted_revision verbatim, already validated against the identical revision '
+            'definition through the pending schema at reserve (pending.accepted_revision '
+            'references the same revision definition, :341), and the after body row() again '
+            'validates first. No complete call can make this row refuse while its two '
+            'dependency rows hold; it never gates acceptance alone.')),
 }
