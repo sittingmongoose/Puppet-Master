@@ -27,17 +27,14 @@ DG5_EVIDENCE = {}
 # cancel request admitted by its SIR owner. The request is whole-schema checked at
 # accept (GoalCancelRequestV2 integer, minimum 1) and digested by the original
 # SP-304 Goal JSON codec, which preserves exact integers, so no JCS binary64
-# expectation is declared. Date-time: the producer occurred_at_utc on a direct
-# AppendOwner append (positive-case retries call it at top level), validated by
-# Storage's EventRecord path - the T251 class (CV-1101 spellings vs stock
-# format/pattern predicates), left unmasked whatever it shows.
+# expectation is declared. Date-time: no slot (DG5 ruling on C's corpus mail):
+# with no caller-supplied time entry argument, the only date-time route is
+# tampered stored times through readers - the T251 bank-format surface - so the
+# CA date-time corpus cell is recorded as T251-blocked in the handover.
 SLOTS = [
     dict(name='goal.cancelled/request.expected_revision', family='goal.cancelled', entry='SIROwner.accept',
          path=('args', 0, 'expected_revision'), kind='integer', minimum=1,
          where='ca/sir/request/expected_revision', also_rows=('dg5/roots/schema',)),
-    dict(name='goal.cancelled/append.occurred_at_utc', family='goal.cancelled', entry='AppendOwner.append_original',
-         path=('args', 2, 0, 'occurred_at_utc'), kind='date-time', profile='EVENT_RECORD',
-         where='ca/append/occurred_at_utc', also_rows=()),
 ]
 
 
