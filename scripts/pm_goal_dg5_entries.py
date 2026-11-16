@@ -1,10 +1,32 @@
 """Shared entry observation plumbing for DG5's original family suites."""
 import functools
+import hashlib
 import inspect
+import os
 from pathlib import Path
 
 import pm_goal_dg5_boundaries as bridge
 import pm_goal_guard_tables as tables
+
+
+def case_shard_selected(case_id, spec=None):
+    """Whether `case_id` belongs to shard ``i/n`` (``PM_DG5_CASE_SHARD`` when unset).
+
+    The shard is a stable hash partition over whole authored case ids only: every
+    complete call of a selected case runs in one process, and no schema root or
+    case is split. The union of shards ``0/n .. (n-1)/n`` is the full case set.
+    """
+    raw = os.environ.get('PM_DG5_CASE_SHARD', '') if spec is None else spec
+    if raw in (None, ''):
+        return True
+    try:
+        index_text, total_text = str(raw).split('/', 1)
+        index, total = int(index_text), int(total_text)
+    except (ValueError, AttributeError) as error:
+        raise ValueError('PM_DG5_CASE_SHARD must be i/n, got %r' % (raw,)) from error
+    if total <= 0 or not 0 <= index < total:
+        raise ValueError('PM_DG5_CASE_SHARD must be i/n with 0 <= i < n, got %r' % (raw,))
+    return int.from_bytes(hashlib.sha256(case_id.encode()).digest()[:8], 'big') % total == index
 
 
 def world_root(world):
