@@ -793,3 +793,260 @@ def cases(suite):
         'C1/append_original/value_commitment', C1_SITE + '594')
     add('c1/producer_digest', lambda: lost_event(lambda w, r, eid: w.storage.custody[eid].update(producer_semantic_digest='0' * 64)),
         'C1/append_original/producer_digest', C1_SITE + '595')
+
+    # ---- batch 6 (helper C): chain-isolating negatives from the ef0 discovery ----
+    def audit_reference_join():
+        w, r = C4C.until(suite, 'admit_codec_domain')
+        cell = w.storage.cells[AS.AUDIT_TABLE][r.audit_key]
+        new = copy.deepcopy(cell['value'])
+        new['record']['scope'] = dict(new['record']['scope'], goal_id=O.short_id('goal'))
+        cell['value'] = new
+        return w, r.admit_codec_domain
+    add('c4/audit_reference_join', audit_reference_join,
+        'C4A/admit_codec_domain/audit_reference_join', AS_SITE + '441')
+
+    def issue_reservation_no_fence():
+        w, r = C4C.until(suite, 'issue_assignment_audit')
+        r.fence = None
+        w.storage.fence = None
+        return w, r.issue_assignment_audit
+    add('c4/issue_reservation', issue_reservation_no_fence,
+        'C4A/issue_assignment_audit/reservation', AS_SITE + '617')
+
+    def template_producer():
+        w, r = C4C.until(suite, 'append_original')
+
+        def edit(rec):
+            for m in rec['exact_event_encoding_template']['members']:
+                if m['key'] == 'payload':
+                    for inner in m['value']['members']:
+                        if inner['key'] == 'cancel_reason':
+                            inner['value'] = dict(term='string', value='other_reason')
+        C4C.substitute_audit(w, r, edit)
+        readmit_substituted(w, r)
+        return w, r.append_original
+    add('c4/template_producer', template_producer, 'C4A/append_reserved/template_producer', AS_SITE + '716')
+
+    def fence_clone(w, r):
+        clone = AS.Fence(r.fence.operation_id, r.fence.boot_session)
+        clone.identity = r.fence.identity
+        return clone
+
+    def append_fence_final():
+        w, r = C4C.until(suite, 'append_original')
+        w.storage.fence = fence_clone(w, r)   # same identity fields, different object: :719 is-check only
+        return w, r.append_original
+    add('c4/append_fence_final', append_fence_final, 'C4A/append_reserved/fence_final', AS_SITE + '719')
+
+    def fence_lost():
+        w, r = C4C.until(suite, 'append_original')
+        r.fence.operation_id = O.uid('TEST_ONLY:other-operation')
+        return w, r.append_original
+    add('c4/fence_lost', fence_lost, 'assignment/fence_lost', AS_SITE + '193')
+
+    def binding_associations():
+        suite.n += 1
+        w = AS.assigned_world(suite.work / ('b%05d' % suite.n))
+        bound = C2.BoundPlanCancel(w, state='active')
+        w.plan_inventory.members.clear()   # inventories empty; the binding association remains
+        plain = C1.NoAssociationCancel(w, birth=False)
+        plain.scope, plain.cancel_decision, plain.actor_ref = bound.scope, bound.cancel_decision, bound.actor_ref
+        plain.dispatch(plain.user_request())
+        return w, plain.capture_source
+    add('c1/binding_associations', binding_associations, 'C1/capture_source/binding_associations', C1_SITE + '314')
+
+    def stop_receipt_custody():
+        w, r = until('commit_receipt')
+        r.progress = copy.deepcopy(r.progress)
+        r.progress['stop_receipt']['original_host_transaction_ref'] = O.uid('TEST_ONLY:host-stop-transaction')
+        coherent_progress(w, r)
+        return w, r.commit_receipt
+    add('c1/stop_receipt_custody', stop_receipt_custody, 'C1/commit_receipt/stop_receipt_custody', C1_SITE + '503')
+
+    def held_withdrawn():
+        w, r = DGO.c1_route(suite)
+        w.binding.withdraw()
+        held = r.hold_current_read()   # held fence already carries the withdrawn domain
+        return w, lambda: r.release_held(held)
+    add('c1/held_reader_withdrawn', held_withdrawn, 'C1/held_reader/withdrawn', C1_SITE + '878')
+
+    def effects_origin_sha():
+        w, r = settled_until()
+        fam, key = r.actual_targets['plan_effect'][0], r.actual_targets['plan_effect'][1]
+        value = w.value(fam, key)
+        okey = 'plan_cancel_source_origin.v1:%s:%s:%s' % (C2.hx(w.storage_id), C2.hx(key), O.row_sha(value))
+        edit_record(w, 'plan_cancel_source_origin', okey, 'issued_physical_sha256', '0' * 64)
+        return w, r.settle_owner
+    add('c2/effects_origin_unavailable', effects_origin_sha,
+        'C2/effects/origin_unavailable/plan_effect', C2_SITE + '1219')
+
+    def settle_genuine_effects():
+        w, r = settled_until()
+        del r.commit_admission
+        return w, r.settle_owner
+    add('c2/genuine_effects', settle_genuine_effects, 'C2/settle_owner/genuine_effects', C2_SITE + '1293')
+
+    def terminal_bogus_kind():
+        w, r = until('commit_receipt')   # phase stop_reserved: the unknown branch's phase set
+        return w, lambda: r.terminal('bogus')
+    add('c1/terminal_kind', terminal_bogus_kind, 'C1/terminal/kind', C1_SITE + '703')
+
+    def writer_join():
+        w, r = born()
+        sel, _, _ = w.binding.domain_selection()
+        dcell = w.storage.cells[w.binding.DOMAIN][sel['physical_key']]
+        new = copy.deepcopy(dcell['value'])
+        for row in new['record']['writers']:
+            if row['operation'] == 'goal_birth':
+                row['original_registration_ref'] = O.uid('TEST_ONLY:foreign-registration')
+        dcell['value'] = new
+        hkey = 'goal_execution_writer_domain_head.v1:' + w.binding.storage_key()
+        hcell = w.storage.cells[w.binding.HEAD][hkey]
+        newh = copy.deepcopy(hcell['value'])
+        newh['record']['domain']['complete_value_sha256'] = O.row_sha(new)
+        hcell['value'] = newh
+        return w, lambda: w.binding.require_writer('goal_birth')
+    add('owner/writer_join', writer_join, 'domain/writer_join/goal_birth', OWNERS_SITE + '568')
+
+    def user_stop_epoch_max():
+        suite.n += 1
+        w = AS.assigned_world(suite.work / ('a%05d' % suite.n))
+        r = AS.AssignedCancel(w, state='active')
+        edit_record(w, w.host_stop.FAMILY, w.host_stop.key(r.scope), 'user_stop_epoch', MAX_U64)
+        r.dispatch(r.user_request())
+        r.capture_source()
+        return w, r.reserve_append_assignment
+    add('number/c4a_user_stop_epoch_max', user_stop_epoch_max,
+        'C4A/user_stop_epoch/numrule/integer_range', 'dg5/C4A/user_stop_epoch/number')
+
+    def lease_through_max():
+        w, r = C4C.until(suite, 'reserve_append_assignment')
+        w.storage.last_sequence = MAX_U64 - 10
+        return w, r.reserve_append_assignment
+    add('number/lease_through_max', lease_through_max,
+        'lease/through/numrule/integer_range', 'dg5/lease/through/number')
+
+    def pack_unavailable_only():
+        w, r = C4C.until(suite, 'admit_codec_domain')
+        ref = w.value(AS.AUDIT_TABLE, r.audit_key)['record']['audit_payload']
+        w.storage.packs[ref['blake3']]['durable'] = False   # file kept: only :1726 can refuse
+        return w, r.admit_codec_domain
+    add('c4/pack_unavailable', pack_unavailable_only, 'pack/unavailable',
+        'dg5/site/pm_goal_test_storage.py:1726')
+
+    def pack_present_only():
+        w, r = C4C.until(suite, 'admit_codec_domain')
+        ref = w.value(AS.AUDIT_TABLE, r.audit_key)['record']['audit_payload']
+        (w.storage.root / 'packs' / ref['blake3']).unlink()   # record stays durable: only :1728
+        return w, r.admit_codec_domain
+    add('c4/pack_present', pack_present_only, 'pack/present',
+        'dg5/site/pm_goal_test_storage.py:1728')
+
+    # ---- batch 7 (helper C): shared adapter/storage sites via family entries ----
+    ST_SITE = 'dg5/site/pm_goal_test_storage.py:'
+    AD_SITE = 'dg5/site/pm_goal_test_owner_adapters.py:'
+
+    def registry_role():
+        w, r = DGO.c1_route(suite)
+        w.plan_inventory.role = 'bogus_role'
+        return w, r.capture_source
+    add('shared/registry_role', registry_role, 'registry/role', AD_SITE + '247')
+
+    def registry_unregistered():
+        w, r = DGO.c1_route(suite)
+        w.plan_inventory.owner_id = O.uid('TEST_ONLY:foreign-owner')
+        return w, r.capture_source
+    add('shared/registry_unregistered', registry_unregistered, 'registry/unregistered_owner', AD_SITE + '246')
+
+    def original_withdrawn():
+        w, r = DGO.c1_route(suite)
+        w.sir.withdraw(r.sir_handle)
+        return w, r.capture_source
+    add('shared/original_withdrawn', original_withdrawn, 'original/withdrawn', AD_SITE + '401')
+
+    def cand_setup(edits=None, first=False):
+        w, r = until('append_original')
+        p = copy.deepcopy(r.progress['producer_input'])
+        if first:
+            w.appender.append_original(O.uid('TEST_ONLY:dg5-first'), dict(kind='TEST_ONLY:dg5'), [copy.deepcopy(p)])
+        if edits:
+            p.update(edits)
+        op = O.uid('TEST_ONLY:dg5-append')
+        return w, r, op, p
+
+    def append_case(name, setup, expected, target, kw=None):
+        def make():
+            w, r, op, p = cand_setup(**setup)
+            return w, lambda: w.appender.append_original(op, dict(kind='TEST_ONLY:dg5'), [p], **(kw or {}))
+        add(name, make, expected, target)
+
+    append_case('shared/durability_class', dict(), 'append/durability_class', ST_SITE + '1450',
+                kw=dict(durability_class='bogus'))
+    # candidates-shaped cases need the raw candidates argument, not a producer dict:
+    def raw_candidates(name, cands, expected, target):
+        def make():
+            w, r = until('append_original')
+            op = O.uid('TEST_ONLY:dg5-append')
+            return w, lambda: w.appender.append_original(op, dict(kind='TEST_ONLY:dg5'), cands(r))
+        add(name, make, expected, target)
+    raw_candidates('shared/append_nonempty', lambda r: [], 'append/nonempty', ST_SITE + '1451')
+    raw_candidates('shared/candidate_type', lambda r: ['not-a-dict'], 'append/candidate/type', ST_SITE + '1422')
+    append_case('shared/redaction_profile', dict(edits=dict(redaction_profile='secret')),
+                'append/candidate/redaction_profile', ST_SITE + '1426')
+    append_case('shared/scope_project_id', dict(edits=dict(project_id='')), 'scope/project_id', ST_SITE + '189')
+    raw_candidates('shared/duplicate_in_group',
+                   lambda r: [copy.deepcopy(r.progress['producer_input'])] * 2,
+                   'append/duplicate_in_group', ST_SITE + '1477')
+    append_case('shared/append_once_exists', dict(edits=dict(replay_policy='append_once'), first=True),
+                'append/append_once_exists', ST_SITE + '1460')
+
+    def conflict(name, edits, expected, target):
+        def make():
+            w, r, op, p = cand_setup(edits=edits, first=True)
+            return w, lambda: w.appender.append_original(op, dict(kind='TEST_ONLY:dg5'), [p])
+        add(name, make, expected, target)
+    conflict('shared/conflict_event_id', dict(event_id=O.uid('TEST_ONLY:other-event')),
+             'append/conflict/event_id', ST_SITE + '1462')
+    conflict('shared/conflict_scoped_identity', dict(idempotency_key=O.uid('TEST_ONLY:other-key')),
+             'append/conflict/scoped_identity', ST_SITE + '1463')
+
+    def partial_dedupe():
+        w, r, op, p = cand_setup(first=True)
+        fresh = copy.deepcopy(p)
+        fresh.update(event_id=O.uid('TEST_ONLY:fresh-event'), idempotency_key=O.uid('TEST_ONLY:fresh-key'))
+        return w, lambda: w.appender.append_original(op, dict(kind='TEST_ONLY:dg5'), [p, fresh])
+    add('shared/partial_dedupe', partial_dedupe, 'append/partial_dedupe', ST_SITE + '1466')
+
+    def custody_unavailable():
+        w, r = until('publish_control')
+        w.storage.custody.pop(r.progress['publication']['event_id'])
+        return w, r.publish_control
+    add('shared/custody_unavailable', custody_unavailable, 'custody/unavailable', ST_SITE + '1601')
+
+    def read_event_unavailable():
+        w, r = until('append_original')
+        r.append_original(lose_ack=True)
+        w.storage.events.pop(next(iter(w.storage.events)))
+        return w, r.resolve_original
+    add('shared/read_event_unavailable', read_event_unavailable, 'read/event_unavailable', ST_SITE + '1633')
+
+    def handle_case(name, tamper, expected, target):
+        def make():
+            w, r = until('terminal')
+            tamper(w, r)
+            return w, r.terminal
+        add(name, make, expected, target)
+    handle_case('shared/handle_type', lambda w, r: setattr(r, 'reservation', dict()),
+                'handle/type', ST_SITE + '1259')
+
+    def foreign_handle(w, r):
+        other = suite.world()
+        h = other.storage.reserve(O.uid('TEST_ONLY:foreign-op'), dict(kind='x'))
+        r.reservation = h
+    handle_case('shared/handle_issuer', foreign_handle, 'handle/issuer', ST_SITE + '1260')
+
+    # handle/kind (:1261): proof in pm_goal_dg5_proofs_ca.py (_handles only ever holds
+    # 'reservation' handles, the only kind _resolve_handle is called with).
+    # receipt_handle type/issuer (:1589/:1590): no family entry reaches receipt_of with a
+    # caller handle (publish paths use custody directly); left for DG5's adapter source,
+    # whose run already kills :1590 - listed in the handover.
