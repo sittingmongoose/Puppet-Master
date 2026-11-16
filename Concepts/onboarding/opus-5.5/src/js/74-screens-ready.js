@@ -47,6 +47,14 @@
     if (!rowOf(id) && !made) { lsSet(''); if (window.PM_ACTIVE_PROJECT_ID === id) { delete window.PM_ACTIVE_PROJECT_ID; staleLoaded = true; } return; }
     window.PM_ACTIVE_PROJECT_ID = id;
     restoring = made || { id, name: null, info: null };
+    /* the title bar names it now, not at boot: this script runs after the title bar is in the page, and the box (wired
+       at boot) would show the page's own Project until then, 4.6-5.1 s on F's films (FO-222 round 2, F1). The label, and
+       the selected row: a fixture Project's own row, or none until boot lists the setup Project's row and selects it. */
+    const fix = rowOf(id), label = document.getElementById('projectMenuLabel');
+    const name = fix ? (fix.getAttribute('data-project-name') || id) : ((made && made.name) || id);
+    if (label && label.textContent !== name) label.textContent = name;
+    document.querySelectorAll('#projectMenu .pm6-tb-menu-item.is-selected[data-project]').forEach((r) => { if (r !== fix) r.classList.remove('is-selected'); });
+    if (fix && !fix.classList.contains('is-selected')) fix.classList.add('is-selected');
   })();
 
   /* Shell helpers: select a Project in the title-bar menu (adding it when the app doesn't list it yet). The project box
