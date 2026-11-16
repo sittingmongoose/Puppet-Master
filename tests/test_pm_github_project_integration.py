@@ -93,6 +93,8 @@ class GitHubProjectIntegrationTests(unittest.TestCase):
         admitted_ids |= record_pinned_family_ids(families) - upstream_ids
         proposed_ids = {'event-family-settings-layer-changed', 'event-family-approval-chat-tool-requested',
                         'event-family-approval-chat-tool-resolved'}
+        # s2's DL-412 step-form records also pin these three DL-300 rows; count them once, as proposed.
+        admitted_ids -= proposed_ids
         for ident in proposed_ids:
             self.assertTrue(all(v['producer_admission'] == 'requires_owner_adoption' for v in live[ident]['payload_versions']))
         self.assertEqual({row["family_id"] for row in families}, upstream_ids | admitted_ids | proposed_ids)
