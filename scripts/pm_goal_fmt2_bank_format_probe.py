@@ -8,6 +8,8 @@ import hashlib
 import json
 from pathlib import Path
 
+import jsonschema
+
 import pm_goal_dg_s_world as W
 import pm_goal_test_numrule as NR
 from pm_goal_own_c_roots import OriginalBank
@@ -75,8 +77,14 @@ def synthetic_bank(work, dialect):
             'Uuid': {'type': 'string', 'format': 'uuid'},
             'UnknownFormat': {'type': 'string', 'format': 'uri'},
             'Length': {'type': 'string', 'maxLength': 2},
+            'BooleanProperty': {'type': 'object', 'properties': {'schema_id': False}},
+            'UnknownAnnotation': {'type': 'object', 'x-pm-oracle-id': False,
+                                  'properties': {'label': {'type': 'string'}}},
         },
     }
+    if dialect == 'draft4':
+        # Boolean schemas entered JSON Schema after Draft4.
+        del schema['definitions']['BooleanProperty']
     # Put the role in a different declared dialect from the root wrapper.
     schema['$ref'] = '#/definitions/Event'
     unformatted = copy.deepcopy(schema['definitions']['Event'])
@@ -133,6 +141,9 @@ def run(work):
         expected = [error_shape(e) for e in bank.errors(root, dict(control, occurred_at_utc='not-a-date'))]
         assert [error_shape(e) for e in validator.iter_errors(dict(control, occurred_at_utc='not-a-date'))] == expected
         formats = validator.format_checker
+        assert isinstance(formats, jsonschema.FormatChecker)
+        assert formats.conforms(instance='2026-01-01t00:00:00z', format='date-time')
+        assert hash(formats) == hash(formats)
         assert set(formats.checkers) == set(FORMAT.checkers)
         assert formats.checkers['uuid'] is FORMAT.checkers['uuid']
         original = formats.checkers['date-time']
@@ -190,7 +201,10 @@ def run(work):
                            original, prefix + 'Unformatted', event, field, value, profile))
         for name, value, accepted in [('Pattern', 'cat', False), ('Pattern', 'a', True), ('Uuid', 'a' * 32, False),
                                       ('Uuid', 'AAAAAAAA-AAAA-4AAA-8AAA-AAAAAAAAAAAA', True),
-                                      ('UnknownFormat', 'not a uri', True), ('Length', 'abcd', False)]:
+                                      ('UnknownFormat', 'not a uri', True), ('Length', 'abcd', False),
+                                      ('BooleanProperty', {}, True), ('BooleanProperty', {'schema_id': 'x'}, False),
+                                      ('UnknownAnnotation', {'label': 'x'}, True),
+                                      ('UnknownAnnotation', {'label': 7}, False)]:
             def unchanged(name=name, value=value, accepted=accepted):
                 errors = original.errors(prefix + name, value)
                 legacy = list(Validator({'$ref': prefix + name}, registry=original.registry,
@@ -198,6 +212,8 @@ def run(work):
                 assert [error_shape(e) for e in errors] == [error_shape(e) for e in legacy]
                 assert (not errors) == accepted, [error_shape(e) for e in errors]
                 return [error_shape(e) for e in errors]
+            if dialect == 'draft4' and name == 'BooleanProperty':
+                continue
             checks.add(dialect + '/other_keyword/' + name + '/' + str(accepted), unchanged)
     return dict(qualification='TEST_ONLY', native_execution='NOT_RUN', cases=checks.rows,
                 status='pass' if all(row['status'] == 'pass' for row in checks.rows) else 'fail')

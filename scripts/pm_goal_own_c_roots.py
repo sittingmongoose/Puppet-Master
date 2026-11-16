@@ -7,7 +7,7 @@ from __future__ import annotations
 
 import hashlib
 import json
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from functools import lru_cache
 from types import MappingProxyType
 
@@ -20,15 +20,9 @@ from pm_goal_own_c_oracles import ROOT, Validator, FORMAT, Refusal, require, equ
 from pm_goal_oracle_common import timestamp_roles
 
 
-@dataclass(frozen=True)
-class _OwnerFormats:
-    checkers: object
-
-    def check(self, value, format):
-        return jsonschema.FormatChecker.check(self, value, format)
-
-    def conforms(self, value, format):
-        return jsonschema.FormatChecker.conforms(self, value, format)
+@dataclass(frozen=True, eq=False, repr=False)
+class _OwnerFormats(jsonschema.FormatChecker):
+    checkers: object = field()
 
 
 @lru_cache(maxsize=None)
@@ -41,10 +35,19 @@ def _owner_formats(profile):
 
 
 def _timestamp_profiles(schema):
-    profiles = timestamp_roles(schema)
     properties = schema.get('properties', {})
+    identity_schema = properties.get('schema_id', {})
+    identity = identity_schema.get('const') if isinstance(identity_schema, dict) else None
+    # Role discovery ignores boolean identity schemas and non-string
+    # annotations. Validation still receives the exact original schema.
+    role_schema = schema
+    if not isinstance(identity_schema, dict) or not isinstance(schema.get('x-pm-oracle-id', ''), str):
+        role_schema = dict(schema, properties=dict(properties, schema_id=identity_schema
+                                                  if isinstance(identity_schema, dict) else {}))
+        if not isinstance(schema.get('x-pm-oracle-id', ''), str):
+            role_schema['x-pm-oracle-id'] = ''
+    profiles = timestamp_roles(role_schema)
     required = set(schema.get('required', ()))
-    identity = properties.get('schema_id', {}).get('const')
     if {'observed_at_utc', 'persisted_at_utc', 'sequence_id'} <= required:
         profiles.update({name: NR.DT.STORAGE_UTC_Z for name in ('observed_at_utc', 'persisted_at_utc')
                          if name in properties})
@@ -88,7 +91,7 @@ def _owned_properties(validator, properties, instance, schema):
                 if not _has_field_error(errors, name, keyword):
                     value = 'date-time' if keyword == 'format' else 'string'
                     yield jsonschema.ValidationError(
-                        f'{instance[name]!r} is not a {value!r}', validator=keyword,
+                        'shared timestamp profile refused', validator=keyword,
                         validator_value=value, instance=instance[name], schema=subschema,
                         path=(name,), schema_path=(name, keyword), cause=error)
         yield from errors
