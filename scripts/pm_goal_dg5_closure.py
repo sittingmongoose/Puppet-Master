@@ -48,6 +48,8 @@ import pm_goal_go_schema_closure as go  # noqa: E402
 TOOL_SHA256 = hashlib.sha256(Path(__file__).read_bytes()).hexdigest()
 SEED_CAP = 24
 RECORD_CAP = 400          # recorded instances per root for the agreement check (accepted and refused)
+RECORD_BYTES_CAP = 4 * 1024 * 1024  # pickled-record bytes per root; live deepcopies of custody-sized
+                                    # instances OOMed collection at 2G on the 22k-call CA3 source
 CAPTURE = [None]          # list receiving the outermost validator of one bank call
 SLOTS = {}                # root key -> slot
 PATCHED_CLASSES = set()
@@ -163,8 +165,10 @@ def hook_bank(cls, method='errors', family=None):
                 return result
             if not refused and len(slot['seeds']) < SEED_CAP:
                 slot['seeds'].setdefault(sha, copy.deepcopy(value))
-            if len(slot['records']) < RECORD_CAP and all(r[0] != sha for r in slot['records']):
-                slot['records'].append((sha, copy.deepcopy(value), _signature(result)))
+            if len(slot['records']) < RECORD_CAP and slot.get('record_bytes', 0) + len(raw) <= RECORD_BYTES_CAP \
+                    and all(r[0] != sha for r in slot['records']):
+                slot['records'].append((sha, raw, _signature(result)))
+                slot['record_bytes'] = slot.get('record_bytes', 0) + len(raw)
         return result
     errors._dg5_closure = True
     setattr(cls, method, errors)
@@ -331,7 +335,8 @@ def closure_validator(v, label, bank=None):
 
 def agree(original, copy_v, records):
     bad = []
-    for sha, value, expected in records:
+    for sha, raw, expected in records:
+        value = pickle.loads(raw)
         got = _signature(copy_v.iter_errors(value))
         if got != expected:
             bad.append(dict(input_sha256=sha, original=expected[:6], copy=got[:6]))
@@ -413,6 +418,8 @@ def main():
             entry.update(error=type(exc).__name__ + ': ' + str(exc)[:400], counts={'UNCOVERED_ROOT_ERROR': 1},
                          clauses={ident + '/<root>': dict(cls='UNCOVERED', error=str(exc)[:300])})
             print(f'{ident}: ERROR {exc!r}'[:300], file=sys.stderr, flush=True)
+            slot['records'] = []
+            slot['seeds'] = {}
             continue
         counts = collections.Counter(e['cls'] for e in entries.values())
         entry.update(branch_controls=branch_controls, validations=spent, counts=dict(counts), clauses=entries,
@@ -420,6 +427,8 @@ def main():
         print(f'{ident} {slot["bank"]} {key[1][:80]}: seeds={len(slot["seeds"])} {dict(counts)}', file=sys.stderr,
               flush=True)
         args.out.with_suffix('.partial.json').write_text(json.dumps(report, indent=1, sort_keys=True, default=str) + '\n')
+        slot['records'] = []  # agreement + closure for this root are done; free its retained instances
+        slot['seeds'] = {}
     report['shard'] = args.shard
     report['seconds'] = round(time.time() - started, 1)
     totals = collections.Counter()
