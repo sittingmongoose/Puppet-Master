@@ -379,3 +379,19 @@ PROOFS.update({
             "outside uint64 range (smoke3 chain: physical_integer_range, no_progress). No "
             "single-defect witness exists; the authored ceiling case witnesses the exact refusal.")),
 })
+
+PROOFS.update({
+    'dg5/native/advance/number': dict(
+        kind='entailment', families=['goal_run.started'],
+        depends_on=[],
+        sites=[(START, 259), (START, 262), (WORLD_PY, 70)],
+        argument=(
+            "NativeOwner.advance increments the current body revision at :259 on a "
+            "schema-validated stored body, so only the uint64 ceiling can refuse. With :259 cut "
+            "the resulting 2^64 revision is immediately digested for the new control wrapper "
+            "(control_wrapper body_record_sha256, :262) and written through the physical canonical "
+            "encoding behind W.cdigest (world:70), which refuses integers outside uint64 range - "
+            "the smoke4 chain stops at exactly that physical-integer-range refusal. The authored "
+            "ceiling case witnesses the exact :259 refusal, and no cut of :259 alone lets the "
+            "advance complete.")),
+})
