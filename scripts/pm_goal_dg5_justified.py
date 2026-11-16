@@ -74,7 +74,7 @@ def _frames(detail):
             for f, l, fn in re.findall(r'(pm_goal\w*\.py):(\d+)\((\w+)\)', head)]
 
 
-PROOF_MODULES = ('u', 's', 'ca', 'r', 'cf')   # pm_goal_dg5_proofs_<x>.py or pm_goal_dg5_justified_<x>.py (SPLIT.md)
+PROOF_MODULES = ('u', 's', 'ca', 'r', 'cf', 'shared')   # pm_goal_dg5_proofs_<x>.py or pm_goal_dg5_justified_<x>.py (SPLIT.md)
 
 
 def written_proofs():
