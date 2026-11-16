@@ -1287,3 +1287,289 @@ def cases(suite):
     # control_epoch+1/+2 domains and the argument canonical refuses out-of-physical-range
     # (witnessed in smoke: C3/argument/numrule/physical_integer_range) before the latch
     # increment; at publish the native selector sha refuses earlier. Proof in proofs_ca.
+
+    # ---- batch 10 (helper C): C3 settle/freeze/append/publish/terminal/retained ----
+    def c3_commit_custody():
+        w, r = C3C.until(suite, 'commit_receipt')
+        r.progress = copy.deepcopy(r.progress)
+        r.progress['stop_receipt']['original_host_transaction_ref'] = O.uid('TEST_ONLY:host-stop-transaction')
+        c3_coherent_progress(w, r)
+        return w, r.commit_receipt
+    add('c3/commit_stop_receipt_custody', c3_commit_custody, 'C3/commit_receipt/stop_receipt_custody', R3_SITE + '742')
+
+    def genuine_pending(w):
+        """A schema-valid body pending record from a genuine reservation on a second goal."""
+        r2 = C1.NoAssociationCancel(w, state='active')
+        w.goal.reserve_pending(r2.scope, w.host_stop.record(r2.scope)['user_stop_epoch'])
+        return copy.deepcopy(w.goal.control(r2.scope)['value']['record']['pending'])
+
+    def c3_commit_pending():
+        w, r = C3C.until(suite, 'commit_receipt')
+        edit_record(w, w.goal.CONTROL, w.goal.keys(r.scope)['control'], 'pending', genuine_pending(w))
+        return w, r.commit_receipt
+    add('c3/commit_pending_unresolved', c3_commit_pending, 'C3/commit_receipt/pending_unresolved', R3_SITE + '746')
+
+    def c3_settle_receipt_custody():
+        w, r = C3C.until(suite, 'settle_owner')
+        r.progress = copy.deepcopy(r.progress)
+        r.progress['cancellation_receipt'] = dict(
+            r.progress['cancellation_receipt'],
+            stop_receipt_ref=r.key('goal_cancel_stop_receipt') + ':foreign')
+        c3_coherent_progress(w, r)
+        return w, r.settle_owner
+    add('c3/settle_receipt_custody', c3_settle_receipt_custody, 'C3/settle_owner/receipt_custody', R3_SITE + '850')
+
+    def c3_settle_pending():
+        # Pending introduced before the native run via a genuine transaction, so the
+        # D05/D06 disposition selectors verify as retained committed versions.
+        w, r = C3C.until(suite, 'native')
+        pend = genuine_pending(w)
+        key = w.goal.keys(r.scope)['control']
+        cell = w.goal.control(r.scope)
+        new = copy.deepcopy(cell['value'])
+        new['record']['pending'] = pend
+        w.write([w.put(w.goal.CONTROL, key, new, expected=cell['version'])])
+        r.run_native()
+        return w, r.settle_owner
+    add('c3/settle_pending_unresolved', c3_settle_pending, 'C3/settle_owner/pending_unresolved', R3_SITE + '866')
+
+    def c3_proof_absent():
+        w, r = C3C.until(suite, 'settle_owner')
+        key = r.key(R3.SCOPE_PROOF)
+        w.write([w.put(R3.SCOPE_PROOF, key, dict(schema_id='pm.test_only.preexisting_proof.v1', record={}))])
+        return w, r.settle_owner
+    add('c3/proof_absent', c3_proof_absent, 'C3/settle_owner/proof_absent', R3_SITE + '891')
+
+    def c3_freeze_occurrence():
+        w, r = C3C.until(suite, 'freeze_event')
+        r.progress = copy.deepcopy(r.progress)
+        r.progress['cancellation_receipt'] = dict(r.progress['cancellation_receipt'],
+                                                  accepted_at='1999-01-01T00:00:00.000Z')
+        c3_coherent_progress(w, r)
+        return w, r.freeze_event
+    add('c3/freeze_accepted_occurrence', c3_freeze_occurrence, 'C3/freeze_event/accepted_occurrence', R3_SITE + '918')
+
+    def c3_append_fence():
+        w, r = C3C.until(suite, 'append_original')
+        w.storage.fence = None
+        return w, r.append_original
+    add('c3/append_fence', c3_append_fence, 'C3/append_original/fence', R3_SITE + '1101')
+
+    def c3_append_fence_final():
+        w, r = C3C.until(suite, 'append_original')
+        r.inject[('append_original', 'final')] = lambda route: setattr(
+            route.world.storage, 'fence', fence_clone(route.world, route))
+        return w, r.append_original
+    add('c3/append_fence_final', c3_append_fence_final, 'C3/append_original/fence_final', R3_SITE + '1118')
+
+    def c3_audit_fence():
+        w, r = C3C.until(suite, 'append_original')
+        for cellmap in (w.storage.cells[R3.LATE_AUDIT],):
+            cell = cellmap[r.late_audit_key]
+            new = copy.deepcopy(cell['value'])
+            new['record']['actual_late_reservation']['original_exclusive_fence_id'] = O.uid('TEST_ONLY:foreign-fence')
+            cell['value'] = new
+            r.late_audit = copy.deepcopy(new['record'])
+        return w, r.append_original
+    add('c3/append_audit_fence', c3_audit_fence, 'C3/append_original/audit_fence', R3_SITE + '1104')
+
+    def c3_audit_goal_argument():
+        w, r = C3C.until(suite, 'append_original')
+        cell = w.storage.cells[R3.LATE_AUDIT][r.late_audit_key]
+        new = copy.deepcopy(cell['value'])
+        new['record']['complete_goal_argument_sha256'] = '0' * 64
+        cell['value'] = new
+        r.late_audit = copy.deepcopy(new['record'])
+        return w, r.append_original
+    add('c3/append_audit_goal_argument', c3_audit_goal_argument, 'C3/append_original/audit_goal_argument', R3_SITE + '1106')
+
+    def c3_audit_producer():
+        w, r = C3C.until(suite, 'append_original')
+        cell = w.storage.cells[R3.LATE_AUDIT][r.late_audit_key]
+        new = copy.deepcopy(cell['value'])
+        new['record']['producer_semantic_digest'] = '0' * 64
+        cell['value'] = new
+        r.late_audit = copy.deepcopy(new['record'])
+        return w, r.append_original
+    add('c3/append_audit_producer', c3_audit_producer, 'C3/append_original/audit_producer', R3_SITE + '1114')
+
+    def c3_resolve_producer():
+        w, r = C3C.until(suite, 'append_original')
+        r.append_original(lose_ack=True)
+        r.progress = copy.deepcopy(r.progress)
+        r.progress['producer_input'] = dict(r.progress['producer_input'],
+                                            correlation_id=O.uid('TEST_ONLY:correlation'))
+        c3_coherent_progress(w, r)
+        w.index.publish()   # pre-create every index row so the resolve-time publish rewrites only marked keys
+
+        def act():
+            for table in ('event_record_index', 'event_record_index_checkpoint'):
+                for key in list(w.storage.cells.get(table, {})):
+                    DGO.mark(w, table, key)
+            return r.resolve_original()
+        return w, act
+    add('c3/resolve_stored_producer', c3_resolve_producer, 'C3/resolve_original/stored_producer', R3_SITE + '1159')
+
+    def c3_publish_publication():
+        w, r = C3C.until(suite, 'publish_control')
+        r.progress = copy.deepcopy(r.progress)
+        pub = copy.deepcopy(r.progress['publication'])
+        pub['original_append_result'] = dict(pub['original_append_result'],
+                                             sequence_id=pub['original_append_result']['sequence_id'] + 1)
+        r.progress['publication'] = pub
+        c3_coherent_progress(w, r)
+        return w, r.publish_control
+    add('c3/publish_original_publication', c3_publish_publication,
+        'C3/publish_control/original_publication', R3_SITE + '1181')
+
+    def c3_publish_reservation():
+        w, r = C3C.until(suite, 'publish_control')
+        r.progress = copy.deepcopy(r.progress)
+        r.progress['reservation_sha256'] = '0' * 64
+        c3_coherent_progress(w, r)
+        return w, r.publish_control
+    add('c3/publish_reservation', c3_publish_reservation, 'C3/publish_control/reservation', R3_SITE + '1187')
+
+    # C3/publish_control/pending_unresolved (:1189): no case - pending at publish
+    # entails pending at settle (proof in pm_goal_dg5_proofs_ca.py).
+
+    def c3_terminal_control():
+        w, r = C3C.until(suite, 'terminal_succeeded')
+        edit_record(w, w.goal.CONTROL, w.goal.keys(r.scope)['control'], 'cancellation_receipt_ref', None)
+        return w, r.terminal_succeeded
+    add('c3/terminal_control_published', c3_terminal_control,
+        'C3/terminal_succeeded/control_published', R3_SITE + '1265')
+
+    def c3_unsettled_issued():
+        w, r = C3C.until(suite, 'terminal_succeeded')
+        r.terminal_succeeded()
+        return w, lambda: r.terminal_unsettled('unknown')
+    add('c3/unsettled_already_issued', c3_unsettled_issued,
+        'C3/terminal_unsettled/already_issued', R3_SITE + '1295')
+
+    def c3_no_effect_stop():
+        w, r = C3C.wf(suite)
+        r.capture_source()
+        w.host_stop.manual(r.scope, 'stop')
+        w.permissions.revoke(r.cancel_decision)
+        return w, lambda: r.terminal_unsettled('no_effect')
+    add('c3/no_effect_stop_unchanged', c3_no_effect_stop,
+        'C3/terminal_unsettled/no_effect_stop_unchanged', R3_SITE + '1300')
+
+    def c3_replay_operation():
+        w, r = C3C.until(suite, 'terminal_succeeded')
+        r.terminal_succeeded()
+        req = r.user_request()
+
+        def act():
+            DGO.mark(w, w.sir.ACCEPTED, req['command_instance_id'])
+            DGO.mark(w, w.sir.OUTCOME, req['command_instance_id'])
+            return r.replay(req)
+        return w, act
+    add('c3/replay_operation', c3_replay_operation, 'C3/replay/operation', R3_SITE + '1344')
+
+    def c3_replay_terminal():
+        w, r = C3C.until(suite, 'terminal_succeeded')
+        r.terminal_succeeded()
+        edit_record(w, 'goal_cancel_terminal_audit', r.key('goal_cancel_terminal_audit'), 'kind', 'unknown')
+        return w, lambda: r.replay(copy.deepcopy(r.request))
+    add('c3/replay_original_terminal', c3_replay_terminal, 'C3/replay/original_terminal', R3_SITE + '1347')
+
+    def c3_retained_kind():
+        w, r = C3C.until(suite, 'terminal_succeeded')
+        r.terminal_succeeded()
+        edit_record(w, 'goal_cancel_terminal_audit', r.key('goal_cancel_terminal_audit'), 'kind', 'unknown')
+        return w, r.read_retained_success
+    add('c3/retained_succeeded', c3_retained_kind, 'C3/read_retained_success/succeeded', R3_SITE + '1358')
+
+    def c3_retained_origin():
+        w, r = C3C.until(suite, 'terminal_succeeded')
+        r.terminal_succeeded()
+        # Chain-edit: proof's d06_origin selector sha, resealed through settlement
+        # (selected progress) and the terminal progress sha so earlier joins pass.
+        pkey = r.key(R3.SCOPE_PROOF)
+        pcell = w.storage.cells[R3.SCOPE_PROOF][pkey]
+        newp = copy.deepcopy(pcell['value'])
+        newp['record']['d06_origin'] = dict(newp['record']['d06_origin'], complete_value_sha256='0' * 64)
+        pcell['value'] = newp
+        prog_key = r.progress_key(r.progress['progress_epoch'])
+        pcell2 = w.storage.cells['goal_cancel_progress'][prog_key]
+        newprog = copy.deepcopy(pcell2['value'])
+        newprog['record']['owner_settlement'] = dict(newprog['record']['owner_settlement'],
+                                                     original_scope_proof_sha256=O.row_sha(newp))
+        pcell2['value'] = newprog
+        r.progress = copy.deepcopy(newprog['record'])
+        tkey = r.key('goal_cancel_terminal_audit')
+        tcell = w.storage.cells['goal_cancel_terminal_audit'][tkey]
+        newt = copy.deepcopy(tcell['value'])
+        newt['record']['terminal_progress_sha256'] = O.row_sha(newprog)
+        tcell['value'] = newt
+        return w, r.read_retained_success
+    add('c3/retained_d06_origin', c3_retained_origin, 'C3/read_retained_success/d06_origin', R3_SITE + '1374')
+
+    def c3_retained_selected():
+        w, r = C3C.wf(suite)
+        r.capture_source()
+        w.permissions.revoke(r.cancel_decision)
+        r.terminal_unsettled('no_effect')
+        edit_record(w, 'goal_cancel_progress', r.progress_key(r.progress['progress_epoch']), 'phase', 'tampered')
+        return w, r.read_retained_unsettled
+    add('c3/retained_selected_progress', c3_retained_selected,
+        'C3/read_retained_unsettled/selected_progress', R3_SITE + '1390')
+
+    # index direct-entry cases (EventIndexOwner entries registered by _ca install)
+    def ix_case(name, setup, act, expected, target):
+        def make():
+            w, r = C3C.until(suite, 'terminal_succeeded')
+            r.terminal_succeeded()
+            setup(w, r)
+            return w, lambda: act(w, r)
+        add(name, make, expected, target)
+
+    def ix_checkpoint():
+        w = suite.world()
+        import pm_goal_dg_ca3_index as IX
+        ix = IX.EventIndexOwner(w)
+        return w, ix.current
+    add('c3/index_checkpoint_unavailable', ix_checkpoint, 'index/checkpoint_unavailable', IX_SITE + '177')
+
+    def ix_no_generation(w, r):
+        cell = w.storage.cells['event_record_index_checkpoint'][w.index.checkpoint_key()]
+        cell['value'] = dict(cell['value'], current_generation_id='eig_bogus')
+    ix_case('c3/index_no_current_generation', ix_no_generation,
+            lambda w, r: w.index.current(), 'index/no_current_generation', IX_SITE + '180')
+
+    def ix_anchor(w, r):
+        key = w.index.checkpoint_key()
+        cell = w.storage.cells['event_record_index_checkpoint'][key]
+        new = copy.deepcopy(cell['value'])
+        gid = new['current_generation_id']
+        new['generations'][gid]['anchor']['storage_instance_id'] = 'bogus'
+        cell['value'] = new
+    ix_case('c3/index_generation_anchor', ix_anchor,
+            lambda w, r: w.index.current(), 'index/generation_anchor', IX_SITE + '182')
+    ix_case('c3/index_event_unavailable', lambda w, r: None,
+            lambda w, r: w.index.row('no-such-event'), 'index/event_unavailable', IX_SITE + '205')
+    ix_case('c3/index_frame_event_unavailable', lambda w, r: None,
+            lambda w, r: w.index.source_frame('no-such-event'), 'index/event_unavailable', IX_SITE + '214')
+
+    def ix_row_drop(w, r):
+        eid = r.progress['publication']['event_id']
+        gen = w.index.current()[1]['generation_id']
+        info = w.storage.events[eid]
+        drop(w, 'event_record_index', w.index.row_key(gen, info['sequence_id']))
+    ix_case('c3/index_row_unavailable', ix_row_drop,
+            lambda w, r: w.index.row(r.progress['publication']['event_id']),
+            'index/row_unavailable', IX_SITE + '207')
+
+    def ix_row_rewritten(w, r):
+        gen = w.index.current()[1]['generation_id']
+        eid = r.progress['publication']['event_id']
+        info = w.storage.events[eid]
+        key = w.index.row_key(gen, info['sequence_id'])
+        cell = w.storage.cells['event_record_index'][key]
+        new = copy.deepcopy(cell['value'])
+        new['event_type'] = 'bogus.event'
+        cell['value'] = new
+    ix_case('c3/index_row_rewritten', ix_row_rewritten,
+            lambda w, r: w.index.publish(), 'index/row_rewritten', IX_SITE + '166')
