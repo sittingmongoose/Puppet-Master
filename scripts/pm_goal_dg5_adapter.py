@@ -11,6 +11,7 @@ original self-test only (--skip-matrix here).
 """
 import functools
 import inspect
+import json
 import os
 from pathlib import Path
 import sys
@@ -67,6 +68,36 @@ def install():
         plumbing.entries(cls, public_methods(cls), FAMILY)
 
 
+def supplements(suite, work):
+    """DG5 negatives for routed frame-decode sites, surfaced through Storage.read_event.
+
+    The original self-test calls decode_frame directly, outside any DG5 complete call, so
+    those cases can never target the sites. Each case below appends one genuine event,
+    replaces its segment with the wire-fixture frame (frame hash rewired in the in-memory
+    index, exactly one defect left), and reads it back through the original owner entry.
+    """
+    data = json.loads((bridge.ROOT / 'Plans/seglog_frame_v2_wire_fixtures.json').read_text())
+    base = bytes.fromhex(data['base_frame_hex'])
+    generation = data['segment_generation']
+    for fixture in data['cases']:
+        def run(fixture=fixture):
+            store = storage.TestOwnerStorage.create(work / fixture['id'])
+            _handle, _out, rows = selftest.append_one(store, 'dg5-' + fixture['id'])
+            event_id = rows[0]['event_id']
+            info = store.events[event_id]
+            raw = bytearray(base[:fixture['length']])
+            for offset, byte in fixture['replace_bytes']:
+                raw[offset] = byte
+            raw = bytes(raw)
+            store._segment_path(generation).write_bytes(raw)
+            info.update(offset=0, length=len(raw), frame_sha256=storage.sha256(raw),
+                        segment_generation=generation)
+            return store.read_event(event_id)
+
+        suite.negative('dg5-shared', 'frame_fixture:' + fixture['id'], run,
+                       fixture['expected_class'] + ':' + fixture['expected_code'])
+
+
 def main():
     install()
     scratch = Path(os.environ['PM_DG5_SCRATCH'])
@@ -77,5 +108,10 @@ def main():
         code = selftest.main()
     finally:
         sys.argv = saved
-    DG5_EVIDENCE.update(family=FAMILY, original_suite=str(scratch / 'adapter-selftest-source.json'))
-    return code
+    supplement_suite = selftest.Suite()
+    supplements(supplement_suite, scratch / 'adapter-supplements')
+    rows = [dict(case, ok=case['status'] == 'pass', qualification='TEST_ONLY')
+            for case in supplement_suite.cases]
+    DG5_EVIDENCE.update(family=FAMILY, original_suite=str(scratch / 'adapter-selftest-source.json'),
+                        supplement_rows=rows)
+    return code or (1 if any(not row['ok'] for row in rows) else 0)
