@@ -6,9 +6,10 @@ export const KEEP = 16, STEADY_MS = 25;
 export const SLOW_FLOOR_MS = 40;
 
 // steps: PM_WARM.log rows, oldest first. A row that records slow1/steady1/slow2/steady2/resetAt (the bars its two
-// intervals were judged against, and which of them reset the count) is judged from those. An older row, which has only
-// the bar of its last interval, is bracketed between that bar and the row before it. Rows with neither fall back to
-// hz, the later display-rate sample.
+// intervals were judged against, and which of them reset the count) is judged from those, unless a logged bar is
+// under the product's floor (slow 40 ms, steady 25 ms, less the 0.1 ms logging rounding): impossible metadata is
+// bracketed like an older row (R59 C1). An older row, which has only the bar of its last interval, is bracketed
+// between that bar and the row before it. Rows with neither fall back to hz, the later display-rate sample.
 export function replayWatch(steps, hz) {
 	const gap = 1000 / hz, fallbackSteady = Math.max(STEADY_MS, 1.5 * gap), fallbackSlow = Math.max(40, 3 * gap);
 	let steady = fallbackSteady, slow = fallbackSlow, adaptive = 0;
@@ -19,10 +20,16 @@ export function replayWatch(steps, hz) {
 	// PM7PERF-WARMWATCH-BAR-IN-STEP (R18-4) and R53-C4. A row without per-interval bars logs the slow bar of its LAST
 	// interval. The bar a step's d1 met can lie between that and the previous row's bar or, when the median dips and
 	// recovers inside the step, under both (R53-C4). Those rows are bracketed: lo against the lower bar, hi against
-	// the higher. A row with the per-interval fields is not bracketed: resetAt is 1 or 2 for the interval that set the
+	// the higher. A row with the per-interval fields and possible bars is not bracketed: resetAt is 1 or 2 for the interval that set the
 	// count back to zero, or 0 when neither did, and slow1/slow2 are the bars that comparison used.
 	let prevSlow = null;
+	// PM7PERF-WARMWATCH-BARS-TRUSTED (R59 C1): the product's bars cannot be under their floors — lateMs() is
+	// max(40, 3 x median) and the steady bar max(25, 1.5 x median) — and they are logged rounded to 0.1 ms.
+	// A row logging a bar under its floor is impossible metadata, not an exact row: it is judged by the bracket
+	// path below, as a row without the fields is, so a low logged bar cannot excuse a needless watch.
 	const exactRow = (e) => [e.slow1, e.steady1, e.slow2, e.steady2].every((n) => Number.isFinite(n) && n > 0)
+		&& e.slow1 >= SLOW_FLOOR_MS - 0.1 && e.slow2 >= SLOW_FLOOR_MS - 0.1
+		&& e.steady1 >= STEADY_MS - 0.1 && e.steady2 >= STEADY_MS - 0.1
 		&& (e.resetAt === 0 || e.resetAt === 1 || e.resetAt === 2);
 	for (const e of steps) {
 		steady = Number.isFinite(e.steadyMs) && e.steadyMs > 0 ? e.steadyMs : fallbackSteady;
