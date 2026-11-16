@@ -163,4 +163,33 @@ PROOFS = {
             'non-goal payload shape fails the payload $ref or the body_receipt_request access at '
             ':1874). The authored other_family_event and a type-flipped goal.updated copy both '
             'witness those later refusals; :1867 never gates acceptance alone.')),
+    SITE + '165': dict(
+        kind='entailed-by-owner-schemas',
+        families=['goal.updated'],
+        depends_on=['dg5/dgu/sir/request/schema', 'dg5/dgu/sir/proposal/schema',
+                    'dg5/dgu/sir/terminal/result/schema'],
+        sites=[(U, 165), (U, 715), (U, 721), (U, 763), (U, 766), (U, 870)],
+        argument=(
+            'jcs key type (:165) is reached only from jcs(request) at :721, jcs(proposal) at '
+            ':766, jcs(result) at :871 and the event_identity list at :230. The first three run '
+            'only after their whole-root owner schemas validate the same value (:715 '
+            'GoalUpdateRequestV2, :763 GoalUpdateProposalRequest, :870 the branch result): a '
+            'non-string dict key is refused there first (witnessed: an int-keyed request refuses '
+            'at dgu/sir/request/schema). The result dict is otherwise owner-built with literal '
+            'keys, and the identity value is a list of literal and schema-validated strings with '
+            'no dict at all. No complete call can present a non-string key to :165.')),
+    SITE + '173': dict(
+        kind='entailed-by-owner-schemas',
+        families=['goal.updated'],
+        depends_on=['dg5/dgu/sir/request/schema', 'dg5/dgu/sir/proposal/schema',
+                    'dg5/dgu/sir/terminal/result/schema'],
+        sites=[(U, 173), (U, 715), (U, 721), (U, 763), (U, 766), (U, 870)],
+        argument=(
+            'jcs value type (:173, the else branch for values that are not int/dict/list/str and '
+            'not float, which :160 refuse()s first) has the same four call paths as :165. Every '
+            'value in a schema-validated request, proposal or branch result is a JSON scalar, '
+            'array or object by the schema types validated before jcs runs (witnessed: a bytes '
+            'objective_text refuses at dgu/sir/request/schema/objective_text), the result dict '
+            'is owner-built from those validated scalars, and the identity list holds strings '
+            'only. No complete call can present another Python type to :173.')),
 }
