@@ -40,4 +40,17 @@ PROOFS = {
             'so every row present in snap.rows has position < defect[1] whenever a defect exists. '
             'No complete inspect call can present a row at or after its snapshot defect, so :1862 '
             'can never refuse alone; it restates the acquisition invariant at the consumer.')),
+    SITE + '1918': dict(
+        kind='entailed-by-installation-graph',
+        families=['goal.updated'],
+        depends_on=[SITE + '496'],
+        sites=[(U, 496), (U, 1854), (U, 1909), (U, 1917), (U, 1918)],
+        argument=(
+            ':1918 requires the final installation graph to equal the witness graph recorded at '
+            ':1909 from w.installation.current(). Both reads sit behind require_installed in the '
+            'same complete inspect call (the installation helper at :1854 and the final call at '
+            ':1917), and require_installed refuses unless the cell graph equals the one static '
+            'graph_sha256() of the loaded resource graph (:496). So whenever :1918 is reached, '
+            'the witness graph and the final graph both equal that one value; no complete call '
+            'can make :1918 refuse alone. It closes by this proof once :496 is closed.')),
 }
