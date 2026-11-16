@@ -68,8 +68,26 @@
     const fix = rowOf(id), label = document.getElementById('projectMenuLabel');
     const name = fix ? (fix.getAttribute('data-project-name') || id) : ((made && made.name) || id);
     if (label && label.textContent !== name) label.textContent = name;
-    document.querySelectorAll('#projectMenu .pm6-tb-menu-item.is-selected[data-project]').forEach((r) => { if (r !== fix) r.classList.remove('is-selected'); });
-    if (fix && !fix.classList.contains('is-selected')) fix.classList.add('is-selected');
+    /* (a setup Project's row is in the menu before the box is wired, selected, with the attributes PM_PROJECT_BOX.add
+       gives one: the box's own renderer draws it as it wires, and its badge is that Project's from its first paint, not
+       the state of an id it does not know, 'waiting' for 0.2 s on t-b63; restoreProject finds it and confirms) */
+    let own = fix;
+    if (!own && made) {
+      const menu = document.getElementById('projectMenu');
+      if (menu) {
+        own = document.createElement('button');
+        own.type = 'button'; own.className = 'pm6-tb-menu-item'; own.setAttribute('role', 'menuitem'); own.setAttribute('data-project', id);
+        if (made.name && made.name !== id) own.setAttribute('data-project-name', made.name);
+        ['path', 'branch'].forEach((k) => { if (made.info && made.info[k]) own.setAttribute('data-project-' + k, made.info[k]); });
+        own.setAttribute('data-command-id', 'cmd.project.switch_active_tab'); own.setAttribute('data-binding-id', 'shell.project.pick'); own.setAttribute('data-o55-added', '');
+        /* (its name as its text until the renderer draws it, as the page's own rows have theirs: an empty button was
+           given a title by the page's labelling pass, which a row the box adds never has) */
+        own.textContent = made.name || id;
+        menu.insertBefore(own, menu.querySelector('[data-project]') || menu.querySelector('.pm6-tb-project-sep'));
+      }
+    }
+    document.querySelectorAll('#projectMenu .pm6-tb-menu-item.is-selected[data-project]').forEach((r) => { if (r !== own) r.classList.remove('is-selected'); });
+    if (own && !own.classList.contains('is-selected')) own.classList.add('is-selected');
   })();
 
   /* Shell helpers: select a Project in the title-bar menu (adding it when the app doesn't list it yet). The project box
@@ -96,6 +114,9 @@
       const box = window.PM_PROJECT_BOX;
       if (box) setupProjects().forEach((p) => { if (!rowOf(p.id)) { const row = box.add(p.id, Object.assign({}, p.info || {}, { name: p.name || p.id })); if (row) row.setAttribute('data-o55-added', ''); } });
       if (restoring && box) { const r = restoring; restoring = null; O55.shell.selectProject(r.id, r.name || r.id, r.info || undefined); }
+      /* (a setup row restoreEarly put in the page before the load's labelling pass (wireTitles: every menu row present
+         then gets its text as a title, which the hover tag reads first) is the row the box adds, which has none) */
+      document.querySelectorAll('#projectMenu [data-o55-added][title]').forEach((r) => { if (r.getAttribute('title') === r.textContent.trim().replace(/\s+/g, ' ')) r.removeAttribute('title'); });
       if (staleLoaded) { staleLoaded = false; if (window.PM12_KIMI && window.PM12_KIMI.reloadProject) { try { window.PM12_KIMI.reloadProject(); } catch (_) {} } }
       const menu = document.getElementById('projectMenu');
       if (!menu || menu.__pmActive) return;
