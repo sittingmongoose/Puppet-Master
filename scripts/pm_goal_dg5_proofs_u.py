@@ -103,4 +103,64 @@ PROOFS = {
             'The whole MessagePack row is bounded under 600 bytes for every wrapper any DG-U '
             'physical() caller builds (body row(), progress_writes, capture source/input, SIR '
             'terminal), an order of magnitude under the cap, so :663 can never refuse alone.')),
+    SITE + '892': dict(
+        kind='code-selection',
+        families=['goal.updated'],
+        depends_on=[SITE + '894'],
+        sites=[(U, 891), (U, 892), (U, 894)],
+        argument=(
+            'terminalize final boundary: :892 requires the re-read head epoch and snapshot key '
+            'unchanged; :894 requires the re-read snapshot wrapper sha to equal the terminal '
+            'commitment over the first snapshot. Any head movement that fails :892 selects a '
+            'different epoch snapshot whose record carries that different progress_epoch, so its '
+            'wrapper bytes and sha also differ and :894 refuses; a same-epoch snapshot with the '
+            'same wrapper passes both. With :892 cut, every reachable head movement still refuses '
+            'at :894, so :892 selects the exact code and never gates acceptance alone.')),
+    SITE + '962': dict(
+        kind='code-selection',
+        families=['goal.updated'],
+        depends_on=[SITE + '963'],
+        sites=[(U, 918), (U, 962), (U, 963)],
+        argument=(
+            'HITL capture: :962 requires the proposal target storage id to be a hyphenated '
+            '8-4-4-4-12 hex UUID (_uuid_ok, :918); :963 requires it to equal this Storage '
+            'instance id, which Storage creates as a hyphenated UUID spelling. A malformed '
+            'spelling can never equal that id, so with :962 cut the same call still refuses at '
+            ':963 (the authored target_uuid_malformed witness); a well-formed foreign spelling '
+            'passes :962 and is judged at :963 alone (U-DG5/N/hitl_foreign_storage_only). :962 '
+            'selects the exact code and never gates acceptance alone.')),
+    SITE + '1181': dict(
+        kind='code-selection',
+        families=['goal.updated'],
+        depends_on=['dg5/site/pm_goal_test_storage.py:1657'],
+        sites=[(U, 1180), (U, 1181), (U, 1188), ('scripts/pm_goal_test_storage.py', 1657)],
+        argument=(
+            'body.reserve final boundary: :1181 requires the re-read control record to equal the '
+            'first-read control exactly. The reserve writes then go through Storage transact with '
+            'expected=first-read control_version (:1188), whose CAS version check '
+            '(pm_goal_test_storage.py:1657) refuses unless the current cell version is still that '
+            'version. Storage transact is the only cell writer in every complete call and always '
+            'increments a written cell version, so any reachable control change between the reads '
+            'bumps the version and still refuses at the CAS with :1181 cut; an unchanged version '
+            'means no write occurred and the record is the same. :1181 selects the exact code '
+            'and never gates acceptance alone. It closes once the CAS row is closed.')),
+    SITE + '1867': dict(
+        kind='entailed-by-selected-event-schema-and-producer-join',
+        families=['goal.updated'],
+        depends_on=['dg5/dgu/inspect/event/schema', SITE + '1884'],
+        sites=[(U, 1867), (U, 1869), (U, 1884),
+               ('Plans/goal_updated_consumer_contracts.schema.json', 497)],
+        argument=(
+            ':1867 requires event_type goal.updated, the goal.updated payload_schema_id and '
+            'scope_kind project. The SelectedActiveEvent schema validated two statements later '
+            '(:1869, row dg5/dgu/inspect/event/schema) carries exactly those three consts on the '
+            'same fields. With both cut, the frozen-producer join (:1884) still compares '
+            'producer25(event) - the whole event minus Storage fields, including event_type and '
+            'payload_schema_id - with the frozen producer_input, a genuine goal.updated '
+            'ProducerInput whose metadata was built with those values (:1542-1550) and schema-'
+            'validated at freeze; scope_kind project is likewise in that metadata. An event '
+            'failing any :1867 conjunct therefore still refuses at the schema or at :1884 (and a '
+            'non-goal payload shape fails the payload $ref or the body_receipt_request access at '
+            ':1874). The authored other_family_event and a type-flipped goal.updated copy both '
+            'witness those later refusals; :1867 never gates acceptance alone.')),
 }
