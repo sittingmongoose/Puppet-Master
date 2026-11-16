@@ -55,6 +55,13 @@ DECLARED = {
         'images by build_seglog_images (current birth_operation_ref and the manifest '
         'selection id derivation), and both whole-schema validators bound that same '
         'field by string minLength 1 in the same _commit_state call.'),
+    'adapter/dg5-shared/index_retained_inventory_only:202': ((
+        'dg5/site/pm_goal_test_source.py:202', 'dg5/site/pm_goal_test_source.py:446'),
+        'For this input only the token source_selection retained_inventory_sha256 is '
+        'substituted: GenericSource token verification compares it to the digest of the '
+        'manifest retained inventory at :202, and the index read compares the identical '
+        'token source_selection object to the checkpoint frontier source_selection at '
+        ':446. Both refuse solely on that one substituted field value.'),
 }
 
 
