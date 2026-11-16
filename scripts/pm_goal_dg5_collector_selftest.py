@@ -51,9 +51,22 @@ def check_collector_releases_sealed_values():
     assert collector.snapshots[row] is None, 'snapshot sealed value retained'
 
 
+def check_stateless_reducer_not_an_entry():
+    import pm_goal_dg5_adapter as adapter
+    import pm_goal_test_source as source
+
+    adapter.install()
+    reducer = source.LifecycleReducer('run')
+    state = reducer.initial()
+    state = reducer.step(state, dict(event_type='goal_run.started', event_id='e1', sequence_id=1),
+                          dict(group_digest='g'))
+    assert state['status'] == 'started'
+
+
 def main():
     check_shard_partition()
     check_collector_releases_sealed_values()
+    check_stateless_reducer_not_an_entry()
     print('pm_goal_dg5_collector_selftest: PASS')
     return 0
 

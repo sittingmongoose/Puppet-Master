@@ -60,7 +60,10 @@ def install():
     plumbing.entries(storage.TestOwnerStorage, tuple(n for n in STORAGE_ENTRIES if n in vars(storage.TestOwnerStorage)),
                      FAMILY)
     plumbing.entries(A.AppendOwner, ('append_original', 'event', 'first_receipt'), FAMILY)
-    for cls in (source.GenericSource, source.EventRecordIndexSource, source.LifecycleReducer):
+    # LifecycleReducer is a pure state function with no original world or durable store to
+    # seal, so it is not itself a DG5 complete-call entry; its shared sites are observed
+    # nested under GenericSource.project entries (and its direct probe calls stay unwrapped).
+    for cls in (source.GenericSource, source.EventRecordIndexSource):
         plumbing.entries(cls, public_methods(cls), FAMILY)
 
 
