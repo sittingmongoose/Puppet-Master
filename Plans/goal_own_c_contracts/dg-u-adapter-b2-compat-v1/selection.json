@@ -18,11 +18,11 @@
   "members": [
     {
       "path": "scripts/pm_goal_dg_u_owners.py",
-      "sha256": "72683af61117fb4e662fa1330ed6d72da7b299bf5022d338abc451a001d38f2e"
+      "sha256": "b58de51fedf37e290885f5b4650fc2181df466a7fb786e2a9c11f15385cc40fa"
     },
     {
       "path": "scripts/pm_goal_dg_u_oracles.py",
-      "sha256": "27dd7183c118e8434e362a57a889c946b6feb4ddc802150981bcced650e1bc4c"
+      "sha256": "d48c7d535a9702ed638395182ec01e36acabda42dce659898f879db4dadfdf77"
     },
     {
       "path": "scripts/pm_goal_test_numrule.py",
@@ -30,15 +30,15 @@
     },
     {
       "path": "scripts/pm_goal_test_storage.py",
-      "sha256": "b5b90ebb4af5d443134a9b3340f7978f924dff64609e3e5097f79371a086ec2b"
+      "sha256": "389457a3132d0a2bd172c526b63e1f5e8dcec88843b40c66e16970935c995c13"
     },
     {
       "path": "scripts/pm_goal_test_owner_adapters.py",
-      "sha256": "f8f5b342be1629e14b21aef2f8818752ee358fea51e506e33c578eb74895fb40"
+      "sha256": "bed2c35b5588106289b27f2591b2c8311841a18c35a954f0bb8f872bc1a442b2"
     },
     {
       "path": "scripts/pm_goal_test_source.py",
-      "sha256": "7fa4b81a87853724310ac0a27290b97bbf0cd894262245384a29b4f7f3211b4e"
+      "sha256": "72db3db5387f0334c6ae15b513209403e1d0168e05d8731194ec89db25d2e832"
     },
     {
       "path": "scripts/pm_goal_test_reopen.py",
@@ -65,6 +65,10 @@
     {
       "path": "Plans/goal_updated_consumer_resources.json",
       "sha256": "5d3838be2868a7b6740de7565a2274d0bd97fb6ebe4aefaff4ee621a31e60139"
+    },
+    {
+      "path": "scripts/pm_goal_oracle_common.py",
+      "sha256": "cd08c2c5666643e576a319ca3b1cbd677761039f63d3146ef09f36ed055c7bd5"
     }
   ],
   "numrule": {
