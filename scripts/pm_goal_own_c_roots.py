@@ -7,10 +7,99 @@ from __future__ import annotations
 
 import hashlib
 import json
+import copy
+from functools import lru_cache
+
+import jsonschema
+import pm_goal_test_numrule as NR
 
 from referencing import Registry, Resource
 from referencing.jsonschema import DRAFT202012
 from pm_goal_own_c_oracles import ROOT, Validator, FORMAT, Refusal, require, equal
+from pm_goal_oracle_common import timestamp_roles
+
+
+@lru_cache(maxsize=None)
+def _owner_formats(profile):
+    # Keep this bank's exact format inventory and UUID predicate. Only the
+    # date-time entry changes; the provider's separate utc()/instant() stays.
+    checker = copy.copy(FORMAT)
+    checker.checkers = dict(FORMAT.checkers)
+    checker.checkers['date-time'] = NR.DT.format_checker(profile=profile).checkers['date-time']
+    return checker
+
+
+def _timestamp_profiles(schema):
+    profiles = timestamp_roles(schema)
+    properties = schema.get('properties', {})
+    required = set(schema.get('required', ()))
+    identity = properties.get('schema_id', {}).get('const')
+    if {'observed_at_utc', 'persisted_at_utc', 'sequence_id'} <= required:
+        profiles.update({name: NR.DT.STORAGE_UTC_Z for name in ('observed_at_utc', 'persisted_at_utc')
+                         if name in properties})
+    if identity == 'pm.goal.update.approval_request.v1':
+        profiles.update({name: NR.DT.COORDINATION_UTC_Z for name in ('created_at_utc', 'expires_at_utc')
+                         if name in properties})
+    if {'approval_id', 'request_sha256', 'decided_at_utc', 'protected_person_decision_ref'} <= required:
+        if 'decided_at_utc' in properties:
+            profiles['decided_at_utc'] = NR.DT.COORDINATION_UTC_Z
+    return profiles
+
+
+def _has_field_error(errors, name, keyword):
+    for error in errors:
+        if ((list(error.path) == [name] or list(error.absolute_path) == [name]) and error.validator == keyword
+                and (keyword != 'format' or error.validator_value == 'date-time')):
+            return True
+        if _has_field_error(error.context, name, keyword):
+            return True
+    return False
+
+
+def _owned_properties(validator, properties, instance, schema):
+    if not validator.is_type(instance, 'object'):
+        return
+    profiles = _timestamp_profiles(schema)
+    for name, subschema in properties.items():
+        if name not in instance:
+            continue
+        profile = profiles.get(name, NR.DT.EVENT_RECORD)
+        checker = _owner_formats(profile)
+        child = validator if validator.format_checker is checker else validator.evolve(format_checker=checker)
+        errors = list(child.descend(instance[name], subschema, path=name, schema_path=name))
+        # Owner clocks remain enforced when a pinned schema omits its format.
+        # Reuse a reached type/format error so its shape and ordering survive.
+        if name in profiles and not (name == 'expires_at_utc' and instance[name] is None):
+            try:
+                NR.DT.date_time(instance[name], profile=profile)
+            except NR.NumRefusal as error:
+                keyword = 'format' if validator.is_type(instance[name], 'string') else 'type'
+                if not _has_field_error(errors, name, keyword):
+                    value = 'date-time' if keyword == 'format' else 'string'
+                    yield jsonschema.ValidationError(
+                        f'{instance[name]!r} is not a {value!r}', validator=keyword,
+                        validator_value=value, instance=instance[name], schema=subschema,
+                        path=(name,), schema_path=(name, keyword), cause=error)
+        yield from errors
+
+
+@lru_cache(maxsize=None)
+def _original_validator(base):
+    # Preserve the selected dialect's existing keyword implementations,
+    # including its pattern route. Only the owner profile hook is added.
+    from attrs import fields
+    cls = jsonschema.validators.extend(base, {'properties': _owned_properties})
+
+    def evolve(self, **changes):
+        schema = changes.setdefault('schema', self.schema)
+        selected = jsonschema.validators.validator_for(schema, default=base)
+        for field in fields(type(self)):
+            if field.init and field.alias not in changes:
+                changes[field.alias] = getattr(self, field.name)
+        return _original_validator(selected)(**changes)
+
+    cls.evolve = evolve
+    return cls
 
 
 def digest(raw):
@@ -82,8 +171,13 @@ class OriginalBank:
             for value in node:
                 self._refs(value, resolver)
 
+    def validator(self, ref):
+        """The exact bank validator, exposed for clause-closure callers."""
+        return _original_validator(Validator)({'$ref': ref}, registry=self.registry,
+                                             format_checker=_owner_formats(NR.DT.EVENT_RECORD))
+
     def errors(self, ref, value):
-        return list(Validator({'$ref': ref}, registry=self.registry, format_checker=FORMAT).iter_errors(value))
+        return list(self.validator(ref).iter_errors(value))
 
     def validate(self, ref, value):
         errors = self.errors(ref, value)
