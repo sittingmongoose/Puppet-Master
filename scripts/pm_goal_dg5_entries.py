@@ -29,6 +29,10 @@ def entries(cls, methods, family):
                 world = getattr(self, 'world', None) or getattr(self, 'w', None)
                 if world is None and hasattr(self, 'storage') and hasattr(self, 'recorder'):
                     world = self  # a world-level original method (the receiver is the world)
+                if world is None and type(self).__name__ == 'TestOwnerStorage':
+                    world = self  # a shared Storage entry: its own root is the complete store
+                if world is None and type(getattr(self, 'storage', None)).__name__ == 'TestOwnerStorage':
+                    world = self.storage  # a shared owner/source entry over one Storage
                 if world is None:
                     raise ValueError('entry has no original world: ' + entry)
                 case = bridge.CASE[0]
