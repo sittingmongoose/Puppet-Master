@@ -684,6 +684,10 @@
    "outcome": "registered"
   },
   {
+   "event_type": "remote_access.proxy_state_changed",
+   "outcome": "registered"
+  },
+  {
    "event_type": "run.graph_canonical_locked",
    "outcome": "registered"
   },
