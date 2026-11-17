@@ -193,6 +193,21 @@ def check_closure_memo_and_dump_recipe():
     assert agree_meta['search_credit'] == 'none-agree-only'
     assert agree_meta['search_validator'] == 'memo'
     assert agree_meta['memo_agreement']['disagreements'] == 0
+    # Regression (dg5:c25e0ff944e76a07): a referenced resource declaring $schema made
+    # jsonschema's __init_subclass__ stock evolve shadow the guarded evolve on the
+    # Memo subclass, so inner errors lost oracle_guard. The memo copy must agree here.
+    target = {'$id': 'https://example.test/target', '$schema': 'https://json-schema.org/draft/2020-12/schema',
+              'type': 'object', 'required': ['zz'],
+              'properties': {'zz': {'type': 'integer', 'minimum': 3}}}
+    ref_schema = {'$ref': 'https://example.test/target'}
+    registry2 = Registry().with_resources(
+        [('https://example.test/target', Resource.from_contents(target))]).crawl()
+    plain2 = jsonschema.Draft202012Validator(ref_schema, registry=registry2,
+                                              _resolver=registry2.resolver(base_uri='https://example.test/'))
+    copy2 = closure.closure_validator(plain2, 'selftest-ref', None)
+    memo2, note2 = closure._memoised(copy2)
+    assert note2 == 'memo', note2
+    assert closure.memo_agree(copy2, memo2, [], [{'zz': 5}, {}, {'zz': 1}]) == []
     created = jsonschema.validators.create(
         meta_schema=jsonschema.Draft202012Validator.META_SCHEMA,
         validators=dict(jsonschema.Draft202012Validator.VALIDATORS),
@@ -204,6 +219,38 @@ def check_closure_memo_and_dump_recipe():
     for value in ({'a': 5}, {'a': 1}, {'a': 'no'}):
         assert [e.validator for e in probe_a.iter_errors(value)] == \
                [e.validator for e in probe_b.iter_errors(value)]
+
+
+def check_witness_capture_pairing():
+    """A witness is stored only for the exact uncut/cut pair the kill test judged."""
+    import pm_goal_dg5_closure as closure
+
+    class Err:
+        def __init__(self, guard):
+            self.oracle_guard = guard
+
+    orig_search, orig_errors = closure.go.search_clause, closure.go.errors_of
+    
+    def fake_errors(v, value, cut=frozenset()):
+        return [] if cut else [Err('ident-1')]
+
+    def fake_search(clause, keyword, location, info, node, ident, *args, **kwargs):
+        closure.go.errors_of(None, {'x': 1})                       # uncut, guard present
+        closure.go.errors_of(None, {'x': 2})                       # uncut only: never confirmed
+        closure.go.errors_of(None, {'x': 1}, frozenset({ident}))  # cut, guard gone: confirms {'x': 1}
+        return dict(cls='KILLED')
+
+    closure.go.search_clause, closure.go.errors_of = fake_search, fake_errors
+    try:
+        orig = closure._install_search_wrappers(object(), object(), 0)
+        try:
+            closure.go.search_clause('clause/1', 'type', 'loc', {}, {}, 'ident-1')
+        finally:
+            closure._restore_search_wrappers(orig)
+    finally:
+        closure.go.search_clause, closure.go.errors_of = orig_search, orig_errors
+    import pickle
+    assert pickle.loads(closure._WIT['store']['clause/1']) == {'x': 1}
 
 
 def check_pass2_parent_release():
@@ -240,6 +287,7 @@ def check_pass2_parent_release():
 def main():
     check_frame_error_target_mapping()
     check_closure_memo_and_dump_recipe()
+    check_witness_capture_pairing()
     check_pass2_parent_release()
     check_shard_partition()
     check_collector_releases_sealed_values()
