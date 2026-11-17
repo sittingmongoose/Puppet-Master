@@ -174,14 +174,14 @@ PROOFS = {
         [(AS, 522), (AS, 750)],
         ['dg5/site/pm_goal_dg_ca_assignment.py:204',
          'dg5/site/pm_goal_dg_ca_assignment.py:205']),
-    'dg5/site/pm_goal_test_owner_adapters.py:480': _p(
+    'dg5/site/pm_goal_test_owner_adapters.py:481': _p(
         "type(handle) is OriginalHandle is entailed by the next check "
         "handle in self._handles (:399): handles enter _handles only through "
         "_issue, which mints OriginalHandle instances, so anything passing "
         ":399 has the exact type, and anything failing :398 also fails :399. "
         ":398 can therefore never refuse alone; :399 closes by presence.",
         [(AD, 480), (AD, 481)],
-        ['dg5/site/pm_goal_test_owner_adapters.py:481']),
+        ['dg5/site/pm_goal_test_owner_adapters.py:482']),
     'dg5/site/pm_goal_dg_ca_assignment.py:600': _p(
         "The header measured is S.event_header of the expected producer: exactly "
         "seven short strings (event_id, event_type, schema_id/version, "
@@ -269,22 +269,22 @@ PROOFS = {
         "check can never refuse after the issuer check passes.",
         [(ST, 1253), (ST, 1271), (ST, 1261)],
         ['dg5/site/pm_goal_test_storage.py:1260']),
-    'dg5/site/pm_goal_test_owner_adapters.py:624': _p(
+    'dg5/site/pm_goal_test_owner_adapters.py:625': _p(
         "AppendOwner.event checks type(handle) is OriginalHandle immediately "
         "before the _events membership check at :543; _events is a "
         "WeakKeyDictionary keyed only by OriginalHandle('event') instances "
         "minted in append_original, so any handle passing :543 has the exact "
         "type, and the type check can never refuse alone.",
         [(AD, 624), (AD, 625), (AD, 602)],
-        ['dg5/site/pm_goal_test_owner_adapters.py:625']),
-    'dg5/site/pm_goal_test_owner_adapters.py:630': _p(
+        ['dg5/site/pm_goal_test_owner_adapters.py:626']),
+    'dg5/site/pm_goal_test_owner_adapters.py:631': _p(
         "AppendOwner.first_receipt checks type(handle) is OriginalHandle "
         "immediately before the _events membership check at :549; _events is "
         "keyed only by OriginalHandle('event') instances minted in "
         "append_original, so any handle passing :549 has the exact type, "
         "and the type check can never refuse alone.",
         [(AD, 630), (AD, 631), (AD, 602)],
-        ['dg5/site/pm_goal_test_owner_adapters.py:631']),
+        ['dg5/site/pm_goal_test_owner_adapters.py:632']),
     'dg5/site/pm_goal_test_storage.py:1056': _p(
         "_index_group indexes one durable group's frames; on the append "
         "path the group's event ids were required fresh and group-unique "
@@ -357,20 +357,20 @@ PROOFS = {
         "events; no family path passes a non-str component.",
         [(ST, 163), (ST, 189)],
         ['dg5/site/pm_goal_test_storage.py:189']),
-    'dg5/site/pm_goal_test_owner_adapters.py:320': _p(
+    'dg5/site/pm_goal_test_owner_adapters.py:321': _p(
         "register is called only from TestOwner.__init__ with the owner's "
         "class-level role literal (every owner class in the DG lanes declares "
         "a non-empty str role, and AssociationOwner receives one of the three "
         "literal association roles from World), so role is always a "
         "non-empty str at registration.",
         [(AD, 320), (OWN, 154)]),
-    'dg5/site/pm_goal_test_owner_adapters.py:321': _p(
+    'dg5/site/pm_goal_test_owner_adapters.py:322': _p(
         "owner_id is minted per TestOwner instance at construction (uuid-"
         "based TEST_ONLY id) and register is called once per instance from "
         "__init__; two live owners cannot present the same id to one "
         "registry through any family construction path.",
         [(AD, 321)]),
-    'dg5/site/pm_goal_test_owner_adapters.py:465': _p(
+    'dg5/site/pm_goal_test_owner_adapters.py:466': _p(
         "Every _issue ref is either freshly minted by uid() (decision, "
         "registration, dispatch, member, receipt refs) or the sequence-"
         "formatted TEST_ONLY:original ref with a per-issue incrementing "
