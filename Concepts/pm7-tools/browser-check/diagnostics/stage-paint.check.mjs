@@ -14,6 +14,13 @@
 //                 the stage's svg, as W2 proposes (a trial in the page, not the product's change);
 //   split-paused  the same with the backdrop's loops paused (the backdrop then holds nothing that changes);
 //   split-layer   split, and the stage's own svg (Pip, its strings, props) on a compositor layer of its own (will-change);
+//   only:<k+k>    the stage writes only those kinds, every other write it makes dropped (diagnosis: which write makes
+//                 Chrome re-layerize the whole page); freeze:<k+k> drops only those. Kinds: pose (Pip's control and head
+//                 transforms and their parts), strings (Pip's strings and power glow d), face (eyes, blink), props (props
+//                 and their strings), shadows, fx (particles, the z's), hud (NieR's brackets), trail, ripples, terrain,
+//                 bubble (the bubble's, note's and HTML HUD's attributes and style), other (anything else in the stage);
+//                 each frame is classed as a full PaintArtifactCompositor::Update, the repaint-only path, or neither;
+//   --set layers=0 skips the LayerTree reading;
 //   noapp         the page behind the onboarding window not painted (content-visibility: hidden on body's other
 //                 children): how much of the cost is the page's other layers, not the stage;
 // it reads a DevTools trace (main-thread paint, pre-paint, layerize and commit ms a second, the paint group by event name,
@@ -82,9 +89,73 @@ const APPLY = (v) => {
 		const o = document.getElementById('pm-o55-onboarding');
 		for (const el of document.body.children) { if (el.contains(o) || el.tagName === 'SCRIPT' || el.tagName === 'STYLE') continue; const was = el.style.contentVisibility; el.style.contentVisibility = 'hidden'; U.push(() => { el.style.contentVisibility = was; }); }
 	}
+	else if (/^(only|freeze):/.test(v)) {
+		/* only:<kinds> lets the stage write only those kinds (a+b), freeze:<kinds> stops only those; every other write
+		   the stage makes (an attribute, a node added, the bubble's or note's style) is dropped, so those parts stand where
+		   they were while the stage goes on drawing. Diagnosis only: the picture is not one the page draws */
+		const [mode, rest] = v.split(':'), [list, mod] = rest.split('!'), want = new Set(list.split('+'));
+		/* !translate: Pip's control and head transforms written without their rotate() (a translate-and-scale only
+		   matrix); !wc: those two groups given will-change: transform (their own compositor layers). Diagnosis only */
+		if (mod === 'wc') for (const g of [st.gCtl, st.gHead]) { g.style.willChange = 'transform'; U.push(() => { g.style.willChange = ''; }); }
+		const inS = (n) => n && n.nodeType === 1 && st.root.contains(n);
+		const kindOf = (e) => {
+			if (e === st.gCtl || e === st.gHead || (st.gCtl && st.gCtl.contains(e) && e !== st.eyesEl && e !== st.blinkEl) || (st.gHead && st.gHead.contains(e) && e !== st.eyesEl && e !== st.blinkEl && !(st.eyesEl && st.eyesEl.contains(e)) && !(st.blinkEl && st.blinkEl.contains(e)))) return 'pose';
+			if ((st.pstrs || []).includes(e) || (st.pglow || []).includes(e)) return 'strings';
+			if (e === st.eyesEl || e === st.blinkEl || (st.eyesEl && st.eyesEl.contains(e)) || (st.blinkEl && st.blinkEl.contains(e))) return 'face';
+			const c = (sel) => e.closest && e.closest(sel);
+			if (c('.pst-props') || c('.pst-pstr')) return 'props';
+			if (c('.pst-shadows')) return 'shadows';
+			if (c('.pst-fx')) return 'fx';
+			if (c('.pst-hud')) return 'hud';
+			if (c('.pst-trail')) return 'trail';
+			if (c('.pst-ripples')) return 'ripples';
+			if (c('.pst-terrain')) return 'terrain';
+			if (c('.pst-bubble') || c('.pst-tip') || c('.pst-hudhtml')) return 'bubble';
+			return 'other';
+		};
+		const drop = (e) => { if (!inS(e)) return false; const k = kindOf(e); return mode === 'only' ? !want.has(k) : want.has(k); };
+		const D = window.__spDrops = {};
+		const note = (e, what) => { const k = kindOf(e) + ' ' + what; D[k] = (D[k] || 0) + 1; };
+		const EP = Element.prototype, NP = Node.prototype, sa = EP.setAttribute, ra = EP.removeAttribute, ac = NP.appendChild, ib = NP.insertBefore, rm = EP.remove;
+		EP.setAttribute = function (a, val) { if (drop(this)) { note(this, '@' + a); return; } if (mod === 'translate' && a === 'transform' && (this === st.gCtl || this === st.gHead)) val = String(val).replace(/rotate\([^)]*\)/g, '').replace(/scale\([^)]*\)/g, ''); return sa.call(this, a, val); };
+		EP.removeAttribute = function (a) { if (drop(this)) { note(this, '-@' + a); return; } return ra.call(this, a); };
+		NP.appendChild = function (n) { if (inS(this) && drop(this)) { note(this, '+child'); return n; } return ac.call(this, n); };
+		NP.insertBefore = function (n, r) { if (inS(this) && drop(this)) { note(this, '+child'); return n; } return ib.call(this, n, r); };
+		EP.remove = function () { if (drop(this)) { note(this, 'remove'); return; } return rm.call(this); };
+		const CP = CSSStyleDeclaration.prototype, sp = CP.setProperty, styles = new Map();
+		const owners = [...st.root.querySelectorAll('.pst-bubble, .pst-tip, .pst-hudhtml, .pst-hudhtml *')];
+		const owner = (cs) => owners.find((el) => el.style === cs) || null;
+		CP.setProperty = function (k, val, pr) { const el = owner(this); if (el && drop(el)) { note(el, 'style ' + k); return; } return sp.call(this, k, val, pr); };
+		const props = ['translate', 'transform'];
+		const descs = props.map((k) => [k, Object.getOwnPropertyDescriptor(CP, k)]).filter(([, d]) => d && d.set);
+		for (const [k, d] of descs) Object.defineProperty(CP, k, { configurable: true, enumerable: d.enumerable, get: d.get, set(val) { const el = owner(this); if (el && drop(el)) { note(el, 'style ' + k); return; } return d.set.call(this, val); } });
+		U.push(() => { EP.setAttribute = sa; EP.removeAttribute = ra; NP.appendChild = ac; NP.insertBefore = ib; EP.remove = rm; CP.setProperty = sp; for (const [k, d] of descs) Object.defineProperty(CP, k, d); });
+	}
 	else if (v !== 'as') return 'unknown variant ' + v;
 	return '';
 };
+const DROPS = () => { const d = window.__spDrops || {}; delete window.__spDrops; return Object.entries(d).sort((a, b) => b[1] - a[1]).slice(0, 10).map(([k, n]) => k + ' ' + n).join(', '); };
+
+// Per main frame on the renderer: did it run a full PaintArtifactCompositor::Update, the repaint-only path, or no
+// layerization at all; every PaintArtifactCompositor/Repainted event name with its count; the args of the first few
+function pacFrames(events, renderer) {
+	if (!renderer) return null;
+	const mine = events.filter((e) => e.pid === renderer.pid && e.tid === renderer.tid && typeof e.name === 'string');
+	const starts = mine.filter((e) => e.name === 'ProxyMain::BeginMainFrame' && e.ph === 'X').sort((a, b) => a.ts - b.ts);
+	const pac = mine.filter((e) => /PaintArtifactCompositor|Repainted|Layerize/.test(e.name) && (e.ph === 'X' || e.ph === 'B'));
+	const names = {}; for (const e of pac) names[e.name] = (names[e.name] || 0) + 1;
+	const out = { frames: starts.length, full: 0, repainted: 0, none: 0, noUpdates: 0, names, args: [] };
+	const noUp = mine.filter((e) => e.name === 'EarlyOut_NoUpdates').map((e) => e.ts);
+	for (const s of starts) {
+		const inside = pac.filter((e) => e.ts >= s.ts && e.ts <= s.ts + s.dur);
+		if (inside.some((e) => e.name === 'PaintArtifactCompositor::Update')) out.full++;
+		else if (inside.some((e) => /Repainted/.test(e.name))) out.repainted++;
+		else if (noUp.some((t) => t >= s.ts && t <= s.ts + s.dur)) out.noUpdates++;
+		else out.none++;
+	}
+	for (const e of pac.filter((e) => e.args && Object.keys(e.args).length).slice(0, 3)) out.args.push(e.name + ' ' + JSON.stringify(e.args).slice(0, 200));
+	return out;
+}
 const UNDO = () => { const U = window.__spU || []; while (U.length) { try { U.pop()(); } catch (e) { /* gone */ } } };
 
 // Boxes on the page: the stage's, its svg(s), Pip's and each prop's (for the layers' sizes against them)
@@ -97,7 +168,7 @@ const BOXES = () => {
 export default async function (t) {
 	const looks = String(t.args.looks || 'basic-dark,glass-dark,nier-dark,friendly-dark').split(',').filter(Boolean);
 	const screens = String(t.args.screens || 'welcome,ready').split(',').filter(Boolean);
-	const variants = String(t.args.variants || 'as,noback,still,paused,split,split-paused').split(',').filter(Boolean);
+	const variants = t.args.variants === 'none' ? [] : String(t.args.variants || 'as,noback,still,paused,split,split-paused').split(',').filter(Boolean);
 	const ms = Number(t.args.ms || 3000);
 	const keep = t.args.keep ? path.resolve(String(t.args.keep)) : null;
 	if (keep) mkdirSync(keep, { recursive: true });
@@ -147,6 +218,34 @@ export default async function (t) {
 		return { secs: Math.round(secs * 10) / 10, n: b.length, drawn: rows.length, repainted: rows.filter((r) => r.paintsPerSec > 0).slice(0, 8), layerPainted: painted.length ? [...pe].map(([k, s]) => ({ id: k, perSec: Math.round(s.n / secs * 10) / 10, areaPerPaint: Math.round(s.area / s.n), max: s.max })) : 'none (Chrome sent no LayerTree.layerPainted)' };
 	};
 
+	/* --set census=1: every drawn compositor layer with Chrome's compositing reasons, the DOM node it names, that node's
+	   box and whether it is inside the onboarding window or behind it; grouped by reason (step 2 of the diagnosis: what
+	   makes the page's layers, so which could be held as fewer with the same pixels) */
+	const census = async (label) => {
+		const ls = await snapshot(); await cdp.send('LayerTree.disable').catch(() => {});
+		if (!ls) return null;
+		const rows = [];
+		for (const l of ls.filter((x) => x.drawsContent)) {
+			let reasons = '?', node = '', where = '?', vis = '';
+			try { const r = await cdp.send('LayerTree.compositingReasons', { layerId: l.layerId }); reasons = (r.compositingReasonIds || r.compositingReasons || []).join('+') || 'none'; } catch (e) { /* none */ }
+			if (l.backendNodeId) {
+				try {
+					const { object } = await cdp.send('DOM.resolveNode', { backendNodeId: l.backendNodeId });
+					const r = await cdp.send('Runtime.callFunctionOn', { objectId: object.objectId, returnByValue: true, functionDeclaration: `function () { const e = this.nodeType === 1 ? this : this.parentElement; if (!e) return null; const c = typeof e.className === 'string' ? e.className : (e.className && e.className.baseVal) || ''; const b = e.getBoundingClientRect(); const cs = getComputedStyle(e); return { node: e.tagName.toLowerCase() + (e.id ? '#' + e.id : '') + (c.trim() ? '.' + c.trim().split(/\\s+/).slice(0, 3).join('.') : ''), inWin: !!e.closest('#pm-o55-onboarding'), box: [Math.round(b.left), Math.round(b.top), Math.round(b.width), Math.round(b.height)], wc: cs.willChange, anim: cs.animationName !== 'none' ? cs.animationName + ' ' + cs.animationPlayState : '', vt: cs.viewTransitionName && cs.viewTransitionName !== 'none' ? cs.viewTransitionName : '', pos: cs.position, filter: cs.filter !== 'none' ? 'filter' : '', bf: cs.backdropFilter && cs.backdropFilter !== 'none' ? 'backdrop' : '', ov: cs.overflowY }; }` });
+					const v = r.result && r.result.value; if (v) { node = v.node; where = v.inWin ? 'window' : 'behind'; vis = [v.box.join(','), v.wc !== 'auto' ? 'will-change:' + v.wc : '', v.anim, v.vt ? 'vt:' + v.vt : '', v.pos === 'fixed' || v.pos === 'sticky' ? v.pos : '', v.filter, v.bf, /auto|scroll/.test(v.ov) ? 'scroll:' + v.ov : ''].filter(Boolean).join(' '); }
+					await cdp.send('Runtime.releaseObject', { objectId: object.objectId }).catch(() => {});
+				} catch (e) { node = 'node ' + l.backendNodeId; }
+			}
+			rows.push({ w: Math.round(l.width), h: Math.round(l.height), reasons, node, where, vis });
+		}
+		const by = new Map();
+		for (const r of rows) { const k = r.where + ' | ' + r.reasons; const g = by.get(k) || { n: 0, px: 0, eg: [] }; g.n++; g.px += r.w * r.h; if (g.eg.length < 4) g.eg.push(r.node + ' ' + r.w + 'x' + r.h + (r.vis ? ' [' + r.vis + ']' : '')); by.set(k, g); }
+		const groups = [...by].sort((a, b) => b[1].n - a[1].n);
+		t.log(`${label} CENSUS: ${rows.length} drawn layers (${rows.filter((r) => r.where === 'window').length} in the window, ${rows.filter((r) => r.where === 'behind').length} behind it, ${rows.filter((r) => r.where === '?').length} unnamed)`);
+		for (const [k, g] of groups) t.log(`${label} CENSUS ${String(g.n).padStart(3)} x ${k} (${Math.round(g.px / 1e4) / 100} MP): ${g.eg.join(' ; ')}`);
+		return { rows, groups: groups.map(([k, g]) => ({ k, ...g })) };
+	};
+
 	const out = [];
 	for (const look of looks) {
 		const [fam, mode] = look.split('-');
@@ -166,22 +265,26 @@ export default async function (t) {
 			await t.page.waitForTimeout(Number(t.args.viewSettle ?? 6000));
 			await f.waitForFunction(SETTLED, null, { timeout: 10000, polling: 250 }).catch(() => t.log(`${look} ${screen}: NOTE not settled after 16 s; measured as it was`));
 			const boxes = await f.evaluate(BOXES);
+			if (String(t.args.census || '') === '1') out.push({ look, screen, census: await census(`${look} ${screen}`) });
 			t.log(`${look} ${screen}: stage ${boxes.stage} svgs ${JSON.stringify(boxes.svgs)} Pip ${boxes.pip} props ${boxes.props} (${boxes.nProps}) dpr ${boxes.dpr}${boxes.asleep ? ' asleep' : ''}`);
 			for (const v of variants) {
 				const err = await f.evaluate(APPLY, v);
 				if (err) { t.log(`${look} ${screen} ${v}: NOTE ${err}`); await f.evaluate(UNDO); continue; }
 				await t.page.waitForTimeout(700);
-				let x = null, names = [], e = '';
-				try { const ev = await traceEvents(cdp, { ms }); if (keep) writeFileSync(path.join(keep, `${look}-${screen}-${v}.json`), JSON.stringify(ev)); x = summarise(ev, { url: f.url() }); names = selfByName(ev, x.renderer, PAINT).map(([n, us]) => [n, Math.round(us / 1000 / x.secs * 10) / 10]); } catch (er) { e = String(er && er.message || er); }
-				const ly = await layers().catch((er) => ({ error: String(er) }));
+				let x = null, names = [], e = '', pf = null;
+				try { const ev = await traceEvents(cdp, { ms }); if (keep) writeFileSync(path.join(keep, `${look}-${screen}-${v.replace(/[^a-z0-9+-]/gi, '_')}.json`), JSON.stringify(ev)); x = summarise(ev, { url: f.url() }); names = selfByName(ev, x.renderer, PAINT).map(([n, us]) => [n, Math.round(us / 1000 / x.secs * 10) / 10]); pf = pacFrames(ev, x.renderer); } catch (er) { e = String(er && er.message || er); }
+				const drops = /^(only|freeze):/.test(v) ? await f.evaluate(DROPS) : '';
+				const ly = String(t.args.layers ?? '1') === '0' ? { skipped: true } : await layers().catch((er) => ({ error: String(er) }));
 				await f.evaluate(UNDO);
 				const n = (k) => Math.round((x && x.split[k]) || 0);
 				const fr = x ? Math.max(1, x.mainFrames.renderedPerSec || x.mainFrames.perSec) : 1;
-				const row = { look, screen, variant: v, boxes, trace: x && { main: x.cost.main, split: x.split, raster: x.cost.raster, gpu: x.cost.gpuMain, viz: x.cost.viz, frames: x.mainFrames, drawn: x.drawn, style: x.style, layoutPerSec: x.layoutPerSec }, paintNames: names, layers: ly, error: e || undefined };
+				const row = { look, screen, variant: v, boxes, pac: pf, drops, trace: x && { main: x.cost.main, split: x.split, raster: x.cost.raster, gpu: x.cost.gpuMain, viz: x.cost.viz, frames: x.mainFrames, drawn: x.drawn, style: x.style, layoutPerSec: x.layoutPerSec }, paintNames: names, layers: ly, error: e || undefined };
 				out.push(row);
 				if (x) t.log(`${look} ${screen} ${v.padEnd(12)}: main ${Math.round(x.cost.main)} ms/s | paint ${n('paint')} (${(n('paint') / fr).toFixed(2)} ms/frame) prepaint ${n('prepaint')} layerize ${n('layerize')} commit ${n('commit')} style ${n('style')} layout ${n('layout')} script ${n('script')} | raster ${Math.round(x.cost.raster)} gpu ${Math.round(x.cost.gpuMain)} viz ${Math.round(x.cost.viz)} | frames ${x.mainFrames.perSec}/s (rendered ${x.mainFrames.renderedPerSec}) drawn ${x.drawn.perSec}/s | paint by name: ${names.map(([k, v]) => `${k} ${v}`).join(', ')}`);
 				else t.log(`${look} ${screen} ${v}: NOTE trace failed: ${e}`);
-				if (ly && !ly.error) t.log(`${look} ${screen} ${v.padEnd(12)}: layers ${ly.drawn} drawn of ${ly.n}; painted again: ${ly.repainted.map((r) => `${r.paintsPerSec}/s ${r.w}x${r.h}@${r.x},${r.y} ${r.node}`).join(' | ') || 'none'}; layerPainted: ${typeof ly.layerPainted === 'string' ? ly.layerPainted : ly.layerPainted.map((p) => `${p.id} ${p.perSec}/s ${p.areaPerPaint} px a paint (max ${p.max})`).join(' | ')}`);
+				if (pf) t.log(`${look} ${screen} ${v.padEnd(12)}: main frames ${pf.frames}: full PAC Update ${pf.full}, repaint-only ${pf.repainted}, no PAC ${pf.none}, nothing to update ${pf.noUpdates} | names ${JSON.stringify(pf.names)}${pf.args.length ? ' | args ' + pf.args.join(' ; ') : ''}${drops ? ' | dropped writes: ' + drops : ''}`);
+				if (ly && ly.skipped) { /* --set layers=0 */ }
+				else if (ly && !ly.error) t.log(`${look} ${screen} ${v.padEnd(12)}: layers ${ly.drawn} drawn of ${ly.n}; painted again: ${ly.repainted.map((r) => `${r.paintsPerSec}/s ${r.w}x${r.h}@${r.x},${r.y} ${r.node}`).join(' | ') || 'none'}; layerPainted: ${typeof ly.layerPainted === 'string' ? ly.layerPainted : ly.layerPainted.map((p) => `${p.id} ${p.perSec}/s ${p.areaPerPaint} px a paint (max ${p.max})`).join(' | ')}`);
 				else t.log(`${look} ${screen} ${v}: NOTE layers: ${ly && ly.error}`);
 				if (t.args.out) writeFileSync(String(t.args.out), JSON.stringify(out, null, 1));
 			}
