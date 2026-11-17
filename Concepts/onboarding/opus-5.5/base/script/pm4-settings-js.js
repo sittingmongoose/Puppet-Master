@@ -2243,12 +2243,12 @@ window.PM12_REFERENCE = {"version":"1.0.0","total":892,"inventory_sha256":"be85c
     }catch(_e){base.settingsProjectionSource=window.PM_SETTINGS_REGISTRY?'owner_registry_read_failed':'concept_default_fixture';base.settingsProjectionReadOnly=!!window.PM_SETTINGS_REGISTRY;return base;}
   }
   function save(snapshot,forKey){
-    var k=forKey||key(),safe=scrubCredentialSettings(snapshot);safe.settings['general.visual.glass-transparency']=clampGlassAlpha(safe.settings,safe.settings['general.visual.glass-transparency']);var owned={schema_version:'pm7.settings.project_projection.v1',settings:safe.settings,changed:clone(snapshot&&snapshot.changed||{}),domain:snapshot&&snapshot.domain,workspace:snapshot&&snapshot.workspace,activeSection:clone(snapshot&&snapshot.activeSection||{}),transferCategories:clone(snapshot&&snapshot.transferCategories||[]),settingsTransferHistory:clone(snapshot&&snapshot.settingsTransferHistory||[]),settingsTransferRollbacks:clone(snapshot&&snapshot.settingsTransferRollbacks||{}),settingsSourceSnapshot:clone(snapshot&&snapshot.settingsSourceSnapshot||null),o55Migrations:clone(snapshot&&snapshot.o55Migrations||{})};var o55Typed=snapshot&&snapshot.pm51&&snapshot.pm51.o55Custom;if(o55Typed&&typeof o55Typed==='object'){owned.pm51={o55Custom:{}};Object.keys(o55Typed).forEach(function(id){if(!credentialSettingIds.has(id)&&typeof o55Typed[id]==='string')owned.pm51.o55Custom[id]=o55Typed[id];});}
+    var k=forKey===undefined?key():forKey,safe=scrubCredentialSettings(snapshot);safe.settings['general.visual.glass-transparency']=clampGlassAlpha(safe.settings,safe.settings['general.visual.glass-transparency']);var owned={schema_version:'pm7.settings.project_projection.v1',settings:safe.settings,changed:clone(snapshot&&snapshot.changed||{}),domain:snapshot&&snapshot.domain,workspace:snapshot&&snapshot.workspace,activeSection:clone(snapshot&&snapshot.activeSection||{}),transferCategories:clone(snapshot&&snapshot.transferCategories||[]),settingsTransferHistory:clone(snapshot&&snapshot.settingsTransferHistory||[]),settingsTransferRollbacks:clone(snapshot&&snapshot.settingsTransferRollbacks||{}),settingsSourceSnapshot:clone(snapshot&&snapshot.settingsSourceSnapshot||null),o55Migrations:clone(snapshot&&snapshot.o55Migrations||{})};var o55Typed=snapshot&&snapshot.pm51&&snapshot.pm51.o55Custom;if(o55Typed&&typeof o55Typed==='object'){owned.pm51={o55Custom:{}};Object.keys(o55Typed).forEach(function(id){if(!credentialSettingIds.has(id)&&typeof o55Typed[id]==='string')owned.pm51.o55Custom[id]=o55Typed[id];});}
     /* FO-186 r2: the model rows' depth (pm51.o55Depth, {key:{model,effort}}) survives the project round trip beside o55Custom; load's merge restores pm51 wholesale */
     var o55Depths=snapshot&&snapshot.pm51&&snapshot.pm51.o55Depth;if(o55Depths&&typeof o55Depths==='object'&&!Array.isArray(o55Depths)){owned.pm51=owned.pm51||{};owned.pm51.o55Depth={};Object.keys(o55Depths).forEach(function(id){var d=o55Depths[id];if(!credentialSettingIds.has(id)&&d&&typeof d==='object'&&typeof d.model==='string'&&typeof d.effort==='string')owned.pm51.o55Depth[id]={model:d.model,effort:d.effort};});}
     if(k&&!window.PM_SETTINGS_REGISTRY&&CONCEPT_FIXTURE_MODE)try{projectStore.setItem(k,JSON.stringify(owned));}catch(_e){}
     /* a save for a Project that is no longer shown (a place left waiting when the Project changed) paints nothing */
-    if(!bridgeDepth&&(!forKey||forKey===key()))applyPaint(snapshot);
+    if(!bridgeDepth&&(forKey===undefined||forKey===key()))applyPaint(snapshot);
   }
   function has(k){try{return !!k&&projectStore.getItem(k)!=null;}catch(_e){return false;}}
   function reset(){var k=key();if(k)try{projectStore.removeItem(k);}catch(_e){}}
@@ -3032,12 +3032,12 @@ window.PM12_REFERENCE = {"version":"1.0.0","total":892,"inventory_sha256":"be85c
   let state = loadState();
 
   /* the navigation's waiting place save (saveNavigationSoon, below navigate): declared before anything can save */
-  let navigationSaveJob = 0, navigationSaveIdle = false, navigationSaveFrame = 0, navigationSaveKey = null, navigationSaveHad = false, navigationSaveFor = null;
+  let navigationSaveJob = 0, navigationSaveIdle = false, navigationSaveFrame = 0, navigationSaveKey = null, navigationSaveHad = false, navigationSaveFor = undefined;
   function saveState() {
     searchIndexDirty = true;
     const copy = clone(state);
     delete copy.home; delete copy.railOpen; delete copy.resourceRosterOpen;
-    window.PM7_SETTINGS_TOME.save(copy, navigationSaveFor || undefined);
+    window.PM7_SETTINGS_TOME.save(copy, navigationSaveFor);
   }
 
 
@@ -3179,7 +3179,7 @@ window.PM12_REFERENCE = {"version":"1.0.0","total":892,"inventory_sha256":"be85c
     /* a record removed on purpose while the place waited (a reset, a fresh start) is not written back */
     if (had && k && window.PM7_SETTINGS_TOME.has && !window.PM7_SETTINGS_TOME.has(k)) return;
     navigationSaveFor = k;
-    try { saveState(); } finally { navigationSaveFor = null; }
+    try { saveState(); } finally { navigationSaveFor = undefined; }
   }
   window.addEventListener('pagehide', saveNavigationNow);
   document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'hidden') saveNavigationNow(); });
