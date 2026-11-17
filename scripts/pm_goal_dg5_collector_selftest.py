@@ -187,6 +187,12 @@ def check_closure_memo_and_dump_recipe():
                         pickle.dumps(value, protocol=5), closure._signature(copy_v.iter_errors(value))))
     assert closure.agree(plain, copy_v, records) == []
     assert closure.memo_agree(copy_v, memo_v, records, seeds) == []
+    from types import SimpleNamespace
+
+    agree_meta = closure._agree_one('selftest', plain, None, seeds, records, SimpleNamespace(memo=True))
+    assert agree_meta['search_credit'] == 'none-agree-only'
+    assert agree_meta['search_validator'] == 'memo'
+    assert agree_meta['memo_agreement']['disagreements'] == 0
     created = jsonschema.validators.create(
         meta_schema=jsonschema.Draft202012Validator.META_SCHEMA,
         validators=dict(jsonschema.Draft202012Validator.VALIDATORS),
