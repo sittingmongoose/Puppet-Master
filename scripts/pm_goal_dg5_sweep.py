@@ -25,6 +25,7 @@ import collections
 import gzip
 import hashlib
 import json
+import os
 from pathlib import Path
 import subprocess
 import sys
@@ -160,6 +161,75 @@ def generate(collector):
     return chunks
 
 
+def prove_bounded(collector, out, only=None):
+    """sweep.prove with each table proved in a forked child (DG5 memory bound).
+
+    GH1 prove_table imports one generated module per table and runs the gated
+    tool in-process; several helper judging runs kernel-OOMed at the 2G gate
+    inside specific table sets. Forking per table bounds peak memory to the
+    shared collector/by_sig pages plus one table's working set, with byte-
+    identical reports (prove_table is pure per table). The summary/rows tail
+    (including dominance/union/provider proofs) replicates sweep.prove exactly.
+    Set PM_DG5_PROVE_FORK=0 to use the in-process GH1 path unchanged.
+    """
+    if os.environ.get('PM_DG5_PROVE_FORK', '1') == '0' or not hasattr(os, 'fork'):
+        return sweep.prove(collector, out, only)
+    out.mkdir(parents=True, exist_ok=True)
+    manifest = tables.rows()
+    grouped = collections.defaultdict(list)
+    for name, spec in manifest.items():
+        if name in collector.rows:
+            grouped[spec['table']].append((spec.get('index', 0), name, spec))
+    by_sig = sweep.table_records(collector)
+    reports = []
+    for ident in sorted(grouped):
+        if only and ident not in only:
+            continue
+        entries = sorted(grouped[ident])
+        names = [n for _, n, _ in entries]
+        kwargs = {} if entries[0][2].get('phase') else dict(module_name=tables.PREFIX + ident)
+        result_path = out / ('.prove-result-' + ident + '.json')
+        pid = os.fork()
+        if pid == 0:
+            try:
+                entry = sweep.prove_table(collector, ident, names, by_sig, out, **kwargs)
+                with open(result_path, 'w') as handle:
+                    json.dump(entry, handle, default=list)
+            finally:
+                os._exit(0)
+        os.waitpid(pid, 0)
+        reports.append(json.loads(result_path.read_text()))
+        result_path.unlink()
+        if len(reports) % 25 == 0:
+            print(f'tables {len(reports)} proved {sum(len(x["proved"]) for x in reports)}',
+                  file=sys.stderr, flush=True)
+    (out / 'summary.json').write_text(json.dumps(reports, indent=1, default=list) + '\n')
+    rows = []
+    for entry in reports:
+        for name in entry['rows']:
+            rows.append(dict(guard=name, table=entry['table'],
+                             status='PASS' if name in entry['proved'] else 'UNPROVED',
+                             table_status=entry['status']))
+    for row in rows:
+        if row['status'] == 'UNPROVED':
+            proof = sweep.dominance_proof(row['guard'], rows) or sweep.union_member_proof(row['guard'], rows)
+            for provider in collector.proof_providers:
+                if proof:
+                    break
+                candidate = provider(row['guard'], rows)
+                if candidate:
+                    earlier = candidate.get('earlier_guards', [])
+                    if not earlier or any(
+                            not any(r['guard'] == name and r['status'] == 'PASS' for r in rows)
+                            for name in earlier):
+                        raise ValueError('earlier-clause proof lacks a proved dependency: ' + row['guard'])
+                    proof = candidate
+            if proof:
+                row['proof'] = proof
+    (out / 'rows.json').write_text(json.dumps(rows, indent=1, default=list) + '\n')
+    return reports, rows
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.add_argument('--out', type=Path, required=True)
@@ -235,7 +305,7 @@ def main():
             path = ROOT / 'scripts' / (tables.module_name(spec) + '.py')
             bindings[str(path.relative_to(ROOT))] = hashlib.sha256(path.read_bytes()).hexdigest()
         bindings[str(MANIFEST.relative_to(ROOT))] = hashlib.sha256(MANIFEST.read_bytes()).hexdigest()
-        reports, rows = sweep.prove(collector, args.out / 'tables', args.table)
+        reports, rows = prove_bounded(collector, args.out / 'tables', args.table)
         probe = sweep.fabricated_row_self_test(collector, args.out / 'tables', reports)
         (args.out / 'fabricated-row-self-test.json').write_text(json.dumps(probe, indent=1, default=str) + '\n')
         mutation = sweep.ledger_summary(collector, rows)
