@@ -8,10 +8,10 @@
 //            no section of an arrival turns relevant and is skipped again within a second ("one-frame unlocks").
 //   save     navigation's saveState (two deep copies, the tome's write and its applyPaint) ran in the build task.
 //            Judged: the tome's save does not run between the release and the new chapter's first painted frame, and
-//            does run, with the new chapter as the place, within 2.5 s.
+//            does run, with the new chapter as the place, by collection after the row-completion wait (10 s cap).
 //   release  the hover tags of the removed chapter (about 2,000 nodes) were walked in the build task's microtasks.
 //            Judged: the controller's cleanupRemoved does not run before that frame, and the old chapter's tagged nodes
-//            have let go of their tags within 2.5 s.
+//            have let go of their tags by that collection (after the initial 2.5 s settle and capped completion wait).
 // "First painted frame": a message posted from the first animation frame that has the new chapter arrives once that
 // frame's style, layout, paint and commit are over on the main thread. Each switch is a real held press on the chapter
 // list (down, 90 ms, up); Settings acts on the click. Logged per switch, not judged: release -> painted, the build task
@@ -400,11 +400,11 @@ for (const surface of ['normal', 'sandbox']) {
 				await t.check(`${look} ${surface}: after each arrival every row placement puts on the page is drawn, once`, !left.length,
 					left.map((r) => `${r.pair}: ${r.pendingLeft} row lists still pending, ${r.dupIds} duplicate row ids, missing ${r.missing ? r.missing.gone.join(', ') || 'none' : '?'} of ${r.missing ? r.missing.want : '?'} placed on ${r.missing ? r.missing.ws : '?'}`).join('; '));
 				const unsaved = rows.filter((r) => r.savedPlace < 1);
-				await t.check(`${look} ${surface}: the new place is saved within 2.5 s`, !unsaved.length, unsaved.map((r) => r.pair).join(', '));
+				await t.check(`${look} ${surface}: the new place is saved by collection after the capped row-completion wait`, !unsaved.length, unsaved.map((r) => r.pair).join(', '));
 				const walked = rows.filter((r) => r.cleanupsBeforePaint > 0);
 				await t.check(`${look} ${surface}: the old chapter's hover tags are not walked before the new chapter's first frame`, !walked.length, walked.map((r) => `${r.pair}: ${r.cleanupsBeforePaint} walk(s)`).join('; '));
 				const kept = rows.filter((r) => r.taggedStill > 0);
-				await t.check(`${look} ${surface}: the old chapter's tagged nodes let go of their tags within 2.5 s`, !kept.length, kept.map((r) => `${r.pair}: ${r.taggedStill} of ${r.tagged}`).join('; '));
+				await t.check(`${look} ${surface}: the old chapter's tagged nodes let go of their tags by collection after the capped row-completion wait`, !kept.length, kept.map((r) => `${r.pair}: ${r.taggedStill} of ${r.tagged}`).join('; '));
 			});
 		}
 	};
