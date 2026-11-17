@@ -509,7 +509,7 @@ for (const surface of ['normal', 'sandbox']) {
 				await t.check(`${look} ${surface}: the place is not saved before the new chapter's first frame`, !saved.length, saved.map((r) => `${r.pair}: ${r.savesBeforePaint} save(s) before the frame`).join('; '));
 				const code = rows.filter((r) => r.to === 'code');
 				const whole = code.filter((r) => r.rowsEnd > 0 && r.rowsFirst >= r.rowsEnd);
-				await t.check(`${look} ${surface}: an arrival at Code & Tools shows its first screen before the rest of its rows`, code.length > 0 && !whole.length,
+				if (seq.some(([, to]) => to === 'code')) await t.check(`${look} ${surface}: an arrival at Code & Tools shows its first screen before the rest of its rows`, code.length > 0 && !whole.length,
 					whole.map((r) => `${r.pair}: all ${r.rowsEnd} rows were built for the first frame`).join('; ') || 'no arrival at Code & Tools');
 				const left = rows.filter((r) => r.pendingLeft > 0 || r.dupIds > 0 || (r.missing && r.missing.gone.length) || (r.to === 'code' && !(r.missing && r.missing.want)));
 				await t.check(`${look} ${surface}: after each arrival every row placement puts on the page is drawn, once`, !left.length,
