@@ -1718,7 +1718,10 @@
       var live = opOn && !!gesture && !gesture.done, want = live ? gesture.type : null, cl = document.body.classList, ended = false, wrote = false;
       if (live && !cl.contains('pm-resizing')) { cl.add('pm-resizing'); RESIZING_BY = inner; wrote = true; }
       else if (!live && RESIZING_BY === inner) { RESIZING_BY = null; cl.remove('pm-resizing'); ended = wrote = true; }
-      if (boardEl.getAttribute('data-op') !== want) { if (want) boardEl.setAttribute('data-op', want); else boardEl.removeAttribute('data-op'); wrote = true; }
+      /* (a wheel pause that began in the idle period after a gesture's end keeps its data-op="wheel": 42-cards.js
+         bindTools ends it, PERF-USAGE-HOVER) */
+      var op = boardEl.getAttribute('data-op');
+      if (op !== want && !(op === 'wheel' && !want)) { if (want) boardEl.setAttribute('data-op', want); else boardEl.removeAttribute('data-op'); wrote = true; }
       if (wrote) void boardEl.offsetWidth;   /* the restyle runs in this idle period, not in the next frame */
       if (ended) { try { if (typeof window.PM_DRAGEND === 'function') window.PM_DRAGEND(); } catch (error) {} }
     }

@@ -1262,6 +1262,9 @@
     var over = function (e) {
       var el = e.target && e.target.closest ? e.target.closest('[data-prov]') : null;
       if (!el || !root.contains(el) || el.closest('.pmu-gallery')) return;
+      /* the wheel pause (PERF-USAGE-HOVER, 42-cards.js bindTools): a provider's mark or row that slides under a resting
+         pointer lights nothing; the pause's end (pmu-op-end, below) looks at what the pointer rests on */
+      if (el.closest('.pmu-board[data-op="wheel"]')) { clearTimeout(timer); return; }
       var id = el.getAttribute('data-prov');
       clearTimeout(clearTimer);
       if (id === current) return;
@@ -1276,10 +1279,18 @@
       clearTimeout(clearTimer);
       clearTimer = setTimeout(function () { set(null); }, 60);
     };
+    /* the wheel pause's end: the provider under the resting pointer lights as if the pointer had just come over it */
+    var opEnd = function (e) {
+      var b = boardEl();
+      if (!b || !e.detail || e.detail.board !== b) return;
+      var hot = b.querySelectorAll('[data-prov]:hover');
+      if (hot.length) over({ target: hot[hot.length - 1] });
+    };
     root.addEventListener('pointerover', over);
     root.addEventListener('pointerout', out);
+    document.addEventListener('pmu-op-end', opEnd);
     /* the board's teardown: no pending light lands in a destroyed board */
-    return function () { clearTimeout(timer); clearTimeout(clearTimer); lit = []; root.removeEventListener('pointerover', over); root.removeEventListener('pointerout', out); };
+    return function () { clearTimeout(timer); clearTimeout(clearTimer); lit = []; root.removeEventListener('pointerover', over); root.removeEventListener('pointerout', out); document.removeEventListener('pmu-op-end', opEnd); };
   }
   (function crossHighlight() {
     var root = document.getElementById('pmuApp');

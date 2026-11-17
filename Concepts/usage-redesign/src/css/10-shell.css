@@ -77,7 +77,8 @@ html[data-theme^="retro"] #panel-usage .pmu-navbtn { font-size: 12.5px; gap: 8px
 #panel-usage .pmu-seg { position: relative; display: inline-flex; align-items: center; gap: 0; height: 30px; }
 #panel-usage .pmu-seg button { position: relative; height: 30px; padding: 0 9px; border: 0; background: transparent; color: var(--pmu-ink-3); font: inherit; font-size: 12.5px;
   cursor: pointer; transition: color calc(140ms * var(--pmu-speed, 1)); }
-#panel-usage .pmu-seg button:hover { color: var(--pmu-ink); }
+/* (:where(:not(.pmu-board[data-op="wheel"] *)) on the in-board :hover rules below: the wheel pause, 20-board.css PERF-USAGE-HOVER) */
+#panel-usage .pmu-seg button:hover:where(:not(.pmu-board[data-op="wheel"] *)) { color: var(--pmu-ink); }
 #panel-usage .pmu-seg button.active { color: var(--pmu-ink); font-weight: 600; }
 #panel-usage .pmu-range button { font-family: var(--pmu-mono); font-size: 11.5px; font-weight: 500; letter-spacing: .04em; text-transform: uppercase; }
 #panel-usage .pmu-range button.active { font-weight: 650; }
@@ -87,7 +88,7 @@ html[data-theme^="retro"] #panel-usage .pmu-navbtn { font-size: 12.5px; gap: 8px
 html[data-theme^="retro"] #panel-usage .pmu-seg-ink { border-radius: 0; transition-timing-function: steps(4, end); }
 #panel-usage .pmu-iconbtn { display: inline-grid; place-items: center; width: 30px; height: 30px; padding: 0; border: 0; border-radius: 9px; background: transparent;
   color: var(--pmu-ink-3); cursor: pointer; outline: none; transition: background-color calc(140ms * var(--pmu-speed, 1)), color calc(140ms * var(--pmu-speed, 1)), transform calc(140ms * var(--pmu-speed, 1)); }
-#panel-usage .pmu-iconbtn:hover { color: var(--pmu-ink); background: var(--pmu-row-hover); }
+#panel-usage .pmu-iconbtn:hover:where(:not(.pmu-board[data-op="wheel"] *)) { color: var(--pmu-ink); background: var(--pmu-row-hover); }
 #panel-usage .pmu-iconbtn:active { transform: scale(.94); }
 #panel-usage .pmu-iconbtn svg { width: 16px; height: 16px; }
 /* refresh: while the readings are on their way the system loader takes the icon's place (90-api.js refresh; W5 replaces
@@ -120,7 +121,7 @@ html[data-o55-nier="on"] #panel-usage .pmu-toggle::after { transition: transform
 #panel-usage .pmu-toggle:focus-visible { outline: 2px solid var(--pmu-accent); outline-offset: 2px; }
 #panel-usage .pmu-stepper { display: inline-flex; align-items: center; height: 28px; border: 1px solid var(--pmu-rule); border-radius: 8px; overflow: hidden; }
 #panel-usage .pmu-stepper button { display: inline-grid; place-items: center; width: 24px; height: 100%; padding: 0; border: 0; background: transparent; color: var(--pmu-ink-3); cursor: pointer; }
-#panel-usage .pmu-stepper button:hover { background: var(--pmu-row-hover); color: var(--pmu-ink); }
+#panel-usage .pmu-stepper button:hover:where(:not(.pmu-board[data-op="wheel"] *)) { background: var(--pmu-row-hover); color: var(--pmu-ink); }
 #panel-usage .pmu-stepper button svg { width: 12px; height: 12px; }
 #panel-usage .pmu-stepper output, #panel-usage .pmu-stepper .pmu-stepval { min-width: 40px; padding: 0 4px; text-align: center; font-size: 13px; font-weight: 600; font-variant-numeric: tabular-nums; }
 /* a pseudo-element is dropped inside :is(), so the knob is its own selector-list entry */

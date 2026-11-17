@@ -1051,7 +1051,7 @@
     var token = card._pmuUnfit = (card._pmuUnfit || 0) + 1, frames = 0;
     function back() {
       if (card._pmuUnfit !== token || !card._pmuFitOn) return;
-      if (!card.isConnected || card.matches(':hover') || card.matches(':focus-visible')) return;
+      if (!card.isConnected || (card.matches(':hover') && !wheelPaused(card)) || card.matches(':focus-visible')) return;
       var head = card.querySelector(':scope > .pmu-cardhead');
       if (head && head.hasAttribute('data-tools-on')) return;
       var titles = head && head.querySelector(':scope > .pmu-cardtitles');
@@ -1067,8 +1067,11 @@
   function refitSoon(card) {
     if (!card || !card._pmuFitOn) return;
     if (fitT) cancelAnimationFrame(fitT);
-    fitT = requestAnimationFrame(function () { fitT = null; if (card.isConnected && (card.matches(':hover') || card.matches(':focus-visible'))) fitTools(card); });
+    fitT = requestAnimationFrame(function () { fitT = null; if (card.isConnected && ((card.matches(':hover') && !wheelPaused(card)) || card.matches(':focus-visible'))) fitTools(card); });
   }
+  /* a card of a board in the wheel pause (PERF-USAGE-HOVER, bindTools) shows no hover: its head is not fitted for it, and
+     the pause's end fits the card under the pointer */
+  function wheelPaused(card) { var p = card.parentNode; return !!(p && p.getAttribute && p.getAttribute('data-op') === 'wheel'); }
   var M = PMU.motion;
 
   /* tool clicks (delegated on the board) */
@@ -1079,33 +1082,40 @@
     var boardEl = b.scrollEl || b.el();
     if (!boardEl) return null;
     /* PERF-USAGE-HOVER (Jared, 2026-11-16, card A: "Pause hover highlights on the Usage page while the mouse wheel
-       turns"). While the wheel turns over a board, a card or row under a resting pointer does not light up or show its
-       tool buttons: the board takes data-op="wheel" from the first wheel event until WHEEL_REST ms after the last wheel or
-       scroll event, or until the pointer really moves or presses. The shell's hover engine rests for a board with [data-op]
-       (18-hover.js: no plate light, glow, reticle or magnet on its cards) and Usage's in-board :hover rules are gated by
-       :where(.pmu-board:not([data-op="wheel"])) (20-board.css and the widget, chart and account sheets); the drag-only
-       [data-op] rules leave the wheel value out, so keyboard focus and keyboard-opened tools keep theirs. Hit-testing is
-       unchanged: a click or a press lands where it always did. When the pause ends the board drops the value, the card
-       under the pointer is fitted again and one pmu-op-end event tells the hover engine to look again at what is under
-       the resting pointer (its restEnded), so the light comes back with the highlights. Nothing runs while the page
-       rests: a timer exists only between a wheel and the pause's end. A gesture that already holds data-op keeps it. */
-    var WHEEL_REST = 150, wheelT = 0, wheelAt = null;
+       turns"). While the wheel turns over the Usage page's board, a card or row that slides under a resting pointer does
+       not light up or show its tool buttons: the board takes data-op="wheel" from the first wheel event until WHEEL_REST
+       ms after the last wheel or scroll event, or until the pointer really moves or presses. The shell's hover engine
+       rests for a board with [data-op] (18-hover.js: no plate light, glow, reticle or magnet on its cards); Usage's
+       in-board :hover rules end in :where(:not(.pmu-board[data-op="wheel"] *)) (20-board.css says more); the head fit
+       below, the cross-highlight (30-charts-core.js) and the donut's legend light (34-charts-bars.js) wait. Hit-testing
+       is unchanged: a click or a press lands where it always did. When the pause ends the board drops the value, the
+       card under the pointer is fitted again and one pmu-op-end event (detail: the board) tells the hover engine to look
+       again at what is under the resting pointer (its restEnded) and the chart lights to take the element under it, so
+       the highlights come back without a move (on the owner's PC that saved 13 % of the main thread's work while
+       scrolling in Basic Dark, 26 % in Retro Dark). The card that was under the pointer when the wheel began lets its
+       title clamp go as on a pointer leave (unfitSoon). Nothing runs while the page rests: a timer exists only between a
+       wheel and the pause's end. A gesture that already holds data-op keeps it. Only the Usage page's board pauses
+       (#pmuScroll): a Home dashboard keeps its highlights, as the card named the Usage page. */
+    var WHEEL_REST = 150, wheelT = 0, wheelAt = null, wheelEl = null;
     var wheelEnd = function () {
       if (wheelT) { clearTimeout(wheelT); wheelT = 0; }
       if (!wheelAt) return;
-      wheelAt = null;
-      var el = b.el();
+      var el = wheelEl;
+      wheelAt = wheelEl = null;
       if (el && el.getAttribute('data-op') === 'wheel') el.removeAttribute('data-op');
-      var card = el && el.querySelector(':scope > .pmu-card:hover');
+      var card = el && el.isConnected && el.querySelector(':scope > .pmu-card:hover');
       if (card) { try { fitTools(card); } catch (error) { console.error('[pm-usage] head fit', error); } }
-      try { document.dispatchEvent(new Event('pmu-op-end')); } catch (error) { /* none */ }
+      try { document.dispatchEvent(new CustomEvent('pmu-op-end', { detail: { board: el } })); } catch (error) { /* none */ }
     };
     var wheelHold = function () { if (wheelT) clearTimeout(wheelT); wheelT = setTimeout(wheelEnd, WHEEL_REST); };
     var onWheel = function (event) {
-      var el = b.el(); if (!el) return;
       if (!wheelAt) {
-        if (el.hasAttribute('data-op')) return;
+        var el = b.el();
+        if (!el || el.hasAttribute('data-op')) return;
         el.setAttribute('data-op', 'wheel');
+        wheelEl = el;
+        var under = el.querySelector(':scope > .pmu-card:hover');
+        if (under) unfitSoon(under);
       }
       wheelAt = [event.clientX, event.clientY];
       wheelHold();
@@ -1153,16 +1163,21 @@
     boardEl.addEventListener('focusin', onFocusIn);
     boardEl.addEventListener('focusout', onFocusOut);
     boardEl.addEventListener('click', onClick);
-    boardEl.addEventListener('wheel', onWheel, { passive: true });
-    boardEl.addEventListener('scroll', onWheelScroll, { passive: true });
-    boardEl.addEventListener('pointermove', onWheelMove, { passive: true });
-    boardEl.addEventListener('pointerdown', onWheelPress, { passive: true });
+    var pausing = boardEl.id === 'pmuScroll';
+    if (pausing) {
+      boardEl.addEventListener('wheel', onWheel, { passive: true });
+      boardEl.addEventListener('scroll', onWheelScroll, { passive: true });
+      boardEl.addEventListener('pointermove', onWheelMove, { passive: true });
+      boardEl.addEventListener('pointerdown', onWheelPress, { passive: true });
+    }
     return function () {
-      wheelEnd();
-      boardEl.removeEventListener('wheel', onWheel, { passive: true });
-      boardEl.removeEventListener('scroll', onWheelScroll, { passive: true });
-      boardEl.removeEventListener('pointermove', onWheelMove, { passive: true });
-      boardEl.removeEventListener('pointerdown', onWheelPress, { passive: true });
+      if (pausing) {
+        wheelEnd();
+        boardEl.removeEventListener('wheel', onWheel, { passive: true });
+        boardEl.removeEventListener('scroll', onWheelScroll, { passive: true });
+        boardEl.removeEventListener('pointermove', onWheelMove, { passive: true });
+        boardEl.removeEventListener('pointerdown', onWheelPress, { passive: true });
+      }
       boardEl.removeEventListener('pointerover', onOver);
       boardEl.removeEventListener('pointerout', onOut);
       boardEl.removeEventListener('focusin', onFocusIn);
