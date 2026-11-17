@@ -213,7 +213,11 @@ root.addEventListener('pointerdown', e => {
   if (o55fs.pending.size && sc && e.target === sc) o55fsFillAll();   /* its scroll bar */
 }, true);
 root.addEventListener('scroll', e => { if (e.target.id === 'settings-document') o55fsFillNear(e.target); }, true);
-document.addEventListener('keydown', e => { if (o55fs.pending.size && (e.ctrlKey || e.metaKey) && (e.key === 'f' || e.key === 'F')) o55fsFillAll(); }, true);
+document.addEventListener('keydown', e => {
+  const find = (e.ctrlKey || e.metaKey) && (e.key === 'f' || e.key === 'F');
+  const next = e.key === 'F3' && !e.ctrlKey && !e.metaKey && !e.altKey;
+  if (o55fs.pending.size && (find || next)) o55fsFillAll();
+}, true);
 /* Tab and Shift+Tab (F's L1, 2026-11-17): the browser picks the next control among those that exist, so focus put back
    without scrolling next to an unfilled section (a redraw's or a dialog's focus restore) would pass over it. Every
    pending section is filled before the key's default action, from any control, inputs too (Tab leaves an input), and

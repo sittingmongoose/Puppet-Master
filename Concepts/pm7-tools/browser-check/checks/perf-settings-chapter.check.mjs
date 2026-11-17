@@ -369,6 +369,33 @@ async function moreOptionsRow(t, f, label, reduced) {
 }
 
 export const tests = {};
+for (const surface of ['normal','sandbox']) {
+	tests[`R93 #5 F3 and Shift+F3 fill pending text synchronously (${surface})`] = async(t)=>{
+		if(!t.app.surfaces().includes(surface)){await t.check(`${surface} surface not asked for`,true);return;}
+		await t.viewport(1920,1080);await muteSound(t.page);
+		if(t.args.motion==='reduce')await t.emulate({reducedMotion:'reduce'});
+		const f=await t.app.open({sandbox:surface==='sandbox'});await t.app.resetLayout().catch(()=>{});await f.locator('#tab-settings').click();await t.settle();
+		for(const key of ['F3','Shift+F3']){
+			await f.locator('#pm-settings-root .domain-link[data-domain="general"]').first().click();await t.page.waitForTimeout(700);
+			await f.evaluate(()=>{
+				const root=document.getElementById('pm-settings-root'),pending=()=>root.querySelectorAll('[data-o55-fill="pending"]').length;
+				const R=window.__pscFind={ready:false,seen:false};
+				const mo=new MutationObserver(()=>{if(root.querySelector('.domain-link.active')?.dataset.domain==='code'){mo.disconnect();R.ready=true;}});
+				const key=e=>{if(e.key==='F3'){R.seen=true;R.before=pending();}};
+				const after=e=>{if(e.key!=='F3')return;R.after=pending();R.text=!!root.querySelector('#section-editor-terminal-look')?.textContent.includes('Terminal colors');R.done=true;};
+				mo.observe(root,{childList:true,subtree:true,attributes:true,attributeFilter:['class']});window.addEventListener('keydown',key,true);document.addEventListener('keydown',after,true);
+				R.stop=()=>{mo.disconnect();window.removeEventListener('keydown',key,true);document.removeEventListener('keydown',after,true);};
+			});
+			try{
+				await f.locator('#pm-settings-root .domain-link[data-domain="code"]').first().click();await f.waitForFunction(()=>window.__pscFind.ready,null,{timeout:5000});
+				await t.page.keyboard.press(key);await f.waitForFunction(()=>window.__pscFind.done,null,{timeout:3000}).catch(()=>{});
+				const r=await f.evaluate(()=>{const{stop,...r}=window.__pscFind;return r;});t.log(`${surface} ${key}: pending ${r.before} -> ${r.after}, Terminal colors present ${r.text}`);
+				await t.check(`${surface} ${key}: the key reached pending Code content`,r.seen&&r.before>0,JSON.stringify(r));
+				await t.check(`${surface} ${key}: pending text is filled within the key dispatch`,r.done&&r.after===0&&r.text,JSON.stringify(r));
+			}finally{await f.evaluate(()=>window.__pscFind.stop());}
+		}
+	};
+}
 for (const surface of ['normal', 'sandbox']) {
 	tests[`R93 #4 a fast wheel into lower Code fills visible lists before the frame (${surface})`] = async (t) => {
 		if (!t.app.surfaces().includes(surface)) { await t.check(`${surface} surface not asked for`, true); return; }
