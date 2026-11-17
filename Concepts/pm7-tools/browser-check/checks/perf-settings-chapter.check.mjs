@@ -154,6 +154,98 @@ async function projectRow(t, f, surface) {
 	await t.check(`${surface}: back in ${a}, Settings' place is Code & Tools`, back === 'code', `its place is ${back || 'none'}`);
 }
 
+/* R90 P1: the restore transaction replaces storage. A waiting place save must run BEFORE it, or it puts the old
+   settings/history back afterwards. Accept the existing Reset all to defaults confirmation at chapter commit,
+   before a frame/idle callback can run (the same fast-action boundary as R89 P1). Observe scheduling/cancellation;
+   never hold, replace or invoke a scheduled callback. Main saves eagerly, so its control must have saved Code already. */
+const ARM_RESTORE = (id) => {
+	const tome = window.PM7_SETTINGS_TOME, root = document.getElementById('pm-settings-root');
+	const R = window.__pscRestore = { scheduled: 0, pendingAtAccept: 0, pendingAtRestore: 0, accepted: false, result: null, saves: [] };
+	const pending = new Set(), raf = window.requestAnimationFrame, caf = window.cancelAnimationFrame;
+	const idle = window.requestIdleCallback, cancelIdle = window.cancelIdleCallback, save = tome.save, restore = tome.restoreProjectDefaults;
+	const watch = (fn) => typeof fn === 'function' && (fn.name === 'saveNavigationNow' || /\bnavigationSaveJob\b/.test(Function.prototype.toString.call(fn)));
+	window.requestAnimationFrame = function (fn) {
+		if (!watch(fn)) return raf.apply(this, arguments);
+		let ticket = raf.call(this, (stamp) => { pending.delete('frame:' + ticket); fn(stamp); });
+		pending.add('frame:' + ticket); R.scheduled++; return ticket;
+	};
+	window.cancelAnimationFrame = function (ticket) { pending.delete('frame:' + ticket); return caf.apply(this, arguments); };
+	if (idle) window.requestIdleCallback = function (fn, opts) {
+		if (!watch(fn)) return idle.apply(this, arguments);
+		let ticket = idle.call(this, (deadline) => { pending.delete('idle:' + ticket); fn(deadline); }, opts);
+		pending.add('idle:' + ticket); R.scheduled++; return ticket;
+	};
+	if (cancelIdle) window.cancelIdleCallback = function (ticket) { pending.delete('idle:' + ticket); return cancelIdle.apply(this, arguments); };
+	tome.save = function (snap) { R.saves.push(snap && snap.domain); return save.apply(this, arguments); };
+	tome.restoreProjectDefaults = function () {
+		R.pendingAtRestore = pending.size;
+		R.before = tome.projectSnapshot(tome.project().id);
+		R.result = restore.apply(this, arguments);
+		R.restored = tome.projectSnapshot(tome.project().id);
+		return R.result;
+	};
+	const mo = new MutationObserver(() => {
+		if (root.querySelector('.domain-link.active')?.dataset.domain !== 'code') return;
+		mo.disconnect();
+		/* This is the product's existing action/confirmation, not a call to the restore implementation. */
+		window.PM12_KIMI.dispatchAction('pm51-all-reset');
+		const button = document.querySelector('.overlay [role="dialog"][aria-label="Reset every setting to its default?"] button[type="submit"]');
+		R.pendingAtAccept = pending.size;
+		R.eagerAtAccept = R.saves.includes('code');
+		const s = window.PM12_KIMI.getState();
+		R.place = { domain: s.domain, workspace: s.workspace, activeSection: s.activeSection };
+		R.changedAtAccept = !!s.changed[id] && s.settings[id] === 20;
+		if (button) { R.accepted = true; button.click(); }
+	});
+	mo.observe(root, { childList: true, subtree: true, attributes: true, attributeFilter: ['class'] });
+	R.stop = () => {
+		mo.disconnect(); window.requestAnimationFrame = raf; window.cancelAnimationFrame = caf;
+		if (idle) window.requestIdleCallback = idle;
+		if (cancelIdle) window.cancelIdleCallback = cancelIdle;
+		tome.save = save; tome.restoreProjectDefaults = restore;
+	};
+};
+const RESTORE_RECORD = () => {
+	const tome = window.PM7_SETTINGS_TOME;
+	try { return { source: 'stored', record: JSON.parse(localStorage.getItem('pm7:settings:tome-tabs:v1:' + encodeURIComponent(tome.project().id)) || 'null') }; }
+	catch (_) { return { source: 'in-memory (opaque sandbox)', record: window.PM12_KIMI.getState() }; }
+};
+async function restoreAllRow(t, f, surface) {
+	const id = 'general.visual.font-size';
+	await f.evaluate((key) => window.PM12_KIMI.setSettingFromHost(key, 20), id);
+	await f.locator('#pm-settings-root .domain-link[data-domain="general"]').first().click();
+	await t.page.waitForTimeout(2500);
+	await f.evaluate(PROBE);
+	await f.evaluate(ARM_RESTORE, id);
+	try {
+		await press(t, f, 'code');
+		await f.waitForFunction(() => window.__pscRestore.result !== null, null, { timeout: 5000 }).catch(() => {});
+		const r = await f.evaluate(() => { const { stop, ...r0 } = window.__pscRestore; return r0; });
+		t.log(`${surface} R90 P1: ${r.scheduled} navigation callbacks scheduled, ${r.pendingAtAccept} pending at acceptance, ${r.pendingAtRestore} at transaction; main's eager-save control ${!!r.eagerAtAccept}; place ${JSON.stringify(r.place)}`);
+		await t.check(`${surface}: could judge restore-all: changed Text Size and accepted the existing confirmation`, r.accepted && r.changedAtAccept, JSON.stringify(r));
+		await t.check(`${surface}: could judge restore-all: navigation save is still pending at acceptance (main control: already saved eagerly)`, r.scheduled > 0 ? r.pendingAtAccept > 0 : r.eagerAtAccept === true, JSON.stringify(r));
+		await t.check(`${surface}: restore-all returned an accepted rollback receipt`, r.result?.ok === true && !!r.result.rollback_ref, JSON.stringify(r.result));
+		await t.page.waitForTimeout(2500);
+		const { source, record: s } = await f.evaluate(RESTORE_RECORD);
+		const def = await f.evaluate((key) => Object.values(window.PM12_REFERENCE.byCat).flatMap((c) => c.settings).find((x) => x.id === key).default, id);
+		const h = s?.settingsTransferHistory?.find((x) => x.receipt_id === r.result?.receipt_id), rollback = s?.settingsTransferRollbacks?.[r.result?.rollback_ref];
+		t.log(`${surface} R90 P1 ${source}: Text Size ${s?.settings?.[id] ?? '(default)'}, changed ${!!s?.changed?.[id]}, history ${!!h}, rollback ${!!rollback}; place ${s?.domain}/${s?.workspace}`);
+		await t.check(`${surface}: restore-all keeps Text Size at its default and removes its changed mark (${source})`, !!s && (s.settings?.[id] === undefined || s.settings[id] === def) && !s.changed?.[id], JSON.stringify({ value: s?.settings?.[id], changed: s?.changed?.[id], def }));
+		await t.check(`${surface}: restore-all retains its history and exact prior settings/changed rollback (${source})`, !!h && h.action === 'Restored project defaults' && h.rollback_available === true && h.rollback_ref === r.result?.rollback_ref && !!rollback && JSON.stringify(rollback.settings) === JSON.stringify(r.before?.settings || {}) && JSON.stringify(rollback.changed) === JSON.stringify(r.before?.changed || {}), JSON.stringify({ history: h, rollback, before: r.before }));
+		await t.check(`${surface}: restore-all keeps the transaction's complete history and rollback maps (${source})`, !!s && !!r.restored && JSON.stringify(s.settingsTransferHistory) === JSON.stringify(r.restored.settingsTransferHistory) && JSON.stringify(s.settingsTransferRollbacks) === JSON.stringify(r.restored.settingsTransferRollbacks), 'the final history or rollback map differs from the accepted restore transaction');
+		if (source === 'stored') await t.check(`${surface}: restore-all stored settings and changed maps are empty, as on main`, Object.keys(s?.settings || {}).length === 0 && Object.keys(s?.changed || {}).length === 0, JSON.stringify({ settings: s?.settings, changed: s?.changed }));
+		await f.evaluate(() => window.__pscRestore.stop());
+		/* A full reload on normal; the adapter's memory store survives only reloadProject in the opaque sandbox. */
+		if (surface === 'normal') {
+			await t.reloadApp();
+			f = t.root === t.page ? t.page.mainFrame() : t.root;
+			await f.waitForFunction(() => !!window.PM12_KIMI, null, { timeout: 60000 });
+		} else await f.evaluate(() => window.PM12_KIMI.reloadProject());
+		const back = await f.evaluate(() => { const s0 = window.PM12_KIMI.getState(); return { domain: s0.domain, workspace: s0.workspace, activeSection: s0.activeSection }; });
+		await t.check(`${surface}: reloaded Settings retains main's chosen Code & Tools reading place`, r.place?.domain === 'code' && JSON.stringify(back) === JSON.stringify(r.place), `${JSON.stringify(back)}; expected ${JSON.stringify(r.place)}`);
+	} finally { await f.evaluate(() => window.__pscRestore?.stop()); }
+}
+
 /* F's L1 (sol-review-fo196u): native Tab order is resolved against the controls that exist, so focus put back without
    scrolling next to a section the first screen left unfilled must not pass over that section. In the moment Code & Tools
    is committed, before any frame or idle time, focus goes to the last control of the section before BOUNDARY (then Tab)
@@ -218,6 +310,19 @@ async function restoredFocusRow(t, f, surface, dir) {
 }
 
 export const tests = {};
+for (const surface of ['normal', 'sandbox']) {
+	tests[`R90 P1 Restore all defaults wins over a pending chapter save (${surface})`] = async (t) => {
+		if (!t.app.surfaces().includes(surface)) { await t.check(`${surface} surface not asked for`, true); return; }
+		await t.viewport(1920, 1080);
+		await muteSound(t.page);
+		if (t.args.motion === 'reduce') await t.emulate({ reducedMotion: 'reduce' });
+		const f = await t.app.open({ sandbox: surface === 'sandbox' });
+		await t.app.resetLayout().catch(() => {});
+		await f.locator('#tab-settings').click();
+		await t.settle();
+		await restoreAllRow(t, f, surface);
+	};
+}
 for (const surface of ['normal', 'sandbox']) {
 	tests[`L1 Tab and Shift+Tab from restored focus enter the section the first screen left unfilled (${surface})`] = async (t) => {
 		if (!t.app.surfaces().includes(surface)) { await t.check(`${surface} surface not asked for`, true); return; }
