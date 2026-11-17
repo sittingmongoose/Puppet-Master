@@ -8,8 +8,8 @@
    - when the list comes within a screen of the view (an IntersectionObserver on the page's scroller);
    - in idle slices once the arrival's entrance is over, one section a slice, in page order;
    - at once, before anything reads a far section: a jump to a section, a setting revealed (search, Details links,
-     deep links), a page tab further down, the More options opening, End / Home / Ctrl+End, a press on the scroll bar,
-     Find in page (Ctrl/Cmd+F), printing.
+     deep links), a page tab further down, the More options opening, End / Home / Ctrl+End, Tab / Shift+Tab, a press on
+     the scroll bar, Find in page (Ctrl/Cmd+F), printing.
    A redraw in place (a changed setting) draws a filled section in full and a pending one as a shell again, so it never
    drops rows or builds them early. A fill only puts rows into a section's existing list: it replaces no layout, adds no
    page-enter and animates nothing, so the chapter's one entrance (pageIn) never plays twice. Manager pages are one
@@ -190,4 +190,9 @@ root.addEventListener('pointerdown', e => {
   if (o55fs.pending.size && sc && e.target === sc) o55fsFillAll();   /* its scroll bar */
 }, true);
 document.addEventListener('keydown', e => { if (o55fs.pending.size && (e.ctrlKey || e.metaKey) && (e.key === 'f' || e.key === 'F')) o55fsFillAll(); }, true);
+/* Tab and Shift+Tab (F's L1, 2026-11-17): the browser picks the next control among those that exist, so focus put back
+   without scrolling next to an unfilled section (a redraw's or a dialog's focus restore) would pass over it. Every
+   pending section is filled before the key's default action, from any control, inputs too (Tab leaves an input), and
+   from no control at all (the starting point of a click on text can sit anywhere). On window, so it runs first. */
+window.addEventListener('keydown', e => { if (e.key === 'Tab' && o55fs.pending.size && !e.ctrlKey && !e.metaKey && !e.altKey) o55fsFillAll(); }, true);
 window.addEventListener('beforeprint', o55fsFillAll);
