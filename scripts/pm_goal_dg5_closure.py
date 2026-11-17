@@ -632,8 +632,8 @@ def root_id(key):
     return 'dg5:' + hashlib.sha256(json.dumps(key).encode()).hexdigest()[:16]
 
 
-def _close_one(ident, plain, bank_object, seeds, records, args, carried):
-    """Agree, (memo) search and witness-verify one root; returns (entries, meta)."""
+def _prepare_search_validator(ident, plain, bank_object, seeds, records, args):
+    """Build and agree-check the reference and optional memo search validators."""
     v = closure_validator(plain, ident, bank_object)
     disagreements = agree(plain, v, records)
     meta = dict(agreement=dict(records=len(records), disagreement_count=len(disagreements),
@@ -651,6 +651,21 @@ def _close_one(ident, plain, bank_object, seeds, records, args, carried):
             else:
                 search_v = candidate
     meta['memo'] = memo_note
+    meta['search_validator'] = 'memo' if search_v is not v else 'reference'
+    return v, search_v, meta
+
+
+def _agree_one(ident, plain, bank_object, seeds, records, args):
+    """Run only the reference/memo agreement gate; take no search credit."""
+    _reference_v, _search_v, meta = _prepare_search_validator(
+        ident, plain, bank_object, seeds, records, args)
+    meta['search_credit'] = 'none-agree-only'
+    return meta
+
+
+def _close_one(ident, plain, bank_object, seeds, records, args, carried):
+    """Agree, (memo) search and witness-verify one root; returns (entries, meta)."""
+    v, search_v, meta = _prepare_search_validator(ident, plain, bank_object, seeds, records, args)
     go.UNRESOLVED.clear()
     budget = args.budget or 10**12
     if args.per_clause:
@@ -702,6 +717,7 @@ def _main_from_dump(args):
                   calls=data['meta'].get('calls'), collection_failures=[], roots={},
                   from_dump=dict(path=str(args.from_dump),
                                  sha256=hashlib.sha256(args.from_dump.read_bytes()).hexdigest()),
+                  mode='agree-only' if args.agree_only else 'close',
                   native_execution='NOT_RUN')
     for number, ident in enumerate(sorted(data['roots'])):
         if number % total != part or (args.roots and not any(r in ident for r in args.roots)):
@@ -721,6 +737,14 @@ def _main_from_dump(args):
             continue
         try:
             plain = _rebuild_plain(dumped)
+            if args.agree_only:
+                meta = _agree_one(ident, plain, None, list(dumped['seeds']), dumped['records'], args)
+                entry.update(meta, counts={}, clauses={}, agree_only=True)
+                print(f'{ident} {dumped["bank"]}: agree-only memo={meta.get("memo")} '
+                      f'memo_agreement={meta.get("memo_agreement")}', file=sys.stderr, flush=True)
+                args.out.with_suffix('.partial.json').write_text(
+                    json.dumps(report, indent=1, sort_keys=True, default=str) + '\n')
+                continue
             entries, meta = _close_one(ident, plain, None, list(dumped['seeds']), dumped['records'],
                                        args, carried.get(ident))
         except Exception as exc:  # noqa: BLE001 - reported, never skipped
@@ -759,6 +783,8 @@ def main():
     parser.add_argument('--shard', default='0/1', help='i/n over whole roots (sorted ids); never splits one root')
     parser.add_argument('--inventory-only', action='store_true')
     parser.add_argument('--memo', action='store_true', help="search with GO2's memoizing validator (agree-gated)")
+    parser.add_argument('--agree-only', action='store_true',
+                        help='run reference/memo agreement trials and take no search credit')
     parser.add_argument('--sample-every', type=int, default=997, help='in-run memo/reference agreement sampling (0 = off)')
     parser.add_argument('--carry', action='append', type=Path, default=[],
                         help='earlier DG5 closure report(s): clauses not left UNCOVERED are carried, not re-searched')
