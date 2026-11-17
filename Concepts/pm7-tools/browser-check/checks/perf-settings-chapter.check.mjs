@@ -370,6 +370,65 @@ async function moreOptionsRow(t, f, label, reduced) {
 
 export const tests = {};
 for (const surface of ['normal', 'sandbox']) {
+	tests[`R93 #4 a fast wheel into lower Code fills visible lists before the frame (${surface})`] = async (t) => {
+		if (!t.app.surfaces().includes(surface)) { await t.check(`${surface} surface not asked for`, true); return; }
+		await t.viewport(1920, 1080); await muteSound(t.page);
+		await t.emulate({reducedMotion:t.args.motion === 'reduce' ? 'reduce' : 'no-preference'});
+		const f = await t.app.open({sandbox:surface === 'sandbox'});
+		await t.app.resetLayout().catch(() => {}); await f.locator('#tab-settings').click(); await t.settle();
+		for (const look of ['basic-dark','nier-light']) {
+			await setLookBySetting(t,f,look);
+			if (!(await guardPaintedLook(t,f,look,`${look} ${surface}`))) return;
+			await f.locator('#pm-settings-root .domain-link[data-domain="general"]').first().click(); await t.page.waitForTimeout(700);
+			const box = await f.locator('#settings-document').boundingBox();
+			await f.evaluate(() => {
+				const root=document.getElementById('pm-settings-root');
+				const R=window.__pscFling={committed:false,sampled:false,pending:0,empty:[]};
+				const mo=new MutationObserver(() => {
+					if(root.querySelector('.domain-link.active')?.dataset.domain!=='code')return;
+					mo.disconnect(); const sc=root.querySelector('#settings-document'),sec=root.querySelector('#section-editor-terminal-look');
+					R.pending=root.querySelectorAll('[data-o55-fill="pending"]').length;
+					R.targetPending=!!sec?.querySelector('[data-o55-fill="pending"]');
+					if(!sc||!sec){R.committed=true;return;}
+					const b=sec.getBoundingClientRect(),v=sc.getBoundingClientRect();
+					R.start=sc.scrollTop;R.delta=b.top-v.top+b.height*.55;R.height=sc.clientHeight;R.committed=true;
+				});
+				const scroll=e=>{
+					const sc=e.target;
+					if(!R.committed||R.sampled||R.armed||sc.id!=='settings-document'||Math.abs(sc.scrollTop-R.start)<R.height)return;
+					R.armed=true;
+					requestAnimationFrame(()=>{
+						const v=sc.getBoundingClientRect();R.top=sc.scrollTop;R.moved=R.top-R.start;
+						R.empty=[...sc.querySelectorAll('[data-o55-fill="pending"]')].filter(l=>{
+							if(l.closest('details:not([open])'))return false;
+							const b=l.closest('[data-section-id]').getBoundingClientRect();
+							if(!b.height||b.bottom<=v.top||b.top>=v.bottom)return false;
+							const r=l.getBoundingClientRect();return r.height>0&&r.bottom>v.top&&r.top<v.bottom;
+						}).map(l=>l.closest('[data-section-id]').dataset.sectionId);
+						R.sampled=true;
+					});
+				};
+				mo.observe(root,{childList:true,subtree:true,attributes:true,attributeFilter:['class']});
+				window.addEventListener('scroll',scroll,true);
+				R.stop=()=>{mo.disconnect();window.removeEventListener('scroll',scroll,true);};
+			});
+			try {
+				await f.locator('#pm-settings-root .domain-link[data-domain="code"]').first().click();
+				await f.waitForFunction(()=>window.__pscFling.committed,null,{timeout:5000});
+				const delta=await f.evaluate(()=>window.__pscFling.delta);
+				await t.page.mouse.move(box.x+box.width*.65,box.y+box.height*.55);
+				await t.page.mouse.wheel(0,Math.ceil(delta));
+				await f.waitForFunction(()=>window.__pscFling.sampled,null,{timeout:5000}).catch(()=>{});
+				const r=await f.evaluate(()=>{const {stop,...r}=window.__pscFling;return r;});
+				t.log(`${look} ${surface} fling: ${r.pending} lists pending at commit, target pending ${r.targetPending}; moved ${r.moved} px (${r.height} px view); empty visible lists at scroll-frame rAF: ${r.empty.join(',')||'none'}`);
+				await t.check(`${look} ${surface}: fling began with Terminal look pending`,r.pending>0&&r.targetPending,JSON.stringify(r));
+				await t.check(`${look} ${surface}: a real wheel crossed at least one viewport`,r.sampled&&r.moved>=r.height,JSON.stringify(r));
+				await t.check(`${look} ${surface}: no visible list is empty at the scroll frame`,r.sampled&&r.empty.length===0,r.empty.join(',')||'no scroll-frame sample');
+			} finally {await f.evaluate(()=>window.__pscFling.stop());}
+		}
+	};
+}
+for (const surface of ['normal', 'sandbox']) {
 	tests[`R93 #3 cross-chapter search does not fill the chapter being discarded (${surface})`] = async (t) => {
 		if (!t.app.surfaces().includes(surface)) { await t.check(`${surface} surface not asked for`, true); return; }
 		await t.viewport(1920, 1080); await muteSound(t.page);

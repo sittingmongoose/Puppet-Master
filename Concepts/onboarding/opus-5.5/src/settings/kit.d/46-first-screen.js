@@ -113,6 +113,17 @@ function o55fsFillThrough(id) {
   }
 }
 function o55fsFillAll() { if (o55fs.pending.size) o55fsFillThrough(null); }
+/* Scroll events run before the frame's rAF/layout/paint. A fling can outrun IntersectionObserver delivery, so fill
+   sections entering the view plus one viewport now (R93 #4). Read section boxes, retaining far content skipping. */
+function o55fsFillNear(sc) {
+  if (!o55fs.pending.size) return;
+  const view = sc.getBoundingClientRect(), margin = sc.clientHeight;
+  for (const sec of sc.querySelectorAll('[data-section-id]')) {
+    if (!o55fs.pending.has(sec.dataset.sectionId) || sec.closest('details:not([open])')) continue;
+    const box = sec.getBoundingClientRect();
+    if (box.height && box.bottom >= view.top - margin && box.top <= view.bottom + margin) o55fsFill(sec.dataset.sectionId);
+  }
+}
 function o55fsDone() {
   if (o55fs.observer) { o55fs.observer.disconnect(); o55fs.observer = null; }
   clearTimeout(o55fs.idleTimer); o55fs.idleTimer = 0;
@@ -201,6 +212,7 @@ root.addEventListener('pointerdown', e => {
   const sc = root.querySelector('#settings-document');
   if (o55fs.pending.size && sc && e.target === sc) o55fsFillAll();   /* its scroll bar */
 }, true);
+root.addEventListener('scroll', e => { if (e.target.id === 'settings-document') o55fsFillNear(e.target); }, true);
 document.addEventListener('keydown', e => { if (o55fs.pending.size && (e.ctrlKey || e.metaKey) && (e.key === 'f' || e.key === 'F')) o55fsFillAll(); }, true);
 /* Tab and Shift+Tab (F's L1, 2026-11-17): the browser picks the next control among those that exist, so focus put back
    without scrolling next to an unfilled section (a redraw's or a dialog's focus restore) would pass over it. Every
