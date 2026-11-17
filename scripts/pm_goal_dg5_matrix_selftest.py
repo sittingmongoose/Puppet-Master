@@ -17,8 +17,15 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
 FAM = 'goal.updated'
-OA = 'scripts/pm_goal_test_owner_adapters.py'   # :75 shared_refuse in an except branch
+OA = 'scripts/pm_goal_test_owner_adapters.py'   # a shared_refuse in an except branch
 ST = 'scripts/pm_goal_test_storage.py'          # :1657 plain require (not a bad-branch site)
+
+
+def _refuse_line():
+    for i, text in enumerate((ROOT / OA).read_text().splitlines(), 1):
+        if 'shared_refuse(' in text:
+            return i
+    raise AssertionError('no shared_refuse site in ' + OA)
 
 
 def _sha(path):
@@ -75,9 +82,10 @@ def check_matrix():
     dup = 'dg5/test/duplicate_set_only'
     req = 'dg5/site/pm_goal_test_storage.py:1657'
     normal = 'dg5/test/pass_table_killed'
-    rows = {ok: dict(sites=[[OA, 75]]), nowit: dict(sites=[[OA, 75]]), fail: dict(sites=[[OA, 75]]),
-            later: dict(sites=[[OA, 75]]), dup: dict(sites=[[OA, 75]]), req: dict(sites=[[ST, 1657]]),
-            normal: dict(sites=[[OA, 75]])}
+    line = _refuse_line()
+    rows = {ok: dict(sites=[[OA, line]]), nowit: dict(sites=[[OA, line]]), fail: dict(sites=[[OA, line]]),
+            later: dict(sites=[[OA, line]]), dup: dict(sites=[[OA, line]]), req: dict(sites=[[ST, 1657]]),
+            normal: dict(sites=[[OA, line]])}
     nr = lambda t, r: dict(table=t, status='NOT_RUN', rows=[r], reason='no control vector')
     specs = [dict(guard=ok, table='t-ok', status='UNPROVED'), dict(guard=nowit, table='t-nw', status='UNPROVED'),
              dict(guard=fail, table='t-fail', status='FAIL'), dict(guard=later, table='t-later', status='UNPROVED'),
