@@ -221,6 +221,38 @@ def check_closure_memo_and_dump_recipe():
                [e.validator for e in probe_b.iter_errors(value)]
 
 
+def check_witness_capture_pairing():
+    """A witness is stored only for the exact uncut/cut pair the kill test judged."""
+    import pm_goal_dg5_closure as closure
+
+    class Err:
+        def __init__(self, guard):
+            self.oracle_guard = guard
+
+    orig_search, orig_errors = closure.go.search_clause, closure.go.errors_of
+    
+    def fake_errors(v, value, cut=frozenset()):
+        return [] if cut else [Err('ident-1')]
+
+    def fake_search(clause, keyword, location, info, node, ident, *args, **kwargs):
+        closure.go.errors_of(None, {'x': 1})                       # uncut, guard present
+        closure.go.errors_of(None, {'x': 2})                       # uncut only: never confirmed
+        closure.go.errors_of(None, {'x': 1}, frozenset({ident}))  # cut, guard gone: confirms {'x': 1}
+        return dict(cls='KILLED')
+
+    closure.go.search_clause, closure.go.errors_of = fake_search, fake_errors
+    try:
+        orig = closure._install_search_wrappers(object(), object(), 0)
+        try:
+            closure.go.search_clause('clause/1', 'type', 'loc', {}, {}, 'ident-1')
+        finally:
+            closure._restore_search_wrappers(orig)
+    finally:
+        closure.go.search_clause, closure.go.errors_of = orig_search, orig_errors
+    import pickle
+    assert pickle.loads(closure._WIT['store']['clause/1']) == {'x': 1}
+
+
 def check_pass2_parent_release():
     """--prove-generated releases the pass-1 collector/bridge memos before the
     pass-2 child re-collects, so the scope cap sees one peak, not pass1+pass2."""
@@ -255,6 +287,7 @@ def check_pass2_parent_release():
 def main():
     check_frame_error_target_mapping()
     check_closure_memo_and_dump_recipe()
+    check_witness_capture_pairing()
     check_pass2_parent_release()
     check_shard_partition()
     check_collector_releases_sealed_values()
