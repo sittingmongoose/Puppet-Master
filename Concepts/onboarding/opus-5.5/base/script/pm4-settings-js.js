@@ -2747,10 +2747,12 @@ window.PM12_REFERENCE = {"version":"1.0.0","total":892,"inventory_sha256":"be85c
     if(!project){showToast('Select or create a project','No-project mode has no persisted Settings defaults to restore.','warning');return false;}
     if(state.settingsProjectionReadOnly===true){showToast('Defaults were not restored','The attached Settings owner has not supplied a current readable project projection.','error');return false;}
     if(typeof restore!=='function'){showToast('Defaults were not restored','The Settings owner does not expose the required atomic restore-all transaction.','warning');return false;}
+    /* R90 P1: settle the old projection before the restore replaces it, keeping main's saved reading place. */
+    saveNavigationNow();
     const result=restore({project_id:project.id,create_rollback:true,preserve_credential_references:true});
     if(result&&typeof result.then==='function'){showToast('Defaults were not restored','The concept requires an accepted owner receipt before updating its projection.','error');return false;}
     if(!result||result.ok===false){showToast('Defaults were not restored',result?.safe_user_message||result?.reason||'The Settings owner rejected restore-all.','error');return false;}
-    saveNavigationNow();const restorePlace={home:state.home,domain:state.domain,workspace:state.workspace,activeSection:clone(state.activeSection||{})};state=loadState();ensureStateShape();Object.assign(state,restorePlace);state.detailSetting=null;renderApp();window.PM7_SETTINGS_TOME.applyPaint(state);showToast('Project defaults restored','Project settings are back to their defaults. Saved sign-ins and history were kept.','success');return true;
+    const restorePlace={home:state.home,domain:state.domain,workspace:state.workspace,activeSection:clone(state.activeSection||{})};state=loadState();ensureStateShape();Object.assign(state,restorePlace);state.detailSetting=null;renderApp();window.PM7_SETTINGS_TOME.applyPaint(state);showToast('Project defaults restored','Project settings are back to their defaults. Saved sign-ins and history were kept.','success');return true;
   }
   function portalFrame(){const portal=portalRoot(),rect=portal.getBoundingClientRect();return {portal,rect,width:portal.clientWidth||rect.width,height:portal.clientHeight||rect.height};}
   let hostWidth=0;
