@@ -540,11 +540,14 @@
     if(!root||root.nodeType!==1)return;var self=this;
     if(this.active&&(this.active===root||root.contains(this.active)))this.close(true);
     if(this.pendingOpenTarget&&(this.pendingOpenTarget===root||root.contains(this.pendingOpenTarget)))this.cancelPendingOpen();
-    (this.removedQueue||(this.removedQueue=[])).push(root);if(this.removedJob)return;
-    var run=function(){self.removedJob=0;var q=self.removedQueue;self.removedQueue=[];q.forEach(function(r){if(!r.isConnected)self.cleanupRemoved(r);});};
+    (this.removedQueue||(this.removedQueue=[])).push(root);if(this.removedFrame)return;
+    /* A later removal must not inherit an earlier batch's already-passed frame (R93 #7). */
+    if(this.removedJob){if(this.removedIdle)cancelIdleCallback(this.removedJob);else clearTimeout(this.removedJob);this.removedJob=0;}
+    var ticket=this.removedTicket=(this.removedTicket||0)+1;
+    var run=function(){if(self.removedTicket!==ticket)return;self.removedJob=0;var q=self.removedQueue;self.removedQueue=[];q.forEach(function(r){if(!r.isConnected)self.cleanupRemoved(r);});};
     /* idle time is asked for after the next frame: an idle moment between the build and the new chapter's first frame
        would otherwise run the walk before that frame */
-    this.removedJob=-1;requestAnimationFrame(function(){self.removedJob=typeof requestIdleCallback==='function'?requestIdleCallback(run,{timeout:1500}):setTimeout(run,200);});
+    this.removedFrame=requestAnimationFrame(function(){self.removedFrame=0;self.removedIdle=typeof requestIdleCallback==='function';self.removedJob=self.removedIdle?requestIdleCallback(run,{timeout:1500}):setTimeout(run,200);});
   };
   HoverTagController.prototype.beginLive=function(){
     var self=this;if(this.pageSettling||this.overlaySettling){this.liveShallow.clear();this.liveDeep.clear();return;}if(this.scanning||this.scanFrame){this.liveFrame=censusFrame(function(){self.liveFrame=0;self.beginLive();});return;}this.pruneLiveScopes();
