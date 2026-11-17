@@ -43,6 +43,7 @@ from referencing.jsonschema import DRAFT202012
 
 import pm_goal_test_numrule as NR
 import pm_goal_test_storage as S
+from pm_goal_bank_diagnostics import integer_diagnostics
 
 QUALIFICATION = 'TEST_ONLY'
 NATIVE_LINE = NR.NATIVE_LINE
@@ -227,7 +228,7 @@ def _root_validator(base):
     Resource bytes and the declared dialect remain unchanged.
     """
     from attrs import fields
-    cls = jsonschema.validators.extend(base, {'properties': _owner_timestamp_properties,
+    cls = jsonschema.validators.extend(base, {**integer_diagnostics(base), 'properties': _owner_timestamp_properties,
                                             'pattern': _owner_pattern})
 
     def evolve(self, **changes):

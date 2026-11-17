@@ -89,29 +89,29 @@ PROOFS = {
             'CUT_EXCEPTION witnesses exactly this), so no execution accepts a frame whose '
             'payload does not decode; :572 converts the codec refusal to the exact '
             'payload_codec code.')),
-    OSITE + '302': dict(
+    OSITE + '303': dict(
         kind='reduce-or-refuse',
         families=FAMILIES,
         depends_on=[],
-        sites=[(OA, 291), (OA, 301), (OA, 302)],
+        sites=[(OA, 292), (OA, 302), (OA, 303)],
         argument=(
             'OriginalHandle.__reduce__ unconditionally refuses handle/not_serializable '
-            'at :302 and the class defines no __reduce_ex__ or __getstate__, so pickle '
-            'has no other serialization path. With :302 cut, __reduce__ returns None and '
+            'at :303 and the class defines no __reduce_ex__ or __getstate__, so pickle '
+            'has no other serialization path. With :303 cut, __reduce__ returns None and '
             'pickle raises PicklingError (__reduce__ must return a string or tuple; the '
             'handle_not_serializable CUT_EXCEPTION witnesses exactly this), so no '
-            'execution serializes a handle; :302 states the exact refusal.')),
-    OSITE + '415': dict(
+            'execution serializes a handle; :303 states the exact refusal.')),
+    OSITE + '416': dict(
         kind='code-selection',
         families=FAMILIES,
-        depends_on=[OSITE + '428'],
-        sites=[(OA, 407), (OA, 415), (OA, 428)],
+        depends_on=[OSITE + '429'],
+        sites=[(OA, 408), (OA, 416), (OA, 429)],
         argument=(
-            'exact_json check() refuses a float leaf by name at :415; with :415 cut the '
-            'same float reaches the final else require at :428 (v is None or type(v) is '
+            'exact_json check() refuses a float leaf by name at :416; with :416 cut the '
+            'same float reaches the final else require at :429 (v is None or type(v) is '
             'bool), which no float satisfies, and refuses custody/exact_json/type (the '
-            'exact_json_float chain witnesses exactly this). Every value :415 refuses is '
-            'a float, so :415 selects the exact float code and never gates acceptance '
+            'exact_json_float chain witnesses exactly this). Every value :416 refuses is '
+            'a float, so :416 selects the exact float code and never gates acceptance '
             'alone.')),
     SITE + '1450': dict(
         kind='code-selection',
