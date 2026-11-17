@@ -35,6 +35,49 @@ import pm_goal_guard_tables as tables
 import pm_goal_guard_sweep as sweep
 
 ROOT = Path(__file__).resolve().parents[1]
+
+
+def _trim():
+    """Return freed heap pages to the OS (deepcopy-heavy collection fragments glibc arenas;
+    RSS otherwise tracks the high-water mark, which the systemd scope cap counts)."""
+    import ctypes
+    import gc
+    gc.collect()
+    try:
+        ctypes.CDLL('libc.so.6').malloc_trim(0)
+    except OSError:
+        pass
+
+
+def _release_pass1_state(collector):
+    """Drop every pass-1 retention before the pass-2 child re-collects (DG5 memory bound).
+
+    --prove-generated used to keep the whole pass-1 collector (ledger, sealed
+    candidates, bridge bank/singleton memos, schema memo) resident in the parent
+    while the child re-ran the same source with the kill judge, so the scope cap
+    saw pass1 + pass2 peak (9/32: 1.6G parent + growing child, OOM at 2G and 4G).
+    The child reads only the generated tables/manifest the parent already wrote,
+    never the parent's collector, so releasing it changes no output byte
+    (rows.json byte-identical on the adapter proof). Set PM_DG5_PASS2_RELEASE=0
+    to keep the old behaviour.
+    """
+    import pm_goal_dg5_boundaries as bridge
+    bridge.FROZEN.clear()
+    bridge.FROZEN_PARTS.clear()
+    bridge.MEMBERS.clear()
+    bridge.CASE_BANKS.clear()
+    tables._SCHEMAS.clear()
+    tables._PREDICATES.clear()
+    collector.ledger = []
+    collector.signature_list = []
+    collector.candidates = {}
+    collector.snapshots = {}
+    collector.schema_seeds = {}
+    collector.store_snapshots = []
+    collector.rows = {}
+    _trim()
+
+
 MANIFEST = ROOT / 'scripts/pm_goal_dg5_rows.json'
 PREFIX = 'pm_goal_dg5_phase_'
 SOURCES = ['pm_goal_dg5_u']
@@ -85,6 +128,15 @@ def install(prove):
                 for name in list(self.snapshots):
                     if self.snapshots[name] is not None:
                         self.snapshots[name] = None
+                # Pass 2 replays each negative several times; return arena pages and
+                # bound the pure-decision schema memo periodically (recomputed on
+                # demand, so no verdict or output byte changes).
+                if os.environ.get('PM_DG5_PASS2_RELEASE', '1') != '0' \
+                        and self.calls - getattr(self, '_dg5_trimmed_at', 0) >= 250:
+                    self._dg5_trimmed_at = self.calls
+                    if len(tables._SCHEMAS) > 50000:
+                        tables._SCHEMAS.clear()
+                    _trim()
         sweep.Collector.invoke = control_invoke
         sweep.Collector._go_controls = True
     if not getattr(sweep.Collector, '_go_cut_sites', False):
@@ -292,6 +344,8 @@ def main():
             child = [sys.executable, '-B', __file__, '--out', str(args.out / 'proof')] + [x for s in sources for x in ('--source', s)]
             if args.namespace:
                 child += ['--namespace', args.namespace]
+            if os.environ.get('PM_DG5_PASS2_RELEASE', '1') != '0':
+                _release_pass1_state(collector)
             return subprocess.call(child)
         return int(bool(collector.failures))
     failed = bool(collector.failures)

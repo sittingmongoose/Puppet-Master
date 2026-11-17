@@ -159,8 +159,82 @@ def check_frame_error_target_mapping():
         'dg5/site/pm_goal_test_storage.py:581'
 
 
+def check_closure_memo_and_dump_recipe():
+    """GO2 port: the memo copy agrees with the guarded reference copy (incl. a cut),
+    and a create()-class validator round-trips through the dump class recipe."""
+    import hashlib
+    import pickle
+
+    import jsonschema
+    from referencing import Registry, Resource
+
+    import pm_goal_dg5_closure as closure
+
+    schema = {'$id': 'https://example.test/root', '$schema': 'https://json-schema.org/draft/2020-12/schema',
+              'type': 'object',
+              'properties': {'a': {'type': 'integer', 'minimum': 3}, 'b': {'$ref': '#/$defs/T'}},
+              'required': ['a'], '$defs': {'T': {'type': 'string', 'minLength': 2}}}
+    registry = Registry().with_resources(
+        [('https://example.test/root', Resource.from_contents(schema))]).crawl()
+    plain = jsonschema.Draft202012Validator(schema, registry=registry,
+                                             _resolver=registry.resolver(base_uri='https://example.test/root'))
+    copy_v = closure.closure_validator(plain, 'selftest', None)
+    memo_v, note = closure._memoised(copy_v)
+    assert note == 'memo' and memo_v is not copy_v, note
+    records, seeds = [], [{'a': 5, 'b': 'xy'}]
+    for value in ({'a': 5, 'b': 'xy'}, {'a': 1}, {'b': 'x'}, {'a': 'no'}, {}):
+        records.append((hashlib.sha256(pickle.dumps(value, protocol=5)).hexdigest(),
+                        pickle.dumps(value, protocol=5), closure._signature(copy_v.iter_errors(value))))
+    assert closure.agree(plain, copy_v, records) == []
+    assert closure.memo_agree(copy_v, memo_v, records, seeds) == []
+    created = jsonschema.validators.create(
+        meta_schema=jsonschema.Draft202012Validator.META_SCHEMA,
+        validators=dict(jsonschema.Draft202012Validator.VALIDATORS),
+        type_checker=jsonschema.Draft202012Validator.TYPE_CHECKER)
+    recipe = closure._class_recipe(created)
+    assert recipe is not None
+    rebuilt = closure._rebuild_class(recipe)
+    probe_a, probe_b = created(schema), rebuilt(schema)
+    for value in ({'a': 5}, {'a': 1}, {'a': 'no'}):
+        assert [e.validator for e in probe_a.iter_errors(value)] == \
+               [e.validator for e in probe_b.iter_errors(value)]
+
+
+def check_pass2_parent_release():
+    """--prove-generated releases the pass-1 collector/bridge memos before the
+    pass-2 child re-collects, so the scope cap sees one peak, not pass1+pass2."""
+    import pm_goal_dg5_boundaries as bridge
+    import pm_goal_guard_tables as tables
+
+    class FakeCollector:
+        pass
+
+    fake = FakeCollector()
+    fake.ledger, fake.signature_list = [dict(id=0)], [frozenset({1, 2})]
+    fake.candidates = {'row': (lambda: None, object(), 'case/label')}
+    fake.snapshots = {'row': object()}
+    fake.schema_seeds = {('schema',): [('v', dict(x=1), 'p')]}
+    fake.store_snapshots, fake.rows = [dict(case='case')], {'row': dict(sites=set())}
+    bridge.FROZEN['x'], bridge.FROZEN_PARTS['x'] = (object(), 'sha'), {}
+    bridge.MEMBERS['y'], bridge.CASE_BANKS['z'] = 'sha', (object(), 'sha', 'case/id')
+    tables._SCHEMAS['k'] = frozenset({'row'})
+    tables._PREDICATES['t'] = {}
+    try:
+        dg5._release_pass1_state(fake)
+        assert fake.ledger == [] and fake.signature_list == [] and fake.candidates == {}
+        assert fake.snapshots == {} and fake.schema_seeds == {} and fake.store_snapshots == []
+        assert fake.rows == {} and not bridge.FROZEN and not bridge.FROZEN_PARTS
+        assert not bridge.MEMBERS and not bridge.CASE_BANKS
+        assert not tables._SCHEMAS and not tables._PREDICATES
+    finally:
+        tables._SCHEMAS.clear()
+        tables._PREDICATES.clear()
+
+
 def main():
     check_frame_error_target_mapping()
+    check_closure_memo_and_dump_recipe()
+    check_pass2_parent_release()
     check_shard_partition()
     check_collector_releases_sealed_values()
     check_stateless_reducer_not_an_entry()

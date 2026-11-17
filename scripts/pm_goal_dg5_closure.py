@@ -343,6 +343,274 @@ def agree(original, copy_v, records):
     return bad
 
 
+# ---------------------------------------------------------------- GO2 port: memo, witness verify, dump
+# The memoizing validator, error-signature relation and dump shape are GO2's
+# (scripts/pm_goal_go2_closure.py, imported read-only): a subclass of the exact
+# guarded-copy class reuses only fully-drained no-error results keyed by
+# (schema node, exact-interned instance, base URI, schema context incl. cut);
+# every refusal stream is recomputed. No search credit is taken from the memo
+# copy before its agreement trial passes (records + seeds, with and without a
+# cut), and in-run sampled agreement keeps comparing during the search.
+
+def _memoised(instance):
+    """GO2's Memo subclass of the guarded copy's class, or (instance, reason) when not applicable."""
+    resolver = instance._resolver
+    if type(resolver).__module__ != 'referencing._core':
+        return instance, 'skipped-custom-resolver:' + type(resolver).__qualname__
+    import pm_goal_go2_closure as go2
+    cls = go2.memo_class(type(instance))
+    return cls(**{f.alias: getattr(instance, f.name) for f in attrs.fields(type(instance)) if f.init}), 'memo'
+
+
+def memo_agree(reference_v, memo_v, records, seeds):
+    """GO2 agreement: identical error signatures (path, schema path, keyword, oracle
+    guard, recursively) on recorded + seed instances, with and without one clause cut."""
+    import pm_goal_go2_closure as go2
+    values = [(sha, pickle.loads(raw)) for sha, raw, _expected in records]
+    values += [(hashlib.sha256(pickle.dumps(s, protocol=5)).hexdigest(), s) for s in seeds]
+    nodes = go.walk(reference_v)
+    first_ident = None
+    for info in nodes.values():
+        for keyword in go.clauses_of(info['node']):
+            first_ident = common.schema_guard(info['node'], keyword)
+            break
+        if first_ident:
+            break
+    bad = []
+    for sha, value in values:
+        for cut in (frozenset(), frozenset({first_ident}) if first_ident else frozenset()):
+            if go2.signature(memo_v, value, cut) != go2.signature(reference_v, value, cut):
+                bad.append(dict(input_sha256=sha, cut=sorted(cut)))
+                break
+    return bad
+
+
+_WIT = dict(current=None, store={}, bytes=0, sampled=dict(calls=0, compared=0, mismatch=0))
+_WITNESS_BYTES_CAP = 64 * 1024 * 1024
+
+
+def _install_search_wrappers(reference_v, search_v, sample_every):
+    """Capture one witness value per clause (for post-close re-judging on the reference
+    copy) and, when searching with the memo copy, sampled memo/reference agreement."""
+    import pm_goal_go2_closure as go2
+    orig_search, orig_errors = go.search_clause, go.errors_of
+    _WIT.update(current=None, store={}, bytes=0, sampled=dict(calls=0, compared=0, mismatch=0))
+
+    def search(clause, keyword, location, info, node, ident, *args, **kwargs):
+        _WIT['current'] = (clause, ident)
+        try:
+            return orig_search(clause, keyword, location, info, node, ident, *args, **kwargs)
+        finally:
+            _WIT['current'] = None
+
+    def errors_of(v, value, cut=frozenset()):
+        errs = orig_errors(v, value, cut)
+        if search_v is not reference_v and v is search_v and sample_every:
+            _WIT['sampled']['calls'] += 1
+            if _WIT['sampled']['calls'] % sample_every == 0:
+                _WIT['sampled']['compared'] += 1
+                a = tuple(go2.error_signature(e) for e in errs)
+                if a != go2.signature(reference_v, value, cut):
+                    _WIT['sampled']['mismatch'] += 1
+        cur = _WIT['current']
+        if cur and not cut:
+            clause, ident = cur
+            if clause not in _WIT['store'] and ident in {getattr(e, 'oracle_guard', None) for e in errs}:
+                try:
+                    raw = pickle.dumps(value, protocol=5)
+                except Exception:  # noqa: BLE001 - an unpicklable witness is reported unverifiable
+                    raw = None
+                if raw is not None and _WIT['bytes'] + len(raw) <= _WITNESS_BYTES_CAP:
+                    _WIT['store'][clause] = raw
+                    _WIT['bytes'] += len(raw)
+        return errs
+
+    go.search_clause, go.errors_of = search, errors_of
+    return orig_search, orig_errors
+
+
+def _restore_search_wrappers(orig):
+    go.search_clause, go.errors_of = orig
+
+
+def verify_witnesses(reference_v, entries):
+    """Re-judge every captured KILLED/COVERED_LATER witness on the reference (unmemoized) copy."""
+    idents = {}
+    for location, info in go.walk(reference_v).items():
+        for keyword in go.clauses_of(info['node']):
+            idents[location + '/' + go.name_of(keyword)] = common.schema_guard(info['node'], keyword)
+    passed = failed = unverifiable = 0
+    failures = []
+    for clause, entry in entries.items():
+        if entry.get('cls') not in ('KILLED', 'COVERED_LATER'):
+            continue
+        raw = _WIT['store'].get(clause)
+        ident = idents.get(clause)
+        if raw is None or ident is None:
+            unverifiable += 1
+            continue
+        value = pickle.loads(raw)
+        guards = {getattr(e, 'oracle_guard', None) for e in go.errors_of(reference_v, value)}
+        cut_errs = go.errors_of(reference_v, value, frozenset({ident}))
+        cut_guards = {getattr(e, 'oracle_guard', None) for e in cut_errs}
+        ok = ident in guards and ident not in cut_guards and (entry['cls'] != 'KILLED' or not cut_errs)
+        if ok:
+            passed += 1
+        else:
+            failed += 1
+            failures.append(clause)
+    return dict(passed=passed, failed=failed, unverifiable=unverifiable, failures=failures[:20],
+                sampled=_WIT['sampled'])
+
+
+def _fn_ref(fn):
+    module, qual = getattr(fn, '__module__', None), getattr(fn, '__qualname__', None)
+    if not module or not qual or '<locals>' in qual:
+        return None
+    try:
+        obj = __import__(module, fromlist=['*'])
+        for part in qual.split('.'):
+            obj = getattr(obj, part)
+    except (ImportError, AttributeError):
+        return None
+    return (module, qual) if obj is fn else None
+
+
+def _import_ref(ref):
+    module, qual = ref
+    obj = __import__(module, fromlist=['*'])
+    for part in qual.split('.'):
+        obj = getattr(obj, part)
+    return obj
+
+
+_DIALECTS = ('Draft202012Validator', 'Draft201909Validator', 'Draft7Validator', 'Draft6Validator',
+             'Draft4Validator', 'Draft3Validator')
+
+
+def _class_recipe(cls):
+    validators = {}
+    for name, fn in cls.VALIDATORS.items():
+        ref = _fn_ref(fn)
+        if ref is None:
+            return None
+        validators[name] = ref
+    # Stock dialect type checkers contain lambdas (jsonschema._types): name the
+    # dialect whose mapping matches and store only differing, importable overrides.
+    mine = cls.TYPE_CHECKER._type_checkers
+    base_name, overrides = None, {}
+    for dialect in _DIALECTS:
+        stock = getattr(jsonschema, dialect).TYPE_CHECKER._type_checkers
+        if set(stock) == set(mine) and all(stock[k] is mine[k] or _fn_ref(mine[k]) is not None for k in mine):
+            base_name = dialect
+            overrides = {k: _fn_ref(mine[k]) for k in mine if stock[k] is not mine[k]}
+            break
+    if base_name is None:
+        return None
+    return dict(validators=validators, meta_schema=cls.META_SCHEMA,
+                type_checker_base=base_name, type_checkers=overrides)
+
+
+def _rebuild_class(recipe):
+    checker = getattr(jsonschema, recipe['type_checker_base']).TYPE_CHECKER
+    for name, ref in recipe['type_checkers'].items():
+        checker = checker.redefine(name, _import_ref(ref))
+    return jsonschema.validators.create(meta_schema=recipe['meta_schema'],
+                                          validators={k: _import_ref(r) for k, r in recipe['validators'].items()},
+                                          type_checker=checker)
+
+
+def _format_recipe(checker):
+    if checker is common.FORMATS:
+        return 'common.FORMATS'
+    try:
+        out = {}
+        for name, (fn, raises) in checker.checkers.items():
+            ref = _fn_ref(fn)
+            exc = [_fn_ref(e) for e in raises]
+            if ref is None or any(r is None for r in exc):
+                return None
+            out[name] = (ref, exc)
+        return out
+    except AttributeError:
+        return None
+
+
+def _rebuild_format(recipe):
+    if recipe == 'common.FORMATS':
+        return common.FORMATS
+    return jsonschema.FormatChecker(checkers={name: (_import_ref(ref), tuple(_import_ref(e) for e in exc))
+                                                for name, (ref, exc) in recipe.items()})
+
+
+def _dump_entry(slot, ident):
+    """GO2-style dump entry for one DG5 root: exact rebuild inputs + seeds + agree records.
+
+    RootBank rebuilds through its own factory (exact class incl. dialect evolve);
+    other plain-resolver banks rebuild from a validator-class recipe. Anything
+    else is marked 'recollect' and never silently approximated. The rebuild is
+    round-trip verified here against the recorded instances before it is trusted.
+    """
+    v, bank = slot['validator'], slot['bank_object']
+    entry = dict(ident=ident, bank=slot['bank'], rows=sorted(slot.get('rows', ())),
+                 families=sorted(slot['families']), calls=slot['calls'], refused=slot['refused'],
+                 seeds=list(slot['seeds'].values()), seed_sha256=sorted(slot['seeds']),
+                 records=slot['records'], schema=v.schema, rebuild='recollect', rebuild_note=None)
+    resolver = v._resolver
+    if type(resolver).__module__ != 'referencing._core':
+        entry['rebuild_note'] = 'custom resolver ' + type(resolver).__qualname__
+        return entry
+    if type(bank).__qualname__ == 'RootBank' and isinstance(v.schema, dict) and set(v.schema) == {'$ref'}:
+        entry['rebuild'] = 'rootbank'
+        entry['rootbank'] = dict(documents=bank.documents, pins=bank.pins, root=v.schema['$ref'])
+    else:
+        recipe = _class_recipe(type(v))
+        fmt = _format_recipe(v.format_checker)
+        registry = resolver._registry
+        if recipe is None or fmt is None or registry is None:
+            entry['rebuild_note'] = 'validator class or format checker not importable by name'
+            return entry
+        entry['rebuild'] = 'recipe'
+        entry['recipe'] = dict(cls=recipe, format=fmt, base=resolver._base_uri,
+                               resources={uri: registry[uri].contents for uri in _plain_registry(registry)})
+    try:
+        plain = _rebuild_plain(entry)
+        copy_v = closure_validator(plain, ident, None)
+        bad = agree(plain, copy_v, slot['records'])
+        entry['rebuild_agreement'] = dict(records=len(slot['records']), disagreements=len(bad))
+        if bad:
+            entry['rebuild'], entry['rebuild_note'] = 'recollect', f'rebuild disagrees on {len(bad)} records'
+    except Exception as exc:  # noqa: BLE001 - a failed rebuild is recorded, never approximated
+        entry['rebuild'] = 'recollect'
+        entry['rebuild_note'] = 'rebuild failed: ' + type(exc).__name__ + ': ' + str(exc)[:300]
+    return entry
+
+
+def _rebuild_plain(entry):
+    """The captured (pre-annotation) validator for a dump entry, rebuilt exactly."""
+    if entry['rebuild'] == 'rootbank':
+        import pm_goal_test_owner_adapters as adapters
+        from referencing.jsonschema import DRAFT202012
+        bank = adapters.RootBank.__new__(adapters.RootBank)
+        bank.documents = entry['rootbank']['documents']
+        bank.pins = entry['rootbank']['pins']
+        bank.registry = Registry().with_resources(
+            (uri, Resource.from_contents(doc, default_specification=DRAFT202012))
+            for uri, doc in bank.documents.items()).crawl()
+        return bank.validator(entry['rootbank']['root'])
+    recipe = entry['recipe']
+    cls = _rebuild_class(recipe['cls'])
+    registry = Registry().with_resources(
+        (uri, Resource(contents=c, specification=_spec_of(c))) for uri, c in recipe['resources'].items()).crawl()
+    return cls(schema=entry['schema'], registry=registry, format_checker=_rebuild_format(recipe['format']),
+               _resolver=registry.resolver(base_uri=recipe['base']))
+
+
+def _spec_of(contents):
+    from referencing.jsonschema import specification_with
+    return specification_with(contents)
+
+
 # ---------------------------------------------------------------- run
 
 def collect(source, family):
@@ -364,20 +632,149 @@ def root_id(key):
     return 'dg5:' + hashlib.sha256(json.dumps(key).encode()).hexdigest()[:16]
 
 
+def _close_one(ident, plain, bank_object, seeds, records, args, carried):
+    """Agree, (memo) search and witness-verify one root; returns (entries, meta)."""
+    v = closure_validator(plain, ident, bank_object)
+    disagreements = agree(plain, v, records)
+    meta = dict(agreement=dict(records=len(records), disagreement_count=len(disagreements),
+                               disagreements=disagreements[:20]))
+    if disagreements:
+        raise ValueError(f'annotated copy disagrees with the original on {len(disagreements)} recorded instances')
+    search_v, memo_note = v, 'off'
+    if args.memo:
+        candidate, memo_note = _memoised(v)
+        if candidate is not v:
+            bad = memo_agree(v, candidate, records, seeds)
+            meta['memo_agreement'] = dict(instances=len(records) + len(seeds), disagreements=len(bad))
+            if bad:
+                memo_note = f'disagreed:{len(bad)}-fallback-reference'
+            else:
+                search_v = candidate
+    meta['memo'] = memo_note
+    go.UNRESOLVED.clear()
+    budget = args.budget or 10**12
+    if args.per_clause:
+        go.CURRENT[0] = search_v
+        clauses = sum(len(go.clauses_of(info['node'])) for info in go.walk(search_v).values())
+        budget = max(budget if args.budget else 0, args.per_clause * clauses)
+    orig = _install_search_wrappers(v, search_v, args.sample_every)
+    try:
+        entries, branch_controls, spent = go.close_root(ident, search_v, seeds, budget, carried=carried or None)
+    finally:
+        _restore_search_wrappers(orig)
+    meta['verify'] = verify_witnesses(v, entries)
+    meta['branch_controls'] = branch_controls
+    meta['validations'] = spent
+    meta['budget'] = dict(budget=budget, clause_cap=args.clause_cap)
+    meta['unresolved_refs'] = list(go.UNRESOLVED)
+    if _WIT['store']:
+        import gzip
+        store_path = Path(str(args.out) + '.' + ident + '.witnesses.pkl.gz')
+        blob = gzip.compress(pickle.dumps(_WIT['store'], protocol=5))
+        store_path.write_bytes(blob)
+        meta['witness_store'] = dict(path=store_path.name, sha256=hashlib.sha256(blob).hexdigest(),
+                                     witnesses=len(_WIT['store']))
+    return entries, meta
+
+
+def _carried_from(paths):
+    carried = {}
+    for path in paths or ():
+        report = json.loads(Path(path).read_text())
+        for ident, entry in report.get('roots', {}).items():
+            slot = carried.setdefault(ident, {})
+            for clause, item in entry.get('clauses', {}).items():
+                if item.get('cls') != 'UNCOVERED':
+                    slot[clause] = item
+    return carried
+
+
+def _main_from_dump(args):
+    """GO2 split run: close dumped roots (one root per process via --roots) without re-collecting."""
+    started = time.time()
+    go.CLAUSE_CAP[0] = args.clause_cap
+    carried = _carried_from(args.carry)
+    data = pickle.loads(args.from_dump.read_bytes())
+    part, total = map(int, args.shard.split('/'))
+    report = dict(method=__doc__.split('\n\n')[0], closure_tool='scripts/pm_goal_go_schema_closure.py',
+                  closure_tool_sha256=go.TOOL_SHA256, dg5_adapter_sha256=TOOL_SHA256,
+                  source=data['meta'].get('source'), family=data['meta'].get('family'),
+                  calls=data['meta'].get('calls'), collection_failures=[], roots={},
+                  from_dump=dict(path=str(args.from_dump),
+                                 sha256=hashlib.sha256(args.from_dump.read_bytes()).hexdigest()),
+                  native_execution='NOT_RUN')
+    for number, ident in enumerate(sorted(data['roots'])):
+        if number % total != part or (args.roots and not any(r in ident for r in args.roots)):
+            continue
+        dumped = data['roots'][ident]
+        entry = dict(bank=dumped['bank'], rows=dumped['rows'], families=dumped['families'],
+                     calls=dumped['calls'], refused=dumped['refused'], seeds=len(dumped['seeds']),
+                     seed_sha256=dumped['seed_sha256'], rebuild=dumped['rebuild'],
+                     rebuild_note=dumped.get('rebuild_note'), schema=json.dumps(dumped['schema'], sort_keys=True))
+        report['roots'][ident] = entry
+        if args.inventory_only:
+            continue
+        if dumped['rebuild'] == 'recollect':
+            entry.update(error='recollect-required: ' + str(dumped.get('rebuild_note'))[:300],
+                         counts={'UNCOVERED_ROOT_ERROR': 1},
+                         clauses={ident + '/<root>': dict(cls='UNCOVERED', error='dump entry needs recollection')})
+            continue
+        try:
+            plain = _rebuild_plain(dumped)
+            entries, meta = _close_one(ident, plain, None, list(dumped['seeds']), dumped['records'],
+                                       args, carried.get(ident))
+        except Exception as exc:  # noqa: BLE001 - reported, never skipped
+            entry.update(error=type(exc).__name__ + ': ' + str(exc)[:400], counts={'UNCOVERED_ROOT_ERROR': 1},
+                         clauses={ident + '/<root>': dict(cls='UNCOVERED', error=str(exc)[:300])})
+            print(f'{ident}: ERROR {exc!r}'[:300], file=sys.stderr, flush=True)
+            continue
+        counts = collections.Counter(e['cls'] for e in entries.values())
+        entry.update(meta, counts=dict(counts), clauses=entries)
+        print(f'{ident} {dumped["bank"]}: seeds={len(dumped["seeds"])} {dict(counts)} '
+              f'memo={meta.get("memo")} verify={meta.get("verify")}', file=sys.stderr, flush=True)
+        args.out.with_suffix('.partial.json').write_text(json.dumps(report, indent=1, sort_keys=True, default=str) + '\n')
+    report['shard'] = args.shard
+    report['seconds'] = round(time.time() - started, 1)
+    totals = collections.Counter()
+    for entry in report['roots'].values():
+        totals.update(entry.get('counts', {}))
+    report['totals'] = dict(totals)
+    report['uncovered'] = sorted(c for r in report['roots'].values() for c, e in r.get('clauses', {}).items()
+                                  if e['cls'] == 'UNCOVERED')
+    args.out.write_text(json.dumps(report, indent=1, sort_keys=True, default=str) + '\n')
+    print(json.dumps(dict(roots=len(report['roots']), totals=report['totals'],
+                          uncovered=len(report['uncovered']), seconds=report['seconds'])))
+    return 0
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    parser.add_argument('--source', required=True)
-    parser.add_argument('--family', required=True)
+    parser.add_argument('--source')
+    parser.add_argument('--family')
     parser.add_argument('--out', type=Path, required=True)
-    parser.add_argument('--budget', type=int, default=40000)
+    parser.add_argument('--budget', type=int, default=0, help='root validation budget; 0 = unbounded (per-clause cap binds, GO2)')
     parser.add_argument('--per-clause', type=int, default=0)
     parser.add_argument('--clause-cap', type=int, default=900)
     parser.add_argument('--roots', nargs='*')
     parser.add_argument('--shard', default='0/1', help='i/n over whole roots (sorted ids); never splits one root')
     parser.add_argument('--inventory-only', action='store_true')
+    parser.add_argument('--memo', action='store_true', help="search with GO2's memoizing validator (agree-gated)")
+    parser.add_argument('--sample-every', type=int, default=997, help='in-run memo/reference agreement sampling (0 = off)')
+    parser.add_argument('--carry', action='append', type=Path, default=[],
+                        help='earlier DG5 closure report(s): clauses not left UNCOVERED are carried, not re-searched')
+    parser.add_argument('--seed-cap', type=int, default=24)
+    parser.add_argument('--dump', type=Path, help='collect once and pickle GO2-style root dumps here, then exit')
+    parser.add_argument('--from-dump', type=Path, help='close roots from a --dump pickle instead of collecting')
     args = parser.parse_args()
+    if args.from_dump:
+        return _main_from_dump(args)
+    if not args.source or not args.family:
+        parser.error('--source and --family are required unless --from-dump is given')
     started = time.time()
     go.CLAUSE_CAP[0] = args.clause_cap
+    global SEED_CAP
+    SEED_CAP = args.seed_cap
+    carried = _carried_from(args.carry)
     collector = collect(args.source, args.family)
     part, total = map(int, args.shard.split('/'))
     report = dict(method=__doc__.split('\n\n')[0], closure_tool='scripts/pm_goal_go_schema_closure.py',
@@ -388,6 +785,22 @@ def main():
     report['all_roots'] = {root_id(k): dict(bank=s['bank'], schema=k[1][:300], calls=s['calls'], refused=s['refused'],
                                             rows=sorted(s.get('rows', ())),
                                             seeds=len(s['seeds']), families=sorted(s['families'])) for k, s in ordered}
+    if args.dump:
+        dumped = {}
+        for key, slot in ordered:
+            ident = root_id(key)
+            if args.roots and not any(r in ident or r in key[1] for r in args.roots):
+                continue
+            dumped[ident] = _dump_entry(slot, ident)
+            print(f"{ident} dump rebuild={dumped[ident]['rebuild']} seeds={len(dumped[ident]['seeds'])} "
+                  f"note={dumped[ident].get('rebuild_note')}", file=sys.stderr, flush=True)
+        blob = pickle.dumps(dict(meta=dict(source=args.source, family=args.family, calls=collector.calls,
+                                           seed_cap=args.seed_cap, tool_sha256=TOOL_SHA256,
+                                           seconds=round(time.time() - started, 1)), roots=dumped), protocol=5)
+        args.dump.write_bytes(blob)
+        print(json.dumps(dict(dump=str(args.dump), roots={i: e['rebuild'] for i, e in dumped.items()},
+                              sha256=hashlib.sha256(blob).hexdigest())))
+        return 0
     for number, (key, slot) in enumerate(ordered):
         ident = root_id(key)
         if number % total != part or (args.roots and not any(r in ident or r in key[1] for r in args.roots)):
@@ -400,20 +813,9 @@ def main():
         if args.inventory_only:
             continue
         try:
-            v = closure_validator(slot['validator'], ident, slot['bank_object'])
-            disagreements = agree(slot['validator'], v, slot['records'])
-            entry['agreement'] = dict(records=len(slot['records']), disagreements=disagreements[:20],
-                                      disagreement_count=len(disagreements))
-            if disagreements:
-                raise ValueError(f'annotated copy disagrees with the original on {len(disagreements)} recorded instances')
-            seeds = list(slot['seeds'].values())
-            go.UNRESOLVED.clear()
-            budget = args.budget
-            if args.per_clause:
-                go.CURRENT[0] = v
-                clauses = sum(len(go.clauses_of(info['node'])) for info in go.walk(v).values())
-                budget = max(budget, args.per_clause * clauses)
-            entries, branch_controls, spent = go.close_root(ident, v, seeds, budget)
+            entries, meta = _close_one(ident, slot['validator'], slot['bank_object'],
+                                       list(slot['seeds'].values()), slot['records'], args,
+                                       carried.get(ident))
         except Exception as exc:  # noqa: BLE001 - a root that cannot be closed is reported, never skipped
             entry.update(error=type(exc).__name__ + ': ' + str(exc)[:400], counts={'UNCOVERED_ROOT_ERROR': 1},
                          clauses={ident + '/<root>': dict(cls='UNCOVERED', error=str(exc)[:300])})
@@ -422,8 +824,7 @@ def main():
             slot['seeds'] = {}
             continue
         counts = collections.Counter(e['cls'] for e in entries.values())
-        entry.update(branch_controls=branch_controls, validations=spent, counts=dict(counts), clauses=entries,
-                     unresolved_refs=list(go.UNRESOLVED), budget=dict(budget=budget, clause_cap=args.clause_cap))
+        entry.update(meta, counts=dict(counts), clauses=entries)
         print(f'{ident} {slot["bank"]} {key[1][:80]}: seeds={len(slot["seeds"])} {dict(counts)}', file=sys.stderr,
               flush=True)
         args.out.with_suffix('.partial.json').write_text(json.dumps(report, indent=1, sort_keys=True, default=str) + '\n')
