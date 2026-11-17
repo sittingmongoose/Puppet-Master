@@ -10,7 +10,7 @@ export async function popupTab(t, f, trigger, where, back, depth = false) {
  if (depth) {
    // A selected model's depth is already open; otherwise use ArrowRight on the first model with levels.
   if (!(await f.locator('.o55-depth [role="listbox"]').count())) {
-   const index = await f.evaluate(() => [...document.querySelectorAll('.o55-pick-pop .o55-pick-item')].find(n => /depth/i.test(n.textContent))?.dataset.index);
+   const index = await f.evaluate(() => document.querySelector('.o55-pick-pop .o55-pick-item[data-levels]:not([aria-disabled="true"])')?.dataset.index);
    if (index !== undefined) await f.locator(`.o55-pick-pop .o55-pick-item[data-index="${index}"]`).click();
   }
   await f.locator('.o55-depth [role="listbox"]').focus();
