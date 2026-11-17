@@ -359,6 +359,14 @@ def _memoised(instance):
         return instance, 'skipped-custom-resolver:' + type(resolver).__qualname__
     import pm_goal_go2_closure as go2
     cls = go2.memo_class(type(instance))
+    # jsonschema's create() __init_subclass__ rebinds the stock evolve on the Memo
+    # subclass, shadowing the guarded copy's custom evolve: evolved sub-validators
+    # for referenced resources then come back unguarded (stock dialect class), so
+    # inner errors lose their oracle_guard and the $ref guard replaces it (found by
+    # the agree gate on dg5:c25e0ff944e76a07; in-run sampling flagged 27/64 on
+    # dg5:9c17854a57867b18). Rebind the guarded evolve; GO2's classes need no such
+    # fix because their guards do not ride a custom evolve.
+    cls.evolve = type(instance).evolve
     return cls(**{f.alias: getattr(instance, f.name) for f in attrs.fields(type(instance)) if f.init}), 'memo'
 
 
@@ -385,23 +393,33 @@ def memo_agree(reference_v, memo_v, records, seeds):
     return bad
 
 
-_WIT = dict(current=None, store={}, bytes=0, sampled=dict(calls=0, compared=0, mismatch=0))
+_WIT = dict(current=None, store={}, pending={}, bytes=0, sampled=dict(calls=0, compared=0, mismatch=0))
 _WITNESS_BYTES_CAP = 64 * 1024 * 1024
 
 
 def _install_search_wrappers(reference_v, search_v, sample_every):
-    """Capture one witness value per clause (for post-close re-judging on the reference
-    copy) and, when searching with the memo copy, sampled memo/reference agreement."""
+    """Capture one exact witness value per clause (for post-close re-judging on the
+    reference copy) and, when searching with the memo copy, sampled agreement.
+
+    A witness is confirmed only when the same value (by pickle hash) is seen both
+    uncut with the clause guard among its errors and cut with that guard gone —
+    the exact pair the kill test itself judged. First-match capture proved too
+    weak on dg5:c25e0ff944e76a07 (2 pattern witnesses captured from non-killing
+    attempts failed re-judging while the reference search itself was exact).
+    """
     import pm_goal_go2_closure as go2
     orig_search, orig_errors = go.search_clause, go.errors_of
-    _WIT.update(current=None, store={}, bytes=0, sampled=dict(calls=0, compared=0, mismatch=0))
+    _WIT.update(current=None, store={}, pending={}, bytes=0,
+                sampled=dict(calls=0, compared=0, mismatch=0))
 
     def search(clause, keyword, location, info, node, ident, *args, **kwargs):
         _WIT['current'] = (clause, ident)
+        _WIT['pending'] = {}
         try:
             return orig_search(clause, keyword, location, info, node, ident, *args, **kwargs)
         finally:
             _WIT['current'] = None
+            _WIT['pending'] = {}
 
     def errors_of(v, value, cut=frozenset()):
         errs = orig_errors(v, value, cut)
@@ -413,16 +431,23 @@ def _install_search_wrappers(reference_v, search_v, sample_every):
                 if a != go2.signature(reference_v, value, cut):
                     _WIT['sampled']['mismatch'] += 1
         cur = _WIT['current']
-        if cur and not cut:
+        if cur:
             clause, ident = cur
-            if clause not in _WIT['store'] and ident in {getattr(e, 'oracle_guard', None) for e in errs}:
+            if clause not in _WIT['store']:
                 try:
                     raw = pickle.dumps(value, protocol=5)
                 except Exception:  # noqa: BLE001 - an unpicklable witness is reported unverifiable
                     raw = None
-                if raw is not None and _WIT['bytes'] + len(raw) <= _WITNESS_BYTES_CAP:
-                    _WIT['store'][clause] = raw
-                    _WIT['bytes'] += len(raw)
+                if raw is not None:
+                    digest = hashlib.sha256(raw).hexdigest()
+                    guards = {getattr(e, 'oracle_guard', None) for e in errs}
+                    if not cut and ident in guards and len(_WIT['pending']) < 8:
+                        _WIT['pending'][digest] = raw
+                    elif cut and ident not in guards and digest in _WIT['pending']:
+                        confirmed = _WIT['pending'][digest]
+                        if _WIT['bytes'] + len(confirmed) <= _WITNESS_BYTES_CAP:
+                            _WIT['store'][clause] = confirmed
+                            _WIT['bytes'] += len(confirmed)
         return errs
 
     go.search_clause, go.errors_of = search, errors_of
