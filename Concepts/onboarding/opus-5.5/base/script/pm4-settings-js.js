@@ -3032,7 +3032,7 @@ window.PM12_REFERENCE = {"version":"1.0.0","total":892,"inventory_sha256":"be85c
   let state = loadState();
 
   /* the navigation's waiting place save (saveNavigationSoon, below navigate): declared before anything can save */
-  let navigationSaveJob = 0, navigationSaveFrame = 0, navigationSaveKey = null, navigationSaveHad = false, navigationSaveFor = null;
+  let navigationSaveJob = 0, navigationSaveIdle = false, navigationSaveFrame = 0, navigationSaveKey = null, navigationSaveHad = false, navigationSaveFor = null;
   function saveState() {
     searchIndexDirty = true;
     const copy = clone(state);
@@ -3149,8 +3149,11 @@ window.PM12_REFERENCE = {"version":"1.0.0","total":892,"inventory_sha256":"be85c
   function navigationTomeKey() { return window.PM7_SETTINGS_TOME && typeof window.PM7_SETTINGS_TOME.key === 'function' ? window.PM7_SETTINGS_TOME.key() : null; }
   function cancelNavigationSave() {
     if (navigationSaveFrame) cancelAnimationFrame(navigationSaveFrame);
-    if (navigationSaveJob) { if (typeof cancelIdleCallback === 'function') cancelIdleCallback(navigationSaveJob); clearTimeout(navigationSaveJob); }
-    navigationSaveJob = 0; navigationSaveFrame = 0; navigationSaveKey = null;
+    if (navigationSaveJob) {
+      if (navigationSaveIdle) { if (typeof cancelIdleCallback === 'function') cancelIdleCallback(navigationSaveJob); }
+      else clearTimeout(navigationSaveJob);
+    }
+    navigationSaveJob = 0; navigationSaveIdle = false; navigationSaveFrame = 0; navigationSaveKey = null;
   }
   /* The place is saved under the Project it was chosen in (R89 P1: a Project change inside the wait saved the next
      Project's state and lost the chapter of the first). A later place in the same Project rides the one waiting save;
@@ -3165,7 +3168,8 @@ window.PM12_REFERENCE = {"version":"1.0.0","total":892,"inventory_sha256":"be85c
        would otherwise save before that frame */
     navigationSaveFrame = requestAnimationFrame(() => {
       navigationSaveFrame = 0;
-      navigationSaveJob = typeof requestIdleCallback === 'function' ? requestIdleCallback(saveNavigationNow, { timeout: 1500 }) : setTimeout(saveNavigationNow, 300);
+      navigationSaveIdle = typeof requestIdleCallback === 'function';
+      navigationSaveJob = navigationSaveIdle ? requestIdleCallback(saveNavigationNow, { timeout: 1500 }) : setTimeout(saveNavigationNow, 300);
     });
   }
   function saveNavigationNow() {
