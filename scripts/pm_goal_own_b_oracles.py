@@ -1206,6 +1206,7 @@ def gc_vectors(case, schemas):
 
 def main(argv=None):
     parser=argparse.ArgumentParser();parser.add_argument('--output',type=Path);args=parser.parse_args(argv)
+    assert not (refused := revision_admission_failures(PAYLOAD_RESOURCES)), ('admission mode refused', refused)
     global _SCHEMAS
     schemas=_SCHEMAS=Schemas();rows=vectors(schemas)
     result=dict(status='pass' if all(r['pass_'] for r in rows) else 'fail',activation='TEST_ONLY_PREPARED_WITHOUT_ADMISSION',native_execution='NOT_RUN',cases=len(rows),positives=sum(r['expected'] is None for r in rows),negatives=sum(r['expected'] is not None for r in rows),failures=[r for r in rows if not r['pass_']],schema_resources=len(schemas.resources),schema_references=schemas.reference_count,rows=rows,guard_isolation='SHARED_TOOL_SWEEP_NOT_RUN',number_and_format_sweep='NOT_RUN')
@@ -1242,6 +1243,35 @@ Realm.call = adapter.complete_entry(Realm.call, 'own_b', Refused, state=_realm_s
                                     store=_realm_store, is_read=lambda args: len(args) > 1 and args[1] in _READS)
 Realm.terminal = adapter.complete_entry(Realm.terminal, 'own_b', Refused, state=_realm_state, restore=_realm_restore)
 Schemas.check = adapter.complete_entry(Schemas.check, 'own_b', Refused, state=lambda schemas: None, restore=lambda data: _SCHEMAS)
+
+
+def revision_admission_failures(event_types):
+    """S5b: pinned predecessor/successor rows, then the shared revision record proof.
+
+    Whole-row hashes are taken from the applied Merge-2 records at 8477a48c7a, independently of this run's files.
+    The pre-revision row retains its prior verdict; the successor requires its exact complete revision record.
+    """
+    import pm_ea_admission_mode as admission_mode
+    pins = {'goal.blocked': {'before': 'f2775d66d7a4223f52d1c434c450e2cbec6645598a45aca846feceee626f43a1', 'after': 'bb8a35168b77493dfd5b4324fa092fefdd34c61698ae1f33947fff846d7e5316', 'predecessor': {'family_revision': '2.0.0', 'payload_schema_id': 'pm.goal_runtime_event.goal_blocked.schema.v2'}}, 'goal.completed': {'before': '021861dd5943dc3115a58042d72f2b62738176bbfee809f3ccfd528dec7d1f8a', 'after': '7061d1c3ec0ab906601288adeb4f926cdc75e0761e25258019cc3a3626f759cb', 'predecessor': {'family_revision': '2.0.0', 'payload_schema_id': 'pm.goal_runtime_event.goal_completed.schema.v2'}}}
+    registry = admission_mode.load_registry(ROOT)
+    failures = []
+    for family in event_types:
+        rows = [r for r in registry['families'] if r['event_type'] == family]
+        if len(rows) != 1:
+            failures.append(family + ': admission mode refused: revision_family_not_registered_once')
+            continue
+        row, pin = rows[0], pins[family]
+        digest = admission_mode.canonical_sha256(row)
+        if digest not in (pin['before'], pin['after']):
+            failures.append(family + ': admission mode refused: registry_row_differs_from_pinned_revision')
+            continue
+        # For the predecessor, a non-successor placeholder makes revision_verdict exercise its unrevised branch.
+        successor = row if digest == pin['after'] else {'event_type': family, 'family_revision': '3.0.0'}
+        mode = admission_mode.revision_verdict(family, successor_row=successor, predecessor=pin['predecessor'],
+                                               root=ROOT, registry=registry)
+        if mode['mode'] == 'refused':
+            failures.append(family + ': admission mode refused: ' + mode['code'])
+    return failures
 
 
 if __name__=='__main__':

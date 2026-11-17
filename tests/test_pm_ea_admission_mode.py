@@ -419,6 +419,14 @@ LANE_CASES = [
      lambda fn, et, root, reg: fn(et, reg) == 0, None),
     ("DCW", "scripts/pm_dcw_event_oracles.py", "admission_report", "wizard.blocked",
      lambda fn, et, root, reg: _accepts(fn, [et]), None),
+    ("DMEM-report", "scripts/pm_memory_maintenance_events.py", "admission_report", "memory.dedup_sweep.completed",
+     lambda fn, et, root, reg: _accepts(fn, [et]), None),
+    ("DG6A-alert-report", "scripts/pm-alert-event-contracts-check.py", "admission_report", "alert.acknowledged",
+     lambda fn, et, root, reg: _accepts(fn, [et]), None),
+    ("DG6A-concern-report", "scripts/pm-concern-created-contracts-check.py", "admission_report", "concern.created",
+     lambda fn, et, root, reg: _accepts(fn, [et]), None),
+    ("DG6A-panel-report", "scripts/pm-panel-event-contracts-check.py", "admission_report", "panel.redocked",
+     lambda fn, et, root, reg: _accepts(fn, [et]), None),
     ("DG6A-card5", "scripts/pm-card5-event-contracts-check.py", "admission_label", "bundle.note_created",
      lambda fn, et, root, reg: _accepts(fn, et), None),
     ("DR", "scripts/pm-runtime-artifact-event-drafts.py", "admission_report", "runtime_artifact.screenshot",
@@ -426,6 +434,85 @@ LANE_CASES = [
     ("DC", "scripts/pm_collaboration_events.py", "admission_mode_failures", "collaboration.created",
      lambda fn, et, root, reg: fn(root, [et] if any(f["event_type"] == et for f in reg["families"]) else []) == [], _dc_extra),
 ]
+
+
+# T252: every family selected by DF's contract main goes through the same record gate.
+DF_CONTRACT_FAMILIES = tuple(r["event_type"] for r in _read(REPO, "Plans/filesafe_event_contract_fixtures.json")["families"])
+LANE_CASES.extend(
+    ("DF-contracts:" + family, "scripts/pm_filesafe_event_contracts.py", "admission_report", family,
+     lambda fn, et, root, reg: (lambda failures: (fn([et], failures), failures)[1] == [])([]), None)
+    for family in DF_CONTRACT_FAMILIES
+)
+
+
+# Missing-record sweep: all twelve FileManager families need the same record gate.
+DFM_CONTRACT_FAMILIES = tuple(r["event_type"] for r in _read(REPO, "Plans/filemanager_event_contract_fixtures.json")["rows"])
+LANE_CASES.extend(
+    ("DFM:" + family, "scripts/pm-filemanager-event-contracts.py", "admission_report", family,
+     lambda fn, et, root, reg: _accepts(fn, [et]), None)
+    for family in DFM_CONTRACT_FAMILIES
+)
+
+
+# Real missing-record false passes: both W3D entrypoints, all W3E and all W3I families.
+for _lane, _checker, _families in [
+    ("W3D-direct", "scripts/pm_w3d_bsd_events.py", [r["event_type"] for r in _read(REPO, "Plans/bsd_event_oracle_plan.json")["families"]]),
+    ("W3D-wrapper", "scripts/pm-w3d-event-contracts.py", [r["event_type"] for r in _read(REPO, "Plans/bsd_event_oracle_plan.json")["families"]]),
+    ("W3E", "scripts/pm_w3e_event_oracles.py", [r["event_type"] for r in _read(REPO, "Plans/event_authority_w3e_oracle_plan.json")["families"]]),
+    ("W3I", "scripts/pm_w3i_continuity_oracles.py", ["continuity.actor_identified", "continuity.provenance_recorded", "continuity.redaction_applied", "continuity.replay_checkpointed"]),
+]:
+    LANE_CASES.extend(
+        (_lane + ":" + family, _checker, "admission_failures", family,
+         lambda fn, et, root, reg: fn([et]) == [], None)
+        for family in _families
+    )
+
+REVISION_LANE_CASES = [
+    ("S3-own_b", "scripts/pm_goal_own_b_oracles.py", "goal.blocked"),
+    ("S3-own_b", "scripts/pm_goal_own_b_oracles.py", "goal.completed"),
+    ("S3-replan", "scripts/pm_goal_run_replan_oracles.py", "goal_run.replanned"),
+]
+
+
+def run_revision_lane_scenarios(module, repo: Path = REPO):
+    """Six actual registry/record states through each new revision lane's own function."""
+    results = []
+    sys.modules["pm_ea_admission_mode"] = module
+    try:
+        with tempfile.TemporaryDirectory(prefix="pm-ea-revision-lanes-") as scratch:
+            base = Path(scratch) / "base"
+            for rel in admission_mode.inputs([c[2] for c in REVISION_LANE_CASES], repo):
+                (base / rel).parent.mkdir(parents=True, exist_ok=True)
+                shutil.copyfile(repo / rel, base / rel)
+            for lane, checker, family in REVISION_LANE_CASES:
+                for scenario, accepted in [("admitted_tree", True), ("a_record_deleted", False),
+                        ("b_record_does_not_match", False), ("c_live_row_differs_from_pinned", False),
+                        ("d_prepared_successor_registered", False), ("pre_revision_tree", True)]:
+                    root = Path(scratch) / (family + "-" + scenario)
+                    shutil.copytree(base, root)
+                    rel = REVISION_DIR + "/" + family + ".json"
+                    record = _read(root, rel)
+                    if scenario in ("a_record_deleted", "d_prepared_successor_registered", "pre_revision_tree"):
+                        (root / rel).unlink()
+                    if scenario == "b_record_does_not_match":
+                        record["registry_after"]["revision"] = "2026-11-16.997"
+                        _write(root, rel, record)
+                    if scenario == "c_live_row_differs_from_pinned":
+                        _registry_edit(root, lambda doc: next(r for r in doc["families"] if r["event_type"] == family).__setitem__("family_revision", "9.9.9"))
+                    if scenario == "pre_revision_tree":
+                        _registry_edit(root, lambda doc: doc.__setitem__("families", [copy.deepcopy(record["before_row"]) if r["event_type"] == family else r for r in doc["families"]]))
+                    module.reset_caches()
+                    try:
+                        fn = lane_function(checker, "revision_admission_failures", root)
+                        observed, error = fn([family]) == [], None
+                    except Exception as exc:
+                        observed, error = None, type(exc).__name__ + ": " + str(exc)[:300]
+                    results.append(dict(lane=lane, family=family, scenario=scenario, expected_accepted=accepted,
+                                        observed_accepted=observed, error=error, ok=observed is accepted))
+                    shutil.rmtree(root)
+    finally:
+        sys.modules["pm_ea_admission_mode"] = admission_mode
+    return results
 
 
 def _accepts(fn, *args):
@@ -604,6 +691,33 @@ class LaneAdmissionFunctions(unittest.TestCase):
         self.assertEqual(len(results), len(LANE_CASES) * len(LANE_DEFECTS))
         for result in results:
             with self.subTest(result["lane"] + ":" + result["scenario"]):
+                self.assertIsNone(result["error"])
+                self.assertTrue(result["ok"], result)
+
+
+    def test_output_metadata_names_record_bound_and_prepared_states(self):
+        for lane, checker, name, family, _, _ in LANE_CASES:
+            if lane not in ('DMEM-report', 'DG6A-alert-report', 'DG6A-concern-report', 'DG6A-panel-report'):
+                continue
+            with self.subTest(lane):
+                fn = lane_function(checker, name, REPO)
+                row = _row(REPO, family)
+                ref = row['retention_policy_ref']
+                policy = 'RECORD_BOUND:' + ref['policy_id'] + '@' + ref['policy_version']
+                self.assertEqual(fn([family]), dict(admission='RECORD_BOUND', retention={family: policy},
+                                                    admission_counts=dict(prepared=0, admitted=1, refused=0)))
+                self.assertEqual(fn([PREPARED]), dict(admission='ABSENT', retention={PREPARED: 'PENDING_RETENTION_DECISION'},
+                                                      admission_counts=dict(prepared=1, admitted=0, refused=0)))
+                mixed = fn([family, PREPARED])
+                self.assertEqual(mixed['admission'], 'ABSENT_AND_RECORD_BOUND')
+                self.assertEqual(mixed['retention'], {family: policy, PREPARED: 'PENDING_RETENTION_DECISION'})
+
+
+    def test_new_revision_lane_gates_keep_only_the_exact_record_bound_successor(self):
+        results = run_revision_lane_scenarios(admission_mode)
+        self.assertEqual(len(results), len(REVISION_LANE_CASES) * 6)
+        for result in results:
+            with self.subTest(result["lane"] + ":" + result["family"] + ":" + result["scenario"]):
                 self.assertIsNone(result["error"])
                 self.assertTrue(result["ok"], result)
 

@@ -3477,6 +3477,7 @@ def main(argv=None):
         only = args[args.index('--family') + 1]
     out_path = Path(args[args.index('--json') + 1]) if '--json' in args else None
     summary = dict(families=0, positives=0, negatives=0, single_row=0, multi_row=0, mismatches=[], unresolved_refs=[])
+    assert not (refused := admission_failures([f['event_type'] for f in spec.FAMILIES if only is None or f['event_type'] == only])), ('admission mode refused', refused)
     coverage = {}
     with exact_integer_digits():
         summary['unresolved_refs'] = resolve_every_ref()
@@ -3520,6 +3521,12 @@ def main(argv=None):
     print(json.dumps({k: (v if k != 'mismatches' else v[:40]) for k, v in summary.items() if k != 'rows_witnessed'},
                      indent=1, default=str))
     return 0 if summary['status'] == 'pass' else 1
+
+
+def admission_failures(event_types):
+    """Refuse any selected prepared family registered outside its exact complete DL-077 admission."""
+    import pm_ea_admission_mode as admission_mode
+    return admission_mode.gate_failures(admission_mode.verdicts(event_types, root=ROOT))
 
 
 if __name__ == '__main__':

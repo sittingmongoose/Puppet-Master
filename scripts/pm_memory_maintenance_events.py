@@ -2026,7 +2026,7 @@ def main():
                       'guard_table_witnesses': witnesses, 'shared_number_corpus': shared_numbers,
                       'guard_tables': {'phases': len(TABLE_PHASES), 'rows': sum(len(table_rows(p)) for p in TABLE_PHASES),
                                        'order': 'every factory requires its rows in table order'},
-                      'native': 'NOT_RUN', 'admission': 'ABSENT', 'retention': 'PENDING_RETENTION_DECISION'}, indent=2))
+                      'native': 'NOT_RUN', **admission_report(families)}, indent=2))
 
 
 
@@ -2040,6 +2040,25 @@ def unadmitted_registrations(registered, event_types):
     import pm_ea_admission_mode as admission_mode
     named = sorted(set(registered).intersection(event_types))
     return {et: v['code'] for et, v in admission_mode.verdicts(named, root=ROOT).items() if v['mode'] != 'admitted'}
+
+
+def admission_report(event_types):
+    """Output metadata from the exact DL-077 verdicts; preparation keeps its pending labels."""
+    import pm_ea_admission_mode as admission_mode
+    results = admission_mode.verdicts(event_types, root=ROOT)
+    failures = admission_mode.gate_failures(results)
+    assert not failures, ('admission mode refused', failures)
+    counts = admission_mode.summary(results)['counts']
+    label = 'ABSENT' if not counts['admitted'] else 'RECORD_BOUND' if not counts['prepared'] else 'ABSENT_AND_RECORD_BOUND'
+    rows = {row['event_type']: row for row in admission_mode.load_registry(ROOT)['families']}
+    retention = {}
+    for event, mode in sorted(results.items()):
+        if mode['mode'] == 'prepared':
+            retention[event] = 'PENDING_RETENTION_DECISION'
+        else:
+            ref = rows[event]['retention_policy_ref']
+            retention[event] = 'RECORD_BOUND:' + ref['policy_id'] + '@' + ref['policy_version']
+    return dict(admission=label, retention=retention, admission_counts=counts)
 
 
 if __name__ == '__main__':

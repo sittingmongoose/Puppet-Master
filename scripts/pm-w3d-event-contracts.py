@@ -78,6 +78,7 @@ def main(argv=None):
     parser.add_argument('--skip-numbers', action='store_true')
     parser.add_argument('--skip-inventory', action='store_true')
     args = parser.parse_args(argv)
+    assert not (refused := admission_failures([f['event_type'] for f in spec.FAMILIES])), ('admission mode refused', refused)
     result = {}
     # complete checker
     result['checker'] = m.main(['--json', str(ROOT / 'reports/event-authority-20261105/W3D-checker.json')])
@@ -110,6 +111,12 @@ def main(argv=None):
         Path(args.json).write_text(text + '\n')
     print(text)
     return 0 if ok else 1
+
+
+def admission_failures(event_types):
+    """Refuse any selected prepared family registered outside its exact complete DL-077 admission."""
+    import pm_ea_admission_mode as admission_mode
+    return admission_mode.gate_failures(admission_mode.verdicts(event_types, root=ROOT))
 
 
 if __name__ == '__main__':

@@ -470,10 +470,10 @@ def main():
                       'guard_case_oracle':guards,'canonical_history_cases':canonical_history,
                       'numeric_writer_cases':numeric_writers,'boundary_domains':domains,'write_recipes':recipes,
                       'storage_uint64':metadata, 'card6_policy':policy, 'guard_table_witnesses':witnesses, 'shared_number_corpus':shared_numbers,
-                      'payload_messagepack_upper_bounds':bounds,'native':'NOT_RUN','admission':'ABSENT',
+                      'payload_messagepack_upper_bounds':bounds,'native':'NOT_RUN',**core.admission_report(families),
                       'approved_cutoffs':{'monthly_summary':'DL-446: idle >=90 days AND score <0.10',
                                           'prune_archive':'DL-447: idle >=180 days AND score <0.05'},
-                      'activation':'admission ABSENT; operation retention pending'},indent=2))
+                      'activation':'admission ' + core.admission_report(families)['admission'] + '; operation retention RP-MEMORY-MAINTENANCE-APPLICATION-2555D'},indent=2))
 
 if __name__ == '__main__':
     main()

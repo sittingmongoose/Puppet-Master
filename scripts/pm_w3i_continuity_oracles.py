@@ -2762,6 +2762,7 @@ def main(argv=None):
     parser = argparse.ArgumentParser(description='W3I complete continuity checker')
     parser.add_argument('--json', help='write the same summary to this path')
     args = parser.parse_args(argv)
+    assert not (refused := admission_failures(FAMILIES)), ('admission mode refused', refused)
     eager = {'continuity': eager_refs(CONTINUITY_SCHEMA), 'event_record': eager_refs(EVENT_RECORD_SCHEMA),
              'receipt': eager_refs(RECEIPT_SCHEMA)}
     controls = build_controls()
@@ -2834,6 +2835,12 @@ def export_fixtures(path):
            'items': items}
     Path(path).write_text(json.dumps(doc, indent=1, sort_keys=True) + '\n')
     return len(items)
+
+
+def admission_failures(event_types):
+    """Refuse any selected prepared family registered outside its exact complete DL-077 admission."""
+    import pm_ea_admission_mode as admission_mode
+    return admission_mode.gate_failures(admission_mode.verdicts(event_types, root=ROOT))
 
 
 if __name__ == '__main__':
