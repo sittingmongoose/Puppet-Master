@@ -159,8 +159,40 @@ def check_frame_error_target_mapping():
         'dg5/site/pm_goal_test_storage.py:581'
 
 
+def check_pass2_parent_release():
+    """--prove-generated releases the pass-1 collector/bridge memos before the
+    pass-2 child re-collects, so the scope cap sees one peak, not pass1+pass2."""
+    import pm_goal_dg5_boundaries as bridge
+    import pm_goal_guard_tables as tables
+
+    class FakeCollector:
+        pass
+
+    fake = FakeCollector()
+    fake.ledger, fake.signature_list = [dict(id=0)], [frozenset({1, 2})]
+    fake.candidates = {'row': (lambda: None, object(), 'case/label')}
+    fake.snapshots = {'row': object()}
+    fake.schema_seeds = {('schema',): [('v', dict(x=1), 'p')]}
+    fake.store_snapshots, fake.rows = [dict(case='case')], {'row': dict(sites=set())}
+    bridge.FROZEN['x'], bridge.FROZEN_PARTS['x'] = (object(), 'sha'), {}
+    bridge.MEMBERS['y'], bridge.CASE_BANKS['z'] = 'sha', (object(), 'sha', 'case/id')
+    tables._SCHEMAS['k'] = frozenset({'row'})
+    tables._PREDICATES['t'] = {}
+    try:
+        dg5._release_pass1_state(fake)
+        assert fake.ledger == [] and fake.signature_list == [] and fake.candidates == {}
+        assert fake.snapshots == {} and fake.schema_seeds == {} and fake.store_snapshots == []
+        assert fake.rows == {} and not bridge.FROZEN and not bridge.FROZEN_PARTS
+        assert not bridge.MEMBERS and not bridge.CASE_BANKS
+        assert not tables._SCHEMAS and not tables._PREDICATES
+    finally:
+        tables._SCHEMAS.clear()
+        tables._PREDICATES.clear()
+
+
 def main():
     check_frame_error_target_mapping()
+    check_pass2_parent_release()
     check_shard_partition()
     check_collector_releases_sealed_values()
     check_stateless_reducer_not_an_entry()
