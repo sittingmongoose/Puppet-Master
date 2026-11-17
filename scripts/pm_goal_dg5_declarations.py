@@ -42,6 +42,34 @@ DECLARED = {
         'decode_frame bounds the same declared payload_len prefix field twice for this input: '
         'by PAYLOAD_CAP at :537 and by the bytes actually present at :539; the fixture declared '
         'length exceeds both bounds, and with both cuts the genuine payload slice decodes.'),
+    'adapter/source/token_frontier_revision': ((
+        'dg5/site/pm_goal_test_source.py:210', 'dg5/site/pm_goal_test_source.py:227'),
+        'GenericSource token verification compares the same storage_token frontier_revision '
+        'field by equality twice for this input (only that field is mutated): against the '
+        'canonical state index_frontier_revision at :210 and against the checkpoint node '
+        'frontier publication_revision at :227. The two compared values are recordings of '
+        'the one committed frontier, cross-checked in the canonical-state rebuild.'),
+    'adapter/dg5-shared/images_current_schema:907': ((
+        'dg5/site/pm_goal_test_storage.py:907', 'dg5/site/pm_goal_test_storage.py:908'),
+        'The empty birth_operation_ref is copied verbatim into both canonical seglog '
+        'images by build_seglog_images (current birth_operation_ref and the manifest '
+        'selection id derivation), and both whole-schema validators bound that same '
+        'field by string minLength 1 in the same _commit_state call.'),
+    'adapter/dg5-shared/index_retained_inventory_only:202': ((
+        'dg5/site/pm_goal_test_source.py:202', 'dg5/site/pm_goal_test_source.py:446'),
+        'For this input only the token source_selection retained_inventory_sha256 is '
+        'substituted: GenericSource token verification compares it to the digest of the '
+        'manifest retained inventory at :202, and the index read compares the identical '
+        'token source_selection object to the checkpoint frontier source_selection at '
+        ':446. Both refuse solely on that one substituted field value.'),
+    'U5/N/occurred_time_trailing_lf': ((
+        'dg5/dgu/source/capture/occurred_at_utc/date-time',
+        'dg5/dgu/source/capture/prepared_producer/schema', 'dg5/dgu/progress/schema'),
+        'The same metadata occurred_at_utc value is bounded by the identical NUMRULE '
+        'EVENT_RECORD date-time predicate three times in one capture call: directly by '
+        'NR.event_time, through the ProducerInput format check in prepared_event, and '
+        'through the Progress producer_metadata format check at progress write. The '
+        'trailing-LF input fails that one predicate at every member.'),
 }
 
 
@@ -58,10 +86,12 @@ DECLARED_RULES = (
      ('dg5/dgu/sir/request/schema', U_SITE + '294'),
      'GoalUpdateRequestV2 goal_id minLength 1 and exact_str (pm_goal_dg_u_owners.py:294) `value != \'\'` require the '
      'same field to be non-empty.'),
-    (lambda cid: cid.startswith('U5/F/hitl.capture/after:') and cid.endswith('/body'),
+    (lambda cid: cid.startswith('U5/F/hitl.capture/after:') and cid.endswith('/body')
+     and not cid.startswith('U5/F/hitl.capture/after:current_goal/'),
      HITL_TARGET,
      "ApprovalOwner.capture checks the Goal body's revision and currentness_hash against the proposal target at :975 "
-     'and re-reads and re-checks the identical predicate at its final boundary :998.'),
+     'and re-reads and re-checks the identical predicate at its final boundary :998. '
+     'The after:current_goal fault lands between the two checks, so that case targets :998 alone.'),
 )
 
 

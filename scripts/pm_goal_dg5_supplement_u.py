@@ -175,6 +175,231 @@ def value_sha_substituted(d):
     return w, U.body_read(w, g)
 
 
+@case('U-DG5/N/logical_schema_extra_record_field', 'dgu/physical/logical/schema/record',
+      'dg5/dgu/physical/logical/schema',
+      'Single defect: the stored body record gains one field no owner schema defines, with its '
+      'currentness hash recomputed and the control body-bytes/currentness copies rewired to match, '
+      'so the physical row, value_sha256, currentness and every read join hold and only the whole-root '
+      'logical schema (additionalProperties at the record) refuses. Prototype for the whole-root schema '
+      'rows the write-time row() validations can never fail on owner-built records.')
+def logical_schema_extra_record_field(d):
+    w, g = U._goal(d)
+    U.run_direct(w, g)
+    sc = g['scope']
+    bkey = O.body_key(sc['project_id'], sc['goal_id'])
+    new = U.rbody(w, O.T_BODY, bkey, lambda r: (lambda x: dict(
+        x, currentness_hash=O.currentness(x)))(dict(r, dg5_schemaless_field=1)))['record']
+    U.rbody(w, O.T_CONTROL, U.ctl_key(g), lambda c: dict(
+        c, body_sha256=O.body_bytes_sha(new), currentness_hash=new['currentness_hash']))
+    return w, U.body_read(w, g)
+
+
+@case('U-DG5/N/body_control_schema_empty_storage', 'dgu/body/goal_body_control/schema/record/storage_instance_id',
+      ('dg5/dgu/body/goal_body_control/schema', 'dg5/dgu/body/goal_body_mutation_receipt/schema'),
+      'Single defect at the start entry: the caller scope carries an empty storage_instance_id. '
+      'No earlier row() in start reads that field (body, revision and origin records have none); '
+      'the owner-built control and mutation receipt copy the same scope field, and both whole-root '
+      'schemas bound it by the same predicate (string minLength 1), so the two schema rows are a '
+      'declared duplicate set for this input.')
+def body_control_schema_empty_storage(d):
+    w = U.world(d)
+    scope = dict(storage_instance_id='', project_id='TEST_ONLY-project-dg5ctl',
+                 thread_id='thr_TEST_ONLY_dg5ctl', goal_id='goal:TEST_ONLY:dg5ctl')
+    return w, lambda: w.body.start(scope, 'x', 'message:TEST_ONLY:dg5ctl',
+                                   'TEST_ONLY:creation-authority:dg5ctl', 'context:TEST_ONLY:dg5ctl')
+
+
+@case('U-DG5/N/body_origin_schema_empty_message_ref', 'dgu/body/goal_objective_origin/schema/record/source_message_refs/0',
+      'dg5/dgu/body/goal_objective_origin/schema',
+      'Single defect at the start entry: the caller creation_message_id is empty. The body and '
+      'revision rows built before the origin row do not carry it, so the first schema to refuse '
+      'is the whole-root origin validation (row dg5/dgu/body/goal_objective_origin/schema).')
+def body_origin_schema_empty_message_ref(d):
+    w = U.world(d)
+    scope = dict(storage_instance_id=w.storage.storage_instance_id, project_id='TEST_ONLY-project-dg5org',
+                 thread_id='thr_TEST_ONLY_dg5org', goal_id='goal:TEST_ONLY:dg5org')
+    return w, lambda: w.body.start(scope, 'x', '', 'TEST_ONLY:creation-authority:dg5org',
+                                   'context:TEST_ONLY:dg5org')
+
+
+@case('U-DG5/N/body_record_schema_empty_thread', 'dgu/body/goal_body_record/schema/record/thread_id',
+      ('dg5/dgu/body/goal_body_record/schema', 'dg5/dgu/body/goal_body_control/schema',
+       'dg5/dgu/body/goal_body_mutation_receipt/schema'),
+      'Single defect at the start entry: the caller scope carries an empty thread_id (project/goal '
+      'ids feed the row keys first, so they cannot isolate a schema). The owner-built body, control '
+      'and mutation receipt records copy the same scope field, and all three whole-root schemas '
+      'bound it by the same predicate (string minLength 1), so the three schema rows are a '
+      'declared duplicate set for this input.')
+def body_record_schema_empty_thread(d):
+    w = U.world(d)
+    scope = dict(storage_instance_id=w.storage.storage_instance_id, project_id='TEST_ONLY-project-dg5rec',
+                 thread_id='', goal_id='goal:TEST_ONLY:dg5rec')
+    return w, lambda: w.body.start(scope, 'x', 'message:TEST_ONLY:dg5rec',
+                                   'TEST_ONLY:creation-authority:dg5rec', 'context:TEST_ONLY:dg5rec')
+
+
+@case('U-DG5/N/audit_request_schema_extra_field', 'dgu/reader/audit/request/schema/',
+      ('dg5/dgu/reader/audit/request/schema', 'dg5/dgu/reader/audit/result/schema'),
+      'Single defect: the caller audit request gains one field no reader schema defines. The '
+      'request validation is the first statement of read_audit, and the identical request object '
+      'is embedded verbatim in the validated result, so the request and result whole-root schemas '
+      'bound the same object by the same predicate (additionalProperties) as a declared set.')
+def audit_request_schema_extra_field(d):
+    w, g = U._goal(d)
+    req, adm = U.run_direct(w, g)
+    r = dict(U._audit_req(g, U.op_of(adm)), dg5_schemaless_field=1)
+    return w, lambda: w.source.read_audit(r, g['user'], g['user_permission'])
+
+
+@case('U-DG5/N/input_request_schema_extra_field', 'dgu/reader/input/request/schema/',
+      ('dg5/dgu/reader/input/request/schema', 'dg5/dgu/reader/input/result/schema'),
+      'Single defect: the caller input request gains one field no reader schema defines. The '
+      'request validation is the first statement of read_input_content, and the identical request '
+      'object is embedded verbatim in the validated result, so the request and result whole-root '
+      'schemas bound the same object by the same predicate (additionalProperties) as a declared set.')
+def input_request_schema_extra_field(d):
+    w, g = U._goal(d)
+    req, adm = U.run_direct(w, g)
+    r = dict(reader_binding='reader.goal.update_input@1.0.0', operation_id=U.op_of(adm),
+             dg5_schemaless_field=1, **g['scope'])
+    return w, lambda: w.source.read_input_content(r, g['user'], g['user_permission'])
+
+
+@case('U-DG5/N/inspect_request_schema_extra_field', 'dgu/inspect/request/schema/',
+      ('dg5/dgu/inspect/request/schema', 'dg5/dgu/inspect/witness/schema'),
+      'Single defect: the caller inspect request gains one field no consumer schema defines. The '
+      'request validation is the first statement of inspect, and the identical request object is '
+      'embedded verbatim in the validated witness, so the request and witness whole-root schemas '
+      'bound the same object by the same predicate (additionalProperties) as a declared set.')
+def inspect_request_schema_extra_field(d):
+    w, g = U._goal(d)
+    req, adm = U.run_direct(w, g)
+    r = dict(w.inspector.request_for(g['scope'], U.event_of(w, g, adm)), dg5_schemaless_field=1)
+    return w, lambda: w.inspector.inspect(r, g['user'], g['user_permission'])
+
+
+@case('U-DG5/N/hitl_resolution_schema_request_sha', 'dgu/hitl/resolution/schema/request_sha256',
+      'dg5/dgu/hitl/resolution/schema',
+      'Single defect: the stored approval carries a non-hex request_sha256 (cells are read back '
+      'through _decode_cell with no schema), so decide copies it into the owner-built resolution '
+      'and only the whole-root ApprovalResolution validation refuses; the decision enum check and '
+      'person permission check never read that field.')
+def hitl_resolution_schema_request_sha(d):
+    w, g = U._goal(d)
+    req, ag = O.agent_request(w, g, 'x', decide=None)
+    cur = w.approvals.state(ag['approval_id'])
+    w.approvals.put(ag['approval_id'], dict(cur, request_sha256='not-hex'))
+    return w, lambda: w.approvals.decide(ag['approval_id'], 'approved', ag['approver_permission'],
+                                         ag['approver'])
+
+
+@case('U-DG5/N/hitl_request_schema_proposal_sha', 'dgu/hitl/request/schema/proposal_request_sha256',
+      'dg5/dgu/hitl/request/schema',
+      'Single defect: the stored SIR proposal dispatch carries a non-hex proposal_sha256 (dispatch '
+      'cells are read back with no schema), so capture copies it into the owner-built approval '
+      'request and only the whole-root ApprovalRequest validation refuses; every earlier capture '
+      'check reads the proposal target, messages and scope, never that digest.')
+def hitl_request_schema_proposal_sha(d):
+    w, g, prop, ap = U._proposal(d)
+    key = 'proposal:' + O.hexk(prop['command_instance_id'])
+    w.sir.put(key, dict(w.sir.state(key), proposal_sha256='not-hex'))
+    return w, lambda: w.approvals.capture(prop['command_instance_id'])
+
+
+@case('U-DG5/N/metadata_intent_schema_blocked_ref_type', 'dgu/body/metadata/intent/schema/after_record/blocked_reason_ref',
+      ('dg5/dgu/body/metadata/intent/schema', 'dg5/dgu/body/goal_body_record/schema'),
+      'Single defect: the lifecycle change carries an integer blocked_reason_ref. The state and '
+      'blocked-reason presence checks read only its presence, so the first schema to refuse is '
+      'the metadata intent whole-root pending validation over the after_record; with it cut, '
+      'the body row validation refuses the identical field by the identical type predicate, '
+      'so the two schema rows are a declared duplicate set for this input.')
+def metadata_intent_schema_blocked_ref_type(d):
+    w, g = U._goal(d)
+    U.run_direct(w, g)
+    return w, lambda: w.lifecycle.change(g['scope'], 'blocked', 1)
+
+
+@case('U-DG5/N/receipt_request_schema_extra_field', 'dgu/reader/receipt/receipt_request/schema/',
+      ('dg5/dgu/reader/receipt/receipt_request/schema', 'dg5/dgu/reader/receipt/final/receipt_request/schema'),
+      'Single defect: the caller receipt request gains one field no reader schema defines. '
+      'read_receipt_private validates the identical request object at entry and again at the '
+      'final boundary, so the two whole-root schema rows bound the same object by the same '
+      'predicate (additionalProperties) as a declared duplicate set.')
+def receipt_request_schema_extra_field(d):
+    w, g = U._goal(d)
+    req, adm = U.run_direct(w, g)
+    rr = dict(U.progress(w, g, U.op_of(adm))['body_commit']['receipt_request'], dg5_schemaless_field=1)
+    return w, lambda: w.body.read_receipt(rr, g['user'], g['user_permission'])
+
+
+@case('U-DG5/N/terminal_result_schema_bogus_status', 'dgu/sir/terminal/result/schema/status',
+      ('dg5/dgu/sir/terminal/result/schema', 'dg5/dgu/sir/terminal/schema'),
+      'Single defect: terminalize is called for a no-effect progress with a status outside the '
+      'result enum. No earlier check reads status (phase, receipt-absence and event-absence all '
+      'hold), so the first schema to refuse is the whole-root NoEffectResult validation; the '
+      'identical result object is embedded verbatim in the StorageTerminal validation, so the '
+      'two schema rows are a declared duplicate set for this input.')
+def terminal_result_schema_bogus_status(d):
+    w, g = U._goal(d)
+    req = O.direct_request(w, g, 'x')
+    adm, _ = w.command.admit_and_capture(req)
+    p = U.progress(w, g, U.op_of(adm))
+    w.source.advance(g['scope'], U.op_of(adm), dict(p, progress_epoch=1, phase='no_effect'),
+                     expected_phase=('source_admitted',), where='o')
+    return w, lambda: w.sir.terminalize(req['command_instance_id'], 'no_effect', status='bogus',
+                                         error_code='manual_stop_latched')
+
+
+@case('U-DG5/N/progress_schema_bogus_phase', 'dgu/progress/schema/',
+      'dg5/dgu/progress/schema',
+      'Single defect: advance is asked to write the next progress epoch with a phase outside '
+      'the Progress oneOf shapes. The phase/epoch edge checks read only the stored snapshot '
+      'phase and the new epoch number, so the first check to refuse is the whole-root Progress '
+      'validation in progress_writes.')
+def progress_schema_bogus_phase(d):
+    w, g = U._goal(d)
+    req = O.direct_request(w, g, 'x')
+    adm, _ = w.command.admit_and_capture(req)
+    p = U.progress(w, g, U.op_of(adm))
+    return w, lambda: w.source.advance(g['scope'], U.op_of(adm),
+                                       dict(p, progress_epoch=p['progress_epoch'] + 1, phase='bogus'),
+                                       expected_phase=('source_admitted',), where='o')
+
+
+@case('U-DG5/N/reserve_pending_schema_blocked_ref_type', 'dgu/body/reserve/pending/schema/after_record/blocked_reason_ref',
+      ('dg5/dgu/body/reserve/pending/schema', 'dg5/dgu/body/goal_body_control/schema'),
+      'Single defect: the genuine pending intent carries an integer blocked_reason_ref in its '
+      'after_record, with intent_sha256 recomputed so the intent and stale checks hold. The '
+      'first schema to refuse is the reserve pending whole-root validation; with it cut, the '
+      'control row validation refuses the identical embedded pending by the identical type '
+      'predicate, so the two schema rows are a declared duplicate set for this input.')
+def reserve_pending_schema_blocked_ref_type(d):
+    w, g = U._goal(d)
+    req = O.direct_request(w, g, 'x')
+    adm, _ = w.command.admit_and_capture(req)
+    sc = g['scope']
+    src = w.source.read_source(sc, U.op_of(adm), 'o')
+    cur = w.body.read_private(sc, 'o')
+    pending = w.command._pending(adm, src, cur, 'o')
+    pending['after_record'] = dict(pending['after_record'], blocked_reason_ref=1)
+    pending['intent_sha256'] = O.intent_sha(pending)
+    return w, lambda: w.body.reserve(sc, pending, lambda new_control: [])
+
+
+@case('U-DG5/N/sir_normalized_schema_empty_environment', 'dgu/sir/normalized/schema/owner_identity/execution_environment_id',
+      ('dg5/dgu/sir/normalized/schema', 'dg5/dgu/sir/outcome/schema'),
+      'Single defect: the world config carries an empty execution environment id. The request '
+      'schema never reads it; identity_envelope copies it into both the normalized identity and '
+      'the outcome identity, and both whole-root schemas bound it by the same predicate '
+      '(string minLength 1 in IdentityEnvelope), so the two schema rows are a declared '
+      'duplicate set for this input.')
+def sir_normalized_schema_empty_environment(d):
+    w, g = U._goal(d)
+    req = O.direct_request(w, g, 'x')
+    w.config['environment_id'] = ''
+    return w, lambda: w.sir.admit(req)
+
+
 @case('U-DG5/N/inspect_source_defect', 'dgu/inspect/source_defect', SITE + '1867',
       'Single defect in the acquired source snapshot: first custody group_digest is substituted, so '
       'GenericSource halts before that event (a custody defect at its position) and the inspected event '

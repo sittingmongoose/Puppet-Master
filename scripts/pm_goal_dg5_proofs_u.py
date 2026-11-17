@@ -225,4 +225,230 @@ PROOFS = {
             'chain witnesses exactly this), so :1842 selects the inspector code '
             'dgu/inspect/event_unavailable and never gates acceptance alone. It closes by '
             'this proof once the Storage read row is closed.')),
+    'dg5/dgu/body/goal_objective_revision/schema': dict(
+        kind='entailed-by-body-and-pending-schemas',
+        families=['goal.updated'],
+        depends_on=['dg5/dgu/body/goal_body_record/schema', 'dg5/dgu/body/reserve/pending/schema'],
+        sites=[(U, 1099), (U, 1114), (U, 1231), (U, 1257),
+               ('Plans/goal_body_custody.schema.json', 5), ('Plans/goal_body_custody.schema.json', 105),
+               ('Plans/goal_body_custody.schema.json', 341)],
+        argument=(
+            'The storage_revision whole-root validation in GoalBodyOwner.row (dg5/dgu/body/'
+            'goal_objective_revision/schema) is reached only from start and commit. At start '
+            '(:1099-1114) the revision record is owner-built: goal_id and objective_text are the '
+            'identical values the body record carries, bounded identically in the body and '
+            'revision definitions (goal_body_custody.schema.json body :5 vs revision :105), '
+            'and the body row() validation runs first in the same writes list; every other '
+            'revision field is a constant (revision 1, change_source user_direct, null '
+            'source/approval/prior) or computed (revision_hash, created_at from the same now '
+            'the body record carries). At commit (:1231-1257) the record is the pending '
+            'accepted_revision verbatim, already validated against the identical revision '
+            'definition through the pending schema at reserve (pending.accepted_revision '
+            'references the same revision definition, :341), and the after body row() again '
+            'validates first. No complete call can make this row refuse while its two '
+            'dependency rows hold; it never gates acceptance alone.')),
+    'dg5/dgu/source/capture/prepared_producer/schema': dict(
+        kind='entailed-by-producer-construction',
+        families=['goal.updated'],
+        depends_on=[],
+        sites=[(U, 235), (U, 1549), (U, 1609), (U, 1621),
+               ('Plans/goal_update_command_custody.schema.json', 755),
+               ('Plans/goal_update_command_custody.schema.json', 875)],
+        argument=(
+            'prepared_event (:1609-1621) validates a ProducerInput assembled only from the '
+            'capture metadata (:1549-1559) and a placeholder payload: every metadata field '
+            'is a schema constant (schema_id, version, scope_kind, event_type, payload_schema_id, '
+            'redaction/replay policies, null run/node/attempt/causation/parent/migration), an '
+            'event_identity output (:235, computed non-empty strings), a scope or actor value '
+            'already bounded identically by the validated GoalUpdateRequestV2 (project/thread/'
+            'actor maxLength 256), or the admission clock value; the payload carries the same '
+            'bounded scope ids, integer revisions from the read-validated body, placeholder '
+            '64-hex hashes, and acceptance fields copied from the read-validated source record. '
+            'ProducerInput (:755) is ProducerMetadata (:875) plus that payload, with no bound '
+            'tighter than its sources at any copied field, so no complete capture call can make '
+            'this row refuse alone.')),
+    'dg5/dgu/producer/freeze/producer_input/schema': dict(
+        kind='entailed-by-producer-construction',
+        families=['goal.updated'],
+        depends_on=[],
+        sites=[(U, 1752), (U, 1770), ('Plans/goal_update_command_custody.schema.json', 755)],
+        argument=(
+            'freeze (:1752-1770) validates a ProducerInput whose metadata half is the stored '
+            'progress producer_metadata verbatim (validated as ProducerMetadata when the '
+            'progress snapshot was written and again on every read) and whose payload is '
+            'assembled only from the read-validated body receipt (revision integers and '
+            'pattern hashes), the read-validated accepted revision, and acceptance fields of '
+            'the read-validated source record, each bounded identically in ProducerInput '
+            '(:755). The event_identity join (:1765) has already refused any metadata/payload '
+            'identity mismatch before validation. No complete freeze call can make this row '
+            'refuse alone.')),
+    'dg5/dgu/producer/publish/producer_input/schema': dict(
+        kind='entailed-by-producer-construction',
+        families=['goal.updated'],
+        depends_on=[],
+        sites=[(U, 1793), (U, 1794), ('Plans/goal_update_command_custody.schema.json', 755)],
+        argument=(
+            'publish (:1793-1794) validates a verbatim deepcopy of the frozen progress '
+            'producer_input, which freeze already validated against the identical '
+            'ProducerInput definition (:755) before the snapshot was written and which every '
+            'progress read revalidates under the StorageProgress root. The identical value '
+            'cannot newly fail the identical root, so no complete publish call can make this '
+            'row refuse alone; it re-asserts the frozen candidate at the publish boundary.')),
+    'dg5/dgu/producer/publish/publication/schema': dict(
+        kind='entailed-by-producer-construction',
+        families=['goal.updated'],
+        depends_on=[],
+        sites=[(U, 1805), (U, 1809), (U, 1814), ('scripts/pm_goal_test_storage.py', 598),
+               ('Plans/goal_update_command_custody.schema.json', 151)],
+        argument=(
+            'publish (:1809-1814) validates an OriginalPublication assembled only from the '
+            'append result the same call just read back: event_id from the frame-validated '
+            'stored event, first_append_receipt and original_event_value_commitment verbatim '
+            'from AppendOwner.first_receipt (constructed by Storage receipts_from_commit, '
+            'pm_goal_test_storage.py:598, in exactly the AppendReceipt/commitment shapes '
+            'OriginalPublication references, :151), and original_append_result copied from '
+            'that receipt plus the stored sequence. Every field is either a constant-shape '
+            'storage output or copied verbatim from it, so no complete publish call can make '
+            'this row refuse alone.')),
+    'dg5/dgu/inspect/event/schema': dict(
+        kind='code-selection',
+        families=['goal.updated'],
+        depends_on=[SITE + '1891'],
+        sites=[(U, 1874), (U, 1876), (U, 1891), ('scripts/pm_goal_test_storage.py', 1861),
+               ('Plans/goal_updated_consumer_contracts.schema.json', 497)],
+        argument=(
+            'inspect validates the selected event against SelectedActiveEvent (:1876: the '
+            'EventRecord root plus goal.updated consts and the payload definition, :497) only '
+            'after the const triple is required at :1874-1875, and Storage has already '
+            'frame-validated the identical EventRecord root at decode. The one tighter '
+            'part is the payload definition, and every payload or metadata byte is compared '
+            'verbatim at :1891 (producer25 of the whole event minus storage-assigned fields '
+            'against the frozen ProducerInput, pm_goal_test_storage.py:1861): a producer-issued '
+            'event carries the freeze-validated payload, and any other event differs from the '
+            'frozen input and refuses there. With this row cut, no event that would fail it '
+            'is accepted; it selects the consumer-schema code and never gates acceptance '
+            'alone. It closes by this proof once :1891 is closed.')),
+    'dg5/dgu/inspect/observation/schema': dict(
+        kind='entailed-by-inspect-construction',
+        families=['goal.updated'],
+        depends_on=['dg5/dgu/inspect/event/schema', 'dg5/dgu/inspect/request/schema'],
+        sites=[(U, 1903), (U, 1917), ('Plans/goal_updated_consumer_contracts.schema.json', 144)],
+        argument=(
+            'inspect builds the observation (:1903-1908) only from constants (reader_binding, '
+            'payload_schema_id, action_authority, checkpoint_effect), the request-validated '
+            'scope ids, and fields copied verbatim from the event just validated against '
+            'SelectedActiveEvent (event/thread/goal ids, sequence within the same uint64 '
+            'bound, occurred_at under the same date-time format, and the payload against the '
+            'identical payload reference, EventObservation :144). Every bound in the '
+            'observation definition is identical to a bound its sources already passed, so '
+            'no complete inspect call can make this row refuse alone. It closes by this '
+            'proof once the inspect event and request schema rows are closed.')),
+    'dg5/dgu/producer/freeze/receipt_request/schema': dict(
+        kind='entailed-by-progress-schema',
+        families=['goal.updated'],
+        depends_on=[],
+        sites=[(U, 1371), (U, 1740), ('Plans/goal_update_command_custody.schema.json', 708),
+               ('Plans/goal_body_custody.schema.json', 720)],
+        argument=(
+            'freeze reads the body receipt through read_receipt_private (:1740), whose first '
+            'statement validates the request against receipt_read_request (:1371, '
+            'goal_body_custody.schema.json:720). The request object is the stored progress '
+            'body_commit.receipt_request verbatim, already validated against the identical '
+            'referenced definition (BodyCommit.receipt_request, '
+            'goal_update_command_custody.schema.json:708) when the progress snapshot was '
+            'written and on every read. The identical value cannot newly fail the identical '
+            'definition, so no complete freeze call can make this row refuse alone.')),
+    'dg5/dgu/sir/terminal/receipt_request/schema': dict(
+        kind='entailed-by-progress-schema',
+        families=['goal.updated'],
+        depends_on=[],
+        sites=[(U, 831), (U, 1371), ('Plans/goal_update_command_custody.schema.json', 708),
+               ('Plans/goal_body_custody.schema.json', 720)],
+        argument=(
+            'terminalize (succeeded) reads the body receipt through read_receipt_private '
+            '(:831) with the stored progress body_commit.receipt_request verbatim, already '
+            'validated against the identical referenced receipt_read_request definition '
+            '(BodyCommit, goal_update_command_custody.schema.json:708, referencing '
+            'goal_body_custody.schema.json:720) at progress write and on every read. The '
+            'identical value cannot newly fail the identical definition at :1371, so no '
+            'complete terminalize call can make this row refuse alone.')),
+    'dg5/dgu/inspect/receipt_request/schema': dict(
+        kind='entailed-by-selected-event-schema',
+        families=['goal.updated'],
+        depends_on=['dg5/dgu/inspect/event/schema'],
+        sites=[(U, 1371), (U, 1899)],
+        argument=(
+            'inspect reads the body receipt through read_receipt_private (:1898-1899) with '
+            'payload.body_receipt_request verbatim from the event validated moments earlier '
+            'against SelectedActiveEvent, whose payload definition carries a '
+            'body_receipt_request object byte-identical in constraints to the '
+            'receipt_read_request definition validated at :1371 (same required fields, '
+            'const reader_binding and string bounds). The identical value cannot newly fail '
+            'the identical constraints, so no complete inspect call can make this row refuse '
+            'alone. It closes by this proof once the inspect event schema row is closed.')),
+    'dg5/oracle/receipt_request/schema': dict(
+        kind='entailed-by-progress-schema',
+        families=['goal.updated'],
+        depends_on=['dg5/dgu/reader/receipt/receipt_request/schema'],
+        sites=[(U, 1371), ('scripts/pm_goal_dg_u_oracles.py', 184),
+               ('Plans/goal_update_command_custody.schema.json', 708)],
+        argument=(
+            'This row is the same read_receipt_private validation (:1371) reached only with '
+            'where=oracle from the oracle harness self-checks (pm_goal_dg_u_oracles.py:184), '
+            'always with the genuine progress body_commit.receipt_request - the identical '
+            'object class, identical referenced definition (BodyCommit, '
+            'goal_update_command_custody.schema.json:708) and identical validation call as '
+            'the reader receipt rows. It can refuse only where those rows refuse, so it '
+            'never gates acceptance alone and closes with the reader receipt row.')),
+    'dg5/dgu/physical/row/schema': dict(
+        kind='entailed-by-physical-construction',
+        families=['goal.updated'],
+        depends_on=[],
+        sites=[(U, 656), (U, 671), (U, 1079), (U, 1081)],
+        argument=(
+            'PhysicalMixin.physical (:656-671) validates a row it has just assembled '
+            'from schema constants (schema_id, schema_version, the wrapper logical ids '
+            'from the validated wrapper itself), a computed owner-identity digest, a '
+            'lifetime taken from the owner LIFETIME table, the computed value_sha256 of '
+            'the canonical wrapper bytes, and either that wrapper verbatim (already '
+            'validated against its logical root by row() at :1081 before physical runs) '
+            'or a pack reference whose media and bytes were verified by put_pack/'
+            'read_pack in the same call plus the compact-row cap at :670. Every '
+            'physical-row schema bound is a const, a computed digest, or identical to a '
+            'bound its sources already passed, so no complete owner call can make this '
+            'row refuse alone.')),
+    'dg5/dgu/reader/audit/result/schema': dict(
+        kind='entailed-by-audit-construction',
+        families=['goal.updated'],
+        depends_on=[],
+        sites=[(U, 1632), (U, 1667), (U, 1674),
+               ('Plans/goal_updated_consumer_contracts.schema.json', 364),
+               ('Plans/goal_updated_consumer_contracts.schema.json', 418)],
+        argument=(
+            'read_audit builds its result (:1667-1674) only from constants '
+            '(reader_binding, action_authority, checkpoint_effect), the request just '
+            'validated against AuditReadRequest at entry, the source wrapper and '
+            'progress snapshot just read through their own whole-root validations, a '
+            'selector computed from that snapshot, and - for the terminal branch - the '
+            'terminal wrapper just unwrapped against StorageTerminal. AuditedProgress '
+            'and AuditedTerminal (:364/:418) reference exactly those validated shapes '
+            'with no tighter bound at any copied field, so no complete read_audit call '
+            'can make this row refuse alone. (Its clause-closure roots are a separate '
+            'gate.)')),
+    'dg5/dgu/inspect/witness/schema': dict(
+        kind='entailed-by-inspect-construction',
+        families=['goal.updated'],
+        depends_on=['dg5/dgu/inspect/event/schema'],
+        sites=[(U, 1909), (U, 1918), ('Plans/goal_updated_consumer_contracts.schema.json', 520)],
+        argument=(
+            'inspect builds the witness (:1909-1916) only from the request just '
+            'validated against EventReadRequest, the snapshot read token, the event '
+            'just validated against SelectedActiveEvent, the read-validated source '
+            'wrapper, progress head and selected snapshot, the body receipt wrapper '
+            'just read through its own whole-root validation, the frozen publication '
+            'already join-checked at :1891-1892, and the installed resource graph '
+            'digest. PrivateEventReadWitness (:520) references exactly those validated '
+            'shapes with no tighter bound at any copied field, so no complete inspect '
+            'call can make this row refuse alone once the inspect event row holds. '
+            '(Its clause-closure root is a separate gate.)')),
 }
