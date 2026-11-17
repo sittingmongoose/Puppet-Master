@@ -12,6 +12,22 @@ CLOSED_BY_PROOF = a recorded justification (scripts/pm_goal_dg5_justified.py)
 whose dependencies are closed in this family; OPEN otherwise, with its reason.
 A whole-root schema row is CLOSED only if, in addition, every root it validates
 for this family has 0 UNCOVERED clauses in the DG5 clause-closure report(s).
+A NOT_RUN row (the gated tool found no control vector or no single-row vector;
+rows.json status UNPROVED) also closes as CLOSED_BY_PROOF with kind
+witness_bound_not_run under the lead ruling of 2026-11-17
+(RULING-single-vector-20261117.md,
+sha256 6b57a3e42182bdcb76f0e093eea0289ef1493d5324d2538cb50d3b72d5d6cc95) only
+when every condition holds: every site
+is a bad-branch site (a shared_refuse or refuse call, an except-branch require,
+or a __reduce__ handler) bound to the witness proof's exact source bytes; the
+row has an exact KILLED witness of this family (or a byte-identical cited
+shared witness) whose restoration repeats the refusal -- COVERED_LATER,
+CUT_EXCEPTION and duplicate-set kills never qualify; the table summary's
+NOT_RUN reason is copied verbatim; the row was never evaluated in an accepted
+family call; and the family's whole-source pass-2 replay is cited with
+failures 0 and every control exact. A FAIL table never qualifies, and where a
+family table has a control and a single-row vector the normal gated rule
+applies instead. Per-family counts of the class are reported separately.
 
 Several proof directories may be given for one family whose suites or groups had to run in
 separate snapshots: family rows, controls and attempts are unioned, a gated PASS in any part
@@ -27,8 +43,10 @@ Usage: python3 scripts/pm_goal_dg5_matrix.py PROOF_DIR... --family F [--closure 
        [--shared-proof SHARED_PROOF_DIR ...] --out matrix.json
 """
 import argparse
+import ast
 import collections
 import gzip
+import hashlib
 import json
 from pathlib import Path
 
@@ -134,6 +152,159 @@ def _restoration(record):
                 same_refusal=record.get('restoration_errors') == record.get('errors'))
 
 
+NOT_RUN_REASONS = ('no control vector', 'no single-row vector')
+_GUARDED_CALLS = ('shared_refuse', 'refuse', 'shared_require', 'require')
+_TREE_CACHE = {}
+
+
+def _classify(tree, line):
+    """Bad-branch kind of the guarded call at `line`, or None (ruling condition 1)."""
+    parents = {}
+    for node in ast.walk(tree):
+        for child in ast.iter_child_nodes(node):
+            parents[child] = node
+    for node in ast.walk(tree):
+        if not isinstance(node, ast.Call) or not node.lineno <= line <= (node.end_lineno or node.lineno):
+            continue
+        fn = node.func.id if isinstance(node.func, ast.Name) else getattr(node.func, 'attr', None)
+        if fn not in _GUARDED_CALLS:
+            continue
+        chain, cursor = [], node
+        while cursor in parents:
+            cursor = parents[cursor]
+            chain.append(cursor)
+        funcs = [c.name for c in chain if isinstance(c, (ast.FunctionDef, ast.AsyncFunctionDef))]
+        if funcs and funcs[0] in ('__reduce__', '__reduce_ex__'):
+            return 'reduce_handler'
+        if fn == 'shared_refuse':
+            return 'shared_refuse'
+        if fn == 'refuse':
+            return 'unconditional_refuse'
+        if any(isinstance(c, ast.ExceptHandler) for c in chain):
+            return 'except_branch_require'
+        return None
+    return None
+
+
+def _site_structure(path, line):
+    """The site's bad-branch classification bound to the current source bytes, or None."""
+    if path not in _TREE_CACHE:
+        try:
+            raw = (ROOT / path).read_bytes()
+        except OSError:
+            _TREE_CACHE[path] = None
+        else:
+            try:
+                tree = ast.parse(raw.decode())
+            except (SyntaxError, UnicodeDecodeError):
+                tree = None
+            _TREE_CACHE[path] = (tree, hashlib.sha256(raw).hexdigest(),
+                                 raw.decode(errors='replace').splitlines())
+    entry = _TREE_CACHE[path]
+    if entry is None or entry[0] is None:
+        return None
+    tree, file_sha256, lines = entry
+    kind = _classify(tree, int(line))
+    if kind is None:
+        return None
+    return dict(path=path, line=int(line), kind=kind, file_sha256=file_sha256,
+                source=lines[int(line) - 1].strip()[:240] if 0 < int(line) <= len(lines) else None)
+
+
+def _exact_witness(records, name):
+    """An exact KILLED witness for the row alone (ruling condition 2), or None."""
+    good = []
+    for record in records:
+        if record.get('kill') != 'KILLED' or record.get('outcome') != 'exact_expected':
+            continue
+        if name not in (record.get('errors') or []) or record.get('cut_errors'):
+            continue
+        if record.get('restoration_errors') != record.get('errors'):
+            continue
+        cuts = record.get('site_cuts')
+        if cuts and cuts != {name: [name]}:
+            continue
+        good.append(record)
+    good.sort(key=lambda r: (r.get('_dg5_proof_index', 0), str(r.get('id'))))
+    return good[0] if good else None
+
+
+def _replay_entry(proof, family):
+    """Pass-2 replay citation for one proof directory (ruling condition 4)."""
+    controls = [r for r in proof['ledger'] if r.get('family') == family and r.get('outcome') == 'control']
+    exact = all(not r.get('errors') for r in controls)
+    failures = proof['collection'].get('failures')
+    ok = failures == [] and exact
+    return ok, dict(proof_dir=proof['path'], calls=proof['collection'].get('calls'),
+                    failures=len(failures) if isinstance(failures, list) else failures,
+                    controls=len(controls), controls_exact=exact)
+
+
+def _witness_bound_not_run(name, sites, specs, shared, tries, shared_tries, accepted_calls,
+                           proofs, shared_proofs, family):
+    """The witness_bound_not_run justification for a NOT_RUN row, or None (ruling 2026-11-17)."""
+    if not specs or not sites or accepted_calls:
+        return None
+    if any(spec.get('status') not in ('UNPROVED', 'NOT_RUN') for spec in specs):
+        return None
+    if any(spec.get('table_status') != 'NOT_RUN' or spec.get('table_reason') not in NOT_RUN_REASONS
+           for spec in specs):
+        return None
+    if any(spec.get('status') == 'FAIL' or spec.get('table_status') == 'FAIL' for spec in shared['specs']):
+        return None
+    witness = _exact_witness(tries, name)
+    shared_cite = False
+    if witness is None and shared['valid']:
+        witness = _exact_witness(shared_tries, name)
+        shared_cite = witness is not None
+    if witness is None:
+        return None
+    by_dir = {proof['path']: proof for proof in proofs + shared_proofs}
+    witness_proof = by_dir.get(witness.get('_dg5_proof_dir'))
+    if witness_proof is None:
+        return None
+    structural = []
+    for path, line in sites:
+        bound = _site_structure(path, line)
+        if bound is None or bound['file_sha256'] != witness_proof['bindings'].get(path):
+            return None
+        structural.append(bound)
+    replay, total_controls = [], 0
+    for proof in proofs:
+        if name not in proof['family_rows'].get(family, []) and \
+                not any(r.get('family') == family for r in proof['ledger']):
+            continue
+        ok, entry = _replay_entry(proof, family)
+        if not ok:
+            return None
+        replay.append(entry)
+        total_controls += entry['controls']
+    if not replay or not total_controls:
+        return None
+    if all(entry['proof_dir'] != witness_proof['path'] for entry in replay):
+        ok, entry = _replay_entry(witness_proof, witness.get('family'))
+        if not ok:
+            return None
+        replay.append(entry)
+    return dict(
+        kind='witness_bound_not_run',
+        ruling='RULING-single-vector-20261117.md sha256 '
+               '6b57a3e42182bdcb76f0e093eea0289ef1493d5324d2538cb50d3b72d5d6cc95',
+        structural=structural,
+        witness=dict(_witness(witness), kill='KILLED', cut_errors=witness.get('cut_errors'),
+                     restoration=dict(errors=witness.get('restoration_errors'), same_refusal=True),
+                     shared_cite=shared_cite),
+        table_reasons=[dict(proof_dir=spec.get('proof_dir'), table=spec.get('table'),
+                            status=spec.get('table_status'), reason=spec.get('table_reason'))
+                       for spec in specs],
+        family_accepted_calls=0, replay=replay, depends_on=[],
+        claim='Every site is reached only on an already-failing input (bad-branch kind recorded '
+              'per site, bound to the witness proof source bytes) and was never evaluated in an '
+              'accepted family call; the exact KILLED witness refuses only at this row, its cut '
+              'accepts, and its restoration repeats the refusal; the gated table did not run for '
+              'the recorded reason, so no gated PASS is claimed.')
+
+
 def _shared_citation(shared_proofs, family_proofs, name, sites):
     """Cited shared attempts for one shared row, valid only at identical sites and source bytes."""
     if not sites or not all(Path(p).name.startswith('pm_goal_test_') for p, _ in sites):
@@ -158,6 +329,7 @@ def _shared_citation(shared_proofs, family_proofs, name, sites):
         if spec is not None:
             table = proof['tables'].get(spec.get('table'), {})
             specs.append(dict(spec, proof_dir=proof['path'], table_status=table.get('status'),
+                              table_reason=table.get('reason'),
                               table_rows=len(table.get('rows', []))))
         for record in proof['ledger']:
             target = record.get('target')
@@ -212,6 +384,7 @@ def main():
                 if spec is not None:
                     table = proof['tables'].get(spec.get('table'), {})
                     specs.append(dict(spec, proof_dir=proof['path'], table_status=table.get('status'),
+                                      table_reason=table.get('reason'),
                                       table_rows=len(table.get('rows', []))))
             row = next((spec for spec in specs if spec.get('status') == 'PASS'), specs[0] if specs else {})
             table = {'status': row.get('table_status'), 'rows': [None] * row.get('table_rows', 0)} if row else {}
@@ -241,6 +414,10 @@ def main():
                 proof_record = justified.justification(family, name, shared_tries, sites)
                 if proof_record is not None and proof_record.get('kind') == 'presence':
                     proof_record = dict(proof_record, shared_cite=True)
+            bound = None
+            if proof_record is None and not site_conflict:
+                bound = _witness_bound_not_run(name, sites, specs, shared, tries, shared_tries,
+                                               controls.get(name, 0), proofs, shared_proofs, family)
             if site_conflict:
                 status, reason = 'OPEN', 'conflicting collection sites across proof directories'
             elif effective_gated == 'PASS' and (killed or shared_killed):
@@ -253,6 +430,8 @@ def main():
                 # to row status UNPROVED with table_status NOT_RUN. Proofs close such rows
                 # as in pm_goal_c12_matrix and pm_goal_go_matrix; FAIL tables never close.
                 status, reason = 'CLOSED_BY_PROOF', proof_record['kind']
+            elif bound is not None:
+                status, reason = 'CLOSED_BY_PROOF', 'witness_bound_not_run'
             elif effective_gated != 'PASS':
                 status, reason = 'OPEN', 'gated ' + str(effective_gated)
             elif not tries and not shared_tries:
@@ -269,12 +448,14 @@ def main():
                                               'clause closure leaves %d uncovered' % schema['uncovered'])
             predicate = dict(table=row.get('table'), gated=gated, effective_gated=effective_gated,
                              proof_dir=row.get('proof_dir'), table_status=table.get('status'),
+                             table_reason=row.get('table_reason'),
                              table_rows=len(table.get('rows', [])),
                              sites=[dict(path=p, line=l, source=line_text(p, l)) for p, l in sites[:4]])
             if len(proofs) > 1 or shared_proofs:
                 predicate['sources'] = [dict(table=spec.get('table'), gated=spec.get('status'),
                                              proof_dir=spec.get('proof_dir'),
                                              table_status=spec.get('table_status'),
+                                             table_reason=spec.get('table_reason'),
                                              table_rows=spec.get('table_rows')) for spec in specs]
                 predicate['shared_sources'] = shared['specs']
                 predicate['shared_gated'] = shared['gated'] if shared['valid'] else None
@@ -285,7 +466,8 @@ def main():
                 control=dict(family_accepted_calls=controls.get(name, 0)),
                 negative=dict(declared_attempts=len(tries), outcomes=dict(outcomes), witness=_witness(witness)),
                 cut=_cut(witness), restoration=_restoration(witness),
-                justification=proof_record, schema_closure=schema, kills=dict(kills))
+                justification=proof_record if proof_record is not None else bound,
+                schema_closure=schema, kills=dict(kills))
             if shared_proofs:
                 entry['shared_negative'] = dict(
                     valid_citation=shared['valid'], rejected_reason=shared['reason'],
@@ -314,13 +496,16 @@ def main():
                 m['status'], m['reason'] = 'OPEN', 'justification dependency not closed (or cyclic): ' + ', '.join(pending)
         summary = collections.Counter(m['status'] for m in matrix)
         out['families'][family] = dict(rows=len(matrix), status=dict(summary),
+            witness_bound_not_run=sum(1 for m in matrix if m['status'] == 'CLOSED_BY_PROOF'
+                                      and (m['justification'] or {}).get('kind') == 'witness_bound_not_run'),
             schema_rows=sum(1 for m in matrix if m['row'].endswith('/schema')),
             checker_rows=sum(1 for m in matrix if not m['row'].endswith('/schema')),
             open=[dict(row=m['row'], reason=m['reason']) for m in matrix if m['status'] == 'OPEN'],
             matrix=matrix)
     args.out.write_text(json.dumps(out, indent=1, default=list) + '\n')
-    print(json.dumps({f: dict(rows=v['rows'], status=v['status'], open=len(v['open'])) for f, v in out['families'].items()},
-                     indent=1))
+    print(json.dumps({f: dict(rows=v['rows'], status=v['status'], open=len(v['open']),
+                              witness_bound_not_run=v['witness_bound_not_run'])
+                      for f, v in out['families'].items()}, indent=1))
     return 0
 
 
