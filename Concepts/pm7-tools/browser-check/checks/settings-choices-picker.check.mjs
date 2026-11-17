@@ -1142,8 +1142,9 @@ export const tests = {
 				const action = await f.evaluate(() => ({ enter: window.__fo225Enter, click: window.__fo225Click, details: window.__fo225Target?.tagName === 'SUMMARY' ? window.__fo225Target.parentElement.open : null }));
 				await t.check(`${where}: Enter reaches and activates the landed control`, landed.same && action.enter && (!['SUMMARY', 'BUTTON', 'A'].includes(landed.tag) || action.click) && (landed.details === null || action.details !== landed.details), JSON.stringify(action));
 				// Enter on Back or another navigation action can close the panel; restore through its row.
-				await t.page.keyboard.press('Escape');
-				if (!(await f.locator(PICKER).count())) await openDetails(t, f, id);
+				if (await f.locator('.o55-pick-pop.is-open').count()) await t.page.keyboard.press('Escape');
+				await t.settle();
+				if (!(await trigger.isVisible())) await openDetails(t, f, id);
 			}
 			await closeDetails(t, f);
 			if (id === 'general.visual.nier-background') await setLook(t, f, 'basic-dark');
