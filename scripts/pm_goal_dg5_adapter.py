@@ -103,6 +103,353 @@ def supplements(suite, work):
     _read_event_supplements(suite, work, base, generation)
     _decode_supplements(suite, work, data, base, generation)
     _pure_supplements(suite, work)
+    _handle_supplements(suite, work)
+    _index_supplements(suite, work)
+    _fence_supplements(suite, work)
+    _index_read_supplements(suite, work)
+    _schema_assert_supplements(suite, work)
+    _guard_supplements(suite, work)
+
+
+class _HandleSubclass(A.OriginalHandle):
+    """A handle whose exact type is not OriginalHandle (the :624/:630 defect)."""
+
+
+def _handle_supplements(suite, work):
+    """DG5 negatives isolating the AppendOwner handle-type rows (:624/:630).
+
+    The authored dict-handle cases also fail the issuer check on the next line, so neither
+    row can be killed by them. A subclass handle registered in the owner's own event map
+    (the sealed world state, exactly as a stored-cell rewrite) passes the issuer check and
+    the genuine read, leaving the exact-type require as the only refusal.
+    """
+    def setup(tag):
+        registry = A.OwnerRegistry()
+        store = storage.TestOwnerStorage.create(work / ('handle-' + tag))
+        appender = A.AppendOwner(registry, store)
+        events, _reservation, _outcome = appender.append_original(
+            'TEST_ONLY:op:' + tag, dict(tag=tag), [selftest.candidate(tag)])
+        genuine = events[0]
+        sub = _HandleSubclass(genuine.kind)
+        appender._events[sub] = appender._events[genuine]
+        return appender, sub
+
+    def event_case():
+        appender, sub = setup('dg5-event-handle')
+        return appender.event(sub)
+
+    def receipt_case():
+        appender, sub = setup('dg5-receipt-handle')
+        return appender.first_receipt(sub)
+
+    suite.negative('dg5-shared', 'event_subclass_handle:624', event_case, 'event/handle_type')
+    suite.negative('dg5-shared', 'first_receipt_subclass_handle:630', receipt_case, 'event/handle_type')
+
+    def append_case():
+        store = storage.TestOwnerStorage.create(work / 'handle-storage-append')
+        genuine = store.reserve('TEST_ONLY:op:dg5-append-handle', dict(tag='dg5-append-handle'))
+        sub = _StorageHandleSubclass(genuine.kind)
+        store._handles[sub] = store._handles[genuine]
+        return store.append(sub, [selftest.candidate('dg5-append-handle')])
+
+    def receipt_of_case():
+        store = storage.TestOwnerStorage.create(work / 'handle-storage-receipt')
+        genuine, _out, _rows = selftest.append_one(store, 'dg5-receipt-handle')
+        issued = store.issue_first_receipt(genuine)
+        sub = _StorageHandleSubclass(issued[0].kind)
+        store._receipt_handles[sub] = store._receipt_handles[issued[0]]
+        return store.receipt_of(sub)
+
+    def append_kind_case():
+        store = storage.TestOwnerStorage.create(work / 'handle-storage-kind')
+        genuine = store.reserve('TEST_ONLY:op:dg5-kind-handle', dict(tag='dg5-kind-handle'))
+        genuine.kind = 'other'
+        return store.append(genuine, [selftest.candidate('dg5-kind-handle')])
+
+    suite.negative('dg5-shared', 'append_subclass_handle:1259', append_case, 'handle/type')
+    suite.negative('dg5-shared', 'append_wrong_kind_handle:1261', append_kind_case, 'handle/kind')
+    suite.negative('dg5-shared', 'receipt_of_subclass_handle:1589', receipt_of_case, 'receipt_handle/type')
+
+
+def _index_supplements(suite, work):
+    """DG5 negatives isolating the index duplicate rows (:1056/:1057).
+
+    A second segment is crafted with one re-encoded frame (duplicate event_id with a
+    fresh idempotency key, or fresh event_id with the same scoped identity), a third
+    genuine segment is appended and sealed, and retiring it rebuilds the index over
+    both remaining segments inside the judged retire_segment entry. The authored
+    append-path cases can never reach these rows (append dedupe and :1477 refuse first).
+    """
+    def setup(tag, dup_edit):
+        store = storage.TestOwnerStorage.create(work / ('index-' + tag))
+        _handle, out, _rows = selftest.append_one(store, tag)
+        event_id = out['event_ids'][0]
+        event = store.read_event(event_id)
+        gen1 = store.segments[-1]['generation']
+        seq1 = event['sequence_id']
+        gen2 = gen1 + 1
+        dup = dup_edit(dict(event, sequence_id=seq1 + 1))
+        raw_event = storage.encode_event_frame(dup, gen2)
+        commit = dict(commit_group_id='TEST_ONLY:group:' + tag, segment_name='segment-%d' % gen2,
+                      segment_generation=gen2, manifest_generation=store.manifest_generation,
+                      durability_class='ordinary', acknowledged_at_utc=event['persisted_at_utc'],
+                      first_sequence=seq1 + 1, last_sequence=seq1 + 1,
+                      members=[[dup['event_id'], seq1 + 1, 0]], restore_admission=None)
+        raw_commit = storage.encode_commit_frame(commit, gen2, seq1 + 1)
+        seg2 = dict(store.segments[-1], generation=gen2, name='segment-%d' % gen2,
+                    watermark=len(raw_event) + len(raw_commit), sealed=True, retired=False)
+        store._segment_path(gen2).write_bytes(raw_event + raw_commit)
+        store.segments.append(seg2)
+        gen3 = gen2 + 1
+        store.segments.append(store._new_segment(
+            gen3, seq1 + 2, 'TEST_ONLY:segment-rotation:%s:%d' % (store.storage_instance_id, gen3)))
+        store._segment_path(gen3).touch()
+        store.last_sequence = seq1 + 1
+        h = store.reserve('TEST_ONLY:op:' + tag + '-third', dict(tag=tag + '-third'))
+        store.append(h, [selftest.candidate(tag + '-third')])
+        store.segments[-1]['sealed'] = True
+        return store, gen3
+
+    def duplicate_event_id():
+        store, gen3 = setup('dg5-dup-event', lambda e: dict(e, idempotency_key='TEST_ONLY:key:dup2'))
+        return store.retire_segment(gen3, storage.RetentionOwner(store))
+
+    def duplicate_scoped_identity():
+        store, gen3 = setup('dg5-dup-scoped', lambda e: dict(e, event_id='TEST_ONLY:goal_test.adapter_probe:dup-scoped'))
+        return store.retire_segment(gen3, storage.RetentionOwner(store))
+
+    suite.negative('dg5-shared', 'index_duplicate_event_id:1056', duplicate_event_id,
+                   'index/duplicate_event_id')
+    suite.negative('dg5-shared', 'index_duplicate_scoped_identity:1057', duplicate_scoped_identity,
+                   'index/duplicate_scoped_identity')
+
+
+def _fence_supplements(suite, work):
+    """DG5 single-defect negatives for the append fence/dedupe rows.
+
+    The authored fence cases move several selected-sink facts at once (abandon also
+    drops the fence; rotation moves segment, offset, manifest and sequence together),
+    so each row is only COVERED_LATER there. Each case below flips exactly one
+    recorded fact in the sealed reservation record, leaving every sibling check
+    holding, so the named row refuses alone.
+    """
+    def fenced(tag, edit):
+        store = storage.TestOwnerStorage.create(work / ('fence-' + tag))
+        handle, _fence, _record = store.reserve_assignment('TEST_ONLY:op:' + tag, dict(tag=tag))
+        edit(store.append_reservations['TEST_ONLY:op:' + tag])
+        return store.append(handle, [selftest.candidate(tag)])
+
+    suite.negative('dg5-shared', 'assignment_abandoned_state_only:1441',
+                   lambda: fenced('dg5-fence-abandoned', lambda r: r.update(state='abandoned')),
+                   'assignment/reservation_abandoned')
+    suite.negative('dg5-shared', 'assignment_selected_segment_only:1445',
+                   lambda: fenced('dg5-fence-segment',
+                                  lambda r: r.update(segment_generation=r['segment_generation'] + 99)),
+                   'assignment/selected_segment')
+    suite.negative('dg5-shared', 'assignment_selected_offset_only:1447',
+                   lambda: fenced('dg5-fence-offset', lambda r: r.update(byte_offset=r['byte_offset'] + 1)),
+                   'assignment/selected_offset')
+
+    def append_once_retry():
+        store = storage.TestOwnerStorage.create(work / 'fence-append-once')
+        selftest.append_one(store, 'dg5-once', selftest.candidate('dg5-once', replay_policy='append_once'),
+                            op='TEST_ONLY:op:dg5-once-1')
+        return selftest.append_one(store, 'dg5-once',
+                                   selftest.candidate('dg5-once', replay_policy='append_once'),
+                                   op='TEST_ONLY:op:dg5-once-2')
+
+    suite.negative('dg5-shared', 'append_once_identical_retry:1460', append_once_retry,
+                   'append/append_once_exists')
+
+    def retire_while_fenced_sealed():
+        store = storage.TestOwnerStorage.create(work / 'fence-retire', segment_target_bytes=2000)
+        selftest.append_one(store, 'dg5-retire-1')
+        selftest.append_one(store, 'dg5-retire-2')
+        sealed = next(x['generation'] for x in store.segments if x['sealed'] and not x['retired'])
+        store.reserve_assignment('TEST_ONLY:op:dg5-retire-fence', dict(tag='dg5-retire-fence'))
+        return store.retire_segment(sealed, storage.RetentionOwner(store))
+
+    suite.negative('dg5-shared', 'retire_while_fenced_sealed:1748', retire_while_fenced_sealed,
+                   'assignment/fence_held')
+
+
+def _index_read_supplements(suite, work):
+    """DG5 single-defect negatives for the index frontier rows (:451/:452).
+
+    The authored cases drop or edit an index row, which a later row-frame join also
+    refuses. Each case below instead flips exactly one frontier fact in the checkpoint
+    (token digests repointed coherently, the authored _token_patch pattern), leaving
+    every row and join genuine, so the named frontier check refuses alone.
+    """
+    def snapshot_with(tag, frontier_edit, token_edit=None):
+        store = storage.TestOwnerStorage.create(work / ('indexread-' + tag), segment_target_bytes=3000)
+        for i in range(3):
+            selftest.append_one(store, '%s-%d' % (tag, i))
+        raw = copy.deepcopy(store.acquire_source())
+        ck = storage.decode_canonical(raw['canonical']['checkpoint_raw'])
+        node = ck['generations'][ck['current_generation_id']]
+        frontier_edit(node['frontier'])
+        raw['canonical']['checkpoint_raw'] = storage.canonical(ck)
+        node = ck['generations'].get(ck['current_generation_id'], node)
+        raw['token']['frontier_sha256'] = storage.index_digest(node['frontier'])
+        raw['token']['generation_anchor_sha256'] = storage.index_digest(node['anchor'])
+        if token_edit is not None:
+            token_edit(raw['token'])
+        return source.EventRecordIndexSource(store).read(raw)
+
+    suite.negative('dg5-shared', 'index_row_count_only:451',
+                   lambda: snapshot_with('dg5-ix-count',
+                                         lambda f: f.update(index_row_count=f['index_row_count'] + 1)),
+                   'index/row_count')
+    suite.negative('dg5-shared', 'index_retained_inventory_only:202',
+                   lambda: snapshot_with('dg5-ix-retained', lambda f: None,
+                                         lambda t: t['source_selection'].update(
+                                             retained_inventory_sha256='0' * 64)),
+                   'source/retained_inventory')
+    # index/source_complete (:430) has no DG5 negative: every in-watermark defect is
+    # refused earlier (segment inventory / token verification) and every post-watermark
+    # tail is trimmed by the snapshot itself; the authored corrupt-at-rest chain is the
+    # only witness and it cascades. Recorded in STATE as a genuine remaining gate.
+    suite.negative('dg5-shared', 'index_row_set_only:452',
+                   lambda: snapshot_with('dg5-ix-rowset',
+                                         lambda f: f.update(index_row_set_sha256='0' * 64)),
+                   'index/row_set')
+
+
+def _schema_assert_supplements(suite, work):
+    """DG5 single-defect negatives for Storage internal schema asserts.
+
+    Each case corrupts exactly one in-memory state field (the sealed world state,
+    exactly as a stored-cell rewrite) that only the named whole-schema assert reads,
+    leaving every earlier and later check holding.
+    """
+    def full_value():
+        store = storage.TestOwnerStorage.create(work / 'assert-full-value')
+        _handle, out, _rows = selftest.append_one(store, 'dg5-full-value')
+        store.custody[out['event_ids'][0]]['original_segment_ref'] = 1
+        return store.full_value_result(out['event_ids'][0])
+
+    def lease_schema():
+        store = storage.TestOwnerStorage.create(work / 'assert-lease')
+        selftest.append_one(store, 'dg5-lease-1')
+        store.sequence_lease['lease_revision'] = 'x'
+        return selftest.append_one(store, 'dg5-lease-2')
+
+    def checkpoint_schema():
+        store = storage.TestOwnerStorage.create(work / 'assert-checkpoint')
+        selftest.append_one(store, 'dg5-ck-1')
+        checkpoint = store.canonical['checkpoint']
+        node = checkpoint['generations'][checkpoint['current_generation_id']]
+        node['anchor'] = dict(node['anchor'], generation_seed_sha256='not-hex')
+        return selftest.append_one(store, 'dg5-ck-2')
+
+    suite.negative('dg5-shared', 'custody_full_value_schema:1611', full_value, 'custody/full_value_schema')
+    suite.negative('dg5-shared', 'images_lease_schema:909', lease_schema, 'images/lease_schema')
+    suite.negative('dg5-shared', 'index_checkpoint_schema:1210', checkpoint_schema, 'index/checkpoint_schema')
+
+    def candidate_type():
+        store = storage.TestOwnerStorage.create(work / 'assert-candidate-type')
+        handle = store.reserve('TEST_ONLY:op:dg5-cand-type', dict(tag='dg5-cand-type'))
+        return store.append(handle, ['x'])
+
+    def row_schema():
+        store = storage.TestOwnerStorage.create(work / 'assert-row-schema')
+        _handle, out, _rows = selftest.append_one(store, 'dg5-row-schema')
+        info = store.events[out['event_ids'][0]]
+        info['row_base'] = dict(info['row_base'], sequence_id='x')
+        rows = store.index_datasets[store.canonical['checkpoint']['current_generation_id']]
+        del rows[[k for k, r in rows.items() if r['event_id'] == out['event_ids'][0]][0]]
+        return selftest.append_one(store, 'dg5-row-schema-2')
+
+    def current_schema():
+        store = storage.TestOwnerStorage.create(work / 'assert-current-schema')
+        selftest.append_one(store, 'dg5-current-1')
+        store.birth_operation_ref = ''
+        return selftest.append_one(store, 'dg5-current-2')
+
+    def manifest_schema():
+        store = storage.TestOwnerStorage.create(work / 'assert-manifest-schema')
+        selftest.append_one(store, 'dg5-manifest-1')
+        store.segments[-1]['canonical_name'] = ''
+        return selftest.append_one(store, 'dg5-manifest-2')
+
+    suite.negative('dg5-shared', 'append_candidate_type:1422', candidate_type, 'append/candidate/type')
+    suite.negative('dg5-shared', 'index_row_schema:1200', row_schema, 'index/row_schema')
+    suite.negative('dg5-shared', 'images_current_schema:907', current_schema, 'images/current_schema')
+    suite.negative('dg5-shared', 'images_manifest_schema:908', manifest_schema, 'images/manifest_schema')
+    # custody/schema (:1564) has no judged negative: _custody_row builds only from a
+    # frame-validated event plus computed digests (see its entailed proof).
+
+
+def _guard_supplements(suite, work):
+    """DG5 negatives for guard rows whose authored cases land on a sibling site or
+    whose cut raises at the guarded read (presence at the matrix)."""
+    def foreign_first_receipt():
+        store = storage.TestOwnerStorage.create(work / 'guard-foreign-receipt')
+        registry = A.OwnerRegistry()
+        appender = A.AppendOwner(registry, store)
+        events, _reservation, _outcome = appender.append_original(
+            'TEST_ONLY:op:dg5-foreign-receipt', dict(tag='dg5-foreign-receipt'),
+            [selftest.candidate('dg5-foreign-receipt')])
+        return A.AppendOwner(registry, store).first_receipt(events[0])
+
+    def full_value_absent():
+        store = storage.TestOwnerStorage.create(work / 'guard-full-value-absent')
+        return store.full_value_result('TEST_ONLY:absent')
+
+    def withdraw_absent():
+        store = storage.TestOwnerStorage.create(work / 'guard-withdraw-absent')
+        return store.withdraw_pack('0' * 64)
+
+    def read_frame_absent():
+        store = storage.TestOwnerStorage.create(work / 'guard-read-frame')
+        return store.read_frame('TEST_ONLY:absent')
+
+    def read_event_absent():
+        store = storage.TestOwnerStorage.create(work / 'guard-read-event')
+        return store.read_event('TEST_ONLY:absent')
+
+    def retire_empty():
+        store = storage.TestOwnerStorage.create(work / 'guard-retire-empty')
+        seg = store._new_segment(2, 0, 'TEST_ONLY:segment-rotation:%s:2' % store.storage_instance_id)
+        seg['sealed'] = True
+        store.segments.append(seg)
+        store._segment_path(2).touch()
+        return store.retire_segment(2, storage.RetentionOwner(store))
+
+    suite.negative('dg5-shared', 'first_receipt_foreign_handle:631', foreign_first_receipt, 'event/issuer')
+    suite.negative('dg5-shared', 'full_value_absent:1607', full_value_absent, 'custody/unavailable')
+    suite.negative('dg5-shared', 'withdraw_pack_absent:1736', withdraw_absent, 'pack/unavailable')
+    suite.negative('dg5-shared', 'read_frame_absent:1624', read_frame_absent, 'read/event_unavailable')
+    suite.negative('dg5-shared', 'read_event_absent:1633', read_event_absent, 'read/event_unavailable')
+    suite.negative('dg5-shared', 'retire_empty_segment:1754', retire_empty, 'retire/nonempty')
+
+    def scope_application_project():
+        store = storage.TestOwnerStorage.create(work / 'guard-scope-app')
+        handle = store.reserve('TEST_ONLY:op:dg5-scope-app', dict(tag='dg5-scope-app'))
+        return store.append(handle, [selftest.candidate(
+            'dg5-scope-app', scope_kind='application', project_id='TEST_ONLY-project-x')])
+
+    def scope_project_empty():
+        store = storage.TestOwnerStorage.create(work / 'guard-scope-empty')
+        handle = store.reserve('TEST_ONLY:op:dg5-scope-empty', dict(tag='dg5-scope-empty'))
+        return store.append(handle, [selftest.candidate('dg5-scope-empty', project_id='')])
+
+    suite.negative('dg5-shared', 'scope_application_project:187', scope_application_project,
+                   'scope/application_project_null')
+    suite.negative('dg5-shared', 'scope_project_empty:189', scope_project_empty, 'scope/project_id')
+
+
+def _rootbank_of(entries):
+    return A.RootBank(entries)
+
+
+def _generic_source_of(storage_value):
+    return source.GenericSource(storage_value)
+
+
+class _StorageHandleSubclass(storage._Handle):
+    """A storage handle whose exact type is not _Handle (the :1259/:1589 defect)."""
 
 
 def _read_event_supplements(suite, work, base, generation):
@@ -316,6 +663,45 @@ def _pure_supplements(suite, work):
     pure('exact_json_bytes:428',
          lambda: ((lambda: A.exact_json(b'x')), A.exact_json, dict(args=(b'x',), kwargs={})),
          'custody/exact_json/type', 'dg5/site/pm_goal_test_owner_adapters.py:428')
+    def event_record_make():
+        store = storage.TestOwnerStorage.create(work / 'pure-event-schema')
+        _handle, out, _rows = selftest.append_one(store, 'dg5-event-schema')
+        event = store.read_event(out['event_ids'][0])
+        bad = {k: v for k, v in event.items() if k != 'correlation_id'}
+        return (lambda: storage.validate_event_record(bad, 'append/event')), \
+            storage.validate_event_record, dict(args=(bad, 'append/event'), kwargs={})
+
+    pure('event_record_schema:473', event_record_make,
+         'append/event/schema/', 'dg5/site/pm_goal_test_storage.py:473')
+    pure('exact_json_key_type:420',
+         lambda: ((lambda: A.exact_json({1: 'x'})), A.exact_json, dict(args=({1: 'x'},), kwargs={})),
+         'custody/exact_json/key', 'dg5/site/pm_goal_test_owner_adapters.py:420')
+    pure('event_record_type:470',
+         lambda: ((lambda: storage.validate_event_record('x', 'append/event')),
+                  storage.validate_event_record, dict(args=('x', 'append/event'), kwargs={})),
+         'append/event/type', 'dg5/site/pm_goal_test_storage.py:470')
+
+    def bank_no_uri_make():
+        entries = [dict(path='Plans/seglog_frame_v2_wire_fixtures.json')]
+        return (lambda: _rootbank_of(entries)), _rootbank_of, dict(args=(entries,), kwargs={})
+
+    _bank_path = 'Plans/goal_certified_event_coordinator_contracts/schemas/coordinator.v1.schema.json'
+    _bank_uri = json.loads((bridge.ROOT / _bank_path).read_text())['$id']
+
+    def bank_rebound_make():
+        entries = [dict(path=_bank_path), dict(path='Plans/event_record.schema.json', retrieval_uri=_bank_uri)]
+        return (lambda: _rootbank_of(entries)), _rootbank_of, dict(args=(entries,), kwargs={})
+
+    pure('bank_no_uri:267', bank_no_uri_make,
+         'bank/uri/Plans/seglog_frame_v2_wire_fixtures.json', 'dg5/site/pm_goal_test_owner_adapters.py:267')
+    pure('bank_uri_rebound:268', bank_rebound_make,
+         'bank/no_rebinding/' + _bank_uri, 'dg5/site/pm_goal_test_owner_adapters.py:268')
+    pure('key_component_type:163',
+         lambda: ((lambda: storage.k_component(1)), storage.k_component, dict(args=(1,), kwargs={})),
+         'key/component_type', 'dg5/site/pm_goal_test_storage.py:163')
+    pure('generic_source_storage_type:239',
+         lambda: ((lambda: _generic_source_of(dict())), _generic_source_of, dict(args=(dict(),), kwargs={})),
+         'source/storage_type', 'dg5/site/pm_goal_test_source.py:239')
     pure('storage_u64_negative:197',
          lambda: ((lambda: storage.u64(-1, 'dg5/shared')), storage.u64, dict(args=(-1, 'dg5/shared'), kwargs={})),
          'dg5/shared/numrule/integer_range', 'dg5/site/pm_goal_test_storage.py:197')
