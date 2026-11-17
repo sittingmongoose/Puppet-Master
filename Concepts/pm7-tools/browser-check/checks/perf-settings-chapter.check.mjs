@@ -154,7 +154,86 @@ async function projectRow(t, f, surface) {
 	await t.check(`${surface}: back in ${a}, Settings' place is Code & Tools`, back === 'code', `its place is ${back || 'none'}`);
 }
 
+/* F's L1 (sol-review-fo196u): native Tab order is resolved against the controls that exist, so focus put back without
+   scrolling next to a section the first screen left unfilled must not pass over that section. In the moment Code & Tools
+   is committed, before any frame or idle time, focus goes to the last control of the section before BOUNDARY (then Tab)
+   or the first control of the section after it (then Shift+Tab); either key must land in BOUNDARY, as on main. Logged,
+   not judged: key -> focus moved (on a page that fills on the key, that is the fill). */
+const BOUNDARY = 'editor-terminal';
+const ARM_FOCUS = ([dir, boundary]) => {
+	const root = document.getElementById('pm-settings-root');
+	const F = window.__pscFocus = { dir, boundary, set: false, at: 0, key: 0, moved: 0, filled: 0, boundaryPending: false, pendingAtFocus: 0, fromSection: '', fromLabel: '' };
+	if (!window.__pscKeyOn) {
+		window.__pscKeyOn = true;
+		window.addEventListener('keydown', (e) => { const G = window.__pscFocus; if (G && e.key === 'Tab' && !G.key) G.key = e.timeStamp; }, true);
+		window.addEventListener('focusin', () => { const G = window.__pscFocus; if (G && G.key && !G.moved) G.moved = performance.now(); }, true);
+	}
+	const tabbable = (s) => (s ? [...s.querySelectorAll('a[href], button, input, select, textarea, [tabindex]')].filter((x) => x.tabIndex >= 0 && !x.disabled && !x.closest('[inert]') && x.getClientRects().length) : []);
+	const listOf = (s) => s && s.querySelector(':scope > .setting-list');
+	const mo = new MutationObserver(() => {
+		const link = root.querySelector('.domain-link.active');
+		if (!link || link.dataset.domain !== 'code') return;
+		const secs = [...root.querySelectorAll('#settings-document [data-section-id]')];
+		const i = secs.findIndex((s) => s.dataset.sectionId === boundary);
+		if (i < 1 || i + 1 >= secs.length) return;
+		mo.disconnect();
+		const from = dir === 'forward' ? tabbable(secs[i - 1]).at(-1) : tabbable(secs[i + 1])[0];
+		const list = listOf(secs[i]);
+		F.pendingAtFocus = root.querySelectorAll('#settings-document [data-o55-fill="pending"]').length;
+		F.boundaryPending = !!(list && list.getAttribute('data-o55-fill') === 'pending');
+		F.fromSection = from ? from.closest('[data-section-id]').dataset.sectionId : '';
+		F.fromLabel = from ? (from.getAttribute('aria-label') || from.textContent || '').trim().slice(0, 50) : '';
+		if (from) from.focus({ preventScroll: true });
+		F.set = !!from && document.activeElement === from;
+		F.at = performance.now();
+		if (F.boundaryPending) {
+			const m2 = new MutationObserver(() => { if (list.getAttribute('data-o55-fill') !== 'pending') { F.filled = performance.now(); m2.disconnect(); } });
+			m2.observe(list, { attributes: true, attributeFilter: ['data-o55-fill'] });
+		}
+	});
+	mo.observe(root, { childList: true, subtree: true, attributes: true, attributeFilter: ['class'] });
+};
+const COLLECT_FOCUS = () => {
+	const F = window.__pscFocus || {}, a = document.activeElement, sec = a && a.closest ? a.closest('[data-section-id]') : null;
+	return { ...F, toSection: sec ? sec.dataset.sectionId : '', toLabel: a ? (a.getAttribute('aria-label') || a.textContent || '').trim().slice(0, 50) : '' };
+};
+async function restoredFocusRow(t, f, surface, dir) {
+	const key = dir === 'forward' ? 'Tab' : 'Shift+Tab';
+	await f.locator('#pm-settings-root .domain-link[data-domain="general"]').first().click();
+	await t.page.waitForTimeout(2500);
+	await f.waitForFunction(() => !document.querySelector('#workspace-stage [data-o55-fill="pending"]'), null, { timeout: 10000 }).catch(() => {});
+	await f.evaluate(ARM_FOCUS, [dir, BOUNDARY]);
+	await press(t, f, 'code');
+	/* the chapter is committed a few tens of ms after the release: the key comes once focus is back (checked each frame) */
+	await f.waitForFunction(() => (window.__pscFocus || {}).at > 0, null, { timeout: 5000 }).catch(() => {});
+	await t.page.keyboard.press(key);
+	await t.page.waitForTimeout(150);
+	const r = await f.evaluate(COLLECT_FOCUS);
+	const ms = (x) => (x && r.key ? Math.round(x - r.key) : null);
+	t.log(`${surface} ${key}: focus put back on "${r.fromLabel}" (${r.fromSection || '-'}) at the commit, ${r.pendingAtFocus} row lists pending, ${BOUNDARY} ${r.boundaryPending ? 'pending' : 'drawn'}; the key landed on "${r.toLabel}" (${r.toSection || '-'}); key -> focus moved ${ms(r.moved) ?? '-'} ms; ${BOUNDARY} filled ${r.filled ? `${ms(r.filled)} ms after the key` : r.boundaryPending ? 'not yet' : '(drawn at once)'}`);
+	await t.check(`${surface} ${key}: could judge: focus was put back next to ${BOUNDARY} at the commit, before the key`, r.set && r.at > 0 && r.key > r.at,
+		r.set ? `the key came ${Math.round(r.at - r.key)} ms before the focus` : `no control next to ${BOUNDARY} (from "${r.fromSection || 'none'}")`);
+	if (r.boundaryPending) await t.check(`${surface} ${key}: could judge: ${BOUNDARY} was still unfilled when the key came`, !(r.filled && r.filled < r.key), `filled ${Math.round(r.key - r.filled)} ms before the key`);
+	await t.check(`${surface} ${key} from restored focus lands in ${BOUNDARY}, the section next to it`, r.toSection === BOUNDARY, `landed on "${r.toLabel}" in ${r.toSection || 'no section'}`);
+}
+
 export const tests = {};
+for (const surface of ['normal', 'sandbox']) {
+	tests[`L1 Tab and Shift+Tab from restored focus enter the section the first screen left unfilled (${surface})`] = async (t) => {
+		if (!t.app.surfaces().includes(surface)) { await t.check(`${surface} surface not asked for`, true); return; }
+		await t.viewport(1920, 1080);
+		await muteSound(t.page);
+		const f = await t.app.open({ sandbox: surface === 'sandbox' });
+		await t.app.resetLayout().catch(() => {});
+		await f.locator('#tab-settings').click();
+		await t.settle();
+		await t.page.waitForTimeout(1500);
+		await setLookBySetting(t, f, 'basic-dark');
+		if (!(await guardPaintedLook(t, f, 'basic-dark', `basic-dark ${surface}`))) return;
+		await f.evaluate(PROBE);
+		for (const dir of ['forward', 'backward']) await restoredFocusRow(t, f, surface, dir);
+	};
+}
 for (const surface of ['normal', 'sandbox']) {
 	tests[`R89 P1 a chapter chosen just before a Project change stays with its Project (${surface})`] = async (t) => {
 		if (!t.app.surfaces().includes(surface)) { await t.check(`${surface} surface not asked for`, true); return; }
