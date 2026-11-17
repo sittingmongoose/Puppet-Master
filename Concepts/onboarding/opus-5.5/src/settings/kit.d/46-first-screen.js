@@ -168,10 +168,14 @@ jumpToWorkspace = function (wsId) {
 const o55fsReveal = PM51.revealSetting;
 PM51.revealSetting = function (id) {
   if (o55fs.pending.size) {
-    const placed = PM51.placement && PM51.placement.sectionOf ? PM51.placement.sectionOf(id) : null;
+    const placed = PM51.placement && PM51.placement.byId ? PM51.placement.byId[id] : null;
     const f = placed ? null : findSettingGlobal(id);
-    const sid = placed ? placed.id : f && f.section ? f.section.id : null;
-    if (sid) o55fsFillThrough(sid); else o55fsFillAll();
+    const ws = placed ? placed.workspace : f && f.workspace ? f.workspace.id : null;
+    /* A reveal into another page will replace this one; never fill its outgoing shells (R93 #3). */
+    if (ws === o55fs.ws) {
+      const sid = placed ? placed.section : f && f.section ? f.section.id : null;
+      if (sid) o55fsFillThrough(sid); else o55fsFillAll();
+    }
   }
   return o55fsReveal.apply(this, arguments);
 };

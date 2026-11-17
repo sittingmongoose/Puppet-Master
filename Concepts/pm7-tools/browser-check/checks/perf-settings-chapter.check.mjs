@@ -370,6 +370,44 @@ async function moreOptionsRow(t, f, label, reduced) {
 
 export const tests = {};
 for (const surface of ['normal', 'sandbox']) {
+	tests[`R93 #3 cross-chapter search does not fill the chapter being discarded (${surface})`] = async (t) => {
+		if (!t.app.surfaces().includes(surface)) { await t.check(`${surface} surface not asked for`, true); return; }
+		await t.viewport(1920, 1080); await muteSound(t.page);
+		if (t.args.motion === 'reduce') await t.emulate({ reducedMotion: 'reduce' });
+		const f = await t.app.open({ sandbox: surface === 'sandbox' });
+		await t.app.resetLayout().catch(() => {}); await f.locator('#tab-settings').click(); await t.settle();
+		await f.locator('#pm-settings-root .domain-link[data-domain="general"]').first().click(); await t.page.waitForTimeout(700);
+		await f.evaluate(() => {
+			const root = document.getElementById('pm-settings-root'), replace = Element.prototype.replaceChildren;
+			const R = window.__pscCross = { ready:false, on:false, pending:0, fills:[], selected:false };
+			Element.prototype.replaceChildren = function () {
+				if (R.on && R.lists.includes(this)) R.fills.push(this.closest('[data-section-id]').dataset.sectionId);
+				return replace.apply(this, arguments);
+			};
+			const mo = new MutationObserver(() => {
+				if (root.querySelector('.domain-link.active')?.dataset.domain !== 'code') return;
+				mo.disconnect(); R.lists = [...root.querySelectorAll('[data-o55-fill="pending"]')]; R.pending = R.lists.length;
+				const input = root.querySelector('[data-global-search]');
+				input.value = 'general.interaction.spellcheck-words'; input.dispatchEvent(new Event('input', {bubbles:true}));
+				const result = document.querySelector('[data-search-result="setting"][data-search-payload*="general.interaction.spellcheck-words"]');
+				R.on = true;
+				try { if (result) {R.selected = true; result.click();} } finally {R.on = false; R.ready = true;}
+			});
+			mo.observe(root, {childList:true, subtree:true, attributes:true, attributeFilter:['class']});
+			R.stop = () => {mo.disconnect(); Element.prototype.replaceChildren = replace;};
+		});
+		try {
+			await f.locator('#pm-settings-root .domain-link[data-domain="code"]').first().click();
+			await f.waitForFunction(() => window.__pscCross.ready, null, {timeout:5000});
+			await f.waitForFunction(() => document.querySelector('#pm-settings-root .domain-link.active')?.dataset.domain === 'general', null, {timeout:5000});
+			const r = await f.evaluate(() => {const {stop, lists, ...r} = window.__pscCross; return r;});
+			t.log(`${surface} cross-chapter: pending ${r.pending}; real search result selected ${r.selected}; outgoing fills ${r.fills.join(',') || 'none'}`);
+			await t.check(`${surface}: cross-chapter search was selected while Code held pending sections`, r.selected && r.pending > 0, JSON.stringify(r));
+			await t.check(`${surface}: revealing General synchronously fills no outgoing Code list`, r.fills.length === 0, r.fills.join(', '));
+		} finally {await f.evaluate(() => window.__pscCross.stop());}
+	};
+}
+for (const surface of ['normal', 'sandbox']) {
 	tests[`R92 P1 More options measures filled sections before its opening animation (${surface})`] = async (t) => {
 		if (!t.app.surfaces().includes(surface)) { await t.check(`${surface} surface not asked for`, true); return; }
 		await t.viewport(1920, 1080);
