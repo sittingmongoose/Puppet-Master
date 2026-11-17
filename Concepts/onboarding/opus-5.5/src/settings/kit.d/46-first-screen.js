@@ -221,6 +221,7 @@ document.addEventListener('keydown', e => {
 /* Tab and Shift+Tab (F's L1, 2026-11-17): the browser picks the next control among those that exist, so focus put back
    without scrolling next to an unfilled section (a redraw's or a dialog's focus restore) would pass over it. Every
    pending section is filled before the key's default action, from any control, inputs too (Tab leaves an input), and
-   from no control at all (the starting point of a click on text can sit anywhere). On window, so it runs first. */
-window.addEventListener('keydown', e => { if (e.key === 'Tab' && o55fs.pending.size && !e.ctrlKey && !e.metaKey && !e.altKey) o55fsFillAll(); }, true);
+   from no control at all (the starting point of a click on text can sit anywhere). On window, so it runs first.
+   Only the active Settings view participates: a Tab in Usage must not build its hidden chapter (R93 #8). */
+window.addEventListener('keydown', e => { if (e.key === 'Tab' && o55fs.pending.size && !e.ctrlKey && !e.metaKey && !e.altKey && document.getElementById('panel-settings')?.classList.contains('active')) o55fsFillAll(); }, true);
 window.addEventListener('beforeprint', o55fsFillAll);

@@ -369,6 +369,37 @@ async function moreOptionsRow(t, f, label, reduced) {
 }
 
 export const tests = {};
+for(const surface of ['normal','sandbox']){
+	tests[`R93 #8 Tab in Usage does not fill hidden Settings (${surface})`]=async(t)=>{
+		if(!t.app.surfaces().includes(surface)){await t.check(`${surface} surface not asked for`,true);return;}
+		await t.viewport(1920,1080);await muteSound(t.page);if(t.args.motion==='reduce')await t.emulate({reducedMotion:'reduce'});
+		await t.page.addInitScript(()=>{
+			const early=e=>{const R=window.__pscHidden;if(!R||e.key!=='Tab')return;R.seen=true;R.hidden=!document.getElementById('panel-settings').classList.contains('active');R.before=document.querySelectorAll('#pm-settings-root [data-o55-fill="pending"]').length;};
+			window.__pscHiddenEarly=early;window.addEventListener('keydown',early,true);
+		});
+		const f=await t.app.open({sandbox:surface==='sandbox'});await t.app.resetLayout().catch(()=>{});await f.locator('#tab-settings').click();await t.settle();
+		await f.locator('#tab-usage').click();await t.settle();await f.locator('#tab-settings').click();await t.settle();
+		await f.locator('#pm-settings-root .domain-link[data-domain="general"]').first().click();await t.page.waitForTimeout(700);
+		await f.evaluate(()=>{
+			const root=document.getElementById('pm-settings-root'),pending=()=>root.querySelectorAll('[data-o55-fill="pending"]').length;
+			const R=window.__pscHidden={ready:false,seen:false};
+			const mo=new MutationObserver(()=>{
+				if(root.querySelector('.domain-link.active')?.dataset.domain!=='code')return;mo.disconnect();R.atCommit=pending();
+				document.getElementById('tab-usage').click();R.ready=true;
+			});
+			const key=e=>{if(e.key==='Tab'){R.after=pending();R.done=true;}};
+			mo.observe(root,{childList:true,subtree:true,attributes:true,attributeFilter:['class']});window.addEventListener('keydown',key,true);
+			R.stop=()=>{mo.disconnect();window.removeEventListener('keydown',key,true);window.removeEventListener('keydown',window.__pscHiddenEarly,true);};
+		});
+		try{
+			await f.locator('#pm-settings-root .domain-link[data-domain="code"]').first().click();await f.waitForFunction(()=>window.__pscHidden.ready,null,{timeout:5000});
+			await t.page.keyboard.press('Tab');await f.waitForFunction(()=>window.__pscHidden.done,null,{timeout:3000}).catch(()=>{});
+			const r=await f.evaluate(()=>{const{stop,...r}=window.__pscHidden;return r;});t.log(`${surface} Usage Tab: hidden ${r.hidden}; pending ${r.before} -> ${r.after}`);
+			await t.check(`${surface}: Tab reached Usage while hidden Settings had pending lists`,r.seen&&r.hidden&&r.before>0,JSON.stringify(r));
+			await t.check(`${surface}: Tab constructs no hidden Settings list`,r.done&&r.after===r.before,JSON.stringify(r));
+		}finally{await f.evaluate(()=>window.__pscHidden.stop());}
+	};
+}
 for (const surface of ['normal','sandbox']) {
 	tests[`R93 #5 F3 and Shift+F3 fill pending text synchronously (${surface})`] = async(t)=>{
 		if(!t.app.surfaces().includes(surface)){await t.check(`${surface} surface not asked for`,true);return;}
