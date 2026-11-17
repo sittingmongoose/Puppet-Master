@@ -98,15 +98,20 @@
        or tour bar renders its control from it */
     if (O55.sound && O55.sound.refresh) { try { O55.sound.refresh('boot'); } catch (_) {} }
     if (window.PM51 && window.PM51.refreshTourRows) { try { window.PM51.refreshTourRows(); } catch (_) {} }
+    /* the Project the person was last in (FO-222, O55.shell.restoreProject), whatever the window does */
+    if (O55.shell && O55.shell.restoreProject) { try { O55.shell.restoreProject(); } catch (_) {} }
     if (sw === 'off') return;
     /* a new install (?o55=fresh, or no onboarding record yet: the window opens by itself) starts in Basic Dark; the
        head painted Basic Dark for it too (window.PM_O55_BOOT.install) */
-    if (sw === 'fresh') { O55.store.clear('onboarding'); return O55.ui.open({ fresh: true, install: true }); }
+    if (sw === 'fresh') { if (O55.shell && O55.shell.forgetSetup) O55.shell.forgetSetup({ all: true }); O55.store.clear('onboarding'); return O55.ui.open({ fresh: true, install: true }); }
     if (sw.startsWith('screen=')) return O55.ui.open({ screen: sw.slice(7) });
     if (sw === 'tour') return O55.tour && O55.tour.start && O55.tour.start({ source: 'switch' });
     const saved = O55.store.get('onboarding', null);
     tourChip();
     if (!saved) return O55.ui.open({ install: true });
+    /* a run the page left with its window open (a reload, the tab closed) is offered again as one closed unfinished: the
+       Resume chip and the bell's entry, on its step; it does not open by itself (FO-219, 60-ui-core.js parkStale) */
+    if (saved.status === 'active' && O55.ui.parkStale && O55.ui.parkStale()) saved.status = 'closed';
     if (saved.status === 'closed') chip();
   }
   const kick = () => O55.motion.real.setTimeout(start, 140);

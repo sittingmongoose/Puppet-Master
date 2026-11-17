@@ -262,7 +262,7 @@ def validate() -> dict[str, Any]:
     # T239: generate writes render_markdown of the index. The file must be that render.
     # Only the generation-time line may differ; the counts and finding rows are part of the compare.
     markdown_text = MARKDOWN.read_text(encoding="utf-8")
-    generated_line = re.compile(r"(?m)^- Generated: `[^`]*`$")
+    generated_line = re.compile(r"(?m)^- Generated: `[^`\n]*`$")
     placeholder = "- Generated: `<generation-time>`"
     rendered = render_markdown(expected)
     if generated_line.sub(placeholder, markdown_text) != generated_line.sub(placeholder, rendered):
@@ -300,6 +300,14 @@ def main() -> int:
         return 0
     report = validate()
     print(json.dumps(report, indent=2, sort_keys=True))
+    if any(f.get("error") in ("stale_audit_status_index", "stale_current_audit_status_markdown")
+           for f in report["failures"]):
+        # T241: message only. The committed index counts gitignored Plans/.audits reports
+        # that only full checkouts carry, so a clean clone reports staleness by design; in a full
+        # tree the same staleness is real and needs `generate` (T244: the note names both causes).
+        print("note: the committed index counts gitignored reports that only full checkouts carry. "
+              "In a clean clone this staleness is expected: validate must run in a full tree. "
+              "In a full tree it is real: regenerate with `generate`.", file=sys.stderr)
     return 0 if report["status"] == "pass" else 1
 
 

@@ -4,15 +4,15 @@
     "build_order_available": true,
     "build_order_blocked_node_count": 0,
     "cycle_blocker_count": 0,
-    "depends_on_edge_count": 24529,
+    "depends_on_edge_count": 24540,
     "downstream_blocked_node_count": 0,
-    "edge_count": 27747,
-    "node_count": 8966,
+    "edge_count": 27760,
+    "node_count": 8969,
     "true_cycle_component_count": 0,
-    "unblocks_edge_count": 3218,
+    "unblocks_edge_count": 3220,
     "unresolved_reference_count": 0
   },
-  "generated_at_utc": "2026-11-15T14:36:41Z",
+  "generated_at_utc": "2026-11-16T00:00:13Z",
   "gui_related_units": {
     "count": 3931,
     "units": [
@@ -43265,10 +43265,10 @@
   "no_final_node_queues_created": true,
   "no_worknodes_created": true,
   "nodeseed_candidates_created": false,
-  "plan_unit_count": 8966,
+  "plan_unit_count": 8969,
   "risk_and_reasoning_summary": {
     "reasoning_tier_counts": {
-      "high": 4283,
+      "high": 4286,
       "low": 9,
       "medium": 34,
       "standard": 4640
@@ -43878,6 +43878,8 @@
       "client_trust_or_revocation_bypass": 1,
       "clock_skew_schedule_projection_drift": 1,
       "cluster_scope_creep": 1,
+      "code_mode_carriage_overclaim": 1,
+      "code_mode_policy_bypass": 1,
       "codex_account_root_auth_family": 1,
       "codex_jsonl_subagent_output_parser_example": 1,
       "coding_plan_product_labels_picker_recommendation": 1,
@@ -47121,6 +47123,7 @@
       "tool_anchor_and_registry_drift": 1,
       "tool_artifact_attribution_gap": 1,
       "tool_boundary": 1,
+      "tool_calling_mode_truth_drift": 1,
       "tool_context": 1,
       "tool_contract_drift": 70,
       "tool_contract_preview_drift": 1,
@@ -47492,7 +47495,7 @@
     "source_preserving_unit_count": 0,
     "source_preserving_units": [],
     "status_counts": {
-      "accepted": 8686,
+      "accepted": 8689,
       "draft": 47,
       "retired": 205,
       "superseded": 28
@@ -47565,7 +47568,7 @@
       "recovery_requirement": 4,
       "reference": 5,
       "reference_formula": 1,
-      "requirement": 6091,
+      "requirement": 6094,
       "retirement_record": 3,
       "risk": 2,
       "runtime_contract": 22,
@@ -47740,10 +47743,12 @@
         "source_path": "scripts/pm_pnc019_currentness.py"
       },
       {
-        "actual": null,
-        "error": "pnc019_source_hash_stale",
-        "expected": "5a1c070b9f0afc24848a6da357c73c6b5ede42b5e563044f0dd0181a62616b6f",
+        "error": "pnc019_source_hash_path_missing",
         "source_path": "Plans/.audits/event-authority-2026-08-13-currentness/VALIDATOR_RECEIPT.json"
+      },
+      {
+        "detail": "[Errno 2] No such file or directory: 'Plans/.audits/event-authority-2026-08-13-currentness/VALIDATOR_RECEIPT.json'",
+        "error": "event_authority_currentness_audit_unavailable"
       },
       {
         "bulk_registration_allowed": false,

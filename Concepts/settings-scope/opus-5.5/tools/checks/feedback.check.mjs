@@ -12,7 +12,7 @@
 import crypto from 'node:crypto';
 import fs from 'node:fs';
 import path from 'node:path';
-import { pathToFileURL } from 'node:url';
+import { fileURLToPath, pathToFileURL } from 'node:url';
 const want = (t, part) => !t.args.only || String(t.args.only).split(',').includes(part);
 /* review S1: Plans' inventory layering is the per-row authority (SSYS-059). The checks read it from the repository
    (--set inventory=<path> to read another copy) and pass each row's layering in: { id: { home, value } } */
@@ -29,6 +29,8 @@ const inventory = (t) => {
 	return INVENTORY;
 };
 const fileUrl = (p) => (/^[a-z][a-z0-9+.-]+:/i.test(p) ? p : pathToFileURL(path.resolve(p)).href);
+/* URL.pathname of a Windows file URL is "/C:/..."; path.resolve then yields file:///C:/C:/... . fileURLToPath keeps one drive. */
+const barePm7 = () => fileURLToPath(new URL('../../../../PMConcept7.html', import.meta.url));
 /* review A-r1 tool note E: move a row into view by scrolling the Settings scroller that holds it, never with
    scrollIntoView (that also scrolls overflow-hidden ancestors and left the whole root 67px up, a state no one reaches) */
 const HELPERS = () => {
@@ -903,7 +905,7 @@ export default async function (t) {
 		await t.viewport(1920, 1080);
 		// the rows the base page redraws when switched: the same click redraws them on bare PMConcept7 too (stream F's)
 		if (redrawn.size) {
-			const bareUrl = fileUrl(t.args.bare || new URL('../../../../PMConcept7.html', import.meta.url).pathname);
+			const bareUrl = fileUrl(t.args.bare || barePm7());
 			await t.goto(`${bareUrl}${bareUrl.includes('?') ? '&' : '?'}o55=off&cb=${Date.now()}`);
 			await t.until('bare PMConcept7 is ready', () => document.documentElement.getAttribute('data-pmr-ready') === '1' && !!window.PM12_KIMI, null, { timeout: 60000 });
 			await run(t, HELPERS); await settle(t, 1200);
@@ -946,7 +948,7 @@ export default async function (t) {
 			const lay = which ? await run(t, TOGGLE, '[data-psx-probe="acct"] .toggle') : { missing: true };
 			await t.check(`${wname} · Services · ${which || 'an account switch'}, with the layer: until the base page redraws the page, the switch and the end word stay put, no “?” shows, Changed changes at most once`, !lay.missing && !lay.toggleX && !lay.endX && !lay.endW && !lay.bareEnds && lay.changedFlips <= 1, JSON.stringify(lay));
 			// the same click on bare PMConcept7
-			const bareUrl = fileUrl(t.args.bare || new URL('../../../../PMConcept7.html', import.meta.url).pathname);
+			const bareUrl = fileUrl(t.args.bare || barePm7());
 			await t.goto(`${bareUrl}${bareUrl.includes('?') ? '&' : '?'}o55=off&cb=${Date.now()}`);
 			await t.until('bare PMConcept7 is ready', () => document.documentElement.getAttribute('data-pmr-ready') === '1' && !!window.PM12_KIMI, null, { timeout: 60000 });
 			await run(t, HELPERS); await settle(t, 1200);
@@ -1292,7 +1294,7 @@ export default async function (t) {
 		const misses = results.filter((x) => x.r.bad.length);
 		const bareOf = {};
 		if (misses.length) {
-			const bareUrl = fileUrl(t.args.bare || new URL('../../../../PMConcept7.html', import.meta.url).pathname);
+			const bareUrl = fileUrl(t.args.bare || barePm7());
 			await t.goto(`${bareUrl}${bareUrl.includes('?') ? '&' : '?'}o55=off&cb=${Date.now()}`);
 			await t.until('bare PMConcept7 is ready', () => document.documentElement.getAttribute('data-pmr-ready') === '1' && !!window.PM12_KIMI, null, { timeout: 60000 });
 			await settle(t, 1200);

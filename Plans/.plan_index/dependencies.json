@@ -5568,6 +5568,7 @@
     "PS-057",
     "PS-058",
     "PS-076",
+    "T-188",
     "RAP-006",
     "RM-018",
     "RM-020",
@@ -5758,6 +5759,8 @@
     "PS-083",
     "PS-089",
     "PS-097",
+    "T-189",
+    "T-190",
     "SP-345",
     "ACD-355",
     "ACD-356",
@@ -116459,6 +116462,61 @@
     },
     {
       "edge_type": "depends_on",
+      "from": "T-188",
+      "to": "T-169"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "T-188",
+      "to": "T-176"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "T-188",
+      "to": "T-177"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "T-188",
+      "to": "T-178"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "T-189",
+      "to": "T-169"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "T-189",
+      "to": "T-176"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "T-189",
+      "to": "T-188"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "T-190",
+      "to": "T-176"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "T-190",
+      "to": "T-177"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "T-190",
+      "to": "T-178"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "T-190",
+      "to": "T-188"
+    },
+    {
+      "edge_type": "depends_on",
       "from": "TCME-001",
       "to": "SIR-007"
     },
@@ -146704,6 +146762,16 @@
     },
     {
       "edge_type": "unblocks",
+      "from": "T-188",
+      "to": "T-189"
+    },
+    {
+      "edge_type": "unblocks",
+      "from": "T-188",
+      "to": "T-190"
+    },
+    {
+      "edge_type": "unblocks",
       "from": "TCME-001",
       "to": "TCME-002"
     },
@@ -147708,7 +147776,7 @@
       "to": "F3-395"
     }
   ],
-  "generated_at_utc": "2026-11-15T07:53:29Z",
+  "generated_at_utc": "2026-11-16T00:00:13Z",
   "nodes": [
     {
       "context_scope": "residual_plan_standardization",
@@ -289729,6 +289797,57 @@
       "unit_type": "requirement"
     },
     {
+      "context_scope": "code_mode_tool_calling",
+      "gui_related": false,
+      "owner_doc": "Plans/Tools.md",
+      "plan_unit_id": "T-188",
+      "reasoning_tier": "high",
+      "risk_class": "tool_calling_mode_truth_drift",
+      "source_location": {
+        "heading": "T-188 - Code Mode Is The Requested Tool-Calling Mode For Every Provider",
+        "heading_level": 3,
+        "heading_line": 13366,
+        "line": 13368,
+        "path": "Plans/Tools.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "code_mode_tool_calling",
+      "gui_related": false,
+      "owner_doc": "Plans/Tools.md",
+      "plan_unit_id": "T-189",
+      "reasoning_tier": "high",
+      "risk_class": "code_mode_carriage_overclaim",
+      "source_location": {
+        "heading": "T-189 - Code Mode Carriage By Provider Execution Shape",
+        "heading_level": 3,
+        "heading_line": 13437,
+        "line": 13439,
+        "path": "Plans/Tools.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "code_mode_tool_calling",
+      "gui_related": false,
+      "owner_doc": "Plans/Tools.md",
+      "plan_unit_id": "T-190",
+      "reasoning_tier": "high",
+      "risk_class": "code_mode_policy_bypass",
+      "source_location": {
+        "heading": "T-190 - Code Mode Script Safety, Limits And Visibility",
+        "heading_level": 3,
+        "heading_line": 13509,
+        "line": 13511,
+        "path": "Plans/Tools.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
       "context_scope": "generic_test_capture_service",
       "gui_related": false,
       "owner_doc": "Plans/Test_Capture_and_Motion_Evidence.md",
@@ -300139,12 +300258,12 @@
     "build_order_available": true,
     "build_order_blocked_node_count": 0,
     "cycle_blocker_count": 0,
-    "depends_on_edge_count": 24529,
+    "depends_on_edge_count": 24540,
     "downstream_blocked_node_count": 0,
-    "edge_count": 27747,
-    "node_count": 8966,
+    "edge_count": 27760,
+    "node_count": 8969,
     "true_cycle_component_count": 0,
-    "unblocks_edge_count": 3218,
+    "unblocks_edge_count": 3220,
     "unresolved_reference_count": 0
   },
   "unresolved_references": []

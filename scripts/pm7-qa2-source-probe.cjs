@@ -193,8 +193,13 @@ for (const source of [read('Concepts/chat-assistant-concepts/5.6 Pro/app.js'), r
   requireThat(!source.includes('class="menu-head-wand"'), 'wand wrapper discards glyph ink roles');
 }
 const slots = 'Concepts/liquid-glass/opus-5.5/src/slots/onboarding/opus-5.5/src/css/22-hover/';
-requireThat(/--pmf-sheen:\s*rgb\(255 255 255 \/ \.045\)/.test(read(slots + 'G0596.css')), 'Glass Dark sheen differs');
-requireThat(/--pmf-sheen:[^;]*4\.5%/.test(read(slots + 'G0597.css')), 'Glass Light sheen differs');
+// FO-121 (f58faa070f) removed the pointer sheen; the box-edge hairline and inset band stay.
+const darkHover = read(slots + 'G0596.css');
+requireThat(/--pmf-rim:\s*color-mix\(in srgb, color-mix\(in srgb, rgb\(var\(--accent-primary-rgb\)\) 45%, #fff\) 85%, transparent\)/.test(darkHover) &&
+  /--pmf-rim2:\s*color-mix\(in srgb, rgb\(var\(--accent-primary-rgb\)\) 38%, transparent\)/.test(darkHover), 'Glass Dark box-edge glow differs');
+const lightHover = read(slots + 'G0597.css');
+requireThat(/--pmf-rim:\s*color-mix\(in srgb, rgb\(var\(--accent-primary-rgb\)\) 85%, transparent\)/.test(lightHover) &&
+  /--pmf-rim2:\s*color-mix\(in srgb, rgb\(var\(--accent-primary-rgb\)\) 28%, transparent\)/.test(lightHover), 'Glass Light box-edge glow differs');
 const glass = read('Concepts/liquid-glass/opus-5.5/src/glass.js');
 requireThat(!/function onPtr\(/.test(glass), 'independent Glass sheet pointer light remains');
 counts.source_boundary_checks = 10;

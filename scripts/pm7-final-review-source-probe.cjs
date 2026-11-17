@@ -54,7 +54,9 @@ async function main() {
   const copy = section(flow, 'const COPIED =', '\n})();');
   let copyOK = true;
   const timers = [], buttons = [];
-  const button = () => ({ textContent: 'Copy', getAttribute: () => 'copy-control' });
+  // F.copyBtn draws the label in a span; the product writes the face and the button reads it (3ce3263747).
+  const button = () => { const face = { textContent: 'Copy' };
+    return { firstElementChild: face, get textContent() { return face.textContent; }, getAttribute: () => 'copy-control' }; };
   const ctx = vm.createContext({ F: {}, U: { slug: s => s, esc: s => s, copyText: async () => copyOK },
     T: key => key === 'chrome.copied' ? 'Copied' : 'Copy',
     O55: { actions: {}, tips: { opt: (_key, html) => html }, sound: { play() {} },

@@ -45,6 +45,7 @@
   const EMPTY_ROUTING = () => ({ defaultModel: '', accountOrder: [], exhaustion: 'next-service' });
   const ACC = 'providers-account', SVC = 'providers-service';
   /* Settings that belong to one account (drawn in each account) and where the service-specific ones live. */
+  const ACCOUNT_MODEL = 'ai.accounts.default-model';
   const ACCOUNT_IDS = ['ai.accounts.account-name', 'ai.accounts.account-enabled', 'ai.accounts.account-roles', 'ai.accounts.billing-entity', 'ai.accounts.claude-login-method', 'ai.accounts.codex-auth-family', 'ai.accounts.gcp-project-id', 'ai.accounts.account-priority', 'ai.accounts.switch-mode-override', 'ai.accounts.cooldown-policy', 'ai.accounts.retry-budget', 'ai.accounts.quota-profile', 'ai.accounts.auth-family', 'ai.accounts.credential-storage', 'ai.accounts.auth-surface', 'ai.accounts.set-preferred-account'];
   const OWNER = {
     'ai.accounts.claude-login-method': 'claude-code', 'system.advanced.cli-path-claude': 'claude-code',
@@ -533,7 +534,11 @@
       p.gcp ? PM51.scoped.row('ai.accounts.gcp-project-id', v('ai.accounts.gcp-project-id'), Object.assign({}, opt, { label: 'Google Cloud project', help: 'The project that is billed and whose quota applies.' })) : '',
       key ? keyLine(p, acc) : '',
       PM51.scoped.row('ai.accounts.account-roles', v('ai.accounts.account-roles'), Object.assign({}, opt, { label: 'Jobs it may do', help: 'None picked means any job. Keep a costly account off routine work.' })),
-      PM51.scoped.row('ai.accounts.billing-entity', v('ai.accounts.billing-entity'), Object.assign({}, opt, { label: 'Who is billed', help: 'Costs on the Usage page are grouped by this.' }))
+      PM51.scoped.row('ai.accounts.billing-entity', v('ai.accounts.billing-entity'), Object.assign({}, opt, { label: 'Who is billed', help: 'Costs on the Usage page are grouped by this.' })),
+      /* FO-183: the inventory's model row for one account (it had no row anywhere); the shared model picker, with this
+         service's models and the inherit choice in the inventory's own words ("Use the normal defaults list") */
+      PM51.scoped.row(ACCOUNT_MODEL, v(ACCOUNT_MODEL), Object.assign({}, opt, { label: 'Default model for this account', help: 'For runs you send to this account yourself, when nothing earlier names a model.',
+        control: PM51.modelSelect(ACCOUNT_MODEL, v(ACCOUNT_MODEL), { action: 'pm51-scoped-select', data: { scope: ACC, provider: p.id, account: acc.id }, label: 'Default model for this account', depthKey: `${ACCOUNT_MODEL}|${p.id}|${acc.id}`, provider: p.id }) }))
     ];
     const low = PM51.scoped.fields([
       accountPolicyField(p, acc, 'ai.accounts.hard-switch-level', 'Switch when this much is left', accountLevelControl(p, acc)),
@@ -1167,6 +1172,7 @@
   const everyAccount = fn => () => all().flatMap(p => orderedAccounts(p).map((acc, i) => ({ name: `${p.name} · ${acc.nickname}`, value: fn(p, acc, i) })));
   ACCOUNT_IDS.filter(id => id !== 'ai.accounts.set-preferred-account').forEach(id => PM51.perValues(id, everyAccount((p, acc, i) =>
     id === 'ai.accounts.account-name' ? acc.nickname : id === 'ai.accounts.account-enabled' ? acc.enabled !== false : id === 'ai.accounts.account-priority' ? i + 1 : PM51.scopedValue(acc, id))));
+  PM51.perValues(ACCOUNT_MODEL, everyAccount((p, acc) => PM51.scopedValue(acc, ACCOUNT_MODEL)));
   /* Model pickers offer the models on your signed-in accounts, after the inventory's examples. */
   const MODEL_PICKERS = ['ai.models.default-model', 'ai.models.overseer-model', 'ai.models.worker-model', 'ai.models.gui-worker-model', 'ai.models.high-effort-worker-model', 'ai.models.auditor-model', 'ai.models.teach-model', 'ai.models.thread-title-model'];
   /* a model that only makes pictures (GPT Image) answers no chat, plan or review, so the model pickers never offer it

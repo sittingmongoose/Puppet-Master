@@ -448,11 +448,20 @@
   place-items: center;
   align-content: center;
   text-align: center;
-  padding: 4px;
+  padding: 0;
   position: relative;
   z-index: 1;
   cursor: pointer;
   appearance: none; -webkit-appearance: none;
+  /* FO-201: Pip and the label are placed by the circle's own size, read from the disc itself (a size container, so
+     100cqw is the inside of the ring and they follow it while the disc grows or shrinks). The label's first line sits
+     a little below the centre, where the circle is widest, and Pip stands on it. Measured on 64-96 px discs in every
+     look: Pip 26 -> 40 px, the label 9.5 -> 11.5 px, the line 0 -> 16.5 px below the centre. */
+  container-type: size;
+  --oc-fs: clamp(9.5px, calc(9.5px + (100cqw - 60px) / 16), 11.5px);
+  --oc-lh: calc(var(--oc-fs) * 1.15);
+  --oc-pip: clamp(26px, calc(26px + (100cqw - 60px) * .875), 40px);
+  --oc-y: min(100cqw - 60px, 4px + (100cqw - 64px) * .5, 8px + (100cqw - 72px) * .425);
   /* the live subject's dark disc (PART 3): an opaque puck rimmed in the phase
      hue; its label reads in the puck's own text ink */
   background: var(--nx-disc);
@@ -469,25 +478,39 @@
 }
 .orbit-core:hover { transform: scale(1.035); }
 .orbit-core:focus-visible { outline: 2px solid color-mix(in srgb, var(--accent) 72%, white); outline-offset: 3px; }
-/* The label is CLIPPED TO THE CIRCLE, never allowed outside it. Measured
-   before this: at a 162px dial "Subagents" painted 10.3px beyond the core's
-   own edge, over the ring behind it. The full label is always readable
-   elsewhere — in the caption when collapsed, in the panel when open — so an
-   ellipsis inside the disc is the honest trade. */
+/* The label stays INSIDE THE RING with room to spare (FO-201, Jared's QA of 2026-11-13: "Subagents" and "Preparing" ran
+   across the ring on both sides). It was capped at the disc's square content box under a centred Pip, but at the
+   label's row, near the bottom, the circle is much narrower than that box: Glass's "Subagents" ran 7.3 px past the
+   ring's inner edge on a 64 px disc under a 40 px Pip, and on the 82 px disc a 1920 window shows Friendly's "App
+   control" ran 3.8 px past it (main 69a5f383b7). Now its first line sits near the centre (--oc-y,
+   above) and wraps at 5.6em, the width of the longest single word in the widest look's face, so a two-word label
+   takes a second, shorter line rather than running into the narrow part. Every line of every label, in every look,
+   keeps 2 px or more inside the ring at its own row (pm7-tools/browser-check/checks/orbit-core-label.check.mjs). */
 .orbit-core strong {
   /* No entrance: the node is never remounted (constant data-k), so the
      pm-materialize rule styles.css puts on this selector would only ever fire
      once, on the first paint of the card. Kept off so a phase handover never
      blanks the word. */
   animation: none;
-  font-size: 11.5px; display: block; margin-top: 2px; line-height: 1.15;
-  max-width: 100%; overflow: hidden;
+  /* its first line centred --oc-y below the disc's centre; more lines go below it, so Pip never moves when a
+     handover changes how many lines the label takes */
+  position: absolute; left: 0; right: 0; top: calc(50% + var(--oc-y) - var(--oc-lh) / 2);
+  margin: 0 auto; width: fit-content;
+  font-size: var(--oc-fs); display: block; line-height: 1.15;
+  /* not clipped: a g or p reaches below the 1.15 line in Friendly's and NieR's faces, and overflow: hidden cut its foot */
+  max-width: calc(5.58em + .6px);
   /* WRAP, do not ellipsise. A circle has room for two short lines and none for
      a truncation mark, and the longest labels here are two words ("Browser
      test", "App control", "Web search"). `anywhere` is the backstop for a long
      single word — at these sizes it never fires, but it guarantees the label
      can never paint outside the disc, which is the property that matters. */
   white-space: normal; overflow-wrap: anywhere;
+}
+/* Pip stands on the label's first line: its drawing ends about 5% above its box's foot */
+.orbit-core > .orbit-core-face {
+  position: absolute; margin: 0; left: calc(50% - var(--oc-pip) / 2);
+  top: calc(50% + var(--oc-y) - var(--oc-lh) / 2 + 1px - var(--oc-pip));
+  width: var(--oc-pip); height: var(--oc-pip);
 }
 /* FO-120: the glyph's entrance and full moving anatomy belong to the ring. The parent node keeps its
    positioning/rotation, pulse and failure shake. The 14/11/9px ink box leaves travel room inside each tile. */
@@ -513,10 +536,6 @@
   .orbit-node-symbol svg { --nx-ink: ButtonText !important; --nx-hi-a: 0; }
 }
 .orbit-core.done { border-color: var(--positive); }
-@container orbitdial (max-width: 190px) {
-  .orbit-core strong { font-size: 10px; }
-  .orbit-core { padding: 3px; }
-}
 
 /* ---- detail panel ---------------------------------------------------- */
 .orbit-panel {

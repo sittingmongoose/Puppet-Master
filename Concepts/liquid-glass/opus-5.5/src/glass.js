@@ -1456,6 +1456,16 @@
        so in every look their chip is the control's own under-layer (under: the lens inside the control, under its
        labels), which scrolls with it and stays under the bars; it wears the material the chosen segment wore in place */
     { sel: '#pm-settings-root .segmented', items: ':scope > button', many: true, kind: 'lens', active: ':is([aria-checked="true"], [aria-pressed="true"])', pad: 0, magRest: 1, mark: true, under: true },
+    /* FO-197 (Jared, 2026-11-13: "should the tab selection between the adjustable tabs on the home page also use the newer
+       animations ... Yes to both, and also the usage page tab switching"): the panels' tabs are the same switcher, in
+       the panel strip's own under-layer, so the chip moves as every other chip of the look does (Friendly's hop,
+       Basic's snap, Retro's steps, NieR's cut, Glass's lens) and as Reduce Motion asks; the plate's chip steps aside
+       (glass.css). A strip folded to a column marks its chosen tab in place, and a tab carried by a drag keeps the
+       plate, which follows it 1:1: neither has a chip here. Settings' chapters and Usage's pages were here already. */
+    { sel: '.pmw-strip', items: '.pmw-tab', many: true, kind: 'lens', active: '[data-active]', pad: 0, magRest: 1, mark: true, under: true,
+      pick: function (strip) { return strip.hasAttribute('data-column') || strip.classList.contains('is-dragging') ? null : strip.querySelector('.pmw-tab[data-active]'); },
+      /* (and its tab list: a chosen tab grows when its close x shows, and under Reduce Motion nothing else syncs it) */
+      follow: function (strip) { return [strip, strip.querySelector(':scope > .pmw-tablist')]; } },
   ];
   /* the onboarding step rail's mark of a step: its bead and its word, those of them that are drawn; null when neither is */
   function railMark(i) { return unionRect([i.querySelector('.o55-railnode'), i.querySelector('.o55-raillabel')]); }
@@ -1900,7 +1910,7 @@
   function relayerLenses() {
     /* a strip whose lens is always under (ownUnder) keeps it: its layer does not change with the look's mode */
     lenses.forEach(function (L, strip) { if (ownUnder.has(strip) && L.strip.isConnected && L.lens.isConnected) return; if (L.strip.isConnected && L.lens.isConnected) parkLens(L); else disposeLens(L); lenses.delete(strip); });
-    if (typeof hiddenLenses !== 'undefined') hiddenLenses.clear();
+    if (typeof hiddenLenses !== 'undefined') { showUnwatchAll(); hiddenLenses.clear(); }
   }
   function pruneLenses() {
     lenses.forEach(function (L, strip) {
@@ -1932,6 +1942,9 @@
      document's animation clock stays at the frame before it, and the DOM reports the lens where it was hundreds of
      milliseconds ago (seen in the films as a jump back along its path). */
   function visualRect(L) {
+    /* a carried chip is where its trip has it now, on the clock that draws it (a block that goes on with a trip is still
+       on the box the trip under way ends on until its change is drawn, not on L.rect, its tab's) */
+    var K = L.carry; if (K && K.pose && L.hopFrames) { var Q = K.pose(Math.min(carryAge(K), K.dur)); return { x: Q.x, y: Q.y, w: Q.w, h: Q.h }; }
     var T = L.path; if (!L.anim || !T || !L.rect) return L.rect;
     var t = performance.now() - T.t0; if (t >= T.dur) return L.rect;
     for (var i = 1; i < T.rects.length; i++) if (T.rects[i].t >= t) return T.rects[i];
@@ -2034,43 +2047,102 @@
     try { L.lens.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 160, delay: Math.max(0, left - 160), fill: 'backwards', easing: 'ease-out' }); } catch (e) {}
   }
   /* a lens hidden because its strip or item stopped showing comes back when they show again (Jared #23: "the page
-     selector starts out being there but goes away eventually"). A strip can be hidden and shown in ways no observed
-     mutation reports: an inline style, inert, an attribute on <html> such as the onboarding window's data-o55-open. Such
-     lenses are checked every 400 ms, and only while there are any. */
-  var hiddenLenses = new Map(), showT = 0;
+     selector starts out being there but goes away eventually"). While a lens is hidden its strip is watched by a
+     ResizeObserver (showWatch): whatever gives the strip its box back — an inline or a stylesheet display, on the
+     strip or on any ancestor — is reported after that frame's layout, and the check runs once through onLayout, the
+     same path the timer uses. What no observer reports is a visibility-only change (an inline visibility, a stylesheet
+     visibility keyed to an unobserved attribute): for those a 2000 ms safety-net timer remains, armed when the first
+     lens is hidden and re-armed only from inside the check, only while any lens is still hidden; a hidden document
+     re-arms it without reading anything. A sync that lands while that check is waiting for layout may arm a tick;
+     the check drops it before it looks, and arms the next interval if a lens is still hidden. The check's reads are stripParked (a closest(), no layout), cvSkipped (the
+     section's own style and box, never the skipped content) and visible() (the strip's and its target's rect and
+     computed visibility), all after the frame's layout, where they are free. Where ResizeObserver does not exist the
+     timer alone does the work, at the same 2000 ms. */
+  var hiddenLenses = new Map(), showT = 0, showHold = false;
+  var showSize = new WeakMap();
+  var showWatch = window.ResizeObserver ? new ResizeObserver(function (entries) {
+    var woke = false;
+    entries.forEach(function (en) {
+      var b = en.borderBoxSize && en.borderBoxSize[0];
+      var w = b ? b.inlineSize : en.contentRect.width, h = b ? b.blockSize : en.contentRect.height;
+      var was = showSize.get(en.target); showSize.set(en.target, [w, h]);
+      /* at most 1 px in either axis to more than 1 px in either: the strip may be back (visible() decides). The first
+         report of a strip queued while hidden counts too: it may have come back before the watch's first delivery */
+      if ((w > 1 || h > 1) && (!was || was[0] <= 1 || was[1] <= 1)) woke = true;
+    });
+    if (!woke || !hiddenLenses.size) return;
+    /* the pending net tick is dropped so the check runs now; the check re-arms the net from inside itself */
+    if (showT) { clearTimeout(showT); showT = 0; }
+    queueShown();
+  }) : null;
+  /* a strip is observed while any hidden lens uses it: one lens leaving does not unwatch a strip another still hides */
+  function showUnwatch(L) {
+    if (!showWatch) return;
+    var still = false;
+    hiddenLenses.forEach(function (cfg, O) { if (O !== L && O.strip === L.strip) still = true; });
+    if (!still) { showWatch.unobserve(L.strip); showSize.delete(L.strip); }
+  }
+  function showUnwatchAll() {
+    if (!showWatch) return;
+    hiddenLenses.forEach(function (cfg, L) { showWatch.unobserve(L.strip); showSize.delete(L.strip); });
+  }
   function awaitShow(L, cfg) {
-    if (!L.strip.isConnected) { hiddenLenses.delete(L); return; }
+    if (!L.strip.isConnected) { hiddenLenses.delete(L); showUnwatch(L); return; }
     hiddenLenses.set(L, cfg);
-    if (!showT) showT = setTimeout(checkShown, 400);
+    if (showWatch) showWatch.observe(L.strip);
+    /* armed even while a check is queued: the queued check drops this tick before it looks (queueShown), so it cannot
+       make that check skip; and if the queued check is ever lost (another function of the same layout delivery
+       throwing first), this tick is what starts the checking again */
+    if (!showT) showT = setTimeout(checkShown, 2000);
   }
   /* onLayout(fn): fn runs once after the frame's own style and layout, before paint, so every read in it is free (Q16).
      It is afterLayout(fn): one probe and one ResizeObserver for all of Glass. Work that a timer would otherwise run in the
      middle of an app's rebuild waits there instead: */
   function onLayout(fn) { if (!afterLayout(fn)) fn(); }
+  /* the wake and the tick share one queued check (showHold: at most one waits for layout). The queued check drops any
+     pending tick before it looks: a tick armed in the gap before it runs (a sync's awaitShow) used to trip the showT
+     guard and skip the look, so a lens already shown waited another whole interval (2351 and 3040 ms seen). */
+  function queueShown() {
+    if (showHold) return;
+    showHold = true;
+    onLayout(function () {
+      showHold = false;
+      if (document.hidden) { if (hiddenLenses.size && !showT) showT = setTimeout(checkShown, 2000); return; }
+      if (showT) { clearTimeout(showT); showT = 0; }
+      checkShownNow();
+    });
+  }
   /* - the hidden-lens check, whose tick landing on a Settings chapter change forced the half-built page through 242 ms
        of layout in Basic Dark */
   function checkShown() {
     showT = 0;
-    if (!switchOn()) { hiddenLenses.clear(); return; }
-    onLayout(checkShownNow);
+    /* a background tab never wakes layout: the tick re-arms without reading anything */
+    if (document.hidden) { if (hiddenLenses.size) showT = setTimeout(checkShown, 2000); return; }
+    if (!switchOn()) { showUnwatchAll(); hiddenLenses.clear(); return; }
+    /* a tick that finds a check still queued two seconds later takes it for lost and queues again: a second run of
+       the check is harmless, a hold that never ends would stop the checking for good */
+    showHold = false;
+    queueShown();
   }
   function checkShownNow() {
     if (showT) return;
-    if (!switchOn()) { hiddenLenses.clear(); return; }
+    if (!hiddenLenses.size) return;
+    if (!switchOn()) { showUnwatchAll(); hiddenLenses.clear(); return; }
     /* every hidden lens is looked at before any shown one is synced, and those are synced together (B6 packet 1) */
     var shown = []; cvSeen = new Map();
     try {
       hiddenLenses.forEach(function (cfg, L) {
-        if (!L.strip.isConnected || (cfg.kind === 'lensIcon' && !isGlass())) { hiddenLenses.delete(L); return; }
+        if (!L.strip.isConnected || (cfg.kind === 'lensIcon' && !isGlass())) { hiddenLenses.delete(L); showUnwatch(L); return; }
         if (stripParked(L.strip)) return;
-        if (cvSkipped(L.strip)) { hiddenLenses.delete(L); cvSkip(L.strip); return; }
+        if (cvSkipped(L.strip)) { hiddenLenses.delete(L); showUnwatch(L); cvSkip(L.strip); return; }
         if (!visible(L.strip)) return;
         var t = cfg.pick ? cfg.pick(L.strip) : L.strip.querySelector(cfg.items + (cfg.active || '.active'));
-        if (t && visible(t)) { hiddenLenses.delete(L); shown.push([cfg, L.strip]); }
+        if (t && visible(t)) { hiddenLenses.delete(L); showUnwatch(L); shown.push([cfg, L.strip]); }
       });
       syncStrips(shown);
     } finally { cvSeen = null; }
-    if (hiddenLenses.size) showT = setTimeout(checkShown, 400);
+    /* not over a tick that syncStrips' own awaitShow has just armed (one timer, not two) */
+    if (hiddenLenses.size && !showT) showT = setTimeout(checkShown, 2000);
   }
   /* A strip whose chip is its own (ownUnder, Settings' segmented choices) shows that chip only while it moves: at rest the
      chosen segment wears the material in place, exactly as it did before the chip existed, so nothing at rest changes
@@ -2155,7 +2227,7 @@
     if (!due.length || !switchOn()) return;
     if (dragHeld()) { due.forEach(function (x) { heldScopes.push(x); }); flushHeldSoon(); return; }
     due.forEach(function (x) { settleStrips.add(x); });
-    syncPending();
+    frameSync++; try { syncPending(); } finally { frameSync--; }
   }) : null;
   /* the boxes are named again at each sync of the strip: an app that redraws its content (the wizard's screens) keeps
      the strip and replaces the box around it, which is then followed instead */
@@ -2191,7 +2263,7 @@
     if (P0 && P0 !== L.pending) pressMark(P0, false);
     var pre = m && m.target === target ? m : null;
     if (!target || !(pre ? pre.shown : visible(target) && visible(strip))) { stopLensTravel(L); if (L.scrubCleanup) L.scrubCleanup(); if (L.lens.style.opacity !== '0') L.lens.style.opacity = '0'; L.rect = null; awaitShow(L, cfg); return; }
-    hiddenLenses.delete(L);
+    hiddenLenses.delete(L); showUnwatch(L);
     if (L.scroller && L.scroller.isConnected) {
       var out;
       if (pre && pre.scroller === L.scroller && pre.out !== undefined) out = pre.out;
@@ -2216,11 +2288,17 @@
        their label) kept the chip at its unchosen width for a lazy sync, its chosen words running off the chip onto bare
        ground ("Curren", 2026-10-28 review, astra R4) */
     if (L.hopFrames && L.hopTarget === target) {
-      /* a carried chip whose tab changed size or place under it while it travels (the rail's tabs show the chosen tab's
-         word and fold the others to icons when the app chooses): the block is made again for the new box with fresh
-         copies, on the same clock, so it lands on the tab as it is now with the words as they are now */
-      var K = L.carry, KA = K ? carryAge(K) : 0;
-      if (K && KA < K.dur && L.rect && Math.max(Math.abs(L.rect.x - R.x), Math.abs(L.rect.y - R.y), Math.abs(L.rect.w - R.w), Math.abs(L.rect.h - R.h)) > 0.5) { endHop(L); carry(L, K.A, R, strip, cfg, target, K.vertical, performance.now() - KA); return; }
+      /* a carried chip whose tab changed size or place under it (the rail's tabs show the chosen tab's word and fold the
+         others to icons when the app chooses, often after the chip has landed): the block is made again for the new box
+         with fresh copies, so it lands on the tab as it is now with the words as they are now, and it goes on from where
+         it is drawn (carry's go, below). Until FO-195 it began again from the trip's first box toward the new one at the
+         same age, which put it at once where that other trip would have been (19 px left in Friendly Light, Jared
+         2026-11-13: "it almost jumps twice"), and a chip that had landed snapped to the new box. */
+      var K = L.carry;
+      if (K && K.pose && L.rect && Math.max(Math.abs(L.rect.x - R.x), Math.abs(L.rect.y - R.y), Math.abs(L.rect.w - R.w), Math.abs(L.rect.h - R.h)) > 0.5) {
+        var go = { K: K, at: carryAge(K), zero: carryZero(K), retarget: true };
+        endHop(L); carry(L, K.A, R, strip, cfg, target, K.vertical, go); return;
+      }
       hopSettle(L); if (L.hopFrames) return;
     }
     if (still) return;
@@ -2341,13 +2419,22 @@
     var cfg = L.cfg; if (!T.matches(cfg.active || '.active')) return;
     /* (a carried block lands by its own clock, which a long task right after the press may have held back) */
     var K = L.carry, wait = K ? K.dur - carryAge(K) : L.hopEnd - performance.now();
+    /* (and not before the compositor has reported the block's start, nor while its change is still to come: until then
+       its age is an estimate, or its end is not its tab's, and a block cut short lands the chip under the labels a step
+       ahead of it, 14 px in Basic Light on Alexis) */
+    if (K && ((K.anim && K.anim.startTime == null && K.anim.playState !== 'finished') || K.change)) wait = Math.max(wait, 16);
     if (wait > 0) { if (!L.hopT) L.hopT = setTimeout(function () { L.hopT = 0; hopSettle(L); }, wait + 1); return; }
     endHop(L);
   }
   function hop(L, A, B, strip, cfg, target, vertical) {
+    /* a press while a carried chip still moves (back and forth): the new trip goes on from the trip under way (carry's
+       go), on its clock, so the chip is not set back to where it was when the press came while the compositor carried
+       it on until the new block was drawn (9 px, Friendly Light on Alexis, 88 ms between the two) */
+    var K = L.carry, go = null;
+    if (K && K.pose && L.hopFrames && CARRY[switchMotion] && carryZero(K) != null) { var KA = carryAge(K); if (KA < K.dur) go = { K: K, at: KA, zero: carryZero(K) }; }
     stopLensTravel(L);
     if (switchMotion === 'cut' || !A) { setLensBox(L, B); return; }
-    if (CARRY[switchMotion]) { carry(L, A, B, strip, cfg, target, vertical); return; }
+    if (CARRY[switchMotion]) { carry(L, A, B, strip, cfg, target, vertical, go); return; }
     var stops = hopStops(A, B, strip, cfg, target, vertical);
     if (stops.length < 2 || !L.under) { setLensBox(L, B); return; }
     var now = strip.querySelector(cfg.items + (cfg.active || '.active')), weight = getComputedStyle(now || target).fontWeight;
@@ -2410,18 +2497,46 @@
      that first drew it) to now, on the wall clock. A press the app answers with a long task before any frame leaves the
      animation unstarted (no start time: it has not moved yet), and inside or right after a long task the animation's own
      current time is the frame's from before it, so neither the wall clock from the press nor that current time is where
-     the block is drawn */
-  function carryAge(K) { var a = K.anim; return !a || a.startTime == null ? 0 : Math.max(0, performance.now() - a.startTime); }
+     the block is drawn. A block that goes on with a trip (carry's go) starts its animation part way along it (from), and
+     waits to start at the age it is to be drawn at (its hold: its current time while it waits) */
+  function carryAge(K) {
+    var a = K.anim, f = K.from || 0;
+    if (a && a.startTime != null) return Math.max(0, performance.now() - a.startTime + f);
+    /* drawn, but its start not reported yet (the compositor reports it to a main thread that may still be busy): from
+       when its first frame was drawn, at the age it was held at. A block made again from a reported age of 0 began its
+       change again from the start, 11 px back (Friendly Light, Alexis, head film F975) */
+    if (K.drawn != null) return Math.max(0, K.at + performance.now() - K.drawn);
+    return !a ? f : f + (a.currentTime || 0);
+  }
+  /* when the trip's age was 0, on the wall clock; null until a frame has drawn it */
+  function carryZero(K) { var a = K.anim; return a && a.startTime != null ? a.startTime - (K.from || 0) : K.drawn != null ? K.drawn - K.at : null; }
   var CARRY_REACH = 8;   /* px past the trip's ends along the strip: a label the squashed or tilted chip can touch */
-  function carry(L, A, B, strip, cfg, target, vertical, t0) {
+  var CARRY_FOLLOW = 0.5, CARRY_FOLLOW_MS = 110;   /* the least time a carried chip takes to follow its tab to a new box: half
+                                                     its trip, never under 110 ms (Basic's snap is 110 ms, Friendly's hop 440) */
+  var FRAME_MS = 1000 / 60;
+  /* go: the trip under way that a new block goes on with ({ K: that trip, at: its age now, zero: when its age was 0, or
+     null if no frame has drawn it yet, retarget: its tab changed under it }). Retarget (FO-195): the trip so far stays as
+     it was, its lift, tilt and squash included, and the change of box is added to it from the new block's first frame
+     until the trip's end, or for at least CARRY_FOLLOW of a trip (CARRY_FOLLOW_MS), easing in and out (smoothstep), so
+     in no frame does the block step or change speed at once: it bends toward the tab as the tab is now. A new trip (a
+     press while the chip moves) blends from the trip under way into its own (plan, below). The new block's frames run
+     from the last whole frame before at, and like every carried block it waits for the first frame that draws it, held
+     at the trip's age at (its current time while it waits), so the change starts with that frame however long the app
+     holds it. Run on the trip's own clock instead (a start time set from it), the change ran its course inside the app's
+     long task before the first frame (190 ms, Basic Light, Alexis: the block stepped the whole way), a frame drawn
+     before that start showed the block untransformed (head film F1344), and the compositor drew the first frame after a
+     late one 100 ms back along the trip (F1195). */
+  function carry(L, A, B, strip, cfg, target, vertical, go) {
     if (!L.under || reduced()) { setLensBox(L, B); return; }
-    var start = t0 || performance.now(), age = Math.max(0, performance.now() - start);
-    var C = CARRY[switchMotion], ease = bezierEase(C.ease), dur = C.dur, hopping = switchMotion === 'hop';
+    var motion = switchMotion, C = CARRY[motion], ease = bezierEase(C.ease), dur = C.dur, hopping = motion === 'hop';
+    var zero = go && go.zero != null ? go.zero : null, liftX, liftY;
     var now = strip.querySelector(cfg.items + (cfg.active || '.active')), weight = getComputedStyle(now || target).fontWeight;
     var stick = hopping ? getComputedStyle(strip).getPropertyValue('--pm-switch-stick').trim() : '';
     if (stick === 'transparent' || stick === 'none') stick = '';
-    /* every label the chip can cross: along the strip, between the trip's two ends and a little past them */
-    var lo = Math.min(vertical ? A.y : A.x, vertical ? B.y : B.x) - CARRY_REACH, hi = Math.max(vertical ? A.y + A.h : A.x + A.w, vertical ? B.y + B.h : B.x + B.w) + CARRY_REACH;
+    /* every label the chip can cross: along the strip, between the trip's ends (and the box it was bound for, when it
+       goes on with a trip) and a little past them */
+    var ends = go ? [A, B, go.K.A, go.K.B] : [A, B];
+    var lo = Math.min.apply(null, ends.map(function (r) { return vertical ? r.y : r.x; })) - CARRY_REACH, hi = Math.max.apply(null, ends.map(function (r) { return vertical ? r.y + r.h : r.x + r.w; })) + CARRY_REACH;
     var crossed = Array.prototype.slice.call(strip.querySelectorAll(cfg.items)).filter(visible).map(function (it) { var w = (cfg.twin && cfg.twin(it)) || it; return { it: w, r: rectIn(strip, w, 0) }; })
       .filter(function (s) { var a = vertical ? s.r.y : s.r.x, b = a + (vertical ? s.r.h : s.r.w); return b > lo && a < hi; });
     var over = overLayer(strip), tag = cfg.tag, box = function (e) { var st = e.style; st.left = B.x + 'px'; st.top = B.y + 'px'; st.width = B.w + 'px'; st.height = B.h + 'px'; };
@@ -2433,38 +2548,114 @@
     if (stick) { S = el('i', { class: 'lg-carry-shadow', 'aria-hidden': 'true' }); if (tag) S.setAttribute('data-lg-for', tag); box(S); over.appendChild(S); }
     over.appendChild(F);
     if (S) S.style.borderRadius = getComputedStyle(F).borderRadius;   /* the block's own corner, whatever shapes it (a rail skin's) */
-    /* the frames: the block's transform (about its centre: translate, tilt, scale), its copies' exact inverse, and the
-       shadow's (the block's, pushed out by the sticker's rest offset, 2 px, growing to 4 x 6 px at the top of the hop).
-       A vertical strip lifts the sticker toward the light (up and left) instead of up its own path */
-    var fF = [], fG = [], fS = [], rects = [], n = Math.max(2, Math.ceil(dur / (1000 / 60))), cB = { x: B.x + B.w / 2, y: B.y + B.h / 2 };
     /* the lift stays inside the strip's own box: a strip at the top of a scroller (onboarding's segments, first in their
        pane) clips anything above it, and a sticker lifted 6 px there lost its top edge for six frames (Windows film) */
-    var roomX = Math.max(0, Math.min(A.x, B.x)), roomY = Math.max(0, Math.min(A.y, B.y)), liftX = vertical ? Math.min(2, roomX) : 0, liftY = Math.min(vertical ? 2 : 6, roomY);
-    for (var i = 0; i <= n; i++) {
-      var t = Math.min(dur, i * 1000 / 60), o = t / dur, P = carryPose(switchMotion, ease(o), A, B);
-      var lx = hopping ? -liftX * P.lift : 0, ly = hopping ? -liftY * P.lift : 0, rot = hopping ? -2 * P.lift : 0;
-      var dx = P.x + P.w / 2 - cB.x + lx, dy = P.y + P.h / 2 - cB.y + ly, kx = P.sx * P.w / B.w, ky = P.sy * P.h / B.h;
-      fF.push({ offset: o, transform: 'translate(' + dx.toFixed(2) + 'px,' + dy.toFixed(2) + 'px) rotate(' + rot.toFixed(3) + 'deg) scale(' + kx.toFixed(4) + ',' + ky.toFixed(4) + ')' });
-      fG.push({ offset: o, transform: 'scale(' + (1 / kx).toFixed(5) + ',' + (1 / ky).toFixed(5) + ') rotate(' + (-rot).toFixed(3) + 'deg) translate(' + (-dx).toFixed(2) + 'px,' + (-dy).toFixed(2) + 'px)' });
-      if (S) { var ox = 2 + 2 * P.lift, oy = 2 + 4 * P.lift; fS.push({ offset: o, transform: 'translate(' + (dx + ox).toFixed(2) + 'px,' + (dy + oy).toFixed(2) + 'px) rotate(' + rot.toFixed(3) + 'deg) scale(' + kx.toFixed(4) + ',' + ky.toFixed(4) + ')' }); }
-      rects.push({ t: t, x: P.x, y: P.y, w: P.w, h: P.h });
-      if (t >= dur) break;
+    if (go) { liftX = go.K.liftX; liftY = go.K.liftY; }
+    else { var roomX = Math.max(0, Math.min(A.x, B.x)), roomY = Math.max(0, Math.min(A.y, B.y)); liftX = vertical ? Math.min(2, roomX) : 0; liftY = Math.min(vertical ? 2 : 6, roomY); }
+    var cB = { x: B.x + B.w / 2, y: B.y + B.h / 2 };
+    /* the trip from its age at, with the change (a retarget's new box, a new trip's hop) from tC on: its pose at any age,
+       its end, the box it ends on, and the frames from the last whole frame before at. With no tC it is the trip under
+       way alone. The frames: the block's transform (about its centre: translate, tilt, scale), its copies' exact inverse,
+       and the shadow's (the block's, pushed out by the sticker's rest offset, 2 px, growing to 4 x 6 px at the top of the
+       hop). A vertical strip lifts the sticker toward the light (up and left) instead of up its own path */
+    function plan(at, tC, from0) {
+      var pose, end = dur, from = 0, to = B;
+      if (go) {
+        var K0 = go.K, was = K0.pose, wasEnd = K0.dur, B0 = K0.B, follow = Math.max(CARRY_FOLLOW_MS, dur * CARRY_FOLLOW);
+        if (at >= wasEnd) was = (function (R) { return function () { return R; }; })(was(wasEnd));   /* at rest: no chain of trips */
+        if (tC == null) { pose = function (t) { return was(Math.min(t, wasEnd)); }; end = Math.max(wasEnd, at + 2 * FRAME_MS); to = B0; }
+        else if (go.retarget) {
+          var t1 = Math.max(wasEnd, tC + follow), d = { x: B.x - B0.x, y: B.y - B0.y, w: B.w - B0.w, h: B.h - B0.h };
+          pose = function (t) {
+            var P = was(Math.min(t, wasEnd)), u = t <= tC ? 0 : Math.min(1, (t - tC) / (t1 - tC)), k = u * u * (3 - 2 * u);
+            return { x: P.x + d.x * k, y: P.y + d.y * k, w: P.w + d.w * k, h: P.h + d.h * k, lift: P.lift, sx: P.sx, sy: P.sy };
+          };
+          end = t1;
+        } else {
+          /* a new trip: from the chip's box at tC, its own hop or snap, into which the trip under way blends over its
+             first part (smoothstep, as long as a follow, at most half the trip): place, speed, lift, tilt and squash
+             carry over */
+          var Q = was(Math.min(tC, wasEnd)), A1 = { x: Q.x, y: Q.y, w: Q.w, h: Q.h }, tb = Math.min(dur * 0.5, follow);
+          pose = function (t) {
+            var N = carryPose(motion, ease(Math.max(0, Math.min(1, (t - tC) / dur))), A1, B), P = was(Math.min(t, wasEnd));
+            var u = t <= tC ? 0 : Math.min(1, (t - tC) / tb), k = u * u * (3 - 2 * u), m = function (a, b) { return a + (b - a) * k; };
+            return { x: m(P.x, N.x), y: m(P.y, N.y), w: m(P.w, N.w), h: m(P.h, N.h), lift: m(P.lift, N.lift), sx: m(P.sx, N.sx), sy: m(P.sy, N.sy) };
+          };
+          end = tC + dur;
+        }
+        from = from0;
+      } else pose = function (t) { return carryPose(motion, ease(Math.min(1, t / dur)), A, B); };
+      var span = end - from, fF = [], fG = [], fS = [], rects = [], n = Math.max(2, Math.ceil(span / FRAME_MS));
+      for (var i = 0; i <= n; i++) {
+        var t = Math.min(end, from + i * FRAME_MS), o = (t - from) / span, P = pose(t);
+        var lx = hopping ? -liftX * P.lift : 0, ly = hopping ? -liftY * P.lift : 0, rot = hopping ? -2 * P.lift : 0;
+        var dx = P.x + P.w / 2 - cB.x + lx, dy = P.y + P.h / 2 - cB.y + ly, kx = P.sx * P.w / B.w, ky = P.sy * P.h / B.h;
+        fF.push({ offset: o, transform: 'translate(' + dx.toFixed(2) + 'px,' + dy.toFixed(2) + 'px) rotate(' + rot.toFixed(3) + 'deg) scale(' + kx.toFixed(4) + ',' + ky.toFixed(4) + ')' });
+        fG.push({ offset: o, transform: 'scale(' + (1 / kx).toFixed(5) + ',' + (1 / ky).toFixed(5) + ') rotate(' + (-rot).toFixed(3) + 'deg) translate(' + (-dx).toFixed(2) + 'px,' + (-dy).toFixed(2) + 'px)' });
+        if (S) { var ox = 2 + 2 * P.lift, oy = 2 + 4 * P.lift; fS.push({ offset: o, transform: 'translate(' + (dx + ox).toFixed(2) + 'px,' + (dy + oy).toFixed(2) + 'px) rotate(' + rot.toFixed(3) + 'deg) scale(' + kx.toFixed(4) + ',' + ky.toFixed(4) + ')' }); }
+        rects.push({ t: t, x: P.x, y: P.y, w: P.w, h: P.h });
+        if (t >= end) break;
+      }
+      return { at: at, pose: pose, end: end, from: from, to: to, span: span, frames: [fF, fG, fS], rects: rects };
     }
-    var timing = { duration: dur, easing: 'linear', fill: 'forwards' };
-    var lead = null;
-    [[F, fF], [G, fG], [S, fS]].forEach(function (x) { if (!x[0]) return; var a = x[0].animate(x[1], timing); if (age) a.currentTime = Math.min(dur, age); if (!lead) lead = a; });
+    /* a block that goes on with a trip is first only the trip under way (at the age it is drawn at, whatever that turns
+       out to be, it is where the trip under way is), and takes its change in place at the first frame that is on time */
+    var at = go ? (zero != null ? Math.max(go.at, performance.now() - zero) : go.at) : 0, from = go ? Math.floor(at / FRAME_MS) * FRAME_MS : 0;
+    var T = plan(at, go ? null : 0, from), start = performance.now() - at;
+    var parts = [F, G, S], anims = [], lead = null;
+    parts.forEach(function (e, j) { if (!e) return; var a = e.animate(T.frames[j], { duration: T.span, easing: 'linear', fill: 'forwards' }); if (at > from) a.currentTime = at - from; anims.push(a); if (!lead) lead = a; });
+    var probe = F.animate([], { duration: 1000 }), made = performance.now(), inFrame = frameSync > 0 || postRunning;
     setLensBox(L, B);
     /* the chip under the labels stays hidden while the block is up (as for a step's blocks) */
     L.anim = L.hopHide = L.lens.animate([{ opacity: 0 }, { opacity: 0 }], { duration: 600000 });
-    L.path = { t0: start, dur: dur, rects: rects };
     if (!L.hopMarks) L.hopMarks = new Map();
-    L.hopFrames = S ? [S, F] : [F]; L.hopTarget = target; L.hopEnd = start + dur;
-    L.carry = { A: A, t0: start, vertical: vertical, anim: lead, dur: dur };
+    L.hopFrames = S ? [S, F] : [F]; L.hopTarget = target;
+    var K = L.carry = { A: A, B: B, vertical: vertical, anim: lead, liftX: liftX, liftY: liftY, change: !!go };
+    function take(P) {
+      K.t0 = start; K.dur = P.end; K.from = P.from; K.pose = P.pose; K.at = P.at; K.B = P.to;
+      L.path = { t0: start, dur: P.end, rects: P.rects }; L.hopEnd = start + P.end;
+      if (L.hopT) clearTimeout(L.hopT);
+      L.hopT = setTimeout(function () { L.hopT = 0; hopSettle(L); }, Math.max(0, start + P.end - performance.now()) + 1);
+    }
+    take(T);
+    requestAnimationFrame(function (ts) {
+      /* the first frame callback after the block was made: when it was first drawn (K.drawn), so its age is known before
+         the compositor reports its start (its probe, an empty animation, starts in the lifecycle of the frame that first
+         draws it: started means drawn in the frame it was made in, at its own layout; waiting means drawn once this frame
+         has been laid out, painted and handed to the compositor, up to 100 ms after this callback while the app switches
+         a page, and the first task after the frame is about then; a block made by a sync inside a frame, frameSync, is
+         drawn in that frame whatever its probe says). Not drawn yet, a block that goes on with a trip is
+         held at the trip's age at this frame's own time: Chrome starts a waiting animation at the time of the frame that
+         first draws it, less its hold, so held so it is on the trip's own clock from its first frame (held at the age it
+         was made at, in a task, it was drawn that much behind the block it took over from: 4 px, Basic Light) */
+      var drawn = inFrame || probe.startTime != null || lead.startTime != null; probe.cancel();
+      if (L.carry !== K) return;
+      if (drawn) { K.drawn = made; return; }
+      if (zero != null && ts - zero >= from) anims.forEach(function (a) { if (a.startTime == null) a.currentTime = ts - zero - from; });
+      setTimeout(function () { if (K.drawn == null) K.drawn = performance.now(); }, 0);
+    });
+    /* the change, in place: at the first frame whose callback runs on time (within 12 ms of the frame's own time; the
+       page's other frame callbacks run first) once the compositor has the block, or after half a second, starting a frame
+       and a half on from where the trip is then, which a frame on time reaches the screen before. A new motion started in a
+       late frame is drawn from that frame's own time, so it has already run for as long as the frame was late when it is
+       first drawn: a change started so ran its course out of sight inside the app's long task (190 ms, Basic Light,
+       Alexis: the block stepped the whole way), and started in a frame callback 100 ms late it was drawn half done. The
+       block keeps its clock (only its frames change), so the trip under way goes on in every frame meanwhile */
+    if (go) {
+      var tries = 0;
+      var change = function (ts) {
+        if (L.carry !== K) return;
+        if ((lead.startTime == null || performance.now() - ts > 12) && ++tries < 30) { requestAnimationFrame(change); return; }
+        var P = plan(at, Math.max(at, carryAge(K) + 1.5 * FRAME_MS), from);
+        anims.forEach(function (a) { a.effect.setKeyframes(P.frames[parts.indexOf(a.effect.target)]); a.effect.updateTiming({ duration: P.span }); });
+        K.change = false; take(P);
+      };
+      requestAnimationFrame(change);
+    }
     var Pp = L.pending && L.pending.el === target ? L.pending : null; if (Pp) L.hopPress = Pp;
     /* the labels underneath rest in their resting ink: the one headed for until the block lands on it, the one left at
        once (a press marks it so; a change the app made has already taken its chosen look away) */
     hopMark(L, target, 'off');
-    L.hopT = setTimeout(function () { L.hopT = 0; hopSettle(L); }, Math.max(0, dur - age) + 1);
     L.hopSafety = setTimeout(function () { L.hopSafety = 0; if (L.hopFrames) { endHop(L); queueSync(L.strip); } }, 3000);
   }
   /* the press: the lens leaves for the pressed item at once; the app's choice (or its absence) settles it. Only for
@@ -3011,7 +3202,7 @@
   function queueSync(scope) {
     if (scope && scope.nodeType === 1) dirtyScope(scope);
     if (afterLayout()) return;
-    if (!syncQ) syncQ = requestAnimationFrame(function () { syncQ = 0; syncPending(); });
+    if (!syncQ) syncQ = requestAnimationFrame(function () { syncQ = 0; frameSync++; try { syncPending(); } finally { frameSync--; } });
   }
   /* A sync waits for the frame's own layout: a ResizeObserver's first report of a fresh observation comes after layout
      and before paint, where every read is free and what the sync writes is still drawn in that frame. Synced in the
@@ -3021,6 +3212,9 @@
      step). A request made inside that delivery waits for the next frame's layout, as a fresh observation made there
      would be skipped and reported as a ResizeObserver loop error. */
   var postEl = null, postRO = null, postQ = false, postOn = false, postFns = [], postRunning = false;
+  /* above 0 while a sync runs inside a frame (its frame callback, a follow observer's report; afterLayout's is
+     postRunning): what it makes is drawn in that frame (carry) */
+  var frameSync = 0;
   /* The probe is observed afresh, often from the mutation observer below, which runs inside another observer's delivery
      when that observer's callback is what changed the page (the title bar's density fold, the chat's re-render). The
      browser delivers a fresh observation made in a delivery only if it is deeper than every target that delivery's
@@ -3212,8 +3406,10 @@
     /* the frost is drawn for one viewport: a resize mid-crossfade ends it */
     window.addEventListener('resize', function () { endFrostFade(); });
     /* data-col-top: the onboarding window's column, held at a top and centred again on a window resize, moves its tab strips
-       with no size changing (60-ui-core.js holdColumn); its layer is HOT, so their chips sync after that frame's layout (SW-25) */
-    mo.observe(document.body, { subtree: true, childList: true, attributes: true, attributeOldValue: true, attributeFilter: ['class', 'hidden', 'data-open', 'data-lg-surface', 'open', 'data-col-top'] });
+       with no size changing (60-ui-core.js holdColumn); its layer is HOT, so their chips sync after that frame's layout (SW-25).
+       data-active: Home's panel tabs mark the chosen tab with it alone (FO-197); under Reduce Motion nothing else synced
+       their chip, which stayed on the tab left in one press of five (Alexis, sandbox) */
+    mo.observe(document.body, { subtree: true, childList: true, attributes: true, attributeOldValue: true, attributeFilter: ['class', 'hidden', 'data-open', 'data-lg-surface', 'open', 'data-col-top', 'data-active'] });
     if (window.ResizeObserver) { var ro = new ResizeObserver(function (entries) { if (dragHeld()) { entries.forEach(function (en) { heldScopes.push(en.target); }); flushHeldSoon(); return; } entries.forEach(function (en) { dirtyScope(en.target); }); lazySync(false); }); ['.app-shell', '.left-panel', '#sidePanelSlot', '#chatPanel', '#pmuBoard', '#pmuApp'].forEach(function (s) { var e = document.querySelector(s); if (e) ro.observe(e); }); }
     /* The title bar lays out the brand, the project box and then the page tabs, so whenever the box changes width (another
        project's name, a long name, its badge, the density fold) the tabs move, and the chosen tab's chip is this lens. On

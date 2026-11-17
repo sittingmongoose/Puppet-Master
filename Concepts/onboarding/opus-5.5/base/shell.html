@@ -232,6 +232,44 @@ by its "PM7 SECTION n/total" banner comment (names, never byte offsets).
           <div class="pm6-tb-project-sep" role="separator"></div>
           <button type="button" class="pm6-tb-menu-item pm6-tb-project-all" role="menuitem" data-project-all data-ui-action-id="ui.project_switcher.all_projects" data-binding-id="shell.project.all">All projects</button>
         </div>
+        <script id="pm7-project-name">
+/* FO-222 (stream F's ruling, round 2): the Project box names the Project the page opens on as soon as its markup is parsed,
+   so no frame shows another Project's name. It follows the head's one decision (base/script/script-001.js:
+   PM_ACTIVE_PROJECT_ID, taken from the shell's record and never on a new install); the name is that Project's own menu
+   row above, or, for a Project setup made, the shell's record of them (74-screens-ready.js, pm7:shell:setup-projects:v1,
+   or an older onboarding record's finished / committed Project). An id nothing answers to, an unreadable record or a
+   storage that throws leaves the static markup. It writes only what differs: the label, the box's name and detail, the
+   selected row. restoreEarly and restoreProject (74-screens-ready.js) confirm. */
+(function () {
+  try {
+    var id = window.PM_ACTIVE_PROJECT_ID;
+    if (typeof id !== 'string' || !id) return;
+    var rows = document.querySelectorAll('#projectMenu [data-project]'), row = null, i;
+    for (i = 0; i < rows.length; i++) if (rows[i].getAttribute('data-project') === id) row = rows[i];
+    var name = '', path = '', branch = '', stack = '';
+    if (row) { name = row.getAttribute('data-project-name') || id; path = row.getAttribute('data-project-path') || ''; branch = row.getAttribute('data-project-branch') || ''; stack = row.getAttribute('data-project-stack') || ''; }
+    else {
+      var made = JSON.parse(window.localStorage.getItem('pm7:shell:setup-projects:v1') || '[]'), p = null;
+      for (i = 0; Array.isArray(made) && i < made.length; i++) if (made[i] && made[i].id === id) p = made[i];
+      if (!p) {
+        var rec = JSON.parse(window.localStorage.getItem('pm.o55.onboarding.v1') || 'null') || {}, fin = rec.finished || {}, cm = rec.commit || {}, d = (rec.drafts && rec.drafts.main) || {};
+        if (fin.project === id) p = { name: fin.name, info: fin.info };
+        else if (cm.state === 'done' && cm.projectId === id) p = { name: (cm.listed && cm.listed.name) || d.project_name, info: cm.listed && cm.listed.info };
+      }
+      if (!p) return;
+      name = p.name || id; path = (p.info && p.info.path) || ''; branch = (p.info && p.info.branch) || '';
+    }
+    var label = document.getElementById('projectMenuLabel'), btn = document.getElementById('projectMenuBtn');
+    if (label && label.textContent !== name) label.textContent = name;
+    if (btn) {
+      var detail = [path + (path && branch ? ' on ' + branch : ''), stack].filter(Boolean).join(' · ') + '. Switch project: Ctrl+Shift+P';
+      if (btn.getAttribute('data-pm-hover-label') !== name) btn.setAttribute('data-pm-hover-label', name);
+      if (btn.getAttribute('data-pm-hover-detail') !== detail) btn.setAttribute('data-pm-hover-detail', detail);
+    }
+    for (i = 0; i < rows.length; i++) { var on = rows[i] === row; if (rows[i].classList.contains('is-selected') !== on) rows[i].classList.toggle('is-selected', on); }
+  } catch (e) { /* storage that throws (a sandboxed page) or an unreadable record: the static markup stays */ }
+})();
+        </script>
       </div>
       <nav class="page-tabs" data-od-id="page-tabs">
         <span class="page-tab-ink" aria-hidden="true" data-od-id="page-tab-ink"></span>
