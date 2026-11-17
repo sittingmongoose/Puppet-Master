@@ -309,7 +309,84 @@ async function restoredFocusRow(t, f, surface, dir) {
 	await t.check(`${surface} ${key} from restored focus lands in ${BOUNDARY}, the section next to it`, r.toSection === BOUNDARY, `landed on "${r.toLabel}" in ${r.toSection || 'no section'}`);
 }
 
+/* R92 P1: search lands at Spelling with the later More options groups still pending. Observe the real opening
+   animation without delaying any callback: its last height must match the filled body's natural scrollHeight.
+   Main is the eager control; a page with the first-screen wrapper must prove pending groups at the click. */
+const ARM_MORE = () => {
+	const root = document.getElementById('pm-settings-root'), animate = Element.prototype.animate;
+	const R = window.__pscMore = { deferred: /o55fs\.pending/.test(String(window.PM51.revealSetting)), clicked: false, done: false, animations: 0 };
+	const collect = (body) => {
+		R.natural = body.scrollHeight;
+		R.pendingEnd = body.querySelectorAll('[data-o55-fill="pending"]').length;
+		const b = body.getBoundingClientRect(), end = R.endpoint ?? R.natural;
+		R.bodyHeight = b.height;
+		const rows = [...body.querySelectorAll('.setting-row')].filter(n => n.getBoundingClientRect().height > 0);
+		R.rows = rows.length;
+		/* The endpoint is the opening's final clip box; checking only the post-animation box hides a snap. */
+		R.clipped = rows.filter(n => { const r = n.getBoundingClientRect(); return r.top < b.top - 1 || r.bottom > b.top + end + 1; }).map(n => ({id:n.id, top:n.getBoundingClientRect().top-b.top, bottom:n.getBoundingClientRect().bottom-b.top}));
+		R.done = true;
+	};
+	const click = e => {
+		const sum = e.target.closest && e.target.closest('details.pm51-advanced > summary');
+		if (!sum || !root.contains(sum) || sum.parentElement.open) return;
+		const d = sum.parentElement;
+		R.clicked = true; R.pendingClick = d.querySelectorAll('[data-o55-fill="pending"]').length;
+		R.closedClick = !d.open;
+		/* Native Reduced Motion has no animation; toggle is delivered after its default action/fill. */
+		if (matchMedia('(prefers-reduced-motion: reduce)').matches) d.addEventListener('toggle', () => queueMicrotask(() => collect(d.querySelector(':scope > .pm51-advanced-body'))), { once: true });
+	};
+	window.addEventListener('click', click, true);
+	Element.prototype.animate = function () {
+		const a = animate.apply(this, arguments);
+		if (R.clicked && this.matches('.pm51-advanced-body')) {
+			R.animations++; R.endpoint = parseFloat(a.effect.getKeyframes().at(-1).height);
+			a.finished.then(() => queueMicrotask(() => collect(this)), () => { R.cancelled = true; R.done = true; });
+		}
+		return a;
+	};
+	R.stop = () => { window.removeEventListener('click', click, true); Element.prototype.animate = animate; };
+};
+async function moreOptionsRow(t, f, label, reduced) {
+	await f.locator('#pm-settings-root .domain-link[data-domain="code"]').first().click();
+	await t.page.waitForTimeout(700);
+	await f.locator('#pm-settings-root [data-global-search]').fill('general.interaction.spellcheck-words');
+	const result = f.locator('[data-search-result="setting"][data-search-payload*="general.interaction.spellcheck-words"]').first();
+	await result.waitFor({ state: 'visible', timeout: 5000 });
+	await f.evaluate(ARM_MORE);
+	try {
+		await result.click();
+		/* Deliver the summary's native click promptly, without a mouse focus scroll changing which sections reveal.
+		   This invokes the existing disclosure/default action; it does not call a fill or animation implementation. */
+		await f.locator('#workspace-stage details.pm51-advanced > summary').first().evaluate(n => n.click());
+		await f.waitForFunction(() => window.__pscMore.done, null, { timeout: 5000 }).catch(() => {});
+		const r = await f.evaluate(() => { const { stop, ...r } = window.__pscMore; return r; });
+		t.log(`${label}: deferred ${r.deferred}, pending at click ${r.pendingClick}, animations ${r.animations}, endpoint ${r.endpoint ?? 'native'}, natural ${r.natural}, body height ${r.bodyHeight}, rows ${r.rows}, pending end ${r.pendingEnd}, clipped ${JSON.stringify(r.clipped)}`);
+		await t.check(`${label}: More options was closed and ${r.deferred ? 'held pending sections' : 'was fully drawn on eager main'} at the click`, r.clicked && r.closedClick && (r.deferred ? r.pendingClick > 0 : r.pendingClick === 0), JSON.stringify(r));
+		await t.check(`${label}: the opening finished with all rows filled`, r.done && !r.cancelled && r.pendingEnd === 0 && r.rows > 0, JSON.stringify(r));
+		await t.check(`${label}: ${reduced ? 'Reduced Motion uses native opening' : 'the animation ends at the filled body\'s natural height'}`, reduced ? r.animations === 0 : r.animations === 1 && Math.abs(r.endpoint - r.natural) <= 1, `endpoint ${r.endpoint}; natural ${r.natural}; animations ${r.animations}`);
+		await t.check(`${label}: no row is clipped by the opening's final height`, r.done && r.rows > 0 && r.clipped?.length === 0, JSON.stringify(r.clipped || []) + (r.done ? '' : '; opening did not finish'));
+	} finally { await f.evaluate(() => window.__pscMore.stop()); }
+}
+
 export const tests = {};
+for (const surface of ['normal', 'sandbox']) {
+	tests[`R92 P1 More options measures filled sections before its opening animation (${surface})`] = async (t) => {
+		if (!t.app.surfaces().includes(surface)) { await t.check(`${surface} surface not asked for`, true); return; }
+		await t.viewport(1920, 1080);
+		await muteSound(t.page);
+		const reduced = t.args.motion === 'reduce';
+		await t.emulate({ reducedMotion: reduced ? 'reduce' : 'no-preference' });
+		const f = await t.app.open({ sandbox: surface === 'sandbox' });
+		await t.app.resetLayout().catch(() => {});
+		await f.locator('#tab-settings').click();
+		await t.settle();
+		for (const look of String(t.args.moreLooks || 'basic-dark,nier-light').split(',')) {
+			await setLookBySetting(t, f, look);
+			if (!(await guardPaintedLook(t, f, look, `${look} ${surface}`))) return;
+			await moreOptionsRow(t, f, `${look} ${surface}`, reduced);
+		}
+	};
+}
 for (const surface of ['normal', 'sandbox']) {
 	tests[`R90 P1 Restore all defaults wins over a pending chapter save (${surface})`] = async (t) => {
 		if (!t.app.surfaces().includes(surface)) { await t.check(`${surface} surface not asked for`, true); return; }

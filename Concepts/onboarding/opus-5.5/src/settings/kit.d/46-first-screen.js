@@ -175,6 +175,14 @@ PM51.revealSetting = function (id) {
   }
   return o55fsReveal.apply(this, arguments);
 };
+/* The summary's motion handler opens and measures in its click task; toggle arrives after that measurement (R92 P1).
+   Fill before its own listener runs. Reduced Motion keeps the native default action and the toggle path below. */
+root.addEventListener('click', e => {
+  if (!o55fs.pending.size || o55Still()) return;
+  const sum = e.target.closest && e.target.closest('details.pm51-advanced > summary');
+  const d = sum && sum.parentElement;
+  if (d && !d.open) d.querySelectorAll('[data-section-id]').forEach(s => o55fsFill(s.dataset.sectionId));
+}, true);
 root.addEventListener('toggle', e => {
   const d = e.target;
   if (o55fs.pending.size && d && d.open && d.matches && d.matches('details')) d.querySelectorAll('[data-section-id]').forEach(s => o55fsFill(s.dataset.sectionId));
