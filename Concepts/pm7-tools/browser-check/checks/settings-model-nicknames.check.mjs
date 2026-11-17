@@ -1,3 +1,4 @@
+import { popupTab } from '../helpers/popup-tab.mjs';
 // FO-186 (Jared's Settings review, 2026-11-13, item 4: "There is a field that says model nicknames...It makes no sense,
 // it doesnt let you set any values that make sense, this is pointless."). Canon: Plans/settings_inventory.json
 // ai.models.model-alias (its presentation_contract, read here) and Models_System 6.7-6.8 (DL-479): one Model nicknames
@@ -103,6 +104,15 @@ async function typeSearch(t, search, text) {
 }
 
 export const tests = {
+ 'FO-225 nickname popup follows native Tab order': async (t) => {
+  const f=await t.app.open(); await f.locator('#tab-settings').click(); await t.settle();
+  for(const back of [false,true]) {
+   await toModels(t,f);
+   const row=f.locator(`#pm-settings-root [id="setting-${ID}"]`);
+   await row.locator('.o55-nick-input').fill('FO225');
+   await popupTab(t,f,row.locator('.o55-nick-add [role="combobox"]'),'FO-225 nickname',back);
+  }
+ },
 	'FO-186 one Model nicknames list with the built-ins, the shared picker and its refusals': async (t) => {
 		const [w, h] = String(t.args.size || '1920x1080').split('x').map(Number);
 		const f = await t.app.open();

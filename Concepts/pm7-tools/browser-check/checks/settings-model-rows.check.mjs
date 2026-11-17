@@ -32,6 +32,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { popupTab } from '../helpers/popup-tab.mjs';
 import { LOOKS } from '../browser-check.config.mjs';
 import { setLookBySetting, guardPaintedLook } from '../helpers/settings-look.mjs';
 
@@ -259,6 +260,19 @@ async function settingsAt(t, f, w, h) {
 const ROWS = (t) => (t.args.rows ? String(t.args.rows).split(',') : Object.keys(CANON)).filter((id) => PLACE[id]);
 
 export const tests = {
+ 'FO-225 every model row popup and depth follows native Tab order': async (t) => {
+  const f = await t.app.open(); await t.viewport(1920,1080);
+  await f.locator('#tab-settings').click(); await t.settle();
+  for (const id of ROWS(t)) for (const back of [false,true]) {
+   const scope = await reach(t,f,id);
+   const trigger = f.locator(ctlSel(id,scope)).first();
+   await popupTab(t,f,trigger,`FO-225 ${id}`,back);
+  }
+  for (const back of [false,true]) {
+   const id='ai.models.default-model', scope=await reach(t,f,id);
+   await popupTab(t,f,f.locator(ctlSel(id,scope)).first(),'FO-225 model depth',back,true);
+  }
+ },
 	'FO-182/183 every model row is the shared picker, all looks': async (t) => {
 		const looks = t.args.looks ? String(t.args.looks).split(',') : LOOKS;
 		const sizes = String(t.args.sizes || SIZES).split(',').map((s) => s.split('x').map(Number));
