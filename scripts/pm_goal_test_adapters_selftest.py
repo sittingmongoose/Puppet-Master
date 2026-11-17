@@ -743,6 +743,10 @@ def main():
         NUM.selftest(s, work / 'numbers')
         import pm_goal_shared_route_probe as ROUTES
         ROUTES.selftest(s, work / 'shared_routes')
+        import pm_goal_fmt2_bank_format_probe as BANKFMT
+        BANKFMT.selftest(s, work / 'original_bank_formats')
+        import pm_goal_fmt2_bank_integer_probe as BANKINT
+        BANKINT.selftest(s, work / 'bank_integer_diagnostics')
         matrix = None
         if not a.skip_matrix:
             matrix = R.run_matrix(work / 'matrix')

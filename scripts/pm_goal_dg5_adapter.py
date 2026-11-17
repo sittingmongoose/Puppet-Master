@@ -654,15 +654,15 @@ def _pure_supplements(suite, work):
               dict(event_type='goal_run.started', event_id='e1', sequence_id=1),
               dict(event_type='goal_run.started', event_id='e2', sequence_id=2),
               'reducer/duplicate_start')
-    pure(' canonical_nonfinite:75'.strip(),
+    pure(' canonical_nonfinite:76'.strip(),
          lambda: ((lambda: A.canonical(float('inf'))), A.canonical, dict(args=(float('inf'),), kwargs={})),
-         'adapter/canonical/numrule/physical_nonfinite', 'dg5/site/pm_goal_test_owner_adapters.py:75')
-    pure('exact_json_float:415',
+         'adapter/canonical/numrule/physical_nonfinite', 'dg5/site/pm_goal_test_owner_adapters.py:76')
+    pure('exact_json_float:416',
          lambda: ((lambda: A.exact_json(1.5)), A.exact_json, dict(args=(1.5,), kwargs={})),
-         'custody/exact_json/float', 'dg5/site/pm_goal_test_owner_adapters.py:415')
-    pure('exact_json_bytes:428',
+         'custody/exact_json/float', 'dg5/site/pm_goal_test_owner_adapters.py:416')
+    pure('exact_json_bytes:429',
          lambda: ((lambda: A.exact_json(b'x')), A.exact_json, dict(args=(b'x',), kwargs={})),
-         'custody/exact_json/type', 'dg5/site/pm_goal_test_owner_adapters.py:428')
+         'custody/exact_json/type', 'dg5/site/pm_goal_test_owner_adapters.py:429')
     def event_record_make():
         store = storage.TestOwnerStorage.create(work / 'pure-event-schema')
         _handle, out, _rows = selftest.append_one(store, 'dg5-event-schema')
@@ -673,9 +673,9 @@ def _pure_supplements(suite, work):
 
     pure('event_record_schema:473', event_record_make,
          'append/event/schema/', 'dg5/site/pm_goal_test_storage.py:473')
-    pure('exact_json_key_type:420',
+    pure('exact_json_key_type:421',
          lambda: ((lambda: A.exact_json({1: 'x'})), A.exact_json, dict(args=({1: 'x'},), kwargs={})),
-         'custody/exact_json/key', 'dg5/site/pm_goal_test_owner_adapters.py:420')
+         'custody/exact_json/key', 'dg5/site/pm_goal_test_owner_adapters.py:421')
     pure('event_record_type:470',
          lambda: ((lambda: storage.validate_event_record('x', 'append/event')),
                   storage.validate_event_record, dict(args=('x', 'append/event'), kwargs={})),
@@ -692,10 +692,10 @@ def _pure_supplements(suite, work):
         entries = [dict(path=_bank_path), dict(path='Plans/event_record.schema.json', retrieval_uri=_bank_uri)]
         return (lambda: _rootbank_of(entries)), _rootbank_of, dict(args=(entries,), kwargs={})
 
-    pure('bank_no_uri:267', bank_no_uri_make,
-         'bank/uri/Plans/seglog_frame_v2_wire_fixtures.json', 'dg5/site/pm_goal_test_owner_adapters.py:267')
-    pure('bank_uri_rebound:268', bank_rebound_make,
-         'bank/no_rebinding/' + _bank_uri, 'dg5/site/pm_goal_test_owner_adapters.py:268')
+    pure('bank_no_uri:268', bank_no_uri_make,
+         'bank/uri/Plans/seglog_frame_v2_wire_fixtures.json', 'dg5/site/pm_goal_test_owner_adapters.py:268')
+    pure('bank_uri_rebound:269', bank_rebound_make,
+         'bank/no_rebinding/' + _bank_uri, 'dg5/site/pm_goal_test_owner_adapters.py:269')
     pure('key_component_type:163',
          lambda: ((lambda: storage.k_component(1)), storage.k_component, dict(args=(1,), kwargs={})),
          'key/component_type', 'dg5/site/pm_goal_test_storage.py:163')
@@ -705,15 +705,15 @@ def _pure_supplements(suite, work):
     pure('storage_u64_negative:197',
          lambda: ((lambda: storage.u64(-1, 'dg5/shared')), storage.u64, dict(args=(-1, 'dg5/shared'), kwargs={})),
          'dg5/shared/numrule/integer_range', 'dg5/site/pm_goal_test_storage.py:197')
-    pure('handle_not_serializable:302',
+    pure('handle_not_serializable:303',
          lambda: (_pickle_original_handle, _pickle_original_handle, dict(args=(), kwargs={})),
-         'handle/not_serializable', 'dg5/site/pm_goal_test_owner_adapters.py:302')
-    pure('handle_not_copyable_copy:305',
+         'handle/not_serializable', 'dg5/site/pm_goal_test_owner_adapters.py:303')
+    pure('handle_not_copyable_copy:306',
          lambda: ((lambda: copy.copy(A.OriginalHandle())), copy.copy, dict(args=(), kwargs={})),
-         'handle/not_copyable', 'dg5/site/pm_goal_test_owner_adapters.py:305')
-    pure('handle_not_copyable_deepcopy:308',
+         'handle/not_copyable', 'dg5/site/pm_goal_test_owner_adapters.py:306')
+    pure('handle_not_copyable_deepcopy:309',
          lambda: ((lambda: copy.deepcopy(A.OriginalHandle())), copy.deepcopy, dict(args=(), kwargs={})),
-         'handle/not_copyable', 'dg5/site/pm_goal_test_owner_adapters.py:308')
+         'handle/not_copyable', 'dg5/site/pm_goal_test_owner_adapters.py:309')
 
 
 def main():
