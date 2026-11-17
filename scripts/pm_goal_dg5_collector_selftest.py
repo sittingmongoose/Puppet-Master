@@ -193,6 +193,21 @@ def check_closure_memo_and_dump_recipe():
     assert agree_meta['search_credit'] == 'none-agree-only'
     assert agree_meta['search_validator'] == 'memo'
     assert agree_meta['memo_agreement']['disagreements'] == 0
+    # Regression (dg5:c25e0ff944e76a07): a referenced resource declaring $schema made
+    # jsonschema's __init_subclass__ stock evolve shadow the guarded evolve on the
+    # Memo subclass, so inner errors lost oracle_guard. The memo copy must agree here.
+    target = {'$id': 'https://example.test/target', '$schema': 'https://json-schema.org/draft/2020-12/schema',
+              'type': 'object', 'required': ['zz'],
+              'properties': {'zz': {'type': 'integer', 'minimum': 3}}}
+    ref_schema = {'$ref': 'https://example.test/target'}
+    registry2 = Registry().with_resources(
+        [('https://example.test/target', Resource.from_contents(target))]).crawl()
+    plain2 = jsonschema.Draft202012Validator(ref_schema, registry=registry2,
+                                              _resolver=registry2.resolver(base_uri='https://example.test/'))
+    copy2 = closure.closure_validator(plain2, 'selftest-ref', None)
+    memo2, note2 = closure._memoised(copy2)
+    assert note2 == 'memo', note2
+    assert closure.memo_agree(copy2, memo2, [], [{'zz': 5}, {}, {'zz': 1}]) == []
     created = jsonschema.validators.create(
         meta_schema=jsonschema.Draft202012Validator.META_SCHEMA,
         validators=dict(jsonschema.Draft202012Validator.VALIDATORS),

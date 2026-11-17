@@ -359,6 +359,14 @@ def _memoised(instance):
         return instance, 'skipped-custom-resolver:' + type(resolver).__qualname__
     import pm_goal_go2_closure as go2
     cls = go2.memo_class(type(instance))
+    # jsonschema's create() __init_subclass__ rebinds the stock evolve on the Memo
+    # subclass, shadowing the guarded copy's custom evolve: evolved sub-validators
+    # for referenced resources then come back unguarded (stock dialect class), so
+    # inner errors lose their oracle_guard and the $ref guard replaces it (found by
+    # the agree gate on dg5:c25e0ff944e76a07; in-run sampling flagged 27/64 on
+    # dg5:9c17854a57867b18). Rebind the guarded evolve; GO2's classes need no such
+    # fix because their guards do not ride a custom evolve.
+    cls.evolve = type(instance).evolve
     return cls(**{f.alias: getattr(instance, f.name) for f in attrs.fields(type(instance)) if f.init}), 'memo'
 
 
