@@ -264,11 +264,13 @@ export const tests = {
   const f = await t.app.open(); await t.viewport(1920,1080);
   await f.locator('#tab-settings').click(); await t.settle();
   for (const id of ROWS(t)) for (const back of [false,true]) {
+   await closeAll(t,f);
    const scope = await reach(t,f,id);
-   const trigger = f.locator(ctlSel(id,scope)).first();
+   const trigger = f.locator(`.o55-msel[data-o55-msel="${id}"] [role="combobox"]:visible`).first();
    await popupTab(t,f,trigger,`FO-225 ${id}`,back);
   }
   for (const back of [false,true]) {
+   await closeAll(t,f);
    const id='ai.models.default-model', scope=await reach(t,f,id);
    await popupTab(t,f,f.locator(ctlSel(id,scope)).first(),'FO-225 model depth',back,true);
   }
