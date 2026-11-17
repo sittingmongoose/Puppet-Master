@@ -961,19 +961,19 @@ def cases(suite):
         w, r = DGO.c1_route(suite)
         w.plan_inventory.role = 'bogus_role'
         return w, r.capture_source
-    add('shared/registry_role', registry_role, 'registry/role', AD_SITE + '329')
+    add('shared/registry_role', registry_role, 'registry/role', AD_SITE + '330')
 
     def registry_unregistered():
         w, r = DGO.c1_route(suite)
         w.plan_inventory.owner_id = O.uid('TEST_ONLY:foreign-owner')
         return w, r.capture_source
-    add('shared/registry_unregistered', registry_unregistered, 'registry/unregistered_owner', AD_SITE + '328')
+    add('shared/registry_unregistered', registry_unregistered, 'registry/unregistered_owner', AD_SITE + '329')
 
     def original_withdrawn():
         w, r = DGO.c1_route(suite)
         w.sir.withdraw(r.sir_handle)
         return w, r.capture_source
-    add('shared/original_withdrawn', original_withdrawn, 'original/withdrawn', AD_SITE + '483')
+    add('shared/original_withdrawn', original_withdrawn, 'original/withdrawn', AD_SITE + '484')
 
     def cand_setup(edits=None, first=False):
         w, r = until('append_original')
