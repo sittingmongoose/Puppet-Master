@@ -440,7 +440,7 @@ html[data-theme^="retro"] #panel-usage .pmu-sweep-glint { border-radius: 0; back
 #panel-usage .pmu-sbfill > i { transition: opacity 140ms; }
 /* (the segment named class-first, i.pmu-mark; same specificity as `> i`: a bare i after :hover went into Chrome's page-wide set) */
 #panel-usage .pmu-sbrow:hover:where(:not(.pmu-board[data-op="wheel"] *)) .pmu-sbfill > :where(.pmu-mark):is(i) { opacity: .9; }
-#panel-usage .pmu-sbrow .pmu-sbfill > i:hover:where(:not(.pmu-board[data-op="wheel"] *)) { opacity: 1; }
+#panel-usage .pmu-sbrow .pmu-sbfill > i:hover { opacity: 1; }   /* (keyed on a tag: no wheel-pause gate, see 10-shell.css) */
 #panel-usage .pmu-sbnum { text-align: right; white-space: nowrap; }
 #panel-usage .pmu-sbnum.is-2 { color: var(--pmu-ink-2); }
 #panel-usage .pmu-sbnum.is-cost { font-weight: 620; }

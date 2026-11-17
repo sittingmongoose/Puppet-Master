@@ -254,6 +254,8 @@
        taken during the rest found nothing: re-measure and look again (a page switch slides the new page in while the
        outgoing page stays hit-testable, and the Usage room plays its entrance after it, both rests) */
     function restEnded() { scopeDirty = rectsDirty = geomDirty = true; recheckSoon(); setTimeout(afterFrameSoon, 400); }
+    /* Usage's wheel pause (PERF-USAGE-HOVER, usage 42-cards.js bindTools) ends without a body class or a pointer move */
+    document.addEventListener('pmu-op-end', restEnded);
 
     function gestureRest() {
       var b = document.body;

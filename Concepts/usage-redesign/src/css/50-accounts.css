@@ -92,7 +92,7 @@
 #panel-usage .pmu-stepval:hover:where(:not(.pmu-board[data-op="wheel"] *)) { background: var(--pmu-row-hover); }
 /* one disabled look in either form (motion QA A15: the hover bridge's aria-disabled form drew at .56) */
 #panel-usage .pmu-stepper button:is([disabled], [aria-disabled="true"]) { opacity: .35; cursor: default; }
-#panel-usage .pmu-stepper button:is([disabled], [aria-disabled="true"]):hover:where(:not(.pmu-board[data-op="wheel"] *)) { background: transparent; color: var(--pmu-ink-3); }
+#panel-usage .pmu-stepper button:is([disabled], [aria-disabled="true"]):hover { background: transparent; color: var(--pmu-ink-3); }
 
 
 #panel-usage .pmu-swfams { display: flex; align-items: center; flex-wrap: nowrap; gap: 8px 18px; min-width: 0; overflow: hidden; }
