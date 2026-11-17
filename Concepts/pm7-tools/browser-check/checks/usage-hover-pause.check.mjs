@@ -19,14 +19,17 @@
 //       the resting one carries the engine's light (.pmh-on, or .pmh-near, its light on a card near the pointer). On
 //       origin/main bb8cd0e873 (Alexis, Basic Dark) the card that slides in starts its tools', resize corner's and
 //       light's transitions and takes .pmh-near: red.
-//   R2  after the wheel: within BACK ms (180) of the last wheel or scroll event, the card under the resting pointer
+//   R2  after the wheel: within BACK ms (200) of the last wheel or scroll event, the card under the resting pointer
 //       carries .pmh-on and its tools show (opacity above .05, or their opacity transition has started), with no pointer
-//       move. Logged with the time it took. On origin/main the engine's .pmh-on stays on the card that was under the
+//       move. The light's time is when the engine writes .pmh-on (a class observer: a frame sample runs before the
+//       engine's frame callback and saw it a frame late, 198-233 ms for a light written at 170). Logged with both times. On origin/main the engine's .pmh-on stays on the card that was under the
 //       pointer at rest and scrolled away, and the card under the pointer never gets it without a move: red too.
+//   R3  keyboard focus is not paused: a card with keyboard focus keeps its focus ring and its tools while the wheel
+//       turns (a guard, green on origin/main too: the board gestures' [data-op] rules hide every card's tools).
 // A window that did not scroll at least TICKS*40*0.6 px is taken again (twice at most); one still short fails as
 // "could not judge".
 //   --set looks=basic-dark,glass-dark,retro-dark,nier-dark   --set tries=3   --set ticks=12   --set gap=30
-//   --set back=180   --set rm=1 (Reduced Motion)   --set settle=<ms> (20000)   --set dump=<file.json> (every window)
+//   --set back=200   --set rm=1 (Reduced Motion)   --set settle=<ms> (20000)   --set dump=<file.json> (every window)
 // Bar for this check (test-tool-bar.md, written before its first review): a finding stops work only if it is shown on
 // real inputs to pass a build whose cards light up or show their tools while the wheel scrolls them under a resting
 // pointer (R1), or to pass a build whose highlight does not come back without a move (R2); anything else goes on
@@ -58,8 +61,17 @@ const INSTALL = () => {
 			lit: [...board.querySelectorAll(':scope > .pmu-card.pmh-on')].map(cardId), near: [...board.querySelectorAll(':scope > .pmu-card.pmh-near')].map(cardId) });
 		requestAnimationFrame(frame);
 	};
-	R.start = () => { Object.assign(R, { on: true, frames: [], wheels: [], scrolls: [], trans: [], t0: performance.now() }); requestAnimationFrame(frame); };
-	R.stop = () => { R.on = false; return { t0: R.t0, frames: R.frames, wheels: R.wheels, scrolls: R.scrolls, trans: R.trans }; };
+	// frames of 50 ms or more (Chrome's long-animation-frame entries), with their style and layout and their longest
+	// scripts, logged around the pause's end
+	try {
+		new PerformanceObserver((l) => { if (R.on) for (const e of l.getEntries()) R.loaf.push({ t: e.startTime, d: Math.round(e.duration), sl: Math.round(e.styleAndLayoutDuration || 0), scripts: [...(e.scripts || [])].sort((a, b) => b.duration - a.duration).slice(0, 3).map((s) => `${s.invoker || s.invokerType} ${Math.round(s.duration)} ms (forced style/layout ${Math.round(s.forcedStyleAndLayoutDuration || 0)})`) }); }).observe({ type: 'long-animation-frame' });
+	} catch (e) { /* no entries in this browser */ }
+	// when a card takes or drops the engine's light, timed as the class is written (the frame callbacks above run before
+	// the engine's in a frame, so a frame sample sees a light one frame after the frame that drew it)
+	new MutationObserver((ms) => { if (!R.on) return; const now = performance.now(); for (const m of ms) if (m.target.parentNode === board && m.target.classList.contains('pmu-card')) R.cls.push({ t: now, card: cardId(m.target), on: m.target.classList.contains('pmh-on') }); })
+		.observe(board, { attributes: true, attributeFilter: ['class'], subtree: true });
+	R.start = () => { Object.assign(R, { on: true, frames: [], wheels: [], scrolls: [], trans: [], loaf: [], cls: [], t0: performance.now() }); requestAnimationFrame(frame); };
+	R.stop = () => { R.on = false; return { t0: R.t0, frames: R.frames, wheels: R.wheels, scrolls: R.scrolls, trans: R.trans, loaf: R.loaf, cls: R.cls }; };
 	R.state = () => { const hc = board.querySelector(':scope > .pmu-card:hover'), tools = hc && hc.querySelector('.pmu-cardtools'); return { card: cardId(hc), lit: !!(hc && hc.classList.contains('pmh-on')), tools: tools ? parseFloat(getComputedStyle(tools).opacity) : null }; };
 	return true;
 };
@@ -71,19 +83,31 @@ export function judge(rec, { rest, back }) {
 	const during = (x) => x.t >= from && x.t <= end;
 	const ins = rec.trans.filter((x) => during(x) && x.under && x.card !== rest);
 	const litFrames = rec.frames.filter((x) => during(x) && x.lit.concat(x.near || []).some((c) => c !== rest));
+	// R2: the card under the pointer once the wheel has stopped; its light is back when its .pmh-on is written (or it
+	// still had it), its tools when their opacity transition starts or a frame reads them above .05
 	const after = rec.frames.filter((x) => x.t > end);
-	const toolsStart = (card) => rec.trans.find((x) => x.t > end && x.card === card && x.prop === 'opacity' && /pmu-cardtools/.test(x.cls));
-	const back1 = after.find((x) => x.card && x.lit.includes(x.card) && (x.tools > 0.05 || toolsStart(x.card)));
+	const target = after.length ? after[after.length - 1].card : null;
+	const settled = after.length && after[after.length - 1].lit.includes(target);
+	const lastBefore = (rec.cls || []).filter((x) => x.t <= end && x.card === target).pop();
+	const litAt = (rec.cls || []).find((x) => x.t > end && x.card === target && x.on);
+	const lightT = !settled ? null : litAt ? litAt.t : lastBefore && lastBefore.on ? end : (after.find((x) => x.lit.includes(target)) || {}).t;
+	const toolsTr = rec.trans.find((x) => x.t > end && x.card === target && x.prop === 'opacity' && /pmu-cardtools/.test(x.cls));
+	const toolsFr = after.find((x) => x.card === target && x.tools > 0.05);
+	const toolsT = Math.min(toolsTr ? toolsTr.t : Infinity, toolsFr ? toolsFr.t : Infinity);
+	const backT = lightT != null && toolsT !== Infinity ? Math.max(lightT, toolsT) : null;
 	return {
 		r1: { ok: ins.length === 0 && litFrames.length === 0, ins: ins.length, insCards: [...new Set(ins.map((x) => x.card))], insProps: [...new Set(ins.map((x) => x.prop + ' ' + x.cls.split(' ')[0]))].slice(0, 8), litFrames: litFrames.length, frames: rec.frames.filter(during).length, cardsPassed: [...new Set(rec.frames.filter(during).map((x) => x.card).filter(Boolean))].length },
-		r2: { ok: !!back1 && back1.t - end <= back, ms: back1 ? Math.round(back1.t - end) : null, card: back1 ? back1.card : (after.length ? after[after.length - 1].card : null) },
+		r2: { ok: backT != null && backT - end <= back, ms: backT != null ? Math.round(backT - end) : null, card: target,
+			light: lightT != null ? Math.round(lightT - end) : null, tools: toolsT !== Infinity ? Math.round(toolsT - end) : null,
+			long: (rec.loaf || []).filter((x) => x.t + x.d > end && x.t < end + 400).map((x) => `+${Math.round(x.t - end)} ms ${x.d} ms (style/layout ${x.sl}: ${x.scripts.join('; ') || 'no script'})`) },
 		span: { wheel: Math.round(lastWheel - first), tail: Math.round(lastScroll - lastWheel), wheels: rec.wheels.length, scrolls: rec.scrolls.length }
 	};
 }
 
 export default async function (t) {
 	const looks = String(t.args.looks || 'basic-dark').split(',').filter(Boolean);
-	const TRIES = Number(t.args.tries || 3), TICKS = Number(t.args.ticks || 12), GAP = Number(t.args.gap || 30), BACK = Number(t.args.back || 180);
+	// BACK: the pause ends 150 ms after the last wheel or scroll event; light and tools were back at 168-185 ms on Alexis
+	const TRIES = Number(t.args.tries || 3), TICKS = Number(t.args.ticks || 12), GAP = Number(t.args.gap || 30), BACK = Number(t.args.back || 200);
 	const W = 1920, H = 1080;
 	await t.viewport(W, H);
 	await muteSound(t.page);
@@ -105,6 +129,7 @@ export default async function (t) {
 			const range = await f.evaluate(() => { const s = document.getElementById('pmuScroll'); return s ? s.scrollHeight - s.clientHeight : 0; });
 			if (!ok || range < TICKS * 40 + 80) { await t.check(S + 'could judge: Usage\'s board is there and scrolls ' + (TICKS * 40 + 80) + ' px', false, `range ${range}`); continue; }
 			const res = { r0: [], r1: [], r2: [] };
+			const at0 = await f.evaluate(() => { const p = document.querySelector('.page.active') || document.body, r = p.getBoundingClientRect(); return { x: Math.round(r.left + r.width / 2), y: Math.round(r.top + r.height * 0.55) }; });
 			for (let w = 0; w < TRIES; w++) {
 				let rec, rest, at, j, short = [];
 				for (let attempt = 0; attempt < 3; attempt++) {
@@ -129,7 +154,7 @@ export default async function (t) {
 				dump.push({ surface, look, window: w + 1, rest, at, judged: j, rec });
 				res.r0.push(!!(rest.card && rest.lit && rest.tools > 0.5));
 				res.r1.push(j.r1); res.r2.push(j.r2);
-				t.log(`${S}window ${w + 1}: at rest card ${rest.card} lit ${rest.lit} tools ${rest.tools} | wheel ${j.span.wheels} events over ${j.span.wheel} ms, scroll ${j.span.scrolls} events ending ${j.span.tail} ms after the last wheel, ${moved} px | during: ${j.r1.cardsPassed} cards under the pointer, ${j.r1.ins} hover-in transitions (${j.r1.insProps.join(', ') || 'none'}) on ${j.r1.insCards.join(',') || 'no card'}, ${j.r1.litFrames} of ${j.r1.frames} frames light another card | after: back in ${j.r2.ms === null ? 'never (800 ms)' : j.r2.ms + ' ms'} on ${j.r2.card}${short.length ? ' | taken again: ' + short.join('; ') : ''}`);
+				t.log(`${S}window ${w + 1}: at rest card ${rest.card} lit ${rest.lit} tools ${rest.tools} | wheel ${j.span.wheels} events over ${j.span.wheel} ms, scroll ${j.span.scrolls} events ending ${j.span.tail} ms after the last wheel, ${moved} px | during: ${j.r1.cardsPassed} cards under the pointer, ${j.r1.ins} hover-in transitions (${j.r1.insProps.join(', ') || 'none'}) on ${j.r1.insCards.join(',') || 'no card'}, ${j.r1.litFrames} of ${j.r1.frames} frames light another card | after: back in ${j.r2.ms === null ? 'never (800 ms)' : j.r2.ms + ' ms'} on ${j.r2.card} (light ${j.r2.light ?? 'never'}, tools ${j.r2.tools ?? 'never'})${j.r2.long.length ? ' | long frames after: ' + j.r2.long.join(' / ') : ''}${short.length ? ' | taken again: ' + short.join('; ') : ''}`);
 				if (t.args.dump) writeFileSync(String(t.args.dump), JSON.stringify(dump));
 			}
 			await park();
@@ -138,7 +163,29 @@ export default async function (t) {
 			await t.check(S + 'while the wheel turns, no card or row that slides under the resting pointer lights up or shows its tools', n > 0 && res.r1.every((r) => r.ok),
 				res.r1.map((r, i) => `w${i + 1}: ${r.ins} hover-in transitions, ${r.litFrames} lit frames, ${r.cardsPassed} cards passed`).join('; '));
 			await t.check(S + `after the wheel, the highlight under the resting pointer comes back within ${BACK} ms without a move`, n > 0 && res.r2.every((r) => r.ok),
-				res.r2.map((r, i) => `w${i + 1}: ${r.ms === null ? 'never' : r.ms + ' ms'} (${r.card})`).join('; '));
+				res.r2.map((r, i) => `w${i + 1}: ${r.ms === null ? 'never' : r.ms + ' ms'} (${r.card}: light ${r.light ?? 'never'}, tools ${r.tools ?? 'never'})`).join('; '));
+
+			// R3: keyboard focus is not paused. The board's first card takes keyboard focus (a key pressed first, so the
+			// browser draws its focus ring); the pointer rests at the centre and TICKS wheel ticks scroll the board. Before,
+			// half-way and 400 ms after, the card still matches :focus-visible, its ring (outline and box-shadow) is the one
+			// it had before, and its tools stay shown (opacity .99 or more): the pause gates hover only.
+			await f.evaluate(() => { document.getElementById('pmuScroll').scrollTop = 0; });
+			await t.page.mouse.move(at0.x, at0.y, { steps: 4 });
+			await t.page.waitForTimeout(300);
+			await t.page.keyboard.press('Shift');
+			const ring = () => f.evaluate(() => { const c = document.querySelector('#pmuScroll .pmu-board > .pmu-card.pmu-kbprobe'); if (!c) return null; const cs = getComputedStyle(c), tools = c.querySelector('.pmu-cardtools'); return { fv: c.matches(':focus-visible'), ring: `${cs.outlineStyle} ${cs.outlineWidth} ${cs.outlineColor} | ${cs.boxShadow}`, tools: tools ? parseFloat(getComputedStyle(tools).opacity) : null }; });
+			await f.evaluate(() => { const c = document.querySelector('#pmuScroll .pmu-board > .pmu-card'); if (!c) return; c.classList.add('pmu-kbprobe'); try { c.focus({ focusVisible: true, preventScroll: true }); } catch (e) { c.focus(); } });
+			await t.page.waitForTimeout(600);
+			const k0 = await ring();
+			let k1 = null;
+			for (let i = 0; i < TICKS; i++) { await t.page.mouse.wheel(0, 40); await t.page.waitForTimeout(GAP); if (i === Math.floor(TICKS / 2)) k1 = await ring(); }
+			await t.page.waitForTimeout(400);
+			const k2 = await ring();
+			await f.evaluate(() => { const c = document.querySelector('.pmu-kbprobe'); if (c) { c.classList.remove('pmu-kbprobe'); c.blur(); } });
+			const same = (k) => !!(k && k0 && k.fv && k.ring === k0.ring && k.tools >= 0.99);
+			await t.check(S + 'while the wheel turns, a card with keyboard focus keeps its focus ring and its tools', !!(k0 && k0.fv) && same(k1) && same(k2),
+				`before ${JSON.stringify(k0)} | half-way ${JSON.stringify(k1)} | after ${JSON.stringify(k2)}`);
+			await park();
 		}
 	}
 }
