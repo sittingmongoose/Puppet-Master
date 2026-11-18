@@ -768,6 +768,22 @@ def _close_one(ident, plain, bank_object, seeds, records, args, carried):
     return entries, meta
 
 
+def _check_dump_ids(dumped_ids, expect_paths):
+    """Standing check (lead 1118011148): a dump fails loudly unless its root ids
+    equal the closure inventory's root ids for the suite, exactly. The inventory
+    is the union of all_roots (or roots) of the given earlier closure reports."""
+    expected = set()
+    for path in expect_paths or ():
+        report = json.loads(Path(path).read_text())
+        expected |= set(report.get('all_roots') or report.get('roots') or ())
+    if expected and set(dumped_ids) != expected:
+        missing = sorted(expected - set(dumped_ids))
+        extra = sorted(set(dumped_ids) - expected)
+        raise SystemExit(f'dump root ids != inventory root ids: missing {missing[:8]} (+{max(0, len(missing)-8)}), '
+                         f'extra {extra[:8]} (+{max(0, len(extra)-8)})')
+    return expected
+
+
 def _carried_from(paths):
     carried = {}
     for path in paths or ():
@@ -866,6 +882,8 @@ def main():
                         help='earlier DG5 closure report(s): clauses not left UNCOVERED are carried, not re-searched')
     parser.add_argument('--seed-cap', type=int, default=24)
     parser.add_argument('--dump', type=Path, help='collect once and pickle GO2-style root dumps here, then exit')
+    parser.add_argument('--expect-roots', action='append', type=Path, default=[],
+                        help='earlier closure report(s) whose inventory root ids the dump must equal exactly')
     parser.add_argument('--from-dump', type=Path, help='close roots from a --dump pickle instead of collecting')
     args = parser.parse_args()
     if args.from_dump:
@@ -896,6 +914,9 @@ def main():
             dumped[ident] = _dump_entry(slot, ident)
             print(f"{ident} dump rebuild={dumped[ident]['rebuild']} seeds={len(dumped[ident]['seeds'])} "
                   f"note={dumped[ident].get('rebuild_note')}", file=sys.stderr, flush=True)
+        if not args.roots:
+            assert set(dumped) == {root_id(k) for k, _s in ordered}, 'dump ids != collected slot ids'
+        _check_dump_ids(dumped, args.expect_roots)
         blob = pickle.dumps(dict(meta=dict(source=args.source, family=args.family, calls=collector.calls,
                                            seed_cap=args.seed_cap, tool_sha256=TOOL_SHA256,
                                            seconds=round(time.time() - started, 1)), roots=dumped), protocol=5)
