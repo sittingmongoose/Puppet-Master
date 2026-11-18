@@ -13,7 +13,7 @@
 // Each row: { k: 'task' | 'raf', ts: the frame's time, tl: document.timeline.currentTime at the read, now, s: { [sel]: {
 //   chip: [x, y, w, h] the visible chip (a carried or stepped block above the labels, else the lens under them, else a
 //   lens in a shared layer over the strip), src: 'carry' | 'hop' | 'lens', rec: the carry record id (carry-frames RECORD),
-//   st / ct: the block's transform animation's start time and current time, on: the chosen item's box, items: every
+//   st / ct: the block's (or the shown lens's) transform animation's start time and current time, on: the chosen item's box, items: every
 //   item's box, faint: the chip under the labels (or the Glass lens followed) while it is not shown (a Reduce Motion
 //   fade's first frames, at opacity 0.3), edge: { rx, ry, rimX, rimY } the drawn chip's corner radius and rim (its
 //   inset outline) in screen pixels along each axis, read from the element that paints its material (FO-235) } },
@@ -30,6 +30,8 @@ export const CHIP_SAMPLER = (opts) => {
 	const shown = (e) => { if (!e.getClientRects().length) return false; const cs = getComputedStyle(e); return +cs.opacity > 0.5 && cs.visibility !== 'hidden'; };
 	const stripOf = (s) => (s.el && s.el.isConnected && s.el.getClientRects().length ? s.el : (s.el = [...document.querySelectorAll(s.sel)].find((e) => e.getClientRects().length) || null));
 	const leadOf = (b) => b.getAnimations().find((a) => a.effect && a.effect.getTiming().duration > 0 && a.playState !== 'idle') || null;
+	// (a lens's own travel: its transform animation, not the opacity ones a hop's hide or a Reduce Motion fade put on it)
+	const travelOf = (b) => b.getAnimations().find((a) => a.effect && a.effect.getTiming().duration > 0 && a.playState !== 'idle' && a.effect.getKeyframes().some((k) => k.transform != null)) || null;
 	// FO-235: the drawn edge of a chip. The element that paints its material (the chip itself, or the first element inside
 	// it that paints a background, its inverted label copies aside), its corner radius and its rim (the widest inset shadow
 	// that is not transparent), each times the scale every transform from it up to the chip's layer applies along each axis
@@ -61,7 +63,7 @@ export const CHIP_SAMPLER = (opts) => {
 				edge = edgeOf(b, b.parentElement);
 			} else {
 				const ul = el.querySelector(':scope > lg-under > .lg-lens');
-				if (ul && shown(ul)) { chip = rr(ul); src = 'lens'; edge = edgeOf(ul, ul.parentElement); }
+				if (ul && shown(ul)) { chip = rr(ul); src = 'lens'; edge = edgeOf(ul, ul.parentElement); const a = travelOf(ul); if (a) { st = a.startTime; ct = a.currentTime; } }
 				else if (ul && ul.getClientRects().length) faint = rr(ul);
 				else {
 					// a lens in a shared layer (Glass): the one over this strip, the same element read after read while it is shown
@@ -75,7 +77,7 @@ export const CHIP_SAMPLER = (opts) => {
 					const keep = s.lensEl && cands.includes(s.lensEl) ? s.lensEl : cands[0] || null;
 					if (s.lensEl) s.lensWas = s.lensEl;
 					s.lensEl = keep;
-					if (keep) { chip = rr(keep); src = 'lens'; lenses = cands.length; }
+					if (keep) { chip = rr(keep); src = 'lens'; lenses = cands.length; const a = travelOf(keep); if (a) { st = a.startTime; ct = a.currentTime; } }
 					else if (!faint && all.length) { const f = was && all.includes(was) ? was : all.slice().sort((a, b) => +getComputedStyle(b).opacity - +getComputedStyle(a).opacity)[0]; faint = rr(f); }
 				}
 			}
@@ -124,10 +126,12 @@ const rel = (b, o) => (b && o ? [b[0] - o[0], b[1] - o[1], b[2], b[3]] : b);
 // the strip's origin at time t: from the last read at or before t
 function originAt(rows, t) { let o = null; for (const r of rows) { if (r.ts > t && o) break; if (r.so) o = r.so; } return o; }
 
-// a read the main thread can vouch for: the lens, or a carried block whose start it already has and whose start is not
-// later than the read (a block waiting for its first frame reads at its hold while the compositor already moves it; one
-// in its before phase reads untransformed, at the box it is bound for)
-export const trusted = (r) => r.box && (r.src !== 'carry' || (r.st != null && r.st <= r.t));
+// a read the main thread can vouch for: a carried block whose start it already has and whose start is not later than the
+// read (a block waiting for its first frame reads at its hold while the compositor already moves it; one in its before
+// phase reads untransformed, at the box it is bound for), or a lens that is not in its own travel's before phase (Glass's
+// glide is a transform animation on the lens: a start the compositor reported later than the frame's rounded time put it
+// there too, read at the item it was bound for, one Usage pitch, 31 px, away: FO-234's signature on a lens)
+export const trusted = (r) => r.box && (r.src === 'carry' ? r.st != null && r.st <= r.t : r.st == null || r.st <= r.t);
 
 // every frame drawn, on the frame grid the reads give (each read's frame time; frames inside a long task every 1/60 s):
 // a carried block from the first frame that draws it (a block that waited for it starts at that frame's time less its
