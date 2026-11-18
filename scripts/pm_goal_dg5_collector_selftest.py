@@ -266,6 +266,13 @@ def check_dump_inventory_gate():
             assert 'dg5:b' in str(exc)
         else:
             raise AssertionError('dump inventory gate did not fail on a missing root')
+    closure._check_dump_nonempty(0, set())
+    try:
+        closure._check_dump_nonempty(4653, set())
+    except SystemExit:
+        pass
+    else:
+        raise AssertionError('zero-root dump from 4653 calls did not fail loudly')
 
 
 def check_witness_capture_pairing():
