@@ -317,6 +317,11 @@ const ARM_MORE = () => {
 		if (R.reduced) d.addEventListener('toggle', () => queueMicrotask(() => collect(d.querySelector(':scope > .pm51-advanced-body'))), { once: true });
 	};
 	window.addEventListener('click', click, true);
+	const beforeDefault = e => {
+		const sum = e.target.closest && e.target.closest('details.pm51-advanced > summary');
+		if (R.clicked && sum && root.contains(sum)) R.pendingBeforeDefault = sum.parentElement.querySelectorAll('[data-o55-fill="pending"]').length;
+	};
+	document.addEventListener('click', beforeDefault);
 	Element.prototype.animate = function () {
 		const a = animate.apply(this, arguments);
 		if (R.clicked && this.matches('.pm51-advanced-body')) {
@@ -325,7 +330,7 @@ const ARM_MORE = () => {
 		}
 		return a;
 	};
-	R.stop = () => { window.removeEventListener('click', click, true); Element.prototype.animate = animate; };
+	R.stop = () => { window.removeEventListener('click', click, true); document.removeEventListener('click', beforeDefault); Element.prototype.animate = animate; };
 };
 async function moreOptionsRow(t, f, label) {
 	await f.locator('#pm-settings-root .domain-link[data-domain="code"]').first().click();
@@ -343,6 +348,7 @@ async function moreOptionsRow(t, f, label) {
 		const r = await f.evaluate(() => { const { stop, ...r } = window.__pscMore; return r; });
 		t.log(`${label}: deferred ${r.deferred}, pending at click ${r.pendingClick}, animations ${r.animations}, endpoint ${r.endpoint ?? 'native'}, natural ${r.natural}, body height ${r.bodyHeight}, rows ${r.rows}, pending end ${r.pendingEnd}, clipped ${JSON.stringify(r.clipped)}`);
 		await t.check(`${label}: More options was closed and ${r.deferred ? 'held pending sections' : 'was fully drawn on eager main'} at the click`, r.clicked && r.closedClick && (r.deferred ? r.pendingClick > 0 : r.pendingClick === 0), JSON.stringify(r));
+		await t.check(`${label}: all rows are filled before the summary's native default`, r.pendingBeforeDefault === 0, JSON.stringify(r));
 		await t.check(`${label}: the opening finished with all rows filled`, r.done && !r.cancelled && r.pendingEnd === 0 && r.rows > 0, JSON.stringify(r));
 		await t.check(`${label}: ${r.reduced ? 'Reduced Motion uses native opening' : 'the animation ends at the filled body\'s natural height'}`, r.reduced ? r.animations === 0 : r.animations === 1 && Math.abs(r.endpoint - r.natural) <= 1, `endpoint ${r.endpoint}; natural ${r.natural}; animations ${r.animations}`);
 		await t.check(`${label}: no row is clipped by the opening's final height`, r.done && r.rows > 0 && r.clipped?.length === 0, JSON.stringify(r.clipped || []) + (r.done ? '' : '; opening did not finish'));

@@ -1208,7 +1208,10 @@ Object.entries(PLACEMENT.pages || {}).forEach(([id, p]) => { if (p && p.intro) I
 
 /* Navigation: a section or setting on another tab switches the tab before the mount; scrolling to a
    section on a tab that is not rendered switches and re-renders synchronously first. */
-const pm51OpenAdvancedFor = node => { const d = node && node.closest('details.pm51-advanced'); if (d && !d.open) d.open = true; };
+const pm51OpenAdvancedFor = node => {
+  const d = node && node.closest('details.pm51-advanced');
+  if (d && !d.open) { if (PM51.fillDisclosure) PM51.fillDisclosure(d); d.open = true; }
+};
 const pm51OriginalNavigate = navigate;
 navigate = function (domainId, workspaceId, options = {}) {
   const meta = options && options.section ? pm51SectionMeta[options.section] : null;

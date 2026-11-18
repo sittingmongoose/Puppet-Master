@@ -139,7 +139,8 @@ function o55OpenAround(selector) {
     const el = root.querySelector(selector); if (!el) return ++tries > 30;
     let item = el.closest('.pm51-acc-item:not(.is-open)');
     while (item) { const t = item.querySelector(':scope > .pm51-acc-head .pm51-acc-toggle'); if (t) t.click(); else break; item = item.parentElement && item.parentElement.closest('.pm51-acc-item:not(.is-open)'); }
-    el.closest('details:not([open])') && (el.closest('details:not([open])').open = true);
+    const d = el.closest('details:not([open])');
+    if (d) { if (PM51.fillDisclosure) PM51.fillDisclosure(d); d.open = true; }
     return true;
   };
   if (!go()) { const t = window.setInterval(() => { if (go()) window.clearInterval(t); }, 70); }
