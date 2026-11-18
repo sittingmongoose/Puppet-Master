@@ -143,13 +143,16 @@ async function firstScrollFrame(t) {
 			const wheel = (e) => r.wheels.push({ trusted: e.isTrusted, ...state() });
 			const scroll = () => r.scrolls.push(state());
 			const start = (e) => { if (e.detail?.board === board) r.starts.push(state()); };
+			const wheelDone = () => r.wheelDone = state();
 			sc.addEventListener('wheel', wheel, { capture: true, passive: true });
+			sc.addEventListener('wheel', wheelDone, { passive: true });
 			sc.addEventListener('scroll', scroll, { capture: true, passive: true });
 			document.addEventListener('pmu-op-start', start);
 			raf = requestAnimationFrame(sample);
 			r.stop = () => {
 				cancelAnimationFrame(raf);
 				sc.removeEventListener('wheel', wheel, true);
+				sc.removeEventListener('wheel', wheelDone);
 				sc.removeEventListener('scroll', scroll, true);
 				document.removeEventListener('pmu-op-start', start);
 				return { ...r, stop: undefined, after: state() };
@@ -159,10 +162,13 @@ async function firstScrollFrame(t) {
 		await t.page.waitForTimeout(650);
 		const r = await f.evaluate(() => window.__firstUsageScroll.stop());
 		const moved = r.frames.find((s) => s.top > r.startTop), scroll = r.scrolls.find((s) => s.top > r.startTop);
-		const details = JSON.stringify({ wheels: r.wheels, scroll, starts: r.starts, moved, after: r.after });
+		const details = JSON.stringify({ wheels: r.wheels, wheelDone: r.wheelDone, scroll, starts: r.starts, moved, after: r.after });
 		t.log(S + ' ' + details);
 		await t.check(S + ' could judge a trusted wheel that moved the pane', r.wheels.length === 1 && r.wheels[0].trusted &&
 			r.wheels[0].top === r.startTop && r.max - r.startTop >= 145 && !!scroll && !!moved && r.after.top > r.startTop, details);
+		await t.check(S + ' wheel dispatch sets the pause before the first scroll callback',
+			r.wheelDone?.op === 'wheel' && r.wheelDone.lit === 0 && scroll?.op === 'wheel' &&
+			r.starts[0]?.top === r.startTop, details);
 		await t.check(S + ' is already paused and has no card engine light', r.starts.length === 1 && moved?.op === 'wheel' &&
 			moved.lit === 0 && r.starts[0].t <= moved.t && !r.after.op, details);
 	}

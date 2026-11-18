@@ -1083,7 +1083,8 @@
     if (!boardEl) return null;
     /* PERF-USAGE-HOVER (Jared, 2026-11-16, card A: "Pause hover highlights on the Usage page while the mouse wheel
        turns"). While the wheel turns over the Usage page's board, a card or row that slides under a resting pointer does
-       not light up or show its tool buttons: the board takes data-op="wheel" on the first wheel-driven pane movement.
+       not light up or show its tool buttons: the board takes data-op="wheel" on the first wheel with room to scroll,
+       or on the first matching pane movement when the wheel check misses it.
        The mark stays until WHEEL_REST ms after the last wheel or scroll, or until the pointer moves, presses or leaves.
        The shell's hover engine
        rests for a board with [data-op] (18-hover.js: no plate light, glow, reticle or magnet on its cards); Usage's
@@ -1187,24 +1188,39 @@
         }
       }
     };
+    var startWheel = function (point) {
+      wheelInput = null;
+      if (!wheelBoard()) return;
+      /* The outgoing room can still paint above the pane when the wheel begins. */
+      var ghost = boardEl.querySelector(':scope > :is(.pmu-ghostboard,.pmu-oldboard):not(#pmuBoard)');
+      if (ghost && ghost.getAttribute('data-op') !== 'wheel') pauseHover(ghost);
+      wheelAt = point;
+      wheelHold();
+    };
     var onWheel = function (event) {
       if (wheelAt) {
         if (wheelBoard()) { wheelAt = [event.clientX, event.clientY]; wheelHold(); }
         return;
       }
-      if (b.gesture && b.gesture()) return;
-      var now = performance.now();
-      /* Remember input without taking the marker or starting a timer. The pane can consume nothing at a limit. */
-      if (!wheelInput || now - wheelInput.t >= WHEEL_REST) {
-        wheelInput = { top: boardEl.scrollTop, left: boardEl.scrollLeft };
+      if ((b.gesture && b.gesture()) || event.defaultPrevented || event.ctrlKey) return;
+      var top = boardEl.scrollTop, left = boardEl.scrollLeft;
+      var dx = event.deltaX || (event.shiftKey ? event.deltaY : 0);
+      var dy = event.shiftKey ? 0 : event.deltaY;
+      /* Mark in wheel dispatch when the pane has room in that direction. A passive listener lets Chromium
+         keep scrolling on the compositor. The scroll listener covers movement this range check missed. */
+      if ((dy < 0 && top > 0) || (dy > 0 && top < boardEl.scrollHeight - boardEl.clientHeight) ||
+          (dx < 0 && left > 0) || (dx > 0 && left < boardEl.scrollWidth - boardEl.clientWidth)) {
+        startWheel([event.clientX, event.clientY]);
+        return;
       }
+      var now = performance.now();
+      if (!wheelInput || now - wheelInput.t >= WHEEL_REST) wheelInput = { top: top, left: left };
       /* A later scroll can have another cause. Match its direction to a delta in this wheel burst.
-         Shift-wheel can be routed to the horizontal axis. */
-      var dx = event.deltaX || (event.shiftKey ? event.deltaY : 0), dy = event.deltaY;
+         A platform can deliver Shift-wheel as vertical movement even when horizontal was predicted. */
       wheelInput.leftward = wheelInput.leftward || dx < 0;
       wheelInput.rightward = wheelInput.rightward || dx > 0;
-      wheelInput.upward = wheelInput.upward || dy < 0;
-      wheelInput.downward = wheelInput.downward || dy > 0;
+      wheelInput.upward = wheelInput.upward || event.deltaY < 0;
+      wheelInput.downward = wheelInput.downward || event.deltaY > 0;
       wheelInput.t = now;
       wheelInput.point = [event.clientX, event.clientY];
     };
@@ -1218,14 +1234,7 @@
         wheelInput.top = top; wheelInput.left = left;
         return;
       }
-      var point = wheelInput.point;
-      wheelInput = null;
-      if (!wheelBoard()) return;
-      /* The outgoing room can still paint above the pane when the first scroll arrives. */
-      var ghost = boardEl.querySelector(':scope > :is(.pmu-ghostboard,.pmu-oldboard):not(#pmuBoard)');
-      if (ghost && ghost.getAttribute('data-op') !== 'wheel') pauseHover(ghost);
-      wheelAt = point;
-      wheelHold();
+      startWheel(wheelInput.point);
     };
     var onWheelMove = function (event) {
       var point = wheelAt || (wheelInput && wheelInput.point);

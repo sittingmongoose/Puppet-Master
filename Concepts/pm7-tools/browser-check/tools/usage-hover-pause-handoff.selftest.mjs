@@ -49,12 +49,12 @@ function fixture(toolOpacity) {
   this.startGesture=function(mode){gesture={type:mode};opOn=true;RESIZING_BY=inner;document.body.classList.add('pm-resizing');opSync();};
   this.releaseGesture=function(defer){gesture=null;opOn=false;if(!defer)opSync();};
   this.cleanup=bindTools(b);`,ctx);
- sc.scrollTop=0;sc.scrollLeft=0;
+ sc.scrollTop=0;sc.scrollLeft=0;sc.scrollHeight=300;sc.clientHeight=100;sc.scrollWidth=100;sc.clientWidth=100;
  const input=(type,x=100,y=100,deltaX=0,deltaY=1)=>sc.handlers.get(type)({clientX:x,clientY:y,deltaX,deltaY});
  const advance=t=>{while(true){const due=[...timers].filter(([,x])=>x.t<=t).sort((a,b)=>a[1].t-b[1].t)[0];if(!due)break;now=due[1].t;timers.delete(due[0]);due[1].fn();}now=t;};
  const scrollBy=(dy)=>{sc.scrollTop+=dy;input('scroll');};
  const startWheel=()=>{input('wheel');scrollBy(1);};
- return {board,ghost,tools,ctx,input,scrollBy,startWheel,advance,events,ends:()=>events.filter(e=>e.type==='pmu-op-end'),cleanup:()=>ctx.cleanup()};
+ return {board,sc,ghost,tools,ctx,input,scrollBy,startWheel,advance,events,ends:()=>events.filter(e=>e.type==='pmu-op-end'),cleanup:()=>ctx.cleanup()};
 }
 for(const mode of ['move','resize']) {
  test(`${mode}: early idle release retains wheel until its original deadline`,()=>{
@@ -120,7 +120,7 @@ for(const opacity of [0,.4]) {
 
 test('a wheel without pane movement starts no pause and cannot renew one later',()=>{
  const x=fixture();try {
-  x.input('wheel');x.input('scroll');assert.equal(x.board.getAttribute('data-op'),null);
+  x.input('wheel',100,100,0,-1);x.input('scroll');assert.equal(x.board.getAttribute('data-op'),null);
   x.advance(151);x.scrollBy(1);assert.equal(x.board.getAttribute('data-op'),null);
   assert.equal(x.events.length,0);
  } finally{x.cleanup();}
@@ -128,6 +128,7 @@ test('a wheel without pane movement starts no pause and cannot renew one later',
 
 test('a press between wheel and scroll consumes the pending wheel',()=>{
  const x=fixture();try {
+  x.sc.scrollHeight=x.sc.clientHeight;
   x.input('wheel');x.input('pointerdown');x.scrollBy(1);
   assert.equal(x.board.getAttribute('data-op'),null);assert.equal(x.events.length,0);
  } finally{x.cleanup();}
@@ -137,7 +138,7 @@ test('the first pane movement can take over a completed gesture before idle clea
  const x=fixture();try {
   x.ctx.startGesture('move');x.ctx.releaseGesture(true);
   assert.equal(x.board.getAttribute('data-op'),'move');
-  x.input('wheel');assert.equal(x.board.getAttribute('data-op'),'move');
+  x.input('wheel');assert.equal(x.board.getAttribute('data-op'),'wheel');
   x.scrollBy(1);assert.equal(x.board.getAttribute('data-op'),'wheel');
   x.advance(150);assert.equal(x.board.getAttribute('data-op'),null);assert.equal(x.ends().length,1);
  } finally{x.cleanup();}
@@ -161,6 +162,39 @@ test('a later real wheel scroll can start after an unrelated offset change',()=>
   assert.equal(x.board.getAttribute('data-op'),null);
   x.input('wheel',100,100,0,-1);
   x.scrollBy(-1);
+  assert.equal(x.board.getAttribute('data-op'),'wheel');
+ } finally{x.cleanup();}
+});
+
+test('a wheel with room in its direction starts before any scroll event',()=>{
+ const x=fixture();try {
+  x.input('wheel');
+  assert.equal(x.board.getAttribute('data-op'),'wheel');
+  assert.equal(x.ghost.getAttribute('data-op'),'wheel');
+  assert.equal(x.sc.scrollTop,0);
+  assert.equal(x.events.filter(e=>e.type==='pmu-op-start').length,2);
+  x.scrollBy(1);
+  assert.equal(x.events.filter(e=>e.type==='pmu-op-start').length,2);
+ } finally{x.cleanup();}
+});
+
+test('a matching offset change can start the pause after the wheel range check missed it',()=>{
+ const x=fixture();try {
+  x.sc.scrollTop=x.sc.scrollHeight-x.sc.clientHeight;
+  x.input('wheel');
+  assert.equal(x.board.getAttribute('data-op'),null);
+  x.sc.scrollHeight+=10;
+  x.scrollBy(1);
+  assert.equal(x.board.getAttribute('data-op'),'wheel');
+ } finally{x.cleanup();}
+});
+
+test('a horizontal wheel starts before scroll only when the pane has room',()=>{
+ const x=fixture();try {
+  x.input('wheel',100,100,1,0);
+  assert.equal(x.board.getAttribute('data-op'),null);
+  x.sc.scrollWidth+=10;
+  x.input('wheel',100,100,1,0);
   assert.equal(x.board.getAttribute('data-op'),'wheel');
  } finally{x.cleanup();}
 });

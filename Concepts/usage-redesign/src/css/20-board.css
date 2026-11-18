@@ -209,8 +209,8 @@ html[data-theme^="retro"] #panel-usage .pmu-keysw { border-radius: 0; }
 /* before a card has been fitted (keyboard focus that moved in without a focus event) an extra-small card shows grip and menu */
 #panel-usage .pmu-card[data-tw="xs"] .pmu-cardtools:not([data-fold]) :is(.pmu-cardsize, .pmu-cardgear) { display: none; }
 /* PERF-USAGE-HOVER (Jared, 2026-11-16, card A: pause hover highlights on the Usage page while the mouse wheel turns).
-   While the wheel turns over the Usage board, the board carries data-op="wheel" (42-cards.js bindTools: from the first change in pane scroll offset after a
-   wheel event to 150 ms after the last wheel or scroll event, or until the pointer really moves or presses). During
+   While the wheel turns over the Usage board, the board carries data-op="wheel" (42-cards.js bindTools: from the first wheel that can scroll,
+   or matching pane movement, to 150 ms after the last wheel or scroll event, or until the pointer moves or presses). During
    a keyboard gesture, data-wheel-handoff carries the same remaining pause while data-op records the gesture. The
    in-board :hover highlights use :where(:not(.pmu-board:is([data-op="wheel"],[data-wheel-handoff]) *)): a card or row that slides
    under a resting pointer does not light up, show its tools or slide its head while it passes. The owner's PC priced the
