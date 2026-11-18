@@ -135,7 +135,7 @@ export function judge(rec, { rest, back }) {
 
 async function providerRace(t, f, label, park) {
 	await park();
-	const column = f.locator('#pmuScroll .pmu-skycol[data-prov]').first();
+	const column = f.locator('#pmuBoard .pmu-skycol[data-prov]').first();
 	if (!await column.count()) { await t.check(label + 'R4 could judge: a Skyline provider column exists', false); return; }
 	await column.scrollIntoViewIfNeeded();
 	await t.page.waitForTimeout(500);
@@ -144,7 +144,8 @@ async function providerRace(t, f, label, park) {
 	const x = box.x + box.width / 2, top = Math.max(box.y, pane.y), bottom = Math.min(box.y + box.height, pane.y + pane.height);
 	const y = (top + bottom) / 2;
 	await f.evaluate(() => {
-		const sc = document.getElementById('pmuScroll'), board = sc.querySelector('.pmu-board');
+		// R99's room routes can leave the spare first in DOM order; R4 samples the live board too.
+		const sc = document.getElementById('pmuScroll'), board = document.getElementById('pmuBoard');
 		const r = window.__uhpRace = { enter: null, wheel: null, end: null, pauses: [], during: [], frames: 0, moves: 0, outs: 0, startTop: sc.scrollTop,
 			clean: !board.querySelector('.is-hl-dim, .is-hl-on'), marks: board.querySelectorAll('.pmu-mark[data-prov]').length };
 		let target = null, running = true;
