@@ -75,6 +75,9 @@
 #pmh-frame.pmh-frame-on { opacity: 1; }
 #pmh-frame > i { position: absolute; display: block; will-change: transform; }
 
+/* A Usage wheel pause cuts the layers it owns at their old viewport position. Reuse restores their usual entry. */
+#pmh-glow > i.pmh-proxy-cut, #pmh-frame.pmh-proxy-cut { visibility: hidden; transition: none; }
+
 /* Reduced Motion: states switch at once (the engine stops the magnet, the travel and the pointer-following field). */
 [data-motion="reduced"] :is(#pmh-glow > i, #pmh-frame) { transition: none; }
 @media (prefers-reduced-motion: reduce) {

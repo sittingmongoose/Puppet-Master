@@ -1110,6 +1110,8 @@
         }
       }
       el.setAttribute('data-op', 'wheel');
+      /* Notify the engine once for each marked board, including an outgoing ghost with a fading proxy. */
+      try { document.dispatchEvent(new CustomEvent('pmu-op-start', { detail: { board: el } })); } catch (error) { /* none */ }
       return under;
     };
     var clearWheelFades = function () {
@@ -1171,8 +1173,6 @@
       if (op !== 'wheel') {
         var under = pauseHover(el);
         if (under) unfitSoon(under);
-        /* Clear highlights whose pointer intent already completed (R100 P1); each adopted board hears this once. */
-        try { document.dispatchEvent(new CustomEvent('pmu-op-start', { detail: { board: el } })); } catch (error) { /* none */ }
       }
       return el;
     };

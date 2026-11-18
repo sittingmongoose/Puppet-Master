@@ -578,6 +578,85 @@ async function keyboardPause(t, f, label, park) {
 	return records;
 }
 
+// R121 P1: the fixed layers have their own opacity and viewport position, independent of the card's classes.
+async function wheelProxies(t, f, label, park) {
+	const live = await f.evaluate(() => { const on = PMU.live.on(); PMU.live.pause(); PM7_USAGE.setRoomDetail('overview', 'glance'); return on; });
+	await f.waitForFunction(() => !document.querySelector('#pmuScroll .pmu-ghostboard'));
+	const records = [];
+	for (const kind of ['settled glow', 'already fading glow']) {
+		await park();
+		await f.evaluate(() => { document.activeElement?.blur(); document.getElementById('pmuScroll').scrollTop = 0; });
+		await t.page.waitForTimeout(500);
+		const points = await f.evaluate(() => {
+			const pane = document.getElementById('pmuScroll').getBoundingClientRect();
+			return [...document.querySelectorAll('#pmuBoard > .pmu-card[data-head="plate"]')].map((card) => {
+				const r = card.getBoundingClientRect(), x = r.x + r.width / 2, y = (Math.max(r.top, pane.top) + Math.min(r.bottom, pane.bottom)) / 2;
+				return y >= pane.top + 30 && y <= pane.bottom - 180 && card.contains(document.elementFromPoint(x, y)) ? { x, y, widget: card.dataset.widget } : null;
+			}).filter(Boolean).slice(0, 2);
+		});
+		const S = label + 'R121 ' + kind + ': ';
+		if (points.length < 2) { await t.check(S + 'could judge two visible card targets', false, JSON.stringify(points)); continue; }
+		const [old, next] = points;
+		await t.page.mouse.move(old.x, old.y);
+		await t.page.waitForTimeout(650);
+		await f.evaluate(() => {
+			const sc = document.getElementById('pmuScroll'), board = document.getElementById('pmuBoard');
+			const r = window.__usageProxies = { wheels: [], scrolls: [], frames: [] };
+			let raf;
+			const layer = (el) => {
+				const box = el.getBoundingClientRect(), cs = getComputedStyle(el);
+				return { x: box.x, y: box.y, w: box.width, h: box.height,
+					opacity: cs.visibility === 'visible' && cs.display !== 'none' ? +cs.opacity : 0,
+					on: el.matches('.pmh-glow-on,.pmh-frame-on') };
+			};
+			const read = () => ({ t: performance.now(), top: sc.scrollTop, op: board.getAttribute('data-op'),
+				card: board.querySelector(':scope > .pmu-card:hover')?.dataset.widget,
+				layers: [...document.querySelectorAll('#pmh-glow > i,#pmh-frame')].map(layer) });
+			const sample = () => { r.frames.push(read()); raf = requestAnimationFrame(sample); };
+			const wheel = (e) => r.wheels.push({ trusted: e.isTrusted, ...read() });
+			const scroll = () => r.scrolls.push({ t: performance.now(), top: sc.scrollTop });
+			sc.addEventListener('wheel', wheel, { capture: true, passive: true });
+			sc.addEventListener('scroll', scroll, { passive: true });
+			raf = requestAnimationFrame(sample);
+			r.stop = () => {
+				cancelAnimationFrame(raf); sc.removeEventListener('wheel', wheel, true); sc.removeEventListener('scroll', scroll);
+				return { ...r, stop: undefined };
+			};
+		});
+		if (kind === 'already fading glow') {
+			await t.page.mouse.move(next.x, next.y);
+			await f.waitForFunction(() => [...document.querySelectorAll('#pmh-glow > i:not(.pmh-glow-on)')]
+				.some((el) => +getComputedStyle(el).opacity > 0.15), null, { timeout: 2000 });
+		}
+		// Stay within the chosen card while moving enough to distinguish the fixed old box from the scrolling one.
+		for (const delta of [24, 24, 24, 24, 24, 24]) {
+			await t.page.mouse.wheel(0, delta);
+			await t.page.waitForTimeout(30);
+		}
+		await t.page.waitForTimeout(650);
+		const r = await f.evaluate(() => window.__usageProxies.stop());
+		const first = r.wheels[0], moved = r.scrolls.find((s) => s.top > first?.top);
+		const last = Math.max(r.wheels.at(-1)?.t, r.scrolls.at(-1)?.t);
+		const held = r.frames.filter((s) => s.top > first?.top && s.t >= moved?.t && s.t < last + 130);
+		const before = first?.layers.filter((l) => l.opacity > 0.05 && l.on === (kind === 'settled glow')) || [];
+		const bright = held.flatMap((s) => s.layers.filter((l) => l.opacity > 0.01).map((l) => ({ ...l, t: s.t, top: s.top })));
+		const returned = r.frames.find((s) => s.t > last + 150 && !s.op && s.layers.some((l) => l.on && l.opacity > 0.5));
+		const detail = JSON.stringify({ before, wheels: r.wheels.length, scrolls: r.scrolls.length, held: held.length,
+			moved, firstBright: bright[0], visibleSamples: bright.length, returned });
+		records.push({ kind, ...r });
+		t.log(S + detail);
+		await t.check(S + 'could judge visible proxy opacity before trusted real scroll with the pointer still',
+			first?.card === (kind === 'settled glow' ? old.widget : next.widget) && before.length > 0 &&
+			r.wheels.length === 6 && r.wheels.every((w) => w.trusted) && held.length >= 5 && !!moved, detail);
+		await t.check(S + 'no fixed glow or frame proxy remains visible in the moving hold',
+			held.length >= 5 && held.every((s) => s.op === 'wheel') && bright.length === 0, detail);
+		await t.check(S + 'hover glow returns at the card now under the pointer', !!returned, detail);
+	}
+	await park();
+	await f.evaluate((on) => { if (on) PMU.live.resume(); }, live);
+	return records;
+}
+
 export default async function (t) {
 	const looks = String(t.args.looks || 'basic-dark').split(',').filter(Boolean);
 	// BACK: the pause ends 150 ms after the last wheel or scroll event; light and tools were back at 168-185 ms on Alexis
@@ -599,6 +678,14 @@ export default async function (t) {
 			await f.waitForFunction(() => !(window.PM_THEME_TRANSITION?.busy?.() || window.PM_LOOK_COVERED?.()), null, { timeout: 20000 }).catch(() => {});
 			await f.evaluate(() => PM_PAGES.go('usage'));
 			await t.page.waitForTimeout(Number(t.args.viewSettle ?? 8000));
+			const proxyOnly = String(t.args.proxyOnly || '') === '1';
+			if (!rm && /^(basic|friendly|glass)-/.test(look) && (proxyOnly ||
+				!['narrowOnly', 'chartOnly', 'raceOnly', 'mountOnly', 'departureOnly', 'keyboardOnly', 'r113Only'].some((key) => String(t.args[key] || '') === '1'))) {
+				const proxies = await wheelProxies(t, f, S, park);
+				dump.push({ surface, look, proxies });
+				if (t.args.dump) writeFileSync(String(t.args.dump), JSON.stringify(dump));
+			}
+			if (proxyOnly) continue;
 			if(String(t.args.narrowOnly||'')==='1') {
 				const r113=await r113Cases(t,f,S,park),applied=await appliedHighlights(t,f,S,park);
 				dump.push({surface,look,r113,applied});if(t.args.dump)writeFileSync(String(t.args.dump),JSON.stringify(dump));continue;
