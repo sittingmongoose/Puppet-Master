@@ -45,9 +45,9 @@ export default (ctx) => {
 				const l = typeof sel === 'string' ? f.locator(sel, o.hasText ? { hasText: o.hasText } : undefined).first() : sel;
 				// (noScroll: menus and the title bar, which a scroll would move or close)
 				if (!o.noScroll) {
+					// Match browser-check 2.0.62's private shared click: scroll only when hidden.
+					// Centring every ancestor can move or close an already-visible History flyout.
 					await l.scrollIntoViewIfNeeded({ timeout: 5000 }).catch(() => {});
-					// a control inside a sticky card or an inner scroller: centre it in every scroller around it
-					await l.evaluate((e) => e.scrollIntoView({ block: 'center', inline: 'nearest' })).catch(() => {});
 					await t.page.waitForTimeout(80);
 				}
 				if (o.noScroll) await f.evaluate(() => { document.documentElement.scrollTop = 0; document.body.scrollTop = 0; }).catch(() => {});
