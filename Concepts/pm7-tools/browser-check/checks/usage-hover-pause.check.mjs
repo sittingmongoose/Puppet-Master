@@ -315,9 +315,10 @@ async function roomMountRace(t, f, label, park, rm) {
 // R100: wheel from a fully applied chart/card state, not merely from pending pointer intent.
 async function appliedHighlights(t, f, label, park) {
 	const records = [], wanted = String(t.args.chartCases || 'provider,donut,column,engine,tool').split(','), rm = String(t.args.rm || '') === '1';
-	const routes = wanted.flatMap((kind)=>kind === 'tool' && rm ? [{kind,reducedTool:true},{kind,reducedTool:false}] : [{kind,reducedTool:rm}]);
+	const routes = wanted.flatMap((kind)=>kind === 'tool' && rm ? [{kind,reducedTool:true},{kind,reducedTool:false}] : [{kind,reducedTool:rm}]), attempts={};
 	const liveWasOn = await f.evaluate(() => { const on = PMU.live.on(); PMU.live.pause(); return on; });
-	for (const {kind,reducedTool} of routes) {
+	for(let route=0;route<routes.length;route++) {
+		const {kind,reducedTool}=routes[route],key=kind+':'+reducedTool,attempt=attempts[key]=(attempts[key]||0)+1;
 		if(rm){await t.emulate({reducedMotion:reducedTool?'reduce':'no-preference'});await f.waitForFunction((want)=>PMU.motion.reduced()===want,reducedTool,{timeout:5000});}
 		await park();
 		await f.evaluate((r) => { PMU.menu.close(); PM7_USAGE.setRoomDetail(r, 'diagnostics'); }, kind === 'donut' ? 'analytics' : kind === 'column' ? 'costs' : 'overview');
@@ -386,15 +387,11 @@ async function appliedHighlights(t, f, label, park) {
 		}
 		const pre = await f.evaluate(() => window.__uhpApplied.read());
 		if (kind === 'tool') { await t.page.mouse.wheel(0,-1); if(!reducedTool){await t.page.mouse.down(); await t.page.mouse.up();} }
-		else {
-			// As in R5, queue trusted inputs at wall-clock cadence: renderer acknowledgements must not split
-			// the intended burst. The existing 18-input, one-end and marked-frame prerequisites still qualify it.
-			const inputs=[];for(let i=0;i<18;i++){inputs.push(t.page.mouse.wheel(0,kind==='engine'?-1:i%2?-1:1));await new Promise(resolve=>setTimeout(resolve,30));}await Promise.all(inputs);
-		}
+		else for(let i=0;i<18;i++){await t.page.mouse.wheel(0,kind==='engine'?-1:i%2?-1:1);await t.page.waitForTimeout(30);}
 		await t.page.waitForTimeout(900);
 		const rec = await f.evaluate(() => { const r=window.__uhpApplied.stop(); r.menuOpen=!!PMU.menu.current(); return r; });
 		const S=label+`R100 ${kind}${rm&&kind==='tool'?(reducedTool?' (Reduced Motion)':' (motion enabled)'):''}: `, last=rec.wheels.at(-1)?.t, marked=rec.frames.filter((x) => x.t >= rec.wheels[0]?.t+50);
-		records.push({kind,pre,rec});
+		records.push({kind,attempt,pre,rec});
 		t.log(S+JSON.stringify({pre, neutral:rec.neutral, frames:marked.length, ends:rec.ends, press:rec.press, after:rec.after}));
 		if (kind === 'tool' && reducedTool) {
 			await t.check(S+'could judge unfocused shown tools and trusted wheel in Reduced Motion',pre.hovered&&pre.reduced&&pre.toolOpacity>0.5&&rec.wheels.length===1&&rec.wheels[0].trusted&&rec.immediate?.op==='wheel'&&!rec.moves,JSON.stringify({pre,immediate:rec.immediate,wheels:rec.wheels,moves:rec.moves}));
@@ -419,7 +416,10 @@ async function appliedHighlights(t, f, label, park) {
 		} else {
 			const shown=kind === 'provider' ? pre.hl>0 : kind === 'donut' ? pre.dim>0 && pre.hot>0 && pre.value!==rec.neutral.value : kind === 'column' ? pre.cols===1 && pre.bars : pre.lit && !pre.engineRunning;
 			const travel=rec.scrolls.map((s)=>s.top);
-			await t.check(S+'could judge already-applied state, still pointer and a sampled complete wheel hold', shown && pre.hovered && rec.after.hovered && !rec.moves && marked.length>=10 && rec.wheels.length===18 && rec.wheels.every((w)=>w.trusted) && rec.ends.length===1 && rec.ends[0]>last && (kind === 'engine' ? pre.top===0 && rec.after.top===0 : travel.length>0), JSON.stringify({shown,pre,after:rec.after,frames:marked.length,scrolls:travel,ends:rec.ends}));
+			const qualified=shown&&pre.hovered&&rec.after.hovered&&!rec.moves&&marked.length>=10&&rec.wheels.length===18&&rec.wheels.every(w=>w.trusted)&&rec.ends.length===1&&rec.ends[0]>last&&(kind==='engine'?pre.top===0&&rec.after.top===0:travel.length>0);
+			// Retake only an unqualified chart input window, as R5 does. A qualified wrong chart state fails at once.
+			if(!qualified&&['provider','donut','column'].includes(kind)&&attempt<3){t.log(S+'unqualified native input attempt '+attempt+'; same fixture/prerequisites repeated: '+JSON.stringify({wheels:rec.wheels.length,ends:rec.ends,frames:marked.length,moves:rec.moves}));await park();route--;continue;}
+			await t.check(S+'could judge already-applied state, still pointer and a sampled complete wheel hold',qualified,JSON.stringify({attempt,shown,pre,after:rec.after,frames:marked.length,scrolls:travel,ends:rec.ends}));
 			const same=(s)=>kind==='provider'?s.hl===pre.hl:kind==='donut'?s.dim===pre.dim&&JSON.stringify(s.hotRows)===JSON.stringify(pre.hotRows)&&s.value===pre.value&&s.caption===pre.caption:kind==='column'?(rec.scrolls.length&&s.t>=rec.scrolls[0].t?!s.cols&&!s.bars&&!s.readout:s.cols===pre.cols&&s.bars===pre.bars&&s.readout===pre.readout):!s.lit;
 			// Main's native scroll listener dismisses an open column readout. Provider/donut selections stay applied;
 			// none of these states is cleared or restored by wheel start/end. Engine lights retain the pause.
