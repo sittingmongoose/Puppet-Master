@@ -397,7 +397,9 @@ async function appliedHighlights(t, f, label, park) {
 			const a=rec.after, restored=kind === 'provider' ? a.hl>0 : kind === 'donut' ? a.dim>0 && a.hot===pre.hot && a.value===pre.value && a.caption===pre.caption : kind === 'column' ? a.cols===1 && a.bars && !a.readout : a.lit;
 			await t.check(S+'current target highlight returns without pointer movement', !a.op && a.hovered && restored, JSON.stringify(a));
 		}
-		if (sparse) { await park(); await f.evaluate((s)=>{ PMU.board.resize(s.id,s.rect); s.ids.filter((id)=>id!==s.id).forEach((id)=>PMU.board.setVisible(id,true)); },sparse); }
+		// Removing/re-adding panels applies real gravity and can rearrange peers. Restore this fresh fixture's room
+		// defaults in one reset so R0 keeps its original fixed point and starts on the normal board, not a gap.
+		if (sparse) { await park(); await f.evaluate(()=>PMU.board.reset('room')); }
 		await park();
 	}
 	await f.evaluate((on)=>{ PMU.menu.close(); document.activeElement?.blur(); PM7_USAGE.setRoomDetail('overview','glance'); if(on) PMU.live.resume(); },liveWasOn);
