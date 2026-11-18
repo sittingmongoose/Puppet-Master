@@ -2424,7 +2424,7 @@
     /* (and not before the compositor has reported the block's start, nor while its change is still to come: until then
        its age is an estimate, or its end is not its tab's, and a block cut short lands the chip under the labels a step
        ahead of it, 14 px in Basic Light on Alexis) */
-    if (K && ((K.anim && K.anim.startTime == null && K.anim.playState !== 'finished') || K.change)) wait = Math.max(wait, 16);
+    if (K && ((K.anim && K.anim.startTime == null && K.anim.playState !== 'finished') || K.change || K.due)) wait = Math.max(wait, 16);
     if (wait > 0) { if (!L.hopT) L.hopT = setTimeout(function () { L.hopT = 0; hopSettle(L); }, wait + 1); return; }
     endHop(L);
   }
@@ -2522,7 +2522,10 @@
     var K = L.carry, a = K && K.anim;
     if (!K || !K.pose || !L.hopFrames || !a || a.startTime != null || a.playState === 'finished') return false;
     if ((K.waits = (K.waits || 0) + 1) > 30) return false;
-    requestAnimationFrame(function () { if (L.carry === K) queueSync(strip); });
+    /* (and the block does not land meanwhile: landed at its own box while its tab had grown, the chip under the labels
+       would take the tab's new box at once) */
+    K.due = true;
+    requestAnimationFrame(function () { K.due = false; if (L.carry === K) queueSync(strip); });
     return true;
   }
   var CARRY_REACH = 8;   /* px past the trip's ends along the strip: a label the squashed or tilted chip can touch */

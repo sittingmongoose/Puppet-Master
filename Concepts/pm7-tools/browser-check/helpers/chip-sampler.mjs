@@ -106,7 +106,8 @@ export function drawnFrames(smp, sel, anims0) {
 	const recs = anims.filter((r) => r.strip === sel && r.start != null).sort((a, b) => a.created - b.created);
 	const after = (t) => { const r = rows.find((x) => x.ts > t); return r ? r.ts : Infinity; };
 	// (drawnAt: the frame that first drew the block's commit, from carry-frames' probe)
-	const D = new Map(recs.map((r) => [r, r.drawnAt != null ? r.drawnAt : r.explicit ? after(r.created) : r.start + (r.hold || 0)]));
+	// (a block that waited for its first frame: the compositor's own start for it, plus its hold, is that frame)
+	const D = new Map(recs.map((r) => [r, !r.explicit && !r.startFromProbe ? r.start + (r.hold || 0) : r.drawnAt != null ? r.drawnAt : after(r.created)]));
 	const replaced = new Set(recs.filter((r, i) => r.cancelled != null && recs[i + 1] && recs[i + 1].created - r.cancelled <= 200 && recs[i + 1].created >= r.cancelled - 0.5));
 	const ts = [...new Set(rows.map((r) => r.ts))].sort((a, b) => a - b), byTs = new Map(rows.map((r) => [r.ts, r]));
 	// a block's keyframes place it from its box when it was made, in the strip as it was then
@@ -175,7 +176,7 @@ export function takeovers(anims0, sel, { span = 100 } = {}) {
 		if (!p || p.cancelled == null || p.start == null || p.cancelled > n.created + 0.5 || n.created - p.cancelled > 200) continue;
 		if (!p) continue;
 		const goes = n.explicit || n.hold != null;   // a block that goes on with a trip (carry's go)
-		const first = n.drawnAt != null ? n.drawnAt : n.explicit ? n.created : n.start + (n.hold || 0);
+		const first = !n.explicit && !n.startFromProbe ? n.start + (n.hold || 0) : n.drawnAt != null ? n.drawnAt : n.created;
 		const last = Math.min(first + span, n.rebDrawn != null ? n.rebDrawn : n.rebTl != null ? n.rebTl : Infinity, n.cancelled != null ? n.cancelled : Infinity);
 		const n0 = { ...n, kf: n.kf0, dur: n.dur0 };
 		let worst = 0, at = first;
