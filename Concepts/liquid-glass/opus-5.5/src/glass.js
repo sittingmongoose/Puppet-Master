@@ -2403,7 +2403,7 @@
   function endHop(L) {
     if (L.hopT) { clearTimeout(L.hopT); L.hopT = 0; }
     if (L.hopSafety) { clearTimeout(L.hopSafety); L.hopSafety = 0; }
-    if (L.hopFrames) { L.hopFrames.forEach(function (F) { F.getAnimations().forEach(function (a) { a.cancel(); }); F.remove(); }); L.hopFrames = null; }
+    if (L.hopFrames) { L.hopFrames.forEach(function (F) { F.getAnimations({ subtree: true }).forEach(function (a) { a.cancel(); }); F.remove(); }); L.hopFrames = null; }
     /* the chip under the labels shows the moment the blocks go */
     if (L.hopHide) { var hh = L.hopHide; L.hopHide = null; if (L.anim === hh) L.anim = null; hh.cancel(); }
     var over = L.strip && L.strip.__lgOver; if (over && !over.children.length) { over.remove(); L.strip.__lgOver = null; if (L.strip.__lgPosOver && !L.strip.__lgUnder) { L.strip.style.removeProperty('position'); } L.strip.__lgPosOver = false; }
@@ -2544,6 +2544,34 @@
      long task before the first frame (190 ms, Basic Light, Alexis: the block stepped the whole way), a frame drawn
      before that start showed the block untransformed (head film F1344), and the compositor drew the first frame after a
      late one 100 ms back along the trip (F1195). */
+  /* FO-235: a carried block is boxed where its trip ends and scaled to each pose, and its material scaled with it: leaving
+     Friendly's 111 px Agents tab for its 36 px icon tab, the block drew its 2 px rim 6 px wide and its 9 px corners 27 px
+     long, a pill with a thick border and the mint narrowed 4 px a side, from the frame it took over from the chip under
+     the labels (and 0.6 px and 3 px the other way: thin and square); Basic's 3 px corners the same. So the block keeps its
+     box, keyframes and clock, and paints nothing of its own: its material (fill, rim and corner, read from the block as
+     every rule of the look and its strip shape it, a rail skin's corner or forced colours included) is drawn by two halves,
+     one from each end of the trip, clipped at the block's middle, each a skin long enough to pass the middle whose own
+     keyframes undo the block's scale along the trip (fH in carry's plan). The rim and corners are then the chip's at every
+     size the block takes, as the chip under the labels draws them; across the trip they keep the block's scale, the hop's
+     squash. The sticker's shadow is cut the same way. The inverted labels stay in the block, which still clips them */
+  function carrySkins(F, S, vertical, len) {
+    var cs = getComputedStyle(F), out = [];
+    var mat = { borderRadius: cs.borderRadius, backgroundImage: cs.backgroundImage, backgroundColor: cs.backgroundColor, backgroundSize: cs.backgroundSize,
+      backgroundPosition: cs.backgroundPosition, backgroundRepeat: cs.backgroundRepeat, boxShadow: cs.boxShadow, forcedColorAdjust: cs.forcedColorAdjust };
+    var shade = S ? { borderRadius: cs.borderRadius, backgroundColor: getComputedStyle(S).backgroundColor, forcedColorAdjust: cs.forcedColorAdjust } : null;
+    [[F, mat], [S, shade]].forEach(function (p) {
+      var host = p[0]; if (!host) return;
+      if (vertical) host.setAttribute('data-lg-axis', 'y');
+      ['b', 'a'].forEach(function (k) {
+        var half = el('i', { class: 'lg-carry-half', 'data-half': k, 'aria-hidden': 'true' }), skin = el('i', { class: 'lg-carry-skin', 'aria-hidden': 'true' });
+        for (var q in p[1]) skin.style[q] = p[1][q];
+        skin.style[vertical ? 'height' : 'width'] = len + 'px';
+        half.appendChild(skin); host.insertBefore(half, host.firstChild); out.push(skin);
+      });
+      host.style.setProperty('background', 'none', 'important'); host.style.setProperty('box-shadow', 'none', 'important'); host.style.setProperty('border-radius', '0', 'important');
+    });
+    return out;
+  }
   function carry(L, A, B, strip, cfg, target, vertical, go) {
     if (!L.under || reduced()) { setLensBox(L, B); return; }
     var motion = switchMotion, C = CARRY[motion], ease = bezierEase(C.ease), dur = C.dur, hopping = motion === 'hop';
@@ -2565,7 +2593,7 @@
     F.appendChild(G);
     if (stick) { S = el('i', { class: 'lg-carry-shadow', 'aria-hidden': 'true' }); if (tag) S.setAttribute('data-lg-for', tag); box(S); over.appendChild(S); }
     over.appendChild(F);
-    if (S) S.style.borderRadius = getComputedStyle(F).borderRadius;   /* the block's own corner, whatever shapes it (a rail skin's) */
+    var SK = carrySkins(F, S, vertical, Math.ceil(1.1 * Math.max.apply(null, ends.map(function (r) { return vertical ? r.h : r.w; }))) + 8);
     /* the lift stays inside the strip's own box: a strip at the top of a scroller (onboarding's segments, first in their
        pane) clips anything above it, and a sticker lifted 6 px there lost its top edge for six frames (Windows film) */
     if (go) { liftX = go.K.liftX; liftY = go.K.liftY; }
@@ -2603,7 +2631,7 @@
         }
         from = from0;
       } else pose = function (t) { return carryPose(motion, ease(Math.min(1, t / dur)), A, B); };
-      var span = end - from, fF = [], fG = [], fS = [], rects = [], n = Math.max(2, Math.ceil(span / FRAME_MS));
+      var span = end - from, fF = [], fG = [], fS = [], fH = [], rects = [], n = Math.max(2, Math.ceil(span / FRAME_MS));
       for (var i = 0; i <= n; i++) {
         var t = Math.min(end, from + i * FRAME_MS), o = (t - from) / span, P = pose(t);
         var lx = hopping ? -liftX * P.lift : 0, ly = hopping ? -liftY * P.lift : 0, rot = hopping ? -2 * P.lift : 0;
@@ -2611,10 +2639,12 @@
         fF.push({ offset: o, transform: 'translate(' + dx.toFixed(2) + 'px,' + dy.toFixed(2) + 'px) rotate(' + rot.toFixed(3) + 'deg) scale(' + kx.toFixed(4) + ',' + ky.toFixed(4) + ')' });
         fG.push({ offset: o, transform: 'scale(' + (1 / kx).toFixed(5) + ',' + (1 / ky).toFixed(5) + ') rotate(' + (-rot).toFixed(3) + 'deg) translate(' + (-dx).toFixed(2) + 'px,' + (-dy).toFixed(2) + 'px)' });
         if (S) { var ox = 2 + 2 * P.lift, oy = 2 + 4 * P.lift; fS.push({ offset: o, transform: 'translate(' + (dx + ox).toFixed(2) + 'px,' + (dy + oy).toFixed(2) + 'px) rotate(' + rot.toFixed(3) + 'deg) scale(' + kx.toFixed(4) + ',' + ky.toFixed(4) + ')' }); }
+        /* (the halves of its material undo the block's own scale along the trip, as the block draws it: carrySkins) */
+        fH.push({ offset: o, transform: vertical ? 'scale(1,' + (1 / +ky.toFixed(4)).toFixed(5) + ')' : 'scale(' + (1 / +kx.toFixed(4)).toFixed(5) + ',1)' });
         rects.push({ t: t, x: P.x, y: P.y, w: P.w, h: P.h });
         if (t >= end) break;
       }
-      return { at: at, pose: pose, end: end, from: from, to: to, span: span, frames: [fF, fG, fS], rects: rects };
+      return { at: at, pose: pose, end: end, from: from, to: to, span: span, frames: [fF, fG, fS].concat(SK.map(function () { return fH; })), rects: rects };
     }
     /* a block that goes on with a trip is first only the trip under way, and takes its change in place at the first frame
        that is on time once it has been drawn. It runs on the trip's own clock (FO-231): its start time is the trip's, set
@@ -2634,7 +2664,7 @@
     var g0 = go ? go.K.from || 0 : 0;
     var from = go ? g0 + Math.floor(Math.max(0, (zero != null ? Math.min(at, tl - zero) : at) - g0) / FRAME_MS) * FRAME_MS : 0;
     var T = plan(at, go ? null : 0, from), start = performance.now() - at;
-    var parts = [F, G, S], anims = [], lead = null;
+    var parts = [F, G, S].concat(SK), anims = [], lead = null;
     parts.forEach(function (e, j) {
       if (!e) return;
       var a = e.animate(T.frames[j], { duration: T.span, easing: 'linear', fill: 'forwards' });
@@ -3336,6 +3366,13 @@
      is mounted after the frame's own layout, still before that frame is painted, instead of forcing the app's style for
      the whole new sheet inside the click (the editor's Customize screen: 28-38 ms forced on a P1000, 2026-10-16) */
   var MENU_HOT = '.pmu-pop, .pmr-menu-list, .pm6-tb-menu, #themeMenu';
+  /* FO-232: switcher items whose chosen mark the app sets on a frame of its own (Home's panel tabs: data-active, written by
+     the strip's render in the frame after the click). Under Reduce Motion no press moves their chip (the pointerdown
+     below steps aside), so the mark is all that does: it syncs after the layout of the frame that sets it, and the chip is
+     on the chosen tab in the first frame that paints it chosen. On the lazy sync it stayed on the tab left for the 140 ms
+     timer and the next frame's layout (100-217 ms, 2 to 13 frames, 8 presses of 10 on the 12e page). In motion the press
+     has already moved the chip, and these marks wait as before */
+  var CHOSEN_HOT = '.pmw-tab';
   function generatedMutation(rec) {
     var t = rec.target;
     if (t.nodeType === 1 && t.closest(GENERATED)) return true;
@@ -3368,7 +3405,7 @@
      window (a screen replaced, a card, a button) is handled as before. */
   function pipDecoration(r) { var n = r.target; n = n && n.nodeType === 1 ? n : n && n.parentElement; return !!(n && n.closest && n.closest('#pm-o55-onboarding .pst [aria-hidden="true"]')); }
   var mo = new MutationObserver(function (recs) {
-    var hot = false, menuHot = false, relevant = false, area = boardMoment() ? document.querySelector(BOARD_AREA) : null;
+    var hot = false, menuHot = false, relevant = false, area = boardMoment() ? document.querySelector(BOARD_AREA) : null, quiet = null;
     for (var i = 0; i < recs.length; i++) {
       if (pipDecoration(recs[i])) continue;
       /* an app redrew a strip and dropped its under-layer with the chip in it: the chip comes back in this frame, not after
@@ -3386,6 +3423,7 @@
       /* a <details> opening shows sheets that were not drawn: they are mounted in this frame (inClosedDetails) */
       if (recs[i].attributeName === 'open' && t.tagName === 'DETAILS') { hot = true; dirtyScope(t); if (t.open) bakeSoon(t); }
       if (t.matches(HOT)) { hot = true; if (t.matches(MENU_HOT)) menuHot = true; }
+      else if (recs[i].attributeName === 'data-active' && t.matches(CHOSEN_HOT) && (quiet == null ? (quiet = reduced()) : quiet)) hot = true;
       else for (var j = 0; j < recs[i].addedNodes.length; j++) { var nd = recs[i].addedNodes[j]; if (nd.nodeType === 1 && (nd.matches(HOT) || nd.matches('.pmu-card') || (nd.querySelector && nd.querySelector('.pmr-menu-list, .pmu-card, #pm-settings-root .segmented')))) { hot = true; if (area && (nd.matches(MENU_HOT) || (nd.querySelector && nd.querySelector('.pmr-menu-list')))) menuHot = true; break; } }
     }
     if (!relevant) return;
@@ -3466,7 +3504,8 @@
     /* data-col-top: the onboarding window's column, held at a top and centred again on a window resize, moves its tab strips
        with no size changing (60-ui-core.js holdColumn); its layer is HOT, so their chips sync after that frame's layout (SW-25).
        data-active: Home's panel tabs mark the chosen tab with it alone (FO-197); under Reduce Motion nothing else synced
-       their chip, which stayed on the tab left in one press of five (Alexis, sandbox) */
+       their chip, which stayed on the tab left in one press of five (Alexis, sandbox), and under Reduce Motion it syncs
+       their chip in the frame that sets it (CHOSEN_HOT, FO-232) */
     mo.observe(document.body, { subtree: true, childList: true, attributes: true, attributeOldValue: true, attributeFilter: ['class', 'hidden', 'data-open', 'data-lg-surface', 'open', 'data-col-top', 'data-active'] });
     if (window.ResizeObserver) { var ro = new ResizeObserver(function (entries) { if (dragHeld()) { entries.forEach(function (en) { heldScopes.push(en.target); }); flushHeldSoon(); return; } entries.forEach(function (en) { dirtyScope(en.target); }); lazySync(false); }); ['.app-shell', '.left-panel', '#sidePanelSlot', '#chatPanel', '#pmuBoard', '#pmuApp'].forEach(function (s) { var e = document.querySelector(s); if (e) ro.observe(e); }); }
     /* The title bar lays out the brand, the project box and then the page tabs, so whenever the box changes width (another
