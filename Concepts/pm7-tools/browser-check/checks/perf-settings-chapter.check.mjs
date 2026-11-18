@@ -19,7 +19,7 @@
 // Looks: Basic Dark, Friendly Light, Retro Dark, Glass Dark, NieR Light by default (`--set looks=`, `all` for ten), each
 // set through Settings' Theme rows and guarded as painted (helpers/settings-look.mjs). Switches: General, AI & Providers
 // and Code & Tools, both ways (`--set seq=a:b,...`). Both surfaces (`--set sandbox=0` and `1`). `--set motion=reduce`
-// runs under Reduced Motion. `--set appReduce=1` exercises the app preference with unrestricted system motion in More options.
+// runs under Reduced Motion. `--set appReduce=1` exercises the app preference; combine with `motion=reduce` to cover both sources in More options.
 // `--set settle=<ms>` waits after each look change (default 4000).
 import { setLookBySetting, guardPaintedLook } from '../helpers/settings-look.mjs';
 import { muteSound } from '../helpers/quiet-page.mjs';
@@ -332,7 +332,7 @@ const ARM_MORE = () => {
 	};
 	R.stop = () => { window.removeEventListener('click', click, true); document.removeEventListener('click', beforeDefault); Element.prototype.animate = animate; };
 };
-async function moreOptionsRow(t, f, label) {
+async function moreOptionsRow(t, f, label, expectedReduced) {
 	await f.locator('#pm-settings-root .domain-link[data-domain="code"]').first().click();
 	await t.page.waitForTimeout(700);
 	await f.locator('#pm-settings-root [data-global-search]').fill('general.interaction.spellcheck-words');
@@ -350,6 +350,7 @@ async function moreOptionsRow(t, f, label) {
 		await t.check(`${label}: More options was closed and ${r.deferred ? 'held pending sections' : 'was fully drawn on eager main'} at the click`, r.clicked && r.closedClick && (r.deferred ? r.pendingClick > 0 : r.pendingClick === 0), JSON.stringify(r));
 		await t.check(`${label}: all rows are filled before the summary's native default`, r.pendingBeforeDefault === 0, JSON.stringify(r));
 		await t.check(`${label}: the opening finished with all rows filled`, r.done && !r.cancelled && r.pendingEnd === 0 && r.rows > 0, JSON.stringify(r));
+		await t.check(`${label}: disclosure uses the requested motion state`, r.reduced === expectedReduced, `requested ${expectedReduced}, observed ${r.reduced}`);
 		await t.check(`${label}: ${r.reduced ? 'Reduced Motion uses native opening' : 'the animation ends at the filled body\'s natural height'}`, r.reduced ? r.animations === 0 : r.animations === 1 && Math.abs(r.endpoint - r.natural) <= 1, `endpoint ${r.endpoint}; natural ${r.natural}; animations ${r.animations}`);
 		await t.check(`${label}: no row is clipped by the opening's final height`, r.done && r.rows > 0 && r.clipped?.length === 0, JSON.stringify(r.clipped || []) + (r.done ? '' : '; opening did not finish'));
 	} finally { await f.evaluate(() => window.__pscMore.stop()); }
@@ -731,20 +732,25 @@ for (const surface of ['normal', 'sandbox']) {
 		if (!t.app.surfaces().includes(surface)) { await t.check(`${surface} surface not asked for`, true); return; }
 		await t.viewport(1920, 1080);
 		await muteSound(t.page);
-		const reduced = t.args.motion === 'reduce';
-		await t.emulate({ reducedMotion: reduced ? 'reduce' : 'no-preference' });
+		const systemReduced = t.args.motion === 'reduce', appReduced = t.args.appReduce === '1';
+		/* App-only explicitly clears system emulation; combined keeps both sources enabled (R106 T1). */
+		await t.emulate({ reducedMotion: systemReduced ? 'reduce' : 'no-preference' });
 		const f = await t.app.open({ sandbox: surface === 'sandbox' });
 		await t.app.resetLayout().catch(() => {});
 		await f.locator('#tab-settings').click();
 		await t.settle();
-		if (t.args.appReduce === '1') {
-			await f.evaluate(() => window.PM12_KIMI.setSettingFromHost('general.visual.reduce-animations', true));
-			await t.check(`${surface}: app preference reduces motion without a system request`, await f.evaluate(() => document.documentElement.dataset.motion === 'reduced' && !matchMedia('(prefers-reduced-motion: reduce)').matches));
-		}
+		await f.evaluate(on => window.PM12_KIMI.setSettingFromHost('general.visual.reduce-animations', on), appReduced);
+		const sources = await f.evaluate(() => ({
+			app: window.PM12_KIMI.getState().settings['general.visual.reduce-animations'] === true,
+			system: matchMedia('(prefers-reduced-motion: reduce)').matches,
+			attribute: document.documentElement.dataset.motion === 'reduced'
+		}));
+		await t.check(`${surface}: motion sources match app=${appReduced}, system=${systemReduced}`,
+			sources.app === appReduced && sources.system === systemReduced && (!appReduced || sources.attribute), JSON.stringify(sources));
 		for (const look of String(t.args.moreLooks || 'basic-dark,nier-light').split(',')) {
 			await setLookBySetting(t, f, look);
 			if (!(await guardPaintedLook(t, f, look, `${look} ${surface}`))) return;
-			await moreOptionsRow(t, f, `${look} ${surface}`);
+			await moreOptionsRow(t, f, `${look} ${surface}`, systemReduced || appReduced);
 		}
 	};
 }
