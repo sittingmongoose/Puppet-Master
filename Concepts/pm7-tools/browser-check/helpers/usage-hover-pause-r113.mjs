@@ -209,13 +209,19 @@ async function neutralDonutRoll(t,f,label,park) {
 		r.stop=()=>{sc.removeEventListener('wheel',capture,true);sc.removeEventListener('wheel',bubble);document.removeEventListener('pointermove',move,true);return {...r,stop:undefined,after:read()};};
 	});
 	await f.evaluate(()=>PMU.board.setVisible('an-model-donut',true));
+	// Settle the card/legend entrance first. Reproduce its authored centre-roll path independently: a quiet entrance
+	// legitimately has no roll, and motion of the entering card must not satisfy the number's painted-motion verdict.
+	await t.page.waitForTimeout(1800);
+	await f.evaluate(()=>{const chart=document.querySelector('#pmuBoard [data-widget="an-model-donut"] .pmu-c-donut')._pmuChart,cv=chart.el.querySelector('.pmu-dc-v');cv.removeAttribute('data-shown');PMU.charts.roll(cv,chart._centreNum,chart._centreFmt,{dur:1000,delay:300});});
 	await f.waitForFunction(()=>{const cv=document.querySelector('#pmuBoard [data-widget="an-model-donut"] .pmu-dc-v');return !!cv?.querySelector('.pmu-odo-s')&&cv.getAnimations({subtree:true}).some(a=>a.playState==='running');},null,{timeout:5000}).catch(()=>{});
 	await t.page.mouse.wheel(0,-1);
 	const centre=f.locator('#pmuBoard [data-widget="an-model-donut"] .pmu-dc-v');
+	// Let the wheel's outgoing/returning card lights settle too; the delayed number roll is still running afterward.
+	await t.page.waitForTimeout(400);
 	await t.moving(centre,label+'R113 P7 neutral centre retains painted number-roll motion after wheel',{ms:300,count:5,scroll:false});
 	await t.page.waitForTimeout(900);
 	const rec=await f.evaluate(()=>window.__uhpR113.stop()),w=rec.wheels[0];t.log(label+'R113 P7 neutral roll: '+JSON.stringify(rec));
-	await t.check(label+'R113 P7 could judge: real add entrance is rolling, no donut selection, trusted wheel over neighbor with still pointer',rec.wheels.length===1&&w.trusted&&w.card==='token-trend'&&w.before.strips>0&&w.before.running>0&&w.before.remaining>=600&&!w.before.hot&&!w.before.donutHovered&&!w.before.live&&!rec.moves,JSON.stringify(rec));
+	await t.check(label+'R113 P7 could judge: authored centre roll after settled add, no selection, trusted neighbor wheel and still pointer',rec.wheels.length===1&&w.trusted&&w.card==='token-trend'&&w.before.strips>0&&w.before.running>0&&w.before.remaining>=900&&!w.before.hot&&!w.before.donutHovered&&!w.before.live&&!rec.moves,JSON.stringify(rec));
 	await t.check(label+'R113 P7 wheel start preserves the neutral donut digit strip and its running roll',w?.after.op==='wheel'&&w.after.sameStrip&&w.after.strips>0&&w.after.running>0,JSON.stringify(w));
 	await park();await f.evaluate(on=>{PMU.board.reset('room');if(on)PMU.live.resume();},on);await t.page.waitForTimeout(1800);
 	return {kind:'roll',rec};
