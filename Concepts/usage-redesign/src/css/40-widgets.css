@@ -594,7 +594,9 @@ html[data-o55-nier="on"] #panel-usage .pmu-skytrack { border-radius: 0; backgrou
   background: radial-gradient(circle at 35% 30%, var(--cb, var(--c)), var(--c) 70%); box-shadow: 0 0 0 1.5px var(--pmu-card), 0 0 14px -2px color-mix(in srgb, var(--c) 60%, transparent); }
 #panel-usage .pmu-atdot.is-est { background: color-mix(in srgb, var(--c) 72%, var(--pmu-card)); box-shadow: 0 0 0 1.5px var(--pmu-card); }
 #panel-usage .pmu-atdot.is-pending { background: transparent; border: 1.5px dashed var(--c); box-shadow: none; }
-#panel-usage .pmu-atdot:hover:where(:not(.pmu-board:is([data-op="wheel"],[data-wheel-handoff]) *)) { z-index: 2; box-shadow: 0 0 0 1.5px var(--pmu-card), 0 0 0 3px color-mix(in srgb, var(--c) 55%, transparent); }
+/* Overlapping attempt dots keep their tooltip hit order during the wheel pause. */
+#panel-usage .pmu-atdot:hover { z-index: 2; }
+#panel-usage .pmu-atdot:hover:where(:not(.pmu-board:is([data-op="wheel"],[data-wheel-handoff]) *)) { box-shadow: 0 0 0 1.5px var(--pmu-card), 0 0 0 3px color-mix(in srgb, var(--c) 55%, transparent); }
 #panel-usage .pmu-ataxis { position: relative; height: 22px; }
 #panel-usage .pmu-ataxis span { position: absolute; top: 6px; transform: translateX(-50%); font-family: var(--pmu-mono); font-size: 11px; letter-spacing: .04em; color: var(--pmu-ink-3); white-space: nowrap; }
 #panel-usage .pmu-ataxis span.is-now { transform: translateX(-100%); color: var(--pmu-ink-2); font-weight: 600; }
