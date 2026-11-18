@@ -749,5 +749,47 @@ class BrowserProgramBindingTests(unittest.TestCase):
             self.assertEqual(GATE.authority_binding_failures(row), ["browser_program_contract_missing"])
 
 
+
+class Merge2Fix1BrowserTests(unittest.TestCase):
+    """FIX1: full ledger compatibility and bounded successor preservation."""
+    def test_whole_ledger_is_valid(self):
+        result = GATE.validate()
+        self.assertEqual(result["failures"], [])
+        self.assertEqual(result["status"], "pass")
+
+    def test_storage_reference_shape_and_cross_family_refusals(self):
+        schema = GATE.load_json("Plans/browser_event_admission.schema.json")
+        admission = GATE.load_json("Plans/browser_event_admission.json")
+        self.assertEqual(list(GATE.Draft202012Validator(schema).iter_errors(admission)), [])
+        row = next(r for r in admission["rows"] if r["event_type"] == "browser.workspace.closed")
+        prop = schema["properties"]["rows"]["items"]["properties"]["authority_contract_ref"]
+        for ref in ("Plans/other.md#SP-2500", "Plans/storage-plan.md#SP-x", "Plans/storage-plan.md#SP-02500",
+                    "Plans/storage-plan.md#SP-2500/trailing", "Plans/storage-plan.md#SP-2500x"):
+            with self.subTest(ref=ref):
+                self.assertTrue(list(GATE.Draft202012Validator(prop).iter_errors(ref)))
+        wrong = dict(row, authority_contract_ref="Plans/storage-plan.md#SP-2501")
+        self.assertEqual(list(GATE.Draft202012Validator(prop).iter_errors(wrong["authority_contract_ref"])), [])
+        self.assertTrue(GATE.browser_program_binding_failures(wrong))
+        self.assertEqual(GATE.browser_program_binding_failures(row), [])
+
+    def test_s5b_projection_keeps_real_changes_refused(self):
+        rows = GATE.load_json("Plans/event_family_registry.json")["families"]
+        admission = GATE.load_json("Plans/browser_event_admission.json")
+        report, failures = GATE.preexisting_preservation(admission, rows)
+        self.assertEqual(failures, [])
+        self.assertTrue(report["historical_original39_verified"] and report["historical_original40_verified"])
+        pins = json.loads((ROOT / "scripts/pm_ea_reviewed_successors.json").read_text())["families"]
+        for family_id in pins:
+            for field in ("family_revision", "semantic_owner_doc", "payload_owner_doc", "source_refs", "scope_policy"):
+                changed = copy.deepcopy(rows)
+                row = next(r for r in changed if r["family_id"] == family_id)
+                row[field] = ["Plans/forged.md#CV-1"] if field == "source_refs" else "forged"
+                with self.subTest(family=family_id, field=field):
+                    self.assertTrue(GATE.preexisting_preservation(admission, changed)[1])
+        for family_id in GATE.REVIEWED_GOAL_SUCCESSORS:
+            changed = [r for r in rows if r["family_id"] != family_id]
+            self.assertTrue(GATE.preexisting_preservation(admission, changed)[1])
+
+
 if __name__ == "__main__":
     unittest.main()
