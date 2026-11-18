@@ -79,5 +79,125 @@ class Recipes(unittest.TestCase):
         self.assertEqual(entry['rebuild'], 'recollect')
 
 
+    def test_capture_factory_root_ids_equal_inventory(self):
+        import json
+        import pm_goal_dg5_boundaries as bridge
+        class CallTimeBank(original.OriginalBank):
+            pass
+        uri = 'https://example.test/captured'
+        b = bank(CallTimeBank, {uri: {'$id': uri, 'type': 'integer'}})
+        expected_v = b.validator(uri)
+        key = (type(expected_v).__module__ + '.' + type(expected_v).__qualname__,
+               json.dumps(expected_v.schema, sort_keys=True), c._registry_digest(expected_v),
+               type(b).__qualname__)
+        expected_id = c.root_id(key)
+        saved_slots, saved_parent, saved_active = dict(c.SLOTS), bridge.PARENT_CALL[0], bridge.ACTIVE[0]
+        c.SLOTS.clear()
+        bridge.PARENT_CALL[0], bridge.ACTIVE[0] = True, False
+        try:
+            c.hook_bank(CallTimeBank, family='selftest')
+            self.assertEqual(b.errors(uri, 7), [])
+            self.assertTrue(b.errors(uri, True))
+            self.assertEqual({c.root_id(k) for k in c.SLOTS}, {expected_id})
+            captured = next(iter(c.SLOTS.values()))
+            self.assertEqual(captured['calls'], 2)
+            self.assertEqual(c._dump_entry(captured, expected_id)['rebuild'], 'recipe')
+        finally:
+            c.SLOTS.clear()
+            c.SLOTS.update(saved_slots)
+            bridge.PARENT_CALL[0], bridge.ACTIVE[0] = saved_parent, saved_active
+
+
+class Witnesses(unittest.TestCase):
+    def test_nested_witness_and_missing_evidence_are_checked(self):
+        schema = {'type': 'object', 'properties': {'n': {'anyOf': [{'type': 'integer'}, {'type': 'string'}]}}}
+        v = c.closure_validator(jsonschema.Draft202012Validator(schema), 'selftest-nested')
+        value = {'n': None}
+        clause = next(x for x in c.go.locations(c.go.errors_of(v, value)) if x.endswith('/anyOf/0/type'))
+        entry = dict(cls='KILLED', input_sha256=hashlib.sha256(pickle.dumps(value, protocol=5)).hexdigest())
+        self.assertIn(clause, c.go.locations(c.go.errors_of(v, value)))
+        result = c.verify_witnesses(v, {clause: entry}, {clause: pickle.dumps(value, protocol=5)})
+        self.assertEqual((result['passed'], result['failed'], result['unverifiable']), (1, 0, 0))
+        missing = c.verify_witnesses(v, {clause: entry}, {})
+        self.assertEqual((missing['passed'], missing['failed'], missing['unverifiable']), (0, 1, 0))
+
+    def test_selected_pair_not_first_confirmed_pair(self):
+        from unittest.mock import patch
+        target = 'dg5-root:pair/type'
+        ident = c.common.guard_for_location(target)
+        class Err:
+            oracle_guard, context = ident, ()
+        chosen = {'x': 3}
+        raw = pickle.dumps(chosen, protocol=5)
+        def errors(v, value, cut=frozenset()):
+            return [] if cut else [Err()]
+        def search(*args, **kwargs):
+            for value, cut in (({'x': 1}, frozenset()), ({'x': 1}, frozenset({ident})),
+                               (chosen, frozenset()), (chosen, frozenset({'another-cut'})),
+                               (chosen, frozenset({ident}))):
+                c.go.errors_of(None, value, cut)
+            return dict(cls='KILLED', input_sha256=hashlib.sha256(raw).hexdigest())
+        with patch.object(c.go, 'search_clause', search), patch.object(c.go, 'errors_of', errors):
+            saved = c._install_search_wrappers(None, None, 0)
+            try:
+                c.go.search_clause(target, 'type', 'dg5-root:pair', {}, {}, ident)
+            finally:
+                c._restore_search_wrappers(saved)
+        self.assertEqual(c._WIT['store'][target], raw)
+
+    def test_carry_loads_and_rechecks_raw_store(self):
+        import gzip
+        import json
+        import tempfile
+        from pathlib import Path
+        with tempfile.TemporaryDirectory() as temp:
+            path = Path(temp) / 'prior.json'
+            raw = pickle.dumps({'n': None}, protocol=5)
+            blob = gzip.compress(pickle.dumps({'clause': raw}, protocol=5))
+            (Path(temp) / 'witness.gz').write_bytes(blob)
+            path.write_text(json.dumps({'roots': {'root': {'clauses': {'clause': {'cls': 'KILLED'}},
+                'witness_store': {'path': 'witness.gz', 'sha256': hashlib.sha256(blob).hexdigest()}}}}))
+            self.assertEqual(c._carried_from([path])['root']['clause']['cls'], 'KILLED')
+            self.assertEqual(c._CARRIED_EVIDENCE['root']['raw']['clause'], raw)
+            # Integrity errors cannot silently remove carry evidence.
+            (Path(temp) / 'witness.gz').write_bytes(blob + b'bad')
+            with self.assertRaisesRegex(ValueError, 'hash mismatch'):
+                c._carried_from([path])
+        c._CARRIED_EVIDENCE.clear()
+
+    def test_legacy_reconstruction_keeps_verdict_and_records_provenance(self):
+        import pm_goal_dg5_reverify as replay
+        v = c.closure_validator(jsonschema.Draft202012Validator({'type': 'object',
+                               'properties': {'n': {'type': 'integer'}}}), 'selftest-legacy')
+        c.go.CURRENT[0] = v
+        nodes = c.go.walk(v)
+        clause = next(x for x in c.go.locations(c.go.errors_of(v, {'n': True})) if x.endswith('/n/type'))
+        entry = dict(cls='KILLED', path=['n'], edit='True', input_sha256='old-missing-witness')
+        control = {'n': 7}
+        rebuilt, problem = replay.reconstruct(v, nodes, clause, entry,
+                                               {replay.digest(control): control}, {})
+        self.assertIsNone(problem)
+        self.assertEqual(rebuilt['cls'], entry['cls'])
+        self.assertEqual(rebuilt['reference_reconstruction']['original_input_sha256'], entry['input_sha256'])
+        checked = c.verify_witnesses(v, {clause: rebuilt}, {}, {replay.digest(control): control})
+        self.assertEqual((checked['passed'], checked['failed']), (1, 0))
+        refused, problem = replay.reconstruct(v, nodes, clause, entry, {}, {})
+        self.assertIsNone(refused)
+        self.assertIsNotNone(problem)
+
+    def test_truncated_edit_reconstructed_without_eval(self):
+        import pm_goal_dg5_reverify as replay
+        edit = {'long': 'x' * 200}
+        entry = {'edit': repr(edit)[:80]}
+        self.assertEqual(replay.edits_for(entry, 'type', {'type': 'string'}, 'x', [edit]), [edit])
+        self.assertEqual(replay.typed_path({'x': [7]}, ['x', '0']), ('x', 0))
+
+    def test_annotation_memo_retains_source_identity(self):
+        memo = c.AnnotationMemo()
+        node = {'type': 'integer'}
+        c.annotate(node, 'selftest-retained', memo)
+        self.assertIs(memo.sources[id(node)], node)
+
+
 if __name__ == '__main__':
     unittest.main()

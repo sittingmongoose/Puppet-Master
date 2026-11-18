@@ -299,7 +299,9 @@ def check_witness_capture_pairing():
     class Err:
         def __init__(self, guard):
             self.oracle_guard = guard
+            self.context = []
 
+    closure.common._SCHEMA_LOCATIONS['ident-1'] = 'clause/1'
     orig_search, orig_errors = closure.go.search_clause, closure.go.errors_of
     
     def fake_errors(v, value, cut=frozenset()):
