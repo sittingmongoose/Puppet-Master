@@ -390,7 +390,7 @@ for (const surface of ['normal', 'sandbox']) {
 		await t.page.addInitScript(() => {
 			window.addEventListener('keydown', e => {
 				const R = window.__pscCovered;
-				if (!R || !['Tab', 'F3', 'f', 'F'].includes(e.key)) return;
+				if (!R || !['Tab', 'F3', 'f', 'F', 'a', 'A'].includes(e.key)) return;
 				R.seen = true; R.before = document.querySelectorAll('#pm-settings-root [data-o55-fill="pending"]').length;
 				const panel = document.getElementById('panel-settings');
 				R.active = panel.classList.contains('active'); R.inert = !!panel.closest('[inert]');
@@ -401,7 +401,7 @@ for (const surface of ['normal', 'sandbox']) {
 		await t.app.resetLayout().catch(() => {}); await f.locator('#tab-settings').click(); await t.settle();
 		/* Warm Usage before the pending-page setup; its normal first entry may otherwise consume the idle interval. */
 		await f.locator('#tab-usage').click(); await t.settle(); await f.locator('#tab-settings').click(); await t.settle();
-		for (const [cover, key] of [['resume', 'Tab'], ['resume', 'Shift+Tab'], ['usage', 'F3'], ['usage', 'Shift+F3'], ['usage', 'Control+f'], ['usage', 'Meta+f']]) {
+		for (const [cover, key] of [['resume', 'Tab'], ['resume', 'Shift+Tab'], ['usage', 'F3'], ['usage', 'Shift+F3'], ['usage', 'Control+f'], ['usage', 'Meta+f'], ['resume', 'Control+a'], ['resume', 'Meta+a'], ['usage', 'Control+a'], ['usage', 'Meta+a']]) {
 			await f.locator('#pm-settings-root .domain-link[data-domain="general"]').first().click(); await t.page.waitForTimeout(700);
 			await f.evaluate(cover => {
 				const root = document.getElementById('pm-settings-root');
@@ -414,7 +414,7 @@ for (const surface of ['normal', 'sandbox']) {
 					R.ready = true;
 				});
 				const after = e => {
-					if (!R.seen || !['Tab', 'F3', 'f', 'F'].includes(e.key)) return;
+					if (!R.seen || !['Tab', 'F3', 'f', 'F', 'a', 'A'].includes(e.key)) return;
 					R.after = root.querySelectorAll('[data-o55-fill="pending"]').length; R.done = true;
 				};
 				mo.observe(root, { childList: true, subtree: true, attributes: true, attributeFilter: ['class'] });
@@ -469,6 +469,93 @@ for(const surface of ['normal','sandbox']){
 			await t.check(`${surface}: Tab reached Usage while hidden Settings had pending lists`,r.seen&&r.hidden&&r.before>0,JSON.stringify(r));
 			await t.check(`${surface}: Tab constructs no hidden Settings list`,r.done&&r.after===r.before,JSON.stringify(r));
 		}finally{await f.evaluate(()=>window.__pscHidden.stop());}
+	};
+}
+for (const surface of ['normal', 'sandbox']) {
+	tests[`R106 P1 Select All includes pending chapter rows (${surface})`] = async (t) => {
+		if (!t.app.surfaces().includes(surface)) { await t.check(`${surface} surface not asked for`, true); return; }
+		await t.viewport(1920, 1080); await muteSound(t.page);
+		await t.emulate({ reducedMotion: t.args.motion === 'reduce' ? 'reduce' : 'no-preference' });
+		const f = await t.app.open({ sandbox: surface === 'sandbox' });
+		await t.app.resetLayout().catch(() => {}); await f.locator('#tab-settings').click(); await t.settle();
+		await f.locator('#pm-settings-root .domain-link[data-domain="general"]').first().click(); await t.page.waitForTimeout(700);
+		await f.evaluate(() => {
+			const root = document.getElementById('pm-settings-root'), pending = () => root.querySelectorAll('[data-o55-fill="pending"]').length;
+			const R = window.__pscSelectAll = { ready: false, seen: false };
+			const mo = new MutationObserver(() => { if (root.querySelector('.domain-link.active')?.dataset.domain === 'code') { mo.disconnect(); R.ready = true; } });
+			const selectAll = e => (e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'a';
+			const before = e => {
+				if (!selectAll(e)) return;
+				R.seen = true; R.before = pending();
+				R.targetPending = !!root.querySelector('#section-editor-terminal-look [data-o55-fill="pending"]');
+				R.chapterFocus = e.target.matches('.domain-link[data-domain="code"]') && document.activeElement === e.target;
+			};
+			const after = e => { if (selectAll(e)) { R.after = pending(); R.done = true; } };
+			mo.observe(root, { childList: true, subtree: true, attributes: true, attributeFilter: ['class'] });
+			window.addEventListener('keydown', before, true); document.addEventListener('keydown', after, true);
+			R.stop = () => { mo.disconnect(); window.removeEventListener('keydown', before, true); document.removeEventListener('keydown', after, true); getSelection().removeAllRanges(); };
+		});
+		try {
+			await f.locator('#pm-settings-root .domain-link[data-domain="code"]').first().click();
+			await f.waitForFunction(() => window.__pscSelectAll.ready, null, { timeout: 5000 });
+			await t.page.keyboard.press('Control+A');
+			const r = await f.evaluate(() => { const { stop, ...r } = window.__pscSelectAll; return { ...r, selectedTerminal: getSelection().toString().includes('Terminal colors') }; });
+			t.log(`${surface} Select All: pending ${r.before} -> ${r.after}, Terminal look pending ${r.targetPending}, chapter focus ${r.chapterFocus}, selected Terminal colors ${r.selectedTerminal}`);
+			await t.check(`${surface}: Select All reached the chapter button while Terminal look was pending`, r.seen && r.chapterFocus && r.before > 0 && r.targetPending, JSON.stringify(r));
+			await t.check(`${surface}: Select All filled every pending list during key dispatch`, r.done && r.after === 0, JSON.stringify(r));
+			await t.check(`${surface}: native selection includes Terminal colors before Copy`, r.selectedTerminal, JSON.stringify(r));
+		} finally { await f.evaluate(() => window.__pscSelectAll.stop()); }
+	};
+}
+for (const surface of ['normal', 'sandbox']) {
+	tests[`R106 P1 Select All inside editing controls leaves pending Settings alone (${surface})`] = async (t) => {
+		if (!t.app.surfaces().includes(surface)) { await t.check(`${surface} surface not asked for`, true); return; }
+		await t.viewport(1920, 1080); await muteSound(t.page);
+		await t.emulate({ reducedMotion: t.args.motion === 'reduce' ? 'reduce' : 'no-preference' });
+		const f = await t.app.open({ sandbox: surface === 'sandbox' });
+		await t.app.resetLayout().catch(() => {}); await f.locator('#tab-settings').click(); await t.settle();
+		for (const kind of ['input', 'textarea', 'contenteditable', 'plaintext-only', 'code-editor']) {
+			await f.locator('#pm-settings-root .domain-link[data-domain="general"]').first().click(); await t.page.waitForTimeout(700);
+			await f.evaluate(kind => {
+				const root = document.getElementById('pm-settings-root'), pending = () => root.querySelectorAll('[data-o55-fill="pending"]').length;
+				const R = window.__pscEditing = { ready: false, seen: false };
+				let fixture, control;
+				const mo = new MutationObserver(() => {
+					if (root.querySelector('.domain-link.active')?.dataset.domain !== 'code') return;
+					mo.disconnect();
+					fixture = document.createElement('div'); fixture.style.cssText = 'position:fixed;left:400px;top:30px;z-index:99999';
+					control = document.createElement(kind === 'input' || kind === 'textarea' ? kind : 'span');
+					if (kind === 'input' || kind === 'textarea') control.value = 'editing words';
+					else { control.textContent = 'editing words'; control.tabIndex = 0; }
+					if (kind === 'contenteditable') fixture.contentEditable = 'true';
+					if (kind === 'plaintext-only') control.contentEditable = 'plaintext-only';
+					if (kind === 'code-editor') fixture.className = 'cm-editor';
+					fixture.append(control); root.append(fixture); control.focus({ preventScroll: true });
+					if (kind === 'contenteditable' || kind === 'plaintext-only') {
+						const caret = document.createRange(); caret.selectNodeContents(control); caret.collapse(false);
+						getSelection().removeAllRanges(); getSelection().addRange(caret);
+					}
+					R.ready = true;
+				});
+				const key = e => (e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'a';
+				const before = e => { if (key(e)) { R.seen = true; R.before = pending(); R.focused = fixture.contains(e.target) && fixture.contains(document.activeElement); } };
+				const after = e => { if (key(e)) { R.after = pending(); R.prevented = e.defaultPrevented; R.done = true; } };
+				mo.observe(root, { childList: true, subtree: true, attributes: true, attributeFilter: ['class'] });
+				window.addEventListener('keydown', before, true); document.addEventListener('keydown', after, true);
+				R.selection = () => kind === 'input' || kind === 'textarea' ? control.value.slice(control.selectionStart, control.selectionEnd) : getSelection().toString();
+				R.stop = () => { mo.disconnect(); window.removeEventListener('keydown', before, true); document.removeEventListener('keydown', after, true); fixture?.remove(); getSelection().removeAllRanges(); };
+			}, kind);
+			try {
+				await f.locator('#pm-settings-root .domain-link[data-domain="code"]').first().click();
+				await f.waitForFunction(() => window.__pscEditing.ready, null, { timeout: 5000 });
+				await t.page.keyboard.press('Control+A');
+				const r = await f.evaluate(() => { const { stop, selection, ...r } = window.__pscEditing; return { ...r, selected: selection() }; });
+				t.log(`${surface} ${kind} Select All: pending ${r.before} -> ${r.after}, focused ${r.focused}, default prevented ${r.prevented}`);
+				await t.check(`${surface} ${kind}: Select All reached the editor with pending lists`, r.seen && r.focused && r.before > 0, JSON.stringify(r));
+				await t.check(`${surface} ${kind}: Select All fills no Settings list and keeps its native default`, r.done && r.after === r.before && !r.prevented, JSON.stringify(r));
+				if (kind !== 'code-editor') await t.check(`${surface} ${kind}: native Select All selects only its editing text`, r.selected === 'editing words', JSON.stringify(r));
+			} finally { await f.evaluate(() => window.__pscEditing.stop()); }
+		}
 	};
 }
 for (const surface of ['normal','sandbox']) {

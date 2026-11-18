@@ -9,7 +9,7 @@
    - in idle slices once the arrival's entrance is over, one section a slice, in page order;
    - at once, before anything reads a far section: a jump to a section, a setting revealed (search, Details links,
      deep links), a page tab further down, the More options opening, End / Home / Ctrl+End, Tab / Shift+Tab, a press on
-     the scroll bar, Find in page (Ctrl/Cmd+F), printing.
+     the scroll bar, Find in page (Ctrl/Cmd+F), document Select All (Ctrl/Cmd+A), printing.
    A redraw in place (a changed setting) draws a filled section in full and a pending one as a shell again, so it never
    drops rows or builds them early. A fill only puts rows into a section's existing list: it replaces no layout, adds no
    page-enter and animates nothing, so the chapter's one entrance (pageIn) never plays twice. Manager pages are one
@@ -240,7 +240,11 @@ function o55fsInteractive() {
 document.addEventListener('keydown', e => {
   const find = (e.ctrlKey || e.metaKey) && (e.key === 'f' || e.key === 'F');
   const next = e.key === 'F3' && !e.ctrlKey && !e.metaKey && !e.altKey;
-  if (o55fs.pending.size && (find || next) && o55fsInteractive()) o55fsFillAll();
+  /* The native document selection must see every row before Copy (R106 P1). Editing controls keep their own
+     Select All, including inherited/plaintext-only contenteditable and an editor's focusable descendants. */
+  const editing = e.target && (e.target.isContentEditable || e.target.closest && e.target.closest('input, textarea, select, [contenteditable]:not([contenteditable="false"]), [role="textbox"], .cm-editor, .monaco-editor, .ace_editor, .CodeMirror'));
+  const selectAll = (e.ctrlKey || e.metaKey) && !e.altKey && (e.key === 'a' || e.key === 'A') && !editing;
+  if (o55fs.pending.size && (find || next || selectAll) && o55fsInteractive()) o55fsFillAll();
 }, true);
 /* Tab and Shift+Tab (F's L1, 2026-11-17): the browser picks the next control among those that exist, so focus put back
    without scrolling next to an unfilled section (a redraw's or a dialog's focus restore) would pass over it. Every
