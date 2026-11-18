@@ -235,6 +235,8 @@ async function roomMountRace(t, f, label, park, rm) {
 			let running = true, last = old, position = null;
 			const live = () => document.getElementById('pmuBoard');
 			const wheel = (e) => { r.wheels.push({ t: performance.now(), trusted: e.isTrusted }); position = [e.clientX, e.clientY]; };
+			// Native input can mount the room before the next paint; witness the initial hold after its wheel handler.
+			const held = () => { if (old.getAttribute('data-op') === 'wheel') r.oldPaused = true; };
 			const keydown = (e) => { if (e.key === 'Enter' || e.key === ' ') r.keys.push({ t: performance.now(), key: e.key, trusted: e.isTrusted, room: e.target.dataset.room }); };
 			const move = (e) => { if (position && (e.clientX !== position[0] || e.clientY !== position[1])) r.moves++; };
 			const end = (e) => r.ends.push({ t: performance.now(), live: e.detail?.board === live(), room: e.detail?.board?.dataset.room });
@@ -252,11 +254,11 @@ async function roomMountRace(t, f, label, park, rm) {
 				}
 				requestAnimationFrame(sample);
 			};
-			sc.addEventListener('wheel', wheel, { capture: true, passive: true });
+			sc.addEventListener('wheel', wheel, { capture: true, passive: true }); sc.addEventListener('wheel', held, { passive: true });
 			document.addEventListener('keydown', keydown, true); sc.addEventListener('pointermove', move, true);
 			document.addEventListener('pmu-op-end', end); requestAnimationFrame(sample);
 			r.stop = () => {
-				running = false; sc.removeEventListener('wheel', wheel, true); document.removeEventListener('keydown', keydown, true);
+				running = false; sc.removeEventListener('wheel', wheel, true); sc.removeEventListener('wheel', held); document.removeEventListener('keydown', keydown, true);
 				sc.removeEventListener('pointermove', move, true); document.removeEventListener('pmu-op-end', end);
 				const b = live(), card = b?.querySelector(':scope > .pmu-card:hover'), tools = card?.querySelector('.pmu-cardtools');
 				const hot = b?.querySelector(selector + ':hover'), id = hot?.dataset.prov;
@@ -290,7 +292,7 @@ async function roomMountRace(t, f, label, park, rm) {
 		// A busy mount can delay event delivery past 150 ms while the already-queued wheel task precedes the timer.
 		// Chrome may coalesce queued wheel inputs while busy; at least 80% must reach the page. The pause must
 		// actually stay alive: an end before the last tick rejects this run, regardless of that delivery gap.
-		const qualified = activated && rec.wheels.length >= INPUTS * 0.8 && rec.wheels.every((w) => w.trusted) && rec.ends.every((e) => e.t > last) && !rec.moves && during.length > 10 && rec.swaps > 0 && rec.liveRoom === room && rec.targetHovered && destinationTop === 0;
+		const qualified = (String(t.args.mountNoPause || '') === '1' || rec.oldPaused) && activated && rec.wheels.length >= INPUTS * 0.8 && rec.wheels.every((w) => w.trusted) && rec.ends.every((e) => e.t > last) && !rec.moves && during.length > 10 && rec.swaps > 0 && rec.liveRoom === room && rec.targetHovered && destinationTop === 0;
 		if (!qualified && attempt < 2) { t.log(S + `unjudgeable attempt ${attempt + 1}; repeat the same input route: ` + detail); continue; }
 		await t.check(S + 'could judge trusted keyboard mount within one stationary wheel burst', qualified, detail);
 		if (String(t.args.mountNoPause || '') === '1') {
