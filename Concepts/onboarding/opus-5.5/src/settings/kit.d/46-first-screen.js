@@ -223,15 +223,25 @@ root.addEventListener('pointerdown', e => {
   if (o55fs.pending.size && sc && e.target === sc) o55fsFillAll();   /* its scroll bar */
 }, true);
 root.addEventListener('scroll', e => { if (e.target.id === 'settings-document') o55fsFillNear(e.target); }, true);
+/* These global keys belong to Settings only while its panel can receive input. Onboarding leaves the active class
+   in place beneath its inert app; modal dialogs can cover Settings without changing either (R97 P1). */
+function o55fsInteractive() {
+  const panel = document.getElementById('panel-settings');
+  if (!panel || !panel.classList.contains('active') || panel.closest('[inert], [hidden], [aria-hidden="true"]')) return false;
+  if (document.documentElement.hasAttribute('data-o55-open') || document.getElementById('o55-open-scrim')) return false;
+  if (!panel.getClientRects().length || getComputedStyle(panel).visibility !== 'visible') return false;
+  return ![...document.querySelectorAll('[aria-modal="true"], dialog[open]')].some(d =>
+    !d.closest('[hidden], [inert], [aria-hidden="true"]') && d.getClientRects().length && getComputedStyle(d).visibility === 'visible');
+}
 document.addEventListener('keydown', e => {
   const find = (e.ctrlKey || e.metaKey) && (e.key === 'f' || e.key === 'F');
   const next = e.key === 'F3' && !e.ctrlKey && !e.metaKey && !e.altKey;
-  if (o55fs.pending.size && (find || next)) o55fsFillAll();
+  if (o55fs.pending.size && (find || next) && o55fsInteractive()) o55fsFillAll();
 }, true);
 /* Tab and Shift+Tab (F's L1, 2026-11-17): the browser picks the next control among those that exist, so focus put back
    without scrolling next to an unfilled section (a redraw's or a dialog's focus restore) would pass over it. Every
    pending section is filled before the key's default action, from any control, inputs too (Tab leaves an input), and
    from no control at all (the starting point of a click on text can sit anywhere). On window, so it runs first.
    Only the active Settings view participates: a Tab in Usage must not build its hidden chapter (R93 #8). */
-window.addEventListener('keydown', e => { if (e.key === 'Tab' && o55fs.pending.size && !e.ctrlKey && !e.metaKey && !e.altKey && document.getElementById('panel-settings')?.classList.contains('active')) o55fsFillAll(); }, true);
+window.addEventListener('keydown', e => { if (e.key === 'Tab' && o55fs.pending.size && !e.ctrlKey && !e.metaKey && !e.altKey && o55fsInteractive()) o55fsFillAll(); }, true);
 window.addEventListener('beforeprint', o55fsFillAll);

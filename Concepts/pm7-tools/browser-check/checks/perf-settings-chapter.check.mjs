@@ -347,6 +347,66 @@ async function moreOptionsRow(t, f, label) {
 }
 
 export const tests = {};
+/* R97 product 1: capture counts on the key's own dispatch, around the product listeners. Resume uses the existing
+   public action at Code commit, so the real onboarding window holds the still-pending Settings chapter inert. */
+for (const surface of ['normal', 'sandbox']) {
+	tests[`R97 keys under Resume setup and in Usage build no hidden Settings (${surface})`] = async (t) => {
+		if (!t.app.surfaces().includes(surface)) { await t.check(`${surface} surface not asked for`, true); return; }
+		await t.viewport(1920, 1080); await muteSound(t.page);
+		if (t.args.motion === 'reduce') await t.emulate({ reducedMotion: 'reduce' });
+		await t.page.addInitScript(() => {
+			window.addEventListener('keydown', e => {
+				const R = window.__pscCovered;
+				if (!R || !['Tab', 'F3', 'f', 'F'].includes(e.key)) return;
+				R.seen = true; R.before = document.querySelectorAll('#pm-settings-root [data-o55-fill="pending"]').length;
+				const panel = document.getElementById('panel-settings');
+				R.active = panel.classList.contains('active'); R.inert = !!panel.closest('[inert]');
+				R.modal = document.documentElement.hasAttribute('data-o55-open');
+			}, true);
+		});
+		const f = await t.app.open({ sandbox: surface === 'sandbox' });
+		await t.app.resetLayout().catch(() => {}); await f.locator('#tab-settings').click(); await t.settle();
+		/* Warm Usage before the pending-page setup; its normal first entry may otherwise consume the idle interval. */
+		await f.locator('#tab-usage').click(); await t.settle(); await f.locator('#tab-settings').click(); await t.settle();
+		for (const [cover, key] of [['resume', 'Tab'], ['resume', 'Shift+Tab'], ['usage', 'F3'], ['usage', 'Shift+F3'], ['usage', 'Control+f'], ['usage', 'Meta+f']]) {
+			await f.locator('#pm-settings-root .domain-link[data-domain="general"]').first().click(); await t.page.waitForTimeout(700);
+			await f.evaluate(cover => {
+				const root = document.getElementById('pm-settings-root');
+				const R = window.__pscCovered = { ready: false, seen: false };
+				const mo = new MutationObserver(() => {
+					if (root.querySelector('.domain-link.active')?.dataset.domain !== 'code') return;
+					mo.disconnect();
+					if (cover === 'resume') window.PM7_ONBOARDING_CINEMATIC.resume();
+					else document.getElementById('tab-usage').click();
+					R.ready = true;
+				});
+				const after = e => {
+					if (!R.seen || !['Tab', 'F3', 'f', 'F'].includes(e.key)) return;
+					R.after = root.querySelectorAll('[data-o55-fill="pending"]').length; R.done = true;
+				};
+				mo.observe(root, { childList: true, subtree: true, attributes: true, attributeFilter: ['class'] });
+				document.addEventListener('keydown', after, true);
+				R.stop = () => { mo.disconnect(); document.removeEventListener('keydown', after, true); };
+			}, cover);
+			try {
+				await f.locator('#pm-settings-root .domain-link[data-domain="code"]').first().click();
+				await f.waitForFunction(() => window.__pscCovered.ready, null, { timeout: 5000 });
+				if (cover === 'resume') await f.waitForFunction(() => document.documentElement.hasAttribute('data-o55-open') && !!document.getElementById('panel-settings').closest('[inert]'), null, { timeout: 5000 });
+				await t.page.keyboard.press(key);
+				const r = await f.evaluate(() => { const { stop, ...r } = window.__pscCovered; return r; });
+				t.log(`${surface} ${cover} ${key}: active ${r.active}, inert ${r.inert}, modal ${r.modal}; pending ${r.before} -> ${r.after}`);
+				await t.check(`${surface} ${cover} ${key}: key reached pending Settings behind the other view`, r.seen && r.before > 0 && (cover === 'resume' ? r.active && r.inert && r.modal : !r.active), JSON.stringify(r));
+				await t.check(`${surface} ${cover} ${key}: key constructs no hidden Settings list`, r.done && r.after === r.before, JSON.stringify(r));
+			} finally {
+				await f.evaluate(() => window.__pscCovered.stop());
+				if (cover === 'resume') {
+					await f.evaluate(() => window.PM7_ONBOARDING_CINEMATIC.close());
+					await f.waitForFunction(() => !document.documentElement.hasAttribute('data-o55-open'), null, { timeout: 5000 });
+				} else { await f.locator('#tab-settings').click(); await t.settle(); }
+			}
+		}
+	};
+}
 for(const surface of ['normal','sandbox']){
 	tests[`R93 #8 Tab in Usage does not fill hidden Settings (${surface})`]=async(t)=>{
 		if(!t.app.surfaces().includes(surface)){await t.check(`${surface} surface not asked for`,true);return;}
