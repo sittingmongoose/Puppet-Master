@@ -2,9 +2,9 @@
 
 Source: `Plans/Decision_Log.md`
 
-Source lines: L28747-L53958
+Source lines: L28747-L54002
 
-Source SHA256: `983aa861bcdb3d4c29664cf9ed0501c8edd30897480031f0e30b93e0aa5bbb36`
+Source SHA256: `de39dfd0788226c8df09671900d2fefcd37ac40fdaa4a3d295fab10fe1d3b131`
 
 ---
 
@@ -24867,7 +24867,7 @@ canonical_text: 'Under Jared''s EA-P3 A standing rule and DL-080 and the exact p
   2026-11-16.300 (SHA-256 a634791fb3f7ebaaa86f5b9c37971ac150ab7454f32c92043ab9de1e308be10b) becomes 2026-11-16.301
   (SHA-256 be075e429cc8fb5c47b8c06bee6153bee597ce7320f14292e001d0e16a5008ed); the count remains 517. The successor
   row''s canonical SHA-256 is ae9962c6468e18147c0f3202187c045322f601961e308163c422b859be1c670c. The 12/12 assessment
-  reports/event-authority-20261116/admission-merge-2/revisions/goal_run.stopped.json (SHA-256 c99832d1eafd45c4784e3bca54d52c2e421ac4c42d6ff27a37982ea20504f07d)
+  reports/event-authority-20261116/admission-merge-2/revisions/goal_run.stopped.json (SHA-256 7cb0d57b00a178ec981108d82b2f2e0a498648ff30e68b6e3c0e435a8e4f214f)
   carries the reviewed PASS cells and records the exact selector predicates completing pending schema/scope cells.
   Source grade verdicts are unchanged. DL-078 checkpoint pins and the legacy golden revision move in this commit.
   Historical resource bytes and dormant application editions remain as specified by the pinned row. Native execution
@@ -24918,7 +24918,7 @@ canonical_text: 'Under Jared''s EA-P3 A standing rule and DL-080 and the exact p
   2026-11-16.301 (SHA-256 be075e429cc8fb5c47b8c06bee6153bee597ce7320f14292e001d0e16a5008ed) becomes 2026-11-16.302
   (SHA-256 48ad8de5c1639db6c254db2352dc5d70acc4d70ccfdab4cdf2c169477f8ff534); the count remains 517. The successor
   row''s canonical SHA-256 is c4dfb79556f354978a690dcfd0ca96282d1ecd0ba95f1be33c4140070b6bbeb7. The 12/12 assessment
-  reports/event-authority-20261116/admission-merge-2/revisions/goal_run.blocked.json (SHA-256 c826ecdb8e14a77b73f7e744acc7a71c977aefe9e0847419cfe1356540c01fb0)
+  reports/event-authority-20261116/admission-merge-2/revisions/goal_run.blocked.json (SHA-256 003cd54c34b6e51c024a8d3636a309ea9c5491796da93fde26f66412281a55b7)
   carries the reviewed PASS cells and records the exact selector predicates completing pending schema/scope cells.
   Source grade verdicts are unchanged. DL-078 checkpoint pins and the legacy golden revision move in this commit.
   Historical resource bytes and dormant application editions remain as specified by the pinned row. Native execution
@@ -25219,4 +25219,48 @@ preserved_exact_tokens:
 negative_constraints:
 - No per-family requirement or grade verdict is relaxed.
 - No new family action or registry change is granted by this batch-boundary decision.
+```
+
+### DL-2444: Event Authority registers usage.event (admission merge 2)
+
+```yaml
+plan_unit_id: DL-2444
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: |-
+  Event Authority registers `usage.event` as family `event-family-usage-event` revision 1.0.0 in admission merge 2 of PNC-019. On 2026-11-14 Jared answered card EA-P2 with option B ("Two merges: the 173 ready now, then the rest"), so the remaining prepared families are admitted in this second merge after the first 173. `usage.event` is one of the rows DL-039 confirmed as persisted but unregistered and kept quarantined until its contract was complete; DL-414 requires every such row to reach its one outcome, and DL-039 authorized registering these rows family by family. Under DL-096 ("And yes I approve the DL-093 covering the families and later") this entry is Jared's decision entry for `usage.event`, and the family's DL-077 admission record cites it as its decision_ref. DL-400 keeps this family's own commit, entry, record and twelve-criterion assessment inside the batched landing.
+
+  The registry moves from revision 2026-11-16.306 (517 families, SHA-256 774f6d49c5662d6115e42b880c855b5d415fd3eb234627e7405a3f493bd83204) to 2026-11-18.1 (518 families, SHA-256 aa6188dd713badcfa9c902d24d917b764b23a6a9e2290bdb58de8776a2f79a5e). The appended row, canonical SHA-256 e8acb218b20549a1acde148e99c63fa322437cbd5d23ab21ff45e200b9053bb7, has scope policy application_or_project, payload `pm.event_payload.usage_event.v1` at Plans/dt_event_contracts.schema.json#/$defs/usage_event, semantic owner Plans/Contracts_V0.md#CV-614, payload owner Plans/Contracts_V0.md#CV-614 and retention setting `ai.usage.usage-retention` from Plans/storage-plan.md#SP-594 (anchor `first_durable_save`, immutable; no policy ID). Its payload versions are application `pm.event_payload.usage_event.v1` (setting `ai.usage.usage-retention` from Plans/storage-plan.md#SP-594 (anchor `first_durable_save`, immutable; no policy ID), producer requires_owner_adoption); project `pm.event_payload.usage_event.v1` (setting `ai.usage.usage-retention` from Plans/storage-plan.md#SP-594 (anchor `first_durable_save`, immutable; no policy ID), producer requires_owner_adoption). Under DL-078's standing rule the PNC-019 checkpoint moves in the same commit: EVENT_FAMILY_REGISTRY_REVISION 2026-11-18.1 and EVENT_FAMILY_REGISTRY_KERNEL_ROW_COUNT 518 in scripts/pm_pnc019_currentness.py, and the approved checkpoint count in the two DL-078 test files.
+
+  Depth: reports/event-authority-20261116/admission-merge-2/depth/usage.event.json (SHA-256 00d1486829f46837c811bcec5fd80e14a4b2b0f75e913d20851513e114d33a4c) grades all twelve criteria PASS. Eleven are carried from the reviewed grade reports/event-authority-20261116/admission-merge-2/usage-readiness-list.json (SHA-256 12d02f10f2c0ce60f70b96f939ae7fe576dab5e0e04a80ace55df50ddc66493e) with every cited quotation re-read at this commit's base, and membership_version is this registry row. Admission record: reports/event-authority-20260911/admission-records/usage.event.json.
+
+  Native execution stays NOT_RUN and every payload version's producer still requires owner adoption. This entry registers only `usage.event`. It changes no other family, validator, seal condition, retention assignment or holding bucket, and it grants no producer adoption, native claim, readiness clearance or governance seal. It lands only with its merge, after the merge's review pair and the coordinator's landing go.
+gui_related: false
+gui_classification_reason: Registers one event family in the Event Authority registry; no visual presentation changes.
+depends_on: [DL-039, DL-077, DL-078, DL-096, DL-400, DL-414]
+unblocks: []
+acceptance_criteria:
+- "The live registry contains exactly one row for usage.event, equal to the row whose canonical SHA-256 this entry records."
+- "The DL-077 admission record reports/event-authority-20260911/admission-records/usage.event.json passes the frozen seal check with no problem for this family."
+- "The checkpoint pins name revision 2026-11-18.1 and 518 families."
+validation_surfaces:
+- python3 Plans/.audits/event-authority-2026-08-12/independent-validator/pm_event_authority_independent_validator.py
+- python3 scripts/pm-implementation-readiness.py validate
+- python3 scripts/pm-ea-admission-writer.py verify
+risk_class: event_authority_admission
+reasoning_tier: high
+context_scope: event_authority_pnc019_admission_merge_2
+implementation_surfaces: [Plans/event_family_registry.json, scripts/pm_pnc019_currentness.py]
+node_compile_hint: {mode: owner_contract_only, create_worknodes: false, create_nodeseeds: false}
+source_lineage:
+- "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/ANSWERS_EA-P_20261114.md; SHA-256 8f8c89d237c83fa265aa2baeebd041b657e757014a3a806aff451efb6641f1ac (EA-P1 A, EA-P2 B, Jared 2026-11-14)"
+- "Plans/Decision_Log.md#DL-039 (confirmed_persisted_unregistered row, registered family by family)"
+- "reports/event-authority-20261116/admission-merge-2/usage-readiness-list.json; SHA-256 12d02f10f2c0ce60f70b96f939ae7fe576dab5e0e04a80ace55df50ddc66493e"
+- "reports/event-authority-20261116/admission-merge-2/usage-readiness-list.json; SHA-256 12d02f10f2c0ce60f70b96f939ae7fe576dab5e0e04a80ace55df50ddc66493e"
+- "scripts/pm-ea-admission-writer.py (pm-ea-admission-writer.v1)"
+preserved_exact_tokens: ["usage.event", "event-family-usage-event", "2026-11-18.1", "aa6188dd713badcfa9c902d24d917b764b23a6a9e2290bdb58de8776a2f79a5e", "e8acb218b20549a1acde148e99c63fa322437cbd5d23ab21ff45e200b9053bb7", "Two merges: the 173 ready now, then the rest", "And yes I approve the DL-093 covering the families and later"]
+negative_constraints:
+- No other family, validator, seal condition, retention assignment or holding bucket changes.
+- No producer adoption, native execution claim, readiness clearance or governance seal is granted.
 ```

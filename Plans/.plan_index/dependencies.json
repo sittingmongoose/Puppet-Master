@@ -5040,6 +5040,7 @@
     "DL-2441",
     "DL-2442",
     "DL-2443",
+    "DL-2444",
     "DL-412",
     "DL-413",
     "DL-520",
@@ -51329,6 +51330,36 @@
       "edge_type": "depends_on",
       "from": "DL-2443",
       "to": "DL-400"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "DL-2444",
+      "to": "DL-039"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "DL-2444",
+      "to": "DL-077"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "DL-2444",
+      "to": "DL-078"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "DL-2444",
+      "to": "DL-096"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "DL-2444",
+      "to": "DL-400"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "DL-2444",
+      "to": "DL-414"
     },
     {
       "edge_type": "depends_on",
@@ -162111,7 +162142,7 @@
       "to": "F3-395"
     }
   ],
-  "generated_at_utc": "2026-11-18T14:54:00Z",
+  "generated_at_utc": "2026-11-18T15:41:02Z",
   "nodes": [
     {
       "context_scope": "residual_plan_standardization",
@@ -212768,6 +212799,23 @@
         "heading_level": 3,
         "heading_line": 53899,
         "line": 53901,
+        "path": "Plans/Decision_Log.md"
+      },
+      "status": "accepted",
+      "unit_type": "decision"
+    },
+    {
+      "context_scope": "event_authority_pnc019_admission_merge_2",
+      "gui_related": false,
+      "owner_doc": "Plans/Decision_Log.md",
+      "plan_unit_id": "DL-2444",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority_admission",
+      "source_location": {
+        "heading": "DL-2444: Event Authority registers usage.event (admission merge 2)",
+        "heading_level": 3,
+        "heading_line": 53960,
+        "line": 53962,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -323008,10 +323056,10 @@
     "build_order_available": true,
     "build_order_blocked_node_count": 0,
     "cycle_blocker_count": 0,
-    "depends_on_edge_count": 27305,
+    "depends_on_edge_count": 27311,
     "downstream_blocked_node_count": 0,
-    "edge_count": 30528,
-    "node_count": 9464,
+    "edge_count": 30534,
+    "node_count": 9465,
     "true_cycle_component_count": 0,
     "unblocks_edge_count": 3223,
     "unresolved_reference_count": 0
