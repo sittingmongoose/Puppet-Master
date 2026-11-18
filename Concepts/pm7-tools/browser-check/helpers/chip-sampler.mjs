@@ -49,8 +49,12 @@ export const CHIP_SAMPLER = (opts) => {
 		return { rx: r2(rr2[0] * sx), ry: r2((rr2[1] != null ? rr2[1] : rr2[0]) * sy), rimX: r2(rim * sx), rimY: r2(rim * sy), sx: +sx.toFixed(4), sy: +sy.toFixed(4) };
 	};
 	addEventListener('pointerup', (e) => { if (W.on) W.ups.push(e.timeStamp); }, true);
+	// (stale: a person's input ran after this frame's callback and before its read, so what the read sees can hold changes
+	// that input made and no frame painted yet: Usage's click sets its chosen page at once, and an input task outranks the
+	// read's; the page then syncs its chip with the next frame's layout, painted together with the mark)
+	W.inputAt = -1; for (const ty of ['pointerdown', 'pointerup', 'click', 'keydown', 'keyup']) addEventListener(ty, () => { W.inputAt = performance.now(); }, true);
 	const read = (k) => {
-		const row = { k, ts: W.ts, tl: document.timeline.currentTime, now: performance.now(), s: {} };
+		const row = { k, ts: W.ts, tl: document.timeline.currentTime, now: performance.now(), s: {}, stale: k === 'task' && W.inputAt > W.tickAt };
 		for (const s of W.strips) {
 			const el = stripOf(s); if (!el) continue;
 			const sr = el.getBoundingClientRect();
@@ -95,7 +99,7 @@ export const CHIP_SAMPLER = (opts) => {
 	ch.port1.onmessage = () => { if (W.on) read('task'); };
 	W.via = window.scheduler && typeof scheduler.postTask === 'function' ? 'postTask' : 'message';
 	const post = W.via === 'postTask' ? () => { scheduler.postTask(() => { if (W.on) read('task'); }, { priority: 'user-blocking' }).catch(() => {}); } : () => ch.port2.postMessage(0);
-	const tick = (ts) => { if (!W.on) return; W.ts = ts; if (W.raf) read('raf'); post(); requestAnimationFrame(tick); };
+	const tick = (ts) => { if (!W.on) return; W.ts = ts; W.tickAt = performance.now(); if (W.raf) read('raf'); post(); requestAnimationFrame(tick); };
 	requestAnimationFrame(tick);
 	try {
 		new PerformanceObserver((list) => {
@@ -119,7 +123,7 @@ const near = (a, b, tol) => a && b && edges(a).every((v, i) => Math.abs(v - edge
 
 // one strip's task reads: { t (timeline time at the read), now, box, src, rec, st, ct, on, items, so: the strip's origin }
 export function chipRows(data, sel, kind = 'task') {
-	return data.rows.filter((r) => r.k === kind && r.s[sel]).map((r) => ({ t: r.tl, ts: r.ts, now: r.now, ...r.s[sel], box: r.s[sel].chip }));
+	return data.rows.filter((r) => r.k === kind && r.s[sel]).map((r) => ({ t: r.tl, ts: r.ts, now: r.now, stale: !!r.stale, ...r.s[sel], box: r.s[sel].chip }));
 }
 // a box in the strip's own coordinates (the strip can move: Usage's rooms slide in)
 const rel = (b, o) => (b && o ? [b[0] - o[0], b[1] - o[1], b[2], b[3]] : b);
@@ -281,8 +285,11 @@ export function stripShifts(shifts, stripBox) {
 // on that item (centres within tol + 1 px; a chip still fading in counts by where it is, faint). Per press (each
 // pointerup), the frames from the press until the chosen mark moved and until the chip was on it: the chip must reach
 // the chosen item in the same frame that first paints it chosen. Returns { off: [reads off], presses: [{ up, mark,
-// chip, lagFrames, lagMs }] }; a read with no chip at all counts as off.
-export function rmOnChosen(rows, ups, { tol = 2 } = {}) {
+// chip, lagFrames, lagMs }], stale }; a read with no chip at all counts as off; a stale read (input ran between its frame
+// and the read) is left out.
+export function rmOnChosen(rows0, ups, { tol = 2 } = {}) {
+	// (a stale read saw input that no frame had painted yet: it stands for no frame, and is left out)
+	const rows = rows0.filter((r) => !r.stale);
 	const c = (b) => [b[0] + b[2] / 2, b[1] + b[3] / 2];
 	const on = (r) => { const b = r.box || r.faint; if (!b || !r.on) return false; const p = c(b), q = c(r.on); return Math.abs(p[0] - q[0]) <= tol + 1 && Math.abs(p[1] - q[1]) <= tol + 1; };
 	const off = [], presses = [];
@@ -295,7 +302,7 @@ export function rmOnChosen(rows, ups, { tol = 2 } = {}) {
 		const ic = rows.findIndex((r, i) => i >= im && on(r));
 		presses.push({ up: +up.toFixed(1), mark: +rows[im].ts.toFixed(1), markFrames: im - i0, chip: ic < 0 ? null : +rows[ic].ts.toFixed(1), lagFrames: ic < 0 ? null : ic - im, lagMs: ic < 0 ? null : +(rows[ic].ts - rows[im].ts).toFixed(1) });
 	}
-	return { off, presses };
+	return { off, presses, stale: rows0.length - rows.length };
 }
 
 // FO-235: the chip keeps one edge. Along the strip's own axis (a vertical strip's y, else x) every trusted read draws the

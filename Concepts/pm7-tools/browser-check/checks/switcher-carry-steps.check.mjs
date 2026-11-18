@@ -147,7 +147,7 @@ export const tests = {
 						await t.check(`${tag}: every read shows the chip on an item, never between two (${off.length} off)`, off.length === 0, off.slice(0, 4).map((x) => JSON.stringify(x)).join('; '));
 						const rc = rmOnChosen(rows, smp.ups), late = rc.presses.filter((p) => p.lagFrames !== 0), mk = rc.presses.map((p) => p.markFrames);
 						const worst = rc.presses.reduce((m, p) => (p.lagFrames == null || (m && m.lagFrames != null && m.lagFrames >= p.lagFrames) ? m : p), null);
-						await t.check(`${tag}: the chip is on the chosen item from the first frame that paints it chosen (${rc.presses.length - late.length}/${rc.presses.length} presses; ${rc.off.length} reads off${worst && worst.lagFrames ? `; worst ${worst.lagFrames} frames, ${worst.lagMs} ms late` : ''}; chosen mark painted ${mk.length ? Math.min(...mk) : '?'}-${mk.length ? Math.max(...mk) : '?'} frames after the press)`,
+						await t.check(`${tag}: the chip is on the chosen item from the first frame that paints it chosen (${rc.presses.length - late.length}/${rc.presses.length} presses; ${rc.off.length} reads off, ${rc.stale} read after input left out${worst && worst.lagFrames ? `; worst ${worst.lagFrames} frames, ${worst.lagMs} ms late` : ''}; chosen mark painted ${mk.length ? Math.min(...mk) : '?'}-${mk.length ? Math.max(...mk) : '?'} frames after the press)`,
 							rc.presses.length >= 4 && late.length === 0 && rc.off.length === 0,
 							[...late.slice(0, 4).map((p) => `press t${p.up}: chosen painted t${p.mark}, chip on it ${p.chip == null ? 'never' : `t${p.chip} (${p.lagFrames} frames, ${p.lagMs} ms later)`}`), ...rc.off.slice(0, 3).map((x) => JSON.stringify(x))].join('; '));
 						cell.rm = rc;
