@@ -388,6 +388,19 @@ async function appliedHighlights(t, f, label, park) {
 		if (kind === 'tool') {
 			await t.check(S+'could judge a trusted press while the previously shown tool still visibly fades', pre.hovered && rec.press?.trusted && rec.press.paused && rec.press.opacity > 0.05 && !rec.moves, JSON.stringify(rec.press));
 			await t.check(S+'the visible menu tool receives the press and opens its menu', rec.press?.tool === 'menu' && rec.menuOpen, JSON.stringify({press:rec.press,menuOpen:rec.menuOpen}));
+			if (rec.menuOpen) {
+				const mb = await f.locator('.pmu-menu:not([aria-hidden="true"])').last().boundingBox(), cb = await target.boundingBox();
+				if (mb && cb) {
+					const candidates = [[mb.x+20,mb.y+mb.height-12],[mb.x+20,mb.y+12],[mb.x+mb.width-12,mb.y+mb.height-12]];
+					const off = candidates.find(([x,y])=>x<cb.x||x>cb.x+cb.width||y<cb.y||y>cb.y+cb.height) || candidates[0];
+					await t.page.mouse.move(off[0],off[1],{steps:4}); await t.page.waitForTimeout(400);
+				}
+				const hidden = await f.evaluate(()=>{const h=PMU.menu.current(), a=h?.anchor, tools=a?.closest('.pmu-cardtools');window.__uhpFocusAnchor=a;const cs=tools&&getComputedStyle(tools);return {menuFocus:!!h?.el.contains(document.activeElement),opacity:cs?parseFloat(cs.opacity):null,hitDisabled:!!cs&&(cs.visibility!=='visible'||cs.pointerEvents==='none'),pointerEvents:cs?.pointerEvents,hovered:!!tools?.closest('.pmu-card').matches(':hover'),discrete:CSS.supports('transition-behavior','allow-discrete')};});
+				await t.check(S+'could judge Escape from the menu after its trigger has fully faded', hidden.menuFocus && hidden.opacity===0 && hidden.hitDisabled && !hidden.hovered, JSON.stringify(hidden));
+				await t.page.keyboard.press('Escape'); await t.page.waitForTimeout(400);
+				const focus = await f.evaluate(()=>{const a=window.__uhpFocusAnchor;delete window.__uhpFocusAnchor;return {closed:!PMU.menu.current(),returned:!!a&&document.activeElement===a,visible:!!a?.matches(':focus-visible')};});
+				await t.check(S+'Escape returns keyboard focus to the faded trigger', focus.closed && focus.returned && focus.visible, JSON.stringify({hidden,focus}));
+			}
 			await f.evaluate(() => PMU.menu.close());
 		} else {
 			const shown=kind === 'provider' ? pre.hl>0 : kind === 'donut' ? pre.dim>0 && pre.hot>0 && pre.value!==rec.neutral.value : kind === 'column' ? pre.cols===1 && pre.bars : pre.lit && !pre.engineRunning;
