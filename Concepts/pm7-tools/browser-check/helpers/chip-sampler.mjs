@@ -67,11 +67,16 @@ export const CHIP_SAMPLER = (opts) => {
 					// a lens in a shared layer (Glass): the one over this strip, the same element read after read while it is shown
 					// over it (followed by identity, never by where it is, so a step of the lens is not mistaken for another lens)
 					const over = (q) => q[0] < sr.right && q[0] + q[2] > sr.left && q[1] < sr.bottom && q[1] + q[3] > sr.top;
-					const cands = [...document.querySelectorAll('.lg-lens:not(.lg-hop):not(.lg-bead)')].filter((l) => !l.closest('lg-under') && shown(l) && over(rr(l)));
+					// (all: every such lens drawn over it whatever its opacity, for faint: under Reduce Motion Glass fades its lens in
+					// at the new item from 0.3, glass.js syncStrip)
+					const all = [...document.querySelectorAll('.lg-lens:not(.lg-hop):not(.lg-bead)')].filter((l) => !l.closest('lg-under') && l.getClientRects().length && getComputedStyle(l).visibility !== 'hidden' && over(rr(l)));
+					const cands = all.filter(shown);
+					const was = s.lensEl || s.lensWas || null;
 					const keep = s.lensEl && cands.includes(s.lensEl) ? s.lensEl : cands[0] || null;
+					if (s.lensEl) s.lensWas = s.lensEl;
 					s.lensEl = keep;
 					if (keep) { chip = rr(keep); src = 'lens'; lenses = cands.length; }
-					else if (!faint && s.lensEl && s.lensEl.isConnected && s.lensEl.getClientRects().length) faint = rr(s.lensEl);
+					else if (!faint && all.length) { const f = was && all.includes(was) ? was : all.slice().sort((a, b) => +getComputedStyle(b).opacity - +getComputedStyle(a).opacity)[0]; faint = rr(f); }
 				}
 			}
 			const on = el.querySelector(s.active);
