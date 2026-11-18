@@ -87,15 +87,15 @@ async function pressNth(t, f, sel, i, label) {
 }
 // in the page: the strip's chosen item and the switcher's chip on it: a lens (under the labels, or in Glass's layers)
 // whose box sits on the item (centres within 3 px), and whether a carried block is up
-const CHIP_ON = ([sel, active]) => {
+const CHIP_ON = ([sel, active, faint]) => {
 	const s = [...document.querySelectorAll(sel)].find((e) => e.getClientRects().length); if (!s) return { strip: false };
 	const r = (e) => { const b = e.getBoundingClientRect(); return [b.left, b.top, b.width, b.height]; };
 	const on = s.querySelector(active), ob = on ? r(on) : null;
 	const lenses = [...s.querySelectorAll(':scope > lg-under > .lg-lens'), ...document.querySelectorAll('.lg-lenses-local > .lg-lens, #lg-lenses > .lg-lens, body > .lg-lenses > .lg-lens, .lg-lens:not(.lg-hop)')]
-		.filter((l, i, a) => a.indexOf(l) === i && l.getClientRects().length && +getComputedStyle(l).opacity > 0.5 && getComputedStyle(l).visibility !== 'hidden');
+		.filter((l, i, a) => a.indexOf(l) === i && l.getClientRects().length && (faint || +getComputedStyle(l).opacity > 0.5) && getComputedStyle(l).visibility !== 'hidden');
 	const near = ob && lenses.find((l) => { const b = r(l); return Math.abs(b[0] + b[2] / 2 - (ob[0] + ob[2] / 2)) < 3 && Math.abs(b[1] + b[3] / 2 - (ob[1] + ob[3] / 2)) < 3; });
 	const ul = s.querySelector(':scope > lg-under > .lg-lens');
-	return { strip: true, lensed: s.hasAttribute('data-lg-lensed'), under: !!ul, underBox: ul ? r(ul).map((v) => Math.round(v)) : null, on: ob, lens: near ? r(near) : null, block: !!s.querySelector(':scope > lg-over > .lg-carry'), motion: document.documentElement.getAttribute('data-motion') };
+	return { strip: true, lensed: s.hasAttribute('data-lg-lensed'), under: !!ul, underBox: ul ? r(ul).map((v) => Math.round(v)) : null, on: ob, lens: near ? r(near) : null, op: near ? +(+getComputedStyle(near).opacity).toFixed(2) : null, block: !!s.querySelector(':scope > lg-over > .lg-carry'), motion: document.documentElement.getAttribute('data-motion') };
 };
 
 export const tests = {
@@ -126,7 +126,10 @@ export const tests = {
 						const t0 = await f.evaluate(() => performance.now());
 						await pressNth(t, f, g.items, i, `${tag} ${i}`);
 						// two frames after the choice: under Reduce Motion the chip is there already
-						if (mode !== 'motion') { await t.page.waitForTimeout(260); const q = await f.evaluate(CHIP_ON, [g.strip.sel, g.strip.active]); quick.push(q); }
+						// (a lens still fading in counts where it is: Retro and Glass fade the chip in at the chosen item from 0.3 under
+						// Reduce Motion, so read at opacity 0.5 or less it was no chip at all, and fo229-combined's Retro rows failed with
+						// the chip under the labels centred on the chosen item; switcher-carry-steps judges this frame by frame, FO-232)
+						if (mode !== 'motion') { await t.page.waitForTimeout(260); const q = await f.evaluate(CHIP_ON, [g.strip.sel, g.strip.active, true]); quick.push(q); }
 						await t.page.waitForTimeout(mode === 'motion' ? 900 : 500);
 						const st = await f.evaluate(CHIP_ON, [g.strip.sel, g.strip.active]);
 						const ok = !!st.lens;

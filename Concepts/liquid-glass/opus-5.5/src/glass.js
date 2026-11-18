@@ -2296,6 +2296,7 @@
          2026-11-13: "it almost jumps twice"), and a chip that had landed snapped to the new box. */
       var K = L.carry;
       if (K && K.pose && L.rect && Math.max(Math.abs(L.rect.x - R.x), Math.abs(L.rect.y - R.y), Math.abs(L.rect.w - R.w), Math.abs(L.rect.h - R.h)) > 0.5) {
+        if (startUnknown(L, strip)) return;
         var go = { K: K, at: carryAge(K), zero: carryZero(K), retarget: true };
         endHop(L); carry(L, K.A, R, strip, cfg, target, K.vertical, go); return;
       }
@@ -2326,6 +2327,7 @@
        the strip scrolled or reflowed) is followed at once (Jared #21: a lens measured mid-entrance slid 50 px into
        place after the page had landed) */
     if (L.tgt === target && !L.dragging) { if (L.hopFrames) { hopSettle(L); if (L.hopFrames) return; } stopLensTravel(L); setLensBox(L, R); return; }
+    if (CARRY[switchMotion] && !isGlass() && startUnknown(L, strip)) return;
     L.tgt = target;
     var from = visualRect(L) || A, vertical = !!cfg.vertical || Math.abs(from.y - R.y) > Math.abs(from.x - R.x);
     if (switchMotion !== 'glide' && !isGlass()) { hop(L, from, R, strip, cfg, target, vertical); return; }
@@ -2401,7 +2403,7 @@
   function endHop(L) {
     if (L.hopT) { clearTimeout(L.hopT); L.hopT = 0; }
     if (L.hopSafety) { clearTimeout(L.hopSafety); L.hopSafety = 0; }
-    if (L.hopFrames) { L.hopFrames.forEach(function (F) { F.getAnimations().forEach(function (a) { a.cancel(); }); F.remove(); }); L.hopFrames = null; }
+    if (L.hopFrames) { L.hopFrames.forEach(function (F) { F.getAnimations({ subtree: true }).forEach(function (a) { a.cancel(); }); F.remove(); }); L.hopFrames = null; }
     /* the chip under the labels shows the moment the blocks go */
     if (L.hopHide) { var hh = L.hopHide; L.hopHide = null; if (L.anim === hh) L.anim = null; hh.cancel(); }
     var over = L.strip && L.strip.__lgOver; if (over && !over.children.length) { over.remove(); L.strip.__lgOver = null; if (L.strip.__lgPosOver && !L.strip.__lgUnder) { L.strip.style.removeProperty('position'); } L.strip.__lgPosOver = false; }
@@ -2422,7 +2424,7 @@
     /* (and not before the compositor has reported the block's start, nor while its change is still to come: until then
        its age is an estimate, or its end is not its tab's, and a block cut short lands the chip under the labels a step
        ahead of it, 14 px in Basic Light on Alexis) */
-    if (K && ((K.anim && K.anim.startTime == null && K.anim.playState !== 'finished') || K.change)) wait = Math.max(wait, 16);
+    if (K && ((K.anim && K.anim.startTime == null && K.anim.playState !== 'finished') || K.change || K.due)) wait = Math.max(wait, 16);
     if (wait > 0) { if (!L.hopT) L.hopT = setTimeout(function () { L.hopT = 0; hopSettle(L); }, wait + 1); return; }
     endHop(L);
   }
@@ -2510,6 +2512,22 @@
   }
   /* when the trip's age was 0, on the wall clock; null until a frame has drawn it */
   function carryZero(K) { var a = K.anim; return a && a.startTime != null ? a.startTime - (K.from || 0) : K.drawn != null ? K.drawn - K.at : null; }
+  /* a carried block whose start the compositor has not reported yet (one made late in a long frame: the report comes with
+     the next frame) has no clock the main thread can read, and a block made to go on from it now has only a guess at its
+     age: held at the age the main thread last knew while the compositor had carried the trip on for 150 ms, it was drawn
+     32 px back at the trip's start (Friendly Dark, a quick back-and-forth). A press or a resized tab that would make a
+     block go on from it waits for the report, which the next frame brings, and the block flies on meanwhile (up to 30
+     frames, then as before) */
+  function startUnknown(L, strip) {
+    var K = L.carry, a = K && K.anim;
+    if (!K || !K.pose || !L.hopFrames || !a || a.startTime != null || a.playState === 'finished') return false;
+    if ((K.waits = (K.waits || 0) + 1) > 30) return false;
+    /* (and the block does not land meanwhile: landed at its own box while its tab had grown, the chip under the labels
+       would take the tab's new box at once) */
+    K.due = true;
+    requestAnimationFrame(function () { K.due = false; if (L.carry === K) queueSync(strip); });
+    return true;
+  }
   var CARRY_REACH = 8;   /* px past the trip's ends along the strip: a label the squashed or tilted chip can touch */
   var CARRY_FOLLOW = 0.5, CARRY_FOLLOW_MS = 110;   /* the least time a carried chip takes to follow its tab to a new box: half
                                                      its trip, never under 110 ms (Basic's snap is 110 ms, Friendly's hop 440) */
@@ -2526,6 +2544,34 @@
      long task before the first frame (190 ms, Basic Light, Alexis: the block stepped the whole way), a frame drawn
      before that start showed the block untransformed (head film F1344), and the compositor drew the first frame after a
      late one 100 ms back along the trip (F1195). */
+  /* FO-235: a carried block is boxed where its trip ends and scaled to each pose, and its material scaled with it: leaving
+     Friendly's 111 px Agents tab for its 36 px icon tab, the block drew its 2 px rim 6 px wide and its 9 px corners 27 px
+     long, a pill with a thick border and the mint narrowed 4 px a side, from the frame it took over from the chip under
+     the labels (and 0.6 px and 3 px the other way: thin and square); Basic's 3 px corners the same. So the block keeps its
+     box, keyframes and clock, and paints nothing of its own: its material (fill, rim and corner, read from the block as
+     every rule of the look and its strip shape it, a rail skin's corner or forced colours included) is drawn by two halves,
+     one from each end of the trip, clipped at the block's middle, each a skin long enough to pass the middle whose own
+     keyframes undo the block's scale along the trip (fH in carry's plan). The rim and corners are then the chip's at every
+     size the block takes, as the chip under the labels draws them; across the trip they keep the block's scale, the hop's
+     squash. The sticker's shadow is cut the same way. The inverted labels stay in the block, which still clips them */
+  function carrySkins(F, S, vertical, len) {
+    var cs = getComputedStyle(F), out = [];
+    var mat = { borderRadius: cs.borderRadius, backgroundImage: cs.backgroundImage, backgroundColor: cs.backgroundColor, backgroundSize: cs.backgroundSize,
+      backgroundPosition: cs.backgroundPosition, backgroundRepeat: cs.backgroundRepeat, boxShadow: cs.boxShadow, forcedColorAdjust: cs.forcedColorAdjust };
+    var shade = S ? { borderRadius: cs.borderRadius, backgroundColor: getComputedStyle(S).backgroundColor, forcedColorAdjust: cs.forcedColorAdjust } : null;
+    [[F, mat], [S, shade]].forEach(function (p) {
+      var host = p[0]; if (!host) return;
+      if (vertical) host.setAttribute('data-lg-axis', 'y');
+      ['b', 'a'].forEach(function (k) {
+        var half = el('i', { class: 'lg-carry-half', 'data-half': k, 'aria-hidden': 'true' }), skin = el('i', { class: 'lg-carry-skin', 'aria-hidden': 'true' });
+        for (var q in p[1]) skin.style[q] = p[1][q];
+        skin.style[vertical ? 'height' : 'width'] = len + 'px';
+        half.appendChild(skin); host.insertBefore(half, host.firstChild); out.push(skin);
+      });
+      host.style.setProperty('background', 'none', 'important'); host.style.setProperty('box-shadow', 'none', 'important'); host.style.setProperty('border-radius', '0', 'important');
+    });
+    return out;
+  }
   function carry(L, A, B, strip, cfg, target, vertical, go) {
     if (!L.under || reduced()) { setLensBox(L, B); return; }
     var motion = switchMotion, C = CARRY[motion], ease = bezierEase(C.ease), dur = C.dur, hopping = motion === 'hop';
@@ -2547,7 +2593,7 @@
     F.appendChild(G);
     if (stick) { S = el('i', { class: 'lg-carry-shadow', 'aria-hidden': 'true' }); if (tag) S.setAttribute('data-lg-for', tag); box(S); over.appendChild(S); }
     over.appendChild(F);
-    if (S) S.style.borderRadius = getComputedStyle(F).borderRadius;   /* the block's own corner, whatever shapes it (a rail skin's) */
+    var SK = carrySkins(F, S, vertical, Math.ceil(1.1 * Math.max.apply(null, ends.map(function (r) { return vertical ? r.h : r.w; }))) + 8);
     /* the lift stays inside the strip's own box: a strip at the top of a scroller (onboarding's segments, first in their
        pane) clips anything above it, and a sticker lifted 6 px there lost its top edge for six frames (Windows film) */
     if (go) { liftX = go.K.liftX; liftY = go.K.liftY; }
@@ -2585,7 +2631,7 @@
         }
         from = from0;
       } else pose = function (t) { return carryPose(motion, ease(Math.min(1, t / dur)), A, B); };
-      var span = end - from, fF = [], fG = [], fS = [], rects = [], n = Math.max(2, Math.ceil(span / FRAME_MS));
+      var span = end - from, fF = [], fG = [], fS = [], fH = [], rects = [], n = Math.max(2, Math.ceil(span / FRAME_MS));
       for (var i = 0; i <= n; i++) {
         var t = Math.min(end, from + i * FRAME_MS), o = (t - from) / span, P = pose(t);
         var lx = hopping ? -liftX * P.lift : 0, ly = hopping ? -liftY * P.lift : 0, rot = hopping ? -2 * P.lift : 0;
@@ -2593,21 +2639,42 @@
         fF.push({ offset: o, transform: 'translate(' + dx.toFixed(2) + 'px,' + dy.toFixed(2) + 'px) rotate(' + rot.toFixed(3) + 'deg) scale(' + kx.toFixed(4) + ',' + ky.toFixed(4) + ')' });
         fG.push({ offset: o, transform: 'scale(' + (1 / kx).toFixed(5) + ',' + (1 / ky).toFixed(5) + ') rotate(' + (-rot).toFixed(3) + 'deg) translate(' + (-dx).toFixed(2) + 'px,' + (-dy).toFixed(2) + 'px)' });
         if (S) { var ox = 2 + 2 * P.lift, oy = 2 + 4 * P.lift; fS.push({ offset: o, transform: 'translate(' + (dx + ox).toFixed(2) + 'px,' + (dy + oy).toFixed(2) + 'px) rotate(' + rot.toFixed(3) + 'deg) scale(' + kx.toFixed(4) + ',' + ky.toFixed(4) + ')' }); }
+        /* (the halves of its material undo the block's own scale along the trip, as the block draws it: carrySkins) */
+        fH.push({ offset: o, transform: vertical ? 'scale(1,' + (1 / +ky.toFixed(4)).toFixed(5) + ')' : 'scale(' + (1 / +kx.toFixed(4)).toFixed(5) + ',1)' });
         rects.push({ t: t, x: P.x, y: P.y, w: P.w, h: P.h });
         if (t >= end) break;
       }
-      return { at: at, pose: pose, end: end, from: from, to: to, span: span, frames: [fF, fG, fS], rects: rects };
+      return { at: at, pose: pose, end: end, from: from, to: to, span: span, frames: [fF, fG, fS].concat(SK.map(function () { return fH; })), rects: rects };
     }
-    /* a block that goes on with a trip is first only the trip under way (at the age it is drawn at, whatever that turns
-       out to be, it is where the trip under way is), and takes its change in place at the first frame that is on time */
-    var at = go ? (zero != null ? Math.max(go.at, performance.now() - zero) : go.at) : 0, from = go ? Math.floor(at / FRAME_MS) * FRAME_MS : 0;
+    /* a block that goes on with a trip is first only the trip under way, and takes its change in place at the first frame
+       that is on time once it has been drawn. It runs on the trip's own clock (FO-231): its start time is the trip's, set
+       from the start the compositor reported for the trip (zero), so whichever frame first draws it, that frame shows the
+       trip where it is at that frame's own time. A block is made late in a long frame (after the app's layout, up to
+       120 ms after the frame began) and the compositor first draws it at the next frame after that frame's commit and
+       raster, 9 to 37 ms after it was made: held at the age it was made at (its current time until it started), it was
+       drawn that far behind the block it took over from (2.7 px on Friendly Dark, 10.9 px under load: W12D-1). Its frames
+       run from the last whole frame before the trip's age at this frame's own time (the timeline's time: inside a frame,
+       that frame's; in a task, now), which no frame that draws it is earlier than, so no frame draws it before its frames
+       begin. A trip no frame has drawn yet (no zero) has no clock to run on: its block waits at the age it is made at,
+       as that trip's own block did */
+    var tl = document.timeline && document.timeline.currentTime != null ? document.timeline.currentTime : performance.now();
+    var at = go ? (zero != null ? Math.max(go.at, performance.now() - zero) : go.at) : 0;
+    /* (on the same instants as the trip under way's own frames, a frame apart from its first, so the two draw the same
+       pose at every time: a frame apart from another instant, Basic's snap drew 1.05 px off where they bend) */
+    var g0 = go ? go.K.from || 0 : 0;
+    var from = go ? g0 + Math.floor(Math.max(0, (zero != null ? Math.min(at, tl - zero) : at) - g0) / FRAME_MS) * FRAME_MS : 0;
     var T = plan(at, go ? null : 0, from), start = performance.now() - at;
-    var parts = [F, G, S], anims = [], lead = null;
-    parts.forEach(function (e, j) { if (!e) return; var a = e.animate(T.frames[j], { duration: T.span, easing: 'linear', fill: 'forwards' }); if (at > from) a.currentTime = at - from; anims.push(a); if (!lead) lead = a; });
+    var parts = [F, G, S].concat(SK), anims = [], lead = null;
+    parts.forEach(function (e, j) {
+      if (!e) return;
+      var a = e.animate(T.frames[j], { duration: T.span, easing: 'linear', fill: 'forwards' });
+      if (zero != null) a.startTime = zero + from; else if (at > from) a.currentTime = at - from;
+      anims.push(a); if (!lead) lead = a;
+    });
     var probe = F.animate([], { duration: 1000 }), made = performance.now(), inFrame = frameSync > 0 || postRunning;
     setLensBox(L, B);
     /* the chip under the labels stays hidden while the block is up (as for a step's blocks) */
-    L.anim = L.hopHide = L.lens.animate([{ opacity: 0 }, { opacity: 0 }], { duration: 600000 });
+    var hide = L.anim = L.hopHide = L.lens.animate([{ opacity: 0 }, { opacity: 0 }], { duration: 600000 });
     if (!L.hopMarks) L.hopMarks = new Map();
     L.hopFrames = S ? [S, F] : [F]; L.hopTarget = target;
     var K = L.carry = { A: A, B: B, vertical: vertical, anim: lead, liftX: liftX, liftY: liftY, change: !!go };
@@ -2618,37 +2685,58 @@
       L.hopT = setTimeout(function () { L.hopT = 0; hopSettle(L); }, Math.max(0, start + P.end - performance.now()) + 1);
     }
     take(T);
-    requestAnimationFrame(function (ts) {
+    requestAnimationFrame(function () {
       /* the first frame callback after the block was made: when it was first drawn (K.drawn), so its age is known before
          the compositor reports its start (its probe, an empty animation, starts in the lifecycle of the frame that first
          draws it: started means drawn in the frame it was made in, at its own layout; waiting means drawn once this frame
          has been laid out, painted and handed to the compositor, up to 100 ms after this callback while the app switches
          a page, and the first task after the frame is about then; a block made by a sync inside a frame, frameSync, is
-         drawn in that frame whatever its probe says). Not drawn yet, a block that goes on with a trip is
-         held at the trip's age at this frame's own time: Chrome starts a waiting animation at the time of the frame that
-         first draws it, less its hold, so held so it is on the trip's own clock from its first frame (held at the age it
-         was made at, in a task, it was drawn that much behind the block it took over from: 4 px, Basic Light) */
+         drawn in that frame whatever its probe says). A block that goes on with a drawn trip has the trip's start time
+         from the moment it is made, so its age never needs this */
       var drawn = inFrame || probe.startTime != null || lead.startTime != null; probe.cancel();
       if (L.carry !== K) return;
       if (drawn) { K.drawn = made; return; }
-      if (zero != null && ts - zero >= from) anims.forEach(function (a) { if (a.startTime == null) a.currentTime = ts - zero - from; });
       setTimeout(function () { if (K.drawn == null) K.drawn = performance.now(); }, 0);
     });
-    /* the change, in place: at the first frame whose callback runs on time (within 12 ms of the frame's own time; the
-       page's other frame callbacks run first) once the compositor has the block, or after half a second, starting a frame
-       and a half on from where the trip is then, which a frame on time reaches the screen before. A new motion started in a
-       late frame is drawn from that frame's own time, so it has already run for as long as the frame was late when it is
-       first drawn: a change started so ran its course out of sight inside the app's long task (190 ms, Basic Light,
-       Alexis: the block stepped the whole way), and started in a frame callback 100 ms late it was drawn half done. The
-       block keeps its clock (only its frames change), so the trip under way goes on in every frame meanwhile */
+    /* the change, in place, once a frame has drawn the block (the hide of the chip under the labels, made with it, goes to
+       the compositor in the same commit, so its start is the time of the frame that first drew both), or after half a
+       second: at the next frame, after that frame's own layout (afterLayout: what is written there goes out with that
+       frame's paint and commit), starting at the trip's age then (FO-227), so the frame that draws it first shows the
+       trip under way and the change only just begun; no frame is counted ahead. A change set at the start of a frame
+       went out only when the frame was done: one frame callback on time was followed by 102 ms of the app's style and
+       layout in the same frame, and its change, started at the callback, was drawn 100 ms along, 70 px at once (an
+       earlier build of this fix, film F2372-F2373, Friendly Dark). A new motion is drawn from the time of the frame that first draws it, so one
+       started inside the app's long task ran its course out of sight (190 ms, Basic Light, Alexis: the block stepped the
+       whole way). The block keeps its clock (only its frames change), so the trip under way goes on in every frame
+       meanwhile. Written after layout, a change can still go out with a commit whose paint and raster hold its first frame
+       back (85 ms when Usage drew a page): a trip under way that has landed is where it is at any time, so its change is
+       made as new animations instead, from that place, which the compositor starts at the frame that first draws them
+       (as it starts every new animation), so the change begins at that frame whenever it comes. A frame whose own work
+       ran long before its layout was done (the app drawing a page) commits late, and what goes out with it is drawn late:
+       a change written 130 ms into such a frame was first drawn about 200 ms on, the hop already over, 110 px at once
+       (Friendly Dark, Home's tabs, film F1564-F1567). So a change from a trip still moving goes out only with a frame
+       whose layout was done within 12 ms of its start (as a frame callback on time was judged); otherwise it waits for
+       such a frame or for the trip to land, whichever comes first, and a landed trip's change needs neither (its new
+       animations start at whatever frame draws them). Under steady load no frame was on time and a change gated so
+       waited past its trip's landing, the chip left on the tab the trip ended on (Usage, sandbox) */
     if (go) {
       var tries = 0;
-      var change = function (ts) {
+      var apply = function () {
         if (L.carry !== K) return;
-        if ((lead.startTime == null || performance.now() - ts > 12) && ++tries < 30) { requestAnimationFrame(change); return; }
-        var P = plan(at, Math.max(at, carryAge(K) + 1.5 * FRAME_MS), from);
-        anims.forEach(function (a) { a.effect.setKeyframes(P.frames[parts.indexOf(a.effect.target)]); a.effect.updateTiming({ duration: P.span }); });
+        var age = Math.max(at, carryAge(K)), rest = age >= go.K.dur;
+        var tl1 = document.timeline && document.timeline.currentTime != null ? document.timeline.currentTime : null;
+        if (!rest && tl1 != null && performance.now() - tl1 > 12) { requestAnimationFrame(change); return; }
+        var P = plan(at, age, rest ? age : from);
+        if (rest) {
+          anims = anims.map(function (a) { var e = a.effect.target, b; a.cancel(); b = e.animate(P.frames[parts.indexOf(e)], { duration: P.span, easing: 'linear', fill: 'forwards' }); return b; });
+          lead = K.anim = anims[0]; K.drawn = null;
+        } else anims.forEach(function (a) { a.effect.setKeyframes(P.frames[parts.indexOf(a.effect.target)]); a.effect.updateTiming({ duration: P.span }); });
         K.change = false; take(P);
+      };
+      var change = function () {
+        if (L.carry !== K) return;
+        if ((lead.startTime == null || (hide.startTime == null && hide.playState !== 'finished')) && ++tries < 30) { requestAnimationFrame(change); return; }
+        if (!afterLayout(apply)) apply();
       };
       requestAnimationFrame(change);
     }
@@ -3278,6 +3366,13 @@
      is mounted after the frame's own layout, still before that frame is painted, instead of forcing the app's style for
      the whole new sheet inside the click (the editor's Customize screen: 28-38 ms forced on a P1000, 2026-10-16) */
   var MENU_HOT = '.pmu-pop, .pmr-menu-list, .pm6-tb-menu, #themeMenu';
+  /* FO-232: switcher items whose chosen mark the app sets on a frame of its own (Home's panel tabs: data-active, written by
+     the strip's render in the frame after the click). Under Reduce Motion no press moves their chip (the pointerdown
+     below steps aside), so the mark is all that does: it syncs after the layout of the frame that sets it, and the chip is
+     on the chosen tab in the first frame that paints it chosen. On the lazy sync it stayed on the tab left for the 140 ms
+     timer and the next frame's layout (100-217 ms, 2 to 13 frames, 8 presses of 10 on the 12e page). In motion the press
+     has already moved the chip, and these marks wait as before */
+  var CHOSEN_HOT = '.pmw-tab';
   function generatedMutation(rec) {
     var t = rec.target;
     if (t.nodeType === 1 && t.closest(GENERATED)) return true;
@@ -3310,7 +3405,7 @@
      window (a screen replaced, a card, a button) is handled as before. */
   function pipDecoration(r) { var n = r.target; n = n && n.nodeType === 1 ? n : n && n.parentElement; return !!(n && n.closest && n.closest('#pm-o55-onboarding .pst [aria-hidden="true"]')); }
   var mo = new MutationObserver(function (recs) {
-    var hot = false, menuHot = false, relevant = false, area = boardMoment() ? document.querySelector(BOARD_AREA) : null;
+    var hot = false, menuHot = false, relevant = false, area = boardMoment() ? document.querySelector(BOARD_AREA) : null, quiet = null;
     for (var i = 0; i < recs.length; i++) {
       if (pipDecoration(recs[i])) continue;
       /* an app redrew a strip and dropped its under-layer with the chip in it: the chip comes back in this frame, not after
@@ -3328,6 +3423,7 @@
       /* a <details> opening shows sheets that were not drawn: they are mounted in this frame (inClosedDetails) */
       if (recs[i].attributeName === 'open' && t.tagName === 'DETAILS') { hot = true; dirtyScope(t); if (t.open) bakeSoon(t); }
       if (t.matches(HOT)) { hot = true; if (t.matches(MENU_HOT)) menuHot = true; }
+      else if (recs[i].attributeName === 'data-active' && t.matches(CHOSEN_HOT) && (quiet == null ? (quiet = reduced()) : quiet)) hot = true;
       else for (var j = 0; j < recs[i].addedNodes.length; j++) { var nd = recs[i].addedNodes[j]; if (nd.nodeType === 1 && (nd.matches(HOT) || nd.matches('.pmu-card') || (nd.querySelector && nd.querySelector('.pmr-menu-list, .pmu-card, #pm-settings-root .segmented')))) { hot = true; if (area && (nd.matches(MENU_HOT) || (nd.querySelector && nd.querySelector('.pmr-menu-list')))) menuHot = true; break; } }
     }
     if (!relevant) return;
@@ -3408,7 +3504,8 @@
     /* data-col-top: the onboarding window's column, held at a top and centred again on a window resize, moves its tab strips
        with no size changing (60-ui-core.js holdColumn); its layer is HOT, so their chips sync after that frame's layout (SW-25).
        data-active: Home's panel tabs mark the chosen tab with it alone (FO-197); under Reduce Motion nothing else synced
-       their chip, which stayed on the tab left in one press of five (Alexis, sandbox) */
+       their chip, which stayed on the tab left in one press of five (Alexis, sandbox), and under Reduce Motion it syncs
+       their chip in the frame that sets it (CHOSEN_HOT, FO-232) */
     mo.observe(document.body, { subtree: true, childList: true, attributes: true, attributeOldValue: true, attributeFilter: ['class', 'hidden', 'data-open', 'data-lg-surface', 'open', 'data-col-top', 'data-active'] });
     if (window.ResizeObserver) { var ro = new ResizeObserver(function (entries) { if (dragHeld()) { entries.forEach(function (en) { heldScopes.push(en.target); }); flushHeldSoon(); return; } entries.forEach(function (en) { dirtyScope(en.target); }); lazySync(false); }); ['.app-shell', '.left-panel', '#sidePanelSlot', '#chatPanel', '#pmuBoard', '#pmuApp'].forEach(function (s) { var e = document.querySelector(s); if (e) ro.observe(e); }); }
     /* The title bar lays out the brand, the project box and then the page tabs, so whenever the box changes width (another
