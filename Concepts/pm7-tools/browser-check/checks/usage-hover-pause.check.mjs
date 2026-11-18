@@ -26,6 +26,10 @@
 //       pointer at rest and scrolled away, and the card under the pointer never gets it without a move: red too.
 //   R3  keyboard focus is not paused: a card with keyboard focus keeps its focus ring and its tools while the wheel
 //       turns (a guard, green on origin/main too: the board gestures' [data-op] rules hide every card's tools).
+//   R4  enter a Skyline provider column, then send a real wheel tick before its 110 ms highlight intent fires. Keep
+//       the pointer on that column: no is-hl-dim/is-hl-on while paused, and the provider light returns after op-end.
+//       --set raceOnly=1 runs this row alone. On main use --set raceNoPause=1: assert the absence of a pause marker,
+//       then explicitly SKIP R4's suppression/return verdicts, which have no pause interval to judge there.
 // A window that did not scroll at least TICKS*40*0.6 px is taken again (twice at most); one still short fails as
 // "could not judge".
 //   --set looks=basic-dark,glass-dark,retro-dark,nier-dark   --set tries=3   --set ticks=12   --set gap=30
@@ -104,6 +108,75 @@ export function judge(rec, { rest, back }) {
 	};
 }
 
+async function providerRace(t, f, label, park) {
+	await park();
+	const column = f.locator('#pmuScroll .pmu-skycol[data-prov]').first();
+	if (!await column.count()) { await t.check(label + 'R4 could judge: a Skyline provider column exists', false); return; }
+	await column.scrollIntoViewIfNeeded();
+	await t.page.waitForTimeout(500);
+	const box = await column.boundingBox(), pane = await f.locator('#pmuScroll').boundingBox();
+	if (!box || !pane) { await t.check(label + 'R4 could judge: the Skyline column is visible', false); return; }
+	const x = box.x + box.width / 2, top = Math.max(box.y, pane.y), bottom = Math.min(box.y + box.height, pane.y + pane.height);
+	const y = (top + bottom) / 2;
+	await f.evaluate(() => {
+		const sc = document.getElementById('pmuScroll'), board = sc.querySelector('.pmu-board');
+		const r = window.__uhpRace = { enter: null, wheel: null, end: null, pauses: [], during: [], frames: 0, moves: 0, outs: 0, startTop: sc.scrollTop,
+			clean: !board.querySelector('.is-hl-dim, .is-hl-on'), marks: board.querySelectorAll('.pmu-mark[data-prov]').length };
+		let target = null, running = true;
+		const over = (e) => { const el = e.target.closest?.('.pmu-skycol[data-prov]'); if (!target && el && board.contains(el)) { target = el; r.enter = performance.now(); r.id = el.dataset.prov; } };
+		const out = (e) => { if (target && target.contains(e.target) && !target.contains(e.relatedTarget)) r.outs++; };
+		const wheel = (e) => { r.wheel = performance.now(); r.wx = e.clientX; r.wy = e.clientY; };
+		const move = (e) => { if (r.wheel != null && (e.clientX !== r.wx || e.clientY !== r.wy)) r.moves++; };
+		const sample = (why) => {
+			if (board.getAttribute('data-op') !== 'wheel') return;
+			r.frames++;
+			const lit = board.querySelectorAll('.is-hl-dim, .is-hl-on');
+			if (lit.length) r.during.push({ t: performance.now(), why, dim: board.querySelectorAll('.is-hl-dim').length, on: board.querySelectorAll('.is-hl-on').length });
+		};
+		const mo = new MutationObserver((ms) => {
+			for (const m of ms) if (m.target === board && m.attributeName === 'data-op') {
+				if (board.getAttribute('data-op') === 'wheel') r.pauses.push(performance.now());
+				else if (r.pauses.length) r.end = performance.now();
+			}
+			sample('mutation');
+		});
+		mo.observe(board, { attributes: true, attributeFilter: ['class', 'data-op'], subtree: true });
+		const frame = () => { if (!running) return; sample('frame'); requestAnimationFrame(frame); };
+		board.addEventListener('pointerover', over, true); board.addEventListener('pointerout', out, true);
+		sc.addEventListener('wheel', wheel, { capture: true, passive: true }); sc.addEventListener('pointermove', move, true);
+		requestAnimationFrame(frame);
+		r.stop = () => {
+			running = false; mo.disconnect(); board.removeEventListener('pointerover', over, true); board.removeEventListener('pointerout', out, true);
+			sc.removeEventListener('wheel', wheel, true); sc.removeEventListener('pointermove', move, true);
+			const dim = [...board.querySelectorAll('.is-hl-dim')], on = [...board.querySelectorAll('.is-hl-on')];
+			return { ...r, stop: undefined, top: sc.scrollTop, paused: board.getAttribute('data-op') === 'wheel', targetHovered: !!target?.matches(':hover'),
+				eligibleDim: [...board.querySelectorAll('.pmu-mark[data-prov]')].filter((el) => el.dataset.prov !== r.id).length,
+				eligibleOn: [...board.querySelectorAll('.pmu-irow[data-prov]')].filter((el) => el.dataset.prov === r.id).length,
+				dim: dim.length, on: on.length, correct: dim.every((el) => el.dataset.prov !== r.id) && on.every((el) => el.dataset.prov === r.id) };
+		};
+	});
+	// No round trip between these trusted inputs: the page-side recorder proves their actual interval was under 110 ms.
+	await t.page.mouse.move(x, y);
+	await t.page.mouse.wheel(0, 12);
+	await t.page.waitForTimeout(800);
+	const rec = await f.evaluate(() => window.__uhpRace.stop());
+	t.log(label + 'R4 provider race: ' + JSON.stringify(rec));
+	const gap = rec.enter != null && rec.wheel != null ? rec.wheel - rec.enter : null;
+	await t.check(label + 'R4 could judge: enter then wheel within 110 ms, the board scrolls, pointer stays on the same provider',
+		rec.clean && rec.eligibleDim + rec.eligibleOn > 0 && gap != null && gap >= 0 && gap < 110 && rec.top > rec.startTop && rec.targetHovered && !rec.moves && !rec.outs,
+		`enter-to-wheel ${gap} ms, scroll ${rec.top - rec.startTop} px, hovered ${rec.targetHovered}, moves ${rec.moves}, leaves ${rec.outs}, clean ${rec.clean}, eligible dim/on ${rec.eligibleDim}/${rec.eligibleOn}`);
+	if (String(t.args.raceNoPause || '') === '1') {
+		await t.check(label + 'R4 main control has no wheel pause to judge', rec.pauses.length === 0);
+		t.log(label + 'SKIP R4 suppression/return: explicit raceNoPause control has no wheel pause');
+		return rec;
+	}
+	await t.check(label + 'R4 pending provider highlight cannot start during the wheel pause', rec.pauses.length > 0 && rec.frames > 0 && rec.during.length === 0,
+		`${rec.pauses.length} pauses, ${rec.frames} paused samples, ${rec.during.length} lit samples: ${JSON.stringify(rec.during.slice(0, 3))}`);
+	await t.check(label + 'R4 provider highlight returns after the pause without moving the pointer', rec.end != null && !rec.paused && rec.targetHovered && rec.eligibleDim + rec.eligibleOn > 0 && rec.dim === rec.eligibleDim && rec.on === rec.eligibleOn && rec.correct,
+		`pause end ${rec.end}, paused ${rec.paused}, hovered ${rec.targetHovered}, dim ${rec.dim}, on ${rec.on}, correct provider ${rec.correct}`);
+	return rec;
+}
+
 export default async function (t) {
 	const looks = String(t.args.looks || 'basic-dark').split(',').filter(Boolean);
 	// BACK: the pause ends 150 ms after the last wheel or scroll event; light and tools were back at 168-185 ms on Alexis
@@ -128,6 +201,10 @@ export default async function (t) {
 			const ok = await f.evaluate(INSTALL);
 			const range = await f.evaluate(() => { const s = document.getElementById('pmuScroll'); return s ? s.scrollHeight - s.clientHeight : 0; });
 			if (!ok || range < TICKS * 40 + 80) { await t.check(S + 'could judge: Usage\'s board is there and scrolls ' + (TICKS * 40 + 80) + ' px', false, `range ${range}`); continue; }
+			const race = await providerRace(t, f, S, park);
+			dump.push({ surface, look, race });
+			if (t.args.dump) writeFileSync(String(t.args.dump), JSON.stringify(dump));
+			if (String(t.args.raceOnly || '') === '1') { await park(); continue; }
 			const res = { r0: [], r1: [], r2: [] };
 			const at0 = await f.evaluate(() => { const p = document.querySelector('.page.active') || document.body, r = p.getBoundingClientRect(); return { x: Math.round(r.left + r.width / 2), y: Math.round(r.top + r.height * 0.55) }; });
 			for (let w = 0; w < TRIES; w++) {
