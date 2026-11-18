@@ -37,9 +37,12 @@ export const RECORD = (stripSel) => {
 						return { o: k.offset, dx: tr[0], dy: tr[1], r: ro[0], kx: sc[0], ky: sc[1] };
 					});
 					rec.kf = parse(kf);
+					// (switcher-carry-steps: the block's first keyframes and duration, and the timeline's time when it was made and
+					// when its change was set, which in a frame callback is that frame's own time)
+					rec.kf0 = rec.kf; rec.dur0 = rec.dur; rec.createdTl = document.timeline.currentTime;
 					// a block whose trip is rebased at its first frame (glass.js carry's rebase) takes new keyframes and timing
 					const eff = a.effect, sk = eff.setKeyframes, ut = eff.updateTiming;
-					eff.setKeyframes = function (k) { rec.kf = parse(k); rec.rebased = performance.now(); return sk.call(eff, k); };
+					eff.setKeyframes = function (k) { rec.kf = parse(k); rec.rebased = performance.now(); rec.rebTl = document.timeline.currentTime; return sk.call(eff, k); };
 					eff.updateTiming = function (tm) { if (tm && tm.duration != null) rec.dur = tm.duration; return ut.call(eff, tm); };
 					// a start time the page sets itself (glass.js carry's go) puts the animation in its before phase until then
 					const stDesc = Object.getOwnPropertyDescriptor(Animation.prototype, 'startTime');
@@ -50,6 +53,7 @@ export const RECORD = (stripSel) => {
 					W.live = W.live || new Map(); W.live.set(rec.id, a);
 					const cancel = a.cancel;
 					a.cancel = function () { if (a.startTime != null) rec.start = a.startTime; if (rec.cancelled == null) rec.cancelled = performance.now(); return cancel.call(a); };
+					try { this.__carryRec = rec.id; } catch (e) { /* the sampler names the block by its record */ }
 					W.anims.push(rec);
 				}
 			} catch (e) { /* recording must never break the page */ }
@@ -95,7 +99,7 @@ const FRAME = 1000 / 60;
 // by the page; a block that waits for its first frame starts after both)
 const beforeBare = (rec) => (rec.explicit != null ? rec.explicit : rec.start <= rec.created + 0.5 || (rec.rebased != null && rec.start <= rec.rebased + 1)) && !/both|backwards/.test(rec.fill || 'forwards');
 // a carry animation's drawn box (viewport px, axis-aligned, rotation included) at timeline time T; null before it starts
-function poseAt(rec, T) {
+export function poseAt(rec, T) {
 	if (rec.start == null) return null;
 	// before its start time an animation filled only forwards has no effect: the block is drawn at its own box, untransformed
 	// (an explicit start time later than the frame drawn: two frames of the block on the tab it was bound for, head film)
@@ -109,7 +113,7 @@ function poseAt(rec, T) {
 	const cx = B.x + B.w / 2 + L('dx'), cy = B.y + B.h / 2 + L('dy'), AW = W * Math.cos(r) + H * Math.sin(r), AH = W * Math.sin(r) + H * Math.cos(r);
 	return [cx - AW / 2, cy - AH / 2, AW, AH];
 }
-const edges = (b) => (b ? [b[0], b[1], b[0] + b[2], b[1] + b[3]] : null);
+export const edges = (b) => (b ? [b[0], b[1], b[0] + b[2], b[1] + b[3]] : null);
 // px per ms of an edge of a carry at T, from its keyframes (the speed the compositor draws it at)
 function speedAt(rec, T) {
 	const p = poseAt(rec, T), q = poseAt(rec, T + 4);
