@@ -257,6 +257,9 @@ def annotate(node, where, memo):
         raise ValueError('owner schema already carries x-pm-oracle-id at ' + where)
     out = dict(node)
     memo[id(node)] = out
+    # Retain the source alongside its copy: an id-only cache otherwise aliases
+    # a later temporary schema after Python reuses the earlier object's id.
+    memo[(id(node), 'source')] = node
     out['x-pm-oracle-id'] = where
     for key in SCHEMA_MAPS:
         if isinstance(node.get(key), dict):
@@ -646,6 +649,22 @@ _DIALECTS = ('Draft202012Validator', 'Draft201909Validator', 'Draft7Validator', 
 
 
 def _class_recipe(cls):
+    # These factories install local diagnostic callbacks AND a dialect-preserving
+    # evolve. Recreating only VALIDATORS silently loses the latter.
+    import pm_goal_own_c_roots as original
+    import pm_goal_own_c_oracles as owner
+    import pm_goal_test_owner_adapters as adapters
+    for name in _DIALECTS:
+        if cls is getattr(jsonschema, name):
+            return dict(class_ref=('jsonschema', name))
+    if cls is owner.Validator:
+        return dict(class_ref=('pm_goal_own_c_oracles', 'Validator'))
+    for factory in (original._original_validator, adapters._root_validator):
+        base = inspect.getclosurevars(cls.evolve).nonlocals.get('base')
+        if base is not None and factory(base) is cls:
+            base_recipe = _class_recipe(base)
+            if base_recipe is not None:
+                return dict(factory=_fn_ref(factory), base=base_recipe)
     validators = {}
     for name, fn in cls.VALIDATORS.items():
         ref = _fn_ref(fn)
@@ -669,6 +688,10 @@ def _class_recipe(cls):
 
 
 def _rebuild_class(recipe):
+    if 'class_ref' in recipe:
+        return _import_ref(recipe['class_ref'])
+    if 'factory' in recipe:
+        return _import_ref(recipe['factory'])(_rebuild_class(recipe['base']))
     checker = getattr(jsonschema, recipe['type_checker_base']).TYPE_CHECKER
     for name, ref in recipe['type_checkers'].items():
         checker = checker.redefine(name, _import_ref(ref))
@@ -678,6 +701,12 @@ def _rebuild_class(recipe):
 
 
 def _format_recipe(checker):
+    if checker is None:
+        return dict(kind='none')
+    import pm_goal_own_c_roots as original
+    for profile in original.NR.DT.PROFILES:
+        if checker is original._owner_formats(profile):
+            return dict(kind='owner', profile=profile)
     if checker is common.FORMATS:
         return 'common.FORMATS'
     try:
@@ -694,6 +723,11 @@ def _format_recipe(checker):
 
 
 def _rebuild_format(recipe):
+    if isinstance(recipe, dict) and recipe.get('kind') == 'none':
+        return None
+    if isinstance(recipe, dict) and recipe.get('kind') == 'owner':
+        from pm_goal_own_c_roots import _owner_formats
+        return _owner_formats(recipe['profile'])
     if recipe == 'common.FORMATS':
         return common.FORMATS
     checker = jsonschema.FormatChecker()
@@ -716,9 +750,18 @@ def _dump_entry(slot, ident):
                  seeds=list(slot['seeds'].values()), seed_sha256=sorted(slot['seeds']),
                  records=slot['records'], schema=v.schema, rebuild='recollect', rebuild_note=None)
     resolver = v._resolver
-    if type(resolver).__module__ != 'referencing._core':
+    scoped = type(resolver).__module__ == 'pm_goal_own_c3_w12_bank' and type(resolver).__name__ == 'ScopedResolverV2'
+    if type(resolver).__module__ != 'referencing._core' and not scoped:
         entry['rebuild_note'] = 'custom resolver ' + type(resolver).__qualname__
         return entry
+    if scoped:
+        entry['scoped'] = dict(documents=resolver.bank.documents,
+                               origins=resolver.bank.resource_origins,
+                               imports=list(resolver.bank.imports.items()),
+                               retained_documents=resolver.bank.retained.documents,
+                               retained_origins=resolver.bank.retained.resource_origins,
+                               origin=resolver.origin, retained=resolver.retained)
+        resolver = resolver.resolver
     if type(bank).__qualname__ == 'RootBank' and isinstance(v.schema, dict) and set(v.schema) == {'$ref'}:
         entry['rebuild'] = 'rootbank'
         entry['rootbank'] = dict(documents=bank.documents, pins=bank.pins, root=v.schema['$ref'])
@@ -740,8 +783,10 @@ def _dump_entry(slot, ident):
     try:
         plain = _rebuild_plain(entry)
         copy_v = closure_validator(plain, ident, None)
-        bad = agree(plain, copy_v, slot['records'])
+        bad = agree(plain, plain, slot['records']) + agree(plain, copy_v, slot['records'])
         entry['rebuild_agreement'] = dict(records=len(slot['records']), disagreements=len(bad))
+        if bad:
+            entry['rebuild_disagreements'] = bad[:4]
         if bad:
             entry['rebuild'], entry['rebuild_note'] = 'recollect', f'rebuild disagrees on {len(bad)} records'
     except Exception as exc:  # noqa: BLE001 - a failed rebuild is recorded, never approximated
@@ -766,13 +811,32 @@ def _rebuild_plain(entry):
     cls = _rebuild_class(recipe['cls'])
     registry = Registry().with_resources(
         (uri, Resource(contents=c, specification=_spec_of(c))) for uri, c in recipe['resources'].items()).crawl()
+    resolver = registry.resolver(base_uri=recipe['base'])
+    if 'scoped' in entry:
+        from pm_goal_own_c3_w12_bank import ScopedBankV2, ScopedResolverV2
+        from pm_goal_own_c_roots import OriginalBank
+        state = entry['scoped']
+        def bank_copy(kind, documents, origins):
+            bank = kind.__new__(kind)
+            bank.registry, bank.documents, bank.resource_origins = Registry(), {}, {}
+            bank.node_origins = {}
+            for uri, doc in documents.items():
+                bank._register(uri, doc, origins[uri])
+            bank.registry = bank.registry.crawl()
+            return bank
+        bank = bank_copy(ScopedBankV2, state['documents'], state['origins'])
+        bank.imports = dict(state['imports'])
+        bank.retained = bank_copy(OriginalBank, state['retained_documents'], state['retained_origins'])
+        resolver = ScopedResolverV2(bank.registry.resolver(base_uri=recipe['base']), bank,
+                                    state['origin'], state['retained'])
+        registry = bank.registry
     return cls(schema=entry['schema'], registry=registry, format_checker=_rebuild_format(recipe['format']),
-               _resolver=registry.resolver(base_uri=recipe['base']))
+               _resolver=resolver)
 
 
 def _spec_of(contents):
-    from referencing.jsonschema import specification_with
-    return specification_with(contents)
+    from referencing.jsonschema import DRAFT202012
+    return Resource.from_contents(contents, default_specification=DRAFT202012)._specification
 
 
 # ---------------------------------------------------------------- run
