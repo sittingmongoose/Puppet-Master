@@ -82,17 +82,35 @@ def _patch_class(cls):
     PATCHED_CLASSES.add(cls)
 
 
-_SCANNED = [0]
+_SCANNED = [(-1, -1)]
 
 
-def patch_validator_classes():
-    """Every validator class reachable as a module attribute of a Goal checker module, and jsonschema's own."""
-    if len(sys.modules) == _SCANNED[0]:
+def _validator_subclasses():
+    seen, stack = set(), [v for v in vars(jsonschema.validators).values() if _is_validator_class(v)]
+    while stack:
+        cls = stack.pop()
+        if cls in seen:
+            continue
+        seen.add(cls)
+        stack.extend(cls.__subclasses__())
+    return seen
+
+
+def patch_validator_classes(force=False):
+    """Every validator class reachable as a module attribute of a Goal checker module,
+    jsonschema's own, and every subclass of those (factory-created classes such as
+    FMT2's _original_validator(Validator) are module attributes nowhere; the old
+    module-count scan gate also never re-ran after they were created, so their
+    iter_errors was never patched and capture silently missed whole banks).
+    extend()/create() classes do not inherit from their base, so a gc sweep
+    (force, after a capture miss) is the last resort that finds them."""
+    subclasses = _validator_subclasses()
+    gate = (len(sys.modules), len(subclasses))
+    if gate == _SCANNED[0] and not force:
         return
-    _SCANNED[0] = len(sys.modules)
-    for value in vars(jsonschema.validators).values():
-        if _is_validator_class(value):
-            _patch_class(value)
+    _SCANNED[0] = gate
+    for value in subclasses:
+        _patch_class(value)
     for module in tuple(sys.modules.values()):
         name = getattr(module, '__name__', '')
         if not name.startswith(('pm_goal', 'pm_event')) or name.startswith(('pm_goal_phase_', 'pm_goal_table_')):
@@ -100,6 +118,29 @@ def patch_validator_classes():
         for value in list(vars(module).values()):
             if _is_validator_class(value):
                 _patch_class(value)
+    if force:
+        import gc
+        for value in gc.get_objects():
+            if type(value) is type and _is_validator_class(value):
+                _patch_class(value)
+
+
+def _hook_validator_factory(cls):
+    """Capture at the bank's validator() factory too: a factory-created class is
+    patched (and the instance captured) on its very first validation."""
+    factory = getattr(cls, 'validator', None)
+    if factory is None or getattr(factory, '_dg5_closure', False):
+        return
+
+    def validator(self, *args, **kwargs):
+        result = factory(self, *args, **kwargs)
+        _patch_class(type(result))
+        sink = CAPTURE[0]
+        if sink is not None and not sink:
+            sink.append(result)
+        return result
+    validator._dg5_closure = True
+    cls.validator = validator
 
 
 def _signature(errors):
@@ -123,6 +164,7 @@ def _registry_digest(v, memo={}):  # noqa: B006 - per-process memo by registry i
 
 def hook_bank(cls, method='errors', family=None):
     """Observation only: the bank's own result is returned unchanged."""
+    _hook_validator_factory(cls)
     original = getattr(cls, method)
     if getattr(original, '_dg5_closure', False):
         return
@@ -141,6 +183,8 @@ def hook_bank(cls, method='errors', family=None):
             result = original(self, *args)
         finally:
             CAPTURE[0] = saved
+        if not sink:
+            patch_validator_classes(force=True)  # a factory class created mid-call: patch it for the next call
         if sink:
             v = sink[0]
             value = args[-1]
