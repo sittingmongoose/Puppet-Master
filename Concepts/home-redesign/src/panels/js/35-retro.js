@@ -4,7 +4,9 @@
    300 ms that resolves into the block) and DOS (a double inversion blink over 600 ms that ends inverted). Every effect
    ends on the steady state: a phosphor-filled block with dark text. A drag is always the DOS dashed cut-out with 8 px
    cells and one inversion blink on drop (Jared, T33, 2026-09-02). Retro only; never under Reduced Motion. The plate
-   hides while an effect draws, so the effect is the tab, then the block returns. */
+   hides while an effect draws, so the effect is the tab, then the block returns. A strip the shared switcher chips
+   (FO-197) moves its chosen chip in Retro's steps instead, and the effects on the chosen tab step aside there (FO-229,
+   below). */
 
 var retro = PMW.retro = {};
 var RFX_MODES = ['phos', 'crt', 'dos'];
@@ -44,6 +46,16 @@ function rfxStop(host) {
   }
 }
 retro.roll = rfxRoll;
+/* FO-229 (A12D-7, 2026-11-16): a strip the shared switcher has taken over (glass.js STRIPS, '.pmw-strip', which marks it
+   data-lg-lensed) has its chosen tab's face drawn by the switcher: its chip under the labels and its ink, from the press
+   (Retro's step, FO-197) to rest. A strip's own selection fill and moving ink step aside under that mark (glass.css: "A
+   strip the lens has taken over ... hides its own chosen fill and its moving ink"), and these effects are this strip's
+   own (the phosphor afterglow round the tab left behind is not, and still glows). Drawn as well, they were a second
+   owner of the same face: their phosphor ink on the switcher's phosphor chip, and the switcher's dark press ink on
+   their transparent phases, blanked the chosen tab's label and kind glyph for 100-260 ms (Home to Agents, Retro Dark
+   and Light, both surfaces). The switcher leaves no chip on a strip folded to a column (its pick), where the chosen
+   tab is its own reverse-video cell (70-retro.css), so the effects still draw there. */
+function rfxChipped(host) { return host.hasAttribute('data-lg-lensed') && !host.hasAttribute('data-column'); }
 
 var lastActiveByPanel = {};
 bus.on('activate', function (e) {
@@ -59,8 +71,12 @@ bus.on('activate', function (e) {
     var mode = rfxRoll();
     var ms = RFX_MS[mode];
     rfxStop(host);
-    rfxPulse(host, 'pmw-rfx-live', ms);
-    rfxPulse(tab, 'pmw-rfx-' + mode, ms);
+    /* only the chosen tab's face steps aside under the switcher's chip: the phosphor afterglow round the tab it left
+       touches no face, and stays */
+    if (!rfxChipped(host)) {
+      rfxPulse(host, 'pmw-rfx-live', ms);
+      rfxPulse(tab, 'pmw-rfx-' + mode, ms);
+    }
     if (mode === 'phos' && old && old !== tab) rfxPulse(old, 'pmw-rfx-glow', RFX_MS.phosGlow);
   });
 });
