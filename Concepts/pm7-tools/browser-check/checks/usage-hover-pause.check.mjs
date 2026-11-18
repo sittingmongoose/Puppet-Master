@@ -36,11 +36,15 @@ const INSTALL = () => {
 		const exiting = t.classList.contains('pmh-out') && !t.classList.contains('pmh-on') && ['opacity','--pmh-x','--pmh-y'].includes(e.propertyName);
 		let from, to;
 		if (cardId(card) === R.rest && t.matches('.pmu-cardtools,.pmu-h,.pmu-headtools,.pmu-cardtitles')) {
-			try { const a=t.getAnimations().find((a)=>a.transitionProperty===e.propertyName), k=e.propertyName.replace(/-([a-z])/g,(_,v)=>v.toUpperCase()), fs=a?.effect?.getKeyframes();
-				if(fs?.length){from=fs[0][k]??fs[0][e.propertyName];to=fs.at(-1)[k]??fs.at(-1)[e.propertyName];} } catch (_) { /* unknown directions remain checked */ }
+			try {
+				const a = t.getAnimations({ subtree: !!e.pseudoElement }).find((a) => a.transitionProperty === e.propertyName &&
+					a.effect?.target === t && (a.effect.pseudoElement || '') === e.pseudoElement);
+				const key = e.propertyName.replace(/-([a-z])/g, (_, v) => v.toUpperCase()), frames = a?.effect?.getKeyframes();
+				if (frames?.length) { from = frames[0][key] ?? frames[0][e.propertyName]; to = frames.at(-1)[key] ?? frames.at(-1)[e.propertyName]; }
+			} catch (_) { /* Unknown directions remain checked. */ }
 		}
 		const chartControlled=(e.propertyName==='opacity'&&t.matches?.('.pmu-mark[data-prov],path[data-mark="arc"],.pmu-colstack'))||(e.propertyName==='transform'&&t.matches?.('.pmu-col'))||(['background-color','background'].includes(e.propertyName)&&R.chartRows?.has(t));
-		R.trans.push({ chartControlled, t: performance.now(), prop: e.propertyName, cls: cls(t), card: cardId(card), under: !!under, approved: !!approved, exiting, from, to, self: !!(t.matches && t.matches(':hover')) });
+		R.trans.push({ chartControlled, t: performance.now(), prop: e.propertyName, pseudo: e.pseudoElement, cls: cls(t), card: cardId(card), under: !!under, approved: !!approved, exiting, from, to, self: !!(t.matches && t.matches(':hover')) });
 	}, true);
 	const frame = () => {
 		if (!R.on) return;
@@ -662,7 +666,7 @@ export default async function (t) {
 	const W = 1920, H = 1080;
 	await t.viewport(W, H);
 	await muteSound(t.page);
-	const rm = String(t.args.rm || '') === '1';
+	const rm = String(t.args.rm || '') === '1', holdOnly = String(t.args.holdOnly || '') === '1';
 	if (rm) await t.emulate({ reducedMotion: 'reduce' });
 	const dump = [];
 	for (const surface of t.app.surfaces()) {
@@ -677,7 +681,7 @@ export default async function (t) {
 			await f.evaluate(() => PM_PAGES.go('usage'));
 			await t.page.waitForTimeout(Number(t.args.viewSettle ?? 8000));
 			const proxyOnly = String(t.args.proxyOnly || '') === '1';
-			if (!rm && /^(basic|friendly|glass)-/.test(look) && (proxyOnly ||
+			if (!holdOnly && !rm && /^(basic|friendly|glass)-/.test(look) && (proxyOnly ||
 				!['narrowOnly', 'chartOnly', 'raceOnly', 'mountOnly', 'departureOnly', 'keyboardOnly', 'r113Only'].some((key) => String(t.args[key] || '') === '1'))) {
 				const proxies = await wheelProxies(t, f, S, park);
 				dump.push({ surface, look, proxies });
@@ -688,17 +692,17 @@ export default async function (t) {
 				const r113=await r113Cases(t,f,S,park),applied=await appliedHighlights(t,f,S,park);
 				dump.push({surface,look,r113,applied});if(t.args.dump)writeFileSync(String(t.args.dump),JSON.stringify(dump));continue;
 			}
-			if (!['chartOnly','raceOnly','mountOnly','departureOnly','keyboardOnly'].some((key)=>String(t.args[key] || '')==='1')) {
+			if (!holdOnly && !['chartOnly','raceOnly','mountOnly','departureOnly','keyboardOnly'].some((key)=>String(t.args[key] || '')==='1')) {
 				const r113=await r113Cases(t,f,S,park);dump.push({surface,look,r113});
 				if(t.args.dump) writeFileSync(String(t.args.dump),JSON.stringify(dump));
 				if(String(t.args.r113Only || '')==='1') continue;
 			}
-			if (!['chartOnly','raceOnly','mountOnly','departureOnly'].some((key)=>String(t.args[key] || '')==='1')) {
+			if (!holdOnly && !['chartOnly','raceOnly','mountOnly','departureOnly'].some((key)=>String(t.args[key] || '')==='1')) {
 				const keyboard=await keyboardPause(t,f,S,park); dump.push({surface,look,keyboard});
 				if(t.args.dump) writeFileSync(String(t.args.dump),JSON.stringify(dump));
 				if(String(t.args.keyboardOnly || '')==='1') continue;
 			}
-			if (!['chartOnly','raceOnly','mountOnly'].some((key)=>String(t.args[key] || '')==='1')) {
+			if (!holdOnly && !['chartOnly','raceOnly','mountOnly'].some((key)=>String(t.args[key] || '')==='1')) {
 				const departure=await pointerDeparture(t,f,S,park); dump.push({surface,look,departure});
 				if(t.args.dump) writeFileSync(String(t.args.dump),JSON.stringify(dump));
 				if(String(t.args.departureOnly || '')==='1') continue;
@@ -709,20 +713,22 @@ export default async function (t) {
 				continue;
 			}
 			let mounts;
-			if (String(t.args.raceOnly || '') !== '1') {
+			if (!holdOnly && String(t.args.raceOnly || '') !== '1') {
 				mounts = await roomMountRace(t, f, S, park, rm);
 				dump.push({ surface, look, mounts });
 				if (t.args.dump) writeFileSync(String(t.args.dump), JSON.stringify(dump));
 				if (String(t.args.mountOnly || '') === '1') continue;
 			}
-			if (String(t.args.raceOnly || '') !== '1') { const applied=await appliedHighlights(t,f,S,park); dump.push({surface,look,applied}); if(t.args.dump) writeFileSync(String(t.args.dump),JSON.stringify(dump)); }
+			if (!holdOnly && String(t.args.raceOnly || '') !== '1') { const applied=await appliedHighlights(t,f,S,park); dump.push({surface,look,applied}); if(t.args.dump) writeFileSync(String(t.args.dump),JSON.stringify(dump)); }
 			const ok = await f.evaluate(INSTALL);
 			const range = await f.evaluate(() => { const s = document.getElementById('pmuScroll'); return s ? s.scrollHeight - s.clientHeight : 0; });
 			if (!ok || range < TICKS * 40 + 80) { await t.check(S + 'could judge: Usage\'s board is there and scrolls ' + (TICKS * 40 + 80) + ' px', false, `range ${range}`); continue; }
-			const race = await providerRace(t, f, S, park);
-			dump.push({ surface, look, race });
-			if (t.args.dump) writeFileSync(String(t.args.dump), JSON.stringify(dump));
-			if (String(t.args.raceOnly || '') === '1') { await park(); continue; }
+			if (!holdOnly) {
+				const race = await providerRace(t, f, S, park);
+				dump.push({ surface, look, race });
+				if (t.args.dump) writeFileSync(String(t.args.dump), JSON.stringify(dump));
+				if (String(t.args.raceOnly || '') === '1') { await park(); continue; }
+			}
 			const res = { r0: [], r1: [], r2: [] };
 			const at0 = await f.evaluate(() => { const p = document.querySelector('.page.active') || document.body, r = p.getBoundingClientRect(); return { x: Math.round(r.left + r.width / 2), y: Math.round(r.top + r.height * 0.55) }; });
 			for (let w = 0; w < TRIES; w++) {
