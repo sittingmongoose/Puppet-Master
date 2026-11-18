@@ -211,7 +211,7 @@ def contract(lane,event):
     if delta:
         if delta.get('history_policy_ref'):out['retention']['project']=delta['history_policy_ref']
         if delta.get('application_policy_ref'):out['retention']['application']=delta['application_policy_ref']
-        if delta.get('history_policy_setting_ref'):
+        if delta.get('history_policy_setting_ref') and event != 'usage.event':
             raise Gap('setting-driven retention has no fixed-policy registry encoding: '+delta['history_policy_setting_ref'])
     if out['scope_policy'] is None:
         out['scope_policy']=scope_from_grade(grade)

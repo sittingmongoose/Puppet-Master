@@ -24,7 +24,7 @@ import pm_ea_admission_mode as admission_mode  # noqa: E402
 
 ADMITTED = "scheduler.pass"            # merge 1, DX, DL-549
 OTHER = "subagent.context_rehydrated"  # merge 1, DM, DL-550
-PREPARED = "usage.event"                # DT, the one merge-2 family left prepared (blocked), not registered
+PREPARED = "fixture.prepared"          # synthetic unregistered family; remains prepared after Usage admission
 RECORDS = admission_mode.RECORD_DIR
 REGISTRY = admission_mode.REGISTRY
 
@@ -75,7 +75,7 @@ def _remove_record(root):
 
 def _register_prepared(root):
     row = copy.deepcopy(_row(root, ADMITTED))
-    row["event_type"], row["family_id"] = PREPARED, "event-family-usage-event"
+    row["event_type"], row["family_id"] = PREPARED, "event-family-fixture-prepared"
     _registry_edit(root, lambda doc: doc["families"].append(row))
 
 
