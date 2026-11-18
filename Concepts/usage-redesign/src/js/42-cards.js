@@ -1106,7 +1106,18 @@
       if (el && el.getAttribute('data-op') === 'wheel') el.removeAttribute('data-op');
       if (!el || el.hasAttribute('data-op') || b.gesture && b.gesture()) return;
       var card = el && el.isConnected && el.querySelector(':scope > .pmu-card:hover');
-      if (card) { try { fitTools(card); } catch (error) { console.error('[pm-usage] head fit', error); } }
+      if (card) {
+        /* R100 T2: a delayed incoming transition is not a visible return. Restore the already-hovered head in one
+           step, then put ordinary hover timing back after it has painted. A newer return owns its cleanup token. */
+        var head = card.querySelector(':scope > .pmu-cardhead'), token = {};
+        if (head) {
+          head._pmuWheelReturn = token; head.classList.add('pmu-wheel-return');
+          requestAnimationFrame(function () { requestAnimationFrame(function () {
+            if (head._pmuWheelReturn === token) { head._pmuWheelReturn = null; head.classList.remove('pmu-wheel-return'); }
+          }); });
+        }
+        try { fitTools(card); } catch (error) { console.error('[pm-usage] head fit', error); }
+      }
       try { document.dispatchEvent(new CustomEvent('pmu-op-end', { detail: { board: el, point: point } })); } catch (error) { /* none */ }
     };
     var wheelHold = function () { if (wheelT) clearTimeout(wheelT); wheelT = setTimeout(wheelEnd, WHEEL_REST); };

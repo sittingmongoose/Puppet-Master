@@ -230,6 +230,9 @@ html[data-theme^="retro"] #panel-usage .pmu-keysw { border-radius: 0; }
    that read already starts the cluster's fade, so its delay has to be in place before anything is measured) */
 #panel-usage .pmu-card:hover:where(:not(.pmu-board[data-op="wheel"] *)) > .pmu-cardhead > .pmu-headtools:not(:empty) ~ .pmu-cardtools, #panel-usage .pmu-card:focus-visible > .pmu-cardhead > .pmu-headtools:not(:empty) ~ .pmu-cardtools,
 #panel-usage .pmu-cardhead[data-tools-on] > .pmu-headtools:not(:empty) ~ .pmu-cardtools { transition-delay: calc(160ms * var(--pmu-speed, 1)), 0s; }
+/* R100 T2: wheel return restores the current head visibly within the pause's budget; subsequent ordinary hover keeps
+   its existing sequence. The short phase is owned by 42-cards.js wheelEnd, not by the chart/body subtree. */
+#panel-usage .pmu-cardhead.pmu-wheel-return > :is(.pmu-cardtools, .pmu-headtools, .pmu-cardtitles, .pmu-cardmeta) { transition: none; }
 #panel-usage .pmu-board[data-op]:where(:not([data-op="wheel"])) .pmu-headtools { transform: none; }
 /* the title yields its room to the cluster at once and takes it back once the cluster has faded and the head tools are
    back (140 + 160); a yielding title

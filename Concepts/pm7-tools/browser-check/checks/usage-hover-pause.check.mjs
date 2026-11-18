@@ -13,14 +13,14 @@
 // card's tool cluster opacity) and every transitionrun inside the board, wheel and scroll event.
 //   R0  could judge: at rest before the wheel, the card under the pointer is lit (.pmh-on) and shows its tools (opacity
 //       above .5): both builds, every look; without it there is nothing to pause.
-//   R1  while the wheel turns (from 50 ms after the first wheel event to the last scroll event): no hover-in restyle.
-//       A hover-in restyle is a transition that starts on an element of a card under the pointer at that moment, other
-//       than the card that was under it at rest (a card or row that slid in lit up), or a frame where a card other than
-//       the resting one carries the engine's light (.pmh-on, or .pmh-near, its light on a card near the pointer). On
+//   R1  from 50 ms after the first wheel through the marker's removal (including its tail): no hover-in restyle.
+//       At least five sampled frames; all cards, existing chart selections and tools after their outgoing fade count.
+//       A hover-in restyle is a transition that starts on an element of a card under the pointer at that moment, including
+//       the starting card (approved segment/stepper/sharebar transitions excluded), or a frame with an engine/chart light (.pmh-on, or .pmh-near, its light on a card near the pointer). On
 //       origin/main bb8cd0e873 (Alexis, Basic Dark) the card that slides in starts its tools', resize corner's and
 //       light's transitions and takes .pmh-near: red.
 //   R2  after the wheel: within BACK ms (200) of the last wheel or scroll event, the card under the resting pointer
-//       carries .pmh-on and its tools show (opacity above .05, or their opacity transition has started), with no pointer
+//       carries .pmh-on and its tools visibly show (opacity above .5), with no pointer
 //       move. The light's time is when the engine writes .pmh-on (a class observer: a frame sample runs before the
 //       engine's frame callback and saw it a frame late, 198-233 ms for a light written at 170). Logged with both times. On origin/main the engine's .pmh-on stays on the card that was under the
 //       pointer at rest and scrolled away, and the card under the pointer never gets it without a move: red too.
@@ -30,6 +30,8 @@
 //       the pointer on that column: no is-hl-dim/is-hl-on while paused, and the provider light returns after op-end.
 //       --set raceOnly=1 runs this row alone. On main use --set raceNoPause=1: assert the absence of a pause marker,
 //       then explicitly SKIP R4's suppression/return verdicts, which have no pause interval to judge there.
+//   R100 wheel from an already-shown provider/donut/column/card state, including a sparse sleeping engine at the
+//       scroll limit and a press on a still-visible fading tool. --set chartOnly=1, chartCases=provider,donut,column,engine,tool.
 //   R5  keyboard-mount Accounts/Overview mid-burst; live-board marker, tools/rows/light suppression and live return.
 //       --set mountOnly=1 isolates R5; --set mountNoPause=1 explicitly skips pause verdicts on main; rm=1 covers the spare.
 // A window that did not scroll at least TICKS*40*0.6 px is taken again (twice at most); one still short fails as
@@ -58,7 +60,8 @@ const INSTALL = () => {
 		if (!R.on) return;
 		const t = e.target, card = t.closest && t.closest('.pmu-card');
 		const under = card && card.matches(':hover');
-		R.trans.push({ t: performance.now(), prop: e.propertyName, cls: cls(t), card: cardId(card), under: !!under, self: !!(t.matches && t.matches(':hover')) });
+		const approved = (t.matches?.('.pmu-seg button') && e.propertyName === 'color') || (t.matches?.('.pmu-stepper button') && ['color','background-color'].includes(e.propertyName)) || (t.matches?.('.pmu-sbrow .pmu-sbfill > i') && e.propertyName === 'opacity');
+		R.trans.push({ t: performance.now(), prop: e.propertyName, cls: cls(t), card: cardId(card), under: !!under, approved: !!approved, self: !!(t.matches && t.matches(':hover')) });
 	}, true);
 	const frame = () => {
 		if (!R.on) return;
@@ -66,7 +69,8 @@ const INSTALL = () => {
 		const hc = board.querySelector(':scope > .pmu-card:hover');
 		const tools = hc && hc.querySelector('.pmu-cardtools');
 		R.frames.push({ t: performance.now(), top: Math.round(sc.scrollTop), card: cardId(hc), tools: tools ? Math.round(parseFloat(getComputedStyle(tools).opacity) * 100) / 100 : null,
-			lit: [...board.querySelectorAll(':scope > .pmu-card.pmh-on')].map(cardId), near: [...board.querySelectorAll(':scope > .pmu-card.pmh-near')].map(cardId) });
+			lit: [...board.querySelectorAll(':scope > .pmu-card.pmh-on')].map(cardId), near: [...board.querySelectorAll(':scope > .pmu-card.pmh-near')].map(cardId),
+			op: board.getAttribute('data-op'), highlights: board.querySelectorAll('.is-hl-on,.is-hl-dim,path[data-mark="arc"].is-dim,.pmu-dl-row.is-hot,.pmu-col.is-hot-col').length });
 		requestAnimationFrame(frame);
 	};
 	// frames of 50 ms or more (Chrome's long-animation-frame entries), with their style and layout and their longest
@@ -76,10 +80,19 @@ const INSTALL = () => {
 	} catch (e) { /* no entries in this browser */ }
 	// when a card takes or drops the engine's light, timed as the class is written (the frame callbacks above run before
 	// the engine's in a frame, so a frame sample sees a light one frame after the frame that drew it)
-	new MutationObserver((ms) => { if (!R.on) return; const now = performance.now(); for (const m of ms) if (m.target.parentNode === document.getElementById('pmuBoard') && m.target.classList.contains('pmu-card')) R.cls.push({ t: now, card: cardId(m.target), on: m.target.classList.contains('pmh-on') }); })
-		.observe(sc, { attributes: true, attributeFilter: ['class'], subtree: true });
-	R.start = () => { Object.assign(R, { on: true, frames: [], wheels: [], scrolls: [], trans: [], loaf: [], cls: [], t0: performance.now() }); requestAnimationFrame(frame); };
-	R.stop = () => { R.on = false; return { t0: R.t0, frames: R.frames, wheels: R.wheels, scrolls: R.scrolls, trans: R.trans, loaf: R.loaf, cls: R.cls }; };
+	new MutationObserver((ms) => {
+		if (!R.on) return; const now = performance.now(), live = document.getElementById('pmuBoard');
+		for (const m of ms) {
+			if (m.target === live && m.attributeName === 'data-op') R.ops.push({t:now,op:live.getAttribute('data-op')});
+			if (m.attributeName === 'class' && m.target.parentNode === live && m.target.classList.contains('pmu-card')) R.cls.push({ t: now, card: cardId(m.target), on: m.target.classList.contains('pmh-on') });
+		}
+	}).observe(sc, { attributes: true, attributeFilter: ['class','data-op'], subtree: true });
+	R.start = () => {
+		const tools = document.querySelector('#pmuBoard .pmu-card:hover .pmu-cardtools');
+		const fadeMs = tools ? Math.max(...getComputedStyle(tools).transitionDuration.split(',').map((v) => parseFloat(v) * (v.trim().endsWith('ms') ? 1 : 1000))) : 140;
+		Object.assign(R, { on: true, frames: [], wheels: [], scrolls: [], trans: [], loaf: [], cls: [], ops: [], fadeMs, t0: performance.now() }); requestAnimationFrame(frame);
+	};
+	R.stop = () => { R.on = false; return { t0: R.t0, frames: R.frames, wheels: R.wheels, scrolls: R.scrolls, trans: R.trans, loaf: R.loaf, cls: R.cls, ops: R.ops, fadeMs: R.fadeMs }; };
 	R.state = () => { board = document.getElementById('pmuBoard'); const hc = board.querySelector(':scope > .pmu-card:hover'), tools = hc && hc.querySelector('.pmu-cardtools'); return { card: cardId(hc), lit: !!(hc && hc.classList.contains('pmh-on')), tools: tools ? parseFloat(getComputedStyle(tools).opacity) : null }; };
 	return true;
 };
@@ -88,25 +101,28 @@ const INSTALL = () => {
 export function judge(rec, { rest, back }) {
 	const first = rec.wheels[0], lastWheel = rec.wheels[rec.wheels.length - 1], lastScroll = rec.scrolls.length ? rec.scrolls[rec.scrolls.length - 1] : lastWheel;
 	const end = Math.max(lastWheel, lastScroll), from = first + 50;
-	const during = (x) => x.t >= from && x.t <= end;
-	const ins = rec.trans.filter((x) => during(x) && x.under && x.card !== rest);
-	const litFrames = rec.frames.filter((x) => during(x) && x.lit.concat(x.near || []).some((c) => c !== rest));
+	const pauseEnd = (rec.ops || []).find((x) => x.t > first && x.op !== 'wheel')?.t ?? end;
+	const during = (x) => x.t >= from && x.t < pauseEnd;
+	const active = rec.frames.filter(during);
+	const ins = rec.trans.filter((x) => during(x) && x.under && !x.approved);
+	const litFrames = active.filter((x) => x.lit.concat(x.near || []).length > 0 || x.highlights > 0);
+	const toolFrames = active.filter((x) => x.t >= first + (rec.fadeMs ?? 140) + 50 && x.tools > 0.05);
 	// R2: the card under the pointer once the wheel has stopped; its light is back when its .pmh-on is written (or it
-	// still had it), its tools when their opacity transition starts or a frame reads them above .05
+	// still had it), its tools when a frame reads them above .5. Transition creation is logged separately.
 	const after = rec.frames.filter((x) => x.t > end);
 	const target = after.length ? after[after.length - 1].card : null;
-	const settled = after.length && after[after.length - 1].lit.includes(target);
+	const settled = after.length && after[after.length - 1].lit.includes(target) && after[after.length - 1].tools > 0.5;
 	const lastBefore = (rec.cls || []).filter((x) => x.t <= end && x.card === target).pop();
 	const litAt = (rec.cls || []).find((x) => x.t > end && x.card === target && x.on);
 	const lightT = !settled ? null : litAt ? litAt.t : lastBefore && lastBefore.on ? end : (after.find((x) => x.lit.includes(target)) || {}).t;
 	const toolsTr = rec.trans.find((x) => x.t > end && x.card === target && x.prop === 'opacity' && /pmu-cardtools/.test(x.cls));
-	const toolsFr = after.find((x) => x.card === target && x.tools > 0.05);
-	const toolsT = Math.min(toolsTr ? toolsTr.t : Infinity, toolsFr ? toolsFr.t : Infinity);
+	const toolsFr = after.find((x) => x.card === target && x.tools > 0.5);
+	const toolsT = toolsFr ? toolsFr.t : Infinity;
 	const backT = lightT != null && toolsT !== Infinity ? Math.max(lightT, toolsT) : null;
 	return {
-		r1: { ok: ins.length === 0 && litFrames.length === 0, ins: ins.length, insCards: [...new Set(ins.map((x) => x.card))], insProps: [...new Set(ins.map((x) => x.prop + ' ' + x.cls.split(' ')[0]))].slice(0, 8), litFrames: litFrames.length, frames: rec.frames.filter(during).length, cardsPassed: [...new Set(rec.frames.filter(during).map((x) => x.card).filter(Boolean))].length },
+		r1: { ok: active.length >= 5 && ins.length === 0 && litFrames.length === 0 && toolFrames.length === 0, toolFrames: toolFrames.length, pauseEnd, ins: ins.length, insCards: [...new Set(ins.map((x) => x.card))], insProps: [...new Set(ins.map((x) => x.prop + ' ' + x.cls.split(' ')[0]))].slice(0, 8), litFrames: litFrames.length, frames: rec.frames.filter(during).length, cardsPassed: [...new Set(rec.frames.filter(during).map((x) => x.card).filter(Boolean))].length },
 		r2: { ok: backT != null && backT - end <= back, ms: backT != null ? Math.round(backT - end) : null, card: target,
-			light: lightT != null ? Math.round(lightT - end) : null, tools: toolsT !== Infinity ? Math.round(toolsT - end) : null,
+			light: lightT != null ? Math.round(lightT - end) : null, tools: toolsT !== Infinity ? Math.round(toolsT - end) : null, toolsTransition: toolsTr ? Math.round(toolsTr.t - end) : null,
 			long: (rec.loaf || []).filter((x) => x.t + x.d > end && x.t < end + 400).map((x) => `+${Math.round(x.t - end)} ms ${x.d} ms (style/layout ${x.sl}: ${x.scripts.join('; ') || 'no script'})`) },
 		span: { wheel: Math.round(lastWheel - first), tail: Math.round(lastScroll - lastWheel), wheels: rec.wheels.length, scrolls: rec.scrolls.length }
 	};
@@ -378,7 +394,7 @@ async function appliedHighlights(t, f, label, park) {
 		if (sparse) { await park(); await f.evaluate((s)=>{ PMU.board.resize(s.id,s.rect); s.ids.filter((id)=>id!==s.id).forEach((id)=>PMU.board.setVisible(id,true)); },sparse); }
 		await park();
 	}
-	await f.evaluate((on)=>{ PM7_USAGE.setRoomDetail('overview','glance'); if(on) PMU.live.resume(); },liveWasOn);
+	await f.evaluate((on)=>{ PMU.menu.close(); document.activeElement?.blur(); PM7_USAGE.setRoomDetail('overview','glance'); if(on) PMU.live.resume(); },liveWasOn);
 	await t.page.waitForTimeout(4500);
 	return records;
 }
