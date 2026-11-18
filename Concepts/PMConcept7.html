@@ -29906,6 +29906,9 @@ html[data-o55-nier-parts~="cursor"] #pm-o55-onboarding .o55-lookmenu .o55-opt-me
 #pm-o55-onboarding .o55-prewarm.o55-predraw { visibility: visible; opacity: 0.001; will-change: opacity; }
 #pm-o55-onboarding .o55-predraw :not([data-pd]) { visibility: hidden !important; }
 #pm-o55-onboarding .o55-predraw [data-pd] { visibility: visible !important; }
+/* (an SVG element with a filter draws that filter even when everything in it is hidden: in the host, waiting or drawing,
+   every filter stays off until the pre-draw gives it its turns, data-pdf, 60-ui-core.js predraw) */
+#pm-o55-onboarding .o55-prewarm [filter]:not([data-pdf]) { filter: none !important; }
 .o55-hold, .o55-hold *, .o55-wait, .o55-wait * { animation-play-state: paused !important; }
 
 /* layers are transparent so the outgoing layer stays visible under the incoming one */
@@ -166574,8 +166577,10 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
      { queued, dropped, backoffMs, lateRun, stopped, session, off, running, lateCount, waiting: the gate that held the
      last try ('idle', 'frames', 'input', 'animation', ...) }; window.__pmWarmLog (also PM_WARM.log): the last 200
      { owner, name, t, at (the step's frame), cpuMs, frameMs, late, outcome, watched: false on a GPU step judged without
-     its watch, steadyMs / slowMs (the adaptive watch bars, rounded to 0.1 ms), watchReset: true on the first row after
-     an interval that no row shows set the count of steady watches back to zero (watchClean, below) }. 'pm-warm-done' on window when the queue empties, at the session stop, and after an add skipped with
+     its watch, steadyMs / slowMs (the adaptive watch bars, rounded to 0.1 ms), slow1 / steady1 and slow2 / steady2
+     (the slow bar and the steady bar in effect when the step's two intervals, d1 and d2, were judged, rounded to
+     0.1 ms), resetAt (0, or 1 or 2 for the interval that set the steady-watch count back to zero), watchReset: true
+     on the first row after an interval that no row shows set that count back to zero (watchClean, below) }. 'pm-warm-done' on window when the queue empties, at the session stop, and after an add skipped with
      nothing queued (warming off), so an owner that waits for it never waits on a software-rendered computer */
   const warmFlag = (v) => { try { return new RegExp('(?:^|[?&])pm-warm=' + v + '(?:&|$)').test(location.search); } catch (_) { return false; } };
   const warmOff = warmFlag('0'), warmForce = warmFlag('force');
@@ -166681,12 +166686,22 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
   };
   /* Log-only snapshots: no gate, timer or watch decision reads these. */
   let watchSteadyLog = null, watchSlowLog = null;
+  let slow1Log = null, steady1Log = null, slow2Log = null, steady2Log = null, resetAtLog = 0;
   const lateMs = () => Math.max(40, 3 * median());
   const onTime = (d) => d <= 1.5 * median();
-  const note = (d) => {
+  /* which is 1 or 2 when this interval is the step's d1 or d2; admission frames and watch frames omit it */
+  const note = (d, which) => {
     watchSlowLog = lateMs(); // the slow bar before this noted interval enters the rolling median
+    if (which === 1 || which === 2) {
+      const steadyBar = Math.max(STEADY_MS, 1.5 * median());
+      if (which === 1) { slow1Log = watchSlowLog; steady1Log = steadyBar; }
+      else { slow2Log = watchSlowLog; steady2Log = steadyBar; }
+    }
     /* over the slow bar: the watch is needed again (watchClean, below) */
-    if (d > lateMs()) { warmLateAt = performance.now(); watchClean = 0; watchResets++; }
+    if (d > lateMs()) {
+      warmLateAt = performance.now(); watchClean = 0; watchResets++;
+      if ((which === 1 || which === 2) && resetAtLog === 0) resetAtLog = which;
+    }
     warmD1 = warmD2; warmD2 = d;
     warmDeltas.push(d); if (warmDeltas.length > 30) warmDeltas.shift();
   };
@@ -166713,7 +166728,16 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
       row.steadyMs = Math.round((watchSteadyLog == null ? Math.max(STEADY_MS, 1.5 * median()) : watchSteadyLog) * 10) / 10;
       row.slowMs = Math.round((watchSlowLog == null ? lateMs() : watchSlowLog) * 10) / 10;
     }
-    watchSteadyLog = watchSlowLog = null;
+    /* the bars d1 and d2 were judged against, and which of them reset the count; absent on a row that judged neither */
+    if (slow1Log != null && steady1Log != null && slow2Log != null && steady2Log != null) {
+      row.slow1 = Math.round(slow1Log * 10) / 10;
+      row.steady1 = Math.round(steady1Log * 10) / 10;
+      row.slow2 = Math.round(slow2Log * 10) / 10;
+      row.steady2 = Math.round(steady2Log * 10) / 10;
+      row.resetAt = resetAtLog;
+    }
+    watchSteadyLog = watchSlowLog = slow1Log = steady1Log = slow2Log = steady2Log = null;
+    resetAtLog = 0;
     /* a GPU step judged without its watch (watching(), below) */
     if (st.unwatched) row.watched = false;
     /* the count of steady watches set back to zero by an interval no row shows (watchUnseen, at WATCH_KEEP below) */
@@ -166845,7 +166869,12 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
      holds the word until the next row. steadyMs captures the bar at watched(); slowMs captures note()'s latest slow
      bar before inserting that interval. Rows without those decisions report the current bars. Both are rounded to
      0.1 ms for replay: the later display-rate sample cannot stand in for this rolling 30-interval median.
-     watchSteadyLog / watchSlowLog are log-only; the existing decisions below read their existing expressions. */
+     A step's row also records the slow bar and the steady bar in effect when its d1 and its d2 were judged
+     (slow1, steady1, slow2, steady2) and resetAt, 0 or the interval (1 or 2) whose comparison set the count back
+     to zero. The median can move between those two judgments and the row's slowMs, so the endpoint bars are not
+     a bound on the bar d1 met (R53-C4). Admission frames and the watch's later frames are not d1 or d2 and leave
+     these fields unset. watchSteadyLog / watchSlowLog / slow1Log / steady1Log / slow2Log / steady2Log / resetAtLog
+     are log-only; the existing decisions below read their existing expressions. */
   const WATCH_KEEP = 16, STEADY_MS = 25;
   const watching = () => watchClean < WATCH_KEEP;
   const watched = (frameMs) => { watchSteadyLog = Math.max(STEADY_MS, 1.5 * median()); watchClean = Math.max.apply(null, frameMs) <= Math.max(STEADY_MS, 1.5 * median()) ? watchClean + 1 : 0; };
@@ -166885,7 +166914,7 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
       clean(r);
       const d1 = a - t;
       if (vis !== warmVis) { judge(st, r.cpu, null, limit); after(); return; }
-      note(d1);
+      note(d1, 1);
       if (st.light) {
         /* the owner's next light step (FIFO) in this frame, while everything holds and the chain is under its 100 ms
            turn (v3.6 item 3); then the turn passes on */
@@ -166908,7 +166937,7 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
       requestAnimationFrame((b) => {
         const d2 = b - a;
         if (vis !== warmVis) { judge(st, r.cpu, null, limit); after(); return; }
-        note(d2);
+        note(d2, 2);
         /* the watch not needed: judged by the two (a d1 or d2 over the slow bar has just made it needed, so this step
            keeps it) */
         if (!watching()) { st.unwatched = true; if (!judge(st, r.cpu, [Math.round(d1), Math.round(d2)], limit)) after(); return; }
@@ -166927,7 +166956,7 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
     requestAnimationFrame((b) => {
       const d2 = b - a;
       if (vis !== warmVis) { judge(st, cpuMs, null, limit); after(); return; }
-      note(d2);
+      note(d2, 2);
       st.unwatched = true;
       if (!judge(st, cpuMs, [Math.round(d1), Math.round(d2)], limit)) after();
     });
@@ -166952,11 +166981,11 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
       clean(r);
       if (vis !== warmVis) { judge(st, r.cpu, null, limit); after(); return; }
       const d1 = a - from;
-      note(d1);
+      note(d1, 1);
       requestAnimationFrame((b) => {
         const d2 = b - a;
         if (vis !== warmVis) { judge(st, r.cpu, null, limit); after(); return; }
-        note(d2);
+        note(d2, 2);
         if (!judge(st, r.cpu, [Math.round(d1), Math.round(d2)], limit)) after();
       });
     };
@@ -183054,16 +183083,42 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
      edges, K-AA) */
   let pdHold = (() => { try { return new URLSearchParams(location.search).get('o55pdhold') === '1'; } catch (_) { return false; } })();
   const NONPAINT = /^(defs|lineargradient|radialgradient|stop|clippath|mask|filter|pattern|symbol|title|desc|style|script|metadata|marker|fe[a-z]+)$/;
-  const pd = { phase: 'none', listeners: 0, pieces: 0, slices: 0, worst: 0, startedAt: 0, endedAt: 0, why: '', long: [] };
+  const pd = { phase: 'none', listeners: 0, pieces: 0, filters: 0, slices: 0, worst: 0, builtAt: 0, startedAt: 0, firstSliceAt: 0, endedAt: 0, why: '', long: [] };
   function predraw(host, from) {
     const els = Array.from(host.querySelectorAll('*')).filter((n) => !NONPAINT.test(n.localName.toLowerCase()));
+    /* (an SVG element with a filter draws that filter even with everything in it hidden: the Glass tile's Pip, its head's
+       drop shadow, linked five GPU programs in the frame after the host was built, one raster of 113-129 ms on Alexis, the
+       owner's PC's 117 ms, Welcome's Pip held for an eighth of a second. Start needs those programs (without them its
+       first raster linked seven: 199 ms on Alexis), and a filter drawn over its content does not link them. 20-motion.css
+       keeps every filter in the host off until it is given its turns here, just before its element is shown, a slice each
+       with all of it still hidden: a drop shadow first as its blur alone (three of its five programs, which only come
+       together: a one-way blur or an offset does not split them), then whole (the other two); any other filter whole. Its
+       element and what is in it are then shown through it, as before) */
+    const fx = [], seq = [];
+    host.querySelectorAll('[filter]').forEach((el) => {
+      const m = /url\(\s*["']?#([^"')\s]+)/.exec(el.getAttribute('filter') || '');
+      const fl = m ? host.querySelector('#' + CSS.escape(m[1])) : null, ds = fl && fl.querySelector('feDropShadow');
+      let st = null;
+      const turns = [];
+      if (ds) turns.push([el, () => {
+        st = fl.cloneNode(false); st.id = fl.id + '-pdb';
+        const b = st.appendChild(document.createElementNS('http://www.w3.org/2000/svg', 'feGaussianBlur'));
+        b.setAttribute('stdDeviation', ds.getAttribute('stdDeviation') || '0');
+        fl.after(st); el.style.filter = 'url(#' + st.id + ')'; el.setAttribute('data-pdf', '');
+      }, 'as a blur']);
+      turns.push([el, () => { el.style.removeProperty('filter'); el.setAttribute('data-pdf', ''); if (st) st.remove(); }, 'whole']);
+      fx.push([el, turns]);
+    });
+    const turnsOf = new Map(fx);
+    els.forEach((e) => { if (turnsOf.has(e)) { seq.push(...turnsOf.get(e)); turnsOf.delete(e); } seq.push(e); });
+    turnsOf.forEach((turns) => seq.unshift(...turns));
     const down = new Set(); let moved = 0, stop = false, cap = 0;
     const onMove = () => { moved = performance.now(); };
     const onDown = (e) => { down.add(e.code || e.key); }, onUp = (e) => { down.delete(e.code || e.key); }, onBlur = () => down.clear();
     document.addEventListener('pointermove', onMove, true); document.addEventListener('keydown', onDown, true); document.addEventListener('keyup', onUp, true); window.addEventListener('blur', onBlur);
-    Object.assign(pd, { phase: 'running', listeners: 4, pieces: els.length, slices: 0, worst: 0, startedAt: performance.now(), endedAt: 0, why: '', long: [] });
+    Object.assign(pd, { phase: 'running', listeners: 4, pieces: els.length, filters: seq.length - els.length, slices: 0, worst: 0, startedAt: performance.now(), firstSliceAt: 0, endedAt: 0, why: '', long: [] });
     const desc = (e) => e.localName + (e.getAttribute('class') ? '.' + String(e.getAttribute('class')).trim().split(/\s+/)[0] : '') + (e.closest('[data-tile]') ? '@' + e.closest('[data-tile]').getAttribute('data-tile') : '');
-    let batch = [];
+    let batch = [], what = '';
     const tell = (type) => { try { window.dispatchEvent(new CustomEvent('o55:predraw', { detail: Object.assign({ type }, pd) })); } catch (_) { /* none */ } };
     const end = (why) => {
       if (stop) return;
@@ -183083,12 +183138,12 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
       if (watch) {
         /* (a batch is judged on the three frames after it: its raster comes in the frame after its paint) */
         gap = Math.max(gap, dt);
-        if (--watch === 0) { pd.worst = Math.max(pd.worst, gap); if (gap > 34 && pd.long.length < 40) pd.long.push([Math.round(gap), batch.map(desc).join(' ')]); n = gap > 34 ? 1 : Math.min(2, n * 2); }
-      } else if (i >= els.length) { end('done'); return; }
+        if (--watch === 0) { pd.worst = Math.max(pd.worst, gap); if (gap > 34 && pd.long.length < 40) pd.long.push([Math.round(gap), batch.map(desc).join(' ') + what]); n = gap > 34 ? 1 : Math.min(2, n * 2); }
+      } else if (i >= seq.length) { end('done'); return; }
       else if (settled() && performance.now() - moved > 300 && !down.size) {
-        const to = Math.min(els.length, i + n);
-        batch = els.slice(i, to);
-        for (; i < to; i++) els[i].setAttribute('data-pd', '');
+        if (Array.isArray(seq[i])) { const [el, go, how] = seq[i++]; batch = [el]; what = ' (its filter, ' + how + ', hidden)'; go(); }
+        else { batch = []; what = ''; while (i < seq.length && batch.length < n && !Array.isArray(seq[i])) { seq[i].setAttribute('data-pd', ''); batch.push(seq[i++]); } }
+        if (!pd.slices) pd.firstSliceAt = performance.now();
         pd.slices++; watch = 3; gap = 0;
       }
       O55.motion.real.raf(frame);
@@ -183113,6 +183168,7 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
       /* (pmed-prepared: Liquid Glass's lens switcher leaves strips under it alone, as it does the editor's prepared sheet; the
          copied Light / Dark control was adopted once the pre-draw showed it, and its lens drawn in the real window at full
          strength, a chip at the top of Welcome's pane in Glass for the whole pre-draw, R49-2) */
+      pd.builtAt = performance.now();
       host.className = 'o55-prewarm pmed-prepared'; host.setAttribute('aria-hidden', 'true'); host.setAttribute('inert', ''); host.setAttribute('data-screen', id);
       try { host.innerHTML = def.body(S); } catch (_) { return; }
       host.querySelectorAll('[id]').forEach((n) => n.removeAttribute('id'));
@@ -314312,7 +314368,11 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
   function armComposerObserver(){
     // The keyed shell retains these nodes. Recreating the observer every render
     // delivered another initial resize callback and repeated both forced-layout probes.
-    if(!composerRO) composerRO=new ResizeObserver(()=>{
+    // A look revealed over the onboarding window covers the chat (PM_LOOK_HOLD, 11-motion-start.js).
+    // This re-measured the hidden composer in the reveal's first frame (E4 section 3: a cache miss is
+    // getComputedStyle plus one rect for each of the five tool buttons). It waits, then runs once.
+    if(!composerRO) composerRO=new ResizeObserver(function onComposerResize(){
+      if(window.PM_LOOK_HOLD&&window.PM_LOOK_HOLD.after&&window.PM_LOOK_HOLD.after(onComposerResize))return;
       if(chromeSyncFrame!==null)return;
       chromeSyncFrame=requestAnimationFrame(runChromeSync);
     });

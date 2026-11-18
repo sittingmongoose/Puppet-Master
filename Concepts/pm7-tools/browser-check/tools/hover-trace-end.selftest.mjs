@@ -16,6 +16,8 @@ async function run(fail) {
  return{calls,error};
 }
 let x=await run();assert.equal(x.error,undefined);assert.ok(x.calls.includes('renderer-ack'),'the renderer must acknowledge completion after the last input');
-assert.ok(x.calls.indexOf('input')<x.calls.indexOf('renderer-ack'));assert.ok(x.calls.indexOf('renderer-ack')<x.calls.indexOf('Tracing.end'));
+assert.ok(x.calls.indexOf('input')<x.calls.lastIndexOf('renderer-ack'));assert.ok(x.calls.lastIndexOf('renderer-ack')<x.calls.indexOf('Tracing.end'));
+// PM7PERF-HOVER-FIRST-COUNT-NULL: a renderer round trip also comes between Tracing.start and the first input
+assert.ok(x.calls.indexOf('Tracing.start')<x.calls.indexOf('renderer-ack')&&x.calls.indexOf('renderer-ack')<x.calls.indexOf('input'),'the renderer answers once before the first input: '+x.calls.join(','));
 for(const fail of ['input','renderer']){x=await run(fail);assert.match(x.error.message,new RegExp(fail+' failure'));assert.ok(x.calls.includes('Tracing.end'));assert.ok(x.calls.includes('IO.close'),'drain and close even after failure');}
-console.log('PASS renderer acknowledges the last input before trace end; input/ack errors still stop and drain tracing');
+console.log('PASS the renderer answers once after Tracing.start before the first input, and acknowledges the last input before trace end; input/ack errors still stop and drain tracing');

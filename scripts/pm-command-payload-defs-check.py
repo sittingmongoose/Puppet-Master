@@ -2334,6 +2334,35 @@ def internal_detail(check: str, exc: BaseException) -> str:
     return f"{check}: {type(exc).__name__}: {' '.join(str(exc).split())}"
 
 
+class _AliasSpanLoader(yaml.SafeLoader):
+    """SafeLoader that records which mapping keys have a YAML alias as their value.
+
+    The composer resolves an alias to the anchored node itself, so that node's marks describe the
+    anchor's site, not the alias use; a field span built from them would point into another key
+    (T232). compose_mapping_node composes each value with its key node as ``index``.
+    """
+
+    def __init__(self, stream: str) -> None:
+        super().__init__(stream)
+        self.alias_value_keys: set[int] = set()
+
+    def compose_node(self, parent: yaml.Node | None, index: yaml.Node | int | None) -> yaml.Node:
+        if self.check_event(yaml.AliasEvent) and isinstance(index, yaml.Node):
+            node = super().compose_node(parent, index)
+            self.alias_value_keys.add(id(index))
+            return node
+        return super().compose_node(parent, index)
+
+
+def _compose_unit_fence(text: str) -> tuple[yaml.Node | None, set[int]]:
+    """(root node, ids of the keys whose value is an alias) of one YAML document."""
+    loader = _AliasSpanLoader(text)
+    try:
+        return loader.get_single_node(), loader.alias_value_keys
+    finally:
+        loader.dispose()
+
+
 def check_evidence_lines(ctx: Context, value: Any = None, doc: str = CATALOG) -> None:
     """Check all evidence records with line hints, including nested definition records."""
     outside_map = value is None
@@ -2351,10 +2380,15 @@ def check_evidence_lines(ctx: Context, value: Any = None, doc: str = CATALOG) ->
                 unit = ctx.corpus.units(target).get(uid)
                 if unit:
                     match = PLAN_UNIT_FENCE_PATTERN.match(text, unit.start)
-                    root = yaml.compose(match.group(1), Loader=yaml.SafeLoader) if match else None
+                    root, aliased = _compose_unit_fence(match.group(1)) if match else (None, set())
                     if isinstance(root, yaml.MappingNode):
                         for name, node in root.value:
                             if name.value == field:
+                                if id(name) in aliased:
+                                    # T232: the value is an alias, so the resolved node's marks
+                                    # describe the anchor's site in another key, not this field;
+                                    # refuse the hint instead of accepting the anchor's line.
+                                    continue
                                 allowed.append((match.start(1) + node.start_mark.index,
                                                 match.start(1) + node.end_mark.index))
             map_unit = ctx.catalog_units.get(MAP_UNIT)
@@ -4393,6 +4427,19 @@ def build_cases() -> tuple[list[tuple[str, Callable[[Fixture], None], int, set[s
             occurrences = list(re.finditer(re.escape(quote), text))
             selected = {"map": 0, "doc_map": 0, "correct": 1, "other_field": 2, "other_unit": 3}[location]
             evidence["line"] = line_of(text, occurrences[selected].start())
+
+    @case("fail T232: evidence hint at an aliased field's anchor", 1, {"C05"}, kinds={"evidence_line_mismatch"})
+    def _(fx: Fixture) -> None:
+        external(fx)
+        evidence = fx.map["outside_range_commands"][0]["evidence"]
+        quote = evidence["quote"]
+        # The named field's value becomes an alias; the quote stays on the anchor's line in another key.
+        fx.doc_suffix[CATALOG] = fx.doc_suffix[CATALOG].replace(
+            "canonical_text: " + quote,
+            "other_source: &q " + quote + "\ncanonical_text: *q", 1)
+        evidence["line"] = 1
+        text = fx.files()[CATALOG]
+        evidence["line"] = line_of(text, text.index("other_source: &q " + quote))
 
     @case("fail MAX1: deleted in-record discriminator", 1, {"C05"}, kinds={"typed_discriminator_branch_value_mismatch"})
     def _(fx: Fixture) -> None:

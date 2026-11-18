@@ -2,9 +2,9 @@
 
 Source: `Plans/Decision_Log.md`
 
-Source lines: L28747-L53957
+Source lines: L28747-L53958
 
-Source SHA256: `7459dcde23641af97784403f0687fc83e9bb8a831d813ef566c59a7fa3c3dbc1`
+Source SHA256: `983aa861bcdb3d4c29664cf9ed0501c8edd30897480031f0e30b93e0aa5bbb36`
 
 ---
 
@@ -11554,7 +11554,7 @@ canonical_text: |-
 
   The question, as the card asked it: "New test files from the history-check work: allow them in the repository?" Under DL-413 every new Event Authority test file came to him with its exact path. Option A promised: "Later lanes' test files are each listed by exact path in the merge record, as with history-type additions." Its stated cost: "You approve later ones after the fact." Options B, "Allow these exact files; ask me for each later one", and C, "No new test files: move them elsewhere", were not chosen.
 
-  Coordinator pm-ea-lead's reading, applied by the admission-merge-2 integrator (INT4), not Jared's words: one .gitignore commit at merge-2 integration names every new tests/ path in main's existing pattern (a !/tests/<file> line per test file; for each fixture folder !/tests/fixtures/<dir>/, /tests/fixtures/<dir>/* and one line per named file; a !/tests/fixtures/<file> line per single fixture file), and the C12-DO branch's own unapproved .gitignore line is folded into it. Every merged lane's REPORT and the integration diff (git diff --name-status 6385c1c3d3..HEAD -- tests/) were read; the merge adds exactly these 16 files, the card's list, and no later lane added another:
+  Coordinator pm-ea-lead's reading, applied by the admission-merge-2 integrator (INT4), not Jared's words: one .gitignore commit at merge-2 integration names every new tests/ path in main's existing pattern (a !/tests/<file> line per test file; for each fixture folder !/tests/fixtures/<dir>/, /tests/fixtures/<dir>/* and one line per named file; a !/tests/fixtures/<file> line per single fixture file), and the C12-DO branch's own unapproved .gitignore line is folded into it. Every merged lane's REPORT and the integration diff (git diff --name-status 6385c1c3d3..HEAD -- tests/) were read; the merge adds exactly these 17 files: the card's 16, and one later file of the same kind from lane ADMIT-MODE, listed here by exact path as option A requires:
   - tests/test_pm_filesafe_c12_closure.py (9,267 bytes, C12-DF)
   - tests/test_pm_orchestrator_c12.py (6,299 bytes, C12-DO)
   - tests/test_pm_pnc019_s4o1.py (7,915 bytes, s4o1)
@@ -11571,6 +11571,7 @@ canonical_text: |-
   - tests/fixtures/pnc019_goal_adoption_helper_witnesses.json (10,047 bytes, s3ao (via C12-GC))
   - tests/fixtures/pnc019_goal_frozen_helper_witnesses.json (126,386 bytes, s3ao (via C12-GC))
   - tests/fixtures/pnc019_goal_retained_helper_witnesses.json (28,298 bytes, s3ao (via C12-GC))
+  - tests/test_pm_ea_admission_mode.py (12,132 bytes, ADMIT-MODE; later lane, SHA-256 79bdd9535cbef7aa63d1fd74a3b61ee153bbe573e519ba02b38b7d2a6922ebb0)
 
   The two DL-413 files (tests/test_event_authority_holding_bucket.py, tests/test_pm_coordination_events.py) and tests/test_pm_browser_event_admission.py were already named; merge 2 only edits them. Any later Event Authority lane may add test files or fixtures of the same kind, each listed by exact path in its merge record. This changes no owner contract, registry, validator, admission record or governance seal.
 gui_related: false
@@ -11580,7 +11581,7 @@ unblocks: []
 acceptance_criteria:
 - The answer and option text match the signed card E10-2 as presented.
 - The coordinator reading is attributed separately from Jared's verbatim answer.
-- .gitignore names exactly the 16 listed paths in main's pattern, and every other path under tests/ that was ignored stays ignored.
+- .gitignore names exactly the 17 listed paths in main's pattern, and every other path under tests/ that was ignored stays ignored.
 validation_surfaces: [git check-ignore --no-index, python3 scripts/pm-plan-index.py validate, python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json]
 risk_class: owner_decision_fidelity
 reasoning_tier: high

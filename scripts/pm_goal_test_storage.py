@@ -194,7 +194,7 @@ def _num(where, function, *args, **kwargs):
     try:
         return function(*args, **kwargs)
     except NumruleRefusal as error:
-        raise StorageRefusal(error.reason) from error
+        shared_refuse(StorageRefusal(error.reason), cause=error)
 
 
 def u64(value, where):
@@ -481,106 +481,106 @@ def validate_event_record(event, where='event'):
 
 
 def _commit_shape(value, generation, sequence):
-    if type(value) is not dict or tuple(sorted(value)) != tuple(sorted(COMMIT_KEYS)):
-        raise FrameError('Corrupt', 'commit_payload_shape')
+
+    shared_require(FrameError('Corrupt', 'commit_payload_shape'), not (type(value) is not dict or tuple(sorted(value)) != tuple(sorted(COMMIT_KEYS))))
     for key in ('segment_generation', 'manifest_generation', 'first_sequence', 'last_sequence'):
         try:
             u64(value[key], 'commit/' + key)
         except StorageRefusal:
-            raise FrameError('Corrupt', 'commit_payload_shape')
-    if value['durability_class'] not in ('ordinary', 'barrier') or type(value['durability_class']) is not str:
-        raise FrameError('Corrupt', 'commit_payload_shape')
+            shared_refuse(FrameError('Corrupt', 'commit_payload_shape'))
+
+    shared_require(FrameError('Corrupt', 'commit_payload_shape'), not (value['durability_class'] not in ('ordinary', 'barrier') or type(value['durability_class']) is not str))
     for key in ('commit_group_id', 'segment_name'):
-        if type(value[key]) is not str or value[key] == '':
-            raise FrameError('Corrupt', 'commit_payload_shape')
+
+        shared_require(FrameError('Corrupt', 'commit_payload_shape'), not (type(value[key]) is not str or value[key] == ''))
     try:
         _num('commit', NR.storage_time, value['acknowledged_at_utc'], 'commit/acknowledged_at_utc')
     except StorageRefusal:
-        raise FrameError('Corrupt', 'commit_payload_shape')
-    if value['restore_admission'] is not None:
-        raise FrameError('Unsupported', 'restore_admission_unadmitted')
+        shared_refuse(FrameError('Corrupt', 'commit_payload_shape'))
+
+    shared_require(FrameError('Unsupported', 'restore_admission_unadmitted'), not (value['restore_admission'] is not None))
     members = value['members']
-    if type(members) is not list or not members:
-        raise FrameError('Corrupt', 'commit_payload_shape')
+
+    shared_require(FrameError('Corrupt', 'commit_payload_shape'), not (type(members) is not list or not members))
     for member in members:
-        if type(member) is not list or len(member) != 3 or type(member[0]) is not str:
-            raise FrameError('Corrupt', 'commit_payload_shape')
-    if value['segment_generation'] != generation or value['last_sequence'] != sequence:
-        raise FrameError('Corrupt', 'commit_payload_identity')
+
+        shared_require(FrameError('Corrupt', 'commit_payload_shape'), not (type(member) is not list or len(member) != 3 or type(member[0]) is not str))
+
+    shared_require(FrameError('Corrupt', 'commit_payload_identity'), not (value['segment_generation'] != generation or value['last_sequence'] != sequence))
 
 
 def decode_frame(buf, offset, *, generation, prior_sequence, prior_control):
     """Mandatory Case L-2 validation order, steps 1-10."""
     end = len(buf)
     if end - offset < 8 or buf[offset:offset + 8] != MAGIC:
-        if end - offset < 8 and buf[offset:end] == MAGIC[:end - offset]:
-            raise FrameError('Corrupt', 'prefix_truncated')
-        raise FrameError('Corrupt', 'magic')
-    if end - offset < PREFIX:
-        raise FrameError('Corrupt', 'prefix_truncated')
+
+        shared_require(FrameError('Corrupt', 'prefix_truncated'), not (end - offset < 8 and buf[offset:end] == MAGIC[:end - offset]))
+        shared_refuse(FrameError('Corrupt', 'magic'))
+
+    shared_require(FrameError('Corrupt', 'prefix_truncated'), not (end - offset < PREFIX))
     prefix = bytearray(buf[offset:offset + PREFIX])
     stored_prefix_crc = int.from_bytes(prefix[40:44], 'little')
     prefix[40:44] = b'\0\0\0\0'
-    if crc32(bytes(prefix)) != stored_prefix_crc:
-        raise FrameError('Corrupt', 'prefix_crc')
+
+    shared_require(FrameError('Corrupt', 'prefix_crc'), not (crc32(bytes(prefix)) != stored_prefix_crc))
     version = prefix[8]
-    if version != 2:
-        raise FrameError('Unsupported', 'unsupported_frame_version')
-    if prefix[44:48] != b'\0\0\0\0':
-        raise FrameError('Corrupt', 'reserved_nonzero')
+
+    shared_require(FrameError('Unsupported', 'unsupported_frame_version'), not (version != 2))
+
+    shared_require(FrameError('Corrupt', 'reserved_nonzero'), not (prefix[44:48] != b'\0\0\0\0'))
     flags = prefix[15]
-    if flags not in (0, 2):
-        raise FrameError('Unsupported', 'unsupported_flags')
+
+    shared_require(FrameError('Unsupported', 'unsupported_flags'), not (flags not in (0, 2)))
     header_len = int.from_bytes(prefix[9:11], 'little')
     payload_len = int.from_bytes(prefix[11:15], 'little')
-    if header_len > HEADER_CAP or payload_len > PAYLOAD_CAP:
-        raise FrameError('Corrupt', 'frame_caps')
-    if end - offset - PREFIX < header_len + payload_len:
-        raise FrameError('Corrupt', 'frame_truncated')
+
+    shared_require(FrameError('Corrupt', 'frame_caps'), not (header_len > HEADER_CAP or payload_len > PAYLOAD_CAP))
+
+    shared_require(FrameError('Corrupt', 'frame_truncated'), not (end - offset - PREFIX < header_len + payload_len))
     frame_generation = int.from_bytes(prefix[16:24], 'little')
     sequence = int.from_bytes(prefix[24:32], 'little')
-    if frame_generation != generation:
-        raise FrameError('Corrupt', 'generation_mismatch')
-    if flags == 0 and prior_sequence is not None and sequence <= prior_sequence:
-        raise FrameError('Corrupt', 'sequence_progression')
+
+    shared_require(FrameError('Corrupt', 'generation_mismatch'), not (frame_generation != generation))
+
+    shared_require(FrameError('Corrupt', 'sequence_progression'), not (flags == 0 and prior_sequence is not None and sequence <= prior_sequence))
     header_raw = bytes(buf[offset + PREFIX:offset + PREFIX + header_len])
     payload_raw = bytes(buf[offset + PREFIX + header_len:offset + PREFIX + header_len + payload_len])
-    if crc32(header_raw) != int.from_bytes(prefix[32:36], 'little'):
-        raise FrameError('Corrupt', 'header_crc')
+
+    shared_require(FrameError('Corrupt', 'header_crc'), not (crc32(header_raw) != int.from_bytes(prefix[32:36], 'little')))
     try:
         header = decode_canonical(header_raw, 'frame/header')
     except StorageRefusal:
-        raise FrameError('Corrupt', 'header_codec')
-    if type(header) is not list or not header or header[0] != 1 or type(header[0]) is not int:
-        raise FrameError('Unsupported', 'header_version')
-    if len(header) != 8 or any(type(x) is not str or x == '' for x in header[1:7]) or not (
-            header[7] is None or (type(header[7]) is str and header[7] != '')):
-        raise FrameError('Corrupt', 'header_shape')
-    if flags == 2 and header != control_header(generation, sequence):
-        raise FrameError('Corrupt', 'control_header_mismatch')
-    if flags == 2 and (prior_sequence is None or prior_control or sequence != prior_sequence):
-        # SP-347: a control frame carries the prior frame's sequence and is
-        # never first in a segment or after another control frame.
-        raise FrameError('Corrupt', 'control_sequence')
-    if flags == 0 and header[2] == CONTROL_TYPE:
-        raise FrameError('Corrupt', 'control_header_mismatch')
-    if crc32(payload_raw) != int.from_bytes(prefix[36:40], 'little'):
-        raise FrameError('Corrupt', 'payload_crc')
+        shared_refuse(FrameError('Corrupt', 'header_codec'))
+
+    shared_require(FrameError('Unsupported', 'header_version'), not (type(header) is not list or not header or header[0] != 1 or type(header[0]) is not int))
+
+
+    shared_require(FrameError('Corrupt', 'header_shape'), not (len(header) != 8 or any(type(x) is not str or x == '' for x in header[1:7]) or not (             header[7] is None or (type(header[7]) is str and header[7] != ''))))
+
+    shared_require(FrameError('Corrupt', 'control_header_mismatch'), not (flags == 2 and header != control_header(generation, sequence)))
+
+    # SP-347: a control frame carries the prior frame's sequence and is
+    # never first in a segment or after another control frame.
+    shared_require(FrameError('Corrupt', 'control_sequence'), not (flags == 2 and (prior_sequence is None or prior_control or sequence != prior_sequence)))
+
+    shared_require(FrameError('Corrupt', 'control_header_mismatch'), not (flags == 0 and header[2] == CONTROL_TYPE))
+
+    shared_require(FrameError('Corrupt', 'payload_crc'), not (crc32(payload_raw) != int.from_bytes(prefix[36:40], 'little')))
     try:
         value = decode_canonical(payload_raw, 'frame/payload')
     except StorageRefusal:
-        raise FrameError('Corrupt', 'payload_codec')
+        shared_refuse(FrameError('Corrupt', 'payload_codec'))
     if flags == 2:
         _commit_shape(value, generation, sequence)
     else:
-        if type(value) is not dict:
-            raise FrameError('Corrupt', 'payload_shape')
+
+        shared_require(FrameError('Corrupt', 'payload_shape'), not (type(value) is not dict))
         try:
             validate_event_record(value, 'frame/event')
         except StorageRefusal as error:
-            raise FrameError('Corrupt', 'event_record:' + error.code)
-        if event_header(value) != header or value['sequence_id'] != sequence:
-            raise FrameError('Corrupt', 'duplicate_header_envelope_identity')
+            shared_refuse(FrameError('Corrupt', 'event_record:' + error.code))
+
+        shared_require(FrameError('Corrupt', 'duplicate_header_envelope_identity'), not (event_header(value) != header or value['sequence_id'] != sequence))
     length = PREFIX + header_len + payload_len
     return Frame(offset, length, flags, sequence, header, value, bytes(buf[offset:offset + length]))
 
@@ -1877,3 +1877,19 @@ class RetentionOwner:
     def verify(disposition):
         body = {k: v for k, v in disposition.items() if k != 'proof_sha256'}
         return disposition.get('proof_sha256') == sha256(canonical(['pm.goal_test.retention_gap.v1', body]))
+
+
+# Routing helpers preserve the exception instance and Python chaining semantics.
+# They follow the adapters so existing predicate source locations remain stable.
+_KEEP = object()
+
+def shared_require(exc, condition, *, cause=_KEEP):
+    if not condition:
+        if cause is _KEEP:
+            raise exc
+        raise exc from cause
+
+def shared_refuse(exc, *, cause=_KEEP):
+    if cause is _KEEP:
+        raise exc
+    raise exc from cause

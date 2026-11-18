@@ -18,6 +18,9 @@
 #pm-o55-onboarding .o55-prewarm.o55-predraw { visibility: visible; opacity: 0.001; will-change: opacity; }
 #pm-o55-onboarding .o55-predraw :not([data-pd]) { visibility: hidden !important; }
 #pm-o55-onboarding .o55-predraw [data-pd] { visibility: visible !important; }
+/* (an SVG element with a filter draws that filter even when everything in it is hidden: in the host, waiting or drawing,
+   every filter stays off until the pre-draw gives it its turns, data-pdf, 60-ui-core.js predraw) */
+#pm-o55-onboarding .o55-prewarm [filter]:not([data-pdf]) { filter: none !important; }
 .o55-hold, .o55-hold *, .o55-wait, .o55-wait * { animation-play-state: paused !important; }
 
 /* layers are transparent so the outgoing layer stays visible under the incoming one */

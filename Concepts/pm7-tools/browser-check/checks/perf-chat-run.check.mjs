@@ -7,7 +7,14 @@
 // roomFrame 52 -> 15, script 256 -> 63 ms a second, a frame's median 9.4 -> 6.4 ms, dropped frames 32 -> 11 a second.
 // Here, on Home, with a run restarted (PM56_DEMO.startWorking()) and nobody touching the page, counted over the WHOLE
 // run (its phases differ: a 4 s window gave 83 to 221 a second before and 24 to 56 after, depending on where it fell):
-//   - the frame callbacks asked for by roomFrame and kickFollow together are at most --set loops (default 80) a second.
+//   - the frame callbacks asked for by roomFrame and kickFollow together are at most --set share (default 2/3) per
+//     refresh of the display (PM7PERF-CHATRUN-FRAMECAP-FLAP): both ask once a frame while something moves, so a count a
+//     second grows with the refresh rate. The cap was 80 a second, set and passed on 120 Hz hosts (80/120 = 2/3); on
+//     Alexis at 238 Hz main's own page read 82.7 (Retro Dark) and flapped. Measured per refresh: main's page lg1
+//     0.14-0.42 (Alexis 238 Hz, 2 runs per surface x 10 looks, 2026-11-15: 32-91 a second, Retro, NieR and Friendly
+//     highest, where the old cap failed 2-3 looks a run); the page with lane C's fix reverted 1.35-1.40 (Alexis) and
+//     before it 1.6-1.9 (Windows main5, 190-229 a second at 120 Hz). --set loops=<n> judges an absolute count a second
+//     instead. The two loops' own shares are logged.
 //     They are told by the asking function's name AND by where it runs: the built page's script#pm56-js, #pm56-app-js
 //     and #pm56-port-js blocks (helpers/built-source.mjs). If neither name is seen at all the cell fails as not judged
 //     (a renamed loop must not pass by being invisible);
@@ -49,10 +56,14 @@
 //     flight's layers stand still (what the reader sees, under the window's scrim). At the close the flight carries on
 //     from there and lands: no .tx-fly layer left, no message still marked data-flight, body not .tx-flying. The
 //     branch before lane C3 asked for a frame on every refresh for the whole visit.
+//   PM7PERF-CHATRUN-NIER-AFTER-VISIT: each judged chain visit logs the look painted while the window was open (a
+//   note, not a row: the window paints its run's own look). After the visit part, the look under test is written
+//   through Settings, because the window's close leaves a preview that look()'s persist:false paint does not replace.
 //
 // --set looks=<a,b>  default basic-dark,glass-dark,retro-dark,nier-dark; looks=all for all ten
 // --set parts=run,rest,visit   --set settle=<ms> (default 30000)
 // Both surfaces. A run that never started, or a place missing from the page, fails as "could not judge".
+import { paintedLookHeld } from '../browser-check.config.mjs';
 import { muteSound, refreshRate, parkPointer } from '../helpers/quiet-page.mjs';
 import { CALLBACK_PROBE } from '../helpers/callback-probe.mjs';
 import { DOM_LISTEN, DOM_READ } from '../helpers/dom-writes.mjs';
@@ -62,11 +73,20 @@ const ALL = ['basic-light', 'basic-dark', 'friendly-light', 'friendly-dark', 'gl
 const CHAT = ':is(.pm56-host, #pm56-layers, #pmw-chat56)';
 const PLACES = [['card', `${CHAT} :is(.working-card, .orbit-card)`], ['bar', `${CHAT} .status-bar`]];
 
+// Whether a visit can be judged (exported for tools/chat-visit.selftest.mjs): it opened after the arming, and a short visit
+// closed 100 ms before the delay would have been due, a long one stayed past it; a visit that overruns stays unjudged
+export const visitJudged = (kind, visit, delay) => !!visit && visit[0] > 0 && (kind === 'long' ? visit[1] > delay : visit[1] < delay - 100);
+
+// The look painted while a visit's window was open (PM7PERF-CHATRUN-NIER-AFTER-VISIT). Same rule as look()'s applied row.
+export const visitRanInLook = paintedLookHeld;
+
 export default async function (t) {
 	const want = String(t.args.looks || 'basic-dark,glass-dark,retro-dark,nier-dark');
 	const looks = want === 'all' ? ALL : want.split(',').filter(Boolean);
 	const parts = String(t.args.parts || 'run,rest,visit').split(',');
-	const loopsMax = Number(t.args.loops || 80), hold = Number(t.args.hold || 4000);
+	// PM7PERF-CHATRUN-FRAMECAP-FLAP: the pair is judged as a share of the display's refresh rate (see the header), or
+	// against an absolute --set loops=<per second> when one is given
+	const loopsShare = Number(t.args.share || 2 / 3), loopsAbs = t.args.loops ? Number(t.args.loops) : null, hold = Number(t.args.hold || 4000);
 	const W = 1920, H = 1080;
 	await t.viewport(W, H);
 	await muteSound(t.page);
@@ -137,7 +157,10 @@ export default async function (t) {
 				t.log(`${look} run: card records ${dw.places.card.records} (${(dw.places.card.records / dw.secs).toFixed(1)}/s), same-value ${dw.places.card.same}`);
 				const seen = room > 0 || follow > 0;
 				await t.check(`${look} run: the room's and the follow's loops are seen by name`, seen, seen ? `roomFrame ${room.toFixed(1)}/s, kickFollow ${follow.toFixed(1)}/s` : `neither roomFrame nor kickFollow asked for a frame from the chat's blocks: could not judge (${show(chat, cb.secs)})`);
-				if (seen) await t.check(`${look} run: over the whole run roomFrame and kickFollow ask for at most ${loopsMax} frame callbacks a second`, pair <= loopsMax, `${pair.toFixed(1)}/s (roomFrame ${room.toFixed(1)}, kickFollow ${follow.toFixed(1)}) over ${cb.secs.toFixed(1)} s`);
+				const per = (x) => (x / hz).toFixed(3), loopsMax = loopsAbs ?? loopsShare * hz;
+				t.log(`${look} run: per refresh at ${hz.toFixed(0)} Hz: the pair ${per(pair)}, roomFrame ${per(room)}, kickFollow ${per(follow)}`);
+				if (seen && !(hz > 20 && hz < 400)) await t.check(`${look} run: the display's refresh rate could be read`, false, `${hz.toFixed(1)} Hz: could not judge`);
+				else if (seen) await t.check(`${look} run: over the whole run roomFrame and kickFollow ask for at most ${loopsAbs != null ? loopsAbs + ' frame callbacks a second' : (Math.round(loopsShare * 1000) / 1000) + ' frame callbacks per refresh'}`, pair <= loopsMax, `${pair.toFixed(1)}/s = ${per(pair)} per refresh at ${hz.toFixed(0)} Hz (roomFrame ${room.toFixed(1)}/s ${per(room)}, kickFollow ${follow.toFixed(1)}/s ${per(follow)}) over ${cb.secs.toFixed(1)} s; bound ${loopsMax.toFixed(1)}/s`);
 				await t.check(`${look} run: the card is being written (the run shows its progress)`, dw.places.card.found > 0 && dw.places.card.records > 0, `${dw.places.card.records} records in ${dw.secs.toFixed(1)} s`);
 				if (v0.gap != null && v0.gap <= 24) await t.check(`${look} run: a following transcript is still at the bottom half-way through the run`, !!vMid && vMid.gap <= 24, vMid ? `gap ${v0.gap} px at the start, ${vMid.gap} px at 12 s of the run's clock` : 'the run never reached 12 s on its clock: could not judge');
 			}
@@ -210,82 +233,161 @@ export default async function (t) {
 			}
 		}
 		if (parts.includes('visit')) {
+			try {
 			const thread0 = await f.evaluate(() => window.PM56_DEMO.getState().selectedThread);
 			// 1. a chain's next run: its delay counts only the time the window is not open
 			const delay = await f.evaluate(() => { const r = window.PM56_DATA && PM56_DATA.workRuns && PM56_DATA.workRuns.orbitA; return r && r.next && r.next.run === 'orbitB' ? r.next.delayMs || 1200 : null; });
 			for (const [kind, openAt, closeAt] of [['short', 100, 250], ['long', 100, 2400]]) {
 				if (!delay || !appBlock) { await t.check(`${look} visit: the Multi Orbit chain and the chat's app block are in the page`, false, `orbitA -> orbitB delay ${delay}, app block ${appBlock ? appBlock.from : 'missing'}: could not judge`); break; }
-				const r = await f.evaluate(async ({ delay, openAt, closeAt, app }) => {
-					const D = window.PM56_DEMO, H = window.PM56_HOST, real = window.setTimeout.bind(window);
-					const sleep = (ms) => new Promise((res) => real(res, ms));
-					const works = () => D.snapshot().works || {};
-					// what the chat hears: one listener for the page's life (onRest has no removal)
-					if (!window.__c3rest) { window.__c3rest = []; H.onRest((on) => window.__c3rest.push([on, performance.now()])); }
-					const out = { arm: null, start: null, err: null, rest: null };
-					D.trigger('Multi-orbit turn');
-					for (let i = 0; i < 100 && !(works().orbitA && works().orbitA.running); i++) await sleep(50);
-					if (!(works().orbitA && works().orbitA.running)) { out.err = 'orbitA never started'; return out; }
-					const prev = window.setTimeout;
-					window.setTimeout = function (fn, ms, ...rest) {
-						if (out.arm == null && ms === delay) {
-							const m = /:(\d+):\d+/.exec(String(new Error().stack).split('\n')[2] || '');
-							if (m && +m[1] >= app.from && +m[1] <= app.to) {
-								out.arm = performance.now();
-								real(() => window.O55.ui.open(), openAt);
-								real(() => window.O55.ui.close(), closeAt);
-							}
+				// PM7PERF-CHATRUN-VISIT-SHORT-LATE: on a loaded host the window itself takes 130-420 ms to open after open() and
+				// 500-950 ms to close after close() (Alexis, 2026-11-15), so a short visit can still overrun the delay. It closes
+				// as the chat hears the window open (or at its timer, whichever comes first), and a visit that cannot be judged
+				// is run again, up to --set visitTries (3) times, before the row fails as not judged.
+				const visitTries = Number(t.args.visitTries || 3), unjudged = [];
+				for (let attempt = 0; attempt < visitTries; attempt++) {
+					const r = await f.evaluate(async ({ delay, openAt, closeAt, app, closeOnRest }) => {
+						const D = window.PM56_DEMO, H = window.PM56_HOST, real = window.setTimeout.bind(window);
+						const sleep = (ms) => new Promise((res) => real(res, ms));
+						const works = () => D.snapshot().works || {};
+						// what the chat hears: one listener for the page's life (onRest has no removal). The first open also
+						// records the look the visit is measured in (PM7PERF-CHATRUN-NIER-AFTER-VISIT).
+						window.__c3paint = null;
+						window.__c3paintNow = () => {
+							const theme = document.documentElement.getAttribute('data-theme') || '';
+							const pv = window.PM_NIER && typeof PM_NIER.previewing === 'function' ? PM_NIER.previewing() : null;
+							return { theme, nier: !!(window.PM_NIER && PM_NIER.on()) || theme.startsWith('nier'), loose: !!(pv && pv.loose) };
+						};
+						if (!window.__c3rest) {
+							window.__c3rest = [];
+							H.onRest((on) => {
+								window.__c3rest.push([on, performance.now()]);
+								if (on && !window.__c3paint && window.__c3paintNow) window.__c3paint = window.__c3paintNow();
+							});
 						}
-						return prev.call(window, fn, ms, ...rest);
-					};
-					const mark = window.__c3rest.length;
-					try {
-						for (let i = 0; i < 600 && !works().orbitA.completed; i++) D.tickOnce();
-						if (!works().orbitA.completed) { out.err = 'orbitA did not reach its end'; return out; }
-						for (let i = 0; i < 400 && out.arm == null; i++) await sleep(100);
-						if (out.arm == null) { out.err = 'the successor\'s delay was never armed'; return out; }
-						const until = performance.now() + delay + closeAt + 8000;
-						while (!works().orbitB && performance.now() < until) await sleep(4);
-						if (works().orbitB) out.start = performance.now();
-						while (document.documentElement.hasAttribute('data-o55-open') && performance.now() < until + 5000) await sleep(20);
-					} finally { window.setTimeout = prev; }
-					out.rest = window.__c3rest.slice(mark);
-					return out;
-				}, { delay, openAt, closeAt, app: { from: appBlock.from, to: appBlock.to } });
-				if (r.err || r.start == null) { await t.check(`${look} visit ${kind}: a chain's successor is armed and starts`, false, `${r.err || 'orbitB never started'}: could not judge ${JSON.stringify(r)}`); continue; }
-				// the time the window was open between the arming and the start, as the chat heard it
-				let open = 0, on = null, opened = null, closed = null;
-				for (const [o, at] of r.rest) { if (o && on == null) { on = at; if (opened == null) opened = at; } else if (!o && on != null) { open += Math.max(0, Math.min(at, r.start) - Math.max(on, r.arm)); on = null; closed = at; } }
-				if (on != null) open += Math.max(0, r.start - Math.max(on, r.arm));
-				const total = r.start - r.arm, outside = total - open;
-				const visit = opened == null || closed == null ? null : [Math.round(opened - r.arm), Math.round(closed - r.arm)];
-				t.log(`${look} visit ${kind}: delay ${delay} ms armed, window open ${JSON.stringify(visit)} ms after it, orbitB at +${Math.round(total)} ms: ${Math.round(outside)} ms outside the window`);
-				const judged = !!visit && visit[0] > 0 && (kind === 'long' ? visit[1] > delay : visit[1] < delay - 100);
-				if (!judged) { await t.check(`${look} visit ${kind}: the window opened and closed inside the delay as planned`, false, `window ${JSON.stringify(visit)} ms after the arming, delay ${delay}: could not judge`); continue; }
-				await t.check(`${look} visit ${kind}: the chain's next run starts after its delay counted outside the window (${kind === 'short' ? 'the window closed before it was due' : 'the window stayed past it'})`, outside >= delay - 40 && outside <= delay + 300, `${Math.round(outside)} ms outside the window of ${Math.round(total)} ms from the arming to orbitB's start (window ${visit[0]}-${visit[1]} ms); expected ${delay - 40} to ${delay + 300}`);
+						if (!window.__c3closer) { window.__c3closer = true; H.onRest((on) => { const c = window.__c3closeNow; if (on && c) { window.__c3closeNow = null; c(); } }); }
+						const out = { arm: null, start: null, err: null, rest: null };
+						D.trigger('Multi-orbit turn');
+						for (let i = 0; i < 100 && !(works().orbitA && works().orbitA.running); i++) await sleep(50);
+						if (!(works().orbitA && works().orbitA.running)) { out.err = 'orbitA never started'; return out; }
+						const prev = window.setTimeout;
+						window.setTimeout = function (fn, ms, ...rest) {
+							if (out.arm == null && ms === delay) {
+								const m = /:(\d+):\d+/.exec(String(new Error().stack).split('\n')[2] || '');
+								if (m && +m[1] >= app.from && +m[1] <= app.to) out.arm = performance.now();
+							}
+							return prev.call(window, fn, ms, ...rest);
+						};
+						const mark = window.__c3rest.length;
+						try {
+							for (let i = 0; i < 600 && !works().orbitA.completed; i++) D.tickOnce();
+							if (!works().orbitA.completed) { out.err = 'orbitA did not reach its end'; return out; }
+							for (let i = 0; i < 400 && out.arm == null; i++) await sleep(100);
+							if (out.arm == null) { out.err = 'the successor\'s delay was never armed'; return out; }
+							// PM7PERF-CHATRUN-VISIT-SHORT-LATE: the visit's timers are set once the synchronous ticks above have
+							// returned, at the same times after the arming (set inside the ticks, they could fire only when the run of
+							// up to 600 ticks ended, 300-500 ms late on a loaded host, and the short visit could not end in time)
+							out.armLag = Math.round(performance.now() - out.arm);
+							real(() => { out.opened = Math.round(performance.now() - out.arm); window.O55.ui.open(); }, Math.max(0, openAt - out.armLag));
+							const close = () => { out.closed = Math.round(performance.now() - out.arm); window.O55.ui.close(); };
+							if (closeOnRest) window.__c3closeNow = close;
+							real(() => { if (!closeOnRest) close(); else if (window.__c3closeNow) { window.__c3closeNow = null; close(); } }, Math.max(0, closeAt - out.armLag));
+							const until = performance.now() + delay + closeAt + 8000;
+							while (!works().orbitB && performance.now() < until) await sleep(4);
+							if (works().orbitB) out.start = performance.now();
+							while (document.documentElement.hasAttribute('data-o55-open') && performance.now() < until + 5000) await sleep(20);
+						} finally { window.setTimeout = prev; window.__c3closeNow = null; }
+						out.rest = window.__c3rest.slice(mark);
+						out.painted = window.__c3paint;
+						return out;
+					}, { delay, openAt, closeAt, app: { from: appBlock.from, to: appBlock.to }, closeOnRest: kind === 'short' });
+					if (r.err || r.start == null) { await t.check(`${look} visit ${kind}: a chain's successor is armed and starts`, false, `${r.err || 'orbitB never started'}: could not judge ${JSON.stringify(r)}`); break; }
+					// the time the window was open between the arming and the start, as the chat heard it
+					let open = 0, on = null, opened = null, closed = null;
+					for (const [o, at] of r.rest) { if (o && on == null) { on = at; if (opened == null) opened = at; } else if (!o && on != null) { open += Math.max(0, Math.min(at, r.start) - Math.max(on, r.arm)); on = null; closed = at; } }
+					if (on != null) open += Math.max(0, r.start - Math.max(on, r.arm));
+					const total = r.start - r.arm, outside = total - open;
+					const visit = opened == null || closed == null ? null : [Math.round(opened - r.arm), Math.round(closed - r.arm)];
+					t.log(`${look} visit ${kind}: delay ${delay} ms armed, window open ${JSON.stringify(visit)} ms after it (open() called at +${r.opened}, close() at +${r.closed}; the ticks returned ${r.armLag} ms after the arming), orbitB at +${Math.round(total)} ms: ${Math.round(outside)} ms outside the window`);
+					const judged = visitJudged(kind, visit, delay);
+					if (!judged) {
+						unjudged.push(JSON.stringify(visit));
+						if (attempt + 1 < visitTries) continue;
+						await t.check(`${look} visit ${kind}: the window opened and closed inside the delay as planned`, false, `in ${visitTries} tries the window was ${unjudged.join(', ')} ms after the arming, delay ${delay}: could not judge`); break;
+					}
+					if (unjudged.length) t.log(`${look} visit ${kind}: NOTE ${unjudged.length} attempt(s) not judged, the window ${unjudged.join(', ')} ms after the arming`);
+					await t.check(`${look} visit ${kind}: the chain's next run starts after its delay counted outside the window (${kind === 'short' ? 'the window closed before it was due' : 'the window stayed past it'})`, outside >= delay - 40 && outside <= delay + 300, `${Math.round(outside)} ms outside the window of ${Math.round(total)} ms from the arming to orbitB's start (window ${visit[0]}-${visit[1]} ms); expected ${delay - 40} to ${delay + 300}`);
+					// Logged, not judged: the setup window paints its run's own look while it is open (Basic Dark for a new run),
+					// so on a correct page the visit is not in the look under test (Alexis, 2026-11-15, the integration page:
+					// "data-theme basic-dark, NieR off" in Glass, Retro and NieR Dark, both surfaces, 6 of 6 judged visits).
+					t.log(`${look} visit ${kind}: NOTE the window was open in ${r.painted ? `data-theme ${r.painted.theme}, NieR ${r.painted.nier ? 'on' : 'off'}${r.painted.loose ? ', preview lingering' : ''}` : 'a look that was not read'}${visitRanInLook(look, r.painted) ? ' (the look under test)' : ' (the run\'s own look, not the look under test)'}`);
+					break;
+				}
 			}
 
 			// 2. a send flight under the window: it rests, and lands after the close
 			if (!flyLines[0] || !flyLines[1] || flyLines[1] <= flyLines[0]) await t.check(`${look} visit flight: fly() in turn-stream.js is found once in the built page`, false, `fly at ${flyLines[0]}, land at ${flyLines[1]}: could not judge`);
 			else {
-				const fl = await f.evaluate(async () => {
-					const real = window.setTimeout.bind(window), sleep = (ms) => new Promise((res) => real(res, ms));
-					for (let i = 0; i < 100 && (window.PM56_STREAM.active().length || document.querySelector('.tx-fly')); i++) await sleep(100);
-					const shape = () => document.querySelector('.tx-fly-shape');
-					// (the host moves the chat's flight layers out of body into its own layer: the whole document is watched)
-					const opened = new Promise((res) => {
-						const mo = new MutationObserver(() => { if (!shape()) return; mo.disconnect(); const t0 = performance.now(); window.O55.ui.open(); res(performance.now() - t0); });
-						mo.observe(document.documentElement, { childList: true, subtree: true });
-						real(() => { mo.disconnect(); res(null); }, 4000);
-					});
-					window.PM56_DEMO.trigger('Live reply');
-					const took = await opened;
-					if (took == null) return { err: 'no send flight began (Live reply)' };
-					await new Promise((res) => requestAnimationFrame(() => requestAnimationFrame(res)));
-					return { flying: !!shape() && !!document.querySelector('.transcript [data-flight]'), at: Math.round(took) };
-				});
-				if (fl.err || !fl.flying) await t.check(`${look} visit flight: the window opened while a send flight was in the air`, false, `${fl.err || `the flight had landed two frames after the opening`}: could not judge`);
-				else {
+				// PM7PERF-S-CHATRUN-NIER-FLIGHT-ONEOFF and PM7PERF-G-CHATRUN-RETRO-FLIGHT-ONEOFF (Alexis under load, NieR Dark
+				// normal and Retro Dark sandbox, once each): the window takes 200-300 ms to come up and the flight lasts 440
+				// ms, so on a loaded host the flight could land before the chat heard of the window, and the row read "no
+				// flight layer under the window" with nothing under test (lane Q, 2026-11-15: the chat heard the window 445-560
+				// ms into the flight, its layers still up, and it landed on its next frame). What the chat hears is recorded:
+				// when its rest began (PM56_HOST.onRest, after the chat's own listener), whether the flight's layers and message
+				// were still up then, and how far into the flight that was. Only an attempt whose flight had at least 100 ms left when the rest
+				// began is judged; another is closed and tried again, up to --set flightTries (3) times, then fails as not
+				// judged. A flight that keeps going under the window (judged, gone or moved by the pose reads) still fails.
+				// From the moment the shape appears until the pose reads end, the chat's motion clock (PM56_CLOCK.setScale, its
+				// film and test hook; the flight reads it) runs at --set flightScale (0.25), so the flight lasts 1760 ms and the
+				// window meets it mid-air on a loaded host too; under the window the chat's clock stands still whatever its
+				// scale, which is what the rows judge. 1 keeps the flight's own speed.
+				let fl = null; const flightTries = Number(t.args.flightTries || 3), flightScale = Number(t.args.flightScale || 0.25), flyMs = 440 / flightScale, missed = [];
+				const unscale = () => f.evaluate(() => { if (window.__c5scale != null) { window.PM56_CLOCK.setScale(window.__c5scale); window.__c5scale = null; } });
+				for (let k = 0; k < flightTries; k++) {
+					fl = await f.evaluate(async (scale) => {
+						const real = window.setTimeout.bind(window), sleep = (ms) => new Promise((res) => real(res, ms));
+						for (let i = 0; i < 100 && (window.PM56_STREAM.active().length || document.querySelector('.tx-fly')); i++) await sleep(100);
+						if (!window.__c5fly) { window.__c5fly = []; window.PM56_HOST.onRest((on) => window.__c5fly.push([on, performance.now(), !!document.querySelector('.tx-fly'), !!document.querySelector('.transcript [data-flight]')])); }
+						const heardFrom = window.__c5fly.length;
+						// when the flight's layers and its message's mark go away, for the failure text (diagnosis)
+						if (window.__c5gone) window.__c5gone.mo.disconnect();
+						const gone = window.__c5gone = { t0: performance.now(), events: [], mo: null };
+						gone.mo = new MutationObserver((rs) => { for (const r of rs) {
+							if (r.type === 'childList') for (const n of r.removedNodes) { if (n.nodeType === 1 && (n.matches('.tx-fly') || n.querySelector?.('.tx-fly'))) gone.events.push(['layer gone', Math.round(performance.now() - gone.t0)]); }
+							else if (r.attributeName === 'data-flight' && !r.target.hasAttribute('data-flight')) gone.events.push(['mark gone', Math.round(performance.now() - gone.t0)]);
+						} });
+						gone.mo.observe(document.documentElement, { childList: true, subtree: true, attributes: true, attributeFilter: ['data-flight'] });
+						const shape = () => document.querySelector('.tx-fly-shape');
+						// (the host moves the chat's flight layers out of body into its own layer: the whole document is watched)
+						const opened = new Promise((res) => {
+							const mo = new MutationObserver(() => { if (!shape()) return; mo.disconnect(); const t0 = performance.now(); window.__c5shapeAt = t0; if (scale !== 1 && window.PM56_CLOCK?.setScale) { window.__c5scale = window.PM56_CLOCK.scale; window.PM56_CLOCK.setScale(scale); } window.O55.ui.open(); res(performance.now() - t0); });
+							mo.observe(document.documentElement, { childList: true, subtree: true });
+							real(() => { mo.disconnect(); res(null); }, 4000);
+						});
+						window.PM56_DEMO.trigger('Live reply');
+						const took = await opened;
+						if (took == null) return { err: 'no send flight began (Live reply)' };
+						await new Promise((res) => requestAnimationFrame(() => requestAnimationFrame(res)));
+						return { flying: !!shape() && !!document.querySelector('.transcript [data-flight]'), at: Math.round(took), heardFrom, shapeAt: window.__c5shapeAt };
+					}, flightScale);
+					if (fl.err) break;
 					await f.waitForFunction(() => document.documentElement.hasAttribute('data-o55-open') && window.PM56_HOST.resting(), null, { timeout: 10000 });
+					const heard = await f.evaluate((m) => window.__c5fly.slice(m).find(([on]) => on) || null, fl.heardFrom);
+					// in the air with time to spare: the chat heard the window while the flight's layers and mark were up and at
+					// least 100 ms before the flight's own 440 ms end (FLY_MS, turn-stream.js). Lane Q's diagnosis (Alexis,
+					// 2026-11-15): on a loaded host the chat heard the window 445-560 ms after the flight began, with its layers
+					// still up, so it landed on its next frame (mark gone 45-60 ms after the rest began): nothing under test.
+					fl.lead = heard ? Math.round(heard[1] - fl.shapeAt) : null;
+					fl.inAir = !!heard && heard[2] && heard[3] && fl.lead != null && fl.lead <= flyMs - 100;
+					if (fl.flying && fl.inAir) break;
+					missed.push(!fl.flying ? 'landed within two frames of the opening' : !heard || !heard[2] || !heard[3] ? 'landed before the chat heard of the window' : `the chat heard the window ${fl.lead} ms into the ${flyMs} ms flight`);
+					await unscale();
+					await closeWin();
+					await f.waitForFunction(() => !document.querySelector('.tx-fly') && !document.body.classList.contains('tx-flying'), null, { timeout: 5000 }).catch(() => {});
+					await t.page.waitForTimeout(500);
+				}
+				if (missed.length) t.log(`${look} visit flight: NOTE ${missed.length} attempt(s) not judged: ${missed.join('; ')}`);
+				if (fl.err || !fl.flying || !fl.inAir) { await unscale(); await t.check(`${look} visit flight: the window opened while a send flight was in the air`, false, `${fl.err || `in ${flightTries} tries the flight never was in the air when the chat heard of the window (${missed.join('; ')})`}: could not judge`); }
+				else {
 					await t.page.waitForTimeout(1000);
 					const pose = () => f.evaluate(() => [...document.querySelectorAll('.tx-fly')].map((n) => `${n.className}|${n.style.left}|${n.style.top}|${n.style.transform}|${n.style.opacity}|${n.style.clipPath}`).join(' ; '));
 					const pose0 = await pose();
@@ -293,11 +395,13 @@ export default async function (t) {
 					await t.page.waitForTimeout(hold);
 					const cb = await f.evaluate(() => window.__cbp.read());
 					const pose1 = await pose();
+					await unscale();
 					const flight = cb.raf.filter(([, site]) => { const l = linesOfSite(site)[0]; return l >= flyLines[0] && l < flyLines[1]; });
 					const n = flight.reduce((a, [k]) => a + k, 0);
-					t.log(`${look} visit flight: opened at the flight's start (O55.ui.open() returned in ${fl.at} ms); under the window ${cb.secs.toFixed(1)} s: the flight's frame callbacks ${n} (${show(flight, cb.secs)}); its layers ${pose0 === pose1 ? 'stood still' : 'moved'}`);
+					t.log(`${look} visit flight: opened at the flight's start (O55.ui.open() returned in ${fl.at} ms; the chat heard the window ${fl.lead} ms into the flight); under the window ${cb.secs.toFixed(1)} s: the flight's frame callbacks ${n} (${show(flight, cb.secs)}); its layers ${pose0 === pose1 ? 'stood still' : 'moved'}`);
 					await t.check(`${look} visit flight: under the window the send flight asks for at most 2 frame callbacks`, n <= 2, `${n} in ${cb.secs.toFixed(1)} s (${(n / cb.secs).toFixed(1)}/s): ${show(flight, cb.secs)}`);
-					await t.check(`${look} visit flight: under the window the flight stands where it was (its layers do not move)`, !!pose0 && pose0 === pose1, `${pose0 ? pose0.slice(0, 160) : 'no flight layer under the window'}${pose0 === pose1 ? '' : ` -> ${String(pose1).slice(0, 160)}`}`);
+					const when = pose0 ? '' : await f.evaluate((m) => { const g = window.__c5gone; return `; ms after the attempt began: rest ${JSON.stringify(window.__c5fly.slice(m).map(([on, at, layer, mark]) => [on ? 'on' : 'off', Math.round(at - g.t0), layer, mark]))}, ${JSON.stringify(g.events.slice(0, 6))}, pose read at ${Math.round(performance.now() - g.t0)}`; }, fl.heardFrom);
+					await t.check(`${look} visit flight: under the window the flight stands where it was (its layers do not move)`, !!pose0 && pose0 === pose1, `${pose0 ? pose0.slice(0, 160) : 'no flight layer under the window'}${pose0 === pose1 ? '' : ` -> ${String(pose1).slice(0, 160)}`}${when}`);
 					await closeWin();
 					await t.page.waitForTimeout(1500);
 					const end = await f.evaluate(() => ({ layers: document.querySelectorAll('.tx-fly').length, marked: document.querySelectorAll('.transcript [data-flight]').length, flying: document.body.classList.contains('tx-flying') }));
@@ -306,6 +410,13 @@ export default async function (t) {
 			}
 			await f.evaluate((id) => window.PM56_DEMO.selectThread(id), thread0);
 			await t.page.waitForTimeout(1000);
+			} finally {
+				// The window's unfinished close leaves its preview until Settings writes. Re-apply the look under test
+				// once the window is closed, so the next look() is not stuck on that preview.
+				const still = await f.evaluate(() => document.documentElement.hasAttribute('data-o55-open')).catch(() => true);
+				if (!still) await t.app.look(look, { save: true });
+				else t.log(`NOTE ${look} visit: the window is still open, so the look under test is not re-applied`);
+			}
 		}
 		first = false;
 	}

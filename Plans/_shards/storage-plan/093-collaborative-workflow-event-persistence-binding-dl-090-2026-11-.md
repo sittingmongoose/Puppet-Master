@@ -2,9 +2,9 @@
 
 Source: `Plans/storage-plan.md`
 
-Source lines: L36589-L45198
+Source lines: L36589-L45199
 
-Source SHA256: `bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707`
+Source SHA256: `7c263abcd24e12e537b77bcfc41510b607c20036e5cd9dcdb742490c83f347ac`
 
 ---
 
@@ -2778,7 +2778,8 @@ canonical_text: "Newly authored owner contract under DL-045 for usage.event only
   \ totals remain canonical, backed up and permanent; commit their accounting before detail cleanup and\
   \ never rebuild them from expired detail. Holds, required references, recovery, rollback and protected\
   \ backups still block deletion. This is the existing setting-driven policy selector, not a newly minted\
-  \ policy ID. The separate original source rows keep their exact DL-507 assignments; no source-row lifetime\
+  \ policy ID. The registry retention_policy_ref setting-selected form carries setting_key=ai.usage.usage-retention,\
+  \ anchor=first_durable_save, anchor_immutable=true and owner_ref=Plans/storage-plan.md#SP-594, with no policy_id or policy_version. The separate original source rows keep their exact DL-507 assignments; no source-row lifetime\
   \ is transferred from this event answer. `PENDING_RETENTION_BINDING` is resolved for this event; separate\
   \ admission, storage implementation and native proof remain required.\n\nSigned answer: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/ANSWERS_E-CARDS-8_20261114.md`,\
   \ card `E8-1`, send `f66b1af9-f851-493f-a2ee-6b666b477920`, signed 2026-11-14 at 3:25 PM EST (20:25\
