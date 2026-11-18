@@ -106,11 +106,11 @@ test('a first wheel after a room swap pauses the already visible ghost',()=>{
  } finally{x.cleanup();}
 });
 
-for(const opacity of [0,.4]) {
- test(`wheel fade tags a hovered cluster at opacity ${opacity} only if it is visible`,()=>{
+for(const opacity of [0,.4,1]) {
+ test(`wheel fade tags a hovered cluster at opacity ${opacity} only if it is fully shown`,()=>{
   const x=fixture(opacity);try {
    x.startWheel();
-   assert.equal(x.tools.hasAttribute('data-wheel-fade'),opacity>0);
+   assert.equal(x.tools.hasAttribute('data-wheel-fade'),opacity===1);
    x.advance(150);
    assert.ok(!x.tools.hasAttribute('data-wheel-fade'));
   } finally{x.cleanup();}

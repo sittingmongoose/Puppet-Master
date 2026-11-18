@@ -192,7 +192,7 @@ html[data-theme^="retro"] #panel-usage .pmu-keysw { border-radius: 0; }
    menu alone does not fit beside the title, lets the title yield the room (--pmu-head-room) on the lines it has at rest */
 #panel-usage .pmu-cardtools { position: absolute; z-index: 4; top: 5px; right: 6px; display: flex; gap: 1px; padding: 2px; border-radius: 9px; opacity: 0; pointer-events: none;
   background: var(--pmu-menu-bg, var(--pmu-card)); transition: opacity calc(140ms * var(--pmu-speed, 1)) var(--pmu-ease-out); }
-/* A wheel can leave a visible tool fading where the pointer already was. Only that cluster retains
+/* A wheel can leave a fully shown tool fading where the pointer already was. Only that cluster retains
    hit-testing through its fade (42-cards.js). Hidden controls still accept keyboard focus for menu Escape. */
 #panel-usage :where(.pmu-board:is([data-op="wheel"],[data-wheel-handoff])) .pmu-cardtools[data-wheel-fade] {
   transition: opacity calc(140ms * var(--pmu-speed, 1)) var(--pmu-ease-out), pointer-events 0s linear calc(140ms * var(--pmu-speed, 1));

@@ -1090,7 +1090,7 @@
        rests for a board with [data-op] (18-hover.js: no plate light, glow, reticle or magnet on its cards); Usage's
        in-board :hover rules read the wheel and keyboard handoff markers (20-board.css says more); the head fit
        below waits too. Chart highlights, readouts, tooltip hit areas and pointer tooltips retain their ordinary
-       behavior. A tool already visible when the pause begins can still take a press while it fades. When the pause
+       behavior. A fully shown tool can still take a press while it fades. When the pause
        ends, the board drops the value, refits the card under the pointer and sends one pmu-op-end event so the hover
        engine can relight it without a move. At pause start the hovered card's title clamp yields as on a pointer leave
        (unfitSoon). A gesture that already holds data-op keeps it. Only the Usage page's board pauses (#pmuScroll):
@@ -1099,12 +1099,12 @@
     var pauseHover = function (el) {
       var under = el.querySelector(':scope > .pmu-card:hover');
       var tools = under && under.querySelector(':scope > .pmu-cardhead > .pmu-cardtools');
-      /* Check before writing the board marker, while a delayed entry still reads as zero.
-         The read is only for the old hover at pause start, including a newly gated outgoing board. */
+      /* Read before writing the marker. Reversing an incomplete fade-in shortens the opacity transition,
+         so only fully shown tools can use the full pointer-events delay safely. */
       if (tools && !M.reduced() && !under.matches(':focus-visible') && !tools.matches(':focus-within') &&
           !tools.hasAttribute('data-wheel-fade')) {
         var style = getComputedStyle(tools);
-        if (+style.opacity > 0 && style.pointerEvents === 'auto') {
+        if (+style.opacity === 1 && style.pointerEvents === 'auto') {
           tools.setAttribute('data-wheel-fade', '');
           wheelFades.push(tools);
         }
