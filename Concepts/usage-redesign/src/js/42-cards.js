@@ -1213,7 +1213,12 @@
       offWheelSwap = b.on('swap', onWheelMount);   /* Reduce Motion adopts its spare after mount returns */
       /* An early gesture release leaves the original wheel deadline intact; an expired hold returns once flags clear.
          Pointer move/leave/press keep updating wheelAt during the handoff, so wheelEnd resolves the live hover. */
-      offWheelEnd = b.on('op-end', function () { if (wheelAt && !wheelT) wheelEnd(); });
+      offWheelEnd = b.on('op-end', function () {
+        if (!wheelAt) return;
+        /* R116 P5: opSync just removed the gesture marker. Reacquire wheel suppression while its
+           original timer is still pending; do not restart or extend that deadline. */
+        if (wheelT) wheelBoard(); else wheelEnd();
+      });
       boardEl.addEventListener('wheel', onWheel, { passive: true });
       boardEl.addEventListener('scroll', onWheelScroll, { passive: true });
       boardEl.addEventListener('pointermove', onWheelMove, { passive: true });
