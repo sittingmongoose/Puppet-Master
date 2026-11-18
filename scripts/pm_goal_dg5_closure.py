@@ -587,6 +587,10 @@ def verify_witnesses(reference_v, entries, raw_store=None, controls=None):
                 value = pickle.loads(raw)
             else:
                 raise ValueError('selected witness missing from stored evidence')
+            if entry.get('input_value_sha256'):
+                import pm_goal_go2_closure as go2
+                if go2.value_sha(value) != entry['input_value_sha256']:
+                    raise ValueError('rebuilt witness value fingerprint differs from the selected result')
             problem = _witness_problem(reference_v, clause, entry, value)
         except Exception as exc:
             problem = type(exc).__name__ + ': ' + str(exc)[:240]
@@ -945,6 +949,8 @@ def _close_one(ident, plain, bank_object, seeds, records, args, carried, donor_s
             blob = gzip.compress(pickle.dumps(controls, protocol=5))
             store_path.write_bytes(blob)
             meta['control_store'] = dict(path=store_path.name, sha256=hashlib.sha256(blob).hexdigest(), controls=len(controls))
+    if meta['verify']['failed']:
+        meta['error'] = 'reference witness verification failed: ' + str(meta['verify']['failed'])
     meta['branch_controls'] = branch_controls
     meta['validations'] = spent
     meta['budget'] = dict(budget=budget, clause_cap=args.clause_cap)
