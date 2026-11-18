@@ -91,11 +91,12 @@ const COLLECT = () => {
 		cleanupsBeforePaint: P.cleanups.filter((c) => P.painted && c < P.painted).length,
 		rowsFirst: P.rows1 || 0, rowsEnd: stage ? stage.querySelectorAll('.setting-row').length : 0,
 		pendingLeft: document.querySelectorAll('#workspace-stage [data-o55-fill="pending"]').length,
-		/* every row placement puts on the drawn plain page is drawn (a fill that cleared its marker but dropped rows) */
+		/* The rendered workspace model includes both placement and hand-authored rows (R97 check 2). */
 		missing: (() => {
 			const body = document.querySelector('#workspace-stage [data-continuous-workspace-body][data-workspace-mounted="true"]');
-			const ws = body && body.dataset.continuousWorkspaceBody, byId = (window.PM51 && PM51.placement && PM51.placement.byId) || {};
-			const want = Object.values(byId).filter((e) => e && e.page && !e.hand && e.workspace === ws).map((e) => e.id);
+			const ws = body && body.dataset.continuousWorkspaceBody;
+			const model = (window.PM12_DATA?.domains || []).flatMap(d => d.workspaces || []).find(w => w.id === ws);
+			const want = [...new Set((model?.sections || []).flatMap(s => Array.isArray(s.settings) ? s.settings.map(st => st.id) : []))];
 			return { ws, want: want.length, gone: want.filter((id) => !body.querySelector(`[id="setting-${CSS.escape(id)}"]`)).slice(0, 6) };
 		})(),
 		dupIds: (() => { const ids = [...document.querySelectorAll('#workspace-stage [id^="setting-"]')].map((n) => n.id); return ids.length - new Set(ids).size; })(),
@@ -347,6 +348,27 @@ async function moreOptionsRow(t, f, label) {
 }
 
 export const tests = {};
+
+/* R97 check 2: the collector must notice a missing hand-authored Spelling row on the real rendered model. */
+for (const surface of ['normal', 'sandbox']) {
+	tests[`R97 completeness includes hand-authored Settings rows (${surface})`] = async (t) => {
+		if (!t.app.surfaces().includes(surface)) { await t.check(`${surface} surface not asked for`, true); return; }
+		await t.viewport(1920, 1080); await muteSound(t.page);
+		if (t.args.motion === 'reduce') await t.emulate({ reducedMotion: 'reduce' });
+		const f = await t.app.open({ sandbox: surface === 'sandbox' });
+		await t.app.resetLayout().catch(() => {}); await f.locator('#tab-settings').click(); await t.settle();
+		await f.locator('#pm-settings-root .domain-link[data-domain="general"]').first().click();
+		await f.waitForFunction(() => !document.querySelector('#workspace-stage [data-o55-fill="pending"]'), null, { timeout: 15000 });
+		await f.evaluate(PROBE); await f.evaluate(ARM);
+		const id = 'general.interaction.spellcheck-words';
+		const removed = await f.evaluate(id => { const n = document.getElementById('setting-' + id); if (!n) return false; n.remove(); return true; }, id);
+		const r = await f.evaluate(COLLECT);
+		t.log(`${surface} missing hand row: expected ${r.missing.want}, absent ${r.missing.gone.join(',') || 'none'}`);
+		await t.check(`${surface}: omission control removed the real hand-authored Spelling row`, removed);
+		await t.check(`${surface}: collector rejects the missing hand-authored row`, r.missing.gone.includes(id), JSON.stringify(r.missing));
+	};
+}
+
 /* R97 product 1: capture counts on the key's own dispatch, around the product listeners. Resume uses the existing
    public action at Code commit, so the real onboarding window holds the still-pending Settings chapter inert. */
 for (const surface of ['normal', 'sandbox']) {
@@ -671,8 +693,8 @@ for (const surface of ['normal', 'sandbox']) {
 				if (seq.some(([, to]) => to === 'code')) await t.check(`${look} ${surface}: an arrival at Code & Tools shows its first screen before the rest of its rows`, code.length > 0 && !whole.length,
 					whole.map((r) => `${r.pair}: all ${r.rowsEnd} rows were built for the first frame`).join('; ') || 'no arrival at Code & Tools');
 				const left = rows.filter((r) => r.pendingLeft > 0 || r.dupIds > 0 || (r.missing && r.missing.gone.length) || (r.to === 'code' && !(r.missing && r.missing.want)));
-				await t.check(`${look} ${surface}: after each arrival every row placement puts on the page is drawn, once`, !left.length,
-					left.map((r) => `${r.pair}: ${r.pendingLeft} row lists still pending, ${r.dupIds} duplicate row ids, missing ${r.missing ? r.missing.gone.join(', ') || 'none' : '?'} of ${r.missing ? r.missing.want : '?'} placed on ${r.missing ? r.missing.ws : '?'}`).join('; '));
+				await t.check(`${look} ${surface}: after each arrival every row in the rendered workspace model is drawn, once`, !left.length,
+					left.map((r) => `${r.pair}: ${r.pendingLeft} row lists still pending, ${r.dupIds} duplicate row ids, missing ${r.missing ? r.missing.gone.join(', ') || 'none' : '?'} of ${r.missing ? r.missing.want : '?'} modeled on ${r.missing ? r.missing.ws : '?'}`).join('; '));
 				const unsaved = rows.filter((r) => r.savedPlace < 1);
 				await t.check(`${look} ${surface}: the new place is saved by collection after the capped row-completion wait`, !unsaved.length, unsaved.map((r) => r.pair).join(', '));
 				const walked = rows.filter((r) => r.cleanupsBeforePaint > 0);
