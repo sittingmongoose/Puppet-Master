@@ -2626,7 +2626,10 @@
        as that trip's own block did */
     var tl = document.timeline && document.timeline.currentTime != null ? document.timeline.currentTime : performance.now();
     var at = go ? (zero != null ? Math.max(go.at, performance.now() - zero) : go.at) : 0;
-    var from = go ? Math.floor(Math.max(0, zero != null ? Math.min(at, tl - zero) : at) / FRAME_MS) * FRAME_MS : 0;
+    /* (on the same instants as the trip under way's own frames, a frame apart from its first, so the two draw the same
+       pose at every time: a frame apart from another instant, Basic's snap drew 1.05 px off where they bend) */
+    var g0 = go ? go.K.from || 0 : 0;
+    var from = go ? g0 + Math.floor(Math.max(0, (zero != null ? Math.min(at, tl - zero) : at) - g0) / FRAME_MS) * FRAME_MS : 0;
     var T = plan(at, go ? null : 0, from), start = performance.now() - at;
     var parts = [F, G, S], anims = [], lead = null;
     parts.forEach(function (e, j) {
