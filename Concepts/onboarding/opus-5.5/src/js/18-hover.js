@@ -256,6 +256,9 @@
     function restEnded() { scopeDirty = rectsDirty = geomDirty = true; recheckSoon(); setTimeout(afterFrameSoon, 400); }
     /* Usage's wheel pause (PERF-USAGE-HOVER, usage 42-cards.js bindTools) ends without a body class or a pointer move */
     document.addEventListener('pmu-op-end', restEnded);
+    /* R100 P5: a sparse room's scope may sit above its scroller, and a wheel against the limit emits no scroll.
+       Wake once when Usage takes the marker so an already-lit card clears in either case. */
+    document.addEventListener('pmu-op-start', recheckSoon);
 
     function gestureRest() {
       var b = document.body;
