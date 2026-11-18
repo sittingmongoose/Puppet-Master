@@ -47,7 +47,6 @@ export default (ctx) => {
 				if (!o.noScroll) {
 					// Match browser-check 2.0.62's private shared click: scroll only when hidden.
 					// Centring every ancestor can move or close an already-visible History flyout.
-					await l.scrollIntoViewIfNeeded({ timeout: 5000 }).catch(() => {});
 					// Animated controls may never settle for Playwright's scroll. Native nearest
 					// reveals clipped edges without moving ancestors that already show the item.
 					await l.evaluate((e) => e.scrollIntoView({ block: 'nearest', inline: 'nearest' })).catch(() => {});
