@@ -232,12 +232,16 @@ def check_witness_capture_pairing():
     orig_search, orig_errors = closure.go.search_clause, closure.go.errors_of
     
     def fake_errors(v, value, cut=frozenset()):
-        return [] if cut else [Err('ident-1')]
+        if not cut:
+            return [Err('ident-1')]
+        return [Err('other')] if value == {'x': 1} else []  # covered pair first, clean kill later
 
     def fake_search(clause, keyword, location, info, node, ident, *args, **kwargs):
         closure.go.errors_of(None, {'x': 1})                       # uncut, guard present
         closure.go.errors_of(None, {'x': 2})                       # uncut only: never confirmed
-        closure.go.errors_of(None, {'x': 1}, frozenset({ident}))  # cut, guard gone: confirms {'x': 1}
+        closure.go.errors_of(None, {'x': 1}, frozenset({ident}))  # cut, guard gone but other errors: covered
+        closure.go.errors_of(None, {'x': 3})                       # uncut, guard present
+        closure.go.errors_of(None, {'x': 3}, frozenset({ident}))  # cut, no errors: the kill pair wins
         return dict(cls='KILLED')
 
     closure.go.search_clause, closure.go.errors_of = fake_search, fake_errors
@@ -250,7 +254,7 @@ def check_witness_capture_pairing():
     finally:
         closure.go.search_clause, closure.go.errors_of = orig_search, orig_errors
     import pickle
-    assert pickle.loads(closure._WIT['store']['clause/1']) == {'x': 1}
+    assert pickle.loads(closure._WIT['store']['clause/1']) == {'x': 3}
 
 
 def check_pass2_parent_release():
