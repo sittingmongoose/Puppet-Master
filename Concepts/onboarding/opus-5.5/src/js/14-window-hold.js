@@ -17,7 +17,7 @@
      start time and performance.now(), after the pause's restyle), so it holds the place it was shown at, to within the
      rest of that frame's work; a loop the main thread draws was shown at the frame's own time and stays there;
    - at the close, the marks stay through the frame that wakes the app (data-o55-open goes, inert comes off) and are
-     taken off in the frame after it, which starts on time, so each loop goes on from exactly where it stopped;
+     taken off in a fresh frame armed by its layout-completion notification, so each loop goes on from exactly where it stopped;
    - a loop that starts while the window is open (a look applied as the window opens, a row the app redraws beneath) is
      marked when it starts (animationstart, listened to only while the hold is on), and a mark a renderer takes away is
      put back before the next frame (as the still page does, 14-shell-still.js);
@@ -41,6 +41,9 @@
   const raf = (fn) => ((window.O55 && window.O55.motion && window.O55.motion.real && window.O55.motion.real.raf) || window.requestAnimationFrame.bind(window))(fn);
   const marked = new Set();
   let on = false, releasing = 0, taking = 0;
+  function cancelRelease() {
+    if (releasing) { releasing.observer.disconnect(); releasing.probe.remove(); releasing = 0; }
+  }
 
   const isCss = (a) => !!(window.CSSAnimation && a instanceof window.CSSAnimation);
   /* an element of a part of the page the window holds (light DOM, under a body child that is not the window's own) */
@@ -99,7 +102,7 @@
   }
   /* at the click: held from the frame that draws its dim; when the window is already being shown, at once */
   function hold(atOnce) {
-    if (releasing) { releasing = 0; }
+    cancelRelease();
     if (!on) {
       on = true;
       window.addEventListener('animationstart', started, true);
@@ -121,12 +124,22 @@
     const sweep = () => { if (!on) document.querySelectorAll('[' + MARK + ']').forEach((n) => n.removeAttribute(MARK)); };
     if (typeof window.requestIdleCallback === 'function') window.requestIdleCallback(sweep, { timeout: 3000 }); else setTimeout(sweep, 1000);
   }
-  /* let go in the frame after the next one: the next frame is the one that wakes the app (its long style); the one
-     after it starts on time */
+  /* The observer is delivered after the wake's style/layout work. Only that notification arms the
+     release frame: counting rAF callbacks cannot tell whether the wake's layout has completed.
+     Resume in the next frame so CSS uses a fresh start time, rather than the wake's stale one. */
   function releaseSoon() {
     if (!on || releasing) return;
-    const id = releasing = {};
-    raf(() => { if (releasing === id) raf(() => { if (releasing === id) release(); }); });
+    const probe = document.createElement('div');
+    probe.id = 'o55-wake-layout';
+    probe.style.cssText = 'position:fixed;width:1px;height:1px;contain:strict;visibility:hidden;pointer-events:none';
+    const observer = new ResizeObserver(() => {
+      observer.disconnect(); probe.remove();
+      if (releasing !== id) return;
+      raf(() => { if (releasing === id) release(); });
+    });
+    const id = releasing = { observer, probe };
+    document.documentElement.appendChild(probe);
+    observer.observe(probe);
   }
 
   if (typeof MutationObserver === 'function') {
