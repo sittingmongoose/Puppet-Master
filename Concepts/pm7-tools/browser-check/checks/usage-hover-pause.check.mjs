@@ -32,6 +32,8 @@
 //       then explicitly SKIP R4's suppression/return verdicts, which have no pause interval to judge there.
 //   R100 wheel from an already-shown provider/donut/column/card state, including a sparse sleeping engine at the
 //       scroll limit and a press on a still-visible fading tool. --set chartOnly=1, chartCases=provider,donut,column,engine,tool.
+//   R107 wheel over a lit column, leave #pmuScroll within the hold for the toolbar, then stay outside past return.
+//       No column/provider/donut/card light may return. --set departureOnly=1 isolates the regression.
 //   R5  keyboard-mount Accounts/Overview mid-burst; live-board marker, tools/rows/light suppression and live return.
 //       --set mountOnly=1 isolates R5; --set mountNoPause=1 explicitly skips pause verdicts on main; rm=1 covers the spare.
 // A window that did not scroll at least TICKS*40*0.6 px is taken again (twice at most); one still short fails as
@@ -436,6 +438,58 @@ async function appliedHighlights(t, f, label, park) {
 	return records;
 }
 
+// R107 P1: a trusted move straight to the toolbar must invalidate the old wheel location.
+async function pointerDeparture(t, f, label, park) {
+	await park();
+	const liveWasOn = await f.evaluate(() => { const on = PMU.live.on(); PMU.live.pause(); PM7_USAGE.setRoomDetail('costs', 'diagnostics'); return on; });
+	await t.page.waitForTimeout(4500);
+	const target = f.locator('#pmuBoard .pmu-colsplot .pmu-col:not(.is-zero)').first();
+	if (!await target.count()) { await t.check(label + 'R107 could judge: a column exists', false); return; }
+	await target.scrollIntoViewIfNeeded();
+	await t.page.waitForTimeout(500);
+	const box = await target.boundingBox(), pane = await f.locator('#pmuScroll').boundingBox();
+	if (!box || !pane) { await t.check(label + 'R107 could judge: column and board are visible', false); return; }
+	const at = { x: box.x + box.width / 2, y: (Math.max(box.y, pane.y) + Math.min(box.y + box.height, pane.y + pane.height)) / 2 };
+	const outside = { x: pane.x + pane.width / 2, y: Math.max(2, pane.y - 18) };
+	await t.page.mouse.move(at.x, at.y);
+	await t.page.waitForTimeout(900);
+	await f.evaluate(() => {
+		const b = document.getElementById('pmuBoard'), sc = document.getElementById('pmuScroll');
+		const r = window.__uhpDeparture = { pre: b.querySelectorAll('.pmu-col.is-hot-col').length, wheels: [], leaves: [], ends: [], after: [] };
+		let running = true, point = null;
+		const read = () => ({ t: performance.now(), op: b.getAttribute('data-op'), outside: !sc.matches(':hover'),
+			column: b.querySelectorAll('.pmu-col.is-hot-col,.pmu-cols.is-hot').length,
+			provider: b.querySelectorAll('.is-hl-on,.is-hl-dim').length,
+			donut: b.querySelectorAll('path[data-mark="arc"].is-dim,.pmu-dl-row.is-hot').length,
+			card: b.querySelectorAll('.pmh-on,.pmh-near').length });
+		const wheel = (e) => { point = [e.clientX,e.clientY]; r.wheels.push({t:performance.now(),trusted:e.isTrusted,held:b.getAttribute('data-op')==='wheel'}); };
+		// Capture before the scroller's own leave handler can end the pause on the fixed page.
+		const leave = (e) => { if (sc.contains(e.target) && !sc.contains(e.relatedTarget)) r.leaves.push({t:performance.now(),trusted:e.isTrusted,held:b.getAttribute('data-op')==='wheel'}); };
+		const end = (e) => { if (e.detail?.board === b) { const hit = point && document.elementFromPoint(...point); r.ends.push({t:performance.now(),outside:!sc.matches(':hover'),oldPointOnPlot:!!hit?.closest('.pmu-colsplot')}); } };
+		const sample = () => { if (!running) return; if (r.ends.length) r.after.push(read()); requestAnimationFrame(sample); };
+		sc.addEventListener('wheel',wheel,{passive:true}); document.addEventListener('pointerout',leave,true); document.addEventListener('pmu-op-end',end);
+		requestAnimationFrame(sample);
+		r.stop = () => { running=false; sc.removeEventListener('wheel',wheel); document.removeEventListener('pointerout',leave,true); document.removeEventListener('pmu-op-end',end); return {...r,stop:undefined,final:read()}; };
+	});
+	// No intervening page round trip: the page timestamps prove departure precedes the 150 ms rest.
+	await t.page.mouse.wheel(0,1);
+	await t.page.mouse.move(outside.x,outside.y);
+	await t.page.waitForTimeout(900);
+	const rec = await f.evaluate(() => window.__uhpDeparture.stop());
+	const gap = rec.leaves[0]?.t - rec.wheels[0]?.t;
+	t.log(label + 'R107 departure: ' + JSON.stringify(rec));
+	await t.check(label + 'R107 could judge: trusted wheel on a lit column, direct departure during the hold, old point still on the plot',
+		rec.pre===1 && rec.wheels.length===1 && rec.wheels[0].trusted && rec.wheels[0].held && rec.leaves.length===1 && rec.leaves[0].trusted && rec.leaves[0].held && gap>=0 && gap<150 && rec.ends.length===1 && rec.ends[0].outside && rec.ends[0].oldPointOnPlot && rec.after.length>=5 && rec.after.every((x)=>x.outside) && rec.final.outside && !rec.final.op,
+		`departure ${gap} ms after wheel; ${JSON.stringify({...rec,after:rec.after.length})}`);
+	await t.check(label + 'R107 no column, provider, donut or card light returns while the pointer remains outside the board',
+		rec.after.length>=5 && rec.after.every((x)=>x.outside && !x.column && !x.provider && !x.donut && !x.card) && rec.final.outside && !rec.final.column && !rec.final.provider && !rec.final.donut && !rec.final.card,
+		`${rec.after.filter((x)=>x.column || x.provider || x.donut || x.card).length}/${rec.after.length} lit post-return frames; final ${JSON.stringify(rec.final)}`);
+	await park();
+	await f.evaluate((on) => { PM7_USAGE.setRoomDetail('overview','glance'); if(on) PMU.live.resume(); },liveWasOn);
+	await t.page.waitForTimeout(4500);
+	return rec;
+}
+
 export default async function (t) {
 	const looks = String(t.args.looks || 'basic-dark').split(',').filter(Boolean);
 	// BACK: the pause ends 150 ms after the last wheel or scroll event; light and tools were back at 168-185 ms on Alexis
@@ -457,6 +511,11 @@ export default async function (t) {
 			await f.waitForFunction(() => !(window.PM_THEME_TRANSITION?.busy?.() || window.PM_LOOK_COVERED?.()), null, { timeout: 20000 }).catch(() => {});
 			await f.evaluate(() => PM_PAGES.go('usage'));
 			await t.page.waitForTimeout(Number(t.args.viewSettle ?? 8000));
+			if (!['chartOnly','raceOnly','mountOnly'].some((key)=>String(t.args[key] || '')==='1')) {
+				const departure=await pointerDeparture(t,f,S,park); dump.push({surface,look,departure});
+				if(t.args.dump) writeFileSync(String(t.args.dump),JSON.stringify(dump));
+				if(String(t.args.departureOnly || '')==='1') continue;
+			}
 			if (String(t.args.chartOnly || '') === '1') {
 				const applied = await appliedHighlights(t, f, S, park); dump.push({surface,look,applied});
 				if(t.args.dump) writeFileSync(String(t.args.dump),JSON.stringify(dump));
