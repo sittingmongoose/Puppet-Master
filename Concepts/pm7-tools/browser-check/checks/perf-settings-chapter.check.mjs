@@ -1,14 +1,11 @@
 // A Settings chapter switch builds and shows the new chapter without work that can wait (FO-196, the cost part; lane U,
 // 2026-11-14). On main 9bfa159274 the old chapter stayed on screen 90-830 ms after the release (median 143 ms on an
-// RTX 3080) while one task built the new chapter and the next frame styled and laid it out. Three parts of that are
+// RTX 3080) while one task built the new chapter and the next frame styled and laid it out. Two parts of that are
 // work the first frame does not need, and each is judged here by what runs when, not by a time (times differ by host):
 //   unlock   a chapter is drawn new on every visit, so content-visibility's remembered sizes never helped: every far
 //            section was a 460 px placeholder, Code & Tools' Terminal look (49 rows, 3,494 px) landed inside Chrome's
 //            margin of the screen and was styled and laid out in the first frame, then skipped again in the next. Judged:
 //            no section of an arrival turns relevant and is skipped again within a second ("one-frame unlocks").
-//   save     navigation's saveState (two deep copies, the tome's write and its applyPaint) ran in the build task.
-//            Judged: the tome's save does not run between the release and the new chapter's first painted frame, and
-//            does run, with the new chapter as the place, by collection after the row-completion wait (10 s cap).
 //   release  the hover tags of the removed chapter (about 2,000 nodes) were walked in the build task's microtasks.
 //            Judged: the controller's cleanupRemoved does not run before that frame, and the old chapter's tagged nodes
 //            have let go of their tags by that collection (after the initial 2.5 s settle and capped completion wait).
@@ -17,6 +14,8 @@
 // list (down, 90 ms, up); Settings acts on the click. Logged per switch, not judged: release -> painted, the build task
 // ("finish" in the long animation frames), elements built.
 //
+// Navigation saves immediately, as on main (C3 retired by the owner, 2026-11-18). Save counts are logged, and the
+// Project-switch/restore-all guards retain the correctness checks.
 // Looks: Basic Dark, Friendly Light, Retro Dark, Glass Dark, NieR Light by default (`--set looks=`, `all` for ten), each
 // set through Settings' Theme rows and guarded as painted (helpers/settings-look.mjs). Switches: General, AI & Providers
 // and Code & Tools, both ways (`--set seq=a:b,...`). Both surfaces (`--set sandbox=0` and `1`). `--set motion=reduce`
@@ -154,31 +153,15 @@ async function projectRow(t, f, surface) {
 	await t.check(`${surface}: back in ${a}, Settings' place is Code & Tools`, back === 'code', `its place is ${back || 'none'}`);
 }
 
-/* R90 P1: the restore transaction replaces storage. A waiting place save must run BEFORE it, or it puts the old
-   settings/history back afterwards. Accept the existing Reset all to defaults confirmation at chapter commit,
-   before a frame/idle callback can run (the same fast-action boundary as R89 P1). Observe scheduling/cancellation;
-   never hold, replace or invoke a scheduled callback. Main saves eagerly, so its control must have saved Code already. */
+/* R90 P1: accept the existing Reset all confirmation at chapter commit, then verify the accepted values,
+   history/rollback maps and reading place survive reload. Navigation must already be saved eagerly, as on main
+   (owner decision: C3 retired). The old deferred-save pages remain useful negative fixtures for this guard. */
 const ARM_RESTORE = (id) => {
 	const tome = window.PM7_SETTINGS_TOME, root = document.getElementById('pm-settings-root');
-	const R = window.__pscRestore = { scheduled: 0, pendingAtAccept: 0, pendingAtRestore: 0, accepted: false, result: null, saves: [] };
-	const pending = new Set(), raf = window.requestAnimationFrame, caf = window.cancelAnimationFrame;
-	const idle = window.requestIdleCallback, cancelIdle = window.cancelIdleCallback, save = tome.save, restore = tome.restoreProjectDefaults;
-	const watch = (fn) => typeof fn === 'function' && (fn.name === 'saveNavigationNow' || /\bnavigationSaveJob\b/.test(Function.prototype.toString.call(fn)));
-	window.requestAnimationFrame = function (fn) {
-		if (!watch(fn)) return raf.apply(this, arguments);
-		let ticket = raf.call(this, (stamp) => { pending.delete('frame:' + ticket); fn(stamp); });
-		pending.add('frame:' + ticket); R.scheduled++; return ticket;
-	};
-	window.cancelAnimationFrame = function (ticket) { pending.delete('frame:' + ticket); return caf.apply(this, arguments); };
-	if (idle) window.requestIdleCallback = function (fn, opts) {
-		if (!watch(fn)) return idle.apply(this, arguments);
-		let ticket = idle.call(this, (deadline) => { pending.delete('idle:' + ticket); fn(deadline); }, opts);
-		pending.add('idle:' + ticket); R.scheduled++; return ticket;
-	};
-	if (cancelIdle) window.cancelIdleCallback = function (ticket) { pending.delete('idle:' + ticket); return cancelIdle.apply(this, arguments); };
+	const R = window.__pscRestore = { accepted: false, result: null, saves: [] };
+	const save = tome.save, restore = tome.restoreProjectDefaults;
 	tome.save = function (snap) { R.saves.push(snap && snap.domain); return save.apply(this, arguments); };
 	tome.restoreProjectDefaults = function () {
-		R.pendingAtRestore = pending.size;
 		R.before = tome.projectSnapshot(tome.project().id);
 		R.result = restore.apply(this, arguments);
 		R.restored = tome.projectSnapshot(tome.project().id);
@@ -187,10 +170,8 @@ const ARM_RESTORE = (id) => {
 	const mo = new MutationObserver(() => {
 		if (root.querySelector('.domain-link.active')?.dataset.domain !== 'code') return;
 		mo.disconnect();
-		/* This is the product's existing action/confirmation, not a call to the restore implementation. */
 		window.PM12_KIMI.dispatchAction('pm51-all-reset');
 		const button = document.querySelector('.overlay [role="dialog"][aria-label="Reset every setting to its default?"] button[type="submit"]');
-		R.pendingAtAccept = pending.size;
 		R.eagerAtAccept = R.saves.includes('code');
 		const s = window.PM12_KIMI.getState();
 		R.place = { domain: s.domain, workspace: s.workspace, activeSection: s.activeSection };
@@ -198,12 +179,7 @@ const ARM_RESTORE = (id) => {
 		if (button) { R.accepted = true; button.click(); }
 	});
 	mo.observe(root, { childList: true, subtree: true, attributes: true, attributeFilter: ['class'] });
-	R.stop = () => {
-		mo.disconnect(); window.requestAnimationFrame = raf; window.cancelAnimationFrame = caf;
-		if (idle) window.requestIdleCallback = idle;
-		if (cancelIdle) window.cancelIdleCallback = cancelIdle;
-		tome.save = save; tome.restoreProjectDefaults = restore;
-	};
+	R.stop = () => { mo.disconnect(); tome.save = save; tome.restoreProjectDefaults = restore; };
 };
 const RESTORE_RECORD = () => {
 	const tome = window.PM7_SETTINGS_TOME;
@@ -221,9 +197,9 @@ async function restoreAllRow(t, f, surface) {
 		await press(t, f, 'code');
 		await f.waitForFunction(() => window.__pscRestore.result !== null, null, { timeout: 5000 }).catch(() => {});
 		const r = await f.evaluate(() => { const { stop, ...r0 } = window.__pscRestore; return r0; });
-		t.log(`${surface} R90 P1: ${r.scheduled} navigation callbacks scheduled, ${r.pendingAtAccept} pending at acceptance, ${r.pendingAtRestore} at transaction; main's eager-save control ${!!r.eagerAtAccept}; place ${JSON.stringify(r.place)}`);
+		t.log(`${surface} R90 P1: Code already saved eagerly at acceptance ${!!r.eagerAtAccept}; place ${JSON.stringify(r.place)}`);
 		await t.check(`${surface}: could judge restore-all: changed Text Size and accepted the existing confirmation`, r.accepted && r.changedAtAccept, JSON.stringify(r));
-		await t.check(`${surface}: could judge restore-all: navigation save is still pending at acceptance (main control: already saved eagerly)`, r.scheduled > 0 ? r.pendingAtAccept > 0 : r.eagerAtAccept === true, JSON.stringify(r));
+		await t.check(`${surface}: could judge restore-all: Code was already saved eagerly at acceptance, as on main`, r.eagerAtAccept === true, JSON.stringify(r));
 		await t.check(`${surface}: restore-all returned an accepted rollback receipt`, r.result?.ok === true && !!r.result.rollback_ref, JSON.stringify(r.result));
 		await t.page.waitForTimeout(2500);
 		const { source, record: s } = await f.evaluate(RESTORE_RECORD);
@@ -543,7 +519,7 @@ for (const surface of ['normal', 'sandbox']) {
 	};
 }
 for (const surface of ['normal', 'sandbox']) {
-	tests[`R90 P1 Restore all defaults wins over a pending chapter save (${surface})`] = async (t) => {
+	tests[`R90 P1 Restore all defaults keeps its accepted transaction across a chapter change (${surface})`] = async (t) => {
 		if (!t.app.surfaces().includes(surface)) { await t.check(`${surface} surface not asked for`, true); return; }
 		await t.viewport(1920, 1080);
 		await muteSound(t.page);
@@ -560,6 +536,7 @@ for (const surface of ['normal', 'sandbox']) {
 		if (!t.app.surfaces().includes(surface)) { await t.check(`${surface} surface not asked for`, true); return; }
 		await t.viewport(1920, 1080);
 		await muteSound(t.page);
+		if (t.args.motion === 'reduce') await t.emulate({ reducedMotion: 'reduce' });
 		const f = await t.app.open({ sandbox: surface === 'sandbox' });
 		await t.app.resetLayout().catch(() => {});
 		await f.locator('#tab-settings').click();
@@ -576,6 +553,7 @@ for (const surface of ['normal', 'sandbox']) {
 		if (!t.app.surfaces().includes(surface)) { await t.check(`${surface} surface not asked for`, true); return; }
 		await t.viewport(1920, 1080);
 		await muteSound(t.page);
+		if (t.args.motion === 'reduce') await t.emulate({ reducedMotion: 'reduce' });
 		const f = await t.app.open({ sandbox: surface === 'sandbox' });
 		await t.app.resetLayout().catch(() => {});
 		await f.locator('#tab-settings').click();
@@ -622,8 +600,6 @@ for (const surface of ['normal', 'sandbox']) {
 				const unlocked = rows.filter((r) => r.unlocks.length);
 				await t.check(`${look} ${surface}: no section of an arrival is laid out for one frame and skipped again`, !unlocked.length,
 					unlocked.map((r) => `${r.pair}: ${r.unlocks.join(', ')}`).join('; '));
-				const saved = rows.filter((r) => r.savesBeforePaint > 0);
-				await t.check(`${look} ${surface}: the place is not saved before the new chapter's first frame`, !saved.length, saved.map((r) => `${r.pair}: ${r.savesBeforePaint} save(s) before the frame`).join('; '));
 				const code = rows.filter((r) => r.to === 'code');
 				const whole = code.filter((r) => r.rowsEnd > 0 && r.rowsFirst >= r.rowsEnd);
 				if (seq.some(([, to]) => to === 'code')) await t.check(`${look} ${surface}: an arrival at Code & Tools shows its first screen before the rest of its rows`, code.length > 0 && !whole.length,
