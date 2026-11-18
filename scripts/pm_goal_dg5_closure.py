@@ -768,6 +768,13 @@ def _close_one(ident, plain, bank_object, seeds, records, args, carried):
     return entries, meta
 
 
+def _check_dump_nonempty(calls, dumped_ids):
+    """A dump that collected calls but captured no roots is a capture failure,
+    never a silent success (B's empty S dumps at pre-capture-fix heads)."""
+    if calls and not dumped_ids:
+        raise SystemExit(f'dump captured 0 roots from {calls} complete calls: capture missed every bank')
+
+
 def _check_dump_ids(dumped_ids, expect_paths):
     """Standing check (lead 1118011148): a dump fails loudly unless its root ids
     equal the closure inventory's root ids for the suite, exactly. The inventory
@@ -916,6 +923,7 @@ def main():
                   f"note={dumped[ident].get('rebuild_note')}", file=sys.stderr, flush=True)
         if not args.roots:
             assert set(dumped) == {root_id(k) for k, _s in ordered}, 'dump ids != collected slot ids'
+        _check_dump_nonempty(collector.calls, dumped)
         _check_dump_ids(dumped, args.expect_roots)
         blob = pickle.dumps(dict(meta=dict(source=args.source, family=args.family, calls=collector.calls,
                                            seed_cap=args.seed_cap, tool_sha256=TOOL_SHA256,
