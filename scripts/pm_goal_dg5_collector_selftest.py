@@ -220,6 +220,18 @@ def check_closure_memo_and_dump_recipe():
     fmt = closure._format_recipe(single)
     assert fmt is not None and closure._rebuild_format(fmt).checkers['date-time'][1] == (ValueError,)
     rebuilt = closure._rebuild_class(recipe)
+    # GO2 donor stage: a synthetic close records replay-token witnesses and the
+    # reference re-judge passes them.
+    import tempfile
+    from pathlib import Path as _Path
+
+    donor_args = SimpleNamespace(memo=True, donors=True, donor_dump=[], budget=0, per_clause=0,
+                                 clause_cap=900, sample_every=0, out=_Path(tempfile.mkdtemp()) / 'close.json')
+    entries, meta = closure._close_one('selftest-donor', plain, None, seeds, records, donor_args, None,
+                                       [seeds])
+    killed = [x for x in entries.values() if x.get('cls') == 'KILLED']
+    assert killed and all(x.get('replay') and x.get('control_sha256') for x in killed), entries
+    assert meta['verify']['failed'] == 0 and meta['verify']['passed'] >= 1, meta['verify']
     probe_a, probe_b = created(schema), rebuilt(schema)
     for value in ({'a': 5}, {'a': 1}, {'a': 'no'}):
         assert [e.validator for e in probe_a.iter_errors(value)] == \

@@ -539,6 +539,87 @@ def verify_witnesses(reference_v, entries):
                 sampled=_WIT['sampled'])
 
 
+def _install_go2_search(donor_seed_lists, residual):
+    """Stage 2 (GO2 donor port): GO's close_root runs GO2's search_clause - donor
+    constructions first for clauses no control reaches, witnesses recorded as
+    replay tokens (control sha + base64 (path, edit)) with every witness control
+    kept in CONTROL_STORE for reference re-judging. GO2's deref fix (inline $id
+    base switch) is installed for the duration and restored after."""
+    import pm_goal_go2_closure as go2
+    go2.install_fixes(go)
+    go2.DONORS[0] = go2.Donors(donor_seed_lists) if donor_seed_lists else None
+    go2.RESIDUAL[0] = bool(residual)
+    go2.REACHING[0] = False
+    go2.CONTROL_STORE.clear()
+    orig = go.search_clause
+
+    def search(clause, keyword, location, info, node, ident, v, nodes, seeds, controls, known,
+               branch_controls, by_ipath, budget, root0, deadline):
+        return go2.search_clause(go, clause, keyword, location, info, node, ident, v, nodes, seeds,
+                                  controls, known, branch_controls, by_ipath, budget, root0, deadline)
+    go.search_clause = search
+    return orig
+
+
+def _restore_go2_search(orig):
+    import pm_goal_go2_closure as go2
+    go.search_clause = orig
+    go2.DONORS[0] = None
+    go2.RESIDUAL[0] = False
+    if getattr(go.deref, 'go_original', None) is not None:
+        go.deref = go.deref.go_original
+
+
+def verify_go2_witnesses(reference_v, entries, store):
+    """GO2 verify: replay every witness token on the reference (unmemoized) copy -
+    control accepted; control+(path,edit) refused at the clause; KILLED cut accepts
+    and restoration refuses; COVERED_LATER cut still refuses by the named clauses."""
+    import base64
+    passed = failed = unverifiable = 0
+    failures, accepted = [], {}
+    for clause, entry in entries.items():
+        if entry.get('cls') not in ('KILLED', 'COVERED_LATER'):
+            continue
+        control = store.get(entry.get('control_sha256')) if entry.get('control_sha256') else None
+        if not entry.get('replay') or control is None:
+            unverifiable += 1
+            continue
+        problem = None
+        csha = entry['control_sha256']
+        if csha not in accepted:
+            accepted[csha] = not go.errors_of(reference_v, control)
+        if not accepted[csha]:
+            problem = 'control refused by the reference validator'
+        else:
+            path, edit = pickle.loads(base64.b64decode(entry['replay']))
+            mutated = go.apply(control, path, edit)
+            if mutated is None:
+                problem = 'replay token does not apply to the control'
+            else:
+                ident = common.guard_for_location(clause)
+                errs = go.errors_of(reference_v, mutated)
+                if not errs or clause not in go.locations(errs):
+                    problem = 'input not refused at the clause'
+                else:
+                    cut = go.errors_of(reference_v, mutated, {ident})
+                    if entry['cls'] == 'KILLED':
+                        if cut:
+                            problem = 'cut does not accept'
+                        elif not go.errors_of(reference_v, mutated):
+                            problem = 'restoration does not refuse'
+                    elif not cut:
+                        problem = 'COVERED_LATER but the cut accepts'
+                    elif not set(entry.get('still_refused_by') or ()) <= go.locations(cut):
+                        problem = 'still_refused_by not among the cut refusals'
+        if problem:
+            failed += 1
+            failures.append(dict(clause=clause, problem=problem))
+        else:
+            passed += 1
+    return dict(passed=passed, failed=failed, unverifiable=unverifiable, failures=failures[:20],
+                controls_checked=len(accepted), sampled=_WIT['sampled'])
+
+
 def _fn_ref(fn):
     module, qual = getattr(fn, '__module__', None), getattr(fn, '__qualname__', None)
     if not module or not qual or '<locals>' in qual:
@@ -746,7 +827,7 @@ def _agree_one(ident, plain, bank_object, seeds, records, args):
     return meta
 
 
-def _close_one(ident, plain, bank_object, seeds, records, args, carried):
+def _close_one(ident, plain, bank_object, seeds, records, args, carried, donor_seed_lists=()):
     """Agree, (memo) search and witness-verify one root; returns (entries, meta)."""
     v, search_v, meta = _prepare_search_validator(ident, plain, bank_object, seeds, records, args)
     go.UNRESOLVED.clear()
@@ -755,12 +836,27 @@ def _close_one(ident, plain, bank_object, seeds, records, args, carried):
         go.CURRENT[0] = search_v
         clauses = sum(len(go.clauses_of(info['node'])) for info in go.walk(search_v).values())
         budget = max(budget if args.budget else 0, args.per_clause * clauses)
+    go2_orig = _install_go2_search(donor_seed_lists, residual=bool(carried)) if args.donors else None
     orig = _install_search_wrappers(v, search_v, args.sample_every)
     try:
         entries, branch_controls, spent = go.close_root(ident, search_v, seeds, budget, carried=carried or None)
     finally:
         _restore_search_wrappers(orig)
-    meta['verify'] = verify_witnesses(v, entries)
+        if args.donors:
+            _restore_go2_search(go2_orig)
+    if args.donors:
+        import gzip as _gzip
+        import pm_goal_go2_closure as _go2
+        store = dict(_go2.CONTROL_STORE)
+        meta['verify'] = verify_go2_witnesses(v, entries, store)
+        if store:
+            store_path = Path(str(args.out) + '.' + ident + '.controls.pkl.gz')
+            blob = _gzip.compress(pickle.dumps(store, protocol=5))
+            store_path.write_bytes(blob)
+            meta['control_store'] = dict(path=store_path.name, sha256=hashlib.sha256(blob).hexdigest(),
+                                         controls=len(store))
+    else:
+        meta['verify'] = verify_witnesses(v, entries)
     meta['branch_controls'] = branch_controls
     meta['validations'] = spent
     meta['budget'] = dict(budget=budget, clause_cap=args.clause_cap)
@@ -796,6 +892,14 @@ def _check_dump_ids(dumped_ids, expect_paths):
         raise SystemExit(f'dump root ids != inventory root ids: missing {missing[:8]} (+{max(0, len(missing)-8)}), '
                          f'extra {extra[:8]} (+{max(0, len(extra)-8)})')
     return expected
+
+
+def _donor_seed_lists(args, own_lists):
+    lists = [list(seeds) for seeds in own_lists if seeds]
+    for path in args.donor_dump or ():
+        data = pickle.loads(Path(path).read_bytes())
+        lists += [list(e['seeds']) for e in data['roots'].values() if e.get('seeds')]
+    return lists
 
 
 def _carried_from(paths):
@@ -852,7 +956,8 @@ def _main_from_dump(args):
                     json.dumps(report, indent=1, sort_keys=True, default=str) + '\n')
                 continue
             entries, meta = _close_one(ident, plain, None, list(dumped['seeds']), dumped['records'],
-                                       args, carried.get(ident))
+                                       args, carried.get(ident),
+                                       _donor_seed_lists(args, [e['seeds'] for e in data['roots'].values()]))
         except Exception as exc:  # noqa: BLE001 - reported, never skipped
             entry.update(error=type(exc).__name__ + ': ' + str(exc)[:400], counts={'UNCOVERED_ROOT_ERROR': 1},
                          clauses={ident + '/<root>': dict(cls='UNCOVERED', error=str(exc)[:300])})
@@ -891,6 +996,10 @@ def main():
     parser.add_argument('--memo', action='store_true', help="search with GO2's memoizing validator (agree-gated)")
     parser.add_argument('--agree-only', action='store_true',
                         help='run reference/memo agreement trials and take no search credit')
+    parser.add_argument('--donors', action='store_true',
+                        help="GO2 donor stage: donor constructions + replay-token witnesses re-judged in verify")
+    parser.add_argument('--donor-dump', action='append', type=Path, default=[],
+                        help='extra dump pickle(s) whose roots seeds feed the donor pool')
     parser.add_argument('--sample-every', type=int, default=997, help='in-run memo/reference agreement sampling (0 = off)')
     parser.add_argument('--carry', action='append', type=Path, default=[],
                         help='earlier DG5 closure report(s): clauses not left UNCOVERED are carried, not re-searched')
@@ -953,7 +1062,8 @@ def main():
         try:
             entries, meta = _close_one(ident, slot['validator'], slot['bank_object'],
                                        list(slot['seeds'].values()), slot['records'], args,
-                                       carried.get(ident))
+                                       carried.get(ident),
+                                       _donor_seed_lists(args, [list(s['seeds'].values()) for s in SLOTS.values()]))
         except Exception as exc:  # noqa: BLE001 - a root that cannot be closed is reported, never skipped
             entry.update(error=type(exc).__name__ + ': ' + str(exc)[:400], counts={'UNCOVERED_ROOT_ERROR': 1},
                          clauses={ident + '/<root>': dict(cls='UNCOVERED', error=str(exc)[:300])})
