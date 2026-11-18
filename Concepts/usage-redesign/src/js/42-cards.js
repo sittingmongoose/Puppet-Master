@@ -1137,7 +1137,9 @@
       /* R113 P3: endGesture clears the live gesture before idle opSync removes its marker. A completed move/resize
          can hand that marker to this first wheel; an actual gesture or another operation keeps its ownership. */
       if (!el || b.gesture && b.gesture() || op !== null && op !== 'wheel' && op !== 'move' && op !== 'resize') { wheelEnd(); return null; }
-      if (wheelEl && wheelEl !== el && wheelEl.getAttribute('data-op') === 'wheel') wheelEl.removeAttribute('data-op');
+      /* R116 P1: the outgoing board still paints and takes hits above the incoming board. Its wheel
+         marker stays until retirement clears its attributes, or a later mount promotes it back to live. */
+      if (wheelEl && wheelEl !== el && wheelEl.getAttribute('data-op') === 'wheel' && !wheelEl.matches('.pmu-ghostboard,.pmu-oldboard')) wheelEl.removeAttribute('data-op');
       wheelEl = el;
       if (op !== 'wheel') {
         el.setAttribute('data-op', 'wheel');
@@ -1148,7 +1150,13 @@
       }
       return el;
     };
-    var onWheelMount = function () { if (wheelAt) wheelBoard(); };
+    var onWheelMount = function () {
+      if (wheelAt) wheelBoard();
+      else {
+        /* A reversed ghost can return after the original hold ended. Promotion restores its ordinary hover. */
+        var el = b.el(); if (el && el.getAttribute('data-op') === 'wheel') el.removeAttribute('data-op');
+      }
+    };
     var onWheel = function (event) {
       if (!wheelBoard()) return;
       wheelAt = [event.clientX, event.clientY];
