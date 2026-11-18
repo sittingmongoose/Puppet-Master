@@ -1087,15 +1087,35 @@
        ms after the last wheel or scroll event, or until the pointer really moves or presses. The shell's hover engine
        rests for a board with [data-op] (18-hover.js: no plate light, glow, reticle or magnet on its cards); Usage's
        in-board :hover rules read the wheel and keyboard handoff markers (20-board.css says more); the head fit
-       below waits too. Chart highlights, readouts and pointer tooltips retain main's ordinary JS behavior. Hit-testing
-       is unchanged: a click or a press lands where it always did. When the pause ends the board drops the value, the
+       below waits too. Chart highlights, readouts, tooltip hit areas and pointer tooltips retain their ordinary
+       behavior. A tool already visible when the pause begins can still take a press while it fades. When the pause
+       ends the board drops the value, the
        card under the pointer is fitted again and one pmu-op-end event (detail: the board) tells the hover engine to look
        again at what is under the resting pointer (its restEnded), so the card light and tools come back without a move.
        The card that was under the pointer when the wheel began lets its
        title clamp go as on a pointer leave (unfitSoon). Nothing runs while the page rests: a timer exists only between a
        wheel and the pause's end. A gesture that already holds data-op keeps it. Only the Usage page's board pauses
        (#pmuScroll): a Home dashboard keeps its highlights, as the card named the Usage page. */
-    var WHEEL_REST = 150, wheelT = 0, wheelAt = null, wheelEl = null;
+    var WHEEL_REST = 150, wheelT = 0, wheelAt = null, wheelEl = null, wheelFades = [];
+    var pauseHover = function (el) {
+      var under = el.querySelector(':scope > .pmu-card:hover');
+      var tools = under && under.querySelector(':scope > .pmu-cardhead > .pmu-cardtools');
+      /* Check before writing the board marker, while a delayed entry still reads as zero.
+         The read is only for the old hover at pause start, including a newly gated outgoing board. */
+      if (tools && !M.reduced() && !under.matches(':focus-visible') && !tools.matches(':focus-within') &&
+          !tools.hasAttribute('data-wheel-fade')) {
+        var style = getComputedStyle(tools);
+        if (+style.opacity > 0 && style.pointerEvents === 'auto') {
+          tools.setAttribute('data-wheel-fade', '');
+          wheelFades.push(tools);
+        }
+      }
+      el.setAttribute('data-op', 'wheel');
+      return under;
+    };
+    var clearWheelFades = function () {
+      while (wheelFades.length) wheelFades.pop().removeAttribute('data-wheel-fade');
+    };
     var wheelEnd = function () {
       if (wheelT) { clearTimeout(wheelT); wheelT = 0; }
       if (!wheelAt) return;
@@ -1110,10 +1130,11 @@
       if (el && (op !== null && op !== 'wheel' || b.gesture && b.gesture())) {
         if (op === 'wheel') el.removeAttribute('data-op');
         el.removeAttribute('data-wheel-handoff');
+        clearWheelFades();
         return;
       }
       wheelAt = wheelEl = null;
-      if (!el) return;
+      if (!el) { clearWheelFades(); return; }
       var card = el && el.isConnected && el.querySelector(':scope > .pmu-card:hover');
       if (card) {
         /* R100 T2: a delayed incoming transition is not a visible return. Restore the already-hovered head in one
@@ -1131,6 +1152,7 @@
       }
       if (el.getAttribute('data-op') === 'wheel') el.removeAttribute('data-op');
       el.removeAttribute('data-wheel-handoff');
+      clearWheelFades();
       try { document.dispatchEvent(new CustomEvent('pmu-op-end', { detail: { board: el, point: point } })); } catch (error) { /* none */ }
     };
     var wheelHold = function () { if (wheelT) clearTimeout(wheelT); wheelT = setTimeout(wheelEnd, WHEEL_REST); };
@@ -1148,8 +1170,7 @@
       if (wheelEl && wheelEl !== el && wheelEl.getAttribute('data-op') === 'wheel' && !wheelEl.matches('.pmu-ghostboard,.pmu-oldboard')) wheelEl.removeAttribute('data-op');
       wheelEl = el;
       if (op !== 'wheel') {
-        el.setAttribute('data-op', 'wheel');
-        var under = el.querySelector(':scope > .pmu-card:hover');
+        var under = pauseHover(el);
         if (under) unfitSoon(under);
         /* Clear highlights whose pointer intent already completed (R100 P1); each adopted board hears this once. */
         try { document.dispatchEvent(new CustomEvent('pmu-op-start', { detail: { board: el } })); } catch (error) { /* none */ }
@@ -1173,7 +1194,7 @@
         /* The compositor can deliver the wheel to the pane while the previous room still paints above it.
            Its hover needs the same gate until the film retires it or promotes it back to live. */
         var ghost = boardEl.querySelector(':scope > :is(.pmu-ghostboard,.pmu-oldboard):not(#pmuBoard)');
-        if (ghost && ghost.getAttribute('data-op') !== 'wheel') ghost.setAttribute('data-op', 'wheel');
+        if (ghost && ghost.getAttribute('data-op') !== 'wheel') pauseHover(ghost);
       }
       wheelAt = [event.clientX, event.clientY];
       wheelHold();

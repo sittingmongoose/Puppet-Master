@@ -495,10 +495,6 @@ async function keyboardPause(t, f, label, park) {
 	await park();
 	const liveWasOn = await f.evaluate(() => { const on = PMU.live.on(); PMU.live.pause(); PM7_USAGE.setRoomDetail('overview', 'glance'); return on; });
 	await t.page.waitForTimeout(4500);
-	// Keep the two real cards used by this keyboard route. This keeps the gesture's deferred work
-	// inside the wheel deadline on the test host while retaining the same focus, hover and provider state.
-	await f.evaluate(() => PMU.board.visible().filter((id) => id !== 'health' && id !== 'ov-skyline').forEach((id) => PMU.board.setVisible(id, false)));
-	await t.page.waitForTimeout(1500);
 	const records = [];
 	for (const [key, mode] of [['m', 'move'], ['r', 'resize']]) {
 		const S = label + `R112 ${mode}: `;
@@ -572,7 +568,7 @@ async function keyboardPause(t, f, label, park) {
 		await t.check(S + 'after Escape one lifecycle return releases the engine while main provider selection stays unchanged', rec.ends.length === 1 && rec.ends[0].live && !rec.ends[0].gesture && !rec.ends[0].op && rec.ends[0].t >= escape?.t && JSON.stringify(rec.ends[0].point) === JSON.stringify(rec.point) && !a.gesture && !a.op && a.hovered && a.dim === a.eligibleDim && a.on === a.eligibleOn && a.dim + a.on > 0 && a.correct, JSON.stringify({ends: rec.ends, after: a}));
 	}
 	await park();
-	await f.evaluate((on) => { document.activeElement?.blur(); PMU.board.reset('room'); if (on) PMU.live.resume(); }, liveWasOn);
+	await f.evaluate((on) => { document.activeElement?.blur(); if (on) PMU.live.resume(); }, liveWasOn);
 	return records;
 }
 

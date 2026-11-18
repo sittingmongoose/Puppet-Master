@@ -13,7 +13,7 @@ function between(source,start,end) {
 }
 const bind=between(cards,'  function bindTools(b) {','  PMU.boards.each(bindTools);');
 const sync=between(boards,'    function opSync() {','    function sizeLabel(');
-function fixture() {
+function fixture(toolOpacity) {
  let now=0,next=1;const timers=new Map(),events=[],listeners=new Map();
  class Element {
   constructor(id){this.id=id;this.attrs=new Map();this.handlers=new Map();this.isConnected=true;}
@@ -21,20 +21,28 @@ function fixture() {
   hasAttribute(k){return this.attrs.has(k);}
   setAttribute(k,v){this.attrs.set(k,v);}
   removeAttribute(k){this.attrs.delete(k);}
-  querySelector(selector){return selector.includes('.pmu-ghostboard')?this.ghost??null:null;}
+  querySelector(selector){
+   if(selector.includes('.pmu-ghostboard'))return this.ghost??null;
+   if(selector.includes('.pmu-card:hover'))return this.hovered??null;
+   if(selector.includes('.pmu-cardtools'))return this.tools??null;
+   return null;
+  }
   matches(){return false;}
   addEventListener(k,fn){this.handlers.set(k,fn);}
   removeEventListener(k){this.handlers.delete(k);}
  }
  const board=new Element('pmuBoard'),sc=new Element('pmuScroll'),ghost=new Element(''),classes=new Set();
  sc.ghost=ghost;
+ const tools=new Element('tools');
+ if(toolOpacity!=null){board.hovered=new Element('card');board.hovered.tools=tools;}
  const cl={contains:k=>classes.has(k),add:k=>classes.add(k),remove:k=>classes.delete(k)};
  const emit=type=>{for(const fn of listeners.get(type)||[])fn();};
  const b={scrollEl:sc,el:()=>board,on:(type,fn)=>{const set=listeners.get(type)||new Set();set.add(fn);listeners.set(type,set);return()=>set.delete(fn);}};
  const ctx=vm.createContext({b,boardEl:board,inner:b,document:{body:{classList:cl},dispatchEvent:e=>events.push({type:e.type,t:now,detail:e.detail})},
   console,CustomEvent:class{constructor(type,init){this.type=type;this.detail=init.detail;}},
   setTimeout:(fn,ms)=>{const id=next++;timers.set(id,{fn,t:now+ms});return id;},clearTimeout:id=>timers.delete(id),
-  requestAnimationFrame:()=>0,unfitSoon:()=>{},fitTools:()=>{},emit});
+  requestAnimationFrame:()=>0,unfitSoon:()=>{},fitTools:()=>{},M:{reduced:()=>false},
+  getComputedStyle:()=>({opacity:String(toolOpacity),pointerEvents:'auto'}),emit});
  ctx.window=ctx;
  vm.runInContext('var opT=0,opOn=false,gesture=null,RESIZING_BY=null;'+sync+bind+`
   b.gesture=function(){return gesture;};
@@ -43,7 +51,7 @@ function fixture() {
   this.cleanup=bindTools(b);`,ctx);
  const input=(type,x=100,y=100)=>sc.handlers.get(type)({clientX:x,clientY:y});
  const advance=t=>{while(true){const due=[...timers].filter(([,x])=>x.t<=t).sort((a,b)=>a[1].t-b[1].t)[0];if(!due)break;now=due[1].t;timers.delete(due[0]);due[1].fn();}now=t;};
- return {board,ghost,ctx,input,advance,events,ends:()=>events.filter(e=>e.type==='pmu-op-end'),cleanup:()=>ctx.cleanup()};
+ return {board,ghost,tools,ctx,input,advance,events,ends:()=>events.filter(e=>e.type==='pmu-op-end'),cleanup:()=>ctx.cleanup()};
 }
 for(const mode of ['move','resize']) {
  test(`${mode}: early idle release retains wheel until its original deadline`,()=>{
@@ -94,3 +102,14 @@ test('a first wheel after a room swap pauses the already visible ghost',()=>{
   assert.equal(x.ends()[0].detail.board,x.board);
  } finally{x.cleanup();}
 });
+
+for(const opacity of [0,.4]) {
+ test(`wheel fade tags a hovered cluster at opacity ${opacity} only if it is visible`,()=>{
+  const x=fixture(opacity);try {
+   x.input('wheel');
+   assert.equal(x.tools.hasAttribute('data-wheel-fade'),opacity>0);
+   x.advance(150);
+   assert.ok(!x.tools.hasAttribute('data-wheel-fade'));
+  } finally{x.cleanup();}
+ });
+}
