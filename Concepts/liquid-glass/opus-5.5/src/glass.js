@@ -2598,16 +2598,32 @@
       }
       return { at: at, pose: pose, end: end, from: from, to: to, span: span, frames: [fF, fG, fS], rects: rects };
     }
-    /* a block that goes on with a trip is first only the trip under way (at the age it is drawn at, whatever that turns
-       out to be, it is where the trip under way is), and takes its change in place at the first frame that is on time */
-    var at = go ? (zero != null ? Math.max(go.at, performance.now() - zero) : go.at) : 0, from = go ? Math.floor(at / FRAME_MS) * FRAME_MS : 0;
+    /* a block that goes on with a trip is first only the trip under way, and takes its change in place at the first frame
+       that is on time once it has been drawn. It runs on the trip's own clock (FO-231): its start time is the trip's, set
+       from the start the compositor reported for the trip (zero), so whichever frame first draws it, that frame shows the
+       trip where it is at that frame's own time. A block is made late in a long frame (after the app's layout, up to
+       120 ms after the frame began) and the compositor first draws it at the next frame after that frame's commit and
+       raster, 9 to 37 ms after it was made: held at the age it was made at (its current time until it started), it was
+       drawn that far behind the block it took over from (2.7 px on Friendly Dark, 10.9 px under load: W12D-1). Its frames
+       run from the last whole frame before the trip's age at this frame's own time (the timeline's time: inside a frame,
+       that frame's; in a task, now), which no frame that draws it is earlier than, so no frame draws it before its frames
+       begin. A trip no frame has drawn yet (no zero) has no clock to run on: its block waits at the age it is made at,
+       as that trip's own block did */
+    var tl = document.timeline && document.timeline.currentTime != null ? document.timeline.currentTime : performance.now();
+    var at = go ? (zero != null ? Math.max(go.at, performance.now() - zero) : go.at) : 0;
+    var from = go ? Math.floor(Math.max(0, zero != null ? Math.min(at, tl - zero) : at) / FRAME_MS) * FRAME_MS : 0;
     var T = plan(at, go ? null : 0, from), start = performance.now() - at;
     var parts = [F, G, S], anims = [], lead = null;
-    parts.forEach(function (e, j) { if (!e) return; var a = e.animate(T.frames[j], { duration: T.span, easing: 'linear', fill: 'forwards' }); if (at > from) a.currentTime = at - from; anims.push(a); if (!lead) lead = a; });
+    parts.forEach(function (e, j) {
+      if (!e) return;
+      var a = e.animate(T.frames[j], { duration: T.span, easing: 'linear', fill: 'forwards' });
+      if (zero != null) a.startTime = zero + from; else if (at > from) a.currentTime = at - from;
+      anims.push(a); if (!lead) lead = a;
+    });
     var probe = F.animate([], { duration: 1000 }), made = performance.now(), inFrame = frameSync > 0 || postRunning;
     setLensBox(L, B);
     /* the chip under the labels stays hidden while the block is up (as for a step's blocks) */
-    L.anim = L.hopHide = L.lens.animate([{ opacity: 0 }, { opacity: 0 }], { duration: 600000 });
+    var hide = L.anim = L.hopHide = L.lens.animate([{ opacity: 0 }, { opacity: 0 }], { duration: 600000 });
     if (!L.hopMarks) L.hopMarks = new Map();
     L.hopFrames = S ? [S, F] : [F]; L.hopTarget = target;
     var K = L.carry = { A: A, B: B, vertical: vertical, anim: lead, liftX: liftX, liftY: liftY, change: !!go };
@@ -2618,35 +2634,36 @@
       L.hopT = setTimeout(function () { L.hopT = 0; hopSettle(L); }, Math.max(0, start + P.end - performance.now()) + 1);
     }
     take(T);
-    requestAnimationFrame(function (ts) {
+    requestAnimationFrame(function () {
       /* the first frame callback after the block was made: when it was first drawn (K.drawn), so its age is known before
          the compositor reports its start (its probe, an empty animation, starts in the lifecycle of the frame that first
          draws it: started means drawn in the frame it was made in, at its own layout; waiting means drawn once this frame
          has been laid out, painted and handed to the compositor, up to 100 ms after this callback while the app switches
          a page, and the first task after the frame is about then; a block made by a sync inside a frame, frameSync, is
-         drawn in that frame whatever its probe says). Not drawn yet, a block that goes on with a trip is
-         held at the trip's age at this frame's own time: Chrome starts a waiting animation at the time of the frame that
-         first draws it, less its hold, so held so it is on the trip's own clock from its first frame (held at the age it
-         was made at, in a task, it was drawn that much behind the block it took over from: 4 px, Basic Light) */
+         drawn in that frame whatever its probe says). A block that goes on with a drawn trip has the trip's start time
+         from the moment it is made, so its age never needs this */
       var drawn = inFrame || probe.startTime != null || lead.startTime != null; probe.cancel();
       if (L.carry !== K) return;
       if (drawn) { K.drawn = made; return; }
-      if (zero != null && ts - zero >= from) anims.forEach(function (a) { if (a.startTime == null) a.currentTime = ts - zero - from; });
       setTimeout(function () { if (K.drawn == null) K.drawn = performance.now(); }, 0);
     });
     /* the change, in place: at the first frame whose callback runs on time (within 12 ms of the frame's own time; the
-       page's other frame callbacks run first) once the compositor has the block, or after half a second, starting a frame
-       and a half on from where the trip is then, which a frame on time reaches the screen before. A new motion started in a
-       late frame is drawn from that frame's own time, so it has already run for as long as the frame was late when it is
-       first drawn: a change started so ran its course out of sight inside the app's long task (190 ms, Basic Light,
-       Alexis: the block stepped the whole way), and started in a frame callback 100 ms late it was drawn half done. The
-       block keeps its clock (only its frames change), so the trip under way goes on in every frame meanwhile */
+       page's other frame callbacks run first) once a frame has drawn the block (the hide of the chip under the labels,
+       made with it, goes to the compositor in the same commit, so its start is the time of the frame that first drew
+       both), or after half a second. It starts at the trip's age at the time of that frame, the frame that commits it
+       (FO-227), so the frame that draws it first shows the trip under way and the next the change begun; no frame is
+       counted ahead. A new motion started in a late frame is drawn from that frame's own time, so it has already run for
+       as long as the frame was late when it is first drawn: a change started so ran its course out of sight inside the
+       app's long task (190 ms, Basic Light, Alexis: the block stepped the whole way), and started in a frame callback
+       100 ms late it was drawn half done; a callback still late after half a second starts it where the trip is now.
+       The block keeps its clock (only its frames change), so the trip under way goes on in every frame meanwhile */
     if (go) {
       var tries = 0;
       var change = function (ts) {
         if (L.carry !== K) return;
-        if ((lead.startTime == null || performance.now() - ts > 12) && ++tries < 30) { requestAnimationFrame(change); return; }
-        var P = plan(at, Math.max(at, carryAge(K) + 1.5 * FRAME_MS), from);
+        var late = performance.now() - ts > 12;
+        if (((lead.startTime == null || (hide.startTime == null && hide.playState !== 'finished')) || late) && ++tries < 30) { requestAnimationFrame(change); return; }
+        var z = carryZero(K), P = plan(at, Math.max(at, late || z == null ? carryAge(K) : ts - z), from);
         anims.forEach(function (a) { a.effect.setKeyframes(P.frames[parts.indexOf(a.effect.target)]); a.effect.updateTiming({ duration: P.span }); });
         K.change = false; take(P);
       };
