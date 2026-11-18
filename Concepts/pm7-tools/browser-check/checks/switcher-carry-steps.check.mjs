@@ -13,9 +13,11 @@
 //   its own motion (carry-frames steps(), 3 px, rebuilt from the task reads and the keyframes); a block that takes over
 //   from another (a press while the chip moves, or its tab resized under it) draws the trip under way where the block it
 //   replaced would have drawn it, from its first frame (1 px: FO-231, a block held at the age it was made at was drawn
-//   9-37 ms later, that far behind its trip); its change (a retarget or a new trip) starts on screen at the frame that
-//   commits it (FO-227: the last keyframe that still draws the trip under way is at most one frame after that frame's
-//   own time; the 12e page started it a frame and a half on from where the trip was when the callback ran);
+//   9-37 ms later, that far behind its trip); its change (a retarget or a new trip) starts when it is committed (FO-227:
+//   the last keyframe that still draws the trip under way is at most one frame after the moment its keyframes were set;
+//   the 12e page started it a frame and a half on from then). The drawn frames use when each block and each change were
+//   first drawn (a composited probe in the same commit, carry-frames RECORD), so a change drawn late, already begun, is
+//   a step;
 // - Reduce Motion (the OS's and the page's own): nothing is carried, every read shows the chip on an item (never between
 //   two), and after each press it rests on the chosen item.
 //
@@ -113,7 +115,7 @@ export const tests = {
 						const tk = takeovers(data.anims, sel), tkw = tk.reduce((m, x) => Math.max(m, x.worst), 0);
 						await t.check(`${tag}: a block that takes over draws the trip where the block it replaced would (${tk.length} takeovers, worst ${tkw} px)`, tkw <= 1, tk.filter((x) => x.worst > 1).slice(0, 4).map((x) => `rec${x.from}->rec${x.id} ${x.worst} px at t${x.at}${x.lagMs ? `, first drawn ${x.lagMs} ms after it was made` : ''}`).join('; '));
 						const cs = changeStarts(data.anims, sel), late = cs.filter((x) => x.late > FRAME + 0.5);
-						await t.check(`${tag}: each change starts on screen at the frame that commits it (${cs.length} changes, latest ${cs.reduce((m, x) => Math.max(m, x.late), -Infinity).toFixed(1)} ms after that frame)`, late.length === 0, late.slice(0, 4).map((x) => `rec${x.id} committed t${x.commit}, trip under way drawn until t${x.lastSame} (+${x.late} ms)`).join('; '));
+						await t.check(`${tag}: each change starts when it is committed (${cs.length} changes, latest ${cs.reduce((m, x) => Math.max(m, x.late), -Infinity).toFixed(1)} ms after)`, late.length === 0, late.slice(0, 4).map((x) => `rec${x.id} committed t${x.commit}, trip under way drawn until t${x.lastSame} (+${x.late} ms)`).join('; '));
 						Object.assign(cell, { steps: st.worst, witness: mw, takeovers: tk, changes: cs });
 					}
 					if (mode !== 'motion') {

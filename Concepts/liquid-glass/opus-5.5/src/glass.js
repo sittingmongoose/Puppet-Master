@@ -2647,25 +2647,35 @@
       if (drawn) { K.drawn = made; return; }
       setTimeout(function () { if (K.drawn == null) K.drawn = performance.now(); }, 0);
     });
-    /* the change, in place: at the first frame whose callback runs on time (within 12 ms of the frame's own time; the
-       page's other frame callbacks run first) once a frame has drawn the block (the hide of the chip under the labels,
-       made with it, goes to the compositor in the same commit, so its start is the time of the frame that first drew
-       both), or after half a second. It starts at the trip's age at the time of that frame, the frame that commits it
-       (FO-227), so the frame that draws it first shows the trip under way and the next the change begun; no frame is
-       counted ahead. A new motion started in a late frame is drawn from that frame's own time, so it has already run for
-       as long as the frame was late when it is first drawn: a change started so ran its course out of sight inside the
-       app's long task (190 ms, Basic Light, Alexis: the block stepped the whole way), and started in a frame callback
-       100 ms late it was drawn half done; a callback still late after half a second starts it where the trip is now.
-       The block keeps its clock (only its frames change), so the trip under way goes on in every frame meanwhile */
+    /* the change, in place, once a frame has drawn the block (the hide of the chip under the labels, made with it, goes to
+       the compositor in the same commit, so its start is the time of the frame that first drew both), or after half a
+       second: at the next frame, after that frame's own layout (afterLayout: what is written there goes out with that
+       frame's paint and commit), starting at the trip's age then (FO-227), so the frame that draws it first shows the
+       trip under way and the change only just begun; no frame is counted ahead. A change set at the start of a frame
+       went out only when the frame was done: one frame callback on time was followed by 102 ms of the app's style and
+       layout in the same frame, and its change, started at the callback, was drawn 100 ms along, 70 px at once (an
+       earlier build of this fix, film F2372-F2373, Friendly Dark). A new motion is drawn from the time of the frame that first draws it, so one
+       started inside the app's long task ran its course out of sight (190 ms, Basic Light, Alexis: the block stepped the
+       whole way). The block keeps its clock (only its frames change), so the trip under way goes on in every frame
+       meanwhile. Written after layout, a change can still go out with a commit whose paint and raster hold its first frame
+       back (85 ms when Usage drew a page): a trip under way that has landed is where it is at any time, so its change is
+       made as new animations instead, from that place, which the compositor starts at the frame that first draws them
+       (as it starts every new animation), so the change begins at that frame whenever it comes */
     if (go) {
       var tries = 0;
-      var change = function (ts) {
+      var apply = function () {
         if (L.carry !== K) return;
-        var late = performance.now() - ts > 12;
-        if (((lead.startTime == null || (hide.startTime == null && hide.playState !== 'finished')) || late) && ++tries < 30) { requestAnimationFrame(change); return; }
-        var z = carryZero(K), P = plan(at, Math.max(at, late || z == null ? carryAge(K) : ts - z), from);
-        anims.forEach(function (a) { a.effect.setKeyframes(P.frames[parts.indexOf(a.effect.target)]); a.effect.updateTiming({ duration: P.span }); });
+        var age = Math.max(at, carryAge(K)), rest = age >= go.K.dur, P = plan(at, age, rest ? age : from);
+        if (rest) {
+          anims = anims.map(function (a) { var e = a.effect.target, b; a.cancel(); b = e.animate(P.frames[parts.indexOf(e)], { duration: P.span, easing: 'linear', fill: 'forwards' }); return b; });
+          lead = K.anim = anims[0]; K.drawn = null;
+        } else anims.forEach(function (a) { a.effect.setKeyframes(P.frames[parts.indexOf(a.effect.target)]); a.effect.updateTiming({ duration: P.span }); });
         K.change = false; take(P);
+      };
+      var change = function () {
+        if (L.carry !== K) return;
+        if ((lead.startTime == null || (hide.startTime == null && hide.playState !== 'finished')) && ++tries < 30) { requestAnimationFrame(change); return; }
+        if (!afterLayout(apply)) apply();
       };
       requestAnimationFrame(change);
     }

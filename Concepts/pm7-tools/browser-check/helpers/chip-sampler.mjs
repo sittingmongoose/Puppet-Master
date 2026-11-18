@@ -49,7 +49,7 @@ export const CHIP_SAMPLER = (opts) => {
 			}
 			const on = el.querySelector(s.active);
 			const items = s.items ? [...el.querySelectorAll(s.items)].filter((e) => e.getClientRects().length).map(rr) : [];
-			row.s[s.sel] = { chip, src, rec, st, ct, on: on ? rr(on) : null, items };
+			row.s[s.sel] = { chip, src, rec, st, ct, on: on ? rr(on) : null, items, so: [sr.left, sr.top] };
 		}
 		W.rows.push(row);
 	};
@@ -73,10 +73,14 @@ export const CHIP_RESET = () => { const W = window.__chipSmp; if (W) { W.rows.le
 const FRAME = 1000 / 60;
 const near = (a, b, tol) => a && b && edges(a).every((v, i) => Math.abs(v - edges(b)[i]) <= tol);
 
-// one strip's task reads: { t (timeline time at the read), now, box, src, rec, st, ct, on, items }
+// one strip's task reads: { t (timeline time at the read), now, box, src, rec, st, ct, on, items, so: the strip's origin }
 export function chipRows(data, sel, kind = 'task') {
 	return data.rows.filter((r) => r.k === kind && r.s[sel]).map((r) => ({ t: r.tl, ts: r.ts, now: r.now, ...r.s[sel], box: r.s[sel].chip }));
 }
+// a box in the strip's own coordinates (the strip can move: Usage's rooms slide in)
+const rel = (b, o) => (b && o ? [b[0] - o[0], b[1] - o[1], b[2], b[3]] : b);
+// the strip's origin at time t: from the last read at or before t
+function originAt(rows, t) { let o = null; for (const r of rows) { if (r.ts > t && o) break; if (r.so) o = r.so; } return o; }
 
 // a read the main thread can vouch for: the lens, or a carried block whose start it already has and whose start is not
 // later than the read (a block waiting for its first frame reads at its hold while the compositor already moves it; one
@@ -93,9 +97,13 @@ export function drawnFrames(smp, sel, anims) {
 	const rows = smp.rows.filter((r) => r.k === 'task' && r.s[sel]);
 	const recs = anims.filter((r) => r.strip === sel && r.start != null).sort((a, b) => a.created - b.created);
 	const after = (t) => { const r = rows.find((x) => x.ts > t); return r ? r.ts : Infinity; };
-	const D = new Map(recs.map((r) => [r, r.explicit ? after(r.created) : r.start + (r.hold || 0)]));
+	// (drawnAt: the frame that first drew the block's commit, from carry-frames' probe)
+	const D = new Map(recs.map((r) => [r, r.drawnAt != null ? r.drawnAt : r.explicit ? after(r.created) : r.start + (r.hold || 0)]));
 	const replaced = new Set(recs.filter((r, i) => r.cancelled != null && recs[i + 1] && recs[i + 1].created - r.cancelled <= 200 && recs[i + 1].created >= r.cancelled - 0.5));
 	const ts = [...new Set(rows.map((r) => r.ts))].sort((a, b) => a - b), byTs = new Map(rows.map((r) => [r.ts, r]));
+	// a block's keyframes place it from its box when it was made, in the strip as it was then
+	const sr = rows.map((r) => ({ ts: r.now, so: r.s[sel].so }));
+	const originOf = (rec) => originAt(sr, rec.created);
 	const grid = [];
 	ts.forEach((T, i) => { if (i) for (let u = ts[i - 1] + FRAME; u < T - FRAME / 2; u += FRAME) grid.push(u); grid.push(T); });
 	const out = [];
@@ -103,9 +111,11 @@ export function drawnFrames(smp, sel, anims) {
 		let cur = null;
 		for (const r of recs) if (D.get(r) <= T + 0.01 && (!cur || D.get(r) >= D.get(cur))) cur = r;
 		if (cur && cur.cancelled != null && !replaced.has(cur) && T >= after(cur.cancelled)) cur = null;
-		if (cur) { const b = poseAt(cur, T); if (b) { out.push({ t: T, box: b, src: 'rec:' + cur.id, rec: cur }); continue; } }
+		// a change is drawn from the frame that first drew its commit (rebDrawn); before that, the frames it replaced
+		const early = cur && cur.rebDrawn != null && T < cur.rebDrawn - 0.01 && cur.kfPrev;
+		if (cur) { const b = poseAt(early ? { ...cur, kf: cur.kfPrev, dur: cur.durPrev } : cur, T); if (b) { out.push({ t: T, box: rel(b, originOf(cur)), src: 'rec:' + cur.id, rec: cur }); continue; } }
 		const row = byTs.get(T), x = row && row.s[sel];
-		if (x && x.chip && x.src !== 'carry') out.push({ t: T, box: x.chip, src: x.src, rec: null });
+		if (x && x.chip && x.src !== 'carry') out.push({ t: T, box: rel(x.chip, x.so), src: x.src, rec: null });
 	}
 	return out;
 }
@@ -116,8 +126,10 @@ export function modelWitness(smp, sel, anims) {
 	for (const r of chipRows(smp, sel)) {
 		if (r.src !== 'carry' || r.rec == null || !trusted(r)) continue;
 		const rec = anims.find((a) => a.id === r.rec && a.strip === sel); if (!rec || rec.start == null) continue;
-		const m = poseAt(rec, r.t); if (!m) continue;
-		n++; worst = Math.max(worst, ...edges(m).map((v, i) => Math.abs(v - edges(r.box)[i])));
+		const m0 = poseAt(rec, r.t); if (!m0) continue;
+		const all = chipRows(smp, sel).map((x) => ({ ts: x.now, so: x.so }));
+		const m = rel(m0, originAt(all, rec.created)), b = rel(r.box, r.so);
+		n++; worst = Math.max(worst, ...edges(m).map((v, i) => Math.abs(v - edges(b)[i])));
 	}
 	return { worst: +worst.toFixed(2), n };
 }
@@ -130,7 +142,7 @@ export function spikes(rows, { tol = 6, ratio = 0.3, maxGap = 40 } = {}) {
 	for (let i = 1; i < R.length - 1; i++) {
 		const a = R[i - 1], b = R[i], c = R[i + 1];
 		if (b.t - a.t > maxGap || c.t - b.t > maxGap) continue;
-		const ea = edges(a.box), eb = edges(b.box), ec = edges(c.box);
+		const ea = edges(rel(a.box, a.so)), eb = edges(rel(b.box, b.so)), ec = edges(rel(c.box, c.so));
 		for (let k = 0; k < 4; k++) {
 			const d1 = eb[k] - ea[k], d2 = ec[k] - eb[k], d3 = ec[k] - ea[k], m = Math.min(Math.abs(d1), Math.abs(d2));
 			if (Math.sign(d1) !== Math.sign(d2) && m > tol && Math.abs(d3) < ratio * m) { out.push({ t: +b.t.toFixed(1), edge: k, out: +d1.toFixed(2), back: +d2.toFixed(2), src: `${a.src}${a.rec ?? ''}>${b.src}${b.rec ?? ''}>${c.src}${c.rec ?? ''}` }); break; }
@@ -155,8 +167,8 @@ export function takeovers(anims, sel, { span = 100 } = {}) {
 		if (!p || p.cancelled == null || p.start == null || p.cancelled > n.created + 0.5 || n.created - p.cancelled > 200) continue;
 		if (!p) continue;
 		const goes = n.explicit || n.hold != null;   // a block that goes on with a trip (carry's go)
-		const first = n.explicit ? n.created : n.start + (n.hold || 0);
-		const last = Math.min(first + span, n.rebTl != null ? n.rebTl : Infinity, n.cancelled != null ? n.cancelled : Infinity);
+		const first = n.drawnAt != null ? n.drawnAt : n.explicit ? n.created : n.start + (n.hold || 0);
+		const last = Math.min(first + span, n.rebDrawn != null ? n.rebDrawn : n.rebTl != null ? n.rebTl : Infinity, n.cancelled != null ? n.cancelled : Infinity);
 		const n0 = { ...n, kf: n.kf0, dur: n.dur0 };
 		let worst = 0, at = first;
 		const T1 = goes ? Math.max(first, last) : first;
@@ -165,14 +177,15 @@ export function takeovers(anims, sel, { span = 100 } = {}) {
 			const e = Math.max(...edges(a).map((v, i) => Math.abs(v - edges(b)[i])));
 			if (e > worst) { worst = e; at = T; }
 		}
-		out.push({ id: n.id, from: p.id, goes, explicit: !!n.explicit, lagMs: !n.explicit && n.hold != null ? +(first - n.created).toFixed(1) : 0, worst: +worst.toFixed(2), at: +at.toFixed(1) });
+		out.push({ id: n.id, from: p.id, goes, explicit: !!n.explicit, lagMs: !n.explicit && n.hold != null ? +(n.start + n.hold - n.created).toFixed(1) : 0, worst: +worst.toFixed(2), at: +at.toFixed(1) });
 	}
 	return out;
 }
 
 // when a block's change (glass.js carry's change: a retarget or a new trip blended into the trip under way) starts on
-// screen, against the frame that committed it (the timeline's time when its keyframes were set, in that frame's
-// callback): the last keyframe that still draws the trip under way, minus that frame's time
+// screen, against the moment it was committed (the page's clock when its keyframes were set): the last keyframe that
+// still draws the trip under way, minus that moment. Keyframes sit a frame apart, so a change that starts when it is
+// committed has its last unchanged keyframe at most a frame later (its first changed one can round to unchanged)
 export function changeStarts(anims, sel) {
 	const out = [];
 	for (const r of anims.filter((x) => x.strip === sel && x.rebTl != null && x.start != null && x.kf0)) {
@@ -187,7 +200,8 @@ export function changeStarts(anims, sel) {
 			lastSame = T;
 		}
 		if (lastSame == null) continue;
-		out.push({ id: r.id, commit: +r.rebTl.toFixed(1), lastSame: +lastSame.toFixed(1), late: +(lastSame - r.rebTl).toFixed(1) });
+		const at = r.rebased != null ? r.rebased : r.rebTl;
+		out.push({ id: r.id, commit: +at.toFixed(1), frame: +r.rebTl.toFixed(1), drawn: r.rebDrawn != null ? +r.rebDrawn.toFixed(1) : null, lastSame: +lastSame.toFixed(1), late: +(lastSame - at).toFixed(1) });
 	}
 	return out;
 }

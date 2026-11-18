@@ -20,6 +20,14 @@ export const RECORD = (stripSel) => {
 	if (!W.patched) {
 		W.patched = true;
 		const animate = Element.prototype.animate;
+		// (switcher-carry-steps) a composited probe made in the same task as a block or its change goes to the compositor in
+		// the same commit, so its start time is the time of the frame that first drew that commit
+		W.probes = new Map();
+		const probe = (rec, key) => {
+			let e = W.probeEl;
+			if (!e || !e.isConnected) { e = W.probeEl = document.createElement('i'); e.setAttribute('aria-hidden', 'true'); e.style.cssText = 'position:fixed;left:0;top:0;width:2px;height:2px;pointer-events:none;opacity:0.01;contain:strict'; document.documentElement.appendChild(e); }
+			W.probes.set(animate.call(e, [{ opacity: 0.01 }, { opacity: 0.02 }], { duration: 60000 }), { rec, key });
+		};
 		Element.prototype.animate = function (kf, timing) {
 			const a = animate.call(this, kf, timing);
 			try {
@@ -42,7 +50,7 @@ export const RECORD = (stripSel) => {
 					rec.kf0 = rec.kf; rec.dur0 = rec.dur; rec.createdTl = document.timeline.currentTime;
 					// a block whose trip is rebased at its first frame (glass.js carry's rebase) takes new keyframes and timing
 					const eff = a.effect, sk = eff.setKeyframes, ut = eff.updateTiming;
-					eff.setKeyframes = function (k) { rec.kf = parse(k); rec.rebased = performance.now(); rec.rebTl = document.timeline.currentTime; return sk.call(eff, k); };
+					eff.setKeyframes = function (k) { rec.kfPrev = rec.kf; rec.durPrev = rec.dur; rec.kf = parse(k); rec.rebased = performance.now(); rec.rebTl = document.timeline.currentTime; probe(rec, 'rebDrawn'); return sk.call(eff, k); };
 					eff.updateTiming = function (tm) { if (tm && tm.duration != null) rec.dur = tm.duration; return ut.call(eff, tm); };
 					// a start time the page sets itself (glass.js carry's go) puts the animation in its before phase until then
 					const stDesc = Object.getOwnPropertyDescriptor(Animation.prototype, 'startTime');
@@ -54,6 +62,7 @@ export const RECORD = (stripSel) => {
 					const cancel = a.cancel;
 					a.cancel = function () { if (a.startTime != null) rec.start = a.startTime; if (rec.cancelled == null) rec.cancelled = performance.now(); return cancel.call(a); };
 					try { this.__carryRec = rec.id; } catch (e) { /* the sampler names the block by its record */ }
+					probe(rec, 'drawnAt');
 					W.anims.push(rec);
 				}
 			} catch (e) { /* recording must never break the page */ }
@@ -61,8 +70,12 @@ export const RECORD = (stripSel) => {
 		};
 		const tick = (ts) => {
 			if (!W.on) return;
+			if (W.probes) W.probes.forEach((p, a) => { if (a.startTime != null) { p.rec[p.key] = a.startTime; a.cancel(); W.probes.delete(a); } else if (performance.now() - p.rec.created > 3000) { a.cancel(); W.probes.delete(a); } });
 			if (W.live) W.live.forEach((a, id) => { const r = W.anims[id]; if (a.startTime != null) r.start = a.startTime; if (r.cancelled != null || a.playState === 'finished') W.live.delete(id); });
-			const row = { t: ts, now: performance.now(), s: {} };
+			// (tl: the timeline's time in this frame callback; st: the block's start time as the main thread has it. FO-234: a
+			// start reported in the frame it was drawn can be a hair later than this frame's time, which puts the block in its
+			// before phase here, untransformed at the box it is bound for)
+			const row = { t: ts, now: performance.now(), tl: document.timeline.currentTime, s: {} };
 			W.strips.forEach((s) => {
 				const el = s.el && s.el.isConnected ? s.el : (s.el = [...document.querySelectorAll(s.sel)].find((e) => e.getClientRects().length));
 				if (!el) return;
@@ -70,8 +83,9 @@ export const RECORD = (stripSel) => {
 				const block = [...el.querySelectorAll(':scope > lg-over > .lg-carry')].pop();
 				const lens = el.querySelector(':scope > lg-under > .lg-lens');
 				const on = el.querySelector(s.active);
+				const ba = block ? block.getAnimations().find((a) => a.effect && a.effect.getTiming().duration > 0 && a.playState !== 'idle') : null;
 				row.s[s.sel] = {
-					block: block ? rr(block) : null,
+					block: block ? rr(block) : null, st: ba ? ba.startTime : null,
 					lens: lens ? rr(lens) : null, lensOp: lens ? +getComputedStyle(lens).opacity : 0,
 					on: on ? (on.getAttribute('data-tab') || on.textContent.trim().slice(0, 24)) : null, onBox: on ? rr(on) : null
 				};
@@ -148,9 +162,13 @@ export function frames(data, sel) {
 		// (a block whose hold or frames the page changed after this callback measured it, in the same frame, was measured in a
 		// state no frame drew: glass.js sets a waiting block's hold, and a block's change, in a frame callback of its own;
 		// it is not compared with the model)
-		const r = r0, m = r && Td !== row.t ? poseAt(r, Td) : null, after = (x) => x != null && x > row.now && x - row.now < FRAME * 2;
+		// a read in the block's before phase on the main thread (its start later than this frame's time: FO-234, the block
+		// read untransformed at the box it is bound for, 120 px from where it was drawn) is not what was drawn: its keyframes
+		// at the frame's time are
+		const before = r0 && s.block && s.st != null && row.tl != null && s.st > row.tl;
+		const r = r0, m = r && (Td !== row.t || before) ? poseAt(r, Td) : null, after = (x) => x != null && x > row.now && x - row.now < FRAME * 2;
 		const stale = r && (after(r.held) || after(r.rebased));
-		const f = s.block ? { t: Td, box: m || s.block, src: r ? 'rec:' + r.id : 'block', rec: r, real: s.block, modelBox: r && !stale ? poseAt(r, row.t) : null, late: Td !== row.t }
+		const f = s.block ? { t: Td, box: m || s.block, src: r ? 'rec:' + r.id : 'block', rec: r, real: s.block, modelBox: r && !stale && !before ? poseAt(r, row.t) : null, late: Td !== row.t, before: before || undefined }
 			: s.lens && s.lensOp > 0.5 ? { t: Td, box: s.lens, src: 'lens', rec: null } : null;
 		// a frame drawn later than its callback's own time: if at that time the block was in its before phase with
 		// nothing filled backwards (a start the page set past the frame's time), the compositor may draw it at its own
