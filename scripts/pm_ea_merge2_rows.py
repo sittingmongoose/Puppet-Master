@@ -118,6 +118,20 @@ def contract(lane,event):
     elif lane=='DMEM':
         ref='Plans/memory_maintenance_event_payloads.schema.json#/$defs/'+slug
         out['contract_ref']='Plans/memory_maintenance_contracts.json#'
+        # Card 1b declares owners by role; its SP payloads are not the CV
+        # verification-sweep units adopted by the archive preparation.
+        parent=load('Plans/memory_maintenance_contracts.json')
+        card1b=parent.get('card1b_prepared_contracts_ref')
+        if card1b:
+            if card1b != 'Plans/memory_archive_contracts.json':
+                raise Gap('unknown Card 1b contract reference')
+            matches=[(i,row) for i,row in enumerate(load(card1b)['families']) if row['event_type']==event]
+            if len(matches)>1:raise Gap('ambiguous Card 1b family contract')
+            if matches:
+                i,row=matches[0]
+                out.update(contract_ref=f'{card1b}#/families/{i}',
+                    owners={role:row[role+'_owner'] for role in ('semantic','payload','storage')},
+                    extra_source_refs=['Plans/memory_maintenance_contracts.json#/card1b_prepared_contracts_ref'])
     elif lane=='DO':
         facts,source=_facts('Plans/orchestrator_event_contract_fixtures.json',event)
         ref='Plans/orchestrator_event_payloads.schema.json#/$defs/'+facts['definition']

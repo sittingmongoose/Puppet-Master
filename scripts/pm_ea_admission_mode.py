@@ -191,6 +191,25 @@ def registry_history_problem(record: dict, registry: dict, index: int, root: Pat
     whose row sits at the pinned position.
     """
     before, after = record["registry_before"], record["registry_after"]
+    historical_row_sha = record.get("registry_row_sha256")
+    correction = record.get("registry_row_correction")
+    if correction is not None:
+        # FIX1/T259 repairs four wrongly dispatched owner roles after admission.
+        # Original append checkpoints remain historical; only these exact
+        # reviewed before/after row pairs may use the old row for that proof.
+        try:
+            pins = json.loads((Path(__file__).with_name("pm_ea_reviewed_owner_corrections.json")).read_text())["families"]
+            pin = pins[record["event_type"]]
+            valid = (isinstance(correction, dict)
+                     and correction.get("authority") == "MERGE2-FIX1 finding 5 / T259"
+                     and correction.get("predecessor_row_sha256") == pin["predecessor_sha256"]
+                     and record.get("registry_row_sha256") == pin["successor_sha256"]
+                     and correction.get("contract_ref") == pin["contract_ref"])
+        except (OSError, ValueError, KeyError, TypeError):
+            valid = False
+        if not valid:
+            return "registry_after_mismatch", {"route": "owner_correction", "reason": "unreviewed row correction"}
+        historical_row_sha = pin["predecessor_sha256"]
     # Rebuild witnesses: the registry being judged, then (when a caller judges another registry document, as the
     # lanes' synthetic witnesses do) this tree's own registry file, with the family's row at its own position.
     witnesses = [(registry, index)]
@@ -238,7 +257,7 @@ def registry_history_problem(record: dict, registry: dict, index: int, root: Pat
     if not (_pins_match(after, after_doc) and after_doc["families"]
             and isinstance(after_doc["families"][-1], dict)
             and after_doc["families"][-1].get("event_type") == record.get("event_type")
-            and canonical_sha256(after_doc["families"][-1]) == record.get("registry_row_sha256")):
+            and canonical_sha256(after_doc["families"][-1]) == historical_row_sha):
         return "registry_after_mismatch", dict(detail, pinned=after, blob_found=after_doc is not None)
     if canonical_sha256(before_doc["families"]) != canonical_sha256(after_doc["families"][:-1]):
         return "registry_before_mismatch", dict(detail, pinned=before, before_is_after_less_its_last_row=False)
@@ -373,7 +392,8 @@ def lane_gate(event_types, root: Path = ROOT) -> tuple[dict, list[str]]:
 def inputs(event_types, root: Path = ROOT) -> list[str]:
     """Repository-relative paths a disposable copy of the tree needs for these verdicts."""
     root = Path(root)
-    paths = {REGISTRY, DECISION_LOG, FROZEN, POST_AUGUST_RECEIPT, "scripts/pm_ea_admission_mode.py"}
+    paths = {REGISTRY, DECISION_LOG, FROZEN, POST_AUGUST_RECEIPT, "scripts/pm_ea_admission_mode.py",
+             "scripts/pm_ea_reviewed_owner_corrections.json"}
     paths.update(str(p.relative_to(root)) for p in sorted((root / RECORD_DIR).glob("*.json")))
     # Revision records rebuild the registry states before later in-place row revisions (revision_states).
     revisions = [p for d in sorted(root.glob(REVISION_DIR_GLOB)) for p in sorted(d.glob("*.json"))]

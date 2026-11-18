@@ -1,0 +1,29 @@
+{
+  "authority": "MERGE2-FIX1 finding 5 / T259; four Card 1b role corrections only",
+  "families": {
+    "memory.monthly_summary.completed": {
+      "predecessor_sha256": "2020a398c603184689e62a0fac3404a350fa07505ad4bb5928e50218fe1f1f6d",
+      "successor_sha256": "422d094acb4fc05c8a6935c31c8a89ba5a3b8765f1176da76772a1cd28401cac",
+      "contract_ref": "Plans/memory_archive_contracts.json#/families/0",
+      "review_commit": "0c904de00426b0089ba5d56349fda8ea16cc9f88"
+    },
+    "memory.monthly_summary.started": {
+      "predecessor_sha256": "8dae2d66d4bd401c3a2ef31ada9a35d5996159c14ba7bbbcb8edff045a456540",
+      "successor_sha256": "daca640613eebaa304c55bb8e037a2da8da1b4bdaf3d85c0bf33542db229f54f",
+      "contract_ref": "Plans/memory_archive_contracts.json#/families/1",
+      "review_commit": "0c904de00426b0089ba5d56349fda8ea16cc9f88"
+    },
+    "memory.prune_archive.completed": {
+      "predecessor_sha256": "cacc8471e40339fbab4d67dc63c784a2be01511de66110ebbf91858ea96318ed",
+      "successor_sha256": "b802b23ae9970fa44e87c5c473b62bf0f6cd5cb181ef3b6831dbf01607f44716",
+      "contract_ref": "Plans/memory_archive_contracts.json#/families/2",
+      "review_commit": "0c904de00426b0089ba5d56349fda8ea16cc9f88"
+    },
+    "memory.prune_archive.started": {
+      "predecessor_sha256": "09c6499f2e9ac4b21ec9fa5c5cbede71e0e64550bbaba414d52e2c9645f450ed",
+      "successor_sha256": "e1b25ca591dd023f034863caa2a8ce121f77238757c6cb17c8afac9a7be09479",
+      "contract_ref": "Plans/memory_archive_contracts.json#/families/3",
+      "review_commit": "0c904de00426b0089ba5d56349fda8ea16cc9f88"
+    }
+  }
+}

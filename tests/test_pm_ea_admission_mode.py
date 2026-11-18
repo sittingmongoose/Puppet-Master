@@ -752,5 +752,61 @@ class RevisionModeStandingNegatives(unittest.TestCase):
         self.assertEqual(reached, set(admission_mode.REVISION_CODES))
 
 
+
+class Merge2Fix1EvidenceTests(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+        import importlib.util
+        spec = importlib.util.spec_from_file_location("fix1_writer", REPO / "scripts/pm-ea-admission-writer.py")
+        cls.writer = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(cls.writer)
+
+    def test_real_collaboration_span_digest_and_historical_location(self):
+        w = self.writer
+        doc = _read(REPO, "reports/event-authority-20261116/admission-merge-2/depth/collaboration.failed.json")
+        item = doc["rows"][0]["cells"]["scope_identity"]["evidence"][0]
+        current = w.refresh_evidence(item)
+        lines = (REPO / current["path"]).read_text().splitlines()
+        excerpt = "\n".join(lines[current["line_start"] - 1:current["line_end"]])
+        self.assertEqual(current["excerpt_sha256"], hashlib.sha256(excerpt.encode()).hexdigest())
+        self.assertIn(current["quote"], excerpt)
+        self.assertEqual(current["source_citation"].get("excerpt_sha256"), item.get("source_citation", item).get("excerpt_sha256"))
+
+    def test_literal_quote_digest_is_not_replaced_by_line_digest(self):
+        w = self.writer
+        path = "Plans/storage-plan.md"
+        text = (REPO / path).read_text()
+        unit = "SP-638"; span = w.unit_span(text, unit)
+        line = next((i, line) for i,line in enumerate(text.splitlines()[span[0]-1:span[1]], span[0]) if len(line)>80)
+        item = dict(path=path,unit=unit,line_start=line[0],line_end=line[0],quote=line[1][:40],excerpt_sha256="0"*64)
+        current = w.refresh_evidence(item, digest_convention="literal_quote")
+        self.assertEqual(current["excerpt_sha256"], hashlib.sha256(item["quote"].encode()).hexdigest())
+        self.assertNotEqual(current["excerpt_sha256"], hashlib.sha256(line[1].encode()).hexdigest())
+
+    def test_real_do_bare_heading_relocates_with_separate_source(self):
+        w = self.writer
+        delta = _read(REPO, "reports/event-authority-20261114/C12-DO.self-grade.json")
+        family = next(x for x in delta["families"] if x["event_type"]=="subagent.completed")
+        item = dict(family["evidence"][0], unit=family["owner_unit"])
+        current = w.refresh_evidence(item,source_commit=delta["implementation_commit"])
+        self.assertEqual(current["source_citation"]["line"], item["line"])
+        self.assertNotEqual(current["line"], item["line"])
+        self.assertEqual((REPO / current["path"]).read_text().splitlines()[current["line"]-1],current["quote"])
+        with self.assertRaises(w.Gap):
+            w.refresh_evidence(dict(item,sha256="0"*64), source_commit=delta["implementation_commit"])
+        with self.assertRaises(w.Gap):
+            w.refresh_evidence(item)
+
+    def test_card1b_owners_follow_roles(self):
+        import pm_ea_admission_rows as rows
+        rows.SELF_GRADES["DMEM"]="reports/event-authority-20261116/admission-merge-2/readiness-list.json"
+        parent = _read(REPO, "Plans/memory_maintenance_contracts.json")
+        ref = parent["card1b_prepared_contracts_ref"]
+        for original in _read(REPO,ref)["families"]:
+            contract = rows.lane_contract("DMEM", original["event_type"])
+            self.assertEqual(contract["owners"], {k:original[k+"_owner"] for k in ("semantic","payload","storage")})
+            self.assertTrue(contract["contract_ref"].startswith(ref+"#/families/"))
+
+
 if __name__ == "__main__":
     unittest.main()

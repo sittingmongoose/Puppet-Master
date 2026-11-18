@@ -178,7 +178,7 @@ def prepare(args) -> int:
             problems = schema_failures(row)
             if problems:
                 raise Gap("registry schema: " + "; ".join(problems[:3]))
-            carried_cells(grade, entry["grade"])  # every cited quotation must still read at this tree
+            carried_cells(grade, entry["grade"], lane=lane)  # every cited quotation must still read at this tree
             entry.update(registry_row=row, row_provenance=provenance, contract_ref=contract["contract_ref"])
             candidates.append(row)
         except Gap as gap:
@@ -341,7 +341,7 @@ def relocate(text: str, quote: str, want: int, span: tuple[int, int] | None) -> 
     return None
 
 
-def refresh_evidence(item: dict) -> dict:
+def refresh_evidence(item: dict, *, digest_convention: str = "whole_line", source_commit: str | None = None) -> dict:
     """Re-read one cited quotation at the current tree; relocate it inside its own unit or fail closed."""
     rel = item.get("path")
     if isinstance(rel, str) and Path(rel).is_absolute():
@@ -359,7 +359,37 @@ def refresh_evidence(item: dict) -> dict:
     if text is None:
         raise Gap(f"evidence file missing: {rel}")
     out = dict(item)
+    # A current file hash must never be paired with an unexplained old line or
+    # excerpt hash. Keep the original edition as a separate auditable value.
+    source = copy.deepcopy(item.get("source_citation") or {
+        k: v for k, v in item.items() if k not in ("quote_check", "quote_scope")})
+    if source_commit:
+        source.setdefault("commit", source_commit)
     unit = item.get("unit")
+    quote = item.get("quote")
+    if not quote and ("line" in item or "line_start" in item):
+        commit = source.get("commit")
+        if not isinstance(commit, str) or not re.fullmatch(r"[0-9a-f]{40}", commit):
+            raise Gap(f"line-only evidence needs its historical source commit: {rel}")
+        result = subprocess.run(["git", "-C", str(REPO), "show", commit + ":" + rel], capture_output=True)
+        if result.returncode:
+            raise Gap(f"historical evidence is unreadable: {commit}:{rel}")
+        expected = source.get("sha256") or source.get("file_sha256")
+        if not expected or sha256_bytes(result.stdout) != expected:
+            raise Gap(f"historical evidence file hash differs: {commit}:{rel}")
+        old_lines = result.stdout.decode("utf-8").splitlines()
+        start = source.get("line_start", source.get("line"))
+        end = source.get("line_end", start)
+        if not isinstance(start, int) or not isinstance(end, int) or not 1 <= start <= end <= len(old_lines):
+            raise Gap(f"historical evidence line range is invalid: {rel}")
+        quote = "\n".join(old_lines[start - 1:end])
+        source.setdefault("quote", quote)
+        heading = re.match(r"^#+\s+([A-Z][A-Z0-9]*-[0-9]+)\b", quote)
+        if not unit and heading:
+            unit = heading[1]
+            out["unit"] = unit
+        if not unit:
+            raise Gap(f"line-only evidence has no declared unit bound: {rel}")
     span = None
     if (rel.startswith("Plans/") and rel.endswith(".md") and isinstance(unit, str)
             and re.fullmatch(r"[A-Z][A-Z0-9]*-[0-9]+", unit)):
@@ -369,7 +399,6 @@ def refresh_evidence(item: dict) -> dict:
             span = unit_span(text, unit)
             if span is None:
                 raise Gap(f"evidence unit {unit} has no single declared span in {rel}")
-    quote = item.get("quote")
     if isinstance(quote, str) and quote:
         want = item.get("line_start") if isinstance(item.get("line_start"), int) else 1
         found = relocate(text, quote, want, span)
@@ -377,8 +406,24 @@ def refresh_evidence(item: dict) -> dict:
             where = f"unit {unit} ({rel}:{span[0]}-{span[1]})" if span else rel
             raise Gap(f"cited quotation not present in {where}: {quote[:80]!r}")
         out["line_start"], out["line_end"], out["quote_check"] = found
+        excerpt = "\n".join(text.splitlines()[found[0] - 1:found[1]])
+        if found[2] == "whitespace_normalized":
+            matched = re.search(r"\s+".join(re.escape(w) for w in quote.split()), excerpt)
+            quote = matched[0]
+        out["quote"] = quote
+        if "line" in out:
+            out["line"] = found[0]
+        if "excerpt_sha256" in item:
+            convention = item.get("excerpt_digest_convention", digest_convention)
+            if convention not in ("whole_line", "literal_quote"):
+                raise Gap(f"unknown excerpt digest convention: {convention}")
+            out["excerpt_digest_convention"] = convention
+            out["excerpt_sha256"] = sha256_bytes((quote if convention == "literal_quote" else excerpt).encode("utf-8"))
         out["quote_scope"] = f"unit {unit}, {rel}:{span[0]}-{span[1]}" if span else "document"
+    out["source_citation"] = source
     out["file_sha256"] = _TEXT_HASH_CACHE[rel]
+    if "sha256" in out:
+        out["sha256"] = out["file_sha256"]
     return out
 
 
@@ -427,12 +472,23 @@ def self_test() -> list[str]:
     return problems
 
 
-def carried_cells(grade: dict, grade_ref: dict) -> dict:
+def carried_cells(grade: dict, grade_ref: dict, *, lane: str | None = None) -> dict:
     """The eleven reviewed PASS cells, each quotation re-read at the current tree."""
     cells = {}
     for field in EVIDENCE_FIELDS[1:]:
         cell = copy.deepcopy(grade["cells"][field])
-        evidence = [refresh_evidence(e) for e in cell.get("evidence") or [] if isinstance(e, dict)]
+        convention = "literal_quote" if (lane or grade.get("lane")) in ("DF", "DG6B") else "whole_line"
+        source_commit = grade_ref.get("source_commit")
+        if (lane or grade.get("lane")) == "DO" and field == "positive_negative_oracles":
+            delta = load("reports/event-authority-20261114/C12-DO.self-grade.json")
+            source_commit = delta["implementation_commit"]
+            _, original = find_by_event(delta["families"], grade["event_type"])
+            for e in cell.get("evidence") or []:
+                if e.get("path") == "Plans/orchestrator-subagent-integration.md":
+                    e.setdefault("unit", original["owner_unit"])
+        evidence = [refresh_evidence(e, digest_convention=convention,
+                                   source_commit=source_commit)
+                    for e in cell.get("evidence") or [] if isinstance(e, dict)]
         if not any(str(e.get("path", "")).startswith("Plans/") for e in evidence):
             raise Gap(f"{field} PASS carries no Plans evidence")
         cells[field] = {
@@ -690,7 +746,7 @@ def apply_family(fam: dict, dl: str, args, state: dict) -> list[str]:
     grade = state["grades"][fam["lane"]][et]
     if sha256_file(REPO / fam["grade"]["path"]) != fam["grade"]["sha256"]:
         raise SystemExit("reviewed grade bytes changed since prepare: " + fam["grade"]["path"])
-    cells = {"membership_version": membership_cell(fam, ctx), **carried_cells(grade, fam["grade"])}
+    cells = {"membership_version": membership_cell(fam, ctx), **carried_cells(grade, fam["grade"], lane=fam["lane"])}
     depth_rel = f"{args.report_dir}/depth/{et}.json"
     depth = {
         "schema_id": "pm.assurance.event_authority.admission_depth_assessment.v1",

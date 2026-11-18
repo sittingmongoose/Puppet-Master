@@ -552,8 +552,10 @@ def derive_row(family: dict, grade: dict, contract: dict, readiness) -> tuple[di
         graded_payload = graded_unit(grade, "closed_payload_schema")
         if graded_payload and graded_payload.split("#")[1].startswith("CV-"):
             owners["payload"] = graded_payload
-        elif cv_units:
+        elif len(cv_units) == 1:
             owners["payload"] = unit_ref(cv_units[0])
+        elif cv_units:
+            raise Gap("multiple CV units do not declare a payload owner role")
         provenance["payload_owner_doc"] = SELF_GRADES[family["lane"]] + " closed_payload_schema evidence / current_owner_units"
     else:
         provenance["payload_owner_doc"] = contract["contract_ref"]
