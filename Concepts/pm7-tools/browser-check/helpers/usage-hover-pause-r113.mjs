@@ -1,8 +1,9 @@
 // R113 regressions run as rows of usage-hover-pause, on its selected looks and surfaces.
 export async function r113Cases(t, f, label, park) {
 	const records = [];
-	for (const kind of String(t.args.r113Cases || 'live,plot').split(',')) {
+	for (const kind of String(t.args.r113Cases || 'live,plot,tooltip').split(',')) {
 		if (kind === 'plot') { records.push(await plotLimit(t,f,label,park)); continue; }
+		if (kind === 'tooltip') { records.push(await tooltipPause(t,f,label,park)); continue; }
 		if (kind !== 'live') throw new Error('Unknown R113 case: ' + kind);
 		await park();
 		const liveWasOn = await f.evaluate(() => { const on=PMU.live.on(); PMU.live.resume(); PM7_USAGE.setRoomDetail('costs','diagnostics'); return on; });
@@ -35,6 +36,41 @@ export async function r113Cases(t, f, label, park) {
 		await park();await f.evaluate(on=>{if(!on)PMU.live.pause();},liveWasOn);
 	}
 	return records;
+}
+
+async function tooltipPause(t,f,label,park) {
+	await park();
+	const prior=await f.evaluate(()=>{const c=PM_HOVER_TAG_CONTROLLER,on=PMU.live.on(),tips=c.readVisualSetting();PMU.live.pause();PM12_KIMI.setSettingFromHost('general.interaction.show-tooltips',true);c.syncVisualSetting();PM7_USAGE.setRoomDetail('overview','glance');return {on,tips};});
+	await t.page.waitForTimeout(4500);
+	const records=[],target=f.locator('#pmuBoard .pmu-skycol[data-prov]').first();
+	for(const phase of ['pending','shown','focus']) {
+		await park();await f.evaluate(()=>{PM_HOVER_TAG_CONTROLLER.close(true);document.activeElement?.blur();document.getElementById('pmuScroll').scrollTop=0;});
+		const box=await target.boundingBox(),pane=await f.locator('#pmuScroll').boundingBox();
+		if(!box||!pane){await t.check(label+'R113 P2 '+phase+' could judge Skyline target',false);continue;}
+		await t.page.mouse.move(box.x+box.width/2,(Math.max(box.y,pane.y)+Math.min(box.y+box.height,pane.y+pane.height))/2);
+		if(phase==='focus'){await target.focus();await t.page.keyboard.press('Tab');await target.focus();}
+		await t.page.waitForTimeout(phase==='pending'?1100:phase==='shown'?1900:1400);
+		await f.evaluate(phase=>{
+			const c=PM_HOVER_TAG_CONTROLLER,b=document.getElementById('pmuBoard'),sc=document.getElementById('pmuScroll');
+			const read=()=>{const tag=c.tag,open=!!tag&&!tag.hidden&&tag.getAttribute('data-open')==='true';return {t:performance.now(),op:b.getAttribute('data-op'),top:sc.scrollTop,enabled:c.visualEnabled,hovered:!!b.querySelector('.pmu-skycol:hover'),pending:c.pendingOpenSource,pendingHere:!!c.pendingOpenTarget&&b.contains(c.pendingOpenTarget),dwell:c.pendingPointerIntent?performance.now()-c.pendingPointerIntent.entered_at:null,activeHere:!!c.active&&b.contains(c.active),pointer:open&&tag.getAttribute('data-source')==='pointer',focus:open&&tag.getAttribute('data-source')==='focus'};};
+			const r=window.__uhpR113={phase,pre:read(),frames:[],wheels:[],moves:0,ends:[]};let running=true,pos=null;
+			const wheel=e=>{pos=[e.clientX,e.clientY];r.wheels.push({t:performance.now(),trusted:e.isTrusted});};
+			const move=e=>{if(pos&&(pos[0]!==e.clientX||pos[1]!==e.clientY))r.moves++;};
+			const end=e=>{if(e.detail?.board===b)r.ends.push(performance.now());};
+			const frame=()=>{if(!running)return;if(b.getAttribute('data-op')==='wheel')r.frames.push(read());requestAnimationFrame(frame);};
+			sc.addEventListener('wheel',wheel,{passive:true});document.addEventListener('pointermove',move,true);document.addEventListener('pmu-op-end',end);requestAnimationFrame(frame);
+			r.stop=()=>{running=false;sc.removeEventListener('wheel',wheel);document.removeEventListener('pointermove',move,true);document.removeEventListener('pmu-op-end',end);return {...r,stop:undefined,after:read()};};
+		},phase);
+		for(let i=0;i<18;i++){await t.page.mouse.wheel(0,-1);await t.page.waitForTimeout(30);}
+		await t.page.waitForTimeout(900);
+		const rec=await f.evaluate(()=>window.__uhpR113.stop()),p=rec.pre,a=rec.after,held=rec.frames.filter(x=>x.t>=rec.wheels[0]?.t+50);records.push(rec);
+		t.log(label+'R113 P2 '+phase+': '+JSON.stringify(rec));
+		const ready=phase==='pending'?p.pending==='pointer'&&p.pendingHere&&p.dwell>=1000&&p.dwell<1600&&!p.pointer:phase==='shown'?p.pointer&&p.activeHere:p.focus&&p.activeHere;
+		await t.check(label+'R113 P2 '+phase+' could judge: real tooltip state, trusted top-limit wheel hold and stationary provider',ready&&p.enabled&&p.hovered&&p.top===0&&a.hovered&&a.top===0&&!rec.moves&&rec.wheels.length===18&&rec.wheels.every(x=>x.trusted)&&held.length>=10&&rec.ends.length>=1&&rec.ends.at(-1)>rec.wheels.at(-1)?.t&&!a.op,JSON.stringify({pre:p,after:a,frames:held.length,wheels:rec.wheels.length,moves:rec.moves,ends:rec.ends}));
+		await t.check(label+'R113 P2 '+phase+(phase==='focus'?' keyboard-focus tag survives the wheel pause':' pointer tag stays closed throughout the pause and afterward'),held.length>=10&&(phase==='focus'?held.every(x=>x.focus)&&a.focus:held.every(x=>!x.pointer)&&!a.pointer&&a.pending!=='pointer'),`${held.filter(x=>phase==='focus'?!x.focus:x.pointer).length}/${held.length} wrong tooltip samples; after ${JSON.stringify(a)}`);
+	}
+	await park();await f.evaluate(prior=>{PM_HOVER_TAG_CONTROLLER.close(true);document.activeElement?.blur();PM12_KIMI.setSettingFromHost('general.interaction.show-tooltips',prior.tips);if(prior.on)PMU.live.resume();},prior);
+	return {kind:'tooltip',records};
 }
 
 async function plotLimit(t,f,label,park) {
