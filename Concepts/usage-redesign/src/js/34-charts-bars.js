@@ -825,6 +825,8 @@
       cvx.textContent = (Math.round(x.f * 1000) / 10).toFixed(1) + '%';
       capx.textContent = x.s.name + ' · ' + (x.s.valueText || D.fmtV(x.s.value)) + (D.mode === 'cost' ? '' : ' ' + t('charts.tokens_word'));
     };
+    /* R100 P2: wheel start resets a selection that was already visible, including the centre text. */
+    c.el._pmuClearHot = function () { hot(null); };
     /* (_pmuHot is the element's own light, also called by the wheel pause's end, below) */
     pathEls.forEach(function (p, i) { if (p._pmuHot) return; p._pmuHot = function () { hot(i); }; p.addEventListener('pointerenter', function () { if (!wheelPaused(p)) p._pmuHot(); }); p.addEventListener('pointerleave', function () { hot(null); }); });
     $$('.pmu-dl-row[data-i]', c.el).forEach(function (r) { if (r._pmuHot) return; r._pmuHot = function () { hot(+r.getAttribute('data-i')); }; r.addEventListener('pointerenter', function () { if (!wheelPaused(r)) r._pmuHot(); }); r.addEventListener('pointerleave', function () { hot(null); }); });
@@ -832,6 +834,11 @@
   /* the wheel pause (PERF-USAGE-HOVER, 42-cards.js bindTools): an arc or legend row that slides under a resting pointer
      does not light; when the pause ends, the one the pointer rests on lights as if the pointer had just entered it */
   function wheelPaused(el) { return !!(el.closest && el.closest('.pmu-board[data-op="wheel"]')); }
+  document.addEventListener('pmu-op-start', function (e) {
+    var b = e.detail && e.detail.board;
+    if (!b || !b.isConnected) return;
+    $$('.pmu-c-donut', b).forEach(function (el) { if (typeof el._pmuClearHot === 'function') el._pmuClearHot(); });
+  });
   document.addEventListener('pmu-op-end', function (e) {
     var b = e.detail && e.detail.board;
     var el = b && b.isConnected ? b.querySelector('.pmu-dl-row[data-i]:hover') || b.querySelector('path[data-mark="arc"]:hover') : null;
