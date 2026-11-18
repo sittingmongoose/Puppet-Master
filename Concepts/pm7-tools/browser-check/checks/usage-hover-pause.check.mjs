@@ -1,52 +1,18 @@
-// Usage pauses hover highlights while the mouse wheel turns (lane V, PERF-USAGE-HOVER, Jared's card A, 2026-11-16).
-//
-// When the wheel scrolls Usage's board under a resting pointer, cards and rows slide under it. Each one lit up, showed
-// its tool buttons and faded again as it passed, and that restyle and repaint made the scroll drop frames. Jared chose
-// to pause those highlights while the wheel turns: the board's hover effects are gated (src/css: the in-board :hover
-// rules; the shell's hover engine, 18-hover.js, rests for a board with [data-op]); hit-testing is unchanged, so a click
-// or a pointer move works as it always did, and the highlight under the resting pointer comes back once the wheel stops.
-//
-// Per look (default Basic Dark, --set looks=) and surface, TRIES windows (3): the board at its top, the pointer moved
-// onto the card at the page's centre (55 % down) and left there until its hover is on (rows R0 below), then TICKS (12)
-// real wheel ticks of 40 px, GAP (30) ms apart, downward, and 800 ms with the pointer still. A recorder in the app's
-// frame logs each frame (the card under the pointer, the cards carrying the hover engine's light .pmh-on, the hovered
-// card's tool cluster opacity) and every transitionrun inside the board, wheel and scroll event.
-//   R0  could judge: at rest before the wheel, the card under the pointer is lit (.pmh-on) and shows its tools (opacity
-//       above .5): both builds, every look; without it there is nothing to pause.
-//   R1  from 50 ms after the first wheel through the marker's removal (including its tail): no hover-in restyle.
-//       At least five sampled frames; all cards, existing chart selections and tools after their outgoing fade count.
-//       A hover-in restyle is a transition that starts on an element of a card under the pointer at that moment, including
-//       the starting card (approved segment/stepper/sharebar transitions excluded), or a frame with an engine/chart light (.pmh-on, or .pmh-near, its light on a card near the pointer). On
-//       origin/main bb8cd0e873 (Alexis, Basic Dark) the card that slides in starts its tools', resize corner's and
-//       light's transitions and takes .pmh-near: red.
-//   R2  after the wheel: within BACK ms (200) of the last wheel or scroll event, the card under the resting pointer
-//       carries .pmh-on and its tools visibly show (opacity above .5), with no pointer
-//       move. The light's time is when the engine writes .pmh-on (a class observer: a frame sample runs before the
-//       engine's frame callback and saw it a frame late, 198-233 ms for a light written at 170). Logged with both times. On origin/main the engine's .pmh-on stays on the card that was under the
-//       pointer at rest and scrolled away, and the card under the pointer never gets it without a move: red too.
-//   R3  keyboard focus is not paused: a card with keyboard focus keeps its focus ring and its tools while the wheel
-//       turns (a guard, green on origin/main too: the board gestures' [data-op] rules hide every card's tools).
-//   R4  enter a Skyline provider column, then send a real wheel tick before its 110 ms highlight intent fires. Keep
-//       the pointer on that column: no is-hl-dim/is-hl-on while paused, and the provider light returns after op-end.
-//       --set raceOnly=1 runs this row alone. On main use --set raceNoPause=1: assert the absence of a pause marker,
-//       then explicitly SKIP R4's suppression/return verdicts, which have no pause interval to judge there.
-//   R100 wheel from an already-shown provider/donut/column/card state, including a sparse sleeping engine at the
-//       scroll limit and a press on a still-visible fading tool. --set chartOnly=1, chartCases=provider,donut,column,engine,tool.
-//   R107 wheel over a lit column, leave #pmuScroll within the hold for the toolbar, then stay outside past return.
-//       No column/provider/donut/card light may return. --set departureOnly=1 isolates the regression.
-//   R112 wheel upward at the top over a lit Skyline provider, M/R on another focused card within the hold, then
-//       keep that keyboard gesture past the hold and Escape. No return during the gesture; current provider returns
-//       without a pointer move after release. --set keyboardOnly=1 isolates both trusted keyboard paths.
-//   R5  keyboard-mount Accounts/Overview mid-burst; live-board marker, tools/rows/light suppression and live return.
-//       --set mountOnly=1 isolates R5; --set mountNoPause=1 explicitly skips pause verdicts on main; rm=1 covers the spare.
-// A window that did not scroll at least TICKS*40*0.6 px is taken again (twice at most); one still short fails as
-// "could not judge".
-//   --set looks=basic-dark,glass-dark,retro-dark,nier-dark   --set tries=3   --set ticks=12   --set gap=30
-//   --set back=200   --set rm=1 (Reduced Motion)   --set settle=<ms> (20000)   --set dump=<file.json> (every window)
-// Bar for this check (test-tool-bar.md, written before its first review): a finding stops work only if it is shown on
-// real inputs to pass a build whose cards light up or show their tools while the wheel scrolls them under a resting
-// pointer (R1), or to pass a build whose highlight does not come back without a move (R2); anything else goes on
-// TOOL-ISSUES.md.
+// Narrowed Usage wheel pause (Jared, 2026-11-18): CSS hover gates, card tools/head fitting and the hover ENGINE.
+// Chart and pointer-tooltip JS is main's behavior: ordinary entry/leave/scroll applies, no wheel clear or return.
+// R0-R3 judge card engine lights, tools, CSS hover transitions and keyboard focus. The 200 ms return bound is unchanged.
+// R4 verifies ordinary 110 ms provider intent still completes during a wheel hold. R5 covers live/spare room mounts,
+// hit-tested outgoing ghosts (R116 P1/T1), tools/rows/engine and one lifecycle return. Chart-selected row backgrounds
+// and typed JS chart transitions are measured separately, not treated as CSS hover leakage.
+// R100 covers applied provider/donut selection remaining intact, main's scroll dismissal of column readouts with no
+// synthetic restoration, a sleeping engine at a scroll limit, and the fading-tool press/keyboard-focus paths.
+// R107 retains pointer-departure checks; R112 retains long keyboard M/R ownership and unchanged main provider state.
+// R113 rows cover main's plot-at-limit/readout and pointer-tooltip behavior, ordinary compact donut entry, neutral
+// digit-strip rolls (NieR skip is explicit), released-gesture handoff and natural Live beats after real scroll cleanup.
+// R116 P5's short idle order is covered by tools/usage-hover-pause-handoff.selftest.mjs, which executes authored source.
+// --set looks=basic-dark,glass-light --set rm=1 --set chartOnly=1 --set r113Only=1 --set dump=<file.json>
+// Fixed stopping bar: only a real check falsely passing on real input or a demonstrated product bug stops the lane;
+// other tool findings go on TOOL-ISSUES.md. Native input prerequisites and reduced-motion semantics remain explicit.
 import { writeFileSync } from 'node:fs';
 import { muteSound } from '../helpers/quiet-page.mjs';
 import { r113Cases } from '../helpers/usage-hover-pause-r113.mjs';
@@ -73,7 +39,8 @@ const INSTALL = () => {
 			try { const a=t.getAnimations().find((a)=>a.transitionProperty===e.propertyName), k=e.propertyName.replace(/-([a-z])/g,(_,v)=>v.toUpperCase()), fs=a?.effect?.getKeyframes();
 				if(fs?.length){from=fs[0][k]??fs[0][e.propertyName];to=fs.at(-1)[k]??fs.at(-1)[e.propertyName];} } catch (_) { /* unknown directions remain checked */ }
 		}
-		R.trans.push({ t: performance.now(), prop: e.propertyName, cls: cls(t), card: cardId(card), under: !!under, approved: !!approved, exiting, from, to, self: !!(t.matches && t.matches(':hover')) });
+		const chartControlled=(e.propertyName==='opacity'&&t.matches?.('.pmu-mark[data-prov],path[data-mark="arc"],.pmu-colstack'))||(e.propertyName==='transform'&&t.matches?.('.pmu-col'))||(['background-color','background'].includes(e.propertyName)&&R.chartRows?.has(t));
+		R.trans.push({ chartControlled, t: performance.now(), prop: e.propertyName, cls: cls(t), card: cardId(card), under: !!under, approved: !!approved, exiting, from, to, self: !!(t.matches && t.matches(':hover')) });
 	}, true);
 	const frame = () => {
 		if (!R.on) return;
@@ -96,13 +63,14 @@ const INSTALL = () => {
 		if (!R.on) return; const now = performance.now(), live = document.getElementById('pmuBoard');
 		for (const m of ms) {
 			if (m.target === live && m.attributeName === 'data-op') R.ops.push({t:now,op:live.getAttribute('data-op')});
+			if(m.attributeName==='class'&&m.target.matches?.('.pmu-irow.is-hl-on,.pmu-dl-row.is-hot'))R.chartRows.add(m.target);
 			if (m.attributeName === 'class' && m.target.parentNode === live && m.target.classList.contains('pmu-card')) R.cls.push({ t: now, card: cardId(m.target), on: m.target.classList.contains('pmh-on') });
 		}
 	}).observe(sc, { attributes: true, attributeFilter: ['class','data-op'], subtree: true });
 	R.start = () => {
 		const tools = document.querySelector('#pmuBoard .pmu-card:hover .pmu-cardtools');
 		const fadeMs = tools ? Math.max(...getComputedStyle(tools).transitionDuration.split(',').map((v) => parseFloat(v) * (v.trim().endsWith('ms') ? 1 : 1000))) : 140;
-		Object.assign(R, { on: true, frames: [], wheels: [], scrolls: [], trans: [], loaf: [], cls: [], ops: [], fadeMs, rest: cardId(document.querySelector('#pmuBoard .pmu-card:hover')), t0: performance.now() }); requestAnimationFrame(frame);
+		Object.assign(R, { on: true, chartRows:new WeakSet(board.querySelectorAll('.pmu-irow.is-hl-on,.pmu-dl-row.is-hot')), frames: [], wheels: [], scrolls: [], trans: [], loaf: [], cls: [], ops: [], fadeMs, rest: cardId(document.querySelector('#pmuBoard .pmu-card:hover')), t0: performance.now() }); requestAnimationFrame(frame);
 	};
 	R.stop = () => { R.on = false; return { t0: R.t0, frames: R.frames, wheels: R.wheels, scrolls: R.scrolls, trans: R.trans, loaf: R.loaf, cls: R.cls, ops: R.ops, fadeMs: R.fadeMs }; };
 	R.state = () => { board = document.getElementById('pmuBoard'); const hc = board.querySelector(':scope > .pmu-card:hover'), tools = hc && hc.querySelector('.pmu-cardtools'); return { card: cardId(hc), lit: !!(hc && hc.classList.contains('pmh-on')), tools: tools ? parseFloat(getComputedStyle(tools).opacity) : null }; };
@@ -129,8 +97,8 @@ export function judge(rec, { rest, back }) {
 		if(x.prop==='margin-right'&&cs.includes('pmu-cardtitles')) return parseFloat(x.from)>0&&parseFloat(x.to)===0;
 		return x.prop==='transform'&&cs.includes('pmu-headtools')&&x.from!=='none'&&x.to==='none';
 	};
-	const ins = rec.trans.filter((x) => during(x) && x.under && !x.approved && !x.exiting && !neutralExit(x));
-	const litFrames = active.filter((x) => x.lit.concat(x.near || []).length > 0 || x.highlights > 0);
+	const ins = rec.trans.filter((x) => during(x) && x.under && !x.approved && !x.chartControlled && !x.exiting && !neutralExit(x));
+	const litFrames = active.filter((x) => x.lit.concat(x.near || []).length > 0);
 	const toolFrames = active.filter((x) => x.t >= pauseAt(x.t) + (rec.fadeMs ?? 140) + 50 && x.tools > 0.05);
 	// R2: the card under the pointer once the wheel has stopped; its light is back when its .pmh-on is written (or it
 	// still had it), its tools when a frame reads them above .5. Transition creation is logged separately.
@@ -212,13 +180,13 @@ async function providerRace(t, f, label, park) {
 		rec.clean && rec.eligibleDim + rec.eligibleOn > 0 && gap != null && gap >= 0 && gap < 110 && rec.top > rec.startTop && rec.targetHovered && !rec.moves && !rec.outs,
 		`enter-to-wheel ${gap} ms, scroll ${rec.top - rec.startTop} px, hovered ${rec.targetHovered}, moves ${rec.moves}, leaves ${rec.outs}, clean ${rec.clean}, eligible dim/on ${rec.eligibleDim}/${rec.eligibleOn}`);
 	if (String(t.args.raceNoPause || '') === '1') {
-		await t.check(label + 'R4 main control has no wheel pause to judge', rec.pauses.length === 0);
-		t.log(label + 'SKIP R4 suppression/return: explicit raceNoPause control has no wheel pause');
+		await t.check(label + 'R4 main control has no wheel marker and its ordinary provider intent completes', rec.pauses.length === 0 && rec.correct && rec.dim===rec.eligibleDim && rec.on===rec.eligibleOn && rec.dim+rec.on>0);
+		t.log(label + 'R4 main control: ordinary chart behavior is judged above; marker-only checks are inapplicable');
 		return rec;
 	}
-	await t.check(label + 'R4 pending provider highlight cannot start during the wheel pause', rec.pauses.length > 0 && rec.frames > 0 && rec.during.length === 0,
+	await t.check(label + 'R4 main provider intent completes during the wheel hold without being cancelled or rearmed', rec.pauses.length > 0 && rec.frames > 0 && rec.during.some(x=>x.t>=rec.enter+100),
 		`${rec.pauses.length} pauses, ${rec.frames} paused samples, ${rec.during.length} lit samples: ${JSON.stringify(rec.during.slice(0, 3))}`);
-	await t.check(label + 'R4 provider highlight returns after the pause without moving the pointer', rec.end != null && !rec.paused && rec.targetHovered && rec.eligibleDim + rec.eligibleOn > 0 && rec.dim === rec.eligibleDim && rec.on === rec.eligibleOn && rec.correct,
+	await t.check(label + 'R4 main provider highlight remains after the hold without a synthetic return', rec.end != null && !rec.paused && rec.targetHovered && rec.eligibleDim + rec.eligibleOn > 0 && rec.dim === rec.eligibleDim && rec.on === rec.eligibleOn && rec.correct,
 		`pause end ${rec.end}, paused ${rec.paused}, hovered ${rec.targetHovered}, dim ${rec.dim}, on ${rec.on}, correct provider ${rec.correct}`);
 	return rec;
 }
@@ -274,10 +242,10 @@ async function roomMountRace(t, f, label, park, rm) {
 					const hitRow=inPane&&hit?.closest('.pmu-row,.pmu-irow,.pmu-accrow'), neutral=window.__uhpMountNeutralRows;
 					document.querySelectorAll('#pmuScroll .pmu-board .pmu-row,#pmuScroll .pmu-board .pmu-irow,#pmuScroll .pmu-board .pmu-accrow').forEach(row=>{if(!neutral.has(row)&&!row.matches(':hover'))neutral.set(row,getComputedStyle(row).backgroundColor);});
 					r.samples.push({ t: performance.now(), op: b.getAttribute('data-op'),
-						lit: b.querySelectorAll('.pmh-on, .pmh-near, .is-hl-dim, .is-hl-on').length,
+						lit: b.querySelectorAll('.pmh-on, .pmh-near').length,
 						tools: tools ? parseFloat(getComputedStyle(tools).opacity) : null,
-						rows: rows.filter((row, i) => row.matches(':hover') && baseline[i] !== getComputedStyle(row).backgroundColor).length,
-						hit:inPane?{room:hitBoard.dataset.room,live:hitBoard===b,ghost:hitBoard.classList.contains('pmu-ghostboard'),op:hitBoard.getAttribute('data-op'),widget:hitCard.dataset.widget,alpha,tools:hitTools?+getComputedStyle(hitTools).opacity*alpha:null,lit:hitCard.querySelectorAll('.pmh-on,.pmh-near').length+Number(hitCard.matches('.pmh-on,.pmh-near')),rows:hitRow&&neutral.has(hitRow)&&neutral.get(hitRow)!==getComputedStyle(hitRow).backgroundColor?1:0}:null });
+						rows: rows.filter((row, i) => row.matches(':hover') && !row.matches('.is-hl-on,.is-hot') && baseline[i] !== getComputedStyle(row).backgroundColor).length,
+						hit:inPane?{room:hitBoard.dataset.room,live:hitBoard===b,ghost:hitBoard.classList.contains('pmu-ghostboard'),op:hitBoard.getAttribute('data-op'),widget:hitCard.dataset.widget,alpha,tools:hitTools?+getComputedStyle(hitTools).opacity*alpha:null,lit:hitCard.querySelectorAll('.pmh-on,.pmh-near').length+Number(hitCard.matches('.pmh-on,.pmh-near')),rows:hitRow&&!hitRow.matches('.is-hl-on,.is-hot')&&neutral.has(hitRow)&&neutral.get(hitRow)!==getComputedStyle(hitRow).backgroundColor?1:0}:null });
 				}
 				requestAnimationFrame(sample);
 			};
@@ -330,16 +298,13 @@ async function roomMountRace(t, f, label, park, rm) {
 		await t.check(S + 'live board keeps its wheel marker after the mount', rec.oldPaused && during.length > 0 && during.every((s) => s.op === 'wheel'), `${during.filter((s) => s.op !== 'wheel').length}/${during.length} live samples lost marker`);
 		// Allow the first 100 ms for an already-lit reused card's outgoing fade; nothing arriving may light thereafter.
 		const settled = during.filter((s) => s.t >= during[0].t + 100);
-		await t.check(S + 'live card tools, row backgrounds and hover/provider lights stay paused', settled.length > 10 && settled.every((s) => !s.lit && (s.tools == null || s.tools <= 0.05) && !s.rows), `${settled.filter((s) => s.lit || s.tools > 0.05 || s.rows).length}/${settled.length} lit samples`);
+		await t.check(S + 'live card tools, CSS row backgrounds and engine lights stay paused', settled.length > 10 && settled.every((s) => !s.lit && (s.tools == null || s.tools <= 0.05) && !s.rows), `${settled.filter((s) => s.lit || s.tools > 0.05 || s.rows).length}/${settled.length} lit samples`);
 		const hitSamples=settled.filter(s=>s.hit&&s.hit.alpha>.02),ghostSamples=hitSamples.filter(s=>s.hit.ghost&&!s.hit.live);
 		t.log(S+'R116 T1 hit-tested surfaces: '+JSON.stringify({samples:hitSamples.length,ghost:ghostSamples.length,bad:hitSamples.filter(s=>s.hit.tools>.05||s.hit.lit||s.hit.rows)}));
 		await t.check(S+'R116 T1 hit-tested card tools, rows and light stay paused on either visible board',hitSamples.length>10&&hitSamples.every(s=>!(s.hit.tools>.05)&&!s.hit.lit&&!s.hit.rows),`${hitSamples.filter(s=>s.hit.tools>.05||s.hit.lit||s.hit.rows).length}/${hitSamples.length} lit hit-tested samples; ${ghostSamples.length} on outgoing ghost`);
 		if(!rm)await t.check(S+'R116 P1 could judge outgoing ghost above incoming room during wheel hold',ghostSamples.length>0,`${ghostSamples.length} visible outgoing ghost hits`);
 		await t.check(S + 'pause end restores the LIVE board light and tools without a move', rec.ends.length === 1 && rec.ends[0].live && rec.ends[0].room === room && rec.ends[0].t > last && !rec.op && rec.oldOp !== 'wheel' && rec.cardLit && rec.tools > 0.5, JSON.stringify({ ends: rec.ends, op: rec.op, oldOp: rec.oldOp, cardLit: rec.cardLit, tools: rec.tools }));
-		if (room === 'overview') {
-			const p = rec.provider;
-			await t.check(S + 'provider return reaches the live board', !!p.id && p.expectedDim + p.expectedOn > 0 && p.correct && p.dim === p.expectedDim && p.on === p.expectedOn, JSON.stringify(p));
-		}
+
 		break;
 		}
 	}
@@ -393,7 +358,7 @@ async function appliedHighlights(t, f, label, park) {
 				dimIndices: [...chart.querySelectorAll('path[data-mark="arc"].is-dim')].map((p)=>p.dataset.i), arcIndices: [...chart.querySelectorAll('path[data-mark="arc"]')].map((p)=>p.dataset.i),
 				colIndices: [...chart.querySelectorAll('.pmu-col.is-hot-col')].map((c)=>c.dataset.i),
 				bucket: kind === 'column' && (pos || point) ? ([...chart.querySelectorAll('.pmu-col[data-i]')].find((c)=>{const r=c.getBoundingClientRect(), x=(pos||point)[0];return x>=r.left&&x<=r.right;})?.dataset.i ?? null) : null,
-				readout: !!chart.querySelector('.pmu-xh-on'), lit: target.classList.contains('pmh-on'), engineRunning: window.PMH?.stats?.().running });
+				readout: !!chart.querySelector('.pmu-xh-on'),ro:[...document.querySelectorAll('.pmu-readout.is-on')].map(el=>el.textContent), lit: target.classList.contains('pmh-on'), engineRunning: window.PMH?.stats?.().running });
 			r.neutral = read();
 			const immediate=()=>{if(kind==='tool'&&reducedTool)r.immediate=read();};
 			const wheel = (e) => { r.wheels.push({ t: performance.now(), trusted: e.isTrusted }); pos = [e.clientX,e.clientY]; point = pos; };
@@ -421,7 +386,11 @@ async function appliedHighlights(t, f, label, park) {
 		}
 		const pre = await f.evaluate(() => window.__uhpApplied.read());
 		if (kind === 'tool') { await t.page.mouse.wheel(0,-1); if(!reducedTool){await t.page.mouse.down(); await t.page.mouse.up();} }
-		else for (let i=0;i<18;i++) { await t.page.mouse.wheel(0,kind === 'engine' ? -1 : i % 2 ? -1 : 1); await t.page.waitForTimeout(30); }
+		else {
+			// As in R5, queue trusted inputs at wall-clock cadence: renderer acknowledgements must not split
+			// the intended burst. The existing 18-input, one-end and marked-frame prerequisites still qualify it.
+			const inputs=[];for(let i=0;i<18;i++){inputs.push(t.page.mouse.wheel(0,kind==='engine'?-1:i%2?-1:1));await new Promise(resolve=>setTimeout(resolve,30));}await Promise.all(inputs);
+		}
 		await t.page.waitForTimeout(900);
 		const rec = await f.evaluate(() => { const r=window.__uhpApplied.stop(); r.menuOpen=!!PMU.menu.current(); return r; });
 		const S=label+`R100 ${kind}${rm&&kind==='tool'?(reducedTool?' (Reduced Motion)':' (motion enabled)'):''}: `, last=rec.wheels.at(-1)?.t, marked=rec.frames.filter((x) => x.t >= rec.wheels[0]?.t+50);
@@ -451,10 +420,12 @@ async function appliedHighlights(t, f, label, park) {
 			const shown=kind === 'provider' ? pre.hl>0 : kind === 'donut' ? pre.dim>0 && pre.hot>0 && pre.value!==rec.neutral.value : kind === 'column' ? pre.cols===1 && pre.bars : pre.lit && !pre.engineRunning;
 			const travel=rec.scrolls.map((s)=>s.top);
 			await t.check(S+'could judge already-applied state, still pointer and a sampled complete wheel hold', shown && pre.hovered && rec.after.hovered && !rec.moves && marked.length>=10 && rec.wheels.length===18 && rec.wheels.every((w)=>w.trusted) && rec.ends.length===1 && rec.ends[0]>last && (kind === 'engine' ? pre.top===0 && rec.after.top===0 : travel.length>0), JSON.stringify({shown,pre,after:rec.after,frames:marked.length,scrolls:travel,ends:rec.ends}));
-			const quiet=(s)=>kind === 'provider' ? !s.hl : kind === 'donut' ? !s.dim && !s.hot && s.value===rec.neutral.value && s.caption===rec.neutral.caption : kind === 'column' ? !s.cols && !s.bars : !s.lit;
-			await t.check(S+'existing highlight clears throughout the marked interval, including its tail', marked.length>=10 && marked.every(quiet), `${marked.filter((s)=>!quiet(s)).length}/${marked.length} highlighted samples`);
-			const a=rec.after, restored=kind === 'provider' ? a.hl>0 : kind === 'donut' ? a.dim>0 && a.hoverIndex!=null && a.hotRows.length===1 && a.hotRows.every((r)=>!r.footer&&r.index===a.hoverIndex) && a.dimIndices.length===a.arcIndices.length-1 && a.dimIndices.every((i)=>i!==a.hoverIndex) && a.value===pre.value && a.caption===pre.caption : kind === 'column' ? a.cols===1 && a.bars && !a.readout && a.bucket!=null && a.colIndices.length===1 && a.colIndices[0]===a.bucket : a.lit;
-			await t.check(S+'current target highlight returns without pointer movement', !a.op && a.hovered && restored, JSON.stringify(a));
+			const same=(s)=>kind==='provider'?s.hl===pre.hl:kind==='donut'?s.dim===pre.dim&&JSON.stringify(s.hotRows)===JSON.stringify(pre.hotRows)&&s.value===pre.value&&s.caption===pre.caption:kind==='column'?(rec.scrolls.length&&s.t>=rec.scrolls[0].t?!s.cols&&!s.bars&&!s.readout:s.cols===pre.cols&&s.bars===pre.bars&&s.readout===pre.readout):!s.lit;
+			// Main's native scroll listener dismisses an open column readout. Provider/donut selections stay applied;
+			// none of these states is cleared or restored by wheel start/end. Engine lights retain the pause.
+			await t.check(S+(kind==='engine'?'engine light clears throughout the marked interval, including its tail':'main chart behavior persists throughout the complete wheel hold'),marked.length>=10&&marked.every(same),`${marked.filter(s=>!same(s)).length}/${marked.length} unexpected samples`);
+			const a=rec.after,expected=kind==='engine'?a.lit:same(a);
+			await t.check(S+(kind==='engine'?'current card engine light returns without pointer movement':'main chart behavior remains after hold, with no chart restoration'),!a.op&&a.hovered&&expected,JSON.stringify(a));
 		}
 		// Removing/re-adding panels applies real gravity and can rearrange peers. Restore this fresh fixture's room
 		// defaults in one reset so R0 keeps its original fixed point and starts on the normal board, not a gap.
@@ -574,8 +545,8 @@ async function keyboardPause(t, f, label, park) {
 			escape.t - press.t >= 500 && held.length >= 5 && held.every((x) => x.gesture?.kb && x.gesture.type === mode && x.hovered && x.top === 0) && held.some((x) => x.op === mode) &&
 			!rec.moves && a.hovered && a.top === 0 && !a.gesture && !a.op,
 			JSON.stringify({gap, pre: p, focused: rec.focused, wheels: rec.wheels, keys: rec.keys, held: held.length, moves: rec.moves, after: a}));
-		await t.check(S + 'no chart return fires while the keyboard gesture owns the board', held.length >= 5 && held.every((x) => !x.dim && !x.on) && !rec.ends.some((x) => x.t < escape?.t || x.gesture || x.op), JSON.stringify({ends: rec.ends, litHeld: held.filter((x) => x.dim || x.on).length}));
-		await t.check(S + 'after Escape one return restores the current hovered provider without moving the pointer', rec.ends.length === 1 && rec.ends[0].live && !rec.ends[0].gesture && !rec.ends[0].op && rec.ends[0].t >= escape?.t && JSON.stringify(rec.ends[0].point) === JSON.stringify(rec.point) && !a.gesture && !a.op && a.hovered && a.dim === a.eligibleDim && a.on === a.eligibleOn && a.dim + a.on > 0 && a.correct, JSON.stringify({ends: rec.ends, after: a}));
+		await t.check(S + 'main provider selection stays unchanged while the keyboard gesture owns the board', held.length >= 5 && held.every((x) => x.dim===p.dim&&x.on===p.on&&x.correct) && !rec.ends.some((x) => x.t < escape?.t || x.gesture || x.op), JSON.stringify({ends: rec.ends, litHeld: held.filter((x) => x.dim || x.on).length}));
+		await t.check(S + 'after Escape one lifecycle return releases the engine while main provider selection stays unchanged', rec.ends.length === 1 && rec.ends[0].live && !rec.ends[0].gesture && !rec.ends[0].op && rec.ends[0].t >= escape?.t && JSON.stringify(rec.ends[0].point) === JSON.stringify(rec.point) && !a.gesture && !a.op && a.hovered && a.dim === a.eligibleDim && a.on === a.eligibleOn && a.dim + a.on > 0 && a.correct, JSON.stringify({ends: rec.ends, after: a}));
 	}
 	await park();
 	await f.evaluate((on) => { document.activeElement?.blur(); if (on) PMU.live.resume(); }, liveWasOn);
@@ -603,6 +574,10 @@ export default async function (t) {
 			await f.waitForFunction(() => !(window.PM_THEME_TRANSITION?.busy?.() || window.PM_LOOK_COVERED?.()), null, { timeout: 20000 }).catch(() => {});
 			await f.evaluate(() => PM_PAGES.go('usage'));
 			await t.page.waitForTimeout(Number(t.args.viewSettle ?? 8000));
+			if(String(t.args.narrowOnly||'')==='1') {
+				const r113=await r113Cases(t,f,S,park),applied=await appliedHighlights(t,f,S,park);
+				dump.push({surface,look,r113,applied});if(t.args.dump)writeFileSync(String(t.args.dump),JSON.stringify(dump));continue;
+			}
 			if (!['chartOnly','raceOnly','mountOnly','departureOnly','keyboardOnly'].some((key)=>String(t.args[key] || '')==='1')) {
 				const r113=await r113Cases(t,f,S,park);dump.push({surface,look,r113});
 				if(t.args.dump) writeFileSync(String(t.args.dump),JSON.stringify(dump));
@@ -664,7 +639,7 @@ export default async function (t) {
 				dump.push({ surface, look, window: w + 1, rest, at, judged: j, rec });
 				res.r0.push(!!(rest.card && rest.lit && rest.tools > 0.5));
 				res.r1.push(j.r1); res.r2.push(j.r2);
-				t.log(`${S}window ${w + 1}: at rest card ${rest.card} lit ${rest.lit} tools ${rest.tools} | wheel ${j.span.wheels} events over ${j.span.wheel} ms, scroll ${j.span.scrolls} events ending ${j.span.tail} ms after the last wheel, ${moved} px | during: ${j.r1.cardsPassed} cards under the pointer, ${j.r1.ins} hover-in transitions (${j.r1.insProps.join(', ') || 'none'}) on ${j.r1.insCards.join(',') || 'no card'}, ${j.r1.litFrames} of ${j.r1.frames} frames retain a card/chart light, ${j.r1.toolFrames} retain shown tools | after: back in ${j.r2.ms === null ? 'never (800 ms)' : j.r2.ms + ' ms'} on ${j.r2.card} (light ${j.r2.light ?? 'never'}, tools ${j.r2.tools ?? 'never'})${j.r2.long.length ? ' | long frames after: ' + j.r2.long.join(' / ') : ''}${short.length ? ' | taken again: ' + short.join('; ') : ''}`);
+				t.log(`${S}window ${w + 1}: at rest card ${rest.card} lit ${rest.lit} tools ${rest.tools} | wheel ${j.span.wheels} events over ${j.span.wheel} ms, scroll ${j.span.scrolls} events ending ${j.span.tail} ms after the last wheel, ${moved} px | during: ${j.r1.cardsPassed} cards under the pointer, ${j.r1.ins} hover-in transitions (${j.r1.insProps.join(', ') || 'none'}) on ${j.r1.insCards.join(',') || 'no card'}, ${j.r1.litFrames} of ${j.r1.frames} frames retain a card engine light, ${j.r1.toolFrames} retain shown tools | after: back in ${j.r2.ms === null ? 'never (800 ms)' : j.r2.ms + ' ms'} on ${j.r2.card} (light ${j.r2.light ?? 'never'}, tools ${j.r2.tools ?? 'never'})${j.r2.long.length ? ' | long frames after: ' + j.r2.long.join(' / ') : ''}${short.length ? ' | taken again: ' + short.join('; ') : ''}`);
 				if (t.args.dump) writeFileSync(String(t.args.dump), JSON.stringify(dump));
 			}
 			await park();

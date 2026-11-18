@@ -847,9 +847,8 @@
     roLayer.setAttribute('aria-hidden', 'true');
     return roLayer;
   }
-  /* Index-only column emphasis needs scroll cleanup, but is not an open readout and must not hold Live (R113 P6). */
-  var openCards = new Set(), indexCards = new Set();
-  window.addEventListener('scroll', function () { openCards.forEach(function (h) { h.hide(); }); indexCards.forEach(function (h) { h.hide(); }); }, true);
+  var openCards = new Set();
+  window.addEventListener('scroll', function () { openCards.forEach(function (h) { h.hide(); }); }, true);
   /* WOW-SPEC 3.5 (WOW-TASKS C-5): a bucket-wide band (accent 8 %) fades in 120 ms and follows the crosshair by transform;
      the hovered series' dot grows to 5 px with a 12 px halo and the other series dim to 35 % (the series nearest the
      pointer is the hovered one); the card appears from the dot's side (scale .96 -> 1, 120 ms), keeps its side until the
@@ -982,7 +981,7 @@
   charts.crosshairOn = function () { return openCards.size > 0; };
   charts.hover = function (box, cfg) {
     var band = H('div', 'pmu-xband', box), xh = H('div', 'pmu-xh', box), dotEls = [];
-    var on = false, indexOnly = false, last = -1, api, side = 1, hotKey = null, py = -1, lastSwap = 0, instantT = 0;
+    var on = false, last = -1, api, side = 1, hotKey = null, py = -1, lastSwap = 0, instantT = 0;
     var geo = null, geoAt = 0, cardSize = null;
     function ensureDots() {
       var n = 0;
@@ -994,13 +993,6 @@
       var now = performance.now();
       if (!geo || now - geoAt > 120) { var r = box.getBoundingClientRect(); geo = { r: r, cw: box.clientWidth || r.width || 1 }; geoAt = now; }
       return geo;
-    }
-    function indexAt(point) {
-      var g = boxGeo(), r = g.r, sc = g.cw / (r.width || 1), mx = (point[0] - r.left) * sc;
-      if (mx < cfg.pad.l - 10 || mx > g.cw - cfg.pad.r + 10) return null;
-      var best = 0, bd = Infinity;
-      for (var i = 0; i < cfg.n; i++) { var d = Math.abs(cfg.xAt(i) - mx); if (d < bd) { bd = d; best = i; } }
-      return { i: best, y: (point[1] - r.top) * sc };
     }
     function bandW() {
       if (cfg.bw) return cfg.bw;
@@ -1122,16 +1114,16 @@
     function move(e) {
       if (!cfg.n) return;
       if (!on) geo = null;   /* a fresh read on entry */
-      var picked = indexAt([e.clientX, e.clientY]);
-      if (!picked) { hide(); return; }
-      var best = picked.i; py = picked.y;
+      var g = boxGeo(), r = g.r, sc = g.cw / (r.width || 1), mx = (e.clientX - r.left) * sc;
+      py = (e.clientY - r.top) * sc;
+      if (mx < cfg.pad.l - 10 || mx > g.cw - cfg.pad.r + 10) { hide(); return; }
+      var best = 0, bd = Infinity;
+      for (var i = 0; i < cfg.n; i++) { var d = Math.abs(cfg.xAt(i) - mx); if (d < bd) { bd = d; best = i; } }
       var first = !on;
       if (first) show(best, true); else place(best, false);
       if (cfg.onIndex) cfg.onIndex(best);
     }
     function show(i, instant) {
-      indexCards.delete(api);
-      indexOnly = false;
       if (cardOwner && cardOwner !== api && cardOwner.hide) cardOwner.hide();
       var card = readoutCard(box);
       if (instant) parts().forEach(function (el) { el.classList.add('is-instant'); });
@@ -1147,39 +1139,22 @@
       }
     }
     function hide() {
-      if (!on && !indexOnly) return;
-      on = indexOnly = false; last = -1;
+      if (!on) return;
+      on = false; last = -1;
       setHot(null);
       [xh, band].concat(dotEls).forEach(function (el) { el.classList.remove('is-on'); });
       box.classList.remove('pmu-xh-on');
       if (cardOwner === api) readoutCard(box).classList.remove('is-on');
-      openCards.delete(api); indexCards.delete(api);
+      openCards.delete(api);
       if (cfg.onIndex) cfg.onIndex(null);
     }
-    /* R100 P3/R107: column emphasis returns only to a currently hovered plot at the pause's current pointer. The
-       floating readout, crosshair and dots stay dismissed. Keep emphasis in scroll cleanup until it leaves or clears. */
-    function opEnd(e) {
-      var b = e.detail && e.detail.board, point = e.detail && e.detail.point;
-      if (!cfg.restoreIndex || !cfg.n || !point || !box.isConnected || box.closest('.pmu-board') !== b || !box.matches(':hover')) return;
-      var hit = document.elementFromPoint(point[0], point[1]);
-      if (!hit || !box.contains(hit)) return;
-      geo = null;
-      var picked = indexAt(point);
-      if (!picked) return;
-      if (cfg.onIndex) cfg.onIndex(picked.i);
-      indexOnly = true; indexCards.add(api);
-    }
-    /* R113 P1: a no-scroll wheel must dismiss every open plot; only opted-in columns restore index emphasis. */
-    function opStart(e) { if (e.detail && e.detail.board === box.closest('.pmu-board')) hide(); }
-    document.addEventListener('pmu-op-start', opStart);
-    if (cfg.restoreIndex) document.addEventListener('pmu-op-end', opEnd);
     box.addEventListener('pointermove', move);
     box.addEventListener('pointerleave', hide);
     api = {
-      set: function (next) { Object.assign(cfg, next); last = -1; geo = null; cardSize = null; if (on || indexOnly) hide(); ensureDots(); },
+      set: function (next) { Object.assign(cfg, next); last = -1; geo = null; cardSize = null; if (on) hide(); ensureDots(); },
       hide: hide,
       showAt: function (i) { if (!cfg.n) return; show(clamp(i, 0, cfg.n - 1), true); },
-      destroy: function () { hide(); if (cardOwner === api) cardOwner = null; box.removeEventListener('pointermove', move); box.removeEventListener('pointerleave', hide); document.removeEventListener('pmu-op-start', opStart); document.removeEventListener('pmu-op-end', opEnd); band.remove(); xh.remove(); dotEls.forEach(function (d) { d.remove(); }); }
+      destroy: function () { hide(); if (cardOwner === api) cardOwner = null; box.removeEventListener('pointermove', move); box.removeEventListener('pointerleave', hide); band.remove(); xh.remove(); dotEls.forEach(function (d) { d.remove(); }); }
     };
     return api;
   };
@@ -1287,19 +1262,11 @@
     var over = function (e) {
       var el = e.target && e.target.closest ? e.target.closest('[data-prov]') : null;
       if (!el || !root.contains(el) || el.closest('.pmu-gallery')) return;
-      /* the wheel pause (PERF-USAGE-HOVER, 42-cards.js bindTools): a provider's mark or row that slides under a resting
-         pointer lights nothing; the pause's end (pmu-op-end, below) looks at what the pointer rests on */
-      if (el.closest('.pmu-board[data-op="wheel"]')) { clearTimeout(timer); return; }
       var id = el.getAttribute('data-prov');
       clearTimeout(clearTimer);
       if (id === current) return;
       clearTimeout(timer);
-      timer = setTimeout(function () {
-        /* the wheel may have started after pointerover queued this intent (R94); op-end queues fresh intent */
-        var b = boardEl();
-        if (!b || b.getAttribute('data-op') === 'wheel') return;
-        set(id);
-      }, 110);
+      timer = setTimeout(function () { set(id); }, 110);
     };
     var out = function (e) {
       var from = e.target && e.target.closest ? e.target.closest('[data-prov]') : null;
@@ -1309,26 +1276,10 @@
       clearTimeout(clearTimer);
       clearTimer = setTimeout(function () { set(null); }, 60);
     };
-    /* R100 P1: a completed intent is just as visible as a pending one. Clear it once at wheel start; leave the
-       marker's delayed-intent guard in place and let op-end select the provider currently under the pointer. */
-    var opStart = function (e) {
-      if (!e.detail || e.detail.board !== boardEl()) return;
-      clearTimeout(timer); clearTimeout(clearTimer);
-      set(null);
-    };
-    /* the wheel pause's end: the provider under the resting pointer lights as if the pointer had just come over it */
-    var opEnd = function (e) {
-      var b = boardEl();
-      if (!b || !e.detail || e.detail.board !== b) return;
-      var hot = b.querySelectorAll('[data-prov]:hover');
-      if (hot.length) over({ target: hot[hot.length - 1] });
-    };
     root.addEventListener('pointerover', over);
     root.addEventListener('pointerout', out);
-    document.addEventListener('pmu-op-start', opStart);
-    document.addEventListener('pmu-op-end', opEnd);
     /* the board's teardown: no pending light lands in a destroyed board */
-    return function () { clearTimeout(timer); clearTimeout(clearTimer); lit = []; root.removeEventListener('pointerover', over); root.removeEventListener('pointerout', out); document.removeEventListener('pmu-op-start', opStart); document.removeEventListener('pmu-op-end', opEnd); };
+    return function () { clearTimeout(timer); clearTimeout(clearTimer); lit = []; root.removeEventListener('pointerover', over); root.removeEventListener('pointerout', out); };
   }
   (function crossHighlight() {
     var root = document.getElementById('pmuApp');

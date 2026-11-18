@@ -818,34 +818,16 @@
     var hot = function (i) {
       var D = c._dh, cvx = c.el.querySelector('.pmu-dc-v'), capx = c.el.querySelector('.pmu-dc-c');
       $$('path[data-mark="arc"]', c.el).forEach(function (p, j) { p.classList.toggle('is-dim', i != null && j !== i); });
-      /* R113 P5: the aggregate footer has no index; ordinary entry and wheel return share this highlighter. */
-      $$('.pmu-dl-row', c.el).forEach(function (r) { r.classList.toggle('is-hot', i != null && r.hasAttribute('data-i') && +r.getAttribute('data-i') === i); });
+      $$('.pmu-dl-row', c.el).forEach(function (r) { r.classList.toggle('is-hot', i != null && +r.getAttribute('data-i') === i); });
       if (!cvx || !capx) return;
       if (i == null || !D.arcs[i]) { cvx.textContent = D.centreVal; capx.textContent = D.centreCap; return; }
       var x = D.arcs[i];
       cvx.textContent = (Math.round(x.f * 1000) / 10).toFixed(1) + '%';
       capx.textContent = x.s.name + ' · ' + (x.s.valueText || D.fmtV(x.s.value)) + (D.mode === 'cost' ? '' : ' ' + t('charts.tokens_word'));
     };
-    /* R100 P2/R113 P7: clear only an applied selection. A neutral centre may be in its entrance number roll;
-       rewriting its text would remove those running digit strips even when the pointer is over another card. */
-    c.el._pmuClearHot = function () { if (c.el.querySelector('path[data-mark="arc"].is-dim,.pmu-dl-row.is-hot')) hot(null); };
-    /* (_pmuHot is the element's own light, also called by the wheel pause's end, below) */
-    pathEls.forEach(function (p, i) { if (p._pmuHot) return; p._pmuHot = function () { hot(i); }; p.addEventListener('pointerenter', function () { if (!wheelPaused(p)) p._pmuHot(); }); p.addEventListener('pointerleave', function () { hot(null); }); });
-    $$('.pmu-dl-row[data-i]', c.el).forEach(function (r) { if (r._pmuHot) return; r._pmuHot = function () { hot(+r.getAttribute('data-i')); }; r.addEventListener('pointerenter', function () { if (!wheelPaused(r)) r._pmuHot(); }); r.addEventListener('pointerleave', function () { hot(null); }); });
+    pathEls.forEach(function (p, i) { if (p._pmuHot) return; p._pmuHot = 1; p.addEventListener('pointerenter', function () { hot(i); }); p.addEventListener('pointerleave', function () { hot(null); }); });
+    $$('.pmu-dl-row[data-i]', c.el).forEach(function (r) { if (r._pmuHot) return; r._pmuHot = 1; r.addEventListener('pointerenter', function () { hot(+r.getAttribute('data-i')); }); r.addEventListener('pointerleave', function () { hot(null); }); });
   }
-  /* the wheel pause (PERF-USAGE-HOVER, 42-cards.js bindTools): an arc or legend row that slides under a resting pointer
-     does not light; when the pause ends, the one the pointer rests on lights as if the pointer had just entered it */
-  function wheelPaused(el) { return !!(el.closest && el.closest('.pmu-board[data-op="wheel"]')); }
-  document.addEventListener('pmu-op-start', function (e) {
-    var b = e.detail && e.detail.board;
-    if (!b || !b.isConnected) return;
-    $$('.pmu-c-donut', b).forEach(function (el) { if (typeof el._pmuClearHot === 'function') el._pmuClearHot(); });
-  });
-  document.addEventListener('pmu-op-end', function (e) {
-    var b = e.detail && e.detail.board;
-    var el = b && b.isConnected ? b.querySelector('.pmu-dl-row[data-i]:hover') || b.querySelector('path[data-mark="arc"]:hover') : null;
-    if (el && typeof el._pmuHot === 'function') el._pmuHot();
-  });
 
   /* ================= sharebars: token breakdown (A1 7.5) ================= */
   /* spec: {rows: [{type, name, tokens, tokenShare, value, valueShare, vs, tokensText, valueText}]} shares in % (or fractions) */

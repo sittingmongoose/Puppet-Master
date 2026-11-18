@@ -10,8 +10,8 @@ const make = () => ({
 const j = (r) => judge(r,{rest:'old',back:200});
 test('a sampled quiet pause and visibly restored target pass',()=>{const r=j(make());assert.equal(r.r1.ok,true);assert.equal(r.r2.ok,true);});
 test('an engine light persisting on the starting card fails R1',()=>{const r=make();Object.assign(r.frames.find(f=>f.t===300),{card:'old',lit:['old']});assert.equal(j(r).r1.ok,false);});
-test('an already-applied provider or donut highlight fails R1 without any new transition',()=>{const r=make();r.frames.find(f=>f.t===300).highlights=1;assert.equal(j(r).r1.ok,false);});
-test('the marked tail after the last scroll is part of R1',()=>{const r=make();r.frames.find(f=>f.t===600).highlights=1;assert.equal(j(r).r1.ok,false);});
+test('ordinary main chart selections are outside the narrowed engine verdict',()=>{const r=make();r.frames.find(f=>f.t===300).highlights=1;assert.equal(j(r).r1.ok,true);});
+test('the marked tail after the last scroll is part of R1',()=>{const r=make();r.frames.find(f=>f.t===600).lit=['old'];assert.equal(j(r).r1.ok,false);});
 test('fewer than five sampled active frames cannot pass R1',()=>{const r=make();r.frames=r.frames.filter(f=>f.t>=680);assert.equal(j(r).r1.ok,false);});
 test('a starting card with tools still revealed after their fade cannot pass R1',()=>{const r=make();Object.assign(r.frames.find(f=>f.t===400),{card:'old',tools:1});assert.equal(j(r).r1.ok,false);});
 test('an approved segmented-control color transition is not a forbidden card reveal',()=>{const r=make();r.trans.push({t:300,card:'new',under:true,prop:'color',cls:'pmu-seg-button',approved:true});assert.equal(j(r).r1.ok,true);});
@@ -20,7 +20,7 @@ test('a lit card whose tools never visibly return cannot pass R2',()=>{const r=m
 test('a later marked hold in the same input window must also be judged',()=>{
  const r=make();r.ops=[{t:101,op:'wheel'},{t:250,op:null},{t:270,op:'wheel'},{t:670,op:null}];
  for(const f of r.frames)f.op=(f.t<250||f.t>=270&&f.t<670)?'wheel':null;
- r.frames.find(f=>f.t===600).highlights=1;assert.equal(j(r).r1.ok,false);
+ r.frames.find(f=>f.t===600).lit=['old'];assert.equal(j(r).r1.ok,false);
 });
 test('an explicitly marked PMH exit is not a new hover-in transition on the starting card',()=>{
  const r=make();r.trans.push({t:180,card:'old',under:true,prop:'opacity',cls:'pmu-card pmh-out',exiting:true});assert.equal(j(r).r1.ok,true);
@@ -30,3 +30,5 @@ test('delayed starting-head transitions toward neutral are exits, while entries 
  for(const [prop,cls,from,to] of exits){const r=make();r.trans.push({t:180,card:'old',under:true,prop,cls,from,to});assert.equal(j(r).r1.ok,true,prop);}
  const r=make();r.trans.push({t:180,card:'old',under:true,prop:'opacity',cls:'pmu-cardtools',from:'0',to:'1'});assert.equal(j(r).r1.ok,false);
 });
+
+test('typed main chart transitions are allowed while CSS hover row leakage still fails',()=>{const r=make();r.trans.push({t:300,card:'new',under:true,prop:'opacity',cls:'pmu-mark is-hl-dim',chartControlled:true});assert.equal(j(r).r1.ok,true);r.trans.push({t:320,card:'new',under:true,prop:'background-color',cls:'pmu-row',chartControlled:false});assert.equal(j(r).r1.ok,false);});

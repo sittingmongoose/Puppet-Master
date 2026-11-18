@@ -601,7 +601,6 @@
     var target=this.pendingOpenTarget,pendingSource=this.pendingOpenSource,intent=this.pendingPointerIntent;
     if(target!==el||pendingSource!==source)return false;
     if(source==='pointer'){
-      if(target.closest&&target.closest('.pmu-board[data-op="wheel"]')){this.cancelPendingOpen();return false;}
       var geometry=anchorGeometry(target);if(!sameGeometry(intent&&intent.anchor_geometry,geometry)){this.resetPointerStationary(null,geometry);return false;}
     }
     this.cancelPendingOpen();
@@ -638,8 +637,6 @@
     var model=this.refresh(el)||this.bind(el);if(!model)return false;
     if(!this.visualEnabled){this.cancelPendingOpen();return false;}
     source=source==='focus'?'focus':'pointer';
-    /* R113 P2: pointer intent rests with a wheeling board; keyboard-focus intent keeps its own lifetime. */
-    if(source==='pointer'&&el.closest&&el.closest('.pmu-board[data-op="wheel"]')){if(this.pendingOpenSource==='pointer')this.cancelPendingOpen();return false;}
     if(this.active===el&&this.tag&&this.tag.getAttribute('data-open')==='true')return true;
     if(this.pendingOpenTarget===el&&this.pendingOpenSource===source)return true;
     this.cancelPendingOpen();if(this.active&&this.active!==el)this.close(false);
@@ -855,11 +852,6 @@
       if(self.pendingOpenTarget)self.cancelPendingOpen();
       if(self.active&&self.tag&&(self.tag.getAttribute('data-source')==='pointer'||self.pressHeld(self.active)))self.close(true);
     },true);
-    document.addEventListener('pmu-op-start',function(event){
-      var board=event.detail&&event.detail.board;if(!board)return;
-      if(self.pendingOpenSource==='pointer'&&self.pendingOpenTarget&&board.contains(self.pendingOpenTarget))self.cancelPendingOpen();
-      if(self.active&&board.contains(self.active)&&self.tag&&self.tag.getAttribute('data-source')==='pointer')self.close(true);
-    });
     document.addEventListener('focusin',function(event){var el=event.target&&event.target.closest&&event.target.closest('[data-pm-hover-bound="true"],'+ACTION_SELECTOR+','+SEMANTIC_SELECTOR);if(!el||inOwner(el))return;
       if(performance.now()-navKeyAt<NAV_KEY_MS)self.open(el,'focus');else if(self.pendingOpenSource==='focus')self.cancelPendingOpen();},true);
     document.addEventListener('focusout',function(event){var el=event.target&&event.target.closest&&event.target.closest('[data-pm-hover-bound="true"]');if(el&&(!event.relatedTarget||!el.contains(event.relatedTarget)))self.depart(el);},true);

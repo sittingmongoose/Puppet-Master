@@ -1278,7 +1278,6 @@
   function bindColumnsHover(c, m) {
     var spec = c.spec, f = c.f, g = c._colGeo, unit = spec.unit || 'usd';
     var cfg = {
-      restoreIndex: true,
       n: g.n, pad: { t: g.pad.t, h: g.ph, l: g.pad.l, r: g.pad.r },
       xAt: function (i) { return g.pad.l + g.slot * (i + 0.5); },
       dots: function () { return []; },

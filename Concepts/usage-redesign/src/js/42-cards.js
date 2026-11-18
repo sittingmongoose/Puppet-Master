@@ -1087,12 +1087,11 @@
        ms after the last wheel or scroll event, or until the pointer really moves or presses. The shell's hover engine
        rests for a board with [data-op] (18-hover.js: no plate light, glow, reticle or magnet on its cards); Usage's
        in-board :hover rules end in :where(:not(.pmu-board[data-op="wheel"] *)) (20-board.css says more); the head fit
-       below, the cross-highlight (30-charts-core.js) and the donut's legend light (34-charts-bars.js) wait. Hit-testing
+       below waits too. Chart highlights, readouts and pointer tooltips retain main's ordinary JS behavior. Hit-testing
        is unchanged: a click or a press lands where it always did. When the pause ends the board drops the value, the
        card under the pointer is fitted again and one pmu-op-end event (detail: the board) tells the hover engine to look
-       again at what is under the resting pointer (its restEnded) and the chart lights to take the element under it, so
-       the highlights come back without a move (on the owner's PC that saved 13 % of the main thread's work while
-       scrolling in Basic Dark, 26 % in Retro Dark). The card that was under the pointer when the wheel began lets its
+       again at what is under the resting pointer (its restEnded), so the card light and tools come back without a move.
+       The card that was under the pointer when the wheel began lets its
        title clamp go as on a pointer leave (unfitSoon). Nothing runs while the page rests: a timer exists only between a
        wheel and the pause's end. A gesture that already holds data-op keeps it. Only the Usage page's board pauses
        (#pmuScroll): a Home dashboard keeps its highlights, as the card named the Usage page. */

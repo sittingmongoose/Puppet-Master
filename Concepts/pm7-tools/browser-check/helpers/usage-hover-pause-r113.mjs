@@ -1,4 +1,4 @@
-// R113 regressions run as rows of usage-hover-pause, on its selected looks and surfaces.
+// Main-behavior chart controls plus retained R113 lifecycle/roll/Live regressions, on selected looks and surfaces.
 export async function r113Cases(t, f, label, park) {
 	const records = [];
 	for (const kind of String(t.args.r113Cases || 'live,plot,tooltip,handoff,compact,roll').split(',')) {
@@ -19,22 +19,23 @@ export async function r113Cases(t, f, label, park) {
 		await t.page.waitForTimeout(800);
 		await f.evaluate(() => {
 			const sc=document.getElementById('pmuScroll'), b=document.getElementById('pmuBoard'), plot=b.querySelector('.pmu-colsplot:hover');
-			const read=()=>{const s=PMU.live.state();return {t:performance.now(),on:s.on,armed:s.armed,beats:s.beats,held:s.held,pending:s.pending,hovered:!!plot?.isConnected&&plot.matches(':hover'),hot:[...plot?.querySelectorAll('.pmu-col.is-hot-col')||[]].map(x=>x.dataset.i),readout:!!plot?.classList.contains('pmu-xh-on'),crosshair:PMU.charts.crosshairOn(),op:b.getAttribute('data-op')};};
-			const r=window.__uhpR113={pre:read(),wheels:[],moves:0,ends:[],samples:[]};let pos=null;
+			const read=()=>{const s=PMU.live.state();return {t:performance.now(),on:s.on,armed:s.armed,beats:s.beats,held:s.held,pending:s.pending,hovered:!!plot?.isConnected&&plot.matches(':hover'),hot:[...plot?.querySelectorAll('.pmu-col.is-hot-col')||[]].map(x=>x.dataset.i),readout:!!plot?.classList.contains('pmu-xh-on'),crosshair:PMU.charts.crosshairOn(),top:sc.scrollTop,op:b.getAttribute('data-op')};};
+			const r=window.__uhpR113={pre:read(),wheels:[],scrolls:[],moves:0,ends:[],samples:[]};let pos=null;
 			const wheel=e=>{pos=[e.clientX,e.clientY];r.wheels.push({t:performance.now(),trusted:e.isTrusted});};
+			const scroll=()=>r.scrolls.push({t:performance.now(),top:sc.scrollTop});
 			const move=e=>{if(pos&&(pos[0]!==e.clientX||pos[1]!==e.clientY))r.moves++;};
 			const end=e=>{if(e.detail?.board===b)r.ends.push(performance.now());};
-			sc.addEventListener('wheel',wheel,{passive:true});document.addEventListener('pointermove',move,true);document.addEventListener('pmu-op-end',end);
+			sc.addEventListener('wheel',wheel,{passive:true});sc.addEventListener('scroll',scroll,{passive:true});document.addEventListener('pointermove',move,true);document.addEventListener('pmu-op-end',end);
 			r.read=read;r.timer=setInterval(()=>r.samples.push(read()),500);
-			r.stop=()=>{clearInterval(r.timer);sc.removeEventListener('wheel',wheel);document.removeEventListener('pointermove',move,true);document.removeEventListener('pmu-op-end',end);return {...r,timer:undefined,read:undefined,stop:undefined,after:read()};};
+			r.stop=()=>{clearInterval(r.timer);sc.removeEventListener('wheel',wheel);sc.removeEventListener('scroll',scroll);document.removeEventListener('pointermove',move,true);document.removeEventListener('pmu-op-end',end);return {...r,timer:undefined,read:undefined,stop:undefined,after:read()};};
 		});
 		await t.page.mouse.wheel(0,1); await t.page.waitForTimeout(900);
 		const returned=await f.evaluate(()=>window.__uhpR113.read());
 		await t.page.waitForTimeout(14000);
 		const rec=await f.evaluate(()=>window.__uhpR113.stop());records.push({kind,returned,rec});
 		t.log(label+'R113 P6 Live columns: '+JSON.stringify({returned,rec}));
-		await t.check(label+'R113 P6 could judge: Live on, trusted wheel, index-only column return, stationary hovered plot over successive beats',rec.pre.on&&returned.on&&returned.armed&&rec.wheels.length===1&&rec.wheels[0].trusted&&rec.ends.length===1&&!rec.moves&&returned.hovered&&returned.hot.length===1&&!returned.readout&&!returned.op&&rec.after.hovered&&rec.samples.length>=20,JSON.stringify({pre:rec.pre,returned,after:rec.after,wheels:rec.wheels,ends:rec.ends,moves:rec.moves}));
-		await t.check(label+'R113 P6 index-only emphasis never holds Live as an open crosshair',!returned.crosshair&&rec.samples.filter(x=>x.t>=returned.t).every(x=>!x.crosshair&&x.held!=='crosshair'),JSON.stringify({returned,held:rec.samples.map(x=>x.held)}));
+		await t.check(label+'R113 P6 could judge: Live on, trusted wheel and real scroll, stationary plot over successive beats',rec.pre.on&&returned.on&&returned.armed&&rec.wheels.length===1&&rec.wheels[0].trusted&&rec.ends.length===1&&!rec.moves&&returned.hovered&&rec.scrolls.length>0&&returned.top>rec.pre.top&&!returned.readout&&!returned.op&&rec.after.hovered&&rec.samples.length>=20,JSON.stringify({pre:rec.pre,returned,after:rec.after,wheels:rec.wheels,ends:rec.ends,moves:rec.moves}));
+		await t.check(label+'R113 P6 main scroll dismissal leaves no restored column or crosshair and does not hold Live',!returned.crosshair&&!returned.hot.length&&rec.samples.filter(x=>x.t>=returned.t).every(x=>!x.crosshair&&!x.hot.length&&x.held!=='crosshair'),JSON.stringify({returned,held:rec.samples.map(x=>x.held)}));
 		await t.check(label+'R113 P6 Live keeps flushing at least two natural beats under the still pointer',rec.after.beats>=returned.beats+2&&!rec.after.pending,`${returned.beats} -> ${rec.after.beats} flushed beats; held ${rec.after.held}, pending ${rec.after.pending}`);
 		await park();await f.evaluate(on=>{if(!on)PMU.live.pause();},liveWasOn);
 	}
@@ -70,7 +71,7 @@ async function tooltipPause(t,f,label,park) {
 		t.log(label+'R113 P2 '+phase+': '+JSON.stringify(rec));
 		const ready=phase==='pending'?p.pending==='pointer'&&p.pendingHere&&p.dwell>=1000&&p.dwell<1600&&!p.pointer:phase==='shown'?p.pointer&&p.activeHere:p.focus&&p.activeHere;
 		await t.check(label+'R113 P2 '+phase+' could judge: real tooltip state, trusted top-limit wheel hold and stationary provider',ready&&p.enabled&&p.hovered&&p.top===0&&a.hovered&&a.top===0&&!rec.moves&&rec.wheels.length===18&&rec.wheels.every(x=>x.trusted)&&held.length>=10&&rec.ends.length>=1&&rec.ends.at(-1)>rec.wheels.at(-1)?.t&&!a.op,JSON.stringify({pre:p,after:a,frames:held.length,wheels:rec.wheels.length,moves:rec.moves,ends:rec.ends}));
-		await t.check(label+'R113 P2 '+phase+(phase==='focus'?' keyboard-focus tag survives the wheel pause':' pointer tag stays closed throughout the pause and afterward'),held.length>=10&&(phase==='focus'?held.every(x=>x.focus)&&a.focus:held.every(x=>!x.pointer)&&!a.pointer&&a.pending!=='pointer'),`${held.filter(x=>phase==='focus'?!x.focus:x.pointer).length}/${held.length} wrong tooltip samples; after ${JSON.stringify(a)}`);
+		await t.check(label+'R113 P2 '+phase+' tooltip retains main behavior at a scroll limit',held.length>=10&&(phase==='focus'?held.every(x=>x.focus)&&a.focus:phase==='shown'?held.every(x=>x.pointer)&&a.pointer:held.some(x=>x.pointer)&&a.pointer&&a.pending!=='pointer'),`${held.filter(x=>phase==='focus'?!x.focus:phase==='shown'?!x.pointer:false).length}/${held.length} wrong tooltip samples; after ${JSON.stringify(a)}`);
 	}
 	await park();await f.evaluate(prior=>{PM_HOVER_TAG_CONTROLLER.close(true);document.activeElement?.blur();PM12_KIMI.setSettingFromHost('general.interaction.show-tooltips',prior.tips);if(prior.on)PMU.live.resume();},prior);
 	return {kind:'tooltip',records};
@@ -104,9 +105,9 @@ async function plotLimit(t,f,label,park) {
 	const rec=await f.evaluate(()=>window.__uhpR113.stop()),p=rec.pre,a=rec.after,held=rec.frames.filter(x=>x.t>=rec.wheels[0]?.t+50);
 	t.log(label+'R113 P1 plot at limit: '+JSON.stringify(rec));
 	await t.check(label+'R113 P1 could judge: open area readout/crosshair/band/dots, trusted wheel hold at top, still hovered pointer',p.xh>0&&p.band>0&&p.dots>0&&p.readout>0&&p.hovered&&p.top===0&&a.hovered&&a.top===0&&!rec.moves&&rec.wheels.length===18&&rec.wheels.every(x=>x.trusted)&&held.length>=10&&rec.ends.length===1&&!a.op,JSON.stringify({pre:p,after:a,frames:held.length,wheels:rec.wheels.length,ends:rec.ends,moves:rec.moves}));
-	const quiet=x=>!x.xh&&!x.band&&!x.dots&&!x.readout&&!x.cold;
-	await t.check(label+'R113 P1 wheel clears every plot part and series emphasis through the complete hold',held.length>=10&&held.every(quiet),`${held.filter(x=>!quiet(x)).length}/${held.length} lit samples`);
-	await t.check(label+'R113 P1 area readout stays dismissed after return; index-only restoration remains column-only',quiet(a),JSON.stringify(a));
+	const unchanged=x=>x.xh===p.xh&&x.band===p.band&&x.dots===p.dots&&x.readout===p.readout&&x.cold===p.cold;
+	await t.check(label+'R113 P1 main readout, crosshair, band, dots and series emphasis stay unchanged at the wheel limit',held.length>=10&&held.every(unchanged),`${held.filter(x=>!unchanged(x)).length}/${held.length} changed plot samples`);
+	await t.check(label+'R113 P1 plot stays open after hold with no synthetic dismissal or restoration',unchanged(a),JSON.stringify(a));
 	await park();await f.evaluate(on=>{PMU.board.reset('room');if(on)PMU.live.resume();},on);await t.page.waitForTimeout(1800);
 	return {kind:'plot',rec};
 }
@@ -183,8 +184,8 @@ async function compactDonut(t,f,label,park) {
 	await t.check(label+'R113 P5 could judge: supported compact donut has aggregate footer and applied first-model selection; trusted still-pointer wheel holds complete',p.footer===1&&p.index==='0'&&p.hovered&&p.hot.length>0&&p.dim.length>0&&p.value!==rec.neutral.value&&a.hovered&&!rec.moves&&rec.wheels.length===18&&rec.wheels.every(x=>x.trusted)&&held.length>=10&&rec.ends.length>=1&&rec.ends.at(-1)>rec.wheels.at(-1)?.t&&!a.op,JSON.stringify({pre:p,after:a,frames:held.length,wheels:rec.wheels.length,ends:rec.ends,moves:rec.moves}));
 	const identity=x=>x.index!=null&&x.hot.length===1&&x.hot.every(r=>!r.footer&&r.index===x.index)&&x.dim.length===x.arcs.length-1&&x.dim.every(i=>i!==x.index);
 	await t.check(label+'R113 P5 ordinary entry selects only its indexed model and leaves the aggregate footer neutral',identity(p),JSON.stringify(p));
-	await t.check(label+'R113 P5 active donut selection clears throughout each held interval',held.length>=10&&held.every(x=>!x.hot.length&&!x.dim.length&&x.value===rec.neutral.value&&x.caption===rec.neutral.caption),`${held.filter(x=>x.hot.length||x.dim.length||x.value!==rec.neutral.value).length}/${held.length} selected samples`);
-	await t.check(label+'R113 P5 return restores exactly the CURRENT hovered model index and no footer',identity(a)&&a.value===p.value&&a.caption===p.caption,JSON.stringify(a));
+	await t.check(label+'R113 P5 main model selection remains indexed and unchanged throughout the wheel hold',held.length>=10&&held.every(x=>identity(x)&&x.value===p.value&&x.caption===p.caption),`${held.filter(x=>!identity(x)||x.value!==p.value||x.caption!==p.caption).length}/${held.length} changed or wrong-index samples`);
+	await t.check(label+'R113 P5 selected model and neutral footer remain unchanged after hold without chart restoration',identity(a)&&a.value===p.value&&a.caption===p.caption,JSON.stringify(a));
 	await park();await f.evaluate(on=>{PMU.board.reset('room');if(on)PMU.live.resume();},on);await t.page.waitForTimeout(1800);
 	return {kind:'compact',rec};
 }
