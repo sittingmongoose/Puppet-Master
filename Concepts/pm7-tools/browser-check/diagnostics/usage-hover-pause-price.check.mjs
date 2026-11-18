@@ -52,12 +52,24 @@ export default async function (t) {
 			await t.page.waitForTimeout(400);
 			await t.page.mouse.move(at.x, at.y);
 			await t.page.waitForTimeout(600);
-			let ticks = 0;
-			const x = await traceWindow(cdp, { ms: 1, url: f.url(), during: async () => { const until = Date.now() + MS; let i = 0; while (i < TICKS && Date.now() < until) { await t.page.mouse.wheel(0, (Math.floor(i++ / turn) % 2 ? -1 : 1) * 40); await new Promise((r) => setTimeout(r, 14)); } ticks = i; await new Promise((r) => setTimeout(r, TAIL)); } });
+			let ticks = 0, inputStart, lastWheelAck, inputEnd, tailEnd;
+			const x = await traceWindow(cdp, { ms: 1, url: f.url(), during: async () => {
+				inputStart = Date.now(); const until = inputStart + MS; let i = 0;
+				while (i < TICKS && Date.now() < until) {
+					await t.page.mouse.wheel(0, (Math.floor(i++ / turn) % 2 ? -1 : 1) * 40);
+					lastWheelAck = Date.now(); await new Promise((r) => setTimeout(r, 14));
+				}
+				ticks = i; inputEnd = Date.now(); await new Promise((r) => setTimeout(r, TAIL)); tailEnd = Date.now();
+			} });
 			const sp = x.split, fr = x.frames;
 			const row = { look, name, load: n, ticks, secs: x.secs, dataLoss: x.dataLoss, main: Math.round(x.cost.main), paint: Math.round((sp.paint || 0) + (sp.prepaint || 0) + (sp.layerize || 0)), gpu: Math.round(x.cost.gpuMain), notPresented: fr.notPresentedPerSec, partial: fr.partialPerSec, unknown: fr.presentationUnknownPerSec, dropped: fr.droppedPerSec, drawn: x.drawn.perSec, scrolls: x.dispatched.scroll || 0, pointerover: x.dispatched.pointerover || 0 };
+			// Observation only: serial wheel acknowledgments, requested sleeps and trace event span have different clocks.
+			// Do not infer wheel duration from x.secs (the trace-wide event span); keep the original qualification unchanged.
+			row.timing = { wheelAckMs: lastWheelAck - inputStart, inputLoopMs: inputEnd - inputStart,
+				tailMs: tailEnd - inputEnd, traceDuringMs: tailEnd - x.at };
 			out.push(row);
 			t.log(`${look} ${name} (load ${n}): main ${row.main} ms/s, paint ${row.paint}, GPU ${row.gpu} ms/s | never presented ${row.notPresented}/s, partial ${row.partial}/s, unknown ${row.unknown}/s (all DroppedFrame ${row.dropped}/s) | drawn ${row.drawn}/s over ${row.secs} s, ${ticks} ticks, ${row.scrolls} scroll events, ${row.pointerover} pointerover${row.dataLoss ? ' | TRACE LOST DATA' : ''}`);
+			t.log(`${look} ${name} timing: wheel acknowledgments ${row.timing.wheelAckMs} ms, input loop ${row.timing.inputLoopMs} ms, tail ${row.timing.tailMs} ms, trace callback ${row.timing.traceDuringMs} ms, trace events ${row.secs * 1000} ms`);
 			if (t.args.out) writeFileSync(String(t.args.out), JSON.stringify(out, null, 1));
 		}
 		await cdp.detach().catch(() => {});
