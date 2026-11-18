@@ -1121,6 +1121,8 @@
         el.setAttribute('data-op', 'wheel');
         var under = el.querySelector(':scope > .pmu-card:hover');
         if (under) unfitSoon(under);
+        /* Clear highlights whose pointer intent already completed (R100 P1); each adopted board hears this once. */
+        try { document.dispatchEvent(new CustomEvent('pmu-op-start', { detail: { board: el } })); } catch (error) { /* none */ }
       }
       return el;
     };

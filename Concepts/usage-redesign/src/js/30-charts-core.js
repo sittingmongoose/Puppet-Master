@@ -1284,6 +1284,13 @@
       clearTimeout(clearTimer);
       clearTimer = setTimeout(function () { set(null); }, 60);
     };
+    /* R100 P1: a completed intent is just as visible as a pending one. Clear it once at wheel start; leave the
+       marker's delayed-intent guard in place and let op-end select the provider currently under the pointer. */
+    var opStart = function (e) {
+      if (!e.detail || e.detail.board !== boardEl()) return;
+      clearTimeout(timer); clearTimeout(clearTimer);
+      set(null);
+    };
     /* the wheel pause's end: the provider under the resting pointer lights as if the pointer had just come over it */
     var opEnd = function (e) {
       var b = boardEl();
@@ -1293,9 +1300,10 @@
     };
     root.addEventListener('pointerover', over);
     root.addEventListener('pointerout', out);
+    document.addEventListener('pmu-op-start', opStart);
     document.addEventListener('pmu-op-end', opEnd);
     /* the board's teardown: no pending light lands in a destroyed board */
-    return function () { clearTimeout(timer); clearTimeout(clearTimer); lit = []; root.removeEventListener('pointerover', over); root.removeEventListener('pointerout', out); document.removeEventListener('pmu-op-end', opEnd); };
+    return function () { clearTimeout(timer); clearTimeout(clearTimer); lit = []; root.removeEventListener('pointerover', over); root.removeEventListener('pointerout', out); document.removeEventListener('pmu-op-start', opStart); document.removeEventListener('pmu-op-end', opEnd); };
   }
   (function crossHighlight() {
     var root = document.getElementById('pmuApp');
