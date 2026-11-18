@@ -42,6 +42,9 @@ for (const surface of ['normal', 'sandbox']) {
 		if (await skip(t)) return;
 		const f = await settings(t, surface);
 		await go(t, f, 'code', 'editor-runtime');
+		// Editor & Terminal can mount with the Terminal output rows still pending.
+		await f.locator('#pm-settings-root .index-link[data-action="scroll-section"][data-section="editor-terminal-output"]').click();
+		await f.locator('[id="setting-code.terminal.transcript-retention"]').waitFor({ state: 'visible', timeout: 15000 });
 		const keep = await f.evaluate(() => {
 			const row = document.getElementById('setting-code.terminal.transcript-retention'); if (!row) return null;
 			const sel = row.querySelector('select');
