@@ -22,3 +22,6 @@ test('a later marked hold in the same input window must also be judged',()=>{
  for(const f of r.frames)f.op=(f.t<250||f.t>=270&&f.t<670)?'wheel':null;
  r.frames.find(f=>f.t===600).highlights=1;assert.equal(j(r).r1.ok,false);
 });
+test('an explicitly marked PMH exit is not a new hover-in transition on the starting card',()=>{
+ const r=make();r.trans.push({t:180,card:'old',under:true,prop:'opacity',cls:'pmu-card pmh-out',exiting:true});assert.equal(j(r).r1.ok,true);
+});

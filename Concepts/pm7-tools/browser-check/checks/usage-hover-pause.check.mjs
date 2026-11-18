@@ -61,7 +61,8 @@ const INSTALL = () => {
 		const t = e.target, card = t.closest && t.closest('.pmu-card');
 		const under = card && card.matches(':hover');
 		const approved = (t.matches?.('.pmu-seg button') && e.propertyName === 'color') || (t.matches?.('.pmu-stepper button') && ['color','background-color'].includes(e.propertyName)) || (t.matches?.('.pmu-sbrow .pmu-sbfill > i') && e.propertyName === 'opacity');
-		R.trans.push({ t: performance.now(), prop: e.propertyName, cls: cls(t), card: cardId(card), under: !!under, approved: !!approved, self: !!(t.matches && t.matches(':hover')) });
+		const exiting = t.classList.contains('pmh-out') && !t.classList.contains('pmh-on') && ['opacity','--pmh-x','--pmh-y'].includes(e.propertyName);
+		R.trans.push({ t: performance.now(), prop: e.propertyName, cls: cls(t), card: cardId(card), under: !!under, approved: !!approved, exiting, self: !!(t.matches && t.matches(':hover')) });
 	}, true);
 	const frame = () => {
 		if (!R.on) return;
@@ -109,7 +110,7 @@ export function judge(rec, { rest, back }) {
 	};
 	const during = (x) => { const start = pauseAt(x.t); return start != null && x.t >= start + 50 && x.t < pauseEnd; };
 	const active = rec.frames.filter(during);
-	const ins = rec.trans.filter((x) => during(x) && x.under && !x.approved);
+	const ins = rec.trans.filter((x) => during(x) && x.under && !x.approved && !x.exiting);
 	const litFrames = active.filter((x) => x.lit.concat(x.near || []).length > 0 || x.highlights > 0);
 	const toolFrames = active.filter((x) => x.t >= pauseAt(x.t) + (rec.fadeMs ?? 140) + 50 && x.tools > 0.05);
 	// R2: the card under the pointer once the wheel has stopped; its light is back when its .pmh-on is written (or it
