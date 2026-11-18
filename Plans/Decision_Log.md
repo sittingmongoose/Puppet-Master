@@ -53603,7 +53603,7 @@ canonical_text: 'Under Jared''s EA-P3 A standing rule and DL-080 and the exact p
   2026-11-16.300 (SHA-256 a634791fb3f7ebaaa86f5b9c37971ac150ab7454f32c92043ab9de1e308be10b) becomes 2026-11-16.301
   (SHA-256 be075e429cc8fb5c47b8c06bee6153bee597ce7320f14292e001d0e16a5008ed); the count remains 517. The successor
   row''s canonical SHA-256 is ae9962c6468e18147c0f3202187c045322f601961e308163c422b859be1c670c. The 12/12 assessment
-  reports/event-authority-20261116/admission-merge-2/revisions/goal_run.stopped.json (SHA-256 c99832d1eafd45c4784e3bca54d52c2e421ac4c42d6ff27a37982ea20504f07d)
+  reports/event-authority-20261116/admission-merge-2/revisions/goal_run.stopped.json (SHA-256 7cb0d57b00a178ec981108d82b2f2e0a498648ff30e68b6e3c0e435a8e4f214f)
   carries the reviewed PASS cells and records the exact selector predicates completing pending schema/scope cells.
   Source grade verdicts are unchanged. DL-078 checkpoint pins and the legacy golden revision move in this commit.
   Historical resource bytes and dormant application editions remain as specified by the pinned row. Native execution
@@ -53654,7 +53654,7 @@ canonical_text: 'Under Jared''s EA-P3 A standing rule and DL-080 and the exact p
   2026-11-16.301 (SHA-256 be075e429cc8fb5c47b8c06bee6153bee597ce7320f14292e001d0e16a5008ed) becomes 2026-11-16.302
   (SHA-256 48ad8de5c1639db6c254db2352dc5d70acc4d70ccfdab4cdf2c169477f8ff534); the count remains 517. The successor
   row''s canonical SHA-256 is c4dfb79556f354978a690dcfd0ca96282d1ecd0ba95f1be33c4140070b6bbeb7. The 12/12 assessment
-  reports/event-authority-20261116/admission-merge-2/revisions/goal_run.blocked.json (SHA-256 c826ecdb8e14a77b73f7e744acc7a71c977aefe9e0847419cfe1356540c01fb0)
+  reports/event-authority-20261116/admission-merge-2/revisions/goal_run.blocked.json (SHA-256 003cd54c34b6e51c024a8d3636a309ea9c5491796da93fde26f66412281a55b7)
   carries the reviewed PASS cells and records the exact selector predicates completing pending schema/scope cells.
   Source grade verdicts are unchanged. DL-078 checkpoint pins and the legacy golden revision move in this commit.
   Historical resource bytes and dormant application editions remain as specified by the pinned row. Native execution

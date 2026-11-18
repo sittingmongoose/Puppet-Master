@@ -2,8 +2,8 @@
  "schema_id": "pm.pnc019.c12_gc.depth_grades.v1",
  "grade": "after",
  "assessed_tree": {
-  "commit": "02023aa6840fb15c915764ef987c62690615a316",
-  "branch": "plans/ea-adapter-fmt2-20261116",
+  "commit": "4010894119165afc73d2f7ef273154fd572ee59a",
+  "branch": "plans/ea-merge2-apply-20261116",
   "note": "Grades the tree at this commit; the bundle and grade file are committed after it."
  },
  "rubric": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08-depth42-20260924/rubric.md",
@@ -66,11 +66,11 @@
       },
       {
        "path": "Plans/event_family_registry.json",
-       "line_start": 408,
-       "line_end": 408,
+       "line_start": 491,
+       "line_end": 491,
        "quote": "\"family_id\": \"event-family-goal-blocked\"",
        "excerpt_sha256": "c901ef887acf870b64c9ad57166931a7921e1b6fa1578af4d176edf8b0ab9767",
-       "file_sha256": "e1bcd4b70ee6cf0bc698a748cfee94d5f4035d70e73c2fbaec806bddc7422c0c"
+       "file_sha256": "aa6188dd713badcfa9c902d24d917b764b23a6a9e2290bdb58de8776a2f79a5e"
       }
      ],
      "prior": {
@@ -332,7 +332,7 @@
        "line_end": 163,
        "quote": "\"open_rows\": 0",
        "excerpt_sha256": "8317e57fa00a2a5c08c3983d0f360aee93599e775e373a19a9da25b3a2f63522",
-       "file_sha256": "8c94b98008b6d10ea3a0ccf1b8e83e20616715f24e949e51d28b28af750484a1"
+       "file_sha256": "fb3d97ab295b5a0bdf030e0e1cb57ea74f1e6635d79c83d56bcc0c01cc0a3cf5"
       },
       {
        "path": "reports/event-authority-20261115/PNC019-C12-GC-core.json",
@@ -340,7 +340,7 @@
        "line_end": 180,
        "quote": "\"tool_proved\": 100",
        "excerpt_sha256": "48c6c7f1d916cdfad0711d150010c39b5d2c76461e4b39012df06192eb357027",
-       "file_sha256": "8c94b98008b6d10ea3a0ccf1b8e83e20616715f24e949e51d28b28af750484a1"
+       "file_sha256": "fb3d97ab295b5a0bdf030e0e1cb57ea74f1e6635d79c83d56bcc0c01cc0a3cf5"
       },
       {
        "path": "reports/event-authority-20261115/PNC019-C12-GC-core.json",
@@ -348,7 +348,7 @@
        "line_end": 161,
        "quote": "\"justified_singletons\": 20",
        "excerpt_sha256": "353dadc2d5eaa3e3f00979db201adba812ef3479dbb208897b91025fbc403172",
-       "file_sha256": "8c94b98008b6d10ea3a0ccf1b8e83e20616715f24e949e51d28b28af750484a1"
+       "file_sha256": "fb3d97ab295b5a0bdf030e0e1cb57ea74f1e6635d79c83d56bcc0c01cc0a3cf5"
       },
       {
        "path": "reports/event-authority-20261115/PNC019-C12-GC-core.json",
@@ -356,7 +356,7 @@
        "line_end": 171,
        "quote": "\"retained_store_changed\": 0",
        "excerpt_sha256": "ea30079af2d99f4651d5d68780dbb544fc91ebdd71219917e0f68896108b9757",
-       "file_sha256": "8c94b98008b6d10ea3a0ccf1b8e83e20616715f24e949e51d28b28af750484a1"
+       "file_sha256": "fb3d97ab295b5a0bdf030e0e1cb57ea74f1e6635d79c83d56bcc0c01cc0a3cf5"
       },
       {
        "path": "reports/event-authority-20261115/PNC019-C12-GC-core.json",
@@ -364,7 +364,7 @@
        "line_end": 159,
        "quote": "\"corpus_cases\": 121",
        "excerpt_sha256": "871ac78907d95d1e0264791b27baaa0c066a1b7e356075ec96a188eda2f2ebbb",
-       "file_sha256": "8c94b98008b6d10ea3a0ccf1b8e83e20616715f24e949e51d28b28af750484a1"
+       "file_sha256": "fb3d97ab295b5a0bdf030e0e1cb57ea74f1e6635d79c83d56bcc0c01cc0a3cf5"
       },
       {
        "path": "reports/event-authority-20261115/PNC019-C12-GC-core.json",
@@ -372,7 +372,7 @@
        "line_end": 160,
        "quote": "\"join_cases\": 13",
        "excerpt_sha256": "26e27d6df29f71209e2899b1b089a72b6125bd66999c1a3bb9780e3da6d22965",
-       "file_sha256": "8c94b98008b6d10ea3a0ccf1b8e83e20616715f24e949e51d28b28af750484a1"
+       "file_sha256": "fb3d97ab295b5a0bdf030e0e1cb57ea74f1e6635d79c83d56bcc0c01cc0a3cf5"
       },
       {
        "path": "reports/event-authority-20261115/PNC019-C12-GC-core.json",
@@ -380,7 +380,7 @@
        "line_end": 177,
        "quote": "\"schema_uncovered\": 0",
        "excerpt_sha256": "b239c37db1a429e840e6806a6e9f2332a5187afcede8e7e811c3269858c24feb",
-       "file_sha256": "8c94b98008b6d10ea3a0ccf1b8e83e20616715f24e949e51d28b28af750484a1"
+       "file_sha256": "fb3d97ab295b5a0bdf030e0e1cb57ea74f1e6635d79c83d56bcc0c01cc0a3cf5"
       },
       {
        "path": "reports/event-authority-20261115/PNC019-C12-GC-core.json",
@@ -388,7 +388,7 @@
        "line_end": 176,
        "quote": "\"schema_clauses_killed\": 1206",
        "excerpt_sha256": "722b5143279bba063c541ee1551b9e0f554847c772d7b09546eda03d105f62a9",
-       "file_sha256": "8c94b98008b6d10ea3a0ccf1b8e83e20616715f24e949e51d28b28af750484a1"
+       "file_sha256": "fb3d97ab295b5a0bdf030e0e1cb57ea74f1e6635d79c83d56bcc0c01cc0a3cf5"
       },
       {
        "path": "scripts/pm-goal-gc-schema-closure.py",
@@ -428,7 +428,7 @@
        "line_end": 532,
        "quote": "adapter.retained_reason(",
        "excerpt_sha256": "336e6ed073d987aa427fe01deae1fd4661eded9495d775dce9ddb9aecd1252e4",
-       "file_sha256": "84addf582a50316b910d47531bce82037073354197c3d9f185df88c082d164e0"
+       "file_sha256": "785f5478ef6e3a06e845517bcccafa2f337c63e441066547f2a0626f03b889ff"
       },
       {
        "path": "scripts/pm_goal_own_b_oracles.py",
@@ -436,16 +436,7 @@
        "line_end": 1044,
        "quote": "corpus = ",
        "excerpt_sha256": "ad1473dfc8b4888e2f55c764a5af870d59e8d8bffc7d4b460ae2b7b1484d6c60",
-       "file_sha256": "84addf582a50316b910d47531bce82037073354197c3d9f185df88c082d164e0"
-      },
-      {
-       "path": "Plans/Goal_Runtime_System.md",
-       "line_start": 8522,
-       "line_end": 8522,
-       "quote": "Newly authored",
-       "excerpt_sha256": "953ea3ff89cb4ad6ee7f69b8b44b899bb2b8fb75e3e764382201095457ac5c9d",
-       "file_sha256": "7f1ab26575a3fbaaabca94d22b6a8e6c4275cca0f5b9af71c58b13eb9fa5c6ed",
-       "role": "Canonical subject of the existing executable oracle proof; checker evidence and verdict are unchanged."
+       "file_sha256": "785f5478ef6e3a06e845517bcccafa2f337c63e441066547f2a0626f03b889ff"
       }
      ],
      "prior_status": "PARTIAL",
@@ -502,11 +493,11 @@
       },
       {
        "path": "Plans/event_family_registry.json",
-       "line_start": 616,
-       "line_end": 616,
+       "line_start": 708,
+       "line_end": 708,
        "quote": "\"family_id\": \"event-family-goal-completed\"",
        "excerpt_sha256": "d4c38538903fbb42746a3eff888473d91ccd1bcfe96a9f48b1bb3ffed8ed101a",
-       "file_sha256": "e1bcd4b70ee6cf0bc698a748cfee94d5f4035d70e73c2fbaec806bddc7422c0c"
+       "file_sha256": "aa6188dd713badcfa9c902d24d917b764b23a6a9e2290bdb58de8776a2f79a5e"
       }
      ],
      "prior": {
@@ -760,7 +751,7 @@
        "line_end": 187,
        "quote": "\"open_rows\": 0",
        "excerpt_sha256": "8317e57fa00a2a5c08c3983d0f360aee93599e775e373a19a9da25b3a2f63522",
-       "file_sha256": "8c94b98008b6d10ea3a0ccf1b8e83e20616715f24e949e51d28b28af750484a1"
+       "file_sha256": "fb3d97ab295b5a0bdf030e0e1cb57ea74f1e6635d79c83d56bcc0c01cc0a3cf5"
       },
       {
        "path": "reports/event-authority-20261115/PNC019-C12-GC-core.json",
@@ -768,7 +759,7 @@
        "line_end": 204,
        "quote": "\"tool_proved\": 149",
        "excerpt_sha256": "0b96bef27b229c956207296a6f02756d9cd7b36cf4c34d8d36babb6581d1d16c",
-       "file_sha256": "8c94b98008b6d10ea3a0ccf1b8e83e20616715f24e949e51d28b28af750484a1"
+       "file_sha256": "fb3d97ab295b5a0bdf030e0e1cb57ea74f1e6635d79c83d56bcc0c01cc0a3cf5"
       },
       {
        "path": "reports/event-authority-20261115/PNC019-C12-GC-core.json",
@@ -776,7 +767,7 @@
        "line_end": 185,
        "quote": "\"justified_singletons\": 24",
        "excerpt_sha256": "9c40c59afcecac68237c43ae62be8f8c2a6748be6a7427a5b736539020434dd7",
-       "file_sha256": "8c94b98008b6d10ea3a0ccf1b8e83e20616715f24e949e51d28b28af750484a1"
+       "file_sha256": "fb3d97ab295b5a0bdf030e0e1cb57ea74f1e6635d79c83d56bcc0c01cc0a3cf5"
       },
       {
        "path": "reports/event-authority-20261115/PNC019-C12-GC-core.json",
@@ -784,7 +775,7 @@
        "line_end": 195,
        "quote": "\"retained_store_changed\": 0",
        "excerpt_sha256": "ea30079af2d99f4651d5d68780dbb544fc91ebdd71219917e0f68896108b9757",
-       "file_sha256": "8c94b98008b6d10ea3a0ccf1b8e83e20616715f24e949e51d28b28af750484a1"
+       "file_sha256": "fb3d97ab295b5a0bdf030e0e1cb57ea74f1e6635d79c83d56bcc0c01cc0a3cf5"
       },
       {
        "path": "reports/event-authority-20261115/PNC019-C12-GC-core.json",
@@ -792,7 +783,7 @@
        "line_end": 183,
        "quote": "\"corpus_cases\": 242",
        "excerpt_sha256": "84ae582eb62ca21a0b73934f5e5b395a18bdaa475dbbec8e1ec020fb0372a026",
-       "file_sha256": "8c94b98008b6d10ea3a0ccf1b8e83e20616715f24e949e51d28b28af750484a1"
+       "file_sha256": "fb3d97ab295b5a0bdf030e0e1cb57ea74f1e6635d79c83d56bcc0c01cc0a3cf5"
       },
       {
        "path": "reports/event-authority-20261115/PNC019-C12-GC-core.json",
@@ -800,7 +791,7 @@
        "line_end": 184,
        "quote": "\"join_cases\": 26",
        "excerpt_sha256": "818fcb7074a112d49c3e297d437b7ae67b1044aa0481544211b3e451c4cca08e",
-       "file_sha256": "8c94b98008b6d10ea3a0ccf1b8e83e20616715f24e949e51d28b28af750484a1"
+       "file_sha256": "fb3d97ab295b5a0bdf030e0e1cb57ea74f1e6635d79c83d56bcc0c01cc0a3cf5"
       },
       {
        "path": "reports/event-authority-20261115/PNC019-C12-GC-core.json",
@@ -808,7 +799,7 @@
        "line_end": 201,
        "quote": "\"schema_uncovered\": 0",
        "excerpt_sha256": "b239c37db1a429e840e6806a6e9f2332a5187afcede8e7e811c3269858c24feb",
-       "file_sha256": "8c94b98008b6d10ea3a0ccf1b8e83e20616715f24e949e51d28b28af750484a1"
+       "file_sha256": "fb3d97ab295b5a0bdf030e0e1cb57ea74f1e6635d79c83d56bcc0c01cc0a3cf5"
       },
       {
        "path": "reports/event-authority-20261115/PNC019-C12-GC-core.json",
@@ -816,7 +807,7 @@
        "line_end": 200,
        "quote": "\"schema_clauses_killed\": 3075",
        "excerpt_sha256": "69479ed2e5e12b3d7dae57a4354fda86414bb4cfb1ac378768d4fe8da999cdf3",
-       "file_sha256": "8c94b98008b6d10ea3a0ccf1b8e83e20616715f24e949e51d28b28af750484a1"
+       "file_sha256": "fb3d97ab295b5a0bdf030e0e1cb57ea74f1e6635d79c83d56bcc0c01cc0a3cf5"
       },
       {
        "path": "scripts/pm-goal-gc-schema-closure.py",
@@ -856,7 +847,7 @@
        "line_end": 532,
        "quote": "adapter.retained_reason(",
        "excerpt_sha256": "336e6ed073d987aa427fe01deae1fd4661eded9495d775dce9ddb9aecd1252e4",
-       "file_sha256": "84addf582a50316b910d47531bce82037073354197c3d9f185df88c082d164e0"
+       "file_sha256": "785f5478ef6e3a06e845517bcccafa2f337c63e441066547f2a0626f03b889ff"
       },
       {
        "path": "scripts/pm_goal_own_b_oracles.py",
@@ -864,16 +855,7 @@
        "line_end": 1044,
        "quote": "corpus = ",
        "excerpt_sha256": "ad1473dfc8b4888e2f55c764a5af870d59e8d8bffc7d4b460ae2b7b1484d6c60",
-       "file_sha256": "84addf582a50316b910d47531bce82037073354197c3d9f185df88c082d164e0"
-      },
-      {
-       "path": "Plans/Goal_Runtime_System.md",
-       "line_start": 8522,
-       "line_end": 8522,
-       "quote": "Newly authored",
-       "excerpt_sha256": "953ea3ff89cb4ad6ee7f69b8b44b899bb2b8fb75e3e764382201095457ac5c9d",
-       "file_sha256": "7f1ab26575a3fbaaabca94d22b6a8e6c4275cca0f5b9af71c58b13eb9fa5c6ed",
-       "role": "Canonical subject of the existing executable oracle proof; checker evidence and verdict are unchanged."
+       "file_sha256": "785f5478ef6e3a06e845517bcccafa2f337c63e441066547f2a0626f03b889ff"
       }
      ],
      "prior_status": "PARTIAL",
@@ -931,11 +913,11 @@
       },
       {
        "path": "Plans/event_family_registry.json",
-       "line_start": 366,
-       "line_end": 366,
+       "line_start": 397,
+       "line_end": 397,
        "quote": "\"family_id\": \"event-family-goal-run-stopped\"",
        "excerpt_sha256": "efef9a88e06e29bf4bf06f30070d68fbb92903a7d6961cb018771a4f4a2700f1",
-       "file_sha256": "e1bcd4b70ee6cf0bc698a748cfee94d5f4035d70e73c2fbaec806bddc7422c0c"
+       "file_sha256": "aa6188dd713badcfa9c902d24d917b764b23a6a9e2290bdb58de8776a2f79a5e"
       },
       {
        "path": "Plans/goal_run_stop_block_contracts/prepared-registry-rows.json",
@@ -1153,19 +1135,19 @@
      "evidence": [
       {
        "path": "Plans/event_family_registry.json",
-       "line_start": 47,
-       "line_end": 47,
+       "line_start": 77,
+       "line_end": 77,
        "quote": "\"policy_id\": \"RP-AUTHORITY-INDEFINITE\"",
        "excerpt_sha256": "218a403b240aa548ad151a5d5401bf2a73e2a57cbfe0c0ceb2f649d6f0ebc652",
-       "file_sha256": "e1bcd4b70ee6cf0bc698a748cfee94d5f4035d70e73c2fbaec806bddc7422c0c"
+       "file_sha256": "aa6188dd713badcfa9c902d24d917b764b23a6a9e2290bdb58de8776a2f79a5e"
       },
       {
        "path": "Plans/event_family_registry.json",
-       "line_start": 48,
-       "line_end": 48,
+       "line_start": 78,
+       "line_end": 78,
        "quote": "\"policy_version\": \"1.0.0\"",
        "excerpt_sha256": "42ad19f2cac0b98558f527227ff8377def128614a9bb06e731c74185ee4dc978",
-       "file_sha256": "e1bcd4b70ee6cf0bc698a748cfee94d5f4035d70e73c2fbaec806bddc7422c0c"
+       "file_sha256": "aa6188dd713badcfa9c902d24d917b764b23a6a9e2290bdb58de8776a2f79a5e"
       },
       {
        "path": "Plans/storage-plan.md",
@@ -1290,7 +1272,7 @@
        "path": "Plans/workflow_standard_source_contracts/native-v7/protocol.md",
        "line_start": 61,
        "line_end": 61,
-       "quote": "Native successful publication may advance the Workflow progress lineage with original_execution_progress, running→running; it changes only the Workflow body revision",
+       "quote": "Native successful publication may advance the Workflow progress lineage with original_execution_progress, running\u2192running; it changes only the Workflow body revision",
        "excerpt_sha256": "bee102aa79fbd2a2ad98784ec01c9d6a3bc9af15ba209a45b73c776237770fb3",
        "file_sha256": "4d79524298752ff3aa6fb83937dd79c769c09d69fe33e81e6bc41f271401e054"
       },
@@ -1298,7 +1280,7 @@
        "path": "Plans/workflow_standard_source_contracts/native-v7/protocol.md",
        "line_start": 61,
        "line_end": 61,
-       "quote": "Native successful publication may advance the Workflow progress lineage with original_execution_progress, running→running; it changes only the Workflow body revision",
+       "quote": "Native successful publication may advance the Workflow progress lineage with original_execution_progress, running\u2192running; it changes only the Workflow body revision",
        "excerpt_sha256": "bee102aa79fbd2a2ad98784ec01c9d6a3bc9af15ba209a45b73c776237770fb3",
        "file_sha256": "4d79524298752ff3aa6fb83937dd79c769c09d69fe33e81e6bc41f271401e054"
       },
@@ -1397,7 +1379,7 @@
        "line_end": 236,
        "quote": "\"open_rows\": 0",
        "excerpt_sha256": "8317e57fa00a2a5c08c3983d0f360aee93599e775e373a19a9da25b3a2f63522",
-       "file_sha256": "8c94b98008b6d10ea3a0ccf1b8e83e20616715f24e949e51d28b28af750484a1"
+       "file_sha256": "fb3d97ab295b5a0bdf030e0e1cb57ea74f1e6635d79c83d56bcc0c01cc0a3cf5"
       },
       {
        "path": "reports/event-authority-20261115/PNC019-C12-GC-core.json",
@@ -1405,7 +1387,7 @@
        "line_end": 254,
        "quote": "\"tool_proved\": 128",
        "excerpt_sha256": "be4e257a2d7d52ebd2bdb3525ab3e403b1556077071bd8faedfb21b1db59ce45",
-       "file_sha256": "8c94b98008b6d10ea3a0ccf1b8e83e20616715f24e949e51d28b28af750484a1"
+       "file_sha256": "fb3d97ab295b5a0bdf030e0e1cb57ea74f1e6635d79c83d56bcc0c01cc0a3cf5"
       },
       {
        "path": "reports/event-authority-20261115/PNC019-C12-GC-core.json",
@@ -1413,7 +1395,7 @@
        "line_end": 234,
        "quote": "\"justified_singletons\": 14",
        "excerpt_sha256": "df772be4099c82cc8e72b20e01d6f8c24a108657a294972be92e54129c251305",
-       "file_sha256": "8c94b98008b6d10ea3a0ccf1b8e83e20616715f24e949e51d28b28af750484a1"
+       "file_sha256": "fb3d97ab295b5a0bdf030e0e1cb57ea74f1e6635d79c83d56bcc0c01cc0a3cf5"
       },
       {
        "path": "reports/event-authority-20261115/PNC019-C12-GC-core.json",
@@ -1421,7 +1403,7 @@
        "line_end": 245,
        "quote": "\"retained_store_changed\": 0",
        "excerpt_sha256": "ea30079af2d99f4651d5d68780dbb544fc91ebdd71219917e0f68896108b9757",
-       "file_sha256": "8c94b98008b6d10ea3a0ccf1b8e83e20616715f24e949e51d28b28af750484a1"
+       "file_sha256": "fb3d97ab295b5a0bdf030e0e1cb57ea74f1e6635d79c83d56bcc0c01cc0a3cf5"
       },
       {
        "path": "reports/event-authority-20261115/PNC019-C12-GC-core.json",
@@ -1429,7 +1411,7 @@
        "line_end": 232,
        "quote": "\"corpus_cases\": 126",
        "excerpt_sha256": "d1e151d6b1cbf54c136f452cf0d629bb905039b6b96082ccd2ce621cefb3216b",
-       "file_sha256": "8c94b98008b6d10ea3a0ccf1b8e83e20616715f24e949e51d28b28af750484a1"
+       "file_sha256": "fb3d97ab295b5a0bdf030e0e1cb57ea74f1e6635d79c83d56bcc0c01cc0a3cf5"
       },
       {
        "path": "reports/event-authority-20261115/PNC019-C12-GC-core.json",
@@ -1437,7 +1419,7 @@
        "line_end": 233,
        "quote": "\"join_cases\": 18",
        "excerpt_sha256": "6ae7bf8c389a22e6023d07af8fb91ff671e84e4e0693e79beb548b1224510f59",
-       "file_sha256": "8c94b98008b6d10ea3a0ccf1b8e83e20616715f24e949e51d28b28af750484a1"
+       "file_sha256": "fb3d97ab295b5a0bdf030e0e1cb57ea74f1e6635d79c83d56bcc0c01cc0a3cf5"
       },
       {
        "path": "reports/event-authority-20261115/PNC019-C12-GC-core.json",
@@ -1445,7 +1427,7 @@
        "line_end": 251,
        "quote": "\"schema_uncovered\": 0",
        "excerpt_sha256": "b239c37db1a429e840e6806a6e9f2332a5187afcede8e7e811c3269858c24feb",
-       "file_sha256": "8c94b98008b6d10ea3a0ccf1b8e83e20616715f24e949e51d28b28af750484a1"
+       "file_sha256": "fb3d97ab295b5a0bdf030e0e1cb57ea74f1e6635d79c83d56bcc0c01cc0a3cf5"
       },
       {
        "path": "reports/event-authority-20261115/PNC019-C12-GC-core.json",
@@ -1453,7 +1435,7 @@
        "line_end": 250,
        "quote": "\"schema_clauses_killed\": 1230",
        "excerpt_sha256": "d05862f5fb3a10111fafa6813b7fa5094ca438e094cfa0dcad45336a6e705254",
-       "file_sha256": "8c94b98008b6d10ea3a0ccf1b8e83e20616715f24e949e51d28b28af750484a1"
+       "file_sha256": "fb3d97ab295b5a0bdf030e0e1cb57ea74f1e6635d79c83d56bcc0c01cc0a3cf5"
       },
       {
        "path": "scripts/pm-goal-gc-schema-closure.py",
@@ -1493,7 +1475,7 @@
        "line_end": 620,
        "quote": "adapter.retained_reason(",
        "excerpt_sha256": "8cd487f997ca08a000356c9679c59f07b2e93c5f96a9803c4876d21e0fe88425",
-       "file_sha256": "99cbcb89cbc100ce2ed3ee07a982dcecc713afa8c8e88a2cd3e98743bebcce03"
+       "file_sha256": "7d7d0ebd3865c667e7593ccc7e164b25dd25719eef8e5f958f32b35e10cfbd50"
       },
       {
        "path": "scripts/pm_goal_own_a_oracles.py",
@@ -1501,16 +1483,7 @@
        "line_end": 1500,
        "quote": "corpus = ",
        "excerpt_sha256": "9880add2c1938fc71bb7a03e2d4c11b8063d824e1c260811624569363a768a68",
-       "file_sha256": "99cbcb89cbc100ce2ed3ee07a982dcecc713afa8c8e88a2cd3e98743bebcce03"
-      },
-      {
-       "path": "Plans/Goal_Runtime_System.md",
-       "line_start": 2911,
-       "line_end": 2911,
-       "quote": "Current v3 (prepared, DL-080): GRS-200",
-       "excerpt_sha256": "e0dd4ea235bfa5bdfed6949c89c389692ba680a7b73bde05f32df3e024bb69c5",
-       "file_sha256": "7f1ab26575a3fbaaabca94d22b6a8e6c4275cca0f5b9af71c58b13eb9fa5c6ed",
-       "role": "Canonical subject of the existing executable oracle proof; checker evidence and verdict are unchanged."
+       "file_sha256": "7d7d0ebd3865c667e7593ccc7e164b25dd25719eef8e5f958f32b35e10cfbd50"
       }
      ],
      "prior_status": "PARTIAL",
@@ -1575,7 +1548,7 @@
        "line_end": 10,
        "quote": "\"family_id\": \"event-family-goal-run-blocked\"",
        "excerpt_sha256": "6fa7a1a7c391a3c8dcf3f0e3c783a3745242118a764178c834cd9fa428ea2d5c",
-       "file_sha256": "e1bcd4b70ee6cf0bc698a748cfee94d5f4035d70e73c2fbaec806bddc7422c0c"
+       "file_sha256": "aa6188dd713badcfa9c902d24d917b764b23a6a9e2290bdb58de8776a2f79a5e"
       },
       {
        "path": "Plans/goal_run_stop_block_contracts/prepared-registry-rows.json",
@@ -1906,7 +1879,7 @@
        "path": "Plans/workflow_standard_source_contracts/native-v7/protocol.md",
        "line_start": 61,
        "line_end": 61,
-       "quote": "Native successful publication may advance the Workflow progress lineage with original_execution_progress, running→running; it changes only the Workflow body revision",
+       "quote": "Native successful publication may advance the Workflow progress lineage with original_execution_progress, running\u2192running; it changes only the Workflow body revision",
        "excerpt_sha256": "bee102aa79fbd2a2ad98784ec01c9d6a3bc9af15ba209a45b73c776237770fb3",
        "file_sha256": "4d79524298752ff3aa6fb83937dd79c769c09d69fe33e81e6bc41f271401e054"
       },
@@ -1914,7 +1887,7 @@
        "path": "Plans/workflow_standard_source_contracts/native-v7/protocol.md",
        "line_start": 61,
        "line_end": 61,
-       "quote": "Native successful publication may advance the Workflow progress lineage with original_execution_progress, running→running; it changes only the Workflow body revision",
+       "quote": "Native successful publication may advance the Workflow progress lineage with original_execution_progress, running\u2192running; it changes only the Workflow body revision",
        "excerpt_sha256": "bee102aa79fbd2a2ad98784ec01c9d6a3bc9af15ba209a45b73c776237770fb3",
        "file_sha256": "4d79524298752ff3aa6fb83937dd79c769c09d69fe33e81e6bc41f271401e054"
       },
@@ -2013,7 +1986,7 @@
        "line_end": 211,
        "quote": "\"open_rows\": 0",
        "excerpt_sha256": "8317e57fa00a2a5c08c3983d0f360aee93599e775e373a19a9da25b3a2f63522",
-       "file_sha256": "8c94b98008b6d10ea3a0ccf1b8e83e20616715f24e949e51d28b28af750484a1"
+       "file_sha256": "fb3d97ab295b5a0bdf030e0e1cb57ea74f1e6635d79c83d56bcc0c01cc0a3cf5"
       },
       {
        "path": "reports/event-authority-20261115/PNC019-C12-GC-core.json",
@@ -2021,7 +1994,7 @@
        "line_end": 229,
        "quote": "\"tool_proved\": 136",
        "excerpt_sha256": "09c1be818f555de503a4608cb87e839e12a27b144fa89297b7473b4de56d04fa",
-       "file_sha256": "8c94b98008b6d10ea3a0ccf1b8e83e20616715f24e949e51d28b28af750484a1"
+       "file_sha256": "fb3d97ab295b5a0bdf030e0e1cb57ea74f1e6635d79c83d56bcc0c01cc0a3cf5"
       },
       {
        "path": "reports/event-authority-20261115/PNC019-C12-GC-core.json",
@@ -2029,7 +2002,7 @@
        "line_end": 209,
        "quote": "\"justified_singletons\": 14",
        "excerpt_sha256": "df772be4099c82cc8e72b20e01d6f8c24a108657a294972be92e54129c251305",
-       "file_sha256": "8c94b98008b6d10ea3a0ccf1b8e83e20616715f24e949e51d28b28af750484a1"
+       "file_sha256": "fb3d97ab295b5a0bdf030e0e1cb57ea74f1e6635d79c83d56bcc0c01cc0a3cf5"
       },
       {
        "path": "reports/event-authority-20261115/PNC019-C12-GC-core.json",
@@ -2037,7 +2010,7 @@
        "line_end": 220,
        "quote": "\"retained_store_changed\": 0",
        "excerpt_sha256": "ea30079af2d99f4651d5d68780dbb544fc91ebdd71219917e0f68896108b9757",
-       "file_sha256": "8c94b98008b6d10ea3a0ccf1b8e83e20616715f24e949e51d28b28af750484a1"
+       "file_sha256": "fb3d97ab295b5a0bdf030e0e1cb57ea74f1e6635d79c83d56bcc0c01cc0a3cf5"
       },
       {
        "path": "reports/event-authority-20261115/PNC019-C12-GC-core.json",
@@ -2045,7 +2018,7 @@
        "line_end": 207,
        "quote": "\"corpus_cases\": 126",
        "excerpt_sha256": "d1e151d6b1cbf54c136f452cf0d629bb905039b6b96082ccd2ce621cefb3216b",
-       "file_sha256": "8c94b98008b6d10ea3a0ccf1b8e83e20616715f24e949e51d28b28af750484a1"
+       "file_sha256": "fb3d97ab295b5a0bdf030e0e1cb57ea74f1e6635d79c83d56bcc0c01cc0a3cf5"
       },
       {
        "path": "reports/event-authority-20261115/PNC019-C12-GC-core.json",
@@ -2053,7 +2026,7 @@
        "line_end": 208,
        "quote": "\"join_cases\": 20",
        "excerpt_sha256": "ef5efb245d0dcb4a9aa005d6f70df27fc246e84dc81f4522aea680aca47cd6ee",
-       "file_sha256": "8c94b98008b6d10ea3a0ccf1b8e83e20616715f24e949e51d28b28af750484a1"
+       "file_sha256": "fb3d97ab295b5a0bdf030e0e1cb57ea74f1e6635d79c83d56bcc0c01cc0a3cf5"
       },
       {
        "path": "reports/event-authority-20261115/PNC019-C12-GC-core.json",
@@ -2061,7 +2034,7 @@
        "line_end": 226,
        "quote": "\"schema_uncovered\": 0",
        "excerpt_sha256": "b239c37db1a429e840e6806a6e9f2332a5187afcede8e7e811c3269858c24feb",
-       "file_sha256": "8c94b98008b6d10ea3a0ccf1b8e83e20616715f24e949e51d28b28af750484a1"
+       "file_sha256": "fb3d97ab295b5a0bdf030e0e1cb57ea74f1e6635d79c83d56bcc0c01cc0a3cf5"
       },
       {
        "path": "reports/event-authority-20261115/PNC019-C12-GC-core.json",
@@ -2069,7 +2042,7 @@
        "line_end": 225,
        "quote": "\"schema_clauses_killed\": 1236",
        "excerpt_sha256": "09ee977fd58f6543ff7c7e67e24d264ef13082879449076381ab92b2bcf279d7",
-       "file_sha256": "8c94b98008b6d10ea3a0ccf1b8e83e20616715f24e949e51d28b28af750484a1"
+       "file_sha256": "fb3d97ab295b5a0bdf030e0e1cb57ea74f1e6635d79c83d56bcc0c01cc0a3cf5"
       },
       {
        "path": "scripts/pm-goal-gc-schema-closure.py",
@@ -2109,7 +2082,7 @@
        "line_end": 620,
        "quote": "adapter.retained_reason(",
        "excerpt_sha256": "8cd487f997ca08a000356c9679c59f07b2e93c5f96a9803c4876d21e0fe88425",
-       "file_sha256": "99cbcb89cbc100ce2ed3ee07a982dcecc713afa8c8e88a2cd3e98743bebcce03"
+       "file_sha256": "7d7d0ebd3865c667e7593ccc7e164b25dd25719eef8e5f958f32b35e10cfbd50"
       },
       {
        "path": "scripts/pm_goal_own_a_oracles.py",
@@ -2117,16 +2090,7 @@
        "line_end": 1500,
        "quote": "corpus = ",
        "excerpt_sha256": "9880add2c1938fc71bb7a03e2d4c11b8063d824e1c260811624569363a768a68",
-       "file_sha256": "99cbcb89cbc100ce2ed3ee07a982dcecc713afa8c8e88a2cd3e98743bebcce03"
-      },
-      {
-       "path": "Plans/Goal_Runtime_System.md",
-       "line_start": 2908,
-       "line_end": 2908,
-       "quote": "Current v3 (prepared, DL-080): GRS-201",
-       "excerpt_sha256": "a1c6b4f45c12ac5633e2687fc8c9fdfa646b5fc37556856f915fcad462e98ca5",
-       "file_sha256": "7f1ab26575a3fbaaabca94d22b6a8e6c4275cca0f5b9af71c58b13eb9fa5c6ed",
-       "role": "Canonical subject of the existing executable oracle proof; checker evidence and verdict are unchanged."
+       "file_sha256": "7d7d0ebd3865c667e7593ccc7e164b25dd25719eef8e5f958f32b35e10cfbd50"
       }
      ],
      "prior_status": "PARTIAL",

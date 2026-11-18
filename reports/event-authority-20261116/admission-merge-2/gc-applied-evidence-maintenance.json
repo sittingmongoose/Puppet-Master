@@ -1,0 +1,132 @@
+{
+ "schema_id": "pm.ea.merge2.gc_applied_evidence_maintenance.v1",
+ "native_execution": "NOT_RUN",
+ "source_core": {
+  "path": "reports/event-authority-20261115/PNC019-C12-GC-core.json",
+  "sha256": "fb3d97ab295b5a0bdf030e0e1cb57ea74f1e6635d79c83d56bcc0c01cc0a3cf5"
+ },
+ "source_grades": {
+  "path": "reports/event-authority-20261115/PNC019-C12-GC-grades.json",
+  "sha256": "1bff507668723e4d681d35f285b89cf8af6c8bdddb9438fedb8f4a591f9281e5"
+ },
+ "registry_and_checkpoints": {
+  "Plans/event_family_registry.json": "aa6188dd713badcfa9c902d24d917b764b23a6a9e2290bdb58de8776a2f79a5e",
+  "scripts/pm_pnc019_currentness.py": "526df064ed3c6a7dd871941eac4791133c1bbea0fa1310a53a2364c35cb3ee16",
+  "tests/fixtures/event_record/legacy_normalization/golden/event_envelope_v1_to_event_record_v2.json": "bc4d03d2b20563e979b396eeec9e515740955b0156cd3d3b021784c1164fa7a3"
+ },
+ "verdicts_changed": false,
+ "registry_changed": false,
+ "historical_application_provenance_preserved": true,
+ "events": [
+  {
+   "event_type": "goal_run.stopped",
+   "decision_ref": "Plans/Decision_Log.md#DL-2437",
+   "assessment": "reports/event-authority-20261116/admission-merge-2/revisions/goal_run.stopped.json",
+   "before_sha256": "c99832d1eafd45c4784e3bca54d52c2e421ac4c42d6ff27a37982ea20504f07d",
+   "after_sha256": "7cb0d57b00a178ec981108d82b2f2e0a498648ff30e68b6e3c0e435a8e4f214f",
+   "changed_citations": [
+    {
+     "index": 12,
+     "old": {
+      "path": "scripts/pm_goal_own_a_oracles.py",
+      "line_start": 620,
+      "line_end": 620,
+      "quote": "adapter.retained_reason(",
+      "excerpt_sha256": "8cd487f997ca08a000356c9679c59f07b2e93c5f96a9803c4876d21e0fe88425",
+      "file_sha256": "99cbcb89cbc100ce2ed3ee07a982dcecc713afa8c8e88a2cd3e98743bebcce03",
+      "quote_check": "exact",
+      "quote_scope": "document"
+     },
+     "new": {
+      "path": "scripts/pm_goal_own_a_oracles.py",
+      "line_start": 620,
+      "line_end": 620,
+      "quote": "adapter.retained_reason(",
+      "excerpt_sha256": "8cd487f997ca08a000356c9679c59f07b2e93c5f96a9803c4876d21e0fe88425",
+      "file_sha256": "7d7d0ebd3865c667e7593ccc7e164b25dd25719eef8e5f958f32b35e10cfbd50",
+      "quote_check": "exact",
+      "quote_scope": "document"
+     }
+    },
+    {
+     "index": 13,
+     "old": {
+      "path": "scripts/pm_goal_own_a_oracles.py",
+      "line_start": 1500,
+      "line_end": 1500,
+      "quote": "corpus = ",
+      "excerpt_sha256": "9880add2c1938fc71bb7a03e2d4c11b8063d824e1c260811624569363a768a68",
+      "file_sha256": "99cbcb89cbc100ce2ed3ee07a982dcecc713afa8c8e88a2cd3e98743bebcce03",
+      "quote_check": "exact",
+      "quote_scope": "document"
+     },
+     "new": {
+      "path": "scripts/pm_goal_own_a_oracles.py",
+      "line_start": 1500,
+      "line_end": 1500,
+      "quote": "corpus = ",
+      "excerpt_sha256": "9880add2c1938fc71bb7a03e2d4c11b8063d824e1c260811624569363a768a68",
+      "file_sha256": "7d7d0ebd3865c667e7593ccc7e164b25dd25719eef8e5f958f32b35e10cfbd50",
+      "quote_check": "exact",
+      "quote_scope": "document"
+     }
+    }
+   ]
+  },
+  {
+   "event_type": "goal_run.blocked",
+   "decision_ref": "Plans/Decision_Log.md#DL-2438",
+   "assessment": "reports/event-authority-20261116/admission-merge-2/revisions/goal_run.blocked.json",
+   "before_sha256": "c826ecdb8e14a77b73f7e744acc7a71c977aefe9e0847419cfe1356540c01fb0",
+   "after_sha256": "003cd54c34b6e51c024a8d3636a309ea9c5491796da93fde26f66412281a55b7",
+   "changed_citations": [
+    {
+     "index": 12,
+     "old": {
+      "path": "scripts/pm_goal_own_a_oracles.py",
+      "line_start": 620,
+      "line_end": 620,
+      "quote": "adapter.retained_reason(",
+      "excerpt_sha256": "8cd487f997ca08a000356c9679c59f07b2e93c5f96a9803c4876d21e0fe88425",
+      "file_sha256": "99cbcb89cbc100ce2ed3ee07a982dcecc713afa8c8e88a2cd3e98743bebcce03",
+      "quote_check": "exact",
+      "quote_scope": "document"
+     },
+     "new": {
+      "path": "scripts/pm_goal_own_a_oracles.py",
+      "line_start": 620,
+      "line_end": 620,
+      "quote": "adapter.retained_reason(",
+      "excerpt_sha256": "8cd487f997ca08a000356c9679c59f07b2e93c5f96a9803c4876d21e0fe88425",
+      "file_sha256": "7d7d0ebd3865c667e7593ccc7e164b25dd25719eef8e5f958f32b35e10cfbd50",
+      "quote_check": "exact",
+      "quote_scope": "document"
+     }
+    },
+    {
+     "index": 13,
+     "old": {
+      "path": "scripts/pm_goal_own_a_oracles.py",
+      "line_start": 1500,
+      "line_end": 1500,
+      "quote": "corpus = ",
+      "excerpt_sha256": "9880add2c1938fc71bb7a03e2d4c11b8063d824e1c260811624569363a768a68",
+      "file_sha256": "99cbcb89cbc100ce2ed3ee07a982dcecc713afa8c8e88a2cd3e98743bebcce03",
+      "quote_check": "exact",
+      "quote_scope": "document"
+     },
+     "new": {
+      "path": "scripts/pm_goal_own_a_oracles.py",
+      "line_start": 1500,
+      "line_end": 1500,
+      "quote": "corpus = ",
+      "excerpt_sha256": "9880add2c1938fc71bb7a03e2d4c11b8063d824e1c260811624569363a768a68",
+      "file_sha256": "7d7d0ebd3865c667e7593ccc7e164b25dd25719eef8e5f958f32b35e10cfbd50",
+      "quote_check": "exact",
+      "quote_scope": "document"
+     }
+    }
+   ]
+  }
+ ]
+}
