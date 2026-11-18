@@ -1101,13 +1101,16 @@
       if (wheelT) { clearTimeout(wheelT); wheelT = 0; }
       if (!wheelAt) return;
       var held = wheelEl, el = b.el(), point = wheelAt;
-      wheelAt = wheelEl = null;
       if (held && held !== el && held.getAttribute('data-op') === 'wheel') held.removeAttribute('data-op');
       var op = el && el.getAttribute('data-op');
-      if (!el || op !== null && op !== 'wheel' || b.gesture && b.gesture()) {
+      /* R112: keyboard M/R can take over without a pointer event. Keep the return and its current point until the
+         board's idle sync releases the gesture flags; never release a move/resize marker or notify a live gesture. */
+      if (el && (op !== null && op !== 'wheel' || b.gesture && b.gesture())) {
         if (op === 'wheel') el.removeAttribute('data-op');
         return;
       }
+      wheelAt = wheelEl = null;
+      if (!el) return;
       var card = el && el.isConnected && el.querySelector(':scope > .pmu-card:hover');
       if (card) {
         /* R100 T2: a delayed incoming transition is not a visible return. Restore the already-hovered head in one
@@ -1194,10 +1197,13 @@
     boardEl.addEventListener('focusin', onFocusIn);
     boardEl.addEventListener('focusout', onFocusOut);
     boardEl.addEventListener('click', onClick);
-    var pausing = boardEl.id === 'pmuScroll', offWheelMount = null, offWheelSwap = null;
+    var pausing = boardEl.id === 'pmuScroll', offWheelMount = null, offWheelSwap = null, offWheelEnd = null;
     if (pausing) {
       offWheelMount = b.on('mount', onWheelMount);
       offWheelSwap = b.on('swap', onWheelMount);   /* Reduce Motion adopts its spare after mount returns */
+      /* An early gesture release leaves the original wheel deadline intact; an expired hold returns once flags clear.
+         Pointer move/leave/press keep updating wheelAt during the handoff, so wheelEnd resolves the live hover. */
+      offWheelEnd = b.on('op-end', function () { if (wheelAt && !wheelT) wheelEnd(); });
       boardEl.addEventListener('wheel', onWheel, { passive: true });
       boardEl.addEventListener('scroll', onWheelScroll, { passive: true });
       boardEl.addEventListener('pointermove', onWheelMove, { passive: true });
@@ -1206,7 +1212,7 @@
     }
     return function () {
       if (pausing) {
-        offWheelMount(); offWheelSwap();
+        offWheelMount(); offWheelSwap(); offWheelEnd();
         wheelEnd();
         boardEl.removeEventListener('wheel', onWheel, { passive: true });
         boardEl.removeEventListener('scroll', onWheelScroll, { passive: true });

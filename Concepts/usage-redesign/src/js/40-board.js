@@ -1727,6 +1727,9 @@
       if (op !== want && !(op === 'wheel' && !want)) { if (want) boardEl.setAttribute('data-op', want); else boardEl.removeAttribute('data-op'); wrote = true; }
       if (wrote) void boardEl.offsetWidth;   /* the restyle runs in this idle period, not in the next frame */
       if (ended) { try { if (typeof window.PM_DRAGEND === 'function') window.PM_DRAGEND(); } catch (error) {} }
+      /* R112: a wheel return can be waiting for a keyboard gesture, including one whose deferred marker never wrote.
+         Notify this board's listeners only after its live gesture and operation flags have released. */
+      if (!live) emit('op-end');
     }
     function sizeLabel(id, r) {
       var name = PMU.cards.sizeName(kindSpec(id), r.w, r.h, id, api);
