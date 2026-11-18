@@ -366,7 +366,10 @@ for (const surface of ['normal', 'sandbox']) {
 		const f = await t.app.open({ sandbox: surface === 'sandbox' });
 		await t.app.resetLayout().catch(() => {}); await f.locator('#tab-settings').click(); await t.settle();
 		await f.locator('#pm-settings-root .domain-link[data-domain="general"]').first().click();
-		await f.waitForFunction(() => !document.querySelector('#workspace-stage [data-o55-fill="pending"]'), null, { timeout: 15000 });
+		await f.waitForFunction(() => {
+			const body = document.querySelector('#workspace-stage [data-continuous-workspace-body="app-input"][data-workspace-mounted="true"]');
+			return body && body.querySelector('[id="setting-general.interaction.spellcheck-words"]') && !body.querySelector('[data-o55-fill="pending"]');
+		}, null, { timeout: 15000 });
 		await f.evaluate(PROBE); await f.evaluate(ARM);
 		const id = 'general.interaction.spellcheck-words';
 		const removed = await f.evaluate(id => { const n = document.getElementById('setting-' + id); if (!n) return false; n.remove(); return true; }, id);
