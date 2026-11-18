@@ -87,10 +87,10 @@ html[data-theme^="retro"] #panel-usage .pmu-navbtn { font-size: 12.5px; gap: 8px
 html[data-theme^="retro"] #panel-usage .pmu-seg-ink { border-radius: 0; transition-timing-function: steps(4, end); }
 #panel-usage .pmu-iconbtn { display: inline-grid; place-items: center; width: 30px; height: 30px; padding: 0; border: 0; border-radius: 9px; background: transparent;
   color: var(--pmu-ink-3); cursor: pointer; outline: none; transition: background-color calc(140ms * var(--pmu-speed, 1)), color calc(140ms * var(--pmu-speed, 1)), transform calc(140ms * var(--pmu-speed, 1)); }
-/* (:where(:not(.pmu-board[data-op="wheel"] *)): the wheel pause, 20-board.css PERF-USAGE-HOVER; the seg and stepper buttons
+/* (:where(:not(.pmu-board:is([data-op="wheel"],[data-wheel-handoff]) *)): the wheel pause, 20-board.css PERF-USAGE-HOVER; the seg and stepper buttons
    above and below are keyed on a tag, so a gate there would restyle every button of the board at each pause's start and
    end: they keep their hover) */
-#panel-usage .pmu-iconbtn:hover:where(:not(.pmu-board[data-op="wheel"] *)) { color: var(--pmu-ink); background: var(--pmu-row-hover); }
+#panel-usage .pmu-iconbtn:hover:where(:not(.pmu-board:is([data-op="wheel"],[data-wheel-handoff]) *)) { color: var(--pmu-ink); background: var(--pmu-row-hover); }
 #panel-usage .pmu-iconbtn:active { transform: scale(.94); }
 #panel-usage .pmu-iconbtn svg { width: 16px; height: 16px; }
 /* refresh: while the readings are on their way the system loader takes the icon's place (90-api.js refresh; W5 replaces

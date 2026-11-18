@@ -161,8 +161,8 @@ html[data-theme^="retro"] #panel-usage .pmu-mark[data-mark="glow"] { stroke-widt
 #panel-usage .pmu-legend-item.is-compact { gap: 5px; }
 #panel-usage .pmu-legend-item { display: inline-flex; align-items: center; gap: 7px; white-space: nowrap; min-width: 0; transition: opacity 140ms cubic-bezier(.2,.8,.2,1); }
 #panel-usage .pmu-legend-item[role="button"] { cursor: pointer; border-radius: 4px; }
-/* (:where(:not(.pmu-board[data-op="wheel"] *)) on the in-board :hover rules below: the wheel pause, 20-board.css PERF-USAGE-HOVER) */
-#panel-usage .pmu-legend-item[role="button"]:hover:where(:not(.pmu-board[data-op="wheel"] *)) .pmu-legend-name { color: var(--pmu-ink); }
+/* (:where(:not(.pmu-board:is([data-op="wheel"],[data-wheel-handoff]) *)) on the in-board :hover rules below: the wheel pause, 20-board.css PERF-USAGE-HOVER) */
+#panel-usage .pmu-legend-item[role="button"]:hover:where(:not(.pmu-board:is([data-op="wheel"],[data-wheel-handoff]) *)) .pmu-legend-name { color: var(--pmu-ink); }
 #panel-usage .pmu-legend-item:focus-visible { outline: 2px solid var(--accent-primary); outline-offset: 2px; }
 #panel-usage .pmu-legend-item.is-dim { opacity: .38; }
 #panel-usage .pmu-legend-item em { font-style: normal; font-size: 12px; color: var(--pmu-ink-3); }
@@ -308,7 +308,7 @@ html[data-theme$="-light"] #panel-usage .pmu-meter[data-ramp="1"] { --c: color-m
 #panel-usage .pmu-meterfoot > span { overflow: hidden; text-overflow: ellipsis; min-width: 0; }
 #panel-usage .pmu-reset.is-soon { color: var(--pmu-ink-2); font-weight: 560; }
 #panel-usage .pmu-meteramt { flex: none; }
-#panel-usage .pmu-meter:hover:where(:not(.pmu-board[data-op="wheel"] *)) .pmu-metertrack, #panel-usage .pmu-row:hover:where(:not(.pmu-board[data-op="wheel"] *)) .pmu-metertrack { background-color: var(--pmu-track-hover); transform: translateY(-1px); }
+#panel-usage .pmu-meter:hover:where(:not(.pmu-board:is([data-op="wheel"],[data-wheel-handoff]) *)) .pmu-metertrack, #panel-usage .pmu-row:hover:where(:not(.pmu-board:is([data-op="wheel"],[data-wheel-handoff]) *)) .pmu-metertrack { background-color: var(--pmu-track-hover); transform: translateY(-1px); }
 #panel-usage .pmu-meter[data-bare] .pmu-meterline, #panel-usage .pmu-meter[data-bare] .pmu-meterfoot { display: none !important; }
 #panel-usage .pmu-meter[data-bare] .pmu-metertrack { margin-top: 0; }
 #panel-usage .pmu-meter[data-left] .pmu-metertrack::before { display: none; }
@@ -325,7 +325,7 @@ html[data-theme$="-light"] #panel-usage .pmu-meter[data-ramp="1"] { --c: color-m
 #panel-usage .pmu-c-ranked { display: flex; flex-direction: column; gap: 2px; }
 #panel-usage .pmu-rk { display: grid; grid-template-columns: minmax(0, 1fr) auto; grid-template-areas: "name val" "bar bar"; gap: 5px 10px; align-items: baseline;
   padding: 7px 10px; border-radius: 8px; transition: background-color 180ms cubic-bezier(.2,.8,.2,1); }
-#panel-usage .pmu-rk:hover:where(:not(.pmu-board[data-op="wheel"] *)) { background: var(--pmu-row-hover); }
+#panel-usage .pmu-rk:hover:where(:not(.pmu-board:is([data-op="wheel"],[data-wheel-handoff]) *)) { background: var(--pmu-row-hover); }
 #panel-usage .pmu-rkname { grid-area: name; display: flex; align-items: center; gap: 8px; min-width: 0; overflow: hidden; font-size: 13px; }
 #panel-usage .pmu-rkt { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 #panel-usage .pmu-rkname em { flex: 1 1 0; min-width: 0; overflow: hidden; text-overflow: ellipsis; font-style: normal; font-size: 12px; color: var(--pmu-ink-3); white-space: nowrap; }
@@ -413,7 +413,7 @@ html[data-theme^="retro"] #panel-usage .pmu-sweep-glint { border-radius: 0; back
 #panel-usage .pmu-c-donut[data-side="0"] .pmu-dlegend { width: 100%; }
 #panel-usage .pmu-dl-row { display: grid; grid-template-columns: 10px minmax(0, 1fr) auto var(--dl-share, 52px); gap: 9px; align-items: center; padding: 5px 8px; border-radius: 7px;
   font-size: 12.5px; font-variant-numeric: tabular-nums; transition: background-color 140ms cubic-bezier(.2,.8,.2,1); }
-#panel-usage .pmu-dl-row:hover:where(:not(.pmu-board[data-op="wheel"] *)), #panel-usage .pmu-dl-row.is-hot { background: var(--pmu-row-hover); }
+#panel-usage .pmu-dl-row:hover:where(:not(.pmu-board:is([data-op="wheel"],[data-wheel-handoff]) *)), #panel-usage .pmu-dl-row.is-hot { background: var(--pmu-row-hover); }
 #panel-usage .pmu-dl-n { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 #panel-usage .pmu-dl-row b { font-weight: 600; text-align: right; white-space: nowrap; }
 #panel-usage .pmu-dl-row em { font-style: normal; color: var(--pmu-ink-3); text-align: right; white-space: nowrap; }
@@ -429,7 +429,7 @@ html[data-theme^="retro"] #panel-usage .pmu-sweep-glint { border-radius: 0; back
 #panel-usage .pmu-sbrow { display: grid; gap: 14px; align-items: center; width: 100%; min-height: 40px; padding: 7px 10px; border: 0; border-radius: 9px; background: none;
   color: inherit; font: inherit; font-size: 13px; text-align: left; font-variant-numeric: tabular-nums; cursor: pointer;
   transition: background-color 140ms cubic-bezier(.2,.8,.2,1), transform 140ms cubic-bezier(.2,.8,.2,1); }
-#panel-usage .pmu-sbrow:hover:where(:not(.pmu-board[data-op="wheel"] *)) { background: var(--pmu-row-hover); }
+#panel-usage .pmu-sbrow:hover:where(:not(.pmu-board:is([data-op="wheel"],[data-wheel-handoff]) *)) { background: var(--pmu-row-hover); }
 #panel-usage .pmu-sbrow:active { transform: scale(.995); }
 #panel-usage .pmu-sbrow.is-sel { background: var(--pmu-row-sel); }
 #panel-usage .pmu-sbrow:focus-visible { outline: 2px solid var(--accent-primary); outline-offset: -2px; }
@@ -439,7 +439,7 @@ html[data-theme^="retro"] #panel-usage .pmu-sweep-glint { border-radius: 0; back
 #panel-usage .pmu-sbfill { display: flex; gap: 1px; height: 100%; width: var(--f, 0%); border-radius: 4px; overflow: hidden; transform-origin: 0 50%; }
 #panel-usage .pmu-sbfill > i { transition: opacity 140ms; }
 /* (the segment named class-first, i.pmu-mark; same specificity as `> i`: a bare i after :hover went into Chrome's page-wide set) */
-#panel-usage .pmu-sbrow:hover:where(:not(.pmu-board[data-op="wheel"] *)) .pmu-sbfill > :where(.pmu-mark):is(i) { opacity: .9; }
+#panel-usage .pmu-sbrow:hover:where(:not(.pmu-board:is([data-op="wheel"],[data-wheel-handoff]) *)) .pmu-sbfill > :where(.pmu-mark):is(i) { opacity: .9; }
 #panel-usage .pmu-sbrow .pmu-sbfill > i:hover { opacity: 1; }   /* (keyed on a tag: no wheel-pause gate, see 10-shell.css) */
 #panel-usage .pmu-sbnum { text-align: right; white-space: nowrap; }
 #panel-usage .pmu-sbnum.is-2 { color: var(--pmu-ink-2); }
@@ -533,7 +533,7 @@ html[data-theme^="retro"] #panel-usage .pmu-sweep-glint { border-radius: 0; back
 #panel-usage .pmu-hc[data-step="6"], #panel-usage .pmu-hs i[data-step="6"] { background: var(--pmu-heat-6); }
 #panel-usage .pmu-hc[data-step="-1"], #panel-usage .pmu-hs-key i[data-step="-1"] { background: transparent; outline: 1px dashed var(--pmu-rule-strong); outline-offset: -1px; }
 #panel-usage .pmu-hs-key i[data-step="0"] { background: var(--pmu-heat-zero); }
-#panel-usage .pmu-hc:hover:where(:not(.pmu-board[data-op="wheel"] *)) { transform: scale(1.12); position: relative; z-index: 1; }
+#panel-usage .pmu-hc:hover:where(:not(.pmu-board:is([data-op="wheel"],[data-wheel-handoff]) *)) { transform: scale(1.12); position: relative; z-index: 1; }
 #panel-usage .pmu-hc[data-peak] { box-shadow: inset 0 0 0 1.5px var(--pmu-card); }
 #panel-usage .pmu-heatleg { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 10px; margin-top: 12px; font-size: 12px; color: var(--pmu-ink-3); font-variant-numeric: tabular-nums; }
 #panel-usage .pmu-heatleg b { color: var(--pmu-ink-2); font-weight: 600; }
@@ -561,7 +561,7 @@ html[data-theme^="retro"] #panel-usage .pmu-sweep-glint { border-radius: 0; back
 #panel-usage .pmu-mark[data-q][data-mark="area"]:is([data-tone="crit"], [data-tone="exhausted"]) { fill: url(#pmu-gq-crit); }
 #panel-usage .pmu-mark[data-q][data-mark="area"][data-tone="over"] { fill: url(#pmu-gq-over); }
 #panel-usage .pmu-mark[data-q][data-mark="line"]:is([data-tone="warn"], [data-tone="crit"], [data-tone="exhausted"], [data-tone="over"]) { stroke-width: 2; }
-#panel-usage .pmu-row:hover:where(:not(.pmu-board[data-op="wheel"] *)) .pmu-mark[data-q][data-mark="line"], #panel-usage .pmu-c-qspark:hover:where(:not(.pmu-board[data-op="wheel"] *)) .pmu-mark[data-q][data-mark="line"] { stroke-width: 2.2; }
+#panel-usage .pmu-row:hover:where(:not(.pmu-board:is([data-op="wheel"],[data-wheel-handoff]) *)) .pmu-mark[data-q][data-mark="line"], #panel-usage .pmu-c-qspark:hover:where(:not(.pmu-board:is([data-op="wheel"],[data-wheel-handoff]) *)) .pmu-mark[data-q][data-mark="line"] { stroke-width: 2.2; }
 #panel-usage .pmu-mark[data-focus][data-mark="line"] { stroke-width: 1.75; stroke-linecap: butt; }
 
 /* ---------- range bars: tool latency (A1 7.11) ---------- */
@@ -576,7 +576,7 @@ html[data-theme^="retro"] #panel-usage .pmu-sweep-glint { border-radius: 0; back
 #panel-usage .pmu-raxis-t { position: relative; height: 16px; }
 #panel-usage .pmu-raxis-t i { position: absolute; top: 0; transform: translateX(-50%); font-style: normal; font-family: var(--pmu-mono); font-size: 11px; font-stretch: 87.5%; color: var(--pmu-ink-3); }
 #panel-usage .pmu-rrow { min-height: 28px; padding: 0 2px; border-radius: 6px; font-size: 13px; }
-#panel-usage .pmu-rrow:hover:where(:not(.pmu-board[data-op="wheel"] *)) { background: var(--pmu-row-hover); }
+#panel-usage .pmu-rrow:hover:where(:not(.pmu-board:is([data-op="wheel"],[data-wheel-handoff]) *)) { background: var(--pmu-row-hover); }
 #panel-usage .pmu-rname { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 #panel-usage .pmu-rtrack { position: relative; height: 6px; border-radius: 3px; background: var(--pmu-card-3); }
 #panel-usage .pmu-rgrid { position: absolute; top: -3px; bottom: -3px; width: 1px; background: var(--pmu-grid); }

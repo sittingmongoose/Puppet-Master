@@ -18,6 +18,7 @@ function fixture() {
  class Element {
   constructor(id){this.id=id;this.attrs=new Map();this.handlers=new Map();this.isConnected=true;}
   getAttribute(k){return this.attrs.get(k)??null;}
+  hasAttribute(k){return this.attrs.has(k);}
   setAttribute(k,v){this.attrs.set(k,v);}
   removeAttribute(k){this.attrs.delete(k);}
   querySelector(){return null;}
@@ -47,16 +48,26 @@ for(const mode of ['move','resize']) {
  test(`${mode}: early idle release retains wheel until its original deadline`,()=>{
   const x=fixture();try {
    x.input('wheel');assert.equal(x.board.getAttribute('data-op'),'wheel');
-   x.advance(50);x.ctx.startGesture(mode);assert.equal(x.board.getAttribute('data-op'),mode);
+   x.advance(50);x.ctx.startGesture(mode);assert.equal(x.board.getAttribute('data-op'),mode);assert.ok(x.board.hasAttribute('data-wheel-handoff'));
    x.advance(90);x.ctx.releaseGesture();assert.equal(x.board.getAttribute('data-op'),'wheel','released gesture hands suppression back to pending wheel');
    x.advance(149);assert.equal(x.board.getAttribute('data-op'),'wheel');assert.equal(x.ends().length,0);
-   x.advance(150);assert.equal(x.board.getAttribute('data-op'),null);assert.equal(x.ends().length,1);assert.equal(x.ends()[0].t,150);
+   x.advance(150);assert.equal(x.board.getAttribute('data-op'),null);assert.ok(!x.board.hasAttribute('data-wheel-handoff'));assert.equal(x.ends().length,1);assert.equal(x.ends()[0].t,150);
   } finally{x.cleanup();}
  });
+ for(const input of ['scroll','wheel']) {
+  test(`${mode}: ${input} during the gesture leaves the original wheel deadline intact`,()=>{
+   const x=fixture();try {
+    x.input('wheel');x.advance(50);x.ctx.startGesture(mode);x.advance(70);x.input(input);
+    x.advance(90);x.ctx.releaseGesture();assert.equal(x.board.getAttribute('data-op'),'wheel');
+    x.advance(149);assert.equal(x.ends().length,0);
+    x.advance(150);assert.equal(x.board.getAttribute('data-op'),null);assert.equal(x.ends().length,1);assert.equal(x.ends()[0].t,150);
+   } finally{x.cleanup();}
+  });
+ }
  test(`${mode}: hold expiry waits for a longer gesture and returns exactly once`,()=>{
   const x=fixture();try {
    x.input('wheel');x.advance(50);x.ctx.startGesture(mode);x.advance(180);
-   assert.equal(x.board.getAttribute('data-op'),mode);assert.equal(x.ends().length,0);
+   assert.equal(x.board.getAttribute('data-op'),mode);assert.ok(!x.board.hasAttribute('data-wheel-handoff'));assert.equal(x.ends().length,0);
    x.ctx.releaseGesture();assert.equal(x.board.getAttribute('data-op'),null);assert.equal(x.ends().length,1);assert.equal(x.ends()[0].t,180);
    x.advance(400);assert.equal(x.ends().length,1);
   } finally{x.cleanup();}

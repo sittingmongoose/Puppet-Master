@@ -88,8 +88,8 @@
 #panel-usage .pmu-swlabel { font-size: 12.5px; font-weight: 540; color: var(--pmu-ink); margin-right: 4px; }
 #panel-usage .pmu-swat { font-size: 12.5px; color: var(--pmu-ink-2); }
 #panel-usage .pmu-stepval { border: 0; background: transparent; color: var(--pmu-ink); font: inherit; cursor: pointer; }
-/* (:where(:not(.pmu-board[data-op="wheel"] *)) on the in-board :hover rules below: the wheel pause, 20-board.css PERF-USAGE-HOVER) */
-#panel-usage .pmu-stepval:hover:where(:not(.pmu-board[data-op="wheel"] *)) { background: var(--pmu-row-hover); }
+/* (:where(:not(.pmu-board:is([data-op="wheel"],[data-wheel-handoff]) *)) on the in-board :hover rules below: the wheel pause, 20-board.css PERF-USAGE-HOVER) */
+#panel-usage .pmu-stepval:hover:where(:not(.pmu-board:is([data-op="wheel"],[data-wheel-handoff]) *)) { background: var(--pmu-row-hover); }
 /* one disabled look in either form (motion QA A15: the hover bridge's aria-disabled form drew at .56) */
 #panel-usage .pmu-stepper button:is([disabled], [aria-disabled="true"]) { opacity: .35; cursor: default; }
 #panel-usage .pmu-stepper button:is([disabled], [aria-disabled="true"]):hover { background: transparent; color: var(--pmu-ink-3); }
@@ -118,7 +118,7 @@
   display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow-wrap: anywhere; }
 #panel-usage .pmu-provword { flex: none; max-width: 40%; font-size: 12px; color: var(--pmu-ink-3); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 #panel-usage .pmu-provrow .pmu-textbtn { flex: none; height: 24px; padding: 0 6px; border-color: transparent; font-size: 12.5px; }
-#panel-usage .pmu-provrow .pmu-textbtn:hover:where(:not(.pmu-board[data-op="wheel"] *)) { border-color: color-mix(in srgb, var(--pmu-accent) 55%, transparent); }
+#panel-usage .pmu-provrow .pmu-textbtn:hover:where(:not(.pmu-board:is([data-op="wheel"],[data-wheel-handoff]) *)) { border-color: color-mix(in srgb, var(--pmu-accent) 55%, transparent); }
 
 /* ------------------------------------------------------------------ the setup card (A1 10.6) */
 #panel-usage .pmu-setup { display: flex; flex-direction: column; min-width: 0; }
@@ -135,7 +135,7 @@
 /* Settings group headings over the Accounts plates (kind group, head form band): no plate, the group name with a hairline
    rule under it, the count line muted; the tools still appear on hover so a heading can be moved or hidden */
 #panel-usage .pmu-card[data-head="band"] { background: transparent; border-color: transparent; box-shadow: none; }
-#panel-usage .pmu-card[data-head="band"]:hover:where(:not(.pmu-board[data-op="wheel"] *)) { border-color: transparent; box-shadow: none; transform: none; }
+#panel-usage .pmu-card[data-head="band"]:hover:where(:not(.pmu-board:is([data-op="wheel"],[data-wheel-handoff]) *)) { border-color: transparent; box-shadow: none; transform: none; }
 #panel-usage .pmu-card[data-head="band"] > .pmu-cardhead { height: 52px; align-items: flex-end; padding: 0 2px 9px; border-bottom: 1px solid var(--pmu-rule); }
 #panel-usage .pmu-card[data-head="band"] > .pmu-cardbody { display: none; }
 #panel-usage .pmu-card[data-head="band"] .pmu-cardtitles { flex-direction: row; align-items: baseline; gap: 12px; }
@@ -149,7 +149,7 @@
 #panel-usage .pmu-provword[data-tone="good"] { color: var(--pmu-ink-good, var(--pmu-ink-ok)); font-weight: 600; }
 #panel-usage .pmu-provword[data-tone="warn"] { color: var(--pmu-ink-warn); font-weight: 600; }
 #panel-usage .pmu-provrow.is-setup { cursor: pointer; border-radius: 6px; margin: 0 -6px; padding: 2px 6px; transition: background-color 160ms; }
-#panel-usage .pmu-provrow.is-setup:hover:where(:not(.pmu-board[data-op="wheel"] *)) { background: var(--pmu-row-hover); }
+#panel-usage .pmu-provrow.is-setup:hover:where(:not(.pmu-board:is([data-op="wheel"],[data-wheel-handoff]) *)) { background: var(--pmu-row-hover); }
 html[data-theme^="retro"] #panel-usage .pmu-provrow.is-setup { border-radius: 0; }
 
 /* ------------------------------------------------------------------ POLISH2 content (WOW round, 2026-10-02) */
@@ -204,7 +204,7 @@ html[data-theme^="retro"] #panel-usage .pmu-provrow.is-setup { border-radius: 0;
 #panel-usage .pmu-ladval { font-size: 13px; font-weight: 640; text-align: right; color: var(--pmu-ink); font-variant-numeric: tabular-nums; }
 #panel-usage .pmu-ladrow[data-tone="warn"] .pmu-ladval, #panel-usage .pmu-ladrow[data-tone="crit"] .pmu-ladval, #panel-usage .pmu-ladrow[data-tone="exhausted"] .pmu-ladval { color: var(--c); }
 #panel-usage .pmu-ladact .pmu-glyph { color: var(--pmu-ink-good); }
-#panel-usage .pmu-ladrow:hover:where(:not(.pmu-board[data-op="wheel"] *)) .pmu-ladtrack { box-shadow: 0 0 0 1px color-mix(in srgb, var(--c) 50%, transparent); }
+#panel-usage .pmu-ladrow:hover:where(:not(.pmu-board:is([data-op="wheel"],[data-wheel-handoff]) *)) .pmu-ladtrack { box-shadow: 0 0 0 1px color-mix(in srgb, var(--c) 50%, transparent); }
 /* the switch line: at the switch level of every track (16 + 8 + the measured name column + 8: it lives in the track
    column's coordinates; 104 px = the fixed columns and the four gaps) */
 
@@ -273,13 +273,13 @@ html[data-o55-nier="on"] #panel-usage .pmu-acclight { display: none; }
 #panel-usage .pmu-polcell .pmu-toggle { margin-left: 2px; }
 #panel-usage .pmu-polval { flex: none; height: 24px; min-width: 42px; padding: 0 6px; border: 1px solid var(--pmu-rule); border-radius: 7px; background: transparent; color: var(--pmu-ink);
   font: inherit; font-size: 12.5px; font-weight: 600; font-variant-numeric: tabular-nums; cursor: pointer; transition: background-color 140ms, color 140ms, border-color 140ms; }
-#panel-usage .pmu-polval:hover:where(:not(.pmu-board[data-op="wheel"] *)):not([disabled]) { background: var(--pmu-row-hover); }
+#panel-usage .pmu-polval:hover:where(:not(.pmu-board:is([data-op="wheel"],[data-wheel-handoff]) *)):not([disabled]) { background: var(--pmu-row-hover); }
 #panel-usage .pmu-polval[data-off] { color: var(--pmu-ink-3); font-weight: 500; }
 #panel-usage .pmu-polval[disabled] { opacity: .5; cursor: default; }
 #panel-usage .pmu-polcell[data-tone="warn"] .pmu-polval { border-color: color-mix(in srgb, var(--pmu-warn) 60%, var(--pmu-rule)); }
 #panel-usage .pmu-polshared { display: block; margin: 0; min-width: 0; font-size: 12px; line-height: 18px; color: var(--pmu-ink-3); cursor: pointer; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 #panel-usage .pmu-polshared b { font-weight: 600; color: var(--pmu-ink-2); }
-#panel-usage .pmu-polshared:hover:where(:not(.pmu-board[data-op="wheel"] *)) { color: var(--pmu-ink-2); }
+#panel-usage .pmu-polshared:hover:where(:not(.pmu-board:is([data-op="wheel"],[data-wheel-handoff]) *)) { color: var(--pmu-ink-2); }
 #panel-usage .pmu-polshared.is-none { cursor: default; white-space: normal; }
 #panel-usage .pmu-ladder.is-stacked .pmu-ladpol { flex: 1 1 100%; }
 #panel-usage .pmu-polcap { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; min-width: 0; }
@@ -311,7 +311,7 @@ html[data-pmu-soft] #panel-usage .pmu-skynotch, html[data-o55-nier="on"] #panel-
 
 html[data-theme^="retro"] #panel-usage :is(.pmu-polval, .pmu-ladnotch) { border-radius: 0; }
 html[data-o55-nier="on"] #panel-usage .pmu-polval { border-radius: 0; border-color: var(--o55-nier-ink); color: var(--o55-nier-ink); }
-html[data-o55-nier="on"] #panel-usage .pmu-polval:hover:where(:not(.pmu-board[data-op="wheel"] *)):not([disabled]) { background: var(--o55-nier-ink); color: var(--o55-nier-paper, var(--pmu-card)); }
+html[data-o55-nier="on"] #panel-usage .pmu-polval:hover:where(:not(.pmu-board:is([data-op="wheel"],[data-wheel-handoff]) *)):not([disabled]) { background: var(--o55-nier-ink); color: var(--o55-nier-paper, var(--pmu-card)); }
 html[data-o55-nier="on"] #panel-usage .pmu-ladnotch { border-radius: 0; background: var(--o55-nier-ink); }
 html[data-o55-nier="on"] #panel-usage .pmu-accpol { border-top-style: dashed; }
 
@@ -333,8 +333,8 @@ html[data-o55-nier="on"] #panel-usage .pmu-accpol { border-top-style: dashed; }
 #panel-usage .pmu-accswi .is-own { color: var(--pmu-ink); }
 #panel-usage .pmu-accswi .is-own svg { width: 6px; height: 14px; }
 #panel-usage .pmu-accsw:not([data-own]) .is-own, #panel-usage .pmu-accsw[data-own] .is-link { display: none; }
-#panel-usage .pmu-accrow:hover:where(:not(.pmu-board[data-op="wheel"] *)) .pmu-accsw:not([data-own]) { border-color: var(--pmu-rule-2); }
-#panel-usage .pmu-accrow:hover:where(:not(.pmu-board[data-op="wheel"] *)) .pmu-accsw:is(:hover:where(:not(.pmu-board[data-op="wheel"] *)), .is-open):not([disabled]), #panel-usage .pmu-accsw:is(:hover:where(:not(.pmu-board[data-op="wheel"] *)), .is-open):not([disabled]) {
+#panel-usage .pmu-accrow:hover:where(:not(.pmu-board:is([data-op="wheel"],[data-wheel-handoff]) *)) .pmu-accsw:not([data-own]) { border-color: var(--pmu-rule-2); }
+#panel-usage .pmu-accrow:hover:where(:not(.pmu-board:is([data-op="wheel"],[data-wheel-handoff]) *)) .pmu-accsw:is(:hover:where(:not(.pmu-board:is([data-op="wheel"],[data-wheel-handoff]) *)), .is-open):not([disabled]), #panel-usage .pmu-accsw:is(:hover:where(:not(.pmu-board:is([data-op="wheel"],[data-wheel-handoff]) *)), .is-open):not([disabled]) {
   background: color-mix(in srgb, var(--pmu-ink) 9%, transparent); border-color: var(--pmu-rule-strong); color: var(--pmu-ink); }
 #panel-usage .pmu-accsw:active:not([disabled]) { background: color-mix(in srgb, var(--pmu-ink) 14%, transparent); }
 #panel-usage .pmu-accsw.is-open { border-color: color-mix(in srgb, var(--pmu-accent) 60%, var(--pmu-rule-strong)); }
@@ -362,16 +362,16 @@ html[data-o55-nier="on"] #panel-usage .pmu-accpol { border-top-style: dashed; }
    stepped, NieR draws the following state on a dashed ink edge and its own level on a solid one, and inverts on hover */
 html[data-theme^="friendly"] #panel-usage .pmu-accsw { border-radius: 8px; }
 html[data-theme^="friendly"] #panel-usage .pmu-accswi > i { transition: transform calc(240ms * var(--pmu-speed, 1)) var(--pmu-ease-spring); }
-html[data-theme^="friendly"] #panel-usage .pmu-accsw:is(:hover:where(:not(.pmu-board[data-op="wheel"] *)), .is-open):not([disabled]) .pmu-accswi > :where(.is-link):is(i),
-html[data-theme^="friendly"] #panel-usage .pmu-accsw:is(:hover:where(:not(.pmu-board[data-op="wheel"] *)), .is-open):not([disabled]) .pmu-accswi > :where(.is-own):is(i) { transform: scale(1.18); }
-html[data-theme^="glass"] #panel-usage .pmu-accsw:is(:hover:where(:not(.pmu-board[data-op="wheel"] *)), .is-open):not([disabled]) { box-shadow: inset 0 1px 0 color-mix(in srgb, #fff 18%, transparent), 0 1px 6px -2px color-mix(in srgb, #000 30%, transparent); }
-html[data-theme="glass-light"] #panel-usage .pmu-accsw:is(:hover:where(:not(.pmu-board[data-op="wheel"] *)), .is-open):not([disabled]) { box-shadow: inset 0 1px 0 color-mix(in srgb, #fff 70%, transparent), 0 1px 5px -2px color-mix(in srgb, #000 18%, transparent); }
+html[data-theme^="friendly"] #panel-usage .pmu-accsw:is(:hover:where(:not(.pmu-board:is([data-op="wheel"],[data-wheel-handoff]) *)), .is-open):not([disabled]) .pmu-accswi > :where(.is-link):is(i),
+html[data-theme^="friendly"] #panel-usage .pmu-accsw:is(:hover:where(:not(.pmu-board:is([data-op="wheel"],[data-wheel-handoff]) *)), .is-open):not([disabled]) .pmu-accswi > :where(.is-own):is(i) { transform: scale(1.18); }
+html[data-theme^="glass"] #panel-usage .pmu-accsw:is(:hover:where(:not(.pmu-board:is([data-op="wheel"],[data-wheel-handoff]) *)), .is-open):not([disabled]) { box-shadow: inset 0 1px 0 color-mix(in srgb, #fff 18%, transparent), 0 1px 6px -2px color-mix(in srgb, #000 30%, transparent); }
+html[data-theme="glass-light"] #panel-usage .pmu-accsw:is(:hover:where(:not(.pmu-board:is([data-op="wheel"],[data-wheel-handoff]) *)), .is-open):not([disabled]) { box-shadow: inset 0 1px 0 color-mix(in srgb, #fff 70%, transparent), 0 1px 5px -2px color-mix(in srgb, #000 18%, transparent); }
 html[data-theme^="retro"] #panel-usage .pmu-accsw { border-radius: 0; transition-timing-function: steps(2, jump-start); }
 html[data-o55-nier="on"] #panel-usage .pmu-accsw { border-radius: 0; color: var(--o55-nier-ink); border: 1px dashed rgba(var(--o55-nier-ink-rgb, 72, 69, 58), .42); transition-timing-function: steps(2, jump-start); }
 html[data-o55-nier="on"] #panel-usage .pmu-accsw[data-own] { border-style: solid; border-color: var(--o55-nier-ink); }
 html[data-o55-nier="on"] #panel-usage .pmu-accswi > i { color: inherit; }
-html[data-o55-nier="on"] #panel-usage .pmu-accrow:hover:where(:not(.pmu-board[data-op="wheel"] *)) .pmu-accsw:not([data-own]) { border-color: rgba(var(--o55-nier-ink-rgb, 72, 69, 58), .7); }
-html[data-o55-nier="on"] #panel-usage .pmu-accrow:hover:where(:not(.pmu-board[data-op="wheel"] *)) .pmu-accsw:is(:hover:where(:not(.pmu-board[data-op="wheel"] *)), .is-open):not([disabled]), html[data-o55-nier="on"] #panel-usage .pmu-accsw:is(:hover:where(:not(.pmu-board[data-op="wheel"] *)), .is-open):not([disabled]) {
+html[data-o55-nier="on"] #panel-usage .pmu-accrow:hover:where(:not(.pmu-board:is([data-op="wheel"],[data-wheel-handoff]) *)) .pmu-accsw:not([data-own]) { border-color: rgba(var(--o55-nier-ink-rgb, 72, 69, 58), .7); }
+html[data-o55-nier="on"] #panel-usage .pmu-accrow:hover:where(:not(.pmu-board:is([data-op="wheel"],[data-wheel-handoff]) *)) .pmu-accsw:is(:hover:where(:not(.pmu-board:is([data-op="wheel"],[data-wheel-handoff]) *)), .is-open):not([disabled]), html[data-o55-nier="on"] #panel-usage .pmu-accsw:is(:hover:where(:not(.pmu-board:is([data-op="wheel"],[data-wheel-handoff]) *)), .is-open):not([disabled]) {
   background: var(--o55-nier-ink); border-style: solid; border-color: var(--o55-nier-ink); color: var(--o55-nier-paper, var(--pmu-card)); box-shadow: none; }
 html[data-o55-nier="on"] #panel-usage .pmu-accsw:focus-visible { outline: 1px solid var(--o55-nier-ink); outline-offset: 2px; }
 html[data-o55-nier="on"] #panel-usage .pmu-accsww { color: var(--o55-nier-ink); opacity: .7; letter-spacing: .02em; }

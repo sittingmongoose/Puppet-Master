@@ -1071,7 +1071,7 @@
   }
   /* a card of a board in the wheel pause (PERF-USAGE-HOVER, bindTools) shows no hover: its head is not fitted for it, and
      the pause's end fits the card under the pointer */
-  function wheelPaused(card) { var p = card.parentNode; return !!(p && p.getAttribute && p.getAttribute('data-op') === 'wheel'); }
+  function wheelPaused(card) { var p = card.parentNode; return !!(p && p.getAttribute && (p.getAttribute('data-op') === 'wheel' || p.hasAttribute('data-wheel-handoff'))); }
   var M = PMU.motion;
 
   /* tool clicks (delegated on the board) */
@@ -1086,7 +1086,7 @@
        not light up or show its tool buttons: the board takes data-op="wheel" from the first wheel event until WHEEL_REST
        ms after the last wheel or scroll event, or until the pointer really moves or presses. The shell's hover engine
        rests for a board with [data-op] (18-hover.js: no plate light, glow, reticle or magnet on its cards); Usage's
-       in-board :hover rules end in :where(:not(.pmu-board[data-op="wheel"] *)) (20-board.css says more); the head fit
+       in-board :hover rules read the wheel and keyboard handoff markers (20-board.css says more); the head fit
        below waits too. Chart highlights, readouts and pointer tooltips retain main's ordinary JS behavior. Hit-testing
        is unchanged: a click or a press lands where it always did. When the pause ends the board drops the value, the
        card under the pointer is fitted again and one pmu-op-end event (detail: the board) tells the hover engine to look
@@ -1100,12 +1100,16 @@
       if (wheelT) { clearTimeout(wheelT); wheelT = 0; }
       if (!wheelAt) return;
       var held = wheelEl, el = b.el(), point = wheelAt;
-      if (held && held !== el && held.getAttribute('data-op') === 'wheel') held.removeAttribute('data-op');
+      if (held && held !== el) {
+        if (held.getAttribute('data-op') === 'wheel') held.removeAttribute('data-op');
+        held.removeAttribute('data-wheel-handoff');
+      }
       var op = el && el.getAttribute('data-op');
       /* R112: keyboard M/R can take over without a pointer event. Keep the return and its current point until the
          board's idle sync releases the gesture flags; never release a move/resize marker or notify a live gesture. */
       if (el && (op !== null && op !== 'wheel' || b.gesture && b.gesture())) {
         if (op === 'wheel') el.removeAttribute('data-op');
+        el.removeAttribute('data-wheel-handoff');
         return;
       }
       wheelAt = wheelEl = null;
@@ -1126,6 +1130,7 @@
         try { fitTools(card); } catch (error) { console.error('[pm-usage] head fit', error); }
       }
       if (el.getAttribute('data-op') === 'wheel') el.removeAttribute('data-op');
+      el.removeAttribute('data-wheel-handoff');
       try { document.dispatchEvent(new CustomEvent('pmu-op-end', { detail: { board: el, point: point } })); } catch (error) { /* none */ }
     };
     var wheelHold = function () { if (wheelT) clearTimeout(wheelT); wheelT = setTimeout(wheelEnd, WHEEL_REST); };
@@ -1135,7 +1140,9 @@
       var el = b.el(), op = el && el.getAttribute('data-op');
       /* R113 P3: endGesture clears the live gesture before idle opSync removes its marker. A completed move/resize
          can hand that marker to this first wheel; an actual gesture or another operation keeps its ownership. */
-      if (!el || b.gesture && b.gesture() || op !== null && op !== 'wheel' && op !== 'move' && op !== 'resize') { wheelEnd(); return null; }
+      /* Any input delivered during a live keyboard gesture leaves an existing deadline alone. */
+      if (b.gesture && b.gesture()) return null;
+      if (!el || op !== null && op !== 'wheel' && op !== 'move' && op !== 'resize') { wheelEnd(); return null; }
       /* R116 P1: the outgoing board still paints and takes hits above the incoming board. Its wheel
          marker stays until retirement clears its attributes, or a later mount promotes it back to live. */
       if (wheelEl && wheelEl !== el && wheelEl.getAttribute('data-op') === 'wheel' && !wheelEl.matches('.pmu-ghostboard,.pmu-oldboard')) wheelEl.removeAttribute('data-op');
@@ -1153,7 +1160,11 @@
       if (wheelAt) wheelBoard();
       else {
         /* A reversed ghost can return after the original hold ended. Promotion restores its ordinary hover. */
-        var el = b.el(); if (el && el.getAttribute('data-op') === 'wheel') el.removeAttribute('data-op');
+        var el = b.el();
+        if (el) {
+          if (el.getAttribute('data-op') === 'wheel') el.removeAttribute('data-op');
+          el.removeAttribute('data-wheel-handoff');
+        }
       }
     };
     var onWheel = function (event) {
@@ -1214,8 +1225,8 @@
          Pointer move/leave/press keep updating wheelAt during the handoff, so wheelEnd resolves the live hover. */
       offWheelEnd = b.on('op-end', function () {
         if (!wheelAt) return;
-        /* R116 P5: opSync just removed the gesture marker. Reacquire wheel suppression while its
-           original timer is still pending; do not restart or extend that deadline. */
+        /* opSync restored the wheel marker if its deadline is still pending. A hold that already
+           expired can now complete its deferred engine return. */
         if (wheelT) wheelBoard(); else wheelEnd();
       });
       boardEl.addEventListener('wheel', onWheel, { passive: true });

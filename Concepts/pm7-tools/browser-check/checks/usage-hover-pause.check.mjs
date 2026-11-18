@@ -495,6 +495,10 @@ async function keyboardPause(t, f, label, park) {
 	await park();
 	const liveWasOn = await f.evaluate(() => { const on = PMU.live.on(); PMU.live.pause(); PM7_USAGE.setRoomDetail('overview', 'glance'); return on; });
 	await t.page.waitForTimeout(4500);
+	// Keep the two real cards used by this keyboard route. This keeps the gesture's deferred work
+	// inside the wheel deadline on the test host while retaining the same focus, hover and provider state.
+	await f.evaluate(() => PMU.board.visible().filter((id) => id !== 'health' && id !== 'ov-skyline').forEach((id) => PMU.board.setVisible(id, false)));
+	await t.page.waitForTimeout(1500);
 	const records = [];
 	for (const [key, mode] of [['m', 'move'], ['r', 'resize']]) {
 		const S = label + `R112 ${mode}: `;
@@ -509,39 +513,58 @@ async function keyboardPause(t, f, label, park) {
 		await f.evaluate(({key, mode}) => {
 			const sc = document.getElementById('pmuScroll'), board = () => document.getElementById('pmuBoard');
 			const target = board().querySelector('.pmu-card[data-widget="ov-skyline"] .pmu-skycol[data-prov]:hover');
+			const track = target?.querySelector('.pmu-skytrack');
 			const read = () => {
 				const b = board(), dim = [...b.querySelectorAll('.is-hl-dim')], on = [...b.querySelectorAll('.is-hl-on')];
-				return { t: performance.now(), op: b.getAttribute('data-op'), gesture: PMU.board.gesture(), top: sc.scrollTop,
+				return { t: performance.now(), op: b.getAttribute('data-op'), gesture: PMU.board.gesture(), top: sc.scrollTop, shadow: track && getComputedStyle(track).boxShadow,
 					hovered: !!target?.isConnected && target.closest('.pmu-board') === b && target.matches(':hover'),
 					dim: dim.length, on: on.length, correct: !!target && dim.every((el) => el.dataset.prov !== target.dataset.prov) && on.every((el) => el.dataset.prov === target.dataset.prov),
 					eligibleDim: [...b.querySelectorAll('.pmu-mark[data-prov]')].filter((el) => el.dataset.prov !== target?.dataset.prov).length,
 					eligibleOn: [...b.querySelectorAll('.pmu-irow[data-prov]')].filter((el) => el.dataset.prov === target?.dataset.prov).length };
 			};
-			const r = window.__uhpKeyboard = { key, mode, pre: read(), focused: document.activeElement?.dataset.widget, wheels: [], keys: [], ends: [], moves: 0, frames: [] };
+			const r = window.__uhpKeyboard = { key, mode, pre: read(), focused: document.activeElement?.dataset.widget, wheels: [], keys: [], ends: [], moves: 0, frames: [], markers: [] };
 			let running = true, point = null;
-			const wheel = (e) => { point = [e.clientX, e.clientY]; r.wheels.push({t: performance.now(), trusted: e.isTrusted, held: board().getAttribute('data-op') === 'wheel'}); };
+			const wheel = (e) => {
+				point = [e.clientX, e.clientY];
+				r.wheels.push({t: performance.now(), trusted: e.isTrusted, ...read()});
+			};
 			const keydown = (e) => { if (e.key === key || e.key === 'Escape') r.keys.push({t: performance.now(), key: e.key, trusted: e.isTrusted, focused: e.target.dataset.widget}); };
 			const move = (e) => { if (point && (e.clientX !== point[0] || e.clientY !== point[1])) r.moves++; };
 			const end = (e) => r.ends.push({t: performance.now(), live: e.detail?.board === board(), gesture: !!PMU.board.gesture(), op: board().getAttribute('data-op'), point: e.detail?.point});
 			const frame = () => { if (!running) return; r.frames.push(read()); requestAnimationFrame(frame); };
 			sc.addEventListener('wheel', wheel, {passive: true}); document.addEventListener('keydown', keydown, true); document.addEventListener('pointermove', move, true); document.addEventListener('pmu-op-end', end);
+			const markers = new MutationObserver(() => r.markers.push(read()));
+			markers.observe(board(), { attributes: true, attributeFilter: ['data-op'] });
 			requestAnimationFrame(frame);
-			r.stop = () => { running = false; sc.removeEventListener('wheel', wheel); document.removeEventListener('keydown', keydown, true); document.removeEventListener('pointermove', move, true); document.removeEventListener('pmu-op-end', end); return {...r, stop: undefined, point, after: read()}; };
+			r.stop = () => { running = false; markers.disconnect(); sc.removeEventListener('wheel', wheel); document.removeEventListener('keydown', keydown, true); document.removeEventListener('pointermove', move, true); document.removeEventListener('pmu-op-end', end); return {...r, stop: undefined, point, after: read()}; };
 		}, {key, mode});
-		// Consecutive trusted inputs; the in-page timestamps qualify entry before the 150 ms deadline.
+		// A second trusted wheel at the same limit witnesses suppression inside the live gesture even
+		// if the deferred operation marker misses this host's first 150 ms window.
 		await t.page.mouse.wheel(0, -1);
-		await t.page.keyboard.press(key);
+		await Promise.all([t.page.keyboard.down(key), t.page.mouse.wheel(0, -1)]);
+		await t.page.keyboard.up(key);
 		await t.page.waitForTimeout(650);
 		await t.page.keyboard.press('Escape');
 		await t.page.waitForTimeout(900);
 		const rec = await f.evaluate(() => window.__uhpKeyboard.stop()); records.push(rec);
 		const press = rec.keys.find((x) => x.key === key), escape = rec.keys.find((x) => x.key === 'Escape');
-		const gap = press?.t - rec.wheels[0]?.t, held = rec.frames.filter((x) => x.t >= rec.wheels[0]?.t + 200 && x.t < escape?.t);
+		const [first, follow] = rec.wheels;
+		const gap = press?.t - first?.t, held = rec.frames.filter((x) => x.t >= first?.t + 200 && x.t < escape?.t);
 		const a = rec.after, p = rec.pre;
+		const duringMove = [...rec.markers, ...rec.frames].filter((x) => x.t >= first?.t && x.t < first?.t + 150 && x.op === mode && x.hovered);
+		const visualInput = rec.wheels.length === 2 && first.trusted && follow.trusted && first.op === 'wheel' &&
+			follow.gesture?.kb && follow.gesture.type === mode && follow.t >= press?.t && follow.t < first.t + 150 &&
+			p.hovered && first.hovered && follow.hovered && first.shadow !== p.shadow &&
+			first.top === 0 && follow.top === 0 && !rec.moves;
+		await t.check(S + 'could judge Skyline hover before its wheel deadline on a second trusted wheel inside the keyboard gesture',
+			visualInput, JSON.stringify({pre: p, wheels: rec.wheels, press, moves: rec.moves}));
+		await t.check(S + 'Skyline stays visually neutral inside the keyboard gesture until the original wheel deadline',
+			visualInput && follow.shadow === first.shadow && duringMove.every((x) => x.shadow === first.shadow) && a.shadow === p.shadow,
+			JSON.stringify({resting: p.shadow, wheels: rec.wheels, after: a.shadow, duringMove}));
 		t.log(S + JSON.stringify(rec));
 		await t.check(S + 'could judge: applied provider, trusted wheel at top, M/R on another focused card within 150 ms, gesture held past pause, trusted Escape and still pointer',
 			p.hovered && p.dim === p.eligibleDim && p.on === p.eligibleOn && p.dim + p.on > 0 && p.correct && rec.focused === 'health' &&
-			rec.wheels.length === 1 && rec.wheels[0].trusted && rec.wheels[0].held && gap >= 0 && gap < 150 && press?.trusted && press.focused === 'health' && escape?.trusted &&
+			rec.wheels.length === 2 && rec.wheels.every((x) => x.trusted) && first.op === 'wheel' && gap >= 0 && gap < 150 && press?.trusted && press.focused === 'health' && escape?.trusted &&
 			escape.t - press.t >= 500 && held.length >= 5 && held.every((x) => x.gesture?.kb && x.gesture.type === mode && x.hovered && x.top === 0) && held.some((x) => x.op === mode) &&
 			!rec.moves && a.hovered && a.top === 0 && !a.gesture && !a.op,
 			JSON.stringify({gap, pre: p, focused: rec.focused, wheels: rec.wheels, keys: rec.keys, held: held.length, moves: rec.moves, after: a}));
@@ -549,7 +572,7 @@ async function keyboardPause(t, f, label, park) {
 		await t.check(S + 'after Escape one lifecycle return releases the engine while main provider selection stays unchanged', rec.ends.length === 1 && rec.ends[0].live && !rec.ends[0].gesture && !rec.ends[0].op && rec.ends[0].t >= escape?.t && JSON.stringify(rec.ends[0].point) === JSON.stringify(rec.point) && !a.gesture && !a.op && a.hovered && a.dim === a.eligibleDim && a.on === a.eligibleOn && a.dim + a.on > 0 && a.correct, JSON.stringify({ends: rec.ends, after: a}));
 	}
 	await park();
-	await f.evaluate((on) => { document.activeElement?.blur(); if (on) PMU.live.resume(); }, liveWasOn);
+	await f.evaluate((on) => { document.activeElement?.blur(); PMU.board.reset('room'); if (on) PMU.live.resume(); }, liveWasOn);
 	return records;
 }
 
