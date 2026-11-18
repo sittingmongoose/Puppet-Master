@@ -25,8 +25,10 @@ export const RECORD = (stripSel) => {
 		W.probes = new Map();
 		const probe = (rec, key) => {
 			let e = W.probeEl;
-			if (!e || !e.isConnected) { e = W.probeEl = document.createElement('i'); e.setAttribute('aria-hidden', 'true'); e.style.cssText = 'position:fixed;left:0;top:0;width:2px;height:2px;pointer-events:none;opacity:0.01;contain:strict'; document.documentElement.appendChild(e); }
-			W.probes.set(animate.call(e, [{ opacity: 0.01 }, { opacity: 0.02 }], { duration: 60000 }), { rec, key });
+			// (a transform on a painted box, so the compositor runs it: an animation the main thread runs alone is dated at the
+			// next main frame's time, which can be 200 ms before its commit is drawn)
+			if (!e || !e.isConnected) { e = W.probeEl = document.createElement('i'); e.setAttribute('aria-hidden', 'true'); e.style.cssText = 'position:fixed;left:0;top:0;width:2px;height:2px;pointer-events:none;background:rgba(0,0,0,0.004);display:block'; document.documentElement.appendChild(e); }
+			W.probes.set(animate.call(e, [{ transform: 'translateX(0px)' }, { transform: 'translateX(0.01px)' }], { duration: 60000 }), { rec, key });
 		};
 		Element.prototype.animate = function (kf, timing) {
 			const a = animate.call(this, kf, timing);

@@ -31,7 +31,7 @@ export const CHIP_SAMPLER = (opts) => {
 		for (const s of W.strips) {
 			const el = stripOf(s); if (!el) continue;
 			const sr = el.getBoundingClientRect();
-			let chip = null, src = null, rec = null, st = null, ct = null;
+			let chip = null, src = null, rec = null, st = null, ct = null, lenses = 0;
 			const blocks = [...el.querySelectorAll(':scope > lg-over > .lg-hop')].filter(shown);
 			const b = blocks.pop();
 			if (b) {
@@ -41,15 +41,18 @@ export const CHIP_SAMPLER = (opts) => {
 				const ul = el.querySelector(':scope > lg-under > .lg-lens');
 				if (ul && shown(ul)) { chip = rr(ul); src = 'lens'; }
 				else {
-					// a lens in a shared layer (Glass): the one over this strip
-					const near = [...document.querySelectorAll('.lg-lens:not(.lg-hop):not(.lg-bead)')].filter((l) => !l.closest('lg-under') && shown(l)).map(rr)
-						.filter((q) => q[0] < sr.right && q[0] + q[2] > sr.left && q[1] < sr.bottom && q[1] + q[3] > sr.top);
-					if (near.length) { chip = near[0]; src = 'lens'; }
+					// a lens in a shared layer (Glass): the one over this strip, the same element read after read while it is shown
+					// over it (followed by identity, never by where it is, so a step of the lens is not mistaken for another lens)
+					const over = (q) => q[0] < sr.right && q[0] + q[2] > sr.left && q[1] < sr.bottom && q[1] + q[3] > sr.top;
+					const cands = [...document.querySelectorAll('.lg-lens:not(.lg-hop):not(.lg-bead)')].filter((l) => !l.closest('lg-under') && shown(l) && over(rr(l)));
+					const keep = s.lensEl && cands.includes(s.lensEl) ? s.lensEl : cands[0] || null;
+					s.lensEl = keep;
+					if (keep) { chip = rr(keep); src = 'lens'; lenses = cands.length; }
 				}
 			}
 			const on = el.querySelector(s.active);
 			const items = s.items ? [...el.querySelectorAll(s.items)].filter((e) => e.getClientRects().length).map(rr) : [];
-			row.s[s.sel] = { chip, src, rec, st, ct, on: on ? rr(on) : null, items, so: [sr.left, sr.top] };
+			row.s[s.sel] = { chip, src, rec, st, ct, on: on ? rr(on) : null, items, so: [sr.left, sr.top], lenses };
 		}
 		W.rows.push(row);
 	};

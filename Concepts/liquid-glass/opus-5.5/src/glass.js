@@ -2678,12 +2678,22 @@
        meanwhile. Written after layout, a change can still go out with a commit whose paint and raster hold its first frame
        back (85 ms when Usage drew a page): a trip under way that has landed is where it is at any time, so its change is
        made as new animations instead, from that place, which the compositor starts at the frame that first draws them
-       (as it starts every new animation), so the change begins at that frame whenever it comes */
+       (as it starts every new animation), so the change begins at that frame whenever it comes. A frame whose own work
+       ran long before its layout was done (the app drawing a page) commits late, and what goes out with it is drawn late:
+       a change written 130 ms into such a frame was first drawn about 200 ms on, the hop already over, 110 px at once
+       (Friendly Dark, Home's tabs, film F1564-F1567). So a change from a trip still moving goes out only with a frame
+       whose layout was done within 12 ms of its start (as a frame callback on time was judged); otherwise it waits for
+       such a frame or for the trip to land, whichever comes first, and a landed trip's change needs neither (its new
+       animations start at whatever frame draws them). Under steady load no frame was on time and a change gated so
+       waited past its trip's landing, the chip left on the tab the trip ended on (Usage, sandbox) */
     if (go) {
       var tries = 0;
       var apply = function () {
         if (L.carry !== K) return;
-        var age = Math.max(at, carryAge(K)), rest = age >= go.K.dur, P = plan(at, age, rest ? age : from);
+        var age = Math.max(at, carryAge(K)), rest = age >= go.K.dur;
+        var tl1 = document.timeline && document.timeline.currentTime != null ? document.timeline.currentTime : null;
+        if (!rest && tl1 != null && performance.now() - tl1 > 12) { requestAnimationFrame(change); return; }
+        var P = plan(at, age, rest ? age : from);
         if (rest) {
           anims = anims.map(function (a) { var e = a.effect.target, b; a.cancel(); b = e.animate(P.frames[parts.indexOf(e)], { duration: P.span, easing: 'linear', fill: 'forwards' }); return b; });
           lead = K.anim = anims[0]; K.drawn = null;
