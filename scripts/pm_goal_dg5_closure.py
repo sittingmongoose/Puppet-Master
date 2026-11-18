@@ -603,7 +603,7 @@ def _format_recipe(checker):
         out = {}
         for name, (fn, raises) in checker.checkers.items():
             ref = _fn_ref(fn)
-            exc = [_fn_ref(e) for e in raises]
+            exc = [_fn_ref(e) for e in (raises if isinstance(raises, tuple) else (raises,))]
             if ref is None or any(r is None for r in exc):
                 return None
             out[name] = (ref, exc)
@@ -615,8 +615,10 @@ def _format_recipe(checker):
 def _rebuild_format(recipe):
     if recipe == 'common.FORMATS':
         return common.FORMATS
-    return jsonschema.FormatChecker(checkers={name: (_import_ref(ref), tuple(_import_ref(e) for e in exc))
-                                                for name, (ref, exc) in recipe.items()})
+    checker = jsonschema.FormatChecker()
+    checker.checkers = {name: (_import_ref(ref), tuple(_import_ref(e) for e in exc))
+                          for name, (ref, exc) in recipe.items()}
+    return checker
 
 
 def _dump_entry(slot, ident):
@@ -640,15 +642,20 @@ def _dump_entry(slot, ident):
         entry['rebuild'] = 'rootbank'
         entry['rootbank'] = dict(documents=bank.documents, pins=bank.pins, root=v.schema['$ref'])
     else:
-        recipe = _class_recipe(type(v))
-        fmt = _format_recipe(v.format_checker)
-        registry = resolver._registry
-        if recipe is None or fmt is None or registry is None:
+        try:
+            recipe = _class_recipe(type(v))
+            fmt = _format_recipe(v.format_checker)
+            registry = resolver._registry
+            resources = {uri: registry[uri].contents for uri in _plain_registry(registry)} \
+                if registry is not None else None
+        except Exception as exc:  # noqa: BLE001 - one root's recipe failure never aborts the dump
+            entry['rebuild_note'] = 'recipe failed: ' + type(exc).__name__ + ': ' + str(exc)[:300]
+            return entry
+        if recipe is None or fmt is None or resources is None:
             entry['rebuild_note'] = 'validator class or format checker not importable by name'
             return entry
         entry['rebuild'] = 'recipe'
-        entry['recipe'] = dict(cls=recipe, format=fmt, base=resolver._base_uri,
-                               resources={uri: registry[uri].contents for uri in _plain_registry(registry)})
+        entry['recipe'] = dict(cls=recipe, format=fmt, base=resolver._base_uri, resources=resources)
     try:
         plain = _rebuild_plain(entry)
         copy_v = closure_validator(plain, ident, None)
