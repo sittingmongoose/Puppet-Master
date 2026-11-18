@@ -1169,8 +1169,10 @@
       if (cfg.onIndex) cfg.onIndex(picked.i);
       indexOnly = true; indexCards.add(api);
     }
-    function opStart(e) { if (cfg.restoreIndex && e.detail && e.detail.board === box.closest('.pmu-board')) hide(); }
-    if (cfg.restoreIndex) { document.addEventListener('pmu-op-start', opStart); document.addEventListener('pmu-op-end', opEnd); }
+    /* R113 P1: a no-scroll wheel must dismiss every open plot; only opted-in columns restore index emphasis. */
+    function opStart(e) { if (e.detail && e.detail.board === box.closest('.pmu-board')) hide(); }
+    document.addEventListener('pmu-op-start', opStart);
+    if (cfg.restoreIndex) document.addEventListener('pmu-op-end', opEnd);
     box.addEventListener('pointermove', move);
     box.addEventListener('pointerleave', hide);
     api = {
