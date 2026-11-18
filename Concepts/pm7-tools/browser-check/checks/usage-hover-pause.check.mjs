@@ -337,9 +337,11 @@ async function roomMountRace(t, f, label, park, rm) {
 
 // R100: wheel from a fully applied chart/card state, not merely from pending pointer intent.
 async function appliedHighlights(t, f, label, park) {
-	const records = [], wanted = String(t.args.chartCases || 'provider,donut,column,engine,tool').split(',');
+	const records = [], wanted = String(t.args.chartCases || 'provider,donut,column,engine,tool').split(','), rm = String(t.args.rm || '') === '1';
+	const routes = wanted.flatMap((kind)=>kind === 'tool' && rm ? [{kind,reducedTool:true},{kind,reducedTool:false}] : [{kind,reducedTool:rm}]);
 	const liveWasOn = await f.evaluate(() => { const on = PMU.live.on(); PMU.live.pause(); return on; });
-	for (const kind of wanted) {
+	for (const {kind,reducedTool} of routes) {
+		if(rm){await t.emulate({reducedMotion:reducedTool?'reduce':'no-preference'});await f.waitForFunction((want)=>PMU.motion.reduced()===want,reducedTool,{timeout:5000});}
 		await park();
 		await f.evaluate((r) => { PMU.menu.close(); PM7_USAGE.setRoomDetail(r, 'diagnostics'); }, kind === 'donut' ? 'analytics' : kind === 'column' ? 'costs' : 'overview');
 		await t.page.waitForTimeout(4500);
@@ -364,11 +366,12 @@ async function appliedHighlights(t, f, label, park) {
 		if (!box || !pane) { await t.check(label + `R100 ${kind}: could judge visible target`, false); continue; }
 		let at = { x: box.x + box.width / 2, y: (Math.max(box.y, pane.y) + Math.min(box.y + box.height, pane.y + pane.height)) / 2 };
 		await t.page.mouse.move(2,2); await t.page.waitForTimeout(250);
-		await f.evaluate(({ kind, selector }) => {
+		await f.evaluate(({ kind, selector, reducedTool }) => {
 			const b = document.getElementById('pmuBoard'), sc = document.getElementById('pmuScroll'), target = b.querySelector(selector);
-			const chart = target.closest('.pmu-chart') || target, r = window.__uhpApplied = { kind, frames: [], wheels: [], scrolls: [], moves: 0, ends: [] };
+			const chart = target.closest('.pmu-chart') || target, r = window.__uhpApplied = { kind, reducedTool, frames: [], wheels: [], scrolls: [], moves: 0, ends: [] };
 			let running = true, pos = null, point = null;
-			const read = () => ({ t: performance.now(), op: b.getAttribute('data-op'), top: sc.scrollTop, hovered: kind === 'column' ? chart.matches(':hover') : target.matches(':hover'),
+			const toolState=()=>{const tools=kind==='tool'?target.querySelector('.pmu-cardtools'):null;if(!tools)return {};const cs=getComputedStyle(tools);return {toolOpacity:parseFloat(cs.opacity),toolPointerEvents:cs.pointerEvents,reduced:PMU.motion.reduced()};};
+			const read = () => ({ ...toolState(), t: performance.now(), op: b.getAttribute('data-op'), top: sc.scrollTop, hovered: kind === 'column' ? chart.matches(':hover') : target.matches(':hover'),
 				hl: b.querySelectorAll('.is-hl-dim,.is-hl-on').length,
 				dim: chart.querySelectorAll('path[data-mark="arc"].is-dim').length, hot: chart.querySelectorAll('.pmu-dl-row.is-hot').length,
 				value: chart.querySelector('.pmu-dc-v')?.textContent, caption: chart.querySelector('.pmu-dc-c')?.textContent,
@@ -380,16 +383,17 @@ async function appliedHighlights(t, f, label, park) {
 				bucket: kind === 'column' && (pos || point) ? ([...chart.querySelectorAll('.pmu-col[data-i]')].find((c)=>{const r=c.getBoundingClientRect(), x=(pos||point)[0];return x>=r.left&&x<=r.right;})?.dataset.i ?? null) : null,
 				readout: !!chart.querySelector('.pmu-xh-on'), lit: target.classList.contains('pmh-on'), engineRunning: window.PMH?.stats?.().running });
 			r.neutral = read();
+			const immediate=()=>{if(kind==='tool'&&reducedTool)r.immediate=read();};
 			const wheel = (e) => { r.wheels.push({ t: performance.now(), trusted: e.isTrusted }); pos = [e.clientX,e.clientY]; point = pos; };
 			const scroll = () => r.scrolls.push({ t: performance.now(), top: sc.scrollTop });
 			const move = (e) => { point = [e.clientX,e.clientY]; if (pos && (e.clientX !== pos[0] || e.clientY !== pos[1])) r.moves++; };
 			const end = (e) => { if (e.detail?.board === b) r.ends.push(performance.now()); };
 			const sample = () => { if (!running) return; if (b.getAttribute('data-op') === 'wheel') r.frames.push(read()); requestAnimationFrame(sample); };
-			sc.addEventListener('wheel', wheel, { capture:true, passive:true }); sc.addEventListener('scroll', scroll, { passive:true }); sc.addEventListener('pointermove', move, true);
+			sc.addEventListener('wheel', wheel, { capture:true, passive:true }); sc.addEventListener('wheel',immediate,{passive:true}); sc.addEventListener('scroll', scroll, { passive:true }); sc.addEventListener('pointermove', move, true);
 			document.addEventListener('pmu-op-end', end); requestAnimationFrame(sample);
 			r.read = read;
-			r.stop = () => { running=false; sc.removeEventListener('wheel',wheel,true); sc.removeEventListener('scroll',scroll); sc.removeEventListener('pointermove',move,true); document.removeEventListener('pmu-op-end',end); return { ...r, read:undefined, stop:undefined, after:read() }; };
-		}, { kind, selector });
+			r.stop = () => { running=false; sc.removeEventListener('wheel',wheel,true); sc.removeEventListener('wheel',immediate); sc.removeEventListener('scroll',scroll); sc.removeEventListener('pointermove',move,true); document.removeEventListener('pmu-op-end',end); return { ...r, read:undefined, stop:undefined, after:read() }; };
+		}, { kind, selector, reducedTool });
 		await t.page.mouse.move(at.x, at.y, { steps: 4 });
 		await t.page.waitForTimeout(kind === 'engine' ? 4000 : 900);
 		if (kind === 'tool') {
@@ -397,21 +401,24 @@ async function appliedHighlights(t, f, label, park) {
 			if (!mb) { await t.check(label + 'R100 tool: menu button exists', false); continue; }
 			at = { x: mb.x + mb.width / 2, y: mb.y + mb.height / 2 };
 			await t.page.mouse.move(at.x, at.y); await t.page.waitForTimeout(600);
-			await f.evaluate(() => {
+			if(!reducedTool) await f.evaluate(() => {
 				const r = window.__uhpApplied;
 				const down = (e) => { document.removeEventListener('pointerdown',down,true); const c = e.target.closest('.pmu-card'); const tools = c?.querySelector('.pmu-cardtools'); r.press={ trusted:e.isTrusted, tool:e.target.closest('[data-tool]')?.dataset.tool, opacity:tools ? parseFloat(getComputedStyle(tools).opacity) : null, paused:document.getElementById('pmuBoard').getAttribute('data-op') === 'wheel' }; };
 				document.addEventListener('pointerdown',down,true);
 			});
 		}
 		const pre = await f.evaluate(() => window.__uhpApplied.read());
-		if (kind === 'tool') { await t.page.mouse.wheel(0,-1); await t.page.mouse.down(); await t.page.mouse.up(); }
+		if (kind === 'tool') { await t.page.mouse.wheel(0,-1); if(!reducedTool){await t.page.mouse.down(); await t.page.mouse.up();} }
 		else for (let i=0;i<18;i++) { await t.page.mouse.wheel(0,kind === 'engine' ? -1 : i % 2 ? -1 : 1); await t.page.waitForTimeout(30); }
 		await t.page.waitForTimeout(900);
 		const rec = await f.evaluate(() => { const r=window.__uhpApplied.stop(); r.menuOpen=!!PMU.menu.current(); return r; });
-		const S=label+`R100 ${kind}: `, last=rec.wheels.at(-1)?.t, marked=rec.frames.filter((x) => x.t >= rec.wheels[0]?.t+50);
+		const S=label+`R100 ${kind}${rm&&kind==='tool'?(reducedTool?' (Reduced Motion)':' (motion enabled)'):''}: `, last=rec.wheels.at(-1)?.t, marked=rec.frames.filter((x) => x.t >= rec.wheels[0]?.t+50);
 		records.push({kind,pre,rec});
 		t.log(S+JSON.stringify({pre, neutral:rec.neutral, frames:marked.length, ends:rec.ends, press:rec.press, after:rec.after}));
-		if (kind === 'tool') {
+		if (kind === 'tool' && reducedTool) {
+			await t.check(S+'could judge unfocused shown tools and trusted wheel in Reduced Motion',pre.hovered&&pre.reduced&&pre.toolOpacity>0.5&&rec.wheels.length===1&&rec.wheels[0].trusted&&rec.immediate?.op==='wheel'&&!rec.moves,JSON.stringify({pre,immediate:rec.immediate,wheels:rec.wheels,moves:rec.moves}));
+			await t.check(S+'tools conceal immediately in the wheel task under Reduced Motion',rec.immediate?.reduced&&rec.immediate.toolOpacity===0&&rec.immediate.toolPointerEvents==='none',JSON.stringify(rec.immediate));
+		} else if (kind === 'tool') {
 			await t.check(S+'could judge a trusted press while the previously shown tool still visibly fades', pre.hovered && rec.press?.trusted && rec.press.paused && rec.press.opacity > 0.05 && !rec.moves, JSON.stringify(rec.press));
 			await t.check(S+'the visible menu tool receives the press and opens its menu', rec.press?.tool === 'menu' && rec.menuOpen, JSON.stringify({press:rec.press,menuOpen:rec.menuOpen}));
 			if (rec.menuOpen) {
@@ -442,6 +449,7 @@ async function appliedHighlights(t, f, label, park) {
 		if (sparse) { await park(); await f.evaluate(()=>PMU.board.reset('room')); }
 		await park();
 	}
+	if(rm)await t.emulate({reducedMotion:'reduce'});
 	await f.evaluate((on)=>{ PMU.menu.close(); document.activeElement?.blur(); PM7_USAGE.setRoomDetail('overview','glance'); if(on) PMU.live.resume(); },liveWasOn);
 	await t.page.waitForTimeout(4500);
 	return records;
