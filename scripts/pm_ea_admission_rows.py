@@ -555,7 +555,13 @@ def derive_row(family: dict, grade: dict, contract: dict, readiness) -> tuple[di
         elif len(cv_units) == 1:
             owners["payload"] = unit_ref(cv_units[0])
         elif cv_units:
-            raise Gap("multiple CV units do not declare a payload owner role")
+            from pm_ea_merge2_rows import _owner_body
+            payload_refs = [v["path"] + v["json_pointer"].removesuffix("#") for v in editions.values()]
+            candidates = [u for u in cv_units if event_type in _owner_body(u)
+                          and any(ref in _owner_body(u) for ref in payload_refs)]
+            if len(candidates) != 1:
+                raise Gap("multiple CV units do not declare one exact-family payload owner role")
+            owners["payload"] = unit_ref(candidates[0])
         provenance["payload_owner_doc"] = SELF_GRADES[family["lane"]] + " closed_payload_schema evidence / current_owner_units"
     else:
         provenance["payload_owner_doc"] = contract["contract_ref"]
