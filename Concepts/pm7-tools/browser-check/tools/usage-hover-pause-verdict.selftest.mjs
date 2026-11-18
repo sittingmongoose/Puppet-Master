@@ -17,3 +17,8 @@ test('a starting card with tools still revealed after their fade cannot pass R1'
 test('an approved segmented-control color transition is not a forbidden card reveal',()=>{const r=make();r.trans.push({t:300,card:'new',under:true,prop:'color',cls:'pmu-seg-button',approved:true});assert.equal(j(r).r1.ok,true);});
 test('a transitionrun or ten-percent opacity cannot stand in for visibly returned tools',()=>{const r=make();r.trans.push({t:680,card:'new',under:true,prop:'opacity',cls:'pmu-cardtools'});for(const f of r.frames)if(f.t>=680&&f.t<860)f.tools=.1;assert.equal(j(r).r2.ok,false);});
 test('a lit card whose tools never visibly return cannot pass R2',()=>{const r=make();r.trans.push({t:680,card:'new',under:true,prop:'opacity',cls:'pmu-cardtools'});for(const f of r.frames)f.tools=0;assert.equal(j(r).r2.ok,false);});
+test('a later marked hold in the same input window must also be judged',()=>{
+ const r=make();r.ops=[{t:101,op:'wheel'},{t:250,op:null},{t:270,op:'wheel'},{t:670,op:null}];
+ for(const f of r.frames)f.op=(f.t<250||f.t>=270&&f.t<670)?'wheel':null;
+ r.frames.find(f=>f.t===600).highlights=1;assert.equal(j(r).r1.ok,false);
+});
