@@ -544,6 +544,31 @@ def revision_states(doc: dict, root: Path = ROOT) -> list[dict]:
                             for s in ("registry_before", "registry_after"))):
                 pending.append(rec)
     states, current = [], doc
+    # The four FIX1 owner-role corrections follow S5b. Reconstruct that exact
+    # prior registry first so earlier append proofs still work without Git.
+    # Both complete registry hashes and every corrected row pair are pinned;
+    # an unknown edit cannot disappear from a historical comparison.
+    try:
+        corrections = json.loads((root / "scripts/pm_ea_reviewed_owner_corrections.json").read_text())
+        after, before = corrections["registry_after"], corrections["registry_before"]
+        if (len(doc["families"]) >= after["family_count"]
+                and hashlib.sha256(_prefix(doc, after["revision"], after["family_count"])).hexdigest() == after["sha256"]):
+            earlier = copy.deepcopy(dict(doc, families=doc["families"][:after["family_count"]]))
+            for event, pin in corrections["families"].items():
+                at = [i for i, row in enumerate(earlier["families"]) if row.get("event_type") == event]
+                if len(at) != 1 or canonical_sha256(earlier["families"][at[0]]) != pin["successor_sha256"]:
+                    raise ValueError("owner correction successor not exact")
+                if canonical_sha256(pin["predecessor_row"]) != pin["predecessor_sha256"]:
+                    raise ValueError("owner correction predecessor not exact")
+                earlier["families"][at[0]] = copy.deepcopy(pin["predecessor_row"])
+            earlier["registry_revision"] = before["revision"]
+            if (len(earlier["families"]) != before["family_count"]
+                    or hashlib.sha256(rendered(earlier)).hexdigest() != before["sha256"]):
+                raise ValueError("owner correction registry predecessor not exact")
+            states.append(earlier)
+            current = earlier
+    except (OSError, ValueError, KeyError, TypeError):
+        pass  # No witness from this path; all callers still require exact pins.
     while pending:
         for rec in pending:
             after, before = rec["registry_after"], rec["registry_before"]

@@ -74,7 +74,8 @@ def all_prepared_snapshot():
     # inside the upstream40: DL-188's workspace.layout_changed 2.0.0 row (c0d688db9f, 634412b3ac) and DL-300's
     # eleven Goal application editions (102a7e99e8, admitted 5375bfd2a7). The reviewed-successor check below
     # still requires those exact current rows; pm-browser-event-admission.py accepts them by exact digest.
-    if len(registry["families"]) != 40 or GATE.fingerprint(registry["families"]) != "2fe49c025e4db8adc9183a3f32c393333c203f375d9a047cc7a98d48c6f8776e":
+    reviewed = GATE.emit_only_contract().reviewed_s5b_predecessors(registry["families"])
+    if len(reviewed) != 40 or GATE.fingerprint(reviewed) != "2fe49c025e4db8adc9183a3f32c393333c203f375d9a047cc7a98d48c6f8776e":
         raise AssertionError("Synthetic admission fixture requires the unchanged live upstream40")
     preservation, failures = GATE.preexisting_preservation(context[0], registry["families"])
     if len(registry["families"]) != 40 or failures or not preservation["current_preexisting_rows_match_reviewed_successors"]:

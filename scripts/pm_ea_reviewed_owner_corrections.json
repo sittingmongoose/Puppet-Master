@@ -5,25 +5,201 @@
       "predecessor_sha256": "2020a398c603184689e62a0fac3404a350fa07505ad4bb5928e50218fe1f1f6d",
       "successor_sha256": "422d094acb4fc05c8a6935c31c8a89ba5a3b8765f1176da76772a1cd28401cac",
       "contract_ref": "Plans/memory_archive_contracts.json#/families/0",
-      "review_commit": "0c904de00426b0089ba5d56349fda8ea16cc9f88"
+      "review_commit": "0c904de00426b0089ba5d56349fda8ea16cc9f88",
+      "predecessor_row": {
+        "family_id": "event-family-memory-monthly-summary-completed",
+        "family_revision": "1.0.0",
+        "event_type": "memory.monthly_summary.completed",
+        "scope_policy": "project_only",
+        "semantic_owner_doc": "Plans/storage-plan.md#SP-638",
+        "payload_owner_doc": "Plans/Contracts_V0.md#CV-656",
+        "payload_schema_id": "https://puppetmaster.local/Plans/memory_maintenance_event_payloads.schema.json#/$defs/memory_monthly_summary_completed",
+        "payload_schema_ref": {
+          "path": "Plans/memory_maintenance_event_payloads.schema.json",
+          "json_pointer": "#/$defs/memory_monthly_summary_completed",
+          "schema_id": "https://puppetmaster.local/Plans/memory_maintenance_event_payloads.schema.json#/$defs/memory_monthly_summary_completed"
+        },
+        "legacy": {
+          "aliases": [],
+          "admitted_extensions": [],
+          "identity_json_pointers": {
+            "project_id": [
+              "/payload/project_id"
+            ],
+            "thread_id": []
+          },
+          "referenced_event_id_pointer": null,
+          "redaction": {
+            "mode": "reject_unhandled_secrets",
+            "transform_id": null,
+            "transform_version": null
+          }
+        },
+        "source_refs": [
+          "Plans/storage-plan.md#SP-638",
+          "Plans/Contracts_V0.md#CV-656",
+          "Plans/memory_maintenance_event_payloads.schema.json#/$defs/memory_monthly_summary_completed",
+          "Plans/memory_maintenance_contracts.json#",
+          "reports/event-authority-20261116/admission-merge-2/readiness-list.json"
+        ],
+        "retention_policy_ref": {
+          "registry_schema_id": "pm.storage_value_registry.v2",
+          "policy_id": "RP-OPERATIONAL-2555D",
+          "policy_version": "1.0.0"
+        }
+      }
     },
     "memory.monthly_summary.started": {
       "predecessor_sha256": "8dae2d66d4bd401c3a2ef31ada9a35d5996159c14ba7bbbcb8edff045a456540",
       "successor_sha256": "daca640613eebaa304c55bb8e037a2da8da1b4bdaf3d85c0bf33542db229f54f",
       "contract_ref": "Plans/memory_archive_contracts.json#/families/1",
-      "review_commit": "0c904de00426b0089ba5d56349fda8ea16cc9f88"
+      "review_commit": "0c904de00426b0089ba5d56349fda8ea16cc9f88",
+      "predecessor_row": {
+        "family_id": "event-family-memory-monthly-summary-started",
+        "family_revision": "1.0.0",
+        "event_type": "memory.monthly_summary.started",
+        "scope_policy": "project_only",
+        "semantic_owner_doc": "Plans/storage-plan.md#SP-639",
+        "payload_owner_doc": "Plans/Contracts_V0.md#CV-657",
+        "payload_schema_id": "https://puppetmaster.local/Plans/memory_maintenance_event_payloads.schema.json#/$defs/memory_monthly_summary_started",
+        "payload_schema_ref": {
+          "path": "Plans/memory_maintenance_event_payloads.schema.json",
+          "json_pointer": "#/$defs/memory_monthly_summary_started",
+          "schema_id": "https://puppetmaster.local/Plans/memory_maintenance_event_payloads.schema.json#/$defs/memory_monthly_summary_started"
+        },
+        "legacy": {
+          "aliases": [],
+          "admitted_extensions": [],
+          "identity_json_pointers": {
+            "project_id": [
+              "/payload/project_id"
+            ],
+            "thread_id": []
+          },
+          "referenced_event_id_pointer": null,
+          "redaction": {
+            "mode": "reject_unhandled_secrets",
+            "transform_id": null,
+            "transform_version": null
+          }
+        },
+        "source_refs": [
+          "Plans/storage-plan.md#SP-639",
+          "Plans/Contracts_V0.md#CV-657",
+          "Plans/memory_maintenance_event_payloads.schema.json#/$defs/memory_monthly_summary_started",
+          "Plans/memory_maintenance_contracts.json#",
+          "reports/event-authority-20261116/admission-merge-2/readiness-list.json"
+        ],
+        "retention_policy_ref": {
+          "registry_schema_id": "pm.storage_value_registry.v2",
+          "policy_id": "RP-OPERATIONAL-2555D",
+          "policy_version": "1.0.0"
+        }
+      }
     },
     "memory.prune_archive.completed": {
       "predecessor_sha256": "cacc8471e40339fbab4d67dc63c784a2be01511de66110ebbf91858ea96318ed",
       "successor_sha256": "b802b23ae9970fa44e87c5c473b62bf0f6cd5cb181ef3b6831dbf01607f44716",
       "contract_ref": "Plans/memory_archive_contracts.json#/families/2",
-      "review_commit": "0c904de00426b0089ba5d56349fda8ea16cc9f88"
+      "review_commit": "0c904de00426b0089ba5d56349fda8ea16cc9f88",
+      "predecessor_row": {
+        "family_id": "event-family-memory-prune-archive-completed",
+        "family_revision": "1.0.0",
+        "event_type": "memory.prune_archive.completed",
+        "scope_policy": "project_only",
+        "semantic_owner_doc": "Plans/Contracts_V0.md#CV-658",
+        "payload_owner_doc": "Plans/Contracts_V0.md#CV-658",
+        "payload_schema_id": "https://puppetmaster.local/Plans/memory_maintenance_event_payloads.schema.json#/$defs/memory_prune_archive_completed",
+        "payload_schema_ref": {
+          "path": "Plans/memory_maintenance_event_payloads.schema.json",
+          "json_pointer": "#/$defs/memory_prune_archive_completed",
+          "schema_id": "https://puppetmaster.local/Plans/memory_maintenance_event_payloads.schema.json#/$defs/memory_prune_archive_completed"
+        },
+        "legacy": {
+          "aliases": [],
+          "admitted_extensions": [],
+          "identity_json_pointers": {
+            "project_id": [
+              "/payload/project_id"
+            ],
+            "thread_id": []
+          },
+          "referenced_event_id_pointer": null,
+          "redaction": {
+            "mode": "reject_unhandled_secrets",
+            "transform_id": null,
+            "transform_version": null
+          }
+        },
+        "source_refs": [
+          "Plans/Contracts_V0.md#CV-658",
+          "Plans/memory_maintenance_event_payloads.schema.json#/$defs/memory_prune_archive_completed",
+          "Plans/memory_maintenance_contracts.json#",
+          "reports/event-authority-20261116/admission-merge-2/readiness-list.json"
+        ],
+        "retention_policy_ref": {
+          "registry_schema_id": "pm.storage_value_registry.v2",
+          "policy_id": "RP-OPERATIONAL-2555D",
+          "policy_version": "1.0.0"
+        }
+      }
     },
     "memory.prune_archive.started": {
       "predecessor_sha256": "09c6499f2e9ac4b21ec9fa5c5cbede71e0e64550bbaba414d52e2c9645f450ed",
       "successor_sha256": "e1b25ca591dd023f034863caa2a8ce121f77238757c6cb17c8afac9a7be09479",
       "contract_ref": "Plans/memory_archive_contracts.json#/families/3",
-      "review_commit": "0c904de00426b0089ba5d56349fda8ea16cc9f88"
+      "review_commit": "0c904de00426b0089ba5d56349fda8ea16cc9f88",
+      "predecessor_row": {
+        "family_id": "event-family-memory-prune-archive-started",
+        "family_revision": "1.0.0",
+        "event_type": "memory.prune_archive.started",
+        "scope_policy": "project_only",
+        "semantic_owner_doc": "Plans/Contracts_V0.md#CV-659",
+        "payload_owner_doc": "Plans/Contracts_V0.md#CV-659",
+        "payload_schema_id": "https://puppetmaster.local/Plans/memory_maintenance_event_payloads.schema.json#/$defs/memory_prune_archive_started",
+        "payload_schema_ref": {
+          "path": "Plans/memory_maintenance_event_payloads.schema.json",
+          "json_pointer": "#/$defs/memory_prune_archive_started",
+          "schema_id": "https://puppetmaster.local/Plans/memory_maintenance_event_payloads.schema.json#/$defs/memory_prune_archive_started"
+        },
+        "legacy": {
+          "aliases": [],
+          "admitted_extensions": [],
+          "identity_json_pointers": {
+            "project_id": [
+              "/payload/project_id"
+            ],
+            "thread_id": []
+          },
+          "referenced_event_id_pointer": null,
+          "redaction": {
+            "mode": "reject_unhandled_secrets",
+            "transform_id": null,
+            "transform_version": null
+          }
+        },
+        "source_refs": [
+          "Plans/Contracts_V0.md#CV-659",
+          "Plans/memory_maintenance_event_payloads.schema.json#/$defs/memory_prune_archive_started",
+          "Plans/memory_maintenance_contracts.json#",
+          "reports/event-authority-20261116/admission-merge-2/readiness-list.json"
+        ],
+        "retention_policy_ref": {
+          "registry_schema_id": "pm.storage_value_registry.v2",
+          "policy_id": "RP-OPERATIONAL-2555D",
+          "policy_version": "1.0.0"
+        }
+      }
     }
+  },
+  "registry_before": {
+    "revision": "2026-11-18.1",
+    "family_count": 518,
+    "sha256": "aa6188dd713badcfa9c902d24d917b764b23a6a9e2290bdb58de8776a2f79a5e"
+  },
+  "registry_after": {
+    "revision": "2026-11-18.2",
+    "family_count": 518,
+    "sha256": "ec21cf1a5b42b3e68a5564a847b4798dff968612d11d438bc7075b89196f9602"
   }
 }
