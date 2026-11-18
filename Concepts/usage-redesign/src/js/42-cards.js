@@ -1100,14 +1100,14 @@
     var wheelEnd = function () {
       if (wheelT) { clearTimeout(wheelT); wheelT = 0; }
       if (!wheelAt) return;
-      var held = wheelEl, el = b.el();
+      var held = wheelEl, el = b.el(), point = wheelAt;
       wheelAt = wheelEl = null;
       if (held && held !== el && held.getAttribute('data-op') === 'wheel') held.removeAttribute('data-op');
       if (el && el.getAttribute('data-op') === 'wheel') el.removeAttribute('data-op');
       if (!el || el.hasAttribute('data-op') || b.gesture && b.gesture()) return;
       var card = el && el.isConnected && el.querySelector(':scope > .pmu-card:hover');
       if (card) { try { fitTools(card); } catch (error) { console.error('[pm-usage] head fit', error); } }
-      try { document.dispatchEvent(new CustomEvent('pmu-op-end', { detail: { board: el } })); } catch (error) { /* none */ }
+      try { document.dispatchEvent(new CustomEvent('pmu-op-end', { detail: { board: el, point: point } })); } catch (error) { /* none */ }
     };
     var wheelHold = function () { if (wheelT) clearTimeout(wheelT); wheelT = setTimeout(wheelEnd, WHEEL_REST); };
     /* A room mount can replace the board or clear its marker while the same wheel burst continues (R99). Transfer
@@ -1133,8 +1133,8 @@
       wheelHold();
     };
     var onWheelScroll = function () { if (wheelAt && wheelBoard()) wheelHold(); };
-    var onWheelMove = function (event) { if (wheelAt && (Math.abs(event.clientX - wheelAt[0]) >= 1 || Math.abs(event.clientY - wheelAt[1]) >= 1)) wheelEnd(); };
-    var onWheelPress = function () { if (wheelAt) wheelEnd(); };
+    var onWheelMove = function (event) { if (wheelAt && (Math.abs(event.clientX - wheelAt[0]) >= 1 || Math.abs(event.clientY - wheelAt[1]) >= 1)) { wheelAt = [event.clientX, event.clientY]; wheelEnd(); } };
+    var onWheelPress = function (event) { if (wheelAt) { wheelAt = [event.clientX, event.clientY]; wheelEnd(); } };
     var onOver = function (event) {
       if (wheelAt) return;   /* the pause: the tools stay hidden, so nothing is fitted until it ends (wheelEnd fits) */
       var card = event.target.closest && event.target.closest('.pmu-card');

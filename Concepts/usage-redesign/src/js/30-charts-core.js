@@ -981,7 +981,7 @@
   charts.crosshairOn = function () { return openCards.size > 0; };
   charts.hover = function (box, cfg) {
     var band = H('div', 'pmu-xband', box), xh = H('div', 'pmu-xh', box), dotEls = [];
-    var on = false, last = -1, api, side = 1, hotKey = null, py = -1, lastSwap = 0, instantT = 0;
+    var on = false, indexOnly = false, last = -1, api, side = 1, hotKey = null, py = -1, lastSwap = 0, instantT = 0;
     var geo = null, geoAt = 0, cardSize = null;
     function ensureDots() {
       var n = 0;
@@ -993,6 +993,13 @@
       var now = performance.now();
       if (!geo || now - geoAt > 120) { var r = box.getBoundingClientRect(); geo = { r: r, cw: box.clientWidth || r.width || 1 }; geoAt = now; }
       return geo;
+    }
+    function indexAt(point) {
+      var g = boxGeo(), r = g.r, sc = g.cw / (r.width || 1), mx = (point[0] - r.left) * sc;
+      if (mx < cfg.pad.l - 10 || mx > g.cw - cfg.pad.r + 10) return null;
+      var best = 0, bd = Infinity;
+      for (var i = 0; i < cfg.n; i++) { var d = Math.abs(cfg.xAt(i) - mx); if (d < bd) { bd = d; best = i; } }
+      return { i: best, y: (point[1] - r.top) * sc };
     }
     function bandW() {
       if (cfg.bw) return cfg.bw;
@@ -1114,16 +1121,15 @@
     function move(e) {
       if (!cfg.n) return;
       if (!on) geo = null;   /* a fresh read on entry */
-      var g = boxGeo(), r = g.r, sc = g.cw / (r.width || 1), mx = (e.clientX - r.left) * sc;
-      py = (e.clientY - r.top) * sc;
-      if (mx < cfg.pad.l - 10 || mx > g.cw - cfg.pad.r + 10) { hide(); return; }
-      var best = 0, bd = Infinity;
-      for (var i = 0; i < cfg.n; i++) { var d = Math.abs(cfg.xAt(i) - mx); if (d < bd) { bd = d; best = i; } }
+      var picked = indexAt([e.clientX, e.clientY]);
+      if (!picked) { hide(); return; }
+      var best = picked.i; py = picked.y;
       var first = !on;
       if (first) show(best, true); else place(best, false);
       if (cfg.onIndex) cfg.onIndex(best);
     }
     function show(i, instant) {
+      indexOnly = false;
       if (cardOwner && cardOwner !== api && cardOwner.hide) cardOwner.hide();
       var card = readoutCard(box);
       if (instant) parts().forEach(function (el) { el.classList.add('is-instant'); });
@@ -1139,8 +1145,8 @@
       }
     }
     function hide() {
-      if (!on) return;
-      on = false; last = -1;
+      if (!on && !indexOnly) return;
+      on = indexOnly = false; last = -1;
       setHot(null);
       [xh, band].concat(dotEls).forEach(function (el) { el.classList.remove('is-on'); });
       box.classList.remove('pmu-xh-on');
@@ -1148,13 +1154,28 @@
       openCards.delete(api);
       if (cfg.onIndex) cfg.onIndex(null);
     }
+    /* R100 P3: column emphasis returns from a fresh hit-test of the pause's current pointer. The floating readout,
+       crosshair and dots stay dismissed. Keep this emphasis in the scroll cleanup set until it leaves or clears. */
+    function opEnd(e) {
+      var b = e.detail && e.detail.board, point = e.detail && e.detail.point;
+      if (!cfg.restoreIndex || !cfg.n || !point || !box.isConnected || box.closest('.pmu-board') !== b) return;
+      var hit = document.elementFromPoint(point[0], point[1]);
+      if (!hit || !box.contains(hit)) return;
+      geo = null;
+      var picked = indexAt(point);
+      if (!picked) return;
+      if (cfg.onIndex) cfg.onIndex(picked.i);
+      indexOnly = true; openCards.add(api);
+    }
+    function opStart(e) { if (cfg.restoreIndex && e.detail && e.detail.board === box.closest('.pmu-board')) hide(); }
+    if (cfg.restoreIndex) { document.addEventListener('pmu-op-start', opStart); document.addEventListener('pmu-op-end', opEnd); }
     box.addEventListener('pointermove', move);
     box.addEventListener('pointerleave', hide);
     api = {
-      set: function (next) { Object.assign(cfg, next); last = -1; geo = null; cardSize = null; if (on) hide(); ensureDots(); },
+      set: function (next) { Object.assign(cfg, next); last = -1; geo = null; cardSize = null; if (on || indexOnly) hide(); ensureDots(); },
       hide: hide,
       showAt: function (i) { if (!cfg.n) return; show(clamp(i, 0, cfg.n - 1), true); },
-      destroy: function () { hide(); if (cardOwner === api) cardOwner = null; box.removeEventListener('pointermove', move); box.removeEventListener('pointerleave', hide); band.remove(); xh.remove(); dotEls.forEach(function (d) { d.remove(); }); }
+      destroy: function () { hide(); if (cardOwner === api) cardOwner = null; box.removeEventListener('pointermove', move); box.removeEventListener('pointerleave', hide); document.removeEventListener('pmu-op-start', opStart); document.removeEventListener('pmu-op-end', opEnd); band.remove(); xh.remove(); dotEls.forEach(function (d) { d.remove(); }); }
     };
     return api;
   };
