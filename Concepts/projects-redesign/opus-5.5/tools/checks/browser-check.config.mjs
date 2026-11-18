@@ -45,11 +45,24 @@ export default (ctx) => {
 				const l = typeof sel === 'string' ? f.locator(sel, o.hasText ? { hasText: o.hasText } : undefined).first() : sel;
 				// (noScroll: menus and the title bar, which a scroll would move or close)
 				if (!o.noScroll) {
-					// Match browser-check 2.0.62's private shared click: scroll only when hidden.
-					// Centring every ancestor can move or close an already-visible History flyout.
-					// Animated controls may never settle for Playwright's scroll. Native nearest
-					// reveals clipped edges without moving ancestors that already show the item.
-					await l.evaluate((e) => e.scrollIntoView({ block: 'nearest', inline: 'nearest' })).catch(() => {});
+					// The shared click is private. Match its rule: move only ancestors that hide
+					// the target. Repeat for sticky cards whose box stays put until their boundary.
+					await l.evaluate((e) => {
+						for (let a = e.parentElement; a; a = a.parentElement) {
+							const s = getComputedStyle(a);
+							for (let i = 0; i < 8; i++) {
+								const r = e.getBoundingClientRect(), b = a.getBoundingClientRect();
+								const top = Math.max(0, b.top + a.clientTop), bottom = Math.min(innerHeight, b.top + a.clientTop + a.clientHeight);
+								const left = Math.max(0, b.left + a.clientLeft), right = Math.min(innerWidth, b.left + a.clientLeft + a.clientWidth);
+								const dy = /auto|scroll|hidden/.test(s.overflowY) && a.scrollHeight > a.clientHeight ? (r.top < top ? r.top - top : r.bottom > bottom ? r.bottom - bottom : 0) : 0;
+								const dx = /auto|scroll|hidden/.test(s.overflowX) && a.scrollWidth > a.clientWidth ? (r.left < left ? r.left - left : r.right > right ? r.right - right : 0) : 0;
+								if (!dx && !dy) break;
+								const x = a.scrollLeft, y = a.scrollTop;
+								a.scrollBy({ left: dx, top: dy, behavior: 'instant' });
+								if (a.scrollLeft === x && a.scrollTop === y) break;
+							}
+						}
+					}).catch(() => {});
 					await t.page.waitForTimeout(80);
 				}
 				if (o.noScroll) await f.evaluate(() => { document.documentElement.scrollTop = 0; document.body.scrollTop = 0; }).catch(() => {});
