@@ -8,9 +8,10 @@
 // Judged on real pixels, in every frame we can get. A person's press (down, 90 ms, up) on Agents, then on Home, four times
 // each, on the strip that holds both tabs. Each press is watched by a CDP screencast (compositor PNG frames) from just before
 // the press until it has settled (900 ms); in every frame the two tabs' labels and kind glyphs are read against the same
-// parts in the settled frame (helpers/tab-face-pixels.mjs): a part is painted when its glyph pixels and its ground differ by
-// 1.8:1 or more. Every frame of every press must paint every part. A screencast keeps only some of the 60 frames a second:
-// the run says how many it judged per press, and fails a press with fewer than 8. For every frame, record with
+// parts in the settled frame and the frame before the press (helpers/tab-face-pixels.mjs: a part's glyph pixels are those
+// that are glyph in both, FO-236): a part is painted when its glyph pixels and its ground differ by 1.8:1 or more. Every
+// frame of every press must paint every part. A screencast keeps only some of the 60 frames a second: the run says how
+// many it judged per press, and fails a press with fewer than 8. For every frame, record with
 // `--record <file.mp4> --no-pointer-marker` (the pointer ring and press pulse sit on the label) and read the film with
 // `node tools/home-retro-tab-face-film-reader.mjs <video> <run folder> <out.json>`, which applies the same rule to every
 // native frame between each press's marks, and is the verdict for the films.
@@ -71,7 +72,7 @@ export const tests = {
 			const off = await offset(t, f);
 			const g0 = await f.evaluate(GEOM);
 			if (!(await t.check(`${look}: Home shows a panel strip with the Home and Agents tabs, taken over by the switcher`, !!g0 && !!g0.tabs.Home && !!g0.tabs.Agents && g0.lensed && g0.theme === look, JSON.stringify(g0)))) continue;
-			const blanks = [], thin = [], unread = [], shifted = [], wrong = [], counts = [], perPress = [];
+			const blanks = [], thin = [], unread = [], shifted = [], wrong = [], counts = [], perPress = [], kept = {};
 			let lowest = null;
 			for (let i = 0; i < presses; i++) {
 				const name = i % 2 ? 'Home' : 'Agents', tag = `${look} ${i + 1} ${name}`;
@@ -79,6 +80,7 @@ export const tests = {
 				const tb = shift(before.tabs[name].tab, off), cx = tb[0] + Math.min(tb[2] - 6, Math.max(6, tb[2] / 2)), cy = tb[1] + tb[3] / 2;
 				await t.page.mouse.move(cx, cy);
 				frames = [];
+				let rest = null;
 				await t.unmarked(async () => {
 					await cdp.send('Page.startScreencast', { format: 'png', everyNthFrame: 1, maxWidth: 1920, maxHeight: 1080 });
 					for (let k = 0; k < 60 && !frames.length; k++) await t.page.waitForTimeout(25);
@@ -88,6 +90,8 @@ export const tests = {
 					await t.page.waitForTimeout(SETTLE);
 					if (t.args.film) await t.mark(`settled ${tag}`);
 					await cdp.send('Page.stopScreencast').catch(() => {});
+					// the first frame the screencast sent came before the press was sent: the parts at rest, before (FO-236)
+					rest = frames.length ? frames.reduce((p, q) => (q.wall < p.wall ? q : p)).data : null;
 					frames = frames.filter((x) => x.wall >= w0).sort((p, q) => p.wall - q.wall).map((x) => ({ wall: x.wall - w0, data: x.data }));
 				});
 				const got = frames; frames = null;
@@ -98,13 +102,16 @@ export const tests = {
 				counts.push(got.length);
 				if (got.length < MIN_FRAMES) { thin.push(`${tag}: ${got.length}`); continue; }
 				const imgs = got.map((x) => ({ wall: x.wall, img: decodePng(Buffer.from(x.data, 'base64')) }));
-				const ref = imgs[imgs.length - 1].img;
+				const ref = imgs[imgs.length - 1].img, pre = decodePng(Buffer.from(rest, 'base64'));
 				const masks = [];
 				for (const n of ['Home', 'Agents']) for (const part of ['label', 'glyph']) {
 					const b = shift(after.tabs[n][part], off); if (!b) continue;
-					const m = partMask(ref, b); m.name = `${n} ${part}`;
-					if (!m.ok) { unread.push(`${tag}: ${m.name} (${m.g.length} glyph px)`); continue; }
+					const m = partMask(ref, b, pre); m.name = `${n} ${part}`;
+					if (!m.ok) { unread.push(`${tag}: ${m.name} (${m.g.length} glyph px in both the settled frame and the one before the press)`); continue; }
 					masks.push(m);
+					// how many glyph pixels each part keeps in both frames, of those in the settled frame (FO-236)
+					const k = kept[m.name] || (kept[m.name] = { lo: Infinity, hi: 0, of: [] });
+					k.lo = Math.min(k.lo, m.g.length); k.hi = Math.max(k.hi, m.g.length); k.of.push(m.gSettled);
 				}
 				const had = blanks.length;
 				for (const { wall, img } of imgs) for (const m of masks) {
@@ -115,6 +122,8 @@ export const tests = {
 				perPress.push(blanks.length - had);
 			}
 			t.log(`${look}: screencast frames judged per press ${counts.join(',')}; blank part-frames per press ${perPress.join(',')}; lowest part contrast ${lowest ? `${lowest.c}:1 at ${lowest.at}` : 'none'}`);
+			const ks = Object.entries(kept);
+			t.log(`${look}: glyph pixels kept in both frames per part (of the settled frame's) ${ks.map(([n, k]) => `${n} ${k.lo}-${k.hi} (of ${Math.min(...k.of)}-${Math.max(...k.of)})`).join(', ')}; smallest ${ks.length ? Math.min(...ks.map(([, k]) => k.lo)) : 'none'}`);
 			await t.check(`${look}: every press chose its tab (${presses - wrong.length}/${presses})`, wrong.length === 0, wrong.join(' | '));
 			await t.check(`${look}: each press gave at least ${MIN_FRAMES} screencast frames to judge`, thin.length === 0, thin.join(' | '));
 			await t.check(`${look}: every label and glyph has glyph pixels in its settled frame`, unread.length === 0, unread.join(' | '));
