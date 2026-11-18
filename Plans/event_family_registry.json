@@ -2,7 +2,7 @@
   "$schema": "https://puppetmaster.local/schemas/event_family_registry/1.0.0/event_family_registry.schema.json",
   "schema_id": "pm.event_family_registry.v1",
   "schema_version": "2.0.0",
-  "registry_revision": "2026-11-16.306",
+  "registry_revision": "2026-11-18.1",
   "owner_doc": "Plans/storage-plan.md#case-l-5-eventrecord-persistence-legacy-normalization-and-dedupe",
   "unknown_event_disposition": "quarantine_without_checkpoint_advance",
   "families": [
@@ -33533,6 +33533,101 @@
         "policy_id": "RP-WORKTREE-TOMBSTONE-365D",
         "policy_version": "1.0.0"
       }
+    },
+    {
+      "family_id": "event-family-usage-event",
+      "family_revision": "1.0.0",
+      "event_type": "usage.event",
+      "scope_policy": "application_or_project",
+      "semantic_owner_doc": "Plans/Contracts_V0.md#CV-614",
+      "payload_owner_doc": "Plans/Contracts_V0.md#CV-614",
+      "payload_schema_id": "pm.event_payload.usage_event.v1",
+      "payload_schema_ref": {
+        "path": "Plans/dt_event_contracts.schema.json",
+        "json_pointer": "#/$defs/usage_event",
+        "schema_id": "pm.event_payload.usage_event.v1"
+      },
+      "legacy": {
+        "aliases": [],
+        "admitted_extensions": [],
+        "identity_json_pointers": {
+          "project_id": [],
+          "thread_id": [
+            "/payload/thread_id"
+          ],
+          "run_id": [
+            "/payload/run_id"
+          ],
+          "node_id": [
+            "/payload/node_id"
+          ],
+          "attempt_id": [
+            "/payload/attempt_id"
+          ]
+        },
+        "referenced_event_id_pointer": null,
+        "redaction": {
+          "mode": "reject_unhandled_secrets",
+          "transform_id": null,
+          "transform_version": null
+        }
+      },
+      "source_refs": [
+        "Plans/Contracts_V0.md#CV-614",
+        "Plans/storage-plan.md#SP-594",
+        "Plans/dt_event_contracts.schema.json#/$defs/usage_event",
+        "Plans/dt_event_contracts.json#/families/14",
+        "reports/event-authority-20261116/admission-merge-2/usage-readiness-list.json"
+      ],
+      "retention_policy_ref": {
+        "setting_key": "ai.usage.usage-retention",
+        "anchor": "first_durable_save",
+        "anchor_immutable": true,
+        "owner_ref": "Plans/storage-plan.md#SP-594"
+      },
+      "payload_versions": [
+        {
+          "scope_kind": "application",
+          "payload_schema_id": "pm.event_payload.usage_event.v1",
+          "payload_schema_ref": {
+            "path": "Plans/dt_event_contracts.schema.json",
+            "json_pointer": "#/$defs/usage_event",
+            "schema_id": "pm.event_payload.usage_event.v1"
+          },
+          "source_graph_ref": "Plans/Contracts_V0.md#CV-366",
+          "producer_admission": "requires_owner_adoption",
+          "append_owner_ref": "Plans/Contracts_V0.md#CV-614",
+          "read_owner_ref": "Plans/Contracts_V0.md#CV-614",
+          "backup_owner_ref": "Plans/Backup_Restore_System.md#BRS-033",
+          "retention_policy_ref": {
+            "setting_key": "ai.usage.usage-retention",
+            "anchor": "first_durable_save",
+            "anchor_immutable": true,
+            "owner_ref": "Plans/storage-plan.md#SP-594"
+          }
+        },
+        {
+          "scope_kind": "project",
+          "payload_schema_id": "pm.event_payload.usage_event.v1",
+          "payload_schema_ref": {
+            "path": "Plans/dt_event_contracts.schema.json",
+            "json_pointer": "#/$defs/usage_event",
+            "schema_id": "pm.event_payload.usage_event.v1"
+          },
+          "source_graph_ref": "Plans/Contracts_V0.md#CV-366",
+          "producer_admission": "requires_owner_adoption",
+          "append_owner_ref": "Plans/Contracts_V0.md#CV-614",
+          "read_owner_ref": "Plans/Contracts_V0.md#CV-614",
+          "backup_owner_ref": "Plans/Backup_Restore_System.md#BRS-033",
+          "retention_policy_ref": {
+            "setting_key": "ai.usage.usage-retention",
+            "anchor": "first_durable_save",
+            "anchor_immutable": true,
+            "owner_ref": "Plans/storage-plan.md#SP-594"
+          }
+        }
+      ],
+      "payload_selection_policy": "exact_scope_and_schema_id_no_fallback"
     }
   ],
   "retention_assignment_id": "RET-K37-ASSIGNMENT-001",
