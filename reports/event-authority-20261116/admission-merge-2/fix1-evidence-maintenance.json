@@ -42,5 +42,15 @@
     "T259",
     "T262"
   ],
-  "native_execution": "NOT_RUN"
+  "native_execution": "NOT_RUN",
+  "numeric_exclusion_maintenance": {
+    "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/merge2-fix1/evidence/numrule-maintenance/exclusion-maintenance.json",
+    "sha256": "67d295080e5f6d98017b59615dddc03395c2d0dccde33bd206e2d0cd7013d396",
+    "source_file": "scripts/pm_event_datetime_exclusions.json",
+    "source_sha256": "d09c8ec5d2a91543fe0acf23284eda5b5e1d58da679ff58c00e3338bfdebee5a",
+    "preserved_rows": 1190,
+    "refreshed_coordinates": 364,
+    "schema_classification_changed": false,
+    "reason": "Refresh exact non-runtime YAML/index container pins after the approved owner edits and final regeneration; no validator predicate or schema-node reclassification."
+  }
 }
