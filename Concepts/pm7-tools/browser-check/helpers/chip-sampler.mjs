@@ -18,9 +18,10 @@
 //   fade's first frames, at opacity 0.3), edge: { rx, ry, rimX, rimY } the drawn chip's corner radius and rim (its
 //   inset outline) in screen pixels along each axis, read from the element that paints its material (FO-235) } },
 //   and ups: every pointerup's timeStamp (FO-232: the press each frame is judged from).
+import { withPaintedChip } from './painted-chip.mjs';
 import { poseAt, edges } from './carry-frames.mjs';
 
-export const CHIP_SAMPLER = (opts) => {
+export const CHIP_SAMPLER = withPaintedChip((opts) => {
 	const W = window.__chipSmp || (window.__chipSmp = { rows: [], shifts: [], strips: [], on: true, ids: 0, ups: [] });
 	for (const s of opts.strips) if (!W.strips.some((x) => x.sel === s.sel)) W.strips.push({ sel: s.sel, active: s.active, items: s.items, el: null });
 	if (opts.raf) W.raf = true;
@@ -32,22 +33,7 @@ export const CHIP_SAMPLER = (opts) => {
 	const leadOf = (b) => b.getAnimations().find((a) => a.effect && a.effect.getTiming().duration > 0 && a.playState !== 'idle') || null;
 	// (a lens's own travel: its transform animation, not the opacity ones a hop's hide or a Reduce Motion fade put on it)
 	const travelOf = (b) => b.getAnimations().find((a) => a.effect && a.effect.getTiming().duration > 0 && a.playState !== 'idle' && a.effect.getKeyframes().some((k) => k.transform != null)) || null;
-	// FO-235: the drawn edge of a chip. The element that paints its material (the chip itself, or the first element inside
-	// it that paints a background, its inverted label copies aside), its corner radius and its rim (the widest inset shadow
-	// that is not transparent), each times the scale every transform from it up to the chip's layer applies along each axis
-	const alpha = (c) => { const m = /rgba?\(([^)]*)\)/.exec(c || ''); if (!m) return c && c !== 'transparent' ? 1 : 0; const v = m[1].split(/[\s,/]+/).filter(Boolean); return v.length > 3 ? +v[3] : 1; };
-	const paints = (e) => { const cs = getComputedStyle(e); return cs.backgroundImage !== 'none' || alpha(cs.backgroundColor) > 0; };
-	const shadows = (v) => { const out = []; let d = 0, cur = ''; for (const ch of v || '') { if (ch === '(') d++; if (ch === ')') d--; if (ch === ',' && !d) { out.push(cur); cur = ''; } else cur += ch; } if (cur.trim()) out.push(cur); return out; };
-	const rimOf = (cs) => { let w = 0; for (const sh of shadows(cs.boxShadow === 'none' ? '' : cs.boxShadow)) { if (!/inset/.test(sh)) continue; const col = (/(rgba?\([^)]*\)|#[0-9a-f]+|transparent)/i.exec(sh) || [''])[0]; if (alpha(col) <= 0) continue; const n = sh.replace(/(rgba?\([^)]*\)|#[0-9a-f]+|transparent|inset)/gi, '').trim().split(/\s+/).map(parseFloat); if (n.length >= 4) w = Math.max(w, n[3]); } return w; };
-	const edgeOf = (chipEl, layer) => {
-		let e = paints(chipEl) ? chipEl : [...chipEl.querySelectorAll('*')].find((x) => !x.closest('.lg-carry-twins') && x.getClientRects().length && paints(x));
-		if (!e) return null;
-		let m = new DOMMatrix();
-		for (let x = e; x && x !== layer; x = x.parentElement) { const t = getComputedStyle(x).transform; if (t && t !== 'none') m = new DOMMatrix(t).multiply(m); }
-		const sx = Math.hypot(m.a, m.b), sy = Math.hypot(m.c, m.d), cs = getComputedStyle(e), rr2 = cs.borderTopLeftRadius.split(/\s+/).map(parseFloat), rim = rimOf(cs);
-		const r2 = (v) => +v.toFixed(2);
-		return { rx: r2(rr2[0] * sx), ry: r2((rr2[1] != null ? rr2[1] : rr2[0]) * sy), rimX: r2(rim * sx), rimY: r2(rim * sy), sx: +sx.toFixed(4), sy: +sy.toFixed(4) };
-	};
+	const edgeOf = paintedChip;
 	addEventListener('pointerup', (e) => { if (W.on) W.ups.push(e.timeStamp); }, true);
 	// (stale: a person's input ran after this frame's callback and before its read, so what the read sees can hold changes
 	// that input made and no frame painted yet: Usage's click sets its chosen page at once, and an input task outranks the
@@ -87,6 +73,7 @@ export const CHIP_SAMPLER = (opts) => {
 			}
 			const on = el.querySelector(s.active);
 			const items = s.items ? [...el.querySelectorAll(s.items)].filter((e) => e.getClientRects().length).map(rr) : [];
+			if (edge) chip = edge.box;
 			row.s[s.sel] = { chip, src, rec, st, ct, on: on ? rr(on) : null, items, so: [sr.left, sr.top], lenses, faint, edge };
 		}
 		W.rows.push(row);
@@ -110,7 +97,7 @@ export const CHIP_SAMPLER = (opts) => {
 		}).observe({ type: 'layout-shift', buffered: false });
 	} catch (e) { W.shiftErr = String(e); }
 	return true;
-};
+});
 export const CHIP_TAKE = () => { const W = window.__chipSmp; return W ? { rows: W.rows, shifts: W.shifts, ups: W.ups, via: W.via, shiftErr: W.shiftErr || null } : null; };
 export const CHIP_RESET = () => { const W = window.__chipSmp; if (W) { W.rows.length = 0; W.shifts.length = 0; W.ups.length = 0; } return true; };
 
@@ -321,10 +308,12 @@ export function edgeHolds(rows, { vertical = false, tolR = 0.6, tolRim = 0.3 } =
 	const along = [], hand = [];
 	let prev = null, n = 0;
 	for (const r of rows) {
-		if (!r.edge || !trusted(r)) { prev = null; continue; }
+		if (!r.edge || !r.box) { prev = null; continue; }
 		n++;
 		const e = r.edge, dR = Math.abs(e[A[0]] - ref[A[0]]), dRim = Math.abs(e[A[1]] - ref[A[1]]);
-		if (dR > tolR || dRim > tolRim) along.push({ t: +r.t.toFixed(1), src: r.src, rec: r.rec, edge: e, ref });
+		const parts = e.parts || [e];
+  const partBad = parts.some(p => (p.corners || [p]).some(c => Math.abs(c[A[0]] - ref[A[0]]) > tolR) || Math.abs(p[A[1]] - ref[A[1]]) > tolRim || (p.borders || []).some((v,i) => Math.abs(v - (rest[0].edge.borders || [0,0,0,0])[i]) > tolRim));
+  if (dR > tolR || dRim > tolRim || partBad) along.push({ t: +r.t.toFixed(1), src: r.src, rec: r.rec, edge: e, ref });
 		// (along the axis only: across it a block's last read before it lands can be in the hop's squash, a body scale the
 		// chip under the labels then takes back over the next frames' reads)
 		if (prev && (prev.src !== r.src || prev.rec !== r.rec)) {
