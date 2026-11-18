@@ -242,9 +242,14 @@ function o55PopClose(focusTrigger) {
    skipping the popup's own controls. The popup closes first, with no focus move of its own; the walk's target takes
    the focus. With nothing on that side of the trigger, focus stays on the trigger, as a pick leaves it (FO-178 r2, L1). */
 function o55PopTabOut(p, back) {
-  const stops = [...document.querySelectorAll('button, [href], input, select, textarea, [tabindex]')].filter(el => {
+  const stops = [...document.querySelectorAll('button, [href], input, select, textarea, summary, [tabindex]')].filter(el => {
     if (p.box.contains(el) || el.disabled || el.getAttribute('aria-hidden') === 'true' || el.tabIndex < 0 || el.closest('[inert]')) return false;
-    const s = getComputedStyle(el); return s.visibility !== 'hidden' && s.display !== 'none';
+    /* A closed details still gives its descendants computed display/visibility. Only its first summary
+       participates in the visible walk; apply the rule at every ancestor, including nested details (FO-225). */
+    for (let d = el.parentElement; d; d = d.parentElement) {
+      if (d.tagName === 'DETAILS' && !d.open && ![...d.children].find(n => n.tagName === 'SUMMARY')?.contains(el)) return false;
+    }
+    const s = getComputedStyle(el); return el.getClientRects().length > 0 && s.visibility !== 'hidden' && s.display !== 'none';
   });
   const i = stops.indexOf(p.trigger), next = i >= 0 ? stops[i + (back ? -1 : 1)] : null;
   o55PopClose(false);
