@@ -247,6 +247,12 @@ def _escape(part):
     return str(part).replace('~', '~0').replace('/', '~1')
 
 
+class AnnotationMemo(dict):
+    def __init__(self):
+        super().__init__()
+        self.sources = {}  # retain identity keys while their annotated copies remain live
+
+
 def annotate(node, where, memo):
     """Location annotation only; every other member is the original object."""
     if not isinstance(node, dict):
@@ -257,6 +263,8 @@ def annotate(node, where, memo):
         raise ValueError('owner schema already carries x-pm-oracle-id at ' + where)
     out = dict(node)
     memo[id(node)] = out
+    if isinstance(memo, AnnotationMemo):
+        memo.sources[id(node)] = node
     # Retain the source alongside its copy: an id-only cache otherwise aliases
     # a later temporary schema after Python reuses the earlier object's id.
     memo[(id(node), 'source')] = node
@@ -351,7 +359,7 @@ def closure_validator(v, label, bank=None):
     after collection: their registries are replaced by annotated copies and their node-identity maps
     follow the copies. Collection has finished, so no recorded result depends on the prepared bank.
     """
-    memo = PREPARED.setdefault('memo', {})
+    memo = PREPARED.setdefault('memo', AnnotationMemo())
     resolver = v._resolver
     kind = type(resolver).__name__
     if kind == 'ScopedResolverV2':
@@ -464,11 +472,27 @@ def _install_search_wrappers(reference_v, search_v, sample_every):
     def search(clause, keyword, location, info, node, ident, *args, **kwargs):
         _WIT['current'] = (clause, ident)
         _WIT['pending'] = {}
+        confirmed = {}
+        _WIT['confirmed'] = confirmed
         try:
-            return orig_search(clause, keyword, location, info, node, ident, *args, **kwargs)
+            result = orig_search(clause, keyword, location, info, node, ident, *args, **kwargs)
+            if result.get('cls') in ('KILLED', 'COVERED_LATER'):
+                digest = result.get('input_sha256')
+                raw = confirmed.get(digest)
+                if raw is None and digest is None and confirmed:  # synthetic collector regression
+                    raw = next(reversed(confirmed.values()))
+                if raw is not None:
+                    previous = _WIT['store'].get(clause)
+                    size = _WIT['bytes'] + len(raw) - (len(previous) if previous else 0)
+                    if size > _WITNESS_BYTES_CAP:
+                        raise RuntimeError('witness store capacity exhausted; no unverifiable credit')
+                    _WIT['store'][clause] = raw
+                    _WIT['bytes'] = size
+            return result
         finally:
             _WIT['current'] = None
             _WIT['pending'] = {}
+            _WIT['confirmed'] = {}
 
     def errors_of(v, value, cut=frozenset()):
         errs = orig_errors(v, value, cut)
@@ -482,26 +506,20 @@ def _install_search_wrappers(reference_v, search_v, sample_every):
         cur = _WIT['current']
         if cur:
             clause, ident = cur
-            if clause not in _WIT['locked']:
-                try:
-                    raw = pickle.dumps(value, protocol=5)
-                except Exception:  # noqa: BLE001 - an unpicklable witness is reported unverifiable
-                    raw = None
-                if raw is not None:
-                    digest = hashlib.sha256(raw).hexdigest()
-                    guards = {getattr(e, 'oracle_guard', None) for e in errs}
-                    if not cut and ident in guards:
-                        _WIT['pending'][digest] = raw
-                        while len(_WIT['pending']) > 64:
-                            _WIT['pending'].pop(next(iter(_WIT['pending'])))
-                    elif cut and ident not in guards and digest in _WIT['pending']:
-                        confirmed = _WIT['pending'][digest]
-                        previous = _WIT['store'].get(clause)
-                        if _WIT['bytes'] + len(confirmed) - (len(previous) if previous else 0) <= _WITNESS_BYTES_CAP:
-                            _WIT['store'][clause] = confirmed
-                            _WIT['bytes'] += len(confirmed) - (len(previous) if previous else 0)
-                            if not errs:
-                                _WIT['locked'].add(clause)
+            try:
+                raw = pickle.dumps(value, protocol=5)
+            except Exception:
+                return errs
+            digest = hashlib.sha256(raw).hexdigest()
+            # GO's actual clause predicate includes nested error contexts. A cut
+            # for some other clause (repair/swap construction) cannot confirm this one.
+            locations = go.locations(errs)
+            if not cut and clause in locations:
+                _WIT['pending'][digest] = raw
+                while len(_WIT['pending']) > 64:
+                    _WIT['pending'].pop(next(iter(_WIT['pending'])))
+            elif frozenset(cut) == frozenset({ident}) and clause not in locations and digest in _WIT['pending']:
+                _WIT['confirmed'][digest] = _WIT['pending'][digest]
         return errs
 
     go.search_clause, go.errors_of = search, errors_of
@@ -512,34 +530,72 @@ def _restore_search_wrappers(orig):
     go.search_clause, go.errors_of = orig
 
 
-def verify_witnesses(reference_v, entries):
-    """Re-judge every captured KILLED/COVERED_LATER witness on the reference (unmemoized) copy."""
-    idents = {}
-    for location, info in go.walk(reference_v).items():
-        for keyword in go.clauses_of(info['node']):
-            idents[location + '/' + go.name_of(keyword)] = common.schema_guard(info['node'], keyword)
-    passed = failed = unverifiable = 0
-    failures = []
+def _witness_problem(reference_v, clause, entry, value):
+    ident = common.guard_for_location(clause)
+    errs = go.errors_of(reference_v, value)
+    if clause not in go.locations(errs):
+        return 'input not refused at the clause'
+    cut = go.errors_of(reference_v, value, {ident})
+    if entry['cls'] == 'KILLED':
+        if cut:
+            return 'cut does not accept'
+        if not go.errors_of(reference_v, value):
+            return 'restoration does not refuse'
+    elif not cut:
+        return 'COVERED_LATER but the cut accepts'
+    elif not set(entry.get('still_refused_by') or ()) <= go.locations(cut):
+        return 'still_refused_by not among the cut refusals'
+    return None
+
+
+def verify_witnesses(reference_v, entries, raw_store=None, controls=None):
+    """Reference-check EVERY witness result, including carried raw and replay evidence.
+
+    Missing evidence is an explicit failed check, never an unverifiable success.
+    The caller may reconstruct legacy evidence with --verify-report first.
+    """
+    import base64
+    raw_store = _WIT['store'] if raw_store is None else raw_store
+    controls = controls or {}
+    passed, failures, accepted = 0, [], {}
     for clause, entry in entries.items():
         if entry.get('cls') not in ('KILLED', 'COVERED_LATER'):
             continue
-        raw = _WIT['store'].get(clause)
-        ident = idents.get(clause)
-        if raw is None or ident is None:
-            unverifiable += 1
-            continue
-        value = pickle.loads(raw)
-        guards = {getattr(e, 'oracle_guard', None) for e in go.errors_of(reference_v, value)}
-        cut_errs = go.errors_of(reference_v, value, frozenset({ident}))
-        cut_guards = {getattr(e, 'oracle_guard', None) for e in cut_errs}
-        ok = ident in guards and ident not in cut_guards and (entry['cls'] != 'KILLED' or not cut_errs)
-        if ok:
-            passed += 1
+        problem = None
+        try:
+            if entry.get('replay'):
+                sha = entry.get('control_sha256')
+                if sha not in controls:
+                    raise ValueError('control not in stored evidence')
+                control = controls[sha]
+                if sha not in accepted:
+                    accepted[sha] = not go.errors_of(reference_v, control)
+                if not accepted[sha]:
+                    raise ValueError('control refused by the reference validator')
+                path, edit = pickle.loads(base64.b64decode(entry['replay']))
+                value = go.apply(control, path, edit)
+                if value is None:
+                    raise ValueError('replay token does not apply to the control')
+                if entry.get('input_value_sha256'):
+                    import pm_goal_go2_closure as go2
+                    if go2.value_sha(value) != entry['input_value_sha256']:
+                        raise ValueError('replayed input does not match the selected result')
+            elif clause in raw_store:
+                raw = raw_store[clause]
+                if entry.get('input_sha256') and hashlib.sha256(raw).hexdigest() != entry['input_sha256']:
+                    raise ValueError('stored witness does not match the selected result')
+                value = pickle.loads(raw)
+            else:
+                raise ValueError('selected witness missing from stored evidence')
+            problem = _witness_problem(reference_v, clause, entry, value)
+        except Exception as exc:
+            problem = type(exc).__name__ + ': ' + str(exc)[:240]
+        if problem:
+            failures.append(dict(clause=clause, problem=problem))
         else:
-            failed += 1
-            failures.append(clause)
-    return dict(passed=passed, failed=failed, unverifiable=unverifiable, failures=failures[:20],
-                sampled=_WIT['sampled'])
+            passed += 1
+    return dict(passed=passed, failed=len(failures), unverifiable=0, failures=failures,
+                controls_checked=len(accepted), sampled=_WIT['sampled'])
 
 
 def _install_go2_search(donor_seed_lists, residual):
@@ -574,53 +630,7 @@ def _restore_go2_search(orig):
 
 
 def verify_go2_witnesses(reference_v, entries, store):
-    """GO2 verify: replay every witness token on the reference (unmemoized) copy -
-    control accepted; control+(path,edit) refused at the clause; KILLED cut accepts
-    and restoration refuses; COVERED_LATER cut still refuses by the named clauses."""
-    import base64
-    passed = failed = unverifiable = 0
-    failures, accepted = [], {}
-    for clause, entry in entries.items():
-        if entry.get('cls') not in ('KILLED', 'COVERED_LATER'):
-            continue
-        control = store.get(entry.get('control_sha256')) if entry.get('control_sha256') else None
-        if not entry.get('replay') or control is None:
-            unverifiable += 1
-            continue
-        problem = None
-        csha = entry['control_sha256']
-        if csha not in accepted:
-            accepted[csha] = not go.errors_of(reference_v, control)
-        if not accepted[csha]:
-            problem = 'control refused by the reference validator'
-        else:
-            path, edit = pickle.loads(base64.b64decode(entry['replay']))
-            mutated = go.apply(control, path, edit)
-            if mutated is None:
-                problem = 'replay token does not apply to the control'
-            else:
-                ident = common.guard_for_location(clause)
-                errs = go.errors_of(reference_v, mutated)
-                if not errs or clause not in go.locations(errs):
-                    problem = 'input not refused at the clause'
-                else:
-                    cut = go.errors_of(reference_v, mutated, {ident})
-                    if entry['cls'] == 'KILLED':
-                        if cut:
-                            problem = 'cut does not accept'
-                        elif not go.errors_of(reference_v, mutated):
-                            problem = 'restoration does not refuse'
-                    elif not cut:
-                        problem = 'COVERED_LATER but the cut accepts'
-                    elif not set(entry.get('still_refused_by') or ()) <= go.locations(cut):
-                        problem = 'still_refused_by not among the cut refusals'
-        if problem:
-            failed += 1
-            failures.append(dict(clause=clause, problem=problem))
-        else:
-            passed += 1
-    return dict(passed=passed, failed=failed, unverifiable=unverifiable, failures=failures[:20],
-                controls_checked=len(accepted), sampled=_WIT['sampled'])
+    return verify_witnesses(reference_v, entries, controls=store)
 
 
 def _fn_ref(fn):
@@ -902,6 +912,13 @@ def _close_one(ident, plain, bank_object, seeds, records, args, carried, donor_s
         budget = max(budget if args.budget else 0, args.per_clause * clauses)
     go2_orig = _install_go2_search(donor_seed_lists, residual=bool(carried)) if args.donors else None
     orig = _install_search_wrappers(v, search_v, args.sample_every)
+    evidence = _CARRIED_EVIDENCE.get(ident, {}) if carried else {}
+    _WIT['store'].update(evidence.get('raw', {}))
+    _WIT['bytes'] = sum(map(len, _WIT['store'].values()))
+    controls = dict(evidence.get('controls', {}))
+    if args.donors:
+        import pm_goal_go2_closure as _go2
+        _go2.CONTROL_STORE.update(controls)
     try:
         entries, branch_controls, spent = go.close_root(ident, search_v, seeds, budget, carried=carried or None)
     finally:
@@ -912,6 +929,7 @@ def _close_one(ident, plain, bank_object, seeds, records, args, carried, donor_s
         import gzip as _gzip
         import pm_goal_go2_closure as _go2
         store = dict(_go2.CONTROL_STORE)
+        controls.update(store)
         meta['verify'] = verify_go2_witnesses(v, entries, store)
         if store:
             store_path = Path(str(args.out) + '.' + ident + '.controls.pkl.gz')
@@ -920,7 +938,13 @@ def _close_one(ident, plain, bank_object, seeds, records, args, carried, donor_s
             meta['control_store'] = dict(path=store_path.name, sha256=hashlib.sha256(blob).hexdigest(),
                                          controls=len(store))
     else:
-        meta['verify'] = verify_witnesses(v, entries)
+        meta['verify'] = verify_witnesses(v, entries, controls=controls)
+        if controls:
+            import gzip
+            store_path = Path(str(args.out) + '.' + ident + '.controls.pkl.gz')
+            blob = gzip.compress(pickle.dumps(controls, protocol=5))
+            store_path.write_bytes(blob)
+            meta['control_store'] = dict(path=store_path.name, sha256=hashlib.sha256(blob).hexdigest(), controls=len(controls))
     meta['branch_controls'] = branch_controls
     meta['validations'] = spent
     meta['budget'] = dict(budget=budget, clause_cap=args.clause_cap)
@@ -966,15 +990,33 @@ def _donor_seed_lists(args, own_lists):
     return lists
 
 
+_CARRIED_EVIDENCE = {}
+
+
 def _carried_from(paths):
+    import gzip
+    _CARRIED_EVIDENCE.clear()
     carried = {}
     for path in paths or ():
         report = json.loads(Path(path).read_text())
         for ident, entry in report.get('roots', {}).items():
             slot = carried.setdefault(ident, {})
+            evidence = _CARRIED_EVIDENCE.setdefault(ident, dict(raw={}, controls={}))
+            stores = {}
+            for field in ('witness_store', 'control_store'):
+                meta = entry.get(field)
+                if meta:
+                    blob = (Path(path).parent / meta['path']).read_bytes()
+                    if hashlib.sha256(blob).hexdigest() != meta['sha256']:
+                        raise ValueError('carried evidence hash mismatch: ' + meta['path'])
+                    stores[field] = pickle.loads(gzip.decompress(blob))
+            evidence['controls'].update(stores.get('control_store', {}))
             for clause, item in entry.get('clauses', {}).items():
                 if item.get('cls') != 'UNCOVERED':
                     slot[clause] = item
+                    evidence['raw'].pop(clause, None)
+                    if clause in stores.get('witness_store', {}):
+                        evidence['raw'][clause] = stores['witness_store'][clause]
     return carried
 
 
@@ -1089,7 +1131,7 @@ def main():
                   family=args.family, calls=collector.calls, collection_failures=collector.failures, roots={},
                   native_execution='NOT_RUN')
     ordered = sorted(SLOTS.items(), key=lambda item: root_id(item[0]))
-    report['all_roots'] = {root_id(k): dict(bank=s['bank'], schema=k[1][:300], calls=s['calls'], refused=s['refused'],
+    report['all_roots'] = {root_id(k): dict(bank=s['bank'], schema=k[1], validator_class=k[0], registry_sha256=k[2], calls=s['calls'], refused=s['refused'],
                                             rows=sorted(s.get('rows', ())),
                                             seeds=len(s['seeds']), families=sorted(s['families'])) for k, s in ordered}
     if args.dump:
@@ -1103,6 +1145,9 @@ def main():
                   f"note={dumped[ident].get('rebuild_note')}", file=sys.stderr, flush=True)
         if not args.roots:
             assert set(dumped) == {root_id(k) for k, _s in ordered}, 'dump ids != collected slot ids'
+        report['mode'] = 'dump-inventory'
+        report['rebuilds'] = {i: dict(rebuild=e['rebuild'], note=e.get('rebuild_note')) for i, e in dumped.items()}
+        args.out.write_text(json.dumps(report, indent=1, sort_keys=True, default=str) + '\n')
         _check_dump_nonempty(collector.calls, dumped)
         _check_dump_ids(dumped, args.expect_roots)
         blob = pickle.dumps(dict(meta=dict(source=args.source, family=args.family, calls=collector.calls,
