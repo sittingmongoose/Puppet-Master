@@ -190,8 +190,10 @@ html[data-theme^="retro"] #panel-usage .pmu-keysw { border-radius: 0; }
    the widest form that leaves the whole title in place (data-fold: all four, "pair" = grip and menu, "menu" = the menu
    alone, which holds every action), slides the head tools exactly clear of it (--pmu-head-slide) and, where even the
    menu alone does not fit beside the title, lets the title yield the room (--pmu-head-room) on the lines it has at rest */
-#panel-usage .pmu-cardtools { position: absolute; z-index: 4; top: 5px; right: 6px; display: flex; gap: 1px; padding: 2px; border-radius: 9px; opacity: 0; pointer-events: none;
-  background: var(--pmu-menu-bg, var(--pmu-card)); transition: opacity calc(140ms * var(--pmu-speed, 1)) var(--pmu-ease-out); }
+/* R100 P6: a fading cluster stays hittable until its opacity fade has finished. Visibility removes the fully hidden
+   controls from hit-testing; dropping pointer-events at fade start could send a press through to the header. */
+#panel-usage .pmu-cardtools { position: absolute; z-index: 4; top: 5px; right: 6px; display: flex; gap: 1px; padding: 2px; border-radius: 9px; opacity: 0; visibility: hidden; pointer-events: auto;
+  background: var(--pmu-menu-bg, var(--pmu-card)); transition: opacity calc(140ms * var(--pmu-speed, 1)) var(--pmu-ease-out), visibility 0s linear calc(140ms * var(--pmu-speed, 1)); }
 #panel-usage .pmu-card[data-head="plate"] .pmu-cardtools { top: 9px; right: 9px; }
 #panel-usage .pmu-cardtools .pmu-iconbtn { width: 24px; height: 24px; border-radius: 7px; }
 #panel-usage .pmu-cardtools .pmu-iconbtn svg { width: 14px; height: 14px; }
@@ -214,7 +216,7 @@ html[data-theme^="retro"] #panel-usage .pmu-keysw { border-radius: 0; }
    theirs. */
 /* shown on hover, on keyboard focus of the card, and while a tool inside has focus (a pointer-down focuses the card
    article, so :focus-within on the card would keep them over a narrow title after a drag) */
-#panel-usage .pmu-card:hover:where(:not(.pmu-board[data-op="wheel"] *)) .pmu-cardtools, #panel-usage .pmu-card:focus-visible .pmu-cardtools, #panel-usage .pmu-cardtools:focus-within { opacity: 1; pointer-events: auto; }
+#panel-usage .pmu-card:hover:where(:not(.pmu-board[data-op="wheel"] *)) .pmu-cardtools, #panel-usage .pmu-card:focus-visible .pmu-cardtools, #panel-usage .pmu-cardtools:focus-within { opacity: 1; visibility: visible; pointer-events: auto; transition-delay: 0s; }
 #panel-usage .pmu-cardtools .pmu-menu-anchor-open { color: var(--pmu-ink); background: var(--pmu-row-hover); }
 /* the meta (text only) gives way to the tools; the head tools (switches, legends, the folded count) never vanish: they
    slide left exactly clear of the cluster */
@@ -227,7 +229,7 @@ html[data-theme^="retro"] #panel-usage .pmu-keysw { border-radius: 0; }
 /* (keyed on the head tools being there, not on a measurement: entering a card reads its head (42-cards.js fitTools), and
    that read already starts the cluster's fade, so its delay has to be in place before anything is measured) */
 #panel-usage .pmu-card:hover:where(:not(.pmu-board[data-op="wheel"] *)) > .pmu-cardhead > .pmu-headtools:not(:empty) ~ .pmu-cardtools, #panel-usage .pmu-card:focus-visible > .pmu-cardhead > .pmu-headtools:not(:empty) ~ .pmu-cardtools,
-#panel-usage .pmu-cardhead[data-tools-on] > .pmu-headtools:not(:empty) ~ .pmu-cardtools { transition-delay: calc(160ms * var(--pmu-speed, 1)); }
+#panel-usage .pmu-cardhead[data-tools-on] > .pmu-headtools:not(:empty) ~ .pmu-cardtools { transition-delay: calc(160ms * var(--pmu-speed, 1)), 0s; }
 #panel-usage .pmu-board[data-op]:where(:not([data-op="wheel"])) .pmu-headtools { transform: none; }
 /* the title yields its room to the cluster at once and takes it back once the cluster has faded and the head tools are
    back (140 + 160); a yielding title
