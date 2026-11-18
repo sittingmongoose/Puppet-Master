@@ -1,16 +1,17 @@
 # Admission merge 2: application record
 
-Status: APPLIED CHECKPOINT. 298 new families and eight registered-row changes are committed on this branch. Main landing, reviews and the governance seal remain with the lead and assigned lanes. Native execution: NOT_RUN.
+Status: APPLIED MERGE 2. 299 new families and eight registered-row changes are committed. DG5's five definition confirmations are deferred to merge 3 by DL-2443. Native execution: NOT_RUN.
 
 Branch: plans/ea-merge2-apply-20261116. Requested integration base: 01e696a112d7429dfdf52b2147e912a7c8d7d825.
-Source checkpoint before this reporting update: af9fbb67419e04b2805ef14dafaf5b6425d6bc8f.
-Registry checkpoint: 2026-11-16.306, 517 families.
+Source checkpoint before this reporting update: 826e6cb4d4a50e8c2635c4003576b4c0248bed6f.
+Registry checkpoint: 2026-11-18.1, 518 families.
 
-Authority: Jared’s EA-P1 A, EA-P2 B and EA-P3 A, signed 2026-11-14; /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/ANSWERS_EA-P_20261114.md, SHA-256 8f8c89d237c83fa265aa2baeebd041b657e757014a3a806aff451efb6641f1ac. One commit, DL entry, DL-077 record and 12/12 assessment per new family; registered revisions are separate.
+Original authority: Jared's EA-P1 A, EA-P2 B and EA-P3 A, signed 2026-11-14. DL-2443 records the Nov 17 batch-boundary answer verbatim: "Land without them". Source: /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/ANSWERS_MERGE2-SPLIT_20261117.md, SHA-256 d4723e065acc5804ba1cbc73d60d94c63aadb78e21d7ccea93bb597f9f35eb68. DL-400 per-family requirements stand. The review/landing reading is attributed to coordinator pm7-build, not quoted as additional words from Jared.
 
-Immutable 299-family preparation input: reports/event-authority-20261116/admission-merge-2/readiness-list.json, SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792. The first batch applied the 298 ready rows; usage.event waits for the final INT4 USAGE-RET join and its separate pinned input.
+Immutable original preparation input: reports/event-authority-20261116/admission-merge-2/readiness-list.json, SHA-256 9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792. Its 298 ready families are retained. Usage was applied separately as DL-2444 from reports/event-authority-20261116/admission-merge-2/usage-readiness-list.json, SHA-256 12d02f10f2c0ce60f70b96f939ae7fe576dab5e0e04a80ace55df50ddc66493e.
 
-Application commit-map input: /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/merge2-apply/evidence/admission-298-commits.json, SHA-256 c1fe01627a6fcbc5facc17443467bcad3b41df6b16a1fa17ea35c7b25368cd41. These are the original implementation-branch commits; an independent data replay has its own commits.
+Final census: reports/event-authority-20261116/admission-merge-2/final-census.json, SHA-256 7c914bdaaa02d70f541f617d261196b5b3e3ed029833bdff4b2726895befcf2f.
+Declared reporting input: reports/event-authority-20261116/admission-merge-2/final-application-inputs.json, SHA-256 cafef7a3a2bcb1a2876f7a62b0f773f80dd3f59ed854ee38311586a6cdb7e290. Original-branch commit maps below are reporting inputs; independent replay uses its own commits.
 
 | Family | Lane | Decision | Applied commit |
 |---|---|---|---|
@@ -312,12 +313,13 @@ Application commit-map input: /mnt/Cursor/PuppetMaster-Evidence/event-authority-
 | wizard.unblocked | DCW | DL-2432 | 9b53dc2e64fecfafe5dfe168595bcd11a1e7fe0b |
 | worktree.created | DT | DL-2433 | 06e119188f739589426f08f2060f8344dd0a734c |
 | worktree.deleted | DT | DL-2434 | 827b0e4a36501549c5c5231a4a69bd7431eace44 |
+| usage.event | DT | DL-2444 | 4010894119165afc73d2f7ef273154fd572ee59a |
 
 ## Registered-row changes
 
-Each has a separate DL entry, twelve-criterion assessment and DL-078 checkpoint; the family count stays unchanged. The final three withdraw only the unused application editions under DL-409.
+Eight retained S5b actions. The final three withdraw only unused application editions under DL-409. The action commits and current assessment paths are listed separately from later evidence maintenance.
 
-| Family | Decision | Applied commit | Assessment |
+| Family | Decision | Applied commit | Current assessment |
 |---|---|---|---|
 | goal.blocked | DL-2435 | 7fda6b4b82e2acc18b0ed313e4f4c0dbca53d4e9 | reports/event-authority-20261116/admission-merge-2/revisions/goal.blocked.json |
 | goal.completed | DL-2436 | 96e062046d1b54c62670bd61735effdc2fdb9369 | reports/event-authority-20261116/admission-merge-2/revisions/goal.completed.json |
@@ -328,10 +330,14 @@ Each has a separate DL entry, twelve-criterion assessment and DL-078 checkpoint;
 | goal.receipt_recorded | DL-2441 | 11b55f3319574b597b29830bcc7fd831cc9d092d | reports/event-authority-20261116/admission-merge-2/revisions/goal.receipt_recorded.json |
 | goal.tool_check_recorded | DL-2442 | e8037279d73c75d7496f4572d1e72408916741d2 | reports/event-authority-20261116/admission-merge-2/revisions/goal.tool_check_recorded.json |
 
-## Remaining inputs
+## Deferred to merge 3
 
-usage.event and the five DG successor definition confirmations remain unapplied. The latter require the final reviewed grades and exact selector map; their current selected v3 row bytes and SemVer are retained. Final INT4/ADAPTER-FMT integration, checker controls, generation, NUMRULE-FINAL and final verification remain pending.
+`goal.cancelled`, `goal.updated`, `goal_run.cancelled`, `goal_run.certified`, `goal_run.started`. No merge-2 admission, definition confirmation or per-family decision is applied for them. Their pre-existing main registry rows and selected payload resources remain unchanged. The split census removes exactly these five planned confirmations and preserves every other applied family.
 
-OUTCOMES is complete: exactly 249 unique sorted recount names, all registered. The nine s4x CPU exclusions are recorded in their separate CPU union and decisions.
+Split census: reports/event-authority-20261116/admission-merge-2/merge2-batch-split.json, SHA-256 a69185e51439394a2b25f7f9b24011221aac4866ac71b61a271b2fe521096ec5.
 
-This record grants no source installation, producer adoption, native authority, main landing or governance seal.
+OUTCOMES is complete: exactly 249 unique sorted recount names, all registered, none open. The nine s4x CPU exclusions remain separately recorded.
+
+## Follow-up gates
+
+The lead runs NUMRULE-FINAL and the GATE-MERGE2 review pair on the published final head. Main landing and the later governance seal remain with their assigned lanes. This record grants no source installation, producer adoption, native authority, landing permission or governance seal.
