@@ -221,6 +221,33 @@ def check_closure_memo_and_dump_recipe():
                [e.validator for e in probe_b.iter_errors(value)]
 
 
+def check_dynamic_validator_capture():
+    """A factory-created validator class (module attribute nowhere, FMT2 OriginalBank
+    shape) is patched and captured on its first validation."""
+    import jsonschema
+
+    import pm_goal_dg5_closure as closure
+
+    dynamic = jsonschema.validators.extend(jsonschema.Draft202012Validator, {})
+    closure.patch_validator_classes(force=True)  # extend() classes inherit from nobody: gc sweep finds them
+    assert dynamic in closure.PATCHED_CLASSES
+    assert getattr(dynamic.iter_errors, '_dg5_capture', False)
+
+    class FactoryBank:
+        def validator(self, schema):
+            return dynamic(schema)
+
+    closure._hook_validator_factory(FactoryBank)
+    sink = []
+    saved = closure.CAPTURE[0]
+    closure.CAPTURE[0] = sink
+    try:
+        built = FactoryBank().validator({'type': 'integer'})
+    finally:
+        closure.CAPTURE[0] = saved
+    assert sink == [built]
+
+
 def check_witness_capture_pairing():
     """A witness is stored only for the exact uncut/cut pair the kill test judged."""
     import pm_goal_dg5_closure as closure
@@ -291,6 +318,7 @@ def check_pass2_parent_release():
 def main():
     check_frame_error_target_mapping()
     check_closure_memo_and_dump_recipe()
+    check_dynamic_validator_capture()
     check_witness_capture_pairing()
     check_pass2_parent_release()
     check_shard_partition()
