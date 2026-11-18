@@ -62,7 +62,12 @@ const INSTALL = () => {
 		const under = card && card.matches(':hover');
 		const approved = (t.matches?.('.pmu-seg button') && e.propertyName === 'color') || (t.matches?.('.pmu-stepper button') && ['color','background-color'].includes(e.propertyName)) || (t.matches?.('.pmu-sbrow .pmu-sbfill > i') && e.propertyName === 'opacity');
 		const exiting = t.classList.contains('pmh-out') && !t.classList.contains('pmh-on') && ['opacity','--pmh-x','--pmh-y'].includes(e.propertyName);
-		R.trans.push({ t: performance.now(), prop: e.propertyName, cls: cls(t), card: cardId(card), under: !!under, approved: !!approved, exiting, self: !!(t.matches && t.matches(':hover')) });
+		let from, to;
+		if (cardId(card) === R.rest && t.matches('.pmu-cardtools,.pmu-h,.pmu-headtools,.pmu-cardtitles')) {
+			try { const a=t.getAnimations().find((a)=>a.transitionProperty===e.propertyName), k=e.propertyName.replace(/-([a-z])/g,(_,v)=>v.toUpperCase()), fs=a?.effect?.getKeyframes();
+				if(fs?.length){from=fs[0][k]??fs[0][e.propertyName];to=fs.at(-1)[k]??fs.at(-1)[e.propertyName];} } catch (_) { /* unknown directions remain checked */ }
+		}
+		R.trans.push({ t: performance.now(), prop: e.propertyName, cls: cls(t), card: cardId(card), under: !!under, approved: !!approved, exiting, from, to, self: !!(t.matches && t.matches(':hover')) });
 	}, true);
 	const frame = () => {
 		if (!R.on) return;
@@ -91,7 +96,7 @@ const INSTALL = () => {
 	R.start = () => {
 		const tools = document.querySelector('#pmuBoard .pmu-card:hover .pmu-cardtools');
 		const fadeMs = tools ? Math.max(...getComputedStyle(tools).transitionDuration.split(',').map((v) => parseFloat(v) * (v.trim().endsWith('ms') ? 1 : 1000))) : 140;
-		Object.assign(R, { on: true, frames: [], wheels: [], scrolls: [], trans: [], loaf: [], cls: [], ops: [], fadeMs, t0: performance.now() }); requestAnimationFrame(frame);
+		Object.assign(R, { on: true, frames: [], wheels: [], scrolls: [], trans: [], loaf: [], cls: [], ops: [], fadeMs, rest: cardId(document.querySelector('#pmuBoard .pmu-card:hover')), t0: performance.now() }); requestAnimationFrame(frame);
 	};
 	R.stop = () => { R.on = false; return { t0: R.t0, frames: R.frames, wheels: R.wheels, scrolls: R.scrolls, trans: R.trans, loaf: R.loaf, cls: R.cls, ops: R.ops, fadeMs: R.fadeMs }; };
 	R.state = () => { board = document.getElementById('pmuBoard'); const hc = board.querySelector(':scope > .pmu-card:hover'), tools = hc && hc.querySelector('.pmu-cardtools'); return { card: cardId(hc), lit: !!(hc && hc.classList.contains('pmh-on')), tools: tools ? parseFloat(getComputedStyle(tools).opacity) : null }; };
@@ -110,7 +115,15 @@ export function judge(rec, { rest, back }) {
 	};
 	const during = (x) => { const start = pauseAt(x.t); return start != null && x.t >= start + 50 && x.t < pauseEnd; };
 	const active = rec.frames.filter(during);
-	const ins = rec.trans.filter((x) => during(x) && x.under && !x.approved && !x.exiting);
+	const neutralExit = (x) => {
+		if(x.card!==rest || x.to==null) return false;
+		const cs=x.cls.split(/\s+/);
+		if(x.prop==='opacity'&&(cs.includes('pmu-cardtools')||cs.includes('pmu-h'))) return Number(x.from)>0&&Number(x.to)===0;
+		if(x.prop==='pointer-events'&&cs.includes('pmu-cardtools')) return x.from==='auto'&&x.to==='none';
+		if(x.prop==='margin-right'&&cs.includes('pmu-cardtitles')) return parseFloat(x.from)>0&&parseFloat(x.to)===0;
+		return x.prop==='transform'&&cs.includes('pmu-headtools')&&x.from!=='none'&&x.to==='none';
+	};
+	const ins = rec.trans.filter((x) => during(x) && x.under && !x.approved && !x.exiting && !neutralExit(x));
 	const litFrames = active.filter((x) => x.lit.concat(x.near || []).length > 0 || x.highlights > 0);
 	const toolFrames = active.filter((x) => x.t >= pauseAt(x.t) + (rec.fadeMs ?? 140) + 50 && x.tools > 0.05);
 	// R2: the card under the pointer once the wheel has stopped; its light is back when its .pmh-on is written (or it

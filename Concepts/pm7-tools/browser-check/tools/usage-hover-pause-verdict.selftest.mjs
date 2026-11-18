@@ -25,3 +25,8 @@ test('a later marked hold in the same input window must also be judged',()=>{
 test('an explicitly marked PMH exit is not a new hover-in transition on the starting card',()=>{
  const r=make();r.trans.push({t:180,card:'old',under:true,prop:'opacity',cls:'pmu-card pmh-out',exiting:true});assert.equal(j(r).r1.ok,true);
 });
+test('delayed starting-head transitions toward neutral are exits, while entries still fail',()=>{
+ const exits=[['opacity','pmu-cardtools','1','0'],['opacity','pmu-h','1','0'],['transform','pmu-headtools','matrix(1,0,0,1,-108,0)','none'],['margin-right','pmu-cardtitles','108px','0px'],['pointer-events','pmu-cardtools','auto','none']];
+ for(const [prop,cls,from,to] of exits){const r=make();r.trans.push({t:180,card:'old',under:true,prop,cls,from,to});assert.equal(j(r).r1.ok,true,prop);}
+ const r=make();r.trans.push({t:180,card:'old',under:true,prop:'opacity',cls:'pmu-cardtools',from:'0',to:'1'});assert.equal(j(r).r1.ok,false);
+});
