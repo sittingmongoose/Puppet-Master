@@ -148,6 +148,8 @@ function speedAt(rec, T) {
 export function frames(data, sel) {
 	const recs = data.anims.filter((r) => r.strip === sel);
 	const liveAt = (now) => recs.filter((r) => r.created <= now && (r.cancelled == null || r.cancelled > now)).pop() || null;
+	const firstDrawn = (r) => (r.explicit ? (r.drawnAt != null ? r.drawnAt : null) : r.start != null ? r.start + (r.hold || 0) : null);
+	const drawnBy = (T, was) => { let g = was; for (const r of recs) { const d = firstDrawn(r); if (r.created > was.created && d != null && d <= T && r.start != null) g = r; } return g; };
 	const out = [];
 	let prev = null;
 	for (const row of data.samples) {
@@ -156,8 +158,11 @@ export function frames(data, sel) {
 		// (a block's change, glass.js carry's, takes new keyframes that match the old up to where the change starts, so
 		// its latest keyframes are its frames at every time)
 		const r0 = s.block ? liveAt(row.now) : null;
+		// (switcher-carry-steps, FO-227: a block can be made inside a frame of the gap, after its layout, and drawn from the
+		// next one: each frame of the gap draws the block the compositor had first drawn by then, its start plus its hold,
+		// or for a block on its trip's clock the frame its probe dates, and the earlier block only before that)
 		if (prev && prev.rec && prev.rec.start != null && Td - prev.t > FRAME * 1.5) {
-			for (let T = prev.t + FRAME; T < Td - FRAME / 2; T += FRAME) { const b = poseAt(prev.rec, T); if (b) out.push({ t: T, box: b, src: 'rec:' + prev.rec.id, rec: prev.rec, model: true, gap: true }); }
+			for (let T = prev.t + FRAME; T < Td - FRAME / 2; T += FRAME) { const g = drawnBy(T, prev.rec), b = poseAt(g, T); if (b) out.push({ t: T, box: b, src: 'rec:' + g.id, rec: g, model: true, gap: true }); }
 		}
 		// the block as measured, unless the frame is drawn later than it was measured (a late callback): then its keyframes
 		// at the time it is drawn
