@@ -72,7 +72,7 @@ export const tests = {
 			const off = await offset(t, f);
 			const g0 = await f.evaluate(GEOM);
 			if (!(await t.check(`${look}: Home shows a panel strip with the Home and Agents tabs, taken over by the switcher`, !!g0 && !!g0.tabs.Home && !!g0.tabs.Agents && g0.lensed && g0.theme === look, JSON.stringify(g0)))) continue;
-			const blanks = [], thin = [], unread = [], shifted = [], wrong = [], counts = [], perPress = [];
+			const blanks = [], thin = [], unread = [], shifted = [], wrong = [], counts = [], perPress = [], kept = {};
 			let lowest = null;
 			for (let i = 0; i < presses; i++) {
 				const name = i % 2 ? 'Home' : 'Agents', tag = `${look} ${i + 1} ${name}`;
@@ -109,6 +109,9 @@ export const tests = {
 					const m = partMask(ref, b, pre); m.name = `${n} ${part}`;
 					if (!m.ok) { unread.push(`${tag}: ${m.name} (${m.g.length} glyph px in both the settled frame and the one before the press)`); continue; }
 					masks.push(m);
+					// how many glyph pixels each part keeps in both frames, of those in the settled frame (FO-236)
+					const k = kept[m.name] || (kept[m.name] = { lo: Infinity, hi: 0, of: [] });
+					k.lo = Math.min(k.lo, m.g.length); k.hi = Math.max(k.hi, m.g.length); k.of.push(m.gSettled);
 				}
 				const had = blanks.length;
 				for (const { wall, img } of imgs) for (const m of masks) {
@@ -119,6 +122,8 @@ export const tests = {
 				perPress.push(blanks.length - had);
 			}
 			t.log(`${look}: screencast frames judged per press ${counts.join(',')}; blank part-frames per press ${perPress.join(',')}; lowest part contrast ${lowest ? `${lowest.c}:1 at ${lowest.at}` : 'none'}`);
+			const ks = Object.entries(kept);
+			t.log(`${look}: glyph pixels kept in both frames per part (of the settled frame's) ${ks.map(([n, k]) => `${n} ${k.lo}-${k.hi} (of ${Math.min(...k.of)}-${Math.max(...k.of)})`).join(', ')}; smallest ${ks.length ? Math.min(...ks.map(([, k]) => k.lo)) : 'none'}`);
 			await t.check(`${look}: every press chose its tab (${presses - wrong.length}/${presses})`, wrong.length === 0, wrong.join(' | '));
 			await t.check(`${look}: each press gave at least ${MIN_FRAMES} screencast frames to judge`, thin.length === 0, thin.join(' | '));
 			await t.check(`${look}: every label and glyph has glyph pixels in its settled frame`, unread.length === 0, unread.join(' | '));
