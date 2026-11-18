@@ -2242,15 +2242,13 @@ window.PM12_REFERENCE = {"version":"1.0.0","total":892,"inventory_sha256":"be85c
       return saved;
     }catch(_e){base.settingsProjectionSource=window.PM_SETTINGS_REGISTRY?'owner_registry_read_failed':'concept_default_fixture';base.settingsProjectionReadOnly=!!window.PM_SETTINGS_REGISTRY;return base;}
   }
-  function save(snapshot,forKey){
-    var k=forKey===undefined?key():forKey,safe=scrubCredentialSettings(snapshot);safe.settings['general.visual.glass-transparency']=clampGlassAlpha(safe.settings,safe.settings['general.visual.glass-transparency']);var owned={schema_version:'pm7.settings.project_projection.v1',settings:safe.settings,changed:clone(snapshot&&snapshot.changed||{}),domain:snapshot&&snapshot.domain,workspace:snapshot&&snapshot.workspace,activeSection:clone(snapshot&&snapshot.activeSection||{}),transferCategories:clone(snapshot&&snapshot.transferCategories||[]),settingsTransferHistory:clone(snapshot&&snapshot.settingsTransferHistory||[]),settingsTransferRollbacks:clone(snapshot&&snapshot.settingsTransferRollbacks||{}),settingsSourceSnapshot:clone(snapshot&&snapshot.settingsSourceSnapshot||null),o55Migrations:clone(snapshot&&snapshot.o55Migrations||{})};var o55Typed=snapshot&&snapshot.pm51&&snapshot.pm51.o55Custom;if(o55Typed&&typeof o55Typed==='object'){owned.pm51={o55Custom:{}};Object.keys(o55Typed).forEach(function(id){if(!credentialSettingIds.has(id)&&typeof o55Typed[id]==='string')owned.pm51.o55Custom[id]=o55Typed[id];});}
+  function save(snapshot){
+    var k=key(),safe=scrubCredentialSettings(snapshot);safe.settings['general.visual.glass-transparency']=clampGlassAlpha(safe.settings,safe.settings['general.visual.glass-transparency']);var owned={schema_version:'pm7.settings.project_projection.v1',settings:safe.settings,changed:clone(snapshot&&snapshot.changed||{}),domain:snapshot&&snapshot.domain,workspace:snapshot&&snapshot.workspace,activeSection:clone(snapshot&&snapshot.activeSection||{}),transferCategories:clone(snapshot&&snapshot.transferCategories||[]),settingsTransferHistory:clone(snapshot&&snapshot.settingsTransferHistory||[]),settingsTransferRollbacks:clone(snapshot&&snapshot.settingsTransferRollbacks||{}),settingsSourceSnapshot:clone(snapshot&&snapshot.settingsSourceSnapshot||null),o55Migrations:clone(snapshot&&snapshot.o55Migrations||{})};var o55Typed=snapshot&&snapshot.pm51&&snapshot.pm51.o55Custom;if(o55Typed&&typeof o55Typed==='object'){owned.pm51={o55Custom:{}};Object.keys(o55Typed).forEach(function(id){if(!credentialSettingIds.has(id)&&typeof o55Typed[id]==='string')owned.pm51.o55Custom[id]=o55Typed[id];});}
     /* FO-186 r2: the model rows' depth (pm51.o55Depth, {key:{model,effort}}) survives the project round trip beside o55Custom; load's merge restores pm51 wholesale */
     var o55Depths=snapshot&&snapshot.pm51&&snapshot.pm51.o55Depth;if(o55Depths&&typeof o55Depths==='object'&&!Array.isArray(o55Depths)){owned.pm51=owned.pm51||{};owned.pm51.o55Depth={};Object.keys(o55Depths).forEach(function(id){var d=o55Depths[id];if(!credentialSettingIds.has(id)&&d&&typeof d==='object'&&typeof d.model==='string'&&typeof d.effort==='string')owned.pm51.o55Depth[id]={model:d.model,effort:d.effort};});}
     if(k&&!window.PM_SETTINGS_REGISTRY&&CONCEPT_FIXTURE_MODE)try{projectStore.setItem(k,JSON.stringify(owned));}catch(_e){}
-    /* a save for a Project that is no longer shown (a place left waiting when the Project changed) paints nothing */
-    if(!bridgeDepth&&(forKey===undefined||forKey===key()))applyPaint(snapshot);
+    if(!bridgeDepth)applyPaint(snapshot);
   }
-  function has(k){try{return !!k&&projectStore.getItem(k)!=null;}catch(_e){return false;}}
   function reset(){var k=key();if(k)try{projectStore.removeItem(k);}catch(_e){}}
   function projectSnapshot(projectId){
     var owner=window.PM_SETTINGS_REGISTRY,registry=owner&&owner.getProjectSnapshot;
@@ -2361,7 +2359,7 @@ window.PM12_REFERENCE = {"version":"1.0.0","total":892,"inventory_sha256":"be85c
     document.addEventListener('page.changed',closeIfInactive);
     new MutationObserver(function(){closeIfInactive({page:panel.classList.contains('active')?'settings':'inactive'});}).observe(panel,{attributes:true,attributeFilter:['class']});
   }
-  window.PM7_SETTINGS_TOME={load:load,save:save,key:key,has:has,reset:reset,restoreProjectDefaults:restoreProjectDefaults,wallpaperSnapshot:wallpaperSnapshot,writeWallpaper:writeProjectWallpaper,migrateGlassWallpaper:migrateGlassWallpaper,projectSnapshot:projectSnapshot,dispatch:dispatch,consumeCommandResult:consumeCommandResult,applyPaint:applyPaint,clampGlassAlpha:clampGlassAlpha,configuredThemeSlug:configuredThemeSlug,setChromeThemeFamily:setChromeThemeFamily,setChromeThemeMode:setChromeThemeMode,project:projectRecord,projectLabel:function(){var p=projectRecord();return p?p.label:'No project';},portal:function(){return document.getElementById('pm-settings-portals')||document.getElementById('panel-settings')||document.body;},ownsEvent:function(target){var root=document.getElementById('pm-settings-root'),portal=document.getElementById('pm-settings-portals');return !!(target&&((root&&root.contains(target))||(portal&&portal.contains(target))));},openBloom:openBloom};
+  window.PM7_SETTINGS_TOME={load:load,save:save,reset:reset,restoreProjectDefaults:restoreProjectDefaults,wallpaperSnapshot:wallpaperSnapshot,writeWallpaper:writeProjectWallpaper,migrateGlassWallpaper:migrateGlassWallpaper,projectSnapshot:projectSnapshot,dispatch:dispatch,consumeCommandResult:consumeCommandResult,applyPaint:applyPaint,clampGlassAlpha:clampGlassAlpha,configuredThemeSlug:configuredThemeSlug,setChromeThemeFamily:setChromeThemeFamily,setChromeThemeMode:setChromeThemeMode,project:projectRecord,projectLabel:function(){var p=projectRecord();return p?p.label:'No project';},portal:function(){return document.getElementById('pm-settings-portals')||document.getElementById('panel-settings')||document.body;},ownsEvent:function(target){var root=document.getElementById('pm-settings-root'),portal=document.getElementById('pm-settings-portals');return !!(target&&((root&&root.contains(target))||(portal&&portal.contains(target))));},openBloom:openBloom};
   window.PM7_SETTINGS_OPEN_BLOOM=openBloom;
   document.addEventListener('DOMContentLoaded',function(){setTimeout(function(){redirectProjectModal();reloadOnProjectChange();installPanelLifecycle();window.addEventListener('pm7.settings.runtime-context.changed',function(){if(window.PM12_KIMI&&typeof window.PM12_KIMI.renderApp==='function')window.PM12_KIMI.renderApp({soft:true});});if(window.PM12_KIMI)applyPaint(window.PM12_KIMI.getState());},0);});
 })();
@@ -2747,8 +2745,6 @@ window.PM12_REFERENCE = {"version":"1.0.0","total":892,"inventory_sha256":"be85c
     if(!project){showToast('Select or create a project','No-project mode has no persisted Settings defaults to restore.','warning');return false;}
     if(state.settingsProjectionReadOnly===true){showToast('Defaults were not restored','The attached Settings owner has not supplied a current readable project projection.','error');return false;}
     if(typeof restore!=='function'){showToast('Defaults were not restored','The Settings owner does not expose the required atomic restore-all transaction.','warning');return false;}
-    /* R90 P1: settle the old projection before the restore replaces it, keeping main's saved reading place. */
-    saveNavigationNow();
     const result=restore({project_id:project.id,create_rollback:true,preserve_credential_references:true});
     if(result&&typeof result.then==='function'){showToast('Defaults were not restored','The concept requires an accepted owner receipt before updating its projection.','error');return false;}
     if(!result||result.ok===false){showToast('Defaults were not restored',result?.safe_user_message||result?.reason||'The Settings owner rejected restore-all.','error');return false;}
@@ -3031,13 +3027,11 @@ window.PM12_REFERENCE = {"version":"1.0.0","total":892,"inventory_sha256":"be85c
 
   let state = loadState();
 
-  /* the navigation's waiting place save (saveNavigationSoon, below navigate): declared before anything can save */
-  let navigationSaveJob = 0, navigationSaveIdle = false, navigationSaveFrame = 0, navigationSaveKey = null, navigationSaveHad = false, navigationSaveFor = undefined;
   function saveState() {
     searchIndexDirty = true;
     const copy = clone(state);
     delete copy.home; delete copy.railOpen; delete copy.resourceRosterOpen;
-    window.PM7_SETTINGS_TOME.save(copy, navigationSaveFor);
+    window.PM7_SETTINGS_TOME.save(copy);
   }
 
 
@@ -3141,49 +3135,6 @@ window.PM12_REFERENCE = {"version":"1.0.0","total":892,"inventory_sha256":"be85c
     return String(value).replace(/(["\\.#:[\]()=])/g, '\\$1');
   }
 
-  /* A navigation changes only the place (the chapter, the page, the section). Saving it ran inside the task that builds
-     the new chapter: two deep copies of the state, the tome's write and its applyPaint (the wallpaper's refresh), 11 to
-     36 ms of that task on a P1000 (traces) and 6 to 9 ms on an RTX 3080 (timed per press; lane U, 2026-11-14, FO-196).
-     The place is saved once the new chapter is on screen and the page is idle, and at once if the page is hidden or
-     left first; a save for any other reason in the meantime carries the place too. */
-  function navigationTomeKey() { return window.PM7_SETTINGS_TOME && typeof window.PM7_SETTINGS_TOME.key === 'function' ? window.PM7_SETTINGS_TOME.key() : null; }
-  function cancelNavigationSave() {
-    if (navigationSaveFrame) cancelAnimationFrame(navigationSaveFrame);
-    if (navigationSaveJob) {
-      if (navigationSaveIdle) { if (typeof cancelIdleCallback === 'function') cancelIdleCallback(navigationSaveJob); }
-      else clearTimeout(navigationSaveJob);
-    }
-    navigationSaveJob = 0; navigationSaveIdle = false; navigationSaveFrame = 0; navigationSaveKey = null;
-  }
-  /* The place is saved under the Project it was chosen in (R89 P1: a Project change inside the wait saved the next
-     Project's state and lost the chapter of the first). A later place in the same Project rides the one waiting save;
-     a place still waiting from another Project is saved under that Project first. */
-  function saveNavigationSoon() {
-    const k = navigationTomeKey();
-    if ((navigationSaveJob || navigationSaveFrame) && k === navigationSaveKey) return;
-    saveNavigationNow();
-    navigationSaveKey = k;
-    navigationSaveHad = !!(k && window.PM7_SETTINGS_TOME.has && window.PM7_SETTINGS_TOME.has(k));
-    /* idle time is asked for after the next frame: an idle moment between the build and the new chapter's first frame
-       would otherwise save before that frame */
-    navigationSaveFrame = requestAnimationFrame(() => {
-      navigationSaveFrame = 0;
-      navigationSaveIdle = typeof requestIdleCallback === 'function';
-      navigationSaveJob = navigationSaveIdle ? requestIdleCallback(saveNavigationNow, { timeout: 1500 }) : setTimeout(saveNavigationNow, 300);
-    });
-  }
-  function saveNavigationNow() {
-    if (!navigationSaveJob && !navigationSaveFrame) return;
-    const k = navigationSaveKey, had = navigationSaveHad;
-    cancelNavigationSave();
-    /* a record removed on purpose while the place waited (a reset, a fresh start) is not written back */
-    if (had && k && window.PM7_SETTINGS_TOME.has && !window.PM7_SETTINGS_TOME.has(k)) return;
-    navigationSaveFor = k;
-    try { saveState(); } finally { navigationSaveFor = undefined; }
-  }
-  window.addEventListener('pagehide', saveNavigationNow);
-  document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'hidden') saveNavigationNow(); });
-
   function navigate(domainId, workspaceId, options = {}) {
     settingsSoundPreview.stop('settings-navigation');
     const domain = getDomain(domainId);
@@ -3198,7 +3149,7 @@ window.PM12_REFERENCE = {"version":"1.0.0","total":892,"inventory_sha256":"be85c
     state.railOpen = false;
     state.resourceRosterOpen = false;
     if (options.section) state.activeSection[workspace.id] = options.section;
-    saveNavigationSoon();
+    saveState();
 
     const needsRemount = !sameDomainView || hadDetail || !!state.detailSetting;
     if (!needsRemount) {
@@ -8098,8 +8049,8 @@ if(state.projectSyncTab==='move')return `<div class="card-grid two"><section cla
       /* Re-read only these owned fields after a verified gallery/migration transaction. No second write or rerender. */
       syncWallpaperProjection:(accepted)=>{const p=window.PM7_SETTINGS_TOME.project(),snapshot=accepted?(p&&p.id===accepted.project_id?accepted.snapshot:null):p&&window.PM7_SETTINGS_TOME.projectSnapshot(p.id);if(!snapshot||!snapshot.settings)return;for(const id of ['general.visual.wallpaper','general.visual.glass-background-mode']){if(Object.prototype.hasOwnProperty.call(snapshot.settings,id))state.settings[id]=clone(snapshot.settings[id]);else delete state.settings[id];if(snapshot.changed&&Object.prototype.hasOwnProperty.call(snapshot.changed,id))state.changed[id]=snapshot.changed[id];else delete state.changed[id];}},
       setState:next=>{state=mergeState(clone(defaultState),next||{});ensureStateShape();saveState();renderApp();},
-      reset:()=>{cancelNavigationSave();settingsSoundPreview.clearFiles();window.PM7_SETTINGS_TOME.reset();state=loadState();ensureStateShape();renderApp();window.PM7_SETTINGS_TOME.applyPaint(state);},
-      reloadProject:()=>{saveNavigationNow();settingsSoundPreview.clearFiles();state=loadState();ensureStateShape();renderApp();window.PM7_SETTINGS_TOME.applyPaint(state);},
+      reset:()=>{settingsSoundPreview.clearFiles();window.PM7_SETTINGS_TOME.reset();state=loadState();ensureStateShape();renderApp();window.PM7_SETTINGS_TOME.applyPaint(state);},
+      reloadProject:()=>{settingsSoundPreview.clearFiles();state=loadState();ensureStateShape();renderApp();window.PM7_SETTINGS_TOME.applyPaint(state);},
       setSettingFromHost:(id,value,rerenderView=true,syncRelated=true)=>{if(!commitSettingValue(id,value,{syncRelated})){window.PM7_SETTINGS_TOME.applyPaint(state);return false;}saveState();if(rerenderView)renderApp();return true;},
       o55SettingsTransfer:(()=>{const pending=new Map();return {sources:()=>settingsCopySources(),categoryFor:(id)=>transferCategoryForId(id),categories:()=>{const s=new Set();const snap=Object.values(window.PM12_REFERENCE?.byCat||{}).flatMap(c=>c.settings||[]);for(const r of snap){if(!r||!r.id||TRANSFER_CREDENTIAL_IDS.has(r.id)||r.credential_ref_only)continue;const c=transferCategoryForId(r.id);if(c)s.add(c);}return [...s];},draftPreview:(sourceId,categories)=>{const snapshot=window.PM7_SETTINGS_TOME.projectSnapshot(sourceId);if(!snapshot?.settings)return {ok:false,reason:'This Project has no readable settings yet.'};const rows=Object.values(window.PM12_REFERENCE?.byCat||{}).flatMap(c=>c.settings||[]),canon=new Map(rows.map(r=>[r.id,r]));const pick=Array.isArray(categories)&&categories.length?new Set(categories):null,groups={},excluded=[];for(const [id,value] of Object.entries(snapshot.settings)){const row=canon.get(id);if(!row)continue;if(TRANSFER_CREDENTIAL_IDS.has(id)||row.credential_ref_only){excluded.push(id);continue;}const cat=transferCategoryForId(id);if(!cat||(pick&&!pick.has(cat)))continue;(groups[cat]=groups[cat]||[]).push({id,label:row.label||id,value});}return {ok:true,sourceId,groups,excludedCount:excluded.length,applied:false};},apply:(sourceId,categories,options)=>applyDetachedSettingsCopy(sourceId,categories,options||{}),applyPending:(sourceId,reservation,categories,options={})=>{
  if(window.PM_SETTINGS_REGISTRY)return {ok:false,reason:'The Settings owner has not supplied a current draft rebind and reserved-destination transaction.'};
