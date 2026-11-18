@@ -191,6 +191,8 @@ async function compactDonut(t,f,label,park) {
 
 async function neutralDonutRoll(t,f,label,park) {
 	if(await f.evaluate(()=>PMU.motion.reduced())){t.log(label+'R113 P7 SKIP number-roll race under Reduced Motion: its centre is already final.');return {kind:'roll',skipped:'Reduced Motion has no number roll'};}
+	// R115 T1/R116 T3: this is specifically a digit-strip identity race. NieR never renders those strips.
+	if(await f.evaluate(()=>PMU.motion.family()==='nier')){const reason='NieR uses glyph decode (or a text swap without a GPU), with no digit strips or subtree Web Animations';t.log(label+'R113 P7 SKIP digit-strip race: '+reason+'.');return {kind:'roll',skipped:reason};}
 	await park();const on=await f.evaluate(()=>{const on=PMU.live.on();PMU.live.pause();PM7_USAGE.setRoomDetail('analytics','diagnostics');return on;});await t.page.waitForTimeout(4500);
 	await f.evaluate(()=>{const b=PMU.board;b.visible().filter(x=>!['token-trend','an-model-donut'].includes(x)).forEach(x=>b.setVisible(x,false));b.resize('token-trend',{w:6,h:10});b.resize('an-model-donut',{w:6,h:10});b.move('token-trend',{x:0,y:0});b.move('an-model-donut',{x:6,y:0});});await t.page.waitForTimeout(1800);
 	await f.evaluate(()=>{document.getElementById('pmuScroll').scrollTop=0;});
