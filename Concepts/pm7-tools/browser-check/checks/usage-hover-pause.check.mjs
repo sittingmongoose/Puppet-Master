@@ -34,6 +34,9 @@
 //       scroll limit and a press on a still-visible fading tool. --set chartOnly=1, chartCases=provider,donut,column,engine,tool.
 //   R107 wheel over a lit column, leave #pmuScroll within the hold for the toolbar, then stay outside past return.
 //       No column/provider/donut/card light may return. --set departureOnly=1 isolates the regression.
+//   R112 wheel upward at the top over a lit Skyline provider, M/R on another focused card within the hold, then
+//       keep that keyboard gesture past the hold and Escape. No return during the gesture; current provider returns
+//       without a pointer move after release. --set keyboardOnly=1 isolates both trusted keyboard paths.
 //   R5  keyboard-mount Accounts/Overview mid-burst; live-board marker, tools/rows/light suppression and live return.
 //       --set mountOnly=1 isolates R5; --set mountNoPause=1 explicitly skips pause verdicts on main; rm=1 covers the spare.
 // A window that did not scroll at least TICKS*40*0.6 px is taken again (twice at most); one still short fails as
@@ -490,6 +493,69 @@ async function pointerDeparture(t, f, label, park) {
 	return rec;
 }
 
+// R112: keyboard gestures need no pointer press/move, so they can take over an outstanding wheel return.
+async function keyboardPause(t, f, label, park) {
+	await park();
+	const liveWasOn = await f.evaluate(() => { const on = PMU.live.on(); PMU.live.pause(); PM7_USAGE.setRoomDetail('overview', 'glance'); return on; });
+	await t.page.waitForTimeout(4500);
+	const records = [];
+	for (const [key, mode] of [['m', 'move'], ['r', 'resize']]) {
+		const S = label + `R112 ${mode}: `;
+		await park();
+		await f.evaluate(() => { document.getElementById('pmuScroll').scrollTop = 0; });
+		await f.locator('#pmuBoard > .pmu-card[data-widget="health"]').focus();
+		const target = f.locator('#pmuBoard > .pmu-card[data-widget="ov-skyline"] .pmu-skycol[data-prov]').first();
+		const box = await target.boundingBox(), pane = await f.locator('#pmuScroll').boundingBox();
+		if (!box || !pane) { await t.check(S + 'could judge: Skyline provider and focused card exist', false); continue; }
+		await t.page.mouse.move(box.x + box.width / 2, (Math.max(box.y, pane.y) + Math.min(box.y + box.height, pane.y + pane.height)) / 2);
+		await t.page.waitForTimeout(900);
+		await f.evaluate(({key, mode}) => {
+			const sc = document.getElementById('pmuScroll'), board = () => document.getElementById('pmuBoard');
+			const target = board().querySelector('.pmu-card[data-widget="ov-skyline"] .pmu-skycol[data-prov]:hover');
+			const read = () => {
+				const b = board(), dim = [...b.querySelectorAll('.is-hl-dim')], on = [...b.querySelectorAll('.is-hl-on')];
+				return { t: performance.now(), op: b.getAttribute('data-op'), gesture: PMU.board.gesture(), top: sc.scrollTop,
+					hovered: !!target?.isConnected && target.closest('.pmu-board') === b && target.matches(':hover'),
+					dim: dim.length, on: on.length, correct: !!target && dim.every((el) => el.dataset.prov !== target.dataset.prov) && on.every((el) => el.dataset.prov === target.dataset.prov),
+					eligibleDim: [...b.querySelectorAll('.pmu-mark[data-prov]')].filter((el) => el.dataset.prov !== target?.dataset.prov).length,
+					eligibleOn: [...b.querySelectorAll('.pmu-irow[data-prov]')].filter((el) => el.dataset.prov === target?.dataset.prov).length };
+			};
+			const r = window.__uhpKeyboard = { key, mode, pre: read(), focused: document.activeElement?.dataset.widget, wheels: [], keys: [], ends: [], moves: 0, frames: [] };
+			let running = true, point = null;
+			const wheel = (e) => { point = [e.clientX, e.clientY]; r.wheels.push({t: performance.now(), trusted: e.isTrusted, held: board().getAttribute('data-op') === 'wheel'}); };
+			const keydown = (e) => { if (e.key === key || e.key === 'Escape') r.keys.push({t: performance.now(), key: e.key, trusted: e.isTrusted, focused: e.target.dataset.widget}); };
+			const move = (e) => { if (point && (e.clientX !== point[0] || e.clientY !== point[1])) r.moves++; };
+			const end = (e) => r.ends.push({t: performance.now(), live: e.detail?.board === board(), gesture: !!PMU.board.gesture(), op: board().getAttribute('data-op'), point: e.detail?.point});
+			const frame = () => { if (!running) return; r.frames.push(read()); requestAnimationFrame(frame); };
+			sc.addEventListener('wheel', wheel, {passive: true}); document.addEventListener('keydown', keydown, true); document.addEventListener('pointermove', move, true); document.addEventListener('pmu-op-end', end);
+			requestAnimationFrame(frame);
+			r.stop = () => { running = false; sc.removeEventListener('wheel', wheel); document.removeEventListener('keydown', keydown, true); document.removeEventListener('pointermove', move, true); document.removeEventListener('pmu-op-end', end); return {...r, stop: undefined, point, after: read()}; };
+		}, {key, mode});
+		// Consecutive trusted inputs; the in-page timestamps qualify entry before the 150 ms deadline.
+		await t.page.mouse.wheel(0, -1);
+		await t.page.keyboard.press(key);
+		await t.page.waitForTimeout(650);
+		await t.page.keyboard.press('Escape');
+		await t.page.waitForTimeout(900);
+		const rec = await f.evaluate(() => window.__uhpKeyboard.stop()); records.push(rec);
+		const press = rec.keys.find((x) => x.key === key), escape = rec.keys.find((x) => x.key === 'Escape');
+		const gap = press?.t - rec.wheels[0]?.t, held = rec.frames.filter((x) => x.t >= rec.wheels[0]?.t + 200 && x.t < escape?.t);
+		const a = rec.after, p = rec.pre;
+		t.log(S + JSON.stringify(rec));
+		await t.check(S + 'could judge: applied provider, trusted wheel at top, M/R on another focused card within 150 ms, gesture held past pause, trusted Escape and still pointer',
+			p.hovered && p.dim === p.eligibleDim && p.on === p.eligibleOn && p.dim + p.on > 0 && p.correct && rec.focused === 'health' &&
+			rec.wheels.length === 1 && rec.wheels[0].trusted && rec.wheels[0].held && gap >= 0 && gap < 150 && press?.trusted && press.focused === 'health' && escape?.trusted &&
+			escape.t - press.t >= 500 && held.length >= 5 && held.every((x) => x.gesture?.kb && x.gesture.type === mode && x.hovered && x.top === 0) && held.some((x) => x.op === mode) &&
+			!rec.moves && a.hovered && a.top === 0 && !a.gesture && !a.op,
+			JSON.stringify({gap, pre: p, focused: rec.focused, wheels: rec.wheels, keys: rec.keys, held: held.length, moves: rec.moves, after: a}));
+		await t.check(S + 'no chart return fires while the keyboard gesture owns the board', held.length >= 5 && held.every((x) => !x.dim && !x.on) && !rec.ends.some((x) => x.t < escape?.t || x.gesture || x.op), JSON.stringify({ends: rec.ends, litHeld: held.filter((x) => x.dim || x.on).length}));
+		await t.check(S + 'after Escape one return restores the current hovered provider without moving the pointer', rec.ends.length === 1 && rec.ends[0].live && !rec.ends[0].gesture && !rec.ends[0].op && rec.ends[0].t >= escape?.t && JSON.stringify(rec.ends[0].point) === JSON.stringify(rec.point) && !a.gesture && !a.op && a.hovered && a.dim === a.eligibleDim && a.on === a.eligibleOn && a.dim + a.on > 0 && a.correct, JSON.stringify({ends: rec.ends, after: a}));
+	}
+	await park();
+	await f.evaluate((on) => { document.activeElement?.blur(); if (on) PMU.live.resume(); }, liveWasOn);
+	return records;
+}
+
 export default async function (t) {
 	const looks = String(t.args.looks || 'basic-dark').split(',').filter(Boolean);
 	// BACK: the pause ends 150 ms after the last wheel or scroll event; light and tools were back at 168-185 ms on Alexis
@@ -511,6 +577,11 @@ export default async function (t) {
 			await f.waitForFunction(() => !(window.PM_THEME_TRANSITION?.busy?.() || window.PM_LOOK_COVERED?.()), null, { timeout: 20000 }).catch(() => {});
 			await f.evaluate(() => PM_PAGES.go('usage'));
 			await t.page.waitForTimeout(Number(t.args.viewSettle ?? 8000));
+			if (!['chartOnly','raceOnly','mountOnly','departureOnly'].some((key)=>String(t.args[key] || '')==='1')) {
+				const keyboard=await keyboardPause(t,f,S,park); dump.push({surface,look,keyboard});
+				if(t.args.dump) writeFileSync(String(t.args.dump),JSON.stringify(dump));
+				if(String(t.args.keyboardOnly || '')==='1') continue;
+			}
 			if (!['chartOnly','raceOnly','mountOnly'].some((key)=>String(t.args[key] || '')==='1')) {
 				const departure=await pointerDeparture(t,f,S,park); dump.push({surface,look,departure});
 				if(t.args.dump) writeFileSync(String(t.args.dump),JSON.stringify(dump));
