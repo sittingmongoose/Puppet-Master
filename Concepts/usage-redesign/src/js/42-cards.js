@@ -1151,7 +1151,9 @@
     };
     var onWheelScroll = function () { if (wheelAt && wheelBoard()) wheelHold(); };
     var onWheelMove = function (event) { if (wheelAt && (Math.abs(event.clientX - wheelAt[0]) >= 1 || Math.abs(event.clientY - wheelAt[1]) >= 1)) { wheelAt = [event.clientX, event.clientY]; wheelEnd(); } };
-    var onWheelPress = function (event) { if (wheelAt) { wheelAt = [event.clientX, event.clientY]; wheelEnd(); } };
+    /* R107: a direct move to navigation/toolbar has no pointermove in the scroller. Its leave carries the current
+       pointer too: end the hold there, so no return can hit-test the old wheel position. A press also resumes. */
+    var onWheelResume = function (event) { if (wheelAt) { wheelAt = [event.clientX, event.clientY]; wheelEnd(); } };
     var onOver = function (event) {
       if (wheelAt) return;   /* the pause: the tools stay hidden, so nothing is fitted until it ends (wheelEnd fits) */
       var card = event.target.closest && event.target.closest('.pmu-card');
@@ -1199,7 +1201,8 @@
       boardEl.addEventListener('wheel', onWheel, { passive: true });
       boardEl.addEventListener('scroll', onWheelScroll, { passive: true });
       boardEl.addEventListener('pointermove', onWheelMove, { passive: true });
-      boardEl.addEventListener('pointerdown', onWheelPress, { passive: true });
+      boardEl.addEventListener('pointerdown', onWheelResume, { passive: true });
+      boardEl.addEventListener('pointerleave', onWheelResume, { passive: true });
     }
     return function () {
       if (pausing) {
@@ -1208,7 +1211,8 @@
         boardEl.removeEventListener('wheel', onWheel, { passive: true });
         boardEl.removeEventListener('scroll', onWheelScroll, { passive: true });
         boardEl.removeEventListener('pointermove', onWheelMove, { passive: true });
-        boardEl.removeEventListener('pointerdown', onWheelPress, { passive: true });
+        boardEl.removeEventListener('pointerdown', onWheelResume, { passive: true });
+        boardEl.removeEventListener('pointerleave', onWheelResume, { passive: true });
       }
       boardEl.removeEventListener('pointerover', onOver);
       boardEl.removeEventListener('pointerout', onOut);

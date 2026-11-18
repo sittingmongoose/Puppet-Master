@@ -1154,11 +1154,11 @@
       openCards.delete(api);
       if (cfg.onIndex) cfg.onIndex(null);
     }
-    /* R100 P3: column emphasis returns from a fresh hit-test of the pause's current pointer. The floating readout,
-       crosshair and dots stay dismissed. Keep this emphasis in the scroll cleanup set until it leaves or clears. */
+    /* R100 P3/R107: column emphasis returns only to a currently hovered plot at the pause's current pointer. The
+       floating readout, crosshair and dots stay dismissed. Keep emphasis in scroll cleanup until it leaves or clears. */
     function opEnd(e) {
       var b = e.detail && e.detail.board, point = e.detail && e.detail.point;
-      if (!cfg.restoreIndex || !cfg.n || !point || !box.isConnected || box.closest('.pmu-board') !== b) return;
+      if (!cfg.restoreIndex || !cfg.n || !point || !box.isConnected || box.closest('.pmu-board') !== b || !box.matches(':hover')) return;
       var hit = document.elementFromPoint(point[0], point[1]);
       if (!hit || !box.contains(hit)) return;
       geo = null;
