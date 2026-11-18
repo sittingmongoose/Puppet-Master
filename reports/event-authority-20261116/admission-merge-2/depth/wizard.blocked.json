@@ -5,9 +5,9 @@
  "merge": "admission-merge-2",
  "registry": {
   "path": "Plans/event_family_registry.json",
-  "revision": "2026-11-16.293",
-  "sha256": "73f62c4fdddca145f2e7881c30541cf32d2f4dc1cbb1c8fb8e9428bb5aca6173",
-  "family_count": 512,
+  "revision": "2026-11-18.2",
+  "sha256": "ec21cf1a5b42b3e68a5564a847b4798dff968612d11d438bc7075b89196f9602",
+  "family_count": 518,
   "row_pointer": "#/families/511"
  },
  "base_commit": "45b4ccf25270c486dbc682805cd455ce4ca25fb0",
@@ -22,17 +22,27 @@
     "membership_version": {
      "status": "PASS",
      "representation": "exact_registry_membership",
-     "finding": "Registered at registry revision 2026-11-16.293 as #/families/511 (canonical row SHA-256 18060fa2cdaf043c295673847413073a5843eba70cab782900ba9c22816223aa); before this commit the family was absent.",
+     "finding": "Currently registered at 2026-11-18.2 as #/families/511 (canonical row SHA-256 18060fa2cdaf043c295673847413073a5843eba70cab782900ba9c22816223aa). Original one-family admission checkpoints remain in the family record and immutable Git source.",
      "evidence": [
       {
        "path": "Plans/event_family_registry.json",
        "json_pointer": "#/families/511",
-       "line_start": 33233,
-       "line_end": 33274,
+       "line_start": 33283,
+       "line_end": 33324,
        "quote": "\"event_type\": \"wizard.blocked\"",
-       "quote_line": 33236,
-       "file_sha256": "73f62c4fdddca145f2e7881c30541cf32d2f4dc1cbb1c8fb8e9428bb5aca6173",
-       "quote_check": "exact"
+       "quote_line": 33286,
+       "file_sha256": "ec21cf1a5b42b3e68a5564a847b4798dff968612d11d438bc7075b89196f9602",
+       "quote_check": "exact",
+       "source_citation": {
+        "path": "Plans/event_family_registry.json",
+        "json_pointer": "#/families/511",
+        "line_start": 33233,
+        "line_end": 33274,
+        "quote": "\"event_type\": \"wizard.blocked\"",
+        "quote_line": 33236,
+        "file_sha256": "73f62c4fdddca145f2e7881c30541cf32d2f4dc1cbb1c8fb8e9428bb5aca6173",
+        "quote_check": "exact"
+       }
       }
      ]
     },
@@ -44,12 +54,20 @@
       {
        "path": "Plans/Contracts_V0.md",
        "unit": "CV-596",
-       "line_start": 42858,
-       "line_end": 42859,
+       "line_start": 42859,
+       "line_end": 42860,
        "quote": "Semantic owner is current\\\n  \\ Plans/Planning_Wizard.md#PWIZ-002,",
-       "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a",
+       "file_sha256": "4ae2225d8ed19b6df971b6c32797aae6882d175264ff2c2e9a2045650d735e67",
        "quote_check": "exact",
-       "quote_scope": "unit CV-596, Plans/Contracts_V0.md:42849-43072"
+       "quote_scope": "unit CV-596, Plans/Contracts_V0.md:42850-43073",
+       "source_citation": {
+        "path": "Plans/Contracts_V0.md",
+        "unit": "CV-596",
+        "line_start": 42858,
+        "line_end": 42859,
+        "quote": "Semantic owner is current\\\n  \\ Plans/Planning_Wizard.md#PWIZ-002,",
+        "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a"
+       }
       }
      ],
      "carried_from": {
@@ -67,12 +85,20 @@
       {
        "path": "Plans/Contracts_V0.md",
        "unit": "CV-596",
-       "line_start": 42881,
-       "line_end": 42882,
+       "line_start": 42882,
+       "line_end": 42883,
        "quote": "Producer emitter.wizard_blocked@1.0.0\\\n  \\ is the responsible Planning Wizard component's observer of its original",
-       "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a",
+       "file_sha256": "4ae2225d8ed19b6df971b6c32797aae6882d175264ff2c2e9a2045650d735e67",
        "quote_check": "exact",
-       "quote_scope": "unit CV-596, Plans/Contracts_V0.md:42849-43072"
+       "quote_scope": "unit CV-596, Plans/Contracts_V0.md:42850-43073",
+       "source_citation": {
+        "path": "Plans/Contracts_V0.md",
+        "unit": "CV-596",
+        "line_start": 42881,
+        "line_end": 42882,
+        "quote": "Producer emitter.wizard_blocked@1.0.0\\\n  \\ is the responsible Planning Wizard component's observer of its original",
+        "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a"
+       }
       }
      ],
      "carried_from": {
@@ -90,12 +116,20 @@
       {
        "path": "Plans/Contracts_V0.md",
        "unit": "CV-596",
-       "line_start": 42874,
-       "line_end": 42875,
+       "line_start": 42875,
+       "line_end": 42876,
        "quote": "All properties of Plans/event_payloads/planning_wizard/wizard_blocked.schema.json\\\n  \\ are required-present, root additionalProperties=false,",
-       "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a",
+       "file_sha256": "4ae2225d8ed19b6df971b6c32797aae6882d175264ff2c2e9a2045650d735e67",
        "quote_check": "exact",
-       "quote_scope": "unit CV-596, Plans/Contracts_V0.md:42849-43072"
+       "quote_scope": "unit CV-596, Plans/Contracts_V0.md:42850-43073",
+       "source_citation": {
+        "path": "Plans/Contracts_V0.md",
+        "unit": "CV-596",
+        "line_start": 42874,
+        "line_end": 42875,
+        "quote": "All properties of Plans/event_payloads/planning_wizard/wizard_blocked.schema.json\\\n  \\ are required-present, root additionalProperties=false,",
+        "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a"
+       }
       },
       {
        "path": "Plans/event_payloads/planning_wizard/wizard_blocked.schema.json",
@@ -105,7 +139,15 @@
        "quote": "\"additionalProperties\": false,",
        "quote_check": "exact",
        "quote_scope": "document",
-       "file_sha256": "b5fc3631469ef4ccd3e265f0431d95982e2a319af9ff2888585eb45d7e4d30b3"
+       "file_sha256": "b5fc3631469ef4ccd3e265f0431d95982e2a319af9ff2888585eb45d7e4d30b3",
+       "source_citation": {
+        "path": "Plans/event_payloads/planning_wizard/wizard_blocked.schema.json",
+        "unit": "root",
+        "line_start": 5,
+        "line_end": 5,
+        "quote": "\"additionalProperties\": false,",
+        "file_sha256": "b5fc3631469ef4ccd3e265f0431d95982e2a319af9ff2888585eb45d7e4d30b3"
+       }
       }
      ],
      "carried_from": {
@@ -123,12 +165,20 @@
       {
        "path": "Plans/Contracts_V0.md",
        "unit": "CV-596",
-       "line_start": 42898,
-       "line_end": 42898,
+       "line_start": 42899,
+       "line_end": 42899,
        "quote": "NEW identity recipe",
        "quote_check": "exact",
-       "quote_scope": "unit CV-596, Plans/Contracts_V0.md:42849-43072",
-       "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a"
+       "quote_scope": "unit CV-596, Plans/Contracts_V0.md:42850-43073",
+       "file_sha256": "4ae2225d8ed19b6df971b6c32797aae6882d175264ff2c2e9a2045650d735e67",
+       "source_citation": {
+        "path": "Plans/Contracts_V0.md",
+        "unit": "CV-596",
+        "line_start": 42898,
+        "line_end": 42898,
+        "quote": "NEW identity recipe",
+        "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a"
+       }
       }
      ],
      "carried_from": {
@@ -146,12 +196,20 @@
       {
        "path": "Plans/Contracts_V0.md",
        "unit": "CV-596",
-       "line_start": 42904,
-       "line_end": 42905,
+       "line_start": 42905,
+       "line_end": 42906,
        "quote": "Retry compares exactly the producer-owned semantic fields enumerated\\\n  \\ by CV-339: event_type, scope_kind, project_id,",
-       "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a",
+       "file_sha256": "4ae2225d8ed19b6df971b6c32797aae6882d175264ff2c2e9a2045650d735e67",
        "quote_check": "exact",
-       "quote_scope": "unit CV-596, Plans/Contracts_V0.md:42849-43072"
+       "quote_scope": "unit CV-596, Plans/Contracts_V0.md:42850-43073",
+       "source_citation": {
+        "path": "Plans/Contracts_V0.md",
+        "unit": "CV-596",
+        "line_start": 42904,
+        "line_end": 42905,
+        "quote": "Retry compares exactly the producer-owned semantic fields enumerated\\\n  \\ by CV-339: event_type, scope_kind, project_id,",
+        "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a"
+       }
       }
      ],
      "carried_from": {
@@ -169,12 +227,20 @@
       {
        "path": "Plans/Contracts_V0.md",
        "unit": "CV-596",
-       "line_start": 43024,
-       "line_end": 43024,
+       "line_start": 43025,
+       "line_end": 43025,
        "quote": "\\ history `retention_policy_ref = RP-AUTHORITY-INDEFINITE@1.0.0`, under DL-401.\\n\\nUse the existing\\",
        "quote_check": "exact",
-       "quote_scope": "unit CV-596, Plans/Contracts_V0.md:42849-43072",
-       "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a"
+       "quote_scope": "unit CV-596, Plans/Contracts_V0.md:42850-43073",
+       "file_sha256": "4ae2225d8ed19b6df971b6c32797aae6882d175264ff2c2e9a2045650d735e67",
+       "source_citation": {
+        "path": "Plans/Contracts_V0.md",
+        "unit": "CV-596",
+        "line_start": 43024,
+        "line_end": 43024,
+        "quote": "\\ history `retention_policy_ref = RP-AUTHORITY-INDEFINITE@1.0.0`, under DL-401.\\n\\nUse the existing\\",
+        "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a"
+       }
       }
      ],
      "carried_from": {
@@ -192,12 +258,20 @@
       {
        "path": "Plans/Contracts_V0.md",
        "unit": "CV-596",
-       "line_start": 42935,
-       "line_end": 42936,
+       "line_start": 42936,
+       "line_end": 42937,
        "quote": "NEW original custody source wizard_blocked_evidence\\\n  \\ is materialized in Plans/storage_value_registry.json under",
-       "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a",
+       "file_sha256": "4ae2225d8ed19b6df971b6c32797aae6882d175264ff2c2e9a2045650d735e67",
        "quote_check": "exact",
-       "quote_scope": "unit CV-596, Plans/Contracts_V0.md:42849-43072"
+       "quote_scope": "unit CV-596, Plans/Contracts_V0.md:42850-43073",
+       "source_citation": {
+        "path": "Plans/Contracts_V0.md",
+        "unit": "CV-596",
+        "line_start": 42935,
+        "line_end": 42936,
+        "quote": "NEW original custody source wizard_blocked_evidence\\\n  \\ is materialized in Plans/storage_value_registry.json under",
+        "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a"
+       }
       }
      ],
      "carried_from": {
@@ -215,12 +289,20 @@
       {
        "path": "Plans/Contracts_V0.md",
        "unit": "CV-596",
-       "line_start": 42919,
-       "line_end": 42920,
+       "line_start": 42920,
+       "line_end": 42921,
        "quote": "The planning component's immutable\\\n  \\ observation has kind blockage_recorded or repair_attempt_completed and subject_kind=planning_run.",
-       "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a",
+       "file_sha256": "4ae2225d8ed19b6df971b6c32797aae6882d175264ff2c2e9a2045650d735e67",
        "quote_check": "exact",
-       "quote_scope": "unit CV-596, Plans/Contracts_V0.md:42849-43072"
+       "quote_scope": "unit CV-596, Plans/Contracts_V0.md:42850-43073",
+       "source_citation": {
+        "path": "Plans/Contracts_V0.md",
+        "unit": "CV-596",
+        "line_start": 42919,
+        "line_end": 42920,
+        "quote": "The planning component's immutable\\\n  \\ observation has kind blockage_recorded or repair_attempt_completed and subject_kind=planning_run.",
+        "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a"
+       }
       }
      ],
      "carried_from": {
@@ -238,12 +320,20 @@
       {
        "path": "Plans/Contracts_V0.md",
        "unit": "CV-596",
-       "line_start": 42969,
-       "line_end": 42970,
+       "line_start": 42970,
+       "line_end": 42971,
        "quote": "NEW passive operating consumer\\\n  \\ reader.wizard_blocked_history@1.0.0 selects only wizard.blocked at this exact supported",
-       "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a",
+       "file_sha256": "4ae2225d8ed19b6df971b6c32797aae6882d175264ff2c2e9a2045650d735e67",
        "quote_check": "exact",
-       "quote_scope": "unit CV-596, Plans/Contracts_V0.md:42849-43072"
+       "quote_scope": "unit CV-596, Plans/Contracts_V0.md:42850-43073",
+       "source_citation": {
+        "path": "Plans/Contracts_V0.md",
+        "unit": "CV-596",
+        "line_start": 42969,
+        "line_end": 42970,
+        "quote": "NEW passive operating consumer\\\n  \\ reader.wizard_blocked_history@1.0.0 selects only wizard.blocked at this exact supported",
+        "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a"
+       }
       }
      ],
      "carried_from": {
@@ -261,22 +351,38 @@
       {
        "path": "Plans/Contracts_V0.md",
        "unit": "CV-596",
-       "line_start": 42994,
-       "line_end": 42994,
+       "line_start": 42995,
+       "line_end": 42995,
        "quote": "Compatibility/withdrawal for wizard.blocked alone: dispatch only explicitly supported exact family/schema/version;",
        "quote_check": "exact",
-       "quote_scope": "unit CV-596, Plans/Contracts_V0.md:42849-43072",
-       "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a"
+       "quote_scope": "unit CV-596, Plans/Contracts_V0.md:42850-43073",
+       "file_sha256": "4ae2225d8ed19b6df971b6c32797aae6882d175264ff2c2e9a2045650d735e67",
+       "source_citation": {
+        "path": "Plans/Contracts_V0.md",
+        "unit": "CV-596",
+        "line_start": 42994,
+        "line_end": 42994,
+        "quote": "Compatibility/withdrawal for wizard.blocked alone: dispatch only explicitly supported exact family/schema/version;",
+        "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a"
+       }
       },
       {
        "path": "Plans/Contracts_V0.md",
        "unit": "CV-596",
-       "line_start": 42966,
-       "line_end": 42967,
+       "line_start": 42967,
+       "line_end": 42968,
        "quote": "Under CV-1101, ts and occurred_at_utc use pm_event_datetime.date_time with the EventRecord\\\n  \\ profile; under CV-253,",
-       "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a",
+       "file_sha256": "4ae2225d8ed19b6df971b6c32797aae6882d175264ff2c2e9a2045650d735e67",
        "quote_check": "exact",
-       "quote_scope": "unit CV-596, Plans/Contracts_V0.md:42849-43072"
+       "quote_scope": "unit CV-596, Plans/Contracts_V0.md:42850-43073",
+       "source_citation": {
+        "path": "Plans/Contracts_V0.md",
+        "unit": "CV-596",
+        "line_start": 42966,
+        "line_end": 42967,
+        "quote": "Under CV-1101, ts and occurred_at_utc use pm_event_datetime.date_time with the EventRecord\\\n  \\ profile; under CV-253,",
+        "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a"
+       }
       },
       {
        "path": "scripts/pm_dcw_blockage_events.py",
@@ -286,7 +392,15 @@
        "quote": "m.check_schema('Plans/event_record.schema.json', event)",
        "quote_check": "exact",
        "quote_scope": "document",
-       "file_sha256": "73eb3f227285478168f9bee9265ecc1ebba9c09f7876d317498d09a3cf064771"
+       "file_sha256": "f962787652ab61e70e38d658ea93f054f2494d832e30c33cc3b8ee43e43142b1",
+       "source_citation": {
+        "path": "scripts/pm_dcw_blockage_events.py",
+        "unit": "envelope",
+        "line_start": 24,
+        "line_end": 24,
+        "quote": "m.check_schema('Plans/event_record.schema.json', event)",
+        "file_sha256": "73eb3f227285478168f9bee9265ecc1ebba9c09f7876d317498d09a3cf064771"
+       }
       },
       {
        "path": "scripts/pm_dcw_event_oracles.py",
@@ -296,7 +410,15 @@
        "quote": "event_datetime.date_time(item, profile=event_datetime.STORAGE_UTC_Z)",
        "quote_check": "exact",
        "quote_scope": "document",
-       "file_sha256": "2ce4e1853f47c0821dd5676298dbeff2766eb5080bc5eb2e391502d661146599"
+       "file_sha256": "8f8c464ec7cd48766c92983a762703b474a13401f2212dad5f66eacb3a36c796",
+       "source_citation": {
+        "path": "scripts/pm_dcw_event_oracles.py",
+        "unit": "require_storage_timestamps",
+        "line_start": 853,
+        "line_end": 853,
+        "quote": "event_datetime.date_time(item, profile=event_datetime.STORAGE_UTC_Z)",
+        "file_sha256": "2ce4e1853f47c0821dd5676298dbeff2766eb5080bc5eb2e391502d661146599"
+       }
       }
      ],
      "carried_from": {
@@ -314,13 +436,22 @@
       {
        "path": "Plans/Contracts_V0.md",
        "unit": "CV-596",
-       "line_start": 42874,
-       "line_end": 42875,
+       "line_start": 42875,
+       "line_end": 42876,
        "quote": "All properties of Plans/event_payloads/planning_wizard/wizard_blocked.schema.json\\\n  \\ are required-present, root additionalProperties=false,",
-       "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a",
+       "file_sha256": "4ae2225d8ed19b6df971b6c32797aae6882d175264ff2c2e9a2045650d735e67",
        "quote_check": "exact",
        "evidence_role": "Exact canonical subject of the existing whole-definition oracle proof; test execution evidence remains the separately cited scripts.",
-       "quote_scope": "unit CV-596, Plans/Contracts_V0.md:42849-43072"
+       "quote_scope": "unit CV-596, Plans/Contracts_V0.md:42850-43073",
+       "source_citation": {
+        "path": "Plans/Contracts_V0.md",
+        "unit": "CV-596",
+        "line_start": 42874,
+        "line_end": 42875,
+        "quote": "All properties of Plans/event_payloads/planning_wizard/wizard_blocked.schema.json\\\n  \\ are required-present, root additionalProperties=false,",
+        "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a",
+        "evidence_role": "Exact canonical subject of the existing whole-definition oracle proof; test execution evidence remains the separately cited scripts."
+       }
       },
       {
        "path": "scripts/pm_dcw_event_oracles.py",
@@ -330,7 +461,15 @@
        "quote": "guard_rows.enforce('O234', {'site': 'O234', 'code': 'index_translation_unverified', 'v0': generation['translation']})",
        "quote_check": "exact",
        "quote_scope": "document",
-       "file_sha256": "2ce4e1853f47c0821dd5676298dbeff2766eb5080bc5eb2e391502d661146599"
+       "file_sha256": "8f8c464ec7cd48766c92983a762703b474a13401f2212dad5f66eacb3a36c796",
+       "source_citation": {
+        "path": "scripts/pm_dcw_event_oracles.py",
+        "unit": "index_read",
+        "line_start": 482,
+        "line_end": 482,
+        "quote": "guard_rows.enforce('O234', {'site': 'O234', 'code': 'index_translation_unverified', 'v0': generation['translation']})",
+        "file_sha256": "2ce4e1853f47c0821dd5676298dbeff2766eb5080bc5eb2e391502d661146599"
+       }
       },
       {
        "path": "scripts/pm_dcw_c12.py",
@@ -340,7 +479,15 @@
        "quote": "EXPECTED = ['refused', 'OE001', 'schema']",
        "quote_check": "exact",
        "quote_scope": "document",
-       "file_sha256": "2d9cbb9fe1b5e5972385081249e53948bf86d0ec411c47ce3310e279eddb4631"
+       "file_sha256": "2d9cbb9fe1b5e5972385081249e53948bf86d0ec411c47ce3310e279eddb4631",
+       "source_citation": {
+        "path": "scripts/pm_dcw_c12.py",
+        "unit": "schema ledger",
+        "line_start": 395,
+        "line_end": 395,
+        "quote": "EXPECTED = ['refused', 'OE001', 'schema']",
+        "file_sha256": "2d9cbb9fe1b5e5972385081249e53948bf86d0ec411c47ce3310e279eddb4631"
+       }
       },
       {
        "path": "scripts/pm_dcw_c12.py",
@@ -350,7 +497,15 @@
        "quote": "killed=after_cut == ['accepted'] and restored == EXPECTED)",
        "quote_check": "exact",
        "quote_scope": "document",
-       "file_sha256": "2d9cbb9fe1b5e5972385081249e53948bf86d0ec411c47ce3310e279eddb4631"
+       "file_sha256": "2d9cbb9fe1b5e5972385081249e53948bf86d0ec411c47ce3310e279eddb4631",
+       "source_citation": {
+        "path": "scripts/pm_dcw_c12.py",
+        "unit": "schema ledger",
+        "line_start": 439,
+        "line_end": 439,
+        "quote": "killed=after_cut == ['accepted'] and restored == EXPECTED)",
+        "file_sha256": "2d9cbb9fe1b5e5972385081249e53948bf86d0ec411c47ce3310e279eddb4631"
+       }
       },
       {
        "path": "scripts/pm_dcw_c12_boundary.py",
@@ -360,7 +515,15 @@
        "quote": "return dict(status='complete_boundary', first=first, cut=single)",
        "quote_check": "exact",
        "quote_scope": "document",
-       "file_sha256": "3b42dc9b8ac59d77a40ce6e37290dc6cff7fec003a37f35c30fe9b580937b6a8"
+       "file_sha256": "3b42dc9b8ac59d77a40ce6e37290dc6cff7fec003a37f35c30fe9b580937b6a8",
+       "source_citation": {
+        "path": "scripts/pm_dcw_c12_boundary.py",
+        "unit": "classify",
+        "line_start": 72,
+        "line_end": 72,
+        "quote": "return dict(status='complete_boundary', first=first, cut=single)",
+        "file_sha256": "3b42dc9b8ac59d77a40ce6e37290dc6cff7fec003a37f35c30fe9b580937b6a8"
+       }
       },
       {
        "path": "scripts/pm_dcw_c12_implications.py",
@@ -370,7 +533,15 @@
        "quote": "entry['status'] = 'pass' if chains and all(set(claim['by']) & set(c) for c in chains) else 'fail'",
        "quote_check": "exact",
        "quote_scope": "document",
-       "file_sha256": "101ef9b2ba3f4cdafa35e7880ae4834b42429d9cf397154f6fedfb1d684af120"
+       "file_sha256": "101ef9b2ba3f4cdafa35e7880ae4834b42429d9cf397154f6fedfb1d684af120",
+       "source_citation": {
+        "path": "scripts/pm_dcw_c12_implications.py",
+        "unit": "check",
+        "line_start": 147,
+        "line_end": 147,
+        "quote": "entry['status'] = 'pass' if chains and all(set(claim['by']) & set(c) for c in chains) else 'fail'",
+        "file_sha256": "101ef9b2ba3f4cdafa35e7880ae4834b42429d9cf397154f6fedfb1d684af120"
+       }
       },
       {
        "path": "scripts/pm_dcw_c12_retained.py",
@@ -380,7 +551,15 @@
        "quote": "assert row['store_unchanged'] and row['caller_unchanged'], row",
        "quote_check": "exact",
        "quote_scope": "document",
-       "file_sha256": "30f97e20d1e1bcaa57281c10f9b0933b9481727af2d346eaa413765b32623262"
+       "file_sha256": "30f97e20d1e1bcaa57281c10f9b0933b9481727af2d346eaa413765b32623262",
+       "source_citation": {
+        "path": "scripts/pm_dcw_c12_retained.py",
+        "unit": "observe",
+        "line_start": 222,
+        "line_end": 222,
+        "quote": "assert row['store_unchanged'] and row['caller_unchanged'], row",
+        "file_sha256": "30f97e20d1e1bcaa57281c10f9b0933b9481727af2d346eaa413765b32623262"
+       }
       },
       {
        "path": "scripts/pm_dcw_c12_datetime.py",
@@ -390,7 +569,15 @@
        "quote": "return dt.STORAGE_UTC_Z if storage else dt.EVENT_RECORD",
        "quote_check": "exact",
        "quote_scope": "document",
-       "file_sha256": "2b54ba8612ef5b3b6340b6ccd8faf674f372e204cc77c5eddd95e25f03520501"
+       "file_sha256": "2b54ba8612ef5b3b6340b6ccd8faf674f372e204cc77c5eddd95e25f03520501",
+       "source_citation": {
+        "path": "scripts/pm_dcw_c12_datetime.py",
+        "unit": "field_profile",
+        "line_start": 50,
+        "line_end": 50,
+        "quote": "return dt.STORAGE_UTC_Z if storage else dt.EVENT_RECORD",
+        "file_sha256": "2b54ba8612ef5b3b6340b6ccd8faf674f372e204cc77c5eddd95e25f03520501"
+       }
       },
       {
        "path": "scripts/pm_dcw_c12_entailments.py",
@@ -400,7 +587,15 @@
        "quote": "ok = all(a['first_is_earlier'] and not a['row_refused_first'] and a['backstop_refuses'] for a in attempts)",
        "quote_check": "exact",
        "quote_scope": "document",
-       "file_sha256": "f96d834622f3920fcb5b15aba3cb43539b20d8f6f59e0bac260c6b3979ded6e2"
+       "file_sha256": "f96d834622f3920fcb5b15aba3cb43539b20d8f6f59e0bac260c6b3979ded6e2",
+       "source_citation": {
+        "path": "scripts/pm_dcw_c12_entailments.py",
+        "unit": "run_spec",
+        "line_start": 185,
+        "line_end": 185,
+        "quote": "ok = all(a['first_is_earlier'] and not a['row_refused_first'] and a['backstop_refuses'] for a in attempts)",
+        "file_sha256": "f96d834622f3920fcb5b15aba3cb43539b20d8f6f59e0bac260c6b3979ded6e2"
+       }
       },
       {
        "path": "scripts/pm_dcw_c12_cases.py",
@@ -410,7 +605,15 @@
        "quote": "yield witness('B015', 'wizard.blocked', None, base('wizard.blocked'), trailing_space, 'identifier_whitespace', 'append')",
        "quote_check": "exact",
        "quote_scope": "document",
-       "file_sha256": "c86a50adbde2a1e924d71d3cb62ba0b6a26d589331e267099fe5728d71adf39c"
+       "file_sha256": "c86a50adbde2a1e924d71d3cb62ba0b6a26d589331e267099fe5728d71adf39c",
+       "source_citation": {
+        "path": "scripts/pm_dcw_c12_cases.py",
+        "unit": "wizard.blocked",
+        "line_start": 110,
+        "line_end": 110,
+        "quote": "yield witness('B015', 'wizard.blocked', None, base('wizard.blocked'), trailing_space, 'identifier_whitespace', 'append')",
+        "file_sha256": "c86a50adbde2a1e924d71d3cb62ba0b6a26d589331e267099fe5728d71adf39c"
+       }
       },
       {
        "path": "scripts/pm_dcw_c12_cases.py",
@@ -420,7 +623,15 @@
        "quote": "yield witness('B022', 'wizard.blocked', None, base('wizard.blocked'), foreign_source_ref, 'source_ref', 'append')",
        "quote_check": "exact",
        "quote_scope": "document",
-       "file_sha256": "c86a50adbde2a1e924d71d3cb62ba0b6a26d589331e267099fe5728d71adf39c"
+       "file_sha256": "c86a50adbde2a1e924d71d3cb62ba0b6a26d589331e267099fe5728d71adf39c",
+       "source_citation": {
+        "path": "scripts/pm_dcw_c12_cases.py",
+        "unit": "wizard.blocked",
+        "line_start": 120,
+        "line_end": 120,
+        "quote": "yield witness('B022', 'wizard.blocked', None, base('wizard.blocked'), foreign_source_ref, 'source_ref', 'append')",
+        "file_sha256": "c86a50adbde2a1e924d71d3cb62ba0b6a26d589331e267099fe5728d71adf39c"
+       }
       },
       {
        "path": "scripts/pm_dcw_c12_cases.py",
@@ -430,7 +641,15 @@
        "quote": "yield witness('B023', 'wizard.blocked', None, base('wizard.blocked'), rekeyed_source_ref, 'source_ref', 'append')",
        "quote_check": "exact",
        "quote_scope": "document",
-       "file_sha256": "c86a50adbde2a1e924d71d3cb62ba0b6a26d589331e267099fe5728d71adf39c"
+       "file_sha256": "c86a50adbde2a1e924d71d3cb62ba0b6a26d589331e267099fe5728d71adf39c",
+       "source_citation": {
+        "path": "scripts/pm_dcw_c12_cases.py",
+        "unit": "wizard.blocked",
+        "line_start": 129,
+        "line_end": 129,
+        "quote": "yield witness('B023', 'wizard.blocked', None, base('wizard.blocked'), rekeyed_source_ref, 'source_ref', 'append')",
+        "file_sha256": "c86a50adbde2a1e924d71d3cb62ba0b6a26d589331e267099fe5728d71adf39c"
+       }
       }
      ],
      "carried_from": {
@@ -442,5 +661,19 @@
     }
    }
   }
- ]
+ ],
+ "source_registry": {
+  "path": "Plans/event_family_registry.json",
+  "revision": "2026-11-16.293",
+  "sha256": "73f62c4fdddca145f2e7881c30541cf32d2f4dc1cbb1c8fb8e9428bb5aca6173",
+  "family_count": 512,
+  "row_pointer": "#/families/511"
+ },
+ "evidence_maintenance": {
+  "authority": "MERGE2-FIX1 findings 1/3/5",
+  "source_commit": "0c904de00426b0089ba5d56349fda8ea16cc9f88",
+  "source_assessment_sha256": "06b1a7edfdf9bb464f5611fa4291a1e2b7912ab28009fa8d170071904445807b",
+  "native_execution": "NOT_RUN",
+  "verdicts_changed": false
+ }
 }

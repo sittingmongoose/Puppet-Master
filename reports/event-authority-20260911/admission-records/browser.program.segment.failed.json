@@ -4,7 +4,7 @@
  "family_id": "event-family-browser-program-segment-failed",
  "implementation_receipt_sha256": "dceb7f21436cbe126c23822e62caa1b6dedcb45fefae3005c1804576ca34d827",
  "decision_ref": "Plans/Decision_Log.md#DL-2178",
- "decision_section_sha256": "4abd5b71734876889e0d7514a23c96b345a307f63e7c2ecc4d2963dd05a60b5d",
+ "decision_section_sha256": "a64c38a90641dac7f1eeffeb83949b0ac723860c4a29b948a9b7d6094b57eff2",
  "registry_before": {
   "revision": "2026-11-16.41",
   "sha256": "4e0c7ae99a2f53012e3fdfbafa168ad0fe6195d48076cc454c20d42a641676be",
@@ -18,7 +18,7 @@
  "registry_row_sha256": "17ae0ce6449c063794ea6d37dd516f0d991ed2b99254871505f757fb72014ec2",
  "depth_assessment": {
   "path": "reports/event-authority-20261116/admission-merge-2/depth/browser.program.segment.failed.json",
-  "sha256": "cc47b593dd3998d1ea536e9cc4f91912260e74358edbdaea3c5f401b74c3fefc"
+  "sha256": "9fd0024e21244803703114a7b8537a7a59bf89903dca254b42d2e975bf4167bd"
  },
  "admission_landing": {
   "branch": "plans/ea-merge2-apply-20261116",
@@ -35,5 +35,13 @@
   "The decision entry is DL-2178, which DL-096 makes Jared's decision entry for this family.",
   "registry_before is the registry at this commit's parent. If main's registry moves before the landing, the writer runs again on the new base and this record, its entry and the pins are taken again.",
   "Written under DL-077. The seal check recomputes completeness from the pinned assessment; the two fields ending in _at_recording are informational only."
- ]
+ ],
+ "evidence_maintenance": {
+  "authority": "MERGE2-FIX1",
+  "source_commit": "0c904de00426b0089ba5d56349fda8ea16cc9f88",
+  "source_record_sha256": "265bf846593e2c22d0841dd41e3f81ec095579cbc12b5d1f4828315899cce32a",
+  "source_assessment_sha256": "cc47b593dd3998d1ea536e9cc4f91912260e74358edbdaea3c5f401b74c3fefc",
+  "source_decision_section_sha256": "4abd5b71734876889e0d7514a23c96b345a307f63e7c2ecc4d2963dd05a60b5d",
+  "original_registry_checkpoints_preserved": true
+ }
 }

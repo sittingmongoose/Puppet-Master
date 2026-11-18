@@ -5,9 +5,9 @@
  "merge": "admission-merge-2",
  "registry": {
   "path": "Plans/event_family_registry.json",
-  "revision": "2026-11-16.193",
-  "sha256": "810ed8ea5d99a1d08ca3164e4484a9e86989e54330bab2dcb7a563572a950580",
-  "family_count": 412,
+  "revision": "2026-11-18.2",
+  "sha256": "ec21cf1a5b42b3e68a5564a847b4798dff968612d11d438bc7075b89196f9602",
+  "family_count": 518,
   "row_pointer": "#/families/411"
  },
  "base_commit": "45b4ccf25270c486dbc682805cd455ce4ca25fb0",
@@ -22,17 +22,27 @@
     "membership_version": {
      "status": "PASS",
      "representation": "exact_registry_membership",
-     "finding": "Registered at registry revision 2026-11-16.193 as #/families/411 (canonical row SHA-256 b4399cbef5f8fd14f6d83960003f0d6b37239f747839970d243d5cd785a95592); before this commit the family was absent.",
+     "finding": "Currently registered at 2026-11-18.2 as #/families/411 (canonical row SHA-256 b4399cbef5f8fd14f6d83960003f0d6b37239f747839970d243d5cd785a95592). Original one-family admission checkpoints remain in the family record and immutable Git source.",
      "evidence": [
       {
        "path": "Plans/event_family_registry.json",
        "json_pointer": "#/families/411",
-       "line_start": 26811,
-       "line_end": 26852,
+       "line_start": 26855,
+       "line_end": 26896,
        "quote": "\"event_type\": \"memory.index.semantic.rebuild.completed\"",
-       "quote_line": 26814,
-       "file_sha256": "810ed8ea5d99a1d08ca3164e4484a9e86989e54330bab2dcb7a563572a950580",
-       "quote_check": "exact"
+       "quote_line": 26858,
+       "file_sha256": "ec21cf1a5b42b3e68a5564a847b4798dff968612d11d438bc7075b89196f9602",
+       "quote_check": "exact",
+       "source_citation": {
+        "path": "Plans/event_family_registry.json",
+        "json_pointer": "#/families/411",
+        "line_start": 26811,
+        "line_end": 26852,
+        "quote": "\"event_type\": \"memory.index.semantic.rebuild.completed\"",
+        "quote_line": 26814,
+        "file_sha256": "810ed8ea5d99a1d08ca3164e4484a9e86989e54330bab2dcb7a563572a950580",
+        "quote_check": "exact"
+       }
       }
      ]
     },
@@ -44,12 +54,20 @@
       {
        "path": "Plans/assistant-memory-subsystem.md",
        "unit": "AMS-104",
-       "line_start": 4575,
-       "line_end": 4575,
+       "line_start": 4581,
+       "line_end": 4581,
        "quote": "Newly authored owner contract under DL-045 for exactly memory.index.semantic.rebuild.completed@1.0.0,",
        "quote_check": "exact",
-       "quote_scope": "unit AMS-104, Plans/assistant-memory-subsystem.md:4568-4619",
-       "file_sha256": "6fb2d744ee0ee1ba56c1bc0bbc38d8996e8bc0af660efe7d4bbdd21ac67e9911"
+       "quote_scope": "unit AMS-104, Plans/assistant-memory-subsystem.md:4574-4627",
+       "file_sha256": "bef912af3f908a962527eb2a58e3d50af7eb741092d247beebc773e1314587d8",
+       "source_citation": {
+        "path": "Plans/assistant-memory-subsystem.md",
+        "unit": "AMS-104",
+        "line_start": 4575,
+        "line_end": 4575,
+        "quote": "Newly authored owner contract under DL-045 for exactly memory.index.semantic.rebuild.completed@1.0.0,",
+        "file_sha256": "6fb2d744ee0ee1ba56c1bc0bbc38d8996e8bc0af660efe7d4bbdd21ac67e9911"
+       }
       },
       {
        "path": "Plans/Contracts_V0.md",
@@ -59,7 +77,15 @@
        "quote": "Newly authored closed payload owner contract for exactly memory.index.semantic.rebuild.completed@1.0.0",
        "quote_check": "exact",
        "quote_scope": "unit CV-654, Plans/Contracts_V0.md:38824-38869",
-       "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a"
+       "file_sha256": "4ae2225d8ed19b6df971b6c32797aae6882d175264ff2c2e9a2045650d735e67",
+       "source_citation": {
+        "path": "Plans/Contracts_V0.md",
+        "unit": "CV-654",
+        "line_start": 38831,
+        "line_end": 38831,
+        "quote": "Newly authored closed payload owner contract for exactly memory.index.semantic.rebuild.completed@1.0.0",
+        "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a"
+       }
       }
      ],
      "carried_from": {
@@ -77,42 +103,74 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-634",
-       "line_start": 47263,
-       "line_end": 47265,
+       "line_start": 47262,
+       "line_end": 47264,
        "quote": "explicitly adopts SP-286 and CV-339 full-value\\\n  \\ v2 first-AppendReceipt custody: validate admission, append barrier-class SeglogFrameV2 through SP-026/SP-236\\\n  \\ with full flush, durably settle or",
-       "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707",
+       "file_sha256": "73ee6d097e08d31fd93301d05d2cd2632dd46e5a22ba3ea405ffadda4a0a9db2",
        "quote_check": "exact",
-       "quote_scope": "unit SP-634, Plans/storage-plan.md:47237-47517"
+       "quote_scope": "unit SP-634, Plans/storage-plan.md:47236-47516",
+       "source_citation": {
+        "path": "Plans/storage-plan.md",
+        "unit": "SP-634",
+        "line_start": 47263,
+        "line_end": 47265,
+        "quote": "explicitly adopts SP-286 and CV-339 full-value\\\n  \\ v2 first-AppendReceipt custody: validate admission, append barrier-class SeglogFrameV2 through SP-026/SP-236\\\n  \\ with full flush, durably settle or",
+        "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+       }
       },
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-634",
-       "line_start": 47311,
-       "line_end": 47313,
+       "line_start": 47310,
+       "line_end": 47312,
        "quote": "Every mutation\\\n  \\ is a whole-value CAS against the exact prior operation row under the single maintenance writer; request,\\\n  \\ scope, source, start time and receipt identities never change. started",
-       "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707",
+       "file_sha256": "73ee6d097e08d31fd93301d05d2cd2632dd46e5a22ba3ea405ffadda4a0a9db2",
        "quote_check": "exact",
-       "quote_scope": "unit SP-634, Plans/storage-plan.md:47237-47517"
+       "quote_scope": "unit SP-634, Plans/storage-plan.md:47236-47516",
+       "source_citation": {
+        "path": "Plans/storage-plan.md",
+        "unit": "SP-634",
+        "line_start": 47311,
+        "line_end": 47313,
+        "quote": "Every mutation\\\n  \\ is a whole-value CAS against the exact prior operation row under the single maintenance writer; request,\\\n  \\ scope, source, start time and receipt identities never change. started",
+        "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+       }
       },
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-634",
-       "line_start": 47375,
-       "line_end": 47377,
+       "line_start": 47374,
+       "line_end": 47376,
        "quote": "Newly authored semantic target/selection custody for this exact family\\\n  \\ (per-family round-1 search in DMEM-search.json) uses required nullable prepared_target in index_semantic_rebuild.\\\n  \\ It is",
-       "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707",
+       "file_sha256": "73ee6d097e08d31fd93301d05d2cd2632dd46e5a22ba3ea405ffadda4a0a9db2",
        "quote_check": "exact",
-       "quote_scope": "unit SP-634, Plans/storage-plan.md:47237-47517"
+       "quote_scope": "unit SP-634, Plans/storage-plan.md:47236-47516",
+       "source_citation": {
+        "path": "Plans/storage-plan.md",
+        "unit": "SP-634",
+        "line_start": 47375,
+        "line_end": 47377,
+        "quote": "Newly authored semantic target/selection custody for this exact family\\\n  \\ (per-family round-1 search in DMEM-search.json) uses required nullable prepared_target in index_semantic_rebuild.\\\n  \\ It is",
+        "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+       }
       },
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-634",
-       "line_start": 47426,
-       "line_end": 47427,
+       "line_start": 47425,
+       "line_end": 47426,
        "quote": "A current-writer retained EventRecord\\\n  \\ carries the unchanged CV-339 full-value commitment",
-       "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707",
+       "file_sha256": "73ee6d097e08d31fd93301d05d2cd2632dd46e5a22ba3ea405ffadda4a0a9db2",
        "quote_check": "exact",
-       "quote_scope": "unit SP-634, Plans/storage-plan.md:47237-47517"
+       "quote_scope": "unit SP-634, Plans/storage-plan.md:47236-47516",
+       "source_citation": {
+        "path": "Plans/storage-plan.md",
+        "unit": "SP-634",
+        "line_start": 47426,
+        "line_end": 47427,
+        "quote": "A current-writer retained EventRecord\\\n  \\ carries the unchanged CV-339 full-value commitment",
+        "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+       }
       }
      ],
      "carried_from": {
@@ -135,7 +193,15 @@
        "quote": "is a distinct closed definition; schema_version and event_type are exact constants. All listed properties are",
        "quote_check": "exact",
        "quote_scope": "unit CV-654, Plans/Contracts_V0.md:38824-38869",
-       "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a"
+       "file_sha256": "4ae2225d8ed19b6df971b6c32797aae6882d175264ff2c2e9a2045650d735e67",
+       "source_citation": {
+        "path": "Plans/Contracts_V0.md",
+        "unit": "CV-654",
+        "line_start": 38833,
+        "line_end": 38833,
+        "quote": "is a distinct closed definition; schema_version and event_type are exact constants. All listed properties are",
+        "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a"
+       }
       }
      ],
      "carried_from": {
@@ -153,22 +219,38 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-634",
-       "line_start": 47250,
-       "line_end": 47252,
+       "line_start": 47249,
+       "line_end": 47251,
        "quote": "Identity recipe for this family:\\\n  \\ use strict UTF-8 canonical JSON of the array [\\\"pm.memory.maintenance.event.v1\\\",storage_instance_id,project_id,operation_id,\\\"\\\n  memory.index.semantic.rebuild.com",
-       "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707",
+       "file_sha256": "73ee6d097e08d31fd93301d05d2cd2632dd46e5a22ba3ea405ffadda4a0a9db2",
        "quote_check": "exact",
-       "quote_scope": "unit SP-634, Plans/storage-plan.md:47237-47517"
+       "quote_scope": "unit SP-634, Plans/storage-plan.md:47236-47516",
+       "source_citation": {
+        "path": "Plans/storage-plan.md",
+        "unit": "SP-634",
+        "line_start": 47250,
+        "line_end": 47252,
+        "quote": "Identity recipe for this family:\\\n  \\ use strict UTF-8 canonical JSON of the array [\\\"pm.memory.maintenance.event.v1\\\",storage_instance_id,project_id,operation_id,\\\"\\\n  memory.index.semantic.rebuild.com",
+        "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+       }
       },
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-634",
-       "line_start": 47328,
-       "line_end": 47329,
+       "line_start": 47327,
+       "line_end": 47328,
        "quote": "Newly\\\n  \\ authored current-writer boundary for exactly memory.index.semantic.rebuild.completed@1.0.0",
-       "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707",
+       "file_sha256": "73ee6d097e08d31fd93301d05d2cd2632dd46e5a22ba3ea405ffadda4a0a9db2",
        "quote_check": "exact",
-       "quote_scope": "unit SP-634, Plans/storage-plan.md:47237-47517"
+       "quote_scope": "unit SP-634, Plans/storage-plan.md:47236-47516",
+       "source_citation": {
+        "path": "Plans/storage-plan.md",
+        "unit": "SP-634",
+        "line_start": 47328,
+        "line_end": 47329,
+        "quote": "Newly\\\n  \\ authored current-writer boundary for exactly memory.index.semantic.rebuild.completed@1.0.0",
+        "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+       }
       }
      ],
      "carried_from": {
@@ -186,12 +268,20 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-634",
-       "line_start": 47326,
-       "line_end": 47328,
+       "line_start": 47325,
+       "line_end": 47327,
        "quote": "Completed payload status/ref/hash and frozen time\\\n  \\ must equal that row and, when present, the exact retained SP-286 full-value original. Started retries\\\n  \\ likewise equal the original full value",
-       "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707",
+       "file_sha256": "73ee6d097e08d31fd93301d05d2cd2632dd46e5a22ba3ea405ffadda4a0a9db2",
        "quote_check": "exact",
-       "quote_scope": "unit SP-634, Plans/storage-plan.md:47237-47517"
+       "quote_scope": "unit SP-634, Plans/storage-plan.md:47236-47516",
+       "source_citation": {
+        "path": "Plans/storage-plan.md",
+        "unit": "SP-634",
+        "line_start": 47326,
+        "line_end": 47328,
+        "quote": "Completed payload status/ref/hash and frozen time\\\n  \\ must equal that row and, when present, the exact retained SP-286 full-value original. Started retries\\\n  \\ likewise equal the original full value",
+        "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+       }
       },
       {
        "path": "Plans/memory_maintenance_event_fixtures.json",
@@ -201,47 +291,87 @@
        "quote": "\"name\": \"memory.index.semantic.rebuild.completed:lost-ack-retry-replay-no-effects\",",
        "quote_check": "exact",
        "quote_scope": "document",
-       "file_sha256": "ec051c523c063034526ac09c446af49cedb836330a7b5afbd1910c8f9c39a03d"
+       "file_sha256": "ec051c523c063034526ac09c446af49cedb836330a7b5afbd1910c8f9c39a03d",
+       "source_citation": {
+        "path": "Plans/memory_maintenance_event_fixtures.json",
+        "unit": "#/stateful_families/memory.index.semantic.rebuild.completed",
+        "line_start": 39387,
+        "line_end": 39387,
+        "quote": "\"name\": \"memory.index.semantic.rebuild.completed:lost-ack-retry-replay-no-effects\",",
+        "file_sha256": "ec051c523c063034526ac09c446af49cedb836330a7b5afbd1910c8f9c39a03d"
+       }
       },
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-634",
-       "line_start": 47375,
-       "line_end": 47377,
+       "line_start": 47374,
+       "line_end": 47376,
        "quote": "Newly authored semantic target/selection custody for this exact family\\\n  \\ (per-family round-1 search in DMEM-search.json) uses required nullable prepared_target in index_semantic_rebuild.\\\n  \\ It is",
-       "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707",
+       "file_sha256": "73ee6d097e08d31fd93301d05d2cd2632dd46e5a22ba3ea405ffadda4a0a9db2",
        "quote_check": "exact",
-       "quote_scope": "unit SP-634, Plans/storage-plan.md:47237-47517"
+       "quote_scope": "unit SP-634, Plans/storage-plan.md:47236-47516",
+       "source_citation": {
+        "path": "Plans/storage-plan.md",
+        "unit": "SP-634",
+        "line_start": 47375,
+        "line_end": 47377,
+        "quote": "Newly authored semantic target/selection custody for this exact family\\\n  \\ (per-family round-1 search in DMEM-search.json) uses required nullable prepared_target in index_semantic_rebuild.\\\n  \\ It is",
+        "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+       }
       },
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-634",
-       "line_start": 47328,
-       "line_end": 47329,
+       "line_start": 47327,
+       "line_end": 47328,
        "quote": "Newly\\\n  \\ authored current-writer boundary for exactly memory.index.semantic.rebuild.completed@1.0.0",
-       "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707",
+       "file_sha256": "73ee6d097e08d31fd93301d05d2cd2632dd46e5a22ba3ea405ffadda4a0a9db2",
        "quote_check": "exact",
-       "quote_scope": "unit SP-634, Plans/storage-plan.md:47237-47517"
+       "quote_scope": "unit SP-634, Plans/storage-plan.md:47236-47516",
+       "source_citation": {
+        "path": "Plans/storage-plan.md",
+        "unit": "SP-634",
+        "line_start": 47328,
+        "line_end": 47329,
+        "quote": "Newly\\\n  \\ authored current-writer boundary for exactly memory.index.semantic.rebuild.completed@1.0.0",
+        "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+       }
       },
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-634",
        "quote": "Start custody gate for exactly memory.index.semantic.rebuild.completed@1.0.0,\\\n  \\ newly authored owner contract (DMEM fix round 4)",
-       "line_start": 47342,
-       "line_end": 47343,
-       "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707",
+       "line_start": 47341,
+       "line_end": 47342,
+       "file_sha256": "73ee6d097e08d31fd93301d05d2cd2632dd46e5a22ba3ea405ffadda4a0a9db2",
        "quote_check": "exact",
-       "quote_scope": "unit SP-634, Plans/storage-plan.md:47237-47517"
+       "quote_scope": "unit SP-634, Plans/storage-plan.md:47236-47516",
+       "source_citation": {
+        "path": "Plans/storage-plan.md",
+        "unit": "SP-634",
+        "quote": "Start custody gate for exactly memory.index.semantic.rebuild.completed@1.0.0,\\\n  \\ newly authored owner contract (DMEM fix round 4)",
+        "line_start": 47342,
+        "line_end": 47343,
+        "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+       }
       },
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-634",
        "quote": "Missing, corrupted, mismatched or withdrawn custody refuses\\\n  \\ with start_receipt_missing, or permission_or_withdrawal for a withdrawal fence",
-       "line_start": 47359,
-       "line_end": 47360,
-       "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707",
+       "line_start": 47358,
+       "line_end": 47359,
+       "file_sha256": "73ee6d097e08d31fd93301d05d2cd2632dd46e5a22ba3ea405ffadda4a0a9db2",
        "quote_check": "exact",
-       "quote_scope": "unit SP-634, Plans/storage-plan.md:47237-47517"
+       "quote_scope": "unit SP-634, Plans/storage-plan.md:47236-47516",
+       "source_citation": {
+        "path": "Plans/storage-plan.md",
+        "unit": "SP-634",
+        "quote": "Missing, corrupted, mismatched or withdrawn custody refuses\\\n  \\ with start_receipt_missing, or permission_or_withdrawal for a withdrawal fence",
+        "line_start": 47359,
+        "line_end": 47360,
+        "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+       }
       }
      ],
      "carried_from": {
@@ -259,22 +389,38 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-634",
-       "line_start": 47473,
-       "line_end": 47473,
+       "line_start": 47472,
+       "line_end": 47472,
        "quote": "\\ history `retention_policy_ref = RP-OPERATIONAL-2555D@1.0.0`, under DL-401, DL-417, DL-500, DL-509.\\n\\",
        "quote_check": "exact",
-       "quote_scope": "unit SP-634, Plans/storage-plan.md:47237-47517",
-       "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+       "quote_scope": "unit SP-634, Plans/storage-plan.md:47236-47516",
+       "file_sha256": "73ee6d097e08d31fd93301d05d2cd2632dd46e5a22ba3ea405ffadda4a0a9db2",
+       "source_citation": {
+        "path": "Plans/storage-plan.md",
+        "unit": "SP-634",
+        "line_start": 47473,
+        "line_end": 47473,
+        "quote": "\\ history `retention_policy_ref = RP-OPERATIONAL-2555D@1.0.0`, under DL-401, DL-417, DL-500, DL-509.\\n\\",
+        "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+       }
       },
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-634",
-       "line_start": 47480,
-       "line_end": 47480,
+       "line_start": 47479,
+       "line_end": 47479,
        "quote": "\\ retains `RP-MEMORY-MAINTENANCE-APPLICATION-2555D@1.0.0` under DL-509; this does not assign its referenced\\",
        "quote_check": "exact",
-       "quote_scope": "unit SP-634, Plans/storage-plan.md:47237-47517",
-       "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+       "quote_scope": "unit SP-634, Plans/storage-plan.md:47236-47516",
+       "file_sha256": "73ee6d097e08d31fd93301d05d2cd2632dd46e5a22ba3ea405ffadda4a0a9db2",
+       "source_citation": {
+        "path": "Plans/storage-plan.md",
+        "unit": "SP-634",
+        "line_start": 47480,
+        "line_end": 47480,
+        "quote": "\\ retains `RP-MEMORY-MAINTENANCE-APPLICATION-2555D@1.0.0` under DL-509; this does not assign its referenced\\",
+        "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+       }
       }
      ],
      "carried_from": {
@@ -292,52 +438,92 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-634",
-       "line_start": 47294,
-       "line_end": 47296,
+       "line_start": 47293,
+       "line_end": 47295,
        "quote": "Original operation/result, canonical gists, EventRecord\\\n  \\ and SP-286 receipts join coherent BRS-031 capture/restore boundaries; derived indexes are rebuilt,\\\n  \\ never backed up as canonical gists",
-       "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707",
+       "file_sha256": "73ee6d097e08d31fd93301d05d2cd2632dd46e5a22ba3ea405ffadda4a0a9db2",
        "quote_check": "exact",
-       "quote_scope": "unit SP-634, Plans/storage-plan.md:47237-47517"
+       "quote_scope": "unit SP-634, Plans/storage-plan.md:47236-47516",
+       "source_citation": {
+        "path": "Plans/storage-plan.md",
+        "unit": "SP-634",
+        "line_start": 47294,
+        "line_end": 47296,
+        "quote": "Original operation/result, canonical gists, EventRecord\\\n  \\ and SP-286 receipts join coherent BRS-031 capture/restore boundaries; derived indexes are rebuilt,\\\n  \\ never backed up as canonical gists",
+        "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+       }
       },
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-634",
-       "line_start": 47338,
-       "line_end": 47339,
+       "line_start": 47337,
+       "line_end": 47338,
        "quote": "Recovery rechecks current Project permission and family withdrawal before any original disclosure,\\\n  \\ including completed operations; refusal returns no output and leaves durable state unchanged.",
-       "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707",
+       "file_sha256": "73ee6d097e08d31fd93301d05d2cd2632dd46e5a22ba3ea405ffadda4a0a9db2",
        "quote_check": "exact",
-       "quote_scope": "unit SP-634, Plans/storage-plan.md:47237-47517"
+       "quote_scope": "unit SP-634, Plans/storage-plan.md:47236-47516",
+       "source_citation": {
+        "path": "Plans/storage-plan.md",
+        "unit": "SP-634",
+        "line_start": 47338,
+        "line_end": 47339,
+        "quote": "Recovery rechecks current Project permission and family withdrawal before any original disclosure,\\\n  \\ including completed operations; refusal returns no output and leaves durable state unchanged.",
+        "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+       }
       },
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-634",
        "quote": "Start custody gate for exactly memory.index.semantic.rebuild.completed@1.0.0,\\\n  \\ newly authored owner contract (DMEM fix round 4)",
-       "line_start": 47342,
-       "line_end": 47343,
-       "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707",
+       "line_start": 47341,
+       "line_end": 47342,
+       "file_sha256": "73ee6d097e08d31fd93301d05d2cd2632dd46e5a22ba3ea405ffadda4a0a9db2",
        "quote_check": "exact",
-       "quote_scope": "unit SP-634, Plans/storage-plan.md:47237-47517"
+       "quote_scope": "unit SP-634, Plans/storage-plan.md:47236-47516",
+       "source_citation": {
+        "path": "Plans/storage-plan.md",
+        "unit": "SP-634",
+        "quote": "Start custody gate for exactly memory.index.semantic.rebuild.completed@1.0.0,\\\n  \\ newly authored owner contract (DMEM fix round 4)",
+        "line_start": 47342,
+        "line_end": 47343,
+        "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+       }
       },
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-634",
        "quote": "Missing, corrupted, mismatched or withdrawn custody refuses\\\n  \\ with start_receipt_missing, or permission_or_withdrawal for a withdrawal fence",
-       "line_start": 47359,
-       "line_end": 47360,
-       "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707",
+       "line_start": 47358,
+       "line_end": 47359,
+       "file_sha256": "73ee6d097e08d31fd93301d05d2cd2632dd46e5a22ba3ea405ffadda4a0a9db2",
        "quote_check": "exact",
-       "quote_scope": "unit SP-634, Plans/storage-plan.md:47237-47517"
+       "quote_scope": "unit SP-634, Plans/storage-plan.md:47236-47516",
+       "source_citation": {
+        "path": "Plans/storage-plan.md",
+        "unit": "SP-634",
+        "quote": "Missing, corrupted, mismatched or withdrawn custody refuses\\\n  \\ with start_receipt_missing, or permission_or_withdrawal for a withdrawal fence",
+        "line_start": 47359,
+        "line_end": 47360,
+        "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+       }
       },
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-634",
        "quote": "The history reader\\\n  \\ returns a retained original that verified when written whatever the operation's current live state",
-       "line_start": 47366,
-       "line_end": 47367,
-       "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707",
+       "line_start": 47365,
+       "line_end": 47366,
+       "file_sha256": "73ee6d097e08d31fd93301d05d2cd2632dd46e5a22ba3ea405ffadda4a0a9db2",
        "quote_check": "exact",
-       "quote_scope": "unit SP-634, Plans/storage-plan.md:47237-47517"
+       "quote_scope": "unit SP-634, Plans/storage-plan.md:47236-47516",
+       "source_citation": {
+        "path": "Plans/storage-plan.md",
+        "unit": "SP-634",
+        "quote": "The history reader\\\n  \\ returns a retained original that verified when written whatever the operation's current live state",
+        "line_start": 47366,
+        "line_end": 47367,
+        "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+       }
       }
      ],
      "carried_from": {
@@ -355,42 +541,74 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-634",
-       "line_start": 47308,
-       "line_end": 47309,
+       "line_start": 47307,
+       "line_end": 47308,
        "quote": "Operation rows use the phase constraints of their closed schema: accepted has no event receipt\\\n  \\ or outcome; started has only the original start receipt; effect_committed has a complete frozen",
-       "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707",
+       "file_sha256": "73ee6d097e08d31fd93301d05d2cd2632dd46e5a22ba3ea405ffadda4a0a9db2",
        "quote_check": "exact",
-       "quote_scope": "unit SP-634, Plans/storage-plan.md:47237-47517"
+       "quote_scope": "unit SP-634, Plans/storage-plan.md:47236-47516",
+       "source_citation": {
+        "path": "Plans/storage-plan.md",
+        "unit": "SP-634",
+        "line_start": 47308,
+        "line_end": 47309,
+        "quote": "Operation rows use the phase constraints of their closed schema: accepted has no event receipt\\\n  \\ or outcome; started has only the original start receipt; effect_committed has a complete frozen",
+        "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+       }
       },
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-634",
-       "line_start": 47375,
-       "line_end": 47377,
+       "line_start": 47374,
+       "line_end": 47376,
        "quote": "Newly authored semantic target/selection custody for this exact family\\\n  \\ (per-family round-1 search in DMEM-search.json) uses required nullable prepared_target in index_semantic_rebuild.\\\n  \\ It is",
-       "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707",
+       "file_sha256": "73ee6d097e08d31fd93301d05d2cd2632dd46e5a22ba3ea405ffadda4a0a9db2",
        "quote_check": "exact",
-       "quote_scope": "unit SP-634, Plans/storage-plan.md:47237-47517"
+       "quote_scope": "unit SP-634, Plans/storage-plan.md:47236-47516",
+       "source_citation": {
+        "path": "Plans/storage-plan.md",
+        "unit": "SP-634",
+        "line_start": 47375,
+        "line_end": 47377,
+        "quote": "Newly authored semantic target/selection custody for this exact family\\\n  \\ (per-family round-1 search in DMEM-search.json) uses required nullable prepared_target in index_semantic_rebuild.\\\n  \\ It is",
+        "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+       }
       },
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-634",
        "quote": "Start custody gate for exactly memory.index.semantic.rebuild.completed@1.0.0,\\\n  \\ newly authored owner contract (DMEM fix round 4)",
-       "line_start": 47342,
-       "line_end": 47343,
-       "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707",
+       "line_start": 47341,
+       "line_end": 47342,
+       "file_sha256": "73ee6d097e08d31fd93301d05d2cd2632dd46e5a22ba3ea405ffadda4a0a9db2",
        "quote_check": "exact",
-       "quote_scope": "unit SP-634, Plans/storage-plan.md:47237-47517"
+       "quote_scope": "unit SP-634, Plans/storage-plan.md:47236-47516",
+       "source_citation": {
+        "path": "Plans/storage-plan.md",
+        "unit": "SP-634",
+        "quote": "Start custody gate for exactly memory.index.semantic.rebuild.completed@1.0.0,\\\n  \\ newly authored owner contract (DMEM fix round 4)",
+        "line_start": 47342,
+        "line_end": 47343,
+        "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+       }
       },
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-634",
        "quote": "Missing, corrupted, mismatched or withdrawn custody refuses\\\n  \\ with start_receipt_missing, or permission_or_withdrawal for a withdrawal fence",
-       "line_start": 47359,
-       "line_end": 47360,
-       "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707",
+       "line_start": 47358,
+       "line_end": 47359,
+       "file_sha256": "73ee6d097e08d31fd93301d05d2cd2632dd46e5a22ba3ea405ffadda4a0a9db2",
        "quote_check": "exact",
-       "quote_scope": "unit SP-634, Plans/storage-plan.md:47237-47517"
+       "quote_scope": "unit SP-634, Plans/storage-plan.md:47236-47516",
+       "source_citation": {
+        "path": "Plans/storage-plan.md",
+        "unit": "SP-634",
+        "quote": "Missing, corrupted, mismatched or withdrawn custody refuses\\\n  \\ with start_receipt_missing, or permission_or_withdrawal for a withdrawal fence",
+        "line_start": 47359,
+        "line_end": 47360,
+        "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+       }
       }
      ],
      "carried_from": {
@@ -408,12 +626,20 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-634",
-       "line_start": 47280,
-       "line_end": 47282,
+       "line_start": 47279,
+       "line_end": 47281,
        "quote": "Exact consumer reader.memory.index.semantic.rebuild.completed.history.v1@1.0.0\\\n  \\ is a newly authored stateless read-only binding used by Memory maintenance history and audit lookup\\\n  \\ for this ex",
-       "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707",
+       "file_sha256": "73ee6d097e08d31fd93301d05d2cd2632dd46e5a22ba3ea405ffadda4a0a9db2",
        "quote_check": "exact",
-       "quote_scope": "unit SP-634, Plans/storage-plan.md:47237-47517"
+       "quote_scope": "unit SP-634, Plans/storage-plan.md:47236-47516",
+       "source_citation": {
+        "path": "Plans/storage-plan.md",
+        "unit": "SP-634",
+        "line_start": 47280,
+        "line_end": 47282,
+        "quote": "Exact consumer reader.memory.index.semantic.rebuild.completed.history.v1@1.0.0\\\n  \\ is a newly authored stateless read-only binding used by Memory maintenance history and audit lookup\\\n  \\ for this ex",
+        "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+       }
       },
       {
        "path": "Plans/memory_maintenance_event_fixtures.json",
@@ -423,7 +649,15 @@
        "line_end": 81617,
        "quote_check": "exact",
        "quote_scope": "document",
-       "file_sha256": "ec051c523c063034526ac09c446af49cedb836330a7b5afbd1910c8f9c39a03d"
+       "file_sha256": "ec051c523c063034526ac09c446af49cedb836330a7b5afbd1910c8f9c39a03d",
+       "source_citation": {
+        "path": "Plans/memory_maintenance_event_fixtures.json",
+        "unit": "#/checkpoint_families/memory.index.semantic.rebuild.completed",
+        "quote": "\"name\": \"memory.index.semantic.rebuild.completed:checkpoint-storage-positive\",",
+        "line_start": 81617,
+        "line_end": 81617,
+        "file_sha256": "ec051c523c063034526ac09c446af49cedb836330a7b5afbd1910c8f9c39a03d"
+       }
       }
      ],
      "carried_from": {
@@ -441,32 +675,56 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-634",
-       "line_start": 47301,
-       "line_end": 47303,
+       "line_start": 47300,
+       "line_end": 47302,
        "quote": "Withdrawal\\\n  \\ first fences new command acceptance and this family's writer admission, drains or explicitly leaves\\\n  \\ unresolved existing original operations without reissuing them, then under the",
-       "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707",
+       "file_sha256": "73ee6d097e08d31fd93301d05d2cd2632dd46e5a22ba3ea405ffadda4a0a9db2",
        "quote_check": "exact",
-       "quote_scope": "unit SP-634, Plans/storage-plan.md:47237-47517"
+       "quote_scope": "unit SP-634, Plans/storage-plan.md:47236-47516",
+       "source_citation": {
+        "path": "Plans/storage-plan.md",
+        "unit": "SP-634",
+        "line_start": 47301,
+        "line_end": 47303,
+        "quote": "Withdrawal\\\n  \\ first fences new command acceptance and this family's writer admission, drains or explicitly leaves\\\n  \\ unresolved existing original operations without reissuing them, then under the",
+        "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+       }
       },
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-634",
-       "line_start": 47338,
-       "line_end": 47339,
+       "line_start": 47337,
+       "line_end": 47338,
        "quote": "Recovery rechecks current Project permission and family withdrawal before any original disclosure,\\\n  \\ including completed operations; refusal returns no output and leaves durable state unchanged.",
-       "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707",
+       "file_sha256": "73ee6d097e08d31fd93301d05d2cd2632dd46e5a22ba3ea405ffadda4a0a9db2",
        "quote_check": "exact",
-       "quote_scope": "unit SP-634, Plans/storage-plan.md:47237-47517"
+       "quote_scope": "unit SP-634, Plans/storage-plan.md:47236-47516",
+       "source_citation": {
+        "path": "Plans/storage-plan.md",
+        "unit": "SP-634",
+        "line_start": 47338,
+        "line_end": 47339,
+        "quote": "Recovery rechecks current Project permission and family withdrawal before any original disclosure,\\\n  \\ including completed operations; refusal returns no output and leaves durable state unchanged.",
+        "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+       }
       },
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-634",
-       "line_start": 47434,
-       "line_end": 47435,
+       "line_start": 47433,
+       "line_end": 47434,
        "quote": "Reader dispatch follows\\\n  \\ SP-1101: each retained canonical original",
-       "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707",
+       "file_sha256": "73ee6d097e08d31fd93301d05d2cd2632dd46e5a22ba3ea405ffadda4a0a9db2",
        "quote_check": "exact",
-       "quote_scope": "unit SP-634, Plans/storage-plan.md:47237-47517"
+       "quote_scope": "unit SP-634, Plans/storage-plan.md:47236-47516",
+       "source_citation": {
+        "path": "Plans/storage-plan.md",
+        "unit": "SP-634",
+        "line_start": 47434,
+        "line_end": 47435,
+        "quote": "Reader dispatch follows\\\n  \\ SP-1101: each retained canonical original",
+        "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+       }
       }
      ],
      "carried_from": {
@@ -484,12 +742,34 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-634",
-       "line_start": 47244,
-       "line_end": 47250,
-       "quote": "Newly authored owner contract under DL-045 for exactly memory.index.semantic.rebuild.completed@1.0.0;\\\n  \\ search scope and negative evidence are the family's row in reports/event-authority-20261104/DMEM-search.json.\\\n  \\ The family remains absent from event_family_registry.json, quarantined before append or projection.\\\n  \\ Retention is PENDING_RETENTION_DECISION: candidate ordinary telemetry (Case L-3, 90 days/2,000,000\\\n  \\ per Project) versus audit authority (indefinite/no count eviction); neither is selected. Unknown policy\\\n  \\ is materially incomplete and permits no destructive inference. Operation custody has the same pending\\\n  \\ assignment, and actual native activation is fenced until it resolves.",
-       "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707",
+       "line_start": 47243,
+       "line_end": 47249,
+       "quote": "Newly authored owner contract under DL-045 for exactly memory.index.semantic.rebuild.completed@1.0.0;\\\n  \\ search scope and negative evidence are the family's row in reports/event-authority-20261104/DMEM-search.json.\\\n  \\ At preparation before the 2026-11-18 registration, the family was absent from event_family_registry.json and quarantined before append or projection.\\\n  \\ Retention is PENDING_RETENTION_DECISION: candidate ordinary telemetry (Case L-3, 90 days/2,000,000\\\n  \\ per Project) versus audit authority (indefinite/no count eviction); neither is selected. Unknown policy\\\n  \\ is materially incomplete and permits no destructive inference. Operation custody has the same pending\\\n  \\ assignment, and actual native activation is fenced until it resolves.",
+       "file_sha256": "73ee6d097e08d31fd93301d05d2cd2632dd46e5a22ba3ea405ffadda4a0a9db2",
        "quote_check": "exact",
-       "quote_scope": "unit SP-634, Plans/storage-plan.md:47237-47517"
+       "quote_scope": "unit SP-634, Plans/storage-plan.md:47236-47516",
+       "source_citation": {
+        "path": "Plans/storage-plan.md",
+        "unit": "SP-634",
+        "line_start": 47244,
+        "line_end": 47250,
+        "quote": "Newly authored owner contract under DL-045 for exactly memory.index.semantic.rebuild.completed@1.0.0;\\\n  \\ search scope and negative evidence are the family's row in reports/event-authority-20261104/DMEM-search.json.\\\n  \\ The family remains absent from event_family_registry.json, quarantined before append or projection.\\\n  \\ Retention is PENDING_RETENTION_DECISION: candidate ordinary telemetry (Case L-3, 90 days/2,000,000\\\n  \\ per Project) versus audit authority (indefinite/no count eviction); neither is selected. Unknown policy\\\n  \\ is materially incomplete and permits no destructive inference. Operation custody has the same pending\\\n  \\ assignment, and actual native activation is fenced until it resolves.",
+        "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707",
+        "quote_check": "exact",
+        "quote_scope": "unit SP-634, Plans/storage-plan.md:47237-47517"
+       },
+       "reanchor": {
+        "method": "recited_authorized_owner_change",
+        "unit": "SP-634",
+        "source_commit": "0c904de00426b0089ba5d56349fda8ea16cc9f88",
+        "owner_change_commit": "55aecc69b0ed447088ffd3c364fe60c06739018a",
+        "before_unit_sha256": "8879149d6d8d48e31d397a34950ef50e3a22c12577d1f37f1311a8d90959c37c",
+        "after_unit_sha256": "40c58903a747d3e0ee2fe051b49d076a5d026eded8e772cbfe129264aea3dfd3",
+        "history": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/merge2-fix1/evidence/reanchor-history/Plans_storage-plan.md-SP-634.log",
+        "why": "The approved owner edit makes preparation-time nonmembership dated history and conditions present refusal on actual membership; the cited contract role and all other source, identity, retention and native fences remain. This carries the reviewed cell without changing its verdict.",
+        "old_quote": "Newly authored owner contract under DL-045 for exactly memory.index.semantic.rebuild.completed@1.0.0;\\\n  \\ search scope and negative evidence are the family's row in reports/event-authority-20261104/DMEM-search.json.\\\n  \\ The family remains absent from event_family_registry.json, quarantined before append or projection.\\\n  \\ Retention is PENDING_RETENTION_DECISION: candidate ordinary telemetry (Case L-3, 90 days/2,000,000\\\n  \\ per Project) versus audit authority (indefinite/no count eviction); neither is selected. Unknown policy\\\n  \\ is materially incomplete and permits no destructive inference. Operation custody has the same pending\\\n  \\ assignment, and actual native activation is fenced until it resolves.",
+        "new_quote": "Newly authored owner contract under DL-045 for exactly memory.index.semantic.rebuild.completed@1.0.0;\\\n  \\ search scope and negative evidence are the family's row in reports/event-authority-20261104/DMEM-search.json.\\\n  \\ At preparation before the 2026-11-18 registration, the family was absent from event_family_registry.json and quarantined before append or projection.\\\n  \\ Retention is PENDING_RETENTION_DECISION: candidate ordinary telemetry (Case L-3, 90 days/2,000,000\\\n  \\ per Project) versus audit authority (indefinite/no count eviction); neither is selected. Unknown policy\\\n  \\ is materially incomplete and permits no destructive inference. Operation custody has the same pending\\\n  \\ assignment, and actual native activation is fenced until it resolves."
+       }
       },
       {
        "path": "Plans/Contracts_V0.md",
@@ -499,7 +779,15 @@
        "quote": "canonical_text: Newly authored closed payload owner contract for exactly memory.index.semantic.rebuild.completed@1.0.0",
        "quote_check": "exact",
        "quote_scope": "unit CV-654, Plans/Contracts_V0.md:38824-38869",
-       "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a"
+       "file_sha256": "4ae2225d8ed19b6df971b6c32797aae6882d175264ff2c2e9a2045650d735e67",
+       "source_citation": {
+        "path": "Plans/Contracts_V0.md",
+        "unit": "CV-654",
+        "line_start": 38831,
+        "line_end": 38831,
+        "quote": "canonical_text: Newly authored closed payload owner contract for exactly memory.index.semantic.rebuild.completed@1.0.0",
+        "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a"
+       }
       },
       {
        "path": "scripts/pm_memory_c12.py",
@@ -508,7 +796,14 @@
        "quote": "def schema_closure(m, path, definition):",
        "quote_check": "exact",
        "quote_scope": "document",
-       "file_sha256": "ffccef4f1723ad73c757aaf4d720b8698c8d46522be94afa8ce03984db525431"
+       "file_sha256": "ffccef4f1723ad73c757aaf4d720b8698c8d46522be94afa8ce03984db525431",
+       "source_citation": {
+        "path": "scripts/pm_memory_c12.py",
+        "line_start": 111,
+        "line_end": 111,
+        "quote": "def schema_closure(m, path, definition):",
+        "file_sha256": "ffccef4f1723ad73c757aaf4d720b8698c8d46522be94afa8ce03984db525431"
+       }
       },
       {
        "path": "scripts/pm_memory_c12.py",
@@ -517,7 +812,14 @@
        "quote": "killed=baseline == expected and cut == ['accepted'] and restored == expected,",
        "quote_check": "exact",
        "quote_scope": "document",
-       "file_sha256": "ffccef4f1723ad73c757aaf4d720b8698c8d46522be94afa8ce03984db525431"
+       "file_sha256": "ffccef4f1723ad73c757aaf4d720b8698c8d46522be94afa8ce03984db525431",
+       "source_citation": {
+        "path": "scripts/pm_memory_c12.py",
+        "line_start": 338,
+        "line_end": 338,
+        "quote": "killed=baseline == expected and cut == ['accepted'] and restored == expected,",
+        "file_sha256": "ffccef4f1723ad73c757aaf4d720b8698c8d46522be94afa8ce03984db525431"
+       }
       },
       {
        "path": "scripts/pm_memory_c12.py",
@@ -526,7 +828,14 @@
        "quote": "assert before == after and state == caller, (event, mode, defect, 'read changed custody/caller')",
        "quote_check": "exact",
        "quote_scope": "document",
-       "file_sha256": "ffccef4f1723ad73c757aaf4d720b8698c8d46522be94afa8ce03984db525431"
+       "file_sha256": "ffccef4f1723ad73c757aaf4d720b8698c8d46522be94afa8ce03984db525431",
+       "source_citation": {
+        "path": "scripts/pm_memory_c12.py",
+        "line_start": 402,
+        "line_end": 402,
+        "quote": "assert before == after and state == caller, (event, mode, defect, 'read changed custody/caller')",
+        "file_sha256": "ffccef4f1723ad73c757aaf4d720b8698c8d46522be94afa8ce03984db525431"
+       }
       },
       {
        "path": "scripts/pm_memory_c12_selftest.py",
@@ -535,7 +844,14 @@
        "quote": "results.append({'case': '4400-digit-integer-at-complete-writer', 'result': 'exact_storage_uint64_refusal'})",
        "quote_check": "exact",
        "quote_scope": "document",
-       "file_sha256": "5b4d06685862dbc57bd6f8107901d8211d78f2674719017b0bacbfe884a1d355"
+       "file_sha256": "5b4d06685862dbc57bd6f8107901d8211d78f2674719017b0bacbfe884a1d355",
+       "source_citation": {
+        "path": "scripts/pm_memory_c12_selftest.py",
+        "line_start": 103,
+        "line_end": 103,
+        "quote": "results.append({'case': '4400-digit-integer-at-complete-writer', 'result': 'exact_storage_uint64_refusal'})",
+        "file_sha256": "5b4d06685862dbc57bd6f8107901d8211d78f2674719017b0bacbfe884a1d355"
+       }
       },
       {
        "path": "scripts/pm_memory_c12_entailments.py",
@@ -544,7 +860,14 @@
        "quote": "assert len(records) == 26 and len({r['row'] for r in records}) == 26",
        "quote_check": "exact",
        "quote_scope": "document",
-       "file_sha256": "55e5b64ff3f515c17e2e54930600581ae6eaa27838ceeca55734404e35d77fdc"
+       "file_sha256": "55e5b64ff3f515c17e2e54930600581ae6eaa27838ceeca55734404e35d77fdc",
+       "source_citation": {
+        "path": "scripts/pm_memory_c12_entailments.py",
+        "line_start": 104,
+        "line_end": 104,
+        "quote": "assert len(records) == 26 and len({r['row'] for r in records}) == 26",
+        "file_sha256": "55e5b64ff3f515c17e2e54930600581ae6eaa27838ceeca55734404e35d77fdc"
+       }
       },
       {
        "path": "scripts/pm_memory_guard_witnesses.py",
@@ -553,7 +876,14 @@
        "quote": "add('checkpoint-application-scope', 'ck_scope', 'CK08_scope_kind', join,",
        "quote_check": "exact",
        "quote_scope": "document",
-       "file_sha256": "df116144fc0488a65c65f0d610d3e3b4c7b68051da451cbe8fc617d9676d65fd"
+       "file_sha256": "df116144fc0488a65c65f0d610d3e3b4c7b68051da451cbe8fc617d9676d65fd",
+       "source_citation": {
+        "path": "scripts/pm_memory_guard_witnesses.py",
+        "line_start": 420,
+        "line_end": 420,
+        "quote": "add('checkpoint-application-scope', 'ck_scope', 'CK08_scope_kind', join,",
+        "file_sha256": "df116144fc0488a65c65f0d610d3e3b4c7b68051da451cbe8fc617d9676d65fd"
+       }
       },
       {
        "path": "Plans/assistant-memory-subsystem.md",
@@ -563,7 +893,15 @@
        "unit": "AMS-023",
        "quote_check": "exact",
        "quote_scope": "unit AMS-023, Plans/assistant-memory-subsystem.md:1710-1761",
-       "file_sha256": "6fb2d744ee0ee1ba56c1bc0bbc38d8996e8bc0af660efe7d4bbdd21ac67e9911"
+       "file_sha256": "bef912af3f908a962527eb2a58e3d50af7eb741092d247beebc773e1314587d8",
+       "source_citation": {
+        "path": "Plans/assistant-memory-subsystem.md",
+        "line_start": 1726,
+        "line_end": 1726,
+        "quote": "workbench or button is planned.",
+        "unit": "AMS-023",
+        "file_sha256": "6fb2d744ee0ee1ba56c1bc0bbc38d8996e8bc0af660efe7d4bbdd21ac67e9911"
+       }
       }
      ],
      "carried_from": {
@@ -575,5 +913,19 @@
     }
    }
   }
- ]
+ ],
+ "source_registry": {
+  "path": "Plans/event_family_registry.json",
+  "revision": "2026-11-16.193",
+  "sha256": "810ed8ea5d99a1d08ca3164e4484a9e86989e54330bab2dcb7a563572a950580",
+  "family_count": 412,
+  "row_pointer": "#/families/411"
+ },
+ "evidence_maintenance": {
+  "authority": "MERGE2-FIX1 findings 1/3/5",
+  "source_commit": "0c904de00426b0089ba5d56349fda8ea16cc9f88",
+  "source_assessment_sha256": "d7a903a6ff4825e157598b522b8777a5acfd26fe0153dd88bf7c1625c1719553",
+  "native_execution": "NOT_RUN",
+  "verdicts_changed": false
+ }
 }

@@ -5,9 +5,9 @@
  "merge": "admission-merge-2",
  "registry": {
   "path": "Plans/event_family_registry.json",
-  "revision": "2026-11-16.132",
-  "sha256": "b5789a3aff06fe51e39ee3e397f5e93661a0ee0a14cd2639553e1b5ecd09a0af",
-  "family_count": 351,
+  "revision": "2026-11-18.2",
+  "sha256": "ec21cf1a5b42b3e68a5564a847b4798dff968612d11d438bc7075b89196f9602",
+  "family_count": 518,
   "row_pointer": "#/families/350"
  },
  "base_commit": "45b4ccf25270c486dbc682805cd455ce4ca25fb0",
@@ -22,17 +22,27 @@
     "membership_version": {
      "status": "PASS",
      "representation": "exact_registry_membership",
-     "finding": "Registered at registry revision 2026-11-16.132 as #/families/350 (canonical row SHA-256 99327ea273530958f5d6875f2e190a3e962896093f632bb7cb89488cf221773e); before this commit the family was absent.",
+     "finding": "Currently registered at 2026-11-18.2 as #/families/350 (canonical row SHA-256 99327ea273530958f5d6875f2e190a3e962896093f632bb7cb89488cf221773e). Original one-family admission checkpoints remain in the family record and immutable Git source.",
      "evidence": [
       {
        "path": "Plans/event_family_registry.json",
        "json_pointer": "#/families/350",
-       "line_start": 23753,
-       "line_end": 23793,
+       "line_start": 23797,
+       "line_end": 23837,
        "quote": "\"event_type\": \"concern.created\"",
-       "quote_line": 23756,
-       "file_sha256": "b5789a3aff06fe51e39ee3e397f5e93661a0ee0a14cd2639553e1b5ecd09a0af",
-       "quote_check": "exact"
+       "quote_line": 23800,
+       "file_sha256": "ec21cf1a5b42b3e68a5564a847b4798dff968612d11d438bc7075b89196f9602",
+       "quote_check": "exact",
+       "source_citation": {
+        "path": "Plans/event_family_registry.json",
+        "json_pointer": "#/families/350",
+        "line_start": 23753,
+        "line_end": 23793,
+        "quote": "\"event_type\": \"concern.created\"",
+        "quote_line": 23756,
+        "file_sha256": "b5789a3aff06fe51e39ee3e397f5e93661a0ee0a14cd2639553e1b5ecd09a0af",
+        "quote_check": "exact"
+       }
       }
      ]
     },
@@ -44,12 +54,20 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-666",
-       "line_start": 51153,
-       "line_end": 51153,
+       "line_start": 51152,
+       "line_end": 51152,
        "quote": "Newly authored owner contract for concern.created 1.0.0 under DL-045, prepared without admission.",
        "quote_check": "exact",
-       "quote_scope": "unit SP-666, Plans/storage-plan.md:51146-51356",
-       "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+       "quote_scope": "unit SP-666, Plans/storage-plan.md:51145-51355",
+       "file_sha256": "73ee6d097e08d31fd93301d05d2cd2632dd46e5a22ba3ea405ffadda4a0a9db2",
+       "source_citation": {
+        "path": "Plans/storage-plan.md",
+        "unit": "SP-666",
+        "line_start": 51153,
+        "line_end": 51153,
+        "quote": "Newly authored owner contract for concern.created 1.0.0 under DL-045, prepared without admission.",
+        "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+       }
       },
       {
        "path": "Plans/Contracts_V0.md",
@@ -58,8 +76,16 @@
        "line_end": 40405,
        "quote": "concern.created closed current payload and authority route",
        "quote_check": "exact",
-       "quote_scope": "unit CV-686, Plans/Contracts_V0.md:40405-40478",
-       "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a"
+       "quote_scope": "unit CV-686, Plans/Contracts_V0.md:40405-40479",
+       "file_sha256": "4ae2225d8ed19b6df971b6c32797aae6882d175264ff2c2e9a2045650d735e67",
+       "source_citation": {
+        "path": "Plans/Contracts_V0.md",
+        "unit": "CV-686",
+        "line_start": 40405,
+        "line_end": 40405,
+        "quote": "concern.created closed current payload and authority route",
+        "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a"
+       }
       }
      ],
      "carried_from": {
@@ -77,22 +103,38 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-666",
-       "line_start": 51158,
-       "line_end": 51159,
+       "line_start": 51157,
+       "line_end": 51158,
        "quote": "handlers::concern::create commits this\\\n  \\ family, after independently authenticating one of those five creator",
-       "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707",
+       "file_sha256": "73ee6d097e08d31fd93301d05d2cd2632dd46e5a22ba3ea405ffadda4a0a9db2",
        "quote_check": "exact",
-       "quote_scope": "unit SP-666, Plans/storage-plan.md:51146-51356"
+       "quote_scope": "unit SP-666, Plans/storage-plan.md:51145-51355",
+       "source_citation": {
+        "path": "Plans/storage-plan.md",
+        "unit": "SP-666",
+        "line_start": 51158,
+        "line_end": 51159,
+        "quote": "handlers::concern::create commits this\\\n  \\ family, after independently authenticating one of those five creator",
+        "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+       }
       },
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-666",
-       "line_start": 51209,
-       "line_end": 51209,
+       "line_start": 51208,
+       "line_end": 51208,
        "quote": "storage.first_append_receipt.resolve.v2, including the full-value v2 successor,",
        "quote_check": "exact",
-       "quote_scope": "unit SP-666, Plans/storage-plan.md:51146-51356",
-       "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+       "quote_scope": "unit SP-666, Plans/storage-plan.md:51145-51355",
+       "file_sha256": "73ee6d097e08d31fd93301d05d2cd2632dd46e5a22ba3ea405ffadda4a0a9db2",
+       "source_citation": {
+        "path": "Plans/storage-plan.md",
+        "unit": "SP-666",
+        "line_start": 51209,
+        "line_end": 51209,
+        "quote": "storage.first_append_receipt.resolve.v2, including the full-value v2 successor,",
+        "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+       }
       }
      ],
      "carried_from": {
@@ -115,7 +157,15 @@
        "quote": "\"additionalProperties\": false,",
        "quote_check": "exact",
        "quote_scope": "document",
-       "file_sha256": "583e1b5d02e78568946ac53fb66a8ec4e5ce8c9e7972c66fee01a6e918f60996"
+       "file_sha256": "583e1b5d02e78568946ac53fb66a8ec4e5ce8c9e7972c66fee01a6e918f60996",
+       "source_citation": {
+        "path": "Plans/event_payloads/concern/concern_created.schema.json",
+        "unit": "closed payload schema",
+        "line_start": 8,
+        "line_end": 8,
+        "quote": "\"additionalProperties\": false,",
+        "file_sha256": "583e1b5d02e78568946ac53fb66a8ec4e5ce8c9e7972c66fee01a6e918f60996"
+       }
       },
       {
        "path": "Plans/event_payloads/concern/concern_created.schema.json",
@@ -125,7 +175,15 @@
        "quote": "\"schema_version\", \"project_id\", \"concern_id\", \"concern_revision\",",
        "quote_check": "exact",
        "quote_scope": "document",
-       "file_sha256": "583e1b5d02e78568946ac53fb66a8ec4e5ce8c9e7972c66fee01a6e918f60996"
+       "file_sha256": "583e1b5d02e78568946ac53fb66a8ec4e5ce8c9e7972c66fee01a6e918f60996",
+       "source_citation": {
+        "path": "Plans/event_payloads/concern/concern_created.schema.json",
+        "unit": "closed payload schema",
+        "line_start": 10,
+        "line_end": 10,
+        "quote": "\"schema_version\", \"project_id\", \"concern_id\", \"concern_revision\",",
+        "file_sha256": "583e1b5d02e78568946ac53fb66a8ec4e5ce8c9e7972c66fee01a6e918f60996"
+       }
       },
       {
        "path": "Plans/Contracts_V0.md",
@@ -134,8 +192,16 @@
        "line_end": 40405,
        "quote": "concern.created closed current payload and authority route",
        "quote_check": "exact",
-       "quote_scope": "unit CV-686, Plans/Contracts_V0.md:40405-40478",
-       "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a"
+       "quote_scope": "unit CV-686, Plans/Contracts_V0.md:40405-40479",
+       "file_sha256": "4ae2225d8ed19b6df971b6c32797aae6882d175264ff2c2e9a2045650d735e67",
+       "source_citation": {
+        "path": "Plans/Contracts_V0.md",
+        "unit": "CV-686",
+        "line_start": 40405,
+        "line_end": 40405,
+        "quote": "concern.created closed current payload and authority route",
+        "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a"
+       }
       }
      ],
      "carried_from": {
@@ -153,22 +219,38 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-666",
-       "line_start": 51171,
-       "line_end": 51172,
+       "line_start": 51170,
+       "line_end": 51171,
        "quote": "Identity: Project-only EventRecord 2.0.0, scope_kind=project, envelope project_id equals payload and\\\n  \\ original",
-       "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707",
+       "file_sha256": "73ee6d097e08d31fd93301d05d2cd2632dd46e5a22ba3ea405ffadda4a0a9db2",
        "quote_check": "exact",
-       "quote_scope": "unit SP-666, Plans/storage-plan.md:51146-51356"
+       "quote_scope": "unit SP-666, Plans/storage-plan.md:51145-51355",
+       "source_citation": {
+        "path": "Plans/storage-plan.md",
+        "unit": "SP-666",
+        "line_start": 51171,
+        "line_end": 51172,
+        "quote": "Identity: Project-only EventRecord 2.0.0, scope_kind=project, envelope project_id equals payload and\\\n  \\ original",
+        "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+       }
       },
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-666",
-       "line_start": 51172,
-       "line_end": 51173,
+       "line_start": 51171,
+       "line_end": 51172,
        "quote": "project~base64url_no_pad(UTF8(project_id)).\\\n  \\ No application/default/focus",
-       "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707",
+       "file_sha256": "73ee6d097e08d31fd93301d05d2cd2632dd46e5a22ba3ea405ffadda4a0a9db2",
        "quote_check": "exact",
-       "quote_scope": "unit SP-666, Plans/storage-plan.md:51146-51356"
+       "quote_scope": "unit SP-666, Plans/storage-plan.md:51145-51355",
+       "source_citation": {
+        "path": "Plans/storage-plan.md",
+        "unit": "SP-666",
+        "line_start": 51172,
+        "line_end": 51173,
+        "quote": "project~base64url_no_pad(UTF8(project_id)).\\\n  \\ No application/default/focus",
+        "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+       }
       }
      ],
      "carried_from": {
@@ -186,32 +268,56 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-666",
-       "line_start": 51191,
-       "line_end": 51191,
+       "line_start": 51190,
+       "line_end": 51190,
        "quote": "Request digest",
        "quote_check": "exact",
-       "quote_scope": "unit SP-666, Plans/storage-plan.md:51146-51356",
-       "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+       "quote_scope": "unit SP-666, Plans/storage-plan.md:51145-51355",
+       "file_sha256": "73ee6d097e08d31fd93301d05d2cd2632dd46e5a22ba3ea405ffadda4a0a9db2",
+       "source_citation": {
+        "path": "Plans/storage-plan.md",
+        "unit": "SP-666",
+        "line_start": 51191,
+        "line_end": 51191,
+        "quote": "Request digest",
+        "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+       }
       },
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-666",
-       "line_start": 51217,
-       "line_end": 51217,
+       "line_start": 51216,
+       "line_end": 51216,
        "quote": "retries recover append; settled retries",
        "quote_check": "exact",
-       "quote_scope": "unit SP-666, Plans/storage-plan.md:51146-51356",
-       "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+       "quote_scope": "unit SP-666, Plans/storage-plan.md:51145-51355",
+       "file_sha256": "73ee6d097e08d31fd93301d05d2cd2632dd46e5a22ba3ea405ffadda4a0a9db2",
+       "source_citation": {
+        "path": "Plans/storage-plan.md",
+        "unit": "SP-666",
+        "line_start": 51217,
+        "line_end": 51217,
+        "quote": "retries recover append; settled retries",
+        "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+       }
       },
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-666",
-       "line_start": 51182,
-       "line_end": 51182,
+       "line_start": 51181,
+       "line_end": 51181,
        "quote": "projector_replay_only",
        "quote_check": "exact",
-       "quote_scope": "unit SP-666, Plans/storage-plan.md:51146-51356",
-       "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+       "quote_scope": "unit SP-666, Plans/storage-plan.md:51145-51355",
+       "file_sha256": "73ee6d097e08d31fd93301d05d2cd2632dd46e5a22ba3ea405ffadda4a0a9db2",
+       "source_citation": {
+        "path": "Plans/storage-plan.md",
+        "unit": "SP-666",
+        "line_start": 51182,
+        "line_end": 51182,
+        "quote": "projector_replay_only",
+        "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+       }
       },
       {
        "path": "scripts/pm-concern-created-contracts-check.py",
@@ -221,7 +327,15 @@
        "quote": "def caller_body",
        "quote_check": "exact",
        "quote_scope": "document",
-       "file_sha256": "e9f76bce9f436b6e39bab7fc5db221bbe00264ac531b81a73440e8fd30cffbc9"
+       "file_sha256": "80f554a1ad4ae5cd4d5d10074e1172524d10baf33b020c5924b9f2e27ad26a56",
+       "source_citation": {
+        "path": "scripts/pm-concern-created-contracts-check.py",
+        "unit": "caller_body",
+        "line_start": 42,
+        "line_end": 42,
+        "quote": "def caller_body",
+        "file_sha256": "e9f76bce9f436b6e39bab7fc5db221bbe00264ac531b81a73440e8fd30cffbc9"
+       }
       }
      ],
      "carried_from": {
@@ -239,12 +353,20 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-666",
-       "line_start": 51301,
-       "line_end": 51301,
+       "line_start": 51300,
+       "line_end": 51300,
        "quote": "\\ = RP-AUTHORITY-INDEFINITE@1.0.0`, under DL-401, DL-500, DL-501.\\n\\nUse the existing policy object\\",
        "quote_check": "exact",
-       "quote_scope": "unit SP-666, Plans/storage-plan.md:51146-51356",
-       "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+       "quote_scope": "unit SP-666, Plans/storage-plan.md:51145-51355",
+       "file_sha256": "73ee6d097e08d31fd93301d05d2cd2632dd46e5a22ba3ea405ffadda4a0a9db2",
+       "source_citation": {
+        "path": "Plans/storage-plan.md",
+        "unit": "SP-666",
+        "line_start": 51301,
+        "line_end": 51301,
+        "quote": "\\ = RP-AUTHORITY-INDEFINITE@1.0.0`, under DL-401, DL-500, DL-501.\\n\\nUse the existing policy object\\",
+        "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+       }
       }
      ],
      "carried_from": {
@@ -262,22 +384,38 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-666",
-       "line_start": 51232,
-       "line_end": 51233,
+       "line_start": 51231,
+       "line_end": 51232,
        "quote": "Custody: canonical record\\\n  \\ and original operation are non-rebuildable original authority. Preserve immutable original",
-       "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707",
+       "file_sha256": "73ee6d097e08d31fd93301d05d2cd2632dd46e5a22ba3ea405ffadda4a0a9db2",
        "quote_check": "exact",
-       "quote_scope": "unit SP-666, Plans/storage-plan.md:51146-51356"
+       "quote_scope": "unit SP-666, Plans/storage-plan.md:51145-51355",
+       "source_citation": {
+        "path": "Plans/storage-plan.md",
+        "unit": "SP-666",
+        "line_start": 51232,
+        "line_end": 51233,
+        "quote": "Custody: canonical record\\\n  \\ and original operation are non-rebuildable original authority. Preserve immutable original",
+        "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+       }
       },
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-666",
-       "line_start": 51235,
-       "line_end": 51236,
+       "line_start": 51234,
+       "line_end": 51235,
        "quote": "backup/restore includes all of them with the original Storage source under one verified\\\n  \\ recovery boundary.",
-       "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707",
+       "file_sha256": "73ee6d097e08d31fd93301d05d2cd2632dd46e5a22ba3ea405ffadda4a0a9db2",
        "quote_check": "exact",
-       "quote_scope": "unit SP-666, Plans/storage-plan.md:51146-51356"
+       "quote_scope": "unit SP-666, Plans/storage-plan.md:51145-51355",
+       "source_citation": {
+        "path": "Plans/storage-plan.md",
+        "unit": "SP-666",
+        "line_start": 51235,
+        "line_end": 51236,
+        "quote": "backup/restore includes all of them with the original Storage source under one verified\\\n  \\ recovery boundary.",
+        "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+       }
       },
       {
        "path": "scripts/pm-alert-event-contracts-check.py",
@@ -287,7 +425,15 @@
        "quote": "def append_result_errors",
        "quote_check": "exact",
        "quote_scope": "document",
-       "file_sha256": "25f8207005bae21b3cfe94ece2b202eec86dc68ef4b1e210b27f24a71f29ba30"
+       "file_sha256": "35cdf881e6aa3dbf57a5355f3ec697d3c1f3f167c161af3e4e1a55da3db1bc6e",
+       "source_citation": {
+        "path": "scripts/pm-alert-event-contracts-check.py",
+        "unit": "append_result_errors",
+        "line_start": 349,
+        "line_end": 349,
+        "quote": "def append_result_errors",
+        "file_sha256": "25f8207005bae21b3cfe94ece2b202eec86dc68ef4b1e210b27f24a71f29ba30"
+       }
       },
       {
        "path": "Plans/concern_created_contracts/concern_created.fixtures.json",
@@ -297,7 +443,15 @@
        "quote": "\"name\": \"foreign_original_append_result_ref\"",
        "quote_check": "exact",
        "quote_scope": "document",
-       "file_sha256": "5b63f1a803bfd335d710db6d233e0bae61898ba3ce59045dc2a008b6a3e1f693"
+       "file_sha256": "5b63f1a803bfd335d710db6d233e0bae61898ba3ce59045dc2a008b6a3e1f693",
+       "source_citation": {
+        "path": "Plans/concern_created_contracts/concern_created.fixtures.json",
+        "unit": "append_cases",
+        "line_start": 26941,
+        "line_end": 26941,
+        "quote": "\"name\": \"foreign_original_append_result_ref\"",
+        "file_sha256": "5b63f1a803bfd335d710db6d233e0bae61898ba3ce59045dc2a008b6a3e1f693"
+       }
       }
      ],
      "carried_from": {
@@ -315,12 +469,20 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-666",
-       "line_start": 51164,
-       "line_end": 51165,
+       "line_start": 51163,
+       "line_end": 51164,
        "quote": "Birth is absent -> active at concern_revision=1, never acknowledged/resolved/dismissed,\\\n  \\ never a",
-       "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707",
+       "file_sha256": "73ee6d097e08d31fd93301d05d2cd2632dd46e5a22ba3ea405ffadda4a0a9db2",
        "quote_check": "exact",
-       "quote_scope": "unit SP-666, Plans/storage-plan.md:51146-51356"
+       "quote_scope": "unit SP-666, Plans/storage-plan.md:51145-51355",
+       "source_citation": {
+        "path": "Plans/storage-plan.md",
+        "unit": "SP-666",
+        "line_start": 51164,
+        "line_end": 51165,
+        "quote": "Birth is absent -> active at concern_revision=1, never acknowledged/resolved/dismissed,\\\n  \\ never a",
+        "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+       }
       }
      ],
      "carried_from": {
@@ -338,32 +500,56 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-666",
-       "line_start": 51241,
-       "line_end": 51242,
+       "line_start": 51240,
+       "line_end": 51241,
        "quote": "projector.concern_created.history@1.0.0\\\n  \\ and reader.concern_created.history@1.0.0 expose passive",
-       "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707",
+       "file_sha256": "73ee6d097e08d31fd93301d05d2cd2632dd46e5a22ba3ea405ffadda4a0a9db2",
        "quote_check": "exact",
-       "quote_scope": "unit SP-666, Plans/storage-plan.md:51146-51356"
+       "quote_scope": "unit SP-666, Plans/storage-plan.md:51145-51355",
+       "source_citation": {
+        "path": "Plans/storage-plan.md",
+        "unit": "SP-666",
+        "line_start": 51241,
+        "line_end": 51242,
+        "quote": "projector.concern_created.history@1.0.0\\\n  \\ and reader.concern_created.history@1.0.0 expose passive",
+        "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+       }
       },
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-666",
-       "line_start": 51244,
-       "line_end": 51244,
+       "line_start": 51243,
+       "line_end": 51243,
        "quote": "SP-278/DL-076:",
        "quote_check": "exact",
-       "quote_scope": "unit SP-666, Plans/storage-plan.md:51146-51356",
-       "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+       "quote_scope": "unit SP-666, Plans/storage-plan.md:51145-51355",
+       "file_sha256": "73ee6d097e08d31fd93301d05d2cd2632dd46e5a22ba3ea405ffadda4a0a9db2",
+       "source_citation": {
+        "path": "Plans/storage-plan.md",
+        "unit": "SP-666",
+        "line_start": 51244,
+        "line_end": 51244,
+        "quote": "SP-278/DL-076:",
+        "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+       }
       },
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-666",
-       "line_start": 51201,
-       "line_end": 51201,
+       "line_start": 51200,
+       "line_end": 51200,
        "quote": "CAS creates concern_record.v1:{project_id}:{concern_id}",
        "quote_check": "exact",
-       "quote_scope": "unit SP-666, Plans/storage-plan.md:51146-51356",
-       "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+       "quote_scope": "unit SP-666, Plans/storage-plan.md:51145-51355",
+       "file_sha256": "73ee6d097e08d31fd93301d05d2cd2632dd46e5a22ba3ea405ffadda4a0a9db2",
+       "source_citation": {
+        "path": "Plans/storage-plan.md",
+        "unit": "SP-666",
+        "line_start": 51201,
+        "line_end": 51201,
+        "quote": "CAS creates concern_record.v1:{project_id}:{concern_id}",
+        "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+       }
       }
      ],
      "carried_from": {
@@ -381,22 +567,38 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-666",
-       "line_start": 51268,
-       "line_end": 51269,
+       "line_start": 51267,
+       "line_end": 51268,
        "quote": "Compatibility: only the exact current payload 1.0.0 and declared value schemas\\\n  \\ are selected;",
-       "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707",
+       "file_sha256": "73ee6d097e08d31fd93301d05d2cd2632dd46e5a22ba3ea405ffadda4a0a9db2",
        "quote_check": "exact",
-       "quote_scope": "unit SP-666, Plans/storage-plan.md:51146-51356"
+       "quote_scope": "unit SP-666, Plans/storage-plan.md:51145-51355",
+       "source_citation": {
+        "path": "Plans/storage-plan.md",
+        "unit": "SP-666",
+        "line_start": 51268,
+        "line_end": 51269,
+        "quote": "Compatibility: only the exact current payload 1.0.0 and declared value schemas\\\n  \\ are selected;",
+        "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+       }
       },
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-666",
-       "line_start": 51260,
-       "line_end": 51260,
+       "line_start": 51259,
+       "line_end": 51259,
        "quote": "withdrawn publication or missing coverage is unavailable. Source-generation change requires",
        "quote_check": "exact",
-       "quote_scope": "unit SP-666, Plans/storage-plan.md:51146-51356",
-       "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+       "quote_scope": "unit SP-666, Plans/storage-plan.md:51145-51355",
+       "file_sha256": "73ee6d097e08d31fd93301d05d2cd2632dd46e5a22ba3ea405ffadda4a0a9db2",
+       "source_citation": {
+        "path": "Plans/storage-plan.md",
+        "unit": "SP-666",
+        "line_start": 51260,
+        "line_end": 51260,
+        "quote": "withdrawn publication or missing coverage is unavailable. Source-generation change requires",
+        "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+       }
       },
       {
        "path": "scripts/pm_dg6a_custody.py",
@@ -406,7 +608,15 @@
        "quote": "def resolve(original):",
        "quote_check": "exact",
        "quote_scope": "document",
-       "file_sha256": "0012cdb6b5c8ac3243e3459e290f073daaf3da131ed37dc4598aad6c50e3793d"
+       "file_sha256": "0012cdb6b5c8ac3243e3459e290f073daaf3da131ed37dc4598aad6c50e3793d",
+       "source_citation": {
+        "path": "scripts/pm_dg6a_custody.py",
+        "unit": "resolve",
+        "line_start": 324,
+        "line_end": 324,
+        "quote": "def resolve(original):",
+        "file_sha256": "0012cdb6b5c8ac3243e3459e290f073daaf3da131ed37dc4598aad6c50e3793d"
+       }
       }
      ],
      "carried_from": {
@@ -429,17 +639,33 @@
        "quote": "concern.created has its own independent python3 scripts/pm-concern-created-contracts-check.py and",
        "quote_check": "exact",
        "quote_scope": "unit ATS-334, Plans/Automated_Testing_System.md:10814-10887",
-       "file_sha256": "e1c8a84c145a3aaaa0738971f76db5fa0bf94f59c0149e76f4131e8579a6971d"
+       "file_sha256": "e1c8a84c145a3aaaa0738971f76db5fa0bf94f59c0149e76f4131e8579a6971d",
+       "source_citation": {
+        "path": "Plans/Automated_Testing_System.md",
+        "unit": "ATS-334",
+        "line_start": 10841,
+        "line_end": 10841,
+        "quote": "concern.created has its own independent python3 scripts/pm-concern-created-contracts-check.py and",
+        "file_sha256": "e1c8a84c145a3aaaa0738971f76db5fa0bf94f59c0149e76f4131e8579a6971d"
+       }
       },
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-666",
-       "line_start": 51299,
-       "line_end": 51300,
+       "line_start": 51298,
+       "line_end": 51299,
        "quote": "NOT_RUN. Nothing here admits an event or makes a native writer\\\n  \\ available.",
-       "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707",
+       "file_sha256": "73ee6d097e08d31fd93301d05d2cd2632dd46e5a22ba3ea405ffadda4a0a9db2",
        "quote_check": "exact",
-       "quote_scope": "unit SP-666, Plans/storage-plan.md:51146-51356"
+       "quote_scope": "unit SP-666, Plans/storage-plan.md:51145-51355",
+       "source_citation": {
+        "path": "Plans/storage-plan.md",
+        "unit": "SP-666",
+        "line_start": 51299,
+        "line_end": 51300,
+        "quote": "NOT_RUN. Nothing here admits an event or makes a native writer\\\n  \\ available.",
+        "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+       }
       },
       {
        "path": "Plans/concern_created_contracts/concern_created.fixtures.json",
@@ -449,7 +675,15 @@
        "quote": "\"name\": \"foreign_original_append_result_ref\"",
        "quote_check": "exact",
        "quote_scope": "document",
-       "file_sha256": "5b63f1a803bfd335d710db6d233e0bae61898ba3ce59045dc2a008b6a3e1f693"
+       "file_sha256": "5b63f1a803bfd335d710db6d233e0bae61898ba3ce59045dc2a008b6a3e1f693",
+       "source_citation": {
+        "path": "Plans/concern_created_contracts/concern_created.fixtures.json",
+        "unit": "append_cases",
+        "line_start": 26941,
+        "line_end": 26941,
+        "quote": "\"name\": \"foreign_original_append_result_ref\"",
+        "file_sha256": "5b63f1a803bfd335d710db6d233e0bae61898ba3ce59045dc2a008b6a3e1f693"
+       }
       },
       {
        "path": "reports/event-authority-20261114/C12-DG6A.md",
@@ -459,7 +693,15 @@
        "quote": "| `concern.created` | PARTIAL | PASS |",
        "quote_check": "exact",
        "quote_scope": "document",
-       "file_sha256": "be6a9c141581982a70f84ac1ef79025683ad56d564aa6437f16998667c2bfa3e"
+       "file_sha256": "be6a9c141581982a70f84ac1ef79025683ad56d564aa6437f16998667c2bfa3e",
+       "source_citation": {
+        "path": "reports/event-authority-20261114/C12-DG6A.md",
+        "unit": "C12-DG6A concern.created",
+        "line_start": 15,
+        "line_end": 15,
+        "quote": "| `concern.created` | PARTIAL | PASS |",
+        "file_sha256": "be6a9c141581982a70f84ac1ef79025683ad56d564aa6437f16998667c2bfa3e"
+       }
       },
       {
        "path": "scripts/pm_dg6a_c12_closure.py",
@@ -469,7 +711,15 @@
        "quote": "def schema_coverage(family, out):",
        "quote_check": "exact",
        "quote_scope": "document",
-       "file_sha256": "58a582bcc3bb6ff56c1cfd2c267d116d11b386e9c414b30e00cbe20fce60745d"
+       "file_sha256": "58a582bcc3bb6ff56c1cfd2c267d116d11b386e9c414b30e00cbe20fce60745d",
+       "source_citation": {
+        "path": "scripts/pm_dg6a_c12_closure.py",
+        "unit": "schema_coverage",
+        "line_start": 961,
+        "line_end": 961,
+        "quote": "def schema_coverage(family, out):",
+        "file_sha256": "58a582bcc3bb6ff56c1cfd2c267d116d11b386e9c414b30e00cbe20fce60745d"
+       }
       },
       {
        "path": "scripts/pm_dg6a_c12_closure.py",
@@ -479,7 +729,15 @@
        "quote": "def copies_mode(family, out):",
        "quote_check": "exact",
        "quote_scope": "document",
-       "file_sha256": "58a582bcc3bb6ff56c1cfd2c267d116d11b386e9c414b30e00cbe20fce60745d"
+       "file_sha256": "58a582bcc3bb6ff56c1cfd2c267d116d11b386e9c414b30e00cbe20fce60745d",
+       "source_citation": {
+        "path": "scripts/pm_dg6a_c12_closure.py",
+        "unit": "copies_mode",
+        "line_start": 1578,
+        "line_end": 1578,
+        "quote": "def copies_mode(family, out):",
+        "file_sha256": "58a582bcc3bb6ff56c1cfd2c267d116d11b386e9c414b30e00cbe20fce60745d"
+       }
       },
       {
        "path": "scripts/pm_dg6a_c12_closure.py",
@@ -489,7 +747,15 @@
        "quote": "def retained_variants(",
        "quote_check": "exact",
        "quote_scope": "document",
-       "file_sha256": "58a582bcc3bb6ff56c1cfd2c267d116d11b386e9c414b30e00cbe20fce60745d"
+       "file_sha256": "58a582bcc3bb6ff56c1cfd2c267d116d11b386e9c414b30e00cbe20fce60745d",
+       "source_citation": {
+        "path": "scripts/pm_dg6a_c12_closure.py",
+        "unit": "retained_variants",
+        "line_start": 1445,
+        "line_end": 1445,
+        "quote": "def retained_variants(",
+        "file_sha256": "58a582bcc3bb6ff56c1cfd2c267d116d11b386e9c414b30e00cbe20fce60745d"
+       }
       },
       {
        "path": "scripts/pm_dg6a_c12_closure.py",
@@ -499,7 +765,15 @@
        "quote": "def datetime_schema_corpus(",
        "quote_check": "exact",
        "quote_scope": "document",
-       "file_sha256": "58a582bcc3bb6ff56c1cfd2c267d116d11b386e9c414b30e00cbe20fce60745d"
+       "file_sha256": "58a582bcc3bb6ff56c1cfd2c267d116d11b386e9c414b30e00cbe20fce60745d",
+       "source_citation": {
+        "path": "scripts/pm_dg6a_c12_closure.py",
+        "unit": "datetime_schema_corpus",
+        "line_start": 933,
+        "line_end": 933,
+        "quote": "def datetime_schema_corpus(",
+        "file_sha256": "58a582bcc3bb6ff56c1cfd2c267d116d11b386e9c414b30e00cbe20fce60745d"
+       }
       },
       {
        "path": "scripts/pm_dg6a_c12_closure.py",
@@ -509,7 +783,15 @@
        "quote": "def bigint_mode(family, out):",
        "quote_check": "exact",
        "quote_scope": "document",
-       "file_sha256": "58a582bcc3bb6ff56c1cfd2c267d116d11b386e9c414b30e00cbe20fce60745d"
+       "file_sha256": "58a582bcc3bb6ff56c1cfd2c267d116d11b386e9c414b30e00cbe20fce60745d",
+       "source_citation": {
+        "path": "scripts/pm_dg6a_c12_closure.py",
+        "unit": "bigint_mode",
+        "line_start": 1624,
+        "line_end": 1624,
+        "quote": "def bigint_mode(family, out):",
+        "file_sha256": "58a582bcc3bb6ff56c1cfd2c267d116d11b386e9c414b30e00cbe20fce60745d"
+       }
       },
       {
        "path": "scripts/pm-dg6a-c12-entailed.py",
@@ -519,7 +801,15 @@
        "quote": "def command_key_rows(results):",
        "quote_check": "exact",
        "quote_scope": "document",
-       "file_sha256": "38b022edac6573f58470bb5c8886f6741c1e2ffc75ddf9f28395ccbc0f79de8b"
+       "file_sha256": "38b022edac6573f58470bb5c8886f6741c1e2ffc75ddf9f28395ccbc0f79de8b",
+       "source_citation": {
+        "path": "scripts/pm-dg6a-c12-entailed.py",
+        "unit": "command_key_rows",
+        "line_start": 109,
+        "line_end": 109,
+        "quote": "def command_key_rows(results):",
+        "file_sha256": "38b022edac6573f58470bb5c8886f6741c1e2ffc75ddf9f28395ccbc0f79de8b"
+       }
       },
       {
        "path": "scripts/pm-dg6a-c12-split-equivalence.py",
@@ -529,7 +819,15 @@
        "quote": "phases['current_context'] = ('current_context', 'current_context__2')",
        "quote_check": "exact",
        "quote_scope": "document",
-       "file_sha256": "4c711d116363f7e54eed524824d39840e0a1dd7d3d6375d707be89970840e1b3"
+       "file_sha256": "4c711d116363f7e54eed524824d39840e0a1dd7d3d6375d707be89970840e1b3",
+       "source_citation": {
+        "path": "scripts/pm-dg6a-c12-split-equivalence.py",
+        "unit": "main",
+        "line_start": 105,
+        "line_end": 105,
+        "quote": "phases['current_context'] = ('current_context', 'current_context__2')",
+        "file_sha256": "4c711d116363f7e54eed524824d39840e0a1dd7d3d6375d707be89970840e1b3"
+       }
       },
       {
        "path": "scripts/pm_dg6a_phase_groups.py",
@@ -539,7 +837,15 @@
        "quote": "ALIASES = ",
        "quote_check": "exact",
        "quote_scope": "document",
-       "file_sha256": "c8bd028969f102098d282a81007abf454b5eeab420eb31d2fa2a0d81243f70ff"
+       "file_sha256": "c8bd028969f102098d282a81007abf454b5eeab420eb31d2fa2a0d81243f70ff",
+       "source_citation": {
+        "path": "scripts/pm_dg6a_phase_groups.py",
+        "unit": "ALIASES",
+        "line_start": 2,
+        "line_end": 2,
+        "quote": "ALIASES = ",
+        "file_sha256": "c8bd028969f102098d282a81007abf454b5eeab420eb31d2fa2a0d81243f70ff"
+       }
       },
       {
        "path": "scripts/pm-alert-event-contracts-check.py",
@@ -549,7 +855,15 @@
        "quote": "def registry_mirror_errors(",
        "quote_check": "exact",
        "quote_scope": "document",
-       "file_sha256": "25f8207005bae21b3cfe94ece2b202eec86dc68ef4b1e210b27f24a71f29ba30"
+       "file_sha256": "35cdf881e6aa3dbf57a5355f3ec697d3c1f3f167c161af3e4e1a55da3db1bc6e",
+       "source_citation": {
+        "path": "scripts/pm-alert-event-contracts-check.py",
+        "unit": "registry_mirror_errors",
+        "line_start": 575,
+        "line_end": 575,
+        "quote": "def registry_mirror_errors(",
+        "file_sha256": "25f8207005bae21b3cfe94ece2b202eec86dc68ef4b1e210b27f24a71f29ba30"
+       }
       },
       {
        "path": "scripts/pm-dg6a-guard-tables.py",
@@ -559,7 +873,15 @@
        "quote": "def collect_context_part(module):",
        "quote_check": "exact",
        "quote_scope": "document",
-       "file_sha256": "6b2069bd7af8931b281bda6aba6ac462b132878d7b1a2966c2bc0b604cca0ae9"
+       "file_sha256": "6b2069bd7af8931b281bda6aba6ac462b132878d7b1a2966c2bc0b604cca0ae9",
+       "source_citation": {
+        "path": "scripts/pm-dg6a-guard-tables.py",
+        "unit": "collect_context_part",
+        "line_start": 472,
+        "line_end": 472,
+        "quote": "def collect_context_part(module):",
+        "file_sha256": "6b2069bd7af8931b281bda6aba6ac462b132878d7b1a2966c2bc0b604cca0ae9"
+       }
       }
      ],
      "carried_from": {
@@ -571,5 +893,19 @@
     }
    }
   }
- ]
+ ],
+ "source_registry": {
+  "path": "Plans/event_family_registry.json",
+  "revision": "2026-11-16.132",
+  "sha256": "b5789a3aff06fe51e39ee3e397f5e93661a0ee0a14cd2639553e1b5ecd09a0af",
+  "family_count": 351,
+  "row_pointer": "#/families/350"
+ },
+ "evidence_maintenance": {
+  "authority": "MERGE2-FIX1 findings 1/3/5",
+  "source_commit": "0c904de00426b0089ba5d56349fda8ea16cc9f88",
+  "source_assessment_sha256": "5e10c82d897d238608ed48c3fb00ba93ed4b8e86dea18cc3cde663472a4bc6a6",
+  "native_execution": "NOT_RUN",
+  "verdicts_changed": false
+ }
 }

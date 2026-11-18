@@ -5,9 +5,9 @@
  "merge": "admission-merge-2",
  "registry": {
   "path": "Plans/event_family_registry.json",
-  "revision": "2026-11-16.21",
-  "sha256": "189b384040c1a6a085fde81c2ce6ec6560e285180cd09315b1fecf8b7d4b464b",
-  "family_count": 240,
+  "revision": "2026-11-18.2",
+  "sha256": "ec21cf1a5b42b3e68a5564a847b4798dff968612d11d438bc7075b89196f9602",
+  "family_count": 518,
   "row_pointer": "#/families/239"
  },
  "base_commit": "45b4ccf25270c486dbc682805cd455ce4ca25fb0",
@@ -22,17 +22,27 @@
     "membership_version": {
      "status": "PASS",
      "representation": "exact_registry_membership",
-     "finding": "Registered at registry revision 2026-11-16.21 as #/families/239 (canonical row SHA-256 609e928478ec586468e5e4e7a847d58d227be526fe65e5edcdf3e2839b5f52c7); before this commit the family was absent.",
+     "finding": "Currently registered at 2026-11-18.2 as #/families/239 (canonical row SHA-256 609e928478ec586468e5e4e7a847d58d227be526fe65e5edcdf3e2839b5f52c7). Original one-family admission checkpoints remain in the family record and immutable Git source.",
      "evidence": [
       {
        "path": "Plans/event_family_registry.json",
        "json_pointer": "#/families/239",
-       "line_start": 16628,
-       "line_end": 16711,
+       "line_start": 16672,
+       "line_end": 16755,
        "quote": "\"event_type\": \"browser.context_shared\"",
-       "quote_line": 16631,
-       "file_sha256": "189b384040c1a6a085fde81c2ce6ec6560e285180cd09315b1fecf8b7d4b464b",
-       "quote_check": "exact"
+       "quote_line": 16675,
+       "file_sha256": "ec21cf1a5b42b3e68a5564a847b4798dff968612d11d438bc7075b89196f9602",
+       "quote_check": "exact",
+       "source_citation": {
+        "path": "Plans/event_family_registry.json",
+        "json_pointer": "#/families/239",
+        "line_start": 16628,
+        "line_end": 16711,
+        "quote": "\"event_type\": \"browser.context_shared\"",
+        "quote_line": 16631,
+        "file_sha256": "189b384040c1a6a085fde81c2ce6ec6560e285180cd09315b1fecf8b7d4b464b",
+        "quote_check": "exact"
+       }
       }
      ]
     },
@@ -44,12 +54,20 @@
       {
        "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
        "unit": "SMPFS-320",
-       "line_start": 16614,
-       "line_end": 16614,
+       "line_start": 16616,
+       "line_end": 16616,
        "quote": "newly authored owner contract",
        "quote_check": "exact",
-       "quote_scope": "unit SMPFS-320, Plans/Section15_MVP_Promoted_Features_Spec.md:16607-16764",
-       "file_sha256": "752b95d90e41b07c28e1376d0e1fdfdac2052196ca2e73e31e838f6f3124869d"
+       "quote_scope": "unit SMPFS-320, Plans/Section15_MVP_Promoted_Features_Spec.md:16609-16765",
+       "file_sha256": "140caa73848b1a688465f9f69c11a07a6d866208c8997f4cbf88a0bb475eb86d",
+       "source_citation": {
+        "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+        "unit": "SMPFS-320",
+        "line_start": 16614,
+        "line_end": 16614,
+        "quote": "newly authored owner contract",
+        "file_sha256": "752b95d90e41b07c28e1376d0e1fdfdac2052196ca2e73e31e838f6f3124869d"
+       }
       }
      ],
      "carried_from": {
@@ -67,12 +85,20 @@
       {
        "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
        "unit": "SMPFS-320",
-       "line_start": 16630,
-       "line_end": 16630,
+       "line_start": 16632,
+       "line_end": 16632,
        "quote": "Producer:",
        "quote_check": "exact",
-       "quote_scope": "unit SMPFS-320, Plans/Section15_MVP_Promoted_Features_Spec.md:16607-16764",
-       "file_sha256": "752b95d90e41b07c28e1376d0e1fdfdac2052196ca2e73e31e838f6f3124869d"
+       "quote_scope": "unit SMPFS-320, Plans/Section15_MVP_Promoted_Features_Spec.md:16609-16765",
+       "file_sha256": "140caa73848b1a688465f9f69c11a07a6d866208c8997f4cbf88a0bb475eb86d",
+       "source_citation": {
+        "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+        "unit": "SMPFS-320",
+        "line_start": 16630,
+        "line_end": 16630,
+        "quote": "Producer:",
+        "file_sha256": "752b95d90e41b07c28e1376d0e1fdfdac2052196ca2e73e31e838f6f3124869d"
+       }
       }
      ],
      "carried_from": {
@@ -95,7 +121,15 @@
        "quote": "\"additionalProperties\": false",
        "quote_check": "exact",
        "quote_scope": "document",
-       "file_sha256": "7ce720b1a7fa95e0ba1fe0909b4e4cde6654601fbe04f7f60d007c305fe2194f"
+       "file_sha256": "7ce720b1a7fa95e0ba1fe0909b4e4cde6654601fbe04f7f60d007c305fe2194f",
+       "source_citation": {
+        "path": "Plans/ds15_browser_context_shared.schema.json",
+        "unit": "root",
+        "line_start": 5,
+        "line_end": 5,
+        "quote": "\"additionalProperties\": false",
+        "file_sha256": "7ce720b1a7fa95e0ba1fe0909b4e4cde6654601fbe04f7f60d007c305fe2194f"
+       }
       },
       {
        "path": "Plans/ds15_browser_context_shared.schema.json",
@@ -105,7 +139,15 @@
        "quote": "\"const\": \"1.0.0\"",
        "quote_check": "exact",
        "quote_scope": "document",
-       "file_sha256": "7ce720b1a7fa95e0ba1fe0909b4e4cde6654601fbe04f7f60d007c305fe2194f"
+       "file_sha256": "7ce720b1a7fa95e0ba1fe0909b4e4cde6654601fbe04f7f60d007c305fe2194f",
+       "source_citation": {
+        "path": "Plans/ds15_browser_context_shared.schema.json",
+        "unit": "root",
+        "line_start": 17,
+        "line_end": 17,
+        "quote": "\"const\": \"1.0.0\"",
+        "file_sha256": "7ce720b1a7fa95e0ba1fe0909b4e4cde6654601fbe04f7f60d007c305fe2194f"
+       }
       }
      ],
      "carried_from": {
@@ -123,12 +165,20 @@
       {
        "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
        "unit": "SMPFS-320",
-       "line_start": 16634,
-       "line_end": 16635,
+       "line_start": 16636,
+       "line_end": 16637,
        "quote": "Scope and\\\n  \\ identity:",
-       "file_sha256": "752b95d90e41b07c28e1376d0e1fdfdac2052196ca2e73e31e838f6f3124869d",
+       "file_sha256": "140caa73848b1a688465f9f69c11a07a6d866208c8997f4cbf88a0bb475eb86d",
        "quote_check": "exact",
-       "quote_scope": "unit SMPFS-320, Plans/Section15_MVP_Promoted_Features_Spec.md:16607-16764"
+       "quote_scope": "unit SMPFS-320, Plans/Section15_MVP_Promoted_Features_Spec.md:16609-16765",
+       "source_citation": {
+        "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+        "unit": "SMPFS-320",
+        "line_start": 16634,
+        "line_end": 16635,
+        "quote": "Scope and\\\n  \\ identity:",
+        "file_sha256": "752b95d90e41b07c28e1376d0e1fdfdac2052196ca2e73e31e838f6f3124869d"
+       }
       }
      ],
      "carried_from": {
@@ -146,12 +196,20 @@
       {
        "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
        "unit": "SMPFS-320",
-       "line_start": 16676,
-       "line_end": 16676,
+       "line_start": 16678,
+       "line_end": 16678,
        "quote": "Replay and transitions:",
        "quote_check": "exact",
-       "quote_scope": "unit SMPFS-320, Plans/Section15_MVP_Promoted_Features_Spec.md:16607-16764",
-       "file_sha256": "752b95d90e41b07c28e1376d0e1fdfdac2052196ca2e73e31e838f6f3124869d"
+       "quote_scope": "unit SMPFS-320, Plans/Section15_MVP_Promoted_Features_Spec.md:16609-16765",
+       "file_sha256": "140caa73848b1a688465f9f69c11a07a6d866208c8997f4cbf88a0bb475eb86d",
+       "source_citation": {
+        "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+        "unit": "SMPFS-320",
+        "line_start": 16676,
+        "line_end": 16676,
+        "quote": "Replay and transitions:",
+        "file_sha256": "752b95d90e41b07c28e1376d0e1fdfdac2052196ca2e73e31e838f6f3124869d"
+       }
       }
      ],
      "carried_from": {
@@ -169,12 +227,20 @@
       {
        "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
        "unit": "SMPFS-320",
-       "line_start": 16715,
-       "line_end": 16715,
+       "line_start": 16716,
+       "line_end": 16716,
        "quote": "\\ binding for `browser.context_shared` (2026-11-14).\\n\\nEvent history `retention_policy_ref = RP-CHAT-THREAD-LIFETIME@1.0.0`,\\",
        "quote_check": "exact",
-       "quote_scope": "unit SMPFS-320, Plans/Section15_MVP_Promoted_Features_Spec.md:16607-16764",
-       "file_sha256": "752b95d90e41b07c28e1376d0e1fdfdac2052196ca2e73e31e838f6f3124869d"
+       "quote_scope": "unit SMPFS-320, Plans/Section15_MVP_Promoted_Features_Spec.md:16609-16765",
+       "file_sha256": "140caa73848b1a688465f9f69c11a07a6d866208c8997f4cbf88a0bb475eb86d",
+       "source_citation": {
+        "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+        "unit": "SMPFS-320",
+        "line_start": 16715,
+        "line_end": 16715,
+        "quote": "\\ binding for `browser.context_shared` (2026-11-14).\\n\\nEvent history `retention_policy_ref = RP-CHAT-THREAD-LIFETIME@1.0.0`,\\",
+        "file_sha256": "752b95d90e41b07c28e1376d0e1fdfdac2052196ca2e73e31e838f6f3124869d"
+       }
       }
      ],
      "carried_from": {
@@ -192,12 +258,20 @@
       {
        "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
        "unit": "SMPFS-320",
-       "line_start": 16666,
-       "line_end": 16666,
+       "line_start": 16668,
+       "line_end": 16668,
        "quote": "Original source and custody:",
        "quote_check": "exact",
-       "quote_scope": "unit SMPFS-320, Plans/Section15_MVP_Promoted_Features_Spec.md:16607-16764",
-       "file_sha256": "752b95d90e41b07c28e1376d0e1fdfdac2052196ca2e73e31e838f6f3124869d"
+       "quote_scope": "unit SMPFS-320, Plans/Section15_MVP_Promoted_Features_Spec.md:16609-16765",
+       "file_sha256": "140caa73848b1a688465f9f69c11a07a6d866208c8997f4cbf88a0bb475eb86d",
+       "source_citation": {
+        "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+        "unit": "SMPFS-320",
+        "line_start": 16666,
+        "line_end": 16666,
+        "quote": "Original source and custody:",
+        "file_sha256": "752b95d90e41b07c28e1376d0e1fdfdac2052196ca2e73e31e838f6f3124869d"
+       }
       }
      ],
      "carried_from": {
@@ -215,12 +289,20 @@
       {
        "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
        "unit": "SMPFS-320",
-       "line_start": 16630,
-       "line_end": 16630,
+       "line_start": 16632,
+       "line_end": 16632,
        "quote": "Producer:",
        "quote_check": "exact",
-       "quote_scope": "unit SMPFS-320, Plans/Section15_MVP_Promoted_Features_Spec.md:16607-16764",
-       "file_sha256": "752b95d90e41b07c28e1376d0e1fdfdac2052196ca2e73e31e838f6f3124869d"
+       "quote_scope": "unit SMPFS-320, Plans/Section15_MVP_Promoted_Features_Spec.md:16609-16765",
+       "file_sha256": "140caa73848b1a688465f9f69c11a07a6d866208c8997f4cbf88a0bb475eb86d",
+       "source_citation": {
+        "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+        "unit": "SMPFS-320",
+        "line_start": 16630,
+        "line_end": 16630,
+        "quote": "Producer:",
+        "file_sha256": "752b95d90e41b07c28e1376d0e1fdfdac2052196ca2e73e31e838f6f3124869d"
+       }
       }
      ],
      "carried_from": {
@@ -238,12 +320,20 @@
       {
        "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
        "unit": "SMPFS-320",
-       "line_start": 16682,
-       "line_end": 16682,
+       "line_start": 16684,
+       "line_end": 16684,
        "quote": "Consumer and checkpoint:",
        "quote_check": "exact",
-       "quote_scope": "unit SMPFS-320, Plans/Section15_MVP_Promoted_Features_Spec.md:16607-16764",
-       "file_sha256": "752b95d90e41b07c28e1376d0e1fdfdac2052196ca2e73e31e838f6f3124869d"
+       "quote_scope": "unit SMPFS-320, Plans/Section15_MVP_Promoted_Features_Spec.md:16609-16765",
+       "file_sha256": "140caa73848b1a688465f9f69c11a07a6d866208c8997f4cbf88a0bb475eb86d",
+       "source_citation": {
+        "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+        "unit": "SMPFS-320",
+        "line_start": 16682,
+        "line_end": 16682,
+        "quote": "Consumer and checkpoint:",
+        "file_sha256": "752b95d90e41b07c28e1376d0e1fdfdac2052196ca2e73e31e838f6f3124869d"
+       }
       }
      ],
      "carried_from": {
@@ -261,12 +351,20 @@
       {
        "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
        "unit": "SMPFS-320",
-       "line_start": 16705,
-       "line_end": 16705,
+       "line_start": 16707,
+       "line_end": 16707,
        "quote": "Compatibility and withdrawal:",
        "quote_check": "exact",
-       "quote_scope": "unit SMPFS-320, Plans/Section15_MVP_Promoted_Features_Spec.md:16607-16764",
-       "file_sha256": "752b95d90e41b07c28e1376d0e1fdfdac2052196ca2e73e31e838f6f3124869d"
+       "quote_scope": "unit SMPFS-320, Plans/Section15_MVP_Promoted_Features_Spec.md:16609-16765",
+       "file_sha256": "140caa73848b1a688465f9f69c11a07a6d866208c8997f4cbf88a0bb475eb86d",
+       "source_citation": {
+        "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+        "unit": "SMPFS-320",
+        "line_start": 16705,
+        "line_end": 16705,
+        "quote": "Compatibility and withdrawal:",
+        "file_sha256": "752b95d90e41b07c28e1376d0e1fdfdac2052196ca2e73e31e838f6f3124869d"
+       }
       }
      ],
      "carried_from": {
@@ -282,70 +380,124 @@
      "finding": "SMPFS-320 browser.context_shared@1.0.0: every guard row the complete deck-2 checker reaches for this family (184 rows in 97 tables) is proved by the gated tool from this family's own single-defect witnesses (155 rows) or carries a checked entailment proof (17 singleton-table rows, 12 family-constant or earlier-boundary rows); 1786 evaluated schema clause sites: 1278 isolated or branch witnesses through the real validator and phase row, 1030 exact complete-boundary kills, the rest applicator, condition, sibling-entailed or co-asserted with named clauses; shared date-time battery, number corpus and edge sweep, sealed-receipt retained reads with custody snapshots, and the full original suite pass. Native execution NOT_RUN; membership ABSENT; independent review NOT_RUN.",
      "evidence": [
       {
-       "line": 15756,
+       "line": 16091,
        "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
        "quote": "  Oracles: ",
-       "sha256": "c8c272c2affb4b2766d863f72a2baaee6f6d7e32feee1df180961a0819fc331e",
+       "sha256": "140caa73848b1a688465f9f69c11a07a6d866208c8997f4cbf88a0bb475eb86d",
        "line_start": 16091,
        "line_end": 16091,
        "quote_check": "exact",
        "quote_scope": "document",
-       "file_sha256": "752b95d90e41b07c28e1376d0e1fdfdac2052196ca2e73e31e838f6f3124869d"
+       "file_sha256": "140caa73848b1a688465f9f69c11a07a6d866208c8997f4cbf88a0bb475eb86d",
+       "source_citation": {
+        "line": 15756,
+        "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+        "quote": "  Oracles: ",
+        "sha256": "c8c272c2affb4b2766d863f72a2baaee6f6d7e32feee1df180961a0819fc331e",
+        "line_start": 16091,
+        "line_end": 16091,
+        "file_sha256": "752b95d90e41b07c28e1376d0e1fdfdac2052196ca2e73e31e838f6f3124869d"
+       }
       },
       {
-       "line": 15756,
+       "line": 16713,
        "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
        "quote": "python3 scripts/pm-ds15-deck2-contracts.py --family browser.context_shared",
-       "sha256": "c8c272c2affb4b2766d863f72a2baaee6f6d7e32feee1df180961a0819fc331e",
-       "line_start": 16711,
-       "line_end": 16711,
+       "sha256": "140caa73848b1a688465f9f69c11a07a6d866208c8997f4cbf88a0bb475eb86d",
+       "line_start": 16713,
+       "line_end": 16713,
        "quote_check": "exact",
        "quote_scope": "document",
-       "file_sha256": "752b95d90e41b07c28e1376d0e1fdfdac2052196ca2e73e31e838f6f3124869d"
+       "file_sha256": "140caa73848b1a688465f9f69c11a07a6d866208c8997f4cbf88a0bb475eb86d",
+       "source_citation": {
+        "line": 15756,
+        "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+        "quote": "python3 scripts/pm-ds15-deck2-contracts.py --family browser.context_shared",
+        "sha256": "c8c272c2affb4b2766d863f72a2baaee6f6d7e32feee1df180961a0819fc331e",
+        "line_start": 16711,
+        "line_end": 16711,
+        "file_sha256": "752b95d90e41b07c28e1376d0e1fdfdac2052196ca2e73e31e838f6f3124869d"
+       }
       },
       {
-       "line": 16643,
+       "line": 16645,
        "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
        "quote": "Closed payload:\\\n  \\ Plans/ds15_browser_context_shared.schema.json",
-       "sha256": "c8c272c2affb4b2766d863f72a2baaee6f6d7e32feee1df180961a0819fc331e",
-       "line_start": 16643,
-       "line_end": 16644,
-       "file_sha256": "752b95d90e41b07c28e1376d0e1fdfdac2052196ca2e73e31e838f6f3124869d",
+       "sha256": "140caa73848b1a688465f9f69c11a07a6d866208c8997f4cbf88a0bb475eb86d",
+       "line_start": 16645,
+       "line_end": 16646,
+       "file_sha256": "140caa73848b1a688465f9f69c11a07a6d866208c8997f4cbf88a0bb475eb86d",
        "quote_check": "exact",
-       "quote_scope": "document"
+       "quote_scope": "document",
+       "source_citation": {
+        "line": 16643,
+        "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+        "quote": "Closed payload:\\\n  \\ Plans/ds15_browser_context_shared.schema.json",
+        "sha256": "c8c272c2affb4b2766d863f72a2baaee6f6d7e32feee1df180961a0819fc331e",
+        "line_start": 16643,
+        "line_end": 16644,
+        "file_sha256": "752b95d90e41b07c28e1376d0e1fdfdac2052196ca2e73e31e838f6f3124869d"
+       }
       },
       {
-       "line": 662,
+       "line": 184,
        "path": "reports/event-authority-20261104/DS15-self-grade.json",
        "quote": "\"status\": \"PARTIAL\"",
-       "sha256": "fe434edd4145ea5f898cff46db99a3c95183f3526cbf1ccd34a87b78cf66cd69",
+       "sha256": "18a7c5c82459c8b9df297996322c3478f002c2c44816395cc83283af3037097b",
        "line_start": 184,
        "line_end": 184,
        "quote_check": "exact",
        "quote_scope": "document",
-       "file_sha256": "18a7c5c82459c8b9df297996322c3478f002c2c44816395cc83283af3037097b"
+       "file_sha256": "18a7c5c82459c8b9df297996322c3478f002c2c44816395cc83283af3037097b",
+       "source_citation": {
+        "line": 662,
+        "path": "reports/event-authority-20261104/DS15-self-grade.json",
+        "quote": "\"status\": \"PARTIAL\"",
+        "sha256": "fe434edd4145ea5f898cff46db99a3c95183f3526cbf1ccd34a87b78cf66cd69",
+        "line_start": 184,
+        "line_end": 184,
+        "file_sha256": "18a7c5c82459c8b9df297996322c3478f002c2c44816395cc83283af3037097b"
+       }
       },
       {
        "line": 1356,
        "path": "scripts/pm-ds15-event-contracts.py",
        "quote": "def claimed_range(first, last, rows):",
-       "sha256": "c8419b67ec7bc0540e9a679ffa92fbe873ca6c0d303de4896150f0f793715a23",
+       "sha256": "e240382b525faa67249f2051abc9e366415c4587b652da5a5ba34923169dc366",
        "line_start": 1356,
        "line_end": 1356,
        "quote_check": "exact",
        "quote_scope": "document",
-       "file_sha256": "c8419b67ec7bc0540e9a679ffa92fbe873ca6c0d303de4896150f0f793715a23"
+       "file_sha256": "e240382b525faa67249f2051abc9e366415c4587b652da5a5ba34923169dc366",
+       "source_citation": {
+        "line": 1356,
+        "path": "scripts/pm-ds15-event-contracts.py",
+        "quote": "def claimed_range(first, last, rows):",
+        "sha256": "c8419b67ec7bc0540e9a679ffa92fbe873ca6c0d303de4896150f0f793715a23",
+        "line_start": 1356,
+        "line_end": 1356,
+        "file_sha256": "c8419b67ec7bc0540e9a679ffa92fbe873ca6c0d303de4896150f0f793715a23"
+       }
       },
       {
        "line": 160,
        "path": "scripts/pm-ds15-deck2-contracts.py",
        "quote": "    if not retry and not context_ok(c, d.get('context')):",
-       "sha256": "b96e362a41375545398b6bb299ad372a54b4e062ee5fc30a30ad4dd326edf2fc",
+       "sha256": "3b51a915f43818a527d5935bf71aa827e8855d71c9086e9615d5f86a81e2fd2c",
        "line_start": 160,
        "line_end": 160,
        "quote_check": "exact",
        "quote_scope": "document",
-       "file_sha256": "b96e362a41375545398b6bb299ad372a54b4e062ee5fc30a30ad4dd326edf2fc"
+       "file_sha256": "3b51a915f43818a527d5935bf71aa827e8855d71c9086e9615d5f86a81e2fd2c",
+       "source_citation": {
+        "line": 160,
+        "path": "scripts/pm-ds15-deck2-contracts.py",
+        "quote": "    if not retry and not context_ok(c, d.get('context')):",
+        "sha256": "b96e362a41375545398b6bb299ad372a54b4e062ee5fc30a30ad4dd326edf2fc",
+        "line_start": 160,
+        "line_end": 160,
+        "file_sha256": "b96e362a41375545398b6bb299ad372a54b4e062ee5fc30a30ad4dd326edf2fc"
+       }
       },
       {
        "line": 2,
@@ -356,7 +508,16 @@
        "line_end": 2,
        "quote_check": "exact",
        "quote_scope": "document",
-       "file_sha256": "61cb2a29509cc15c759c97d32a3fcd502a1a1339e1dd5e585e575f9b0548ac32"
+       "file_sha256": "61cb2a29509cc15c759c97d32a3fcd502a1a1339e1dd5e585e575f9b0548ac32",
+       "source_citation": {
+        "line": 2,
+        "path": "scripts/pm_ds15_c12_cases.py",
+        "quote": "\"\"\"C12-DS15 own-family witnesses for the seven deck-2 families",
+        "sha256": "61cb2a29509cc15c759c97d32a3fcd502a1a1339e1dd5e585e575f9b0548ac32",
+        "line_start": 2,
+        "line_end": 2,
+        "file_sha256": "61cb2a29509cc15c759c97d32a3fcd502a1a1339e1dd5e585e575f9b0548ac32"
+       }
       },
       {
        "line": 42,
@@ -367,7 +528,16 @@
        "line_end": 42,
        "quote_check": "exact",
        "quote_scope": "document",
-       "file_sha256": "5efd072ab74b8e13534808259d7d76ab6a09be55486917c75a9f1422949f3a8c"
+       "file_sha256": "5efd072ab74b8e13534808259d7d76ab6a09be55486917c75a9f1422949f3a8c",
+       "source_citation": {
+        "line": 42,
+        "path": "scripts/pm-ds15-guard-tables.py",
+        "quote": "    parser.add_argument('--family'",
+        "sha256": "5efd072ab74b8e13534808259d7d76ab6a09be55486917c75a9f1422949f3a8c",
+        "line_start": 42,
+        "line_end": 42,
+        "file_sha256": "5efd072ab74b8e13534808259d7d76ab6a09be55486917c75a9f1422949f3a8c"
+       }
       }
      ],
      "carried_from": {
@@ -379,5 +549,19 @@
     }
    }
   }
- ]
+ ],
+ "source_registry": {
+  "path": "Plans/event_family_registry.json",
+  "revision": "2026-11-16.21",
+  "sha256": "189b384040c1a6a085fde81c2ce6ec6560e285180cd09315b1fecf8b7d4b464b",
+  "family_count": 240,
+  "row_pointer": "#/families/239"
+ },
+ "evidence_maintenance": {
+  "authority": "MERGE2-FIX1 findings 1/3/5",
+  "source_commit": "0c904de00426b0089ba5d56349fda8ea16cc9f88",
+  "source_assessment_sha256": "9f89b864ae70fb74a72e155dcdbbb5ebf6ca4cf9133d95c6e2b0746b96aee64b",
+  "native_execution": "NOT_RUN",
+  "verdicts_changed": false
+ }
 }

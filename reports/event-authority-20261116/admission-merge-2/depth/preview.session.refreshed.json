@@ -5,9 +5,9 @@
  "merge": "admission-merge-2",
  "registry": {
   "path": "Plans/event_family_registry.json",
-  "revision": "2026-11-16.220",
-  "sha256": "693e3d21a4f8dd305cd1287dfa9cb50afb5a6871cf199575120ae681f3f834ec",
-  "family_count": 439,
+  "revision": "2026-11-18.2",
+  "sha256": "ec21cf1a5b42b3e68a5564a847b4798dff968612d11d438bc7075b89196f9602",
+  "family_count": 518,
   "row_pointer": "#/families/438"
  },
  "base_commit": "45b4ccf25270c486dbc682805cd455ce4ca25fb0",
@@ -22,17 +22,27 @@
     "membership_version": {
      "status": "PASS",
      "representation": "exact_registry_membership",
-     "finding": "Registered at registry revision 2026-11-16.220 as #/families/438 (canonical row SHA-256 caabe5a07628e79be67a7bd7f17a847e0251a91108dd55e192e1f410a61d8d46); before this commit the family was absent.",
+     "finding": "Currently registered at 2026-11-18.2 as #/families/438 (canonical row SHA-256 caabe5a07628e79be67a7bd7f17a847e0251a91108dd55e192e1f410a61d8d46). Original one-family admission checkpoints remain in the family record and immutable Git source.",
      "evidence": [
       {
        "path": "Plans/event_family_registry.json",
        "json_pointer": "#/families/438",
-       "line_start": 28534,
-       "line_end": 28576,
+       "line_start": 28584,
+       "line_end": 28626,
        "quote": "\"event_type\": \"preview.session.refreshed\"",
-       "quote_line": 28537,
-       "file_sha256": "693e3d21a4f8dd305cd1287dfa9cb50afb5a6871cf199575120ae681f3f834ec",
-       "quote_check": "exact"
+       "quote_line": 28587,
+       "file_sha256": "ec21cf1a5b42b3e68a5564a847b4798dff968612d11d438bc7075b89196f9602",
+       "quote_check": "exact",
+       "source_citation": {
+        "path": "Plans/event_family_registry.json",
+        "json_pointer": "#/families/438",
+        "line_start": 28534,
+        "line_end": 28576,
+        "quote": "\"event_type\": \"preview.session.refreshed\"",
+        "quote_line": 28537,
+        "file_sha256": "693e3d21a4f8dd305cd1287dfa9cb50afb5a6871cf199575120ae681f3f834ec",
+        "quote_check": "exact"
+       }
       }
      ]
     },
@@ -49,7 +59,15 @@
        "quote": "preview.session.refreshed owner contract",
        "quote_check": "exact",
        "quote_scope": "unit SMPFS-316, Plans/Section15_MVP_Promoted_Features_Spec.md:16401-16455",
-       "file_sha256": "752b95d90e41b07c28e1376d0e1fdfdac2052196ca2e73e31e838f6f3124869d"
+       "file_sha256": "140caa73848b1a688465f9f69c11a07a6d866208c8997f4cbf88a0bb475eb86d",
+       "source_citation": {
+        "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+        "unit": "SMPFS-316",
+        "line_start": 16401,
+        "line_end": 16401,
+        "quote": "preview.session.refreshed owner contract",
+        "file_sha256": "752b95d90e41b07c28e1376d0e1fdfdac2052196ca2e73e31e838f6f3124869d"
+       }
       }
      ],
      "carried_from": {
@@ -72,7 +90,15 @@
        "quote": "Producer: PreviewSession owner commits an actual refresh/hot-reload outcome for a refreshable visible subject (FileManager sections 13/14.6). A browser-backed ordinary session uses",
        "quote_check": "exact",
        "quote_scope": "unit SMPFS-316, Plans/Section15_MVP_Promoted_Features_Spec.md:16401-16455",
-       "file_sha256": "752b95d90e41b07c28e1376d0e1fdfdac2052196ca2e73e31e838f6f3124869d"
+       "file_sha256": "140caa73848b1a688465f9f69c11a07a6d866208c8997f4cbf88a0bb475eb86d",
+       "source_citation": {
+        "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+        "unit": "SMPFS-316",
+        "line_start": 16411,
+        "line_end": 16411,
+        "quote": "Producer: PreviewSession owner commits an actual refresh/hot-reload outcome for a refreshable visible subject (FileManager sections 13/14.6). A browser-backed ordinary session uses",
+        "file_sha256": "752b95d90e41b07c28e1376d0e1fdfdac2052196ca2e73e31e838f6f3124869d"
+       }
       },
       {
        "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
@@ -82,7 +108,15 @@
        "quote": "Round 7 authenticated history for preview.session.refreshed: retained read, checkpoint and rebuild accept supported 1.0.0 originals written with projector_replay_only as well as de",
        "quote_check": "exact",
        "quote_scope": "unit SMPFS-316, Plans/Section15_MVP_Promoted_Features_Spec.md:16401-16455",
-       "file_sha256": "752b95d90e41b07c28e1376d0e1fdfdac2052196ca2e73e31e838f6f3124869d"
+       "file_sha256": "140caa73848b1a688465f9f69c11a07a6d866208c8997f4cbf88a0bb475eb86d",
+       "source_citation": {
+        "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+        "unit": "SMPFS-316",
+        "line_start": 16424,
+        "line_end": 16424,
+        "quote": "Round 7 authenticated history for preview.session.refreshed: retained read, checkpoint and rebuild accept supported 1.0.0 originals written with projector_replay_only as well as de",
+        "file_sha256": "752b95d90e41b07c28e1376d0e1fdfdac2052196ca2e73e31e838f6f3124869d"
+       }
       }
      ],
      "carried_from": {
@@ -105,7 +139,15 @@
        "quote": "\"additionalProperties\": false,",
        "quote_check": "exact",
        "quote_scope": "document",
-       "file_sha256": "197b71fc66d97eb8e31d643f9086dbb55c5780082659d9f7ccad6ba0bcf879da"
+       "file_sha256": "197b71fc66d97eb8e31d643f9086dbb55c5780082659d9f7ccad6ba0bcf879da",
+       "source_citation": {
+        "path": "Plans/ds15_preview_session_refreshed.schema.json",
+        "unit": "root",
+        "line_start": 3,
+        "line_end": 3,
+        "quote": "\"additionalProperties\": false,",
+        "file_sha256": "197b71fc66d97eb8e31d643f9086dbb55c5780082659d9f7ccad6ba0bcf879da"
+       }
       },
       {
        "path": "Plans/ds15_preview_session_refreshed.schema.json",
@@ -115,7 +157,15 @@
        "quote": "\"const\": \"1.0.0\"",
        "quote_check": "exact",
        "quote_scope": "document",
-       "file_sha256": "197b71fc66d97eb8e31d643f9086dbb55c5780082659d9f7ccad6ba0bcf879da"
+       "file_sha256": "197b71fc66d97eb8e31d643f9086dbb55c5780082659d9f7ccad6ba0bcf879da",
+       "source_citation": {
+        "path": "Plans/ds15_preview_session_refreshed.schema.json",
+        "unit": "root",
+        "line_start": 22,
+        "line_end": 22,
+        "quote": "\"const\": \"1.0.0\"",
+        "file_sha256": "197b71fc66d97eb8e31d643f9086dbb55c5780082659d9f7ccad6ba0bcf879da"
+       }
       }
      ],
      "carried_from": {
@@ -138,7 +188,15 @@
        "quote": "Idempotency key is sha256(canonical MessagePack array [\"preview.session.refreshed\", \"1.0.0\", actual project_id, preview_subject_id, preview_session_id, preview_revision]). Changed ",
        "quote_check": "exact",
        "quote_scope": "unit SMPFS-316, Plans/Section15_MVP_Promoted_Features_Spec.md:16401-16455",
-       "file_sha256": "752b95d90e41b07c28e1376d0e1fdfdac2052196ca2e73e31e838f6f3124869d"
+       "file_sha256": "140caa73848b1a688465f9f69c11a07a6d866208c8997f4cbf88a0bb475eb86d",
+       "source_citation": {
+        "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+        "unit": "SMPFS-316",
+        "line_start": 16413,
+        "line_end": 16413,
+        "quote": "Idempotency key is sha256(canonical MessagePack array [\"preview.session.refreshed\", \"1.0.0\", actual project_id, preview_subject_id, preview_session_id, preview_revision]). Changed ",
+        "file_sha256": "752b95d90e41b07c28e1376d0e1fdfdac2052196ca2e73e31e838f6f3124869d"
+       }
       }
      ],
      "carried_from": {
@@ -161,7 +219,15 @@
        "quote": "Replay: lost acknowledgement returns original receipt, event_id and frozen payload; retry uses original outcome custody without repeating capture, thread creation, launch, stop, re",
        "quote_check": "exact",
        "quote_scope": "unit SMPFS-316, Plans/Section15_MVP_Promoted_Features_Spec.md:16401-16455",
-       "file_sha256": "752b95d90e41b07c28e1376d0e1fdfdac2052196ca2e73e31e838f6f3124869d"
+       "file_sha256": "140caa73848b1a688465f9f69c11a07a6d866208c8997f4cbf88a0bb475eb86d",
+       "source_citation": {
+        "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+        "unit": "SMPFS-316",
+        "line_start": 16416,
+        "line_end": 16416,
+        "quote": "Replay: lost acknowledgement returns original receipt, event_id and frozen payload; retry uses original outcome custody without repeating capture, thread creation, launch, stop, re",
+        "file_sha256": "752b95d90e41b07c28e1376d0e1fdfdac2052196ca2e73e31e838f6f3124869d"
+       }
       },
       {
        "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
@@ -171,7 +237,15 @@
        "quote": "Round 7 authenticated history for preview.session.refreshed: retained read, checkpoint and rebuild accept supported 1.0.0 originals written with projector_replay_only as well as de",
        "quote_check": "exact",
        "quote_scope": "unit SMPFS-316, Plans/Section15_MVP_Promoted_Features_Spec.md:16401-16455",
-       "file_sha256": "752b95d90e41b07c28e1376d0e1fdfdac2052196ca2e73e31e838f6f3124869d"
+       "file_sha256": "140caa73848b1a688465f9f69c11a07a6d866208c8997f4cbf88a0bb475eb86d",
+       "source_citation": {
+        "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+        "unit": "SMPFS-316",
+        "line_start": 16424,
+        "line_end": 16424,
+        "quote": "Round 7 authenticated history for preview.session.refreshed: retained read, checkpoint and rebuild accept supported 1.0.0 originals written with projector_replay_only as well as de",
+        "file_sha256": "752b95d90e41b07c28e1376d0e1fdfdac2052196ca2e73e31e838f6f3124869d"
+       }
       }
      ],
      "carried_from": {
@@ -189,12 +263,20 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-653",
-       "line_start": 49624,
-       "line_end": 49624,
+       "line_start": 49623,
+       "line_end": 49623,
        "quote": "\\ = RP-TELEMETRY-90D@1.0.0`, under DL-401, DL-415, DL-421, DL-500.\\n\\nUse the existing policy object\\",
        "quote_check": "exact",
-       "quote_scope": "unit SP-653, Plans/storage-plan.md:49601-49666",
-       "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+       "quote_scope": "unit SP-653, Plans/storage-plan.md:49600-49665",
+       "file_sha256": "73ee6d097e08d31fd93301d05d2cd2632dd46e5a22ba3ea405ffadda4a0a9db2",
+       "source_citation": {
+        "path": "Plans/storage-plan.md",
+        "unit": "SP-653",
+        "line_start": 49624,
+        "line_end": 49624,
+        "quote": "\\ = RP-TELEMETRY-90D@1.0.0`, under DL-401, DL-415, DL-421, DL-500.\\n\\nUse the existing policy object\\",
+        "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+       }
       }
      ],
      "carried_from": {
@@ -217,7 +299,15 @@
        "quote": "backup/restore of the full original source/log/receipt closure. Checkpoints are derived and grant no access. Every read rechecks current subject/thread/Project permissions and sour",
        "quote_check": "exact",
        "quote_scope": "unit SMPFS-316, Plans/Section15_MVP_Promoted_Features_Spec.md:16401-16455",
-       "file_sha256": "752b95d90e41b07c28e1376d0e1fdfdac2052196ca2e73e31e838f6f3124869d"
+       "file_sha256": "140caa73848b1a688465f9f69c11a07a6d866208c8997f4cbf88a0bb475eb86d",
+       "source_citation": {
+        "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+        "unit": "SMPFS-316",
+        "line_start": 16418,
+        "line_end": 16418,
+        "quote": "backup/restore of the full original source/log/receipt closure. Checkpoints are derived and grant no access. Every read rechecks current subject/thread/Project permissions and sour",
+        "file_sha256": "752b95d90e41b07c28e1376d0e1fdfdac2052196ca2e73e31e838f6f3124869d"
+       }
       },
       {
        "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
@@ -227,7 +317,15 @@
        "quote": "Round 7 authenticated history for preview.session.refreshed: retained read, checkpoint and rebuild accept supported 1.0.0 originals written with projector_replay_only as well as de",
        "quote_check": "exact",
        "quote_scope": "unit SMPFS-316, Plans/Section15_MVP_Promoted_Features_Spec.md:16401-16455",
-       "file_sha256": "752b95d90e41b07c28e1376d0e1fdfdac2052196ca2e73e31e838f6f3124869d"
+       "file_sha256": "140caa73848b1a688465f9f69c11a07a6d866208c8997f4cbf88a0bb475eb86d",
+       "source_citation": {
+        "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+        "unit": "SMPFS-316",
+        "line_start": 16424,
+        "line_end": 16424,
+        "quote": "Round 7 authenticated history for preview.session.refreshed: retained read, checkpoint and rebuild accept supported 1.0.0 originals written with projector_replay_only as well as de",
+        "file_sha256": "752b95d90e41b07c28e1376d0e1fdfdac2052196ca2e73e31e838f6f3124869d"
+       }
       }
      ],
      "carried_from": {
@@ -250,7 +348,15 @@
        "quote": "Producer: PreviewSession owner commits an actual refresh/hot-reload outcome for a refreshable visible subject (FileManager sections 13/14.6). A browser-backed ordinary session uses",
        "quote_check": "exact",
        "quote_scope": "unit SMPFS-316, Plans/Section15_MVP_Promoted_Features_Spec.md:16401-16455",
-       "file_sha256": "752b95d90e41b07c28e1376d0e1fdfdac2052196ca2e73e31e838f6f3124869d"
+       "file_sha256": "140caa73848b1a688465f9f69c11a07a6d866208c8997f4cbf88a0bb475eb86d",
+       "source_citation": {
+        "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+        "unit": "SMPFS-316",
+        "line_start": 16411,
+        "line_end": 16411,
+        "quote": "Producer: PreviewSession owner commits an actual refresh/hot-reload outcome for a refreshable visible subject (FileManager sections 13/14.6). A browser-backed ordinary session uses",
+        "file_sha256": "752b95d90e41b07c28e1376d0e1fdfdac2052196ca2e73e31e838f6f3124869d"
+       }
       }
      ],
      "carried_from": {
@@ -273,7 +379,15 @@
        "quote": "reader.ds15.preview_session_refreshed.v1@1.0.0, operating as Preview subject history reader, reads only preview.session.refreshed@1.0.0. It adopts SP-278 by name and DL-076 nine-fi",
        "quote_check": "exact",
        "quote_scope": "unit SMPFS-316, Plans/Section15_MVP_Promoted_Features_Spec.md:16401-16455",
-       "file_sha256": "752b95d90e41b07c28e1376d0e1fdfdac2052196ca2e73e31e838f6f3124869d"
+       "file_sha256": "140caa73848b1a688465f9f69c11a07a6d866208c8997f4cbf88a0bb475eb86d",
+       "source_citation": {
+        "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+        "unit": "SMPFS-316",
+        "line_start": 16417,
+        "line_end": 16417,
+        "quote": "reader.ds15.preview_session_refreshed.v1@1.0.0, operating as Preview subject history reader, reads only preview.session.refreshed@1.0.0. It adopts SP-278 by name and DL-076 nine-fi",
+        "file_sha256": "752b95d90e41b07c28e1376d0e1fdfdac2052196ca2e73e31e838f6f3124869d"
+       }
       },
       {
        "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
@@ -283,7 +397,15 @@
        "quote": "Round 7 authenticated history for preview.session.refreshed: retained read, checkpoint and rebuild accept supported 1.0.0 originals written with projector_replay_only as well as de",
        "quote_check": "exact",
        "quote_scope": "unit SMPFS-316, Plans/Section15_MVP_Promoted_Features_Spec.md:16401-16455",
-       "file_sha256": "752b95d90e41b07c28e1376d0e1fdfdac2052196ca2e73e31e838f6f3124869d"
+       "file_sha256": "140caa73848b1a688465f9f69c11a07a6d866208c8997f4cbf88a0bb475eb86d",
+       "source_citation": {
+        "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+        "unit": "SMPFS-316",
+        "line_start": 16424,
+        "line_end": 16424,
+        "quote": "Round 7 authenticated history for preview.session.refreshed: retained read, checkpoint and rebuild accept supported 1.0.0 originals written with projector_replay_only as well as de",
+        "file_sha256": "752b95d90e41b07c28e1376d0e1fdfdac2052196ca2e73e31e838f6f3124869d"
+       }
       }
      ],
      "carried_from": {
@@ -306,7 +428,15 @@
        "quote": "withdrawal: exact 1.0.0 event/reader only; refuse unknown fields/version before effects or checkpoint. No alias or deployed event predecessor is assumed. Value migrations are expli",
        "quote_check": "exact",
        "quote_scope": "unit SMPFS-316, Plans/Section15_MVP_Promoted_Features_Spec.md:16401-16455",
-       "file_sha256": "752b95d90e41b07c28e1376d0e1fdfdac2052196ca2e73e31e838f6f3124869d"
+       "file_sha256": "140caa73848b1a688465f9f69c11a07a6d866208c8997f4cbf88a0bb475eb86d",
+       "source_citation": {
+        "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+        "unit": "SMPFS-316",
+        "line_start": 16421,
+        "line_end": 16421,
+        "quote": "withdrawal: exact 1.0.0 event/reader only; refuse unknown fields/version before effects or checkpoint. No alias or deployed event predecessor is assumed. Value migrations are expli",
+        "file_sha256": "752b95d90e41b07c28e1376d0e1fdfdac2052196ca2e73e31e838f6f3124869d"
+       }
       },
       {
        "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
@@ -316,7 +446,15 @@
        "quote": "Round 7 authenticated history for preview.session.refreshed: retained read, checkpoint and rebuild accept supported 1.0.0 originals written with projector_replay_only as well as de",
        "quote_check": "exact",
        "quote_scope": "unit SMPFS-316, Plans/Section15_MVP_Promoted_Features_Spec.md:16401-16455",
-       "file_sha256": "752b95d90e41b07c28e1376d0e1fdfdac2052196ca2e73e31e838f6f3124869d"
+       "file_sha256": "140caa73848b1a688465f9f69c11a07a6d866208c8997f4cbf88a0bb475eb86d",
+       "source_citation": {
+        "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+        "unit": "SMPFS-316",
+        "line_start": 16424,
+        "line_end": 16424,
+        "quote": "Round 7 authenticated history for preview.session.refreshed: retained read, checkpoint and rebuild accept supported 1.0.0 originals written with projector_replay_only as well as de",
+        "file_sha256": "752b95d90e41b07c28e1376d0e1fdfdac2052196ca2e73e31e838f6f3124869d"
+       }
       }
      ],
      "carried_from": {
@@ -339,7 +477,15 @@
        "quote": "Oracles: ATS-329 and exact family cases in Plans/ds15_event_contract_fixtures.json execute via scripts/pm-ds15-event-contracts.py: valid/invalid transition, scope joins, original r",
        "quote_check": "exact",
        "quote_scope": "unit SMPFS-316, Plans/Section15_MVP_Promoted_Features_Spec.md:16401-16455",
-       "file_sha256": "752b95d90e41b07c28e1376d0e1fdfdac2052196ca2e73e31e838f6f3124869d"
+       "file_sha256": "140caa73848b1a688465f9f69c11a07a6d866208c8997f4cbf88a0bb475eb86d",
+       "source_citation": {
+        "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+        "unit": "SMPFS-316",
+        "line_start": 16422,
+        "line_end": 16422,
+        "quote": "Oracles: ATS-329 and exact family cases in Plans/ds15_event_contract_fixtures.json execute via scripts/pm-ds15-event-contracts.py: valid/invalid transition, scope joins, original r",
+        "file_sha256": "752b95d90e41b07c28e1376d0e1fdfdac2052196ca2e73e31e838f6f3124869d"
+       }
       },
       {
        "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
@@ -349,7 +495,15 @@
        "quote": "Round 7 authenticated history for preview.session.refreshed: retained read, checkpoint and rebuild accept supported 1.0.0 originals written with projector_replay_only as well as de",
        "quote_check": "exact",
        "quote_scope": "unit SMPFS-316, Plans/Section15_MVP_Promoted_Features_Spec.md:16401-16455",
-       "file_sha256": "752b95d90e41b07c28e1376d0e1fdfdac2052196ca2e73e31e838f6f3124869d"
+       "file_sha256": "140caa73848b1a688465f9f69c11a07a6d866208c8997f4cbf88a0bb475eb86d",
+       "source_citation": {
+        "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+        "unit": "SMPFS-316",
+        "line_start": 16424,
+        "line_end": 16424,
+        "quote": "Round 7 authenticated history for preview.session.refreshed: retained read, checkpoint and rebuild accept supported 1.0.0 originals written with projector_replay_only as well as de",
+        "file_sha256": "752b95d90e41b07c28e1376d0e1fdfdac2052196ca2e73e31e838f6f3124869d"
+       }
       }
      ],
      "carried_from": {
@@ -361,5 +515,19 @@
     }
    }
   }
- ]
+ ],
+ "source_registry": {
+  "path": "Plans/event_family_registry.json",
+  "revision": "2026-11-16.220",
+  "sha256": "693e3d21a4f8dd305cd1287dfa9cb50afb5a6871cf199575120ae681f3f834ec",
+  "family_count": 439,
+  "row_pointer": "#/families/438"
+ },
+ "evidence_maintenance": {
+  "authority": "MERGE2-FIX1 findings 1/3/5",
+  "source_commit": "0c904de00426b0089ba5d56349fda8ea16cc9f88",
+  "source_assessment_sha256": "881fece5865889517bfcb8643867682a35d4c4b53c7806a19c6d8b5ff7e086c3",
+  "native_execution": "NOT_RUN",
+  "verdicts_changed": false
+ }
 }

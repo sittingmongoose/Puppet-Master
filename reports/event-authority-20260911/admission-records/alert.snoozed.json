@@ -4,7 +4,7 @@
  "family_id": "event-family-alert-snoozed",
  "implementation_receipt_sha256": "dceb7f21436cbe126c23822e62caa1b6dedcb45fefae3005c1804576ca34d827",
  "decision_ref": "Plans/Decision_Log.md#DL-2140",
- "decision_section_sha256": "44b982de51d842000f18d2c3742731fc3bab8a72859104180122b4a496e70ed1",
+ "decision_section_sha256": "3a85ffb726b30c3260febfbab44cd0e178e233e3fe51f41ceb5121db8069ed2b",
  "registry_before": {
   "revision": "2026-11-16.3",
   "sha256": "5725ededda26037f56470673024f82a08f0fcec3517bc3f3025e2d088392fc6a",
@@ -18,7 +18,7 @@
  "registry_row_sha256": "94a87a700ce0daad575221e59cfea1a7e16a205db9c01469760f227b311bfe2c",
  "depth_assessment": {
   "path": "reports/event-authority-20261116/admission-merge-2/depth/alert.snoozed.json",
-  "sha256": "d6488f7d595feba3016b39be8aa4e8821d317cb0fb4dfbe70496c709f4280ab2"
+  "sha256": "3b3730df97f24a228e466e605bda5476a6cf48063efdd69cd48676f9974dd53a"
  },
  "admission_landing": {
   "branch": "plans/ea-merge2-apply-20261116",
@@ -35,5 +35,13 @@
   "The decision entry is DL-2140, which DL-096 makes Jared's decision entry for this family.",
   "registry_before is the registry at this commit's parent. If main's registry moves before the landing, the writer runs again on the new base and this record, its entry and the pins are taken again.",
   "Written under DL-077. The seal check recomputes completeness from the pinned assessment; the two fields ending in _at_recording are informational only."
- ]
+ ],
+ "evidence_maintenance": {
+  "authority": "MERGE2-FIX1",
+  "source_commit": "0c904de00426b0089ba5d56349fda8ea16cc9f88",
+  "source_record_sha256": "32b5f00b813cf746df86864ff7de7ee83de3caff5b09ad7014091d596943bf07",
+  "source_assessment_sha256": "d6488f7d595feba3016b39be8aa4e8821d317cb0fb4dfbe70496c709f4280ab2",
+  "source_decision_section_sha256": "44b982de51d842000f18d2c3742731fc3bab8a72859104180122b4a496e70ed1",
+  "original_registry_checkpoints_preserved": true
+ }
 }

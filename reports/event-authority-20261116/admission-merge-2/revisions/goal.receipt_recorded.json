@@ -178,12 +178,22 @@
       {
        "path": "Plans/event_family_registry.json",
        "json_pointer": "#/families/14",
-       "line_start": 1031,
-       "line_end": 1094,
+       "line_start": 1034,
+       "line_end": 1034,
        "quote": "\"event_type\": \"goal.receipt_recorded\"",
        "quote_line": 1034,
-       "file_sha256": "222914703a8985ef96769e5a7d8f6558bfa09110707d424dbfabae4facc3ef40",
-       "quote_check": "exact"
+       "file_sha256": "ec21cf1a5b42b3e68a5564a847b4798dff968612d11d438bc7075b89196f9602",
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "source_citation": {
+        "path": "Plans/event_family_registry.json",
+        "json_pointer": "#/families/14",
+        "line_start": 1031,
+        "line_end": 1094,
+        "quote": "\"event_type\": \"goal.receipt_recorded\"",
+        "quote_line": 1034,
+        "file_sha256": "222914703a8985ef96769e5a7d8f6558bfa09110707d424dbfabae4facc3ef40"
+       }
       }
      ]
     },
@@ -198,10 +208,20 @@
        "line_start": 9352,
        "line_end": 9352,
        "quote": "Newly authored",
-       "excerpt_sha256": "9f01283ace83984d22640d7ebe5d5d8f447ea9695a00b6661e56ad098f3b6fc1",
+       "excerpt_sha256": "6819a14b22c9c5067ee1a9711a9b0a418ab4b711c3035401d890c2e983e140f5",
        "file_sha256": "122f980eb82a138dc71713eede5caa472a2d2d9ce404fab798698f8a38f5ca3e",
        "quote_check": "exact",
-       "quote_scope": "unit GRS-206, Plans/Goal_Runtime_System.md:9306-9359"
+       "quote_scope": "unit GRS-206, Plans/Goal_Runtime_System.md:9306-9359",
+       "excerpt_digest_convention": "whole_line",
+       "source_citation": {
+        "path": "Plans/Goal_Runtime_System.md",
+        "unit": "GRS-206",
+        "line_start": 9352,
+        "line_end": 9352,
+        "quote": "Newly authored",
+        "excerpt_sha256": "9f01283ace83984d22640d7ebe5d5d8f447ea9695a00b6661e56ad098f3b6fc1",
+        "file_sha256": "122f980eb82a138dc71713eede5caa472a2d2d9ce404fab798698f8a38f5ca3e"
+       }
       }
      ],
      "carried_from": {
@@ -222,10 +242,20 @@
        "line_start": 9352,
        "line_end": 9352,
        "quote": "No host, worker",
-       "excerpt_sha256": "3ba294f42b0039ee348b626e115e0e84cf71db2d92afcf94cb415e213af30154",
+       "excerpt_sha256": "6819a14b22c9c5067ee1a9711a9b0a418ab4b711c3035401d890c2e983e140f5",
        "file_sha256": "122f980eb82a138dc71713eede5caa472a2d2d9ce404fab798698f8a38f5ca3e",
        "quote_check": "exact",
-       "quote_scope": "unit GRS-206, Plans/Goal_Runtime_System.md:9306-9359"
+       "quote_scope": "unit GRS-206, Plans/Goal_Runtime_System.md:9306-9359",
+       "excerpt_digest_convention": "whole_line",
+       "source_citation": {
+        "path": "Plans/Goal_Runtime_System.md",
+        "unit": "GRS-206",
+        "line_start": 9352,
+        "line_end": 9352,
+        "quote": "No host, worker",
+        "excerpt_sha256": "3ba294f42b0039ee348b626e115e0e84cf71db2d92afcf94cb415e213af30154",
+        "file_sha256": "122f980eb82a138dc71713eede5caa472a2d2d9ce404fab798698f8a38f5ca3e"
+       }
       }
      ],
      "carried_from": {
@@ -243,13 +273,23 @@
       {
        "path": "Plans/Contracts_V0.md",
        "unit": "CV-425",
-       "line_start": 44360,
-       "line_end": 44360,
+       "line_start": 44361,
+       "line_end": 44361,
        "quote": "whole historical reader resource",
-       "excerpt_sha256": "0fe8886c7d418ab269457848b69d55a1987ee153f310032ae46599c4a4262d20",
-       "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a",
+       "excerpt_sha256": "2dfdd4c73968070806eba69e9d255104e33751f02df3bda424ab7c7bd4d353db",
+       "file_sha256": "4ae2225d8ed19b6df971b6c32797aae6882d175264ff2c2e9a2045650d735e67",
        "quote_check": "exact",
-       "quote_scope": "unit CV-425, Plans/Contracts_V0.md:44318-44361"
+       "quote_scope": "unit CV-425, Plans/Contracts_V0.md:44319-44362",
+       "excerpt_digest_convention": "whole_line",
+       "source_citation": {
+        "path": "Plans/Contracts_V0.md",
+        "unit": "CV-425",
+        "line_start": 44360,
+        "line_end": 44360,
+        "quote": "whole historical reader resource",
+        "excerpt_sha256": "0fe8886c7d418ab269457848b69d55a1987ee153f310032ae46599c4a4262d20",
+        "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a"
+       }
       }
      ],
      "carried_from": {
@@ -265,14 +305,32 @@
      "finding": "DL-409's exact three unused application editions are withdrawn; the existing Project identity and historical schema remain byte-identical.",
      "evidence": [
       {
-       "path": "Plans/Decision_Log.md",
+       "path": "Plans/Decision_Log.md@0c904de00426b0089ba5d56349fda8ea16cc9f88",
        "unit": "DL-409",
        "line_start": 6867,
        "line_end": 6867,
        "quote": "the next registry checkpoint withdraws them. Existing project records, schemas and retention stay unchanged; no",
        "quote_check": "exact",
        "quote_scope": "unit DL-409, Plans/Decision_Log.md:6852-6909",
-       "file_sha256": "f03e7ec40d2ff46203cc9017f68d8eacb531ff0a2600f07c14d286bd624d93df"
+       "file_sha256": "de39dfd0788226c8df09671900d2fefcd37ac40fdaa4a3d295fab10fe1d3b131",
+       "source_citation": {
+        "path": "Plans/Decision_Log.md",
+        "unit": "DL-409",
+        "line_start": 6867,
+        "line_end": 6867,
+        "quote": "the next registry checkpoint withdraws them. Existing project records, schemas and retention stay unchanged; no",
+        "file_sha256": "f03e7ec40d2ff46203cc9017f68d8eacb531ff0a2600f07c14d286bd624d93df"
+       },
+       "current_citation": {
+        "path": "Plans/Decision_Log.md",
+        "unit": "DL-409",
+        "line_start": 6867,
+        "line_end": 6867,
+        "quote": "the next registry checkpoint withdraws them. Existing project records, schemas and retention stay unchanged; no",
+        "quote_scope": "unit DL-409, Plans/Decision_Log.md:6852-6909",
+        "excerpt_sha256": "0c0149ddec8d4601bd02f197d5f420f3f729e32294b53113e5bb21da63bcd7c7"
+       },
+       "source_commit": "0c904de00426b0089ba5d56349fda8ea16cc9f88"
       }
      ],
      "source_grade": {
@@ -292,13 +350,23 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-432",
-       "line_start": 56153,
-       "line_end": 56153,
+       "line_start": 55646,
+       "line_end": 55646,
        "quote": "Repeated reads recompute",
        "excerpt_sha256": "2903add84cb90fb6135786d512e6897dd084279584d9923dae7f5bb724547d8d",
-       "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707",
+       "file_sha256": "73ee6d097e08d31fd93301d05d2cd2632dd46e5a22ba3ea405ffadda4a0a9db2",
        "quote_check": "exact",
-       "quote_scope": "unit SP-432, Plans/storage-plan.md:56097-56159"
+       "quote_scope": "unit SP-432, Plans/storage-plan.md:55590-55652",
+       "excerpt_digest_convention": "whole_line",
+       "source_citation": {
+        "path": "Plans/storage-plan.md",
+        "unit": "SP-432",
+        "line_start": 56153,
+        "line_end": 56153,
+        "quote": "Repeated reads recompute",
+        "excerpt_sha256": "2903add84cb90fb6135786d512e6897dd084279584d9923dae7f5bb724547d8d",
+        "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+       }
       }
      ],
      "carried_from": {
@@ -316,13 +384,23 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-432",
-       "line_start": 56153,
-       "line_end": 56153,
+       "line_start": 55646,
+       "line_end": 55646,
        "quote": "RP-AUTHORITY-INDEFINITE",
-       "excerpt_sha256": "a009bffbf68539df571c200041e114c8efc887e799e677590bb2a7bff3b66227",
-       "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707",
+       "excerpt_sha256": "2903add84cb90fb6135786d512e6897dd084279584d9923dae7f5bb724547d8d",
+       "file_sha256": "73ee6d097e08d31fd93301d05d2cd2632dd46e5a22ba3ea405ffadda4a0a9db2",
        "quote_check": "exact",
-       "quote_scope": "unit SP-432, Plans/storage-plan.md:56097-56159"
+       "quote_scope": "unit SP-432, Plans/storage-plan.md:55590-55652",
+       "excerpt_digest_convention": "whole_line",
+       "source_citation": {
+        "path": "Plans/storage-plan.md",
+        "unit": "SP-432",
+        "line_start": 56153,
+        "line_end": 56153,
+        "quote": "RP-AUTHORITY-INDEFINITE",
+        "excerpt_sha256": "a009bffbf68539df571c200041e114c8efc887e799e677590bb2a7bff3b66227",
+        "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+       }
       }
      ],
      "carried_from": {
@@ -340,13 +418,23 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-432",
-       "line_start": 56153,
-       "line_end": 56153,
+       "line_start": 55646,
+       "line_end": 55646,
        "quote": "Reject unhandled secrets",
        "excerpt_sha256": "2903add84cb90fb6135786d512e6897dd084279584d9923dae7f5bb724547d8d",
-       "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707",
+       "file_sha256": "73ee6d097e08d31fd93301d05d2cd2632dd46e5a22ba3ea405ffadda4a0a9db2",
        "quote_check": "exact",
-       "quote_scope": "unit SP-432, Plans/storage-plan.md:56097-56159"
+       "quote_scope": "unit SP-432, Plans/storage-plan.md:55590-55652",
+       "excerpt_digest_convention": "whole_line",
+       "source_citation": {
+        "path": "Plans/storage-plan.md",
+        "unit": "SP-432",
+        "line_start": 56153,
+        "line_end": 56153,
+        "quote": "Reject unhandled secrets",
+        "excerpt_sha256": "2903add84cb90fb6135786d512e6897dd084279584d9923dae7f5bb724547d8d",
+        "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+       }
       }
      ],
      "carried_from": {
@@ -367,10 +455,20 @@
        "line_start": 9354,
        "line_end": 9354,
        "quote": "Preserve original",
-       "excerpt_sha256": "42eb9f70bce6911d936c4b9b5bd6f134de0328143e43993faff1f806fe729a04",
+       "excerpt_sha256": "7d87d55be3b67fd25f58cd56319ea1e49c294ed3ca5f6be4cae1e18ab125397d",
        "file_sha256": "122f980eb82a138dc71713eede5caa472a2d2d9ce404fab798698f8a38f5ca3e",
        "quote_check": "exact",
-       "quote_scope": "unit GRS-206, Plans/Goal_Runtime_System.md:9306-9359"
+       "quote_scope": "unit GRS-206, Plans/Goal_Runtime_System.md:9306-9359",
+       "excerpt_digest_convention": "whole_line",
+       "source_citation": {
+        "path": "Plans/Goal_Runtime_System.md",
+        "unit": "GRS-206",
+        "line_start": 9354,
+        "line_end": 9354,
+        "quote": "Preserve original",
+        "excerpt_sha256": "42eb9f70bce6911d936c4b9b5bd6f134de0328143e43993faff1f806fe729a04",
+        "file_sha256": "122f980eb82a138dc71713eede5caa472a2d2d9ce404fab798698f8a38f5ca3e"
+       }
       }
      ],
      "carried_from": {
@@ -388,13 +486,23 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-432",
-       "line_start": 56153,
-       "line_end": 56153,
+       "line_start": 55646,
+       "line_end": 55646,
        "quote": "SP-339 pm inspect / F3-666 call",
        "excerpt_sha256": "2903add84cb90fb6135786d512e6897dd084279584d9923dae7f5bb724547d8d",
-       "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707",
+       "file_sha256": "73ee6d097e08d31fd93301d05d2cd2632dd46e5a22ba3ea405ffadda4a0a9db2",
        "quote_check": "exact",
-       "quote_scope": "unit SP-432, Plans/storage-plan.md:56097-56159"
+       "quote_scope": "unit SP-432, Plans/storage-plan.md:55590-55652",
+       "excerpt_digest_convention": "whole_line",
+       "source_citation": {
+        "path": "Plans/storage-plan.md",
+        "unit": "SP-432",
+        "line_start": 56153,
+        "line_end": 56153,
+        "quote": "SP-339 pm inspect / F3-666 call",
+        "excerpt_sha256": "2903add84cb90fb6135786d512e6897dd084279584d9923dae7f5bb724547d8d",
+        "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+       }
       }
      ],
      "carried_from": {
@@ -412,13 +520,23 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-432",
-       "line_start": 56144,
-       "line_end": 56144,
+       "line_start": 55648,
+       "line_end": 55648,
        "quote": "withdrawal",
-       "excerpt_sha256": "ba2df9d5cba876e7865ed21669b986c1e109c4dea8ef2aa4d19b4b1ffae74022",
-       "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707",
+       "excerpt_sha256": "d193cea5ef91f1bd38694b1677090eaf23ddabe6fb7209e6de116000bf8a34b2",
+       "file_sha256": "73ee6d097e08d31fd93301d05d2cd2632dd46e5a22ba3ea405ffadda4a0a9db2",
        "quote_check": "exact",
-       "quote_scope": "unit SP-432, Plans/storage-plan.md:56097-56159"
+       "quote_scope": "unit SP-432, Plans/storage-plan.md:55590-55652",
+       "excerpt_digest_convention": "whole_line",
+       "source_citation": {
+        "path": "Plans/storage-plan.md",
+        "unit": "SP-432",
+        "line_start": 56144,
+        "line_end": 56144,
+        "quote": "withdrawal",
+        "excerpt_sha256": "ba2df9d5cba876e7865ed21669b986c1e109c4dea8ef2aa4d19b4b1ffae74022",
+        "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+       }
       }
      ],
      "carried_from": {
@@ -442,7 +560,17 @@
        "excerpt_sha256": "a5319d8335b88fb607e9bbcff3146c406461c5bccc6cd5ec78e2258742a940d7",
        "file_sha256": "20054debaddab1eebfd639445549129e9dc4443e7e7f14a8c20dcb4350e41030",
        "quote_check": "exact",
-       "quote_scope": "document"
+       "quote_scope": "document",
+       "excerpt_digest_convention": "whole_line",
+       "source_citation": {
+        "path": "reports/event-authority-20261115/PNC019-C12-GH2-core.json",
+        "unit": "C12-GH2 core: family record",
+        "line_start": 483,
+        "line_end": 483,
+        "quote": "\"family\": \"goal.receipt_recorded\"",
+        "excerpt_sha256": "a5319d8335b88fb607e9bbcff3146c406461c5bccc6cd5ec78e2258742a940d7",
+        "file_sha256": "20054debaddab1eebfd639445549129e9dc4443e7e7f14a8c20dcb4350e41030"
+       }
       },
       {
        "path": "reports/event-authority-20261115/PNC019-C12-GH2-core.json",
@@ -453,7 +581,17 @@
        "excerpt_sha256": "1135474c773f4ac6c421f357f39793bf4317b2c4302190d2cf42bf83f56b7f97",
        "file_sha256": "20054debaddab1eebfd639445549129e9dc4443e7e7f14a8c20dcb4350e41030",
        "quote_check": "exact",
-       "quote_scope": "document"
+       "quote_scope": "document",
+       "excerpt_digest_convention": "whole_line",
+       "source_citation": {
+        "path": "reports/event-authority-20261115/PNC019-C12-GH2-core.json",
+        "unit": "C12-GH2 core: family coverage matrix status",
+        "line_start": 484,
+        "line_end": 484,
+        "quote": "\"goal.receipt_recorded_matrix\": \"",
+        "excerpt_sha256": "1135474c773f4ac6c421f357f39793bf4317b2c4302190d2cf42bf83f56b7f97",
+        "file_sha256": "20054debaddab1eebfd639445549129e9dc4443e7e7f14a8c20dcb4350e41030"
+       }
       },
       {
        "path": "reports/event-authority-20261115/PNC019-C12-GH2-core.json",
@@ -464,7 +602,17 @@
        "excerpt_sha256": "29762a3e0198d7c49952cf0bbd3ede225f9594793815ca49938912bcbe71d1e2",
        "file_sha256": "20054debaddab1eebfd639445549129e9dc4443e7e7f14a8c20dcb4350e41030",
        "quote_check": "exact",
-       "quote_scope": "document"
+       "quote_scope": "document",
+       "excerpt_digest_convention": "whole_line",
+       "source_citation": {
+        "path": "reports/event-authority-20261115/PNC019-C12-GH2-core.json",
+        "unit": "C12-GH2 core: family owner-schema clause closure",
+        "line_start": 485,
+        "line_end": 485,
+        "quote": "\"goal.receipt_recorded_closure\": \"",
+        "excerpt_sha256": "29762a3e0198d7c49952cf0bbd3ede225f9594793815ca49938912bcbe71d1e2",
+        "file_sha256": "20054debaddab1eebfd639445549129e9dc4443e7e7f14a8c20dcb4350e41030"
+       }
       },
       {
        "path": "scripts/pm_goal_guard_sweep.py",
@@ -475,7 +623,17 @@
        "excerpt_sha256": "1c4cfe8d2b203a98ba1c49cf6c5a6ac2bd5f6e6cb915914bdb2c6f33c74a797f",
        "file_sha256": "932bbbd2c349257f83c026359fe83dbbc75f2cc28a6e377fe698893ddaf6377e",
        "quote_check": "exact",
-       "quote_scope": "document"
+       "quote_scope": "document",
+       "excerpt_digest_convention": "whole_line",
+       "source_citation": {
+        "path": "scripts/pm_goal_guard_sweep.py",
+        "unit": "C12-GH1 kill rule: cut accepts and restoration repeats the refusal",
+        "line_start": 360,
+        "line_end": 360,
+        "quote": "record['kill'] = 'KILLED'",
+        "excerpt_sha256": "1c4cfe8d2b203a98ba1c49cf6c5a6ac2bd5f6e6cb915914bdb2c6f33c74a797f",
+        "file_sha256": "932bbbd2c349257f83c026359fe83dbbc75f2cc28a6e377fe698893ddaf6377e"
+       }
       },
       {
        "path": "scripts/pm_goal_guard_sweep.py",
@@ -486,7 +644,17 @@
        "excerpt_sha256": "87c20b25dbd83e012d10b5c597eb8c95dd1587658887d36aa7b2abb4ba4087cf",
        "file_sha256": "932bbbd2c349257f83c026359fe83dbbc75f2cc28a6e377fe698893ddaf6377e",
        "quote_check": "exact",
-       "quote_scope": "document"
+       "quote_scope": "document",
+       "excerpt_digest_convention": "whole_line",
+       "source_citation": {
+        "path": "scripts/pm_goal_guard_sweep.py",
+        "unit": "C12-GH1 gated proof on real vectors: unobserved row refused",
+        "line_start": 640,
+        "line_end": 640,
+        "quote": "entry.update(status='REFUSED', reason='row_never_observed_by_complete_checker', proved=[])",
+        "excerpt_sha256": "87c20b25dbd83e012d10b5c597eb8c95dd1587658887d36aa7b2abb4ba4087cf",
+        "file_sha256": "932bbbd2c349257f83c026359fe83dbbc75f2cc28a6e377fe698893ddaf6377e"
+       }
       },
       {
        "path": "scripts/pm_goal_c12_gh2_closure.py",
@@ -497,7 +665,17 @@
        "excerpt_sha256": "df8e025b72a1013f9a0c78728ec02701b416643e3b27ac1abd8080a6c60c0f44",
        "file_sha256": "0b56e1c4a2f8eb16296e37a983afa97c56efcc1c9c411696528dce1b72a2d1b1",
        "quote_check": "exact",
-       "quote_scope": "document"
+       "quote_scope": "document",
+       "excerpt_digest_convention": "whole_line",
+       "source_citation": {
+        "path": "scripts/pm_goal_c12_gh2_closure.py",
+        "unit": "C12-GH2 closure: two independent reachability walks",
+        "line_start": 210,
+        "line_end": 210,
+        "quote": "entry.update(cls='UNCOVERED', reason='reached by the independent walk, not inventoried as a row')",
+        "excerpt_sha256": "df8e025b72a1013f9a0c78728ec02701b416643e3b27ac1abd8080a6c60c0f44",
+        "file_sha256": "0b56e1c4a2f8eb16296e37a983afa97c56efcc1c9c411696528dce1b72a2d1b1"
+       }
       },
       {
        "path": "Plans/Goal_Runtime_System.md",
@@ -505,11 +683,22 @@
        "line_start": 9352,
        "line_end": 9352,
        "quote": "Newly authored",
-       "excerpt_sha256": "9f01283ace83984d22640d7ebe5d5d8f447ea9695a00b6661e56ad098f3b6fc1",
+       "excerpt_sha256": "6819a14b22c9c5067ee1a9711a9b0a418ab4b711c3035401d890c2e983e140f5",
        "file_sha256": "122f980eb82a138dc71713eede5caa472a2d2d9ce404fab798698f8a38f5ca3e",
        "quote_check": "exact",
        "role": "Canonical subject of the existing executable oracle proof; checker evidence and verdict are unchanged.",
-       "quote_scope": "unit GRS-206, Plans/Goal_Runtime_System.md:9306-9359"
+       "quote_scope": "unit GRS-206, Plans/Goal_Runtime_System.md:9306-9359",
+       "excerpt_digest_convention": "whole_line",
+       "source_citation": {
+        "path": "Plans/Goal_Runtime_System.md",
+        "unit": "GRS-206",
+        "line_start": 9352,
+        "line_end": 9352,
+        "quote": "Newly authored",
+        "excerpt_sha256": "9f01283ace83984d22640d7ebe5d5d8f447ea9695a00b6661e56ad098f3b6fc1",
+        "file_sha256": "122f980eb82a138dc71713eede5caa472a2d2d9ce404fab798698f8a38f5ca3e",
+        "role": "Canonical subject of the existing executable oracle proof; checker evidence and verdict are unchanged."
+       }
       }
      ],
      "carried_from": {
@@ -521,5 +710,12 @@
     }
    }
   }
- ]
+ ],
+ "evidence_maintenance": {
+  "authority": "MERGE2-FIX1 finding 3",
+  "source_commit": "0c904de00426b0089ba5d56349fda8ea16cc9f88",
+  "source_assessment_sha256": "ad6f7c2ed6f2af575f9e97bfd74926ce7631adb063102f1d30996091840a4a1a",
+  "native_execution": "NOT_RUN",
+  "verdicts_changed": false
+ }
 }

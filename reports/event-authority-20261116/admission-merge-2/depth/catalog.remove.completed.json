@@ -5,9 +5,9 @@
  "merge": "admission-merge-2",
  "registry": {
   "path": "Plans/event_family_registry.json",
-  "revision": "2026-11-16.99",
-  "sha256": "05a72551616209580909e316a201a92b71e3ce86bd6fc15da68f3867a1b72264",
-  "family_count": 318,
+  "revision": "2026-11-18.2",
+  "sha256": "ec21cf1a5b42b3e68a5564a847b4798dff968612d11d438bc7075b89196f9602",
+  "family_count": 518,
   "row_pointer": "#/families/317"
  },
  "base_commit": "45b4ccf25270c486dbc682805cd455ce4ca25fb0",
@@ -22,17 +22,27 @@
     "membership_version": {
      "status": "PASS",
      "representation": "exact_registry_membership",
-     "finding": "Registered at registry revision 2026-11-16.99 as #/families/317 (canonical row SHA-256 0e30a801f20c9ed0a27bdc3be562a5ca78dc940a918c0c301f083416456f30c5); before this commit the family was absent.",
+     "finding": "Currently registered at 2026-11-18.2 as #/families/317 (canonical row SHA-256 0e30a801f20c9ed0a27bdc3be562a5ca78dc940a918c0c301f083416456f30c5). Original one-family admission checkpoints remain in the family record and immutable Git source.",
      "evidence": [
       {
        "path": "Plans/event_family_registry.json",
        "json_pointer": "#/families/317",
-       "line_start": 20781,
-       "line_end": 20862,
+       "line_start": 20825,
+       "line_end": 20906,
        "quote": "\"event_type\": \"catalog.remove.completed\"",
-       "quote_line": 20784,
-       "file_sha256": "05a72551616209580909e316a201a92b71e3ce86bd6fc15da68f3867a1b72264",
-       "quote_check": "exact"
+       "quote_line": 20828,
+       "file_sha256": "ec21cf1a5b42b3e68a5564a847b4798dff968612d11d438bc7075b89196f9602",
+       "quote_check": "exact",
+       "source_citation": {
+        "path": "Plans/event_family_registry.json",
+        "json_pointer": "#/families/317",
+        "line_start": 20781,
+        "line_end": 20862,
+        "quote": "\"event_type\": \"catalog.remove.completed\"",
+        "quote_line": 20784,
+        "file_sha256": "05a72551616209580909e316a201a92b71e3ce86bd6fc15da68f3867a1b72264",
+        "quote_check": "exact"
+       }
       }
      ]
     },
@@ -44,12 +54,20 @@
       {
        "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
        "unit": "SMPFS-325",
-       "line_start": 17099,
-       "line_end": 17099,
+       "line_start": 17102,
+       "line_end": 17102,
        "quote": "newly authored owner contract",
        "quote_check": "exact",
-       "quote_scope": "unit SMPFS-325, Plans/Section15_MVP_Promoted_Features_Spec.md:17091-17145",
-       "file_sha256": "752b95d90e41b07c28e1376d0e1fdfdac2052196ca2e73e31e838f6f3124869d"
+       "quote_scope": "unit SMPFS-325, Plans/Section15_MVP_Promoted_Features_Spec.md:17094-17149",
+       "file_sha256": "140caa73848b1a688465f9f69c11a07a6d866208c8997f4cbf88a0bb475eb86d",
+       "source_citation": {
+        "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+        "unit": "SMPFS-325",
+        "line_start": 17099,
+        "line_end": 17099,
+        "quote": "newly authored owner contract",
+        "file_sha256": "752b95d90e41b07c28e1376d0e1fdfdac2052196ca2e73e31e838f6f3124869d"
+       }
       }
      ],
      "carried_from": {
@@ -67,12 +85,20 @@
       {
        "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
        "unit": "SMPFS-325",
-       "line_start": 17103,
-       "line_end": 17103,
+       "line_start": 17106,
+       "line_end": 17106,
        "quote": "Producer:",
        "quote_check": "exact",
-       "quote_scope": "unit SMPFS-325, Plans/Section15_MVP_Promoted_Features_Spec.md:17091-17145",
-       "file_sha256": "752b95d90e41b07c28e1376d0e1fdfdac2052196ca2e73e31e838f6f3124869d"
+       "quote_scope": "unit SMPFS-325, Plans/Section15_MVP_Promoted_Features_Spec.md:17094-17149",
+       "file_sha256": "140caa73848b1a688465f9f69c11a07a6d866208c8997f4cbf88a0bb475eb86d",
+       "source_citation": {
+        "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+        "unit": "SMPFS-325",
+        "line_start": 17103,
+        "line_end": 17103,
+        "quote": "Producer:",
+        "file_sha256": "752b95d90e41b07c28e1376d0e1fdfdac2052196ca2e73e31e838f6f3124869d"
+       }
       }
      ],
      "carried_from": {
@@ -95,7 +121,15 @@
        "quote": "\"additionalProperties\": false",
        "quote_check": "exact",
        "quote_scope": "document",
-       "file_sha256": "8739a577f787a19ff7efb56076d7894b9254391929504e1d43781ae657185ed4"
+       "file_sha256": "8739a577f787a19ff7efb56076d7894b9254391929504e1d43781ae657185ed4",
+       "source_citation": {
+        "path": "Plans/ds15_catalog_remove_completed.schema.json",
+        "unit": "root",
+        "line_start": 5,
+        "line_end": 5,
+        "quote": "\"additionalProperties\": false",
+        "file_sha256": "8739a577f787a19ff7efb56076d7894b9254391929504e1d43781ae657185ed4"
+       }
       },
       {
        "path": "Plans/ds15_catalog_remove_completed.schema.json",
@@ -105,7 +139,15 @@
        "quote": "\"const\": \"1.0.0\"",
        "quote_check": "exact",
        "quote_scope": "document",
-       "file_sha256": "8739a577f787a19ff7efb56076d7894b9254391929504e1d43781ae657185ed4"
+       "file_sha256": "8739a577f787a19ff7efb56076d7894b9254391929504e1d43781ae657185ed4",
+       "source_citation": {
+        "path": "Plans/ds15_catalog_remove_completed.schema.json",
+        "unit": "root",
+        "line_start": 19,
+        "line_end": 19,
+        "quote": "\"const\": \"1.0.0\"",
+        "file_sha256": "8739a577f787a19ff7efb56076d7894b9254391929504e1d43781ae657185ed4"
+       }
       }
      ],
      "carried_from": {
@@ -123,12 +165,20 @@
       {
        "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
        "unit": "SMPFS-325",
-       "line_start": 17105,
-       "line_end": 17105,
+       "line_start": 17108,
+       "line_end": 17108,
        "quote": "Scope and identity:",
        "quote_check": "exact",
-       "quote_scope": "unit SMPFS-325, Plans/Section15_MVP_Promoted_Features_Spec.md:17091-17145",
-       "file_sha256": "752b95d90e41b07c28e1376d0e1fdfdac2052196ca2e73e31e838f6f3124869d"
+       "quote_scope": "unit SMPFS-325, Plans/Section15_MVP_Promoted_Features_Spec.md:17094-17149",
+       "file_sha256": "140caa73848b1a688465f9f69c11a07a6d866208c8997f4cbf88a0bb475eb86d",
+       "source_citation": {
+        "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+        "unit": "SMPFS-325",
+        "line_start": 17105,
+        "line_end": 17105,
+        "quote": "Scope and identity:",
+        "file_sha256": "752b95d90e41b07c28e1376d0e1fdfdac2052196ca2e73e31e838f6f3124869d"
+       }
       }
      ],
      "carried_from": {
@@ -146,12 +196,20 @@
       {
        "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
        "unit": "SMPFS-325",
-       "line_start": 17108,
-       "line_end": 17108,
+       "line_start": 17111,
+       "line_end": 17111,
        "quote": "Replay and transitions:",
        "quote_check": "exact",
-       "quote_scope": "unit SMPFS-325, Plans/Section15_MVP_Promoted_Features_Spec.md:17091-17145",
-       "file_sha256": "752b95d90e41b07c28e1376d0e1fdfdac2052196ca2e73e31e838f6f3124869d"
+       "quote_scope": "unit SMPFS-325, Plans/Section15_MVP_Promoted_Features_Spec.md:17094-17149",
+       "file_sha256": "140caa73848b1a688465f9f69c11a07a6d866208c8997f4cbf88a0bb475eb86d",
+       "source_citation": {
+        "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+        "unit": "SMPFS-325",
+        "line_start": 17108,
+        "line_end": 17108,
+        "quote": "Replay and transitions:",
+        "file_sha256": "752b95d90e41b07c28e1376d0e1fdfdac2052196ca2e73e31e838f6f3124869d"
+       }
       }
      ],
      "carried_from": {
@@ -169,12 +227,20 @@
       {
        "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
        "unit": "SMPFS-325",
-       "line_start": 17110,
-       "line_end": 17110,
+       "line_start": 17113,
+       "line_end": 17113,
        "quote": "Retention:",
        "quote_check": "exact",
-       "quote_scope": "unit SMPFS-325, Plans/Section15_MVP_Promoted_Features_Spec.md:17091-17145",
-       "file_sha256": "752b95d90e41b07c28e1376d0e1fdfdac2052196ca2e73e31e838f6f3124869d"
+       "quote_scope": "unit SMPFS-325, Plans/Section15_MVP_Promoted_Features_Spec.md:17094-17149",
+       "file_sha256": "140caa73848b1a688465f9f69c11a07a6d866208c8997f4cbf88a0bb475eb86d",
+       "source_citation": {
+        "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+        "unit": "SMPFS-325",
+        "line_start": 17110,
+        "line_end": 17110,
+        "quote": "Retention:",
+        "file_sha256": "752b95d90e41b07c28e1376d0e1fdfdac2052196ca2e73e31e838f6f3124869d"
+       }
       }
      ],
      "carried_from": {
@@ -192,12 +258,20 @@
       {
        "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
        "unit": "SMPFS-325",
-       "line_start": 17107,
-       "line_end": 17107,
+       "line_start": 17110,
+       "line_end": 17110,
        "quote": "Original source and custody:",
        "quote_check": "exact",
-       "quote_scope": "unit SMPFS-325, Plans/Section15_MVP_Promoted_Features_Spec.md:17091-17145",
-       "file_sha256": "752b95d90e41b07c28e1376d0e1fdfdac2052196ca2e73e31e838f6f3124869d"
+       "quote_scope": "unit SMPFS-325, Plans/Section15_MVP_Promoted_Features_Spec.md:17094-17149",
+       "file_sha256": "140caa73848b1a688465f9f69c11a07a6d866208c8997f4cbf88a0bb475eb86d",
+       "source_citation": {
+        "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+        "unit": "SMPFS-325",
+        "line_start": 17107,
+        "line_end": 17107,
+        "quote": "Original source and custody:",
+        "file_sha256": "752b95d90e41b07c28e1376d0e1fdfdac2052196ca2e73e31e838f6f3124869d"
+       }
       }
      ],
      "carried_from": {
@@ -215,12 +289,20 @@
       {
        "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
        "unit": "SMPFS-325",
-       "line_start": 17103,
-       "line_end": 17103,
+       "line_start": 17106,
+       "line_end": 17106,
        "quote": "Producer:",
        "quote_check": "exact",
-       "quote_scope": "unit SMPFS-325, Plans/Section15_MVP_Promoted_Features_Spec.md:17091-17145",
-       "file_sha256": "752b95d90e41b07c28e1376d0e1fdfdac2052196ca2e73e31e838f6f3124869d"
+       "quote_scope": "unit SMPFS-325, Plans/Section15_MVP_Promoted_Features_Spec.md:17094-17149",
+       "file_sha256": "140caa73848b1a688465f9f69c11a07a6d866208c8997f4cbf88a0bb475eb86d",
+       "source_citation": {
+        "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+        "unit": "SMPFS-325",
+        "line_start": 17103,
+        "line_end": 17103,
+        "quote": "Producer:",
+        "file_sha256": "752b95d90e41b07c28e1376d0e1fdfdac2052196ca2e73e31e838f6f3124869d"
+       }
       }
      ],
      "carried_from": {
@@ -238,12 +320,20 @@
       {
        "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
        "unit": "SMPFS-325",
-       "line_start": 17109,
-       "line_end": 17109,
+       "line_start": 17112,
+       "line_end": 17112,
        "quote": "Consumer and checkpoint:",
        "quote_check": "exact",
-       "quote_scope": "unit SMPFS-325, Plans/Section15_MVP_Promoted_Features_Spec.md:17091-17145",
-       "file_sha256": "752b95d90e41b07c28e1376d0e1fdfdac2052196ca2e73e31e838f6f3124869d"
+       "quote_scope": "unit SMPFS-325, Plans/Section15_MVP_Promoted_Features_Spec.md:17094-17149",
+       "file_sha256": "140caa73848b1a688465f9f69c11a07a6d866208c8997f4cbf88a0bb475eb86d",
+       "source_citation": {
+        "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+        "unit": "SMPFS-325",
+        "line_start": 17109,
+        "line_end": 17109,
+        "quote": "Consumer and checkpoint:",
+        "file_sha256": "752b95d90e41b07c28e1376d0e1fdfdac2052196ca2e73e31e838f6f3124869d"
+       }
       }
      ],
      "carried_from": {
@@ -261,12 +351,20 @@
       {
        "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
        "unit": "SMPFS-325",
-       "line_start": 17111,
-       "line_end": 17111,
+       "line_start": 17114,
+       "line_end": 17114,
        "quote": "Compatibility and withdrawal:",
        "quote_check": "exact",
-       "quote_scope": "unit SMPFS-325, Plans/Section15_MVP_Promoted_Features_Spec.md:17091-17145",
-       "file_sha256": "752b95d90e41b07c28e1376d0e1fdfdac2052196ca2e73e31e838f6f3124869d"
+       "quote_scope": "unit SMPFS-325, Plans/Section15_MVP_Promoted_Features_Spec.md:17094-17149",
+       "file_sha256": "140caa73848b1a688465f9f69c11a07a6d866208c8997f4cbf88a0bb475eb86d",
+       "source_citation": {
+        "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+        "unit": "SMPFS-325",
+        "line_start": 17111,
+        "line_end": 17111,
+        "quote": "Compatibility and withdrawal:",
+        "file_sha256": "752b95d90e41b07c28e1376d0e1fdfdac2052196ca2e73e31e838f6f3124869d"
+       }
       }
      ],
      "carried_from": {
@@ -282,70 +380,124 @@
      "finding": "SMPFS-325 catalog.remove.completed@1.0.0: every guard row the complete deck-2 checker reaches for this family (196 rows in 100 tables) is proved by the gated tool from this family's own single-defect witnesses (164 rows) or carries a checked entailment proof (17 singleton-table rows, 15 family-constant or earlier-boundary rows); 1653 evaluated schema clause sites: 1202 isolated or branch witnesses through the real validator and phase row, 954 exact complete-boundary kills, the rest applicator, condition, sibling-entailed or co-asserted with named clauses; shared date-time battery, number corpus and edge sweep, sealed-receipt retained reads with custody snapshots, and the full original suite pass. Native execution NOT_RUN; membership ABSENT; independent review NOT_RUN.",
      "evidence": [
       {
-       "line": 16030,
+       "line": 16091,
        "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
        "quote": "  Oracles: ",
-       "sha256": "c8c272c2affb4b2766d863f72a2baaee6f6d7e32feee1df180961a0819fc331e",
+       "sha256": "140caa73848b1a688465f9f69c11a07a6d866208c8997f4cbf88a0bb475eb86d",
        "line_start": 16091,
        "line_end": 16091,
        "quote_check": "exact",
        "quote_scope": "document",
-       "file_sha256": "752b95d90e41b07c28e1376d0e1fdfdac2052196ca2e73e31e838f6f3124869d"
+       "file_sha256": "140caa73848b1a688465f9f69c11a07a6d866208c8997f4cbf88a0bb475eb86d",
+       "source_citation": {
+        "line": 16030,
+        "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+        "quote": "  Oracles: ",
+        "sha256": "c8c272c2affb4b2766d863f72a2baaee6f6d7e32feee1df180961a0819fc331e",
+        "line_start": 16091,
+        "line_end": 16091,
+        "file_sha256": "752b95d90e41b07c28e1376d0e1fdfdac2052196ca2e73e31e838f6f3124869d"
+       }
       },
       {
-       "line": 16030,
+       "line": 17115,
        "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
        "quote": "python3 scripts/pm-ds15-deck2-contracts.py --family catalog.remove.completed",
-       "sha256": "c8c272c2affb4b2766d863f72a2baaee6f6d7e32feee1df180961a0819fc331e",
-       "line_start": 17112,
-       "line_end": 17112,
+       "sha256": "140caa73848b1a688465f9f69c11a07a6d866208c8997f4cbf88a0bb475eb86d",
+       "line_start": 17115,
+       "line_end": 17115,
        "quote_check": "exact",
        "quote_scope": "document",
-       "file_sha256": "752b95d90e41b07c28e1376d0e1fdfdac2052196ca2e73e31e838f6f3124869d"
+       "file_sha256": "140caa73848b1a688465f9f69c11a07a6d866208c8997f4cbf88a0bb475eb86d",
+       "source_citation": {
+        "line": 16030,
+        "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+        "quote": "python3 scripts/pm-ds15-deck2-contracts.py --family catalog.remove.completed",
+        "sha256": "c8c272c2affb4b2766d863f72a2baaee6f6d7e32feee1df180961a0819fc331e",
+        "line_start": 17112,
+        "line_end": 17112,
+        "file_sha256": "752b95d90e41b07c28e1376d0e1fdfdac2052196ca2e73e31e838f6f3124869d"
+       }
       },
       {
-       "line": 16024,
+       "line": 17109,
        "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
        "quote": "  Closed payload: Plans/ds15_catalog_remove_completed.schema.json",
-       "sha256": "c8c272c2affb4b2766d863f72a2baaee6f6d7e32feee1df180961a0819fc331e",
-       "line_start": 17106,
-       "line_end": 17106,
+       "sha256": "140caa73848b1a688465f9f69c11a07a6d866208c8997f4cbf88a0bb475eb86d",
+       "line_start": 17109,
+       "line_end": 17109,
        "quote_check": "exact",
        "quote_scope": "document",
-       "file_sha256": "752b95d90e41b07c28e1376d0e1fdfdac2052196ca2e73e31e838f6f3124869d"
+       "file_sha256": "140caa73848b1a688465f9f69c11a07a6d866208c8997f4cbf88a0bb475eb86d",
+       "source_citation": {
+        "line": 16024,
+        "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+        "quote": "  Closed payload: Plans/ds15_catalog_remove_completed.schema.json",
+        "sha256": "c8c272c2affb4b2766d863f72a2baaee6f6d7e32feee1df180961a0819fc331e",
+        "line_start": 17106,
+        "line_end": 17106,
+        "file_sha256": "752b95d90e41b07c28e1376d0e1fdfdac2052196ca2e73e31e838f6f3124869d"
+       }
       },
       {
-       "line": 1612,
+       "line": 184,
        "path": "reports/event-authority-20261104/DS15-self-grade.json",
        "quote": "\"status\": \"PARTIAL\"",
-       "sha256": "fe434edd4145ea5f898cff46db99a3c95183f3526cbf1ccd34a87b78cf66cd69",
+       "sha256": "18a7c5c82459c8b9df297996322c3478f002c2c44816395cc83283af3037097b",
        "line_start": 184,
        "line_end": 184,
        "quote_check": "exact",
        "quote_scope": "document",
-       "file_sha256": "18a7c5c82459c8b9df297996322c3478f002c2c44816395cc83283af3037097b"
+       "file_sha256": "18a7c5c82459c8b9df297996322c3478f002c2c44816395cc83283af3037097b",
+       "source_citation": {
+        "line": 1612,
+        "path": "reports/event-authority-20261104/DS15-self-grade.json",
+        "quote": "\"status\": \"PARTIAL\"",
+        "sha256": "fe434edd4145ea5f898cff46db99a3c95183f3526cbf1ccd34a87b78cf66cd69",
+        "line_start": 184,
+        "line_end": 184,
+        "file_sha256": "18a7c5c82459c8b9df297996322c3478f002c2c44816395cc83283af3037097b"
+       }
       },
       {
        "line": 1356,
        "path": "scripts/pm-ds15-event-contracts.py",
        "quote": "def claimed_range(first, last, rows):",
-       "sha256": "c8419b67ec7bc0540e9a679ffa92fbe873ca6c0d303de4896150f0f793715a23",
+       "sha256": "e240382b525faa67249f2051abc9e366415c4587b652da5a5ba34923169dc366",
        "line_start": 1356,
        "line_end": 1356,
        "quote_check": "exact",
        "quote_scope": "document",
-       "file_sha256": "c8419b67ec7bc0540e9a679ffa92fbe873ca6c0d303de4896150f0f793715a23"
+       "file_sha256": "e240382b525faa67249f2051abc9e366415c4587b652da5a5ba34923169dc366",
+       "source_citation": {
+        "line": 1356,
+        "path": "scripts/pm-ds15-event-contracts.py",
+        "quote": "def claimed_range(first, last, rows):",
+        "sha256": "c8419b67ec7bc0540e9a679ffa92fbe873ca6c0d303de4896150f0f793715a23",
+        "line_start": 1356,
+        "line_end": 1356,
+        "file_sha256": "c8419b67ec7bc0540e9a679ffa92fbe873ca6c0d303de4896150f0f793715a23"
+       }
       },
       {
        "line": 160,
        "path": "scripts/pm-ds15-deck2-contracts.py",
        "quote": "    if not retry and not context_ok(c, d.get('context')):",
-       "sha256": "b96e362a41375545398b6bb299ad372a54b4e062ee5fc30a30ad4dd326edf2fc",
+       "sha256": "3b51a915f43818a527d5935bf71aa827e8855d71c9086e9615d5f86a81e2fd2c",
        "line_start": 160,
        "line_end": 160,
        "quote_check": "exact",
        "quote_scope": "document",
-       "file_sha256": "b96e362a41375545398b6bb299ad372a54b4e062ee5fc30a30ad4dd326edf2fc"
+       "file_sha256": "3b51a915f43818a527d5935bf71aa827e8855d71c9086e9615d5f86a81e2fd2c",
+       "source_citation": {
+        "line": 160,
+        "path": "scripts/pm-ds15-deck2-contracts.py",
+        "quote": "    if not retry and not context_ok(c, d.get('context')):",
+        "sha256": "b96e362a41375545398b6bb299ad372a54b4e062ee5fc30a30ad4dd326edf2fc",
+        "line_start": 160,
+        "line_end": 160,
+        "file_sha256": "b96e362a41375545398b6bb299ad372a54b4e062ee5fc30a30ad4dd326edf2fc"
+       }
       },
       {
        "line": 2,
@@ -356,7 +508,16 @@
        "line_end": 2,
        "quote_check": "exact",
        "quote_scope": "document",
-       "file_sha256": "61cb2a29509cc15c759c97d32a3fcd502a1a1339e1dd5e585e575f9b0548ac32"
+       "file_sha256": "61cb2a29509cc15c759c97d32a3fcd502a1a1339e1dd5e585e575f9b0548ac32",
+       "source_citation": {
+        "line": 2,
+        "path": "scripts/pm_ds15_c12_cases.py",
+        "quote": "\"\"\"C12-DS15 own-family witnesses for the seven deck-2 families",
+        "sha256": "61cb2a29509cc15c759c97d32a3fcd502a1a1339e1dd5e585e575f9b0548ac32",
+        "line_start": 2,
+        "line_end": 2,
+        "file_sha256": "61cb2a29509cc15c759c97d32a3fcd502a1a1339e1dd5e585e575f9b0548ac32"
+       }
       },
       {
        "line": 42,
@@ -367,7 +528,16 @@
        "line_end": 42,
        "quote_check": "exact",
        "quote_scope": "document",
-       "file_sha256": "5efd072ab74b8e13534808259d7d76ab6a09be55486917c75a9f1422949f3a8c"
+       "file_sha256": "5efd072ab74b8e13534808259d7d76ab6a09be55486917c75a9f1422949f3a8c",
+       "source_citation": {
+        "line": 42,
+        "path": "scripts/pm-ds15-guard-tables.py",
+        "quote": "    parser.add_argument('--family'",
+        "sha256": "5efd072ab74b8e13534808259d7d76ab6a09be55486917c75a9f1422949f3a8c",
+        "line_start": 42,
+        "line_end": 42,
+        "file_sha256": "5efd072ab74b8e13534808259d7d76ab6a09be55486917c75a9f1422949f3a8c"
+       }
       }
      ],
      "carried_from": {
@@ -379,5 +549,19 @@
     }
    }
   }
- ]
+ ],
+ "source_registry": {
+  "path": "Plans/event_family_registry.json",
+  "revision": "2026-11-16.99",
+  "sha256": "05a72551616209580909e316a201a92b71e3ce86bd6fc15da68f3867a1b72264",
+  "family_count": 318,
+  "row_pointer": "#/families/317"
+ },
+ "evidence_maintenance": {
+  "authority": "MERGE2-FIX1 findings 1/3/5",
+  "source_commit": "0c904de00426b0089ba5d56349fda8ea16cc9f88",
+  "source_assessment_sha256": "6bc7ce7ac3865ec1fc57c3f07d24a68d44a502f4587ba5008f74a11d187118a3",
+  "native_execution": "NOT_RUN",
+  "verdicts_changed": false
+ }
 }

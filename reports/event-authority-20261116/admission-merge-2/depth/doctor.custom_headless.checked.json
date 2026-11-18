@@ -5,9 +5,9 @@
  "merge": "admission-merge-2",
  "registry": {
   "path": "Plans/event_family_registry.json",
-  "revision": "2026-11-16.158",
-  "sha256": "339e1107b6de8e3ceb3604049b3f9d66ee9b08c3fbea9d616af025398454e6cd",
-  "family_count": 377,
+  "revision": "2026-11-18.2",
+  "sha256": "ec21cf1a5b42b3e68a5564a847b4798dff968612d11d438bc7075b89196f9602",
+  "family_count": 518,
   "row_pointer": "#/families/376"
  },
  "base_commit": "45b4ccf25270c486dbc682805cd455ce4ca25fb0",
@@ -22,17 +22,27 @@
     "membership_version": {
      "status": "PASS",
      "representation": "exact_registry_membership",
-     "finding": "Registered at registry revision 2026-11-16.158 as #/families/376 (canonical row SHA-256 33d3505655db2bc52e8f14b04be4ebeb5dc4eb9e11a892339ada8d8a1aa99876); before this commit the family was absent.",
+     "finding": "Currently registered at 2026-11-18.2 as #/families/376 (canonical row SHA-256 33d3505655db2bc52e8f14b04be4ebeb5dc4eb9e11a892339ada8d8a1aa99876). Original one-family admission checkpoints remain in the family record and immutable Git source.",
      "evidence": [
       {
        "path": "Plans/event_family_registry.json",
        "json_pointer": "#/families/376",
-       "line_start": 25017,
-       "line_end": 25059,
+       "line_start": 25061,
+       "line_end": 25103,
        "quote": "\"event_type\": \"doctor.custom_headless.checked\"",
-       "quote_line": 25020,
-       "file_sha256": "339e1107b6de8e3ceb3604049b3f9d66ee9b08c3fbea9d616af025398454e6cd",
-       "quote_check": "exact"
+       "quote_line": 25064,
+       "file_sha256": "ec21cf1a5b42b3e68a5564a847b4798dff968612d11d438bc7075b89196f9602",
+       "quote_check": "exact",
+       "source_citation": {
+        "path": "Plans/event_family_registry.json",
+        "json_pointer": "#/families/376",
+        "line_start": 25017,
+        "line_end": 25059,
+        "quote": "\"event_type\": \"doctor.custom_headless.checked\"",
+        "quote_line": 25020,
+        "file_sha256": "339e1107b6de8e3ceb3604049b3f9d66ee9b08c3fbea9d616af025398454e6cd",
+        "quote_check": "exact"
+       }
       }
      ]
     },
@@ -49,7 +59,15 @@
        "quote": "doctor.custom_headless.checked 1.0.0 — newly authored owner contract, prepared without admission.",
        "quote_check": "exact",
        "quote_scope": "unit N2-217, Plans/newtools.md:9111-9163",
-       "file_sha256": "178bb7506499c09d2b5ceb3e4658c14b098132679aa10284d8ee12dd8e7ef64e"
+       "file_sha256": "178bb7506499c09d2b5ceb3e4658c14b098132679aa10284d8ee12dd8e7ef64e",
+       "source_citation": {
+        "path": "Plans/newtools.md",
+        "unit": "N2-217",
+        "line_start": 9111,
+        "line_end": 9111,
+        "quote": "doctor.custom_headless.checked 1.0.0 — newly authored owner contract, prepared without admission.",
+        "file_sha256": "178bb7506499c09d2b5ceb3e4658c14b098132679aa10284d8ee12dd8e7ef64e"
+       }
       }
      ],
      "carried_from": {
@@ -72,7 +90,15 @@
        "quote": "Producer: CheckRegistry Doctor custom-headless detection. Each actual Doctor invocation records exactly one detection outcome after config inspection. Valid registers CustomHeadles",
        "quote_check": "exact",
        "quote_scope": "unit N2-217, Plans/newtools.md:9111-9163",
-       "file_sha256": "178bb7506499c09d2b5ceb3e4658c14b098132679aa10284d8ee12dd8e7ef64e"
+       "file_sha256": "178bb7506499c09d2b5ceb3e4658c14b098132679aa10284d8ee12dd8e7ef64e",
+       "source_citation": {
+        "path": "Plans/newtools.md",
+        "unit": "N2-217",
+        "line_start": 9121,
+        "line_end": 9121,
+        "quote": "Producer: CheckRegistry Doctor custom-headless detection. Each actual Doctor invocation records exactly one detection outcome after config inspection. Valid registers CustomHeadles",
+        "file_sha256": "178bb7506499c09d2b5ceb3e4658c14b098132679aa10284d8ee12dd8e7ef64e"
+       }
       },
       {
        "path": "Plans/newtools.md",
@@ -82,7 +108,15 @@
        "quote": "Round 7 authenticated history for doctor.custom_headless.checked: retained read, checkpoint and rebuild accept supported 1.0.0 originals written with projector_replay_only as well ",
        "quote_check": "exact",
        "quote_scope": "unit N2-217, Plans/newtools.md:9111-9163",
-       "file_sha256": "178bb7506499c09d2b5ceb3e4658c14b098132679aa10284d8ee12dd8e7ef64e"
+       "file_sha256": "178bb7506499c09d2b5ceb3e4658c14b098132679aa10284d8ee12dd8e7ef64e",
+       "source_citation": {
+        "path": "Plans/newtools.md",
+        "unit": "N2-217",
+        "line_start": 9132,
+        "line_end": 9132,
+        "quote": "Round 7 authenticated history for doctor.custom_headless.checked: retained read, checkpoint and rebuild accept supported 1.0.0 originals written with projector_replay_only as well ",
+        "file_sha256": "178bb7506499c09d2b5ceb3e4658c14b098132679aa10284d8ee12dd8e7ef64e"
+       }
       }
      ],
      "carried_from": {
@@ -105,7 +139,15 @@
        "quote": "\"additionalProperties\": false,",
        "quote_check": "exact",
        "quote_scope": "document",
-       "file_sha256": "fdc41cfb966a54c21cf17533080f9a9d7a42a3806cadcd102f5cce5aab976daa"
+       "file_sha256": "fdc41cfb966a54c21cf17533080f9a9d7a42a3806cadcd102f5cce5aab976daa",
+       "source_citation": {
+        "path": "Plans/ds15_doctor_custom_headless_checked.schema.json",
+        "unit": "root",
+        "line_start": 3,
+        "line_end": 3,
+        "quote": "\"additionalProperties\": false,",
+        "file_sha256": "fdc41cfb966a54c21cf17533080f9a9d7a42a3806cadcd102f5cce5aab976daa"
+       }
       },
       {
        "path": "Plans/ds15_doctor_custom_headless_checked.schema.json",
@@ -115,7 +157,15 @@
        "quote": "\"const\": \"1.0.0\"",
        "quote_check": "exact",
        "quote_scope": "document",
-       "file_sha256": "fdc41cfb966a54c21cf17533080f9a9d7a42a3806cadcd102f5cce5aab976daa"
+       "file_sha256": "fdc41cfb966a54c21cf17533080f9a9d7a42a3806cadcd102f5cce5aab976daa",
+       "source_citation": {
+        "path": "Plans/ds15_doctor_custom_headless_checked.schema.json",
+        "unit": "root",
+        "line_start": 12,
+        "line_end": 12,
+        "quote": "\"const\": \"1.0.0\"",
+        "file_sha256": "fdc41cfb966a54c21cf17533080f9a9d7a42a3806cadcd102f5cce5aab976daa"
+       }
       }
      ],
      "carried_from": {
@@ -138,7 +188,15 @@
        "quote": "Idempotency key is sha256(canonical MessagePack array [\"doctor.custom_headless.checked\", \"1.0.0\", actual project_id, doctor_invocation_id]); the ordered tuple is unambiguous, never",
        "quote_check": "exact",
        "quote_scope": "unit N2-217, Plans/newtools.md:9111-9163",
-       "file_sha256": "178bb7506499c09d2b5ceb3e4658c14b098132679aa10284d8ee12dd8e7ef64e"
+       "file_sha256": "178bb7506499c09d2b5ceb3e4658c14b098132679aa10284d8ee12dd8e7ef64e",
+       "source_citation": {
+        "path": "Plans/newtools.md",
+        "unit": "N2-217",
+        "line_start": 9122,
+        "line_end": 9122,
+        "quote": "Idempotency key is sha256(canonical MessagePack array [\"doctor.custom_headless.checked\", \"1.0.0\", actual project_id, doctor_invocation_id]); the ordered tuple is unambiguous, never",
+        "file_sha256": "178bb7506499c09d2b5ceb3e4658c14b098132679aa10284d8ee12dd8e7ef64e"
+       }
       }
      ],
      "carried_from": {
@@ -161,7 +219,15 @@
        "quote": "Replay: event delivery and passive reads execute no external action; exact duplicates leave the index state unchanged. Actual original run/Doctor source custody plus canonical even",
        "quote_check": "exact",
        "quote_scope": "unit N2-217, Plans/newtools.md:9111-9163",
-       "file_sha256": "178bb7506499c09d2b5ceb3e4658c14b098132679aa10284d8ee12dd8e7ef64e"
+       "file_sha256": "178bb7506499c09d2b5ceb3e4658c14b098132679aa10284d8ee12dd8e7ef64e",
+       "source_citation": {
+        "path": "Plans/newtools.md",
+        "unit": "N2-217",
+        "line_start": 9125,
+        "line_end": 9125,
+        "quote": "Replay: event delivery and passive reads execute no external action; exact duplicates leave the index state unchanged. Actual original run/Doctor source custody plus canonical even",
+        "file_sha256": "178bb7506499c09d2b5ceb3e4658c14b098132679aa10284d8ee12dd8e7ef64e"
+       }
       },
       {
        "path": "Plans/newtools.md",
@@ -171,7 +237,15 @@
        "quote": "Round 7 authenticated history for doctor.custom_headless.checked: retained read, checkpoint and rebuild accept supported 1.0.0 originals written with projector_replay_only as well ",
        "quote_check": "exact",
        "quote_scope": "unit N2-217, Plans/newtools.md:9111-9163",
-       "file_sha256": "178bb7506499c09d2b5ceb3e4658c14b098132679aa10284d8ee12dd8e7ef64e"
+       "file_sha256": "178bb7506499c09d2b5ceb3e4658c14b098132679aa10284d8ee12dd8e7ef64e",
+       "source_citation": {
+        "path": "Plans/newtools.md",
+        "unit": "N2-217",
+        "line_start": 9132,
+        "line_end": 9132,
+        "quote": "Round 7 authenticated history for doctor.custom_headless.checked: retained read, checkpoint and rebuild accept supported 1.0.0 originals written with projector_replay_only as well ",
+        "file_sha256": "178bb7506499c09d2b5ceb3e4658c14b098132679aa10284d8ee12dd8e7ef64e"
+       }
       }
      ],
      "carried_from": {
@@ -189,12 +263,20 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-640",
-       "line_start": 48802,
-       "line_end": 48802,
+       "line_start": 48801,
+       "line_end": 48801,
        "quote": "\\ `retention_policy_ref = RP-OPERATIONAL-2555D@1.0.0`, under DL-401, DL-500.\\n\\nUse the existing policy\\",
        "quote_check": "exact",
-       "quote_scope": "unit SP-640, Plans/storage-plan.md:48780-48842",
-       "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+       "quote_scope": "unit SP-640, Plans/storage-plan.md:48779-48841",
+       "file_sha256": "73ee6d097e08d31fd93301d05d2cd2632dd46e5a22ba3ea405ffadda4a0a9db2",
+       "source_citation": {
+        "path": "Plans/storage-plan.md",
+        "unit": "SP-640",
+        "line_start": 48802,
+        "line_end": 48802,
+        "quote": "\\ `retention_policy_ref = RP-OPERATIONAL-2555D@1.0.0`, under DL-401, DL-500.\\n\\nUse the existing policy\\",
+        "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+       }
       }
      ],
      "carried_from": {
@@ -217,7 +299,15 @@
        "quote": "backup/restore covers original log, receipts and the source closure; mandatory original custody missing or unverifiable fences retry and disclosure. The derived checkpoint is rebui",
        "quote_check": "exact",
        "quote_scope": "unit N2-217, Plans/newtools.md:9111-9163",
-       "file_sha256": "178bb7506499c09d2b5ceb3e4658c14b098132679aa10284d8ee12dd8e7ef64e"
+       "file_sha256": "178bb7506499c09d2b5ceb3e4658c14b098132679aa10284d8ee12dd8e7ef64e",
+       "source_citation": {
+        "path": "Plans/newtools.md",
+        "unit": "N2-217",
+        "line_start": 9127,
+        "line_end": 9127,
+        "quote": "backup/restore covers original log, receipts and the source closure; mandatory original custody missing or unverifiable fences retry and disclosure. The derived checkpoint is rebui",
+        "file_sha256": "178bb7506499c09d2b5ceb3e4658c14b098132679aa10284d8ee12dd8e7ef64e"
+       }
       },
       {
        "path": "Plans/newtools.md",
@@ -227,7 +317,15 @@
        "quote": "Round 7 authenticated history for doctor.custom_headless.checked: retained read, checkpoint and rebuild accept supported 1.0.0 originals written with projector_replay_only as well ",
        "quote_check": "exact",
        "quote_scope": "unit N2-217, Plans/newtools.md:9111-9163",
-       "file_sha256": "178bb7506499c09d2b5ceb3e4658c14b098132679aa10284d8ee12dd8e7ef64e"
+       "file_sha256": "178bb7506499c09d2b5ceb3e4658c14b098132679aa10284d8ee12dd8e7ef64e",
+       "source_citation": {
+        "path": "Plans/newtools.md",
+        "unit": "N2-217",
+        "line_start": 9132,
+        "line_end": 9132,
+        "quote": "Round 7 authenticated history for doctor.custom_headless.checked: retained read, checkpoint and rebuild accept supported 1.0.0 originals written with projector_replay_only as well ",
+        "file_sha256": "178bb7506499c09d2b5ceb3e4658c14b098132679aa10284d8ee12dd8e7ef64e"
+       }
       }
      ],
      "carried_from": {
@@ -250,7 +348,15 @@
        "quote": "Producer: CheckRegistry Doctor custom-headless detection. Each actual Doctor invocation records exactly one detection outcome after config inspection. Valid registers CustomHeadles",
        "quote_check": "exact",
        "quote_scope": "unit N2-217, Plans/newtools.md:9111-9163",
-       "file_sha256": "178bb7506499c09d2b5ceb3e4658c14b098132679aa10284d8ee12dd8e7ef64e"
+       "file_sha256": "178bb7506499c09d2b5ceb3e4658c14b098132679aa10284d8ee12dd8e7ef64e",
+       "source_citation": {
+        "path": "Plans/newtools.md",
+        "unit": "N2-217",
+        "line_start": 9121,
+        "line_end": 9121,
+        "quote": "Producer: CheckRegistry Doctor custom-headless detection. Each actual Doctor invocation records exactly one detection outcome after config inspection. Valid registers CustomHeadles",
+        "file_sha256": "178bb7506499c09d2b5ceb3e4658c14b098132679aa10284d8ee12dd8e7ef64e"
+       }
       }
      ],
      "carried_from": {
@@ -273,7 +379,15 @@
        "quote": "reader.ds15.doctor_custom_headless_checked.v1@1.0.0, operating as Doctor detection outcome reader, reads only this exact admitted event type at 1.0.0. It adopts SP-278 by name and ",
        "quote_check": "exact",
        "quote_scope": "unit N2-217, Plans/newtools.md:9111-9163",
-       "file_sha256": "178bb7506499c09d2b5ceb3e4658c14b098132679aa10284d8ee12dd8e7ef64e"
+       "file_sha256": "178bb7506499c09d2b5ceb3e4658c14b098132679aa10284d8ee12dd8e7ef64e",
+       "source_citation": {
+        "path": "Plans/newtools.md",
+        "unit": "N2-217",
+        "line_start": 9126,
+        "line_end": 9126,
+        "quote": "reader.ds15.doctor_custom_headless_checked.v1@1.0.0, operating as Doctor detection outcome reader, reads only this exact admitted event type at 1.0.0. It adopts SP-278 by name and ",
+        "file_sha256": "178bb7506499c09d2b5ceb3e4658c14b098132679aa10284d8ee12dd8e7ef64e"
+       }
       },
       {
        "path": "Plans/newtools.md",
@@ -283,7 +397,15 @@
        "quote": "Round 7 authenticated history for doctor.custom_headless.checked: retained read, checkpoint and rebuild accept supported 1.0.0 originals written with projector_replay_only as well ",
        "quote_check": "exact",
        "quote_scope": "unit N2-217, Plans/newtools.md:9111-9163",
-       "file_sha256": "178bb7506499c09d2b5ceb3e4658c14b098132679aa10284d8ee12dd8e7ef64e"
+       "file_sha256": "178bb7506499c09d2b5ceb3e4658c14b098132679aa10284d8ee12dd8e7ef64e",
+       "source_citation": {
+        "path": "Plans/newtools.md",
+        "unit": "N2-217",
+        "line_start": 9132,
+        "line_end": 9132,
+        "quote": "Round 7 authenticated history for doctor.custom_headless.checked: retained read, checkpoint and rebuild accept supported 1.0.0 originals written with projector_replay_only as well ",
+        "file_sha256": "178bb7506499c09d2b5ceb3e4658c14b098132679aa10284d8ee12dd8e7ef64e"
+       }
       }
      ],
      "carried_from": {
@@ -306,7 +428,15 @@
        "quote": "withdrawal definition was found for doctor.custom_headless.checked. This family is explicitly inside DL-045's exact scope. No sibling definition is adopted.",
        "quote_check": "exact",
        "quote_scope": "unit N2-217, Plans/newtools.md:9111-9163",
-       "file_sha256": "178bb7506499c09d2b5ceb3e4658c14b098132679aa10284d8ee12dd8e7ef64e"
+       "file_sha256": "178bb7506499c09d2b5ceb3e4658c14b098132679aa10284d8ee12dd8e7ef64e",
+       "source_citation": {
+        "path": "Plans/newtools.md",
+        "unit": "N2-217",
+        "line_start": 9120,
+        "line_end": 9120,
+        "quote": "withdrawal definition was found for doctor.custom_headless.checked. This family is explicitly inside DL-045's exact scope. No sibling definition is adopted.",
+        "file_sha256": "178bb7506499c09d2b5ceb3e4658c14b098132679aa10284d8ee12dd8e7ef64e"
+       }
       },
       {
        "path": "Plans/newtools.md",
@@ -316,7 +446,15 @@
        "quote": "Round 7 authenticated history for doctor.custom_headless.checked: retained read, checkpoint and rebuild accept supported 1.0.0 originals written with projector_replay_only as well ",
        "quote_check": "exact",
        "quote_scope": "unit N2-217, Plans/newtools.md:9111-9163",
-       "file_sha256": "178bb7506499c09d2b5ceb3e4658c14b098132679aa10284d8ee12dd8e7ef64e"
+       "file_sha256": "178bb7506499c09d2b5ceb3e4658c14b098132679aa10284d8ee12dd8e7ef64e",
+       "source_citation": {
+        "path": "Plans/newtools.md",
+        "unit": "N2-217",
+        "line_start": 9132,
+        "line_end": 9132,
+        "quote": "Round 7 authenticated history for doctor.custom_headless.checked: retained read, checkpoint and rebuild accept supported 1.0.0 originals written with projector_replay_only as well ",
+        "file_sha256": "178bb7506499c09d2b5ceb3e4658c14b098132679aa10284d8ee12dd8e7ef64e"
+       }
       }
      ],
      "carried_from": {
@@ -339,7 +477,15 @@
        "quote": "Oracles: ATS-320 and scripts/pm-ds15-event-contracts.py exercise this exact closed payload and checkpoint identity. Native obligations: original-outcome/append crash boundaries, re",
        "quote_check": "exact",
        "quote_scope": "unit N2-217, Plans/newtools.md:9111-9163",
-       "file_sha256": "178bb7506499c09d2b5ceb3e4658c14b098132679aa10284d8ee12dd8e7ef64e"
+       "file_sha256": "178bb7506499c09d2b5ceb3e4658c14b098132679aa10284d8ee12dd8e7ef64e",
+       "source_citation": {
+        "path": "Plans/newtools.md",
+        "unit": "N2-217",
+        "line_start": 9130,
+        "line_end": 9130,
+        "quote": "Oracles: ATS-320 and scripts/pm-ds15-event-contracts.py exercise this exact closed payload and checkpoint identity. Native obligations: original-outcome/append crash boundaries, re",
+        "file_sha256": "178bb7506499c09d2b5ceb3e4658c14b098132679aa10284d8ee12dd8e7ef64e"
+       }
       },
       {
        "path": "Plans/newtools.md",
@@ -349,7 +495,15 @@
        "quote": "Round 7 authenticated history for doctor.custom_headless.checked: retained read, checkpoint and rebuild accept supported 1.0.0 originals written with projector_replay_only as well ",
        "quote_check": "exact",
        "quote_scope": "unit N2-217, Plans/newtools.md:9111-9163",
-       "file_sha256": "178bb7506499c09d2b5ceb3e4658c14b098132679aa10284d8ee12dd8e7ef64e"
+       "file_sha256": "178bb7506499c09d2b5ceb3e4658c14b098132679aa10284d8ee12dd8e7ef64e",
+       "source_citation": {
+        "path": "Plans/newtools.md",
+        "unit": "N2-217",
+        "line_start": 9132,
+        "line_end": 9132,
+        "quote": "Round 7 authenticated history for doctor.custom_headless.checked: retained read, checkpoint and rebuild accept supported 1.0.0 originals written with projector_replay_only as well ",
+        "file_sha256": "178bb7506499c09d2b5ceb3e4658c14b098132679aa10284d8ee12dd8e7ef64e"
+       }
       }
      ],
      "carried_from": {
@@ -361,5 +515,19 @@
     }
    }
   }
- ]
+ ],
+ "source_registry": {
+  "path": "Plans/event_family_registry.json",
+  "revision": "2026-11-16.158",
+  "sha256": "339e1107b6de8e3ceb3604049b3f9d66ee9b08c3fbea9d616af025398454e6cd",
+  "family_count": 377,
+  "row_pointer": "#/families/376"
+ },
+ "evidence_maintenance": {
+  "authority": "MERGE2-FIX1 findings 1/3/5",
+  "source_commit": "0c904de00426b0089ba5d56349fda8ea16cc9f88",
+  "source_assessment_sha256": "d8402dcd82cf241e5ca1c05356a3d37fcc48750bc8905614ad30b3724b6134a7",
+  "native_execution": "NOT_RUN",
+  "verdicts_changed": false
+ }
 }

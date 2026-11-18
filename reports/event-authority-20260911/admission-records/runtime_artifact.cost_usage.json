@@ -4,7 +4,7 @@
  "family_id": "event-family-runtime-artifact-cost-usage",
  "implementation_receipt_sha256": "dceb7f21436cbe126c23822e62caa1b6dedcb45fefae3005c1804576ca34d827",
  "decision_ref": "Plans/Decision_Log.md#DL-2381",
- "decision_section_sha256": "13e78d5d03c7da465d696b4bd4aef9da6f66c53187f0b28c4d1bc0817e68c5af",
+ "decision_section_sha256": "6a6c5bd51c0c275ff4d01f16bc363be6c4a506bf1730fe5777fc359980de3c74",
  "registry_before": {
   "revision": "2026-11-16.244",
   "sha256": "68af4e5213dfa3eafaea46a96d50cff7a501afc395adba247c916b7593c89840",
@@ -18,7 +18,7 @@
  "registry_row_sha256": "22ad6be8ef9bfa3a5c5ebc57cf8639ff52a6c3483f9dd320f9fbaf90dba4d915",
  "depth_assessment": {
   "path": "reports/event-authority-20261116/admission-merge-2/depth/runtime_artifact.cost_usage.json",
-  "sha256": "b0302b5ffc8de8b29e92d14b82d36adaab7e354955b8c782aefeb6498e9c2be7"
+  "sha256": "48967f421f00cb6e344cb3483092b7f32a4d437ee9bdae3b8f149af13c61c63d"
  },
  "admission_landing": {
   "branch": "plans/ea-merge2-apply-20261116",
@@ -35,5 +35,13 @@
   "The decision entry is DL-2381, which DL-096 makes Jared's decision entry for this family.",
   "registry_before is the registry at this commit's parent. If main's registry moves before the landing, the writer runs again on the new base and this record, its entry and the pins are taken again.",
   "Written under DL-077. The seal check recomputes completeness from the pinned assessment; the two fields ending in _at_recording are informational only."
- ]
+ ],
+ "evidence_maintenance": {
+  "authority": "MERGE2-FIX1",
+  "source_commit": "0c904de00426b0089ba5d56349fda8ea16cc9f88",
+  "source_record_sha256": "e92e6cd7cb898fa4b98b6890a196bc86c8cd8852d6108e633f40d8b11b4a675e",
+  "source_assessment_sha256": "b0302b5ffc8de8b29e92d14b82d36adaab7e354955b8c782aefeb6498e9c2be7",
+  "source_decision_section_sha256": "13e78d5d03c7da465d696b4bd4aef9da6f66c53187f0b28c4d1bc0817e68c5af",
+  "original_registry_checkpoints_preserved": true
+ }
 }

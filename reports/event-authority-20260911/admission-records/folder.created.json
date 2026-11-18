@@ -4,7 +4,7 @@
  "family_id": "event-family-folder-created",
  "implementation_receipt_sha256": "dceb7f21436cbe126c23822e62caa1b6dedcb45fefae3005c1804576ca34d827",
  "decision_ref": "Plans/Decision_Log.md#DL-2309",
- "decision_section_sha256": "6806464f79e7a342af466607ef80c6f880705a2fe16ba925c0f96c01599668f5",
+ "decision_section_sha256": "68b829108c2002ede75a1d90ce6e76fb173d7b156017f252fc72f74e4ef30a0f",
  "registry_before": {
   "revision": "2026-11-16.172",
   "sha256": "6fb0766bc7ef5cd80ea6e0fd518ca059076ecb910c18caf49d35f26326f6ed9a",
@@ -18,7 +18,7 @@
  "registry_row_sha256": "855a6291c98603cde01ff0bf5b04f3c087a512f77ad21fcd014ae9bafca6761e",
  "depth_assessment": {
   "path": "reports/event-authority-20261116/admission-merge-2/depth/folder.created.json",
-  "sha256": "52befa603587e3b4e549550be722d2bb3f75db1bd2e0bafb3d849ea00ebc591e"
+  "sha256": "64e6dcb22cc06c06a9b4aa89ebe6f6861b911db73b3cf5c8afc100268b4ce7db"
  },
  "admission_landing": {
   "branch": "plans/ea-merge2-apply-20261116",
@@ -35,5 +35,13 @@
   "The decision entry is DL-2309, which DL-096 makes Jared's decision entry for this family.",
   "registry_before is the registry at this commit's parent. If main's registry moves before the landing, the writer runs again on the new base and this record, its entry and the pins are taken again.",
   "Written under DL-077. The seal check recomputes completeness from the pinned assessment; the two fields ending in _at_recording are informational only."
- ]
+ ],
+ "evidence_maintenance": {
+  "authority": "MERGE2-FIX1",
+  "source_commit": "0c904de00426b0089ba5d56349fda8ea16cc9f88",
+  "source_record_sha256": "5f2544eb770a06e138e5c592500cfed9059a9293027c8754443d1a46d3c8e1e6",
+  "source_assessment_sha256": "52befa603587e3b4e549550be722d2bb3f75db1bd2e0bafb3d849ea00ebc591e",
+  "source_decision_section_sha256": "6806464f79e7a342af466607ef80c6f880705a2fe16ba925c0f96c01599668f5",
+  "original_registry_checkpoints_preserved": true
+ }
 }

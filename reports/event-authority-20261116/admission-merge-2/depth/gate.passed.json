@@ -5,9 +5,9 @@
  "merge": "admission-merge-2",
  "registry": {
   "path": "Plans/event_family_registry.json",
-  "revision": "2026-11-16.181",
-  "sha256": "db01286b019b0cccadc9d311767367b225cffc01dfd2df02700ca2dbc09b90a6",
-  "family_count": 400,
+  "revision": "2026-11-18.2",
+  "sha256": "ec21cf1a5b42b3e68a5564a847b4798dff968612d11d438bc7075b89196f9602",
+  "family_count": 518,
   "row_pointer": "#/families/399"
  },
  "base_commit": "45b4ccf25270c486dbc682805cd455ce4ca25fb0",
@@ -22,17 +22,27 @@
     "membership_version": {
      "status": "PASS",
      "representation": "exact_registry_membership",
-     "finding": "Registered at registry revision 2026-11-16.181 as #/families/399 (canonical row SHA-256 dc47a039ce3d79448a72cf0b3476115391176f5d6ffe001e3ed58d1dca831632); before this commit the family was absent.",
+     "finding": "Currently registered at 2026-11-18.2 as #/families/399 (canonical row SHA-256 dc47a039ce3d79448a72cf0b3476115391176f5d6ffe001e3ed58d1dca831632). Original one-family admission checkpoints remain in the family record and immutable Git source.",
      "evidence": [
       {
        "path": "Plans/event_family_registry.json",
        "json_pointer": "#/families/399",
-       "line_start": 26280,
-       "line_end": 26328,
+       "line_start": 26324,
+       "line_end": 26372,
        "quote": "\"event_type\": \"gate.passed\"",
-       "quote_line": 26283,
-       "file_sha256": "db01286b019b0cccadc9d311767367b225cffc01dfd2df02700ca2dbc09b90a6",
-       "quote_check": "exact"
+       "quote_line": 26327,
+       "file_sha256": "ec21cf1a5b42b3e68a5564a847b4798dff968612d11d438bc7075b89196f9602",
+       "quote_check": "exact",
+       "source_citation": {
+        "path": "Plans/event_family_registry.json",
+        "json_pointer": "#/families/399",
+        "line_start": 26280,
+        "line_end": 26328,
+        "quote": "\"event_type\": \"gate.passed\"",
+        "quote_line": 26283,
+        "file_sha256": "db01286b019b0cccadc9d311767367b225cffc01dfd2df02700ca2dbc09b90a6",
+        "quote_check": "exact"
+       }
       }
      ]
     },
@@ -49,7 +59,15 @@
        "quote": "Newly authored owner contract under DL-045 for gate.passed@1.0.0 only",
        "quote_check": "exact",
        "quote_scope": "unit CV-607, Plans/Contracts_V0.md:35152-35190",
-       "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a"
+       "file_sha256": "4ae2225d8ed19b6df971b6c32797aae6882d175264ff2c2e9a2045650d735e67",
+       "source_citation": {
+        "path": "Plans/Contracts_V0.md",
+        "unit": "CV-607",
+        "line_start": 35160,
+        "line_end": 35160,
+        "quote": "Newly authored owner contract under DL-045 for gate.passed@1.0.0 only",
+        "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a"
+       }
       }
      ],
      "carried_from": {
@@ -72,7 +90,15 @@
        "quote": "For gate.passed alone, the newly authored original-source custody",
        "quote_check": "exact",
        "quote_scope": "unit SP-587, Plans/storage-plan.md:38710-38750",
-       "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+       "file_sha256": "73ee6d097e08d31fd93301d05d2cd2632dd46e5a22ba3ea405ffadda4a0a9db2",
+       "source_citation": {
+        "path": "Plans/storage-plan.md",
+        "unit": "SP-587",
+        "line_start": 38719,
+        "line_end": 38719,
+        "quote": "For gate.passed alone, the newly authored original-source custody",
+        "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+       }
       }
      ],
      "carried_from": {
@@ -95,7 +121,15 @@
        "quote": "\"const\": \"pm.event_payload.gate_passed.v1\"",
        "quote_check": "exact",
        "quote_scope": "document",
-       "file_sha256": "8e0a2dfcc209567e50e82b03572529f02a990d85da4863a7fbc27abd53258213"
+       "file_sha256": "8e0a2dfcc209567e50e82b03572529f02a990d85da4863a7fbc27abd53258213",
+       "source_citation": {
+        "path": "Plans/dt_event_contracts.schema.json",
+        "unit": "Plans/dt_event_contracts.schema.json#/$defs/gate_passed",
+        "line_start": 2216,
+        "line_end": 2216,
+        "quote": "\"const\": \"pm.event_payload.gate_passed.v1\"",
+        "file_sha256": "8e0a2dfcc209567e50e82b03572529f02a990d85da4863a7fbc27abd53258213"
+       }
       },
       {
        "path": "Plans/Contracts_V0.md",
@@ -105,7 +139,15 @@
        "quote": "Exposing either scalar requires both dispatch fields and the matching node_id.",
        "quote_check": "exact",
        "quote_scope": "unit CV-607, Plans/Contracts_V0.md:35152-35190",
-       "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a"
+       "file_sha256": "4ae2225d8ed19b6df971b6c32797aae6882d175264ff2c2e9a2045650d735e67",
+       "source_citation": {
+        "path": "Plans/Contracts_V0.md",
+        "unit": "CV-607",
+        "line_start": 35165,
+        "line_end": 35165,
+        "quote": "Exposing either scalar requires both dispatch fields and the matching node_id.",
+        "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a"
+       }
       },
       {
        "path": "scripts/pm-dt-event-contracts.py",
@@ -115,7 +157,15 @@
        "quote": "DATE_TIME_FORMAT = format_checker(profile=EVENT_RECORD)",
        "quote_check": "exact",
        "quote_scope": "document",
-       "file_sha256": "47d57d00c34def0c241ccf8e0e982fa4c3782f6a4ad4fa16070ba473197eb152"
+       "file_sha256": "06a44e8c91c14473c6c555c87e6818149a98570fc2721424b071eebc729f680f",
+       "source_citation": {
+        "path": "scripts/pm-dt-event-contracts.py",
+        "unit": "sweep2b",
+        "line_start": 198,
+        "line_end": 198,
+        "quote": "DATE_TIME_FORMAT = format_checker(profile=EVENT_RECORD)",
+        "file_sha256": "47d57d00c34def0c241ccf8e0e982fa4c3782f6a4ad4fa16070ba473197eb152"
+       }
       },
       {
        "path": "scripts/pm-dt-event-contracts.py",
@@ -125,7 +175,15 @@
        "quote": "Draft202012Validator, type_checker=Draft202012Validator.TYPE_CHECKER.redefine('integer', exact_integer_type))",
        "quote_check": "exact",
        "quote_scope": "document",
-       "file_sha256": "47d57d00c34def0c241ccf8e0e982fa4c3782f6a4ad4fa16070ba473197eb152"
+       "file_sha256": "06a44e8c91c14473c6c555c87e6818149a98570fc2721424b071eebc729f680f",
+       "source_citation": {
+        "path": "scripts/pm-dt-event-contracts.py",
+        "unit": "sweep2b",
+        "line_start": 214,
+        "line_end": 214,
+        "quote": "Draft202012Validator, type_checker=Draft202012Validator.TYPE_CHECKER.redefine('integer', exact_integer_type))",
+        "file_sha256": "47d57d00c34def0c241ccf8e0e982fa4c3782f6a4ad4fa16070ba473197eb152"
+       }
       },
       {
        "path": "Plans/Contracts_V0.md",
@@ -135,7 +193,15 @@
        "quote": "For gate.passed alone, the shared CV-1100, SP-1100, SP-1101 and CV-1101 owner units apply",
        "quote_check": "exact",
        "quote_scope": "unit CV-607, Plans/Contracts_V0.md:35152-35190",
-       "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a"
+       "file_sha256": "4ae2225d8ed19b6df971b6c32797aae6882d175264ff2c2e9a2045650d735e67",
+       "source_citation": {
+        "path": "Plans/Contracts_V0.md",
+        "unit": "CV-607",
+        "line_start": 35166,
+        "line_end": 35166,
+        "quote": "For gate.passed alone, the shared CV-1100, SP-1100, SP-1101 and CV-1101 owner units apply",
+        "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a"
+       }
       }
      ],
      "carried_from": {
@@ -158,7 +224,15 @@
        "quote": "For gate.passed alone, source codec",
        "quote_check": "exact",
        "quote_scope": "unit SP-587, Plans/storage-plan.md:38710-38750",
-       "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+       "file_sha256": "73ee6d097e08d31fd93301d05d2cd2632dd46e5a22ba3ea405ffadda4a0a9db2",
+       "source_citation": {
+        "path": "Plans/storage-plan.md",
+        "unit": "SP-587",
+        "line_start": 38721,
+        "line_end": 38721,
+        "quote": "For gate.passed alone, source codec",
+        "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+       }
       }
      ],
      "carried_from": {
@@ -181,7 +255,15 @@
        "quote": "For gate.passed alone, current writer and retry paths refuse",
        "quote_check": "exact",
        "quote_scope": "unit CV-607, Plans/Contracts_V0.md:35152-35190",
-       "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a"
+       "file_sha256": "4ae2225d8ed19b6df971b6c32797aae6882d175264ff2c2e9a2045650d735e67",
+       "source_citation": {
+        "path": "Plans/Contracts_V0.md",
+        "unit": "CV-607",
+        "line_start": 35164,
+        "line_end": 35164,
+        "quote": "For gate.passed alone, current writer and retry paths refuse",
+        "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a"
+       }
       },
       {
        "path": "scripts/pm-dt-event-contracts.py",
@@ -191,7 +273,15 @@
        "quote": "return pm_event_numbers.producer_semantic_digest(event)",
        "quote_check": "exact",
        "quote_scope": "document",
-       "file_sha256": "47d57d00c34def0c241ccf8e0e982fa4c3782f6a4ad4fa16070ba473197eb152"
+       "file_sha256": "06a44e8c91c14473c6c555c87e6818149a98570fc2721424b071eebc729f680f",
+       "source_citation": {
+        "path": "scripts/pm-dt-event-contracts.py",
+        "unit": "sweep2b",
+        "line_start": 515,
+        "line_end": 515,
+        "quote": "return pm_event_numbers.producer_semantic_digest(event)",
+        "file_sha256": "47d57d00c34def0c241ccf8e0e982fa4c3782f6a4ad4fa16070ba473197eb152"
+       }
       },
       {
        "path": "scripts/pm-dt-event-contracts.py",
@@ -201,7 +291,15 @@
        "quote": "yield 'src_replay', {'historical': historical, 'replay_policy': event['replay_policy'], 'producer_refusal': producer_refusal(event)}",
        "quote_check": "exact",
        "quote_scope": "document",
-       "file_sha256": "47d57d00c34def0c241ccf8e0e982fa4c3782f6a4ad4fa16070ba473197eb152"
+       "file_sha256": "06a44e8c91c14473c6c555c87e6818149a98570fc2721424b071eebc729f680f",
+       "source_citation": {
+        "path": "scripts/pm-dt-event-contracts.py",
+        "unit": "sweep2b",
+        "line_start": 882,
+        "line_end": 882,
+        "quote": "yield 'src_replay', {'historical': historical, 'replay_policy': event['replay_policy'], 'producer_refusal': producer_refusal(event)}",
+        "file_sha256": "47d57d00c34def0c241ccf8e0e982fa4c3782f6a4ad4fa16070ba473197eb152"
+       }
       },
       {
        "path": "Plans/Contracts_V0.md",
@@ -211,7 +309,15 @@
        "quote": "For gate.passed alone, the shared CV-1100, SP-1100, SP-1101 and CV-1101 owner units apply",
        "quote_check": "exact",
        "quote_scope": "unit CV-607, Plans/Contracts_V0.md:35152-35190",
-       "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a"
+       "file_sha256": "4ae2225d8ed19b6df971b6c32797aae6882d175264ff2c2e9a2045650d735e67",
+       "source_citation": {
+        "path": "Plans/Contracts_V0.md",
+        "unit": "CV-607",
+        "line_start": 35166,
+        "line_end": 35166,
+        "quote": "For gate.passed alone, the shared CV-1100, SP-1100, SP-1101 and CV-1101 owner units apply",
+        "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a"
+       }
       }
      ],
      "carried_from": {
@@ -234,7 +340,15 @@
        "quote": "retention_policy_ref = RP-RUNTIME-365D",
        "quote_check": "exact",
        "quote_scope": "unit SP-587, Plans/storage-plan.md:38710-38750",
-       "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+       "file_sha256": "73ee6d097e08d31fd93301d05d2cd2632dd46e5a22ba3ea405ffadda4a0a9db2",
+       "source_citation": {
+        "path": "Plans/storage-plan.md",
+        "unit": "SP-587",
+        "line_start": 38718,
+        "line_end": 38718,
+        "quote": "retention_policy_ref = RP-RUNTIME-365D",
+        "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+       }
       },
       {
        "path": "scripts/pm-dt-event-contracts.py",
@@ -244,7 +358,15 @@
        "quote": "now_refusal, now = exact_instant(value['now'])",
        "quote_check": "exact",
        "quote_scope": "document",
-       "file_sha256": "47d57d00c34def0c241ccf8e0e982fa4c3782f6a4ad4fa16070ba473197eb152"
+       "file_sha256": "06a44e8c91c14473c6c555c87e6818149a98570fc2721424b071eebc729f680f",
+       "source_citation": {
+        "path": "scripts/pm-dt-event-contracts.py",
+        "unit": "sweep2b",
+        "line_start": 2486,
+        "line_end": 2486,
+        "quote": "now_refusal, now = exact_instant(value['now'])",
+        "file_sha256": "47d57d00c34def0c241ccf8e0e982fa4c3782f6a4ad4fa16070ba473197eb152"
+       }
       }
      ],
      "carried_from": {
@@ -267,7 +389,15 @@
        "quote": "Source stages, original owner outcomes, referenced bodies and full-value receipt custody form one mandatory coherent backup closure.",
        "quote_check": "exact",
        "quote_scope": "unit SP-587, Plans/storage-plan.md:38710-38750",
-       "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+       "file_sha256": "73ee6d097e08d31fd93301d05d2cd2632dd46e5a22ba3ea405ffadda4a0a9db2",
+       "source_citation": {
+        "path": "Plans/storage-plan.md",
+        "unit": "SP-587",
+        "line_start": 38719,
+        "line_end": 38719,
+        "quote": "Source stages, original owner outcomes, referenced bodies and full-value receipt custody form one mandatory coherent backup closure.",
+        "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+       }
       }
      ],
      "carried_from": {
@@ -290,7 +420,15 @@
        "quote": "For gate.passed alone, the explicit lifecycle transition is",
        "quote_check": "exact",
        "quote_scope": "unit CV-607, Plans/Contracts_V0.md:35152-35190",
-       "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a"
+       "file_sha256": "4ae2225d8ed19b6df971b6c32797aae6882d175264ff2c2e9a2045650d735e67",
+       "source_citation": {
+        "path": "Plans/Contracts_V0.md",
+        "unit": "CV-607",
+        "line_start": 35163,
+        "line_end": 35163,
+        "quote": "For gate.passed alone, the explicit lifecycle transition is",
+        "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a"
+       }
       }
      ],
      "carried_from": {
@@ -313,7 +451,15 @@
        "quote": "For gate.passed alone, its SP-278/DL-076 checkpoint",
        "quote_check": "exact",
        "quote_scope": "unit SP-587, Plans/storage-plan.md:38710-38750",
-       "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+       "file_sha256": "73ee6d097e08d31fd93301d05d2cd2632dd46e5a22ba3ea405ffadda4a0a9db2",
+       "source_citation": {
+        "path": "Plans/storage-plan.md",
+        "unit": "SP-587",
+        "line_start": 38720,
+        "line_end": 38720,
+        "quote": "For gate.passed alone, its SP-278/DL-076 checkpoint",
+        "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+       }
       },
       {
        "path": "scripts/pm_dt_table_cp_token.py",
@@ -323,7 +469,15 @@
        "quote": "def CP14_token_storage(value, context):",
        "quote_check": "exact",
        "quote_scope": "document",
-       "file_sha256": "3ffbb77f1d1cebde79dcad3337caf1c9909400c6711478d09f5f15d1f4b361fc"
+       "file_sha256": "3ffbb77f1d1cebde79dcad3337caf1c9909400c6711478d09f5f15d1f4b361fc",
+       "source_citation": {
+        "path": "scripts/pm_dt_table_cp_token.py",
+        "unit": "CP14_token_storage",
+        "line_start": 20,
+        "line_end": 20,
+        "quote": "def CP14_token_storage(value, context):",
+        "file_sha256": "3ffbb77f1d1cebde79dcad3337caf1c9909400c6711478d09f5f15d1f4b361fc"
+       }
       }
      ],
      "carried_from": {
@@ -346,7 +500,15 @@
        "quote": "Withdrawal first cuts off this family's append admission",
        "quote_check": "exact",
        "quote_scope": "unit SP-587, Plans/storage-plan.md:38710-38750",
-       "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+       "file_sha256": "73ee6d097e08d31fd93301d05d2cd2632dd46e5a22ba3ea405ffadda4a0a9db2",
+       "source_citation": {
+        "path": "Plans/storage-plan.md",
+        "unit": "SP-587",
+        "line_start": 38718,
+        "line_end": 38718,
+        "quote": "Withdrawal first cuts off this family's append admission",
+        "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+       }
       },
       {
        "path": "scripts/pm-dt-event-contracts.py",
@@ -356,7 +518,15 @@
        "quote": "custody = _CUSTODY['dispatcher'].resolve(original_ref(completed, event), binding, disclose=lambda b: True)",
        "quote_check": "exact",
        "quote_scope": "document",
-       "file_sha256": "47d57d00c34def0c241ccf8e0e982fa4c3782f6a4ad4fa16070ba473197eb152"
+       "file_sha256": "06a44e8c91c14473c6c555c87e6818149a98570fc2721424b071eebc729f680f",
+       "source_citation": {
+        "path": "scripts/pm-dt-event-contracts.py",
+        "unit": "sweep2b",
+        "line_start": 1224,
+        "line_end": 1224,
+        "quote": "custody = _CUSTODY['dispatcher'].resolve(original_ref(completed, event), binding, disclose=lambda b: True)",
+        "file_sha256": "47d57d00c34def0c241ccf8e0e982fa4c3782f6a4ad4fa16070ba473197eb152"
+       }
       },
       {
        "path": "Plans/Contracts_V0.md",
@@ -366,7 +536,15 @@
        "quote": "For gate.passed alone, the shared CV-1100, SP-1100, SP-1101 and CV-1101 owner units apply",
        "quote_check": "exact",
        "quote_scope": "unit CV-607, Plans/Contracts_V0.md:35152-35190",
-       "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a"
+       "file_sha256": "4ae2225d8ed19b6df971b6c32797aae6882d175264ff2c2e9a2045650d735e67",
+       "source_citation": {
+        "path": "Plans/Contracts_V0.md",
+        "unit": "CV-607",
+        "line_start": 35166,
+        "line_end": 35166,
+        "quote": "For gate.passed alone, the shared CV-1100, SP-1100, SP-1101 and CV-1101 owner units apply",
+        "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a"
+       }
       }
      ],
      "carried_from": {
@@ -389,7 +567,15 @@
        "unit": "ATS-293",
        "quote_check": "exact",
        "quote_scope": "unit ATS-293, Plans/Automated_Testing_System.md:9144-9182",
-       "file_sha256": "e1c8a84c145a3aaaa0738971f76db5fa0bf94f59c0149e76f4131e8579a6971d"
+       "file_sha256": "e1c8a84c145a3aaaa0738971f76db5fa0bf94f59c0149e76f4131e8579a6971d",
+       "source_citation": {
+        "line_end": 9159,
+        "line_start": 9159,
+        "path": "Plans/Automated_Testing_System.md",
+        "quote": "For gate.passed alone, round-1 fixtures refuse",
+        "unit": "ATS-293",
+        "file_sha256": "e1c8a84c145a3aaaa0738971f76db5fa0bf94f59c0149e76f4131e8579a6971d"
+       }
       },
       {
        "line_end": 74202,
@@ -399,7 +585,15 @@
        "unit": "gate.passed retry_oracle",
        "quote_check": "exact",
        "quote_scope": "document",
-       "file_sha256": "b3432bfcdfc68263dcf0b00b8ed0c7d9ee518ed63f4132e146edc18ceca40365"
+       "file_sha256": "b3432bfcdfc68263dcf0b00b8ed0c7d9ee518ed63f4132e146edc18ceca40365",
+       "source_citation": {
+        "line_end": 74202,
+        "line_start": 74202,
+        "path": "Plans/dt_event_contract_fixtures.json",
+        "quote": "\"producer_semantic_digest\": \"3156abdc29b343f4fbc56c57fe151feef60ab24d32a0093d7440916e801f6445\"",
+        "unit": "gate.passed retry_oracle",
+        "file_sha256": "b3432bfcdfc68263dcf0b00b8ed0c7d9ee518ed63f4132e146edc18ceca40365"
+       }
       },
       {
        "line_end": 38722,
@@ -409,7 +603,15 @@
        "unit": "SP-587",
        "quote_check": "exact",
        "quote_scope": "unit SP-587, Plans/storage-plan.md:38710-38750",
-       "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+       "file_sha256": "73ee6d097e08d31fd93301d05d2cd2632dd46e5a22ba3ea405ffadda4a0a9db2",
+       "source_citation": {
+        "line_end": 38722,
+        "line_start": 38722,
+        "path": "Plans/storage-plan.md",
+        "quote": "For gate.passed, boolean authority/context flags are exact booleans",
+        "unit": "SP-587",
+        "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+       }
       },
       {
        "line_end": 2572,
@@ -419,7 +621,15 @@
        "unit": "complete original suite",
        "quote_check": "exact",
        "quote_scope": "document",
-       "file_sha256": "47d57d00c34def0c241ccf8e0e982fa4c3782f6a4ad4fa16070ba473197eb152"
+       "file_sha256": "06a44e8c91c14473c6c555c87e6818149a98570fc2721424b071eebc729f680f",
+       "source_citation": {
+        "line_end": 2572,
+        "line_start": 2572,
+        "path": "scripts/pm-dt-event-contracts.py",
+        "quote": "def family_checks(c, inputs, check):",
+        "unit": "complete original suite",
+        "file_sha256": "47d57d00c34def0c241ccf8e0e982fa4c3782f6a4ad4fa16070ba473197eb152"
+       }
       },
       {
        "line_end": 1388,
@@ -429,7 +639,15 @@
        "unit": "sealed receipt and store",
        "quote_check": "exact",
        "quote_scope": "document",
-       "file_sha256": "47d57d00c34def0c241ccf8e0e982fa4c3782f6a4ad4fa16070ba473197eb152"
+       "file_sha256": "06a44e8c91c14473c6c555c87e6818149a98570fc2721424b071eebc729f680f",
+       "source_citation": {
+        "line_end": 1388,
+        "line_start": 1388,
+        "path": "scripts/pm-dt-event-contracts.py",
+        "quote": "def retained_custody_checks(c, f, schemas, check):",
+        "unit": "sealed receipt and store",
+        "file_sha256": "47d57d00c34def0c241ccf8e0e982fa4c3782f6a4ad4fa16070ba473197eb152"
+       }
       },
       {
        "line_end": 242,
@@ -439,7 +657,15 @@
        "unit": "whole-definition covering",
        "quote_check": "exact",
        "quote_scope": "document",
-       "file_sha256": "95ecbab453e7816c3fe3fa6863a6ae0aab2cf0a238636cdd52a7e62af99a8870"
+       "file_sha256": "95ecbab453e7816c3fe3fa6863a6ae0aab2cf0a238636cdd52a7e62af99a8870",
+       "source_citation": {
+        "line_end": 242,
+        "line_start": 242,
+        "path": "scripts/pm_dt_c12_schema.py",
+        "quote": "def schema_witnesses(dt, inputs, out):",
+        "unit": "whole-definition covering",
+        "file_sha256": "95ecbab453e7816c3fe3fa6863a6ae0aab2cf0a238636cdd52a7e62af99a8870"
+       }
       },
       {
        "line_end": 44,
@@ -449,7 +675,15 @@
        "unit": "coverage control",
        "quote_check": "exact",
        "quote_scope": "document",
-       "file_sha256": "fedacd8204d3579d61670ce2156b078fd3e2325b18ea7e74c1457b00eee96404"
+       "file_sha256": "fedacd8204d3579d61670ce2156b078fd3e2325b18ea7e74c1457b00eee96404",
+       "source_citation": {
+        "line_end": 44,
+        "line_start": 44,
+        "path": "scripts/pm-dt-c12-closure.py",
+        "quote": "check(schema['uncontrolled_rules'] == 0",
+        "unit": "coverage control",
+        "file_sha256": "fedacd8204d3579d61670ce2156b078fd3e2325b18ea7e74c1457b00eee96404"
+       }
       },
       {
        "line_end": 2260,
@@ -459,7 +693,15 @@
        "unit": "shared numbers",
        "quote_check": "exact",
        "quote_scope": "document",
-       "file_sha256": "47d57d00c34def0c241ccf8e0e982fa4c3782f6a4ad4fa16070ba473197eb152"
+       "file_sha256": "06a44e8c91c14473c6c555c87e6818149a98570fc2721424b071eebc729f680f",
+       "source_citation": {
+        "line_end": 2260,
+        "line_start": 2260,
+        "path": "scripts/pm-dt-event-contracts.py",
+        "quote": "def number_corpus_checks(c, f, schemas, check):",
+        "unit": "shared numbers",
+        "file_sha256": "47d57d00c34def0c241ccf8e0e982fa4c3782f6a4ad4fa16070ba473197eb152"
+       }
       },
       {
        "line_end": 2111,
@@ -469,7 +711,15 @@
        "unit": "shared datetime",
        "quote_check": "exact",
        "quote_scope": "document",
-       "file_sha256": "47d57d00c34def0c241ccf8e0e982fa4c3782f6a4ad4fa16070ba473197eb152"
+       "file_sha256": "06a44e8c91c14473c6c555c87e6818149a98570fc2721424b071eebc729f680f",
+       "source_citation": {
+        "line_end": 2111,
+        "line_start": 2111,
+        "path": "scripts/pm-dt-event-contracts.py",
+        "quote": "def datetime_checks(c, f, schemas, check):",
+        "unit": "shared datetime",
+        "file_sha256": "47d57d00c34def0c241ccf8e0e982fa4c3782f6a4ad4fa16070ba473197eb152"
+       }
       }
      ],
      "carried_from": {
@@ -481,5 +731,19 @@
     }
    }
   }
- ]
+ ],
+ "source_registry": {
+  "path": "Plans/event_family_registry.json",
+  "revision": "2026-11-16.181",
+  "sha256": "db01286b019b0cccadc9d311767367b225cffc01dfd2df02700ca2dbc09b90a6",
+  "family_count": 400,
+  "row_pointer": "#/families/399"
+ },
+ "evidence_maintenance": {
+  "authority": "MERGE2-FIX1 findings 1/3/5",
+  "source_commit": "0c904de00426b0089ba5d56349fda8ea16cc9f88",
+  "source_assessment_sha256": "086aa27fae4711c67106fb47ccfd1542d356832429ea132eef073529a4bb2cfe",
+  "native_execution": "NOT_RUN",
+  "verdicts_changed": false
+ }
 }

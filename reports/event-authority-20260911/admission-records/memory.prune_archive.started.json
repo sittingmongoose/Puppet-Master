@@ -4,7 +4,7 @@
  "family_id": "event-family-memory-prune-archive-started",
  "implementation_receipt_sha256": "dceb7f21436cbe126c23822e62caa1b6dedcb45fefae3005c1804576ca34d827",
  "decision_ref": "Plans/Decision_Log.md#DL-2334",
- "decision_section_sha256": "0272e52ff1a84965c72bb6be1949b1c8979cf4e1e31ba0ec6ebaddacfb848d3f",
+ "decision_section_sha256": "95479d85ec661e8af5028109b34fd5d062f0a4168e0e382b96d820a2dce32325",
  "registry_before": {
   "revision": "2026-11-16.197",
   "sha256": "a518084eb4de997795b8a1df403d9f86cd6d422e2d7c377f2367fa81181ca84d",
@@ -15,10 +15,10 @@
   "sha256": "4c762d619453c30535dceb398c3357686cc19a543238377ad916b7a582eac9dd",
   "family_count": 417
  },
- "registry_row_sha256": "09c6499f2e9ac4b21ec9fa5c5cbede71e0e64550bbaba414d52e2c9645f450ed",
+ "registry_row_sha256": "e1b25ca591dd023f034863caa2a8ce121f77238757c6cb17c8afac9a7be09479",
  "depth_assessment": {
   "path": "reports/event-authority-20261116/admission-merge-2/depth/memory.prune_archive.started.json",
-  "sha256": "a7b6f5f0bb34afecc84c3d8c50dd0b91d7776abac9c35f5195203de963fd791b"
+  "sha256": "adc6b4071a1cd825e8210457bf6ca4c6b4eb7944851eaf001efb9491c211605a"
  },
  "admission_landing": {
   "branch": "plans/ea-merge2-apply-20261116",
@@ -35,5 +35,18 @@
   "The decision entry is DL-2334, which DL-096 makes Jared's decision entry for this family.",
   "registry_before is the registry at this commit's parent. If main's registry moves before the landing, the writer runs again on the new base and this record, its entry and the pins are taken again.",
   "Written under DL-077. The seal check recomputes completeness from the pinned assessment; the two fields ending in _at_recording are informational only."
- ]
+ ],
+ "evidence_maintenance": {
+  "authority": "MERGE2-FIX1",
+  "source_commit": "0c904de00426b0089ba5d56349fda8ea16cc9f88",
+  "source_record_sha256": "e64c71e9f488646005d379ec17bee4bad051cf052e305d526acd17378e8a5bcc",
+  "source_assessment_sha256": "a7b6f5f0bb34afecc84c3d8c50dd0b91d7776abac9c35f5195203de963fd791b",
+  "source_decision_section_sha256": "0272e52ff1a84965c72bb6be1949b1c8979cf4e1e31ba0ec6ebaddacfb848d3f",
+  "original_registry_checkpoints_preserved": true
+ },
+ "registry_row_correction": {
+  "authority": "MERGE2-FIX1 finding 5 / T259",
+  "predecessor_row_sha256": "09c6499f2e9ac4b21ec9fa5c5cbede71e0e64550bbaba414d52e2c9645f450ed",
+  "contract_ref": "Plans/memory_archive_contracts.json#/families/3"
+ }
 }

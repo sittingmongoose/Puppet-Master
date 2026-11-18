@@ -4,7 +4,7 @@
  "family_id": "event-family-server-identity-mismatch-detected",
  "implementation_receipt_sha256": "dceb7f21436cbe126c23822e62caa1b6dedcb45fefae3005c1804576ca34d827",
  "decision_ref": "Plans/Decision_Log.md#DL-2404",
- "decision_section_sha256": "9d5e667eb0620056c52dac0ad55b8b7496c7cab466b7481419fa64c05914cf44",
+ "decision_section_sha256": "4f421a749de12d589ea0ce260a68d67a7f03b73fea99418131d100bbdea0f47b",
  "registry_before": {
   "revision": "2026-11-16.267",
   "sha256": "41b80fd36833500c144fb26d49aaddfe481525444fe19777b359f11775e9b407",
@@ -18,7 +18,7 @@
  "registry_row_sha256": "69cf01ad7ddbf15412cea3e7a18573de11775d5a7d6196afefdede068b8ca83c",
  "depth_assessment": {
   "path": "reports/event-authority-20261116/admission-merge-2/depth/server.identity_mismatch_detected.json",
-  "sha256": "10eb32080f205a9772efc1bd023480485d651f962d038f97f1969916323ec340"
+  "sha256": "2d2df2f25b541c7eceb5b32d2d760314f373d9681868250fec2c9c27d7998db8"
  },
  "admission_landing": {
   "branch": "plans/ea-merge2-apply-20261116",
@@ -35,5 +35,13 @@
   "The decision entry is DL-2404, which DL-096 makes Jared's decision entry for this family.",
   "registry_before is the registry at this commit's parent. If main's registry moves before the landing, the writer runs again on the new base and this record, its entry and the pins are taken again.",
   "Written under DL-077. The seal check recomputes completeness from the pinned assessment; the two fields ending in _at_recording are informational only."
- ]
+ ],
+ "evidence_maintenance": {
+  "authority": "MERGE2-FIX1",
+  "source_commit": "0c904de00426b0089ba5d56349fda8ea16cc9f88",
+  "source_record_sha256": "ac41a96c8b631ff993cb7dcd258d8567891056907e7bb1916336ec1f981643da",
+  "source_assessment_sha256": "10eb32080f205a9772efc1bd023480485d651f962d038f97f1969916323ec340",
+  "source_decision_section_sha256": "9d5e667eb0620056c52dac0ad55b8b7496c7cab466b7481419fa64c05914cf44",
+  "original_registry_checkpoints_preserved": true
+ }
 }

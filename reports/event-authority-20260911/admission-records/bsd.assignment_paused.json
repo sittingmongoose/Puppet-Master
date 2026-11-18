@@ -4,7 +4,7 @@
  "family_id": "event-family-bsd-assignment-paused",
  "implementation_receipt_sha256": "dceb7f21436cbe126c23822e62caa1b6dedcb45fefae3005c1804576ca34d827",
  "decision_ref": "Plans/Decision_Log.md#DL-2210",
- "decision_section_sha256": "0f4b842ca6821065e777ea76868d0646abdac9e98049a0d13d3a89599600523f",
+ "decision_section_sha256": "8c1bcb93b1c81007024a63f9758b77ffd558b7035b55c3a84e5809103b8c4406",
  "registry_before": {
   "revision": "2026-11-16.73",
   "sha256": "e2ee0201d30caca3d6a70103a152c791ccbaefec6638cc2b6f72ce987bb97dc4",
@@ -18,7 +18,7 @@
  "registry_row_sha256": "f85dc3293e33b09188f5a1e17f6a8d59134f7c049683ad90be220213ff26436e",
  "depth_assessment": {
   "path": "reports/event-authority-20261116/admission-merge-2/depth/bsd.assignment_paused.json",
-  "sha256": "8331c26bf1d37b59ea8e79e38fda4633b840134dbe5eb34d2749ac21b568c987"
+  "sha256": "2fe0c8deaafaf44103a1a97931a05aa889ed387f116670358ee8e7d39023174c"
  },
  "admission_landing": {
   "branch": "plans/ea-merge2-apply-20261116",
@@ -35,5 +35,13 @@
   "The decision entry is DL-2210, which DL-096 makes Jared's decision entry for this family.",
   "registry_before is the registry at this commit's parent. If main's registry moves before the landing, the writer runs again on the new base and this record, its entry and the pins are taken again.",
   "Written under DL-077. The seal check recomputes completeness from the pinned assessment; the two fields ending in _at_recording are informational only."
- ]
+ ],
+ "evidence_maintenance": {
+  "authority": "MERGE2-FIX1",
+  "source_commit": "0c904de00426b0089ba5d56349fda8ea16cc9f88",
+  "source_record_sha256": "6cc417aac89b43850cca3adfa4afd4a30d6dde151efb722f630231c007f4acba",
+  "source_assessment_sha256": "8331c26bf1d37b59ea8e79e38fda4633b840134dbe5eb34d2749ac21b568c987",
+  "source_decision_section_sha256": "0f4b842ca6821065e777ea76868d0646abdac9e98049a0d13d3a89599600523f",
+  "original_registry_checkpoints_preserved": true
+ }
 }

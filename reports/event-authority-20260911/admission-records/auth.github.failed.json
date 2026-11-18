@@ -4,7 +4,7 @@
  "family_id": "event-family-auth-github-failed",
  "implementation_receipt_sha256": "dceb7f21436cbe126c23822e62caa1b6dedcb45fefae3005c1804576ca34d827",
  "decision_ref": "Plans/Decision_Log.md#DL-2148",
- "decision_section_sha256": "3d8aa7450e0b5f6338e7c5da42672893cd28d349ff092624fb9e6e6d33c13939",
+ "decision_section_sha256": "6f2c223ef26dc645f085561f26bb070708a2a0afa25fe842cfe31dd6b4279157",
  "registry_before": {
   "revision": "2026-11-16.11",
   "sha256": "8e33379963ef36eab321738cc63d1b8da69882db8ab203c8060fee085a455389",
@@ -18,7 +18,7 @@
  "registry_row_sha256": "d6ea21fb565a0dd737fef672e1bba9449619490511f69536962d292865adda58",
  "depth_assessment": {
   "path": "reports/event-authority-20261116/admission-merge-2/depth/auth.github.failed.json",
-  "sha256": "09a8c61129a35d7783cefed1ee94916ac3cc47b9860419ba78b84d28b45fbd97"
+  "sha256": "421c03f87fd55fcc61161b5ce070f1937093e96fdcfffdf2be71f737ece55c3a"
  },
  "admission_landing": {
   "branch": "plans/ea-merge2-apply-20261116",
@@ -35,5 +35,13 @@
   "The decision entry is DL-2148, which DL-096 makes Jared's decision entry for this family.",
   "registry_before is the registry at this commit's parent. If main's registry moves before the landing, the writer runs again on the new base and this record, its entry and the pins are taken again.",
   "Written under DL-077. The seal check recomputes completeness from the pinned assessment; the two fields ending in _at_recording are informational only."
- ]
+ ],
+ "evidence_maintenance": {
+  "authority": "MERGE2-FIX1",
+  "source_commit": "0c904de00426b0089ba5d56349fda8ea16cc9f88",
+  "source_record_sha256": "9adedae0628be9558643236a9181eab865698872d40de0d3eaf59e55ffe68a1b",
+  "source_assessment_sha256": "09a8c61129a35d7783cefed1ee94916ac3cc47b9860419ba78b84d28b45fbd97",
+  "source_decision_section_sha256": "3d8aa7450e0b5f6338e7c5da42672893cd28d349ff092624fb9e6e6d33c13939",
+  "original_registry_checkpoints_preserved": true
+ }
 }

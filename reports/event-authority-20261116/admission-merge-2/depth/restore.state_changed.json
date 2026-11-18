@@ -5,9 +5,9 @@
  "merge": "admission-merge-2",
  "registry": {
   "path": "Plans/event_family_registry.json",
-  "revision": "2026-11-16.234",
-  "sha256": "83ee98616bc80d5cf211e7ec7e6b71e27c18a0a62645eec00bd8c98d0bd422b4",
-  "family_count": 453,
+  "revision": "2026-11-18.2",
+  "sha256": "ec21cf1a5b42b3e68a5564a847b4798dff968612d11d438bc7075b89196f9602",
+  "family_count": 518,
   "row_pointer": "#/families/452"
  },
  "base_commit": "45b4ccf25270c486dbc682805cd455ce4ca25fb0",
@@ -22,17 +22,27 @@
     "membership_version": {
      "status": "PASS",
      "representation": "exact_registry_membership",
-     "finding": "Registered at registry revision 2026-11-16.234 as #/families/452 (canonical row SHA-256 b075b7d95e309aefe0e7a4e563930bd2d53300d8cd1b038cd92633a92f3c9281); before this commit the family was absent.",
+     "finding": "Currently registered at 2026-11-18.2 as #/families/452 (canonical row SHA-256 b075b7d95e309aefe0e7a4e563930bd2d53300d8cd1b038cd92633a92f3c9281). Original one-family admission checkpoints remain in the family record and immutable Git source.",
      "evidence": [
       {
        "path": "Plans/event_family_registry.json",
        "json_pointer": "#/families/452",
-       "line_start": 29125,
-       "line_end": 29207,
+       "line_start": 29175,
+       "line_end": 29257,
        "quote": "\"event_type\": \"restore.state_changed\"",
-       "quote_line": 29128,
-       "file_sha256": "83ee98616bc80d5cf211e7ec7e6b71e27c18a0a62645eec00bd8c98d0bd422b4",
-       "quote_check": "exact"
+       "quote_line": 29178,
+       "file_sha256": "ec21cf1a5b42b3e68a5564a847b4798dff968612d11d438bc7075b89196f9602",
+       "quote_check": "exact",
+       "source_citation": {
+        "path": "Plans/event_family_registry.json",
+        "json_pointer": "#/families/452",
+        "line_start": 29125,
+        "line_end": 29207,
+        "quote": "\"event_type\": \"restore.state_changed\"",
+        "quote_line": 29128,
+        "file_sha256": "83ee98616bc80d5cf211e7ec7e6b71e27c18a0a62645eec00bd8c98d0bd422b4",
+        "quote_check": "exact"
+       }
       }
      ]
     },
@@ -44,12 +54,34 @@
       {
        "path": "Plans/Backup_Restore_System.md",
        "unit": "BRS-1410",
-       "line_start": 1176,
-       "line_end": 1176,
-       "quote": "canonical_text: 'Newly authored owner contract for restore.state_changed@1.0.0, prepared without admission, authorized",
-       "file_sha256": "cafacb59720399f0a190bb0bf2905d5d47775b266496840296faff5501c5a828",
+       "line_start": 1174,
+       "line_end": 1174,
+       "quote": "canonical_text: 'Newly authored owner contract for restore.state_changed@1.0.0, prepared without admission before the 2026-11-18 registration, authorized",
+       "file_sha256": "cc93ce72e2d1fe184527e789f4267280b454784a5949fc9004d4fdbcd2590a98",
        "quote_check": "exact",
-       "quote_scope": "unit BRS-1410, Plans/Backup_Restore_System.md:1169-1349"
+       "quote_scope": "unit BRS-1410, Plans/Backup_Restore_System.md:1167-1346",
+       "source_citation": {
+        "path": "Plans/Backup_Restore_System.md",
+        "unit": "BRS-1410",
+        "line_start": 1176,
+        "line_end": 1176,
+        "quote": "canonical_text: 'Newly authored owner contract for restore.state_changed@1.0.0, prepared without admission, authorized",
+        "file_sha256": "cafacb59720399f0a190bb0bf2905d5d47775b266496840296faff5501c5a828",
+        "quote_check": "exact",
+        "quote_scope": "unit BRS-1410, Plans/Backup_Restore_System.md:1169-1349"
+       },
+       "reanchor": {
+        "method": "recited_authorized_owner_change",
+        "unit": "BRS-1410",
+        "source_commit": "0c904de00426b0089ba5d56349fda8ea16cc9f88",
+        "owner_change_commit": "55aecc69b0ed447088ffd3c364fe60c06739018a",
+        "before_unit_sha256": "2a5f05a69c34ca90ce6269f52796bea81f5b9167c0c25bb42cfaa057a4a3ca68",
+        "after_unit_sha256": "2b31cc78b36583d84bb6cd39ff2b364302ea23f57a491e27a1ad2b615c65aa60",
+        "history": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/merge2-fix1/evidence/reanchor-history/Plans_Backup_Restore_System.md-BRS-1410.log",
+        "why": "The approved owner edit makes preparation-time nonmembership dated history and conditions present refusal on actual membership; the cited contract role and all other source, identity, retention and native fences remain. This carries the reviewed cell without changing its verdict.",
+        "old_quote": "canonical_text: 'Newly authored owner contract for restore.state_changed@1.0.0, prepared without admission, authorized",
+        "new_quote": "canonical_text: 'Newly authored owner contract for restore.state_changed@1.0.0, prepared without admission before the 2026-11-18 registration, authorized"
+       }
       }
      ],
      "carried_from": {
@@ -67,12 +99,20 @@
       {
        "path": "Plans/Backup_Restore_System.md",
        "unit": "BRS-1410",
-       "line_start": 1207,
-       "line_end": 1207,
+       "line_start": 1205,
+       "line_end": 1205,
        "quote": "Producer: the sole newly authored BackupCoordinator.restore_phase_commit@1.0.0 method of the existing domain owner.",
-       "file_sha256": "cafacb59720399f0a190bb0bf2905d5d47775b266496840296faff5501c5a828",
+       "file_sha256": "cc93ce72e2d1fe184527e789f4267280b454784a5949fc9004d4fdbcd2590a98",
        "quote_check": "exact",
-       "quote_scope": "unit BRS-1410, Plans/Backup_Restore_System.md:1169-1349"
+       "quote_scope": "unit BRS-1410, Plans/Backup_Restore_System.md:1167-1346",
+       "source_citation": {
+        "path": "Plans/Backup_Restore_System.md",
+        "unit": "BRS-1410",
+        "line_start": 1207,
+        "line_end": 1207,
+        "quote": "Producer: the sole newly authored BackupCoordinator.restore_phase_commit@1.0.0 method of the existing domain owner.",
+        "file_sha256": "cafacb59720399f0a190bb0bf2905d5d47775b266496840296faff5501c5a828"
+       }
       }
      ],
      "carried_from": {
@@ -90,12 +130,20 @@
       {
        "path": "Plans/Backup_Restore_System.md",
        "unit": "BRS-1410",
-       "line_start": 1191,
-       "line_end": 1191,
+       "line_start": 1189,
+       "line_end": 1189,
        "quote": "Historical lookup authenticates retained provenance and does not reacquire expired live authority. Payload: Plans/event_payloads/w3e/restore_state_changed.schema.json,",
-       "file_sha256": "cafacb59720399f0a190bb0bf2905d5d47775b266496840296faff5501c5a828",
+       "file_sha256": "cc93ce72e2d1fe184527e789f4267280b454784a5949fc9004d4fdbcd2590a98",
        "quote_check": "exact",
-       "quote_scope": "unit BRS-1410, Plans/Backup_Restore_System.md:1169-1349"
+       "quote_scope": "unit BRS-1410, Plans/Backup_Restore_System.md:1167-1346",
+       "source_citation": {
+        "path": "Plans/Backup_Restore_System.md",
+        "unit": "BRS-1410",
+        "line_start": 1191,
+        "line_end": 1191,
+        "quote": "Historical lookup authenticates retained provenance and does not reacquire expired live authority. Payload: Plans/event_payloads/w3e/restore_state_changed.schema.json,",
+        "file_sha256": "cafacb59720399f0a190bb0bf2905d5d47775b266496840296faff5501c5a828"
+       }
       },
       {
        "path": "Plans/event_payloads/w3e/restore_state_changed.schema.json",
@@ -105,7 +153,15 @@
        "quote": "\"additionalProperties\": false,",
        "file_sha256": "6c5cc9064a204eb184bd860bc79981735d0375fad1da42a7cae39b02bb46ced4",
        "quote_check": "exact",
-       "quote_scope": "document"
+       "quote_scope": "document",
+       "source_citation": {
+        "path": "Plans/event_payloads/w3e/restore_state_changed.schema.json",
+        "unit": "#/",
+        "line_start": 3,
+        "line_end": 3,
+        "quote": "\"additionalProperties\": false,",
+        "file_sha256": "6c5cc9064a204eb184bd860bc79981735d0375fad1da42a7cae39b02bb46ced4"
+       }
       }
      ],
      "carried_from": {
@@ -123,12 +179,20 @@
       {
        "path": "Plans/Backup_Restore_System.md",
        "unit": "BRS-1410",
-       "line_start": 1223,
-       "line_end": 1223,
+       "line_start": 1220,
+       "line_end": 1220,
        "quote": "Identity: owner_operation_id is family-operation@1: plus lowercase SHA-256 of exact UTF-8 bytes \"pm.w3e.owner_fact.v1\\0\"",
-       "file_sha256": "cafacb59720399f0a190bb0bf2905d5d47775b266496840296faff5501c5a828",
+       "file_sha256": "cc93ce72e2d1fe184527e789f4267280b454784a5949fc9004d4fdbcd2590a98",
        "quote_check": "exact",
-       "quote_scope": "unit BRS-1410, Plans/Backup_Restore_System.md:1169-1349"
+       "quote_scope": "unit BRS-1410, Plans/Backup_Restore_System.md:1167-1346",
+       "source_citation": {
+        "path": "Plans/Backup_Restore_System.md",
+        "unit": "BRS-1410",
+        "line_start": 1223,
+        "line_end": 1223,
+        "quote": "Identity: owner_operation_id is family-operation@1: plus lowercase SHA-256 of exact UTF-8 bytes \"pm.w3e.owner_fact.v1\\0\"",
+        "file_sha256": "cafacb59720399f0a190bb0bf2905d5d47775b266496840296faff5501c5a828"
+       }
       }
      ],
      "carried_from": {
@@ -146,12 +210,20 @@
       {
        "path": "Plans/Backup_Restore_System.md",
        "unit": "BRS-1410",
-       "line_start": 1240,
-       "line_end": 1240,
+       "line_start": 1237,
+       "line_end": 1237,
        "quote": "Idempotency/replay: same selected identity and semantic digest returns the immutable original result and first",
-       "file_sha256": "cafacb59720399f0a190bb0bf2905d5d47775b266496840296faff5501c5a828",
+       "file_sha256": "cc93ce72e2d1fe184527e789f4267280b454784a5949fc9004d4fdbcd2590a98",
        "quote_check": "exact",
-       "quote_scope": "unit BRS-1410, Plans/Backup_Restore_System.md:1169-1349"
+       "quote_scope": "unit BRS-1410, Plans/Backup_Restore_System.md:1167-1346",
+       "source_citation": {
+        "path": "Plans/Backup_Restore_System.md",
+        "unit": "BRS-1410",
+        "line_start": 1240,
+        "line_end": 1240,
+        "quote": "Idempotency/replay: same selected identity and semantic digest returns the immutable original result and first",
+        "file_sha256": "cafacb59720399f0a190bb0bf2905d5d47775b266496840296faff5501c5a828"
+       }
       }
      ],
      "carried_from": {
@@ -169,32 +241,56 @@
       {
        "path": "Plans/Backup_Restore_System.md",
        "unit": "BRS-1410",
-       "line_start": 1248,
-       "line_end": 1248,
+       "line_start": 1245,
+       "line_end": 1245,
        "quote": "Retention: Project editions take retention_policy_ref=RP-OPERATIONAL-2555D@1.0.0 under the Storage Project first-save anchor adapter (each entry starts its clock at its own saved state change), sharing the existing 2,000,000-entry seven-year Project allowance; application editions take retention_policy_ref=RP-OPERATIONAL-SECURITY-APPLICATION-2555D@1.0.0 in the one separate 2,000,000-entry applicat",
-       "file_sha256": "cafacb59720399f0a190bb0bf2905d5d47775b266496840296faff5501c5a828",
+       "file_sha256": "cc93ce72e2d1fe184527e789f4267280b454784a5949fc9004d4fdbcd2590a98",
        "quote_check": "exact",
-       "quote_scope": "unit BRS-1410, Plans/Backup_Restore_System.md:1169-1349"
+       "quote_scope": "unit BRS-1410, Plans/Backup_Restore_System.md:1167-1346",
+       "source_citation": {
+        "path": "Plans/Backup_Restore_System.md",
+        "unit": "BRS-1410",
+        "line_start": 1248,
+        "line_end": 1248,
+        "quote": "Retention: Project editions take retention_policy_ref=RP-OPERATIONAL-2555D@1.0.0 under the Storage Project first-save anchor adapter (each entry starts its clock at its own saved state change), sharing the existing 2,000,000-entry seven-year Project allowance; application editions take retention_policy_ref=RP-OPERATIONAL-SECURITY-APPLICATION-2555D@1.0.0 in the one separate 2,000,000-entry applicat",
+        "file_sha256": "cafacb59720399f0a190bb0bf2905d5d47775b266496840296faff5501c5a828"
+       }
       },
       {
        "path": "Plans/Contracts_V0.md",
        "unit": "CV-1410",
-       "line_start": 48911,
-       "line_end": 48911,
+       "line_start": 48912,
+       "line_end": 48912,
        "quote": "retention_policy_ref=RP-OPERATIONAL-2555D@1.0.0 under the Storage Project first-save anchor adapter (each entry starts its clock at its own saved state change), sharing the existing 2,000,000-entry seven-year Project allowance; application editions take retention_policy_ref=RP-OPERATIONAL-SECURITY-APPLICATION-2555D@1.0.0 in the one separate 2,000,000-entry application allowance app:operational_sec",
-       "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a",
+       "file_sha256": "4ae2225d8ed19b6df971b6c32797aae6882d175264ff2c2e9a2045650d735e67",
        "quote_check": "exact",
-       "quote_scope": "unit CV-1410, Plans/Contracts_V0.md:48893-48953"
+       "quote_scope": "unit CV-1410, Plans/Contracts_V0.md:48894-48954",
+       "source_citation": {
+        "path": "Plans/Contracts_V0.md",
+        "unit": "CV-1410",
+        "line_start": 48911,
+        "line_end": 48911,
+        "quote": "retention_policy_ref=RP-OPERATIONAL-2555D@1.0.0 under the Storage Project first-save anchor adapter (each entry starts its clock at its own saved state change), sharing the existing 2,000,000-entry seven-year Project allowance; application editions take retention_policy_ref=RP-OPERATIONAL-SECURITY-APPLICATION-2555D@1.0.0 in the one separate 2,000,000-entry application allowance app:operational_sec",
+        "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a"
+       }
       },
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-1410",
-       "line_start": 70923,
-       "line_end": 70923,
+       "line_start": 70416,
+       "line_end": 70416,
        "quote": "retention_policy_ref=RP-OPERATIONAL-2555D@1.0.0 under the Storage Project first-save anchor adapter (each entry starts its clock at its own saved state change), sharing the existing 2,000,000-entry seven-year Project allowance; application editions take retention_policy_ref=RP-OPERATIONAL-SECURITY-APPLICATION-2555D@1.0.0 in the one separate 2,000,000-entry application allowance app:operational_sec",
-       "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707",
+       "file_sha256": "73ee6d097e08d31fd93301d05d2cd2632dd46e5a22ba3ea405ffadda4a0a9db2",
        "quote_check": "exact",
-       "quote_scope": "unit SP-1410, Plans/storage-plan.md:70911-70999"
+       "quote_scope": "unit SP-1410, Plans/storage-plan.md:70404-70492",
+       "source_citation": {
+        "path": "Plans/storage-plan.md",
+        "unit": "SP-1410",
+        "line_start": 70923,
+        "line_end": 70923,
+        "quote": "retention_policy_ref=RP-OPERATIONAL-2555D@1.0.0 under the Storage Project first-save anchor adapter (each entry starts its clock at its own saved state change), sharing the existing 2,000,000-entry seven-year Project allowance; application editions take retention_policy_ref=RP-OPERATIONAL-SECURITY-APPLICATION-2555D@1.0.0 in the one separate 2,000,000-entry application allowance app:operational_sec",
+        "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+       }
       }
      ],
      "carried_from": {
@@ -212,12 +308,20 @@
       {
        "path": "Plans/Backup_Restore_System.md",
        "unit": "BRS-1410",
-       "line_start": 1252,
-       "line_end": 1252,
+       "line_start": 1249,
+       "line_end": 1249,
        "quote": "Redaction/custody: BackupCoordinator on the actual Server holds the original accepted intent, complete before/after",
-       "file_sha256": "cafacb59720399f0a190bb0bf2905d5d47775b266496840296faff5501c5a828",
+       "file_sha256": "cc93ce72e2d1fe184527e789f4267280b454784a5949fc9004d4fdbcd2590a98",
        "quote_check": "exact",
-       "quote_scope": "unit BRS-1410, Plans/Backup_Restore_System.md:1169-1349"
+       "quote_scope": "unit BRS-1410, Plans/Backup_Restore_System.md:1167-1346",
+       "source_citation": {
+        "path": "Plans/Backup_Restore_System.md",
+        "unit": "BRS-1410",
+        "line_start": 1252,
+        "line_end": 1252,
+        "quote": "Redaction/custody: BackupCoordinator on the actual Server holds the original accepted intent, complete before/after",
+        "file_sha256": "cafacb59720399f0a190bb0bf2905d5d47775b266496840296faff5501c5a828"
+       }
       }
      ],
      "carried_from": {
@@ -235,12 +339,20 @@
       {
        "path": "Plans/Backup_Restore_System.md",
        "unit": "BRS-1410",
-       "line_start": 1191,
-       "line_end": 1191,
+       "line_start": 1189,
+       "line_end": 1189,
        "quote": "Historical lookup authenticates retained provenance and does not reacquire expired live authority. Payload: Plans/event_payloads/w3e/restore_state_changed.schema.json,",
-       "file_sha256": "cafacb59720399f0a190bb0bf2905d5d47775b266496840296faff5501c5a828",
+       "file_sha256": "cc93ce72e2d1fe184527e789f4267280b454784a5949fc9004d4fdbcd2590a98",
        "quote_check": "exact",
-       "quote_scope": "unit BRS-1410, Plans/Backup_Restore_System.md:1169-1349"
+       "quote_scope": "unit BRS-1410, Plans/Backup_Restore_System.md:1167-1346",
+       "source_citation": {
+        "path": "Plans/Backup_Restore_System.md",
+        "unit": "BRS-1410",
+        "line_start": 1191,
+        "line_end": 1191,
+        "quote": "Historical lookup authenticates retained provenance and does not reacquire expired live authority. Payload: Plans/event_payloads/w3e/restore_state_changed.schema.json,",
+        "file_sha256": "cafacb59720399f0a190bb0bf2905d5d47775b266496840296faff5501c5a828"
+       }
       }
      ],
      "carried_from": {
@@ -258,22 +370,38 @@
       {
        "path": "Plans/Backup_Restore_System.md",
        "unit": "BRS-1410",
-       "line_start": 1264,
-       "line_end": 1264,
+       "line_start": 1261,
+       "line_end": 1261,
        "quote": "Consumer/checkpoint: newly authored projector.w3e.restore_state_changed.history@1.0.0 and reader.w3e.restore_state_changed.history@1.0.0",
-       "file_sha256": "cafacb59720399f0a190bb0bf2905d5d47775b266496840296faff5501c5a828",
+       "file_sha256": "cc93ce72e2d1fe184527e789f4267280b454784a5949fc9004d4fdbcd2590a98",
        "quote_check": "exact",
-       "quote_scope": "unit BRS-1410, Plans/Backup_Restore_System.md:1169-1349"
+       "quote_scope": "unit BRS-1410, Plans/Backup_Restore_System.md:1167-1346",
+       "source_citation": {
+        "path": "Plans/Backup_Restore_System.md",
+        "unit": "BRS-1410",
+        "line_start": 1264,
+        "line_end": 1264,
+        "quote": "Consumer/checkpoint: newly authored projector.w3e.restore_state_changed.history@1.0.0 and reader.w3e.restore_state_changed.history@1.0.0",
+        "file_sha256": "cafacb59720399f0a190bb0bf2905d5d47775b266496840296faff5501c5a828"
+       }
       },
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-1410",
-       "line_start": 70937,
-       "line_end": 70937,
+       "line_start": 70430,
+       "line_end": 70430,
        "quote": "The exact checkpoint in derived redb checkpoints is w3e_restore_state_changed_checkpoint.v1:{hex(storage_instance_id)}:{scope_partition}:{hex(server_id)}",
-       "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707",
+       "file_sha256": "73ee6d097e08d31fd93301d05d2cd2632dd46e5a22ba3ea405ffadda4a0a9db2",
        "quote_check": "exact",
-       "quote_scope": "unit SP-1410, Plans/storage-plan.md:70911-70999"
+       "quote_scope": "unit SP-1410, Plans/storage-plan.md:70404-70492",
+       "source_citation": {
+        "path": "Plans/storage-plan.md",
+        "unit": "SP-1410",
+        "line_start": 70937,
+        "line_end": 70937,
+        "quote": "The exact checkpoint in derived redb checkpoints is w3e_restore_state_changed_checkpoint.v1:{hex(storage_instance_id)}:{scope_partition}:{hex(server_id)}",
+        "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+       }
       }
      ],
      "carried_from": {
@@ -291,12 +419,20 @@
       {
        "path": "Plans/Backup_Restore_System.md",
        "unit": "BRS-1410",
-       "line_start": 1277,
-       "line_end": 1277,
+       "line_start": 1274,
+       "line_end": 1274,
        "quote": "Compatibility/withdrawal: no legacy writer or event alias is claimed for this newly authored family. Exact retained",
-       "file_sha256": "cafacb59720399f0a190bb0bf2905d5d47775b266496840296faff5501c5a828",
+       "file_sha256": "cc93ce72e2d1fe184527e789f4267280b454784a5949fc9004d4fdbcd2590a98",
        "quote_check": "exact",
-       "quote_scope": "unit BRS-1410, Plans/Backup_Restore_System.md:1169-1349"
+       "quote_scope": "unit BRS-1410, Plans/Backup_Restore_System.md:1167-1346",
+       "source_citation": {
+        "path": "Plans/Backup_Restore_System.md",
+        "unit": "BRS-1410",
+        "line_start": 1277,
+        "line_end": 1277,
+        "quote": "Compatibility/withdrawal: no legacy writer or event alias is claimed for this newly authored family. Exact retained",
+        "file_sha256": "cafacb59720399f0a190bb0bf2905d5d47775b266496840296faff5501c5a828"
+       }
       }
      ],
      "carried_from": {
@@ -314,12 +450,20 @@
       {
        "path": "Plans/Contracts_V0.md",
        "unit": "CV-1410",
-       "line_start": 48911,
-       "line_end": 48911,
+       "line_start": 48912,
+       "line_end": 48912,
        "quote": "Phase 2 (2026-11-13) runs the executable synthetic oracles of this family in scripts/pm_w3e_event_oracles.py; every refusal is one named single-predicate row of a generated Method B guard table (scripts/pm_w3e_table_*.py) proved by the gated shared scripts/pm_guard_isolation.py through scripts/pm-w3e-guard-proof.py, and rows no input can refuse first stay alone in their own table with a written pr",
-       "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a",
+       "file_sha256": "4ae2225d8ed19b6df971b6c32797aae6882d175264ff2c2e9a2045650d735e67",
        "quote_check": "exact",
-       "quote_scope": "unit CV-1410, Plans/Contracts_V0.md:48893-48953"
+       "quote_scope": "unit CV-1410, Plans/Contracts_V0.md:48894-48954",
+       "source_citation": {
+        "path": "Plans/Contracts_V0.md",
+        "unit": "CV-1410",
+        "line_start": 48911,
+        "line_end": 48911,
+        "quote": "Phase 2 (2026-11-13) runs the executable synthetic oracles of this family in scripts/pm_w3e_event_oracles.py; every refusal is one named single-predicate row of a generated Method B guard table (scripts/pm_w3e_table_*.py) proved by the gated shared scripts/pm_guard_isolation.py through scripts/pm-w3e-guard-proof.py, and rows no input can refuse first stay alone in their own table with a written pr",
+        "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a"
+       }
       },
       {
        "path": "scripts/pm_pnc019_s4o3_store.py",
@@ -328,7 +472,14 @@
        "quote": "class Store:",
        "file_sha256": "10f10d033d805d9830f26d0c9c1fbe1cc8560ed5c943c81af935e56aa4684663",
        "quote_check": "exact",
-       "quote_scope": "document"
+       "quote_scope": "document",
+       "source_citation": {
+        "path": "scripts/pm_pnc019_s4o3_store.py",
+        "line_start": 144,
+        "line_end": 144,
+        "quote": "class Store:",
+        "file_sha256": "10f10d033d805d9830f26d0c9c1fbe1cc8560ed5c943c81af935e56aa4684663"
+       }
       },
       {
        "path": "scripts/pm_pnc019_s4o3_store.py",
@@ -337,7 +488,14 @@
        "quote": "def read(self, generation, original_ref):",
        "file_sha256": "10f10d033d805d9830f26d0c9c1fbe1cc8560ed5c943c81af935e56aa4684663",
        "quote_check": "exact",
-       "quote_scope": "document"
+       "quote_scope": "document",
+       "source_citation": {
+        "path": "scripts/pm_pnc019_s4o3_store.py",
+        "line_start": 249,
+        "line_end": 249,
+        "quote": "def read(self, generation, original_ref):",
+        "file_sha256": "10f10d033d805d9830f26d0c9c1fbe1cc8560ed5c943c81af935e56aa4684663"
+       }
       },
       {
        "path": "scripts/pm_pnc019_s4o3_oracles.py",
@@ -346,7 +504,14 @@
        "quote": "def run_family(adapter, family, trace=None, cut=None):",
        "file_sha256": "1fea5e492c2d45f94c41d59184da26081b7b2f30833fccd5142167bcf4cb66f6",
        "quote_check": "exact",
-       "quote_scope": "document"
+       "quote_scope": "document",
+       "source_citation": {
+        "path": "scripts/pm_pnc019_s4o3_oracles.py",
+        "line_start": 142,
+        "line_end": 142,
+        "quote": "def run_family(adapter, family, trace=None, cut=None):",
+        "file_sha256": "1fea5e492c2d45f94c41d59184da26081b7b2f30833fccd5142167bcf4cb66f6"
+       }
       },
       {
        "path": "scripts/pm-pnc019-s4o3-proof.py",
@@ -355,16 +520,30 @@
        "quote": "def mutations(out):",
        "file_sha256": "c3d51d67e679729c0bd7775e06e823726e79741566e4b4036aec04e0d6736487",
        "quote_check": "exact",
-       "quote_scope": "document"
+       "quote_scope": "document",
+       "source_citation": {
+        "path": "scripts/pm-pnc019-s4o3-proof.py",
+        "line_start": 103,
+        "line_end": 103,
+        "quote": "def mutations(out):",
+        "file_sha256": "c3d51d67e679729c0bd7775e06e823726e79741566e4b4036aec04e0d6736487"
+       }
       },
       {
        "path": "scripts/pm_w3e_event_oracles.py",
        "line_start": 631,
        "line_end": 631,
        "quote": "RESULT_FIELDS = {",
-       "file_sha256": "cfdd3aa717c4e810169a3bd74da0cf77a43327a344daf0c02b8a019c55988f9a",
+       "file_sha256": "f461bff17b1f3d6e46535a9761a6993f1c3db9a8d1d597e162c940d1343cde5c",
        "quote_check": "exact",
-       "quote_scope": "document"
+       "quote_scope": "document",
+       "source_citation": {
+        "path": "scripts/pm_w3e_event_oracles.py",
+        "line_start": 631,
+        "line_end": 631,
+        "quote": "RESULT_FIELDS = {",
+        "file_sha256": "cfdd3aa717c4e810169a3bd74da0cf77a43327a344daf0c02b8a019c55988f9a"
+       }
       },
       {
        "path": "scripts/pm_pnc019_s4o3_domain_cases.py",
@@ -373,7 +552,14 @@
        "quote": "RULES = (",
        "file_sha256": "277b6d33314f4364caa287d2d6aec6f51affc193af04f9d163deedff71c05d9d",
        "quote_check": "exact",
-       "quote_scope": "document"
+       "quote_scope": "document",
+       "source_citation": {
+        "path": "scripts/pm_pnc019_s4o3_domain_cases.py",
+        "line_start": 14,
+        "line_end": 14,
+        "quote": "RULES = (",
+        "file_sha256": "277b6d33314f4364caa287d2d6aec6f51affc193af04f9d163deedff71c05d9d"
+       }
       },
       {
        "path": "scripts/pm_pnc019_s4o3_owner.py",
@@ -382,7 +568,14 @@
        "quote": "RESTORE_REFS = (",
        "file_sha256": "c6dcfbc63623ce82f521c89723164ba1370e01fb03a439d2cb1c392f3aed68e2",
        "quote_check": "exact",
-       "quote_scope": "document"
+       "quote_scope": "document",
+       "source_citation": {
+        "path": "scripts/pm_pnc019_s4o3_owner.py",
+        "line_start": 20,
+        "line_end": 20,
+        "quote": "RESTORE_REFS = (",
+        "file_sha256": "c6dcfbc63623ce82f521c89723164ba1370e01fb03a439d2cb1c392f3aed68e2"
+       }
       }
      ],
      "carried_from": {
@@ -394,5 +587,19 @@
     }
    }
   }
- ]
+ ],
+ "source_registry": {
+  "path": "Plans/event_family_registry.json",
+  "revision": "2026-11-16.234",
+  "sha256": "83ee98616bc80d5cf211e7ec7e6b71e27c18a0a62645eec00bd8c98d0bd422b4",
+  "family_count": 453,
+  "row_pointer": "#/families/452"
+ },
+ "evidence_maintenance": {
+  "authority": "MERGE2-FIX1 findings 1/3/5",
+  "source_commit": "0c904de00426b0089ba5d56349fda8ea16cc9f88",
+  "source_assessment_sha256": "b0ba0749cafd9b5d8261965271c7aae8e0febc14f159fb0173cf3296ad6dadcf",
+  "native_execution": "NOT_RUN",
+  "verdicts_changed": false
+ }
 }

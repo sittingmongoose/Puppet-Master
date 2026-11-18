@@ -4,7 +4,7 @@
  "family_id": "event-family-gate-failed",
  "implementation_receipt_sha256": "dceb7f21436cbe126c23822e62caa1b6dedcb45fefae3005c1804576ca34d827",
  "decision_ref": "Plans/Decision_Log.md#DL-2316",
- "decision_section_sha256": "2dc5121374349e48ff1d4a50173040d14240e8a0f998f7db740923bd80b7a081",
+ "decision_section_sha256": "7d789c16eace75381ed340376797c590cfa4555dfd974b9966e06d4788d0a2a9",
  "registry_before": {
   "revision": "2026-11-16.179",
   "sha256": "a1f57f3b16ce4d17a13aa461aca5446bbedcd61d6f17975128c1fd6fc4374b27",
@@ -18,7 +18,7 @@
  "registry_row_sha256": "3102ebc183e82833dd9355c70163aad7ea8ed59a443c3372591af10ee2297d15",
  "depth_assessment": {
   "path": "reports/event-authority-20261116/admission-merge-2/depth/gate.failed.json",
-  "sha256": "36ba9a5933da24c688fcf367ede63f340e5d7d385215f45dea822a784d2493b9"
+  "sha256": "bc16e6691404627b9b317cd51ad6c0273d3d001bd42d6065afd59b2d271e71f7"
  },
  "admission_landing": {
   "branch": "plans/ea-merge2-apply-20261116",
@@ -35,5 +35,13 @@
   "The decision entry is DL-2316, which DL-096 makes Jared's decision entry for this family.",
   "registry_before is the registry at this commit's parent. If main's registry moves before the landing, the writer runs again on the new base and this record, its entry and the pins are taken again.",
   "Written under DL-077. The seal check recomputes completeness from the pinned assessment; the two fields ending in _at_recording are informational only."
- ]
+ ],
+ "evidence_maintenance": {
+  "authority": "MERGE2-FIX1",
+  "source_commit": "0c904de00426b0089ba5d56349fda8ea16cc9f88",
+  "source_record_sha256": "14e9d4b80b9fdeb84db4f662d001e5141b91b4d9cd14be0459e550070ee43076",
+  "source_assessment_sha256": "36ba9a5933da24c688fcf367ede63f340e5d7d385215f45dea822a784d2493b9",
+  "source_decision_section_sha256": "2dc5121374349e48ff1d4a50173040d14240e8a0f998f7db740923bd80b7a081",
+  "original_registry_checkpoints_preserved": true
+ }
 }

@@ -5,9 +5,9 @@
  "merge": "admission-merge-2",
  "registry": {
   "path": "Plans/event_family_registry.json",
-  "revision": "2026-11-16.137",
-  "sha256": "bbe44daa64e385c0833b4ba8dfcd61ba6ec0821b1e5ab4463f4b2e06c4c43046",
-  "family_count": 356,
+  "revision": "2026-11-18.2",
+  "sha256": "ec21cf1a5b42b3e68a5564a847b4798dff968612d11d438bc7075b89196f9602",
+  "family_count": 518,
   "row_pointer": "#/families/355"
  },
  "base_commit": "45b4ccf25270c486dbc682805cd455ce4ca25fb0",
@@ -22,17 +22,27 @@
     "membership_version": {
      "status": "PASS",
      "representation": "exact_registry_membership",
-     "finding": "Registered at registry revision 2026-11-16.137 as #/families/355 (canonical row SHA-256 c09b7bcf120ab7694b79e51ba93f9c5b05d19b34e55a809a7ecc3233ae3c65d3); before this commit the family was absent.",
+     "finding": "Currently registered at 2026-11-18.2 as #/families/355 (canonical row SHA-256 c09b7bcf120ab7694b79e51ba93f9c5b05d19b34e55a809a7ecc3233ae3c65d3). Original one-family admission checkpoints remain in the family record and immutable Git source.",
      "evidence": [
       {
        "path": "Plans/event_family_registry.json",
        "json_pointer": "#/families/355",
-       "line_start": 23954,
-       "line_end": 23993,
+       "line_start": 23998,
+       "line_end": 24037,
        "quote": "\"event_type\": \"concern.updated\"",
-       "quote_line": 23957,
-       "file_sha256": "bbe44daa64e385c0833b4ba8dfcd61ba6ec0821b1e5ab4463f4b2e06c4c43046",
-       "quote_check": "exact"
+       "quote_line": 24001,
+       "file_sha256": "ec21cf1a5b42b3e68a5564a847b4798dff968612d11d438bc7075b89196f9602",
+       "quote_check": "exact",
+       "source_citation": {
+        "path": "Plans/event_family_registry.json",
+        "json_pointer": "#/families/355",
+        "line_start": 23954,
+        "line_end": 23993,
+        "quote": "\"event_type\": \"concern.updated\"",
+        "quote_line": 23957,
+        "file_sha256": "bbe44daa64e385c0833b4ba8dfcd61ba6ec0821b1e5ab4463f4b2e06c4c43046",
+        "quote_check": "exact"
+       }
       }
      ]
     },
@@ -44,12 +54,20 @@
       {
        "path": "Plans/FinalGUISpec.md",
        "unit": "F3-714",
-       "line_start": 54068,
-       "line_end": 54068,
+       "line_start": 54054,
+       "line_end": 54054,
        "quote": "Newly authored owner contract for ",
        "quote_check": "exact",
-       "quote_scope": "unit F3-714, Plans/FinalGUISpec.md:54061-54266",
-       "file_sha256": "483180446b9ea96a38be9d03c75a9b126212e08b8266917f8c76e1fc17f2797f"
+       "quote_scope": "unit F3-714, Plans/FinalGUISpec.md:54047-54250",
+       "file_sha256": "98c1784c6b2734d3ec8e4f4052d90ed981d1e4063e83ee81a67e5e051ebb8e10",
+       "source_citation": {
+        "path": "Plans/FinalGUISpec.md",
+        "unit": "F3-714",
+        "line_start": 54068,
+        "line_end": 54068,
+        "quote": "Newly authored owner contract for ",
+        "file_sha256": "483180446b9ea96a38be9d03c75a9b126212e08b8266917f8c76e1fc17f2797f"
+       }
       }
      ],
      "carried_from": {
@@ -67,12 +85,20 @@
       {
        "path": "Plans/FinalGUISpec.md",
        "unit": "F3-714",
-       "line_start": 54128,
-       "line_end": 54128,
+       "line_start": 54113,
+       "line_end": 54113,
        "quote": "Explicitly adopt SP-286/CV-339",
        "quote_check": "exact",
-       "quote_scope": "unit F3-714, Plans/FinalGUISpec.md:54061-54266",
-       "file_sha256": "483180446b9ea96a38be9d03c75a9b126212e08b8266917f8c76e1fc17f2797f"
+       "quote_scope": "unit F3-714, Plans/FinalGUISpec.md:54047-54250",
+       "file_sha256": "98c1784c6b2734d3ec8e4f4052d90ed981d1e4063e83ee81a67e5e051ebb8e10",
+       "source_citation": {
+        "path": "Plans/FinalGUISpec.md",
+        "unit": "F3-714",
+        "line_start": 54128,
+        "line_end": 54128,
+        "quote": "Explicitly adopt SP-286/CV-339",
+        "file_sha256": "483180446b9ea96a38be9d03c75a9b126212e08b8266917f8c76e1fc17f2797f"
+       }
       }
      ],
      "carried_from": {
@@ -90,12 +116,20 @@
       {
        "path": "Plans/FinalGUISpec.md",
        "unit": "F3-714",
-       "line_start": 54089,
-       "line_end": 54090,
+       "line_start": 54075,
+       "line_end": 54076,
        "quote": "Payload and scope:\\\n  \\ the exact closed schema is",
-       "file_sha256": "483180446b9ea96a38be9d03c75a9b126212e08b8266917f8c76e1fc17f2797f",
+       "file_sha256": "98c1784c6b2734d3ec8e4f4052d90ed981d1e4063e83ee81a67e5e051ebb8e10",
        "quote_check": "exact",
-       "quote_scope": "unit F3-714, Plans/FinalGUISpec.md:54061-54266"
+       "quote_scope": "unit F3-714, Plans/FinalGUISpec.md:54047-54250",
+       "source_citation": {
+        "path": "Plans/FinalGUISpec.md",
+        "unit": "F3-714",
+        "line_start": 54089,
+        "line_end": 54090,
+        "quote": "Payload and scope:\\\n  \\ the exact closed schema is",
+        "file_sha256": "483180446b9ea96a38be9d03c75a9b126212e08b8266917f8c76e1fc17f2797f"
+       }
       }
      ],
      "carried_from": {
@@ -113,12 +147,20 @@
       {
        "path": "Plans/FinalGUISpec.md",
        "unit": "F3-714",
-       "line_start": 54092,
-       "line_end": 54093,
+       "line_start": 54078,
+       "line_end": 54079,
        "quote": "scope_partition\\\n  \\ is project~base64url_no_pad(UTF8(project_id))",
-       "file_sha256": "483180446b9ea96a38be9d03c75a9b126212e08b8266917f8c76e1fc17f2797f",
+       "file_sha256": "98c1784c6b2734d3ec8e4f4052d90ed981d1e4063e83ee81a67e5e051ebb8e10",
        "quote_check": "exact",
-       "quote_scope": "unit F3-714, Plans/FinalGUISpec.md:54061-54266"
+       "quote_scope": "unit F3-714, Plans/FinalGUISpec.md:54047-54250",
+       "source_citation": {
+        "path": "Plans/FinalGUISpec.md",
+        "unit": "F3-714",
+        "line_start": 54092,
+        "line_end": 54093,
+        "quote": "scope_partition\\\n  \\ is project~base64url_no_pad(UTF8(project_id))",
+        "file_sha256": "483180446b9ea96a38be9d03c75a9b126212e08b8266917f8c76e1fc17f2797f"
+       }
       }
      ],
      "carried_from": {
@@ -136,12 +178,20 @@
       {
        "path": "Plans/FinalGUISpec.md",
        "unit": "F3-714",
-       "line_start": 54136,
-       "line_end": 54136,
+       "line_start": 54121,
+       "line_end": 54121,
        "quote": "Same scoped key with changed caller semantic body is idempotency_conflict",
        "quote_check": "exact",
-       "quote_scope": "unit F3-714, Plans/FinalGUISpec.md:54061-54266",
-       "file_sha256": "483180446b9ea96a38be9d03c75a9b126212e08b8266917f8c76e1fc17f2797f"
+       "quote_scope": "unit F3-714, Plans/FinalGUISpec.md:54047-54250",
+       "file_sha256": "98c1784c6b2734d3ec8e4f4052d90ed981d1e4063e83ee81a67e5e051ebb8e10",
+       "source_citation": {
+        "path": "Plans/FinalGUISpec.md",
+        "unit": "F3-714",
+        "line_start": 54136,
+        "line_end": 54136,
+        "quote": "Same scoped key with changed caller semantic body is idempotency_conflict",
+        "file_sha256": "483180446b9ea96a38be9d03c75a9b126212e08b8266917f8c76e1fc17f2797f"
+       }
       }
      ],
      "carried_from": {
@@ -159,12 +209,20 @@
       {
        "path": "Plans/FinalGUISpec.md",
        "unit": "F3-714",
-       "line_start": 54221,
-       "line_end": 54221,
+       "line_start": 54205,
+       "line_end": 54205,
        "quote": "\\ binding for `concern.updated` (2026-11-14).\\n\\nEvent history `retention_policy_ref = RP-AUTHORITY-INDEFINITE@1.0.0`,\\",
        "quote_check": "exact",
-       "quote_scope": "unit F3-714, Plans/FinalGUISpec.md:54061-54266",
-       "file_sha256": "483180446b9ea96a38be9d03c75a9b126212e08b8266917f8c76e1fc17f2797f"
+       "quote_scope": "unit F3-714, Plans/FinalGUISpec.md:54047-54250",
+       "file_sha256": "98c1784c6b2734d3ec8e4f4052d90ed981d1e4063e83ee81a67e5e051ebb8e10",
+       "source_citation": {
+        "path": "Plans/FinalGUISpec.md",
+        "unit": "F3-714",
+        "line_start": 54221,
+        "line_end": 54221,
+        "quote": "\\ binding for `concern.updated` (2026-11-14).\\n\\nEvent history `retention_policy_ref = RP-AUTHORITY-INDEFINITE@1.0.0`,\\",
+        "file_sha256": "483180446b9ea96a38be9d03c75a9b126212e08b8266917f8c76e1fc17f2797f"
+       }
       }
      ],
      "carried_from": {
@@ -182,12 +240,20 @@
       {
        "path": "Plans/FinalGUISpec.md",
        "unit": "F3-714",
-       "line_start": 54177,
-       "line_end": 54177,
+       "line_start": 54162,
+       "line_end": 54162,
        "quote": "Mandatory coherent backup/restore preserves them together",
        "quote_check": "exact",
-       "quote_scope": "unit F3-714, Plans/FinalGUISpec.md:54061-54266",
-       "file_sha256": "483180446b9ea96a38be9d03c75a9b126212e08b8266917f8c76e1fc17f2797f"
+       "quote_scope": "unit F3-714, Plans/FinalGUISpec.md:54047-54250",
+       "file_sha256": "98c1784c6b2734d3ec8e4f4052d90ed981d1e4063e83ee81a67e5e051ebb8e10",
+       "source_citation": {
+        "path": "Plans/FinalGUISpec.md",
+        "unit": "F3-714",
+        "line_start": 54177,
+        "line_end": 54177,
+        "quote": "Mandatory coherent backup/restore preserves them together",
+        "file_sha256": "483180446b9ea96a38be9d03c75a9b126212e08b8266917f8c76e1fc17f2797f"
+       }
       }
      ],
      "carried_from": {
@@ -205,12 +271,20 @@
       {
        "path": "Plans/FinalGUISpec.md",
        "unit": "F3-714",
-       "line_start": 54141,
-       "line_end": 54141,
+       "line_start": 54126,
+       "line_end": 54126,
        "quote": "Exact effect:",
        "quote_check": "exact",
-       "quote_scope": "unit F3-714, Plans/FinalGUISpec.md:54061-54266",
-       "file_sha256": "483180446b9ea96a38be9d03c75a9b126212e08b8266917f8c76e1fc17f2797f"
+       "quote_scope": "unit F3-714, Plans/FinalGUISpec.md:54047-54250",
+       "file_sha256": "98c1784c6b2734d3ec8e4f4052d90ed981d1e4063e83ee81a67e5e051ebb8e10",
+       "source_citation": {
+        "path": "Plans/FinalGUISpec.md",
+        "unit": "F3-714",
+        "line_start": 54141,
+        "line_end": 54141,
+        "quote": "Exact effect:",
+        "file_sha256": "483180446b9ea96a38be9d03c75a9b126212e08b8266917f8c76e1fc17f2797f"
+       }
       }
      ],
      "carried_from": {
@@ -228,12 +302,20 @@
       {
        "path": "Plans/FinalGUISpec.md",
        "unit": "F3-714",
-       "line_start": 54153,
-       "line_end": 54153,
+       "line_start": 54138,
+       "line_end": 54138,
        "quote": "Explicitly adopt SP-278/DL-076:",
        "quote_check": "exact",
-       "quote_scope": "unit F3-714, Plans/FinalGUISpec.md:54061-54266",
-       "file_sha256": "483180446b9ea96a38be9d03c75a9b126212e08b8266917f8c76e1fc17f2797f"
+       "quote_scope": "unit F3-714, Plans/FinalGUISpec.md:54047-54250",
+       "file_sha256": "98c1784c6b2734d3ec8e4f4052d90ed981d1e4063e83ee81a67e5e051ebb8e10",
+       "source_citation": {
+        "path": "Plans/FinalGUISpec.md",
+        "unit": "F3-714",
+        "line_start": 54153,
+        "line_end": 54153,
+        "quote": "Explicitly adopt SP-278/DL-076:",
+        "file_sha256": "483180446b9ea96a38be9d03c75a9b126212e08b8266917f8c76e1fc17f2797f"
+       }
       }
      ],
      "carried_from": {
@@ -251,12 +333,20 @@
       {
        "path": "Plans/FinalGUISpec.md",
        "unit": "F3-714",
-       "line_start": 54204,
-       "line_end": 54205,
+       "line_start": 54189,
+       "line_end": 54190,
        "quote": "Close exact-family\\\n  \\ writer admission first",
-       "file_sha256": "483180446b9ea96a38be9d03c75a9b126212e08b8266917f8c76e1fc17f2797f",
+       "file_sha256": "98c1784c6b2734d3ec8e4f4052d90ed981d1e4063e83ee81a67e5e051ebb8e10",
        "quote_check": "exact",
-       "quote_scope": "unit F3-714, Plans/FinalGUISpec.md:54061-54266"
+       "quote_scope": "unit F3-714, Plans/FinalGUISpec.md:54047-54250",
+       "source_citation": {
+        "path": "Plans/FinalGUISpec.md",
+        "unit": "F3-714",
+        "line_start": 54204,
+        "line_end": 54205,
+        "quote": "Close exact-family\\\n  \\ writer admission first",
+        "file_sha256": "483180446b9ea96a38be9d03c75a9b126212e08b8266917f8c76e1fc17f2797f"
+       }
       },
       {
        "path": "scripts/pm_dg6a_custody.py",
@@ -266,7 +356,15 @@
        "quote": "def resolve(original):",
        "quote_check": "exact",
        "quote_scope": "document",
-       "file_sha256": "0012cdb6b5c8ac3243e3459e290f073daaf3da131ed37dc4598aad6c50e3793d"
+       "file_sha256": "0012cdb6b5c8ac3243e3459e290f073daaf3da131ed37dc4598aad6c50e3793d",
+       "source_citation": {
+        "path": "scripts/pm_dg6a_custody.py",
+        "unit": "resolve",
+        "line_start": 324,
+        "line_end": 324,
+        "quote": "def resolve(original):",
+        "file_sha256": "0012cdb6b5c8ac3243e3459e290f073daaf3da131ed37dc4598aad6c50e3793d"
+       }
       }
      ],
      "carried_from": {
@@ -284,12 +382,20 @@
       {
        "path": "Plans/FinalGUISpec.md",
        "unit": "F3-714",
-       "line_start": 54216,
-       "line_end": 54216,
+       "line_start": 54201,
+       "line_end": 54201,
        "quote": "C12 remains PARTIAL: JSON Schema keyword cuts are not ported to that tool,",
        "quote_check": "exact",
-       "quote_scope": "unit F3-714, Plans/FinalGUISpec.md:54061-54266",
-       "file_sha256": "483180446b9ea96a38be9d03c75a9b126212e08b8266917f8c76e1fc17f2797f"
+       "quote_scope": "unit F3-714, Plans/FinalGUISpec.md:54047-54250",
+       "file_sha256": "98c1784c6b2734d3ec8e4f4052d90ed981d1e4063e83ee81a67e5e051ebb8e10",
+       "source_citation": {
+        "path": "Plans/FinalGUISpec.md",
+        "unit": "F3-714",
+        "line_start": 54216,
+        "line_end": 54216,
+        "quote": "C12 remains PARTIAL: JSON Schema keyword cuts are not ported to that tool,",
+        "file_sha256": "483180446b9ea96a38be9d03c75a9b126212e08b8266917f8c76e1fc17f2797f"
+       }
       },
       {
        "path": "reports/event-authority-20261114/C12-DG6A.md",
@@ -299,7 +405,15 @@
        "quote": "| `concern.updated` | PARTIAL | PASS |",
        "quote_check": "exact",
        "quote_scope": "document",
-       "file_sha256": "be6a9c141581982a70f84ac1ef79025683ad56d564aa6437f16998667c2bfa3e"
+       "file_sha256": "be6a9c141581982a70f84ac1ef79025683ad56d564aa6437f16998667c2bfa3e",
+       "source_citation": {
+        "path": "reports/event-authority-20261114/C12-DG6A.md",
+        "unit": "C12-DG6A concern.updated",
+        "line_start": 24,
+        "line_end": 24,
+        "quote": "| `concern.updated` | PARTIAL | PASS |",
+        "file_sha256": "be6a9c141581982a70f84ac1ef79025683ad56d564aa6437f16998667c2bfa3e"
+       }
       },
       {
        "path": "scripts/pm_dg6a_c12_closure.py",
@@ -309,7 +423,15 @@
        "quote": "def schema_coverage(family, out):",
        "quote_check": "exact",
        "quote_scope": "document",
-       "file_sha256": "58a582bcc3bb6ff56c1cfd2c267d116d11b386e9c414b30e00cbe20fce60745d"
+       "file_sha256": "58a582bcc3bb6ff56c1cfd2c267d116d11b386e9c414b30e00cbe20fce60745d",
+       "source_citation": {
+        "path": "scripts/pm_dg6a_c12_closure.py",
+        "unit": "schema_coverage",
+        "line_start": 961,
+        "line_end": 961,
+        "quote": "def schema_coverage(family, out):",
+        "file_sha256": "58a582bcc3bb6ff56c1cfd2c267d116d11b386e9c414b30e00cbe20fce60745d"
+       }
       },
       {
        "path": "scripts/pm_dg6a_c12_closure.py",
@@ -319,7 +441,15 @@
        "quote": "def copies_mode(family, out):",
        "quote_check": "exact",
        "quote_scope": "document",
-       "file_sha256": "58a582bcc3bb6ff56c1cfd2c267d116d11b386e9c414b30e00cbe20fce60745d"
+       "file_sha256": "58a582bcc3bb6ff56c1cfd2c267d116d11b386e9c414b30e00cbe20fce60745d",
+       "source_citation": {
+        "path": "scripts/pm_dg6a_c12_closure.py",
+        "unit": "copies_mode",
+        "line_start": 1578,
+        "line_end": 1578,
+        "quote": "def copies_mode(family, out):",
+        "file_sha256": "58a582bcc3bb6ff56c1cfd2c267d116d11b386e9c414b30e00cbe20fce60745d"
+       }
       },
       {
        "path": "scripts/pm_dg6a_c12_closure.py",
@@ -329,7 +459,15 @@
        "quote": "def retained_variants(",
        "quote_check": "exact",
        "quote_scope": "document",
-       "file_sha256": "58a582bcc3bb6ff56c1cfd2c267d116d11b386e9c414b30e00cbe20fce60745d"
+       "file_sha256": "58a582bcc3bb6ff56c1cfd2c267d116d11b386e9c414b30e00cbe20fce60745d",
+       "source_citation": {
+        "path": "scripts/pm_dg6a_c12_closure.py",
+        "unit": "retained_variants",
+        "line_start": 1445,
+        "line_end": 1445,
+        "quote": "def retained_variants(",
+        "file_sha256": "58a582bcc3bb6ff56c1cfd2c267d116d11b386e9c414b30e00cbe20fce60745d"
+       }
       },
       {
        "path": "scripts/pm_dg6a_c12_closure.py",
@@ -339,7 +477,15 @@
        "quote": "def datetime_schema_corpus(",
        "quote_check": "exact",
        "quote_scope": "document",
-       "file_sha256": "58a582bcc3bb6ff56c1cfd2c267d116d11b386e9c414b30e00cbe20fce60745d"
+       "file_sha256": "58a582bcc3bb6ff56c1cfd2c267d116d11b386e9c414b30e00cbe20fce60745d",
+       "source_citation": {
+        "path": "scripts/pm_dg6a_c12_closure.py",
+        "unit": "datetime_schema_corpus",
+        "line_start": 933,
+        "line_end": 933,
+        "quote": "def datetime_schema_corpus(",
+        "file_sha256": "58a582bcc3bb6ff56c1cfd2c267d116d11b386e9c414b30e00cbe20fce60745d"
+       }
       },
       {
        "path": "scripts/pm_dg6a_c12_closure.py",
@@ -349,7 +495,15 @@
        "quote": "def bigint_mode(family, out):",
        "quote_check": "exact",
        "quote_scope": "document",
-       "file_sha256": "58a582bcc3bb6ff56c1cfd2c267d116d11b386e9c414b30e00cbe20fce60745d"
+       "file_sha256": "58a582bcc3bb6ff56c1cfd2c267d116d11b386e9c414b30e00cbe20fce60745d",
+       "source_citation": {
+        "path": "scripts/pm_dg6a_c12_closure.py",
+        "unit": "bigint_mode",
+        "line_start": 1624,
+        "line_end": 1624,
+        "quote": "def bigint_mode(family, out):",
+        "file_sha256": "58a582bcc3bb6ff56c1cfd2c267d116d11b386e9c414b30e00cbe20fce60745d"
+       }
       },
       {
        "path": "scripts/pm-dg6a-c12-entailed.py",
@@ -359,7 +513,15 @@
        "quote": "def command_key_rows(results):",
        "quote_check": "exact",
        "quote_scope": "document",
-       "file_sha256": "38b022edac6573f58470bb5c8886f6741c1e2ffc75ddf9f28395ccbc0f79de8b"
+       "file_sha256": "38b022edac6573f58470bb5c8886f6741c1e2ffc75ddf9f28395ccbc0f79de8b",
+       "source_citation": {
+        "path": "scripts/pm-dg6a-c12-entailed.py",
+        "unit": "command_key_rows",
+        "line_start": 109,
+        "line_end": 109,
+        "quote": "def command_key_rows(results):",
+        "file_sha256": "38b022edac6573f58470bb5c8886f6741c1e2ffc75ddf9f28395ccbc0f79de8b"
+       }
       },
       {
        "path": "scripts/pm-dg6a-c12-split-equivalence.py",
@@ -369,7 +531,15 @@
        "quote": "phases['current_context'] = ('current_context', 'current_context__2')",
        "quote_check": "exact",
        "quote_scope": "document",
-       "file_sha256": "4c711d116363f7e54eed524824d39840e0a1dd7d3d6375d707be89970840e1b3"
+       "file_sha256": "4c711d116363f7e54eed524824d39840e0a1dd7d3d6375d707be89970840e1b3",
+       "source_citation": {
+        "path": "scripts/pm-dg6a-c12-split-equivalence.py",
+        "unit": "main",
+        "line_start": 105,
+        "line_end": 105,
+        "quote": "phases['current_context'] = ('current_context', 'current_context__2')",
+        "file_sha256": "4c711d116363f7e54eed524824d39840e0a1dd7d3d6375d707be89970840e1b3"
+       }
       },
       {
        "path": "scripts/pm_dg6a_phase_groups.py",
@@ -379,7 +549,15 @@
        "quote": "ALIASES = ",
        "quote_check": "exact",
        "quote_scope": "document",
-       "file_sha256": "c8bd028969f102098d282a81007abf454b5eeab420eb31d2fa2a0d81243f70ff"
+       "file_sha256": "c8bd028969f102098d282a81007abf454b5eeab420eb31d2fa2a0d81243f70ff",
+       "source_citation": {
+        "path": "scripts/pm_dg6a_phase_groups.py",
+        "unit": "ALIASES",
+        "line_start": 2,
+        "line_end": 2,
+        "quote": "ALIASES = ",
+        "file_sha256": "c8bd028969f102098d282a81007abf454b5eeab420eb31d2fa2a0d81243f70ff"
+       }
       },
       {
        "path": "scripts/pm-alert-event-contracts-check.py",
@@ -389,7 +567,15 @@
        "quote": "def registry_mirror_errors(",
        "quote_check": "exact",
        "quote_scope": "document",
-       "file_sha256": "25f8207005bae21b3cfe94ece2b202eec86dc68ef4b1e210b27f24a71f29ba30"
+       "file_sha256": "35cdf881e6aa3dbf57a5355f3ec697d3c1f3f167c161af3e4e1a55da3db1bc6e",
+       "source_citation": {
+        "path": "scripts/pm-alert-event-contracts-check.py",
+        "unit": "registry_mirror_errors",
+        "line_start": 575,
+        "line_end": 575,
+        "quote": "def registry_mirror_errors(",
+        "file_sha256": "25f8207005bae21b3cfe94ece2b202eec86dc68ef4b1e210b27f24a71f29ba30"
+       }
       },
       {
        "path": "scripts/pm-dg6a-guard-tables.py",
@@ -399,7 +585,15 @@
        "quote": "def collect_context_part(module):",
        "quote_check": "exact",
        "quote_scope": "document",
-       "file_sha256": "6b2069bd7af8931b281bda6aba6ac462b132878d7b1a2966c2bc0b604cca0ae9"
+       "file_sha256": "6b2069bd7af8931b281bda6aba6ac462b132878d7b1a2966c2bc0b604cca0ae9",
+       "source_citation": {
+        "path": "scripts/pm-dg6a-guard-tables.py",
+        "unit": "collect_context_part",
+        "line_start": 472,
+        "line_end": 472,
+        "quote": "def collect_context_part(module):",
+        "file_sha256": "6b2069bd7af8931b281bda6aba6ac462b132878d7b1a2966c2bc0b604cca0ae9"
+       }
       }
      ],
      "carried_from": {
@@ -411,5 +605,19 @@
     }
    }
   }
- ]
+ ],
+ "source_registry": {
+  "path": "Plans/event_family_registry.json",
+  "revision": "2026-11-16.137",
+  "sha256": "bbe44daa64e385c0833b4ba8dfcd61ba6ec0821b1e5ab4463f4b2e06c4c43046",
+  "family_count": 356,
+  "row_pointer": "#/families/355"
+ },
+ "evidence_maintenance": {
+  "authority": "MERGE2-FIX1 findings 1/3/5",
+  "source_commit": "0c904de00426b0089ba5d56349fda8ea16cc9f88",
+  "source_assessment_sha256": "8de7404ff43d3277b3e7b7cfd063089d71f20ffa99b1adf6e2da1a44a8dcb95a",
+  "native_execution": "NOT_RUN",
+  "verdicts_changed": false
+ }
 }

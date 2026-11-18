@@ -5,9 +5,9 @@
  "merge": "admission-merge-2",
  "registry": {
   "path": "Plans/event_family_registry.json",
-  "revision": "2026-11-16.272",
-  "sha256": "f97f63866032765530427ab897686425609d74c3369343fcaedca62b32871873",
-  "family_count": 491,
+  "revision": "2026-11-18.2",
+  "sha256": "ec21cf1a5b42b3e68a5564a847b4798dff968612d11d438bc7075b89196f9602",
+  "family_count": 518,
   "row_pointer": "#/families/490"
  },
  "base_commit": "45b4ccf25270c486dbc682805cd455ce4ca25fb0",
@@ -22,17 +22,27 @@
     "membership_version": {
      "status": "PASS",
      "representation": "exact_registry_membership",
-     "finding": "Registered at registry revision 2026-11-16.272 as #/families/490 (canonical row SHA-256 1c706257f2b7f7f87eec11fec69442c1b751f6b52502097de087c166ee747cf9); before this commit the family was absent.",
+     "finding": "Currently registered at 2026-11-18.2 as #/families/490 (canonical row SHA-256 1c706257f2b7f7f87eec11fec69442c1b751f6b52502097de087c166ee747cf9). Original one-family admission checkpoints remain in the family record and immutable Git source.",
      "evidence": [
       {
        "path": "Plans/event_family_registry.json",
        "json_pointer": "#/families/490",
-       "line_start": 31438,
-       "line_end": 31524,
+       "line_start": 31488,
+       "line_end": 31574,
        "quote": "\"event_type\": \"subagent.context_warning\"",
-       "quote_line": 31441,
-       "file_sha256": "f97f63866032765530427ab897686425609d74c3369343fcaedca62b32871873",
-       "quote_check": "exact"
+       "quote_line": 31491,
+       "file_sha256": "ec21cf1a5b42b3e68a5564a847b4798dff968612d11d438bc7075b89196f9602",
+       "quote_check": "exact",
+       "source_citation": {
+        "path": "Plans/event_family_registry.json",
+        "json_pointer": "#/families/490",
+        "line_start": 31438,
+        "line_end": 31524,
+        "quote": "\"event_type\": \"subagent.context_warning\"",
+        "quote_line": 31441,
+        "file_sha256": "f97f63866032765530427ab897686425609d74c3369343fcaedca62b32871873",
+        "quote_check": "exact"
+       }
       }
      ]
     },
@@ -49,7 +59,15 @@
        "quote": "**OSI-689: `subagent.context_warning@1.0.0` — newly authored owner contract (DL-045), prepared without admission.** This exact family alone adopts the contract below. No current ap",
        "quote_check": "exact",
        "quote_scope": "unit OSI-689, Plans/orchestrator-subagent-integration.md:33147-33224",
-       "file_sha256": "b39393943cd0f6532f76acdc63eb4152c4cea49b337972fb49705a7e9bfc2365"
+       "file_sha256": "b39393943cd0f6532f76acdc63eb4152c4cea49b337972fb49705a7e9bfc2365",
+       "source_citation": {
+        "path": "Plans/orchestrator-subagent-integration.md",
+        "unit": "OSI-689",
+        "line_start": 33149,
+        "line_end": 33149,
+        "quote": "**OSI-689: `subagent.context_warning@1.0.0` — newly authored owner contract (DL-045), prepared without admission.** This exact family alone adopts the contract below. No current ap",
+        "file_sha256": "b39393943cd0f6532f76acdc63eb4152c4cea49b337972fb49705a7e9bfc2365"
+       }
       }
      ],
      "carried_from": {
@@ -72,7 +90,15 @@
        "quote": "**Producer and ordering.** `Child context monitor / report threshold` owns the occurrence. Predicate: running -> running; record measured context_usage_pct and threshold; warning g",
        "quote_check": "exact",
        "quote_scope": "unit OSI-689, Plans/orchestrator-subagent-integration.md:33147-33224",
-       "file_sha256": "b39393943cd0f6532f76acdc63eb4152c4cea49b337972fb49705a7e9bfc2365"
+       "file_sha256": "b39393943cd0f6532f76acdc63eb4152c4cea49b337972fb49705a7e9bfc2365",
+       "source_citation": {
+        "path": "Plans/orchestrator-subagent-integration.md",
+        "unit": "OSI-689",
+        "line_start": 33153,
+        "line_end": 33153,
+        "quote": "**Producer and ordering.** `Child context monitor / report threshold` owns the occurrence. Predicate: running -> running; record measured context_usage_pct and threshold; warning g",
+        "file_sha256": "b39393943cd0f6532f76acdc63eb4152c4cea49b337972fb49705a7e9bfc2365"
+       }
       }
      ],
      "carried_from": {
@@ -95,7 +121,15 @@
        "quote": "**Payload and scope.** `Plans/orchestrator_event_payloads.schema.json#/$defs/subagent_context_warning` (`pm.event_payload.subagent_context_warning.v1@1.0.0`) is the closed payload.",
        "quote_check": "exact",
        "quote_scope": "unit OSI-689, Plans/orchestrator-subagent-integration.md:33147-33224",
-       "file_sha256": "b39393943cd0f6532f76acdc63eb4152c4cea49b337972fb49705a7e9bfc2365"
+       "file_sha256": "b39393943cd0f6532f76acdc63eb4152c4cea49b337972fb49705a7e9bfc2365",
+       "source_citation": {
+        "path": "Plans/orchestrator-subagent-integration.md",
+        "unit": "OSI-689",
+        "line_start": 33151,
+        "line_end": 33151,
+        "quote": "**Payload and scope.** `Plans/orchestrator_event_payloads.schema.json#/$defs/subagent_context_warning` (`pm.event_payload.subagent_context_warning.v1@1.0.0`) is the closed payload.",
+        "file_sha256": "b39393943cd0f6532f76acdc63eb4152c4cea49b337972fb49705a7e9bfc2365"
+       }
       }
      ],
      "carried_from": {
@@ -118,7 +152,15 @@
        "quote": "**Identity and replay.** scope_partition is `app` or the exact EventRecord project~ encoding. Project identity preimage remains `JCS([\"ea-do-v1\",scope_partition,server_id,thread_id",
        "quote_check": "exact",
        "quote_scope": "unit OSI-689, Plans/orchestrator-subagent-integration.md:33147-33224",
-       "file_sha256": "b39393943cd0f6532f76acdc63eb4152c4cea49b337972fb49705a7e9bfc2365"
+       "file_sha256": "b39393943cd0f6532f76acdc63eb4152c4cea49b337972fb49705a7e9bfc2365",
+       "source_citation": {
+        "path": "Plans/orchestrator-subagent-integration.md",
+        "unit": "OSI-689",
+        "line_start": 33155,
+        "line_end": 33155,
+        "quote": "**Identity and replay.** scope_partition is `app` or the exact EventRecord project~ encoding. Project identity preimage remains `JCS([\"ea-do-v1\",scope_partition,server_id,thread_id",
+        "file_sha256": "b39393943cd0f6532f76acdc63eb4152c4cea49b337972fb49705a7e9bfc2365"
+       }
       },
       {
        "path": "Plans/orchestrator-subagent-integration.md",
@@ -128,7 +170,15 @@
        "quote": "The current writing recipe is `ea-do-rfc8785-v2`; only new writes use it.",
        "quote_check": "exact",
        "quote_scope": "unit OSI-689, Plans/orchestrator-subagent-integration.md:33147-33224",
-       "file_sha256": "b39393943cd0f6532f76acdc63eb4152c4cea49b337972fb49705a7e9bfc2365"
+       "file_sha256": "b39393943cd0f6532f76acdc63eb4152c4cea49b337972fb49705a7e9bfc2365",
+       "source_citation": {
+        "path": "Plans/orchestrator-subagent-integration.md",
+        "unit": "OSI-689",
+        "line_start": 33155,
+        "line_end": 33155,
+        "quote": "The current writing recipe is `ea-do-rfc8785-v2`; only new writes use it.",
+        "file_sha256": "b39393943cd0f6532f76acdc63eb4152c4cea49b337972fb49705a7e9bfc2365"
+       }
       }
      ],
      "carried_from": {
@@ -151,7 +201,15 @@
        "quote": "**Identity and replay.** scope_partition is `app` or the exact EventRecord project~ encoding. Project identity preimage remains `JCS([\"ea-do-v1\",scope_partition,server_id,thread_id",
        "quote_check": "exact",
        "quote_scope": "unit OSI-689, Plans/orchestrator-subagent-integration.md:33147-33224",
-       "file_sha256": "b39393943cd0f6532f76acdc63eb4152c4cea49b337972fb49705a7e9bfc2365"
+       "file_sha256": "b39393943cd0f6532f76acdc63eb4152c4cea49b337972fb49705a7e9bfc2365",
+       "source_citation": {
+        "path": "Plans/orchestrator-subagent-integration.md",
+        "unit": "OSI-689",
+        "line_start": 33155,
+        "line_end": 33155,
+        "quote": "**Identity and replay.** scope_partition is `app` or the exact EventRecord project~ encoding. Project identity preimage remains `JCS([\"ea-do-v1\",scope_partition,server_id,thread_id",
+        "file_sha256": "b39393943cd0f6532f76acdc63eb4152c4cea49b337972fb49705a7e9bfc2365"
+       }
       },
       {
        "path": "Plans/orchestrator-subagent-integration.md",
@@ -161,7 +219,15 @@
        "quote": "Recovery verifies the original and returns its exact complete receipt before any retry;",
        "quote_check": "exact",
        "quote_scope": "unit OSI-689, Plans/orchestrator-subagent-integration.md:33147-33224",
-       "file_sha256": "b39393943cd0f6532f76acdc63eb4152c4cea49b337972fb49705a7e9bfc2365"
+       "file_sha256": "b39393943cd0f6532f76acdc63eb4152c4cea49b337972fb49705a7e9bfc2365",
+       "source_citation": {
+        "path": "Plans/orchestrator-subagent-integration.md",
+        "unit": "OSI-689",
+        "line_start": 33155,
+        "line_end": 33155,
+        "quote": "Recovery verifies the original and returns its exact complete receipt before any retry;",
+        "file_sha256": "b39393943cd0f6532f76acdc63eb4152c4cea49b337972fb49705a7e9bfc2365"
+       }
       }
      ],
      "carried_from": {
@@ -184,7 +250,15 @@
        "quote": "Event history `retention_policy_ref = RP-CHAT-THREAD-LIFETIME@1.0.0`, under DL-084.",
        "quote_check": "exact",
        "quote_scope": "unit OSI-689, Plans/orchestrator-subagent-integration.md:33147-33224",
-       "file_sha256": "b39393943cd0f6532f76acdc63eb4152c4cea49b337972fb49705a7e9bfc2365"
+       "file_sha256": "b39393943cd0f6532f76acdc63eb4152c4cea49b337972fb49705a7e9bfc2365",
+       "source_citation": {
+        "path": "Plans/orchestrator-subagent-integration.md",
+        "unit": "OSI-689",
+        "line_start": 33215,
+        "line_end": 33215,
+        "quote": "Event history `retention_policy_ref = RP-CHAT-THREAD-LIFETIME@1.0.0`, under DL-084.",
+        "file_sha256": "b39393943cd0f6532f76acdc63eb4152c4cea49b337972fb49705a7e9bfc2365"
+       }
       }
      ],
      "carried_from": {
@@ -207,7 +281,15 @@
        "quote": "**Retention and custody.** `retention_policy_ref = RP-CHAT-THREAD-LIFETIME@1.0.0` under DL-084, as materialized in the landed `Plans/storage_value_registry.json` (Storage retention landing `4d52bd2758526cd0e8a56358baaa73049c1d4bdd`), report `reports/eve",
        "quote_check": "exact",
        "quote_scope": "unit OSI-689, Plans/orchestrator-subagent-integration.md:33147-33224",
-       "file_sha256": "b39393943cd0f6532f76acdc63eb4152c4cea49b337972fb49705a7e9bfc2365"
+       "file_sha256": "b39393943cd0f6532f76acdc63eb4152c4cea49b337972fb49705a7e9bfc2365",
+       "source_citation": {
+        "path": "Plans/orchestrator-subagent-integration.md",
+        "unit": "OSI-689",
+        "line_start": 33159,
+        "line_end": 33159,
+        "quote": "**Retention and custody.** `retention_policy_ref = RP-CHAT-THREAD-LIFETIME@1.0.0` under DL-084, as materialized in the landed `Plans/storage_value_registry.json` (Storage retention landing `4d52bd2758526cd0e8a56358baaa73049c1d4bdd`), report `reports/eve",
+        "file_sha256": "b39393943cd0f6532f76acdc63eb4152c4cea49b337972fb49705a7e9bfc2365"
+       }
       }
      ],
      "carried_from": {
@@ -230,7 +312,15 @@
        "quote": "**Producer and ordering.** `Child context monitor / report threshold` owns the occurrence. Predicate: running -> running; record measured context_usage_pct and threshold; warning g",
        "quote_check": "exact",
        "quote_scope": "unit OSI-689, Plans/orchestrator-subagent-integration.md:33147-33224",
-       "file_sha256": "b39393943cd0f6532f76acdc63eb4152c4cea49b337972fb49705a7e9bfc2365"
+       "file_sha256": "b39393943cd0f6532f76acdc63eb4152c4cea49b337972fb49705a7e9bfc2365",
+       "source_citation": {
+        "path": "Plans/orchestrator-subagent-integration.md",
+        "unit": "OSI-689",
+        "line_start": 33153,
+        "line_end": 33153,
+        "quote": "**Producer and ordering.** `Child context monitor / report threshold` owns the occurrence. Predicate: running -> running; record measured context_usage_pct and threshold; warning g",
+        "file_sha256": "b39393943cd0f6532f76acdc63eb4152c4cea49b337972fb49705a7e9bfc2365"
+       }
       }
      ],
      "carried_from": {
@@ -253,7 +343,15 @@
        "quote": "**Operating consumer and checkpoint.** `reader.orchestrator.subagent_context_warning.history.v1@1.0.0` serves the existing child history inspector for this exact family. It explici",
        "quote_check": "exact",
        "quote_scope": "unit OSI-689, Plans/orchestrator-subagent-integration.md:33147-33224",
-       "file_sha256": "b39393943cd0f6532f76acdc63eb4152c4cea49b337972fb49705a7e9bfc2365"
+       "file_sha256": "b39393943cd0f6532f76acdc63eb4152c4cea49b337972fb49705a7e9bfc2365",
+       "source_citation": {
+        "path": "Plans/orchestrator-subagent-integration.md",
+        "unit": "OSI-689",
+        "line_start": 33157,
+        "line_end": 33157,
+        "quote": "**Operating consumer and checkpoint.** `reader.orchestrator.subagent_context_warning.history.v1@1.0.0` serves the existing child history inspector for this exact family. It explici",
+        "file_sha256": "b39393943cd0f6532f76acdc63eb4152c4cea49b337972fb49705a7e9bfc2365"
+       }
       }
      ],
      "carried_from": {
@@ -276,7 +374,15 @@
        "quote": "**Compatibility and withdrawal.** Accept only this exact schema/version; old sketches or aliases do not self-upgrade or become lawful history. A historical read requires proof of i",
        "quote_check": "exact",
        "quote_scope": "unit OSI-689, Plans/orchestrator-subagent-integration.md:33147-33224",
-       "file_sha256": "b39393943cd0f6532f76acdc63eb4152c4cea49b337972fb49705a7e9bfc2365"
+       "file_sha256": "b39393943cd0f6532f76acdc63eb4152c4cea49b337972fb49705a7e9bfc2365",
+       "source_citation": {
+        "path": "Plans/orchestrator-subagent-integration.md",
+        "unit": "OSI-689",
+        "line_start": 33161,
+        "line_end": 33161,
+        "quote": "**Compatibility and withdrawal.** Accept only this exact schema/version; old sketches or aliases do not self-upgrade or become lawful history. A historical read requires proof of i",
+        "file_sha256": "b39393943cd0f6532f76acdc63eb4152c4cea49b337972fb49705a7e9bfc2365"
+       }
       },
       {
        "path": "Plans/orchestrator-subagent-integration.md",
@@ -286,7 +392,15 @@
        "quote": "**Historical-read admission oracle — subagent.context_warning.** Newly authored exact-family binding uses the closed `Plans/orchestrator_historical_read.schema.json` witness with r",
        "quote_check": "exact",
        "quote_scope": "unit OSI-689, Plans/orchestrator-subagent-integration.md:33147-33224",
-       "file_sha256": "b39393943cd0f6532f76acdc63eb4152c4cea49b337972fb49705a7e9bfc2365"
+       "file_sha256": "b39393943cd0f6532f76acdc63eb4152c4cea49b337972fb49705a7e9bfc2365",
+       "source_citation": {
+        "path": "Plans/orchestrator-subagent-integration.md",
+        "unit": "OSI-689",
+        "line_start": 33163,
+        "line_end": 33163,
+        "quote": "**Historical-read admission oracle — subagent.context_warning.** Newly authored exact-family binding uses the closed `Plans/orchestrator_historical_read.schema.json` witness with r",
+        "file_sha256": "b39393943cd0f6532f76acdc63eb4152c4cea49b337972fb49705a7e9bfc2365"
+       }
       },
       {
        "path": "Plans/orchestrator-subagent-integration.md",
@@ -296,7 +410,15 @@
        "quote": "A custody refusal, or missing, unverified, contradictory, unsupported or foreign recipe evidence, refuses.",
        "quote_check": "exact",
        "quote_scope": "unit OSI-689, Plans/orchestrator-subagent-integration.md:33147-33224",
-       "file_sha256": "b39393943cd0f6532f76acdc63eb4152c4cea49b337972fb49705a7e9bfc2365"
+       "file_sha256": "b39393943cd0f6532f76acdc63eb4152c4cea49b337972fb49705a7e9bfc2365",
+       "source_citation": {
+        "path": "Plans/orchestrator-subagent-integration.md",
+        "unit": "OSI-689",
+        "line_start": 33155,
+        "line_end": 33155,
+        "quote": "A custody refusal, or missing, unverified, contradictory, unsupported or foreign recipe evidence, refuses.",
+        "file_sha256": "b39393943cd0f6532f76acdc63eb4152c4cea49b337972fb49705a7e9bfc2365"
+       }
       }
      ],
      "carried_from": {
@@ -313,20 +435,47 @@
      "evidence": [
       {
        "path": "Plans/orchestrator-subagent-integration.md",
-       "line": 32923,
-       "sha256": "fa6173a2d85cbb5e63635c4044e792a2db27ab19a1a592fb0ed47d0649fc2dd1",
-       "file_sha256": "b39393943cd0f6532f76acdc63eb4152c4cea49b337972fb49705a7e9bfc2365"
+       "line": 33147,
+       "sha256": "b39393943cd0f6532f76acdc63eb4152c4cea49b337972fb49705a7e9bfc2365",
+       "file_sha256": "b39393943cd0f6532f76acdc63eb4152c4cea49b337972fb49705a7e9bfc2365",
+       "unit": "OSI-689",
+       "line_start": 33147,
+       "line_end": 33147,
+       "quote_check": "exact",
+       "quote": "### OSI-689 — subagent.context_warning",
+       "quote_scope": "unit OSI-689, Plans/orchestrator-subagent-integration.md:33147-33224",
+       "source_citation": {
+        "path": "Plans/orchestrator-subagent-integration.md",
+        "line": 32923,
+        "sha256": "fa6173a2d85cbb5e63635c4044e792a2db27ab19a1a592fb0ed47d0649fc2dd1",
+        "file_sha256": "b39393943cd0f6532f76acdc63eb4152c4cea49b337972fb49705a7e9bfc2365",
+        "unit": "OSI-689",
+        "commit": "e14b1332904a7d67b3184b732c3c77bcabe5088f",
+        "quote": "### OSI-689 — subagent.context_warning"
+       }
       },
       {
        "path": "Plans/orchestrator-subagent-integration.md",
-       "line": 32941,
+       "line": 33165,
        "quote": "**Oracles.** ATS-360 and `Plans/orchestrator_event_contract_fixtures.json` select only `subagent.context_warning` cases. Positive payload and negative missing-required/unknown-field/foreign-scope/schema-version cases run via `python3 scripts/pm-orchestrator-event-contracts.py`. Native NOT_RUN obligations: full-value uncertain receipt retry/conflict, producer predicate and canonical-effect ordering, restore entropy, current token/source/access fences, deletion/hold deadline, version/withdrawal races and replay without the effect named above. Static payload success never certifies those native obligations.",
-       "sha256": "fa6173a2d85cbb5e63635c4044e792a2db27ab19a1a592fb0ed47d0649fc2dd1",
+       "sha256": "b39393943cd0f6532f76acdc63eb4152c4cea49b337972fb49705a7e9bfc2365",
        "line_start": 33165,
        "line_end": 33165,
        "quote_check": "exact",
-       "quote_scope": "document",
-       "file_sha256": "b39393943cd0f6532f76acdc63eb4152c4cea49b337972fb49705a7e9bfc2365"
+       "quote_scope": "unit OSI-689, Plans/orchestrator-subagent-integration.md:33147-33224",
+       "file_sha256": "b39393943cd0f6532f76acdc63eb4152c4cea49b337972fb49705a7e9bfc2365",
+       "unit": "OSI-689",
+       "source_citation": {
+        "path": "Plans/orchestrator-subagent-integration.md",
+        "line": 32941,
+        "quote": "**Oracles.** ATS-360 and `Plans/orchestrator_event_contract_fixtures.json` select only `subagent.context_warning` cases. Positive payload and negative missing-required/unknown-field/foreign-scope/schema-version cases run via `python3 scripts/pm-orchestrator-event-contracts.py`. Native NOT_RUN obligations: full-value uncertain receipt retry/conflict, producer predicate and canonical-effect ordering, restore entropy, current token/source/access fences, deletion/hold deadline, version/withdrawal races and replay without the effect named above. Static payload success never certifies those native obligations.",
+        "sha256": "fa6173a2d85cbb5e63635c4044e792a2db27ab19a1a592fb0ed47d0649fc2dd1",
+        "line_start": 33165,
+        "line_end": 33165,
+        "file_sha256": "b39393943cd0f6532f76acdc63eb4152c4cea49b337972fb49705a7e9bfc2365",
+        "unit": "OSI-689",
+        "commit": "e14b1332904a7d67b3184b732c3c77bcabe5088f"
+       }
       },
       {
        "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/c12-do/schema-final/schema-matrix.json",
@@ -347,5 +496,19 @@
     }
    }
   }
- ]
+ ],
+ "source_registry": {
+  "path": "Plans/event_family_registry.json",
+  "revision": "2026-11-16.272",
+  "sha256": "f97f63866032765530427ab897686425609d74c3369343fcaedca62b32871873",
+  "family_count": 491,
+  "row_pointer": "#/families/490"
+ },
+ "evidence_maintenance": {
+  "authority": "MERGE2-FIX1 findings 1/3/5",
+  "source_commit": "0c904de00426b0089ba5d56349fda8ea16cc9f88",
+  "source_assessment_sha256": "b2252e6d02649fa764c6c3352b2c8f1418385e381e1b1db2d18a7c1a94044261",
+  "native_execution": "NOT_RUN",
+  "verdicts_changed": false
+ }
 }

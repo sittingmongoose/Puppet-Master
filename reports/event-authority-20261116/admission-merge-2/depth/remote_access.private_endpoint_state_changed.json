@@ -5,9 +5,9 @@
  "merge": "admission-merge-2",
  "registry": {
   "path": "Plans/event_family_registry.json",
-  "revision": "2026-11-16.225",
-  "sha256": "e81e51faff696241375addd431e83ee553a17bd779fe8d1dfab7414da95bceef",
-  "family_count": 444,
+  "revision": "2026-11-18.2",
+  "sha256": "ec21cf1a5b42b3e68a5564a847b4798dff968612d11d438bc7075b89196f9602",
+  "family_count": 518,
   "row_pointer": "#/families/443"
  },
  "base_commit": "45b4ccf25270c486dbc682805cd455ce4ca25fb0",
@@ -22,17 +22,27 @@
     "membership_version": {
      "status": "PASS",
      "representation": "exact_registry_membership",
-     "finding": "Registered at registry revision 2026-11-16.225 as #/families/443 (canonical row SHA-256 edc1ce8c3f9bfba8923f0d91c74c1d0ba91339719567bc972ab2c73c423bf929); before this commit the family was absent.",
+     "finding": "Currently registered at 2026-11-18.2 as #/families/443 (canonical row SHA-256 edc1ce8c3f9bfba8923f0d91c74c1d0ba91339719567bc972ab2c73c423bf929). Original one-family admission checkpoints remain in the family record and immutable Git source.",
      "evidence": [
       {
        "path": "Plans/event_family_registry.json",
        "json_pointer": "#/families/443",
-       "line_start": 28747,
-       "line_end": 28788,
+       "line_start": 28797,
+       "line_end": 28838,
        "quote": "\"event_type\": \"remote_access.private_endpoint_state_changed\"",
-       "quote_line": 28750,
-       "file_sha256": "e81e51faff696241375addd431e83ee553a17bd779fe8d1dfab7414da95bceef",
-       "quote_check": "exact"
+       "quote_line": 28800,
+       "file_sha256": "ec21cf1a5b42b3e68a5564a847b4798dff968612d11d438bc7075b89196f9602",
+       "quote_check": "exact",
+       "source_citation": {
+        "path": "Plans/event_family_registry.json",
+        "json_pointer": "#/families/443",
+        "line_start": 28747,
+        "line_end": 28788,
+        "quote": "\"event_type\": \"remote_access.private_endpoint_state_changed\"",
+        "quote_line": 28750,
+        "file_sha256": "e81e51faff696241375addd431e83ee553a17bd779fe8d1dfab7414da95bceef",
+        "quote_check": "exact"
+       }
       }
      ]
     },
@@ -47,9 +57,17 @@
        "line_start": 680,
        "line_end": 680,
        "quote": "canonical_text: 'Newly authored owner contract for remote_access.private_endpoint_state_changed@1.0.0, prepared",
-       "file_sha256": "68d6c2261d6aa046c2b84333e57713c5ea43b1627f66c193a1046af60684c3cd",
+       "file_sha256": "1beab71d56166a94eaf7e941bd6f09e15fff59289c404c2f5c4022b08427035e",
        "quote_check": "exact",
-       "quote_scope": "unit RAS-1402, Plans/Remote_Access_System.md:673-845"
+       "quote_scope": "unit RAS-1402, Plans/Remote_Access_System.md:673-842",
+       "source_citation": {
+        "path": "Plans/Remote_Access_System.md",
+        "unit": "RAS-1402",
+        "line_start": 680,
+        "line_end": 680,
+        "quote": "canonical_text: 'Newly authored owner contract for remote_access.private_endpoint_state_changed@1.0.0, prepared",
+        "file_sha256": "68d6c2261d6aa046c2b84333e57713c5ea43b1627f66c193a1046af60684c3cd"
+       }
       }
      ],
      "carried_from": {
@@ -67,12 +85,20 @@
       {
        "path": "Plans/Remote_Access_System.md",
        "unit": "RAS-1402",
-       "line_start": 708,
-       "line_end": 708,
+       "line_start": 707,
+       "line_end": 707,
        "quote": "Producer: the sole newly authored RemoteAccessRouteService.private_endpoint_commit@1.0.0 method of the existing",
-       "file_sha256": "68d6c2261d6aa046c2b84333e57713c5ea43b1627f66c193a1046af60684c3cd",
+       "file_sha256": "1beab71d56166a94eaf7e941bd6f09e15fff59289c404c2f5c4022b08427035e",
        "quote_check": "exact",
-       "quote_scope": "unit RAS-1402, Plans/Remote_Access_System.md:673-845"
+       "quote_scope": "unit RAS-1402, Plans/Remote_Access_System.md:673-842",
+       "source_citation": {
+        "path": "Plans/Remote_Access_System.md",
+        "unit": "RAS-1402",
+        "line_start": 708,
+        "line_end": 708,
+        "quote": "Producer: the sole newly authored RemoteAccessRouteService.private_endpoint_commit@1.0.0 method of the existing",
+        "file_sha256": "68d6c2261d6aa046c2b84333e57713c5ea43b1627f66c193a1046af60684c3cd"
+       }
       }
      ],
      "carried_from": {
@@ -90,12 +116,20 @@
       {
        "path": "Plans/Remote_Access_System.md",
        "unit": "RAS-1402",
-       "line_start": 695,
-       "line_end": 695,
+       "line_start": 694,
+       "line_end": 694,
        "quote": "Historical lookup authenticates retained provenance and does not reacquire expired live authority. Payload: Plans/event_payloads/w3e/remote_access_private_endpoint_state_changed.schema.json,",
-       "file_sha256": "68d6c2261d6aa046c2b84333e57713c5ea43b1627f66c193a1046af60684c3cd",
+       "file_sha256": "1beab71d56166a94eaf7e941bd6f09e15fff59289c404c2f5c4022b08427035e",
        "quote_check": "exact",
-       "quote_scope": "unit RAS-1402, Plans/Remote_Access_System.md:673-845"
+       "quote_scope": "unit RAS-1402, Plans/Remote_Access_System.md:673-842",
+       "source_citation": {
+        "path": "Plans/Remote_Access_System.md",
+        "unit": "RAS-1402",
+        "line_start": 695,
+        "line_end": 695,
+        "quote": "Historical lookup authenticates retained provenance and does not reacquire expired live authority. Payload: Plans/event_payloads/w3e/remote_access_private_endpoint_state_changed.schema.json,",
+        "file_sha256": "68d6c2261d6aa046c2b84333e57713c5ea43b1627f66c193a1046af60684c3cd"
+       }
       },
       {
        "path": "Plans/event_payloads/w3e/remote_access_private_endpoint_state_changed.schema.json",
@@ -105,7 +139,15 @@
        "quote": "\"additionalProperties\": false,",
        "file_sha256": "17224a3e457d41f5ef18ab0be276deb57a78aa3450d2fa1dca42f36bb024867d",
        "quote_check": "exact",
-       "quote_scope": "document"
+       "quote_scope": "document",
+       "source_citation": {
+        "path": "Plans/event_payloads/w3e/remote_access_private_endpoint_state_changed.schema.json",
+        "unit": "#/",
+        "line_start": 3,
+        "line_end": 3,
+        "quote": "\"additionalProperties\": false,",
+        "file_sha256": "17224a3e457d41f5ef18ab0be276deb57a78aa3450d2fa1dca42f36bb024867d"
+       }
       }
      ],
      "carried_from": {
@@ -123,12 +165,20 @@
       {
        "path": "Plans/Remote_Access_System.md",
        "unit": "RAS-1402",
-       "line_start": 724,
-       "line_end": 724,
+       "line_start": 721,
+       "line_end": 721,
        "quote": "Identity: owner_operation_id is family-operation@1: plus lowercase SHA-256 of exact UTF-8 bytes \"pm.w3e.owner_fact.v1\\0\"",
-       "file_sha256": "68d6c2261d6aa046c2b84333e57713c5ea43b1627f66c193a1046af60684c3cd",
+       "file_sha256": "1beab71d56166a94eaf7e941bd6f09e15fff59289c404c2f5c4022b08427035e",
        "quote_check": "exact",
-       "quote_scope": "unit RAS-1402, Plans/Remote_Access_System.md:673-845"
+       "quote_scope": "unit RAS-1402, Plans/Remote_Access_System.md:673-842",
+       "source_citation": {
+        "path": "Plans/Remote_Access_System.md",
+        "unit": "RAS-1402",
+        "line_start": 724,
+        "line_end": 724,
+        "quote": "Identity: owner_operation_id is family-operation@1: plus lowercase SHA-256 of exact UTF-8 bytes \"pm.w3e.owner_fact.v1\\0\"",
+        "file_sha256": "68d6c2261d6aa046c2b84333e57713c5ea43b1627f66c193a1046af60684c3cd"
+       }
       }
      ],
      "carried_from": {
@@ -146,12 +196,20 @@
       {
        "path": "Plans/Remote_Access_System.md",
        "unit": "RAS-1402",
-       "line_start": 741,
-       "line_end": 741,
+       "line_start": 738,
+       "line_end": 738,
        "quote": "Idempotency/replay: same selected identity and semantic digest returns the immutable original result and first",
-       "file_sha256": "68d6c2261d6aa046c2b84333e57713c5ea43b1627f66c193a1046af60684c3cd",
+       "file_sha256": "1beab71d56166a94eaf7e941bd6f09e15fff59289c404c2f5c4022b08427035e",
        "quote_check": "exact",
-       "quote_scope": "unit RAS-1402, Plans/Remote_Access_System.md:673-845"
+       "quote_scope": "unit RAS-1402, Plans/Remote_Access_System.md:673-842",
+       "source_citation": {
+        "path": "Plans/Remote_Access_System.md",
+        "unit": "RAS-1402",
+        "line_start": 741,
+        "line_end": 741,
+        "quote": "Idempotency/replay: same selected identity and semantic digest returns the immutable original result and first",
+        "file_sha256": "68d6c2261d6aa046c2b84333e57713c5ea43b1627f66c193a1046af60684c3cd"
+       }
       }
      ],
      "carried_from": {
@@ -169,32 +227,56 @@
       {
        "path": "Plans/Remote_Access_System.md",
        "unit": "RAS-1402",
-       "line_start": 749,
-       "line_end": 749,
+       "line_start": 746,
+       "line_end": 746,
        "quote": "Retention: retention_policy_ref=RP-ROUTINE-OBSERVATION-APPLICATION-90D@1.0.0 (DL-454, E-CARDS-3 item 2.a, option A), application editions only, kept 90 days (7,776,000 seconds) from the first successful save that survives a restart, never restarted by retry, reprocessing or restore, in the one separate 2,000,000-entry application allowance app:routine_observation (fail_closed overflow, hold eligib",
-       "file_sha256": "68d6c2261d6aa046c2b84333e57713c5ea43b1627f66c193a1046af60684c3cd",
+       "file_sha256": "1beab71d56166a94eaf7e941bd6f09e15fff59289c404c2f5c4022b08427035e",
        "quote_check": "exact",
-       "quote_scope": "unit RAS-1402, Plans/Remote_Access_System.md:673-845"
+       "quote_scope": "unit RAS-1402, Plans/Remote_Access_System.md:673-842",
+       "source_citation": {
+        "path": "Plans/Remote_Access_System.md",
+        "unit": "RAS-1402",
+        "line_start": 749,
+        "line_end": 749,
+        "quote": "Retention: retention_policy_ref=RP-ROUTINE-OBSERVATION-APPLICATION-90D@1.0.0 (DL-454, E-CARDS-3 item 2.a, option A), application editions only, kept 90 days (7,776,000 seconds) from the first successful save that survives a restart, never restarted by retry, reprocessing or restore, in the one separate 2,000,000-entry application allowance app:routine_observation (fail_closed overflow, hold eligib",
+        "file_sha256": "68d6c2261d6aa046c2b84333e57713c5ea43b1627f66c193a1046af60684c3cd"
+       }
       },
       {
        "path": "Plans/Contracts_V0.md",
        "unit": "CV-1402",
-       "line_start": 48421,
-       "line_end": 48421,
+       "line_start": 48422,
+       "line_end": 48422,
        "quote": "retention_policy_ref=RP-ROUTINE-OBSERVATION-APPLICATION-90D@1.0.0 (DL-454, E-CARDS-3 item 2.a, option A), application editions only, kept 90 days (7,776,000 seconds) from the first successful save that survives a restart, never restarted by retry, reprocessing or restore, in the one separate 2,000,000-entry application allowance app:routine_observation (fail_closed overflow, hold eligible; only ex",
-       "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a",
+       "file_sha256": "4ae2225d8ed19b6df971b6c32797aae6882d175264ff2c2e9a2045650d735e67",
        "quote_check": "exact",
-       "quote_scope": "unit CV-1402, Plans/Contracts_V0.md:48402-48463"
+       "quote_scope": "unit CV-1402, Plans/Contracts_V0.md:48403-48464",
+       "source_citation": {
+        "path": "Plans/Contracts_V0.md",
+        "unit": "CV-1402",
+        "line_start": 48421,
+        "line_end": 48421,
+        "quote": "retention_policy_ref=RP-ROUTINE-OBSERVATION-APPLICATION-90D@1.0.0 (DL-454, E-CARDS-3 item 2.a, option A), application editions only, kept 90 days (7,776,000 seconds) from the first successful save that survives a restart, never restarted by retry, reprocessing or restore, in the one separate 2,000,000-entry application allowance app:routine_observation (fail_closed overflow, hold eligible; only ex",
+        "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a"
+       }
       },
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-1402",
-       "line_start": 70212,
-       "line_end": 70212,
+       "line_start": 69705,
+       "line_end": 69705,
        "quote": "retention_policy_ref=RP-ROUTINE-OBSERVATION-APPLICATION-90D@1.0.0 (DL-454, E-CARDS-3 item 2.a, option A), application editions only, kept 90 days (7,776,000 seconds) from the first successful save that survives a restart, never restarted by retry, reprocessing or restore, in the one separate 2,000,000-entry application allowance app:routine_observation (fail_closed overflow, hold eligible; only ex",
-       "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707",
+       "file_sha256": "73ee6d097e08d31fd93301d05d2cd2632dd46e5a22ba3ea405ffadda4a0a9db2",
        "quote_check": "exact",
-       "quote_scope": "unit SP-1402, Plans/storage-plan.md:70201-70289"
+       "quote_scope": "unit SP-1402, Plans/storage-plan.md:69694-69782",
+       "source_citation": {
+        "path": "Plans/storage-plan.md",
+        "unit": "SP-1402",
+        "line_start": 70212,
+        "line_end": 70212,
+        "quote": "retention_policy_ref=RP-ROUTINE-OBSERVATION-APPLICATION-90D@1.0.0 (DL-454, E-CARDS-3 item 2.a, option A), application editions only, kept 90 days (7,776,000 seconds) from the first successful save that survives a restart, never restarted by retry, reprocessing or restore, in the one separate 2,000,000-entry application allowance app:routine_observation (fail_closed overflow, hold eligible; only ex",
+        "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+       }
       }
      ],
      "carried_from": {
@@ -212,12 +294,20 @@
       {
        "path": "Plans/Remote_Access_System.md",
        "unit": "RAS-1402",
-       "line_start": 753,
-       "line_end": 753,
+       "line_start": 750,
+       "line_end": 750,
        "quote": "Redaction/custody: RemoteAccessRouteService on the actual Server holds the original accepted intent, complete",
-       "file_sha256": "68d6c2261d6aa046c2b84333e57713c5ea43b1627f66c193a1046af60684c3cd",
+       "file_sha256": "1beab71d56166a94eaf7e941bd6f09e15fff59289c404c2f5c4022b08427035e",
        "quote_check": "exact",
-       "quote_scope": "unit RAS-1402, Plans/Remote_Access_System.md:673-845"
+       "quote_scope": "unit RAS-1402, Plans/Remote_Access_System.md:673-842",
+       "source_citation": {
+        "path": "Plans/Remote_Access_System.md",
+        "unit": "RAS-1402",
+        "line_start": 753,
+        "line_end": 753,
+        "quote": "Redaction/custody: RemoteAccessRouteService on the actual Server holds the original accepted intent, complete",
+        "file_sha256": "68d6c2261d6aa046c2b84333e57713c5ea43b1627f66c193a1046af60684c3cd"
+       }
       }
      ],
      "carried_from": {
@@ -235,12 +325,20 @@
       {
        "path": "Plans/Remote_Access_System.md",
        "unit": "RAS-1402",
-       "line_start": 695,
-       "line_end": 695,
+       "line_start": 694,
+       "line_end": 694,
        "quote": "Historical lookup authenticates retained provenance and does not reacquire expired live authority. Payload: Plans/event_payloads/w3e/remote_access_private_endpoint_state_changed.schema.json,",
-       "file_sha256": "68d6c2261d6aa046c2b84333e57713c5ea43b1627f66c193a1046af60684c3cd",
+       "file_sha256": "1beab71d56166a94eaf7e941bd6f09e15fff59289c404c2f5c4022b08427035e",
        "quote_check": "exact",
-       "quote_scope": "unit RAS-1402, Plans/Remote_Access_System.md:673-845"
+       "quote_scope": "unit RAS-1402, Plans/Remote_Access_System.md:673-842",
+       "source_citation": {
+        "path": "Plans/Remote_Access_System.md",
+        "unit": "RAS-1402",
+        "line_start": 695,
+        "line_end": 695,
+        "quote": "Historical lookup authenticates retained provenance and does not reacquire expired live authority. Payload: Plans/event_payloads/w3e/remote_access_private_endpoint_state_changed.schema.json,",
+        "file_sha256": "68d6c2261d6aa046c2b84333e57713c5ea43b1627f66c193a1046af60684c3cd"
+       }
       }
      ],
      "carried_from": {
@@ -258,22 +356,38 @@
       {
        "path": "Plans/Remote_Access_System.md",
        "unit": "RAS-1402",
-       "line_start": 765,
-       "line_end": 765,
+       "line_start": 762,
+       "line_end": 762,
        "quote": "Consumer/checkpoint: newly authored projector.w3e.remote_access_private_endpoint_state_changed.history@1.0.0 and",
-       "file_sha256": "68d6c2261d6aa046c2b84333e57713c5ea43b1627f66c193a1046af60684c3cd",
+       "file_sha256": "1beab71d56166a94eaf7e941bd6f09e15fff59289c404c2f5c4022b08427035e",
        "quote_check": "exact",
-       "quote_scope": "unit RAS-1402, Plans/Remote_Access_System.md:673-845"
+       "quote_scope": "unit RAS-1402, Plans/Remote_Access_System.md:673-842",
+       "source_citation": {
+        "path": "Plans/Remote_Access_System.md",
+        "unit": "RAS-1402",
+        "line_start": 765,
+        "line_end": 765,
+        "quote": "Consumer/checkpoint: newly authored projector.w3e.remote_access_private_endpoint_state_changed.history@1.0.0 and",
+        "file_sha256": "68d6c2261d6aa046c2b84333e57713c5ea43b1627f66c193a1046af60684c3cd"
+       }
       },
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-1402",
-       "line_start": 70226,
-       "line_end": 70226,
+       "line_start": 69719,
+       "line_end": 69719,
        "quote": "The exact checkpoint in derived redb checkpoints is w3e_remote_access_private_endpoint_state_changed_checkpoint.v1:{hex(storage_instance_id)}:{scope_partition}:{hex(server_id)}",
-       "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707",
+       "file_sha256": "73ee6d097e08d31fd93301d05d2cd2632dd46e5a22ba3ea405ffadda4a0a9db2",
        "quote_check": "exact",
-       "quote_scope": "unit SP-1402, Plans/storage-plan.md:70201-70289"
+       "quote_scope": "unit SP-1402, Plans/storage-plan.md:69694-69782",
+       "source_citation": {
+        "path": "Plans/storage-plan.md",
+        "unit": "SP-1402",
+        "line_start": 70226,
+        "line_end": 70226,
+        "quote": "The exact checkpoint in derived redb checkpoints is w3e_remote_access_private_endpoint_state_changed_checkpoint.v1:{hex(storage_instance_id)}:{scope_partition}:{hex(server_id)}",
+        "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+       }
       }
      ],
      "carried_from": {
@@ -291,12 +405,20 @@
       {
        "path": "Plans/Remote_Access_System.md",
        "unit": "RAS-1402",
-       "line_start": 779,
-       "line_end": 779,
+       "line_start": 776,
+       "line_end": 776,
        "quote": "Compatibility/withdrawal: no legacy writer or event alias is claimed for this newly authored family. Exact retained",
-       "file_sha256": "68d6c2261d6aa046c2b84333e57713c5ea43b1627f66c193a1046af60684c3cd",
+       "file_sha256": "1beab71d56166a94eaf7e941bd6f09e15fff59289c404c2f5c4022b08427035e",
        "quote_check": "exact",
-       "quote_scope": "unit RAS-1402, Plans/Remote_Access_System.md:673-845"
+       "quote_scope": "unit RAS-1402, Plans/Remote_Access_System.md:673-842",
+       "source_citation": {
+        "path": "Plans/Remote_Access_System.md",
+        "unit": "RAS-1402",
+        "line_start": 779,
+        "line_end": 779,
+        "quote": "Compatibility/withdrawal: no legacy writer or event alias is claimed for this newly authored family. Exact retained",
+        "file_sha256": "68d6c2261d6aa046c2b84333e57713c5ea43b1627f66c193a1046af60684c3cd"
+       }
       }
      ],
      "carried_from": {
@@ -314,12 +436,20 @@
       {
        "path": "Plans/Contracts_V0.md",
        "unit": "CV-1402",
-       "line_start": 48421,
-       "line_end": 48421,
+       "line_start": 48422,
+       "line_end": 48422,
        "quote": "Phase 2 (2026-11-13) runs the executable synthetic oracles of this family in scripts/pm_w3e_event_oracles.py; every refusal is one named single-predicate row of a generated Method B guard table (scripts/pm_w3e_table_*.py) proved by the gated shared scripts/pm_guard_isolation.py through scripts/pm-w3e-guard-proof.py, and rows no input can refuse first stay alone in their own table with a written pr",
-       "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a",
+       "file_sha256": "4ae2225d8ed19b6df971b6c32797aae6882d175264ff2c2e9a2045650d735e67",
        "quote_check": "exact",
-       "quote_scope": "unit CV-1402, Plans/Contracts_V0.md:48402-48463"
+       "quote_scope": "unit CV-1402, Plans/Contracts_V0.md:48403-48464",
+       "source_citation": {
+        "path": "Plans/Contracts_V0.md",
+        "unit": "CV-1402",
+        "line_start": 48421,
+        "line_end": 48421,
+        "quote": "Phase 2 (2026-11-13) runs the executable synthetic oracles of this family in scripts/pm_w3e_event_oracles.py; every refusal is one named single-predicate row of a generated Method B guard table (scripts/pm_w3e_table_*.py) proved by the gated shared scripts/pm_guard_isolation.py through scripts/pm-w3e-guard-proof.py, and rows no input can refuse first stay alone in their own table with a written pr",
+        "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a"
+       }
       },
       {
        "path": "scripts/pm_pnc019_s4o3_store.py",
@@ -328,7 +458,14 @@
        "quote": "class Store:",
        "file_sha256": "10f10d033d805d9830f26d0c9c1fbe1cc8560ed5c943c81af935e56aa4684663",
        "quote_check": "exact",
-       "quote_scope": "document"
+       "quote_scope": "document",
+       "source_citation": {
+        "path": "scripts/pm_pnc019_s4o3_store.py",
+        "line_start": 144,
+        "line_end": 144,
+        "quote": "class Store:",
+        "file_sha256": "10f10d033d805d9830f26d0c9c1fbe1cc8560ed5c943c81af935e56aa4684663"
+       }
       },
       {
        "path": "scripts/pm_pnc019_s4o3_store.py",
@@ -337,7 +474,14 @@
        "quote": "def read(self, generation, original_ref):",
        "file_sha256": "10f10d033d805d9830f26d0c9c1fbe1cc8560ed5c943c81af935e56aa4684663",
        "quote_check": "exact",
-       "quote_scope": "document"
+       "quote_scope": "document",
+       "source_citation": {
+        "path": "scripts/pm_pnc019_s4o3_store.py",
+        "line_start": 249,
+        "line_end": 249,
+        "quote": "def read(self, generation, original_ref):",
+        "file_sha256": "10f10d033d805d9830f26d0c9c1fbe1cc8560ed5c943c81af935e56aa4684663"
+       }
       },
       {
        "path": "scripts/pm_pnc019_s4o3_oracles.py",
@@ -346,7 +490,14 @@
        "quote": "def run_family(adapter, family, trace=None, cut=None):",
        "file_sha256": "1fea5e492c2d45f94c41d59184da26081b7b2f30833fccd5142167bcf4cb66f6",
        "quote_check": "exact",
-       "quote_scope": "document"
+       "quote_scope": "document",
+       "source_citation": {
+        "path": "scripts/pm_pnc019_s4o3_oracles.py",
+        "line_start": 142,
+        "line_end": 142,
+        "quote": "def run_family(adapter, family, trace=None, cut=None):",
+        "file_sha256": "1fea5e492c2d45f94c41d59184da26081b7b2f30833fccd5142167bcf4cb66f6"
+       }
       },
       {
        "path": "scripts/pm-pnc019-s4o3-proof.py",
@@ -355,16 +506,30 @@
        "quote": "def mutations(out):",
        "file_sha256": "c3d51d67e679729c0bd7775e06e823726e79741566e4b4036aec04e0d6736487",
        "quote_check": "exact",
-       "quote_scope": "document"
+       "quote_scope": "document",
+       "source_citation": {
+        "path": "scripts/pm-pnc019-s4o3-proof.py",
+        "line_start": 103,
+        "line_end": 103,
+        "quote": "def mutations(out):",
+        "file_sha256": "c3d51d67e679729c0bd7775e06e823726e79741566e4b4036aec04e0d6736487"
+       }
       },
       {
        "path": "scripts/pm_w3e_event_oracles.py",
        "line_start": 631,
        "line_end": 631,
        "quote": "RESULT_FIELDS = {",
-       "file_sha256": "cfdd3aa717c4e810169a3bd74da0cf77a43327a344daf0c02b8a019c55988f9a",
+       "file_sha256": "f461bff17b1f3d6e46535a9761a6993f1c3db9a8d1d597e162c940d1343cde5c",
        "quote_check": "exact",
-       "quote_scope": "document"
+       "quote_scope": "document",
+       "source_citation": {
+        "path": "scripts/pm_w3e_event_oracles.py",
+        "line_start": 631,
+        "line_end": 631,
+        "quote": "RESULT_FIELDS = {",
+        "file_sha256": "cfdd3aa717c4e810169a3bd74da0cf77a43327a344daf0c02b8a019c55988f9a"
+       }
       },
       {
        "path": "scripts/pm_pnc019_s4o3_domain_cases.py",
@@ -373,7 +538,14 @@
        "quote": "RULES = (",
        "file_sha256": "277b6d33314f4364caa287d2d6aec6f51affc193af04f9d163deedff71c05d9d",
        "quote_check": "exact",
-       "quote_scope": "document"
+       "quote_scope": "document",
+       "source_citation": {
+        "path": "scripts/pm_pnc019_s4o3_domain_cases.py",
+        "line_start": 14,
+        "line_end": 14,
+        "quote": "RULES = (",
+        "file_sha256": "277b6d33314f4364caa287d2d6aec6f51affc193af04f9d163deedff71c05d9d"
+       }
       },
       {
        "path": "scripts/pm_pnc019_s4o3_owner.py",
@@ -382,7 +554,14 @@
        "quote": "RESTORE_REFS = (",
        "file_sha256": "c6dcfbc63623ce82f521c89723164ba1370e01fb03a439d2cb1c392f3aed68e2",
        "quote_check": "exact",
-       "quote_scope": "document"
+       "quote_scope": "document",
+       "source_citation": {
+        "path": "scripts/pm_pnc019_s4o3_owner.py",
+        "line_start": 20,
+        "line_end": 20,
+        "quote": "RESTORE_REFS = (",
+        "file_sha256": "c6dcfbc63623ce82f521c89723164ba1370e01fb03a439d2cb1c392f3aed68e2"
+       }
       }
      ],
      "carried_from": {
@@ -394,5 +573,19 @@
     }
    }
   }
- ]
+ ],
+ "source_registry": {
+  "path": "Plans/event_family_registry.json",
+  "revision": "2026-11-16.225",
+  "sha256": "e81e51faff696241375addd431e83ee553a17bd779fe8d1dfab7414da95bceef",
+  "family_count": 444,
+  "row_pointer": "#/families/443"
+ },
+ "evidence_maintenance": {
+  "authority": "MERGE2-FIX1 findings 1/3/5",
+  "source_commit": "0c904de00426b0089ba5d56349fda8ea16cc9f88",
+  "source_assessment_sha256": "1552680711e240f4122390621b0874b93fddace6dd2d479a9fc305c4215c38aa",
+  "native_execution": "NOT_RUN",
+  "verdicts_changed": false
+ }
 }

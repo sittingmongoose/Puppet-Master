@@ -4,7 +4,7 @@
  "family_id": "event-family-server-client-revoked",
  "implementation_receipt_sha256": "dceb7f21436cbe126c23822e62caa1b6dedcb45fefae3005c1804576ca34d827",
  "decision_ref": "Plans/Decision_Log.md#DL-2398",
- "decision_section_sha256": "a47bd79ed3b3c0fbe9b1813a615bddcf3bab76ed84fe94bf7cd01600e467d3c1",
+ "decision_section_sha256": "42aaba29815dd9f745220a097bd904e8278b7d18329f549ab0b28a1e2f34b574",
  "registry_before": {
   "revision": "2026-11-16.261",
   "sha256": "28114aec3ae5472f36cf40bf130394530a4bdda2374e7ba411614733e8fc7d65",
@@ -18,7 +18,7 @@
  "registry_row_sha256": "049ad0efbaead45ded15ef0a6ccb0094f0b0c55306f5c8d7a031505054462fb5",
  "depth_assessment": {
   "path": "reports/event-authority-20261116/admission-merge-2/depth/server.client_revoked.json",
-  "sha256": "82b4ae016ee2957d53ac37d1d49767dab1e3bc014bf7db7f69676421bebf2172"
+  "sha256": "c49b4458e57daa5ed684b392a7bfa71ab7491e6b015a21f18d8286b6a39d10aa"
  },
  "admission_landing": {
   "branch": "plans/ea-merge2-apply-20261116",
@@ -35,5 +35,13 @@
   "The decision entry is DL-2398, which DL-096 makes Jared's decision entry for this family.",
   "registry_before is the registry at this commit's parent. If main's registry moves before the landing, the writer runs again on the new base and this record, its entry and the pins are taken again.",
   "Written under DL-077. The seal check recomputes completeness from the pinned assessment; the two fields ending in _at_recording are informational only."
- ]
+ ],
+ "evidence_maintenance": {
+  "authority": "MERGE2-FIX1",
+  "source_commit": "0c904de00426b0089ba5d56349fda8ea16cc9f88",
+  "source_record_sha256": "cc944474cbf5916dfc92bb35a920911f4c2eeefca5c48a7fa3c4c3581335b457",
+  "source_assessment_sha256": "82b4ae016ee2957d53ac37d1d49767dab1e3bc014bf7db7f69676421bebf2172",
+  "source_decision_section_sha256": "a47bd79ed3b3c0fbe9b1813a615bddcf3bab76ed84fe94bf7cd01600e467d3c1",
+  "original_registry_checkpoints_preserved": true
+ }
 }

@@ -167,12 +167,22 @@
       {
        "path": "Plans/event_family_registry.json",
        "json_pointer": "#/families/5",
-       "line_start": 365,
-       "line_end": 458,
+       "line_start": 399,
+       "line_end": 399,
        "quote": "\"event_type\": \"goal_run.stopped\"",
        "quote_line": 368,
-       "file_sha256": "be075e429cc8fb5c47b8c06bee6153bee597ce7320f14292e001d0e16a5008ed",
-       "quote_check": "exact"
+       "file_sha256": "ec21cf1a5b42b3e68a5564a847b4798dff968612d11d438bc7075b89196f9602",
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "source_citation": {
+        "path": "Plans/event_family_registry.json",
+        "json_pointer": "#/families/5",
+        "line_start": 365,
+        "line_end": 458,
+        "quote": "\"event_type\": \"goal_run.stopped\"",
+        "quote_line": 368,
+        "file_sha256": "be075e429cc8fb5c47b8c06bee6153bee597ce7320f14292e001d0e16a5008ed"
+       }
       }
      ]
     },
@@ -189,7 +199,16 @@
        "excerpt_sha256": "e0dd4ea235bfa5bdfed6949c89c389692ba680a7b73bde05f32df3e024bb69c5",
        "file_sha256": "122f980eb82a138dc71713eede5caa472a2d2d9ce404fab798698f8a38f5ca3e",
        "quote_check": "exact",
-       "quote_scope": "document"
+       "quote_scope": "document",
+       "excerpt_digest_convention": "whole_line",
+       "source_citation": {
+        "path": "Plans/Goal_Runtime_System.md",
+        "line_start": 2911,
+        "line_end": 2911,
+        "quote": "Current v3 (prepared, DL-080): GRS-200",
+        "excerpt_sha256": "e0dd4ea235bfa5bdfed6949c89c389692ba680a7b73bde05f32df3e024bb69c5",
+        "file_sha256": "122f980eb82a138dc71713eede5caa472a2d2d9ce404fab798698f8a38f5ca3e"
+       }
       },
       {
        "path": "Plans/goal_run_stop_block_contracts/prepared-registry-rows.json",
@@ -199,7 +218,16 @@
        "excerpt_sha256": "8375f6295aeacc8c14c10d18ce4facd88e633658a5481f9987415c563deb4aa2",
        "file_sha256": "3dce5a4704701fd9d67453899f34798ea94cd18de974a5e804d5d243e3f0c1c5",
        "quote_check": "exact",
-       "quote_scope": "document"
+       "quote_scope": "document",
+       "excerpt_digest_convention": "whole_line",
+       "source_citation": {
+        "path": "Plans/goal_run_stop_block_contracts/prepared-registry-rows.json",
+        "line_start": 19,
+        "line_end": 19,
+        "quote": "\"semantic_owner_doc\": \"Plans/Goal_Runtime_System.md#GRS-200\"",
+        "excerpt_sha256": "8375f6295aeacc8c14c10d18ce4facd88e633658a5481f9987415c563deb4aa2",
+        "file_sha256": "3dce5a4704701fd9d67453899f34798ea94cd18de974a5e804d5d243e3f0c1c5"
+       }
       }
      ],
      "carried_from": {
@@ -222,7 +250,16 @@
        "excerpt_sha256": "abb4b47fb413b0327f201c1c7d7066ef1ae914c6b8d99d0b6c2f5dc2854c56bd",
        "file_sha256": "5dc6a7b9a34f3fc8ced31230011f055a8db503f3b85c5b7ec2d370dbb2401732",
        "quote_check": "exact",
-       "quote_scope": "document"
+       "quote_scope": "document",
+       "excerpt_digest_convention": "whole_line",
+       "source_citation": {
+        "path": "Plans/Executor_Protocol.md",
+        "line_start": 12351,
+        "line_end": 12351,
+        "quote": "and that edition is now authored by EP-1110",
+        "excerpt_sha256": "abb4b47fb413b0327f201c1c7d7066ef1ae914c6b8d99d0b6c2f5dc2854c56bd",
+        "file_sha256": "5dc6a7b9a34f3fc8ced31230011f055a8db503f3b85c5b7ec2d370dbb2401732"
+       }
       },
       {
        "path": "Plans/Executor_Protocol.md",
@@ -232,7 +269,16 @@
        "excerpt_sha256": "dbb6d8e885816fdef9f206ced78fe57a32a374208782c39db335015171e51d0f",
        "file_sha256": "5dc6a7b9a34f3fc8ced31230011f055a8db503f3b85c5b7ec2d370dbb2401732",
        "quote_check": "exact",
-       "quote_scope": "document"
+       "quote_scope": "document",
+       "excerpt_digest_convention": "whole_line",
+       "source_citation": {
+        "path": "Plans/Executor_Protocol.md",
+        "line_start": 12381,
+        "line_end": 12381,
+        "quote": "The distinct pm.executor.workflow_source.all_writers.stop_block.v1 descriptor incorporates every EP-124",
+        "excerpt_sha256": "dbb6d8e885816fdef9f206ced78fe57a32a374208782c39db335015171e51d0f",
+        "file_sha256": "5dc6a7b9a34f3fc8ced31230011f055a8db503f3b85c5b7ec2d370dbb2401732"
+       }
       },
       {
        "path": "Plans/Executor_Protocol.md",
@@ -242,7 +288,16 @@
        "excerpt_sha256": "4eebdab7125cd7c3054ba85fafd7bfb914f1fd9a18bed8413bc135095668a156",
        "file_sha256": "5dc6a7b9a34f3fc8ced31230011f055a8db503f3b85c5b7ec2d370dbb2401732",
        "quote_check": "exact",
-       "quote_scope": "document"
+       "quote_scope": "document",
+       "excerpt_digest_convention": "whole_line",
+       "source_citation": {
+        "path": "Plans/Executor_Protocol.md",
+        "line_start": 12448,
+        "line_end": 12448,
+        "quote": "Append only the frozen own-family Event, resolve SP-286 original eleven-field receipt plus",
+        "excerpt_sha256": "4eebdab7125cd7c3054ba85fafd7bfb914f1fd9a18bed8413bc135095668a156",
+        "file_sha256": "5dc6a7b9a34f3fc8ced31230011f055a8db503f3b85c5b7ec2d370dbb2401732"
+       }
       },
       {
        "path": "Plans/goal_run_stop_block_contracts/profile.json",
@@ -252,7 +307,16 @@
        "excerpt_sha256": "939a9794391b3900b345c28378f1a1fdc38b2751cf52954f94ac414b9840dc6f",
        "file_sha256": "86d7ffed4ccc688f7c9f5cf4a4e2a1ee02cddd1b2611671d9d65b7d5a1f0ba15",
        "quote_check": "exact",
-       "quote_scope": "document"
+       "quote_scope": "document",
+       "excerpt_digest_convention": "whole_line",
+       "source_citation": {
+        "path": "Plans/goal_run_stop_block_contracts/profile.json",
+        "line_start": 5,
+        "line_end": 5,
+        "quote": "\"status\": \"PREPARED_WITHOUT_ADMISSION_NATIVE_NOT_RUN\"",
+        "excerpt_sha256": "939a9794391b3900b345c28378f1a1fdc38b2751cf52954f94ac414b9840dc6f",
+        "file_sha256": "86d7ffed4ccc688f7c9f5cf4a4e2a1ee02cddd1b2611671d9d65b7d5a1f0ba15"
+       }
       },
       {
        "path": "Plans/goal_run_stop_block_contracts/protocol.md",
@@ -262,7 +326,16 @@
        "excerpt_sha256": "fd2747979af15de6227bf864135b0d75e3685a0bbec073794f67b5ee5a6b3f0e",
        "file_sha256": "8b2f2d425b242110fc84d977a971ab76bfe9873c849cb818b0b48e5e0a94721a",
        "quote_check": "exact",
-       "quote_scope": "document"
+       "quote_scope": "document",
+       "excerpt_digest_convention": "whole_line",
+       "source_citation": {
+        "path": "Plans/goal_run_stop_block_contracts/protocol.md",
+        "line_start": 7,
+        "line_end": 7,
+        "quote": "The source is therefore no longer held",
+        "excerpt_sha256": "fd2747979af15de6227bf864135b0d75e3685a0bbec073794f67b5ee5a6b3f0e",
+        "file_sha256": "8b2f2d425b242110fc84d977a971ab76bfe9873c849cb818b0b48e5e0a94721a"
+       }
       }
      ],
      "carried_from": {
@@ -285,7 +358,16 @@
        "excerpt_sha256": "102065b1f33221981125ab399f6f6c61307be2f2a2b5fa1e8e22a3a20e9369db",
        "file_sha256": "122f980eb82a138dc71713eede5caa472a2d2d9ce404fab798698f8a38f5ca3e",
        "quote_check": "exact",
-       "quote_scope": "document"
+       "quote_scope": "document",
+       "excerpt_digest_convention": "whole_line",
+       "source_citation": {
+        "path": "Plans/Goal_Runtime_System.md",
+        "line_start": 8458,
+        "line_end": 8458,
+        "quote": "Payload: pm.goal_runtime_event.goal_run_stopped.schema.v3 (CV-420) on the GoalRun envelope grammar that CV-288 keeps for Event Authority custody after DL-478",
+        "excerpt_sha256": "102065b1f33221981125ab399f6f6c61307be2f2a2b5fa1e8e22a3a20e9369db",
+        "file_sha256": "122f980eb82a138dc71713eede5caa472a2d2d9ce404fab798698f8a38f5ca3e"
+       }
       },
       {
        "path": "Plans/Contracts_V0.md",
@@ -293,9 +375,18 @@
        "line_end": 23059,
        "quote": "The GoalRun/SubagentWave/VerificationCycle family is retired as current product flow by DL-478.",
        "excerpt_sha256": "ee448aea1cafcc825ef2421fca34868e82e4d8e2b842bbdf82c1bbc1cb6ea18f",
-       "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a",
+       "file_sha256": "4ae2225d8ed19b6df971b6c32797aae6882d175264ff2c2e9a2045650d735e67",
        "quote_check": "exact",
-       "quote_scope": "document"
+       "quote_scope": "document",
+       "excerpt_digest_convention": "whole_line",
+       "source_citation": {
+        "path": "Plans/Contracts_V0.md",
+        "line_start": 23059,
+        "line_end": 23059,
+        "quote": "The GoalRun/SubagentWave/VerificationCycle family is retired as current product flow by DL-478.",
+        "excerpt_sha256": "ee448aea1cafcc825ef2421fca34868e82e4d8e2b842bbdf82c1bbc1cb6ea18f",
+        "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a"
+       }
       },
       {
        "path": "Plans/Contracts_V0.md",
@@ -303,19 +394,37 @@
        "line_end": 23059,
        "quote": "it imposes no current GoalRun execution, verification, repair, or completion-certification obligations.",
        "excerpt_sha256": "ee448aea1cafcc825ef2421fca34868e82e4d8e2b842bbdf82c1bbc1cb6ea18f",
-       "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a",
+       "file_sha256": "4ae2225d8ed19b6df971b6c32797aae6882d175264ff2c2e9a2045650d735e67",
        "quote_check": "exact",
-       "quote_scope": "document"
+       "quote_scope": "document",
+       "excerpt_digest_convention": "whole_line",
+       "source_citation": {
+        "path": "Plans/Contracts_V0.md",
+        "line_start": 23059,
+        "line_end": 23059,
+        "quote": "it imposes no current GoalRun execution, verification, repair, or completion-certification obligations.",
+        "excerpt_sha256": "ee448aea1cafcc825ef2421fca34868e82e4d8e2b842bbdf82c1bbc1cb6ea18f",
+        "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a"
+       }
       },
       {
        "path": "Plans/Contracts_V0.md",
-       "line_start": 44078,
-       "line_end": 44078,
+       "line_start": 44079,
+       "line_end": 44079,
        "quote": "expected_goal_run_revision, goal_run_revision and idempotency_key are required; expected_goal_revision and parent_goal_id are gone",
        "excerpt_sha256": "55e7a144c7c640b681aa4298383a24a67edb70d4f883ba9956a337a50a7531ea",
-       "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a",
+       "file_sha256": "4ae2225d8ed19b6df971b6c32797aae6882d175264ff2c2e9a2045650d735e67",
        "quote_check": "exact",
-       "quote_scope": "document"
+       "quote_scope": "document",
+       "excerpt_digest_convention": "whole_line",
+       "source_citation": {
+        "path": "Plans/Contracts_V0.md",
+        "line_start": 44078,
+        "line_end": 44078,
+        "quote": "expected_goal_run_revision, goal_run_revision and idempotency_key are required; expected_goal_revision and parent_goal_id are gone",
+        "excerpt_sha256": "55e7a144c7c640b681aa4298383a24a67edb70d4f883ba9956a337a50a7531ea",
+        "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a"
+       }
       },
       {
        "path": "Plans/goal_run_stop_block_contracts/prepared-registry-rows.json",
@@ -325,17 +434,35 @@
        "excerpt_sha256": "629cb3e06f20aec7ffc37c5790d9a546d8f31b425717d09c4bf8929b26ef0787",
        "file_sha256": "3dce5a4704701fd9d67453899f34798ea94cd18de974a5e804d5d243e3f0c1c5",
        "quote_check": "exact",
-       "quote_scope": "document"
+       "quote_scope": "document",
+       "excerpt_digest_convention": "whole_line",
+       "source_citation": {
+        "path": "Plans/goal_run_stop_block_contracts/prepared-registry-rows.json",
+        "line_start": 21,
+        "line_end": 21,
+        "quote": "\"payload_schema_id\": \"pm.goal_runtime_event.goal_run_stopped.schema.v3\"",
+        "excerpt_sha256": "629cb3e06f20aec7ffc37c5790d9a546d8f31b425717d09c4bf8929b26ef0787",
+        "file_sha256": "3dce5a4704701fd9d67453899f34798ea94cd18de974a5e804d5d243e3f0c1c5"
+       }
       },
       {
        "path": "Plans/Contracts_V0.md",
-       "line_start": 44078,
-       "line_end": 44078,
+       "line_start": 44079,
+       "line_end": 44079,
        "quote": "the prepared 3.0.0 successor row is in Plans/goal_run_stop_block_contracts/prepared-registry-rows.json",
        "excerpt_sha256": "55e7a144c7c640b681aa4298383a24a67edb70d4f883ba9956a337a50a7531ea",
-       "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a",
+       "file_sha256": "4ae2225d8ed19b6df971b6c32797aae6882d175264ff2c2e9a2045650d735e67",
        "quote_check": "exact",
-       "quote_scope": "document"
+       "quote_scope": "document",
+       "excerpt_digest_convention": "whole_line",
+       "source_citation": {
+        "path": "Plans/Contracts_V0.md",
+        "line_start": 44078,
+        "line_end": 44078,
+        "quote": "the prepared 3.0.0 successor row is in Plans/goal_run_stop_block_contracts/prepared-registry-rows.json",
+        "excerpt_sha256": "55e7a144c7c640b681aa4298383a24a67edb70d4f883ba9956a337a50a7531ea",
+        "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a"
+       }
       }
      ],
      "carried_from": {
@@ -356,9 +483,18 @@
        "line_end": 31869,
        "quote": "Identity: D = SHA256(JCS([\"pm.goal_run.stopped.v1\"",
        "excerpt_sha256": "f1ea7bf6848d25df57e7991ffd4b5472ed09b80223fc4fd8819031938d023430",
-       "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707",
+       "file_sha256": "73ee6d097e08d31fd93301d05d2cd2632dd46e5a22ba3ea405ffadda4a0a9db2",
        "quote_check": "exact",
-       "quote_scope": "document"
+       "quote_scope": "document",
+       "excerpt_digest_convention": "whole_line",
+       "source_citation": {
+        "path": "Plans/storage-plan.md",
+        "line_start": 31869,
+        "line_end": 31869,
+        "quote": "Identity: D = SHA256(JCS([\"pm.goal_run.stopped.v1\"",
+        "excerpt_sha256": "f1ea7bf6848d25df57e7991ffd4b5472ed09b80223fc4fd8819031938d023430",
+        "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+       }
       },
       {
        "path": "Plans/goal_run_stop_block_contracts/prepared-registry-rows.json",
@@ -368,7 +504,16 @@
        "excerpt_sha256": "3450e4c51ff7e41707a3b5ad203b7500d6f0adfa02c382ab5d67f923060c355f",
        "file_sha256": "3dce5a4704701fd9d67453899f34798ea94cd18de974a5e804d5d243e3f0c1c5",
        "quote_check": "exact",
-       "quote_scope": "document"
+       "quote_scope": "document",
+       "excerpt_digest_convention": "whole_line",
+       "source_citation": {
+        "path": "Plans/goal_run_stop_block_contracts/prepared-registry-rows.json",
+        "line_start": 38,
+        "line_end": 38,
+        "quote": "\"/payload/payload/goal_run_id\"",
+        "excerpt_sha256": "3450e4c51ff7e41707a3b5ad203b7500d6f0adfa02c382ab5d67f923060c355f",
+        "file_sha256": "3dce5a4704701fd9d67453899f34798ea94cd18de974a5e804d5d243e3f0c1c5"
+       }
       }
      ],
      "carried_from": {
@@ -389,9 +534,18 @@
        "line_end": 31869,
        "quote": "SP-286 first-AppendReceipt custody is adopted by name",
        "excerpt_sha256": "f1ea7bf6848d25df57e7991ffd4b5472ed09b80223fc4fd8819031938d023430",
-       "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707",
+       "file_sha256": "73ee6d097e08d31fd93301d05d2cd2632dd46e5a22ba3ea405ffadda4a0a9db2",
        "quote_check": "exact",
-       "quote_scope": "document"
+       "quote_scope": "document",
+       "excerpt_digest_convention": "whole_line",
+       "source_citation": {
+        "path": "Plans/storage-plan.md",
+        "line_start": 31869,
+        "line_end": 31869,
+        "quote": "SP-286 first-AppendReceipt custody is adopted by name",
+        "excerpt_sha256": "f1ea7bf6848d25df57e7991ffd4b5472ed09b80223fc4fd8819031938d023430",
+        "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+       }
       }
      ],
      "carried_from": {
@@ -408,23 +562,41 @@
      "evidence": [
       {
        "path": "Plans/event_family_registry.json",
-       "line_start": 47,
-       "line_end": 47,
+       "line_start": 77,
+       "line_end": 77,
        "quote": "\"policy_id\": \"RP-AUTHORITY-INDEFINITE\"",
        "excerpt_sha256": "218a403b240aa548ad151a5d5401bf2a73e2a57cbfe0c0ceb2f649d6f0ebc652",
-       "file_sha256": "a634791fb3f7ebaaa86f5b9c37971ac150ab7454f32c92043ab9de1e308be10b",
+       "file_sha256": "ec21cf1a5b42b3e68a5564a847b4798dff968612d11d438bc7075b89196f9602",
        "quote_check": "exact",
-       "quote_scope": "document"
+       "quote_scope": "document",
+       "excerpt_digest_convention": "whole_line",
+       "source_citation": {
+        "path": "Plans/event_family_registry.json",
+        "line_start": 47,
+        "line_end": 47,
+        "quote": "\"policy_id\": \"RP-AUTHORITY-INDEFINITE\"",
+        "excerpt_sha256": "218a403b240aa548ad151a5d5401bf2a73e2a57cbfe0c0ceb2f649d6f0ebc652",
+        "file_sha256": "a634791fb3f7ebaaa86f5b9c37971ac150ab7454f32c92043ab9de1e308be10b"
+       }
       },
       {
        "path": "Plans/event_family_registry.json",
-       "line_start": 48,
-       "line_end": 48,
+       "line_start": 78,
+       "line_end": 78,
        "quote": "\"policy_version\": \"1.0.0\"",
        "excerpt_sha256": "42ad19f2cac0b98558f527227ff8377def128614a9bb06e731c74185ee4dc978",
-       "file_sha256": "a634791fb3f7ebaaa86f5b9c37971ac150ab7454f32c92043ab9de1e308be10b",
+       "file_sha256": "ec21cf1a5b42b3e68a5564a847b4798dff968612d11d438bc7075b89196f9602",
        "quote_check": "exact",
-       "quote_scope": "document"
+       "quote_scope": "document",
+       "excerpt_digest_convention": "whole_line",
+       "source_citation": {
+        "path": "Plans/event_family_registry.json",
+        "line_start": 48,
+        "line_end": 48,
+        "quote": "\"policy_version\": \"1.0.0\"",
+        "excerpt_sha256": "42ad19f2cac0b98558f527227ff8377def128614a9bb06e731c74185ee4dc978",
+        "file_sha256": "a634791fb3f7ebaaa86f5b9c37971ac150ab7454f32c92043ab9de1e308be10b"
+       }
       },
       {
        "path": "Plans/storage-plan.md",
@@ -432,9 +604,18 @@
        "line_end": 18780,
        "quote": "`goal_run.stopped`",
        "excerpt_sha256": "a3f2e8a64a746789e32f5050152e092096625803689f58ed596b9f08cff58461",
-       "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707",
+       "file_sha256": "73ee6d097e08d31fd93301d05d2cd2632dd46e5a22ba3ea405ffadda4a0a9db2",
        "quote_check": "exact",
-       "quote_scope": "document"
+       "quote_scope": "document",
+       "excerpt_digest_convention": "whole_line",
+       "source_citation": {
+        "path": "Plans/storage-plan.md",
+        "line_start": 18780,
+        "line_end": 18780,
+        "quote": "`goal_run.stopped`",
+        "excerpt_sha256": "a3f2e8a64a746789e32f5050152e092096625803689f58ed596b9f08cff58461",
+        "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+       }
       },
       {
        "path": "Plans/storage-plan.md",
@@ -442,19 +623,37 @@
        "line_end": 18780,
        "quote": "`RP-AUTHORITY-INDEFINITE@1.0.0` | 23 |",
        "excerpt_sha256": "a3f2e8a64a746789e32f5050152e092096625803689f58ed596b9f08cff58461",
-       "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707",
+       "file_sha256": "73ee6d097e08d31fd93301d05d2cd2632dd46e5a22ba3ea405ffadda4a0a9db2",
        "quote_check": "exact",
-       "quote_scope": "document"
+       "quote_scope": "document",
+       "excerpt_digest_convention": "whole_line",
+       "source_citation": {
+        "path": "Plans/storage-plan.md",
+        "line_start": 18780,
+        "line_end": 18780,
+        "quote": "`RP-AUTHORITY-INDEFINITE@1.0.0` | 23 |",
+        "excerpt_sha256": "a3f2e8a64a746789e32f5050152e092096625803689f58ed596b9f08cff58461",
+        "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+       }
       },
       {
        "path": "Plans/storage-plan.md",
-       "line_start": 56375,
-       "line_end": 56375,
+       "line_start": 55868,
+       "line_end": 55868,
        "quote": "Reuse RP-PROJECTION-3GEN",
        "excerpt_sha256": "139fab7c069664aa30a9b9d287a3cd825eace0e2ed1741cdd34244544b463060",
-       "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707",
+       "file_sha256": "73ee6d097e08d31fd93301d05d2cd2632dd46e5a22ba3ea405ffadda4a0a9db2",
        "quote_check": "exact",
-       "quote_scope": "document"
+       "quote_scope": "document",
+       "excerpt_digest_convention": "whole_line",
+       "source_citation": {
+        "path": "Plans/storage-plan.md",
+        "line_start": 56375,
+        "line_end": 56375,
+        "quote": "Reuse RP-PROJECTION-3GEN",
+        "excerpt_sha256": "139fab7c069664aa30a9b9d287a3cd825eace0e2ed1741cdd34244544b463060",
+        "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+       }
       }
      ],
      "carried_from": {
@@ -475,19 +674,37 @@
        "line_end": 31869,
        "quote": "Custody: the canonical seglog record and its SP-286 custody row are the originals",
        "excerpt_sha256": "f1ea7bf6848d25df57e7991ffd4b5472ed09b80223fc4fd8819031938d023430",
-       "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707",
+       "file_sha256": "73ee6d097e08d31fd93301d05d2cd2632dd46e5a22ba3ea405ffadda4a0a9db2",
        "quote_check": "exact",
-       "quote_scope": "document"
+       "quote_scope": "document",
+       "excerpt_digest_convention": "whole_line",
+       "source_citation": {
+        "path": "Plans/storage-plan.md",
+        "line_start": 31869,
+        "line_end": 31869,
+        "quote": "Custody: the canonical seglog record and its SP-286 custody row are the originals",
+        "excerpt_sha256": "f1ea7bf6848d25df57e7991ffd4b5472ed09b80223fc4fd8819031938d023430",
+        "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+       }
       },
       {
        "path": "Plans/storage-plan.md",
-       "line_start": 56238,
-       "line_end": 56238,
+       "line_start": 55797,
+       "line_end": 55797,
        "quote": "Current access/deletion/hold/restore controls apply",
        "excerpt_sha256": "9773a8d77c81382ccfe3570d210a839c7e247688656f9d897891c335bac6bad3",
-       "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707",
+       "file_sha256": "73ee6d097e08d31fd93301d05d2cd2632dd46e5a22ba3ea405ffadda4a0a9db2",
        "quote_check": "exact",
-       "quote_scope": "document"
+       "quote_scope": "document",
+       "excerpt_digest_convention": "whole_line",
+       "source_citation": {
+        "path": "Plans/storage-plan.md",
+        "line_start": 56238,
+        "line_end": 56238,
+        "quote": "Current access/deletion/hold/restore controls apply",
+        "excerpt_sha256": "9773a8d77c81382ccfe3570d210a839c7e247688656f9d897891c335bac6bad3",
+        "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+       }
       }
      ],
      "carried_from": {
@@ -510,7 +727,16 @@
        "excerpt_sha256": "102065b1f33221981125ab399f6f6c61307be2f2a2b5fa1e8e22a3a20e9369db",
        "file_sha256": "122f980eb82a138dc71713eede5caa472a2d2d9ce404fab798698f8a38f5ca3e",
        "quote_check": "exact",
-       "quote_scope": "document"
+       "quote_scope": "document",
+       "excerpt_digest_convention": "whole_line",
+       "source_citation": {
+        "path": "Plans/Goal_Runtime_System.md",
+        "line_start": 8458,
+        "line_end": 8458,
+        "quote": "Transitions adopt D-R21 over the native Workflow status set",
+        "excerpt_sha256": "102065b1f33221981125ab399f6f6c61307be2f2a2b5fa1e8e22a3a20e9369db",
+        "file_sha256": "122f980eb82a138dc71713eede5caa472a2d2d9ce404fab798698f8a38f5ca3e"
+       }
       }
      ],
      "carried_from": {
@@ -533,7 +759,16 @@
        "excerpt_sha256": "7f5f186e811e28a5044c9f5b74031e2172d3c80aae714ff7c6f0721ccd9268c1",
        "file_sha256": "122f980eb82a138dc71713eede5caa472a2d2d9ce404fab798698f8a38f5ca3e",
        "quote_check": "exact",
-       "quote_scope": "document"
+       "quote_scope": "document",
+       "excerpt_digest_convention": "whole_line",
+       "source_citation": {
+        "path": "Plans/Goal_Runtime_System.md",
+        "line_start": 8596,
+        "line_end": 8596,
+        "quote": "Revision relation (amended 2026-11-14 under DL-045, PNC-019 lane s3a",
+        "excerpt_sha256": "7f5f186e811e28a5044c9f5b74031e2172d3c80aae714ff7c6f0721ccd9268c1",
+        "file_sha256": "122f980eb82a138dc71713eede5caa472a2d2d9ce404fab798698f8a38f5ca3e"
+       }
       },
       {
        "path": "Plans/Goal_Runtime_System.md",
@@ -543,7 +778,16 @@
        "excerpt_sha256": "7f5f186e811e28a5044c9f5b74031e2172d3c80aae714ff7c6f0721ccd9268c1",
        "file_sha256": "122f980eb82a138dc71713eede5caa472a2d2d9ce404fab798698f8a38f5ca3e",
        "quote_check": "exact",
-       "quote_scope": "document"
+       "quote_scope": "document",
+       "excerpt_digest_convention": "whole_line",
+       "source_citation": {
+        "path": "Plans/Goal_Runtime_System.md",
+        "line_start": 8596,
+        "line_end": 8596,
+        "quote": "The expected revision may exceed the last projected revision only when the original D01/native chronology authenticates every intervening body revision as a supported non-emitting native step",
+        "excerpt_sha256": "7f5f186e811e28a5044c9f5b74031e2172d3c80aae714ff7c6f0721ccd9268c1",
+        "file_sha256": "122f980eb82a138dc71713eede5caa472a2d2d9ce404fab798698f8a38f5ca3e"
+       }
       },
       {
        "path": "Plans/storage-plan.md",
@@ -551,9 +795,18 @@
        "line_end": 32007,
        "quote": "The projected revision is the accepted row's own goal_run_revision",
        "excerpt_sha256": "e99002b95732898e6834f1438746dd6d7457a16c0a3d7d40a2fc602952da8fcd",
-       "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707",
+       "file_sha256": "73ee6d097e08d31fd93301d05d2cd2632dd46e5a22ba3ea405ffadda4a0a9db2",
        "quote_check": "exact",
-       "quote_scope": "document"
+       "quote_scope": "document",
+       "excerpt_digest_convention": "whole_line",
+       "source_citation": {
+        "path": "Plans/storage-plan.md",
+        "line_start": 32007,
+        "line_end": 32007,
+        "quote": "The projected revision is the accepted row's own goal_run_revision",
+        "excerpt_sha256": "e99002b95732898e6834f1438746dd6d7457a16c0a3d7d40a2fc602952da8fcd",
+        "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+       }
       },
       {
        "path": "Plans/Automated_Testing_System.md",
@@ -563,7 +816,16 @@
        "excerpt_sha256": "e0b6106606c82868b0574d794b7008d5ba6c5b1ccb7138d2c719a29a058826b6",
        "file_sha256": "e1c8a84c145a3aaaa0738971f76db5fa0bf94f59c0149e76f4131e8579a6971d",
        "quote_check": "exact",
-       "quote_scope": "document"
+       "quote_scope": "document",
+       "excerpt_digest_convention": "whole_line",
+       "source_citation": {
+        "path": "Plans/Automated_Testing_System.md",
+        "line_start": 11920,
+        "line_end": 11920,
+        "quote": "**GRS-202 revision relation (2026-11-14, PNC-019 lane s3a, under DL-045).**",
+        "excerpt_sha256": "e0b6106606c82868b0574d794b7008d5ba6c5b1ccb7138d2c719a29a058826b6",
+        "file_sha256": "e1c8a84c145a3aaaa0738971f76db5fa0bf94f59c0149e76f4131e8579a6971d"
+       }
       },
       {
        "path": "Plans/workflow_standard_source_contracts/native-v7/protocol.md",
@@ -573,7 +835,16 @@
        "excerpt_sha256": "bee102aa79fbd2a2ad98784ec01c9d6a3bc9af15ba209a45b73c776237770fb3",
        "file_sha256": "4d79524298752ff3aa6fb83937dd79c769c09d69fe33e81e6bc41f271401e054",
        "quote_check": "exact",
-       "quote_scope": "document"
+       "quote_scope": "document",
+       "excerpt_digest_convention": "whole_line",
+       "source_citation": {
+        "path": "Plans/workflow_standard_source_contracts/native-v7/protocol.md",
+        "line_start": 61,
+        "line_end": 61,
+        "quote": "Native successful publication may advance the Workflow progress lineage with original_execution_progress, running→running; it changes only the Workflow body revision",
+        "excerpt_sha256": "bee102aa79fbd2a2ad98784ec01c9d6a3bc9af15ba209a45b73c776237770fb3",
+        "file_sha256": "4d79524298752ff3aa6fb83937dd79c769c09d69fe33e81e6bc41f271401e054"
+       }
       },
       {
        "path": "Plans/workflow_standard_source_contracts/native-v7/protocol.md",
@@ -583,7 +854,16 @@
        "excerpt_sha256": "bee102aa79fbd2a2ad98784ec01c9d6a3bc9af15ba209a45b73c776237770fb3",
        "file_sha256": "4d79524298752ff3aa6fb83937dd79c769c09d69fe33e81e6bc41f271401e054",
        "quote_check": "exact",
-       "quote_scope": "document"
+       "quote_scope": "document",
+       "excerpt_digest_convention": "whole_line",
+       "source_citation": {
+        "path": "Plans/workflow_standard_source_contracts/native-v7/protocol.md",
+        "line_start": 61,
+        "line_end": 61,
+        "quote": "Native successful publication may advance the Workflow progress lineage with original_execution_progress, running→running; it changes only the Workflow body revision",
+        "excerpt_sha256": "bee102aa79fbd2a2ad98784ec01c9d6a3bc9af15ba209a45b73c776237770fb3",
+        "file_sha256": "4d79524298752ff3aa6fb83937dd79c769c09d69fe33e81e6bc41f271401e054"
+       }
       },
       {
        "path": "Plans/workflow_standard_source_contracts/native-v7/protocol.md",
@@ -593,7 +873,16 @@
        "excerpt_sha256": "9799c53e247d6b138aae6dd54805dab276c5d4ddb08dd9c5c746662a69c02cfa",
        "file_sha256": "4d79524298752ff3aa6fb83937dd79c769c09d69fe33e81e6bc41f271401e054",
        "quote_check": "exact",
-       "quote_scope": "document"
+       "quote_scope": "document",
+       "excerpt_digest_convention": "whole_line",
+       "source_citation": {
+        "path": "Plans/workflow_standard_source_contracts/native-v7/protocol.md",
+        "line_start": 65,
+        "line_end": 65,
+        "quote": "`owner.workflow.standard.publish_provisional_success.v1` requires the authentic original running Workflow",
+        "excerpt_sha256": "9799c53e247d6b138aae6dd54805dab276c5d4ddb08dd9c5c746662a69c02cfa",
+        "file_sha256": "4d79524298752ff3aa6fb83937dd79c769c09d69fe33e81e6bc41f271401e054"
+       }
       },
       {
        "path": "Plans/storage-plan.md",
@@ -601,29 +890,56 @@
        "line_end": 32060,
        "quote": "SP-1112's closed `StorageProjection` root stores them as `lifecycle_metadata`",
        "excerpt_sha256": "4ec50f97a74c4b3e0f3f736a1bd70756eb8c80f479ad7b940b6242ca0c35c783",
-       "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707",
+       "file_sha256": "73ee6d097e08d31fd93301d05d2cd2632dd46e5a22ba3ea405ffadda4a0a9db2",
        "quote_check": "exact",
-       "quote_scope": "document"
+       "quote_scope": "document",
+       "excerpt_digest_convention": "whole_line",
+       "source_citation": {
+        "path": "Plans/storage-plan.md",
+        "line_start": 32060,
+        "line_end": 32060,
+        "quote": "SP-1112's closed `StorageProjection` root stores them as `lifecycle_metadata`",
+        "excerpt_sha256": "4ec50f97a74c4b3e0f3f736a1bd70756eb8c80f479ad7b940b6242ca0c35c783",
+        "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+       }
       },
       {
        "path": "Plans/storage-plan.md",
-       "line_start": 56363,
-       "line_end": 56363,
+       "line_start": 55856,
+       "line_end": 55856,
        "quote": "the Storage source reader owner.storage.goal_run.stop_block.read_sources.v1;",
        "excerpt_sha256": "bd81684d3f19b05f9dd950a9747781239a80ad209f8e6d0cd981af83cb02dc74",
-       "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707",
+       "file_sha256": "73ee6d097e08d31fd93301d05d2cd2632dd46e5a22ba3ea405ffadda4a0a9db2",
        "quote_check": "exact",
-       "quote_scope": "document"
+       "quote_scope": "document",
+       "excerpt_digest_convention": "whole_line",
+       "source_citation": {
+        "path": "Plans/storage-plan.md",
+        "line_start": 56363,
+        "line_end": 56363,
+        "quote": "the Storage source reader owner.storage.goal_run.stop_block.read_sources.v1;",
+        "excerpt_sha256": "bd81684d3f19b05f9dd950a9747781239a80ad209f8e6d0cd981af83cb02dc74",
+        "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+       }
       },
       {
        "path": "Plans/storage-plan.md",
-       "line_start": 56370,
-       "line_end": 56370,
+       "line_start": 55863,
+       "line_end": 55863,
        "quote": "Adopt SP-278 and DL-076 full",
        "excerpt_sha256": "17233ed083cb13482de71e862b54ade46d1bd1ce17ce3c75d165921ad5459ca4",
-       "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707",
+       "file_sha256": "73ee6d097e08d31fd93301d05d2cd2632dd46e5a22ba3ea405ffadda4a0a9db2",
        "quote_check": "exact",
-       "quote_scope": "document"
+       "quote_scope": "document",
+       "excerpt_digest_convention": "whole_line",
+       "source_citation": {
+        "path": "Plans/storage-plan.md",
+        "line_start": 56370,
+        "line_end": 56370,
+        "quote": "Adopt SP-278 and DL-076 full",
+        "excerpt_sha256": "17233ed083cb13482de71e862b54ade46d1bd1ce17ce3c75d165921ad5459ca4",
+        "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+       }
       },
       {
        "path": "Plans/goal_run_stop_block_contracts/protocol.md",
@@ -633,7 +949,16 @@
        "excerpt_sha256": "6601a0a3757d95c9ab2e4876838f50fd467734e2315e34b982b6a63b21087521",
        "file_sha256": "8b2f2d425b242110fc84d977a971ab76bfe9873c849cb818b0b48e5e0a94721a",
        "quote_check": "exact",
-       "quote_scope": "document"
+       "quote_scope": "document",
+       "excerpt_digest_convention": "whole_line",
+       "source_citation": {
+        "path": "Plans/goal_run_stop_block_contracts/protocol.md",
+        "line_start": 61,
+        "line_end": 61,
+        "quote": "**SBP5** revision relation",
+        "excerpt_sha256": "6601a0a3757d95c9ab2e4876838f50fd467734e2315e34b982b6a63b21087521",
+        "file_sha256": "8b2f2d425b242110fc84d977a971ab76bfe9873c849cb818b0b48e5e0a94721a"
+       }
       },
       {
        "path": "Plans/goal_run_stop_block_contracts/methods.json",
@@ -643,7 +968,16 @@
        "excerpt_sha256": "673309fca58e53421c5c68ded6e5f5f5619a995aace73ff16809fe8cf019d6b7",
        "file_sha256": "4c60ce56a12b3c9f87135b3bf0689c137f77112669c907a941f54f51ee12a331",
        "quote_check": "exact",
-       "quote_scope": "document"
+       "quote_scope": "document",
+       "excerpt_digest_convention": "whole_line",
+       "source_citation": {
+        "path": "Plans/goal_run_stop_block_contracts/methods.json",
+        "line_start": 193,
+        "line_end": 193,
+        "quote": "\"method\": \"owner.goal_run.stop_block.project_prefix.v1\"",
+        "excerpt_sha256": "673309fca58e53421c5c68ded6e5f5f5619a995aace73ff16809fe8cf019d6b7",
+        "file_sha256": "4c60ce56a12b3c9f87135b3bf0689c137f77112669c907a941f54f51ee12a331"
+       }
       },
       {
        "path": "Plans/Goal_Runtime_System.md",
@@ -653,7 +987,16 @@
        "excerpt_sha256": "d0ef0ee50a0558ab54bb3785a45210e188290845c2d126238be06f94a34c6760",
        "file_sha256": "122f980eb82a138dc71713eede5caa472a2d2d9ce404fab798698f8a38f5ca3e",
        "quote_check": "exact",
-       "quote_scope": "document"
+       "quote_scope": "document",
+       "excerpt_digest_convention": "whole_line",
+       "source_citation": {
+        "path": "Plans/Goal_Runtime_System.md",
+        "line_start": 9426,
+        "line_end": 9426,
+        "quote": "consumer-resource-bank.json and the typed methods.json consumer methods",
+        "excerpt_sha256": "d0ef0ee50a0558ab54bb3785a45210e188290845c2d126238be06f94a34c6760",
+        "file_sha256": "122f980eb82a138dc71713eede5caa472a2d2d9ce404fab798698f8a38f5ca3e"
+       }
       }
      ],
      "carried_from": {
@@ -674,9 +1017,18 @@
        "line_end": 31869,
        "quote": "Withdrawal: writer cutoff at the writer's final predicate, per-reader withdrawal without deletion, and rebuild fences by new generation only.",
        "excerpt_sha256": "f1ea7bf6848d25df57e7991ffd4b5472ed09b80223fc4fd8819031938d023430",
-       "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707",
+       "file_sha256": "73ee6d097e08d31fd93301d05d2cd2632dd46e5a22ba3ea405ffadda4a0a9db2",
        "quote_check": "exact",
-       "quote_scope": "document"
+       "quote_scope": "document",
+       "excerpt_digest_convention": "whole_line",
+       "source_citation": {
+        "path": "Plans/storage-plan.md",
+        "line_start": 31869,
+        "line_end": 31869,
+        "quote": "Withdrawal: writer cutoff at the writer's final predicate, per-reader withdrawal without deletion, and rebuild fences by new generation only.",
+        "excerpt_sha256": "f1ea7bf6848d25df57e7991ffd4b5472ed09b80223fc4fd8819031938d023430",
+        "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+       }
       }
      ],
      "carried_from": {
@@ -697,9 +1049,18 @@
        "line_end": 236,
        "quote": "\"open_rows\": 0",
        "excerpt_sha256": "8317e57fa00a2a5c08c3983d0f360aee93599e775e373a19a9da25b3a2f63522",
-       "file_sha256": "e80285e238733704a301da4580388233d987277d55cdee96cd1ff2784f5cfc06",
+       "file_sha256": "fb3d97ab295b5a0bdf030e0e1cb57ea74f1e6635d79c83d56bcc0c01cc0a3cf5",
        "quote_check": "exact",
-       "quote_scope": "document"
+       "quote_scope": "document",
+       "excerpt_digest_convention": "whole_line",
+       "source_citation": {
+        "path": "reports/event-authority-20261115/PNC019-C12-GC-core.json",
+        "line_start": 236,
+        "line_end": 236,
+        "quote": "\"open_rows\": 0",
+        "excerpt_sha256": "8317e57fa00a2a5c08c3983d0f360aee93599e775e373a19a9da25b3a2f63522",
+        "file_sha256": "e80285e238733704a301da4580388233d987277d55cdee96cd1ff2784f5cfc06"
+       }
       },
       {
        "path": "reports/event-authority-20261115/PNC019-C12-GC-core.json",
@@ -707,9 +1068,18 @@
        "line_end": 254,
        "quote": "\"tool_proved\": 128",
        "excerpt_sha256": "be4e257a2d7d52ebd2bdb3525ab3e403b1556077071bd8faedfb21b1db59ce45",
-       "file_sha256": "e80285e238733704a301da4580388233d987277d55cdee96cd1ff2784f5cfc06",
+       "file_sha256": "fb3d97ab295b5a0bdf030e0e1cb57ea74f1e6635d79c83d56bcc0c01cc0a3cf5",
        "quote_check": "exact",
-       "quote_scope": "document"
+       "quote_scope": "document",
+       "excerpt_digest_convention": "whole_line",
+       "source_citation": {
+        "path": "reports/event-authority-20261115/PNC019-C12-GC-core.json",
+        "line_start": 254,
+        "line_end": 254,
+        "quote": "\"tool_proved\": 128",
+        "excerpt_sha256": "be4e257a2d7d52ebd2bdb3525ab3e403b1556077071bd8faedfb21b1db59ce45",
+        "file_sha256": "e80285e238733704a301da4580388233d987277d55cdee96cd1ff2784f5cfc06"
+       }
       },
       {
        "path": "reports/event-authority-20261115/PNC019-C12-GC-core.json",
@@ -717,9 +1087,18 @@
        "line_end": 234,
        "quote": "\"justified_singletons\": 14",
        "excerpt_sha256": "df772be4099c82cc8e72b20e01d6f8c24a108657a294972be92e54129c251305",
-       "file_sha256": "e80285e238733704a301da4580388233d987277d55cdee96cd1ff2784f5cfc06",
+       "file_sha256": "fb3d97ab295b5a0bdf030e0e1cb57ea74f1e6635d79c83d56bcc0c01cc0a3cf5",
        "quote_check": "exact",
-       "quote_scope": "document"
+       "quote_scope": "document",
+       "excerpt_digest_convention": "whole_line",
+       "source_citation": {
+        "path": "reports/event-authority-20261115/PNC019-C12-GC-core.json",
+        "line_start": 234,
+        "line_end": 234,
+        "quote": "\"justified_singletons\": 14",
+        "excerpt_sha256": "df772be4099c82cc8e72b20e01d6f8c24a108657a294972be92e54129c251305",
+        "file_sha256": "e80285e238733704a301da4580388233d987277d55cdee96cd1ff2784f5cfc06"
+       }
       },
       {
        "path": "reports/event-authority-20261115/PNC019-C12-GC-core.json",
@@ -727,9 +1106,18 @@
        "line_end": 245,
        "quote": "\"retained_store_changed\": 0",
        "excerpt_sha256": "ea30079af2d99f4651d5d68780dbb544fc91ebdd71219917e0f68896108b9757",
-       "file_sha256": "e80285e238733704a301da4580388233d987277d55cdee96cd1ff2784f5cfc06",
+       "file_sha256": "fb3d97ab295b5a0bdf030e0e1cb57ea74f1e6635d79c83d56bcc0c01cc0a3cf5",
        "quote_check": "exact",
-       "quote_scope": "document"
+       "quote_scope": "document",
+       "excerpt_digest_convention": "whole_line",
+       "source_citation": {
+        "path": "reports/event-authority-20261115/PNC019-C12-GC-core.json",
+        "line_start": 245,
+        "line_end": 245,
+        "quote": "\"retained_store_changed\": 0",
+        "excerpt_sha256": "ea30079af2d99f4651d5d68780dbb544fc91ebdd71219917e0f68896108b9757",
+        "file_sha256": "e80285e238733704a301da4580388233d987277d55cdee96cd1ff2784f5cfc06"
+       }
       },
       {
        "path": "reports/event-authority-20261115/PNC019-C12-GC-core.json",
@@ -737,9 +1125,18 @@
        "line_end": 232,
        "quote": "\"corpus_cases\": 126",
        "excerpt_sha256": "d1e151d6b1cbf54c136f452cf0d629bb905039b6b96082ccd2ce621cefb3216b",
-       "file_sha256": "e80285e238733704a301da4580388233d987277d55cdee96cd1ff2784f5cfc06",
+       "file_sha256": "fb3d97ab295b5a0bdf030e0e1cb57ea74f1e6635d79c83d56bcc0c01cc0a3cf5",
        "quote_check": "exact",
-       "quote_scope": "document"
+       "quote_scope": "document",
+       "excerpt_digest_convention": "whole_line",
+       "source_citation": {
+        "path": "reports/event-authority-20261115/PNC019-C12-GC-core.json",
+        "line_start": 232,
+        "line_end": 232,
+        "quote": "\"corpus_cases\": 126",
+        "excerpt_sha256": "d1e151d6b1cbf54c136f452cf0d629bb905039b6b96082ccd2ce621cefb3216b",
+        "file_sha256": "e80285e238733704a301da4580388233d987277d55cdee96cd1ff2784f5cfc06"
+       }
       },
       {
        "path": "reports/event-authority-20261115/PNC019-C12-GC-core.json",
@@ -747,9 +1144,18 @@
        "line_end": 233,
        "quote": "\"join_cases\": 18",
        "excerpt_sha256": "6ae7bf8c389a22e6023d07af8fb91ff671e84e4e0693e79beb548b1224510f59",
-       "file_sha256": "e80285e238733704a301da4580388233d987277d55cdee96cd1ff2784f5cfc06",
+       "file_sha256": "fb3d97ab295b5a0bdf030e0e1cb57ea74f1e6635d79c83d56bcc0c01cc0a3cf5",
        "quote_check": "exact",
-       "quote_scope": "document"
+       "quote_scope": "document",
+       "excerpt_digest_convention": "whole_line",
+       "source_citation": {
+        "path": "reports/event-authority-20261115/PNC019-C12-GC-core.json",
+        "line_start": 233,
+        "line_end": 233,
+        "quote": "\"join_cases\": 18",
+        "excerpt_sha256": "6ae7bf8c389a22e6023d07af8fb91ff671e84e4e0693e79beb548b1224510f59",
+        "file_sha256": "e80285e238733704a301da4580388233d987277d55cdee96cd1ff2784f5cfc06"
+       }
       },
       {
        "path": "reports/event-authority-20261115/PNC019-C12-GC-core.json",
@@ -757,9 +1163,18 @@
        "line_end": 251,
        "quote": "\"schema_uncovered\": 0",
        "excerpt_sha256": "b239c37db1a429e840e6806a6e9f2332a5187afcede8e7e811c3269858c24feb",
-       "file_sha256": "e80285e238733704a301da4580388233d987277d55cdee96cd1ff2784f5cfc06",
+       "file_sha256": "fb3d97ab295b5a0bdf030e0e1cb57ea74f1e6635d79c83d56bcc0c01cc0a3cf5",
        "quote_check": "exact",
-       "quote_scope": "document"
+       "quote_scope": "document",
+       "excerpt_digest_convention": "whole_line",
+       "source_citation": {
+        "path": "reports/event-authority-20261115/PNC019-C12-GC-core.json",
+        "line_start": 251,
+        "line_end": 251,
+        "quote": "\"schema_uncovered\": 0",
+        "excerpt_sha256": "b239c37db1a429e840e6806a6e9f2332a5187afcede8e7e811c3269858c24feb",
+        "file_sha256": "e80285e238733704a301da4580388233d987277d55cdee96cd1ff2784f5cfc06"
+       }
       },
       {
        "path": "reports/event-authority-20261115/PNC019-C12-GC-core.json",
@@ -767,9 +1182,18 @@
        "line_end": 250,
        "quote": "\"schema_clauses_killed\": 1230",
        "excerpt_sha256": "d05862f5fb3a10111fafa6813b7fa5094ca438e094cfa0dcad45336a6e705254",
-       "file_sha256": "e80285e238733704a301da4580388233d987277d55cdee96cd1ff2784f5cfc06",
+       "file_sha256": "fb3d97ab295b5a0bdf030e0e1cb57ea74f1e6635d79c83d56bcc0c01cc0a3cf5",
        "quote_check": "exact",
-       "quote_scope": "document"
+       "quote_scope": "document",
+       "excerpt_digest_convention": "whole_line",
+       "source_citation": {
+        "path": "reports/event-authority-20261115/PNC019-C12-GC-core.json",
+        "line_start": 250,
+        "line_end": 250,
+        "quote": "\"schema_clauses_killed\": 1230",
+        "excerpt_sha256": "d05862f5fb3a10111fafa6813b7fa5094ca438e094cfa0dcad45336a6e705254",
+        "file_sha256": "e80285e238733704a301da4580388233d987277d55cdee96cd1ff2784f5cfc06"
+       }
       },
       {
        "path": "scripts/pm-goal-gc-schema-closure.py",
@@ -779,7 +1203,16 @@
        "excerpt_sha256": "2a0b2e74b32b269c3bfc6e6c6dd241d693e3db0e1998b4f40beb1d9ee4f86e21",
        "file_sha256": "537b293d735816dd12b42bdb31a1fcdd313a16d8146b8113a88500fbb48d211b",
        "quote_check": "exact",
-       "quote_scope": "document"
+       "quote_scope": "document",
+       "excerpt_digest_convention": "whole_line",
+       "source_citation": {
+        "path": "scripts/pm-goal-gc-schema-closure.py",
+        "line_start": 9,
+        "line_end": 9,
+        "quote": "with only that clause cut it ACCEPTS",
+        "excerpt_sha256": "2a0b2e74b32b269c3bfc6e6c6dd241d693e3db0e1998b4f40beb1d9ee4f86e21",
+        "file_sha256": "537b293d735816dd12b42bdb31a1fcdd313a16d8146b8113a88500fbb48d211b"
+       }
       },
       {
        "path": "scripts/pm-goal-gc-guard-tables.py",
@@ -789,7 +1222,16 @@
        "excerpt_sha256": "be17b404d0791670c06b2d63e57cf7fef646caa45e0afc69aae7a8ede25f3df6",
        "file_sha256": "8b5e11d4f0451295f7ae1b7b542a501634b8bbaf79ca7aceb15920bb8e55a357",
        "quote_check": "exact",
-       "quote_scope": "document"
+       "quote_scope": "document",
+       "excerpt_digest_convention": "whole_line",
+       "source_citation": {
+        "path": "scripts/pm-goal-gc-guard-tables.py",
+        "line_start": 13,
+        "line_end": 13,
+        "quote": "A kill is counted only when the cut complete checker ACCEPTS",
+        "excerpt_sha256": "be17b404d0791670c06b2d63e57cf7fef646caa45e0afc69aae7a8ede25f3df6",
+        "file_sha256": "8b5e11d4f0451295f7ae1b7b542a501634b8bbaf79ca7aceb15920bb8e55a357"
+       }
       },
       {
        "path": "scripts/pm-goal-gc-guard-tables.py",
@@ -799,7 +1241,16 @@
        "excerpt_sha256": "b1818d75009acd0fbb0f6527ff7562db3394876935d08534398d9e6c1ab9ca48",
        "file_sha256": "8b5e11d4f0451295f7ae1b7b542a501634b8bbaf79ca7aceb15920bb8e55a357",
        "quote_check": "exact",
-       "quote_scope": "document"
+       "quote_scope": "document",
+       "excerpt_digest_convention": "whole_line",
+       "source_citation": {
+        "path": "scripts/pm-goal-gc-guard-tables.py",
+        "line_start": 19,
+        "line_end": 19,
+        "quote": "real observation vectors: controls",
+        "excerpt_sha256": "b1818d75009acd0fbb0f6527ff7562db3394876935d08534398d9e6c1ab9ca48",
+        "file_sha256": "8b5e11d4f0451295f7ae1b7b542a501634b8bbaf79ca7aceb15920bb8e55a357"
+       }
       },
       {
        "path": "scripts/pm_goal_gc_adapter.py",
@@ -809,7 +1260,16 @@
        "excerpt_sha256": "93198f718f884001ef4d8c3bb70e5efc5fc47ac9d975ef06f1e34c8c578d6aab",
        "file_sha256": "f2590d8190815c0f041c3f478b2656b0626a8bc4935187f15335363e48768f7d",
        "quote_check": "exact",
-       "quote_scope": "document"
+       "quote_scope": "document",
+       "excerpt_digest_convention": "whole_line",
+       "source_citation": {
+        "path": "scripts/pm_goal_gc_adapter.py",
+        "line_start": 197,
+        "line_end": 197,
+        "quote": "predicate, field = _predicate(key)",
+        "excerpt_sha256": "93198f718f884001ef4d8c3bb70e5efc5fc47ac9d975ef06f1e34c8c578d6aab",
+        "file_sha256": "f2590d8190815c0f041c3f478b2656b0626a8bc4935187f15335363e48768f7d"
+       }
       },
       {
        "path": "scripts/pm_goal_own_a_oracles.py",
@@ -819,7 +1279,16 @@
        "excerpt_sha256": "8cd487f997ca08a000356c9679c59f07b2e93c5f96a9803c4876d21e0fe88425",
        "file_sha256": "7d7d0ebd3865c667e7593ccc7e164b25dd25719eef8e5f958f32b35e10cfbd50",
        "quote_check": "exact",
-       "quote_scope": "document"
+       "quote_scope": "document",
+       "excerpt_digest_convention": "whole_line",
+       "source_citation": {
+        "path": "scripts/pm_goal_own_a_oracles.py",
+        "line_start": 620,
+        "line_end": 620,
+        "quote": "adapter.retained_reason(",
+        "excerpt_sha256": "8cd487f997ca08a000356c9679c59f07b2e93c5f96a9803c4876d21e0fe88425",
+        "file_sha256": "7d7d0ebd3865c667e7593ccc7e164b25dd25719eef8e5f958f32b35e10cfbd50"
+       }
       },
       {
        "path": "scripts/pm_goal_own_a_oracles.py",
@@ -829,7 +1298,16 @@
        "excerpt_sha256": "9880add2c1938fc71bb7a03e2d4c11b8063d824e1c260811624569363a768a68",
        "file_sha256": "7d7d0ebd3865c667e7593ccc7e164b25dd25719eef8e5f958f32b35e10cfbd50",
        "quote_check": "exact",
-       "quote_scope": "document"
+       "quote_scope": "document",
+       "excerpt_digest_convention": "whole_line",
+       "source_citation": {
+        "path": "scripts/pm_goal_own_a_oracles.py",
+        "line_start": 1500,
+        "line_end": 1500,
+        "quote": "corpus = ",
+        "excerpt_sha256": "9880add2c1938fc71bb7a03e2d4c11b8063d824e1c260811624569363a768a68",
+        "file_sha256": "7d7d0ebd3865c667e7593ccc7e164b25dd25719eef8e5f958f32b35e10cfbd50"
+       }
       },
       {
        "path": "Plans/Goal_Runtime_System.md",
@@ -840,7 +1318,17 @@
        "file_sha256": "122f980eb82a138dc71713eede5caa472a2d2d9ce404fab798698f8a38f5ca3e",
        "role": "Canonical subject of the existing executable oracle proof; checker evidence and verdict are unchanged.",
        "quote_check": "exact",
-       "quote_scope": "document"
+       "quote_scope": "document",
+       "excerpt_digest_convention": "whole_line",
+       "source_citation": {
+        "path": "Plans/Goal_Runtime_System.md",
+        "line_start": 2911,
+        "line_end": 2911,
+        "quote": "Current v3 (prepared, DL-080): GRS-200",
+        "excerpt_sha256": "e0dd4ea235bfa5bdfed6949c89c389692ba680a7b73bde05f32df3e024bb69c5",
+        "file_sha256": "122f980eb82a138dc71713eede5caa472a2d2d9ce404fab798698f8a38f5ca3e",
+        "role": "Canonical subject of the existing executable oracle proof; checker evidence and verdict are unchanged."
+       }
       }
      ],
      "carried_from": {
@@ -852,5 +1340,12 @@
     }
    }
   }
- ]
+ ],
+ "evidence_maintenance": {
+  "authority": "MERGE2-FIX1 finding 3",
+  "source_commit": "0c904de00426b0089ba5d56349fda8ea16cc9f88",
+  "source_assessment_sha256": "7cb0d57b00a178ec981108d82b2f2e0a498648ff30e68b6e3c0e435a8e4f214f",
+  "native_execution": "NOT_RUN",
+  "verdicts_changed": false
+ }
 }

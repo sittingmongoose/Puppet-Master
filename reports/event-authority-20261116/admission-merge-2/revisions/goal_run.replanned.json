@@ -116,12 +116,22 @@
       {
        "path": "Plans/event_family_registry.json",
        "json_pointer": "#/families/3",
-       "line_start": 257,
-       "line_end": 299,
+       "line_start": 260,
+       "line_end": 260,
        "quote": "\"event_type\": \"goal_run.replanned\"",
        "quote_line": 260,
-       "file_sha256": "26c1a6bd69b0cbdddbccc86b253ac5b91f4111db60a8ad24684d7c6aa33e5ad2",
-       "quote_check": "exact"
+       "file_sha256": "ec21cf1a5b42b3e68a5564a847b4798dff968612d11d438bc7075b89196f9602",
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "source_citation": {
+        "path": "Plans/event_family_registry.json",
+        "json_pointer": "#/families/3",
+        "line_start": 257,
+        "line_end": 299,
+        "quote": "\"event_type\": \"goal_run.replanned\"",
+        "quote_line": 260,
+        "file_sha256": "26c1a6bd69b0cbdddbccc86b253ac5b91f4111db60a8ad24684d7c6aa33e5ad2"
+       }
       }
      ]
     },
@@ -137,9 +147,19 @@
        "line_end": 218,
        "quote": "\"semantic_owner_doc\": \"Plans/Goal_Runtime_System.md#goal-and-goalrun-payload-minima\"",
        "excerpt_sha256": "91bf44995150698a250e61e6c9537fb9c667da5d6766d837dc38ea542d2f22cb",
-       "file_sha256": "48ad8de5c1639db6c254db2352dc5d70acc4d70ccfdab4cdf2c169477f8ff534",
+       "file_sha256": "ec21cf1a5b42b3e68a5564a847b4798dff968612d11d438bc7075b89196f9602",
        "quote_check": "exact",
-       "quote_scope": "document"
+       "quote_scope": "document",
+       "excerpt_digest_convention": "whole_line",
+       "source_citation": {
+        "path": "Plans/event_family_registry.json",
+        "unit": "#/families/3",
+        "line_start": 218,
+        "line_end": 218,
+        "quote": "\"semantic_owner_doc\": \"Plans/Goal_Runtime_System.md#goal-and-goalrun-payload-minima\"",
+        "excerpt_sha256": "91bf44995150698a250e61e6c9537fb9c667da5d6766d837dc38ea542d2f22cb",
+        "file_sha256": "48ad8de5c1639db6c254db2352dc5d70acc4d70ccfdab4cdf2c169477f8ff534"
+       }
       },
       {
        "path": "Plans/Goal_Runtime_System.md",
@@ -150,7 +170,17 @@
        "excerpt_sha256": "f8ca58f0aab1bfaab577528ed261107f530ecc0e034f10c16b7c94842343e715",
        "file_sha256": "122f980eb82a138dc71713eede5caa472a2d2d9ce404fab798698f8a38f5ca3e",
        "quote_check": "exact",
-       "quote_scope": "document"
+       "quote_scope": "document",
+       "excerpt_digest_convention": "whole_line",
+       "source_citation": {
+        "path": "Plans/Goal_Runtime_System.md",
+        "unit": "Goal and GoalRun payload minima",
+        "line_start": 2907,
+        "line_end": 2907,
+        "quote": "Current v3 (prepared, DL-080 option 1): GRS-3100 with CV-3100, SP-3100 and EP-3101 on `all_writers.v8` births",
+        "excerpt_sha256": "f8ca58f0aab1bfaab577528ed261107f530ecc0e034f10c16b7c94842343e715",
+        "file_sha256": "122f980eb82a138dc71713eede5caa472a2d2d9ce404fab798698f8a38f5ca3e"
+       }
       },
       {
        "path": "Plans/event_family_registry.json",
@@ -159,9 +189,19 @@
        "line_end": 219,
        "quote": "\"payload_owner_doc\": \"Plans/storage-plan.md#sp-214---goal-runtime-persistence-consumer\"",
        "excerpt_sha256": "8a56f9ea8fd0001d6045b55116400600fead64f75505be23b9feac0e3a619ddc",
-       "file_sha256": "48ad8de5c1639db6c254db2352dc5d70acc4d70ccfdab4cdf2c169477f8ff534",
+       "file_sha256": "ec21cf1a5b42b3e68a5564a847b4798dff968612d11d438bc7075b89196f9602",
        "quote_check": "exact",
-       "quote_scope": "document"
+       "quote_scope": "document",
+       "excerpt_digest_convention": "whole_line",
+       "source_citation": {
+        "path": "Plans/event_family_registry.json",
+        "unit": "#/families/3",
+        "line_start": 219,
+        "line_end": 219,
+        "quote": "\"payload_owner_doc\": \"Plans/storage-plan.md#sp-214---goal-runtime-persistence-consumer\"",
+        "excerpt_sha256": "8a56f9ea8fd0001d6045b55116400600fead64f75505be23b9feac0e3a619ddc",
+        "file_sha256": "48ad8de5c1639db6c254db2352dc5d70acc4d70ccfdab4cdf2c169477f8ff534"
+       }
       },
       {
        "path": "Plans/storage-plan.md",
@@ -170,9 +210,19 @@
        "line_end": 15651,
        "quote": "for `goal_run.replanned` the individually admitted projection route is the prepared v8 branch of GRS-3101",
        "excerpt_sha256": "8998840d4fc4f9f524a01a8be9051be1628d1306ffb968af17abc1b47090c476",
-       "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707",
+       "file_sha256": "73ee6d097e08d31fd93301d05d2cd2632dd46e5a22ba3ea405ffadda4a0a9db2",
        "quote_check": "exact",
-       "quote_scope": "document"
+       "quote_scope": "document",
+       "excerpt_digest_convention": "whole_line",
+       "source_citation": {
+        "path": "Plans/storage-plan.md",
+        "unit": "SP-214 amendment",
+        "line_start": 15651,
+        "line_end": 15651,
+        "quote": "for `goal_run.replanned` the individually admitted projection route is the prepared v8 branch of GRS-3101",
+        "excerpt_sha256": "8998840d4fc4f9f524a01a8be9051be1628d1306ffb968af17abc1b47090c476",
+        "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+       }
       }
      ],
      "carried_from": {
@@ -196,7 +246,17 @@
        "excerpt_sha256": "74679d50529b27cc4460f217fbdbac5f2a09a1415d3080fde7e640ca221222f8",
        "file_sha256": "5dc6a7b9a34f3fc8ced31230011f055a8db503f3b85c5b7ec2d370dbb2401732",
        "quote_check": "exact",
-       "quote_scope": "unit EP-3101, Plans/Executor_Protocol.md:12956-13025"
+       "quote_scope": "unit EP-3101, Plans/Executor_Protocol.md:12956-13025",
+       "excerpt_digest_convention": "whole_line",
+       "source_citation": {
+        "path": "Plans/Executor_Protocol.md",
+        "unit": "EP-3101",
+        "line_start": 12964,
+        "line_end": 12964,
+        "quote": "One writer is named: owner.executor.workflow_run.replan.v1, whose entrypoints are exactly the frozen v8 methods draft.replan.prepare.v3",
+        "excerpt_sha256": "74679d50529b27cc4460f217fbdbac5f2a09a1415d3080fde7e640ca221222f8",
+        "file_sha256": "5dc6a7b9a34f3fc8ced31230011f055a8db503f3b85c5b7ec2d370dbb2401732"
+       }
       },
       {
        "path": "Plans/Executor_Protocol.md",
@@ -207,7 +267,17 @@
        "excerpt_sha256": "74679d50529b27cc4460f217fbdbac5f2a09a1415d3080fde7e640ca221222f8",
        "file_sha256": "5dc6a7b9a34f3fc8ced31230011f055a8db503f3b85c5b7ec2d370dbb2401732",
        "quote_check": "exact",
-       "quote_scope": "unit EP-3101, Plans/Executor_Protocol.md:12956-13025"
+       "quote_scope": "unit EP-3101, Plans/Executor_Protocol.md:12956-13025",
+       "excerpt_digest_convention": "whole_line",
+       "source_citation": {
+        "path": "Plans/Executor_Protocol.md",
+        "unit": "EP-3101",
+        "line_start": 12964,
+        "line_end": 12964,
+        "quote": "append through ordinary Storage with SP-286 first-AppendReceipt and CV-339 custody under SP-336/SP-347 durability (C4)",
+        "excerpt_sha256": "74679d50529b27cc4460f217fbdbac5f2a09a1415d3080fde7e640ca221222f8",
+        "file_sha256": "5dc6a7b9a34f3fc8ced31230011f055a8db503f3b85c5b7ec2d370dbb2401732"
+       }
       },
       {
        "path": "Plans/Executor_Protocol.md",
@@ -218,7 +288,17 @@
        "excerpt_sha256": "74679d50529b27cc4460f217fbdbac5f2a09a1415d3080fde7e640ca221222f8",
        "file_sha256": "5dc6a7b9a34f3fc8ced31230011f055a8db503f3b85c5b7ec2d370dbb2401732",
        "quote_check": "exact",
-       "quote_scope": "unit EP-3101, Plans/Executor_Protocol.md:12956-13025"
+       "quote_scope": "unit EP-3101, Plans/Executor_Protocol.md:12956-13025",
+       "excerpt_digest_convention": "whole_line",
+       "source_citation": {
+        "path": "Plans/Executor_Protocol.md",
+        "unit": "EP-3101",
+        "line_start": 12964,
+        "line_end": 12964,
+        "quote": "The command result (RuntimeReplanResult, EP-236) is published only after the first receipt; receipt_ref names it.",
+        "excerpt_sha256": "74679d50529b27cc4460f217fbdbac5f2a09a1415d3080fde7e640ca221222f8",
+        "file_sha256": "5dc6a7b9a34f3fc8ced31230011f055a8db503f3b85c5b7ec2d370dbb2401732"
+       }
       },
       {
        "path": "Plans/Executor_Protocol.md",
@@ -229,7 +309,17 @@
        "excerpt_sha256": "15adceef89241f2a7cd5621bce4fcf3500e8b3cf05c76db3e7ebaf15e949f322",
        "file_sha256": "5dc6a7b9a34f3fc8ced31230011f055a8db503f3b85c5b7ec2d370dbb2401732",
        "quote_check": "exact",
-       "quote_scope": "unit EP-3100, Plans/Executor_Protocol.md:12888-12955"
+       "quote_scope": "unit EP-3100, Plans/Executor_Protocol.md:12888-12955",
+       "excerpt_digest_convention": "whole_line",
+       "source_citation": {
+        "path": "Plans/Executor_Protocol.md",
+        "unit": "EP-3100",
+        "line_start": 12896,
+        "line_end": 12896,
+        "quote": "only a genuine original Workflow birth installs v8, with WorkflowBirth.installed_contract_digest and the combined Enrollment equal to the adoption digest",
+        "excerpt_sha256": "15adceef89241f2a7cd5621bce4fcf3500e8b3cf05c76db3e7ebaf15e949f322",
+        "file_sha256": "5dc6a7b9a34f3fc8ced31230011f055a8db503f3b85c5b7ec2d370dbb2401732"
+       }
       },
       {
        "path": "Plans/Executor_Protocol.md",
@@ -240,7 +330,17 @@
        "excerpt_sha256": "5316b112c8dd3e881121e89174a0752a599f89cdb71d22544be6936d57765e7e",
        "file_sha256": "5dc6a7b9a34f3fc8ced31230011f055a8db503f3b85c5b7ec2d370dbb2401732",
        "quote_check": "exact",
-       "quote_scope": "document"
+       "quote_scope": "document",
+       "excerpt_digest_convention": "whole_line",
+       "source_citation": {
+        "path": "Plans/Executor_Protocol.md",
+        "unit": "EP-118 amendment",
+        "line_start": 7733,
+        "line_end": 7733,
+        "quote": "the Workflow writer list also names `owner.executor.workflow_run.replan.v1` (EP-3101), the optional/replanned materialization route this adoption excludes",
+        "excerpt_sha256": "5316b112c8dd3e881121e89174a0752a599f89cdb71d22544be6936d57765e7e",
+        "file_sha256": "5dc6a7b9a34f3fc8ced31230011f055a8db503f3b85c5b7ec2d370dbb2401732"
+       }
       }
      ],
      "carried_from": {
@@ -258,12 +358,20 @@
       {
        "path": "Plans/Contracts_V0.md",
        "unit": "CV-3100",
-       "line_start": 55286,
-       "line_end": 55286,
+       "line_start": 55287,
+       "line_end": 55287,
        "quote": "Newly authored owner contract under DL-045, written for DL-080 option 1 (PNC-019 lane rv8b, 2026-11-14). goal_run.replanned binds schema ID pm.goal_runtime_event.goal_run_replanned.schema.v3 at Plans/event_payloads/goal_runtime/goal_run_replanned.v3.schema.json, closed at the root (additionalProperties false, unevaluatedProperties false) and self-contained, on the GoalRun envelope grammar that CV-288 keeps for Event Authority custody after DL-478: expected_goal_run_revision, goal_run_revision and idempotency_key are required; expected_goal_revision and parent_goal_id are gone; goal_revision is the unchanged Goal context revision; execution_role is runtime_controller. The specific payload keeps the seven v2 fields (goal_run_id, previous_workgraph_ref, new_workgraph_ref, replan_generation with maximum 4294967295, affected_worknode_refs, cancelled_or_resteered_refs, next_action) and adds the required original_graph_patch and original_graph_patch_history from the accepted v8 source, whose graph-patch and OwnerIdentity definitions are inlined under graph_patch_* with their grammar unchanged. It is the restriction successor of the v8 draft clock-split payload (Plans/goal_run_replan_contracts/payload-correspondence.json): each canon instance maps to exactly one draft instance that satisfies the draft's own owner rules, and back; no other draft instance has a canon image. The delivery profile pm.goal_run_replanned.delivery.v3 selects this schema for the v8 Replan writer's WholeProducerSubmission and appended Event (adoption correction C1). The whole v2 schema stays unchanged as the historical reader and is never reinterpreted. Prepared without admission: the registry row keeps v2 until the S5b switch (prepared row in Plans/goal_run_replan_contracts/prepared-registry-row.json).",
        "quote_check": "exact",
-       "quote_scope": "unit CV-3100, Plans/Contracts_V0.md:55278-55334",
-       "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a"
+       "quote_scope": "unit CV-3100, Plans/Contracts_V0.md:55279-55335",
+       "file_sha256": "4ae2225d8ed19b6df971b6c32797aae6882d175264ff2c2e9a2045650d735e67",
+       "source_citation": {
+        "path": "Plans/Contracts_V0.md",
+        "unit": "CV-3100",
+        "line_start": 55286,
+        "line_end": 55286,
+        "quote": "Newly authored owner contract under DL-045, written for DL-080 option 1 (PNC-019 lane rv8b, 2026-11-14). goal_run.replanned binds schema ID pm.goal_runtime_event.goal_run_replanned.schema.v3 at Plans/event_payloads/goal_runtime/goal_run_replanned.v3.schema.json, closed at the root (additionalProperties false, unevaluatedProperties false) and self-contained, on the GoalRun envelope grammar that CV-288 keeps for Event Authority custody after DL-478: expected_goal_run_revision, goal_run_revision and idempotency_key are required; expected_goal_revision and parent_goal_id are gone; goal_revision is the unchanged Goal context revision; execution_role is runtime_controller. The specific payload keeps the seven v2 fields (goal_run_id, previous_workgraph_ref, new_workgraph_ref, replan_generation with maximum 4294967295, affected_worknode_refs, cancelled_or_resteered_refs, next_action) and adds the required original_graph_patch and original_graph_patch_history from the accepted v8 source, whose graph-patch and OwnerIdentity definitions are inlined under graph_patch_* with their grammar unchanged. It is the restriction successor of the v8 draft clock-split payload (Plans/goal_run_replan_contracts/payload-correspondence.json): each canon instance maps to exactly one draft instance that satisfies the draft's own owner rules, and back; no other draft instance has a canon image. The delivery profile pm.goal_run_replanned.delivery.v3 selects this schema for the v8 Replan writer's WholeProducerSubmission and appended Event (adoption correction C1). The whole v2 schema stays unchanged as the historical reader and is never reinterpreted. Prepared without admission: the registry row keeps v2 until the S5b switch (prepared row in Plans/goal_run_replan_contracts/prepared-registry-row.json).",
+        "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a"
+       }
       }
      ],
      "source_grade": {
@@ -287,31 +395,61 @@
        "line_end": 217,
        "quote": "\"scope_policy\": \"project_only\"",
        "excerpt_sha256": "8472a5d51eb53462551949130f1f8bd4f09280814f6c7f854cccadb4de30bc95",
-       "file_sha256": "48ad8de5c1639db6c254db2352dc5d70acc4d70ccfdab4cdf2c169477f8ff534",
+       "file_sha256": "ec21cf1a5b42b3e68a5564a847b4798dff968612d11d438bc7075b89196f9602",
        "quote_check": "exact",
-       "quote_scope": "document"
+       "quote_scope": "document",
+       "excerpt_digest_convention": "whole_line",
+       "source_citation": {
+        "path": "Plans/event_family_registry.json",
+        "unit": "#/families/3",
+        "line_start": 217,
+        "line_end": 217,
+        "quote": "\"scope_policy\": \"project_only\"",
+        "excerpt_sha256": "8472a5d51eb53462551949130f1f8bd4f09280814f6c7f854cccadb4de30bc95",
+        "file_sha256": "48ad8de5c1639db6c254db2352dc5d70acc4d70ccfdab4cdf2c169477f8ff534"
+       }
       },
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-3100",
-       "line_start": 78295,
-       "line_end": 78295,
+       "line_start": 77788,
+       "line_end": 77788,
        "quote": "Identity: idempotency key pm.goal-runtime-event.v3: plus lowercase SHA-256 of CV-1100 qualified RFC 8785 JCS of [\"pm.goal-runtime-event-idempotency.v3\"",
        "excerpt_sha256": "d6f216582323ac3e7c2b066db9b1d1a8256e95aa8e6b0f58bec2a13be45c598e",
-       "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707",
+       "file_sha256": "73ee6d097e08d31fd93301d05d2cd2632dd46e5a22ba3ea405ffadda4a0a9db2",
        "quote_check": "exact",
-       "quote_scope": "unit SP-3100, Plans/storage-plan.md:78287-78350"
+       "quote_scope": "unit SP-3100, Plans/storage-plan.md:77780-77843",
+       "excerpt_digest_convention": "whole_line",
+       "source_citation": {
+        "path": "Plans/storage-plan.md",
+        "unit": "SP-3100",
+        "line_start": 78295,
+        "line_end": 78295,
+        "quote": "Identity: idempotency key pm.goal-runtime-event.v3: plus lowercase SHA-256 of CV-1100 qualified RFC 8785 JCS of [\"pm.goal-runtime-event-idempotency.v3\"",
+        "excerpt_sha256": "d6f216582323ac3e7c2b066db9b1d1a8256e95aa8e6b0f58bec2a13be45c598e",
+        "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+       }
       },
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-3100",
-       "line_start": 78295,
-       "line_end": 78295,
+       "line_start": 77788,
+       "line_end": 77788,
        "quote": "inner and outer keys are byte-equal; outer scope_kind project, project_id, run_id = payload goal_run_id, node_id and attempt_id null",
        "excerpt_sha256": "d6f216582323ac3e7c2b066db9b1d1a8256e95aa8e6b0f58bec2a13be45c598e",
-       "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707",
+       "file_sha256": "73ee6d097e08d31fd93301d05d2cd2632dd46e5a22ba3ea405ffadda4a0a9db2",
        "quote_check": "exact",
-       "quote_scope": "unit SP-3100, Plans/storage-plan.md:78287-78350"
+       "quote_scope": "unit SP-3100, Plans/storage-plan.md:77780-77843",
+       "excerpt_digest_convention": "whole_line",
+       "source_citation": {
+        "path": "Plans/storage-plan.md",
+        "unit": "SP-3100",
+        "line_start": 78295,
+        "line_end": 78295,
+        "quote": "inner and outer keys are byte-equal; outer scope_kind project, project_id, run_id = payload goal_run_id, node_id and attempt_id null",
+        "excerpt_sha256": "d6f216582323ac3e7c2b066db9b1d1a8256e95aa8e6b0f58bec2a13be45c598e",
+        "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+       }
       },
       {
        "path": "Plans/goal_run_replan_contracts/prepared-registry-row.json",
@@ -322,7 +460,17 @@
        "excerpt_sha256": "32df1e60481a989d49dabe19a36b19e53aa9034cf5f15203d0f1482cb8279363",
        "file_sha256": "e69f7dba7318bf2167120bf15b96b6899e849ddd6158632b33d6938d04ab6f63",
        "quote_check": "exact",
-       "quote_scope": "document"
+       "quote_scope": "document",
+       "excerpt_digest_convention": "whole_line",
+       "source_citation": {
+        "path": "Plans/goal_run_replan_contracts/prepared-registry-row.json",
+        "unit": "prepared_row",
+        "line_start": 24,
+        "line_end": 24,
+        "quote": "\"/payload/project_id\"",
+        "excerpt_sha256": "32df1e60481a989d49dabe19a36b19e53aa9034cf5f15203d0f1482cb8279363",
+        "file_sha256": "e69f7dba7318bf2167120bf15b96b6899e849ddd6158632b33d6938d04ab6f63"
+       }
       }
      ],
      "carried_from": {
@@ -340,24 +488,44 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-3100",
-       "line_start": 78295,
-       "line_end": 78295,
+       "line_start": 77788,
+       "line_end": 77788,
        "quote": "Replay: same key and same producer semantic digest return the original event_id, receipt, sequence and transition with no second append or effect",
        "excerpt_sha256": "d6f216582323ac3e7c2b066db9b1d1a8256e95aa8e6b0f58bec2a13be45c598e",
-       "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707",
+       "file_sha256": "73ee6d097e08d31fd93301d05d2cd2632dd46e5a22ba3ea405ffadda4a0a9db2",
        "quote_check": "exact",
-       "quote_scope": "unit SP-3100, Plans/storage-plan.md:78287-78350"
+       "quote_scope": "unit SP-3100, Plans/storage-plan.md:77780-77843",
+       "excerpt_digest_convention": "whole_line",
+       "source_citation": {
+        "path": "Plans/storage-plan.md",
+        "unit": "SP-3100",
+        "line_start": 78295,
+        "line_end": 78295,
+        "quote": "Replay: same key and same producer semantic digest return the original event_id, receipt, sequence and transition with no second append or effect",
+        "excerpt_sha256": "d6f216582323ac3e7c2b066db9b1d1a8256e95aa8e6b0f58bec2a13be45c598e",
+        "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+       }
       },
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-3100",
-       "line_start": 78295,
-       "line_end": 78295,
+       "line_start": 77788,
+       "line_end": 77788,
        "quote": "SP-286 first-AppendReceipt custody and its CV-339 full-value custody_v2 are adopted by name",
        "excerpt_sha256": "d6f216582323ac3e7c2b066db9b1d1a8256e95aa8e6b0f58bec2a13be45c598e",
-       "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707",
+       "file_sha256": "73ee6d097e08d31fd93301d05d2cd2632dd46e5a22ba3ea405ffadda4a0a9db2",
        "quote_check": "exact",
-       "quote_scope": "unit SP-3100, Plans/storage-plan.md:78287-78350"
+       "quote_scope": "unit SP-3100, Plans/storage-plan.md:77780-77843",
+       "excerpt_digest_convention": "whole_line",
+       "source_citation": {
+        "path": "Plans/storage-plan.md",
+        "unit": "SP-3100",
+        "line_start": 78295,
+        "line_end": 78295,
+        "quote": "SP-286 first-AppendReceipt custody and its CV-339 full-value custody_v2 are adopted by name",
+        "excerpt_sha256": "d6f216582323ac3e7c2b066db9b1d1a8256e95aa8e6b0f58bec2a13be45c598e",
+        "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+       }
       },
       {
        "path": "Plans/Executor_Protocol.md",
@@ -368,7 +536,17 @@
        "excerpt_sha256": "74679d50529b27cc4460f217fbdbac5f2a09a1415d3080fde7e640ca221222f8",
        "file_sha256": "5dc6a7b9a34f3fc8ced31230011f055a8db503f3b85c5b7ec2d370dbb2401732",
        "quote_check": "exact",
-       "quote_scope": "unit EP-3101, Plans/Executor_Protocol.md:12956-13025"
+       "quote_scope": "unit EP-3101, Plans/Executor_Protocol.md:12956-13025",
+       "excerpt_digest_convention": "whole_line",
+       "source_citation": {
+        "path": "Plans/Executor_Protocol.md",
+        "unit": "EP-3101",
+        "line_start": 12964,
+        "line_end": 12964,
+        "quote": "a lost acknowledgement resolves from SP-286 retained receipt custody; nothing re-dispatches, re-applies or mints a new event value",
+        "excerpt_sha256": "74679d50529b27cc4460f217fbdbac5f2a09a1415d3080fde7e640ca221222f8",
+        "file_sha256": "5dc6a7b9a34f3fc8ced31230011f055a8db503f3b85c5b7ec2d370dbb2401732"
+       }
       }
      ],
      "carried_from": {
@@ -386,35 +564,65 @@
       {
        "path": "Plans/event_family_registry.json",
        "unit": "#/families/3",
-       "line_start": 295,
-       "line_end": 295,
+       "line_start": 296,
+       "line_end": 296,
        "quote": "\"policy_id\": \"RP-RUNTIME-365D\"",
        "excerpt_sha256": "ff4d0a8da38a8f3056162d8a1f66e9cc6a187fe4827aa9f5f6c952963259f7b3",
-       "file_sha256": "48ad8de5c1639db6c254db2352dc5d70acc4d70ccfdab4cdf2c169477f8ff534",
+       "file_sha256": "ec21cf1a5b42b3e68a5564a847b4798dff968612d11d438bc7075b89196f9602",
        "quote_check": "exact",
-       "quote_scope": "document"
+       "quote_scope": "document",
+       "excerpt_digest_convention": "whole_line",
+       "source_citation": {
+        "path": "Plans/event_family_registry.json",
+        "unit": "#/families/3",
+        "line_start": 295,
+        "line_end": 295,
+        "quote": "\"policy_id\": \"RP-RUNTIME-365D\"",
+        "excerpt_sha256": "ff4d0a8da38a8f3056162d8a1f66e9cc6a187fe4827aa9f5f6c952963259f7b3",
+        "file_sha256": "48ad8de5c1639db6c254db2352dc5d70acc4d70ccfdab4cdf2c169477f8ff534"
+       }
       },
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-3102",
-       "line_start": 78422,
-       "line_end": 78422,
+       "line_start": 77915,
+       "line_end": 77915,
        "quote": "current, staged and retired generations count toward RP-PROJECTION-3GEN@1.0.0",
        "excerpt_sha256": "f70f0f5bd18043cddb45ca037d798784dc0fb60b23b329fbbebfd3167e44bccc",
-       "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707",
+       "file_sha256": "73ee6d097e08d31fd93301d05d2cd2632dd46e5a22ba3ea405ffadda4a0a9db2",
        "quote_check": "exact",
-       "quote_scope": "unit SP-3102, Plans/storage-plan.md:78414-78471"
+       "quote_scope": "unit SP-3102, Plans/storage-plan.md:77907-77964",
+       "excerpt_digest_convention": "whole_line",
+       "source_citation": {
+        "path": "Plans/storage-plan.md",
+        "unit": "SP-3102",
+        "line_start": 78422,
+        "line_end": 78422,
+        "quote": "current, staged and retired generations count toward RP-PROJECTION-3GEN@1.0.0",
+        "excerpt_sha256": "f70f0f5bd18043cddb45ca037d798784dc0fb60b23b329fbbebfd3167e44bccc",
+        "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+       }
       },
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-3101",
-       "line_start": 78359,
-       "line_end": 78359,
+       "line_start": 77852,
+       "line_end": 77852,
        "quote": "Lifetime: compact original authority families use RP-AUTHORITY-INDEFINITE@1.0.0, the policy of every existing Workflow source, start, cancel, standard and certified authority family",
        "excerpt_sha256": "c11a5178ecc21857924f8426068ff2265b3da28a75920c384e70745787ea621b",
-       "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707",
+       "file_sha256": "73ee6d097e08d31fd93301d05d2cd2632dd46e5a22ba3ea405ffadda4a0a9db2",
        "quote_check": "exact",
-       "quote_scope": "unit SP-3101, Plans/storage-plan.md:78351-78413"
+       "quote_scope": "unit SP-3101, Plans/storage-plan.md:77844-77906",
+       "excerpt_digest_convention": "whole_line",
+       "source_citation": {
+        "path": "Plans/storage-plan.md",
+        "unit": "SP-3101",
+        "line_start": 78359,
+        "line_end": 78359,
+        "quote": "Lifetime: compact original authority families use RP-AUTHORITY-INDEFINITE@1.0.0, the policy of every existing Workflow source, start, cancel, standard and certified authority family",
+        "excerpt_sha256": "c11a5178ecc21857924f8426068ff2265b3da28a75920c384e70745787ea621b",
+        "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+       }
       }
      ],
      "carried_from": {
@@ -436,42 +644,82 @@
        "line_end": 239,
        "quote": "\"mode\": \"reject_unhandled_secrets\"",
        "excerpt_sha256": "91c21aae18a31744144bca6d3504227098463bc391436ab5b9042a5b03d04763",
-       "file_sha256": "48ad8de5c1639db6c254db2352dc5d70acc4d70ccfdab4cdf2c169477f8ff534",
+       "file_sha256": "ec21cf1a5b42b3e68a5564a847b4798dff968612d11d438bc7075b89196f9602",
        "quote_check": "exact",
-       "quote_scope": "document"
+       "quote_scope": "document",
+       "excerpt_digest_convention": "whole_line",
+       "source_citation": {
+        "path": "Plans/event_family_registry.json",
+        "unit": "#/families/3",
+        "line_start": 239,
+        "line_end": 239,
+        "quote": "\"mode\": \"reject_unhandled_secrets\"",
+        "excerpt_sha256": "91c21aae18a31744144bca6d3504227098463bc391436ab5b9042a5b03d04763",
+        "file_sha256": "48ad8de5c1639db6c254db2352dc5d70acc4d70ccfdab4cdf2c169477f8ff534"
+       }
       },
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-3100",
-       "line_start": 78295,
-       "line_end": 78295,
+       "line_start": 77788,
+       "line_end": 77788,
        "quote": "Custody: the canonical seglog record and its SP-286 custody row are the Event originals; the v8 compact authority families of SP-3101 are the writer",
        "excerpt_sha256": "d6f216582323ac3e7c2b066db9b1d1a8256e95aa8e6b0f58bec2a13be45c598e",
-       "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707",
+       "file_sha256": "73ee6d097e08d31fd93301d05d2cd2632dd46e5a22ba3ea405ffadda4a0a9db2",
        "quote_check": "exact",
-       "quote_scope": "unit SP-3100, Plans/storage-plan.md:78287-78350"
+       "quote_scope": "unit SP-3100, Plans/storage-plan.md:77780-77843",
+       "excerpt_digest_convention": "whole_line",
+       "source_citation": {
+        "path": "Plans/storage-plan.md",
+        "unit": "SP-3100",
+        "line_start": 78295,
+        "line_end": 78295,
+        "quote": "Custody: the canonical seglog record and its SP-286 custody row are the Event originals; the v8 compact authority families of SP-3101 are the writer",
+        "excerpt_sha256": "d6f216582323ac3e7c2b066db9b1d1a8256e95aa8e6b0f58bec2a13be45c598e",
+        "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+       }
       },
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-3100",
-       "line_start": 78295,
-       "line_end": 78295,
+       "line_start": 77788,
+       "line_end": 77788,
        "quote": "every read applies current Project access, deletion and hold checks, and an unresolvable referenced record reads unresolved, never inferred",
        "excerpt_sha256": "d6f216582323ac3e7c2b066db9b1d1a8256e95aa8e6b0f58bec2a13be45c598e",
-       "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707",
+       "file_sha256": "73ee6d097e08d31fd93301d05d2cd2632dd46e5a22ba3ea405ffadda4a0a9db2",
        "quote_check": "exact",
-       "quote_scope": "unit SP-3100, Plans/storage-plan.md:78287-78350"
+       "quote_scope": "unit SP-3100, Plans/storage-plan.md:77780-77843",
+       "excerpt_digest_convention": "whole_line",
+       "source_citation": {
+        "path": "Plans/storage-plan.md",
+        "unit": "SP-3100",
+        "line_start": 78295,
+        "line_end": 78295,
+        "quote": "every read applies current Project access, deletion and hold checks, and an unresolvable referenced record reads unresolved, never inferred",
+        "excerpt_sha256": "d6f216582323ac3e7c2b066db9b1d1a8256e95aa8e6b0f58bec2a13be45c598e",
+        "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+       }
       },
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-3101",
-       "line_start": 78359,
-       "line_end": 78359,
+       "line_start": 77852,
+       "line_end": 77852,
        "quote": "unknown or missing custody stays mutation-fenced, with no reconstruction, backfill, rekey or substitute issuer",
        "excerpt_sha256": "c11a5178ecc21857924f8426068ff2265b3da28a75920c384e70745787ea621b",
-       "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707",
+       "file_sha256": "73ee6d097e08d31fd93301d05d2cd2632dd46e5a22ba3ea405ffadda4a0a9db2",
        "quote_check": "exact",
-       "quote_scope": "unit SP-3101, Plans/storage-plan.md:78351-78413"
+       "quote_scope": "unit SP-3101, Plans/storage-plan.md:77844-77906",
+       "excerpt_digest_convention": "whole_line",
+       "source_citation": {
+        "path": "Plans/storage-plan.md",
+        "unit": "SP-3101",
+        "line_start": 78359,
+        "line_end": 78359,
+        "quote": "unknown or missing custody stays mutation-fenced, with no reconstruction, backfill, rekey or substitute issuer",
+        "excerpt_sha256": "c11a5178ecc21857924f8426068ff2265b3da28a75920c384e70745787ea621b",
+        "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+       }
       }
      ],
      "carried_from": {
@@ -495,7 +743,17 @@
        "excerpt_sha256": "971c1eb16db884860d1acf4abb3ec81162376fca4c18776cbe500048e0c5e3c1",
        "file_sha256": "122f980eb82a138dc71713eede5caa472a2d2d9ce404fab798698f8a38f5ca3e",
        "quote_check": "exact",
-       "quote_scope": "unit GRS-3100, Plans/Goal_Runtime_System.md:10309-10381"
+       "quote_scope": "unit GRS-3100, Plans/Goal_Runtime_System.md:10309-10381",
+       "excerpt_digest_convention": "whole_line",
+       "source_citation": {
+        "path": "Plans/Goal_Runtime_System.md",
+        "unit": "GRS-3100",
+        "line_start": 10317,
+        "line_end": 10317,
+        "quote": "Transitions adopt D-R19 over the native Workflow status set: running|provisional_success|verifying|failed_verification|repairing|blocked|stopped -> successor by action",
+        "excerpt_sha256": "971c1eb16db884860d1acf4abb3ec81162376fca4c18776cbe500048e0c5e3c1",
+        "file_sha256": "122f980eb82a138dc71713eede5caa472a2d2d9ce404fab798698f8a38f5ca3e"
+       }
       },
       {
        "path": "Plans/Goal_Runtime_System.md",
@@ -506,7 +764,17 @@
        "excerpt_sha256": "971c1eb16db884860d1acf4abb3ec81162376fca4c18776cbe500048e0c5e3c1",
        "file_sha256": "122f980eb82a138dc71713eede5caa472a2d2d9ce404fab798698f8a38f5ca3e",
        "quote_check": "exact",
-       "quote_scope": "unit GRS-3100, Plans/Goal_Runtime_System.md:10309-10381"
+       "quote_scope": "unit GRS-3100, Plans/Goal_Runtime_System.md:10309-10381",
+       "excerpt_digest_convention": "whole_line",
+       "source_citation": {
+        "path": "Plans/Goal_Runtime_System.md",
+        "unit": "GRS-3100",
+        "line_start": 10317,
+        "line_end": 10317,
+        "quote": "The cancel action is never published by a replan: the manager",
+        "excerpt_sha256": "971c1eb16db884860d1acf4abb3ec81162376fca4c18776cbe500048e0c5e3c1",
+        "file_sha256": "122f980eb82a138dc71713eede5caa472a2d2d9ce404fab798698f8a38f5ca3e"
+       }
       },
       {
        "path": "Plans/Goal_Runtime_System.md",
@@ -517,7 +785,17 @@
        "excerpt_sha256": "8a47896dfff7a0f7c65d9aefcf2470e78d05f0a53762499c3a4621ce9282c97d",
        "file_sha256": "122f980eb82a138dc71713eede5caa472a2d2d9ce404fab798698f8a38f5ca3e",
        "quote_check": "exact",
-       "quote_scope": "document"
+       "quote_scope": "document",
+       "excerpt_digest_convention": "whole_line",
+       "source_citation": {
+        "path": "Plans/Goal_Runtime_System.md",
+        "unit": "Known-37 4.2 amendment",
+        "line_start": 3726,
+        "line_end": 3726,
+        "quote": "A run born under a profile without that writer keeps the fence: its blocked or stopped status leaves only by D06 cancellation (GRS-080, GRS-200, GRS-201).",
+        "excerpt_sha256": "8a47896dfff7a0f7c65d9aefcf2470e78d05f0a53762499c3a4621ce9282c97d",
+        "file_sha256": "122f980eb82a138dc71713eede5caa472a2d2d9ce404fab798698f8a38f5ca3e"
+       }
       },
       {
        "path": "Plans/Goal_Runtime_System.md",
@@ -528,7 +806,17 @@
        "excerpt_sha256": "4ca0046c28f3d826a62779364c5dd631f6f3c3c72b21b193cfa2a7a10d0b5acf",
        "file_sha256": "122f980eb82a138dc71713eede5caa472a2d2d9ce404fab798698f8a38f5ca3e",
        "quote_check": "exact",
-       "quote_scope": "unit GRS-3101, Plans/Goal_Runtime_System.md:10382-10446"
+       "quote_scope": "unit GRS-3101, Plans/Goal_Runtime_System.md:10382-10446",
+       "excerpt_digest_convention": "whole_line",
+       "source_citation": {
+        "path": "Plans/Goal_Runtime_System.md",
+        "unit": "GRS-3101",
+        "line_start": 10390,
+        "line_end": 10390,
+        "quote": "Rule table: started -> replanned; replanned -> replanned; started or replanned -> cancelled",
+        "excerpt_sha256": "4ca0046c28f3d826a62779364c5dd631f6f3c3c72b21b193cfa2a7a10d0b5acf",
+        "file_sha256": "122f980eb82a138dc71713eede5caa472a2d2d9ce404fab798698f8a38f5ca3e"
+       }
       }
      ],
      "carried_from": {
@@ -552,29 +840,59 @@
        "excerpt_sha256": "4ca0046c28f3d826a62779364c5dd631f6f3c3c72b21b193cfa2a7a10d0b5acf",
        "file_sha256": "122f980eb82a138dc71713eede5caa472a2d2d9ce404fab798698f8a38f5ca3e",
        "quote_check": "exact",
-       "quote_scope": "unit GRS-3101, Plans/Goal_Runtime_System.md:10382-10446"
+       "quote_scope": "unit GRS-3101, Plans/Goal_Runtime_System.md:10382-10446",
+       "excerpt_digest_convention": "whole_line",
+       "source_citation": {
+        "path": "Plans/Goal_Runtime_System.md",
+        "unit": "GRS-3101",
+        "line_start": 10390,
+        "line_end": 10390,
+        "quote": "selects each run",
+        "excerpt_sha256": "4ca0046c28f3d826a62779364c5dd631f6f3c3c72b21b193cfa2a7a10d0b5acf",
+        "file_sha256": "122f980eb82a138dc71713eede5caa472a2d2d9ce404fab798698f8a38f5ca3e"
+       }
       },
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-3102",
-       "line_start": 78422,
-       "line_end": 78422,
+       "line_start": 77915,
+       "line_end": 77915,
        "quote": "Consumer: owner.goal_run.history_v8.project_prefix.v1, the only writer of the v8 branch values",
        "excerpt_sha256": "f70f0f5bd18043cddb45ca037d798784dc0fb60b23b329fbbebfd3167e44bccc",
-       "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707",
+       "file_sha256": "73ee6d097e08d31fd93301d05d2cd2632dd46e5a22ba3ea405ffadda4a0a9db2",
        "quote_check": "exact",
-       "quote_scope": "unit SP-3102, Plans/storage-plan.md:78414-78471"
+       "quote_scope": "unit SP-3102, Plans/storage-plan.md:77907-77964",
+       "excerpt_digest_convention": "whole_line",
+       "source_citation": {
+        "path": "Plans/storage-plan.md",
+        "unit": "SP-3102",
+        "line_start": 78422,
+        "line_end": 78422,
+        "quote": "Consumer: owner.goal_run.history_v8.project_prefix.v1, the only writer of the v8 branch values",
+        "excerpt_sha256": "f70f0f5bd18043cddb45ca037d798784dc0fb60b23b329fbbebfd3167e44bccc",
+        "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+       }
       },
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-3102",
-       "line_start": 78422,
-       "line_end": 78422,
+       "line_start": 77915,
+       "line_end": 77915,
        "quote": "Checkpoint: adopts SP-278 with the nine-field durable read token (DL-076) as index_read_token; no stored value holds redb_snapshot_id.",
        "excerpt_sha256": "f70f0f5bd18043cddb45ca037d798784dc0fb60b23b329fbbebfd3167e44bccc",
-       "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707",
+       "file_sha256": "73ee6d097e08d31fd93301d05d2cd2632dd46e5a22ba3ea405ffadda4a0a9db2",
        "quote_check": "exact",
-       "quote_scope": "unit SP-3102, Plans/storage-plan.md:78414-78471"
+       "quote_scope": "unit SP-3102, Plans/storage-plan.md:77907-77964",
+       "excerpt_digest_convention": "whole_line",
+       "source_citation": {
+        "path": "Plans/storage-plan.md",
+        "unit": "SP-3102",
+        "line_start": 78422,
+        "line_end": 78422,
+        "quote": "Checkpoint: adopts SP-278 with the nine-field durable read token (DL-076) as index_read_token; no stored value holds redb_snapshot_id.",
+        "excerpt_sha256": "f70f0f5bd18043cddb45ca037d798784dc0fb60b23b329fbbebfd3167e44bccc",
+        "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+       }
       },
       {
        "path": "Plans/goal_run_replan_contracts/projection.schema.json",
@@ -585,7 +903,17 @@
        "excerpt_sha256": "f0acc187b14aa8cddb84267276a10e9e2bb79e66533af3fa255be31392ff266a",
        "file_sha256": "cfab45ff17d4bb84bd006eb68211b94e1fb6e97c6759b2aab077c7f673a3f4e1",
        "quote_check": "exact",
-       "quote_scope": "document"
+       "quote_scope": "document",
+       "excerpt_digest_convention": "whole_line",
+       "source_citation": {
+        "path": "Plans/goal_run_replan_contracts/projection.schema.json",
+        "unit": "#/$defs/checkpoint",
+        "line_start": 322,
+        "line_end": 322,
+        "quote": "\"const\": \"pm.storage_value.goal_run_history_v8_checkpoint.v1\"",
+        "excerpt_sha256": "f0acc187b14aa8cddb84267276a10e9e2bb79e66533af3fa255be31392ff266a",
+        "file_sha256": "cfab45ff17d4bb84bd006eb68211b94e1fb6e97c6759b2aab077c7f673a3f4e1"
+       }
       }
      ],
      "carried_from": {
@@ -603,35 +931,65 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-3100",
-       "line_start": 78295,
-       "line_end": 78295,
+       "line_start": 77788,
+       "line_end": 77788,
        "quote": "Withdrawal: writer cutoff at the writer",
        "excerpt_sha256": "d6f216582323ac3e7c2b066db9b1d1a8256e95aa8e6b0f58bec2a13be45c598e",
-       "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707",
+       "file_sha256": "73ee6d097e08d31fd93301d05d2cd2632dd46e5a22ba3ea405ffadda4a0a9db2",
        "quote_check": "exact",
-       "quote_scope": "unit SP-3100, Plans/storage-plan.md:78287-78350"
+       "quote_scope": "unit SP-3100, Plans/storage-plan.md:77780-77843",
+       "excerpt_digest_convention": "whole_line",
+       "source_citation": {
+        "path": "Plans/storage-plan.md",
+        "unit": "SP-3100",
+        "line_start": 78295,
+        "line_end": 78295,
+        "quote": "Withdrawal: writer cutoff at the writer",
+        "excerpt_sha256": "d6f216582323ac3e7c2b066db9b1d1a8256e95aa8e6b0f58bec2a13be45c598e",
+        "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+       }
       },
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-3100",
-       "line_start": 78295,
-       "line_end": 78295,
+       "line_start": 77788,
+       "line_end": 77788,
        "quote": "readers are withdrawn one by one without deletion and return unavailable",
        "excerpt_sha256": "d6f216582323ac3e7c2b066db9b1d1a8256e95aa8e6b0f58bec2a13be45c598e",
-       "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707",
+       "file_sha256": "73ee6d097e08d31fd93301d05d2cd2632dd46e5a22ba3ea405ffadda4a0a9db2",
        "quote_check": "exact",
-       "quote_scope": "unit SP-3100, Plans/storage-plan.md:78287-78350"
+       "quote_scope": "unit SP-3100, Plans/storage-plan.md:77780-77843",
+       "excerpt_digest_convention": "whole_line",
+       "source_citation": {
+        "path": "Plans/storage-plan.md",
+        "unit": "SP-3100",
+        "line_start": 78295,
+        "line_end": 78295,
+        "quote": "readers are withdrawn one by one without deletion and return unavailable",
+        "excerpt_sha256": "d6f216582323ac3e7c2b066db9b1d1a8256e95aa8e6b0f58bec2a13be45c598e",
+        "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+       }
       },
       {
        "path": "Plans/Contracts_V0.md",
        "unit": "CV-3100",
-       "line_start": 55286,
-       "line_end": 55286,
+       "line_start": 55287,
+       "line_end": 55287,
        "quote": "The whole v2 schema stays unchanged as the historical reader and is never reinterpreted.",
        "excerpt_sha256": "8b6a4c153a1b2f443c1eb7019fcaadb0183725f1fdc8360a288c4a62dcd9bac5",
-       "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a",
+       "file_sha256": "4ae2225d8ed19b6df971b6c32797aae6882d175264ff2c2e9a2045650d735e67",
        "quote_check": "exact",
-       "quote_scope": "unit CV-3100, Plans/Contracts_V0.md:55278-55334"
+       "quote_scope": "unit CV-3100, Plans/Contracts_V0.md:55279-55335",
+       "excerpt_digest_convention": "whole_line",
+       "source_citation": {
+        "path": "Plans/Contracts_V0.md",
+        "unit": "CV-3100",
+        "line_start": 55286,
+        "line_end": 55286,
+        "quote": "The whole v2 schema stays unchanged as the historical reader and is never reinterpreted.",
+        "excerpt_sha256": "8b6a4c153a1b2f443c1eb7019fcaadb0183725f1fdc8360a288c4a62dcd9bac5",
+        "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a"
+       }
       },
       {
        "path": "Plans/Wiring_Matrix.production.json",
@@ -642,7 +1000,17 @@
        "excerpt_sha256": "fe250873001644d29a659f1aefba62a72776b3eb4a161cef9398772c318fbb42",
        "file_sha256": "464184b2020ce5a60cef73a5fe1f971115efa947942ad419457cfdf0ea6f88c6",
        "quote_check": "exact",
-       "quote_scope": "document"
+       "quote_scope": "document",
+       "excerpt_digest_convention": "whole_line",
+       "source_citation": {
+        "path": "Plans/Wiring_Matrix.production.json",
+        "unit": "catalog.runtime_replan",
+        "line_start": 61877,
+        "line_end": 61877,
+        "quote": "goal.replanned is historical-only (GRS-070) and is never its effect or an alias",
+        "excerpt_sha256": "fe250873001644d29a659f1aefba62a72776b3eb4a161cef9398772c318fbb42",
+        "file_sha256": "464184b2020ce5a60cef73a5fe1f971115efa947942ad419457cfdf0ea6f88c6"
+       }
       }
      ],
      "carried_from": {
@@ -666,7 +1034,17 @@
        "excerpt_sha256": "8b27797374edfd6b9b4e8110998354788eeed1c037e59be355c5c69e1689fd00",
        "file_sha256": "e1c8a84c145a3aaaa0738971f76db5fa0bf94f59c0149e76f4131e8579a6971d",
        "quote_check": "exact",
-       "quote_scope": "unit ATS-3100, Plans/Automated_Testing_System.md:15072-15142"
+       "quote_scope": "unit ATS-3100, Plans/Automated_Testing_System.md:15072-15142",
+       "excerpt_digest_convention": "whole_line",
+       "source_citation": {
+        "path": "Plans/Automated_Testing_System.md",
+        "unit": "ATS-3100",
+        "line_start": 15080,
+        "line_end": 15080,
+        "quote": "Every refusal is decided only by Method B guard rows in generated tables of at most eight rows",
+        "excerpt_sha256": "8b27797374edfd6b9b4e8110998354788eeed1c037e59be355c5c69e1689fd00",
+        "file_sha256": "e1c8a84c145a3aaaa0738971f76db5fa0bf94f59c0149e76f4131e8579a6971d"
+       }
       },
       {
        "path": "Plans/Automated_Testing_System.md",
@@ -677,7 +1055,17 @@
        "excerpt_sha256": "8b27797374edfd6b9b4e8110998354788eeed1c037e59be355c5c69e1689fd00",
        "file_sha256": "e1c8a84c145a3aaaa0738971f76db5fa0bf94f59c0149e76f4131e8579a6971d",
        "quote_check": "exact",
-       "quote_scope": "unit ATS-3100, Plans/Automated_Testing_System.md:15072-15142"
+       "quote_scope": "unit ATS-3100, Plans/Automated_Testing_System.md:15072-15142",
+       "excerpt_digest_convention": "whole_line",
+       "source_citation": {
+        "path": "Plans/Automated_Testing_System.md",
+        "unit": "ATS-3100",
+        "line_start": 15080,
+        "line_end": 15080,
+        "quote": "the gated guard tool scripts/pm_guard_isolation.py proves every row through scripts/pm-grr-guard-tables.py",
+        "excerpt_sha256": "8b27797374edfd6b9b4e8110998354788eeed1c037e59be355c5c69e1689fd00",
+        "file_sha256": "e1c8a84c145a3aaaa0738971f76db5fa0bf94f59c0149e76f4131e8579a6971d"
+       }
       },
       {
        "path": "Plans/Automated_Testing_System.md",
@@ -688,7 +1076,17 @@
        "excerpt_sha256": "8b27797374edfd6b9b4e8110998354788eeed1c037e59be355c5c69e1689fd00",
        "file_sha256": "e1c8a84c145a3aaaa0738971f76db5fa0bf94f59c0149e76f4131e8579a6971d",
        "quote_check": "exact",
-       "quote_scope": "unit ATS-3100, Plans/Automated_Testing_System.md:15072-15142"
+       "quote_scope": "unit ATS-3100, Plans/Automated_Testing_System.md:15072-15142",
+       "excerpt_digest_convention": "whole_line",
+       "source_citation": {
+        "path": "Plans/Automated_Testing_System.md",
+        "unit": "ATS-3100",
+        "line_start": 15080,
+        "line_end": 15080,
+        "quote": "Copy rows have distinct values in every control and copy-swap witnesses.",
+        "excerpt_sha256": "8b27797374edfd6b9b4e8110998354788eeed1c037e59be355c5c69e1689fd00",
+        "file_sha256": "e1c8a84c145a3aaaa0738971f76db5fa0bf94f59c0149e76f4131e8579a6971d"
+       }
       },
       {
        "path": "Plans/Automated_Testing_System.md",
@@ -699,7 +1097,17 @@
        "excerpt_sha256": "6e48d27721b1c2c25c1b75a8ff1b7f603f2c6375ad2c5a6d5bc1127b2a3b57f2",
        "file_sha256": "e1c8a84c145a3aaaa0738971f76db5fa0bf94f59c0149e76f4131e8579a6971d",
        "quote_check": "exact",
-       "quote_scope": "document"
+       "quote_scope": "document",
+       "excerpt_digest_convention": "whole_line",
+       "source_citation": {
+        "path": "Plans/Automated_Testing_System.md",
+        "unit": "ATS-3100 acceptance",
+        "line_start": 15100,
+        "line_end": 15100,
+        "quote": "- python3 scripts/pm-grr-mutation-proof.py --scratch <dir> kills every mutant under its declared detector outcome.",
+        "excerpt_sha256": "6e48d27721b1c2c25c1b75a8ff1b7f603f2c6375ad2c5a6d5bc1127b2a3b57f2",
+        "file_sha256": "e1c8a84c145a3aaaa0738971f76db5fa0bf94f59c0149e76f4131e8579a6971d"
+       }
       }
      ],
      "carried_from": {
@@ -711,5 +1119,12 @@
     }
    }
   }
- ]
+ ],
+ "evidence_maintenance": {
+  "authority": "MERGE2-FIX1 finding 3",
+  "source_commit": "0c904de00426b0089ba5d56349fda8ea16cc9f88",
+  "source_assessment_sha256": "d221137f6088b22dfffcf81b152eb0c0cc7819d421833ee9d0e770fd0d4f39b3",
+  "native_execution": "NOT_RUN",
+  "verdicts_changed": false
+ }
 }

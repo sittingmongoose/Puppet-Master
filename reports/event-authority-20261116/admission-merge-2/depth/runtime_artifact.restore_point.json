@@ -5,9 +5,9 @@
  "merge": "admission-merge-2",
  "registry": {
   "path": "Plans/event_family_registry.json",
-  "revision": "2026-11-16.252",
-  "sha256": "554c24077f03b324d7266db8ace54c8eb53d5cdbcf29f0625fa5e54e9efdc992",
-  "family_count": 471,
+  "revision": "2026-11-18.2",
+  "sha256": "ec21cf1a5b42b3e68a5564a847b4798dff968612d11d438bc7075b89196f9602",
+  "family_count": 518,
   "row_pointer": "#/families/470"
  },
  "base_commit": "45b4ccf25270c486dbc682805cd455ce4ca25fb0",
@@ -22,17 +22,27 @@
     "membership_version": {
      "status": "PASS",
      "representation": "exact_registry_membership",
-     "finding": "Registered at registry revision 2026-11-16.252 as #/families/470 (canonical row SHA-256 cd7d46e7b8684d6d27e6d37c5a46809cb10a8125d23830d1266611789654d907); before this commit the family was absent.",
+     "finding": "Currently registered at 2026-11-18.2 as #/families/470 (canonical row SHA-256 cd7d46e7b8684d6d27e6d37c5a46809cb10a8125d23830d1266611789654d907). Original one-family admission checkpoints remain in the family record and immutable Git source.",
      "evidence": [
       {
        "path": "Plans/event_family_registry.json",
        "json_pointer": "#/families/470",
-       "line_start": 30299,
-       "line_end": 30352,
+       "line_start": 30349,
+       "line_end": 30402,
        "quote": "\"event_type\": \"runtime_artifact.restore_point\"",
-       "quote_line": 30302,
-       "file_sha256": "554c24077f03b324d7266db8ace54c8eb53d5cdbcf29f0625fa5e54e9efdc992",
-       "quote_check": "exact"
+       "quote_line": 30352,
+       "file_sha256": "ec21cf1a5b42b3e68a5564a847b4798dff968612d11d438bc7075b89196f9602",
+       "quote_check": "exact",
+       "source_citation": {
+        "path": "Plans/event_family_registry.json",
+        "json_pointer": "#/families/470",
+        "line_start": 30299,
+        "line_end": 30352,
+        "quote": "\"event_type\": \"runtime_artifact.restore_point\"",
+        "quote_line": 30302,
+        "file_sha256": "554c24077f03b324d7266db8ace54c8eb53d5cdbcf29f0625fa5e54e9efdc992",
+        "quote_check": "exact"
+       }
       }
      ]
     },
@@ -49,7 +59,15 @@
        "quote": "Newly authored owner contract under DL-045 for runtime_artifact.restore_point@1.0.0, prepared without admission. This exact family implements only the existing Option 2 transition: A restore",
        "quote_check": "exact",
        "quote_scope": "unit RAP-113, Plans/Runtime_Artifacts_Panel.md:4160-4202",
-       "file_sha256": "27d5680bbb7e65b143de99d8f12198cffadc4cb6cd207ccf58e749406862f5be"
+       "file_sha256": "27d5680bbb7e65b143de99d8f12198cffadc4cb6cd207ccf58e749406862f5be",
+       "source_citation": {
+        "path": "Plans/Runtime_Artifacts_Panel.md",
+        "unit": "RAP-113",
+        "line_start": 4168,
+        "line_end": 4168,
+        "quote": "Newly authored owner contract under DL-045 for runtime_artifact.restore_point@1.0.0, prepared without admission. This exact family implements only the existing Option 2 transition: A restore",
+        "file_sha256": "27d5680bbb7e65b143de99d8f12198cffadc4cb6cd207ccf58e749406862f5be"
+       }
       }
      ],
      "carried_from": {
@@ -72,7 +90,15 @@
        "quote": "The producer is Restore-point owner observation writer, through the newly named handler owner.runtime_artifacts.restore_point.publish@1.0.0. This handler seals one immutable artifact metadat",
        "quote_check": "exact",
        "quote_scope": "unit RAP-113, Plans/Runtime_Artifacts_Panel.md:4160-4202",
-       "file_sha256": "27d5680bbb7e65b143de99d8f12198cffadc4cb6cd207ccf58e749406862f5be"
+       "file_sha256": "27d5680bbb7e65b143de99d8f12198cffadc4cb6cd207ccf58e749406862f5be",
+       "source_citation": {
+        "path": "Plans/Runtime_Artifacts_Panel.md",
+        "unit": "RAP-113",
+        "line_start": 4169,
+        "line_end": 4169,
+        "quote": "The producer is Restore-point owner observation writer, through the newly named handler owner.runtime_artifacts.restore_point.publish@1.0.0. This handler seals one immutable artifact metadat",
+        "file_sha256": "27d5680bbb7e65b143de99d8f12198cffadc4cb6cd207ccf58e749406862f5be"
+       }
       },
       {
        "path": "Plans/Runtime_Artifacts_Panel.md",
@@ -82,17 +108,33 @@
        "quote": "No terminal artifact publication precedes authentic first-receipt custody and the final source/permission guard. No durable pending-request family is invented. After crash, retry only from t",
        "quote_check": "exact",
        "quote_scope": "unit RAP-113, Plans/Runtime_Artifacts_Panel.md:4160-4202",
-       "file_sha256": "27d5680bbb7e65b143de99d8f12198cffadc4cb6cd207ccf58e749406862f5be"
+       "file_sha256": "27d5680bbb7e65b143de99d8f12198cffadc4cb6cd207ccf58e749406862f5be",
+       "source_citation": {
+        "path": "Plans/Runtime_Artifacts_Panel.md",
+        "unit": "RAP-113",
+        "line_start": 4174,
+        "line_end": 4174,
+        "quote": "No terminal artifact publication precedes authentic first-receipt custody and the final source/permission guard. No durable pending-request family is invented. After crash, retry only from t",
+        "file_sha256": "27d5680bbb7e65b143de99d8f12198cffadc4cb6cd207ccf58e749406862f5be"
+       }
       },
       {
        "path": "Plans/Contracts_V0.md",
        "unit": "CV-533",
-       "line_start": 42183,
-       "line_end": 42183,
+       "line_start": 42184,
+       "line_end": 42184,
        "quote": "Explicitly adopt SP-337 store-once packs for this family. Newly authored exact dispatch binding under DL-045: encode the unchanged logical payload as RFC 8785 canonical JSON, UTF-8 without B",
        "quote_check": "exact",
-       "quote_scope": "unit CV-533, Plans/Contracts_V0.md:42174-42210",
-       "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a"
+       "quote_scope": "unit CV-533, Plans/Contracts_V0.md:42175-42211",
+       "file_sha256": "4ae2225d8ed19b6df971b6c32797aae6882d175264ff2c2e9a2045650d735e67",
+       "source_citation": {
+        "path": "Plans/Contracts_V0.md",
+        "unit": "CV-533",
+        "line_start": 42183,
+        "line_end": 42183,
+        "quote": "Explicitly adopt SP-337 store-once packs for this family. Newly authored exact dispatch binding under DL-045: encode the unchanged logical payload as RFC 8785 canonical JSON, UTF-8 without B",
+        "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a"
+       }
       }
      ],
      "carried_from": {
@@ -110,12 +152,20 @@
       {
        "path": "Plans/Contracts_V0.md",
        "unit": "CV-533",
-       "line_start": 42182,
-       "line_end": 42182,
+       "line_start": 42183,
+       "line_end": 42183,
        "quote": "Payload dispatch prepared for runtime_artifact.restore_point@1.0.0 only: Plans/runtime_artifact_restore_point.schema.json, schema ID pm.runtime_artifact.restore_point.schema.v1, root object ",
        "quote_check": "exact",
-       "quote_scope": "unit CV-533, Plans/Contracts_V0.md:42174-42210",
-       "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a"
+       "quote_scope": "unit CV-533, Plans/Contracts_V0.md:42175-42211",
+       "file_sha256": "4ae2225d8ed19b6df971b6c32797aae6882d175264ff2c2e9a2045650d735e67",
+       "source_citation": {
+        "path": "Plans/Contracts_V0.md",
+        "unit": "CV-533",
+        "line_start": 42182,
+        "line_end": 42182,
+        "quote": "Payload dispatch prepared for runtime_artifact.restore_point@1.0.0 only: Plans/runtime_artifact_restore_point.schema.json, schema ID pm.runtime_artifact.restore_point.schema.v1, root object ",
+        "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a"
+       }
       }
      ],
      "carried_from": {
@@ -138,17 +188,33 @@
        "quote": "Newly authored observation identity under DL-045 explicitly completes RAP-054's unfinished four-member recommendation for this lifecycle-changing family only. The four-member tuple [event_ty",
        "quote_check": "exact",
        "quote_scope": "unit RAP-113, Plans/Runtime_Artifacts_Panel.md:4160-4202",
-       "file_sha256": "27d5680bbb7e65b143de99d8f12198cffadc4cb6cd207ccf58e749406862f5be"
+       "file_sha256": "27d5680bbb7e65b143de99d8f12198cffadc4cb6cd207ccf58e749406862f5be",
+       "source_citation": {
+        "path": "Plans/Runtime_Artifacts_Panel.md",
+        "unit": "RAP-113",
+        "line_start": 4170,
+        "line_end": 4170,
+        "quote": "Newly authored observation identity under DL-045 explicitly completes RAP-054's unfinished four-member recommendation for this lifecycle-changing family only. The four-member tuple [event_ty",
+        "file_sha256": "27d5680bbb7e65b143de99d8f12198cffadc4cb6cd207ccf58e749406862f5be"
+       }
       },
       {
        "path": "Plans/Contracts_V0.md",
        "unit": "CV-533",
-       "line_start": 42183,
-       "line_end": 42183,
+       "line_start": 42184,
+       "line_end": 42184,
        "quote": "Envelope run_id/attempt_id/thread_id/node_id equal the corresponding payload values or required-present null for absent optional fields; occurred_at_utc equals payload.created_at_utc. actor_",
        "quote_check": "exact",
-       "quote_scope": "unit CV-533, Plans/Contracts_V0.md:42174-42210",
-       "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a"
+       "quote_scope": "unit CV-533, Plans/Contracts_V0.md:42175-42211",
+       "file_sha256": "4ae2225d8ed19b6df971b6c32797aae6882d175264ff2c2e9a2045650d735e67",
+       "source_citation": {
+        "path": "Plans/Contracts_V0.md",
+        "unit": "CV-533",
+        "line_start": 42183,
+        "line_end": 42183,
+        "quote": "Envelope run_id/attempt_id/thread_id/node_id equal the corresponding payload values or required-present null for absent optional fields; occurred_at_utc equals payload.created_at_utc. actor_",
+        "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a"
+       }
       },
       {
        "path": "Plans/Runtime_Artifacts_Panel.md",
@@ -158,7 +224,15 @@
        "quote": "RAP-113 additionally binds each original source-backed restore observation's producer_sequence_id",
        "quote_check": "exact",
        "quote_scope": "unit RAP-054, Plans/Runtime_Artifacts_Panel.md:2511-2601",
-       "file_sha256": "27d5680bbb7e65b143de99d8f12198cffadc4cb6cd207ccf58e749406862f5be"
+       "file_sha256": "27d5680bbb7e65b143de99d8f12198cffadc4cb6cd207ccf58e749406862f5be",
+       "source_citation": {
+        "path": "Plans/Runtime_Artifacts_Panel.md",
+        "unit": "RAP-054",
+        "line_start": 2523,
+        "line_end": 2523,
+        "quote": "RAP-113 additionally binds each original source-backed restore observation's producer_sequence_id",
+        "file_sha256": "27d5680bbb7e65b143de99d8f12198cffadc4cb6cd207ccf58e749406862f5be"
+       }
       }
      ],
      "carried_from": {
@@ -181,17 +255,33 @@
        "quote": "Lost acknowledgements return the original EventRecord/receipt through actual first-receipt resolution; replay cannot manufacture a new event_id, body, receipt or external effect.",
        "quote_check": "exact",
        "quote_scope": "unit RAP-113, Plans/Runtime_Artifacts_Panel.md:4160-4202",
-       "file_sha256": "27d5680bbb7e65b143de99d8f12198cffadc4cb6cd207ccf58e749406862f5be"
+       "file_sha256": "27d5680bbb7e65b143de99d8f12198cffadc4cb6cd207ccf58e749406862f5be",
+       "source_citation": {
+        "path": "Plans/Runtime_Artifacts_Panel.md",
+        "unit": "RAP-113",
+        "line_start": 4174,
+        "line_end": 4174,
+        "quote": "Lost acknowledgements return the original EventRecord/receipt through actual first-receipt resolution; replay cannot manufacture a new event_id, body, receipt or external effect.",
+        "file_sha256": "27d5680bbb7e65b143de99d8f12198cffadc4cb6cd207ccf58e749406862f5be"
+       }
       },
       {
        "path": "Plans/Contracts_V0.md",
        "unit": "CV-533",
-       "line_start": 42183,
-       "line_end": 42183,
+       "line_start": 42184,
+       "line_end": 42184,
        "quote": "Retries freeze the original payload route/ref/bytes as producer-semantic inputs; no repacking or re-encoding may silently change the original digest or first receipt. Envelope run_id/attempt",
        "quote_check": "exact",
-       "quote_scope": "unit CV-533, Plans/Contracts_V0.md:42174-42210",
-       "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a"
+       "quote_scope": "unit CV-533, Plans/Contracts_V0.md:42175-42211",
+       "file_sha256": "4ae2225d8ed19b6df971b6c32797aae6882d175264ff2c2e9a2045650d735e67",
+       "source_citation": {
+        "path": "Plans/Contracts_V0.md",
+        "unit": "CV-533",
+        "line_start": 42183,
+        "line_end": 42183,
+        "quote": "Retries freeze the original payload route/ref/bytes as producer-semantic inputs; no repacking or re-encoding may silently change the original digest or first receipt. Envelope run_id/attempt",
+        "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a"
+       }
       }
      ],
      "carried_from": {
@@ -209,12 +299,20 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-533",
-       "line_start": 54413,
-       "line_end": 54413,
+       "line_start": 53906,
+       "line_end": 53906,
        "quote": "The reused event_record_index rows retain RP-EVENT-INDEX-SOURCE, source-coupled to the retained EventRecord, with complete target-generation rebuild/remapping at compaction. Only event_recor",
        "quote_check": "exact",
-       "quote_scope": "unit SP-533, Plans/storage-plan.md:54402-54440",
-       "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+       "quote_scope": "unit SP-533, Plans/storage-plan.md:53895-53933",
+       "file_sha256": "73ee6d097e08d31fd93301d05d2cd2632dd46e5a22ba3ea405ffadda4a0a9db2",
+       "source_citation": {
+        "path": "Plans/storage-plan.md",
+        "unit": "SP-533",
+        "line_start": 54413,
+        "line_end": 54413,
+        "quote": "The reused event_record_index rows retain RP-EVENT-INDEX-SOURCE, source-coupled to the retained EventRecord, with complete target-generation rebuild/remapping at compaction. Only event_recor",
+        "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+       }
       },
       {
        "path": "Plans/Runtime_Artifacts_Panel.md",
@@ -224,7 +322,15 @@
        "quote": "Retain this event, including embedded summary/text and original provenance, under RP-AUTHORITY-INDEFINITE@1.0.0 (DL-075 and Case L-3). The payload retention_class describes the artifact/body",
        "quote_check": "exact",
        "quote_scope": "unit RAP-113, Plans/Runtime_Artifacts_Panel.md:4160-4202",
-       "file_sha256": "27d5680bbb7e65b143de99d8f12198cffadc4cb6cd207ccf58e749406862f5be"
+       "file_sha256": "27d5680bbb7e65b143de99d8f12198cffadc4cb6cd207ccf58e749406862f5be",
+       "source_citation": {
+        "path": "Plans/Runtime_Artifacts_Panel.md",
+        "unit": "RAP-113",
+        "line_start": 4176,
+        "line_end": 4176,
+        "quote": "Retain this event, including embedded summary/text and original provenance, under RP-AUTHORITY-INDEFINITE@1.0.0 (DL-075 and Case L-3). The payload retention_class describes the artifact/body",
+        "file_sha256": "27d5680bbb7e65b143de99d8f12198cffadc4cb6cd207ccf58e749406862f5be"
+       }
       }
      ],
      "carried_from": {
@@ -247,7 +353,15 @@
        "quote": "On each read recheck current authorization, source deletion/revocation and holds; inaccessible bodies remain unavailable and are never reconstructed from the retained event. No new deletion ",
        "quote_check": "exact",
        "quote_scope": "unit RAP-113, Plans/Runtime_Artifacts_Panel.md:4160-4202",
-       "file_sha256": "27d5680bbb7e65b143de99d8f12198cffadc4cb6cd207ccf58e749406862f5be"
+       "file_sha256": "27d5680bbb7e65b143de99d8f12198cffadc4cb6cd207ccf58e749406862f5be",
+       "source_citation": {
+        "path": "Plans/Runtime_Artifacts_Panel.md",
+        "unit": "RAP-113",
+        "line_start": 4176,
+        "line_end": 4176,
+        "quote": "On each read recheck current authorization, source deletion/revocation and holds; inaccessible bodies remain unavailable and are never reconstructed from the retained event. No new deletion ",
+        "file_sha256": "27d5680bbb7e65b143de99d8f12198cffadc4cb6cd207ccf58e749406862f5be"
+       }
       },
       {
        "path": "Plans/Runtime_Artifacts_Panel.md",
@@ -257,17 +371,33 @@
        "quote": "Redact before sealing; refs and summaries must not carry secrets, private reasoning, protected auth-session captures or raw hidden content.",
        "quote_check": "exact",
        "quote_scope": "unit RAP-113, Plans/Runtime_Artifacts_Panel.md:4160-4202",
-       "file_sha256": "27d5680bbb7e65b143de99d8f12198cffadc4cb6cd207ccf58e749406862f5be"
+       "file_sha256": "27d5680bbb7e65b143de99d8f12198cffadc4cb6cd207ccf58e749406862f5be",
+       "source_citation": {
+        "path": "Plans/Runtime_Artifacts_Panel.md",
+        "unit": "RAP-113",
+        "line_start": 4176,
+        "line_end": 4176,
+        "quote": "Redact before sealing; refs and summaries must not carry secrets, private reasoning, protected auth-session captures or raw hidden content.",
+        "file_sha256": "27d5680bbb7e65b143de99d8f12198cffadc4cb6cd207ccf58e749406862f5be"
+       }
       },
       {
        "path": "Plans/Contracts_V0.md",
        "unit": "CV-533",
-       "line_start": 42183,
-       "line_end": 42183,
+       "line_start": 42184,
+       "line_end": 42184,
        "quote": "Pack bytes and index are durable before acknowledgement through SP-337's pack-first sync or same-group segment staging/seal protocol. Retained EventRecord references keep the full logical me",
        "quote_check": "exact",
-       "quote_scope": "unit CV-533, Plans/Contracts_V0.md:42174-42210",
-       "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a"
+       "quote_scope": "unit CV-533, Plans/Contracts_V0.md:42175-42211",
+       "file_sha256": "4ae2225d8ed19b6df971b6c32797aae6882d175264ff2c2e9a2045650d735e67",
+       "source_citation": {
+        "path": "Plans/Contracts_V0.md",
+        "unit": "CV-533",
+        "line_start": 42183,
+        "line_end": 42183,
+        "quote": "Pack bytes and index are durable before acknowledgement through SP-337's pack-first sync or same-group segment staging/seal protocol. Retained EventRecord references keep the full logical me",
+        "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a"
+       }
       }
      ],
      "carried_from": {
@@ -290,7 +420,15 @@
        "quote": "This exact family implements only the existing Option 2 transition: A restore-point record becomes durable or changes its recorded availability/lifecycle state under the existing field-deep ",
        "quote_check": "exact",
        "quote_scope": "unit RAP-113, Plans/Runtime_Artifacts_Panel.md:4160-4202",
-       "file_sha256": "27d5680bbb7e65b143de99d8f12198cffadc4cb6cd207ccf58e749406862f5be"
+       "file_sha256": "27d5680bbb7e65b143de99d8f12198cffadc4cb6cd207ccf58e749406862f5be",
+       "source_citation": {
+        "path": "Plans/Runtime_Artifacts_Panel.md",
+        "unit": "RAP-113",
+        "line_start": 4168,
+        "line_end": 4168,
+        "quote": "This exact family implements only the existing Option 2 transition: A restore-point record becomes durable or changes its recorded availability/lifecycle state under the existing field-deep ",
+        "file_sha256": "27d5680bbb7e65b143de99d8f12198cffadc4cb6cd207ccf58e749406862f5be"
+       }
       },
       {
        "path": "Plans/Runtime_Artifacts_Panel.md",
@@ -300,7 +438,15 @@
        "quote": "No terminal artifact publication precedes authentic first-receipt custody and the final source/permission guard. No durable pending-request family is invented. After crash, retry only from t",
        "quote_check": "exact",
        "quote_scope": "unit RAP-113, Plans/Runtime_Artifacts_Panel.md:4160-4202",
-       "file_sha256": "27d5680bbb7e65b143de99d8f12198cffadc4cb6cd207ccf58e749406862f5be"
+       "file_sha256": "27d5680bbb7e65b143de99d8f12198cffadc4cb6cd207ccf58e749406862f5be",
+       "source_citation": {
+        "path": "Plans/Runtime_Artifacts_Panel.md",
+        "unit": "RAP-113",
+        "line_start": 4174,
+        "line_end": 4174,
+        "quote": "No terminal artifact publication precedes authentic first-receipt custody and the final source/permission guard. No durable pending-request family is invented. After crash, retry only from t",
+        "file_sha256": "27d5680bbb7e65b143de99d8f12198cffadc4cb6cd207ccf58e749406862f5be"
+       }
       }
      ],
      "carried_from": {
@@ -318,22 +464,38 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-533",
-       "line_start": 54411,
-       "line_end": 54411,
+       "line_start": 53904,
+       "line_end": 53904,
        "quote": "The exact physical checkpoint is event_record_index_checkpoint.v1:{storage_instance_id} in the checkpoints table; value pm.storage_value.event_record_index_checkpoint.v1@1.0.0 at Plans/event",
        "quote_check": "exact",
-       "quote_scope": "unit SP-533, Plans/storage-plan.md:54402-54440",
-       "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+       "quote_scope": "unit SP-533, Plans/storage-plan.md:53895-53933",
+       "file_sha256": "73ee6d097e08d31fd93301d05d2cd2632dd46e5a22ba3ea405ffadda4a0a9db2",
+       "source_citation": {
+        "path": "Plans/storage-plan.md",
+        "unit": "SP-533",
+        "line_start": 54411,
+        "line_end": 54411,
+        "quote": "The exact physical checkpoint is event_record_index_checkpoint.v1:{storage_instance_id} in the checkpoints table; value pm.storage_value.event_record_index_checkpoint.v1@1.0.0 at Plans/event",
+        "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+       }
       },
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-533",
-       "line_start": 54412,
-       "line_end": 54412,
+       "line_start": 53905,
+       "line_end": 53905,
        "quote": "The adopted full-index projector advances rows and frontier atomically in one redb transaction with prior-generation/frontier CAS, as SP-278 requires. The live token has ten fields; any dura",
        "quote_check": "exact",
-       "quote_scope": "unit SP-533, Plans/storage-plan.md:54402-54440",
-       "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+       "quote_scope": "unit SP-533, Plans/storage-plan.md:53895-53933",
+       "file_sha256": "73ee6d097e08d31fd93301d05d2cd2632dd46e5a22ba3ea405ffadda4a0a9db2",
+       "source_citation": {
+        "path": "Plans/storage-plan.md",
+        "unit": "SP-533",
+        "line_start": 54412,
+        "line_end": 54412,
+        "quote": "The adopted full-index projector advances rows and frontier atomically in one redb transaction with prior-generation/frontier CAS, as SP-278 requires. The live token has ten fields; any dura",
+        "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+       }
       }
      ],
      "carried_from": {
@@ -356,7 +518,15 @@
        "quote": "Compatibility is exact-version only: unsupported schema IDs/versions fail closed with unsupported_schema_version. Existing source-lineage values may be inspected only through their explicitl",
        "quote_check": "exact",
        "quote_scope": "unit RAP-113, Plans/Runtime_Artifacts_Panel.md:4160-4202",
-       "file_sha256": "27d5680bbb7e65b143de99d8f12198cffadc4cb6cd207ccf58e749406862f5be"
+       "file_sha256": "27d5680bbb7e65b143de99d8f12198cffadc4cb6cd207ccf58e749406862f5be",
+       "source_citation": {
+        "path": "Plans/Runtime_Artifacts_Panel.md",
+        "unit": "RAP-113",
+        "line_start": 4177,
+        "line_end": 4177,
+        "quote": "Compatibility is exact-version only: unsupported schema IDs/versions fail closed with unsupported_schema_version. Existing source-lineage values may be inspected only through their explicitl",
+        "file_sha256": "27d5680bbb7e65b143de99d8f12198cffadc4cb6cd207ccf58e749406862f5be"
+       }
       }
      ],
      "carried_from": {
@@ -379,7 +549,15 @@
        "unit": "draft row",
        "quote_check": "exact",
        "quote_scope": "document",
-       "file_sha256": "238e68373869824485d53d84b557feb5e1eadb1ccd880f37172814521fe4cb3a"
+       "file_sha256": "238e68373869824485d53d84b557feb5e1eadb1ccd880f37172814521fe4cb3a",
+       "source_citation": {
+        "line_end": 280,
+        "line_start": 280,
+        "path": "Plans/runtime_artifact_event_drafts.json",
+        "quote": "\"event_type\": \"runtime_artifact.restore_point\"",
+        "unit": "draft row",
+        "file_sha256": "238e68373869824485d53d84b557feb5e1eadb1ccd880f37172814521fe4cb3a"
+       }
       },
       {
        "line_end": 4160,
@@ -389,27 +567,51 @@
        "unit": "RAP-113",
        "quote_check": "exact",
        "quote_scope": "unit RAP-113, Plans/Runtime_Artifacts_Panel.md:4160-4202",
-       "file_sha256": "27d5680bbb7e65b143de99d8f12198cffadc4cb6cd207ccf58e749406862f5be"
+       "file_sha256": "27d5680bbb7e65b143de99d8f12198cffadc4cb6cd207ccf58e749406862f5be",
+       "source_citation": {
+        "line_end": 4160,
+        "line_start": 4160,
+        "path": "Plans/Runtime_Artifacts_Panel.md",
+        "quote": "### RAP-113 — runtime_artifact.restore_point",
+        "unit": "RAP-113",
+        "file_sha256": "27d5680bbb7e65b143de99d8f12198cffadc4cb6cd207ccf58e749406862f5be"
+       }
       },
       {
-       "line_end": 54402,
-       "line_start": 54402,
+       "line_end": 53895,
+       "line_start": 53895,
        "path": "Plans/storage-plan.md",
        "quote": "### SP-533 — runtime_artifact.restore_point",
        "unit": "SP-533",
        "quote_check": "exact",
-       "quote_scope": "unit SP-533, Plans/storage-plan.md:54402-54440",
-       "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+       "quote_scope": "unit SP-533, Plans/storage-plan.md:53895-53933",
+       "file_sha256": "73ee6d097e08d31fd93301d05d2cd2632dd46e5a22ba3ea405ffadda4a0a9db2",
+       "source_citation": {
+        "line_end": 54402,
+        "line_start": 54402,
+        "path": "Plans/storage-plan.md",
+        "quote": "### SP-533 — runtime_artifact.restore_point",
+        "unit": "SP-533",
+        "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+       }
       },
       {
-       "line_end": 42174,
-       "line_start": 42174,
+       "line_end": 42175,
+       "line_start": 42175,
        "path": "Plans/Contracts_V0.md",
        "quote": "### CV-533 — runtime_artifact.restore_point",
        "unit": "CV-533",
        "quote_check": "exact",
-       "quote_scope": "unit CV-533, Plans/Contracts_V0.md:42174-42210",
-       "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a"
+       "quote_scope": "unit CV-533, Plans/Contracts_V0.md:42175-42211",
+       "file_sha256": "4ae2225d8ed19b6df971b6c32797aae6882d175264ff2c2e9a2045650d735e67",
+       "source_citation": {
+        "line_end": 42174,
+        "line_start": 42174,
+        "path": "Plans/Contracts_V0.md",
+        "quote": "### CV-533 — runtime_artifact.restore_point",
+        "unit": "CV-533",
+        "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a"
+       }
       },
       {
        "line_end": 3,
@@ -419,7 +621,15 @@
        "unit": "payload schema",
        "quote_check": "exact",
        "quote_scope": "document",
-       "file_sha256": "64ac7aa6519b2e8c9979826c54ed82335504e668777121a847601f3329086639"
+       "file_sha256": "64ac7aa6519b2e8c9979826c54ed82335504e668777121a847601f3329086639",
+       "source_citation": {
+        "line_end": 3,
+        "line_start": 3,
+        "path": "Plans/runtime_artifact_restore_point.schema.json",
+        "quote": "\"$id\": \"pm.runtime_artifact.restore_point.schema.v1\"",
+        "unit": "payload schema",
+        "file_sha256": "64ac7aa6519b2e8c9979826c54ed82335504e668777121a847601f3329086639"
+       }
       },
       {
        "line_end": 11266,
@@ -429,7 +639,15 @@
        "unit": "ATS-260",
        "quote_check": "exact",
        "quote_scope": "unit ATS-260, Plans/Automated_Testing_System.md:11258-11300",
-       "file_sha256": "e1c8a84c145a3aaaa0738971f76db5fa0bf94f59c0149e76f4131e8579a6971d"
+       "file_sha256": "e1c8a84c145a3aaaa0738971f76db5fa0bf94f59c0149e76f4131e8579a6971d",
+       "source_citation": {
+        "line_end": 11266,
+        "line_start": 11266,
+        "path": "Plans/Automated_Testing_System.md",
+        "quote": "scripts/pm-runtime-artifact-event-drafts.py checks its own closed schema",
+        "unit": "ATS-260",
+        "file_sha256": "e1c8a84c145a3aaaa0738971f76db5fa0bf94f59c0149e76f4131e8579a6971d"
+       }
       },
       {
        "line_end": 11267,
@@ -439,7 +657,15 @@
        "unit": "ATS-260",
        "quote_check": "exact",
        "quote_scope": "unit ATS-260, Plans/Automated_Testing_System.md:11258-11300",
-       "file_sha256": "e1c8a84c145a3aaaa0738971f76db5fa0bf94f59c0149e76f4131e8579a6971d"
+       "file_sha256": "e1c8a84c145a3aaaa0738971f76db5fa0bf94f59c0149e76f4131e8579a6971d",
+       "source_citation": {
+        "line_end": 11267,
+        "line_start": 11267,
+        "path": "Plans/Automated_Testing_System.md",
+        "quote": "every current schema integer slot of EventRecord, receipt, custody, result, checkpoint and payload values accepts only what current_integer accepts",
+        "unit": "ATS-260",
+        "file_sha256": "e1c8a84c145a3aaaa0738971f76db5fa0bf94f59c0149e76f4131e8579a6971d"
+       }
       },
       {
        "line_end": 464,
@@ -449,7 +675,15 @@
        "unit": "TableValidator (schema.case rows S07/S08/S02/S04/N01)",
        "quote_check": "exact",
        "quote_scope": "document",
-       "file_sha256": "fb6b914b207bf6e0999eb6f117dd8f7f472a0df3a2a4c4ab0c360970803f2f61"
+       "file_sha256": "2947f53f611f5d1b36697f18c44ebed8eae9fb2f954319ce8abb5fc9afbac1eb",
+       "source_citation": {
+        "line_end": 464,
+        "line_start": 464,
+        "path": "scripts/pm-runtime-artifact-event-drafts.py",
+        "quote": "class TableValidator:",
+        "unit": "TableValidator (schema.case rows S07/S08/S02/S04/N01)",
+        "file_sha256": "fb6b914b207bf6e0999eb6f117dd8f7f472a0df3a2a4c4ab0c360970803f2f61"
+       }
       },
       {
        "line_end": 953,
@@ -459,7 +693,15 @@
        "unit": "resolve_history (SP-1101 sealed recipe)",
        "quote_check": "exact",
        "quote_scope": "document",
-       "file_sha256": "fb6b914b207bf6e0999eb6f117dd8f7f472a0df3a2a4c4ab0c360970803f2f61"
+       "file_sha256": "2947f53f611f5d1b36697f18c44ebed8eae9fb2f954319ce8abb5fc9afbac1eb",
+       "source_citation": {
+        "line_end": 953,
+        "line_start": 953,
+        "path": "scripts/pm-runtime-artifact-event-drafts.py",
+        "quote": "custody, reason = dispatch_original(row, original, source, packs, (HISTORICAL_V1,), recipe_override)",
+        "unit": "resolve_history (SP-1101 sealed recipe)",
+        "file_sha256": "fb6b914b207bf6e0999eb6f117dd8f7f472a0df3a2a4c4ab0c360970803f2f61"
+       }
       },
       {
        "line_end": 935,
@@ -469,7 +711,15 @@
        "unit": "dispatch_original",
        "quote_check": "exact",
        "quote_scope": "document",
-       "file_sha256": "fb6b914b207bf6e0999eb6f117dd8f7f472a0df3a2a4c4ab0c360970803f2f61"
+       "file_sha256": "2947f53f611f5d1b36697f18c44ebed8eae9fb2f954319ce8abb5fc9afbac1eb",
+       "source_citation": {
+        "line_end": 935,
+        "line_start": 935,
+        "path": "scripts/pm-runtime-artifact-event-drafts.py",
+        "quote": "dispatcher = RetainedDispatcher(SourceOwner(row, source), recipes)",
+        "unit": "dispatch_original",
+        "file_sha256": "fb6b914b207bf6e0999eb6f117dd8f7f472a0df3a2a4c4ab0c360970803f2f61"
+       }
       },
       {
        "line_end": 1076,
@@ -479,7 +729,15 @@
        "unit": "checkpoint_matches schema occurrences",
        "quote_check": "exact",
        "quote_scope": "document",
-       "file_sha256": "fb6b914b207bf6e0999eb6f117dd8f7f472a0df3a2a4c4ab0c360970803f2f61"
+       "file_sha256": "2947f53f611f5d1b36697f18c44ebed8eae9fb2f954319ce8abb5fc9afbac1eb",
+       "source_citation": {
+        "line_end": 1076,
+        "line_start": 1076,
+        "path": "scripts/pm-runtime-artifact-event-drafts.py",
+        "quote": "if not validator(schema, 'checkpoint').is_valid(checkpoint) or not validator(schema, 'read_token').is_valid(token):",
+        "unit": "checkpoint_matches schema occurrences",
+        "file_sha256": "fb6b914b207bf6e0999eb6f117dd8f7f472a0df3a2a4c4ab0c360970803f2f61"
+       }
       },
       {
        "line_end": 21,
@@ -489,7 +747,15 @@
        "unit": "H05b_original_binding",
        "quote_check": "exact",
        "quote_scope": "document",
-       "file_sha256": "bf62372b175c07db39c37273fc07d548e0f1dd24cbb5eb252823fd3e26b52b69"
+       "file_sha256": "bf62372b175c07db39c37273fc07d548e0f1dd24cbb5eb252823fd3e26b52b69",
+       "source_citation": {
+        "line_end": 21,
+        "line_start": 21,
+        "path": "scripts/pm_runtime_artifact_table_history.py",
+        "quote": "return 'unavailable' if value['dispatch_refusal'] == 'original_binding' else None",
+        "unit": "H05b_original_binding",
+        "file_sha256": "bf62372b175c07db39c37273fc07d548e0f1dd24cbb5eb252823fd3e26b52b69"
+       }
       },
       {
        "line_end": 331,
@@ -499,7 +765,15 @@
        "unit": "clause isolation rule",
        "quote_check": "exact",
        "quote_scope": "document",
-       "file_sha256": "5dc2e77f1918caec6889dd9701e49a4e24f8163d875a8837802d752e02275b33"
+       "file_sha256": "5dc2e77f1918caec6889dd9701e49a4e24f8163d875a8837802d752e02275b33",
+       "source_citation": {
+        "line_end": 331,
+        "line_start": 331,
+        "path": "scripts/pm_runtime_artifact_c12.py",
+        "quote": "def structural_isolated(tv, instance, keyword, location, node, branches=()):",
+        "unit": "clause isolation rule",
+        "file_sha256": "5dc2e77f1918caec6889dd9701e49a4e24f8163d875a8837802d752e02275b33"
+       }
       },
       {
        "line_end": 418,
@@ -509,7 +783,15 @@
        "unit": "complete-boundary cut and restoration",
        "quote_check": "exact",
        "quote_scope": "document",
-       "file_sha256": "5dc2e77f1918caec6889dd9701e49a4e24f8163d875a8837802d752e02275b33"
+       "file_sha256": "5dc2e77f1918caec6889dd9701e49a4e24f8163d875a8837802d752e02275b33",
+       "source_citation": {
+        "line_end": 418,
+        "line_start": 418,
+        "path": "scripts/pm_runtime_artifact_c12.py",
+        "quote": "def cut_and_restore(route, phase, row, expected):",
+        "unit": "complete-boundary cut and restoration",
+        "file_sha256": "5dc2e77f1918caec6889dd9701e49a4e24f8163d875a8837802d752e02275b33"
+       }
       },
       {
        "line_end": 432,
@@ -519,7 +801,15 @@
        "unit": "sealed-store snapshot",
        "quote_check": "exact",
        "quote_scope": "document",
-       "file_sha256": "5dc2e77f1918caec6889dd9701e49a4e24f8163d875a8837802d752e02275b33"
+       "file_sha256": "5dc2e77f1918caec6889dd9701e49a4e24f8163d875a8837802d752e02275b33",
+       "source_citation": {
+        "line_end": 432,
+        "line_start": 432,
+        "path": "scripts/pm_runtime_artifact_c12.py",
+        "quote": "def store_digest(store):",
+        "unit": "sealed-store snapshot",
+        "file_sha256": "5dc2e77f1918caec6889dd9701e49a4e24f8163d875a8837802d752e02275b33"
+       }
       },
       {
        "line_end": 176,
@@ -529,7 +819,15 @@
        "unit": "schema inventory and witnesses",
        "quote_check": "exact",
        "quote_scope": "document",
-       "file_sha256": "630b436409607e116bd18ee06eb8047f03637a5f9e5682127648347cd6661f1e"
+       "file_sha256": "630b436409607e116bd18ee06eb8047f03637a5f9e5682127648347cd6661f1e",
+       "source_citation": {
+        "line_end": 176,
+        "line_start": 176,
+        "path": "scripts/pm-runtime-artifact-c12-closure.py",
+        "quote": "def schema_part(ctx, references, out):",
+        "unit": "schema inventory and witnesses",
+        "file_sha256": "630b436409607e116bd18ee06eb8047f03637a5f9e5682127648347cd6661f1e"
+       }
       },
       {
        "line_end": 378,
@@ -539,7 +837,15 @@
        "unit": "complete-boundary pair ledger",
        "quote_check": "exact",
        "quote_scope": "document",
-       "file_sha256": "630b436409607e116bd18ee06eb8047f03637a5f9e5682127648347cd6661f1e"
+       "file_sha256": "630b436409607e116bd18ee06eb8047f03637a5f9e5682127648347cd6661f1e",
+       "source_citation": {
+        "line_end": 378,
+        "line_start": 378,
+        "path": "scripts/pm-runtime-artifact-c12-closure.py",
+        "quote": "def pairs_part(families, out):",
+        "unit": "complete-boundary pair ledger",
+        "file_sha256": "630b436409607e116bd18ee06eb8047f03637a5f9e5682127648347cd6661f1e"
+       }
       },
       {
        "line_end": 430,
@@ -549,7 +855,15 @@
        "unit": "retained reads and store snapshots",
        "quote_check": "exact",
        "quote_scope": "document",
-       "file_sha256": "630b436409607e116bd18ee06eb8047f03637a5f9e5682127648347cd6661f1e"
+       "file_sha256": "630b436409607e116bd18ee06eb8047f03637a5f9e5682127648347cd6661f1e",
+       "source_citation": {
+        "line_end": 430,
+        "line_start": 430,
+        "path": "scripts/pm-runtime-artifact-c12-closure.py",
+        "quote": "def retained_part(ctx, out):",
+        "unit": "retained reads and store snapshots",
+        "file_sha256": "630b436409607e116bd18ee06eb8047f03637a5f9e5682127648347cd6661f1e"
+       }
       },
       {
        "line_end": 564,
@@ -559,7 +873,15 @@
        "unit": "shared date-time battery at the complete boundary",
        "quote_check": "exact",
        "quote_scope": "document",
-       "file_sha256": "630b436409607e116bd18ee06eb8047f03637a5f9e5682127648347cd6661f1e"
+       "file_sha256": "630b436409607e116bd18ee06eb8047f03637a5f9e5682127648347cd6661f1e",
+       "source_citation": {
+        "line_end": 564,
+        "line_start": 564,
+        "path": "scripts/pm-runtime-artifact-c12-closure.py",
+        "quote": "def datetime_part(ctx, out):",
+        "unit": "shared date-time battery at the complete boundary",
+        "file_sha256": "630b436409607e116bd18ee06eb8047f03637a5f9e5682127648347cd6661f1e"
+       }
       }
      ],
      "carried_from": {
@@ -571,5 +893,19 @@
     }
    }
   }
- ]
+ ],
+ "source_registry": {
+  "path": "Plans/event_family_registry.json",
+  "revision": "2026-11-16.252",
+  "sha256": "554c24077f03b324d7266db8ace54c8eb53d5cdbcf29f0625fa5e54e9efdc992",
+  "family_count": 471,
+  "row_pointer": "#/families/470"
+ },
+ "evidence_maintenance": {
+  "authority": "MERGE2-FIX1 findings 1/3/5",
+  "source_commit": "0c904de00426b0089ba5d56349fda8ea16cc9f88",
+  "source_assessment_sha256": "e2d54d83138ba2d5b8cae2107fb0dfd21523d92f297f88f9d2b1b95c1be79941",
+  "native_execution": "NOT_RUN",
+  "verdicts_changed": false
+ }
 }

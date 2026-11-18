@@ -4,7 +4,7 @@
  "family_id": "event-family-subagent-retried",
  "implementation_receipt_sha256": "dceb7f21436cbe126c23822e62caa1b6dedcb45fefae3005c1804576ca34d827",
  "decision_ref": "Plans/Decision_Log.md#DL-2418",
- "decision_section_sha256": "e278baf78905c2117158b4930e6ae97272ccb2a7bcc96b086f8938f6357fbac4",
+ "decision_section_sha256": "cc08f503b85f92112ce45ef42d36acf6fae36f1a6b8afe31398abe60a6864377",
  "registry_before": {
   "revision": "2026-11-16.281",
   "sha256": "54c51e5022030c6e90d7ca512098fe9da85c54f7fd4250a13ebaad23d266187a",
@@ -18,7 +18,7 @@
  "registry_row_sha256": "31f0012f07287535d8f618fe869c3547f67d3702b9e0e1032bdf71fa70a55b1d",
  "depth_assessment": {
   "path": "reports/event-authority-20261116/admission-merge-2/depth/subagent.retried.json",
-  "sha256": "3a3440df3d2c3520ee1dee51de512e2dd3289395ea88f5ab40f8c222684d3aa3"
+  "sha256": "2c04a48ff743f8653970a9943691b0c23c5ea26d8ca238f4882ce4a09ead4830"
  },
  "admission_landing": {
   "branch": "plans/ea-merge2-apply-20261116",
@@ -35,5 +35,13 @@
   "The decision entry is DL-2418, which DL-096 makes Jared's decision entry for this family.",
   "registry_before is the registry at this commit's parent. If main's registry moves before the landing, the writer runs again on the new base and this record, its entry and the pins are taken again.",
   "Written under DL-077. The seal check recomputes completeness from the pinned assessment; the two fields ending in _at_recording are informational only."
- ]
+ ],
+ "evidence_maintenance": {
+  "authority": "MERGE2-FIX1",
+  "source_commit": "0c904de00426b0089ba5d56349fda8ea16cc9f88",
+  "source_record_sha256": "50d07313d85703a6dbf8de5472d9698786b6e21691271779a8c5606767214c4d",
+  "source_assessment_sha256": "3a3440df3d2c3520ee1dee51de512e2dd3289395ea88f5ab40f8c222684d3aa3",
+  "source_decision_section_sha256": "e278baf78905c2117158b4930e6ae97272ccb2a7bcc96b086f8938f6357fbac4",
+  "original_registry_checkpoints_preserved": true
+ }
 }

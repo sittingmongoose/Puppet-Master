@@ -4,7 +4,7 @@
  "family_id": "event-family-browser-controller-lease-renewed",
  "implementation_receipt_sha256": "dceb7f21436cbe126c23822e62caa1b6dedcb45fefae3005c1804576ca34d827",
  "decision_ref": "Plans/Decision_Log.md#DL-2160",
- "decision_section_sha256": "09d29b839880686cccbcc72510ed9c39911fe37241abd598213560380bd26f88",
+ "decision_section_sha256": "6e008d46f77bd712cf305c5d562f779165a424f6bd63df2070327749da5909c3",
  "registry_before": {
   "revision": "2026-11-16.23",
   "sha256": "cc1569dd99876bd7b0d170d1328efdbe2aee955393aa0cb2626193427f0564c7",
@@ -18,7 +18,7 @@
  "registry_row_sha256": "f1c90d0d4aaf16a6804fa3b39e8c1f677c02fedaba40269b040611e30b92c0f0",
  "depth_assessment": {
   "path": "reports/event-authority-20261116/admission-merge-2/depth/browser.controller_lease.renewed.json",
-  "sha256": "7d46b2127b236fe3f532964b0dd0659d11204e712ec45a868a579bb5d831638b"
+  "sha256": "0ee0bb39d42e887646d494dddfbbcd74a46366eae57e54aa7f41dc3af1405c08"
  },
  "admission_landing": {
   "branch": "plans/ea-merge2-apply-20261116",
@@ -35,5 +35,13 @@
   "The decision entry is DL-2160, which DL-096 makes Jared's decision entry for this family.",
   "registry_before is the registry at this commit's parent. If main's registry moves before the landing, the writer runs again on the new base and this record, its entry and the pins are taken again.",
   "Written under DL-077. The seal check recomputes completeness from the pinned assessment; the two fields ending in _at_recording are informational only."
- ]
+ ],
+ "evidence_maintenance": {
+  "authority": "MERGE2-FIX1",
+  "source_commit": "0c904de00426b0089ba5d56349fda8ea16cc9f88",
+  "source_record_sha256": "f7d538959d364634ed48d014635f0b12a7153d0f0db126065e3da687faa29cf4",
+  "source_assessment_sha256": "7d46b2127b236fe3f532964b0dd0659d11204e712ec45a868a579bb5d831638b",
+  "source_decision_section_sha256": "09d29b839880686cccbcc72510ed9c39911fe37241abd598213560380bd26f88",
+  "original_registry_checkpoints_preserved": true
+ }
 }

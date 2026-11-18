@@ -5,9 +5,9 @@
  "merge": "admission-merge-2",
  "registry": {
   "path": "Plans/event_family_registry.json",
-  "revision": "2026-11-16.223",
-  "sha256": "0019fe44ad6d0dc1531552ee64bcbe76da4014f6700fc27424be2e8ebbe400e2",
-  "family_count": 442,
+  "revision": "2026-11-18.2",
+  "sha256": "ec21cf1a5b42b3e68a5564a847b4798dff968612d11d438bc7075b89196f9602",
+  "family_count": 518,
   "row_pointer": "#/families/441"
  },
  "base_commit": "45b4ccf25270c486dbc682805cd455ce4ca25fb0",
@@ -22,17 +22,27 @@
     "membership_version": {
      "status": "PASS",
      "representation": "exact_registry_membership",
-     "finding": "Registered at registry revision 2026-11-16.223 as #/families/441 (canonical row SHA-256 3ecba89e708cb4be6778516c481026d98bb9bf7a2895442abd8e4e44e8477dac); before this commit the family was absent.",
+     "finding": "Currently registered at 2026-11-18.2 as #/families/441 (canonical row SHA-256 3ecba89e708cb4be6778516c481026d98bb9bf7a2895442abd8e4e44e8477dac). Original one-family admission checkpoints remain in the family record and immutable Git source.",
      "evidence": [
       {
        "path": "Plans/event_family_registry.json",
        "json_pointer": "#/families/441",
-       "line_start": 28663,
-       "line_end": 28704,
+       "line_start": 28713,
+       "line_end": 28754,
        "quote": "\"event_type\": \"project.added\"",
-       "quote_line": 28666,
-       "file_sha256": "0019fe44ad6d0dc1531552ee64bcbe76da4014f6700fc27424be2e8ebbe400e2",
-       "quote_check": "exact"
+       "quote_line": 28716,
+       "file_sha256": "ec21cf1a5b42b3e68a5564a847b4798dff968612d11d438bc7075b89196f9602",
+       "quote_check": "exact",
+       "source_citation": {
+        "path": "Plans/event_family_registry.json",
+        "json_pointer": "#/families/441",
+        "line_start": 28663,
+        "line_end": 28704,
+        "quote": "\"event_type\": \"project.added\"",
+        "quote_line": 28666,
+        "file_sha256": "0019fe44ad6d0dc1531552ee64bcbe76da4014f6700fc27424be2e8ebbe400e2",
+        "quote_check": "exact"
+       }
       }
      ]
     },
@@ -49,7 +59,15 @@
        "quote": "project.added 1.0.0 — newly authored owner contract under DL-045.",
        "file_sha256": "31daf70f89dc5bc46552158f53b2f59c8b00884f7b070b2c7f90441ad0faa6bb",
        "quote_check": "exact",
-       "quote_scope": "unit PJCT-072, Plans/Project_System.md:990-1042"
+       "quote_scope": "unit PJCT-072, Plans/Project_System.md:990-1042",
+       "source_citation": {
+        "path": "Plans/Project_System.md",
+        "unit": "PJCT-072",
+        "line_start": 990,
+        "line_end": 990,
+        "quote": "project.added 1.0.0 — newly authored owner contract under DL-045.",
+        "file_sha256": "31daf70f89dc5bc46552158f53b2f59c8b00884f7b070b2c7f90441ad0faa6bb"
+       }
       }
      ],
      "carried_from": {
@@ -72,7 +90,15 @@
        "quote": "Adopt SP-286 first-AppendReceipt custody and CV-339 full-value v2 successor by name, including SP-336/SP-347 current group-commit rules. Validate admission before append; absent membership, unresolved",
        "file_sha256": "31daf70f89dc5bc46552158f53b2f59c8b00884f7b070b2c7f90441ad0faa6bb",
        "quote_check": "exact",
-       "quote_scope": "unit PJCT-072, Plans/Project_System.md:990-1042"
+       "quote_scope": "unit PJCT-072, Plans/Project_System.md:990-1042",
+       "source_citation": {
+        "path": "Plans/Project_System.md",
+        "unit": "PJCT-072",
+        "line_start": 1002,
+        "line_end": 1002,
+        "quote": "Adopt SP-286 first-AppendReceipt custody and CV-339 full-value v2 successor by name, including SP-336/SP-347 current group-commit rules. Validate admission before append; absent membership, unresolved",
+        "file_sha256": "31daf70f89dc5bc46552158f53b2f59c8b00884f7b070b2c7f90441ad0faa6bb"
+       }
       }
      ],
      "carried_from": {
@@ -95,7 +121,15 @@
        "quote": "\"additionalProperties\": false,",
        "file_sha256": "be30ffdd2962c3224c601211fde570457d4cd78f1efa8b12eda02074da99ddc7",
        "quote_check": "exact",
-       "quote_scope": "document"
+       "quote_scope": "document",
+       "source_citation": {
+        "path": "Plans/event_payloads/project_added.schema.json",
+        "unit": "CV-625",
+        "line_start": 5,
+        "line_end": 5,
+        "quote": "\"additionalProperties\": false,",
+        "file_sha256": "be30ffdd2962c3224c601211fde570457d4cd78f1efa8b12eda02074da99ddc7"
+       }
       },
       {
        "path": "Plans/Project_System.md",
@@ -105,7 +139,15 @@
        "quote": "Exact envelope joins for project.added: actor_ref is the non-empty non-secret actor reference retained by the original completed Project existing-content registration from its accepted owner request, ",
        "file_sha256": "31daf70f89dc5bc46552158f53b2f59c8b00884f7b070b2c7f90441ad0faa6bb",
        "quote_check": "exact",
-       "quote_scope": "unit PJCT-072, Plans/Project_System.md:990-1042"
+       "quote_scope": "unit PJCT-072, Plans/Project_System.md:990-1042",
+       "source_citation": {
+        "path": "Plans/Project_System.md",
+        "unit": "PJCT-072",
+        "line_start": 1004,
+        "line_end": 1004,
+        "quote": "Exact envelope joins for project.added: actor_ref is the non-empty non-secret actor reference retained by the original completed Project existing-content registration from its accepted owner request, ",
+        "file_sha256": "31daf70f89dc5bc46552158f53b2f59c8b00884f7b070b2c7f90441ad0faa6bb"
+       }
       }
      ],
      "carried_from": {
@@ -128,7 +170,15 @@
        "quote": "Exact envelope joins for project.added: actor_ref is the non-empty non-secret actor reference retained by the original completed Project existing-content registration from its accepted owner request, ",
        "file_sha256": "31daf70f89dc5bc46552158f53b2f59c8b00884f7b070b2c7f90441ad0faa6bb",
        "quote_check": "exact",
-       "quote_scope": "unit PJCT-072, Plans/Project_System.md:990-1042"
+       "quote_scope": "unit PJCT-072, Plans/Project_System.md:990-1042",
+       "source_citation": {
+        "path": "Plans/Project_System.md",
+        "unit": "PJCT-072",
+        "line_start": 1004,
+        "line_end": 1004,
+        "quote": "Exact envelope joins for project.added: actor_ref is the non-empty non-secret actor reference retained by the original completed Project existing-content registration from its accepted owner request, ",
+        "file_sha256": "31daf70f89dc5bc46552158f53b2f59c8b00884f7b070b2c7f90441ad0faa6bb"
+       }
       },
       {
        "path": "Plans/Project_System.md",
@@ -138,7 +188,15 @@
        "quote": "Identity digest is SHA-256 of UTF-8 compact JSON array [\"project.added\", \"1.0.0\", storage_instance_id, payload.project_id, payload.operation_id], with ensure_ascii=false, no whitespace and array order",
        "file_sha256": "31daf70f89dc5bc46552158f53b2f59c8b00884f7b070b2c7f90441ad0faa6bb",
        "quote_check": "exact",
-       "quote_scope": "unit PJCT-072, Plans/Project_System.md:990-1042"
+       "quote_scope": "unit PJCT-072, Plans/Project_System.md:990-1042",
+       "source_citation": {
+        "path": "Plans/Project_System.md",
+        "unit": "PJCT-072",
+        "line_start": 1003,
+        "line_end": 1003,
+        "quote": "Identity digest is SHA-256 of UTF-8 compact JSON array [\"project.added\", \"1.0.0\", storage_instance_id, payload.project_id, payload.operation_id], with ensure_ascii=false, no whitespace and array order",
+        "file_sha256": "31daf70f89dc5bc46552158f53b2f59c8b00884f7b070b2c7f90441ad0faa6bb"
+       }
       }
      ],
      "carried_from": {
@@ -161,7 +219,15 @@
        "quote": "Identity digest is SHA-256 of UTF-8 compact JSON array [\"project.added\", \"1.0.0\", storage_instance_id, payload.project_id, payload.operation_id], with ensure_ascii=false, no whitespace and array order",
        "file_sha256": "31daf70f89dc5bc46552158f53b2f59c8b00884f7b070b2c7f90441ad0faa6bb",
        "quote_check": "exact",
-       "quote_scope": "unit PJCT-072, Plans/Project_System.md:990-1042"
+       "quote_scope": "unit PJCT-072, Plans/Project_System.md:990-1042",
+       "source_citation": {
+        "path": "Plans/Project_System.md",
+        "unit": "PJCT-072",
+        "line_start": 1003,
+        "line_end": 1003,
+        "quote": "Identity digest is SHA-256 of UTF-8 compact JSON array [\"project.added\", \"1.0.0\", storage_instance_id, payload.project_id, payload.operation_id], with ensure_ascii=false, no whitespace and array order",
+        "file_sha256": "31daf70f89dc5bc46552158f53b2f59c8b00884f7b070b2c7f90441ad0faa6bb"
+       }
       },
       {
        "path": "Plans/Project_System.md",
@@ -171,7 +237,15 @@
        "quote": "project.added append and current retry reject replay_policy=projector_replay_only as replay_only_not_appendable",
        "file_sha256": "31daf70f89dc5bc46552158f53b2f59c8b00884f7b070b2c7f90441ad0faa6bb",
        "quote_check": "exact",
-       "quote_scope": "unit PJCT-072, Plans/Project_System.md:990-1042"
+       "quote_scope": "unit PJCT-072, Plans/Project_System.md:990-1042",
+       "source_citation": {
+        "path": "Plans/Project_System.md",
+        "unit": "PJCT-072",
+        "line_start": 1012,
+        "line_end": 1012,
+        "quote": "project.added append and current retry reject replay_policy=projector_replay_only as replay_only_not_appendable",
+        "file_sha256": "31daf70f89dc5bc46552158f53b2f59c8b00884f7b070b2c7f90441ad0faa6bb"
+       }
       }
      ],
      "carried_from": {
@@ -189,12 +263,23 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-605",
-       "line_start": 53381,
-       "line_end": 53381,
-       "quote": "\\ binding for `project.added` (2026-11-14).\\n\\nEvent history `retention_policy_ref = RP-AUTHORITY-INDEFINITE@1.0.0`,\\",
+       "line_start": 53130,
+       "line_end": 53132,
+       "quote": "binding for `project.added` (2026-11-14).\n\n  Event history `retention_policy_ref = RP-AUTHORITY-INDEFINITE@1.0.0`,",
        "quote_check": "exact",
-       "quote_scope": "unit SP-605, Plans/storage-plan.md:53231-53417",
-       "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+       "quote_scope": "unit SP-605, Plans/storage-plan.md:53102-53164",
+       "file_sha256": "73ee6d097e08d31fd93301d05d2cd2632dd46e5a22ba3ea405ffadda4a0a9db2",
+       "source_citation": {
+        "path": "Plans/storage-plan.md",
+        "unit": "SP-605",
+        "line_start": 53381,
+        "line_end": 53381,
+        "quote": "\\ binding for `project.added` (2026-11-14).\\n\\nEvent history `retention_policy_ref = RP-AUTHORITY-INDEFINITE@1.0.0`,\\",
+        "quote_check": "exact",
+        "quote_scope": "unit SP-605, Plans/storage-plan.md:53231-53417",
+        "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+       },
+       "reanchor_authority": "reports/event-authority-20261116/admission-merge-2/int4-quotation-reanchors.json"
       }
      ],
      "carried_from": {
@@ -217,7 +302,15 @@
        "quote": "Profile rationale for project.added: stable config and original registration result remain behind authorized refs; redaction_profile=secret_refs_only is an existing EventRecord value and does not gran",
        "file_sha256": "31daf70f89dc5bc46552158f53b2f59c8b00884f7b070b2c7f90441ad0faa6bb",
        "quote_check": "exact",
-       "quote_scope": "unit PJCT-072, Plans/Project_System.md:990-1042"
+       "quote_scope": "unit PJCT-072, Plans/Project_System.md:990-1042",
+       "source_citation": {
+        "path": "Plans/Project_System.md",
+        "unit": "PJCT-072",
+        "line_start": 1006,
+        "line_end": 1006,
+        "quote": "Profile rationale for project.added: stable config and original registration result remain behind authorized refs; redaction_profile=secret_refs_only is an existing EventRecord value and does not gran",
+        "file_sha256": "31daf70f89dc5bc46552158f53b2f59c8b00884f7b070b2c7f90441ad0faa6bb"
+       }
       },
       {
        "path": "Plans/Project_System.md",
@@ -227,7 +320,15 @@
        "quote": "Custody remains with Project registration commit adapter and Storage's original seglog/payload owners. Store only bounded metadata and opaque authorized source refs; no transcript, diff body, secrets,",
        "file_sha256": "31daf70f89dc5bc46552158f53b2f59c8b00884f7b070b2c7f90441ad0faa6bb",
        "quote_check": "exact",
-       "quote_scope": "unit PJCT-072, Plans/Project_System.md:990-1042"
+       "quote_scope": "unit PJCT-072, Plans/Project_System.md:990-1042",
+       "source_citation": {
+        "path": "Plans/Project_System.md",
+        "unit": "PJCT-072",
+        "line_start": 1007,
+        "line_end": 1007,
+        "quote": "Custody remains with Project registration commit adapter and Storage's original seglog/payload owners. Store only bounded metadata and opaque authorized source refs; no transcript, diff body, secrets,",
+        "file_sha256": "31daf70f89dc5bc46552158f53b2f59c8b00884f7b070b2c7f90441ad0faa6bb"
+       }
       }
      ],
      "carried_from": {
@@ -250,7 +351,15 @@
        "quote": "Producer: Project registration commit adapter. After cmd.project.add_existing completes atomic projects:v1 identity/config/permission/owner handoff and readback, record its existing-content registrati",
        "file_sha256": "31daf70f89dc5bc46552158f53b2f59c8b00884f7b070b2c7f90441ad0faa6bb",
        "quote_check": "exact",
-       "quote_scope": "unit PJCT-072, Plans/Project_System.md:990-1042"
+       "quote_scope": "unit PJCT-072, Plans/Project_System.md:990-1042",
+       "source_citation": {
+        "path": "Plans/Project_System.md",
+        "unit": "PJCT-072",
+        "line_start": 1000,
+        "line_end": 1000,
+        "quote": "Producer: Project registration commit adapter. After cmd.project.add_existing completes atomic projects:v1 identity/config/permission/owner handoff and readback, record its existing-content registrati",
+        "file_sha256": "31daf70f89dc5bc46552158f53b2f59c8b00884f7b070b2c7f90441ad0faa6bb"
+       }
       }
      ],
      "carried_from": {
@@ -273,7 +382,15 @@
        "quote": "Operating consumer reader.project.added@1.0.0 uses reader.storage.event_record_index@1.0.0 and projector.storage.event_record_index@1.0.0, explicitly adopting SP-278. It reads this exact event_type/re",
        "file_sha256": "31daf70f89dc5bc46552158f53b2f59c8b00884f7b070b2c7f90441ad0faa6bb",
        "quote_check": "exact",
-       "quote_scope": "unit PJCT-072, Plans/Project_System.md:990-1042"
+       "quote_scope": "unit PJCT-072, Plans/Project_System.md:990-1042",
+       "source_citation": {
+        "path": "Plans/Project_System.md",
+        "unit": "PJCT-072",
+        "line_start": 1005,
+        "line_end": 1005,
+        "quote": "Operating consumer reader.project.added@1.0.0 uses reader.storage.event_record_index@1.0.0 and projector.storage.event_record_index@1.0.0, explicitly adopting SP-278. It reads this exact event_type/re",
+        "file_sha256": "31daf70f89dc5bc46552158f53b2f59c8b00884f7b070b2c7f90441ad0faa6bb"
+       }
       },
       {
        "path": "Plans/Project_System.md",
@@ -283,7 +400,15 @@
        "quote": "Checkpoint identity for project.added: before atomic rebuild publication, validate the nine-field durable token",
        "file_sha256": "31daf70f89dc5bc46552158f53b2f59c8b00884f7b070b2c7f90441ad0faa6bb",
        "quote_check": "exact",
-       "quote_scope": "unit PJCT-072, Plans/Project_System.md:990-1042"
+       "quote_scope": "unit PJCT-072, Plans/Project_System.md:990-1042",
+       "source_citation": {
+        "path": "Plans/Project_System.md",
+        "unit": "PJCT-072",
+        "line_start": 1013,
+        "line_end": 1013,
+        "quote": "Checkpoint identity for project.added: before atomic rebuild publication, validate the nine-field durable token",
+        "file_sha256": "31daf70f89dc5bc46552158f53b2f59c8b00884f7b070b2c7f90441ad0faa6bb"
+       }
       },
       {
        "path": "scripts/pm-small-owner-events.py",
@@ -293,7 +418,15 @@
        "quote": "def checkpoint_matches_original(state):",
        "file_sha256": "b50a32dbc931074b1e4a7584ac342e7c0e3b64e3b71ffd6fae4896e0d098a68e",
        "quote_check": "exact",
-       "quote_scope": "document"
+       "quote_scope": "document",
+       "source_citation": {
+        "path": "scripts/pm-small-owner-events.py",
+        "unit": "checkpoint_matches_original",
+        "line_start": 811,
+        "line_end": 811,
+        "quote": "def checkpoint_matches_original(state):",
+        "file_sha256": "b50a32dbc931074b1e4a7584ac342e7c0e3b64e3b71ffd6fae4896e0d098a68e"
+       }
       }
      ],
      "carried_from": {
@@ -316,7 +449,15 @@
        "quote": "Compatibility: only this exact 1.0.0 schema is a current writer candidate. Historical names/bytes remain unchanged; unknown future revisions halt the consumer before advance, never normalize by guesse",
        "file_sha256": "31daf70f89dc5bc46552158f53b2f59c8b00884f7b070b2c7f90441ad0faa6bb",
        "quote_check": "exact",
-       "quote_scope": "unit PJCT-072, Plans/Project_System.md:990-1042"
+       "quote_scope": "unit PJCT-072, Plans/Project_System.md:990-1042",
+       "source_citation": {
+        "path": "Plans/Project_System.md",
+        "unit": "PJCT-072",
+        "line_start": 1009,
+        "line_end": 1009,
+        "quote": "Compatibility: only this exact 1.0.0 schema is a current writer candidate. Historical names/bytes remain unchanged; unknown future revisions halt the consumer before advance, never normalize by guesse",
+        "file_sha256": "31daf70f89dc5bc46552158f53b2f59c8b00884f7b070b2c7f90441ad0faa6bb"
+       }
       }
      ],
      "carried_from": {
@@ -339,7 +480,15 @@
        "quote": "Exact-family oracle matrix for project.added: Plans/small_owner_event_fixtures.json owns its full EventRecord, independent original owner operation/result, original eleven-field receipt and four-field",
        "file_sha256": "31daf70f89dc5bc46552158f53b2f59c8b00884f7b070b2c7f90441ad0faa6bb",
        "quote_check": "exact",
-       "quote_scope": "unit PJCT-072, Plans/Project_System.md:990-1042"
+       "quote_scope": "unit PJCT-072, Plans/Project_System.md:990-1042",
+       "source_citation": {
+        "path": "Plans/Project_System.md",
+        "unit": "PJCT-072",
+        "line_start": 1010,
+        "line_end": 1010,
+        "quote": "Exact-family oracle matrix for project.added: Plans/small_owner_event_fixtures.json owns its full EventRecord, independent original owner operation/result, original eleven-field receipt and four-field",
+        "file_sha256": "31daf70f89dc5bc46552158f53b2f59c8b00884f7b070b2c7f90441ad0faa6bb"
+       }
       },
       {
        "path": "scripts/pm-small-owner-events.py",
@@ -349,7 +498,15 @@
        "quote": "def run_exact_family(row):",
        "file_sha256": "b50a32dbc931074b1e4a7584ac342e7c0e3b64e3b71ffd6fae4896e0d098a68e",
        "quote_check": "exact",
-       "quote_scope": "document"
+       "quote_scope": "document",
+       "source_citation": {
+        "path": "scripts/pm-small-owner-events.py",
+        "unit": "run_exact_family",
+        "line_start": 1040,
+        "line_end": 1040,
+        "quote": "def run_exact_family(row):",
+        "file_sha256": "b50a32dbc931074b1e4a7584ac342e7c0e3b64e3b71ffd6fae4896e0d098a68e"
+       }
       },
       {
        "path": "Plans/Project_System.md",
@@ -359,7 +516,15 @@
        "quote": "project.added append and current retry reject replay_policy=projector_replay_only as replay_only_not_appendable",
        "file_sha256": "31daf70f89dc5bc46552158f53b2f59c8b00884f7b070b2c7f90441ad0faa6bb",
        "quote_check": "exact",
-       "quote_scope": "unit PJCT-072, Plans/Project_System.md:990-1042"
+       "quote_scope": "unit PJCT-072, Plans/Project_System.md:990-1042",
+       "source_citation": {
+        "path": "Plans/Project_System.md",
+        "unit": "PJCT-072",
+        "line_start": 1012,
+        "line_end": 1012,
+        "quote": "project.added append and current retry reject replay_policy=projector_replay_only as replay_only_not_appendable",
+        "file_sha256": "31daf70f89dc5bc46552158f53b2f59c8b00884f7b070b2c7f90441ad0faa6bb"
+       }
       },
       {
        "path": "Plans/Project_System.md",
@@ -369,7 +534,15 @@
        "quote": "Checkpoint identity for project.added: before atomic rebuild publication, validate the nine-field durable token",
        "file_sha256": "31daf70f89dc5bc46552158f53b2f59c8b00884f7b070b2c7f90441ad0faa6bb",
        "quote_check": "exact",
-       "quote_scope": "unit PJCT-072, Plans/Project_System.md:990-1042"
+       "quote_scope": "unit PJCT-072, Plans/Project_System.md:990-1042",
+       "source_citation": {
+        "path": "Plans/Project_System.md",
+        "unit": "PJCT-072",
+        "line_start": 1013,
+        "line_end": 1013,
+        "quote": "Checkpoint identity for project.added: before atomic rebuild publication, validate the nine-field durable token",
+        "file_sha256": "31daf70f89dc5bc46552158f53b2f59c8b00884f7b070b2c7f90441ad0faa6bb"
+       }
       },
       {
        "path": "scripts/pm-small-owner-guard-audit.py",
@@ -379,7 +552,15 @@
        "quote": "def normal_checks(namespace, fixtures, guard_first=None):",
        "file_sha256": "e84f7cfdce6d6aeb72d8a7b4c3fa98c68af520b3727ad865d545481fcb61a9ef",
        "quote_check": "exact",
-       "quote_scope": "document"
+       "quote_scope": "document",
+       "source_citation": {
+        "path": "scripts/pm-small-owner-guard-audit.py",
+        "unit": "normal_checks",
+        "line_start": 794,
+        "line_end": 794,
+        "quote": "def normal_checks(namespace, fixtures, guard_first=None):",
+        "file_sha256": "e84f7cfdce6d6aeb72d8a7b4c3fa98c68af520b3727ad865d545481fcb61a9ef"
+       }
       },
       {
        "path": "scripts/pm-small-owner-events.py",
@@ -389,7 +570,15 @@
        "quote": "def integer_type(checker, instance):",
        "file_sha256": "b50a32dbc931074b1e4a7584ac342e7c0e3b64e3b71ffd6fae4896e0d098a68e",
        "quote_check": "exact",
-       "quote_scope": "document"
+       "quote_scope": "document",
+       "source_citation": {
+        "path": "scripts/pm-small-owner-events.py",
+        "unit": "integer_type",
+        "line_start": 178,
+        "line_end": 178,
+        "quote": "def integer_type(checker, instance):",
+        "file_sha256": "b50a32dbc931074b1e4a7584ac342e7c0e3b64e3b71ffd6fae4896e0d098a68e"
+       }
       },
       {
        "path": "scripts/pm-small-owner-events.py",
@@ -399,7 +588,15 @@
        "quote": "def canonical_json_numbers(value, *, retained=False):",
        "file_sha256": "b50a32dbc931074b1e4a7584ac342e7c0e3b64e3b71ffd6fae4896e0d098a68e",
        "quote_check": "exact",
-       "quote_scope": "document"
+       "quote_scope": "document",
+       "source_citation": {
+        "path": "scripts/pm-small-owner-events.py",
+        "unit": "canonical_json_numbers",
+        "line_start": 235,
+        "line_end": 235,
+        "quote": "def canonical_json_numbers(value, *, retained=False):",
+        "file_sha256": "b50a32dbc931074b1e4a7584ac342e7c0e3b64e3b71ffd6fae4896e0d098a68e"
+       }
       },
       {
        "path": "scripts/pm-small-owner-events.py",
@@ -409,7 +606,15 @@
        "quote": "def retained_producer_digest(event):",
        "file_sha256": "b50a32dbc931074b1e4a7584ac342e7c0e3b64e3b71ffd6fae4896e0d098a68e",
        "quote_check": "exact",
-       "quote_scope": "document"
+       "quote_scope": "document",
+       "source_citation": {
+        "path": "scripts/pm-small-owner-events.py",
+        "unit": "retained_producer_digest",
+        "line_start": 488,
+        "line_end": 488,
+        "quote": "def retained_producer_digest(event):",
+        "file_sha256": "b50a32dbc931074b1e4a7584ac342e7c0e3b64e3b71ffd6fae4896e0d098a68e"
+       }
       },
       {
        "path": "scripts/pm-small-owner-guard-audit.py",
@@ -419,7 +624,15 @@
        "quote": "def numeric_catalogue(m, fixtures, add, change):",
        "file_sha256": "e84f7cfdce6d6aeb72d8a7b4c3fa98c68af520b3727ad865d545481fcb61a9ef",
        "quote_check": "exact",
-       "quote_scope": "document"
+       "quote_scope": "document",
+       "source_citation": {
+        "path": "scripts/pm-small-owner-guard-audit.py",
+        "unit": "numeric_catalogue",
+        "line_start": 638,
+        "line_end": 638,
+        "quote": "def numeric_catalogue(m, fixtures, add, change):",
+        "file_sha256": "e84f7cfdce6d6aeb72d8a7b4c3fa98c68af520b3727ad865d545481fcb61a9ef"
+       }
       },
       {
        "path": "scripts/pm-small-owner-events.py",
@@ -429,7 +642,15 @@
        "line_end": 76,
        "file_sha256": "b50a32dbc931074b1e4a7584ac342e7c0e3b64e3b71ffd6fae4896e0d098a68e",
        "quote_check": "exact",
-       "quote_scope": "document"
+       "quote_scope": "document",
+       "source_citation": {
+        "path": "scripts/pm-small-owner-events.py",
+        "unit": "clock_ok",
+        "quote": "return date_time(value, profile=profile) == value",
+        "line_start": 76,
+        "line_end": 76,
+        "file_sha256": "b50a32dbc931074b1e4a7584ac342e7c0e3b64e3b71ffd6fae4896e0d098a68e"
+       }
       },
       {
        "path": "scripts/pm-small-owner-events.py",
@@ -439,7 +660,15 @@
        "line_end": 91,
        "file_sha256": "b50a32dbc931074b1e4a7584ac342e7c0e3b64e3b71ffd6fae4896e0d098a68e",
        "quote_check": "exact",
-       "quote_scope": "document"
+       "quote_scope": "document",
+       "source_citation": {
+        "path": "scripts/pm-small-owner-events.py",
+        "unit": "storage_clocks_ok",
+        "quote": "def storage_clocks_ok(event, profile):",
+        "line_start": 91,
+        "line_end": 91,
+        "file_sha256": "b50a32dbc931074b1e4a7584ac342e7c0e3b64e3b71ffd6fae4896e0d098a68e"
+       }
       },
       {
        "path": "scripts/pm-small-owner-events.py",
@@ -449,7 +678,15 @@
        "line_end": 64,
        "file_sha256": "b50a32dbc931074b1e4a7584ac342e7c0e3b64e3b71ffd6fae4896e0d098a68e",
        "quote_check": "exact",
-       "quote_scope": "document"
+       "quote_scope": "document",
+       "source_citation": {
+        "path": "scripts/pm-small-owner-events.py",
+        "unit": "bound_profile",
+        "quote": "if kind in ('source', 'ack'):",
+        "line_start": 64,
+        "line_end": 64,
+        "file_sha256": "b50a32dbc931074b1e4a7584ac342e7c0e3b64e3b71ffd6fae4896e0d098a68e"
+       }
       },
       {
        "path": "scripts/pm-small-owner-events.py",
@@ -459,7 +696,15 @@
        "line_end": 66,
        "file_sha256": "b50a32dbc931074b1e4a7584ac342e7c0e3b64e3b71ffd6fae4896e0d098a68e",
        "quote_check": "exact",
-       "quote_scope": "document"
+       "quote_scope": "document",
+       "source_citation": {
+        "path": "scripts/pm-small-owner-events.py",
+        "unit": "bound_profile",
+        "quote": "if kind == 'storage':",
+        "line_start": 66,
+        "line_end": 66,
+        "file_sha256": "b50a32dbc931074b1e4a7584ac342e7c0e3b64e3b71ffd6fae4896e0d098a68e"
+       }
       },
       {
        "path": "scripts/pm-small-owner-events.py",
@@ -469,7 +714,15 @@
        "line_end": 200,
        "file_sha256": "b50a32dbc931074b1e4a7584ac342e7c0e3b64e3b71ffd6fae4896e0d098a68e",
        "quote_check": "exact",
-       "quote_scope": "document"
+       "quote_scope": "document",
+       "source_citation": {
+        "path": "scripts/pm-small-owner-events.py",
+        "unit": "exact_value",
+        "quote": "def exact_value(value, expected):",
+        "line_start": 200,
+        "line_end": 200,
+        "file_sha256": "b50a32dbc931074b1e4a7584ac342e7c0e3b64e3b71ffd6fae4896e0d098a68e"
+       }
       },
       {
        "path": "scripts/pm-small-owner-guard-audit.py",
@@ -479,7 +732,15 @@
        "line_end": 474,
        "file_sha256": "e84f7cfdce6d6aeb72d8a7b4c3fa98c68af520b3727ad865d545481fcb61a9ef",
        "quote_check": "exact",
-       "quote_scope": "document"
+       "quote_scope": "document",
+       "source_citation": {
+        "path": "scripts/pm-small-owner-guard-audit.py",
+        "unit": "type_timestamp_catalogue",
+        "quote": "def type_timestamp_catalogue(m, fixtures, add, change, no_if, mutants):",
+        "line_start": 474,
+        "line_end": 474,
+        "file_sha256": "e84f7cfdce6d6aeb72d8a7b4c3fa98c68af520b3727ad865d545481fcb61a9ef"
+       }
       },
       {
        "path": "scripts/pm-small-owner-events.py",
@@ -489,7 +750,15 @@
        "quote": "'closure_keys': _fact(lambda: not (incoming.keys() - envelope['properties'].keys())),",
        "file_sha256": "b50a32dbc931074b1e4a7584ac342e7c0e3b64e3b71ffd6fae4896e0d098a68e",
        "quote_check": "exact",
-       "quote_scope": "document"
+       "quote_scope": "document",
+       "source_citation": {
+        "path": "scripts/pm-small-owner-events.py",
+        "unit": "current_retry",
+        "line_start": 759,
+        "line_end": 759,
+        "quote": "'closure_keys': _fact(lambda: not (incoming.keys() - envelope['properties'].keys())),",
+        "file_sha256": "b50a32dbc931074b1e4a7584ac342e7c0e3b64e3b71ffd6fae4896e0d098a68e"
+       }
       },
       {
        "path": "scripts/pm-small-owner-events.py",
@@ -499,7 +768,15 @@
        "quote": "for case in row['retry_extra_field_cases']:",
        "file_sha256": "b50a32dbc931074b1e4a7584ac342e7c0e3b64e3b71ffd6fae4896e0d098a68e",
        "quote_check": "exact",
-       "quote_scope": "document"
+       "quote_scope": "document",
+       "source_citation": {
+        "path": "scripts/pm-small-owner-events.py",
+        "unit": "main",
+        "line_start": 1279,
+        "line_end": 1279,
+        "quote": "for case in row['retry_extra_field_cases']:",
+        "file_sha256": "b50a32dbc931074b1e4a7584ac342e7c0e3b64e3b71ffd6fae4896e0d098a68e"
+       }
       }
      ],
      "carried_from": {
@@ -511,5 +788,19 @@
     }
    }
   }
- ]
+ ],
+ "source_registry": {
+  "path": "Plans/event_family_registry.json",
+  "revision": "2026-11-16.223",
+  "sha256": "0019fe44ad6d0dc1531552ee64bcbe76da4014f6700fc27424be2e8ebbe400e2",
+  "family_count": 442,
+  "row_pointer": "#/families/441"
+ },
+ "evidence_maintenance": {
+  "authority": "MERGE2-FIX1 findings 1/3/5",
+  "source_commit": "0c904de00426b0089ba5d56349fda8ea16cc9f88",
+  "source_assessment_sha256": "2d29ef04d379d03d8a7b5cd19d820a3beab98601f3ef41c9f6ad05e7bf47acf8",
+  "native_execution": "NOT_RUN",
+  "verdicts_changed": false
+ }
 }

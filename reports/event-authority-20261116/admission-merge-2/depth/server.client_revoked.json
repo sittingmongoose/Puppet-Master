@@ -5,9 +5,9 @@
  "merge": "admission-merge-2",
  "registry": {
   "path": "Plans/event_family_registry.json",
-  "revision": "2026-11-16.262",
-  "sha256": "b4fa63143234a384de21733f64564f5b9ea6ddab789b7bd1f44739c340091b3a",
-  "family_count": 481,
+  "revision": "2026-11-18.2",
+  "sha256": "ec21cf1a5b42b3e68a5564a847b4798dff968612d11d438bc7075b89196f9602",
+  "family_count": 518,
   "row_pointer": "#/families/480"
  },
  "base_commit": "45b4ccf25270c486dbc682805cd455ce4ca25fb0",
@@ -22,17 +22,27 @@
     "membership_version": {
      "status": "PASS",
      "representation": "exact_registry_membership",
-     "finding": "Registered at registry revision 2026-11-16.262 as #/families/480 (canonical row SHA-256 049ad0efbaead45ded15ef0a6ccb0094f0b0c55306f5c8d7a031505054462fb5); before this commit the family was absent.",
+     "finding": "Currently registered at 2026-11-18.2 as #/families/480 (canonical row SHA-256 049ad0efbaead45ded15ef0a6ccb0094f0b0c55306f5c8d7a031505054462fb5). Original one-family admission checkpoints remain in the family record and immutable Git source.",
      "evidence": [
       {
        "path": "Plans/event_family_registry.json",
        "json_pointer": "#/families/480",
-       "line_start": 30883,
-       "line_end": 30924,
+       "line_start": 30933,
+       "line_end": 30974,
        "quote": "\"event_type\": \"server.client_revoked\"",
-       "quote_line": 30886,
-       "file_sha256": "b4fa63143234a384de21733f64564f5b9ea6ddab789b7bd1f44739c340091b3a",
-       "quote_check": "exact"
+       "quote_line": 30936,
+       "file_sha256": "ec21cf1a5b42b3e68a5564a847b4798dff968612d11d438bc7075b89196f9602",
+       "quote_check": "exact",
+       "source_citation": {
+        "path": "Plans/event_family_registry.json",
+        "json_pointer": "#/families/480",
+        "line_start": 30883,
+        "line_end": 30924,
+        "quote": "\"event_type\": \"server.client_revoked\"",
+        "quote_line": 30886,
+        "file_sha256": "b4fa63143234a384de21733f64564f5b9ea6ddab789b7bd1f44739c340091b3a",
+        "quote_check": "exact"
+       }
       }
      ]
     },
@@ -44,12 +54,34 @@
       {
        "path": "Plans/Server_System.md",
        "unit": "SRV-1413",
-       "line_start": 1404,
-       "line_end": 1404,
-       "quote": "canonical_text: 'Newly authored owner contract for server.client_revoked@1.0.0, prepared without admission, authorized",
-       "file_sha256": "d2e77e0964bbabad5a52d2c198af2e61720a8438ddcf6449042479ff25c0dc24",
+       "line_start": 1401,
+       "line_end": 1401,
+       "quote": "canonical_text: 'Newly authored owner contract for server.client_revoked@1.0.0, prepared without admission before the 2026-11-18 registration, authorized",
+       "file_sha256": "6bce1bdfdb7fefbbb1ca8afc1308c93a609eaf76ee03a09799567c5a63749814",
        "quote_check": "exact",
-       "quote_scope": "unit SRV-1413, Plans/Server_System.md:1397-1569"
+       "quote_scope": "unit SRV-1413, Plans/Server_System.md:1394-1565",
+       "source_citation": {
+        "path": "Plans/Server_System.md",
+        "unit": "SRV-1413",
+        "line_start": 1404,
+        "line_end": 1404,
+        "quote": "canonical_text: 'Newly authored owner contract for server.client_revoked@1.0.0, prepared without admission, authorized",
+        "file_sha256": "d2e77e0964bbabad5a52d2c198af2e61720a8438ddcf6449042479ff25c0dc24",
+        "quote_check": "exact",
+        "quote_scope": "unit SRV-1413, Plans/Server_System.md:1397-1569"
+       },
+       "reanchor": {
+        "method": "recited_authorized_owner_change",
+        "unit": "SRV-1413",
+        "source_commit": "0c904de00426b0089ba5d56349fda8ea16cc9f88",
+        "owner_change_commit": "55aecc69b0ed447088ffd3c364fe60c06739018a",
+        "before_unit_sha256": "71f4cb7620f6efa975094e5e0882b05230e66dbf242dd22c1af978cd94762df9",
+        "after_unit_sha256": "09f81b7b285389452e82609a2dcb41bfc4fc7e8500702d4c88a6dd4184ca5ecf",
+        "history": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/merge2-fix1/evidence/reanchor-history/Plans_Server_System.md-SRV-1413.log",
+        "why": "The approved owner edit makes preparation-time nonmembership dated history and conditions present refusal on actual membership; the cited contract role and all other source, identity, retention and native fences remain. This carries the reviewed cell without changing its verdict.",
+        "old_quote": "canonical_text: 'Newly authored owner contract for server.client_revoked@1.0.0, prepared without admission, authorized",
+        "new_quote": "canonical_text: 'Newly authored owner contract for server.client_revoked@1.0.0, prepared without admission before the 2026-11-18 registration, authorized"
+       }
       }
      ],
      "carried_from": {
@@ -67,12 +99,20 @@
       {
        "path": "Plans/Server_System.md",
        "unit": "SRV-1413",
-       "line_start": 1432,
-       "line_end": 1432,
+       "line_start": 1429,
+       "line_end": 1429,
        "quote": "Producer: the sole newly authored ClientTrustRegistry.revoke_commit@1.0.0 method of the existing domain owner.",
-       "file_sha256": "d2e77e0964bbabad5a52d2c198af2e61720a8438ddcf6449042479ff25c0dc24",
+       "file_sha256": "6bce1bdfdb7fefbbb1ca8afc1308c93a609eaf76ee03a09799567c5a63749814",
        "quote_check": "exact",
-       "quote_scope": "unit SRV-1413, Plans/Server_System.md:1397-1569"
+       "quote_scope": "unit SRV-1413, Plans/Server_System.md:1394-1565",
+       "source_citation": {
+        "path": "Plans/Server_System.md",
+        "unit": "SRV-1413",
+        "line_start": 1432,
+        "line_end": 1432,
+        "quote": "Producer: the sole newly authored ClientTrustRegistry.revoke_commit@1.0.0 method of the existing domain owner.",
+        "file_sha256": "d2e77e0964bbabad5a52d2c198af2e61720a8438ddcf6449042479ff25c0dc24"
+       }
       }
      ],
      "carried_from": {
@@ -90,12 +130,20 @@
       {
        "path": "Plans/Server_System.md",
        "unit": "SRV-1413",
-       "line_start": 1419,
-       "line_end": 1419,
+       "line_start": 1416,
+       "line_end": 1416,
        "quote": "Historical lookup authenticates retained provenance and does not reacquire expired live authority. Payload: Plans/event_payloads/w3e/server_client_revoked.schema.json,",
-       "file_sha256": "d2e77e0964bbabad5a52d2c198af2e61720a8438ddcf6449042479ff25c0dc24",
+       "file_sha256": "6bce1bdfdb7fefbbb1ca8afc1308c93a609eaf76ee03a09799567c5a63749814",
        "quote_check": "exact",
-       "quote_scope": "unit SRV-1413, Plans/Server_System.md:1397-1569"
+       "quote_scope": "unit SRV-1413, Plans/Server_System.md:1394-1565",
+       "source_citation": {
+        "path": "Plans/Server_System.md",
+        "unit": "SRV-1413",
+        "line_start": 1419,
+        "line_end": 1419,
+        "quote": "Historical lookup authenticates retained provenance and does not reacquire expired live authority. Payload: Plans/event_payloads/w3e/server_client_revoked.schema.json,",
+        "file_sha256": "d2e77e0964bbabad5a52d2c198af2e61720a8438ddcf6449042479ff25c0dc24"
+       }
       },
       {
        "path": "Plans/event_payloads/w3e/server_client_revoked.schema.json",
@@ -105,7 +153,15 @@
        "quote": "\"additionalProperties\": false,",
        "file_sha256": "e45c6f06f5d2e0000a3cb32fbc089ebdb8fd7fc9be6196bbf56e63dc1790de3e",
        "quote_check": "exact",
-       "quote_scope": "document"
+       "quote_scope": "document",
+       "source_citation": {
+        "path": "Plans/event_payloads/w3e/server_client_revoked.schema.json",
+        "unit": "#/",
+        "line_start": 3,
+        "line_end": 3,
+        "quote": "\"additionalProperties\": false,",
+        "file_sha256": "e45c6f06f5d2e0000a3cb32fbc089ebdb8fd7fc9be6196bbf56e63dc1790de3e"
+       }
       }
      ],
      "carried_from": {
@@ -123,12 +179,20 @@
       {
        "path": "Plans/Server_System.md",
        "unit": "SRV-1413",
-       "line_start": 1448,
-       "line_end": 1448,
+       "line_start": 1444,
+       "line_end": 1444,
        "quote": "Identity: owner_operation_id is family-operation@1: plus lowercase SHA-256 of exact UTF-8 bytes \"pm.w3e.owner_fact.v1\\0\"",
-       "file_sha256": "d2e77e0964bbabad5a52d2c198af2e61720a8438ddcf6449042479ff25c0dc24",
+       "file_sha256": "6bce1bdfdb7fefbbb1ca8afc1308c93a609eaf76ee03a09799567c5a63749814",
        "quote_check": "exact",
-       "quote_scope": "unit SRV-1413, Plans/Server_System.md:1397-1569"
+       "quote_scope": "unit SRV-1413, Plans/Server_System.md:1394-1565",
+       "source_citation": {
+        "path": "Plans/Server_System.md",
+        "unit": "SRV-1413",
+        "line_start": 1448,
+        "line_end": 1448,
+        "quote": "Identity: owner_operation_id is family-operation@1: plus lowercase SHA-256 of exact UTF-8 bytes \"pm.w3e.owner_fact.v1\\0\"",
+        "file_sha256": "d2e77e0964bbabad5a52d2c198af2e61720a8438ddcf6449042479ff25c0dc24"
+       }
       }
      ],
      "carried_from": {
@@ -146,12 +210,20 @@
       {
        "path": "Plans/Server_System.md",
        "unit": "SRV-1413",
-       "line_start": 1464,
-       "line_end": 1464,
+       "line_start": 1460,
+       "line_end": 1460,
        "quote": "Idempotency/replay: same selected identity and semantic digest returns the immutable original result and first",
-       "file_sha256": "d2e77e0964bbabad5a52d2c198af2e61720a8438ddcf6449042479ff25c0dc24",
+       "file_sha256": "6bce1bdfdb7fefbbb1ca8afc1308c93a609eaf76ee03a09799567c5a63749814",
        "quote_check": "exact",
-       "quote_scope": "unit SRV-1413, Plans/Server_System.md:1397-1569"
+       "quote_scope": "unit SRV-1413, Plans/Server_System.md:1394-1565",
+       "source_citation": {
+        "path": "Plans/Server_System.md",
+        "unit": "SRV-1413",
+        "line_start": 1464,
+        "line_end": 1464,
+        "quote": "Idempotency/replay: same selected identity and semantic digest returns the immutable original result and first",
+        "file_sha256": "d2e77e0964bbabad5a52d2c198af2e61720a8438ddcf6449042479ff25c0dc24"
+       }
       }
      ],
      "carried_from": {
@@ -169,32 +241,56 @@
       {
        "path": "Plans/Server_System.md",
        "unit": "SRV-1413",
-       "line_start": 1472,
-       "line_end": 1472,
+       "line_start": 1468,
+       "line_end": 1468,
        "quote": "Retention: retention_policy_ref=RP-AUTHORITY-INDEFINITE@1.0.0 (DL-453, E-CARDS-3 item 1.a, option A), kept permanently, application editions only, with no age or count expiry and no new count allowance; storage pressure refuses new history writes, and explicit application data deletion follows its existing authorized rules. Deleting the described object does not remove this separate history or kee",
-       "file_sha256": "d2e77e0964bbabad5a52d2c198af2e61720a8438ddcf6449042479ff25c0dc24",
+       "file_sha256": "6bce1bdfdb7fefbbb1ca8afc1308c93a609eaf76ee03a09799567c5a63749814",
        "quote_check": "exact",
-       "quote_scope": "unit SRV-1413, Plans/Server_System.md:1397-1569"
+       "quote_scope": "unit SRV-1413, Plans/Server_System.md:1394-1565",
+       "source_citation": {
+        "path": "Plans/Server_System.md",
+        "unit": "SRV-1413",
+        "line_start": 1472,
+        "line_end": 1472,
+        "quote": "Retention: retention_policy_ref=RP-AUTHORITY-INDEFINITE@1.0.0 (DL-453, E-CARDS-3 item 1.a, option A), kept permanently, application editions only, with no age or count expiry and no new count allowance; storage pressure refuses new history writes, and explicit application data deletion follows its existing authorized rules. Deleting the described object does not remove this separate history or kee",
+        "file_sha256": "d2e77e0964bbabad5a52d2c198af2e61720a8438ddcf6449042479ff25c0dc24"
+       }
       },
       {
        "path": "Plans/Contracts_V0.md",
        "unit": "CV-1413",
-       "line_start": 49093,
-       "line_end": 49093,
+       "line_start": 49094,
+       "line_end": 49094,
        "quote": "retention_policy_ref=RP-AUTHORITY-INDEFINITE@1.0.0 (DL-453, E-CARDS-3 item 1.a, option A), kept permanently, application editions only, with no age or count expiry and no new count allowance; storage pressure refuses new history writes, and explicit application data deletion follows its existing authorized rules. Deleting the described object does not remove this separate history or keep the delet",
-       "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a",
+       "file_sha256": "4ae2225d8ed19b6df971b6c32797aae6882d175264ff2c2e9a2045650d735e67",
        "quote_check": "exact",
-       "quote_scope": "unit CV-1413, Plans/Contracts_V0.md:49075-49135"
+       "quote_scope": "unit CV-1413, Plans/Contracts_V0.md:49076-49136",
+       "source_citation": {
+        "path": "Plans/Contracts_V0.md",
+        "unit": "CV-1413",
+        "line_start": 49093,
+        "line_end": 49093,
+        "quote": "retention_policy_ref=RP-AUTHORITY-INDEFINITE@1.0.0 (DL-453, E-CARDS-3 item 1.a, option A), kept permanently, application editions only, with no age or count expiry and no new count allowance; storage pressure refuses new history writes, and explicit application data deletion follows its existing authorized rules. Deleting the described object does not remove this separate history or keep the delet",
+        "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a"
+       }
       },
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-1413",
-       "line_start": 71185,
-       "line_end": 71185,
+       "line_start": 70678,
+       "line_end": 70678,
        "quote": "retention_policy_ref=RP-AUTHORITY-INDEFINITE@1.0.0 (DL-453, E-CARDS-3 item 1.a, option A), kept permanently, application editions only, with no age or count expiry and no new count allowance; storage pressure refuses new history writes, and explicit application data deletion follows its existing authorized rules. Deleting the described object does not remove this separate history or keep the delet",
-       "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707",
+       "file_sha256": "73ee6d097e08d31fd93301d05d2cd2632dd46e5a22ba3ea405ffadda4a0a9db2",
        "quote_check": "exact",
-       "quote_scope": "unit SP-1413, Plans/storage-plan.md:71175-71261"
+       "quote_scope": "unit SP-1413, Plans/storage-plan.md:70668-70754",
+       "source_citation": {
+        "path": "Plans/storage-plan.md",
+        "unit": "SP-1413",
+        "line_start": 71185,
+        "line_end": 71185,
+        "quote": "retention_policy_ref=RP-AUTHORITY-INDEFINITE@1.0.0 (DL-453, E-CARDS-3 item 1.a, option A), kept permanently, application editions only, with no age or count expiry and no new count allowance; storage pressure refuses new history writes, and explicit application data deletion follows its existing authorized rules. Deleting the described object does not remove this separate history or keep the delet",
+        "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+       }
       }
      ],
      "carried_from": {
@@ -212,12 +308,20 @@
       {
        "path": "Plans/Server_System.md",
        "unit": "SRV-1413",
-       "line_start": 1476,
-       "line_end": 1476,
+       "line_start": 1472,
+       "line_end": 1472,
        "quote": "Redaction/custody: ClientTrustRegistry on the actual Server holds the original accepted intent, complete before/after",
-       "file_sha256": "d2e77e0964bbabad5a52d2c198af2e61720a8438ddcf6449042479ff25c0dc24",
+       "file_sha256": "6bce1bdfdb7fefbbb1ca8afc1308c93a609eaf76ee03a09799567c5a63749814",
        "quote_check": "exact",
-       "quote_scope": "unit SRV-1413, Plans/Server_System.md:1397-1569"
+       "quote_scope": "unit SRV-1413, Plans/Server_System.md:1394-1565",
+       "source_citation": {
+        "path": "Plans/Server_System.md",
+        "unit": "SRV-1413",
+        "line_start": 1476,
+        "line_end": 1476,
+        "quote": "Redaction/custody: ClientTrustRegistry on the actual Server holds the original accepted intent, complete before/after",
+        "file_sha256": "d2e77e0964bbabad5a52d2c198af2e61720a8438ddcf6449042479ff25c0dc24"
+       }
       }
      ],
      "carried_from": {
@@ -235,12 +339,20 @@
       {
        "path": "Plans/Server_System.md",
        "unit": "SRV-1413",
-       "line_start": 1419,
-       "line_end": 1419,
+       "line_start": 1416,
+       "line_end": 1416,
        "quote": "Historical lookup authenticates retained provenance and does not reacquire expired live authority. Payload: Plans/event_payloads/w3e/server_client_revoked.schema.json,",
-       "file_sha256": "d2e77e0964bbabad5a52d2c198af2e61720a8438ddcf6449042479ff25c0dc24",
+       "file_sha256": "6bce1bdfdb7fefbbb1ca8afc1308c93a609eaf76ee03a09799567c5a63749814",
        "quote_check": "exact",
-       "quote_scope": "unit SRV-1413, Plans/Server_System.md:1397-1569"
+       "quote_scope": "unit SRV-1413, Plans/Server_System.md:1394-1565",
+       "source_citation": {
+        "path": "Plans/Server_System.md",
+        "unit": "SRV-1413",
+        "line_start": 1419,
+        "line_end": 1419,
+        "quote": "Historical lookup authenticates retained provenance and does not reacquire expired live authority. Payload: Plans/event_payloads/w3e/server_client_revoked.schema.json,",
+        "file_sha256": "d2e77e0964bbabad5a52d2c198af2e61720a8438ddcf6449042479ff25c0dc24"
+       }
       }
      ],
      "carried_from": {
@@ -258,22 +370,38 @@
       {
        "path": "Plans/Server_System.md",
        "unit": "SRV-1413",
-       "line_start": 1488,
-       "line_end": 1488,
+       "line_start": 1484,
+       "line_end": 1484,
        "quote": "Consumer/checkpoint: newly authored projector.w3e.server_client_revoked.history@1.0.0 and reader.w3e.server_client_revoked.history@1.0.0",
-       "file_sha256": "d2e77e0964bbabad5a52d2c198af2e61720a8438ddcf6449042479ff25c0dc24",
+       "file_sha256": "6bce1bdfdb7fefbbb1ca8afc1308c93a609eaf76ee03a09799567c5a63749814",
        "quote_check": "exact",
-       "quote_scope": "unit SRV-1413, Plans/Server_System.md:1397-1569"
+       "quote_scope": "unit SRV-1413, Plans/Server_System.md:1394-1565",
+       "source_citation": {
+        "path": "Plans/Server_System.md",
+        "unit": "SRV-1413",
+        "line_start": 1488,
+        "line_end": 1488,
+        "quote": "Consumer/checkpoint: newly authored projector.w3e.server_client_revoked.history@1.0.0 and reader.w3e.server_client_revoked.history@1.0.0",
+        "file_sha256": "d2e77e0964bbabad5a52d2c198af2e61720a8438ddcf6449042479ff25c0dc24"
+       }
       },
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-1413",
-       "line_start": 71199,
-       "line_end": 71199,
+       "line_start": 70692,
+       "line_end": 70692,
        "quote": "The exact checkpoint in derived redb checkpoints is w3e_server_client_revoked_checkpoint.v1:{hex(storage_instance_id)}:{scope_partition}:{hex(server_id)}",
-       "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707",
+       "file_sha256": "73ee6d097e08d31fd93301d05d2cd2632dd46e5a22ba3ea405ffadda4a0a9db2",
        "quote_check": "exact",
-       "quote_scope": "unit SP-1413, Plans/storage-plan.md:71175-71261"
+       "quote_scope": "unit SP-1413, Plans/storage-plan.md:70668-70754",
+       "source_citation": {
+        "path": "Plans/storage-plan.md",
+        "unit": "SP-1413",
+        "line_start": 71199,
+        "line_end": 71199,
+        "quote": "The exact checkpoint in derived redb checkpoints is w3e_server_client_revoked_checkpoint.v1:{hex(storage_instance_id)}:{scope_partition}:{hex(server_id)}",
+        "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+       }
       }
      ],
      "carried_from": {
@@ -291,12 +419,20 @@
       {
        "path": "Plans/Server_System.md",
        "unit": "SRV-1413",
-       "line_start": 1501,
-       "line_end": 1501,
+       "line_start": 1497,
+       "line_end": 1497,
        "quote": "Compatibility/withdrawal: no legacy writer or event alias is claimed for this newly authored family. Exact retained",
-       "file_sha256": "d2e77e0964bbabad5a52d2c198af2e61720a8438ddcf6449042479ff25c0dc24",
+       "file_sha256": "6bce1bdfdb7fefbbb1ca8afc1308c93a609eaf76ee03a09799567c5a63749814",
        "quote_check": "exact",
-       "quote_scope": "unit SRV-1413, Plans/Server_System.md:1397-1569"
+       "quote_scope": "unit SRV-1413, Plans/Server_System.md:1394-1565",
+       "source_citation": {
+        "path": "Plans/Server_System.md",
+        "unit": "SRV-1413",
+        "line_start": 1501,
+        "line_end": 1501,
+        "quote": "Compatibility/withdrawal: no legacy writer or event alias is claimed for this newly authored family. Exact retained",
+        "file_sha256": "d2e77e0964bbabad5a52d2c198af2e61720a8438ddcf6449042479ff25c0dc24"
+       }
       }
      ],
      "carried_from": {
@@ -314,12 +450,20 @@
       {
        "path": "Plans/Contracts_V0.md",
        "unit": "CV-1413",
-       "line_start": 49093,
-       "line_end": 49093,
+       "line_start": 49094,
+       "line_end": 49094,
        "quote": "Phase 2 (2026-11-13) runs the executable synthetic oracles of this family in scripts/pm_w3e_event_oracles.py; every refusal is one named single-predicate row of a generated Method B guard table (scripts/pm_w3e_table_*.py) proved by the gated shared scripts/pm_guard_isolation.py through scripts/pm-w3e-guard-proof.py, and rows no input can refuse first stay alone in their own table with a written pr",
-       "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a",
+       "file_sha256": "4ae2225d8ed19b6df971b6c32797aae6882d175264ff2c2e9a2045650d735e67",
        "quote_check": "exact",
-       "quote_scope": "unit CV-1413, Plans/Contracts_V0.md:49075-49135"
+       "quote_scope": "unit CV-1413, Plans/Contracts_V0.md:49076-49136",
+       "source_citation": {
+        "path": "Plans/Contracts_V0.md",
+        "unit": "CV-1413",
+        "line_start": 49093,
+        "line_end": 49093,
+        "quote": "Phase 2 (2026-11-13) runs the executable synthetic oracles of this family in scripts/pm_w3e_event_oracles.py; every refusal is one named single-predicate row of a generated Method B guard table (scripts/pm_w3e_table_*.py) proved by the gated shared scripts/pm_guard_isolation.py through scripts/pm-w3e-guard-proof.py, and rows no input can refuse first stay alone in their own table with a written pr",
+        "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a"
+       }
       },
       {
        "path": "scripts/pm_pnc019_s4o3_store.py",
@@ -328,7 +472,14 @@
        "quote": "class Store:",
        "file_sha256": "10f10d033d805d9830f26d0c9c1fbe1cc8560ed5c943c81af935e56aa4684663",
        "quote_check": "exact",
-       "quote_scope": "document"
+       "quote_scope": "document",
+       "source_citation": {
+        "path": "scripts/pm_pnc019_s4o3_store.py",
+        "line_start": 144,
+        "line_end": 144,
+        "quote": "class Store:",
+        "file_sha256": "10f10d033d805d9830f26d0c9c1fbe1cc8560ed5c943c81af935e56aa4684663"
+       }
       },
       {
        "path": "scripts/pm_pnc019_s4o3_store.py",
@@ -337,7 +488,14 @@
        "quote": "def read(self, generation, original_ref):",
        "file_sha256": "10f10d033d805d9830f26d0c9c1fbe1cc8560ed5c943c81af935e56aa4684663",
        "quote_check": "exact",
-       "quote_scope": "document"
+       "quote_scope": "document",
+       "source_citation": {
+        "path": "scripts/pm_pnc019_s4o3_store.py",
+        "line_start": 249,
+        "line_end": 249,
+        "quote": "def read(self, generation, original_ref):",
+        "file_sha256": "10f10d033d805d9830f26d0c9c1fbe1cc8560ed5c943c81af935e56aa4684663"
+       }
       },
       {
        "path": "scripts/pm_pnc019_s4o3_oracles.py",
@@ -346,7 +504,14 @@
        "quote": "def run_family(adapter, family, trace=None, cut=None):",
        "file_sha256": "1fea5e492c2d45f94c41d59184da26081b7b2f30833fccd5142167bcf4cb66f6",
        "quote_check": "exact",
-       "quote_scope": "document"
+       "quote_scope": "document",
+       "source_citation": {
+        "path": "scripts/pm_pnc019_s4o3_oracles.py",
+        "line_start": 142,
+        "line_end": 142,
+        "quote": "def run_family(adapter, family, trace=None, cut=None):",
+        "file_sha256": "1fea5e492c2d45f94c41d59184da26081b7b2f30833fccd5142167bcf4cb66f6"
+       }
       },
       {
        "path": "scripts/pm-pnc019-s4o3-proof.py",
@@ -355,16 +520,30 @@
        "quote": "def mutations(out):",
        "file_sha256": "c3d51d67e679729c0bd7775e06e823726e79741566e4b4036aec04e0d6736487",
        "quote_check": "exact",
-       "quote_scope": "document"
+       "quote_scope": "document",
+       "source_citation": {
+        "path": "scripts/pm-pnc019-s4o3-proof.py",
+        "line_start": 103,
+        "line_end": 103,
+        "quote": "def mutations(out):",
+        "file_sha256": "c3d51d67e679729c0bd7775e06e823726e79741566e4b4036aec04e0d6736487"
+       }
       },
       {
        "path": "scripts/pm_w3e_event_oracles.py",
        "line_start": 631,
        "line_end": 631,
        "quote": "RESULT_FIELDS = {",
-       "file_sha256": "cfdd3aa717c4e810169a3bd74da0cf77a43327a344daf0c02b8a019c55988f9a",
+       "file_sha256": "f461bff17b1f3d6e46535a9761a6993f1c3db9a8d1d597e162c940d1343cde5c",
        "quote_check": "exact",
-       "quote_scope": "document"
+       "quote_scope": "document",
+       "source_citation": {
+        "path": "scripts/pm_w3e_event_oracles.py",
+        "line_start": 631,
+        "line_end": 631,
+        "quote": "RESULT_FIELDS = {",
+        "file_sha256": "cfdd3aa717c4e810169a3bd74da0cf77a43327a344daf0c02b8a019c55988f9a"
+       }
       },
       {
        "path": "scripts/pm_pnc019_s4o3_domain_cases.py",
@@ -373,7 +552,14 @@
        "quote": "RULES = (",
        "file_sha256": "277b6d33314f4364caa287d2d6aec6f51affc193af04f9d163deedff71c05d9d",
        "quote_check": "exact",
-       "quote_scope": "document"
+       "quote_scope": "document",
+       "source_citation": {
+        "path": "scripts/pm_pnc019_s4o3_domain_cases.py",
+        "line_start": 14,
+        "line_end": 14,
+        "quote": "RULES = (",
+        "file_sha256": "277b6d33314f4364caa287d2d6aec6f51affc193af04f9d163deedff71c05d9d"
+       }
       },
       {
        "path": "scripts/pm_pnc019_s4o3_owner.py",
@@ -382,7 +568,14 @@
        "quote": "RESTORE_REFS = (",
        "file_sha256": "c6dcfbc63623ce82f521c89723164ba1370e01fb03a439d2cb1c392f3aed68e2",
        "quote_check": "exact",
-       "quote_scope": "document"
+       "quote_scope": "document",
+       "source_citation": {
+        "path": "scripts/pm_pnc019_s4o3_owner.py",
+        "line_start": 20,
+        "line_end": 20,
+        "quote": "RESTORE_REFS = (",
+        "file_sha256": "c6dcfbc63623ce82f521c89723164ba1370e01fb03a439d2cb1c392f3aed68e2"
+       }
       }
      ],
      "carried_from": {
@@ -394,5 +587,19 @@
     }
    }
   }
- ]
+ ],
+ "source_registry": {
+  "path": "Plans/event_family_registry.json",
+  "revision": "2026-11-16.262",
+  "sha256": "b4fa63143234a384de21733f64564f5b9ea6ddab789b7bd1f44739c340091b3a",
+  "family_count": 481,
+  "row_pointer": "#/families/480"
+ },
+ "evidence_maintenance": {
+  "authority": "MERGE2-FIX1 findings 1/3/5",
+  "source_commit": "0c904de00426b0089ba5d56349fda8ea16cc9f88",
+  "source_assessment_sha256": "82b4ae016ee2957d53ac37d1d49767dab1e3bc014bf7db7f69676421bebf2172",
+  "native_execution": "NOT_RUN",
+  "verdicts_changed": false
+ }
 }

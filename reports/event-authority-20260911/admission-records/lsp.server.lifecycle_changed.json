@@ -4,7 +4,7 @@
  "family_id": "event-family-lsp-server-lifecycle-changed",
  "implementation_receipt_sha256": "dceb7f21436cbe126c23822e62caa1b6dedcb45fefae3005c1804576ca34d827",
  "decision_ref": "Plans/Decision_Log.md#DL-2324",
- "decision_section_sha256": "4ef5cba5e5b3a552c55ab46e9838285bcc8824d290cdd99cf884c45345ddf8d3",
+ "decision_section_sha256": "4a3388aae3e2746ddf94e070f9fc9702c6226841760638dbb97a3b01d5ea16af",
  "registry_before": {
   "revision": "2026-11-16.187",
   "sha256": "bdc47259bc566aae55e34b5960a078efe3342791379d567f55c952a2411501e1",
@@ -18,7 +18,7 @@
  "registry_row_sha256": "e04114cc46980eb61993066e21f11f0ffd6bbb5d805b47278c06bde836eb5910",
  "depth_assessment": {
   "path": "reports/event-authority-20261116/admission-merge-2/depth/lsp.server.lifecycle_changed.json",
-  "sha256": "b875d17245c941deb615e8ee8aef4c1182567b36f6615f40f3ebe8bdcbb0ab77"
+  "sha256": "e3550052e5d0c0cc2721f47f726b7bc778d1174cb5db9f4024c628b4f8e316b5"
  },
  "admission_landing": {
   "branch": "plans/ea-merge2-apply-20261116",
@@ -35,5 +35,13 @@
   "The decision entry is DL-2324, which DL-096 makes Jared's decision entry for this family.",
   "registry_before is the registry at this commit's parent. If main's registry moves before the landing, the writer runs again on the new base and this record, its entry and the pins are taken again.",
   "Written under DL-077. The seal check recomputes completeness from the pinned assessment; the two fields ending in _at_recording are informational only."
- ]
+ ],
+ "evidence_maintenance": {
+  "authority": "MERGE2-FIX1",
+  "source_commit": "0c904de00426b0089ba5d56349fda8ea16cc9f88",
+  "source_record_sha256": "a7641e0ae729c7d90646790379d00b996d3339244bbe8a7258242be17dc96b9d",
+  "source_assessment_sha256": "b875d17245c941deb615e8ee8aef4c1182567b36f6615f40f3ebe8bdcbb0ab77",
+  "source_decision_section_sha256": "4ef5cba5e5b3a552c55ab46e9838285bcc8824d290cdd99cf884c45345ddf8d3",
+  "original_registry_checkpoints_preserved": true
+ }
 }

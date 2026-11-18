@@ -5,9 +5,9 @@
  "merge": "admission-merge-2",
  "registry": {
   "path": "Plans/event_family_registry.json",
-  "revision": "2026-11-16.150",
-  "sha256": "f74f56e1b5f10e7db5459aae42d691089b331950d0027fbb39ea59e89b14b797",
-  "family_count": 369,
+  "revision": "2026-11-18.2",
+  "sha256": "ec21cf1a5b42b3e68a5564a847b4798dff968612d11d438bc7075b89196f9602",
+  "family_count": 518,
   "row_pointer": "#/families/368"
  },
  "base_commit": "45b4ccf25270c486dbc682805cd455ce4ca25fb0",
@@ -22,17 +22,27 @@
     "membership_version": {
      "status": "PASS",
      "representation": "exact_registry_membership",
-     "finding": "Registered at registry revision 2026-11-16.150 as #/families/368 (canonical row SHA-256 36db74477afe14cc19a6b6b21521132f3fb46ff077bbe037e9cc2dd0c5704dd6); before this commit the family was absent.",
+     "finding": "Currently registered at 2026-11-18.2 as #/families/368 (canonical row SHA-256 36db74477afe14cc19a6b6b21521132f3fb46ff077bbe037e9cc2dd0c5704dd6). Original one-family admission checkpoints remain in the family record and immutable Git source.",
      "evidence": [
       {
        "path": "Plans/event_family_registry.json",
        "json_pointer": "#/families/368",
-       "line_start": 24666,
-       "line_end": 24703,
+       "line_start": 24710,
+       "line_end": 24747,
        "quote": "\"event_type\": \"debug.investigation.imported\"",
-       "quote_line": 24669,
-       "file_sha256": "f74f56e1b5f10e7db5459aae42d691089b331950d0027fbb39ea59e89b14b797",
-       "quote_check": "exact"
+       "quote_line": 24713,
+       "file_sha256": "ec21cf1a5b42b3e68a5564a847b4798dff968612d11d438bc7075b89196f9602",
+       "quote_check": "exact",
+       "source_citation": {
+        "path": "Plans/event_family_registry.json",
+        "json_pointer": "#/families/368",
+        "line_start": 24666,
+        "line_end": 24703,
+        "quote": "\"event_type\": \"debug.investigation.imported\"",
+        "quote_line": 24669,
+        "file_sha256": "f74f56e1b5f10e7db5459aae42d691089b331950d0027fbb39ea59e89b14b797",
+        "quote_check": "exact"
+       }
       }
      ]
     },
@@ -49,7 +59,15 @@
        "quote": "canonical_text: 'Newly authored owner contract under DL-045 for exactly debug.investigation.imported@1.0.0,",
        "quote_check": "exact",
        "quote_scope": "unit CV-573, Plans/Contracts_V0.md:5573-5702",
-       "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a"
+       "file_sha256": "4ae2225d8ed19b6df971b6c32797aae6882d175264ff2c2e9a2045650d735e67",
+       "source_citation": {
+        "path": "Plans/Contracts_V0.md",
+        "unit": "CV-573",
+        "line_start": 5580,
+        "line_end": 5580,
+        "quote": "canonical_text: 'Newly authored owner contract under DL-045 for exactly debug.investigation.imported@1.0.0,",
+        "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a"
+       }
       }
      ],
      "carried_from": {
@@ -72,7 +90,15 @@
        "quote": "Producer binding: owner.debug.investigation.imported@1.0.0 is the exact emitting handler above. Under",
        "quote_check": "exact",
        "quote_scope": "unit CV-573, Plans/Contracts_V0.md:5573-5702",
-       "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a"
+       "file_sha256": "4ae2225d8ed19b6df971b6c32797aae6882d175264ff2c2e9a2045650d735e67",
+       "source_citation": {
+        "path": "Plans/Contracts_V0.md",
+        "unit": "CV-573",
+        "line_start": 5603,
+        "line_end": 5603,
+        "quote": "Producer binding: owner.debug.investigation.imported@1.0.0 is the exact emitting handler above. Under",
+        "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a"
+       }
       }
      ],
      "carried_from": {
@@ -95,7 +121,15 @@
        "quote": "Closed payload: Plans/debug_investigation_event_payloads.schema.json#/$defs/imported; operation_id is",
        "quote_check": "exact",
        "quote_scope": "unit CV-573, Plans/Contracts_V0.md:5573-5702",
-       "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a"
+       "file_sha256": "4ae2225d8ed19b6df971b6c32797aae6882d175264ff2c2e9a2045650d735e67",
+       "source_citation": {
+        "path": "Plans/Contracts_V0.md",
+        "unit": "CV-573",
+        "line_start": 5582,
+        "line_end": 5582,
+        "quote": "Closed payload: Plans/debug_investigation_event_payloads.schema.json#/$defs/imported; operation_id is",
+        "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a"
+       }
       },
       {
        "path": "Plans/debug_investigation_event_payloads.schema.json",
@@ -105,7 +139,15 @@
        "quote": "\"$id\": \"pm.debug_investigation.imported.schema.v1\"",
        "quote_check": "exact",
        "quote_scope": "document",
-       "file_sha256": "ae5832ccea575c071892d1ec85804da05debd08c40cfd52243d5b5d13982b10d"
+       "file_sha256": "ae5832ccea575c071892d1ec85804da05debd08c40cfd52243d5b5d13982b10d",
+       "source_citation": {
+        "path": "Plans/debug_investigation_event_payloads.schema.json",
+        "unit": "#/$defs/imported",
+        "line_start": 227,
+        "line_end": 227,
+        "quote": "\"$id\": \"pm.debug_investigation.imported.schema.v1\"",
+        "file_sha256": "ae5832ccea575c071892d1ec85804da05debd08c40cfd52243d5b5d13982b10d"
+       }
       }
      ],
      "carried_from": {
@@ -128,7 +170,15 @@
        "quote": "Identity: idempotency_key is \"debug:\" + lowercase SHA-256 of RFC 8785 canonical JSON [\"debug.investigation.imported\",",
        "quote_check": "exact",
        "quote_scope": "unit CV-573, Plans/Contracts_V0.md:5573-5702",
-       "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a"
+       "file_sha256": "4ae2225d8ed19b6df971b6c32797aae6882d175264ff2c2e9a2045650d735e67",
+       "source_citation": {
+        "path": "Plans/Contracts_V0.md",
+        "unit": "CV-573",
+        "line_start": 5613,
+        "line_end": 5613,
+        "quote": "Identity: idempotency_key is \"debug:\" + lowercase SHA-256 of RFC 8785 canonical JSON [\"debug.investigation.imported\",",
+        "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a"
+       }
       }
      ],
      "carried_from": {
@@ -151,7 +201,15 @@
        "quote": "immutable semantic envelope and payload under Case L-5. Same identity and digest returns the original",
        "quote_check": "exact",
        "quote_scope": "unit CV-573, Plans/Contracts_V0.md:5573-5702",
-       "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a"
+       "file_sha256": "4ae2225d8ed19b6df971b6c32797aae6882d175264ff2c2e9a2045650d735e67",
+       "source_citation": {
+        "path": "Plans/Contracts_V0.md",
+        "unit": "CV-573",
+        "line_start": 5617,
+        "line_end": 5617,
+        "quote": "immutable semantic envelope and payload under Case L-5. Same identity and digest returns the original",
+        "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a"
+       }
       }
      ],
      "carried_from": {
@@ -174,7 +232,15 @@
        "quote": "\\ (2026-11-14).\\n\\nEvent history `retention_policy_ref = RP-OPERATIONAL-2555D@1.0.0`, under DL-401,\\",
        "quote_check": "exact",
        "quote_scope": "unit SP-570, Plans/storage-plan.md:1057-1638",
-       "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+       "file_sha256": "73ee6d097e08d31fd93301d05d2cd2632dd46e5a22ba3ea405ffadda4a0a9db2",
+       "source_citation": {
+        "path": "Plans/storage-plan.md",
+        "unit": "SP-570",
+        "line_start": 1192,
+        "line_end": 1192,
+        "quote": "\\ (2026-11-14).\\n\\nEvent history `retention_policy_ref = RP-OPERATIONAL-2555D@1.0.0`, under DL-401,\\",
+        "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+       }
       },
       {
        "path": "Plans/storage-plan.md",
@@ -184,7 +250,15 @@
        "quote": "\\ selects `RP-DEBUG-APPLICATION-2555D@1.0.0`; Project records select the Project policy and never count\\",
        "quote_check": "exact",
        "quote_scope": "unit SP-570, Plans/storage-plan.md:1057-1638",
-       "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+       "file_sha256": "73ee6d097e08d31fd93301d05d2cd2632dd46e5a22ba3ea405ffadda4a0a9db2",
+       "source_citation": {
+        "path": "Plans/storage-plan.md",
+        "unit": "SP-570",
+        "line_start": 1196,
+        "line_end": 1196,
+        "quote": "\\ selects `RP-DEBUG-APPLICATION-2555D@1.0.0`; Project records select the Project policy and never count\\",
+        "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+       }
       }
      ],
      "carried_from": {
@@ -207,7 +281,15 @@
        "quote": "Custody: Storage owns the immutable EventRecord and first receipt under coherent seglog/index/receipt",
        "quote_check": "exact",
        "quote_scope": "unit CV-573, Plans/Contracts_V0.md:5573-5702",
-       "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a"
+       "file_sha256": "4ae2225d8ed19b6df971b6c32797aae6882d175264ff2c2e9a2045650d735e67",
+       "source_citation": {
+        "path": "Plans/Contracts_V0.md",
+        "unit": "CV-573",
+        "line_start": 5646,
+        "line_end": 5646,
+        "quote": "Custody: Storage owns the immutable EventRecord and first receipt under coherent seglog/index/receipt",
+        "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a"
+       }
       }
      ],
      "carried_from": {
@@ -230,7 +312,15 @@
        "quote": "Producer binding: owner.debug.investigation.imported@1.0.0 is the exact emitting handler above. Under",
        "quote_check": "exact",
        "quote_scope": "unit CV-573, Plans/Contracts_V0.md:5573-5702",
-       "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a"
+       "file_sha256": "4ae2225d8ed19b6df971b6c32797aae6882d175264ff2c2e9a2045650d735e67",
+       "source_citation": {
+        "path": "Plans/Contracts_V0.md",
+        "unit": "CV-573",
+        "line_start": 5603,
+        "line_end": 5603,
+        "quote": "Producer binding: owner.debug.investigation.imported@1.0.0 is the exact emitting handler above. Under",
+        "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a"
+       }
       }
      ],
      "carried_from": {
@@ -253,7 +343,15 @@
        "quote": "Consumer binding: reader.debug.investigation.imported@1.0.0 is the direct transient history reader for",
        "quote_check": "exact",
        "quote_scope": "unit CV-573, Plans/Contracts_V0.md:5573-5702",
-       "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a"
+       "file_sha256": "4ae2225d8ed19b6df971b6c32797aae6882d175264ff2c2e9a2045650d735e67",
+       "source_citation": {
+        "path": "Plans/Contracts_V0.md",
+        "unit": "CV-573",
+        "line_start": 5628,
+        "line_end": 5628,
+        "quote": "Consumer binding: reader.debug.investigation.imported@1.0.0 is the direct transient history reader for",
+        "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a"
+       }
       }
      ],
      "carried_from": {
@@ -276,7 +374,15 @@
        "quote": "Compatibility and withdrawal: writers emit only 1.0.0, no alias or sibling admission. Unknown versions",
        "quote_check": "exact",
        "quote_scope": "unit CV-573, Plans/Contracts_V0.md:5573-5702",
-       "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a"
+       "file_sha256": "4ae2225d8ed19b6df971b6c32797aae6882d175264ff2c2e9a2045650d735e67",
+       "source_citation": {
+        "path": "Plans/Contracts_V0.md",
+        "unit": "CV-573",
+        "line_start": 5660,
+        "line_end": 5660,
+        "quote": "Compatibility and withdrawal: writers emit only 1.0.0, no alias or sibling admission. Unknown versions",
+        "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a"
+       }
       }
      ],
      "carried_from": {
@@ -299,7 +405,15 @@
        "quote": "history or sibling records. Positive/negative oracles are the imported cases in Plans/debug_investigation_event_fixtures.json",
        "quote_check": "exact",
        "quote_scope": "unit CV-573, Plans/Contracts_V0.md:5573-5702",
-       "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a"
+       "file_sha256": "4ae2225d8ed19b6df971b6c32797aae6882d175264ff2c2e9a2045650d735e67",
+       "source_citation": {
+        "path": "Plans/Contracts_V0.md",
+        "unit": "CV-573",
+        "line_start": 5666,
+        "line_end": 5666,
+        "quote": "history or sibling records. Positive/negative oracles are the imported cases in Plans/debug_investigation_event_fixtures.json",
+        "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a"
+       }
       },
       {
        "path": "Plans/debug_investigation_event_fixtures.json",
@@ -309,7 +423,15 @@
        "quote": "\"event_type\": \"debug.investigation.imported\",",
        "quote_check": "exact",
        "quote_scope": "document",
-       "file_sha256": "bfa8b6c11c1b20f88996516e79afc7bf50578e4fad931579b4fcaaacfa5400fa"
+       "file_sha256": "bfa8b6c11c1b20f88996516e79afc7bf50578e4fad931579b4fcaaacfa5400fa",
+       "source_citation": {
+        "path": "Plans/debug_investigation_event_fixtures.json",
+        "unit": "imported",
+        "line_start": 1984,
+        "line_end": 1984,
+        "quote": "\"event_type\": \"debug.investigation.imported\",",
+        "file_sha256": "bfa8b6c11c1b20f88996516e79afc7bf50578e4fad931579b4fcaaacfa5400fa"
+       }
       },
       {
        "path": "reports/event-authority-20261104/DDBG.md",
@@ -319,7 +441,15 @@
        "line_end": 106,
        "quote_check": "exact",
        "quote_scope": "document",
-       "file_sha256": "991b454ca465bb9feb1d45d2eaf407d45090be9e854708500491a0c77b375d38"
+       "file_sha256": "991b454ca465bb9feb1d45d2eaf407d45090be9e854708500491a0c77b375d38",
+       "source_citation": {
+        "path": "reports/event-authority-20261104/DDBG.md",
+        "unit": "guard tool totals",
+        "quote": "**Totals:** 33 suites, **512 rows, 512 proved**",
+        "line_start": 106,
+        "line_end": 106,
+        "file_sha256": "991b454ca465bb9feb1d45d2eaf407d45090be9e854708500491a0c77b375d38"
+       }
       },
       {
        "path": "reports/event-authority-20261104/DDBG.md",
@@ -329,7 +459,15 @@
        "line_end": 262,
        "quote_check": "exact",
        "quote_scope": "document",
-       "file_sha256": "991b454ca465bb9feb1d45d2eaf407d45090be9e854708500491a0c77b375d38"
+       "file_sha256": "991b454ca465bb9feb1d45d2eaf407d45090be9e854708500491a0c77b375d38",
+       "source_citation": {
+        "path": "reports/event-authority-20261104/DDBG.md",
+        "unit": "lifecycle_suite",
+        "quote": "| `lifecycle_suite` | PASS | 16 | 21 / 21 |",
+        "line_start": 262,
+        "line_end": 262,
+        "file_sha256": "991b454ca465bb9feb1d45d2eaf407d45090be9e854708500491a0c77b375d38"
+       }
       }
      ],
      "carried_from": {
@@ -341,5 +479,19 @@
     }
    }
   }
- ]
+ ],
+ "source_registry": {
+  "path": "Plans/event_family_registry.json",
+  "revision": "2026-11-16.150",
+  "sha256": "f74f56e1b5f10e7db5459aae42d691089b331950d0027fbb39ea59e89b14b797",
+  "family_count": 369,
+  "row_pointer": "#/families/368"
+ },
+ "evidence_maintenance": {
+  "authority": "MERGE2-FIX1 findings 1/3/5",
+  "source_commit": "0c904de00426b0089ba5d56349fda8ea16cc9f88",
+  "source_assessment_sha256": "4f388c1c70dc852c5cae377fdb4b3c951409604dd9b74688a5a5f76534afaa84",
+  "native_execution": "NOT_RUN",
+  "verdicts_changed": false
+ }
 }

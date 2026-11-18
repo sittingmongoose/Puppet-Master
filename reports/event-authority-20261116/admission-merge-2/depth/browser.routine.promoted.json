@@ -5,9 +5,9 @@
  "merge": "admission-merge-2",
  "registry": {
   "path": "Plans/event_family_registry.json",
-  "revision": "2026-11-16.63",
-  "sha256": "ef64c2deccd4b897fa2ea021bb7b2cf6f03a7203f587c3f6f41b5a6b7168667d",
-  "family_count": 282,
+  "revision": "2026-11-18.2",
+  "sha256": "ec21cf1a5b42b3e68a5564a847b4798dff968612d11d438bc7075b89196f9602",
+  "family_count": 518,
   "row_pointer": "#/families/281"
  },
  "base_commit": "45b4ccf25270c486dbc682805cd455ce4ca25fb0",
@@ -22,17 +22,27 @@
     "membership_version": {
      "status": "PASS",
      "representation": "exact_registry_membership",
-     "finding": "Registered at registry revision 2026-11-16.63 as #/families/281 (canonical row SHA-256 dd0f61b3026d5e919db0169c9288a0692a40a57ca6339e97d4dbf80b4fa49114); before this commit the family was absent.",
+     "finding": "Currently registered at 2026-11-18.2 as #/families/281 (canonical row SHA-256 dd0f61b3026d5e919db0169c9288a0692a40a57ca6339e97d4dbf80b4fa49114). Original one-family admission checkpoints remain in the family record and immutable Git source.",
      "evidence": [
       {
        "path": "Plans/event_family_registry.json",
        "json_pointer": "#/families/281",
-       "line_start": 18967,
-       "line_end": 19021,
+       "line_start": 19011,
+       "line_end": 19065,
        "quote": "\"event_type\": \"browser.routine.promoted\"",
-       "quote_line": 18970,
-       "file_sha256": "ef64c2deccd4b897fa2ea021bb7b2cf6f03a7203f587c3f6f41b5a6b7168667d",
-       "quote_check": "exact"
+       "quote_line": 19014,
+       "file_sha256": "ec21cf1a5b42b3e68a5564a847b4798dff968612d11d438bc7075b89196f9602",
+       "quote_check": "exact",
+       "source_citation": {
+        "path": "Plans/event_family_registry.json",
+        "json_pointer": "#/families/281",
+        "line_start": 18967,
+        "line_end": 19021,
+        "quote": "\"event_type\": \"browser.routine.promoted\"",
+        "quote_line": 18970,
+        "file_sha256": "ef64c2deccd4b897fa2ea021bb7b2cf6f03a7203f587c3f6f41b5a6b7168667d",
+        "quote_check": "exact"
+       }
       }
      ]
     },
@@ -44,12 +54,20 @@
       {
        "path": "Plans/browser_event_admission.json",
        "unit": "#/rows/48",
-       "line_start": 2482,
-       "line_end": 2482,
+       "line_start": 2489,
+       "line_end": 2489,
        "quote": "\"semantic_owner_ref\": \"Plans/Section15_MVP_Promoted_Features_Spec.md#browser-program-event-authority-routine-promoted\"",
        "quote_check": "exact",
        "quote_scope": "document",
-       "file_sha256": "b6ba5a91cb17dd7d4f27c2cd0eb3fab14c24f02bf8edf92556e94cc7d9575e06"
+       "file_sha256": "d9a149ada1bd49c26a1218563027c33d72b56a2a788d28a386505833545a78da",
+       "source_citation": {
+        "path": "Plans/browser_event_admission.json",
+        "unit": "#/rows/48",
+        "line_start": 2482,
+        "line_end": 2482,
+        "quote": "\"semantic_owner_ref\": \"Plans/Section15_MVP_Promoted_Features_Spec.md#browser-program-event-authority-routine-promoted\"",
+        "file_sha256": "b6ba5a91cb17dd7d4f27c2cd0eb3fab14c24f02bf8edf92556e94cc7d9575e06"
+       }
       },
       {
        "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
@@ -59,7 +77,15 @@
        "quote": "**Newly authored technical owner definition under DL-046**, limited to `browser.routine.promoted`",
        "quote_check": "exact",
        "quote_scope": "document",
-       "file_sha256": "752b95d90e41b07c28e1376d0e1fdfdac2052196ca2e73e31e838f6f3124869d"
+       "file_sha256": "140caa73848b1a688465f9f69c11a07a6d866208c8997f4cbf88a0bb475eb86d",
+       "source_citation": {
+        "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+        "unit": "#browser-program-event-authority-routine-promoted",
+        "line_start": 13163,
+        "line_end": 13163,
+        "quote": "**Newly authored technical owner definition under DL-046**, limited to `browser.routine.promoted`",
+        "file_sha256": "752b95d90e41b07c28e1376d0e1fdfdac2052196ca2e73e31e838f6f3124869d"
+       }
       }
      ],
      "carried_from": {
@@ -82,7 +108,15 @@
        "quote": "The sole producer is `BrowserRuntimeService.routines`, publishing through `BrowserRuntimeService.routines.publish.routine_promoted@1.0.0`",
        "quote_check": "exact",
        "quote_scope": "document",
-       "file_sha256": "752b95d90e41b07c28e1376d0e1fdfdac2052196ca2e73e31e838f6f3124869d"
+       "file_sha256": "140caa73848b1a688465f9f69c11a07a6d866208c8997f4cbf88a0bb475eb86d",
+       "source_citation": {
+        "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+        "unit": "#browser-program-event-authority-routine-promoted",
+        "line_start": 13169,
+        "line_end": 13169,
+        "quote": "The sole producer is `BrowserRuntimeService.routines`, publishing through `BrowserRuntimeService.routines.publish.routine_promoted@1.0.0`",
+        "file_sha256": "752b95d90e41b07c28e1376d0e1fdfdac2052196ca2e73e31e838f6f3124869d"
+       }
       },
       {
        "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
@@ -92,7 +126,15 @@
        "quote": "ordinary EventRecord append, first AppendReceipt issued and synced under SP-286/CV-339",
        "quote_check": "exact",
        "quote_scope": "document",
-       "file_sha256": "752b95d90e41b07c28e1376d0e1fdfdac2052196ca2e73e31e838f6f3124869d"
+       "file_sha256": "140caa73848b1a688465f9f69c11a07a6d866208c8997f4cbf88a0bb475eb86d",
+       "source_citation": {
+        "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+        "unit": "#browser-program-event-authority-routine-promoted",
+        "line_start": 13169,
+        "line_end": 13169,
+        "quote": "ordinary EventRecord append, first AppendReceipt issued and synced under SP-286/CV-339",
+        "file_sha256": "752b95d90e41b07c28e1376d0e1fdfdac2052196ca2e73e31e838f6f3124869d"
+       }
       },
       {
        "path": "Plans/storage-plan.md",
@@ -102,7 +144,15 @@
        "quote": "`storage.first_append_receipt.issue.v2` issues the eleven-field first receipt",
        "quote_check": "exact",
        "quote_scope": "unit SP-2546, Plans/storage-plan.md:23559-23629",
-       "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+       "file_sha256": "73ee6d097e08d31fd93301d05d2cd2632dd46e5a22ba3ea405ffadda4a0a9db2",
+       "source_citation": {
+        "path": "Plans/storage-plan.md",
+        "unit": "SP-2546",
+        "line_start": 23563,
+        "line_end": 23563,
+        "quote": "`storage.first_append_receipt.issue.v2` issues the eleven-field first receipt",
+        "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+       }
       }
      ],
      "carried_from": {
@@ -125,7 +175,15 @@
        "quote": "\"$id\": \"pm.browser_event.routine_promoted.schema.v1\"",
        "quote_check": "exact",
        "quote_scope": "document",
-       "file_sha256": "329f7794326afef1e8a528130877fd1f817e109c254a976fdd7d9062a96e378f"
+       "file_sha256": "329f7794326afef1e8a528130877fd1f817e109c254a976fdd7d9062a96e378f",
+       "source_citation": {
+        "path": "Plans/browser_event_payloads.schema.json",
+        "unit": "#/$defs/routine_promoted",
+        "line_start": 5617,
+        "line_end": 5617,
+        "quote": "\"$id\": \"pm.browser_event.routine_promoted.schema.v1\"",
+        "file_sha256": "329f7794326afef1e8a528130877fd1f817e109c254a976fdd7d9062a96e378f"
+       }
       },
       {
        "path": "Plans/Contracts_V0.md",
@@ -135,7 +193,15 @@
        "quote": "`Plans/browser_event_payloads.schema.json#/$defs/routine_promoted` (`pm.browser_event.routine_promoted.schema.v1`) is its closed payload",
        "quote_check": "exact",
        "quote_scope": "unit CV-2546, Plans/Contracts_V0.md:29882-29946",
-       "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a"
+       "file_sha256": "4ae2225d8ed19b6df971b6c32797aae6882d175264ff2c2e9a2045650d735e67",
+       "source_citation": {
+        "path": "Plans/Contracts_V0.md",
+        "unit": "CV-2546",
+        "line_start": 29884,
+        "line_end": 29884,
+        "quote": "`Plans/browser_event_payloads.schema.json#/$defs/routine_promoted` (`pm.browser_event.routine_promoted.schema.v1`) is its closed payload",
+        "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a"
+       }
       }
      ],
      "carried_from": {
@@ -158,7 +224,15 @@
        "quote": "`scope_kind=project` only, with `scope_partition=project~base64url_no_pad(UTF8(project_id))`",
        "quote_check": "exact",
        "quote_scope": "unit CV-2546, Plans/Contracts_V0.md:29882-29946",
-       "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a"
+       "file_sha256": "4ae2225d8ed19b6df971b6c32797aae6882d175264ff2c2e9a2045650d735e67",
+       "source_citation": {
+        "path": "Plans/Contracts_V0.md",
+        "unit": "CV-2546",
+        "line_start": 29886,
+        "line_end": 29886,
+        "quote": "`scope_kind=project` only, with `scope_partition=project~base64url_no_pad(UTF8(project_id))`",
+        "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a"
+       }
       },
       {
        "path": "Plans/Contracts_V0.md",
@@ -168,7 +242,15 @@
        "quote": "`event_id` is `evt_browser_` ",
        "quote_check": "exact",
        "quote_scope": "unit CV-2546, Plans/Contracts_V0.md:29882-29946",
-       "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a"
+       "file_sha256": "4ae2225d8ed19b6df971b6c32797aae6882d175264ff2c2e9a2045650d735e67",
+       "source_citation": {
+        "path": "Plans/Contracts_V0.md",
+        "unit": "CV-2546",
+        "line_start": 29888,
+        "line_end": 29888,
+        "quote": "`event_id` is `evt_browser_` ",
+        "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a"
+       }
       }
      ],
      "carried_from": {
@@ -191,7 +273,15 @@
        "quote": "Every current write selects `replay_policy=dedupe_by_idempotency_key`",
        "quote_check": "exact",
        "quote_scope": "unit CV-2546, Plans/Contracts_V0.md:29882-29946",
-       "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a"
+       "file_sha256": "4ae2225d8ed19b6df971b6c32797aae6882d175264ff2c2e9a2045650d735e67",
+       "source_citation": {
+        "path": "Plans/Contracts_V0.md",
+        "unit": "CV-2546",
+        "line_start": 29890,
+        "line_end": 29890,
+        "quote": "Every current write selects `replay_policy=dedupe_by_idempotency_key`",
+        "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a"
+       }
       },
       {
        "path": "Plans/storage-plan.md",
@@ -201,7 +291,15 @@
        "quote": "A lost-ack retry returns the original receipt from `storage.first_append_receipt.resolve.v2`",
        "quote_check": "exact",
        "quote_scope": "unit SP-2546, Plans/storage-plan.md:23559-23629",
-       "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+       "file_sha256": "73ee6d097e08d31fd93301d05d2cd2632dd46e5a22ba3ea405ffadda4a0a9db2",
+       "source_citation": {
+        "path": "Plans/storage-plan.md",
+        "unit": "SP-2546",
+        "line_start": 23563,
+        "line_end": 23563,
+        "quote": "A lost-ack retry returns the original receipt from `storage.first_append_receipt.resolve.v2`",
+        "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+       }
       }
      ],
      "carried_from": {
@@ -219,22 +317,48 @@
       {
        "path": "Plans/browser_event_admission.json",
        "unit": "#/rows/48",
-       "line_start": 2468,
-       "line_end": 2468,
+       "line_start": 2474,
+       "line_end": 2474,
        "quote": "\"policy_id\": \"RP-AUTHORITY-INDEFINITE\"",
        "quote_check": "exact",
        "quote_scope": "document",
-       "file_sha256": "b6ba5a91cb17dd7d4f27c2cd0eb3fab14c24f02bf8edf92556e94cc7d9575e06"
+       "file_sha256": "d9a149ada1bd49c26a1218563027c33d72b56a2a788d28a386505833545a78da",
+       "source_citation": {
+        "path": "Plans/browser_event_admission.json",
+        "unit": "#/rows/48",
+        "line_start": 2468,
+        "line_end": 2468,
+        "quote": "\"policy_id\": \"RP-AUTHORITY-INDEFINITE\"",
+        "file_sha256": "b6ba5a91cb17dd7d4f27c2cd0eb3fab14c24f02bf8edf92556e94cc7d9575e06"
+       }
       },
       {
-       "path": "Plans/Decision_Log.md",
+       "path": "Plans/Decision_Log.md@0c904de00426b0089ba5d56349fda8ea16cc9f88",
        "unit": "DL-401",
        "line_start": 6425,
        "line_end": 6425,
        "quote": "Browser retention was not put to a ruling: SP-262’s split stands.",
        "quote_check": "exact",
        "quote_scope": "unit DL-401, Plans/Decision_Log.md:6290-6454",
-       "file_sha256": "61c4c275c25ff6fc0f38bc5f72ac70ac4d5295386c392dd95efbf4e77b7b5322"
+       "file_sha256": "de39dfd0788226c8df09671900d2fefcd37ac40fdaa4a3d295fab10fe1d3b131",
+       "source_citation": {
+        "path": "Plans/Decision_Log.md",
+        "unit": "DL-401",
+        "line_start": 6425,
+        "line_end": 6425,
+        "quote": "Browser retention was not put to a ruling: SP-262’s split stands.",
+        "file_sha256": "61c4c275c25ff6fc0f38bc5f72ac70ac4d5295386c392dd95efbf4e77b7b5322"
+       },
+       "current_citation": {
+        "path": "Plans/Decision_Log.md",
+        "unit": "DL-401",
+        "line_start": 6425,
+        "line_end": 6425,
+        "quote": "Browser retention was not put to a ruling: SP-262’s split stands.",
+        "quote_scope": "unit DL-401, Plans/Decision_Log.md:6290-6454",
+        "excerpt_sha256": "1766dbe232b0f5ed4e96a28e5db9d6665c4777d460156a23c1231797f3925a9b"
+       },
+       "source_commit": "0c904de00426b0089ba5d56349fda8ea16cc9f88"
       },
       {
        "path": "Plans/storage-plan.md",
@@ -244,7 +368,15 @@
        "quote": "The checkpoint uses `RP-PROJECTION-3GEN@1.0.0`",
        "quote_check": "exact",
        "quote_scope": "unit SP-2546, Plans/storage-plan.md:23559-23629",
-       "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+       "file_sha256": "73ee6d097e08d31fd93301d05d2cd2632dd46e5a22ba3ea405ffadda4a0a9db2",
+       "source_citation": {
+        "path": "Plans/storage-plan.md",
+        "unit": "SP-2546",
+        "line_start": 23569,
+        "line_end": 23569,
+        "quote": "The checkpoint uses `RP-PROJECTION-3GEN@1.0.0`",
+        "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+       }
       }
      ],
      "carried_from": {
@@ -267,7 +399,15 @@
        "quote": "protected `AuthBrowserSession` identity and content never appear",
        "quote_check": "exact",
        "quote_scope": "document",
-       "file_sha256": "752b95d90e41b07c28e1376d0e1fdfdac2052196ca2e73e31e838f6f3124869d"
+       "file_sha256": "140caa73848b1a688465f9f69c11a07a6d866208c8997f4cbf88a0bb475eb86d",
+       "source_citation": {
+        "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+        "unit": "#browser-program-event-authority-routine-promoted",
+        "line_start": 13175,
+        "line_end": 13175,
+        "quote": "protected `AuthBrowserSession` identity and content never appear",
+        "file_sha256": "752b95d90e41b07c28e1376d0e1fdfdac2052196ca2e73e31e838f6f3124869d"
+       }
       },
       {
        "path": "Plans/storage-plan.md",
@@ -277,7 +417,15 @@
        "quote": "Storage holds the original record, its custody v2 first receipt and its sealed SP-1101 write receipt under",
        "quote_check": "exact",
        "quote_scope": "unit SP-2546, Plans/storage-plan.md:23559-23629",
-       "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+       "file_sha256": "73ee6d097e08d31fd93301d05d2cd2632dd46e5a22ba3ea405ffadda4a0a9db2",
+       "source_citation": {
+        "path": "Plans/storage-plan.md",
+        "unit": "SP-2546",
+        "line_start": 23569,
+        "line_end": 23569,
+        "quote": "Storage holds the original record, its custody v2 first receipt and its sealed SP-1101 write receipt under",
+        "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+       }
       }
      ],
      "carried_from": {
@@ -300,7 +448,15 @@
        "quote": "The entitling owner transition is `routine_promoted`",
        "quote_check": "exact",
        "quote_scope": "document",
-       "file_sha256": "752b95d90e41b07c28e1376d0e1fdfdac2052196ca2e73e31e838f6f3124869d"
+       "file_sha256": "140caa73848b1a688465f9f69c11a07a6d866208c8997f4cbf88a0bb475eb86d",
+       "source_citation": {
+        "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+        "unit": "#browser-program-event-authority-routine-promoted",
+        "line_start": 13167,
+        "line_end": 13167,
+        "quote": "The entitling owner transition is `routine_promoted`",
+        "file_sha256": "752b95d90e41b07c28e1376d0e1fdfdac2052196ca2e73e31e838f6f3124869d"
+       }
       },
       {
        "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
@@ -310,7 +466,15 @@
        "quote": "Only a transition the owner has committed emits",
        "quote_check": "exact",
        "quote_scope": "document",
-       "file_sha256": "752b95d90e41b07c28e1376d0e1fdfdac2052196ca2e73e31e838f6f3124869d"
+       "file_sha256": "140caa73848b1a688465f9f69c11a07a6d866208c8997f4cbf88a0bb475eb86d",
+       "source_citation": {
+        "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+        "unit": "#browser-program-event-authority-routine-promoted",
+        "line_start": 13167,
+        "line_end": 13167,
+        "quote": "Only a transition the owner has committed emits",
+        "file_sha256": "752b95d90e41b07c28e1376d0e1fdfdac2052196ca2e73e31e838f6f3124869d"
+       }
       }
      ],
      "carried_from": {
@@ -333,7 +497,15 @@
        "quote": "Derived family `browser_routine_promoted_index_checkpoint`",
        "quote_check": "exact",
        "quote_scope": "unit SP-2546, Plans/storage-plan.md:23559-23629",
-       "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+       "file_sha256": "73ee6d097e08d31fd93301d05d2cd2632dd46e5a22ba3ea405ffadda4a0a9db2",
+       "source_citation": {
+        "path": "Plans/storage-plan.md",
+        "unit": "SP-2546",
+        "line_start": 23565,
+        "line_end": 23565,
+        "quote": "Derived family `browser_routine_promoted_index_checkpoint`",
+        "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+       }
       },
       {
        "path": "Plans/storage-plan.md",
@@ -343,7 +515,15 @@
        "quote": "It explicitly adopts SP-278",
        "quote_check": "exact",
        "quote_scope": "unit SP-2546, Plans/storage-plan.md:23559-23629",
-       "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+       "file_sha256": "73ee6d097e08d31fd93301d05d2cd2632dd46e5a22ba3ea405ffadda4a0a9db2",
+       "source_citation": {
+        "path": "Plans/storage-plan.md",
+        "unit": "SP-2546",
+        "line_start": 23565,
+        "line_end": 23565,
+        "quote": "It explicitly adopts SP-278",
+        "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+       }
       },
       {
        "path": "Plans/storage-plan.md",
@@ -353,17 +533,33 @@
        "quote": "It stores only the nine-field durable read token (DL-076), never `redb_snapshot_id`",
        "quote_check": "exact",
        "quote_scope": "unit SP-2546, Plans/storage-plan.md:23559-23629",
-       "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+       "file_sha256": "73ee6d097e08d31fd93301d05d2cd2632dd46e5a22ba3ea405ffadda4a0a9db2",
+       "source_citation": {
+        "path": "Plans/storage-plan.md",
+        "unit": "SP-2546",
+        "line_start": 23565,
+        "line_end": 23565,
+        "quote": "It stores only the nine-field durable read token (DL-076), never `redb_snapshot_id`",
+        "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+       }
       },
       {
        "path": "Plans/storage_value_registry.json",
        "unit": "browser_routine_promoted_index_checkpoint",
-       "line_start": 308289,
-       "line_end": 308289,
+       "line_start": 308685,
+       "line_end": 308685,
        "quote": "\"family_id\": \"browser_routine_promoted_index_checkpoint\"",
        "quote_check": "exact",
        "quote_scope": "document",
-       "file_sha256": "5f588f0aedddefe10864c536bfeb261da5833ef1a894c3f43706e07e7c6c79da"
+       "file_sha256": "b04c18aad61bb76c24b887ff5ded4cdc751b902c16a8c914ad7e62c009281642",
+       "source_citation": {
+        "path": "Plans/storage_value_registry.json",
+        "unit": "browser_routine_promoted_index_checkpoint",
+        "line_start": 308289,
+        "line_end": 308289,
+        "quote": "\"family_id\": \"browser_routine_promoted_index_checkpoint\"",
+        "file_sha256": "5f588f0aedddefe10864c536bfeb261da5833ef1a894c3f43706e07e7c6c79da"
+       }
       }
      ],
      "carried_from": {
@@ -386,7 +582,15 @@
        "quote": "A reviewed withdrawal first cuts off writers (checked before dedupe",
        "quote_check": "exact",
        "quote_scope": "unit SP-2546, Plans/storage-plan.md:23559-23629",
-       "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+       "file_sha256": "73ee6d097e08d31fd93301d05d2cd2632dd46e5a22ba3ea405ffadda4a0a9db2",
+       "source_citation": {
+        "path": "Plans/storage-plan.md",
+        "unit": "SP-2546",
+        "line_start": 23573,
+        "line_end": 23573,
+        "quote": "A reviewed withdrawal first cuts off writers (checked before dedupe",
+        "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+       }
       },
       {
        "path": "Plans/storage-plan.md",
@@ -396,7 +600,15 @@
        "quote": "A retained `browser.routine.promoted` original is read under the recipe named by the one write",
        "quote_check": "exact",
        "quote_scope": "unit SP-2546, Plans/storage-plan.md:23559-23629",
-       "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+       "file_sha256": "73ee6d097e08d31fd93301d05d2cd2632dd46e5a22ba3ea405ffadda4a0a9db2",
+       "source_citation": {
+        "path": "Plans/storage-plan.md",
+        "unit": "SP-2546",
+        "line_start": 23571,
+        "line_end": 23571,
+        "quote": "A retained `browser.routine.promoted` original is read under the recipe named by the one write",
+        "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+       }
       }
      ],
      "carried_from": {
@@ -419,7 +631,15 @@
        "quote": "### ATS-2500 - Browser Program prepared families criterion-12 oracles (s4b)",
        "quote_check": "exact",
        "quote_scope": "unit ATS-2500, Plans/Automated_Testing_System.md:14916-14973",
-       "file_sha256": "e1c8a84c145a3aaaa0738971f76db5fa0bf94f59c0149e76f4131e8579a6971d"
+       "file_sha256": "e1c8a84c145a3aaaa0738971f76db5fa0bf94f59c0149e76f4131e8579a6971d",
+       "source_citation": {
+        "path": "Plans/Automated_Testing_System.md",
+        "unit": "ATS-2500",
+        "line_start": 14916,
+        "line_end": 14916,
+        "quote": "### ATS-2500 - Browser Program prepared families criterion-12 oracles (s4b)",
+        "file_sha256": "e1c8a84c145a3aaaa0738971f76db5fa0bf94f59c0149e76f4131e8579a6971d"
+       }
       },
       {
        "path": "scripts/pm_s4b_browser_events.py",
@@ -429,7 +649,15 @@
        "quote": "- The checker refuses ONLY through those table predicates (evaluate()).",
        "quote_check": "exact",
        "quote_scope": "document",
-       "file_sha256": "65528f01c62c5f1fd25e906122c820a61febe5748811fb669846656b2d7de8a0"
+       "file_sha256": "65528f01c62c5f1fd25e906122c820a61febe5748811fb669846656b2d7de8a0",
+       "source_citation": {
+        "path": "scripts/pm_s4b_browser_events.py",
+        "unit": "checker structure",
+        "line_start": 11,
+        "line_end": 11,
+        "quote": "- The checker refuses ONLY through those table predicates (evaluate()).",
+        "file_sha256": "65528f01c62c5f1fd25e906122c820a61febe5748811fb669846656b2d7de8a0"
+       }
       }
      ],
      "carried_from": {
@@ -441,5 +669,19 @@
     }
    }
   }
- ]
+ ],
+ "source_registry": {
+  "path": "Plans/event_family_registry.json",
+  "revision": "2026-11-16.63",
+  "sha256": "ef64c2deccd4b897fa2ea021bb7b2cf6f03a7203f587c3f6f41b5a6b7168667d",
+  "family_count": 282,
+  "row_pointer": "#/families/281"
+ },
+ "evidence_maintenance": {
+  "authority": "MERGE2-FIX1 findings 1/3/5",
+  "source_commit": "0c904de00426b0089ba5d56349fda8ea16cc9f88",
+  "source_assessment_sha256": "26d2a23156e5da24e474ac06dd3e1a542cd032ac5c2b8b4ce59f97b0d93c736b",
+  "native_execution": "NOT_RUN",
+  "verdicts_changed": false
+ }
 }

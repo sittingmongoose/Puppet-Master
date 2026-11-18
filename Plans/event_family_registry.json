@@ -2,7 +2,7 @@
   "$schema": "https://puppetmaster.local/schemas/event_family_registry/1.0.0/event_family_registry.schema.json",
   "schema_id": "pm.event_family_registry.v1",
   "schema_version": "2.0.0",
-  "registry_revision": "2026-11-18.1",
+  "registry_revision": "2026-11-18.2",
   "owner_doc": "Plans/storage-plan.md#case-l-5-eventrecord-persistence-legacy-normalization-and-dedupe",
   "unknown_event_disposition": "quarantine_without_checkpoint_advance",
   "families": [
@@ -26941,8 +26941,8 @@
       "family_revision": "1.0.0",
       "event_type": "memory.monthly_summary.completed",
       "scope_policy": "project_only",
-      "semantic_owner_doc": "Plans/storage-plan.md#SP-638",
-      "payload_owner_doc": "Plans/Contracts_V0.md#CV-656",
+      "semantic_owner_doc": "Plans/assistant-memory-subsystem.md#7-gui-and-maintenance",
+      "payload_owner_doc": "Plans/storage-plan.md#SP-638",
       "payload_schema_id": "https://puppetmaster.local/Plans/memory_maintenance_event_payloads.schema.json#/$defs/memory_monthly_summary_completed",
       "payload_schema_ref": {
         "path": "Plans/memory_maintenance_event_payloads.schema.json",
@@ -26966,10 +26966,11 @@
         }
       },
       "source_refs": [
+        "Plans/assistant-memory-subsystem.md#7-gui-and-maintenance",
         "Plans/storage-plan.md#SP-638",
-        "Plans/Contracts_V0.md#CV-656",
+        "Plans/memory_maintenance_contracts.json#/card1b_prepared_contracts_ref",
         "Plans/memory_maintenance_event_payloads.schema.json#/$defs/memory_monthly_summary_completed",
-        "Plans/memory_maintenance_contracts.json#",
+        "Plans/memory_archive_contracts.json#/families/0",
         "reports/event-authority-20261116/admission-merge-2/readiness-list.json"
       ],
       "retention_policy_ref": {
@@ -26983,8 +26984,8 @@
       "family_revision": "1.0.0",
       "event_type": "memory.monthly_summary.started",
       "scope_policy": "project_only",
-      "semantic_owner_doc": "Plans/storage-plan.md#SP-639",
-      "payload_owner_doc": "Plans/Contracts_V0.md#CV-657",
+      "semantic_owner_doc": "Plans/assistant-memory-subsystem.md#7-gui-and-maintenance",
+      "payload_owner_doc": "Plans/storage-plan.md#SP-639",
       "payload_schema_id": "https://puppetmaster.local/Plans/memory_maintenance_event_payloads.schema.json#/$defs/memory_monthly_summary_started",
       "payload_schema_ref": {
         "path": "Plans/memory_maintenance_event_payloads.schema.json",
@@ -27008,10 +27009,11 @@
         }
       },
       "source_refs": [
+        "Plans/assistant-memory-subsystem.md#7-gui-and-maintenance",
         "Plans/storage-plan.md#SP-639",
-        "Plans/Contracts_V0.md#CV-657",
+        "Plans/memory_maintenance_contracts.json#/card1b_prepared_contracts_ref",
         "Plans/memory_maintenance_event_payloads.schema.json#/$defs/memory_monthly_summary_started",
-        "Plans/memory_maintenance_contracts.json#",
+        "Plans/memory_archive_contracts.json#/families/1",
         "reports/event-authority-20261116/admission-merge-2/readiness-list.json"
       ],
       "retention_policy_ref": {
@@ -27025,7 +27027,7 @@
       "family_revision": "1.0.0",
       "event_type": "memory.prune_archive.completed",
       "scope_policy": "project_only",
-      "semantic_owner_doc": "Plans/Contracts_V0.md#CV-658",
+      "semantic_owner_doc": "Plans/assistant-memory-subsystem.md#7-gui-and-maintenance",
       "payload_owner_doc": "Plans/Contracts_V0.md#CV-658",
       "payload_schema_id": "https://puppetmaster.local/Plans/memory_maintenance_event_payloads.schema.json#/$defs/memory_prune_archive_completed",
       "payload_schema_ref": {
@@ -27050,9 +27052,11 @@
         }
       },
       "source_refs": [
+        "Plans/assistant-memory-subsystem.md#7-gui-and-maintenance",
         "Plans/Contracts_V0.md#CV-658",
+        "Plans/memory_maintenance_contracts.json#/card1b_prepared_contracts_ref",
         "Plans/memory_maintenance_event_payloads.schema.json#/$defs/memory_prune_archive_completed",
-        "Plans/memory_maintenance_contracts.json#",
+        "Plans/memory_archive_contracts.json#/families/2",
         "reports/event-authority-20261116/admission-merge-2/readiness-list.json"
       ],
       "retention_policy_ref": {
@@ -27066,7 +27070,7 @@
       "family_revision": "1.0.0",
       "event_type": "memory.prune_archive.started",
       "scope_policy": "project_only",
-      "semantic_owner_doc": "Plans/Contracts_V0.md#CV-659",
+      "semantic_owner_doc": "Plans/assistant-memory-subsystem.md#7-gui-and-maintenance",
       "payload_owner_doc": "Plans/Contracts_V0.md#CV-659",
       "payload_schema_id": "https://puppetmaster.local/Plans/memory_maintenance_event_payloads.schema.json#/$defs/memory_prune_archive_started",
       "payload_schema_ref": {
@@ -27091,9 +27095,11 @@
         }
       },
       "source_refs": [
+        "Plans/assistant-memory-subsystem.md#7-gui-and-maintenance",
         "Plans/Contracts_V0.md#CV-659",
+        "Plans/memory_maintenance_contracts.json#/card1b_prepared_contracts_ref",
         "Plans/memory_maintenance_event_payloads.schema.json#/$defs/memory_prune_archive_started",
-        "Plans/memory_maintenance_contracts.json#",
+        "Plans/memory_archive_contracts.json#/families/3",
         "reports/event-authority-20261116/admission-merge-2/readiness-list.json"
       ],
       "retention_policy_ref": {
