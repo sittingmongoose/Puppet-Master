@@ -192,6 +192,35 @@ class Witnesses(unittest.TestCase):
         self.assertEqual(replay.edits_for(entry, 'type', {'type': 'string'}, 'x', [edit]), [edit])
         self.assertEqual(replay.typed_path({'x': [7]}, ['x', '0']), ('x', 0))
 
+    def test_reverify_output_keeps_matrix_bindings(self):
+        import json
+        import tempfile
+        from pathlib import Path
+        import pm_goal_dg5_reverify as replay
+        plain = jsonschema.Draft202012Validator({'type': 'object', 'properties': {'n': {'type': 'integer'}}})
+        control = {'n': 7}
+        item = slot(object(), plain, [control])
+        item.update(rows={'schema-row'}, families={'goal.updated'}, seeds={replay.digest(control): control})
+        dumped = c._dump_entry(item, 'selftest-output')
+        v = c.closure_validator(plain, 'selftest-output')
+        clause = next(x for x in c.go.locations(c.go.errors_of(v, {'n': True})) if x.endswith('/n/type'))
+        with tempfile.TemporaryDirectory() as temp:
+            dump, prior, out = [Path(temp) / x for x in ('dump.pkl', 'prior.json', 'out.json')]
+            dump.write_bytes(pickle.dumps({'meta': {}, 'roots': {'selftest-output': dumped}}))
+            prior.write_text(json.dumps({'roots': {'selftest-output': {'clauses': {clause:
+                {'cls': 'KILLED', 'path': ['n'], 'edit': 'True', 'input_sha256': 'missing'}}}}}))
+            self.assertEqual(replay.reverify(dump, [prior], out), 0)
+            result = json.loads(out.read_text())
+            root = result['roots']['selftest-output']
+            self.assertEqual(root['rows'], ['schema-row'])
+            self.assertEqual(root['families'], ['goal.updated'])
+            self.assertEqual(root['verify']['passed'], 1)
+            self.assertEqual(result['from_dump_sha256'], hashlib.sha256(dump.read_bytes()).hexdigest())
+            # Changing the value hash must fail even if another value has the same verdict.
+            evidence = replay.load_store(out, root['control_store'])
+            root['clauses'][clause]['input_value_sha256'] = 'wrong'
+            self.assertEqual(c.verify_witnesses(v, root['clauses'], {}, evidence)['failed'], 1)
+
     def test_annotation_memo_retains_source_identity(self):
         memo = c.AnnotationMemo()
         node = {'type': 'integer'}
