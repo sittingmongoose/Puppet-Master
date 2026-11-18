@@ -30,6 +30,8 @@
 //       the pointer on that column: no is-hl-dim/is-hl-on while paused, and the provider light returns after op-end.
 //       --set raceOnly=1 runs this row alone. On main use --set raceNoPause=1: assert the absence of a pause marker,
 //       then explicitly SKIP R4's suppression/return verdicts, which have no pause interval to judge there.
+//   R5  keyboard-mount Accounts/Overview mid-burst; live-board marker, tools/rows/light suppression and live return.
+//       --set mountOnly=1 isolates R5; --set mountNoPause=1 explicitly skips pause verdicts on main; rm=1 covers the spare.
 // A window that did not scroll at least TICKS*40*0.6 px is taken again (twice at most); one still short fails as
 // "could not judge".
 //   --set looks=basic-dark,glass-dark,retro-dark,nier-dark   --set tries=3   --set ticks=12   --set gap=30
@@ -44,14 +46,15 @@ import { muteSound } from '../helpers/quiet-page.mjs';
 // the recorder, installed once in the app's frame; __uhp.start() clears it and starts a window, __uhp.stop() ends it
 const INSTALL = () => {
 	if (window.__uhp) return true;
-	const sc = document.getElementById('pmuScroll'), board = sc && sc.querySelector('.pmu-board');
+	const sc = document.getElementById('pmuScroll');
+	let board = document.getElementById('pmuBoard');
 	if (!board) return false;
 	const R = window.__uhp = { on: false };
 	const cardId = (c) => (c ? c.getAttribute('data-id') || c.getAttribute('data-card') || c.id || String([...board.children].indexOf(c)) : null);
 	const cls = (el) => String(el.className && el.className.baseVal !== undefined ? el.className.baseVal : el.className || el.tagName).slice(0, 48);
 	sc.addEventListener('wheel', () => { if (R.on) R.wheels.push(performance.now()); }, { passive: true, capture: true });
 	sc.addEventListener('scroll', () => { if (R.on) R.scrolls.push(performance.now()); }, { passive: true });
-	board.addEventListener('transitionrun', (e) => {
+	sc.addEventListener('transitionrun', (e) => {
 		if (!R.on) return;
 		const t = e.target, card = t.closest && t.closest('.pmu-card');
 		const under = card && card.matches(':hover');
@@ -59,6 +62,7 @@ const INSTALL = () => {
 	}, true);
 	const frame = () => {
 		if (!R.on) return;
+		board = document.getElementById('pmuBoard');
 		const hc = board.querySelector(':scope > .pmu-card:hover');
 		const tools = hc && hc.querySelector('.pmu-cardtools');
 		R.frames.push({ t: performance.now(), top: Math.round(sc.scrollTop), card: cardId(hc), tools: tools ? Math.round(parseFloat(getComputedStyle(tools).opacity) * 100) / 100 : null,
@@ -72,11 +76,11 @@ const INSTALL = () => {
 	} catch (e) { /* no entries in this browser */ }
 	// when a card takes or drops the engine's light, timed as the class is written (the frame callbacks above run before
 	// the engine's in a frame, so a frame sample sees a light one frame after the frame that drew it)
-	new MutationObserver((ms) => { if (!R.on) return; const now = performance.now(); for (const m of ms) if (m.target.parentNode === board && m.target.classList.contains('pmu-card')) R.cls.push({ t: now, card: cardId(m.target), on: m.target.classList.contains('pmh-on') }); })
-		.observe(board, { attributes: true, attributeFilter: ['class'], subtree: true });
+	new MutationObserver((ms) => { if (!R.on) return; const now = performance.now(); for (const m of ms) if (m.target.parentNode === document.getElementById('pmuBoard') && m.target.classList.contains('pmu-card')) R.cls.push({ t: now, card: cardId(m.target), on: m.target.classList.contains('pmh-on') }); })
+		.observe(sc, { attributes: true, attributeFilter: ['class'], subtree: true });
 	R.start = () => { Object.assign(R, { on: true, frames: [], wheels: [], scrolls: [], trans: [], loaf: [], cls: [], t0: performance.now() }); requestAnimationFrame(frame); };
 	R.stop = () => { R.on = false; return { t0: R.t0, frames: R.frames, wheels: R.wheels, scrolls: R.scrolls, trans: R.trans, loaf: R.loaf, cls: R.cls }; };
-	R.state = () => { const hc = board.querySelector(':scope > .pmu-card:hover'), tools = hc && hc.querySelector('.pmu-cardtools'); return { card: cardId(hc), lit: !!(hc && hc.classList.contains('pmh-on')), tools: tools ? parseFloat(getComputedStyle(tools).opacity) : null }; };
+	R.state = () => { board = document.getElementById('pmuBoard'); const hc = board.querySelector(':scope > .pmu-card:hover'), tools = hc && hc.querySelector('.pmu-cardtools'); return { card: cardId(hc), lit: !!(hc && hc.classList.contains('pmh-on')), tools: tools ? parseFloat(getComputedStyle(tools).opacity) : null }; };
 	return true;
 };
 
@@ -177,6 +181,109 @@ async function providerRace(t, f, label, park) {
 	return rec;
 }
 
+// R5 (R99): a trusted keyboard room activation in an ongoing trusted wheel burst. Calibrate the destination's
+// row/provider at rest, switch away, then leave the pointer at that exact position while Enter/Space mounts it again.
+// Every sample resolves the LIVE board, including Reduce Motion's asynchronous spare-board adoption.
+async function roomMountRace(t, f, label, park, rm) {
+	const records = [];
+	for (const room of ['accounts', 'overview']) {
+		const source = room === 'accounts' ? 'overview' : 'accounts', key = room === 'accounts' ? 'Enter' : 'Space';
+		const nav = (r) => f.locator(`#pmuNav .pmu-navbtn[data-room="${r}"]`);
+		const choose = async (r) => { await park(); await nav(r).focus(); await t.page.keyboard.press('Enter'); await t.page.waitForTimeout(5000); };
+		await choose(room);
+		await f.evaluate(() => { document.getElementById('pmuScroll').scrollTop = 0; });
+		const selector = room === 'accounts' ? '.pmu-accrow' : '.pmu-skycol[data-prov]';
+		const target = f.locator('#pmuBoard ' + selector).first();
+		await target.scrollIntoViewIfNeeded();
+		await t.page.waitForTimeout(500);
+		const box = await target.boundingBox(), pane = await f.locator('#pmuScroll').boundingBox();
+		if (!box || !pane) { await t.check(label + `R5 ${room}: could judge destination target`, false); continue; }
+		const at = { x: box.x + box.width / 2, y: (Math.max(box.y, pane.y) + Math.min(box.y + box.height, pane.y + pane.height)) / 2 };
+		const baseline = await f.evaluate(() => [...document.querySelectorAll('#pmuBoard .pmu-row, #pmuBoard .pmu-irow')].map((r) => getComputedStyle(r).backgroundColor));
+		const destinationTop = await f.evaluate(() => document.getElementById('pmuScroll').scrollTop);
+		await choose(source);
+		await nav(room).focus();
+		await t.page.mouse.move(at.x, at.y, { steps: 4 });
+		await t.page.waitForTimeout(500);
+		await f.evaluate(({ room, baseline, selector }) => {
+			const sc = document.getElementById('pmuScroll'), old = document.getElementById('pmuBoard');
+			const r = window.__uhpMount = { room, wheels: [], keys: [], samples: [], ends: [], moves: 0, oldPaused: false, swaps: 0 };
+			let running = true, last = old, position = null;
+			const live = () => document.getElementById('pmuBoard');
+			const wheel = (e) => { r.wheels.push({ t: performance.now(), trusted: e.isTrusted }); position = [e.clientX, e.clientY]; };
+			const keydown = (e) => { if (e.key === 'Enter' || e.key === ' ') r.keys.push({ t: performance.now(), key: e.key, trusted: e.isTrusted, room: e.target.dataset.room }); };
+			const move = (e) => { if (position && (e.clientX !== position[0] || e.clientY !== position[1])) r.moves++; };
+			const end = (e) => r.ends.push({ t: performance.now(), live: e.detail?.board === live(), room: e.detail?.board?.dataset.room });
+			const sample = () => {
+				if (!running) return;
+				const b = live(); if (b !== last) { r.swaps++; last = b; }
+				if (old.getAttribute('data-op') === 'wheel') r.oldPaused = true;
+				if (b && b.dataset.room === room) {
+					const card = b.querySelector(':scope > .pmu-card:hover'), tools = card?.querySelector('.pmu-cardtools');
+					const rows = [...b.querySelectorAll('.pmu-row, .pmu-irow')];
+					r.samples.push({ t: performance.now(), op: b.getAttribute('data-op'),
+						lit: b.querySelectorAll('.pmh-on, .pmh-near, .is-hl-dim, .is-hl-on').length,
+						tools: tools ? parseFloat(getComputedStyle(tools).opacity) : null,
+						rows: rows.filter((row, i) => row.matches(':hover') && baseline[i] !== getComputedStyle(row).backgroundColor).length });
+				}
+				requestAnimationFrame(sample);
+			};
+			sc.addEventListener('wheel', wheel, { capture: true, passive: true });
+			document.addEventListener('keydown', keydown, true); sc.addEventListener('pointermove', move, true);
+			document.addEventListener('pmu-op-end', end); requestAnimationFrame(sample);
+			r.stop = () => {
+				running = false; sc.removeEventListener('wheel', wheel, true); document.removeEventListener('keydown', keydown, true);
+				sc.removeEventListener('pointermove', move, true); document.removeEventListener('pmu-op-end', end);
+				const b = live(), card = b?.querySelector(':scope > .pmu-card:hover'), tools = card?.querySelector('.pmu-cardtools');
+				const hot = b?.querySelector(selector + ':hover'), id = hot?.dataset.prov;
+				const dim = [...(b?.querySelectorAll('.is-hl-dim') || [])], on = [...(b?.querySelectorAll('.is-hl-on') || [])];
+				return { ...r, stop: undefined, op: b?.getAttribute('data-op'), liveRoom: b?.dataset.room, oldOp: old.getAttribute('data-op'),
+					targetHovered: !!hot, cardLit: !!card?.classList.contains('pmh-on'), tools: tools ? parseFloat(getComputedStyle(tools).opacity) : null,
+					provider: { id, dim: dim.length, on: on.length, expectedDim: [...(b?.querySelectorAll('.pmu-mark[data-prov]') || [])].filter((e) => e.dataset.prov !== id).length,
+						expectedOn: [...(b?.querySelectorAll('.pmu-irow[data-prov]') || [])].filter((e) => e.dataset.prov === id).length,
+						correct: dim.every((e) => e.dataset.prov !== id) && on.every((e) => e.dataset.prov === id) } };
+			};
+		}, { room, baseline, selector });
+		for (let i = 0; i < 3; i++) { await t.page.mouse.wheel(0, 1); await t.page.waitForTimeout(25); }
+		// Queue the next wheel input while the trusted key is handled: waiting for the mount's keyboard
+		// acknowledgement first can create a real 150 ms gap, which would test two separate bursts.
+		const activation = t.page.keyboard.press(key);
+		// Keep turning through the room's entrance and the delayed Reduce Motion swap. Alternating one-pixel ticks
+		// keep the calibrated row/provider under the pointer; no evaluate or locator round trip interrupts the burst.
+		for (let i = 0; i < 110; i++) { await t.page.mouse.wheel(0, i % 2 ? -1 : 1); await t.page.waitForTimeout(25); }
+		await activation;
+		await t.page.waitForTimeout(1200);
+		const rec = await f.evaluate(() => window.__uhpMount.stop());
+		const first = rec.wheels[0]?.t, last = rec.wheels.at(-1)?.t;
+		const during = rec.samples.filter((s) => s.t >= first && s.t <= last);
+		const gaps = rec.wheels.slice(1).map((w, i) => w.t - rec.wheels[i].t), maxGap = Math.max(...gaps);
+		const activated = rec.keys.some((k) => k.trusted && k.room === room && k.t > first && k.t < last);
+		const S = label + `R5 ${room} (${rm ? 'Reduced Motion spare' : 'motion on'}, ${key}): `;
+		const detail = `wheels ${rec.wheels.length}, max gap ${Math.round(maxGap)} ms, samples ${during.length}, swaps ${rec.swaps}, moves ${rec.moves}, target ${rec.targetHovered}, calibration scroll ${destinationTop}`;
+		t.log(S + detail + ' | return ' + JSON.stringify({ ends: rec.ends, op: rec.op, cardLit: rec.cardLit, tools: rec.tools, provider: rec.provider }));
+		records.push({ room, at, destinationTop, maxGap, rec });
+		// A busy mount can delay event delivery past 150 ms while the already-queued wheel task precedes the timer.
+		// The pause must actually stay alive: an end before the last tick rejects this run, regardless of that gap.
+		await t.check(S + 'could judge trusted keyboard mount within one stationary wheel burst', activated && rec.wheels.length === 113 && rec.wheels.every((w) => w.trusted) && rec.ends.every((e) => e.t > last) && !rec.moves && during.length > 10 && rec.swaps > 0 && rec.liveRoom === room && rec.targetHovered && destinationTop === 0, detail);
+		if (String(t.args.mountNoPause || '') === '1') {
+			await t.check(S + 'main control has no pause interval', !rec.oldPaused && during.every((s) => s.op !== 'wheel'));
+			t.log(S + 'SKIP R5 suppression/restoration: explicit mountNoPause control has no wheel hold');
+			continue;
+		}
+		await t.check(S + 'live board keeps its wheel marker after the mount', rec.oldPaused && during.length > 0 && during.every((s) => s.op === 'wheel'), `${during.filter((s) => s.op !== 'wheel').length}/${during.length} live samples lost marker`);
+		// Allow the first 100 ms for an already-lit reused card's outgoing fade; nothing arriving may light thereafter.
+		const settled = during.filter((s) => s.t >= during[0].t + 100);
+		await t.check(S + 'live card tools, row backgrounds and hover/provider lights stay paused', settled.length > 10 && settled.every((s) => !s.lit && (s.tools == null || s.tools <= 0.05) && !s.rows), `${settled.filter((s) => s.lit || s.tools > 0.05 || s.rows).length}/${settled.length} lit samples`);
+		await t.check(S + 'pause end restores the LIVE board light and tools without a move', rec.ends.length === 1 && rec.ends[0].live && rec.ends[0].room === room && rec.ends[0].t > last && !rec.op && rec.oldOp !== 'wheel' && rec.cardLit && rec.tools > 0.5, JSON.stringify({ ends: rec.ends, op: rec.op, oldOp: rec.oldOp, cardLit: rec.cardLit, tools: rec.tools }));
+		if (room === 'overview') {
+			const p = rec.provider;
+			await t.check(S + 'provider return reaches the live board', !!p.id && p.expectedDim + p.expectedOn > 0 && p.correct && p.dim === p.expectedDim && p.on === p.expectedOn, JSON.stringify(p));
+		}
+	}
+	await park();
+	return records;
+}
+
 export default async function (t) {
 	const looks = String(t.args.looks || 'basic-dark').split(',').filter(Boolean);
 	// BACK: the pause ends 150 ms after the last wheel or scroll event; light and tools were back at 168-185 ms on Alexis
@@ -198,6 +305,13 @@ export default async function (t) {
 			await f.waitForFunction(() => !(window.PM_THEME_TRANSITION?.busy?.() || window.PM_LOOK_COVERED?.()), null, { timeout: 20000 }).catch(() => {});
 			await f.evaluate(() => PM_PAGES.go('usage'));
 			await t.page.waitForTimeout(Number(t.args.viewSettle ?? 8000));
+			let mounts;
+			if (String(t.args.raceOnly || '') !== '1') {
+				mounts = await roomMountRace(t, f, S, park, rm);
+				dump.push({ surface, look, mounts });
+				if (t.args.dump) writeFileSync(String(t.args.dump), JSON.stringify(dump));
+				if (String(t.args.mountOnly || '') === '1') continue;
+			}
 			const ok = await f.evaluate(INSTALL);
 			const range = await f.evaluate(() => { const s = document.getElementById('pmuScroll'); return s ? s.scrollHeight - s.clientHeight : 0; });
 			if (!ok || range < TICKS * 40 + 80) { await t.check(S + 'could judge: Usage\'s board is there and scrolls ' + (TICKS * 40 + 80) + ' px', false, `range ${range}`); continue; }
