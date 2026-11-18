@@ -1103,8 +1103,11 @@
       var held = wheelEl, el = b.el(), point = wheelAt;
       wheelAt = wheelEl = null;
       if (held && held !== el && held.getAttribute('data-op') === 'wheel') held.removeAttribute('data-op');
-      if (el && el.getAttribute('data-op') === 'wheel') el.removeAttribute('data-op');
-      if (!el || el.hasAttribute('data-op') || b.gesture && b.gesture()) return;
+      var op = el && el.getAttribute('data-op');
+      if (!el || op !== null && op !== 'wheel' || b.gesture && b.gesture()) {
+        if (op === 'wheel') el.removeAttribute('data-op');
+        return;
+      }
       var card = el && el.isConnected && el.querySelector(':scope > .pmu-card:hover');
       if (card) {
         /* R100 T2: a delayed incoming transition is not a visible return. Restore the already-hovered head in one
@@ -1116,8 +1119,11 @@
             if (head._pmuWheelReturn === token) { head._pmuWheelReturn = null; head.classList.remove('pmu-wheel-return'); }
           }); });
         }
+        /* Fit while hover is still gated: releasing first invalidates the whole board, then the fitter's reads force
+           that work before its own head writes. Publish the fitted head and the released marker together instead. */
         try { fitTools(card); } catch (error) { console.error('[pm-usage] head fit', error); }
       }
+      if (el.getAttribute('data-op') === 'wheel') el.removeAttribute('data-op');
       try { document.dispatchEvent(new CustomEvent('pmu-op-end', { detail: { board: el, point: point } })); } catch (error) { /* none */ }
     };
     var wheelHold = function () { if (wheelT) clearTimeout(wheelT); wheelT = setTimeout(wheelEnd, WHEEL_REST); };
