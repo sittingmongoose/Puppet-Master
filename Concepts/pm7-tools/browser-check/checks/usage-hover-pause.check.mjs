@@ -483,7 +483,10 @@ async function pointerDeparture(t, f, label, park) {
 		r.stop = () => { running=false; sc.removeEventListener('wheel',wheel); sc.removeEventListener('scroll',scroll); document.removeEventListener('pointerout',leave,true); document.removeEventListener('pmu-op-end',end); return {...r,stop:undefined,final:read()}; };
 	});
 	await t.page.mouse.wheel(0,1);
-	await f.waitForFunction(() => document.getElementById('pmuBoard').getAttribute('data-op') === 'wheel');
+	await f.waitForFunction(() => {
+		const r = window.__uhpDeparture;
+		return r.scrolls.some((s) => s.held && s.top > r.top);
+	});
 	await t.page.mouse.move(outside.x,outside.y);
 	await t.page.waitForTimeout(900);
 	const rec = await f.evaluate(() => window.__uhpDeparture.stop());
@@ -546,24 +549,28 @@ async function keyboardPause(t, f, label, park) {
 					eligibleDim: [...b.querySelectorAll('.pmu-mark[data-prov]')].filter((el) => el.dataset.prov !== target?.dataset.prov).length,
 					eligibleOn: [...b.querySelectorAll('.pmu-irow[data-prov]')].filter((el) => el.dataset.prov === target?.dataset.prov).length };
 			};
-			const r = window.__uhpKeyboard = { key, mode, pre: read(), focused: document.activeElement?.dataset.widget, wheels: [], keys: [], ends: [], moves: 0, frames: [], markers: [] };
+			const r = window.__uhpKeyboard = { key, mode, pre: read(), focused: document.activeElement?.dataset.widget, wheels: [], scrolls: [], keys: [], ends: [], moves: 0, frames: [], markers: [] };
 			let running = true, point = null;
 			const wheel = (e) => {
 				point = [e.clientX, e.clientY];
 				r.wheels.push({t: performance.now(), trusted: e.isTrusted, ...read()});
 			};
+			const scroll = () => r.scrolls.push({ t: performance.now(), top: sc.scrollTop, op: board().getAttribute('data-op') });
 			const keydown = (e) => { if (e.key === key || e.key === 'Escape') r.keys.push({t: performance.now(), key: e.key, trusted: e.isTrusted, focused: e.target.dataset.widget}); };
 			const move = (e) => { if (point && (e.clientX !== point[0] || e.clientY !== point[1])) r.moves++; };
 			const end = (e) => r.ends.push({t: performance.now(), live: e.detail?.board === board(), gesture: !!PMU.board.gesture(), op: board().getAttribute('data-op'), point: e.detail?.point});
 			const frame = () => { if (!running) return; r.frames.push(read()); requestAnimationFrame(frame); };
-			sc.addEventListener('wheel', wheel, {passive: true}); document.addEventListener('keydown', keydown, true); document.addEventListener('pointermove', move, true); document.addEventListener('pmu-op-end', end);
+			sc.addEventListener('wheel', wheel, {passive: true}); sc.addEventListener('scroll', scroll, {passive: true}); document.addEventListener('keydown', keydown, true); document.addEventListener('pointermove', move, true); document.addEventListener('pmu-op-end', end);
 			const markers = new MutationObserver(() => r.markers.push(read()));
 			markers.observe(board(), { attributes: true, attributeFilter: ['data-op'] });
 			requestAnimationFrame(frame);
-			r.stop = () => { running = false; markers.disconnect(); sc.removeEventListener('wheel', wheel); document.removeEventListener('keydown', keydown, true); document.removeEventListener('pointermove', move, true); document.removeEventListener('pmu-op-end', end); return {...r, stop: undefined, point, after: read()}; };
+			r.stop = () => { running = false; markers.disconnect(); sc.removeEventListener('wheel', wheel); sc.removeEventListener('scroll', scroll); document.removeEventListener('keydown', keydown, true); document.removeEventListener('pointermove', move, true); document.removeEventListener('pmu-op-end', end); return {...r, stop: undefined, point, after: read()}; };
 		}, {key, mode});
 		await t.page.mouse.wheel(0, 1);
-		await f.waitForFunction(() => document.getElementById('pmuBoard').getAttribute('data-op') === 'wheel');
+		await f.waitForFunction(() => {
+			const r = window.__uhpKeyboard;
+			return r.scrolls.some((s) => s.op === 'wheel' && s.top > r.pre.top);
+		});
 		// Keep the second tick on the already latched axis: a horizontal tick can queue behind the keyboard work.
 		await Promise.all([t.page.keyboard.down(key), t.page.mouse.wheel(0, 1)]);
 		await t.page.keyboard.up(key);
@@ -573,15 +580,18 @@ async function keyboardPause(t, f, label, park) {
 		const rec = await f.evaluate(() => window.__uhpKeyboard.stop()); records.push(rec);
 		const press = rec.keys.find((x) => x.key === key), escape = rec.keys.find((x) => x.key === 'Escape');
 		const [first, follow] = rec.wheels;
-		const started = rec.markers.find((x) => x.op === 'wheel'), gap = press?.t - started?.t, held = rec.frames.filter((x) => x.t >= first?.t + 200 && x.t < escape?.t);
+		const started = rec.markers.find((x) => x.op === 'wheel');
+		const firstScroll = rec.scrolls.find((x) => x.op === 'wheel' && x.top > rec.pre.top);
+		const gap = press?.t - firstScroll?.t, due = firstScroll?.t + 150;
+		const held = rec.frames.filter((x) => x.t >= due + 50 && x.t < escape?.t);
 		const a = rec.after, p = rec.pre;
-		const duringMove = [...rec.markers, ...rec.frames].filter((x) => x.t >= first?.t && x.t < started?.t + 150 && x.op === mode && x.hovered);
+		const duringMove = [...rec.markers, ...rec.frames].filter((x) => x.t >= first?.t && x.t < due && x.op === mode && x.hovered);
 		const visualInput = rec.wheels.length === 2 && first.trusted && follow.trusted && started?.op === 'wheel' &&
-			follow.gesture?.kb && follow.gesture.type === mode && follow.t >= press?.t && follow.t < started.t + 150 &&
+			follow.gesture?.kb && follow.gesture.type === mode && follow.t >= press?.t && follow.t < due &&
 			p.hovered && first.hovered && follow.hovered && started.shadow !== p.shadow &&
-			first.top === 0 && started.top > first.top && follow.top === started.top && !rec.moves;
+			first.top === 0 && started.top === first.top && follow.top === firstScroll?.top && !rec.moves;
 		await t.check(S + 'could judge Skyline hover before its wheel deadline on a second trusted wheel inside the keyboard gesture',
-			visualInput, JSON.stringify({pre: p, started, wheels: rec.wheels, press, moves: rec.moves}));
+			visualInput, JSON.stringify({pre: p, started, firstScroll, wheels: rec.wheels, press, moves: rec.moves}));
 		await t.check(S + 'Skyline stays visually neutral inside the keyboard gesture until the original wheel deadline',
 			visualInput && follow.shadow === started.shadow && duringMove.every((x) => x.shadow === started.shadow) && a.shadow === p.shadow,
 			JSON.stringify({resting: p.shadow, wheels: rec.wheels, after: a.shadow, duringMove}));
@@ -589,9 +599,9 @@ async function keyboardPause(t, f, label, park) {
 		await t.check(S + 'could judge: applied provider, trusted wheel moves the pane, M/R on another focused card within 150 ms, gesture held past pause, trusted Escape and still pointer',
 			p.hovered && p.dim === p.eligibleDim && p.on === p.eligibleOn && p.dim + p.on > 0 && p.correct && rec.focused === 'health' &&
 			rec.wheels.length === 2 && rec.wheels.every((x) => x.trusted) && started?.op === 'wheel' && gap >= 0 && gap < 150 && press?.trusted && press.focused === 'health' && escape?.trusted &&
-			escape.t - press.t >= 500 && held.length >= 5 && held.every((x) => x.gesture?.kb && x.gesture.type === mode && x.hovered && x.top >= started.top && x.top <= started.top + 1) && held.some((x) => x.op === mode) &&
-			!rec.moves && a.hovered && a.top >= started.top && a.top <= started.top + 1 && !a.gesture && !a.op,
-			JSON.stringify({gap, started, pre: p, focused: rec.focused, wheels: rec.wheels, keys: rec.keys, held: held.length, moves: rec.moves, after: a}));
+			escape.t - press.t >= 500 && held.length >= 5 && held.every((x) => x.gesture?.kb && x.gesture.type === mode && x.hovered && x.top >= firstScroll.top && x.top <= firstScroll.top + 1) && held.some((x) => x.op === mode) &&
+			!rec.moves && a.hovered && a.top >= firstScroll.top && a.top <= firstScroll.top + 1 && !a.gesture && !a.op,
+			JSON.stringify({gap, started, firstScroll, pre: p, focused: rec.focused, wheels: rec.wheels, keys: rec.keys, held: held.length, moves: rec.moves, after: a}));
 		await t.check(S + 'main provider selection stays unchanged while the keyboard gesture owns the board', held.length >= 5 && held.every((x) => x.dim===p.dim&&x.on===p.on&&x.correct) && !rec.ends.some((x) => x.t < escape?.t || x.gesture || x.op), JSON.stringify({ends: rec.ends, litHeld: held.filter((x) => x.dim || x.on).length}));
 		await t.check(S + 'after Escape one lifecycle return releases the engine while main provider selection stays unchanged', rec.ends.length === 1 && rec.ends[0].live && !rec.ends[0].gesture && !rec.ends[0].op && rec.ends[0].t >= escape?.t && JSON.stringify(rec.ends[0].point) === JSON.stringify(rec.point) && !a.gesture && !a.op && a.hovered && a.dim === a.eligibleDim && a.on === a.eligibleOn && a.dim + a.on > 0 && a.correct, JSON.stringify({ends: rec.ends, after: a}));
 	}

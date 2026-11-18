@@ -132,16 +132,17 @@ async function gestureHandoff(t,f,label,park) {
 					const r=window.__uhpR113={pre:read(),keys:[],wheels:[],starts:[],ends:[],moves:0};
 					let pos=null;
 					const capture=e=>{pos=[e.clientX,e.clientY];r.wheels.push({...read(),trusted:e.isTrusted});};
+					const wheelDone=()=>{if(r.wheels.length)r.wheels.at(-1).afterWheel=read();};
 					const scroll=()=>{if(r.wheels.length)r.wheels.at(-1).after=read();};
 					const key=e=>{if(e.key==='Escape')r.keys.push({t:performance.now(),trusted:e.isTrusted});};
 					const start=e=>{if(e.detail?.board===b)r.starts.push(read());};
 					const end=e=>{if(e.detail?.board===b)r.ends.push(read());};
 					const move=e=>{if(pos&&(pos[0]!==e.clientX||pos[1]!==e.clientY))r.moves++;};
-					sc.addEventListener('wheel',capture,{capture:true,passive:true});sc.addEventListener('scroll',scroll,{passive:true});document.addEventListener('keydown',key,true);document.addEventListener('pointermove',move,true);document.addEventListener('pmu-op-start',start);document.addEventListener('pmu-op-end',end);
-					r.stop=()=>{sc.removeEventListener('wheel',capture,true);sc.removeEventListener('scroll',scroll);document.removeEventListener('keydown',key,true);document.removeEventListener('pointermove',move,true);document.removeEventListener('pmu-op-start',start);document.removeEventListener('pmu-op-end',end);return {...r,stop:undefined,after:read()};};
+					sc.addEventListener('wheel',capture,{capture:true,passive:true});sc.addEventListener('wheel',wheelDone,{passive:true});sc.addEventListener('scroll',scroll,{passive:true});document.addEventListener('keydown',key,true);document.addEventListener('pointermove',move,true);document.addEventListener('pmu-op-start',start);document.addEventListener('pmu-op-end',end);
+					r.stop=()=>{sc.removeEventListener('wheel',capture,true);sc.removeEventListener('wheel',wheelDone);sc.removeEventListener('scroll',scroll);document.removeEventListener('keydown',key,true);document.removeEventListener('pointermove',move,true);document.removeEventListener('pmu-op-start',start);document.removeEventListener('pmu-op-end',end);return {...r,stop:undefined,after:read()};};
 				});
 				// Queue both trusted inputs together. The authored component check covers the narrow idle-marker race;
-				// here the real scroll must take over once the gesture is released, even if idle cleanup ran already.
+				// here the wheel must take over once the gesture is released, even if idle cleanup ran already.
 				await Promise.all([
 					cdp.send('Input.dispatchKeyEvent',{type:'keyDown',key:'Escape',code:'Escape',windowsVirtualKeyCode:27}),
 					cdp.send('Input.dispatchMouseEvent',{type:'mouseWheel',x:at.x,y:at.y,deltaX:0,deltaY:1})
@@ -153,7 +154,11 @@ async function gestureHandoff(t,f,label,park) {
 				t.log(label+'R113 P3 '+mode+' attempt '+(attempt+1)+': '+JSON.stringify(rec));
 				if(!qualified&&attempt<2)continue;
 				await t.check(label+'R113 P3 '+mode+' could judge: trusted gesture release followed by real wheel-driven pane movement',qualified,JSON.stringify(rec));
-				await t.check(label+'R113 P3 '+mode+' first real scroll after gesture release starts and ends one pause',qualified&&w.after?.op==='wheel'&&rec.starts.length===1&&rec.ends.length===1&&rec.starts[0].op==='wheel'&&rec.starts[0].top>0&&!rec.ends[0].op&&!rec.ends[0].gesture,JSON.stringify(rec));
+				const began=rec.starts[0], ended=rec.ends[0];
+				await t.check(label+'R113 P3 '+mode+' first effective wheel after gesture release starts and ends one pause',
+					qualified&&rec.starts.length===1&&began.op==='wheel'&&began.top===w.top&&
+					w.afterWheel?.op==='wheel'&&w.after?.op==='wheel'&&w.after.top>w.top&&
+					rec.ends.length===1&&ended.t>w.after.t&&!ended.op&&!ended.gesture,JSON.stringify(rec));
 				break;
 			}
 		}
