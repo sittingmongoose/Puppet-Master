@@ -32,24 +32,24 @@ export const tests = {
 					const sc = document.getElementById('pmuScroll');
 					const read = () => {
 						const cs = getComputedStyle(tools), btn = tools.querySelector('.pmu-cardmenu'), box = btn.getBoundingClientRect();
-						return { opacity: +cs.opacity, pointer: cs.pointerEvents, hover: el.matches(':hover'), op: b.getAttribute('data-op'),
+						return { opacity: +cs.opacity, pointer: cs.pointerEvents, hover: el.matches(':hover'), top: sc.scrollTop, op: b.getAttribute('data-op'),
 							hit: btn.contains(document.elementFromPoint(box.x + box.width / 2, box.y + box.height / 2)),
 							home: el.closest('[data-pmu-host]')?.getAttribute('data-pmu-host') ?? null,
 							headTools: !!el.querySelector('.pmu-headtools:not(:empty)') };
 					};
 					const r = window.__r117Tools = { samples: [] };
 					const wheel = (e) => { r.pre = read(); r.wheel = { trusted: e.isTrusted, over: el.contains(e.target) }; };
-					const afterWheel = () => { r.samples.push(read()); };
+					const afterScroll = () => { if (r.wheel) r.samples.push(read()); };
 					const move = (e) => {
 						if (!r.pre || !e.isTrusted || el.contains(e.target)) return;
 						r.samples.push(read());
 						requestAnimationFrame(() => r.samples.push(read()));
 					};
-					if (zero) { sc.addEventListener('wheel', wheel, { capture: true, passive: true }); sc.addEventListener('wheel', afterWheel, { passive: true }); }
+					if (zero) { sc.addEventListener('wheel', wheel, { capture: true, passive: true }); sc.addEventListener('scroll', afterScroll, { passive: true }); }
 					else document.addEventListener('pointermove', move);
 					r.arm = () => { r.pre = read(); };
 					r.stop = () => {
-						sc.removeEventListener('wheel', wheel, true); sc.removeEventListener('wheel', afterWheel); document.removeEventListener('pointermove', move);
+						sc.removeEventListener('wheel', wheel, true); sc.removeEventListener('scroll', afterScroll); document.removeEventListener('pointermove', move);
 						return { ...r, arm: undefined, stop: undefined };
 					};
 					return read();
@@ -61,7 +61,7 @@ export const tests = {
 						const [x, y] = at;
 						await Promise.all([
 							cdp.send('Input.dispatchMouseEvent', { type: 'mouseMoved', x, y }),
-							cdp.send('Input.dispatchMouseEvent', { type: 'mouseWheel', x, y, deltaX: 40, deltaY: 0 }),
+							cdp.send('Input.dispatchMouseEvent', { type: 'mouseWheel', x, y, deltaX: 0, deltaY: 1 }),
 						]);
 					} finally { await cdp.detach(); }
 				} else {
@@ -77,7 +77,7 @@ export const tests = {
 				const rec = await f.evaluate(() => window.__r117Tools.stop()), first = rec.samples[0], pre = rec.pre;
 				const qualified = hidden.opacity === 0 && hidden.pointer === 'none' && pre?.hover && !pre.op && !!first &&
 					(route !== 'Home exit' || first.home === 'home') &&
-					(zero ? pre.headTools && pre.opacity === 0 && rec.wheel?.trusted && rec.wheel.over && first.op === 'wheel' :
+					(zero ? pre.headTools && pre.opacity === 0 && rec.wheel?.trusted && rec.wheel.over && first.top > pre.top && first.op === 'wheel' :
 						pre.opacity > 0.95 && pre.hit && !first.hover && !first.op && first.opacity > 0);
 				await t.check(S + 'could judge the tool state immediately after trusted input', qualified, JSON.stringify({ hidden, rec }));
 				await t.check(S + 'the tools immediately stop taking hits', first?.pointer === 'none' && !first.hit, JSON.stringify(rec));

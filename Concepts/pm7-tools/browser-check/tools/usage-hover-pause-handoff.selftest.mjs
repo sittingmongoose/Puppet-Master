@@ -39,7 +39,7 @@ function fixture(toolOpacity) {
  const emit=type=>{for(const fn of listeners.get(type)||[])fn();};
  const b={scrollEl:sc,el:()=>board,on:(type,fn)=>{const set=listeners.get(type)||new Set();set.add(fn);listeners.set(type,set);return()=>set.delete(fn);}};
  const ctx=vm.createContext({b,boardEl:board,inner:b,document:{body:{classList:cl},dispatchEvent:e=>events.push({type:e.type,t:now,detail:e.detail})},
-  console,CustomEvent:class{constructor(type,init){this.type=type;this.detail=init.detail;}},
+  console,performance:{now:()=>now},CustomEvent:class{constructor(type,init){this.type=type;this.detail=init.detail;}},
   setTimeout:(fn,ms)=>{const id=next++;timers.set(id,{fn,t:now+ms});return id;},clearTimeout:id=>timers.delete(id),
   requestAnimationFrame:()=>0,unfitSoon:()=>{},fitTools:()=>{},M:{reduced:()=>false},
   getComputedStyle:()=>({opacity:String(toolOpacity),pointerEvents:'auto'}),emit});
@@ -47,16 +47,19 @@ function fixture(toolOpacity) {
  vm.runInContext('var opT=0,opOn=false,gesture=null,RESIZING_BY=null;'+sync+bind+`
   b.gesture=function(){return gesture;};
   this.startGesture=function(mode){gesture={type:mode};opOn=true;RESIZING_BY=inner;document.body.classList.add('pm-resizing');opSync();};
-  this.releaseGesture=function(){gesture=null;opOn=false;opSync();};
+  this.releaseGesture=function(defer){gesture=null;opOn=false;if(!defer)opSync();};
   this.cleanup=bindTools(b);`,ctx);
+ sc.scrollTop=0;sc.scrollLeft=0;
  const input=(type,x=100,y=100)=>sc.handlers.get(type)({clientX:x,clientY:y});
  const advance=t=>{while(true){const due=[...timers].filter(([,x])=>x.t<=t).sort((a,b)=>a[1].t-b[1].t)[0];if(!due)break;now=due[1].t;timers.delete(due[0]);due[1].fn();}now=t;};
- return {board,ghost,tools,ctx,input,advance,events,ends:()=>events.filter(e=>e.type==='pmu-op-end'),cleanup:()=>ctx.cleanup()};
+ const scrollBy=(dy)=>{sc.scrollTop+=dy;input('scroll');};
+ const startWheel=()=>{input('wheel');scrollBy(1);};
+ return {board,ghost,tools,ctx,input,scrollBy,startWheel,advance,events,ends:()=>events.filter(e=>e.type==='pmu-op-end'),cleanup:()=>ctx.cleanup()};
 }
 for(const mode of ['move','resize']) {
  test(`${mode}: early idle release retains wheel until its original deadline`,()=>{
   const x=fixture();try {
-   x.input('wheel');assert.equal(x.board.getAttribute('data-op'),'wheel');
+   x.startWheel();assert.equal(x.board.getAttribute('data-op'),'wheel');
    x.advance(50);x.ctx.startGesture(mode);assert.equal(x.board.getAttribute('data-op'),mode);assert.ok(x.board.hasAttribute('data-wheel-handoff'));
    x.advance(90);x.ctx.releaseGesture();assert.equal(x.board.getAttribute('data-op'),'wheel','released gesture hands suppression back to pending wheel');
    x.advance(149);assert.equal(x.board.getAttribute('data-op'),'wheel');assert.equal(x.ends().length,0);
@@ -66,7 +69,7 @@ for(const mode of ['move','resize']) {
  for(const input of ['scroll','wheel']) {
   test(`${mode}: ${input} during the gesture leaves the original wheel deadline intact`,()=>{
    const x=fixture();try {
-    x.input('wheel');x.advance(50);x.ctx.startGesture(mode);x.advance(70);x.input(input);
+    x.startWheel();x.advance(50);x.ctx.startGesture(mode);x.advance(70);if(input==='scroll')x.scrollBy(1);else x.input('wheel');
     x.advance(90);x.ctx.releaseGesture();assert.equal(x.board.getAttribute('data-op'),'wheel');
     x.advance(149);assert.equal(x.ends().length,0);
     x.advance(150);assert.equal(x.board.getAttribute('data-op'),null);assert.equal(x.ends().length,1);assert.equal(x.ends()[0].t,150);
@@ -75,7 +78,7 @@ for(const mode of ['move','resize']) {
  }
  test(`${mode}: hold expiry waits for a longer gesture and returns exactly once`,()=>{
   const x=fixture();try {
-   x.input('wheel');x.advance(50);x.ctx.startGesture(mode);x.advance(180);
+   x.startWheel();x.advance(50);x.ctx.startGesture(mode);x.advance(180);
    assert.equal(x.board.getAttribute('data-op'),mode);assert.ok(!x.board.hasAttribute('data-wheel-handoff'));assert.equal(x.ends().length,0);
    x.ctx.releaseGesture();assert.equal(x.board.getAttribute('data-op'),null);assert.equal(x.ends().length,1);assert.equal(x.ends()[0].t,180);
    x.advance(400);assert.equal(x.ends().length,1);
@@ -83,7 +86,7 @@ for(const mode of ['move','resize']) {
  });
  test(`${mode}: pointer departure during gesture does not resurrect a wheel hold`,()=>{
   const x=fixture();try {
-   x.input('wheel');x.advance(50);x.ctx.startGesture(mode);x.advance(70);x.input('pointerleave',140,20);
+   x.startWheel();x.advance(50);x.ctx.startGesture(mode);x.advance(70);x.input('pointerleave',140,20);
    x.advance(90);x.ctx.releaseGesture();assert.equal(x.board.getAttribute('data-op'),null);assert.equal(x.ends().length,1);
    x.advance(400);assert.equal(x.ends().length,1,'no timer or marker is resurrected after pointer departure');
   } finally{x.cleanup();}
@@ -93,7 +96,7 @@ for(const mode of ['move','resize']) {
 test('a first wheel after a room swap pauses the already visible ghost',()=>{
  const x=fixture();try {
   assert.equal(x.ghost.getAttribute('data-op'),null);
-  x.input('wheel');
+  x.startWheel();
   assert.equal(x.ghost.getAttribute('data-op'),'wheel');
   assert.equal(x.board.getAttribute('data-op'),'wheel');
   x.advance(150);
@@ -106,10 +109,36 @@ test('a first wheel after a room swap pauses the already visible ghost',()=>{
 for(const opacity of [0,.4]) {
  test(`wheel fade tags a hovered cluster at opacity ${opacity} only if it is visible`,()=>{
   const x=fixture(opacity);try {
-   x.input('wheel');
+   x.startWheel();
    assert.equal(x.tools.hasAttribute('data-wheel-fade'),opacity>0);
    x.advance(150);
    assert.ok(!x.tools.hasAttribute('data-wheel-fade'));
   } finally{x.cleanup();}
  });
 }
+
+
+test('a wheel without pane movement starts no pause and cannot renew one later',()=>{
+ const x=fixture();try {
+  x.input('wheel');x.input('scroll');assert.equal(x.board.getAttribute('data-op'),null);
+  x.advance(151);x.scrollBy(1);assert.equal(x.board.getAttribute('data-op'),null);
+  assert.equal(x.events.length,0);
+ } finally{x.cleanup();}
+});
+
+test('a press between wheel and scroll consumes the pending wheel',()=>{
+ const x=fixture();try {
+  x.input('wheel');x.input('pointerdown');x.scrollBy(1);
+  assert.equal(x.board.getAttribute('data-op'),null);assert.equal(x.events.length,0);
+ } finally{x.cleanup();}
+});
+
+test('the first pane movement can take over a completed gesture before idle cleanup',()=>{
+ const x=fixture();try {
+  x.ctx.startGesture('move');x.ctx.releaseGesture(true);
+  assert.equal(x.board.getAttribute('data-op'),'move');
+  x.input('wheel');assert.equal(x.board.getAttribute('data-op'),'move');
+  x.scrollBy(1);assert.equal(x.board.getAttribute('data-op'),'wheel');
+  x.advance(150);assert.equal(x.board.getAttribute('data-op'),null);assert.equal(x.ends().length,1);
+ } finally{x.cleanup();}
+});

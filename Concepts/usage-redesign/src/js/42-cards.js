@@ -1083,7 +1083,7 @@
     if (!boardEl) return null;
     /* PERF-USAGE-HOVER (Jared, 2026-11-16, card A: "Pause hover highlights on the Usage page while the mouse wheel
        turns"). While the wheel turns over the Usage page's board, a card or row that slides under a resting pointer does
-       not light up or show its tool buttons: the board takes data-op="wheel" from the first wheel event until WHEEL_REST
+       not light up or show its tool buttons: the board takes data-op="wheel" from the first real pane movement after a wheel event until WHEEL_REST
        ms after the last wheel or scroll event, or until the pointer really moves or presses. The shell's hover engine
        rests for a board with [data-op] (18-hover.js: no plate light, glow, reticle or magnet on its cards); Usage's
        in-board :hover rules read the wheel and keyboard handoff markers (20-board.css says more); the head fit
@@ -1092,11 +1092,10 @@
        ends the board drops the value, the
        card under the pointer is fitted again and one pmu-op-end event (detail: the board) tells the hover engine to look
        again at what is under the resting pointer (its restEnded), so the card light and tools come back without a move.
-       The card that was under the pointer when the wheel began lets its
-       title clamp go as on a pointer leave (unfitSoon). Nothing runs while the page rests: a timer exists only between a
-       wheel and the pause's end. A gesture that already holds data-op keeps it. Only the Usage page's board pauses
+       The card under the pointer when the pause begins lets its
+       title clamp go as on a pointer leave (unfitSoon). The timer runs only once the pane actually scrolls. A gesture that already holds data-op keeps it. Only the Usage page's board pauses
        (#pmuScroll): a Home dashboard keeps its highlights, as the card named the Usage page. */
-    var WHEEL_REST = 150, wheelT = 0, wheelAt = null, wheelEl = null, wheelFades = [];
+    var WHEEL_REST = 150, wheelT = 0, wheelInput = null, wheelAt = null, wheelEl = null, wheelFades = [];
     var pauseHover = function (el) {
       var under = el.querySelector(':scope > .pmu-card:hover');
       var tools = under && under.querySelector(':scope > .pmu-cardhead > .pmu-cardtools');
@@ -1161,7 +1160,7 @@
     var wheelBoard = function () {
       var el = b.el(), op = el && el.getAttribute('data-op');
       /* R113 P3: endGesture clears the live gesture before idle opSync removes its marker. A completed move/resize
-         can hand that marker to this first wheel; an actual gesture or another operation keeps its ownership. */
+         can hand that marker to the first scroll; an actual gesture or another operation keeps its ownership. */
       /* Any input delivered during a live keyboard gesture leaves an existing deadline alone. */
       if (b.gesture && b.gesture()) return null;
       if (!el || op !== null && op !== 'wheel' && op !== 'move' && op !== 'resize') { wheelEnd(); return null; }
@@ -1180,6 +1179,7 @@
     var onWheelMount = function () {
       if (wheelAt) wheelBoard();
       else {
+        wheelInput = null;
         /* A reversed ghost can return after the original hold ended. Promotion restores its ordinary hover. */
         var el = b.el();
         if (el) {
@@ -1189,21 +1189,42 @@
       }
     };
     var onWheel = function (event) {
-      if (!wheelBoard()) return;
-      if (!wheelAt) {
-        /* The compositor can deliver the wheel to the pane while the previous room still paints above it.
-           Its hover needs the same gate until the film retires it or promotes it back to live. */
-        var ghost = boardEl.querySelector(':scope > :is(.pmu-ghostboard,.pmu-oldboard):not(#pmuBoard)');
-        if (ghost && ghost.getAttribute('data-op') !== 'wheel') pauseHover(ghost);
+      if (wheelAt) {
+        if (wheelBoard()) { wheelAt = [event.clientX, event.clientY]; wheelHold(); }
+        return;
       }
-      wheelAt = [event.clientX, event.clientY];
+      if (b.gesture && b.gesture()) return;
+      var now = performance.now();
+      /* Remember input without taking the marker or starting a timer. The pane can consume nothing at a limit. */
+      if (!wheelInput || now - wheelInput.t >= WHEEL_REST) {
+        wheelInput = { top: boardEl.scrollTop, left: boardEl.scrollLeft };
+      }
+      wheelInput.t = now;
+      wheelInput.point = [event.clientX, event.clientY];
+    };
+    var onWheelScroll = function () {
+      if (wheelAt) { if (wheelBoard()) wheelHold(); return; }
+      if (!wheelInput || performance.now() - wheelInput.t >= WHEEL_REST ||
+          boardEl.scrollTop === wheelInput.top && boardEl.scrollLeft === wheelInput.left) return;
+      var point = wheelInput.point;
+      wheelInput = null;
+      if (!wheelBoard()) return;
+      /* The outgoing room can still paint above the pane when the first scroll arrives. */
+      var ghost = boardEl.querySelector(':scope > :is(.pmu-ghostboard,.pmu-oldboard):not(#pmuBoard)');
+      if (ghost && ghost.getAttribute('data-op') !== 'wheel') pauseHover(ghost);
+      wheelAt = point;
       wheelHold();
     };
-    var onWheelScroll = function () { if (wheelAt && wheelBoard()) wheelHold(); };
-    var onWheelMove = function (event) { if (wheelAt && (Math.abs(event.clientX - wheelAt[0]) >= 1 || Math.abs(event.clientY - wheelAt[1]) >= 1)) { wheelAt = [event.clientX, event.clientY]; wheelEnd(); } };
-    /* R107: a direct move to navigation/toolbar has no pointermove in the scroller. Its leave carries the current
+    var onWheelMove = function (event) {
+      var point = wheelAt || (wheelInput && wheelInput.point);
+      if (point && (Math.abs(event.clientX - point[0]) >= 1 || Math.abs(event.clientY - point[1]) >= 1)) onWheelResume(event);
+    };
+    /* A direct move to navigation/toolbar has no pointermove in the scroller. Its leave carries the current
        pointer too: end the hold there, so no return can hit-test the old wheel position. A press also resumes. */
-    var onWheelResume = function (event) { if (wheelAt) { wheelAt = [event.clientX, event.clientY]; wheelEnd(); } };
+    var onWheelResume = function (event) {
+      wheelInput = null;
+      if (wheelAt) { wheelAt = [event.clientX, event.clientY]; wheelEnd(); }
+    };
     var onOver = function (event) {
       if (wheelAt) return;   /* the pause: the tools stay hidden, so nothing is fitted until it ends (wheelEnd fits) */
       var card = event.target.closest && event.target.closest('.pmu-card');

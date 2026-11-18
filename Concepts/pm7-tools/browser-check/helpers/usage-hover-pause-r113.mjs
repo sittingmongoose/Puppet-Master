@@ -61,7 +61,7 @@ async function tooltipPause(t,f,label,park) {
 			const wheel=e=>{pos=[e.clientX,e.clientY];r.wheels.push({t:performance.now(),trusted:e.isTrusted});};
 			const move=e=>{if(pos&&(pos[0]!==e.clientX||pos[1]!==e.clientY))r.moves++;};
 			const end=e=>{if(e.detail?.board===b)r.ends.push(performance.now());};
-			const frame=()=>{if(!running)return;if(b.getAttribute('data-op')==='wheel')r.frames.push(read());requestAnimationFrame(frame);};
+			const frame=()=>{if(!running)return;r.frames.push(read());requestAnimationFrame(frame);};
 			sc.addEventListener('wheel',wheel,{passive:true});document.addEventListener('pointermove',move,true);document.addEventListener('pmu-op-end',end);requestAnimationFrame(frame);
 			r.stop=()=>{running=false;sc.removeEventListener('wheel',wheel);document.removeEventListener('pointermove',move,true);document.removeEventListener('pmu-op-end',end);return {...r,stop:undefined,after:read()};};
 		},phase);
@@ -70,7 +70,7 @@ async function tooltipPause(t,f,label,park) {
 		const rec=await f.evaluate(()=>window.__uhpR113.stop()),p=rec.pre,a=rec.after,held=rec.frames.filter(x=>x.t>=rec.wheels[0]?.t+50);records.push(rec);
 		t.log(label+'R113 P2 '+phase+': '+JSON.stringify(rec));
 		const ready=phase==='pending'?p.pending==='pointer'&&p.pendingHere&&p.dwell>=1000&&p.dwell<1600&&!p.pointer:phase==='shown'?p.pointer&&p.activeHere:p.focus&&p.activeHere;
-		await t.check(label+'R113 P2 '+phase+' could judge: real tooltip state, trusted top-limit wheel hold and stationary provider',ready&&p.enabled&&p.hovered&&p.top===0&&a.hovered&&a.top===0&&!rec.moves&&rec.wheels.length===18&&rec.wheels.every(x=>x.trusted)&&held.length>=10&&rec.ends.length>=1&&rec.ends.at(-1)>rec.wheels.at(-1)?.t&&!a.op,JSON.stringify({pre:p,after:a,frames:held.length,wheels:rec.wheels.length,moves:rec.moves,ends:rec.ends}));
+		await t.check(label+'R113 P2 '+phase+' could judge: real tooltip state, trusted top-limit wheel hold and stationary provider',ready&&p.enabled&&p.hovered&&p.top===0&&a.hovered&&a.top===0&&!rec.moves&&rec.wheels.length===18&&rec.wheels.every(x=>x.trusted)&&held.length>=10&&!rec.ends.length&&held.every(x=>!x.op&&!x.top)&&!a.op,JSON.stringify({pre:p,after:a,frames:held.length,wheels:rec.wheels.length,moves:rec.moves,ends:rec.ends}));
 		await t.check(label+'R113 P2 '+phase+' tooltip retains main behavior at a scroll limit',held.length>=10&&(phase==='focus'?held.every(x=>x.focus)&&a.focus:phase==='shown'?held.every(x=>x.pointer)&&a.pointer:held.some(x=>x.pointer)&&a.pointer&&a.pending!=='pointer'),`${held.filter(x=>phase==='focus'?!x.focus:phase==='shown'?!x.pointer:false).length}/${held.length} wrong tooltip samples; after ${JSON.stringify(a)}`);
 	}
 	await park();await f.evaluate(prior=>{PM_HOVER_TAG_CONTROLLER.close(true);document.activeElement?.blur();PM12_KIMI.setSettingFromHost('general.interaction.show-tooltips',prior.tips);if(prior.on)PMU.live.resume();},prior);
@@ -96,7 +96,7 @@ async function plotLimit(t,f,label,park) {
 		const wheel=e=>{pos=[e.clientX,e.clientY];r.wheels.push({t:performance.now(),trusted:e.isTrusted});};
 		const move=e=>{if(pos&&(pos[0]!==e.clientX||pos[1]!==e.clientY))r.moves++;};
 		const end=e=>{if(e.detail?.board===b)r.ends.push(performance.now());};
-		const frame=()=>{if(!running)return;if(b.getAttribute('data-op')==='wheel')r.frames.push(read());requestAnimationFrame(frame);};
+		const frame=()=>{if(!running)return;r.frames.push(read());requestAnimationFrame(frame);};
 		sc.addEventListener('wheel',wheel,{passive:true});document.addEventListener('pointermove',move,true);document.addEventListener('pmu-op-end',end);requestAnimationFrame(frame);
 		r.stop=()=>{running=false;sc.removeEventListener('wheel',wheel);document.removeEventListener('pointermove',move,true);document.removeEventListener('pmu-op-end',end);return {...r,stop:undefined,after:read()};};
 	});
@@ -104,7 +104,7 @@ async function plotLimit(t,f,label,park) {
 	await t.page.waitForTimeout(900);
 	const rec=await f.evaluate(()=>window.__uhpR113.stop()),p=rec.pre,a=rec.after,held=rec.frames.filter(x=>x.t>=rec.wheels[0]?.t+50);
 	t.log(label+'R113 P1 plot at limit: '+JSON.stringify(rec));
-	await t.check(label+'R113 P1 could judge: open area readout/crosshair/band/dots, trusted wheel hold at top, still hovered pointer',p.xh>0&&p.band>0&&p.dots>0&&p.readout>0&&p.hovered&&p.top===0&&a.hovered&&a.top===0&&!rec.moves&&rec.wheels.length===18&&rec.wheels.every(x=>x.trusted)&&held.length>=10&&rec.ends.length===1&&!a.op,JSON.stringify({pre:p,after:a,frames:held.length,wheels:rec.wheels.length,ends:rec.ends,moves:rec.moves}));
+	await t.check(label+'R113 P1 could judge: open area readout/crosshair/band/dots, trusted wheel hold at top, still hovered pointer',p.xh>0&&p.band>0&&p.dots>0&&p.readout>0&&p.hovered&&p.top===0&&a.hovered&&a.top===0&&!rec.moves&&rec.wheels.length===18&&rec.wheels.every(x=>x.trusted)&&held.length>=10&&!rec.ends.length&&held.every(x=>!x.op&&!x.top)&&!a.op,JSON.stringify({pre:p,after:a,frames:held.length,wheels:rec.wheels.length,ends:rec.ends,moves:rec.moves}));
 	const unchanged=x=>x.xh===p.xh&&x.band===p.band&&x.dots===p.dots&&x.readout===p.readout&&x.cold===p.cold;
 	await t.check(label+'R113 P1 main readout, crosshair, band, dots and series emphasis stay unchanged at the wheel limit',held.length>=10&&held.every(unchanged),`${held.filter(x=>!unchanged(x)).length}/${held.length} changed plot samples`);
 	await t.check(label+'R113 P1 plot stays open after hold with no synthetic dismissal or restoration',unchanged(a),JSON.stringify(a));
@@ -132,28 +132,28 @@ async function gestureHandoff(t,f,label,park) {
 					const r=window.__uhpR113={pre:read(),keys:[],wheels:[],starts:[],ends:[],moves:0};
 					let pos=null;
 					const capture=e=>{pos=[e.clientX,e.clientY];r.wheels.push({...read(),trusted:e.isTrusted});};
-					const bubble=()=>{r.wheels.at(-1).after=read();};
+					const scroll=()=>{if(r.wheels.length)r.wheels.at(-1).after=read();};
 					const key=e=>{if(e.key==='Escape')r.keys.push({t:performance.now(),trusted:e.isTrusted});};
 					const start=e=>{if(e.detail?.board===b)r.starts.push(read());};
 					const end=e=>{if(e.detail?.board===b)r.ends.push(read());};
 					const move=e=>{if(pos&&(pos[0]!==e.clientX||pos[1]!==e.clientY))r.moves++;};
-					sc.addEventListener('wheel',capture,{capture:true,passive:true});sc.addEventListener('wheel',bubble,{passive:true});document.addEventListener('keydown',key,true);document.addEventListener('pointermove',move,true);document.addEventListener('pmu-op-start',start);document.addEventListener('pmu-op-end',end);
-					r.stop=()=>{sc.removeEventListener('wheel',capture,true);sc.removeEventListener('wheel',bubble);document.removeEventListener('keydown',key,true);document.removeEventListener('pointermove',move,true);document.removeEventListener('pmu-op-start',start);document.removeEventListener('pmu-op-end',end);return {...r,stop:undefined,after:read()};};
+					sc.addEventListener('wheel',capture,{capture:true,passive:true});sc.addEventListener('scroll',scroll,{passive:true});document.addEventListener('keydown',key,true);document.addEventListener('pointermove',move,true);document.addEventListener('pmu-op-start',start);document.addEventListener('pmu-op-end',end);
+					r.stop=()=>{sc.removeEventListener('wheel',capture,true);sc.removeEventListener('scroll',scroll);document.removeEventListener('keydown',key,true);document.removeEventListener('pointermove',move,true);document.removeEventListener('pmu-op-start',start);document.removeEventListener('pmu-op-end',end);return {...r,stop:undefined,after:read()};};
 				});
-				// Queue both trusted protocol inputs together; the recorder independently proves release preceded wheel
-				// while idle cleanup had not yet replaced the old move/resize marker. No scheduler hook or fake wheel.
+				// Queue both trusted inputs together. The authored component check covers the narrow idle-marker race;
+				// here the real scroll must take over once the gesture is released, even if idle cleanup ran already.
 				await Promise.all([
 					cdp.send('Input.dispatchKeyEvent',{type:'keyDown',key:'Escape',code:'Escape',windowsVirtualKeyCode:27}),
-					cdp.send('Input.dispatchMouseEvent',{type:'mouseWheel',x:at.x,y:at.y,deltaX:0,deltaY:-1})
+					cdp.send('Input.dispatchMouseEvent',{type:'mouseWheel',x:at.x,y:at.y,deltaX:0,deltaY:1})
 				]);
 				await cdp.send('Input.dispatchKeyEvent',{type:'keyUp',key:'Escape',code:'Escape',windowsVirtualKeyCode:27});
 				await t.page.waitForTimeout(900);
 				const rec=await f.evaluate(()=>window.__uhpR113.stop());records.push({mode,attempt,rec});
-				const w=rec.wheels[0],k=rec.keys[0],qualified=rec.pre.gesture?.kb&&rec.pre.gesture.type===mode&&rec.pre.op===mode&&rec.wheels.length===1&&w.trusted&&k?.trusted&&k.t<=w.t&&w.op===mode&&!w.gesture&&!rec.moves&&w.top===0&&rec.after.top===0&&!rec.after.gesture&&!rec.after.op;
+				const w=rec.wheels[0],k=rec.keys[0],qualified=rec.pre.gesture?.kb&&rec.pre.gesture.type===mode&&rec.pre.op===mode&&rec.wheels.length===1&&w.trusted&&k?.trusted&&k.t<=w.t&&!w.gesture&&!rec.moves&&w.top===0&&rec.after.top>0&&!rec.after.gesture&&!rec.after.op;
 				t.log(label+'R113 P3 '+mode+' attempt '+(attempt+1)+': '+JSON.stringify(rec));
 				if(!qualified&&attempt<2)continue;
-				await t.check(label+'R113 P3 '+mode+' could judge: trusted release then wheel before idle marker cleanup',qualified,JSON.stringify(rec));
-				await t.check(label+'R113 P3 '+mode+' first wheel takes the completed gesture marker and starts/ends one pause',qualified&&w.after.op==='wheel'&&rec.starts.length===1&&rec.ends.length===1&&rec.starts[0].op==='wheel'&&!rec.ends[0].op&&!rec.ends[0].gesture,JSON.stringify(rec));
+				await t.check(label+'R113 P3 '+mode+' could judge: trusted gesture release followed by real wheel-driven pane movement',qualified,JSON.stringify(rec));
+				await t.check(label+'R113 P3 '+mode+' first real scroll after gesture release starts and ends one pause',qualified&&w.after?.op==='wheel'&&rec.starts.length===1&&rec.ends.length===1&&rec.starts[0].op==='wheel'&&rec.starts[0].top>0&&!rec.ends[0].op&&!rec.ends[0].gesture,JSON.stringify(rec));
 				break;
 			}
 		}
@@ -174,7 +174,7 @@ async function compactDonut(t,f,label,park) {
 		const r=window.__uhpR113={pre:read(),neutral:chart._pmuChart._dh,frames:[],wheels:[],moves:0,ends:[]};let pos=null,running=true;
 		const wheel=e=>{pos=[e.clientX,e.clientY];r.wheels.push({t:performance.now(),trusted:e.isTrusted});};
 		const move=e=>{if(pos&&(pos[0]!==e.clientX||pos[1]!==e.clientY))r.moves++;};const end=e=>{if(e.detail?.board===b)r.ends.push(performance.now());};
-		const frame=()=>{if(!running)return;if(b.getAttribute('data-op')==='wheel')r.frames.push(read());requestAnimationFrame(frame);};
+		const frame=()=>{if(!running)return;r.frames.push(read());requestAnimationFrame(frame);};
 		sc.addEventListener('wheel',wheel,{passive:true});document.addEventListener('pointermove',move,true);document.addEventListener('pmu-op-end',end);requestAnimationFrame(frame);
 		r.stop=()=>{running=false;sc.removeEventListener('wheel',wheel);document.removeEventListener('pointermove',move,true);document.removeEventListener('pmu-op-end',end);return {...r,neutral:{value:r.neutral.centreVal,caption:r.neutral.centreCap},stop:undefined,after:read()};};
 	});
@@ -225,7 +225,7 @@ async function neutralDonutRoll(t,f,label,park) {
 	await t.page.waitForTimeout(900);
 	const rec=await f.evaluate(()=>window.__uhpR113.stop()),w=rec.wheels[0];t.log(label+'R113 P7 neutral roll: '+JSON.stringify(rec));
 	await t.check(label+'R113 P7 could judge: authored centre roll after settled add, no selection, trusted neighbor wheel and still pointer',rec.wheels.length===1&&w.trusted&&w.card==='token-trend'&&w.before.strips>0&&w.before.running>0&&w.before.remaining>=900&&!w.before.hot&&!w.before.donutHovered&&!w.before.live&&!rec.moves,JSON.stringify(rec));
-	await t.check(label+'R113 P7 wheel start preserves the neutral donut digit strip and its running roll',w?.after.op==='wheel'&&w.after.sameStrip&&w.after.strips>0&&w.after.running>0,JSON.stringify(w));
+	await t.check(label+'R113 P7 wheel at the limit preserves the neutral donut digit strip and its running roll',!w?.after.op&&w.after.sameStrip&&w.after.strips>0&&w.after.running>0,JSON.stringify(w));
 	await park();await f.evaluate(on=>{PMU.board.reset('room');if(on)PMU.live.resume();},on);await t.page.waitForTimeout(1800);
 	return {kind:'roll',rec};
 }

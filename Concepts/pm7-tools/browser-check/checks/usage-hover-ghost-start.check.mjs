@@ -30,23 +30,23 @@ export const tests = {
 					const sc = document.getElementById('pmuScroll'), old = document.getElementById('pmuBoard');
 					const track = old.querySelector('.pmu-skycol:hover .pmu-skytrack');
 					const state = () => ({ shadow: track && getComputedStyle(track).boxShadow, liveOp: document.getElementById('pmuBoard').getAttribute('data-op'),
-						ghost: old.matches('.pmu-ghostboard'), alpha: +getComputedStyle(old).opacity, hover: !!track?.closest('.pmu-skycol').matches(':hover') });
+						ghost: old.matches('.pmu-ghostboard'), alpha: +getComputedStyle(old).opacity, hover: !!track?.closest('.pmu-skycol').matches(':hover'), top: sc.scrollTop });
 					const r = window.__r117Ghost = { neutral, pre: state(), wheels: [] };
 					const capture = (e) => {
 						const hit = document.elementFromPoint(e.clientX, e.clientY);
 						r.wheels.push({ ...state(), trusted: e.isTrusted, hitOld: hit?.closest('.pmu-board') === old,
 							hitSkyline: hit?.closest('.pmu-skycol') === track?.closest('.pmu-skycol') });
 					};
-					const bubble = () => { r.after = state(); };
+					const scroll = () => { if (r.wheels.length && sc.scrollTop !== r.wheels[0].top) r.after ??= state(); };
 					sc.addEventListener('wheel', capture, { capture: true, passive: true });
-					sc.addEventListener('wheel', bubble, { passive: true });
+					sc.addEventListener('scroll', scroll, { passive: true });
 					r.stop = () => {
-						sc.removeEventListener('wheel', capture, true); sc.removeEventListener('wheel', bubble);
+						sc.removeEventListener('wheel', capture, true); sc.removeEventListener('scroll', scroll);
 						return { ...r, stop: undefined };
 					};
 				}, neutral);
 				await t.page.keyboard.press('Enter');
-				await t.page.mouse.wheel(0, -1);
+				await t.page.mouse.wheel(0, 1);
 				await t.page.waitForTimeout(250);
 				rec = await f.evaluate(() => window.__r117Ghost.stop());
 				const hit = rec.wheels[0];
@@ -56,8 +56,8 @@ export const tests = {
 				t.log(S + 'unqualified input ' + JSON.stringify(rec));
 				rec = null;
 			}
-			await t.check(S + 'trusted first wheel hit the visibly hovered outgoing Skyline', !!rec, JSON.stringify(rec));
-			await t.check(S + 'the outgoing Skyline outline is suppressed in that wheel task',
+			await t.check(S + 'trusted wheel hit the visibly hovered outgoing Skyline and moved the pane', !!rec, JSON.stringify(rec));
+			await t.check(S + 'the outgoing Skyline outline is suppressed on the first real scroll',
 				rec?.after?.ghost && rec.after.hover && rec.after.shadow === rec.neutral, JSON.stringify(rec));
 		}
 	},

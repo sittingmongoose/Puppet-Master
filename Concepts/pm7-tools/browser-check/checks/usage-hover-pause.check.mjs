@@ -366,11 +366,11 @@ async function appliedHighlights(t, f, label, park) {
 			const scroll = () => r.scrolls.push({ t: performance.now(), top: sc.scrollTop });
 			const move = (e) => { point = [e.clientX,e.clientY]; if (pos && (e.clientX !== pos[0] || e.clientY !== pos[1])) r.moves++; };
 			const end = (e) => { if (e.detail?.board === b) r.ends.push(performance.now()); };
-			const sample = () => { if (!running) return; if (b.getAttribute('data-op') === 'wheel') r.frames.push(read()); requestAnimationFrame(sample); };
-			sc.addEventListener('wheel', wheel, { capture:true, passive:true }); sc.addEventListener('wheel',immediate,{passive:true}); sc.addEventListener('scroll', scroll, { passive:true }); sc.addEventListener('pointermove', move, true);
+			const sample = () => { if (!running) return; if (kind === 'engine' || b.getAttribute('data-op') === 'wheel') r.frames.push(read()); requestAnimationFrame(sample); };
+			sc.addEventListener('wheel', wheel, { capture:true, passive:true }); sc.addEventListener('scroll',immediate,{passive:true}); sc.addEventListener('scroll', scroll, { passive:true }); sc.addEventListener('pointermove', move, true);
 			document.addEventListener('pmu-op-end', end); requestAnimationFrame(sample);
 			r.read = read;
-			r.stop = () => { running=false; sc.removeEventListener('wheel',wheel,true); sc.removeEventListener('wheel',immediate); sc.removeEventListener('scroll',scroll); sc.removeEventListener('pointermove',move,true); document.removeEventListener('pmu-op-end',end); return { ...r, read:undefined, stop:undefined, after:read() }; };
+			r.stop = () => { running=false; sc.removeEventListener('wheel',wheel,true); sc.removeEventListener('scroll',immediate); sc.removeEventListener('scroll',scroll); sc.removeEventListener('pointermove',move,true); document.removeEventListener('pmu-op-end',end); return { ...r, read:undefined, stop:undefined, after:read() }; };
 		}, { kind, selector, reducedTool });
 		await t.page.mouse.move(at.x, at.y, { steps: 4 });
 		await t.page.waitForTimeout(kind === 'engine' ? 4000 : 900);
@@ -386,7 +386,13 @@ async function appliedHighlights(t, f, label, park) {
 			});
 		}
 		const pre = await f.evaluate(() => window.__uhpApplied.read());
-		if (kind === 'tool') { await t.page.mouse.wheel(0,-1); if(!reducedTool){await t.page.mouse.down(); await t.page.mouse.up();} }
+		if (kind === 'tool') {
+			await t.page.mouse.wheel(0, 1);
+			if (!reducedTool) {
+				await f.waitForFunction(() => document.getElementById('pmuBoard').getAttribute('data-op') === 'wheel');
+				await t.page.mouse.down(); await t.page.mouse.up();
+			}
+		}
 		else for(let i=0;i<18;i++){await t.page.mouse.wheel(0,kind==='engine'?-1:i%2?-1:1);await t.page.waitForTimeout(30);}
 		await t.page.waitForTimeout(900);
 		const rec = await f.evaluate(() => { const r=window.__uhpApplied.stop(); r.menuOpen=!!PMU.menu.current(); return r; });
@@ -395,7 +401,7 @@ async function appliedHighlights(t, f, label, park) {
 		t.log(S+JSON.stringify({pre, neutral:rec.neutral, frames:marked.length, ends:rec.ends, press:rec.press, after:rec.after}));
 		if (kind === 'tool' && reducedTool) {
 			await t.check(S+'could judge unfocused shown tools and trusted wheel in Reduced Motion',pre.hovered&&pre.reduced&&pre.toolOpacity>0.5&&rec.wheels.length===1&&rec.wheels[0].trusted&&rec.immediate?.op==='wheel'&&!rec.moves,JSON.stringify({pre,immediate:rec.immediate,wheels:rec.wheels,moves:rec.moves}));
-			await t.check(S+'tools conceal immediately in the wheel task under Reduced Motion',rec.immediate?.reduced&&rec.immediate.toolOpacity===0&&rec.immediate.toolPointerEvents==='none',JSON.stringify(rec.immediate));
+			await t.check(S+'tools conceal immediately on the first wheel-driven scroll under Reduced Motion',rec.immediate?.reduced&&rec.immediate.toolOpacity===0&&rec.immediate.toolPointerEvents==='none',JSON.stringify(rec.immediate));
 		} else if (kind === 'tool') {
 			await t.check(S+'could judge a trusted press while the previously shown tool still visibly fades', pre.hovered && rec.press?.trusted && rec.press.paused && rec.press.opacity > 0.05 && !rec.moves, JSON.stringify(rec.press));
 			await t.check(S+'the visible menu tool receives the press and opens its menu', rec.press?.tool === 'menu' && rec.menuOpen, JSON.stringify({press:rec.press,menuOpen:rec.menuOpen}));
@@ -416,16 +422,16 @@ async function appliedHighlights(t, f, label, park) {
 		} else {
 			const shown=kind === 'provider' ? pre.hl>0 : kind === 'donut' ? pre.dim>0 && pre.hot>0 && pre.value!==rec.neutral.value : kind === 'column' ? pre.cols===1 && pre.bars : pre.lit && !pre.engineRunning;
 			const travel=rec.scrolls.map((s)=>s.top);
-			const qualified=shown&&pre.hovered&&rec.after.hovered&&!rec.moves&&marked.length>=10&&rec.wheels.length===18&&rec.wheels.every(w=>w.trusted)&&rec.ends.length===1&&rec.ends[0]>last&&(kind==='engine'?pre.top===0&&rec.after.top===0:travel.length>0);
+			const qualified=shown&&pre.hovered&&rec.after.hovered&&!rec.moves&&marked.length>=10&&rec.wheels.length===18&&rec.wheels.every(w=>w.trusted)&&(kind==='engine' ? pre.top===0 && rec.after.top===0 && !travel.length : rec.ends.length===1 && rec.ends[0]>last && travel.length>0);
 			// Retake only an unqualified chart input window, as R5 does. A qualified wrong chart state fails at once.
 			if(!qualified&&['provider','donut','column'].includes(kind)&&attempt<3){t.log(S+'unqualified native input attempt '+attempt+'; same fixture/prerequisites repeated: '+JSON.stringify({wheels:rec.wheels.length,ends:rec.ends,frames:marked.length,moves:rec.moves}));await park();route--;continue;}
-			await t.check(S+'could judge already-applied state, still pointer and a sampled complete wheel hold',qualified,JSON.stringify({attempt,shown,pre,after:rec.after,frames:marked.length,scrolls:travel,ends:rec.ends}));
-			const same=(s)=>kind==='provider'?s.hl===pre.hl:kind==='donut'?s.dim===pre.dim&&JSON.stringify(s.hotRows)===JSON.stringify(pre.hotRows)&&s.value===pre.value&&s.caption===pre.caption:kind==='column'?(rec.scrolls.length&&s.t>=rec.scrolls[0].t?!s.cols&&!s.bars&&!s.readout:s.cols===pre.cols&&s.bars===pre.bars&&s.readout===pre.readout):!s.lit;
+			await t.check(S+'could judge already-applied state, still pointer and a sampled wheel input window',qualified,JSON.stringify({attempt,shown,pre,after:rec.after,frames:marked.length,scrolls:travel,ends:rec.ends}));
+			const same=(s)=>kind==='provider'?s.hl===pre.hl:kind==='donut'?s.dim===pre.dim&&JSON.stringify(s.hotRows)===JSON.stringify(pre.hotRows)&&s.value===pre.value&&s.caption===pre.caption:kind==='column'?(rec.scrolls.length&&s.t>=rec.scrolls[0].t?!s.cols&&!s.bars&&!s.readout:s.cols===pre.cols&&s.bars===pre.bars&&s.readout===pre.readout):s.lit&&!s.op&&!s.engineRunning;
 			// Main's native scroll listener dismisses an open column readout. Provider/donut selections stay applied;
-			// none of these states is cleared or restored by wheel start/end. Engine lights retain the pause.
-			await t.check(S+(kind==='engine'?'engine light clears throughout the marked interval, including its tail':'main chart behavior persists throughout the complete wheel hold'),marked.length>=10&&marked.every(same),`${marked.filter(s=>!same(s)).length}/${marked.length} unexpected samples`);
-			const a=rec.after,expected=kind==='engine'?a.lit:same(a);
-			await t.check(S+(kind==='engine'?'current card engine light returns without pointer movement':'main chart behavior remains after hold, with no chart restoration'),!a.op&&a.hovered&&expected,JSON.stringify(a));
+			// none of these states is cleared or restored by wheel start/end. A stationary pane leaves the settled engine light alone.
+			await t.check(S+(kind==='engine'?'wheel at the limit preserves the settled light without waking the engine':'main chart behavior persists throughout the complete wheel hold'),marked.length>=10&&marked.every(same),`${marked.filter(s=>!same(s)).length}/${marked.length} unexpected samples`);
+			const a=rec.after,expected=same(a) && (kind!=='engine' || !rec.ends.length);
+			await t.check(S+(kind==='engine'?'stationary card light and idle engine persist after input':'main chart behavior remains after hold, with no chart restoration'),!a.op&&a.hovered&&expected,JSON.stringify(a));
 		}
 		// Removing/re-adding panels applies real gravity and can rearrange peers. Restore this fresh fixture's room
 		// defaults in one reset so R0 keeps its original fixed point and starts on the normal board, not a gap.
@@ -534,10 +540,10 @@ async function keyboardPause(t, f, label, park) {
 			requestAnimationFrame(frame);
 			r.stop = () => { running = false; markers.disconnect(); sc.removeEventListener('wheel', wheel); document.removeEventListener('keydown', keydown, true); document.removeEventListener('pointermove', move, true); document.removeEventListener('pmu-op-end', end); return {...r, stop: undefined, point, after: read()}; };
 		}, {key, mode});
-		// A second trusted wheel at the same limit witnesses suppression inside the live gesture even
-		// if the deferred operation marker misses this host's first 150 ms window.
-		await t.page.mouse.wheel(0, -1);
-		await Promise.all([t.page.keyboard.down(key), t.page.mouse.wheel(0, -1)]);
+		await t.page.mouse.wheel(0, 1);
+		await f.waitForFunction(() => document.getElementById('pmuBoard').getAttribute('data-op') === 'wheel');
+		// A second trusted tick at the same point witnesses suppression inside the live gesture.
+		await Promise.all([t.page.keyboard.down(key), t.page.mouse.wheel(40, 0)]);
 		await t.page.keyboard.up(key);
 		await t.page.waitForTimeout(650);
 		await t.page.keyboard.press('Escape');
@@ -545,25 +551,25 @@ async function keyboardPause(t, f, label, park) {
 		const rec = await f.evaluate(() => window.__uhpKeyboard.stop()); records.push(rec);
 		const press = rec.keys.find((x) => x.key === key), escape = rec.keys.find((x) => x.key === 'Escape');
 		const [first, follow] = rec.wheels;
-		const gap = press?.t - first?.t, held = rec.frames.filter((x) => x.t >= first?.t + 200 && x.t < escape?.t);
+		const started = rec.markers.find((x) => x.op === 'wheel'), gap = press?.t - started?.t, held = rec.frames.filter((x) => x.t >= first?.t + 200 && x.t < escape?.t);
 		const a = rec.after, p = rec.pre;
 		const duringMove = [...rec.markers, ...rec.frames].filter((x) => x.t >= first?.t && x.t < first?.t + 150 && x.op === mode && x.hovered);
-		const visualInput = rec.wheels.length === 2 && first.trusted && follow.trusted && first.op === 'wheel' &&
-			follow.gesture?.kb && follow.gesture.type === mode && follow.t >= press?.t && follow.t < first.t + 150 &&
-			p.hovered && first.hovered && follow.hovered && first.shadow !== p.shadow &&
-			first.top === 0 && follow.top === 0 && !rec.moves;
+		const visualInput = rec.wheels.length === 2 && first.trusted && follow.trusted && started?.op === 'wheel' &&
+			follow.gesture?.kb && follow.gesture.type === mode && follow.t >= press?.t && follow.t < started.t + 150 &&
+			p.hovered && first.hovered && follow.hovered && started.shadow !== p.shadow &&
+			first.top === 0 && started.top > first.top && follow.top === started.top && !rec.moves;
 		await t.check(S + 'could judge Skyline hover before its wheel deadline on a second trusted wheel inside the keyboard gesture',
-			visualInput, JSON.stringify({pre: p, wheels: rec.wheels, press, moves: rec.moves}));
+			visualInput, JSON.stringify({pre: p, started, wheels: rec.wheels, press, moves: rec.moves}));
 		await t.check(S + 'Skyline stays visually neutral inside the keyboard gesture until the original wheel deadline',
-			visualInput && follow.shadow === first.shadow && duringMove.every((x) => x.shadow === first.shadow) && a.shadow === p.shadow,
+			visualInput && follow.shadow === started.shadow && duringMove.every((x) => x.shadow === started.shadow) && a.shadow === p.shadow,
 			JSON.stringify({resting: p.shadow, wheels: rec.wheels, after: a.shadow, duringMove}));
 		t.log(S + JSON.stringify(rec));
-		await t.check(S + 'could judge: applied provider, trusted wheel at top, M/R on another focused card within 150 ms, gesture held past pause, trusted Escape and still pointer',
+		await t.check(S + 'could judge: applied provider, trusted wheel moves the pane, M/R on another focused card within 150 ms, gesture held past pause, trusted Escape and still pointer',
 			p.hovered && p.dim === p.eligibleDim && p.on === p.eligibleOn && p.dim + p.on > 0 && p.correct && rec.focused === 'health' &&
-			rec.wheels.length === 2 && rec.wheels.every((x) => x.trusted) && first.op === 'wheel' && gap >= 0 && gap < 150 && press?.trusted && press.focused === 'health' && escape?.trusted &&
-			escape.t - press.t >= 500 && held.length >= 5 && held.every((x) => x.gesture?.kb && x.gesture.type === mode && x.hovered && x.top === 0) && held.some((x) => x.op === mode) &&
-			!rec.moves && a.hovered && a.top === 0 && !a.gesture && !a.op,
-			JSON.stringify({gap, pre: p, focused: rec.focused, wheels: rec.wheels, keys: rec.keys, held: held.length, moves: rec.moves, after: a}));
+			rec.wheels.length === 2 && rec.wheels.every((x) => x.trusted) && started?.op === 'wheel' && gap >= 0 && gap < 150 && press?.trusted && press.focused === 'health' && escape?.trusted &&
+			escape.t - press.t >= 500 && held.length >= 5 && held.every((x) => x.gesture?.kb && x.gesture.type === mode && x.hovered && x.top === started.top) && held.some((x) => x.op === mode) &&
+			!rec.moves && a.hovered && a.top === started.top && !a.gesture && !a.op,
+			JSON.stringify({gap, started, pre: p, focused: rec.focused, wheels: rec.wheels, keys: rec.keys, held: held.length, moves: rec.moves, after: a}));
 		await t.check(S + 'main provider selection stays unchanged while the keyboard gesture owns the board', held.length >= 5 && held.every((x) => x.dim===p.dim&&x.on===p.on&&x.correct) && !rec.ends.some((x) => x.t < escape?.t || x.gesture || x.op), JSON.stringify({ends: rec.ends, litHeld: held.filter((x) => x.dim || x.on).length}));
 		await t.check(S + 'after Escape one lifecycle return releases the engine while main provider selection stays unchanged', rec.ends.length === 1 && rec.ends[0].live && !rec.ends[0].gesture && !rec.ends[0].op && rec.ends[0].t >= escape?.t && JSON.stringify(rec.ends[0].point) === JSON.stringify(rec.point) && !a.gesture && !a.op && a.hovered && a.dim === a.eligibleDim && a.on === a.eligibleOn && a.dim + a.on > 0 && a.correct, JSON.stringify({ends: rec.ends, after: a}));
 	}
