@@ -2,9 +2,9 @@
 
 Source: `Plans/storage-plan.md`
 
-Source lines: L46102-L53292
+Source lines: L46102-L53290
 
-Source SHA256: `7c263abcd24e12e537b77bcfc41510b607c20036e5cd9dcdb742490c83f347ac`
+Source SHA256: `73ee6d097e08d31fd93301d05d2cd2632dd46e5a22ba3ea405ffadda4a0a9db2`
 
 ---
 
@@ -78,8 +78,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/storage-plan.md
 canonical_text: "Newly authored owner contract under DL-045 for exactly memory.dedup_sweep.completed@1.0.0; search scope\
-  \ and negative evidence are the family's row in reports/event-authority-20261104/DMEM-search.json. The\
-  \ family remains absent from event_family_registry.json, quarantined before append or projection. Retention\
+  \ and negative evidence are the family's row in reports/event-authority-20261104/DMEM-search.json. At preparation before the 2026-11-18 registration, the family was absent from event_family_registry.json and quarantined before append or projection. Retention\
   \ is PENDING_RETENTION_DECISION: candidate ordinary telemetry (Case L-3, 90 days/2,000,000 per Project)\
   \ versus audit authority (indefinite/no count eviction); neither is selected. Unknown policy is materially\
   \ incomplete and permits no destructive inference. Operation custody has the same pending assignment,\
@@ -292,7 +291,7 @@ canonical_text: "Newly authored owner contract under DL-045 for exactly memory.d
   \ with their own owners. Legal/investigation holds, required references, recovery, rollback, maintenance,\
   \ protected backups and latest-25-run protection override cleanup without granting access. No unexpired/protected\
   \ eviction for space, no retry anchor renewal, no hold release, admission, native proof or governance\
-  \ clearance is granted.\n"
+  \ clearance is granted.\n\n\nCurrent membership (2026-11-18) — memory.dedup_sweep.completed@1.0.0 is individually registered in Plans/event_family_registry.json. Missing-registration refusal applies only if the exact current family/version/scope registration is absent; this registered family is not refused as missing_event_registration or family_not_admitted merely because it was prepared without admission. Append and checkpoint advance still require every existing schema, scope, retention, original-source, receipt, permission and withdrawal check specified here. Registry membership supplies no native execution proof or additional action authority."
 gui_related: false
 gui_classification_reason: Typed events, identity, custody and recovery; no visual behavior.
 depends_on:
@@ -303,7 +302,7 @@ depends_on:
 - CV-650
 unblocks: []
 acceptance_criteria:
-- Exact family remains quarantined until its own admission and retention resolution.
+- Exact family is registered; quarantine for missing registration applies only while its exact registration is absent, and existing retention and other append/projection checks remain mandatory.
 - Schema, identity, custody, replay and withdrawal match this unit.
 validation_surfaces:
 - python3 scripts/pm_memory_maintenance_events.py
@@ -319,7 +318,7 @@ source_lineage:
 - reports/event-authority-20261104/DMEM-search.json
 preserved_exact_tokens: []
 negative_constraints:
-- No admission, deletion-policy decision, app-scope expansion or native proof.
+- Preparation itself grants no admission, deletion-policy decision, app-scope expansion or native proof.
 ```
 
 
@@ -331,8 +330,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/storage-plan.md
 canonical_text: "Newly authored owner contract under DL-045 for exactly memory.dedup_sweep.started@1.0.0; search scope\
-  \ and negative evidence are the family's row in reports/event-authority-20261104/DMEM-search.json. The\
-  \ family remains absent from event_family_registry.json, quarantined before append or projection. Retention\
+  \ and negative evidence are the family's row in reports/event-authority-20261104/DMEM-search.json. At preparation before the 2026-11-18 registration, the family was absent from event_family_registry.json and quarantined before append or projection. Retention\
   \ is PENDING_RETENTION_DECISION: candidate ordinary telemetry (Case L-3, 90 days/2,000,000 per Project)\
   \ versus audit authority (indefinite/no count eviction); neither is selected. Unknown policy is materially\
   \ incomplete and permits no destructive inference. Operation custody has the same pending assignment,\
@@ -548,7 +546,7 @@ canonical_text: "Newly authored owner contract under DL-045 for exactly memory.d
   \ admission, native proof or governance clearance is granted.\n\nFor `memory.dedup_sweep.started`, the\
   \ already named exact stored value `memory_dedup_sweep_operation` uses `RP-MEMORY-MAINTENANCE-APPLICATION-2555D@1.0.0`\
   \ under DL-509. Preserve that policy's own anchor, limits, holds and dependency closure; no sibling\
-  \ or referenced body receives this assignment.\n"
+  \ or referenced body receives this assignment.\n\n\nCurrent membership (2026-11-18) — memory.dedup_sweep.started@1.0.0 is individually registered in Plans/event_family_registry.json. Missing-registration refusal applies only if the exact current family/version/scope registration is absent; this registered family is not refused as missing_event_registration or family_not_admitted merely because it was prepared without admission. Append and checkpoint advance still require every existing schema, scope, retention, original-source, receipt, permission and withdrawal check specified here. Registry membership supplies no native execution proof or additional action authority."
 gui_related: false
 gui_classification_reason: Typed events, identity, custody and recovery; no visual behavior.
 depends_on:
@@ -559,7 +557,7 @@ depends_on:
 - CV-651
 unblocks: []
 acceptance_criteria:
-- Exact family remains quarantined until its own admission and retention resolution.
+- Exact family is registered; quarantine for missing registration applies only while its exact registration is absent, and existing retention and other append/projection checks remain mandatory.
 - Schema, identity, custody, replay and withdrawal match this unit.
 validation_surfaces:
 - python3 scripts/pm_memory_maintenance_events.py
@@ -575,7 +573,7 @@ source_lineage:
 - reports/event-authority-20261104/DMEM-search.json
 preserved_exact_tokens: []
 negative_constraints:
-- No admission, deletion-policy decision, app-scope expansion or native proof.
+- Preparation itself grants no admission, deletion-policy decision, app-scope expansion or native proof.
 ```
 
 
@@ -588,7 +586,7 @@ status: accepted
 owner_doc: Plans/storage-plan.md
 canonical_text: "Newly authored owner contract under DL-045 for exactly memory.index.lexical.rebuild.completed@1.0.0;\
   \ search scope and negative evidence are the family's row in reports/event-authority-20261104/DMEM-search.json.\
-  \ The family remains absent from event_family_registry.json, quarantined before append or projection.\
+  \ At preparation before the 2026-11-18 registration, the family was absent from event_family_registry.json and quarantined before append or projection.\
   \ Retention is PENDING_RETENTION_DECISION: candidate ordinary telemetry (Case L-3, 90 days/2,000,000\
   \ per Project) versus audit authority (indefinite/no count eviction); neither is selected. Unknown policy\
   \ is materially incomplete and permits no destructive inference. Operation custody has the same pending\
@@ -829,7 +827,7 @@ canonical_text: "Newly authored owner contract under DL-045 for exactly memory.i
   \ lifetimes remain with their own owners. Legal/investigation holds, required references, recovery,\
   \ rollback, maintenance, protected backups and latest-25-run protection override cleanup without granting\
   \ access. No unexpired/protected eviction for space, no retry anchor renewal, no hold release, admission,\
-  \ native proof or governance clearance is granted.\n"
+  \ native proof or governance clearance is granted.\n\n\nCurrent membership (2026-11-18) — memory.index.lexical.rebuild.completed@1.0.0 is individually registered in Plans/event_family_registry.json. Missing-registration refusal applies only if the exact current family/version/scope registration is absent; this registered family is not refused as missing_event_registration or family_not_admitted merely because it was prepared without admission. Append and checkpoint advance still require every existing schema, scope, retention, original-source, receipt, permission and withdrawal check specified here. Registry membership supplies no native execution proof or additional action authority."
 gui_related: false
 gui_classification_reason: Typed events, identity, custody and recovery; no visual behavior.
 depends_on:
@@ -840,7 +838,7 @@ depends_on:
 - CV-652
 unblocks: []
 acceptance_criteria:
-- Exact family remains quarantined until its own admission and retention resolution.
+- Exact family is registered; quarantine for missing registration applies only while its exact registration is absent, and existing retention and other append/projection checks remain mandatory.
 - Schema, identity, custody, replay and withdrawal match this unit.
 validation_surfaces:
 - python3 scripts/pm_memory_maintenance_events.py
@@ -856,7 +854,7 @@ source_lineage:
 - reports/event-authority-20261104/DMEM-search.json
 preserved_exact_tokens: []
 negative_constraints:
-- No admission, deletion-policy decision, app-scope expansion or native proof.
+- Preparation itself grants no admission, deletion-policy decision, app-scope expansion or native proof.
 ```
 
 
@@ -869,7 +867,7 @@ status: accepted
 owner_doc: Plans/storage-plan.md
 canonical_text: "Newly authored owner contract under DL-045 for exactly memory.index.lexical.rebuild.started@1.0.0; search\
   \ scope and negative evidence are the family's row in reports/event-authority-20261104/DMEM-search.json.\
-  \ The family remains absent from event_family_registry.json, quarantined before append or projection.\
+  \ At preparation before the 2026-11-18 registration, the family was absent from event_family_registry.json and quarantined before append or projection.\
   \ Retention is PENDING_RETENTION_DECISION: candidate ordinary telemetry (Case L-3, 90 days/2,000,000\
   \ per Project) versus audit authority (indefinite/no count eviction); neither is selected. Unknown policy\
   \ is materially incomplete and permits no destructive inference. Operation custody has the same pending\
@@ -1113,7 +1111,7 @@ canonical_text: "Newly authored owner contract under DL-045 for exactly memory.i
   \ or referenced body receives this assignment.\n\nFor `memory.index.lexical.rebuild.started`, the already\
   \ named exact stored value `memory_index_lexical_rebuild_operation` uses `RP-MEMORY-MAINTENANCE-APPLICATION-2555D@1.0.0`\
   \ under DL-509. Preserve that policy's own anchor, limits, holds and dependency closure; no sibling\
-  \ or referenced body receives this assignment.\n"
+  \ or referenced body receives this assignment.\n\n\nCurrent membership (2026-11-18) — memory.index.lexical.rebuild.started@1.0.0 is individually registered in Plans/event_family_registry.json. Missing-registration refusal applies only if the exact current family/version/scope registration is absent; this registered family is not refused as missing_event_registration or family_not_admitted merely because it was prepared without admission. Append and checkpoint advance still require every existing schema, scope, retention, original-source, receipt, permission and withdrawal check specified here. Registry membership supplies no native execution proof or additional action authority."
 gui_related: false
 gui_classification_reason: Typed events, identity, custody and recovery; no visual behavior.
 depends_on:
@@ -1124,7 +1122,7 @@ depends_on:
 - CV-653
 unblocks: []
 acceptance_criteria:
-- Exact family remains quarantined until its own admission and retention resolution.
+- Exact family is registered; quarantine for missing registration applies only while its exact registration is absent, and existing retention and other append/projection checks remain mandatory.
 - Schema, identity, custody, replay and withdrawal match this unit.
 validation_surfaces:
 - python3 scripts/pm_memory_maintenance_events.py
@@ -1140,7 +1138,7 @@ source_lineage:
 - reports/event-authority-20261104/DMEM-search.json
 preserved_exact_tokens: []
 negative_constraints:
-- No admission, deletion-policy decision, app-scope expansion or native proof.
+- Preparation itself grants no admission, deletion-policy decision, app-scope expansion or native proof.
 ```
 
 
@@ -1153,7 +1151,7 @@ status: accepted
 owner_doc: Plans/storage-plan.md
 canonical_text: "Newly authored owner contract under DL-045 for exactly memory.index.semantic.rebuild.completed@1.0.0;\
   \ search scope and negative evidence are the family's row in reports/event-authority-20261104/DMEM-search.json.\
-  \ The family remains absent from event_family_registry.json, quarantined before append or projection.\
+  \ At preparation before the 2026-11-18 registration, the family was absent from event_family_registry.json and quarantined before append or projection.\
   \ Retention is PENDING_RETENTION_DECISION: candidate ordinary telemetry (Case L-3, 90 days/2,000,000\
   \ per Project) versus audit authority (indefinite/no count eviction); neither is selected. Unknown policy\
   \ is materially incomplete and permits no destructive inference. Operation custody has the same pending\
@@ -1394,7 +1392,7 @@ canonical_text: "Newly authored owner contract under DL-045 for exactly memory.i
   \ lifetimes remain with their own owners. Legal/investigation holds, required references, recovery,\
   \ rollback, maintenance, protected backups and latest-25-run protection override cleanup without granting\
   \ access. No unexpired/protected eviction for space, no retry anchor renewal, no hold release, admission,\
-  \ native proof or governance clearance is granted.\n"
+  \ native proof or governance clearance is granted.\n\n\nCurrent membership (2026-11-18) — memory.index.semantic.rebuild.completed@1.0.0 is individually registered in Plans/event_family_registry.json. Missing-registration refusal applies only if the exact current family/version/scope registration is absent; this registered family is not refused as missing_event_registration or family_not_admitted merely because it was prepared without admission. Append and checkpoint advance still require every existing schema, scope, retention, original-source, receipt, permission and withdrawal check specified here. Registry membership supplies no native execution proof or additional action authority."
 gui_related: false
 gui_classification_reason: Typed events, identity, custody and recovery; no visual behavior.
 depends_on:
@@ -1405,7 +1403,7 @@ depends_on:
 - CV-654
 unblocks: []
 acceptance_criteria:
-- Exact family remains quarantined until its own admission and retention resolution.
+- Exact family is registered; quarantine for missing registration applies only while its exact registration is absent, and existing retention and other append/projection checks remain mandatory.
 - Schema, identity, custody, replay and withdrawal match this unit.
 validation_surfaces:
 - python3 scripts/pm_memory_maintenance_events.py
@@ -1421,7 +1419,7 @@ source_lineage:
 - reports/event-authority-20261104/DMEM-search.json
 preserved_exact_tokens: []
 negative_constraints:
-- No admission, deletion-policy decision, app-scope expansion or native proof.
+- Preparation itself grants no admission, deletion-policy decision, app-scope expansion or native proof.
 ```
 
 
@@ -1434,7 +1432,7 @@ status: accepted
 owner_doc: Plans/storage-plan.md
 canonical_text: "Newly authored owner contract under DL-045 for exactly memory.index.semantic.rebuild.started@1.0.0; search\
   \ scope and negative evidence are the family's row in reports/event-authority-20261104/DMEM-search.json.\
-  \ The family remains absent from event_family_registry.json, quarantined before append or projection.\
+  \ At preparation before the 2026-11-18 registration, the family was absent from event_family_registry.json and quarantined before append or projection.\
   \ Retention is PENDING_RETENTION_DECISION: candidate ordinary telemetry (Case L-3, 90 days/2,000,000\
   \ per Project) versus audit authority (indefinite/no count eviction); neither is selected. Unknown policy\
   \ is materially incomplete and permits no destructive inference. Operation custody has the same pending\
@@ -1678,7 +1676,7 @@ canonical_text: "Newly authored owner contract under DL-045 for exactly memory.i
   \ or referenced body receives this assignment.\n\nFor `memory.index.semantic.rebuild.started`, the already\
   \ named exact stored value `memory_index_semantic_rebuild_operation` uses `RP-MEMORY-MAINTENANCE-APPLICATION-2555D@1.0.0`\
   \ under DL-509. Preserve that policy's own anchor, limits, holds and dependency closure; no sibling\
-  \ or referenced body receives this assignment.\n"
+  \ or referenced body receives this assignment.\n\n\nCurrent membership (2026-11-18) — memory.index.semantic.rebuild.started@1.0.0 is individually registered in Plans/event_family_registry.json. Missing-registration refusal applies only if the exact current family/version/scope registration is absent; this registered family is not refused as missing_event_registration or family_not_admitted merely because it was prepared without admission. Append and checkpoint advance still require every existing schema, scope, retention, original-source, receipt, permission and withdrawal check specified here. Registry membership supplies no native execution proof or additional action authority."
 gui_related: false
 gui_classification_reason: Typed events, identity, custody and recovery; no visual behavior.
 depends_on:
@@ -1689,7 +1687,7 @@ depends_on:
 - CV-655
 unblocks: []
 acceptance_criteria:
-- Exact family remains quarantined until its own admission and retention resolution.
+- Exact family is registered; quarantine for missing registration applies only while its exact registration is absent, and existing retention and other append/projection checks remain mandatory.
 - Schema, identity, custody, replay and withdrawal match this unit.
 validation_surfaces:
 - python3 scripts/pm_memory_maintenance_events.py
@@ -1705,7 +1703,7 @@ source_lineage:
 - reports/event-authority-20261104/DMEM-search.json
 preserved_exact_tokens: []
 negative_constraints:
-- No admission, deletion-policy decision, app-scope expansion or native proof.
+- Preparation itself grants no admission, deletion-policy decision, app-scope expansion or native proof.
 ```
 
 
@@ -1718,7 +1716,7 @@ status: accepted
 owner_doc: Plans/storage-plan.md
 canonical_text: "Newly authored owner contract under DL-045 for exactly memory.verification_sweep.completed@1.0.0; search\
   \ scope and negative evidence are the family's row in reports/event-authority-20261104/DMEM-search.json.\
-  \ The family remains absent from event_family_registry.json, quarantined before append or projection.\
+  \ At preparation before the 2026-11-18 registration, the family was absent from event_family_registry.json and quarantined before append or projection.\
   \ Retention is PENDING_RETENTION_DECISION: candidate ordinary telemetry (Case L-3, 90 days/2,000,000\
   \ per Project) versus audit authority (indefinite/no count eviction); neither is selected. Unknown policy\
   \ is materially incomplete and permits no destructive inference. Operation custody has the same pending\
@@ -1937,7 +1935,7 @@ canonical_text: "Newly authored owner contract under DL-045 for exactly memory.v
   \ no hold release, admission, native proof or governance clearance is granted.\n\nFor `memory.verification_sweep.completed`,\
   \ the already named exact stored value `memory_prune_archive_operation` uses `RP-MEMORY-MAINTENANCE-APPLICATION-2555D@1.0.0`\
   \ under DL-509. Preserve that policy's own anchor, limits, holds and dependency closure; no sibling\
-  \ or referenced body receives this assignment.\n"
+  \ or referenced body receives this assignment.\n\n\nCurrent membership (2026-11-18) — memory.verification_sweep.completed@1.0.0 is individually registered in Plans/event_family_registry.json. Missing-registration refusal applies only if the exact current family/version/scope registration is absent; this registered family is not refused as missing_event_registration or family_not_admitted merely because it was prepared without admission. Append and checkpoint advance still require every existing schema, scope, retention, original-source, receipt, permission and withdrawal check specified here. Registry membership supplies no native execution proof or additional action authority."
 gui_related: false
 gui_classification_reason: Typed events, identity, custody and recovery; no visual behavior.
 depends_on:
@@ -1948,7 +1946,7 @@ depends_on:
 - CV-656
 unblocks: []
 acceptance_criteria:
-- Exact family remains quarantined until its own admission and retention resolution.
+- Exact family is registered; quarantine for missing registration applies only while its exact registration is absent, and existing retention and other append/projection checks remain mandatory.
 - Schema, identity, custody, replay and withdrawal match this unit.
 validation_surfaces:
 - python3 scripts/pm_memory_maintenance_events.py
@@ -1964,7 +1962,7 @@ source_lineage:
 - reports/event-authority-20261104/DMEM-search.json
 preserved_exact_tokens: []
 negative_constraints:
-- No admission, deletion-policy decision, app-scope expansion or native proof.
+- Preparation itself grants no admission, deletion-policy decision, app-scope expansion or native proof.
 ```
 
 
@@ -1977,7 +1975,7 @@ status: accepted
 owner_doc: Plans/storage-plan.md
 canonical_text: "Newly authored owner contract under DL-045 for exactly memory.verification_sweep.started@1.0.0; search\
   \ scope and negative evidence are the family's row in reports/event-authority-20261104/DMEM-search.json.\
-  \ The family remains absent from event_family_registry.json, quarantined before append or projection.\
+  \ At preparation before the 2026-11-18 registration, the family was absent from event_family_registry.json and quarantined before append or projection.\
   \ Retention is PENDING_RETENTION_DECISION: candidate ordinary telemetry (Case L-3, 90 days/2,000,000\
   \ per Project) versus audit authority (indefinite/no count eviction); neither is selected. Unknown policy\
   \ is materially incomplete and permits no destructive inference. Operation custody has the same pending\
@@ -2195,7 +2193,7 @@ canonical_text: "Newly authored owner contract under DL-045 for exactly memory.v
   \ or referenced body receives this assignment.\n\nFor `memory.prune_archive.started`, the already named\
   \ exact stored value `memory_verification_sweep_operation` uses `RP-MEMORY-MAINTENANCE-APPLICATION-2555D@1.0.0`\
   \ under DL-509. Preserve that policy's own anchor, limits, holds and dependency closure; no sibling\
-  \ or referenced body receives this assignment.\n"
+  \ or referenced body receives this assignment.\n\n\nCurrent membership (2026-11-18) — memory.verification_sweep.started@1.0.0 is individually registered in Plans/event_family_registry.json. Missing-registration refusal applies only if the exact current family/version/scope registration is absent; this registered family is not refused as missing_event_registration or family_not_admitted merely because it was prepared without admission. Append and checkpoint advance still require every existing schema, scope, retention, original-source, receipt, permission and withdrawal check specified here. Registry membership supplies no native execution proof or additional action authority."
 gui_related: false
 gui_classification_reason: Typed events, identity, custody and recovery; no visual behavior.
 depends_on:
@@ -2206,7 +2204,7 @@ depends_on:
 - CV-657
 unblocks: []
 acceptance_criteria:
-- Exact family remains quarantined until its own admission and retention resolution.
+- Exact family is registered; quarantine for missing registration applies only while its exact registration is absent, and existing retention and other append/projection checks remain mandatory.
 - Schema, identity, custody, replay and withdrawal match this unit.
 validation_surfaces:
 - python3 scripts/pm_memory_maintenance_events.py
@@ -2222,7 +2220,7 @@ source_lineage:
 - reports/event-authority-20261104/DMEM-search.json
 preserved_exact_tokens: []
 negative_constraints:
-- No admission, deletion-policy decision, app-scope expansion or native proof.
+- Preparation itself grants no admission, deletion-policy decision, app-scope expansion or native proof.
 ```
 
 

@@ -40420,7 +40420,7 @@ canonical_text: concern.created current 1.0.0 selects the existing closed Plans/
   with SP-337 addressing for large detail. Project-only EventRecord 2.0.0 and encoded project~ partition; dedupe_by_idempotency_key
   current append/retry, projector_replay_only refuses replay_only_not_appendable. No additional direct creator,
   confirmation policy, sibling concern action, admission, retention assignment or native execution proof is authorized.
-  Event membership ABSENT; event/operation/checkpoint retention PENDING_RETENTION_DECISION. Static positive and
+  At preparation before the 2026-11-18 registration, event membership was ABSENT; event/operation/checkpoint retention PENDING_RETENTION_DECISION. Static positive and
   negative oracles are independently python3 scripts/pm-concern-created-contracts-check.py and this family's fixture;
   native execution NOT_RUN.
   Current semantic numbers follow CV-1100 and SP-1100, beside the CV-317, CV-339, SP-278 and SP-286 profile owners, as
@@ -40437,6 +40437,7 @@ canonical_text: concern.created current 1.0.0 selects the existing closed Plans/
   fractional digit kept and a leap second ordered within its minute. Enforce date-time and UUID formats without
   optional package dependencies.
   The family-specific input-domain and guard oracle is scripts/pm-dg6a-domain-check.py alongside its full family checker.
+  Current membership (2026-11-18) — concern.created@1.0.0 is individually registered in Plans/event_family_registry.json. Missing-registration refusal applies only if the exact current family/version/scope registration is absent; this registered family is not refused as missing_event_registration or family_not_admitted merely because it was prepared without admission. Append and checkpoint advance still require every existing schema, scope, retention, original-source, receipt, permission and withdrawal check specified here. Registry membership supplies no native execution proof or additional action authority.
 gui_related: false
 gui_classification_reason: Event identity, authority, custody and storage contract; existing GUI action model is
   preserved.
@@ -40446,7 +40447,7 @@ depends_on:
 - SP-666
 unblocks: []
 acceptance_criteria:
-- concern.created is prepared without admission; no writer/checkpoint/effect while absent.
+- concern.created is registered; absent exact registration still forbids writer/checkpoint/effect, and all other existing checks remain.
 - No additional creator or sibling action authority; retention pending and native execution NOT_RUN.
 validation_surfaces:
 - python3 scripts/pm-concern-created-contracts-check.py

@@ -677,8 +677,7 @@ plan_unit_id: RAS-1402
 unit_type: contract
 status: accepted
 owner_doc: Plans/Remote_Access_System.md
-canonical_text: 'Newly authored owner contract for remote_access.private_endpoint_state_changed@1.0.0, prepared
-  without admission, authorized only by deck 2 item 9.a A (DL-450). A Server-owned PM private listener state change
+canonical_text: 'Newly authored owner contract for remote_access.private_endpoint_state_changed@1.0.0, prepared without admission before the 2026-11-18 registration, authorized only by deck 2 item 9.a A (DL-450). A Server-owned PM private listener state change
   under the active RAS-015 connector contract.
 
   Search at base f9c5de6561dff0a53a48e530f2a5c6804a7e941d: exact literal name across 894 live Plans files found
@@ -709,9 +708,7 @@ canonical_text: 'Newly authored owner contract for remote_access.private_endpoin
   domain owner. It consumes the original accepted owner operation and immutable journal/observation/detection fact,
   never a caller success assertion. Revalidate schema, exact source/current generations, permission and writer lease
   before the existing domain effect; settle the original domain commit/readback and the ref-only canonical pending
-  event intent. Before any append, require this family''s exact registry/version/scope and retention admission;
-  until then return missing_event_registration and leave existing command expected_event_types=[] and independent
-  owner receipts unchanged. No transport action or view refresh becomes an event source.
+  event intent. Before any append, require this family''s exact registry/version/scope and retention admission. Return missing_event_registration only while that exact registration is absent; leave existing command expected_event_types=[] and independent owner receipts unchanged on that refusal. Registration alone does not satisfy retention or the other existing append checks. No transport action or view refresh becomes an event source.
 
   For this family adopt SP-286 and CV-339 by name, including current strict full-value v2 resolver and SP-336/SP-347
   issuance rules. After domain source commit, store the exact semantic input and original owner result under SP-1402;
@@ -785,7 +782,7 @@ canonical_text: 'Newly authored owner contract for remote_access.private_endpoin
   a complete admitted replacement source/generation is verified; atomic publication cannot reinterpret old payloads
   or reissue domain work. Source retention/deletion authority remains independent.
 
-  Oracle plan: Plans/event_authority_w3e_oracle_plan.json#families/2 and ATS-1240/ATS-1241. Phase 2 (2026-11-13) runs the executable synthetic oracles of this family in scripts/pm_w3e_event_oracles.py; every refusal is one named single-predicate row of a generated Method B guard table (scripts/pm_w3e_table_*.py) proved by the gated shared scripts/pm_guard_isolation.py through scripts/pm-w3e-guard-proof.py, and rows no input can refuse first stay alone in their own table with a written proof. Numbers use the shared CV-1100/SP-1100 calls and timestamps the shared CV-1101 date_time with the owner profile of each field. Membership is ABSENT and native execution NOT_RUN.
+  Oracle plan: Plans/event_authority_w3e_oracle_plan.json#families/2 and ATS-1240/ATS-1241. Phase 2 (2026-11-13) runs the executable synthetic oracles of this family in scripts/pm_w3e_event_oracles.py; every refusal is one named single-predicate row of a generated Method B guard table (scripts/pm_w3e_table_*.py) proved by the gated shared scripts/pm_guard_isolation.py through scripts/pm-w3e-guard-proof.py, and rows no input can refuse first stay alone in their own table with a written proof. Numbers use the shared CV-1100/SP-1100 calls and timestamps the shared CV-1101 date_time with the owner profile of each field. At preparation before the 2026-11-18 registration, membership was ABSENT; native execution remains NOT_RUN.
 
 
   This family fixes its source authority_evidence roster to writer_fence, permission_or_service_authority, connector_owner,
@@ -797,7 +794,7 @@ canonical_text: 'Newly authored owner contract for remote_access.private_endpoin
 
   Retention is decided above by the third retention sitting answers; Storage Case L-3 still supplies the hold and protection machinery, and original receipts and source records keep their own policies. No runtime Run is invented for a BackupRun or RestoreRun.
 
-  '
+  Current membership (2026-11-18) — remote_access.private_endpoint_state_changed@1.0.0 is individually registered in Plans/event_family_registry.json. Missing-registration refusal applies only if the exact current family/version/scope registration is absent; this registered family is not refused as missing_event_registration or family_not_admitted merely because it was prepared without admission. Append and checkpoint advance still require every existing schema, scope, retention, original-source, receipt, permission and withdrawal check specified here. Registry membership supplies no native execution proof or additional action authority.'
 gui_related: false
 gui_classification_reason: Defines event data, source custody, replay and internal checkpoints; existing surfaces
   only.
@@ -811,7 +808,7 @@ depends_on:
 - SP-337
 unblocks: []
 acceptance_criteria:
-- This exact family remains prepared without admission; current writes stay missing_event_registration.
+- This exact family is registered; missing_event_registration refuses only an absent exact registration, and all other existing append checks still apply.
 - Every stated join and refusal has a positive and a single-defect negative planned; native execution is NOT_RUN.
 - Retention is unresolved where explicitly marked; no lifetime or deletion policy is inferred.
 validation_surfaces:
@@ -839,7 +836,7 @@ preserved_exact_tokens:
 - CV-339
 - SP-337
 negative_constraints:
-- No admission, registry family append, Decision Log entry or native execution claim.
+- Preparation itself grants no admission, registry family append, Decision Log entry or native execution claim.
 - No independent number/timestamp implementation or retention decision.
 ```
 
@@ -850,7 +847,7 @@ plan_unit_id: RAS-1403
 unit_type: contract
 status: accepted
 owner_doc: Plans/Remote_Access_System.md
-canonical_text: 'Newly authored owner contract for remote_access.proxy_state_changed@1.0.0, prepared without admission,
+canonical_text: 'Newly authored owner contract for remote_access.proxy_state_changed@1.0.0, prepared without admission before the 2026-11-18 registration,
   authorized only by deck 2 item 9.a A (DL-450). A reverse-proxy route lifecycle change, including an existing proxy
   whose configuration was not generated by PM.
 
@@ -882,9 +879,7 @@ canonical_text: 'Newly authored owner contract for remote_access.proxy_state_cha
   owner. It consumes the original accepted owner operation and immutable journal/observation/detection fact, never
   a caller success assertion. Revalidate schema, exact source/current generations, permission and writer lease before
   the existing domain effect; settle the original domain commit/readback and the ref-only canonical pending event
-  intent. Before any append, require this family''s exact registry/version/scope and retention admission; until
-  then return missing_event_registration and leave existing command expected_event_types=[] and independent owner
-  receipts unchanged. No transport action or view refresh becomes an event source.
+  intent. Before any append, require this family''s exact registry/version/scope and retention admission. Return missing_event_registration only while that exact registration is absent; leave existing command expected_event_types=[] and independent owner receipts unchanged on that refusal. Registration alone does not satisfy retention or the other existing append checks. No transport action or view refresh becomes an event source.
 
   For this family adopt SP-286 and CV-339 by name, including current strict full-value v2 resolver and SP-336/SP-347
   issuance rules. After domain source commit, store the exact semantic input and original owner result under SP-1403;
@@ -956,7 +951,7 @@ canonical_text: 'Newly authored owner contract for remote_access.proxy_state_cha
   a complete admitted replacement source/generation is verified; atomic publication cannot reinterpret old payloads
   or reissue domain work. Source retention/deletion authority remains independent.
 
-  Oracle plan: Plans/event_authority_w3e_oracle_plan.json#families/3 and ATS-1240/ATS-1241. Phase 2 (2026-11-13) runs the executable synthetic oracles of this family in scripts/pm_w3e_event_oracles.py; every refusal is one named single-predicate row of a generated Method B guard table (scripts/pm_w3e_table_*.py) proved by the gated shared scripts/pm_guard_isolation.py through scripts/pm-w3e-guard-proof.py, and rows no input can refuse first stay alone in their own table with a written proof. Numbers use the shared CV-1100/SP-1100 calls and timestamps the shared CV-1101 date_time with the owner profile of each field. Membership is ABSENT and native execution NOT_RUN.
+  Oracle plan: Plans/event_authority_w3e_oracle_plan.json#families/3 and ATS-1240/ATS-1241. Phase 2 (2026-11-13) runs the executable synthetic oracles of this family in scripts/pm_w3e_event_oracles.py; every refusal is one named single-predicate row of a generated Method B guard table (scripts/pm_w3e_table_*.py) proved by the gated shared scripts/pm_guard_isolation.py through scripts/pm-w3e-guard-proof.py, and rows no input can refuse first stay alone in their own table with a written proof. Numbers use the shared CV-1100/SP-1100 calls and timestamps the shared CV-1101 date_time with the owner profile of each field. At preparation before the 2026-11-18 registration, membership was ABSENT; native execution remains NOT_RUN.
 
 
   This family fixes its source authority_evidence roster to writer_fence, permission_or_service_authority, route_source,
@@ -969,7 +964,7 @@ canonical_text: 'Newly authored owner contract for remote_access.proxy_state_cha
 
   Retention is decided above by the third retention sitting answers; Storage Case L-3 still supplies the hold and protection machinery, and original receipts and source records keep their own policies. No runtime Run is invented for a BackupRun or RestoreRun.
 
-  '
+  Current membership (2026-11-18) — remote_access.proxy_state_changed@1.0.0 is individually registered in Plans/event_family_registry.json. Missing-registration refusal applies only if the exact current family/version/scope registration is absent; this registered family is not refused as missing_event_registration or family_not_admitted merely because it was prepared without admission. Append and checkpoint advance still require every existing schema, scope, retention, original-source, receipt, permission and withdrawal check specified here. Registry membership supplies no native execution proof or additional action authority.'
 gui_related: false
 gui_classification_reason: Defines event data, source custody, replay and internal checkpoints; existing surfaces
   only.
@@ -983,7 +978,7 @@ depends_on:
 - SP-337
 unblocks: []
 acceptance_criteria:
-- This exact family remains prepared without admission; current writes stay missing_event_registration.
+- This exact family is registered; missing_event_registration refuses only an absent exact registration, and all other existing append checks still apply.
 - Every stated join and refusal has a positive and a single-defect negative planned; native execution is NOT_RUN.
 - Retention is unresolved where explicitly marked; no lifetime or deletion policy is inferred.
 validation_surfaces:
@@ -1011,7 +1006,7 @@ preserved_exact_tokens:
 - CV-339
 - SP-337
 negative_constraints:
-- No admission, registry family append, Decision Log entry or native execution claim.
+- Preparation itself grants no admission, registry family append, Decision Log entry or native execution claim.
 - No independent number/timestamp implementation or retention decision.
 ```
 
@@ -1022,8 +1017,7 @@ plan_unit_id: RAS-1404
 unit_type: contract
 status: accepted
 owner_doc: Plans/Remote_Access_System.md
-canonical_text: 'Newly authored owner contract for remote_access.public_security_violation_detected@1.0.0, prepared
-  without admission, authorized only by deck 2 item 9.a A (DL-450). One owner-confirmed public-ingress policy violation;
+canonical_text: 'Newly authored owner contract for remote_access.public_security_violation_detected@1.0.0, prepared without admission before the 2026-11-18 registration, authorized only by deck 2 item 9.a A (DL-450). One owner-confirmed public-ingress policy violation;
   it does not assert an unauthorized request succeeded or authorize a new security response.
 
   Search at base f9c5de6561dff0a53a48e530f2a5c6804a7e941d: exact literal name across 894 live Plans files found
@@ -1055,8 +1049,7 @@ canonical_text: 'Newly authored owner contract for remote_access.public_security
   It consumes the original accepted owner operation and immutable journal/observation/detection fact, never a caller
   success assertion. Revalidate schema, exact source/current generations, permission and writer lease before the
   existing domain effect; settle the original domain commit/readback and the ref-only canonical pending event intent.
-  Before any append, require this family''s exact registry/version/scope and retention admission; until then return
-  missing_event_registration and leave existing command expected_event_types=[] and independent owner receipts unchanged.
+  Before any append, require this family''s exact registry/version/scope and retention admission. Return missing_event_registration only while that exact registration is absent; leave existing command expected_event_types=[] and independent owner receipts unchanged on that refusal. Registration alone does not satisfy retention or the other existing append checks.
   No transport action or view refresh becomes an event source.
 
   For this family adopt SP-286 and CV-339 by name, including current strict full-value v2 resolver and SP-336/SP-347
@@ -1131,7 +1124,7 @@ canonical_text: 'Newly authored owner contract for remote_access.public_security
   a complete admitted replacement source/generation is verified; atomic publication cannot reinterpret old payloads
   or reissue domain work. Source retention/deletion authority remains independent.
 
-  Oracle plan: Plans/event_authority_w3e_oracle_plan.json#families/4 and ATS-1240/ATS-1241. Phase 2 (2026-11-13) runs the executable synthetic oracles of this family in scripts/pm_w3e_event_oracles.py; every refusal is one named single-predicate row of a generated Method B guard table (scripts/pm_w3e_table_*.py) proved by the gated shared scripts/pm_guard_isolation.py through scripts/pm-w3e-guard-proof.py, and rows no input can refuse first stay alone in their own table with a written proof. Numbers use the shared CV-1100/SP-1100 calls and timestamps the shared CV-1101 date_time with the owner profile of each field. Membership is ABSENT and native execution NOT_RUN.
+  Oracle plan: Plans/event_authority_w3e_oracle_plan.json#families/4 and ATS-1240/ATS-1241. Phase 2 (2026-11-13) runs the executable synthetic oracles of this family in scripts/pm_w3e_event_oracles.py; every refusal is one named single-predicate row of a generated Method B guard table (scripts/pm_w3e_table_*.py) proved by the gated shared scripts/pm_guard_isolation.py through scripts/pm-w3e-guard-proof.py, and rows no input can refuse first stay alone in their own table with a written proof. Numbers use the shared CV-1100/SP-1100 calls and timestamps the shared CV-1101 date_time with the owner profile of each field. At preparation before the 2026-11-18 registration, membership was ABSENT; native execution remains NOT_RUN.
 
 
   This family fixes its source authority_evidence roster to writer_fence, permission_or_service_authority, public_policy,
@@ -1143,7 +1136,7 @@ canonical_text: 'Newly authored owner contract for remote_access.public_security
 
   Retention is decided above by the third retention sitting answers; Storage Case L-3 still supplies the hold and protection machinery, and original receipts and source records keep their own policies. No runtime Run is invented for a BackupRun or RestoreRun.
 
-  '
+  Current membership (2026-11-18) — remote_access.public_security_violation_detected@1.0.0 is individually registered in Plans/event_family_registry.json. Missing-registration refusal applies only if the exact current family/version/scope registration is absent; this registered family is not refused as missing_event_registration or family_not_admitted merely because it was prepared without admission. Append and checkpoint advance still require every existing schema, scope, retention, original-source, receipt, permission and withdrawal check specified here. Registry membership supplies no native execution proof or additional action authority.'
 gui_related: false
 gui_classification_reason: Defines event data, source custody, replay and internal checkpoints; existing surfaces
   only.
@@ -1157,7 +1150,7 @@ depends_on:
 - SP-337
 unblocks: []
 acceptance_criteria:
-- This exact family remains prepared without admission; current writes stay missing_event_registration.
+- This exact family is registered; missing_event_registration refuses only an absent exact registration, and all other existing append checks still apply.
 - Every stated join and refusal has a positive and a single-defect negative planned; native execution is NOT_RUN.
 - Retention is unresolved where explicitly marked; no lifetime or deletion policy is inferred.
 validation_surfaces:
@@ -1185,7 +1178,7 @@ preserved_exact_tokens:
 - CV-339
 - SP-337
 negative_constraints:
-- No admission, registry family append, Decision Log entry or native execution claim.
+- Preparation itself grants no admission, registry family append, Decision Log entry or native execution claim.
 - No independent number/timestamp implementation or retention decision.
 ```
 
@@ -1196,8 +1189,7 @@ plan_unit_id: RAS-1405
 unit_type: contract
 status: accepted
 owner_doc: Plans/Remote_Access_System.md
-canonical_text: 'Newly authored owner contract for remote_access.remote_link_state_changed@1.0.0, prepared without
-  admission, authorized only by deck 2 item 9.a A (DL-450). One Remote Link transport-state change for the same
+canonical_text: 'Newly authored owner contract for remote_access.remote_link_state_changed@1.0.0, prepared without admission before the 2026-11-18 registration, authorized only by deck 2 item 9.a A (DL-450). One Remote Link transport-state change for the same
   existing Server, including direct/relay/provider migration.
 
   Search at base f9c5de6561dff0a53a48e530f2a5c6804a7e941d: exact literal name across 894 live Plans files found
@@ -1229,9 +1221,7 @@ canonical_text: 'Newly authored owner contract for remote_access.remote_link_sta
   domain owner. It consumes the original accepted owner operation and immutable journal/observation/detection fact,
   never a caller success assertion. Revalidate schema, exact source/current generations, permission and writer lease
   before the existing domain effect; settle the original domain commit/readback and the ref-only canonical pending
-  event intent. Before any append, require this family''s exact registry/version/scope and retention admission;
-  until then return missing_event_registration and leave existing command expected_event_types=[] and independent
-  owner receipts unchanged. No transport action or view refresh becomes an event source.
+  event intent. Before any append, require this family''s exact registry/version/scope and retention admission. Return missing_event_registration only while that exact registration is absent; leave existing command expected_event_types=[] and independent owner receipts unchanged on that refusal. Registration alone does not satisfy retention or the other existing append checks. No transport action or view refresh becomes an event source.
 
   For this family adopt SP-286 and CV-339 by name, including current strict full-value v2 resolver and SP-336/SP-347
   issuance rules. After domain source commit, store the exact semantic input and original owner result under SP-1405;
@@ -1304,7 +1294,7 @@ canonical_text: 'Newly authored owner contract for remote_access.remote_link_sta
   a complete admitted replacement source/generation is verified; atomic publication cannot reinterpret old payloads
   or reissue domain work. Source retention/deletion authority remains independent.
 
-  Oracle plan: Plans/event_authority_w3e_oracle_plan.json#families/5 and ATS-1240/ATS-1241. Phase 2 (2026-11-13) runs the executable synthetic oracles of this family in scripts/pm_w3e_event_oracles.py; every refusal is one named single-predicate row of a generated Method B guard table (scripts/pm_w3e_table_*.py) proved by the gated shared scripts/pm_guard_isolation.py through scripts/pm-w3e-guard-proof.py, and rows no input can refuse first stay alone in their own table with a written proof. Numbers use the shared CV-1100/SP-1100 calls and timestamps the shared CV-1101 date_time with the owner profile of each field. Membership is ABSENT and native execution NOT_RUN.
+  Oracle plan: Plans/event_authority_w3e_oracle_plan.json#families/5 and ATS-1240/ATS-1241. Phase 2 (2026-11-13) runs the executable synthetic oracles of this family in scripts/pm_w3e_event_oracles.py; every refusal is one named single-predicate row of a generated Method B guard table (scripts/pm_w3e_table_*.py) proved by the gated shared scripts/pm_guard_isolation.py through scripts/pm-w3e-guard-proof.py, and rows no input can refuse first stay alone in their own table with a written proof. Numbers use the shared CV-1100/SP-1100 calls and timestamps the shared CV-1101 date_time with the owner profile of each field. At preparation before the 2026-11-18 registration, membership was ABSENT; native execution remains NOT_RUN.
 
 
   This family fixes its source authority_evidence roster to writer_fence, permission_or_service_authority, route_source,
@@ -1317,7 +1307,7 @@ canonical_text: 'Newly authored owner contract for remote_access.remote_link_sta
 
   Retention is decided above by the third retention sitting answers; Storage Case L-3 still supplies the hold and protection machinery, and original receipts and source records keep their own policies. No runtime Run is invented for a BackupRun or RestoreRun.
 
-  '
+  Current membership (2026-11-18) — remote_access.remote_link_state_changed@1.0.0 is individually registered in Plans/event_family_registry.json. Missing-registration refusal applies only if the exact current family/version/scope registration is absent; this registered family is not refused as missing_event_registration or family_not_admitted merely because it was prepared without admission. Append and checkpoint advance still require every existing schema, scope, retention, original-source, receipt, permission and withdrawal check specified here. Registry membership supplies no native execution proof or additional action authority.'
 gui_related: false
 gui_classification_reason: Defines event data, source custody, replay and internal checkpoints; existing surfaces
   only.
@@ -1331,7 +1321,7 @@ depends_on:
 - SP-337
 unblocks: []
 acceptance_criteria:
-- This exact family remains prepared without admission; current writes stay missing_event_registration.
+- This exact family is registered; missing_event_registration refuses only an absent exact registration, and all other existing append checks still apply.
 - Every stated join and refusal has a positive and a single-defect negative planned; native execution is NOT_RUN.
 - Retention is unresolved where explicitly marked; no lifetime or deletion policy is inferred.
 validation_surfaces:
@@ -1359,7 +1349,7 @@ preserved_exact_tokens:
 - CV-339
 - SP-337
 negative_constraints:
-- No admission, registry family append, Decision Log entry or native execution claim.
+- Preparation itself grants no admission, registry family append, Decision Log entry or native execution claim.
 - No independent number/timestamp implementation or retention decision.
 ```
 
@@ -1370,8 +1360,7 @@ plan_unit_id: RAS-1406
 unit_type: contract
 status: accepted
 owner_doc: Plans/Remote_Access_System.md
-canonical_text: 'Newly authored owner contract for remote_access.route_migration_state_changed@1.0.0, prepared without
-  admission, authorized only by deck 2 item 9.a A (DL-450). One committed route-migration phase under its original
+canonical_text: 'Newly authored owner contract for remote_access.route_migration_state_changed@1.0.0, prepared without admission before the 2026-11-18 registration, authorized only by deck 2 item 9.a A (DL-450). One committed route-migration phase under its original
   migration identity.
 
   Search at base f9c5de6561dff0a53a48e530f2a5c6804a7e941d: exact literal name across 894 live Plans files found
@@ -1402,9 +1391,7 @@ canonical_text: 'Newly authored owner contract for remote_access.route_migration
   domain owner. It consumes the original accepted owner operation and immutable journal/observation/detection fact,
   never a caller success assertion. Revalidate schema, exact source/current generations, permission and writer lease
   before the existing domain effect; settle the original domain commit/readback and the ref-only canonical pending
-  event intent. Before any append, require this family''s exact registry/version/scope and retention admission;
-  until then return missing_event_registration and leave existing command expected_event_types=[] and independent
-  owner receipts unchanged. No transport action or view refresh becomes an event source.
+  event intent. Before any append, require this family''s exact registry/version/scope and retention admission. Return missing_event_registration only while that exact registration is absent; leave existing command expected_event_types=[] and independent owner receipts unchanged on that refusal. Registration alone does not satisfy retention or the other existing append checks. No transport action or view refresh becomes an event source.
 
   For this family adopt SP-286 and CV-339 by name, including current strict full-value v2 resolver and SP-336/SP-347
   issuance rules. After domain source commit, store the exact semantic input and original owner result under SP-1406;
@@ -1478,7 +1465,7 @@ canonical_text: 'Newly authored owner contract for remote_access.route_migration
   a complete admitted replacement source/generation is verified; atomic publication cannot reinterpret old payloads
   or reissue domain work. Source retention/deletion authority remains independent.
 
-  Oracle plan: Plans/event_authority_w3e_oracle_plan.json#families/6 and ATS-1240/ATS-1241. Phase 2 (2026-11-13) runs the executable synthetic oracles of this family in scripts/pm_w3e_event_oracles.py; every refusal is one named single-predicate row of a generated Method B guard table (scripts/pm_w3e_table_*.py) proved by the gated shared scripts/pm_guard_isolation.py through scripts/pm-w3e-guard-proof.py, and rows no input can refuse first stay alone in their own table with a written proof. Numbers use the shared CV-1100/SP-1100 calls and timestamps the shared CV-1101 date_time with the owner profile of each field. Membership is ABSENT and native execution NOT_RUN.
+  Oracle plan: Plans/event_authority_w3e_oracle_plan.json#families/6 and ATS-1240/ATS-1241. Phase 2 (2026-11-13) runs the executable synthetic oracles of this family in scripts/pm_w3e_event_oracles.py; every refusal is one named single-predicate row of a generated Method B guard table (scripts/pm_w3e_table_*.py) proved by the gated shared scripts/pm_guard_isolation.py through scripts/pm-w3e-guard-proof.py, and rows no input can refuse first stay alone in their own table with a written proof. Numbers use the shared CV-1100/SP-1100 calls and timestamps the shared CV-1101 date_time with the owner profile of each field. At preparation before the 2026-11-18 registration, membership was ABSENT; native execution remains NOT_RUN.
 
 
   This family fixes its source authority_evidence roster to writer_fence, permission_or_service_authority, source_route,
@@ -1491,7 +1478,7 @@ canonical_text: 'Newly authored owner contract for remote_access.route_migration
 
   Retention is decided above by the third retention sitting answers; Storage Case L-3 still supplies the hold and protection machinery, and original receipts and source records keep their own policies. No runtime Run is invented for a BackupRun or RestoreRun.
 
-  '
+  Current membership (2026-11-18) — remote_access.route_migration_state_changed@1.0.0 is individually registered in Plans/event_family_registry.json. Missing-registration refusal applies only if the exact current family/version/scope registration is absent; this registered family is not refused as missing_event_registration or family_not_admitted merely because it was prepared without admission. Append and checkpoint advance still require every existing schema, scope, retention, original-source, receipt, permission and withdrawal check specified here. Registry membership supplies no native execution proof or additional action authority.'
 gui_related: false
 gui_classification_reason: Defines event data, source custody, replay and internal checkpoints; existing surfaces
   only.
@@ -1504,7 +1491,7 @@ depends_on:
 - SP-337
 unblocks: []
 acceptance_criteria:
-- This exact family remains prepared without admission; current writes stay missing_event_registration.
+- This exact family is registered; missing_event_registration refuses only an absent exact registration, and all other existing append checks still apply.
 - Every stated join and refusal has a positive and a single-defect negative planned; native execution is NOT_RUN.
 - Retention is unresolved where explicitly marked; no lifetime or deletion policy is inferred.
 validation_surfaces:
@@ -1532,7 +1519,7 @@ preserved_exact_tokens:
 - CV-339
 - SP-337
 negative_constraints:
-- No admission, registry family append, Decision Log entry or native execution claim.
+- Preparation itself grants no admission, registry family append, Decision Log entry or native execution claim.
 - No independent number/timestamp implementation or retention decision.
 ```
 
@@ -1543,8 +1530,7 @@ plan_unit_id: RAS-1407
 unit_type: contract
 status: accepted
 owner_doc: Plans/Remote_Access_System.md
-canonical_text: 'Newly authored owner contract for remote_access.route_preference_changed@1.0.0, prepared without
-  admission, authorized only by deck 2 item 9.a A (DL-450). One accepted change of preferred route under an explicit
+canonical_text: 'Newly authored owner contract for remote_access.route_preference_changed@1.0.0, prepared without admission before the 2026-11-18 registration, authorized only by deck 2 item 9.a A (DL-450). One accepted change of preferred route under an explicit
   policy or the existing runtime selection policy.
 
   Search at base f9c5de6561dff0a53a48e530f2a5c6804a7e941d: exact literal name across 894 live Plans files found
@@ -1574,9 +1560,7 @@ canonical_text: 'Newly authored owner contract for remote_access.route_preferenc
   owner. It consumes the original accepted owner operation and immutable journal/observation/detection fact, never
   a caller success assertion. Revalidate schema, exact source/current generations, permission and writer lease before
   the existing domain effect; settle the original domain commit/readback and the ref-only canonical pending event
-  intent. Before any append, require this family''s exact registry/version/scope and retention admission; until
-  then return missing_event_registration and leave existing command expected_event_types=[] and independent owner
-  receipts unchanged. No transport action or view refresh becomes an event source.
+  intent. Before any append, require this family''s exact registry/version/scope and retention admission. Return missing_event_registration only while that exact registration is absent; leave existing command expected_event_types=[] and independent owner receipts unchanged on that refusal. Registration alone does not satisfy retention or the other existing append checks. No transport action or view refresh becomes an event source.
 
   For this family adopt SP-286 and CV-339 by name, including current strict full-value v2 resolver and SP-336/SP-347
   issuance rules. After domain source commit, store the exact semantic input and original owner result under SP-1407;
@@ -1649,7 +1633,7 @@ canonical_text: 'Newly authored owner contract for remote_access.route_preferenc
   a complete admitted replacement source/generation is verified; atomic publication cannot reinterpret old payloads
   or reissue domain work. Source retention/deletion authority remains independent.
 
-  Oracle plan: Plans/event_authority_w3e_oracle_plan.json#families/7 and ATS-1240/ATS-1241. Phase 2 (2026-11-13) runs the executable synthetic oracles of this family in scripts/pm_w3e_event_oracles.py; every refusal is one named single-predicate row of a generated Method B guard table (scripts/pm_w3e_table_*.py) proved by the gated shared scripts/pm_guard_isolation.py through scripts/pm-w3e-guard-proof.py, and rows no input can refuse first stay alone in their own table with a written proof. Numbers use the shared CV-1100/SP-1100 calls and timestamps the shared CV-1101 date_time with the owner profile of each field. Membership is ABSENT and native execution NOT_RUN.
+  Oracle plan: Plans/event_authority_w3e_oracle_plan.json#families/7 and ATS-1240/ATS-1241. Phase 2 (2026-11-13) runs the executable synthetic oracles of this family in scripts/pm_w3e_event_oracles.py; every refusal is one named single-predicate row of a generated Method B guard table (scripts/pm_w3e_table_*.py) proved by the gated shared scripts/pm_guard_isolation.py through scripts/pm-w3e-guard-proof.py, and rows no input can refuse first stay alone in their own table with a written proof. Numbers use the shared CV-1100/SP-1100 calls and timestamps the shared CV-1101 date_time with the owner profile of each field. At preparation before the 2026-11-18 registration, membership was ABSENT; native execution remains NOT_RUN.
 
 
   This family fixes its source authority_evidence roster to writer_fence, permission_or_service_authority, previous_route,
@@ -1661,7 +1645,7 @@ canonical_text: 'Newly authored owner contract for remote_access.route_preferenc
 
   Retention is decided above by the third retention sitting answers; Storage Case L-3 still supplies the hold and protection machinery, and original receipts and source records keep their own policies. No runtime Run is invented for a BackupRun or RestoreRun.
 
-  '
+  Current membership (2026-11-18) — remote_access.route_preference_changed@1.0.0 is individually registered in Plans/event_family_registry.json. Missing-registration refusal applies only if the exact current family/version/scope registration is absent; this registered family is not refused as missing_event_registration or family_not_admitted merely because it was prepared without admission. Append and checkpoint advance still require every existing schema, scope, retention, original-source, receipt, permission and withdrawal check specified here. Registry membership supplies no native execution proof or additional action authority.'
 gui_related: false
 gui_classification_reason: Defines event data, source custody, replay and internal checkpoints; existing surfaces
   only.
@@ -1674,7 +1658,7 @@ depends_on:
 - SP-337
 unblocks: []
 acceptance_criteria:
-- This exact family remains prepared without admission; current writes stay missing_event_registration.
+- This exact family is registered; missing_event_registration refuses only an absent exact registration, and all other existing append checks still apply.
 - Every stated join and refusal has a positive and a single-defect negative planned; native execution is NOT_RUN.
 - Retention is unresolved where explicitly marked; no lifetime or deletion policy is inferred.
 validation_surfaces:
@@ -1702,7 +1686,7 @@ preserved_exact_tokens:
 - CV-339
 - SP-337
 negative_constraints:
-- No admission, registry family append, Decision Log entry or native execution claim.
+- Preparation itself grants no admission, registry family append, Decision Log entry or native execution claim.
 - No independent number/timestamp implementation or retention decision.
 ```
 
@@ -1713,7 +1697,7 @@ plan_unit_id: RAS-1408
 unit_type: contract
 status: accepted
 owner_doc: Plans/Remote_Access_System.md
-canonical_text: 'Newly authored owner contract for remote_access.route_state_changed@1.0.0, prepared without admission,
+canonical_text: 'Newly authored owner contract for remote_access.route_state_changed@1.0.0, prepared without admission before the 2026-11-18 registration,
   authorized only by deck 2 item 9.a A (DL-450). One committed RemoteRouteRecord state change, not a duplicate sample
   or proof that transport reachability grants trust.
 
@@ -1745,9 +1729,7 @@ canonical_text: 'Newly authored owner contract for remote_access.route_state_cha
   owner. It consumes the original accepted owner operation and immutable journal/observation/detection fact, never
   a caller success assertion. Revalidate schema, exact source/current generations, permission and writer lease before
   the existing domain effect; settle the original domain commit/readback and the ref-only canonical pending event
-  intent. Before any append, require this family''s exact registry/version/scope and retention admission; until
-  then return missing_event_registration and leave existing command expected_event_types=[] and independent owner
-  receipts unchanged. No transport action or view refresh becomes an event source.
+  intent. Before any append, require this family''s exact registry/version/scope and retention admission. Return missing_event_registration only while that exact registration is absent; leave existing command expected_event_types=[] and independent owner receipts unchanged on that refusal. Registration alone does not satisfy retention or the other existing append checks. No transport action or view refresh becomes an event source.
 
   For this family adopt SP-286 and CV-339 by name, including current strict full-value v2 resolver and SP-336/SP-347
   issuance rules. After domain source commit, store the exact semantic input and original owner result under SP-1408;
@@ -1819,7 +1801,7 @@ canonical_text: 'Newly authored owner contract for remote_access.route_state_cha
   a complete admitted replacement source/generation is verified; atomic publication cannot reinterpret old payloads
   or reissue domain work. Source retention/deletion authority remains independent.
 
-  Oracle plan: Plans/event_authority_w3e_oracle_plan.json#families/8 and ATS-1240/ATS-1241. Phase 2 (2026-11-13) runs the executable synthetic oracles of this family in scripts/pm_w3e_event_oracles.py; every refusal is one named single-predicate row of a generated Method B guard table (scripts/pm_w3e_table_*.py) proved by the gated shared scripts/pm_guard_isolation.py through scripts/pm-w3e-guard-proof.py, and rows no input can refuse first stay alone in their own table with a written proof. Numbers use the shared CV-1100/SP-1100 calls and timestamps the shared CV-1101 date_time with the owner profile of each field. Membership is ABSENT and native execution NOT_RUN.
+  Oracle plan: Plans/event_authority_w3e_oracle_plan.json#families/8 and ATS-1240/ATS-1241. Phase 2 (2026-11-13) runs the executable synthetic oracles of this family in scripts/pm_w3e_event_oracles.py; every refusal is one named single-predicate row of a generated Method B guard table (scripts/pm_w3e_table_*.py) proved by the gated shared scripts/pm_guard_isolation.py through scripts/pm-w3e-guard-proof.py, and rows no input can refuse first stay alone in their own table with a written proof. Numbers use the shared CV-1100/SP-1100 calls and timestamps the shared CV-1101 date_time with the owner profile of each field. At preparation before the 2026-11-18 registration, membership was ABSENT; native execution remains NOT_RUN.
 
 
   This family fixes its source authority_evidence roster to writer_fence, permission_or_service_authority, endpoint_identity,
@@ -1832,7 +1814,7 @@ canonical_text: 'Newly authored owner contract for remote_access.route_state_cha
 
   Retention is decided above by the third retention sitting answers; Storage Case L-3 still supplies the hold and protection machinery, and original receipts and source records keep their own policies. No runtime Run is invented for a BackupRun or RestoreRun.
 
-  '
+  Current membership (2026-11-18) — remote_access.route_state_changed@1.0.0 is individually registered in Plans/event_family_registry.json. Missing-registration refusal applies only if the exact current family/version/scope registration is absent; this registered family is not refused as missing_event_registration or family_not_admitted merely because it was prepared without admission. Append and checkpoint advance still require every existing schema, scope, retention, original-source, receipt, permission and withdrawal check specified here. Registry membership supplies no native execution proof or additional action authority.'
 gui_related: false
 gui_classification_reason: Defines event data, source custody, replay and internal checkpoints; existing surfaces
   only.
@@ -1849,7 +1831,7 @@ depends_on:
 - SP-337
 unblocks: []
 acceptance_criteria:
-- This exact family remains prepared without admission; current writes stay missing_event_registration.
+- This exact family is registered; missing_event_registration refuses only an absent exact registration, and all other existing append checks still apply.
 - Every stated join and refusal has a positive and a single-defect negative planned; native execution is NOT_RUN.
 - Retention is unresolved where explicitly marked; no lifetime or deletion policy is inferred.
 validation_surfaces:
@@ -1877,7 +1859,7 @@ preserved_exact_tokens:
 - CV-339
 - SP-337
 negative_constraints:
-- No admission, registry family append, Decision Log entry or native execution claim.
+- Preparation itself grants no admission, registry family append, Decision Log entry or native execution claim.
 - No independent number/timestamp implementation or retention decision.
 ```
 
@@ -1888,7 +1870,7 @@ plan_unit_id: RAS-1409
 unit_type: contract
 status: accepted
 owner_doc: Plans/Remote_Access_System.md
-canonical_text: 'Newly authored owner contract for remote_access.route_test_completed@1.0.0, prepared without admission,
+canonical_text: 'Newly authored owner contract for remote_access.route_test_completed@1.0.0, prepared without admission before the 2026-11-18 registration,
   authorized only by deck 2 item 9.a A (DL-450). One terminal route-test result, whether passed, failed, blocked
   or cancelled; test completion is not always success.
 
@@ -1921,9 +1903,7 @@ canonical_text: 'Newly authored owner contract for remote_access.route_test_comp
   owner. It consumes the original accepted owner operation and immutable journal/observation/detection fact, never
   a caller success assertion. Revalidate schema, exact source/current generations, permission and writer lease before
   the existing domain effect; settle the original domain commit/readback and the ref-only canonical pending event
-  intent. Before any append, require this family''s exact registry/version/scope and retention admission; until
-  then return missing_event_registration and leave existing command expected_event_types=[] and independent owner
-  receipts unchanged. No transport action or view refresh becomes an event source.
+  intent. Before any append, require this family''s exact registry/version/scope and retention admission. Return missing_event_registration only while that exact registration is absent; leave existing command expected_event_types=[] and independent owner receipts unchanged on that refusal. Registration alone does not satisfy retention or the other existing append checks. No transport action or view refresh becomes an event source.
 
   For this family adopt SP-286 and CV-339 by name, including current strict full-value v2 resolver and SP-336/SP-347
   issuance rules. After domain source commit, store the exact semantic input and original owner result under SP-1409;
@@ -1995,7 +1975,7 @@ canonical_text: 'Newly authored owner contract for remote_access.route_test_comp
   a complete admitted replacement source/generation is verified; atomic publication cannot reinterpret old payloads
   or reissue domain work. Source retention/deletion authority remains independent.
 
-  Oracle plan: Plans/event_authority_w3e_oracle_plan.json#families/9 and ATS-1240/ATS-1241. Phase 2 (2026-11-13) runs the executable synthetic oracles of this family in scripts/pm_w3e_event_oracles.py; every refusal is one named single-predicate row of a generated Method B guard table (scripts/pm_w3e_table_*.py) proved by the gated shared scripts/pm_guard_isolation.py through scripts/pm-w3e-guard-proof.py, and rows no input can refuse first stay alone in their own table with a written proof. Numbers use the shared CV-1100/SP-1100 calls and timestamps the shared CV-1101 date_time with the owner profile of each field. Membership is ABSENT and native execution NOT_RUN.
+  Oracle plan: Plans/event_authority_w3e_oracle_plan.json#families/9 and ATS-1240/ATS-1241. Phase 2 (2026-11-13) runs the executable synthetic oracles of this family in scripts/pm_w3e_event_oracles.py; every refusal is one named single-predicate row of a generated Method B guard table (scripts/pm_w3e_table_*.py) proved by the gated shared scripts/pm_guard_isolation.py through scripts/pm-w3e-guard-proof.py, and rows no input can refuse first stay alone in their own table with a written proof. Numbers use the shared CV-1100/SP-1100 calls and timestamps the shared CV-1101 date_time with the owner profile of each field. At preparation before the 2026-11-18 registration, membership was ABSENT; native execution remains NOT_RUN.
 
 
   This family fixes its source authority_evidence roster to writer_fence, permission_or_service_authority, test_invocation,
@@ -2007,7 +1987,7 @@ canonical_text: 'Newly authored owner contract for remote_access.route_test_comp
 
   Retention is decided above by the third retention sitting answers; Storage Case L-3 still supplies the hold and protection machinery, and original receipts and source records keep their own policies. No runtime Run is invented for a BackupRun or RestoreRun.
 
-  '
+  Current membership (2026-11-18) — remote_access.route_test_completed@1.0.0 is individually registered in Plans/event_family_registry.json. Missing-registration refusal applies only if the exact current family/version/scope registration is absent; this registered family is not refused as missing_event_registration or family_not_admitted merely because it was prepared without admission. Append and checkpoint advance still require every existing schema, scope, retention, original-source, receipt, permission and withdrawal check specified here. Registry membership supplies no native execution proof or additional action authority.'
 gui_related: false
 gui_classification_reason: Defines event data, source custody, replay and internal checkpoints; existing surfaces
   only.
@@ -2022,7 +2002,7 @@ depends_on:
 - SP-337
 unblocks: []
 acceptance_criteria:
-- This exact family remains prepared without admission; current writes stay missing_event_registration.
+- This exact family is registered; missing_event_registration refuses only an absent exact registration, and all other existing append checks still apply.
 - Every stated join and refusal has a positive and a single-defect negative planned; native execution is NOT_RUN.
 - Retention is unresolved where explicitly marked; no lifetime or deletion policy is inferred.
 validation_surfaces:
@@ -2050,7 +2030,7 @@ preserved_exact_tokens:
 - CV-339
 - SP-337
 negative_constraints:
-- No admission, registry family append, Decision Log entry or native execution claim.
+- Preparation itself grants no admission, registry family append, Decision Log entry or native execution claim.
 - No independent number/timestamp implementation or retention decision.
 ```
 
