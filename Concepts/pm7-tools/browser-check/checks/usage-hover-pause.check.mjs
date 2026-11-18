@@ -32,10 +32,12 @@ const INSTALL = () => {
 		if (!R.on) return;
 		const t = e.target, card = t.closest && t.closest('.pmu-card');
 		const under = card && card.matches(':hover');
-		const approved = (t.matches?.('.pmu-seg button') && e.propertyName === 'color') || (t.matches?.('.pmu-stepper button') && ['color','background-color'].includes(e.propertyName)) || (t.matches?.('.pmu-sbrow .pmu-sbfill > i') && e.propertyName === 'opacity');
+		// Header controls retain main's hit geometry even when their hover colors are gated.
+		const headGeometry = e.propertyName === 'transform' && t.matches?.('.pmu-headtools');
+		const approved = headGeometry || (t.matches?.('.pmu-seg button') && e.propertyName === 'color') || (t.matches?.('.pmu-stepper button') && ['color','background-color'].includes(e.propertyName)) || (t.matches?.('.pmu-sbrow .pmu-sbfill > i') && e.propertyName === 'opacity');
 		const exiting = t.classList.contains('pmh-out') && !t.classList.contains('pmh-on') && ['opacity','--pmh-x','--pmh-y'].includes(e.propertyName);
 		let from, to;
-		if (cardId(card) === R.rest && t.matches('.pmu-cardtools,.pmu-h,.pmu-headtools,.pmu-cardtitles')) {
+		if (cardId(card) === R.rest && t.matches('.pmu-cardtools,.pmu-h,.pmu-cardtitles')) {
 			try {
 				const a = t.getAnimations({ subtree: !!e.pseudoElement }).find((a) => a.transitionProperty === e.propertyName &&
 					a.effect?.target === t && (a.effect.pseudoElement || '') === e.pseudoElement);
@@ -99,7 +101,7 @@ export function judge(rec, { rest, back }) {
 		if(x.prop==='opacity'&&(cs.includes('pmu-cardtools')||cs.includes('pmu-h'))) return Number(x.from)>0&&Number(x.to)===0;
 		if(x.prop==='pointer-events'&&cs.includes('pmu-cardtools')) return x.from==='auto'&&x.to==='none';
 		if(x.prop==='margin-right'&&cs.includes('pmu-cardtitles')) return parseFloat(x.from)>0&&parseFloat(x.to)===0;
-		return x.prop==='transform'&&cs.includes('pmu-headtools')&&x.from!=='none'&&x.to==='none';
+		return false;
 	};
 	const ins = rec.trans.filter((x) => during(x) && x.under && !x.approved && !x.chartControlled && !x.exiting && !neutralExit(x));
 	const litFrames = active.filter((x) => x.lit.concat(x.near || []).length > 0);

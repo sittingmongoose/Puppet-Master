@@ -213,7 +213,7 @@ html[data-theme^="retro"] #panel-usage .pmu-keysw { border-radius: 0; }
    or matching pane movement, to 150 ms after the last wheel or scroll event, or until the pointer moves or presses). During
    a keyboard gesture, data-wheel-handoff carries the same remaining pause while data-op records the gesture. The
    in-board :hover highlights use :where(:not(.pmu-board:is([data-op="wheel"],[data-wheel-handoff]) *)): a card or row that slides
-   under a resting pointer does not light up, show its tools or slide its head while it passes. The owner's PC priced the
+   under a resting pointer does not light up or show its tools while it passes. The owner's PC priced the
    pause while scrolling: main thread 329 -> 286 ms/s in Basic Dark, 288 -> 214 in Retro Dark, GPU 306 -> 235. The gate
    weighs nothing (:where), so at rest, and for anything outside a paused board, every rule matches and wins as before;
    chart hit geometry stays active. The [data-op] rules below belong to board gestures (a drag, a resize) and leave
@@ -223,21 +223,21 @@ html[data-theme^="retro"] #panel-usage .pmu-keysw { border-radius: 0; }
    article, so :focus-within on the card would keep them over a narrow title after a drag) */
 #panel-usage .pmu-card:hover:where(:not(.pmu-board:is([data-op="wheel"],[data-wheel-handoff]) *)) .pmu-cardtools, #panel-usage .pmu-card:focus-visible .pmu-cardtools, #panel-usage .pmu-cardtools:focus-within { opacity: 1; pointer-events: auto; transition-delay: 0s; }
 #panel-usage .pmu-cardtools .pmu-menu-anchor-open { color: var(--pmu-ink); background: var(--pmu-row-hover); }
-/* the meta (text only) gives way to the tools; the head tools (switches, legends, the folded count) never vanish: they
-   slide left exactly clear of the cluster */
+/* the meta (text only) gives way to the tools; the head tools (switches, legends, the folded count) keep their ordinary hover position
+   so they can still take pointer hits during the wheel pause */
 #panel-usage .pmu-card:hover:where(:not(.pmu-board:is([data-op="wheel"],[data-wheel-handoff]) *)) .pmu-cardmeta, #panel-usage .pmu-card:focus-visible .pmu-cardmeta { opacity: 0; }
 /* one after the other, so the two never cross: entering, the head tools slide aside (160) and the cluster fades in once
    they have cleared its place; leaving, the cluster fades out (140) and only then do the head tools slide back */
 #panel-usage .pmu-headtools { transition: transform calc(160ms * var(--pmu-speed, 1)) var(--pmu-ease-out) calc(140ms * var(--pmu-speed, 1)); }
-#panel-usage .pmu-card:hover:where(:not(.pmu-board:is([data-op="wheel"],[data-wheel-handoff]) *)) .pmu-headtools, #panel-usage .pmu-card:focus-visible .pmu-headtools, #panel-usage .pmu-cardhead[data-tools-on] > .pmu-headtools { transform: translateX(var(--pmu-head-slide, -108px)); transition-delay: 0s; }
-#panel-usage .pmu-card[data-tw="xs"]:hover:where(:not(.pmu-board:is([data-op="wheel"],[data-wheel-handoff]) *)) .pmu-headtools { transform: translateX(var(--pmu-head-slide, -58px)); }
+#panel-usage .pmu-card:hover .pmu-headtools, #panel-usage .pmu-card:focus-visible .pmu-headtools, #panel-usage .pmu-cardhead[data-tools-on] > .pmu-headtools { transform: translateX(var(--pmu-head-slide, -108px)); transition-delay: 0s; }
+#panel-usage .pmu-card[data-tw="xs"]:hover .pmu-headtools { transform: translateX(var(--pmu-head-slide, -58px)); }
 /* (keyed on the head tools being there, not on a measurement: entering a card reads its head (42-cards.js fitTools), and
    that read already starts the cluster's fade, so its delay has to be in place before anything is measured) */
 #panel-usage .pmu-card:hover:where(:not(.pmu-board:is([data-op="wheel"],[data-wheel-handoff]) *)) > .pmu-cardhead > .pmu-headtools:not(:empty) ~ .pmu-cardtools, #panel-usage .pmu-card:focus-visible > .pmu-cardhead > .pmu-headtools:not(:empty) ~ .pmu-cardtools,
 #panel-usage .pmu-cardhead[data-tools-on] > .pmu-headtools:not(:empty) ~ .pmu-cardtools { transition-delay: calc(160ms * var(--pmu-speed, 1)), 0s; }
 /* R100 T2: wheel return restores the current head visibly within the pause's budget; subsequent ordinary hover keeps
    its existing sequence. The short phase is owned by 42-cards.js wheelEnd, not by the chart/body subtree. */
-#panel-usage .pmu-cardhead.pmu-wheel-return > :is(.pmu-cardtools, .pmu-headtools, .pmu-cardtitles, .pmu-cardmeta) { transition: none; }
+#panel-usage .pmu-cardhead.pmu-wheel-return > :is(.pmu-cardtools, .pmu-cardtitles, .pmu-cardmeta) { transition: none; }
 #panel-usage .pmu-board[data-op]:where(:not([data-op="wheel"])) .pmu-headtools { transform: none; }
 /* the title yields its room to the cluster at once and takes it back once the cluster has faded and the head tools are
    back (140 + 160); a yielding title

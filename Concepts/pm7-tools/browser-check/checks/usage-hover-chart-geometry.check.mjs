@@ -1,15 +1,18 @@
 // R117 P3 / R121 P2-P3: wheel input without pane travel preserves main's tooltip hit geometry.
 import { muteSound } from '../helpers/quiet-page.mjs';
 
-function record(el) {
+function record(el, scrollHead = false) {
 	const sc = document.getElementById('pmuScroll'), board = document.getElementById('pmuBoard');
 	const card = el.closest('.pmu-card'), tips = PM_HOVER_TAG_CONTROLLER;
+	const headTools = scrollHead ? el.closest('.pmu-headtools') : null;
 	let point, raf;
 	const read = () => {
 		const box = el.getBoundingClientRect(), cs = getComputedStyle(el);
 		return { t: performance.now(), top: sc.scrollTop, left: sc.scrollLeft, op: board.getAttribute('data-op'),
 			x: box.x, y: box.y, w: box.width, h: box.height, z: cs.zIndex, transform: cs.transform,
 			cardTranslate: getComputedStyle(card).translate,
+			...(headTools && { cardX: card.getBoundingClientRect().x, hover: card.matches(':hover'),
+				headTransform: getComputedStyle(headTools).transform }),
 			tip: tips.active === el && tips.tag?.getAttribute('data-open') === 'true',
 			hit: point && el.contains(document.elementFromPoint(...point)) };
 	};
@@ -174,6 +177,51 @@ async function firstScrollFrame(t) {
 	}
 }
 
+async function scrollingHeadGeometry(t) {
+	await t.viewport(1920, 1080);
+	await t.emulate({ reducedMotion: 'no-preference' });
+	await muteSound(t.page);
+	for (const surface of t.app.surfaces()) {
+		for (const look of String(t.args.looks || 'basic-dark,retro-dark').split(',')) {
+			const label = `[${surface}] ${look} compact Token volume About icon`;
+			const f = await t.app.open({ query: 'pm-warm=0', sandbox: surface === 'sandbox' });
+			await t.app.look(look);
+			await f.evaluate(() => {
+				PMU.live.pause(); PM_PAGES.go('usage'); PM7_USAGE.setRoomDetail('analytics', 'diagnostics');
+			});
+			await f.waitForFunction(() => document.getElementById('pmuBoard')?.dataset.room === 'analytics' &&
+				!document.querySelector('#pmuScroll .pmu-ghostboard') && !document.documentElement.hasAttribute('data-pmu-moment'));
+			await f.evaluate(() => {
+				PMU.board.resize('token-trend', { x: 0, y: 0, w: 4, h: 4 });
+				document.getElementById('pmuScroll').scrollTop = 0;
+			});
+			const mark = f.locator('#pmuBoard [data-widget="token-trend"] .pmu-headtools .pmu-caveat');
+			await mark.waitFor({ state: 'visible' });
+			const base = await mark.boundingBox();
+			await t.page.mouse.move(base.x + base.width / 2, base.y + base.height / 2);
+			await t.page.waitForTimeout(400);
+			const hovered = await mark.boundingBox();
+			await t.page.mouse.move(hovered.x + hovered.width / 2, hovered.y + hovered.height / 2);
+			await mark.evaluate(record, true);
+			for (let i = 0; i < 7; i++) {
+				await t.page.mouse.wheel(0, 1);
+				await t.page.waitForTimeout(35);
+			}
+			const r = await f.evaluate(() => window.__usageGeometry.stop()), p = r.pre;
+			// Subtract the plate's translation so Retro's independent raise does not hide a head-tools slide.
+			const held = r.frames.filter((s) => s.op === 'wheel' && s.t - r.wheels[0]?.t > 180 && s.top > p.top);
+			const drift = held.map((s) => Math.abs((s.x - s.cardX) - (p.x - p.cardX)));
+			const detail = JSON.stringify({ pre: p, firstWheel: r.wheels[0], lastWheel: r.wheels.at(-1), scrolls: r.scrolls,
+				held: held.length, maxDrift: Math.max(...drift, 0), shifted: held[drift.findIndex((x) => x >= 0.5)] });
+			await t.check(label + ' could judge a held hover through real pane travel', p.hover && !p.op && p.headTransform !== 'none' &&
+				r.wheels.length === 7 && r.wheels.every((w) => w.trusted && w.dx === 0 && w.dy === 1) &&
+				r.wheels[0].hit && r.scrolls > 0 && held.length >= 2 && held.every((s) => s.hover), detail);
+			await t.check(label + ' keeps its horizontal position and hit within the card during the pause',
+				held.length >= 2 && drift.every((x) => x < 0.5) && held.every((s) => s.hit), detail);
+		}
+	}
+}
+
 async function stationaryRetroRaise(t) {
 	if (!String(t.args.looks || 'basic-dark,retro-dark').split(',').includes('retro-dark')) return;
 	await t.viewport(1920, 1080);
@@ -217,5 +265,6 @@ async function stationaryRetroRaise(t) {
 export const tests = {
 	'Usage stationary chart geometry': stationaryGeometry,
 	'Usage first scrolling frame': firstScrollFrame,
+	'Usage scrolling chart head geometry': scrollingHeadGeometry,
 	'Usage Retro stationary card raise': stationaryRetroRaise,
 };

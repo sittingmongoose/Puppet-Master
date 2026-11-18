@@ -26,9 +26,17 @@ test('an explicitly marked PMH exit is not a new hover-in transition on the star
  const r=make();r.trans.push({t:180,card:'old',under:true,prop:'opacity',cls:'pmu-card pmh-out',exiting:true});assert.equal(j(r).r1.ok,true);
 });
 test('delayed starting-head transitions toward neutral are exits, while entries still fail',()=>{
- const exits=[['opacity','pmu-cardtools','1','0'],['opacity','pmu-h','1','0'],['transform','pmu-headtools','matrix(1,0,0,1,-108,0)','none'],['margin-right','pmu-cardtitles','108px','0px'],['pointer-events','pmu-cardtools','auto','none']];
+ const exits=[['opacity','pmu-cardtools','1','0'],['opacity','pmu-h','1','0'],['margin-right','pmu-cardtitles','108px','0px'],['pointer-events','pmu-cardtools','auto','none']];
  for(const [prop,cls,from,to] of exits){const r=make();r.trans.push({t:180,card:'old',under:true,prop,cls,from,to});assert.equal(j(r).r1.ok,true,prop);}
  const r=make();r.trans.push({t:180,card:'old',under:true,prop:'opacity',cls:'pmu-cardtools',from:'0',to:'1'});assert.equal(j(r).r1.ok,false);
+});
+
+test('main head-tools geometry stays outside R1 while hover tint is still checked',()=>{
+ const r=make();
+ r.trans.push({t:180,card:'new',under:true,prop:'transform',cls:'pmu-headtools',approved:true});
+ assert.equal(j(r).r1.ok,true);
+ r.trans.push({t:200,card:'new',under:true,prop:'color',cls:'pmu-caveat'});
+ assert.equal(j(r).r1.ok,false);
 });
 
 test('typed main chart transitions are allowed while CSS hover row leakage still fails',()=>{const r=make();r.trans.push({t:300,card:'new',under:true,prop:'opacity',cls:'pmu-mark is-hl-dim',chartControlled:true});assert.equal(j(r).r1.ok,true);r.trans.push({t:320,card:'new',under:true,prop:'background-color',cls:'pmu-row',chartControlled:false});assert.equal(j(r).r1.ok,false);});
