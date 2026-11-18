@@ -82,17 +82,35 @@ def _patch_class(cls):
     PATCHED_CLASSES.add(cls)
 
 
-_SCANNED = [0]
+_SCANNED = [(-1, -1)]
 
 
-def patch_validator_classes():
-    """Every validator class reachable as a module attribute of a Goal checker module, and jsonschema's own."""
-    if len(sys.modules) == _SCANNED[0]:
+def _validator_subclasses():
+    seen, stack = set(), [v for v in vars(jsonschema.validators).values() if _is_validator_class(v)]
+    while stack:
+        cls = stack.pop()
+        if cls in seen:
+            continue
+        seen.add(cls)
+        stack.extend(cls.__subclasses__())
+    return seen
+
+
+def patch_validator_classes(force=False):
+    """Every validator class reachable as a module attribute of a Goal checker module,
+    jsonschema's own, and every subclass of those (factory-created classes such as
+    FMT2's _original_validator(Validator) are module attributes nowhere; the old
+    module-count scan gate also never re-ran after they were created, so their
+    iter_errors was never patched and capture silently missed whole banks).
+    extend()/create() classes do not inherit from their base, so a gc sweep
+    (force, after a capture miss) is the last resort that finds them."""
+    subclasses = _validator_subclasses()
+    gate = (len(sys.modules), len(subclasses))
+    if gate == _SCANNED[0] and not force:
         return
-    _SCANNED[0] = len(sys.modules)
-    for value in vars(jsonschema.validators).values():
-        if _is_validator_class(value):
-            _patch_class(value)
+    _SCANNED[0] = gate
+    for value in subclasses:
+        _patch_class(value)
     for module in tuple(sys.modules.values()):
         name = getattr(module, '__name__', '')
         if not name.startswith(('pm_goal', 'pm_event')) or name.startswith(('pm_goal_phase_', 'pm_goal_table_')):
@@ -100,6 +118,29 @@ def patch_validator_classes():
         for value in list(vars(module).values()):
             if _is_validator_class(value):
                 _patch_class(value)
+    if force:
+        import gc
+        for value in gc.get_objects():
+            if type(value) is type and _is_validator_class(value):
+                _patch_class(value)
+
+
+def _hook_validator_factory(cls):
+    """Capture at the bank's validator() factory too: a factory-created class is
+    patched (and the instance captured) on its very first validation."""
+    factory = getattr(cls, 'validator', None)
+    if factory is None or getattr(factory, '_dg5_closure', False):
+        return
+
+    def validator(self, *args, **kwargs):
+        result = factory(self, *args, **kwargs)
+        _patch_class(type(result))
+        sink = CAPTURE[0]
+        if sink is not None and not sink:
+            sink.append(result)
+        return result
+    validator._dg5_closure = True
+    cls.validator = validator
 
 
 def _signature(errors):
@@ -123,6 +164,7 @@ def _registry_digest(v, memo={}):  # noqa: B006 - per-process memo by registry i
 
 def hook_bank(cls, method='errors', family=None):
     """Observation only: the bank's own result is returned unchanged."""
+    _hook_validator_factory(cls)
     original = getattr(cls, method)
     if getattr(original, '_dg5_closure', False):
         return
@@ -141,6 +183,8 @@ def hook_bank(cls, method='errors', family=None):
             result = original(self, *args)
         finally:
             CAPTURE[0] = saved
+        if not sink:
+            patch_validator_classes(force=True)  # a factory class created mid-call: patch it for the next call
         if sink:
             v = sink[0]
             value = args[-1]
@@ -443,8 +487,10 @@ def _install_search_wrappers(reference_v, search_v, sample_every):
                 if raw is not None:
                     digest = hashlib.sha256(raw).hexdigest()
                     guards = {getattr(e, 'oracle_guard', None) for e in errs}
-                    if not cut and ident in guards and len(_WIT['pending']) < 8:
+                    if not cut and ident in guards:
                         _WIT['pending'][digest] = raw
+                        while len(_WIT['pending']) > 64:
+                            _WIT['pending'].pop(next(iter(_WIT['pending'])))
                     elif cut and ident not in guards and digest in _WIT['pending']:
                         confirmed = _WIT['pending'][digest]
                         previous = _WIT['store'].get(clause)
@@ -722,6 +768,22 @@ def _close_one(ident, plain, bank_object, seeds, records, args, carried):
     return entries, meta
 
 
+def _check_dump_ids(dumped_ids, expect_paths):
+    """Standing check (lead 1118011148): a dump fails loudly unless its root ids
+    equal the closure inventory's root ids for the suite, exactly. The inventory
+    is the union of all_roots (or roots) of the given earlier closure reports."""
+    expected = set()
+    for path in expect_paths or ():
+        report = json.loads(Path(path).read_text())
+        expected |= set(report.get('all_roots') or report.get('roots') or ())
+    if expected and set(dumped_ids) != expected:
+        missing = sorted(expected - set(dumped_ids))
+        extra = sorted(set(dumped_ids) - expected)
+        raise SystemExit(f'dump root ids != inventory root ids: missing {missing[:8]} (+{max(0, len(missing)-8)}), '
+                         f'extra {extra[:8]} (+{max(0, len(extra)-8)})')
+    return expected
+
+
 def _carried_from(paths):
     carried = {}
     for path in paths or ():
@@ -820,6 +882,8 @@ def main():
                         help='earlier DG5 closure report(s): clauses not left UNCOVERED are carried, not re-searched')
     parser.add_argument('--seed-cap', type=int, default=24)
     parser.add_argument('--dump', type=Path, help='collect once and pickle GO2-style root dumps here, then exit')
+    parser.add_argument('--expect-roots', action='append', type=Path, default=[],
+                        help='earlier closure report(s) whose inventory root ids the dump must equal exactly')
     parser.add_argument('--from-dump', type=Path, help='close roots from a --dump pickle instead of collecting')
     args = parser.parse_args()
     if args.from_dump:
@@ -850,6 +914,9 @@ def main():
             dumped[ident] = _dump_entry(slot, ident)
             print(f"{ident} dump rebuild={dumped[ident]['rebuild']} seeds={len(dumped[ident]['seeds'])} "
                   f"note={dumped[ident].get('rebuild_note')}", file=sys.stderr, flush=True)
+        if not args.roots:
+            assert set(dumped) == {root_id(k) for k, _s in ordered}, 'dump ids != collected slot ids'
+        _check_dump_ids(dumped, args.expect_roots)
         blob = pickle.dumps(dict(meta=dict(source=args.source, family=args.family, calls=collector.calls,
                                            seed_cap=args.seed_cap, tool_sha256=TOOL_SHA256,
                                            seconds=round(time.time() - started, 1)), roots=dumped), protocol=5)

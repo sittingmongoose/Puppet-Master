@@ -221,6 +221,53 @@ def check_closure_memo_and_dump_recipe():
                [e.validator for e in probe_b.iter_errors(value)]
 
 
+def check_dynamic_validator_capture():
+    """A factory-created validator class (module attribute nowhere, FMT2 OriginalBank
+    shape) is patched and captured on its first validation."""
+    import jsonschema
+
+    import pm_goal_dg5_closure as closure
+
+    dynamic = jsonschema.validators.extend(jsonschema.Draft202012Validator, {})
+    closure.patch_validator_classes(force=True)  # extend() classes inherit from nobody: gc sweep finds them
+    assert dynamic in closure.PATCHED_CLASSES
+    assert getattr(dynamic.iter_errors, '_dg5_capture', False)
+
+    class FactoryBank:
+        def validator(self, schema):
+            return dynamic(schema)
+
+    closure._hook_validator_factory(FactoryBank)
+    sink = []
+    saved = closure.CAPTURE[0]
+    closure.CAPTURE[0] = sink
+    try:
+        built = FactoryBank().validator({'type': 'integer'})
+    finally:
+        closure.CAPTURE[0] = saved
+    assert sink == [built]
+
+
+def check_dump_inventory_gate():
+    """A dump whose root ids differ from the inventory fails loudly (lead 1118011148)."""
+    import json
+    import tempfile
+    from pathlib import Path
+
+    import pm_goal_dg5_closure as closure
+
+    with tempfile.TemporaryDirectory() as td:
+        inv = Path(td) / 'inv.json'
+        inv.write_text(json.dumps(dict(all_roots={'dg5:a': {}, 'dg5:b': {}})))
+        assert closure._check_dump_ids({'dg5:a', 'dg5:b'}, [inv]) == {'dg5:a', 'dg5:b'}
+        try:
+            closure._check_dump_ids({'dg5:a'}, [inv])
+        except SystemExit as exc:
+            assert 'dg5:b' in str(exc)
+        else:
+            raise AssertionError('dump inventory gate did not fail on a missing root')
+
+
 def check_witness_capture_pairing():
     """A witness is stored only for the exact uncut/cut pair the kill test judged."""
     import pm_goal_dg5_closure as closure
@@ -291,6 +338,8 @@ def check_pass2_parent_release():
 def main():
     check_frame_error_target_mapping()
     check_closure_memo_and_dump_recipe()
+    check_dynamic_validator_capture()
+    check_dump_inventory_gate()
     check_witness_capture_pairing()
     check_pass2_parent_release()
     check_shard_partition()
