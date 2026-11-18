@@ -847,8 +847,9 @@
     roLayer.setAttribute('aria-hidden', 'true');
     return roLayer;
   }
-  var openCards = new Set();
-  window.addEventListener('scroll', function () { openCards.forEach(function (h) { h.hide(); }); }, true);
+  /* Index-only column emphasis needs scroll cleanup, but is not an open readout and must not hold Live (R113 P6). */
+  var openCards = new Set(), indexCards = new Set();
+  window.addEventListener('scroll', function () { openCards.forEach(function (h) { h.hide(); }); indexCards.forEach(function (h) { h.hide(); }); }, true);
   /* WOW-SPEC 3.5 (WOW-TASKS C-5): a bucket-wide band (accent 8 %) fades in 120 ms and follows the crosshair by transform;
      the hovered series' dot grows to 5 px with a 12 px halo and the other series dim to 35 % (the series nearest the
      pointer is the hovered one); the card appears from the dot's side (scale .96 -> 1, 120 ms), keeps its side until the
@@ -1129,6 +1130,7 @@
       if (cfg.onIndex) cfg.onIndex(best);
     }
     function show(i, instant) {
+      indexCards.delete(api);
       indexOnly = false;
       if (cardOwner && cardOwner !== api && cardOwner.hide) cardOwner.hide();
       var card = readoutCard(box);
@@ -1151,7 +1153,7 @@
       [xh, band].concat(dotEls).forEach(function (el) { el.classList.remove('is-on'); });
       box.classList.remove('pmu-xh-on');
       if (cardOwner === api) readoutCard(box).classList.remove('is-on');
-      openCards.delete(api);
+      openCards.delete(api); indexCards.delete(api);
       if (cfg.onIndex) cfg.onIndex(null);
     }
     /* R100 P3/R107: column emphasis returns only to a currently hovered plot at the pause's current pointer. The
@@ -1165,7 +1167,7 @@
       var picked = indexAt(point);
       if (!picked) return;
       if (cfg.onIndex) cfg.onIndex(picked.i);
-      indexOnly = true; openCards.add(api);
+      indexOnly = true; indexCards.add(api);
     }
     function opStart(e) { if (cfg.restoreIndex && e.detail && e.detail.board === box.closest('.pmu-board')) hide(); }
     if (cfg.restoreIndex) { document.addEventListener('pmu-op-start', opStart); document.addEventListener('pmu-op-end', opEnd); }

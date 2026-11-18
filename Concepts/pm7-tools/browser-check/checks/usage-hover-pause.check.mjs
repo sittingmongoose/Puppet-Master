@@ -49,6 +49,7 @@
 // TOOL-ISSUES.md.
 import { writeFileSync } from 'node:fs';
 import { muteSound } from '../helpers/quiet-page.mjs';
+import { r113Cases } from '../helpers/usage-hover-pause-r113.mjs';
 
 // the recorder, installed once in the app's frame; __uhp.start() clears it and starts a window, __uhp.stop() ends it
 const INSTALL = () => {
@@ -577,6 +578,11 @@ export default async function (t) {
 			await f.waitForFunction(() => !(window.PM_THEME_TRANSITION?.busy?.() || window.PM_LOOK_COVERED?.()), null, { timeout: 20000 }).catch(() => {});
 			await f.evaluate(() => PM_PAGES.go('usage'));
 			await t.page.waitForTimeout(Number(t.args.viewSettle ?? 8000));
+			if (!['chartOnly','raceOnly','mountOnly','departureOnly','keyboardOnly'].some((key)=>String(t.args[key] || '')==='1')) {
+				const r113=await r113Cases(t,f,S,park);dump.push({surface,look,r113});
+				if(t.args.dump) writeFileSync(String(t.args.dump),JSON.stringify(dump));
+				if(String(t.args.r113Only || '')==='1') continue;
+			}
 			if (!['chartOnly','raceOnly','mountOnly','departureOnly'].some((key)=>String(t.args[key] || '')==='1')) {
 				const keyboard=await keyboardPause(t,f,S,park); dump.push({surface,look,keyboard});
 				if(t.args.dump) writeFileSync(String(t.args.dump),JSON.stringify(dump));
