@@ -1256,6 +1256,9 @@
         if (bo.liveId) nb.id = bo.liveId;
         boardEl = nb;
         retireBoard(old);
+        /* Reduce Motion mounts asynchronously: clients holding the live board (wheel hover pause, R99) reconcile
+           before this newly adopted spare can paint, rather than waiting for below-screen bodies to finish. */
+        emit('swap', { room: room, board: nb });
         scroll.scrollTop = 0; view.top = 0;
         ensurePreviews();
         if (FILM && FILM.dissolve) FILM.dissolve(nb);

@@ -1100,27 +1100,37 @@
     var wheelEnd = function () {
       if (wheelT) { clearTimeout(wheelT); wheelT = 0; }
       if (!wheelAt) return;
-      var el = wheelEl;
+      var held = wheelEl, el = b.el();
       wheelAt = wheelEl = null;
+      if (held && held !== el && held.getAttribute('data-op') === 'wheel') held.removeAttribute('data-op');
       if (el && el.getAttribute('data-op') === 'wheel') el.removeAttribute('data-op');
+      if (!el || el.hasAttribute('data-op') || b.gesture && b.gesture()) return;
       var card = el && el.isConnected && el.querySelector(':scope > .pmu-card:hover');
       if (card) { try { fitTools(card); } catch (error) { console.error('[pm-usage] head fit', error); } }
       try { document.dispatchEvent(new CustomEvent('pmu-op-end', { detail: { board: el } })); } catch (error) { /* none */ }
     };
     var wheelHold = function () { if (wheelT) clearTimeout(wheelT); wheelT = setTimeout(wheelEnd, WHEEL_REST); };
-    var onWheel = function (event) {
-      if (!wheelAt) {
-        var el = b.el();
-        if (!el || el.hasAttribute('data-op')) return;
+    /* A room mount can replace the board or clear its marker while the same wheel burst continues (R99). Transfer
+       only our wheel value; a live drag/resize keeps ownership, including before its deferred data-op write. */
+    var wheelBoard = function () {
+      var el = b.el(), op = el && el.getAttribute('data-op');
+      if (!el || op !== null && op !== 'wheel' || b.gesture && b.gesture()) { wheelEnd(); return null; }
+      if (wheelEl && wheelEl !== el && wheelEl.getAttribute('data-op') === 'wheel') wheelEl.removeAttribute('data-op');
+      wheelEl = el;
+      if (op !== 'wheel') {
         el.setAttribute('data-op', 'wheel');
-        wheelEl = el;
         var under = el.querySelector(':scope > .pmu-card:hover');
         if (under) unfitSoon(under);
       }
+      return el;
+    };
+    var onWheelMount = function () { if (wheelAt) wheelBoard(); };
+    var onWheel = function (event) {
+      if (!wheelBoard()) return;
       wheelAt = [event.clientX, event.clientY];
       wheelHold();
     };
-    var onWheelScroll = function () { if (wheelAt) wheelHold(); };
+    var onWheelScroll = function () { if (wheelAt && wheelBoard()) wheelHold(); };
     var onWheelMove = function (event) { if (wheelAt && (Math.abs(event.clientX - wheelAt[0]) >= 1 || Math.abs(event.clientY - wheelAt[1]) >= 1)) wheelEnd(); };
     var onWheelPress = function () { if (wheelAt) wheelEnd(); };
     var onOver = function (event) {
@@ -1163,8 +1173,10 @@
     boardEl.addEventListener('focusin', onFocusIn);
     boardEl.addEventListener('focusout', onFocusOut);
     boardEl.addEventListener('click', onClick);
-    var pausing = boardEl.id === 'pmuScroll';
+    var pausing = boardEl.id === 'pmuScroll', offWheelMount = null, offWheelSwap = null;
     if (pausing) {
+      offWheelMount = b.on('mount', onWheelMount);
+      offWheelSwap = b.on('swap', onWheelMount);   /* Reduce Motion adopts its spare after mount returns */
       boardEl.addEventListener('wheel', onWheel, { passive: true });
       boardEl.addEventListener('scroll', onWheelScroll, { passive: true });
       boardEl.addEventListener('pointermove', onWheelMove, { passive: true });
@@ -1172,6 +1184,7 @@
     }
     return function () {
       if (pausing) {
+        offWheelMount(); offWheelSwap();
         wheelEnd();
         boardEl.removeEventListener('wheel', onWheel, { passive: true });
         boardEl.removeEventListener('scroll', onWheelScroll, { passive: true });
