@@ -826,8 +826,9 @@
       cvx.textContent = (Math.round(x.f * 1000) / 10).toFixed(1) + '%';
       capx.textContent = x.s.name + ' · ' + (x.s.valueText || D.fmtV(x.s.value)) + (D.mode === 'cost' ? '' : ' ' + t('charts.tokens_word'));
     };
-    /* R100 P2: wheel start resets a selection that was already visible, including the centre text. */
-    c.el._pmuClearHot = function () { hot(null); };
+    /* R100 P2/R113 P7: clear only an applied selection. A neutral centre may be in its entrance number roll;
+       rewriting its text would remove those running digit strips even when the pointer is over another card. */
+    c.el._pmuClearHot = function () { if (c.el.querySelector('path[data-mark="arc"].is-dim,.pmu-dl-row.is-hot')) hot(null); };
     /* (_pmuHot is the element's own light, also called by the wheel pause's end, below) */
     pathEls.forEach(function (p, i) { if (p._pmuHot) return; p._pmuHot = function () { hot(i); }; p.addEventListener('pointerenter', function () { if (!wheelPaused(p)) p._pmuHot(); }); p.addEventListener('pointerleave', function () { hot(null); }); });
     $$('.pmu-dl-row[data-i]', c.el).forEach(function (r) { if (r._pmuHot) return; r._pmuHot = function () { hot(+r.getAttribute('data-i')); }; r.addEventListener('pointerenter', function () { if (!wheelPaused(r)) r._pmuHot(); }); r.addEventListener('pointerleave', function () { hot(null); }); });

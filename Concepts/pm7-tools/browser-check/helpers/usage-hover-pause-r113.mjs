@@ -1,11 +1,12 @@
 // R113 regressions run as rows of usage-hover-pause, on its selected looks and surfaces.
 export async function r113Cases(t, f, label, park) {
 	const records = [];
-	for (const kind of String(t.args.r113Cases || 'live,plot,tooltip,handoff,compact').split(',')) {
+	for (const kind of String(t.args.r113Cases || 'live,plot,tooltip,handoff,compact,roll').split(',')) {
 		if (kind === 'plot') { records.push(await plotLimit(t,f,label,park)); continue; }
 		if (kind === 'tooltip') { records.push(await tooltipPause(t,f,label,park)); continue; }
 		if (kind === 'handoff') { records.push(await gestureHandoff(t,f,label,park)); continue; }
 		if (kind === 'compact') { records.push(await compactDonut(t,f,label,park)); continue; }
+		if (kind === 'roll') { records.push(await neutralDonutRoll(t,f,label,park)); continue; }
 		if (kind !== 'live') throw new Error('Unknown R113 case: ' + kind);
 		await park();
 		const liveWasOn = await f.evaluate(() => { const on=PMU.live.on(); PMU.live.resume(); PM7_USAGE.setRoomDetail('costs','diagnostics'); return on; });
@@ -186,4 +187,36 @@ async function compactDonut(t,f,label,park) {
 	await t.check(label+'R113 P5 return restores exactly the CURRENT hovered model index and no footer',identity(a)&&a.value===p.value&&a.caption===p.caption,JSON.stringify(a));
 	await park();await f.evaluate(on=>{PMU.board.reset('room');if(on)PMU.live.resume();},on);await t.page.waitForTimeout(1800);
 	return {kind:'compact',rec};
+}
+
+async function neutralDonutRoll(t,f,label,park) {
+	if(await f.evaluate(()=>PMU.motion.reduced())){t.log(label+'R113 P7 SKIP number-roll race under Reduced Motion: its centre is already final.');return {kind:'roll',skipped:'Reduced Motion has no number roll'};}
+	await park();const on=await f.evaluate(()=>{const on=PMU.live.on();PMU.live.pause();PM7_USAGE.setRoomDetail('analytics','diagnostics');return on;});await t.page.waitForTimeout(4500);
+	await f.evaluate(()=>{const b=PMU.board;b.visible().filter(x=>!['token-trend','an-model-donut'].includes(x)).forEach(x=>b.setVisible(x,false));b.resize('token-trend',{w:6,h:10});b.resize('an-model-donut',{w:6,h:10});b.move('token-trend',{x:0,y:0});b.move('an-model-donut',{x:6,y:0});});await t.page.waitForTimeout(1800);
+	await f.evaluate(()=>{document.getElementById('pmuScroll').scrollTop=0;});
+	const peer=f.locator('#pmuBoard > [data-widget="token-trend"] .pmu-cardhead'),box=await peer.boundingBox();
+	if(!box){await t.check(label+'R113 P7 could judge neighboring card',false);return null;}
+	await t.page.mouse.move(box.x+box.width/2,box.y+box.height/2);
+	await f.evaluate(()=>PMU.board.setVisible('an-model-donut',false));await t.page.waitForTimeout(700);
+	await f.evaluate(()=>{
+		const sc=document.getElementById('pmuScroll'),b=document.getElementById('pmuBoard');
+		const read=()=>{const cv=b.querySelector('[data-widget="an-model-donut"] .pmu-dc-v'),chart=cv?.closest('.pmu-c-donut');const anims=cv?[...cv.getAnimations({subtree:true})].filter(a=>a.playState==='running'):[];return {t:performance.now(),strips:cv?.querySelectorAll('.pmu-odo-s').length||0,running:anims.length,remaining:Math.max(0,...anims.map(a=>{const s=a.effect.getTiming();return Number(s.delay)+Number(s.duration)-Number(a.currentTime);})),hot:chart?.querySelectorAll('path.is-dim,.pmu-dl-row.is-hot').length||0,donutHovered:!!chart?.matches(':hover'),op:b.getAttribute('data-op'),live:PMU.live.on()};};
+		const r=window.__uhpR113={wheels:[],moves:0};let pos=null,strip=null;
+		const capture=e=>{pos=[e.clientX,e.clientY];const cv=b.querySelector('[data-widget="an-model-donut"] .pmu-dc-v');strip=cv?.querySelector('.pmu-odo-s');r.wheels.push({trusted:e.isTrusted,card:e.target.closest('.pmu-card')?.dataset.widget,before:read()});};
+		const bubble=()=>{const cv=b.querySelector('[data-widget="an-model-donut"] .pmu-dc-v');r.wheels.at(-1).after={...read(),sameStrip:!!strip&&cv?.contains(strip)};};
+		const move=e=>{if(pos&&(pos[0]!==e.clientX||pos[1]!==e.clientY))r.moves++;};
+		sc.addEventListener('wheel',capture,{capture:true,passive:true});sc.addEventListener('wheel',bubble,{passive:true});document.addEventListener('pointermove',move,true);
+		r.stop=()=>{sc.removeEventListener('wheel',capture,true);sc.removeEventListener('wheel',bubble);document.removeEventListener('pointermove',move,true);return {...r,stop:undefined,after:read()};};
+	});
+	await f.evaluate(()=>PMU.board.setVisible('an-model-donut',true));
+	await f.waitForFunction(()=>{const cv=document.querySelector('#pmuBoard [data-widget="an-model-donut"] .pmu-dc-v');return !!cv?.querySelector('.pmu-odo-s')&&cv.getAnimations({subtree:true}).some(a=>a.playState==='running');},null,{timeout:5000}).catch(()=>{});
+	await t.page.mouse.wheel(0,-1);
+	const centre=f.locator('#pmuBoard [data-widget="an-model-donut"] .pmu-dc-v');
+	await t.moving(centre,label+'R113 P7 neutral centre retains painted number-roll motion after wheel',{ms:300,count:5,scroll:false});
+	await t.page.waitForTimeout(900);
+	const rec=await f.evaluate(()=>window.__uhpR113.stop()),w=rec.wheels[0];t.log(label+'R113 P7 neutral roll: '+JSON.stringify(rec));
+	await t.check(label+'R113 P7 could judge: real add entrance is rolling, no donut selection, trusted wheel over neighbor with still pointer',rec.wheels.length===1&&w.trusted&&w.card==='token-trend'&&w.before.strips>0&&w.before.running>0&&w.before.remaining>=600&&!w.before.hot&&!w.before.donutHovered&&!w.before.live&&!rec.moves,JSON.stringify(rec));
+	await t.check(label+'R113 P7 wheel start preserves the neutral donut digit strip and its running roll',w?.after.op==='wheel'&&w.after.sameStrip&&w.after.strips>0&&w.after.running>0,JSON.stringify(w));
+	await park();await f.evaluate(on=>{PMU.board.reset('room');if(on)PMU.live.resume();},on);await t.page.waitForTimeout(1800);
+	return {kind:'roll',rec};
 }
