@@ -403,13 +403,15 @@ def _install_search_wrappers(reference_v, search_v, sample_every):
 
     A witness is confirmed only when the same value (by pickle hash) is seen both
     uncut with the clause guard among its errors and cut with that guard gone —
-    the exact pair the kill test itself judged. First-match capture proved too
-    weak on dg5:c25e0ff944e76a07 (2 pattern witnesses captured from non-killing
-    attempts failed re-judging while the reference search itself was exact).
+    the exact pair the kill test itself judged. A kill-shaped pair (cut run has
+    no errors at all) outranks a covered-shaped pair stored earlier in the same
+    clause search: first-confirmed capture still failed re-judging on
+    dg5:c25e0ff944e76a07, whose pattern edit also broke maxLength, so the
+    covered-shaped pair was stored before the clean kill was found.
     """
     import pm_goal_go2_closure as go2
     orig_search, orig_errors = go.search_clause, go.errors_of
-    _WIT.update(current=None, store={}, pending={}, bytes=0,
+    _WIT.update(current=None, store={}, pending={}, locked=set(), bytes=0,
                 sampled=dict(calls=0, compared=0, mismatch=0))
 
     def search(clause, keyword, location, info, node, ident, *args, **kwargs):
@@ -433,7 +435,7 @@ def _install_search_wrappers(reference_v, search_v, sample_every):
         cur = _WIT['current']
         if cur:
             clause, ident = cur
-            if clause not in _WIT['store']:
+            if clause not in _WIT['locked']:
                 try:
                     raw = pickle.dumps(value, protocol=5)
                 except Exception:  # noqa: BLE001 - an unpicklable witness is reported unverifiable
@@ -445,9 +447,12 @@ def _install_search_wrappers(reference_v, search_v, sample_every):
                         _WIT['pending'][digest] = raw
                     elif cut and ident not in guards and digest in _WIT['pending']:
                         confirmed = _WIT['pending'][digest]
-                        if _WIT['bytes'] + len(confirmed) <= _WITNESS_BYTES_CAP:
+                        previous = _WIT['store'].get(clause)
+                        if _WIT['bytes'] + len(confirmed) - (len(previous) if previous else 0) <= _WITNESS_BYTES_CAP:
                             _WIT['store'][clause] = confirmed
-                            _WIT['bytes'] += len(confirmed)
+                            _WIT['bytes'] += len(confirmed) - (len(previous) if previous else 0)
+                            if not errs:
+                                _WIT['locked'].add(clause)
         return errs
 
     go.search_clause, go.errors_of = search, errors_of
