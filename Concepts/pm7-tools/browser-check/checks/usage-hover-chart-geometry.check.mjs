@@ -74,9 +74,10 @@ async function stationaryGeometry(t) {
 				await t.page.waitForTimeout(400);
 				const hovered = await mark.boundingBox();
 				if (heat) {
-					// Hit the enlarged band outside the unhovered cell.
-					const x = hovered.x + hovered.width / 2;
-					const y = (base.y + base.height + hovered.y + hovered.height) / 2;
+					// Hit an enlarged edge. Retro raises the card up-left, so use the left edge in that look.
+					const retro = look.startsWith('retro');
+					const x = retro ? Math.ceil(hovered.x) + 1 : hovered.x + hovered.width / 2;
+					const y = retro ? hovered.y + hovered.height / 2 : (base.y + base.height + hovered.y + hovered.height) / 2;
 					await t.page.mouse.move(x, y);
 				} else if (head) {
 					await t.page.mouse.move(hovered.x + hovered.width / 2, hovered.y + hovered.height / 2);
@@ -176,7 +177,9 @@ async function stationaryRetroRaise(t) {
 		const S = `[${surface}] Retro stationary card raise`;
 		const f = await t.app.open({ query: 'pm-warm=0', sandbox: surface === 'sandbox' });
 		await t.app.look('retro-dark');
-		await f.evaluate(() => { PMU.live.pause(); PM_PAGES.go('usage'); });
+		await f.evaluate(() => { PMU.live.pause(); PM_PAGES.go('usage'); PM7_USAGE.setRoomDetail('overview', 'glance'); });
+		await f.waitForFunction(() => document.getElementById('pmuBoard')?.dataset.room === 'overview' &&
+			!document.querySelector('#pmuScroll .pmu-ghostboard') && !document.documentElement.hasAttribute('data-pmu-moment'));
 		const card = f.locator('#pmuBoard > [data-widget="ov-skyline"]');
 		await card.waitFor({ state: 'visible' });
 		const box = await card.boundingBox();

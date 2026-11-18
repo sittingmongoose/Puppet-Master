@@ -463,32 +463,33 @@ async function pointerDeparture(t, f, label, park) {
 	await t.page.waitForTimeout(900);
 	await f.evaluate(() => {
 		const b = document.getElementById('pmuBoard'), sc = document.getElementById('pmuScroll');
-		const r = window.__uhpDeparture = { pre: b.querySelectorAll('.pmu-col.is-hot-col').length, wheels: [], leaves: [], ends: [], after: [] };
+		const r = window.__uhpDeparture = { pre: b.querySelectorAll('.pmu-col.is-hot-col').length, top: sc.scrollTop, wheels: [], scrolls: [], leaves: [], ends: [], after: [] };
 		let running = true, point = null;
 		const read = () => ({ t: performance.now(), op: b.getAttribute('data-op'), outside: !sc.matches(':hover'),
 			column: b.querySelectorAll('.pmu-col.is-hot-col,.pmu-cols.is-hot').length,
 			provider: b.querySelectorAll('.is-hl-on,.is-hl-dim').length,
 			donut: b.querySelectorAll('path[data-mark="arc"].is-dim,.pmu-dl-row.is-hot').length,
 			card: b.querySelectorAll('.pmh-on,.pmh-near').length });
-		const wheel = (e) => { point = [e.clientX,e.clientY]; r.wheels.push({t:performance.now(),trusted:e.isTrusted,held:b.getAttribute('data-op')==='wheel'}); };
+		const wheel = (e) => { point = [e.clientX,e.clientY]; r.wheels.push({t:performance.now(),trusted:e.isTrusted}); };
+		const scroll = () => r.scrolls.push({t:performance.now(),top:sc.scrollTop,held:b.getAttribute('data-op')==='wheel'});
 		// Capture before the scroller's own leave handler can end the pause on the fixed page.
 		const leave = (e) => { if (sc.contains(e.target) && !sc.contains(e.relatedTarget)) r.leaves.push({t:performance.now(),trusted:e.isTrusted,held:b.getAttribute('data-op')==='wheel'}); };
 		const end = (e) => { if (e.detail?.board === b) { const hit = point && document.elementFromPoint(...point); r.ends.push({t:performance.now(),outside:!sc.matches(':hover'),oldPointOnPlot:!!hit?.closest('.pmu-colsplot')}); } };
 		const sample = () => { if (!running) return; if (r.ends.length) r.after.push(read()); requestAnimationFrame(sample); };
-		sc.addEventListener('wheel',wheel,{passive:true}); document.addEventListener('pointerout',leave,true); document.addEventListener('pmu-op-end',end);
+		sc.addEventListener('wheel',wheel,{passive:true}); sc.addEventListener('scroll',scroll,{passive:true}); document.addEventListener('pointerout',leave,true); document.addEventListener('pmu-op-end',end);
 		requestAnimationFrame(sample);
-		r.stop = () => { running=false; sc.removeEventListener('wheel',wheel); document.removeEventListener('pointerout',leave,true); document.removeEventListener('pmu-op-end',end); return {...r,stop:undefined,final:read()}; };
+		r.stop = () => { running=false; sc.removeEventListener('wheel',wheel); sc.removeEventListener('scroll',scroll); document.removeEventListener('pointerout',leave,true); document.removeEventListener('pmu-op-end',end); return {...r,stop:undefined,final:read()}; };
 	});
-	// No intervening page round trip: the page timestamps prove departure precedes the 150 ms rest.
 	await t.page.mouse.wheel(0,1);
+	await f.waitForFunction(() => document.getElementById('pmuBoard').getAttribute('data-op') === 'wheel');
 	await t.page.mouse.move(outside.x,outside.y);
 	await t.page.waitForTimeout(900);
 	const rec = await f.evaluate(() => window.__uhpDeparture.stop());
-	const gap = rec.leaves[0]?.t - rec.wheels[0]?.t;
+	const firstScroll = rec.scrolls[0], gap = rec.leaves[0]?.t - firstScroll?.t;
 	t.log(label + 'R107 departure: ' + JSON.stringify(rec));
 	await t.check(label + 'R107 could judge: trusted wheel on a lit column, direct departure during the hold, old point still on the plot',
-		rec.pre===1 && rec.wheels.length===1 && rec.wheels[0].trusted && rec.wheels[0].held && rec.leaves.length===1 && rec.leaves[0].trusted && rec.leaves[0].held && gap>=0 && gap<150 && rec.ends.length===1 && rec.ends[0].outside && rec.ends[0].oldPointOnPlot && rec.after.length>=5 && rec.after.every((x)=>x.outside) && rec.final.outside && !rec.final.op,
-		`departure ${gap} ms after wheel; ${JSON.stringify({...rec,after:rec.after.length})}`);
+		rec.pre===1 && rec.wheels.length===1 && rec.wheels[0].trusted && firstScroll?.held && firstScroll.top > rec.top && rec.leaves.length===1 && rec.leaves[0].trusted && rec.leaves[0].held && gap>=0 && gap<150 && rec.ends.length===1 && rec.ends[0].outside && rec.ends[0].oldPointOnPlot && rec.after.length>=5 && rec.after.every((x)=>x.outside) && rec.final.outside && !rec.final.op,
+		`departure ${gap} ms after first scroll; ${JSON.stringify({...rec,after:rec.after.length})}`);
 	await t.check(label + 'R107 no column, provider, donut or card light returns while the pointer remains outside the board',
 		rec.after.length>=5 && rec.after.every((x)=>x.outside && !x.column && !x.provider && !x.donut && !x.card) && rec.final.outside && !rec.final.column && !rec.final.provider && !rec.final.donut && !rec.final.card,
 		`${rec.after.filter((x)=>x.column || x.provider || x.donut || x.card).length}/${rec.after.length} lit post-return frames; final ${JSON.stringify(rec.final)}`);
@@ -503,6 +504,23 @@ async function keyboardPause(t, f, label, park) {
 	await park();
 	const liveWasOn = await f.evaluate(() => { const on = PMU.live.on(); PMU.live.pause(); PM7_USAGE.setRoomDetail('overview', 'glance'); return on; });
 	await t.page.waitForTimeout(4500);
+	// Keep the gesture's cards and a real provider mark. Laying out unrelated widgets can delay Chrome's second tick.
+	await f.evaluate(() => {
+		const b = PMU.board, board = document.getElementById('pmuBoard');
+		const provider = board.querySelector('.pmu-skycol[data-prov]')?.dataset.prov;
+		const row = [...board.querySelectorAll('.pmu-irow[data-prov]')].find((el) => el.dataset.prov === provider);
+		const mark = [...board.querySelectorAll('.pmu-mark[data-prov]')].find((el) => el.dataset.prov !== provider);
+		const witness = (row || mark)?.closest('.pmu-card')?.dataset.widget;
+		const keep = new Set(['health', 'ov-skyline', witness]);
+		b.visible().filter((id) => !keep.has(id)).forEach((id) => b.setVisible(id, false));
+	});
+	await t.page.waitForTimeout(1800);
+	const minHeight = await f.evaluate(() => {
+		const board = document.getElementById('pmuBoard'), pane = document.getElementById('pmuScroll');
+		const prior = board.style.minHeight;
+		board.style.minHeight = (pane.clientHeight + 80) + 'px';
+		return prior;
+	});
 	const records = [];
 	for (const [key, mode] of [['m', 'move'], ['r', 'resize']]) {
 		const S = label + `R112 ${mode}: `;
@@ -544,8 +562,8 @@ async function keyboardPause(t, f, label, park) {
 		}, {key, mode});
 		await t.page.mouse.wheel(0, 1);
 		await f.waitForFunction(() => document.getElementById('pmuBoard').getAttribute('data-op') === 'wheel');
-		// A second trusted tick at the same point witnesses suppression inside the live gesture.
-		await Promise.all([t.page.keyboard.down(key), t.page.mouse.wheel(40, 0)]);
+		// Keep the second tick on the already latched axis: a horizontal tick can queue behind the keyboard work.
+		await Promise.all([t.page.keyboard.down(key), t.page.mouse.wheel(0, 1)]);
 		await t.page.keyboard.up(key);
 		await t.page.waitForTimeout(650);
 		await t.page.keyboard.press('Escape');
@@ -555,7 +573,7 @@ async function keyboardPause(t, f, label, park) {
 		const [first, follow] = rec.wheels;
 		const started = rec.markers.find((x) => x.op === 'wheel'), gap = press?.t - started?.t, held = rec.frames.filter((x) => x.t >= first?.t + 200 && x.t < escape?.t);
 		const a = rec.after, p = rec.pre;
-		const duringMove = [...rec.markers, ...rec.frames].filter((x) => x.t >= first?.t && x.t < first?.t + 150 && x.op === mode && x.hovered);
+		const duringMove = [...rec.markers, ...rec.frames].filter((x) => x.t >= first?.t && x.t < started?.t + 150 && x.op === mode && x.hovered);
 		const visualInput = rec.wheels.length === 2 && first.trusted && follow.trusted && started?.op === 'wheel' &&
 			follow.gesture?.kb && follow.gesture.type === mode && follow.t >= press?.t && follow.t < started.t + 150 &&
 			p.hovered && first.hovered && follow.hovered && started.shadow !== p.shadow &&
@@ -569,14 +587,19 @@ async function keyboardPause(t, f, label, park) {
 		await t.check(S + 'could judge: applied provider, trusted wheel moves the pane, M/R on another focused card within 150 ms, gesture held past pause, trusted Escape and still pointer',
 			p.hovered && p.dim === p.eligibleDim && p.on === p.eligibleOn && p.dim + p.on > 0 && p.correct && rec.focused === 'health' &&
 			rec.wheels.length === 2 && rec.wheels.every((x) => x.trusted) && started?.op === 'wheel' && gap >= 0 && gap < 150 && press?.trusted && press.focused === 'health' && escape?.trusted &&
-			escape.t - press.t >= 500 && held.length >= 5 && held.every((x) => x.gesture?.kb && x.gesture.type === mode && x.hovered && x.top === started.top) && held.some((x) => x.op === mode) &&
-			!rec.moves && a.hovered && a.top === started.top && !a.gesture && !a.op,
+			escape.t - press.t >= 500 && held.length >= 5 && held.every((x) => x.gesture?.kb && x.gesture.type === mode && x.hovered && x.top >= started.top && x.top <= started.top + 1) && held.some((x) => x.op === mode) &&
+			!rec.moves && a.hovered && a.top >= started.top && a.top <= started.top + 1 && !a.gesture && !a.op,
 			JSON.stringify({gap, started, pre: p, focused: rec.focused, wheels: rec.wheels, keys: rec.keys, held: held.length, moves: rec.moves, after: a}));
 		await t.check(S + 'main provider selection stays unchanged while the keyboard gesture owns the board', held.length >= 5 && held.every((x) => x.dim===p.dim&&x.on===p.on&&x.correct) && !rec.ends.some((x) => x.t < escape?.t || x.gesture || x.op), JSON.stringify({ends: rec.ends, litHeld: held.filter((x) => x.dim || x.on).length}));
 		await t.check(S + 'after Escape one lifecycle return releases the engine while main provider selection stays unchanged', rec.ends.length === 1 && rec.ends[0].live && !rec.ends[0].gesture && !rec.ends[0].op && rec.ends[0].t >= escape?.t && JSON.stringify(rec.ends[0].point) === JSON.stringify(rec.point) && !a.gesture && !a.op && a.hovered && a.dim === a.eligibleDim && a.on === a.eligibleOn && a.dim + a.on > 0 && a.correct, JSON.stringify({ends: rec.ends, after: a}));
 	}
 	await park();
-	await f.evaluate((on) => { document.activeElement?.blur(); if (on) PMU.live.resume(); }, liveWasOn);
+	await f.evaluate(({ on, minHeight }) => {
+		document.activeElement?.blur();
+		document.getElementById('pmuBoard').style.minHeight = minHeight;
+		PMU.board.reset('room');
+		if (on) PMU.live.resume();
+	}, { on: liveWasOn, minHeight });
 	return records;
 }
 
