@@ -227,6 +227,8 @@ class BrowserPreexistingPreservationTests(unittest.TestCase):
     def test_current_manifest_pin_does_not_replace_historical_row_authority(self):
         self.assertEqual(self.admission["preexisting_family_rows_sha256"], GATE.CURRENT39_SHA256)
         current39 = [row for row in self.rows if row["family_id"] in self.admission["preexisting_family_ids"]]
+        # CURRENT39 is the retained post-DL300 checkpoint, before exact approved S5b revisions.
+        current39 = GATE.emit_only_contract().reviewed_s5b_predecessors(current39)
         self.assertEqual(GATE.fingerprint(current39), GATE.CURRENT39_SHA256)
         admission = copy.deepcopy(self.admission)
         admission["preexisting_family_rows_sha256"] = GATE.ORIGINAL39_SHA256
@@ -236,11 +238,15 @@ class BrowserPreexistingPreservationTests(unittest.TestCase):
         self.assertFalse(report["current_preexisting_rows_match_reviewed_successors"])
 
     def test_prepared_registration_cannot_escape_with_reviewed_successors(self):
-        prepared = next(row for row in self.admission["rows"] if row["admission_status"] == "prepared_not_admitted")
+        # Build the prepared-ledger state explicitly after all live rows are admitted.
+        # Keep exactly one real central row, so the subset guard is the boundary under test.
+        admission = copy.deepcopy(self.admission)
+        admission["rows"][0]["admission_status"] = "prepared_not_admitted"
+        context = (admission, *CONTEXT[1:])
         for payloads_only in (False, True):
             with self.subTest(payloads_only=payloads_only):
-                registry = {"families": self.rows + [synthetic_family(prepared)]}
-                with registry_snapshot(registry):
+                registry = {"families": copy.deepcopy(self.rows)}
+                with registry_snapshot(registry), patch.object(GATE, "contract_context", return_value=context):
                     report = GATE.validate(payloads_only=payloads_only)
                 self.assertEqual(report["status"], "fail")
                 self.assertIn("exact_admitted_subset_mismatch", {row["error"] for row in report["failures"]})
