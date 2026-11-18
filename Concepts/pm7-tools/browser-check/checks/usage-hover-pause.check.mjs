@@ -291,6 +291,98 @@ async function roomMountRace(t, f, label, park, rm) {
 	return records;
 }
 
+// R100: wheel from a fully applied chart/card state, not merely from pending pointer intent.
+async function appliedHighlights(t, f, label, park) {
+	const records = [], wanted = String(t.args.chartCases || 'provider,donut,column,engine,tool').split(',');
+	const liveWasOn = await f.evaluate(() => { const on = PMU.live.on(); PMU.live.pause(); return on; });
+	for (const kind of wanted) {
+		await park();
+		await f.evaluate((r) => { PMU.menu.close(); PM7_USAGE.setRoomDetail(r, 'diagnostics'); }, kind === 'donut' ? 'analytics' : kind === 'column' ? 'costs' : 'overview');
+		await t.page.waitForTimeout(4500);
+		let sparse = null;
+		if (kind === 'engine') {
+			sparse = await f.evaluate(() => {
+				const b = PMU.board, ids = b.visible(), c = document.querySelector('#pmuBoard .pmu-card[data-head="plate"]');
+				if (!c) return null;
+				const id = c.dataset.widget, rect = b.rect(id);
+				ids.filter((x) => x !== id).forEach((x) => b.setVisible(x, false)); b.resize(id, { w: b.cls().tracks, h: 40 });
+				return { ids, id, rect };
+			});
+			await t.page.waitForTimeout(4000);
+		}
+		const selector = kind === 'provider' ? '.pmu-skycol[data-prov]' : kind === 'donut' ? '.pmu-dl-row[data-i]' : kind === 'column' ? '.pmu-colsplot .pmu-col:not(.is-zero)' : kind === 'engine' && sparse ? `.pmu-card[data-widget="${sparse.id}"]` : '.pmu-card[data-head="plate"]';
+		const target = f.locator('#pmuBoard ' + selector).first();
+		if (!await target.count()) { await t.check(label + `R100 ${kind}: could judge target exists`, false); continue; }
+		await target.scrollIntoViewIfNeeded();
+		if (kind === 'engine' || kind === 'tool') await f.evaluate(() => { document.getElementById('pmuScroll').scrollTop = 0; });
+		await t.page.waitForTimeout(500);
+		const box = await target.boundingBox(), pane = await f.locator('#pmuScroll').boundingBox();
+		if (!box || !pane) { await t.check(label + `R100 ${kind}: could judge visible target`, false); continue; }
+		let at = { x: box.x + box.width / 2, y: (Math.max(box.y, pane.y) + Math.min(box.y + box.height, pane.y + pane.height)) / 2 };
+		await t.page.mouse.move(2,2); await t.page.waitForTimeout(250);
+		await f.evaluate(({ kind, selector }) => {
+			const b = document.getElementById('pmuBoard'), sc = document.getElementById('pmuScroll'), target = b.querySelector(selector);
+			const chart = target.closest('.pmu-chart') || target, r = window.__uhpApplied = { kind, frames: [], wheels: [], scrolls: [], moves: 0, ends: [] };
+			let running = true, pos = null;
+			const read = () => ({ t: performance.now(), op: b.getAttribute('data-op'), top: sc.scrollTop, hovered: kind === 'column' ? chart.matches(':hover') : target.matches(':hover'),
+				hl: b.querySelectorAll('.is-hl-dim,.is-hl-on').length,
+				dim: chart.querySelectorAll('path[data-mark="arc"].is-dim').length, hot: chart.querySelectorAll('.pmu-dl-row.is-hot').length,
+				value: chart.querySelector('.pmu-dc-v')?.textContent, caption: chart.querySelector('.pmu-dc-c')?.textContent,
+				cols: chart.querySelectorAll('.pmu-col.is-hot-col').length, bars: !!chart.querySelector('.pmu-cols.is-hot'),
+				readout: !!chart.querySelector('.pmu-xh-on'), lit: target.classList.contains('pmh-on'), engineRunning: window.PMH?.stats?.().running });
+			r.neutral = read();
+			const wheel = (e) => { r.wheels.push({ t: performance.now(), trusted: e.isTrusted }); pos = [e.clientX,e.clientY]; };
+			const scroll = () => r.scrolls.push({ t: performance.now(), top: sc.scrollTop });
+			const move = (e) => { if (pos && (e.clientX !== pos[0] || e.clientY !== pos[1])) r.moves++; };
+			const end = (e) => { if (e.detail?.board === b) r.ends.push(performance.now()); };
+			const sample = () => { if (!running) return; if (b.getAttribute('data-op') === 'wheel') r.frames.push(read()); requestAnimationFrame(sample); };
+			sc.addEventListener('wheel', wheel, { capture:true, passive:true }); sc.addEventListener('scroll', scroll, { passive:true }); sc.addEventListener('pointermove', move, true);
+			document.addEventListener('pmu-op-end', end); requestAnimationFrame(sample);
+			r.read = read;
+			r.stop = () => { running=false; sc.removeEventListener('wheel',wheel,true); sc.removeEventListener('scroll',scroll); sc.removeEventListener('pointermove',move,true); document.removeEventListener('pmu-op-end',end); return { ...r, read:undefined, stop:undefined, after:read() }; };
+		}, { kind, selector });
+		await t.page.mouse.move(at.x, at.y, { steps: 4 });
+		await t.page.waitForTimeout(kind === 'engine' ? 4000 : 900);
+		if (kind === 'tool') {
+			const menu = target.locator('.pmu-cardmenu').first(), mb = await menu.boundingBox();
+			if (!mb) { await t.check(label + 'R100 tool: menu button exists', false); continue; }
+			at = { x: mb.x + mb.width / 2, y: mb.y + mb.height / 2 };
+			await t.page.mouse.move(at.x, at.y); await t.page.waitForTimeout(600);
+			await f.evaluate(() => {
+				const r = window.__uhpApplied;
+				const down = (e) => { document.removeEventListener('pointerdown',down,true); const c = e.target.closest('.pmu-card'); const tools = c?.querySelector('.pmu-cardtools'); r.press={ trusted:e.isTrusted, tool:e.target.closest('[data-tool]')?.dataset.tool, opacity:tools ? parseFloat(getComputedStyle(tools).opacity) : null, paused:document.getElementById('pmuBoard').getAttribute('data-op') === 'wheel' }; };
+				document.addEventListener('pointerdown',down,true);
+			});
+		}
+		const pre = await f.evaluate(() => window.__uhpApplied.read());
+		if (kind === 'tool') { await t.page.mouse.wheel(0,-1); await t.page.mouse.down(); await t.page.mouse.up(); }
+		else for (let i=0;i<18;i++) { await t.page.mouse.wheel(0,kind === 'engine' ? -1 : i % 2 ? -1 : 1); await t.page.waitForTimeout(30); }
+		await t.page.waitForTimeout(900);
+		const rec = await f.evaluate(() => { const r=window.__uhpApplied.stop(); r.menuOpen=!!PMU.menu.current(); return r; });
+		const S=label+`R100 ${kind}: `, last=rec.wheels.at(-1)?.t, marked=rec.frames.filter((x) => x.t >= rec.wheels[0]?.t+50);
+		records.push({kind,pre,rec});
+		t.log(S+JSON.stringify({pre, neutral:rec.neutral, frames:marked.length, ends:rec.ends, press:rec.press, after:rec.after}));
+		if (kind === 'tool') {
+			await t.check(S+'could judge a trusted press while the previously shown tool still visibly fades', pre.hovered && rec.press?.trusted && rec.press.paused && rec.press.opacity > 0.05 && !rec.moves, JSON.stringify(rec.press));
+			await t.check(S+'the visible menu tool receives the press and opens its menu', rec.press?.tool === 'menu' && rec.menuOpen, JSON.stringify({press:rec.press,menuOpen:rec.menuOpen}));
+			await f.evaluate(() => PMU.menu.close());
+		} else {
+			const shown=kind === 'provider' ? pre.hl>0 : kind === 'donut' ? pre.dim>0 && pre.hot>0 && pre.value!==rec.neutral.value : kind === 'column' ? pre.cols===1 && pre.bars : pre.lit && !pre.engineRunning;
+			const travel=rec.scrolls.map((s)=>s.top);
+			await t.check(S+'could judge already-applied state, still pointer and a sampled complete wheel hold', shown && pre.hovered && rec.after.hovered && !rec.moves && marked.length>=10 && rec.wheels.length===18 && rec.wheels.every((w)=>w.trusted) && rec.ends.length===1 && rec.ends[0]>last && (kind === 'engine' ? pre.top===0 && rec.after.top===0 : travel.length>0), JSON.stringify({shown,pre,after:rec.after,frames:marked.length,scrolls:travel,ends:rec.ends}));
+			const quiet=(s)=>kind === 'provider' ? !s.hl : kind === 'donut' ? !s.dim && !s.hot && s.value===rec.neutral.value && s.caption===rec.neutral.caption : kind === 'column' ? !s.cols && !s.bars : !s.lit;
+			await t.check(S+'existing highlight clears throughout the marked interval, including its tail', marked.length>=10 && marked.every(quiet), `${marked.filter((s)=>!quiet(s)).length}/${marked.length} highlighted samples`);
+			const a=rec.after, restored=kind === 'provider' ? a.hl>0 : kind === 'donut' ? a.dim>0 && a.hot===pre.hot && a.value===pre.value && a.caption===pre.caption : kind === 'column' ? a.cols===1 && a.bars && !a.readout : a.lit;
+			await t.check(S+'current target highlight returns without pointer movement', !a.op && a.hovered && restored, JSON.stringify(a));
+		}
+		if (sparse) { await park(); await f.evaluate((s)=>{ PMU.board.resize(s.id,s.rect); s.ids.filter((id)=>id!==s.id).forEach((id)=>PMU.board.setVisible(id,true)); },sparse); }
+		await park();
+	}
+	await f.evaluate((on)=>{ PM7_USAGE.setRoomDetail('overview','glance'); if(on) PMU.live.resume(); },liveWasOn);
+	await t.page.waitForTimeout(4500);
+	return records;
+}
+
 export default async function (t) {
 	const looks = String(t.args.looks || 'basic-dark').split(',').filter(Boolean);
 	// BACK: the pause ends 150 ms after the last wheel or scroll event; light and tools were back at 168-185 ms on Alexis
@@ -312,6 +404,11 @@ export default async function (t) {
 			await f.waitForFunction(() => !(window.PM_THEME_TRANSITION?.busy?.() || window.PM_LOOK_COVERED?.()), null, { timeout: 20000 }).catch(() => {});
 			await f.evaluate(() => PM_PAGES.go('usage'));
 			await t.page.waitForTimeout(Number(t.args.viewSettle ?? 8000));
+			if (String(t.args.chartOnly || '') === '1') {
+				const applied = await appliedHighlights(t, f, S, park); dump.push({surface,look,applied});
+				if(t.args.dump) writeFileSync(String(t.args.dump),JSON.stringify(dump));
+				continue;
+			}
 			let mounts;
 			if (String(t.args.raceOnly || '') !== '1') {
 				mounts = await roomMountRace(t, f, S, park, rm);
@@ -319,6 +416,7 @@ export default async function (t) {
 				if (t.args.dump) writeFileSync(String(t.args.dump), JSON.stringify(dump));
 				if (String(t.args.mountOnly || '') === '1') continue;
 			}
+			if (String(t.args.raceOnly || '') !== '1') { const applied=await appliedHighlights(t,f,S,park); dump.push({surface,look,applied}); if(t.args.dump) writeFileSync(String(t.args.dump),JSON.stringify(dump)); }
 			const ok = await f.evaluate(INSTALL);
 			const range = await f.evaluate(() => { const s = document.getElementById('pmuScroll'); return s ? s.scrollHeight - s.clientHeight : 0; });
 			if (!ok || range < TICKS * 40 + 80) { await t.check(S + 'could judge: Usage\'s board is there and scrolls ' + (TICKS * 40 + 80) + ' px', false, `range ${range}`); continue; }
