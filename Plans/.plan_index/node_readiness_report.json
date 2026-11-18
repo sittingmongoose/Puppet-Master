@@ -4,15 +4,15 @@
     "build_order_available": true,
     "build_order_blocked_node_count": 0,
     "cycle_blocker_count": 0,
-    "depends_on_edge_count": 27304,
+    "depends_on_edge_count": 27305,
     "downstream_blocked_node_count": 0,
-    "edge_count": 30527,
-    "node_count": 9463,
+    "edge_count": 30528,
+    "node_count": 9464,
     "true_cycle_component_count": 0,
     "unblocks_edge_count": 3223,
     "unresolved_reference_count": 0
   },
-  "generated_at_utc": "2026-11-16T05:23:51Z",
+  "generated_at_utc": "2026-11-18T02:00:50Z",
   "gui_related_units": {
     "count": 3935,
     "units": [
@@ -43309,10 +43309,10 @@
   "no_final_node_queues_created": true,
   "no_worknodes_created": true,
   "nodeseed_candidates_created": false,
-  "plan_unit_count": 9463,
+  "plan_unit_count": 9464,
   "risk_and_reasoning_summary": {
     "reasoning_tier_counts": {
-      "high": 4777,
+      "high": 4778,
       "low": 10,
       "medium": 36,
       "standard": 4640
@@ -44546,6 +44546,7 @@
       "event_authority_admission_decision_entry_drift": 1,
       "event_authority_admission_decision_entry_scope_drift": 1,
       "event_authority_and_false_completion": 1,
+      "event_authority_batch_boundary": 1,
       "event_authority_binding_drift": 29,
       "event_authority_binding_scope_expansion": 1,
       "event_authority_checkpoint_approval_drift": 1,
@@ -47566,7 +47567,7 @@
     "source_preserving_unit_count": 0,
     "source_preserving_units": [],
     "status_counts": {
-      "accepted": 9183,
+      "accepted": 9184,
       "draft": 47,
       "retired": 205,
       "superseded": 28
@@ -47600,7 +47601,7 @@
       "contract": 203,
       "contract_requirement": 3,
       "data_contract": 8,
-      "decision": 757,
+      "decision": 758,
       "decision_record": 24,
       "deferred_enhancement": 8,
       "delta_contract": 1,

@@ -53895,3 +53895,64 @@ negative_constraints:
 - No native execution or producer adoption is claimed.
 ```
 
+### DL-2443: Event Authority defers five Goal definition confirmations to merge 3
+
+```yaml
+plan_unit_id: DL-2443
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: 'On Nov 17, about 20:35 EST (about 01:35Z Nov 18, 2026), Jared answered verbatim: "Land without
+  them". The answer is recorded in /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/ANSWERS_MERGE2-SPLIT_20261117.md
+  (SHA-256 d4723e065acc5804ba1cbc73d60d94c63aadb78e21d7ccea93bb597f9f35eb68). This changes only the batch boundary
+  of EA-P2 B: merge 2 is the rest except goal.updated, goal_run.started, goal.cancelled, goal_run.cancelled and
+  goal_run.certified; merge 3 contains those five. No new admission, S5b definition change, family Decision Log
+  entry or registry row for those five is applied in merge 2. Their historical registry rows and selected payload
+  resources already equal main at bb8cd0e8730c04b1983f3a4d0394dde110f0b198 and remain unchanged. The census reports/event-authority-20261116/admission-merge-2/merge2-batch-split.json
+  (SHA-256 a69185e51439394a2b25f7f9b24011221aac4866ac71b61a271b2fe521096ec5) removes exactly those five planned
+  confirmations, preserves all 298 applied admissions and eight applied S5b changes, and changes no registry bytes.
+  DL-400''s separate family commits, full contracts, Decision Log entries, admission records, twelve passing depth
+  criteria, reviews, coordinator landing go and checkpoint bookkeeping remain required. The coordinator''s reading,
+  attributed to pm7-build rather than quoted as Jared''s words, is to finish NUMRULE-FINAL and the GATE-MERGE2 review
+  pair on merge 2, then land it after that pair passes; the five continue their approved closure work and follow
+  in merge 3 with its own review. No admission criterion, grade verdict or governance seal is changed.'
+gui_related: false
+gui_classification_reason: Planning batch boundary only.
+depends_on:
+- DL-400
+unblocks: []
+acceptance_criteria:
+- Exactly the five named planned definition confirmations move to merge 3; their main state is preserved.
+- All other applied admissions and S5b actions remain unchanged, as the pinned census demonstrates.
+- DL-400 per-family requirements and the required reviews remain in force.
+validation_surfaces:
+- reports/event-authority-20261116/admission-merge-2/merge2-batch-split.json
+risk_class: event_authority_batch_boundary
+reasoning_tier: high
+context_scope: event_authority_pnc019_merge2_split
+implementation_surfaces:
+- Plans/Decision_Log.md
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/ANSWERS_MERGE2-SPLIT_20261117.md;
+  SHA-256 d4723e065acc5804ba1cbc73d60d94c63aadb78e21d7ccea93bb597f9f35eb68
+- reports/event-authority-20261116/admission-merge-2/merge2-batch-split.json; SHA-256 a69185e51439394a2b25f7f9b24011221aac4866ac71b61a271b2fe521096ec5
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/merge2-apply/evidence/split-dl-inventory-final.json;
+  SHA-256 0e11edac2032d754aa9788e06178c17772f2c42e75ae6aabfae1b7e74a9a60cc
+preserved_exact_tokens:
+- Land without them
+- EA-P2 B
+- DL-400
+- goal.cancelled
+- goal.updated
+- goal_run.cancelled
+- goal_run.certified
+- goal_run.started
+negative_constraints:
+- No per-family requirement or grade verdict is relaxed.
+- No new family action or registry change is granted by this batch-boundary decision.
+```
+

@@ -5039,6 +5039,7 @@
     "DL-2440",
     "DL-2441",
     "DL-2442",
+    "DL-2443",
     "DL-412",
     "DL-413",
     "DL-520",
@@ -51322,6 +51323,11 @@
     {
       "edge_type": "depends_on",
       "from": "DL-2442",
+      "to": "DL-400"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "DL-2443",
       "to": "DL-400"
     },
     {
@@ -162105,7 +162111,7 @@
       "to": "F3-395"
     }
   ],
-  "generated_at_utc": "2026-11-16T05:23:51Z",
+  "generated_at_utc": "2026-11-18T02:00:50Z",
   "nodes": [
     {
       "context_scope": "residual_plan_standardization",
@@ -212745,6 +212751,23 @@
         "heading_level": 3,
         "heading_line": 53847,
         "line": 53849,
+        "path": "Plans/Decision_Log.md"
+      },
+      "status": "accepted",
+      "unit_type": "decision"
+    },
+    {
+      "context_scope": "event_authority_pnc019_merge2_split",
+      "gui_related": false,
+      "owner_doc": "Plans/Decision_Log.md",
+      "plan_unit_id": "DL-2443",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority_batch_boundary",
+      "source_location": {
+        "heading": "DL-2443: Event Authority defers five Goal definition confirmations to merge 3",
+        "heading_level": 3,
+        "heading_line": 53898,
+        "line": 53900,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -322985,10 +323008,10 @@
     "build_order_available": true,
     "build_order_blocked_node_count": 0,
     "cycle_blocker_count": 0,
-    "depends_on_edge_count": 27304,
+    "depends_on_edge_count": 27305,
     "downstream_blocked_node_count": 0,
-    "edge_count": 30527,
-    "node_count": 9463,
+    "edge_count": 30528,
+    "node_count": 9464,
     "true_cycle_component_count": 0,
     "unblocks_edge_count": 3223,
     "unresolved_reference_count": 0
