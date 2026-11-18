@@ -443,8 +443,10 @@ def _install_search_wrappers(reference_v, search_v, sample_every):
                 if raw is not None:
                     digest = hashlib.sha256(raw).hexdigest()
                     guards = {getattr(e, 'oracle_guard', None) for e in errs}
-                    if not cut and ident in guards and len(_WIT['pending']) < 8:
+                    if not cut and ident in guards:
                         _WIT['pending'][digest] = raw
+                        while len(_WIT['pending']) > 64:
+                            _WIT['pending'].pop(next(iter(_WIT['pending'])))
                     elif cut and ident not in guards and digest in _WIT['pending']:
                         confirmed = _WIT['pending'][digest]
                         previous = _WIT['store'].get(clause)
