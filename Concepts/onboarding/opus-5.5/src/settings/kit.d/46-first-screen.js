@@ -22,7 +22,7 @@ const o55fs = {
   ws: null,          // the page whose later sections may be shells
   budget: 0, used: 0, target: null, afterTarget: false,
   pending: new Map(),  // section id -> { section, workspace, index }
-  observer: null, idleTimer: 0, idleJob: null, ticket: 0
+  scroller: null, observer: null, idleTimer: 0, idleJob: null, ticket: 0
 };
 const o55fsRows = s => (s && Array.isArray(s.settings) ? s.settings.length : 0);
 const o55fsRowH = () => (hostIsNarrow() ? 112 : 70);
@@ -34,6 +34,7 @@ function o55fsReset() {
   clearTimeout(o55fs.idleTimer); o55fs.idleTimer = 0;
   if (o55fs.idleJob && o55fs.idleJob.cancel) o55fs.idleJob.cancel();
   o55fs.idleJob = null;
+  o55fs.scroller = null;
 }
 /* the section an arrival lands on: a jump's section, or the section of the setting it opens */
 function o55fsTarget() {
@@ -137,18 +138,25 @@ function o55fsDone() {
 function o55fsArm() {
   const sc = root.querySelector('#settings-document'), ticket = o55fs.ticket;
   if (!sc || !o55fs.pending.size) return;
+  o55fs.scroller = sc;
   if (typeof IntersectionObserver === 'function') {
     o55fs.observer = new IntersectionObserver(entries => {
-      for (const e of entries) if (e.isIntersecting) { const s = e.target.closest('[data-section-id]'); if (s) o55fsFillThrough(s.dataset.sectionId); }
+      /* A queued notification can outlive disconnect(). It belongs only to this live chapter and scroller (R97 P2). */
+      if (ticket !== o55fs.ticket || !sc.isConnected || sc !== root.querySelector('#settings-document')) return;
+      for (const e of entries) if (e.isIntersecting && e.target.isConnected && sc.contains(e.target)) {
+        const s = e.target.closest('[data-section-id]');
+        if (s && o55fs.pending.has(s.dataset.sectionId)) o55fsFillThrough(s.dataset.sectionId);
+      }
     }, { root: sc, rootMargin: '100% 0px' });
     sc.querySelectorAll(`.setting-list[${O55FS_ATTR}]`).forEach(l => o55fs.observer.observe(l));
   }
   const slice = dl => {
-    o55fs.idleJob = null;
     if (ticket !== o55fs.ticket || !o55fs.pending.size) return;
+    o55fs.idleJob = null;
+    if (!sc.isConnected || sc !== root.querySelector('#settings-document')) { o55fsReset(); return; }
     const next = [...root.querySelectorAll(`#settings-document .setting-list[${O55FS_ATTR}]`)][0];
     const sec = next && next.closest('[data-section-id]');
-    if (!sec) { o55fs.pending.clear(); return; }
+    if (!sec) { o55fsReset(); return; }
     o55fsFill(sec.dataset.sectionId);
     if (o55fs.pending.size) ask();
   };
@@ -160,6 +168,8 @@ const o55fsRender = renderApp;
 renderApp = function () {
   o55fs.seq++;
   const r = o55fsRender.apply(this, arguments);
+  /* Home and manager-only pages render no plain section, so their replacement must end the old job here. */
+  if (o55fs.scroller && o55fs.scroller !== root.querySelector('#settings-document')) o55fsReset();
   if (o55fs.pending.size && !o55fs.observer && !o55fs.idleTimer && !o55fs.idleJob) o55fsArm();
   return r;
 };
