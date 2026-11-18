@@ -1269,7 +1269,12 @@
       clearTimeout(clearTimer);
       if (id === current) return;
       clearTimeout(timer);
-      timer = setTimeout(function () { set(id); }, 110);
+      timer = setTimeout(function () {
+        /* the wheel may have started after pointerover queued this intent (R94); op-end queues fresh intent */
+        var b = boardEl();
+        if (!b || b.getAttribute('data-op') === 'wheel') return;
+        set(id);
+      }, 110);
     };
     var out = function (e) {
       var from = e.target && e.target.closest ? e.target.closest('[data-prov]') : null;
