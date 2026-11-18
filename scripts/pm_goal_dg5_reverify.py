@@ -148,6 +148,7 @@ def reverify(dump_path, report_paths, out_path, root_filter=()):
     data = pickle.loads(dump_path.read_bytes())
     reports = [(p, json.loads(p.read_text())) for p in report_paths]
     report = dict(method=__doc__.split('\n\n')[0], from_dump=str(dump_path),
+                  from_dump_sha256=hashlib.sha256(dump_path.read_bytes()).hexdigest(),
                   inputs=[dict(path=str(p), sha256=hashlib.sha256(p.read_bytes()).hexdigest()) for p in report_paths],
                   roots={}, native_execution='NOT_RUN')
     failed = 0
@@ -205,8 +206,11 @@ def reverify(dump_path, report_paths, out_path, root_filter=()):
                 print(f'{ident}: {number}/{len(entries)} reference checks; {len(problems)} failed', flush=True)
         result = c.verify_witnesses(v, entries, raw, controls)
         failed += result['failed']
-        root = dict(bank=dumped['bank'], clauses=entries, counts=dict(collections.Counter(e['cls'] for e in entries.values())),
+        root = dict(bank=dumped['bank'], rows=dumped.get('rows', []), families=dumped.get('families', []),
+                    clauses=entries, counts=dict(collections.Counter(e['cls'] for e in entries.values())),
                     verify=result, reconstruction_failures=problems)
+        if result['failed']:
+            root['error'] = 'reference witness verification failed: ' + str(result['failed'])
         for field, store in (('witness_store', raw), ('control_store', controls)):
             path = Path(str(out_path) + '.' + ident + '.' + field + '.pkl.gz')
             blob = gzip.compress(pickle.dumps(store, protocol=5))
