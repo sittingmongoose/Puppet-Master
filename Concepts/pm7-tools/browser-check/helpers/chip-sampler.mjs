@@ -4,7 +4,8 @@
 // before the compositor started a carried block's animation; when the start arrives in that frame, the block's start
 // time is later than the frame's own time and the main thread computes it in its before phase, untransformed, at the
 // box it is bound for (one tab pitch away: 120 px on Friendly's Home tabs, 31 px on Usage's pages). So this sampler reads
-// in a task queued from each frame callback (a MessageChannel message, which runs after the frame's paint), with the
+// in a task queued from each frame callback (a user-blocking scheduler task, else a MessageChannel message, which runs
+// after the frame's paint), with the
 // timeline's own time at the read, and keeps the layout shifts the page reports beside it.
 //
 // In the page: CHIP_SAMPLER({ strips: [{ sel, active, items }], raf }) installs it (idempotent; raf: 1 also reads inside
@@ -13,11 +14,14 @@
 //   chip: [x, y, w, h] the visible chip (a carried or stepped block above the labels, else the lens under them, else a
 //   lens in a shared layer over the strip), src: 'carry' | 'hop' | 'lens', rec: the carry record id (carry-frames RECORD),
 //   st / ct: the block's transform animation's start time and current time, on: the chosen item's box, items: every
-//   item's box } }.
+//   item's box, faint: the chip under the labels (or the Glass lens followed) while it is not shown (a Reduce Motion
+//   fade's first frames, at opacity 0.3), edge: { rx, ry, rimX, rimY } the drawn chip's corner radius and rim (its
+//   inset outline) in screen pixels along each axis, read from the element that paints its material (FO-235) } },
+//   and ups: every pointerup's timeStamp (FO-232: the press each frame is judged from).
 import { poseAt, edges } from './carry-frames.mjs';
 
 export const CHIP_SAMPLER = (opts) => {
-	const W = window.__chipSmp || (window.__chipSmp = { rows: [], shifts: [], strips: [], on: true, ids: 0 });
+	const W = window.__chipSmp || (window.__chipSmp = { rows: [], shifts: [], strips: [], on: true, ids: 0, ups: [] });
 	for (const s of opts.strips) if (!W.strips.some((x) => x.sel === s.sel)) W.strips.push({ sel: s.sel, active: s.active, items: s.items, el: null });
 	if (opts.raf) W.raf = true;
 	if (W.installed) return true;
@@ -26,20 +30,39 @@ export const CHIP_SAMPLER = (opts) => {
 	const shown = (e) => { if (!e.getClientRects().length) return false; const cs = getComputedStyle(e); return +cs.opacity > 0.5 && cs.visibility !== 'hidden'; };
 	const stripOf = (s) => (s.el && s.el.isConnected && s.el.getClientRects().length ? s.el : (s.el = [...document.querySelectorAll(s.sel)].find((e) => e.getClientRects().length) || null));
 	const leadOf = (b) => b.getAnimations().find((a) => a.effect && a.effect.getTiming().duration > 0 && a.playState !== 'idle') || null;
+	// FO-235: the drawn edge of a chip. The element that paints its material (the chip itself, or the first element inside
+	// it that paints a background, its inverted label copies aside), its corner radius and its rim (the widest inset shadow
+	// that is not transparent), each times the scale every transform from it up to the chip's layer applies along each axis
+	const alpha = (c) => { const m = /rgba?\(([^)]*)\)/.exec(c || ''); if (!m) return c && c !== 'transparent' ? 1 : 0; const v = m[1].split(/[\s,/]+/).filter(Boolean); return v.length > 3 ? +v[3] : 1; };
+	const paints = (e) => { const cs = getComputedStyle(e); return cs.backgroundImage !== 'none' || alpha(cs.backgroundColor) > 0; };
+	const shadows = (v) => { const out = []; let d = 0, cur = ''; for (const ch of v || '') { if (ch === '(') d++; if (ch === ')') d--; if (ch === ',' && !d) { out.push(cur); cur = ''; } else cur += ch; } if (cur.trim()) out.push(cur); return out; };
+	const rimOf = (cs) => { let w = 0; for (const sh of shadows(cs.boxShadow === 'none' ? '' : cs.boxShadow)) { if (!/inset/.test(sh)) continue; const col = (/(rgba?\([^)]*\)|#[0-9a-f]+|transparent)/i.exec(sh) || [''])[0]; if (alpha(col) <= 0) continue; const n = sh.replace(/(rgba?\([^)]*\)|#[0-9a-f]+|transparent|inset)/gi, '').trim().split(/\s+/).map(parseFloat); if (n.length >= 4) w = Math.max(w, n[3]); } return w; };
+	const edgeOf = (chipEl, layer) => {
+		let e = paints(chipEl) ? chipEl : [...chipEl.querySelectorAll('*')].find((x) => !x.closest('.lg-carry-twins') && x.getClientRects().length && paints(x));
+		if (!e) return null;
+		let m = new DOMMatrix();
+		for (let x = e; x && x !== layer; x = x.parentElement) { const t = getComputedStyle(x).transform; if (t && t !== 'none') m = new DOMMatrix(t).multiply(m); }
+		const sx = Math.hypot(m.a, m.b), sy = Math.hypot(m.c, m.d), cs = getComputedStyle(e), rr2 = cs.borderTopLeftRadius.split(/\s+/).map(parseFloat), rim = rimOf(cs);
+		const r2 = (v) => +v.toFixed(2);
+		return { rx: r2(rr2[0] * sx), ry: r2((rr2[1] != null ? rr2[1] : rr2[0]) * sy), rimX: r2(rim * sx), rimY: r2(rim * sy), sx: +sx.toFixed(4), sy: +sy.toFixed(4) };
+	};
+	addEventListener('pointerup', (e) => { if (W.on) W.ups.push(e.timeStamp); }, true);
 	const read = (k) => {
 		const row = { k, ts: W.ts, tl: document.timeline.currentTime, now: performance.now(), s: {} };
 		for (const s of W.strips) {
 			const el = stripOf(s); if (!el) continue;
 			const sr = el.getBoundingClientRect();
-			let chip = null, src = null, rec = null, st = null, ct = null, lenses = 0;
+			let chip = null, src = null, rec = null, st = null, ct = null, lenses = 0, faint = null, edge = null;
 			const blocks = [...el.querySelectorAll(':scope > lg-over > .lg-hop')].filter(shown);
 			const b = blocks.pop();
 			if (b) {
 				chip = rr(b); src = b.classList.contains('lg-carry') ? 'carry' : 'hop'; rec = b.__carryRec != null ? b.__carryRec : null;
 				const a = leadOf(b); if (a) { st = a.startTime; ct = a.currentTime; }
+				edge = edgeOf(b, b.parentElement);
 			} else {
 				const ul = el.querySelector(':scope > lg-under > .lg-lens');
-				if (ul && shown(ul)) { chip = rr(ul); src = 'lens'; }
+				if (ul && shown(ul)) { chip = rr(ul); src = 'lens'; edge = edgeOf(ul, ul.parentElement); }
+				else if (ul && ul.getClientRects().length) faint = rr(ul);
 				else {
 					// a lens in a shared layer (Glass): the one over this strip, the same element read after read while it is shown
 					// over it (followed by identity, never by where it is, so a step of the lens is not mistaken for another lens)
@@ -48,17 +71,24 @@ export const CHIP_SAMPLER = (opts) => {
 					const keep = s.lensEl && cands.includes(s.lensEl) ? s.lensEl : cands[0] || null;
 					s.lensEl = keep;
 					if (keep) { chip = rr(keep); src = 'lens'; lenses = cands.length; }
+					else if (!faint && s.lensEl && s.lensEl.isConnected && s.lensEl.getClientRects().length) faint = rr(s.lensEl);
 				}
 			}
 			const on = el.querySelector(s.active);
 			const items = s.items ? [...el.querySelectorAll(s.items)].filter((e) => e.getClientRects().length).map(rr) : [];
-			row.s[s.sel] = { chip, src, rec, st, ct, on: on ? rr(on) : null, items, so: [sr.left, sr.top], lenses };
+			row.s[s.sel] = { chip, src, rec, st, ct, on: on ? rr(on) : null, items, so: [sr.left, sr.top], lenses, faint, edge };
 		}
 		W.rows.push(row);
 	};
+	// (FO-232: the read is the first task after the frame, a user-blocking one where the page has the task scheduler. A
+	// message task could run after a timer the app's own frame callback queued, and Settings' chapter switch writes its
+	// chosen mark in such a timer (o55AfterPaint): read after it, the frame showed the new mark with the chip not yet synced,
+	// which no frame painted; the next frame painted both. Either way the read says which way it was queued: via)
 	const ch = new MessageChannel();
 	ch.port1.onmessage = () => { if (W.on) read('task'); };
-	const tick = (ts) => { if (!W.on) return; W.ts = ts; if (W.raf) read('raf'); ch.port2.postMessage(0); requestAnimationFrame(tick); };
+	W.via = window.scheduler && typeof scheduler.postTask === 'function' ? 'postTask' : 'message';
+	const post = W.via === 'postTask' ? () => { scheduler.postTask(() => { if (W.on) read('task'); }, { priority: 'user-blocking' }).catch(() => {}); } : () => ch.port2.postMessage(0);
+	const tick = (ts) => { if (!W.on) return; W.ts = ts; if (W.raf) read('raf'); post(); requestAnimationFrame(tick); };
 	requestAnimationFrame(tick);
 	try {
 		new PerformanceObserver((list) => {
@@ -70,8 +100,8 @@ export const CHIP_SAMPLER = (opts) => {
 	} catch (e) { W.shiftErr = String(e); }
 	return true;
 };
-export const CHIP_TAKE = () => { const W = window.__chipSmp; return W ? { rows: W.rows, shifts: W.shifts, shiftErr: W.shiftErr || null } : null; };
-export const CHIP_RESET = () => { const W = window.__chipSmp; if (W) { W.rows.length = 0; W.shifts.length = 0; } return true; };
+export const CHIP_TAKE = () => { const W = window.__chipSmp; return W ? { rows: W.rows, shifts: W.shifts, ups: W.ups, via: W.via, shiftErr: W.shiftErr || null } : null; };
+export const CHIP_RESET = () => { const W = window.__chipSmp; if (W) { W.rows.length = 0; W.shifts.length = 0; W.ups.length = 0; } return true; };
 
 const FRAME = 1000 / 60;
 // a block whose start never reached the main thread (it was replaced first) starts, like every block that waits for its
@@ -238,4 +268,56 @@ export function stripShifts(shifts, stripBox) {
 	const inside = (q) => q && q[0] < x + w && q[0] + q[2] > x && q[1] < y + h && q[1] + q[3] > y;
 	return shifts.filter((s) => s.src.some((q) => inside(q.prev) || inside(q.cur)));
 }
+// FO-232 (Reduce Motion: no travel, and no late jump either): in every read whose frame paints an item chosen, the chip is
+// on that item (centres within tol + 1 px; a chip still fading in counts by where it is, faint). Per press (each
+// pointerup), the frames from the press until the chosen mark moved and until the chip was on it: the chip must reach
+// the chosen item in the same frame that first paints it chosen. Returns { off: [reads off], presses: [{ up, mark,
+// chip, lagFrames, lagMs }] }; a read with no chip at all counts as off.
+export function rmOnChosen(rows, ups, { tol = 2 } = {}) {
+	const c = (b) => [b[0] + b[2] / 2, b[1] + b[3] / 2];
+	const on = (r) => { const b = r.box || r.faint; if (!b || !r.on) return false; const p = c(b), q = c(r.on); return Math.abs(p[0] - q[0]) <= tol + 1 && Math.abs(p[1] - q[1]) <= tol + 1; };
+	const off = [], presses = [];
+	for (const r of rows) if (r.on && !on(r)) off.push({ t: +r.t.toFixed(1), ts: +r.ts.toFixed(1), box: (r.box || r.faint || []).map((v) => +v.toFixed(1)), chosen: r.on.map((v) => +v.toFixed(1)), faint: !r.box && !!r.faint });
+	const key = (b) => (b ? b.map((v) => Math.round(v)).join(',') : '');
+	for (const up of ups || []) {
+		const i0 = rows.findIndex((r) => r.ts > up); if (i0 < 1) continue;
+		const was = key(rows[i0 - 1].on);
+		const im = rows.findIndex((r, i) => i >= i0 && key(r.on) !== was && r.on); if (im < 0) continue;
+		const ic = rows.findIndex((r, i) => i >= im && on(r));
+		presses.push({ up: +up.toFixed(1), mark: +rows[im].ts.toFixed(1), markFrames: im - i0, chip: ic < 0 ? null : +rows[ic].ts.toFixed(1), lagFrames: ic < 0 ? null : ic - im, lagMs: ic < 0 ? null : +(rows[ic].ts - rows[im].ts).toFixed(1) });
+	}
+	return { off, presses };
+}
+
+// FO-235: the chip keeps one edge. Along the strip's own axis (a vertical strip's y, else x) every trusted read draws the
+// corner radius and rim the resting chip draws (tolR, tolRim px: a block scaled to its pose drew its own 2 px rim 6 px wide
+// and its 9 px corner 27 px long, leaving a wide tab for a narrow one); across it, the resting chip's times the block's own
+// scale across (the hop's squash), as before. At every change of the drawn element (the chip under the labels and a carried
+// block, one block and the block taking over from it) the edge along the axis does not step. Returns { ref, along: [bad reads], hand: [bad
+// handovers], n }.
+export function edgeHolds(rows, { vertical = false, tolR = 0.6, tolRim = 0.3 } = {}) {
+	const rest = rows.filter((r) => r.src === 'lens' && r.edge);
+	if (!rest.length) return { ref: null, along: [], hand: [], n: 0 };
+	// the resting chip's edge: the commonest one the lens draws
+	const tally = new Map(); for (const r of rest) { const k = [r.edge.rx, r.edge.ry, r.edge.rimX, r.edge.rimY].join('|'); tally.set(k, (tally.get(k) || 0) + 1); }
+	const [rx, ry, rimX, rimY] = [...tally.entries()].sort((a, b) => b[1] - a[1])[0][0].split('|').map(Number), ref = { rx, ry, rimX, rimY };
+	const A = vertical ? ['ry', 'rimY'] : ['rx', 'rimX'];
+	const along = [], hand = [];
+	let prev = null, n = 0;
+	for (const r of rows) {
+		if (!r.edge || !trusted(r)) { prev = null; continue; }
+		n++;
+		const e = r.edge, dR = Math.abs(e[A[0]] - ref[A[0]]), dRim = Math.abs(e[A[1]] - ref[A[1]]);
+		if (dR > tolR || dRim > tolRim) along.push({ t: +r.t.toFixed(1), src: r.src, rec: r.rec, edge: e, ref });
+		// (along the axis only: across it a block's last read before it lands can be in the hop's squash, a body scale the
+		// chip under the labels then takes back over the next frames' reads)
+		if (prev && (prev.src !== r.src || prev.rec !== r.rec)) {
+			const st = A.map((k) => Math.abs(e[k] - prev.edge[k]));
+			if (st[0] > tolR || st[1] > tolRim) hand.push({ t: +r.t.toFixed(1), from: `${prev.src}${prev.rec != null ? ':' + prev.rec : ''}`, to: `${r.src}${r.rec != null ? ':' + r.rec : ''}`, was: prev.edge, now: e });
+		}
+		prev = r;
+	}
+	return { ref, along, hand, n };
+}
+
 export { near, FRAME };

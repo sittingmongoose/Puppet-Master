@@ -19,23 +19,34 @@
 //   first drawn (a composited probe in the same commit, carry-frames RECORD), so a change drawn late, already begun, is
 //   a step;
 // - Reduce Motion (the OS's and the page's own): nothing is carried, every read shows the chip on an item (never between
-//   two), and after each press it rests on the chosen item.
+//   two), and after each press it rests on the chosen item;
+// - FO-232, Reduce Motion: no travel, and no late jump. In every read whose frame paints an item chosen the chip is on that
+//   item, so from each press the chip reaches the chosen item in the first frame that paints it chosen (the 12e page let
+//   Home's panel tabs keep the chip on the tab left for 2 to 13 frames, 100-217 ms, after the chosen tab was painted: the
+//   mark syncs it only through glass.js's 140 ms lazy timer). Beside the singles and the quick run, a run of rmPresses
+//   presses 300 ms apart (default 10);
+// - FO-235, motion, Friendly and Basic: the chip keeps one edge. Along the strip's own axis every read draws the corner
+//   and the rim the chip at rest draws, through every trip and every handover (the chip under the labels to a block, a
+//   block to the block taking over, a block to the chip under the labels): a block sized to the tab it is bound for and
+//   scaled to its pose drew its 2 px rim 6 px wide and its 9 px corners 27 px long on leaving a wide tab for a narrow one
+//   (and 0.6 px and 3 px the other way), so the chip changed its border and shape in the frame the block took over.
 //
 //   --set looks=friendly-dark,...   --set modes=motion,os-reduce,page-reduce   --set rmLooks=  (Reduce Motion looks; default
 //   all ten for os-reduce, Friendly Light and Basic Dark for page-reduce)   --set groups=rail,home,settings,usage
+//   --set rmPresses=10 (FO-232's extra Reduce Motion presses per strip, 300 ms apart)
 //   --set sandbox=0|1 (both surfaces: run twice)   --set dump=<file.json>   --set raf=1 (also read inside the frame
 //   callback, for comparison, in the dump)   --set film=1 (marks)
 import { RECORD, TAKE, RESET, steps } from '../helpers/carry-frames.mjs';
-import { CHIP_SAMPLER, CHIP_TAKE, CHIP_RESET, chipRows, drawnFrames, modelWitness, spikes, takeovers, changeStarts, offItems, stripShifts, FRAME } from '../helpers/chip-sampler.mjs';
+import { CHIP_SAMPLER, CHIP_TAKE, CHIP_RESET, chipRows, drawnFrames, modelWitness, spikes, takeovers, changeStarts, offItems, stripShifts, rmOnChosen, edgeHolds, FRAME } from '../helpers/chip-sampler.mjs';
 import { setLookBySetting, setMotionApp } from '../helpers/settings-look.mjs';
 import { LOOKS } from '../browser-check.config.mjs';
 
 const list = (v, all) => (v ? String(v).split(',').map((s) => s.trim()).filter(Boolean) : all);
-const HOLD = 90, GAP = 110;
+const HOLD = 90, GAP = 110, RM_GAP = 300;
 
 const GROUPS = [
-	{ key: 'settings', name: 'Settings chapters', page: 5, strip: { sel: '#pm-settings-root .rail-scroll', active: ':is(.side-link[data-action="home"], .domain-link).active', items: '.domain-link' }, press: '#pm-settings-root .rail-scroll .domain-link', singles: [1, 2], rapid: [1, 2, 1, 2, 3, 1] },
-	{ key: 'usage', name: 'Usage pages', page: 4, strip: { sel: '#pmuNav', active: '.pmu-navbtn.active', items: '.pmu-navbtn' }, press: '#pmuNav .pmu-navbtn', singles: [1, 2], rapid: [1, 2, 1, 2, 3, 1] },
+	{ key: 'settings', name: 'Settings chapters', page: 5, vertical: true, strip: { sel: '#pm-settings-root .rail-scroll', active: ':is(.side-link[data-action="home"], .domain-link).active', items: '.domain-link' }, press: '#pm-settings-root .rail-scroll .domain-link', singles: [1, 2], rapid: [1, 2, 1, 2, 3, 1] },
+	{ key: 'usage', name: 'Usage pages', page: 4, vertical: true, strip: { sel: '#pmuNav', active: '.pmu-navbtn.active', items: '.pmu-navbtn' }, press: '#pmuNav .pmu-navbtn', singles: [1, 2], rapid: [1, 2, 1, 2, 3, 1] },
 	{ key: 'home', name: 'Home panel tabs', page: 0, mark: true, strip: { sel: '.pmw-strip[data-tsm]', active: '.pmw-tab[data-active]', items: '.pmw-tab' }, press: '.pmw-strip[data-tsm] .pmw-tab', singles: [1, 0], rapid: [1, 0, 1, 0, 1, 0] },
 	{ key: 'rail', name: 'rail Files switcher', page: 0, strip: { sel: '#sidePanelSlot .pm-segtab', active: '.pm-segtab-item.active', items: '.pm-segtab-item' }, press: '#sidePanelSlot .pm-segtab .pm-segtab-item', singles: [1, 0, 2, 1], rapid: [0, 1, 0, 1, 2, 0] }
 ];
@@ -91,6 +102,14 @@ export const tests = {
 					for (const i of g.rapid) { await pressNth(t, f, g.press, i, `${tag} rapid ${i}`); await t.page.waitForTimeout(GAP); }
 					await t.page.waitForTimeout(1400);
 					ends.push(await f.evaluate(() => performance.now()));
+					// FO-232: under Reduce Motion, many more presses, each judged from its own frame
+					if (mode !== 'motion') {
+						const nRm = t.args.rmPresses != null ? +t.args.rmPresses : 10;
+						// (between two items, the first not the one the quick run left chosen, so every press changes the choice)
+						const last = g.rapid[g.rapid.length - 1], pair = [g.singles.find((i) => i !== last), last];
+						for (let k = 0; k < nRm; k++) { const i = pair[k % 2]; await pressNth(t, f, g.press, i, `${tag} rm ${i}`); await t.page.waitForTimeout(RM_GAP); }
+						if (nRm) { await t.page.waitForTimeout(700); ends.push(await f.evaluate(() => performance.now())); }
+					}
 					const data = await f.evaluate(TAKE), smp = await f.evaluate(CHIP_TAKE);
 					const sel = g.strip.sel, rows = chipRows(smp, sel);
 					if (!(await t.check(`${tag}: the chip was read after every frame (${rows.length} reads)`, rows.filter((r) => r.box).length > 60, `${rows.length} reads, ${rows.filter((r) => r.box).length} with a chip`))) continue;
@@ -117,11 +136,21 @@ export const tests = {
 						const cs = changeStarts(data.anims, sel), late = cs.filter((x) => x.late > FRAME + 0.5);
 						await t.check(`${tag}: each change starts when it is committed (${cs.length} changes, latest ${cs.reduce((m, x) => Math.max(m, x.late), -Infinity).toFixed(1)} ms after)`, late.length === 0, late.slice(0, 4).map((x) => `rec${x.id} committed t${x.commit}, trip under way drawn until t${x.lastSame} (+${x.late} ms)`).join('; '));
 						Object.assign(cell, { steps: st.worst, witness: mw, takeovers: tk, changes: cs });
+						const eh = edgeHolds(rows, { vertical: !!g.vertical }), ax = g.vertical ? ['ry', 'rimY'] : ['rx', 'rimX'];
+						await t.check(`${tag}: the chip keeps one edge along the strip (corner ${eh.ref ? eh.ref[ax[0]] : '?'} px, rim ${eh.ref ? eh.ref[ax[1]] : '?'} px at rest; ${eh.along.length} of ${eh.n} reads off, ${eh.hand.length} handovers step)`, !!eh.ref && eh.along.length === 0 && eh.hand.length === 0,
+							[...eh.hand.slice(0, 3).map((h) => `t${h.t} ${h.from}->${h.to} corner ${h.was[ax[0]]}->${h.now[ax[0]]} rim ${h.was[ax[1]]}->${h.now[ax[1]]}`), ...eh.along.slice(0, 3).map((x) => `t${x.t} ${x.src}${x.rec != null ? ':' + x.rec : ''} corner ${x.edge[ax[0]]} rim ${x.edge[ax[1]]}`)].join('; '));
+						cell.edge = { ref: eh.ref, along: eh.along.length, hand: eh.hand, n: eh.n, worst: eh.along.slice(0, 6) };
 					}
 					if (mode !== 'motion') {
 						await t.check(`${tag}: nothing is carried (${anims.length})`, anims.length === 0, `${anims.length}`);
 						const off = offItems(rows);
 						await t.check(`${tag}: every read shows the chip on an item, never between two (${off.length} off)`, off.length === 0, off.slice(0, 4).map((x) => JSON.stringify(x)).join('; '));
+						const rc = rmOnChosen(rows, smp.ups), late = rc.presses.filter((p) => p.lagFrames !== 0), mk = rc.presses.map((p) => p.markFrames);
+						const worst = rc.presses.reduce((m, p) => (p.lagFrames == null || (m && m.lagFrames != null && m.lagFrames >= p.lagFrames) ? m : p), null);
+						await t.check(`${tag}: the chip is on the chosen item from the first frame that paints it chosen (${rc.presses.length - late.length}/${rc.presses.length} presses; ${rc.off.length} reads off${worst && worst.lagFrames ? `; worst ${worst.lagFrames} frames, ${worst.lagMs} ms late` : ''}; chosen mark painted ${mk.length ? Math.min(...mk) : '?'}-${mk.length ? Math.max(...mk) : '?'} frames after the press)`,
+							rc.presses.length >= 4 && late.length === 0 && rc.off.length === 0,
+							[...late.slice(0, 4).map((p) => `press t${p.up}: chosen painted t${p.mark}, chip on it ${p.chip == null ? 'never' : `t${p.chip} (${p.lagFrames} frames, ${p.lagMs} ms later)`}`), ...rc.off.slice(0, 3).map((x) => JSON.stringify(x))].join('; '));
+						cell.rm = rc;
 					}
 					cell.spikes = sp;
 					if (t.args.dump) dump.push({ ...cell, data, smp });
