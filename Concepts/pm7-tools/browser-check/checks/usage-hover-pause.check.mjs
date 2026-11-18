@@ -246,6 +246,7 @@ async function roomMountRace(t, f, label, park, rm) {
 		const destinationTop = await f.evaluate(() => document.getElementById('pmuScroll').scrollTop);
 		await choose(source);
 		await nav(room).focus();
+		await f.evaluate(()=>{window.__uhpMountNeutralRows=new WeakMap();document.querySelectorAll('#pmuScroll .pmu-board .pmu-row,#pmuScroll .pmu-board .pmu-irow,#pmuScroll .pmu-board .pmu-accrow').forEach(row=>window.__uhpMountNeutralRows.set(row,getComputedStyle(row).backgroundColor));});
 		await t.page.mouse.move(at.x, at.y, { steps: 4 });
 		await t.page.waitForTimeout(500);
 		await f.evaluate(({ room, baseline, selector }) => {
@@ -266,10 +267,17 @@ async function roomMountRace(t, f, label, park, rm) {
 				if (b && b.dataset.room === room) {
 					const card = b.querySelector(':scope > .pmu-card:hover'), tools = card?.querySelector('.pmu-cardtools');
 					const rows = [...b.querySelectorAll('.pmu-row, .pmu-irow')];
+					// R116 T1: the outgoing board overlaps the live board and still takes pointer hits.
+					const hit=position&&document.elementFromPoint(...position), hitCard=hit?.closest('.pmu-card'), hitBoard=hitCard?.closest('.pmu-board');
+					const inPane=!!hitBoard&&sc.contains(hitBoard)&&!hitBoard.hidden, hitTools=inPane&&hitCard.querySelector('.pmu-cardtools');
+					let alpha=1;if(inPane)for(let el=hitCard;el&&el!==sc;el=el.parentElement)alpha*=+getComputedStyle(el).opacity;
+					const hitRow=inPane&&hit?.closest('.pmu-row,.pmu-irow,.pmu-accrow'), neutral=window.__uhpMountNeutralRows;
+					document.querySelectorAll('#pmuScroll .pmu-board .pmu-row,#pmuScroll .pmu-board .pmu-irow,#pmuScroll .pmu-board .pmu-accrow').forEach(row=>{if(!neutral.has(row)&&!row.matches(':hover'))neutral.set(row,getComputedStyle(row).backgroundColor);});
 					r.samples.push({ t: performance.now(), op: b.getAttribute('data-op'),
 						lit: b.querySelectorAll('.pmh-on, .pmh-near, .is-hl-dim, .is-hl-on').length,
 						tools: tools ? parseFloat(getComputedStyle(tools).opacity) : null,
-						rows: rows.filter((row, i) => row.matches(':hover') && baseline[i] !== getComputedStyle(row).backgroundColor).length });
+						rows: rows.filter((row, i) => row.matches(':hover') && baseline[i] !== getComputedStyle(row).backgroundColor).length,
+						hit:inPane?{room:hitBoard.dataset.room,live:hitBoard===b,ghost:hitBoard.classList.contains('pmu-ghostboard'),op:hitBoard.getAttribute('data-op'),widget:hitCard.dataset.widget,alpha,tools:hitTools?+getComputedStyle(hitTools).opacity*alpha:null,lit:hitCard.querySelectorAll('.pmh-on,.pmh-near').length+Number(hitCard.matches('.pmh-on,.pmh-near')),rows:hitRow&&neutral.has(hitRow)&&neutral.get(hitRow)!==getComputedStyle(hitRow).backgroundColor?1:0}:null });
 				}
 				requestAnimationFrame(sample);
 			};
@@ -323,6 +331,10 @@ async function roomMountRace(t, f, label, park, rm) {
 		// Allow the first 100 ms for an already-lit reused card's outgoing fade; nothing arriving may light thereafter.
 		const settled = during.filter((s) => s.t >= during[0].t + 100);
 		await t.check(S + 'live card tools, row backgrounds and hover/provider lights stay paused', settled.length > 10 && settled.every((s) => !s.lit && (s.tools == null || s.tools <= 0.05) && !s.rows), `${settled.filter((s) => s.lit || s.tools > 0.05 || s.rows).length}/${settled.length} lit samples`);
+		const hitSamples=settled.filter(s=>s.hit&&s.hit.alpha>.02),ghostSamples=hitSamples.filter(s=>s.hit.ghost&&!s.hit.live);
+		t.log(S+'R116 T1 hit-tested surfaces: '+JSON.stringify({samples:hitSamples.length,ghost:ghostSamples.length,bad:hitSamples.filter(s=>s.hit.tools>.05||s.hit.lit||s.hit.rows)}));
+		await t.check(S+'R116 T1 hit-tested card tools, rows and light stay paused on either visible board',hitSamples.length>10&&hitSamples.every(s=>!(s.hit.tools>.05)&&!s.hit.lit&&!s.hit.rows),`${hitSamples.filter(s=>s.hit.tools>.05||s.hit.lit||s.hit.rows).length}/${hitSamples.length} lit hit-tested samples; ${ghostSamples.length} on outgoing ghost`);
+		if(!rm)await t.check(S+'R116 P1 could judge outgoing ghost above incoming room during wheel hold',ghostSamples.length>0,`${ghostSamples.length} visible outgoing ghost hits`);
 		await t.check(S + 'pause end restores the LIVE board light and tools without a move', rec.ends.length === 1 && rec.ends[0].live && rec.ends[0].room === room && rec.ends[0].t > last && !rec.op && rec.oldOp !== 'wheel' && rec.cardLit && rec.tools > 0.5, JSON.stringify({ ends: rec.ends, op: rec.op, oldOp: rec.oldOp, cardLit: rec.cardLit, tools: rec.tools }));
 		if (room === 'overview') {
 			const p = rec.provider;
