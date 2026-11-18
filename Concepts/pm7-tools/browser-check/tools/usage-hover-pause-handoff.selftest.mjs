@@ -21,12 +21,13 @@ function fixture() {
   hasAttribute(k){return this.attrs.has(k);}
   setAttribute(k,v){this.attrs.set(k,v);}
   removeAttribute(k){this.attrs.delete(k);}
-  querySelector(){return null;}
+  querySelector(selector){return selector.includes('.pmu-ghostboard')?this.ghost??null:null;}
   matches(){return false;}
   addEventListener(k,fn){this.handlers.set(k,fn);}
   removeEventListener(k){this.handlers.delete(k);}
  }
- const board=new Element('pmuBoard'),sc=new Element('pmuScroll'),classes=new Set();
+ const board=new Element('pmuBoard'),sc=new Element('pmuScroll'),ghost=new Element(''),classes=new Set();
+ sc.ghost=ghost;
  const cl={contains:k=>classes.has(k),add:k=>classes.add(k),remove:k=>classes.delete(k)};
  const emit=type=>{for(const fn of listeners.get(type)||[])fn();};
  const b={scrollEl:sc,el:()=>board,on:(type,fn)=>{const set=listeners.get(type)||new Set();set.add(fn);listeners.set(type,set);return()=>set.delete(fn);}};
@@ -42,7 +43,7 @@ function fixture() {
   this.cleanup=bindTools(b);`,ctx);
  const input=(type,x=100,y=100)=>sc.handlers.get(type)({clientX:x,clientY:y});
  const advance=t=>{while(true){const due=[...timers].filter(([,x])=>x.t<=t).sort((a,b)=>a[1].t-b[1].t)[0];if(!due)break;now=due[1].t;timers.delete(due[0]);due[1].fn();}now=t;};
- return {board,ctx,input,advance,events,ends:()=>events.filter(e=>e.type==='pmu-op-end'),cleanup:()=>ctx.cleanup()};
+ return {board,ghost,ctx,input,advance,events,ends:()=>events.filter(e=>e.type==='pmu-op-end'),cleanup:()=>ctx.cleanup()};
 }
 for(const mode of ['move','resize']) {
  test(`${mode}: early idle release retains wheel until its original deadline`,()=>{
@@ -80,3 +81,16 @@ for(const mode of ['move','resize']) {
   } finally{x.cleanup();}
  });
 }
+
+test('a first wheel after a room swap pauses the already visible ghost',()=>{
+ const x=fixture();try {
+  assert.equal(x.ghost.getAttribute('data-op'),null);
+  x.input('wheel');
+  assert.equal(x.ghost.getAttribute('data-op'),'wheel');
+  assert.equal(x.board.getAttribute('data-op'),'wheel');
+  x.advance(150);
+  assert.equal(x.board.getAttribute('data-op'),null);
+  assert.equal(x.ends().length,1);
+  assert.equal(x.ends()[0].detail.board,x.board);
+ } finally{x.cleanup();}
+});

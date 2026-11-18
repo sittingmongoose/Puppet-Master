@@ -1169,6 +1169,12 @@
     };
     var onWheel = function (event) {
       if (!wheelBoard()) return;
+      if (!wheelAt) {
+        /* The compositor can deliver the wheel to the pane while the previous room still paints above it.
+           Its hover needs the same gate until the film retires it or promotes it back to live. */
+        var ghost = boardEl.querySelector(':scope > :is(.pmu-ghostboard,.pmu-oldboard):not(#pmuBoard)');
+        if (ghost && ghost.getAttribute('data-op') !== 'wheel') ghost.setAttribute('data-op', 'wheel');
+      }
       wheelAt = [event.clientX, event.clientY];
       wheelHold();
     };
