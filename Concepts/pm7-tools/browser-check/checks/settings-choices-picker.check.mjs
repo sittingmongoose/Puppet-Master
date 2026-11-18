@@ -76,6 +76,7 @@ async function openDetails(t, f, id, quiet = false) {
 	await f.locator(`#pm-settings-root [data-action="navigate-domain"][data-domain="${pl.domain}"]`).first().click();
 	await t.settle();
 	if (pl.tab) { await f.locator(`#pm-settings-root [data-tab="${pl.tab}"]`).first().click().catch(() => {}); await t.settle(); }
+	await f.waitForFunction(()=>!document.querySelector('#workspace-stage [data-o55-fill="pending"]'),null,{timeout:15000});
 	const about = f.locator(`#pm-settings-root .o55-about[data-setting="${id}"]`).first();
 	if (!(await about.count()) || !(await about.isVisible())) { if (!quiet) await t.check(`${id}: the row's About button exists`, false); return false; }
 	await about.evaluate((el) => el.scrollIntoView({ block: 'center' }));

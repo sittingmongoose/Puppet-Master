@@ -2347,13 +2347,27 @@ class _AliasSpanLoader(yaml.SafeLoader):
     def __init__(self, stream: str) -> None:
         super().__init__(stream)
         self.alias_value_keys: set[tuple[int, int]] = set()
+        # Scalar events/nodes start at properties; scanner tokens start at the value.
+        # Block tokens also include their header comment, so skip the complete header.
+        self.scalar_value_starts: dict[int, int] = {}
+        for token in yaml.scan(stream):
+            if isinstance(token, yaml.tokens.ScalarToken):
+                start, end = token.start_mark.index, token.end_mark.index
+                if token.style in ("|", ">"):
+                    newline = re.search(r"\r\n|[\r\n\x85\u2028\u2029]", stream[start:end])
+                    start = start + newline.end() if newline else end
+                self.scalar_value_starts[end] = start
 
     def compose_node(self, parent: yaml.Node | None, index: yaml.Node | int | None) -> yaml.Node:
         if self.check_event(yaml.AliasEvent) and isinstance(index, yaml.Node):
             node = super().compose_node(parent, index)
             self.alias_value_keys.add((id(parent), id(index)))
             return node
-        return super().compose_node(parent, index)
+        node = super().compose_node(parent, index)
+        if isinstance(node, yaml.ScalarNode):
+            # An implicit empty scalar has no value token and contributes no source text.
+            node.value_start = self.scalar_value_starts.get(node.end_mark.index, node.end_mark.index)
+        return node
 
 
 def _compose_unit_fence(text: str) -> tuple[yaml.Node | None, set[tuple[int, int]]]:
@@ -2369,7 +2383,8 @@ def _value_spans(node: yaml.Node, left: int, right: int) -> Iterator[tuple[int, 
     """Physical source spans of a field value's own scalar nodes (T243).
 
     A collection's outer bounds include comments and the whitespace between items; a line hint
-    must land on a value node's own text, never a comment. An alias resolves to the anchored
+    must land on a value token's own text, never properties or a header comment (T245).
+    An alias resolves to the anchored
     node, whose marks describe the anchor's site: that span counts only when the anchor lies
     physically inside this field's own source bounds (left, right), never when it sits in
     another key. Shared nodes are visited once, so an alias cycle cannot loop the walk.
@@ -2381,8 +2396,8 @@ def _value_spans(node: yaml.Node, left: int, right: int) -> Iterator[tuple[int, 
             return
         seen.add(id(current))
         if isinstance(current, yaml.ScalarNode):
-            if left <= current.start_mark.index and current.end_mark.index <= right:
-                yield (current.start_mark.index, current.end_mark.index)
+            if left <= current.value_start and current.end_mark.index <= right:
+                yield (current.value_start, current.end_mark.index)
         elif isinstance(current, yaml.SequenceNode):
             for item in current.value:
                 yield from walk(item)
@@ -4540,6 +4555,34 @@ def build_cases() -> tuple[list[tuple[str, Callable[[Fixture], None], int, set[s
         evidence["line"] = 1
         text = fx.files()[CATALOG]
         evidence["line"] = line_of(text, text.index("other_source: &q " + quote))
+
+    for shape in ("anchor", "tag", "literal_header", "folded_header", "tag_comment", "anchor_comment", "alias_header"):
+        for correct in (False, True):
+            @case(f"{'pass' if correct else 'fail'} T245: {shape} hint at {'value' if correct else 'property or comment'}",
+                  0 if correct else 1, set() if correct else {"C05"},
+                  kinds=set() if correct else {"evidence_line_mismatch"})
+            def _(fx: Fixture, shape=shape, correct=correct) -> None:
+                external(fx)
+                entry = fx.map["outside_range_commands"][0]
+                command_quote = entry["evidence"]["quote"]
+                quote = {"anchor": "attempt_id", "tag": "str"}.get(shape, command_quote)
+                prefix = {"anchor": "&attempt_id", "tag": "!!str", "literal_header": "|",
+                          "folded_header": ">", "tag_comment": "!!str", "anchor_comment": "&q",
+                          "alias_header": "|"}[shape]
+                header = prefix + (" # " + quote if "header" in shape or "comment" in shape else "")
+                replacement = f"canonical_text:\n- {header}\n  {quote}\n- {command_quote}"
+                if shape == "alias_header":
+                    replacement = (f"other_source: &q {command_quote}\ncanonical_text:\n- *q\n"
+                                   f"- {header}\n  {quote}")
+                fx.doc_suffix[CATALOG] = fx.doc_suffix[CATALOG].replace(
+                    "canonical_text: " + command_quote, replacement, 1)
+                # The ordinary registration stays intact; this nested locator isolates a
+                # single-token property quote without weakening the command's evidence.
+                evidence = entry["locator_probe"] = {"doc": CATALOG, "unit": "UCC-231",
+                                                       "field": "canonical_text", "quote": quote, "line": 1}
+                text = fx.files()[CATALOG]
+                marker = "  " + quote if correct else "- " + header
+                evidence["line"] = line_of(text, text.index(marker, text.index(replacement)))
 
     @case("fail MAX1: deleted in-record discriminator", 1, {"C05"}, kinds={"typed_discriminator_branch_value_mismatch"})
     def _(fx: Fixture) -> None:

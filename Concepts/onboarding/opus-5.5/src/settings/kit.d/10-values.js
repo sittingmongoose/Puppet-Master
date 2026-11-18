@@ -365,7 +365,16 @@ renderSettingsSection = function (section, workspace, index) {
   if (def) owners = def.owner ? `<div class="owner-redirects o55-owner-line"><span>${h(def.owner.text)}</span>${(def.owner.buttons || []).map(b => `<button type="button" class="btn" data-action="${a(b.action)}">${h(b.label)}</button>`).join('')}</div>` : '';
   else { try { owners = typeof renderOwnerRedirects === 'function' ? renderOwnerRedirects(section) : ''; } catch (e) { owners = ''; } }
   const idle = section.settings.length > 0 && section.settings.every(st => (O55R[st.id] || {}).when && !PM51.relevant(st.id));
-  return `<section class="settings-section o55-group${idle ? ' o55-sec-off' : ''}" id="section-${a(section.id)}" data-section-id="${a(section.id)}">
+  /* A page's third section on is skipped until it nears the screen (content-visibility: auto,
+     styles.d/29-navigation-motion.css), sized meanwhile by its intrinsic size. A chapter is drawn new on every visit, so
+     that size was never a remembered one: every far section was 460 px, Code & Tools' Terminal look (49 rows, 3,494 px)
+     landed inside Chrome's margin of the screen, and it and its neighbour were styled and laid out in the new chapter's
+     first frame, then skipped again in the next (FO-196, lane U, 2026-11-14). Each section now gives its own size from
+     its rows: 64 px and 70 a row (112 when the host is narrow), what 73 drawn sections measure (65 + 71 a row). An
+     arrival at Code & Tools styled 2,666 elements in its first frame and now 1,016; that frame's style and layout went
+     from 133 to 79 ms and release -> first frame from 294 to 221 ms on a P1000 (traces, A-B-B-A). */
+  const est = Math.round(64 + section.settings.length * (hostIsNarrow() ? 112 : 70));
+  return `<section class="settings-section o55-group${idle ? ' o55-sec-off' : ''}" id="section-${a(section.id)}" data-section-id="${a(section.id)}" style="contain-intrinsic-size:auto ${est}px">
       <header class="o55-group-head"><h3 class="o55-group-title">${h(section.label)}</h3>${section.description ? `<p class="o55-group-help">${h(section.description)}</p>` : ''}</header>
       ${owners}<div class="setting-list">${section.settings.map(s => renderSettingRow(s, section, workspace)).join('')}</div>
     </section>`;
