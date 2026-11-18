@@ -1,3 +1,4 @@
+import { withPaintedChip } from './painted-chip.mjs';
 // The switcher's chip, frame by frame, as the compositor draws it (FO-195 / FO-197, Jared 2026-11-13: "it almost jumps
 // twice ... film it at 60fps and watch it back frame by frame").
 //
@@ -15,7 +16,7 @@
 // box, moves an edge further than the motion itself does in that frame, and fails.
 
 // in the page (the app's frame): install the recorder for one strip selector; idempotent per strip
-export const RECORD = (stripSel) => {
+export const RECORD = withPaintedChip((stripSel) => {
 	const W = window.__carryRec || (window.__carryRec = { anims: [], samples: [], strips: [], on: true });
 	if (!W.patched) {
 		W.patched = true;
@@ -87,7 +88,7 @@ export const RECORD = (stripSel) => {
 				const on = el.querySelector(s.active);
 				const ba = block ? block.getAnimations().find((a) => a.effect && a.effect.getTiming().duration > 0 && a.playState !== 'idle') : null;
 				row.s[s.sel] = {
-					block: block ? rr(block) : null, st: ba ? ba.startTime : null,
+					block: block ? (paintedChip(block)?.box || rr(block)) : null, st: ba ? ba.startTime : null,
 					lens: lens ? rr(lens) : null, lensOp: lens ? +getComputedStyle(lens).opacity : 0,
 					on: on ? (on.getAttribute('data-tab') || on.textContent.trim().slice(0, 24)) : null, onBox: on ? rr(on) : null
 				};
@@ -99,7 +100,7 @@ export const RECORD = (stripSel) => {
 	}
 	if (!W.strips.some((s) => s.sel === stripSel.sel)) W.strips.push({ sel: stripSel.sel, active: stripSel.active, el: null });
 	return true;
-};
+});
 
 // in the page: take the record so far (and keep recording); the Animation objects stay in the page
 export const TAKE = () => {

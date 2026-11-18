@@ -305,3 +305,12 @@ Chat `tests/pmx-verify.mjs` now uses the shared GPU launcher. Its loop census fa
 `chat-sweep` SW01 bootstraps Home once, then measures ten fresh reloads at Basic Dark1024×480 on the selected surface. It captures native PNG compositor frames and compares the first painted cover-title glyphs to the trusted click’s performance timestamp (converted to the frame-swap epoch clock). Observer/callback delivery time is never the deadline. The limit remains500ms. A pre-input reference is part of measurement setup; there is no idle/settling delay or product animation change.
 
 Each click retains `activity-first-paint-<n>/before.png`, raw frames, `frames.json` and `paint.json`. A late observation must be read with its previous negative frame; a gap straddling500ms is unresolved, rather than proof of a product miss. `tools/calibrate-activity-paint.mjs <external window2 evidence> <external output.json>` replays the title-pixel predicate on the retained native film clicks. Its documented low-opacity boundary correction is explicit. Element Timing was tested and rejected for this opacity-entry path; its paired calibration and source are retained externally, not shipped as a second assertion.
+
+FO-232/235 painted-part controls: `helpers/painted-chip.mjs` supplies the clipped union box to both frame recorders and records every material part's four corner radii, inset rim and CSS borders. `edgeHolds` checks every part against the resting chip with the existing 0.6 px corner / 0.3 px rim tolerances. Appearance reads include pending-start frames; the existing positional timing filters remain in force.
+
+Run the permanent negative controls explicitly (each named control MUST FAIL the existing edge row, with injection confirmed):
+```
+browser-check run Concepts/pm7-tools/browser-check/diagnostics/chip-halves-negative.check.mjs --set page=<FO-235-built-page> --set sandbox=0
+browser-check run Concepts/pm7-tools/browser-check/diagnostics/chip-halves-negative.check.mjs --set page=<FO-235-built-page> --set sandbox=1
+```
+Each control changes only its named half's corner and inset border for one frame of each moving block. They live outside the normal passing suite.
