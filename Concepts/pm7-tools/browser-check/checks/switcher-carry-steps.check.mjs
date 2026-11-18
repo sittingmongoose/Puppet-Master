@@ -32,7 +32,8 @@
 //   (and 0.6 px and 3 px the other way), so the chip changed its border and shape in the frame the block took over.
 //
 //   --set looks=friendly-dark,...   --set modes=motion,os-reduce,page-reduce   --set rmLooks=  (Reduce Motion looks; default
-//   all ten for os-reduce, Friendly Light and Basic Dark for page-reduce)   --set groups=rail,home,settings,usage
+//   all ten for os-reduce; Friendly Light, Basic Dark and both Retro looks for page-reduce, the app's own Reduce animations,
+//   since Retro fades its chip in under Reduce Motion)   --set groups=rail,home,settings,usage
 //   --set rmPresses=10 (FO-232's extra Reduce Motion presses per strip, 300 ms apart)
 //   --set sandbox=0|1 (both surfaces: run twice)   --set dump=<file.json>   --set raf=1 (also read inside the frame
 //   callback, for comparison, in the dump)   --set film=1 (marks)
@@ -77,7 +78,7 @@ export const tests = {
 		const groups = GROUPS.filter((g) => list(t.args.groups, GROUPS.map((x) => x.key)).includes(g.key));
 		const dump = [];
 		for (const mode of modes) {
-			const ml = mode === 'motion' ? looks : list(t.args.rmLooks, mode === 'os-reduce' ? looks : ['friendly-light', 'basic-dark'].filter((l) => looks.includes(l)));
+			const ml = mode === 'motion' ? looks : list(t.args.rmLooks, mode === 'os-reduce' ? looks : ['friendly-light', 'basic-dark', 'retro-dark', 'retro-light'].filter((l) => looks.includes(l)));
 			await t.emulate({ reducedMotion: mode === 'os-reduce' ? 'reduce' : 'no-preference' });
 			for (const look of ml) {
 				const f = await t.app.open();
