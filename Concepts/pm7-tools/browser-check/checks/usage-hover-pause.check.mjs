@@ -79,16 +79,16 @@ const INSTALL = () => {
 
 // R1 and R2 from one window's record (pure, so the verdict can be read back from a dump)
 export function judge(rec, { rest, back }) {
-	const first = rec.wheels[0], lastWheel = rec.wheels[rec.wheels.length - 1], lastScroll = rec.scrolls.length ? rec.scrolls[rec.scrolls.length - 1] : lastWheel;
-	const end = Math.max(lastWheel, lastScroll);
-	const ops = (rec.ops || []).filter((x) => x.t >= first), lastOp = ops.at(-1);
-	const pauseEnd = lastOp ? lastOp.op === 'wheel' ? rec.frames.at(-1)?.t ?? end : lastOp.t : end;
-	const pauseAt = (t) => {
-		for (let i = ops.length - 1; i >= 0; i--) if (ops[i].t <= t) return ops[i].op === 'wheel' ? ops[i].t : null;
-		return ops.length ? null : first;
-	};
-	const during = (x) => { const start = pauseAt(x.t); return start != null && x.t >= start + 50 && x.t < pauseEnd; };
+	const first = rec.wheels[0], lastWheel = rec.wheels.at(-1), firstScroll = rec.scrolls.find((t) => t >= first);
+	const lastScroll = rec.scrolls.at(-1) ?? lastWheel, end = Math.max(lastWheel, lastScroll);
+	// The event recorder follows the app's listener in the same task. Allow 2 ms at expiry for the two clocks in that task.
+	const due = end + 150, ops = (rec.ops || []).filter((x) => x.t >= first);
+	const startIndex = ops.findIndex((x) => x.op === 'wheel'), started = ops[startIndex];
+	const release = startIndex < 0 ? null : ops.slice(startIndex + 1).find((x) => x.op !== 'wheel');
+	const during = (x) => x.t >= firstScroll + 50 && x.t < due - 2;
 	const active = rec.frames.filter(during);
+	const coverage = firstScroll != null && started?.t <= firstScroll + 50 && release?.t >= due - 2 &&
+		active.every((x) => x.op === 'wheel');
 	const neutralExit = (x) => {
 		if(x.card!==rest || x.to==null) return false;
 		const cs=x.cls.split(/\s+/);
@@ -99,21 +99,19 @@ export function judge(rec, { rest, back }) {
 	};
 	const ins = rec.trans.filter((x) => during(x) && x.under && !x.approved && !x.chartControlled && !x.exiting && !neutralExit(x));
 	const litFrames = active.filter((x) => x.lit.concat(x.near || []).length > 0);
-	const toolFrames = active.filter((x) => x.t >= pauseAt(x.t) + (rec.fadeMs ?? 140) + 50 && x.tools > 0.05);
-	// R2: the card under the pointer once the wheel has stopped; its light is back when its .pmh-on is written (or it
-	// still had it), its tools when a frame reads them above .5. Transition creation is logged separately.
-	const after = rec.frames.filter((x) => x.t > end);
-	const target = after.length ? after[after.length - 1].card : null;
-	const settled = after.length && after[after.length - 1].lit.includes(target) && after[after.length - 1].tools > 0.5;
-	const lastBefore = (rec.cls || []).filter((x) => x.t <= end && x.card === target).pop();
-	const litAt = (rec.cls || []).find((x) => x.t > end && x.card === target && x.on);
-	const lightT = !settled ? null : litAt ? litAt.t : lastBefore && lastBefore.on ? end : (after.find((x) => x.lit.includes(target)) || {}).t;
-	const toolsTr = rec.trans.find((x) => x.t > end && x.card === target && x.prop === 'opacity' && /pmu-cardtools/.test(x.cls));
+	const toolFrames = active.filter((x) => x.t >= firstScroll + (rec.fadeMs ?? 140) + 50 && x.tools > 0.05);
+	// R2 times the first actual return after the independent rest deadline. An already-lit target is an early return.
+	const after = rec.frames.filter((x) => x.t >= due - 2);
+	const settled = after.at(-1), target = settled?.card;
+	const lightT = settled?.lit.includes(target) && settled.tools > 0.5 ?
+		(rec.cls || []).find((x) => x.t >= due - 2 && x.card === target && x.on)?.t ??
+		after.find((x) => x.card === target && x.lit.includes(target))?.t : null;
+	const toolsTr = rec.trans.find((x) => x.t >= due - 2 && x.card === target && x.prop === 'opacity' && /pmu-cardtools/.test(x.cls));
 	const toolsFr = after.find((x) => x.card === target && x.tools > 0.5);
 	const toolsT = toolsFr ? toolsFr.t : Infinity;
-	const backT = lightT != null && toolsT !== Infinity ? Math.max(lightT, toolsT) : null;
+	const backT = coverage && !litFrames.length && !toolFrames.length && lightT != null && toolsT !== Infinity ? Math.max(lightT, toolsT) : null;
 	return {
-		r1: { ok: active.length >= 5 && ins.length === 0 && litFrames.length === 0 && toolFrames.length === 0, toolFrames: toolFrames.length, pauseEnd, ins: ins.length, insCards: [...new Set(ins.map((x) => x.card))], insProps: [...new Set(ins.map((x) => x.prop + ' ' + x.cls.split(' ')[0]))].slice(0, 8), litFrames: litFrames.length, frames: rec.frames.filter(during).length, cardsPassed: [...new Set(rec.frames.filter(during).map((x) => x.card).filter(Boolean))].length },
+		r1: { ok: coverage && active.length >= 5 && ins.length === 0 && litFrames.length === 0 && toolFrames.length === 0, toolFrames: toolFrames.length, coverage, pauseEnd: release?.t, ins: ins.length, insCards: [...new Set(ins.map((x) => x.card))], insProps: [...new Set(ins.map((x) => x.prop + ' ' + x.cls.split(' ')[0]))].slice(0, 8), litFrames: litFrames.length, frames: rec.frames.filter(during).length, cardsPassed: [...new Set(rec.frames.filter(during).map((x) => x.card).filter(Boolean))].length },
 		r2: { ok: backT != null && backT - end <= back, ms: backT != null ? Math.round(backT - end) : null, card: target,
 			light: lightT != null ? Math.round(lightT - end) : null, tools: toolsT !== Infinity ? Math.round(toolsT - end) : null, toolsTransition: toolsTr ? Math.round(toolsTr.t - end) : null,
 			long: (rec.loaf || []).filter((x) => x.t + x.d > end && x.t < end + 400).map((x) => `+${Math.round(x.t - end)} ms ${x.d} ms (style/layout ${x.sl}: ${x.scripts.join('; ') || 'no script'})`) },
@@ -758,7 +756,7 @@ export default async function (t) {
 			const n = res.r1.length;
 			await t.check(S + `could judge: at rest the card under the pointer is lit and shows its tools (${res.r0.filter(Boolean).length} of ${res.r0.length} windows)`, n === TRIES && res.r0.every(Boolean), `windows judged ${n} of ${TRIES}`);
 			await t.check(S + 'while the wheel turns, no card or row that slides under the resting pointer lights up or shows its tools', n > 0 && res.r1.every((r) => r.ok),
-				res.r1.map((r, i) => `w${i + 1}: ${r.ins} hover-in transitions, ${r.litFrames} lit frames, ${r.toolFrames} shown-tool frames, ${r.frames} sampled frames, ${r.cardsPassed} cards passed`).join('; '));
+				res.r1.map((r, i) => `w${i + 1}: ${r.ins} hover-in transitions, ${r.litFrames} lit frames, ${r.toolFrames} shown-tool frames, marker coverage ${r.coverage}, ${r.frames} sampled frames, ${r.cardsPassed} cards passed`).join('; '));
 			await t.check(S + `after the wheel, the highlight under the resting pointer comes back within ${BACK} ms without a move`, n > 0 && res.r2.every((r) => r.ok),
 				res.r2.map((r, i) => `w${i + 1}: ${r.ms === null ? 'never' : r.ms + ' ms'} (${r.card}: light ${r.light ?? 'never'}, tools ${r.tools ?? 'never'})`).join('; '));
 

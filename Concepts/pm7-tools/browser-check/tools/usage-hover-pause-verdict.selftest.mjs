@@ -32,3 +32,20 @@ test('delayed starting-head transitions toward neutral are exits, while entries 
 });
 
 test('typed main chart transitions are allowed while CSS hover row leakage still fails',()=>{const r=make();r.trans.push({t:300,card:'new',under:true,prop:'opacity',cls:'pmu-mark is-hl-dim',chartControlled:true});assert.equal(j(r).r1.ok,true);r.trans.push({t:320,card:'new',under:true,prop:'background-color',cls:'pmu-row',chartControlled:false});assert.equal(j(r).r1.ok,false);});
+
+test('an early release with enough quiet frames still fails R1 and R2',()=>{
+ const r=make();
+ r.ops=[{t:101,op:'wheel'},{t:290,op:null}];
+ r.cls=[{t:300,card:'new',on:true}];
+ for(const f of r.frames)Object.assign(f,{op:f.t<290?'wheel':null,lit:f.t>=300?['new']:[],tools:f.t>=300?.9:0});
+ const result=j(r);
+ assert.equal(result.r1.ok,false);
+ assert.equal(result.r2.ok,false);
+ assert.equal(result.r2.ms,null);
+});
+test('lighting before the real rest deadline fails both rows even under the marker',()=>{
+ const r=make();
+ r.frames.find(f=>f.t===650).lit=['new'];
+ assert.equal(j(r).r1.ok,false);
+ assert.equal(j(r).r2.ok,false);
+});
