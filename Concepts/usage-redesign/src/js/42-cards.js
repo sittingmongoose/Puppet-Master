@@ -1083,18 +1083,17 @@
     if (!boardEl) return null;
     /* PERF-USAGE-HOVER (Jared, 2026-11-16, card A: "Pause hover highlights on the Usage page while the mouse wheel
        turns"). While the wheel turns over the Usage page's board, a card or row that slides under a resting pointer does
-       not light up or show its tool buttons: the board takes data-op="wheel" from the first real pane movement after a wheel event until WHEEL_REST
-       ms after the last wheel or scroll event, or until the pointer really moves or presses. The shell's hover engine
+       not light up or show its tool buttons: the board takes data-op="wheel" on the first wheel-driven pane movement.
+       The mark stays until WHEEL_REST ms after the last wheel or scroll, or until the pointer moves, presses or leaves.
+       The shell's hover engine
        rests for a board with [data-op] (18-hover.js: no plate light, glow, reticle or magnet on its cards); Usage's
        in-board :hover rules read the wheel and keyboard handoff markers (20-board.css says more); the head fit
        below waits too. Chart highlights, readouts, tooltip hit areas and pointer tooltips retain their ordinary
        behavior. A tool already visible when the pause begins can still take a press while it fades. When the pause
-       ends the board drops the value, the
-       card under the pointer is fitted again and one pmu-op-end event (detail: the board) tells the hover engine to look
-       again at what is under the resting pointer (its restEnded), so the card light and tools come back without a move.
-       The card under the pointer when the pause begins lets its
-       title clamp go as on a pointer leave (unfitSoon). The timer runs only once the pane actually scrolls. A gesture that already holds data-op keeps it. Only the Usage page's board pauses
-       (#pmuScroll): a Home dashboard keeps its highlights, as the card named the Usage page. */
+       ends, the board drops the value, refits the card under the pointer and sends one pmu-op-end event so the hover
+       engine can relight it without a move. At pause start the hovered card's title clamp yields as on a pointer leave
+       (unfitSoon). A gesture that already holds data-op keeps it. Only the Usage page's board pauses (#pmuScroll):
+       a Home dashboard keeps its highlights. */
     var WHEEL_REST = 150, wheelT = 0, wheelInput = null, wheelAt = null, wheelEl = null, wheelFades = [];
     var pauseHover = function (el) {
       var under = el.querySelector(':scope > .pmu-card:hover');
@@ -1199,13 +1198,26 @@
       if (!wheelInput || now - wheelInput.t >= WHEEL_REST) {
         wheelInput = { top: boardEl.scrollTop, left: boardEl.scrollLeft };
       }
+      /* A later scroll can have another cause. Match its direction to a delta in this wheel burst.
+         Shift-wheel can be routed to the horizontal axis. */
+      var dx = event.deltaX || (event.shiftKey ? event.deltaY : 0), dy = event.deltaY;
+      wheelInput.leftward = wheelInput.leftward || dx < 0;
+      wheelInput.rightward = wheelInput.rightward || dx > 0;
+      wheelInput.upward = wheelInput.upward || dy < 0;
+      wheelInput.downward = wheelInput.downward || dy > 0;
       wheelInput.t = now;
       wheelInput.point = [event.clientX, event.clientY];
     };
     var onWheelScroll = function () {
       if (wheelAt) { if (wheelBoard()) wheelHold(); return; }
-      if (!wheelInput || performance.now() - wheelInput.t >= WHEEL_REST ||
-          boardEl.scrollTop === wheelInput.top && boardEl.scrollLeft === wheelInput.left) return;
+      if (!wheelInput || performance.now() - wheelInput.t >= WHEEL_REST) return;
+      var top = boardEl.scrollTop, left = boardEl.scrollLeft;
+      var y = top - wheelInput.top, x = left - wheelInput.left;
+      if (!(y < 0 && wheelInput.upward || y > 0 && wheelInput.downward ||
+          x < 0 && wheelInput.leftward || x > 0 && wheelInput.rightward)) {
+        wheelInput.top = top; wheelInput.left = left;
+        return;
+      }
       var point = wheelInput.point;
       wheelInput = null;
       if (!wheelBoard()) return;

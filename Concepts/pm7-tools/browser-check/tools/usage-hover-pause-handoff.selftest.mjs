@@ -50,7 +50,7 @@ function fixture(toolOpacity) {
   this.releaseGesture=function(defer){gesture=null;opOn=false;if(!defer)opSync();};
   this.cleanup=bindTools(b);`,ctx);
  sc.scrollTop=0;sc.scrollLeft=0;
- const input=(type,x=100,y=100)=>sc.handlers.get(type)({clientX:x,clientY:y});
+ const input=(type,x=100,y=100,deltaX=0,deltaY=1)=>sc.handlers.get(type)({clientX:x,clientY:y,deltaX,deltaY});
  const advance=t=>{while(true){const due=[...timers].filter(([,x])=>x.t<=t).sort((a,b)=>a[1].t-b[1].t)[0];if(!due)break;now=due[1].t;timers.delete(due[0]);due[1].fn();}now=t;};
  const scrollBy=(dy)=>{sc.scrollTop+=dy;input('scroll');};
  const startWheel=()=>{input('wheel');scrollBy(1);};
@@ -140,5 +140,27 @@ test('the first pane movement can take over a completed gesture before idle clea
   x.input('wheel');assert.equal(x.board.getAttribute('data-op'),'move');
   x.scrollBy(1);assert.equal(x.board.getAttribute('data-op'),'wheel');
   x.advance(150);assert.equal(x.board.getAttribute('data-op'),null);assert.equal(x.ends().length,1);
+ } finally{x.cleanup();}
+});
+
+for (const [label,deltaX,deltaY] of [['a horizontal wheel',1,0],['an upward wheel at the top',0,-1]]) {
+ test(`${label} cannot claim a subsequent downward scroll`,()=>{
+  const x=fixture();try {
+   x.input('wheel',100,100,deltaX,deltaY);
+   x.scrollBy(1);
+   assert.equal(x.board.getAttribute('data-op'),null);
+   assert.equal(x.events.length,0);
+  } finally{x.cleanup();}
+ });
+}
+
+test('a later real wheel scroll can start after an unrelated offset change',()=>{
+ const x=fixture();try {
+  x.input('wheel',100,100,0,-1);
+  x.scrollBy(4);
+  assert.equal(x.board.getAttribute('data-op'),null);
+  x.input('wheel',100,100,0,-1);
+  x.scrollBy(-1);
+  assert.equal(x.board.getAttribute('data-op'),'wheel');
  } finally{x.cleanup();}
 });
