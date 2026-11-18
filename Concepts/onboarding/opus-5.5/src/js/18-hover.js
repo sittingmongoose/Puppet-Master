@@ -257,8 +257,15 @@
     /* Usage's wheel pause (PERF-USAGE-HOVER, usage 42-cards.js bindTools) ends without a body class or a pointer move */
     document.addEventListener('pmu-op-end', restEnded);
     /* R100 P5: a sparse room's scope may sit above its scroller, and a wheel against the limit emits no scroll.
-       Wake once when Usage takes the marker so an already-lit card clears in either case. */
-    document.addEventListener('pmu-op-start', recheckSoon);
+       Clear this board's existing light immediately: a busy frame must not leave it lit past the pause's first frame.
+       The normal loop still wakes to reconcile geometry and proxies; other boards keep their light. */
+    document.addEventListener('pmu-op-start', function (event) {
+      var board = event.detail && event.detail.board;
+      if (!board) return;
+      if (hover && board.contains(hover)) { swapHover(hover, null, isReduced()); hover = null; }
+      lit.forEach(function (s) { if (board.contains(s.el)) { unlight(s); lit.delete(s); } });
+      recheckSoon();
+    });
 
     function gestureRest() {
       var b = document.body;
