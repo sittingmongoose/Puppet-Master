@@ -96,7 +96,9 @@ const COLLECT = () => {
 			const body = document.querySelector('#workspace-stage [data-continuous-workspace-body][data-workspace-mounted="true"]');
 			const ws = body && body.dataset.continuousWorkspaceBody;
 			const model = (window.PM12_DATA?.domains || []).flatMap(d => d.workspaces || []).find(w => w.id === ws);
-			const want = [...new Set((model?.sections || []).flatMap(s => Array.isArray(s.settings) ? s.settings.map(st => st.id) : []))];
+			/* Managers compose their own bound controls; only plain workspaces render these setting-row IDs. */
+			const sections = model?.type === 'settings' && !model.virtualAllSettings ? model.sections || [] : [];
+			const want = [...new Set(sections.flatMap(s => Array.isArray(s.settings) ? s.settings.map(st => st.id) : []))];
 			return { ws, want: want.length, gone: want.filter((id) => !body.querySelector(`[id="setting-${CSS.escape(id)}"]`)).slice(0, 6) };
 		})(),
 		dupIds: (() => { const ids = [...document.querySelectorAll('#workspace-stage [id^="setting-"]')].map((n) => n.id); return ids.length - new Set(ids).size; })(),
