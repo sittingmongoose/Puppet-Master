@@ -214,6 +214,11 @@ def check_closure_memo_and_dump_recipe():
         type_checker=jsonschema.Draft202012Validator.TYPE_CHECKER)
     recipe = closure._class_recipe(created)
     assert recipe is not None
+    # FMT2 owner format checkers may carry a single exception type, not a tuple.
+    single = jsonschema.FormatChecker()
+    single.checkers = {'date-time': (isinstance, ValueError)}
+    fmt = closure._format_recipe(single)
+    assert fmt is not None and closure._rebuild_format(fmt).checkers['date-time'][1] == (ValueError,)
     rebuilt = closure._rebuild_class(recipe)
     probe_a, probe_b = created(schema), rebuilt(schema)
     for value in ({'a': 5}, {'a': 1}, {'a': 'no'}):
