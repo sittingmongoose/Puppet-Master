@@ -1,9 +1,10 @@
 // R113 regressions run as rows of usage-hover-pause, on its selected looks and surfaces.
 export async function r113Cases(t, f, label, park) {
 	const records = [];
-	for (const kind of String(t.args.r113Cases || 'live,plot,tooltip').split(',')) {
+	for (const kind of String(t.args.r113Cases || 'live,plot,tooltip,handoff').split(',')) {
 		if (kind === 'plot') { records.push(await plotLimit(t,f,label,park)); continue; }
 		if (kind === 'tooltip') { records.push(await tooltipPause(t,f,label,park)); continue; }
+		if (kind === 'handoff') { records.push(await gestureHandoff(t,f,label,park)); continue; }
 		if (kind !== 'live') throw new Error('Unknown R113 case: ' + kind);
 		await park();
 		const liveWasOn = await f.evaluate(() => { const on=PMU.live.on(); PMU.live.resume(); PM7_USAGE.setRoomDetail('costs','diagnostics'); return on; });
@@ -106,4 +107,53 @@ async function plotLimit(t,f,label,park) {
 	await t.check(label+'R113 P1 area readout stays dismissed after return; index-only restoration remains column-only',quiet(a),JSON.stringify(a));
 	await park();await f.evaluate(on=>{PMU.board.reset('room');if(on)PMU.live.resume();},on);await t.page.waitForTimeout(1800);
 	return {kind:'plot',rec};
+}
+
+async function gestureHandoff(t,f,label,park) {
+	await park();
+	const on=await f.evaluate(()=>{const on=PMU.live.on();PMU.live.pause();PM7_USAGE.setRoomDetail('overview','glance');return on;});
+	await t.page.waitForTimeout(4500);
+	const records=[],cdp=await t.page.context().newCDPSession(t.page);
+	try {
+		for(const [key,mode] of [['m','move'],['r','resize']]) {
+			for(let attempt=0;attempt<3;attempt++) {
+				await park();await f.evaluate(()=>{document.activeElement?.blur();document.getElementById('pmuScroll').scrollTop=0;});
+				await f.locator('#pmuBoard > .pmu-card[data-widget="health"]').focus();
+				const target=f.locator('#pmuBoard .pmu-skycol[data-prov]').first(),box=await target.boundingBox(),pane=await f.locator('#pmuScroll').boundingBox();
+				if(!box||!pane){await t.check(label+'R113 P3 '+mode+' could judge Skyline point',false);break;}
+				const at={x:box.x+box.width/2,y:(Math.max(box.y,pane.y)+Math.min(box.y+box.height,pane.y+pane.height))/2};
+				await t.page.mouse.move(at.x,at.y);await t.page.keyboard.press(key);await t.page.waitForTimeout(400);
+				await f.evaluate(()=>{
+					const b=document.getElementById('pmuBoard'),sc=document.getElementById('pmuScroll');
+					const read=()=>({t:performance.now(),op:b.getAttribute('data-op'),gesture:PMU.board.gesture(),top:sc.scrollTop});
+					const r=window.__uhpR113={pre:read(),keys:[],wheels:[],starts:[],ends:[],moves:0};
+					let pos=null;
+					const capture=e=>{pos=[e.clientX,e.clientY];r.wheels.push({...read(),trusted:e.isTrusted});};
+					const bubble=()=>{r.wheels.at(-1).after=read();};
+					const key=e=>{if(e.key==='Escape')r.keys.push({t:performance.now(),trusted:e.isTrusted});};
+					const start=e=>{if(e.detail?.board===b)r.starts.push(read());};
+					const end=e=>{if(e.detail?.board===b)r.ends.push(read());};
+					const move=e=>{if(pos&&(pos[0]!==e.clientX||pos[1]!==e.clientY))r.moves++;};
+					sc.addEventListener('wheel',capture,{capture:true,passive:true});sc.addEventListener('wheel',bubble,{passive:true});document.addEventListener('keydown',key,true);document.addEventListener('pointermove',move,true);document.addEventListener('pmu-op-start',start);document.addEventListener('pmu-op-end',end);
+					r.stop=()=>{sc.removeEventListener('wheel',capture,true);sc.removeEventListener('wheel',bubble);document.removeEventListener('keydown',key,true);document.removeEventListener('pointermove',move,true);document.removeEventListener('pmu-op-start',start);document.removeEventListener('pmu-op-end',end);return {...r,stop:undefined,after:read()};};
+				});
+				// Queue both trusted protocol inputs together; the recorder independently proves release preceded wheel
+				// while idle cleanup had not yet replaced the old move/resize marker. No scheduler hook or fake wheel.
+				await Promise.all([
+					cdp.send('Input.dispatchKeyEvent',{type:'keyDown',key:'Escape',code:'Escape',windowsVirtualKeyCode:27}),
+					cdp.send('Input.dispatchMouseEvent',{type:'mouseWheel',x:at.x,y:at.y,deltaX:0,deltaY:-1})
+				]);
+				await cdp.send('Input.dispatchKeyEvent',{type:'keyUp',key:'Escape',code:'Escape',windowsVirtualKeyCode:27});
+				await t.page.waitForTimeout(900);
+				const rec=await f.evaluate(()=>window.__uhpR113.stop());records.push({mode,attempt,rec});
+				const w=rec.wheels[0],k=rec.keys[0],qualified=rec.pre.gesture?.kb&&rec.pre.gesture.type===mode&&rec.pre.op===mode&&rec.wheels.length===1&&w.trusted&&k?.trusted&&k.t<=w.t&&w.op===mode&&!w.gesture&&!rec.moves&&w.top===0&&rec.after.top===0&&!rec.after.gesture&&!rec.after.op;
+				t.log(label+'R113 P3 '+mode+' attempt '+(attempt+1)+': '+JSON.stringify(rec));
+				if(!qualified&&attempt<2)continue;
+				await t.check(label+'R113 P3 '+mode+' could judge: trusted release then wheel before idle marker cleanup',qualified,JSON.stringify(rec));
+				await t.check(label+'R113 P3 '+mode+' first wheel takes the completed gesture marker and starts/ends one pause',qualified&&w.after.op==='wheel'&&rec.starts.length===1&&rec.ends.length===1&&rec.starts[0].op==='wheel'&&!rec.ends[0].op&&!rec.ends[0].gesture,JSON.stringify(rec));
+				break;
+			}
+		}
+	} finally {await cdp.detach();await park();await f.evaluate(on=>{document.activeElement?.blur();if(on)PMU.live.resume();},on);}
+	return {kind:'handoff',records};
 }

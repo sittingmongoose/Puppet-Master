@@ -1134,7 +1134,9 @@
        only our wheel value; a live drag/resize keeps ownership, including before its deferred data-op write. */
     var wheelBoard = function () {
       var el = b.el(), op = el && el.getAttribute('data-op');
-      if (!el || op !== null && op !== 'wheel' || b.gesture && b.gesture()) { wheelEnd(); return null; }
+      /* R113 P3: endGesture clears the live gesture before idle opSync removes its marker. A completed move/resize
+         can hand that marker to this first wheel; an actual gesture or another operation keeps its ownership. */
+      if (!el || b.gesture && b.gesture() || op !== null && op !== 'wheel' && op !== 'move' && op !== 'resize') { wheelEnd(); return null; }
       if (wheelEl && wheelEl !== el && wheelEl.getAttribute('data-op') === 'wheel') wheelEl.removeAttribute('data-op');
       wheelEl = el;
       if (op !== 'wheel') {
