@@ -587,6 +587,50 @@ for (const surface of ['normal', 'sandbox']) {
 	};
 }
 for (const surface of ['normal', 'sandbox']) {
+	tests[`R103 P1 search with About open fills only its remounted destination (${surface})`] = async (t) => {
+		if (!t.app.surfaces().includes(surface)) { await t.check(`${surface} surface not asked for`, true); return; }
+		await t.viewport(1920, 1080); await muteSound(t.page);
+		if (t.args.motion === 'reduce') await t.emulate({ reducedMotion: 'reduce' });
+		const f = await t.app.open({ sandbox: surface === 'sandbox' });
+		await t.app.resetLayout().catch(() => {}); await f.locator('#tab-settings').click(); await t.settle();
+		await f.evaluate(() => {
+			const root = document.getElementById('pm-settings-root'), replace = Element.prototype.replaceChildren;
+			const R = window.__pscAbout = { ready: false, on: false, pending: 0, targetPending: false, about: false, selected: false, fills: [] };
+			Element.prototype.replaceChildren = function () {
+				if (R.on && R.lists.includes(this)) R.fills.push(this.closest('[data-section-id]').dataset.sectionId);
+				return replace.apply(this, arguments);
+			};
+			const mo = new MutationObserver(() => {
+				if (root.querySelector('.domain-link.active')?.dataset.domain !== 'code') return;
+				mo.disconnect(); R.stage = root.querySelector('[data-workspace-block]');
+				root.querySelector('#workspace-stage .details-btn')?.click();
+				R.about = !!root.querySelector('.document-layout.inspector-open');
+				R.lists = [...root.querySelectorAll('[data-o55-fill="pending"]')]; R.pending = R.lists.length;
+				R.targetPending = !!root.querySelector('#section-editor-terminal-look [data-o55-fill="pending"]');
+				const input = root.querySelector('[data-global-search]');
+				input.value = 'code.terminal.background-image'; input.dispatchEvent(new Event('input', { bubbles: true }));
+				const result = document.querySelector('[data-search-result="setting"][data-search-payload*="code.terminal.background-image"]');
+				R.on = true;
+				try { if (result) { R.selected = true; result.click(); } } finally { R.on = false; R.ready = true; }
+				R.remounted = R.stage !== root.querySelector('[data-workspace-block]');
+			});
+			mo.observe(root, { childList: true, subtree: true, attributes: true, attributeFilter: ['class'] });
+			R.stop = () => { mo.disconnect(); Element.prototype.replaceChildren = replace; };
+		});
+		try {
+			await f.locator('#pm-settings-root .domain-link[data-domain="code"]').first().click();
+			await f.waitForFunction(() => window.__pscAbout.ready, null, { timeout: 5000 });
+			const target = f.locator('[id="setting-code.terminal.background-image"]');
+			await target.waitFor({ state: 'visible', timeout: 5000 });
+			const r = await f.evaluate(() => { const { stop, lists, stage, ...r } = window.__pscAbout; return r; });
+			t.log(`${surface} About search: pending ${r.pending}, target pending ${r.targetPending}, About open ${r.about}, remounted ${r.remounted}, outgoing fills ${r.fills.join(',') || 'none'}`);
+			await t.check(`${surface}: search selected Terminal background while About was open and Terminal look pending`, r.about && r.selected && r.pending > 0 && r.targetPending, JSON.stringify(r));
+			await t.check(`${surface}: About navigation remounted without filling discarded lists`, r.remounted && r.fills.length === 0, JSON.stringify(r));
+			await t.check(`${surface}: the destination closes About and draws the target once`, await f.evaluate(() => !document.querySelector('#pm-settings-root .document-layout.inspector-open') && document.querySelectorAll('[id="setting-code.terminal.background-image"]').length === 1));
+		} finally { await f.evaluate(() => window.__pscAbout.stop()); }
+	};
+}
+for (const surface of ['normal', 'sandbox']) {
 	tests[`R92 P1 More options measures filled sections before its opening animation (${surface})`] = async (t) => {
 		if (!t.app.surfaces().includes(surface)) { await t.check(`${surface} surface not asked for`, true); return; }
 		await t.viewport(1920, 1080);

@@ -187,13 +187,14 @@ jumpToWorkspace = function (wsId) {
   return o55fsJump.apply(this, arguments);
 };
 const o55fsReveal = PM51.revealSetting;
-PM51.revealSetting = function (id) {
+PM51.revealSetting = function (id, opts) {
   if (o55fs.pending.size) {
     const placed = PM51.placement && PM51.placement.byId ? PM51.placement.byId[id] : null;
     const f = placed ? null : findSettingGlobal(id);
     const ws = placed ? placed.workspace : f && f.workspace ? f.workspace.id : null;
-    /* A reveal into another page will replace this one; never fill its outgoing shells (R93 #3). */
-    if (ws === o55fs.ws) {
+    /* Another page or an existing/requested About inspector makes navigate remount (R93 #3, R103 P1).
+       Its destination owns the fill; never build shells that it is about to discard. */
+    if (ws === o55fs.ws && !state.detailSetting && !(opts && opts.detail)) {
       const sid = placed ? placed.section : f && f.section ? f.section.id : null;
       if (sid) o55fsFillThrough(sid); else o55fsFillAll();
     }
