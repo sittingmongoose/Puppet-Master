@@ -2,9 +2,9 @@
 
 Source: `Plans/Section15_MVP_Promoted_Features_Spec.md`
 
-Source lines: L14043-L17750
+Source lines: L14043-L17755
 
-Source SHA256: `752b95d90e41b07c28e1376d0e1fdfdac2052196ca2e73e31e838f6f3124869d`
+Source SHA256: `140caa73848b1a688465f9f69c11a07a6d866208c8997f4cbf88a0bb475eb86d`
 
 ---
 
@@ -2484,24 +2484,25 @@ unit_type: contract
 status: accepted
 owner_doc: Plans/Section15_MVP_Promoted_Features_Spec.md
 canonical_text: |-
-  catalog.install.started 1.0.0 — newly authored owner contract, prepared without admission. Independent search of current top-level Plans Markdown/JSON and scripts Python found required names at UI_Command_Catalog.md:936 and existing install routing at Wiring_Matrix.md:448, but no exact versioned producer/consumer/checkpoint/identity/withdrawal binding; full per-family negative evidence: /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS15/fix7/catalog_install_started-search.json. Reuse Section15 §3.13, Commands §6.6/CS-066 and Shared Runtime §4.5. DL-045 authorizes only these missing technical bindings.
+  catalog.install.started 1.0.0 — newly authored owner contract, prepared without admission before the 2026-11-18 registration. Independent search of current top-level Plans Markdown/JSON and scripts Python found required names at UI_Command_Catalog.md:936 and existing install routing at Wiring_Matrix.md:448, but no exact versioned producer/consumer/checkpoint/identity/withdrawal binding; full per-family negative evidence: /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS15/fix7/catalog_install_started-search.json. Reuse Section15 §3.13, Commands §6.6/CS-066 and Shared Runtime §4.5. DL-045 authorizes only these missing technical bindings.
   Producer: catalog lifecycle controller records the existing subsystem owner beginning actual installation work after current consent/policy/source validation, with the immutable owner start outcome committed; dispatch, admission, queued or accepted-only command state is insufficient. Keep cmd.catalog.install_item as the existing route; item_type is command, skill, plugin, hook, theme or mcp_config. No update/remove admission, active-item/deferred outcome or deletion choice is made. Existing owners resolve item, version, source and actual namespace; an unavailable or ambiguous owner outcome stays unavailable without a fabricated install success.
   Scope: actual Project or application namespace as selected by the existing item owner, including actual user/Computer/profile. Project ids are real; application project_id is null, never synthetic. Project partition is Storage project~base64url. Scope key for checkpoint namespace is SHA-256 of canonical MessagePack scope map in UTF-8 key order. Identity: stable original event_id allocated once; Idempotency key is application scope: application@1:{hex(server_id)}:{hex(owner_operation_id)}; Project scope: sha256(canonical MessagePack array ["catalog.install.started", "1.0.0", actual scope map with UTF-8 sorted keys, operation_id]). Application server_id and original_operation_id come from the immutable existing owner operation source, never focus/time. Compare caller-supplied CV-317 semantic body only on retries, excluding Storage-assigned sequence/timestamps; changed semantic bytes conflict with no new effect.
   Payload: exact closed Plans/ds15_catalog_install_started.schema.json; bounded refs only, no executable/config/command bodies, local paths, secrets or installation content. outcome_ref and optional installation_ref resolve the existing owner original transition. Context catalog_owner_payload is the immutable resolved owner outcome, not caller assertion; phase and all fields must match. SP-337 keeps content above 16384 bytes in owner-resolved payload refs, never oversized metadata.
   Ordering: adopt SP-286 / CV-339 full-value original outcome, append and first AppendReceipt. Commit existing owner outcome, freeze original event, single writer append/dedupe, retain original receipt/value, then publish. Missing outcome or coherent backup closure is unavailable; no repeat install on retry or replay. Current writes/retries use dedupe_by_idempotency_key and refuse projector_replay_only as replay_only_not_appendable. Retained supported replay-only history remains readable after authenticating original transition, outcome, source and full-value commitment, independently of current live install state. Current permission, owner authorization, deletion/sharing and withdrawal still fence disclosure.
   Consumer: reader.ds15.catalog_install_started.v1@1.0.0, Catalog installation history reader for only catalog.install.started@1.0.0, adopts SP-278 by name and DL-076 nine-field token. Checkpoint key projector.checkpoint.ds15.catalog_install_started:{scope_key}, value Plans/ds15_catalog_install_started_checkpoint.schema.json. Capture CURRENT-selected complete global range and live redb_snapshot_id; persist only nine-field durable token, never the live snapshot. Scan every global row, resolve each matching event original custody and join id/type/scope/partition/Storage sequence. CAS complete previous checkpoint and new checkpoint in one redb transaction; gaps/omissions, changed token/snapshot/source/access or any contradictory original preserve previous. through_sequence_id is globally scanned frontier; last_event_id is last verified matching event. No checkpoint before first match; zero-match suffix retains prior last event. Rebuild requires complete retained prefix and fresh current access.
   Compatibility and withdrawal: supported exact 1.0.0 event/reader only; unknown version/field refuses before effects/checkpoint. Withdrawal fences new admissions at committed source frontier, drains only original admitted outcomes/receipts, then fences reader CAS/marks checkpoint withdrawn. Reinstall requires authorization and a complete fresh rebuild; no replay dispatch. Original source/log/receipt backup and redaction/deletion owners remain authoritative. Authority inputs use closed exact-family context schema and exact boolean/bounded integer types before interpretation; malformed values refuse with zero effects.
-  Retention: event and checkpoint retention_policy_ref=PENDING_RETENTION_DECISION; RT must choose between existing receipt/audit or telemetry classes; no policy, expiry or deletion is selected. Registry membership remains absent.
+  Retention: event and checkpoint retention_policy_ref=PENDING_RETENTION_DECISION; RT must choose between existing receipt/audit or telemetry classes; no policy, expiry or deletion is selected. At preparation before the 2026-11-18 registration, registry membership was absent.
   Oracles: ATS-329 and own family fixtures in Plans/ds15_event_contract_fixtures.json, numeric fixtures and scripts/pm-ds15-event-contracts.py cover start/terminal source, false-success queue/admission refusals, semantic retry, full-value custody, Storage joins, replay-only history, permission/deletion, complete coverage/CAS, rebuild and writer/reader withdrawal. Native execution NOT_RUN; static preparation is no production admission.
   Round 7 type/source refinement: original_context retains the complete writer transition schema; retained read/checkpoint/rebuild require only current scope and exact-boolean owner authorization, plus the existing disclosure/deletion/share/withdrawal fences. They do not require disposed live transition controls. Plans/ds15_index_inputs.schema.json closes the independent selected global source rows before partition/sequence work. Checkpoint schema/byte validation is the shared checkpoint_value_ok used by actual advance and the static checkpoint_boundary oracle; the boundary grants no advance or append authority.
   Round 7 closed evidence carrier: Plans/ds15_original_evidence.schema.json validates original/outcome wrappers, source-map shape and exact carrier metadata types before interpretation; only fields consumed by the operation are required. Original source controls remain frozen, and retained current disclosure context needs only actual subject scope and exact owner authorization. Every envelope joins the complete requested subject scope to the authenticated payload namespace. Candidate semantic body equality is checked before identity/hash construction. Unchanged checkpoint/rebuild results also verify complete selected source and each original Storage join. Pure stored receipt recovery still does not require disposed live transition controls. These are newly authored technical validation bindings, not a native admission.
+  Current membership (2026-11-18) — catalog.install.started@1.0.0 is individually registered in Plans/event_family_registry.json. Missing-registration refusal applies only if the exact current family/version/scope registration is absent; this registered family is not refused as missing_event_registration or family_not_admitted merely because it was prepared without admission. Append and checkpoint advance still require every existing schema, scope, retention, original-source, receipt, permission and withdrawal check specified here. Registry membership supplies no native execution proof or additional action authority.
 gui_related: false
 gui_classification_reason: Event identity, original outcome custody and reader contracts.
 depends_on:
 - DL-045
 unblocks: []
 acceptance_criteria:
-- Exact family positive and negative static oracles pass; no production admission or native proof.
+- Exact family positive and negative static oracles pass; preparation alone grants no production admission or native proof.
 validation_surfaces:
 - python3 scripts/pm-ds15-event-contracts.py
 risk_class: event_authority_contract_drift
@@ -2518,7 +2519,7 @@ source_lineage:
 preserved_exact_tokens:
 - SMPFS-318
 negative_constraints:
-- No admission, retention/deletion decision, update/remove policy, native proof, WorkNodes or NodeSeeds.
+- Preparation itself grants no admission, retention/deletion decision, update/remove policy, native proof, WorkNodes or NodeSeeds.
 owner_hints:
 - Plans/Section15_MVP_Promoted_Features_Spec.md
 ```
@@ -2532,24 +2533,25 @@ unit_type: contract
 status: accepted
 owner_doc: Plans/Section15_MVP_Promoted_Features_Spec.md
 canonical_text: |-
-  catalog.install.completed 1.0.0 — newly authored owner contract, prepared without admission. Independent search of current top-level Plans Markdown/JSON and scripts Python found required names at UI_Command_Catalog.md:936 and existing install routing at Wiring_Matrix.md:448, but no exact versioned producer/consumer/checkpoint/identity/withdrawal binding; full per-family negative evidence: /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS15/fix7/catalog_install_completed-search.json. Reuse Section15 §3.13, Commands §6.6/CS-066 and Shared Runtime §4.5. DL-045 authorizes only these missing technical bindings.
+  catalog.install.completed 1.0.0 — newly authored owner contract, prepared without admission before the 2026-11-18 registration. Independent search of current top-level Plans Markdown/JSON and scripts Python found required names at UI_Command_Catalog.md:936 and existing install routing at Wiring_Matrix.md:448, but no exact versioned producer/consumer/checkpoint/identity/withdrawal binding; full per-family negative evidence: /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS15/fix7/catalog_install_completed-search.json. Reuse Section15 §3.13, Commands §6.6/CS-066 and Shared Runtime §4.5. DL-045 authorizes only these missing technical bindings.
   Producer: catalog lifecycle controller records the existing subsystem owner effective installation commit. For an executable installation this is verified activation/ready under Shared Runtime §4.5; commands, skills, plugins/hooks, themes and MCP configs use their own canonical install commit. Never substitute download, queue acceptance, a UI acknowledgement or a universal executable machine for that owner outcome. Keep cmd.catalog.install_item as the existing route; item_type is command, skill, plugin, hook, theme or mcp_config. No update/remove admission, active-item/deferred outcome or deletion choice is made. Existing owners resolve item, version, source and actual namespace; an unavailable or ambiguous owner outcome stays unavailable without a fabricated install success.
   Scope: actual Project or application namespace as selected by the existing item owner, including actual user/Computer/profile. Project ids are real; application project_id is null, never synthetic. Project partition is Storage project~base64url. Scope key for checkpoint namespace is SHA-256 of canonical MessagePack scope map in UTF-8 key order. Identity: stable original event_id allocated once; Idempotency key is application scope: application@1:{hex(server_id)}:{hex(owner_operation_id)}; Project scope: sha256(canonical MessagePack array ["catalog.install.completed", "1.0.0", actual scope map with UTF-8 sorted keys, operation_id]). Application server_id and original_operation_id come from the immutable existing owner operation source, never focus/time. Compare caller-supplied CV-317 semantic body only on retries, excluding Storage-assigned sequence/timestamps; changed semantic bytes conflict with no new effect.
   Payload: exact closed Plans/ds15_catalog_install_completed.schema.json; bounded refs only, no executable/config/command bodies, local paths, secrets or installation content. outcome_ref and optional installation_ref resolve the existing owner original transition. Context catalog_owner_payload is the immutable resolved owner outcome, not caller assertion; phase and all fields must match. SP-337 keeps content above 16384 bytes in owner-resolved payload refs, never oversized metadata.
   Ordering: adopt SP-286 / CV-339 full-value original outcome, append and first AppendReceipt. Commit existing owner outcome, freeze original event, single writer append/dedupe, retain original receipt/value, then publish. Missing outcome or coherent backup closure is unavailable; no repeat install on retry or replay. Current writes/retries use dedupe_by_idempotency_key and refuse projector_replay_only as replay_only_not_appendable. Retained supported replay-only history remains readable after authenticating original transition, outcome, source and full-value commitment, independently of current live install state. Current permission, owner authorization, deletion/sharing and withdrawal still fence disclosure.
   Consumer: reader.ds15.catalog_install_completed.v1@1.0.0, Catalog installation history reader for only catalog.install.completed@1.0.0, adopts SP-278 by name and DL-076 nine-field token. Checkpoint key projector.checkpoint.ds15.catalog_install_completed:{scope_key}, value Plans/ds15_catalog_install_completed_checkpoint.schema.json. Capture CURRENT-selected complete global range and live redb_snapshot_id; persist only nine-field durable token, never the live snapshot. Scan every global row, resolve each matching event original custody and join id/type/scope/partition/Storage sequence. CAS complete previous checkpoint and new checkpoint in one redb transaction; gaps/omissions, changed token/snapshot/source/access or any contradictory original preserve previous. through_sequence_id is globally scanned frontier; last_event_id is last verified matching event. No checkpoint before first match; zero-match suffix retains prior last event. Rebuild requires complete retained prefix and fresh current access.
   Compatibility and withdrawal: supported exact 1.0.0 event/reader only; unknown version/field refuses before effects/checkpoint. Withdrawal fences new admissions at committed source frontier, drains only original admitted outcomes/receipts, then fences reader CAS/marks checkpoint withdrawn. Reinstall requires authorization and a complete fresh rebuild; no replay dispatch. Original source/log/receipt backup and redaction/deletion owners remain authoritative. Authority inputs use closed exact-family context schema and exact boolean/bounded integer types before interpretation; malformed values refuse with zero effects.
-  Retention: event and checkpoint retention_policy_ref=PENDING_RETENTION_DECISION; RT must choose between existing receipt/audit or telemetry classes; no policy, expiry or deletion is selected. Registry membership remains absent.
+  Retention: event and checkpoint retention_policy_ref=PENDING_RETENTION_DECISION; RT must choose between existing receipt/audit or telemetry classes; no policy, expiry or deletion is selected. At preparation before the 2026-11-18 registration, registry membership was absent.
   Oracles: ATS-329 and own family fixtures in Plans/ds15_event_contract_fixtures.json, numeric fixtures and scripts/pm-ds15-event-contracts.py cover start/terminal source, false-success queue/admission refusals, semantic retry, full-value custody, Storage joins, replay-only history, permission/deletion, complete coverage/CAS, rebuild and writer/reader withdrawal. Native execution NOT_RUN; static preparation is no production admission.
   Round 7 type/source refinement: original_context retains the complete writer transition schema; retained read/checkpoint/rebuild require only current scope and exact-boolean owner authorization, plus the existing disclosure/deletion/share/withdrawal fences. They do not require disposed live transition controls. Plans/ds15_index_inputs.schema.json closes the independent selected global source rows before partition/sequence work. Checkpoint schema/byte validation is the shared checkpoint_value_ok used by actual advance and the static checkpoint_boundary oracle; the boundary grants no advance or append authority.
   Round 7 closed evidence carrier: Plans/ds15_original_evidence.schema.json validates original/outcome wrappers, source-map shape and exact carrier metadata types before interpretation; only fields consumed by the operation are required. Original source controls remain frozen, and retained current disclosure context needs only actual subject scope and exact owner authorization. Every envelope joins the complete requested subject scope to the authenticated payload namespace. Candidate semantic body equality is checked before identity/hash construction. Unchanged checkpoint/rebuild results also verify complete selected source and each original Storage join. Pure stored receipt recovery still does not require disposed live transition controls. These are newly authored technical validation bindings, not a native admission.
+  Current membership (2026-11-18) — catalog.install.completed@1.0.0 is individually registered in Plans/event_family_registry.json. Missing-registration refusal applies only if the exact current family/version/scope registration is absent; this registered family is not refused as missing_event_registration or family_not_admitted merely because it was prepared without admission. Append and checkpoint advance still require every existing schema, scope, retention, original-source, receipt, permission and withdrawal check specified here. Registry membership supplies no native execution proof or additional action authority.
 gui_related: false
 gui_classification_reason: Event identity, original outcome custody and reader contracts.
 depends_on:
 - DL-045
 unblocks: []
 acceptance_criteria:
-- Exact family positive and negative static oracles pass; no production admission or native proof.
+- Exact family positive and negative static oracles pass; preparation alone grants no production admission or native proof.
 validation_surfaces:
 - python3 scripts/pm-ds15-event-contracts.py
 risk_class: event_authority_contract_drift
@@ -2566,7 +2568,7 @@ source_lineage:
 preserved_exact_tokens:
 - SMPFS-319
 negative_constraints:
-- No admission, retention/deletion decision, update/remove policy, native proof, WorkNodes or NodeSeeds.
+- Preparation itself grants no admission, retention/deletion decision, update/remove policy, native proof, WorkNodes or NodeSeeds.
 owner_hints:
 - Plans/Section15_MVP_Promoted_Features_Spec.md
 ```
@@ -2579,7 +2581,7 @@ plan_unit_id: SMPFS-320
 unit_type: contract
 status: accepted
 owner_doc: Plans/Section15_MVP_Promoted_Features_Spec.md
-canonical_text: "browser.context_shared 1.0.0 — newly authored owner contract, prepared without admission. This exact\
+canonical_text: "browser.context_shared 1.0.0 — newly authored owner contract, prepared without admission before the 2026-11-18 registration. This exact\
   \ family independently adopts the following bindings, not a sibling's contract. Source: DL-433 landed\
   \ in Plans/Decision_Log.md on origin/main, authored on origin/plans/ea-cards2-answers-20261105, presented\
   \ deck item 4.c, SHA-256 6db25be3dd290ab0083af482383e469a78dc109a037ad0fd0ece5d8f15679b30. Jared's words\
@@ -2678,8 +2680,7 @@ canonical_text: "browser.context_shared 1.0.0 — newly authored owner contract,
   \ explicit sweep work.\nOracles: ATS-329's exact browser.context_shared section, Plans/ds15_deck2_fixtures.json\
   \ own family row, and python3 scripts/pm-ds15-deck2-contracts.py --family browser.context_shared. Each\
   \ negative has one declared defect and explicit coherent derived observations; fixture source/custody\
-  \ joins are verified against actual retained values. Native execution NOT_RUN. Registry membership remains\
-  \ ABSENT; no admission, new feature, Decision Log entry or readiness claim.\n\nPNC-019 s4r retention\
+  \ joins are verified against actual retained values. Native execution NOT_RUN. At preparation before the 2026-11-18 registration, registry membership was ABSENT; preparation itself granted no admission, new feature, Decision Log entry or readiness claim.\n\nPNC-019 s4r retention\
   \ binding for `browser.context_shared` (2026-11-14).\n\nEvent history `retention_policy_ref = RP-CHAT-THREAD-LIFETIME@1.0.0`,\
   \ under DL-401, DL-459.\n\nUse the existing policy object unchanged: {\"anchor_kind\": \"explicit_delete\"\
   , \"cardinality_scope\": \"thread\", \"expiry_action\": \"tombstone_then_compact\", \"max_cardinality\"\
@@ -2696,7 +2697,7 @@ canonical_text: "browser.context_shared 1.0.0 — newly authored owner contract,
   \ retain the current plus two replaced generations, each replaced copy for seven days after its replacement,\
   \ subject to holds and required dependencies. Rebuild only from retained authorized originals. This\
   \ supersedes the earlier checkpoint-pending statement, grants no source keepalive and creates no application\
-  \ edition.\n"
+  \ edition.\n\n\nCurrent membership (2026-11-18) — browser.context_shared@1.0.0 is individually registered in Plans/event_family_registry.json. Missing-registration refusal applies only if the exact current family/version/scope registration is absent; this registered family is not refused as missing_event_registration or family_not_admitted merely because it was prepared without admission. Append and checkpoint advance still require every existing schema, scope, retention, original-source, receipt, permission and withdrawal check specified here. Registry membership supplies no native execution proof or additional action authority."
 gui_related: false
 gui_classification_reason: Typed event/source identity, persistence, custody and reader contract.
 depends_on:
@@ -2705,7 +2706,7 @@ depends_on:
 - DL-433
 unblocks: []
 acceptance_criteria:
-- Exact family static positive and negative oracles pass; membership remains absent.
+- Exact family static positive and negative oracles pass; membership is registered and all existing append/checkpoint checks still apply.
 validation_surfaces:
 - python3 scripts/pm-ds15-deck2-contracts.py --family browser.context_shared
 risk_class: event_authority_contract_drift
@@ -2724,7 +2725,7 @@ preserved_exact_tokens:
 - SMPFS-320
 - browser.context_shared
 negative_constraints:
-- No admission, registry append, new retention choice, native proof, WorkNodes or NodeSeeds.
+- Preparation itself grants no admission, registry append, new retention choice, native proof, WorkNodes or NodeSeeds.
 owner_hints:
 - Plans/Section15_MVP_Promoted_Features_Spec.md
 ```
@@ -2737,7 +2738,7 @@ plan_unit_id: SMPFS-321
 unit_type: contract
 status: accepted
 owner_doc: Plans/Section15_MVP_Promoted_Features_Spec.md
-canonical_text: "browser.context_share_revoked 1.0.0 — newly authored owner contract, prepared without admission. This\
+canonical_text: "browser.context_share_revoked 1.0.0 — newly authored owner contract, prepared without admission before the 2026-11-18 registration. This\
   \ exact family independently adopts the following bindings, not a sibling's contract. Source: DL-433\
   \ landed in Plans/Decision_Log.md on origin/main, authored on origin/plans/ea-cards2-answers-20261105,\
   \ presented deck item 4.c, SHA-256 6db25be3dd290ab0083af482383e469a78dc109a037ad0fd0ece5d8f15679b30.\
@@ -2837,8 +2838,7 @@ canonical_text: "browser.context_share_revoked 1.0.0 — newly authored owner co
   \ browser.context_share_revoked section, Plans/ds15_deck2_fixtures.json own family row, and python3\
   \ scripts/pm-ds15-deck2-contracts.py --family browser.context_share_revoked. Each negative has one declared\
   \ defect and explicit coherent derived observations; fixture source/custody joins are verified against\
-  \ actual retained values. Native execution NOT_RUN. Registry membership remains ABSENT; no admission,\
-  \ new feature, Decision Log entry or readiness claim.\n\nPNC-019 s4r retention binding for `browser.context_share_revoked`\
+  \ actual retained values. Native execution NOT_RUN. At preparation before the 2026-11-18 registration, registry membership was ABSENT; preparation itself granted no admission, new feature, Decision Log entry or readiness claim.\n\nPNC-019 s4r retention binding for `browser.context_share_revoked`\
   \ (2026-11-14).\n\nEvent history `retention_policy_ref = RP-CHAT-THREAD-LIFETIME@1.0.0`, under DL-401,\
   \ DL-458, DL-459.\n\nUse the existing policy object unchanged: {\"anchor_kind\": \"explicit_delete\"\
   , \"cardinality_scope\": \"thread\", \"expiry_action\": \"tombstone_then_compact\", \"max_cardinality\"\
@@ -2857,7 +2857,7 @@ canonical_text: "browser.context_share_revoked 1.0.0 — newly authored owner co
   \ to `RP-PROJECTION-3GEN@1.0.0`: retain the current plus two replaced generations, each replaced copy\
   \ for seven days after its replacement, subject to holds and required dependencies. Rebuild only from\
   \ retained authorized originals. This supersedes the earlier checkpoint-pending statement, grants no\
-  \ source keepalive and creates no application edition.\n"
+  \ source keepalive and creates no application edition.\n\n\nCurrent membership (2026-11-18) — browser.context_share_revoked@1.0.0 is individually registered in Plans/event_family_registry.json. Missing-registration refusal applies only if the exact current family/version/scope registration is absent; this registered family is not refused as missing_event_registration or family_not_admitted merely because it was prepared without admission. Append and checkpoint advance still require every existing schema, scope, retention, original-source, receipt, permission and withdrawal check specified here. Registry membership supplies no native execution proof or additional action authority."
 gui_related: false
 gui_classification_reason: Typed event/source identity, persistence, custody and reader contract.
 depends_on:
@@ -2866,7 +2866,7 @@ depends_on:
 - DL-433
 unblocks: []
 acceptance_criteria:
-- Exact family static positive and negative oracles pass; membership remains absent.
+- Exact family static positive and negative oracles pass; membership is registered and all existing append/checkpoint checks still apply.
 validation_surfaces:
 - python3 scripts/pm-ds15-deck2-contracts.py --family browser.context_share_revoked
 risk_class: event_authority_contract_drift
@@ -2885,7 +2885,7 @@ preserved_exact_tokens:
 - SMPFS-321
 - browser.context_share_revoked
 negative_constraints:
-- No admission, registry append, new retention choice, native proof, WorkNodes or NodeSeeds.
+- Preparation itself grants no admission, registry append, new retention choice, native proof, WorkNodes or NodeSeeds.
 owner_hints:
 - Plans/Section15_MVP_Promoted_Features_Spec.md
 ```
@@ -2899,7 +2899,7 @@ unit_type: contract
 status: accepted
 owner_doc: Plans/Section15_MVP_Promoted_Features_Spec.md
 canonical_text: |-
-  catalog.update.started 1.0.0 — newly authored owner contract, prepared without admission. This exact family independently adopts the following bindings, not a sibling's contract. Source: DL-434 landed in Plans/Decision_Log.md on origin/main, authored on origin/plans/ea-cards2-answers-20261105, presented deck item 4.d, SHA-256 6db25be3dd290ab0083af482383e469a78dc109a037ad0fd0ece5d8f15679b30. Jared's words alone: "i approve all of it". The deck's fast-reply rule selects A; the option below is the card author's wording, not a Jared quotation.
+  catalog.update.started 1.0.0 — newly authored owner contract, prepared without admission before the 2026-11-18 registration. This exact family independently adopts the following bindings, not a sibling's contract. Source: DL-434 landed in Plans/Decision_Log.md on origin/main, authored on origin/plans/ea-cards2-answers-20261105, presented deck item 4.d, SHA-256 6db25be3dd290ab0083af482383e469a78dc109a037ad0fd0ece5d8f15679b30. Jared's words alone: "i approve all of it". The deck's fast-reply rule selects A; the option below is the card author's wording, not a Jared quotation.
   Approved option A: For the listed uses, keep the current verified version and queue the update until the next safe reload or start allowed by the component that uses it. Save completion only when the new version takes effect. You keep using the old version until it is safe to switch.
   Card **Sources:** `MAIN:Plans/UI_Command_Catalog.md:936-938`; `MAIN:Plans/Section15_MVP_Promoted_Features_Spec.md:563-564`; `DS15:reports/event-authority-20261104/DS15.md:97-100`; `evidence:reviews/DS15-sol/REVIEW.md:63-69`; `evidence:reviews/DS15-sol/REVIEW-cycle4.md:100-104`; `evidence:reviews/DS15-sol/REVIEW-cycle5.md:203-218`; `evidence:reviews/DS15-sol/REVIEW-cycle4.md:98-104`; `MAIN:Plans/Commands_System.md:505-514`; `MAIN:Plans/Commands_System.md:7089-7102`; `MAIN:Plans/Skills_System.md:35-35`; `MAIN:Plans/Skills_System.md:157-189`; `MAIN:Plans/Skills_System.md:315-325`; `MAIN:Plans/Plugins_System.md:511-519`; `MAIN:Plans/Plugins_System.md:43-48`; `MAIN:Plans/Plugins_System.md:4288-4292`; `MAIN:Plans/MCP_Integration.md:119-149`; `MAIN:Plans/MCP_Integration.md:161-174`; `MAIN:Plans/Section15_MVP_Promoted_Features_Spec.md:561-565`; `MAIN:Plans/FinalGUISpec.md:2322-2326`; `MAIN:Plans/Skills_System.md:152-169`.
   Search: /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS15/r9/catalog_update_started-search.json; scope current top-level Plans Markdown/JSON and scripts Python at 30dc9245bc753dbe80693977a1b03e3278d73b85, excluding source ledgers/generated artifacts. Required behavior exists; no complete exact-family technical binding was found. DL-045 permits newly authored technical bindings; DL-434 resolves only the stated behavior choice. Reuse SP-278/SP-286/CV-339/CV-366/SP-337 and actual existing command/Doctor owner outcomes.
@@ -2912,7 +2912,8 @@ canonical_text: |-
   Consumer and checkpoint: reader.ds15.catalog_update_started.v1@1.0.0 is the exact operating catalog.update.started history reader and reads only catalog.update.started@1.0.0. Adopt SP-278 and DL-076 nine-field durable read token; key projector.checkpoint.ds15.catalog_update_started:{scope_key}, closed value Plans/ds15_catalog_update_started_checkpoint.schema.json. Physical proposed value: derived redb, coordination_and_storage budget, messagepack_canonical, full encoded value at most 16384 bytes (SP-339/SP-340). This task appends no storage-value registry row and authorizes no physical write/advance. Capture CURRENT-selected complete global range and live snapshot; persist only the nine-field token, never redb_snapshot_id. Scan every global row, resolve each matching original, join event id/type/scope/partition/Storage sequence. Advance by atomic CAS of complete prior and new checkpoint in one redb transaction. Missing rows, contradictions, mismatched token/Storage/snapshot/source, changed access or reader version preserve prior. through_sequence_id is the global scanned frontier and last_event_id the last verified match; no checkpoint before first match, a zero-match suffix keeps the earlier last event. Rebuild requires complete retained prefix and fresh permissions.
   Retention: Event and checkpoint adopt DL-401 G11 / RP-AUTHORITY-INDEFINITE@1.0.0: creation anchored, metadata/references only, no age/count expiry or count cap, holds and Storage pressure/fail-closed budget rules remain. Neither retained installation history nor a removal event retains executable, configuration, skill, theme, user override or external-service content forever. Retention premise evidence is DL-401 and G10/G11/G14 as named for this exact family in Plans/storage-plan.md, landed on origin/main; those lines are byte-identical at origin/plans/ea-retention-cards2-20261105 commit 9b76338594c6f1ca75de6c757e7a8b98ab68e229; none of items 4.c-4.f changes that grouping. Referenced content follows its own independently approved lifetime, redaction and read access.
   Compatibility and withdrawal: exact 1.0.0 writer/reader/schema only. Unknown version/field fails closed. Writer withdrawal uses committed admission frontier, refuses new admissions and drains only already-admitted original outcomes/receipts; reader withdrawal fences CAS and marks checkpoints withdrawn. Reinstallation needs current authorization and a complete retained-source rebuild. No fabricated old recipe selector; shared number/format historical-selector defects remain explicit sweep work.
-  Oracles: ATS-329's exact catalog.update.started section, Plans/ds15_deck2_fixtures.json own family row, and python3 scripts/pm-ds15-deck2-contracts.py --family catalog.update.started. Each negative has one declared defect and explicit coherent derived observations; fixture source/custody joins are verified against actual retained values. Native execution NOT_RUN. Registry membership remains ABSENT; no admission, new feature, Decision Log entry or readiness claim.
+  Oracles: ATS-329's exact catalog.update.started section, Plans/ds15_deck2_fixtures.json own family row, and python3 scripts/pm-ds15-deck2-contracts.py --family catalog.update.started. Each negative has one declared defect and explicit coherent derived observations; fixture source/custody joins are verified against actual retained values. Native execution NOT_RUN. At preparation before the 2026-11-18 registration, registry membership was ABSENT; preparation itself granted no admission, new feature, Decision Log entry or readiness claim.
+  Current membership (2026-11-18) — catalog.update.started@1.0.0 is individually registered in Plans/event_family_registry.json. Missing-registration refusal applies only if the exact current family/version/scope registration is absent; this registered family is not refused as missing_event_registration or family_not_admitted merely because it was prepared without admission. Append and checkpoint advance still require every existing schema, scope, retention, original-source, receipt, permission and withdrawal check specified here. Registry membership supplies no native execution proof or additional action authority.
 gui_related: false
 gui_classification_reason: Typed event/source identity, persistence, custody and reader contract.
 depends_on:
@@ -2921,7 +2922,7 @@ depends_on:
 - DL-434
 unblocks: []
 acceptance_criteria:
-- Exact family static positive and negative oracles pass; membership remains absent.
+- Exact family static positive and negative oracles pass; membership is registered and all existing append/checkpoint checks still apply.
 validation_surfaces:
 - python3 scripts/pm-ds15-deck2-contracts.py --family catalog.update.started
 risk_class: event_authority_contract_drift
@@ -2940,7 +2941,7 @@ preserved_exact_tokens:
 - SMPFS-322
 - catalog.update.started
 negative_constraints:
-- No admission, registry append, new retention choice, native proof, WorkNodes or NodeSeeds.
+- Preparation itself grants no admission, registry append, new retention choice, native proof, WorkNodes or NodeSeeds.
 owner_hints:
 - Plans/Section15_MVP_Promoted_Features_Spec.md
 ```
@@ -2954,7 +2955,7 @@ unit_type: contract
 status: accepted
 owner_doc: Plans/Section15_MVP_Promoted_Features_Spec.md
 canonical_text: |-
-  catalog.update.completed 1.0.0 — newly authored owner contract, prepared without admission. This exact family independently adopts the following bindings, not a sibling's contract. Source: DL-434 landed in Plans/Decision_Log.md on origin/main, authored on origin/plans/ea-cards2-answers-20261105, presented deck item 4.d, SHA-256 6db25be3dd290ab0083af482383e469a78dc109a037ad0fd0ece5d8f15679b30. Jared's words alone: "i approve all of it". The deck's fast-reply rule selects A; the option below is the card author's wording, not a Jared quotation.
+  catalog.update.completed 1.0.0 — newly authored owner contract, prepared without admission before the 2026-11-18 registration. This exact family independently adopts the following bindings, not a sibling's contract. Source: DL-434 landed in Plans/Decision_Log.md on origin/main, authored on origin/plans/ea-cards2-answers-20261105, presented deck item 4.d, SHA-256 6db25be3dd290ab0083af482383e469a78dc109a037ad0fd0ece5d8f15679b30. Jared's words alone: "i approve all of it". The deck's fast-reply rule selects A; the option below is the card author's wording, not a Jared quotation.
   Approved option A: For the listed uses, keep the current verified version and queue the update until the next safe reload or start allowed by the component that uses it. Save completion only when the new version takes effect. You keep using the old version until it is safe to switch.
   Card **Sources:** `MAIN:Plans/UI_Command_Catalog.md:936-938`; `MAIN:Plans/Section15_MVP_Promoted_Features_Spec.md:563-564`; `DS15:reports/event-authority-20261104/DS15.md:97-100`; `evidence:reviews/DS15-sol/REVIEW.md:63-69`; `evidence:reviews/DS15-sol/REVIEW-cycle4.md:100-104`; `evidence:reviews/DS15-sol/REVIEW-cycle5.md:203-218`; `evidence:reviews/DS15-sol/REVIEW-cycle4.md:98-104`; `MAIN:Plans/Commands_System.md:505-514`; `MAIN:Plans/Commands_System.md:7089-7102`; `MAIN:Plans/Skills_System.md:35-35`; `MAIN:Plans/Skills_System.md:157-189`; `MAIN:Plans/Skills_System.md:315-325`; `MAIN:Plans/Plugins_System.md:511-519`; `MAIN:Plans/Plugins_System.md:43-48`; `MAIN:Plans/Plugins_System.md:4288-4292`; `MAIN:Plans/MCP_Integration.md:119-149`; `MAIN:Plans/MCP_Integration.md:161-174`; `MAIN:Plans/Section15_MVP_Promoted_Features_Spec.md:561-565`; `MAIN:Plans/FinalGUISpec.md:2322-2326`; `MAIN:Plans/Skills_System.md:152-169`.
   Search: /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS15/r9/catalog_update_completed-search.json; scope current top-level Plans Markdown/JSON and scripts Python at 30dc9245bc753dbe80693977a1b03e3278d73b85, excluding source ledgers/generated artifacts. Required behavior exists; no complete exact-family technical binding was found. DL-045 permits newly authored technical bindings; DL-434 resolves only the stated behavior choice. Reuse SP-278/SP-286/CV-339/CV-366/SP-337 and actual existing command/Doctor owner outcomes.
@@ -2967,7 +2968,8 @@ canonical_text: |-
   Consumer and checkpoint: reader.ds15.catalog_update_completed.v1@1.0.0 is the exact operating catalog.update.completed history reader and reads only catalog.update.completed@1.0.0. Adopt SP-278 and DL-076 nine-field durable read token; key projector.checkpoint.ds15.catalog_update_completed:{scope_key}, closed value Plans/ds15_catalog_update_completed_checkpoint.schema.json. Physical proposed value: derived redb, coordination_and_storage budget, messagepack_canonical, full encoded value at most 16384 bytes (SP-339/SP-340). This task appends no storage-value registry row and authorizes no physical write/advance. Capture CURRENT-selected complete global range and live snapshot; persist only the nine-field token, never redb_snapshot_id. Scan every global row, resolve each matching original, join event id/type/scope/partition/Storage sequence. Advance by atomic CAS of complete prior and new checkpoint in one redb transaction. Missing rows, contradictions, mismatched token/Storage/snapshot/source, changed access or reader version preserve prior. through_sequence_id is the global scanned frontier and last_event_id the last verified match; no checkpoint before first match, a zero-match suffix keeps the earlier last event. Rebuild requires complete retained prefix and fresh permissions.
   Retention: Event and checkpoint adopt DL-401 G11 / RP-AUTHORITY-INDEFINITE@1.0.0: creation anchored, metadata/references only, no age/count expiry or count cap, holds and Storage pressure/fail-closed budget rules remain. Neither retained installation history nor a removal event retains executable, configuration, skill, theme, user override or external-service content forever. Retention premise evidence is DL-401 and G10/G11/G14 as named for this exact family in Plans/storage-plan.md, landed on origin/main; those lines are byte-identical at origin/plans/ea-retention-cards2-20261105 commit 9b76338594c6f1ca75de6c757e7a8b98ab68e229; none of items 4.c-4.f changes that grouping. Referenced content follows its own independently approved lifetime, redaction and read access.
   Compatibility and withdrawal: exact 1.0.0 writer/reader/schema only. Unknown version/field fails closed. Writer withdrawal uses committed admission frontier, refuses new admissions and drains only already-admitted original outcomes/receipts; reader withdrawal fences CAS and marks checkpoints withdrawn. Reinstallation needs current authorization and a complete retained-source rebuild. No fabricated old recipe selector; shared number/format historical-selector defects remain explicit sweep work.
-  Oracles: ATS-329's exact catalog.update.completed section, Plans/ds15_deck2_fixtures.json own family row, and python3 scripts/pm-ds15-deck2-contracts.py --family catalog.update.completed. Each negative has one declared defect and explicit coherent derived observations; fixture source/custody joins are verified against actual retained values. Native execution NOT_RUN. Registry membership remains ABSENT; no admission, new feature, Decision Log entry or readiness claim.
+  Oracles: ATS-329's exact catalog.update.completed section, Plans/ds15_deck2_fixtures.json own family row, and python3 scripts/pm-ds15-deck2-contracts.py --family catalog.update.completed. Each negative has one declared defect and explicit coherent derived observations; fixture source/custody joins are verified against actual retained values. Native execution NOT_RUN. At preparation before the 2026-11-18 registration, registry membership was ABSENT; preparation itself granted no admission, new feature, Decision Log entry or readiness claim.
+  Current membership (2026-11-18) — catalog.update.completed@1.0.0 is individually registered in Plans/event_family_registry.json. Missing-registration refusal applies only if the exact current family/version/scope registration is absent; this registered family is not refused as missing_event_registration or family_not_admitted merely because it was prepared without admission. Append and checkpoint advance still require every existing schema, scope, retention, original-source, receipt, permission and withdrawal check specified here. Registry membership supplies no native execution proof or additional action authority.
 gui_related: false
 gui_classification_reason: Typed event/source identity, persistence, custody and reader contract.
 depends_on:
@@ -2976,7 +2978,7 @@ depends_on:
 - DL-434
 unblocks: []
 acceptance_criteria:
-- Exact family static positive and negative oracles pass; membership remains absent.
+- Exact family static positive and negative oracles pass; membership is registered and all existing append/checkpoint checks still apply.
 validation_surfaces:
 - python3 scripts/pm-ds15-deck2-contracts.py --family catalog.update.completed
 risk_class: event_authority_contract_drift
@@ -2995,7 +2997,7 @@ preserved_exact_tokens:
 - SMPFS-323
 - catalog.update.completed
 negative_constraints:
-- No admission, registry append, new retention choice, native proof, WorkNodes or NodeSeeds.
+- Preparation itself grants no admission, registry append, new retention choice, native proof, WorkNodes or NodeSeeds.
 owner_hints:
 - Plans/Section15_MVP_Promoted_Features_Spec.md
 ```
@@ -3009,7 +3011,7 @@ unit_type: contract
 status: accepted
 owner_doc: Plans/Section15_MVP_Promoted_Features_Spec.md
 canonical_text: |-
-  catalog.remove.started 1.0.0 — newly authored owner contract, prepared without admission. This exact family independently adopts the following bindings, not a sibling's contract. Source: DL-435 landed in Plans/Decision_Log.md on origin/main, authored on origin/plans/ea-cards2-answers-20261105, presented deck item 4.e, SHA-256 6db25be3dd290ab0083af482383e469a78dc109a037ad0fd0ece5d8f15679b30. Jared's words alone: "i approve all of it". The deck's fast-reply rule selects A; the option below is the card author's wording, not a Jared quotation.
+  catalog.remove.started 1.0.0 — newly authored owner contract, prepared without admission before the 2026-11-18 registration. This exact family independently adopts the following bindings, not a sibling's contract. Source: DL-435 landed in Plans/Decision_Log.md on origin/main, authored on origin/plans/ea-cards2-answers-20261105, presented deck item 4.e, SHA-256 6db25be3dd290ab0083af482383e469a78dc109a037ad0fd0ece5d8f15679b30. Jared's words alone: "i approve all of it". The deck's fast-reply rule selects A; the option below is the card author's wording, not a Jared quotation.
   Approved option A: For the listed uses, refuse removal until the person releases or disables every current use or saved reference. Keep the installed item available. A refused request is not completed and is never silently queued. You decide when to release its uses and try again.
   Card **Sources:** `MAIN:Plans/UI_Command_Catalog.md:936-938`; `MAIN:Plans/Section15_MVP_Promoted_Features_Spec.md:563-564`; `evidence:reviews/DS15-sol/REVIEW.md:63-69`; `evidence:reviews/DS15-sol/REVIEW-cycle4.md:100-104`; `evidence:reviews/DS15-sol/REVIEW-cycle5.md:203-218`; `evidence:reviews/DS15-sol/REVIEW-cycle4.md:98-104`; `MAIN:Plans/Commands_System.md:505-514`; `MAIN:Plans/Commands_System.md:7089-7102`; `MAIN:Plans/Skills_System.md:35-35`; `MAIN:Plans/Skills_System.md:157-189`; `MAIN:Plans/Skills_System.md:315-325`; `MAIN:Plans/Plugins_System.md:511-519`; `MAIN:Plans/Plugins_System.md:43-48`; `MAIN:Plans/Plugins_System.md:4288-4292`; `MAIN:Plans/MCP_Integration.md:119-149`; `MAIN:Plans/MCP_Integration.md:161-174`; `MAIN:Plans/Section15_MVP_Promoted_Features_Spec.md:561-565`; `MAIN:Plans/FinalGUISpec.md:2322-2326`; `MAIN:Plans/Skills_System.md:152-169`.
   Search: /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS15/r9/catalog_remove_started-search.json; scope current top-level Plans Markdown/JSON and scripts Python at 30dc9245bc753dbe80693977a1b03e3278d73b85, excluding source ledgers/generated artifacts. Required behavior exists; no complete exact-family technical binding was found. DL-045 permits newly authored technical bindings; DL-435 resolves only the stated behavior choice. Reuse SP-278/SP-286/CV-339/CV-366/SP-337 and actual existing command/Doctor owner outcomes.
@@ -3022,7 +3024,8 @@ canonical_text: |-
   Consumer and checkpoint: reader.ds15.catalog_remove_started.v1@1.0.0 is the exact operating catalog.remove.started history reader and reads only catalog.remove.started@1.0.0. Adopt SP-278 and DL-076 nine-field durable read token; key projector.checkpoint.ds15.catalog_remove_started:{scope_key}, closed value Plans/ds15_catalog_remove_started_checkpoint.schema.json. Physical proposed value: derived redb, coordination_and_storage budget, messagepack_canonical, full encoded value at most 16384 bytes (SP-339/SP-340). This task appends no storage-value registry row and authorizes no physical write/advance. Capture CURRENT-selected complete global range and live snapshot; persist only the nine-field token, never redb_snapshot_id. Scan every global row, resolve each matching original, join event id/type/scope/partition/Storage sequence. Advance by atomic CAS of complete prior and new checkpoint in one redb transaction. Missing rows, contradictions, mismatched token/Storage/snapshot/source, changed access or reader version preserve prior. through_sequence_id is the global scanned frontier and last_event_id the last verified match; no checkpoint before first match, a zero-match suffix keeps the earlier last event. Rebuild requires complete retained prefix and fresh permissions.
   Retention: Event and checkpoint adopt DL-401 G11 / RP-AUTHORITY-INDEFINITE@1.0.0: creation anchored, metadata/references only, no age/count expiry or count cap, holds and Storage pressure/fail-closed budget rules remain. Neither retained installation history nor a removal event retains executable, configuration, skill, theme, user override or external-service content forever. Retention premise evidence is DL-401 and G10/G11/G14 as named for this exact family in Plans/storage-plan.md, landed on origin/main; those lines are byte-identical at origin/plans/ea-retention-cards2-20261105 commit 9b76338594c6f1ca75de6c757e7a8b98ab68e229; none of items 4.c-4.f changes that grouping. Referenced content follows its own independently approved lifetime, redaction and read access.
   Compatibility and withdrawal: exact 1.0.0 writer/reader/schema only. Unknown version/field fails closed. Writer withdrawal uses committed admission frontier, refuses new admissions and drains only already-admitted original outcomes/receipts; reader withdrawal fences CAS and marks checkpoints withdrawn. Reinstallation needs current authorization and a complete retained-source rebuild. No fabricated old recipe selector; shared number/format historical-selector defects remain explicit sweep work.
-  Oracles: ATS-329's exact catalog.remove.started section, Plans/ds15_deck2_fixtures.json own family row, and python3 scripts/pm-ds15-deck2-contracts.py --family catalog.remove.started. Each negative has one declared defect and explicit coherent derived observations; fixture source/custody joins are verified against actual retained values. Native execution NOT_RUN. Registry membership remains ABSENT; no admission, new feature, Decision Log entry or readiness claim.
+  Oracles: ATS-329's exact catalog.remove.started section, Plans/ds15_deck2_fixtures.json own family row, and python3 scripts/pm-ds15-deck2-contracts.py --family catalog.remove.started. Each negative has one declared defect and explicit coherent derived observations; fixture source/custody joins are verified against actual retained values. Native execution NOT_RUN. At preparation before the 2026-11-18 registration, registry membership was ABSENT; preparation itself granted no admission, new feature, Decision Log entry or readiness claim.
+  Current membership (2026-11-18) — catalog.remove.started@1.0.0 is individually registered in Plans/event_family_registry.json. Missing-registration refusal applies only if the exact current family/version/scope registration is absent; this registered family is not refused as missing_event_registration or family_not_admitted merely because it was prepared without admission. Append and checkpoint advance still require every existing schema, scope, retention, original-source, receipt, permission and withdrawal check specified here. Registry membership supplies no native execution proof or additional action authority.
 gui_related: false
 gui_classification_reason: Typed event/source identity, persistence, custody and reader contract.
 depends_on:
@@ -3031,7 +3034,7 @@ depends_on:
 - DL-435
 unblocks: []
 acceptance_criteria:
-- Exact family static positive and negative oracles pass; membership remains absent.
+- Exact family static positive and negative oracles pass; membership is registered and all existing append/checkpoint checks still apply.
 validation_surfaces:
 - python3 scripts/pm-ds15-deck2-contracts.py --family catalog.remove.started
 risk_class: event_authority_contract_drift
@@ -3050,7 +3053,7 @@ preserved_exact_tokens:
 - SMPFS-324
 - catalog.remove.started
 negative_constraints:
-- No admission, registry append, new retention choice, native proof, WorkNodes or NodeSeeds.
+- Preparation itself grants no admission, registry append, new retention choice, native proof, WorkNodes or NodeSeeds.
 owner_hints:
 - Plans/Section15_MVP_Promoted_Features_Spec.md
 ```
@@ -3064,7 +3067,7 @@ unit_type: contract
 status: accepted
 owner_doc: Plans/Section15_MVP_Promoted_Features_Spec.md
 canonical_text: |-
-  catalog.remove.completed 1.0.0 — newly authored owner contract, prepared without admission. This exact family independently adopts the following bindings, not a sibling's contract. Source: DL-435 landed in Plans/Decision_Log.md on origin/main, authored on origin/plans/ea-cards2-answers-20261105, presented deck item 4.e, SHA-256 6db25be3dd290ab0083af482383e469a78dc109a037ad0fd0ece5d8f15679b30. Jared's words alone: "i approve all of it". The deck's fast-reply rule selects A; the option below is the card author's wording, not a Jared quotation.
+  catalog.remove.completed 1.0.0 — newly authored owner contract, prepared without admission before the 2026-11-18 registration. This exact family independently adopts the following bindings, not a sibling's contract. Source: DL-435 landed in Plans/Decision_Log.md on origin/main, authored on origin/plans/ea-cards2-answers-20261105, presented deck item 4.e, SHA-256 6db25be3dd290ab0083af482383e469a78dc109a037ad0fd0ece5d8f15679b30. Jared's words alone: "i approve all of it". The deck's fast-reply rule selects A; the option below is the card author's wording, not a Jared quotation.
   Approved option A: For the listed uses, refuse removal until the person releases or disables every current use or saved reference. Keep the installed item available. A refused request is not completed and is never silently queued. You decide when to release its uses and try again.
   Card **Sources:** `MAIN:Plans/UI_Command_Catalog.md:936-938`; `MAIN:Plans/Section15_MVP_Promoted_Features_Spec.md:563-564`; `evidence:reviews/DS15-sol/REVIEW.md:63-69`; `evidence:reviews/DS15-sol/REVIEW-cycle4.md:100-104`; `evidence:reviews/DS15-sol/REVIEW-cycle5.md:203-218`; `evidence:reviews/DS15-sol/REVIEW-cycle4.md:98-104`; `MAIN:Plans/Commands_System.md:505-514`; `MAIN:Plans/Commands_System.md:7089-7102`; `MAIN:Plans/Skills_System.md:35-35`; `MAIN:Plans/Skills_System.md:157-189`; `MAIN:Plans/Skills_System.md:315-325`; `MAIN:Plans/Plugins_System.md:511-519`; `MAIN:Plans/Plugins_System.md:43-48`; `MAIN:Plans/Plugins_System.md:4288-4292`; `MAIN:Plans/MCP_Integration.md:119-149`; `MAIN:Plans/MCP_Integration.md:161-174`; `MAIN:Plans/Section15_MVP_Promoted_Features_Spec.md:561-565`; `MAIN:Plans/FinalGUISpec.md:2322-2326`; `MAIN:Plans/Skills_System.md:152-169`.
   Search: /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS15/r9/catalog_remove_completed-search.json; scope current top-level Plans Markdown/JSON and scripts Python at 30dc9245bc753dbe80693977a1b03e3278d73b85, excluding source ledgers/generated artifacts. Required behavior exists; no complete exact-family technical binding was found. DL-045 permits newly authored technical bindings; DL-435 resolves only the stated behavior choice. Reuse SP-278/SP-286/CV-339/CV-366/SP-337 and actual existing command/Doctor owner outcomes.
@@ -3077,7 +3080,8 @@ canonical_text: |-
   Consumer and checkpoint: reader.ds15.catalog_remove_completed.v1@1.0.0 is the exact operating catalog.remove.completed history reader and reads only catalog.remove.completed@1.0.0. Adopt SP-278 and DL-076 nine-field durable read token; key projector.checkpoint.ds15.catalog_remove_completed:{scope_key}, closed value Plans/ds15_catalog_remove_completed_checkpoint.schema.json. Physical proposed value: derived redb, coordination_and_storage budget, messagepack_canonical, full encoded value at most 16384 bytes (SP-339/SP-340). This task appends no storage-value registry row and authorizes no physical write/advance. Capture CURRENT-selected complete global range and live snapshot; persist only the nine-field token, never redb_snapshot_id. Scan every global row, resolve each matching original, join event id/type/scope/partition/Storage sequence. Advance by atomic CAS of complete prior and new checkpoint in one redb transaction. Missing rows, contradictions, mismatched token/Storage/snapshot/source, changed access or reader version preserve prior. through_sequence_id is the global scanned frontier and last_event_id the last verified match; no checkpoint before first match, a zero-match suffix keeps the earlier last event. Rebuild requires complete retained prefix and fresh permissions.
   Retention: Event and checkpoint adopt DL-401 G11 / RP-AUTHORITY-INDEFINITE@1.0.0: creation anchored, metadata/references only, no age/count expiry or count cap, holds and Storage pressure/fail-closed budget rules remain. Neither retained installation history nor a removal event retains executable, configuration, skill, theme, user override or external-service content forever. Retention premise evidence is DL-401 and G10/G11/G14 as named for this exact family in Plans/storage-plan.md, landed on origin/main; those lines are byte-identical at origin/plans/ea-retention-cards2-20261105 commit 9b76338594c6f1ca75de6c757e7a8b98ab68e229; none of items 4.c-4.f changes that grouping. Referenced content follows its own independently approved lifetime, redaction and read access.
   Compatibility and withdrawal: exact 1.0.0 writer/reader/schema only. Unknown version/field fails closed. Writer withdrawal uses committed admission frontier, refuses new admissions and drains only already-admitted original outcomes/receipts; reader withdrawal fences CAS and marks checkpoints withdrawn. Reinstallation needs current authorization and a complete retained-source rebuild. No fabricated old recipe selector; shared number/format historical-selector defects remain explicit sweep work.
-  Oracles: ATS-329's exact catalog.remove.completed section, Plans/ds15_deck2_fixtures.json own family row, and python3 scripts/pm-ds15-deck2-contracts.py --family catalog.remove.completed. Each negative has one declared defect and explicit coherent derived observations; fixture source/custody joins are verified against actual retained values. Native execution NOT_RUN. Registry membership remains ABSENT; no admission, new feature, Decision Log entry or readiness claim.
+  Oracles: ATS-329's exact catalog.remove.completed section, Plans/ds15_deck2_fixtures.json own family row, and python3 scripts/pm-ds15-deck2-contracts.py --family catalog.remove.completed. Each negative has one declared defect and explicit coherent derived observations; fixture source/custody joins are verified against actual retained values. Native execution NOT_RUN. At preparation before the 2026-11-18 registration, registry membership was ABSENT; preparation itself granted no admission, new feature, Decision Log entry or readiness claim.
+  Current membership (2026-11-18) — catalog.remove.completed@1.0.0 is individually registered in Plans/event_family_registry.json. Missing-registration refusal applies only if the exact current family/version/scope registration is absent; this registered family is not refused as missing_event_registration or family_not_admitted merely because it was prepared without admission. Append and checkpoint advance still require every existing schema, scope, retention, original-source, receipt, permission and withdrawal check specified here. Registry membership supplies no native execution proof or additional action authority.
 gui_related: false
 gui_classification_reason: Typed event/source identity, persistence, custody and reader contract.
 depends_on:
@@ -3086,7 +3090,7 @@ depends_on:
 - DL-435
 unblocks: []
 acceptance_criteria:
-- Exact family static positive and negative oracles pass; membership remains absent.
+- Exact family static positive and negative oracles pass; membership is registered and all existing append/checkpoint checks still apply.
 validation_surfaces:
 - python3 scripts/pm-ds15-deck2-contracts.py --family catalog.remove.completed
 risk_class: event_authority_contract_drift
@@ -3105,7 +3109,7 @@ preserved_exact_tokens:
 - SMPFS-325
 - catalog.remove.completed
 negative_constraints:
-- No admission, registry append, new retention choice, native proof, WorkNodes or NodeSeeds.
+- Preparation itself grants no admission, registry append, new retention choice, native proof, WorkNodes or NodeSeeds.
 owner_hints:
 - Plans/Section15_MVP_Promoted_Features_Spec.md
 ```
@@ -3119,7 +3123,7 @@ unit_type: contract
 status: accepted
 owner_doc: Plans/Section15_MVP_Promoted_Features_Spec.md
 canonical_text: |-
-  tool.custom_headless.skipped 1.0.0 — newly authored owner contract, prepared without admission. This exact family independently adopts the following bindings, not a sibling's contract. Source: DL-436 landed in Plans/Decision_Log.md on origin/main, authored on origin/plans/ea-cards2-answers-20261105, presented deck item 4.f, SHA-256 6db25be3dd290ab0083af482383e469a78dc109a037ad0fd0ece5d8f15679b30. Jared's words alone: "i approve all of it". The deck's fast-reply rule selects A; the option below is the card author's wording, not a Jared quotation.
+  tool.custom_headless.skipped 1.0.0 — newly authored owner contract, prepared without admission before the 2026-11-18 registration. This exact family independently adopts the following bindings, not a sibling's contract. Source: DL-436 landed in Plans/Decision_Log.md on origin/main, authored on origin/plans/ea-cards2-answers-20261105, presented deck item 4.f, SHA-256 6db25be3dd290ab0083af482383e469a78dc109a037ad0fd0ece5d8f15679b30. Jared's words alone: "i approve all of it". The deck's fast-reply rule selects A; the option below is the card author's wording, not a Jared quotation.
   Approved option A: Save the notice the first time Doctor’s readiness check finds the setting for that optional custom browser tool absent for that Project. An earlier run with the setting present leaves the chance unused. Once issued, the notice never resets for configuration edits or removing/re-adding the setting. A clone or import gets a fresh chance only if it creates a separate new Project with its own saved ID. Restoring the same Project preserves whether the notice was already shown. If an older backup cannot prove that, do not guess and show a duplicate. Later checks still save their ordinary check result.
   Card **Sources:** `MAIN:Plans/newtools.md:498-511`; `DT:reports/event-authority-20261104/DT.md:272-273`; `evidence:reviews/DT-sol/REVIEW.md:118-122`; `evidence:reviews/DT-sol/REVIEW-cycle3.md:86-92`; `evidence:reviews/DS15-sol/REVIEW-cycle4.md:45-50`; `evidence:reviews/DT-sol/REVIEW-cycle4.md:93-103`; `evidence:reviews/DT-sol/REVIEW-cycle4.md:93-107`; `evidence:reviews/DT-sol/REVIEW-cycle5.md:7-7`.
   Search: /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS15/r9/tool_custom_headless_skipped-search.json; scope current top-level Plans Markdown/JSON and scripts Python at 30dc9245bc753dbe80693977a1b03e3278d73b85, excluding source ledgers/generated artifacts. Required behavior exists; no complete exact-family technical binding was found. DL-045 permits newly authored technical bindings; DL-436 resolves only the stated behavior choice. Reuse SP-278/SP-286/CV-339/CV-366/SP-337 and actual existing command/Doctor owner outcomes.
@@ -3131,7 +3135,8 @@ canonical_text: |-
   Consumer and checkpoint: reader.ds15.tool_custom_headless_skipped.v1@1.0.0 is the exact operating tool.custom_headless.skipped history reader and reads only tool.custom_headless.skipped@1.0.0. Adopt SP-278 and DL-076 nine-field durable read token; key projector.checkpoint.ds15.tool_custom_headless_skipped:{project_id}, closed value Plans/ds15_tool_custom_headless_skipped_checkpoint.schema.json. Physical proposed value: derived redb, coordination_and_storage budget, messagepack_canonical, full encoded value at most 16384 bytes (SP-339/SP-340). This task appends no storage-value registry row and authorizes no physical write/advance. Capture CURRENT-selected complete global range and live snapshot; persist only the nine-field token, never redb_snapshot_id. Scan every global row, resolve each matching original, join event id/type/scope/partition/Storage sequence. Advance by atomic CAS of complete prior and new checkpoint in one redb transaction. Missing rows, contradictions, mismatched token/Storage/snapshot/source, changed access or reader version preserve prior. through_sequence_id is the global scanned frontier and last_event_id the last verified match; no checkpoint before first match, a zero-match suffix keeps the earlier last event. Rebuild requires complete retained prefix and fresh permissions.
   Retention: Event and derived checkpoint adopt DL-401 G14 / RP-OPERATIONAL-2555D@1.0.0: 2555 days from the original committed absent-check transition, unchanged 2000000/Project cap, only expired unheld/unreferenced history compacts, overflow fails closed, retries/recovery never reset the clock. The original Project readiness source preserves whether this Project's chance was consumed; it remains an active protected reference while needed to enforce DL-436 and travels in the coherent same-ID backup. Expiry or rebuilding a derived history checkpoint never makes an issued/unknown chance unused. No app-scope bucket or synthetic Project is introduced. Retention premise evidence is DL-401 and G10/G11/G14 as named for this exact family in Plans/storage-plan.md, landed on origin/main; those lines are byte-identical at origin/plans/ea-retention-cards2-20261105 commit 9b76338594c6f1ca75de6c757e7a8b98ab68e229; none of items 4.c-4.f changes that grouping. Referenced content follows its own independently approved lifetime, redaction and read access.
   Compatibility and withdrawal: exact 1.0.0 writer/reader/schema only. Unknown version/field fails closed. Writer withdrawal uses committed admission frontier, refuses new admissions and drains only already-admitted original outcomes/receipts; reader withdrawal fences CAS and marks checkpoints withdrawn. Reinstallation needs current authorization and a complete retained-source rebuild. No fabricated old recipe selector; shared number/format historical-selector defects remain explicit sweep work.
-  Oracles: ATS-329's exact tool.custom_headless.skipped section, Plans/ds15_deck2_fixtures.json own family row, and python3 scripts/pm-ds15-deck2-contracts.py --family tool.custom_headless.skipped. Each negative has one declared defect and explicit coherent derived observations; fixture source/custody joins are verified against actual retained values. Native execution NOT_RUN. Registry membership remains ABSENT; no admission, new feature, Decision Log entry or readiness claim.
+  Oracles: ATS-329's exact tool.custom_headless.skipped section, Plans/ds15_deck2_fixtures.json own family row, and python3 scripts/pm-ds15-deck2-contracts.py --family tool.custom_headless.skipped. Each negative has one declared defect and explicit coherent derived observations; fixture source/custody joins are verified against actual retained values. Native execution NOT_RUN. At preparation before the 2026-11-18 registration, registry membership was ABSENT; preparation itself granted no admission, new feature, Decision Log entry or readiness claim.
+  Current membership (2026-11-18) — tool.custom_headless.skipped@1.0.0 is individually registered in Plans/event_family_registry.json. Missing-registration refusal applies only if the exact current family/version/scope registration is absent; this registered family is not refused as missing_event_registration or family_not_admitted merely because it was prepared without admission. Append and checkpoint advance still require every existing schema, scope, retention, original-source, receipt, permission and withdrawal check specified here. Registry membership supplies no native execution proof or additional action authority.
 gui_related: false
 gui_classification_reason: Typed event/source identity, persistence, custody and reader contract.
 depends_on:
@@ -3140,7 +3145,7 @@ depends_on:
 - DL-436
 unblocks: []
 acceptance_criteria:
-- Exact family static positive and negative oracles pass; membership remains absent.
+- Exact family static positive and negative oracles pass; membership is registered and all existing append/checkpoint checks still apply.
 validation_surfaces:
 - python3 scripts/pm-ds15-deck2-contracts.py --family tool.custom_headless.skipped
 risk_class: event_authority_contract_drift
@@ -3159,7 +3164,7 @@ preserved_exact_tokens:
 - SMPFS-326
 - tool.custom_headless.skipped
 negative_constraints:
-- No admission, registry append, new retention choice, native proof, WorkNodes or NodeSeeds.
+- Preparation itself grants no admission, registry append, new retention choice, native proof, WorkNodes or NodeSeeds.
 owner_hints:
 - Plans/Section15_MVP_Promoted_Features_Spec.md
 ```

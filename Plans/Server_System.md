@@ -1055,7 +1055,7 @@ plan_unit_id: SRV-1411
 unit_type: contract
 status: accepted
 owner_doc: Plans/Server_System.md
-canonical_text: 'Newly authored owner contract for server.catalog_changed@1.0.0, prepared without admission, authorized
+canonical_text: 'Newly authored owner contract for server.catalog_changed@1.0.0, prepared without admission before the 2026-11-18 registration, authorized
   only by deck 2 item 9.a A (DL-450). One durable ServerCatalog revision, distinct from LSP catalog data or changes
   to a Project body.
 
@@ -1086,8 +1086,7 @@ canonical_text: 'Newly authored owner contract for server.catalog_changed@1.0.0,
   It consumes the original accepted owner operation and immutable journal/observation/detection fact, never a caller
   success assertion. Revalidate schema, exact source/current generations, permission and writer lease before the
   existing domain effect; settle the original domain commit/readback and the ref-only canonical pending event intent.
-  Before any append, require this family''s exact registry/version/scope and retention admission; until then return
-  missing_event_registration and leave existing command expected_event_types=[] and independent owner receipts unchanged.
+  Before any append, require this family''s exact registry/version/scope and retention admission. Return missing_event_registration only while that exact registration is absent; leave existing command expected_event_types=[] and independent owner receipts unchanged on that refusal. Registration alone does not satisfy retention or the other existing append checks.
   No transport action or view refresh becomes an event source.
 
   For this family adopt SP-286 and CV-339 by name, including current strict full-value v2 resolver and SP-336/SP-347
@@ -1160,7 +1159,7 @@ canonical_text: 'Newly authored owner contract for server.catalog_changed@1.0.0,
   a complete admitted replacement source/generation is verified; atomic publication cannot reinterpret old payloads
   or reissue domain work. Source retention/deletion authority remains independent.
 
-  Oracle plan: Plans/event_authority_w3e_oracle_plan.json#families/11 and ATS-1240/ATS-1241. Phase 2 (2026-11-13) runs the executable synthetic oracles of this family in scripts/pm_w3e_event_oracles.py; every refusal is one named single-predicate row of a generated Method B guard table (scripts/pm_w3e_table_*.py) proved by the gated shared scripts/pm_guard_isolation.py through scripts/pm-w3e-guard-proof.py, and rows no input can refuse first stay alone in their own table with a written proof. Numbers use the shared CV-1100/SP-1100 calls and timestamps the shared CV-1101 date_time with the owner profile of each field. Membership is ABSENT and native execution NOT_RUN.
+  Oracle plan: Plans/event_authority_w3e_oracle_plan.json#families/11 and ATS-1240/ATS-1241. Phase 2 (2026-11-13) runs the executable synthetic oracles of this family in scripts/pm_w3e_event_oracles.py; every refusal is one named single-predicate row of a generated Method B guard table (scripts/pm_w3e_table_*.py) proved by the gated shared scripts/pm_guard_isolation.py through scripts/pm-w3e-guard-proof.py, and rows no input can refuse first stay alone in their own table with a written proof. Numbers use the shared CV-1100/SP-1100 calls and timestamps the shared CV-1101 date_time with the owner profile of each field. At preparation before the 2026-11-18 registration, membership was ABSENT; native execution remains NOT_RUN.
 
 
   This family fixes its source authority_evidence roster to writer_fence, permission_or_service_authority, catalog_mutation_receipt,
@@ -1173,7 +1172,7 @@ canonical_text: 'Newly authored owner contract for server.catalog_changed@1.0.0,
   Retention is decided above by the third retention sitting answers; Storage Case L-3 still supplies the hold and protection machinery, and original receipts and source records keep their own policies. No runtime Run
   is invented for a BackupRun or RestoreRun.
 
-  '
+  Current membership (2026-11-18) — server.catalog_changed@1.0.0 is individually registered in Plans/event_family_registry.json. Missing-registration refusal applies only if the exact current family/version/scope registration is absent; this registered family is not refused as missing_event_registration or family_not_admitted merely because it was prepared without admission. Append and checkpoint advance still require every existing schema, scope, retention, original-source, receipt, permission and withdrawal check specified here. Registry membership supplies no native execution proof or additional action authority.'
 gui_related: false
 gui_classification_reason: Defines event data, source custody, replay and internal checkpoints; existing surfaces
   only.
@@ -1188,7 +1187,7 @@ depends_on:
 - SP-337
 unblocks: []
 acceptance_criteria:
-- This exact family remains prepared without admission; current writes stay missing_event_registration.
+- This exact family is registered; missing_event_registration refuses only an absent exact registration, and all other existing append checks still apply.
 - Every stated join and refusal has a positive and a single-defect negative planned; native execution is NOT_RUN.
 - Retention is unresolved where explicitly marked; no lifetime or deletion policy is inferred.
 validation_surfaces:
@@ -1216,7 +1215,7 @@ preserved_exact_tokens:
 - CV-339
 - SP-337
 negative_constraints:
-- No admission, registry family append, Decision Log entry or native execution claim.
+- Preparation itself grants no admission, registry family append, Decision Log entry or native execution claim.
 - No independent number/timestamp implementation or retention decision.
 ```
 
@@ -1227,7 +1226,7 @@ plan_unit_id: SRV-1412
 unit_type: contract
 status: accepted
 owner_doc: Plans/Server_System.md
-canonical_text: 'Newly authored owner contract for server.client_pairing_state_changed@1.0.0, prepared without admission,
+canonical_text: 'Newly authored owner contract for server.client_pairing_state_changed@1.0.0, prepared without admission before the 2026-11-18 registration,
   authorized only by deck 2 item 9.a A (DL-450). One generation-fenced PairingRun transition for the explicitly
   selected candidate.
 
@@ -1260,9 +1259,7 @@ canonical_text: 'Newly authored owner contract for server.client_pairing_state_c
   owner. It consumes the original accepted owner operation and immutable journal/observation/detection fact, never
   a caller success assertion. Revalidate schema, exact source/current generations, permission and writer lease before
   the existing domain effect; settle the original domain commit/readback and the ref-only canonical pending event
-  intent. Before any append, require this family''s exact registry/version/scope and retention admission; until
-  then return missing_event_registration and leave existing command expected_event_types=[] and independent owner
-  receipts unchanged. No transport action or view refresh becomes an event source.
+  intent. Before any append, require this family''s exact registry/version/scope and retention admission. Return missing_event_registration only while that exact registration is absent; leave existing command expected_event_types=[] and independent owner receipts unchanged on that refusal. Registration alone does not satisfy retention or the other existing append checks. No transport action or view refresh becomes an event source.
 
   For this family adopt SP-286 and CV-339 by name, including current strict full-value v2 resolver and SP-336/SP-347
   issuance rules. After domain source commit, store the exact semantic input and original owner result under SP-1412;
@@ -1334,7 +1331,7 @@ canonical_text: 'Newly authored owner contract for server.client_pairing_state_c
   a complete admitted replacement source/generation is verified; atomic publication cannot reinterpret old payloads
   or reissue domain work. Source retention/deletion authority remains independent.
 
-  Oracle plan: Plans/event_authority_w3e_oracle_plan.json#families/12 and ATS-1240/ATS-1241. Phase 2 (2026-11-13) runs the executable synthetic oracles of this family in scripts/pm_w3e_event_oracles.py; every refusal is one named single-predicate row of a generated Method B guard table (scripts/pm_w3e_table_*.py) proved by the gated shared scripts/pm_guard_isolation.py through scripts/pm-w3e-guard-proof.py, and rows no input can refuse first stay alone in their own table with a written proof. Numbers use the shared CV-1100/SP-1100 calls and timestamps the shared CV-1101 date_time with the owner profile of each field. Membership is ABSENT and native execution NOT_RUN.
+  Oracle plan: Plans/event_authority_w3e_oracle_plan.json#families/12 and ATS-1240/ATS-1241. Phase 2 (2026-11-13) runs the executable synthetic oracles of this family in scripts/pm_w3e_event_oracles.py; every refusal is one named single-predicate row of a generated Method B guard table (scripts/pm_w3e_table_*.py) proved by the gated shared scripts/pm_guard_isolation.py through scripts/pm-w3e-guard-proof.py, and rows no input can refuse first stay alone in their own table with a written proof. Numbers use the shared CV-1100/SP-1100 calls and timestamps the shared CV-1101 date_time with the owner profile of each field. At preparation before the 2026-11-18 registration, membership was ABSENT; native execution remains NOT_RUN.
 
 
   This family fixes its source authority_evidence roster to writer_fence, permission_or_service_authority, candidate_selection,
@@ -1348,7 +1345,7 @@ canonical_text: 'Newly authored owner contract for server.client_pairing_state_c
   Retention is decided above by the third retention sitting answers; Storage Case L-3 still supplies the hold and protection machinery, and original receipts and source records keep their own policies. No runtime Run
   is invented for a BackupRun or RestoreRun.
 
-  '
+  Current membership (2026-11-18) — server.client_pairing_state_changed@1.0.0 is individually registered in Plans/event_family_registry.json. Missing-registration refusal applies only if the exact current family/version/scope registration is absent; this registered family is not refused as missing_event_registration or family_not_admitted merely because it was prepared without admission. Append and checkpoint advance still require every existing schema, scope, retention, original-source, receipt, permission and withdrawal check specified here. Registry membership supplies no native execution proof or additional action authority.'
 gui_related: false
 gui_classification_reason: Defines event data, source custody, replay and internal checkpoints; existing surfaces
   only.
@@ -1362,7 +1359,7 @@ depends_on:
 - SP-337
 unblocks: []
 acceptance_criteria:
-- This exact family remains prepared without admission; current writes stay missing_event_registration.
+- This exact family is registered; missing_event_registration refuses only an absent exact registration, and all other existing append checks still apply.
 - Every stated join and refusal has a positive and a single-defect negative planned; native execution is NOT_RUN.
 - Retention is unresolved where explicitly marked; no lifetime or deletion policy is inferred.
 validation_surfaces:
@@ -1390,7 +1387,7 @@ preserved_exact_tokens:
 - CV-339
 - SP-337
 negative_constraints:
-- No admission, registry family append, Decision Log entry or native execution claim.
+- Preparation itself grants no admission, registry family append, Decision Log entry or native execution claim.
 - No independent number/timestamp implementation or retention decision.
 ```
 
@@ -1401,7 +1398,7 @@ plan_unit_id: SRV-1413
 unit_type: contract
 status: accepted
 owner_doc: Plans/Server_System.md
-canonical_text: 'Newly authored owner contract for server.client_revoked@1.0.0, prepared without admission, authorized
+canonical_text: 'Newly authored owner contract for server.client_revoked@1.0.0, prepared without admission before the 2026-11-18 registration, authorized
   only by deck 2 item 9.a A (DL-450). One entire-Client trust revocation, distinct from revoking one session or
   removing an already retired Catalog record.
 
@@ -1433,8 +1430,7 @@ canonical_text: 'Newly authored owner contract for server.client_revoked@1.0.0, 
   It consumes the original accepted owner operation and immutable journal/observation/detection fact, never a caller
   success assertion. Revalidate schema, exact source/current generations, permission and writer lease before the
   existing domain effect; settle the original domain commit/readback and the ref-only canonical pending event intent.
-  Before any append, require this family''s exact registry/version/scope and retention admission; until then return
-  missing_event_registration and leave existing command expected_event_types=[] and independent owner receipts unchanged.
+  Before any append, require this family''s exact registry/version/scope and retention admission. Return missing_event_registration only while that exact registration is absent; leave existing command expected_event_types=[] and independent owner receipts unchanged on that refusal. Registration alone does not satisfy retention or the other existing append checks.
   No transport action or view refresh becomes an event source.
 
   For this family adopt SP-286 and CV-339 by name, including current strict full-value v2 resolver and SP-336/SP-347
@@ -1507,7 +1503,7 @@ canonical_text: 'Newly authored owner contract for server.client_revoked@1.0.0, 
   a complete admitted replacement source/generation is verified; atomic publication cannot reinterpret old payloads
   or reissue domain work. Source retention/deletion authority remains independent.
 
-  Oracle plan: Plans/event_authority_w3e_oracle_plan.json#families/13 and ATS-1240/ATS-1241. Phase 2 (2026-11-13) runs the executable synthetic oracles of this family in scripts/pm_w3e_event_oracles.py; every refusal is one named single-predicate row of a generated Method B guard table (scripts/pm_w3e_table_*.py) proved by the gated shared scripts/pm_guard_isolation.py through scripts/pm-w3e-guard-proof.py, and rows no input can refuse first stay alone in their own table with a written proof. Numbers use the shared CV-1100/SP-1100 calls and timestamps the shared CV-1101 date_time with the owner profile of each field. Membership is ABSENT and native execution NOT_RUN.
+  Oracle plan: Plans/event_authority_w3e_oracle_plan.json#families/13 and ATS-1240/ATS-1241. Phase 2 (2026-11-13) runs the executable synthetic oracles of this family in scripts/pm_w3e_event_oracles.py; every refusal is one named single-predicate row of a generated Method B guard table (scripts/pm_w3e_table_*.py) proved by the gated shared scripts/pm_guard_isolation.py through scripts/pm-w3e-guard-proof.py, and rows no input can refuse first stay alone in their own table with a written proof. Numbers use the shared CV-1100/SP-1100 calls and timestamps the shared CV-1101 date_time with the owner profile of each field. At preparation before the 2026-11-18 registration, membership was ABSENT; native execution remains NOT_RUN.
 
 
   This family fixes its source authority_evidence roster to writer_fence, permission_or_service_authority, revocation_receipt,
@@ -1521,7 +1517,7 @@ canonical_text: 'Newly authored owner contract for server.client_revoked@1.0.0, 
   Retention is decided above by the third retention sitting answers; Storage Case L-3 still supplies the hold and protection machinery, and original receipts and source records keep their own policies. No runtime Run
   is invented for a BackupRun or RestoreRun.
 
-  '
+  Current membership (2026-11-18) — server.client_revoked@1.0.0 is individually registered in Plans/event_family_registry.json. Missing-registration refusal applies only if the exact current family/version/scope registration is absent; this registered family is not refused as missing_event_registration or family_not_admitted merely because it was prepared without admission. Append and checkpoint advance still require every existing schema, scope, retention, original-source, receipt, permission and withdrawal check specified here. Registry membership supplies no native execution proof or additional action authority.'
 gui_related: false
 gui_classification_reason: Defines event data, source custody, replay and internal checkpoints; existing surfaces
   only.
@@ -1535,7 +1531,7 @@ depends_on:
 - SP-337
 unblocks: []
 acceptance_criteria:
-- This exact family remains prepared without admission; current writes stay missing_event_registration.
+- This exact family is registered; missing_event_registration refuses only an absent exact registration, and all other existing append checks still apply.
 - Every stated join and refusal has a positive and a single-defect negative planned; native execution is NOT_RUN.
 - Retention is unresolved where explicitly marked; no lifetime or deletion policy is inferred.
 validation_surfaces:
@@ -1563,7 +1559,7 @@ preserved_exact_tokens:
 - CV-339
 - SP-337
 negative_constraints:
-- No admission, registry family append, Decision Log entry or native execution claim.
+- Preparation itself grants no admission, registry family append, Decision Log entry or native execution claim.
 - No independent number/timestamp implementation or retention decision.
 ```
 
@@ -1574,7 +1570,7 @@ plan_unit_id: SRV-1414
 unit_type: contract
 status: accepted
 owner_doc: Plans/Server_System.md
-canonical_text: 'Newly authored owner contract for server.client_trust_changed@1.0.0, prepared without admission,
+canonical_text: 'Newly authored owner contract for server.client_trust_changed@1.0.0, prepared without admission before the 2026-11-18 registration,
   authorized only by deck 2 item 9.a A (DL-450). One accepted ClientTrustRecord or access-policy binding change,
   distinct from ServerPeerTrustRecord settings.follow.
 
@@ -1607,8 +1603,7 @@ canonical_text: 'Newly authored owner contract for server.client_trust_changed@1
   It consumes the original accepted owner operation and immutable journal/observation/detection fact, never a caller
   success assertion. Revalidate schema, exact source/current generations, permission and writer lease before the
   existing domain effect; settle the original domain commit/readback and the ref-only canonical pending event intent.
-  Before any append, require this family''s exact registry/version/scope and retention admission; until then return
-  missing_event_registration and leave existing command expected_event_types=[] and independent owner receipts unchanged.
+  Before any append, require this family''s exact registry/version/scope and retention admission. Return missing_event_registration only while that exact registration is absent; leave existing command expected_event_types=[] and independent owner receipts unchanged on that refusal. Registration alone does not satisfy retention or the other existing append checks.
   No transport action or view refresh becomes an event source.
 
   For this family adopt SP-286 and CV-339 by name, including current strict full-value v2 resolver and SP-336/SP-347
@@ -1681,7 +1676,7 @@ canonical_text: 'Newly authored owner contract for server.client_trust_changed@1
   a complete admitted replacement source/generation is verified; atomic publication cannot reinterpret old payloads
   or reissue domain work. Source retention/deletion authority remains independent.
 
-  Oracle plan: Plans/event_authority_w3e_oracle_plan.json#families/14 and ATS-1240/ATS-1241. Phase 2 (2026-11-13) runs the executable synthetic oracles of this family in scripts/pm_w3e_event_oracles.py; every refusal is one named single-predicate row of a generated Method B guard table (scripts/pm_w3e_table_*.py) proved by the gated shared scripts/pm_guard_isolation.py through scripts/pm-w3e-guard-proof.py, and rows no input can refuse first stay alone in their own table with a written proof. Numbers use the shared CV-1100/SP-1100 calls and timestamps the shared CV-1101 date_time with the owner profile of each field. Membership is ABSENT and native execution NOT_RUN.
+  Oracle plan: Plans/event_authority_w3e_oracle_plan.json#families/14 and ATS-1240/ATS-1241. Phase 2 (2026-11-13) runs the executable synthetic oracles of this family in scripts/pm_w3e_event_oracles.py; every refusal is one named single-predicate row of a generated Method B guard table (scripts/pm_w3e_table_*.py) proved by the gated shared scripts/pm_guard_isolation.py through scripts/pm-w3e-guard-proof.py, and rows no input can refuse first stay alone in their own table with a written proof. Numbers use the shared CV-1100/SP-1100 calls and timestamps the shared CV-1101 date_time with the owner profile of each field. At preparation before the 2026-11-18 registration, membership was ABSENT; native execution remains NOT_RUN.
 
 
   This family fixes its source authority_evidence roster to writer_fence, permission_or_service_authority, protected_grant_or_mutation,
@@ -1694,7 +1689,7 @@ canonical_text: 'Newly authored owner contract for server.client_trust_changed@1
   Retention is decided above by the third retention sitting answers; Storage Case L-3 still supplies the hold and protection machinery, and original receipts and source records keep their own policies. No runtime Run
   is invented for a BackupRun or RestoreRun.
 
-  '
+  Current membership (2026-11-18) — server.client_trust_changed@1.0.0 is individually registered in Plans/event_family_registry.json. Missing-registration refusal applies only if the exact current family/version/scope registration is absent; this registered family is not refused as missing_event_registration or family_not_admitted merely because it was prepared without admission. Append and checkpoint advance still require every existing schema, scope, retention, original-source, receipt, permission and withdrawal check specified here. Registry membership supplies no native execution proof or additional action authority.'
 gui_related: false
 gui_classification_reason: Defines event data, source custody, replay and internal checkpoints; existing surfaces
   only.
@@ -1709,7 +1704,7 @@ depends_on:
 - SP-337
 unblocks: []
 acceptance_criteria:
-- This exact family remains prepared without admission; current writes stay missing_event_registration.
+- This exact family is registered; missing_event_registration refuses only an absent exact registration, and all other existing append checks still apply.
 - Every stated join and refusal has a positive and a single-defect negative planned; native execution is NOT_RUN.
 - Retention is unresolved where explicitly marked; no lifetime or deletion policy is inferred.
 validation_surfaces:
@@ -1737,7 +1732,7 @@ preserved_exact_tokens:
 - CV-339
 - SP-337
 negative_constraints:
-- No admission, registry family append, Decision Log entry or native execution claim.
+- Preparation itself grants no admission, registry family append, Decision Log entry or native execution claim.
 - No independent number/timestamp implementation or retention decision.
 ```
 
@@ -1748,7 +1743,7 @@ plan_unit_id: SRV-1415
 unit_type: contract
 status: accepted
 owner_doc: Plans/Server_System.md
-canonical_text: 'Newly authored owner contract for server.connection_state_changed@1.0.0, prepared without admission,
+canonical_text: 'Newly authored owner contract for server.connection_state_changed@1.0.0, prepared without admission before the 2026-11-18 registration,
   authorized only by deck 2 item 9.a A (DL-450). One owner-confirmed Client-to-Server connection-state change; a
   repeated render of the same state emits nothing.
 
@@ -1780,9 +1775,7 @@ canonical_text: 'Newly authored owner contract for server.connection_state_chang
   domain owner. It consumes the original accepted owner operation and immutable journal/observation/detection fact,
   never a caller success assertion. Revalidate schema, exact source/current generations, permission and writer lease
   before the existing domain effect; settle the original domain commit/readback and the ref-only canonical pending
-  event intent. Before any append, require this family''s exact registry/version/scope and retention admission;
-  until then return missing_event_registration and leave existing command expected_event_types=[] and independent
-  owner receipts unchanged. No transport action or view refresh becomes an event source.
+  event intent. Before any append, require this family''s exact registry/version/scope and retention admission. Return missing_event_registration only while that exact registration is absent; leave existing command expected_event_types=[] and independent owner receipts unchanged on that refusal. Registration alone does not satisfy retention or the other existing append checks. No transport action or view refresh becomes an event source.
 
   For this family adopt SP-286 and CV-339 by name, including current strict full-value v2 resolver and SP-336/SP-347
   issuance rules. After domain source commit, store the exact semantic input and original owner result under SP-1415;
@@ -1854,7 +1847,7 @@ canonical_text: 'Newly authored owner contract for server.connection_state_chang
   a complete admitted replacement source/generation is verified; atomic publication cannot reinterpret old payloads
   or reissue domain work. Source retention/deletion authority remains independent.
 
-  Oracle plan: Plans/event_authority_w3e_oracle_plan.json#families/15 and ATS-1240/ATS-1241. Phase 2 (2026-11-13) runs the executable synthetic oracles of this family in scripts/pm_w3e_event_oracles.py; every refusal is one named single-predicate row of a generated Method B guard table (scripts/pm_w3e_table_*.py) proved by the gated shared scripts/pm_guard_isolation.py through scripts/pm-w3e-guard-proof.py, and rows no input can refuse first stay alone in their own table with a written proof. Numbers use the shared CV-1100/SP-1100 calls and timestamps the shared CV-1101 date_time with the owner profile of each field. Membership is ABSENT and native execution NOT_RUN.
+  Oracle plan: Plans/event_authority_w3e_oracle_plan.json#families/15 and ATS-1240/ATS-1241. Phase 2 (2026-11-13) runs the executable synthetic oracles of this family in scripts/pm_w3e_event_oracles.py; every refusal is one named single-predicate row of a generated Method B guard table (scripts/pm_w3e_table_*.py) proved by the gated shared scripts/pm_guard_isolation.py through scripts/pm-w3e-guard-proof.py, and rows no input can refuse first stay alone in their own table with a written proof. Numbers use the shared CV-1100/SP-1100 calls and timestamps the shared CV-1101 date_time with the owner profile of each field. At preparation before the 2026-11-18 registration, membership was ABSENT; native execution remains NOT_RUN.
 
 
   This family fixes its source authority_evidence roster to writer_fence, permission_or_service_authority, connection_attempt,
@@ -1867,7 +1860,7 @@ canonical_text: 'Newly authored owner contract for server.connection_state_chang
 
   Retention is decided above by the third retention sitting answers; Storage Case L-3 still supplies the hold and protection machinery, and original receipts and source records keep their own policies. No runtime Run is invented for a BackupRun or RestoreRun.
 
-  '
+  Current membership (2026-11-18) — server.connection_state_changed@1.0.0 is individually registered in Plans/event_family_registry.json. Missing-registration refusal applies only if the exact current family/version/scope registration is absent; this registered family is not refused as missing_event_registration or family_not_admitted merely because it was prepared without admission. Append and checkpoint advance still require every existing schema, scope, retention, original-source, receipt, permission and withdrawal check specified here. Registry membership supplies no native execution proof or additional action authority.'
 gui_related: false
 gui_classification_reason: Defines event data, source custody, replay and internal checkpoints; existing surfaces
   only.
@@ -1881,7 +1874,7 @@ depends_on:
 - SP-337
 unblocks: []
 acceptance_criteria:
-- This exact family remains prepared without admission; current writes stay missing_event_registration.
+- This exact family is registered; missing_event_registration refuses only an absent exact registration, and all other existing append checks still apply.
 - Every stated join and refusal has a positive and a single-defect negative planned; native execution is NOT_RUN.
 - Retention is unresolved where explicitly marked; no lifetime or deletion policy is inferred.
 validation_surfaces:
@@ -1909,7 +1902,7 @@ preserved_exact_tokens:
 - CV-339
 - SP-337
 negative_constraints:
-- No admission, registry family append, Decision Log entry or native execution claim.
+- Preparation itself grants no admission, registry family append, Decision Log entry or native execution claim.
 - No independent number/timestamp implementation or retention decision.
 ```
 
@@ -1920,7 +1913,7 @@ plan_unit_id: SRV-1416
 unit_type: contract
 status: accepted
 owner_doc: Plans/Server_System.md
-canonical_text: 'Newly authored owner contract for server.discovery_expired@1.0.0, prepared without admission, authorized
+canonical_text: 'Newly authored owner contract for server.discovery_expired@1.0.0, prepared without admission before the 2026-11-18 registration, authorized
   only by deck 2 item 9.a A (DL-450). Expiry of one specific discovery observation at its recorded expiry, not deletion
   or revocation of the discovered Server.
 
@@ -1951,8 +1944,7 @@ canonical_text: 'Newly authored owner contract for server.discovery_expired@1.0.
   It consumes the original accepted owner operation and immutable journal/observation/detection fact, never a caller
   success assertion. Revalidate schema, exact source/current generations, permission and writer lease before the
   existing domain effect; settle the original domain commit/readback and the ref-only canonical pending event intent.
-  Before any append, require this family''s exact registry/version/scope and retention admission; until then return
-  missing_event_registration and leave existing command expected_event_types=[] and independent owner receipts unchanged.
+  Before any append, require this family''s exact registry/version/scope and retention admission. Return missing_event_registration only while that exact registration is absent; leave existing command expected_event_types=[] and independent owner receipts unchanged on that refusal. Registration alone does not satisfy retention or the other existing append checks.
   No transport action or view refresh becomes an event source.
 
   For this family adopt SP-286 and CV-339 by name, including current strict full-value v2 resolver and SP-336/SP-347
@@ -2025,7 +2017,7 @@ canonical_text: 'Newly authored owner contract for server.discovery_expired@1.0.
   a complete admitted replacement source/generation is verified; atomic publication cannot reinterpret old payloads
   or reissue domain work. Source retention/deletion authority remains independent.
 
-  Oracle plan: Plans/event_authority_w3e_oracle_plan.json#families/16 and ATS-1240/ATS-1241. Phase 2 (2026-11-13) runs the executable synthetic oracles of this family in scripts/pm_w3e_event_oracles.py; every refusal is one named single-predicate row of a generated Method B guard table (scripts/pm_w3e_table_*.py) proved by the gated shared scripts/pm_guard_isolation.py through scripts/pm-w3e-guard-proof.py, and rows no input can refuse first stay alone in their own table with a written proof. Numbers use the shared CV-1100/SP-1100 calls and timestamps the shared CV-1101 date_time with the owner profile of each field. Membership is ABSENT and native execution NOT_RUN.
+  Oracle plan: Plans/event_authority_w3e_oracle_plan.json#families/16 and ATS-1240/ATS-1241. Phase 2 (2026-11-13) runs the executable synthetic oracles of this family in scripts/pm_w3e_event_oracles.py; every refusal is one named single-predicate row of a generated Method B guard table (scripts/pm_w3e_table_*.py) proved by the gated shared scripts/pm_guard_isolation.py through scripts/pm-w3e-guard-proof.py, and rows no input can refuse first stay alone in their own table with a written proof. Numbers use the shared CV-1100/SP-1100 calls and timestamps the shared CV-1101 date_time with the owner profile of each field. At preparation before the 2026-11-18 registration, membership was ABSENT; native execution remains NOT_RUN.
 
 
   This family fixes its source authority_evidence roster to writer_fence, permission_or_service_authority, original_observation,
@@ -2037,7 +2029,7 @@ canonical_text: 'Newly authored owner contract for server.discovery_expired@1.0.
 
   Retention is decided above by the third retention sitting answers; Storage Case L-3 still supplies the hold and protection machinery, and original receipts and source records keep their own policies. No runtime Run is invented for a BackupRun or RestoreRun.
 
-  '
+  Current membership (2026-11-18) — server.discovery_expired@1.0.0 is individually registered in Plans/event_family_registry.json. Missing-registration refusal applies only if the exact current family/version/scope registration is absent; this registered family is not refused as missing_event_registration or family_not_admitted merely because it was prepared without admission. Append and checkpoint advance still require every existing schema, scope, retention, original-source, receipt, permission and withdrawal check specified here. Registry membership supplies no native execution proof or additional action authority.'
 gui_related: false
 gui_classification_reason: Defines event data, source custody, replay and internal checkpoints; existing surfaces
   only.
@@ -2051,7 +2043,7 @@ depends_on:
 - SP-337
 unblocks: []
 acceptance_criteria:
-- This exact family remains prepared without admission; current writes stay missing_event_registration.
+- This exact family is registered; missing_event_registration refuses only an absent exact registration, and all other existing append checks still apply.
 - Every stated join and refusal has a positive and a single-defect negative planned; native execution is NOT_RUN.
 - Retention is unresolved where explicitly marked; no lifetime or deletion policy is inferred.
 validation_surfaces:
@@ -2079,7 +2071,7 @@ preserved_exact_tokens:
 - CV-339
 - SP-337
 negative_constraints:
-- No admission, registry family append, Decision Log entry or native execution claim.
+- Preparation itself grants no admission, registry family append, Decision Log entry or native execution claim.
 - No independent number/timestamp implementation or retention decision.
 ```
 
@@ -2090,7 +2082,7 @@ plan_unit_id: SRV-1417
 unit_type: contract
 status: accepted
 owner_doc: Plans/Server_System.md
-canonical_text: 'Newly authored owner contract for server.discovery_observed@1.0.0, prepared without admission,
+canonical_text: 'Newly authored owner contract for server.discovery_observed@1.0.0, prepared without admission before the 2026-11-18 registration,
   authorized only by deck 2 item 9.a A (DL-450). One attributable, expiring minimal discovery observation; refresh
   of an existing saved observation is replay unless the owner recorded a genuinely new observation.
 
@@ -2123,9 +2115,7 @@ canonical_text: 'Newly authored owner contract for server.discovery_observed@1.0
   owner. It consumes the original accepted owner operation and immutable journal/observation/detection fact, never
   a caller success assertion. Revalidate schema, exact source/current generations, permission and writer lease before
   the existing domain effect; settle the original domain commit/readback and the ref-only canonical pending event
-  intent. Before any append, require this family''s exact registry/version/scope and retention admission; until
-  then return missing_event_registration and leave existing command expected_event_types=[] and independent owner
-  receipts unchanged. No transport action or view refresh becomes an event source.
+  intent. Before any append, require this family''s exact registry/version/scope and retention admission. Return missing_event_registration only while that exact registration is absent; leave existing command expected_event_types=[] and independent owner receipts unchanged on that refusal. Registration alone does not satisfy retention or the other existing append checks. No transport action or view refresh becomes an event source.
 
   For this family adopt SP-286 and CV-339 by name, including current strict full-value v2 resolver and SP-336/SP-347
   issuance rules. After domain source commit, store the exact semantic input and original owner result under SP-1417;
@@ -2197,7 +2187,7 @@ canonical_text: 'Newly authored owner contract for server.discovery_observed@1.0
   a complete admitted replacement source/generation is verified; atomic publication cannot reinterpret old payloads
   or reissue domain work. Source retention/deletion authority remains independent.
 
-  Oracle plan: Plans/event_authority_w3e_oracle_plan.json#families/17 and ATS-1240/ATS-1241. Phase 2 (2026-11-13) runs the executable synthetic oracles of this family in scripts/pm_w3e_event_oracles.py; every refusal is one named single-predicate row of a generated Method B guard table (scripts/pm_w3e_table_*.py) proved by the gated shared scripts/pm_guard_isolation.py through scripts/pm-w3e-guard-proof.py, and rows no input can refuse first stay alone in their own table with a written proof. Numbers use the shared CV-1100/SP-1100 calls and timestamps the shared CV-1101 date_time with the owner profile of each field. Membership is ABSENT and native execution NOT_RUN.
+  Oracle plan: Plans/event_authority_w3e_oracle_plan.json#families/17 and ATS-1240/ATS-1241. Phase 2 (2026-11-13) runs the executable synthetic oracles of this family in scripts/pm_w3e_event_oracles.py; every refusal is one named single-predicate row of a generated Method B guard table (scripts/pm_w3e_table_*.py) proved by the gated shared scripts/pm_guard_isolation.py through scripts/pm-w3e-guard-proof.py, and rows no input can refuse first stay alone in their own table with a written proof. Numbers use the shared CV-1100/SP-1100 calls and timestamps the shared CV-1101 date_time with the owner profile of each field. At preparation before the 2026-11-18 registration, membership was ABSENT; native execution remains NOT_RUN.
 
 
   This family fixes its source authority_evidence roster to writer_fence, permission_or_service_authority, bounded_discovery_source,
@@ -2209,7 +2199,7 @@ canonical_text: 'Newly authored owner contract for server.discovery_observed@1.0
 
   Retention is decided above by the third retention sitting answers; Storage Case L-3 still supplies the hold and protection machinery, and original receipts and source records keep their own policies. No runtime Run is invented for a BackupRun or RestoreRun.
 
-  '
+  Current membership (2026-11-18) — server.discovery_observed@1.0.0 is individually registered in Plans/event_family_registry.json. Missing-registration refusal applies only if the exact current family/version/scope registration is absent; this registered family is not refused as missing_event_registration or family_not_admitted merely because it was prepared without admission. Append and checkpoint advance still require every existing schema, scope, retention, original-source, receipt, permission and withdrawal check specified here. Registry membership supplies no native execution proof or additional action authority.'
 gui_related: false
 gui_classification_reason: Defines event data, source custody, replay and internal checkpoints; existing surfaces
   only.
@@ -2223,7 +2213,7 @@ depends_on:
 - SP-337
 unblocks: []
 acceptance_criteria:
-- This exact family remains prepared without admission; current writes stay missing_event_registration.
+- This exact family is registered; missing_event_registration refuses only an absent exact registration, and all other existing append checks still apply.
 - Every stated join and refusal has a positive and a single-defect negative planned; native execution is NOT_RUN.
 - Retention is unresolved where explicitly marked; no lifetime or deletion policy is inferred.
 validation_surfaces:
@@ -2251,7 +2241,7 @@ preserved_exact_tokens:
 - CV-339
 - SP-337
 negative_constraints:
-- No admission, registry family append, Decision Log entry or native execution claim.
+- Preparation itself grants no admission, registry family append, Decision Log entry or native execution claim.
 - No independent number/timestamp implementation or retention decision.
 ```
 
@@ -2262,7 +2252,7 @@ plan_unit_id: SRV-1418
 unit_type: contract
 status: accepted
 owner_doc: Plans/Server_System.md
-canonical_text: 'Newly authored owner contract for server.endpoint_changed@1.0.0, prepared without admission, authorized
+canonical_text: 'Newly authored owner contract for server.endpoint_changed@1.0.0, prepared without admission before the 2026-11-18 registration, authorized
   only by deck 2 item 9.a A (DL-450). One accepted endpoint attribute/generation change beneath an existing Server;
   an address is never its identity.
 
@@ -2295,8 +2285,7 @@ canonical_text: 'Newly authored owner contract for server.endpoint_changed@1.0.0
   It consumes the original accepted owner operation and immutable journal/observation/detection fact, never a caller
   success assertion. Revalidate schema, exact source/current generations, permission and writer lease before the
   existing domain effect; settle the original domain commit/readback and the ref-only canonical pending event intent.
-  Before any append, require this family''s exact registry/version/scope and retention admission; until then return
-  missing_event_registration and leave existing command expected_event_types=[] and independent owner receipts unchanged.
+  Before any append, require this family''s exact registry/version/scope and retention admission. Return missing_event_registration only while that exact registration is absent; leave existing command expected_event_types=[] and independent owner receipts unchanged on that refusal. Registration alone does not satisfy retention or the other existing append checks.
   No transport action or view refresh becomes an event source.
 
   For this family adopt SP-286 and CV-339 by name, including current strict full-value v2 resolver and SP-336/SP-347
@@ -2369,7 +2358,7 @@ canonical_text: 'Newly authored owner contract for server.endpoint_changed@1.0.0
   a complete admitted replacement source/generation is verified; atomic publication cannot reinterpret old payloads
   or reissue domain work. Source retention/deletion authority remains independent.
 
-  Oracle plan: Plans/event_authority_w3e_oracle_plan.json#families/18 and ATS-1240/ATS-1241. Phase 2 (2026-11-13) runs the executable synthetic oracles of this family in scripts/pm_w3e_event_oracles.py; every refusal is one named single-predicate row of a generated Method B guard table (scripts/pm_w3e_table_*.py) proved by the gated shared scripts/pm_guard_isolation.py through scripts/pm-w3e-guard-proof.py, and rows no input can refuse first stay alone in their own table with a written proof. Numbers use the shared CV-1100/SP-1100 calls and timestamps the shared CV-1101 date_time with the owner profile of each field. Membership is ABSENT and native execution NOT_RUN.
+  Oracle plan: Plans/event_authority_w3e_oracle_plan.json#families/18 and ATS-1240/ATS-1241. Phase 2 (2026-11-13) runs the executable synthetic oracles of this family in scripts/pm_w3e_event_oracles.py; every refusal is one named single-predicate row of a generated Method B guard table (scripts/pm_w3e_table_*.py) proved by the gated shared scripts/pm_guard_isolation.py through scripts/pm-w3e-guard-proof.py, and rows no input can refuse first stay alone in their own table with a written proof. Numbers use the shared CV-1100/SP-1100 calls and timestamps the shared CV-1101 date_time with the owner profile of each field. At preparation before the 2026-11-18 registration, membership was ABSENT; native execution remains NOT_RUN.
 
 
   This family fixes its source authority_evidence roster to writer_fence, permission_or_service_authority, endpoint_mutation_receipt,
@@ -2390,7 +2379,7 @@ canonical_text: 'Newly authored owner contract for server.endpoint_changed@1.0.0
   successor object. Removal does not delete a backup repository, revoke unrelated trust or erase historical receipts.
   No unchanged/failed result emits this event.
 
-  '
+  Current membership (2026-11-18) — server.endpoint_changed@1.0.0 is individually registered in Plans/event_family_registry.json. Missing-registration refusal applies only if the exact current family/version/scope registration is absent; this registered family is not refused as missing_event_registration or family_not_admitted merely because it was prepared without admission. Append and checkpoint advance still require every existing schema, scope, retention, original-source, receipt, permission and withdrawal check specified here. Registry membership supplies no native execution proof or additional action authority.'
 gui_related: false
 gui_classification_reason: Defines event data, source custody, replay and internal checkpoints; existing surfaces
   only.
@@ -2404,7 +2393,7 @@ depends_on:
 - SP-337
 unblocks: []
 acceptance_criteria:
-- This exact family remains prepared without admission; current writes stay missing_event_registration.
+- This exact family is registered; missing_event_registration refuses only an absent exact registration, and all other existing append checks still apply.
 - Every stated join and refusal has a positive and a single-defect negative planned; native execution is NOT_RUN.
 - Retention is unresolved where explicitly marked; no lifetime or deletion policy is inferred.
 validation_surfaces:
@@ -2432,7 +2421,7 @@ preserved_exact_tokens:
 - CV-339
 - SP-337
 negative_constraints:
-- No admission, registry family append, Decision Log entry or native execution claim.
+- Preparation itself grants no admission, registry family append, Decision Log entry or native execution claim.
 - No independent number/timestamp implementation or retention decision.
 ```
 
@@ -2443,7 +2432,7 @@ plan_unit_id: SRV-1419
 unit_type: contract
 status: accepted
 owner_doc: Plans/Server_System.md
-canonical_text: 'Newly authored owner contract for server.identity_mismatch_detected@1.0.0, prepared without admission,
+canonical_text: 'Newly authored owner contract for server.identity_mismatch_detected@1.0.0, prepared without admission before the 2026-11-18 registration,
   authorized only by deck 2 item 9.a A (DL-450). One original verified detection that the reached endpoint identity
   differs from the expected Server identity.
 
@@ -2475,8 +2464,7 @@ canonical_text: 'Newly authored owner contract for server.identity_mismatch_dete
   It consumes the original accepted owner operation and immutable journal/observation/detection fact, never a caller
   success assertion. Revalidate schema, exact source/current generations, permission and writer lease before the
   existing domain effect; settle the original domain commit/readback and the ref-only canonical pending event intent.
-  Before any append, require this family''s exact registry/version/scope and retention admission; until then return
-  missing_event_registration and leave existing command expected_event_types=[] and independent owner receipts unchanged.
+  Before any append, require this family''s exact registry/version/scope and retention admission. Return missing_event_registration only while that exact registration is absent; leave existing command expected_event_types=[] and independent owner receipts unchanged on that refusal. Registration alone does not satisfy retention or the other existing append checks.
   No transport action or view refresh becomes an event source.
 
   For this family adopt SP-286 and CV-339 by name, including current strict full-value v2 resolver and SP-336/SP-347
@@ -2549,7 +2537,7 @@ canonical_text: 'Newly authored owner contract for server.identity_mismatch_dete
   a complete admitted replacement source/generation is verified; atomic publication cannot reinterpret old payloads
   or reissue domain work. Source retention/deletion authority remains independent.
 
-  Oracle plan: Plans/event_authority_w3e_oracle_plan.json#families/19 and ATS-1240/ATS-1241. Phase 2 (2026-11-13) runs the executable synthetic oracles of this family in scripts/pm_w3e_event_oracles.py; every refusal is one named single-predicate row of a generated Method B guard table (scripts/pm_w3e_table_*.py) proved by the gated shared scripts/pm_guard_isolation.py through scripts/pm-w3e-guard-proof.py, and rows no input can refuse first stay alone in their own table with a written proof. Numbers use the shared CV-1100/SP-1100 calls and timestamps the shared CV-1101 date_time with the owner profile of each field. Membership is ABSENT and native execution NOT_RUN.
+  Oracle plan: Plans/event_authority_w3e_oracle_plan.json#families/19 and ATS-1240/ATS-1241. Phase 2 (2026-11-13) runs the executable synthetic oracles of this family in scripts/pm_w3e_event_oracles.py; every refusal is one named single-predicate row of a generated Method B guard table (scripts/pm_w3e_table_*.py) proved by the gated shared scripts/pm_guard_isolation.py through scripts/pm-w3e-guard-proof.py, and rows no input can refuse first stay alone in their own table with a written proof. Numbers use the shared CV-1100/SP-1100 calls and timestamps the shared CV-1101 date_time with the owner profile of each field. At preparation before the 2026-11-18 registration, membership was ABSENT; native execution remains NOT_RUN.
 
 
   This family fixes its source authority_evidence roster to writer_fence, permission_or_service_authority, expected_identity_material,
@@ -2563,7 +2551,7 @@ canonical_text: 'Newly authored owner contract for server.identity_mismatch_dete
   Retention is decided above by the third retention sitting answers; Storage Case L-3 still supplies the hold and protection machinery, and original receipts and source records keep their own policies. No runtime Run
   is invented for a BackupRun or RestoreRun.
 
-  '
+  Current membership (2026-11-18) — server.identity_mismatch_detected@1.0.0 is individually registered in Plans/event_family_registry.json. Missing-registration refusal applies only if the exact current family/version/scope registration is absent; this registered family is not refused as missing_event_registration or family_not_admitted merely because it was prepared without admission. Append and checkpoint advance still require every existing schema, scope, retention, original-source, receipt, permission and withdrawal check specified here. Registry membership supplies no native execution proof or additional action authority.'
 gui_related: false
 gui_classification_reason: Defines event data, source custody, replay and internal checkpoints; existing surfaces
   only.
@@ -2578,7 +2566,7 @@ depends_on:
 - SP-337
 unblocks: []
 acceptance_criteria:
-- This exact family remains prepared without admission; current writes stay missing_event_registration.
+- This exact family is registered; missing_event_registration refuses only an absent exact registration, and all other existing append checks still apply.
 - Every stated join and refusal has a positive and a single-defect negative planned; native execution is NOT_RUN.
 - Retention is unresolved where explicitly marked; no lifetime or deletion policy is inferred.
 validation_surfaces:
@@ -2606,7 +2594,7 @@ preserved_exact_tokens:
 - CV-339
 - SP-337
 negative_constraints:
-- No admission, registry family append, Decision Log entry or native execution claim.
+- Preparation itself grants no admission, registry family append, Decision Log entry or native execution claim.
 - No independent number/timestamp implementation or retention decision.
 ```
 

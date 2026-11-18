@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L50475-L54265
+Source lines: L50475-L54249
 
-Source SHA256: `483180446b9ea96a38be9d03c75a9b126212e08b8266917f8c76e1fc17f2797f`
+Source SHA256: `98c1784c6b2734d3ec8e4f4052d90ed981d1e4063e83ee81a67e5e051ebb8e10`
 
 ---
 
@@ -1993,7 +1993,7 @@ unit_type: interaction_contract
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: "Newly authored owner contract for bundle.note_created 1.0.0 under DL-045 and DL-437, deck-2 Card 5.a\
-  \ option A. Prepared without admission. Semantic owners remain Storage SP-095 and Contracts CV-077;\
+  \ option A. Prepared without admission before the 2026-11-18 registration. Semantic owners remain Storage SP-095 and Contracts CV-077;\
   \ this exact-family unit supplies the missing technical bindings and applies only the approved Card\
   \ 5 action. The seven pre-round prepared contracts remain unchanged. Decision Log companion landed as\
   \ DL-437..443 in Plans/Decision_Log.md on main (batch 1); no Decision Log entry is authored here. Jared's\
@@ -2037,8 +2037,7 @@ canonical_text: "Newly authored owner contract for bundle.note_created 1.0.0 und
   \ for the two Storage-assigned EventRecord instants it binds). New schemas add no numeric upper limit.\
   \ Existing date-time/UUID validation is enforced through the existing full-match/Gregorian format checker,\
   \ not optional jsonschema format support.\n\nOrdering: exact event-family admission FIRST, before journal,\
-  \ body commit, owner mutation, append, side effect or checkpoint advance. Registry membership remains\
-  \ ABSENT and refuses family_not_admitted; synthetic future-admission fixtures grant nothing. Current\
+  \ body commit, owner mutation, append, side effect or checkpoint advance. At preparation before the 2026-11-18 registration, registry membership was ABSENT. family_not_admitted applies only when the exact current registration is absent; synthetic future-admission fixtures grant nothing. Current\
   \ writer and retry use dedupe_by_idempotency_key only; projector_replay_only refuses replay_only_not_appendable\
   \ before effects. Authenticate membership, permissions/source access, actual current owner revision,\
   \ single-writer lease, canonical allowed action and existing approval evidence under the same commit\
@@ -2135,8 +2134,7 @@ canonical_text: "Newly authored owner contract for bundle.note_created 1.0.0 und
   \ per row in the lane report. C12 remains PARTIAL: JSON Schema keyword cuts are not ported to that tool,\
   \ CV-1101's datetime_validator and whole-Plans inventory gate run at batch-2 integration, and the batch\
   \ Sol/Astra review has not run. Native authentication, owner atomicity, append/custody/durability, mapping\
-  \ approval, checkpoint CAS, coherent backup/recovery and disclosure races remain NOT_RUN. Membership\
-  \ ABSENT. No admission, executable task or native availability is asserted.\n\nPNC-019 s4r retention\
+  \ approval, checkpoint CAS, coherent backup/recovery and disclosure races remain NOT_RUN. At preparation before the 2026-11-18 registration, membership was ABSENT. No admission, executable task or native availability is asserted.\n\nPNC-019 s4r retention\
   \ binding for `bundle.note_created` (2026-11-14).\n\nEvent history `retention_policy_ref = RP-AUTHORITY-INDEFINITE@1.0.0`,\
   \ under DL-401, DL-500, DL-501.\n\nUse the existing policy object unchanged: {\"anchor_kind\": \"creation\"\
   , \"cardinality_scope\": null, \"expiry_action\": \"none\", \"max_cardinality\": null, \"overflow_action\"\
@@ -2149,7 +2147,7 @@ canonical_text: "Newly authored owner contract for bundle.note_created 1.0.0 und
   \ receipt, referenced-body and backup lifetimes remain with their own owners. Legal/investigation holds,\
   \ required references, recovery, rollback, maintenance, protected backups and latest-25-run protection\
   \ override cleanup without granting access. No unexpired/protected eviction for space, no retry anchor\
-  \ renewal, no hold release, admission, native proof or governance clearance is granted.\n"
+  \ renewal, no hold release, admission, native proof or governance clearance is granted.\n\n\nCurrent membership (2026-11-18) — bundle.note_created@1.0.0 is individually registered in Plans/event_family_registry.json. Missing-registration refusal applies only if the exact current family/version/scope registration is absent; this registered family is not refused as missing_event_registration or family_not_admitted merely because it was prepared without admission. Append and checkpoint advance still require every existing schema, scope, retention, original-source, receipt, permission and withdrawal check specified here. Registry membership supplies no native execution proof or additional action authority."
 gui_related: true
 gui_classification_reason: Exact concern or annotation action and visible audit History boundary.
 split_recommended: false
@@ -2159,7 +2157,7 @@ depends_on:
 - CV-339
 unblocks: []
 acceptance_criteria:
-- bundle.note_created has its own contract; membership ABSENT, retention PENDING_RETENTION_DECISION, native NOT_RUN.
+- bundle.note_created has its own contract; membership is registered; existing exact retention bindings apply and native execution remains NOT_RUN.
 - Preserve exact Card 5.a A recording and confirmation roles without expansion.
 validation_surfaces:
 - python3 scripts/pm-card5-event-contracts-check.py --family bundle.note_created
@@ -2180,7 +2178,7 @@ preserved_exact_tokens:
 - DL-437
 - PENDING_RETENTION_DECISION
 negative_constraints:
-- No admission, new recording privilege beyond option A, duplicate note co-emission or invented retention.
+- Preparation itself grants no admission, new recording privilege beyond option A, duplicate note co-emission or invented retention.
 ```
 
 ### F3-707 - bundle.note_status_changed Card 5 exact-family contract
@@ -2191,7 +2189,7 @@ unit_type: interaction_contract
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: "Newly authored owner contract for bundle.note_status_changed 1.0.0 under DL-045 and DL-437, deck-2 Card\
-  \ 5.a option A. Prepared without admission. Semantic owners remain Storage SP-095 and Contracts CV-077;\
+  \ 5.a option A. Prepared without admission before the 2026-11-18 registration. Semantic owners remain Storage SP-095 and Contracts CV-077;\
   \ this exact-family unit supplies the missing technical bindings and applies only the approved Card\
   \ 5 action. The seven pre-round prepared contracts remain unchanged. Decision Log companion landed as\
   \ DL-437..443 in Plans/Decision_Log.md on main (batch 1); no Decision Log entry is authored here. Jared's\
@@ -2236,8 +2234,7 @@ canonical_text: "Newly authored owner contract for bundle.note_status_changed 1.
   \ for the two Storage-assigned EventRecord instants it binds). New schemas add no numeric upper limit.\
   \ Existing date-time/UUID validation is enforced through the existing full-match/Gregorian format checker,\
   \ not optional jsonschema format support.\n\nOrdering: exact event-family admission FIRST, before journal,\
-  \ body commit, owner mutation, append, side effect or checkpoint advance. Registry membership remains\
-  \ ABSENT and refuses family_not_admitted; synthetic future-admission fixtures grant nothing. Current\
+  \ body commit, owner mutation, append, side effect or checkpoint advance. At preparation before the 2026-11-18 registration, registry membership was ABSENT. family_not_admitted applies only when the exact current registration is absent; synthetic future-admission fixtures grant nothing. Current\
   \ writer and retry use dedupe_by_idempotency_key only; projector_replay_only refuses replay_only_not_appendable\
   \ before effects. Authenticate membership, permissions/source access, actual current owner revision,\
   \ single-writer lease, canonical allowed action and existing approval evidence under the same commit\
@@ -2336,8 +2333,7 @@ canonical_text: "Newly authored owner contract for bundle.note_status_changed 1.
   \ per row in the lane report. C12 remains PARTIAL: JSON Schema keyword cuts are not ported to that tool,\
   \ CV-1101's datetime_validator and whole-Plans inventory gate run at batch-2 integration, and the batch\
   \ Sol/Astra review has not run. Native authentication, owner atomicity, append/custody/durability, mapping\
-  \ approval, checkpoint CAS, coherent backup/recovery and disclosure races remain NOT_RUN. Membership\
-  \ ABSENT. No admission, executable task or native availability is asserted.\n\nPNC-019 s4r retention\
+  \ approval, checkpoint CAS, coherent backup/recovery and disclosure races remain NOT_RUN. At preparation before the 2026-11-18 registration, membership was ABSENT. No admission, executable task or native availability is asserted.\n\nPNC-019 s4r retention\
   \ binding for `bundle.note_status_changed` (2026-11-14).\n\nEvent history `retention_policy_ref = RP-AUTHORITY-INDEFINITE@1.0.0`,\
   \ under DL-401, DL-500, DL-501.\n\nUse the existing policy object unchanged: {\"anchor_kind\": \"creation\"\
   , \"cardinality_scope\": null, \"expiry_action\": \"none\", \"max_cardinality\": null, \"overflow_action\"\
@@ -2350,7 +2346,7 @@ canonical_text: "Newly authored owner contract for bundle.note_status_changed 1.
   \ receipt, referenced-body and backup lifetimes remain with their own owners. Legal/investigation holds,\
   \ required references, recovery, rollback, maintenance, protected backups and latest-25-run protection\
   \ override cleanup without granting access. No unexpired/protected eviction for space, no retry anchor\
-  \ renewal, no hold release, admission, native proof or governance clearance is granted.\n"
+  \ renewal, no hold release, admission, native proof or governance clearance is granted.\n\n\nCurrent membership (2026-11-18) — bundle.note_status_changed@1.0.0 is individually registered in Plans/event_family_registry.json. Missing-registration refusal applies only if the exact current family/version/scope registration is absent; this registered family is not refused as missing_event_registration or family_not_admitted merely because it was prepared without admission. Append and checkpoint advance still require every existing schema, scope, retention, original-source, receipt, permission and withdrawal check specified here. Registry membership supplies no native execution proof or additional action authority."
 gui_related: true
 gui_classification_reason: Exact concern or annotation action and visible audit History boundary.
 split_recommended: false
@@ -2360,7 +2356,7 @@ depends_on:
 - CV-339
 unblocks: []
 acceptance_criteria:
-- bundle.note_status_changed has its own contract; membership ABSENT, retention PENDING_RETENTION_DECISION, native NOT_RUN.
+- bundle.note_status_changed has its own contract; membership is registered; existing exact retention bindings apply and native execution remains NOT_RUN.
 - Preserve exact Card 5.a A recording and confirmation roles without expansion.
 validation_surfaces:
 - python3 scripts/pm-card5-event-contracts-check.py --family bundle.note_status_changed
@@ -2381,7 +2377,7 @@ preserved_exact_tokens:
 - DL-437
 - PENDING_RETENTION_DECISION
 negative_constraints:
-- No admission, new recording privilege beyond option A, duplicate note co-emission or invented retention.
+- Preparation itself grants no admission, new recording privilege beyond option A, duplicate note co-emission or invented retention.
 ```
 
 ### F3-708 - bundle.annotation_state_changed Card 5 exact-family contract
@@ -2392,7 +2388,7 @@ unit_type: interaction_contract
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: "Newly authored owner contract for bundle.annotation_state_changed 1.0.0 under DL-045 and DL-437, deck-2\
-  \ Card 5.a option A. Prepared without admission. Semantic owners remain Storage SP-095 and Contracts\
+  \ Card 5.a option A. Prepared without admission before the 2026-11-18 registration. Semantic owners remain Storage SP-095 and Contracts\
   \ CV-077; this exact-family unit supplies the missing technical bindings and applies only the approved\
   \ Card 5 action. The seven pre-round prepared contracts remain unchanged. Decision Log companion landed\
   \ as DL-437..443 in Plans/Decision_Log.md on main (batch 1); no Decision Log entry is authored here.\
@@ -2505,8 +2501,7 @@ canonical_text: "Newly authored owner contract for bundle.annotation_state_chang
   \ per row in the lane report. C12 remains PARTIAL: JSON Schema keyword cuts are not ported to that tool,\
   \ CV-1101's datetime_validator and whole-Plans inventory gate run at batch-2 integration, and the batch\
   \ Sol/Astra review has not run. Native authentication, owner atomicity, append/custody/durability, mapping\
-  \ approval, checkpoint CAS, coherent backup/recovery and disclosure races remain NOT_RUN. Membership\
-  \ ABSENT. No admission, executable task or native availability is asserted.\n\nPNC-019 s4r retention\
+  \ approval, checkpoint CAS, coherent backup/recovery and disclosure races remain NOT_RUN. At preparation before the 2026-11-18 registration, membership was ABSENT. No admission, executable task or native availability is asserted.\n\nPNC-019 s4r retention\
   \ binding for `bundle.annotation_state_changed` (2026-11-14).\n\nEvent history `retention_policy_ref\
   \ = RP-AUTHORITY-INDEFINITE@1.0.0`, under DL-401, DL-500.\n\nUse the existing policy object unchanged:\
   \ {\"anchor_kind\": \"creation\", \"cardinality_scope\": null, \"expiry_action\": \"none\", \"max_cardinality\"\
@@ -2538,7 +2533,7 @@ canonical_text: "Newly authored owner contract for bundle.annotation_state_chang
   \ UTC); SHA-256 `509def930988ce9c7ac793f95cbdd9082d708a72dc2f108a25a4c3c74eae518b`. No Decision Log\
   \ ID is minted here; integration records the later entry.\n\nThis signed binding supersedes earlier\
   \ pending-retention language for this exact facet, including the prior s4r pending question; other source,\
-  \ checkpoint, custody and admission requirements remain with their existing owners.\n"
+  \ checkpoint, custody and admission requirements remain with their existing owners.\n\n\nCurrent membership (2026-11-18) — bundle.annotation_state_changed@1.0.0 is individually registered in Plans/event_family_registry.json. Missing-registration refusal applies only if the exact current family/version/scope registration is absent; this registered family is not refused as missing_event_registration or family_not_admitted merely because it was prepared without admission. Append and checkpoint advance still require every existing schema, scope, retention, original-source, receipt, permission and withdrawal check specified here. Registry membership supplies no native execution proof or additional action authority."
 gui_related: true
 gui_classification_reason: Exact concern or annotation action and visible audit History boundary.
 split_recommended: false
@@ -2548,7 +2543,7 @@ depends_on:
 - CV-339
 unblocks: []
 acceptance_criteria:
-- bundle.annotation_state_changed has its own contract; membership ABSENT, retention PENDING_RETENTION_DECISION, native NOT_RUN.
+- bundle.annotation_state_changed has its own contract; membership is registered; existing exact retention bindings apply and native execution remains NOT_RUN.
 - Preserve exact Card 5.a A recording and confirmation roles without expansion.
 validation_surfaces:
 - python3 scripts/pm-card5-event-contracts-check.py --family bundle.annotation_state_changed
@@ -2569,7 +2564,7 @@ preserved_exact_tokens:
 - DL-437
 - PENDING_RETENTION_DECISION
 negative_constraints:
-- No admission, new recording privilege beyond option A, duplicate note co-emission or invented retention.
+- Preparation itself grants no admission, new recording privilege beyond option A, duplicate note co-emission or invented retention.
 ```
 
 ### F3-709 - concern.assigned Card 5 exact-family contract
@@ -2580,7 +2575,7 @@ unit_type: interaction_contract
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: "Newly authored owner contract for concern.assigned 2.0.0 under DL-045 and DL-438, deck-2 Card 5.b option\
-  \ A. Prepared without admission. Semantic owners remain Orchestrator_Page OP-002/OP-004 and UCC-147;\
+  \ A. Prepared without admission before the 2026-11-18 registration. Semantic owners remain Orchestrator_Page OP-002/OP-004 and UCC-147;\
   \ this exact-family unit supplies the missing technical bindings and applies only the approved Card\
   \ 5 action. The seven pre-round prepared contracts remain unchanged. Decision Log companion landed as\
   \ DL-437..443 in Plans/Decision_Log.md on main (batch 1); no Decision Log entry is authored here. Jared's\
@@ -2630,8 +2625,7 @@ canonical_text: "Newly authored owner contract for concern.assigned 2.0.0 under 
   \ for the two Storage-assigned EventRecord instants it binds). New schemas add no numeric upper limit.\
   \ Existing date-time/UUID validation is enforced through the existing full-match/Gregorian format checker,\
   \ not optional jsonschema format support.\n\nOrdering: exact event-family admission FIRST, before journal,\
-  \ body commit, owner mutation, append, side effect or checkpoint advance. Registry membership remains\
-  \ ABSENT and refuses family_not_admitted; synthetic future-admission fixtures grant nothing. Current\
+  \ body commit, owner mutation, append, side effect or checkpoint advance. At preparation before the 2026-11-18 registration, registry membership was ABSENT. family_not_admitted applies only when the exact current registration is absent; synthetic future-admission fixtures grant nothing. Current\
   \ writer and retry use dedupe_by_idempotency_key only; projector_replay_only refuses replay_only_not_appendable\
   \ before effects. Authenticate membership, permissions/source access, actual current owner revision,\
   \ single-writer lease, canonical allowed action and existing approval evidence under the same commit\
@@ -2734,8 +2728,7 @@ canonical_text: "Newly authored owner contract for concern.assigned 2.0.0 under 
   \ per row in the lane report. C12 remains PARTIAL: JSON Schema keyword cuts are not ported to that tool,\
   \ CV-1101's datetime_validator and whole-Plans inventory gate run at batch-2 integration, and the batch\
   \ Sol/Astra review has not run. Native authentication, owner atomicity, append/custody/durability, mapping\
-  \ approval, checkpoint CAS, coherent backup/recovery and disclosure races remain NOT_RUN. Membership\
-  \ ABSENT. No admission, executable task or native availability is asserted.\n\nPNC-019 s4r retention\
+  \ approval, checkpoint CAS, coherent backup/recovery and disclosure races remain NOT_RUN. At preparation before the 2026-11-18 registration, membership was ABSENT. No admission, executable task or native availability is asserted.\n\nPNC-019 s4r retention\
   \ binding for `concern.assigned` (2026-11-14).\n\nEvent history `retention_policy_ref = RP-AUTHORITY-INDEFINITE@1.0.0`,\
   \ under DL-401, DL-500, DL-501.\n\nUse the existing policy object unchanged: {\"anchor_kind\": \"creation\"\
   , \"cardinality_scope\": null, \"expiry_action\": \"none\", \"max_cardinality\": null, \"overflow_action\"\
@@ -2748,7 +2741,7 @@ canonical_text: "Newly authored owner contract for concern.assigned 2.0.0 under 
   \ receipt, referenced-body and backup lifetimes remain with their own owners. Legal/investigation holds,\
   \ required references, recovery, rollback, maintenance, protected backups and latest-25-run protection\
   \ override cleanup without granting access. No unexpired/protected eviction for space, no retry anchor\
-  \ renewal, no hold release, admission, native proof or governance clearance is granted.\n"
+  \ renewal, no hold release, admission, native proof or governance clearance is granted.\n\n\nCurrent membership (2026-11-18) — concern.assigned@2.0.0 is individually registered in Plans/event_family_registry.json. Missing-registration refusal applies only if the exact current family/version/scope registration is absent; this registered family is not refused as missing_event_registration or family_not_admitted merely because it was prepared without admission. Append and checkpoint advance still require every existing schema, scope, retention, original-source, receipt, permission and withdrawal check specified here. Registry membership supplies no native execution proof or additional action authority."
 gui_related: true
 gui_classification_reason: Exact concern or annotation action and visible audit History boundary.
 split_recommended: false
@@ -2758,7 +2751,7 @@ depends_on:
 - CV-339
 unblocks: []
 acceptance_criteria:
-- concern.assigned has its own contract; membership ABSENT, retention PENDING_RETENTION_DECISION, native NOT_RUN.
+- concern.assigned has its own contract; membership is registered; existing exact retention bindings apply and native execution remains NOT_RUN.
 - Preserve exact Card 5.b A recording and confirmation roles without expansion.
 validation_surfaces:
 - python3 scripts/pm-card5-event-contracts-check.py --family concern.assigned
@@ -2779,7 +2772,7 @@ preserved_exact_tokens:
 - DL-438
 - PENDING_RETENTION_DECISION
 negative_constraints:
-- No admission, new recording privilege beyond option A, duplicate note co-emission or invented retention.
+- Preparation itself grants no admission, new recording privilege beyond option A, duplicate note co-emission or invented retention.
 ```
 
 ### F3-710 - concern.evidence_linked Card 5 exact-family contract
@@ -2790,7 +2783,7 @@ unit_type: interaction_contract
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: "Newly authored owner contract for concern.evidence_linked 2.0.0 under DL-045 and DL-439, deck-2 Card\
-  \ 5.c option A. Prepared without admission. Semantic owners remain Orchestrator_Page OP-002/OP-004 and\
+  \ 5.c option A. Prepared without admission before the 2026-11-18 registration. Semantic owners remain Orchestrator_Page OP-002/OP-004 and\
   \ UCC-147; this exact-family unit supplies the missing technical bindings and applies only the approved\
   \ Card 5 action. The seven pre-round prepared contracts remain unchanged. Decision Log companion landed\
   \ as DL-437..443 in Plans/Decision_Log.md on main (batch 1); no Decision Log entry is authored here.\
@@ -2833,8 +2826,7 @@ canonical_text: "Newly authored owner contract for concern.evidence_linked 2.0.0
   \ for the two Storage-assigned EventRecord instants it binds). New schemas add no numeric upper limit.\
   \ Existing date-time/UUID validation is enforced through the existing full-match/Gregorian format checker,\
   \ not optional jsonschema format support.\n\nOrdering: exact event-family admission FIRST, before journal,\
-  \ body commit, owner mutation, append, side effect or checkpoint advance. Registry membership remains\
-  \ ABSENT and refuses family_not_admitted; synthetic future-admission fixtures grant nothing. Current\
+  \ body commit, owner mutation, append, side effect or checkpoint advance. At preparation before the 2026-11-18 registration, registry membership was ABSENT. family_not_admitted applies only when the exact current registration is absent; synthetic future-admission fixtures grant nothing. Current\
   \ writer and retry use dedupe_by_idempotency_key only; projector_replay_only refuses replay_only_not_appendable\
   \ before effects. Authenticate membership, permissions/source access, actual current owner revision,\
   \ single-writer lease, canonical allowed action and existing approval evidence under the same commit\
@@ -2934,7 +2926,7 @@ canonical_text: "Newly authored owner contract for concern.evidence_linked 2.0.0
   \ PARTIAL: JSON Schema keyword cuts are not ported to that tool, CV-1101's datetime_validator and whole-Plans\
   \ inventory gate run at batch-2 integration, and the batch Sol/Astra review has not run. Native authentication,\
   \ owner atomicity, append/custody/durability, mapping approval, checkpoint CAS, coherent backup/recovery\
-  \ and disclosure races remain NOT_RUN. Membership ABSENT. No admission, executable task or native availability\
+  \ and disclosure races remain NOT_RUN. At preparation before the 2026-11-18 registration, membership was ABSENT. No admission, executable task or native availability\
   \ is asserted.\n\nPNC-019 s4r retention binding for `concern.evidence_linked` (2026-11-14).\n\nEvent\
   \ history `retention_policy_ref = RP-AUTHORITY-INDEFINITE@1.0.0`, under DL-401, DL-500, DL-501.\n\n\
   Use the existing policy object unchanged: {\"anchor_kind\": \"creation\", \"cardinality_scope\": null,\
@@ -2948,7 +2940,7 @@ canonical_text: "Newly authored owner contract for concern.evidence_linked 2.0.0
   \ remain with their own owners. Legal/investigation holds, required references, recovery, rollback,\
   \ maintenance, protected backups and latest-25-run protection override cleanup without granting access.\
   \ No unexpired/protected eviction for space, no retry anchor renewal, no hold release, admission, native\
-  \ proof or governance clearance is granted.\n"
+  \ proof or governance clearance is granted.\n\n\nCurrent membership (2026-11-18) — concern.evidence_linked@2.0.0 is individually registered in Plans/event_family_registry.json. Missing-registration refusal applies only if the exact current family/version/scope registration is absent; this registered family is not refused as missing_event_registration or family_not_admitted merely because it was prepared without admission. Append and checkpoint advance still require every existing schema, scope, retention, original-source, receipt, permission and withdrawal check specified here. Registry membership supplies no native execution proof or additional action authority."
 gui_related: true
 gui_classification_reason: Exact concern or annotation action and visible audit History boundary.
 split_recommended: false
@@ -2958,7 +2950,7 @@ depends_on:
 - CV-339
 unblocks: []
 acceptance_criteria:
-- concern.evidence_linked has its own contract; membership ABSENT, retention PENDING_RETENTION_DECISION, native NOT_RUN.
+- concern.evidence_linked has its own contract; membership is registered; existing exact retention bindings apply and native execution remains NOT_RUN.
 - Preserve exact Card 5.c A recording and confirmation roles without expansion.
 validation_surfaces:
 - python3 scripts/pm-card5-event-contracts-check.py --family concern.evidence_linked
@@ -2979,7 +2971,7 @@ preserved_exact_tokens:
 - DL-439
 - PENDING_RETENTION_DECISION
 negative_constraints:
-- No admission, new recording privilege beyond option A, duplicate note co-emission or invented retention.
+- Preparation itself grants no admission, new recording privilege beyond option A, duplicate note co-emission or invented retention.
 ```
 
 ### F3-711 - concern.promoted Card 5 exact-family contract
@@ -2990,7 +2982,7 @@ unit_type: interaction_contract
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: "Newly authored owner contract for concern.promoted 2.0.0 under DL-045 and DL-440, deck-2 Card 5.d option\
-  \ A. Prepared without admission. Semantic owners remain Orchestrator_Page OP-002/OP-004 and UCC-147;\
+  \ A. Prepared without admission before the 2026-11-18 registration. Semantic owners remain Orchestrator_Page OP-002/OP-004 and UCC-147;\
   \ this exact-family unit supplies the missing technical bindings and applies only the approved Card\
   \ 5 action. The seven pre-round prepared contracts remain unchanged. Decision Log companion landed as\
   \ DL-437..443 in Plans/Decision_Log.md on main (batch 1); no Decision Log entry is authored here. Jared's\
@@ -3034,8 +3026,7 @@ canonical_text: "Newly authored owner contract for concern.promoted 2.0.0 under 
   \ for the two Storage-assigned EventRecord instants it binds). New schemas add no numeric upper limit.\
   \ Existing date-time/UUID validation is enforced through the existing full-match/Gregorian format checker,\
   \ not optional jsonschema format support.\n\nOrdering: exact event-family admission FIRST, before journal,\
-  \ body commit, owner mutation, append, side effect or checkpoint advance. Registry membership remains\
-  \ ABSENT and refuses family_not_admitted; synthetic future-admission fixtures grant nothing. Current\
+  \ body commit, owner mutation, append, side effect or checkpoint advance. At preparation before the 2026-11-18 registration, registry membership was ABSENT. family_not_admitted applies only when the exact current registration is absent; synthetic future-admission fixtures grant nothing. Current\
   \ writer and retry use dedupe_by_idempotency_key only; projector_replay_only refuses replay_only_not_appendable\
   \ before effects. Authenticate membership, permissions/source access, actual current owner revision,\
   \ single-writer lease, canonical allowed action and existing approval evidence under the same commit\
@@ -3136,8 +3127,7 @@ canonical_text: "Newly authored owner contract for concern.promoted 2.0.0 under 
   \ per row in the lane report. C12 remains PARTIAL: JSON Schema keyword cuts are not ported to that tool,\
   \ CV-1101's datetime_validator and whole-Plans inventory gate run at batch-2 integration, and the batch\
   \ Sol/Astra review has not run. Native authentication, owner atomicity, append/custody/durability, mapping\
-  \ approval, checkpoint CAS, coherent backup/recovery and disclosure races remain NOT_RUN. Membership\
-  \ ABSENT. No admission, executable task or native availability is asserted.\n\nPNC-019 s4r retention\
+  \ approval, checkpoint CAS, coherent backup/recovery and disclosure races remain NOT_RUN. At preparation before the 2026-11-18 registration, membership was ABSENT. No admission, executable task or native availability is asserted.\n\nPNC-019 s4r retention\
   \ binding for `concern.promoted` (2026-11-14).\n\nEvent history `retention_policy_ref = RP-AUTHORITY-INDEFINITE@1.0.0`,\
   \ under DL-401, DL-500, DL-501.\n\nUse the existing policy object unchanged: {\"anchor_kind\": \"creation\"\
   , \"cardinality_scope\": null, \"expiry_action\": \"none\", \"max_cardinality\": null, \"overflow_action\"\
@@ -3150,7 +3140,7 @@ canonical_text: "Newly authored owner contract for concern.promoted 2.0.0 under 
   \ receipt, referenced-body and backup lifetimes remain with their own owners. Legal/investigation holds,\
   \ required references, recovery, rollback, maintenance, protected backups and latest-25-run protection\
   \ override cleanup without granting access. No unexpired/protected eviction for space, no retry anchor\
-  \ renewal, no hold release, admission, native proof or governance clearance is granted.\n"
+  \ renewal, no hold release, admission, native proof or governance clearance is granted.\n\n\nCurrent membership (2026-11-18) — concern.promoted@2.0.0 is individually registered in Plans/event_family_registry.json. Missing-registration refusal applies only if the exact current family/version/scope registration is absent; this registered family is not refused as missing_event_registration or family_not_admitted merely because it was prepared without admission. Append and checkpoint advance still require every existing schema, scope, retention, original-source, receipt, permission and withdrawal check specified here. Registry membership supplies no native execution proof or additional action authority."
 gui_related: true
 gui_classification_reason: Exact concern or annotation action and visible audit History boundary.
 split_recommended: false
@@ -3160,7 +3150,7 @@ depends_on:
 - CV-339
 unblocks: []
 acceptance_criteria:
-- concern.promoted has its own contract; membership ABSENT, retention PENDING_RETENTION_DECISION, native NOT_RUN.
+- concern.promoted has its own contract; membership is registered; existing exact retention bindings apply and native execution remains NOT_RUN.
 - Preserve exact Card 5.d A recording and confirmation roles without expansion.
 validation_surfaces:
 - python3 scripts/pm-card5-event-contracts-check.py --family concern.promoted
@@ -3181,7 +3171,7 @@ preserved_exact_tokens:
 - DL-440
 - PENDING_RETENTION_DECISION
 negative_constraints:
-- No admission, new recording privilege beyond option A, duplicate note co-emission or invented retention.
+- Preparation itself grants no admission, new recording privilege beyond option A, duplicate note co-emission or invented retention.
 ```
 
 ### F3-712 - concern.reopened Card 5 exact-family contract
@@ -3192,7 +3182,7 @@ unit_type: interaction_contract
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: "Newly authored owner contract for concern.reopened 2.0.0 under DL-045 and DL-441, deck-2 Card 5.e option\
-  \ A. Prepared without admission. Semantic owners remain Orchestrator_Page OP-002/OP-004 and UCC-147;\
+  \ A. Prepared without admission before the 2026-11-18 registration. Semantic owners remain Orchestrator_Page OP-002/OP-004 and UCC-147;\
   \ this exact-family unit supplies the missing technical bindings and applies only the approved Card\
   \ 5 action. The seven pre-round prepared contracts remain unchanged. Decision Log companion landed as\
   \ DL-437..443 in Plans/Decision_Log.md on main (batch 1); no Decision Log entry is authored here. Jared's\
@@ -3234,8 +3224,7 @@ canonical_text: "Newly authored owner contract for concern.reopened 2.0.0 under 
   \ for the two Storage-assigned EventRecord instants it binds). New schemas add no numeric upper limit.\
   \ Existing date-time/UUID validation is enforced through the existing full-match/Gregorian format checker,\
   \ not optional jsonschema format support.\n\nOrdering: exact event-family admission FIRST, before journal,\
-  \ body commit, owner mutation, append, side effect or checkpoint advance. Registry membership remains\
-  \ ABSENT and refuses family_not_admitted; synthetic future-admission fixtures grant nothing. Current\
+  \ body commit, owner mutation, append, side effect or checkpoint advance. At preparation before the 2026-11-18 registration, registry membership was ABSENT. family_not_admitted applies only when the exact current registration is absent; synthetic future-admission fixtures grant nothing. Current\
   \ writer and retry use dedupe_by_idempotency_key only; projector_replay_only refuses replay_only_not_appendable\
   \ before effects. Authenticate membership, permissions/source access, actual current owner revision,\
   \ single-writer lease, canonical allowed action and existing approval evidence under the same commit\
@@ -3335,8 +3324,7 @@ canonical_text: "Newly authored owner contract for concern.reopened 2.0.0 under 
   \ per row in the lane report. C12 remains PARTIAL: JSON Schema keyword cuts are not ported to that tool,\
   \ CV-1101's datetime_validator and whole-Plans inventory gate run at batch-2 integration, and the batch\
   \ Sol/Astra review has not run. Native authentication, owner atomicity, append/custody/durability, mapping\
-  \ approval, checkpoint CAS, coherent backup/recovery and disclosure races remain NOT_RUN. Membership\
-  \ ABSENT. No admission, executable task or native availability is asserted.\n\nPNC-019 s4r retention\
+  \ approval, checkpoint CAS, coherent backup/recovery and disclosure races remain NOT_RUN. At preparation before the 2026-11-18 registration, membership was ABSENT. No admission, executable task or native availability is asserted.\n\nPNC-019 s4r retention\
   \ binding for `concern.reopened` (2026-11-14).\n\nEvent history `retention_policy_ref = RP-AUTHORITY-INDEFINITE@1.0.0`,\
   \ under DL-401, DL-500, DL-501.\n\nUse the existing policy object unchanged: {\"anchor_kind\": \"creation\"\
   , \"cardinality_scope\": null, \"expiry_action\": \"none\", \"max_cardinality\": null, \"overflow_action\"\
@@ -3349,7 +3337,7 @@ canonical_text: "Newly authored owner contract for concern.reopened 2.0.0 under 
   \ receipt, referenced-body and backup lifetimes remain with their own owners. Legal/investigation holds,\
   \ required references, recovery, rollback, maintenance, protected backups and latest-25-run protection\
   \ override cleanup without granting access. No unexpired/protected eviction for space, no retry anchor\
-  \ renewal, no hold release, admission, native proof or governance clearance is granted.\n"
+  \ renewal, no hold release, admission, native proof or governance clearance is granted.\n\n\nCurrent membership (2026-11-18) — concern.reopened@2.0.0 is individually registered in Plans/event_family_registry.json. Missing-registration refusal applies only if the exact current family/version/scope registration is absent; this registered family is not refused as missing_event_registration or family_not_admitted merely because it was prepared without admission. Append and checkpoint advance still require every existing schema, scope, retention, original-source, receipt, permission and withdrawal check specified here. Registry membership supplies no native execution proof or additional action authority."
 gui_related: true
 gui_classification_reason: Exact concern or annotation action and visible audit History boundary.
 split_recommended: false
@@ -3359,7 +3347,7 @@ depends_on:
 - CV-339
 unblocks: []
 acceptance_criteria:
-- concern.reopened has its own contract; membership ABSENT, retention PENDING_RETENTION_DECISION, native NOT_RUN.
+- concern.reopened has its own contract; membership is registered; existing exact retention bindings apply and native execution remains NOT_RUN.
 - Preserve exact Card 5.e A recording and confirmation roles without expansion.
 validation_surfaces:
 - python3 scripts/pm-card5-event-contracts-check.py --family concern.reopened
@@ -3380,7 +3368,7 @@ preserved_exact_tokens:
 - DL-441
 - PENDING_RETENTION_DECISION
 negative_constraints:
-- No admission, new recording privilege beyond option A, duplicate note co-emission or invented retention.
+- Preparation itself grants no admission, new recording privilege beyond option A, duplicate note co-emission or invented retention.
 ```
 
 ### F3-713 - concern.resolved Card 5 exact-family contract
@@ -3391,7 +3379,7 @@ unit_type: interaction_contract
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: "Newly authored owner contract for concern.resolved 2.0.0 under DL-045 and DL-442, deck-2 Card 5.f option\
-  \ A. Prepared without admission. Semantic owners remain Orchestrator_Page OP-002/OP-004 and UCC-147;\
+  \ A. Prepared without admission before the 2026-11-18 registration. Semantic owners remain Orchestrator_Page OP-002/OP-004 and UCC-147;\
   \ this exact-family unit supplies the missing technical bindings and applies only the approved Card\
   \ 5 action. The seven pre-round prepared contracts remain unchanged. Decision Log companion landed as\
   \ DL-437..443 in Plans/Decision_Log.md on main (batch 1); no Decision Log entry is authored here. Jared's\
@@ -3442,8 +3430,7 @@ canonical_text: "Newly authored owner contract for concern.resolved 2.0.0 under 
   \ for the two Storage-assigned EventRecord instants it binds). New schemas add no numeric upper limit.\
   \ Existing date-time/UUID validation is enforced through the existing full-match/Gregorian format checker,\
   \ not optional jsonschema format support.\n\nOrdering: exact event-family admission FIRST, before journal,\
-  \ body commit, owner mutation, append, side effect or checkpoint advance. Registry membership remains\
-  \ ABSENT and refuses family_not_admitted; synthetic future-admission fixtures grant nothing. Current\
+  \ body commit, owner mutation, append, side effect or checkpoint advance. At preparation before the 2026-11-18 registration, registry membership was ABSENT. family_not_admitted applies only when the exact current registration is absent; synthetic future-admission fixtures grant nothing. Current\
   \ writer and retry use dedupe_by_idempotency_key only; projector_replay_only refuses replay_only_not_appendable\
   \ before effects. Authenticate membership, permissions/source access, actual current owner revision,\
   \ single-writer lease, canonical allowed action and existing approval evidence under the same commit\
@@ -3546,8 +3533,7 @@ canonical_text: "Newly authored owner contract for concern.resolved 2.0.0 under 
   \ per row in the lane report. C12 remains PARTIAL: JSON Schema keyword cuts are not ported to that tool,\
   \ CV-1101's datetime_validator and whole-Plans inventory gate run at batch-2 integration, and the batch\
   \ Sol/Astra review has not run. Native authentication, owner atomicity, append/custody/durability, mapping\
-  \ approval, checkpoint CAS, coherent backup/recovery and disclosure races remain NOT_RUN. Membership\
-  \ ABSENT. No admission, executable task or native availability is asserted.\n\nPNC-019 s4r retention\
+  \ approval, checkpoint CAS, coherent backup/recovery and disclosure races remain NOT_RUN. At preparation before the 2026-11-18 registration, membership was ABSENT. No admission, executable task or native availability is asserted.\n\nPNC-019 s4r retention\
   \ binding for `concern.resolved` (2026-11-14).\n\nEvent history `retention_policy_ref = RP-AUTHORITY-INDEFINITE@1.0.0`,\
   \ under DL-401, DL-500, DL-501.\n\nUse the existing policy object unchanged: {\"anchor_kind\": \"creation\"\
   , \"cardinality_scope\": null, \"expiry_action\": \"none\", \"max_cardinality\": null, \"overflow_action\"\
@@ -3560,7 +3546,7 @@ canonical_text: "Newly authored owner contract for concern.resolved 2.0.0 under 
   \ receipt, referenced-body and backup lifetimes remain with their own owners. Legal/investigation holds,\
   \ required references, recovery, rollback, maintenance, protected backups and latest-25-run protection\
   \ override cleanup without granting access. No unexpired/protected eviction for space, no retry anchor\
-  \ renewal, no hold release, admission, native proof or governance clearance is granted.\n"
+  \ renewal, no hold release, admission, native proof or governance clearance is granted.\n\n\nCurrent membership (2026-11-18) — concern.resolved@2.0.0 is individually registered in Plans/event_family_registry.json. Missing-registration refusal applies only if the exact current family/version/scope registration is absent; this registered family is not refused as missing_event_registration or family_not_admitted merely because it was prepared without admission. Append and checkpoint advance still require every existing schema, scope, retention, original-source, receipt, permission and withdrawal check specified here. Registry membership supplies no native execution proof or additional action authority."
 gui_related: true
 gui_classification_reason: Exact concern or annotation action and visible audit History boundary.
 split_recommended: false
@@ -3570,7 +3556,7 @@ depends_on:
 - CV-339
 unblocks: []
 acceptance_criteria:
-- concern.resolved has its own contract; membership ABSENT, retention PENDING_RETENTION_DECISION, native NOT_RUN.
+- concern.resolved has its own contract; membership is registered; existing exact retention bindings apply and native execution remains NOT_RUN.
 - Preserve exact Card 5.f A recording and confirmation roles without expansion.
 validation_surfaces:
 - python3 scripts/pm-card5-event-contracts-check.py --family concern.resolved
@@ -3591,7 +3577,7 @@ preserved_exact_tokens:
 - DL-442
 - PENDING_RETENTION_DECISION
 negative_constraints:
-- No admission, new recording privilege beyond option A, duplicate note co-emission or invented retention.
+- Preparation itself grants no admission, new recording privilege beyond option A, duplicate note co-emission or invented retention.
 ```
 
 ### F3-714 - concern.updated Card 5 exact-family contract
@@ -3602,7 +3588,7 @@ unit_type: interaction_contract
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: "Newly authored owner contract for concern.updated 2.0.0 under DL-045 and DL-443, deck-2 Card 5.g option\
-  \ A. Prepared without admission. Semantic owners remain Orchestrator_Page OP-002/OP-004 and UCC-147;\
+  \ A. Prepared without admission before the 2026-11-18 registration. Semantic owners remain Orchestrator_Page OP-002/OP-004 and UCC-147;\
   \ this exact-family unit supplies the missing technical bindings and applies only the approved Card\
   \ 5 action. The seven pre-round prepared contracts remain unchanged. Decision Log companion landed as\
   \ DL-437..443 in Plans/Decision_Log.md on main (batch 1); no Decision Log entry is authored here. Jared's\
@@ -3650,8 +3636,7 @@ canonical_text: "Newly authored owner contract for concern.updated 2.0.0 under D
   \ for the two Storage-assigned EventRecord instants it binds). New schemas add no numeric upper limit.\
   \ Existing date-time/UUID validation is enforced through the existing full-match/Gregorian format checker,\
   \ not optional jsonschema format support.\n\nOrdering: exact event-family admission FIRST, before journal,\
-  \ body commit, owner mutation, append, side effect or checkpoint advance. Registry membership remains\
-  \ ABSENT and refuses family_not_admitted; synthetic future-admission fixtures grant nothing. Current\
+  \ body commit, owner mutation, append, side effect or checkpoint advance. At preparation before the 2026-11-18 registration, registry membership was ABSENT. family_not_admitted applies only when the exact current registration is absent; synthetic future-admission fixtures grant nothing. Current\
   \ writer and retry use dedupe_by_idempotency_key only; projector_replay_only refuses replay_only_not_appendable\
   \ before effects. Authenticate membership, permissions/source access, actual current owner revision,\
   \ single-writer lease, canonical allowed action and existing approval evidence under the same commit\
@@ -3752,8 +3737,7 @@ canonical_text: "Newly authored owner contract for concern.updated 2.0.0 under D
   \ per row in the lane report. C12 remains PARTIAL: JSON Schema keyword cuts are not ported to that tool,\
   \ CV-1101's datetime_validator and whole-Plans inventory gate run at batch-2 integration, and the batch\
   \ Sol/Astra review has not run. Native authentication, owner atomicity, append/custody/durability, mapping\
-  \ approval, checkpoint CAS, coherent backup/recovery and disclosure races remain NOT_RUN. Membership\
-  \ ABSENT. No admission, executable task or native availability is asserted.\n\nPNC-019 s4r retention\
+  \ approval, checkpoint CAS, coherent backup/recovery and disclosure races remain NOT_RUN. At preparation before the 2026-11-18 registration, membership was ABSENT. No admission, executable task or native availability is asserted.\n\nPNC-019 s4r retention\
   \ binding for `concern.updated` (2026-11-14).\n\nEvent history `retention_policy_ref = RP-AUTHORITY-INDEFINITE@1.0.0`,\
   \ under DL-401, DL-500, DL-501.\n\nUse the existing policy object unchanged: {\"anchor_kind\": \"creation\"\
   , \"cardinality_scope\": null, \"expiry_action\": \"none\", \"max_cardinality\": null, \"overflow_action\"\
@@ -3766,7 +3750,7 @@ canonical_text: "Newly authored owner contract for concern.updated 2.0.0 under D
   \ receipt, referenced-body and backup lifetimes remain with their own owners. Legal/investigation holds,\
   \ required references, recovery, rollback, maintenance, protected backups and latest-25-run protection\
   \ override cleanup without granting access. No unexpired/protected eviction for space, no retry anchor\
-  \ renewal, no hold release, admission, native proof or governance clearance is granted.\n"
+  \ renewal, no hold release, admission, native proof or governance clearance is granted.\n\n\nCurrent membership (2026-11-18) — concern.updated@2.0.0 is individually registered in Plans/event_family_registry.json. Missing-registration refusal applies only if the exact current family/version/scope registration is absent; this registered family is not refused as missing_event_registration or family_not_admitted merely because it was prepared without admission. Append and checkpoint advance still require every existing schema, scope, retention, original-source, receipt, permission and withdrawal check specified here. Registry membership supplies no native execution proof or additional action authority."
 gui_related: true
 gui_classification_reason: Exact concern or annotation action and visible audit History boundary.
 split_recommended: false
@@ -3776,7 +3760,7 @@ depends_on:
 - CV-339
 unblocks: []
 acceptance_criteria:
-- concern.updated has its own contract; membership ABSENT, retention PENDING_RETENTION_DECISION, native NOT_RUN.
+- concern.updated has its own contract; membership is registered; existing exact retention bindings apply and native execution remains NOT_RUN.
 - Preserve exact Card 5.g A recording and confirmation roles without expansion.
 validation_surfaces:
 - python3 scripts/pm-card5-event-contracts-check.py --family concern.updated
@@ -3797,5 +3781,5 @@ preserved_exact_tokens:
 - DL-443
 - PENDING_RETENTION_DECISION
 negative_constraints:
-- No admission, new recording privilege beyond option A, duplicate note co-emission or invented retention.
+- Preparation itself grants no admission, new recording privilege beyond option A, duplicate note co-emission or invented retention.
 ```

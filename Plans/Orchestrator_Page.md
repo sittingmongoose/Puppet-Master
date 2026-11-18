@@ -587,9 +587,10 @@ status: accepted
 owner_doc: Plans/Orchestrator_Page.md
 canonical_text: >-
   Concern is a first-class durable record with exact lifecycle states, resolution_kind values, owner/creator/resolver separation, source-event/record/projection layers, required minimum fields, and explicit authority direction.
-  concern.created preparation reuses OP-002's five authorized creators and worker nomination-only boundary.
+  Preparation history before the 2026-11-18 registration: concern.created reused OP-002's five authorized creators and worker nomination-only boundary.
   Its independent technical contract is SP-666/CV-686; closed original record/operation/checkpoint schemas
   and oracles do not grant another creator or settle any other concern-action authority question.
+  Current membership (2026-11-18) — concern.created@1.0.0 is individually registered in Plans/event_family_registry.json. Missing-registration refusal applies only if the exact current family/version/scope registration is absent; this registered family is not refused as missing_event_registration or family_not_admitted merely because it was prepared without admission. Append and checkpoint advance still require every existing schema, scope, retention, original-source, receipt, permission and withdrawal check specified here. Registry membership supplies no native execution proof or additional action authority.
 
 gui_related: false
 gui_classification_reason: This unit defines runtime, governance, or ownership contract behavior rather than visual presentation.

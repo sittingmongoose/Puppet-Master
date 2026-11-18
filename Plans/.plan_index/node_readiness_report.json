@@ -12,7 +12,7 @@
     "unblocks_edge_count": 3223,
     "unresolved_reference_count": 0
   },
-  "generated_at_utc": "2026-11-18T15:41:02Z",
+  "generated_at_utc": "2026-11-18T20:55:10Z",
   "gui_related_units": {
     "count": 3935,
     "units": [
@@ -3851,7 +3851,7 @@
           "heading": "ACD-610 — bundle.selection_forward_blocked",
           "heading_level": 3,
           "heading_line": 31800,
-          "line": 31804,
+          "line": 31806,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -3861,8 +3861,8 @@
         "source_location": {
           "heading": "ACD-611 — bundle.selection_sent_to_chat",
           "heading_level": 3,
-          "heading_line": 31867,
-          "line": 31871,
+          "heading_line": 31869,
+          "line": 31875,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -3872,8 +3872,8 @@
         "source_location": {
           "heading": "ACD-612 — chat.message",
           "heading_level": 3,
-          "heading_line": 31935,
-          "line": 31939,
+          "heading_line": 31939,
+          "line": 31945,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -3883,8 +3883,8 @@
         "source_location": {
           "heading": "ACD-613 — chat.thread_archived",
           "heading_level": 3,
-          "heading_line": 32924,
-          "line": 32928,
+          "heading_line": 32962,
+          "line": 32968,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -3894,8 +3894,8 @@
         "source_location": {
           "heading": "ACD-614 — chat.thread_created",
           "heading_level": 3,
-          "heading_line": 32002,
-          "line": 32006,
+          "heading_line": 32009,
+          "line": 32015,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -3905,8 +3905,8 @@
         "source_location": {
           "heading": "ACD-615 — chat.thread_deleted",
           "heading_level": 3,
-          "heading_line": 32069,
-          "line": 32073,
+          "heading_line": 32079,
+          "line": 32085,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -3916,8 +3916,8 @@
         "source_location": {
           "heading": "ACD-616 — chat.thread_worktree_bound",
           "heading_level": 3,
-          "heading_line": 32137,
-          "line": 32141,
+          "heading_line": 32150,
+          "line": 32156,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -3927,8 +3927,8 @@
         "source_location": {
           "heading": "ACD-617 — chat.thread_worktree_create_failed",
           "heading_level": 3,
-          "heading_line": 32204,
-          "line": 32208,
+          "heading_line": 32219,
+          "line": 32225,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -3938,8 +3938,8 @@
         "source_location": {
           "heading": "ACD-618 — chat.thread_worktree_merge_failed",
           "heading_level": 3,
-          "heading_line": 32271,
-          "line": 32275,
+          "heading_line": 32288,
+          "line": 32294,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -3949,8 +3949,8 @@
         "source_location": {
           "heading": "ACD-619 — chat.thread_worktree_merged",
           "heading_level": 3,
-          "heading_line": 32338,
-          "line": 32342,
+          "heading_line": 32357,
+          "line": 32363,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -3960,8 +3960,8 @@
         "source_location": {
           "heading": "ACD-620 — chat.thread_worktree_pr_created",
           "heading_level": 3,
-          "heading_line": 32405,
-          "line": 32409,
+          "heading_line": 32426,
+          "line": 32432,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -3971,8 +3971,8 @@
         "source_location": {
           "heading": "ACD-621 — chat.thread_worktree_pr_failed",
           "heading_level": 3,
-          "heading_line": 32471,
-          "line": 32475,
+          "heading_line": 32494,
+          "line": 32500,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -3982,8 +3982,8 @@
         "source_location": {
           "heading": "ACD-622 — chat.thread_worktree_pre_merge_test_failed",
           "heading_level": 3,
-          "heading_line": 32538,
-          "line": 32548,
+          "heading_line": 32563,
+          "line": 32575,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -3993,8 +3993,8 @@
         "source_location": {
           "heading": "ACD-623 — chat.thread_worktree_pre_merge_test_passed",
           "heading_level": 3,
-          "heading_line": 32632,
-          "line": 32642,
+          "heading_line": 32660,
+          "line": 32672,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -4004,8 +4004,8 @@
         "source_location": {
           "heading": "ACD-624 — chat.thread_worktree_pre_merge_test_started",
           "heading_level": 3,
-          "heading_line": 32721,
-          "line": 32725,
+          "heading_line": 32752,
+          "line": 32758,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -4015,8 +4015,8 @@
         "source_location": {
           "heading": "ACD-625 — chat.thread_worktree_renamed",
           "heading_level": 3,
-          "heading_line": 32789,
-          "line": 32793,
+          "heading_line": 32823,
+          "line": 32829,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -4026,8 +4026,8 @@
         "source_location": {
           "heading": "ACD-626 — chat.thread_worktree_unbound",
           "heading_level": 3,
-          "heading_line": 32856,
-          "line": 32860,
+          "heading_line": 32892,
+          "line": 32898,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -4037,8 +4037,8 @@
         "source_location": {
           "heading": "ACD-627 — chat.response_stop_requested — request authority",
           "heading_level": 3,
-          "heading_line": 33006,
-          "line": 33014,
+          "heading_line": 33047,
+          "line": 33055,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -4048,8 +4048,8 @@
         "source_location": {
           "heading": "ACD-628 — saved assistant-turn Stop outcome",
           "heading_level": 3,
-          "heading_line": 33094,
-          "line": 33102,
+          "heading_line": 33135,
+          "line": 33143,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -5566,8 +5566,8 @@
         "source_location": {
           "heading": "BRS-011 - Central Sole Future Handler Bindings",
           "heading_level": 3,
-          "heading_line": 1507,
-          "line": 1509,
+          "heading_line": 1504,
+          "line": 1506,
           "path": "Plans/Backup_Restore_System.md"
         }
       },
@@ -5632,8 +5632,8 @@
         "source_location": {
           "heading": "BRS-017 - Coordinator, Capture Barrier, Independent Repositories, And Durable Authority",
           "heading_level": 3,
-          "heading_line": 1558,
-          "line": 1560,
+          "heading_line": 1555,
+          "line": 1557,
           "path": "Plans/Backup_Restore_System.md"
         }
       },
@@ -5643,8 +5643,8 @@
         "source_location": {
           "heading": "BRS-018 - Destination, Headless Authentication, Recovery Key, And Human Delivery Safety",
           "heading_level": 3,
-          "heading_line": 1601,
-          "line": 1603,
+          "heading_line": 1598,
+          "line": 1600,
           "path": "Plans/Backup_Restore_System.md"
         }
       },
@@ -5654,8 +5654,8 @@
         "source_location": {
           "heading": "BRS-019 - Locate, Browse, Restore, Retention, And Durable Operational Safety",
           "heading_level": 3,
-          "heading_line": 1677,
-          "line": 1679,
+          "heading_line": 1674,
+          "line": 1676,
           "path": "Plans/Backup_Restore_System.md"
         }
       },
@@ -5665,8 +5665,8 @@
         "source_location": {
           "heading": "BRS-023 - Phase-Local Restore Evidence And Bound Emergency Consent",
           "heading_level": 3,
-          "heading_line": 1835,
-          "line": 1837,
+          "heading_line": 1832,
+          "line": 1834,
           "path": "Plans/Backup_Restore_System.md"
         }
       },
@@ -5676,8 +5676,8 @@
         "source_location": {
           "heading": "BRS-030 — Verify depth and plan resolution (2026-09-27)",
           "heading_level": 2,
-          "heading_line": 2463,
-          "line": 2471,
+          "heading_line": 2460,
+          "line": 2468,
           "path": "Plans/Backup_Restore_System.md"
         }
       },
@@ -5687,8 +5687,8 @@
         "source_location": {
           "heading": "BRS-031 - Background Backup Capture And The Shown Loss Window",
           "heading_level": 3,
-          "heading_line": 2526,
-          "line": 2528,
+          "heading_line": 2523,
+          "line": 2525,
           "path": "Plans/Backup_Restore_System.md"
         }
       },
@@ -5698,8 +5698,8 @@
         "source_location": {
           "heading": "BRS-032 - New Project backup choice and first policy",
           "heading_level": 3,
-          "heading_line": 2594,
-          "line": 2596,
+          "heading_line": 2591,
+          "line": 2593,
           "path": "Plans/Backup_Restore_System.md"
         }
       },
@@ -5709,8 +5709,8 @@
         "source_location": {
           "heading": "BRS-033 - Archive pause, app custody and conversion-aware restore",
           "heading_level": 3,
-          "heading_line": 2676,
-          "line": 2678,
+          "heading_line": 2673,
+          "line": 2675,
           "path": "Plans/Backup_Restore_System.md"
         }
       },
@@ -8690,8 +8690,8 @@
         "source_location": {
           "heading": "CV-1461 - session_prompt.admitted Resolved Payload And Owner Contract",
           "heading_level": 3,
-          "heading_line": 50404,
-          "line": 50406,
+          "heading_line": 50405,
+          "line": 50407,
           "path": "Plans/Contracts_V0.md"
         }
       },
@@ -8701,8 +8701,8 @@
         "source_location": {
           "heading": "CV-1462 - session_prompt.cancelled Resolved Payload And Owner Contract",
           "heading_level": 3,
-          "heading_line": 50492,
-          "line": 50494,
+          "heading_line": 50493,
+          "line": 50495,
           "path": "Plans/Contracts_V0.md"
         }
       },
@@ -8712,8 +8712,8 @@
         "source_location": {
           "heading": "CV-1463 - session_prompt.expired Resolved Payload And Owner Contract",
           "heading_level": 3,
-          "heading_line": 50580,
-          "line": 50582,
+          "heading_line": 50581,
+          "line": 50583,
           "path": "Plans/Contracts_V0.md"
         }
       },
@@ -8723,8 +8723,8 @@
         "source_location": {
           "heading": "CV-1464 - session_prompt.rejected Resolved Payload And Owner Contract",
           "heading_level": 3,
-          "heading_line": 50668,
-          "line": 50670,
+          "heading_line": 50669,
+          "line": 50671,
           "path": "Plans/Contracts_V0.md"
         }
       },
@@ -9119,8 +9119,8 @@
         "source_location": {
           "heading": "CV-3200 — config.validation.passed: saved tier-start setup-check history (E8-6 B)",
           "heading_level": 3,
-          "heading_line": 55150,
-          "line": 55172,
+          "heading_line": 55151,
+          "line": 55173,
           "path": "Plans/Contracts_V0.md"
         }
       },
@@ -9130,8 +9130,8 @@
         "source_location": {
           "heading": "CV-3201 — config.validation.warning: saved tier-start setup-check history (E8-6 B)",
           "heading_level": 3,
-          "heading_line": 55213,
-          "line": 55235,
+          "heading_line": 55214,
+          "line": 55236,
           "path": "Plans/Contracts_V0.md"
         }
       },
@@ -22132,8 +22132,8 @@
         "source_location": {
           "heading": "F3-707 - bundle.note_status_changed Card 5 exact-family contract",
           "heading_level": 3,
-          "heading_line": 52650,
-          "line": 52652,
+          "heading_line": 52648,
+          "line": 52650,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -22143,8 +22143,8 @@
         "source_location": {
           "heading": "F3-708 - bundle.annotation_state_changed Card 5 exact-family contract",
           "heading_level": 3,
-          "heading_line": 52851,
-          "line": 52853,
+          "heading_line": 52847,
+          "line": 52849,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -22154,8 +22154,8 @@
         "source_location": {
           "heading": "F3-709 - concern.assigned Card 5 exact-family contract",
           "heading_level": 3,
-          "heading_line": 53039,
-          "line": 53041,
+          "heading_line": 53034,
+          "line": 53036,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -22165,8 +22165,8 @@
         "source_location": {
           "heading": "F3-710 - concern.evidence_linked Card 5 exact-family contract",
           "heading_level": 3,
-          "heading_line": 53249,
-          "line": 53251,
+          "heading_line": 53242,
+          "line": 53244,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -22176,8 +22176,8 @@
         "source_location": {
           "heading": "F3-711 - concern.promoted Card 5 exact-family contract",
           "heading_level": 3,
-          "heading_line": 53449,
-          "line": 53451,
+          "heading_line": 53441,
+          "line": 53443,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -22187,8 +22187,8 @@
         "source_location": {
           "heading": "F3-712 - concern.reopened Card 5 exact-family contract",
           "heading_level": 3,
-          "heading_line": 53651,
-          "line": 53653,
+          "heading_line": 53641,
+          "line": 53643,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -22198,8 +22198,8 @@
         "source_location": {
           "heading": "F3-713 - concern.resolved Card 5 exact-family contract",
           "heading_level": 3,
-          "heading_line": 53850,
-          "line": 53852,
+          "heading_line": 53838,
+          "line": 53840,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -22209,8 +22209,8 @@
         "source_location": {
           "heading": "F3-714 - concern.updated Card 5 exact-family contract",
           "heading_level": 3,
-          "heading_line": 54061,
-          "line": 54063,
+          "heading_line": 54047,
+          "line": 54049,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -28721,8 +28721,8 @@
         "source_location": {
           "heading": "OP-005 - Concern Actions Inspectors And Mutation Affordances",
           "heading_level": 3,
-          "heading_line": 653,
-          "line": 655,
+          "heading_line": 654,
+          "line": 656,
           "path": "Plans/Orchestrator_Page.md"
         }
       },
@@ -28732,8 +28732,8 @@
         "source_location": {
           "heading": "OP-007 - Object First Routing And Focused Run Context",
           "heading_level": 3,
-          "heading_line": 764,
-          "line": 766,
+          "heading_line": 765,
+          "line": 767,
           "path": "Plans/Orchestrator_Page.md"
         }
       },
@@ -28743,8 +28743,8 @@
         "source_location": {
           "heading": "OP-008 - Notification Escalation And Blocked Owner Routing",
           "heading_level": 3,
-          "heading_line": 817,
-          "line": 819,
+          "heading_line": 818,
+          "line": 820,
           "path": "Plans/Orchestrator_Page.md"
         }
       },
@@ -28754,8 +28754,8 @@
         "source_location": {
           "heading": "OP-011 - Progress Widget Hostability And Catalog",
           "heading_level": 3,
-          "heading_line": 990,
-          "line": 992,
+          "heading_line": 991,
+          "line": 993,
           "path": "Plans/Orchestrator_Page.md"
         }
       },
@@ -28765,8 +28765,8 @@
         "source_location": {
           "heading": "OP-012 - Artifact Receipts And External Blocked State Pivots",
           "heading_level": 3,
-          "heading_line": 1040,
-          "line": 1042,
+          "heading_line": 1041,
+          "line": 1043,
           "path": "Plans/Orchestrator_Page.md"
         }
       },
@@ -28776,8 +28776,8 @@
         "source_location": {
           "heading": "OP-013 - Owner Surface Command Routing",
           "heading_level": 3,
-          "heading_line": 1092,
-          "line": 1094,
+          "heading_line": 1093,
+          "line": 1095,
           "path": "Plans/Orchestrator_Page.md"
         }
       },
@@ -28787,8 +28787,8 @@
         "source_location": {
           "heading": "OP-015 - Source Control And Worktree Boundary",
           "heading_level": 3,
-          "heading_line": 1180,
-          "line": 1182,
+          "heading_line": 1181,
+          "line": 1183,
           "path": "Plans/Orchestrator_Page.md"
         }
       },
@@ -28798,8 +28798,8 @@
         "source_location": {
           "heading": "OP-018 - Orchestrator Wide Scale Contract",
           "heading_level": 3,
-          "heading_line": 1335,
-          "line": 1337,
+          "heading_line": 1336,
+          "line": 1338,
           "path": "Plans/Orchestrator_Page.md"
         }
       },
@@ -28809,8 +28809,8 @@
         "source_location": {
           "heading": "OP-020 - Owner Section Hydration And Contracts Boundary Compile Addendum",
           "heading_level": 3,
-          "heading_line": 1499,
-          "line": 1501,
+          "heading_line": 1500,
+          "line": 1502,
           "path": "Plans/Orchestrator_Page.md"
         }
       },
@@ -28820,8 +28820,8 @@
         "source_location": {
           "heading": "OP-021 - Priority Cleanup Scope Guard",
           "heading_level": 3,
-          "heading_line": 1541,
-          "line": 1543,
+          "heading_line": 1542,
+          "line": 1544,
           "path": "Plans/Orchestrator_Page.md"
         }
       },
@@ -28831,8 +28831,8 @@
         "source_location": {
           "heading": "OP-022 - GoalRun WorkGraph And Verification Projection",
           "heading_level": 3,
-          "heading_line": 1581,
-          "line": 1583,
+          "heading_line": 1582,
+          "line": 1584,
           "path": "Plans/Orchestrator_Page.md"
         }
       },
@@ -28842,8 +28842,8 @@
         "source_location": {
           "heading": "OP-023 - Plan Compile Tab Projection",
           "heading_level": 3,
-          "heading_line": 1672,
-          "line": 1674,
+          "heading_line": 1673,
+          "line": 1675,
           "path": "Plans/Orchestrator_Page.md"
         }
       },
@@ -28853,8 +28853,8 @@
         "source_location": {
           "heading": "OP-024 - Plans-To-Code Execution Observability Separation",
           "heading_level": 3,
-          "heading_line": 1723,
-          "line": 1725,
+          "heading_line": 1724,
+          "line": 1726,
           "path": "Plans/Orchestrator_Page.md"
         }
       },
@@ -28864,8 +28864,8 @@
         "source_location": {
           "heading": "OP-025 - Plan Compile Launch, Pending Shell, And Execution Separation",
           "heading_level": 3,
-          "heading_line": 1776,
-          "line": 1778,
+          "heading_line": 1777,
+          "line": 1779,
           "path": "Plans/Orchestrator_Page.md"
         }
       },
@@ -28875,8 +28875,8 @@
         "source_location": {
           "heading": "OP-026 - Current Project History Documents Runs Surface",
           "heading_level": 3,
-          "heading_line": 1919,
-          "line": 1921,
+          "heading_line": 1920,
+          "line": 1922,
           "path": "Plans/Orchestrator_Page.md"
         }
       },
@@ -28886,8 +28886,8 @@
         "source_location": {
           "heading": "OP-027 - History Actions Deep Compare Export Rebuild",
           "heading_level": 3,
-          "heading_line": 2151,
-          "line": 2153,
+          "heading_line": 2152,
+          "line": 2154,
           "path": "Plans/Orchestrator_Page.md"
         }
       },
@@ -28908,8 +28908,8 @@
         "source_location": {
           "heading": "OP-029 - Orchestrator Usage Drill-Through Contract",
           "heading_level": 3,
-          "heading_line": 2351,
-          "line": 2353,
+          "heading_line": 2352,
+          "line": 2354,
           "path": "Plans/Orchestrator_Page.md"
         }
       },
@@ -28919,8 +28919,8 @@
         "source_location": {
           "heading": "OP-030 - Problems-Only Graph Filter",
           "heading_level": 3,
-          "heading_line": 2412,
-          "line": 2414,
+          "heading_line": 2413,
+          "line": 2415,
           "path": "Plans/Orchestrator_Page.md"
         }
       },
@@ -28930,8 +28930,8 @@
         "source_location": {
           "heading": "OP-031 - Ledger Export JSON Action",
           "heading_level": 3,
-          "heading_line": 2465,
-          "line": 2467,
+          "heading_line": 2466,
+          "line": 2468,
           "path": "Plans/Orchestrator_Page.md"
         }
       },
@@ -28941,8 +28941,8 @@
         "source_location": {
           "heading": "OP-032 - Plan Compile Replay Projection",
           "heading_level": 3,
-          "heading_line": 2516,
-          "line": 2518,
+          "heading_line": 2517,
+          "line": 2519,
           "path": "Plans/Orchestrator_Page.md"
         }
       },
@@ -28952,8 +28952,8 @@
         "source_location": {
           "heading": "OP-033 - Safe-Point Retry Confirmation Modal",
           "heading_level": 3,
-          "heading_line": 2569,
-          "line": 2571,
+          "heading_line": 2570,
+          "line": 2572,
           "path": "Plans/Orchestrator_Page.md"
         }
       },
@@ -28963,8 +28963,8 @@
         "source_location": {
           "heading": "OP-034 - Run-Control Command Trio Semantics",
           "heading_level": 3,
-          "heading_line": 2644,
-          "line": 2646,
+          "heading_line": 2645,
+          "line": 2647,
           "path": "Plans/Orchestrator_Page.md"
         }
       },
@@ -28974,8 +28974,8 @@
         "source_location": {
           "heading": "Worker Notebook Detail Access Addendum (2026-09-05)",
           "heading_level": 2,
-          "heading_line": 2702,
-          "line": 2706,
+          "heading_line": 2703,
+          "line": 2707,
           "path": "Plans/Orchestrator_Page.md"
         }
       },
@@ -28985,8 +28985,8 @@
         "source_location": {
           "heading": "OP-036 - Run-start History and Ledger reader",
           "heading_level": 3,
-          "heading_line": 2747,
-          "line": 2749,
+          "heading_line": 2748,
+          "line": 2750,
           "path": "Plans/Orchestrator_Page.md"
         }
       },
@@ -28996,8 +28996,8 @@
         "source_location": {
           "heading": "OP-037 - Explicit All Active, Current Project, Selected Plan Scopes",
           "heading_level": 3,
-          "heading_line": 2837,
-          "line": 2839,
+          "heading_line": 2838,
+          "line": 2840,
           "path": "Plans/Orchestrator_Page.md"
         }
       },
@@ -29007,8 +29007,8 @@
         "source_location": {
           "heading": "OP-038 - Application Work Projection Without Orchestrator Activation",
           "heading_level": 3,
-          "heading_line": 2906,
-          "line": 2908,
+          "heading_line": 2907,
+          "line": 2909,
           "path": "Plans/Orchestrator_Page.md"
         }
       },
@@ -29018,8 +29018,8 @@
         "source_location": {
           "heading": "OP-049 - History Command Payload Definitions",
           "heading_level": 3,
-          "heading_line": 2971,
-          "line": 2973,
+          "heading_line": 2972,
+          "line": 2974,
           "path": "Plans/Orchestrator_Page.md"
         }
       },
@@ -32989,8 +32989,8 @@
         "source_location": {
           "heading": "RAS-011 - Remote Link Test Normalization-Only Alias",
           "heading_level": 3,
-          "heading_line": 2167,
-          "line": 2169,
+          "heading_line": 2147,
+          "line": 2149,
           "path": "Plans/Remote_Access_System.md"
         }
       },
@@ -33000,8 +33000,8 @@
         "source_location": {
           "heading": "RAS-012 - Central Sole Future Handler Bindings",
           "heading_level": 3,
-          "heading_line": 2255,
-          "line": 2257,
+          "heading_line": 2235,
+          "line": 2237,
           "path": "Plans/Remote_Access_System.md"
         }
       },
@@ -33011,8 +33011,8 @@
         "source_location": {
           "heading": "RAS-013 - Remote-Link Test Pre-Dispatch Normalization",
           "heading_level": 3,
-          "heading_line": 2306,
-          "line": 2308,
+          "heading_line": 2286,
+          "line": 2288,
           "path": "Plans/Remote_Access_System.md"
         }
       },
@@ -33022,8 +33022,8 @@
         "source_location": {
           "heading": "RAS-014 - Route-first discovery and pairing for an existing Puppet Master",
           "heading_level": 3,
-          "heading_line": 2363,
-          "line": 2365,
+          "heading_line": 2343,
+          "line": 2345,
           "path": "Plans/Remote_Access_System.md"
         }
       },
@@ -33033,8 +33033,8 @@
         "source_location": {
           "heading": "RAS-015 - PM-owned Go tsnet connector, durable authorization, and private-route replacement",
           "heading_level": 3,
-          "heading_line": 2522,
-          "line": 2524,
+          "heading_line": 2502,
+          "line": 2504,
           "path": "Plans/Remote_Access_System.md"
         }
       },
@@ -36630,8 +36630,8 @@
         "source_location": {
           "heading": "SP-656 — Preview subject UI and runtime identity mapping",
           "heading_level": 3,
-          "heading_line": 49774,
-          "line": 49776,
+          "heading_line": 49772,
+          "line": 49774,
           "path": "Plans/storage-plan.md"
         }
       },
@@ -36916,8 +36916,8 @@
         "source_location": {
           "heading": "SRV-011 - Trusted Client Management Command Closure",
           "heading_level": 3,
-          "heading_line": 2734,
-          "line": 2736,
+          "heading_line": 2722,
+          "line": 2724,
           "path": "Plans/Server_System.md"
         }
       },
@@ -36927,8 +36927,8 @@
         "source_location": {
           "heading": "SRV-012 - Central Sole Future Handler Bindings",
           "heading_level": 3,
-          "heading_line": 2806,
-          "line": 2808,
+          "heading_line": 2794,
+          "line": 2796,
           "path": "Plans/Server_System.md"
         }
       },
@@ -36938,8 +36938,8 @@
         "source_location": {
           "heading": "SRV-013 - Backup continuity and remote-endpoint provenance",
           "heading_level": 3,
-          "heading_line": 2861,
-          "line": 2863,
+          "heading_line": 2849,
+          "line": 2851,
           "path": "Plans/Server_System.md"
         }
       },
@@ -47769,7 +47769,7 @@
       {
         "actual": "0c6d1ada4d9b06aad07ece508a27891ce1095685fb890b946181a1f5b3be97f7",
         "error": "pnc019_source_hash_stale",
-        "expected": "7ac0440bbf7df272f65f2b98c2918ece20982eb6a28a55072e14aa430f410937",
+        "expected": "7598319bf5170ea8966fb3a01c995a29562d1f0814c7f2325b89f8fdb69e6e2a",
         "source_path": "Plans/Orchestrator_Page.md"
       },
       {
@@ -47815,101 +47815,12 @@
         "source_path": "scripts/pm_pnc019_currentness.py"
       },
       {
-        "actual": null,
-        "error": "pnc019_source_hash_stale",
-        "expected": "5a1c070b9f0afc24848a6da357c73c6b5ede42b5e563044f0dd0181a62616b6f",
+        "error": "pnc019_source_hash_path_missing",
         "source_path": "Plans/.audits/event-authority-2026-08-13-currentness/VALIDATOR_RECEIPT.json"
       },
       {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/Automated_Testing_System.md"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/Back_Seat_Driver.md"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/Contracts_V0.md"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/Decision_Log.md"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/Executor_Protocol.md"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/FinalGUISpec.md"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/Goal_Runtime_System.md"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/Permissions_System.md"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/Planning_Wizard.md"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/Settings_System.md"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/Shared_Integration_Runtime.md"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/UI_Command_Catalog.md"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/Wiring_Matrix.production.json"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/assistant-chat-design.md"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/event_family_registry.json"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/event_family_registry.schema.json"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/human-in-the-loop.md"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/orchestrator-subagent-integration.md"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/storage-plan.md"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/storage_value_registry.json"
-      },
-      {
-        "error": "event_authority_currentness_validator_drift",
-        "validator_path": "scripts/pm-event-authority-currentness.py"
-      },
-      {
-        "error": "event_authority_currentness_live_registry_drift"
+        "detail": "[Errno 2] No such file or directory: 'Plans/.audits/event-authority-2026-08-13-currentness/VALIDATOR_RECEIPT.json'",
+        "error": "event_authority_currentness_audit_unavailable"
       },
       {
         "bulk_registration_allowed": false,
