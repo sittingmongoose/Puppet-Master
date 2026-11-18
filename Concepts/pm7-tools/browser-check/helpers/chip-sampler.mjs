@@ -71,6 +71,10 @@ export const CHIP_TAKE = () => { const W = window.__chipSmp; return W ? { rows: 
 export const CHIP_RESET = () => { const W = window.__chipSmp; if (W) { W.rows.length = 0; W.shifts.length = 0; } return true; };
 
 const FRAME = 1000 / 60;
+// a block whose start never reached the main thread (it was replaced first) starts, like every block that waits for its
+// first frame, at the time of the frame that first drew it less its hold: carry-frames' probe in the same commit
+// (where both are known they agree to the 0.1 ms)
+const started = (anims) => anims.map((r) => (r.start == null && r.drawnAt != null && !r.explicit ? { ...r, start: r.drawnAt - (r.hold || 0), startFromProbe: true } : r));
 const near = (a, b, tol) => a && b && edges(a).every((v, i) => Math.abs(v - edges(b)[i]) <= tol);
 
 // one strip's task reads: { t (timeline time at the read), now, box, src, rec, st, ct, on, items, so: the strip's origin }
@@ -93,7 +97,8 @@ export const trusted = (r) => r.box && (r.src !== 'carry' || (r.st != null && r.
 // replaced it, or, replaced by none, the frame after it was cancelled; its pose from its keyframes on its own clock (a
 // change's keyframes are the trip under way up to where the change starts, so its last keyframes hold at every time).
 // Otherwise the chip the read of that frame saw (the lens).
-export function drawnFrames(smp, sel, anims) {
+export function drawnFrames(smp, sel, anims0) {
+	const anims = started(anims0);
 	const rows = smp.rows.filter((r) => r.k === 'task' && r.s[sel]);
 	const recs = anims.filter((r) => r.strip === sel && r.start != null).sort((a, b) => a.created - b.created);
 	const after = (t) => { const r = rows.find((x) => x.ts > t); return r ? r.ts : Infinity; };
@@ -156,8 +161,8 @@ export function spikes(rows, { tol = 6, ratio = 0.3, maxGap = 40 } = {}) {
 // (the trip under way, before its change) on its own clock, against the replaced block's last keyframes on that block's
 // clock. A block whose start the page set (on the trip's clock) is judged from the moment it was made; one that waited
 // for its first frame from the time the compositor reports for that frame (its start plus its hold) on.
-export function takeovers(anims, sel, { span = 100 } = {}) {
-	const recs = anims.filter((r) => r.strip === sel).sort((a, b) => a.created - b.created);
+export function takeovers(anims0, sel, { span = 100 } = {}) {
+	const recs = started(anims0).filter((r) => r.strip === sel).sort((a, b) => a.created - b.created);
 	const out = [];
 	for (const n of recs) {
 		if (n.start == null || !n.kf0) continue;

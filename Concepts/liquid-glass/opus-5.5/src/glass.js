@@ -2296,6 +2296,7 @@
          2026-11-13: "it almost jumps twice"), and a chip that had landed snapped to the new box. */
       var K = L.carry;
       if (K && K.pose && L.rect && Math.max(Math.abs(L.rect.x - R.x), Math.abs(L.rect.y - R.y), Math.abs(L.rect.w - R.w), Math.abs(L.rect.h - R.h)) > 0.5) {
+        if (startUnknown(L, strip)) return;
         var go = { K: K, at: carryAge(K), zero: carryZero(K), retarget: true };
         endHop(L); carry(L, K.A, R, strip, cfg, target, K.vertical, go); return;
       }
@@ -2326,6 +2327,7 @@
        the strip scrolled or reflowed) is followed at once (Jared #21: a lens measured mid-entrance slid 50 px into
        place after the page had landed) */
     if (L.tgt === target && !L.dragging) { if (L.hopFrames) { hopSettle(L); if (L.hopFrames) return; } stopLensTravel(L); setLensBox(L, R); return; }
+    if (CARRY[switchMotion] && !isGlass() && startUnknown(L, strip)) return;
     L.tgt = target;
     var from = visualRect(L) || A, vertical = !!cfg.vertical || Math.abs(from.y - R.y) > Math.abs(from.x - R.x);
     if (switchMotion !== 'glide' && !isGlass()) { hop(L, from, R, strip, cfg, target, vertical); return; }
@@ -2510,6 +2512,19 @@
   }
   /* when the trip's age was 0, on the wall clock; null until a frame has drawn it */
   function carryZero(K) { var a = K.anim; return a && a.startTime != null ? a.startTime - (K.from || 0) : K.drawn != null ? K.drawn - K.at : null; }
+  /* a carried block whose start the compositor has not reported yet (one made late in a long frame: the report comes with
+     the next frame) has no clock the main thread can read, and a block made to go on from it now has only a guess at its
+     age: held at the age the main thread last knew while the compositor had carried the trip on for 150 ms, it was drawn
+     32 px back at the trip's start (Friendly Dark, a quick back-and-forth). A press or a resized tab that would make a
+     block go on from it waits for the report, which the next frame brings, and the block flies on meanwhile (up to 30
+     frames, then as before) */
+  function startUnknown(L, strip) {
+    var K = L.carry, a = K && K.anim;
+    if (!K || !K.pose || !L.hopFrames || !a || a.startTime != null || a.playState === 'finished') return false;
+    if ((K.waits = (K.waits || 0) + 1) > 30) return false;
+    requestAnimationFrame(function () { if (L.carry === K) queueSync(strip); });
+    return true;
+  }
   var CARRY_REACH = 8;   /* px past the trip's ends along the strip: a label the squashed or tilted chip can touch */
   var CARRY_FOLLOW = 0.5, CARRY_FOLLOW_MS = 110;   /* the least time a carried chip takes to follow its tab to a new box: half
                                                      its trip, never under 110 ms (Basic's snap is 110 ms, Friendly's hop 440) */
