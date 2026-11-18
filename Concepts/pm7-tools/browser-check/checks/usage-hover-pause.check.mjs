@@ -367,17 +367,22 @@ async function appliedHighlights(t, f, label, park) {
 		await f.evaluate(({ kind, selector }) => {
 			const b = document.getElementById('pmuBoard'), sc = document.getElementById('pmuScroll'), target = b.querySelector(selector);
 			const chart = target.closest('.pmu-chart') || target, r = window.__uhpApplied = { kind, frames: [], wheels: [], scrolls: [], moves: 0, ends: [] };
-			let running = true, pos = null;
+			let running = true, pos = null, point = null;
 			const read = () => ({ t: performance.now(), op: b.getAttribute('data-op'), top: sc.scrollTop, hovered: kind === 'column' ? chart.matches(':hover') : target.matches(':hover'),
 				hl: b.querySelectorAll('.is-hl-dim,.is-hl-on').length,
 				dim: chart.querySelectorAll('path[data-mark="arc"].is-dim').length, hot: chart.querySelectorAll('.pmu-dl-row.is-hot').length,
 				value: chart.querySelector('.pmu-dc-v')?.textContent, caption: chart.querySelector('.pmu-dc-c')?.textContent,
 				cols: chart.querySelectorAll('.pmu-col.is-hot-col').length, bars: !!chart.querySelector('.pmu-cols.is-hot'),
+				hoverIndex: chart.querySelector('.pmu-dl-row[data-i]:hover,path[data-mark="arc"]:hover')?.getAttribute('data-i') ?? null,
+				hotRows: [...chart.querySelectorAll('.pmu-dl-row.is-hot')].map((r)=>({index:r.getAttribute('data-i'),footer:r.classList.contains('is-rest')})),
+				dimIndices: [...chart.querySelectorAll('path[data-mark="arc"].is-dim')].map((p)=>p.dataset.i), arcIndices: [...chart.querySelectorAll('path[data-mark="arc"]')].map((p)=>p.dataset.i),
+				colIndices: [...chart.querySelectorAll('.pmu-col.is-hot-col')].map((c)=>c.dataset.i),
+				bucket: kind === 'column' && (pos || point) ? ([...chart.querySelectorAll('.pmu-col[data-i]')].find((c)=>{const r=c.getBoundingClientRect(), x=(pos||point)[0];return x>=r.left&&x<=r.right;})?.dataset.i ?? null) : null,
 				readout: !!chart.querySelector('.pmu-xh-on'), lit: target.classList.contains('pmh-on'), engineRunning: window.PMH?.stats?.().running });
 			r.neutral = read();
-			const wheel = (e) => { r.wheels.push({ t: performance.now(), trusted: e.isTrusted }); pos = [e.clientX,e.clientY]; };
+			const wheel = (e) => { r.wheels.push({ t: performance.now(), trusted: e.isTrusted }); pos = [e.clientX,e.clientY]; point = pos; };
 			const scroll = () => r.scrolls.push({ t: performance.now(), top: sc.scrollTop });
-			const move = (e) => { if (pos && (e.clientX !== pos[0] || e.clientY !== pos[1])) r.moves++; };
+			const move = (e) => { point = [e.clientX,e.clientY]; if (pos && (e.clientX !== pos[0] || e.clientY !== pos[1])) r.moves++; };
 			const end = (e) => { if (e.detail?.board === b) r.ends.push(performance.now()); };
 			const sample = () => { if (!running) return; if (b.getAttribute('data-op') === 'wheel') r.frames.push(read()); requestAnimationFrame(sample); };
 			sc.addEventListener('wheel', wheel, { capture:true, passive:true }); sc.addEventListener('scroll', scroll, { passive:true }); sc.addEventListener('pointermove', move, true);
@@ -429,7 +434,7 @@ async function appliedHighlights(t, f, label, park) {
 			await t.check(S+'could judge already-applied state, still pointer and a sampled complete wheel hold', shown && pre.hovered && rec.after.hovered && !rec.moves && marked.length>=10 && rec.wheels.length===18 && rec.wheels.every((w)=>w.trusted) && rec.ends.length===1 && rec.ends[0]>last && (kind === 'engine' ? pre.top===0 && rec.after.top===0 : travel.length>0), JSON.stringify({shown,pre,after:rec.after,frames:marked.length,scrolls:travel,ends:rec.ends}));
 			const quiet=(s)=>kind === 'provider' ? !s.hl : kind === 'donut' ? !s.dim && !s.hot && s.value===rec.neutral.value && s.caption===rec.neutral.caption : kind === 'column' ? !s.cols && !s.bars : !s.lit;
 			await t.check(S+'existing highlight clears throughout the marked interval, including its tail', marked.length>=10 && marked.every(quiet), `${marked.filter((s)=>!quiet(s)).length}/${marked.length} highlighted samples`);
-			const a=rec.after, restored=kind === 'provider' ? a.hl>0 : kind === 'donut' ? a.dim>0 && a.hot===pre.hot && a.value===pre.value && a.caption===pre.caption : kind === 'column' ? a.cols===1 && a.bars && !a.readout : a.lit;
+			const a=rec.after, restored=kind === 'provider' ? a.hl>0 : kind === 'donut' ? a.dim>0 && a.hoverIndex!=null && a.hotRows.length===1 && a.hotRows.every((r)=>!r.footer&&r.index===a.hoverIndex) && a.dimIndices.length===a.arcIndices.length-1 && a.dimIndices.every((i)=>i!==a.hoverIndex) && a.value===pre.value && a.caption===pre.caption : kind === 'column' ? a.cols===1 && a.bars && !a.readout && a.bucket!=null && a.colIndices.length===1 && a.colIndices[0]===a.bucket : a.lit;
 			await t.check(S+'current target highlight returns without pointer movement', !a.op && a.hovered && restored, JSON.stringify(a));
 		}
 		// Removing/re-adding panels applies real gravity and can rearrange peers. Restore this fresh fixture's room

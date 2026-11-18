@@ -1,10 +1,11 @@
 // R113 regressions run as rows of usage-hover-pause, on its selected looks and surfaces.
 export async function r113Cases(t, f, label, park) {
 	const records = [];
-	for (const kind of String(t.args.r113Cases || 'live,plot,tooltip,handoff').split(',')) {
+	for (const kind of String(t.args.r113Cases || 'live,plot,tooltip,handoff,compact').split(',')) {
 		if (kind === 'plot') { records.push(await plotLimit(t,f,label,park)); continue; }
 		if (kind === 'tooltip') { records.push(await tooltipPause(t,f,label,park)); continue; }
 		if (kind === 'handoff') { records.push(await gestureHandoff(t,f,label,park)); continue; }
+		if (kind === 'compact') { records.push(await compactDonut(t,f,label,park)); continue; }
 		if (kind !== 'live') throw new Error('Unknown R113 case: ' + kind);
 		await park();
 		const liveWasOn = await f.evaluate(() => { const on=PMU.live.on(); PMU.live.resume(); PM7_USAGE.setRoomDetail('costs','diagnostics'); return on; });
@@ -156,4 +157,33 @@ async function gestureHandoff(t,f,label,park) {
 		}
 	} finally {await cdp.detach();await park();await f.evaluate(on=>{document.activeElement?.blur();if(on)PMU.live.resume();},on);}
 	return {kind:'handoff',records};
+}
+
+async function compactDonut(t,f,label,park) {
+	await park();const on=await f.evaluate(()=>{const on=PMU.live.on();PMU.live.pause();PM7_USAGE.setRoomDetail('analytics','diagnostics');return on;});await t.page.waitForTimeout(4500);
+	await f.evaluate(()=>PMU.board.resize('an-model-donut',{w:6,h:10}));await t.page.waitForTimeout(1800);
+	const target=f.locator('#pmuBoard [data-widget="an-model-donut"] .pmu-dl-row[data-i="0"]');await target.scrollIntoViewIfNeeded();await t.page.waitForTimeout(500);
+	const box=await target.boundingBox(),pane=await f.locator('#pmuScroll').boundingBox();
+	if(!box||!pane){await t.check(label+'R113 P5 could judge compact first model',false);return null;}
+	await t.page.mouse.move(box.x+box.width/2,(Math.max(box.y,pane.y)+Math.min(box.y+box.height,pane.y+pane.height))/2);await t.page.waitForTimeout(800);
+	await f.evaluate(()=>{
+		const b=document.getElementById('pmuBoard'),sc=document.getElementById('pmuScroll'),chart=b.querySelector('[data-widget="an-model-donut"] .pmu-c-donut');
+		const read=()=>({t:performance.now(),op:b.getAttribute('data-op'),hovered:chart.querySelector('.pmu-dl-row[data-i="0"]').matches(':hover'),footer:chart.querySelectorAll('.pmu-dl-row.is-rest').length,index:chart.querySelector('.pmu-dl-row[data-i]:hover')?.getAttribute('data-i'),hot:[...chart.querySelectorAll('.pmu-dl-row.is-hot')].map(x=>({index:x.getAttribute('data-i'),footer:x.classList.contains('is-rest')})),dim:[...chart.querySelectorAll('path[data-mark="arc"].is-dim')].map(x=>x.dataset.i),arcs:[...chart.querySelectorAll('path[data-mark="arc"]')].map(x=>x.dataset.i),value:chart.querySelector('.pmu-dc-v')?.textContent,caption:chart.querySelector('.pmu-dc-c')?.textContent});
+		const r=window.__uhpR113={pre:read(),neutral:chart._pmuChart._dh,frames:[],wheels:[],moves:0,ends:[]};let pos=null,running=true;
+		const wheel=e=>{pos=[e.clientX,e.clientY];r.wheels.push({t:performance.now(),trusted:e.isTrusted});};
+		const move=e=>{if(pos&&(pos[0]!==e.clientX||pos[1]!==e.clientY))r.moves++;};const end=e=>{if(e.detail?.board===b)r.ends.push(performance.now());};
+		const frame=()=>{if(!running)return;if(b.getAttribute('data-op')==='wheel')r.frames.push(read());requestAnimationFrame(frame);};
+		sc.addEventListener('wheel',wheel,{passive:true});document.addEventListener('pointermove',move,true);document.addEventListener('pmu-op-end',end);requestAnimationFrame(frame);
+		r.stop=()=>{running=false;sc.removeEventListener('wheel',wheel);document.removeEventListener('pointermove',move,true);document.removeEventListener('pmu-op-end',end);return {...r,neutral:{value:r.neutral.centreVal,caption:r.neutral.centreCap},stop:undefined,after:read()};};
+	});
+	for(let i=0;i<18;i++){await t.page.mouse.wheel(0,i%2?-1:1);await t.page.waitForTimeout(30);}await t.page.waitForTimeout(900);
+	const rec=await f.evaluate(()=>window.__uhpR113.stop()),p=rec.pre,a=rec.after,held=rec.frames.filter(x=>x.t>=rec.wheels[0]?.t+50);
+	t.log(label+'R113 P5 compact donut: '+JSON.stringify(rec));
+	await t.check(label+'R113 P5 could judge: supported compact donut has aggregate footer and applied first-model selection; trusted still-pointer wheel holds complete',p.footer===1&&p.index==='0'&&p.hovered&&p.hot.length>0&&p.dim.length>0&&p.value!==rec.neutral.value&&a.hovered&&!rec.moves&&rec.wheels.length===18&&rec.wheels.every(x=>x.trusted)&&held.length>=10&&rec.ends.length>=1&&rec.ends.at(-1)>rec.wheels.at(-1)?.t&&!a.op,JSON.stringify({pre:p,after:a,frames:held.length,wheels:rec.wheels.length,ends:rec.ends,moves:rec.moves}));
+	const identity=x=>x.index!=null&&x.hot.length===1&&x.hot.every(r=>!r.footer&&r.index===x.index)&&x.dim.length===x.arcs.length-1&&x.dim.every(i=>i!==x.index);
+	await t.check(label+'R113 P5 ordinary entry selects only its indexed model and leaves the aggregate footer neutral',identity(p),JSON.stringify(p));
+	await t.check(label+'R113 P5 active donut selection clears throughout each held interval',held.length>=10&&held.every(x=>!x.hot.length&&!x.dim.length&&x.value===rec.neutral.value&&x.caption===rec.neutral.caption),`${held.filter(x=>x.hot.length||x.dim.length||x.value!==rec.neutral.value).length}/${held.length} selected samples`);
+	await t.check(label+'R113 P5 return restores exactly the CURRENT hovered model index and no footer',identity(a)&&a.value===p.value&&a.caption===p.caption,JSON.stringify(a));
+	await park();await f.evaluate(on=>{PMU.board.reset('room');if(on)PMU.live.resume();},on);await t.page.waitForTimeout(1800);
+	return {kind:'compact',rec};
 }
