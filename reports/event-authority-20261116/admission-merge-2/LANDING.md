@@ -341,3 +341,33 @@ OUTCOMES is complete: exactly 249 unique sorted recount names, all registered, n
 ## Follow-up gates
 
 The lead runs NUMRULE-FINAL and the GATE-MERGE2 review pair on the published final head. Main landing and the later governance seal remain with their assigned lanes. This record grants no source installation, producer adoption, native authority, landing permission or governance seal.
+
+## Landing note (merge 2)
+
+The E14-1 B census at the reviewed delivery head `a33ef64f9663f399cbdc82e719e94a1d9f065d96` classified **299 LAND and 0 MERGE3**. The batch adds 299 families under DL-2137 through DL-2434 and DL-2444 (`usage.event)), applies eight registered definition changes under DL-2435 through DL-2442, and records all 249 recount outcomes. DL-2443 defers the five DG5 Goal definitions to merge 3. The registry grows from 219 to 518 families.
+
+### Review history
+
+| Review | Verdict |
+|---|---|
+| Initial Sol 6.2 max, with partial Browser evidence retained | NOT_READY, 248 ADMIT and 51 HOLD |
+| Initial Astra 6.2 max | NOT_READY, 138 ADMIT and 161 HOLD |
+| Round 1 Sol 6.2 max | NOT_READY, 108 ADMIT and 191 HOLD |
+| Round 1 Astra 6.2 max | Incomplete. The account reached its limit after closing finding 6. No final verdict was issued. |
+| Round 2 Sol 6.2 max | NOT_READY, 218 ADMIT and 81 HOLD |
+| Round 2 Astra 6.2 max | NOT_READY, 249 ADMIT and 50 HOLD |
+| Round 3 Sol 6.2 max | NOT_READY, 0 ADMIT and 299 HOLD |
+| E14-1 B split check, Sol 6.2 high | LANDING_READY_WITH_NOTES, 299 LAND and 0 MERGE3. No blocking findings within the cohort. |
+
+The [family census](census/CENSUS.md) records the applicable findings and their closing checks. The split check verified the census and the reviewed delivery head. The post-landing Astra review follows E13-1 B, with any findings handled in merge 3.
+
+### Jared's decisions
+
+| Decision | Jared's words | Source |
+|---|---|---|
+| EA-P1 A | “Add each once its definition passes every check” | `decision-answers/ANSWERS_EA-P_20261114.md` |
+| EA-P2 B | “Two merges: the 173 ready now, then the rest” | `decision-answers/ANSWERS_EA-P_20261114.md` |
+| DG5 deferral | “Land without them” | `decision-answers/ANSWERS_MERGE2-SPLIT_20261117.md` |
+| E12-1 A | “Both reviews again, on the problems and the new changes” | `decision-answers/ANSWERS_E-CARDS-12_20261118.md` |
+| E13-1 B | “One review (Sol 6.2 max), then land; Astra right after landing” | `decision-answers/ANSWERS_E-CARDS-13_20261118.md` |
+| E14-1 B | “Land the families that pass now; move the rest to merge 3” | `decision-answers/ANSWERS_E-CARDS-14_20261119.md` |
