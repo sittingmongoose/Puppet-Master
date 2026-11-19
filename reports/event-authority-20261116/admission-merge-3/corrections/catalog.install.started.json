@@ -1,0 +1,235 @@
+{
+ "schema_id": "pm.ea.postfix_revision.v1",
+ "authority": "MERGE3-POSTFIX / post-landing Astra findings",
+ "event_type": "catalog.install.started",
+ "findings": [
+  4
+ ],
+ "source_commit": "42db88dbb2072a2903c3bcbf0a0fc3723bd6867f",
+ "original_admission_decision_ref": "Plans/Decision_Log.md#DL-2234",
+ "decision_ref": "Plans/Decision_Log.md#DL-2471",
+ "registry_before": {
+  "revision": "2026-11-19.20",
+  "sha256": "21aeda54d767d0ab19cee8fa5d6a322603d996a7d61d8353dea7e8df0beec0cd",
+  "family_count": 518
+ },
+ "registry_after": {
+  "revision": "2026-11-19.21",
+  "sha256": "e32c9ec6d5c4127d87e5dc594bd742c9e14ff9a70a80627a550b8ee7d280792b",
+  "family_count": 518
+ },
+ "before_row": {
+  "family_id": "event-family-catalog-install-started",
+  "family_revision": "1.0.0",
+  "event_type": "catalog.install.started",
+  "scope_policy": "application_or_project",
+  "semantic_owner_doc": "Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-318",
+  "payload_owner_doc": "Plans/Contracts_V0.md#CV-677",
+  "payload_schema_id": "pm.ds15.catalog_install_started.payload.v1",
+  "payload_schema_ref": {
+   "path": "Plans/ds15_catalog_install_started.schema.json",
+   "json_pointer": "#",
+   "schema_id": "pm.ds15.catalog_install_started.payload.v1"
+  },
+  "legacy": {
+   "aliases": [],
+   "admitted_extensions": [],
+   "identity_json_pointers": {
+    "project_id": [
+     "/payload/scope/project_id"
+    ],
+    "thread_id": []
+   },
+   "referenced_event_id_pointer": null,
+   "redaction": {
+    "mode": "reject_unhandled_secrets",
+    "transform_id": null,
+    "transform_version": null
+   }
+  },
+  "source_refs": [
+   "Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-318",
+   "Plans/Contracts_V0.md#CV-677",
+   "Plans/storage-plan.md#SP-657",
+   "Plans/ds15_catalog_install_started.schema.json#",
+   "Plans/ds15_event_contracts.json#/14",
+   "reports/event-authority-20261116/admission-merge-2/readiness-list.json"
+  ],
+  "retention_policy_ref": {
+   "registry_schema_id": "pm.storage_value_registry.v2",
+   "policy_id": "RP-AUTHORITY-INDEFINITE",
+   "policy_version": "1.0.0"
+  },
+  "payload_versions": [
+   {
+    "scope_kind": "application",
+    "payload_schema_id": "pm.ds15.catalog_install_started.payload.v1",
+    "payload_schema_ref": {
+     "path": "Plans/ds15_catalog_install_started.schema.json",
+     "json_pointer": "#",
+     "schema_id": "pm.ds15.catalog_install_started.payload.v1"
+    },
+    "source_graph_ref": "Plans/Contracts_V0.md#CV-366",
+    "producer_admission": "requires_owner_adoption",
+    "append_owner_ref": "Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-318",
+    "read_owner_ref": "Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-318",
+    "backup_owner_ref": "Plans/Backup_Restore_System.md#BRS-033",
+    "retention_policy_ref": {
+     "registry_schema_id": "pm.storage_value_registry.v2",
+     "policy_id": "RP-AUTHORITY-INDEFINITE",
+     "policy_version": "1.0.0"
+    }
+   },
+   {
+    "scope_kind": "project",
+    "payload_schema_id": "pm.ds15.catalog_install_started.payload.v1",
+    "payload_schema_ref": {
+     "path": "Plans/ds15_catalog_install_started.schema.json",
+     "json_pointer": "#",
+     "schema_id": "pm.ds15.catalog_install_started.payload.v1"
+    },
+    "source_graph_ref": "Plans/Contracts_V0.md#CV-366",
+    "producer_admission": "requires_owner_adoption",
+    "append_owner_ref": "Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-318",
+    "read_owner_ref": "Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-318",
+    "backup_owner_ref": "Plans/Backup_Restore_System.md#BRS-033",
+    "retention_policy_ref": {
+     "registry_schema_id": "pm.storage_value_registry.v2",
+     "policy_id": "RP-AUTHORITY-INDEFINITE",
+     "policy_version": "1.0.0"
+    }
+   }
+  ],
+  "payload_selection_policy": "exact_scope_and_schema_id_no_fallback"
+ },
+ "registry_row": {
+  "family_id": "event-family-catalog-install-started",
+  "family_revision": "1.0.0",
+  "event_type": "catalog.install.started",
+  "scope_policy": "application_or_project",
+  "semantic_owner_doc": "Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-318",
+  "payload_owner_doc": "Plans/Contracts_V0.md#CV-677",
+  "payload_schema_id": "pm.ds15.catalog_install_started.payload.v1",
+  "payload_schema_ref": {
+   "path": "Plans/ds15_catalog_install_started.schema.json",
+   "json_pointer": "#",
+   "schema_id": "pm.ds15.catalog_install_started.payload.v1"
+  },
+  "legacy": {
+   "aliases": [],
+   "admitted_extensions": [],
+   "identity_json_pointers": {
+    "project_id": [
+     "/payload/scope/project_id"
+    ],
+    "thread_id": []
+   },
+   "referenced_event_id_pointer": null,
+   "redaction": {
+    "mode": "reject_unhandled_secrets",
+    "transform_id": null,
+    "transform_version": null
+   }
+  },
+  "source_refs": [
+   "Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-318",
+   "Plans/Contracts_V0.md#CV-677",
+   "Plans/storage-plan.md#SP-657",
+   "Plans/ds15_catalog_install_started.schema.json#",
+   "Plans/ds15_event_contracts.json#/14",
+   "reports/event-authority-20261116/admission-merge-2/readiness-list.json"
+  ],
+  "retention_policy_ref": {
+   "registry_schema_id": "pm.storage_value_registry.v2",
+   "policy_id": "RP-AUTHORITY-INDEFINITE",
+   "policy_version": "1.0.0"
+  },
+  "payload_versions": [
+   {
+    "scope_kind": "application",
+    "payload_schema_id": "pm.ds15.catalog_install_started.payload.v1",
+    "payload_schema_ref": {
+     "path": "Plans/ds15_catalog_install_started.schema.json",
+     "json_pointer": "#",
+     "schema_id": "pm.ds15.catalog_install_started.payload.v1"
+    },
+    "source_graph_ref": "Plans/Contracts_V0.md#CV-366",
+    "producer_admission": "requires_owner_adoption",
+    "append_owner_ref": "Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-318",
+    "read_owner_ref": "Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-318",
+    "backup_owner_ref": "Plans/Backup_Restore_System.md#BRS-033",
+    "retention_policy_ref": {
+     "registry_schema_id": "pm.storage_value_registry.v2",
+     "policy_id": "RP-AUTHORITY-INDEFINITE",
+     "policy_version": "1.0.0"
+    }
+   },
+   {
+    "scope_kind": "project",
+    "payload_schema_id": "pm.ds15.catalog_install_started.payload.v1",
+    "payload_schema_ref": {
+     "path": "Plans/ds15_catalog_install_started.schema.json",
+     "json_pointer": "#",
+     "schema_id": "pm.ds15.catalog_install_started.payload.v1"
+    },
+    "source_graph_ref": "Plans/Contracts_V0.md#CV-366",
+    "producer_admission": "requires_owner_adoption",
+    "append_owner_ref": "Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-318",
+    "read_owner_ref": "Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-318",
+    "backup_owner_ref": "Plans/Backup_Restore_System.md#BRS-033",
+    "retention_policy_ref": {
+     "registry_schema_id": "pm.storage_value_registry.v2",
+     "policy_id": "RP-AUTHORITY-INDEFINITE",
+     "policy_version": "1.0.0"
+    }
+   }
+  ],
+  "payload_selection_policy": "exact_scope_and_schema_id_no_fallback"
+ },
+ "predecessor_record_sha256": "97dc57e4cddfb983afc1545fa077f926c043e2a02ff2de00cae63e75b3a56a5c",
+ "predecessor_assessment_sha256": "68a9ad6220df12197abbb4a031f192198b451cba59d49c110394f155e00dee3b",
+ "applied_record_sha256": "1a7fbf1a98317e39d59252003935baa2d107826dba27a82ae1c646b160c06de2",
+ "applied_assessment_sha256": "3d15c04aa95295bee28602924d025792e57e73da0b3938a019b87a430d646048",
+ "citation_changes": [
+  {
+   "ordinal": 0,
+   "old": {
+    "path": "Plans/storage-plan.md",
+    "unit": "SP-657",
+    "line_start": 50618,
+    "line_end": 50618,
+    "quote": "Current selected assignment (2026-11-19): catalog.install.started@1.0.0 is registered for application_or_project",
+    "quote_check": "exact",
+    "quote_scope": "unit SP-657, Plans/storage-plan.md:50569-50660",
+    "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+    "source_citation": {
+     "path": "Plans/storage-plan.md",
+     "unit": "SP-657",
+     "line_start": 49833,
+     "line_end": 49833,
+     "quote": "\\nEvent history `retention_policy_ref = RP-AUTHORITY-INDEFINITE@1.0.0`, under DL-401, DL-500.\\n\\nUse\\",
+     "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+    },
+    "locator_maintenance": {
+     "authority": "MERGE2-FIX4",
+     "reason": "Re-cite the same accepted retention claim at its current exact owner assignment; event and source/checkpoint authority remain separate."
+    }
+   },
+   "replacement": {
+    "path": "Plans/storage-plan.md",
+    "unit": "SP-657",
+    "line_start": 50620,
+    "line_end": 50631,
+    "quote": "  Current selected assignment (2026-11-19): catalog.install.started@1.0.0 is registered for application_or_project\n  in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2234. Its event history selects Application\n  = RP-AUTHORITY-INDEFINITE@1.0.0 (anchor_kind=creation, cardinality_scope=null), Project = RP-AUTHORITY-INDEFINITE@1.0.0\n  (anchor_kind=creation, cardinality_scope=null); Plans/storage-plan.md#SP-657 owns the event policy''s existing\n  anchors, counts, holds and deletion rules. Separate stored-value assignment: ds15_catalog_install_started_checkpoint\n  uses RP-PROJECTION-3GEN@1.0.0 under Plans/Decision_Log.md#DL-500; this assigns that stored value, not event history.\n  Separate checkpoint assignment: ds15_catalog_install_started_checkpoint uses RP-PROJECTION-3GEN@1.0.0 under its\n  existing Plans/storage-plan.md#SP-657 contract; checkpoint retention grants no event/source deletion. Original\n  sources and coherent backups retain their independent owner policies; the event lifetime is not transferred to\n  them. Current append/publication still requires the exact selected schema/scope, original custody, current permission,\n  receipt and required producer adoption. Actual missing registration or unresolved required custody refuses; native\n  execution remains NOT_RUN. No native adoption, new retention choice or governance seal follows.'",
+    "quote_check": "exact",
+    "quote_scope": "unit SP-657, Plans/storage-plan.md:50571-50662"
+   },
+   "reason": "Complete current wrapped assignment inside its original unit."
+  }
+ ],
+ "review": {
+  "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/MERGE2-POSTLAND-astra62max/REVIEW.md",
+  "sha256": "757539cf93c9ffe264ceabc42273ef7afe1582bf161fbe0a826a4b6bf18b6d21"
+ },
+ "native_execution": "NOT_RUN"
+}
