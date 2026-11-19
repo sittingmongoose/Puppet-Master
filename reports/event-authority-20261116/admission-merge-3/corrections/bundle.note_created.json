@@ -1,0 +1,147 @@
+{
+ "schema_id": "pm.ea.postfix_revision.v1",
+ "authority": "MERGE3-POSTFIX / post-landing Astra findings",
+ "event_type": "bundle.note_created",
+ "findings": [
+  4
+ ],
+ "source_commit": "0925bb3b1baa78c5675a5593250c21a3fcae0be6",
+ "original_admission_decision_ref": "Plans/Decision_Log.md#DL-2225",
+ "decision_ref": "Plans/Decision_Log.md#DL-2462",
+ "registry_before": {
+  "revision": "2026-11-19.11",
+  "sha256": "b17f7d44ac08cba4e312a62b384dfd6346208fe2403020b5d687538b31bdf9d7",
+  "family_count": 518
+ },
+ "registry_after": {
+  "revision": "2026-11-19.12",
+  "sha256": "c3c4711c2932a48748ce55f1075be3ce170758d8e571c9c943dcd19b7db92dc2",
+  "family_count": 518
+ },
+ "before_row": {
+  "family_id": "event-family-bundle-note-created",
+  "family_revision": "1.0.0",
+  "event_type": "bundle.note_created",
+  "scope_policy": "project_only",
+  "semantic_owner_doc": "Plans/FinalGUISpec.md#F3-706",
+  "payload_owner_doc": "Plans/FinalGUISpec.md#F3-706",
+  "payload_schema_id": "pm.card5.bundle_note_created.payload.v1",
+  "payload_schema_ref": {
+   "path": "Plans/card5_event_contracts/bundle_note_created.payload.schema.json",
+   "json_pointer": "#",
+   "schema_id": "pm.card5.bundle_note_created.payload.v1"
+  },
+  "legacy": {
+   "aliases": [],
+   "admitted_extensions": [],
+   "identity_json_pointers": {
+    "project_id": [
+     "/payload/project_id"
+    ],
+    "thread_id": []
+   },
+   "referenced_event_id_pointer": null,
+   "redaction": {
+    "mode": "reject_unhandled_secrets",
+    "transform_id": null,
+    "transform_version": null
+   }
+  },
+  "source_refs": [
+   "Plans/FinalGUISpec.md#F3-706",
+   "Plans/card5_event_contracts/bundle_note_created.payload.schema.json#",
+   "reports/event-authority-20261116/admission-merge-2/readiness-list.json"
+  ],
+  "retention_policy_ref": {
+   "registry_schema_id": "pm.storage_value_registry.v2",
+   "policy_id": "RP-AUTHORITY-INDEFINITE",
+   "policy_version": "1.0.0"
+  }
+ },
+ "registry_row": {
+  "family_id": "event-family-bundle-note-created",
+  "family_revision": "1.0.0",
+  "event_type": "bundle.note_created",
+  "scope_policy": "project_only",
+  "semantic_owner_doc": "Plans/FinalGUISpec.md#F3-706",
+  "payload_owner_doc": "Plans/FinalGUISpec.md#F3-706",
+  "payload_schema_id": "pm.card5.bundle_note_created.payload.v1",
+  "payload_schema_ref": {
+   "path": "Plans/card5_event_contracts/bundle_note_created.payload.schema.json",
+   "json_pointer": "#",
+   "schema_id": "pm.card5.bundle_note_created.payload.v1"
+  },
+  "legacy": {
+   "aliases": [],
+   "admitted_extensions": [],
+   "identity_json_pointers": {
+    "project_id": [
+     "/payload/project_id"
+    ],
+    "thread_id": []
+   },
+   "referenced_event_id_pointer": null,
+   "redaction": {
+    "mode": "reject_unhandled_secrets",
+    "transform_id": null,
+    "transform_version": null
+   }
+  },
+  "source_refs": [
+   "Plans/FinalGUISpec.md#F3-706",
+   "Plans/card5_event_contracts/bundle_note_created.payload.schema.json#",
+   "reports/event-authority-20261116/admission-merge-2/readiness-list.json"
+  ],
+  "retention_policy_ref": {
+   "registry_schema_id": "pm.storage_value_registry.v2",
+   "policy_id": "RP-AUTHORITY-INDEFINITE",
+   "policy_version": "1.0.0"
+  }
+ },
+ "predecessor_record_sha256": "86c1481ccff19776509cb19403887b05c846c5062f6acd5874bb52b9653b0cb0",
+ "predecessor_assessment_sha256": "5ea1fbbb6b2123535d6350d8a10fe98689d352e4c024ada98cad6d6182e5a894",
+ "applied_record_sha256": "fa65704bdf13d30977a7cc12c1aeafaecc933f9bea645a87ea345bace0f15dd0",
+ "applied_assessment_sha256": "43333ba56a653b6f26151dfb1785dcd33a1cfb1eb0877175ee2f435d2281be84",
+ "citation_changes": [
+  {
+   "ordinal": 0,
+   "old": {
+    "path": "Plans/FinalGUISpec.md",
+    "unit": "F3-706",
+    "line_start": 52640,
+    "line_end": 52640,
+    "quote": "Current selected assignment (2026-11-19): bundle.note_created@1.0.0 is registered for project_only in Plans/event_family_registry.json,",
+    "quote_check": "exact",
+    "quote_scope": "unit F3-706, Plans/FinalGUISpec.md:52427-52686",
+    "file_sha256": "73d2fdbe5d89e1c00d558530c568133646e6c4496956e28ca59efbe50391faa3",
+    "source_citation": {
+     "path": "Plans/FinalGUISpec.md",
+     "unit": "F3-706",
+     "line_start": 52604,
+     "line_end": 52604,
+     "quote": "\\ binding for `bundle.note_created` (2026-11-14).\\n\\nEvent history `retention_policy_ref = RP-AUTHORITY-INDEFINITE@1.0.0`,\\",
+     "file_sha256": "483180446b9ea96a38be9d03c75a9b126212e08b8266917f8c76e1fc17f2797f"
+    },
+    "locator_maintenance": {
+     "authority": "MERGE2-FIX4",
+     "reason": "Re-cite the same accepted retention claim at its current exact owner assignment; event and source/checkpoint authority remain separate."
+    }
+   },
+   "replacement": {
+    "path": "Plans/FinalGUISpec.md",
+    "unit": "F3-706",
+    "line_start": 52640,
+    "line_end": 52651,
+    "quote": "  Current selected assignment (2026-11-19): bundle.note_created@1.0.0 is registered for project_only in Plans/event_family_registry.json,\n  as recorded by Plans/Decision_Log.md#DL-2225. Its event history selects RP-AUTHORITY-INDEFINITE@1.0.0; Plans/FinalGUISpec.md#F3-706\n  owns the event policy''s existing anchors, counts, holds and deletion rules. Separate stored-value assignment:\n  bundle_note_created_checkpoint uses RP-PROJECTION-3GEN@1.0.0 under Plans/Decision_Log.md#DL-500; this assigns\n  that stored value, not event history. Separate stored-value assignment: bundle_note_created_operation uses RP-OPERATIONAL-2555D@1.0.0\n  under Plans/Decision_Log.md#DL-501; this assigns that stored value, not event history. Separate checkpoint assignment:\n  bundle_note_created_checkpoint uses RP-PROJECTION-3GEN@1.0.0 under its existing Plans/FinalGUISpec.md#F3-706 contract;\n  checkpoint retention grants no event/source deletion. Original sources and coherent backups retain their independent\n  owner policies; the event lifetime is not transferred to them. Current append/publication still requires the exact\n  selected schema/scope, original custody, current permission, receipt and required producer adoption. Actual missing\n  registration or unresolved required custody refuses; native execution remains NOT_RUN. No native adoption, new\n  retention choice or governance seal follows.'",
+    "quote_check": "exact",
+    "quote_scope": "unit F3-706, Plans/FinalGUISpec.md:52427-52686"
+   },
+   "reason": "Complete current wrapped assignment inside its original unit."
+  }
+ ],
+ "review": {
+  "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/MERGE2-POSTLAND-astra62max/REVIEW.md",
+  "sha256": "757539cf93c9ffe264ceabc42273ef7afe1582bf161fbe0a826a4b6bf18b6d21"
+ },
+ "native_execution": "NOT_RUN"
+}
