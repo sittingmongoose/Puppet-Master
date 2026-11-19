@@ -155,6 +155,7 @@ for (const surface of ['normal', 'sandbox']) {
 				// on the normal surface a reload keeps the saved tags (the sandbox has no storage)
 				if (surface === 'normal') {
 					const f2 = await t.app.open({ sandbox: false });
+					await pageTab(t, f2, 'settings');
 					await goPersonas(t, f2);
 					await openPersona(t, f2);
 					const row3 = tagsRow(f2);
