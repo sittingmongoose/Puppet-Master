@@ -16,6 +16,7 @@
 import { writeFileSync } from 'node:fs';
 import { muteSound } from '../helpers/quiet-page.mjs';
 import { r113Cases } from '../helpers/usage-hover-pause-r113.mjs';
+import { burstState, burstWhy, REST_MS } from '../helpers/burst-rest.mjs';
 
 // the recorder, installed once in the app's frame; __uhp.start() clears it and starts a window, __uhp.stop() ends it
 const INSTALL = () => {
@@ -88,7 +89,7 @@ export function judge(rec, { rest, back }) {
 	const first = rec.wheels[0], lastWheel = rec.wheels.at(-1), firstScroll = rec.scrolls.find((t) => t >= first);
 	const lastScroll = rec.scrolls.at(-1) ?? lastWheel, end = Math.max(lastWheel, lastScroll);
 	// The event recorder follows the app's listener in the same task. Allow 2 ms at expiry for the two clocks in that task.
-	const due = end + 150, ops = (rec.ops || []).filter((x) => x.t >= first);
+	const due = end + REST_MS, ops = (rec.ops || []).filter((x) => x.t >= first);
 	const startIndex = ops.findIndex((x) => x.op === 'wheel'), started = ops[startIndex];
 	const release = startIndex < 0 ? null : ops.slice(startIndex + 1).find((x) => x.op !== 'wheel');
 	const during = (x) => x.t >= firstScroll + 50 && x.t < due - 2;
@@ -121,7 +122,8 @@ export function judge(rec, { rest, back }) {
 		r2: { ok: backT != null && backT - end <= back, ms: backT != null ? Math.round(backT - end) : null, card: target,
 			light: lightT != null ? Math.round(lightT - end) : null, tools: toolsT !== Infinity ? Math.round(toolsT - end) : null, toolsTransition: toolsTr ? Math.round(toolsTr.t - end) : null,
 			long: (rec.loaf || []).filter((x) => x.t + x.d > end && x.t < end + 400).map((x) => `+${Math.round(x.t - end)} ms ${x.d} ms (style/layout ${x.sl}: ${x.scripts.join('; ') || 'no script'})`) },
-		span: { wheel: Math.round(lastWheel - first), tail: Math.round(lastScroll - lastWheel), wheels: rec.wheels.length, scrolls: rec.scrolls.length }
+		span: { wheel: Math.round(lastWheel - first), tail: Math.round(lastScroll - lastWheel), wheels: rec.wheels.length, scrolls: rec.scrolls.length },
+		burst: burstState(rec.wheels)
 	};
 }
 
@@ -283,6 +285,7 @@ async function roomMountRace(t, f, label, park, rm) {
 		const first = rec.wheels[0]?.t, last = rec.wheels.at(-1)?.t;
 		const during = rec.samples.filter((s) => s.t >= first && s.t <= last);
 		const gaps = rec.wheels.slice(1).map((w, i) => w.t - rec.wheels[i].t), maxGap = Math.max(...gaps);
+		const burst = burstState(rec.wheels), burstBroke = burst.broke, burstDetail = burstBroke ? burstWhy(burst) : null;
 		const activated = rec.keys.some((k) => k.trusted && k.room === room && k.t > first && k.t < last);
 		const S = label + `R5 ${room} (${rm ? 'Reduced Motion spare' : 'motion on'}, ${key}): `;
 		const detail = `wheels ${rec.wheels.length}, max gap ${Math.round(maxGap)} ms, samples ${during.length}, swaps ${rec.swaps}, moves ${rec.moves}, target ${rec.targetHovered}, calibration scroll ${destinationTop}`;
@@ -290,8 +293,9 @@ async function roomMountRace(t, f, label, park, rm) {
 		records.push({ room, attempt: attempt + 1, at, destinationTop, maxGap, rec });
 		// A busy mount can delay event delivery past 150 ms while the already-queued wheel task precedes the timer.
 		// Chrome may coalesce queued wheel inputs while busy; at least 80% must reach the page. The pause must
-		// actually stay alive: an end before the last tick rejects this run, regardless of that delivery gap.
-		const qualified = (String(t.args.mountNoPause || '') === '1' || rec.oldPaused) && activated && rec.wheels.length >= INPUTS * 0.8 && rec.wheels.every((w) => w.trusted) && rec.ends.every((e) => e.t > last) && !rec.moves && during.length > 10 && rec.swaps > 0 && rec.liveRoom === room && rec.targetHovered && destinationTop === 0;
+		// actually stay alive: an end before the last tick rejects this run, regardless of that delivery gap, and a
+		// driver gap over the rest (TB6 item 1) is not a stationary burst even when its timer was late.
+		const qualified = (String(t.args.mountNoPause || '') === '1' || rec.oldPaused) && activated && rec.wheels.length >= INPUTS * 0.8 && rec.wheels.every((w) => w.trusted) && !burstBroke && rec.ends.every((e) => e.t > last) && !rec.moves && during.length > 10 && rec.swaps > 0 && rec.liveRoom === room && rec.targetHovered && destinationTop === 0;
 		if (!qualified && attempt < 2) { t.log(S + `unjudgeable attempt ${attempt + 1}; repeat the same input route: ` + detail); continue; }
 		await t.check(S + 'could judge trusted keyboard mount within one stationary wheel burst', qualified, detail);
 		if (String(t.args.mountNoPause || '') === '1') {
@@ -299,15 +303,15 @@ async function roomMountRace(t, f, label, park, rm) {
 			t.log(S + 'SKIP R5 suppression/restoration: explicit mountNoPause control has no wheel hold');
 			break;
 		}
-		await t.check(S + 'live board keeps its wheel marker after the mount', rec.oldPaused && during.length > 0 && during.every((s) => s.op === 'wheel'), `${during.filter((s) => s.op !== 'wheel').length}/${during.length} live samples lost marker`);
+		await t.check(S + 'live board keeps its wheel marker after the mount', !burstBroke && rec.oldPaused && during.length > 0 && during.every((s) => s.op === 'wheel'), burstDetail || `${during.filter((s) => s.op !== 'wheel').length}/${during.length} live samples lost marker`);
 		// Allow the first 100 ms for an already-lit reused card's outgoing fade; nothing arriving may light thereafter.
 		const settled = during.filter((s) => s.t >= during[0].t + 100);
-		await t.check(S + 'live card tools, CSS row backgrounds and engine lights stay paused', settled.length > 10 && settled.every((s) => !s.lit && (s.tools == null || s.tools <= 0.05) && !s.rows), `${settled.filter((s) => s.lit || s.tools > 0.05 || s.rows).length}/${settled.length} lit samples`);
+		await t.check(S + 'live card tools, CSS row backgrounds and engine lights stay paused', !burstBroke && settled.length > 10 && settled.every((s) => !s.lit && (s.tools == null || s.tools <= 0.05) && !s.rows), burstDetail || `${settled.filter((s) => s.lit || s.tools > 0.05 || s.rows).length}/${settled.length} lit samples`);
 		const hitSamples=settled.filter(s=>s.hit&&s.hit.alpha>.02),ghostSamples=hitSamples.filter(s=>s.hit.ghost&&!s.hit.live);
 		t.log(S+'R116 T1 hit-tested surfaces: '+JSON.stringify({samples:hitSamples.length,ghost:ghostSamples.length,bad:hitSamples.filter(s=>s.hit.tools>.05||s.hit.lit||s.hit.rows)}));
-		await t.check(S+'R116 T1 hit-tested card tools, rows and light stay paused on either visible board',hitSamples.length>10&&hitSamples.every(s=>!(s.hit.tools>.05)&&!s.hit.lit&&!s.hit.rows),`${hitSamples.filter(s=>s.hit.tools>.05||s.hit.lit||s.hit.rows).length}/${hitSamples.length} lit hit-tested samples; ${ghostSamples.length} on outgoing ghost`);
+		await t.check(S+'R116 T1 hit-tested card tools, rows and light stay paused on either visible board',!burstBroke&&hitSamples.length>10&&hitSamples.every(s=>!(s.hit.tools>.05)&&!s.hit.lit&&!s.hit.rows),burstDetail || `${hitSamples.filter(s=>s.hit.tools>.05||s.hit.lit||s.hit.rows).length}/${hitSamples.length} lit hit-tested samples; ${ghostSamples.length} on outgoing ghost`);
 		if(!rm)await t.check(S+'R116 P1 could judge outgoing ghost above incoming room during wheel hold',ghostSamples.length>0,`${ghostSamples.length} visible outgoing ghost hits`);
-		await t.check(S + 'pause end restores the LIVE board light and tools without a move', rec.ends.length === 1 && rec.ends[0].live && rec.ends[0].room === room && rec.ends[0].t > last && !rec.op && rec.oldOp !== 'wheel' && rec.cardLit && rec.tools > 0.5, JSON.stringify({ ends: rec.ends, op: rec.op, oldOp: rec.oldOp, cardLit: rec.cardLit, tools: rec.tools }));
+		await t.check(S + 'pause end restores the LIVE board light and tools without a move', !burstBroke && rec.ends.length === 1 && rec.ends[0].live && rec.ends[0].room === room && rec.ends[0].t > last && !rec.op && rec.oldOp !== 'wheel' && rec.cardLit && rec.tools > 0.5, burstDetail || JSON.stringify({ ends: rec.ends, op: rec.op, oldOp: rec.oldOp, cardLit: rec.cardLit, tools: rec.tools }));
 
 		break;
 		}
@@ -674,6 +678,7 @@ async function wheelProxies(t, f, label, park) {
 		const r = await f.evaluate(() => window.__usageProxies.stop());
 		const first = r.wheels[0], moved = r.scrolls.find((s) => s.top > first?.top);
 		const last = Math.max(r.wheels.at(-1)?.t, r.scrolls.at(-1)?.t);
+		const burst = burstState(r.wheels), burstDetail = burst.broke ? burstWhy(burst) : null;
 		const held = r.frames.filter((s) => s.top > first?.top && s.t >= moved?.t && s.t < last + 130);
 		const before = first?.layers.filter((l) => l.opacity > 0.05 && l.on === (kind === 'settled glow')) || [];
 		const bright = held.flatMap((s) => s.layers.filter((l) => l.opacity > 0.01).map((l) => ({ ...l, t: s.t, top: s.top })));
@@ -684,10 +689,11 @@ async function wheelProxies(t, f, label, park) {
 		t.log(S + detail);
 		await t.check(S + 'could judge visible proxy opacity before trusted real scroll with the pointer still',
 			first?.card === (kind === 'settled glow' ? old.widget : next.widget) && before.length > 0 &&
-			r.wheels.length === 6 && r.wheels.every((w) => w.trusted) && held.length >= 5 && !!moved, detail);
+			r.wheels.length === 6 && r.wheels.every((w) => w.trusted) && !burst.broke && held.length >= 5 && !!moved,
+			`${detail} (max gap ${burst.maxGap} ms)`);
 		await t.check(S + 'no fixed glow or frame proxy remains visible in the moving hold',
-			held.length >= 5 && held.every((s) => s.op === 'wheel') && bright.length === 0, detail);
-		await t.check(S + 'hover glow returns at the card now under the pointer', !!returned, detail);
+			!burst.broke && held.length >= 5 && held.every((s) => s.op === 'wheel') && bright.length === 0, burstDetail || detail);
+		await t.check(S + 'hover glow returns at the card now under the pointer', !burst.broke && !!returned, burstDetail || detail);
 	}
 	await park();
 	await f.evaluate((on) => { if (on) PMU.live.resume(); }, live);
@@ -764,7 +770,7 @@ export default async function (t) {
 				if (t.args.dump) writeFileSync(String(t.args.dump), JSON.stringify(dump));
 				if (String(t.args.raceOnly || '') === '1') { await park(); continue; }
 			}
-			const res = { r0: [], r1: [], r2: [] };
+			const res = { r0: [], r1: [], r2: [], burst: [] };
 			const at0 = await f.evaluate(() => { const p = document.querySelector('.page.active') || document.body, r = p.getBoundingClientRect(); return { x: Math.round(r.left + r.width / 2), y: Math.round(r.top + r.height * 0.55) }; });
 			for (let w = 0; w < TRIES; w++) {
 				let rec, rest, at, j, short = [];
@@ -789,17 +795,25 @@ export default async function (t) {
 				j = judge(rec, { rest: rest.card, back: BACK });
 				dump.push({ surface, look, window: w + 1, rest, at, judged: j, rec });
 				res.r0.push(!!(rest.card && rest.lit && rest.tools > 0.5));
-				res.r1.push(j.r1); res.r2.push(j.r2);
+				res.r1.push(j.r1); res.r2.push(j.r2); res.burst.push(j.burst);
 				t.log(`${S}window ${w + 1}: at rest card ${rest.card} lit ${rest.lit} tools ${rest.tools} | wheel ${j.span.wheels} events over ${j.span.wheel} ms, scroll ${j.span.scrolls} events ending ${j.span.tail} ms after the last wheel, ${moved} px | during: ${j.r1.cardsPassed} cards under the pointer, ${j.r1.ins} hover-in transitions (${j.r1.insProps.join(', ') || 'none'}) on ${j.r1.insCards.join(',') || 'no card'}, ${j.r1.litFrames} of ${j.r1.frames} frames retain a card engine light, ${j.r1.toolFrames} retain shown tools | after: back in ${j.r2.ms === null ? 'never (800 ms)' : j.r2.ms + ' ms'} on ${j.r2.card} (light ${j.r2.light ?? 'never'}, tools ${j.r2.tools ?? 'never'})${j.r2.long.length ? ' | long frames after: ' + j.r2.long.join(' / ') : ''}${short.length ? ' | taken again: ' + short.join('; ') : ''}`);
 				if (t.args.dump) writeFileSync(String(t.args.dump), JSON.stringify(dump));
 			}
 			await park();
 			const n = res.r1.length;
 			await t.check(S + `could judge: at rest the card under the pointer is lit and shows its tools (${res.r0.filter(Boolean).length} of ${res.r0.length} windows)`, n === TRIES && res.r0.every(Boolean), `windows judged ${n} of ${TRIES}`);
-			await t.check(S + 'while the wheel turns, no card or row that slides under the resting pointer lights up or shows its tools', n > 0 && res.r1.every((r) => r.ok),
+			// TB6 item 1: a driver gap longer than the rest lets the pause end correctly mid-burst. The burst row FAILS
+			// (could not judge), and the rows that depend on the pause surviving the whole burst report the same reason
+			// instead of failing a correct page.
+			await t.check(S + `could judge: each wheel burst kept the pause alive (no gap over the ${REST_MS} ms rest)`, n === TRIES && res.burst.length === TRIES && res.burst.every((b) => !b.broke),
+				res.burst.map((b, i) => `w${i + 1}: max gap ${b.maxGap} ms`).join('; ') || 'no judged window');
+			const burstBroke = res.burst.find((b) => b.broke);
+			const burstDetail = burstBroke ? burstWhy(burstBroke) : '';
+			await t.check(S + 'while the wheel turns, no card or row that slides under the resting pointer lights up or shows its tools', !burstBroke && n > 0 && res.r1.every((r) => r.ok),
+				burstBroke ? `${burstDetail} (${res.burst.map((b, i) => `w${i + 1} max gap ${b.maxGap} ms`).join('; ')})` :
 				res.r1.map((r, i) => `w${i + 1}: ${r.ins} hover-in transitions, ${r.litFrames} lit frames, ${r.toolFrames} shown-tool frames, marker coverage ${r.coverage}, ${r.frames} sampled frames, ${r.cardsPassed} cards passed`).join('; '));
-			await t.check(S + `after the wheel, the highlight under the resting pointer comes back within ${BACK} ms without a move`, n > 0 && res.r2.every((r) => r.ok),
-				res.r2.map((r, i) => `w${i + 1}: ${r.ms === null ? 'never' : r.ms + ' ms'} (${r.card}: light ${r.light ?? 'never'}, tools ${r.tools ?? 'never'})`).join('; '));
+			await t.check(S + `after the wheel, the highlight under the resting pointer comes back within ${BACK} ms without a move`, !burstBroke && n > 0 && res.r2.every((r) => r.ok),
+				burstBroke ? burstDetail : res.r2.map((r, i) => `w${i + 1}: ${r.ms === null ? 'never' : r.ms + ' ms'} (${r.card}: light ${r.light ?? 'never'}, tools ${r.tools ?? 'never'})`).join('; '));
 
 			// R3: keyboard focus is not paused. The board's first card takes keyboard focus (a key pressed first, so the
 			// browser draws its focus ring); the pointer rests at the centre and TICKS wheel ticks scroll the board. Before,

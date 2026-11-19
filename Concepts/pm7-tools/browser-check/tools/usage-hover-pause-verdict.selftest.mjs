@@ -55,3 +55,11 @@ test('lighting before the real rest deadline fails both rows even under the mark
  assert.equal(j(r).r1.ok,false);
  assert.equal(j(r).r2.ok,false);
 });
+
+// TB6 item 1: a 258 ms driver gap is reported as a broken burst; a 30 ms cadence is not.
+test('TB6 item 1: a 258 ms driver gap is reported as a broken burst; a 30 ms cadence is not',()=>{
+ const r=make();
+ r.wheels=[100,130,160,418,448,478,508];
+ assert.deepEqual(j(r).burst,{maxGap:258,rest:150,broke:true});
+ assert.equal(j(make()).burst.broke,false);
+});
