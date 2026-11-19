@@ -450,10 +450,14 @@
         "path": "Plans/orchestrator-subagent-integration.md",
         "line": 33323,
         "sha256": "fa6173a2d85cbb5e63635c4044e792a2db27ab19a1a592fb0ed47d0649fc2dd1",
-        "file_sha256": "b39393943cd0f6532f76acdc63eb4152c4cea49b337972fb49705a7e9bfc2365",
+        "file_sha256": "fa6173a2d85cbb5e63635c4044e792a2db27ab19a1a592fb0ed47d0649fc2dd1",
         "unit": "OSI-697",
         "commit": "e14b1332904a7d67b3184b732c3c77bcabe5088f",
-        "quote": "### OSI-697 — subagent.progress"
+        "quote": "### OSI-697 — subagent.progress",
+        "line_start": 33323,
+        "line_end": 33323,
+        "quote_check": "exact",
+        "quote_scope": "unit OSI-697, Plans/orchestrator-subagent-integration.md@e14b1332904a7d67b3184b732c3c77bcabe5088f:33323-33372"
        }
       },
       {
@@ -472,11 +476,13 @@
         "line": 33341,
         "quote": "**Oracles.** ATS-360 and `Plans/orchestrator_event_contract_fixtures.json` select only `subagent.progress` cases. Positive payload and negative missing-required/unknown-field/foreign-scope/schema-version cases run via `python3 scripts/pm-orchestrator-event-contracts.py`. Native NOT_RUN obligations: full-value uncertain receipt retry/conflict, producer predicate and canonical-effect ordering, restore entropy, current token/source/access fences, deletion/hold deadline, version/withdrawal races and replay without the effect named above. Static payload success never certifies those native obligations.",
         "sha256": "fa6173a2d85cbb5e63635c4044e792a2db27ab19a1a592fb0ed47d0649fc2dd1",
-        "line_start": 33789,
-        "line_end": 33789,
-        "file_sha256": "b39393943cd0f6532f76acdc63eb4152c4cea49b337972fb49705a7e9bfc2365",
+        "line_start": 33341,
+        "line_end": 33341,
+        "file_sha256": "fa6173a2d85cbb5e63635c4044e792a2db27ab19a1a592fb0ed47d0649fc2dd1",
         "unit": "OSI-697",
-        "commit": "e14b1332904a7d67b3184b732c3c77bcabe5088f"
+        "commit": "e14b1332904a7d67b3184b732c3c77bcabe5088f",
+        "quote_check": "exact",
+        "quote_scope": "unit OSI-697, Plans/orchestrator-subagent-integration.md@e14b1332904a7d67b3184b732c3c77bcabe5088f:33323-33372"
        }
       },
       {
@@ -507,9 +513,9 @@
   "row_pointer": "#/families/498"
  },
  "evidence_maintenance": {
-  "authority": "MERGE2-FIX2 findings 1/2/3",
-  "source_commit": "0f2a90ece55d4bafd163b19a05cd3c4eda91b9c1",
-  "source_assessment_sha256": "48c2770b5270d941543b7dc408feb9aae59517e48a1bafe4950b52f34d4cdd5c",
+  "authority": "MERGE2-FIX3 items 1/2/3/4",
+  "source_commit": "dfea17a6c44205c69598882b0305b0cbeab1a3e8",
+  "source_assessment_sha256": "a9a347d8395340a2052f681fc8dfcaf446279fb6c92b34c8b9c1170ad7df1bed",
   "native_execution": "NOT_RUN",
   "verdicts_changed": false
  }

@@ -233,11 +233,11 @@
      "evidence": [
       {
        "path": "Plans/Goal_Runtime_System.md",
-       "line_start": 9133,
-       "line_end": 9133,
-       "quote": "Newly authored",
-       "excerpt_sha256": "9f01283ace83984d22640d7ebe5d5d8f447ea9695a00b6661e56ad098f3b6fc1",
-       "file_sha256": "122f980eb82a138dc71713eede5caa472a2d2d9ce404fab798698f8a38f5ca3e",
+       "line_start": 9175,
+       "line_end": 9175,
+       "quote": "Current Project selection (2026-11-19): Plans/event_family_registry.json selects pm.goal_runtime_event.goal_blocked.schema.v3 under Plans/Decision_Log.md#DL-2435. The former v2 selector is retained history, alongside the existing v1 reader; neither historical meaning is cast to v3. This Project revision does not adopt the dormant application sibling or certify native installation.",
+       "excerpt_sha256": "c28dbffd95af7153f4358674d46000da1410ff03c1ddbb034dc0d1119abfdefb",
+       "file_sha256": "459390e9235103074acbe528858e3ebb3aed895608f13756678ceb34bfb71f47",
        "quote_check": "exact",
        "quote_scope": "unit GRS-203, Plans/Goal_Runtime_System.md:9126-9187",
        "excerpt_digest_convention": "whole_line",
@@ -251,8 +251,8 @@
        },
        "unit": "GRS-203",
        "locator_maintenance": {
-        "authority": "MERGE2-FIX2 / R1 Astra real-input lineage evidence",
-        "reason": "Bind the existing claim to its exact named owner or preserved original section, without a sibling fallback or verdict change."
+        "authority": "MERGE2-FIX3 item 2",
+        "reason": "Re-cite the current Project v3 selection explicitly, retaining the prepared/v2 source edition separately."
        }
       }
      ],
@@ -274,7 +274,7 @@
        "line_end": 9489,
        "quote": "admission. GRS-203 adopts owner.goal.lifecycle.blocked.v1@1.0.0, source edition pm.goal.host.blocked_source.v1",
        "excerpt_sha256": "51da0c9c64c14368e3b73f6d670630c1496b8181be5720e76fad7c0b2c61c5d1",
-       "file_sha256": "122f980eb82a138dc71713eede5caa472a2d2d9ce404fab798698f8a38f5ca3e",
+       "file_sha256": "459390e9235103074acbe528858e3ebb3aed895608f13756678ceb34bfb71f47",
        "quote_check": "exact",
        "quote_scope": "unit GRS-1120, Plans/Goal_Runtime_System.md:9481-9585",
        "excerpt_digest_convention": "whole_line",
@@ -298,7 +298,7 @@
        "line_end": 9490,
        "quote": "and method bank Plans/goal_lifecycle_host_contracts/methods.json#/goal.blocked. Its capture, reserve, commit_body,",
        "excerpt_sha256": "586a9553a5130378688ed3cf1bca4d29ea95dd0989c190d507623952c71d6786",
-       "file_sha256": "122f980eb82a138dc71713eede5caa472a2d2d9ce404fab798698f8a38f5ca3e",
+       "file_sha256": "459390e9235103074acbe528858e3ebb3aed895608f13756678ceb34bfb71f47",
        "quote_check": "exact",
        "quote_scope": "unit GRS-1120, Plans/Goal_Runtime_System.md:9481-9585",
        "excerpt_digest_convention": "whole_line",
@@ -318,13 +318,13 @@
       },
       {
        "path": "Plans/storage-plan.md",
-       "line_start": 55894,
-       "line_end": 55894,
+       "line_start": 49121,
+       "line_end": 49121,
        "quote": "SP-287 and SP-286 including its v2 full-value commitment independently. Prepared without registration or admission.",
        "excerpt_sha256": "495fecfc6f5da8a83bb6458832dba90040cd099f42d7c03d9bf30fc625aaa6b5",
-       "file_sha256": "51edc1394ab24ca53a2a021dce3c3c9a1be0f43e2292d901ad56e4b0063a3ebf",
+       "file_sha256": "a80ebad269f3f3a87c644ee23b21cdd62ef64ccad2fbe4377e8bd190614fdf31",
        "quote_check": "exact",
-       "quote_scope": "unit SP-1120, Plans/storage-plan.md:55886-56027",
+       "quote_scope": "unit SP-1120, Plans/storage-plan.md:49113-49254",
        "excerpt_digest_convention": "whole_line",
        "source_citation": {
         "path": "Plans/storage-plan.md",
@@ -342,13 +342,13 @@
       },
       {
        "path": "Plans/Contracts_V0.md",
-       "line_start": 43994,
-       "line_end": 43994,
+       "line_start": 42535,
+       "line_end": 42535,
        "quote": "canonical_text: 'Newly authored closed source/method/result bank for exactly goal.blocked, source edition pm.goal.host.blocked_source.v1.",
        "excerpt_sha256": "a42c351a813b5e4eefe0557098f23dc21259553ed4722ef08677b76b0dbffd87",
-       "file_sha256": "2a9090efcaefbc3b0e85c2155255e078125e4d05a933e115ca931c6566b8b74b",
+       "file_sha256": "405f917ed143e5aefbcee55513fcdf1b11fa61f0dce5d9f164ad6e44ddf078ce",
        "quote_check": "exact",
-       "quote_scope": "unit CV-1120, Plans/Contracts_V0.md:43987-44073",
+       "quote_scope": "unit CV-1120, Plans/Contracts_V0.md:42528-42614",
        "excerpt_digest_convention": "whole_line",
        "source_citation": {
         "path": "Plans/Contracts_V0.md",
@@ -370,7 +370,7 @@
        "line_end": 8671,
        "quote": "owner.goal.body.mutation@1.0.0",
        "excerpt_sha256": "2c7941315ac1c78f2079e50a9bf084d2f0862384d9f564c49a0c4ba9b6ad60fb",
-       "file_sha256": "122f980eb82a138dc71713eede5caa472a2d2d9ce404fab798698f8a38f5ca3e",
+       "file_sha256": "459390e9235103074acbe528858e3ebb3aed895608f13756678ceb34bfb71f47",
        "quote_check": "exact",
        "quote_scope": "unit GRS-086, Plans/Goal_Runtime_System.md:8655-8737",
        "excerpt_digest_convention": "whole_line",
@@ -406,10 +406,10 @@
        "unit": "GRS-203",
        "line_start": 9175,
        "line_end": 9175,
-       "quote": "**Newly authored owner contract under DL-045; prepared Project successor, no admission (2026-11-04).** This unit applies only to `goal.blocked` and `pm.goal_runtime_event.goal_blocked.schema.v3`. The existing whole `goal_blocked.schema.json` v2 resource, original envelope/identity, D-R01 predicates and legacy v1 reader retain their historical meaning. There is no v2-to-v3 cast and no app adoption; the unused app sibling remains governed by CV-366 until its separate owner adoption. The registry still selects v2 pending review and integration.",
+       "quote": "Current Project selection (2026-11-19): Plans/event_family_registry.json selects pm.goal_runtime_event.goal_blocked.schema.v3 under Plans/Decision_Log.md#DL-2435. The former v2 selector is retained history, alongside the existing v1 reader; neither historical meaning is cast to v3. This Project revision does not adopt the dormant application sibling or certify native installation.",
        "quote_check": "exact",
        "quote_scope": "unit GRS-203, Plans/Goal_Runtime_System.md:9126-9187",
-       "file_sha256": "122f980eb82a138dc71713eede5caa472a2d2d9ce404fab798698f8a38f5ca3e",
+       "file_sha256": "459390e9235103074acbe528858e3ebb3aed895608f13756678ceb34bfb71f47",
        "source_citation": {
         "path": "Plans/Goal_Runtime_System.md",
         "unit": "GRS-203",
@@ -417,17 +417,21 @@
         "line_end": 9175,
         "quote": "**Newly authored owner contract under DL-045; prepared Project successor, no admission (2026-11-04).** This unit applies only to `goal.blocked` and `pm.goal_runtime_event.goal_blocked.schema.v3`. The existing whole `goal_blocked.schema.json` v2 resource, original envelope/identity, D-R01 predicates and legacy v1 reader retain their historical meaning. There is no v2-to-v3 cast and no app adoption; the unused app sibling remains governed by CV-366 until its separate owner adoption. The registry still selects v2 pending review and integration.",
         "file_sha256": "122f980eb82a138dc71713eede5caa472a2d2d9ce404fab798698f8a38f5ca3e"
+       },
+       "locator_maintenance": {
+        "authority": "MERGE2-FIX3 item 2",
+        "reason": "Re-cite the current Project v3 selection explicitly, retaining the prepared/v2 source edition separately."
        }
       },
       {
        "path": "Plans/Goal_Runtime_System.md",
        "unit": "GRS-203",
-       "line_start": 9179,
-       "line_end": 9179,
-       "quote": "**Envelope and lifecycle custody.** Adopt `Plans/Contracts_V0.md#EventRecord` pm.event.v0@2.0.0 and CV-422, not a local envelope. Explicit Project/thread/Goal/Storage identity must match the actual canonical body and original host caller. Outer event_type is `goal.blocked`, payload_schema_id is `pm.goal_runtime_event.goal_blocked.schema.v3`, Project and thread equal payload values, run_id equals the owning continuation run, and actor/correlation/causation/account facts come from that original caller. No focus/main/null-Project fallback. The immutable event has no objective text, retired Goal topology or provider/tool output. Raw secrets reject before reservation/append. The body remains exactly GRS-048's four states active|paused|blocked|completed, with cancellation outside the enum.",
+       "line_start": 9175,
+       "line_end": 9175,
+       "quote": "Current Project selection (2026-11-19): Plans/event_family_registry.json selects pm.goal_runtime_event.goal_blocked.schema.v3 under Plans/Decision_Log.md#DL-2435. The former v2 selector is retained history, alongside the existing v1 reader; neither historical meaning is cast to v3. This Project revision does not adopt the dormant application sibling or certify native installation.",
        "quote_check": "exact",
        "quote_scope": "unit GRS-203, Plans/Goal_Runtime_System.md:9126-9187",
-       "file_sha256": "122f980eb82a138dc71713eede5caa472a2d2d9ce404fab798698f8a38f5ca3e",
+       "file_sha256": "459390e9235103074acbe528858e3ebb3aed895608f13756678ceb34bfb71f47",
        "source_citation": {
         "path": "Plans/Goal_Runtime_System.md",
         "unit": "GRS-203",
@@ -435,6 +439,10 @@
         "line_end": 9179,
         "quote": "**Envelope and lifecycle custody.** Adopt `Plans/Contracts_V0.md#EventRecord` pm.event.v0@2.0.0 and CV-422, not a local envelope. Explicit Project/thread/Goal/Storage identity must match the actual canonical body and original host caller. Outer event_type is `goal.blocked`, payload_schema_id is `pm.goal_runtime_event.goal_blocked.schema.v3`, Project and thread equal payload values, run_id equals the owning continuation run, and actor/correlation/causation/account facts come from that original caller. No focus/main/null-Project fallback. The immutable event has no objective text, retired Goal topology or provider/tool output. Raw secrets reject before reservation/append. The body remains exactly GRS-048's four states active|paused|blocked|completed, with cancellation outside the enum.",
         "file_sha256": "122f980eb82a138dc71713eede5caa472a2d2d9ce404fab798698f8a38f5ca3e"
+       },
+       "locator_maintenance": {
+        "authority": "MERGE2-FIX3 item 2",
+        "reason": "Re-cite the current Project v3 selection explicitly, retaining the prepared/v2 source edition separately."
        }
       }
      ],
@@ -457,10 +465,10 @@
        "unit": "GRS-203",
        "line_start": 9175,
        "line_end": 9175,
-       "quote": "**Newly authored owner contract under DL-045; prepared Project successor, no admission (2026-11-04).** This unit applies only to `goal.blocked` and `pm.goal_runtime_event.goal_blocked.schema.v3`. The existing whole `goal_blocked.schema.json` v2 resource, original envelope/identity, D-R01 predicates and legacy v1 reader retain their historical meaning. There is no v2-to-v3 cast and no app adoption; the unused app sibling remains governed by CV-366 until its separate owner adoption. The registry still selects v2 pending review and integration.",
+       "quote": "**Newly authored owner contract under DL-045; prepared Project successor, no admission (2026-11-04).** This unit applies only to `goal.blocked` and `pm.goal_runtime_event.goal_blocked.schema.v3`. The existing whole `goal_blocked.schema.json` v2 resource, original envelope/identity, D-R01 predicates and legacy v1 reader retain their historical meaning. There is no v2-to-v3 cast and no app adoption; the unused app sibling remains governed by CV-366 until its separate owner adoption. Current Project selection (2026-11-19): Plans/event_family_registry.json selects pm.goal_runtime_event.goal_blocked.schema.v3 under Plans/Decision_Log.md#DL-2435. The former v2 selector is retained history, alongside the existing v1 reader; neither historical meaning is cast to v3. This Project revision does not adopt the dormant application sibling or certify native installation.",
        "quote_check": "exact",
        "quote_scope": "unit GRS-203, Plans/Goal_Runtime_System.md:9126-9187",
-       "file_sha256": "122f980eb82a138dc71713eede5caa472a2d2d9ce404fab798698f8a38f5ca3e",
+       "file_sha256": "459390e9235103074acbe528858e3ebb3aed895608f13756678ceb34bfb71f47",
        "source_citation": {
         "path": "Plans/Goal_Runtime_System.md",
         "unit": "GRS-203",
@@ -468,6 +476,15 @@
         "line_end": 9175,
         "quote": "**Newly authored owner contract under DL-045; prepared Project successor, no admission (2026-11-04).** This unit applies only to `goal.blocked` and `pm.goal_runtime_event.goal_blocked.schema.v3`. The existing whole `goal_blocked.schema.json` v2 resource, original envelope/identity, D-R01 predicates and legacy v1 reader retain their historical meaning. There is no v2-to-v3 cast and no app adoption; the unused app sibling remains governed by CV-366 until its separate owner adoption. The registry still selects v2 pending review and integration.",
         "file_sha256": "122f980eb82a138dc71713eede5caa472a2d2d9ce404fab798698f8a38f5ca3e"
+       },
+       "reanchor": {
+        "method": "re_cited",
+        "reason": "The committed correction dates the old preparation outcome and states the already assigned policy/current membership. The source/identity/custody/native constraints and cell verdict stay unchanged.",
+        "unit": "GRS-203",
+        "old_quote": "**Newly authored owner contract under DL-045; prepared Project successor, no admission (2026-11-04).** This unit applies only to `goal.blocked` and `pm.goal_runtime_event.goal_blocked.schema.v3`. The existing whole `goal_blocked.schema.json` v2 resource, original envelope/identity, D-R01 predicates and legacy v1 reader retain their historical meaning. There is no v2-to-v3 cast and no app adoption; the unused app sibling remains governed by CV-366 until its separate owner adoption. The registry still selects v2 pending review and integration.",
+        "new_quote": "**Newly authored owner contract under DL-045; prepared Project successor, no admission (2026-11-04).** This unit applies only to `goal.blocked` and `pm.goal_runtime_event.goal_blocked.schema.v3`. The existing whole `goal_blocked.schema.json` v2 resource, original envelope/identity, D-R01 predicates and legacy v1 reader retain their historical meaning. There is no v2-to-v3 cast and no app adoption; the unused app sibling remains governed by CV-366 until its separate owner adoption. Current Project selection (2026-11-19): Plans/event_family_registry.json selects pm.goal_runtime_event.goal_blocked.schema.v3 under Plans/Decision_Log.md#DL-2435. The former v2 selector is retained history, alongside the existing v1 reader; neither historical meaning is cast to v3. This Project revision does not adopt the dormant application sibling or certify native installation.",
+        "normalizations": [],
+        "owner_change_commit": "MERGE2-FIX3 uncommitted owner correction; final commit recorded in REPORT.md"
        }
       },
       {
@@ -478,7 +495,7 @@
        "quote": "**Envelope and lifecycle custody.** Adopt `Plans/Contracts_V0.md#EventRecord` pm.event.v0@2.0.0 and CV-422, not a local envelope. Explicit Project/thread/Goal/Storage identity must match the actual canonical body and original host caller. Outer event_type is `goal.blocked`, payload_schema_id is `pm.goal_runtime_event.goal_blocked.schema.v3`, Project and thread equal payload values, run_id equals the owning continuation run, and actor/correlation/causation/account facts come from that original caller. No focus/main/null-Project fallback. The immutable event has no objective text, retired Goal topology or provider/tool output. Raw secrets reject before reservation/append. The body remains exactly GRS-048's four states active|paused|blocked|completed, with cancellation outside the enum.",
        "quote_check": "exact",
        "quote_scope": "unit GRS-203, Plans/Goal_Runtime_System.md:9126-9187",
-       "file_sha256": "122f980eb82a138dc71713eede5caa472a2d2d9ce404fab798698f8a38f5ca3e",
+       "file_sha256": "459390e9235103074acbe528858e3ebb3aed895608f13756678ceb34bfb71f47",
        "source_citation": {
         "path": "Plans/Goal_Runtime_System.md",
         "unit": "GRS-203",
@@ -505,13 +522,13 @@
      "evidence": [
       {
        "path": "Plans/storage-plan.md",
-       "line_start": 31288,
-       "line_end": 31288,
+       "line_start": 31237,
+       "line_end": 31237,
        "quote": "producer_semantic_digest",
        "excerpt_sha256": "fd37890467198baf231e0cbdd064f06a8744bc255978d7ae2750dc08e6482456",
-       "file_sha256": "51edc1394ab24ca53a2a021dce3c3c9a1be0f43e2292d901ad56e4b0063a3ebf",
+       "file_sha256": "a80ebad269f3f3a87c644ee23b21cdd62ef64ccad2fbe4377e8bd190614fdf31",
        "quote_check": "exact",
-       "quote_scope": "unit SP-310, Plans/storage-plan.md:31274-31440",
+       "quote_scope": "unit SP-310, Plans/storage-plan.md:31223-31389",
        "excerpt_digest_convention": "whole_line",
        "source_citation": {
         "path": "Plans/storage-plan.md",
@@ -542,13 +559,13 @@
      "evidence": [
       {
        "path": "Plans/storage-plan.md",
-       "line_start": 30687,
-       "line_end": 30687,
+       "line_start": 30636,
+       "line_end": 30636,
        "quote": "RP-AUTHORITY-INDEFINITE",
        "excerpt_sha256": "e7351981e6845a22e7fe6ae338e52a1fa3c16a2d8b28752f60b5b01fa1469422",
-       "file_sha256": "51edc1394ab24ca53a2a021dce3c3c9a1be0f43e2292d901ad56e4b0063a3ebf",
+       "file_sha256": "a80ebad269f3f3a87c644ee23b21cdd62ef64ccad2fbe4377e8bd190614fdf31",
        "quote_check": "exact",
-       "quote_scope": "unit SP-305, Plans/storage-plan.md:30560-30724",
+       "quote_scope": "unit SP-305, Plans/storage-plan.md:30509-30673",
        "excerpt_digest_convention": "whole_line",
        "source_citation": {
         "path": "Plans/storage-plan.md",
@@ -579,13 +596,13 @@
      "evidence": [
       {
        "path": "Plans/storage-plan.md",
-       "line_start": 25109,
-       "line_end": 25109,
+       "line_start": 25058,
+       "line_end": 25058,
        "quote": "reject-unhandled-secrets",
        "excerpt_sha256": "e78e054986bb33bf378bfa76d47deabf3efdf3784a56f99438dc6d5d1d5d09e8",
-       "file_sha256": "51edc1394ab24ca53a2a021dce3c3c9a1be0f43e2292d901ad56e4b0063a3ebf",
+       "file_sha256": "a80ebad269f3f3a87c644ee23b21cdd62ef64ccad2fbe4377e8bd190614fdf31",
        "quote_check": "exact",
-       "quote_scope": "unit SP-271, Plans/storage-plan.md:25015-25119",
+       "quote_scope": "unit SP-271, Plans/storage-plan.md:24964-25068",
        "excerpt_digest_convention": "whole_line",
        "source_citation": {
         "path": "Plans/storage-plan.md",
@@ -620,7 +637,7 @@
        "line_end": 9186,
        "quote": "Exact blocked predicates",
        "excerpt_sha256": "1a1c884d20218d119006fbe26ed1374aa8697a0da588df6da727444dc43b41b2",
-       "file_sha256": "122f980eb82a138dc71713eede5caa472a2d2d9ce404fab798698f8a38f5ca3e",
+       "file_sha256": "459390e9235103074acbe528858e3ebb3aed895608f13756678ceb34bfb71f47",
        "quote_check": "exact",
        "quote_scope": "unit GRS-203, Plans/Goal_Runtime_System.md:9126-9187",
        "excerpt_digest_convention": "whole_line",
@@ -653,13 +670,13 @@
      "evidence": [
       {
        "path": "Plans/storage-plan.md",
-       "line_start": 55432,
-       "line_end": 55432,
+       "line_start": 48659,
+       "line_end": 48659,
        "quote": "Current Activity/body/history/continuation consume",
        "excerpt_sha256": "a87d9a8d9f5768f03bfd31be801d4d2d038dae0d858f8061b7456967daa7dc72",
-       "file_sha256": "51edc1394ab24ca53a2a021dce3c3c9a1be0f43e2292d901ad56e4b0063a3ebf",
+       "file_sha256": "a80ebad269f3f3a87c644ee23b21cdd62ef64ccad2fbe4377e8bd190614fdf31",
        "quote_check": "exact",
-       "quote_scope": "unit SP-429, Plans/storage-plan.md:55379-55437",
+       "quote_scope": "unit SP-429, Plans/storage-plan.md:48606-48664",
        "excerpt_digest_convention": "whole_line",
        "source_citation": {
         "path": "Plans/storage-plan.md",
@@ -690,13 +707,13 @@
      "evidence": [
       {
        "path": "Plans/storage-plan.md",
-       "line_start": 31294,
-       "line_end": 31294,
+       "line_start": 31243,
+       "line_end": 31243,
        "quote": "withdrawal",
        "excerpt_sha256": "88601db51850d209028e541b7c452517f389ca0482e0e6fe9ba28a751be231a1",
-       "file_sha256": "51edc1394ab24ca53a2a021dce3c3c9a1be0f43e2292d901ad56e4b0063a3ebf",
+       "file_sha256": "a80ebad269f3f3a87c644ee23b21cdd62ef64ccad2fbe4377e8bd190614fdf31",
        "quote_check": "exact",
-       "quote_scope": "unit SP-310, Plans/storage-plan.md:31274-31440",
+       "quote_scope": "unit SP-310, Plans/storage-plan.md:31223-31389",
        "excerpt_digest_convention": "whole_line",
        "source_citation": {
         "path": "Plans/storage-plan.md",
@@ -997,7 +1014,7 @@
        "line_end": 9133,
        "quote": "Newly authored",
        "excerpt_sha256": "9f01283ace83984d22640d7ebe5d5d8f447ea9695a00b6661e56ad098f3b6fc1",
-       "file_sha256": "122f980eb82a138dc71713eede5caa472a2d2d9ce404fab798698f8a38f5ca3e",
+       "file_sha256": "459390e9235103074acbe528858e3ebb3aed895608f13756678ceb34bfb71f47",
        "role": "Canonical subject of the existing executable oracle proof; checker evidence and verdict are unchanged.",
        "quote_check": "exact",
        "quote_scope": "unit GRS-203, Plans/Goal_Runtime_System.md:9126-9187",
@@ -1029,9 +1046,9 @@
   }
  ],
  "evidence_maintenance": {
-  "authority": "MERGE2-FIX2 findings 1/2/3",
-  "source_commit": "0f2a90ece55d4bafd163b19a05cd3c4eda91b9c1",
-  "source_assessment_sha256": "83b58b5e3fbdb9d9fa6c0a5543523d0044b7d647c8bc79068208b2529f09ff6d",
+  "authority": "MERGE2-FIX3 items 1/2/3/4",
+  "source_commit": "dfea17a6c44205c69598882b0305b0cbeab1a3e8",
+  "source_assessment_sha256": "3e7d4cacefe2977b6e35909cf4f64273c4cab77ee0829bf7d1e45d3639ea8165",
   "native_execution": "NOT_RUN",
   "verdicts_changed": false
  }

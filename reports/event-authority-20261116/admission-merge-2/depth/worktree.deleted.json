@@ -56,12 +56,12 @@
       {
        "path": "Plans/Contracts_V0.md",
        "unit": "CV-616",
-       "line_start": 35016,
-       "line_end": 35016,
+       "line_start": 35034,
+       "line_end": 35034,
        "quote": "Newly authored owner contract under DL-045 for worktree.deleted@1.0.0 only",
        "quote_check": "exact",
-       "quote_scope": "unit CV-616, Plans/Contracts_V0.md:35008-35049",
-       "file_sha256": "2a9090efcaefbc3b0e85c2155255e078125e4d05a933e115ca931c6566b8b74b",
+       "quote_scope": "unit CV-616, Plans/Contracts_V0.md:35026-35069",
+       "file_sha256": "405f917ed143e5aefbcee55513fcdf1b11fa61f0dce5d9f164ad6e44ddf078ce",
        "source_citation": {
         "path": "Plans/Contracts_V0.md",
         "unit": "CV-616",
@@ -87,12 +87,12 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-596",
-       "line_start": 39642,
-       "line_end": 39642,
+       "line_start": 39183,
+       "line_end": 39183,
        "quote": "For worktree.deleted alone, the newly authored original-source custody",
        "quote_check": "exact",
-       "quote_scope": "unit SP-596, Plans/storage-plan.md:39585-39779",
-       "file_sha256": "51edc1394ab24ca53a2a021dce3c3c9a1be0f43e2292d901ad56e4b0063a3ebf",
+       "quote_scope": "unit SP-596, Plans/storage-plan.md:39174-39230",
+       "file_sha256": "a80ebad269f3f3a87c644ee23b21cdd62ef64ccad2fbe4377e8bd190614fdf31",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-596",
@@ -173,12 +173,12 @@
       {
        "path": "Plans/Contracts_V0.md",
        "unit": "CV-616",
-       "line_start": 35022,
-       "line_end": 35022,
+       "line_start": 35040,
+       "line_end": 35040,
        "quote": "For worktree.deleted alone, the shared CV-1100, SP-1100, SP-1101 and CV-1101 owner units apply",
        "quote_check": "exact",
-       "quote_scope": "unit CV-616, Plans/Contracts_V0.md:35008-35049",
-       "file_sha256": "2a9090efcaefbc3b0e85c2155255e078125e4d05a933e115ca931c6566b8b74b",
+       "quote_scope": "unit CV-616, Plans/Contracts_V0.md:35026-35069",
+       "file_sha256": "405f917ed143e5aefbcee55513fcdf1b11fa61f0dce5d9f164ad6e44ddf078ce",
        "source_citation": {
         "path": "Plans/Contracts_V0.md",
         "unit": "CV-616",
@@ -204,12 +204,12 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-596",
-       "line_start": 39695,
-       "line_end": 39695,
+       "line_start": 39185,
+       "line_end": 39185,
        "quote": "For worktree.deleted alone, source codec",
        "quote_check": "exact",
-       "quote_scope": "unit SP-596, Plans/storage-plan.md:39585-39779",
-       "file_sha256": "51edc1394ab24ca53a2a021dce3c3c9a1be0f43e2292d901ad56e4b0063a3ebf",
+       "quote_scope": "unit SP-596, Plans/storage-plan.md:39174-39230",
+       "file_sha256": "a80ebad269f3f3a87c644ee23b21cdd62ef64ccad2fbe4377e8bd190614fdf31",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-596",
@@ -235,12 +235,12 @@
       {
        "path": "Plans/Contracts_V0.md",
        "unit": "CV-616",
-       "line_start": 35020,
-       "line_end": 35020,
+       "line_start": 35038,
+       "line_end": 35038,
        "quote": "For worktree.deleted alone, current writer and retry paths refuse",
        "quote_check": "exact",
-       "quote_scope": "unit CV-616, Plans/Contracts_V0.md:35008-35049",
-       "file_sha256": "2a9090efcaefbc3b0e85c2155255e078125e4d05a933e115ca931c6566b8b74b",
+       "quote_scope": "unit CV-616, Plans/Contracts_V0.md:35026-35069",
+       "file_sha256": "405f917ed143e5aefbcee55513fcdf1b11fa61f0dce5d9f164ad6e44ddf078ce",
        "source_citation": {
         "path": "Plans/Contracts_V0.md",
         "unit": "CV-616",
@@ -289,12 +289,12 @@
       {
        "path": "Plans/Contracts_V0.md",
        "unit": "CV-616",
-       "line_start": 35022,
-       "line_end": 35022,
+       "line_start": 35040,
+       "line_end": 35040,
        "quote": "For worktree.deleted alone, the shared CV-1100, SP-1100, SP-1101 and CV-1101 owner units apply",
        "quote_check": "exact",
-       "quote_scope": "unit CV-616, Plans/Contracts_V0.md:35008-35049",
-       "file_sha256": "2a9090efcaefbc3b0e85c2155255e078125e4d05a933e115ca931c6566b8b74b",
+       "quote_scope": "unit CV-616, Plans/Contracts_V0.md:35026-35069",
+       "file_sha256": "405f917ed143e5aefbcee55513fcdf1b11fa61f0dce5d9f164ad6e44ddf078ce",
        "source_citation": {
         "path": "Plans/Contracts_V0.md",
         "unit": "CV-616",
@@ -320,12 +320,12 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-596",
-       "line_start": 39748,
-       "line_end": 39748,
-       "quote": "\\ policy in DL-507.\\n\\nExact stored value `dt_worktree_deleted_source` retains `RP-WORKTREE-TOMBSTONE-365D@1.0.0`\\",
+       "line_start": 39206,
+       "line_end": 39206,
+       "quote": "Current selected assignment (2026-11-19): worktree.deleted@1.0.0 is registered for project_only in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2434. Its event history selects RP-WORKTREE-TOMBSTONE-365D@1.0.0; Plans/storage-plan.md#SP-596 owns the event policy's existing anchors, counts, holds and deletion rules. Separate stored-value assignment: dt_worktree_deleted_source uses RP-WORKTREE-TOMBSTONE-365D@1.0.0 under Plans/Decision_Log.md#DL-507; this assigns that stored value, not event history. Separate checkpoint assignment: dt_worktree_deleted_checkpoint uses RP-PROJECTION-3GEN@1.0.0 under its existing Plans/storage-plan.md#SP-596 contract; checkpoint retention grants no event/source deletion. Original sources and coherent backups retain their independent owner policies; the event lifetime is not transferred to them. Current append/publication still requires the exact selected schema/scope, original custody, current permission, receipt and required producer adoption. Actual missing registration or unresolved required custody refuses; native execution remains NOT_RUN. No native adoption, new retention choice or governance seal follows.",
        "quote_check": "exact",
-       "quote_scope": "unit SP-596, Plans/storage-plan.md:39585-39779",
-       "file_sha256": "51edc1394ab24ca53a2a021dce3c3c9a1be0f43e2292d901ad56e4b0063a3ebf",
+       "quote_scope": "unit SP-596, Plans/storage-plan.md:39174-39230",
+       "file_sha256": "a80ebad269f3f3a87c644ee23b21cdd62ef64ccad2fbe4377e8bd190614fdf31",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-596",
@@ -333,6 +333,10 @@
         "line_end": 39747,
         "quote": "\\ policy in DL-507.\\n\\nExact stored value `dt_worktree_deleted_source` retains `RP-WORKTREE-TOMBSTONE-365D@1.0.0`\\",
         "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+       },
+       "locator_maintenance": {
+        "authority": "MERGE2-FIX3",
+        "reason": "Re-cite the same accepted retention claim at its current exact owner assignment; event and source/checkpoint authority remain separate."
        }
       }
      ],
@@ -351,12 +355,12 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-596",
-       "line_start": 39669,
-       "line_end": 39670,
-       "quote": "Source stages, original owner outcomes, referenced bodies and full-value receipt custody form one\\\n  \\ mandatory coherent backup closure.",
-       "file_sha256": "51edc1394ab24ca53a2a021dce3c3c9a1be0f43e2292d901ad56e4b0063a3ebf",
+       "line_start": 39183,
+       "line_end": 39183,
+       "quote": "Source stages, original owner outcomes, referenced bodies and full-value receipt custody form one mandatory coherent backup closure.",
+       "file_sha256": "a80ebad269f3f3a87c644ee23b21cdd62ef64ccad2fbe4377e8bd190614fdf31",
        "quote_check": "exact",
-       "quote_scope": "unit SP-596, Plans/storage-plan.md:39585-39779",
+       "quote_scope": "unit SP-596, Plans/storage-plan.md:39174-39230",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-596",
@@ -364,6 +368,19 @@
         "line_end": 39669,
         "quote": "Source stages, original owner outcomes, referenced bodies and full-value receipt custody form one\\\n  \\ mandatory coherent backup closure.",
         "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+       },
+       "reanchor": {
+        "method": "exact_normalized",
+        "reason": "Whitespace, line wrapping, YAML quoting/escaping or Markdown escaping only; searched the cited unit.",
+        "unit": "SP-596",
+        "old_quote": "Source stages, original owner outcomes, referenced bodies and full-value receipt custody form one\\\n  \\ mandatory coherent backup closure.",
+        "new_quote": "Source stages, original owner outcomes, referenced bodies and full-value receipt custody form one mandatory coherent backup closure.",
+        "normalizations": [
+         "whitespace/line wrapping",
+         "YAML quoting/escaping",
+         "Markdown escaping"
+        ],
+        "owner_change_commit": "MERGE2-FIX3 uncommitted owner correction; final commit recorded in REPORT.md"
        }
       }
      ],
@@ -382,12 +399,12 @@
       {
        "path": "Plans/Contracts_V0.md",
        "unit": "CV-616",
-       "line_start": 35019,
-       "line_end": 35019,
+       "line_start": 35037,
+       "line_end": 35037,
        "quote": "For worktree.deleted alone, the explicit lifecycle transition is",
        "quote_check": "exact",
-       "quote_scope": "unit CV-616, Plans/Contracts_V0.md:35008-35049",
-       "file_sha256": "2a9090efcaefbc3b0e85c2155255e078125e4d05a933e115ca931c6566b8b74b",
+       "quote_scope": "unit CV-616, Plans/Contracts_V0.md:35026-35069",
+       "file_sha256": "405f917ed143e5aefbcee55513fcdf1b11fa61f0dce5d9f164ad6e44ddf078ce",
        "source_citation": {
         "path": "Plans/Contracts_V0.md",
         "unit": "CV-616",
@@ -413,12 +430,12 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-596",
-       "line_start": 39676,
-       "line_end": 39677,
-       "quote": "For worktree.deleted alone, its SP-278/DL-076\\\n  \\ checkpoint",
-       "file_sha256": "51edc1394ab24ca53a2a021dce3c3c9a1be0f43e2292d901ad56e4b0063a3ebf",
+       "line_start": 39184,
+       "line_end": 39184,
+       "quote": "For worktree.deleted alone, its SP-278/DL-076 checkpoint",
+       "file_sha256": "a80ebad269f3f3a87c644ee23b21cdd62ef64ccad2fbe4377e8bd190614fdf31",
        "quote_check": "exact",
-       "quote_scope": "unit SP-596, Plans/storage-plan.md:39585-39779",
+       "quote_scope": "unit SP-596, Plans/storage-plan.md:39174-39230",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-596",
@@ -426,6 +443,19 @@
         "line_end": 39676,
         "quote": "For worktree.deleted alone, its SP-278/DL-076\\\n  \\ checkpoint",
         "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+       },
+       "reanchor": {
+        "method": "exact_normalized",
+        "reason": "Whitespace, line wrapping, YAML quoting/escaping or Markdown escaping only; searched the cited unit.",
+        "unit": "SP-596",
+        "old_quote": "For worktree.deleted alone, its SP-278/DL-076\\\n  \\ checkpoint",
+        "new_quote": "For worktree.deleted alone, its SP-278/DL-076 checkpoint",
+        "normalizations": [
+         "whitespace/line wrapping",
+         "YAML quoting/escaping",
+         "Markdown escaping"
+        ],
+        "owner_change_commit": "MERGE2-FIX3 uncommitted owner correction; final commit recorded in REPORT.md"
        }
       },
       {
@@ -462,12 +492,12 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-596",
-       "line_start": 39628,
-       "line_end": 39629,
-       "quote": "Withdrawal first cuts off this family's\\\n  \\ append admission",
-       "file_sha256": "51edc1394ab24ca53a2a021dce3c3c9a1be0f43e2292d901ad56e4b0063a3ebf",
+       "line_start": 39182,
+       "line_end": 39182,
+       "quote": "Withdrawal first cuts off this family's append admission",
+       "file_sha256": "a80ebad269f3f3a87c644ee23b21cdd62ef64ccad2fbe4377e8bd190614fdf31",
        "quote_check": "exact",
-       "quote_scope": "unit SP-596, Plans/storage-plan.md:39585-39779",
+       "quote_scope": "unit SP-596, Plans/storage-plan.md:39174-39230",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-596",
@@ -475,6 +505,19 @@
         "line_end": 39628,
         "quote": "Withdrawal first cuts off this family's\\\n  \\ append admission",
         "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+       },
+       "reanchor": {
+        "method": "exact_normalized",
+        "reason": "Whitespace, line wrapping, YAML quoting/escaping or Markdown escaping only; searched the cited unit.",
+        "unit": "SP-596",
+        "old_quote": "Withdrawal first cuts off this family's\\\n  \\ append admission",
+        "new_quote": "Withdrawal first cuts off this family's append admission",
+        "normalizations": [
+         "whitespace/line wrapping",
+         "YAML quoting/escaping",
+         "Markdown escaping"
+        ],
+        "owner_change_commit": "MERGE2-FIX3 uncommitted owner correction; final commit recorded in REPORT.md"
        }
       },
       {
@@ -498,12 +541,12 @@
       {
        "path": "Plans/Contracts_V0.md",
        "unit": "CV-616",
-       "line_start": 35022,
-       "line_end": 35022,
+       "line_start": 35040,
+       "line_end": 35040,
        "quote": "For worktree.deleted alone, the shared CV-1100, SP-1100, SP-1101 and CV-1101 owner units apply",
        "quote_check": "exact",
-       "quote_scope": "unit CV-616, Plans/Contracts_V0.md:35008-35049",
-       "file_sha256": "2a9090efcaefbc3b0e85c2155255e078125e4d05a933e115ca931c6566b8b74b",
+       "quote_scope": "unit CV-616, Plans/Contracts_V0.md:35026-35069",
+       "file_sha256": "405f917ed143e5aefbcee55513fcdf1b11fa61f0dce5d9f164ad6e44ddf078ce",
        "source_citation": {
         "path": "Plans/Contracts_V0.md",
         "unit": "CV-616",
@@ -564,14 +607,14 @@
        "json_pointer": "#/families/16"
       },
       {
-       "line_end": 39707,
-       "line_start": 39706,
+       "line_end": 39186,
+       "line_start": 39186,
        "path": "Plans/storage-plan.md",
-       "quote": "For worktree.deleted, boolean authority/context\\\n  \\ flags are exact booleans",
+       "quote": "For worktree.deleted, boolean authority/context flags are exact booleans",
        "unit": "SP-596",
-       "file_sha256": "51edc1394ab24ca53a2a021dce3c3c9a1be0f43e2292d901ad56e4b0063a3ebf",
+       "file_sha256": "a80ebad269f3f3a87c644ee23b21cdd62ef64ccad2fbe4377e8bd190614fdf31",
        "quote_check": "exact",
-       "quote_scope": "unit SP-596, Plans/storage-plan.md:39585-39779",
+       "quote_scope": "unit SP-596, Plans/storage-plan.md:39174-39230",
        "source_citation": {
         "line_end": 39706,
         "line_start": 39705,
@@ -579,6 +622,19 @@
         "quote": "For worktree.deleted, boolean authority/context\\\n  \\ flags are exact booleans",
         "unit": "SP-596",
         "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+       },
+       "reanchor": {
+        "method": "exact_normalized",
+        "reason": "Whitespace, line wrapping, YAML quoting/escaping or Markdown escaping only; searched the cited unit.",
+        "unit": "SP-596",
+        "old_quote": "For worktree.deleted, boolean authority/context\\\n  \\ flags are exact booleans",
+        "new_quote": "For worktree.deleted, boolean authority/context flags are exact booleans",
+        "normalizations": [
+         "whitespace/line wrapping",
+         "YAML quoting/escaping",
+         "Markdown escaping"
+        ],
+        "owner_change_commit": "MERGE2-FIX3 uncommitted owner correction; final commit recorded in REPORT.md"
        }
       },
       {
@@ -708,9 +764,9 @@
   "row_pointer": "#/families/516"
  },
  "evidence_maintenance": {
-  "authority": "MERGE2-FIX2 findings 1/2/3",
-  "source_commit": "0f2a90ece55d4bafd163b19a05cd3c4eda91b9c1",
-  "source_assessment_sha256": "8ecdbdf1da151c81fd678b1f70cca9147d350bd82602e83a8efbbf8daa47c216",
+  "authority": "MERGE2-FIX3 items 1/2/3/4",
+  "source_commit": "dfea17a6c44205c69598882b0305b0cbeab1a3e8",
+  "source_assessment_sha256": "400392aaa2fab52b0cfbf6f3049de67dda7422b114f49a9df1a570863485c1d4",
   "native_execution": "NOT_RUN",
   "verdicts_changed": false
  }

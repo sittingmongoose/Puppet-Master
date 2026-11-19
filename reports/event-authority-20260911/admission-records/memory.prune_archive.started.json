@@ -4,7 +4,7 @@
  "family_id": "event-family-memory-prune-archive-started",
  "implementation_receipt_sha256": "dceb7f21436cbe126c23822e62caa1b6dedcb45fefae3005c1804576ca34d827",
  "decision_ref": "Plans/Decision_Log.md#DL-2334",
- "decision_section_sha256": "e11d1ad177a2b418724c4a8ad0ad0017519f6550bbd622f52a082548089496b8",
+ "decision_section_sha256": "72048d33b44d85192ad5933bc99b33c2b1b41ef08d0228a3240a110b11111342",
  "registry_before": {
   "revision": "2026-11-16.197",
   "sha256": "a518084eb4de997795b8a1df403d9f86cd6d422e2d7c377f2367fa81181ca84d",
@@ -18,7 +18,7 @@
  "registry_row_sha256": "e1b25ca591dd023f034863caa2a8ce121f77238757c6cb17c8afac9a7be09479",
  "depth_assessment": {
   "path": "reports/event-authority-20261116/admission-merge-2/depth/memory.prune_archive.started.json",
-  "sha256": "ce2030438eb897ea4b6bdcf0fa25c5efd114f891d04df5a202b4a21dad5fabb9"
+  "sha256": "912e8131ce3bff48abb84efbcd87c7f6e1862a51e8f5712874b8004ef196cb66"
  },
  "admission_landing": {
   "branch": "plans/ea-merge2-apply-20261116",
@@ -37,11 +37,11 @@
   "Written under DL-077. The seal check recomputes completeness from the pinned assessment; the two fields ending in _at_recording are informational only."
  ],
  "evidence_maintenance": {
-  "authority": "MERGE2-FIX2",
-  "source_commit": "0f2a90ece55d4bafd163b19a05cd3c4eda91b9c1",
-  "source_record_sha256": "e61d79b46cff38f4b9c9ef7c838e3f5bf8ddebe61dbf1feaa50d06389a0bb153",
-  "source_assessment_sha256": "adc6b4071a1cd825e8210457bf6ca4c6b4eb7944851eaf001efb9491c211605a",
-  "source_decision_section_sha256": "95479d85ec661e8af5028109b34fd5d062f0a4168e0e382b96d820a2dce32325",
+  "authority": "MERGE2-FIX3",
+  "source_commit": "dfea17a6c44205c69598882b0305b0cbeab1a3e8",
+  "source_record_sha256": "2ac0dce53d4432736e7a736000c4ffae647f853f859d31f0a9c26daec6978742",
+  "source_assessment_sha256": "9091e53d75da542c7e26c60a48d4d3013ce95cd820e8c7c5c6bca5d770bd1804",
+  "source_decision_section_sha256": "e11d1ad177a2b418724c4a8ad0ad0017519f6550bbd622f52a082548089496b8",
   "original_registry_checkpoints_preserved": true
  },
  "registry_row_correction": {

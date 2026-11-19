@@ -90,13 +90,13 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-672",
-       "line_start": 36546,
-       "line_end": 36546,
+       "line_start": 36565,
+       "line_end": 36565,
        "quote": "The sole producer `handlers::persona::select` authenticates the selected command input/result and actual home/reach/CAS/permission/Stop generations before effect and immediately before append. Separat",
        "excerpt_sha256": "da04ee3ab0c8f238b15dcf739d1eb03e9eaf7c5d175dce6f2acc2fde85e58983",
-       "file_sha256": "51edc1394ab24ca53a2a021dce3c3c9a1be0f43e2292d901ad56e4b0063a3ebf",
+       "file_sha256": "a80ebad269f3f3a87c644ee23b21cdd62ef64ccad2fbe4377e8bd190614fdf31",
        "quote_check": "exact",
-       "quote_scope": "unit SP-672, Plans/storage-plan.md:36315-36588",
+       "quote_scope": "unit SP-672, Plans/storage-plan.md:36315-36607",
        "excerpt_digest_convention": "literal_quote",
        "source_citation": {
         "path": "Plans/storage-plan.md",
@@ -111,13 +111,13 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-672",
-       "line_start": 36555,
-       "line_end": 36555,
+       "line_start": 36574,
+       "line_end": 36574,
        "quote": "`persona.selected` explicitly adopts **SP-286**, **CV-339**, **SP-291** full-value v2 first-AppendReceipt custody and **SP-336** current sync/barrier rules. Source result/body/readback precedes observ",
        "excerpt_sha256": "a4a84d469239a1b35d582980e7eff45354552a5ca35344172b36bf27530fef4d",
-       "file_sha256": "51edc1394ab24ca53a2a021dce3c3c9a1be0f43e2292d901ad56e4b0063a3ebf",
+       "file_sha256": "a80ebad269f3f3a87c644ee23b21cdd62ef64ccad2fbe4377e8bd190614fdf31",
        "quote_check": "exact",
-       "quote_scope": "unit SP-672, Plans/storage-plan.md:36315-36588",
+       "quote_scope": "unit SP-672, Plans/storage-plan.md:36315-36607",
        "excerpt_digest_convention": "literal_quote",
        "source_citation": {
         "path": "Plans/storage-plan.md",
@@ -132,13 +132,13 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-672",
-       "line_start": 36553,
-       "line_end": 36553,
+       "line_start": 36572,
+       "line_end": 36572,
        "quote": "For `persona.selected`, the newly authored physical operation binding measures the complete canonical MessagePack value, independently of EventRecord body size. The closed `persona_selected_operation`",
        "excerpt_sha256": "678bc352192a7dcb1fb9f07d633c13bb5f41774dfb2787ea5d0752d2a0fac674",
-       "file_sha256": "51edc1394ab24ca53a2a021dce3c3c9a1be0f43e2292d901ad56e4b0063a3ebf",
+       "file_sha256": "a80ebad269f3f3a87c644ee23b21cdd62ef64ccad2fbe4377e8bd190614fdf31",
        "quote_check": "exact",
-       "quote_scope": "unit SP-672, Plans/storage-plan.md:36315-36588",
+       "quote_scope": "unit SP-672, Plans/storage-plan.md:36315-36607",
        "excerpt_digest_convention": "literal_quote",
        "source_citation": {
         "path": "Plans/storage-plan.md",
@@ -264,13 +264,13 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-672",
-       "line_start": 36456,
-       "line_end": 36456,
+       "line_start": 36475,
+       "line_end": 36475,
        "quote": "application@1:{hex(server_id)}:{hex(owner_operation_id)}",
        "excerpt_sha256": "f021b441a447da8dc6d75d05b73da15284e77fb8544fd86b7d77fb6639093933",
-       "file_sha256": "51edc1394ab24ca53a2a021dce3c3c9a1be0f43e2292d901ad56e4b0063a3ebf",
+       "file_sha256": "a80ebad269f3f3a87c644ee23b21cdd62ef64ccad2fbe4377e8bd190614fdf31",
        "quote_check": "exact",
-       "quote_scope": "unit SP-672, Plans/storage-plan.md:36315-36588",
+       "quote_scope": "unit SP-672, Plans/storage-plan.md:36315-36607",
        "excerpt_digest_convention": "literal_quote",
        "source_citation": {
         "path": "Plans/storage-plan.md",
@@ -340,13 +340,13 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-672",
-       "line_start": 36550,
-       "line_end": 36550,
+       "line_start": 36569,
+       "line_end": 36569,
        "quote": "`persona.selected` selects current-writer `replay_policy=dedupe_by_idempotency_key`",
        "excerpt_sha256": "529b74c3991284a643afd53023cfe230d7dfdd8590961192a678d5817d0dd0f8",
-       "file_sha256": "51edc1394ab24ca53a2a021dce3c3c9a1be0f43e2292d901ad56e4b0063a3ebf",
+       "file_sha256": "a80ebad269f3f3a87c644ee23b21cdd62ef64ccad2fbe4377e8bd190614fdf31",
        "quote_check": "exact",
-       "quote_scope": "unit SP-672, Plans/storage-plan.md:36315-36588",
+       "quote_scope": "unit SP-672, Plans/storage-plan.md:36315-36607",
        "excerpt_digest_convention": "literal_quote",
        "source_citation": {
         "path": "Plans/storage-plan.md",
@@ -458,12 +458,12 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-672",
-       "line_start": 36415,
-       "line_end": 36415,
-       "quote": "\\ history `retention_policy_ref = RP-AUTHORITY-INDEFINITE@1.0.0`, under DL-401, DL-504.\\n\\nUse the existing\\",
+       "line_start": 36450,
+       "line_end": 36450,
+       "quote": "Current selected assignment (2026-11-19): persona.selected@1.0.0 is registered for application_or_project in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2345. Its event history selects RP-AUTHORITY-INDEFINITE@1.0.0; Plans/storage-plan.md#SP-672 owns the event policy's existing anchors, counts, holds and deletion rules. Separate stored-value assignment: persona_created_operation uses RP-CONFIG-CURRENT@1.0.0 under Plans/Decision_Log.md#DL-504; this assigns that stored value, not event history. Separate stored-value assignment: persona_deleted_operation uses RP-CONFIG-CURRENT@1.0.0 under Plans/Decision_Log.md#DL-504; this assigns that stored value, not event history. Separate stored-value assignment: persona_exported_operation uses RP-CONFIG-CURRENT@1.0.0 under Plans/Decision_Log.md#DL-504; this assigns that stored value, not event history. Separate stored-value assignment: persona_imported_operation uses RP-CONFIG-CURRENT@1.0.0 under Plans/Decision_Log.md#DL-504; this assigns that stored value, not event history. Separate stored-value assignment: persona_selected_operation uses RP-CONFIG-CURRENT@1.0.0 under Plans/Decision_Log.md#DL-504; this assigns that stored value, not event history. Separate stored-value assignment: persona_updated_operation uses RP-CONFIG-CURRENT@1.0.0 under Plans/Decision_Log.md#DL-504; this assigns that stored value, not event history. Original sources and coherent backups retain their independent owner policies; the event lifetime is not transferred to them. Current append/publication still requires the exact selected schema/scope, original custody, current permission, receipt and required producer adoption. Actual missing registration or unresolved required custody refuses; native execution remains NOT_RUN. No native adoption, new retention choice or governance seal follows.",
        "quote_check": "exact",
-       "quote_scope": "unit SP-672, Plans/storage-plan.md:36315-36588",
-       "file_sha256": "51edc1394ab24ca53a2a021dce3c3c9a1be0f43e2292d901ad56e4b0063a3ebf",
+       "quote_scope": "unit SP-672, Plans/storage-plan.md:36315-36607",
+       "file_sha256": "a80ebad269f3f3a87c644ee23b21cdd62ef64ccad2fbe4377e8bd190614fdf31",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-672",
@@ -471,6 +471,10 @@
         "line_end": 36415,
         "quote": "\\ history `retention_policy_ref = RP-AUTHORITY-INDEFINITE@1.0.0`, under DL-401, DL-504.\\n\\nUse the existing\\",
         "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+       },
+       "locator_maintenance": {
+        "authority": "MERGE2-FIX3",
+        "reason": "Re-cite the same accepted retention claim at its current exact owner assignment; event and source/checkpoint authority remain separate."
        }
       }
      ],
@@ -489,13 +493,13 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-672",
-       "line_start": 36467,
-       "line_end": 36467,
+       "line_start": 36486,
+       "line_end": 36486,
        "quote": "Custody: the Persona owner keeps original whole definitions, removed-version/source evidence, selected Settings result, frozen runtime snapshot or export/import receipts under existing access and dele",
        "excerpt_sha256": "407f1f904bfa8854613d9f2d481d9f3a4783a61c484a28b01808589222bf6b7a",
-       "file_sha256": "51edc1394ab24ca53a2a021dce3c3c9a1be0f43e2292d901ad56e4b0063a3ebf",
+       "file_sha256": "a80ebad269f3f3a87c644ee23b21cdd62ef64ccad2fbe4377e8bd190614fdf31",
        "quote_check": "exact",
-       "quote_scope": "unit SP-672, Plans/storage-plan.md:36315-36588",
+       "quote_scope": "unit SP-672, Plans/storage-plan.md:36315-36607",
        "excerpt_digest_convention": "literal_quote",
        "source_citation": {
         "path": "Plans/storage-plan.md",
@@ -586,13 +590,13 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-672",
-       "line_start": 36555,
-       "line_end": 36555,
+       "line_start": 36574,
+       "line_end": 36574,
        "quote": "`persona.selected` explicitly adopts **SP-286**, **CV-339**, **SP-291** full-value v2 first-AppendReceipt custody and **SP-336** current sync/barrier rules. Source result/body/readback precedes observ",
        "excerpt_sha256": "a4a84d469239a1b35d582980e7eff45354552a5ca35344172b36bf27530fef4d",
-       "file_sha256": "51edc1394ab24ca53a2a021dce3c3c9a1be0f43e2292d901ad56e4b0063a3ebf",
+       "file_sha256": "a80ebad269f3f3a87c644ee23b21cdd62ef64ccad2fbe4377e8bd190614fdf31",
        "quote_check": "exact",
-       "quote_scope": "unit SP-672, Plans/storage-plan.md:36315-36588",
+       "quote_scope": "unit SP-672, Plans/storage-plan.md:36315-36607",
        "excerpt_digest_convention": "literal_quote",
        "source_citation": {
         "path": "Plans/storage-plan.md",
@@ -620,13 +624,13 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-672",
-       "line_start": 36557,
-       "line_end": 36557,
+       "line_start": 36576,
+       "line_end": 36576,
        "quote": "Consumer **`consumer.persona_selected.history@1.0.0`** serves the existing authenticated Persona command/audit history only. It explicitly adopts **SP-278** using `projector.storage.event_record_index",
        "excerpt_sha256": "19acc4e796e4008d3819201fa04d0f57c48e9157c447bea5517a4c88fe9e43cc",
-       "file_sha256": "51edc1394ab24ca53a2a021dce3c3c9a1be0f43e2292d901ad56e4b0063a3ebf",
+       "file_sha256": "a80ebad269f3f3a87c644ee23b21cdd62ef64ccad2fbe4377e8bd190614fdf31",
        "quote_check": "exact",
-       "quote_scope": "unit SP-672, Plans/storage-plan.md:36315-36588",
+       "quote_scope": "unit SP-672, Plans/storage-plan.md:36315-36607",
        "excerpt_digest_convention": "literal_quote",
        "source_citation": {
         "path": "Plans/storage-plan.md",
@@ -654,13 +658,13 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-672",
-       "line_start": 36469,
-       "line_end": 36469,
+       "line_start": 36488,
+       "line_end": 36488,
        "quote": "Compatibility: current readers accept only this exact supported version and canonical Persona names. Older Project request/result definitions retain their exact historical schema; the explicitly selec",
        "excerpt_sha256": "0e0452804a7a5fbdb04a49d243d43d2492c568442b1656ed7e7fd3c8bc799a08",
-       "file_sha256": "51edc1394ab24ca53a2a021dce3c3c9a1be0f43e2292d901ad56e4b0063a3ebf",
+       "file_sha256": "a80ebad269f3f3a87c644ee23b21cdd62ef64ccad2fbe4377e8bd190614fdf31",
        "quote_check": "exact",
-       "quote_scope": "unit SP-672, Plans/storage-plan.md:36315-36588",
+       "quote_scope": "unit SP-672, Plans/storage-plan.md:36315-36607",
        "excerpt_digest_convention": "literal_quote",
        "source_citation": {
         "path": "Plans/storage-plan.md",
@@ -830,9 +834,9 @@
   "row_pointer": "#/families/427"
  },
  "evidence_maintenance": {
-  "authority": "MERGE2-FIX2 findings 1/2/3",
-  "source_commit": "0f2a90ece55d4bafd163b19a05cd3c4eda91b9c1",
-  "source_assessment_sha256": "7bd4d2f82aa450d794f97eac02d7926dbd95a0351f92dfa5f948913f6b389cd9",
+  "authority": "MERGE2-FIX3 items 1/2/3/4",
+  "source_commit": "dfea17a6c44205c69598882b0305b0cbeab1a3e8",
+  "source_assessment_sha256": "b6ac648d7b93cb164dd606d6f4ee7755ef930e59c74a4fec5b4d4e108a9ba864",
   "native_execution": "NOT_RUN",
   "verdicts_changed": false
  }

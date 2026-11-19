@@ -4,7 +4,7 @@
  "family_id": "event-family-runtime-artifact-screenshot",
  "implementation_receipt_sha256": "dceb7f21436cbe126c23822e62caa1b6dedcb45fefae3005c1804576ca34d827",
  "decision_ref": "Plans/Decision_Log.md#DL-2389",
- "decision_section_sha256": "a2a2311d353c440e80c88d3234e64019e1e8a8eee1ccb069973b9b443685e64f",
+ "decision_section_sha256": "504ea031356deb46ec2a68d3a026338dd7062825ecd8adaae02694ee266bea4f",
  "registry_before": {
   "revision": "2026-11-16.252",
   "sha256": "554c24077f03b324d7266db8ace54c8eb53d5cdbcf29f0625fa5e54e9efdc992",
@@ -18,7 +18,7 @@
  "registry_row_sha256": "3ff7306c11807c3505fcdab5e7e455a730a754eecbffefb4db748b3aaff7a4ec",
  "depth_assessment": {
   "path": "reports/event-authority-20261116/admission-merge-2/depth/runtime_artifact.screenshot.json",
-  "sha256": "21fb40400c1352fc36973b10204304dee134c0e5514f24f0dbd959be6b034f94"
+  "sha256": "4547e16c465dcfeb97e2ca85a0e9b69cf5630564da35792a49da3177ad36df8a"
  },
  "admission_landing": {
   "branch": "plans/ea-merge2-apply-20261116",
@@ -37,11 +37,11 @@
   "Written under DL-077. The seal check recomputes completeness from the pinned assessment; the two fields ending in _at_recording are informational only."
  ],
  "evidence_maintenance": {
-  "authority": "MERGE2-FIX2",
-  "source_commit": "0f2a90ece55d4bafd163b19a05cd3c4eda91b9c1",
-  "source_record_sha256": "c5aee680854c19e4290ebf59e7f59c6995313a6a0898d7410273187e1c567ae1",
-  "source_assessment_sha256": "a5b35f5ab8cd291f06434cdedc055b5b5c4ee523b2c52bf24ee4f4b4a239d8f9",
-  "source_decision_section_sha256": "d486ad4b18e2059de515044380feeeb1ed452e22a2ec561ff532dde13616429f",
+  "authority": "MERGE2-FIX3",
+  "source_commit": "dfea17a6c44205c69598882b0305b0cbeab1a3e8",
+  "source_record_sha256": "95bde3a73cbf64fc59346daf93410e19b1ee9c4e8cf631364628ed64a4ee28d3",
+  "source_assessment_sha256": "b636eab8324147158de676052eb10b953789d700a5b6e464dd967c684d0cfa78",
+  "source_decision_section_sha256": "a2a2311d353c440e80c88d3234e64019e1e8a8eee1ccb069973b9b443685e64f",
   "original_registry_checkpoints_preserved": true
  }
 }

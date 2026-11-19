@@ -266,12 +266,12 @@
       {
        "path": "Plans/Contracts_V0.md",
        "unit": "CV-1415",
-       "line_start": 48734,
-       "line_end": 48734,
-       "quote": "retention_policy_ref=RP-ROUTINE-OBSERVATION-APPLICATION-90D@1.0.0 (DL-454, E-CARDS-3 item 2.a, option A), application editions only, kept 90 days (7,776,000 seconds) from the first successful save that survives a restart, never restarted by retry, reprocessing or restore, in the one separate 2,000,000-entry application allowance app:routine_observation (fail_closed overflow, hold eligible; only ex",
-       "file_sha256": "2a9090efcaefbc3b0e85c2155255e078125e4d05a933e115ca931c6566b8b74b",
+       "line_start": 47124,
+       "line_end": 47124,
+       "quote": "Current selected assignment (2026-11-19): server.connection_state_changed@1.0.0 is registered for application_only in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2400. Its event history selects RP-ROUTINE-OBSERVATION-APPLICATION-90D@1.0.0; Plans/storage-plan.md#SP-1415 owns the event policy's existing anchors, counts, holds and deletion rules. Original sources and coherent backups retain their independent owner policies; the event lifetime is not transferred to them. Current append/publication still requires the exact selected schema/scope, original custody, current permission, receipt and required producer adoption. Actual missing registration or unresolved required custody refuses; native execution remains NOT_RUN. No native adoption, new retention choice or governance seal follows.",
+       "file_sha256": "405f917ed143e5aefbcee55513fcdf1b11fa61f0dce5d9f164ad6e44ddf078ce",
        "quote_check": "exact",
-       "quote_scope": "unit CV-1415, Plans/Contracts_V0.md:48716-48776",
+       "quote_scope": "unit CV-1415, Plans/Contracts_V0.md:47114-47165",
        "source_citation": {
         "path": "Plans/Contracts_V0.md",
         "unit": "CV-1415",
@@ -279,17 +279,21 @@
         "line_end": 49215,
         "quote": "retention_policy_ref=RP-ROUTINE-OBSERVATION-APPLICATION-90D@1.0.0 (DL-454, E-CARDS-3 item 2.a, option A), application editions only, kept 90 days (7,776,000 seconds) from the first successful save that survives a restart, never restarted by retry, reprocessing or restore, in the one separate 2,000,000-entry application allowance app:routine_observation (fail_closed overflow, hold eligible; only ex",
         "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a"
+       },
+       "locator_maintenance": {
+        "authority": "MERGE2-FIX3",
+        "reason": "Re-cite the same accepted retention claim at its current exact owner assignment; event and source/checkpoint authority remain separate."
        }
       },
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-1415",
-       "line_start": 70822,
-       "line_end": 70822,
+       "line_start": 64049,
+       "line_end": 64049,
        "quote": "retention_policy_ref=RP-ROUTINE-OBSERVATION-APPLICATION-90D@1.0.0 (DL-454, E-CARDS-3 item 2.a, option A), application editions only, kept 90 days (7,776,000 seconds) from the first successful save that survives a restart, never restarted by retry, reprocessing or restore, in the one separate 2,000,000-entry application allowance app:routine_observation (fail_closed overflow, hold eligible; only ex",
-       "file_sha256": "51edc1394ab24ca53a2a021dce3c3c9a1be0f43e2292d901ad56e4b0063a3ebf",
+       "file_sha256": "a80ebad269f3f3a87c644ee23b21cdd62ef64ccad2fbe4377e8bd190614fdf31",
        "quote_check": "exact",
-       "quote_scope": "unit SP-1415, Plans/storage-plan.md:70812-70899",
+       "quote_scope": "unit SP-1415, Plans/storage-plan.md:64039-64126",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-1415",
@@ -395,12 +399,12 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-1415",
-       "line_start": 70837,
-       "line_end": 70837,
+       "line_start": 64064,
+       "line_end": 64064,
        "quote": "The exact checkpoint in derived redb checkpoints is w3e_server_connection_state_changed_checkpoint.v1:{hex(storage_instance_id)}:{scope_partition}:{hex(server_id)}",
-       "file_sha256": "51edc1394ab24ca53a2a021dce3c3c9a1be0f43e2292d901ad56e4b0063a3ebf",
+       "file_sha256": "a80ebad269f3f3a87c644ee23b21cdd62ef64ccad2fbe4377e8bd190614fdf31",
        "quote_check": "exact",
-       "quote_scope": "unit SP-1415, Plans/storage-plan.md:70812-70899",
+       "quote_scope": "unit SP-1415, Plans/storage-plan.md:64039-64126",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-1415",
@@ -457,12 +461,12 @@
       {
        "path": "Plans/Contracts_V0.md",
        "unit": "CV-1415",
-       "line_start": 48734,
-       "line_end": 48734,
+       "line_start": 47122,
+       "line_end": 47122,
        "quote": "Phase 2 (2026-11-13) runs the executable synthetic oracles of this family in scripts/pm_w3e_event_oracles.py; every refusal is one named single-predicate row of a generated Method B guard table (scripts/pm_w3e_table_*.py) proved by the gated shared scripts/pm_guard_isolation.py through scripts/pm-w3e-guard-proof.py, and rows no input can refuse first stay alone in their own table with a written pr",
-       "file_sha256": "2a9090efcaefbc3b0e85c2155255e078125e4d05a933e115ca931c6566b8b74b",
+       "file_sha256": "405f917ed143e5aefbcee55513fcdf1b11fa61f0dce5d9f164ad6e44ddf078ce",
        "quote_check": "exact",
-       "quote_scope": "unit CV-1415, Plans/Contracts_V0.md:48716-48776",
+       "quote_scope": "unit CV-1415, Plans/Contracts_V0.md:47114-47165",
        "source_citation": {
         "path": "Plans/Contracts_V0.md",
         "unit": "CV-1415",
@@ -603,9 +607,9 @@
   "row_pointer": "#/families/482"
  },
  "evidence_maintenance": {
-  "authority": "MERGE2-FIX2 findings 1/2/3",
-  "source_commit": "0f2a90ece55d4bafd163b19a05cd3c4eda91b9c1",
-  "source_assessment_sha256": "5b038e3d4a6e9801310fba9580d777ac4d2b1f84114481b62e3100d0532d37ca",
+  "authority": "MERGE2-FIX3 items 1/2/3/4",
+  "source_commit": "dfea17a6c44205c69598882b0305b0cbeab1a3e8",
+  "source_assessment_sha256": "fe9a48d0d5e440a7b8f4913fbe78652098298ad4eeb9198193ed30def8c5a518",
   "native_execution": "NOT_RUN",
   "verdicts_changed": false
  }

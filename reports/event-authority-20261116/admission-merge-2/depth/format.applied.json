@@ -59,9 +59,9 @@
        "line_start": 1109,
        "line_end": 1109,
        "quote": "format.applied 1.0.0 — newly authored owner contract under DL-045.",
-       "file_sha256": "a5b8d1fa08e51f209ab34c9d21b917e4fa19ada79a407bdc65442bb89b7cc8b7",
+       "file_sha256": "6a6097c9805cd393e2e5a094aa4c3916d62d0ff6e736972ce8250564f00f5d37",
        "quote_check": "exact",
-       "quote_scope": "unit FS-075, Plans/Formatters_System.md:1109-1160",
+       "quote_scope": "unit FS-075, Plans/Formatters_System.md:1109-1162",
        "source_citation": {
         "path": "Plans/Formatters_System.md",
         "unit": "FS-075",
@@ -90,9 +90,9 @@
        "line_start": 1121,
        "line_end": 1121,
        "quote": "Adopt SP-286 first-AppendReceipt custody and CV-339 full-value v2 successor by name, including SP-336/SP-347 current group-commit rules. Validate admission before append; absent membership, unresolved",
-       "file_sha256": "a5b8d1fa08e51f209ab34c9d21b917e4fa19ada79a407bdc65442bb89b7cc8b7",
+       "file_sha256": "6a6097c9805cd393e2e5a094aa4c3916d62d0ff6e736972ce8250564f00f5d37",
        "quote_check": "exact",
-       "quote_scope": "unit FS-075, Plans/Formatters_System.md:1109-1160",
+       "quote_scope": "unit FS-075, Plans/Formatters_System.md:1109-1162",
        "source_citation": {
         "path": "Plans/Formatters_System.md",
         "unit": "FS-075",
@@ -139,9 +139,9 @@
        "line_start": 1123,
        "line_end": 1123,
        "quote": "Exact envelope joins for format.applied: actor_ref is the non-empty non-secret actor reference retained by the original HTE write/edit operation from its accepted owner request, never the retrying Cli",
-       "file_sha256": "a5b8d1fa08e51f209ab34c9d21b917e4fa19ada79a407bdc65442bb89b7cc8b7",
+       "file_sha256": "6a6097c9805cd393e2e5a094aa4c3916d62d0ff6e736972ce8250564f00f5d37",
        "quote_check": "exact",
-       "quote_scope": "unit FS-075, Plans/Formatters_System.md:1109-1160",
+       "quote_scope": "unit FS-075, Plans/Formatters_System.md:1109-1162",
        "source_citation": {
         "path": "Plans/Formatters_System.md",
         "unit": "FS-075",
@@ -170,9 +170,9 @@
        "line_start": 1123,
        "line_end": 1123,
        "quote": "Exact envelope joins for format.applied: actor_ref is the non-empty non-secret actor reference retained by the original HTE write/edit operation from its accepted owner request, never the retrying Cli",
-       "file_sha256": "a5b8d1fa08e51f209ab34c9d21b917e4fa19ada79a407bdc65442bb89b7cc8b7",
+       "file_sha256": "6a6097c9805cd393e2e5a094aa4c3916d62d0ff6e736972ce8250564f00f5d37",
        "quote_check": "exact",
-       "quote_scope": "unit FS-075, Plans/Formatters_System.md:1109-1160",
+       "quote_scope": "unit FS-075, Plans/Formatters_System.md:1109-1162",
        "source_citation": {
         "path": "Plans/Formatters_System.md",
         "unit": "FS-075",
@@ -188,9 +188,9 @@
        "line_start": 1122,
        "line_end": 1122,
        "quote": "Identity digest is SHA-256 of UTF-8 compact JSON array [\"format.applied\", \"1.0.0\", storage_instance_id, payload.project_id, payload.operation_id], with ensure_ascii=false, no whitespace and array orde",
-       "file_sha256": "a5b8d1fa08e51f209ab34c9d21b917e4fa19ada79a407bdc65442bb89b7cc8b7",
+       "file_sha256": "6a6097c9805cd393e2e5a094aa4c3916d62d0ff6e736972ce8250564f00f5d37",
        "quote_check": "exact",
-       "quote_scope": "unit FS-075, Plans/Formatters_System.md:1109-1160",
+       "quote_scope": "unit FS-075, Plans/Formatters_System.md:1109-1162",
        "source_citation": {
         "path": "Plans/Formatters_System.md",
         "unit": "FS-075",
@@ -219,9 +219,9 @@
        "line_start": 1122,
        "line_end": 1122,
        "quote": "Identity digest is SHA-256 of UTF-8 compact JSON array [\"format.applied\", \"1.0.0\", storage_instance_id, payload.project_id, payload.operation_id], with ensure_ascii=false, no whitespace and array orde",
-       "file_sha256": "a5b8d1fa08e51f209ab34c9d21b917e4fa19ada79a407bdc65442bb89b7cc8b7",
+       "file_sha256": "6a6097c9805cd393e2e5a094aa4c3916d62d0ff6e736972ce8250564f00f5d37",
        "quote_check": "exact",
-       "quote_scope": "unit FS-075, Plans/Formatters_System.md:1109-1160",
+       "quote_scope": "unit FS-075, Plans/Formatters_System.md:1109-1162",
        "source_citation": {
         "path": "Plans/Formatters_System.md",
         "unit": "FS-075",
@@ -237,9 +237,9 @@
        "line_start": 1131,
        "line_end": 1131,
        "quote": "format.applied append and current retry reject replay_policy=projector_replay_only as replay_only_not_appendable",
-       "file_sha256": "a5b8d1fa08e51f209ab34c9d21b917e4fa19ada79a407bdc65442bb89b7cc8b7",
+       "file_sha256": "6a6097c9805cd393e2e5a094aa4c3916d62d0ff6e736972ce8250564f00f5d37",
        "quote_check": "exact",
-       "quote_scope": "unit FS-075, Plans/Formatters_System.md:1109-1160",
+       "quote_scope": "unit FS-075, Plans/Formatters_System.md:1109-1162",
        "source_citation": {
         "path": "Plans/Formatters_System.md",
         "unit": "FS-075",
@@ -265,12 +265,12 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-600",
-       "line_start": 52651,
-       "line_end": 52651,
-       "quote": "\\ binding for `format.applied` (2026-11-14).\\n\\nEvent history `retention_policy_ref = RP-TELEMETRY-90D@1.0.0`,\\",
+       "line_start": 46175,
+       "line_end": 46175,
+       "quote": "Current selected assignment (2026-11-19): format.applied@1.0.0 is registered for project_only in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2314. Its event history selects RP-TELEMETRY-90D@1.0.0; Plans/storage-plan.md#SP-600 owns the event policy's existing anchors, counts, holds and deletion rules. Original sources and coherent backups retain their independent owner policies; the event lifetime is not transferred to them. Current append/publication still requires the exact selected schema/scope, original custody, current permission, receipt and required producer adoption. Actual missing registration or unresolved required custody refuses; native execution remains NOT_RUN. No native adoption, new retention choice or governance seal follows.",
        "quote_check": "exact",
-       "quote_scope": "unit SP-600, Plans/storage-plan.md:52502-52688",
-       "file_sha256": "51edc1394ab24ca53a2a021dce3c3c9a1be0f43e2292d901ad56e4b0063a3ebf",
+       "quote_scope": "unit SP-600, Plans/storage-plan.md:46136-46203",
+       "file_sha256": "a80ebad269f3f3a87c644ee23b21cdd62ef64ccad2fbe4377e8bd190614fdf31",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-600",
@@ -278,6 +278,10 @@
         "line_end": 52682,
         "quote": "\\ binding for `format.applied` (2026-11-14).\\n\\nEvent history `retention_policy_ref = RP-TELEMETRY-90D@1.0.0`,\\",
         "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+       },
+       "locator_maintenance": {
+        "authority": "MERGE2-FIX3",
+        "reason": "Re-cite the same accepted retention claim at its current exact owner assignment; event and source/checkpoint authority remain separate."
        }
       }
      ],
@@ -299,9 +303,9 @@
        "line_start": 1125,
        "line_end": 1125,
        "quote": "Profile rationale for format.applied: HTE formatter output and formatted body remain behind the two authorized evidence refs; redaction_profile=secret_refs_only is an existing EventRecord value and do",
-       "file_sha256": "a5b8d1fa08e51f209ab34c9d21b917e4fa19ada79a407bdc65442bb89b7cc8b7",
+       "file_sha256": "6a6097c9805cd393e2e5a094aa4c3916d62d0ff6e736972ce8250564f00f5d37",
        "quote_check": "exact",
-       "quote_scope": "unit FS-075, Plans/Formatters_System.md:1109-1160",
+       "quote_scope": "unit FS-075, Plans/Formatters_System.md:1109-1162",
        "source_citation": {
         "path": "Plans/Formatters_System.md",
         "unit": "FS-075",
@@ -317,9 +321,9 @@
        "line_start": 1126,
        "line_end": 1126,
        "quote": "Custody remains with HTE formatter completion adapter and Storage's original seglog/payload owners. Store only bounded metadata and opaque authorized source refs; no transcript, diff body, secrets, pr",
-       "file_sha256": "a5b8d1fa08e51f209ab34c9d21b917e4fa19ada79a407bdc65442bb89b7cc8b7",
+       "file_sha256": "6a6097c9805cd393e2e5a094aa4c3916d62d0ff6e736972ce8250564f00f5d37",
        "quote_check": "exact",
-       "quote_scope": "unit FS-075, Plans/Formatters_System.md:1109-1160",
+       "quote_scope": "unit FS-075, Plans/Formatters_System.md:1109-1162",
        "source_citation": {
         "path": "Plans/Formatters_System.md",
         "unit": "FS-075",
@@ -348,9 +352,9 @@
        "line_start": 1119,
        "line_end": 1119,
        "quote": "Producer: HTE formatter completion adapter. After a successful HTE write/edit formatter changes the tool output beyond whitespace, capture the tool-output and formatted-output evidence refs before pub",
-       "file_sha256": "a5b8d1fa08e51f209ab34c9d21b917e4fa19ada79a407bdc65442bb89b7cc8b7",
+       "file_sha256": "6a6097c9805cd393e2e5a094aa4c3916d62d0ff6e736972ce8250564f00f5d37",
        "quote_check": "exact",
-       "quote_scope": "unit FS-075, Plans/Formatters_System.md:1109-1160",
+       "quote_scope": "unit FS-075, Plans/Formatters_System.md:1109-1162",
        "source_citation": {
         "path": "Plans/Formatters_System.md",
         "unit": "FS-075",
@@ -379,9 +383,9 @@
        "line_start": 1124,
        "line_end": 1124,
        "quote": "Operating consumer reader.evidence.format_applied@1.0.0 uses reader.storage.event_record_index@1.0.0 and projector.storage.event_record_index@1.0.0, explicitly adopting SP-278. It reads this exact eve",
-       "file_sha256": "a5b8d1fa08e51f209ab34c9d21b917e4fa19ada79a407bdc65442bb89b7cc8b7",
+       "file_sha256": "6a6097c9805cd393e2e5a094aa4c3916d62d0ff6e736972ce8250564f00f5d37",
        "quote_check": "exact",
-       "quote_scope": "unit FS-075, Plans/Formatters_System.md:1109-1160",
+       "quote_scope": "unit FS-075, Plans/Formatters_System.md:1109-1162",
        "source_citation": {
         "path": "Plans/Formatters_System.md",
         "unit": "FS-075",
@@ -397,9 +401,9 @@
        "line_start": 1132,
        "line_end": 1132,
        "quote": "Checkpoint identity for format.applied: before atomic rebuild publication, validate the nine-field durable token",
-       "file_sha256": "a5b8d1fa08e51f209ab34c9d21b917e4fa19ada79a407bdc65442bb89b7cc8b7",
+       "file_sha256": "6a6097c9805cd393e2e5a094aa4c3916d62d0ff6e736972ce8250564f00f5d37",
        "quote_check": "exact",
-       "quote_scope": "unit FS-075, Plans/Formatters_System.md:1109-1160",
+       "quote_scope": "unit FS-075, Plans/Formatters_System.md:1109-1162",
        "source_citation": {
         "path": "Plans/Formatters_System.md",
         "unit": "FS-075",
@@ -446,9 +450,9 @@
        "line_start": 1128,
        "line_end": 1128,
        "quote": "Compatibility: only this exact 1.0.0 schema is a current writer candidate. Historical names/bytes remain unchanged; unknown future revisions halt the consumer before advance, never normalize by guesse",
-       "file_sha256": "a5b8d1fa08e51f209ab34c9d21b917e4fa19ada79a407bdc65442bb89b7cc8b7",
+       "file_sha256": "6a6097c9805cd393e2e5a094aa4c3916d62d0ff6e736972ce8250564f00f5d37",
        "quote_check": "exact",
-       "quote_scope": "unit FS-075, Plans/Formatters_System.md:1109-1160",
+       "quote_scope": "unit FS-075, Plans/Formatters_System.md:1109-1162",
        "source_citation": {
         "path": "Plans/Formatters_System.md",
         "unit": "FS-075",
@@ -477,9 +481,9 @@
        "line_start": 1129,
        "line_end": 1129,
        "quote": "Exact-family oracle matrix for format.applied: Plans/small_owner_event_fixtures.json owns its full EventRecord, independent original owner operation/result, original eleven-field receipt and four-fiel",
-       "file_sha256": "a5b8d1fa08e51f209ab34c9d21b917e4fa19ada79a407bdc65442bb89b7cc8b7",
+       "file_sha256": "6a6097c9805cd393e2e5a094aa4c3916d62d0ff6e736972ce8250564f00f5d37",
        "quote_check": "exact",
-       "quote_scope": "unit FS-075, Plans/Formatters_System.md:1109-1160",
+       "quote_scope": "unit FS-075, Plans/Formatters_System.md:1109-1162",
        "source_citation": {
         "path": "Plans/Formatters_System.md",
         "unit": "FS-075",
@@ -513,9 +517,9 @@
        "line_start": 1131,
        "line_end": 1131,
        "quote": "format.applied append and current retry reject replay_policy=projector_replay_only as replay_only_not_appendable",
-       "file_sha256": "a5b8d1fa08e51f209ab34c9d21b917e4fa19ada79a407bdc65442bb89b7cc8b7",
+       "file_sha256": "6a6097c9805cd393e2e5a094aa4c3916d62d0ff6e736972ce8250564f00f5d37",
        "quote_check": "exact",
-       "quote_scope": "unit FS-075, Plans/Formatters_System.md:1109-1160",
+       "quote_scope": "unit FS-075, Plans/Formatters_System.md:1109-1162",
        "source_citation": {
         "path": "Plans/Formatters_System.md",
         "unit": "FS-075",
@@ -531,9 +535,9 @@
        "line_start": 1132,
        "line_end": 1132,
        "quote": "Checkpoint identity for format.applied: before atomic rebuild publication, validate the nine-field durable token",
-       "file_sha256": "a5b8d1fa08e51f209ab34c9d21b917e4fa19ada79a407bdc65442bb89b7cc8b7",
+       "file_sha256": "6a6097c9805cd393e2e5a094aa4c3916d62d0ff6e736972ce8250564f00f5d37",
        "quote_check": "exact",
-       "quote_scope": "unit FS-075, Plans/Formatters_System.md:1109-1160",
+       "quote_scope": "unit FS-075, Plans/Formatters_System.md:1109-1162",
        "source_citation": {
         "path": "Plans/Formatters_System.md",
         "unit": "FS-075",
@@ -796,9 +800,9 @@
   "row_pointer": "#/families/396"
  },
  "evidence_maintenance": {
-  "authority": "MERGE2-FIX2 findings 1/2/3",
-  "source_commit": "0f2a90ece55d4bafd163b19a05cd3c4eda91b9c1",
-  "source_assessment_sha256": "a199e7e653727018af10d4d8cc790e28c624765705d3b1673bd718c66a3bb059",
+  "authority": "MERGE2-FIX3 items 1/2/3/4",
+  "source_commit": "dfea17a6c44205c69598882b0305b0cbeab1a3e8",
+  "source_assessment_sha256": "a13cefe95f56c45d487b752393af79027c72b8be5602ae79648470af6dc017df",
   "native_execution": "NOT_RUN",
   "verdicts_changed": false
  }

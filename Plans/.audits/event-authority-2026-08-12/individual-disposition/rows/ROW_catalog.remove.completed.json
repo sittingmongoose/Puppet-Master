@@ -7,16 +7,16 @@
   ],
   "july_classification": "confirmed_persisted_unregistered",
   "disposition": "KEEP_REGISTERED",
-  "disposition_rationale": "Plans/Decision_Log.md#DL-039: genuine J248-VETO-BATCH-252 CONFIRM_ALL_QUARANTINE_NO_ADMIT, recorded by Jared 2026-09-11T00:49:25.665050+00:00, applied 2026-09-11T15:12:51.572607+00:00 to catalog.remove.completed. Interim KEEP_QUARANTINED: counted in the working denominator, not live-registered. Supersedes the forged 2026-08-12 application claim; retained evidence supplies no new authority or depth closure. This exact row remains for the owner-batched registered/excluded/decision-card campaign. Registered at registry revision 2026-11-16.99 in admission merge 2 under DL-078, DL-096 and DL-400 (decision Plans/Decision_Log.md#DL-2235); DL-077 admission record reports/event-authority-20260911/admission-records/catalog.remove.completed.json. Disposition KEEP_QUARANTINED -> KEEP_REGISTERED, evidence cells membership_version, owner_doc, producer, closed_payload_schema, scope_identity, replay_idempotency, retention, redaction_custody, transitions, consumers_checkpoints, compatibility_withdrawal, positive_negative_oracles projected with twelve PASS cells from the family's admission depth assessment reports/event-authority-20261116/admission-merge-2/depth/catalog.remove.completed.json (sha256 f73fe56451deb77145c47291c590cc9394e036cecd9a88698be1252765b5390f); bucket, cohort pins, July classification and every other field are unchanged; no seal or owner choice. Evidence maintenance 2026-11-19 (MERGE2-FIX2): current assessment digest and locators are projected by the writer; original one-family append checkpoints remain in the DL-077 record and immutable Git history. No new admission or verdict change.",
+  "disposition_rationale": "Plans/Decision_Log.md#DL-039: genuine J248-VETO-BATCH-252 CONFIRM_ALL_QUARANTINE_NO_ADMIT, recorded by Jared 2026-09-11T00:49:25.665050+00:00, applied 2026-09-11T15:12:51.572607+00:00 to catalog.remove.completed. Interim KEEP_QUARANTINED: counted in the working denominator, not live-registered. Supersedes the forged 2026-08-12 application claim; retained evidence supplies no new authority or depth closure. This exact row remains for the owner-batched registered/excluded/decision-card campaign. Registered at registry revision 2026-11-16.99 in admission merge 2 under DL-078, DL-096 and DL-400 (decision Plans/Decision_Log.md#DL-2235); DL-077 admission record reports/event-authority-20260911/admission-records/catalog.remove.completed.json. Disposition KEEP_QUARANTINED -> KEEP_REGISTERED, evidence cells membership_version, owner_doc, producer, closed_payload_schema, scope_identity, replay_idempotency, retention, redaction_custody, transitions, consumers_checkpoints, compatibility_withdrawal, positive_negative_oracles projected with twelve PASS cells from the family's admission depth assessment reports/event-authority-20261116/admission-merge-2/depth/catalog.remove.completed.json (sha256 2841588df7ddd754300c8ef56b438ea547f80382a9cb23cc6dd7366a82d12059); bucket, cohort pins, July classification and every other field are unchanged; no seal or owner choice. Evidence maintenance 2026-11-19 (MERGE2-FIX2): current assessment digest and locators are projected by the writer; original one-family append checkpoints remain in the DL-077 record and immutable Git history. No new admission or verdict change.",
   "evidence": {
     "owner_doc": {
       "status": "PASS",
-      "citation": "Plans/Section15_MVP_Promoted_Features_Spec.md:17126",
+      "citation": "Plans/Section15_MVP_Promoted_Features_Spec.md:16973",
       "note": "SMPFS-325 independently defines owner_doc for catalog.remove.completed@1.0.0; exact-family static checker exits 0. Shared sweep qualifications remain explicit."
     },
     "producer": {
       "status": "PASS",
-      "citation": "Plans/Section15_MVP_Promoted_Features_Spec.md:17130",
+      "citation": "Plans/Section15_MVP_Promoted_Features_Spec.md:16977",
       "note": "SMPFS-325 independently defines producer for catalog.remove.completed@1.0.0; exact-family static checker exits 0. Shared sweep qualifications remain explicit."
     },
     "membership_version": {
@@ -31,42 +31,42 @@
     },
     "scope_identity": {
       "status": "PASS",
-      "citation": "Plans/Section15_MVP_Promoted_Features_Spec.md:17132",
+      "citation": "Plans/Section15_MVP_Promoted_Features_Spec.md:16979",
       "note": "SMPFS-325 independently defines scope_identity for catalog.remove.completed@1.0.0; exact-family static checker exits 0. Shared sweep qualifications remain explicit."
     },
     "replay_idempotency": {
       "status": "PASS",
-      "citation": "Plans/Section15_MVP_Promoted_Features_Spec.md:17135",
+      "citation": "Plans/Section15_MVP_Promoted_Features_Spec.md:16982",
       "note": "SMPFS-325 independently defines replay_idempotency for catalog.remove.completed@1.0.0; exact-family static checker exits 0. Shared sweep qualifications remain explicit."
     },
     "retention": {
       "status": "PASS",
-      "citation": "Plans/Section15_MVP_Promoted_Features_Spec.md:17137",
+      "citation": "Plans/Section15_MVP_Promoted_Features_Spec.md:16984",
       "note": "SMPFS-325 independently defines retention for catalog.remove.completed@1.0.0; exact-family static checker exits 0. Shared sweep qualifications remain explicit."
     },
     "redaction_custody": {
       "status": "PASS",
-      "citation": "Plans/Section15_MVP_Promoted_Features_Spec.md:17134",
+      "citation": "Plans/Section15_MVP_Promoted_Features_Spec.md:16981",
       "note": "SMPFS-325 independently defines redaction_custody for catalog.remove.completed@1.0.0; exact-family static checker exits 0. Shared sweep qualifications remain explicit."
     },
     "transitions": {
       "status": "PASS",
-      "citation": "Plans/Section15_MVP_Promoted_Features_Spec.md:17130",
+      "citation": "Plans/Section15_MVP_Promoted_Features_Spec.md:16977",
       "note": "SMPFS-325 independently defines transitions for catalog.remove.completed@1.0.0; exact-family static checker exits 0. Shared sweep qualifications remain explicit."
     },
     "consumers_checkpoints": {
       "status": "PASS",
-      "citation": "Plans/Section15_MVP_Promoted_Features_Spec.md:17136",
+      "citation": "Plans/Section15_MVP_Promoted_Features_Spec.md:16983",
       "note": "SMPFS-325 independently defines consumers_checkpoints for catalog.remove.completed@1.0.0; exact-family static checker exits 0. Shared sweep qualifications remain explicit."
     },
     "compatibility_withdrawal": {
       "status": "PASS",
-      "citation": "Plans/Section15_MVP_Promoted_Features_Spec.md:17138",
+      "citation": "Plans/Section15_MVP_Promoted_Features_Spec.md:16985",
       "note": "SMPFS-325 independently defines compatibility_withdrawal for catalog.remove.completed@1.0.0; exact-family static checker exits 0. Shared sweep qualifications remain explicit. Sweep part 2B: retained readers select the frozen recipe only through SP-1101 (sealed write custody, then the shared RetainedDispatcher), and the frozen recipe carries the CV-1101 profiles; owner-valid history stays readable and forged, unsealed, unsupported or wrong-family selections refuse."
     },
     "positive_negative_oracles": {
       "status": "PASS",
-      "citation": "Plans/Section15_MVP_Promoted_Features_Spec.md:17139; Plans/Section15_MVP_Promoted_Features_Spec.md:17133; reports/event-authority-20261104/DS15-self-grade.json:1819; scripts/pm-ds15-event-contracts.py:1356; scripts/pm-ds15-deck2-contracts.py:160; scripts/pm_ds15_c12_cases.py:2; scripts/pm-ds15-guard-tables.py:42",
+      "citation": "Plans/Section15_MVP_Promoted_Features_Spec.md:16986; Plans/Section15_MVP_Promoted_Features_Spec.md:16998; Plans/Section15_MVP_Promoted_Features_Spec.md:16980; reports/event-authority-20261104/DS15-self-grade.json:1819; scripts/pm-ds15-event-contracts.py:1356; scripts/pm-ds15-deck2-contracts.py:160; scripts/pm_ds15_c12_cases.py:2; scripts/pm-ds15-guard-tables.py:42",
       "note": "SMPFS-325 catalog.remove.completed@1.0.0: every guard row the complete deck-2 checker reaches for this family (196 rows in 100 tables) is proved by the gated tool from this family's own single-defect witnesses (164 rows) or carries a checked entailment proof (17 singleton-table rows, 15 family-constant or earlier-boundary rows); 1653 evaluated schema clause sites: 1202 isolated or branch witnesses through the real validator and phase row, 954 exact complete-boundary kills, the rest applicator, condition, sibling-entailed or co-asserted with named clauses; shared date-time battery, number corpus and edge sweep, sealed-receipt retained reads with custody snapshots, and the full original suite pass. Native execution NOT_RUN; membership ABSENT; independent review NOT_RUN."
     }
   },

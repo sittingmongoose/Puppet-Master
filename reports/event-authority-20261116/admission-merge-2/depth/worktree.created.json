@@ -56,12 +56,12 @@
       {
        "path": "Plans/Contracts_V0.md",
        "unit": "CV-615",
-       "line_start": 34974,
-       "line_end": 34974,
+       "line_start": 34990,
+       "line_end": 34990,
        "quote": "Newly authored owner contract under DL-045 for worktree.created@1.0.0 only",
        "quote_check": "exact",
-       "quote_scope": "unit CV-615, Plans/Contracts_V0.md:34966-35007",
-       "file_sha256": "2a9090efcaefbc3b0e85c2155255e078125e4d05a933e115ca931c6566b8b74b",
+       "quote_scope": "unit CV-615, Plans/Contracts_V0.md:34982-35025",
+       "file_sha256": "405f917ed143e5aefbcee55513fcdf1b11fa61f0dce5d9f164ad6e44ddf078ce",
        "source_citation": {
         "path": "Plans/Contracts_V0.md",
         "unit": "CV-615",
@@ -87,12 +87,12 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-595",
-       "line_start": 39446,
-       "line_end": 39447,
-       "quote": "For worktree.created alone, the newly\\\n  \\ authored original-source custody",
-       "file_sha256": "51edc1394ab24ca53a2a021dce3c3c9a1be0f43e2292d901ad56e4b0063a3ebf",
+       "line_start": 39126,
+       "line_end": 39126,
+       "quote": "For worktree.created alone, the newly authored original-source custody",
+       "file_sha256": "a80ebad269f3f3a87c644ee23b21cdd62ef64ccad2fbe4377e8bd190614fdf31",
        "quote_check": "exact",
-       "quote_scope": "unit SP-595, Plans/storage-plan.md:39392-39584",
+       "quote_scope": "unit SP-595, Plans/storage-plan.md:39117-39173",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-595",
@@ -100,6 +100,19 @@
         "line_end": 39446,
         "quote": "For worktree.created alone, the newly\\\n  \\ authored original-source custody",
         "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+       },
+       "reanchor": {
+        "method": "exact_normalized",
+        "reason": "Whitespace, line wrapping, YAML quoting/escaping or Markdown escaping only; searched the cited unit.",
+        "unit": "SP-595",
+        "old_quote": "For worktree.created alone, the newly\\\n  \\ authored original-source custody",
+        "new_quote": "For worktree.created alone, the newly authored original-source custody",
+        "normalizations": [
+         "whitespace/line wrapping",
+         "YAML quoting/escaping",
+         "Markdown escaping"
+        ],
+        "owner_change_commit": "MERGE2-FIX3 uncommitted owner correction; final commit recorded in REPORT.md"
        }
       }
      ],
@@ -173,12 +186,12 @@
       {
        "path": "Plans/Contracts_V0.md",
        "unit": "CV-615",
-       "line_start": 34980,
-       "line_end": 34980,
+       "line_start": 34996,
+       "line_end": 34996,
        "quote": "For worktree.created alone, the shared CV-1100, SP-1100, SP-1101 and CV-1101 owner units apply",
        "quote_check": "exact",
-       "quote_scope": "unit CV-615, Plans/Contracts_V0.md:34966-35007",
-       "file_sha256": "2a9090efcaefbc3b0e85c2155255e078125e4d05a933e115ca931c6566b8b74b",
+       "quote_scope": "unit CV-615, Plans/Contracts_V0.md:34982-35025",
+       "file_sha256": "405f917ed143e5aefbcee55513fcdf1b11fa61f0dce5d9f164ad6e44ddf078ce",
        "source_citation": {
         "path": "Plans/Contracts_V0.md",
         "unit": "CV-615",
@@ -204,12 +217,12 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-595",
-       "line_start": 39500,
-       "line_end": 39500,
+       "line_start": 39128,
+       "line_end": 39128,
        "quote": "For worktree.created alone, source codec",
        "quote_check": "exact",
-       "quote_scope": "unit SP-595, Plans/storage-plan.md:39392-39584",
-       "file_sha256": "51edc1394ab24ca53a2a021dce3c3c9a1be0f43e2292d901ad56e4b0063a3ebf",
+       "quote_scope": "unit SP-595, Plans/storage-plan.md:39117-39173",
+       "file_sha256": "a80ebad269f3f3a87c644ee23b21cdd62ef64ccad2fbe4377e8bd190614fdf31",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-595",
@@ -235,12 +248,12 @@
       {
        "path": "Plans/Contracts_V0.md",
        "unit": "CV-615",
-       "line_start": 34978,
-       "line_end": 34978,
+       "line_start": 34994,
+       "line_end": 34994,
        "quote": "For worktree.created alone, current writer and retry paths refuse",
        "quote_check": "exact",
-       "quote_scope": "unit CV-615, Plans/Contracts_V0.md:34966-35007",
-       "file_sha256": "2a9090efcaefbc3b0e85c2155255e078125e4d05a933e115ca931c6566b8b74b",
+       "quote_scope": "unit CV-615, Plans/Contracts_V0.md:34982-35025",
+       "file_sha256": "405f917ed143e5aefbcee55513fcdf1b11fa61f0dce5d9f164ad6e44ddf078ce",
        "source_citation": {
         "path": "Plans/Contracts_V0.md",
         "unit": "CV-615",
@@ -289,12 +302,12 @@
       {
        "path": "Plans/Contracts_V0.md",
        "unit": "CV-615",
-       "line_start": 34980,
-       "line_end": 34980,
+       "line_start": 34996,
+       "line_end": 34996,
        "quote": "For worktree.created alone, the shared CV-1100, SP-1100, SP-1101 and CV-1101 owner units apply",
        "quote_check": "exact",
-       "quote_scope": "unit CV-615, Plans/Contracts_V0.md:34966-35007",
-       "file_sha256": "2a9090efcaefbc3b0e85c2155255e078125e4d05a933e115ca931c6566b8b74b",
+       "quote_scope": "unit CV-615, Plans/Contracts_V0.md:34982-35025",
+       "file_sha256": "405f917ed143e5aefbcee55513fcdf1b11fa61f0dce5d9f164ad6e44ddf078ce",
        "source_citation": {
         "path": "Plans/Contracts_V0.md",
         "unit": "CV-615",
@@ -320,12 +333,12 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-595",
-       "line_start": 39547,
-       "line_end": 39547,
-       "quote": "\\nEvent history `retention_policy_ref = RP-WORKTREE-TOMBSTONE-365D@1.0.0`, under DL-401, DL-507.\\n\\n\\",
+       "line_start": 39149,
+       "line_end": 39149,
+       "quote": "Current selected assignment (2026-11-19): worktree.created@1.0.0 is registered for project_only in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2433. Its event history selects RP-WORKTREE-TOMBSTONE-365D@1.0.0; Plans/storage-plan.md#SP-595 owns the event policy's existing anchors, counts, holds and deletion rules. Separate stored-value assignment: dt_worktree_created_source uses RP-RUNTIME-365D@1.0.0 under Plans/Decision_Log.md#DL-507; this assigns that stored value, not event history. Separate checkpoint assignment: dt_worktree_created_checkpoint uses RP-PROJECTION-3GEN@1.0.0 under its existing Plans/storage-plan.md#SP-595 contract; checkpoint retention grants no event/source deletion. Original sources and coherent backups retain their independent owner policies; the event lifetime is not transferred to them. Current append/publication still requires the exact selected schema/scope, original custody, current permission, receipt and required producer adoption. Actual missing registration or unresolved required custody refuses; native execution remains NOT_RUN. No native adoption, new retention choice or governance seal follows.",
        "quote_check": "exact",
-       "quote_scope": "unit SP-595, Plans/storage-plan.md:39392-39584",
-       "file_sha256": "51edc1394ab24ca53a2a021dce3c3c9a1be0f43e2292d901ad56e4b0063a3ebf",
+       "quote_scope": "unit SP-595, Plans/storage-plan.md:39117-39173",
+       "file_sha256": "a80ebad269f3f3a87c644ee23b21cdd62ef64ccad2fbe4377e8bd190614fdf31",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-595",
@@ -333,6 +346,10 @@
         "line_end": 39546,
         "quote": "\\nEvent history `retention_policy_ref = RP-WORKTREE-TOMBSTONE-365D@1.0.0`, under DL-401, DL-507.\\n\\n\\",
         "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+       },
+       "locator_maintenance": {
+        "authority": "MERGE2-FIX3",
+        "reason": "Re-cite the same accepted retention claim at its current exact owner assignment; event and source/checkpoint authority remain separate."
        }
       }
      ],
@@ -351,12 +368,12 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-595",
-       "line_start": 39473,
-       "line_end": 39474,
-       "quote": "Source stages, original owner outcomes, referenced\\\n  \\ bodies and full-value receipt custody form one mandatory coherent backup closure.",
-       "file_sha256": "51edc1394ab24ca53a2a021dce3c3c9a1be0f43e2292d901ad56e4b0063a3ebf",
+       "line_start": 39126,
+       "line_end": 39126,
+       "quote": "Source stages, original owner outcomes, referenced bodies and full-value receipt custody form one mandatory coherent backup closure.",
+       "file_sha256": "a80ebad269f3f3a87c644ee23b21cdd62ef64ccad2fbe4377e8bd190614fdf31",
        "quote_check": "exact",
-       "quote_scope": "unit SP-595, Plans/storage-plan.md:39392-39584",
+       "quote_scope": "unit SP-595, Plans/storage-plan.md:39117-39173",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-595",
@@ -364,6 +381,19 @@
         "line_end": 39473,
         "quote": "Source stages, original owner outcomes, referenced\\\n  \\ bodies and full-value receipt custody form one mandatory coherent backup closure.",
         "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+       },
+       "reanchor": {
+        "method": "exact_normalized",
+        "reason": "Whitespace, line wrapping, YAML quoting/escaping or Markdown escaping only; searched the cited unit.",
+        "unit": "SP-595",
+        "old_quote": "Source stages, original owner outcomes, referenced\\\n  \\ bodies and full-value receipt custody form one mandatory coherent backup closure.",
+        "new_quote": "Source stages, original owner outcomes, referenced bodies and full-value receipt custody form one mandatory coherent backup closure.",
+        "normalizations": [
+         "whitespace/line wrapping",
+         "YAML quoting/escaping",
+         "Markdown escaping"
+        ],
+        "owner_change_commit": "MERGE2-FIX3 uncommitted owner correction; final commit recorded in REPORT.md"
        }
       }
      ],
@@ -382,12 +412,12 @@
       {
        "path": "Plans/Contracts_V0.md",
        "unit": "CV-615",
-       "line_start": 34977,
-       "line_end": 34977,
+       "line_start": 34993,
+       "line_end": 34993,
        "quote": "For worktree.created alone, the explicit lifecycle transition is",
        "quote_check": "exact",
-       "quote_scope": "unit CV-615, Plans/Contracts_V0.md:34966-35007",
-       "file_sha256": "2a9090efcaefbc3b0e85c2155255e078125e4d05a933e115ca931c6566b8b74b",
+       "quote_scope": "unit CV-615, Plans/Contracts_V0.md:34982-35025",
+       "file_sha256": "405f917ed143e5aefbcee55513fcdf1b11fa61f0dce5d9f164ad6e44ddf078ce",
        "source_citation": {
         "path": "Plans/Contracts_V0.md",
         "unit": "CV-615",
@@ -413,12 +443,12 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-595",
-       "line_start": 39481,
-       "line_end": 39481,
+       "line_start": 39127,
+       "line_end": 39127,
        "quote": "For worktree.created alone, its SP-278/DL-076 checkpoint",
        "quote_check": "exact",
-       "quote_scope": "unit SP-595, Plans/storage-plan.md:39392-39584",
-       "file_sha256": "51edc1394ab24ca53a2a021dce3c3c9a1be0f43e2292d901ad56e4b0063a3ebf",
+       "quote_scope": "unit SP-595, Plans/storage-plan.md:39117-39173",
+       "file_sha256": "a80ebad269f3f3a87c644ee23b21cdd62ef64ccad2fbe4377e8bd190614fdf31",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-595",
@@ -462,12 +492,12 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-595",
-       "line_start": 39435,
-       "line_end": 39436,
-       "quote": "Withdrawal first cuts off this family's\\\n  \\ append admission",
-       "file_sha256": "51edc1394ab24ca53a2a021dce3c3c9a1be0f43e2292d901ad56e4b0063a3ebf",
+       "line_start": 39125,
+       "line_end": 39125,
+       "quote": "Withdrawal first cuts off this family's append admission",
+       "file_sha256": "a80ebad269f3f3a87c644ee23b21cdd62ef64ccad2fbe4377e8bd190614fdf31",
        "quote_check": "exact",
-       "quote_scope": "unit SP-595, Plans/storage-plan.md:39392-39584",
+       "quote_scope": "unit SP-595, Plans/storage-plan.md:39117-39173",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-595",
@@ -475,6 +505,19 @@
         "line_end": 39435,
         "quote": "Withdrawal first cuts off this family's\\\n  \\ append admission",
         "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+       },
+       "reanchor": {
+        "method": "exact_normalized",
+        "reason": "Whitespace, line wrapping, YAML quoting/escaping or Markdown escaping only; searched the cited unit.",
+        "unit": "SP-595",
+        "old_quote": "Withdrawal first cuts off this family's\\\n  \\ append admission",
+        "new_quote": "Withdrawal first cuts off this family's append admission",
+        "normalizations": [
+         "whitespace/line wrapping",
+         "YAML quoting/escaping",
+         "Markdown escaping"
+        ],
+        "owner_change_commit": "MERGE2-FIX3 uncommitted owner correction; final commit recorded in REPORT.md"
        }
       },
       {
@@ -498,12 +541,12 @@
       {
        "path": "Plans/Contracts_V0.md",
        "unit": "CV-615",
-       "line_start": 34980,
-       "line_end": 34980,
+       "line_start": 34996,
+       "line_end": 34996,
        "quote": "For worktree.created alone, the shared CV-1100, SP-1100, SP-1101 and CV-1101 owner units apply",
        "quote_check": "exact",
-       "quote_scope": "unit CV-615, Plans/Contracts_V0.md:34966-35007",
-       "file_sha256": "2a9090efcaefbc3b0e85c2155255e078125e4d05a933e115ca931c6566b8b74b",
+       "quote_scope": "unit CV-615, Plans/Contracts_V0.md:34982-35025",
+       "file_sha256": "405f917ed143e5aefbcee55513fcdf1b11fa61f0dce5d9f164ad6e44ddf078ce",
        "source_citation": {
         "path": "Plans/Contracts_V0.md",
         "unit": "CV-615",
@@ -564,14 +607,14 @@
        "json_pointer": "#/families/15"
       },
       {
-       "line_end": 39511,
-       "line_start": 39511,
+       "line_end": 39129,
+       "line_start": 39129,
        "path": "Plans/storage-plan.md",
        "quote": "For worktree.created, boolean authority/context flags are exact booleans",
        "unit": "SP-595",
        "quote_check": "exact",
-       "quote_scope": "unit SP-595, Plans/storage-plan.md:39392-39584",
-       "file_sha256": "51edc1394ab24ca53a2a021dce3c3c9a1be0f43e2292d901ad56e4b0063a3ebf",
+       "quote_scope": "unit SP-595, Plans/storage-plan.md:39117-39173",
+       "file_sha256": "a80ebad269f3f3a87c644ee23b21cdd62ef64ccad2fbe4377e8bd190614fdf31",
        "source_citation": {
         "line_end": 39510,
         "line_start": 39510,
@@ -708,9 +751,9 @@
   "row_pointer": "#/families/515"
  },
  "evidence_maintenance": {
-  "authority": "MERGE2-FIX2 findings 1/2/3",
-  "source_commit": "0f2a90ece55d4bafd163b19a05cd3c4eda91b9c1",
-  "source_assessment_sha256": "0947ca33af79f0d01127bbfd2dd41db93234a51b3755c98553f084e322f7f8f5",
+  "authority": "MERGE2-FIX3 items 1/2/3/4",
+  "source_commit": "dfea17a6c44205c69598882b0305b0cbeab1a3e8",
+  "source_assessment_sha256": "11e7d72ab9e2117c48bc3dfbf47b694b03efacbf866d9835790dea2e8bb4f792",
   "native_execution": "NOT_RUN",
   "verdicts_changed": false
  }

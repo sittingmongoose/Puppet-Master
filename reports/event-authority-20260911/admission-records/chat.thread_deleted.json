@@ -4,7 +4,7 @@
  "family_id": "event-family-chat-thread-deleted",
  "implementation_receipt_sha256": "dceb7f21436cbe126c23822e62caa1b6dedcb45fefae3005c1804576ca34d827",
  "decision_ref": "Plans/Decision_Log.md#DL-2243",
- "decision_section_sha256": "c02b75e1acb9cb3d66c401163b29ac640503401c767ea0488ce273bbd12ecc0f",
+ "decision_section_sha256": "edf233777a56b66886f0893211bafd1ad00943cc04d09453d7471c5a356d1eb9",
  "registry_before": {
   "revision": "2026-11-16.106",
   "sha256": "7f42200adb3cde8b0af1d0295b269ee2a6a2b10152a2a18261caa7900d381e7a",
@@ -18,7 +18,7 @@
  "registry_row_sha256": "e4d01e434e04caf46b91cbbd69499c371b62fae458d732bcdde5d5fad9d4e13e",
  "depth_assessment": {
   "path": "reports/event-authority-20261116/admission-merge-2/depth/chat.thread_deleted.json",
-  "sha256": "fa0e1c6a4952169bac67829f95a006a73ccbef550e62c159dc256297116d15df"
+  "sha256": "f5c5561bb2ea17817f7f519417a9c49d02d25cea252aee6a38d87c9b3ec79714"
  },
  "admission_landing": {
   "branch": "plans/ea-merge2-apply-20261116",
@@ -37,11 +37,11 @@
   "Written under DL-077. The seal check recomputes completeness from the pinned assessment; the two fields ending in _at_recording are informational only."
  ],
  "evidence_maintenance": {
-  "authority": "MERGE2-FIX2",
-  "source_commit": "0f2a90ece55d4bafd163b19a05cd3c4eda91b9c1",
-  "source_record_sha256": "4563d8bb9b0b01fe8b40942a85c73e066bb4ccb135f032e4399759cd9138d8dd",
-  "source_assessment_sha256": "9fbacfdc30167a4fc3c6f5f8a2c78f4f31fce0d966668919a133aeb523b52f5b",
-  "source_decision_section_sha256": "44df3f055c29b35fb8064d525745e94aec3c1ed976ae0a7eb57f8d3509737217",
+  "authority": "MERGE2-FIX3",
+  "source_commit": "dfea17a6c44205c69598882b0305b0cbeab1a3e8",
+  "source_record_sha256": "fe0cd6087fcea1e587f6aa121bba4114451850c0afb4cf4e831b571065a592e3",
+  "source_assessment_sha256": "37272ecc71edb0bb9324250928494e490b57ab9274d56eb3d82e1b15544c1b38",
+  "source_decision_section_sha256": "c02b75e1acb9cb3d66c401163b29ac640503401c767ea0488ce273bbd12ecc0f",
   "original_registry_checkpoints_preserved": true
  }
 }

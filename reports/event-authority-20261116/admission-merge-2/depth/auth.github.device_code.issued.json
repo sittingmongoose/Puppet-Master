@@ -90,13 +90,13 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-670",
-       "line_start": 35824,
-       "line_end": 35824,
+       "line_start": 35787,
+       "line_end": 35787,
        "quote": "The sole producer `github_api device-code response handler` first validates actual source/permission/receipt ownership, the closed payload and installed writer/schema/retention admission. Th",
        "excerpt_sha256": "a57d7336efd3b8a72c5ca2a8b23d023d3baa0084fc6c56f66af7b6251418a481",
-       "file_sha256": "51edc1394ab24ca53a2a021dce3c3c9a1be0f43e2292d901ad56e4b0063a3ebf",
+       "file_sha256": "a80ebad269f3f3a87c644ee23b21cdd62ef64ccad2fbe4377e8bd190614fdf31",
        "quote_check": "exact",
-       "quote_scope": "unit SP-670, Plans/storage-plan.md:35677-35914",
+       "quote_scope": "unit SP-670, Plans/storage-plan.md:35626-35877",
        "excerpt_digest_convention": "literal_quote",
        "source_citation": {
         "path": "Plans/storage-plan.md",
@@ -111,13 +111,13 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-670",
-       "line_start": 35831,
-       "line_end": 35831,
+       "line_start": 35794,
+       "line_end": 35794,
        "quote": "For `auth.github.device_code.issued`, the newly authored physical operation binding measures the complete canonical MessagePack value, independently of EventRecord body size. The closed `auth_github_d",
        "excerpt_sha256": "04c71698f2fe0f79a56bd373d75b2b6ced588bb0835079eac381046582850b02",
-       "file_sha256": "51edc1394ab24ca53a2a021dce3c3c9a1be0f43e2292d901ad56e4b0063a3ebf",
+       "file_sha256": "a80ebad269f3f3a87c644ee23b21cdd62ef64ccad2fbe4377e8bd190614fdf31",
        "quote_check": "exact",
-       "quote_scope": "unit SP-670, Plans/storage-plan.md:35677-35914",
+       "quote_scope": "unit SP-670, Plans/storage-plan.md:35626-35877",
        "excerpt_digest_convention": "literal_quote",
        "source_citation": {
         "path": "Plans/storage-plan.md",
@@ -222,13 +222,13 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-670",
-       "line_start": 35803,
-       "line_end": 35803,
+       "line_start": 35812,
+       "line_end": 35812,
        "quote": "application@1:{hex(server_id)}:{hex(owner_operation_id)}",
        "excerpt_sha256": "f021b441a447da8dc6d75d05b73da15284e77fb8544fd86b7d77fb6639093933",
-       "file_sha256": "51edc1394ab24ca53a2a021dce3c3c9a1be0f43e2292d901ad56e4b0063a3ebf",
+       "file_sha256": "a80ebad269f3f3a87c644ee23b21cdd62ef64ccad2fbe4377e8bd190614fdf31",
        "quote_check": "exact",
-       "quote_scope": "unit SP-670, Plans/storage-plan.md:35677-35914",
+       "quote_scope": "unit SP-670, Plans/storage-plan.md:35626-35877",
        "excerpt_digest_convention": "literal_quote",
        "source_citation": {
         "path": "Plans/storage-plan.md",
@@ -298,13 +298,13 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-670",
-       "line_start": 35828,
-       "line_end": 35828,
+       "line_start": 35791,
+       "line_end": 35791,
        "quote": "`auth.github.device_code.issued` selects current-writer `replay_policy=dedupe_by_idempotency_key`",
        "excerpt_sha256": "f49376e9c466003b945cc19189f721cf7766f92114d452fb3a392ccb201e093c",
-       "file_sha256": "51edc1394ab24ca53a2a021dce3c3c9a1be0f43e2292d901ad56e4b0063a3ebf",
+       "file_sha256": "a80ebad269f3f3a87c644ee23b21cdd62ef64ccad2fbe4377e8bd190614fdf31",
        "quote_check": "exact",
-       "quote_scope": "unit SP-670, Plans/storage-plan.md:35677-35914",
+       "quote_scope": "unit SP-670, Plans/storage-plan.md:35626-35877",
        "excerpt_digest_convention": "literal_quote",
        "source_citation": {
         "path": "Plans/storage-plan.md",
@@ -416,12 +416,12 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-670",
-       "line_start": 35760,
-       "line_end": 35760,
-       "quote": "\\ binding for `auth.github.token.polling` (2026-11-14).\\n\\nEvent history `retention_policy_ref = RP-OPERATIONAL-2555D@1.0.0`,\\",
+       "line_start": 35738,
+       "line_end": 35738,
+       "quote": "Current selected assignment (2026-11-19): auth.github.device_code.issued@1.0.0 is registered for application_only in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2146. Its event history selects RP-OPERATIONAL-SECURITY-APPLICATION-2555D@1.0.0; Plans/storage-plan.md#SP-670 owns the event policy's existing anchors, counts, holds and deletion rules. Separate stored-value assignment: auth_github_authenticated_operation uses RP-OPERATIONAL-SECURITY-APPLICATION-2555D@1.0.0 under Plans/Decision_Log.md#DL-502; this assigns that stored value, not event history. Separate stored-value assignment: auth_github_device_code_issued_operation uses RP-OPERATIONAL-SECURITY-APPLICATION-2555D@1.0.0 under Plans/Decision_Log.md#DL-502; this assigns that stored value, not event history. Separate stored-value assignment: auth_github_disconnected_operation uses RP-OPERATIONAL-SECURITY-APPLICATION-2555D@1.0.0 under Plans/Decision_Log.md#DL-502; this assigns that stored value, not event history. Separate stored-value assignment: auth_github_failed_operation uses RP-OPERATIONAL-SECURITY-APPLICATION-2555D@1.0.0 under Plans/Decision_Log.md#DL-502; this assigns that stored value, not event history. Separate stored-value assignment: auth_github_token_polling_operation uses RP-OPERATIONAL-SECURITY-APPLICATION-2555D@1.0.0 under Plans/Decision_Log.md#DL-502; this assigns that stored value, not event history. Original sources and coherent backups retain their independent owner policies; the event lifetime is not transferred to them. Current append/publication still requires the exact selected schema/scope, original custody, current permission, receipt and required producer adoption. Actual missing registration or unresolved required custody refuses; native execution remains NOT_RUN. No native adoption, new retention choice or governance seal follows.",
        "quote_check": "exact",
-       "quote_scope": "unit SP-670, Plans/storage-plan.md:35677-35914",
-       "file_sha256": "51edc1394ab24ca53a2a021dce3c3c9a1be0f43e2292d901ad56e4b0063a3ebf",
+       "quote_scope": "unit SP-670, Plans/storage-plan.md:35626-35877",
+       "file_sha256": "a80ebad269f3f3a87c644ee23b21cdd62ef64ccad2fbe4377e8bd190614fdf31",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-670",
@@ -429,17 +429,21 @@
         "line_end": 35760,
         "quote": "\\ binding for `auth.github.token.polling` (2026-11-14).\\n\\nEvent history `retention_policy_ref = RP-OPERATIONAL-2555D@1.0.0`,\\",
         "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+       },
+       "locator_maintenance": {
+        "authority": "MERGE2-FIX3",
+        "reason": "Re-cite the same accepted retention claim at its current exact owner assignment; event and source/checkpoint authority remain separate."
        }
       },
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-670",
-       "line_start": 35772,
-       "line_end": 35772,
-       "quote": "\\ retains `RP-OPERATIONAL-SECURITY-APPLICATION-2555D@1.0.0` under DL-502; this does not assign its referenced\\",
+       "line_start": 35738,
+       "line_end": 35738,
+       "quote": "Current selected assignment (2026-11-19): auth.github.device_code.issued@1.0.0 is registered for application_only in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2146. Its event history selects RP-OPERATIONAL-SECURITY-APPLICATION-2555D@1.0.0; Plans/storage-plan.md#SP-670 owns the event policy's existing anchors, counts, holds and deletion rules. Separate stored-value assignment: auth_github_authenticated_operation uses RP-OPERATIONAL-SECURITY-APPLICATION-2555D@1.0.0 under Plans/Decision_Log.md#DL-502; this assigns that stored value, not event history. Separate stored-value assignment: auth_github_device_code_issued_operation uses RP-OPERATIONAL-SECURITY-APPLICATION-2555D@1.0.0 under Plans/Decision_Log.md#DL-502; this assigns that stored value, not event history. Separate stored-value assignment: auth_github_disconnected_operation uses RP-OPERATIONAL-SECURITY-APPLICATION-2555D@1.0.0 under Plans/Decision_Log.md#DL-502; this assigns that stored value, not event history. Separate stored-value assignment: auth_github_failed_operation uses RP-OPERATIONAL-SECURITY-APPLICATION-2555D@1.0.0 under Plans/Decision_Log.md#DL-502; this assigns that stored value, not event history. Separate stored-value assignment: auth_github_token_polling_operation uses RP-OPERATIONAL-SECURITY-APPLICATION-2555D@1.0.0 under Plans/Decision_Log.md#DL-502; this assigns that stored value, not event history. Original sources and coherent backups retain their independent owner policies; the event lifetime is not transferred to them. Current append/publication still requires the exact selected schema/scope, original custody, current permission, receipt and required producer adoption. Actual missing registration or unresolved required custody refuses; native execution remains NOT_RUN. No native adoption, new retention choice or governance seal follows.",
        "quote_check": "exact",
-       "quote_scope": "unit SP-670, Plans/storage-plan.md:35677-35914",
-       "file_sha256": "51edc1394ab24ca53a2a021dce3c3c9a1be0f43e2292d901ad56e4b0063a3ebf",
+       "quote_scope": "unit SP-670, Plans/storage-plan.md:35626-35877",
+       "file_sha256": "a80ebad269f3f3a87c644ee23b21cdd62ef64ccad2fbe4377e8bd190614fdf31",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-670",
@@ -447,6 +451,10 @@
         "line_end": 35772,
         "quote": "\\ retains `RP-OPERATIONAL-SECURITY-APPLICATION-2555D@1.0.0` under DL-502; this does not assign its referenced\\",
         "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+       },
+       "locator_maintenance": {
+        "authority": "MERGE2-FIX3",
+        "reason": "Re-cite the same accepted retention claim at its current exact owner assignment; event and source/checkpoint authority remain separate."
        }
       }
      ],
@@ -465,13 +473,13 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-670",
-       "line_start": 35814,
-       "line_end": 35814,
+       "line_start": 35823,
+       "line_end": 35823,
        "quote": "Custody: the operation record holds only the closed payload, actual actor/scope and original receipt reference. Credential secret custody remains github_api/OS-store only; plugin original re",
        "excerpt_sha256": "aa80c6b160a9250e49c5e912cd520b75dff4581b36a98cebbea3f95bfd629f4e",
-       "file_sha256": "51edc1394ab24ca53a2a021dce3c3c9a1be0f43e2292d901ad56e4b0063a3ebf",
+       "file_sha256": "a80ebad269f3f3a87c644ee23b21cdd62ef64ccad2fbe4377e8bd190614fdf31",
        "quote_check": "exact",
-       "quote_scope": "unit SP-670, Plans/storage-plan.md:35677-35914",
+       "quote_scope": "unit SP-670, Plans/storage-plan.md:35626-35877",
        "excerpt_digest_convention": "literal_quote",
        "source_citation": {
         "path": "Plans/storage-plan.md",
@@ -575,13 +583,13 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-670",
-       "line_start": 35835,
-       "line_end": 35835,
+       "line_start": 35798,
+       "line_end": 35798,
        "quote": "Consumer **`consumer.auth_github_device_code_issued.history@1.0.0`** serves only the existing authenticated GitHub auth health/history reader. It explicitly adopts **SP-278** and reads throu",
        "excerpt_sha256": "0ade01c5e48fb7d5988f8aec705f61793bab7b9b9079e4f984ddffa35090369b",
-       "file_sha256": "51edc1394ab24ca53a2a021dce3c3c9a1be0f43e2292d901ad56e4b0063a3ebf",
+       "file_sha256": "a80ebad269f3f3a87c644ee23b21cdd62ef64ccad2fbe4377e8bd190614fdf31",
        "quote_check": "exact",
-       "quote_scope": "unit SP-670, Plans/storage-plan.md:35677-35914",
+       "quote_scope": "unit SP-670, Plans/storage-plan.md:35626-35877",
        "excerpt_digest_convention": "literal_quote",
        "source_citation": {
         "path": "Plans/storage-plan.md",
@@ -609,13 +617,13 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-670",
-       "line_start": 35816,
-       "line_end": 35816,
+       "line_start": 35825,
+       "line_end": 35825,
        "quote": "Compatibility: no legacy tuple or unversioned sketch can be a native writer; unsupported version quarantines before append/read. A versioned migration must retain original ID/receipt and ver",
        "excerpt_sha256": "ee71b229878797ef387c1f44922417b4202c3cf67fbddac43ca0f064a7c0d439",
-       "file_sha256": "51edc1394ab24ca53a2a021dce3c3c9a1be0f43e2292d901ad56e4b0063a3ebf",
+       "file_sha256": "a80ebad269f3f3a87c644ee23b21cdd62ef64ccad2fbe4377e8bd190614fdf31",
        "quote_check": "exact",
-       "quote_scope": "unit SP-670, Plans/storage-plan.md:35677-35914",
+       "quote_scope": "unit SP-670, Plans/storage-plan.md:35626-35877",
        "excerpt_digest_convention": "literal_quote",
        "source_citation": {
         "path": "Plans/storage-plan.md",
@@ -785,9 +793,9 @@
   "row_pointer": "#/families/228"
  },
  "evidence_maintenance": {
-  "authority": "MERGE2-FIX2 findings 1/2/3",
-  "source_commit": "0f2a90ece55d4bafd163b19a05cd3c4eda91b9c1",
-  "source_assessment_sha256": "b841192fe59c04e33bbdb537ac522817f7990dc95867306c7041e99942d805ef",
+  "authority": "MERGE2-FIX3 items 1/2/3/4",
+  "source_commit": "dfea17a6c44205c69598882b0305b0cbeab1a3e8",
+  "source_assessment_sha256": "adb8622fa342955cb1334ba1ab0764fd2456db64a9488a3f9578cf0b2f68ca1f",
   "native_execution": "NOT_RUN",
   "verdicts_changed": false
  }

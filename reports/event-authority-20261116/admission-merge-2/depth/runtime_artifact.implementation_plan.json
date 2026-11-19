@@ -123,12 +123,12 @@
       {
        "path": "Plans/Contracts_V0.md",
        "unit": "CV-531",
-       "line_start": 41630,
-       "line_end": 41630,
+       "line_start": 40499,
+       "line_end": 40499,
        "quote": "Explicitly adopt SP-337 store-once packs for this family. Newly authored exact dispatch binding under DL-045: encode the unchanged logical payload as RFC 8785 canonical JSON, UTF-8 without B",
        "quote_check": "exact",
-       "quote_scope": "unit CV-531, Plans/Contracts_V0.md:41621-41656",
-       "file_sha256": "2a9090efcaefbc3b0e85c2155255e078125e4d05a933e115ca931c6566b8b74b",
+       "quote_scope": "unit CV-531, Plans/Contracts_V0.md:40490-40525",
+       "file_sha256": "405f917ed143e5aefbcee55513fcdf1b11fa61f0dce5d9f164ad6e44ddf078ce",
        "source_citation": {
         "path": "Plans/Contracts_V0.md",
         "unit": "CV-531",
@@ -154,12 +154,12 @@
       {
        "path": "Plans/Contracts_V0.md",
        "unit": "CV-531",
-       "line_start": 41629,
-       "line_end": 41629,
+       "line_start": 40498,
+       "line_end": 40498,
        "quote": "Payload dispatch prepared for runtime_artifact.implementation_plan@1.0.0 only: Plans/runtime_artifact_implementation_plan.schema.json, schema ID pm.runtime_artifact.implementation_plan.schem",
        "quote_check": "exact",
-       "quote_scope": "unit CV-531, Plans/Contracts_V0.md:41621-41656",
-       "file_sha256": "2a9090efcaefbc3b0e85c2155255e078125e4d05a933e115ca931c6566b8b74b",
+       "quote_scope": "unit CV-531, Plans/Contracts_V0.md:40490-40525",
+       "file_sha256": "405f917ed143e5aefbcee55513fcdf1b11fa61f0dce5d9f164ad6e44ddf078ce",
        "source_citation": {
         "path": "Plans/Contracts_V0.md",
         "unit": "CV-531",
@@ -203,12 +203,12 @@
       {
        "path": "Plans/Contracts_V0.md",
        "unit": "CV-531",
-       "line_start": 41630,
-       "line_end": 41630,
+       "line_start": 40499,
+       "line_end": 40499,
        "quote": "Envelope run_id/attempt_id/thread_id/node_id equal the corresponding payload values or required-present null for absent optional fields; occurred_at_utc equals payload.created_at_utc. actor_",
        "quote_check": "exact",
-       "quote_scope": "unit CV-531, Plans/Contracts_V0.md:41621-41656",
-       "file_sha256": "2a9090efcaefbc3b0e85c2155255e078125e4d05a933e115ca931c6566b8b74b",
+       "quote_scope": "unit CV-531, Plans/Contracts_V0.md:40490-40525",
+       "file_sha256": "405f917ed143e5aefbcee55513fcdf1b11fa61f0dce5d9f164ad6e44ddf078ce",
        "source_citation": {
         "path": "Plans/Contracts_V0.md",
         "unit": "CV-531",
@@ -252,12 +252,12 @@
       {
        "path": "Plans/Contracts_V0.md",
        "unit": "CV-531",
-       "line_start": 41630,
-       "line_end": 41630,
+       "line_start": 40499,
+       "line_end": 40499,
        "quote": "Retries freeze the original payload route/ref/bytes as producer-semantic inputs; no repacking or re-encoding may silently change the original digest or first receipt. Envelope run_id/attempt",
        "quote_check": "exact",
-       "quote_scope": "unit CV-531, Plans/Contracts_V0.md:41621-41656",
-       "file_sha256": "2a9090efcaefbc3b0e85c2155255e078125e4d05a933e115ca931c6566b8b74b",
+       "quote_scope": "unit CV-531, Plans/Contracts_V0.md:40490-40525",
+       "file_sha256": "405f917ed143e5aefbcee55513fcdf1b11fa61f0dce5d9f164ad6e44ddf078ce",
        "source_citation": {
         "path": "Plans/Contracts_V0.md",
         "unit": "CV-531",
@@ -283,12 +283,12 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-531",
-       "line_start": 53800,
-       "line_end": 53800,
+       "line_start": 47189,
+       "line_end": 47189,
        "quote": "The reused event_record_index rows retain RP-EVENT-INDEX-SOURCE, source-coupled to the retained EventRecord, with complete target-generation rebuild/remapping at compaction. Only event_recor",
        "quote_check": "exact",
-       "quote_scope": "unit SP-531, Plans/storage-plan.md:53789-53826",
-       "file_sha256": "51edc1394ab24ca53a2a021dce3c3c9a1be0f43e2292d901ad56e4b0063a3ebf",
+       "quote_scope": "unit SP-531, Plans/storage-plan.md:47178-47215",
+       "file_sha256": "a80ebad269f3f3a87c644ee23b21cdd62ef64ccad2fbe4377e8bd190614fdf31",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-531",
@@ -368,12 +368,12 @@
       {
        "path": "Plans/Contracts_V0.md",
        "unit": "CV-531",
-       "line_start": 41630,
-       "line_end": 41630,
+       "line_start": 40499,
+       "line_end": 40499,
        "quote": "Pack bytes and index are durable before acknowledgement through SP-337's pack-first sync or same-group segment staging/seal protocol. Retained EventRecord references keep the full logical me",
        "quote_check": "exact",
-       "quote_scope": "unit CV-531, Plans/Contracts_V0.md:41621-41656",
-       "file_sha256": "2a9090efcaefbc3b0e85c2155255e078125e4d05a933e115ca931c6566b8b74b",
+       "quote_scope": "unit CV-531, Plans/Contracts_V0.md:40490-40525",
+       "file_sha256": "405f917ed143e5aefbcee55513fcdf1b11fa61f0dce5d9f164ad6e44ddf078ce",
        "source_citation": {
         "path": "Plans/Contracts_V0.md",
         "unit": "CV-531",
@@ -448,12 +448,12 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-531",
-       "line_start": 53798,
-       "line_end": 53798,
+       "line_start": 47187,
+       "line_end": 47187,
        "quote": "The exact physical checkpoint is event_record_index_checkpoint.v1:{storage_instance_id} in the checkpoints table; value pm.storage_value.event_record_index_checkpoint.v1@1.0.0 at Plans/event",
        "quote_check": "exact",
-       "quote_scope": "unit SP-531, Plans/storage-plan.md:53789-53826",
-       "file_sha256": "51edc1394ab24ca53a2a021dce3c3c9a1be0f43e2292d901ad56e4b0063a3ebf",
+       "quote_scope": "unit SP-531, Plans/storage-plan.md:47178-47215",
+       "file_sha256": "a80ebad269f3f3a87c644ee23b21cdd62ef64ccad2fbe4377e8bd190614fdf31",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-531",
@@ -466,12 +466,12 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-531",
-       "line_start": 53799,
-       "line_end": 53799,
+       "line_start": 47188,
+       "line_end": 47188,
        "quote": "The adopted full-index projector advances rows and frontier atomically in one redb transaction with prior-generation/frontier CAS, as SP-278 requires. The live token has ten fields; any dura",
        "quote_check": "exact",
-       "quote_scope": "unit SP-531, Plans/storage-plan.md:53789-53826",
-       "file_sha256": "51edc1394ab24ca53a2a021dce3c3c9a1be0f43e2292d901ad56e4b0063a3ebf",
+       "quote_scope": "unit SP-531, Plans/storage-plan.md:47178-47215",
+       "file_sha256": "a80ebad269f3f3a87c644ee23b21cdd62ef64ccad2fbe4377e8bd190614fdf31",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-531",
@@ -563,14 +563,14 @@
        }
       },
       {
-       "line_end": 53789,
-       "line_start": 53789,
+       "line_end": 47178,
+       "line_start": 47178,
        "path": "Plans/storage-plan.md",
        "quote": "### SP-531 — runtime_artifact.implementation_plan",
        "unit": "SP-531",
        "quote_check": "exact",
-       "quote_scope": "unit SP-531, Plans/storage-plan.md:53789-53826",
-       "file_sha256": "51edc1394ab24ca53a2a021dce3c3c9a1be0f43e2292d901ad56e4b0063a3ebf",
+       "quote_scope": "unit SP-531, Plans/storage-plan.md:47178-47215",
+       "file_sha256": "a80ebad269f3f3a87c644ee23b21cdd62ef64ccad2fbe4377e8bd190614fdf31",
        "source_citation": {
         "line_end": 54326,
         "line_start": 54326,
@@ -581,14 +581,14 @@
        }
       },
       {
-       "line_end": 41621,
-       "line_start": 41621,
+       "line_end": 40490,
+       "line_start": 40490,
        "path": "Plans/Contracts_V0.md",
        "quote": "### CV-531 — runtime_artifact.implementation_plan",
        "unit": "CV-531",
        "quote_check": "exact",
-       "quote_scope": "unit CV-531, Plans/Contracts_V0.md:41621-41656",
-       "file_sha256": "2a9090efcaefbc3b0e85c2155255e078125e4d05a933e115ca931c6566b8b74b",
+       "quote_scope": "unit CV-531, Plans/Contracts_V0.md:40490-40525",
+       "file_sha256": "405f917ed143e5aefbcee55513fcdf1b11fa61f0dce5d9f164ad6e44ddf078ce",
        "source_citation": {
         "line_end": 42102,
         "line_start": 42102,
@@ -887,9 +887,9 @@
   "row_pointer": "#/families/468"
  },
  "evidence_maintenance": {
-  "authority": "MERGE2-FIX2 findings 1/2/3",
-  "source_commit": "0f2a90ece55d4bafd163b19a05cd3c4eda91b9c1",
-  "source_assessment_sha256": "586e3d4dc5c8157c99b87150efa879a0a778b8d982463c3ec118470f5c0087b6",
+  "authority": "MERGE2-FIX3 items 1/2/3/4",
+  "source_commit": "dfea17a6c44205c69598882b0305b0cbeab1a3e8",
+  "source_assessment_sha256": "0c21fcd348d82888daef5b0ec34fd416098c55ca751a0468a027e8b85319f9c1",
   "native_execution": "NOT_RUN",
   "verdicts_changed": false
  }

@@ -4,7 +4,7 @@
  "family_id": "event-family-plugin-tool-registered",
  "implementation_receipt_sha256": "dceb7f21436cbe126c23822e62caa1b6dedcb45fefae3005c1804576ca34d827",
  "decision_ref": "Plans/Decision_Log.md#DL-2355",
- "decision_section_sha256": "5d6c30963fa428664ff96f996073b45f18c613c022429f4246bcfc6afd95f775",
+ "decision_section_sha256": "81df882f2af73e69d7d6959c9a9b715c5cd59cb7a4b908da2d33d8788d5f3305",
  "registry_before": {
   "revision": "2026-11-16.218",
   "sha256": "e0febb5861d44a6c145e92553a0eff1e619e544f84aba97e13e5eba12ee14c1d",
@@ -18,7 +18,7 @@
  "registry_row_sha256": "fb45e6e0f865806b2c61450c8cf4d6e1921b0c8b9974cefaadf45080cfda84f5",
  "depth_assessment": {
   "path": "reports/event-authority-20261116/admission-merge-2/depth/plugin.tool.registered.json",
-  "sha256": "e9264116858461c0e56911d8d985bda6add98b4056035f5f2d3a04c7b8e34b39"
+  "sha256": "c4c7c0aeb91db931556a42ef8ba89ddbc9921a9a7e7dbb04a3ddca8ed529e77f"
  },
  "admission_landing": {
   "branch": "plans/ea-merge2-apply-20261116",
@@ -37,11 +37,11 @@
   "Written under DL-077. The seal check recomputes completeness from the pinned assessment; the two fields ending in _at_recording are informational only."
  ],
  "evidence_maintenance": {
-  "authority": "MERGE2-FIX2",
-  "source_commit": "0f2a90ece55d4bafd163b19a05cd3c4eda91b9c1",
-  "source_record_sha256": "a3667760440d99bca20f9a498b53512e992a53e1d53ff42e54cb5b48db31f636",
-  "source_assessment_sha256": "fd8c49d8b98d2f7863394864b72186838df0e95c1efd7edc1d4fb7f6ca54a6e1",
-  "source_decision_section_sha256": "de98e82b913ef484237374b61cf3e3d81a9625cfdf6f663947b516c7cfb35c60",
+  "authority": "MERGE2-FIX3",
+  "source_commit": "dfea17a6c44205c69598882b0305b0cbeab1a3e8",
+  "source_record_sha256": "11e5cfe2a050abf13c040dd7c278cb2c6555116f4ce881c56de3008745f5f433",
+  "source_assessment_sha256": "8f44cb47d4a77e33eb1273f11829a304797580f361c360397822f03f1a546d53",
+  "source_decision_section_sha256": "5d6c30963fa428664ff96f996073b45f18c613c022429f4246bcfc6afd95f775",
   "original_registry_checkpoints_preserved": true
  }
 }

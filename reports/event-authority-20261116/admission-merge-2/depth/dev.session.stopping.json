@@ -56,12 +56,12 @@
       {
        "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
        "unit": "SMPFS-312",
-       "line_start": 16187,
-       "line_end": 16187,
+       "line_start": 16191,
+       "line_end": 16191,
        "quote": "dev.session.stopping owner contract",
        "quote_check": "exact",
-       "quote_scope": "unit SMPFS-312, Plans/Section15_MVP_Promoted_Features_Spec.md:16187-16244",
-       "file_sha256": "192c7a3ebba02013a6ca5d6db7a1ecc5d019219635dcc3c1388e5e2fcf304f85",
+       "quote_scope": "unit SMPFS-312, Plans/Section15_MVP_Promoted_Features_Spec.md:16191-16250",
+       "file_sha256": "9d3117af7f2245e6ca7d63a1826affaad817bbb2d0a371b7d970cf7453d3a3a9",
        "source_citation": {
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
         "unit": "SMPFS-312",
@@ -87,12 +87,12 @@
       {
        "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
        "unit": "SMPFS-312",
-       "line_start": 16197,
-       "line_end": 16197,
+       "line_start": 16201,
+       "line_end": 16201,
        "quote": "Producer: Section15 managed developer-workflow service accepts cmd.dev.stop_session. Commit the accepted stopping intent from running or restarting with workflow_state stopping and",
        "quote_check": "exact",
-       "quote_scope": "unit SMPFS-312, Plans/Section15_MVP_Promoted_Features_Spec.md:16187-16244",
-       "file_sha256": "192c7a3ebba02013a6ca5d6db7a1ecc5d019219635dcc3c1388e5e2fcf304f85",
+       "quote_scope": "unit SMPFS-312, Plans/Section15_MVP_Promoted_Features_Spec.md:16191-16250",
+       "file_sha256": "9d3117af7f2245e6ca7d63a1826affaad817bbb2d0a371b7d970cf7453d3a3a9",
        "source_citation": {
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
         "unit": "SMPFS-312",
@@ -105,12 +105,12 @@
       {
        "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
        "unit": "SMPFS-312",
-       "line_start": 16210,
-       "line_end": 16210,
+       "line_start": 16214,
+       "line_end": 16214,
        "quote": "Round 7 authenticated history for dev.session.stopping: retained read, checkpoint and rebuild accept supported 1.0.0 originals written with projector_replay_only as well as dedupe_",
        "quote_check": "exact",
-       "quote_scope": "unit SMPFS-312, Plans/Section15_MVP_Promoted_Features_Spec.md:16187-16244",
-       "file_sha256": "192c7a3ebba02013a6ca5d6db7a1ecc5d019219635dcc3c1388e5e2fcf304f85",
+       "quote_scope": "unit SMPFS-312, Plans/Section15_MVP_Promoted_Features_Spec.md:16191-16250",
+       "file_sha256": "9d3117af7f2245e6ca7d63a1826affaad817bbb2d0a371b7d970cf7453d3a3a9",
        "source_citation": {
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
         "unit": "SMPFS-312",
@@ -185,12 +185,12 @@
       {
        "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
        "unit": "SMPFS-312",
-       "line_start": 16199,
-       "line_end": 16199,
+       "line_start": 16203,
+       "line_end": 16203,
        "quote": "Idempotency key is sha256(canonical MessagePack array [\"dev.session.stopping\", \"1.0.0\", actual project_id, dev_session_id, workflow_revision]). Changed bytes at the same identity r",
        "quote_check": "exact",
-       "quote_scope": "unit SMPFS-312, Plans/Section15_MVP_Promoted_Features_Spec.md:16187-16244",
-       "file_sha256": "192c7a3ebba02013a6ca5d6db7a1ecc5d019219635dcc3c1388e5e2fcf304f85",
+       "quote_scope": "unit SMPFS-312, Plans/Section15_MVP_Promoted_Features_Spec.md:16191-16250",
+       "file_sha256": "9d3117af7f2245e6ca7d63a1826affaad817bbb2d0a371b7d970cf7453d3a3a9",
        "source_citation": {
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
         "unit": "SMPFS-312",
@@ -216,12 +216,12 @@
       {
        "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
        "unit": "SMPFS-312",
-       "line_start": 16202,
-       "line_end": 16202,
+       "line_start": 16206,
+       "line_end": 16206,
        "quote": "Replay: lost acknowledgement returns original receipt, event_id and frozen payload; retry uses original outcome custody without repeating capture, thread creation, launch, stop, re",
        "quote_check": "exact",
-       "quote_scope": "unit SMPFS-312, Plans/Section15_MVP_Promoted_Features_Spec.md:16187-16244",
-       "file_sha256": "192c7a3ebba02013a6ca5d6db7a1ecc5d019219635dcc3c1388e5e2fcf304f85",
+       "quote_scope": "unit SMPFS-312, Plans/Section15_MVP_Promoted_Features_Spec.md:16191-16250",
+       "file_sha256": "9d3117af7f2245e6ca7d63a1826affaad817bbb2d0a371b7d970cf7453d3a3a9",
        "source_citation": {
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
         "unit": "SMPFS-312",
@@ -234,12 +234,12 @@
       {
        "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
        "unit": "SMPFS-312",
-       "line_start": 16210,
-       "line_end": 16210,
+       "line_start": 16214,
+       "line_end": 16214,
        "quote": "Round 7 authenticated history for dev.session.stopping: retained read, checkpoint and rebuild accept supported 1.0.0 originals written with projector_replay_only as well as dedupe_",
        "quote_check": "exact",
-       "quote_scope": "unit SMPFS-312, Plans/Section15_MVP_Promoted_Features_Spec.md:16187-16244",
-       "file_sha256": "192c7a3ebba02013a6ca5d6db7a1ecc5d019219635dcc3c1388e5e2fcf304f85",
+       "quote_scope": "unit SMPFS-312, Plans/Section15_MVP_Promoted_Features_Spec.md:16191-16250",
+       "file_sha256": "9d3117af7f2245e6ca7d63a1826affaad817bbb2d0a371b7d970cf7453d3a3a9",
        "source_citation": {
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
         "unit": "SMPFS-312",
@@ -265,12 +265,12 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-649",
-       "line_start": 49330,
-       "line_end": 49330,
-       "quote": "\\ history `retention_policy_ref = RP-TELEMETRY-90D@1.0.0`, under DL-401, DL-415, DL-500.\\n\\nUse the\\",
+       "line_start": 43871,
+       "line_end": 43871,
+       "quote": "Current selected assignment (2026-11-19): dev.session.stopping@1.0.0 is registered for project_only in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2293. Its event history selects RP-TELEMETRY-90D@1.0.0; Plans/storage-plan.md#SP-649 owns the event policy's existing anchors, counts, holds and deletion rules. Separate stored-value assignment: ds15_dev_session_stopping_checkpoint uses RP-PROJECTION-3GEN@1.0.0 under Plans/Decision_Log.md#DL-500; this assigns that stored value, not event history. Separate stored-value assignment: dev_session_record uses RP-DEBUG-30D@1.0.0 under Plans/Decision_Log.md#DL-506; this assigns that stored value, not event history. Separate checkpoint assignment: ds15_dev_session_stopping_checkpoint uses RP-PROJECTION-3GEN@1.0.0 under its existing Plans/storage-plan.md#SP-649 contract; checkpoint retention grants no event/source deletion. Original sources and coherent backups retain their independent owner policies; the event lifetime is not transferred to them. Current append/publication still requires the exact selected schema/scope, original custody, current permission, receipt and required producer adoption. Actual missing registration or unresolved required custody refuses; native execution remains NOT_RUN. No native adoption, new retention choice or governance seal follows.",
        "quote_check": "exact",
-       "quote_scope": "unit SP-649, Plans/storage-plan.md:49309-49373",
-       "file_sha256": "51edc1394ab24ca53a2a021dce3c3c9a1be0f43e2292d901ad56e4b0063a3ebf",
+       "quote_scope": "unit SP-649, Plans/storage-plan.md:43843-43900",
+       "file_sha256": "a80ebad269f3f3a87c644ee23b21cdd62ef64ccad2fbe4377e8bd190614fdf31",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-649",
@@ -278,6 +278,10 @@
         "line_end": 49361,
         "quote": "\\ history `retention_policy_ref = RP-TELEMETRY-90D@1.0.0`, under DL-401, DL-415, DL-500.\\n\\nUse the\\",
         "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+       },
+       "locator_maintenance": {
+        "authority": "MERGE2-FIX3",
+        "reason": "Re-cite the same accepted retention claim at its current exact owner assignment; event and source/checkpoint authority remain separate."
        }
       }
      ],
@@ -296,12 +300,12 @@
       {
        "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
        "unit": "SMPFS-312",
-       "line_start": 16204,
-       "line_end": 16204,
+       "line_start": 16208,
+       "line_end": 16208,
        "quote": "backup/restore of the full original source/log/receipt closure. Checkpoints are derived and grant no access. Every read rechecks current subject/thread/Project permissions and sour",
        "quote_check": "exact",
-       "quote_scope": "unit SMPFS-312, Plans/Section15_MVP_Promoted_Features_Spec.md:16187-16244",
-       "file_sha256": "192c7a3ebba02013a6ca5d6db7a1ecc5d019219635dcc3c1388e5e2fcf304f85",
+       "quote_scope": "unit SMPFS-312, Plans/Section15_MVP_Promoted_Features_Spec.md:16191-16250",
+       "file_sha256": "9d3117af7f2245e6ca7d63a1826affaad817bbb2d0a371b7d970cf7453d3a3a9",
        "source_citation": {
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
         "unit": "SMPFS-312",
@@ -314,12 +318,12 @@
       {
        "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
        "unit": "SMPFS-312",
-       "line_start": 16210,
-       "line_end": 16210,
+       "line_start": 16214,
+       "line_end": 16214,
        "quote": "Round 7 authenticated history for dev.session.stopping: retained read, checkpoint and rebuild accept supported 1.0.0 originals written with projector_replay_only as well as dedupe_",
        "quote_check": "exact",
-       "quote_scope": "unit SMPFS-312, Plans/Section15_MVP_Promoted_Features_Spec.md:16187-16244",
-       "file_sha256": "192c7a3ebba02013a6ca5d6db7a1ecc5d019219635dcc3c1388e5e2fcf304f85",
+       "quote_scope": "unit SMPFS-312, Plans/Section15_MVP_Promoted_Features_Spec.md:16191-16250",
+       "file_sha256": "9d3117af7f2245e6ca7d63a1826affaad817bbb2d0a371b7d970cf7453d3a3a9",
        "source_citation": {
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
         "unit": "SMPFS-312",
@@ -345,12 +349,12 @@
       {
        "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
        "unit": "SMPFS-312",
-       "line_start": 16197,
-       "line_end": 16197,
+       "line_start": 16201,
+       "line_end": 16201,
        "quote": "Producer: Section15 managed developer-workflow service accepts cmd.dev.stop_session. Commit the accepted stopping intent from running or restarting with workflow_state stopping and",
        "quote_check": "exact",
-       "quote_scope": "unit SMPFS-312, Plans/Section15_MVP_Promoted_Features_Spec.md:16187-16244",
-       "file_sha256": "192c7a3ebba02013a6ca5d6db7a1ecc5d019219635dcc3c1388e5e2fcf304f85",
+       "quote_scope": "unit SMPFS-312, Plans/Section15_MVP_Promoted_Features_Spec.md:16191-16250",
+       "file_sha256": "9d3117af7f2245e6ca7d63a1826affaad817bbb2d0a371b7d970cf7453d3a3a9",
        "source_citation": {
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
         "unit": "SMPFS-312",
@@ -376,12 +380,12 @@
       {
        "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
        "unit": "SMPFS-312",
-       "line_start": 16203,
-       "line_end": 16203,
+       "line_start": 16207,
+       "line_end": 16207,
        "quote": "reader.ds15.dev_session_stopping.v1@1.0.0, operating as Developer workflow history reader, reads only dev.session.stopping@1.0.0. It adopts SP-278 by name and DL-076 nine-field dur",
        "quote_check": "exact",
-       "quote_scope": "unit SMPFS-312, Plans/Section15_MVP_Promoted_Features_Spec.md:16187-16244",
-       "file_sha256": "192c7a3ebba02013a6ca5d6db7a1ecc5d019219635dcc3c1388e5e2fcf304f85",
+       "quote_scope": "unit SMPFS-312, Plans/Section15_MVP_Promoted_Features_Spec.md:16191-16250",
+       "file_sha256": "9d3117af7f2245e6ca7d63a1826affaad817bbb2d0a371b7d970cf7453d3a3a9",
        "source_citation": {
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
         "unit": "SMPFS-312",
@@ -394,12 +398,12 @@
       {
        "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
        "unit": "SMPFS-312",
-       "line_start": 16210,
-       "line_end": 16210,
+       "line_start": 16214,
+       "line_end": 16214,
        "quote": "Round 7 authenticated history for dev.session.stopping: retained read, checkpoint and rebuild accept supported 1.0.0 originals written with projector_replay_only as well as dedupe_",
        "quote_check": "exact",
-       "quote_scope": "unit SMPFS-312, Plans/Section15_MVP_Promoted_Features_Spec.md:16187-16244",
-       "file_sha256": "192c7a3ebba02013a6ca5d6db7a1ecc5d019219635dcc3c1388e5e2fcf304f85",
+       "quote_scope": "unit SMPFS-312, Plans/Section15_MVP_Promoted_Features_Spec.md:16191-16250",
+       "file_sha256": "9d3117af7f2245e6ca7d63a1826affaad817bbb2d0a371b7d970cf7453d3a3a9",
        "source_citation": {
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
         "unit": "SMPFS-312",
@@ -425,12 +429,12 @@
       {
        "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
        "unit": "SMPFS-312",
-       "line_start": 16207,
-       "line_end": 16207,
+       "line_start": 16211,
+       "line_end": 16211,
        "quote": "withdrawal: exact 1.0.0 event/reader only; refuse unknown fields/version before effects or checkpoint. No alias or deployed event predecessor is assumed. Value migrations are expli",
        "quote_check": "exact",
-       "quote_scope": "unit SMPFS-312, Plans/Section15_MVP_Promoted_Features_Spec.md:16187-16244",
-       "file_sha256": "192c7a3ebba02013a6ca5d6db7a1ecc5d019219635dcc3c1388e5e2fcf304f85",
+       "quote_scope": "unit SMPFS-312, Plans/Section15_MVP_Promoted_Features_Spec.md:16191-16250",
+       "file_sha256": "9d3117af7f2245e6ca7d63a1826affaad817bbb2d0a371b7d970cf7453d3a3a9",
        "source_citation": {
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
         "unit": "SMPFS-312",
@@ -443,12 +447,12 @@
       {
        "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
        "unit": "SMPFS-312",
-       "line_start": 16210,
-       "line_end": 16210,
+       "line_start": 16214,
+       "line_end": 16214,
        "quote": "Round 7 authenticated history for dev.session.stopping: retained read, checkpoint and rebuild accept supported 1.0.0 originals written with projector_replay_only as well as dedupe_",
        "quote_check": "exact",
-       "quote_scope": "unit SMPFS-312, Plans/Section15_MVP_Promoted_Features_Spec.md:16187-16244",
-       "file_sha256": "192c7a3ebba02013a6ca5d6db7a1ecc5d019219635dcc3c1388e5e2fcf304f85",
+       "quote_scope": "unit SMPFS-312, Plans/Section15_MVP_Promoted_Features_Spec.md:16191-16250",
+       "file_sha256": "9d3117af7f2245e6ca7d63a1826affaad817bbb2d0a371b7d970cf7453d3a3a9",
        "source_citation": {
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
         "unit": "SMPFS-312",
@@ -474,12 +478,12 @@
       {
        "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
        "unit": "SMPFS-312",
-       "line_start": 16208,
-       "line_end": 16208,
+       "line_start": 16212,
+       "line_end": 16212,
        "quote": "Oracles: ATS-328 and exact family cases in Plans/ds15_event_contract_fixtures.json execute via scripts/pm-ds15-event-contracts.py: valid/invalid transition, scope joins, original r",
        "quote_check": "exact",
-       "quote_scope": "unit SMPFS-312, Plans/Section15_MVP_Promoted_Features_Spec.md:16187-16244",
-       "file_sha256": "192c7a3ebba02013a6ca5d6db7a1ecc5d019219635dcc3c1388e5e2fcf304f85",
+       "quote_scope": "unit SMPFS-312, Plans/Section15_MVP_Promoted_Features_Spec.md:16191-16250",
+       "file_sha256": "9d3117af7f2245e6ca7d63a1826affaad817bbb2d0a371b7d970cf7453d3a3a9",
        "source_citation": {
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
         "unit": "SMPFS-312",
@@ -492,12 +496,12 @@
       {
        "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
        "unit": "SMPFS-312",
-       "line_start": 16210,
-       "line_end": 16210,
+       "line_start": 16214,
+       "line_end": 16214,
        "quote": "Round 7 authenticated history for dev.session.stopping: retained read, checkpoint and rebuild accept supported 1.0.0 originals written with projector_replay_only as well as dedupe_",
        "quote_check": "exact",
-       "quote_scope": "unit SMPFS-312, Plans/Section15_MVP_Promoted_Features_Spec.md:16187-16244",
-       "file_sha256": "192c7a3ebba02013a6ca5d6db7a1ecc5d019219635dcc3c1388e5e2fcf304f85",
+       "quote_scope": "unit SMPFS-312, Plans/Section15_MVP_Promoted_Features_Spec.md:16191-16250",
+       "file_sha256": "9d3117af7f2245e6ca7d63a1826affaad817bbb2d0a371b7d970cf7453d3a3a9",
        "source_citation": {
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
         "unit": "SMPFS-312",
@@ -526,9 +530,9 @@
   "row_pointer": "#/families/375"
  },
  "evidence_maintenance": {
-  "authority": "MERGE2-FIX2 findings 1/2/3",
-  "source_commit": "0f2a90ece55d4bafd163b19a05cd3c4eda91b9c1",
-  "source_assessment_sha256": "e17cfe09db0e36b002e252f64bc69117d8ddccb932c5005b9128487754f6f949",
+  "authority": "MERGE2-FIX3 items 1/2/3/4",
+  "source_commit": "dfea17a6c44205c69598882b0305b0cbeab1a3e8",
+  "source_assessment_sha256": "8dd4ec6f790fbabd923313f8544b2a88626230cd4c79cf4fa81d29c255d0be98",
   "native_execution": "NOT_RUN",
   "verdicts_changed": false
  }

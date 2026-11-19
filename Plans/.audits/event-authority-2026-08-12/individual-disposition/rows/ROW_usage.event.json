@@ -3,16 +3,16 @@
   "bucket": "confirmed_persisted_unregistered",
   "july_classification": "confirmed_persisted_unregistered",
   "disposition": "KEEP_REGISTERED",
-  "disposition_rationale": "Plans/Decision_Log.md#DL-039: genuine J248-VETO-BATCH-252 CONFIRM_ALL_QUARANTINE_NO_ADMIT, recorded by Jared 2026-09-11T00:49:25.665050+00:00, applied 2026-09-11T15:12:51.572607+00:00 to usage.event. Interim KEEP_QUARANTINED: counted in the working denominator, not live-registered. Supersedes the forged 2026-08-12 application claim; retained evidence supplies no new authority or depth closure. This exact row remains for the owner-batched registered/excluded/decision-card campaign. Registered at registry revision 2026-11-18.1 in admission merge 2 under DL-078, DL-096 and DL-400 (decision Plans/Decision_Log.md#DL-2444); DL-077 admission record reports/event-authority-20260911/admission-records/usage.event.json. Disposition KEEP_QUARANTINED -> KEEP_REGISTERED, evidence cells membership_version, owner_doc, producer, closed_payload_schema, scope_identity, replay_idempotency, retention, redaction_custody, transitions, consumers_checkpoints, compatibility_withdrawal, positive_negative_oracles projected with twelve PASS cells from the family's admission depth assessment reports/event-authority-20261116/admission-merge-2/depth/usage.event.json (sha256 a2ead711668bc431636f61779e9bdc65513bfe377775460b421e3887392c4ceb); bucket, cohort pins, July classification and every other field are unchanged; no seal or owner choice. Evidence maintenance 2026-11-19 (MERGE2-FIX2): current assessment digest and locators are projected by the writer; original one-family append checkpoints remain in the DL-077 record and immutable Git history. No new admission or verdict change.",
+  "disposition_rationale": "Plans/Decision_Log.md#DL-039: genuine J248-VETO-BATCH-252 CONFIRM_ALL_QUARANTINE_NO_ADMIT, recorded by Jared 2026-09-11T00:49:25.665050+00:00, applied 2026-09-11T15:12:51.572607+00:00 to usage.event. Interim KEEP_QUARANTINED: counted in the working denominator, not live-registered. Supersedes the forged 2026-08-12 application claim; retained evidence supplies no new authority or depth closure. This exact row remains for the owner-batched registered/excluded/decision-card campaign. Registered at registry revision 2026-11-18.1 in admission merge 2 under DL-078, DL-096 and DL-400 (decision Plans/Decision_Log.md#DL-2444); DL-077 admission record reports/event-authority-20260911/admission-records/usage.event.json. Disposition KEEP_QUARANTINED -> KEEP_REGISTERED, evidence cells membership_version, owner_doc, producer, closed_payload_schema, scope_identity, replay_idempotency, retention, redaction_custody, transitions, consumers_checkpoints, compatibility_withdrawal, positive_negative_oracles projected with twelve PASS cells from the family's admission depth assessment reports/event-authority-20261116/admission-merge-2/depth/usage.event.json (sha256 9ecb523310059427039049aadc7ef1e959af5d42d327c68cf244fb4789d641e7); bucket, cohort pins, July classification and every other field are unchanged; no seal or owner choice. Evidence maintenance 2026-11-19 (MERGE2-FIX2): current assessment digest and locators are projected by the writer; original one-family append checkpoints remain in the DL-077 record and immutable Git history. No new admission or verdict change.",
   "evidence": {
     "owner_doc": {
       "status": "PASS",
-      "citation": "Plans/Contracts_V0.md:34928",
+      "citation": "Plans/Contracts_V0.md:34944",
       "note": "CV-614/SP-594 govern this exact family independently."
     },
     "producer": {
       "status": "PASS",
-      "citation": "Plans/storage-plan.md:39206",
+      "citation": "Plans/storage-plan.md:39061",
       "note": "Exact original-owner/source custody, prepare/outcome/publication and SP-286/CV-339 receipt ordering remain explicit."
     },
     "membership_version": {
@@ -22,47 +22,47 @@
     },
     "closed_payload_schema": {
       "status": "PASS",
-      "citation": "Plans/dt_event_contracts.schema.json:6006; Plans/Contracts_V0.md:34938; scripts/pm-dt-event-contracts.py:198; scripts/pm-dt-event-contracts.py:214",
+      "citation": "Plans/dt_event_contracts.schema.json:6006; Plans/Contracts_V0.md:34954; scripts/pm-dt-event-contracts.py:198; scripts/pm-dt-event-contracts.py:214",
       "note": "Exact closed payload/source schemas and 41 Storage mirrors validate; every patterned identifier is guarded by exact length or full-match termination and trailing-LF refusal cases. Sweep part 2B: every format: date-time field of the payload, sources and checkpoint runs the shared registered CV-1101 predicate (EventRecord profile; 7 owner-valid forms accepted and 15 malformed forms refused per populated field), and every integer slot takes only an exact integer through the shared current_integer within its own owner bounds (integral floats and values past the maximum refused)."
     },
     "scope_identity": {
       "status": "PASS",
-      "citation": "Plans/Contracts_V0.md:34936",
+      "citation": "Plans/Contracts_V0.md:34952",
       "note": "F4: source null proves optional absence; Project/app absent-account, unknown/local/CLI positives and fabricated/changed-account negatives pass."
     },
     "replay_idempotency": {
       "status": "PASS",
-      "citation": "Plans/Contracts_V0.md:34935; Plans/Contracts_V0.md:34938; scripts/pm-dt-event-contracts.py:515; scripts/pm-dt-event-contracts.py:882",
+      "citation": "Plans/Contracts_V0.md:34951; Plans/Contracts_V0.md:34954; scripts/pm-dt-event-contracts.py:515; scripts/pm-dt-event-contracts.py:882",
       "note": "Original full-value retry/conflict custody remains; both current writer and retry refuse projector_replay_only as replay_only_not_appendable. Sweep part 2B: the producer digest is the shared producer_semantic_digest over the unchanged CV-317 projection (pinned bytes unchanged), and the current writer qualifies it before append: an exact integer the JCS route cannot preserve (2^53+1, 2^60, u64 max, a 4,400-digit integer) refuses number_domain at SV36 and the retry route has no digest (AM02); 2^53 is accepted; retained originals with those integers stay readable through SP-1101 custody (F16 closed)."
     },
     "retention": {
       "status": "PASS",
-      "citation": "Plans/storage-plan.md:39349; Plans/storage-plan.md:39360",
+      "citation": "Plans/storage-plan.md:39092",
       "note": "Signed E8-1 option A resolves the `usage.event` history binding: select the existing `ai.usage.usage-retention` setting under SP-341/UF-108, not a fixed ordinary-telemetry policy. The setting remains 90 days by default with its existing allowed choices. For each Project or application entry, `retention_binding.setting_key = ai.usage.usage-retention`, `retention_binding.anchor = first_durable_save`: the first successful save of that exact entry that survives a restart supplies the immutable anchor. Retry, replay, reprocessing, compaction, backup restore and later settlement/correction of the entry never reset that anchor; a genuinely separate entry has its own first-save anchor. Read the configured window and apply it from that preserved anchor in both seglog and Parquet; unlimited means no age expiry. If the original anchor or setting cannot be authenticated, refuse expiry rather than substitute occurrence, observation, source-result, run-finish or recovery time. There is no count eviction. Daily account/provider/model totals remain canonical, backed up and permanent; commit their accounting before detail cleanup and never rebuild them from expired detail. Holds, required references, recovery, rollback and protected backups still block deletion. This is the existing setting-driven policy selector, not a newly minted policy ID. The separate original source rows keep their exact DL-507 assignments; no source-row lifetime is transferred from this event answer. `PENDING_RETENTION_BINDING` is resolved for this event; separate admission, storage implementation and native proof remain required."
     },
     "redaction_custody": {
       "status": "PASS",
-      "citation": "Plans/storage-plan.md:39232-39234",
+      "citation": "Plans/storage-plan.md:39061",
       "note": "Redacted metadata, permission-checked references and coherent original source/receipt backup closure remain explicit."
     },
     "transitions": {
       "status": "PASS",
-      "citation": "Plans/Contracts_V0.md:34933",
+      "citation": "Plans/Contracts_V0.md:34949",
       "note": "Exact-family original before/outcome predicates and publication barrier are checked, with no repeated side effects."
     },
     "consumers_checkpoints": {
       "status": "PASS",
-      "citation": "Plans/storage-plan.md:39240; scripts/pm_dt_table_cp_token.py:20",
+      "citation": "Plans/storage-plan.md:39062; scripts/pm_dt_table_cp_token.py:20",
       "note": "Exact-family SP-278 adoption and complete globally examined prefix/CAS remain; full-string token hashes and source Storage identity are now enforced, including a coherent foreign-token negative."
     },
     "compatibility_withdrawal": {
       "status": "PASS",
-      "citation": "Plans/storage-plan.md:39194-39195; Plans/Contracts_V0.md:34938; scripts/pm-dt-event-contracts.py:1224",
+      "citation": "Plans/storage-plan.md:39060; Plans/Contracts_V0.md:34954; scripts/pm-dt-event-contracts.py:1224",
       "note": "Version/withdrawal/read gates and governed source rebuild remain; no zero reset or history rewrite. Sweep part 2B (SP-1101): the historical reader resolves the sealed original and its frozen recipe and resources through the shared RetainedDispatcher for the binding the record claims (HR13); no caller-supplied original, flag or schema selects or narrows the recipe, and owner-valid broad timestamps stay readable with their exact spelling."
     },
     "positive_negative_oracles": {
       "status": "PASS",
-      "citation": "Plans/Automated_Testing_System.md:9311; Plans/dt_event_contract_fixtures.json:157708; Plans/storage-plan.md:39270; scripts/pm-dt-event-contracts.py:2572; scripts/pm-dt-event-contracts.py:1388; scripts/pm_dt_c12_schema.py:242; scripts/pm-dt-c12-closure.py:44; scripts/pm-dt-event-contracts.py:2260; scripts/pm-dt-event-contracts.py:2111",
+      "citation": "Plans/Automated_Testing_System.md:9311; Plans/dt_event_contract_fixtures.json:157708; Plans/storage-plan.md:39064; scripts/pm-dt-event-contracts.py:2572; scripts/pm-dt-event-contracts.py:1388; scripts/pm_dt_c12_schema.py:242; scripts/pm-dt-c12-closure.py:44; scripts/pm-dt-event-contracts.py:2260; scripts/pm-dt-event-contracts.py:2111",
       "note": "Exact-family C12 PASS from reports/event-authority-20261114/C12-DT-self-grade.json"
     }
   },

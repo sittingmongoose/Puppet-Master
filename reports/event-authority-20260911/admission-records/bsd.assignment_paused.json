@@ -4,7 +4,7 @@
  "family_id": "event-family-bsd-assignment-paused",
  "implementation_receipt_sha256": "dceb7f21436cbe126c23822e62caa1b6dedcb45fefae3005c1804576ca34d827",
  "decision_ref": "Plans/Decision_Log.md#DL-2210",
- "decision_section_sha256": "e553ec06cfa27a682524f727d3b109be270322d77fa2a6e8b67c002cdfb5f286",
+ "decision_section_sha256": "34fce22af8cb0f94e62ad4e6da5a05103281022ccf0a96c10b9a770d50a70d9c",
  "registry_before": {
   "revision": "2026-11-16.73",
   "sha256": "e2ee0201d30caca3d6a70103a152c791ccbaefec6638cc2b6f72ce987bb97dc4",
@@ -18,7 +18,7 @@
  "registry_row_sha256": "f85dc3293e33b09188f5a1e17f6a8d59134f7c049683ad90be220213ff26436e",
  "depth_assessment": {
   "path": "reports/event-authority-20261116/admission-merge-2/depth/bsd.assignment_paused.json",
-  "sha256": "6259d868ebd3fddba11a3b1e8485ea785d2d1793b1e320ec31ea9c1fcbeb7619"
+  "sha256": "fbadbbe42578e073264c8eab980bb156d205c8b9c4909d03e2769d690ecfd849"
  },
  "admission_landing": {
   "branch": "plans/ea-merge2-apply-20261116",
@@ -37,11 +37,11 @@
   "Written under DL-077. The seal check recomputes completeness from the pinned assessment; the two fields ending in _at_recording are informational only."
  ],
  "evidence_maintenance": {
-  "authority": "MERGE2-FIX2",
-  "source_commit": "0f2a90ece55d4bafd163b19a05cd3c4eda91b9c1",
-  "source_record_sha256": "ac38b2062f99e917c4bbb47af8bf75c7124933a18e97cd8c994adb6cf8f3cbe2",
-  "source_assessment_sha256": "2fe0c8deaafaf44103a1a97931a05aa889ed387f116670358ee8e7d39023174c",
-  "source_decision_section_sha256": "8c1bcb93b1c81007024a63f9758b77ffd558b7035b55c3a84e5809103b8c4406",
+  "authority": "MERGE2-FIX3",
+  "source_commit": "dfea17a6c44205c69598882b0305b0cbeab1a3e8",
+  "source_record_sha256": "eb2282446ef971974cdb49e77e6346a656ebc9a91c2afab5ff20d7bf735a8d4d",
+  "source_assessment_sha256": "d1fa93c59203ea67e9de6bbcfbf7c1c649b420b31e8c1fb92967f814910b176e",
+  "source_decision_section_sha256": "e553ec06cfa27a682524f727d3b109be270322d77fa2a6e8b67c002cdfb5f286",
   "original_registry_checkpoints_preserved": true
  }
 }

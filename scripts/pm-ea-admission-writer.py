@@ -47,6 +47,7 @@ import json
 import re
 import subprocess
 import sys
+from functools import lru_cache
 from pathlib import Path
 from typing import Any
 
@@ -383,6 +384,66 @@ def relocate(text: str, quote: str, want: int, span: tuple[int, int] | None) -> 
     return None
 
 
+@lru_cache(maxsize=8)
+def historical_text(commit: str, rel: str) -> str:
+    if (not re.fullmatch(r"[0-9a-f]{40}", commit) or Path(rel).is_absolute()
+            or ".." in Path(rel).parts):
+        raise Gap(f"invalid historical evidence identity: {commit}:{rel}")
+    result = subprocess.run(["git", "-C", str(REPO), "show", commit + ":" + rel], capture_output=True)
+    if result.returncode:
+        raise Gap(f"historical evidence is unreadable: {commit}:{rel}")
+    return result.stdout.decode("utf-8")
+
+
+def rederive_source_citation(source: dict) -> dict:
+    """Reissue a source edition from its authenticated original hash and quote.
+
+    This maintenance operation is explicit. refresh_evidence instead rejects a
+    mixed input. Callers retain the received object as separate lineage.
+    """
+    out = copy.deepcopy(source)
+    rel, commit = out.get("path"), out.get("commit")
+    if not isinstance(rel, str) or not isinstance(commit, str):
+        raise Gap("historical evidence needs its path and commit")
+    text = historical_text(commit, rel)
+    digest = sha256_bytes(text.encode("utf-8"))
+    # The original sha256 is the lane's whole-file pin. A later file_sha256
+    # must not overwrite it or become authority for historical repair.
+    if out.get("sha256", out.get("file_sha256")) != digest:
+        raise Gap(f"historical source's original whole-file pin differs: {commit}:{rel}")
+    unit, quote = out.get("unit"), out.get("quote")
+    span = (unit_span(text, unit) if isinstance(unit, str) and re.fullmatch(r"[A-Z][A-Z0-9]*-\d+", unit)
+            else heading_span(text, unit) if isinstance(unit, str) else None)
+    if not span or not isinstance(quote, str) or not quote:
+        raise Gap(f"historical source needs a quoted, declared unit: {commit}:{rel}")
+    window = "\n".join(text.splitlines()[span[0] - 1:span[1]])
+    if window.count(quote) != 1:
+        raise Gap(f"historical quotation is not unique in its own unit: {commit}:{rel}#{unit}")
+    start, end, check = relocate(text, quote, out.get("line", span[0]), span)
+    out.update(sha256=digest, file_sha256=digest, line=start, line_start=start, line_end=end,
+               quote_check=check, quote_scope=f"unit {unit}, {rel}@{commit}:{span[0]}-{span[1]}")
+    if "quote_line" in out:
+        out["quote_line"] = start
+    if "excerpt_sha256" in out:
+        convention = out.get("excerpt_digest_convention", "whole_line")
+        if convention not in ("whole_line", "literal_quote"):
+            raise Gap(f"unknown historical excerpt convention: {convention}")
+        excerpt = "\n".join(text.splitlines()[start - 1:end])
+        out["excerpt_sha256"] = sha256_bytes((quote if convention == "literal_quote" else excerpt).encode())
+    return out
+
+
+def source_citation_problems(source: dict) -> list[str]:
+    """Check every stored pin/coordinate against the citation's named Git edition."""
+    try:
+        expected = rederive_source_citation(source)
+    except (Gap, ValueError) as exc:
+        return [str(exc)]
+    fields = ("sha256", "file_sha256", "line", "line_start", "line_end", "quote_line", "excerpt_sha256", "quote_scope")
+    return [f"historical {key} differs at {source['commit']}:{source['path']}"
+            for key in fields if key in source and source[key] != expected.get(key)]
+
+
 def refresh_evidence(item: dict, *, digest_convention: str = "whole_line", source_commit: str | None = None,
                      event_type: str | None = None, criterion: str | None = None) -> dict:
     """Re-read one cited quotation at the current tree; relocate it inside its own unit or fail closed."""
@@ -433,6 +494,10 @@ def refresh_evidence(item: dict, *, digest_convention: str = "whole_line", sourc
             out["unit"] = unit
         if not unit:
             raise Gap(f"line-only evidence has no declared unit bound: {rel}")
+    if source.get("commit"):
+        problems = source_citation_problems(source)
+        if problems:
+            raise Gap("; ".join(problems))
     span = None
     if rel.endswith(".md") and isinstance(unit, str):
         if unit.startswith("heading:") or unit.startswith("#"):

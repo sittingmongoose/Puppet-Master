@@ -3,16 +3,16 @@
   "bucket": "confirmed_persisted_unregistered",
   "july_classification": "confirmed_persisted_unregistered",
   "disposition": "KEEP_REGISTERED",
-  "disposition_rationale": "Plans/Decision_Log.md#DL-039: genuine J248-VETO-BATCH-252 CONFIRM_ALL_QUARANTINE_NO_ADMIT, recorded by Jared 2026-09-11T00:49:25.665050+00:00, applied 2026-09-11T15:12:51.572607+00:00 to wizard.blocked. Interim KEEP_QUARANTINED: counted in the working denominator, not live-registered. Supersedes the forged 2026-08-12 application claim; retained evidence supplies no new authority or depth closure. This exact row remains for the owner-batched registered/excluded/decision-card campaign. Registered at registry revision 2026-11-16.293 in admission merge 2 under DL-078, DL-096 and DL-400 (decision Plans/Decision_Log.md#DL-2429); DL-077 admission record reports/event-authority-20260911/admission-records/wizard.blocked.json. Disposition KEEP_QUARANTINED -> KEEP_REGISTERED, evidence cells membership_version, owner_doc, producer, closed_payload_schema, scope_identity, replay_idempotency, retention, redaction_custody, transitions, consumers_checkpoints, compatibility_withdrawal, positive_negative_oracles projected with twelve PASS cells from the family's admission depth assessment reports/event-authority-20261116/admission-merge-2/depth/wizard.blocked.json (sha256 01b77d3cfa5cfca4d5169ac631b72cb09ace2a9188fbdf87c7328afa8639afef); bucket, cohort pins, July classification and every other field are unchanged; no seal or owner choice. Evidence maintenance 2026-11-19 (MERGE2-FIX2): current assessment digest and locators are projected by the writer; original one-family append checkpoints remain in the DL-077 record and immutable Git history. No new admission or verdict change.",
+  "disposition_rationale": "Plans/Decision_Log.md#DL-039: genuine J248-VETO-BATCH-252 CONFIRM_ALL_QUARANTINE_NO_ADMIT, recorded by Jared 2026-09-11T00:49:25.665050+00:00, applied 2026-09-11T15:12:51.572607+00:00 to wizard.blocked. Interim KEEP_QUARANTINED: counted in the working denominator, not live-registered. Supersedes the forged 2026-08-12 application claim; retained evidence supplies no new authority or depth closure. This exact row remains for the owner-batched registered/excluded/decision-card campaign. Registered at registry revision 2026-11-16.293 in admission merge 2 under DL-078, DL-096 and DL-400 (decision Plans/Decision_Log.md#DL-2429); DL-077 admission record reports/event-authority-20260911/admission-records/wizard.blocked.json. Disposition KEEP_QUARANTINED -> KEEP_REGISTERED, evidence cells membership_version, owner_doc, producer, closed_payload_schema, scope_identity, replay_idempotency, retention, redaction_custody, transitions, consumers_checkpoints, compatibility_withdrawal, positive_negative_oracles projected with twelve PASS cells from the family's admission depth assessment reports/event-authority-20261116/admission-merge-2/depth/wizard.blocked.json (sha256 538484f77bca24a1f5afb198479ccca4ed9b544280cebbd20dec55340c7319e9); bucket, cohort pins, July classification and every other field are unchanged; no seal or owner choice. Evidence maintenance 2026-11-19 (MERGE2-FIX2): current assessment digest and locators are projected by the writer; original one-family append checkpoints remain in the DL-077 record and immutable Git history. No new admission or verdict change.",
   "evidence": {
     "owner_doc": {
       "status": "PASS",
-      "citation": "Plans/Contracts_V0.md:42377-42378",
+      "citation": "Plans/Contracts_V0.md:41193",
       "note": "CV-596 applies DL-431 to the current PlanningRun owner PWIZ-002 and preserves CV-233; the retired Chain Wizard is not restored."
     },
     "producer": {
       "status": "PASS",
-      "citation": "Plans/Contracts_V0.md:42400-42401",
+      "citation": "Plans/Contracts_V0.md:41199",
       "note": "CV-596 names the responsible planning observer and exact SP-286/CV-339 full-value v2 source/append/receipt/publication order."
     },
     "membership_version": {
@@ -22,47 +22,47 @@
     },
     "closed_payload_schema": {
       "status": "PASS",
-      "citation": "Plans/Contracts_V0.md:42393-42394; Plans/event_payloads/planning_wizard/wizard_blocked.schema.json:5",
+      "citation": "Plans/Contracts_V0.md:41197; Plans/event_payloads/planning_wizard/wizard_blocked.schema.json:5",
       "note": "CV-596 names this family's own required-present closed schema and exact version; originals, physical source wrappers and payload references are separate."
     },
     "scope_identity": {
       "status": "PASS",
-      "citation": "Plans/Contracts_V0.md:42417",
+      "citation": "Plans/Contracts_V0.md:41201",
       "note": "CV-596 binds the real Project, whole PlanningRun/episode/observation and exact string-only identity; nullable thread context does not select the subject."
     },
     "replay_idempotency": {
       "status": "PASS",
-      "citation": "Plans/Contracts_V0.md:42423-42424",
+      "citation": "Plans/Contracts_V0.md:41203",
       "note": "CV-596 freezes producer semantic inputs, excludes assigned Storage metadata, resolves original receipts on retry and refuses replay-only current append/retry."
     },
     "retention": {
       "status": "PASS",
-      "citation": "Plans/Contracts_V0.md:42543",
+      "citation": "Plans/Contracts_V0.md:41229",
       "note": "Current exact-family BOUND retention assignment: {\"application_policy_ref\": null, \"decisions\": [\"DL-401\"], \"event_type\": \"wizard.blocked\", \"existing_checkpoints\": [], \"grade_source\": \"reports/event-authority-20261104/DCW.self-grade.json\", \"history_policy_ref\": \"RP-AUTHORITY-INDEFINITE@1.0.0\", \"lane\": \"DCW\", \"original_and_checkpoint_assignments\": [], \"owner\": \"Plans/Contracts_V0.md#CV-596\", \"owner_line\": 39528, \"prior_finding\": \"Event history remains PENDING_RETENTION_DECISION with the exact question. Original source audit custody uses existing RP-AUTHORITY-INDEFINITE; receipt/index/checkpoint policies are explicitly retained.\", \"question\": null, \"status\": \"BOUND\"}"
     },
     "redaction_custody": {
       "status": "PASS",
-      "citation": "Plans/Contracts_V0.md:42454-42455",
+      "citation": "Plans/Contracts_V0.md:41207",
       "note": "CV-596 closes original observation/attempt/action/route/receipt joins, ref-only disclosure, current access/deletion, coherent backup and admitted restore inventories."
     },
     "transitions": {
       "status": "PASS",
-      "citation": "Plans/Contracts_V0.md:42438-42439",
+      "citation": "Plans/Contracts_V0.md:41205",
       "note": "CV-596 enforces the approved whole-run blockage/clearance predicate, authenticated same-episode predecessor chain and current writer CAS without reviving a three-round trigger."
     },
     "consumers_checkpoints": {
       "status": "PASS",
-      "citation": "Plans/Contracts_V0.md:42488-42489",
+      "citation": "Plans/Contracts_V0.md:41211",
       "note": "CV-596 names its passive reader and adopts the existing exact SP-278 projector/reader/checkpoint with complete mixed-source coverage, CAS and DL-076 token shape."
     },
     "compatibility_withdrawal": {
       "status": "PASS",
-      "citation": "Plans/Contracts_V0.md:42513; Plans/Contracts_V0.md:42485-42486; scripts/pm_dcw_blockage_events.py:24; scripts/pm_dcw_event_oracles.py:853",
+      "citation": "Plans/Contracts_V0.md:41215; Plans/Contracts_V0.md:41209; scripts/pm_dcw_blockage_events.py:24; scripts/pm_dcw_event_oracles.py:853",
       "note": "PASS: current caller admission stays separate from authenticated original dispatch and passive replay policy. occurred_at_utc and family ts use pm_event_datetime.date_time with the EventRecord profile; Storage observed_at_utc and persisted_at_utc use storage_utc_z. SP-1101 selects those profiles for a retained original. Native original authentication remains NOT_RUN."
     },
     "positive_negative_oracles": {
       "status": "PASS",
-      "citation": "Plans/Contracts_V0.md:42393-42394; scripts/pm_dcw_event_oracles.py:482; scripts/pm_dcw_c12.py:395; scripts/pm_dcw_c12.py:439; scripts/pm_dcw_c12_boundary.py:72; scripts/pm_dcw_c12_implications.py:147; scripts/pm_dcw_c12_retained.py:222; scripts/pm_dcw_c12_datetime.py:50; scripts/pm_dcw_c12_entailments.py:185; scripts/pm_dcw_c12_cases.py:110; scripts/pm_dcw_c12_cases.py:120; scripts/pm_dcw_c12_cases.py:129",
+      "citation": "Plans/Contracts_V0.md:41197; scripts/pm_dcw_event_oracles.py:482; scripts/pm_dcw_c12.py:395; scripts/pm_dcw_c12.py:439; scripts/pm_dcw_c12_boundary.py:72; scripts/pm_dcw_c12_implications.py:147; scripts/pm_dcw_c12_retained.py:222; scripts/pm_dcw_c12_datetime.py:50; scripts/pm_dcw_c12_entailments.py:185; scripts/pm_dcw_c12_cases.py:110; scripts/pm_dcw_c12_cases.py:120; scripts/pm_dcw_c12_cases.py:129",
       "note": "PASS (C12-DCW): all 219 named rows this family reaches run on the gated tool 004bdedd63 (lane-wide 380/394 proved; the 14 by-construction rows sit alone in their own tables with executable entailment attempts). At the complete boundary each reached row has a lane witness refused first there and accepted by the unchanged complete checker with only that row disabled, or a checked implication (by_construction 5, complete_boundary_reclassified 11, cut_accepts 167, entailed 17, precondition 19). The whole-definition OE001 schema ledger has 20160 exact kills and 8428 INVALID proposals over 15 real check_schema sites, plus 3756 exact kills from path-novel controls beyond the per-site cap; every reachable clause is witnessed with OE001 cut and restoration, witnessed at the same site in another family with identical schema pins, or vacuous (witnessed 1353, witnessed_by_shared_site 13, witnessed_supplement 43); keyword independence is not claimed. Lane-wide copy-join inventory, 193 two-copy rows: 91 have each copy changed alone and refused first there, 76 have the second copy located and pinned by named earlier joins (checked), 24 carry written dispositions (derived, configuration or legacy-callback copies) and 2 are by-construction rows. Retained reads select only the sealed original store and leave it unchanged (34/34 exact). Shared numbers and date-time profiles run at every DCW boundary (EventRecord; storage_utc_z for Storage-assigned times; acknowledged_at_utc EventRecord per E5-2). New row O234 refuses unverified compaction translations. Native campaigns remain NOT_RUN."
     }
   },

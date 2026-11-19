@@ -56,12 +56,12 @@
       {
        "path": "Plans/FinalGUISpec.md",
        "unit": "F3-711",
-       "line_start": 53448,
-       "line_end": 53448,
+       "line_start": 52872,
+       "line_end": 52872,
        "quote": "Newly authored owner contract for ",
        "quote_check": "exact",
-       "quote_scope": "unit F3-711, Plans/FinalGUISpec.md:53441-53640",
-       "file_sha256": "98c1784c6b2734d3ec8e4f4052d90ed981d1e4063e83ee81a67e5e051ebb8e10",
+       "quote_scope": "unit F3-711, Plans/FinalGUISpec.md:52864-52950",
+       "file_sha256": "9d1963b8b44bab29ca32a301c6bf862fa411b3743d5860a7e18e75d4455dbc28",
        "source_citation": {
         "path": "Plans/FinalGUISpec.md",
         "unit": "F3-711",
@@ -87,12 +87,12 @@
       {
        "path": "Plans/FinalGUISpec.md",
        "unit": "F3-711",
-       "line_start": 53503,
-       "line_end": 53503,
+       "line_start": 52884,
+       "line_end": 52884,
        "quote": "Explicitly adopt SP-286/CV-339",
        "quote_check": "exact",
-       "quote_scope": "unit F3-711, Plans/FinalGUISpec.md:53441-53640",
-       "file_sha256": "98c1784c6b2734d3ec8e4f4052d90ed981d1e4063e83ee81a67e5e051ebb8e10",
+       "quote_scope": "unit F3-711, Plans/FinalGUISpec.md:52864-52950",
+       "file_sha256": "9d1963b8b44bab29ca32a301c6bf862fa411b3743d5860a7e18e75d4455dbc28",
        "source_citation": {
         "path": "Plans/FinalGUISpec.md",
         "unit": "F3-711",
@@ -118,12 +118,12 @@
       {
        "path": "Plans/FinalGUISpec.md",
        "unit": "F3-711",
-       "line_start": 53465,
-       "line_end": 53466,
-       "quote": "Payload and scope:\\\n  \\ the exact closed schema is",
-       "file_sha256": "98c1784c6b2734d3ec8e4f4052d90ed981d1e4063e83ee81a67e5e051ebb8e10",
+       "line_start": 52878,
+       "line_end": 52878,
+       "quote": "Payload and scope: the exact closed schema is",
+       "file_sha256": "9d1963b8b44bab29ca32a301c6bf862fa411b3743d5860a7e18e75d4455dbc28",
        "quote_check": "exact",
-       "quote_scope": "unit F3-711, Plans/FinalGUISpec.md:53441-53640",
+       "quote_scope": "unit F3-711, Plans/FinalGUISpec.md:52864-52950",
        "source_citation": {
         "path": "Plans/FinalGUISpec.md",
         "unit": "F3-711",
@@ -131,6 +131,19 @@
         "line_end": 53474,
         "quote": "Payload and scope:\\\n  \\ the exact closed schema is",
         "file_sha256": "483180446b9ea96a38be9d03c75a9b126212e08b8266917f8c76e1fc17f2797f"
+       },
+       "reanchor": {
+        "method": "exact_normalized",
+        "reason": "Whitespace, line wrapping, YAML quoting/escaping or Markdown escaping only; searched the cited unit.",
+        "unit": "F3-711",
+        "old_quote": "Payload and scope:\\\n  \\ the exact closed schema is",
+        "new_quote": "Payload and scope: the exact closed schema is",
+        "normalizations": [
+         "whitespace/line wrapping",
+         "YAML quoting/escaping",
+         "Markdown escaping"
+        ],
+        "owner_change_commit": "MERGE2-FIX3 uncommitted owner correction; final commit recorded in REPORT.md"
        }
       }
      ],
@@ -149,12 +162,12 @@
       {
        "path": "Plans/FinalGUISpec.md",
        "unit": "F3-711",
-       "line_start": 53468,
-       "line_end": 53469,
-       "quote": "scope_partition\\\n  \\ is project~base64url_no_pad(UTF8(project_id))",
-       "file_sha256": "98c1784c6b2734d3ec8e4f4052d90ed981d1e4063e83ee81a67e5e051ebb8e10",
+       "line_start": 52878,
+       "line_end": 52878,
+       "quote": "scope_partition is project~base64url_no_pad(UTF8(project_id))",
+       "file_sha256": "9d1963b8b44bab29ca32a301c6bf862fa411b3743d5860a7e18e75d4455dbc28",
        "quote_check": "exact",
-       "quote_scope": "unit F3-711, Plans/FinalGUISpec.md:53441-53640",
+       "quote_scope": "unit F3-711, Plans/FinalGUISpec.md:52864-52950",
        "source_citation": {
         "path": "Plans/FinalGUISpec.md",
         "unit": "F3-711",
@@ -162,6 +175,19 @@
         "line_end": 53477,
         "quote": "scope_partition\\\n  \\ is project~base64url_no_pad(UTF8(project_id))",
         "file_sha256": "483180446b9ea96a38be9d03c75a9b126212e08b8266917f8c76e1fc17f2797f"
+       },
+       "reanchor": {
+        "method": "exact_normalized",
+        "reason": "Whitespace, line wrapping, YAML quoting/escaping or Markdown escaping only; searched the cited unit.",
+        "unit": "F3-711",
+        "old_quote": "scope_partition\\\n  \\ is project~base64url_no_pad(UTF8(project_id))",
+        "new_quote": "scope_partition is project~base64url_no_pad(UTF8(project_id))",
+        "normalizations": [
+         "whitespace/line wrapping",
+         "YAML quoting/escaping",
+         "Markdown escaping"
+        ],
+        "owner_change_commit": "MERGE2-FIX3 uncommitted owner correction; final commit recorded in REPORT.md"
        }
       }
      ],
@@ -180,12 +206,12 @@
       {
        "path": "Plans/FinalGUISpec.md",
        "unit": "F3-711",
-       "line_start": 53511,
-       "line_end": 53511,
+       "line_start": 52884,
+       "line_end": 52884,
        "quote": "Same scoped key with changed caller semantic body is idempotency_conflict",
        "quote_check": "exact",
-       "quote_scope": "unit F3-711, Plans/FinalGUISpec.md:53441-53640",
-       "file_sha256": "98c1784c6b2734d3ec8e4f4052d90ed981d1e4063e83ee81a67e5e051ebb8e10",
+       "quote_scope": "unit F3-711, Plans/FinalGUISpec.md:52864-52950",
+       "file_sha256": "9d1963b8b44bab29ca32a301c6bf862fa411b3743d5860a7e18e75d4455dbc28",
        "source_citation": {
         "path": "Plans/FinalGUISpec.md",
         "unit": "F3-711",
@@ -211,12 +237,12 @@
       {
        "path": "Plans/FinalGUISpec.md",
        "unit": "F3-711",
-       "line_start": 53595,
-       "line_end": 53595,
-       "quote": "\\ binding for `concern.promoted` (2026-11-14).\\n\\nEvent history `retention_policy_ref = RP-AUTHORITY-INDEFINITE@1.0.0`,\\",
+       "line_start": 52917,
+       "line_end": 52917,
+       "quote": "Current selected assignment (2026-11-19): concern.promoted@2.0.0 is registered for project_only in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2270. Its event history selects RP-AUTHORITY-INDEFINITE@1.0.0; Plans/FinalGUISpec.md#F3-711 owns the event policy's existing anchors, counts, holds and deletion rules. Separate stored-value assignment: concern_promoted_checkpoint uses RP-PROJECTION-3GEN@1.0.0 under Plans/Decision_Log.md#DL-500; this assigns that stored value, not event history. Separate stored-value assignment: concern_promoted_operation uses RP-OPERATIONAL-2555D@1.0.0 under Plans/Decision_Log.md#DL-501; this assigns that stored value, not event history. Separate checkpoint assignment: concern_promoted_checkpoint uses RP-PROJECTION-3GEN@1.0.0 under its existing Plans/FinalGUISpec.md#F3-711 contract; checkpoint retention grants no event/source deletion. Original sources and coherent backups retain their independent owner policies; the event lifetime is not transferred to them. Current append/publication still requires the exact selected schema/scope, original custody, current permission, receipt and required producer adoption. Actual missing registration or unresolved required custody refuses; native execution remains NOT_RUN. No native adoption, new retention choice or governance seal follows.",
        "quote_check": "exact",
-       "quote_scope": "unit F3-711, Plans/FinalGUISpec.md:53441-53640",
-       "file_sha256": "98c1784c6b2734d3ec8e4f4052d90ed981d1e4063e83ee81a67e5e051ebb8e10",
+       "quote_scope": "unit F3-711, Plans/FinalGUISpec.md:52864-52950",
+       "file_sha256": "9d1963b8b44bab29ca32a301c6bf862fa411b3743d5860a7e18e75d4455dbc28",
        "source_citation": {
         "path": "Plans/FinalGUISpec.md",
         "unit": "F3-711",
@@ -224,6 +250,10 @@
         "line_end": 53605,
         "quote": "\\ binding for `concern.promoted` (2026-11-14).\\n\\nEvent history `retention_policy_ref = RP-AUTHORITY-INDEFINITE@1.0.0`,\\",
         "file_sha256": "483180446b9ea96a38be9d03c75a9b126212e08b8266917f8c76e1fc17f2797f"
+       },
+       "locator_maintenance": {
+        "authority": "MERGE2-FIX3",
+        "reason": "Re-cite the same accepted retention claim at its current exact owner assignment; event and source/checkpoint authority remain separate."
        }
       }
      ],
@@ -242,12 +272,12 @@
       {
        "path": "Plans/FinalGUISpec.md",
        "unit": "F3-711",
-       "line_start": 53552,
-       "line_end": 53552,
+       "line_start": 52892,
+       "line_end": 52892,
        "quote": "Mandatory coherent backup/restore preserves them together",
        "quote_check": "exact",
-       "quote_scope": "unit F3-711, Plans/FinalGUISpec.md:53441-53640",
-       "file_sha256": "98c1784c6b2734d3ec8e4f4052d90ed981d1e4063e83ee81a67e5e051ebb8e10",
+       "quote_scope": "unit F3-711, Plans/FinalGUISpec.md:52864-52950",
+       "file_sha256": "9d1963b8b44bab29ca32a301c6bf862fa411b3743d5860a7e18e75d4455dbc28",
        "source_citation": {
         "path": "Plans/FinalGUISpec.md",
         "unit": "F3-711",
@@ -273,12 +303,12 @@
       {
        "path": "Plans/FinalGUISpec.md",
        "unit": "F3-711",
-       "line_start": 53516,
-       "line_end": 53516,
+       "line_start": 52886,
+       "line_end": 52886,
        "quote": "Exact effect:",
        "quote_check": "exact",
-       "quote_scope": "unit F3-711, Plans/FinalGUISpec.md:53441-53640",
-       "file_sha256": "98c1784c6b2734d3ec8e4f4052d90ed981d1e4063e83ee81a67e5e051ebb8e10",
+       "quote_scope": "unit F3-711, Plans/FinalGUISpec.md:52864-52950",
+       "file_sha256": "9d1963b8b44bab29ca32a301c6bf862fa411b3743d5860a7e18e75d4455dbc28",
        "source_citation": {
         "path": "Plans/FinalGUISpec.md",
         "unit": "F3-711",
@@ -304,12 +334,12 @@
       {
        "path": "Plans/FinalGUISpec.md",
        "unit": "F3-711",
-       "line_start": 53528,
-       "line_end": 53528,
+       "line_start": 52888,
+       "line_end": 52888,
        "quote": "Explicitly adopt SP-278/DL-076:",
        "quote_check": "exact",
-       "quote_scope": "unit F3-711, Plans/FinalGUISpec.md:53441-53640",
-       "file_sha256": "98c1784c6b2734d3ec8e4f4052d90ed981d1e4063e83ee81a67e5e051ebb8e10",
+       "quote_scope": "unit F3-711, Plans/FinalGUISpec.md:52864-52950",
+       "file_sha256": "9d1963b8b44bab29ca32a301c6bf862fa411b3743d5860a7e18e75d4455dbc28",
        "source_citation": {
         "path": "Plans/FinalGUISpec.md",
         "unit": "F3-711",
@@ -335,12 +365,12 @@
       {
        "path": "Plans/FinalGUISpec.md",
        "unit": "F3-711",
-       "line_start": 53579,
-       "line_end": 53580,
-       "quote": "Close exact-family\\\n  \\ writer admission first",
-       "file_sha256": "98c1784c6b2734d3ec8e4f4052d90ed981d1e4063e83ee81a67e5e051ebb8e10",
+       "line_start": 52896,
+       "line_end": 52896,
+       "quote": "Close exact-family writer admission first",
+       "file_sha256": "9d1963b8b44bab29ca32a301c6bf862fa411b3743d5860a7e18e75d4455dbc28",
        "quote_check": "exact",
-       "quote_scope": "unit F3-711, Plans/FinalGUISpec.md:53441-53640",
+       "quote_scope": "unit F3-711, Plans/FinalGUISpec.md:52864-52950",
        "source_citation": {
         "path": "Plans/FinalGUISpec.md",
         "unit": "F3-711",
@@ -348,6 +378,19 @@
         "line_end": 53589,
         "quote": "Close exact-family\\\n  \\ writer admission first",
         "file_sha256": "483180446b9ea96a38be9d03c75a9b126212e08b8266917f8c76e1fc17f2797f"
+       },
+       "reanchor": {
+        "method": "exact_normalized",
+        "reason": "Whitespace, line wrapping, YAML quoting/escaping or Markdown escaping only; searched the cited unit.",
+        "unit": "F3-711",
+        "old_quote": "Close exact-family\\\n  \\ writer admission first",
+        "new_quote": "Close exact-family writer admission first",
+        "normalizations": [
+         "whitespace/line wrapping",
+         "YAML quoting/escaping",
+         "Markdown escaping"
+        ],
+        "owner_change_commit": "MERGE2-FIX3 uncommitted owner correction; final commit recorded in REPORT.md"
        }
       },
       {
@@ -384,12 +427,12 @@
       {
        "path": "Plans/FinalGUISpec.md",
        "unit": "F3-711",
-       "line_start": 53591,
-       "line_end": 53591,
+       "line_start": 52898,
+       "line_end": 52898,
        "quote": "C12 remains PARTIAL: JSON Schema keyword cuts are not ported to that tool,",
        "quote_check": "exact",
-       "quote_scope": "unit F3-711, Plans/FinalGUISpec.md:53441-53640",
-       "file_sha256": "98c1784c6b2734d3ec8e4f4052d90ed981d1e4063e83ee81a67e5e051ebb8e10",
+       "quote_scope": "unit F3-711, Plans/FinalGUISpec.md:52864-52950",
+       "file_sha256": "9d1963b8b44bab29ca32a301c6bf862fa411b3743d5860a7e18e75d4455dbc28",
        "source_citation": {
         "path": "Plans/FinalGUISpec.md",
         "unit": "F3-711",
@@ -616,9 +659,9 @@
   "row_pointer": "#/families/352"
  },
  "evidence_maintenance": {
-  "authority": "MERGE2-FIX2 findings 1/2/3",
-  "source_commit": "0f2a90ece55d4bafd163b19a05cd3c4eda91b9c1",
-  "source_assessment_sha256": "2098730c0bb71bb2178f02fd9965bc5c208f655a86c3a5231d0d56cd31d06c27",
+  "authority": "MERGE2-FIX3 items 1/2/3/4",
+  "source_commit": "dfea17a6c44205c69598882b0305b0cbeab1a3e8",
+  "source_assessment_sha256": "a13986fc598f8e6b5115c645361f7072a103ac9e48e8a9d9e1f6bb6f87fe3370",
   "native_execution": "NOT_RUN",
   "verdicts_changed": false
  }

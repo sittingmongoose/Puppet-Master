@@ -56,12 +56,12 @@
       {
        "path": "Plans/Contracts_V0.md",
        "unit": "CV-596",
-       "line_start": 42377,
-       "line_end": 42378,
-       "quote": "Semantic owner is current\\\n  \\ Plans/Planning_Wizard.md#PWIZ-002,",
-       "file_sha256": "2a9090efcaefbc3b0e85c2155255e078125e4d05a933e115ca931c6566b8b74b",
+       "line_start": 41193,
+       "line_end": 41193,
+       "quote": "Semantic owner is current Plans/Planning_Wizard.md#PWIZ-002,",
+       "file_sha256": "405f917ed143e5aefbcee55513fcdf1b11fa61f0dce5d9f164ad6e44ddf078ce",
        "quote_check": "exact",
-       "quote_scope": "unit CV-596, Plans/Contracts_V0.md:42368-42591",
+       "quote_scope": "unit CV-596, Plans/Contracts_V0.md:41185-41270",
        "source_citation": {
         "path": "Plans/Contracts_V0.md",
         "unit": "CV-596",
@@ -69,6 +69,19 @@
         "line_end": 42859,
         "quote": "Semantic owner is current\\\n  \\ Plans/Planning_Wizard.md#PWIZ-002,",
         "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a"
+       },
+       "reanchor": {
+        "method": "exact_normalized",
+        "reason": "Whitespace, line wrapping, YAML quoting/escaping or Markdown escaping only; searched the cited unit.",
+        "unit": "CV-596",
+        "old_quote": "Semantic owner is current\\\n  \\ Plans/Planning_Wizard.md#PWIZ-002,",
+        "new_quote": "Semantic owner is current Plans/Planning_Wizard.md#PWIZ-002,",
+        "normalizations": [
+         "whitespace/line wrapping",
+         "YAML quoting/escaping",
+         "Markdown escaping"
+        ],
+        "owner_change_commit": "MERGE2-FIX3 uncommitted owner correction; final commit recorded in REPORT.md"
        }
       }
      ],
@@ -87,12 +100,12 @@
       {
        "path": "Plans/Contracts_V0.md",
        "unit": "CV-596",
-       "line_start": 42400,
-       "line_end": 42401,
-       "quote": "Producer emitter.wizard_blocked@1.0.0\\\n  \\ is the responsible Planning Wizard component's observer of its original",
-       "file_sha256": "2a9090efcaefbc3b0e85c2155255e078125e4d05a933e115ca931c6566b8b74b",
+       "line_start": 41199,
+       "line_end": 41199,
+       "quote": "Producer emitter.wizard_blocked@1.0.0 is the responsible Planning Wizard component's observer of its original",
+       "file_sha256": "405f917ed143e5aefbcee55513fcdf1b11fa61f0dce5d9f164ad6e44ddf078ce",
        "quote_check": "exact",
-       "quote_scope": "unit CV-596, Plans/Contracts_V0.md:42368-42591",
+       "quote_scope": "unit CV-596, Plans/Contracts_V0.md:41185-41270",
        "source_citation": {
         "path": "Plans/Contracts_V0.md",
         "unit": "CV-596",
@@ -100,6 +113,19 @@
         "line_end": 42882,
         "quote": "Producer emitter.wizard_blocked@1.0.0\\\n  \\ is the responsible Planning Wizard component's observer of its original",
         "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a"
+       },
+       "reanchor": {
+        "method": "exact_normalized",
+        "reason": "Whitespace, line wrapping, YAML quoting/escaping or Markdown escaping only; searched the cited unit.",
+        "unit": "CV-596",
+        "old_quote": "Producer emitter.wizard_blocked@1.0.0\\\n  \\ is the responsible Planning Wizard component's observer of its original",
+        "new_quote": "Producer emitter.wizard_blocked@1.0.0 is the responsible Planning Wizard component's observer of its original",
+        "normalizations": [
+         "whitespace/line wrapping",
+         "YAML quoting/escaping",
+         "Markdown escaping"
+        ],
+        "owner_change_commit": "MERGE2-FIX3 uncommitted owner correction; final commit recorded in REPORT.md"
        }
       }
      ],
@@ -118,12 +144,12 @@
       {
        "path": "Plans/Contracts_V0.md",
        "unit": "CV-596",
-       "line_start": 42393,
-       "line_end": 42394,
-       "quote": "All properties of Plans/event_payloads/planning_wizard/wizard_blocked.schema.json\\\n  \\ are required-present, root additionalProperties=false,",
-       "file_sha256": "2a9090efcaefbc3b0e85c2155255e078125e4d05a933e115ca931c6566b8b74b",
+       "line_start": 41197,
+       "line_end": 41197,
+       "quote": "All properties of Plans/event_payloads/planning_wizard/wizard_blocked.schema.json are required-present, root additionalProperties=false,",
+       "file_sha256": "405f917ed143e5aefbcee55513fcdf1b11fa61f0dce5d9f164ad6e44ddf078ce",
        "quote_check": "exact",
-       "quote_scope": "unit CV-596, Plans/Contracts_V0.md:42368-42591",
+       "quote_scope": "unit CV-596, Plans/Contracts_V0.md:41185-41270",
        "source_citation": {
         "path": "Plans/Contracts_V0.md",
         "unit": "CV-596",
@@ -131,6 +157,19 @@
         "line_end": 42875,
         "quote": "All properties of Plans/event_payloads/planning_wizard/wizard_blocked.schema.json\\\n  \\ are required-present, root additionalProperties=false,",
         "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a"
+       },
+       "reanchor": {
+        "method": "exact_normalized",
+        "reason": "Whitespace, line wrapping, YAML quoting/escaping or Markdown escaping only; searched the cited unit.",
+        "unit": "CV-596",
+        "old_quote": "All properties of Plans/event_payloads/planning_wizard/wizard_blocked.schema.json\\\n  \\ are required-present, root additionalProperties=false,",
+        "new_quote": "All properties of Plans/event_payloads/planning_wizard/wizard_blocked.schema.json are required-present, root additionalProperties=false,",
+        "normalizations": [
+         "whitespace/line wrapping",
+         "YAML quoting/escaping",
+         "Markdown escaping"
+        ],
+        "owner_change_commit": "MERGE2-FIX3 uncommitted owner correction; final commit recorded in REPORT.md"
        }
       },
       {
@@ -167,12 +206,12 @@
       {
        "path": "Plans/Contracts_V0.md",
        "unit": "CV-596",
-       "line_start": 42417,
-       "line_end": 42417,
+       "line_start": 41201,
+       "line_end": 41201,
        "quote": "NEW identity recipe",
        "quote_check": "exact",
-       "quote_scope": "unit CV-596, Plans/Contracts_V0.md:42368-42591",
-       "file_sha256": "2a9090efcaefbc3b0e85c2155255e078125e4d05a933e115ca931c6566b8b74b",
+       "quote_scope": "unit CV-596, Plans/Contracts_V0.md:41185-41270",
+       "file_sha256": "405f917ed143e5aefbcee55513fcdf1b11fa61f0dce5d9f164ad6e44ddf078ce",
        "source_citation": {
         "path": "Plans/Contracts_V0.md",
         "unit": "CV-596",
@@ -198,12 +237,12 @@
       {
        "path": "Plans/Contracts_V0.md",
        "unit": "CV-596",
-       "line_start": 42423,
-       "line_end": 42424,
-       "quote": "Retry compares exactly the producer-owned semantic fields enumerated\\\n  \\ by CV-339: event_type, scope_kind, project_id,",
-       "file_sha256": "2a9090efcaefbc3b0e85c2155255e078125e4d05a933e115ca931c6566b8b74b",
+       "line_start": 41203,
+       "line_end": 41203,
+       "quote": "Retry compares exactly the producer-owned semantic fields enumerated by CV-339: event_type, scope_kind, project_id,",
+       "file_sha256": "405f917ed143e5aefbcee55513fcdf1b11fa61f0dce5d9f164ad6e44ddf078ce",
        "quote_check": "exact",
-       "quote_scope": "unit CV-596, Plans/Contracts_V0.md:42368-42591",
+       "quote_scope": "unit CV-596, Plans/Contracts_V0.md:41185-41270",
        "source_citation": {
         "path": "Plans/Contracts_V0.md",
         "unit": "CV-596",
@@ -211,6 +250,19 @@
         "line_end": 42905,
         "quote": "Retry compares exactly the producer-owned semantic fields enumerated\\\n  \\ by CV-339: event_type, scope_kind, project_id,",
         "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a"
+       },
+       "reanchor": {
+        "method": "exact_normalized",
+        "reason": "Whitespace, line wrapping, YAML quoting/escaping or Markdown escaping only; searched the cited unit.",
+        "unit": "CV-596",
+        "old_quote": "Retry compares exactly the producer-owned semantic fields enumerated\\\n  \\ by CV-339: event_type, scope_kind, project_id,",
+        "new_quote": "Retry compares exactly the producer-owned semantic fields enumerated by CV-339: event_type, scope_kind, project_id,",
+        "normalizations": [
+         "whitespace/line wrapping",
+         "YAML quoting/escaping",
+         "Markdown escaping"
+        ],
+        "owner_change_commit": "MERGE2-FIX3 uncommitted owner correction; final commit recorded in REPORT.md"
        }
       }
      ],
@@ -229,12 +281,12 @@
       {
        "path": "Plans/Contracts_V0.md",
        "unit": "CV-596",
-       "line_start": 42543,
-       "line_end": 42543,
-       "quote": "\\ history `retention_policy_ref = RP-AUTHORITY-INDEFINITE@1.0.0`, under DL-401.\\n\\nUse the existing\\",
+       "line_start": 41229,
+       "line_end": 41229,
+       "quote": "Current selected assignment (2026-11-19): wizard.blocked@1.0.0 is registered for project_only in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2429. Its event history selects RP-AUTHORITY-INDEFINITE@1.0.0; Plans/Contracts_V0.md#CV-596 owns the event policy's existing anchors, counts, holds and deletion rules. Original sources and coherent backups retain their independent owner policies; the event lifetime is not transferred to them. Current append/publication still requires the exact selected schema/scope, original custody, current permission, receipt and required producer adoption. Actual missing registration or unresolved required custody refuses; native execution remains NOT_RUN. No native adoption, new retention choice or governance seal follows.",
        "quote_check": "exact",
-       "quote_scope": "unit CV-596, Plans/Contracts_V0.md:42368-42591",
-       "file_sha256": "2a9090efcaefbc3b0e85c2155255e078125e4d05a933e115ca931c6566b8b74b",
+       "quote_scope": "unit CV-596, Plans/Contracts_V0.md:41185-41270",
+       "file_sha256": "405f917ed143e5aefbcee55513fcdf1b11fa61f0dce5d9f164ad6e44ddf078ce",
        "source_citation": {
         "path": "Plans/Contracts_V0.md",
         "unit": "CV-596",
@@ -242,6 +294,10 @@
         "line_end": 43024,
         "quote": "\\ history `retention_policy_ref = RP-AUTHORITY-INDEFINITE@1.0.0`, under DL-401.\\n\\nUse the existing\\",
         "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a"
+       },
+       "locator_maintenance": {
+        "authority": "MERGE2-FIX3",
+        "reason": "Re-cite the same accepted retention claim at its current exact owner assignment; event and source/checkpoint authority remain separate."
        }
       }
      ],
@@ -260,12 +316,12 @@
       {
        "path": "Plans/Contracts_V0.md",
        "unit": "CV-596",
-       "line_start": 42454,
-       "line_end": 42455,
-       "quote": "NEW original custody source wizard_blocked_evidence\\\n  \\ is materialized in Plans/storage_value_registry.json under",
-       "file_sha256": "2a9090efcaefbc3b0e85c2155255e078125e4d05a933e115ca931c6566b8b74b",
+       "line_start": 41207,
+       "line_end": 41207,
+       "quote": "NEW original custody source wizard_blocked_evidence is materialized in Plans/storage_value_registry.json under",
+       "file_sha256": "405f917ed143e5aefbcee55513fcdf1b11fa61f0dce5d9f164ad6e44ddf078ce",
        "quote_check": "exact",
-       "quote_scope": "unit CV-596, Plans/Contracts_V0.md:42368-42591",
+       "quote_scope": "unit CV-596, Plans/Contracts_V0.md:41185-41270",
        "source_citation": {
         "path": "Plans/Contracts_V0.md",
         "unit": "CV-596",
@@ -273,6 +329,19 @@
         "line_end": 42936,
         "quote": "NEW original custody source wizard_blocked_evidence\\\n  \\ is materialized in Plans/storage_value_registry.json under",
         "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a"
+       },
+       "reanchor": {
+        "method": "exact_normalized",
+        "reason": "Whitespace, line wrapping, YAML quoting/escaping or Markdown escaping only; searched the cited unit.",
+        "unit": "CV-596",
+        "old_quote": "NEW original custody source wizard_blocked_evidence\\\n  \\ is materialized in Plans/storage_value_registry.json under",
+        "new_quote": "NEW original custody source wizard_blocked_evidence is materialized in Plans/storage_value_registry.json under",
+        "normalizations": [
+         "whitespace/line wrapping",
+         "YAML quoting/escaping",
+         "Markdown escaping"
+        ],
+        "owner_change_commit": "MERGE2-FIX3 uncommitted owner correction; final commit recorded in REPORT.md"
        }
       }
      ],
@@ -291,12 +360,12 @@
       {
        "path": "Plans/Contracts_V0.md",
        "unit": "CV-596",
-       "line_start": 42438,
-       "line_end": 42439,
-       "quote": "The planning component's immutable\\\n  \\ observation has kind blockage_recorded or repair_attempt_completed and subject_kind=planning_run.",
-       "file_sha256": "2a9090efcaefbc3b0e85c2155255e078125e4d05a933e115ca931c6566b8b74b",
+       "line_start": 41205,
+       "line_end": 41205,
+       "quote": "The planning component's immutable observation has kind blockage_recorded or repair_attempt_completed and subject_kind=planning_run.",
+       "file_sha256": "405f917ed143e5aefbcee55513fcdf1b11fa61f0dce5d9f164ad6e44ddf078ce",
        "quote_check": "exact",
-       "quote_scope": "unit CV-596, Plans/Contracts_V0.md:42368-42591",
+       "quote_scope": "unit CV-596, Plans/Contracts_V0.md:41185-41270",
        "source_citation": {
         "path": "Plans/Contracts_V0.md",
         "unit": "CV-596",
@@ -304,6 +373,19 @@
         "line_end": 42920,
         "quote": "The planning component's immutable\\\n  \\ observation has kind blockage_recorded or repair_attempt_completed and subject_kind=planning_run.",
         "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a"
+       },
+       "reanchor": {
+        "method": "exact_normalized",
+        "reason": "Whitespace, line wrapping, YAML quoting/escaping or Markdown escaping only; searched the cited unit.",
+        "unit": "CV-596",
+        "old_quote": "The planning component's immutable\\\n  \\ observation has kind blockage_recorded or repair_attempt_completed and subject_kind=planning_run.",
+        "new_quote": "The planning component's immutable observation has kind blockage_recorded or repair_attempt_completed and subject_kind=planning_run.",
+        "normalizations": [
+         "whitespace/line wrapping",
+         "YAML quoting/escaping",
+         "Markdown escaping"
+        ],
+        "owner_change_commit": "MERGE2-FIX3 uncommitted owner correction; final commit recorded in REPORT.md"
        }
       }
      ],
@@ -322,12 +404,12 @@
       {
        "path": "Plans/Contracts_V0.md",
        "unit": "CV-596",
-       "line_start": 42488,
-       "line_end": 42489,
-       "quote": "NEW passive operating consumer\\\n  \\ reader.wizard_blocked_history@1.0.0 selects only wizard.blocked at this exact supported",
-       "file_sha256": "2a9090efcaefbc3b0e85c2155255e078125e4d05a933e115ca931c6566b8b74b",
+       "line_start": 41211,
+       "line_end": 41211,
+       "quote": "NEW passive operating consumer reader.wizard_blocked_history@1.0.0 selects only wizard.blocked at this exact supported",
+       "file_sha256": "405f917ed143e5aefbcee55513fcdf1b11fa61f0dce5d9f164ad6e44ddf078ce",
        "quote_check": "exact",
-       "quote_scope": "unit CV-596, Plans/Contracts_V0.md:42368-42591",
+       "quote_scope": "unit CV-596, Plans/Contracts_V0.md:41185-41270",
        "source_citation": {
         "path": "Plans/Contracts_V0.md",
         "unit": "CV-596",
@@ -335,6 +417,19 @@
         "line_end": 42970,
         "quote": "NEW passive operating consumer\\\n  \\ reader.wizard_blocked_history@1.0.0 selects only wizard.blocked at this exact supported",
         "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a"
+       },
+       "reanchor": {
+        "method": "exact_normalized",
+        "reason": "Whitespace, line wrapping, YAML quoting/escaping or Markdown escaping only; searched the cited unit.",
+        "unit": "CV-596",
+        "old_quote": "NEW passive operating consumer\\\n  \\ reader.wizard_blocked_history@1.0.0 selects only wizard.blocked at this exact supported",
+        "new_quote": "NEW passive operating consumer reader.wizard_blocked_history@1.0.0 selects only wizard.blocked at this exact supported",
+        "normalizations": [
+         "whitespace/line wrapping",
+         "YAML quoting/escaping",
+         "Markdown escaping"
+        ],
+        "owner_change_commit": "MERGE2-FIX3 uncommitted owner correction; final commit recorded in REPORT.md"
        }
       }
      ],
@@ -353,12 +448,12 @@
       {
        "path": "Plans/Contracts_V0.md",
        "unit": "CV-596",
-       "line_start": 42513,
-       "line_end": 42513,
+       "line_start": 41215,
+       "line_end": 41215,
        "quote": "Compatibility/withdrawal for wizard.blocked alone: dispatch only explicitly supported exact family/schema/version;",
        "quote_check": "exact",
-       "quote_scope": "unit CV-596, Plans/Contracts_V0.md:42368-42591",
-       "file_sha256": "2a9090efcaefbc3b0e85c2155255e078125e4d05a933e115ca931c6566b8b74b",
+       "quote_scope": "unit CV-596, Plans/Contracts_V0.md:41185-41270",
+       "file_sha256": "405f917ed143e5aefbcee55513fcdf1b11fa61f0dce5d9f164ad6e44ddf078ce",
        "source_citation": {
         "path": "Plans/Contracts_V0.md",
         "unit": "CV-596",
@@ -371,12 +466,12 @@
       {
        "path": "Plans/Contracts_V0.md",
        "unit": "CV-596",
-       "line_start": 42485,
-       "line_end": 42486,
-       "quote": "Under CV-1101, ts and occurred_at_utc use pm_event_datetime.date_time with the EventRecord\\\n  \\ profile; under CV-253,",
-       "file_sha256": "2a9090efcaefbc3b0e85c2155255e078125e4d05a933e115ca931c6566b8b74b",
+       "line_start": 41209,
+       "line_end": 41209,
+       "quote": "Under CV-1101, ts and occurred_at_utc use pm_event_datetime.date_time with the EventRecord profile; under CV-253,",
+       "file_sha256": "405f917ed143e5aefbcee55513fcdf1b11fa61f0dce5d9f164ad6e44ddf078ce",
        "quote_check": "exact",
-       "quote_scope": "unit CV-596, Plans/Contracts_V0.md:42368-42591",
+       "quote_scope": "unit CV-596, Plans/Contracts_V0.md:41185-41270",
        "source_citation": {
         "path": "Plans/Contracts_V0.md",
         "unit": "CV-596",
@@ -384,6 +479,19 @@
         "line_end": 42967,
         "quote": "Under CV-1101, ts and occurred_at_utc use pm_event_datetime.date_time with the EventRecord\\\n  \\ profile; under CV-253,",
         "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a"
+       },
+       "reanchor": {
+        "method": "exact_normalized",
+        "reason": "Whitespace, line wrapping, YAML quoting/escaping or Markdown escaping only; searched the cited unit.",
+        "unit": "CV-596",
+        "old_quote": "Under CV-1101, ts and occurred_at_utc use pm_event_datetime.date_time with the EventRecord\\\n  \\ profile; under CV-253,",
+        "new_quote": "Under CV-1101, ts and occurred_at_utc use pm_event_datetime.date_time with the EventRecord profile; under CV-253,",
+        "normalizations": [
+         "whitespace/line wrapping",
+         "YAML quoting/escaping",
+         "Markdown escaping"
+        ],
+        "owner_change_commit": "MERGE2-FIX3 uncommitted owner correction; final commit recorded in REPORT.md"
        }
       },
       {
@@ -438,13 +546,13 @@
       {
        "path": "Plans/Contracts_V0.md",
        "unit": "CV-596",
-       "line_start": 42393,
-       "line_end": 42394,
-       "quote": "All properties of Plans/event_payloads/planning_wizard/wizard_blocked.schema.json\\\n  \\ are required-present, root additionalProperties=false,",
-       "file_sha256": "2a9090efcaefbc3b0e85c2155255e078125e4d05a933e115ca931c6566b8b74b",
+       "line_start": 41197,
+       "line_end": 41197,
+       "quote": "All properties of Plans/event_payloads/planning_wizard/wizard_blocked.schema.json are required-present, root additionalProperties=false,",
+       "file_sha256": "405f917ed143e5aefbcee55513fcdf1b11fa61f0dce5d9f164ad6e44ddf078ce",
        "quote_check": "exact",
        "evidence_role": "Exact canonical subject of the existing whole-definition oracle proof; test execution evidence remains the separately cited scripts.",
-       "quote_scope": "unit CV-596, Plans/Contracts_V0.md:42368-42591",
+       "quote_scope": "unit CV-596, Plans/Contracts_V0.md:41185-41270",
        "source_citation": {
         "path": "Plans/Contracts_V0.md",
         "unit": "CV-596",
@@ -453,6 +561,19 @@
         "quote": "All properties of Plans/event_payloads/planning_wizard/wizard_blocked.schema.json\\\n  \\ are required-present, root additionalProperties=false,",
         "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a",
         "evidence_role": "Exact canonical subject of the existing whole-definition oracle proof; test execution evidence remains the separately cited scripts."
+       },
+       "reanchor": {
+        "method": "exact_normalized",
+        "reason": "Whitespace, line wrapping, YAML quoting/escaping or Markdown escaping only; searched the cited unit.",
+        "unit": "CV-596",
+        "old_quote": "All properties of Plans/event_payloads/planning_wizard/wizard_blocked.schema.json\\\n  \\ are required-present, root additionalProperties=false,",
+        "new_quote": "All properties of Plans/event_payloads/planning_wizard/wizard_blocked.schema.json are required-present, root additionalProperties=false,",
+        "normalizations": [
+         "whitespace/line wrapping",
+         "YAML quoting/escaping",
+         "Markdown escaping"
+        ],
+        "owner_change_commit": "MERGE2-FIX3 uncommitted owner correction; final commit recorded in REPORT.md"
        }
       },
       {
@@ -672,9 +793,9 @@
   "row_pointer": "#/families/511"
  },
  "evidence_maintenance": {
-  "authority": "MERGE2-FIX2 findings 1/2/3",
-  "source_commit": "0f2a90ece55d4bafd163b19a05cd3c4eda91b9c1",
-  "source_assessment_sha256": "84f2f3c40a17d089764eb378e1af7bdbda8b85d204566fd3f506a8b43a365a6b",
+  "authority": "MERGE2-FIX3 items 1/2/3/4",
+  "source_commit": "dfea17a6c44205c69598882b0305b0cbeab1a3e8",
+  "source_assessment_sha256": "01b77d3cfa5cfca4d5169ac631b72cb09ace2a9188fbdf87c7328afa8639afef",
   "native_execution": "NOT_RUN",
   "verdicts_changed": false
  }

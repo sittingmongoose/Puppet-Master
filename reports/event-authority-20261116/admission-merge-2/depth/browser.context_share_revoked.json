@@ -56,12 +56,12 @@
       {
        "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
        "unit": "SMPFS-321",
-       "line_start": 16797,
-       "line_end": 16797,
+       "line_start": 16732,
+       "line_end": 16732,
        "quote": "newly authored owner contract",
        "quote_check": "exact",
-       "quote_scope": "unit SMPFS-321, Plans/Section15_MVP_Promoted_Features_Spec.md:16790-16949",
-       "file_sha256": "192c7a3ebba02013a6ca5d6db7a1ecc5d019219635dcc3c1388e5e2fcf304f85",
+       "quote_scope": "unit SMPFS-321, Plans/Section15_MVP_Promoted_Features_Spec.md:16724-16796",
+       "file_sha256": "9d3117af7f2245e6ca7d63a1826affaad817bbb2d0a371b7d970cf7453d3a3a9",
        "source_citation": {
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
         "unit": "SMPFS-321",
@@ -87,12 +87,12 @@
       {
        "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
        "unit": "SMPFS-321",
-       "line_start": 16813,
-       "line_end": 16813,
+       "line_start": 16736,
+       "line_end": 16736,
        "quote": "Producer:",
        "quote_check": "exact",
-       "quote_scope": "unit SMPFS-321, Plans/Section15_MVP_Promoted_Features_Spec.md:16790-16949",
-       "file_sha256": "192c7a3ebba02013a6ca5d6db7a1ecc5d019219635dcc3c1388e5e2fcf304f85",
+       "quote_scope": "unit SMPFS-321, Plans/Section15_MVP_Promoted_Features_Spec.md:16724-16796",
+       "file_sha256": "9d3117af7f2245e6ca7d63a1826affaad817bbb2d0a371b7d970cf7453d3a3a9",
        "source_citation": {
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
         "unit": "SMPFS-321",
@@ -167,12 +167,12 @@
       {
        "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
        "unit": "SMPFS-321",
-       "line_start": 16817,
-       "line_end": 16817,
+       "line_start": 16737,
+       "line_end": 16737,
        "quote": "Scope and identity:",
        "quote_check": "exact",
-       "quote_scope": "unit SMPFS-321, Plans/Section15_MVP_Promoted_Features_Spec.md:16790-16949",
-       "file_sha256": "192c7a3ebba02013a6ca5d6db7a1ecc5d019219635dcc3c1388e5e2fcf304f85",
+       "quote_scope": "unit SMPFS-321, Plans/Section15_MVP_Promoted_Features_Spec.md:16724-16796",
+       "file_sha256": "9d3117af7f2245e6ca7d63a1826affaad817bbb2d0a371b7d970cf7453d3a3a9",
        "source_citation": {
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
         "unit": "SMPFS-321",
@@ -198,12 +198,12 @@
       {
        "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
        "unit": "SMPFS-321",
-       "line_start": 16858,
-       "line_end": 16858,
+       "line_start": 16740,
+       "line_end": 16740,
        "quote": "Replay and transitions:",
        "quote_check": "exact",
-       "quote_scope": "unit SMPFS-321, Plans/Section15_MVP_Promoted_Features_Spec.md:16790-16949",
-       "file_sha256": "192c7a3ebba02013a6ca5d6db7a1ecc5d019219635dcc3c1388e5e2fcf304f85",
+       "quote_scope": "unit SMPFS-321, Plans/Section15_MVP_Promoted_Features_Spec.md:16724-16796",
+       "file_sha256": "9d3117af7f2245e6ca7d63a1826affaad817bbb2d0a371b7d970cf7453d3a3a9",
        "source_citation": {
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
         "unit": "SMPFS-321",
@@ -229,12 +229,12 @@
       {
        "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
        "unit": "SMPFS-321",
-       "line_start": 16898,
-       "line_end": 16898,
-       "quote": "\\ (2026-11-14).\\n\\nEvent history `retention_policy_ref = RP-CHAT-THREAD-LIFETIME@1.0.0`, under DL-401,\\",
+       "line_start": 16763,
+       "line_end": 16763,
+       "quote": "Current selected assignment (2026-11-19): browser.context_share_revoked@1.0.0 is registered for application_or_project in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2156. Its event history selects RP-CHAT-THREAD-LIFETIME@1.0.0; Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-321 owns the event policy's existing anchors, counts, holds and deletion rules. Separate stored-value assignment: projector.checkpoint.ds15.browser_context_share_revoked:{scope_key} uses RP-PROJECTION-3GEN@1.0.0 under Plans/Decision_Log.md#DL-459; this assigns that stored value, not event history. Original sources and coherent backups retain their independent owner policies; the event lifetime is not transferred to them. Current append/publication still requires the exact selected schema/scope, original custody, current permission, receipt and required producer adoption. Actual missing registration or unresolved required custody refuses; native execution remains NOT_RUN. No native adoption, new retention choice or governance seal follows.",
        "quote_check": "exact",
-       "quote_scope": "unit SMPFS-321, Plans/Section15_MVP_Promoted_Features_Spec.md:16790-16949",
-       "file_sha256": "192c7a3ebba02013a6ca5d6db7a1ecc5d019219635dcc3c1388e5e2fcf304f85",
+       "quote_scope": "unit SMPFS-321, Plans/Section15_MVP_Promoted_Features_Spec.md:16724-16796",
+       "file_sha256": "9d3117af7f2245e6ca7d63a1826affaad817bbb2d0a371b7d970cf7453d3a3a9",
        "source_citation": {
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
         "unit": "SMPFS-321",
@@ -242,6 +242,10 @@
         "line_end": 16874,
         "quote": "\\ (2026-11-14).\\n\\nEvent history `retention_policy_ref = RP-CHAT-THREAD-LIFETIME@1.0.0`, under DL-401,\\",
         "file_sha256": "752b95d90e41b07c28e1376d0e1fdfdac2052196ca2e73e31e838f6f3124869d"
+       },
+       "locator_maintenance": {
+        "authority": "MERGE2-FIX3",
+        "reason": "Re-cite the same accepted retention claim at its current exact owner assignment; event and source/checkpoint authority remain separate."
        }
       }
      ],
@@ -260,12 +264,12 @@
       {
        "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
        "unit": "SMPFS-321",
-       "line_start": 16849,
-       "line_end": 16849,
+       "line_start": 16739,
+       "line_end": 16739,
        "quote": "Original source and custody:",
        "quote_check": "exact",
-       "quote_scope": "unit SMPFS-321, Plans/Section15_MVP_Promoted_Features_Spec.md:16790-16949",
-       "file_sha256": "192c7a3ebba02013a6ca5d6db7a1ecc5d019219635dcc3c1388e5e2fcf304f85",
+       "quote_scope": "unit SMPFS-321, Plans/Section15_MVP_Promoted_Features_Spec.md:16724-16796",
+       "file_sha256": "9d3117af7f2245e6ca7d63a1826affaad817bbb2d0a371b7d970cf7453d3a3a9",
        "source_citation": {
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
         "unit": "SMPFS-321",
@@ -291,12 +295,12 @@
       {
        "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
        "unit": "SMPFS-321",
-       "line_start": 16813,
-       "line_end": 16813,
+       "line_start": 16736,
+       "line_end": 16736,
        "quote": "Producer:",
        "quote_check": "exact",
-       "quote_scope": "unit SMPFS-321, Plans/Section15_MVP_Promoted_Features_Spec.md:16790-16949",
-       "file_sha256": "192c7a3ebba02013a6ca5d6db7a1ecc5d019219635dcc3c1388e5e2fcf304f85",
+       "quote_scope": "unit SMPFS-321, Plans/Section15_MVP_Promoted_Features_Spec.md:16724-16796",
+       "file_sha256": "9d3117af7f2245e6ca7d63a1826affaad817bbb2d0a371b7d970cf7453d3a3a9",
        "source_citation": {
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
         "unit": "SMPFS-321",
@@ -322,12 +326,12 @@
       {
        "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
        "unit": "SMPFS-321",
-       "line_start": 16865,
-       "line_end": 16865,
+       "line_start": 16741,
+       "line_end": 16741,
        "quote": "Consumer and checkpoint:",
        "quote_check": "exact",
-       "quote_scope": "unit SMPFS-321, Plans/Section15_MVP_Promoted_Features_Spec.md:16790-16949",
-       "file_sha256": "192c7a3ebba02013a6ca5d6db7a1ecc5d019219635dcc3c1388e5e2fcf304f85",
+       "quote_scope": "unit SMPFS-321, Plans/Section15_MVP_Promoted_Features_Spec.md:16724-16796",
+       "file_sha256": "9d3117af7f2245e6ca7d63a1826affaad817bbb2d0a371b7d970cf7453d3a3a9",
        "source_citation": {
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
         "unit": "SMPFS-321",
@@ -353,12 +357,12 @@
       {
        "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
        "unit": "SMPFS-321",
-       "line_start": 16888,
-       "line_end": 16889,
-       "quote": "Compatibility\\\n  \\ and withdrawal:",
-       "file_sha256": "192c7a3ebba02013a6ca5d6db7a1ecc5d019219635dcc3c1388e5e2fcf304f85",
+       "line_start": 16743,
+       "line_end": 16743,
+       "quote": "Compatibility and withdrawal:",
+       "file_sha256": "9d3117af7f2245e6ca7d63a1826affaad817bbb2d0a371b7d970cf7453d3a3a9",
        "quote_check": "exact",
-       "quote_scope": "unit SMPFS-321, Plans/Section15_MVP_Promoted_Features_Spec.md:16790-16949",
+       "quote_scope": "unit SMPFS-321, Plans/Section15_MVP_Promoted_Features_Spec.md:16724-16796",
        "source_citation": {
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
         "unit": "SMPFS-321",
@@ -366,6 +370,19 @@
         "line_end": 16864,
         "quote": "Compatibility\\\n  \\ and withdrawal:",
         "file_sha256": "752b95d90e41b07c28e1376d0e1fdfdac2052196ca2e73e31e838f6f3124869d"
+       },
+       "reanchor": {
+        "method": "exact_normalized",
+        "reason": "Whitespace, line wrapping, YAML quoting/escaping or Markdown escaping only; searched the cited unit.",
+        "unit": "SMPFS-321",
+        "old_quote": "Compatibility\\\n  \\ and withdrawal:",
+        "new_quote": "Compatibility and withdrawal:",
+        "normalizations": [
+         "whitespace/line wrapping",
+         "YAML quoting/escaping",
+         "Markdown escaping"
+        ],
+        "owner_change_commit": "MERGE2-FIX3 uncommitted owner correction; final commit recorded in REPORT.md"
        }
       }
      ],
@@ -382,15 +399,15 @@
      "finding": "SMPFS-321 browser.context_share_revoked@1.0.0: every guard row the complete deck-2 checker reaches for this family (184 rows in 97 tables) is proved by the gated tool from this family's own single-defect witnesses (153 rows) or carries a checked entailment proof (17 singleton-table rows, 14 family-constant or earlier-boundary rows); 1783 evaluated schema clause sites: 1278 isolated or branch witnesses through the real validator and phase row, 1030 exact complete-boundary kills, the rest applicator, condition, sibling-entailed or co-asserted with named clauses; shared date-time battery, number corpus and edge sweep, sealed-receipt retained reads with custody snapshots, and the full original suite pass. Native execution NOT_RUN; membership ABSENT; independent review NOT_RUN.",
      "evidence": [
       {
-       "line": 16893,
+       "line": 16744,
        "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
        "quote": "Oracles:",
-       "sha256": "192c7a3ebba02013a6ca5d6db7a1ecc5d019219635dcc3c1388e5e2fcf304f85",
-       "line_start": 16893,
-       "line_end": 16893,
+       "sha256": "9d3117af7f2245e6ca7d63a1826affaad817bbb2d0a371b7d970cf7453d3a3a9",
+       "line_start": 16744,
+       "line_end": 16744,
        "quote_check": "exact",
-       "quote_scope": "unit SMPFS-321, Plans/Section15_MVP_Promoted_Features_Spec.md:16790-16949",
-       "file_sha256": "192c7a3ebba02013a6ca5d6db7a1ecc5d019219635dcc3c1388e5e2fcf304f85",
+       "quote_scope": "unit SMPFS-321, Plans/Section15_MVP_Promoted_Features_Spec.md:16724-16796",
+       "file_sha256": "9d3117af7f2245e6ca7d63a1826affaad817bbb2d0a371b7d970cf7453d3a3a9",
        "source_citation": {
         "line": 15810,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
@@ -407,15 +424,15 @@
        }
       },
       {
-       "line": 16927,
+       "line": 16774,
        "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
        "quote": "python3 scripts/pm-ds15-deck2-contracts.py --family browser.context_share_revoked",
-       "sha256": "192c7a3ebba02013a6ca5d6db7a1ecc5d019219635dcc3c1388e5e2fcf304f85",
-       "line_start": 16927,
-       "line_end": 16927,
+       "sha256": "9d3117af7f2245e6ca7d63a1826affaad817bbb2d0a371b7d970cf7453d3a3a9",
+       "line_start": 16774,
+       "line_end": 16774,
        "quote_check": "exact",
-       "quote_scope": "unit SMPFS-321, Plans/Section15_MVP_Promoted_Features_Spec.md:16790-16949",
-       "file_sha256": "192c7a3ebba02013a6ca5d6db7a1ecc5d019219635dcc3c1388e5e2fcf304f85",
+       "quote_scope": "unit SMPFS-321, Plans/Section15_MVP_Promoted_Features_Spec.md:16724-16796",
+       "file_sha256": "9d3117af7f2245e6ca7d63a1826affaad817bbb2d0a371b7d970cf7453d3a3a9",
        "source_citation": {
         "line": 15810,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
@@ -432,15 +449,15 @@
        }
       },
       {
-       "line": 16826,
+       "line": 16738,
        "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
        "quote": "Closed payload: Plans/ds15_browser_context_share_revoked.schema.json",
-       "sha256": "192c7a3ebba02013a6ca5d6db7a1ecc5d019219635dcc3c1388e5e2fcf304f85",
-       "line_start": 16826,
-       "line_end": 16826,
+       "sha256": "9d3117af7f2245e6ca7d63a1826affaad817bbb2d0a371b7d970cf7453d3a3a9",
+       "line_start": 16738,
+       "line_end": 16738,
        "quote_check": "exact",
-       "quote_scope": "unit SMPFS-321, Plans/Section15_MVP_Promoted_Features_Spec.md:16790-16949",
-       "file_sha256": "192c7a3ebba02013a6ca5d6db7a1ecc5d019219635dcc3c1388e5e2fcf304f85",
+       "quote_scope": "unit SMPFS-321, Plans/Section15_MVP_Promoted_Features_Spec.md:16724-16796",
+       "file_sha256": "9d3117af7f2245e6ca7d63a1826affaad817bbb2d0a371b7d970cf7453d3a3a9",
        "source_citation": {
         "line": 15804,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
@@ -577,9 +594,9 @@
   "row_pointer": "#/families/238"
  },
  "evidence_maintenance": {
-  "authority": "MERGE2-FIX2 findings 1/2/3",
-  "source_commit": "0f2a90ece55d4bafd163b19a05cd3c4eda91b9c1",
-  "source_assessment_sha256": "023043385dc8c898d1de84e368947b5be2a1b6450a3626113dc32e321feb2857",
+  "authority": "MERGE2-FIX3 items 1/2/3/4",
+  "source_commit": "dfea17a6c44205c69598882b0305b0cbeab1a3e8",
+  "source_assessment_sha256": "0a95f90b055103b4201bb560a12c3545eda71c27db85888097bbb2a435c59ee1",
   "native_execution": "NOT_RUN",
   "verdicts_changed": false
  }

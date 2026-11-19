@@ -74,12 +74,12 @@
       {
        "path": "Plans/Contracts_V0.md",
        "unit": "CV-650",
-       "line_start": 38145,
-       "line_end": 38145,
+       "line_start": 37225,
+       "line_end": 37225,
        "quote": "Newly authored closed payload owner contract for exactly memory.dedup_sweep.completed@1.0.0 under",
        "quote_check": "exact",
-       "quote_scope": "unit CV-650, Plans/Contracts_V0.md:38138-38185",
-       "file_sha256": "2a9090efcaefbc3b0e85c2155255e078125e4d05a933e115ca931c6566b8b74b",
+       "quote_scope": "unit CV-650, Plans/Contracts_V0.md:37218-37265",
+       "file_sha256": "405f917ed143e5aefbcee55513fcdf1b11fa61f0dce5d9f164ad6e44ddf078ce",
        "source_citation": {
         "path": "Plans/Contracts_V0.md",
         "unit": "CV-650",
@@ -123,12 +123,12 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-630",
-       "line_start": 46189,
-       "line_end": 46191,
-       "quote": "explicitly adopts SP-286 and CV-339 full-value\\\n  \\ v2 first-AppendReceipt custody: validate admission, append barrier-class SeglogFrameV2 through SP-026/SP-236\\\n  \\ with full flush, durably settle or",
-       "file_sha256": "51edc1394ab24ca53a2a021dce3c3c9a1be0f43e2292d901ad56e4b0063a3ebf",
+       "line_start": 42504,
+       "line_end": 42504,
+       "quote": "explicitly adopts SP-286 and CV-339 full-value v2 first-AppendReceipt custody: validate admission, append barrier-class SeglogFrameV2 through SP-026/SP-236 with full flush, durably settle or",
+       "file_sha256": "a80ebad269f3f3a87c644ee23b21cdd62ef64ccad2fbe4377e8bd190614fdf31",
        "quote_check": "exact",
-       "quote_scope": "unit SP-630, Plans/storage-plan.md:46164-46415",
+       "quote_scope": "unit SP-630, Plans/storage-plan.md:42494-42569",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-630",
@@ -136,17 +136,30 @@
         "line_end": 46191,
         "quote": "explicitly adopts SP-286 and CV-339 full-value\\\n  \\ v2 first-AppendReceipt custody: validate admission, append barrier-class SeglogFrameV2 through SP-026/SP-236\\\n  \\ with full flush, durably settle or",
         "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+       },
+       "reanchor": {
+        "method": "exact_normalized",
+        "reason": "Whitespace, line wrapping, YAML quoting/escaping or Markdown escaping only; searched the cited unit.",
+        "unit": "SP-630",
+        "old_quote": "explicitly adopts SP-286 and CV-339 full-value\\\n  \\ v2 first-AppendReceipt custody: validate admission, append barrier-class SeglogFrameV2 through SP-026/SP-236\\\n  \\ with full flush, durably settle or",
+        "new_quote": "explicitly adopts SP-286 and CV-339 full-value v2 first-AppendReceipt custody: validate admission, append barrier-class SeglogFrameV2 through SP-026/SP-236 with full flush, durably settle or",
+        "normalizations": [
+         "whitespace/line wrapping",
+         "YAML quoting/escaping",
+         "Markdown escaping"
+        ],
+        "owner_change_commit": "MERGE2-FIX3 uncommitted owner correction; final commit recorded in REPORT.md"
        }
       },
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-630",
-       "line_start": 46239,
-       "line_end": 46241,
-       "quote": "Every mutation\\\n  \\ is a whole-value CAS against the exact prior operation row under the single maintenance writer; request,\\\n  \\ scope, source, start time and receipt identities never change. started",
-       "file_sha256": "51edc1394ab24ca53a2a021dce3c3c9a1be0f43e2292d901ad56e4b0063a3ebf",
+       "line_start": 42510,
+       "line_end": 42510,
+       "quote": "Every mutation is a whole-value CAS against the exact prior operation row under the single maintenance writer; request, scope, source, start time and receipt identities never change. started",
+       "file_sha256": "a80ebad269f3f3a87c644ee23b21cdd62ef64ccad2fbe4377e8bd190614fdf31",
        "quote_check": "exact",
-       "quote_scope": "unit SP-630, Plans/storage-plan.md:46164-46415",
+       "quote_scope": "unit SP-630, Plans/storage-plan.md:42494-42569",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-630",
@@ -154,17 +167,30 @@
         "line_end": 46241,
         "quote": "Every mutation\\\n  \\ is a whole-value CAS against the exact prior operation row under the single maintenance writer; request,\\\n  \\ scope, source, start time and receipt identities never change. started",
         "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+       },
+       "reanchor": {
+        "method": "exact_normalized",
+        "reason": "Whitespace, line wrapping, YAML quoting/escaping or Markdown escaping only; searched the cited unit.",
+        "unit": "SP-630",
+        "old_quote": "Every mutation\\\n  \\ is a whole-value CAS against the exact prior operation row under the single maintenance writer; request,\\\n  \\ scope, source, start time and receipt identities never change. started",
+        "new_quote": "Every mutation is a whole-value CAS against the exact prior operation row under the single maintenance writer; request, scope, source, start time and receipt identities never change. started",
+        "normalizations": [
+         "whitespace/line wrapping",
+         "YAML quoting/escaping",
+         "Markdown escaping"
+        ],
+        "owner_change_commit": "MERGE2-FIX3 uncommitted owner correction; final commit recorded in REPORT.md"
        }
       },
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-630",
-       "line_start": 46316,
-       "line_end": 46316,
+       "line_start": 42518,
+       "line_end": 42518,
        "quote": "A current-writer retained EventRecord carries the unchanged CV-339 full-value commitment",
        "quote_check": "exact",
-       "quote_scope": "unit SP-630, Plans/storage-plan.md:46164-46415",
-       "file_sha256": "51edc1394ab24ca53a2a021dce3c3c9a1be0f43e2292d901ad56e4b0063a3ebf",
+       "quote_scope": "unit SP-630, Plans/storage-plan.md:42494-42569",
+       "file_sha256": "a80ebad269f3f3a87c644ee23b21cdd62ef64ccad2fbe4377e8bd190614fdf31",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-630",
@@ -190,12 +216,12 @@
       {
        "path": "Plans/Contracts_V0.md",
        "unit": "CV-650",
-       "line_start": 38147,
-       "line_end": 38147,
+       "line_start": 37227,
+       "line_end": 37227,
        "quote": "is a distinct closed definition; schema_version and event_type are exact constants. All listed properties are",
        "quote_check": "exact",
-       "quote_scope": "unit CV-650, Plans/Contracts_V0.md:38138-38185",
-       "file_sha256": "2a9090efcaefbc3b0e85c2155255e078125e4d05a933e115ca931c6566b8b74b",
+       "quote_scope": "unit CV-650, Plans/Contracts_V0.md:37218-37265",
+       "file_sha256": "405f917ed143e5aefbcee55513fcdf1b11fa61f0dce5d9f164ad6e44ddf078ce",
        "source_citation": {
         "path": "Plans/Contracts_V0.md",
         "unit": "CV-650",
@@ -221,12 +247,12 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-630",
-       "line_start": 46176,
-       "line_end": 46178,
-       "quote": "Identity recipe for this family: use strict\\\n  \\ UTF-8 canonical JSON of the array [\\\"pm.memory.maintenance.event.v1\\\",storage_instance_id,project_id,operation_id,\\\"\\\n  memory.dedup_sweep.completed\\\"] wi",
-       "file_sha256": "51edc1394ab24ca53a2a021dce3c3c9a1be0f43e2292d901ad56e4b0063a3ebf",
+       "line_start": 42503,
+       "line_end": 42503,
+       "quote": "Identity recipe for this family: use strict UTF-8 canonical JSON of the array [\"pm.memory.maintenance.event.v1\",storage_instance_id,project_id,operation_id,\"memory.dedup_sweep.completed\"] wi",
+       "file_sha256": "a80ebad269f3f3a87c644ee23b21cdd62ef64ccad2fbe4377e8bd190614fdf31",
        "quote_check": "exact",
-       "quote_scope": "unit SP-630, Plans/storage-plan.md:46164-46415",
+       "quote_scope": "unit SP-630, Plans/storage-plan.md:42494-42569",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-630",
@@ -234,17 +260,30 @@
         "line_end": 46178,
         "quote": "Identity recipe for this family: use strict\\\n  \\ UTF-8 canonical JSON of the array [\\\"pm.memory.maintenance.event.v1\\\",storage_instance_id,project_id,operation_id,\\\"\\\n  memory.dedup_sweep.completed\\\"] wi",
         "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+       },
+       "reanchor": {
+        "method": "exact_normalized",
+        "reason": "Whitespace, line wrapping, YAML quoting/escaping or Markdown escaping only; searched the cited unit.",
+        "unit": "SP-630",
+        "old_quote": "Identity recipe for this family: use strict\\\n  \\ UTF-8 canonical JSON of the array [\\\"pm.memory.maintenance.event.v1\\\",storage_instance_id,project_id,operation_id,\\\"\\\n  memory.dedup_sweep.completed\\\"] wi",
+        "new_quote": "Identity recipe for this family: use strict UTF-8 canonical JSON of the array [\"pm.memory.maintenance.event.v1\",storage_instance_id,project_id,operation_id,\"memory.dedup_sweep.completed\"] wi",
+        "normalizations": [
+         "whitespace/line wrapping",
+         "YAML quoting/escaping",
+         "Markdown escaping"
+        ],
+        "owner_change_commit": "MERGE2-FIX3 uncommitted owner correction; final commit recorded in REPORT.md"
        }
       },
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-630",
-       "line_start": 46256,
-       "line_end": 46257,
-       "quote": "Newly\\\n  \\ authored current-writer boundary for exactly memory.dedup_sweep.completed@1.0.0",
-       "file_sha256": "51edc1394ab24ca53a2a021dce3c3c9a1be0f43e2292d901ad56e4b0063a3ebf",
+       "line_start": 42512,
+       "line_end": 42512,
+       "quote": "Newly authored current-writer boundary for exactly memory.dedup_sweep.completed@1.0.0",
+       "file_sha256": "a80ebad269f3f3a87c644ee23b21cdd62ef64ccad2fbe4377e8bd190614fdf31",
        "quote_check": "exact",
-       "quote_scope": "unit SP-630, Plans/storage-plan.md:46164-46415",
+       "quote_scope": "unit SP-630, Plans/storage-plan.md:42494-42569",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-630",
@@ -252,6 +291,19 @@
         "line_end": 46257,
         "quote": "Newly\\\n  \\ authored current-writer boundary for exactly memory.dedup_sweep.completed@1.0.0",
         "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+       },
+       "reanchor": {
+        "method": "exact_normalized",
+        "reason": "Whitespace, line wrapping, YAML quoting/escaping or Markdown escaping only; searched the cited unit.",
+        "unit": "SP-630",
+        "old_quote": "Newly\\\n  \\ authored current-writer boundary for exactly memory.dedup_sweep.completed@1.0.0",
+        "new_quote": "Newly authored current-writer boundary for exactly memory.dedup_sweep.completed@1.0.0",
+        "normalizations": [
+         "whitespace/line wrapping",
+         "YAML quoting/escaping",
+         "Markdown escaping"
+        ],
+        "owner_change_commit": "MERGE2-FIX3 uncommitted owner correction; final commit recorded in REPORT.md"
        }
       }
      ],
@@ -270,12 +322,12 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-630",
-       "line_start": 46254,
-       "line_end": 46256,
-       "quote": "Completed payload status/ref/hash and frozen time\\\n  \\ must equal that row and, when present, the exact retained SP-286 full-value original. Started retries\\\n  \\ likewise equal the original full value",
-       "file_sha256": "51edc1394ab24ca53a2a021dce3c3c9a1be0f43e2292d901ad56e4b0063a3ebf",
+       "line_start": 42510,
+       "line_end": 42510,
+       "quote": "Completed payload status/ref/hash and frozen time must equal that row and, when present, the exact retained SP-286 full-value original. Started retries likewise equal the original full value",
+       "file_sha256": "a80ebad269f3f3a87c644ee23b21cdd62ef64ccad2fbe4377e8bd190614fdf31",
        "quote_check": "exact",
-       "quote_scope": "unit SP-630, Plans/storage-plan.md:46164-46415",
+       "quote_scope": "unit SP-630, Plans/storage-plan.md:42494-42569",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-630",
@@ -283,6 +335,19 @@
         "line_end": 46256,
         "quote": "Completed payload status/ref/hash and frozen time\\\n  \\ must equal that row and, when present, the exact retained SP-286 full-value original. Started retries\\\n  \\ likewise equal the original full value",
         "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+       },
+       "reanchor": {
+        "method": "exact_normalized",
+        "reason": "Whitespace, line wrapping, YAML quoting/escaping or Markdown escaping only; searched the cited unit.",
+        "unit": "SP-630",
+        "old_quote": "Completed payload status/ref/hash and frozen time\\\n  \\ must equal that row and, when present, the exact retained SP-286 full-value original. Started retries\\\n  \\ likewise equal the original full value",
+        "new_quote": "Completed payload status/ref/hash and frozen time must equal that row and, when present, the exact retained SP-286 full-value original. Started retries likewise equal the original full value",
+        "normalizations": [
+         "whitespace/line wrapping",
+         "YAML quoting/escaping",
+         "Markdown escaping"
+        ],
+        "owner_change_commit": "MERGE2-FIX3 uncommitted owner correction; final commit recorded in REPORT.md"
        }
       },
       {
@@ -307,12 +372,12 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-630",
-       "line_start": 46256,
-       "line_end": 46257,
-       "quote": "Newly\\\n  \\ authored current-writer boundary for exactly memory.dedup_sweep.completed@1.0.0",
-       "file_sha256": "51edc1394ab24ca53a2a021dce3c3c9a1be0f43e2292d901ad56e4b0063a3ebf",
+       "line_start": 42512,
+       "line_end": 42512,
+       "quote": "Newly authored current-writer boundary for exactly memory.dedup_sweep.completed@1.0.0",
+       "file_sha256": "a80ebad269f3f3a87c644ee23b21cdd62ef64ccad2fbe4377e8bd190614fdf31",
        "quote_check": "exact",
-       "quote_scope": "unit SP-630, Plans/storage-plan.md:46164-46415",
+       "quote_scope": "unit SP-630, Plans/storage-plan.md:42494-42569",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-630",
@@ -320,17 +385,30 @@
         "line_end": 46257,
         "quote": "Newly\\\n  \\ authored current-writer boundary for exactly memory.dedup_sweep.completed@1.0.0",
         "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+       },
+       "reanchor": {
+        "method": "exact_normalized",
+        "reason": "Whitespace, line wrapping, YAML quoting/escaping or Markdown escaping only; searched the cited unit.",
+        "unit": "SP-630",
+        "old_quote": "Newly\\\n  \\ authored current-writer boundary for exactly memory.dedup_sweep.completed@1.0.0",
+        "new_quote": "Newly authored current-writer boundary for exactly memory.dedup_sweep.completed@1.0.0",
+        "normalizations": [
+         "whitespace/line wrapping",
+         "YAML quoting/escaping",
+         "Markdown escaping"
+        ],
+        "owner_change_commit": "MERGE2-FIX3 uncommitted owner correction; final commit recorded in REPORT.md"
        }
       },
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-630",
-       "quote": "Start custody gate for exactly memory.dedup_sweep.completed@1.0.0, newly\\\n  \\ authored owner contract (DMEM fix round 4)",
-       "line_start": 46270,
-       "line_end": 46271,
-       "file_sha256": "51edc1394ab24ca53a2a021dce3c3c9a1be0f43e2292d901ad56e4b0063a3ebf",
+       "quote": "Start custody gate for exactly memory.dedup_sweep.completed@1.0.0, newly authored owner contract (DMEM fix round 4)",
+       "line_start": 42514,
+       "line_end": 42514,
+       "file_sha256": "a80ebad269f3f3a87c644ee23b21cdd62ef64ccad2fbe4377e8bd190614fdf31",
        "quote_check": "exact",
-       "quote_scope": "unit SP-630, Plans/storage-plan.md:46164-46415",
+       "quote_scope": "unit SP-630, Plans/storage-plan.md:42494-42569",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-630",
@@ -338,17 +416,30 @@
         "line_start": 46270,
         "line_end": 46271,
         "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+       },
+       "reanchor": {
+        "method": "exact_normalized",
+        "reason": "Whitespace, line wrapping, YAML quoting/escaping or Markdown escaping only; searched the cited unit.",
+        "unit": "SP-630",
+        "old_quote": "Start custody gate for exactly memory.dedup_sweep.completed@1.0.0, newly\\\n  \\ authored owner contract (DMEM fix round 4)",
+        "new_quote": "Start custody gate for exactly memory.dedup_sweep.completed@1.0.0, newly authored owner contract (DMEM fix round 4)",
+        "normalizations": [
+         "whitespace/line wrapping",
+         "YAML quoting/escaping",
+         "Markdown escaping"
+        ],
+        "owner_change_commit": "MERGE2-FIX3 uncommitted owner correction; final commit recorded in REPORT.md"
        }
       },
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-630",
-       "quote": "Missing, corrupted, mismatched or withdrawn custody refuses with\\\n  \\ start_receipt_missing, or permission_or_withdrawal for a withdrawal fence",
-       "line_start": 46287,
-       "line_end": 46288,
-       "file_sha256": "51edc1394ab24ca53a2a021dce3c3c9a1be0f43e2292d901ad56e4b0063a3ebf",
+       "quote": "Missing, corrupted, mismatched or withdrawn custody refuses with start_receipt_missing, or permission_or_withdrawal for a withdrawal fence",
+       "line_start": 42514,
+       "line_end": 42514,
+       "file_sha256": "a80ebad269f3f3a87c644ee23b21cdd62ef64ccad2fbe4377e8bd190614fdf31",
        "quote_check": "exact",
-       "quote_scope": "unit SP-630, Plans/storage-plan.md:46164-46415",
+       "quote_scope": "unit SP-630, Plans/storage-plan.md:42494-42569",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-630",
@@ -356,6 +447,19 @@
         "line_start": 46287,
         "line_end": 46288,
         "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+       },
+       "reanchor": {
+        "method": "exact_normalized",
+        "reason": "Whitespace, line wrapping, YAML quoting/escaping or Markdown escaping only; searched the cited unit.",
+        "unit": "SP-630",
+        "old_quote": "Missing, corrupted, mismatched or withdrawn custody refuses with\\\n  \\ start_receipt_missing, or permission_or_withdrawal for a withdrawal fence",
+        "new_quote": "Missing, corrupted, mismatched or withdrawn custody refuses with start_receipt_missing, or permission_or_withdrawal for a withdrawal fence",
+        "normalizations": [
+         "whitespace/line wrapping",
+         "YAML quoting/escaping",
+         "Markdown escaping"
+        ],
+        "owner_change_commit": "MERGE2-FIX3 uncommitted owner correction; final commit recorded in REPORT.md"
        }
       }
      ],
@@ -374,12 +478,12 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-630",
-       "line_start": 46373,
-       "line_end": 46373,
-       "quote": "\\ `memory.dedup_sweep.completed` (2026-11-14).\\n\\nEvent history `retention_policy_ref = RP-OPERATIONAL-2555D@1.0.0`,\\",
+       "line_start": 42539,
+       "line_end": 42539,
+       "quote": "Current selected assignment (2026-11-19): memory.dedup_sweep.completed@1.0.0 is registered for project_only in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2325. Its event history selects RP-OPERATIONAL-2555D@1.0.0; Plans/storage-plan.md#SP-630 owns the event policy's existing anchors, counts, holds and deletion rules. Separate stored-value assignment: memory_dedup_sweep_operation uses RP-MEMORY-MAINTENANCE-APPLICATION-2555D@1.0.0 under Plans/Decision_Log.md#DL-509; this assigns that stored value, not event history. Original sources and coherent backups retain their independent owner policies; the event lifetime is not transferred to them. Current append/publication still requires the exact selected schema/scope, original custody, current permission, receipt and required producer adoption. Actual missing registration or unresolved required custody refuses; native execution remains NOT_RUN. No native adoption, new retention choice or governance seal follows.",
        "quote_check": "exact",
-       "quote_scope": "unit SP-630, Plans/storage-plan.md:46164-46415",
-       "file_sha256": "51edc1394ab24ca53a2a021dce3c3c9a1be0f43e2292d901ad56e4b0063a3ebf",
+       "quote_scope": "unit SP-630, Plans/storage-plan.md:42494-42569",
+       "file_sha256": "a80ebad269f3f3a87c644ee23b21cdd62ef64ccad2fbe4377e8bd190614fdf31",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-630",
@@ -387,17 +491,21 @@
         "line_end": 46373,
         "quote": "\\ `memory.dedup_sweep.completed` (2026-11-14).\\n\\nEvent history `retention_policy_ref = RP-OPERATIONAL-2555D@1.0.0`,\\",
         "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+       },
+       "locator_maintenance": {
+        "authority": "MERGE2-FIX3",
+        "reason": "Re-cite the same accepted retention claim at its current exact owner assignment; event and source/checkpoint authority remain separate."
        }
       },
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-630",
-       "line_start": 46379,
-       "line_end": 46379,
-       "quote": "\\ retains `RP-MEMORY-MAINTENANCE-APPLICATION-2555D@1.0.0` under DL-509; this does not assign its referenced\\",
+       "line_start": 42539,
+       "line_end": 42539,
+       "quote": "Current selected assignment (2026-11-19): memory.dedup_sweep.completed@1.0.0 is registered for project_only in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2325. Its event history selects RP-OPERATIONAL-2555D@1.0.0; Plans/storage-plan.md#SP-630 owns the event policy's existing anchors, counts, holds and deletion rules. Separate stored-value assignment: memory_dedup_sweep_operation uses RP-MEMORY-MAINTENANCE-APPLICATION-2555D@1.0.0 under Plans/Decision_Log.md#DL-509; this assigns that stored value, not event history. Original sources and coherent backups retain their independent owner policies; the event lifetime is not transferred to them. Current append/publication still requires the exact selected schema/scope, original custody, current permission, receipt and required producer adoption. Actual missing registration or unresolved required custody refuses; native execution remains NOT_RUN. No native adoption, new retention choice or governance seal follows.",
        "quote_check": "exact",
-       "quote_scope": "unit SP-630, Plans/storage-plan.md:46164-46415",
-       "file_sha256": "51edc1394ab24ca53a2a021dce3c3c9a1be0f43e2292d901ad56e4b0063a3ebf",
+       "quote_scope": "unit SP-630, Plans/storage-plan.md:42494-42569",
+       "file_sha256": "a80ebad269f3f3a87c644ee23b21cdd62ef64ccad2fbe4377e8bd190614fdf31",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-630",
@@ -405,6 +513,10 @@
         "line_end": 46379,
         "quote": "\\ retains `RP-MEMORY-MAINTENANCE-APPLICATION-2555D@1.0.0` under DL-509; this does not assign its referenced\\",
         "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+       },
+       "locator_maintenance": {
+        "authority": "MERGE2-FIX3",
+        "reason": "Re-cite the same accepted retention claim at its current exact owner assignment; event and source/checkpoint authority remain separate."
        }
       }
      ],
@@ -423,12 +535,12 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-630",
-       "line_start": 46222,
-       "line_end": 46224,
-       "quote": "Original operation/result, canonical gists, EventRecord\\\n  \\ and SP-286 receipts join coherent BRS-031 capture/restore boundaries; derived indexes are rebuilt,\\\n  \\ never backed up as canonical gists",
-       "file_sha256": "51edc1394ab24ca53a2a021dce3c3c9a1be0f43e2292d901ad56e4b0063a3ebf",
+       "line_start": 42507,
+       "line_end": 42507,
+       "quote": "Original operation/result, canonical gists, EventRecord and SP-286 receipts join coherent BRS-031 capture/restore boundaries; derived indexes are rebuilt, never backed up as canonical gists",
+       "file_sha256": "a80ebad269f3f3a87c644ee23b21cdd62ef64ccad2fbe4377e8bd190614fdf31",
        "quote_check": "exact",
-       "quote_scope": "unit SP-630, Plans/storage-plan.md:46164-46415",
+       "quote_scope": "unit SP-630, Plans/storage-plan.md:42494-42569",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-630",
@@ -436,17 +548,30 @@
         "line_end": 46224,
         "quote": "Original operation/result, canonical gists, EventRecord\\\n  \\ and SP-286 receipts join coherent BRS-031 capture/restore boundaries; derived indexes are rebuilt,\\\n  \\ never backed up as canonical gists",
         "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+       },
+       "reanchor": {
+        "method": "exact_normalized",
+        "reason": "Whitespace, line wrapping, YAML quoting/escaping or Markdown escaping only; searched the cited unit.",
+        "unit": "SP-630",
+        "old_quote": "Original operation/result, canonical gists, EventRecord\\\n  \\ and SP-286 receipts join coherent BRS-031 capture/restore boundaries; derived indexes are rebuilt,\\\n  \\ never backed up as canonical gists",
+        "new_quote": "Original operation/result, canonical gists, EventRecord and SP-286 receipts join coherent BRS-031 capture/restore boundaries; derived indexes are rebuilt, never backed up as canonical gists",
+        "normalizations": [
+         "whitespace/line wrapping",
+         "YAML quoting/escaping",
+         "Markdown escaping"
+        ],
+        "owner_change_commit": "MERGE2-FIX3 uncommitted owner correction; final commit recorded in REPORT.md"
        }
       },
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-630",
-       "line_start": 46266,
-       "line_end": 46267,
-       "quote": "Recovery rechecks current Project permission and family withdrawal before any original disclosure,\\\n  \\ including completed operations; refusal returns no output and leaves durable state unchanged.",
-       "file_sha256": "51edc1394ab24ca53a2a021dce3c3c9a1be0f43e2292d901ad56e4b0063a3ebf",
+       "line_start": 42512,
+       "line_end": 42512,
+       "quote": "Recovery rechecks current Project permission and family withdrawal before any original disclosure, including completed operations; refusal returns no output and leaves durable state unchanged.",
+       "file_sha256": "a80ebad269f3f3a87c644ee23b21cdd62ef64ccad2fbe4377e8bd190614fdf31",
        "quote_check": "exact",
-       "quote_scope": "unit SP-630, Plans/storage-plan.md:46164-46415",
+       "quote_scope": "unit SP-630, Plans/storage-plan.md:42494-42569",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-630",
@@ -454,17 +579,30 @@
         "line_end": 46267,
         "quote": "Recovery rechecks current Project permission and family withdrawal before any original disclosure,\\\n  \\ including completed operations; refusal returns no output and leaves durable state unchanged.",
         "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+       },
+       "reanchor": {
+        "method": "exact_normalized",
+        "reason": "Whitespace, line wrapping, YAML quoting/escaping or Markdown escaping only; searched the cited unit.",
+        "unit": "SP-630",
+        "old_quote": "Recovery rechecks current Project permission and family withdrawal before any original disclosure,\\\n  \\ including completed operations; refusal returns no output and leaves durable state unchanged.",
+        "new_quote": "Recovery rechecks current Project permission and family withdrawal before any original disclosure, including completed operations; refusal returns no output and leaves durable state unchanged.",
+        "normalizations": [
+         "whitespace/line wrapping",
+         "YAML quoting/escaping",
+         "Markdown escaping"
+        ],
+        "owner_change_commit": "MERGE2-FIX3 uncommitted owner correction; final commit recorded in REPORT.md"
        }
       },
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-630",
-       "quote": "Start custody gate for exactly memory.dedup_sweep.completed@1.0.0, newly\\\n  \\ authored owner contract (DMEM fix round 4)",
-       "line_start": 46270,
-       "line_end": 46271,
-       "file_sha256": "51edc1394ab24ca53a2a021dce3c3c9a1be0f43e2292d901ad56e4b0063a3ebf",
+       "quote": "Start custody gate for exactly memory.dedup_sweep.completed@1.0.0, newly authored owner contract (DMEM fix round 4)",
+       "line_start": 42514,
+       "line_end": 42514,
+       "file_sha256": "a80ebad269f3f3a87c644ee23b21cdd62ef64ccad2fbe4377e8bd190614fdf31",
        "quote_check": "exact",
-       "quote_scope": "unit SP-630, Plans/storage-plan.md:46164-46415",
+       "quote_scope": "unit SP-630, Plans/storage-plan.md:42494-42569",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-630",
@@ -472,17 +610,30 @@
         "line_start": 46270,
         "line_end": 46271,
         "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+       },
+       "reanchor": {
+        "method": "exact_normalized",
+        "reason": "Whitespace, line wrapping, YAML quoting/escaping or Markdown escaping only; searched the cited unit.",
+        "unit": "SP-630",
+        "old_quote": "Start custody gate for exactly memory.dedup_sweep.completed@1.0.0, newly\\\n  \\ authored owner contract (DMEM fix round 4)",
+        "new_quote": "Start custody gate for exactly memory.dedup_sweep.completed@1.0.0, newly authored owner contract (DMEM fix round 4)",
+        "normalizations": [
+         "whitespace/line wrapping",
+         "YAML quoting/escaping",
+         "Markdown escaping"
+        ],
+        "owner_change_commit": "MERGE2-FIX3 uncommitted owner correction; final commit recorded in REPORT.md"
        }
       },
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-630",
-       "quote": "Missing, corrupted, mismatched or withdrawn custody refuses with\\\n  \\ start_receipt_missing, or permission_or_withdrawal for a withdrawal fence",
-       "line_start": 46287,
-       "line_end": 46288,
-       "file_sha256": "51edc1394ab24ca53a2a021dce3c3c9a1be0f43e2292d901ad56e4b0063a3ebf",
+       "quote": "Missing, corrupted, mismatched or withdrawn custody refuses with start_receipt_missing, or permission_or_withdrawal for a withdrawal fence",
+       "line_start": 42514,
+       "line_end": 42514,
+       "file_sha256": "a80ebad269f3f3a87c644ee23b21cdd62ef64ccad2fbe4377e8bd190614fdf31",
        "quote_check": "exact",
-       "quote_scope": "unit SP-630, Plans/storage-plan.md:46164-46415",
+       "quote_scope": "unit SP-630, Plans/storage-plan.md:42494-42569",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-630",
@@ -490,17 +641,30 @@
         "line_start": 46287,
         "line_end": 46288,
         "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+       },
+       "reanchor": {
+        "method": "exact_normalized",
+        "reason": "Whitespace, line wrapping, YAML quoting/escaping or Markdown escaping only; searched the cited unit.",
+        "unit": "SP-630",
+        "old_quote": "Missing, corrupted, mismatched or withdrawn custody refuses with\\\n  \\ start_receipt_missing, or permission_or_withdrawal for a withdrawal fence",
+        "new_quote": "Missing, corrupted, mismatched or withdrawn custody refuses with start_receipt_missing, or permission_or_withdrawal for a withdrawal fence",
+        "normalizations": [
+         "whitespace/line wrapping",
+         "YAML quoting/escaping",
+         "Markdown escaping"
+        ],
+        "owner_change_commit": "MERGE2-FIX3 uncommitted owner correction; final commit recorded in REPORT.md"
        }
       },
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-630",
-       "quote": "The history reader returns a retained original\\\n  \\ that verified when written whatever the operation's current live state",
-       "line_start": 46294,
-       "line_end": 46295,
-       "file_sha256": "51edc1394ab24ca53a2a021dce3c3c9a1be0f43e2292d901ad56e4b0063a3ebf",
+       "quote": "The history reader returns a retained original that verified when written whatever the operation's current live state",
+       "line_start": 42514,
+       "line_end": 42514,
+       "file_sha256": "a80ebad269f3f3a87c644ee23b21cdd62ef64ccad2fbe4377e8bd190614fdf31",
        "quote_check": "exact",
-       "quote_scope": "unit SP-630, Plans/storage-plan.md:46164-46415",
+       "quote_scope": "unit SP-630, Plans/storage-plan.md:42494-42569",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-630",
@@ -508,6 +672,19 @@
         "line_start": 46294,
         "line_end": 46295,
         "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+       },
+       "reanchor": {
+        "method": "exact_normalized",
+        "reason": "Whitespace, line wrapping, YAML quoting/escaping or Markdown escaping only; searched the cited unit.",
+        "unit": "SP-630",
+        "old_quote": "The history reader returns a retained original\\\n  \\ that verified when written whatever the operation's current live state",
+        "new_quote": "The history reader returns a retained original that verified when written whatever the operation's current live state",
+        "normalizations": [
+         "whitespace/line wrapping",
+         "YAML quoting/escaping",
+         "Markdown escaping"
+        ],
+        "owner_change_commit": "MERGE2-FIX3 uncommitted owner correction; final commit recorded in REPORT.md"
        }
       }
      ],
@@ -526,12 +703,12 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-630",
-       "line_start": 46236,
-       "line_end": 46237,
-       "quote": "Operation rows use the phase constraints of their closed schema: accepted has no event receipt\\\n  \\ or outcome; started has only the original start receipt; effect_committed has a complete frozen",
-       "file_sha256": "51edc1394ab24ca53a2a021dce3c3c9a1be0f43e2292d901ad56e4b0063a3ebf",
+       "line_start": 42510,
+       "line_end": 42510,
+       "quote": "Operation rows use the phase constraints of their closed schema: accepted has no event receipt or outcome; started has only the original start receipt; effect_committed has a complete frozen",
+       "file_sha256": "a80ebad269f3f3a87c644ee23b21cdd62ef64ccad2fbe4377e8bd190614fdf31",
        "quote_check": "exact",
-       "quote_scope": "unit SP-630, Plans/storage-plan.md:46164-46415",
+       "quote_scope": "unit SP-630, Plans/storage-plan.md:42494-42569",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-630",
@@ -539,17 +716,30 @@
         "line_end": 46237,
         "quote": "Operation rows use the phase constraints of their closed schema: accepted has no event receipt\\\n  \\ or outcome; started has only the original start receipt; effect_committed has a complete frozen",
         "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+       },
+       "reanchor": {
+        "method": "exact_normalized",
+        "reason": "Whitespace, line wrapping, YAML quoting/escaping or Markdown escaping only; searched the cited unit.",
+        "unit": "SP-630",
+        "old_quote": "Operation rows use the phase constraints of their closed schema: accepted has no event receipt\\\n  \\ or outcome; started has only the original start receipt; effect_committed has a complete frozen",
+        "new_quote": "Operation rows use the phase constraints of their closed schema: accepted has no event receipt or outcome; started has only the original start receipt; effect_committed has a complete frozen",
+        "normalizations": [
+         "whitespace/line wrapping",
+         "YAML quoting/escaping",
+         "Markdown escaping"
+        ],
+        "owner_change_commit": "MERGE2-FIX3 uncommitted owner correction; final commit recorded in REPORT.md"
        }
       },
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-630",
-       "quote": "Start custody gate for exactly memory.dedup_sweep.completed@1.0.0, newly\\\n  \\ authored owner contract (DMEM fix round 4)",
-       "line_start": 46270,
-       "line_end": 46271,
-       "file_sha256": "51edc1394ab24ca53a2a021dce3c3c9a1be0f43e2292d901ad56e4b0063a3ebf",
+       "quote": "Start custody gate for exactly memory.dedup_sweep.completed@1.0.0, newly authored owner contract (DMEM fix round 4)",
+       "line_start": 42514,
+       "line_end": 42514,
+       "file_sha256": "a80ebad269f3f3a87c644ee23b21cdd62ef64ccad2fbe4377e8bd190614fdf31",
        "quote_check": "exact",
-       "quote_scope": "unit SP-630, Plans/storage-plan.md:46164-46415",
+       "quote_scope": "unit SP-630, Plans/storage-plan.md:42494-42569",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-630",
@@ -557,17 +747,30 @@
         "line_start": 46270,
         "line_end": 46271,
         "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+       },
+       "reanchor": {
+        "method": "exact_normalized",
+        "reason": "Whitespace, line wrapping, YAML quoting/escaping or Markdown escaping only; searched the cited unit.",
+        "unit": "SP-630",
+        "old_quote": "Start custody gate for exactly memory.dedup_sweep.completed@1.0.0, newly\\\n  \\ authored owner contract (DMEM fix round 4)",
+        "new_quote": "Start custody gate for exactly memory.dedup_sweep.completed@1.0.0, newly authored owner contract (DMEM fix round 4)",
+        "normalizations": [
+         "whitespace/line wrapping",
+         "YAML quoting/escaping",
+         "Markdown escaping"
+        ],
+        "owner_change_commit": "MERGE2-FIX3 uncommitted owner correction; final commit recorded in REPORT.md"
        }
       },
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-630",
-       "quote": "Missing, corrupted, mismatched or withdrawn custody refuses with\\\n  \\ start_receipt_missing, or permission_or_withdrawal for a withdrawal fence",
-       "line_start": 46287,
-       "line_end": 46288,
-       "file_sha256": "51edc1394ab24ca53a2a021dce3c3c9a1be0f43e2292d901ad56e4b0063a3ebf",
+       "quote": "Missing, corrupted, mismatched or withdrawn custody refuses with start_receipt_missing, or permission_or_withdrawal for a withdrawal fence",
+       "line_start": 42514,
+       "line_end": 42514,
+       "file_sha256": "a80ebad269f3f3a87c644ee23b21cdd62ef64ccad2fbe4377e8bd190614fdf31",
        "quote_check": "exact",
-       "quote_scope": "unit SP-630, Plans/storage-plan.md:46164-46415",
+       "quote_scope": "unit SP-630, Plans/storage-plan.md:42494-42569",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-630",
@@ -575,6 +778,19 @@
         "line_start": 46287,
         "line_end": 46288,
         "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+       },
+       "reanchor": {
+        "method": "exact_normalized",
+        "reason": "Whitespace, line wrapping, YAML quoting/escaping or Markdown escaping only; searched the cited unit.",
+        "unit": "SP-630",
+        "old_quote": "Missing, corrupted, mismatched or withdrawn custody refuses with\\\n  \\ start_receipt_missing, or permission_or_withdrawal for a withdrawal fence",
+        "new_quote": "Missing, corrupted, mismatched or withdrawn custody refuses with start_receipt_missing, or permission_or_withdrawal for a withdrawal fence",
+        "normalizations": [
+         "whitespace/line wrapping",
+         "YAML quoting/escaping",
+         "Markdown escaping"
+        ],
+        "owner_change_commit": "MERGE2-FIX3 uncommitted owner correction; final commit recorded in REPORT.md"
        }
       },
       {
@@ -611,12 +827,12 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-630",
-       "line_start": 46208,
-       "line_end": 46210,
-       "quote": "Exact consumer reader.memory.dedup_sweep.completed.history.v1@1.0.0\\\n  \\ is a newly authored stateless read-only binding used by Memory maintenance history and audit lookup\\\n  \\ for this exact type. I",
-       "file_sha256": "51edc1394ab24ca53a2a021dce3c3c9a1be0f43e2292d901ad56e4b0063a3ebf",
+       "line_start": 42506,
+       "line_end": 42506,
+       "quote": "Exact consumer reader.memory.dedup_sweep.completed.history.v1@1.0.0 is a newly authored stateless read-only binding used by Memory maintenance history and audit lookup for this exact type. I",
+       "file_sha256": "a80ebad269f3f3a87c644ee23b21cdd62ef64ccad2fbe4377e8bd190614fdf31",
        "quote_check": "exact",
-       "quote_scope": "unit SP-630, Plans/storage-plan.md:46164-46415",
+       "quote_scope": "unit SP-630, Plans/storage-plan.md:42494-42569",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-630",
@@ -624,6 +840,19 @@
         "line_end": 46210,
         "quote": "Exact consumer reader.memory.dedup_sweep.completed.history.v1@1.0.0\\\n  \\ is a newly authored stateless read-only binding used by Memory maintenance history and audit lookup\\\n  \\ for this exact type. I",
         "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+       },
+       "reanchor": {
+        "method": "exact_normalized",
+        "reason": "Whitespace, line wrapping, YAML quoting/escaping or Markdown escaping only; searched the cited unit.",
+        "unit": "SP-630",
+        "old_quote": "Exact consumer reader.memory.dedup_sweep.completed.history.v1@1.0.0\\\n  \\ is a newly authored stateless read-only binding used by Memory maintenance history and audit lookup\\\n  \\ for this exact type. I",
+        "new_quote": "Exact consumer reader.memory.dedup_sweep.completed.history.v1@1.0.0 is a newly authored stateless read-only binding used by Memory maintenance history and audit lookup for this exact type. I",
+        "normalizations": [
+         "whitespace/line wrapping",
+         "YAML quoting/escaping",
+         "Markdown escaping"
+        ],
+        "owner_change_commit": "MERGE2-FIX3 uncommitted owner correction; final commit recorded in REPORT.md"
        }
       },
       {
@@ -661,12 +890,12 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-630",
-       "line_start": 46229,
-       "line_end": 46231,
-       "quote": "Withdrawal\\\n  \\ first fences new command acceptance and this family's writer admission, drains or explicitly leaves\\\n  \\ unresolved existing original operations without reissuing them, then under the",
-       "file_sha256": "51edc1394ab24ca53a2a021dce3c3c9a1be0f43e2292d901ad56e4b0063a3ebf",
+       "line_start": 42508,
+       "line_end": 42508,
+       "quote": "Withdrawal first fences new command acceptance and this family's writer admission, drains or explicitly leaves unresolved existing original operations without reissuing them, then under the",
+       "file_sha256": "a80ebad269f3f3a87c644ee23b21cdd62ef64ccad2fbe4377e8bd190614fdf31",
        "quote_check": "exact",
-       "quote_scope": "unit SP-630, Plans/storage-plan.md:46164-46415",
+       "quote_scope": "unit SP-630, Plans/storage-plan.md:42494-42569",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-630",
@@ -674,17 +903,30 @@
         "line_end": 46231,
         "quote": "Withdrawal\\\n  \\ first fences new command acceptance and this family's writer admission, drains or explicitly leaves\\\n  \\ unresolved existing original operations without reissuing them, then under the",
         "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+       },
+       "reanchor": {
+        "method": "exact_normalized",
+        "reason": "Whitespace, line wrapping, YAML quoting/escaping or Markdown escaping only; searched the cited unit.",
+        "unit": "SP-630",
+        "old_quote": "Withdrawal\\\n  \\ first fences new command acceptance and this family's writer admission, drains or explicitly leaves\\\n  \\ unresolved existing original operations without reissuing them, then under the",
+        "new_quote": "Withdrawal first fences new command acceptance and this family's writer admission, drains or explicitly leaves unresolved existing original operations without reissuing them, then under the",
+        "normalizations": [
+         "whitespace/line wrapping",
+         "YAML quoting/escaping",
+         "Markdown escaping"
+        ],
+        "owner_change_commit": "MERGE2-FIX3 uncommitted owner correction; final commit recorded in REPORT.md"
        }
       },
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-630",
-       "line_start": 46266,
-       "line_end": 46267,
-       "quote": "Recovery rechecks current Project permission and family withdrawal before any original disclosure,\\\n  \\ including completed operations; refusal returns no output and leaves durable state unchanged.",
-       "file_sha256": "51edc1394ab24ca53a2a021dce3c3c9a1be0f43e2292d901ad56e4b0063a3ebf",
+       "line_start": 42512,
+       "line_end": 42512,
+       "quote": "Recovery rechecks current Project permission and family withdrawal before any original disclosure, including completed operations; refusal returns no output and leaves durable state unchanged.",
+       "file_sha256": "a80ebad269f3f3a87c644ee23b21cdd62ef64ccad2fbe4377e8bd190614fdf31",
        "quote_check": "exact",
-       "quote_scope": "unit SP-630, Plans/storage-plan.md:46164-46415",
+       "quote_scope": "unit SP-630, Plans/storage-plan.md:42494-42569",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-630",
@@ -692,17 +934,30 @@
         "line_end": 46267,
         "quote": "Recovery rechecks current Project permission and family withdrawal before any original disclosure,\\\n  \\ including completed operations; refusal returns no output and leaves durable state unchanged.",
         "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+       },
+       "reanchor": {
+        "method": "exact_normalized",
+        "reason": "Whitespace, line wrapping, YAML quoting/escaping or Markdown escaping only; searched the cited unit.",
+        "unit": "SP-630",
+        "old_quote": "Recovery rechecks current Project permission and family withdrawal before any original disclosure,\\\n  \\ including completed operations; refusal returns no output and leaves durable state unchanged.",
+        "new_quote": "Recovery rechecks current Project permission and family withdrawal before any original disclosure, including completed operations; refusal returns no output and leaves durable state unchanged.",
+        "normalizations": [
+         "whitespace/line wrapping",
+         "YAML quoting/escaping",
+         "Markdown escaping"
+        ],
+        "owner_change_commit": "MERGE2-FIX3 uncommitted owner correction; final commit recorded in REPORT.md"
        }
       },
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-630",
-       "line_start": 46323,
-       "line_end": 46324,
-       "quote": "Reader dispatch follows\\\n  \\ SP-1101: each retained canonical original",
-       "file_sha256": "51edc1394ab24ca53a2a021dce3c3c9a1be0f43e2292d901ad56e4b0063a3ebf",
+       "line_start": 42518,
+       "line_end": 42518,
+       "quote": "Reader dispatch follows SP-1101: each retained canonical original",
+       "file_sha256": "a80ebad269f3f3a87c644ee23b21cdd62ef64ccad2fbe4377e8bd190614fdf31",
        "quote_check": "exact",
-       "quote_scope": "unit SP-630, Plans/storage-plan.md:46164-46415",
+       "quote_scope": "unit SP-630, Plans/storage-plan.md:42494-42569",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-630",
@@ -710,6 +965,19 @@
         "line_end": 46324,
         "quote": "Reader dispatch follows\\\n  \\ SP-1101: each retained canonical original",
         "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+       },
+       "reanchor": {
+        "method": "exact_normalized",
+        "reason": "Whitespace, line wrapping, YAML quoting/escaping or Markdown escaping only; searched the cited unit.",
+        "unit": "SP-630",
+        "old_quote": "Reader dispatch follows\\\n  \\ SP-1101: each retained canonical original",
+        "new_quote": "Reader dispatch follows SP-1101: each retained canonical original",
+        "normalizations": [
+         "whitespace/line wrapping",
+         "YAML quoting/escaping",
+         "Markdown escaping"
+        ],
+        "owner_change_commit": "MERGE2-FIX3 uncommitted owner correction; final commit recorded in REPORT.md"
        }
       }
      ],
@@ -728,12 +996,12 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-630",
-       "line_start": 46171,
-       "line_end": 46176,
-       "quote": "Newly authored owner contract under DL-045 for exactly memory.dedup_sweep.completed@1.0.0; search scope\\\n  \\ and negative evidence are the family's row in reports/event-authority-20261104/DMEM-search.json. At preparation before the 2026-11-18 registration, the family was absent from event_family_registry.json and quarantined before append or projection. Retention\\\n  \\ is PENDING_RETENTION_DECISION: candidate ordinary telemetry (Case L-3, 90 days/2,000,000 per Project)\\\n  \\ versus audit authority (indefinite/no count eviction); neither is selected. Unknown policy is materially\\\n  \\ incomplete and permits no destructive inference. Operation custody has the same pending assignment,\\\n  \\ and actual native activation is fenced until it resolves.",
-       "file_sha256": "51edc1394ab24ca53a2a021dce3c3c9a1be0f43e2292d901ad56e4b0063a3ebf",
+       "line_start": 42501,
+       "line_end": 42503,
+       "quote": "|-\n  Newly authored owner contract under DL-045 for exactly memory.dedup_sweep.completed@1.0.0; search scope and negative evidence are the family's row in reports/event-authority-20261104/DMEM-search.json. At preparation before the 2026-11-18 registration, the family was absent from event_family_registry.json and quarantined before append or projection. Historical preparation snapshot (2026-11-19, stale wording in received dfea17a6c4): «Retention is PENDING_RETENTION_DECISION: candidate ordinary telemetry (Case L-3, 90 days/2,000,000 per Project) versus audit authority (indefinite/no count eviction); neither is selected.» Unknown policy is materially incomplete and permits no destructive inference. Operation custody has the same pending assignment, and actual native activation is fenced until it resolves.\n  Identity",
+       "file_sha256": "a80ebad269f3f3a87c644ee23b21cdd62ef64ccad2fbe4377e8bd190614fdf31",
        "quote_check": "exact",
-       "quote_scope": "unit SP-630, Plans/storage-plan.md:46164-46415",
+       "quote_scope": "unit SP-630, Plans/storage-plan.md:42494-42569",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-630",
@@ -745,27 +1013,24 @@
         "quote_scope": "unit SP-630, Plans/storage-plan.md:46163-46415"
        },
        "reanchor": {
-        "method": "recited_authorized_owner_change",
+        "method": "re_cited",
+        "reason": "The committed correction dates the old preparation outcome and states the already assigned policy/current membership. The source/identity/custody/native constraints and cell verdict stay unchanged.",
         "unit": "SP-630",
-        "source_commit": "0c904de00426b0089ba5d56349fda8ea16cc9f88",
-        "owner_change_commit": "55aecc69b0ed447088ffd3c364fe60c06739018a",
-        "before_unit_sha256": "56d7a22f73ffe2fa1886cb2655f036cb63ef08bd2811a2b0b730790d73ab76a3",
-        "after_unit_sha256": "d6264beda3698520c7062674e4c26a5762b4c58cf49b833c74f1625365ddf3a0",
-        "history": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/merge2-fix1/evidence/reanchor-history/Plans_storage-plan.md-SP-630.log",
-        "why": "The approved owner edit makes preparation-time nonmembership dated history and conditions present refusal on actual membership; the cited contract role and all other source, identity, retention and native fences remain. This carries the reviewed cell without changing its verdict.",
-        "old_quote": "Newly authored owner contract under DL-045 for exactly memory.dedup_sweep.completed@1.0.0; search scope\\\n  \\ and negative evidence are the family's row in reports/event-authority-20261104/DMEM-search.json. The\\\n  \\ family remains absent from event_family_registry.json, quarantined before append or projection. Retention\\\n  \\ is PENDING_RETENTION_DECISION: candidate ordinary telemetry (Case L-3, 90 days/2,000,000 per Project)\\\n  \\ versus audit authority (indefinite/no count eviction); neither is selected. Unknown policy is materially\\\n  \\ incomplete and permits no destructive inference. Operation custody has the same pending assignment,\\\n  \\ and actual native activation is fenced until it resolves.",
-        "new_quote": "Newly authored owner contract under DL-045 for exactly memory.dedup_sweep.completed@1.0.0; search scope\\\n  \\ and negative evidence are the family's row in reports/event-authority-20261104/DMEM-search.json. At preparation before the 2026-11-18 registration, the family was absent from event_family_registry.json and quarantined before append or projection. Retention\\\n  \\ is PENDING_RETENTION_DECISION: candidate ordinary telemetry (Case L-3, 90 days/2,000,000 per Project)\\\n  \\ versus audit authority (indefinite/no count eviction); neither is selected. Unknown policy is materially\\\n  \\ incomplete and permits no destructive inference. Operation custody has the same pending assignment,\\\n  \\ and actual native activation is fenced until it resolves."
+        "old_quote": "Newly authored owner contract under DL-045 for exactly memory.dedup_sweep.completed@1.0.0; search scope\\\n  \\ and negative evidence are the family's row in reports/event-authority-20261104/DMEM-search.json. At preparation before the 2026-11-18 registration, the family was absent from event_family_registry.json and quarantined before append or projection. Retention\\\n  \\ is PENDING_RETENTION_DECISION: candidate ordinary telemetry (Case L-3, 90 days/2,000,000 per Project)\\\n  \\ versus audit authority (indefinite/no count eviction); neither is selected. Unknown policy is materially\\\n  \\ incomplete and permits no destructive inference. Operation custody has the same pending assignment,\\\n  \\ and actual native activation is fenced until it resolves.",
+        "new_quote": "|-\n  Newly authored owner contract under DL-045 for exactly memory.dedup_sweep.completed@1.0.0; search scope and negative evidence are the family's row in reports/event-authority-20261104/DMEM-search.json. At preparation before the 2026-11-18 registration, the family was absent from event_family_registry.json and quarantined before append or projection. Historical preparation snapshot (2026-11-19, stale wording in received dfea17a6c4): «Retention is PENDING_RETENTION_DECISION: candidate ordinary telemetry (Case L-3, 90 days/2,000,000 per Project) versus audit authority (indefinite/no count eviction); neither is selected.» Unknown policy is materially incomplete and permits no destructive inference. Operation custody has the same pending assignment, and actual native activation is fenced until it resolves.\n  Identity",
+        "normalizations": [],
+        "owner_change_commit": "MERGE2-FIX3 uncommitted owner correction; final commit recorded in REPORT.md"
        }
       },
       {
        "path": "Plans/Contracts_V0.md",
        "unit": "CV-650",
-       "line_start": 38145,
-       "line_end": 38145,
+       "line_start": 37225,
+       "line_end": 37225,
        "quote": "canonical_text: Newly authored closed payload owner contract for exactly memory.dedup_sweep.completed@1.0.0 under",
        "quote_check": "exact",
-       "quote_scope": "unit CV-650, Plans/Contracts_V0.md:38138-38185",
-       "file_sha256": "2a9090efcaefbc3b0e85c2155255e078125e4d05a933e115ca931c6566b8b74b",
+       "quote_scope": "unit CV-650, Plans/Contracts_V0.md:37218-37265",
+       "file_sha256": "405f917ed143e5aefbcee55513fcdf1b11fa61f0dce5d9f164ad6e44ddf078ce",
        "source_citation": {
         "path": "Plans/Contracts_V0.md",
         "unit": "CV-650",
@@ -908,9 +1173,9 @@
   "row_pointer": "#/families/407"
  },
  "evidence_maintenance": {
-  "authority": "MERGE2-FIX2 findings 1/2/3",
-  "source_commit": "0f2a90ece55d4bafd163b19a05cd3c4eda91b9c1",
-  "source_assessment_sha256": "cf848386970a995b0c4bb91eb6d443c5c184290747a91987d4be65c4e391b46a",
+  "authority": "MERGE2-FIX3 items 1/2/3/4",
+  "source_commit": "dfea17a6c44205c69598882b0305b0cbeab1a3e8",
+  "source_assessment_sha256": "924ab8aac3316de64b1278ef677f9d1d960fa22cea126abe5ed69df8dbf8491a",
   "native_execution": "NOT_RUN",
   "verdicts_changed": false
  }

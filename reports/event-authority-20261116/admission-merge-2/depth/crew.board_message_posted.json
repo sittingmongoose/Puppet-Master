@@ -154,12 +154,12 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-720",
-       "line_start": 35506,
-       "line_end": 35506,
+       "line_start": 35455,
+       "line_end": 35455,
        "quote": "Its closed member `crew_board_message_posted` is copied from Plans/coordination_event_payloads.schema.json#/$defs/crew_board_message_posted, the file the row's value_schema_ref names, including schema_version and scope union;",
        "quote_check": "exact",
-       "quote_scope": "unit SP-720, Plans/storage-plan.md:35502-35546",
-       "file_sha256": "51edc1394ab24ca53a2a021dce3c3c9a1be0f43e2292d901ad56e4b0063a3ebf",
+       "quote_scope": "unit SP-720, Plans/storage-plan.md:35451-35495",
+       "file_sha256": "a80ebad269f3f3a87c644ee23b21cdd62ef64ccad2fbe4377e8bd190614fdf31",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-720",
@@ -504,10 +504,14 @@
         "path": "Plans/orchestrator-subagent-integration.md",
         "line": 32507,
         "sha256": "fa6173a2d85cbb5e63635c4044e792a2db27ab19a1a592fb0ed47d0649fc2dd1",
-        "file_sha256": "b39393943cd0f6532f76acdc63eb4152c4cea49b337972fb49705a7e9bfc2365",
+        "file_sha256": "fa6173a2d85cbb5e63635c4044e792a2db27ab19a1a592fb0ed47d0649fc2dd1",
         "unit": "OSI-681",
         "commit": "e14b1332904a7d67b3184b732c3c77bcabe5088f",
-        "quote": "### OSI-681 — crew.board_message_posted"
+        "quote": "### OSI-681 — crew.board_message_posted",
+        "line_start": 32507,
+        "line_end": 32507,
+        "quote_check": "exact",
+        "quote_scope": "unit OSI-681, Plans/orchestrator-subagent-integration.md@e14b1332904a7d67b3184b732c3c77bcabe5088f:32507-32562"
        }
       },
       {
@@ -526,11 +530,13 @@
         "line": 32531,
         "quote": "**Oracles.** ATS-360 and `Plans/orchestrator_event_contract_fixtures.json` select only `crew.board_message_posted` cases. Positive payload and negative missing-required/unknown-field/foreign-scope/schema-version cases run via `python3 scripts/pm-orchestrator-event-contracts.py`. Native NOT_RUN obligations: full-value uncertain receipt retry/conflict, producer predicate and canonical-effect ordering, restore entropy, current token/source/access fences, deletion/hold deadline, version/withdrawal races and replay without the effect named above. Static payload success never certifies those native obligations.",
         "sha256": "fa6173a2d85cbb5e63635c4044e792a2db27ab19a1a592fb0ed47d0649fc2dd1",
-        "line_start": 32556,
-        "line_end": 32556,
-        "file_sha256": "b39393943cd0f6532f76acdc63eb4152c4cea49b337972fb49705a7e9bfc2365",
+        "line_start": 32531,
+        "line_end": 32531,
+        "file_sha256": "fa6173a2d85cbb5e63635c4044e792a2db27ab19a1a592fb0ed47d0649fc2dd1",
         "unit": "OSI-681",
-        "commit": "e14b1332904a7d67b3184b732c3c77bcabe5088f"
+        "commit": "e14b1332904a7d67b3184b732c3c77bcabe5088f",
+        "quote_check": "exact",
+        "quote_scope": "unit OSI-681, Plans/orchestrator-subagent-integration.md@e14b1332904a7d67b3184b732c3c77bcabe5088f:32507-32562"
        }
       },
       {
@@ -561,9 +567,9 @@
   "row_pointer": "#/families/362"
  },
  "evidence_maintenance": {
-  "authority": "MERGE2-FIX2 findings 1/2/3",
-  "source_commit": "0f2a90ece55d4bafd163b19a05cd3c4eda91b9c1",
-  "source_assessment_sha256": "00a2c770e06bec4fa023fbf5802a83d7c1ce6a98d282e14655aefe4e244c6726",
+  "authority": "MERGE2-FIX3 items 1/2/3/4",
+  "source_commit": "dfea17a6c44205c69598882b0305b0cbeab1a3e8",
+  "source_assessment_sha256": "7228b3862cbbf67a0c1ba9a74f8cbe799d92541810a69bfea5e9573004d1344f",
   "native_execution": "NOT_RUN",
   "verdicts_changed": false
  }

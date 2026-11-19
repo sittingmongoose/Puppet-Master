@@ -59,9 +59,9 @@
        "line_start": 2141,
        "line_end": 2141,
        "quote": "git.clone.completed 1.0.0 — newly authored owner contract under DL-045.",
-       "file_sha256": "e19265b61f2655a20a361c78517f616187ac5e6edb1120af54606f16f7d54234",
+       "file_sha256": "8a7b05fe2ea59dfb6135eb19c77a1f92971514256ed1a4efd4c068a9d5b6e3b7",
        "quote_check": "exact",
-       "quote_scope": "unit SCS-085, Plans/Source_Control_System.md:2141-2192",
+       "quote_scope": "unit SCS-085, Plans/Source_Control_System.md:2141-2194",
        "source_citation": {
         "path": "Plans/Source_Control_System.md",
         "unit": "SCS-085",
@@ -90,9 +90,9 @@
        "line_start": 2153,
        "line_end": 2153,
        "quote": "Adopt SP-286 first-AppendReceipt custody and CV-339 full-value v2 successor by name, including SP-336/SP-347 current group-commit rules. Validate admission before append; absent membership, unresolved",
-       "file_sha256": "e19265b61f2655a20a361c78517f616187ac5e6edb1120af54606f16f7d54234",
+       "file_sha256": "8a7b05fe2ea59dfb6135eb19c77a1f92971514256ed1a4efd4c068a9d5b6e3b7",
        "quote_check": "exact",
-       "quote_scope": "unit SCS-085, Plans/Source_Control_System.md:2141-2192",
+       "quote_scope": "unit SCS-085, Plans/Source_Control_System.md:2141-2194",
        "source_citation": {
         "path": "Plans/Source_Control_System.md",
         "unit": "SCS-085",
@@ -139,9 +139,9 @@
        "line_start": 2155,
        "line_end": 2155,
        "quote": "Exact envelope joins for git.clone.completed: actor_ref is the non-empty non-secret actor reference retained by the original ordinary Git clone command operation from its accepted owner request, never",
-       "file_sha256": "e19265b61f2655a20a361c78517f616187ac5e6edb1120af54606f16f7d54234",
+       "file_sha256": "8a7b05fe2ea59dfb6135eb19c77a1f92971514256ed1a4efd4c068a9d5b6e3b7",
        "quote_check": "exact",
-       "quote_scope": "unit SCS-085, Plans/Source_Control_System.md:2141-2192",
+       "quote_scope": "unit SCS-085, Plans/Source_Control_System.md:2141-2194",
        "source_citation": {
         "path": "Plans/Source_Control_System.md",
         "unit": "SCS-085",
@@ -170,9 +170,9 @@
        "line_start": 2155,
        "line_end": 2155,
        "quote": "Exact envelope joins for git.clone.completed: actor_ref is the non-empty non-secret actor reference retained by the original ordinary Git clone command operation from its accepted owner request, never",
-       "file_sha256": "e19265b61f2655a20a361c78517f616187ac5e6edb1120af54606f16f7d54234",
+       "file_sha256": "8a7b05fe2ea59dfb6135eb19c77a1f92971514256ed1a4efd4c068a9d5b6e3b7",
        "quote_check": "exact",
-       "quote_scope": "unit SCS-085, Plans/Source_Control_System.md:2141-2192",
+       "quote_scope": "unit SCS-085, Plans/Source_Control_System.md:2141-2194",
        "source_citation": {
         "path": "Plans/Source_Control_System.md",
         "unit": "SCS-085",
@@ -188,9 +188,9 @@
        "line_start": 2154,
        "line_end": 2154,
        "quote": "Identity digest is SHA-256 of UTF-8 compact JSON array [\"git.clone.completed\", \"1.0.0\", storage_instance_id, payload.project_id, payload.operation_id], with ensure_ascii=false, no whitespace and array",
-       "file_sha256": "e19265b61f2655a20a361c78517f616187ac5e6edb1120af54606f16f7d54234",
+       "file_sha256": "8a7b05fe2ea59dfb6135eb19c77a1f92971514256ed1a4efd4c068a9d5b6e3b7",
        "quote_check": "exact",
-       "quote_scope": "unit SCS-085, Plans/Source_Control_System.md:2141-2192",
+       "quote_scope": "unit SCS-085, Plans/Source_Control_System.md:2141-2194",
        "source_citation": {
         "path": "Plans/Source_Control_System.md",
         "unit": "SCS-085",
@@ -219,9 +219,9 @@
        "line_start": 2154,
        "line_end": 2154,
        "quote": "Identity digest is SHA-256 of UTF-8 compact JSON array [\"git.clone.completed\", \"1.0.0\", storage_instance_id, payload.project_id, payload.operation_id], with ensure_ascii=false, no whitespace and array",
-       "file_sha256": "e19265b61f2655a20a361c78517f616187ac5e6edb1120af54606f16f7d54234",
+       "file_sha256": "8a7b05fe2ea59dfb6135eb19c77a1f92971514256ed1a4efd4c068a9d5b6e3b7",
        "quote_check": "exact",
-       "quote_scope": "unit SCS-085, Plans/Source_Control_System.md:2141-2192",
+       "quote_scope": "unit SCS-085, Plans/Source_Control_System.md:2141-2194",
        "source_citation": {
         "path": "Plans/Source_Control_System.md",
         "unit": "SCS-085",
@@ -237,9 +237,9 @@
        "line_start": 2163,
        "line_end": 2163,
        "quote": "git.clone.completed append and current retry reject replay_policy=projector_replay_only as replay_only_not_appendable",
-       "file_sha256": "e19265b61f2655a20a361c78517f616187ac5e6edb1120af54606f16f7d54234",
+       "file_sha256": "8a7b05fe2ea59dfb6135eb19c77a1f92971514256ed1a4efd4c068a9d5b6e3b7",
        "quote_check": "exact",
-       "quote_scope": "unit SCS-085, Plans/Source_Control_System.md:2141-2192",
+       "quote_scope": "unit SCS-085, Plans/Source_Control_System.md:2141-2194",
        "source_citation": {
         "path": "Plans/Source_Control_System.md",
         "unit": "SCS-085",
@@ -265,12 +265,12 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-607",
-       "line_start": 53226,
-       "line_end": 53228,
-       "quote": "binding for `git.clone.completed` (2026-11-14).\n\n  Event history `retention_policy_ref = RP-AUTHORITY-INDEFINITE@1.0.0`,",
+       "line_start": 46621,
+       "line_end": 46621,
+       "quote": "Current selected assignment (2026-11-19): git.clone.completed@1.0.0 is registered for project_only in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2318. Its event history selects RP-AUTHORITY-INDEFINITE@1.0.0; Plans/storage-plan.md#SP-607 owns the event policy's existing anchors, counts, holds and deletion rules. Original sources and coherent backups retain their independent owner policies; the event lifetime is not transferred to them. Current append/publication still requires the exact selected schema/scope, original custody, current permission, receipt and required producer adoption. Actual missing registration or unresolved required custody refuses; native execution remains NOT_RUN. No native adoption, new retention choice or governance seal follows.",
        "quote_check": "exact",
-       "quote_scope": "unit SP-607, Plans/storage-plan.md:53198-53260",
-       "file_sha256": "51edc1394ab24ca53a2a021dce3c3c9a1be0f43e2292d901ad56e4b0063a3ebf",
+       "quote_scope": "unit SP-607, Plans/storage-plan.md:46584-46649",
+       "file_sha256": "a80ebad269f3f3a87c644ee23b21cdd62ef64ccad2fbe4377e8bd190614fdf31",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-607",
@@ -281,7 +281,11 @@
         "quote_scope": "unit SP-607, Plans/storage-plan.md:53608-53797",
         "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
        },
-       "reanchor_authority": "reports/event-authority-20261116/admission-merge-2/int4-quotation-reanchors.json"
+       "reanchor_authority": "reports/event-authority-20261116/admission-merge-2/int4-quotation-reanchors.json",
+       "locator_maintenance": {
+        "authority": "MERGE2-FIX3",
+        "reason": "Re-cite the same accepted retention claim at its current exact owner assignment; event and source/checkpoint authority remain separate."
+       }
       }
      ],
      "carried_from": {
@@ -302,9 +306,9 @@
        "line_start": 2157,
        "line_end": 2157,
        "quote": "Profile rationale for git.clone.completed: source location and original terminal receipt remain behind authorized refs; URLs with credentials and private absolute destinations are forbidden; redaction",
-       "file_sha256": "e19265b61f2655a20a361c78517f616187ac5e6edb1120af54606f16f7d54234",
+       "file_sha256": "8a7b05fe2ea59dfb6135eb19c77a1f92971514256ed1a4efd4c068a9d5b6e3b7",
        "quote_check": "exact",
-       "quote_scope": "unit SCS-085, Plans/Source_Control_System.md:2141-2192",
+       "quote_scope": "unit SCS-085, Plans/Source_Control_System.md:2141-2194",
        "source_citation": {
         "path": "Plans/Source_Control_System.md",
         "unit": "SCS-085",
@@ -320,9 +324,9 @@
        "line_start": 2158,
        "line_end": 2158,
        "quote": "Custody remains with ordinary Git clone terminal adapter and Storage's original seglog/payload owners. Store only bounded metadata and opaque authorized source refs; no transcript, diff body, secrets,",
-       "file_sha256": "e19265b61f2655a20a361c78517f616187ac5e6edb1120af54606f16f7d54234",
+       "file_sha256": "8a7b05fe2ea59dfb6135eb19c77a1f92971514256ed1a4efd4c068a9d5b6e3b7",
        "quote_check": "exact",
-       "quote_scope": "unit SCS-085, Plans/Source_Control_System.md:2141-2192",
+       "quote_scope": "unit SCS-085, Plans/Source_Control_System.md:2141-2194",
        "source_citation": {
         "path": "Plans/Source_Control_System.md",
         "unit": "SCS-085",
@@ -351,9 +355,9 @@
        "line_start": 2151,
        "line_end": 2151,
        "quote": "Producer: ordinary Git clone terminal adapter. Observe succeeded cmd.source_control.repository.clone with scm_backend=git only after owner native completion, destination verification and terminal oper",
-       "file_sha256": "e19265b61f2655a20a361c78517f616187ac5e6edb1120af54606f16f7d54234",
+       "file_sha256": "8a7b05fe2ea59dfb6135eb19c77a1f92971514256ed1a4efd4c068a9d5b6e3b7",
        "quote_check": "exact",
-       "quote_scope": "unit SCS-085, Plans/Source_Control_System.md:2141-2192",
+       "quote_scope": "unit SCS-085, Plans/Source_Control_System.md:2141-2194",
        "source_citation": {
         "path": "Plans/Source_Control_System.md",
         "unit": "SCS-085",
@@ -382,9 +386,9 @@
        "line_start": 2156,
        "line_end": 2156,
        "quote": "Operating consumer reader.scm.git_clone_completed@1.0.0 uses reader.storage.event_record_index@1.0.0 and projector.storage.event_record_index@1.0.0, explicitly adopting SP-278. It reads this exact eve",
-       "file_sha256": "e19265b61f2655a20a361c78517f616187ac5e6edb1120af54606f16f7d54234",
+       "file_sha256": "8a7b05fe2ea59dfb6135eb19c77a1f92971514256ed1a4efd4c068a9d5b6e3b7",
        "quote_check": "exact",
-       "quote_scope": "unit SCS-085, Plans/Source_Control_System.md:2141-2192",
+       "quote_scope": "unit SCS-085, Plans/Source_Control_System.md:2141-2194",
        "source_citation": {
         "path": "Plans/Source_Control_System.md",
         "unit": "SCS-085",
@@ -400,9 +404,9 @@
        "line_start": 2164,
        "line_end": 2164,
        "quote": "Checkpoint identity for git.clone.completed: before atomic rebuild publication, validate the nine-field durable token",
-       "file_sha256": "e19265b61f2655a20a361c78517f616187ac5e6edb1120af54606f16f7d54234",
+       "file_sha256": "8a7b05fe2ea59dfb6135eb19c77a1f92971514256ed1a4efd4c068a9d5b6e3b7",
        "quote_check": "exact",
-       "quote_scope": "unit SCS-085, Plans/Source_Control_System.md:2141-2192",
+       "quote_scope": "unit SCS-085, Plans/Source_Control_System.md:2141-2194",
        "source_citation": {
         "path": "Plans/Source_Control_System.md",
         "unit": "SCS-085",
@@ -449,9 +453,9 @@
        "line_start": 2160,
        "line_end": 2160,
        "quote": "Compatibility: only this exact 1.0.0 schema is a current writer candidate. Historical names/bytes remain unchanged; unknown future revisions halt the consumer before advance, never normalize by guesse",
-       "file_sha256": "e19265b61f2655a20a361c78517f616187ac5e6edb1120af54606f16f7d54234",
+       "file_sha256": "8a7b05fe2ea59dfb6135eb19c77a1f92971514256ed1a4efd4c068a9d5b6e3b7",
        "quote_check": "exact",
-       "quote_scope": "unit SCS-085, Plans/Source_Control_System.md:2141-2192",
+       "quote_scope": "unit SCS-085, Plans/Source_Control_System.md:2141-2194",
        "source_citation": {
         "path": "Plans/Source_Control_System.md",
         "unit": "SCS-085",
@@ -480,9 +484,9 @@
        "line_start": 2161,
        "line_end": 2161,
        "quote": "Exact-family oracle matrix for git.clone.completed: Plans/small_owner_event_fixtures.json owns its full EventRecord, independent original owner operation/result, original eleven-field receipt and four",
-       "file_sha256": "e19265b61f2655a20a361c78517f616187ac5e6edb1120af54606f16f7d54234",
+       "file_sha256": "8a7b05fe2ea59dfb6135eb19c77a1f92971514256ed1a4efd4c068a9d5b6e3b7",
        "quote_check": "exact",
-       "quote_scope": "unit SCS-085, Plans/Source_Control_System.md:2141-2192",
+       "quote_scope": "unit SCS-085, Plans/Source_Control_System.md:2141-2194",
        "source_citation": {
         "path": "Plans/Source_Control_System.md",
         "unit": "SCS-085",
@@ -516,9 +520,9 @@
        "line_start": 2163,
        "line_end": 2163,
        "quote": "git.clone.completed append and current retry reject replay_policy=projector_replay_only as replay_only_not_appendable",
-       "file_sha256": "e19265b61f2655a20a361c78517f616187ac5e6edb1120af54606f16f7d54234",
+       "file_sha256": "8a7b05fe2ea59dfb6135eb19c77a1f92971514256ed1a4efd4c068a9d5b6e3b7",
        "quote_check": "exact",
-       "quote_scope": "unit SCS-085, Plans/Source_Control_System.md:2141-2192",
+       "quote_scope": "unit SCS-085, Plans/Source_Control_System.md:2141-2194",
        "source_citation": {
         "path": "Plans/Source_Control_System.md",
         "unit": "SCS-085",
@@ -534,9 +538,9 @@
        "line_start": 2164,
        "line_end": 2164,
        "quote": "Checkpoint identity for git.clone.completed: before atomic rebuild publication, validate the nine-field durable token",
-       "file_sha256": "e19265b61f2655a20a361c78517f616187ac5e6edb1120af54606f16f7d54234",
+       "file_sha256": "8a7b05fe2ea59dfb6135eb19c77a1f92971514256ed1a4efd4c068a9d5b6e3b7",
        "quote_check": "exact",
-       "quote_scope": "unit SCS-085, Plans/Source_Control_System.md:2141-2192",
+       "quote_scope": "unit SCS-085, Plans/Source_Control_System.md:2141-2194",
        "source_citation": {
         "path": "Plans/Source_Control_System.md",
         "unit": "SCS-085",
@@ -799,9 +803,9 @@
   "row_pointer": "#/families/400"
  },
  "evidence_maintenance": {
-  "authority": "MERGE2-FIX2 findings 1/2/3",
-  "source_commit": "0f2a90ece55d4bafd163b19a05cd3c4eda91b9c1",
-  "source_assessment_sha256": "e52cddc0766dc6941afc102bfc51446ac00eea2051bd6339e511ec8a20ad4f50",
+  "authority": "MERGE2-FIX3 items 1/2/3/4",
+  "source_commit": "dfea17a6c44205c69598882b0305b0cbeab1a3e8",
+  "source_assessment_sha256": "dcb4fd2ffb5a7295ebae3cc417cf8b54c9ea7443e3f5f5d22291213dd3c3d16e",
   "native_execution": "NOT_RUN",
   "verdicts_changed": false
  }

@@ -4,7 +4,7 @@
  "family_id": "event-family-file-copied",
  "implementation_receipt_sha256": "dceb7f21436cbe126c23822e62caa1b6dedcb45fefae3005c1804576ca34d827",
  "decision_ref": "Plans/Decision_Log.md#DL-2295",
- "decision_section_sha256": "fb488ca6d4a45bf73fad52cc047cf1fba7d918ca24df2cf3dae01d2a84423ba0",
+ "decision_section_sha256": "ba74d65870b550a78eb7770eeb3f5352643b0c74ad10a3da94a6b91d42cfe622",
  "registry_before": {
   "revision": "2026-11-16.158",
   "sha256": "339e1107b6de8e3ceb3604049b3f9d66ee9b08c3fbea9d616af025398454e6cd",
@@ -18,7 +18,7 @@
  "registry_row_sha256": "6c4c2f216b5fcd9c5e85efb62c92d2be6fb2867c9d8e8434971da4a2582569a0",
  "depth_assessment": {
   "path": "reports/event-authority-20261116/admission-merge-2/depth/file.copied.json",
-  "sha256": "c5cb215510ab5b1730447b1b7600728e7ab62939eac5d64abd8e4aa192c25c8a"
+  "sha256": "1daf1fbae1c9afbf30e7c4eaed4ed165263fe2f91fbebf52258ab35ce30f4c5d"
  },
  "admission_landing": {
   "branch": "plans/ea-merge2-apply-20261116",
@@ -37,11 +37,11 @@
   "Written under DL-077. The seal check recomputes completeness from the pinned assessment; the two fields ending in _at_recording are informational only."
  ],
  "evidence_maintenance": {
-  "authority": "MERGE2-FIX2",
-  "source_commit": "0f2a90ece55d4bafd163b19a05cd3c4eda91b9c1",
-  "source_record_sha256": "b02a265937590cef3a3b900da24f622d19e6b79b8c3943b8f6c212295b9835bd",
-  "source_assessment_sha256": "ad7b6c6417c8256ce5dac354b635058118c3f9f3f769ea7ad61a04dd3d3a2850",
-  "source_decision_section_sha256": "f5c4eeeb278e5708a630210cabb9daa937ad1b570f57cd9f059567d1da0f1f7d",
+  "authority": "MERGE2-FIX3",
+  "source_commit": "dfea17a6c44205c69598882b0305b0cbeab1a3e8",
+  "source_record_sha256": "fd9df792095a3e8bd76a1d2376ab77400a3923bf21e015b1ee3877f44477842a",
+  "source_assessment_sha256": "9bf3a717113abe778567b5549eae8259a96f386191538928672432e7fce7d1d0",
+  "source_decision_section_sha256": "fb488ca6d4a45bf73fad52cc047cf1fba7d918ca24df2cf3dae01d2a84423ba0",
   "original_registry_checkpoints_preserved": true
  }
 }

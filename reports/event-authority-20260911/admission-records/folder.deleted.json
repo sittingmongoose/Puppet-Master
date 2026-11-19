@@ -4,7 +4,7 @@
  "family_id": "event-family-folder-deleted",
  "implementation_receipt_sha256": "dceb7f21436cbe126c23822e62caa1b6dedcb45fefae3005c1804576ca34d827",
  "decision_ref": "Plans/Decision_Log.md#DL-2310",
- "decision_section_sha256": "8c7661b6abc1ce4fbadda0eac1ab1d08644c716452c780df4feda462355f19ac",
+ "decision_section_sha256": "8dbb0a63bccccbc56e0ffb46b43097525eff70f416684ec068f83ff41a044f43",
  "registry_before": {
   "revision": "2026-11-16.173",
   "sha256": "cbe5d5900c2a6180b1a5001a6ad8d713e7dd98638db81bb05ff8d3e0316796d4",
@@ -18,7 +18,7 @@
  "registry_row_sha256": "f074ba2b5624c2fe734d714881d7547948396dc621511941068d3320da723543",
  "depth_assessment": {
   "path": "reports/event-authority-20261116/admission-merge-2/depth/folder.deleted.json",
-  "sha256": "df32fe71010e1777c1bc1b04a607483ec6221f6200716a084b73ec6aeea16520"
+  "sha256": "bd470516a2419e546dfa38e443dd092ff3c82621924d9b297cf06558767fe05c"
  },
  "admission_landing": {
   "branch": "plans/ea-merge2-apply-20261116",
@@ -37,11 +37,11 @@
   "Written under DL-077. The seal check recomputes completeness from the pinned assessment; the two fields ending in _at_recording are informational only."
  ],
  "evidence_maintenance": {
-  "authority": "MERGE2-FIX2",
-  "source_commit": "0f2a90ece55d4bafd163b19a05cd3c4eda91b9c1",
-  "source_record_sha256": "f4c766d97e08f93067439feb07168c62f0b4e1f154612cf2f4099c540bb41d1e",
-  "source_assessment_sha256": "d1123ef63e801d46b90d19951b730f63f7d0852737bc176e3457de3b96d13f4f",
-  "source_decision_section_sha256": "3ec8c85a531c27a0bb2bfd3e68e9c19f8c0373f23f1cb718626562c15f221cfb",
+  "authority": "MERGE2-FIX3",
+  "source_commit": "dfea17a6c44205c69598882b0305b0cbeab1a3e8",
+  "source_record_sha256": "5ea81d43f9e5086dac39bbbda399725c7ac9bbb88e907a79e9c8b7534ab8f535",
+  "source_assessment_sha256": "5995aa12172ec3cfd2406fa7b176b327ff06c7537b3f460d560c3f54af620386",
+  "source_decision_section_sha256": "8c7661b6abc1ce4fbadda0eac1ab1d08644c716452c780df4feda462355f19ac",
   "original_registry_checkpoints_preserved": true
  }
 }

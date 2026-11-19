@@ -4,7 +4,7 @@
  "family_id": "event-family-auth-github-failed",
  "implementation_receipt_sha256": "dceb7f21436cbe126c23822e62caa1b6dedcb45fefae3005c1804576ca34d827",
  "decision_ref": "Plans/Decision_Log.md#DL-2148",
- "decision_section_sha256": "b1ab408dce02a20cda27481d9ce3ad9d8a88aeb2ecb68b3600ea1c425770e417",
+ "decision_section_sha256": "8734078953bb933ec59c321e054fc1c5d149b7252d68258dbe1716460d5d7d77",
  "registry_before": {
   "revision": "2026-11-16.11",
   "sha256": "8e33379963ef36eab321738cc63d1b8da69882db8ab203c8060fee085a455389",
@@ -18,7 +18,7 @@
  "registry_row_sha256": "d6ea21fb565a0dd737fef672e1bba9449619490511f69536962d292865adda58",
  "depth_assessment": {
   "path": "reports/event-authority-20261116/admission-merge-2/depth/auth.github.failed.json",
-  "sha256": "c6f53ee4332ba7fd6eba480170ec897b17497df0fa2fe0b27ef89a0bc4aa25b5"
+  "sha256": "9d6dea85881d619af83659341cdaac17e7219f1db7f69a8e7e248d0defd24473"
  },
  "admission_landing": {
   "branch": "plans/ea-merge2-apply-20261116",
@@ -37,11 +37,11 @@
   "Written under DL-077. The seal check recomputes completeness from the pinned assessment; the two fields ending in _at_recording are informational only."
  ],
  "evidence_maintenance": {
-  "authority": "MERGE2-FIX2",
-  "source_commit": "0f2a90ece55d4bafd163b19a05cd3c4eda91b9c1",
-  "source_record_sha256": "3301ec7d4baf67f90ce78e76e4a1362f7c7340cc0f072601c1200e83dfbb3239",
-  "source_assessment_sha256": "421c03f87fd55fcc61161b5ce070f1937093e96fdcfffdf2be71f737ece55c3a",
-  "source_decision_section_sha256": "6f2c223ef26dc645f085561f26bb070708a2a0afa25fe842cfe31dd6b4279157",
+  "authority": "MERGE2-FIX3",
+  "source_commit": "dfea17a6c44205c69598882b0305b0cbeab1a3e8",
+  "source_record_sha256": "f5efc9a56be0bfd0b8a6db85fb05959a5806fb500a6e046b0cca7c6ced8e3acb",
+  "source_assessment_sha256": "866a434cc0769008e3b04aa43041d86c8d366f6b0b81dd9bf27722009ae3ae91",
+  "source_decision_section_sha256": "b1ab408dce02a20cda27481d9ce3ad9d8a88aeb2ecb68b3600ea1c425770e417",
   "original_registry_checkpoints_preserved": true
  }
 }

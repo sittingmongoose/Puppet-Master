@@ -4,7 +4,7 @@
  "family_id": "event-family-bsd-assignment-started",
  "implementation_receipt_sha256": "dceb7f21436cbe126c23822e62caa1b6dedcb45fefae3005c1804576ca34d827",
  "decision_ref": "Plans/Decision_Log.md#DL-2212",
- "decision_section_sha256": "eed43a70da18fef0d698095946c13262108e92bfb1be93140d33c68fb81e8c4b",
+ "decision_section_sha256": "ae93336646d9f8497088fca306b69d75bd6586b886d13e2cc8efb71fc2e4aada",
  "registry_before": {
   "revision": "2026-11-16.75",
   "sha256": "d7f0a607c38ab90ef5e67fd3b5ba745f2c944b975fef6b1591884a0426130aef",
@@ -18,7 +18,7 @@
  "registry_row_sha256": "cd39c708ca68e62ec664c5d37777007868f4a3d9350a8da79896543f56179e2b",
  "depth_assessment": {
   "path": "reports/event-authority-20261116/admission-merge-2/depth/bsd.assignment_started.json",
-  "sha256": "8731888a6fbc9f7c3e2438f2a69a38a5af5d1049abb3dd18bf436bf9d6b6f094"
+  "sha256": "e19e1f08195173fde88b0626e2f1cb892e1e557c738727598ca6a26ab7d89e02"
  },
  "admission_landing": {
   "branch": "plans/ea-merge2-apply-20261116",
@@ -37,11 +37,11 @@
   "Written under DL-077. The seal check recomputes completeness from the pinned assessment; the two fields ending in _at_recording are informational only."
  ],
  "evidence_maintenance": {
-  "authority": "MERGE2-FIX2",
-  "source_commit": "0f2a90ece55d4bafd163b19a05cd3c4eda91b9c1",
-  "source_record_sha256": "29eda49a66a6fcbb1c9a0b06d8ee6a0811c9451de55a2621750e22d570f299d8",
-  "source_assessment_sha256": "227811b17989ed21d9f8f26d28878ab219e1816cbbf0421c96b99a4a6857eb85",
-  "source_decision_section_sha256": "b94d2b8c299fc7133a370b3838230b95b2691d15199dbe25a96c2bd2b1c9bb54",
+  "authority": "MERGE2-FIX3",
+  "source_commit": "dfea17a6c44205c69598882b0305b0cbeab1a3e8",
+  "source_record_sha256": "713d21758bb953a99db7698815cc5995cc7a383ce27619e3c126cf1ebb3fa617",
+  "source_assessment_sha256": "6b3128af52b7ebbba490f91cb47da2ca0aea02124ed86c7a0c8f7bec13c4ca20",
+  "source_decision_section_sha256": "eed43a70da18fef0d698095946c13262108e92bfb1be93140d33c68fb81e8c4b",
   "original_registry_checkpoints_preserved": true
  }
 }

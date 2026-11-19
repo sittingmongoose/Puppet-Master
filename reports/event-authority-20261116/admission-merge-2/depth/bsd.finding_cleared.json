@@ -105,12 +105,12 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-1355",
-       "line_start": 76651,
-       "line_end": 76651,
+       "line_start": 69878,
+       "line_end": 69878,
        "quote": "It adopts SP-286/CV-339 first receipt/full-value v2 and SP-336/SP-347 durability explicitly. Coherent mandatory backup restores the operation, complete original source, receipt controls and payload pa",
        "quote_check": "exact",
-       "quote_scope": "unit SP-1355, Plans/storage-plan.md:76642-76703",
-       "file_sha256": "51edc1394ab24ca53a2a021dce3c3c9a1be0f43e2292d901ad56e4b0063a3ebf",
+       "quote_scope": "unit SP-1355, Plans/storage-plan.md:69869-69930",
+       "file_sha256": "a80ebad269f3f3a87c644ee23b21cdd62ef64ccad2fbe4377e8bd190614fdf31",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-1355",
@@ -190,12 +190,12 @@
       {
        "path": "Plans/Contracts_V0.md",
        "unit": "CV-1355",
-       "line_start": 53887,
-       "line_end": 53887,
+       "line_start": 52235,
+       "line_end": 52235,
        "quote": "This EventRecord 2.0.0 family keeps its closed payload inline (payload_ref null): only the EventRecord 3.0.0 successor materializes the SP-337 event-payload reference route and this family has not ado",
        "quote_check": "exact",
-       "quote_scope": "unit CV-1355, Plans/Contracts_V0.md:53877-53934",
-       "file_sha256": "2a9090efcaefbc3b0e85c2155255e078125e4d05a933e115ca931c6566b8b74b",
+       "quote_scope": "unit CV-1355, Plans/Contracts_V0.md:52225-52282",
+       "file_sha256": "405f917ed143e5aefbcee55513fcdf1b11fa61f0dce5d9f164ad6e44ddf078ce",
        "source_citation": {
         "path": "Plans/Contracts_V0.md",
         "unit": "CV-1355",
@@ -221,12 +221,12 @@
       {
        "path": "Plans/Contracts_V0.md",
        "unit": "CV-1355",
-       "line_start": 53886,
-       "line_end": 53886,
+       "line_start": 52234,
+       "line_end": 52234,
        "quote": "The canonical operation ID is bsd-op@1:<hex(original_source_id)>:<hex(transition_component)>:<hex(subject_id)>; every component is an exact string from the authentic original source, never a caller as",
        "quote_check": "exact",
-       "quote_scope": "unit CV-1355, Plans/Contracts_V0.md:53877-53934",
-       "file_sha256": "2a9090efcaefbc3b0e85c2155255e078125e4d05a933e115ca931c6566b8b74b",
+       "quote_scope": "unit CV-1355, Plans/Contracts_V0.md:52225-52282",
+       "file_sha256": "405f917ed143e5aefbcee55513fcdf1b11fa61f0dce5d9f164ad6e44ddf078ce",
        "source_citation": {
         "path": "Plans/Contracts_V0.md",
         "unit": "CV-1355",
@@ -239,12 +239,12 @@
       {
        "path": "Plans/Contracts_V0.md",
        "unit": "CV-1355",
-       "line_start": 53886,
-       "line_end": 53886,
+       "line_start": 52234,
+       "line_end": 52234,
        "quote": "This family adopts by name the shared CV-1100/SP-1100 number rules (current_integer, storage_uint64, producer_semantic_digest, qualified_jcs, storage_value_bytes and full_value_commitment), the CV-110",
        "quote_check": "exact",
-       "quote_scope": "unit CV-1355, Plans/Contracts_V0.md:53877-53934",
-       "file_sha256": "2a9090efcaefbc3b0e85c2155255e078125e4d05a933e115ca931c6566b8b74b",
+       "quote_scope": "unit CV-1355, Plans/Contracts_V0.md:52225-52282",
+       "file_sha256": "405f917ed143e5aefbcee55513fcdf1b11fa61f0dce5d9f164ad6e44ddf078ce",
        "source_citation": {
         "path": "Plans/Contracts_V0.md",
         "unit": "CV-1355",
@@ -373,12 +373,12 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-1355",
-       "line_start": 76652,
-       "line_end": 76652,
+       "line_start": 69879,
+       "line_end": 69879,
        "quote": "RP-RUNTIME-365D\", \"policy_version\": \"1.0.0\"}. A pending retention marker is never a valid production registry reference. Every complete encoded value must stay at or below 16 KiB; SP-337 externalizes ",
        "quote_check": "exact",
-       "quote_scope": "unit SP-1355, Plans/storage-plan.md:76642-76703",
-       "file_sha256": "51edc1394ab24ca53a2a021dce3c3c9a1be0f43e2292d901ad56e4b0063a3ebf",
+       "quote_scope": "unit SP-1355, Plans/storage-plan.md:69869-69930",
+       "file_sha256": "a80ebad269f3f3a87c644ee23b21cdd62ef64ccad2fbe4377e8bd190614fdf31",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-1355",
@@ -556,12 +556,12 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-1355",
-       "line_start": 76653,
-       "line_end": 76653,
+       "line_start": 69880,
+       "line_end": 69880,
        "quote": "Inclusive restart rechecks the last exact event/frame/offset; replay produces no review, advice delivery, notification, Usage charge, canonical write or new event.",
        "quote_check": "exact",
-       "quote_scope": "unit SP-1355, Plans/storage-plan.md:76642-76703",
-       "file_sha256": "51edc1394ab24ca53a2a021dce3c3c9a1be0f43e2292d901ad56e4b0063a3ebf",
+       "quote_scope": "unit SP-1355, Plans/storage-plan.md:69869-69930",
+       "file_sha256": "a80ebad269f3f3a87c644ee23b21cdd62ef64ccad2fbe4377e8bd190614fdf31",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-1355",
@@ -796,9 +796,9 @@
   "row_pointer": "#/families/296"
  },
  "evidence_maintenance": {
-  "authority": "MERGE2-FIX2 findings 1/2/3",
-  "source_commit": "0f2a90ece55d4bafd163b19a05cd3c4eda91b9c1",
-  "source_assessment_sha256": "7bbe8c834f52d7f37f9cb3e1e3396ec8ea56a8cf89cada257d7eac549e7b29f0",
+  "authority": "MERGE2-FIX3 items 1/2/3/4",
+  "source_commit": "dfea17a6c44205c69598882b0305b0cbeab1a3e8",
+  "source_assessment_sha256": "36bd675ddc932b118433746561b24723a15589fe531eea49625246889e63ce1e",
   "native_execution": "NOT_RUN",
   "verdicts_changed": false
  }

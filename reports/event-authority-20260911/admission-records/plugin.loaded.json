@@ -4,7 +4,7 @@
  "family_id": "event-family-plugin-loaded",
  "implementation_receipt_sha256": "dceb7f21436cbe126c23822e62caa1b6dedcb45fefae3005c1804576ca34d827",
  "decision_ref": "Plans/Decision_Log.md#DL-2352",
- "decision_section_sha256": "d6b15f96929239b6f74875ba8d65d93ae64afdb645982ff3c4d165c6bd09629d",
+ "decision_section_sha256": "ba78314fb3e4be8489bb6d0e28bcc2f1b2104a8e85db47b53ceb8a033cc2472e",
  "registry_before": {
   "revision": "2026-11-16.215",
   "sha256": "c84fd8795b8bb13190748e0f42b352743b9d8991609fa8c87d4a8374dda16226",
@@ -18,7 +18,7 @@
  "registry_row_sha256": "47a1abfa9994bd6e342d364b3b48896d5ed342832002467cac8af32ed25c723b",
  "depth_assessment": {
   "path": "reports/event-authority-20261116/admission-merge-2/depth/plugin.loaded.json",
-  "sha256": "c6e5b7714d30dfa12db359ba1dc96c35c68a164288bc01f9e05dded4d6f1c19a"
+  "sha256": "9832ec5c08e0b0c5f64c529e22db8b064d9eb560a03050c4b49a8881b70e69a2"
  },
  "admission_landing": {
   "branch": "plans/ea-merge2-apply-20261116",
@@ -37,11 +37,11 @@
   "Written under DL-077. The seal check recomputes completeness from the pinned assessment; the two fields ending in _at_recording are informational only."
  ],
  "evidence_maintenance": {
-  "authority": "MERGE2-FIX2",
-  "source_commit": "0f2a90ece55d4bafd163b19a05cd3c4eda91b9c1",
-  "source_record_sha256": "82c83ee93a0cbca113db9a12d25b2faa7db00082f6fdd9cdf4cdff59b46b36fa",
-  "source_assessment_sha256": "4d04c4fd8f812760c50354fbca6c77576180cb49144a50beb718864848caf179",
-  "source_decision_section_sha256": "8500d902a70332a923a2568ee218588b008b3544ee6fd273b973d93fa7a3f804",
+  "authority": "MERGE2-FIX3",
+  "source_commit": "dfea17a6c44205c69598882b0305b0cbeab1a3e8",
+  "source_record_sha256": "cdfed1f4c65ff47c03056fc8e7cba71aaf3aa1663ce99ca39128ce28776ac3df",
+  "source_assessment_sha256": "b1e88c233552762181b0f16d4c9eb7927b2d5a4972b34ded38d9a06d82b91d03",
+  "source_decision_section_sha256": "d6b15f96929239b6f74875ba8d65d93ae64afdb645982ff3c4d165c6bd09629d",
   "original_registry_checkpoints_preserved": true
  }
 }
