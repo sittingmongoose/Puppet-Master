@@ -2,8 +2,9 @@
 """Reproduce the E14-B census from exact FIX4 receipts and six review rosters.
 
 This is an evidence census, not a new semantic grade or a governance reseal.
-The landing target remains the tested commit. Delivery may add this script and
-the compact census bundle, but may change no product or admission bytes.
+The assessed target remains the tested commit. Delivery may add this script,
+the compact census bundle and an exact current-main Concept integration; it
+may change no admission, owner, decision or existing checker bytes.
 """
 import argparse
 import collections
@@ -277,7 +278,7 @@ class Census:
         # census preserves all admissions when that set is empty.
         return {'schema_id':'pm.event_authority.merge2_census.v1','target_commit':TARGET,
             'target_tree':git('rev-parse',TARGET+'^{tree}').decode().strip(),
-            'landing_head':TARGET,'evidence_root':str(self.evidence),
+            'assessed_landing_head':TARGET,'delivery_head_ref':'DELIVERY.json','evidence_root':str(self.evidence),
             'qualification':'PASS is an accepted check outcome, not necessarily raw exit 0. Shared repository checks and inapplicable family-specific obligations are labeled explicitly. No new semantic re-grade or independent review is claimed.',
             'counts':{'families':len(rows),'LAND':counts['LAND'],'MERGE3':counts['MERGE3']},
             'by_lane':by_lane,'check_catalog':catalog,'review_findings':findings,
@@ -287,13 +288,13 @@ class Census:
 
 
 def markdown(c):
-    lines=['# Merge-2 family census','', 'Landing head: '+c['landing_head'], '',
+    lines=['# Merge-2 family census','', 'Assessed head: '+c['target_commit']+'; final landing head: DELIVERY.json.', '',
            str(c['counts']['LAND'])+' LAND; '+str(c['counts']['MERGE3'])+' MERGE3, across 299 families.', '',
            '| Lane | LAND | MERGE3 |','|---|---:|---:|']
     for lane,counts in c['by_lane'].items():lines.append('| '+lane+' | '+str(counts['LAND'])+' | '+str(counts['MERGE3'])+' |')
     lines += ['', 'Every family row includes all 20 final FIX1–4 execution outcomes, the dual-scope obligation, all twelve depth cells, global ignore/DL-694/current-main checks, and the qualified full dry landing. Shared checks and non-applicable obligations are identified. The six original review verdicts and every applicable numbered finding are retained. Closure names exact committed checks and ancestor fix commits.', '',
       'All applicable family findings are closed by the recorded checks. No independent post-FIX4 review is claimed. The unresolved Goal adapter and legacy-prefix tool findings concern the eight pre-existing S5b successors outside this 299-family cohort; they remain explicitly open in the separate finding register. The complete Browser historical-preservation checks pass. Native execution remains NOT_RUN.', '',
-      'Numeric raw exit 1 retains exactly the 35 approved T215 diagnostics. The full dry landing at the landing head returned raw 1 with zero blockers and one audit-closure timeout, completed by a same-head standalone rerun with an 1800-second limit. Its 201 existing/staleness diagnostics match the completed audit copy; no infrastructure result remains unresolved. Governance/migration staleness still requires the separately assigned post-landing refresh/reseal.', '',
+      'Numeric raw exit 1 retains exactly the 35 approved T215 diagnostics. The full dry landing at the assessed FIX4 head returned raw 1 with zero blockers and one audit-closure timeout, completed by a same-head standalone rerun with an 1800-second limit. Its 201 existing/staleness diagnostics match the completed audit copy; no infrastructure result remains unresolved at that edition. DELIVERY.json records the separate new-head landing run. Governance/migration staleness still requires the separately assigned post-landing refresh/reseal.', '',
       'The assessed admission content is unchanged when MERGE3 is empty. A separate DELIVERY.json pins the final delivery/landing head and any subsequent current-main integration. The census branch adds only this reproducible census, its compact reports and its committed checker; no admission, record or Decision Log byte is removed or changed.', '',
       'CENSUS.json contains exact evidence paths and SHA-256 pins, per-family check applicability, review closure links and the empty or non-empty MERGE3 set.']
     return '\n'.join(lines)+'\n'

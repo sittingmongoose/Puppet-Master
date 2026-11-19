@@ -1,6 +1,6 @@
 # Merge-2 family census
 
-Landing head: 074e85a9d585790a6d8b1bf7df0ddb4c7b86d301
+Assessed head: 074e85a9d585790a6d8b1bf7df0ddb4c7b86d301; final landing head: DELIVERY.json.
 
 299 LAND; 0 MERGE3, across 299 families.
 
@@ -29,7 +29,7 @@ Every family row includes all 20 final FIX1–4 execution outcomes, the dual-sco
 
 All applicable family findings are closed by the recorded checks. No independent post-FIX4 review is claimed. The unresolved Goal adapter and legacy-prefix tool findings concern the eight pre-existing S5b successors outside this 299-family cohort; they remain explicitly open in the separate finding register. The complete Browser historical-preservation checks pass. Native execution remains NOT_RUN.
 
-Numeric raw exit 1 retains exactly the 35 approved T215 diagnostics. The full dry landing at the landing head returned raw 1 with zero blockers and one audit-closure timeout, completed by a same-head standalone rerun with an 1800-second limit. Its 201 existing/staleness diagnostics match the completed audit copy; no infrastructure result remains unresolved. Governance/migration staleness still requires the separately assigned post-landing refresh/reseal.
+Numeric raw exit 1 retains exactly the 35 approved T215 diagnostics. The full dry landing at the assessed FIX4 head returned raw 1 with zero blockers and one audit-closure timeout, completed by a same-head standalone rerun with an 1800-second limit. Its 201 existing/staleness diagnostics match the completed audit copy; no infrastructure result remains unresolved at that edition. DELIVERY.json records the separate new-head landing run. Governance/migration staleness still requires the separately assigned post-landing refresh/reseal.
 
 The assessed admission content is unchanged when MERGE3 is empty. A separate DELIVERY.json pins the final delivery/landing head and any subsequent current-main integration. The census branch adds only this reproducible census, its compact reports and its committed checker; no admission, record or Decision Log byte is removed or changed.
 
