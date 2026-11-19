@@ -2,9 +2,9 @@
 
 Source: `Plans/Decision_Log.md`
 
-Source lines: L28747-L56153
+Source lines: L28747-L56216
 
-Source SHA256: `936d4397d1b24b14a166bfc69b1347a222f7cd53bcb2364b6c1e70c79fbc8584`
+Source SHA256: `64529d0fbd1dc900bbf9069b38db6c2112996aad8e3e484571d0a89470c5144e`
 
 ---
 
@@ -27412,6 +27412,69 @@ preserved_exact_tokens:
 - 1bc4a5a898763576d87be4cfe16dd69eca27628ace5d770f6b7fc6f060a27ece
 - 2026-11-19.33
 - 2026-11-19.34
+negative_constraints:
+- No new admission, producer adoption, native execution claim or governance seal.
+```
+
+### DL-2485: Event Authority corrects chat.thread_worktree_pr_created (merge 3 post-landing)
+
+```yaml
+plan_unit_id: DL-2485
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: 'Correction for chat.thread_worktree_pr_created only, under DL-077 and DL-400, resolving post-landing Astra
+  finding(s) [4]. The original admission authority remains Plans/Decision_Log.md#DL-2248; this entry records no new admission,
+  verdict, policy choice or producer adoption. Current row canonical SHA-256 b5aa45c4e4edfccc28764739da88cf19aedc733a92fd02a989be15a8df13feb8.
+  Its scope is application_or_project. Payload editions: application `pm.dch_event.chat_thread_worktree_pr_created.application.v1`
+  (RP-CHAT-THREAD-LIFETIME@1.0.0, producer requires_owner_adoption); project `pm.dch_event.chat_thread_worktree_pr_created.project.v1`
+  (RP-CHAT-THREAD-LIFETIME@1.0.0, producer requires_owner_adoption).
+
+
+  The correction moves the full registry from 2026-11-19.34, 518 families, SHA-256 ed0856a18b0ca204826bb08a2a2e0c1c4b2d124f1239596e60419e824b10b1c4,
+  to 2026-11-19.35, 518 families, SHA-256 443747a3c5c8cfede7a0ab99ea8d26f14b4de3ebab862695a939b201e6fdeb91, without changing
+  another family. Revision witness: reports/event-authority-20261116/admission-merge-3/corrections/chat.thread_worktree_pr_created.json.
+  Depth assessment: reports/event-authority-20261116/admission-merge-2/depth/chat.thread_worktree_pr_created.json, SHA-256
+  4f54f5893935b39a90160640323c5f7e70c61409d1d6f2e07df3981dc02557d3.
+
+
+  The original append checkpoints are preserved: before 2026-11-16.111 SHA-256 360bcadd66f887db57dca456d3160eaf6eb26f325424de55c1e617d3cabe3ad7;
+  after 2026-11-16.112 SHA-256 01bc9035eedc01fa8cfd13b652fd9b5752a4cf513d45b903ccfbf629c83b46c5. Existing semantic owner Plans/assistant-chat-design.md#ACD-620,
+  payload owner Plans/Contracts_V0.md#CV-640, resource Plans/dch_event_payloads/chat_thread_worktree_pr_created.schema.json#/$defs/project
+  retain their contracts. Current citations were re-read from existing canonical text; original citations, records and decision
+  entries remain in the named Git predecessor. Native execution remains NOT_RUN. Required producer adoption, permissions,
+  original custody and receipt/publication fences remain required.'
+gui_related: false
+gui_classification_reason: Maintains one existing event admission and its evidence.
+depends_on:
+- DL-077
+- DL-400
+- DL-2248
+unblocks: []
+acceptance_criteria:
+- Exactly one family is corrected and the original append checkpoints remain authenticated.
+- The correction witness and current DL-077 record match their named Git editions.
+validation_surfaces:
+- python3 scripts/pm-ea-record-chain.py
+- python3 scripts/pm-ea-postfix-check.py
+- python3 scripts/pm-ea-retention-citation-check.py
+risk_class: event_authority_admission
+reasoning_tier: high
+context_scope: event_authority_pnc019_merge3_postfix
+implementation_surfaces:
+- Plans/event_family_registry.json
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/MERGE2-POSTLAND-astra62max/REVIEW.md
+- Plans/Decision_Log.md#DL-2248
+preserved_exact_tokens:
+- chat.thread_worktree_pr_created
+- b5aa45c4e4edfccc28764739da88cf19aedc733a92fd02a989be15a8df13feb8
+- 2026-11-19.34
+- 2026-11-19.35
 negative_constraints:
 - No new admission, producer adoption, native execution claim or governance seal.
 ```
