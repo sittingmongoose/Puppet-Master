@@ -17,6 +17,7 @@ import sys
 
 import yaml
 
+from pm_ea_admission_rows import Gap
 from pm_ea_postfix_corrections import (AUTHORITY, DIRECTORY, RECORDS, REGISTRY,
     canonical, corrected_row, git_bytes, pin, rendered, sha)
 from pm_ea_retention_citations import ROOT, assignment_range, union_range, range_text, union_missing, selections
@@ -45,6 +46,7 @@ def write(path, value, indent=1):
     path.write_text(json.dumps(value, indent=indent, ensure_ascii=False)+'\n')
 
 
+@lru_cache(maxsize=1)
 def writer():
     spec = importlib.util.spec_from_file_location('postfix_correction_writer', ROOT/'scripts/pm-ea-admission-writer.py')
     value = importlib.util.module_from_spec(spec)
@@ -52,7 +54,7 @@ def writer():
     return value
 
 
-def prepare():
+def prepare(previous=None):
     registry = load(REGISTRY)
     rows = {x['event_type']:x for x in registry['families']}
     policies = {x['policy_id']:x for x in load('Plans/storage_value_registry.json')['retention_policies']}
@@ -74,7 +76,15 @@ def prepare():
             try:
                 bodies.append(range_text(item, read))
             except (ValueError, KeyError):
-                pass
+                # PROSE can move an unchanged quotation. Mechanically relocate
+                # it inside its original unit before judging meaning; offset
+                # drift is later citation maintenance, not a new family repair.
+                current = item.get('current_citation', item)
+                try:
+                    relocated = writer().refresh_evidence(current,event_type=event)
+                    bodies.append(range_text(relocated,read))
+                except (ValueError, KeyError, Gap):
+                    pass
         gaps, _ = union_missing(bodies, row, policies)
         if gaps:
             named.setdefault(event, set()).add(4)
@@ -85,7 +95,7 @@ def prepare():
         if event in ('run.background_enqueued', 'tool.execution_started', 'tool.execution_completed'):
             needed.add(1)
             named.setdefault(event, set()).add(4)
-        if event in ('crew.board_message_posted', 'crew.board_message_read', 'crew.board_messages_archived'):
+        if event in ('crew.board_message_posted', 'crew.board_message_read', 'crew.board_messages_archived', 'filesafe.policy_degraded'):
             needed.update(range(len(evidence)))
         planned = []
         for ordinal in sorted(needed):
@@ -112,8 +122,19 @@ def prepare():
         if planned:
             replacements[event] = planned
     families = []
-    for event, findings in sorted(named.items()):
-        families.append(dict(event_type=event, lane=ready[event]['lane'], findings=sorted(findings),
+    prior = json.loads(previous.read_text()) if previous else None
+    prior_ids = {f['event_type']:f.get('decision',2451+i) for i,f in enumerate(prior['families'])} if prior else {}
+    order = ([f['event_type'] for f in prior['families']] if prior else [])
+    order += sorted(set(named)-set(order))
+    next_id = max(prior_ids.values(), default=2450)+1
+    for event in order:
+        findings = named.get(event, set())
+        if not findings:
+            findings = set(next(f['findings'] for f in prior['families'] if f['event_type']==event))
+        decision = prior_ids.get(event)
+        if decision is None:
+            decision=next_id;next_id+=1
+        families.append(dict(event_type=event, lane=ready[event]['lane'], decision=decision, findings=sorted(findings),
             expected_row=corrected_row(rows[event], ROOT), citations=replacements.get(event, [])))
     return dict(schema_id='pm.ea.postfix_correction_plan.v1', base=run('git','rev-parse','HEAD'),
         review=str(REVIEW/'REVIEW.md'), review_sha256=sha((REVIEW/'REVIEW.md').read_bytes()),
@@ -152,7 +173,7 @@ def decision_entry(number, event, row, before, after, record, depth_path, depth_
             'python3 scripts/pm-ea-retention-citation-check.py'], risk_class='event_authority_admission',
         reasoning_tier='high', context_scope='event_authority_pnc019_merge3_postfix',
         implementation_surfaces=[REGISTRY], node_compile_hint=dict(mode='owner_contract_only',create_worknodes=False,create_nodeseeds=False),
-        source_lineage=[review, original], preserved_exact_tokens=[event,canonical(row),before['revision'],after['revision']],
+        source_lineage=[review, original]+(['Plans/Decision_Log.md#DL-2450'] if 6 in findings else []), preserved_exact_tokens=[event,canonical(row),before['revision'],after['revision']],
         negative_constraints=['No new admission, producer adoption, native execution claim or governance seal.'])
     return '### '+number+': Event Authority corrects '+event+' (merge 3 post-landing)\n\n```yaml\n'+yaml.safe_dump(data, sort_keys=False, allow_unicode=True, width=120)+'```\n\n'
 
@@ -161,11 +182,14 @@ def apply_one(plan, event, decision):
     if run('git','status','--porcelain'):
         raise ValueError('application requires a clean tree')
     family = next(x for x in plan['families'] if x['event_type'] == event)
+    if family.get('decision', decision) != decision:
+        raise ValueError('decision differs from stable prepared family allocation')
     if any(x['event_type'] == event for x in plan['hold']):
         raise ValueError('family has an unresolved retention witness')
     if event == 'filesafe.policy_degraded' and 'plan_unit_id: DL-2450' not in read(DL):
         raise ValueError('FileSafe waits for the signed Storage binding integration')
     source = run('git','rev-parse','HEAD')
+    changed_owners = set()
     number = 'DL-'+str(decision)
     if decision < 2451 or re.search(r'(?m)^plan_unit_id: '+number+r'$', read(DL)):
         raise ValueError('decision id reserved or already used')
@@ -187,6 +211,38 @@ def apply_one(plan, event, decision):
     depth_path = record['depth_assessment']['path']
     old_depth = (ROOT/depth_path).read_bytes()
     depth = json.loads(old_depth)
+    if 3 in family['findings'] or 6 in family['findings']:
+        # Correct the two incomplete current summaries in their own existing
+        # owners. The producer contract and adoption fence are unchanged.
+        spec = importlib.util.spec_from_file_location('postfix_scope_formatter',ROOT/'scripts/pm-ea-owner-sweep.py')
+        formatter = importlib.util.module_from_spec(spec);spec.loader.exec_module(formatter)
+        policies={p['policy_id']:p for p in load('Plans/storage_value_registry.json')['retention_policies']}
+        assignment=formatter.scope_assignment(row,policies)
+        if 3 in family['findings']:
+            panel=next(p for p in load('Plans/panel_event_contracts/manifest.json')['families'] if p['event_type']==event)
+            refs={row['semantic_owner_doc'],row['payload_owner_doc'],'Plans/storage-plan.md#'+panel['sp']}
+        else:
+            refs={'Plans/storage-plan.md#SP-556','Plans/Contracts_V0.md#CV-556','Plans/Automated_Testing_System.md#ATS-278'}
+        w=writer()
+        edits={}
+        for ref in refs:
+            owner_path,unit=ref.split('#',1)
+            text=read(owner_path);start,end=w.unit_span(text,unit);lines=text.splitlines(keepends=True)
+            body=''.join(lines[start-1:end])
+            pattern=r'(Current selected assignment \(2026-11-19\): '+re.escape(event)+r'@[^ ]+ is registered for )project_only(.*?Its event history selects )([^;]+);'
+            if 3 in family['findings']:
+                new,count=re.subn(pattern,lambda m:m[1]+'application_or_project'+m[2]+assignment+';',body,flags=re.S)
+            else:
+                old_assignment='Application = RP-OPERATIONAL-2555D@1.0.0 (anchor_kind=terminal_transition, cardinality_scope=project), Project = RP-OPERATIONAL-2555D@1.0.0 (anchor_kind=terminal_transition, cardinality_scope=project)'
+                pattern=r'(Current selected assignment \(2026-11-19\): '+re.escape(event)+r'@[^ ]+ is registered for application_or_project.*?Its event history selects )'+re.escape(old_assignment)+';'
+                new,count=re.subn(pattern,lambda m:m[1]+assignment+';',body,flags=re.S)
+            if count:
+                edits.setdefault(owner_path,[]).append((start,end,new))
+        for owner_path,updates in edits.items():
+            lines=read(owner_path).splitlines(keepends=True)
+            for start,end,new in sorted(updates,reverse=True):lines[start-1:end]=[new]
+            (ROOT/owner_path).write_text(''.join(lines));changed_owners.add(owner_path)
+        read.cache_clear()
     cells = depth['rows'][0]['cells']
     for replacement in family['citations']:
         ordinal = replacement['ordinal']
@@ -196,6 +252,12 @@ def apply_one(plan, event, decision):
         if new is None:
             raise ValueError('prepared assignment no longer resolves in its exact unit')
         new['file_sha256'] = sha((ROOT/new['path']).read_bytes())
+        # The received current citations are exact at the reviewed landing,
+        # before the PROSE changes. Keep that actual edition, not this family's
+        # later parent, as their historical canonical source.
+        old['commit'] = '10ba97e699d51287673d6f1db4d994f54c59b4ed'
+        w = writer()
+        old = w.rederive_source_citation(old)
         new['source_citation'] = old
         new['retention_range_maintenance'] = dict(authority=AUTHORITY, source_commit=source,
             old_quote=old.get('quote'), old_path=old['path'], old_unit=old.get('unit'),
@@ -206,7 +268,8 @@ def apply_one(plan, event, decision):
     cells['membership_version']['finding'] = f'Currently registered at {after["revision"]} as #/families/{at}, canonical row SHA-256 {canonical(row)}. Original one-family append checkpoints remain preserved.'
     if 3 in family['findings']:
         old_scope = copy.deepcopy(cells['scope_identity'])
-        owner = next(ref for ref in row['source_refs'] if ref.startswith('Plans/storage-plan.md#'))
+        panel = next(p for p in load('Plans/panel_event_contracts/manifest.json')['families'] if p['event_type']==event)
+        owner = 'Plans/storage-plan.md#'+panel['sp']
         body = read(owner.split('#')[0])
         w = writer()
         start,end = w.unit_span(body, owner.split('#')[1])
@@ -214,7 +277,7 @@ def apply_one(plan, event, decision):
             finding='Application and Project editions follow the per-family Storage contract and the named global_shell_app_scope payload; the incomplete Project-only preparation remains historical.',
             evidence=[dict(path=owner.split('#')[0],unit=owner.split('#')[1],line_start=start,line_end=end,
                 quote='\n'.join(body.splitlines()[start-1:end]),file_sha256=sha(body.encode()))],
-            predecessor_cell=old_scope)
+            predecessor_assessment=dict(commit=source,path=depth_path,sha256=sha(old_depth)))
     depth['registry'] = dict(path=REGISTRY, **after, row_pointer='#/families/'+str(at))
     depth['evidence_maintenance'] = dict(authority=AUTHORITY, source_commit=source, source_assessment_sha256=sha(old_depth), native_execution='NOT_RUN')
     write(depth_path, depth)
@@ -253,8 +316,9 @@ def apply_one(plan, event, decision):
     for command in (['python3','scripts/pm-shard-plans.py','--generate','--config','Plans/sharding_config.json'],['python3','scripts/pm-plan-index.py','generate']):
         subprocess.run(command,cwd=ROOT,check=True,stdout=subprocess.DEVNULL)
     changed=run('git','diff','--name-only').splitlines()
-    allowed={DL,REGISTRY,path,depth_path,currentness,golden}
-    unexpected=[x for x in changed if x not in allowed and not x.startswith(('Plans/_shards/decision_log/','Plans/.plan_index/'))]
+    allowed={DL,REGISTRY,path,depth_path,currentness,golden}|changed_owners
+    derived_prefixes=('Plans/_shards/decision_log/','Plans/.plan_index/')+tuple('Plans/_shards/'+Path(p).stem.lower()+'/' for p in changed_owners)
+    unexpected=[x for x in changed if x not in allowed and not x.startswith(derived_prefixes)]
     if unexpected:
         raise ValueError('regeneration touched unrelated document paths: '+repr(unexpected))
     paths=changed+[revision_path]
@@ -268,11 +332,12 @@ def main():
     p.add_argument('command',choices=['prepare','apply-one'])
     p.add_argument('--manifest',type=Path,required=True)
     p.add_argument('--sha256')
+    p.add_argument('--previous-manifest',type=Path)
     p.add_argument('--event')
     p.add_argument('--decision',type=int)
     args=p.parse_args()
     if args.command=='prepare':
-        doc=prepare();args.manifest.parent.mkdir(parents=True,exist_ok=True);args.manifest.write_text(json.dumps(doc,indent=2,ensure_ascii=False)+'\n')
+        doc=prepare(args.previous_manifest);args.manifest.parent.mkdir(parents=True,exist_ok=True);args.manifest.write_text(json.dumps(doc,indent=2,ensure_ascii=False)+'\n')
         print(json.dumps(dict(families=len(doc['families']),hold=len(doc['hold']),manifest_sha256=sha(args.manifest.read_bytes()))))
     else:
         if sha(args.manifest.read_bytes()) != args.sha256:

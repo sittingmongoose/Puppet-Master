@@ -640,18 +640,20 @@ def derive_row(family: dict, grade: dict, contract: dict, readiness) -> tuple[di
     for ref in (owners["semantic"], owners["payload"], owners.get("storage"), *contract.get("extra_source_refs", [])):
         if ref and ref not in source_refs:
             source_refs.append(ref)
+    selector_refs = []
     for scope in sorted(editions):
         ref = editions[scope]["path"] + editions[scope]["json_pointer"]
         if ref not in source_refs:
             source_refs.append(ref)
         if editions[scope]["selector_id"] != editions[scope]["schema_id"]:
             selector_ref = editions[scope]["selector_source"]
-            if selector_ref not in source_refs:
-                source_refs.append(selector_ref)
+            if selector_ref not in source_refs and selector_ref not in selector_refs:
+                selector_refs.append(selector_ref)
     provenance['payload_schema_id'] = {scope: edition['selector_source'] for scope, edition in editions.items()}
     if contract["contract_ref"].startswith("Plans/") and contract["contract_ref"] not in source_refs:
         source_refs.append(contract["contract_ref"])
     source_refs.append(SELF_GRADES[family["lane"]])
+    source_refs.extend(selector_refs)
 
     row: dict[str, Any] = {
         "family_id": family_id,

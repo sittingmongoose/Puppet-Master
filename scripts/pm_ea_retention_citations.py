@@ -221,6 +221,9 @@ def union_missing(bodies, row, policies):
             expected = 'server counterpart' if scope == 'application' else 'project partition'
             if expected not in lower:
                 gaps.append(scope+':effective_count')
+        if row['event_type'] == 'filesafe.policy_degraded' and scope == 'application':
+            if 'app:filesafe_policy_degraded' not in lower or 'server' not in lower or 'dl-2450' not in lower:
+                gaps.append(scope+':effective_count')
         bindings.append(dict(scope=scope, selected=selected, named_in_current_union=named,
             policy_object_fields=policy, effective_count_owner='SP-351' if row['event_type'] in CREW else None))
     return sorted(set(gaps)), bindings

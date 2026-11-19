@@ -59,9 +59,13 @@ def corrected_row(before, root):
         if scopes != {'application', 'project'}:
             raise ValueError('panel owner positives do not establish both editions')
         row['scope_policy'] = 'application_or_project'
+        row['payload_selection_policy'] = 'exact_scope_and_schema_id_no_fallback'
         project = copy.deepcopy((row.get('payload_versions') or [dict(scope_kind='project',
             payload_schema_id=row['payload_schema_id'], payload_schema_ref=row['payload_schema_ref'],
             retention_policy_ref=row['retention_policy_ref'])])[0])
+        project.update(source_graph_ref='Plans/Contracts_V0.md#CV-366',
+            producer_admission='requires_owner_adoption', append_owner_ref=row['semantic_owner_doc'],
+            read_owner_ref=row['semantic_owner_doc'], backup_owner_ref='Plans/Backup_Restore_System.md#BRS-033')
         application = copy.deepcopy(project)
         application['scope_kind'] = 'application'
         row['payload_versions'] = [application, project]
@@ -134,7 +138,7 @@ def witness(record, root, *, require_committed=True):
     if record['registry_row_sha256'] != canonical(doc['registry_row']) or record['decision_ref'] != doc['decision_ref']:
         raise ValueError('current row/decision is not the correction successor')
     changed = {k for k in set(doc['before_row']) | set(doc['registry_row']) if doc['before_row'].get(k) != doc['registry_row'].get(k)}
-    if changed - {'payload_schema_id', 'payload_schema_ref', 'payload_versions', 'scope_policy', 'source_refs'}:
+    if changed - {'payload_schema_id', 'payload_schema_ref', 'payload_versions', 'payload_selection_policy', 'scope_policy', 'source_refs'}:
         raise ValueError('correction changes an unreviewed registry field')
     if changed and not set(doc['findings']) & {1, 2, 3}:
         raise ValueError('registry change has no selector/scope finding')

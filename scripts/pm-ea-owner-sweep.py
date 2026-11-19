@@ -185,7 +185,7 @@ def policy_name(policy):
 
 CREW = {"crew.board_message_posted", "crew.board_message_read", "crew.board_messages_archived"}
 GITHUB = {"auth.github.device_code.issued", "auth.github.token.polling", "auth.github.authenticated", "auth.github.failed", "auth.github.disconnected"}
-GITHUB_COUNT = "Plans/storage-plan.md#Application-wide count buckets under the operational policy (DL-083, DL-089, DL-401)"
+GITHUB_COUNT = "Plans/storage-plan.md#Application-wide count buckets under the operational policy"
 
 
 def scope_assignment(row, policies):
@@ -198,6 +198,10 @@ def scope_assignment(row, policies):
         if row.get("event_type") in CREW:
             # SP-351 overrides the base policy count partition for Application.
             details = "anchor_kind=run_completion, count in the " + ("SP-351 Server counterpart bucket" if scope == "application" else "Project partition")
+        if row.get("event_type") == "filesafe.policy_degraded":
+            details = "anchor_kind=terminal_transition, " + (
+                "count in app:filesafe_policy_degraded, one dedicated bucket per Puppet Master Server under DL-2450"
+                if scope == "application" else "cardinality_scope=project, count in the Project partition")
         parts.append(scope.capitalize() + " = " + name + " (" + details + ")")
     return ", ".join(parts)
 
@@ -217,6 +221,12 @@ def scope_clause_problem(value, row):
         return False
     if len(names) == 1 and re.search(r"both (?:application and project|scopes)|application and project|project and application", value, re.I):
         return False
+    if len(names) == 1 and all(re.search(r"\b"+scope+r"\b", value, re.I) for scope in selections):
+        # One explicit event-history object can govern both scopes across
+        # sentences; a separate effective count is not another policy object.
+        named = set(re.findall(r"RP-[A-Z0-9-]+@[1-9][0-9]*\.[0-9]+\.[0-9]+", value))
+        if named == names:
+            return False
     scope_names = "|".join(re.escape(scope) for scope in selections)
     labels = list(re.finditer(r"\b(" + scope_names + r")(?=\s*(?:=|editions?\b|scopes?\b|versions?\b|event history\b|history\b|retention\b))", value, re.I))
     found = {}
@@ -492,7 +502,7 @@ def main():
                     signals.append(record)
                     for kind, sentence in stale_sentences(value, row["scope_policy"]):
                         findings.append(dict(base, kind=kind, sentence=sentence))
-                selected = re.search(r"Current selected assignment \(2026-11-19\): ([a-z0-9_.]+)@([^ ]+) is registered for ([a-z_]+).*?as recorded by (Plans/Decision_Log.md#DL-\d+)\. Its event history selects ([^;]+);", value)
+                selected = re.search(r"Current selected assignment \(2026-11-19\): ([a-z0-9_.]+)@([^ ]+) is registered for ([a-z_]+).*?as recorded by (Plans/Decision_Log.md#DL-\d+)\. Its event history selects ([^;]+?)(?:;|\. The Application bucket)", value)
                 if selected:
                     subject, version, family_scope, decision, policy = selected.groups()
                     selected_row = registry.get(subject, {})
