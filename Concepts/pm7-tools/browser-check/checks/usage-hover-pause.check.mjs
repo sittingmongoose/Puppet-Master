@@ -324,6 +324,9 @@ async function roomMountRace(t, f, label, park, rm) {
 			t.log(S + 'SKIP R5 suppression/restoration: explicit mountNoPause control has no wheel hold');
 			break;
 		}
+		// A broken burst lets the pause end correctly mid-burst: the could-judge row above has failed, and the rows that
+		// depend on the pause surviving the burst are skipped with the gap, not failed (PM7PERF-HOVERPAUSE-R5-CASCADE).
+		if (burstBroke) { t.log(S + 'SKIP R5 suppression/restoration: ' + burstDetail); break; }
 		await t.check(S + 'live board keeps its wheel marker after the mount', !burstBroke && rec.oldPaused && during.length > 0 && during.every((s) => s.op === 'wheel'), burstDetail || `${during.filter((s) => s.op !== 'wheel').length}/${during.length} live samples lost marker`);
 		// Allow the first 100 ms for an already-lit reused card's outgoing fade; nothing arriving may light thereafter.
 		const settled = during.filter((s) => s.t >= during[0].t + 100);
@@ -757,6 +760,7 @@ async function wheelProxies(t, f, label, park) {
 			first?.card === (kind === 'settled glow' ? old.widget : next.widget) && before.length > 0 &&
 			r.wheels.length === 6 && r.wheels.every((w) => w.trusted) && !burst.broke && held.length >= 5 && !!moved,
 			`${detail} (max gap ${burst.maxGap} ms)`);
+		if (burst.broke) { t.log(S + 'SKIP proxy hold and return rows: ' + burstDetail); continue; }
 		await t.check(S + 'no fixed glow or frame proxy remains visible in the moving hold',
 			!burst.broke && held.length >= 5 && held.every((s) => s.op === 'wheel') && bright.length === 0, burstDetail || detail);
 		await t.check(S + 'hover glow returns at the card now under the pointer', !burst.broke && !!returned, burstDetail || detail);
@@ -870,18 +874,21 @@ export default async function (t) {
 			const n = res.r1.length;
 			await t.check(S + `could judge: at rest the card under the pointer is lit and shows its tools (${res.r0.filter(Boolean).length} of ${res.r0.length} windows)`, n === TRIES && res.r0.every(Boolean), `windows judged ${n} of ${TRIES}`);
 			// TB6 item 1: a driver gap longer than the rest lets the pause end correctly mid-burst. The burst row FAILS
-			// (could not judge), and the rows that depend on the pause surviving the whole burst report the same reason
-			// instead of failing a correct page.
+			// (could not judge), and the rows that depend on the pause surviving the whole burst are skipped with the gap
+			// in a SKIP log line, so one host-timing miss reads as one failure, not five.
 			await t.check(S + `could judge: each wheel burst kept the pause alive (no gap over the ${REST_MS} ms rest)`, n === TRIES && res.burst.length === TRIES && res.burst.every((b) => !b.broke),
 				res.burst.map((b, i) => `w${i + 1}: max gap ${b.maxGap} ms`).join('; ') || 'no judged window');
 			const burstBroke = res.burst.find((b) => b.broke);
 			const burstDetail = burstBroke ? burstWhy(burstBroke) : '';
-			await t.check(S + 'while the wheel turns, no card or row that slides under the resting pointer lights up or shows its tools', !burstBroke && n > 0 && res.r1.every((r) => r.ok),
-				burstBroke ? `${burstDetail} (${res.burst.map((b, i) => `w${i + 1} max gap ${b.maxGap} ms`).join('; ')})` :
-				res.r1.map((r, i) => `w${i + 1}: ${r.ins} hover-in transitions, ${r.litFrames} lit frames, ${r.toolFrames} shown-tool frames, marker coverage ${r.coverage}, ${r.frames} sampled frames, ${r.cardsPassed} cards passed`).join('; '));
-			await t.check(S + `after the wheel, the pause ends at its ${REST_MS} ms rest and the highlight is back within two frames without a move (outer cap ${BACK} ms)`, !burstBroke && n > 0 && res.r2.every((r) => r.ok),
-				burstBroke ? burstDetail :
-				res.r2.map((r, i) => `w${i + 1}: ${r.ms === null ? 'never' : r.ms + ' ms'} (${r.card}: light ${r.light ?? 'never'}, tools ${r.tools ?? 'never'}; pause end ${r.end ?? 'never'} ms, host timer late ${r.late ?? '?'} ms, back ${r.back ?? 'never'} ms = ${r.backFrames ?? '?'} drawn frames)`).join('; '));
+			if (burstBroke) t.log(S + 'SKIP R1/R2 hold and return rows: ' + burstDetail + ' (' + res.burst.map((b, i) => `w${i + 1} max gap ${b.maxGap} ms`).join('; ') + ')');
+			else {
+				await t.check(S + 'while the wheel turns, no card or row that slides under the resting pointer lights up or shows its tools', !burstBroke && n > 0 && res.r1.every((r) => r.ok),
+					burstBroke ? `${burstDetail} (${res.burst.map((b, i) => `w${i + 1} max gap ${b.maxGap} ms`).join('; ')})` :
+					res.r1.map((r, i) => `w${i + 1}: ${r.ins} hover-in transitions, ${r.litFrames} lit frames, ${r.toolFrames} shown-tool frames, marker coverage ${r.coverage}, ${r.frames} sampled frames, ${r.cardsPassed} cards passed`).join('; '));
+				await t.check(S + `after the wheel, the pause ends at its ${REST_MS} ms rest and the highlight is back within two frames without a move (outer cap ${BACK} ms)`, !burstBroke && n > 0 && res.r2.every((r) => r.ok),
+					burstBroke ? burstDetail :
+					res.r2.map((r, i) => `w${i + 1}: ${r.ms === null ? 'never' : r.ms + ' ms'} (${r.card}: light ${r.light ?? 'never'}, tools ${r.tools ?? 'never'}; pause end ${r.end ?? 'never'} ms, host timer late ${r.late ?? '?'} ms, back ${r.back ?? 'never'} ms = ${r.backFrames ?? '?'} drawn frames)`).join('; '));
+			}
 
 			// R3: keyboard focus is not paused. The board's first card takes keyboard focus (a key pressed first, so the
 			// browser draws its focus ring); the pointer rests at the centre and TICKS wheel ticks scroll the board. Before,

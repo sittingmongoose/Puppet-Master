@@ -6,7 +6,8 @@
 //
 // Used by every stationary-burst group in checks/usage-hover-pause.check.mjs: R1/R2's window, R5's keyboard mounts, and
 // R121's wheel proxies. The group's own could-judge row still fails when the burst broke, so a run is never green by
-// accident: only the rows that depend on the burst report `could not judge: burst broke (max gap N ms)`.
+// accident; the rows that depend on the burst are then skipped with a SKIP log line naming
+// `could not judge: burst broke (max gap N ms)`, not failed.
 export const REST_MS = 150;
 
 export function burstState(wheels, rest = REST_MS) {
