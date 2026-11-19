@@ -5,8 +5,8 @@
  "merge": "admission-merge-2",
  "registry": {
   "path": "Plans/event_family_registry.json",
-  "revision": "2026-11-18.2",
-  "sha256": "ec21cf1a5b42b3e68a5564a847b4798dff968612d11d438bc7075b89196f9602",
+  "revision": "2026-11-19.27",
+  "sha256": "1898cc33c8f7c72002ac85ea40ee41c47051e41041d34f52bc8bc02646becc04",
   "family_count": 518,
   "row_pointer": "#/families/322"
  },
@@ -22,7 +22,7 @@
     "membership_version": {
      "status": "PASS",
      "representation": "exact_registry_membership",
-     "finding": "Currently registered at 2026-11-18.2 as #/families/322 (canonical row SHA-256 c6f7ddf0dcde3bfdacd596a38bdb7f7383bb0f6b91d323ac4160e0a402047304). Original one-family admission checkpoints remain in the family record and immutable Git source.",
+     "finding": "Currently registered at 2026-11-19.27 as #/families/322, canonical row SHA-256 c6f7ddf0dcde3bfdacd596a38bdb7f7383bb0f6b91d323ac4160e0a402047304. Original one-family append checkpoints remain preserved.",
      "evidence": [
       {
        "path": "Plans/event_family_registry.json",
@@ -301,23 +301,45 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-627",
-       "line_start": 47061,
-       "line_end": 47061,
-       "quote": "Current selected assignment (2026-11-19): chat.response_stop_requested@1.0.0 is registered for application_or_project",
+       "line_start": 47063,
+       "line_end": 47073,
+       "quote": "  Current selected assignment (2026-11-19): chat.response_stop_requested@1.0.0 is registered for application_or_project\n  in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2240. Its event history selects Application\n  = RP-CHAT-THREAD-LIFETIME@1.0.0 (anchor_kind=explicit_delete, cardinality_scope=thread), Project = RP-CHAT-THREAD-LIFETIME@1.0.0\n  (anchor_kind=explicit_delete, cardinality_scope=thread); Plans/storage-plan.md#SP-627 owns the event policy''s\n  existing anchors, counts, holds and deletion rules. Separate stored-value assignment: assistant_turn_stop_outcome\n  uses RP-CHAT-THREAD-LIFETIME@1.0.0 under signed E8-2 (send f66b1af9-f851-493f-a2ee-6b666b477920); this assigns\n  that stored value, not event history. Original sources and coherent backups retain their independent owner policies;\n  the event lifetime is not transferred to them. Current append/publication still requires the exact selected schema/scope,\n  original custody, current permission, receipt and required producer adoption. Actual missing registration or unresolved\n  required custody refuses; native execution remains NOT_RUN. No native adoption, new retention choice or governance\n  seal follows.'",
        "quote_check": "exact",
-       "quote_scope": "unit SP-627, Plans/storage-plan.md:46923-47119",
-       "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+       "quote_scope": "unit SP-627, Plans/storage-plan.md:46925-47121",
+       "file_sha256": "1fa333c4ef3aa54859eae354a38973490a4de4ca54b6c8f066b2770f528c3bbb",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-627",
-        "line_start": 45121,
-        "line_end": 45121,
-        "quote": "Event history `retention_policy_ref = RP-CHAT-THREAD-LIFETIME@1.0.0`, under DL-401.",
-        "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+        "line_start": 47061,
+        "line_end": 47061,
+        "quote": "Current selected assignment (2026-11-19): chat.response_stop_requested@1.0.0 is registered for application_or_project",
+        "quote_check": "exact",
+        "quote_scope": "unit SP-627, Plans/storage-plan.md@10ba97e699d51287673d6f1db4d994f54c59b4ed:46923-47119",
+        "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+        "source_citation": {
+         "path": "Plans/storage-plan.md",
+         "unit": "SP-627",
+         "line_start": 45121,
+         "line_end": 45121,
+         "quote": "Event history `retention_policy_ref = RP-CHAT-THREAD-LIFETIME@1.0.0`, under DL-401.",
+         "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+        },
+        "locator_maintenance": {
+         "authority": "MERGE2-FIX4",
+         "reason": "Re-cite the same accepted retention claim at its current exact owner assignment; event and source/checkpoint authority remain separate."
+        },
+        "commit": "10ba97e699d51287673d6f1db4d994f54c59b4ed",
+        "sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+        "line": 47061
        },
-       "locator_maintenance": {
-        "authority": "MERGE2-FIX4",
-        "reason": "Re-cite the same accepted retention claim at its current exact owner assignment; event and source/checkpoint authority remain separate."
+       "retention_range_maintenance": {
+        "authority": "MERGE3-POSTFIX / post-landing Astra findings",
+        "source_commit": "e5a6f8f1b6aae3da99ad3739a3c049b2251b6aed",
+        "old_quote": "Current selected assignment (2026-11-19): chat.response_stop_requested@1.0.0 is registered for application_or_project",
+        "old_path": "Plans/storage-plan.md",
+        "old_unit": "SP-627",
+        "old_line_start": 47061,
+        "reason": "Complete current wrapped assignment inside its original unit."
        }
       }
      ],
@@ -726,10 +748,9 @@
   "row_pointer": "#/families/322"
  },
  "evidence_maintenance": {
-  "authority": "MERGE2-FIX4 items 1/2/3",
-  "source_commit": "2bda6aeed03daea26c4d79dfb7568fc145aac29e",
-  "source_assessment_sha256": "0136cce012410c9534a1f3ad1274911bcc79fd1b7ffc1b830b23761406cc5404",
-  "native_execution": "NOT_RUN",
-  "verdicts_changed": false
+  "authority": "MERGE3-POSTFIX / post-landing Astra findings",
+  "source_commit": "e5a6f8f1b6aae3da99ad3739a3c049b2251b6aed",
+  "source_assessment_sha256": "7e9cfb50cccae19dda1b8fb461d99e686bf990dce3721f474b5145d0a7baafc8",
+  "native_execution": "NOT_RUN"
  }
 }

@@ -1,14 +1,14 @@
 {
-  "generated_at_utc": "2026-11-19T22:38:52Z",
+  "generated_at_utc": "2026-11-19T22:39:59Z",
   "index_path": "Plans/_shards/decision_log/00-index.md",
-  "index_sha256": "f9f967c26d22d6556d5e343dff6f540066cc84c3d502634af69095c914522880",
+  "index_sha256": "b5baf389978273acf50d888e73cc640a6f168b6c025febafbd7061f351365ce6",
   "manifest_path": "Plans/_shards/decision_log/manifest.json",
   "schema_id": "pm.plan_shards.manifest.v1",
   "shards": [
     {
       "heading": "Preamble",
       "path": "Plans/_shards/decision_log/001-preamble.md",
-      "sha256": "157f44851494525373dd5cefb90f729f1666aa87079e3f5641d205a95e82674e",
+      "sha256": "4427742cd1fa9b7aa07a66593d073c96bb5245c40bfc9f47e83af89e10019127",
       "shard_id": "001",
       "source_line_end": 4,
       "source_line_start": 1,
@@ -17,7 +17,7 @@
     {
       "heading": "Purpose",
       "path": "Plans/_shards/decision_log/002-purpose.md",
-      "sha256": "4a27a616dfda505f5a2a93a46f9455d13057e64172c8712a6ce6029930f97b20",
+      "sha256": "e0eab33b2a29b322e225c13e480abdb0b68b8d5cc652433772edd83c1c80f933",
       "shard_id": "002",
       "source_line_end": 11,
       "source_line_start": 6,
@@ -26,7 +26,7 @@
     {
       "heading": "Entries",
       "path": "Plans/_shards/decision_log/003-entries.md",
-      "sha256": "d0d60329af6554c83b1cc0ddda5683959509a8045601f050d21dfe7d3456df7b",
+      "sha256": "1fa767ee1a379dbf188a14b74ea92e24f4585daca9615e0c83dee5af51259ff7",
       "shard_id": "003",
       "source_line_end": 6215,
       "source_line_start": 13,
@@ -35,7 +35,7 @@
     {
       "heading": "Owner / Consumer Map",
       "path": "Plans/_shards/decision_log/004-owner-consumer-map.md",
-      "sha256": "f5b7a73db9aa6f0280e4a280fd9c0fd58495090a01f7a456acdbff631a542bd7",
+      "sha256": "a6b87df70110eab8f0b340b927a23d667d3e45ff7163a89a11e8bd3a279a0d07",
       "shard_id": "004",
       "source_line_end": 6221,
       "source_line_start": 6217,
@@ -44,7 +44,7 @@
     {
       "heading": "PlanUnits",
       "path": "Plans/_shards/decision_log/005-planunits.md",
-      "sha256": "b57c2c5447aab3d3d7e0635a7153c995e6e080975c5c148b4c6fd2f08797ddee",
+      "sha256": "d52f5169544fe76ef34b64491807435f479221ea4cd5d8f365335ec9046cc947",
       "shard_id": "005",
       "source_line_end": 23675,
       "source_line_start": 6223,
@@ -53,7 +53,7 @@
     {
       "heading": "Migration Coverage",
       "path": "Plans/_shards/decision_log/006-migration-coverage.md",
-      "sha256": "5e6480c65d89296983d616c121a08fd7062185c9a5903b5e2ec6d456eaebb4b6",
+      "sha256": "1287e8fa22bec882796cd49b5922148eb116cfcaa83e901bff7ec163c8de8cf9",
       "shard_id": "006",
       "source_line_end": 23687,
       "source_line_start": 23677,
@@ -62,7 +62,7 @@
     {
       "heading": "FABLE Deferred Action Concrete Repair Addendum - 2026-07-08",
       "path": "Plans/_shards/decision_log/007-fable-deferred-action-concrete-repair-addendum-2026-07-08.md",
-      "sha256": "c9f0058cd089a916520caa16f291418bb4bc0ba02f06e13dab6046729a051eaf",
+      "sha256": "02f821e99290083967f24a649fc56c6f7edd7f36294ae5772760068654289d53",
       "shard_id": "007",
       "source_line_end": 23696,
       "source_line_start": 23689,
@@ -71,7 +71,7 @@
     {
       "heading": "FABLE Remaining Action Plan Audit-Lineage Notes (2026-07-08)",
       "path": "Plans/_shards/decision_log/008-fable-remaining-action-plan-audit-lineage-notes-2026-07-08.md",
-      "sha256": "243c87cd5ac7bdc6d0343cb63a4edc22efed6a7fbd3dfa623a15435252528e3f",
+      "sha256": "beaa6ce394d808e4f6b30db5f89bc1058e560e606bc5c3804735883525c9b2f1",
       "shard_id": "008",
       "source_line_end": 27781,
       "source_line_start": 23697,
@@ -80,7 +80,7 @@
     {
       "heading": "QA round 2 \u2014 NieR is the fifth theme family (Jared, 2026-10-30, Q22)",
       "path": "Plans/_shards/decision_log/009-qa-round-2-nier-is-the-fifth-theme-family-jared-2026-10-30-q22.md",
-      "sha256": "02c0b6dd90af53d26deb93562245feade9e729b0412abe592e9b1b1d9e6610c4",
+      "sha256": "204d44370ff7c1a1756132166d162507cffd36b601475d744292bd3d930e926e",
       "shard_id": "009",
       "source_line_end": 28579,
       "source_line_start": 27786,
@@ -89,7 +89,7 @@
     {
       "heading": "DL-260 \u2014 Product canon excludes prototype mechanics (Jared, 2026-10-31, Q3 B)",
       "path": "Plans/_shards/decision_log/010-dl-260-product-canon-excludes-prototype-mechanics-jared-2026-10-.md",
-      "sha256": "38e72abce7f3a60ea41e5bbed329e599be2b393163e3501298cea0a6eb1f4cc3",
+      "sha256": "88ca78812aa379d858a21e6bd81de723f280167618e8fbb7bb1339d59cbd5c88",
       "shard_id": "010",
       "source_line_end": 28745,
       "source_line_start": 28581,
@@ -98,16 +98,16 @@
     {
       "heading": "DL-271 \u2014 Onboarding credential, recovery and pairing feedback",
       "path": "Plans/_shards/decision_log/011-dl-271-onboarding-credential-recovery-and-pairing-feedback.md",
-      "sha256": "121a0f0a9dd07f29e663d16865c965751486c29833e916b01af96b0e6a83be6a",
+      "sha256": "3f5be5fc625988eefa8c09b9266e3383db86657617cc61145a4ff5814c155b4f",
       "shard_id": "011",
-      "source_line_end": 55656,
+      "source_line_end": 55717,
       "source_line_start": 28747,
       "split_rule": "heading-##"
     }
   ],
   "source": {
-    "line_count": 55657,
+    "line_count": 55718,
     "path": "Plans/Decision_Log.md",
-    "sha256": "8508c4cb0e4fa232943ac67f35dc8c922d4589729db5853f9361f9e2e32ce7ff"
+    "sha256": "9ee075f2fd8cd61eb9b8e597cbfb80c9cd45a9345a371b99e7b67ef53844edea"
   }
 }
