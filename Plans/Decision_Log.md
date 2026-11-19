@@ -54497,3 +54497,65 @@ negative_constraints:
 - No new admission, producer adoption, native execution claim or governance seal.
 ```
 
+### DL-2459: Event Authority corrects browser.context_share_revoked (merge 3 post-landing)
+
+```yaml
+plan_unit_id: DL-2459
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: 'Correction for browser.context_share_revoked only, under DL-077 and DL-400, resolving post-landing Astra
+  finding(s) [4]. The original admission authority remains Plans/Decision_Log.md#DL-2156; this entry records no new admission,
+  verdict, policy choice or producer adoption. Current row canonical SHA-256 620d220923c921849b3e600c1daf579a65af643d8e929600b99cbad35f1b9820.
+  Its scope is application_or_project. Payload editions: application `pm.ds15.browser_context_share_revoked.payload.v1` (RP-CHAT-THREAD-LIFETIME@1.0.0,
+  producer requires_owner_adoption); project `pm.ds15.browser_context_share_revoked.payload.v1` (RP-CHAT-THREAD-LIFETIME@1.0.0,
+  producer requires_owner_adoption).
+
+
+  The correction moves the full registry from 2026-11-19.8, 518 families, SHA-256 1a13be381c92ff687e3f3cc49eed53aa80689e4e36332ab40636685c9b162ccc,
+  to 2026-11-19.9, 518 families, SHA-256 21275b6079787147cf8907652912b4983113c77884a85f44142bdb65919507e7, without changing
+  another family. Revision witness: reports/event-authority-20261116/admission-merge-3/corrections/browser.context_share_revoked.json.
+  Depth assessment: reports/event-authority-20261116/admission-merge-2/depth/browser.context_share_revoked.json, SHA-256 30015562f0884006c46d5f58a083a991829d943427f1478668e865113b712df7.
+
+
+  The original append checkpoints are preserved: before 2026-11-16.19 SHA-256 6f4d7cc2f5e98f707685227c0f42a4d52cb6aa5f4aa90b53934b1846bec4f2af;
+  after 2026-11-16.20 SHA-256 111a17ab633a198a96701fe42f95f2f7f6e6aac61c0efdb6cb513e34c815ffd5. Existing semantic owner Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-321,
+  payload owner Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-321, resource Plans/ds15_browser_context_share_revoked.schema.json#
+  retain their contracts. Current citations were re-read from existing canonical text; original citations, records and decision
+  entries remain in the named Git predecessor. Native execution remains NOT_RUN. Required producer adoption, permissions,
+  original custody and receipt/publication fences remain required.'
+gui_related: false
+gui_classification_reason: Maintains one existing event admission and its evidence.
+depends_on:
+- DL-077
+- DL-400
+- DL-2156
+unblocks: []
+acceptance_criteria:
+- Exactly one family is corrected and the original append checkpoints remain authenticated.
+- The correction witness and current DL-077 record match their named Git editions.
+validation_surfaces:
+- python3 scripts/pm-ea-record-chain.py
+- python3 scripts/pm-ea-postfix-check.py
+- python3 scripts/pm-ea-retention-citation-check.py
+risk_class: event_authority_admission
+reasoning_tier: high
+context_scope: event_authority_pnc019_merge3_postfix
+implementation_surfaces:
+- Plans/event_family_registry.json
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/MERGE2-POSTLAND-astra62max/REVIEW.md
+- Plans/Decision_Log.md#DL-2156
+preserved_exact_tokens:
+- browser.context_share_revoked
+- 620d220923c921849b3e600c1daf579a65af643d8e929600b99cbad35f1b9820
+- 2026-11-19.8
+- 2026-11-19.9
+negative_constraints:
+- No new admission, producer adoption, native execution claim or governance seal.
+```
+
