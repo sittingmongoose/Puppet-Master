@@ -56652,3 +56652,64 @@ negative_constraints:
 - No new admission, producer adoption, native execution claim or governance seal.
 ```
 
+### DL-2493: Event Authority corrects concern.created (merge 3 post-landing)
+
+```yaml
+plan_unit_id: DL-2493
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: 'Correction for concern.created only, under DL-077 and DL-400, resolving post-landing Astra finding(s) [4].
+  The original admission authority remains Plans/Decision_Log.md#DL-2268; this entry records no new admission, verdict, policy
+  choice or producer adoption. Current row canonical SHA-256 99327ea273530958f5d6875f2e190a3e962896093f632bb7cb89488cf221773e.
+  Its scope is project_only. Payload editions: project `pm.concern_event.concern_created.schema.v1` (RP-AUTHORITY-INDEFINITE@1.0.0,
+  producer requires_owner_adoption).
+
+
+  The correction moves the full registry from 2026-11-19.42, 518 families, SHA-256 e38e2943b332aff8d4ade99e0d63ce3e9e2a19d0b0dee048e85be768ddab4a71,
+  to 2026-11-19.43, 518 families, SHA-256 da0bc51789dd36df7cc25d91ed9c5d5c3c8fb164fdeac8ad4821c50ec27415db, without changing
+  another family. Revision witness: reports/event-authority-20261116/admission-merge-3/corrections/concern.created.json. Depth
+  assessment: reports/event-authority-20261116/admission-merge-2/depth/concern.created.json, SHA-256 a590b180b5904ecc8ed1beda2f0dac1b081f06247643b95cd73b79309781d48a.
+
+
+  The original append checkpoints are preserved: before 2026-11-16.131 SHA-256 2a1cb7cb26b9f08f5e56ea6be5ded35719a5d0c88833f9e99e285f46a52a3000;
+  after 2026-11-16.132 SHA-256 b5789a3aff06fe51e39ee3e397f5e93661a0ee0a14cd2639553e1b5ecd09a0af. Existing semantic owner Plans/Orchestrator_Page.md#OP-004,
+  payload owner Plans/Contracts_V0.md#CV-686, resource Plans/event_payloads/concern/concern_created.schema.json# retain their
+  contracts. Current citations were re-read from existing canonical text; original citations, records and decision entries
+  remain in the named Git predecessor. Native execution remains NOT_RUN. Required producer adoption, permissions, original
+  custody and receipt/publication fences remain required.'
+gui_related: false
+gui_classification_reason: Maintains one existing event admission and its evidence.
+depends_on:
+- DL-077
+- DL-400
+- DL-2268
+unblocks: []
+acceptance_criteria:
+- Exactly one family is corrected and the original append checkpoints remain authenticated.
+- The correction witness and current DL-077 record match their named Git editions.
+validation_surfaces:
+- python3 scripts/pm-ea-record-chain.py
+- python3 scripts/pm-ea-postfix-check.py
+- python3 scripts/pm-ea-retention-citation-check.py
+risk_class: event_authority_admission
+reasoning_tier: high
+context_scope: event_authority_pnc019_merge3_postfix
+implementation_surfaces:
+- Plans/event_family_registry.json
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/MERGE2-POSTLAND-astra62max/REVIEW.md
+- Plans/Decision_Log.md#DL-2268
+preserved_exact_tokens:
+- concern.created
+- 99327ea273530958f5d6875f2e190a3e962896093f632bb7cb89488cf221773e
+- 2026-11-19.42
+- 2026-11-19.43
+negative_constraints:
+- No new admission, producer adoption, native execution claim or governance seal.
+```
+
