@@ -5,8 +5,8 @@
  "merge": "admission-merge-2",
  "registry": {
   "path": "Plans/event_family_registry.json",
-  "revision": "2026-11-18.2",
-  "sha256": "ec21cf1a5b42b3e68a5564a847b4798dff968612d11d438bc7075b89196f9602",
+  "revision": "2026-11-19.14",
+  "sha256": "c4e35f945de8a1d9214e916f88ce8087d27ee8d0a9dddfe2d7dbbfee515f7839",
   "family_count": 518,
   "row_pointer": "#/families/309"
  },
@@ -22,7 +22,7 @@
     "membership_version": {
      "status": "PASS",
      "representation": "exact_registry_membership",
-     "finding": "Currently registered at 2026-11-18.2 as #/families/309 (canonical row SHA-256 9cdfb2276083bd695f75d273bdf60ce6ef7ba4556cc3eb6de789aa8ce03ca3d1). Original one-family admission checkpoints remain in the family record and immutable Git source.",
+     "finding": "Currently registered at 2026-11-19.14 as #/families/309, canonical row SHA-256 b9a176cb9b7f5cf9a2eaa197ab8d319f98aaae6cb943d47947022d0f240f9bdd. Original one-family append checkpoints remain preserved.",
      "evidence": [
       {
        "path": "Plans/event_family_registry.json",
@@ -404,23 +404,45 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-577",
-       "line_start": 55089,
-       "line_end": 55089,
-       "quote": "Current selected assignment (2026-11-19): bundle.revision_completed@1.0.0 is registered for project_only in Plans/event_family_registry.json,",
+       "line_start": 55091,
+       "line_end": 55099,
+       "quote": "  Current selected assignment (2026-11-19): bundle.revision_completed@1.0.0 is registered for project_only in Plans/event_family_registry.json,\n  as recorded by Plans/Decision_Log.md#DL-2227. Its event history selects RP-AUTHORITY-INDEFINITE@1.0.0; Plans/storage-plan.md#SP-577\n  owns the event policy''s existing anchors, counts, holds and deletion rules. Separate stored-value assignment:\n  revision_run uses RP-CHAT-THREAD-LIFETIME@1.0.0 under Plans/Decision_Log.md#DL-508; this assigns that stored value,\n  not event history. Original sources and coherent backups retain their independent owner policies; the event lifetime\n  is not transferred to them. Current append/publication still requires the exact selected schema/scope, original\n  custody, current permission, receipt and required producer adoption. Actual missing registration or unresolved\n  required custody refuses; native execution remains NOT_RUN. No native adoption, new retention choice or governance\n  seal follows.'",
        "quote_check": "exact",
-       "quote_scope": "unit SP-577, Plans/storage-plan.md:54994-55132",
-       "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+       "quote_scope": "unit SP-577, Plans/storage-plan.md:54996-55134",
+       "file_sha256": "1fa333c4ef3aa54859eae354a38973490a4de4ca54b6c8f066b2770f528c3bbb",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-577",
-        "line_start": 54901,
-        "line_end": 54901,
-        "quote": "\\ `retention_policy_ref = RP-AUTHORITY-INDEFINITE@1.0.0`, under DL-401, DL-508.\\n\\nUse the existing\\",
-        "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+        "line_start": 55089,
+        "line_end": 55089,
+        "quote": "Current selected assignment (2026-11-19): bundle.revision_completed@1.0.0 is registered for project_only in Plans/event_family_registry.json,",
+        "quote_check": "exact",
+        "quote_scope": "unit SP-577, Plans/storage-plan.md@10ba97e699d51287673d6f1db4d994f54c59b4ed:54994-55132",
+        "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+        "source_citation": {
+         "path": "Plans/storage-plan.md",
+         "unit": "SP-577",
+         "line_start": 54901,
+         "line_end": 54901,
+         "quote": "\\ `retention_policy_ref = RP-AUTHORITY-INDEFINITE@1.0.0`, under DL-401, DL-508.\\n\\nUse the existing\\",
+         "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+        },
+        "locator_maintenance": {
+         "authority": "MERGE2-FIX4",
+         "reason": "Re-cite the same accepted retention claim at its current exact owner assignment; event and source/checkpoint authority remain separate."
+        },
+        "commit": "10ba97e699d51287673d6f1db4d994f54c59b4ed",
+        "sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+        "line": 55089
        },
-       "locator_maintenance": {
-        "authority": "MERGE2-FIX4",
-        "reason": "Re-cite the same accepted retention claim at its current exact owner assignment; event and source/checkpoint authority remain separate."
+       "retention_range_maintenance": {
+        "authority": "MERGE3-POSTFIX / post-landing Astra findings",
+        "source_commit": "8fb325addbbc84b4022889af3c824ce9e05d42bf",
+        "old_quote": "Current selected assignment (2026-11-19): bundle.revision_completed@1.0.0 is registered for project_only in Plans/event_family_registry.json,",
+        "old_path": "Plans/storage-plan.md",
+        "old_unit": "SP-577",
+        "old_line_start": 55089,
+        "reason": "Complete current wrapped assignment inside its original unit."
        }
       }
      ],
@@ -1011,10 +1033,9 @@
   "row_pointer": "#/families/309"
  },
  "evidence_maintenance": {
-  "authority": "MERGE2-FIX4 items 1/2/3",
-  "source_commit": "2bda6aeed03daea26c4d79dfb7568fc145aac29e",
-  "source_assessment_sha256": "1bcb94e7771b516ba3d6c05e6662564adf2691612930afaf1f58af740129e36d",
-  "native_execution": "NOT_RUN",
-  "verdicts_changed": false
+  "authority": "MERGE3-POSTFIX / post-landing Astra findings",
+  "source_commit": "8fb325addbbc84b4022889af3c824ce9e05d42bf",
+  "source_assessment_sha256": "17d606f32e8e1807fadf2af02ba276fa9e3964ae14479e110992e70a1b6e7293",
+  "native_execution": "NOT_RUN"
  }
 }
