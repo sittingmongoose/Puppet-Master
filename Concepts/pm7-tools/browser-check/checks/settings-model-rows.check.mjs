@@ -119,8 +119,8 @@ async function reach(t, f, id) {
 	/* a row already on screen (the Models page's nine) is pressed where it is */
 	if (['models', 'bsd'].includes(place) && (await f.evaluate(CTL, [id, 'page'])).found) return 'page';
 	const narrow = SIZE[0] < 1200;
-	if (narrow) { await t.viewport(1920, 1080); await t.page.waitForTimeout(400); }
-	try { return await reachAt(t, f, id, place); } finally { if (narrow) { await t.viewport(SIZE[0], SIZE[1]); await t.page.waitForTimeout(600); } }
+	if (narrow) await settingsAt(t, f, 1920, 1080);
+	try { return await reachAt(t, f, id, place); } finally { if (narrow) await settingsAt(t, f, SIZE[0], SIZE[1]); }
 }
 async function reachAt(t, f, id, place) {
 	if (place === 'models') { await goPage(t, f, 'ai', 'providers', 'models'); return 'page'; }
@@ -254,8 +254,34 @@ async function judgeRow(t, f, id, cell) {
 	return c;
 }
 
+/* FO-239: a resize is not settled when viewport() returns. When the projected host is under 980 px (a 740 px window
+   with the docked Chat still in flow), syncHost() moves Settings to its focus host one animation frame after the
+   ResizeObserver fires; until that frame lands #panel-settings keeps the narrow width left beside the Chat panel
+   (273 px at 740) and the top strip is cut and off centre (probe-fo239.md). Wait for the app's own projection and the
+   class it toggles to agree, and for #panel-settings' width to be the same over two frames; after 8 s say what was
+   still moving and fail, never measure the frame in between. */
 async function settingsAt(t, f, w, h) {
-	await t.viewport(w, h); await t.page.waitForTimeout(500);
+	await t.viewport(w, h);
+	const seen = await f.evaluate(async ([wantW, wantH, bound]) => {
+		const panel = document.getElementById('panel-settings');
+		const host = window.PM7_SYSTEMS_INTEGRATION;
+		const t0 = performance.now();
+		let last = null, same = 0, why = 'nothing measured';
+		for (;;) {
+			const p = host && typeof host.host_projection === 'function' ? host.host_projection() : null;
+			const focused = document.body.classList.contains('pm7-settings-focus-host');
+			const expect = !!(p && p.settings_active && p.shell_width > 0 && p.projected_with_chat < p.threshold);
+			const width = panel ? Math.round(panel.getBoundingClientRect().width * 100) / 100 : -1;
+			const ms = Math.round(performance.now() - t0);
+			if (!p) { last = null; same = 0; why = 'PM7_SYSTEMS_INTEGRATION.host_projection() is not in the page'; }
+			else if (!panel || width <= 0) { last = null; same = 0; why = `#panel-settings is ${panel ? '0 px wide' : 'missing'}`; }
+			else if (focused !== expect) { last = null; same = 0; why = `body ${focused ? 'has' : 'has not'} pm7-settings-focus-host while the shell projects ${p.projected_with_chat} px against ${p.threshold}`; }
+			else { same = last === width ? same + 1 : 1; last = width; if (same >= 2) return { width, focused, ms }; why = `#panel-settings was ${width} px on one frame`; }
+			if (ms > bound) throw new Error(`settingsAt(${wantW}x${wantH}): the focus host never settled in ${ms} ms: ${why}`);
+			await new Promise(requestAnimationFrame);
+		}
+	}, [w, h, 8000]);
+	if (seen.ms > 1000) t.log(`settingsAt ${w}x${h}: #panel-settings ${seen.width} px, focus host ${seen.focused}, settled after ${seen.ms} ms`);
 }
 const ROWS = (t) => (t.args.rows ? String(t.args.rows).split(',') : Object.keys(CANON)).filter((id) => PLACE[id]);
 
@@ -509,7 +535,6 @@ export const tests = {
 					const go = async () => (await press(t, f, nav)) && (!ws || (await press(t, f, wsSel)));
 					let reached = await go();
 					if (!reached) { await settingsAt(t, f, 1920, 1080); reached = await go(); await settingsAt(t, f, size.w, size.h); }
-					await t.page.waitForTimeout(300);
 					const m = await f.evaluate(TABS);
 					const cell = `${look} ${size.id}${size.docked ? ' docked' : ''} ${domain}`;
 					await t.check(`${cell}: the ${domain} chapter${ws ? ` and its ${ws} page` : ''} were reached by real presses`, reached);
