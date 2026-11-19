@@ -2,7 +2,7 @@
   "schema_id": "pm.ea.owner_sweep.v1",
   "admitted_families": 299,
   "input_revision": "working_tree",
-  "script_sha256": "aae04c45e1c4b4dbcfe8302edf5fb1bc000b410c6f1a89c03cf3b1c32a91bc08",
+  "script_sha256": "49a559d865b8ef50945ec82d08bcebc52ab435df702aafe0a9380dd84d484358",
   "selected_sections": 1641,
   "owners": [
     {
@@ -101431,6 +101431,2410 @@
       "named_subjects": []
     }
   ],
+  "multi_scope_checks": [
+    {
+      "event_type": "backup.state_changed",
+      "decision": "Plans/Decision_Log.md#DL-2151",
+      "editions": [
+        {
+          "scope": "application",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-OPERATIONAL-SECURITY-APPLICATION-2555D",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        },
+        {
+          "scope": "project",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-OPERATIONAL-2555D",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        }
+      ]
+    },
+    {
+      "event_type": "brainstorm.plan_synthesized",
+      "decision": "Plans/Decision_Log.md#DL-2152",
+      "editions": [
+        {
+          "scope": "project",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-CHAT-THREAD-LIFETIME",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        },
+        {
+          "scope": "application",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-CHAT-THREAD-LIFETIME",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        }
+      ]
+    },
+    {
+      "event_type": "brainstorm.proposal_added",
+      "decision": "Plans/Decision_Log.md#DL-2153",
+      "editions": [
+        {
+          "scope": "project",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-CHAT-THREAD-LIFETIME",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        },
+        {
+          "scope": "application",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-CHAT-THREAD-LIFETIME",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        }
+      ]
+    },
+    {
+      "event_type": "brainstorm.vote_added",
+      "decision": "Plans/Decision_Log.md#DL-2154",
+      "editions": [
+        {
+          "scope": "project",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-CHAT-THREAD-LIFETIME",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        },
+        {
+          "scope": "application",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-CHAT-THREAD-LIFETIME",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        }
+      ]
+    },
+    {
+      "event_type": "browser.context_captured",
+      "decision": "Plans/Decision_Log.md#DL-2155",
+      "editions": [
+        {
+          "scope": "application",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-CHAT-THREAD-LIFETIME",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        },
+        {
+          "scope": "project",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-CHAT-THREAD-LIFETIME",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        }
+      ]
+    },
+    {
+      "event_type": "browser.context_share_revoked",
+      "decision": "Plans/Decision_Log.md#DL-2156",
+      "editions": [
+        {
+          "scope": "application",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-CHAT-THREAD-LIFETIME",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        },
+        {
+          "scope": "project",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-CHAT-THREAD-LIFETIME",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        }
+      ]
+    },
+    {
+      "event_type": "browser.context_shared",
+      "decision": "Plans/Decision_Log.md#DL-2157",
+      "editions": [
+        {
+          "scope": "application",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-CHAT-THREAD-LIFETIME",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        },
+        {
+          "scope": "project",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-CHAT-THREAD-LIFETIME",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        }
+      ]
+    },
+    {
+      "event_type": "bundle.selection_forward_blocked",
+      "decision": "Plans/Decision_Log.md#DL-2231",
+      "editions": [
+        {
+          "scope": "application",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-AUTHORITY-INDEFINITE",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        },
+        {
+          "scope": "project",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-AUTHORITY-INDEFINITE",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        }
+      ]
+    },
+    {
+      "event_type": "bundle.selection_sent_to_chat",
+      "decision": "Plans/Decision_Log.md#DL-2232",
+      "editions": [
+        {
+          "scope": "application",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-AUTHORITY-INDEFINITE",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        },
+        {
+          "scope": "project",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-AUTHORITY-INDEFINITE",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        }
+      ]
+    },
+    {
+      "event_type": "catalog.install.completed",
+      "decision": "Plans/Decision_Log.md#DL-2233",
+      "editions": [
+        {
+          "scope": "application",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-AUTHORITY-INDEFINITE",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        },
+        {
+          "scope": "project",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-AUTHORITY-INDEFINITE",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        }
+      ]
+    },
+    {
+      "event_type": "catalog.install.started",
+      "decision": "Plans/Decision_Log.md#DL-2234",
+      "editions": [
+        {
+          "scope": "application",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-AUTHORITY-INDEFINITE",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        },
+        {
+          "scope": "project",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-AUTHORITY-INDEFINITE",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        }
+      ]
+    },
+    {
+      "event_type": "catalog.remove.completed",
+      "decision": "Plans/Decision_Log.md#DL-2235",
+      "editions": [
+        {
+          "scope": "application",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-AUTHORITY-INDEFINITE",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        },
+        {
+          "scope": "project",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-AUTHORITY-INDEFINITE",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        }
+      ]
+    },
+    {
+      "event_type": "catalog.remove.started",
+      "decision": "Plans/Decision_Log.md#DL-2236",
+      "editions": [
+        {
+          "scope": "application",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-AUTHORITY-INDEFINITE",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        },
+        {
+          "scope": "project",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-AUTHORITY-INDEFINITE",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        }
+      ]
+    },
+    {
+      "event_type": "catalog.update.completed",
+      "decision": "Plans/Decision_Log.md#DL-2237",
+      "editions": [
+        {
+          "scope": "application",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-AUTHORITY-INDEFINITE",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        },
+        {
+          "scope": "project",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-AUTHORITY-INDEFINITE",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        }
+      ]
+    },
+    {
+      "event_type": "catalog.update.started",
+      "decision": "Plans/Decision_Log.md#DL-2238",
+      "editions": [
+        {
+          "scope": "application",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-AUTHORITY-INDEFINITE",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        },
+        {
+          "scope": "project",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-AUTHORITY-INDEFINITE",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        }
+      ]
+    },
+    {
+      "event_type": "chat.message",
+      "decision": "Plans/Decision_Log.md#DL-2239",
+      "editions": [
+        {
+          "scope": "application",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-CHAT-THREAD-LIFETIME",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        },
+        {
+          "scope": "project",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-CHAT-THREAD-LIFETIME",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        }
+      ]
+    },
+    {
+      "event_type": "chat.response_stop_requested",
+      "decision": "Plans/Decision_Log.md#DL-2240",
+      "editions": [
+        {
+          "scope": "application",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-CHAT-THREAD-LIFETIME",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        },
+        {
+          "scope": "project",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-CHAT-THREAD-LIFETIME",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        }
+      ]
+    },
+    {
+      "event_type": "chat.thread_archived",
+      "decision": "Plans/Decision_Log.md#DL-2241",
+      "editions": [
+        {
+          "scope": "application",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-CHAT-THREAD-LIFETIME",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        },
+        {
+          "scope": "project",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-CHAT-THREAD-LIFETIME",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        }
+      ]
+    },
+    {
+      "event_type": "chat.thread_created",
+      "decision": "Plans/Decision_Log.md#DL-2242",
+      "editions": [
+        {
+          "scope": "application",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-CHAT-THREAD-LIFETIME",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        },
+        {
+          "scope": "project",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-CHAT-THREAD-LIFETIME",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        }
+      ]
+    },
+    {
+      "event_type": "chat.thread_deleted",
+      "decision": "Plans/Decision_Log.md#DL-2243",
+      "editions": [
+        {
+          "scope": "application",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-AUTHORITY-INDEFINITE",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        },
+        {
+          "scope": "project",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-AUTHORITY-INDEFINITE",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        }
+      ]
+    },
+    {
+      "event_type": "chat.thread_worktree_bound",
+      "decision": "Plans/Decision_Log.md#DL-2244",
+      "editions": [
+        {
+          "scope": "application",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-CHAT-THREAD-LIFETIME",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        },
+        {
+          "scope": "project",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-CHAT-THREAD-LIFETIME",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        }
+      ]
+    },
+    {
+      "event_type": "chat.thread_worktree_create_failed",
+      "decision": "Plans/Decision_Log.md#DL-2245",
+      "editions": [
+        {
+          "scope": "application",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-CHAT-THREAD-LIFETIME",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        },
+        {
+          "scope": "project",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-CHAT-THREAD-LIFETIME",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        }
+      ]
+    },
+    {
+      "event_type": "chat.thread_worktree_merge_failed",
+      "decision": "Plans/Decision_Log.md#DL-2246",
+      "editions": [
+        {
+          "scope": "application",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-CHAT-THREAD-LIFETIME",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        },
+        {
+          "scope": "project",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-CHAT-THREAD-LIFETIME",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        }
+      ]
+    },
+    {
+      "event_type": "chat.thread_worktree_merged",
+      "decision": "Plans/Decision_Log.md#DL-2247",
+      "editions": [
+        {
+          "scope": "application",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-CHAT-THREAD-LIFETIME",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        },
+        {
+          "scope": "project",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-CHAT-THREAD-LIFETIME",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        }
+      ]
+    },
+    {
+      "event_type": "chat.thread_worktree_pr_created",
+      "decision": "Plans/Decision_Log.md#DL-2248",
+      "editions": [
+        {
+          "scope": "application",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-CHAT-THREAD-LIFETIME",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        },
+        {
+          "scope": "project",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-CHAT-THREAD-LIFETIME",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        }
+      ]
+    },
+    {
+      "event_type": "chat.thread_worktree_pr_failed",
+      "decision": "Plans/Decision_Log.md#DL-2249",
+      "editions": [
+        {
+          "scope": "application",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-CHAT-THREAD-LIFETIME",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        },
+        {
+          "scope": "project",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-CHAT-THREAD-LIFETIME",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        }
+      ]
+    },
+    {
+      "event_type": "chat.thread_worktree_pre_merge_test_failed",
+      "decision": "Plans/Decision_Log.md#DL-2250",
+      "editions": [
+        {
+          "scope": "application",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-CHAT-THREAD-LIFETIME",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        },
+        {
+          "scope": "project",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-CHAT-THREAD-LIFETIME",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        }
+      ]
+    },
+    {
+      "event_type": "chat.thread_worktree_pre_merge_test_passed",
+      "decision": "Plans/Decision_Log.md#DL-2251",
+      "editions": [
+        {
+          "scope": "application",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-CHAT-THREAD-LIFETIME",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        },
+        {
+          "scope": "project",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-CHAT-THREAD-LIFETIME",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        }
+      ]
+    },
+    {
+      "event_type": "chat.thread_worktree_pre_merge_test_started",
+      "decision": "Plans/Decision_Log.md#DL-2252",
+      "editions": [
+        {
+          "scope": "application",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-CHAT-THREAD-LIFETIME",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        },
+        {
+          "scope": "project",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-CHAT-THREAD-LIFETIME",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        }
+      ]
+    },
+    {
+      "event_type": "chat.thread_worktree_renamed",
+      "decision": "Plans/Decision_Log.md#DL-2253",
+      "editions": [
+        {
+          "scope": "application",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-CHAT-THREAD-LIFETIME",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        },
+        {
+          "scope": "project",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-CHAT-THREAD-LIFETIME",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        }
+      ]
+    },
+    {
+      "event_type": "chat.thread_worktree_unbound",
+      "decision": "Plans/Decision_Log.md#DL-2254",
+      "editions": [
+        {
+          "scope": "application",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-CHAT-THREAD-LIFETIME",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        },
+        {
+          "scope": "project",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-CHAT-THREAD-LIFETIME",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        }
+      ]
+    },
+    {
+      "event_type": "collaboration.artifact_added",
+      "decision": "Plans/Decision_Log.md#DL-2255",
+      "editions": [
+        {
+          "scope": "project",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-CHAT-THREAD-LIFETIME",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        },
+        {
+          "scope": "application",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-CHAT-THREAD-LIFETIME",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        }
+      ]
+    },
+    {
+      "event_type": "collaboration.cancelled",
+      "decision": "Plans/Decision_Log.md#DL-2256",
+      "editions": [
+        {
+          "scope": "project",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-CHAT-THREAD-LIFETIME",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        },
+        {
+          "scope": "application",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-CHAT-THREAD-LIFETIME",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        }
+      ]
+    },
+    {
+      "event_type": "collaboration.completed",
+      "decision": "Plans/Decision_Log.md#DL-2257",
+      "editions": [
+        {
+          "scope": "project",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-CHAT-THREAD-LIFETIME",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        },
+        {
+          "scope": "application",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-CHAT-THREAD-LIFETIME",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        }
+      ]
+    },
+    {
+      "event_type": "collaboration.configuration_changed",
+      "decision": "Plans/Decision_Log.md#DL-2258",
+      "editions": [
+        {
+          "scope": "project",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-CHAT-THREAD-LIFETIME",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        },
+        {
+          "scope": "application",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-CHAT-THREAD-LIFETIME",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        }
+      ]
+    },
+    {
+      "event_type": "collaboration.created",
+      "decision": "Plans/Decision_Log.md#DL-2259",
+      "editions": [
+        {
+          "scope": "project",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-CHAT-THREAD-LIFETIME",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        },
+        {
+          "scope": "application",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-CHAT-THREAD-LIFETIME",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        }
+      ]
+    },
+    {
+      "event_type": "collaboration.failed",
+      "decision": "Plans/Decision_Log.md#DL-2260",
+      "editions": [
+        {
+          "scope": "project",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-CHAT-THREAD-LIFETIME",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        },
+        {
+          "scope": "application",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-CHAT-THREAD-LIFETIME",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        }
+      ]
+    },
+    {
+      "event_type": "collaboration.message_added",
+      "decision": "Plans/Decision_Log.md#DL-2261",
+      "editions": [
+        {
+          "scope": "project",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-CHAT-THREAD-LIFETIME",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        },
+        {
+          "scope": "application",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-CHAT-THREAD-LIFETIME",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        }
+      ]
+    },
+    {
+      "event_type": "collaboration.participant_completed",
+      "decision": "Plans/Decision_Log.md#DL-2262",
+      "editions": [
+        {
+          "scope": "project",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-CHAT-THREAD-LIFETIME",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        },
+        {
+          "scope": "application",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-CHAT-THREAD-LIFETIME",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        }
+      ]
+    },
+    {
+      "event_type": "collaboration.participant_started",
+      "decision": "Plans/Decision_Log.md#DL-2263",
+      "editions": [
+        {
+          "scope": "project",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-CHAT-THREAD-LIFETIME",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        },
+        {
+          "scope": "application",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-CHAT-THREAD-LIFETIME",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        }
+      ]
+    },
+    {
+      "event_type": "collaboration.paused",
+      "decision": "Plans/Decision_Log.md#DL-2264",
+      "editions": [
+        {
+          "scope": "project",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-CHAT-THREAD-LIFETIME",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        },
+        {
+          "scope": "application",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-CHAT-THREAD-LIFETIME",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        }
+      ]
+    },
+    {
+      "event_type": "collaboration.resumed",
+      "decision": "Plans/Decision_Log.md#DL-2265",
+      "editions": [
+        {
+          "scope": "project",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-CHAT-THREAD-LIFETIME",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        },
+        {
+          "scope": "application",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-CHAT-THREAD-LIFETIME",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        }
+      ]
+    },
+    {
+      "event_type": "collaboration.started",
+      "decision": "Plans/Decision_Log.md#DL-2266",
+      "editions": [
+        {
+          "scope": "project",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-CHAT-THREAD-LIFETIME",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        },
+        {
+          "scope": "application",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-CHAT-THREAD-LIFETIME",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        }
+      ]
+    },
+    {
+      "event_type": "config.migrated",
+      "decision": "Plans/Decision_Log.md#DL-2274",
+      "editions": [
+        {
+          "scope": "application",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-OPERATIONAL-2555D",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        },
+        {
+          "scope": "project",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-OPERATIONAL-2555D",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        }
+      ]
+    },
+    {
+      "event_type": "crew.board_message_posted",
+      "decision": "Plans/Decision_Log.md#DL-2280",
+      "editions": [
+        {
+          "scope": "application",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-COORDINATION-180D",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        },
+        {
+          "scope": "project",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-COORDINATION-180D",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        }
+      ]
+    },
+    {
+      "event_type": "crew.board_message_read",
+      "decision": "Plans/Decision_Log.md#DL-2281",
+      "editions": [
+        {
+          "scope": "application",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-COORDINATION-180D",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        },
+        {
+          "scope": "project",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-COORDINATION-180D",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        }
+      ]
+    },
+    {
+      "event_type": "crew.board_messages_archived",
+      "decision": "Plans/Decision_Log.md#DL-2282",
+      "editions": [
+        {
+          "scope": "application",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-COORDINATION-180D",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        },
+        {
+          "scope": "project",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-COORDINATION-180D",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        }
+      ]
+    },
+    {
+      "event_type": "filesafe.command_denied",
+      "decision": "Plans/Decision_Log.md#DL-2301",
+      "editions": [
+        {
+          "scope": "application",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-FILESAFE-BLOCKED-COMMAND-APPLICATION-2555D",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        },
+        {
+          "scope": "project",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-OPERATIONAL-2555D",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        }
+      ]
+    },
+    {
+      "event_type": "filesafe.destructive_override_denied",
+      "decision": "Plans/Decision_Log.md#DL-2302",
+      "editions": [
+        {
+          "scope": "application",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-AUTHORITY-INDEFINITE",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        },
+        {
+          "scope": "project",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-AUTHORITY-INDEFINITE",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        }
+      ]
+    },
+    {
+      "event_type": "filesafe.destructive_override_granted",
+      "decision": "Plans/Decision_Log.md#DL-2303",
+      "editions": [
+        {
+          "scope": "application",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-AUTHORITY-INDEFINITE",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        },
+        {
+          "scope": "project",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-AUTHORITY-INDEFINITE",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        }
+      ]
+    },
+    {
+      "event_type": "filesafe.destructive_override_requested",
+      "decision": "Plans/Decision_Log.md#DL-2304",
+      "editions": [
+        {
+          "scope": "application",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-AUTHORITY-INDEFINITE",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        },
+        {
+          "scope": "project",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-AUTHORITY-INDEFINITE",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        }
+      ]
+    },
+    {
+      "event_type": "filesafe.guard_init_failed",
+      "decision": "Plans/Decision_Log.md#DL-2305",
+      "editions": [
+        {
+          "scope": "application",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-FILESAFE-GUARD-FAILURE-APPLICATION-2555D",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        },
+        {
+          "scope": "project",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-OPERATIONAL-2555D",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        }
+      ]
+    },
+    {
+      "event_type": "filesafe.path_denied",
+      "decision": "Plans/Decision_Log.md#DL-2306",
+      "editions": [
+        {
+          "scope": "application",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-FILESAFE-DENIED-PATH-APPLICATION-2555D",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        },
+        {
+          "scope": "project",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-OPERATIONAL-2555D",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        }
+      ]
+    },
+    {
+      "event_type": "filesafe.policy_degraded",
+      "decision": "Plans/Decision_Log.md#DL-2307",
+      "editions": [
+        {
+          "scope": "application",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-OPERATIONAL-2555D",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        },
+        {
+          "scope": "project",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-OPERATIONAL-2555D",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        }
+      ]
+    },
+    {
+      "event_type": "model.catalog_refreshed",
+      "decision": "Plans/Decision_Log.md#DL-2337",
+      "editions": [
+        {
+          "scope": "application",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-MODEL-CATALOG-APPLICATION-90D",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        },
+        {
+          "scope": "project",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-TELEMETRY-90D",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        }
+      ]
+    },
+    {
+      "event_type": "persona.created",
+      "decision": "Plans/Decision_Log.md#DL-2341",
+      "editions": [
+        {
+          "scope": "application",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-AUTHORITY-INDEFINITE",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        },
+        {
+          "scope": "project",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-AUTHORITY-INDEFINITE",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        }
+      ]
+    },
+    {
+      "event_type": "persona.deleted",
+      "decision": "Plans/Decision_Log.md#DL-2342",
+      "editions": [
+        {
+          "scope": "application",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-AUTHORITY-INDEFINITE",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        },
+        {
+          "scope": "project",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-AUTHORITY-INDEFINITE",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        }
+      ]
+    },
+    {
+      "event_type": "persona.exported",
+      "decision": "Plans/Decision_Log.md#DL-2343",
+      "editions": [
+        {
+          "scope": "application",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-AUTHORITY-INDEFINITE",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        },
+        {
+          "scope": "project",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-AUTHORITY-INDEFINITE",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        }
+      ]
+    },
+    {
+      "event_type": "persona.imported",
+      "decision": "Plans/Decision_Log.md#DL-2344",
+      "editions": [
+        {
+          "scope": "application",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-AUTHORITY-INDEFINITE",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        },
+        {
+          "scope": "project",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-AUTHORITY-INDEFINITE",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        }
+      ]
+    },
+    {
+      "event_type": "persona.selected",
+      "decision": "Plans/Decision_Log.md#DL-2345",
+      "editions": [
+        {
+          "scope": "application",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-AUTHORITY-INDEFINITE",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        },
+        {
+          "scope": "project",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-AUTHORITY-INDEFINITE",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        }
+      ]
+    },
+    {
+      "event_type": "persona.updated",
+      "decision": "Plans/Decision_Log.md#DL-2346",
+      "editions": [
+        {
+          "scope": "application",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-AUTHORITY-INDEFINITE",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        },
+        {
+          "scope": "project",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-AUTHORITY-INDEFINITE",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        }
+      ]
+    },
+    {
+      "event_type": "plugin.hook.blocked",
+      "decision": "Plans/Decision_Log.md#DL-2348",
+      "editions": [
+        {
+          "scope": "application",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-PLUGIN-HOOK-APPLICATION-90D",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        },
+        {
+          "scope": "project",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-TELEMETRY-90D",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        }
+      ]
+    },
+    {
+      "event_type": "plugin.hook.error",
+      "decision": "Plans/Decision_Log.md#DL-2349",
+      "editions": [
+        {
+          "scope": "application",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-PLUGIN-HOOK-APPLICATION-90D",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        },
+        {
+          "scope": "project",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-TELEMETRY-90D",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        }
+      ]
+    },
+    {
+      "event_type": "plugin.hook.invoked",
+      "decision": "Plans/Decision_Log.md#DL-2350",
+      "editions": [
+        {
+          "scope": "application",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-PLUGIN-HOOK-APPLICATION-90D",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        },
+        {
+          "scope": "project",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-TELEMETRY-90D",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        }
+      ]
+    },
+    {
+      "event_type": "plugin.load_failed",
+      "decision": "Plans/Decision_Log.md#DL-2351",
+      "editions": [
+        {
+          "scope": "application",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-PLUGIN-OPERATIONS-APPLICATION-2555D",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        },
+        {
+          "scope": "project",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-OPERATIONAL-2555D",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        }
+      ]
+    },
+    {
+      "event_type": "plugin.loaded",
+      "decision": "Plans/Decision_Log.md#DL-2352",
+      "editions": [
+        {
+          "scope": "application",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-PLUGIN-OPERATIONS-APPLICATION-2555D",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        },
+        {
+          "scope": "project",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-OPERATIONAL-2555D",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        }
+      ]
+    },
+    {
+      "event_type": "plugin.permission.override",
+      "decision": "Plans/Decision_Log.md#DL-2353",
+      "editions": [
+        {
+          "scope": "application",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-PLUGIN-OPERATIONS-APPLICATION-2555D",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        },
+        {
+          "scope": "project",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-OPERATIONAL-2555D",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        }
+      ]
+    },
+    {
+      "event_type": "plugin.tool.collision",
+      "decision": "Plans/Decision_Log.md#DL-2354",
+      "editions": [
+        {
+          "scope": "application",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-PLUGIN-OPERATIONS-APPLICATION-2555D",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        },
+        {
+          "scope": "project",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-OPERATIONAL-2555D",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        }
+      ]
+    },
+    {
+      "event_type": "plugin.tool.registered",
+      "decision": "Plans/Decision_Log.md#DL-2355",
+      "editions": [
+        {
+          "scope": "application",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-PLUGIN-OPERATIONS-APPLICATION-2555D",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        },
+        {
+          "scope": "project",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-OPERATIONAL-2555D",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        }
+      ]
+    },
+    {
+      "event_type": "restore.state_changed",
+      "decision": "Plans/Decision_Log.md#DL-2370",
+      "editions": [
+        {
+          "scope": "application",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-OPERATIONAL-SECURITY-APPLICATION-2555D",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        },
+        {
+          "scope": "project",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-OPERATIONAL-2555D",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        }
+      ]
+    },
+    {
+      "event_type": "review.artifact_finalized",
+      "decision": "Plans/Decision_Log.md#DL-2371",
+      "editions": [
+        {
+          "scope": "project",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-CHAT-THREAD-LIFETIME",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        },
+        {
+          "scope": "application",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-CHAT-THREAD-LIFETIME",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        }
+      ]
+    },
+    {
+      "event_type": "review.finding_added",
+      "decision": "Plans/Decision_Log.md#DL-2372",
+      "editions": [
+        {
+          "scope": "project",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-CHAT-THREAD-LIFETIME",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        },
+        {
+          "scope": "application",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-CHAT-THREAD-LIFETIME",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        }
+      ]
+    },
+    {
+      "event_type": "review.finding_dispositioned",
+      "decision": "Plans/Decision_Log.md#DL-2373",
+      "editions": [
+        {
+          "scope": "project",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-CHAT-THREAD-LIFETIME",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        },
+        {
+          "scope": "application",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-CHAT-THREAD-LIFETIME",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        }
+      ]
+    },
+    {
+      "event_type": "run.background_enqueued",
+      "decision": "Plans/Decision_Log.md#DL-2374",
+      "editions": [
+        {
+          "scope": "application",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-RUNTIME-365D",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        },
+        {
+          "scope": "project",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-RUNTIME-365D",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        }
+      ]
+    },
+    {
+      "event_type": "safe_point.created",
+      "decision": "Plans/Decision_Log.md#DL-2394",
+      "editions": [
+        {
+          "scope": "application",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-RUNTIME-365D",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        },
+        {
+          "scope": "project",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-RUNTIME-365D",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        }
+      ]
+    },
+    {
+      "event_type": "safe_point.restored",
+      "decision": "Plans/Decision_Log.md#DL-2395",
+      "editions": [
+        {
+          "scope": "application",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-RUNTIME-365D",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        },
+        {
+          "scope": "project",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-RUNTIME-365D",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        }
+      ]
+    },
+    {
+      "event_type": "subagent.budget_warning",
+      "decision": "Plans/Decision_Log.md#DL-2405",
+      "editions": [
+        {
+          "scope": "application",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-CHAT-THREAD-LIFETIME",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        },
+        {
+          "scope": "project",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-CHAT-THREAD-LIFETIME",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        }
+      ]
+    },
+    {
+      "event_type": "subagent.cancelled",
+      "decision": "Plans/Decision_Log.md#DL-2406",
+      "editions": [
+        {
+          "scope": "application",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-CHAT-THREAD-LIFETIME",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        },
+        {
+          "scope": "project",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-CHAT-THREAD-LIFETIME",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        }
+      ]
+    },
+    {
+      "event_type": "subagent.completed",
+      "decision": "Plans/Decision_Log.md#DL-2407",
+      "editions": [
+        {
+          "scope": "application",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-CHAT-THREAD-LIFETIME",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        },
+        {
+          "scope": "project",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-CHAT-THREAD-LIFETIME",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        }
+      ]
+    },
+    {
+      "event_type": "subagent.context_warning",
+      "decision": "Plans/Decision_Log.md#DL-2408",
+      "editions": [
+        {
+          "scope": "application",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-CHAT-THREAD-LIFETIME",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        },
+        {
+          "scope": "project",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-CHAT-THREAD-LIFETIME",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        }
+      ]
+    },
+    {
+      "event_type": "subagent.escalated",
+      "decision": "Plans/Decision_Log.md#DL-2409",
+      "editions": [
+        {
+          "scope": "application",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-CHAT-THREAD-LIFETIME",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        },
+        {
+          "scope": "project",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-CHAT-THREAD-LIFETIME",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        }
+      ]
+    },
+    {
+      "event_type": "subagent.failed",
+      "decision": "Plans/Decision_Log.md#DL-2410",
+      "editions": [
+        {
+          "scope": "application",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-CHAT-THREAD-LIFETIME",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        },
+        {
+          "scope": "project",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-CHAT-THREAD-LIFETIME",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        }
+      ]
+    },
+    {
+      "event_type": "subagent.message_received",
+      "decision": "Plans/Decision_Log.md#DL-2411",
+      "editions": [
+        {
+          "scope": "application",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-CHAT-THREAD-LIFETIME",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        },
+        {
+          "scope": "project",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-CHAT-THREAD-LIFETIME",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        }
+      ]
+    },
+    {
+      "event_type": "subagent.message_sent",
+      "decision": "Plans/Decision_Log.md#DL-2412",
+      "editions": [
+        {
+          "scope": "application",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-CHAT-THREAD-LIFETIME",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        },
+        {
+          "scope": "project",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-CHAT-THREAD-LIFETIME",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        }
+      ]
+    },
+    {
+      "event_type": "subagent.model_switched",
+      "decision": "Plans/Decision_Log.md#DL-2413",
+      "editions": [
+        {
+          "scope": "application",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-CHAT-THREAD-LIFETIME",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        },
+        {
+          "scope": "project",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-CHAT-THREAD-LIFETIME",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        }
+      ]
+    },
+    {
+      "event_type": "subagent.output_truncated",
+      "decision": "Plans/Decision_Log.md#DL-2414",
+      "editions": [
+        {
+          "scope": "application",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-CHAT-THREAD-LIFETIME",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        },
+        {
+          "scope": "project",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-CHAT-THREAD-LIFETIME",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        }
+      ]
+    },
+    {
+      "event_type": "subagent.paused",
+      "decision": "Plans/Decision_Log.md#DL-2415",
+      "editions": [
+        {
+          "scope": "application",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-CHAT-THREAD-LIFETIME",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        },
+        {
+          "scope": "project",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-CHAT-THREAD-LIFETIME",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        }
+      ]
+    },
+    {
+      "event_type": "subagent.progress",
+      "decision": "Plans/Decision_Log.md#DL-2416",
+      "editions": [
+        {
+          "scope": "application",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-CHAT-THREAD-LIFETIME",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        },
+        {
+          "scope": "project",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-CHAT-THREAD-LIFETIME",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        }
+      ]
+    },
+    {
+      "event_type": "subagent.resumed",
+      "decision": "Plans/Decision_Log.md#DL-2417",
+      "editions": [
+        {
+          "scope": "application",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-CHAT-THREAD-LIFETIME",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        },
+        {
+          "scope": "project",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-CHAT-THREAD-LIFETIME",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        }
+      ]
+    },
+    {
+      "event_type": "subagent.retried",
+      "decision": "Plans/Decision_Log.md#DL-2418",
+      "editions": [
+        {
+          "scope": "application",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-CHAT-THREAD-LIFETIME",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        },
+        {
+          "scope": "project",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-CHAT-THREAD-LIFETIME",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        }
+      ]
+    },
+    {
+      "event_type": "subagent.spawned",
+      "decision": "Plans/Decision_Log.md#DL-2419",
+      "editions": [
+        {
+          "scope": "application",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-CHAT-THREAD-LIFETIME",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        },
+        {
+          "scope": "project",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-CHAT-THREAD-LIFETIME",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        }
+      ]
+    },
+    {
+      "event_type": "subagent.started",
+      "decision": "Plans/Decision_Log.md#DL-2420",
+      "editions": [
+        {
+          "scope": "application",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-CHAT-THREAD-LIFETIME",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        },
+        {
+          "scope": "project",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-CHAT-THREAD-LIFETIME",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        }
+      ]
+    },
+    {
+      "event_type": "subagent.timeout",
+      "decision": "Plans/Decision_Log.md#DL-2421",
+      "editions": [
+        {
+          "scope": "application",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-CHAT-THREAD-LIFETIME",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        },
+        {
+          "scope": "project",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-CHAT-THREAD-LIFETIME",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        }
+      ]
+    },
+    {
+      "event_type": "subagent.tool_called",
+      "decision": "Plans/Decision_Log.md#DL-2422",
+      "editions": [
+        {
+          "scope": "application",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-CHAT-THREAD-LIFETIME",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        },
+        {
+          "scope": "project",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-CHAT-THREAD-LIFETIME",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        }
+      ]
+    },
+    {
+      "event_type": "subagent.tool_completed",
+      "decision": "Plans/Decision_Log.md#DL-2423",
+      "editions": [
+        {
+          "scope": "application",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-CHAT-THREAD-LIFETIME",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        },
+        {
+          "scope": "project",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-CHAT-THREAD-LIFETIME",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        }
+      ]
+    },
+    {
+      "event_type": "tool.denied",
+      "decision": "Plans/Decision_Log.md#DL-2425",
+      "editions": [
+        {
+          "scope": "application",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-RUNTIME-365D",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        },
+        {
+          "scope": "project",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-RUNTIME-365D",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        }
+      ]
+    },
+    {
+      "event_type": "tool.execution_completed",
+      "decision": "Plans/Decision_Log.md#DL-2426",
+      "editions": [
+        {
+          "scope": "application",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-RUNTIME-365D",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        },
+        {
+          "scope": "project",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-RUNTIME-365D",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        }
+      ]
+    },
+    {
+      "event_type": "tool.execution_started",
+      "decision": "Plans/Decision_Log.md#DL-2427",
+      "editions": [
+        {
+          "scope": "application",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-RUNTIME-365D",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        },
+        {
+          "scope": "project",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-RUNTIME-365D",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        }
+      ]
+    },
+    {
+      "event_type": "tool.invoked",
+      "decision": "Plans/Decision_Log.md#DL-2428",
+      "editions": [
+        {
+          "scope": "application",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-RUNTIME-365D",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        },
+        {
+          "scope": "project",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-RUNTIME-365D",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        }
+      ]
+    },
+    {
+      "event_type": "usage.event",
+      "decision": "Plans/Decision_Log.md#DL-2444",
+      "editions": [
+        {
+          "scope": "application",
+          "policy": {
+            "setting_key": "ai.usage.usage-retention",
+            "anchor": "first_durable_save",
+            "anchor_immutable": true,
+            "owner_ref": "Plans/storage-plan.md#SP-594"
+          },
+          "decision_binding_matches": true
+        },
+        {
+          "scope": "project",
+          "policy": {
+            "setting_key": "ai.usage.usage-retention",
+            "anchor": "first_durable_save",
+            "anchor_immutable": true,
+            "owner_ref": "Plans/storage-plan.md#SP-594"
+          },
+          "decision_binding_matches": true
+        }
+      ]
+    }
+  ],
   "retention_citations": [
     {
       "event_type": "alert.acknowledged",
@@ -170052,7 +172456,7 @@
   ],
   "decision_scopes": {
     "DL-2137": {
-      "section_sha256": "4a68b93d19cbb28f111343a0990ec8f73d9773ead3ff3a90b9f91f99287cd15b",
+      "section_sha256": "9c54399093edf483c4e3f3cf0b06a2ce21195eb50344978617d8fecf019077c9",
       "stored_value_only": false,
       "checkpoint_only": false,
       "explicit_event_scope": null,
@@ -170155,7 +172559,7 @@
       "title": "### DL-401 - Retention assignments for the surviving candidate names"
     },
     "DL-2138": {
-      "section_sha256": "b1d06e05790376fa3893509a294574adfc830e9f9627be69bd3e203067949aa7",
+      "section_sha256": "8a6806909843d3d9dab3f1097de777c5ae762a09afa6020d58eaa087c04833bf",
       "stored_value_only": false,
       "checkpoint_only": false,
       "explicit_event_scope": null,
@@ -170163,7 +172567,7 @@
       "title": "### DL-2138: Event Authority registers alert.dismissed (admission merge 2)"
     },
     "DL-2139": {
-      "section_sha256": "13e3bb9fee5d48d9de9fc67886089bedc395437bdd1acdddfc378e21ac3d05e9",
+      "section_sha256": "243f79c65892017b494f5b58d6d011e8fea9bb5482e85a605c12169b25ebe602",
       "stored_value_only": false,
       "checkpoint_only": false,
       "explicit_event_scope": null,
@@ -170179,7 +172583,7 @@
       "title": "### DL-045 - Bounded Event Authority Technical Binding Definition Approval"
     },
     "DL-2140": {
-      "section_sha256": "4dfcc5c8ce21ef09849bb75ad3ee0262feed464c448449dec9287ab30ffc74fa",
+      "section_sha256": "ac4d77afee9d7c8c1fb1f02f39821d646b2179929dc1e53f4f8320e5f832c2aa",
       "stored_value_only": false,
       "checkpoint_only": false,
       "explicit_event_scope": null,
@@ -170187,7 +172591,7 @@
       "title": "### DL-2140: Event Authority registers alert.snoozed (admission merge 2)"
     },
     "DL-2141": {
-      "section_sha256": "14d8d686a7189d66d255540c2c4b00d8e23b5bb7e7f26a8c1ad4693ed68c87de",
+      "section_sha256": "2268cbf8d210506758566a2dd1ceddded3f9e7c9551d42794d4d5837fd8ad92d",
       "stored_value_only": false,
       "checkpoint_only": false,
       "explicit_event_scope": null,
@@ -170195,7 +172599,7 @@
       "title": "### DL-2141: Event Authority registers approval.denied (admission merge 2)"
     },
     "DL-2142": {
-      "section_sha256": "add52929275cc3b74784b847297c3b61a9ea07ddb2283f4573dcee60a01b5bef",
+      "section_sha256": "eb3b3c584e035ce82f387823fa02785ce53572d05cb648a41d0c276713b7009a",
       "stored_value_only": false,
       "checkpoint_only": false,
       "explicit_event_scope": null,
@@ -170203,7 +172607,7 @@
       "title": "### DL-2142: Event Authority registers approval.granted (admission merge 2)"
     },
     "DL-2143": {
-      "section_sha256": "12834351660fc1a015ec3242e652e1ef271f8f6068743063c249938bc0e4c7a1",
+      "section_sha256": "49c9adf395dc9d4953f395fe54d8c759e2437bcbc2ea48289c75c3d1f33dd563",
       "stored_value_only": false,
       "checkpoint_only": false,
       "explicit_event_scope": null,
@@ -170211,7 +172615,7 @@
       "title": "### DL-2143: Event Authority registers approval.requested (admission merge 2)"
     },
     "DL-2144": {
-      "section_sha256": "2958483807c479b00a1da68980c02d09151ef8ec915ea409a4f0edd36d3a3462",
+      "section_sha256": "895afca7f3957b33e13de16edb9a2bed45a9c56eebf8865905642757c70e8fc6",
       "stored_value_only": false,
       "checkpoint_only": false,
       "explicit_event_scope": null,
@@ -170219,7 +172623,7 @@
       "title": "### DL-2144: Event Authority registers approval.timeout (admission merge 2)"
     },
     "DL-2145": {
-      "section_sha256": "d2ea23fbcc99c3d67910a2fe432f9cab1748c75a75b36a2eba95eba874bd694c",
+      "section_sha256": "b7c9b68563773ba7fef7264f4ddfc2b24b6b8feadd5e1e0be0b7fc5618ea5c12",
       "stored_value_only": false,
       "checkpoint_only": false,
       "explicit_event_scope": null,
@@ -170241,7 +172645,7 @@
       "title": "### DL-502: GitHub sign-in operation history (retention deck 4 Q3)"
     },
     "DL-2146": {
-      "section_sha256": "c54155e1577da3c4e41b915cfafb037f8912e7709f833383fcc688517af871b9",
+      "section_sha256": "595f3f0a566065b6d29f55c2ca746063f8605275f14df8a1906793671d6bdad9",
       "stored_value_only": false,
       "checkpoint_only": false,
       "explicit_event_scope": null,
@@ -170249,7 +172653,7 @@
       "title": "### DL-2146: Event Authority registers auth.github.device_code.issued (admission merge 2)"
     },
     "DL-2147": {
-      "section_sha256": "9863d42c58a80b5edd8768370447f7c34945bcc8cc1d6f56a98c9dcf44bf0661",
+      "section_sha256": "81d1302643e0e1f83fd4cb6236516b29f0040a50693e2686e3f4cad39b7dfff2",
       "stored_value_only": false,
       "checkpoint_only": false,
       "explicit_event_scope": null,
@@ -170257,7 +172661,7 @@
       "title": "### DL-2147: Event Authority registers auth.github.disconnected (admission merge 2)"
     },
     "DL-2148": {
-      "section_sha256": "5a4097b1f7388d9d365b40bba4faf4e6f5048876009e53a413690a716a45de3d",
+      "section_sha256": "bc324a98bf1ee378a54a39e715e1318450d93ab6e53bed21cfbb3efbaadcda88",
       "stored_value_only": false,
       "checkpoint_only": false,
       "explicit_event_scope": null,
@@ -170265,7 +172669,7 @@
       "title": "### DL-2148: Event Authority registers auth.github.failed (admission merge 2)"
     },
     "DL-2149": {
-      "section_sha256": "67f028cacfc93febd8a801b87e92dec2b50f5f295ec29d404a0a056b98992b02",
+      "section_sha256": "62082739cbd9d38da2fdb6c147d072d99d9a4d08509c5fcd606cf82a4fbbc89a",
       "stored_value_only": false,
       "checkpoint_only": false,
       "explicit_event_scope": null,
@@ -170289,7 +172693,7 @@
       "title": "### DL-453 - 47 lasting-change histories stay permanently"
     },
     "DL-2150": {
-      "section_sha256": "ce131d13ab0558f2e8ed57e2c316f87355fc7b3fd66ab90950e0c03572a2575b",
+      "section_sha256": "874527ceb92985b7c9d73ffa6ba389ca010f05bcdb6d0a4cd3c3bcbdbd4d587f",
       "stored_value_only": false,
       "checkpoint_only": false,
       "explicit_event_scope": null,
@@ -170305,7 +172709,7 @@
       "title": "### DL-455 - 24 operational, security and recovery histories stay seven years"
     },
     "DL-2151": {
-      "section_sha256": "22711c54d66b451088ab1d6afdf6768081b9a5a3f2ad7b31849aeab0ef2840ab",
+      "section_sha256": "f769adbaf99150dc3ab9dad5a2bedbf7b207445f141e044b3879ec4bed47d418",
       "stored_value_only": false,
       "checkpoint_only": false,
       "explicit_event_scope": null,
@@ -170369,7 +172773,7 @@
       "title": "### DL-087 - Six Older Crew Lifecycle Events Are Retired For The Shared Collaborative Workflow Events"
     },
     "DL-2152": {
-      "section_sha256": "321539cb8efd2737bd2fa7c83077860304957233a07df3d06d954d2d0ee0238a",
+      "section_sha256": "26f30fbbad524155e41c162f242d11619fc271b6216e941d4e3995f89c0cbc20",
       "stored_value_only": false,
       "checkpoint_only": false,
       "explicit_event_scope": null,
@@ -170393,7 +172797,7 @@
       "title": "### DL-077 - Seal Check Accepts Post-August Families Only Through Complete Admission Records"
     },
     "DL-2153": {
-      "section_sha256": "cd269a8bb773b480c89bc1dd942ac2c7df807953b52e545fbdf6b93b999161be",
+      "section_sha256": "401287b2f29cd7485239171abaf5297f8cfe1d30897871eabc063e1632de8643",
       "stored_value_only": false,
       "checkpoint_only": false,
       "explicit_event_scope": null,
@@ -170401,7 +172805,7 @@
       "title": "### DL-2153: Event Authority registers brainstorm.proposal_added (admission merge 2)"
     },
     "DL-2154": {
-      "section_sha256": "9dd28804b170a924b3dc299836427589e3883c724dd29c8a57fa6e1fe44945c2",
+      "section_sha256": "13582d342f0f21cbb89797088e9b3a6a278df974a346b47ddd37943ccee91d96",
       "stored_value_only": false,
       "checkpoint_only": false,
       "explicit_event_scope": null,
@@ -170409,7 +172813,7 @@
       "title": "### DL-2154: Event Authority registers brainstorm.vote_added (admission merge 2)"
     },
     "DL-2155": {
-      "section_sha256": "3b7ef74fcbbca3d98f84919e85c5290669c3c805be98b25293f7990f7ff440ce",
+      "section_sha256": "32b256551732108093d76262aac5a77ef4b7eaa2a0eb94574d517b48c5bdf766",
       "stored_value_only": false,
       "checkpoint_only": false,
       "explicit_event_scope": null,
@@ -170417,7 +172821,7 @@
       "title": "### DL-2155: Event Authority registers browser.context_captured (admission merge 2)"
     },
     "DL-2156": {
-      "section_sha256": "50776ca3a5f0be84b0c4fa50e3af88bfcf3c52bcd1f56c9d124cc8792ea71d46",
+      "section_sha256": "8faf24ff45988ec864c3179fe0726f14ebf46c47cf023d138bc60933bdce9df1",
       "stored_value_only": false,
       "checkpoint_only": false,
       "explicit_event_scope": null,
@@ -170449,7 +172853,7 @@
       "title": "### DL-459 - Browser reader checkpoints keep a replaced copy seven days"
     },
     "DL-2157": {
-      "section_sha256": "ab18495cf2d185197bfc7ce1bf9c7cb9a2980d34d5360681fd0e337449ab5000",
+      "section_sha256": "1fe67ba1091492f087a5326338bdb44d4876bd23c2e4abd00b55f8a2e7ff1285",
       "stored_value_only": false,
       "checkpoint_only": false,
       "explicit_event_scope": null,
@@ -170457,7 +172861,7 @@
       "title": "### DL-2157: Event Authority registers browser.context_shared (admission merge 2)"
     },
     "DL-2158": {
-      "section_sha256": "5a0c05c2a09e615b538b620b310544d1ab4e1b553436c882d1345170e7bfece1",
+      "section_sha256": "fa1fafda694ff691466e1249ab705ef963e0401a8793be42f80feb0488cddc2d",
       "stored_value_only": false,
       "checkpoint_only": false,
       "explicit_event_scope": null,
@@ -170509,7 +172913,7 @@
       "title": "### DL-089 - Application-Scoped Platform Evaluations Count In Their Own Application Bucket Under RP-OPERATIONAL-2555D"
     },
     "DL-2159": {
-      "section_sha256": "497a50b442294ca5e59173f1b9eb64516d62baa22727d697903519a0a39c8337",
+      "section_sha256": "ab37a5b911ffab528b14f9e5c527557d3f1bd7f50c32594afcda157749e9a5d5",
       "stored_value_only": false,
       "checkpoint_only": false,
       "explicit_event_scope": null,
@@ -170517,7 +172921,7 @@
       "title": "### DL-2159: Event Authority registers browser.controller_lease.lost (admission merge 2)"
     },
     "DL-2160": {
-      "section_sha256": "844a386a2464097011250ab22114a9a12e65fe29057894de8496e123f92c6b53",
+      "section_sha256": "867ff0e9537bae88031037928a71bc7a57fe6a039fef75d64a41cea9751e20f1",
       "stored_value_only": false,
       "checkpoint_only": false,
       "explicit_event_scope": null,
@@ -170525,7 +172929,7 @@
       "title": "### DL-2160: Event Authority registers browser.controller_lease.renewed (admission merge 2)"
     },
     "DL-2161": {
-      "section_sha256": "6093bdc12526c5c3fc9482307d38555f9a2f052444d8ac41b885dbad05c21008",
+      "section_sha256": "6b99fbaf4af0672cae1c5a71fe9f07e75cfb1fed8169e3e2f5a8de7d63c2acba",
       "stored_value_only": false,
       "checkpoint_only": false,
       "explicit_event_scope": null,
@@ -170533,7 +172937,7 @@
       "title": "### DL-2161: Event Authority registers browser.controller_lease.takeover_completed (admission merge 2)"
     },
     "DL-2162": {
-      "section_sha256": "5ef77c4445ba5005cd0fbb0114d82ae5d2fa5cc0ede3d5ce35ac137d71b0b624",
+      "section_sha256": "07daffa7dba59a5bcc6a20484f1aa4bd994bf23344a2a71cc1a8146aa15ea6a1",
       "stored_value_only": false,
       "checkpoint_only": false,
       "explicit_event_scope": null,
@@ -170541,7 +172945,7 @@
       "title": "### DL-2162: Event Authority registers browser.controller_lease.takeover_requested (admission merge 2)"
     },
     "DL-2163": {
-      "section_sha256": "d204abad3c6bd288981c5e831bb3dd8202b2bb79354b887206f379594009998d",
+      "section_sha256": "cd46051107923b2e1119493135895f9b84099af159b93bf1a38c23988c70e280",
       "stored_value_only": false,
       "checkpoint_only": false,
       "explicit_event_scope": null,
@@ -170549,7 +172953,7 @@
       "title": "### DL-2163: Event Authority registers browser.document.generation_changed (admission merge 2)"
     },
     "DL-2164": {
-      "section_sha256": "62f1035bb819c2b5693f292abb9ab60421c1b386d7799d317ec97f86ae564601",
+      "section_sha256": "ed1c9e64b88d764ed0d43dd97bb88a7d7a73ba99d6dfa52a9a6ce62e5b9a4514",
       "stored_value_only": false,
       "checkpoint_only": false,
       "explicit_event_scope": null,
@@ -170557,7 +172961,7 @@
       "title": "### DL-2164: Event Authority registers browser.execution_strategy.fallback_selected (admission merge 2)"
     },
     "DL-2165": {
-      "section_sha256": "fdd67a754c5220063ea5e6e182867dba2d3fb0406ee5e486110609a2017243b8",
+      "section_sha256": "19bd575688f6dc44cfcb463f5b856bac15ab1baaa6033acede5cd8c884d56678",
       "stored_value_only": false,
       "checkpoint_only": false,
       "explicit_event_scope": null,
@@ -170565,7 +172969,7 @@
       "title": "### DL-2165: Event Authority registers browser.execution_strategy.selected (admission merge 2)"
     },
     "DL-2166": {
-      "section_sha256": "d381b2c06df4b557ea0bfe52155bf8c97a7a299fb3d6e55478f024f3ec0df476",
+      "section_sha256": "242952bd2751f99967e0d7822a9faacfc5539c7922e66976a943b79fbc504bec",
       "stored_value_only": false,
       "checkpoint_only": false,
       "explicit_event_scope": null,
@@ -170573,7 +172977,7 @@
       "title": "### DL-2166: Event Authority registers browser.navigation.generation_changed (admission merge 2)"
     },
     "DL-2167": {
-      "section_sha256": "2f082face6bbdf1583b99bb3d662f5844bf73a508d9a658e17aac57f95984a24",
+      "section_sha256": "6bee828d4cef989f06114300c638574689f0e20dc632158601faaaa769faa0df",
       "stored_value_only": false,
       "checkpoint_only": false,
       "explicit_event_scope": null,
@@ -170581,7 +172985,7 @@
       "title": "### DL-2167: Event Authority registers browser.page.activated (admission merge 2)"
     },
     "DL-2168": {
-      "section_sha256": "035bfdc60970178abc9beb2b939828dfd4de0805d36272f022ab6c8d10e934e0",
+      "section_sha256": "53e382a7b32e2a249ec1e144803f6b4a558fea0ba6007e2e9b899f701b384dbf",
       "stored_value_only": false,
       "checkpoint_only": false,
       "explicit_event_scope": null,
@@ -170589,7 +172993,7 @@
       "title": "### DL-2168: Event Authority registers browser.page.closed (admission merge 2)"
     },
     "DL-2169": {
-      "section_sha256": "df438fdc9e275b3b16d79ae98c1a157839b1e192f10a8c2e42d50a65d2cd759d",
+      "section_sha256": "72cfdae9c22085bd0283b40f8ef7a4e1230ebd12c3a517a3fb3eabaff167af92",
       "stored_value_only": false,
       "checkpoint_only": false,
       "explicit_event_scope": null,
@@ -170597,7 +173001,7 @@
       "title": "### DL-2169: Event Authority registers browser.page.created (admission merge 2)"
     },
     "DL-2170": {
-      "section_sha256": "c11db861e3976101ef99e56c0fab480c669417d42d59da7b7bedb5daf99d352c",
+      "section_sha256": "6797cbaf344aa86ffdaade46d7d4acc92690e5873fc9ca71ff26e8313786f32a",
       "stored_value_only": false,
       "checkpoint_only": false,
       "explicit_event_scope": null,
@@ -170605,7 +173009,7 @@
       "title": "### DL-2170: Event Authority registers browser.program.cancelled (admission merge 2)"
     },
     "DL-2171": {
-      "section_sha256": "82f0db95ff66654c37590a3abd528cc3eea1dec50112f1104f3fd205b25c2b1a",
+      "section_sha256": "3330d6ebc907b05028cbe6d43705f8be5c04a3b0b692bbd556c07517352f4763",
       "stored_value_only": false,
       "checkpoint_only": false,
       "explicit_event_scope": null,
@@ -170613,7 +173017,7 @@
       "title": "### DL-2171: Event Authority registers browser.program.checkpointed (admission merge 2)"
     },
     "DL-2172": {
-      "section_sha256": "fa8f40ad3ce17b2a5673187a17d6298115b4c1695e6a4763f6d0960fef0121b2",
+      "section_sha256": "26ebfb20f42d69be886b9993f7a0ea8861b947cffcb5ca70d82c361373cbe74e",
       "stored_value_only": false,
       "checkpoint_only": false,
       "explicit_event_scope": null,
@@ -170621,7 +173025,7 @@
       "title": "### DL-2172: Event Authority registers browser.program.completed (admission merge 2)"
     },
     "DL-2173": {
-      "section_sha256": "dbab531c2e8d13b86ad8c92843ca8fc2d0ed6852ac7fe6d29931d2cdce5eedc7",
+      "section_sha256": "5045fafdadda8ae1919860cf2adace191b8859e922eb44e32b4ca7a035314b65",
       "stored_value_only": false,
       "checkpoint_only": false,
       "explicit_event_scope": null,
@@ -170629,7 +173033,7 @@
       "title": "### DL-2173: Event Authority registers browser.program.failed (admission merge 2)"
     },
     "DL-2174": {
-      "section_sha256": "d09a5fba29d30ef8c5c3c7f0685ba13e47efee6ea2431128f5a766c0d626c61c",
+      "section_sha256": "2bbf6015b34298b479aac267abb6a358a77574b604f51bc8bc03a4ab20368e8d",
       "stored_value_only": false,
       "checkpoint_only": false,
       "explicit_event_scope": null,
@@ -170637,7 +173041,7 @@
       "title": "### DL-2174: Event Authority registers browser.program.paused (admission merge 2)"
     },
     "DL-2175": {
-      "section_sha256": "394882b1e932070df394b93cd59b3e148ea0982a8c3e556fe0950a20d7824c8a",
+      "section_sha256": "52e597cf5ae4ed6a5301840b23d864767db7650bf067dd2dec694774e7dceebd",
       "stored_value_only": false,
       "checkpoint_only": false,
       "explicit_event_scope": null,
@@ -170645,7 +173049,7 @@
       "title": "### DL-2175: Event Authority registers browser.program.resumed (admission merge 2)"
     },
     "DL-2176": {
-      "section_sha256": "43c729a67cf209b6157207449143a856a334dd68b84bc8f7a990616258ca0bb3",
+      "section_sha256": "c3a8aa1dd882ac6077c629e0439ebf21a3f7b5bf872eff70abce11a87e8f17b5",
       "stored_value_only": false,
       "checkpoint_only": false,
       "explicit_event_scope": null,
@@ -170653,7 +173057,7 @@
       "title": "### DL-2176: Event Authority registers browser.program.segment.checkpointed (admission merge 2)"
     },
     "DL-2177": {
-      "section_sha256": "91a62d9f056f7f8e6fdb68481430aaec1850707978a865d40c158ce2bf1574a4",
+      "section_sha256": "4bb2f2e27c455d7e9b136fdd5b3c47b4219806c23427036799bd588829912022",
       "stored_value_only": false,
       "checkpoint_only": false,
       "explicit_event_scope": null,
@@ -170661,7 +173065,7 @@
       "title": "### DL-2177: Event Authority registers browser.program.segment.completed (admission merge 2)"
     },
     "DL-2178": {
-      "section_sha256": "e470e7fc7222bf8f1da1aff4bdc537ba9b74090a173a4df5e85b6f97d16468a7",
+      "section_sha256": "e05011926024f2ef8030268d30031d947cec35dd1873ee8ab656d9b19fc77907",
       "stored_value_only": false,
       "checkpoint_only": false,
       "explicit_event_scope": null,
@@ -170669,7 +173073,7 @@
       "title": "### DL-2178: Event Authority registers browser.program.segment.failed (admission merge 2)"
     },
     "DL-2179": {
-      "section_sha256": "a4022b74feccfb10d2344fa6d6c202af5d47aa6ca46dee0858ba3b394dd9d6d1",
+      "section_sha256": "0b6cefefae3440b0a92b37b530ca8dd571cc1c029c652fabb2597913795e98f2",
       "stored_value_only": false,
       "checkpoint_only": false,
       "explicit_event_scope": null,
@@ -170677,7 +173081,7 @@
       "title": "### DL-2179: Event Authority registers browser.program.segment.started (admission merge 2)"
     },
     "DL-2180": {
-      "section_sha256": "c649b350826b1b9fe61e85fdaba2022949dbba850026384b31b09079f37627bd",
+      "section_sha256": "89190773be6e4b38de5764848c95d3b25e6dd7735dcc69d5ffefe1ae3769e389",
       "stored_value_only": false,
       "checkpoint_only": false,
       "explicit_event_scope": null,
@@ -170685,7 +173089,7 @@
       "title": "### DL-2180: Event Authority registers browser.program.segment.timed_out (admission merge 2)"
     },
     "DL-2181": {
-      "section_sha256": "26cc5669c56dcd112758f84e2f788751ffe4defbda48707628dee00a39a29213",
+      "section_sha256": "bc05843fe9275a12bfb35a4401b587af0dd01e29829d4ee91d58e9b5aba781e3",
       "stored_value_only": false,
       "checkpoint_only": false,
       "explicit_event_scope": null,
@@ -170693,7 +173097,7 @@
       "title": "### DL-2181: Event Authority registers browser.program.started (admission merge 2)"
     },
     "DL-2182": {
-      "section_sha256": "60c4425fd18afd7d0c6736ae7af89f186323af921409bb966094dd98b3b2dcb5",
+      "section_sha256": "3e24ca6244af4dda02b849ffcd2e4c67b12157a28b62ad97f254f53dd6c943e2",
       "stored_value_only": false,
       "checkpoint_only": false,
       "explicit_event_scope": null,
@@ -170701,7 +173105,7 @@
       "title": "### DL-2182: Event Authority registers browser.program.timeout.effect_state_unknown (admission merge 2)"
     },
     "DL-2183": {
-      "section_sha256": "91f553c738fdae03c80cb421d1910aa6e16d7ef7a5b2394fd8e06f3915718877",
+      "section_sha256": "193293f49f926e6e012cb789a9fe6c7413903ee9d8bdf562eac08274dd92255d",
       "stored_value_only": false,
       "checkpoint_only": false,
       "explicit_event_scope": null,
@@ -170709,7 +173113,7 @@
       "title": "### DL-2183: Event Authority registers browser.program.timeout.effects_reconciled (admission merge 2)"
     },
     "DL-2184": {
-      "section_sha256": "d17eff7bdf488e9b1d05fbe3957c2771932f09bb4eb929746f4973390336bbe5",
+      "section_sha256": "b5575b3a293e90c08b412135fb6134c2cc3dfd4d94d0a6294b63e5e930c0c6fc",
       "stored_value_only": false,
       "checkpoint_only": false,
       "explicit_event_scope": null,
@@ -170717,7 +173121,7 @@
       "title": "### DL-2184: Event Authority registers browser.program.timeout.stopped (admission merge 2)"
     },
     "DL-2185": {
-      "section_sha256": "21527966f3db681e304326c9857bc3b4b00e6b806b72a5edd2c350e95b076030",
+      "section_sha256": "b83f8cab5b61a413790d1c31d9aba751e551f29cb8b08f628bf7b7ca18338e87",
       "stored_value_only": false,
       "checkpoint_only": false,
       "explicit_event_scope": null,
@@ -170725,7 +173129,7 @@
       "title": "### DL-2185: Event Authority registers browser.program_workspace.checkpointed (admission merge 2)"
     },
     "DL-2186": {
-      "section_sha256": "d078b8ae7dfd322a8b29eea3b29cd156b236625600d686495c3a5fba1af23106",
+      "section_sha256": "7440c8a82cfef2a7a8ca2b871994588f121e5d5a989ea46affb3ac6e0c41f2ef",
       "stored_value_only": false,
       "checkpoint_only": false,
       "explicit_event_scope": null,
@@ -170733,7 +173137,7 @@
       "title": "### DL-2186: Event Authority registers browser.program_workspace.closed (admission merge 2)"
     },
     "DL-2187": {
-      "section_sha256": "ddd0d723da2baa4338e575bfc380eca257cf8432306044d231a82730481fd93e",
+      "section_sha256": "2eca92c7584363ad6f8cacf67c969e2fcf9e0977f9fcaece545a06952f852d8c",
       "stored_value_only": false,
       "checkpoint_only": false,
       "explicit_event_scope": null,
@@ -170741,7 +173145,7 @@
       "title": "### DL-2187: Event Authority registers browser.program_workspace.created (admission merge 2)"
     },
     "DL-2188": {
-      "section_sha256": "5c886b3308d06ecdf11f210e3c3e6ecc529998de0c18f9215762530342de4101",
+      "section_sha256": "9bfb9eae0fe6ccabb8da86a5d1515e04e9eab79f58082c67cabf61c8cd8cf565",
       "stored_value_only": false,
       "checkpoint_only": false,
       "explicit_event_scope": null,
@@ -170749,7 +173153,7 @@
       "title": "### DL-2188: Event Authority registers browser.program_workspace.spilled (admission merge 2)"
     },
     "DL-2189": {
-      "section_sha256": "6b0b085259c8fa440c5afdd3d1fbbe54a74d01acc62e795524334e77a8f653fe",
+      "section_sha256": "ea3f1f3c7bb522af98c22f53eca5455ddea2dbd388c1eedb483aa5b37584540c",
       "stored_value_only": false,
       "checkpoint_only": false,
       "explicit_event_scope": null,
@@ -170757,7 +173161,7 @@
       "title": "### DL-2189: Event Authority registers browser.program_workspace.updated (admission merge 2)"
     },
     "DL-2190": {
-      "section_sha256": "ac5ff237c9b9269fee2dbd0ef1730bd764a64eae5f689d1dd3ec6ae604e00bae",
+      "section_sha256": "b5bb626aaa8be989d91eb1d58c86041052d13cdc73c1f81c4b473d54dc1de13b",
       "stored_value_only": false,
       "checkpoint_only": false,
       "explicit_event_scope": null,
@@ -170765,7 +173169,7 @@
       "title": "### DL-2190: Event Authority registers browser.representation.captured (admission merge 2)"
     },
     "DL-2191": {
-      "section_sha256": "a81810da077282a11df50b6553da3a4950a50b69c9c659c7d106e717e3942da0",
+      "section_sha256": "762234347bb12b3d3a8e6bf466f954fbf7c6556afa51974b7a50900b253dcc47",
       "stored_value_only": false,
       "checkpoint_only": false,
       "explicit_event_scope": null,
@@ -170773,7 +173177,7 @@
       "title": "### DL-2191: Event Authority registers browser.representation.delta_created (admission merge 2)"
     },
     "DL-2192": {
-      "section_sha256": "c810917c45f4fe07fbd6efe2d48b1081099c485de6c3ded61c37d7e4697d29f3",
+      "section_sha256": "39b807717025a7386e1a2a42e44f45462316209089f2533af9b8d9de370da473",
       "stored_value_only": false,
       "checkpoint_only": false,
       "explicit_event_scope": null,
@@ -170781,7 +173185,7 @@
       "title": "### DL-2192: Event Authority registers browser.representation.invalidated (admission merge 2)"
     },
     "DL-2193": {
-      "section_sha256": "fa732a1ed779775357760e7f380721fd3c6aeef9a84214e30df63f35b394ae76",
+      "section_sha256": "224bdacd3909dcdb3b429436dc893d920f8b50d6735aeb8f8f336c2631efce5b",
       "stored_value_only": false,
       "checkpoint_only": false,
       "explicit_event_scope": null,
@@ -170789,7 +173193,7 @@
       "title": "### DL-2193: Event Authority registers browser.representation.queried (admission merge 2)"
     },
     "DL-2194": {
-      "section_sha256": "4ff0cb8f3188daa4f20bb91febb5b3f43077f2f99d903f54a49bf76611f84e5f",
+      "section_sha256": "cd863a91701ce0787041829a329ce256618b4ffe9d788bcf7990379186ab91c8",
       "stored_value_only": false,
       "checkpoint_only": false,
       "explicit_event_scope": null,
@@ -170797,7 +173201,7 @@
       "title": "### DL-2194: Event Authority registers browser.route.browser_escalated (admission merge 2)"
     },
     "DL-2195": {
-      "section_sha256": "9905de61d1ac54d2dc20b8d8d76c30ac889975d0679c45dd6ecbdaf4a736a077",
+      "section_sha256": "d26d8c7e5c1a136fa956f997a827fadb1547849173ae3fa790485936e94f0e6a",
       "stored_value_only": false,
       "checkpoint_only": false,
       "explicit_event_scope": null,
@@ -170805,7 +173209,7 @@
       "title": "### DL-2195: Event Authority registers browser.route.fetch_selected (admission merge 2)"
     },
     "DL-2196": {
-      "section_sha256": "d2b72f5b885c1288886deaf6b8651e17bb3d6e6156fbd84089881a959918ae51",
+      "section_sha256": "c3c182786cfbe5d3134d51fd5616336fdf00626daaa085cb2c9bdd9a654f904b",
       "stored_value_only": false,
       "checkpoint_only": false,
       "explicit_event_scope": null,
@@ -170813,7 +173217,7 @@
       "title": "### DL-2196: Event Authority registers browser.routine.disabled (admission merge 2)"
     },
     "DL-2197": {
-      "section_sha256": "2b2d06b1b355596278d54dd095550f693bbf27b8e946ecd54522c7510b4e48d5",
+      "section_sha256": "4f4b9265cf07b24b134e2b52d25fdcaef6c9afa5fa00bdd4a4807fbde119cce9",
       "stored_value_only": false,
       "checkpoint_only": false,
       "explicit_event_scope": null,
@@ -170821,7 +173225,7 @@
       "title": "### DL-2197: Event Authority registers browser.routine.generated (admission merge 2)"
     },
     "DL-2198": {
-      "section_sha256": "880c42db31597f38f9f0e306c5659fcc98672868b0ce64c1d2836a1447128c04",
+      "section_sha256": "1535ffe01b90873a8080f4134f6bda38e943bb7cd27cb7391664499416c1be39",
       "stored_value_only": false,
       "checkpoint_only": false,
       "explicit_event_scope": null,
@@ -170829,7 +173233,7 @@
       "title": "### DL-2198: Event Authority registers browser.routine.invalidated (admission merge 2)"
     },
     "DL-2199": {
-      "section_sha256": "6b5406762e22f02c61fea8f9e2392e92902352fcebf73924c71c34be0dda6148",
+      "section_sha256": "c98b38667ffcf42c2e118fb5ebb4a6c243966f2adc0cca10325716cf584a74af",
       "stored_value_only": false,
       "checkpoint_only": false,
       "explicit_event_scope": null,
@@ -170837,7 +173241,7 @@
       "title": "### DL-2199: Event Authority registers browser.routine.promoted (admission merge 2)"
     },
     "DL-2200": {
-      "section_sha256": "7892757c7c53d3518750a8a176b2c55aedd4aed8799d82ff1463a20b0508c4b4",
+      "section_sha256": "71c9a32dbf48195f6807246d4e47dca7de57ff89a2641c9dde1cf491ad47f6d3",
       "stored_value_only": false,
       "checkpoint_only": false,
       "explicit_event_scope": null,
@@ -170845,7 +173249,7 @@
       "title": "### DL-2200: Event Authority registers browser.routine.validated (admission merge 2)"
     },
     "DL-2201": {
-      "section_sha256": "221e4012ec9b5462f5a6bc98d33b944b3e52126c28fdc59915de5d41f52c951b",
+      "section_sha256": "4b0b19e0c8d4b9ebae83dcdeeb04dbbfdf2b1d7da818816c1fc51ab466988ab2",
       "stored_value_only": false,
       "checkpoint_only": false,
       "explicit_event_scope": null,
@@ -170853,7 +173257,7 @@
       "title": "### DL-2201: Event Authority registers browser.screenshot.model_attachment_selected (admission merge 2)"
     },
     "DL-2202": {
-      "section_sha256": "4ae50bcde899b1b00b40fbc9f3febc37556ee22880aea7af0d0d2d72985a13fa",
+      "section_sha256": "b387f75bf3a7b291d42c38659919fa03a3efa574bd30b4363449dee9a619be34",
       "stored_value_only": false,
       "checkpoint_only": false,
       "explicit_event_scope": null,
@@ -170861,7 +173265,7 @@
       "title": "### DL-2202: Event Authority registers browser.screenshot.skipped (admission merge 2)"
     },
     "DL-2203": {
-      "section_sha256": "0b353c2770ee70e0695da3275807607da1aaef2f3c3c7963bc1bef21b217b2a5",
+      "section_sha256": "ca893202f5eee79916a4450f88c05403531190bdfa6f74ae2fbdabe7f6dd903b",
       "stored_value_only": false,
       "checkpoint_only": false,
       "explicit_event_scope": null,
@@ -170869,7 +173273,7 @@
       "title": "### DL-2203: Event Authority registers browser.script.compile_failed (admission merge 2)"
     },
     "DL-2204": {
-      "section_sha256": "9bca2ee23ae0b9c77fa80b5254d83332cafd08968b68b2b3c76f60d782159c5b",
+      "section_sha256": "e563cfba29dba9a585ee40b04791353ae6305a74812afd4f95ac0cfba1262921",
       "stored_value_only": false,
       "checkpoint_only": false,
       "explicit_event_scope": null,
@@ -170877,7 +173281,7 @@
       "title": "### DL-2204: Event Authority registers browser.script.compile_started (admission merge 2)"
     },
     "DL-2205": {
-      "section_sha256": "28aad003e05a8198778fb7f57c8f89b8149ce2d4fc140906a368fb19c3c13981",
+      "section_sha256": "57e64313d2cbcff12d0f4cdb0e606cbff021d594639d4dd3964dd7d1f327c7ac",
       "stored_value_only": false,
       "checkpoint_only": false,
       "explicit_event_scope": null,
@@ -170885,7 +173289,7 @@
       "title": "### DL-2205: Event Authority registers browser.script.compiled (admission merge 2)"
     },
     "DL-2206": {
-      "section_sha256": "ca2d6ce952c35115d6fc77226c44820e43bf39fda1a6b4d2e842f93e845ebee3",
+      "section_sha256": "278342e9b052c767aa1b5abe851da0cc8a497fd136fac2caef913e45f89d52cc",
       "stored_value_only": false,
       "checkpoint_only": false,
       "explicit_event_scope": null,
@@ -170893,7 +173297,7 @@
       "title": "### DL-2206: Event Authority registers browser.session.interrupted (admission merge 2)"
     },
     "DL-2207": {
-      "section_sha256": "e6c60409785d35baed9ee483eeb71bc5602f1f856775c7b6a164ab84c7047df1",
+      "section_sha256": "4831d3a5e0cba2580bb9184630538dacaa47e7c23857cbd7143d6b87f879ebb9",
       "stored_value_only": false,
       "checkpoint_only": false,
       "explicit_event_scope": null,
@@ -170901,7 +173305,7 @@
       "title": "### DL-2207: Event Authority registers browser.session.reconstructed_on_host (admission merge 2)"
     },
     "DL-2208": {
-      "section_sha256": "d5e3b1600a66be7fa4bc2c01194ce4f832334af8b18e8b22785c708fb9e571b9",
+      "section_sha256": "bc92e4402809ab91046b8e0c61d394eb3701398771752a877c6832d21a1cbd6e",
       "stored_value_only": false,
       "checkpoint_only": false,
       "explicit_event_scope": null,
@@ -170925,7 +173329,7 @@
       "title": "### DL-437 - Notes record creation once and each later status change once"
     },
     "DL-2224": {
-      "section_sha256": "29996c124c253e4692832e319269727b2c199fa8513960ab8671e6be538b7838",
+      "section_sha256": "77f0130c368c31fdef73ab46d4324138141d8ff076eb878235518dca8eaf478e",
       "stored_value_only": false,
       "checkpoint_only": false,
       "explicit_event_scope": null,
@@ -170933,7 +173337,7 @@
       "title": "### DL-2224: Event Authority registers bundle.annotation_state_changed (admission merge 2)"
     },
     "DL-2225": {
-      "section_sha256": "7ab292a3f4aed071526046383175afdb08805392434f44c2a24ebffa998a8684",
+      "section_sha256": "4516ef57424aaa90b3fd9b4c300c415308895599f3f3301b895bbd314995876d",
       "stored_value_only": false,
       "checkpoint_only": false,
       "explicit_event_scope": null,
@@ -170941,7 +173345,7 @@
       "title": "### DL-2225: Event Authority registers bundle.note_created (admission merge 2)"
     },
     "DL-2226": {
-      "section_sha256": "3393054f4318533ad47d5007dddf4ccef8554fff3611d0fba94a5996d897b631",
+      "section_sha256": "f1fca586c90eb0a3278e3581c36a25ac65e0f15cc4ee9c97b9e0b79dfc609928",
       "stored_value_only": false,
       "checkpoint_only": false,
       "explicit_event_scope": null,
@@ -170949,7 +173353,7 @@
       "title": "### DL-2226: Event Authority registers bundle.note_status_changed (admission merge 2)"
     },
     "DL-2227": {
-      "section_sha256": "3fd53740d38d5022c93df47637b3a613c61d1353b9b43a9e4b7d85f2dbcf5d9f",
+      "section_sha256": "c32e422cfc81f99562343b419ae36deaf0d33cbb88ad2020f354fd958399f27c",
       "stored_value_only": false,
       "checkpoint_only": false,
       "explicit_event_scope": null,
@@ -170969,7 +173373,7 @@
       "title": "### DL-508: Chat-bound wizard and revision records (retention deck 4 Q9)"
     },
     "DL-2228": {
-      "section_sha256": "3ef1cf30b80cd94001943a9cbb1376347600dfa467695f7eb30f36b3791b3151",
+      "section_sha256": "b99957a8850821d4f799d812f151248ec68cb1e66debcbce936ad72f3c6b1418",
       "stored_value_only": false,
       "checkpoint_only": false,
       "explicit_event_scope": null,
@@ -170977,7 +173381,7 @@
       "title": "### DL-2228: Event Authority registers bundle.revision_interrupted (admission merge 2)"
     },
     "DL-2229": {
-      "section_sha256": "6605ef497146425652bdd9a6ab55891ea46c9cbbc2689f981adb3b23066d800e",
+      "section_sha256": "41c9f15c87c6952382e973b32c1315230c13ad6d0e5de4c4aa379f04aa89639c",
       "stored_value_only": false,
       "checkpoint_only": false,
       "explicit_event_scope": null,
@@ -170985,7 +173389,7 @@
       "title": "### DL-2229: Event Authority registers bundle.revision_requested (admission merge 2)"
     },
     "DL-2230": {
-      "section_sha256": "6b646533d605a06c9ebc463770bc7feebaa27ac4dadb029173de8787566a7da1",
+      "section_sha256": "fc9f0386daefc02aa3c617fb018ca6d667566ccfc659053410435a832bd35c4c",
       "stored_value_only": false,
       "checkpoint_only": false,
       "explicit_event_scope": null,
@@ -171001,7 +173405,7 @@
       "title": "### DL-287 - No Project Is A Real Chat On A Named Computer"
     },
     "DL-2231": {
-      "section_sha256": "60c7a4a0c4d5ea494c6d6b42141f7f96aeb930636ec31de315aa9a5b288cd19a",
+      "section_sha256": "04dd1037848ab2c3c4b06f8f5e8b4836d031f825db49288e022c05e08f49caa4",
       "stored_value_only": false,
       "checkpoint_only": false,
       "explicit_event_scope": null,
@@ -171009,7 +173413,7 @@
       "title": "### DL-2231: Event Authority registers bundle.selection_forward_blocked (admission merge 2)"
     },
     "DL-2232": {
-      "section_sha256": "967eba6bd5910a2d6506cd81d117fa7dc0da8edcc773f6057a5e9f07bf34a2eb",
+      "section_sha256": "eb0076a6d944f56d0352daef2180e026826c8521a8e994e9279d0ad79dbd31c7",
       "stored_value_only": false,
       "checkpoint_only": false,
       "explicit_event_scope": null,
@@ -171017,7 +173421,7 @@
       "title": "### DL-2232: Event Authority registers bundle.selection_sent_to_chat (admission merge 2)"
     },
     "DL-2233": {
-      "section_sha256": "8d466547ca39abb358e8e1b2009fbe1ddc63ffd46724ac5dc2251509419898c0",
+      "section_sha256": "a445a814a315ec9a10542d326c894de3bce8a2e57db65187a9a9733b1ccd542e",
       "stored_value_only": false,
       "checkpoint_only": false,
       "explicit_event_scope": null,
@@ -171025,7 +173429,7 @@
       "title": "### DL-2233: Event Authority registers catalog.install.completed (admission merge 2)"
     },
     "DL-2234": {
-      "section_sha256": "92ac0babb8c62650df1b3cff28ddb99c480dee288e39cd3b3537a3e41b495b58",
+      "section_sha256": "25d97b3e97a6647f7709765e119965cda3bd69d29b3967ea310a871224f158da",
       "stored_value_only": false,
       "checkpoint_only": false,
       "explicit_event_scope": null,
@@ -171033,7 +173437,7 @@
       "title": "### DL-2234: Event Authority registers catalog.install.started (admission merge 2)"
     },
     "DL-2235": {
-      "section_sha256": "f405819890ebbd0e5510e6d5ae04c44b64019317f7a61de5ebafbe7bf4237d84",
+      "section_sha256": "ee5891aa690867e4d008bbcc36439a534266dd85396ddea16a2d1f0c78b3504c",
       "stored_value_only": false,
       "checkpoint_only": false,
       "explicit_event_scope": null,
@@ -171049,7 +173453,7 @@
       "title": "### DL-435 - Catalog removal is refused while any listed use or reference remains"
     },
     "DL-2236": {
-      "section_sha256": "8dddb68f587c78bdbbe13e1639514692964557ea68d3208c19615bb1a677ed81",
+      "section_sha256": "a5339fb6a03323f07ca9b4a6a14b105f996fc4e51e66f2389f2994eb2ce65768",
       "stored_value_only": false,
       "checkpoint_only": false,
       "explicit_event_scope": null,
@@ -171057,7 +173461,7 @@
       "title": "### DL-2236: Event Authority registers catalog.remove.started (admission merge 2)"
     },
     "DL-2237": {
-      "section_sha256": "70efba2ff2a2aaff8d452bb4ed54ca45e85c2ea122f78bdd772b4add950f1b8a",
+      "section_sha256": "35f99c51780d97e2a175010a331f11f1386cd98aea13eb7074ed01091d1d63ce",
       "stored_value_only": false,
       "checkpoint_only": false,
       "explicit_event_scope": null,
@@ -171073,7 +173477,7 @@
       "title": "### DL-434 - Catalog updates wait for the next safe reload or start"
     },
     "DL-2238": {
-      "section_sha256": "09f59def349f36066cd02cff0553af15d59fabd44af93f69508e372e7ab03230",
+      "section_sha256": "7b995d4d011f433eedf9ec32f858d3a1d9f2e0057dd67027414727cd205c73fa",
       "stored_value_only": false,
       "checkpoint_only": false,
       "explicit_event_scope": null,
@@ -171081,7 +173485,7 @@
       "title": "### DL-2238: Event Authority registers catalog.update.started (admission merge 2)"
     },
     "DL-2239": {
-      "section_sha256": "93f3af4c59fdd5ea8c950c8b6b6ef76f247397fe89fe6694b1a4f5fa8232a0b5",
+      "section_sha256": "f028ec9e1eaef5914657351396336987f36f3b82b944f1b09354da2c780e376b",
       "stored_value_only": false,
       "checkpoint_only": false,
       "explicit_event_scope": null,
@@ -171105,7 +173509,7 @@
       "title": "### DL-427 - Chat and Storage may define the missing saved Stop outcome"
     },
     "DL-2240": {
-      "section_sha256": "9f97d43808fb86f8c23b8989d84c5e9bd8122d75667aeed94d2172a19010b707",
+      "section_sha256": "39ee12689baf9c73df688cd6cb4a8e8b9c2a3363b2ab1e45b6a9e133730e6c9b",
       "stored_value_only": false,
       "checkpoint_only": false,
       "explicit_event_scope": null,
@@ -171113,7 +173517,7 @@
       "title": "### DL-2240: Event Authority registers chat.response_stop_requested (admission merge 2)"
     },
     "DL-2241": {
-      "section_sha256": "b58e9779b3ecee164b7d5911b5baf3d7896766de729ad43d3a4647ae90160f3d",
+      "section_sha256": "7d8e7be7b15f63c47d9aabce0ef42ba11eb3d425004f03b3ffa406ae2a3d1a3e",
       "stored_value_only": false,
       "checkpoint_only": false,
       "explicit_event_scope": null,
@@ -171129,7 +173533,7 @@
       "title": "### DL-280 - Approve The Packet And Apply The Later Rulings"
     },
     "DL-2242": {
-      "section_sha256": "cead1cf83c6f19bd91bc66e791927853b3e960661eb53456006b6262c7663b12",
+      "section_sha256": "36c85fa392cddfa28198a6e0d2544f9c304538d1ba31d266046320a6d402d8c9",
       "stored_value_only": false,
       "checkpoint_only": false,
       "explicit_event_scope": null,
@@ -171137,7 +173541,7 @@
       "title": "### DL-2242: Event Authority registers chat.thread_created (admission merge 2)"
     },
     "DL-2243": {
-      "section_sha256": "373bceeff049c6da4b65125282eea217c86f325cfe54ec6e01d0060b73b0fe8f",
+      "section_sha256": "4fb9a437286c08a7aa258bada6e26d28a376cdc2977bdff99ff912215950d36a",
       "stored_value_only": false,
       "checkpoint_only": false,
       "explicit_event_scope": null,
@@ -171145,7 +173549,7 @@
       "title": "### DL-2243: Event Authority registers chat.thread_deleted (admission merge 2)"
     },
     "DL-2244": {
-      "section_sha256": "aa70c11c8fb84a60740188ccd01ea9900f931d53f38b59ad2b1922fa12fe7389",
+      "section_sha256": "2719a0f5077e7e4dad733f616478fcc347b5919fc7110edec92f45c385d5c6f7",
       "stored_value_only": false,
       "checkpoint_only": false,
       "explicit_event_scope": null,
@@ -171153,7 +173557,7 @@
       "title": "### DL-2244: Event Authority registers chat.thread_worktree_bound (admission merge 2)"
     },
     "DL-2245": {
-      "section_sha256": "ace73b64cf1f192b00646fed995457b816c41732050e15f74a5bc5365d7ec693",
+      "section_sha256": "0c5fe6fe8d360e0657340af92c1aa90bc38ad08ef0f2a1055cccec1385b0b83d",
       "stored_value_only": false,
       "checkpoint_only": false,
       "explicit_event_scope": null,
@@ -171161,7 +173565,7 @@
       "title": "### DL-2245: Event Authority registers chat.thread_worktree_create_failed (admission merge 2)"
     },
     "DL-2246": {
-      "section_sha256": "4ba292274858b1e85e940f4d109bcf4c45ba29fe772e59037a66952aad4425be",
+      "section_sha256": "5f30a7a57929e44121c3f9897814592550486bf5fca16e580ce9db5b79085050",
       "stored_value_only": false,
       "checkpoint_only": false,
       "explicit_event_scope": null,
@@ -171169,7 +173573,7 @@
       "title": "### DL-2246: Event Authority registers chat.thread_worktree_merge_failed (admission merge 2)"
     },
     "DL-2247": {
-      "section_sha256": "43cd923760debd93dadfe6890361687331b62493e65adde7921ca55bf4fdcbee",
+      "section_sha256": "a36a397c57ea26b8c30043c286193c97b1d3b52d51ad31bb4f1be00409632051",
       "stored_value_only": false,
       "checkpoint_only": false,
       "explicit_event_scope": null,
@@ -171177,7 +173581,7 @@
       "title": "### DL-2247: Event Authority registers chat.thread_worktree_merged (admission merge 2)"
     },
     "DL-2248": {
-      "section_sha256": "68f823f78f3b6d4959374bf7fb0975fa545e1cf57d91803eb6022008873eb0e6",
+      "section_sha256": "f4f7348a7f5503efb2f869d01ec9e048086e1ce09dac2e9d862d30831ed3d030",
       "stored_value_only": false,
       "checkpoint_only": false,
       "explicit_event_scope": null,
@@ -171185,7 +173589,7 @@
       "title": "### DL-2248: Event Authority registers chat.thread_worktree_pr_created (admission merge 2)"
     },
     "DL-2249": {
-      "section_sha256": "5f8bab888df4ac6ea1be39efc121ecfae8f7bdf5635a63540c7e94bce7985438",
+      "section_sha256": "ae80e12fcb94d9c6f068a5601994b29d74fbb457d975fbf93520479c4f225537",
       "stored_value_only": false,
       "checkpoint_only": false,
       "explicit_event_scope": null,
@@ -171193,7 +173597,7 @@
       "title": "### DL-2249: Event Authority registers chat.thread_worktree_pr_failed (admission merge 2)"
     },
     "DL-2250": {
-      "section_sha256": "e700b73346e43c9d6cb0f6e1b5cd89ac9b73c73625bd6026472dc2e3b7a2fc82",
+      "section_sha256": "e4c00ce912c2393e5120dd067827e1aa9dcf0f69c356d13bf67376807c56e521",
       "stored_value_only": false,
       "checkpoint_only": false,
       "explicit_event_scope": null,
@@ -171201,7 +173605,7 @@
       "title": "### DL-2250: Event Authority registers chat.thread_worktree_pre_merge_test_failed (admission merge 2)"
     },
     "DL-2251": {
-      "section_sha256": "9da8fa03331bdca3b84a71e761af91adf7ab88abb3245a808c0bd2111577ff09",
+      "section_sha256": "ca9303d053d5008f154d9a1f63985678ae208cd41f325241b69a77b70ae7c070",
       "stored_value_only": false,
       "checkpoint_only": false,
       "explicit_event_scope": null,
@@ -171209,7 +173613,7 @@
       "title": "### DL-2251: Event Authority registers chat.thread_worktree_pre_merge_test_passed (admission merge 2)"
     },
     "DL-2252": {
-      "section_sha256": "313a86d2236aa78f408c3008c9f8d4a6802e81cbfefba98eb7b238e0c0af6234",
+      "section_sha256": "3ddbe8730580264fada543780f50540156ef76e79c4a37aee99d41ab675e0a8e",
       "stored_value_only": false,
       "checkpoint_only": false,
       "explicit_event_scope": null,
@@ -171217,7 +173621,7 @@
       "title": "### DL-2252: Event Authority registers chat.thread_worktree_pre_merge_test_started (admission merge 2)"
     },
     "DL-2253": {
-      "section_sha256": "76d3899ee80eecca334ad518098c2255e680f381bdb82c58f044d3f2607db0f3",
+      "section_sha256": "1d09344e71bdc7474a2d7a4e6da0322761ffde0295e3ea6576be7ce4fd455c6e",
       "stored_value_only": false,
       "checkpoint_only": false,
       "explicit_event_scope": null,
@@ -171225,7 +173629,7 @@
       "title": "### DL-2253: Event Authority registers chat.thread_worktree_renamed (admission merge 2)"
     },
     "DL-2254": {
-      "section_sha256": "49dfebc4c68a3d3d3d5df7826f89912bf47fe711b599c2f975a11680eb960ac4",
+      "section_sha256": "727773c1b029f14047081d1cfa89643afba1fe591e2ca4414b7436d9a28b5219",
       "stored_value_only": false,
       "checkpoint_only": false,
       "explicit_event_scope": null,
@@ -171233,7 +173637,7 @@
       "title": "### DL-2254: Event Authority registers chat.thread_worktree_unbound (admission merge 2)"
     },
     "DL-2255": {
-      "section_sha256": "ff51a6754dae9839924693a92fc72f1acb0df1d3e7b1f4a3ea8c08b75c6b74bb",
+      "section_sha256": "b3f1018b5da675ac06afae79c585b193259f087b192c0b36a4a28601eba6b071",
       "stored_value_only": false,
       "checkpoint_only": false,
       "explicit_event_scope": null,
@@ -171249,7 +173653,7 @@
       "title": "### DL-131 - A Crew's Own Time And Cost Limit Overrides The General Run Limit"
     },
     "DL-2256": {
-      "section_sha256": "9f535b47654e4f7d77e42633299e902e40120735c3a27672534934e241344280",
+      "section_sha256": "ad4fcf4cb84f46e0afc791b4a8150e84b2ac21c801a38b916490caf926ffd187",
       "stored_value_only": false,
       "checkpoint_only": false,
       "explicit_event_scope": null,
@@ -171257,7 +173661,7 @@
       "title": "### DL-2256: Event Authority registers collaboration.cancelled (admission merge 2)"
     },
     "DL-2257": {
-      "section_sha256": "3a4347a130c19f78ffb603f17eaac69eb71c85480bb4e54e41a65577d1f52549",
+      "section_sha256": "8e3b404b44f2535b7ddc8d34fca94882d78ba18bc28d4bdf005c57d96057ab0c",
       "stored_value_only": false,
       "checkpoint_only": false,
       "explicit_event_scope": null,
@@ -171265,7 +173669,7 @@
       "title": "### DL-2257: Event Authority registers collaboration.completed (admission merge 2)"
     },
     "DL-2258": {
-      "section_sha256": "121fefa6e6a1bbee6b9d30b6054167ed5778c306b666c7aebef0387754ec1fc8",
+      "section_sha256": "d82648f7ea85a396712fda56c78ae53291785ee8899a9fbf6f4c7470c63625dc",
       "stored_value_only": false,
       "checkpoint_only": false,
       "explicit_event_scope": null,
@@ -171273,7 +173677,7 @@
       "title": "### DL-2258: Event Authority registers collaboration.configuration_changed (admission merge 2)"
     },
     "DL-2259": {
-      "section_sha256": "5497e84dc42b692d087a15547243a28dc2721cb76d02c5001f3a8d667989f4b4",
+      "section_sha256": "0ec5545472683db2a83fd3d788a1d617602e709b8091f202440ed59bf76cb257",
       "stored_value_only": false,
       "checkpoint_only": false,
       "explicit_event_scope": null,
@@ -171289,7 +173693,7 @@
       "title": "### DL-091 - A Failed Collaborative Run Gets Its Own Recorded Event"
     },
     "DL-2260": {
-      "section_sha256": "c3eb23fcbbb3e04085ffedf13ec7af5ce84a41b1b86542e1368d840aff85ebc5",
+      "section_sha256": "0aae54aac73c74908511ee6746381deb818175ec13a79fe4f0c551ebde089119",
       "stored_value_only": false,
       "checkpoint_only": false,
       "explicit_event_scope": null,
@@ -171297,7 +173701,7 @@
       "title": "### DL-2260: Event Authority registers collaboration.failed (admission merge 2)"
     },
     "DL-2261": {
-      "section_sha256": "ec767b56150480f45f8fc1979a1d8aa7075b99c2214d1cb697e8a2a25da6a5aa",
+      "section_sha256": "05e1707a644cdb56481eacd0c89543f84e04fa6d17b82b1ff0209c3de4891055",
       "stored_value_only": false,
       "checkpoint_only": false,
       "explicit_event_scope": null,
@@ -171305,7 +173709,7 @@
       "title": "### DL-2261: Event Authority registers collaboration.message_added (admission merge 2)"
     },
     "DL-2262": {
-      "section_sha256": "4c82478a9a959669c37d3ff196c1be6890c55145ad4465cfcb28de4ea3baf684",
+      "section_sha256": "2bbe87e4d0f8d6af2971cf7ce3a3bea435892934c0feba6d6b4e0798048d0ee7",
       "stored_value_only": false,
       "checkpoint_only": false,
       "explicit_event_scope": null,
@@ -171321,7 +173725,7 @@
       "title": "### DL-218 - Wonderer Runs Alongside And Grill Me Is A Skill"
     },
     "DL-2263": {
-      "section_sha256": "927bbdd0427cdf2d5e362279f3fea7d83457d8cdb83d6bd71eef29cd7186e531",
+      "section_sha256": "96ddbdd7749b8dbc33950257734e4c95d43d63229f253cc847a1ef326adfbb70",
       "stored_value_only": false,
       "checkpoint_only": false,
       "explicit_event_scope": null,
@@ -171329,7 +173733,7 @@
       "title": "### DL-2263: Event Authority registers collaboration.participant_started (admission merge 2)"
     },
     "DL-2264": {
-      "section_sha256": "327b449b79ac3334e5fa6b9af166d73590ddb02644803308750115dfbf9ef46c",
+      "section_sha256": "1d73926407f3f642b5d2c7631db5a95aa0aa91902dd1b664b143ef67ae6f4bd1",
       "stored_value_only": false,
       "checkpoint_only": false,
       "explicit_event_scope": null,
@@ -171337,7 +173741,7 @@
       "title": "### DL-2264: Event Authority registers collaboration.paused (admission merge 2)"
     },
     "DL-2265": {
-      "section_sha256": "a1087b51c8c99c3ec1268088bedb7bc0e273d7a11ff9567c1bde014da8297cd0",
+      "section_sha256": "06a7f1365e578132a0a27cfaf7d3aadd1e8f6ace9c6e2f5fcefff55b163905fd",
       "stored_value_only": false,
       "checkpoint_only": false,
       "explicit_event_scope": null,
@@ -171345,7 +173749,7 @@
       "title": "### DL-2265: Event Authority registers collaboration.resumed (admission merge 2)"
     },
     "DL-2266": {
-      "section_sha256": "a623d8c295a94a445fab101b957958937b75f0c25ad4094f88b520d92d84b5e7",
+      "section_sha256": "abf5405309a693fd4143afdd37a914b42853ed09fbb8d07f6fee5753c0e00672",
       "stored_value_only": false,
       "checkpoint_only": false,
       "explicit_event_scope": null,
@@ -171353,7 +173757,7 @@
       "title": "### DL-2266: Event Authority registers collaboration.started (admission merge 2)"
     },
     "DL-2267": {
-      "section_sha256": "6b4f8c32b2ca8ff673c118f9ce5f864d63b77e935d654a89299b32e7275317d6",
+      "section_sha256": "aa40be656efc622b9ff321f173da9d1e921de7b87327aee4c4c59b6885ec702a",
       "stored_value_only": false,
       "checkpoint_only": false,
       "explicit_event_scope": null,
@@ -171361,7 +173765,7 @@
       "title": "### DL-2267: Event Authority registers concern.assigned (admission merge 2)"
     },
     "DL-2268": {
-      "section_sha256": "2762239c566fbd8cb957abc5fa7ffb086e781181ae2f1bcd9e4b3c637576ccb0",
+      "section_sha256": "47de6bdd423ddb8540d0e0758c7fe80c9f78b2cabbee86e5464717b8cb46871b",
       "stored_value_only": false,
       "checkpoint_only": false,
       "explicit_event_scope": null,
@@ -171369,7 +173773,7 @@
       "title": "### DL-2268: Event Authority registers concern.created (admission merge 2)"
     },
     "DL-2269": {
-      "section_sha256": "a5f10128b2cbf9dd58c3537fc64bbb67a2c50c9c23158beda19ed29c225ded7f",
+      "section_sha256": "e11211e1f7c86fff4a90930a290308b082ae362dd8ced5b01a345ee7a95ecd70",
       "stored_value_only": false,
       "checkpoint_only": false,
       "explicit_event_scope": null,
@@ -171377,7 +173781,7 @@
       "title": "### DL-2269: Event Authority registers concern.evidence_linked (admission merge 2)"
     },
     "DL-2270": {
-      "section_sha256": "b00eb4aecd186aef84678ba2b492865b29c2e6931af2591fef0c59fcf88b5dec",
+      "section_sha256": "a5a4eb65e0e814d2c080027bb0d125d29f933195dbafbf23b7ed32003498ca5f",
       "stored_value_only": false,
       "checkpoint_only": false,
       "explicit_event_scope": null,
@@ -171385,7 +173789,7 @@
       "title": "### DL-2270: Event Authority registers concern.promoted (admission merge 2)"
     },
     "DL-2271": {
-      "section_sha256": "5384cf1fa97e845512565ebcc493fc250973163eca2ec8380d980beafe6c8add",
+      "section_sha256": "09f89ed0da46dd62961570948ec504f0abfc38fdec33679480f19a1405f4c23a",
       "stored_value_only": false,
       "checkpoint_only": false,
       "explicit_event_scope": null,
@@ -171409,7 +173813,7 @@
       "title": "### DL-440 - The authorized controller records concern promotion"
     },
     "DL-2272": {
-      "section_sha256": "912544fca89a331441f246886a1d5471f6b00fc99430a8ab5c94ec8e34e3a507",
+      "section_sha256": "ef7a49ee106fc15655d645419cd43169e1fce588b498c1bed63c98a229bdd372",
       "stored_value_only": false,
       "checkpoint_only": false,
       "explicit_event_scope": null,
@@ -171417,7 +173821,7 @@
       "title": "### DL-2272: Event Authority registers concern.resolved (admission merge 2)"
     },
     "DL-2273": {
-      "section_sha256": "c90a958ac50e24a2c537bbcf892575826f876a39822e9beab55aea8c8c54e669",
+      "section_sha256": "ac0c358c4758297b022b6efe7be6976fbfd3796b5851d5a66457ac4d3bf7a57f",
       "stored_value_only": false,
       "checkpoint_only": false,
       "explicit_event_scope": null,
@@ -171425,7 +173829,7 @@
       "title": "### DL-2273: Event Authority registers concern.updated (admission merge 2)"
     },
     "DL-2276": {
-      "section_sha256": "c25f4d0ff89dfda6ba5c3cfc23e6880e7930847e70e1c5b269a1c1f915dcfe05",
+      "section_sha256": "ac71ed6b81ccd0b82b84388c6939743b167d8bd8b42674f4d0d7bc350f27d8c3",
       "stored_value_only": false,
       "checkpoint_only": false,
       "explicit_event_scope": null,
@@ -171433,7 +173837,7 @@
       "title": "### DL-2276: Event Authority registers continuity.actor_identified (admission merge 2)"
     },
     "DL-2277": {
-      "section_sha256": "68909a57265a6b16ddfb666a368aefc52e8bf41cd7ff4fe08e3b6fb85a009a1d",
+      "section_sha256": "0f37e6e27b66786748c354735b911e752561c4ccc9a3de272619898892335efb",
       "stored_value_only": false,
       "checkpoint_only": false,
       "explicit_event_scope": null,
@@ -171441,7 +173845,7 @@
       "title": "### DL-2277: Event Authority registers continuity.provenance_recorded (admission merge 2)"
     },
     "DL-2278": {
-      "section_sha256": "d5607aaad87f944087741eb3be318c53f2f17fa4e8c1c5283f25fc0f0ad80c88",
+      "section_sha256": "7e28692e2c3d61fd64d4584618d61e81956a9ebf9bfb4e97134d3acc13fcb5c2",
       "stored_value_only": false,
       "checkpoint_only": false,
       "explicit_event_scope": null,
@@ -171449,7 +173853,7 @@
       "title": "### DL-2278: Event Authority registers continuity.redaction_applied (admission merge 2)"
     },
     "DL-2279": {
-      "section_sha256": "31680d6e8f03b942b733d5f6f4ce1a947abfb81d64b4f21fba43b8d18a334c1a",
+      "section_sha256": "18c8d8e83cd707a8bbc96204c8a3df46f9f5ed423c42dde41b6cae71304849e4",
       "stored_value_only": false,
       "checkpoint_only": false,
       "explicit_event_scope": null,
@@ -171457,7 +173861,7 @@
       "title": "### DL-2279: Event Authority registers continuity.replay_checkpointed (admission merge 2)"
     },
     "DL-2282": {
-      "section_sha256": "320dccd944a64cce6e832ec7e0138e7991c9a853419c5f8e27432681990c2164",
+      "section_sha256": "0d386d49103af6b8246bf3be33d3378c56d462f7bb5d6805f0b82b6aa405dc33",
       "stored_value_only": false,
       "checkpoint_only": false,
       "explicit_event_scope": null,
@@ -171465,7 +173869,7 @@
       "title": "### DL-2282: Event Authority registers crew.board_messages_archived (admission merge 2)"
     },
     "DL-2280": {
-      "section_sha256": "7e3326613bcd83d431436089bba066c4bd573072785fc304a3cc43fcabca7f33",
+      "section_sha256": "84ba758dce30ce3cda59e506fd4d73f67b838455a58ee6746603542ad047bb7f",
       "stored_value_only": false,
       "checkpoint_only": false,
       "explicit_event_scope": null,
@@ -171473,7 +173877,7 @@
       "title": "### DL-2280: Event Authority registers crew.board_message_posted (admission merge 2)"
     },
     "DL-2281": {
-      "section_sha256": "496082ccc88a626decab3f7e71da5bec63e3f77589402e6b89cc8777c20e45b5",
+      "section_sha256": "d20a9ee3da0b084cc35acfe456e6a82b1191b6bb746499f86a14947ce50f1223",
       "stored_value_only": false,
       "checkpoint_only": false,
       "explicit_event_scope": null,
@@ -171497,7 +173901,7 @@
       "title": "### DL-429 - Debug probes preserve the complete status and cleanup transition proposal"
     },
     "DL-2283": {
-      "section_sha256": "96df09251acceb2e396d692cab0d8adee1209f49bafe89283e3b319af39151f1",
+      "section_sha256": "133e947d37303cf0cc07507ae6413f1b7c3c5e0f7c5a687cd8cafee4322f8a6b",
       "stored_value_only": false,
       "checkpoint_only": false,
       "explicit_event_scope": null,
@@ -171523,7 +173927,7 @@
       "title": "### DL-506: Developer session record (retention deck 4 Q7)"
     },
     "DL-2284": {
-      "section_sha256": "1e3ffea86b93064d5c440958f1dda473db3fd0cec87cc8fa3a9fba8ca1501203",
+      "section_sha256": "49a09cdea469d58930b2dfb15f3a203cfd87905c128ac4e61dbddb624dbc885e",
       "stored_value_only": false,
       "checkpoint_only": false,
       "explicit_event_scope": null,
@@ -171531,7 +173935,7 @@
       "title": "### DL-2284: Event Authority registers debug.investigation.context_item_state_changed (admission merge 2)"
     },
     "DL-2285": {
-      "section_sha256": "0d2650b997bd5ac8fa745014b5f786c039fc6a7484385718ff8d8f3dbf5020c1",
+      "section_sha256": "077823af8277d6866fec55fd7f81f5662340262d6c229f63879a75f55ec7b43a",
       "stored_value_only": false,
       "checkpoint_only": false,
       "explicit_event_scope": null,
@@ -171539,7 +173943,7 @@
       "title": "### DL-2285: Event Authority registers debug.investigation.exported (admission merge 2)"
     },
     "DL-2286": {
-      "section_sha256": "ef138463e2ae26a0d1c3bfb26988f0ae54de46adc753d566e52f7d7ce5e6fd62",
+      "section_sha256": "2828603209afe8e4128d5d55f280e66ae3a448073c73695b0d87a2712e7cb325",
       "stored_value_only": false,
       "checkpoint_only": false,
       "explicit_event_scope": null,
@@ -171547,7 +173951,7 @@
       "title": "### DL-2286: Event Authority registers debug.investigation.imported (admission merge 2)"
     },
     "DL-2287": {
-      "section_sha256": "807eea6a54c038b7fceb123fa3cb2976cf40b4f40dc854d05b3fe7858e4fdb8e",
+      "section_sha256": "39062ac9ac90783ab44a0f252ebe8d21bf09cd36d1cb7a6f8431334ca212589a",
       "stored_value_only": false,
       "checkpoint_only": false,
       "explicit_event_scope": null,
@@ -171555,7 +173959,7 @@
       "title": "### DL-2287: Event Authority registers debug.investigation.started (admission merge 2)"
     },
     "DL-2288": {
-      "section_sha256": "ae98959f9ccd8b5031ae12f27b868305a5810dae52a2235f10d93f5164fed7f0",
+      "section_sha256": "d2ee6aeacc0ea363f13b3fafa7ee1eab5323c5e6d39e6b85d592abe3bd86842d",
       "stored_value_only": false,
       "checkpoint_only": false,
       "explicit_event_scope": null,
@@ -171563,7 +173967,7 @@
       "title": "### DL-2288: Event Authority registers debug.investigation.target_bound (admission merge 2)"
     },
     "DL-2289": {
-      "section_sha256": "e73ec14ec0d04315aecc5bdce97f4e67c5a908e805a74ce94344a4ef5d5f1f5b",
+      "section_sha256": "0e263961c34a7dafcf45a6b97784752d60d62959b36cc096e1ffefeaf03b1029",
       "stored_value_only": false,
       "checkpoint_only": false,
       "explicit_event_scope": null,
@@ -171587,7 +173991,7 @@
       "title": "### DL-180 - Home Becomes One Universal Panel System And The Chat Stays Fixed On The Right"
     },
     "DL-2290": {
-      "section_sha256": "f1e6ecb202e8dcfd49293803dbf67d2519ab85aa6219b9bc3a38fa538260d947",
+      "section_sha256": "b94ac85d68d74d493886a2a6f2abf629cff95530291c0c6e6b5a676233f1bc91",
       "stored_value_only": false,
       "checkpoint_only": false,
       "explicit_event_scope": null,
@@ -171603,7 +174007,7 @@
       "title": "### DL-415 - The 90-day history clock starts at the first durable save"
     },
     "DL-2291": {
-      "section_sha256": "c3ba4f6db47fdd0ada20d6544c18a96edb1530eb9570de7b2a0cbf9fd0cedaa4",
+      "section_sha256": "59614469af0759003cb52eb76da01ad035fa605995c76eb4639c3ad64ea49131",
       "stored_value_only": false,
       "checkpoint_only": false,
       "explicit_event_scope": null,
@@ -171611,7 +174015,7 @@
       "title": "### DL-2291: Event Authority registers dev.session.started (admission merge 2)"
     },
     "DL-2292": {
-      "section_sha256": "3ce6cb39ed530c18ae6c4625b69f27d43962ab0fb60348feb1d2ed468dbf560f",
+      "section_sha256": "b82f80db34e2323da6a188fd85914a3cff3bd313bbd798cf1fd1b637071b70d4",
       "stored_value_only": false,
       "checkpoint_only": false,
       "explicit_event_scope": null,
@@ -171619,7 +174023,7 @@
       "title": "### DL-2292: Event Authority registers dev.session.stopped (admission merge 2)"
     },
     "DL-2293": {
-      "section_sha256": "f1691b9bc29c7c540ee3394bb95c88ffe0d73719ba8dca2324a2f04e1e14a93e",
+      "section_sha256": "de48cf404ecffdc08a57d01704b0af8ff10c55106fc1baa885111b781e44c7b2",
       "stored_value_only": false,
       "checkpoint_only": false,
       "explicit_event_scope": null,
@@ -171627,7 +174031,7 @@
       "title": "### DL-2293: Event Authority registers dev.session.stopping (admission merge 2)"
     },
     "DL-2294": {
-      "section_sha256": "72980a099831cf0fa932bf12b356e4eea7e625dbb527ccf5c226b708b5f5ced6",
+      "section_sha256": "2020565e09a87cde04f9c146d4c7a918cac19f52969e773d0f2da754cd64312a",
       "stored_value_only": false,
       "checkpoint_only": false,
       "explicit_event_scope": null,
@@ -171635,7 +174039,7 @@
       "title": "### DL-2294: Event Authority registers doctor.custom_headless.checked (admission merge 2)"
     },
     "DL-2295": {
-      "section_sha256": "07bce74c7a56f9578766d45aa2be1130eae8255c65e33ab4637103b83058837b",
+      "section_sha256": "ccdcaafb6b21fa493843f821284706b2549c7adfcd9f853ed9ee8a3b090d4166",
       "stored_value_only": false,
       "checkpoint_only": false,
       "explicit_event_scope": null,
@@ -171643,7 +174047,7 @@
       "title": "### DL-2295: Event Authority registers file.copied (admission merge 2)"
     },
     "DL-2296": {
-      "section_sha256": "e4bb723e9ea6f88020c42bb01832b1cfade0955bbd0bc5cadc3ec51e2268d344",
+      "section_sha256": "963a0e0d2cb2159ddedba431137737a3143ca2b8df75b748a778b452f60e66ef",
       "stored_value_only": false,
       "checkpoint_only": false,
       "explicit_event_scope": null,
@@ -171651,7 +174055,7 @@
       "title": "### DL-2296: Event Authority registers file.created (admission merge 2)"
     },
     "DL-2297": {
-      "section_sha256": "efbff73ceaf9282f302bc68e338e032728d2df761ead4d429d5753ac29844f22",
+      "section_sha256": "917a8e4efa490c67d2d18c2b7c00a599760a8a91cf012e0fb01258e321c77c23",
       "stored_value_only": false,
       "checkpoint_only": false,
       "explicit_event_scope": null,
@@ -171659,7 +174063,7 @@
       "title": "### DL-2297: Event Authority registers file.deleted (admission merge 2)"
     },
     "DL-2298": {
-      "section_sha256": "d47f523c5c697679376b2d8303b02060c1b104c205fcbe49c826dbe001c586b0",
+      "section_sha256": "b88f898f54ff4e5489090356b2097baef09afe5105a71ce9371bbfd6ce49bd3c",
       "stored_value_only": false,
       "checkpoint_only": false,
       "explicit_event_scope": null,
@@ -171667,7 +174071,7 @@
       "title": "### DL-2298: Event Authority registers file.exported (admission merge 2)"
     },
     "DL-2299": {
-      "section_sha256": "5cbd7603007355243b3ec9dae0d6a215e5fa04d4665a1b85200b11a92b5aa598",
+      "section_sha256": "160973f77a6c495fb7e58c53d7508b7c9bb188bf93bd031f48d7a1a61c04f2fc",
       "stored_value_only": false,
       "checkpoint_only": false,
       "explicit_event_scope": null,
@@ -171675,7 +174079,7 @@
       "title": "### DL-2299: Event Authority registers file.moved (admission merge 2)"
     },
     "DL-2300": {
-      "section_sha256": "dc86be39b3a427792d2ef77712fb5f5f5fca6ad8cea2868c4997f3f18c58752f",
+      "section_sha256": "40d843a53c79fa6c219efce4b59e5aafe4f204e5a649e0a4fa49a6f940e891e5",
       "stored_value_only": false,
       "checkpoint_only": false,
       "explicit_event_scope": null,
@@ -171683,7 +174087,7 @@
       "title": "### DL-2300: Event Authority registers file.renamed (admission merge 2)"
     },
     "DL-2308": {
-      "section_sha256": "9905561a5f8de1f473ae33252f18ea2db623c7f402eb796741ead5dd68a1518e",
+      "section_sha256": "5d37a4297c1ecfec89ff059c0eb3738a2b809ae317a1c93c983dc095c9d1c849",
       "stored_value_only": false,
       "checkpoint_only": false,
       "explicit_event_scope": null,
@@ -171691,7 +174095,7 @@
       "title": "### DL-2308: Event Authority registers folder.copied (admission merge 2)"
     },
     "DL-2309": {
-      "section_sha256": "a69c7eb73cf620b458dfd3a3ff9b578f8ef20ab1cd8d1a86e8b562fff77834b5",
+      "section_sha256": "99ef81ff13792426f50d2cfbb326cc982edbdc6544ee751083cfd7e0c33af9cd",
       "stored_value_only": false,
       "checkpoint_only": false,
       "explicit_event_scope": null,
@@ -171699,7 +174103,7 @@
       "title": "### DL-2309: Event Authority registers folder.created (admission merge 2)"
     },
     "DL-2310": {
-      "section_sha256": "f317ce52aee2e28c1c61d5465ef8743066f3aea84db3e3f6ebf2b24e66d569e2",
+      "section_sha256": "b5b488bfe4f5c68a0b9f0b0a65fe5be914c7601641abaa4531cd818b6add5081",
       "stored_value_only": false,
       "checkpoint_only": false,
       "explicit_event_scope": null,
@@ -171707,7 +174111,7 @@
       "title": "### DL-2310: Event Authority registers folder.deleted (admission merge 2)"
     },
     "DL-2311": {
-      "section_sha256": "26ddcfa98842495072534620e1f88358d17525c7a1f62461f397016e7bc2934a",
+      "section_sha256": "32aaa1430f62a3b94fcdabe21de47933ff5d001a28c58b79c6c1c1f7a354ef77",
       "stored_value_only": false,
       "checkpoint_only": false,
       "explicit_event_scope": null,
@@ -171715,7 +174119,7 @@
       "title": "### DL-2311: Event Authority registers folder.exported (admission merge 2)"
     },
     "DL-2312": {
-      "section_sha256": "fa863b61dce16da7f9074e2d23884f867793a61df807bc0a8e3804ce91e8648d",
+      "section_sha256": "556fead602e9c4822f32558d348121b938987c3e8b1287e1ea255607763d94b8",
       "stored_value_only": false,
       "checkpoint_only": false,
       "explicit_event_scope": null,
@@ -171723,7 +174127,7 @@
       "title": "### DL-2312: Event Authority registers folder.moved (admission merge 2)"
     },
     "DL-2313": {
-      "section_sha256": "c8186b449e4a9a1ae354d0e83f5a3c5faca4fd20685562e8816a139a518b526f",
+      "section_sha256": "1630ffc80a8969def92028816e76a1ab1bf8da4d8dffe0bbd9473e10dc086df2",
       "stored_value_only": false,
       "checkpoint_only": false,
       "explicit_event_scope": null,
@@ -171739,7 +174143,7 @@
       "title": "### DL-422 - filesafe.command_denied is seven-year troubleshooting history"
     },
     "DL-2301": {
-      "section_sha256": "e423433f7fbb1fd2d0f67b4f41352564f2855e487471f2d1ca41d43b63b87678",
+      "section_sha256": "c8ca2b7de4f0cf92875c483fb9f9fbbcc7745786b86f679305215b1308010b98",
       "stored_value_only": false,
       "checkpoint_only": false,
       "explicit_event_scope": null,
@@ -171763,7 +174167,7 @@
       "title": "### DL-423 - filesafe.destructive_override_denied is permanent decision proof"
     },
     "DL-2302": {
-      "section_sha256": "4a1c225a0e9fead8deb3680c1515821ee6f2483d269b873fba97bc7a69b9dff3",
+      "section_sha256": "38edae5f7c2b9c6ade3cd4f5b02ecdc6e5350ac3ddd1ed7fae6477c0488226a3",
       "stored_value_only": false,
       "checkpoint_only": false,
       "explicit_event_scope": null,
@@ -171779,7 +174183,7 @@
       "title": "### DL-461 - Override-refusal proof outside Projects uses Server-wide capacity and deletion rules"
     },
     "DL-2303": {
-      "section_sha256": "de9a0e063e2c2ea0d7bcb70dfeafc729d109e7026ff287f753ee62cbbcbe2a48",
+      "section_sha256": "c270e59a5d597a632a1e91b358137a1e0b5ff65f4518f917da41cc3067c71d60",
       "stored_value_only": false,
       "checkpoint_only": false,
       "explicit_event_scope": null,
@@ -171795,7 +174199,7 @@
       "title": "### DL-424 - filesafe.destructive_override_requested is permanent request proof"
     },
     "DL-2304": {
-      "section_sha256": "59a299215528fabf8000534fa11f56452839caee7f2e3608c787e4215e997871",
+      "section_sha256": "17821c46afe3a8a874fb1e97116c26e5fb4954ad66f3371e9206c893b680b468",
       "stored_value_only": false,
       "checkpoint_only": false,
       "explicit_event_scope": null,
@@ -171819,7 +174223,7 @@
       "title": "### DL-425 - filesafe.guard_init_failed is seven-year troubleshooting history"
     },
     "DL-2305": {
-      "section_sha256": "1e722dd008d5054d36d97768dda6699766cfaac971d16dbddf7024a3e4036433",
+      "section_sha256": "66c3c39e0742267bc646981656921ad42a68a4a7a2ceeda0eccc194756d28b81",
       "stored_value_only": false,
       "checkpoint_only": false,
       "explicit_event_scope": null,
@@ -171843,7 +174247,7 @@
       "title": "### DL-426 - filesafe.path_denied is seven-year troubleshooting history"
     },
     "DL-2306": {
-      "section_sha256": "51ae127301902f983d0acc79e3e916234b172c2c7952a600ab599e481ff888c1",
+      "section_sha256": "d557a7f9c5fc3bc7197b8ee67eae6750f0d538c47c28b70cfa28bf1e8814c221",
       "stored_value_only": false,
       "checkpoint_only": false,
       "explicit_event_scope": null,
@@ -171859,7 +174263,7 @@
       "title": "### DL-464 - Denied-path history outside Projects gets its own allowance and scoped rule"
     },
     "DL-2307": {
-      "section_sha256": "1bd269738a26b450eebf956740a3e6c5834e675088b670070be3659ba287c847",
+      "section_sha256": "6387d38b7ae3160282803b44ad5b7815bb1183b507cb39aa7032e56b77ea9bc7",
       "stored_value_only": false,
       "checkpoint_only": false,
       "explicit_event_scope": null,
@@ -171867,7 +174271,7 @@
       "title": "### DL-2307: Event Authority registers filesafe.policy_degraded (admission merge 2)"
     },
     "DL-2314": {
-      "section_sha256": "be07cd1f6d1dad55d742d8434e958a43056552971d939752b10c8e7c1876cffb",
+      "section_sha256": "87eea75dd1aaa180c597aaf202368c461b695a469386ff7600578a6f3158f7f7",
       "stored_value_only": false,
       "checkpoint_only": false,
       "explicit_event_scope": null,
@@ -171875,7 +174279,7 @@
       "title": "### DL-2314: Event Authority registers format.applied (admission merge 2)"
     },
     "DL-2315": {
-      "section_sha256": "26e4cea509105457c09e48b08fc631c0a7a9b889a80d6700b66ce866687e4565",
+      "section_sha256": "1c3d80d01374c2f2348261ea7ce4781304cf2e9271b3b5a5f78b637ce8256116",
       "stored_value_only": false,
       "checkpoint_only": false,
       "explicit_event_scope": null,
@@ -171883,7 +174287,7 @@
       "title": "### DL-2315: Event Authority registers gate.evaluation_started (admission merge 2)"
     },
     "DL-2316": {
-      "section_sha256": "4e6c3c3da87336264b58a4878eebe43b87923ef1b5aa747bc96ef2ebd21bcd7e",
+      "section_sha256": "3962fb12f682c8da23fc49bf20fd8010453caafc898b159b74910d11a065b37d",
       "stored_value_only": false,
       "checkpoint_only": false,
       "explicit_event_scope": null,
@@ -171891,7 +174295,7 @@
       "title": "### DL-2316: Event Authority registers gate.failed (admission merge 2)"
     },
     "DL-2317": {
-      "section_sha256": "2417c3c6b9352726f510db746fb256000d49b0deed4f92057d9c8bf92d1e3fa6",
+      "section_sha256": "111bf69769f0158fe2759584d5acf1291a6db0ab49483d3e1a1218816a78057c",
       "stored_value_only": false,
       "checkpoint_only": false,
       "explicit_event_scope": null,
@@ -171899,7 +174303,7 @@
       "title": "### DL-2317: Event Authority registers gate.passed (admission merge 2)"
     },
     "DL-2318": {
-      "section_sha256": "dbff2d408b9eedc8990be6994ac9af397a0501b6c0d3b2cc7c631ec8c920953a",
+      "section_sha256": "8e12822348b4859863b99ffcd1a03caa892de1ceea7faf54292c03d1780ebbfd",
       "stored_value_only": false,
       "checkpoint_only": false,
       "explicit_event_scope": null,
@@ -171907,7 +174311,7 @@
       "title": "### DL-2318: Event Authority registers git.clone.completed (admission merge 2)"
     },
     "DL-2319": {
-      "section_sha256": "cedbfdc130c8bb8d5780513048c8265e3ca7f8d3e74a4172ee476b772902df09",
+      "section_sha256": "e56a2eb783dc857b08acf041ea8e0a5c50a398d3c0870d263da5ef55c1a1b0e5",
       "stored_value_only": false,
       "checkpoint_only": false,
       "explicit_event_scope": null,
@@ -171915,7 +174319,7 @@
       "title": "### DL-2319: Event Authority registers live.artifact.created (admission merge 2)"
     },
     "DL-2320": {
-      "section_sha256": "9492202185febc8bb06e5bf8028ab1553836b22486323e8406812c0e39d28bbf",
+      "section_sha256": "f2486ba981f982c058bedf820b688309349fe6cadbe9cc86a60455839fa51cc0",
       "stored_value_only": false,
       "checkpoint_only": false,
       "explicit_event_scope": null,
@@ -171923,7 +174327,7 @@
       "title": "### DL-2320: Event Authority registers live.session.completed (admission merge 2)"
     },
     "DL-2321": {
-      "section_sha256": "e68a0d6dc4ef4b0ba0bdd6c68722d8f9b346e9a31e338aa3b5c09ed1df298c52",
+      "section_sha256": "7c9d3e1e01b23fa9c8e23a4052663e95c3b6e957ec198758ce128a15937a5e4c",
       "stored_value_only": false,
       "checkpoint_only": false,
       "explicit_event_scope": null,
@@ -171931,7 +174335,7 @@
       "title": "### DL-2321: Event Authority registers live.session.degraded (admission merge 2)"
     },
     "DL-2322": {
-      "section_sha256": "6e2e443e3f336784259a9414ce561d028209c58e6b927cdc3de065bda0531e0b",
+      "section_sha256": "3e25593d57ed979310c78d788dcfc868c81444994a894212f7ee64f46912917e",
       "stored_value_only": false,
       "checkpoint_only": false,
       "explicit_event_scope": null,
@@ -171939,7 +174343,7 @@
       "title": "### DL-2322: Event Authority registers live.session.started (admission merge 2)"
     },
     "DL-2323": {
-      "section_sha256": "073daeee7f838dc3c81d01aaa6b1825fdc1cefc0084b9d4dd85550a515684819",
+      "section_sha256": "529ee156e4eba6650c657f6c75c5311ef38b5f2f53d8fde0fb1c621996382397",
       "stored_value_only": false,
       "checkpoint_only": false,
       "explicit_event_scope": null,
@@ -171947,7 +174351,7 @@
       "title": "### DL-2323: Event Authority registers live.step.updated (admission merge 2)"
     },
     "DL-2324": {
-      "section_sha256": "35d8426f6bef492d9ce0e336311ef823172df27e76d0fac102fafbf6460beb42",
+      "section_sha256": "67b9bcf5087175f0ca4a26b2900713d08b0237e6037d69590b9d454e24074bb8",
       "stored_value_only": false,
       "checkpoint_only": false,
       "explicit_event_scope": null,
@@ -171995,7 +174399,7 @@
       "title": "### DL-445 - Other merged memory originals are archived and never automatically deleted"
     },
     "DL-2325": {
-      "section_sha256": "fbc08d88dcb24b7209cc1e2901ff2b99686262f47d82d9bf06443ed52cb5a244",
+      "section_sha256": "8cfa351e2382b9206022716967810602071fbbbee78a55917cf82fc6ebe213d6",
       "stored_value_only": false,
       "checkpoint_only": false,
       "explicit_event_scope": null,
@@ -172026,7 +174430,7 @@
       "title": "### DL-509: Memory housekeeping operation records (retention deck 4 Q10)"
     },
     "DL-2326": {
-      "section_sha256": "141dc8d5ad6ba1fc00faf17406e86799a5e2fde2bbff9526664ab9012b6467dd",
+      "section_sha256": "8b3c84d1c4d49090ec8bcb36a1ece95141907f47308f858799eeb291952c59ba",
       "stored_value_only": false,
       "checkpoint_only": false,
       "explicit_event_scope": null,
@@ -172034,7 +174438,7 @@
       "title": "### DL-2326: Event Authority registers memory.dedup_sweep.started (admission merge 2)"
     },
     "DL-2327": {
-      "section_sha256": "3a0632d4cdc0b0a44492159a9fb210b151bd409414783c17b1ba25cca335c393",
+      "section_sha256": "22a9336782b403380a4d720823030c16ff0849cd9dcab4ead47999a71b65ba89",
       "stored_value_only": false,
       "checkpoint_only": false,
       "explicit_event_scope": null,
@@ -172042,7 +174446,7 @@
       "title": "### DL-2327: Event Authority registers memory.index.lexical.rebuild.completed (admission merge 2)"
     },
     "DL-2328": {
-      "section_sha256": "05af15a920b1421ff2d2356545e8179ac2ac446c31147424eac5c3517ae38330",
+      "section_sha256": "0fb8e1c1a783780b7d4d3bd86daacec00937bb8a469da8adea446ba5eb0c9786",
       "stored_value_only": false,
       "checkpoint_only": false,
       "explicit_event_scope": null,
@@ -172050,7 +174454,7 @@
       "title": "### DL-2328: Event Authority registers memory.index.lexical.rebuild.started (admission merge 2)"
     },
     "DL-2329": {
-      "section_sha256": "f259104b4d835c7f325fa1b9b296331b6f79490096bd3be717cd306d8a1a5c2d",
+      "section_sha256": "0d72f4b2a0a2446809aaa29e5595fd2fb7271e4fbb1c981b9cfb8b4c62142754",
       "stored_value_only": false,
       "checkpoint_only": false,
       "explicit_event_scope": null,
@@ -172058,7 +174462,7 @@
       "title": "### DL-2329: Event Authority registers memory.index.semantic.rebuild.completed (admission merge 2)"
     },
     "DL-2330": {
-      "section_sha256": "b44d6672a476aae5735ebd541abe9a7688ca3ac24dfb8b2d45d6e830bab539a7",
+      "section_sha256": "4acc814c91f300e991a295f9ae6f2fd98a24a76df408f6b3bf63a61371c4e735",
       "stored_value_only": false,
       "checkpoint_only": false,
       "explicit_event_scope": null,
@@ -172066,7 +174470,7 @@
       "title": "### DL-2330: Event Authority registers memory.index.semantic.rebuild.started (admission merge 2)"
     },
     "DL-2331": {
-      "section_sha256": "92fe9094a3d73339f75786c6c0d01bd929ed35a6b6a0db96bc9640daa8e4031a",
+      "section_sha256": "e31baff93ab6d59fabf7e7db91c8bb89aadcada4808981837f199a9027a7418f",
       "stored_value_only": false,
       "checkpoint_only": false,
       "explicit_event_scope": null,
@@ -172082,7 +174486,7 @@
       "title": "### DL-403 - Memory maintenance waits for approved cutoffs"
     },
     "DL-2332": {
-      "section_sha256": "0394b6ba32b965b94ec7ccb3750c84ebb1c52f2af9aa8e275b020560dae2b349",
+      "section_sha256": "7a801ae68e724066597117318f66214a6957c02608cd63bcba853cf723a59389",
       "stored_value_only": false,
       "checkpoint_only": false,
       "explicit_event_scope": null,
@@ -172090,7 +174494,7 @@
       "title": "### DL-2332: Event Authority registers memory.monthly_summary.started (admission merge 2)"
     },
     "DL-2333": {
-      "section_sha256": "f5f1edc86683131af5a426ec69e288b0be84e686afeb246ef9f8cc90727e8100",
+      "section_sha256": "2a7297a273497d5cc95be0ff35d529944cd017cf6897898cdde10f58161237bf",
       "stored_value_only": false,
       "checkpoint_only": false,
       "explicit_event_scope": null,
@@ -172098,7 +174502,7 @@
       "title": "### DL-2333: Event Authority registers memory.prune_archive.completed (admission merge 2)"
     },
     "DL-2334": {
-      "section_sha256": "13958ab54aae76f3d5194af8c8cb89a5c849d649a20b33424959296940566e5b",
+      "section_sha256": "4af9a23db33a6bc390d895866fdf2793563ad55dd5ac5066b7f4d0db0e0def6b",
       "stored_value_only": false,
       "checkpoint_only": false,
       "explicit_event_scope": null,
@@ -172106,7 +174510,7 @@
       "title": "### DL-2334: Event Authority registers memory.prune_archive.started (admission merge 2)"
     },
     "DL-2335": {
-      "section_sha256": "d586800ffd7234b698c533fc235e870568ee86dae8eafcadace1df0919627f03",
+      "section_sha256": "8cc971d9e56a96be9b55a3cfb8f77039d06cefc7dc7ecfda173b1d0ce4b89ddc",
       "stored_value_only": false,
       "checkpoint_only": false,
       "explicit_event_scope": null,
@@ -172114,7 +174518,7 @@
       "title": "### DL-2335: Event Authority registers memory.verification_sweep.completed (admission merge 2)"
     },
     "DL-2336": {
-      "section_sha256": "8dc98d4dd1f114229596cc2a85b22f977e7417b9ae59f9cd7ffe5da16156b5ee",
+      "section_sha256": "418e628a1fa678fbeef6a90bf63793d231a9f7d249cb052c9ffc170632a6af2d",
       "stored_value_only": false,
       "checkpoint_only": false,
       "explicit_event_scope": null,
@@ -172122,7 +174526,7 @@
       "title": "### DL-2336: Event Authority registers memory.verification_sweep.started (admission merge 2)"
     },
     "DL-2337": {
-      "section_sha256": "df4f0abe9fd699d010a8d42311b2f2302a0e094325975ca7b145fc0dbe6f76fa",
+      "section_sha256": "d33d0fddc74465115f357a21b4075a14308a5d03458fcc8a5b41e6ca503778a1",
       "stored_value_only": false,
       "checkpoint_only": false,
       "explicit_event_scope": null,
@@ -172138,7 +174542,7 @@
       "title": "### DL-420 - No-project model-list refresh history has its own 90-day allowance"
     },
     "DL-2338": {
-      "section_sha256": "41ad45caf20efea759476ed37a9ec7b6cd6e1e00c959c1ec8b5913c078397baf",
+      "section_sha256": "046329008819b6c64cbc26dbf63f76f5c74272677216dec4bcdbb5e9d03e0f3a",
       "stored_value_only": false,
       "checkpoint_only": false,
       "explicit_event_scope": null,
@@ -172146,7 +174550,7 @@
       "title": "### DL-2338: Event Authority registers panel.redocked (admission merge 2)"
     },
     "DL-2339": {
-      "section_sha256": "0dfcaf718f944953d9d5e1862fe2344aa3691410441463993aa5962fef8176b7",
+      "section_sha256": "cd1079b44dcac8f973d26d36b8fd031e06ba9821824ee6f3ae9ce4a3e06255d7",
       "stored_value_only": false,
       "checkpoint_only": false,
       "explicit_event_scope": null,
@@ -172154,7 +174558,7 @@
       "title": "### DL-2339: Event Authority registers panel.undocked (admission merge 2)"
     },
     "DL-2344": {
-      "section_sha256": "361b568dd1fcd606897bfca9ae325ae310a37ad8cac40ca21600f0c458ed19f5",
+      "section_sha256": "1167af5f2f312a885f82859408296813147b7e886f6b735265da1e85e77b5a47",
       "stored_value_only": false,
       "checkpoint_only": false,
       "explicit_event_scope": null,
@@ -172162,7 +174566,7 @@
       "title": "### DL-2344: Event Authority registers persona.imported (admission merge 2)"
     },
     "DL-2341": {
-      "section_sha256": "d2bd4e28678c01054b975459b992677478735d98986da89b4cf3eb6dd668ac20",
+      "section_sha256": "7413788d41af875b28bec8516255a60224354df5836df337e980f2a0111d6766",
       "stored_value_only": false,
       "checkpoint_only": false,
       "explicit_event_scope": null,
@@ -172185,7 +174589,7 @@
       "title": "### DL-504: Persona operation history (retention deck 4 Q5)"
     },
     "DL-2342": {
-      "section_sha256": "41f4ceb89d2a1790063f49fa97a74d3feeabc3fe171d14deb45777c699c051db",
+      "section_sha256": "b19709b92d543a7ea19cc9fe0b91adcd6566860bcaf0cb4c92344cc31e64917f",
       "stored_value_only": false,
       "checkpoint_only": false,
       "explicit_event_scope": null,
@@ -172193,7 +174597,7 @@
       "title": "### DL-2342: Event Authority registers persona.deleted (admission merge 2)"
     },
     "DL-2343": {
-      "section_sha256": "9f1dc3b376ee832c0464d7377be228b2a74cb2220b1ae78efe4b716f179b2804",
+      "section_sha256": "8496b2b971174479548797ff2f0d10b1cedb518db8657c5209cbfdd433bd1e84",
       "stored_value_only": false,
       "checkpoint_only": false,
       "explicit_event_scope": null,
@@ -172201,7 +174605,7 @@
       "title": "### DL-2343: Event Authority registers persona.exported (admission merge 2)"
     },
     "DL-2345": {
-      "section_sha256": "148e00d4e4cbf1bb7b185642c1d04894d6141052fbed81a6adff61d21e6e214a",
+      "section_sha256": "0c7476161077a70aa8f15d703d7c3afeeaaf95896bd19b7a7a216b68155c64b3",
       "stored_value_only": false,
       "checkpoint_only": false,
       "explicit_event_scope": null,
@@ -172209,7 +174613,7 @@
       "title": "### DL-2345: Event Authority registers persona.selected (admission merge 2)"
     },
     "DL-2346": {
-      "section_sha256": "9809bf495d96708bdc79ef44603f382bb2a834dc52056197e863395f8faa697b",
+      "section_sha256": "ba687705cb9738656707532670fb7e6b1d6ef6a516b4e981d1dbe418286bcd8c",
       "stored_value_only": false,
       "checkpoint_only": false,
       "explicit_event_scope": null,
@@ -172217,7 +174621,7 @@
       "title": "### DL-2346: Event Authority registers persona.updated (admission merge 2)"
     },
     "DL-2348": {
-      "section_sha256": "785a297cecfbbf4bf61b8b0995955b4b6fbe491adf30611d9b4123d2fa096af6",
+      "section_sha256": "3ed367317509242cbd3ef4800dc286705687570bbe67e97bd9e51d67fdb022cb",
       "stored_value_only": false,
       "checkpoint_only": false,
       "explicit_event_scope": null,
@@ -172233,7 +174637,7 @@
       "title": "### DL-419 - No-project plugin-hook history has its own 90-day allowance"
     },
     "DL-2351": {
-      "section_sha256": "60afc86222e5de2633c275b02f33679288dbf95568f5b05cba6bed49550522bd",
+      "section_sha256": "d87b04f714a9b7a274db7a64f78a85d249e32df808b6a1f4aeccb8304d9e5803",
       "stored_value_only": false,
       "checkpoint_only": false,
       "explicit_event_scope": null,
@@ -172266,7 +174670,7 @@
       "title": "### DL-503: Plugin operation history (retention deck 4 Q4)"
     },
     "DL-2349": {
-      "section_sha256": "7bd297d9857a05eeb56e06256d3dc8da226f2b8efd53883ffcceeb1d75e9aefe",
+      "section_sha256": "b0ffb120d9b36f524455add58fcea85e327add67f98662e39e6b8ce990227112",
       "stored_value_only": false,
       "checkpoint_only": false,
       "explicit_event_scope": null,
@@ -172274,7 +174678,7 @@
       "title": "### DL-2349: Event Authority registers plugin.hook.error (admission merge 2)"
     },
     "DL-2350": {
-      "section_sha256": "a529c297440207ee890695bffea0f2456423e079aec588d129d3e0b9eeb33fe5",
+      "section_sha256": "87554c6db4a26ddad936036bd8a33e56c966f11dfebf145cc36304198bdf607b",
       "stored_value_only": false,
       "checkpoint_only": false,
       "explicit_event_scope": null,
@@ -172282,7 +174686,7 @@
       "title": "### DL-2350: Event Authority registers plugin.hook.invoked (admission merge 2)"
     },
     "DL-2352": {
-      "section_sha256": "4bb35564066e450680e3de4a6666b0ac983efe0e0aa228b59858e54325462b2c",
+      "section_sha256": "73fc9b0362c784f807210a55f3193e868f11b0c644dc982250477ab1d9c8a7ed",
       "stored_value_only": false,
       "checkpoint_only": false,
       "explicit_event_scope": null,
@@ -172290,7 +174694,7 @@
       "title": "### DL-2352: Event Authority registers plugin.loaded (admission merge 2)"
     },
     "DL-2353": {
-      "section_sha256": "24a7ab9d23af9ef3fd767d6052cb7c706014ed27e63c39b50a685009654f67b7",
+      "section_sha256": "ce37ddbaee92b5dcbf01be273d6ab4b876130176ff112a521ac1a5b29e6221c2",
       "stored_value_only": false,
       "checkpoint_only": false,
       "explicit_event_scope": null,
@@ -172298,7 +174702,7 @@
       "title": "### DL-2353: Event Authority registers plugin.permission.override (admission merge 2)"
     },
     "DL-2354": {
-      "section_sha256": "c447815baecb393caaf4ae16ba1ae062e1225a0c6be553fe0949dc4e00dd9f63",
+      "section_sha256": "e01ee2accf8f5102e4f94ec80f4c7b2189f46754ac3618166fbb0d30955f6794",
       "stored_value_only": false,
       "checkpoint_only": false,
       "explicit_event_scope": null,
@@ -172306,7 +174710,7 @@
       "title": "### DL-2354: Event Authority registers plugin.tool.collision (admission merge 2)"
     },
     "DL-2355": {
-      "section_sha256": "e0fb3449697e3054843a7e7aac3b7046966875d72244a7d74117ba21fef4a150",
+      "section_sha256": "f4cf58e498fd26a69666eec4c7fb118eee3a304f9a6b087b76fa18a66ef1c670",
       "stored_value_only": false,
       "checkpoint_only": false,
       "explicit_event_scope": null,
@@ -172314,7 +174718,7 @@
       "title": "### DL-2355: Event Authority registers plugin.tool.registered (admission merge 2)"
     },
     "DL-2356": {
-      "section_sha256": "c65955cf84822d56067bbad3c3fdc1d2d2ac766d77ca9a1f7d853ee9e3e8e5f3",
+      "section_sha256": "8e2feb8b397c7a95bc8400fc53796a7ab72a98818d96ee453f414b1aa0104632",
       "stored_value_only": false,
       "checkpoint_only": false,
       "explicit_event_scope": null,
@@ -172330,7 +174734,7 @@
       "title": "### DL-421 - No-project preview history has its own 90-day allowance"
     },
     "DL-2357": {
-      "section_sha256": "9042f610ecf4fa5582f3a998c01d880a67eac2f1c087f93de290d8774fc0c3e5",
+      "section_sha256": "b903b677cc3c530ab88ea594dde623b367d2b98b7c45a3b2d004546f496e42b6",
       "stored_value_only": false,
       "checkpoint_only": false,
       "explicit_event_scope": null,
@@ -172338,7 +174742,7 @@
       "title": "### DL-2357: Event Authority registers preview.session.started (admission merge 2)"
     },
     "DL-2358": {
-      "section_sha256": "580396de322188faa9433242bbdda9dac82fcd64c699e5c11571d40cc4e58494",
+      "section_sha256": "27fa32985baddf8ae11a81cf95637c3653b97185df34931f404a73f926721508",
       "stored_value_only": false,
       "checkpoint_only": false,
       "explicit_event_scope": null,
@@ -172346,7 +174750,7 @@
       "title": "### DL-2358: Event Authority registers preview.session.stopped (admission merge 2)"
     },
     "DL-2359": {
-      "section_sha256": "284a93ee48c06e0519108cfc0136ac82137776ec3a9c55cf86a5ae62418b8d8e",
+      "section_sha256": "b7c77236257473b73d7db8be422e211704630c9dcc6aabd336932f8bc8f4147d",
       "stored_value_only": false,
       "checkpoint_only": false,
       "explicit_event_scope": null,
@@ -172354,7 +174758,7 @@
       "title": "### DL-2359: Event Authority registers project.added (admission merge 2)"
     },
     "DL-2360": {
-      "section_sha256": "64256036306eea260a56a5edccf0bc86c0e45fa34b91ed055cbcd782287bc9a5",
+      "section_sha256": "0d555ac9a7917962456acc96a6bebe4447ec9c5591af9aa90c87143aa474fda9",
       "stored_value_only": false,
       "checkpoint_only": false,
       "explicit_event_scope": null,
@@ -172370,7 +174774,7 @@
       "title": "### DL-454 - 33 routine histories stay 90 days from the first durable save"
     },
     "DL-2361": {
-      "section_sha256": "c86b9e139ef61f31c6352c7a7403f4c7f1620f8f765532dd8c01157bec0b2e5c",
+      "section_sha256": "23079057fb2dc3bce8f10084c523cf51f3e37e789859a76acce3a1d22fa2887c",
       "stored_value_only": false,
       "checkpoint_only": false,
       "explicit_event_scope": null,
@@ -172378,7 +174782,7 @@
       "title": "### DL-2361: Event Authority registers remote_access.private_endpoint_state_changed (admission merge 2)"
     },
     "DL-2362": {
-      "section_sha256": "db7309cfe596c94877425dd190dfb9a9a8e39f1b87dd33ec0d58b99ad20193d6",
+      "section_sha256": "cd7d7854fbbf1c819cebb243ab1bd9501775922486b887bf62181a582e86fb54",
       "stored_value_only": false,
       "checkpoint_only": false,
       "explicit_event_scope": null,
@@ -172386,7 +174790,7 @@
       "title": "### DL-2362: Event Authority registers remote_access.proxy_state_changed (admission merge 2)"
     },
     "DL-2363": {
-      "section_sha256": "44cde611806f6af03f4d8e304f56fd1bd39e29364e4d49677e46d78c648525e0",
+      "section_sha256": "182bbaa48af069de42b988ccb7bbccc050d45e910b0cbb64dfe6fa22a4b77fb2",
       "stored_value_only": false,
       "checkpoint_only": false,
       "explicit_event_scope": null,
@@ -172394,7 +174798,7 @@
       "title": "### DL-2363: Event Authority registers remote_access.public_security_violation_detected (admission merge 2)"
     },
     "DL-2364": {
-      "section_sha256": "1206f2dfb53475c82ff8b9f0d01199eee7ee7fd7f28f82134991186b09326217",
+      "section_sha256": "c436c0d6a951f128b84a500933fd84a10f08ff92c6a0729ee722ffc59eefeb70",
       "stored_value_only": false,
       "checkpoint_only": false,
       "explicit_event_scope": null,
@@ -172402,7 +174806,7 @@
       "title": "### DL-2364: Event Authority registers remote_access.remote_link_state_changed (admission merge 2)"
     },
     "DL-2365": {
-      "section_sha256": "ee5450900683683883f48f18199b57e60224c0481e364154d27f6c39d9c4b17e",
+      "section_sha256": "b6de34470752a45ea0f23cd334bc28a80721cd33151dcc64bae6bf2b89260059",
       "stored_value_only": false,
       "checkpoint_only": false,
       "explicit_event_scope": null,
@@ -172410,7 +174814,7 @@
       "title": "### DL-2365: Event Authority registers remote_access.route_migration_state_changed (admission merge 2)"
     },
     "DL-2366": {
-      "section_sha256": "024e22f3d7f65b551d1b2e66aa12f9e9177eb8ec7fd33526b4d0fb9b394bc88c",
+      "section_sha256": "557603702a5a7dea2f87e965ecf6d0b663b96b7338c37380d32cc6951e93a584",
       "stored_value_only": false,
       "checkpoint_only": false,
       "explicit_event_scope": null,
@@ -172418,7 +174822,7 @@
       "title": "### DL-2366: Event Authority registers remote_access.route_preference_changed (admission merge 2)"
     },
     "DL-2367": {
-      "section_sha256": "67dfe73206255de869bb0fdbabb7353521001ada2e7aaefa65b370cb0b5fe04c",
+      "section_sha256": "4837e0e7972874a0bf2227cca0546165e2622d1c6601ee24b48107e56ac8e0db",
       "stored_value_only": false,
       "checkpoint_only": false,
       "explicit_event_scope": null,
@@ -172426,7 +174830,7 @@
       "title": "### DL-2367: Event Authority registers remote_access.route_state_changed (admission merge 2)"
     },
     "DL-2368": {
-      "section_sha256": "2287077d18c61760d4b78533b65f709dae78e575176d56fbfd0de5bdd8729c05",
+      "section_sha256": "30f7f05976c183fc2afe1f292dbefece03e43a308b305da05be9444003a4fb07",
       "stored_value_only": false,
       "checkpoint_only": false,
       "explicit_event_scope": null,
@@ -172434,7 +174838,7 @@
       "title": "### DL-2368: Event Authority registers remote_access.route_test_completed (admission merge 2)"
     },
     "DL-2369": {
-      "section_sha256": "cf71080ef5b1d3c9ecb99131d6cbfecef5750827eaeb6eddf2012fd5975971db",
+      "section_sha256": "15194fbde18049d87c277ef838917821f67ffab874143e9d85a5461250c79c69",
       "stored_value_only": false,
       "checkpoint_only": false,
       "explicit_event_scope": null,
@@ -172456,7 +174860,7 @@
       "title": "### DL-507: Dev-tool source records (retention deck 4 Q8)"
     },
     "DL-2370": {
-      "section_sha256": "0341b863f78032c71bbda4981c8cdda36287c9c52c2edba83defff95d11a30ca",
+      "section_sha256": "041ebcca18861715e58eebaff81f469b053ba3d151504b433606ca0f60122969",
       "stored_value_only": false,
       "checkpoint_only": false,
       "explicit_event_scope": null,
@@ -172464,7 +174868,7 @@
       "title": "### DL-2370: Event Authority registers restore.state_changed (admission merge 2)"
     },
     "DL-2371": {
-      "section_sha256": "67a4958b094cef75dba9eb8309e8512f5dc499dec9422929c92d1da8f5ee373c",
+      "section_sha256": "181c67288625f96215a599295324659ee6f83adbfb38f063106ce2d8d05b5048",
       "stored_value_only": false,
       "checkpoint_only": false,
       "explicit_event_scope": null,
@@ -172472,7 +174876,7 @@
       "title": "### DL-2371: Event Authority registers review.artifact_finalized (admission merge 2)"
     },
     "DL-2372": {
-      "section_sha256": "bbac2e1cc3788f9892a88581798e75b6fbb0a0082d188470cdb839081bb5dba4",
+      "section_sha256": "efb68600fd710eeaa8acb1ada2dbd81d29d9917e1040c240b95aae18d479c3a3",
       "stored_value_only": false,
       "checkpoint_only": false,
       "explicit_event_scope": null,
@@ -172480,7 +174884,7 @@
       "title": "### DL-2372: Event Authority registers review.finding_added (admission merge 2)"
     },
     "DL-2373": {
-      "section_sha256": "41e9ae37f513a0ab5483d84e557b1fd1d6419cc9db4f2979bc2bfc90ef35648f",
+      "section_sha256": "2a9dccf1e5464580f1717d335c078a24db7a81028098f329af372faeda9e1925",
       "stored_value_only": false,
       "checkpoint_only": false,
       "explicit_event_scope": null,
@@ -172488,7 +174892,7 @@
       "title": "### DL-2373: Event Authority registers review.finding_dispositioned (admission merge 2)"
     },
     "DL-2374": {
-      "section_sha256": "1c6fd6d48d12e8d4e22432739df2fcf42a8b37caee35847ced3c6254b60d6b62",
+      "section_sha256": "99fe8870bd269ec1930ed488e54637be810104371005a6570f591ff4687108f7",
       "stored_value_only": false,
       "checkpoint_only": false,
       "explicit_event_scope": null,
@@ -172496,7 +174900,7 @@
       "title": "### DL-2374: Event Authority registers run.background_enqueued (admission merge 2)"
     },
     "DL-2394": {
-      "section_sha256": "2a7dc0f3f9b896a8ae9ef98696ff90bc4e1729b4bfc50cc678dba048857a8882",
+      "section_sha256": "ad56363329ee517d1f0fe1a797f1c9dd9bc5e1ab43ccebfa92361208944747dd",
       "stored_value_only": false,
       "checkpoint_only": false,
       "explicit_event_scope": null,
@@ -172504,7 +174908,7 @@
       "title": "### DL-2394: Event Authority registers safe_point.created (admission merge 2)"
     },
     "DL-2395": {
-      "section_sha256": "931fdf88704f2ff7e58f1ecf3849131c7bebc460d5c688523db39db4d5fd9b24",
+      "section_sha256": "c224a50d54fdef063988f20b61c9c4ff0c8d32b7dfc6d12f763bcaaa0e80cbee",
       "stored_value_only": false,
       "checkpoint_only": false,
       "explicit_event_scope": null,
@@ -172512,7 +174916,7 @@
       "title": "### DL-2395: Event Authority registers safe_point.restored (admission merge 2)"
     },
     "DL-2396": {
-      "section_sha256": "af2e6921273bbbb9e4f6be4742fa12503ca282e0535ee4b5cf88ae4c7790d7e6",
+      "section_sha256": "dff347b39a63c527539e32e3044d99c8832b6191cc4b1f502c406415083b728a",
       "stored_value_only": false,
       "checkpoint_only": false,
       "explicit_event_scope": null,
@@ -172520,7 +174924,7 @@
       "title": "### DL-2396: Event Authority registers server.catalog_changed (admission merge 2)"
     },
     "DL-2397": {
-      "section_sha256": "954cf22da0309d7950f360daf2cacf7a74a6c38def851d6d89bc02b8d7f6a90f",
+      "section_sha256": "7d8eb160dc89ebeb2a8fb400a63dd923c6e1685266957aa5f03e1fe8cb80dd4f",
       "stored_value_only": false,
       "checkpoint_only": false,
       "explicit_event_scope": null,
@@ -172528,7 +174932,7 @@
       "title": "### DL-2397: Event Authority registers server.client_pairing_state_changed (admission merge 2)"
     },
     "DL-2398": {
-      "section_sha256": "5ea3dcf8365537629dd888ff4e855ccf5fb0e0c89720cab610b6eeb40b073649",
+      "section_sha256": "d162981846ad194c5776e9d178aec62614782734ecdc1c835c10c466acbc1b0d",
       "stored_value_only": false,
       "checkpoint_only": false,
       "explicit_event_scope": null,
@@ -172536,7 +174940,7 @@
       "title": "### DL-2398: Event Authority registers server.client_revoked (admission merge 2)"
     },
     "DL-2399": {
-      "section_sha256": "5def8f7274832adb45be22a7a000b546e64bf85a9eab4a62c5047c464d8ba802",
+      "section_sha256": "91dc8c76d405afc1de1a30bc8fd6550dd14a4dfe8acf494a2d9a86bf1f538659",
       "stored_value_only": false,
       "checkpoint_only": false,
       "explicit_event_scope": null,
@@ -172544,7 +174948,7 @@
       "title": "### DL-2399: Event Authority registers server.client_trust_changed (admission merge 2)"
     },
     "DL-2400": {
-      "section_sha256": "2ee06e15df23b40deb7471494d53457e8588423bee1f59ea7515fc9d05638590",
+      "section_sha256": "5f67096aeb08ceb0eaaff0ce194e92c1535b63d4c4bdf24d96f706168ae3e9f9",
       "stored_value_only": false,
       "checkpoint_only": false,
       "explicit_event_scope": null,
@@ -172552,7 +174956,7 @@
       "title": "### DL-2400: Event Authority registers server.connection_state_changed (admission merge 2)"
     },
     "DL-2401": {
-      "section_sha256": "bd1d0f11c978f274ce421c26dfb2a616735d074f02dd4083368126b52a32638c",
+      "section_sha256": "6e404fb3dee98f8e40ccc7df07db28f70561d0aa622d243aeb5d0435ad19c2fd",
       "stored_value_only": false,
       "checkpoint_only": false,
       "explicit_event_scope": null,
@@ -172560,7 +174964,7 @@
       "title": "### DL-2401: Event Authority registers server.discovery_expired (admission merge 2)"
     },
     "DL-2402": {
-      "section_sha256": "39214a5bfc42438fd08f085f9229d04dae068cd4aaac3786feed0175d5216bf9",
+      "section_sha256": "4226eed918bff49ea316d7331a8f5a9872df3b7f1af6a0c32ab206c14e5afe3f",
       "stored_value_only": false,
       "checkpoint_only": false,
       "explicit_event_scope": null,
@@ -172568,7 +174972,7 @@
       "title": "### DL-2402: Event Authority registers server.discovery_observed (admission merge 2)"
     },
     "DL-2403": {
-      "section_sha256": "03762d487193635934044a9dd8643e3caa23c354063ec8d6e66102e8e6948b5d",
+      "section_sha256": "bdc88eafd022e74e9bae59b89b4f18a000558e074d5bbdfa4e857454a7b77755",
       "stored_value_only": false,
       "checkpoint_only": false,
       "explicit_event_scope": null,
@@ -172576,7 +174980,7 @@
       "title": "### DL-2403: Event Authority registers server.endpoint_changed (admission merge 2)"
     },
     "DL-2404": {
-      "section_sha256": "842261230c5f9d396c214c826e8bb0bb7f8848a22572429b15b1640c45b2a38e",
+      "section_sha256": "0d5e3da5fb8ba4d459a911cf1cd49f4dc5aab47f6bb9d92cf859dea3921a2b4d",
       "stored_value_only": false,
       "checkpoint_only": false,
       "explicit_event_scope": null,
@@ -172584,7 +174988,7 @@
       "title": "### DL-2404: Event Authority registers server.identity_mismatch_detected (admission merge 2)"
     },
     "DL-2405": {
-      "section_sha256": "330aeea064cc77d88f061318980a01cde88ac60ea2019f1671f2365bd90ab415",
+      "section_sha256": "51ce2cfafce4da3e2bbf363334d2c2fd3aaabf6470cc3fa53b18057f12d98c14",
       "stored_value_only": false,
       "checkpoint_only": false,
       "explicit_event_scope": null,
@@ -172592,7 +174996,7 @@
       "title": "### DL-2405: Event Authority registers subagent.budget_warning (admission merge 2)"
     },
     "DL-2406": {
-      "section_sha256": "6bbc4f865757f5f75ef62075480eaf9d08189caa3ff5b0af9798382d1418a551",
+      "section_sha256": "701a6f7faad72dc2d49496804e640d11a1fdf883d8da641f649c14b411c330d4",
       "stored_value_only": false,
       "checkpoint_only": false,
       "explicit_event_scope": null,
@@ -172600,7 +175004,7 @@
       "title": "### DL-2406: Event Authority registers subagent.cancelled (admission merge 2)"
     },
     "DL-2407": {
-      "section_sha256": "75583069d53018ea2c10d8567390a2d2584ed2054c4bbdbfaf20c6046ed706cd",
+      "section_sha256": "2b62182014573b0505232264319178d201561f899534f0674c070dd80f8506f7",
       "stored_value_only": false,
       "checkpoint_only": false,
       "explicit_event_scope": null,
@@ -172608,7 +175012,7 @@
       "title": "### DL-2407: Event Authority registers subagent.completed (admission merge 2)"
     },
     "DL-2408": {
-      "section_sha256": "53bae13e790493bb04a1ffda79bdbd841302f4947f88bcb638b7366ab9808459",
+      "section_sha256": "63d1c479099ed11c66c6bd3a335c41e56fb2d037e6df3de64e73a53825566a40",
       "stored_value_only": false,
       "checkpoint_only": false,
       "explicit_event_scope": null,
@@ -172616,7 +175020,7 @@
       "title": "### DL-2408: Event Authority registers subagent.context_warning (admission merge 2)"
     },
     "DL-2409": {
-      "section_sha256": "b68c71947c7ae843ea8f42a629a5d82c438495c5d384e4613005446e2b038ab4",
+      "section_sha256": "5cf68c39ae25203cae626df74f99ad06f31614671caa2b0a854c5884bc2cdcaf",
       "stored_value_only": false,
       "checkpoint_only": false,
       "explicit_event_scope": null,
@@ -172624,7 +175028,7 @@
       "title": "### DL-2409: Event Authority registers subagent.escalated (admission merge 2)"
     },
     "DL-2410": {
-      "section_sha256": "c960d1dd3d6b235fb7c479c2e0a046c03a16ab5b0cfdb567f8bda10031701721",
+      "section_sha256": "ffccfd3d6f8bddbb1b24ea1e4449fcc908a0178fe9c028af322ee36de9d72f5a",
       "stored_value_only": false,
       "checkpoint_only": false,
       "explicit_event_scope": null,
@@ -172632,7 +175036,7 @@
       "title": "### DL-2410: Event Authority registers subagent.failed (admission merge 2)"
     },
     "DL-2411": {
-      "section_sha256": "01bfc592dc51b2d656605599092b41981f8953b0615ac7ce3af84992fa64072c",
+      "section_sha256": "3c3314e6c70fd2c14eb55f321c3146b94aea01f6d29e244c1f077c61d047ac2b",
       "stored_value_only": false,
       "checkpoint_only": false,
       "explicit_event_scope": null,
@@ -172640,7 +175044,7 @@
       "title": "### DL-2411: Event Authority registers subagent.message_received (admission merge 2)"
     },
     "DL-2412": {
-      "section_sha256": "690d23833590e517cc91769ace67ada65bdd1eaa9efbe8b1242218d75b74274f",
+      "section_sha256": "a39a8cc925333173659bd59ce4782dc00822efbfe40f8deae674aa64ee18db5a",
       "stored_value_only": false,
       "checkpoint_only": false,
       "explicit_event_scope": null,
@@ -172648,7 +175052,7 @@
       "title": "### DL-2412: Event Authority registers subagent.message_sent (admission merge 2)"
     },
     "DL-2413": {
-      "section_sha256": "2781bf9b4fb9f0acb19d28d19055dc96cc0b5efe75e817d9c4343a063a09cd26",
+      "section_sha256": "acc2729735bf9e3543adc50e94041265e433dfcc63656483fef187fb0fdb4384",
       "stored_value_only": false,
       "checkpoint_only": false,
       "explicit_event_scope": null,
@@ -172656,7 +175060,7 @@
       "title": "### DL-2413: Event Authority registers subagent.model_switched (admission merge 2)"
     },
     "DL-2414": {
-      "section_sha256": "b0f3faf96808761e3d77bda4cd8a117c7841771e61161e9350e523416db39008",
+      "section_sha256": "f3551a5781e9b21d95eb28f07bd41838178278ceafb95fd19393d646a4af8a1a",
       "stored_value_only": false,
       "checkpoint_only": false,
       "explicit_event_scope": null,
@@ -172664,7 +175068,7 @@
       "title": "### DL-2414: Event Authority registers subagent.output_truncated (admission merge 2)"
     },
     "DL-2415": {
-      "section_sha256": "2909a690283247ed6c1e12faa956b72fe9a4cc58180677ad1e425c9a7e792288",
+      "section_sha256": "c56decaa94462341633520a8fd1ab5724340998ec161978ba0608c67e13f51bb",
       "stored_value_only": false,
       "checkpoint_only": false,
       "explicit_event_scope": null,
@@ -172672,7 +175076,7 @@
       "title": "### DL-2415: Event Authority registers subagent.paused (admission merge 2)"
     },
     "DL-2416": {
-      "section_sha256": "af6394009174782cf754c3730585f28417609b9b93bc581cae50001470daead1",
+      "section_sha256": "2b46e9811fd2926267b5bef7f93d6b9998ec92c6c8be26f76efdbcb4f16f3745",
       "stored_value_only": false,
       "checkpoint_only": false,
       "explicit_event_scope": null,
@@ -172680,7 +175084,7 @@
       "title": "### DL-2416: Event Authority registers subagent.progress (admission merge 2)"
     },
     "DL-2417": {
-      "section_sha256": "5e79b8ea40842c7937972c394293d3594dc4fce2f85d1affc1a3ec66fb0aafdb",
+      "section_sha256": "d5fff6fb00b8230065765256b46bdc155d59feb46a0a0c7dc2f7f792a632a970",
       "stored_value_only": false,
       "checkpoint_only": false,
       "explicit_event_scope": null,
@@ -172688,7 +175092,7 @@
       "title": "### DL-2417: Event Authority registers subagent.resumed (admission merge 2)"
     },
     "DL-2418": {
-      "section_sha256": "6c6dcd16a505aa747dda9fac514b07e479d0e6e6a2fd063057ed3ab2ca0c6fcc",
+      "section_sha256": "9edac5545bf06c2d5e2fe45861195ddff24e4d944970f1b5ae223b28c262a525",
       "stored_value_only": false,
       "checkpoint_only": false,
       "explicit_event_scope": null,
@@ -172696,7 +175100,7 @@
       "title": "### DL-2418: Event Authority registers subagent.retried (admission merge 2)"
     },
     "DL-2419": {
-      "section_sha256": "50f7b0a88b6f2aca3dcfbd5a6e99ba910e33576d15dd8524ec81a3e4797f86e6",
+      "section_sha256": "e38153de51a1c4749ac38f5eee3a49923654a771b6e857f7fa20fa425d52a326",
       "stored_value_only": false,
       "checkpoint_only": false,
       "explicit_event_scope": null,
@@ -172704,7 +175108,7 @@
       "title": "### DL-2419: Event Authority registers subagent.spawned (admission merge 2)"
     },
     "DL-2420": {
-      "section_sha256": "2d8f768fc5e58f6b963456f4cfbf144dabe8f591a749a4ade1455b5dc20ff1a6",
+      "section_sha256": "5d82cf7d9c05c20be4653a3d8beedf1233efec573fdee8d5a7e05f5f74ba5d75",
       "stored_value_only": false,
       "checkpoint_only": false,
       "explicit_event_scope": null,
@@ -172712,7 +175116,7 @@
       "title": "### DL-2420: Event Authority registers subagent.started (admission merge 2)"
     },
     "DL-2421": {
-      "section_sha256": "093f4e0090b686500aee4603dbc3c0552ddc82b2a3795ee1ed8a5c0e366dcddc",
+      "section_sha256": "85bd468634ece79659675b26d98ab2ba92e83bf0ab1d43efcc406bf6e22ccf34",
       "stored_value_only": false,
       "checkpoint_only": false,
       "explicit_event_scope": null,
@@ -172720,7 +175124,7 @@
       "title": "### DL-2421: Event Authority registers subagent.timeout (admission merge 2)"
     },
     "DL-2422": {
-      "section_sha256": "da36aff0c9db1b2a6b929aa069983f83e76b998bdbd61982446dcb61bff9679e",
+      "section_sha256": "b6873112df6b06160203b67be957001221835b3d797c74b361d88e801f679e49",
       "stored_value_only": false,
       "checkpoint_only": false,
       "explicit_event_scope": null,
@@ -172728,7 +175132,7 @@
       "title": "### DL-2422: Event Authority registers subagent.tool_called (admission merge 2)"
     },
     "DL-2423": {
-      "section_sha256": "41b09d53b2e89aaf2a01f1bfcffe25177113493be378dceaade60e8907b1527b",
+      "section_sha256": "b9dba9fcdedf8034969c3ee40d6e71ed57360ea47d3e793493f7ea140d35d6c8",
       "stored_value_only": false,
       "checkpoint_only": false,
       "explicit_event_scope": null,
@@ -172736,7 +175140,7 @@
       "title": "### DL-2423: Event Authority registers subagent.tool_completed (admission merge 2)"
     },
     "DL-2424": {
-      "section_sha256": "7fa992a6e7c74b75cac9de834a52096ce7743f98e3d146ab0ccc48e4d682f568",
+      "section_sha256": "aebeb9aee1edd56776de2e5ff8385656182687fac5ecf8a2359537d7ee6e65a6",
       "stored_value_only": false,
       "checkpoint_only": false,
       "explicit_event_scope": null,
@@ -172760,7 +175164,7 @@
       "title": "### DL-430 - A FileSafe block records only the FileSafe refusal"
     },
     "DL-2426": {
-      "section_sha256": "acf874170f2606cd309f1b5a051c7378f5a6dcd69d02a8692b2bf138a1e91057",
+      "section_sha256": "a76dfc170b57df223433f3cdce925bea5026040602c06d6accbc38e7d318a90e",
       "stored_value_only": false,
       "checkpoint_only": false,
       "explicit_event_scope": null,
@@ -172768,7 +175172,7 @@
       "title": "### DL-2426: Event Authority registers tool.execution_completed (admission merge 2)"
     },
     "DL-2427": {
-      "section_sha256": "4d72ccfd4b6a72ba2bf7b3d87f9ce05bbdf3dd248e51993e08ea6e602974a7af",
+      "section_sha256": "e41af54de49d9004d86fef48be5f4c0745b6e8d2f258a4158b4550d5ee457345",
       "stored_value_only": false,
       "checkpoint_only": false,
       "explicit_event_scope": null,
@@ -172776,7 +175180,7 @@
       "title": "### DL-2427: Event Authority registers tool.execution_started (admission merge 2)"
     },
     "DL-2444": {
-      "section_sha256": "12b1ad8d77c2bb1c54f3ff848b3c0ebb2fcae4ffc6f90f42be88adb15c2684de",
+      "section_sha256": "f340369520e04f96aef28e1b23e80397652ea6aca65f1d9a271dde13afab4ac2",
       "stored_value_only": false,
       "checkpoint_only": false,
       "explicit_event_scope": null,
@@ -172784,7 +175188,7 @@
       "title": "### DL-2444: Event Authority registers usage.event (admission merge 2)"
     },
     "DL-2429": {
-      "section_sha256": "91806b2da1422abe23f8d0110725653b71578fb0995e9870b61c5fcb8c0e01e9",
+      "section_sha256": "3d05896896cf824036d99867ae857dacb83b23d80bc6df8f548f335d5866cd28",
       "stored_value_only": false,
       "checkpoint_only": false,
       "explicit_event_scope": null,
@@ -172792,7 +175196,7 @@
       "title": "### DL-2429: Event Authority registers wizard.blocked (admission merge 2)"
     },
     "DL-2430": {
-      "section_sha256": "3dd7a3f7d2004b0fe685f5fa804dd9f4bdf0d5ccb3e148c8808f08039d75c135",
+      "section_sha256": "2dd4ef1ddb36b213dff05e24f1192befbb992d164a720ccc8e52eb436e603594",
       "stored_value_only": false,
       "checkpoint_only": false,
       "explicit_event_scope": null,
@@ -172800,7 +175204,7 @@
       "title": "### DL-2430: Event Authority registers wizard.deferred_payload.loaded (admission merge 2)"
     },
     "DL-2431": {
-      "section_sha256": "387e9a1f6cb3ed088dd32427e6493c129474376601829109f55f23b3f142ab93",
+      "section_sha256": "a922f942d3000deefbc89725a5c6154d0fab47d8d1618b6b720b2a596b37a31c",
       "stored_value_only": false,
       "checkpoint_only": false,
       "explicit_event_scope": null,
@@ -172824,7 +175228,7 @@
       "title": "### DL-431 - Wizard Blocked belongs to the whole Planning Run"
     },
     "DL-2432": {
-      "section_sha256": "dc98845149a05d85772bd72ff206cf5c2cdff4d809f030f9f60636b9a00e89d1",
+      "section_sha256": "5cf66111499ec72dedf9b1e426eea66f400ef4ba55acfddb18b7e164147521b6",
       "stored_value_only": false,
       "checkpoint_only": false,
       "explicit_event_scope": null,
@@ -172832,7 +175236,7 @@
       "title": "### DL-2432: Event Authority registers wizard.unblocked (admission merge 2)"
     },
     "DL-2433": {
-      "section_sha256": "84bc957c6edcd89bf02ee1156e09c2e4d6636d71a9fdaeb8b17f2f931aff9b69",
+      "section_sha256": "bf915d9d7209da4812944be7fa725fee790c5fc7e7b6c9069985d719484df558",
       "stored_value_only": false,
       "checkpoint_only": false,
       "explicit_event_scope": null,
@@ -172840,7 +175244,7 @@
       "title": "### DL-2433: Event Authority registers worktree.created (admission merge 2)"
     },
     "DL-2434": {
-      "section_sha256": "594ff2098a405e1690c0fdcbd2a7fdc371a6ede371e91ebd314bf6c0d3fd658a",
+      "section_sha256": "627594cae8afcc0f731c2d9ebd7aa80be2800dbceccc71cdfed93f14d4ec9b7e",
       "stored_value_only": false,
       "checkpoint_only": false,
       "explicit_event_scope": null,

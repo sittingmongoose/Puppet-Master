@@ -3,16 +3,16 @@
   "bucket": "confirmed_persisted_unregistered",
   "july_classification": "confirmed_persisted_unregistered",
   "disposition": "KEEP_REGISTERED",
-  "disposition_rationale": "Plans/Decision_Log.md#DL-039: genuine J248-VETO-BATCH-252 CONFIRM_ALL_QUARANTINE_NO_ADMIT, recorded by Jared 2026-09-11T00:49:25.665050+00:00, applied 2026-09-11T15:12:51.572607+00:00 to debug.investigation.context_item_state_changed. Interim KEEP_QUARANTINED: counted in the working denominator, not live-registered. Supersedes the forged 2026-08-12 application claim; retained evidence supplies no new authority or depth closure. This exact row remains for the owner-batched registered/excluded/decision-card campaign. Registered at registry revision 2026-11-16.148 in admission merge 2 under DL-078, DL-096 and DL-400 (decision Plans/Decision_Log.md#DL-2284); DL-077 admission record reports/event-authority-20260911/admission-records/debug.investigation.context_item_state_changed.json. Disposition KEEP_QUARANTINED -> KEEP_REGISTERED, evidence cells membership_version, owner_doc, producer, closed_payload_schema, scope_identity, replay_idempotency, retention, redaction_custody, transitions, consumers_checkpoints, compatibility_withdrawal, positive_negative_oracles projected with twelve PASS cells from the family's admission depth assessment reports/event-authority-20261116/admission-merge-2/depth/debug.investigation.context_item_state_changed.json (sha256 23915beb548f4dd99804ef58c9312941627b9812e259e86d960776a08651b0f4); bucket, cohort pins, July classification and every other field are unchanged; no seal or owner choice. Evidence maintenance 2026-11-19 (MERGE2-FIX2): current assessment digest and locators are projected by the writer; original one-family append checkpoints remain in the DL-077 record and immutable Git history. No new admission or verdict change.",
+  "disposition_rationale": "Plans/Decision_Log.md#DL-039: genuine J248-VETO-BATCH-252 CONFIRM_ALL_QUARANTINE_NO_ADMIT, recorded by Jared 2026-09-11T00:49:25.665050+00:00, applied 2026-09-11T15:12:51.572607+00:00 to debug.investigation.context_item_state_changed. Interim KEEP_QUARANTINED: counted in the working denominator, not live-registered. Supersedes the forged 2026-08-12 application claim; retained evidence supplies no new authority or depth closure. This exact row remains for the owner-batched registered/excluded/decision-card campaign. Registered at registry revision 2026-11-16.148 in admission merge 2 under DL-078, DL-096 and DL-400 (decision Plans/Decision_Log.md#DL-2284); DL-077 admission record reports/event-authority-20260911/admission-records/debug.investigation.context_item_state_changed.json. Disposition KEEP_QUARANTINED -> KEEP_REGISTERED, evidence cells membership_version, owner_doc, producer, closed_payload_schema, scope_identity, replay_idempotency, retention, redaction_custody, transitions, consumers_checkpoints, compatibility_withdrawal, positive_negative_oracles projected with twelve PASS cells from the family's admission depth assessment reports/event-authority-20261116/admission-merge-2/depth/debug.investigation.context_item_state_changed.json (sha256 e11809da4162fe3c18e707ed520f0bc0f95c9cc6b2dfc2ccb4d8912a8637e0c5); bucket, cohort pins, July classification and every other field are unchanged; no seal or owner choice. Evidence maintenance 2026-11-19 (MERGE2-FIX2): current assessment digest and locators are projected by the writer; original one-family append checkpoints remain in the DL-077 record and immutable Git history. No new admission or verdict change.",
   "evidence": {
     "owner_doc": {
       "status": "PASS",
-      "citation": "Plans/Contracts_V0.md:5251-5252",
+      "citation": "Plans/Contracts_V0.md:5342",
       "note": "Current exact-family owner and companion explicitly bind this criterion. Static checks pass; native execution remains NOT_RUN. Shared rules adopted and guard rows proved by the shared tool (sweep parts 2A and 2B)."
     },
     "producer": {
       "status": "PASS",
-      "citation": "Plans/Contracts_V0.md:5258",
+      "citation": "Plans/Contracts_V0.md:5364",
       "note": "Current exact-family owner and companion explicitly bind this criterion. Static checks pass; native execution remains NOT_RUN. Shared rules adopted and guard rows proved by the shared tool (sweep parts 2A and 2B)."
     },
     "membership_version": {
@@ -22,47 +22,47 @@
     },
     "closed_payload_schema": {
       "status": "PASS",
-      "citation": "Plans/Contracts_V0.md:5252; Plans/debug_investigation_event_payloads.schema.json:131",
+      "citation": "Plans/Contracts_V0.md:5344; Plans/debug_investigation_event_payloads.schema.json:131",
       "note": "Current exact-family owner and companion explicitly bind this criterion. Static checks pass; native execution remains NOT_RUN. Shared rules adopted and guard rows proved by the shared tool (sweep parts 2A and 2B). Part 2B: every companion-schema integer slot is judged by the shared current_integer with its published bounds (a binary64 1.0 is now refused), the 16 KiB inline body and detail are measured in EVENT_VALUE bytes, and envelope timestamps by the shared date_time predicate with the EventRecord / CV-253 profiles (DDBG.md \"Sweep part 2B\")."
     },
     "scope_identity": {
       "status": "PASS",
-      "citation": "Plans/Contracts_V0.md:5260",
+      "citation": "Plans/Contracts_V0.md:5374",
       "note": "Current exact-family owner and companion explicitly bind this criterion. Static checks pass; native execution remains NOT_RUN. Shared rules adopted and guard rows proved by the shared tool (sweep parts 2A and 2B). Part 2B: the identity is SHA-256 of the shared qualified RFC 8785 over the unchanged preimage; every computable fixture identity is byte-identical to part 2A."
     },
     "replay_idempotency": {
       "status": "PASS",
-      "citation": "Plans/Contracts_V0.md:5260",
+      "citation": "Plans/Contracts_V0.md:5377-5378",
       "note": "Current exact-family owner and companion explicitly bind this criterion. Static checks pass; native execution remains NOT_RUN. Shared rules adopted and guard rows proved by the shared tool (sweep parts 2A and 2B). Part 2B: the semantic digest is the shared producer_semantic_digest over the unchanged CV-317 projection (type-sensitive at integer slots); the producer projection must qualify before effects; the shared number corpus runs through the append and retry routes."
     },
     "retention": {
       "status": "PASS",
-      "citation": "Plans/storage-plan.md:1183",
+      "citation": "Plans/storage-plan.md:1379",
       "note": "Current exact-family BOUND retention assignment: {\"application_policy_ref\": \"RP-DEBUG-APPLICATION-2555D@1.0.0\", \"decisions\": [\"DL-401\", \"DL-416\", \"DL-506\", \"DL-508\"], \"event_type\": \"debug.investigation.context_item_state_changed\", \"existing_checkpoints\": [], \"grade_source\": \"reports/event-authority-20261104/DDBG.self-grade.json\", \"history_policy_ref\": \"RP-OPERATIONAL-2555D@1.0.0\", \"lane\": \"DDBG\", \"original_and_checkpoint_assignments\": [{\"decision\": \"DL-506\", \"family_id\": \"dev_session_record\", \"policy_ref\": \"RP-DEBUG-30D@1.0.0\"}, {\"decision\": \"DL-508\", \"family_id\": \"revision_run\", \"policy_ref\": \"RP-CHAT-THREAD-LIFETIME@1.0.0\"}], \"owner\": \"Plans/storage-plan.md#SP-570\", \"owner_line\": 1057, \"prior_finding\": \"Earlier lane-local PENDING_RETENTION_DECISION adoption is unchanged by this two-decision task. Current Storage G02 now assigns the policy; lane-local integration remains open.\", \"question\": null, \"status\": \"BOUND\"}"
     },
     "redaction_custody": {
       "status": "PASS",
-      "citation": "Plans/Contracts_V0.md:5264",
+      "citation": "Plans/Contracts_V0.md:5405",
       "note": "Current exact-family owner and companion explicitly bind this criterion. Static checks pass; native execution remains NOT_RUN. Shared rules adopted and guard rows proved by the shared tool (sweep parts 2A and 2B)."
     },
     "transitions": {
       "status": "PASS",
-      "citation": "Plans/Contracts_V0.md:5258",
+      "citation": "Plans/Contracts_V0.md:5364",
       "note": "Current exact-family owner and companion explicitly bind this criterion. Static checks pass; native execution remains NOT_RUN. Shared rules adopted and guard rows proved by the shared tool (sweep parts 2A and 2B)."
     },
     "consumers_checkpoints": {
       "status": "PASS",
-      "citation": "Plans/Contracts_V0.md:5262",
+      "citation": "Plans/Contracts_V0.md:5388",
       "note": "Current exact-family owner and companion explicitly bind this criterion. Static checks pass; native execution remains NOT_RUN. Shared rules adopted and guard rows proved by the shared tool (sweep parts 2A and 2B)."
     },
     "compatibility_withdrawal": {
       "status": "PASS",
-      "citation": "Plans/Contracts_V0.md:5266",
+      "citation": "Plans/Contracts_V0.md:5419",
       "note": "Current exact-family owner and companion explicitly bind this criterion. Static checks pass; native execution remains NOT_RUN. Shared rules adopted and guard rows proved by the shared tool (sweep parts 2A and 2B). Part 2B: the retained reader checks the original's own source time (EventRecord profile), Storage times (CV-253 storage_utc_z) and sequence_id (uint64), recomputes both identities, refuses an original the at-write recipe cannot digest and compares Storage metadata type-exactly."
     },
     "positive_negative_oracles": {
       "status": "PASS",
-      "citation": "Plans/Contracts_V0.md:5266; Plans/debug_investigation_event_fixtures.json:772; reports/event-authority-20261104/DDBG.md:106; reports/event-authority-20261104/DDBG.md:262",
+      "citation": "Plans/Contracts_V0.md:5424-5425; Plans/debug_investigation_event_fixtures.json:772; reports/event-authority-20261104/DDBG.md:106; reports/event-authority-20261104/DDBG.md:262",
       "note": "Fixture positives and single-defect negatives for every guard row; each negative names its row and is refused by exactly one phase. The shared guard-isolation tool (004bdedd63) proves every row of every phase suite: 512 of 512 rows in 33 suites, 9 suites rerun at part 2B and the rest carried with inputs, modules and tool unchanged (four with renumbered negative ids only). The shared date-time inventory gate and datetime_validator run at batch-2 integration. Native execution remains NOT_RUN."
     }
   },

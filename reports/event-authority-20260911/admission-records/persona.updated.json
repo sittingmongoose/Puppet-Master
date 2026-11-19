@@ -4,7 +4,7 @@
  "family_id": "event-family-persona-updated",
  "implementation_receipt_sha256": "dceb7f21436cbe126c23822e62caa1b6dedcb45fefae3005c1804576ca34d827",
  "decision_ref": "Plans/Decision_Log.md#DL-2346",
- "decision_section_sha256": "35f51468626fb6d3c16eef10bc1022e73d230801ff31f07a2ce9cb2562d91eff",
+ "decision_section_sha256": "8ed5e668bd2902049a9e19186774c494535d31d02beee44afe7bae08cee6f09f",
  "registry_before": {
   "revision": "2026-11-16.209",
   "sha256": "ea1accd9c780cb07c828e1c94e7731ae7b36b7ac81d24981367579020db027b6",
@@ -18,7 +18,7 @@
  "registry_row_sha256": "e08a93ea2753f97e8d27ad215fda5097124550becbcd2b0df26de1970579f21d",
  "depth_assessment": {
   "path": "reports/event-authority-20261116/admission-merge-2/depth/persona.updated.json",
-  "sha256": "de8c7e97c0ce0a38fbaae042c51b8db2aebde3bf35f841035c3f95005138d514"
+  "sha256": "da6ce39c8395dbd5a29906f45faf8c82f5e1cb33aaf234333535e0d19435b951"
  },
  "admission_landing": {
   "branch": "plans/ea-merge2-apply-20261116",
@@ -37,11 +37,11 @@
   "Written under DL-077. The seal check recomputes completeness from the pinned assessment; the two fields ending in _at_recording are informational only."
  ],
  "evidence_maintenance": {
-  "authority": "MERGE2-FIX3",
-  "source_commit": "dfea17a6c44205c69598882b0305b0cbeab1a3e8",
-  "source_record_sha256": "87ef0f55ebcab2cf8f34e0839eaeff25f60551a7873a890fd7d6714f2d6891f6",
-  "source_assessment_sha256": "282b907db7e97cb055d2be480a2667eac567593b103e4deacd263daf1e37658e",
-  "source_decision_section_sha256": "4e0f008d54d1bf063e046ad8728ec1f8583efd7251ccb99186585d4d4b635864",
+  "authority": "MERGE2-FIX4",
+  "source_commit": "2bda6aeed03daea26c4d79dfb7568fc145aac29e",
+  "source_record_sha256": "2d860fe4b2ba53fd2ffbe56b408e7b9126bab6bc815377ff6d498e0ebaa69da7",
+  "source_assessment_sha256": "de8c7e97c0ce0a38fbaae042c51b8db2aebde3bf35f841035c3f95005138d514",
+  "source_decision_section_sha256": "35f51468626fb6d3c16eef10bc1022e73d230801ff31f07a2ce9cb2562d91eff",
   "original_registry_checkpoints_preserved": true
  }
 }

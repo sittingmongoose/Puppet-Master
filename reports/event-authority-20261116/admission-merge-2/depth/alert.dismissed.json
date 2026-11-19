@@ -56,12 +56,12 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-661",
-       "line_start": 44467,
-       "line_end": 44467,
-       "quote": "Newly authored owner contract for alert.dismissed 1.0.0 under DL-045; prepared without admission.",
-       "file_sha256": "a80ebad269f3f3a87c644ee23b21cdd62ef64ccad2fbe4377e8bd190614fdf31",
+       "line_start": 50975,
+       "line_end": 50976,
+       "quote": "Newly authored owner contract for\\\n  \\ alert.dismissed 1.0.0 under DL-045; prepared without admission.",
+       "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
        "quote_check": "exact",
-       "quote_scope": "unit SP-661, Plans/storage-plan.md:44459-44537",
+       "quote_scope": "unit SP-661, Plans/storage-plan.md:50960-51170",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-661",
@@ -74,25 +74,25 @@
         "method": "exact_normalized",
         "reason": "Whitespace, line wrapping, YAML quoting/escaping or Markdown escaping only; searched the cited unit.",
         "unit": "SP-661",
-        "old_quote": "Newly authored owner contract for alert.dismissed 1.0.0\\\n  \\ under DL-045; prepared without admission.",
-        "new_quote": "Newly authored owner contract for alert.dismissed 1.0.0 under DL-045; prepared without admission.",
+        "old_quote": "Newly authored owner contract for alert.dismissed 1.0.0 under DL-045; prepared without admission.",
+        "new_quote": "Newly authored owner contract for\\\n  \\ alert.dismissed 1.0.0 under DL-045; prepared without admission.",
         "normalizations": [
          "whitespace/line wrapping",
          "YAML quoting/escaping",
          "Markdown escaping"
         ],
-        "owner_change_commit": "MERGE2-FIX3 uncommitted owner correction; final commit recorded in REPORT.md"
+        "owner_change_commit": "ca51e78d48b283861d77e4b5b947c1ea880e5fc0"
        }
       },
       {
        "path": "Plans/Contracts_V0.md",
        "unit": "CV-681",
-       "line_start": 38553,
-       "line_end": 38553,
+       "line_start": 42123,
+       "line_end": 42123,
        "quote": "alert.dismissed exact payload and storage route",
        "quote_check": "exact",
-       "quote_scope": "unit CV-681, Plans/Contracts_V0.md:38553-38593",
-       "file_sha256": "405f917ed143e5aefbcee55513fcdf1b11fa61f0dce5d9f164ad6e44ddf078ce",
+       "quote_scope": "unit CV-681, Plans/Contracts_V0.md:42123-42163",
+       "file_sha256": "58dee182ea2dd8dd358d27912280fa9113c3d1d8fd68b1c0c5d51b6f906d73c8",
        "source_citation": {
         "path": "Plans/Contracts_V0.md",
         "unit": "CV-681",
@@ -118,12 +118,12 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-661",
-       "line_start": 44467,
-       "line_end": 44467,
-       "quote": "handlers::alert::dismiss, produces this exact family. Existing closed payload",
-       "file_sha256": "a80ebad269f3f3a87c644ee23b21cdd62ef64ccad2fbe4377e8bd190614fdf31",
+       "line_start": 50976,
+       "line_end": 50977,
+       "quote": "handlers::alert::dismiss,\\\n  \\ produces this exact family. Existing closed payload",
+       "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
        "quote_check": "exact",
-       "quote_scope": "unit SP-661, Plans/storage-plan.md:44459-44537",
+       "quote_scope": "unit SP-661, Plans/storage-plan.md:50960-51170",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-661",
@@ -136,25 +136,25 @@
         "method": "exact_normalized",
         "reason": "Whitespace, line wrapping, YAML quoting/escaping or Markdown escaping only; searched the cited unit.",
         "unit": "SP-661",
-        "old_quote": "handlers::alert::dismiss,\\\n  \\ produces this exact family. Existing closed payload",
-        "new_quote": "handlers::alert::dismiss, produces this exact family. Existing closed payload",
+        "old_quote": "handlers::alert::dismiss, produces this exact family. Existing closed payload",
+        "new_quote": "handlers::alert::dismiss,\\\n  \\ produces this exact family. Existing closed payload",
         "normalizations": [
          "whitespace/line wrapping",
          "YAML quoting/escaping",
          "Markdown escaping"
         ],
-        "owner_change_commit": "MERGE2-FIX3 uncommitted owner correction; final commit recorded in REPORT.md"
+        "owner_change_commit": "ca51e78d48b283861d77e4b5b947c1ea880e5fc0"
        }
       },
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-661",
-       "line_start": 44471,
-       "line_end": 44471,
+       "line_start": 51001,
+       "line_end": 51001,
        "quote": "storage.first_append_receipt.resolve.v2 including its full-value v2 successor, genuine original",
-       "file_sha256": "a80ebad269f3f3a87c644ee23b21cdd62ef64ccad2fbe4377e8bd190614fdf31",
+       "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
        "quote_check": "exact",
-       "quote_scope": "unit SP-661, Plans/storage-plan.md:44459-44537",
+       "quote_scope": "unit SP-661, Plans/storage-plan.md:50960-51170",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-661",
@@ -229,12 +229,12 @@
       {
        "path": "Plans/Contracts_V0.md",
        "unit": "CV-681",
-       "line_start": 38553,
-       "line_end": 38553,
+       "line_start": 42123,
+       "line_end": 42123,
        "quote": "alert.dismissed exact payload and storage route",
        "quote_check": "exact",
-       "quote_scope": "unit CV-681, Plans/Contracts_V0.md:38553-38593",
-       "file_sha256": "405f917ed143e5aefbcee55513fcdf1b11fa61f0dce5d9f164ad6e44ddf078ce",
+       "quote_scope": "unit CV-681, Plans/Contracts_V0.md:42123-42163",
+       "file_sha256": "58dee182ea2dd8dd358d27912280fa9113c3d1d8fd68b1c0c5d51b6f906d73c8",
        "source_citation": {
         "path": "Plans/Contracts_V0.md",
         "unit": "CV-681",
@@ -260,12 +260,12 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-661",
-       "line_start": 44469,
-       "line_end": 44469,
-       "quote": "Identity is Project-scoped EventRecord v2, scope_partition project~base64url_no_pad(UTF8(project_id));",
+       "line_start": 50983,
+       "line_end": 50984,
+       "quote": "Identity is Project-scoped EventRecord\\\n  \\ v2, scope_partition project~base64url_no_pad(UTF8(project_id));",
        "quote_check": "exact",
-       "quote_scope": "unit SP-661, Plans/storage-plan.md:44459-44537",
-       "file_sha256": "a80ebad269f3f3a87c644ee23b21cdd62ef64ccad2fbe4377e8bd190614fdf31",
+       "quote_scope": "unit SP-661, Plans/storage-plan.md:50960-51170",
+       "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-661",
@@ -278,25 +278,25 @@
         "method": "exact_normalized",
         "reason": "Whitespace, line wrapping, YAML quoting/escaping or Markdown escaping only; searched the cited unit.",
         "unit": "SP-661",
-        "old_quote": "Identity is Project-scoped EventRecord v2, scope_partition project~base64url_no_pad(UTF8(project_id));\\",
-        "new_quote": "Identity is Project-scoped EventRecord v2, scope_partition project~base64url_no_pad(UTF8(project_id));",
+        "old_quote": "Identity is Project-scoped EventRecord v2, scope_partition project~base64url_no_pad(UTF8(project_id));",
+        "new_quote": "Identity is Project-scoped EventRecord\\\n  \\ v2, scope_partition project~base64url_no_pad(UTF8(project_id));",
         "normalizations": [
          "whitespace/line wrapping",
          "YAML quoting/escaping",
          "Markdown escaping"
         ],
-        "owner_change_commit": "MERGE2-FIX3 uncommitted owner correction; final commit recorded in REPORT.md"
+        "owner_change_commit": "ca51e78d48b283861d77e4b5b947c1ea880e5fc0"
        }
       },
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-661",
-       "line_start": 44469,
-       "line_end": 44469,
+       "line_start": 50984,
+       "line_end": 50984,
        "quote": "project~base64url_no_pad(UTF8(project_id));",
        "quote_check": "exact",
-       "quote_scope": "unit SP-661, Plans/storage-plan.md:44459-44537",
-       "file_sha256": "a80ebad269f3f3a87c644ee23b21cdd62ef64ccad2fbe4377e8bd190614fdf31",
+       "quote_scope": "unit SP-661, Plans/storage-plan.md:50960-51170",
+       "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-661",
@@ -335,12 +335,12 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-661",
-       "line_start": 44469,
-       "line_end": 44469,
-       "quote": "Request digest covers the full admitted command, subject alert_id, actor,",
-       "file_sha256": "a80ebad269f3f3a87c644ee23b21cdd62ef64ccad2fbe4377e8bd190614fdf31",
+       "line_start": 50989,
+       "line_end": 50990,
+       "quote": "Request digest covers the\\\n  \\ full admitted command, subject alert_id, actor,",
+       "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
        "quote_check": "exact",
-       "quote_scope": "unit SP-661, Plans/storage-plan.md:44459-44537",
+       "quote_scope": "unit SP-661, Plans/storage-plan.md:50960-51170",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-661",
@@ -353,25 +353,25 @@
         "method": "exact_normalized",
         "reason": "Whitespace, line wrapping, YAML quoting/escaping or Markdown escaping only; searched the cited unit.",
         "unit": "SP-661",
-        "old_quote": "Request\\\n  \\ digest covers the full admitted command, subject alert_id, actor,",
-        "new_quote": "Request digest covers the full admitted command, subject alert_id, actor,",
+        "old_quote": "Request digest covers the full admitted command, subject alert_id, actor,",
+        "new_quote": "Request digest covers the\\\n  \\ full admitted command, subject alert_id, actor,",
         "normalizations": [
          "whitespace/line wrapping",
          "YAML quoting/escaping",
          "Markdown escaping"
         ],
-        "owner_change_commit": "MERGE2-FIX3 uncommitted owner correction; final commit recorded in REPORT.md"
+        "owner_change_commit": "ca51e78d48b283861d77e4b5b947c1ea880e5fc0"
        }
       },
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-661",
-       "line_start": 44471,
-       "line_end": 44471,
-       "quote": "Committed retries recover append with frozen semantics; settled retries return original result/receipt.",
-       "file_sha256": "a80ebad269f3f3a87c644ee23b21cdd62ef64ccad2fbe4377e8bd190614fdf31",
+       "line_start": 51006,
+       "line_end": 51007,
+       "quote": "Committed retries\\\n  \\ recover append with frozen semantics; settled retries return original result/receipt.",
+       "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
        "quote_check": "exact",
-       "quote_scope": "unit SP-661, Plans/storage-plan.md:44459-44537",
+       "quote_scope": "unit SP-661, Plans/storage-plan.md:50960-51170",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-661",
@@ -384,25 +384,25 @@
         "method": "exact_normalized",
         "reason": "Whitespace, line wrapping, YAML quoting/escaping or Markdown escaping only; searched the cited unit.",
         "unit": "SP-661",
-        "old_quote": "Committed retries recover append with frozen\\\n  \\ semantics; settled retries return original result/receipt.",
-        "new_quote": "Committed retries recover append with frozen semantics; settled retries return original result/receipt.",
+        "old_quote": "Committed retries recover append with frozen semantics; settled retries return original result/receipt.",
+        "new_quote": "Committed retries\\\n  \\ recover append with frozen semantics; settled retries return original result/receipt.",
         "normalizations": [
          "whitespace/line wrapping",
          "YAML quoting/escaping",
          "Markdown escaping"
         ],
-        "owner_change_commit": "MERGE2-FIX3 uncommitted owner correction; final commit recorded in REPORT.md"
+        "owner_change_commit": "ca51e78d48b283861d77e4b5b947c1ea880e5fc0"
        }
       },
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-661",
-       "line_start": 44486,
-       "line_end": 44486,
-       "quote": "projector_replay_only is compatibility-reader-only and must fail replay_only_not_appendable before any canonical write or effect. EventRecord inline bodies at most 16 KiB; above that use the",
-       "file_sha256": "a80ebad269f3f3a87c644ee23b21cdd62ef64ccad2fbe4377e8bd190614fdf31",
+       "line_start": 51086,
+       "line_end": 51088,
+       "quote": "projector_replay_only\\\n  \\ is compatibility-reader-only and must fail replay_only_not_appendable before any canonical write or effect.\\\n  \\ EventRecord inline bodies at most 16 KiB; above that use the",
+       "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
        "quote_check": "exact",
-       "quote_scope": "unit SP-661, Plans/storage-plan.md:44459-44537",
+       "quote_scope": "unit SP-661, Plans/storage-plan.md:50960-51170",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-661",
@@ -415,14 +415,14 @@
         "method": "exact_normalized",
         "reason": "Whitespace, line wrapping, YAML quoting/escaping or Markdown escaping only; searched the cited unit.",
         "unit": "SP-661",
-        "old_quote": "projector_replay_only\\\n  \\ is compatibility-reader-only and must fail replay_only_not_appendable before any canonical write or\\\n  \\ effect. EventRecord inline bodies at most 16 KiB; above that use the",
-        "new_quote": "projector_replay_only is compatibility-reader-only and must fail replay_only_not_appendable before any canonical write or effect. EventRecord inline bodies at most 16 KiB; above that use the",
+        "old_quote": "projector_replay_only is compatibility-reader-only and must fail replay_only_not_appendable before any canonical write or effect. EventRecord inline bodies at most 16 KiB; above that use the",
+        "new_quote": "projector_replay_only\\\n  \\ is compatibility-reader-only and must fail replay_only_not_appendable before any canonical write or effect.\\\n  \\ EventRecord inline bodies at most 16 KiB; above that use the",
         "normalizations": [
          "whitespace/line wrapping",
          "YAML quoting/escaping",
          "Markdown escaping"
         ],
-        "owner_change_commit": "MERGE2-FIX3 uncommitted owner correction; final commit recorded in REPORT.md"
+        "owner_change_commit": "ca51e78d48b283861d77e4b5b947c1ea880e5fc0"
        }
       },
       {
@@ -459,12 +459,12 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-661",
-       "line_start": 44507,
-       "line_end": 44507,
-       "quote": "Current selected assignment (2026-11-19): alert.dismissed@1.0.0 is registered for project_only in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2138. Its event history selects RP-AUTHORITY-INDEFINITE@1.0.0; Plans/storage-plan.md#SP-661 owns the event policy's existing anchors, counts, holds and deletion rules. Separate stored-value assignment: alert_dismissed_checkpoint uses RP-PROJECTION-3GEN@1.0.0 under Plans/Decision_Log.md#DL-500; this assigns that stored value, not event history. Separate stored-value assignment: alert_dismissed_operation uses RP-OPERATIONAL-2555D@1.0.0 under Plans/Decision_Log.md#DL-501; this assigns that stored value, not event history. Separate stored-value assignment: shared_alert_state uses RP-CONFIG-CURRENT@1.0.0 under Plans/Decision_Log.md#DL-505; this assigns that stored value, not event history. Separate stored-value assignment: shared_alert_rule_state uses RP-CONFIG-CURRENT@1.0.0 under Plans/Decision_Log.md#DL-505; this assigns that stored value, not event history. Separate checkpoint assignment: alert_dismissed_checkpoint uses RP-PROJECTION-3GEN@1.0.0 under its existing Plans/storage-plan.md#SP-661 contract; checkpoint retention grants no event/source deletion. Original sources and coherent backups retain their independent owner policies; the event lifetime is not transferred to them. Current append/publication still requires the exact selected schema/scope, original custody, current permission, receipt and required producer adoption. Actual missing registration or unresolved required custody refuses; native execution remains NOT_RUN. No native adoption, new retention choice or governance seal follows.",
+       "line_start": 51170,
+       "line_end": 51170,
+       "quote": "Current selected assignment (2026-11-19): alert.dismissed@1.0.0 is registered for project_only in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2138. Its event history selects RP-AUTHORITY-INDEFINITE@1.0.0; exact original and checkpoint bindings retain their existing Storage assignments. Registry membership supplies no producer adoption or native-installation proof. Missing-registration refusal applies only if the exact current registration is absent.",
        "quote_check": "exact",
-       "quote_scope": "unit SP-661, Plans/storage-plan.md:44459-44537",
-       "file_sha256": "a80ebad269f3f3a87c644ee23b21cdd62ef64ccad2fbe4377e8bd190614fdf31",
+       "quote_scope": "unit SP-661, Plans/storage-plan.md:50960-51170",
+       "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-661",
@@ -474,7 +474,7 @@
         "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
        },
        "locator_maintenance": {
-        "authority": "MERGE2-FIX3",
+        "authority": "MERGE2-FIX4",
         "reason": "Re-cite the same accepted retention claim at its current exact owner assignment; event and source/checkpoint authority remain separate."
        }
       }
@@ -494,12 +494,12 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-661",
-       "line_start": 44473,
-       "line_end": 44473,
+       "line_start": 51008,
+       "line_end": 51008,
        "quote": "Original operation custody is canonical and non-rebuildable; its schema is Plans/alert_event_contracts/alert_dismissed_operation.schema.json.",
-       "file_sha256": "a80ebad269f3f3a87c644ee23b21cdd62ef64ccad2fbe4377e8bd190614fdf31",
+       "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
        "quote_check": "exact",
-       "quote_scope": "unit SP-661, Plans/storage-plan.md:44459-44537",
+       "quote_scope": "unit SP-661, Plans/storage-plan.md:50960-51170",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-661",
@@ -525,12 +525,12 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-661",
-       "line_start": 44473,
-       "line_end": 44473,
+       "line_start": 51010,
+       "line_end": 51010,
        "quote": "Backup/restore must include coherent original operation, shared alert/rule state, Storage source and first/full-value",
-       "file_sha256": "a80ebad269f3f3a87c644ee23b21cdd62ef64ccad2fbe4377e8bd190614fdf31",
+       "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
        "quote_check": "exact",
-       "quote_scope": "unit SP-661, Plans/storage-plan.md:44459-44537",
+       "quote_scope": "unit SP-661, Plans/storage-plan.md:50960-51170",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-661",
@@ -605,12 +605,12 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-661",
-       "line_start": 44467,
-       "line_end": 44467,
+       "line_start": 50979,
+       "line_end": 50979,
        "quote": "Transition: unacknowledged,",
-       "file_sha256": "a80ebad269f3f3a87c644ee23b21cdd62ef64ccad2fbe4377e8bd190614fdf31",
+       "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
        "quote_check": "exact",
-       "quote_scope": "unit SP-661, Plans/storage-plan.md:44459-44537",
+       "quote_scope": "unit SP-661, Plans/storage-plan.md:50960-51170",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-661",
@@ -636,12 +636,12 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-661",
-       "line_start": 44475,
-       "line_end": 44475,
+       "line_start": 51015,
+       "line_end": 51015,
        "quote": "projector.alert_dismissed.history@1.0.0",
-       "file_sha256": "a80ebad269f3f3a87c644ee23b21cdd62ef64ccad2fbe4377e8bd190614fdf31",
+       "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
        "quote_check": "exact",
-       "quote_scope": "unit SP-661, Plans/storage-plan.md:44459-44537",
+       "quote_scope": "unit SP-661, Plans/storage-plan.md:50960-51170",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-661",
@@ -654,12 +654,12 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-661",
-       "line_start": 44475,
-       "line_end": 44475,
+       "line_start": 51018,
+       "line_end": 51018,
        "quote": "SP-278 and DL-076:",
-       "file_sha256": "a80ebad269f3f3a87c644ee23b21cdd62ef64ccad2fbe4377e8bd190614fdf31",
+       "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
        "quote_check": "exact",
-       "quote_scope": "unit SP-661, Plans/storage-plan.md:44459-44537",
+       "quote_scope": "unit SP-661, Plans/storage-plan.md:50960-51170",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-661",
@@ -685,12 +685,12 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-661",
-       "line_start": 44471,
-       "line_end": 44471,
+       "line_start": 50996,
+       "line_end": 50996,
        "quote": "CAS the exact subject revision",
-       "file_sha256": "a80ebad269f3f3a87c644ee23b21cdd62ef64ccad2fbe4377e8bd190614fdf31",
+       "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
        "quote_check": "exact",
-       "quote_scope": "unit SP-661, Plans/storage-plan.md:44459-44537",
+       "quote_scope": "unit SP-661, Plans/storage-plan.md:50960-51170",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-661",
@@ -729,12 +729,12 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-661",
-       "line_start": 44477,
-       "line_end": 44477,
+       "line_start": 51031,
+       "line_end": 51031,
        "quote": "Compatibility/withdrawal: only payload 1.0.0",
        "quote_check": "exact",
-       "quote_scope": "unit SP-661, Plans/storage-plan.md:44459-44537",
-       "file_sha256": "a80ebad269f3f3a87c644ee23b21cdd62ef64ccad2fbe4377e8bd190614fdf31",
+       "quote_scope": "unit SP-661, Plans/storage-plan.md:50960-51170",
+       "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-661",
@@ -760,12 +760,12 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-661",
-       "line_start": 44477,
-       "line_end": 44477,
+       "line_start": 51035,
+       "line_end": 51035,
        "quote": "withdrawn under whole-value CAS.",
-       "file_sha256": "a80ebad269f3f3a87c644ee23b21cdd62ef64ccad2fbe4377e8bd190614fdf31",
+       "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
        "quote_check": "exact",
-       "quote_scope": "unit SP-661, Plans/storage-plan.md:44459-44537",
+       "quote_scope": "unit SP-661, Plans/storage-plan.md:50960-51170",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-661",
@@ -827,12 +827,12 @@
       {
        "path": "Plans/Automated_Testing_System.md",
        "unit": "ATS-331",
-       "line_start": 10667,
-       "line_end": 10667,
+       "line_start": 11375,
+       "line_end": 11375,
        "quote": "alert.dismissed contract oracles",
        "quote_check": "exact",
-       "quote_scope": "unit ATS-331, Plans/Automated_Testing_System.md:10667-10715",
-       "file_sha256": "e1c8a84c145a3aaaa0738971f76db5fa0bf94f59c0149e76f4131e8579a6971d",
+       "quote_scope": "unit ATS-331, Plans/Automated_Testing_System.md:11375-11429",
+       "file_sha256": "a3028640b73729884c6b3d1a0f095289513e4f76e61af711c233858bf005dc7c",
        "source_citation": {
         "path": "Plans/Automated_Testing_System.md",
         "unit": "ATS-331",
@@ -845,12 +845,12 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-661",
-       "line_start": 44479,
-       "line_end": 44480,
-       "quote": "NOT_RUN. Static validation: python3 scripts/pm-alert-event-contracts-check.py.\n   Original shared state for this",
-       "file_sha256": "a80ebad269f3f3a87c644ee23b21cdd62ef64ccad2fbe4377e8bd190614fdf31",
+       "line_start": 51044,
+       "line_end": 51045,
+       "quote": "NOT_RUN. Static validation: python3 scripts/pm-alert-event-contracts-check.py.\\n Original shared\\\n  \\ state for this",
+       "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
        "quote_check": "exact",
-       "quote_scope": "unit SP-661, Plans/storage-plan.md:44459-44537",
+       "quote_scope": "unit SP-661, Plans/storage-plan.md:50960-51170",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-661",
@@ -863,14 +863,14 @@
         "method": "exact_normalized",
         "reason": "Whitespace, line wrapping, YAML quoting/escaping or Markdown escaping only; searched the cited unit.",
         "unit": "SP-661",
-        "old_quote": "NOT_RUN. Static validation: python3 scripts/pm-alert-event-contracts-check.py.\\n Original\\\n  \\ shared state for this",
-        "new_quote": "NOT_RUN. Static validation: python3 scripts/pm-alert-event-contracts-check.py.\n   Original shared state for this",
+        "old_quote": "NOT_RUN. Static validation: python3 scripts/pm-alert-event-contracts-check.py.\n   Original shared state for this",
+        "new_quote": "NOT_RUN. Static validation: python3 scripts/pm-alert-event-contracts-check.py.\\n Original shared\\\n  \\ state for this",
         "normalizations": [
          "whitespace/line wrapping",
          "YAML quoting/escaping",
          "Markdown escaping"
         ],
-        "owner_change_commit": "MERGE2-FIX3 uncommitted owner correction; final commit recorded in REPORT.md"
+        "owner_change_commit": "ca51e78d48b283861d77e4b5b947c1ea880e5fc0"
        }
       },
       {
@@ -1108,9 +1108,9 @@
   "row_pointer": "#/families/220"
  },
  "evidence_maintenance": {
-  "authority": "MERGE2-FIX3 items 1/2/3/4",
-  "source_commit": "dfea17a6c44205c69598882b0305b0cbeab1a3e8",
-  "source_assessment_sha256": "3567231896a7fb5a39002acfbe8a69eaad0ad263bd3ab767ab0e255a9dbb9e3f",
+  "authority": "MERGE2-FIX4 items 1/2/3",
+  "source_commit": "2bda6aeed03daea26c4d79dfb7568fc145aac29e",
+  "source_assessment_sha256": "9ac1ea8d49ad3b13a89dad1bc24c4c0d80d245eefa31dca642c8eb275c88f9cb",
   "native_execution": "NOT_RUN",
   "verdicts_changed": false
  }

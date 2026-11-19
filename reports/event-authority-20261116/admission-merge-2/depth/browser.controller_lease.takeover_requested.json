@@ -80,7 +80,7 @@
        "quote": "**Newly authored technical owner definition under DL-046**, limited to `browser.controller_lease.takeover_requested`",
        "quote_check": "exact",
        "quote_scope": "unit #browser-program-event-authority-controller-lease-takeover-requested, Plans/Section15_MVP_Promoted_Features_Spec.md:12497-12512",
-       "file_sha256": "9d3117af7f2245e6ca7d63a1826affaad817bbb2d0a371b7d970cf7453d3a3a9",
+       "file_sha256": "b45332b179ca0b17d8a32f21a5b908b7e704e8f7874c01e3981cdbc4e18f98a3",
        "source_citation": {
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
         "unit": "#browser-program-event-authority-controller-lease-takeover-requested",
@@ -111,7 +111,7 @@
        "quote": "The sole producer is `BrowserRuntimeService.controller`, publishing through `BrowserRuntimeService.controller.publish.controller_lease_takeover_requested@1.0.0`",
        "quote_check": "exact",
        "quote_scope": "unit #browser-program-event-authority-controller-lease-takeover-requested, Plans/Section15_MVP_Promoted_Features_Spec.md:12497-12512",
-       "file_sha256": "9d3117af7f2245e6ca7d63a1826affaad817bbb2d0a371b7d970cf7453d3a3a9",
+       "file_sha256": "b45332b179ca0b17d8a32f21a5b908b7e704e8f7874c01e3981cdbc4e18f98a3",
        "source_citation": {
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
         "unit": "#browser-program-event-authority-controller-lease-takeover-requested",
@@ -129,7 +129,7 @@
        "quote": "ordinary EventRecord append, first AppendReceipt issued and synced under SP-286/CV-339",
        "quote_check": "exact",
        "quote_scope": "unit #browser-program-event-authority-controller-lease-takeover-requested, Plans/Section15_MVP_Promoted_Features_Spec.md:12497-12512",
-       "file_sha256": "9d3117af7f2245e6ca7d63a1826affaad817bbb2d0a371b7d970cf7453d3a3a9",
+       "file_sha256": "b45332b179ca0b17d8a32f21a5b908b7e704e8f7874c01e3981cdbc4e18f98a3",
        "source_citation": {
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
         "unit": "#browser-program-event-authority-controller-lease-takeover-requested",
@@ -142,12 +142,12 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-2507",
-       "line_start": 20743,
-       "line_end": 20743,
+       "line_start": 21018,
+       "line_end": 21018,
        "quote": "`storage.first_append_receipt.issue.v2` issues the eleven-field first receipt",
        "quote_check": "exact",
-       "quote_scope": "unit SP-2507, Plans/storage-plan.md:20739-20809",
-       "file_sha256": "a80ebad269f3f3a87c644ee23b21cdd62ef64ccad2fbe4377e8bd190614fdf31",
+       "quote_scope": "unit SP-2507, Plans/storage-plan.md:21014-21087",
+       "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-2507",
@@ -192,12 +192,12 @@
       {
        "path": "Plans/Contracts_V0.md",
        "unit": "CV-2507",
-       "line_start": 26851,
-       "line_end": 26851,
+       "line_start": 27508,
+       "line_end": 27508,
        "quote": "`Plans/browser_event_payloads.schema.json#/$defs/controller_lease_takeover_requested` (`pm.browser_event.controller_lease_takeover_requested.schema.v1`) is its closed payload",
        "quote_check": "exact",
-       "quote_scope": "unit CV-2507, Plans/Contracts_V0.md:26849-26913",
-       "file_sha256": "405f917ed143e5aefbcee55513fcdf1b11fa61f0dce5d9f164ad6e44ddf078ce",
+       "quote_scope": "unit CV-2507, Plans/Contracts_V0.md:27506-27572",
+       "file_sha256": "58dee182ea2dd8dd358d27912280fa9113c3d1d8fd68b1c0c5d51b6f906d73c8",
        "source_citation": {
         "path": "Plans/Contracts_V0.md",
         "unit": "CV-2507",
@@ -223,12 +223,12 @@
       {
        "path": "Plans/Contracts_V0.md",
        "unit": "CV-2507",
-       "line_start": 26853,
-       "line_end": 26853,
+       "line_start": 27510,
+       "line_end": 27510,
        "quote": "`scope_kind=project` only, with `scope_partition=project~base64url_no_pad(UTF8(project_id))`",
        "quote_check": "exact",
-       "quote_scope": "unit CV-2507, Plans/Contracts_V0.md:26849-26913",
-       "file_sha256": "405f917ed143e5aefbcee55513fcdf1b11fa61f0dce5d9f164ad6e44ddf078ce",
+       "quote_scope": "unit CV-2507, Plans/Contracts_V0.md:27506-27572",
+       "file_sha256": "58dee182ea2dd8dd358d27912280fa9113c3d1d8fd68b1c0c5d51b6f906d73c8",
        "source_citation": {
         "path": "Plans/Contracts_V0.md",
         "unit": "CV-2507",
@@ -241,12 +241,12 @@
       {
        "path": "Plans/Contracts_V0.md",
        "unit": "CV-2507",
-       "line_start": 26855,
-       "line_end": 26855,
+       "line_start": 27512,
+       "line_end": 27512,
        "quote": "`event_id` is `evt_browser_` ",
        "quote_check": "exact",
-       "quote_scope": "unit CV-2507, Plans/Contracts_V0.md:26849-26913",
-       "file_sha256": "405f917ed143e5aefbcee55513fcdf1b11fa61f0dce5d9f164ad6e44ddf078ce",
+       "quote_scope": "unit CV-2507, Plans/Contracts_V0.md:27506-27572",
+       "file_sha256": "58dee182ea2dd8dd358d27912280fa9113c3d1d8fd68b1c0c5d51b6f906d73c8",
        "source_citation": {
         "path": "Plans/Contracts_V0.md",
         "unit": "CV-2507",
@@ -272,12 +272,12 @@
       {
        "path": "Plans/Contracts_V0.md",
        "unit": "CV-2507",
-       "line_start": 26857,
-       "line_end": 26857,
+       "line_start": 27514,
+       "line_end": 27514,
        "quote": "Every current write selects `replay_policy=dedupe_by_idempotency_key`",
        "quote_check": "exact",
-       "quote_scope": "unit CV-2507, Plans/Contracts_V0.md:26849-26913",
-       "file_sha256": "405f917ed143e5aefbcee55513fcdf1b11fa61f0dce5d9f164ad6e44ddf078ce",
+       "quote_scope": "unit CV-2507, Plans/Contracts_V0.md:27506-27572",
+       "file_sha256": "58dee182ea2dd8dd358d27912280fa9113c3d1d8fd68b1c0c5d51b6f906d73c8",
        "source_citation": {
         "path": "Plans/Contracts_V0.md",
         "unit": "CV-2507",
@@ -290,12 +290,12 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-2507",
-       "line_start": 20743,
-       "line_end": 20743,
+       "line_start": 21018,
+       "line_end": 21018,
        "quote": "A lost-ack retry returns the original receipt from `storage.first_append_receipt.resolve.v2`",
        "quote_check": "exact",
-       "quote_scope": "unit SP-2507, Plans/storage-plan.md:20739-20809",
-       "file_sha256": "a80ebad269f3f3a87c644ee23b21cdd62ef64ccad2fbe4377e8bd190614fdf31",
+       "quote_scope": "unit SP-2507, Plans/storage-plan.md:21014-21087",
+       "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-2507",
@@ -368,12 +368,12 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-2507",
-       "line_start": 20749,
-       "line_end": 20749,
-       "quote": "The checkpoint uses `RP-PROJECTION-3GEN@1.0.0`",
+       "line_start": 21087,
+       "line_end": 21087,
+       "quote": "Current selected assignment (2026-11-19): browser.controller_lease.takeover_requested@1.0.0 is registered for project_only in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2162. Its event history selects RP-AUTHORITY-INDEFINITE@1.0.0; exact original and checkpoint bindings retain their existing Storage assignments. Registry membership supplies no producer adoption or native-installation proof. Missing-registration refusal applies only if the exact current registration is absent.",
        "quote_check": "exact",
-       "quote_scope": "unit SP-2507, Plans/storage-plan.md:20739-20809",
-       "file_sha256": "a80ebad269f3f3a87c644ee23b21cdd62ef64ccad2fbe4377e8bd190614fdf31",
+       "quote_scope": "unit SP-2507, Plans/storage-plan.md:21014-21087",
+       "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-2507",
@@ -381,6 +381,10 @@
         "line_end": 20800,
         "quote": "The checkpoint uses `RP-PROJECTION-3GEN@1.0.0`",
         "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+       },
+       "locator_maintenance": {
+        "authority": "MERGE2-FIX4",
+        "reason": "Re-cite the same accepted retention claim at its current exact owner assignment; event and source/checkpoint authority remain separate."
        }
       }
      ],
@@ -404,7 +408,7 @@
        "quote": "protected `AuthBrowserSession` identity and content never appear",
        "quote_check": "exact",
        "quote_scope": "unit #browser-program-event-authority-controller-lease-takeover-requested, Plans/Section15_MVP_Promoted_Features_Spec.md:12497-12512",
-       "file_sha256": "9d3117af7f2245e6ca7d63a1826affaad817bbb2d0a371b7d970cf7453d3a3a9",
+       "file_sha256": "b45332b179ca0b17d8a32f21a5b908b7e704e8f7874c01e3981cdbc4e18f98a3",
        "source_citation": {
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
         "unit": "#browser-program-event-authority-controller-lease-takeover-requested",
@@ -417,12 +421,12 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-2507",
-       "line_start": 20749,
-       "line_end": 20749,
+       "line_start": 21024,
+       "line_end": 21024,
        "quote": "Storage holds the original record, its custody v2 first receipt and its sealed SP-1101 write receipt under",
        "quote_check": "exact",
-       "quote_scope": "unit SP-2507, Plans/storage-plan.md:20739-20809",
-       "file_sha256": "a80ebad269f3f3a87c644ee23b21cdd62ef64ccad2fbe4377e8bd190614fdf31",
+       "quote_scope": "unit SP-2507, Plans/storage-plan.md:21014-21087",
+       "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-2507",
@@ -453,7 +457,7 @@
        "quote": "The entitling owner transition is `takeover_request_recorded`",
        "quote_check": "exact",
        "quote_scope": "unit #browser-program-event-authority-controller-lease-takeover-requested, Plans/Section15_MVP_Promoted_Features_Spec.md:12497-12512",
-       "file_sha256": "9d3117af7f2245e6ca7d63a1826affaad817bbb2d0a371b7d970cf7453d3a3a9",
+       "file_sha256": "b45332b179ca0b17d8a32f21a5b908b7e704e8f7874c01e3981cdbc4e18f98a3",
        "source_citation": {
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
         "unit": "#browser-program-event-authority-controller-lease-takeover-requested",
@@ -471,7 +475,7 @@
        "quote": "Only a transition the owner has committed emits",
        "quote_check": "exact",
        "quote_scope": "unit #browser-program-event-authority-controller-lease-takeover-requested, Plans/Section15_MVP_Promoted_Features_Spec.md:12497-12512",
-       "file_sha256": "9d3117af7f2245e6ca7d63a1826affaad817bbb2d0a371b7d970cf7453d3a3a9",
+       "file_sha256": "b45332b179ca0b17d8a32f21a5b908b7e704e8f7874c01e3981cdbc4e18f98a3",
        "source_citation": {
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
         "unit": "#browser-program-event-authority-controller-lease-takeover-requested",
@@ -497,12 +501,12 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-2507",
-       "line_start": 20745,
-       "line_end": 20745,
+       "line_start": 21020,
+       "line_end": 21020,
        "quote": "Derived family `browser_controller_lease_takeover_requested_index_checkpoint`",
        "quote_check": "exact",
-       "quote_scope": "unit SP-2507, Plans/storage-plan.md:20739-20809",
-       "file_sha256": "a80ebad269f3f3a87c644ee23b21cdd62ef64ccad2fbe4377e8bd190614fdf31",
+       "quote_scope": "unit SP-2507, Plans/storage-plan.md:21014-21087",
+       "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-2507",
@@ -515,12 +519,12 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-2507",
-       "line_start": 20745,
-       "line_end": 20745,
+       "line_start": 21020,
+       "line_end": 21020,
        "quote": "It explicitly adopts SP-278",
        "quote_check": "exact",
-       "quote_scope": "unit SP-2507, Plans/storage-plan.md:20739-20809",
-       "file_sha256": "a80ebad269f3f3a87c644ee23b21cdd62ef64ccad2fbe4377e8bd190614fdf31",
+       "quote_scope": "unit SP-2507, Plans/storage-plan.md:21014-21087",
+       "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-2507",
@@ -533,12 +537,12 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-2507",
-       "line_start": 20745,
-       "line_end": 20745,
+       "line_start": 21020,
+       "line_end": 21020,
        "quote": "It stores only the nine-field durable read token (DL-076), never `redb_snapshot_id`",
        "quote_check": "exact",
-       "quote_scope": "unit SP-2507, Plans/storage-plan.md:20739-20809",
-       "file_sha256": "a80ebad269f3f3a87c644ee23b21cdd62ef64ccad2fbe4377e8bd190614fdf31",
+       "quote_scope": "unit SP-2507, Plans/storage-plan.md:21014-21087",
+       "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-2507",
@@ -582,12 +586,12 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-2507",
-       "line_start": 20753,
-       "line_end": 20753,
+       "line_start": 21028,
+       "line_end": 21028,
        "quote": "A reviewed withdrawal first cuts off writers (checked before dedupe",
        "quote_check": "exact",
-       "quote_scope": "unit SP-2507, Plans/storage-plan.md:20739-20809",
-       "file_sha256": "a80ebad269f3f3a87c644ee23b21cdd62ef64ccad2fbe4377e8bd190614fdf31",
+       "quote_scope": "unit SP-2507, Plans/storage-plan.md:21014-21087",
+       "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-2507",
@@ -600,12 +604,12 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-2507",
-       "line_start": 20751,
-       "line_end": 20751,
+       "line_start": 21026,
+       "line_end": 21026,
        "quote": "A retained `browser.controller_lease.takeover_requested` original is read under the recipe named by the one write",
        "quote_check": "exact",
-       "quote_scope": "unit SP-2507, Plans/storage-plan.md:20739-20809",
-       "file_sha256": "a80ebad269f3f3a87c644ee23b21cdd62ef64ccad2fbe4377e8bd190614fdf31",
+       "quote_scope": "unit SP-2507, Plans/storage-plan.md:21014-21087",
+       "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-2507",
@@ -631,12 +635,12 @@
       {
        "path": "Plans/Automated_Testing_System.md",
        "unit": "ATS-2500",
-       "line_start": 14916,
-       "line_end": 14916,
+       "line_start": 15708,
+       "line_end": 15708,
        "quote": "### ATS-2500 - Browser Program prepared families criterion-12 oracles (s4b)",
        "quote_check": "exact",
-       "quote_scope": "unit ATS-2500, Plans/Automated_Testing_System.md:14916-14973",
-       "file_sha256": "e1c8a84c145a3aaaa0738971f76db5fa0bf94f59c0149e76f4131e8579a6971d",
+       "quote_scope": "unit ATS-2500, Plans/Automated_Testing_System.md:15708-15765",
+       "file_sha256": "a3028640b73729884c6b3d1a0f095289513e4f76e61af711c233858bf005dc7c",
        "source_citation": {
         "path": "Plans/Automated_Testing_System.md",
         "unit": "ATS-2500",
@@ -683,9 +687,9 @@
   "row_pointer": "#/families/244"
  },
  "evidence_maintenance": {
-  "authority": "MERGE2-FIX3 items 1/2/3/4",
-  "source_commit": "dfea17a6c44205c69598882b0305b0cbeab1a3e8",
-  "source_assessment_sha256": "25e5003cb6def4865faa0f8d4c5ae2a536b3ebb72d45fa84bd69f7afd94db1f4",
+  "authority": "MERGE2-FIX4 items 1/2/3",
+  "source_commit": "2bda6aeed03daea26c4d79dfb7568fc145aac29e",
+  "source_assessment_sha256": "1b91556e3f1234fbcdf1a104c68f7bcbd5d3c5ffd538c7a70bdb097ca47ca045",
   "native_execution": "NOT_RUN",
   "verdicts_changed": false
  }

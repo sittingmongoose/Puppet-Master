@@ -266,12 +266,12 @@
       {
        "path": "Plans/Contracts_V0.md",
        "unit": "CV-1409",
-       "line_start": 46812,
-       "line_end": 46812,
-       "quote": "Current selected assignment (2026-11-19): remote_access.route_test_completed@1.0.0 is registered for application_only in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2368. Its event history selects RP-OPERATIONAL-SECURITY-APPLICATION-2555D@1.0.0; Plans/storage-plan.md#SP-1409 owns the event policy's existing anchors, counts, holds and deletion rules. Original sources and coherent backups retain their independent owner policies; the event lifetime is not transferred to them. Current append/publication still requires the exact selected schema/scope, original custody, current permission, receipt and required producer adoption. Actual missing registration or unresolved required custody refuses; native execution remains NOT_RUN. No native adoption, new retention choice or governance seal follows.",
-       "file_sha256": "405f917ed143e5aefbcee55513fcdf1b11fa61f0dce5d9f164ad6e44ddf078ce",
+       "line_start": 51015,
+       "line_end": 51015,
+       "quote": "Current selected assignment (2026-11-19): remote_access.route_test_completed@1.0.0 is registered for application_only",
+       "file_sha256": "58dee182ea2dd8dd358d27912280fa9113c3d1d8fd68b1c0c5d51b6f906d73c8",
        "quote_check": "exact",
-       "quote_scope": "unit CV-1409, Plans/Contracts_V0.md:46802-46853",
+       "quote_scope": "unit CV-1409, Plans/Contracts_V0.md:50982-51063",
        "source_citation": {
         "path": "Plans/Contracts_V0.md",
         "unit": "CV-1409",
@@ -281,19 +281,19 @@
         "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a"
        },
        "locator_maintenance": {
-        "authority": "MERGE2-FIX3",
+        "authority": "MERGE2-FIX4",
         "reason": "Re-cite the same accepted retention claim at its current exact owner assignment; event and source/checkpoint authority remain separate."
        }
       },
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-1409",
-       "line_start": 63523,
-       "line_end": 63523,
-       "quote": "retention_policy_ref=RP-OPERATIONAL-SECURITY-APPLICATION-2555D@1.0.0 (DL-455, E-CARDS-3 item 3.a, option A), application editions only, kept seven years (220,752,000 seconds) from the original saved change, never restarted by retry, reprocessing or restore, in the one separate 2,000,000-entry application allowance app:operational_security (fail_closed overflow, hold eligible; only expired unprotec",
-       "file_sha256": "a80ebad269f3f3a87c644ee23b21cdd62ef64ccad2fbe4377e8bd190614fdf31",
+       "line_start": 71405,
+       "line_end": 71405,
+       "quote": "Current selected assignment (2026-11-19): remote_access.route_test_completed@1.0.0 is registered for application_only in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2368. Its event history selects RP-OPERATIONAL-SECURITY-APPLICATION-2555D@1.0.0; exact original and checkpoint bindings retain their existing Storage assignments. Registry membership supplies no producer adoption or native-installation proof. Missing-registration refusal applies only if the exact current registration is absent.",
+       "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
        "quote_check": "exact",
-       "quote_scope": "unit SP-1409, Plans/storage-plan.md:63513-63600",
+       "quote_scope": "unit SP-1409, Plans/storage-plan.md:71307-71405",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-1409",
@@ -301,6 +301,10 @@
         "line_end": 70833,
         "quote": "retention_policy_ref=RP-OPERATIONAL-SECURITY-APPLICATION-2555D@1.0.0 (DL-455, E-CARDS-3 item 3.a, option A), application editions only, kept seven years (220,752,000 seconds) from the original saved change, never restarted by retry, reprocessing or restore, in the one separate 2,000,000-entry application allowance app:operational_security (fail_closed overflow, hold eligible; only expired unprotec",
         "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+       },
+       "locator_maintenance": {
+        "authority": "MERGE2-FIX4",
+        "reason": "Re-cite the same accepted retention claim at its current exact owner assignment; event and source/checkpoint authority remain separate."
        }
       }
      ],
@@ -399,12 +403,12 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-1409",
-       "line_start": 63538,
-       "line_end": 63538,
+       "line_start": 71338,
+       "line_end": 71338,
        "quote": "The exact checkpoint in derived redb checkpoints is w3e_remote_access_route_test_completed_checkpoint.v1:{hex(storage_instance_id)}:{scope_partition}:{hex(server_id)}",
-       "file_sha256": "a80ebad269f3f3a87c644ee23b21cdd62ef64ccad2fbe4377e8bd190614fdf31",
+       "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
        "quote_check": "exact",
-       "quote_scope": "unit SP-1409, Plans/storage-plan.md:63513-63600",
+       "quote_scope": "unit SP-1409, Plans/storage-plan.md:71307-71405",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-1409",
@@ -461,12 +465,12 @@
       {
        "path": "Plans/Contracts_V0.md",
        "unit": "CV-1409",
-       "line_start": 46810,
-       "line_end": 46810,
-       "quote": "Phase 2 (2026-11-13) runs the executable synthetic oracles of this family in scripts/pm_w3e_event_oracles.py; every refusal is one named single-predicate row of a generated Method B guard table (scripts/pm_w3e_table_*.py) proved by the gated shared scripts/pm_guard_isolation.py through scripts/pm-w3e-guard-proof.py, and rows no input can refuse first stay alone in their own table with a written pr",
-       "file_sha256": "405f917ed143e5aefbcee55513fcdf1b11fa61f0dce5d9f164ad6e44ddf078ce",
-       "quote_check": "exact",
-       "quote_scope": "unit CV-1409, Plans/Contracts_V0.md:46802-46853",
+       "line_start": 51005,
+       "line_end": 51009,
+       "quote": "Phase 2 (2026-11-13) runs the executable synthetic oracles of\n  this family in scripts/pm_w3e_event_oracles.py; every refusal is one named single-predicate row of a generated\n  Method B guard table (scripts/pm_w3e_table_*.py) proved by the gated shared scripts/pm_guard_isolation.py through\n  scripts/pm-w3e-guard-proof.py, and rows no input can refuse first stay alone in their own table with a written\n  pr",
+       "file_sha256": "58dee182ea2dd8dd358d27912280fa9113c3d1d8fd68b1c0c5d51b6f906d73c8",
+       "quote_check": "whitespace_normalized",
+       "quote_scope": "unit CV-1409, Plans/Contracts_V0.md:50982-51063",
        "source_citation": {
         "path": "Plans/Contracts_V0.md",
         "unit": "CV-1409",
@@ -607,9 +611,9 @@
   "row_pointer": "#/families/450"
  },
  "evidence_maintenance": {
-  "authority": "MERGE2-FIX3 items 1/2/3/4",
-  "source_commit": "dfea17a6c44205c69598882b0305b0cbeab1a3e8",
-  "source_assessment_sha256": "954324d6b658f29dc79719df58d04e6a976f2fb97566bf07823452b16b9ad42c",
+  "authority": "MERGE2-FIX4 items 1/2/3",
+  "source_commit": "2bda6aeed03daea26c4d79dfb7568fc145aac29e",
+  "source_assessment_sha256": "7b4a53995a457967ad186dacb1e04594d353ebc897bc0af969276f01e3ad3cca",
   "native_execution": "NOT_RUN",
   "verdicts_changed": false
  }

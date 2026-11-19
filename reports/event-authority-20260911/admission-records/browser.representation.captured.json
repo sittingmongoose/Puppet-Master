@@ -4,7 +4,7 @@
  "family_id": "event-family-browser-representation-captured",
  "implementation_receipt_sha256": "dceb7f21436cbe126c23822e62caa1b6dedcb45fefae3005c1804576ca34d827",
  "decision_ref": "Plans/Decision_Log.md#DL-2190",
- "decision_section_sha256": "eb7ad97f45d31c350bb1d19f5da6478ea537ea30935ca8792b29e05a748bab1f",
+ "decision_section_sha256": "f7f9fa1a60ef893f6b041ebac4679de7bf8af9b97e5cae97fe1ded1fab6c487f",
  "registry_before": {
   "revision": "2026-11-16.53",
   "sha256": "bb9052db342a7bf105ca638d54875406ab2dcd0a80d40dbc1b72b9b21a7b4385",
@@ -18,7 +18,7 @@
  "registry_row_sha256": "18cc870acf20d9ecb22de068142cb4e5afcbd8475239e9d470779b9582c3d03f",
  "depth_assessment": {
   "path": "reports/event-authority-20261116/admission-merge-2/depth/browser.representation.captured.json",
-  "sha256": "0e332e25edc9f3a0060ba4063d9a4ccf30ad94784203b5ae11eef972968c27b5"
+  "sha256": "6bf2e7dc4ea2bfb35b09fd45e56d387a180e68bc48db2d945762b5401b72ef6c"
  },
  "admission_landing": {
   "branch": "plans/ea-merge2-apply-20261116",
@@ -37,11 +37,11 @@
   "Written under DL-077. The seal check recomputes completeness from the pinned assessment; the two fields ending in _at_recording are informational only."
  ],
  "evidence_maintenance": {
-  "authority": "MERGE2-FIX3",
-  "source_commit": "dfea17a6c44205c69598882b0305b0cbeab1a3e8",
-  "source_record_sha256": "ccd76abe5862a4f723180484852ac8a8be07a50d03fd30906fce3c1985abc4b4",
-  "source_assessment_sha256": "068e741514a5cd12b7b7c2b053e13480a3701934a1aaeff9dae8df45b37b608f",
-  "source_decision_section_sha256": "705bf331643c7b4c3f9391f3f3ffa787649f7c947cda29f59f33248f605fb4de",
+  "authority": "MERGE2-FIX4",
+  "source_commit": "2bda6aeed03daea26c4d79dfb7568fc145aac29e",
+  "source_record_sha256": "4ae39e3596e2e8b68ac13c91cfc9a594c157c5896983dc66ddec6d123a1706ab",
+  "source_assessment_sha256": "0e332e25edc9f3a0060ba4063d9a4ccf30ad94784203b5ae11eef972968c27b5",
+  "source_decision_section_sha256": "eb7ad97f45d31c350bb1d19f5da6478ea537ea30935ca8792b29e05a748bab1f",
   "original_registry_checkpoints_preserved": true
  }
 }

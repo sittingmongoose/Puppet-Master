@@ -320,10 +320,28 @@ def main():
     registry = {r["event_type"]: r for r in load("Plans/event_family_registry.json")["families"]}
     stored = {r["family_id"]: r for r in load("Plans/storage_value_registry.json")["families"]}
     policies = {p["policy_id"]: p for p in load("Plans/storage_value_registry.json")["retention_policies"]}
-    findings, signals, owners, decisions, revisions, claim_audit = [], [], [], [], [], []
+    findings, signals, owners, decisions, revisions, claim_audit, scope_checks = [], [], [], [], [], [], []
     scope_cache = {}
     for event, preparation in sorted(ready.items()):
         row = registry[event]
+        selections = scope_policies(row)
+        if row['scope_policy'] == 'application_or_project' and set(selections) != {'application', 'project'}:
+            raise ValueError('multi-scope family lacks an exact edition selection: ' + event)
+        if len(selections) > 1:
+            record = load('reports/event-authority-20260911/admission-records/' + event + '.json')
+            _, _, decision_body = section(record['decision_ref'])
+            checked = []
+            for scope, policy in selections.items():
+                token = policy_name(policy)
+                binding = re.search(r'\b' + re.escape(scope) + r' `[^`]+` \((.*?)(?:, producer )', decision_body, re.S)
+                valid = bool(binding and token in binding[1])
+                if policy.get('policy_id'):
+                    valid = valid and policies[policy['policy_id']]['policy_version'] == policy['policy_version']
+                checked.append(dict(scope=scope, policy=policy, decision_binding_matches=valid))
+                if not valid:
+                    findings.append(dict(event_type=event,lane=preparation['lane'],ref=record['decision_ref'],
+                                         kind='scope_policy_not_in_governing_decision',scope=scope,expected=token))
+            scope_checks.append(dict(event_type=event,decision=record['decision_ref'],editions=checked))
         delta = preparation.get("retention_delta", {})
         refs = {row["semantic_owner_doc"], row["payload_owner_doc"]}
         refs.update(graded_owner_refs(preparation, event))
@@ -455,6 +473,7 @@ def main():
     result = dict(schema_id="pm.ea.owner_sweep.v1", admitted_families=len(ready),
                   input_revision=REVISION or "working_tree", script_sha256=hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
                   selected_sections=len(owners), owners=owners, signals=signals, claim_audit=claim_audit,
+                  multi_scope_checks=scope_checks,
                   retention_citations=decisions, decision_scopes=scope_cache, revisions=revisions, findings=findings,
                   by_lane={lane:dict(families=len({x['event_type'] for x in findings if x['lane']==lane}),
                                      findings=sum(x['lane']==lane for x in findings))

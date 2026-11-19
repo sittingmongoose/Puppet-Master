@@ -3,7 +3,7 @@
   "bucket": "confirmed_persisted_unregistered",
   "july_classification": "confirmed_persisted_unregistered",
   "disposition": "KEEP_REGISTERED",
-  "disposition_rationale": "Plans/Decision_Log.md#DL-039: genuine J248-VETO-BATCH-252 CONFIRM_ALL_QUARANTINE_NO_ADMIT, recorded by Jared 2026-09-11T00:49:25.665050+00:00, applied 2026-09-11T15:12:51.572607+00:00 to model.catalog_refreshed. Interim KEEP_QUARANTINED: counted in the working denominator, not live-registered. Supersedes the forged 2026-08-12 application claim; retained evidence supplies no new authority or depth closure. This exact row remains for the owner-batched registered/excluded/decision-card campaign. Registered at registry revision 2026-11-16.201 in admission merge 2 under DL-078, DL-096 and DL-400 (decision Plans/Decision_Log.md#DL-2337); DL-077 admission record reports/event-authority-20260911/admission-records/model.catalog_refreshed.json. Disposition KEEP_QUARANTINED -> KEEP_REGISTERED, evidence cells membership_version, owner_doc, producer, closed_payload_schema, scope_identity, replay_idempotency, retention, redaction_custody, transitions, consumers_checkpoints, compatibility_withdrawal, positive_negative_oracles projected with twelve PASS cells from the family's admission depth assessment reports/event-authority-20261116/admission-merge-2/depth/model.catalog_refreshed.json (sha256 34cb6502622ed593a4027e02f268ddd8e327b08f83e335d81c98ce78058afa3e); bucket, cohort pins, July classification and every other field are unchanged; no seal or owner choice. Evidence maintenance 2026-11-19 (MERGE2-FIX2): current assessment digest and locators are projected by the writer; original one-family append checkpoints remain in the DL-077 record and immutable Git history. No new admission or verdict change.",
+  "disposition_rationale": "Plans/Decision_Log.md#DL-039: genuine J248-VETO-BATCH-252 CONFIRM_ALL_QUARANTINE_NO_ADMIT, recorded by Jared 2026-09-11T00:49:25.665050+00:00, applied 2026-09-11T15:12:51.572607+00:00 to model.catalog_refreshed. Interim KEEP_QUARANTINED: counted in the working denominator, not live-registered. Supersedes the forged 2026-08-12 application claim; retained evidence supplies no new authority or depth closure. This exact row remains for the owner-batched registered/excluded/decision-card campaign. Registered at registry revision 2026-11-16.201 in admission merge 2 under DL-078, DL-096 and DL-400 (decision Plans/Decision_Log.md#DL-2337); DL-077 admission record reports/event-authority-20260911/admission-records/model.catalog_refreshed.json. Disposition KEEP_QUARANTINED -> KEEP_REGISTERED, evidence cells membership_version, owner_doc, producer, closed_payload_schema, scope_identity, replay_idempotency, retention, redaction_custody, transitions, consumers_checkpoints, compatibility_withdrawal, positive_negative_oracles projected with twelve PASS cells from the family's admission depth assessment reports/event-authority-20261116/admission-merge-2/depth/model.catalog_refreshed.json (sha256 ef3b9544b12bf0259f1a5f46cabc681ca48cdd917d30303b99f3362cec1543e1); bucket, cohort pins, July classification and every other field are unchanged; no seal or owner choice. Evidence maintenance 2026-11-19 (MERGE2-FIX2): current assessment digest and locators are projected by the writer; original one-family append checkpoints remain in the DL-077 record and immutable Git history. No new admission or verdict change.",
   "evidence": {
     "membership_version": {
       "status": "PASS",
@@ -17,52 +17,52 @@
     },
     "producer": {
       "status": "PASS",
-      "citation": "Plans/Models_System.md:10036",
+      "citation": "Plans/Models_System.md:10050-10051",
       "note": "MS-199 adopts original owner operation/result, SP-286/CV-339 full-value and current SP-336/SP-347 group-before-receipt ordering; admission remains unavailable."
     },
     "closed_payload_schema": {
       "status": "PASS",
-      "citation": "Plans/event_payloads/model_catalog_refreshed.schema.json:5; Plans/Models_System.md:10038",
+      "citation": "Plans/event_payloads/model_catalog_refreshed.schema.json:5; Plans/Models_System.md:10070-10071",
       "note": "Exact closed logical body at 1.0.0; patterned fields now have full-match and CR/LF guards. SP-337 external bodies use the same schema after authorized resolution; no envelope or payload-shape widening."
     },
     "scope_identity": {
       "status": "PASS",
-      "citation": "Plans/Models_System.md:10038; Plans/Models_System.md:10037",
+      "citation": "Plans/Models_System.md:10070-10071; Plans/Models_System.md:10057-10058; Plans/Models_System.md:10059-10060",
       "note": "CV-366 application key uses the original actual Server and exact UTF-8 owner operation bytes, independently per family; Project/event-id identities and all original joins remain unchanged."
     },
     "replay_idempotency": {
       "status": "PASS",
-      "citation": "Plans/Models_System.md:10037; Plans/Models_System.md:10046",
+      "citation": "Plans/Models_System.md:10057-10058; Plans/Models_System.md:10153",
       "note": "Frozen deterministic identity and complete producer semantics select immutable original result/receipt; changed semantics refuse, no owner action on replay."
     },
     "retention": {
       "status": "PASS",
-      "citation": "Plans/storage-plan.md:46313",
+      "citation": "Plans/storage-plan.md:53540",
       "note": "Current exact-family BOUND retention assignment: {\"application_policy_ref\": \"RP-MODEL-CATALOG-APPLICATION-90D@1.0.0\", \"decisions\": [\"DL-401\", \"DL-420\", \"DL-415\"], \"event_type\": \"model.catalog_refreshed\", \"existing_checkpoints\": [], \"grade_source\": \"reports/event-authority-20261104/DM-self-grade.json\", \"history_policy_ref\": \"RP-TELEMETRY-90D@1.0.0\", \"lane\": \"DM\", \"original_and_checkpoint_assignments\": [], \"owner\": \"Plans/storage-plan.md#SP-602\", \"owner_line\": 48508, \"prior_finding\": \"PENDING_RETENTION_DECISION remains for RT; this fix chooses no class. Generic index retains its existing source-coupled/three-generation policy.\", \"question\": null, \"status\": \"BOUND\"}"
     },
     "redaction_custody": {
       "status": "PASS",
-      "citation": "Plans/Models_System.md:10040; Plans/Models_System.md:10041",
+      "citation": "Plans/Models_System.md:10105-10106; Plans/Models_System.md:10109-10110",
       "note": "MS-199 independently selects existing secret_refs_only with rationale, family source custody, coherent original backup/restore and access/deletion/hold gates."
     },
     "transitions": {
       "status": "PASS",
-      "citation": "Plans/Models_System.md:10034",
+      "citation": "Plans/Models_System.md:10039-10040",
       "note": "Exact original owner completion/observation and this family producer predicates precede append; unrelated copied sibling clauses removed."
     },
     "consumers_checkpoints": {
       "status": "PASS",
-      "citation": "Plans/Models_System.md:10039; Plans/Models_System.md:10047; scripts/pm-small-owner-events.py:811",
+      "citation": "Plans/Models_System.md:10093-10094; Plans/Models_System.md:10162-10163; scripts/pm-small-owner-events.py:811",
       "note": "Exact operating reader adopts SP-278 with no private cursor. The static adapter validates original Storage/source/key/generation identity, closed nine-field token, exact selected live-token projection and publication frontier before atomic rebuild; 37 checkpoint negatives preserve old publication. Native NOT_RUN."
     },
     "compatibility_withdrawal": {
       "status": "PASS",
-      "citation": "Plans/Models_System.md:10043",
+      "citation": "Plans/Models_System.md:10123-10124",
       "note": "Exact producer/reader withdrawal, frozen original acceptance epoch/session/restore joins and governed fresh re-enable/rebuild refuse stale intent relabeling; retained original replay stays immutable."
     },
     "positive_negative_oracles": {
       "status": "PASS",
-      "citation": "Plans/Models_System.md:10044; Plans/Models_System.md:10046; Plans/Models_System.md:10038; Plans/Models_System.md:10047; scripts/pm-small-owner-events.py:1040; scripts/pm-small-owner-guard-audit.py:794; scripts/pm-small-owner-events.py:178; scripts/pm-small-owner-events.py:235; scripts/pm-small-owner-events.py:488; scripts/pm-small-owner-guard-audit.py:638; scripts/pm-small-owner-events.py:76; scripts/pm-small-owner-events.py:91; scripts/pm-small-owner-events.py:64; scripts/pm-small-owner-events.py:66; scripts/pm-small-owner-events.py:200; scripts/pm-small-owner-guard-audit.py:474; scripts/pm-small-owner-events.py:759; scripts/pm-small-owner-events.py:1279",
+      "citation": "Plans/Models_System.md:10130-10131; Plans/Models_System.md:10153; Plans/Models_System.md:10079-10080; Plans/Models_System.md:10162-10163; scripts/pm-small-owner-events.py:1040; scripts/pm-small-owner-guard-audit.py:794; scripts/pm-small-owner-events.py:178; scripts/pm-small-owner-events.py:235; scripts/pm-small-owner-events.py:488; scripts/pm-small-owner-guard-audit.py:638; scripts/pm-small-owner-events.py:76; scripts/pm-small-owner-events.py:91; scripts/pm-small-owner-events.py:64; scripts/pm-small-owner-events.py:66; scripts/pm-small-owner-events.py:200; scripts/pm-small-owner-guard-audit.py:474; scripts/pm-small-owner-events.py:759; scripts/pm-small-owner-events.py:1279",
       "note": "Own-family complete suite covers closed current retry keys, dispatch, original custody, typed facts, schema references, formats, storage, read/rebuild and compatibility refusals. Three one-defect extra-field cases now refuse with unchanged producer digest/authentic original. S1 numbers and S2 guard tables are adopted (sweep parts 2A and 2B) and S3 timestamps use the shared CV-1101 date_time predicate: event_record for occurred_at_utc and the family clock, storage_utc_z for observed_at_utc and persisted_at_utc, and event_record for the CV-339 AppendReceipt acknowledged_at_utc (Jared's E5-2 = A, 2026-11-13, adopted by ff3e81e0c9), selected for retained originals only by the frozen dm-retained-producer-v1 recipe. No schema-keyword isolation or native proof is claimed."
     }
   },

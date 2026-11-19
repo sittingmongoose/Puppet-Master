@@ -61,7 +61,7 @@
        "quote": "**OSI-680: `config.validation.failed@1.0.0` — newly authored owner contract (DL-045), prepared without admission.** This exact family alone adopts the contract below. No current ap",
        "quote_check": "exact",
        "quote_scope": "unit OSI-680, Plans/orchestrator-subagent-integration.md:32459-32531",
-       "file_sha256": "b39393943cd0f6532f76acdc63eb4152c4cea49b337972fb49705a7e9bfc2365",
+       "file_sha256": "e4a8b15da392eff022e41f72d3c5fa81f892eefeeae53f8719fdd96d03712baf",
        "source_citation": {
         "path": "Plans/orchestrator-subagent-integration.md",
         "unit": "OSI-680",
@@ -92,7 +92,7 @@
        "quote": "**Producer and ordering.** `Orchestrator backend config validator / reject unknown subagent` owns the occurrence. Predicate: validation -> refused before child dispatch; invalid_na",
        "quote_check": "exact",
        "quote_scope": "unit OSI-680, Plans/orchestrator-subagent-integration.md:32459-32531",
-       "file_sha256": "b39393943cd0f6532f76acdc63eb4152c4cea49b337972fb49705a7e9bfc2365",
+       "file_sha256": "e4a8b15da392eff022e41f72d3c5fa81f892eefeeae53f8719fdd96d03712baf",
        "source_citation": {
         "path": "Plans/orchestrator-subagent-integration.md",
         "unit": "OSI-680",
@@ -123,7 +123,7 @@
        "quote": "**Payload and scope.** `Plans/orchestrator_event_payloads.schema.json#/$defs/config_validation_failed` (`pm.event_payload.config_validation_failed.v1@1.0.0`) is the closed payload.",
        "quote_check": "exact",
        "quote_scope": "unit OSI-680, Plans/orchestrator-subagent-integration.md:32459-32531",
-       "file_sha256": "b39393943cd0f6532f76acdc63eb4152c4cea49b337972fb49705a7e9bfc2365",
+       "file_sha256": "e4a8b15da392eff022e41f72d3c5fa81f892eefeeae53f8719fdd96d03712baf",
        "source_citation": {
         "path": "Plans/orchestrator-subagent-integration.md",
         "unit": "OSI-680",
@@ -154,7 +154,7 @@
        "quote": "**Identity and replay.** scope_partition is `app` or the exact EventRecord project~ encoding. Identity preimage is `JCS([\"ea-do-v1\",scope_partition,server_id,thread_id,run_id,\"conf",
        "quote_check": "exact",
        "quote_scope": "unit OSI-680, Plans/orchestrator-subagent-integration.md:32459-32531",
-       "file_sha256": "b39393943cd0f6532f76acdc63eb4152c4cea49b337972fb49705a7e9bfc2365",
+       "file_sha256": "e4a8b15da392eff022e41f72d3c5fa81f892eefeeae53f8719fdd96d03712baf",
        "source_citation": {
         "path": "Plans/orchestrator-subagent-integration.md",
         "unit": "OSI-680",
@@ -172,7 +172,7 @@
        "quote": "The current writing recipe is `ea-do-rfc8785-v2`; only new writes use it.",
        "quote_check": "exact",
        "quote_scope": "unit OSI-680, Plans/orchestrator-subagent-integration.md:32459-32531",
-       "file_sha256": "b39393943cd0f6532f76acdc63eb4152c4cea49b337972fb49705a7e9bfc2365",
+       "file_sha256": "e4a8b15da392eff022e41f72d3c5fa81f892eefeeae53f8719fdd96d03712baf",
        "source_citation": {
         "path": "Plans/orchestrator-subagent-integration.md",
         "unit": "OSI-680",
@@ -203,7 +203,7 @@
        "quote": "**Identity and replay.** scope_partition is `app` or the exact EventRecord project~ encoding. Identity preimage is `JCS([\"ea-do-v1\",scope_partition,server_id,thread_id,run_id,\"conf",
        "quote_check": "exact",
        "quote_scope": "unit OSI-680, Plans/orchestrator-subagent-integration.md:32459-32531",
-       "file_sha256": "b39393943cd0f6532f76acdc63eb4152c4cea49b337972fb49705a7e9bfc2365",
+       "file_sha256": "e4a8b15da392eff022e41f72d3c5fa81f892eefeeae53f8719fdd96d03712baf",
        "source_citation": {
         "path": "Plans/orchestrator-subagent-integration.md",
         "unit": "OSI-680",
@@ -221,7 +221,7 @@
        "quote": "Recovery verifies the original and returns its exact complete receipt before any retry;",
        "quote_check": "exact",
        "quote_scope": "unit OSI-680, Plans/orchestrator-subagent-integration.md:32459-32531",
-       "file_sha256": "b39393943cd0f6532f76acdc63eb4152c4cea49b337972fb49705a7e9bfc2365",
+       "file_sha256": "e4a8b15da392eff022e41f72d3c5fa81f892eefeeae53f8719fdd96d03712baf",
        "source_citation": {
         "path": "Plans/orchestrator-subagent-integration.md",
         "unit": "OSI-680",
@@ -252,7 +252,7 @@
        "quote": "Event history `retention_policy_ref = RP-RUNTIME-365D@1.0.0`, under DL-086.",
        "quote_check": "exact",
        "quote_scope": "unit OSI-680, Plans/orchestrator-subagent-integration.md:32459-32531",
-       "file_sha256": "b39393943cd0f6532f76acdc63eb4152c4cea49b337972fb49705a7e9bfc2365",
+       "file_sha256": "e4a8b15da392eff022e41f72d3c5fa81f892eefeeae53f8719fdd96d03712baf",
        "source_citation": {
         "path": "Plans/orchestrator-subagent-integration.md",
         "unit": "OSI-680",
@@ -283,7 +283,7 @@
        "quote": "**Retention and custody.** `retention_policy_ref = RP-RUNTIME-365D@1.0.0` under DL-086, as materialized in the landed `Plans/storage_value_registry.json` (Storage retention landing `4d52bd2758526cd0e8a56358baaa73049c1d4bdd`), report `reports/event-autho",
        "quote_check": "exact",
        "quote_scope": "unit OSI-680, Plans/orchestrator-subagent-integration.md:32459-32531",
-       "file_sha256": "b39393943cd0f6532f76acdc63eb4152c4cea49b337972fb49705a7e9bfc2365",
+       "file_sha256": "e4a8b15da392eff022e41f72d3c5fa81f892eefeeae53f8719fdd96d03712baf",
        "source_citation": {
         "path": "Plans/orchestrator-subagent-integration.md",
         "unit": "OSI-680",
@@ -314,7 +314,7 @@
        "quote": "**Producer and ordering.** `Orchestrator backend config validator / reject unknown subagent` owns the occurrence. Predicate: validation -> refused before child dispatch; invalid_na",
        "quote_check": "exact",
        "quote_scope": "unit OSI-680, Plans/orchestrator-subagent-integration.md:32459-32531",
-       "file_sha256": "b39393943cd0f6532f76acdc63eb4152c4cea49b337972fb49705a7e9bfc2365",
+       "file_sha256": "e4a8b15da392eff022e41f72d3c5fa81f892eefeeae53f8719fdd96d03712baf",
        "source_citation": {
         "path": "Plans/orchestrator-subagent-integration.md",
         "unit": "OSI-680",
@@ -345,7 +345,7 @@
        "quote": "**Operating consumer and checkpoint.** `reader.orchestrator.config_validation_failed.history.v1@1.0.0` serves the existing Orchestrator diagnostic inspector for this exact family. ",
        "quote_check": "exact",
        "quote_scope": "unit OSI-680, Plans/orchestrator-subagent-integration.md:32459-32531",
-       "file_sha256": "b39393943cd0f6532f76acdc63eb4152c4cea49b337972fb49705a7e9bfc2365",
+       "file_sha256": "e4a8b15da392eff022e41f72d3c5fa81f892eefeeae53f8719fdd96d03712baf",
        "source_citation": {
         "path": "Plans/orchestrator-subagent-integration.md",
         "unit": "OSI-680",
@@ -376,7 +376,7 @@
        "quote": "**Compatibility and withdrawal.** Accept only this exact schema/version; old sketches or aliases do not self-upgrade or become lawful history. A historical read requires proof of i",
        "quote_check": "exact",
        "quote_scope": "unit OSI-680, Plans/orchestrator-subagent-integration.md:32459-32531",
-       "file_sha256": "b39393943cd0f6532f76acdc63eb4152c4cea49b337972fb49705a7e9bfc2365",
+       "file_sha256": "e4a8b15da392eff022e41f72d3c5fa81f892eefeeae53f8719fdd96d03712baf",
        "source_citation": {
         "path": "Plans/orchestrator-subagent-integration.md",
         "unit": "OSI-680",
@@ -394,7 +394,7 @@
        "quote": "**Historical-read admission oracle — config.validation.failed.** Newly authored exact-family binding uses the closed `Plans/orchestrator_historical_read.schema.json` witness with r",
        "quote_check": "exact",
        "quote_scope": "unit OSI-680, Plans/orchestrator-subagent-integration.md:32459-32531",
-       "file_sha256": "b39393943cd0f6532f76acdc63eb4152c4cea49b337972fb49705a7e9bfc2365",
+       "file_sha256": "e4a8b15da392eff022e41f72d3c5fa81f892eefeeae53f8719fdd96d03712baf",
        "source_citation": {
         "path": "Plans/orchestrator-subagent-integration.md",
         "unit": "OSI-680",
@@ -412,7 +412,7 @@
        "quote": "A custody refusal, or missing, unverified, contradictory, unsupported or foreign recipe evidence, refuses.",
        "quote_check": "exact",
        "quote_scope": "unit OSI-680, Plans/orchestrator-subagent-integration.md:32459-32531",
-       "file_sha256": "b39393943cd0f6532f76acdc63eb4152c4cea49b337972fb49705a7e9bfc2365",
+       "file_sha256": "e4a8b15da392eff022e41f72d3c5fa81f892eefeeae53f8719fdd96d03712baf",
        "source_citation": {
         "path": "Plans/orchestrator-subagent-integration.md",
         "unit": "OSI-680",
@@ -438,8 +438,8 @@
       {
        "path": "Plans/orchestrator-subagent-integration.md",
        "line": 32459,
-       "sha256": "b39393943cd0f6532f76acdc63eb4152c4cea49b337972fb49705a7e9bfc2365",
-       "file_sha256": "b39393943cd0f6532f76acdc63eb4152c4cea49b337972fb49705a7e9bfc2365",
+       "sha256": "e4a8b15da392eff022e41f72d3c5fa81f892eefeeae53f8719fdd96d03712baf",
+       "file_sha256": "e4a8b15da392eff022e41f72d3c5fa81f892eefeeae53f8719fdd96d03712baf",
        "unit": "OSI-680",
        "line_start": 32459,
        "line_end": 32459,
@@ -464,12 +464,12 @@
        "path": "Plans/orchestrator-subagent-integration.md",
        "line": 32477,
        "quote": "**Oracles.** ATS-360 and `Plans/orchestrator_event_contract_fixtures.json` select only `config.validation.failed` cases. Positive payload and negative missing-required/unknown-field/foreign-scope/schema-version cases run via `python3 scripts/pm-orchestrator-event-contracts.py`. Native NOT_RUN obligations: full-value uncertain receipt retry/conflict, producer predicate and canonical-effect ordering, restore entropy, current token/source/access fences, deletion/hold deadline, version/withdrawal races and replay without the effect named above. Static payload success never certifies those native obligations.",
-       "sha256": "b39393943cd0f6532f76acdc63eb4152c4cea49b337972fb49705a7e9bfc2365",
+       "sha256": "e4a8b15da392eff022e41f72d3c5fa81f892eefeeae53f8719fdd96d03712baf",
        "line_start": 32477,
        "line_end": 32477,
        "quote_check": "exact",
        "quote_scope": "unit OSI-680, Plans/orchestrator-subagent-integration.md:32459-32531",
-       "file_sha256": "b39393943cd0f6532f76acdc63eb4152c4cea49b337972fb49705a7e9bfc2365",
+       "file_sha256": "e4a8b15da392eff022e41f72d3c5fa81f892eefeeae53f8719fdd96d03712baf",
        "unit": "OSI-680",
        "source_citation": {
         "path": "Plans/orchestrator-subagent-integration.md",
@@ -513,9 +513,9 @@
   "row_pointer": "#/families/357"
  },
  "evidence_maintenance": {
-  "authority": "MERGE2-FIX3 items 1/2/3/4",
-  "source_commit": "dfea17a6c44205c69598882b0305b0cbeab1a3e8",
-  "source_assessment_sha256": "2163cb7ef7c123daeee6fb1184ca6d103d3c25c2064c6e460b12bab80d50963d",
+  "authority": "MERGE2-FIX4 items 1/2/3",
+  "source_commit": "2bda6aeed03daea26c4d79dfb7568fc145aac29e",
+  "source_assessment_sha256": "43d21a69f31a2d99fca98698952ce4b4231fdb4cc84998651df0ec7a32891397",
   "native_execution": "NOT_RUN",
   "verdicts_changed": false
  }

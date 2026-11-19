@@ -4,7 +4,7 @@
  "family_id": "event-family-backup-destination-changed",
  "implementation_receipt_sha256": "dceb7f21436cbe126c23822e62caa1b6dedcb45fefae3005c1804576ca34d827",
  "decision_ref": "Plans/Decision_Log.md#DL-2150",
- "decision_section_sha256": "b924139774cedd85014f760e80560ff735f0af34038c2d48d761a67865cb0c0f",
+ "decision_section_sha256": "830b520a4d9c4b49bda8ba20bf942f6bfe3175845c5693de463369aa18a11a92",
  "registry_before": {
   "revision": "2026-11-16.13",
   "sha256": "e427220da5356ca78cbf6e2c36126be4824956f64c37df5c344494856750ea04",
@@ -18,7 +18,7 @@
  "registry_row_sha256": "a5a7944e8403c1f025ae12052f47d2f8ba91d02062f4ee758bda28b5f094ee98",
  "depth_assessment": {
   "path": "reports/event-authority-20261116/admission-merge-2/depth/backup.destination_changed.json",
-  "sha256": "f63e11694748181580e55ddce7583c6e773b3e5044937809a8dd8fed3020e06f"
+  "sha256": "9d5750176876be2a511fa4dd63cf7807c080bd8143923e9310505a742be61194"
  },
  "admission_landing": {
   "branch": "plans/ea-merge2-apply-20261116",
@@ -37,11 +37,11 @@
   "Written under DL-077. The seal check recomputes completeness from the pinned assessment; the two fields ending in _at_recording are informational only."
  ],
  "evidence_maintenance": {
-  "authority": "MERGE2-FIX3",
-  "source_commit": "dfea17a6c44205c69598882b0305b0cbeab1a3e8",
-  "source_record_sha256": "2a318acbeece1fdead210e3948061f2c3fcc2a81d71281096ad5626be07a8b64",
-  "source_assessment_sha256": "aa8a9db3d2fd68fa1d97cd46effda410015a2e72fe749a99718a49099cdaa770",
-  "source_decision_section_sha256": "636691b5933e0b5f1e023ac64b16613dfa2e5f8730181f59745a94bdc1a74e27",
+  "authority": "MERGE2-FIX4",
+  "source_commit": "2bda6aeed03daea26c4d79dfb7568fc145aac29e",
+  "source_record_sha256": "ac6e832e45743584bec55095794badd51d1fdf1923b5e52cd3c1a07c6cd7b4d8",
+  "source_assessment_sha256": "f63e11694748181580e55ddce7583c6e773b3e5044937809a8dd8fed3020e06f",
+  "source_decision_section_sha256": "b924139774cedd85014f760e80560ff735f0af34038c2d48d761a67865cb0c0f",
   "original_registry_checkpoints_preserved": true
  }
 }

@@ -2,7 +2,7 @@
   "schema_id": "pm.ea.owner_sweep.v1",
   "admitted_families": 299,
   "input_revision": "2bda6aeed03daea26c4d79dfb7568fc145aac29e",
-  "script_sha256": "aae04c45e1c4b4dbcfe8302edf5fb1bc000b410c6f1a89c03cf3b1c32a91bc08",
+  "script_sha256": "49a559d865b8ef50945ec82d08bcebc52ab435df702aafe0a9380dd84d484358",
   "selected_sections": 1641,
   "owners": [
     {
@@ -85505,6 +85505,2410 @@
       "text": "This paragraph supersedes earlier pending statements only for the exact assigned facets above. All independent source, receipt, referenced-body and backup lifetimes remain with their own owners. Legal/investigation holds, required references, recovery, rollback, maintenance, protected backups and latest-25-run protection override cleanup without granting access. No unexpired/protected eviction for space, no retry anchor renewal, no hold release, admission, native proof or governance clearance is granted.",
       "active_text": "This paragraph supersedes earlier pending statements only for the exact assigned facets above. All independent source, receipt, referenced-body and backup lifetimes remain with their own owners. Legal/investigation holds, required references, recovery, rollback, maintenance, protected backups and latest-25-run protection override cleanup without granting access. No unexpired/protected eviction for space, no retry anchor renewal, no hold release, admission, native proof or governance clearance is granted.",
       "named_subjects": []
+    }
+  ],
+  "multi_scope_checks": [
+    {
+      "event_type": "backup.state_changed",
+      "decision": "Plans/Decision_Log.md#DL-2151",
+      "editions": [
+        {
+          "scope": "application",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-OPERATIONAL-SECURITY-APPLICATION-2555D",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        },
+        {
+          "scope": "project",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-OPERATIONAL-2555D",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        }
+      ]
+    },
+    {
+      "event_type": "brainstorm.plan_synthesized",
+      "decision": "Plans/Decision_Log.md#DL-2152",
+      "editions": [
+        {
+          "scope": "project",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-CHAT-THREAD-LIFETIME",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        },
+        {
+          "scope": "application",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-CHAT-THREAD-LIFETIME",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        }
+      ]
+    },
+    {
+      "event_type": "brainstorm.proposal_added",
+      "decision": "Plans/Decision_Log.md#DL-2153",
+      "editions": [
+        {
+          "scope": "project",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-CHAT-THREAD-LIFETIME",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        },
+        {
+          "scope": "application",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-CHAT-THREAD-LIFETIME",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        }
+      ]
+    },
+    {
+      "event_type": "brainstorm.vote_added",
+      "decision": "Plans/Decision_Log.md#DL-2154",
+      "editions": [
+        {
+          "scope": "project",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-CHAT-THREAD-LIFETIME",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        },
+        {
+          "scope": "application",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-CHAT-THREAD-LIFETIME",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        }
+      ]
+    },
+    {
+      "event_type": "browser.context_captured",
+      "decision": "Plans/Decision_Log.md#DL-2155",
+      "editions": [
+        {
+          "scope": "application",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-CHAT-THREAD-LIFETIME",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        },
+        {
+          "scope": "project",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-CHAT-THREAD-LIFETIME",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        }
+      ]
+    },
+    {
+      "event_type": "browser.context_share_revoked",
+      "decision": "Plans/Decision_Log.md#DL-2156",
+      "editions": [
+        {
+          "scope": "application",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-CHAT-THREAD-LIFETIME",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        },
+        {
+          "scope": "project",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-CHAT-THREAD-LIFETIME",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        }
+      ]
+    },
+    {
+      "event_type": "browser.context_shared",
+      "decision": "Plans/Decision_Log.md#DL-2157",
+      "editions": [
+        {
+          "scope": "application",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-CHAT-THREAD-LIFETIME",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        },
+        {
+          "scope": "project",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-CHAT-THREAD-LIFETIME",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        }
+      ]
+    },
+    {
+      "event_type": "bundle.selection_forward_blocked",
+      "decision": "Plans/Decision_Log.md#DL-2231",
+      "editions": [
+        {
+          "scope": "application",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-AUTHORITY-INDEFINITE",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        },
+        {
+          "scope": "project",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-AUTHORITY-INDEFINITE",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        }
+      ]
+    },
+    {
+      "event_type": "bundle.selection_sent_to_chat",
+      "decision": "Plans/Decision_Log.md#DL-2232",
+      "editions": [
+        {
+          "scope": "application",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-AUTHORITY-INDEFINITE",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        },
+        {
+          "scope": "project",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-AUTHORITY-INDEFINITE",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        }
+      ]
+    },
+    {
+      "event_type": "catalog.install.completed",
+      "decision": "Plans/Decision_Log.md#DL-2233",
+      "editions": [
+        {
+          "scope": "application",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-AUTHORITY-INDEFINITE",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        },
+        {
+          "scope": "project",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-AUTHORITY-INDEFINITE",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        }
+      ]
+    },
+    {
+      "event_type": "catalog.install.started",
+      "decision": "Plans/Decision_Log.md#DL-2234",
+      "editions": [
+        {
+          "scope": "application",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-AUTHORITY-INDEFINITE",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        },
+        {
+          "scope": "project",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-AUTHORITY-INDEFINITE",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        }
+      ]
+    },
+    {
+      "event_type": "catalog.remove.completed",
+      "decision": "Plans/Decision_Log.md#DL-2235",
+      "editions": [
+        {
+          "scope": "application",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-AUTHORITY-INDEFINITE",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        },
+        {
+          "scope": "project",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-AUTHORITY-INDEFINITE",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        }
+      ]
+    },
+    {
+      "event_type": "catalog.remove.started",
+      "decision": "Plans/Decision_Log.md#DL-2236",
+      "editions": [
+        {
+          "scope": "application",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-AUTHORITY-INDEFINITE",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        },
+        {
+          "scope": "project",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-AUTHORITY-INDEFINITE",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        }
+      ]
+    },
+    {
+      "event_type": "catalog.update.completed",
+      "decision": "Plans/Decision_Log.md#DL-2237",
+      "editions": [
+        {
+          "scope": "application",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-AUTHORITY-INDEFINITE",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        },
+        {
+          "scope": "project",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-AUTHORITY-INDEFINITE",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        }
+      ]
+    },
+    {
+      "event_type": "catalog.update.started",
+      "decision": "Plans/Decision_Log.md#DL-2238",
+      "editions": [
+        {
+          "scope": "application",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-AUTHORITY-INDEFINITE",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        },
+        {
+          "scope": "project",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-AUTHORITY-INDEFINITE",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        }
+      ]
+    },
+    {
+      "event_type": "chat.message",
+      "decision": "Plans/Decision_Log.md#DL-2239",
+      "editions": [
+        {
+          "scope": "application",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-CHAT-THREAD-LIFETIME",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        },
+        {
+          "scope": "project",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-CHAT-THREAD-LIFETIME",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        }
+      ]
+    },
+    {
+      "event_type": "chat.response_stop_requested",
+      "decision": "Plans/Decision_Log.md#DL-2240",
+      "editions": [
+        {
+          "scope": "application",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-CHAT-THREAD-LIFETIME",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        },
+        {
+          "scope": "project",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-CHAT-THREAD-LIFETIME",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        }
+      ]
+    },
+    {
+      "event_type": "chat.thread_archived",
+      "decision": "Plans/Decision_Log.md#DL-2241",
+      "editions": [
+        {
+          "scope": "application",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-CHAT-THREAD-LIFETIME",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        },
+        {
+          "scope": "project",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-CHAT-THREAD-LIFETIME",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        }
+      ]
+    },
+    {
+      "event_type": "chat.thread_created",
+      "decision": "Plans/Decision_Log.md#DL-2242",
+      "editions": [
+        {
+          "scope": "application",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-CHAT-THREAD-LIFETIME",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        },
+        {
+          "scope": "project",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-CHAT-THREAD-LIFETIME",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        }
+      ]
+    },
+    {
+      "event_type": "chat.thread_deleted",
+      "decision": "Plans/Decision_Log.md#DL-2243",
+      "editions": [
+        {
+          "scope": "application",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-AUTHORITY-INDEFINITE",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        },
+        {
+          "scope": "project",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-AUTHORITY-INDEFINITE",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        }
+      ]
+    },
+    {
+      "event_type": "chat.thread_worktree_bound",
+      "decision": "Plans/Decision_Log.md#DL-2244",
+      "editions": [
+        {
+          "scope": "application",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-CHAT-THREAD-LIFETIME",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        },
+        {
+          "scope": "project",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-CHAT-THREAD-LIFETIME",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        }
+      ]
+    },
+    {
+      "event_type": "chat.thread_worktree_create_failed",
+      "decision": "Plans/Decision_Log.md#DL-2245",
+      "editions": [
+        {
+          "scope": "application",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-CHAT-THREAD-LIFETIME",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        },
+        {
+          "scope": "project",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-CHAT-THREAD-LIFETIME",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        }
+      ]
+    },
+    {
+      "event_type": "chat.thread_worktree_merge_failed",
+      "decision": "Plans/Decision_Log.md#DL-2246",
+      "editions": [
+        {
+          "scope": "application",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-CHAT-THREAD-LIFETIME",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        },
+        {
+          "scope": "project",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-CHAT-THREAD-LIFETIME",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        }
+      ]
+    },
+    {
+      "event_type": "chat.thread_worktree_merged",
+      "decision": "Plans/Decision_Log.md#DL-2247",
+      "editions": [
+        {
+          "scope": "application",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-CHAT-THREAD-LIFETIME",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        },
+        {
+          "scope": "project",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-CHAT-THREAD-LIFETIME",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        }
+      ]
+    },
+    {
+      "event_type": "chat.thread_worktree_pr_created",
+      "decision": "Plans/Decision_Log.md#DL-2248",
+      "editions": [
+        {
+          "scope": "application",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-CHAT-THREAD-LIFETIME",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        },
+        {
+          "scope": "project",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-CHAT-THREAD-LIFETIME",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        }
+      ]
+    },
+    {
+      "event_type": "chat.thread_worktree_pr_failed",
+      "decision": "Plans/Decision_Log.md#DL-2249",
+      "editions": [
+        {
+          "scope": "application",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-CHAT-THREAD-LIFETIME",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        },
+        {
+          "scope": "project",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-CHAT-THREAD-LIFETIME",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        }
+      ]
+    },
+    {
+      "event_type": "chat.thread_worktree_pre_merge_test_failed",
+      "decision": "Plans/Decision_Log.md#DL-2250",
+      "editions": [
+        {
+          "scope": "application",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-CHAT-THREAD-LIFETIME",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        },
+        {
+          "scope": "project",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-CHAT-THREAD-LIFETIME",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        }
+      ]
+    },
+    {
+      "event_type": "chat.thread_worktree_pre_merge_test_passed",
+      "decision": "Plans/Decision_Log.md#DL-2251",
+      "editions": [
+        {
+          "scope": "application",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-CHAT-THREAD-LIFETIME",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        },
+        {
+          "scope": "project",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-CHAT-THREAD-LIFETIME",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        }
+      ]
+    },
+    {
+      "event_type": "chat.thread_worktree_pre_merge_test_started",
+      "decision": "Plans/Decision_Log.md#DL-2252",
+      "editions": [
+        {
+          "scope": "application",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-CHAT-THREAD-LIFETIME",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        },
+        {
+          "scope": "project",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-CHAT-THREAD-LIFETIME",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        }
+      ]
+    },
+    {
+      "event_type": "chat.thread_worktree_renamed",
+      "decision": "Plans/Decision_Log.md#DL-2253",
+      "editions": [
+        {
+          "scope": "application",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-CHAT-THREAD-LIFETIME",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        },
+        {
+          "scope": "project",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-CHAT-THREAD-LIFETIME",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        }
+      ]
+    },
+    {
+      "event_type": "chat.thread_worktree_unbound",
+      "decision": "Plans/Decision_Log.md#DL-2254",
+      "editions": [
+        {
+          "scope": "application",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-CHAT-THREAD-LIFETIME",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        },
+        {
+          "scope": "project",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-CHAT-THREAD-LIFETIME",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        }
+      ]
+    },
+    {
+      "event_type": "collaboration.artifact_added",
+      "decision": "Plans/Decision_Log.md#DL-2255",
+      "editions": [
+        {
+          "scope": "project",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-CHAT-THREAD-LIFETIME",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        },
+        {
+          "scope": "application",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-CHAT-THREAD-LIFETIME",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        }
+      ]
+    },
+    {
+      "event_type": "collaboration.cancelled",
+      "decision": "Plans/Decision_Log.md#DL-2256",
+      "editions": [
+        {
+          "scope": "project",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-CHAT-THREAD-LIFETIME",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        },
+        {
+          "scope": "application",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-CHAT-THREAD-LIFETIME",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        }
+      ]
+    },
+    {
+      "event_type": "collaboration.completed",
+      "decision": "Plans/Decision_Log.md#DL-2257",
+      "editions": [
+        {
+          "scope": "project",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-CHAT-THREAD-LIFETIME",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        },
+        {
+          "scope": "application",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-CHAT-THREAD-LIFETIME",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        }
+      ]
+    },
+    {
+      "event_type": "collaboration.configuration_changed",
+      "decision": "Plans/Decision_Log.md#DL-2258",
+      "editions": [
+        {
+          "scope": "project",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-CHAT-THREAD-LIFETIME",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        },
+        {
+          "scope": "application",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-CHAT-THREAD-LIFETIME",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        }
+      ]
+    },
+    {
+      "event_type": "collaboration.created",
+      "decision": "Plans/Decision_Log.md#DL-2259",
+      "editions": [
+        {
+          "scope": "project",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-CHAT-THREAD-LIFETIME",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        },
+        {
+          "scope": "application",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-CHAT-THREAD-LIFETIME",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        }
+      ]
+    },
+    {
+      "event_type": "collaboration.failed",
+      "decision": "Plans/Decision_Log.md#DL-2260",
+      "editions": [
+        {
+          "scope": "project",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-CHAT-THREAD-LIFETIME",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        },
+        {
+          "scope": "application",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-CHAT-THREAD-LIFETIME",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        }
+      ]
+    },
+    {
+      "event_type": "collaboration.message_added",
+      "decision": "Plans/Decision_Log.md#DL-2261",
+      "editions": [
+        {
+          "scope": "project",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-CHAT-THREAD-LIFETIME",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        },
+        {
+          "scope": "application",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-CHAT-THREAD-LIFETIME",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        }
+      ]
+    },
+    {
+      "event_type": "collaboration.participant_completed",
+      "decision": "Plans/Decision_Log.md#DL-2262",
+      "editions": [
+        {
+          "scope": "project",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-CHAT-THREAD-LIFETIME",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        },
+        {
+          "scope": "application",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-CHAT-THREAD-LIFETIME",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        }
+      ]
+    },
+    {
+      "event_type": "collaboration.participant_started",
+      "decision": "Plans/Decision_Log.md#DL-2263",
+      "editions": [
+        {
+          "scope": "project",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-CHAT-THREAD-LIFETIME",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        },
+        {
+          "scope": "application",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-CHAT-THREAD-LIFETIME",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        }
+      ]
+    },
+    {
+      "event_type": "collaboration.paused",
+      "decision": "Plans/Decision_Log.md#DL-2264",
+      "editions": [
+        {
+          "scope": "project",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-CHAT-THREAD-LIFETIME",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        },
+        {
+          "scope": "application",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-CHAT-THREAD-LIFETIME",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        }
+      ]
+    },
+    {
+      "event_type": "collaboration.resumed",
+      "decision": "Plans/Decision_Log.md#DL-2265",
+      "editions": [
+        {
+          "scope": "project",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-CHAT-THREAD-LIFETIME",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        },
+        {
+          "scope": "application",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-CHAT-THREAD-LIFETIME",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        }
+      ]
+    },
+    {
+      "event_type": "collaboration.started",
+      "decision": "Plans/Decision_Log.md#DL-2266",
+      "editions": [
+        {
+          "scope": "project",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-CHAT-THREAD-LIFETIME",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        },
+        {
+          "scope": "application",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-CHAT-THREAD-LIFETIME",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        }
+      ]
+    },
+    {
+      "event_type": "config.migrated",
+      "decision": "Plans/Decision_Log.md#DL-2274",
+      "editions": [
+        {
+          "scope": "application",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-OPERATIONAL-2555D",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        },
+        {
+          "scope": "project",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-OPERATIONAL-2555D",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        }
+      ]
+    },
+    {
+      "event_type": "crew.board_message_posted",
+      "decision": "Plans/Decision_Log.md#DL-2280",
+      "editions": [
+        {
+          "scope": "application",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-COORDINATION-180D",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        },
+        {
+          "scope": "project",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-COORDINATION-180D",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        }
+      ]
+    },
+    {
+      "event_type": "crew.board_message_read",
+      "decision": "Plans/Decision_Log.md#DL-2281",
+      "editions": [
+        {
+          "scope": "application",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-COORDINATION-180D",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        },
+        {
+          "scope": "project",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-COORDINATION-180D",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        }
+      ]
+    },
+    {
+      "event_type": "crew.board_messages_archived",
+      "decision": "Plans/Decision_Log.md#DL-2282",
+      "editions": [
+        {
+          "scope": "application",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-COORDINATION-180D",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        },
+        {
+          "scope": "project",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-COORDINATION-180D",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        }
+      ]
+    },
+    {
+      "event_type": "filesafe.command_denied",
+      "decision": "Plans/Decision_Log.md#DL-2301",
+      "editions": [
+        {
+          "scope": "application",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-FILESAFE-BLOCKED-COMMAND-APPLICATION-2555D",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        },
+        {
+          "scope": "project",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-OPERATIONAL-2555D",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        }
+      ]
+    },
+    {
+      "event_type": "filesafe.destructive_override_denied",
+      "decision": "Plans/Decision_Log.md#DL-2302",
+      "editions": [
+        {
+          "scope": "application",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-AUTHORITY-INDEFINITE",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        },
+        {
+          "scope": "project",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-AUTHORITY-INDEFINITE",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        }
+      ]
+    },
+    {
+      "event_type": "filesafe.destructive_override_granted",
+      "decision": "Plans/Decision_Log.md#DL-2303",
+      "editions": [
+        {
+          "scope": "application",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-AUTHORITY-INDEFINITE",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        },
+        {
+          "scope": "project",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-AUTHORITY-INDEFINITE",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        }
+      ]
+    },
+    {
+      "event_type": "filesafe.destructive_override_requested",
+      "decision": "Plans/Decision_Log.md#DL-2304",
+      "editions": [
+        {
+          "scope": "application",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-AUTHORITY-INDEFINITE",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        },
+        {
+          "scope": "project",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-AUTHORITY-INDEFINITE",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        }
+      ]
+    },
+    {
+      "event_type": "filesafe.guard_init_failed",
+      "decision": "Plans/Decision_Log.md#DL-2305",
+      "editions": [
+        {
+          "scope": "application",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-FILESAFE-GUARD-FAILURE-APPLICATION-2555D",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        },
+        {
+          "scope": "project",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-OPERATIONAL-2555D",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        }
+      ]
+    },
+    {
+      "event_type": "filesafe.path_denied",
+      "decision": "Plans/Decision_Log.md#DL-2306",
+      "editions": [
+        {
+          "scope": "application",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-FILESAFE-DENIED-PATH-APPLICATION-2555D",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        },
+        {
+          "scope": "project",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-OPERATIONAL-2555D",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        }
+      ]
+    },
+    {
+      "event_type": "filesafe.policy_degraded",
+      "decision": "Plans/Decision_Log.md#DL-2307",
+      "editions": [
+        {
+          "scope": "application",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-OPERATIONAL-2555D",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        },
+        {
+          "scope": "project",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-OPERATIONAL-2555D",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        }
+      ]
+    },
+    {
+      "event_type": "model.catalog_refreshed",
+      "decision": "Plans/Decision_Log.md#DL-2337",
+      "editions": [
+        {
+          "scope": "application",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-MODEL-CATALOG-APPLICATION-90D",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        },
+        {
+          "scope": "project",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-TELEMETRY-90D",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        }
+      ]
+    },
+    {
+      "event_type": "persona.created",
+      "decision": "Plans/Decision_Log.md#DL-2341",
+      "editions": [
+        {
+          "scope": "application",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-AUTHORITY-INDEFINITE",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        },
+        {
+          "scope": "project",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-AUTHORITY-INDEFINITE",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        }
+      ]
+    },
+    {
+      "event_type": "persona.deleted",
+      "decision": "Plans/Decision_Log.md#DL-2342",
+      "editions": [
+        {
+          "scope": "application",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-AUTHORITY-INDEFINITE",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        },
+        {
+          "scope": "project",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-AUTHORITY-INDEFINITE",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        }
+      ]
+    },
+    {
+      "event_type": "persona.exported",
+      "decision": "Plans/Decision_Log.md#DL-2343",
+      "editions": [
+        {
+          "scope": "application",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-AUTHORITY-INDEFINITE",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        },
+        {
+          "scope": "project",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-AUTHORITY-INDEFINITE",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        }
+      ]
+    },
+    {
+      "event_type": "persona.imported",
+      "decision": "Plans/Decision_Log.md#DL-2344",
+      "editions": [
+        {
+          "scope": "application",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-AUTHORITY-INDEFINITE",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        },
+        {
+          "scope": "project",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-AUTHORITY-INDEFINITE",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        }
+      ]
+    },
+    {
+      "event_type": "persona.selected",
+      "decision": "Plans/Decision_Log.md#DL-2345",
+      "editions": [
+        {
+          "scope": "application",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-AUTHORITY-INDEFINITE",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        },
+        {
+          "scope": "project",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-AUTHORITY-INDEFINITE",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        }
+      ]
+    },
+    {
+      "event_type": "persona.updated",
+      "decision": "Plans/Decision_Log.md#DL-2346",
+      "editions": [
+        {
+          "scope": "application",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-AUTHORITY-INDEFINITE",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        },
+        {
+          "scope": "project",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-AUTHORITY-INDEFINITE",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        }
+      ]
+    },
+    {
+      "event_type": "plugin.hook.blocked",
+      "decision": "Plans/Decision_Log.md#DL-2348",
+      "editions": [
+        {
+          "scope": "application",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-PLUGIN-HOOK-APPLICATION-90D",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        },
+        {
+          "scope": "project",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-TELEMETRY-90D",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        }
+      ]
+    },
+    {
+      "event_type": "plugin.hook.error",
+      "decision": "Plans/Decision_Log.md#DL-2349",
+      "editions": [
+        {
+          "scope": "application",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-PLUGIN-HOOK-APPLICATION-90D",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        },
+        {
+          "scope": "project",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-TELEMETRY-90D",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        }
+      ]
+    },
+    {
+      "event_type": "plugin.hook.invoked",
+      "decision": "Plans/Decision_Log.md#DL-2350",
+      "editions": [
+        {
+          "scope": "application",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-PLUGIN-HOOK-APPLICATION-90D",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        },
+        {
+          "scope": "project",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-TELEMETRY-90D",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        }
+      ]
+    },
+    {
+      "event_type": "plugin.load_failed",
+      "decision": "Plans/Decision_Log.md#DL-2351",
+      "editions": [
+        {
+          "scope": "application",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-PLUGIN-OPERATIONS-APPLICATION-2555D",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        },
+        {
+          "scope": "project",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-OPERATIONAL-2555D",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        }
+      ]
+    },
+    {
+      "event_type": "plugin.loaded",
+      "decision": "Plans/Decision_Log.md#DL-2352",
+      "editions": [
+        {
+          "scope": "application",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-PLUGIN-OPERATIONS-APPLICATION-2555D",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        },
+        {
+          "scope": "project",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-OPERATIONAL-2555D",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        }
+      ]
+    },
+    {
+      "event_type": "plugin.permission.override",
+      "decision": "Plans/Decision_Log.md#DL-2353",
+      "editions": [
+        {
+          "scope": "application",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-PLUGIN-OPERATIONS-APPLICATION-2555D",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        },
+        {
+          "scope": "project",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-OPERATIONAL-2555D",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        }
+      ]
+    },
+    {
+      "event_type": "plugin.tool.collision",
+      "decision": "Plans/Decision_Log.md#DL-2354",
+      "editions": [
+        {
+          "scope": "application",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-PLUGIN-OPERATIONS-APPLICATION-2555D",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        },
+        {
+          "scope": "project",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-OPERATIONAL-2555D",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        }
+      ]
+    },
+    {
+      "event_type": "plugin.tool.registered",
+      "decision": "Plans/Decision_Log.md#DL-2355",
+      "editions": [
+        {
+          "scope": "application",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-PLUGIN-OPERATIONS-APPLICATION-2555D",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        },
+        {
+          "scope": "project",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-OPERATIONAL-2555D",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        }
+      ]
+    },
+    {
+      "event_type": "restore.state_changed",
+      "decision": "Plans/Decision_Log.md#DL-2370",
+      "editions": [
+        {
+          "scope": "application",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-OPERATIONAL-SECURITY-APPLICATION-2555D",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        },
+        {
+          "scope": "project",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-OPERATIONAL-2555D",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        }
+      ]
+    },
+    {
+      "event_type": "review.artifact_finalized",
+      "decision": "Plans/Decision_Log.md#DL-2371",
+      "editions": [
+        {
+          "scope": "project",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-CHAT-THREAD-LIFETIME",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        },
+        {
+          "scope": "application",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-CHAT-THREAD-LIFETIME",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        }
+      ]
+    },
+    {
+      "event_type": "review.finding_added",
+      "decision": "Plans/Decision_Log.md#DL-2372",
+      "editions": [
+        {
+          "scope": "project",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-CHAT-THREAD-LIFETIME",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        },
+        {
+          "scope": "application",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-CHAT-THREAD-LIFETIME",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        }
+      ]
+    },
+    {
+      "event_type": "review.finding_dispositioned",
+      "decision": "Plans/Decision_Log.md#DL-2373",
+      "editions": [
+        {
+          "scope": "project",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-CHAT-THREAD-LIFETIME",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        },
+        {
+          "scope": "application",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-CHAT-THREAD-LIFETIME",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        }
+      ]
+    },
+    {
+      "event_type": "run.background_enqueued",
+      "decision": "Plans/Decision_Log.md#DL-2374",
+      "editions": [
+        {
+          "scope": "application",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-RUNTIME-365D",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        },
+        {
+          "scope": "project",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-RUNTIME-365D",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        }
+      ]
+    },
+    {
+      "event_type": "safe_point.created",
+      "decision": "Plans/Decision_Log.md#DL-2394",
+      "editions": [
+        {
+          "scope": "application",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-RUNTIME-365D",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        },
+        {
+          "scope": "project",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-RUNTIME-365D",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        }
+      ]
+    },
+    {
+      "event_type": "safe_point.restored",
+      "decision": "Plans/Decision_Log.md#DL-2395",
+      "editions": [
+        {
+          "scope": "application",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-RUNTIME-365D",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        },
+        {
+          "scope": "project",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-RUNTIME-365D",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        }
+      ]
+    },
+    {
+      "event_type": "subagent.budget_warning",
+      "decision": "Plans/Decision_Log.md#DL-2405",
+      "editions": [
+        {
+          "scope": "application",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-CHAT-THREAD-LIFETIME",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        },
+        {
+          "scope": "project",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-CHAT-THREAD-LIFETIME",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        }
+      ]
+    },
+    {
+      "event_type": "subagent.cancelled",
+      "decision": "Plans/Decision_Log.md#DL-2406",
+      "editions": [
+        {
+          "scope": "application",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-CHAT-THREAD-LIFETIME",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        },
+        {
+          "scope": "project",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-CHAT-THREAD-LIFETIME",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        }
+      ]
+    },
+    {
+      "event_type": "subagent.completed",
+      "decision": "Plans/Decision_Log.md#DL-2407",
+      "editions": [
+        {
+          "scope": "application",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-CHAT-THREAD-LIFETIME",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        },
+        {
+          "scope": "project",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-CHAT-THREAD-LIFETIME",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        }
+      ]
+    },
+    {
+      "event_type": "subagent.context_warning",
+      "decision": "Plans/Decision_Log.md#DL-2408",
+      "editions": [
+        {
+          "scope": "application",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-CHAT-THREAD-LIFETIME",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        },
+        {
+          "scope": "project",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-CHAT-THREAD-LIFETIME",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        }
+      ]
+    },
+    {
+      "event_type": "subagent.escalated",
+      "decision": "Plans/Decision_Log.md#DL-2409",
+      "editions": [
+        {
+          "scope": "application",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-CHAT-THREAD-LIFETIME",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        },
+        {
+          "scope": "project",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-CHAT-THREAD-LIFETIME",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        }
+      ]
+    },
+    {
+      "event_type": "subagent.failed",
+      "decision": "Plans/Decision_Log.md#DL-2410",
+      "editions": [
+        {
+          "scope": "application",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-CHAT-THREAD-LIFETIME",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        },
+        {
+          "scope": "project",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-CHAT-THREAD-LIFETIME",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        }
+      ]
+    },
+    {
+      "event_type": "subagent.message_received",
+      "decision": "Plans/Decision_Log.md#DL-2411",
+      "editions": [
+        {
+          "scope": "application",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-CHAT-THREAD-LIFETIME",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        },
+        {
+          "scope": "project",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-CHAT-THREAD-LIFETIME",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        }
+      ]
+    },
+    {
+      "event_type": "subagent.message_sent",
+      "decision": "Plans/Decision_Log.md#DL-2412",
+      "editions": [
+        {
+          "scope": "application",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-CHAT-THREAD-LIFETIME",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        },
+        {
+          "scope": "project",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-CHAT-THREAD-LIFETIME",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        }
+      ]
+    },
+    {
+      "event_type": "subagent.model_switched",
+      "decision": "Plans/Decision_Log.md#DL-2413",
+      "editions": [
+        {
+          "scope": "application",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-CHAT-THREAD-LIFETIME",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        },
+        {
+          "scope": "project",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-CHAT-THREAD-LIFETIME",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        }
+      ]
+    },
+    {
+      "event_type": "subagent.output_truncated",
+      "decision": "Plans/Decision_Log.md#DL-2414",
+      "editions": [
+        {
+          "scope": "application",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-CHAT-THREAD-LIFETIME",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        },
+        {
+          "scope": "project",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-CHAT-THREAD-LIFETIME",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        }
+      ]
+    },
+    {
+      "event_type": "subagent.paused",
+      "decision": "Plans/Decision_Log.md#DL-2415",
+      "editions": [
+        {
+          "scope": "application",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-CHAT-THREAD-LIFETIME",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        },
+        {
+          "scope": "project",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-CHAT-THREAD-LIFETIME",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        }
+      ]
+    },
+    {
+      "event_type": "subagent.progress",
+      "decision": "Plans/Decision_Log.md#DL-2416",
+      "editions": [
+        {
+          "scope": "application",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-CHAT-THREAD-LIFETIME",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        },
+        {
+          "scope": "project",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-CHAT-THREAD-LIFETIME",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        }
+      ]
+    },
+    {
+      "event_type": "subagent.resumed",
+      "decision": "Plans/Decision_Log.md#DL-2417",
+      "editions": [
+        {
+          "scope": "application",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-CHAT-THREAD-LIFETIME",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        },
+        {
+          "scope": "project",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-CHAT-THREAD-LIFETIME",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        }
+      ]
+    },
+    {
+      "event_type": "subagent.retried",
+      "decision": "Plans/Decision_Log.md#DL-2418",
+      "editions": [
+        {
+          "scope": "application",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-CHAT-THREAD-LIFETIME",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        },
+        {
+          "scope": "project",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-CHAT-THREAD-LIFETIME",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        }
+      ]
+    },
+    {
+      "event_type": "subagent.spawned",
+      "decision": "Plans/Decision_Log.md#DL-2419",
+      "editions": [
+        {
+          "scope": "application",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-CHAT-THREAD-LIFETIME",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        },
+        {
+          "scope": "project",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-CHAT-THREAD-LIFETIME",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        }
+      ]
+    },
+    {
+      "event_type": "subagent.started",
+      "decision": "Plans/Decision_Log.md#DL-2420",
+      "editions": [
+        {
+          "scope": "application",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-CHAT-THREAD-LIFETIME",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        },
+        {
+          "scope": "project",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-CHAT-THREAD-LIFETIME",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        }
+      ]
+    },
+    {
+      "event_type": "subagent.timeout",
+      "decision": "Plans/Decision_Log.md#DL-2421",
+      "editions": [
+        {
+          "scope": "application",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-CHAT-THREAD-LIFETIME",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        },
+        {
+          "scope": "project",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-CHAT-THREAD-LIFETIME",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        }
+      ]
+    },
+    {
+      "event_type": "subagent.tool_called",
+      "decision": "Plans/Decision_Log.md#DL-2422",
+      "editions": [
+        {
+          "scope": "application",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-CHAT-THREAD-LIFETIME",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        },
+        {
+          "scope": "project",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-CHAT-THREAD-LIFETIME",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        }
+      ]
+    },
+    {
+      "event_type": "subagent.tool_completed",
+      "decision": "Plans/Decision_Log.md#DL-2423",
+      "editions": [
+        {
+          "scope": "application",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-CHAT-THREAD-LIFETIME",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        },
+        {
+          "scope": "project",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-CHAT-THREAD-LIFETIME",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        }
+      ]
+    },
+    {
+      "event_type": "tool.denied",
+      "decision": "Plans/Decision_Log.md#DL-2425",
+      "editions": [
+        {
+          "scope": "application",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-RUNTIME-365D",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        },
+        {
+          "scope": "project",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-RUNTIME-365D",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        }
+      ]
+    },
+    {
+      "event_type": "tool.execution_completed",
+      "decision": "Plans/Decision_Log.md#DL-2426",
+      "editions": [
+        {
+          "scope": "application",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-RUNTIME-365D",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        },
+        {
+          "scope": "project",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-RUNTIME-365D",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        }
+      ]
+    },
+    {
+      "event_type": "tool.execution_started",
+      "decision": "Plans/Decision_Log.md#DL-2427",
+      "editions": [
+        {
+          "scope": "application",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-RUNTIME-365D",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        },
+        {
+          "scope": "project",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-RUNTIME-365D",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        }
+      ]
+    },
+    {
+      "event_type": "tool.invoked",
+      "decision": "Plans/Decision_Log.md#DL-2428",
+      "editions": [
+        {
+          "scope": "application",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-RUNTIME-365D",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        },
+        {
+          "scope": "project",
+          "policy": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-RUNTIME-365D",
+            "policy_version": "1.0.0"
+          },
+          "decision_binding_matches": true
+        }
+      ]
+    },
+    {
+      "event_type": "usage.event",
+      "decision": "Plans/Decision_Log.md#DL-2444",
+      "editions": [
+        {
+          "scope": "application",
+          "policy": {
+            "setting_key": "ai.usage.usage-retention",
+            "anchor": "first_durable_save",
+            "anchor_immutable": true,
+            "owner_ref": "Plans/storage-plan.md#SP-594"
+          },
+          "decision_binding_matches": true
+        },
+        {
+          "scope": "project",
+          "policy": {
+            "setting_key": "ai.usage.usage-retention",
+            "anchor": "first_durable_save",
+            "anchor_immutable": true,
+            "owner_ref": "Plans/storage-plan.md#SP-594"
+          },
+          "decision_binding_matches": true
+        }
+      ]
     }
   ],
   "retention_citations": [

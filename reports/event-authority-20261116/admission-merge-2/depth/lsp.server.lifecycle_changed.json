@@ -265,12 +265,12 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-601",
-       "line_start": 46243,
-       "line_end": 46243,
+       "line_start": 53302,
+       "line_end": 53302,
        "quote": "Current selected assignment (2026-11-19): lsp.server.lifecycle_changed@1.0.0 is registered for project_only in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2324. Its event history selects RP-TELEMETRY-90D@1.0.0; Plans/storage-plan.md#SP-601 owns the event policy's existing anchors, counts, holds and deletion rules. Original sources and coherent backups retain their independent owner policies; the event lifetime is not transferred to them. Current append/publication still requires the exact selected schema/scope, original custody, current permission, receipt and required producer adoption. Actual missing registration or unresolved required custody refuses; native execution remains NOT_RUN. No native adoption, new retention choice or governance seal follows.",
        "quote_check": "exact",
-       "quote_scope": "unit SP-601, Plans/storage-plan.md:46204-46271",
-       "file_sha256": "a80ebad269f3f3a87c644ee23b21cdd62ef64ccad2fbe4377e8bd190614fdf31",
+       "quote_scope": "unit SP-601, Plans/storage-plan.md:53263-53330",
+       "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-601",
@@ -803,9 +803,9 @@
   "row_pointer": "#/families/406"
  },
  "evidence_maintenance": {
-  "authority": "MERGE2-FIX3 items 1/2/3/4",
-  "source_commit": "dfea17a6c44205c69598882b0305b0cbeab1a3e8",
-  "source_assessment_sha256": "d5f741b69f78f2505e41519063b0bc23e4f4bf07a9b84b4b9ea89a3b5eed91e8",
+  "authority": "MERGE2-FIX4 items 1/2/3",
+  "source_commit": "2bda6aeed03daea26c4d79dfb7568fc145aac29e",
+  "source_assessment_sha256": "1f40d9bd1608038046aed4e46a2039375b48fbff1ce8d1b6ac5378094e5c8fd7",
   "native_execution": "NOT_RUN",
   "verdicts_changed": false
  }

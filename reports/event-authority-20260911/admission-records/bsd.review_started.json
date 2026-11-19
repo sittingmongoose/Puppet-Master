@@ -4,7 +4,7 @@
  "family_id": "event-family-bsd-review-started",
  "implementation_receipt_sha256": "dceb7f21436cbe126c23822e62caa1b6dedcb45fefae3005c1804576ca34d827",
  "decision_ref": "Plans/Decision_Log.md#DL-2221",
- "decision_section_sha256": "36c1fde3da532697068c1d23eacde31fb737ed3ad9a51cc86378e6274130a882",
+ "decision_section_sha256": "c434aed1565249784124c8e809c7758ebdf4874f5068a27a53c3f93347dc269c",
  "registry_before": {
   "revision": "2026-11-16.84",
   "sha256": "eaab116f1c604fc156b18a887c94471d87dad6c6b93ce81a6359da4ce1f72ff3",
@@ -18,7 +18,7 @@
  "registry_row_sha256": "aca7822847735dad0136b2cafe325f9b7bee63eae2672bd0a9af2524c4788ceb",
  "depth_assessment": {
   "path": "reports/event-authority-20261116/admission-merge-2/depth/bsd.review_started.json",
-  "sha256": "913958a70b5bbd0173363ea75200b59f54d9ac903a8dd294c9edd3fe57d6561f"
+  "sha256": "baecb15473c5139005526dd8c9c967446b06ec27f75f63b802fcfd1fd78a90d4"
  },
  "admission_landing": {
   "branch": "plans/ea-merge2-apply-20261116",
@@ -37,11 +37,11 @@
   "Written under DL-077. The seal check recomputes completeness from the pinned assessment; the two fields ending in _at_recording are informational only."
  ],
  "evidence_maintenance": {
-  "authority": "MERGE2-FIX3",
-  "source_commit": "dfea17a6c44205c69598882b0305b0cbeab1a3e8",
-  "source_record_sha256": "9926b01da1ceb5d0a31d34f01e3903c3ac1e0866deb719e20a49396f5bf3ccdc",
-  "source_assessment_sha256": "f4198456e34c19bb6d07abc0d18aa4fd4f30982dd146ff03e219dcf42d58bf56",
-  "source_decision_section_sha256": "13bf7eedc60cc32e1be88adb9ecb547d533a284363f61bebb18be9f100d1ad56",
+  "authority": "MERGE2-FIX4",
+  "source_commit": "2bda6aeed03daea26c4d79dfb7568fc145aac29e",
+  "source_record_sha256": "028f55fd71ea17022d7f486193bbbb230139ca38ac9483ec180343fb99076a22",
+  "source_assessment_sha256": "913958a70b5bbd0173363ea75200b59f54d9ac903a8dd294c9edd3fe57d6561f",
+  "source_decision_section_sha256": "36c1fde3da532697068c1d23eacde31fb737ed3ad9a51cc86378e6274130a882",
   "original_registry_checkpoints_preserved": true
  }
 }

@@ -4,7 +4,7 @@
  "family_id": "event-family-bsd-finding-held",
  "implementation_receipt_sha256": "dceb7f21436cbe126c23822e62caa1b6dedcb45fefae3005c1804576ca34d827",
  "decision_ref": "Plans/Decision_Log.md#DL-2215",
- "decision_section_sha256": "3aee2b13b143f7fbd8d3ec74496da18aaef02284b5bc846fc5e99c2a48a765db",
+ "decision_section_sha256": "739289c05a8e6d0752e5ca1fe2cbe84ad70790d3e4aa04ad350bcddb8a694b1c",
  "registry_before": {
   "revision": "2026-11-16.78",
   "sha256": "5def944c08b66d339adea7c97b503067cab7418e51652b8a6f6d7666914ae377",
@@ -18,7 +18,7 @@
  "registry_row_sha256": "5aba06220dab7fcc70081fb36ca4319fee570b69dd59489b94228ae82fa6f6b7",
  "depth_assessment": {
   "path": "reports/event-authority-20261116/admission-merge-2/depth/bsd.finding_held.json",
-  "sha256": "fad2c5fe53d03bd85fefe49d7da01be8b46186334ca8f2df7b5b9b2b8f1b2c6d"
+  "sha256": "c0c562d991603f8d53a6b53515f70062ecabd52e52859432530fa6d1a3366f59"
  },
  "admission_landing": {
   "branch": "plans/ea-merge2-apply-20261116",
@@ -37,11 +37,11 @@
   "Written under DL-077. The seal check recomputes completeness from the pinned assessment; the two fields ending in _at_recording are informational only."
  ],
  "evidence_maintenance": {
-  "authority": "MERGE2-FIX3",
-  "source_commit": "dfea17a6c44205c69598882b0305b0cbeab1a3e8",
-  "source_record_sha256": "d4ea0031412d5898cefa77b120edca78421a5eab3089493262db3d0448d7d40e",
-  "source_assessment_sha256": "b9bcb325561d130b990b1602cac33f059728b2dab59aa292801cd287443ad72a",
-  "source_decision_section_sha256": "ee3d3a8d1c0728ae68672b7b838d9fb47a865a2f28940ad4e7f474f607dd62b1",
+  "authority": "MERGE2-FIX4",
+  "source_commit": "2bda6aeed03daea26c4d79dfb7568fc145aac29e",
+  "source_record_sha256": "e87ab9c2534ea16fbe13577357b1f0591504b2c224ba95983078fb8181d837dd",
+  "source_assessment_sha256": "fad2c5fe53d03bd85fefe49d7da01be8b46186334ca8f2df7b5b9b2b8f1b2c6d",
+  "source_decision_section_sha256": "3aee2b13b143f7fbd8d3ec74496da18aaef02284b5bc846fc5e99c2a48a765db",
   "original_registry_checkpoints_preserved": true
  }
 }

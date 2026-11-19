@@ -265,12 +265,12 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-600",
-       "line_start": 46175,
-       "line_end": 46175,
+       "line_start": 53234,
+       "line_end": 53234,
        "quote": "Current selected assignment (2026-11-19): format.applied@1.0.0 is registered for project_only in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2314. Its event history selects RP-TELEMETRY-90D@1.0.0; Plans/storage-plan.md#SP-600 owns the event policy's existing anchors, counts, holds and deletion rules. Original sources and coherent backups retain their independent owner policies; the event lifetime is not transferred to them. Current append/publication still requires the exact selected schema/scope, original custody, current permission, receipt and required producer adoption. Actual missing registration or unresolved required custody refuses; native execution remains NOT_RUN. No native adoption, new retention choice or governance seal follows.",
        "quote_check": "exact",
-       "quote_scope": "unit SP-600, Plans/storage-plan.md:46136-46203",
-       "file_sha256": "a80ebad269f3f3a87c644ee23b21cdd62ef64ccad2fbe4377e8bd190614fdf31",
+       "quote_scope": "unit SP-600, Plans/storage-plan.md:53195-53262",
+       "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-600",
@@ -800,9 +800,9 @@
   "row_pointer": "#/families/396"
  },
  "evidence_maintenance": {
-  "authority": "MERGE2-FIX3 items 1/2/3/4",
-  "source_commit": "dfea17a6c44205c69598882b0305b0cbeab1a3e8",
-  "source_assessment_sha256": "a13cefe95f56c45d487b752393af79027c72b8be5602ae79648470af6dc017df",
+  "authority": "MERGE2-FIX4 items 1/2/3",
+  "source_commit": "2bda6aeed03daea26c4d79dfb7568fc145aac29e",
+  "source_assessment_sha256": "5d69cd89a7d62fb32bd0f5578e25fbace60fa73e5632aa41356dea859a61305b",
   "native_execution": "NOT_RUN",
   "verdicts_changed": false
  }
