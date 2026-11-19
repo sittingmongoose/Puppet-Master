@@ -1,0 +1,258 @@
+{
+  "B01": [
+    {
+      "filtered": "rows.jsonl",
+      "filtered_sha256": "1108b6ee2fa0d16749af1d94279b01f1ad1e0861968ee5802d3fd5e043c08ec9",
+      "row_count": 38,
+      "source": "B01/rows.jsonl",
+      "source_sha256": "e4f01bedea686906ff62b6bf72db06e6d7b796dea3543e82b0cb01c7ab9cc75b"
+    },
+    {
+      "filtered": "review_packet-s1b01.jsonl",
+      "filtered_sha256": "67d0755f43085a64cb4431fa37d4b6d4083af81b73c1508ba80760f29c6f3fd2",
+      "row_count": 38,
+      "source": "B01/review_packet-s1b01.jsonl",
+      "source_sha256": "d3e4ef7207aec6e7edc717a266281a7c32410c84a8e7f28a5ba2e02694e2c848"
+    },
+    {
+      "filtered": "review-sol-max-s1b01.jsonl",
+      "filtered_sha256": "10b5f0c5a30ffa936fda5eff0f851d7194092aa97b87597bc328b8cd45dcaa05",
+      "row_count": 38,
+      "source": "B01/review-sol-max-s1b01.jsonl",
+      "source_sha256": "0a2064f1dc2c19f336878732361a8ba2a2826044b1fcfd8800acb7fb8b6ede21"
+    },
+    {
+      "filtered": "review-sol-max-split-s1.jsonl",
+      "filtered_sha256": "058174d1a3a6ffb250e16b6584b7aeaf8ef6aa3a949cd8a3fd587f786466ce58",
+      "row_count": 3,
+      "source": "SPLIT/review-sol-max-split-s1.jsonl",
+      "source_sha256": "5166aadf2397e79227d794100bdf2e2640ff6526e9d57774827503260cdaf2f3"
+    },
+    {
+      "filtered": "review-astra-max-s1b01.jsonl",
+      "filtered_sha256": "94ca2835b70a81268f2dafbb37ef820d309b26b37dba12128258a19522760c80",
+      "row_count": 38,
+      "source": "B01/review-astra-max-s1b01.jsonl",
+      "source_sha256": "4046e5201a760ac53065efbddb967060669ae8e7c5e7356e5b20a79fbad78422"
+    },
+    {
+      "filtered": "review-astra-max-split-s1.jsonl",
+      "filtered_sha256": "565eca735816d541c67b8496af00bae016501cf284dd5708b86ac6d4630f8536",
+      "row_count": 3,
+      "source": "SPLIT/review-astra-max-split-s1.jsonl",
+      "source_sha256": "ae8e70e6cbcd603dc27f40ac4c13f4f0091151a74c7e42e726e7a12db18a2f2a"
+    },
+    {
+      "filtered": "review_packet-split-s1.jsonl",
+      "filtered_sha256": "06a3700f884f1184a6fa74aa81211b04b8bd5d5d15a805c3f73b036ac895c398",
+      "row_count": 3,
+      "source": "SPLIT/review_packet-split-s1.jsonl",
+      "source_sha256": "09530a8faf27b97980ea3c2d2df6fb7b84201c84330be7025bdd055acee64f26"
+    },
+    {
+      "filtered": "review_packet-rsplit-s1.jsonl",
+      "filtered_sha256": "0cf0c44c7a0f22706fc0df970975ab39017ce386f6ecba89e8d3983b1d9be520",
+      "row_count": 3,
+      "source": "B01/review_packet-s1b01.jsonl",
+      "source_sha256": "d3e4ef7207aec6e7edc717a266281a7c32410c84a8e7f28a5ba2e02694e2c848"
+    },
+    {
+      "filtered": "worker-source.jsonl",
+      "filtered_sha256": "a6a6ff215a79cb3a4159579e9be1df4de3bfbfe420668b21cec55c46f5179735",
+      "rewritten_lines": [],
+      "row_count": 38,
+      "source": "B01/worker/records.jsonl",
+      "source_sha256": "caf3ec6f7644eb024b5dc4480e2e7456f7513e97e703023a6cd88e983a14b0a0"
+    }
+  ],
+  "B02": [
+    {
+      "filtered": "rows.jsonl",
+      "filtered_sha256": "b50597de2403c57096015a2a23591c7bd0aa6db9c9a41f3cab59e9d8b4a491b0",
+      "row_count": 16,
+      "source": "B02/rows.jsonl",
+      "source_sha256": "fa24939a9a2536b937674a07e9611c32e87933e6dea21fcee36398f0d71e4f7d"
+    },
+    {
+      "filtered": "review_packet-s1b02.jsonl",
+      "filtered_sha256": "2a31b75e13fde5da180c4bbd67230da264d3f0840bde310013fa5577334c0c50",
+      "row_count": 16,
+      "source": "B02/review_packet-s1b02.jsonl",
+      "source_sha256": "b55f652ac69a37aacb6008b700e705604c01a4e29791a99b876c51f6404fe35b"
+    },
+    {
+      "filtered": "review-sol-max-s1b02.jsonl",
+      "filtered_sha256": "ba2cc5945b964b460c59b254565537b087b71623322b9a601fa1a9c384c58188",
+      "row_count": 16,
+      "source": "B02/review-sol-max-s1b02.jsonl",
+      "source_sha256": "8c0c98f2896d7975f0c6b36ea7f7de8ab8506990e6aa832560a1aa1f501208ae"
+    },
+    {
+      "filtered": "review-astra-max-s1b02.jsonl",
+      "filtered_sha256": "4bd9c1393e4ed78625cd037d72f4297eed2122d0a0fc48eca055b5fbc919b0b8",
+      "row_count": 16,
+      "source": "B02/review-astra-max-s1b02.jsonl",
+      "source_sha256": "0e2fe87e1e074562197e017cfdc69d81d589854ab4d6cc9f783d3f05d14d8c6d"
+    },
+    {
+      "filtered": "worker-source.jsonl",
+      "filtered_sha256": "dec9c03a457a4e71c54bd37b0c6c6a949930199869d14941184c245696df7c57",
+      "rewritten_lines": [],
+      "row_count": 16,
+      "source": "B02/worker/records.jsonl",
+      "source_sha256": "925d53f1aef693fe73f3a69c17c9b828500c3b7ef6f7aba3ebeb639634a9b566"
+    }
+  ],
+  "B03": [
+    {
+      "filtered": "rows.jsonl",
+      "filtered_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "row_count": 0,
+      "source": "B03/rows.jsonl",
+      "source_sha256": "cf53a5987c506ec4f1e1ddbfe2e0e0dd57f0915232783ebff9eca4327b23ef6b"
+    },
+    {
+      "filtered": "review_packet-s1b03.jsonl",
+      "filtered_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "row_count": 0,
+      "source": "B03/review_packet-s1b03.jsonl",
+      "source_sha256": "d856d7a73a6780c250acad89f4da64986209dfb29c705f4962b68fe8ee92c9ea"
+    },
+    {
+      "filtered": "review-sol-max-s1b03.jsonl",
+      "filtered_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "row_count": 0,
+      "source": "B03/review-sol-max-s1b03.jsonl",
+      "source_sha256": "60c6f515c5df6ece7a37ac5e61ab82c120ca9ee6aca2b9b276ba48ca0ae878a2"
+    },
+    {
+      "filtered": "review-astra-max-s1b03.jsonl",
+      "filtered_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "row_count": 0,
+      "source": "B03/review-astra-max-s1b03.jsonl",
+      "source_sha256": "26bde7a00a467422fdd1e3aa832e83d167ce047cb565084142c1b1e6f3f57c5f"
+    },
+    {
+      "filtered": "worker-source.jsonl",
+      "filtered_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "rewritten_lines": [],
+      "row_count": 0,
+      "source": "B03/worker/records.jsonl",
+      "source_sha256": "82510adb45b21196e318d177596be72df5ea5ba600ff8dc4dfe7eea92935ee58"
+    }
+  ],
+  "B04": [
+    {
+      "filtered": "rows.jsonl",
+      "filtered_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "row_count": 0,
+      "source": "B04/rows.jsonl",
+      "source_sha256": "a7183395197cd8d9bc290c4b41033f77a6f269c96b171dd71b497df7b42e43e1"
+    },
+    {
+      "filtered": "review_packet-s1b04.jsonl",
+      "filtered_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "row_count": 0,
+      "source": "B04/review_packet-s1b04.jsonl",
+      "source_sha256": "e95b68e10b5d5af7b04a92cd6aec1ff17ee2c0be3044121f98e67478afaf85ee"
+    },
+    {
+      "filtered": "review-sol-max-s1b04.jsonl",
+      "filtered_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "row_count": 0,
+      "source": "B04/review-sol-max-s1b04.jsonl",
+      "source_sha256": "1101ea544847975b5fd84ce14aa3aa9a98b2a70369643277aaf1850d0b96d47e"
+    },
+    {
+      "filtered": "review-astra-max-s1b04.jsonl",
+      "filtered_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "row_count": 0,
+      "source": "B04/review-astra-max-s1b04.jsonl",
+      "source_sha256": "1a7712987435394b5d832a0df8fa1c960fe873f19cc65e5f99a227ccacc456ca"
+    },
+    {
+      "filtered": "worker-source.jsonl",
+      "filtered_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "rewritten_lines": [],
+      "row_count": 0,
+      "source": "B04/worker/records.jsonl",
+      "source_sha256": "458f7cb1140bad3aa7b2e4d27c0ed72ac34c28f38b11817d81f11f6fcc59fbba"
+    }
+  ],
+  "B05": [
+    {
+      "filtered": "rows.jsonl",
+      "filtered_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "row_count": 0,
+      "source": "B05/rows.jsonl",
+      "source_sha256": "4febab15205a959b3f0fc4dae05bc72b4e79cc92ef9e50f74d42733f4d7d930a"
+    },
+    {
+      "filtered": "review_packet-s1b05.jsonl",
+      "filtered_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "row_count": 0,
+      "source": "B05/review_packet-s1b05.jsonl",
+      "source_sha256": "cefa0a2bddb78cf2544d7c27177381f602fec9eb526c019d44b246a1be3056f8"
+    },
+    {
+      "filtered": "review-sol-max-s1b05.jsonl",
+      "filtered_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "row_count": 0,
+      "source": "B05/review-sol-max-s1b05.jsonl",
+      "source_sha256": "00b62fb83d1868c15269880c3c92eb0c9de8dcc8d8af5e0c4e995df99bd93bef"
+    },
+    {
+      "filtered": "review-astra-max-s1b05.jsonl",
+      "filtered_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "row_count": 0,
+      "source": "B05/review-astra-max-s1b05.jsonl",
+      "source_sha256": "02c7eaec32c38bc0b46f233c5742c5e58c388e18f8a2cf8d5e65d7cd5182876f"
+    },
+    {
+      "filtered": "worker-source.jsonl",
+      "filtered_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "rewritten_lines": [],
+      "row_count": 0,
+      "source": "B05/worker/records.jsonl",
+      "source_sha256": "222d1afe146d8f74db2c0a9a11ab9a316851a01db1ba5e602b9927286206d86f"
+    }
+  ],
+  "B06": [
+    {
+      "filtered": "rows.jsonl",
+      "filtered_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "row_count": 0,
+      "source": "B06/rows.jsonl",
+      "source_sha256": "313ac4f2e7a3beeac11faec21f962fc00a14f7ee8226ce27e76d2898aa414b26"
+    },
+    {
+      "filtered": "review_packet-s1b06.jsonl",
+      "filtered_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "row_count": 0,
+      "source": "B06/review_packet-s1b06.jsonl",
+      "source_sha256": "953ffe8392d0c18cf2cafac54007e2bdf238dd34b315cbb15fb65466b6a76b99"
+    },
+    {
+      "filtered": "review-sol-max-s1b06.jsonl",
+      "filtered_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "row_count": 0,
+      "source": "B06/review-sol-max-s1b06.jsonl",
+      "source_sha256": "d79c00a0590023c7cbec2c32c331e72f6af89abcdba7112d9283c38bf2aa0719"
+    },
+    {
+      "filtered": "review-astra-max-s1b06.jsonl",
+      "filtered_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "row_count": 0,
+      "source": "B06/review-astra-max-s1b06.jsonl",
+      "source_sha256": "cfa5149e348673c02961c776a3816f67ea8400e8c7fbb321b3186088456b00bb"
+    },
+    {
+      "filtered": "worker-source.jsonl",
+      "filtered_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "rewritten_lines": [],
+      "row_count": 0,
+      "source": "B06/worker/records.jsonl",
+      "source_sha256": "6f1d0735dd67d6e88e23d2c89819a00e8cceb29fea3615a0569a4bd5c265f374"
+    }
+  ]
+}
