@@ -1,24 +1,24 @@
 {
   "blockers": [],
   "field_coverage": {
-    "acceptance_criteria": 9515,
-    "canonical_text": 9515,
-    "context_scope": 9515,
-    "depends_on": 9515,
-    "gui_related": 9515,
-    "implementation_surfaces": 9515,
-    "node_compile_hint": 9515,
-    "owner_doc": 9515,
-    "plan_unit_id": 9515,
-    "reasoning_tier": 9515,
-    "risk_class": 9515,
-    "source_lineage": 9515,
-    "status": 9515,
-    "unblocks": 9515,
-    "unit_type": 9515,
-    "validation_surfaces": 9515
+    "acceptance_criteria": 9516,
+    "canonical_text": 9516,
+    "context_scope": 9516,
+    "depends_on": 9516,
+    "gui_related": 9516,
+    "implementation_surfaces": 9516,
+    "node_compile_hint": 9516,
+    "owner_doc": 9516,
+    "plan_unit_id": 9516,
+    "reasoning_tier": 9516,
+    "risk_class": 9516,
+    "source_lineage": 9516,
+    "status": 9516,
+    "unblocks": 9516,
+    "unit_type": 9516,
+    "validation_surfaces": 9516
   },
-  "generated_at_utc": "2026-11-19T23:49:13Z",
+  "generated_at_utc": "2026-11-19T23:50:18Z",
   "issues": {
     "docs_without_plan_units": [],
     "duplicate_plan_unit_ids": [],
@@ -469,11 +469,11 @@
         "structural_disposition": 8
       },
       "doc_count": 72,
-      "live_plan_unit_count": 9515,
+      "live_plan_unit_count": 9516,
       "source_preserving_unit_count": 0,
       "source_preserving_unit_ids": [],
       "span_count": 3933,
-      "unique_live_plan_unit_count": 9515
+      "unique_live_plan_unit_count": 9516
     },
     "coverage_rows": 3933,
     "coverage_span_ids_unique": true,
@@ -901,7 +901,7 @@
       "structural_disposition": 8
     },
     "final_status": "COMPLETE",
-    "live_plan_unit_count": 9515,
+    "live_plan_unit_count": 9516,
     "live_plan_unit_count_source": "current_live_plan_index",
     "next_batch_cursor": null,
     "nodeseeds_created": null,
@@ -941,8 +941,8 @@
     "missing_gui_related_boolean_count": 0,
     "missing_required_metadata_count": 0,
     "parse_error_count": 0,
-    "plan_unit_count": 9515,
-    "unique_plan_unit_count": 9515,
+    "plan_unit_count": 9516,
+    "unique_plan_unit_count": 9516,
     "unresolved_dependency_reference_count": 0
   }
 }
