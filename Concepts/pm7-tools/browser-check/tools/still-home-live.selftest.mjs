@@ -41,4 +41,17 @@ assert.equal(two.secs, 2.3, 'and the covered time is counted once');
 const full = m.beatFreeDrawn([meta, start, ...draws, ...[200000, 700000, 1200000, 1700000, 2200000, 2700000, 3200000, 3700000].map(mark)]);
 assert.equal(full.drawnPerSec, null, 'beats covering the whole window leave under 0.25 s: could not judge, the try is taken again');
 
-console.log('PASS the Home still window is placed between two live beats (wait out the tail, skip a too-close beat); a beat that lands in it has its own draws and span taken out of the rate, and a covered window is could-not-judge');
+// (F5-1) the Home drawn row: three tries whose windows a live beat covered are could not judge, never the raw rate
+const covered = (drawn) => ({ drawn: { perSec: drawn }, beatUnjudgeable: true });
+const all = m.homeDrawnRow([covered(3), covered(4), covered(18)], { drawnMax: 15, quietest: covered(3) });
+assert.equal(all.ok, false, 'three covered tries never pass');
+assert.match(all.detail, /could not judge: a live beat covered all 3 tries/, `and say why: ${all.detail}`);
+assert.equal(covered(3).drawn.perSec <= 15, true, 'the old row judged the quietest raw rate: a covered try can read under the bound');
+assert.equal(covered(18).drawn.perSec <= 15, false, '... or over it (the false FAIL R124 F5-1 names), so the raw rate proves nothing either way');
+const mixed = m.homeDrawnRow([covered(18), { drawn: { perSec: 2 } }], { drawnMax: 15, quietest: { drawn: { perSec: 2 } } });
+assert.equal(mixed.ok, true, 'one judgeable try under the bound judges the row as before');
+assert.equal(mixed.detail, '2/s in the quietest of 2 tries');
+assert.equal(m.homeDrawnRow([{ drawn: { perSec: 40 } }], { drawnMax: 15, quietest: { drawn: { perSec: 40 } } }).ok, false, 'one judgeable try over the bound fails');
+assert.equal(m.homeDrawnRow([], { drawnMax: 15 }).ok, false, 'no try is could not judge');
+
+console.log('PASS the Home still window is placed between two live beats (wait out the tail, skip a too-close beat); a beat that lands in it has its own draws and span taken out of the rate, and a covered window is could-not-judge; every try covered is could-not-judge, never a raw-rate verdict');

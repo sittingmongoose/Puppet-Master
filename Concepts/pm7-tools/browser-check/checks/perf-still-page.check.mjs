@@ -56,7 +56,8 @@
 //                        (logged per try, and named in a failing frames row)
 // Runs on both surfaces (--set sandbox=0 and 1). Main's page (no still page) fails (a), (c), (e) and the 20 s cell.
 // A try whose trace names no renderer main thread measured no main frames (they and the layouts read 0): Settings'
-// main-frame rows fail as could not judge, never pass on the zeros (PM7PERF-NO-RENDERER-READS-ZERO).
+// main-frame rows fail as could not judge, never pass on the zeros (PM7PERF-NO-RENDERER-READS-ZERO). Home's drawn row
+// fails the same way when a live beat covered all three tries, instead of judging a rate the beat's own draws fill (F5-1).
 import { TRACE_CATEGORIES, summarise, frameStarts } from '../helpers/frame-trace.mjs';
 import { muteSound } from '../helpers/quiet-page.mjs';
 import { pageSource, blocksOf, blockAt } from '../helpers/built-source.mjs';
@@ -68,7 +69,7 @@ import { installUsageLiveWatch, usageWritesBeforeRecalc } from '../helpers/still
 import { installToggleFiniteWatch } from '../helpers/still-finite.mjs';
 import { installPrewarmProbe, prewarmSnapshot, consumeUsagePrewarm } from '../helpers/still-prewarm.mjs';
 import { forcedPrewarm } from '../helpers/still-prewarm-control.mjs';
-import { installHomeLiveWatch, readHomeLive, homeBeatPlan, beatFreeDrawn } from '../helpers/still-home-live.mjs';
+import { installHomeLiveWatch, readHomeLive, homeBeatPlan, beatFreeDrawn, homeDrawnRow } from '../helpers/still-home-live.mjs';
 import { traceJudgeable } from '../helpers/trace-guard.mjs';
 
 const ALL = ['basic-light', 'basic-dark', 'friendly-light', 'friendly-dark', 'glass-light', 'glass-dark', 'retro-light', 'retro-dark', 'nier-light', 'nier-dark'];
@@ -424,7 +425,7 @@ export default async function (t) {
 			const judgeStarts = !live && view !== 'dashboard';
 			const startCap = stillStartsBound(refreshHz, { cap: startsMax });
 			const askers = (r) => (r.startsBy || []).slice(0, 4).map(([w, n]) => `${w} ${Math.round(n / r.secs * 10) / 10}/s`).join(', ');
-			let x = null; const tries = [];
+			let x = null; const tries = [], recs = [];
 			const home = view === 'dashboard';
 			for (let k = 0; k < 3; k++) {
 				const quiet = await f.evaluate(QUIET, 3000);
@@ -453,6 +454,7 @@ export default async function (t) {
 				// Settings judges main frames and starts, which a renderer-less trace reads as 0 (PM7PERF-NO-RENDERER-READS-ZERO):
 				// such a try never meets the bounds, so it cannot end the tries as a pass; the row below fails as could not judge.
 				else if (!live) { const meets = j.meets; j.meets = (q) => traceJudgeable(q).ok && meets(q); }
+				recs.push(r);
 				const pick = stillPick(x, r, j);
 				x = pick.x;
 				if (pick.done) break;
@@ -460,7 +462,9 @@ export default async function (t) {
 			t.log(`${at}: STILL drawn ${x.drawn.perSec}/s, main frames rendered ${rendered(x)}/s (starts ${x.mainFrames.perSec}/s, ${x.mainFrames.noUpdatePerSec}/s with nothing to update, commits ${x.mainFrames.commitsPerSec}/s${Object.keys(x.mainFrames.aborts).length ? ', other early outs ' + JSON.stringify(x.mainFrames.aborts) : ''}), main ${Math.round(x.cost.main)} ms/s, GPU ${Math.round(x.cost.gpuMain)} ms/s, viz ${Math.round(x.cost.viz)} ms/s (drawn/rendered per try: ${tries.join('; ')}); toggle ${on && on.found ? `${on.first} elements, ${on.firstFrameMs} ms frame` : 'not seen'}`);
 			if (live) t.log(`${at}: NOTE live data (Usage): frames logged, not judged; quietest try draws ${x.drawn.perSec}/s, main renders ${rendered(x)}/s (starts ${x.mainFrames.perSec}/s), by ${named(x) || 'no script'}`);
 			else {
-				await t.check(`${at}: still, the compositor draws at most ${drawnMax} frames a second`, x.drawn.perSec <= drawnMax, `${x.drawn.perSec}/s in the quietest of ${tries.length} tries (${tries.join('; ')})`);
+				// Home: every try's window covered by a live beat is could not judge, never a raw-rate pass or fail (R124 F5-1)
+				const hd = homeDrawnRow(recs, { drawnMax, quietest: x });
+				await t.check(`${at}: still, the compositor draws at most ${drawnMax} frames a second`, hd.ok, `${hd.detail} (${tries.join('; ')})`);
 				// Home's dashboard is live too (its widgets tick with the demo engine): its main frames are logged, the loops'
 				// cost is judged by what the compositor draws
 				if (view === 'dashboard') t.log(`${at}: NOTE Home is live (its widgets tick): main frames rendered ${rendered(x)}/s (starts ${x.mainFrames.perSec}/s) logged, not judged${named(x) ? '; by ' + named(x) : ''}`);

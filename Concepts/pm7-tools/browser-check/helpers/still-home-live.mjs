@@ -66,6 +66,17 @@ export function homeBeatPlan(w, { ms, tail = 1200, margin = 400, maxWait = 15000
 	return { waitMs: Math.max(0, Math.round(waitMs)), placed: true, why: `start ${Math.round(start - w.now)} ms from now, next beat about ${Math.round(next - w.now)} ms from now (beats every ${Math.round(interval)} ms, tail ${tail} ms)` };
 }
 
+// The Home drawn row: the quietest try's compositor rate against the bound. When every try's window was covered by a
+// live beat, no try measured the page at rest, so the row is "could not judge" rather than judging a raw rate the
+// beat's own draws fill (R124 F5-1: three covered tries used to fail on that raw rate, a false FAIL).
+// recs: every try's trace summary (the beatUnjudgeable ones included); quietest: the try stillPick kept.
+export function homeDrawnRow(recs, { drawnMax, quietest }) {
+	if (recs.length > 0 && recs.every((r) => r.beatUnjudgeable)) return { ok: false, detail: `could not judge: a live beat covered all ${recs.length} tries, so no window measured the page at rest` };
+	const x = quietest || recs[recs.length - 1];
+	if (!x) return { ok: false, detail: 'could not judge: no try' };
+	return { ok: x.drawn.perSec <= drawnMax, detail: `${x.drawn.perSec}/s in the quietest of ${recs.length} tries` };
+}
+
 // A beat landed in the window despite the plan (or no plan fitted): take the beat's own frames out. The watch's
 // pm-still:beat marks are on the trace's clock; a draw inside [mark, mark + tail] is the beat's. The rate is the
 // kept draws over the window less the beat spans (both numerator and denominator, so a real loop still reads high).
