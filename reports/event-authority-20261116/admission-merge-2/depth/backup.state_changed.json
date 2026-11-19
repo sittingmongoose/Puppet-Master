@@ -5,8 +5,8 @@
  "merge": "admission-merge-2",
  "registry": {
   "path": "Plans/event_family_registry.json",
-  "revision": "2026-11-18.2",
-  "sha256": "ec21cf1a5b42b3e68a5564a847b4798dff968612d11d438bc7075b89196f9602",
+  "revision": "2026-11-19.7",
+  "sha256": "ea713346ab7623ec2eeb20cb9c668e55e824a54342c58e6945a951e347115cac",
   "family_count": 518,
   "row_pointer": "#/families/233"
  },
@@ -22,7 +22,7 @@
     "membership_version": {
      "status": "PASS",
      "representation": "exact_registry_membership",
-     "finding": "Currently registered at 2026-11-18.2 as #/families/233 (canonical row SHA-256 2e26388c1d5974d5ec7c8e9bfe0d5b9460db7605c188c508d4ed30bcf708ab32). Original one-family admission checkpoints remain in the family record and immutable Git source.",
+     "finding": "Currently registered at 2026-11-19.7 as #/families/233, canonical row SHA-256 d18d8c971ae7cd231642e027b4b1b73e34033a15be71cf50b408a6a400ab83e5. Original one-family append checkpoints remain preserved.",
      "evidence": [
       {
        "path": "Plans/event_family_registry.json",
@@ -267,22 +267,41 @@
        "path": "Plans/Contracts_V0.md",
        "unit": "CV-1401",
        "line_start": 50356,
-       "line_end": 50356,
-       "quote": "Current selected assignment (2026-11-19): backup.state_changed@1.0.0 is registered for application_or_project",
-       "file_sha256": "58dee182ea2dd8dd358d27912280fa9113c3d1d8fd68b1c0c5d51b6f906d73c8",
+       "line_end": 50364,
+       "quote": "  Current selected assignment (2026-11-19): backup.state_changed@1.0.0 is registered for application_or_project\n  in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2151. Its event history selects Application\n  = RP-OPERATIONAL-SECURITY-APPLICATION-2555D@1.0.0 (anchor_kind=creation, cardinality_scope=instance), Project\n  = RP-OPERATIONAL-2555D@1.0.0 (anchor_kind=terminal_transition, cardinality_scope=project); Plans/storage-plan.md#SP-1401\n  owns the event policy''s existing anchors, counts, holds and deletion rules. Original sources and coherent backups\n  retain their independent owner policies; the event lifetime is not transferred to them. Current append/publication\n  still requires the exact selected schema/scope, original custody, current permission, receipt and required producer\n  adoption. Actual missing registration or unresolved required custody refuses; native execution remains NOT_RUN.\n  No native adoption, new retention choice or governance seal follows.'",
        "quote_check": "exact",
        "quote_scope": "unit CV-1401, Plans/Contracts_V0.md:50322-50406",
+       "file_sha256": "58dee182ea2dd8dd358d27912280fa9113c3d1d8fd68b1c0c5d51b6f906d73c8",
        "source_citation": {
         "path": "Plans/Contracts_V0.md",
         "unit": "CV-1401",
-        "line_start": 48359,
-        "line_end": 48359,
-        "quote": "retention_policy_ref=RP-OPERATIONAL-2555D@1.0.0 under the Storage Project first-save anchor adapter (each entry starts its clock at its own saved state change), sharing the existing 2,000,000-entry seven-year Project allowance; application editions take retention_policy_ref=RP-OPERATIONAL-SECURITY-APPLICATION-2555D@1.0.0 in the one separate 2,000,000-entry application allowance app:operational_sec",
-        "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a"
+        "line_start": 50356,
+        "line_end": 50356,
+        "quote": "Current selected assignment (2026-11-19): backup.state_changed@1.0.0 is registered for application_or_project",
+        "file_sha256": "58dee182ea2dd8dd358d27912280fa9113c3d1d8fd68b1c0c5d51b6f906d73c8",
+        "quote_check": "exact",
+        "quote_scope": "unit CV-1401, Plans/Contracts_V0.md:50322-50406",
+        "source_citation": {
+         "path": "Plans/Contracts_V0.md",
+         "unit": "CV-1401",
+         "line_start": 48359,
+         "line_end": 48359,
+         "quote": "retention_policy_ref=RP-OPERATIONAL-2555D@1.0.0 under the Storage Project first-save anchor adapter (each entry starts its clock at its own saved state change), sharing the existing 2,000,000-entry seven-year Project allowance; application editions take retention_policy_ref=RP-OPERATIONAL-SECURITY-APPLICATION-2555D@1.0.0 in the one separate 2,000,000-entry application allowance app:operational_sec",
+         "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a"
+        },
+        "locator_maintenance": {
+         "authority": "MERGE2-FIX4",
+         "reason": "Re-cite the same accepted retention claim at its current exact owner assignment; event and source/checkpoint authority remain separate."
+        }
        },
-       "locator_maintenance": {
-        "authority": "MERGE2-FIX4",
-        "reason": "Re-cite the same accepted retention claim at its current exact owner assignment; event and source/checkpoint authority remain separate."
+       "retention_range_maintenance": {
+        "authority": "MERGE3-POSTFIX / post-landing Astra findings",
+        "source_commit": "9949589a1c3fe6f35e862a8f02cf81825d509089",
+        "old_quote": "Current selected assignment (2026-11-19): backup.state_changed@1.0.0 is registered for application_or_project",
+        "old_path": "Plans/Contracts_V0.md",
+        "old_unit": "CV-1401",
+        "old_line_start": 50356,
+        "reason": "Complete current wrapped assignment inside its original unit."
        }
       },
       {
@@ -611,10 +630,9 @@
   "row_pointer": "#/families/233"
  },
  "evidence_maintenance": {
-  "authority": "MERGE2-FIX4 items 1/2/3",
-  "source_commit": "2bda6aeed03daea26c4d79dfb7568fc145aac29e",
-  "source_assessment_sha256": "6e9fada55a1216421106970cef3e8315148be1650634a89f221cff7ae9a9b7d6",
-  "native_execution": "NOT_RUN",
-  "verdicts_changed": false
+  "authority": "MERGE3-POSTFIX / post-landing Astra findings",
+  "source_commit": "9949589a1c3fe6f35e862a8f02cf81825d509089",
+  "source_assessment_sha256": "161161729d30fe63fd3688e282197eb64048daaf5110b4935381cf53cf2f1c8f",
+  "native_execution": "NOT_RUN"
  }
 }
