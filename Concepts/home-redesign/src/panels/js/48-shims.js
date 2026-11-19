@@ -204,9 +204,12 @@ shims.fileContextMenu = function () {
         if (folderEl) {
           // the tree's own expand, as ArrowRight on the folder does (pm6-js-cozy-shelves.js treeKeyboard)
           // (a folder the tree lists without its files, under node_modules, has nothing to expand and says so)
+          // the row's aria-expanded is the state __fmAnimate writes at once; the node's 'open' class only lands when
+          // a collapse animation ends, so guarding on the class made Open a no-op on a folder just collapsed, for the
+          // whole ~300 ms its children still animate away (FO-238). Ask the row, and re-expand mid-collapse too.
           var node = folderEl.closest && folderEl.closest('.fm-node');
           if (!node || !node.querySelector(':scope > .fm-children')) note(target + ' is a folder; its files are not listed here.');
-          else if (!node.classList.contains('open') && window.__fmAnimate) { window.__fmAnimate(node, true); if (window.__fmRefreshCollapse) window.__fmRefreshCollapse(); }
+          else if (folderEl.getAttribute('aria-expanded') !== 'true' && window.__fmAnimate) { window.__fmAnimate(node, true); if (window.__fmRefreshCollapse) window.__fmRefreshCollapse(); }
           return;
         }
         PM_HOME.open({ kind: 'editor', path: target, mode: 'keep', where: r[0] === 'open' ? 'auto' : r[0] === 'panel' ? 'panel' : 'right' });
