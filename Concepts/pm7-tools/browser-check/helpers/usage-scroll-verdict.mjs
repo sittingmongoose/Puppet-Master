@@ -10,7 +10,7 @@ export function usageScrollVerdict(windows, { ratio = 0.85, rm = false } = {}) {
 	if (!judged) return { rows, logs, warnings };
 	const mean = (name, k) => { const v = windows.filter((w) => w.name === name).map((w) => w[k] || 0); return v.length ? v.reduce((a, b) => a + b, 0) / v.length : 0; };
 	const [bp, cp] = [mean('as built', 'paint'), mean('control', 'paint')];
-	const detail = `as built ${Math.round(bp)} ms/s, control ${Math.round(cp)} ms/s (paint + pre-paint + layerize): ratio ${(bp / Math.max(1, cp)).toFixed(2)}`;
+	const detail = `as built ${Math.round(bp)} ms/s, control ${Math.round(cp)} ms/s (paint + pre-paint + layerize + PAC): ratio ${(bp / Math.max(1, cp)).toFixed(2)}`;
 	// under Reduced Motion a wheel tick is one instant step, not a smooth scroll of several frames: both builds paint about
 	// the same (Alexis Basic Dark: 55 and 56 ms/s), so the ratio is logged there and the layer row carries the line
 	if (rm) logs.push('Reduced Motion: main-thread paint while scrolling, not judged: ' + detail);

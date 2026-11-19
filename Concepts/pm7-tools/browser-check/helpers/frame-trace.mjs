@@ -1,6 +1,6 @@
 // Frame accounting from a DevTools trace, with nothing added to the page: what the renderer's main thread, the
 // renderer's compositor, the raster workers, the display compositor and the GPU thread each cost per second of wall
-// time, how the main thread's time splits (script, style, layout, pre-paint, paint, layerize, commit), how many main
+// time, how the main thread's time splits (script, style, layout, pre-paint, paint, layerize, PAC, commit), how many main
 // frames ran and how long each took, and how many frames the display compositor drew and Chrome counted as dropped.
 // A probe in the page (a rAF loop, a timer) would itself make the page render frames; a trace does not.
 export const TRACE_CATEGORIES = [
@@ -12,8 +12,12 @@ const GROUPS = [
 	['style', /^(UpdateLayoutTree|Document::updateStyle|Document::recalcStyle|RecalculateStyles|Document::rebuildLayoutTree|StyleEngine::|InvalidateStyle)/],
 	['layout', /^(Layout|LocalFrameView::layout|LocalFrameView::performLayout|UpdateLayout)/],
 	['prepaint', /^(PrePaint|LocalFrameView::RunPrePaintLifecyclePhase)/],
-	['paint', /^(Paint$|PaintImage|LocalFrameView::RunPaintLifecyclePhase|PaintArtifactCompositor::|Paint::)/],
-	['layerize', /^(Layerize|UpdateLayer$|UpdateLayerTree|CompositeLayers|PaintArtifactCompositor::Update|LayerTreeHost::UpdateLayers)/],
+	// PM7PERF-FRAMETRACE-PAC-AS-PAINT: layerize is tried before paint, and PaintArtifactCompositor (Chrome's
+	// layerization of the whole page) is its own group, not Blink paint: the old paint pattern matched
+	// PaintArtifactCompositor:: first, so 83-89% of the stage's "paint" figure was layerization (lane X).
+	['layerize', /^(Layerize|UpdateLayer$|UpdateLayerTree|CompositeLayers|LayerTreeHost::UpdateLayers)/],
+	['pac', /^PaintArtifactCompositor::/],
+	['paint', /^(Paint$|PaintImage|LocalFrameView::RunPaintLifecyclePhase|Paint::)/],
 	['commit', /^(Commit$|ProxyMain::BeginMainFrame::commit|LayerTreeHost::.*Commit|ProxyImpl::.*Commit)/],
 	['gc', /^(V8\.GC|MajorGC|MinorGC|BlinkGC|V8\.GCScavenger|CppGC)/],
 	['script', /^(FunctionCall|EvaluateScript|v8\.|V8\.|FireAnimationFrame|TimerFire|EventDispatch|RunMicrotasks|FireIdleCallback|XHR|v8::|Document::serviceScriptedAnimations|PageAnimator::serviceScriptedAnimations|ResizeObserver|IntersectionObserver|MutationObserver)/],
@@ -138,6 +142,9 @@ export function summarise(trace, { url, allScripts = false } = {}) {
 	// main thread split
 	const mainKey = [...threads].find(([k, n]) => n === 'CrRendererMain' && Number(k.split(':')[0]) === rpid)?.[0];
 	const split = {}, other = new Map(); let frameMs = [], mainFrames = 0, styleCount = 0, layoutCount = 0, wholeLayouts = 0, styleElems = 0; const dispatched = {};
+	// PAC updates by name: Update is the full whole-page layerization; a repainted-layers update is split out when the
+	// trace names it (Chrome 157 traces only the full path by name; lane X). Other PAC events, if any, are 'other'.
+	const pacSplit = { full: 0, repainted: 0, other: 0 };
 	const scripts = new Map();
 	// What each main frame came to (PM7PERF-STILL-FRAMES-STARTS). A ProxyMain::BeginMainFrame is a frame START: Chrome
 	// runs the lifecycle and, when nothing changed, abandons it with an EarlyOut_NoUpdates instant inside it and commits
@@ -167,6 +174,7 @@ export function summarise(trace, { url, allScripts = false } = {}) {
 		const { self } = selfTimes(evs);
 		for (const [name, us] of self) {
 			const g = groupOf(name); split[g] = (split[g] || 0) + us;
+			if (g === 'pac') { if (name === 'PaintArtifactCompositor::Update') pacSplit.full += us; else if (/Repainted/.test(name)) pacSplit.repainted += us; else pacSplit.other += us; }
 			if (g === 'other') other.set(name, (other.get(name) || 0) + us);
 		}
 		for (const e of evs) {
@@ -246,6 +254,8 @@ export function summarise(trace, { url, allScripts = false } = {}) {
 		layoutCategory: layoutCat,
 		cost,
 		split,
+		// the PAC group's self time split by update kind, ms a second (split.pac is their sum)
+		pac: { full: perSec(pacSplit.full), repainted: perSec(pacSplit.repainted), other: perSec(pacSplit.other) },
 		other: [...other].sort((a, b) => b[1] - a[1]).slice(0, 8).map(([n, us]) => [n, perSec(us)]),
 		// perSec counts frame STARTS (what every check judged before 2026-11-15); renderedPerSec the starts that were not
 		// abandoned with nothing to update, noUpdatePerSec those that were, commitsPerSec the commit events themselves
