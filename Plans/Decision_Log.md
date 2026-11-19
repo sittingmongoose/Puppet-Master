@@ -54006,3 +54006,50 @@ negative_constraints:
 - No producer adoption, native execution claim, readiness clearance or governance seal is granted.
 ```
 
+### DL-2450: FileSafe policy degradation has its own Application count bucket
+
+```yaml
+plan_unit_id: DL-2450
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: |-
+  On 2026-11-19 at about 4:40 PM EST, Jared quoted FileSafe card E15-1 option A ("their own whole-app allowance: 7 years, 2,000,000 records, with new ones refused when it's full") and answered verbatim: "this". pm7-build relayed the answer in pm-mail 1119213858-1090 at 2026-11-19T21:38:58Z. The card is vm.pm-ea-lead--E15-1 in E-CARDS-15.md. The signed answer is recorded in ANSWERS_E-CARDS-15_20261119.md.
+
+  E15-1 A gives Application records of filesafe.policy_degraded one dedicated application-wide count bucket per Puppet Master Server, app:filesafe_policy_degraded. SP-556 applies the existing RP-OPERATIONAL-2555D@1.0.0 policy for 2,555 days (220,752,000 seconds) from the original terminal-transition anchor, with at most 2,000,000 retained records. If the next record would exceed capacity and no expired unheld member is eligible for compaction, refuse the append. Overflow never evicts an unexpired or held member, borrows room from another bucket or refuses an append in another bucket. Project records keep their own Project partition under the same policy.
+
+  This decision supplies only the Application count for filesafe.policy_degraded, already registered under DL-2307. It changes no other family, policy value or bucket. Native counting, refusal, expiry and cleanup remain NOT_RUN.
+gui_related: false
+gui_classification_reason: Applies only to an internal event history count.
+depends_on: [DL-2307]
+unblocks: []
+acceptance_criteria:
+- "Only an Application filesafe.policy_degraded record counts in app:filesafe_policy_degraded, once per Puppet Master Server."
+- "Project records keep their Project partition. The existing terminal-transition anchor, hold protections, 2,555-day period and 2,000,000 cap apply."
+- "At capacity without an expired unheld member eligible for compaction, refuse the incoming append with neither eviction of a protected or unexpired record nor effects on another bucket."
+validation_surfaces:
+- Plans/filesafe_event_contract_fixtures.json
+- python3 scripts/pm_filesafe_event_contracts.py
+risk_class: event_authority_retention
+reasoning_tier: high
+context_scope: event_authority_pnc019_merge3_filesafe_application_count
+implementation_surfaces:
+- Plans/storage-plan.md
+- Plans/Contracts_V0.md
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/ANSWERS_E-CARDS-15_20261119.md (SHA-256 9c8e2bcbdc952a74f3ed9828d6d07004934f3da4f1fe3f836b2c4a6b6f2f2404)"
+- "/mnt/Cursor/share/puppet-master/2026-11-04-program/streams/E-CARDS-15.md (SHA-256 4f3178dae796ee56c232a8a3f180c947edaae00c71fd30f44ff1fc65dbfe760b)"
+preserved_exact_tokens:
+- E15-1
+- this
+- 1119213858-1090
+- filesafe.policy_degraded
+- app:filesafe_policy_degraded
+- RP-OPERATIONAL-2555D@1.0.0
+negative_constraints:
+- No retention policy object or policy value changes, unrelated bucket or family change, or producer adoption or native proof follows.
+```

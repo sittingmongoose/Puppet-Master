@@ -2,9 +2,9 @@
 
 Source: `Plans/Contracts_V0.md`
 
-Source lines: L43828-L46699
+Source lines: L43828-L46702
 
-Source SHA256: `58dee182ea2dd8dd358d27912280fa9113c3d1d8fd68b1c0c5d51b6f906d73c8`
+Source SHA256: `dac81bf0562dda70b1ea71fd221e3aa69a84f7b3651602d6808f6bf1a934a22d`
 
 ---
 
@@ -1950,11 +1950,13 @@ owner_doc: Plans/Contracts_V0.md
 canonical_text: filesafe.policy_degraded owns the prepared closed 2.0.0 payload and exact original-source, producer,
   scope and transition joins. Valid only while authoritative enforcement is intact; an advisory failure or embedded
   authoritative fallback can be reported. Missing or empty allowlists, roots, unresolved canonical paths or failed
-  init require refusal, never a degraded success.
+  init require refusal, never a degraded success. SP-556 applies DL-2450's one app:filesafe_policy_degraded
+  bucket per Puppet Master Server to Application history and the Project partition to Project history.
 gui_related: false
 gui_classification_reason: Event authority and storage contracts; no presentation change.
 depends_on:
 - DL-045
+- DL-2450
 - F2-213
 unblocks: []
 acceptance_criteria:
@@ -1974,9 +1976,10 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - Plans/Decision_Log.md#DL-045
+- Plans/Decision_Log.md#DL-2450
 preserved_exact_tokens: []
 negative_constraints:
-- No event registry append, retention decision, or native admission.
+- No event registry append or native admission. DL-2450 supplies the Application count only.
 ```
 
 **Newly authored owner contract under DL-045 for `filesafe.policy_degraded` only.** Current governing behavior: FileSafe CV-245, F2-213; Contracts safe-point and fail-closed security payloads. Schema `Plans/event_payloads/filesafe_policy_degraded_v2.schema.json#`, version 2.0.0, is closed and selects this family only. Current Project minima are retained without nullable widening; this new edition carries explicit application roots required by F2-213/CV-366. It is prepared without admission; no current native writer is enabled.
@@ -2023,7 +2026,7 @@ ContractRef: ContractName:Plans/storage-plan.md#SP-556, ContractName:Plans/FileS
 **Exact numbers and retained dispatch for `filesafe.policy_degraded` (sweep part 2B numbers).** Current inputs follow CV-1100 exactly. Raw JSON text is parsed only by the shared current decoder: `-0`, `01`, non-finite tokens and duplicate keys refuse before any commitment. Every schema integer slot of this family's closed roots is recorded during schema validation and admitted by the shared exact-integer call, with range left to the slot's own schema bounds; a fraction or exponent spelling (`1.0`, `1e0`, `-0.0`) is never folded to an integer, and no blanket integer walk or lane ceiling exists. The complete canonical body, the CV-317 producer digest and every other RFC 8785 use here are CV-1100 qualified RFC 8785: a value that binary64 or the emitted decimal cannot preserve refuses before acceptance. SP-1100 purpose profiles supply the CV-339 full-value commitment and application body bytes; an integer a profile cannot encode refuses through its guard row. Retained originals resolve only through SP-1101: Storage's sealed custody catalogue (write-time edition plus frozen resource manifest) authenticates the original, the installed recipe tuple selects the frozen verifier, application body codecs stay pinned by that catalogue, and no current number guard runs on a retained original. The df-event-v2 identity preimage and the local original-source recipes (Project canonical MessagePack, CV-366 accepted_source) are unchanged. Every timestamp this family validates is checked by the shared CV-1101 predicate date_time: schema format date-time fields, including occurred_at_utc, payload ts and the family's other source timestamps, use the EventRecord profile; Storage-assigned observed_at_utc and persisted_at_utc use the storage_utc_z profile. The SP-1101 frozen verifier uses those same profiles. datetime_validator and the inventory gate run at batch-2 integration.
 
 
-Current selected assignment (2026-11-19): filesafe.policy_degraded@2.0.0 is registered for application_or_project in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2307. Its event history selects Application = RP-OPERATIONAL-2555D@1.0.0 (anchor_kind=terminal_transition, cardinality_scope=project), Project = RP-OPERATIONAL-2555D@1.0.0 (anchor_kind=terminal_transition, cardinality_scope=project); exact original and checkpoint bindings retain their existing Storage assignments. Registry membership supplies no producer adoption or native-installation proof. Missing-registration refusal applies only if the exact current registration is absent.
+Current selected assignment (2026-11-19): filesafe.policy_degraded@2.0.0 is registered for application_or_project in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2307. Its event history selects Application = RP-OPERATIONAL-2555D@1.0.0 (anchor_kind=terminal_transition, count in app:filesafe_policy_degraded, one dedicated bucket per Puppet Master Server under DL-2450), Project = RP-OPERATIONAL-2555D@1.0.0 (anchor_kind=terminal_transition, cardinality_scope=project, count in the Project partition). The Application bucket retains records for 2,555 days (220,752,000 seconds) from the existing terminal-transition anchor and admits at most 2,000,000 retained records. An append that would exceed the limit fails closed if no expired unheld member is eligible for compaction. Overflow neither evicts unexpired or held records nor borrows room from or refuses writes to another bucket. Exact original and checkpoint bindings retain their existing Storage assignments. Registry membership supplies no producer adoption or native-installation proof. Missing-registration refusal applies only if the exact current registration is absent.
 ### CV-557 - safe_point.created closed contract
 
 ```yaml

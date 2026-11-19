@@ -2,9 +2,9 @@
 
 Source: `Plans/storage-plan.md`
 
-Source lines: L53993-L57236
+Source lines: L53995-L57242
 
-Source SHA256: `c5e2112ec95e84283f155f44f8dc1fdf9cb5be016b4aa9acd29b780f4c1721d5`
+Source SHA256: `1fa333c4ef3aa54859eae354a38973490a4de4ca54b6c8f066b2770f528c3bbb`
 
 ---
 
@@ -2106,11 +2106,14 @@ status: accepted
 owner_doc: Plans/storage-plan.md
 canonical_text: filesafe.policy_degraded adopts SP-286 strict full-value custody and SP-278 generic index proof;
   storage.filesafe_policy_degraded_history_read.v1@1.0.0 is passive with none_required family checkpoint. Event-history
-  retention uses RP-OPERATIONAL-2555D under the existing Case L-3 exact-kind default.
+  retention uses RP-OPERATIONAL-2555D@1.0.0 under the existing Case L-3 exact-kind default. Project records
+  count in their Project partition. DL-2450 gives Application records one dedicated app:filesafe_policy_degraded
+  bucket per Puppet Master Server.
 gui_related: false
 gui_classification_reason: Event authority and storage contracts; no presentation change.
 depends_on:
 - DL-045
+- DL-2450
 - CV-556
 - SP-278
 - SP-286
@@ -2132,9 +2135,10 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - Plans/Decision_Log.md#DL-045
+- Plans/Decision_Log.md#DL-2450
 preserved_exact_tokens: []
 negative_constraints:
-- No event registry append, retention decision, or native admission.
+- No event registry append or native admission. DL-2450 supplies the Application count only.
 ```
 
 **Newly authored owner contract under DL-045 for `filesafe.policy_degraded` only.** `CV-556` owns semantics and closed payload. A per-family search of current non-generated Plans Markdown/JSON (FileSafe, Contracts, Storage, Decision Log, central registries, payload and application resources) found partial semantic minima, but no exact versioned history-reader binding, identity recipe, SP-286 adoption or withdrawal protocol. Reuse existing `event_record_index` projector and SP-278 checkpoint; existing safe_point_record and safe_point_restore_transaction remain their own canonical/projection owners, not new EventRecord-derived mutation authority.
@@ -2147,7 +2151,7 @@ negative_constraints:
 
 **Redaction and custody.** Snapshot bodies stay off-worktree under FileSafe's exact snapshot custody; SP-337 owns packed blobs and body addressing. Events contain only sanitized previews, non-secret identities, bounded reason/diagnostic text, refs and hashes: never raw command credentials, environment, file bytes or secret path material. Original guarded input stays only in its owner custody, not a second event body. FileSafe checks actor authorization and exact Host/root at admission and on every body read; hash/ref possession grants no access. Storage's coherent backup includes original source, source holds, seglog and SP-286 full-value receipt custody under the same backup/restore epoch. Restore of older state cannot recapture missing original work or replay effects. A deleted/inaccessible body is unavailable; history cannot recreate it or defeat a deletion/hold. No independent body deletion policy is authored.
 
-**Retention.** `retention_policy_ref = RP-OPERATIONAL-2555D` for this event history. Current Case L-3 (Non-authority security diagnostics) supplies 2,555 days, 2,000,000/project, with expiry only for expired unheld rows and fail-closed pressure otherwise. FileSafe explicitly defines this family as non-authoritative advisory degradation with enforcement intact; CV-556 preserves that premise. This is an existing exact-kind assignment, not a new deletion decision. Original bodies, holds, generic index RP-EVENT-INDEX-SOURCE and checkpoint policies remain independently governed. No registry admission follows.
+**Retention.** Case L-3 supplies `RP-OPERATIONAL-2555D@1.0.0` for this non-authoritative advisory degradation history. CV-556 requires authoritative enforcement to stay intact. Project records keep the 2,555-day terminal-transition window and the 2,000,000 limit in their Project partition. Under DL-2450, Application records count in their family's own `app:filesafe_policy_degraded` bucket, one per Puppet Master Server. The Application bucket retains records for 2,555 days (220,752,000 seconds) from the existing terminal-transition anchor and admits at most 2,000,000 retained records. An append that would exceed the limit fails closed if no expired unheld member is eligible for compaction. Overflow neither evicts unexpired or held records nor borrows room from or refuses writes to another bucket. Original bodies, holds, generic index RP-EVENT-INDEX-SOURCE and checkpoint policies remain under their existing owners.
 
 **Withdrawal and rebuild.** Cut off new `filesafe.policy_degraded` admissions first; reconcile prepared operations from original sources and original first receipts without a second effect. Fence `storage.filesafe_policy_degraded_history_read.v1@1.0.0` and every generic index generation whose admitted-type selection changes. Retain exact old schema dispatch and immutable historical records/custody. A successor reader activates only after a verified rebuild of the actual retained survivor set and atomic SP-278 generation publication/CAS. An unsupported schema/source, missing receipt or unresolved restore returns unavailable. No zero-cursor reset, sibling substitution, history rewrite, automatic deletion or fence clearance is permitted.
 
@@ -2166,7 +2170,7 @@ ContractRef: ContractName:Plans/Contracts_V0.md#CV-556, ContractName:Plans/stora
 
 
 
-Current selected assignment (2026-11-19): filesafe.policy_degraded@2.0.0 is registered for application_or_project in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2307. Its event history selects Application = RP-OPERATIONAL-2555D@1.0.0 (anchor_kind=terminal_transition, cardinality_scope=project), Project = RP-OPERATIONAL-2555D@1.0.0 (anchor_kind=terminal_transition, cardinality_scope=project); exact original and checkpoint bindings retain their existing Storage assignments. Registry membership supplies no producer adoption or native-installation proof. Missing-registration refusal applies only if the exact current registration is absent.
+Current selected assignment (2026-11-19): filesafe.policy_degraded@2.0.0 is registered for application_or_project in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2307. Its event history selects Application = RP-OPERATIONAL-2555D@1.0.0 (anchor_kind=terminal_transition, count in app:filesafe_policy_degraded, one dedicated bucket per Puppet Master Server under DL-2450), Project = RP-OPERATIONAL-2555D@1.0.0 (anchor_kind=terminal_transition, cardinality_scope=project, count in the Project partition). The Application bucket retains records for 2,555 days (220,752,000 seconds) from the existing terminal-transition anchor and admits at most 2,000,000 retained records. An append that would exceed the limit fails closed if no expired unheld member is eligible for compaction. Overflow neither evicts unexpired or held records nor borrows room from or refuses writes to another bucket. Exact original and checkpoint bindings retain their existing Storage assignments. Registry membership supplies no producer adoption or native-installation proof. Missing-registration refusal applies only if the exact current registration is absent.
 ### SP-557 - safe_point.created persistence and read contract
 
 ```yaml
