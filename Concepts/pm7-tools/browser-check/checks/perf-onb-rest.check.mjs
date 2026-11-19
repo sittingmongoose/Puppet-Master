@@ -23,7 +23,9 @@
 //            (per drawn frame, not per second: Retro draws 10 or 20 times a second, and a 238 Hz display draws up to
 //            twice as often as the owner's 120 Hz);
 //   layouts  NieR only: at most --set forced (default 0.1) forced layouts per drawn frame (a Layout event inside a script
-//            task of the trace: NieR's box measured after the frame's writes);
+//            task of the trace: NieR's box measured after the frame's writes). A trace that names no renderer main
+//            thread, or that carries no Layout category, measured nothing: could not judge, and the row FAILS
+//            (PM7PERF-ONBREST-NO-RENDERER-READS-ZERO; helpers/onb-rest-rows.mjs);
 //   counts   the kept nodes stay in step with the stage: Friendly's and Glass's shadows are Pip's and one per placed prop,
 //            Basic's protractor its seven parts, NieR's brackets 6 to 9 parts with a target and none without.
 // Logged per cell: main thread ms a second, style elements a second, layouts and forced layouts a second, forced style
@@ -33,6 +35,7 @@
 // Both surfaces. About 7 minutes with the defaults.
 import { traceEvents, summarise } from '../helpers/frame-trace.mjs';
 import { muteSound } from '../helpers/quiet-page.mjs';
+import { forcedLayoutRow } from '../helpers/onb-rest-rows.mjs';
 
 const ALL = ['basic', 'friendly', 'retro', 'glass', 'nier'].flatMap((f) => [`${f}-light`, `${f}-dark`]);
 const SCRIPT = new Set(['FireAnimationFrame', 'FunctionCall', 'TimerFire', 'EventDispatch', 'RunMicrotasks', 'FireIdleCallback', 'v8.callFunction', 'V8.Execute']);
@@ -201,8 +204,8 @@ export default async function (t) {
 			if (fam === 'nier') {
 				if (!x) await t.check(`${cell}: forced layouts could be read`, false, `trace failed: ${err}: could not judge`);
 				else {
-					const draws = drawsPerSec > 0 ? drawsPerSec : x.mainFrames.perSec, k = fw.layouts / x.secs / draws;
-					await t.check(`${cell}: at most ${forcedMax} forced layouts per drawn frame`, k <= forcedMax, `${(fw.layouts / x.secs).toFixed(1)} forced layouts/s at ${draws.toFixed(1)} draws/s (${k.toFixed(2)} a draw); all layouts ${x.layoutPerSec}/s`);
+					const row = forcedLayoutRow({ summary: x, forced: fw, drawsPerSec, max: forcedMax });
+					await t.check(`${cell}: at most ${forcedMax} forced layouts per drawn frame`, row.ok, row.detail);
 				}
 			}
 			await t.check(`${cell}: the stage's kept ${counts ? counts.what : 'nodes'} match what it shows`, !!counts && counts.ok, counts ? `${counts.got}, want ${counts.want}` : 'no stage');

@@ -66,7 +66,7 @@ function selfTimes(evs) {
 export function summarise(trace, { url, allScripts = false } = {}) {
 	const events = Array.isArray(trace) ? trace : trace.traceEvents || [];
 	const threads = new Map(), procs = new Map();
-	let t0 = Infinity, t1 = -Infinity, started = null;
+	let t0 = Infinity, t1 = -Infinity, started = null, layoutCat = false;
 	for (const e of events) {
 		if (e.ph === 'M') {
 			if (e.name === 'thread_name') threads.set(e.pid + ':' + e.tid, e.args.name);
@@ -75,6 +75,8 @@ export function summarise(trace, { url, allScripts = false } = {}) {
 		}
 		if (e.name === 'TracingStartedInBrowser') started = e;
 		if (!e.ts || e.cat === '__metadata') continue;
+		// devtools.timeline is the category that carries Layout events; a trace taken without it measures no layouts
+		if (!layoutCat && e.cat && e.cat.split(',').includes('devtools.timeline')) layoutCat = true;
 		if (e.ts < t0) t0 = e.ts;
 		const end = e.ts + (e.dur || 0); if (end > t1) t1 = end;
 	}
@@ -239,6 +241,9 @@ export function summarise(trace, { url, allScripts = false } = {}) {
 		gpuPid: gpuPid ?? null,
 		// the page's renderer main thread these numbers are of (for frameStarts below)
 		renderer: mainKey ? { pid: Number(mainKey.split(':')[0]), tid: Number(mainKey.split(':')[1]) } : null,
+		// whether the trace carries the Layout category (devtools.timeline): without it no Layout event could appear,
+		// and a forced-layout count of 0 measured nothing (PM7PERF-ONBREST-NO-RENDERER-READS-ZERO)
+		layoutCategory: layoutCat,
 		cost,
 		split,
 		other: [...other].sort((a, b) => b[1] - a[1]).slice(0, 8).map(([n, us]) => [n, perSec(us)]),
