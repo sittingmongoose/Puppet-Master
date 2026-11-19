@@ -2,9 +2,9 @@
 
 Source: `Plans/Decision_Log.md`
 
-Source lines: L28747-L56342
+Source lines: L28747-L56405
 
-Source SHA256: `0c646906d67028bcaa1fac29a54c49d631b6676e0eefa2fc099d6f5f214bc915`
+Source SHA256: `4c9c3f5104ce8ce26d35c89468f814b446fa0c6cced01f8fb941a3623b355b60`
 
 ---
 
@@ -27601,6 +27601,69 @@ preserved_exact_tokens:
 - 3821251061e9ac2bba69ed482263d13beb3296c5109d98ae08f37fa15538f4e5
 - 2026-11-19.36
 - 2026-11-19.37
+negative_constraints:
+- No new admission, producer adoption, native execution claim or governance seal.
+```
+
+### DL-2488: Event Authority corrects chat.thread_worktree_pre_merge_test_passed (merge 3 post-landing)
+
+```yaml
+plan_unit_id: DL-2488
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: 'Correction for chat.thread_worktree_pre_merge_test_passed only, under DL-077 and DL-400, resolving post-landing
+  Astra finding(s) [4]. The original admission authority remains Plans/Decision_Log.md#DL-2251; this entry records no new
+  admission, verdict, policy choice or producer adoption. Current row canonical SHA-256 82ad3232455910fcef5f49d79d69d4709149b509695f7b275367c8313ac425ee.
+  Its scope is application_or_project. Payload editions: application `pm.dch_event.chat_thread_worktree_pre_merge_test_passed.application.v1`
+  (RP-CHAT-THREAD-LIFETIME@1.0.0, producer requires_owner_adoption); project `pm.dch_event.chat_thread_worktree_pre_merge_test_passed.project.v1`
+  (RP-CHAT-THREAD-LIFETIME@1.0.0, producer requires_owner_adoption).
+
+
+  The correction moves the full registry from 2026-11-19.37, 518 families, SHA-256 e2b08df9a279ade1256a969b0b79dd8b3388fa942821b47751749ec97a5a5b01,
+  to 2026-11-19.38, 518 families, SHA-256 7fa7c892a633179d9dd08e6445257ae5ef0dea2ee974269bf6ac48729be35f4d, without changing
+  another family. Revision witness: reports/event-authority-20261116/admission-merge-3/corrections/chat.thread_worktree_pre_merge_test_passed.json.
+  Depth assessment: reports/event-authority-20261116/admission-merge-2/depth/chat.thread_worktree_pre_merge_test_passed.json,
+  SHA-256 ca85c31799ef8f6be09a633603fa49b516baf8cdb7f02562307b3442ceda407e.
+
+
+  The original append checkpoints are preserved: before 2026-11-16.114 SHA-256 a94f16e440ebf0cc6ab03befc4f4a6533e1fca7ba8ac1abfc4261d870f2e0ea4;
+  after 2026-11-16.115 SHA-256 4e98aea9ebac9e8c817cb30d95633eb581c508da16151e391abd1a1f334b72d0. Existing semantic owner Plans/assistant-chat-design.md#ACD-623,
+  payload owner Plans/Contracts_V0.md#CV-643, resource Plans/dch_event_payloads/chat_thread_worktree_pre_merge_test_passed.schema.json#/$defs/project
+  retain their contracts. Current citations were re-read from existing canonical text; original citations, records and decision
+  entries remain in the named Git predecessor. Native execution remains NOT_RUN. Required producer adoption, permissions,
+  original custody and receipt/publication fences remain required.'
+gui_related: false
+gui_classification_reason: Maintains one existing event admission and its evidence.
+depends_on:
+- DL-077
+- DL-400
+- DL-2251
+unblocks: []
+acceptance_criteria:
+- Exactly one family is corrected and the original append checkpoints remain authenticated.
+- The correction witness and current DL-077 record match their named Git editions.
+validation_surfaces:
+- python3 scripts/pm-ea-record-chain.py
+- python3 scripts/pm-ea-postfix-check.py
+- python3 scripts/pm-ea-retention-citation-check.py
+risk_class: event_authority_admission
+reasoning_tier: high
+context_scope: event_authority_pnc019_merge3_postfix
+implementation_surfaces:
+- Plans/event_family_registry.json
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/MERGE2-POSTLAND-astra62max/REVIEW.md
+- Plans/Decision_Log.md#DL-2251
+preserved_exact_tokens:
+- chat.thread_worktree_pre_merge_test_passed
+- 82ad3232455910fcef5f49d79d69d4709149b509695f7b275367c8313ac425ee
+- 2026-11-19.37
+- 2026-11-19.38
 negative_constraints:
 - No new admission, producer adoption, native execution claim or governance seal.
 ```
