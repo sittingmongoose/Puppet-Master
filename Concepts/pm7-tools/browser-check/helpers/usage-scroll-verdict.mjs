@@ -1,12 +1,17 @@
 // The verdict of checks/perf-usage-scroll.check.mjs from its four measured windows (as built, control, control, as built),
 // kept apart from the browser so tools/usage-scroll-verdict.selftest.mjs can judge it on constructed windows.
-// A window: { name: 'as built' | 'control', scrolls, whole, lost: [why], paint, full (frames never presented a second),
-// partial, unknown, restFrames, restLost }. Returns { rows: [{ name, ok, detail }] the judged rows (could judge, the paint
-// ratio), logs: [text], warnings: [text] (a guard breached: logged as WARNING by the check, never a failed row) }.
+// A window: { name: 'as built' | 'control', scrolls, whole, lost: [why], renderer (the trace's renderer pid, null when
+// the trace named none), paint, full (frames never presented a second), partial, unknown, restFrames, restLost }.
+// Returns { rows: [{ name, ok, detail }] the judged rows (could judge, the paint ratio), logs: [text], warnings: [text]
+// (a guard breached: logged as WARNING by the check, never a failed row) }.
+// A renderer-less window is could not judge (PM7PERF-NO-RENDERER-READS-ZERO, R124 O-1): its paint reads 0, one such
+// as-built window halves the mean and the ratio can pass unmeasured (the guard self-test shows 0.50).
+import { traceJudgeable } from './trace-guard.mjs';
+
 export function usageScrollVerdict(windows, { ratio = 0.85, rm = false } = {}) {
 	const rows = [], logs = [], warnings = [];
-	const judged = windows.length > 0 && windows.every((w) => w.scrolls > 0 && w.whole);
-	rows.push({ name: 'could judge: the wheel scrolled the board in all four windows and each trace is whole', ok: judged, detail: windows.map((w) => `${w.name} ${w.scrolls} scroll events${w.whole ? '' : ' (' + (w.lost || []).join(', ') + ')'}`).join(', ') });
+	const judged = windows.length > 0 && windows.every((w) => w.scrolls > 0 && w.whole && traceJudgeable(w).ok);
+	rows.push({ name: 'could judge: the wheel scrolled the board in all four windows, each trace is whole and names its renderer', ok: judged, detail: windows.map((w) => `${w.name} ${w.scrolls} scroll events${w.whole ? '' : ' (' + (w.lost || []).join(', ') + ')'}${traceJudgeable(w).ok ? '' : ': ' + traceJudgeable(w).why}`).join(', ') });
 	if (!judged) return { rows, logs, warnings };
 	const mean = (name, k) => { const v = windows.filter((w) => w.name === name).map((w) => w[k] || 0); return v.length ? v.reduce((a, b) => a + b, 0) / v.length : 0; };
 	const [bp, cp] = [mean('as built', 'paint'), mean('control', 'paint')];

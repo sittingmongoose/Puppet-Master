@@ -55,6 +55,8 @@
 // --set framesBy=1       diagnosis, off by default: each rest trace also says what asked for its main frame starts
 //                        (logged per try, and named in a failing frames row)
 // Runs on both surfaces (--set sandbox=0 and 1). Main's page (no still page) fails (a), (c), (e) and the 20 s cell.
+// A try whose trace names no renderer main thread measured no main frames (they and the layouts read 0): Settings'
+// main-frame rows fail as could not judge, never pass on the zeros (PM7PERF-NO-RENDERER-READS-ZERO).
 import { TRACE_CATEGORIES, summarise, frameStarts } from '../helpers/frame-trace.mjs';
 import { muteSound } from '../helpers/quiet-page.mjs';
 import { pageSource, blocksOf, blockAt } from '../helpers/built-source.mjs';
@@ -67,6 +69,7 @@ import { installToggleFiniteWatch } from '../helpers/still-finite.mjs';
 import { installPrewarmProbe, prewarmSnapshot, consumeUsagePrewarm } from '../helpers/still-prewarm.mjs';
 import { forcedPrewarm } from '../helpers/still-prewarm-control.mjs';
 import { installHomeLiveWatch, readHomeLive, homeBeatPlan, beatFreeDrawn } from '../helpers/still-home-live.mjs';
+import { traceJudgeable } from '../helpers/trace-guard.mjs';
 
 const ALL = ['basic-light', 'basic-dark', 'friendly-light', 'friendly-dark', 'glass-light', 'glass-dark', 'retro-light', 'retro-dark', 'nier-light', 'nier-dark'];
 // a Home beat's draws last about this long after it (patch slices, lead light, the 600 ms Live-mark pulse, odometer)
@@ -447,6 +450,9 @@ export default async function (t) {
 				tries.push(`${r.drawn.perSec}/${rendered(r)} (starts ${r.mainFrames.perSec}, ${r.mainFrames.noUpdatePerSec} with nothing to update)${quiet ? '' : ' (a finite animation still ran)'}${beatNote}${r.drawn.perSec > drawnMax || rendered(r) > mainMax ? ' by ' + named(r) + (home && r.startsBy ? '; asked by ' + (askers(r) || 'nothing named') : '') : ''}`);
 				const j = stillJudged(view, { drawn: drawnMax, main: mainMax, starts: startsMax, hz: refreshHz });
 				if (home) { const meets = j.meets; j.meets = (q) => !q.beatUnjudgeable && meets(q); }
+				// Settings judges main frames and starts, which a renderer-less trace reads as 0 (PM7PERF-NO-RENDERER-READS-ZERO):
+				// such a try never meets the bounds, so it cannot end the tries as a pass; the row below fails as could not judge.
+				else if (!live) { const meets = j.meets; j.meets = (q) => traceJudgeable(q).ok && meets(q); }
 				const pick = stillPick(x, r, j);
 				x = pick.x;
 				if (pick.done) break;
@@ -458,8 +464,16 @@ export default async function (t) {
 				// Home's dashboard is live too (its widgets tick with the demo engine): its main frames are logged, the loops'
 				// cost is judged by what the compositor draws
 				if (view === 'dashboard') t.log(`${at}: NOTE Home is live (its widgets tick): main frames rendered ${rendered(x)}/s (starts ${x.mainFrames.perSec}/s) logged, not judged${named(x) ? '; by ' + named(x) : ''}`);
-				else await t.check(`${at}: still, the main thread renders at most ${mainMax} frames a second`, rendered(x) <= mainMax, `${rendered(x)}/s rendered (${x.mainFrames.perSec}/s started, ${x.mainFrames.noUpdatePerSec}/s of them with nothing to update), ${Math.round(x.cost.main)} ms/s in the quietest try${named(x) ? '; by ' + named(x) : ''}${framesBy ? '; asked for by ' + (askers(x) || 'nothing named') : ''}`);
-				if (judgeStarts) await t.check(`${at}: still, the main thread starts at most 0.45 per refresh (${Number.isFinite(startCap) ? startCap.toFixed(1) : '?'} a second at ${Number.isFinite(refreshHz) ? refreshHz.toFixed(0) : '?'} Hz, capped at ${startsMax})`, Number.isFinite(startCap) && x.mainFrames.perSec <= startCap, `${x.mainFrames.perSec}/s started (${x.mainFrames.noUpdatePerSec}/s of them with nothing to update, ${rendered(x)}/s rendered), bound ${Number.isFinite(startCap) ? startCap.toFixed(1) : 'unread'}/s = 0.45 of ${Number.isFinite(refreshHz) ? refreshHz.toFixed(0) : '?'} Hz, cap ${startsMax}/s; ${framesBy ? 'asked for by ' + (askers(x) || 'nothing named') : 'run with --set framesBy=1 to name what asks for them'}`);
+				else if (!traceJudgeable(x).ok) {
+					// a renderer-less trace reads main frames and layouts as 0 (PM7PERF-NO-RENDERER-READS-ZERO): could not judge
+					const why = traceJudgeable(x).why;
+					await t.check(`${at}: still, the main thread renders at most ${mainMax} frames a second`, false, `${why}: the trace measured no main thread, so main frames and layouts read 0 (quietest of ${tries.length} tries: ${tries.join('; ')})`);
+					if (judgeStarts) await t.check(`${at}: still, the main thread starts at most 0.45 per refresh (${Number.isFinite(startCap) ? startCap.toFixed(1) : '?'} a second at ${Number.isFinite(refreshHz) ? refreshHz.toFixed(0) : '?'} Hz, capped at ${startsMax})`, false, `${why}: the trace measured no main thread, so frame starts read 0 (${tries.join('; ')})`);
+				}
+				else {
+					await t.check(`${at}: still, the main thread renders at most ${mainMax} frames a second`, rendered(x) <= mainMax, `${rendered(x)}/s rendered (${x.mainFrames.perSec}/s started, ${x.mainFrames.noUpdatePerSec}/s of them with nothing to update), ${Math.round(x.cost.main)} ms/s in the quietest try${named(x) ? '; by ' + named(x) : ''}${framesBy ? '; asked for by ' + (askers(x) || 'nothing named') : ''}`);
+					if (judgeStarts) await t.check(`${at}: still, the main thread starts at most 0.45 per refresh (${Number.isFinite(startCap) ? startCap.toFixed(1) : '?'} a second at ${Number.isFinite(refreshHz) ? refreshHz.toFixed(0) : '?'} Hz, capped at ${startsMax})`, Number.isFinite(startCap) && x.mainFrames.perSec <= startCap, `${x.mainFrames.perSec}/s started (${x.mainFrames.noUpdatePerSec}/s of them with nothing to update, ${rendered(x)}/s rendered), bound ${Number.isFinite(startCap) ? startCap.toFixed(1) : 'unread'}/s = 0.45 of ${Number.isFinite(refreshHz) ? refreshHz.toFixed(0) : '?'} Hz, cap ${startsMax}/s; ${framesBy ? 'asked for by ' + (askers(x) || 'nothing named') : 'run with --set framesBy=1 to name what asks for them'}`);
+				}
 			}
 			if (a.still) await t.check(`${at}: going still cost stays within its marked population`, onCost.pass, `${JSON.stringify(onCost)}; ${on?.found ? `${on.firstFrameMs} ms frame; largest following recalc ${on.max}, ${on.total} in ${on.steps}` : 'no recalc or mark: unjudgeable'}`);
 

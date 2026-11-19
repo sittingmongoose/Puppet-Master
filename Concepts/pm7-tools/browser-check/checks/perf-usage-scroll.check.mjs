@@ -28,7 +28,8 @@
 //      the control's is logged as WARNING (a rest trace that lost data says so).
 // A pane that did not scroll in a window, or a window that stayed partial after two retakes (Chrome reported lost trace
 // data, the compositor drew under 10 frames a second while the wheel turned, or the 48 ticks did not fit in 8 s), fails
-// as "could not judge".
+// as "could not judge". So does a window whose trace names no renderer main thread: its paint reads 0, and one such
+// as-built window halves the mean, so the ratio could pass unmeasured (PM7PERF-NO-RENDERER-READS-ZERO, R124 O-1).
 // Both surfaces (the kit's sandbox switch).   --set looks=basic-dark,glass-dark   --set ratio=0.85   --set rm=1 (Reduced
 // Motion)   --set settle=<ms> (25000)
 // Bar for this check (test-tool-bar.md, written before its first review): a finding stops work only if it is shown on
