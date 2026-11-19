@@ -8,6 +8,9 @@
 //     its frame reporter's final state (PipelineReporter frame_reporter / chrome_frame_reporter, matched by renderer,
 //     layer tree and frame sequence): dropped = not presented, presented partial = partial; with no reporter the
 //     presentation is unknown, and the events without the flag are only that, never called fully dropped.
+// (5) PM7PERF-FRAMETRACE-PAC-AS-PAINT: PaintArtifactCompositor::Update is Chrome's layerization of the whole page,
+//     not Blink paint; the old paint pattern matched it before layerize was tried, so 83-89% of the stage's "paint"
+//     was layerization (lane X). PAC is its own group, full and repainted-layers updates split by event name.
 import assert from 'node:assert/strict';
 import { pathToFileURL } from 'node:url';
 import { resolve } from 'node:path';
@@ -88,4 +91,24 @@ const bare = ft.summarise([...ev, ...drops(null, 'frame_reporter', false)], { ur
 assert.equal(bare.unflaggedPerSec, 10, '(4) DroppedFrame events without the flag are reported under that name');
 assert.equal(bare.presentationUnknownPerSec, 10, '(4) and their presentation is still unknown without a reporter');
 
-console.log('PASS frame starts, NoUpdates aborts and rendered frames counted per renderer; the live frame wins over a stale record at the same address; frameStarts names the asking task; DroppedFrame events classified by their reporter\'s final state (not presented, partial, unknown)');
+// (5) one renderer, a 1 s window: Blink Paint 300 ms, a full PAC Update 100 ms holding a 60 ms Layerize (self 40 ms),
+// a repainted-layers update 150 ms, another PAC event 50 ms. The old helper filed all 240 ms of PAC under paint.
+const pev = [meta(20, 2, 'CrRendererMain'),
+	{ name: 'TracingStartedInBrowser', ph: 'I', ts: 1, pid: 1, tid: 1, args: { data: { frames: [{ frame: 'APP', url: page, processId: 20 }] } } },
+	{ name: 'Paint', ph: 'X', ts: 10000, dur: 200000, pid: 20, tid: 2, cat: 'devtools.timeline' },
+	{ name: 'PaintArtifactCompositor::Update', ph: 'X', ts: 300000, dur: 100000, pid: 20, tid: 2, cat: 'devtools.timeline' },
+	{ name: 'Layerize', ph: 'X', ts: 320000, dur: 60000, pid: 20, tid: 2, cat: 'devtools.timeline' },
+	{ name: 'PaintArtifactCompositor::UpdateRepaintedLayers', ph: 'X', ts: 500000, dur: 150000, pid: 20, tid: 2, cat: 'devtools.timeline' },
+	{ name: 'Paint', ph: 'X', ts: 700000, dur: 100000, pid: 20, tid: 2, cat: 'devtools.timeline' },
+	{ name: 'PaintArtifactCompositor::Rebuild', ph: 'X', ts: 900000, dur: 50000, pid: 20, tid: 2, cat: 'devtools.timeline' },
+	{ name: 'Idle', ph: 'X', ts: 999999, dur: 1, pid: 20, tid: 2, cat: 'devtools.timeline' }];
+const ps = ft.summarise(pev, { url: page });
+assert.equal(ps.split.paint, 300, `(5) paint is Blink's own Paint only (300 ms/s), not PAC layerization: ${JSON.stringify(ps.split)}`);
+assert.equal(ps.split.layerize, 60, '(5) the Layerize inside the PAC Update keeps its own group (60 ms/s self time)');
+assert.equal(ps.split.pac, 240, `(5) PAC Update is its own group (240 ms/s): ${JSON.stringify(ps.split)}`);
+assert.deepEqual(ps.pac, { full: 40, repainted: 150, other: 50 }, `(5) full and repainted-layers updates split when the trace names them: ${JSON.stringify(ps.pac)}`);
+const noPac = ft.summarise(pev.filter((e) => !/PaintArtifactCompositor/.test(e.name || '')), { url: page });
+assert.equal(noPac.split.pac, undefined, '(5) a trace with no PAC events has no pac group');
+assert.deepEqual(noPac.pac, { full: 0, repainted: 0, other: 0 }, '(5) and its split reads zero, not a guess');
+
+console.log('PASS frame starts, NoUpdates aborts and rendered frames counted per renderer; the live frame wins over a stale record at the same address; frameStarts names the asking task; DroppedFrame events classified by their reporter\'s final state (not presented, partial, unknown); PAC Update is its own group split full/repainted, paint is Blink paint only');
