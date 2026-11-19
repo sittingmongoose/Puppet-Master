@@ -1,4 +1,5 @@
 import {setLookBySetting,guardPaintedLook} from '../helpers/settings-look.mjs';
+import {clearToastsOver} from '../helpers/toasts.mjs';
 async function go(t,f,d,w){await f.evaluate(([d,w])=>PM51.go(d,w),[d,w]);await f.waitForSelector(`[data-continuous-workspace-body="${w}"][data-workspace-mounted="true"]`);await t.settle();}
 const body=(f,w)=>f.locator(`[data-continuous-workspace-body="${w}"]`);
 async function tab(t,f,w,label){const b=body(f,w).locator('.manager-tab',{hasText:new RegExp('^\\s*'+label+'\\s*$')}).first();await b.scrollIntoViewIfNeeded();await b.click();await t.settle();await t.page.waitForTimeout(400);}
@@ -76,6 +77,10 @@ export default async function(t){
     const pr=await drawer.locator('.pm51-panel').boundingBox();await t.check(`${look} ${nw}x${nh}: notification sheet fits`,!!pr&&pr.x>=0&&pr.y>=0&&pr.x+pr.width<=nw&&pr.y+pr.height<=nh,JSON.stringify(pr));
     const header=drawer.locator('.pm51-panel-head').first(), close=drawer.locator('.pm51-panel-close').first();
     if(pr&&pr.y>=0){
+     // F12E-SB-SHEET-TOAST-COVER: a live notice can sit over the sheet's head or close at 1920, and Jared ruled toasts
+     // may cover controls, so clear them by their own button (helpers/toasts.mjs) before judging 'exposed'. The
+     // assertions themselves are unchanged; a toast that will not leave is still reported by them as a cover.
+     await clearToastsOver(t,f,header,`${look} ${nw}`,'the sheet header');await clearToastsOver(t,f,close,`${look} ${nw}`,'the close box');
      await t.visible(header,`${look} ${nw}: sheet header exposed`);await t.visible(close,`${look} ${nw}: close exposed`);
      await drawer.locator('.pm51-dd-trigger').first().click();await t.settle();
      const list=f.locator('.pm51-dd-list.is-open').last();await list.waitFor({state:'visible'});
@@ -96,7 +101,7 @@ export default async function(t){
      const r=await sheet.boundingBox();
      await t.check(`${look} ${width}: ${action} fits`,!!r&&r.x>=0&&r.y>=0&&r.x+r.width<=width&&r.y+r.height<=height,JSON.stringify(r));
      const close=sheet.locator('.pm51-panel-close, .dialog-head [data-action="close-overlay"]').first();
-     if(await close.count()){await t.visible(close,`${look} ${width}: ${action} close exposed`);await close.click();await t.settle();}
+     if(await close.count()){await clearToastsOver(t,f,close,`${look} ${width} ${action}`,'the close box');await t.visible(close,`${look} ${width}: ${action} close exposed`);await close.click();await t.settle();}
      await shut(t,f);await t.check(`${look} ${width}: ${action} dismissed`,await sheet.count()===0||!await sheet.isVisible());
     }
    }
