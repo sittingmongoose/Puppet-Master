@@ -31,6 +31,7 @@ def main():
     rows = {x['event_type']:x for x in load('Plans/event_family_registry.json')['families']}
     policies = {x['policy_id']:x for x in load('Plans/storage_value_registry.json')['retention_policies']}
     findings, checks, mutations, families = [], [], [], []
+    reviewed = []
     for event, prepared in sorted(ready.items()):
         cell = load(FOLDER+'/depth/'+event+'.json')['rows'][0]['cells']['retention']
         union = []
@@ -80,9 +81,55 @@ def main():
                     mutations.append(dict(event_type=event, scope=scope, mutation='remove selected policy from all current witnesses', killed=killed))
                     if not killed:
                         findings.append(dict(event_type=event, lane=prepared['lane'], missing=['policy-removal mutation survived']))
+    if args.self_test and not args.strict_citations:
+        from pm_ea_retention_citations import union_missing, selections
+        baseline='10ba97e699d51287673d6f1db4d994f54c59b4ed'
+        @lru_cache(maxsize=64)
+        def original(path):
+            return subprocess.check_output(['git','-C',str(ROOT),'show',baseline+':'+path]).decode()
+        targets={}
+        for path in sorted((ROOT/'reports/event-authority-20261116/admission-merge-3/corrections').glob('*.json')):
+            correction=json.loads(path.read_text());event=correction['event_type']
+            original_depth=json.loads(original(FOLDER+'/depth/'+event+'.json'))
+            for changed in correction['citation_changes']:
+                old=changed['old'];quote=old.get('quote','')
+                if not quote.lstrip().startswith('Current selected assignment') or re.search(r'RP-|ai\.usage\.usage-retention',quote):
+                    continue
+                ordinal=changed['ordinal'];received=original_depth['rows'][0]['cells']['retention']['evidence'][ordinal]
+                if any(old.get(k)!=received.get(k) for k in ('path','unit','quote')):
+                    findings.append(dict(event_type=event,lane=ready[event]['lane'],missing=['review regression does not match actual received Git input']))
+                    continue
+                targets[(event,ordinal)]=old
+        for (event,ordinal),old in sorted(targets.items()):
+            current_item=load(FOLDER+'/depth/'+event+'.json')['rows'][0]['cells']['retention']['evidence'][ordinal]
+            try:body=range_text(current_item,read)
+            except ValueError:body=''
+            tokens=[x.get('policy_id',x.get('setting_key')) for x in selections(rows[event]).values()]
+            repaired=all(token in body for token in tokens)
+            # Restore the exact received membership-only witness. It is not
+            # retention evidence, even when another witness keeps union credit.
+            old_body=range_text(old,original)
+            killed=not all(token in old_body for token in tokens)
+            reviewed.append(dict(event_type=event,ordinal=ordinal,repaired=repaired,original_range_mutation_killed=killed))
+            if not repaired or not killed:
+                findings.append(dict(event_type=event,lane=ready[event]['lane'],missing=['reviewed truncated range not repaired or regression survived']))
+        if len(targets)!=123:
+            findings.append(dict(event_type='shared',lane='shared',missing=['expected all 123 received truncated citations'],count=len(targets)))
+        for event in sorted({key[0] for key in targets}):
+            old_cell=json.loads(original(FOLDER+'/depth/'+event+'.json'))['rows'][0]['cells']['retention']
+            old_bodies=[]
+            for item in old_cell['evidence']:
+                try:old_bodies.append(range_text(item,original))
+                except ValueError:pass
+            gaps,_=union_missing(old_bodies,rows[event],policies)
+            mutations.append(dict(event_type=event,mutation='restore complete received retention cell',baseline_union_missing=gaps,
+                killed=bool(gaps),qualification='Secondary policy evidence may preserve family credit; its reviewed truncated range is still repaired.'))
+        union_refusals=sum(bool(x.get('baseline_union_missing')) for x in mutations if x['mutation']=='restore complete received retention cell')
+        if union_refusals<81:
+            findings.append(dict(event_type='shared',lane='shared',missing=['received whole-cell regressions did not reproduce at least 81 refusals'],count=union_refusals))
     result = dict(schema_id='pm.ea.retention_citation_check.v1', input_revision=args.revision or 'working_tree',
         script_sha256=hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
-        families=len(ready), citations=len(checks), strict_diagnostic=args.strict_citations, findings=findings, checks=checks, family_checks=families, mutations=mutations,
+        families=len(ready), citations=len(checks), strict_diagnostic=args.strict_citations, findings=findings, checks=checks, family_checks=families, mutations=mutations, reviewed_range_regressions=reviewed,
         by_lane=dict(Counter(x['lane'] for x in findings)))
     if args.output:
         args.output.parent.mkdir(parents=True, exist_ok=True)

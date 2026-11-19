@@ -31,8 +31,20 @@ def rendered(value):
     return (json.dumps(value, indent=2, ensure_ascii=False)+'\n').encode()
 
 
+def git_context(root):
+    selected = Path(root).resolve()
+    try:
+        top = subprocess.check_output(['git','-C',str(selected),'rev-parse','--show-toplevel'],stderr=subprocess.DEVNULL).decode().strip()
+    except subprocess.SubprocessError as exc:
+        raise ValueError('correction root has no Git history') from exc
+    if Path(top).resolve() != selected:
+        raise ValueError('correction proof cannot borrow a parent checkout history')
+    return selected
+
+
 @lru_cache(maxsize=64)
 def git_bytes(root, commit, path):
+    root = git_context(root)
     if not re.fullmatch(r'[0-9a-f]{40}', commit):
         raise ValueError('correction predecessor must be a full Git commit')
     return subprocess.check_output(['git', '-C', str(root), 'show', commit+':'+path])
@@ -88,9 +100,15 @@ def corrected_row(before, root):
     return row
 
 
-@lru_cache(maxsize=512)
 def application_commit(root, path, raw_sha):
-    commits = subprocess.check_output(['git', '-C', str(root), 'log', '--format=%H', '--diff-filter=A', 'HEAD', '--', path]).decode().splitlines()
+    root = git_context(root)
+    head = subprocess.check_output(['git','-C',str(root),'rev-parse','HEAD']).decode().strip()
+    return _application_commit_cached(str(root),head,path,raw_sha)
+
+
+@lru_cache(maxsize=512)
+def _application_commit_cached(root, head, path, raw_sha):
+    commits = subprocess.check_output(['git', '-C', str(root), 'log', '--format=%H', '--diff-filter=A', head, '--', path]).decode().splitlines()
     matches = [c for c in commits if sha(git_bytes(root, c, path)) == raw_sha]
     if len(matches) != 1:
         raise ValueError('correction is not one immutable Git application witness: '+path)
@@ -98,7 +116,7 @@ def application_commit(root, path, raw_sha):
 
 
 def witness(record, root, *, require_committed=True):
-    root = Path(root).resolve()
+    root = git_context(root)
     path = record.get('postfix_correction')
     expected = DIRECTORY+'/'+record['event_type']+'.json'
     if path != expected:
@@ -118,6 +136,20 @@ def witness(record, root, *, require_committed=True):
     old_depth = git_bytes(root, source, old_record['depth_assessment']['path'])
     if doc['predecessor_assessment_sha256'] != sha(old_depth) or old_record['depth_assessment']['sha256'] != sha(old_depth):
         raise ValueError('correction predecessor assessment differs from Git')
+    if old_record['registry_row_sha256'] != canonical(doc['before_row']):
+        raise ValueError('predecessor record does not pin the actual before row')
+    if record['depth_assessment']['path'] != old_record['depth_assessment']['path']:
+        raise ValueError('correction changes the assessment path')
+    old_log = git_bytes(root,source,'Plans/Decision_Log.md')
+    marker = ('### '+old_record['decision_ref'].split('#')[1]+':').encode()
+    if old_log.count(marker) != 1:
+        raise ValueError('predecessor decision is missing or ambiguous')
+    start = old_log.index(marker)
+    body_start = old_log.index(b'\n',start)+1
+    following = re.search(rb'(?m)^#{1,3} ',old_log[body_start:])
+    end = body_start+following.start() if following else len(old_log)
+    if sha(old_log[start:end]) != old_record['decision_section_sha256']:
+        raise ValueError('predecessor decision pin differs from its actual Git bytes')
     original = old_record.get('original_admission_decision_ref', old_record['decision_ref'])
     if doc['original_admission_decision_ref'] != original or record.get('original_admission_decision_ref') != original:
         raise ValueError('original admission authority changed')
@@ -172,30 +204,59 @@ def problem(record, root):
 
 
 def prior_states(doc, root):
-    """Rebuild exact complete predecessor bytes, newest correction first."""
-    pending = []
+    """Rebuild exact complete predecessor bytes with one hash per state.
+
+    A larger later registry may use an exact, hash-matching prefix as its first
+    witness. No row or revision is inferred without the complete pinned hash.
+    """
+    pending = {}
     for path in sorted((Path(root)/DIRECTORY).glob('*.json')):
         try:
-            pending.append(json.loads(path.read_text()))
-        except (OSError, ValueError):
+            rec = json.loads(path.read_text())
+            after = rec['registry_after']
+            before = rec['registry_before']
+            valid = (type(after['family_count']) is int and type(before['family_count']) is int
+                and after['family_count']==before['family_count']
+                and isinstance(after['revision'],str) and isinstance(before['revision'],str)
+                and isinstance(rec['registry_row'],dict) and isinstance(rec['before_row'],dict)
+                and all(isinstance(side.get('sha256'),str) and re.fullmatch(r'[0-9a-f]{64}',side['sha256']) for side in (before,after)))
+            if valid:
+                pending.setdefault(after['sha256'],[]).append(rec)
+        except (OSError,ValueError,KeyError,TypeError):
             continue
     states, current = [], doc
+    raw = rendered(current)
     while pending:
-        for rec in pending:
-            if pin(rendered(current)) != rec['registry_after']:
-                continue
-            earlier = copy.deepcopy(current)
-            at = [i for i, r in enumerate(earlier['families']) if r['event_type'] == rec['event_type']]
-            if len(at) != 1 or earlier['families'][at[0]] != rec['registry_row']:
-                continue
-            earlier['families'][at[0]] = rec['before_row']
-            earlier['registry_revision'] = rec['registry_before']['revision']
-            if pin(rendered(earlier)) != rec['registry_before']:
-                continue
-            states.append(earlier)
-            current = earlier
-            pending.remove(rec)
-            break
+        matches = pending.get(sha(raw),[])
+        if not matches and not states:
+            # Later admissions can append rows after this correction sequence.
+            # Exact prefix comparison is the same proof used by S5b states.
+            candidates=[]
+            earlier_hashes={rec['registry_before']['sha256'] for records in pending.values() for rec in records}
+            tips=set(pending)-earlier_hashes
+            for digest,records in pending.items():
+                if digest not in tips:continue
+                for rec in records:
+                    after=rec['registry_after'];count=after['family_count']
+                    if count>len(current['families']):continue
+                    prefix=dict(current,families=current['families'][:count],registry_revision=after['revision'])
+                    candidate=rendered(prefix)
+                    if pin(candidate)==after:candidates.append((rec,prefix,candidate))
+            if len(candidates)!=1:break
+            rec,current,raw=candidates[0]
+        elif len(matches)==1:
+            rec=matches[0]
         else:
             break
+        if pin(raw)!=rec['registry_after']:break
+        earlier=copy.deepcopy(current)
+        at=[i for i,row in enumerate(earlier['families']) if row['event_type']==rec['event_type']]
+        if len(at)!=1 or earlier['families'][at[0]]!=rec['registry_row']:break
+        earlier['families'][at[0]]=rec['before_row']
+        earlier['registry_revision']=rec['registry_before']['revision']
+        before_raw=rendered(earlier)
+        if pin(before_raw)!=rec['registry_before']:break
+        states.append(earlier)
+        del pending[rec['registry_after']['sha256']]
+        current,raw=earlier,before_raw
     return states

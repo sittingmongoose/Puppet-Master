@@ -12,6 +12,7 @@ import copy
 import hashlib
 import json
 import shutil
+import subprocess
 import sys
 import tempfile
 import unittest
@@ -566,6 +567,44 @@ LANE_DEFECTS = [
 ]
 
 
+def attach_correction_history(root, repo, family):
+    """A corrected admission requires this fixture's own Git context.
+
+    Ordinary M1 and S5b fixtures keep their deliberately Gitless rebuild proof.
+    The isolated repo borrows immutable objects; no source checkout is edited.
+    """
+    record = _read(repo, RECORDS+'/'+family+'.json')
+    if not record.get('postfix_correction'):
+        return False
+    subprocess.run(['git','init','--quiet',str(root)],check=True)
+    common = Path(subprocess.check_output(['git','-C',str(repo),'rev-parse','--path-format=absolute','--git-common-dir'],text=True).strip())
+    (root/'.git/objects/info/alternates').write_text(str(common/'objects')+'\n')
+    head = subprocess.check_output(['git','-C',str(repo),'rev-parse','HEAD'],text=True).strip()
+    subprocess.run(['git','-C',str(root),'update-ref','HEAD',head],check=True)
+    return True
+
+
+class CorrectionHistoryContext(unittest.TestCase):
+    def test_corrected_control_requires_its_own_git_history(self):
+        candidates = sorted((REPO / 'reports/event-authority-20261116/admission-merge-3/corrections').glob('*.json'))
+        if not candidates:
+            self.skipTest('No post-landing corrections in this edition')
+        family = json.loads(candidates[0].read_text())['event_type']
+        with tempfile.TemporaryDirectory(prefix='pm-ea-correction-context-') as scratch:
+            root = Path(scratch) / 'case'
+            for rel in admission_mode.inputs([family], REPO):
+                (root / rel).parent.mkdir(parents=True, exist_ok=True)
+                shutil.copyfile(REPO / rel, root / rel)
+            admission_mode.reset_caches()
+            without_history = admission_mode.verdict(family, root=root)
+            self.assertEqual('refused', without_history['mode'])
+            self.assertEqual('registry_after_mismatch', without_history['code'])
+            self.assertTrue(attach_correction_history(root, REPO, family))
+            admission_mode.reset_caches()
+            with_history = admission_mode.verdict(family, root=root)
+            self.assertEqual('admitted', with_history['mode'], with_history)
+
+
 def run_lane_scenarios(module, repo: Path = REPO, lanes=None) -> list[dict]:
     """Each lane case under each defect: accepted or refused through the lane's own function and `module`."""
     results = []
@@ -583,6 +622,7 @@ def run_lane_scenarios(module, repo: Path = REPO, lanes=None) -> list[dict]:
                 for defect_name, defect, accepted in LANE_DEFECTS:
                     root = Path(scratch) / (lane + "-" + defect_name)
                     shutil.copytree(base, root)
+                    attach_correction_history(root,repo,family)
                     if defect is not None:
                         defect(family)(root)
                     module.reset_caches()
