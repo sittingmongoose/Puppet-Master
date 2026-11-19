@@ -78,7 +78,36 @@ def o55_data() -> dict:
                 raise ValueError(f'row {rid} is decided in both {owner[rid]} and {p.name}')
             rows[rid], owner[rid] = meta, p.name
     data['rows'] = {'rows': rows}
+    data['canonModels'] = canon_model_rows()
     return data
+
+
+def canon_model_rows() -> dict:
+    """FO-182/183: every `model_picker` row of Plans/settings_inventory.json, as O55S.canonModels: what the shared model
+    picker (kit.d/31-model-rows.js) reads for a row. Its own inherit label (`option_labels.inherit`) and the row it
+    inherits from (`model_picker.inherit_from`), its stored choices that are not a model (`options`: inherit, Default,
+    None, auto), its default, its catalog and where depth goes (`model_picker.effort`). The base page's pinned reference
+    still calls eleven of these rows a `select` with the old global "Same as the project"; this is the canon they read."""
+    inventory = PKG.parents[2] / 'Plans' / 'settings_inventory.json'
+    if not inventory.exists():
+        return {}
+    out = {}
+    for r in json.loads(inventory.read_text(encoding='utf-8'))['settings']:
+        if r.get('type') != 'model_picker':
+            continue
+        mp = r.get('model_picker') or {}
+        out[r['id']] = {
+            'label': r.get('label'),
+            'options': [o for o in (r.get('options') or []) if isinstance(o, str)],
+            'default': r.get('default'),
+            'inheritLabel': (r.get('option_labels') or {}).get('inherit'),
+            'inheritFrom': mp.get('inherit_from'),
+            'catalog': mp.get('catalog'),
+            'effort': mp.get('effort'),
+            'requires': mp.get('requires_enabled') or [],
+            'home': (r.get('layering') or {}).get('home'),
+        }
+    return out
 
 
 def placement() -> dict:

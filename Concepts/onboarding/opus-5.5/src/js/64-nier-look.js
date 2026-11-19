@@ -64,6 +64,17 @@
     const n = N(); if (n && n.previewing && n.previewing() && n.linger) n.linger();
   }
 
+  /* a lingering preview (the window closed unfinished) is taken back before the look it shows is saved: Settings drops a
+     lingering preview at its next write, and the theme pair is written before NieR's rows, so the background and parts
+     chosen in the window went back to the stored ones (O55.shell.commitLook, FO-216 R57 F2). preview({}) keeps every value
+     and ends the lingering. */
+  function own() {
+    const n = N(), pv = n && n.previewing ? n.previewing() : null;
+    if (!pv || !pv.loose || !n.preview) return false;
+    n.preview({}, { within: null });
+    return true;
+  }
+
   /* into or out of NieR (an older caller's toggle). In the window the control shows the new state in the same frame and
      the moment plays inside the window (hero spec H1, flip below); after setup it is saved at once (Settings' own
      reboot moment, in NieR's voice). */
@@ -273,7 +284,9 @@
     const s = N().store('preview');
     /* the session keeps every change, and each change answers in the window's voice (the chips' own clicks are
        inside the window, where the page's NieR menu sounds stay quiet) */
-    const after = (ev) => { remember(S); if (ev) O55.sound.play(ev); };
+    /* (an edit made here is the person's choice, as a pick is: closed unfinished, or the page gone with the window open,
+       the window saves it, FO-216 R57 F3) */
+    const after = (ev) => { remember(S); if (S) S.lookPicked = true; if (ev) O55.sound.play(ev); };
     return Object.freeze({
       kind: s.kind, BACKGROUNDS: s.BACKGROUNDS,
       on: () => s.on(), parts: () => s.parts(), background: () => s.background(), onChange: (cb) => s.onChange(cb),
@@ -374,5 +387,5 @@
     if (back) try { back.focus({ preventScroll: true }); } catch (_) {}
   }
 
-  O55.nierLook = { IDS, state, toggle, pick, adjust, reapply, commit, closed, look, busy, snap, panelOpen: () => !!panel, closePanel, icon: () => U.nx('sliders', 14, 'control', 'o55-sg') || SLIDERS };
+  O55.nierLook = { IDS, state, toggle, pick, adjust, reapply, commit, own, closed, look, busy, snap, panelOpen: () => !!panel, closePanel, icon: () => U.nx('sliders', 14, 'control', 'o55-sg') || SLIDERS };
 })();
