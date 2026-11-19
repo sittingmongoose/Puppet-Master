@@ -21,8 +21,10 @@
 //       measured before the page goes still, capped at 60 (--set starts= is that cap; Settings)
 //       in at least one of three 2 s traces (a toast leaving or a live update between them is not a loop). Usage shows
 //       live data (its numbers tween after each demo update, the demo engine ticks every 250 ms): its frames are logged
-//       with the script blocks that draw them, never judged; Home's dashboard is live too: its compositor frames are
-//       judged and its main frames logged. Jared's card held the icons, not live data;
+//       with the script blocks that draw them, never judged. Home's dashboard is live too (the hosted Usage board beats
+//       every 3 demo ticks): its still window is placed between two beats, and a beat that still lands in it has its own
+//       frames taken out of the draw count and the window (PM7PERF-STILLPAGE-HOME-LIVE-TICKS, helpers/still-home-live.mjs);
+//       its compositor frames are judged and its main frames logged. Jared's card held the icons, not live data;
 //   (c) one real pointer move wakes it in that event: every animation it held is running again within 100 ms of the
 //       move, its currentTime ahead of where it was held by the time since the wake less that start (not reset, no
 //       jump);
@@ -64,8 +66,11 @@ import { installUsageLiveWatch, usageWritesBeforeRecalc } from '../helpers/still
 import { installToggleFiniteWatch } from '../helpers/still-finite.mjs';
 import { installPrewarmProbe, prewarmSnapshot, consumeUsagePrewarm } from '../helpers/still-prewarm.mjs';
 import { forcedPrewarm } from '../helpers/still-prewarm-control.mjs';
+import { installHomeLiveWatch, readHomeLive, homeBeatPlan, beatFreeDrawn } from '../helpers/still-home-live.mjs';
 
 const ALL = ['basic-light', 'basic-dark', 'friendly-light', 'friendly-dark', 'glass-light', 'glass-dark', 'retro-light', 'retro-dark', 'nier-light', 'nier-dark'];
+// a Home beat's draws last about this long after it (patch slices, lead light, the 600 ms Live-mark pulse, odometer)
+const HOME_BEAT_TAIL = 1200;
 
 // In the page: every animation, endless or not, with what it is; the endless ones that run are kept for (c)
 export const CENSUS = () => {
@@ -192,7 +197,7 @@ export async function trace(cdp, { ms, during, url, keep, track = false, by = fa
 	const events = json.traceEvents || json;
 	if (by) sum.startsBy = frameStarts(events, sum.renderer);
 	const { after, marks } = toggleRecalcs(events, keep);
-	return { sum, after, marks };
+	return { sum, after, marks, events };
 }
 
 // Marks the state's changes in the trace (a check-side observer: the product writes no marks)
@@ -292,6 +297,7 @@ export default async function (t) {
 	const watchFinite = String(t.args.toggleWatchFinite || '0') === '1';
 	if (watchFinite) await f.evaluate(installToggleFiniteWatch);
 	await f.evaluate(MARKER);
+	await f.evaluate(installHomeLiveWatch);
 	await f.evaluate(installPrewarmProbe, { park: false });
 	const watchUsage = String(t.args.toggleWatchLive || '0') === '1';
 	if (watchUsage) await f.evaluate(installUsageLiveWatch);
@@ -416,12 +422,32 @@ export default async function (t) {
 			const startCap = stillStartsBound(refreshHz, { cap: startsMax });
 			const askers = (r) => (r.startsBy || []).slice(0, 4).map(([w, n]) => `${w} ${Math.round(n / r.secs * 10) / 10}/s`).join(', ');
 			let x = null; const tries = [];
+			const home = view === 'dashboard';
 			for (let k = 0; k < 3; k++) {
 				const quiet = await f.evaluate(QUIET, 3000);
-				const r = (await trace(cdp, { ms, url, track: framesBy, by: framesBy })).sum;
+				// Home: place the window between two beats of the hosted Usage board (the old row read the beat's phase)
+				let plan = null, now0 = 0;
+				if (home) {
+					plan = homeBeatPlan(await f.evaluate(readHomeLive), { ms, tail: HOME_BEAT_TAIL });
+					if (plan.waitMs > 0) await t.page.waitForTimeout(plan.waitMs);
+					now0 = await f.evaluate(() => performance.now());
+				}
+				const tr = await trace(cdp, { ms, url, track: framesBy, by: framesBy || home });
+				const r = tr.sum;
+				let beatNote = '';
+				if (home) {
+					const beatsIn = await f.evaluate((span) => { const s = window.__stillHomeLive; return s ? s.beats.filter((b) => b.at >= span[0] && b.at <= span[1]).length : 0; }, [now0 - HOME_BEAT_TAIL, now0 + ms + 250]);
+					if (beatsIn > 0) {
+						const adj = beatFreeDrawn(tr.events, { tail: HOME_BEAT_TAIL });
+						if (adj && adj.drawnPerSec != null) { r.drawn = { ...r.drawn, perSec: adj.drawnPerSec }; beatNote = ` (a beat landed in the window: its ${adj.draws - adj.kept} draws taken out, ${adj.kept} draws over ${adj.secs} s left)`; }
+						else { r.beatUnjudgeable = true; beatNote = ' (beats covered the window: could not judge, taken again)'; }
+					} else if (plan && plan.placed) beatNote = ' (placed between beats)';
+				}
 				if (framesBy) t.log(`${at}: NOTE try ${k + 1} main frame starts by what asked for them [what, starts, nothing to update, rendered, ms]: ${JSON.stringify(r.startsBy.slice(0, 8))}`);
-				tries.push(`${r.drawn.perSec}/${rendered(r)} (starts ${r.mainFrames.perSec}, ${r.mainFrames.noUpdatePerSec} with nothing to update)${quiet ? '' : ' (a finite animation still ran)'}${r.drawn.perSec > drawnMax || rendered(r) > mainMax ? ' by ' + named(r) : ''}`);
-				const pick = stillPick(x, r, stillJudged(view, { drawn: drawnMax, main: mainMax, starts: startsMax, hz: refreshHz }));
+				tries.push(`${r.drawn.perSec}/${rendered(r)} (starts ${r.mainFrames.perSec}, ${r.mainFrames.noUpdatePerSec} with nothing to update)${quiet ? '' : ' (a finite animation still ran)'}${beatNote}${r.drawn.perSec > drawnMax || rendered(r) > mainMax ? ' by ' + named(r) + (home && r.startsBy ? '; asked by ' + (askers(r) || 'nothing named') : '') : ''}`);
+				const j = stillJudged(view, { drawn: drawnMax, main: mainMax, starts: startsMax, hz: refreshHz });
+				if (home) { const meets = j.meets; j.meets = (q) => !q.beatUnjudgeable && meets(q); }
+				const pick = stillPick(x, r, j);
 				x = pick.x;
 				if (pick.done) break;
 			}
