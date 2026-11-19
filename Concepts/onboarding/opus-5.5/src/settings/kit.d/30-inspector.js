@@ -73,7 +73,7 @@ function o55ChoicesFor(setting, current) {
    model (DL-476). */
 const O55_MODEL_CANON = (typeof O55S === 'object' && O55S && O55S.canonModels) || {};
 const O55_PICK_MODELS = new Set(Object.keys(O55_MODEL_CANON));
-const O55_PICK_LISTS = new Set(['code.terminal.background-image', 'code.editing.color-scheme', 'ai.models.default-provider', 'code.terminal.background-gradient', 'general.visual.theme', 'planning.verification.goal-template', 'code.terminal.bezel-material', 'personas.library.default-persona', 'personas.library.active-persona', 'general.visual.nier-background', 'media.image.provider']);
+const O55_PICK_LISTS = new Set(['code.terminal.background-image', 'code.editing.color-scheme', 'ai.models.default-provider', 'code.terminal.background-gradient', 'general.visual.theme', 'planning.verification.goal-template', 'code.terminal.bezel-material', 'personas.library.default-persona', 'personas.library.active-persona', 'general.visual.nier-background']);
 const O55_BRANDS = { anthropic: 'Anthropic', 'anthropic-api': 'Anthropic', 'claude-code': 'Anthropic', openai: 'OpenAI', 'openai-codex': 'OpenAI', gemini: 'Google', google: 'Google', 'qwen-coding': 'Alibaba', 'qwen-token': 'Alibaba', alibaba: 'Alibaba', 'kimi-coding': 'Moonshot', moonshot: 'Moonshot', 'zai-coding': 'z.ai', zai: 'z.ai', 'cursor-cli': 'Cursor', cursor: 'Cursor', 'free-models': 'Free routes', opencode: 'OpenCode' };
 const o55IsModelChoice = setting => O55_PICK_MODELS.has(setting.id) || !!setting.o55Model;
 const o55UsesPicker = (setting, ch) => !!ch && ch.kind === 'single' && (O55_PICK_MODELS.has(setting.id) || O55_PICK_LISTS.has(setting.id));
@@ -242,9 +242,14 @@ function o55PopClose(focusTrigger) {
    skipping the popup's own controls. The popup closes first, with no focus move of its own; the walk's target takes
    the focus. With nothing on that side of the trigger, focus stays on the trigger, as a pick leaves it (FO-178 r2, L1). */
 function o55PopTabOut(p, back) {
-  const stops = [...document.querySelectorAll('button, [href], input, select, textarea, [tabindex]')].filter(el => {
+  const stops = [...document.querySelectorAll('button, [href], input, select, textarea, summary, [tabindex]')].filter(el => {
     if (p.box.contains(el) || el.disabled || el.getAttribute('aria-hidden') === 'true' || el.tabIndex < 0 || el.closest('[inert]')) return false;
-    const s = getComputedStyle(el); return s.visibility !== 'hidden' && s.display !== 'none';
+    /* A closed details still gives its descendants computed display/visibility. Only its first summary
+       participates in the visible walk; apply the rule at every ancestor, including nested details (FO-225). */
+    for (let d = el.parentElement; d; d = d.parentElement) {
+      if (d.tagName === 'DETAILS' && !d.open && ![...d.children].find(n => n.tagName === 'SUMMARY')?.contains(el)) return false;
+    }
+    const s = getComputedStyle(el); return el.getClientRects().length > 0 && s.visibility !== 'hidden' && s.display !== 'none';
   });
   const i = stops.indexOf(p.trigger), next = i >= 0 ? stops[i + (back ? -1 : 1)] : null;
   o55PopClose(false);
@@ -512,8 +517,13 @@ renderDetailInspectorBody = function (setting, section, workspace) {
   const d = setting.detail || {};
   const current = settingValue(setting);
   /* "is it the default" is decided by the value, not by whether it was ever touched: choosing the default again
-     reads as the default */
-  const isDefault = o55SameValue(current, setting.value);
+     reads as the default. FO-224: a model row's value is its model and its depth together (the depth is kept beside
+     the model, 31-model-rows.js), so the default model at another depth is not the default; the depth the default
+     record holds (its default.effort; a token default holds none) is the default depth */
+  const isModelRow = O55_PICK_MODELS.has(setting.id);
+  const defRec = isModelRow ? (O55_MODEL_CANON[setting.id] || {}).default : null;
+  const defDepth = defRec && typeof defRec === 'object' ? String(defRec.effort || '') : '';
+  const isDefault = o55SameValue(current, setting.value) && (!isModelRow || o55SameValue(o55DepthOf(setting.id, o55ModelRaw(current)), defDepth));
   const where = o55Where(setting.id, workspace);
   const label = PM51.rowLabel(setting);
   const iconName = (where.workspace && PANEL_ICONS[where.workspace.id]) || (where.domain && DOMAIN_ICONS[where.domain.id]) || 'settings';
@@ -523,7 +533,9 @@ renderDetailInspectorBody = function (setting, section, workspace) {
   const scopes = (Array.isArray(ref.scope) ? ref.scope : (setting.applicabilityMetadata || [])).map(s => O55_SCOPE[s]).filter(Boolean);
   const applies = row.applies || (scopes.length ? scopes.join('. ') + '.' : (d.applies && d.applies !== 'This project' ? d.applies : 'This project.'));
   const choices = o55ChoicesFor(setting, current);
-  const defText = PM51.valueText(setting, setting.value);
+  /* FO-224: the Default line names the default record's own depth, not the depth stored now for the default model */
+  const defResolve = isModelRow && !o55IsModelToken(setting.id, setting.value) ? o55ModelResolve(setting.id, setting.value, {}, 0) : null;
+  const defText = defResolve && !defResolve.none ? [defResolve.name, defDepth ? `${defDepth} depth` : ''].filter(Boolean).join(' · ') : PM51.valueText(setting, setting.value);
   const nowText = PM51.valueText(setting, current);
   const neighbours = (section && Array.isArray(section.settings) ? section.settings : []).filter(s => s.id !== setting.id).slice(0, 5);
   const crumbs = [where.domain && where.domain.label, where.workspace && where.workspace.label].filter(Boolean);

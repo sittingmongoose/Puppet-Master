@@ -1,6 +1,38 @@
 // FO-67 / FO-52 dependency: real mouse and keyboard opening independently keep the entire popup in view.
 const LOOKS = ['basic','friendly','retro','glass','nier'].flatMap(f => [`${f}-light`,`${f}-dark`]);
 const SIZES = [[740,900],[860,900],[1024,900],[1280,500],[1390,900],[1920,900]];
+/* PM7KIT-LOOK-PALETTE-TOAST-20261118 (F12E-NORMAL-TOAST-COVER-20261118): a live notice under the title bar — its action
+   row div.pmn-acts "Open Usage" — can paint over this trigger when the quick click runs, and Jared ruled toasts may
+   cover controls, so the check clears its own way instead: every staged toast whose box meets the trigger's box is
+   dismissed by its own button (a real click on .pmn-x, the only way a person clears one; the toast itself is never
+   moved). An entering card is waited for first, because it takes no clicks until its entrance has shown; a leaving or
+   flying one is already out of the way. A card that will not take its dismiss click is left there: quickClick then
+   reports the cover, exactly as before — the fix never forces a click through or past a toast. */
+async function clearToastsOver(t, f, trigger, label) {
+  for (let round = 0; round < 5; round++) {
+    const cover = await trigger.evaluate(el => {
+      if (!document.querySelector('#rsStage')) return [];
+      const r = el.getBoundingClientRect();
+      return [...document.querySelectorAll('#rsStage .pmn-toast')]
+        .filter(c => !c.classList.contains('pmn-leaving') && !c.classList.contains('pmn-flying'))
+        .map(c => {
+          const b = c.getBoundingClientRect();
+          return { id: c.getAttribute('data-pmn-id') || '', entering: c.classList.contains('pmn-entering'),
+            over: !!b.width && !!b.height && !(b.right < r.left || b.left > r.right || b.bottom < r.top || b.top > r.bottom),
+            title: (c.querySelector('.pmn-title')?.textContent || c.textContent || '').trim().slice(0, 48) };
+        })
+        .filter(x => x.over && x.id);
+    }).catch(() => []);
+    if (!cover.length) return;
+    for (const c of cover) {
+      if (c.entering) await f.waitForFunction(id => { const e = document.querySelector(`#rsStage .pmn-toast[data-pmn-id="${id}"]`); return !e || !e.classList.contains('pmn-entering'); }, c.id, { timeout: 4000 }).catch(() => {});
+      const clicked = await f.locator(`#rsStage .pmn-toast[data-pmn-id="${c.id}"] .pmn-x`).click({ timeout: 3000 }).then(() => true).catch(() => false);
+      if (!clicked) { t.log(`${label}: a toast over the trigger ("${c.title}") would not take its dismiss click; quickClick will report it`); continue; }
+      await f.waitForFunction(id => { const e = document.querySelector(`#rsStage .pmn-toast[data-pmn-id="${id}"]`); return !e || !e.isConnected; }, c.id, { timeout: 4000 }).catch(() => {});
+      t.log(`${label}: dismissed a toast over the trigger ("${c.title}") by its own button`);
+    }
+  }
+}
 export const tests = Object.fromEntries(['onboarding','tour','settings'].map(route => [route, async t => {
   await t.emulate({reducedMotion:'reduce'});
   const f = await t.app.open(route === 'onboarding' ? {onboarding:true,query:'o55=screen=welcome'} : {});
@@ -39,7 +71,7 @@ export const tests = Object.fromEntries(['onboarding','tour','settings'].map(rou
       for (const input of ['mouse','keyboard']) {
         const label = `${route} ${look} ${w}x${h} ${input}`;
         await trigger.scrollIntoViewIfNeeded();
-        if (input === 'mouse') await t.quickClick(trigger);
+        if (input === 'mouse') { await clearToastsOver(t, f, trigger, label); await t.quickClick(trigger); }
         else { await trigger.focus(); await trigger.press('Enter'); }
         const opened = await f.locator(popup).isVisible();
         await t.check(`${label}: palette opened`, opened);

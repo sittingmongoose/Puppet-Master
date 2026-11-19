@@ -541,18 +541,23 @@
     if(this.active&&(this.active===root||root.contains(this.active)))this.close(true);
     if(this.pendingOpenTarget&&(this.pendingOpenTarget===root||root.contains(this.pendingOpenTarget)))this.cancelPendingOpen();
     (this.removedQueue||(this.removedQueue=[])).push(root);if(this.removedFrame)return;
-    /* A later removal must not inherit an earlier batch's already-passed frame (R93 #7). */
-    if(this.removedJob){if(this.removedJob.cancel)this.removedJob.cancel();else if(this.removedIdle)cancelIdleCallback(this.removedJob);else clearTimeout(this.removedJob);this.removedJob=0;}
-    var ticket=this.removedTicket=(this.removedTicket||0)+1;
-    var run=function(){if(self.removedTicket!==ticket)return;self.removedJob=0;var q=self.removedQueue;self.removedQueue=[];q.forEach(function(r){if(!r.isConnected)self.cleanupRemoved(r);});};
-    /* idle time is asked for after the next frame: an idle moment between the build and the new chapter's first frame
-       would otherwise run the walk before that frame */
+    /* A later removal needs a new frame before the walk (R93 #7). Keep any existing idle job so PM_BUSY can
+       re-admit the same callback when a held drag ends. */
     this.removedFrame=requestAnimationFrame(function(){
       self.removedFrame=0;
+      if(self.removedJob)return;
+      self.removedJob=true;
+      var run=function(){
+        self.removedJob=false;
+        if(self.removedFrame)return; // The newer frame will ask for idle time when it arrives.
+        var q=self.removedQueue;self.removedQueue=[];
+        q.forEach(function(r){if(!r.isConnected)self.cleanupRemoved(r);});
+      };
       /* Like the hover census, removal walks wait through a held drag, including one begun after admission (R97 P3). */
       var B=window.PM_BUSY;
-      if(B&&typeof B.idle==='function'){self.removedJob=B.idle(run,1500);return;}
-      self.removedIdle=typeof requestIdleCallback==='function';self.removedJob=self.removedIdle?requestIdleCallback(run,{timeout:1500}):setTimeout(run,200);
+      if(B&&typeof B.idle==='function')B.idle(run,1500);
+      else if(typeof requestIdleCallback==='function')requestIdleCallback(run,{timeout:1500});
+      else setTimeout(run,200);
     });
   };
   HoverTagController.prototype.beginLive=function(){

@@ -1031,17 +1031,21 @@ export const tests = {
 		const where = 'Tab 1390x900';
 		/* the walk's target, marked so identity is judged, not a label: the next (or previous) focusable in the page
 		   after (or before) the trigger, the popup's own controls skipped */
-		const MARK = (back) => {
-			const trig = document.querySelector('#panel-settings .detail-inspector .o55-pick-trigger');
-			const pop = document.querySelector('.o55-pick-pop');
-			const stops = [...document.querySelectorAll('button, [href], input, select, textarea, [tabindex]')].filter((el) => {
-				if ((pop && pop.contains(el)) || el.disabled || el.getAttribute('aria-hidden') === 'true' || el.tabIndex < 0 || el.closest('[inert]')) return false;
-				const s = getComputedStyle(el); return s.visibility !== 'hidden' && s.display !== 'none';
-			});
-			const i = stops.indexOf(trig), n = i >= 0 ? stops[i + (back ? -1 : 1)] : null;
-			document.querySelectorAll('[data-fo178r2-mark]').forEach((el) => el.removeAttribute('data-fo178r2-mark'));
-			if (n) n.setAttribute('data-fo178r2-mark', back ? 'back' : 'next');
-			return { found: !!n, label: n ? ((n.getAttribute('aria-label') || n.textContent) || '').replace(/\s+/g, ' ').trim().slice(0, 60) : null };
+		// The browser's closed-picker walk is the oracle, independent of the product's focus selector.
+		const mark = async (back) => {
+			await t.page.keyboard.press('Escape');
+			await f.locator(PICKER).first().focus();
+			await t.page.keyboard.press(back ? 'Shift+Tab' : 'Tab');
+			const result = await f.evaluate((back) => {
+				document.querySelectorAll('[data-fo178r2-mark]').forEach(el => el.removeAttribute('data-fo178r2-mark'));
+				const n = document.activeElement;
+				if (n && n !== document.body) n.setAttribute('data-fo178r2-mark', back ? 'back' : 'next');
+				return { found: !!n && n !== document.body, label: (n?.textContent || '').trim().slice(0, 60) };
+			}, back);
+			await f.locator(PICKER).first().click();
+			await t.page.waitForTimeout(450);
+			if (back) await f.locator('.o55-pick-pop.is-open .o55-pick-chip').first().focus();
+			return result;
 		};
 		const AFTER = () => {
 			const trig = document.querySelector('#panel-settings .detail-inspector .o55-pick-trigger');
@@ -1060,7 +1064,7 @@ export const tests = {
 		const o = await f.evaluate(OPEN);
 		await t.check(`${where}: the popup opens with focus in its search`, o.open && o.layer && o.searchFocused, JSON.stringify({ open: o.open, layer: o.layer, search: o.searchFocused }));
 		/* Tab from the search (the popup's last control) */
-		const next = await f.evaluate(MARK, false);
+		const next = await mark(false);
 		await t.check(`${where}: a focusable after the trigger to land on`, next.found, JSON.stringify(next));
 		await t.page.keyboard.press('Tab');
 		await t.page.waitForTimeout(600);
@@ -1075,7 +1079,7 @@ export const tests = {
 		const inner = await f.evaluate(() => ({ popped: !!document.querySelector('.o55-pick-pop.is-open'), inPop: !!(document.activeElement && document.activeElement.closest && document.activeElement.closest('.o55-pick-pop')) }));
 		await t.check(`${where}: Shift+Tab inside the popup keeps it open with focus in it`, inner.popped && inner.inPop, JSON.stringify(inner));
 		await f.locator('.o55-pick-pop.is-open .o55-pick-chip').first().focus();
-		const back = await f.evaluate(MARK, true);
+		const back = await mark(true);
 		await t.check(`${where}: a focusable before the trigger to land on`, back.found, JSON.stringify(back));
 		await t.page.keyboard.press('Shift+Tab');
 		await t.page.waitForTimeout(600);
@@ -1091,5 +1095,61 @@ export const tests = {
 		await t.check(`${where}: Escape still closes the popup with focus back on the trigger`, !a3.popped && a3.expanded === 'false' && a3.onTrigger, JSON.stringify(a3));
 		await f.evaluate(() => document.querySelectorAll('[data-fo178r2-mark]').forEach((el) => el.removeAttribute('data-fo178r2-mark')));
 		await closeDetails(t, f);
+	},
+	'FO-225 all inspector popup kinds follow the native closed-picker Tab walk': async (t) => {
+		const f = await t.app.open();
+		await t.viewport(1390, 900);
+		await f.locator('#tab-settings').click(); await t.settle();
+		let reached = 0;
+		for (const id of [SETTING, ...LONG]) {
+			if (id === 'general.visual.nier-background') await setLook(t, f, 'nier-dark');
+			if (!(await openDetails(t, f, id, true))) { t.log(`FO-225 unreachable placement: ${id}`); continue; }
+			if (id === 'planning.verification.goal-template') {
+				await closeDetails(t, f);
+				await f.evaluate(id => {
+					const row = document.querySelector(`.o55-scoped[data-setting-id="${id}"]`);
+					for (let el = row?.parentElement; el; el = el.parentElement) if (el.tagName === 'DETAILS') el.open = true;
+				}, id);
+				await f.locator(`.o55-scoped[data-setting-id="${id}"] .o55-about`).first().click(); await t.settle();
+			}
+			const trigger = f.locator(PICKER).first();
+			if (!(await trigger.count())) { await closeDetails(t, f); continue; }
+			reached++;
+			for (const back of [false, true]) {
+				const key = back ? 'Shift+Tab' : 'Tab', where = `${id} ${key}`;
+				await trigger.focus(); await t.page.keyboard.press(key);
+				const oracle = await f.evaluate(() => {
+					const el = document.activeElement;
+					window.__fo225Target = el;
+					return { valid: el !== document.body, tag: el.tagName, text: (el.textContent || '').trim().slice(0, 80) };
+				});
+				await t.check(`${where}: closed picker reaches a control`, oracle.valid, JSON.stringify(oracle));
+				await trigger.click(); await t.page.waitForTimeout(450);
+				// Leave from each edge; maker chips remain ordinary internal Tab stops.
+				await f.locator('.o55-pick-pop.is-open').evaluate((box, back) => {
+					const stops = [...box.querySelectorAll('button, input')].filter(n => !n.disabled && n.getClientRects().length);
+					stops[back ? 0 : stops.length - 1].focus();
+				}, back);
+				await t.page.keyboard.press(key); await t.page.waitForTimeout(450);
+				const landed = await f.evaluate(() => {
+					const el = document.activeElement;
+					window.__fo225Enter = false; window.__fo225Click = false;
+					el.addEventListener('keydown', e => { if (e.key === 'Enter' && e.isTrusted) window.__fo225Enter = true; }, { once: true });
+					el.addEventListener('click', e => { if (e.isTrusted) window.__fo225Click = true; }, { once: true });
+					return { same: el === window.__fo225Target, tag: el.tagName, open: !!document.querySelector('.o55-pick-pop.is-open'), text: (el.textContent || '').trim().slice(0, 80), details: el.tagName === 'SUMMARY' ? el.parentElement.open : null };
+				});
+				await t.check(`${where}: open popup closes on the native target`, landed.same && !landed.open && landed.tag !== 'BODY', JSON.stringify({ oracle, landed }));
+				await t.page.keyboard.press('Enter'); await t.page.waitForTimeout(350);
+				const action = await f.evaluate(() => ({ enter: window.__fo225Enter, click: window.__fo225Click, details: window.__fo225Target?.tagName === 'SUMMARY' ? window.__fo225Target.parentElement.open : null }));
+				await t.check(`${where}: Enter reaches and activates the landed control`, landed.same && action.enter && (!['SUMMARY', 'BUTTON', 'A'].includes(landed.tag) || action.click) && (landed.details === null || action.details !== landed.details), JSON.stringify(action));
+				// Enter on Back or another navigation action can close the panel; restore through its row.
+				if (await f.locator('.o55-pick-pop.is-open').count()) await t.page.keyboard.press('Escape');
+				await t.settle();
+				if (!(await trigger.isVisible())) await openDetails(t, f, id);
+			}
+			await closeDetails(t, f);
+			if (id === 'general.visual.nier-background') await setLook(t, f, 'basic-dark');
+		}
+		await t.check('FO-225 model and at least seven long-list popup placements exercised', reached >= 8, `reached ${reached}`);
 	}
 };

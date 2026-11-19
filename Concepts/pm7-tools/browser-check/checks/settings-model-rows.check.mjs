@@ -19,6 +19,9 @@
 //   depth    a row of chat models has models with depths; a press on one shows its depths (Model default and its
 //            levels) beside the list or inside the popup, on top, and saves nothing yet; a manager's own list of models
 //            that have no depths shows none
+//   default  FO-224: the default model at a non-default depth is not the default in Details ("You changed this",
+//            "Go back to the default" offered, and pressing it restores the model and the depth together); a row at
+//            the true default still says it is the default
 // Then: a model and its depth save together (pointer and keys) and the rows that follow it name both; the picker's model
 // settings are exactly the inventory's model_picker rows and per-lane-model is gone; and FO-184's centred top tab strip
 // (its tabs' middle within 1 px of the strip's middle, one line, nothing clipped; the page tabs under it likewise in
@@ -29,6 +32,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { popupTab } from '../helpers/popup-tab.mjs';
 import { LOOKS } from '../browser-check.config.mjs';
 import { setLookBySetting, guardPaintedLook } from '../helpers/settings-look.mjs';
 
@@ -256,6 +260,21 @@ async function settingsAt(t, f, w, h) {
 const ROWS = (t) => (t.args.rows ? String(t.args.rows).split(',') : Object.keys(CANON)).filter((id) => PLACE[id]);
 
 export const tests = {
+ 'FO-225 every model row popup and depth follows native Tab order': async (t) => {
+  const f = await t.app.open(); await t.viewport(1920,1080);
+  await f.locator('#tab-settings').click(); await t.settle();
+  for (const id of ROWS(t)) for (const back of [false,true]) {
+   await closeAll(t,f);
+   const scope = await reach(t,f,id);
+   const trigger = f.locator(`.o55-msel[data-o55-msel="${id}"] [role="combobox"]:visible`).first();
+   await popupTab(t,f,trigger,`FO-225 ${id}`,back);
+  }
+  for (const back of [false,true]) {
+   await closeAll(t,f);
+   const id='ai.models.default-model', scope=await reach(t,f,id);
+   await popupTab(t,f,f.locator(ctlSel(id,scope)).first(),'FO-225 model depth',back,true);
+  }
+ },
 	'FO-182/183 every model row is the shared picker, all looks': async (t) => {
 		const looks = t.args.looks ? String(t.args.looks).split(',') : LOOKS;
 		const sizes = String(t.args.sizes || SIZES).split(',').map((s) => s.split('x').map(Number));
@@ -337,6 +356,84 @@ export const tests = {
 			const back = await f.evaluate((id) => PM51.value(id), id);
 			await t.check(`${id}: a press on its inherit choice saves it ("inherit")`, back === 'inherit', JSON.stringify(back));
 		}
+	},
+
+	/* FO-224: a depth-only change of the default model is a change, and Details restores the model and the depth
+	   together. Real presses on a fresh page: the row's picker, its depths, the row's About button, the reset button. */
+	'FO-224 the default model at another depth is not the default in Details': async (t) => {
+		const f = await t.app.open();
+		await t.viewport(1920, 1080);
+		await f.locator('#tab-settings').click();
+		await t.settle();
+		await goPage(t, f, 'ai', 'providers', 'models');
+		const ID = 'ai.models.default-model';
+		const STATE = (id) => {
+			const insp = document.querySelector('#panel-settings .detail-inspector');
+			const now = insp && insp.querySelector('.o55-insp-now');
+			const reset = insp && insp.querySelector('[data-action="reset-setting"]');
+			const combo = document.querySelector(`#pm-settings-root .o55-msel[data-o55-msel="${CSS.escape(id)}"] [role="combobox"]`);
+			let value = null, defValue = null;
+			try { value = PM51.value(id); defValue = PM51.setting(id).value; } catch (e) { /* no PM51 */ }
+			return {
+				label: now ? ((now.querySelector('.o55-insp-now-label') || {}).textContent || '').trim() : '',
+				valueText: now ? ((now.querySelector('.o55-insp-now-value') || {}).textContent || '').trim() : '',
+				foot: now ? ((now.querySelector('.o55-insp-now-foot') || {}).textContent || '').trim() : '',
+				isDef: !!(now && now.querySelector('.o55-insp-isdef')),
+				changed: !!(now && now.classList.contains('is-changed')),
+				reset: !!reset, resetText: reset ? reset.textContent.trim() : '',
+				small: combo ? ((combo.querySelector('small') || {}).textContent || '').trim() : '',
+				value, defValue
+			};
+		};
+		const openDetails = async () => {
+			const about = f.locator(`#pm-settings-root .o55-about[data-setting="${ID}"]`).first();
+			await about.scrollIntoViewIfNeeded().catch(() => {});
+			await about.click({ timeout: 8000 });
+			await f.waitForSelector('#panel-settings .detail-inspector .o55-insp-head', { timeout: 8000 });
+			await t.settle();
+		};
+		const closeDetails = async () => { await f.locator('#panel-settings .detail-inspector [data-action="close-details"]').click().catch(() => {}); await t.page.waitForTimeout(350); };
+		const s0 = await f.evaluate(STATE, ID);
+		await t.check('FO-224 the row starts at its default value', JSON.stringify(s0.value) === JSON.stringify(s0.defValue), `${JSON.stringify(s0.value)} vs ${JSON.stringify(s0.defValue)}`);
+		await openDetails();
+		const s1 = await f.evaluate(STATE, ID);
+		await t.check('FO-224 a row at the true default says it is the default', s1.isDef && !s1.changed && !s1.reset && /set to the default/i.test(s1.label), JSON.stringify({ label: s1.label, isDef: s1.isDef, reset: s1.reset }));
+		await closeDetails();
+		/* choose the model that is already the default, then a depth that is not the model's own default */
+		const trig = f.locator(ctlSel(ID, 'page')).first();
+		await trig.scrollIntoViewIfNeeded().catch(() => {});
+		await trig.click({ timeout: 8000 }); await t.page.waitForTimeout(450);
+		const o = await f.evaluate(POP);
+		const mine = o.open ? o.opts.find((x) => x.selected && !x.pre && x.levels) : null;
+		await t.check('FO-224 the picker offers the default model with depths', !!(o.open && mine), o.open ? `${o.opts.length} choices, ${o.opts.filter((x) => x.levels).length} with depths` : 'no picker');
+		if (!mine) { await closeAll(t, f); return; }
+		await f.locator(`.o55-pick-pop.is-open [role="option"][data-index="${mine.index}"]`).first().click();
+		await t.page.waitForTimeout(350);
+		const levels = mine.levels.split('|');
+		const level = levels.includes('Max') ? 'Max' : levels[levels.length - 1];
+		await f.locator('[role="listbox"][aria-label^="Thinking depth"] [role="option"]').filter({ hasText: level }).first().click();
+		await t.page.waitForTimeout(700);
+		await openDetails();
+		const s2 = await f.evaluate(STATE, ID);
+		await t.check(`FO-224 the default model at ${level} depth does not say it is the default`, !s2.isDef && s2.changed && /you changed this/i.test(s2.label), JSON.stringify({ label: s2.label, isDef: s2.isDef, changed: s2.changed }));
+		await t.check(`FO-224 Details names the current value with its ${level} depth`, s2.valueText.includes(`${level} depth`), s2.valueText);
+		await t.check('FO-224 Details offers Go back to the default', s2.reset && /go back to the default/i.test(s2.resetText), s2.resetText || 'no reset button');
+		await t.check(`FO-224 the Default line does not name the stored ${level} depth`, !s2.foot.includes(`${level} depth`), s2.foot);
+		const reset = f.locator('#panel-settings .detail-inspector [data-action="reset-setting"]').first();
+		if (await reset.count()) { await reset.click(); await t.page.waitForTimeout(700); }
+		const s3 = await f.evaluate(STATE, ID);
+		await t.check('FO-224 Go back to the default restores the default model', JSON.stringify(s3.value) === JSON.stringify(s3.defValue), `${JSON.stringify(s3.value)} vs ${JSON.stringify(s3.defValue)}`);
+		await t.check(`FO-224 Go back to the default restores the default depth (no ${level} override on the row)`, !s3.small.includes(`${level} depth`), s3.small);
+		await t.check('FO-224 Details says it is the default again, with no reset button', s3.isDef && !s3.changed && !s3.reset && /set to the default/i.test(s3.label), JSON.stringify({ label: s3.label, isDef: s3.isDef, reset: s3.reset }));
+		await closeDetails();
+		/* the picker itself shows the depth back at the model's own default */
+		await trig.click({ timeout: 8000 }); await t.page.waitForTimeout(450);
+		const depthSel = await f.evaluate(() => {
+			const l = [...document.querySelectorAll('[role="listbox"]')].find((x) => /^Thinking depth/.test(x.getAttribute('aria-label') || '') && x.getClientRects().length);
+			return l ? [...l.querySelectorAll('[role="option"]')].filter((n) => n.getAttribute('aria-selected') === 'true').map((n) => n.textContent.trim()) : null;
+		});
+		await t.check('FO-224 the picker shows the depth back at Model default', !!depthSel && depthSel.length === 1 && /model default/i.test(depthSel[0]), JSON.stringify(depthSel));
+		await closeAll(t, f);
 	},
 
 	'FO-183 the picker covers exactly the inventory model rows, per-lane-model is gone': async (t) => {

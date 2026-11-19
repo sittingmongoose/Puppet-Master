@@ -81,30 +81,59 @@ const verdict = (v) => {
 	return bad;
 };
 
-/* a tab press morphs the old body into the new one: wait for one body and two equal reads */
+/* a tab press (and a pick) morphs the old element into the new one: o55Morph keeps the outgoing element as .o55-leaving
+   and marks its host data-o55-morph until it finishes. PM7KIT-DETAIL-ROSTER-SETTLED-20261118: the old wait (no
+   .tab-swap classes, one body, then two equal text/height/node signatures) was content-independent, and switchTab()
+   flips the active tab synchronously but defers the body swap a frame (o55AfterPaint), so it could finish on the
+   outgoing body and hand items() the previous tab's roster (old language-server rows read under Formatters). Wait for
+   the real completion signal; a timeout fails the run instead of being swallowed. */
 async function settled(f, ws) {
-	await f.waitForFunction((w) => !document.querySelector('.tab-swap-a, .tab-swap-b') && document.querySelectorAll(`[data-continuous-workspace-body="${w}"] .pm51-mgr > .manager-body`).length <= 1, ws, { timeout: 4000 }).catch(() => {});
 	await f.waitForFunction((w) => {
 		const b = document.querySelector(`[data-continuous-workspace-body="${w}"]`) || document.getElementById('workspace-stage');
 		if (!b) return false;
-		const sig = `${b.textContent.length}:${b.getBoundingClientRect().height.toFixed(1)}:${b.querySelectorAll('*').length}`;
-		const prev = window.__pmDetailSig; window.__pmDetailSig = sig; return prev === sig;
-	}, ws, { polling: 'raf', timeout: 4000 }).catch(() => {});
+		if (document.querySelector('.tab-swap-a, .tab-swap-b')) return false;
+		if (b.querySelector('.o55-leaving, [data-o55-morph]')) return false;
+		return b.querySelectorAll('.pm51-mgr > .manager-body').length <= 1;
+	}, ws, { timeout: 4000 });
 }
 async function go(t, f, chapter, ws) {
 	await f.evaluate(([c, w]) => window.PM51.go(c, w), [chapter, ws]);
-	await f.waitForSelector(`[data-continuous-workspace-body="${ws}"][data-workspace-mounted="true"]`, { timeout: 15000 });
+	/* the requested chapter is the active domain and the destination workspace is its mounted body, not a stale one */
+	await f.waitForFunction(([c, w]) => !!document.querySelector(`.domain-link.active[data-domain="${c}"]`) &&
+		!!document.querySelector(`[data-continuous-workspace-body="${w}"][data-workspace-mounted="true"]`), [chapter, ws], { timeout: 15000 });
 	await settled(f, ws);
 }
 async function tab(t, f, ws, id) {
 	const btn = f.locator(`[data-continuous-workspace-body="${ws}"] .manager-tab[data-tab="${id}"]`).first();
-	if (await btn.isVisible().catch(() => false)) await btn.click().catch(() => {});
-	else await f.evaluate(([w, i]) => window.PM51.switchTab(w, i), [ws, id]);
-	await settled(f, ws);
+	let why = '';
+	if (await btn.isVisible().catch(() => false)) await btn.click().catch((e) => { why = `click failed: ${String((e && e.message) || e).split('\n')[0]}`; });
+	else await f.evaluate(([w, i]) => window.PM51.switchTab(w, i), [ws, id]).catch((e) => { why = `switchTab failed: ${String((e && e.message) || e).split('\n')[0]}`; });
+	/* the requested tab's own body, not the outgoing one: the tab is active and the manager body it controls (a pm51
+	   manager body carries aria-labelledby="pm51-tab-<manager>-<tab>", so a body names the tab it was rendered for) is
+	   the one live body with the morph finished. A tab whose roster is legitimately empty still names itself, and
+	   items() then enumerates that body's own empty roster; the picked>0 check reports an unexpected empty list. */
+	const own = await f.waitForFunction(([w, i]) => {
+		const b = document.querySelector(`[data-continuous-workspace-body="${w}"]`);
+		const active = b && b.querySelector(`.manager-tab.active[data-tab="${i}"]`);
+		const mgr = active && active.closest('.manager-page');
+		if (!mgr || mgr.hasAttribute('data-o55-morph') || mgr.querySelector('.o55-leaving, [data-o55-morph]')) return false;
+		const bodies = [...mgr.querySelectorAll(':scope > .manager-body')];
+		if (bodies.length !== 1 || bodies[0].classList.contains('o55-leaving')) return false;
+		return !mgr.classList.contains('pm51-mgr') || bodies[0].getAttribute('aria-labelledby') === `pm51-tab-${mgr.getAttribute('data-pm51-manager')}-${i}`;
+	}, [ws, id], { timeout: 15000 }).then(() => true).catch(() => false);
+	if (own && !why) await settled(f, ws);
+	await t.check(`${ws} tab "${id}" settled on its own roster as the one live manager body`, own && !why, why || (own ? '' : 'the requested tab never became the one live body within 15 s'));
 }
-/* the list's items, in order. pick() clicks the item's own row in the DOM (below a 720 px host the list is an off-canvas
-   drawer behind its menu button, so a pointer press would not reach it); the subject is the detail's layout, not the list */
-const items = (f, ws) => f.evaluate((w) => [...document.querySelectorAll(`[data-continuous-workspace-body="${w}"] .pm51-roster .resource-row[data-id]`)].map((b) => ({ id: b.getAttribute('data-id'), name: (b.querySelector('.resource-row-name') || b).textContent.replace(/\s+/g, ' ').trim().slice(0, 40) })), ws);
+/* the list's items, in order, read only from the manager body that owns the active tab: during a morph the outgoing
+   body stays in the DOM as .o55-leaving, and reading the whole workspace enumerated both rosters. pick() clicks the
+   item's own row in the DOM (below a 720 px host the list is an off-canvas drawer behind its menu button, so a pointer
+   press would not reach it); the subject is the detail's layout, not the list */
+const items = (f, ws) => f.evaluate((w) => {
+	const mgr = [...document.querySelectorAll(`[data-continuous-workspace-body="${w}"] .manager-page`)].find((m) => m.querySelector(':scope .manager-tab.active'));
+	const bodies = mgr ? [...mgr.querySelectorAll(':scope > .manager-body')].filter((x) => !x.classList.contains('o55-leaving')) : [];
+	if (bodies.length !== 1) return [];
+	return [...bodies[0].querySelectorAll('.pm51-roster .resource-row[data-id]')].map((b) => ({ id: b.getAttribute('data-id'), name: (b.querySelector('.resource-row-name') || b).textContent.replace(/\s+/g, ' ').trim().slice(0, 40) }));
+}, ws);
 /* the row turns active before its detail re-renders, so a read right after the press measured the previous item's
    detail (main 6bd8294726, Windows: Video Generation read Audio Generation's path). Wait for the detail's own title to
    name the item, then for the body to hold still. Returns whether the detail showed it. */
