@@ -21,12 +21,31 @@ const KINDS = ['Phase', 'Task', 'Subtask', 'Iteration', 'Across phases', 'Langua
 const BODY = '[data-continuous-workspace-body="personas"]';
 const MOUNTED = `${BODY}[data-workspace-mounted="true"]`;
 
+// a page tab: on a narrow host the strip overflows into the More menu, so reach the tab through it when it hides
+async function pageTab(t, f, page) {
+	const tab = f.locator(`#tab-${page}`);
+	if (await tab.isVisible().catch(() => false)) await tab.click();
+	else {
+		await f.locator('#pageTabsMoreBtn').click();
+		await t.page.waitForTimeout(300);
+		await f.locator(`#pageTabsMoreMenu .pm6-tb-menu-item[data-page="${page}"]`).first().click();
+	}
+	await t.settle();
+}
+// on a narrow host the domain rail is a drawer behind the topbar menu button; navigation closes it again
+async function openRailIfNarrow(t, f) {
+	const menu = f.locator('#panel-settings .topbar .mobile-menu[data-action="toggle-rail"]').first();
+	if (await menu.isVisible().catch(() => false)) {
+		await menu.click();
+		await t.page.waitForTimeout(450);
+	}
+}
 async function settings(t, surface, [w, h]) {
 	await t.viewport(w, h);
 	const f = await t.app.open({ sandbox: surface === 'sandbox' });
 	await t.app.resetLayout();
-	await f.locator('#tab-settings').click();
-	await t.settle();
+	await pageTab(t, f, 'settings');
+	await openRailIfNarrow(t, f);
 	return f;
 }
 async function goPersonas(t, f) {
@@ -108,7 +127,7 @@ for (const surface of ['normal', 'sandbox']) {
 				await input.press(',');
 				await t.page.waitForTimeout(350);
 				await t.check('comma adds the typed tag', (await chipTexts(row)).includes(COMMA), shown(await chipTexts(row)));
-				if (t.args.shots && w === 1280 && SHOT_LOOKS.includes(look)) await t.crop(`tags-${look}-${surface}`, row, 'free tag input: two free chips, the input and the remaining suggestions');
+				if (t.args.shots && w === 1280 && SHOT_LOOKS.includes(look)) await t.crop(`tags-${look}-${surface}`, row, 'free tag input: the free chips, a kind chip, the input and the remaining suggestions');
 				// remove one chip (the suggested kind); exactly the free tags are left
 				await row.locator(`.o55-tag-x[data-tag="${KIND}"]`).click();
 				await t.page.waitForTimeout(350);
@@ -117,10 +136,8 @@ for (const surface of ['normal', 'sandbox']) {
 				const meta = (await f.locator(`${BODY} .resource-row[data-id="${PID}"] .resource-row-meta`).innerText()).replace(/\s+/g, ' ');
 				await t.check('the library row shows the free tags', meta.includes(FREE) && meta.includes(COMMA), meta);
 				// the row commits as it goes: close Settings, reopen, and the tags left are what shows
-				await f.locator('#tab-dashboard').click();
-				await t.settle();
-				await f.locator('#tab-settings').click();
-				await t.settle();
+				await pageTab(t, f, 'dashboard');
+				await pageTab(t, f, 'settings');
 				await goPersonas(t, f);
 				await openPersona(t, f);
 				const row2 = tagsRow(f);
