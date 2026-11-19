@@ -31,6 +31,7 @@
 // --set screen=<id>  default where   --set settle=<ms> (default 30000)   --set window=<ms> (default 5000)
 // Both surfaces.
 import { traceWindow } from '../helpers/frame-trace.mjs';
+import { traceJudgeable } from '../helpers/trace-guard.mjs';
 import { muteSound, parkPointer } from '../helpers/quiet-page.mjs';
 import { pageSource, blocksOf, blockAt, fileRegion } from '../helpers/built-source.mjs';
 
@@ -98,13 +99,18 @@ export default async function (t) {
 			if (b && b.id === 'lg-js') { glassMs += ms; glassRows.push(`${key} ${ms} ms/s x${n}/s`); }
 		}
 		const draws = drawn.batches / drawn.secs, perCall = tagCalls > 0 ? tagMs / tagCalls * 1000 : 0;
+		// A trace that names no renderer main thread has an empty script list, so hover-tag script time reads 0 ms/s and
+		// the bound would PASS without measuring (PM7PERF-STAGEOBS-NO-RENDERER-READS-ZERO, TB6 item 4): could not judge.
+		const guard = traceJudgeable(x);
 		t.log(`${look}: main thread ${Math.round(x.cost.main)} ms/s, ${x.mainFrames.perSec} main frames/s; the stage wrote ${draws.toFixed(1)} batches/s (${(drawn.records / drawn.secs).toFixed(0)} records/s), its own script ${rigMs.toFixed(1)} ms/s; hover tags ${tagMs.toFixed(2)} ms/s in ${tagCalls.toFixed(1)} calls/s, ${perCall.toFixed(1)} us a call (${tagRows.slice(0, 4).join(' | ') || 'no call'})`);
 		t.log(`${look}: Liquid Glass's script (script#lg-js) ${glassMs.toFixed(2)} ms/s (${glassRows.slice(0, 5).join(' | ') || 'no call'})`);
 		const moving = draws >= drawsMin;
 		await t.check(`${look}: Pip's stage is drawing while measured`, moving, `${draws.toFixed(1)} batches of its own writes a second (at least ${drawsMin})${moving ? '' : ': could not judge'}`);
 		if (!moving) continue;
-		await t.check(`${look}: the hover tags do at most ${max} ms of script a second while the stage draws`, tagMs <= max, `${tagMs.toFixed(2)} ms/s: ${tagRows.slice(0, 4).join(' | ') || 'no call'}`);
-		if (tagCalls >= callsMin) await t.check(`${look}: a call into the hover tags' script takes at most ${perCallMax} microseconds on average while the stage draws`, perCall <= perCallMax, `${perCall.toFixed(1)} us a call over ${tagCalls.toFixed(1)} calls/s (${tagMs.toFixed(2)} ms/s)`);
+		await t.check(`${look}: the hover tags do at most ${max} ms of script a second while the stage draws`, guard.ok && tagMs <= max,
+			guard.ok ? `${tagMs.toFixed(2)} ms/s: ${tagRows.slice(0, 4).join(' | ') || 'no call'}` : `${guard.why}: the trace measured no renderer, so its script rows read 0 ms/s and 0 calls`);
+		if (tagCalls >= callsMin && guard.ok) await t.check(`${look}: a call into the hover tags' script takes at most ${perCallMax} microseconds on average while the stage draws`, perCall <= perCallMax, `${perCall.toFixed(1)} us a call over ${tagCalls.toFixed(1)} calls/s (${tagMs.toFixed(2)} ms/s)`);
+		else if (!guard.ok) t.log(`${look}: NOTE the hover tags' script cost is not judged: ${guard.why}`);
 		else t.log(`${look}: NOTE the hover tags' script was called ${tagCalls.toFixed(1)} times a second (under ${callsMin}): the cost of a call is not judged here`);
 	}
 }
