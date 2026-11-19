@@ -406,8 +406,31 @@ def inputs(event_types, root: Path = ROOT) -> list[str]:
     """Repository-relative paths a disposable copy of the tree needs for these verdicts."""
     root = Path(root)
     paths = {REGISTRY, DECISION_LOG, FROZEN, POST_AUGUST_RECEIPT, "scripts/pm_ea_admission_mode.py",
-             "scripts/pm_ea_reviewed_owner_corrections.json"}
+             "scripts/pm_ea_reviewed_owner_corrections.json", "scripts/pm_ea_postfix_corrections.py",
+             "scripts/pm_ea_payload_selectors.py"}
     paths.update(str(p.relative_to(root)) for p in sorted((root / RECORD_DIR).glob("*.json")))
+    # The correction proof is portable only with its immutable witness and
+    # exact selector/resource inputs. Git history remains required for admission.
+    correction_dir = root / "reports/event-authority-20261116/admission-merge-3/corrections"
+    for path in sorted(correction_dir.glob("*.json")):
+        paths.add(str(path.relative_to(root)))
+        rec = json.loads(path.read_text())
+        for row in (rec.get("before_row",{}),rec.get("registry_row",{})):
+            refs = [row.get("payload_schema_ref",{})]+[v.get("payload_schema_ref",{}) for v in row.get("payload_versions",[])]
+            paths.update(ref["path"] for ref in refs if ref.get("path"))
+    selector_inputs = ["Plans/event_authority_w3e_oracle_plan.json", "Plans/dcw_event_contract_fixtures.json",
+        "Plans/dcw_blockage_event_fixtures.json", "Plans/orchestrator_event_contract_fixtures.json",
+        "Plans/panel_event_contracts/manifest.json"]
+    paths.update(selector_inputs)
+    plan_path = root / selector_inputs[0]
+    if plan_path.is_file():
+        plan = json.loads(plan_path.read_text())
+        paths.update(f["payload_schema"] for f in plan["families"])
+    panel_path = root / selector_inputs[-1]
+    if panel_path.is_file():
+        panels = json.loads(panel_path.read_text())["families"]
+        paths.update("Plans/panel_event_contracts/"+p["slug"]+".fixtures.json" for p in panels)
+        paths.update(p["payload_schema"] for p in panels)
     # Revision records rebuild the registry states before later in-place row revisions (revision_states).
     revisions = [p for d in sorted(root.glob(REVISION_DIR_GLOB)) for p in sorted(d.glob("*.json"))]
     paths.update(str(p.relative_to(root)) for p in revisions)

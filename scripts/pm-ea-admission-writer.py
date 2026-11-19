@@ -414,6 +414,12 @@ def rederive_source_citation(source: dict) -> dict:
     unit, quote = out.get("unit"), out.get("quote")
     span = (unit_span(text, unit) if isinstance(unit, str) and re.fullmatch(r"[A-Z][A-Z0-9]*-\d+", unit)
             else heading_span(text, unit) if isinstance(unit, str) else None)
+    if rel.endswith('.py') and isinstance(unit, str) and unit.startswith('python:function:'):
+        import ast
+        name = unit.split(':',2)[2]
+        functions = [node for node in ast.walk(ast.parse(text))
+                     if isinstance(node,(ast.FunctionDef,ast.AsyncFunctionDef)) and node.name == name]
+        span = (functions[0].lineno, functions[0].end_lineno) if len(functions)==1 else None
     if not span or not isinstance(quote, str) or not quote:
         raise Gap(f"historical source needs a quoted, declared unit: {commit}:{rel}")
     window = "\n".join(text.splitlines()[span[0] - 1:span[1]])

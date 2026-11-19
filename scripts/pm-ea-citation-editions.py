@@ -56,6 +56,7 @@ def main():
     p.add_argument("--self-test", action="store_true", help="replay the 50 real mixed pairs received at FIX3")
     args = p.parse_args()
     records, failures, controls = [], [], []
+    do_families = {x['event_type'] for x in json.loads((ROOT/FOLDER/'readiness-list.json').read_text())['ready'] if x['lane']=='DO'}
     for path in sorted((ROOT / FOLDER / "depth").glob("*.json")):
         doc = json.loads(path.read_text())
         name = doc["rows"][0]["event_type"]
@@ -72,7 +73,7 @@ def main():
                               problems=issues)
                 records.append(record)
                 failures.extend(dict(event_type=name, ordinal=ordinal, problem=x) for x in issues)
-        if args.self_test and any(x["event_type"] == name for x in records):
+        if args.self_test and name in do_families:
             original = json.loads(subprocess.check_output(["git", "-C", str(ROOT), "show", RECEIVED + ":" + str(path.relative_to(ROOT))]))
             original_items = original["rows"][0]["cells"]["positive_negative_oracles"]["evidence"]
             for item in original_items:
@@ -92,8 +93,9 @@ def main():
                                      mixed_input_refused=refused, rederived_problems=restored))
                 if not bad or not refused or restored:
                     failures.append(dict(event_type=name, problem="received mixed-pair regression failed"))
-    if len(records) != 50 or len({x["event_type"] for x in records}) != 25:
-        failures.append(dict(problem="expected exactly 50 explicit source/live pairs across 25 DO families"))
+    original_pairs = [x for x in records if x['event_type'] in do_families and x['criterion']=='positive_negative_oracles']
+    if len(original_pairs) != 50 or len({x['event_type'] for x in original_pairs}) != 25:
+        failures.append(dict(problem="expected exactly 50 original oracle source/live pairs across 25 DO families"))
     if args.self_test and len(controls) != 50:
         failures.append(dict(problem="incomplete real-input regression coverage"))
     result = dict(schema_id="pm.ea.citation_editions.v1", pairs=records, controls=controls, failures=failures,

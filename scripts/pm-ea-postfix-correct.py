@@ -145,7 +145,7 @@ def prepare(previous=None):
 def decision_entry(number, event, row, before, after, record, depth_path, depth_sha, revision_path, findings, review):
     versions = row.get('payload_versions') or [dict(scope_kind=row['scope_policy'].removesuffix('_only'),
         payload_schema_id=row['payload_schema_id'], retention_policy_ref=row['retention_policy_ref'],
-        producer_admission=row.get('producer_admission', 'owner_adoption_required'))]
+        producer_admission=row.get('producer_admission', 'requires_owner_adoption'))]
     editions = []
     for version in versions:
         policy = version['retention_policy_ref']
@@ -257,6 +257,17 @@ def apply_one(plan, event, decision):
         # later parent, as their historical canonical source.
         old['commit'] = '10ba97e699d51287673d6f1db4d994f54c59b4ed'
         w = writer()
+        if old['path'].endswith('.py'):
+            import ast
+            original = w.historical_text(old['commit'],old['path'])
+            line = old.get('line_start',old.get('line'))
+            functions = [node for node in ast.walk(ast.parse(original)) if isinstance(node,(ast.FunctionDef,ast.AsyncFunctionDef)) and node.lineno <= line <= node.end_lineno]
+            if not functions:
+                raise ValueError('historical script quote has no containing function')
+            function = min(functions,key=lambda node:node.end_lineno-node.lineno)
+            old['received_unit'] = old.get('unit')
+            old['unit'] = 'python:function:'+function.name
+            old['locator_maintenance'] = dict(authority=AUTHORITY,reason='Bind the historical script line to its actual declared function, preserving the received stage label and exact Git bytes; it no longer supplies current retention credit.')
         old = w.rederive_source_citation(old)
         new['source_citation'] = old
         new['retention_range_maintenance'] = dict(authority=AUTHORITY, source_commit=source,
