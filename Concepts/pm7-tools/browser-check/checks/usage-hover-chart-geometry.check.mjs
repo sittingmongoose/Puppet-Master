@@ -222,6 +222,72 @@ async function scrollingHeadGeometry(t) {
 	}
 }
 
+// R123 P-1: a chart card whose head tools pass under a resting pointer during a wheel pause keeps its head at rest
+// (main would slide it aside on hover; the pause holds every head still except the one hovered when it began).
+async function passingHeadStill(t) {
+	await t.viewport(1920, 1080);
+	await t.emulate({ reducedMotion: 'no-preference' });
+	await muteSound(t.page);
+	for (const surface of t.app.surfaces()) {
+		for (const look of String(t.args.looks || 'basic-dark,retro-dark').split(',')) {
+			const label = `[${surface}] ${look} passing chart head`;
+			const f = await t.app.open({ query: 'pm-warm=0', sandbox: surface === 'sandbox' });
+			await t.app.look(look);
+			await f.evaluate(() => { PMU.live.pause(); PM_PAGES.go('usage'); PM7_USAGE.setRoomDetail('analytics', 'diagnostics'); });
+			await f.waitForFunction(() => document.getElementById('pmuBoard')?.dataset.room === 'analytics' &&
+				!document.querySelector('#pmuScroll .pmu-ghostboard') && !document.documentElement.hasAttribute('data-pmu-moment'));
+			// Pick a chart card with head tools low enough to scroll up under a point 60 px above its head.
+			const plan = await f.evaluate(() => {
+				const sc = document.getElementById('pmuScroll'), room = sc.scrollHeight - sc.clientHeight;
+				const vp = sc.getBoundingClientRect();
+				const cards = [...document.querySelectorAll('#pmuBoard > .pmu-card')].filter((c) =>
+					c.querySelector(':scope > .pmu-cardhead > .pmu-headtools:not(:empty)'));
+				for (const c of cards) {
+					const top = c.getBoundingClientRect().top - vp.top + sc.scrollTop;
+					const want = top - 260;
+					if (want >= 0 && want + 300 <= room) {
+						sc.scrollTop = want;
+						const box = c.getBoundingClientRect();
+						return { id: c.dataset.widget, x: Math.round(box.x + box.width / 2), y: Math.round(box.top - 60) };
+					}
+				}
+				return null;
+			});
+			if (!plan) { await t.check(label + ' could find a chart card with head tools and room to scroll', false, 'no card'); continue; }
+			await t.page.waitForTimeout(300);
+			await t.page.mouse.move(plan.x, plan.y);
+			await t.page.waitForTimeout(400);
+			await f.evaluate((id) => {
+				const sc = document.getElementById('pmuScroll'), board = document.getElementById('pmuBoard');
+				const card = board.querySelector(`:scope > .pmu-card[data-widget="${id}"]`);
+				const head = card.querySelector(':scope > .pmu-cardhead > .pmu-headtools');
+				let raf;
+				const read = () => ({ t: performance.now(), top: sc.scrollTop, op: board.getAttribute('data-op'),
+					hover: card.matches(':hover'), head: getComputedStyle(head).transform });
+				const r = window.__passingHead = { pre: read(), frames: [], wheels: [] };
+				const wheel = (e) => r.wheels.push({ trusted: e.isTrusted, dy: e.deltaY, ...read() });
+				const sample = () => { r.frames.push(read()); raf = requestAnimationFrame(sample); };
+				sc.addEventListener('wheel', wheel, { passive: true });
+				raf = requestAnimationFrame(sample);
+				r.stop = () => { cancelAnimationFrame(raf); sc.removeEventListener('wheel', wheel); return { ...r, stop: undefined, after: read() }; };
+			}, plan.id);
+			for (let i = 0; i < 6; i++) { await t.page.mouse.wheel(0, 40); await t.page.waitForTimeout(35); }
+			await t.page.waitForTimeout(90);
+			const r = await f.evaluate(() => window.__passingHead.stop());
+			const held = r.frames.filter((s) => s.op === 'wheel');
+			const under = held.filter((s) => s.hover);
+			const moved = held.filter((s) => s.head !== 'none');
+			const detail = JSON.stringify({ card: plan.id, pre: r.pre, wheels: r.wheels.length, held: held.length, under: under.length,
+				firstMoved: moved[0], lastHeld: held.at(-1) });
+			await t.check(label + ' could judge: the card was at rest, then passed under the resting pointer inside the hold',
+				!r.pre.hover && r.pre.head === 'none' && r.wheels.length === 6 && r.wheels.every((w) => w.trusted && w.dy > 0) &&
+				under.length >= 2, detail);
+			await t.check(label + ' its head tools stay at rest while it passes under the pointer during the pause',
+				under.length >= 2 && moved.length === 0, detail);
+		}
+	}
+}
+
 async function stationaryRetroRaise(t) {
 	if (!String(t.args.looks || 'basic-dark,retro-dark').split(',').includes('retro-dark')) return;
 	await t.viewport(1920, 1080);
@@ -266,5 +332,6 @@ export const tests = {
 	'Usage stationary chart geometry': stationaryGeometry,
 	'Usage first scrolling frame': firstScrollFrame,
 	'Usage scrolling chart head geometry': scrollingHeadGeometry,
+	'Usage passing chart head stays at rest': passingHeadStill,
 	'Usage Retro stationary card raise': stationaryRetroRaise,
 };

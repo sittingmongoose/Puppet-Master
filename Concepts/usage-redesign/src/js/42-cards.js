@@ -1053,7 +1053,8 @@
       if (card._pmuUnfit !== token || !card._pmuFitOn) return;
       if (!card.isConnected || (card.matches(':hover') && !wheelPaused(card)) || card.matches(':focus-visible')) return;
       var head = card.querySelector(':scope > .pmu-cardhead');
-      if (head && head.hasAttribute('data-tools-on')) return;
+      /* (a head held through a wheel pause keeps its fit; releasing it asks again, 42-cards.js releaseHeld) */
+      if (head && (head.hasAttribute('data-tools-on') || head.hasAttribute('data-wheel-held'))) return;
       var titles = head && head.querySelector(':scope > .pmu-cardtitles');
       /* (a yielding title always took at least a pixel, so its room is back exactly when the margin reads 0; the cap only
          guards a card whose margin is held by something else, so a clamp is never left on a resting head) */
@@ -1092,12 +1093,25 @@
        below waits too. Chart highlights, readouts, tooltip hit areas and pointer tooltips retain their ordinary
        behavior. A fully shown tool can still take a press while it fades. When the pause
        ends, the board drops the value, refits the card under the pointer and sends one pmu-op-end event so the hover
-       engine can relight it without a move. At pause start the hovered card's title clamp yields as on a pointer leave
-       (unfitSoon). A gesture that already holds data-op keeps it. Only the Usage page's board pauses (#pmuScroll):
+       engine can relight it without a move. At pause start the card under the pointer keeps its head exactly as it is
+       (data-wheel-held: head tools aside, title yielded and clamped, meta hidden; 20-board.css), so no head moves while
+       the pane and the pointer rest, and cards sliding past do not slide theirs (R122 P3, R123 P-1); the pause's end
+       releases it, and a held card no longer under the pointer then leaves as on a pointer leave (unfitSoon). A gesture
+       that already holds data-op keeps it. Only the Usage page's board pauses (#pmuScroll):
        a Home dashboard keeps its highlights. */
-    var WHEEL_REST = 150, wheelT = 0, wheelInput = null, wheelAt = null, wheelEl = null, wheelFades = [];
+    var WHEEL_REST = 150, wheelT = 0, wheelInput = null, wheelAt = null, wheelEl = null, wheelFades = [], wheelHeld = null;
+    var releaseHeld = function () {
+      var head = wheelHeld; wheelHeld = null;
+      if (!head) return;
+      head.removeAttribute('data-wheel-held');
+      if (head.parentNode) unfitSoon(head.parentNode);
+    };
     var pauseHover = function (el) {
       var under = el.querySelector(':scope > .pmu-card:hover');
+      /* Only the live board's head is held, and only from ordinary hover (a gesture's marker already moved its head). */
+      var head = under && el === b.el() && el.getAttribute('data-op') === null && !el.hasAttribute('data-wheel-handoff') &&
+        under.querySelector(':scope > .pmu-cardhead');
+      if (head && head !== wheelHeld) { releaseHeld(); head.setAttribute('data-wheel-held', ''); wheelHeld = head; }
       var tools = under && under.querySelector(':scope > .pmu-cardhead > .pmu-cardtools');
       /* Read before writing the marker. Reversing an incomplete fade-in shortens the opacity transition,
          so only fully shown tools can use the full pointer-events delay safely. */
@@ -1131,11 +1145,12 @@
       if (el && (op !== null && op !== 'wheel' || b.gesture && b.gesture())) {
         if (op === 'wheel') el.removeAttribute('data-op');
         el.removeAttribute('data-wheel-handoff');
+        releaseHeld();
         clearWheelFades();
         return;
       }
       wheelAt = wheelEl = null;
-      if (!el) { clearWheelFades(); return; }
+      if (!el) { releaseHeld(); clearWheelFades(); return; }
       var card = el && el.isConnected && el.querySelector(':scope > .pmu-card:hover');
       if (card) {
         /* R100 T2: a delayed incoming transition is not a visible return. Restore the already-hovered head in one
@@ -1151,6 +1166,7 @@
            that work before its own head writes. Publish the fitted head and the released marker together instead. */
         try { fitTools(card); } catch (error) { console.error('[pm-usage] head fit', error); }
       }
+      releaseHeld();
       if (el.getAttribute('data-op') === 'wheel') el.removeAttribute('data-op');
       el.removeAttribute('data-wheel-handoff');
       clearWheelFades();
@@ -1172,7 +1188,7 @@
       wheelEl = el;
       if (op !== 'wheel') {
         var under = pauseHover(el);
-        if (under) unfitSoon(under);
+        if (under && (!wheelHeld || wheelHeld.parentNode !== under)) unfitSoon(under);
       }
       return el;
     };
@@ -1182,6 +1198,7 @@
         wheelInput = null;
         /* A reversed ghost can return after the original hold ended. Promotion restores its ordinary hover. */
         var el = b.el();
+        releaseHeld();
         if (el) {
           if (el.getAttribute('data-op') === 'wheel') el.removeAttribute('data-op');
           el.removeAttribute('data-wheel-handoff');

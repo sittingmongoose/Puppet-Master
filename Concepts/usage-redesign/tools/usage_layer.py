@@ -312,7 +312,7 @@ HOST_SCOPE = ':is(#panel-usage,[data-pmu-host])'
 # 2643 (R100 T2, 2026-11-18): the short wheel-return phase is scoped to the current card head.
 # 2644 (R117 P3): the attempt dot's tooltip stacking and painted hover outline get separate rules.
 # 2645 (R117 P4): the discrete pointer-events delay applies only to a visible tool fading in a wheel pause.
-HOST_SCOPE_EXPECT = {'rewritten': 2645, 'compound': 20}
+HOST_SCOPE_EXPECT = {'rewritten': 2647, 'compound': 20}
 HOST_AT_GROUPS = ('@media', '@supports', '@container', '@layer')
 _ANCHOR_RX = re.compile(re.escape(HOST_ANCHOR) + r'(?![\w-])')
 

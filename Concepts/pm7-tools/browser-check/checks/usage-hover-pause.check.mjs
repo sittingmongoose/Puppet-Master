@@ -32,12 +32,12 @@ const INSTALL = () => {
 		if (!R.on) return;
 		const t = e.target, card = t.closest && t.closest('.pmu-card');
 		const under = card && card.matches(':hover');
-		// Header controls retain main's hit geometry even when their hover colors are gated.
-		const headGeometry = e.propertyName === 'transform' && t.matches?.('.pmu-headtools');
-		const approved = headGeometry || (t.matches?.('.pmu-seg button') && e.propertyName === 'color') || (t.matches?.('.pmu-stepper button') && ['color','background-color'].includes(e.propertyName)) || (t.matches?.('.pmu-sbrow .pmu-sbfill > i') && e.propertyName === 'opacity');
+		// R123 P-1: a head-tools slide during a hold is hover leaking (a passing card's head moving, or the held head
+		// leaving its place), never approved. Only the tag-keyed four keep their ordinary hover.
+		const approved = (t.matches?.('.pmu-seg button') && e.propertyName === 'color') || (t.matches?.('.pmu-stepper button') && ['color','background-color'].includes(e.propertyName)) || (t.matches?.('.pmu-sbrow .pmu-sbfill > i') && e.propertyName === 'opacity');
 		const exiting = t.classList.contains('pmh-out') && !t.classList.contains('pmh-on') && ['opacity','--pmh-x','--pmh-y'].includes(e.propertyName);
 		let from, to;
-		if (cardId(card) === R.rest && t.matches('.pmu-cardtools,.pmu-h,.pmu-cardtitles')) {
+		if (cardId(card) === R.rest && t.matches('.pmu-cardtools,.pmu-h,.pmu-headtools,.pmu-cardtitles')) {
 			try {
 				const a = t.getAnimations({ subtree: !!e.pseudoElement }).find((a) => a.transitionProperty === e.propertyName &&
 					a.effect?.target === t && (a.effect.pseudoElement || '') === e.pseudoElement);

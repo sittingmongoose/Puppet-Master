@@ -31,12 +31,10 @@ test('delayed starting-head transitions toward neutral are exits, while entries 
  const r=make();r.trans.push({t:180,card:'old',under:true,prop:'opacity',cls:'pmu-cardtools',from:'0',to:'1'});assert.equal(j(r).r1.ok,false);
 });
 
-test('main head-tools geometry stays outside R1 while hover tint is still checked',()=>{
- const r=make();
- r.trans.push({t:180,card:'new',under:true,prop:'transform',cls:'pmu-headtools',approved:true});
- assert.equal(j(r).r1.ok,true);
- r.trans.push({t:200,card:'new',under:true,prop:'color',cls:'pmu-caveat'});
- assert.equal(j(r).r1.ok,false);
+test('R123 P-1: a head-tools slide during the hold fails R1, on a passing card and on the held one',()=>{
+ const r=make();r.trans.push({t:180,card:'new',under:true,prop:'transform',cls:'pmu-headtools',from:'none',to:'matrix(1,0,0,1,-103,0)'});assert.equal(j(r).r1.ok,false);
+ const h=make();h.trans.push({t:180,card:'old',under:true,prop:'transform',cls:'pmu-headtools',from:'matrix(1,0,0,1,-103,0)',to:'none'});assert.equal(j(h).r1.ok,false);
+ const c=make();c.trans.push({t:200,card:'new',under:true,prop:'color',cls:'pmu-caveat'});assert.equal(j(c).r1.ok,false);
 });
 
 test('typed main chart transitions are allowed while CSS hover row leakage still fails',()=>{const r=make();r.trans.push({t:300,card:'new',under:true,prop:'opacity',cls:'pmu-mark is-hl-dim',chartControlled:true});assert.equal(j(r).r1.ok,true);r.trans.push({t:320,card:'new',under:true,prop:'background-color',cls:'pmu-row',chartControlled:false});assert.equal(j(r).r1.ok,false);});
