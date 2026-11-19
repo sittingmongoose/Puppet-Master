@@ -5,8 +5,8 @@
  "merge": "admission-merge-2",
  "registry": {
   "path": "Plans/event_family_registry.json",
-  "revision": "2026-11-18.2",
-  "sha256": "ec21cf1a5b42b3e68a5564a847b4798dff968612d11d438bc7075b89196f9602",
+  "revision": "2026-11-19.8",
+  "sha256": "1a13be381c92ff687e3f3cc49eed53aa80689e4e36332ab40636685c9b162ccc",
   "family_count": 518,
   "row_pointer": "#/families/237"
  },
@@ -22,7 +22,7 @@
     "membership_version": {
      "status": "PASS",
      "representation": "exact_registry_membership",
-     "finding": "Currently registered at 2026-11-18.2 as #/families/237 (canonical row SHA-256 1877201127ce7bd56e678636df559d819347611ad0b761fc4bb4d24a9db73dd9). Original one-family admission checkpoints remain in the family record and immutable Git source.",
+     "finding": "Currently registered at 2026-11-19.8 as #/families/237, canonical row SHA-256 1877201127ce7bd56e678636df559d819347611ad0b761fc4bb4d24a9db73dd9. Original one-family append checkpoints remain preserved.",
      "evidence": [
       {
        "path": "Plans/event_family_registry.json",
@@ -266,22 +266,41 @@
        "path": "Plans/storage-plan.md",
        "unit": "SP-647",
        "line_start": 49740,
-       "line_end": 49740,
-       "quote": "Current selected assignment (2026-11-19): browser.context_captured@1.0.0 is registered for application_or_project",
+       "line_end": 49751,
+       "quote": "  Current selected assignment (2026-11-19): browser.context_captured@1.0.0 is registered for application_or_project\n  in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2155. Its event history selects Application\n  = RP-CHAT-THREAD-LIFETIME@1.0.0 (anchor_kind=explicit_delete, cardinality_scope=thread), Project = RP-CHAT-THREAD-LIFETIME@1.0.0\n  (anchor_kind=explicit_delete, cardinality_scope=thread); Plans/storage-plan.md#SP-647 owns the event policy''s\n  existing anchors, counts, holds and deletion rules. Separate stored-value assignment: ds15_browser_context_captured_checkpoint\n  uses RP-PROJECTION-3GEN@1.0.0 under Plans/Decision_Log.md#DL-500; this assigns that stored value, not event history.\n  Separate checkpoint assignment: ds15_browser_context_captured_checkpoint uses RP-PROJECTION-3GEN@1.0.0 under its\n  existing Plans/storage-plan.md#SP-647 contract; checkpoint retention grants no event/source deletion. Original\n  sources and coherent backups retain their independent owner policies; the event lifetime is not transferred to\n  them. Current append/publication still requires the exact selected schema/scope, original custody, current permission,\n  receipt and required producer adoption. Actual missing registration or unresolved required custody refuses; native\n  execution remains NOT_RUN. No native adoption, new retention choice or governance seal follows.'",
        "quote_check": "exact",
        "quote_scope": "unit SP-647, Plans/storage-plan.md:49672-49781",
-       "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+       "file_sha256": "c5e2112ec95e84283f155f44f8dc1fdf9cb5be016b4aa9acd29b780f4c1721d5",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-647",
-        "line_start": 49231,
-        "line_end": 49231,
-        "quote": "\\nEvent history `retention_policy_ref = RP-CHAT-THREAD-LIFETIME@1.0.0`, under DL-401, DL-500.\\n\\nUse\\",
-        "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+        "line_start": 49740,
+        "line_end": 49740,
+        "quote": "Current selected assignment (2026-11-19): browser.context_captured@1.0.0 is registered for application_or_project",
+        "quote_check": "exact",
+        "quote_scope": "unit SP-647, Plans/storage-plan.md:49672-49781",
+        "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+        "source_citation": {
+         "path": "Plans/storage-plan.md",
+         "unit": "SP-647",
+         "line_start": 49231,
+         "line_end": 49231,
+         "quote": "\\nEvent history `retention_policy_ref = RP-CHAT-THREAD-LIFETIME@1.0.0`, under DL-401, DL-500.\\n\\nUse\\",
+         "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+        },
+        "locator_maintenance": {
+         "authority": "MERGE2-FIX4",
+         "reason": "Re-cite the same accepted retention claim at its current exact owner assignment; event and source/checkpoint authority remain separate."
+        }
        },
-       "locator_maintenance": {
-        "authority": "MERGE2-FIX4",
-        "reason": "Re-cite the same accepted retention claim at its current exact owner assignment; event and source/checkpoint authority remain separate."
+       "retention_range_maintenance": {
+        "authority": "MERGE3-POSTFIX / post-landing Astra findings",
+        "source_commit": "004f3ec9d0d13c129f1b2af4dcb469748a375d59",
+        "old_quote": "Current selected assignment (2026-11-19): browser.context_captured@1.0.0 is registered for application_or_project",
+        "old_path": "Plans/storage-plan.md",
+        "old_unit": "SP-647",
+        "old_line_start": 49740,
+        "reason": "Complete current wrapped assignment inside its original unit."
        }
       }
      ],
@@ -530,10 +549,9 @@
   "row_pointer": "#/families/237"
  },
  "evidence_maintenance": {
-  "authority": "MERGE2-FIX4 items 1/2/3",
-  "source_commit": "2bda6aeed03daea26c4d79dfb7568fc145aac29e",
-  "source_assessment_sha256": "97dc189af6a42403fec7fe72efb23cd7cf7d3fdb138ec893ee190b6ccee211a0",
-  "native_execution": "NOT_RUN",
-  "verdicts_changed": false
+  "authority": "MERGE3-POSTFIX / post-landing Astra findings",
+  "source_commit": "004f3ec9d0d13c129f1b2af4dcb469748a375d59",
+  "source_assessment_sha256": "f0b93973ff2d8dd2443430d476bab87cc5cad986154266ab4529bf1367ba863e",
+  "native_execution": "NOT_RUN"
  }
 }
