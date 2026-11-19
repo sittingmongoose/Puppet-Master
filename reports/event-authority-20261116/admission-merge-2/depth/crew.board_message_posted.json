@@ -5,8 +5,8 @@
  "merge": "admission-merge-2",
  "registry": {
   "path": "Plans/event_family_registry.json",
-  "revision": "2026-11-18.2",
-  "sha256": "ec21cf1a5b42b3e68a5564a847b4798dff968612d11d438bc7075b89196f9602",
+  "revision": "2026-11-19.51",
+  "sha256": "c1346ec8a6ac13fc997579befba115fa615c55451d54f946d86e68ecbaf6e1da",
   "family_count": 518,
   "row_pointer": "#/families/362"
  },
@@ -22,7 +22,7 @@
     "membership_version": {
      "status": "PASS",
      "representation": "exact_registry_membership",
-     "finding": "Currently registered at 2026-11-18.2 as #/families/362 (canonical row SHA-256 88d2fd472b0c5745d663f975d2959775febfe44c6b7805021725f30f2ac93b94). Original one-family admission checkpoints remain in the family record and immutable Git source.",
+     "finding": "Currently registered at 2026-11-19.51 as #/families/362, canonical row SHA-256 26eedb55fe5ece4133cd876a569a451c58d7fc04ff63895bbf4fd167717fb020. Original one-family append checkpoints remain preserved.",
      "evidence": [
       {
        "path": "Plans/event_family_registry.json",
@@ -303,21 +303,43 @@
        "unit": "OSI-681",
        "line_start": 32640,
        "line_end": 32640,
-       "quote": "Current selected assignment (2026-11-19): crew.board_message_posted@1.0.0 is registered for application_or_project in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2280. Its event history selects Application = RP-COORDINATION-180D@1.0.0 (anchor_kind=run_completion, cardinality_scope=project), Project = RP-COORDINATION-180D@1.0.0 (anchor_kind=run_completion, cardinality_scope=project); exact original and checkpoint bindings retain their existing Storage assignments. Registry membership supplies no producer adoption or native-installation proof. Missing-registration refusal applies only if the exact current registration is absent.",
+       "quote": "Current selected assignment (2026-11-19): crew.board_message_posted@1.0.0 is registered for application_or_project in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2280. Its event history selects Application = RP-COORDINATION-180D@1.0.0 (anchor_kind=run_completion, count in the SP-351 Server counterpart bucket), Project = RP-COORDINATION-180D@1.0.0 (anchor_kind=run_completion, count in the Project partition); exact original and checkpoint bindings retain their existing Storage assignments. Registry membership supplies no producer adoption or native-installation proof. Missing-registration refusal applies only if the exact current registration is absent.",
        "quote_check": "exact",
        "quote_scope": "unit OSI-681, Plans/orchestrator-subagent-integration.md:32532-32644",
-       "file_sha256": "e4a8b15da392eff022e41f72d3c5fa81f892eefeeae53f8719fdd96d03712baf",
+       "file_sha256": "aab3a84daf5765dd55948f63493973b3a79019c6141e475b844cc62f36934c26",
        "source_citation": {
         "path": "Plans/orchestrator-subagent-integration.md",
         "unit": "OSI-681",
-        "line_start": 32603,
-        "line_end": 32603,
-        "quote": "Event history `retention_policy_ref = RP-COORDINATION-180D@1.0.0`, under DL-085.",
-        "file_sha256": "b39393943cd0f6532f76acdc63eb4152c4cea49b337972fb49705a7e9bfc2365"
+        "line_start": 32640,
+        "line_end": 32640,
+        "quote": "Current selected assignment (2026-11-19): crew.board_message_posted@1.0.0 is registered for application_or_project in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2280. Its event history selects Application = RP-COORDINATION-180D@1.0.0 (anchor_kind=run_completion, cardinality_scope=project), Project = RP-COORDINATION-180D@1.0.0 (anchor_kind=run_completion, cardinality_scope=project); exact original and checkpoint bindings retain their existing Storage assignments. Registry membership supplies no producer adoption or native-installation proof. Missing-registration refusal applies only if the exact current registration is absent.",
+        "quote_check": "exact",
+        "quote_scope": "unit OSI-681, Plans/orchestrator-subagent-integration.md@10ba97e699d51287673d6f1db4d994f54c59b4ed:32532-32644",
+        "file_sha256": "e4a8b15da392eff022e41f72d3c5fa81f892eefeeae53f8719fdd96d03712baf",
+        "source_citation": {
+         "path": "Plans/orchestrator-subagent-integration.md",
+         "unit": "OSI-681",
+         "line_start": 32603,
+         "line_end": 32603,
+         "quote": "Event history `retention_policy_ref = RP-COORDINATION-180D@1.0.0`, under DL-085.",
+         "file_sha256": "b39393943cd0f6532f76acdc63eb4152c4cea49b337972fb49705a7e9bfc2365"
+        },
+        "locator_maintenance": {
+         "authority": "MERGE2-FIX4",
+         "reason": "Re-cite the same accepted retention claim at its current exact owner assignment; event and source/checkpoint authority remain separate."
+        },
+        "commit": "10ba97e699d51287673d6f1db4d994f54c59b4ed",
+        "sha256": "e4a8b15da392eff022e41f72d3c5fa81f892eefeeae53f8719fdd96d03712baf",
+        "line": 32640
        },
-       "locator_maintenance": {
-        "authority": "MERGE2-FIX4",
-        "reason": "Re-cite the same accepted retention claim at its current exact owner assignment; event and source/checkpoint authority remain separate."
+       "retention_range_maintenance": {
+        "authority": "MERGE3-POSTFIX / post-landing Astra findings",
+        "source_commit": "1e2b0cc2a33d9850f6de51da0b03fed231a62dde",
+        "old_quote": "Current selected assignment (2026-11-19): crew.board_message_posted@1.0.0 is registered for application_or_project in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2280. Its event history selects Application = RP-COORDINATION-180D@1.0.0 (anchor_kind=run_completion, cardinality_scope=project), Project = RP-COORDINATION-180D@1.0.0 (anchor_kind=run_completion, cardinality_scope=project); exact original and checkpoint bindings retain their existing Storage assignments. Registry membership supplies no producer adoption or native-installation proof. Missing-registration refusal applies only if the exact current registration is absent.",
+        "old_path": "Plans/orchestrator-subagent-integration.md",
+        "old_unit": "OSI-681",
+        "old_line_start": 32640,
+        "reason": "Complete current wrapped assignment inside its original unit."
        }
       }
      ],
@@ -571,10 +593,9 @@
   "row_pointer": "#/families/362"
  },
  "evidence_maintenance": {
-  "authority": "MERGE2-FIX4 items 1/2/3",
-  "source_commit": "2bda6aeed03daea26c4d79dfb7568fc145aac29e",
-  "source_assessment_sha256": "bf984224e2d6542a8928228e84e963cc992389e41c851cf1cb31ca8235a6a10e",
-  "native_execution": "NOT_RUN",
-  "verdicts_changed": false
+  "authority": "MERGE3-POSTFIX / post-landing Astra findings",
+  "source_commit": "1e2b0cc2a33d9850f6de51da0b03fed231a62dde",
+  "source_assessment_sha256": "a83bd68a112dab4b3597d532e6efe132eca594bc1886963931697970daff55a4",
+  "native_execution": "NOT_RUN"
  }
 }
