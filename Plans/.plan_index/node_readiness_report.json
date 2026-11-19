@@ -4,15 +4,15 @@
     "build_order_available": true,
     "build_order_blocked_node_count": 0,
     "cycle_blocker_count": 0,
-    "depends_on_edge_count": 27322,
+    "depends_on_edge_count": 27325,
     "downstream_blocked_node_count": 0,
-    "edge_count": 30547,
-    "node_count": 9468,
+    "edge_count": 30550,
+    "node_count": 9469,
     "true_cycle_component_count": 0,
     "unblocks_edge_count": 3225,
     "unresolved_reference_count": 0
   },
-  "generated_at_utc": "2026-11-19T20:54:57Z",
+  "generated_at_utc": "2026-11-19T21:50:53Z",
   "gui_related_units": {
     "count": 3935,
     "units": [
@@ -43309,10 +43309,10 @@
   "no_final_node_queues_created": true,
   "no_worknodes_created": true,
   "nodeseed_candidates_created": false,
-  "plan_unit_count": 9468,
+  "plan_unit_count": 9469,
   "risk_and_reasoning_summary": {
     "reasoning_tier_counts": {
-      "high": 4782,
+      "high": 4783,
       "low": 10,
       "medium": 36,
       "standard": 4640
@@ -44544,7 +44544,7 @@
       "evalsession_owner_boundary_drift": 1,
       "event_alias_precedence_drift": 1,
       "event_authority": 120,
-      "event_authority_admission": 472,
+      "event_authority_admission": 473,
       "event_authority_admission_decision_entry_drift": 1,
       "event_authority_admission_decision_entry_scope_drift": 1,
       "event_authority_and_false_completion": 1,
@@ -47570,7 +47570,7 @@
     "source_preserving_unit_count": 0,
     "source_preserving_units": [],
     "status_counts": {
-      "accepted": 9188,
+      "accepted": 9189,
       "draft": 47,
       "retired": 205,
       "superseded": 28
@@ -47604,7 +47604,7 @@
       "contract": 203,
       "contract_requirement": 3,
       "data_contract": 8,
-      "decision": 759,
+      "decision": 760,
       "decision_record": 24,
       "deferred_enhancement": 8,
       "delta_contract": 1,
@@ -47718,7 +47718,7 @@
       {
         "actual": "443ae71d7e6326c3673a409f63950b9f33713c67f43c256fed6efa1c0d03a653",
         "error": "pnc019_source_hash_stale",
-        "expected": "ec21cf1a5b42b3e68a5564a847b4798dff968612d11d438bc7075b89196f9602",
+        "expected": "92892e3361a16a91b319533f1d2b5679920496e7e4732294e8fd332762946df3",
         "source_path": "Plans/event_family_registry.json"
       },
       {
@@ -47814,161 +47814,16 @@
       {
         "actual": null,
         "error": "pnc019_source_hash_stale",
-        "expected": "993845de7022ceaa9a1d9acf00da905bd177a6289ce94081654042de16d065ba",
+        "expected": "8bc021d72eae5fff10a3d0f91bc127e828efdaaf65bd2790cd2f9697be09fd33",
         "source_path": "scripts/pm_pnc019_currentness.py"
       },
       {
-        "actual": null,
-        "error": "pnc019_source_hash_stale",
-        "expected": "5a1c070b9f0afc24848a6da357c73c6b5ede42b5e563044f0dd0181a62616b6f",
+        "error": "pnc019_source_hash_path_missing",
         "source_path": "Plans/.audits/event-authority-2026-08-13-currentness/VALIDATOR_RECEIPT.json"
       },
       {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/Automated_Testing_System.md"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/Back_Seat_Driver.md"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/Backup_Restore_System.md"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/Contracts_V0.md"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/Decision_Log.md"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/Executor_Protocol.md"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/FileManager.md"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/FinalGUISpec.md"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/Formatters_System.md"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/Goal_Runtime_System.md"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/LSPSupport.md"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/Models_System.md"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/Orchestrator_Page.md"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/Permissions_System.md"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/Personas.md"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/Planning_Wizard.md"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/Project_System.md"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/Remote_Access_System.md"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/Server_System.md"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/Settings_System.md"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/Shared_Integration_Runtime.md"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/Source_Control_System.md"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/Tools.md"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/UI_Command_Catalog.md"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/Wiring_Matrix.production.json"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/assistant-chat-design.md"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/assistant-memory-subsystem.md"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/event_family_registry.json"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/event_family_registry.schema.json"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/human-in-the-loop.md"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/newtools.md"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/orchestrator-subagent-integration.md"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/storage-plan.md"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/storage_value_registry.json"
-      },
-      {
-        "error": "event_authority_currentness_validator_drift",
-        "validator_path": "scripts/pm-event-authority-currentness.py"
-      },
-      {
-        "error": "event_authority_currentness_live_registry_drift"
+        "detail": "[Errno 2] No such file or directory: 'Plans/.audits/event-authority-2026-08-13-currentness/VALIDATOR_RECEIPT.json'",
+        "error": "event_authority_currentness_audit_unavailable"
       },
       {
         "bulk_registration_allowed": false,

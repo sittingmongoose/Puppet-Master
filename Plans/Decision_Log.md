@@ -54006,3 +54006,64 @@ negative_constraints:
 - No producer adoption, native execution claim, readiness clearance or governance seal is granted.
 ```
 
+### DL-2451: Event Authority corrects auth.github.authenticated (merge 3 post-landing)
+
+```yaml
+plan_unit_id: DL-2451
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: 'Correction for auth.github.authenticated only, under DL-077 and DL-400, resolving post-landing Astra finding(s)
+  [7]. The original admission authority remains Plans/Decision_Log.md#DL-2145; this entry records no new admission, verdict,
+  policy choice or producer adoption. Current row canonical SHA-256 45d76ab72af9bb40d91d94aba64dbb156f89b975d4cf2c52ce9620575cd8ea2f.
+  Its scope is application_only. Payload editions: application `https://puppetmaster.local/schemas/dg6b_event_contracts/1.0.0/schema.json#/$defs/auth_github_authenticated`
+  (RP-OPERATIONAL-SECURITY-APPLICATION-2555D@1.0.0, producer owner_adoption_required).
+
+
+  The correction moves the full registry from 2026-11-18.2, 518 families, SHA-256 ec21cf1a5b42b3e68a5564a847b4798dff968612d11d438bc7075b89196f9602,
+  to 2026-11-19.1, 518 families, SHA-256 92892e3361a16a91b319533f1d2b5679920496e7e4732294e8fd332762946df3, without changing
+  another family. Revision witness: reports/event-authority-20261116/admission-merge-3/corrections/auth.github.authenticated.json.
+  Depth assessment: reports/event-authority-20261116/admission-merge-2/depth/auth.github.authenticated.json, SHA-256 ad1d026a3ebaddc1b225236834041eda9982df5331d51ac4289e59a5258f796a.
+
+
+  The original append checkpoints are preserved: before 2026-11-16.8 SHA-256 f4db9a7626b94ac38d17b1fc3c9634a401fc84220e0edba2b2cef57de270c27e;
+  after 2026-11-16.9 SHA-256 da4339724d14b5d8b227933467f415a5d7ed6f848adada14a971a18f76b876f5. Existing semantic owner Plans/GitHub_API_Auth_and_Flows.md#GAAAF-077,
+  payload owner Plans/Contracts_V0.md#CV-690, resource Plans/dg6b_event_contracts.schema.json#/$defs/auth_github_authenticated
+  retain their contracts. Current citations were re-read from existing canonical text; original citations, records and decision
+  entries remain in the named Git predecessor. Native execution remains NOT_RUN. Required producer adoption, permissions,
+  original custody and receipt/publication fences remain required.'
+gui_related: false
+gui_classification_reason: Maintains one existing event admission and its evidence.
+depends_on:
+- DL-077
+- DL-400
+- DL-2145
+unblocks: []
+acceptance_criteria:
+- Exactly one family is corrected and the original append checkpoints remain authenticated.
+- The correction witness and current DL-077 record match their named Git editions.
+validation_surfaces:
+- python3 scripts/pm-ea-record-chain.py
+- python3 scripts/pm-ea-postfix-check.py
+- python3 scripts/pm-ea-retention-citation-check.py
+risk_class: event_authority_admission
+reasoning_tier: high
+context_scope: event_authority_pnc019_merge3_postfix
+implementation_surfaces:
+- Plans/event_family_registry.json
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/MERGE2-POSTLAND-astra62max/REVIEW.md
+- Plans/Decision_Log.md#DL-2145
+preserved_exact_tokens:
+- auth.github.authenticated
+- 45d76ab72af9bb40d91d94aba64dbb156f89b975d4cf2c52ce9620575cd8ea2f
+- 2026-11-18.2
+- 2026-11-19.1
+negative_constraints:
+- No new admission, producer adoption, native execution claim or governance seal.
+```
+
