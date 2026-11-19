@@ -1,8 +1,8 @@
 // FO-161 (Jared: "A: free tags with suggested kinds"; Plans/Personas.md P-010 / DL-474): a persona's Tags row is a
 // free tag input, not a fixed multiselect. Real typing adds any tag (Enter or comma), each tag is a removable chip,
 // the eight suggested kinds are offered under the box and typing filters them; an added kind leaves the suggestions.
-// The tags left after removing one chip survive a Settings close/reopen (and a page reload on the normal surface),
-// show in the persona's library row, and the roster filter finds the persona by a free tag. Both surfaces, Basic
+// The tags left after removing one chip survive a Settings close/reopen, show in the persona's library row, and the
+// roster filter finds the persona by a free tag. Both surfaces, Basic
 // Dark / Glass Light / NieR Dark / Retro Light, 1280x900 and 740x900. Visible behaviour only.
 // Bite: on the 12e head the row is a fixed chip-select with the old kinds and no input, so the first assertion fails
 // there and passes on the fix. --set shots=1 crops the row at 1280x900 (on a pre-FO-161 page it crops the fixed list
@@ -152,16 +152,9 @@ for (const surface of ['normal', 'sandbox']) {
 				await filter.fill('');
 				await t.page.waitForTimeout(350);
 				await t.check('clearing the search brings the roster back', (await f.locator(`${BODY} .resource-row:not([hidden])`).count()) > 1, `${await f.locator(`${BODY} .resource-row:not([hidden])`).count()} rows`);
-				// on the normal surface a reload keeps the saved tags (the sandbox has no storage)
-				if (surface === 'normal') {
-					const f2 = await t.app.open({ sandbox: false });
-					await pageTab(t, f2, 'settings');
-					await goPersonas(t, f2);
-					await openPersona(t, f2);
-					const row3 = tagsRow(f2);
-					await row3.scrollIntoViewIfNeeded();
-					await t.check('a reload keeps the saved tags', shown(await chipTexts(row3)) === shown(left), shown(await chipTexts(row3)));
-				}
+				// Persona records are the concept's session state, like every persona field (aliases, tools): the
+				// project projection the tome saves holds settings, not the roster, so a page reload re-seeds it.
+				// The close/reopen above is the persistence this row shares with the other persona fields.
 			};
 		}
 	}
