@@ -2,9 +2,9 @@
 
 Source: `Plans/Decision_Log.md`
 
-Source lines: L28747-L55097
+Source lines: L28747-L55160
 
-Source SHA256: `2b40e86dadaf63495420add73d6467b69bb1095660b035403bf0dfb8b402a531`
+Source SHA256: `656c05fe44f6fda7f4e57dfdcc80014a620b9aceac8ba9af104ba704f195de28`
 
 ---
 
@@ -26356,6 +26356,69 @@ preserved_exact_tokens:
 - 69c32706c55f58bfd07110955facf544efadcb083452390251fac6a1162b57e5
 - 2026-11-19.16
 - 2026-11-19.17
+negative_constraints:
+- No new admission, producer adoption, native execution claim or governance seal.
+```
+
+### DL-2468: Event Authority corrects bundle.selection_forward_blocked (merge 3 post-landing)
+
+```yaml
+plan_unit_id: DL-2468
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: 'Correction for bundle.selection_forward_blocked only, under DL-077 and DL-400, resolving post-landing Astra
+  finding(s) [4]. The original admission authority remains Plans/Decision_Log.md#DL-2231; this entry records no new admission,
+  verdict, policy choice or producer adoption. Current row canonical SHA-256 43594d3dee7a946d7bc34f46481353ec88f3163e077e41c27b8576fcc7ff3695.
+  Its scope is application_or_project. Payload editions: application `pm.dch_event.bundle_selection_forward_blocked.application.v1`
+  (RP-AUTHORITY-INDEFINITE@1.0.0, producer requires_owner_adoption); project `pm.dch_event.bundle_selection_forward_blocked.project.v1`
+  (RP-AUTHORITY-INDEFINITE@1.0.0, producer requires_owner_adoption).
+
+
+  The correction moves the full registry from 2026-11-19.17, 518 families, SHA-256 35a6bb7e068679b19f65cdb5f7e5a69c4dcc9f8b17a194c8d4bdbccf32c83768,
+  to 2026-11-19.18, 518 families, SHA-256 786520609c6429497758c32cbe4fa8f0f4d2260d3c39c42b194597b95d31b9bd, without changing
+  another family. Revision witness: reports/event-authority-20261116/admission-merge-3/corrections/bundle.selection_forward_blocked.json.
+  Depth assessment: reports/event-authority-20261116/admission-merge-2/depth/bundle.selection_forward_blocked.json, SHA-256
+  e13708ba546c61678da10343415962f937d29fd76387661254a75ee3ca811d2c.
+
+
+  The original append checkpoints are preserved: before 2026-11-16.94 SHA-256 075d46f4e58c0873b41850e29092af14776c0ebdcd6ab1d0ce19911b069337ba;
+  after 2026-11-16.95 SHA-256 f2cb952f9930a5e1cce3ed684c42a9b2cf0f5ad2bc97327cd18c7ca885b36bc8. Existing semantic owner Plans/assistant-chat-design.md#ACD-610,
+  payload owner Plans/Contracts_V0.md#CV-630, resource Plans/dch_event_payloads/bundle_selection_forward_blocked.schema.json#/$defs/project
+  retain their contracts. Current citations were re-read from existing canonical text; original citations, records and decision
+  entries remain in the named Git predecessor. Native execution remains NOT_RUN. Required producer adoption, permissions,
+  original custody and receipt/publication fences remain required.'
+gui_related: false
+gui_classification_reason: Maintains one existing event admission and its evidence.
+depends_on:
+- DL-077
+- DL-400
+- DL-2231
+unblocks: []
+acceptance_criteria:
+- Exactly one family is corrected and the original append checkpoints remain authenticated.
+- The correction witness and current DL-077 record match their named Git editions.
+validation_surfaces:
+- python3 scripts/pm-ea-record-chain.py
+- python3 scripts/pm-ea-postfix-check.py
+- python3 scripts/pm-ea-retention-citation-check.py
+risk_class: event_authority_admission
+reasoning_tier: high
+context_scope: event_authority_pnc019_merge3_postfix
+implementation_surfaces:
+- Plans/event_family_registry.json
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/MERGE2-POSTLAND-astra62max/REVIEW.md
+- Plans/Decision_Log.md#DL-2231
+preserved_exact_tokens:
+- bundle.selection_forward_blocked
+- 43594d3dee7a946d7bc34f46481353ec88f3163e077e41c27b8576fcc7ff3695
+- 2026-11-19.17
+- 2026-11-19.18
 negative_constraints:
 - No new admission, producer adoption, native execution claim or governance seal.
 ```

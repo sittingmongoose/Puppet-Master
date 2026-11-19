@@ -1,0 +1,241 @@
+{
+ "schema_id": "pm.ea.postfix_revision.v1",
+ "authority": "MERGE3-POSTFIX / post-landing Astra findings",
+ "event_type": "bundle.selection_forward_blocked",
+ "findings": [
+  4
+ ],
+ "source_commit": "9383bf2c470fd70bd1c257c9a505712a378b25ca",
+ "original_admission_decision_ref": "Plans/Decision_Log.md#DL-2231",
+ "decision_ref": "Plans/Decision_Log.md#DL-2468",
+ "registry_before": {
+  "revision": "2026-11-19.17",
+  "sha256": "35a6bb7e068679b19f65cdb5f7e5a69c4dcc9f8b17a194c8d4bdbccf32c83768",
+  "family_count": 518
+ },
+ "registry_after": {
+  "revision": "2026-11-19.18",
+  "sha256": "786520609c6429497758c32cbe4fa8f0f4d2260d3c39c42b194597b95d31b9bd",
+  "family_count": 518
+ },
+ "before_row": {
+  "family_id": "event-family-bundle-selection-forward-blocked",
+  "family_revision": "1.0.0",
+  "event_type": "bundle.selection_forward_blocked",
+  "scope_policy": "application_or_project",
+  "semantic_owner_doc": "Plans/assistant-chat-design.md#ACD-610",
+  "payload_owner_doc": "Plans/Contracts_V0.md#CV-630",
+  "payload_schema_id": "pm.dch_event.bundle_selection_forward_blocked.project.v1",
+  "payload_schema_ref": {
+   "path": "Plans/dch_event_payloads/bundle_selection_forward_blocked.schema.json",
+   "json_pointer": "#/$defs/project",
+   "schema_id": "pm.dch_event.bundle_selection_forward_blocked.project.v1"
+  },
+  "legacy": {
+   "aliases": [],
+   "admitted_extensions": [],
+   "identity_json_pointers": {
+    "project_id": [
+     "/payload/scope/project_id"
+    ],
+    "thread_id": [
+     "/payload/thread_id"
+    ]
+   },
+   "referenced_event_id_pointer": null,
+   "redaction": {
+    "mode": "reject_unhandled_secrets",
+    "transform_id": null,
+    "transform_version": null
+   }
+  },
+  "source_refs": [
+   "Plans/assistant-chat-design.md#ACD-610",
+   "Plans/Contracts_V0.md#CV-630",
+   "Plans/storage-plan.md#SP-610",
+   "Plans/dch_event_payloads/bundle_selection_forward_blocked.schema.json#/$defs/application",
+   "Plans/dch_event_payloads/bundle_selection_forward_blocked.schema.json#/$defs/project",
+   "Plans/dch_event_contracts.json#/rows/0",
+   "reports/event-authority-20261116/admission-merge-2/readiness-list.json"
+  ],
+  "retention_policy_ref": {
+   "registry_schema_id": "pm.storage_value_registry.v2",
+   "policy_id": "RP-AUTHORITY-INDEFINITE",
+   "policy_version": "1.0.0"
+  },
+  "payload_versions": [
+   {
+    "scope_kind": "application",
+    "payload_schema_id": "pm.dch_event.bundle_selection_forward_blocked.application.v1",
+    "payload_schema_ref": {
+     "path": "Plans/dch_event_payloads/bundle_selection_forward_blocked.schema.json",
+     "json_pointer": "#/$defs/application",
+     "schema_id": "pm.dch_event.bundle_selection_forward_blocked.application.v1"
+    },
+    "source_graph_ref": "Plans/Contracts_V0.md#CV-366",
+    "producer_admission": "requires_owner_adoption",
+    "append_owner_ref": "Plans/assistant-chat-design.md#ACD-610",
+    "read_owner_ref": "Plans/assistant-chat-design.md#ACD-610",
+    "backup_owner_ref": "Plans/Backup_Restore_System.md#BRS-033",
+    "retention_policy_ref": {
+     "registry_schema_id": "pm.storage_value_registry.v2",
+     "policy_id": "RP-AUTHORITY-INDEFINITE",
+     "policy_version": "1.0.0"
+    }
+   },
+   {
+    "scope_kind": "project",
+    "payload_schema_id": "pm.dch_event.bundle_selection_forward_blocked.project.v1",
+    "payload_schema_ref": {
+     "path": "Plans/dch_event_payloads/bundle_selection_forward_blocked.schema.json",
+     "json_pointer": "#/$defs/project",
+     "schema_id": "pm.dch_event.bundle_selection_forward_blocked.project.v1"
+    },
+    "source_graph_ref": "Plans/Contracts_V0.md#CV-366",
+    "producer_admission": "requires_owner_adoption",
+    "append_owner_ref": "Plans/assistant-chat-design.md#ACD-610",
+    "read_owner_ref": "Plans/assistant-chat-design.md#ACD-610",
+    "backup_owner_ref": "Plans/Backup_Restore_System.md#BRS-033",
+    "retention_policy_ref": {
+     "registry_schema_id": "pm.storage_value_registry.v2",
+     "policy_id": "RP-AUTHORITY-INDEFINITE",
+     "policy_version": "1.0.0"
+    }
+   }
+  ],
+  "payload_selection_policy": "exact_scope_and_schema_id_no_fallback"
+ },
+ "registry_row": {
+  "family_id": "event-family-bundle-selection-forward-blocked",
+  "family_revision": "1.0.0",
+  "event_type": "bundle.selection_forward_blocked",
+  "scope_policy": "application_or_project",
+  "semantic_owner_doc": "Plans/assistant-chat-design.md#ACD-610",
+  "payload_owner_doc": "Plans/Contracts_V0.md#CV-630",
+  "payload_schema_id": "pm.dch_event.bundle_selection_forward_blocked.project.v1",
+  "payload_schema_ref": {
+   "path": "Plans/dch_event_payloads/bundle_selection_forward_blocked.schema.json",
+   "json_pointer": "#/$defs/project",
+   "schema_id": "pm.dch_event.bundle_selection_forward_blocked.project.v1"
+  },
+  "legacy": {
+   "aliases": [],
+   "admitted_extensions": [],
+   "identity_json_pointers": {
+    "project_id": [
+     "/payload/scope/project_id"
+    ],
+    "thread_id": [
+     "/payload/thread_id"
+    ]
+   },
+   "referenced_event_id_pointer": null,
+   "redaction": {
+    "mode": "reject_unhandled_secrets",
+    "transform_id": null,
+    "transform_version": null
+   }
+  },
+  "source_refs": [
+   "Plans/assistant-chat-design.md#ACD-610",
+   "Plans/Contracts_V0.md#CV-630",
+   "Plans/storage-plan.md#SP-610",
+   "Plans/dch_event_payloads/bundle_selection_forward_blocked.schema.json#/$defs/application",
+   "Plans/dch_event_payloads/bundle_selection_forward_blocked.schema.json#/$defs/project",
+   "Plans/dch_event_contracts.json#/rows/0",
+   "reports/event-authority-20261116/admission-merge-2/readiness-list.json"
+  ],
+  "retention_policy_ref": {
+   "registry_schema_id": "pm.storage_value_registry.v2",
+   "policy_id": "RP-AUTHORITY-INDEFINITE",
+   "policy_version": "1.0.0"
+  },
+  "payload_versions": [
+   {
+    "scope_kind": "application",
+    "payload_schema_id": "pm.dch_event.bundle_selection_forward_blocked.application.v1",
+    "payload_schema_ref": {
+     "path": "Plans/dch_event_payloads/bundle_selection_forward_blocked.schema.json",
+     "json_pointer": "#/$defs/application",
+     "schema_id": "pm.dch_event.bundle_selection_forward_blocked.application.v1"
+    },
+    "source_graph_ref": "Plans/Contracts_V0.md#CV-366",
+    "producer_admission": "requires_owner_adoption",
+    "append_owner_ref": "Plans/assistant-chat-design.md#ACD-610",
+    "read_owner_ref": "Plans/assistant-chat-design.md#ACD-610",
+    "backup_owner_ref": "Plans/Backup_Restore_System.md#BRS-033",
+    "retention_policy_ref": {
+     "registry_schema_id": "pm.storage_value_registry.v2",
+     "policy_id": "RP-AUTHORITY-INDEFINITE",
+     "policy_version": "1.0.0"
+    }
+   },
+   {
+    "scope_kind": "project",
+    "payload_schema_id": "pm.dch_event.bundle_selection_forward_blocked.project.v1",
+    "payload_schema_ref": {
+     "path": "Plans/dch_event_payloads/bundle_selection_forward_blocked.schema.json",
+     "json_pointer": "#/$defs/project",
+     "schema_id": "pm.dch_event.bundle_selection_forward_blocked.project.v1"
+    },
+    "source_graph_ref": "Plans/Contracts_V0.md#CV-366",
+    "producer_admission": "requires_owner_adoption",
+    "append_owner_ref": "Plans/assistant-chat-design.md#ACD-610",
+    "read_owner_ref": "Plans/assistant-chat-design.md#ACD-610",
+    "backup_owner_ref": "Plans/Backup_Restore_System.md#BRS-033",
+    "retention_policy_ref": {
+     "registry_schema_id": "pm.storage_value_registry.v2",
+     "policy_id": "RP-AUTHORITY-INDEFINITE",
+     "policy_version": "1.0.0"
+    }
+   }
+  ],
+  "payload_selection_policy": "exact_scope_and_schema_id_no_fallback"
+ },
+ "predecessor_record_sha256": "6e7e6f922656e4e7d41bb0b4798b01c259ff318562db7262209d2a456ce902d2",
+ "predecessor_assessment_sha256": "80fd9320948c49b4593a07ca833f212a425041edc78cf7686c52ee001b21a211",
+ "applied_record_sha256": "4555653213be25f749c96095059aab59fcc204756adef280b4399cb1967646a9",
+ "applied_assessment_sha256": "e13708ba546c61678da10343415962f937d29fd76387661254a75ee3ca811d2c",
+ "citation_changes": [
+  {
+   "ordinal": 0,
+   "old": {
+    "path": "Plans/storage-plan.md",
+    "unit": "SP-610",
+    "line_start": 41296,
+    "line_end": 41296,
+    "quote": "Current selected assignment (2026-11-19): bundle.selection_forward_blocked@1.0.0 is registered for application_or_project",
+    "quote_check": "exact",
+    "quote_scope": "unit SP-610, Plans/storage-plan.md:41021-41360",
+    "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+    "source_citation": {
+     "path": "Plans/storage-plan.md",
+     "unit": "SP-610",
+     "line_start": 40071,
+     "line_end": 40071,
+     "quote": "Event history `retention_policy_ref = RP-AUTHORITY-INDEFINITE@1.0.0`, under DL-401.",
+     "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+    },
+    "locator_maintenance": {
+     "authority": "MERGE2-FIX4",
+     "reason": "Re-cite the same accepted retention claim at its current exact owner assignment; event and source/checkpoint authority remain separate."
+    }
+   },
+   "replacement": {
+    "path": "Plans/storage-plan.md",
+    "unit": "SP-610",
+    "line_start": 41298,
+    "line_end": 41308,
+    "quote": "  Current selected assignment (2026-11-19): bundle.selection_forward_blocked@1.0.0 is registered for application_or_project\n  in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2231. Its event history selects Application\n  = RP-AUTHORITY-INDEFINITE@1.0.0 (anchor_kind=creation, cardinality_scope=null), Project = RP-AUTHORITY-INDEFINITE@1.0.0\n  (anchor_kind=creation, cardinality_scope=null); Plans/storage-plan.md#SP-610 owns the event policy''s existing\n  anchors, counts, holds and deletion rules. Separate checkpoint assignment: dch_bundle_selection_forward_blocked_checkpoint\n  uses RP-PROJECTION-3GEN@1.0.0 under its existing Plans/storage-plan.md#SP-610 contract; checkpoint retention grants\n  no event/source deletion. Original sources and coherent backups retain their independent owner policies; the event\n  lifetime is not transferred to them. Current append/publication still requires the exact selected schema/scope,\n  original custody, current permission, receipt and required producer adoption. Actual missing registration or unresolved\n  required custody refuses; native execution remains NOT_RUN. No native adoption, new retention choice or governance\n  seal follows.'",
+    "quote_check": "exact",
+    "quote_scope": "unit SP-610, Plans/storage-plan.md:41023-41362"
+   },
+   "reason": "Complete current wrapped assignment inside its original unit."
+  }
+ ],
+ "review": {
+  "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/MERGE2-POSTLAND-astra62max/REVIEW.md",
+  "sha256": "757539cf93c9ffe264ceabc42273ef7afe1582bf161fbe0a826a4b6bf18b6d21"
+ },
+ "native_execution": "NOT_RUN"
+}
