@@ -2,9 +2,9 @@
 
 Source: `Plans/Decision_Log.md`
 
-Source lines: L28747-L55408
+Source lines: L28747-L55470
 
-Source SHA256: `723da26cf302c2808ac6d85aea35902708d47cc176fc489adf63155d947bb872`
+Source SHA256: `9362b80c1eae7bffdca838146b7a7d94183d55c88b27ec36d570b78ea93a1a51`
 
 ---
 
@@ -26667,6 +26667,68 @@ preserved_exact_tokens:
 - 0e30a801f20c9ed0a27bdc3be562a5ca78dc940a918c0c301f083416456f30c5
 - 2026-11-19.21
 - 2026-11-19.22
+negative_constraints:
+- No new admission, producer adoption, native execution claim or governance seal.
+```
+
+### DL-2473: Event Authority corrects catalog.remove.started (merge 3 post-landing)
+
+```yaml
+plan_unit_id: DL-2473
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: 'Correction for catalog.remove.started only, under DL-077 and DL-400, resolving post-landing Astra finding(s)
+  [4]. The original admission authority remains Plans/Decision_Log.md#DL-2236; this entry records no new admission, verdict,
+  policy choice or producer adoption. Current row canonical SHA-256 bf4d385c55c157c3b504c923a3ae9025ea91be5b83f5adc30d44a1c9f3ef7c05.
+  Its scope is application_or_project. Payload editions: application `pm.ds15.catalog_remove_started.payload.v1` (RP-AUTHORITY-INDEFINITE@1.0.0,
+  producer requires_owner_adoption); project `pm.ds15.catalog_remove_started.payload.v1` (RP-AUTHORITY-INDEFINITE@1.0.0, producer
+  requires_owner_adoption).
+
+
+  The correction moves the full registry from 2026-11-19.22, 518 families, SHA-256 2ded6b3862c40e47ea1f98b7441a3521a21b5935e2a579ba6ac498d9193eb7f0,
+  to 2026-11-19.23, 518 families, SHA-256 2540a35477bb7c3fe3d6f12109ea0323c5c902adef5c63bf4119720e7da8e389, without changing
+  another family. Revision witness: reports/event-authority-20261116/admission-merge-3/corrections/catalog.remove.started.json.
+  Depth assessment: reports/event-authority-20261116/admission-merge-2/depth/catalog.remove.started.json, SHA-256 8a5b8264b3c07415edb7bd1d3e4ba470a21158f1768e8a3f9256f3dc6b795924.
+
+
+  The original append checkpoints are preserved: before 2026-11-16.99 SHA-256 05a72551616209580909e316a201a92b71e3ce86bd6fc15da68f3867a1b72264;
+  after 2026-11-16.100 SHA-256 1d926ffc0000d9c8d0661a4e02effb6e157f3e485921ed7ac9485150cd1cb70b. Existing semantic owner Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-324,
+  payload owner Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-324, resource Plans/ds15_catalog_remove_started.schema.json#
+  retain their contracts. Current citations were re-read from existing canonical text; original citations, records and decision
+  entries remain in the named Git predecessor. Native execution remains NOT_RUN. Required producer adoption, permissions,
+  original custody and receipt/publication fences remain required.'
+gui_related: false
+gui_classification_reason: Maintains one existing event admission and its evidence.
+depends_on:
+- DL-077
+- DL-400
+- DL-2236
+unblocks: []
+acceptance_criteria:
+- Exactly one family is corrected and the original append checkpoints remain authenticated.
+- The correction witness and current DL-077 record match their named Git editions.
+validation_surfaces:
+- python3 scripts/pm-ea-record-chain.py
+- python3 scripts/pm-ea-postfix-check.py
+- python3 scripts/pm-ea-retention-citation-check.py
+risk_class: event_authority_admission
+reasoning_tier: high
+context_scope: event_authority_pnc019_merge3_postfix
+implementation_surfaces:
+- Plans/event_family_registry.json
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/MERGE2-POSTLAND-astra62max/REVIEW.md
+- Plans/Decision_Log.md#DL-2236
+preserved_exact_tokens:
+- catalog.remove.started
+- bf4d385c55c157c3b504c923a3ae9025ea91be5b83f5adc30d44a1c9f3ef7c05
+- 2026-11-19.22
+- 2026-11-19.23
 negative_constraints:
 - No new admission, producer adoption, native execution claim or governance seal.
 ```
