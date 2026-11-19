@@ -5464,6 +5464,7 @@
     "DL-2489",
     "DL-2490",
     "DL-2491",
+    "DL-2492",
     "DL-2450",
     "DL-451",
     "DL-694",
@@ -52029,6 +52030,21 @@
     {
       "edge_type": "depends_on",
       "from": "DL-2491",
+      "to": "DL-400"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "DL-2492",
+      "to": "DL-077"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "DL-2492",
+      "to": "DL-2267"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "DL-2492",
       "to": "DL-400"
     },
     {
@@ -162887,7 +162903,7 @@
       "to": "F3-395"
     }
   ],
-  "generated_at_utc": "2026-11-19T23:43:16Z",
+  "generated_at_utc": "2026-11-19T23:44:17Z",
   "nodes": [
     {
       "context_scope": "residual_plan_standardization",
@@ -214360,6 +214376,23 @@
         "heading_level": 3,
         "heading_line": 56532,
         "line": 56534,
+        "path": "Plans/Decision_Log.md"
+      },
+      "status": "accepted",
+      "unit_type": "decision"
+    },
+    {
+      "context_scope": "event_authority_pnc019_merge3_postfix",
+      "gui_related": false,
+      "owner_doc": "Plans/Decision_Log.md",
+      "plan_unit_id": "DL-2492",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority_admission",
+      "source_location": {
+        "heading": "DL-2492: Event Authority corrects concern.assigned (merge 3 post-landing)",
+        "heading_level": 3,
+        "heading_line": 56594,
+        "line": 56596,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -324566,10 +324599,10 @@
     "build_order_available": true,
     "build_order_blocked_node_count": 0,
     "cycle_blocker_count": 0,
-    "depends_on_edge_count": 27449,
+    "depends_on_edge_count": 27452,
     "downstream_blocked_node_count": 0,
-    "edge_count": 30674,
-    "node_count": 9510,
+    "edge_count": 30677,
+    "node_count": 9511,
     "true_cycle_component_count": 0,
     "unblocks_edge_count": 3225,
     "unresolved_reference_count": 0
