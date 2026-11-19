@@ -5,8 +5,8 @@
  "merge": "admission-merge-2",
  "registry": {
   "path": "Plans/event_family_registry.json",
-  "revision": "2026-11-18.2",
-  "sha256": "ec21cf1a5b42b3e68a5564a847b4798dff968612d11d438bc7075b89196f9602",
+  "revision": "2026-11-19.41",
+  "sha256": "b7cd06b800e1ce30fc361e1929fbe92365a2c475403ec962664c1825d8ff9cb7",
   "family_count": 518,
   "row_pointer": "#/families/336"
  },
@@ -22,7 +22,7 @@
     "membership_version": {
      "status": "PASS",
      "representation": "exact_registry_membership",
-     "finding": "Currently registered at 2026-11-18.2 as #/families/336 (canonical row SHA-256 99cee1a9498a8fc0856e015840e7aa13c80c61148e5e9701a523f6206aaf3fd1). Original one-family admission checkpoints remain in the family record and immutable Git source.",
+     "finding": "Currently registered at 2026-11-19.41 as #/families/336, canonical row SHA-256 99cee1a9498a8fc0856e015840e7aa13c80c61148e5e9701a523f6206aaf3fd1. Original one-family append checkpoints remain preserved.",
      "evidence": [
       {
        "path": "Plans/event_family_registry.json",
@@ -391,23 +391,45 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-626",
-       "line_start": 46507,
-       "line_end": 46507,
-       "quote": "Current selected assignment (2026-11-19): chat.thread_worktree_unbound@1.0.0 is registered for application_or_project",
+       "line_start": 46509,
+       "line_end": 46519,
+       "quote": "  Current selected assignment (2026-11-19): chat.thread_worktree_unbound@1.0.0 is registered for application_or_project\n  in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2254. Its event history selects Application\n  = RP-CHAT-THREAD-LIFETIME@1.0.0 (anchor_kind=explicit_delete, cardinality_scope=thread), Project = RP-CHAT-THREAD-LIFETIME@1.0.0\n  (anchor_kind=explicit_delete, cardinality_scope=thread); Plans/storage-plan.md#SP-626 owns the event policy''s\n  existing anchors, counts, holds and deletion rules. Separate checkpoint assignment: dch_chat_thread_worktree_unbound_checkpoint\n  uses RP-PROJECTION-3GEN@1.0.0 under its existing Plans/storage-plan.md#SP-626 contract; checkpoint retention grants\n  no event/source deletion. Original sources and coherent backups retain their independent owner policies; the event\n  lifetime is not transferred to them. Current append/publication still requires the exact selected schema/scope,\n  original custody, current permission, receipt and required producer adoption. Actual missing registration or unresolved\n  required custody refuses; native execution remains NOT_RUN. No native adoption, new retention choice or governance\n  seal follows.'",
        "quote_check": "exact",
-       "quote_scope": "unit SP-626, Plans/storage-plan.md:46227-46573",
-       "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+       "quote_scope": "unit SP-626, Plans/storage-plan.md:46229-46575",
+       "file_sha256": "1fa333c4ef3aa54859eae354a38973490a4de4ca54b6c8f066b2770f528c3bbb",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-626",
-        "line_start": 44660,
-        "line_end": 44660,
-        "quote": "Event history `retention_policy_ref = RP-CHAT-THREAD-LIFETIME@1.0.0`, under DL-401.",
-        "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+        "line_start": 46507,
+        "line_end": 46507,
+        "quote": "Current selected assignment (2026-11-19): chat.thread_worktree_unbound@1.0.0 is registered for application_or_project",
+        "quote_check": "exact",
+        "quote_scope": "unit SP-626, Plans/storage-plan.md@10ba97e699d51287673d6f1db4d994f54c59b4ed:46227-46573",
+        "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+        "source_citation": {
+         "path": "Plans/storage-plan.md",
+         "unit": "SP-626",
+         "line_start": 44660,
+         "line_end": 44660,
+         "quote": "Event history `retention_policy_ref = RP-CHAT-THREAD-LIFETIME@1.0.0`, under DL-401.",
+         "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+        },
+        "locator_maintenance": {
+         "authority": "MERGE2-FIX4",
+         "reason": "Re-cite the same accepted retention claim at its current exact owner assignment; event and source/checkpoint authority remain separate."
+        },
+        "commit": "10ba97e699d51287673d6f1db4d994f54c59b4ed",
+        "sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+        "line": 46507
        },
-       "locator_maintenance": {
-        "authority": "MERGE2-FIX4",
-        "reason": "Re-cite the same accepted retention claim at its current exact owner assignment; event and source/checkpoint authority remain separate."
+       "retention_range_maintenance": {
+        "authority": "MERGE3-POSTFIX / post-landing Astra findings",
+        "source_commit": "894505e56694f8ba3043668ea109334bb0fc13c8",
+        "old_quote": "Current selected assignment (2026-11-19): chat.thread_worktree_unbound@1.0.0 is registered for application_or_project",
+        "old_path": "Plans/storage-plan.md",
+        "old_unit": "SP-626",
+        "old_line_start": 46507,
+        "reason": "Complete current wrapped assignment inside its original unit."
        }
       }
      ],
@@ -904,10 +926,9 @@
   "row_pointer": "#/families/336"
  },
  "evidence_maintenance": {
-  "authority": "MERGE2-FIX4 items 1/2/3",
-  "source_commit": "2bda6aeed03daea26c4d79dfb7568fc145aac29e",
-  "source_assessment_sha256": "ab9242a347f17ca2b8204b1e88c555170a79e10932bd5537101028be8758d320",
-  "native_execution": "NOT_RUN",
-  "verdicts_changed": false
+  "authority": "MERGE3-POSTFIX / post-landing Astra findings",
+  "source_commit": "894505e56694f8ba3043668ea109334bb0fc13c8",
+  "source_assessment_sha256": "78bea982aa5ec3490bbbd38e8eb12187166096ecd2d7439c67015fe3a0fd4eff",
+  "native_execution": "NOT_RUN"
  }
 }
