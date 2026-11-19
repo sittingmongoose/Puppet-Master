@@ -10876,5 +10876,222 @@
     "sha256": "023a32d872af4524332687a8a459232eeae66a3eae7d46f0c8e7ac175cb1efb5",
     "reason": "Previously reviewed YAML PlanUnit metadata with exactly unchanged container bytes, relocated after neighbouring owner edits. Owner Plans/storage-plan.md#SP-3100. Previous pins: Plans/storage-plan.md#fence:70979.",
     "citation": "Plans/storage-plan.md#fence:78910; Plans/storage-plan.md#SP-3100"
+  },
+  {
+    "path": "Plans/.audits/closure-reaudit-20261104/reaudit_records-final-pass-s1.jsonl",
+    "origin": "jsonl:169",
+    "sha256": "d7676b25e4e9e49b375a8fefd6d92ef3cc4b6d3115055151f54ec1626018808d",
+    "reason": "Reviewed audit instance/source-lineage data; timestamp field mentions are evidence text, not schema declarations.",
+    "citation": "Plans/.audits/closure-reaudit-20261104/reaudit_records-final-pass-s1.jsonl#jsonl:169"
+  },
+  {
+    "path": "Plans/.audits/closure-reaudit-20261104/reviews/final-pass-s1/C01/review_packet-rs1c01.jsonl",
+    "origin": "jsonl:1",
+    "sha256": "6db332d40f37c56a3c4e966f94a7504a60f716ab03e539e54470dc7e0b6ba963",
+    "reason": "Reviewed audit instance/source-lineage data; timestamp field mentions are evidence text, not schema declarations.",
+    "citation": "Plans/.audits/closure-reaudit-20261104/reviews/final-pass-s1/C01/review_packet-rs1c01.jsonl#jsonl:1"
+  },
+  {
+    "path": "Plans/.audits/closure-reaudit-20261104/reviews/final-pass-s1/C01/review_packet-rs1c01.jsonl",
+    "origin": "jsonl:32",
+    "sha256": "e79caa2dfc037d6e73956a3090a0773d717ac9ef8019847ba2195ef356f48f5f",
+    "reason": "Reviewed audit instance/source-lineage data; timestamp field mentions are evidence text, not schema declarations.",
+    "citation": "Plans/.audits/closure-reaudit-20261104/reviews/final-pass-s1/C01/review_packet-rs1c01.jsonl#jsonl:32"
+  },
+  {
+    "path": "Plans/.audits/closure-reaudit-20261104/reviews/final-pass-s1/C01/review_packet-s1c01.jsonl",
+    "origin": "jsonl:1",
+    "sha256": "6db332d40f37c56a3c4e966f94a7504a60f716ab03e539e54470dc7e0b6ba963",
+    "reason": "Reviewed audit instance/source-lineage data; timestamp field mentions are evidence text, not schema declarations.",
+    "citation": "Plans/.audits/closure-reaudit-20261104/reviews/final-pass-s1/C01/review_packet-s1c01.jsonl#jsonl:1"
+  },
+  {
+    "path": "Plans/.audits/closure-reaudit-20261104/reviews/final-pass-s1/C01/review_packet-s1c01.jsonl",
+    "origin": "jsonl:32",
+    "sha256": "e79caa2dfc037d6e73956a3090a0773d717ac9ef8019847ba2195ef356f48f5f",
+    "reason": "Reviewed audit instance/source-lineage data; timestamp field mentions are evidence text, not schema declarations.",
+    "citation": "Plans/.audits/closure-reaudit-20261104/reviews/final-pass-s1/C01/review_packet-s1c01.jsonl#jsonl:32"
+  },
+  {
+    "path": "Plans/.audits/closure-reaudit-20261104/reviews/final-pass-s1/C02/review_packet-rs1c02.jsonl",
+    "origin": "jsonl:13",
+    "sha256": "cc88cf887fd072613874ecc005c69a8448a085246f0d58d6c4f21221a0f2b889",
+    "reason": "Reviewed audit instance/source-lineage data; timestamp field mentions are evidence text, not schema declarations.",
+    "citation": "Plans/.audits/closure-reaudit-20261104/reviews/final-pass-s1/C02/review_packet-rs1c02.jsonl#jsonl:13"
+  },
+  {
+    "path": "Plans/.audits/closure-reaudit-20261104/reviews/final-pass-s1/C02/review_packet-rs1c02.jsonl",
+    "origin": "jsonl:14",
+    "sha256": "5b9015173fb9587d09c03cb1579a30d6b09455f736c7f9049ef512020321e32c",
+    "reason": "Reviewed audit instance/source-lineage data; timestamp field mentions are evidence text, not schema declarations.",
+    "citation": "Plans/.audits/closure-reaudit-20261104/reviews/final-pass-s1/C02/review_packet-rs1c02.jsonl#jsonl:14"
+  },
+  {
+    "path": "Plans/.audits/closure-reaudit-20261104/reviews/final-pass-s1/C02/review_packet-rs1c02.jsonl",
+    "origin": "jsonl:15",
+    "sha256": "c6862658ca4ae4bcd963a5e50142ccfdc09d5d13bcb559cfdbfe46f4f93f1720",
+    "reason": "Reviewed audit instance/source-lineage data; timestamp field mentions are evidence text, not schema declarations.",
+    "citation": "Plans/.audits/closure-reaudit-20261104/reviews/final-pass-s1/C02/review_packet-rs1c02.jsonl#jsonl:15"
+  },
+  {
+    "path": "Plans/.audits/closure-reaudit-20261104/reviews/final-pass-s1/C02/review_packet-rs1c02.jsonl",
+    "origin": "jsonl:16",
+    "sha256": "a2fc91b050712b8b854111ccce1f41e2c3ef6fae1e1ed1c7d8d1e2966dab8192",
+    "reason": "Reviewed audit instance/source-lineage data; timestamp field mentions are evidence text, not schema declarations.",
+    "citation": "Plans/.audits/closure-reaudit-20261104/reviews/final-pass-s1/C02/review_packet-rs1c02.jsonl#jsonl:16"
+  },
+  {
+    "path": "Plans/.audits/closure-reaudit-20261104/reviews/final-pass-s1/C02/review_packet-rs1c02.jsonl",
+    "origin": "jsonl:17",
+    "sha256": "54958332764d503b828fc6019bdaf526ca6022bd16ebfbfb5b8cb5988381df88",
+    "reason": "Reviewed audit instance/source-lineage data; timestamp field mentions are evidence text, not schema declarations.",
+    "citation": "Plans/.audits/closure-reaudit-20261104/reviews/final-pass-s1/C02/review_packet-rs1c02.jsonl#jsonl:17"
+  },
+  {
+    "path": "Plans/.audits/closure-reaudit-20261104/reviews/final-pass-s1/C02/review_packet-rs1c02.jsonl",
+    "origin": "jsonl:3",
+    "sha256": "3c67850c4451ed0dd824df563368057d3fa543cb88bac2f37760fec696b63984",
+    "reason": "Reviewed audit instance/source-lineage data; timestamp field mentions are evidence text, not schema declarations.",
+    "citation": "Plans/.audits/closure-reaudit-20261104/reviews/final-pass-s1/C02/review_packet-rs1c02.jsonl#jsonl:3"
+  },
+  {
+    "path": "Plans/.audits/closure-reaudit-20261104/reviews/final-pass-s1/C02/review_packet-rs1c02.jsonl",
+    "origin": "jsonl:5",
+    "sha256": "6029e9231f1488987665086e5f46ab5378587e8b17a7c5bd6f630bf7b3536ca1",
+    "reason": "Reviewed audit instance/source-lineage data; timestamp field mentions are evidence text, not schema declarations.",
+    "citation": "Plans/.audits/closure-reaudit-20261104/reviews/final-pass-s1/C02/review_packet-rs1c02.jsonl#jsonl:5"
+  },
+  {
+    "path": "Plans/.audits/closure-reaudit-20261104/reviews/final-pass-s1/C02/review_packet-rs1c02.jsonl",
+    "origin": "jsonl:6",
+    "sha256": "972921aac9ee8a9e04c599fb3b2e38eff0641e935b1eeafcc4afe162f6d4a812",
+    "reason": "Reviewed audit instance/source-lineage data; timestamp field mentions are evidence text, not schema declarations.",
+    "citation": "Plans/.audits/closure-reaudit-20261104/reviews/final-pass-s1/C02/review_packet-rs1c02.jsonl#jsonl:6"
+  },
+  {
+    "path": "Plans/.audits/closure-reaudit-20261104/reviews/final-pass-s1/C02/review_packet-rs1c02.jsonl",
+    "origin": "jsonl:7",
+    "sha256": "2b49347e4eecd8d7864b35095dfc78e43ffb0363e20b67bbd91d48c7f4b0f9f8",
+    "reason": "Reviewed audit instance/source-lineage data; timestamp field mentions are evidence text, not schema declarations.",
+    "citation": "Plans/.audits/closure-reaudit-20261104/reviews/final-pass-s1/C02/review_packet-rs1c02.jsonl#jsonl:7"
+  },
+  {
+    "path": "Plans/.audits/closure-reaudit-20261104/reviews/final-pass-s1/C02/review_packet-s1c02.jsonl",
+    "origin": "jsonl:13",
+    "sha256": "cc88cf887fd072613874ecc005c69a8448a085246f0d58d6c4f21221a0f2b889",
+    "reason": "Reviewed audit instance/source-lineage data; timestamp field mentions are evidence text, not schema declarations.",
+    "citation": "Plans/.audits/closure-reaudit-20261104/reviews/final-pass-s1/C02/review_packet-s1c02.jsonl#jsonl:13"
+  },
+  {
+    "path": "Plans/.audits/closure-reaudit-20261104/reviews/final-pass-s1/C02/review_packet-s1c02.jsonl",
+    "origin": "jsonl:14",
+    "sha256": "5b9015173fb9587d09c03cb1579a30d6b09455f736c7f9049ef512020321e32c",
+    "reason": "Reviewed audit instance/source-lineage data; timestamp field mentions are evidence text, not schema declarations.",
+    "citation": "Plans/.audits/closure-reaudit-20261104/reviews/final-pass-s1/C02/review_packet-s1c02.jsonl#jsonl:14"
+  },
+  {
+    "path": "Plans/.audits/closure-reaudit-20261104/reviews/final-pass-s1/C02/review_packet-s1c02.jsonl",
+    "origin": "jsonl:15",
+    "sha256": "c6862658ca4ae4bcd963a5e50142ccfdc09d5d13bcb559cfdbfe46f4f93f1720",
+    "reason": "Reviewed audit instance/source-lineage data; timestamp field mentions are evidence text, not schema declarations.",
+    "citation": "Plans/.audits/closure-reaudit-20261104/reviews/final-pass-s1/C02/review_packet-s1c02.jsonl#jsonl:15"
+  },
+  {
+    "path": "Plans/.audits/closure-reaudit-20261104/reviews/final-pass-s1/C02/review_packet-s1c02.jsonl",
+    "origin": "jsonl:16",
+    "sha256": "a2fc91b050712b8b854111ccce1f41e2c3ef6fae1e1ed1c7d8d1e2966dab8192",
+    "reason": "Reviewed audit instance/source-lineage data; timestamp field mentions are evidence text, not schema declarations.",
+    "citation": "Plans/.audits/closure-reaudit-20261104/reviews/final-pass-s1/C02/review_packet-s1c02.jsonl#jsonl:16"
+  },
+  {
+    "path": "Plans/.audits/closure-reaudit-20261104/reviews/final-pass-s1/C02/review_packet-s1c02.jsonl",
+    "origin": "jsonl:17",
+    "sha256": "54958332764d503b828fc6019bdaf526ca6022bd16ebfbfb5b8cb5988381df88",
+    "reason": "Reviewed audit instance/source-lineage data; timestamp field mentions are evidence text, not schema declarations.",
+    "citation": "Plans/.audits/closure-reaudit-20261104/reviews/final-pass-s1/C02/review_packet-s1c02.jsonl#jsonl:17"
+  },
+  {
+    "path": "Plans/.audits/closure-reaudit-20261104/reviews/final-pass-s1/C02/review_packet-s1c02.jsonl",
+    "origin": "jsonl:3",
+    "sha256": "3c67850c4451ed0dd824df563368057d3fa543cb88bac2f37760fec696b63984",
+    "reason": "Reviewed audit instance/source-lineage data; timestamp field mentions are evidence text, not schema declarations.",
+    "citation": "Plans/.audits/closure-reaudit-20261104/reviews/final-pass-s1/C02/review_packet-s1c02.jsonl#jsonl:3"
+  },
+  {
+    "path": "Plans/.audits/closure-reaudit-20261104/reviews/final-pass-s1/C02/review_packet-s1c02.jsonl",
+    "origin": "jsonl:5",
+    "sha256": "6029e9231f1488987665086e5f46ab5378587e8b17a7c5bd6f630bf7b3536ca1",
+    "reason": "Reviewed audit instance/source-lineage data; timestamp field mentions are evidence text, not schema declarations.",
+    "citation": "Plans/.audits/closure-reaudit-20261104/reviews/final-pass-s1/C02/review_packet-s1c02.jsonl#jsonl:5"
+  },
+  {
+    "path": "Plans/.audits/closure-reaudit-20261104/reviews/final-pass-s1/C02/review_packet-s1c02.jsonl",
+    "origin": "jsonl:6",
+    "sha256": "972921aac9ee8a9e04c599fb3b2e38eff0641e935b1eeafcc4afe162f6d4a812",
+    "reason": "Reviewed audit instance/source-lineage data; timestamp field mentions are evidence text, not schema declarations.",
+    "citation": "Plans/.audits/closure-reaudit-20261104/reviews/final-pass-s1/C02/review_packet-s1c02.jsonl#jsonl:6"
+  },
+  {
+    "path": "Plans/.audits/closure-reaudit-20261104/reviews/final-pass-s1/C02/review_packet-s1c02.jsonl",
+    "origin": "jsonl:7",
+    "sha256": "2b49347e4eecd8d7864b35095dfc78e43ffb0363e20b67bbd91d48c7f4b0f9f8",
+    "reason": "Reviewed audit instance/source-lineage data; timestamp field mentions are evidence text, not schema declarations.",
+    "citation": "Plans/.audits/closure-reaudit-20261104/reviews/final-pass-s1/C02/review_packet-s1c02.jsonl#jsonl:7"
+  },
+  {
+    "path": "Plans/.audits/closure-reaudit-20261104/reviews/final-pass-s1/C03/records.jsonl",
+    "origin": "jsonl:39",
+    "sha256": "8a0840f81bbaff0f7d38d74051f6817af2553d4df166cf5ecdf9ab17c9d414d6",
+    "reason": "Reviewed audit instance/source-lineage data; timestamp field mentions are evidence text, not schema declarations.",
+    "citation": "Plans/.audits/closure-reaudit-20261104/reviews/final-pass-s1/C03/records.jsonl#jsonl:39"
+  },
+  {
+    "path": "Plans/.audits/closure-reaudit-20261104/reviews/final-pass-s1/C03/review_packet-rs1c03.jsonl",
+    "origin": "jsonl:11",
+    "sha256": "01a50d6c73a5834789906b88aca36c205ea9a4435728ad17f55c133c5960913d",
+    "reason": "Reviewed audit instance/source-lineage data; timestamp field mentions are evidence text, not schema declarations.",
+    "citation": "Plans/.audits/closure-reaudit-20261104/reviews/final-pass-s1/C03/review_packet-rs1c03.jsonl#jsonl:11"
+  },
+  {
+    "path": "Plans/.audits/closure-reaudit-20261104/reviews/final-pass-s1/C03/review_packet-rs1c03.jsonl",
+    "origin": "jsonl:39",
+    "sha256": "f0e320571118a1104a342effc8503c1efc955f605be1e28f7f45928ef0370dcd",
+    "reason": "Reviewed audit instance/source-lineage data; timestamp field mentions are evidence text, not schema declarations.",
+    "citation": "Plans/.audits/closure-reaudit-20261104/reviews/final-pass-s1/C03/review_packet-rs1c03.jsonl#jsonl:39"
+  },
+  {
+    "path": "Plans/.audits/closure-reaudit-20261104/reviews/final-pass-s1/C03/review_packet-s1c03.jsonl",
+    "origin": "jsonl:11",
+    "sha256": "01a50d6c73a5834789906b88aca36c205ea9a4435728ad17f55c133c5960913d",
+    "reason": "Reviewed audit instance/source-lineage data; timestamp field mentions are evidence text, not schema declarations.",
+    "citation": "Plans/.audits/closure-reaudit-20261104/reviews/final-pass-s1/C03/review_packet-s1c03.jsonl#jsonl:11"
+  },
+  {
+    "path": "Plans/.audits/closure-reaudit-20261104/reviews/final-pass-s1/C03/review_packet-s1c03.jsonl",
+    "origin": "jsonl:39",
+    "sha256": "f0e320571118a1104a342effc8503c1efc955f605be1e28f7f45928ef0370dcd",
+    "reason": "Reviewed audit instance/source-lineage data; timestamp field mentions are evidence text, not schema declarations.",
+    "citation": "Plans/.audits/closure-reaudit-20261104/reviews/final-pass-s1/C03/review_packet-s1c03.jsonl#jsonl:39"
+  },
+  {
+    "path": "Plans/.audits/closure-reaudit-20261104/reviews/final-pass-s1/C03/worker-source.jsonl",
+    "origin": "jsonl:39",
+    "sha256": "86a5d0a11c2e2950e8624fcc1412901da6d596dbe757eac13e69a45ea3e5ac61",
+    "reason": "Reviewed audit instance/source-lineage data; timestamp field mentions are evidence text, not schema declarations.",
+    "citation": "Plans/.audits/closure-reaudit-20261104/reviews/final-pass-s1/C03/worker-source.jsonl#jsonl:39"
+  },
+  {
+    "path": "Plans/.audits/closure-reaudit-20261104/reviews/final-pass-s1/C04/review_packet-rs1c04.jsonl",
+    "origin": "jsonl:20",
+    "sha256": "6d20c0af50a449e8e5efeb90f9eef27b718b68d8beb305ed734a7ac71d05e54c",
+    "reason": "Reviewed audit instance/source-lineage data; timestamp field mentions are evidence text, not schema declarations.",
+    "citation": "Plans/.audits/closure-reaudit-20261104/reviews/final-pass-s1/C04/review_packet-rs1c04.jsonl#jsonl:20"
+  },
+  {
+    "path": "Plans/.audits/closure-reaudit-20261104/reviews/final-pass-s1/C04/review_packet-s1c04.jsonl",
+    "origin": "jsonl:20",
+    "sha256": "6d20c0af50a449e8e5efeb90f9eef27b718b68d8beb305ed734a7ac71d05e54c",
+    "reason": "Reviewed audit instance/source-lineage data; timestamp field mentions are evidence text, not schema declarations.",
+    "citation": "Plans/.audits/closure-reaudit-20261104/reviews/final-pass-s1/C04/review_packet-s1c04.jsonl#jsonl:20"
   }
 ]
