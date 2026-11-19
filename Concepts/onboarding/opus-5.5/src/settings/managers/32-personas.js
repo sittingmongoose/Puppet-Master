@@ -15,6 +15,9 @@
      a persona sets its own; the Spending cap reads "No cap" until a cap is set. They were number boxes that showed
      nothing but a placeholder. Notes on using tools open an editor like Instructions instead of a one-line box, and
      a persona's own tools, skills and plugins stay visible as chips even when they are not in the usual list.
+   - Tags are free (FO-161, Plans/Personas.md P-010 / DL-474): type any tag and add it with Enter or comma, each a
+     removable chip; the eight suggested kinds sit under the box and typing filters them. The library row carries the
+     tags, so the roster filter finds a persona by them.
    - Menus opened here carry o55-mgp-menu (styles.d/63-memory-goals-personas.css): the kit's menus live in <body>,
      outside the rule that strokes Settings icons, so their icons were blank; "New persona or import" gets two-line
      items so "Step by step" is no longer cut off. */
@@ -73,6 +76,15 @@
   /* a persona's value: the record's own fields for name, what it's for and instructions, else its props */
   const MIRROR = { [S.name]: 'name', [S.desc]: 'description', [S.prompt]: 'prompt' };
   const pval = (p, id) => MIRROR[id] ? (p[MIRROR[id]] || '') : id === S.pid ? p.id : id === S.prefer ? ((p.props && p.props[id]) || p.tools || []) : PM51.scopedValue(p, id);
+  /* free tags: the stored strings as typed; the row's choices are only suggested kinds, and a kind reads as its
+     label wherever a tag is shown in words (the Details list, the Saved toast) */
+  const tagList = p => { const v = pval(p, S.tags); return Array.isArray(v) ? v.map(String).filter(Boolean) : []; };
+  const tagWord = t => ((O55R[S.tags] || {}).options || {})[t] || t;
+  const tagText = list => list.length ? list.map(tagWord).join(', ') : 'None';
+  const tagKinds = () => o55Options(PM51.setting(S.tags));
+  const o55PersonaValueText = PM51.valueText;
+  PM51.valueText = (setting, v) => setting && setting.id === S.tags && Array.isArray(v) ? tagText(v.map(String)) : o55PersonaValueText(setting, v);
+  const personaMeta = x => [x.locked ? 'Core · locked' : x.group === 'Bundled' ? 'Bundled' : 'Yours', x.chat === false ? 'helper only' : '', isHidden(x) ? 'hidden' : '', tagList(x).join(', ')].filter(Boolean).join(' · ');
   /* a persona's own number, or "the project's": sliders with a word for where they sit, and a cap that is off at 0 */
   const TUNE = {
     [S.temp]: { min: 0, max: 2, step: 0.1, start: 0.8, ends: ['Predictable', 'Inventive'], word: v => v < 0.3 ? 'Very predictable' : v < 0.6 ? 'Predictable' : v <= 1 ? 'Balanced' : v <= 1.4 ? 'Inventive' : 'Very inventive' },
@@ -96,6 +108,17 @@
   function notesCtl(p) {
     const text = String(pval(p, S.guidance) || '').trim(), first = text.split('\n').find(l => l.trim()) || '';
     return `<span class="o55-mgp-doc${text ? '' : ' is-empty'}">${h(text ? first : 'None yet')}</span>${PM51.btn({ label: text ? 'Edit notes' : 'Write notes', icon: 'edit', small: true, action: 'pm51-personas-guidance', data: { id: p.id } })}`;
+  }
+  /* free tags: chips in a box you type into, the suggested kinds under it (FO-161) */
+  const tagChip = (p, t) => `<span class="o55-tag-chip"><span>${h(tagWord(t))}</span><button type="button" class="o55-tag-x" data-action="pm51-personas-tag-remove" data-id="${a(p.id)}" data-tag="${a(t)}" aria-label="${a('Remove tag ' + tagWord(t))}">${icon('close')}</button></span>`;
+  const tagSuggest = (p, typed) => {
+    const q = String(typed || '').trim().toLowerCase(), have = tagList(p).map(x => x.toLowerCase());
+    return tagKinds().filter(k => !have.includes(String(k).toLowerCase()) && (!q || String(k).toLowerCase().includes(q) || tagWord(k).toLowerCase().includes(q)))
+      .map(k => `<button type="button" class="o55-tag-sug" data-action="pm51-personas-tag-suggest" data-id="${a(p.id)}" data-value="${a(k)}">${h(tagWord(k))}</button>`).join('');
+  };
+  function tagsCtl(p) {
+    const row = O55R[S.tags] || {};
+    return `<div class="o55-tags"><div class="o55-tags-box">${tagList(p).map(t => tagChip(p, t)).join('')}<input class="text-control o55-tags-in" value="" placeholder="${a(row.placeholder || 'Type a tag and press Enter')}" data-action="pm51-personas-tag-type" data-id="${a(p.id)}" autocomplete="off" aria-label="${a('Add a tag for ' + p.name)}"></div><div class="o55-tags-suggest">${tagSuggest(p, '')}</div></div>`;
   }
   /* chips: the usual list plus anything this persona already has, so "Standard tools" shows as chosen */
   const PICKS = { [S.prefer]: () => TOOLS, [S.avoid]: () => TOOLS, [S.skills]: () => ((PM51.s().skills) || []).map(k => k.name), [S.plugins]: () => ((PM51.s().plugins) || []).map(k => k.name) };
@@ -128,7 +151,7 @@
 
   /* ---------- Personas ------------------------------------------------- */
   const srow = (p, id, opts) => PM51.scoped.row(id, pval(p, id), Object.assign({ scope: 'persona', data: { id: p.id }, noChanged: true },
-    TUNE[id] ? { control: tuneCtl(p, id) } : id === S.budget ? { control: capCtl(p) } : id === S.guidance ? { control: notesCtl(p) } : PICKS[id] ? { choices: pickList(p, id) } : {}, opts || {}));
+    TUNE[id] ? { control: tuneCtl(p, id) } : id === S.budget ? { control: capCtl(p) } : id === S.guidance ? { control: notesCtl(p) } : id === S.tags ? { control: tagsCtl(p) } : PICKS[id] ? { choices: pickList(p, id) } : {}, opts || {}));
   const valueRow = (p, id, action, wrap) => { const s = PM51.setting(id); if (!s) return ''; const v = pval(p, id); const text = Array.isArray(v) ? (v.length ? v.join(', ') : 'None') : (String(v || '').trim() || 'Not set'); return PM51.home(id, PM51.rows([wrap ? { label: PM51.rowLabel(s), help: PM51.rowHelp(s), cls: 'is-wrap', control: `<p class="pm51-personas-text">${h(text)}</p>`, action } : { label: PM51.rowLabel(s), help: PM51.rowHelp(s), value: text, action }])); };
   const lockedGroup = (p, ids) => ids.reduce((html, id) => PM51.home(id, html), PM51.kv(ids.map(id => { const s = PM51.setting(id); return s ? [PM51.rowLabel(s), id === S.pid ? p.id : (ownText(p, id) || PM51.valueText(s, pval(p, id)))] : null; })));
   function promptRow(p) {
@@ -166,7 +189,7 @@
       id: ID, rosterTitle: 'Personas', count: view.length,
       add: { action: 'pm51-personas-add', label: 'New persona or import' },
       filter: { placeholder: 'Filter personas', value: (PM51.s().filters || {})[ID] || '' },
-      items: view.map(x => ({ id: x.id, title: x.name, meta: [x.locked ? 'Core · locked' : x.group === 'Bundled' ? 'Bundled' : 'Yours', x.chat === false ? 'helper only' : '', isHidden(x) ? 'hidden' : ''].filter(Boolean).join(' · '), avatar: icon(x.locked ? 'lock' : x.group === 'Bundled' ? 'users' : 'user'), selected: x.id === p.id })),
+      items: view.map(x => ({ id: x.id, title: x.name, meta: personaMeta(x), avatar: icon(x.locked ? 'lock' : x.group === 'Bundled' ? 'users' : 'user'), selected: x.id === p.id })),
       detail: {
         title: p.name, subtitle: [p.locked ? 'Core persona' : p.group === 'Bundled' ? 'Bundled persona' : 'Your persona', (p.crews || []).length ? `In ${p.crews.join(', ')}` : 'Not in a crew'].join(' · '),
         primary: p.locked ? { label: 'Duplicate to edit', icon: 'copy', action: 'pm51-personas-duplicate', data: { id: p.id } } : { label: 'Try it', icon: 'play', action: 'pm51-personas-try-open', data: { id: p.id } },
@@ -416,6 +439,47 @@
       body: PM51.field('Names', `<input class="text-control o55-pa-alias" value="${a((Array.isArray(cur) ? cur : []).join(', '))}" placeholder="For example: prof, the teacher" autocomplete="off" data-autofocus/>`, 'Separate them with commas.'),
       primaryLabel: 'Save', onPrimary: w => { const list = String(w.querySelector('.o55-pa-alias').value || '').split(',').map(x => x.trim()).filter(Boolean); p.props = p.props || {}; p.props[S.aliases] = [...new Set(list)]; saveState(); refresh(); PM51.toast('Saved', list.length ? `${p.name} also answers to ${list.join(', ')}.` : `${p.name} answers only to its name.`); }
     });
+  });
+  /* free tags: Enter or comma adds what is typed, a suggested kind adds itself, the chip's x removes it; the
+     library row's meta follows at once, so the roster filter finds the persona by its tags (FO-161) */
+  function tagsCommit(p, next, box) {
+    p.props = p.props || {}; p.props[S.tags] = next;
+    saveState();
+    const input = box.querySelector('.o55-tags-in');
+    box.querySelectorAll('.o55-tag-chip').forEach(n => n.remove());
+    input.insertAdjacentHTML('beforebegin', next.map(t => tagChip(p, t)).join(''));
+    box.querySelector('.o55-tags-suggest').innerHTML = tagSuggest(p, input.value);
+    const meta = root.querySelector(`.resource-row[data-manager="personas"][data-id="${cssEscape(p.id)}"] .resource-row-meta`);
+    if (meta) meta.textContent = personaMeta(p);
+    showToast('Saved', `Tags for ${p.name}: ${tagText(next)}.`, 'success', 2200);
+  }
+  const tagAdd = (el, raw) => {
+    const p = personas().find(x => x.id === ds(el, 'id')); if (!p || p.locked) return;
+    const box = el.closest('.o55-tags'); if (!box) return;
+    const input = box.querySelector('.o55-tags-in'), cur = tagList(p), next = cur.slice();
+    String(raw || '').split(',').map(x => x.trim()).filter(Boolean).forEach(t => { if (!next.some(x => x.toLowerCase() === t.toLowerCase())) next.push(t); });
+    input.value = '';
+    if (next.length !== cur.length) tagsCommit(p, next, box);
+    else box.querySelector('.o55-tags-suggest').innerHTML = tagSuggest(p, '');
+    input.focus({ preventScroll: true });
+  };
+  PM51.on('personas-tag-remove', el => {
+    const p = personas().find(x => x.id === ds(el, 'id')); if (!p || p.locked) return;
+    const box = el.closest('.o55-tags'); if (!box) return;
+    tagsCommit(p, tagList(p).filter(x => x !== ds(el, 'tag')), box);
+    box.querySelector('.o55-tags-in').focus({ preventScroll: true });
+  });
+  PM51.on('personas-tag-suggest', el => tagAdd(el, ds(el, 'value')));
+  PM51.onInput('personas-tag-type', el => {
+    const p = personas().find(x => x.id === ds(el, 'id')), box = el.closest('.o55-tags');
+    if (p && box) box.querySelector('.o55-tags-suggest').innerHTML = tagSuggest(p, el.value);
+  });
+  document.addEventListener('keydown', e => {
+    if (e.key !== 'Enter' && e.key !== ',') return;
+    const el = e.target && e.target.closest ? e.target.closest('.o55-tags-in') : null;
+    if (!el) return;
+    e.preventDefault();
+    tagAdd(el, el.value);
   });
   PM51.on('personas-prompt', el => {
     const p = personas().find(x => x.id === ds(el, 'id')); if (!p || p.locked) return;

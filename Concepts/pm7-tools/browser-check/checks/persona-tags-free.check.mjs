@@ -1,0 +1,150 @@
+// FO-161 (Jared: "A: free tags with suggested kinds"; Plans/Personas.md P-010 / DL-474): a persona's Tags row is a
+// free tag input, not a fixed multiselect. Real typing adds any tag (Enter or comma), each tag is a removable chip,
+// the eight suggested kinds are offered under the box and typing filters them; an added kind leaves the suggestions.
+// The tags left after removing one chip survive a Settings close/reopen (and a page reload on the normal surface),
+// show in the persona's library row, and the roster filter finds the persona by a free tag. Both surfaces, Basic
+// Dark / Glass Light / NieR Dark / Retro Light, 1280x900 and 740x900. Visible behaviour only.
+// Bite: on the 12e head the row is a fixed chip-select with the old kinds and no input, so the first assertion fails
+// there and passes on the fix. --set shots=1 crops the row at 1280x900 (on a pre-FO-161 page it crops the fixed list
+// instead, for the paired before/after evidence).
+import { setLookBySetting, lookHeld } from '../helpers/settings-look.mjs';
+
+const LOOKS = ['basic-dark', 'glass-light', 'nier-dark', 'retro-light'];
+const SIZES = [[1280, 900], [740, 900]];
+const SHOT_LOOKS = ['basic-dark', 'glass-light', 'nier-dark'];
+const TAGS = 'personas.library.persona-tags';
+const PID = 'custom-ux';                    // Settings UX Reviewer, a seeded custom persona
+const FREE = 'release-notes';               // not a suggested kind
+const COMMA = 'hotfix';                     // added with a comma
+const KIND = 'language', KIND_LABEL = 'Language';
+const KINDS = ['Phase', 'Task', 'Subtask', 'Iteration', 'Across phases', 'Language', 'Domain', 'Framework'];
+const BODY = '[data-continuous-workspace-body="personas"]';
+const MOUNTED = `${BODY}[data-workspace-mounted="true"]`;
+
+async function settings(t, surface, [w, h]) {
+	await t.viewport(w, h);
+	const f = await t.app.open({ sandbox: surface === 'sandbox' });
+	await t.app.resetLayout();
+	await f.locator('#tab-settings').click();
+	await t.settle();
+	return f;
+}
+async function goPersonas(t, f) {
+	await f.evaluate(() => PM51.go('memory', 'personas'));
+	await f.waitForSelector(MOUNTED, { timeout: 15000 });
+	await t.settle();
+	const active = (await f.locator(`${BODY} .pm51-tabs .manager-tab.active`).innerText().catch(() => '')).trim();
+	if (active !== 'Personas') {
+		await f.locator(`${BODY} .pm51-tabs .manager-tab`, { hasText: /^\s*Personas\s*$/ }).first().click();
+		await t.settle();
+		await t.page.waitForTimeout(400);
+	}
+}
+// the roster is an off-canvas drawer on a narrow host: open it behind the detail head's menu button when it shows
+async function openPersona(t, f) {
+	const toggle = f.locator(`${BODY} .pm51-roster-toggle`).first();
+	if (await toggle.isVisible().catch(() => false)) {
+		await toggle.click();
+		await t.page.waitForTimeout(450);
+	}
+	const row = f.locator(`${BODY} .resource-row[data-id="${PID}"]`).first();
+	await row.scrollIntoViewIfNeeded();
+	await row.click();
+	await t.settle();
+	await t.page.waitForTimeout(450);
+}
+const tagsRow = (f) => f.locator(`${BODY} [data-setting-id="${TAGS}"]`).first();
+const chipTexts = (row) => row.locator('.o55-tag-chip > span:first-child').allTextContents();
+const shown = (a) => JSON.stringify(a);
+
+export const tests = {};
+for (const surface of ['normal', 'sandbox']) {
+	for (const look of LOOKS) {
+		for (const [w, h] of SIZES) {
+			tests[`free tags (${surface}, ${look}, ${w}x${h})`] = async (t) => {
+				if (!t.app.surfaces().includes(surface)) { await t.check(`${surface} surface not asked for`, true); return; }
+				const f = await settings(t, surface, [w, h]);
+				await setLookBySetting(t, f, look);
+				const painted = await f.evaluate(() => {
+					const theme = document.documentElement.getAttribute('data-theme') || '';
+					return { theme, nier: !!(window.PM_NIER && PM_NIER.on()) || theme.startsWith('nier') };
+				});
+				await t.check(`measured under ${look}`, lookHeld(look, painted), shown(painted));
+				await goPersonas(t, f);
+				await openPersona(t, f);
+				const row = tagsRow(f);
+				await row.scrollIntoViewIfNeeded();
+				const input = row.locator('.o55-tags-in');
+				const isFree = (await input.count()) === 1;
+				await t.check('Tags is a free tag input, not a fixed list', isFree,
+					isFree ? 'input present' : `fixed control: ${(await row.locator('.setting-control').innerText().catch(() => '')).replace(/\s+/g, ' ').slice(0, 140)}`);
+				if (!isFree) {
+					if (t.args.shots && w === 1280) await t.crop(`tags-before-${look}-${surface}`, row, 'the fixed Tags multiselect before FO-161');
+					return;
+				}
+				// at rest: the eight suggested kinds, none of the old fixed list
+				const sug = row.locator('.o55-tag-sug');
+				const restLabels = await sug.allTextContents();
+				await t.check('the eight canon kinds are offered as suggestions', restLabels.length === 8 && KINDS.every(l => restLabels.includes(l)), restLabels.join(', '));
+				const rowText = (await row.innerText()).replace(/\s+/g, ' ');
+				await t.check('no old fixed kind remains on the row', !/\b(Seam|Package|Lane|Across seams|Other)\b/.test(rowText), rowText.slice(0, 160));
+				// a free tag by Enter
+				await input.fill(FREE);
+				await input.press('Enter');
+				await t.page.waitForTimeout(350);
+				await t.check('Enter adds the free tag as a chip', (await chipTexts(row)).includes(FREE), shown(await chipTexts(row)));
+				await t.check('the input clears after adding', (await input.inputValue()) === '', await input.inputValue());
+				// typing filters the suggestions; picking one adds it
+				await input.fill('lang');
+				await t.page.waitForTimeout(250);
+				const filtered = await sug.allTextContents();
+				await t.check('typing filters the suggestions to Language', filtered.length === 1 && filtered[0] === KIND_LABEL, filtered.join(', '));
+				await sug.first().click();
+				await t.page.waitForTimeout(350);
+				await t.check('the suggested kind is added as a chip', (await chipTexts(row)).includes(KIND_LABEL), shown(await chipTexts(row)));
+				await t.check('an added kind is no longer suggested', (await sug.count()) === 7, `${await sug.count()} suggestions`);
+				// a comma adds what is typed too
+				await input.fill(COMMA);
+				await input.press(',');
+				await t.page.waitForTimeout(350);
+				await t.check('comma adds the typed tag', (await chipTexts(row)).includes(COMMA), shown(await chipTexts(row)));
+				if (t.args.shots && w === 1280 && SHOT_LOOKS.includes(look)) await t.crop(`tags-${look}-${surface}`, row, 'free tag input: two free chips, the input and the remaining suggestions');
+				// remove one chip (the suggested kind); exactly the free tags are left
+				await row.locator(`.o55-tag-x[data-tag="${KIND}"]`).click();
+				await t.page.waitForTimeout(350);
+				const left = [FREE, COMMA];
+				await t.check('removing a chip leaves exactly the others', shown(await chipTexts(row)) === shown(left), shown(await chipTexts(row)));
+				const meta = (await f.locator(`${BODY} .resource-row[data-id="${PID}"] .resource-row-meta`).innerText()).replace(/\s+/g, ' ');
+				await t.check('the library row shows the free tags', meta.includes(FREE) && meta.includes(COMMA), meta);
+				// the row commits as it goes: close Settings, reopen, and the tags left are what shows
+				await f.locator('#tab-dashboard').click();
+				await t.settle();
+				await f.locator('#tab-settings').click();
+				await t.settle();
+				await goPersonas(t, f);
+				await openPersona(t, f);
+				const row2 = tagsRow(f);
+				await row2.scrollIntoViewIfNeeded();
+				await t.check('reopen shows exactly the tags left', shown(await chipTexts(row2)) === shown(left), shown(await chipTexts(row2)));
+				// the roster search finds the persona by its free tag
+				const filter = f.locator(`${BODY} input[data-action="pm51-filter"]`).first();
+				await filter.fill(FREE);
+				await t.page.waitForTimeout(350);
+				const visIds = await f.locator(`${BODY} .resource-row:not([hidden])`).evaluateAll(rs => rs.map(r => r.dataset.id));
+				await t.check('search by the free tag finds exactly this persona', visIds.length === 1 && visIds[0] === PID, visIds.join(', '));
+				await filter.fill('');
+				await t.page.waitForTimeout(350);
+				await t.check('clearing the search brings the roster back', (await f.locator(`${BODY} .resource-row:not([hidden])`).count()) > 1, `${await f.locator(`${BODY} .resource-row:not([hidden])`).count()} rows`);
+				// on the normal surface a reload keeps the saved tags (the sandbox has no storage)
+				if (surface === 'normal') {
+					const f2 = await t.app.open({ sandbox: false });
+					await goPersonas(t, f2);
+					await openPersona(t, f2);
+					const row3 = tagsRow(f2);
+					await row3.scrollIntoViewIfNeeded();
+					await t.check('a reload keeps the saved tags', shown(await chipTexts(row3)) === shown(left), shown(await chipTexts(row3)));
+				}
+			};
+		}
+	}
+}

@@ -17,32 +17,31 @@
   },
   "personas.library.persona-tags": {
    "label": "Tags",
-   "help": "Help search and automatic picking find this persona.",
-   "control": "multiselect",
+   "help": "Free tags for filtering and search, with suggested kinds. Type any tag.",
+   "control": "tags",
+   "noun": "tag",
+   "placeholder": "Type a tag and press Enter",
    "options": {
-    "seam": "Seam",
-    "package": "Package",
-    "lane": "Lane",
-    "node": "Step",
+    "phase": "Phase",
+    "task": "Task",
+    "subtask": "Subtask",
     "iteration": "Iteration",
-    "cross-seam": "Across seams",
+    "cross-phase": "Across phases",
     "language": "Language",
     "domain": "Domain",
-    "framework": "Framework",
-    "freeform": "Other"
+    "framework": "Framework"
    },
    "choices": [
-    "seam",
-    "package",
-    "lane",
-    "node",
+    "phase",
+    "task",
+    "subtask",
     "iteration",
-    "cross-seam",
+    "cross-phase",
     "language",
     "domain",
-    "framework",
-    "freeform"
+    "framework"
    ],
+   "layout": "wide",
    "per": "persona",
    "perWhere": "Change it inside each persona: Memory & Automation › Personas & Crews › Personas."
   },
