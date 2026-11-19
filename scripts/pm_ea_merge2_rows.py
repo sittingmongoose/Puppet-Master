@@ -212,6 +212,19 @@ def contract(lane,event):
         ref=_payload_evidence(grade);out['contract_ref']=ref
         if lane in ('DG6A','DFM','DCW'):out['scope_policy']='project_only'
         if lane=='DG6A':
+            panels = {row['event_type']: row for row in load('Plans/panel_event_contracts/manifest.json')['families']}
+            if event in panels:
+                panel = panels[event]
+                fixtures = load('Plans/panel_event_contracts/' + panel['slug'] + '.fixtures.json')
+                positives = [case['value'] for case in fixtures['payload_cases'] if case['valid']]
+                scopes = {'application' if value['project_id'] is None else 'project' for value in positives}
+                if scopes != {'application', 'project'}:
+                    raise Gap('Panel owner specimens do not establish both scope editions')
+                storage = _owner_body(panel['sp'])
+                if 'application' not in storage.lower() or 'Project' not in storage:
+                    raise Gap('Panel Storage owner does not state both scope editions')
+                out['scope_policy'] = 'application_or_project'
+                out['scope_source'] = 'Plans/storage-plan.md#' + panel['sp'] + ' and named panel payload positives'
             owner=[u for u in grade.get('current_owner_units',[]) if not u.startswith(('SP-','CV-','ATS-'))]
             if event=='concern.created':out['owners']['semantic']='Plans/Orchestrator_Page.md#OP-004'
             elif len(owner)==1:out['owners']['semantic']=unit_ref(owner[0])

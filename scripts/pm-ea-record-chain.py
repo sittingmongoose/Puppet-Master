@@ -31,7 +31,7 @@ def sha(raw):
     return hashlib.sha256(raw).hexdigest()
 
 
-@lru_cache(maxsize=2048)
+@lru_cache(maxsize=64)
 def git_bytes(commit, path):
     if not re.fullmatch(r"[0-9a-f]{40}", commit):
         raise ValueError("source_commit must be a full Git commit: " + str(commit))
@@ -116,7 +116,17 @@ def main():
         old_decisions = git_bytes(source, "Plans/Decision_Log.md")
         check("predecessor_implementation_receipt", predecessor["implementation_receipt_sha256"],
               sha(git_bytes(source, receipt_path)), source)
-        check("shared_decision_ref", record["decision_ref"], predecessor["decision_ref"], source)
+        correction_transition = False
+        if record.get("postfix_correction"):
+            from pm_ea_postfix_corrections import witness
+            try:
+                corrected, prior = witness(record, ROOT)
+                correction_transition = source == corrected["source_commit"] and record["decision_ref"] == corrected["decision_ref"] and predecessor["decision_ref"] == prior["decision_ref"]
+                check("postfix_application_witness", corrected["event_type"], event, corrected["application_commit"])
+            except (ValueError, KeyError, OSError, subprocess.SubprocessError) as exc:
+                check("postfix_application_witness", str(exc), None, "Git")
+        if not correction_transition:
+            check("shared_decision_ref", record["decision_ref"], predecessor["decision_ref"], source)
         check("shared_assessment_path", depth_path, predecessor["depth_assessment"]["path"], source)
         check("predecessor_record", maintenance["source_record_sha256"], sha(predecessor_raw), source)
         check("predecessor_assessment", maintenance["source_assessment_sha256"], sha(old_depth), source)

@@ -541,6 +541,23 @@ def refresh_evidence(item: dict, *, digest_convention: str = "whole_line", sourc
     if rel.startswith("Plans/") and rel.endswith(".md") and span is None:
         if unit or _split_and_spans(text)[1]:
             raise Gap(f"canonical Markdown evidence needs a resolvable unit or heading bound: {rel}#{unit}")
+    if (criterion == "retention" and event_type and rel.startswith("Plans/")
+            and rel.endswith(".md") and span and isinstance(quote, str)
+            and quote.lstrip().startswith("Current selected assignment")):
+        # MERGE3 finding 4: a wrapped membership line is not retention proof.
+        # The replacement remains inside the cited unit and needs actual policy,
+        # anchor and count values; no sibling fallback or verdict change.
+        from pm_ea_retention_citations import union_range
+        registry = load(REGISTRY)
+        selected = next((r for r in registry["families"] if r["event_type"] == event_type), None)
+        policies = {p["policy_id"]:p for p in load(STORAGE_REGISTRY)["retention_policies"]}
+        replacement = union_range(out, selected, policies, file_text) if selected else None
+        if replacement and replacement["quote"] != quote:
+            out["retention_range_maintenance"] = dict(authority="MERGE3-POSTFIX finding 4",
+                old_quote=quote, old_line_start=item.get("line_start"),
+                new_line_start=replacement["line_start"], new_line_end=replacement["line_end"],
+                reason="Expand the exact current assignment through its policy, scope, anchor and effective count in its own cited unit.")
+            quote = out["quote"] = replacement["quote"]
     if isinstance(quote, str) and quote:
         want = item.get("line_start") if isinstance(item.get("line_start"), int) else 1
         found = relocate(text, quote, want, span)

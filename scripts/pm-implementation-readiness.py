@@ -3072,13 +3072,40 @@ def event_family_active_schema_ids_match(
     family: dict[str, Any],
     resolved_schema_id: str | None,
 ) -> bool:
-    row_schema_id = family.get("payload_schema_id")
-    if not isinstance(row_schema_id, str) or not row_schema_id:
+    # A retrieval resource and an EventRecord selector are separate identities.
+    # Both must resolve independently; neither is manufactured from the row's
+    # claimed selector (MERGE3-POSTFIX findings 1 and 2).
+    from pm_ea_payload_selectors import selector_id
+
+    def matches(probe, scope, schema, resource_id):
+        if not isinstance(schema, dict) or not isinstance(resource_id, str):
+            return False
+        ref = probe.get("payload_schema_ref")
+        if isinstance(ref, dict) and ref.get("schema_id") != resource_id:
+            return False
+        try:
+            expected = selector_id(probe.get("event_type"), scope, schema, resource_id, root=ROOT)
+        except (OSError, ValueError, KeyError, TypeError):
+            return False
+        return probe.get("payload_schema_id") == expected
+
+    scope = "application" if family.get("scope_policy") == "application_only" else "project"
+    schema, resource_id = event_family_payload_schema(family, scope)
+    if resource_id != resolved_schema_id or not matches(family, scope, schema, resource_id):
         return False
-    ref = family.get("payload_schema_ref")
-    if isinstance(ref, dict) and ref.get("schema_id") != row_schema_id:
+    versions = family.get("payload_versions") or []
+    if not isinstance(versions, list):
         return False
-    return resolved_schema_id == row_schema_id
+    for version in versions:
+        if not isinstance(version, dict) or version.get("scope_kind") not in ("application", "project"):
+            return False
+        probe = dict(family, payload_schema_id=version.get("payload_schema_id"),
+                     payload_schema_ref=version.get("payload_schema_ref"))
+        probe.pop("payload_schema", None)
+        schema, resource_id = event_family_payload_schema(probe, version["scope_kind"])
+        if not matches(probe, version["scope_kind"], schema, resource_id):
+            return False
+    return True
 
 
 def event_family_legacy_payload_schema(
