@@ -4,7 +4,7 @@ Source: `Plans/Decision_Log.md`
 
 Source lines: L28747-L54055
 
-Source SHA256: `c0af472a1038e57d71a0d6d73e21aa4d8d79736601099133190601d58e55d017`
+Source SHA256: `b7af07edebca7a6d30f4fe201a8d6d5178c5434da5725ed2d763bbbe43be8d70`
 
 ---
 
@@ -25278,7 +25278,7 @@ unit_type: decision
 status: accepted
 owner_doc: Plans/Decision_Log.md
 canonical_text: |-
-  On 2026-11-19 at about 4:40 PM EST, Jared quoted FileSafe card E15-1 option A ("their own whole-app allowance: 7 years, 2,000,000 records, with new ones refused when it's full") and answered verbatim: "this". pm7-build relayed the answer in pm-mail 1119213858-1090 at 2026-11-19T21:38:58Z. The card is vm.pm-ea-lead--E15-1 in E-CARDS-15.md. The signed answer is recorded in ANSWERS_E-CARDS-15_20261119.md.
+  On 2026-11-19 at about 4:40 PM EST, Jared quoted FileSafe card E15-1 option A ("their own whole-app allowance: 7 years, 2,000,000 records, with new ones refused when it's full") and answered verbatim: "this". pm7-build relayed the answer in pm-mail 1119213858-1090 at 2026-11-19T21:38:58Z. The card is vm.pm-ea-lead--E15-1 in E-CARDS-15.md. The answer is recorded in ANSWERS_E-CARDS-15_20261119.md.
 
   E15-1 A gives Application records of filesafe.policy_degraded one dedicated application-wide count bucket per Puppet Master Server, app:filesafe_policy_degraded. SP-556 applies the existing RP-OPERATIONAL-2555D@1.0.0 policy for 2,555 days (220,752,000 seconds) from the original terminal-transition anchor, with at most 2,000,000 retained records. If the next record would exceed capacity and no expired unheld member is eligible for compaction, refuse the append. Overflow never evicts an unexpired or held member, borrows room from another bucket or refuses an append in another bucket. Project records keep their own Project partition under the same policy.
 
