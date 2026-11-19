@@ -75,6 +75,8 @@ async function openPersona(t, f) {
 const tagsRow = (f) => f.locator(`${BODY} [data-setting-id="${TAGS}"]`).first();
 const chipTexts = (row) => row.locator('.o55-tag-chip > span:first-child').allTextContents();
 const shown = (a) => JSON.stringify(a);
+// the About section the row sits in: the shot shows the control among its sibling rows, not alone
+const aboutSection = (row) => row.locator('xpath=ancestor::section[1]');
 
 export const tests = {};
 for (const surface of ['normal', 'sandbox']) {
@@ -98,7 +100,7 @@ for (const surface of ['normal', 'sandbox']) {
 				await t.check('Tags is a free tag input, not a fixed list', isFree,
 					isFree ? 'input present' : `fixed control: ${(await row.locator('.setting-control').innerText().catch(() => '')).replace(/\s+/g, ' ').slice(0, 140)}`);
 				if (!isFree) {
-					if (t.args.shots && w === 1280) await t.crop(`tags-before-${look}-${surface}`, row, 'the fixed Tags multiselect before FO-161');
+					if (t.args.shots && w === 1280) await t.crop(`tags-before-${look}-${surface}`, aboutSection(row), 'the About section with the fixed Tags multiselect before FO-161');
 					return;
 				}
 				// at rest: the eight suggested kinds, none of the old fixed list
@@ -127,7 +129,10 @@ for (const surface of ['normal', 'sandbox']) {
 				await input.press(',');
 				await t.page.waitForTimeout(350);
 				await t.check('comma adds the typed tag', (await chipTexts(row)).includes(COMMA), shown(await chipTexts(row)));
-				if (t.args.shots && w === 1280 && SHOT_LOOKS.includes(look)) await t.crop(`tags-${look}-${surface}`, row, 'free tag input: the free chips, a kind chip, the input and the remaining suggestions');
+				if (t.args.shots && w === 1280 && SHOT_LOOKS.includes(look)) {
+					await t.page.waitForTimeout(2400);   // let the Saved toast go, so the shot shows the rows, not the toast
+					await t.crop(`tags-${look}-${surface}`, aboutSection(row), 'the About section with the free tag input: free chips, a kind chip, the input and the remaining suggestions');
+				}
 				// remove one chip (the suggested kind); exactly the free tags are left
 				await row.locator(`.o55-tag-x[data-tag="${KIND}"]`).click();
 				await t.page.waitForTimeout(350);
