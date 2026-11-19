@@ -5452,6 +5452,7 @@
     "DL-2477",
     "DL-2478",
     "DL-2479",
+    "DL-2480",
     "DL-2450",
     "DL-451",
     "DL-694",
@@ -51837,6 +51838,21 @@
     {
       "edge_type": "depends_on",
       "from": "DL-2479",
+      "to": "DL-400"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "DL-2480",
+      "to": "DL-077"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "DL-2480",
+      "to": "DL-2243"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "DL-2480",
       "to": "DL-400"
     },
     {
@@ -162695,7 +162711,7 @@
       "to": "F3-395"
     }
   ],
-  "generated_at_utc": "2026-11-19T22:43:18Z",
+  "generated_at_utc": "2026-11-19T22:44:27Z",
   "nodes": [
     {
       "context_scope": "residual_plan_standardization",
@@ -213947,6 +213963,23 @@
         "heading_level": 3,
         "heading_line": 27247,
         "line": 27249,
+        "path": "Plans/Decision_Log.md"
+      },
+      "status": "accepted",
+      "unit_type": "decision"
+    },
+    {
+      "context_scope": "event_authority_pnc019_merge3_postfix",
+      "gui_related": false,
+      "owner_doc": "Plans/Decision_Log.md",
+      "plan_unit_id": "DL-2480",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority_admission",
+      "source_location": {
+        "heading": "DL-2480: Event Authority corrects chat.thread_deleted (merge 3 post-landing)",
+        "heading_level": 3,
+        "heading_line": 55843,
+        "line": 55845,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -324170,10 +324203,10 @@
     "build_order_available": true,
     "build_order_blocked_node_count": 0,
     "cycle_blocker_count": 0,
-    "depends_on_edge_count": 27413,
+    "depends_on_edge_count": 27416,
     "downstream_blocked_node_count": 0,
-    "edge_count": 30638,
-    "node_count": 9498,
+    "edge_count": 30641,
+    "node_count": 9499,
     "true_cycle_component_count": 0,
     "unblocks_edge_count": 3225,
     "unresolved_reference_count": 0
