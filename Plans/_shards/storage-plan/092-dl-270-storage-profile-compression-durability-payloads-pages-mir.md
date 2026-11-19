@@ -2,9 +2,9 @@
 
 Source: `Plans/storage-plan.md`
 
-Source lines: L33928-L36607
+Source lines: L34328-L37700
 
-Source SHA256: `a80ebad269f3f3a87c644ee23b21cdd62ef64ccad2fbe4377e8bd190614fdf31`
+Source SHA256: `8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537`
 
 ---
 
@@ -1965,247 +1965,678 @@ plan_unit_id: SP-671
 unit_type: contract
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: |-
-  DG6B plugin individual persistence contracts. This is a newly authored owner contract under DL-045, prepared without admission.
+canonical_text: 'DG6B plugin individual persistence contracts. This is a newly authored owner contract under DL-045,
+  prepared without admission.
+
 
   PNC-019 s4r retention binding for `plugin.hook.blocked` (2026-11-14).
 
-  Event history `retention_policy_ref = RP-TELEMETRY-90D@1.0.0`, under Plans/Decision_Log.md#DL-401, Plans/Decision_Log.md#DL-419, Plans/Decision_Log.md#DL-415.
 
-  Use the existing policy object unchanged: {"anchor_kind": "creation", "cardinality_scope": "project", "expiry_action": "compact", "max_cardinality": 2000000, "overflow_action": "fail_closed", "ttl_seconds": 7776000}.
+  Event history selects Application = RP-PLUGIN-HOOK-APPLICATION-90D@1.0.0 (anchor_kind=creation, cardinality_scope=instance),
+  Project = RP-TELEMETRY-90D@1.0.0 (anchor_kind=creation, cardinality_scope=project) as recorded by Plans/Decision_Log.md#DL-2348,
+  under Plans/Decision_Log.md#DL-401, Plans/Decision_Log.md#DL-419, Plans/Decision_Log.md#DL-415.
 
-  Only an already owner-supported application edition selects `RP-PLUGIN-HOOK-APPLICATION-90D@1.0.0`; Project records select the Project policy and never count in both allowances.
 
-  Preserve first successful restart-surviving save as the 90-day anchor; retry, replay, recovery and restore never restart it (DL-415).
+  Use the existing policy object unchanged: {"anchor_kind": "creation", "cardinality_scope": "project", "expiry_action":
+  "compact", "max_cardinality": 2000000, "overflow_action": "fail_closed", "ttl_seconds": 7776000}.
 
-  Exact stored value `plugin_hook_blocked_operation` retains `RP-PLUGIN-HOOK-APPLICATION-90D@1.0.0` under DL-503; this does not assign its referenced bodies or other values.
 
-  Exact stored value `plugin_hook_error_operation` retains `RP-PLUGIN-HOOK-APPLICATION-90D@1.0.0` under DL-503; this does not assign its referenced bodies or other values.
+  Only an already owner-supported application edition selects `RP-PLUGIN-HOOK-APPLICATION-90D@1.0.0`; Project records
+  select the Project policy and never count in both allowances.
 
-  Exact stored value `plugin_hook_invoked_operation` retains `RP-PLUGIN-HOOK-APPLICATION-90D@1.0.0` under DL-503; this does not assign its referenced bodies or other values.
 
-  Exact stored value `plugin_load_failed_operation` retains `RP-PLUGIN-OPERATIONS-APPLICATION-2555D@1.0.0` under DL-503; this does not assign its referenced bodies or other values.
+  Preserve first successful restart-surviving save as the 90-day anchor; retry, replay, recovery and restore never
+  restart it (DL-415).
 
-  Exact stored value `plugin_loaded_operation` retains `RP-PLUGIN-OPERATIONS-APPLICATION-2555D@1.0.0` under DL-503; this does not assign its referenced bodies or other values.
 
-  Exact stored value `plugin_permission_override_operation` retains `RP-PLUGIN-OPERATIONS-APPLICATION-2555D@1.0.0` under DL-503; this does not assign its referenced bodies or other values.
+  Exact stored value `plugin_hook_blocked_operation` retains `RP-PLUGIN-HOOK-APPLICATION-90D@1.0.0` under DL-503;
+  this does not assign its referenced bodies or other values.
 
-  Exact stored value `plugin_tool_collision_operation` retains `RP-PLUGIN-OPERATIONS-APPLICATION-2555D@1.0.0` under DL-503; this does not assign its referenced bodies or other values.
 
-  Exact stored value `plugin_tool_registered_operation` retains `RP-PLUGIN-OPERATIONS-APPLICATION-2555D@1.0.0` under DL-503; this does not assign its referenced bodies or other values.
+  Exact stored value `plugin_hook_error_operation` retains `RP-PLUGIN-HOOK-APPLICATION-90D@1.0.0` under DL-503;
+  this does not assign its referenced bodies or other values.
 
-  This paragraph supersedes earlier pending statements only for the exact assigned facets above. All independent source, receipt, referenced-body and backup lifetimes remain with their own owners. Legal/investigation holds, required references, recovery, rollback, maintenance, protected backups and latest-25-run protection override cleanup without granting access. No unexpired/protected eviction for space, no retry anchor renewal, no hold release, admission, native proof or governance clearance is granted.
+
+  Exact stored value `plugin_hook_invoked_operation` retains `RP-PLUGIN-HOOK-APPLICATION-90D@1.0.0` under DL-503;
+  this does not assign its referenced bodies or other values.
+
+
+  Exact stored value `plugin_load_failed_operation` retains `RP-PLUGIN-OPERATIONS-APPLICATION-2555D@1.0.0` under
+  DL-503; this does not assign its referenced bodies or other values.
+
+
+  Exact stored value `plugin_loaded_operation` retains `RP-PLUGIN-OPERATIONS-APPLICATION-2555D@1.0.0` under DL-503;
+  this does not assign its referenced bodies or other values.
+
+
+  Exact stored value `plugin_permission_override_operation` retains `RP-PLUGIN-OPERATIONS-APPLICATION-2555D@1.0.0`
+  under DL-503; this does not assign its referenced bodies or other values.
+
+
+  Exact stored value `plugin_tool_collision_operation` retains `RP-PLUGIN-OPERATIONS-APPLICATION-2555D@1.0.0` under
+  DL-503; this does not assign its referenced bodies or other values.
+
+
+  Exact stored value `plugin_tool_registered_operation` retains `RP-PLUGIN-OPERATIONS-APPLICATION-2555D@1.0.0` under
+  DL-503; this does not assign its referenced bodies or other values.
+
+
+  This paragraph supersedes earlier pending statements only for the exact assigned facets above. All independent
+  source, receipt, referenced-body and backup lifetimes remain with their own owners. Legal/investigation holds,
+  required references, recovery, rollback, maintenance, protected backups and latest-25-run protection override
+  cleanup without granting access. No unexpired/protected eviction for space, no retry anchor renewal, no hold release,
+  admission, native proof or governance clearance is granted.
+
 
   PNC-019 s4r retention binding for `plugin.hook.error` (2026-11-14).
 
-  Event history `retention_policy_ref = RP-TELEMETRY-90D@1.0.0`, under Plans/Decision_Log.md#DL-401, Plans/Decision_Log.md#DL-419, Plans/Decision_Log.md#DL-415.
 
-  Use the existing policy object unchanged: {"anchor_kind": "creation", "cardinality_scope": "project", "expiry_action": "compact", "max_cardinality": 2000000, "overflow_action": "fail_closed", "ttl_seconds": 7776000}.
+  Event history selects Application = RP-PLUGIN-HOOK-APPLICATION-90D@1.0.0 (anchor_kind=creation, cardinality_scope=instance),
+  Project = RP-TELEMETRY-90D@1.0.0 (anchor_kind=creation, cardinality_scope=project) as recorded by Plans/Decision_Log.md#DL-2348,
+  under Plans/Decision_Log.md#DL-401, Plans/Decision_Log.md#DL-419, Plans/Decision_Log.md#DL-415.
 
-  Only an already owner-supported application edition selects `RP-PLUGIN-HOOK-APPLICATION-90D@1.0.0`; Project records select the Project policy and never count in both allowances.
 
-  Preserve first successful restart-surviving save as the 90-day anchor; retry, replay, recovery and restore never restart it (DL-415).
+  Use the existing policy object unchanged: {"anchor_kind": "creation", "cardinality_scope": "project", "expiry_action":
+  "compact", "max_cardinality": 2000000, "overflow_action": "fail_closed", "ttl_seconds": 7776000}.
 
-  Exact stored value `plugin_hook_blocked_operation` retains `RP-PLUGIN-HOOK-APPLICATION-90D@1.0.0` under DL-503; this does not assign its referenced bodies or other values.
 
-  Exact stored value `plugin_hook_error_operation` retains `RP-PLUGIN-HOOK-APPLICATION-90D@1.0.0` under DL-503; this does not assign its referenced bodies or other values.
+  Only an already owner-supported application edition selects `RP-PLUGIN-HOOK-APPLICATION-90D@1.0.0`; Project records
+  select the Project policy and never count in both allowances.
 
-  Exact stored value `plugin_hook_invoked_operation` retains `RP-PLUGIN-HOOK-APPLICATION-90D@1.0.0` under DL-503; this does not assign its referenced bodies or other values.
 
-  Exact stored value `plugin_load_failed_operation` retains `RP-PLUGIN-OPERATIONS-APPLICATION-2555D@1.0.0` under DL-503; this does not assign its referenced bodies or other values.
+  Preserve first successful restart-surviving save as the 90-day anchor; retry, replay, recovery and restore never
+  restart it (DL-415).
 
-  Exact stored value `plugin_loaded_operation` retains `RP-PLUGIN-OPERATIONS-APPLICATION-2555D@1.0.0` under DL-503; this does not assign its referenced bodies or other values.
 
-  Exact stored value `plugin_permission_override_operation` retains `RP-PLUGIN-OPERATIONS-APPLICATION-2555D@1.0.0` under DL-503; this does not assign its referenced bodies or other values.
+  Exact stored value `plugin_hook_blocked_operation` retains `RP-PLUGIN-HOOK-APPLICATION-90D@1.0.0` under DL-503;
+  this does not assign its referenced bodies or other values.
 
-  Exact stored value `plugin_tool_collision_operation` retains `RP-PLUGIN-OPERATIONS-APPLICATION-2555D@1.0.0` under DL-503; this does not assign its referenced bodies or other values.
 
-  Exact stored value `plugin_tool_registered_operation` retains `RP-PLUGIN-OPERATIONS-APPLICATION-2555D@1.0.0` under DL-503; this does not assign its referenced bodies or other values.
+  Exact stored value `plugin_hook_error_operation` retains `RP-PLUGIN-HOOK-APPLICATION-90D@1.0.0` under DL-503;
+  this does not assign its referenced bodies or other values.
 
-  This paragraph supersedes earlier pending statements only for the exact assigned facets above. All independent source, receipt, referenced-body and backup lifetimes remain with their own owners. Legal/investigation holds, required references, recovery, rollback, maintenance, protected backups and latest-25-run protection override cleanup without granting access. No unexpired/protected eviction for space, no retry anchor renewal, no hold release, admission, native proof or governance clearance is granted.
+
+  Exact stored value `plugin_hook_invoked_operation` retains `RP-PLUGIN-HOOK-APPLICATION-90D@1.0.0` under DL-503;
+  this does not assign its referenced bodies or other values.
+
+
+  Exact stored value `plugin_load_failed_operation` retains `RP-PLUGIN-OPERATIONS-APPLICATION-2555D@1.0.0` under
+  DL-503; this does not assign its referenced bodies or other values.
+
+
+  Exact stored value `plugin_loaded_operation` retains `RP-PLUGIN-OPERATIONS-APPLICATION-2555D@1.0.0` under DL-503;
+  this does not assign its referenced bodies or other values.
+
+
+  Exact stored value `plugin_permission_override_operation` retains `RP-PLUGIN-OPERATIONS-APPLICATION-2555D@1.0.0`
+  under DL-503; this does not assign its referenced bodies or other values.
+
+
+  Exact stored value `plugin_tool_collision_operation` retains `RP-PLUGIN-OPERATIONS-APPLICATION-2555D@1.0.0` under
+  DL-503; this does not assign its referenced bodies or other values.
+
+
+  Exact stored value `plugin_tool_registered_operation` retains `RP-PLUGIN-OPERATIONS-APPLICATION-2555D@1.0.0` under
+  DL-503; this does not assign its referenced bodies or other values.
+
+
+  This paragraph supersedes earlier pending statements only for the exact assigned facets above. All independent
+  source, receipt, referenced-body and backup lifetimes remain with their own owners. Legal/investigation holds,
+  required references, recovery, rollback, maintenance, protected backups and latest-25-run protection override
+  cleanup without granting access. No unexpired/protected eviction for space, no retry anchor renewal, no hold release,
+  admission, native proof or governance clearance is granted.
+
 
   PNC-019 s4r retention binding for `plugin.hook.invoked` (2026-11-14).
 
-  Event history `retention_policy_ref = RP-TELEMETRY-90D@1.0.0`, under Plans/Decision_Log.md#DL-401, Plans/Decision_Log.md#DL-419, Plans/Decision_Log.md#DL-415.
 
-  Use the existing policy object unchanged: {"anchor_kind": "creation", "cardinality_scope": "project", "expiry_action": "compact", "max_cardinality": 2000000, "overflow_action": "fail_closed", "ttl_seconds": 7776000}.
+  Event history selects Application = RP-PLUGIN-HOOK-APPLICATION-90D@1.0.0 (anchor_kind=creation, cardinality_scope=instance),
+  Project = RP-TELEMETRY-90D@1.0.0 (anchor_kind=creation, cardinality_scope=project) as recorded by Plans/Decision_Log.md#DL-2348,
+  under Plans/Decision_Log.md#DL-401, Plans/Decision_Log.md#DL-419, Plans/Decision_Log.md#DL-415.
 
-  Only an already owner-supported application edition selects `RP-PLUGIN-HOOK-APPLICATION-90D@1.0.0`; Project records select the Project policy and never count in both allowances.
 
-  Preserve first successful restart-surviving save as the 90-day anchor; retry, replay, recovery and restore never restart it (DL-415).
+  Use the existing policy object unchanged: {"anchor_kind": "creation", "cardinality_scope": "project", "expiry_action":
+  "compact", "max_cardinality": 2000000, "overflow_action": "fail_closed", "ttl_seconds": 7776000}.
 
-  Exact stored value `plugin_hook_blocked_operation` retains `RP-PLUGIN-HOOK-APPLICATION-90D@1.0.0` under DL-503; this does not assign its referenced bodies or other values.
 
-  Exact stored value `plugin_hook_error_operation` retains `RP-PLUGIN-HOOK-APPLICATION-90D@1.0.0` under DL-503; this does not assign its referenced bodies or other values.
+  Only an already owner-supported application edition selects `RP-PLUGIN-HOOK-APPLICATION-90D@1.0.0`; Project records
+  select the Project policy and never count in both allowances.
 
-  Exact stored value `plugin_hook_invoked_operation` retains `RP-PLUGIN-HOOK-APPLICATION-90D@1.0.0` under DL-503; this does not assign its referenced bodies or other values.
 
-  Exact stored value `plugin_load_failed_operation` retains `RP-PLUGIN-OPERATIONS-APPLICATION-2555D@1.0.0` under DL-503; this does not assign its referenced bodies or other values.
+  Preserve first successful restart-surviving save as the 90-day anchor; retry, replay, recovery and restore never
+  restart it (DL-415).
 
-  Exact stored value `plugin_loaded_operation` retains `RP-PLUGIN-OPERATIONS-APPLICATION-2555D@1.0.0` under DL-503; this does not assign its referenced bodies or other values.
 
-  Exact stored value `plugin_permission_override_operation` retains `RP-PLUGIN-OPERATIONS-APPLICATION-2555D@1.0.0` under DL-503; this does not assign its referenced bodies or other values.
+  Exact stored value `plugin_hook_blocked_operation` retains `RP-PLUGIN-HOOK-APPLICATION-90D@1.0.0` under DL-503;
+  this does not assign its referenced bodies or other values.
 
-  Exact stored value `plugin_tool_collision_operation` retains `RP-PLUGIN-OPERATIONS-APPLICATION-2555D@1.0.0` under DL-503; this does not assign its referenced bodies or other values.
 
-  Exact stored value `plugin_tool_registered_operation` retains `RP-PLUGIN-OPERATIONS-APPLICATION-2555D@1.0.0` under DL-503; this does not assign its referenced bodies or other values.
+  Exact stored value `plugin_hook_error_operation` retains `RP-PLUGIN-HOOK-APPLICATION-90D@1.0.0` under DL-503;
+  this does not assign its referenced bodies or other values.
 
-  This paragraph supersedes earlier pending statements only for the exact assigned facets above. All independent source, receipt, referenced-body and backup lifetimes remain with their own owners. Legal/investigation holds, required references, recovery, rollback, maintenance, protected backups and latest-25-run protection override cleanup without granting access. No unexpired/protected eviction for space, no retry anchor renewal, no hold release, admission, native proof or governance clearance is granted.
+
+  Exact stored value `plugin_hook_invoked_operation` retains `RP-PLUGIN-HOOK-APPLICATION-90D@1.0.0` under DL-503;
+  this does not assign its referenced bodies or other values.
+
+
+  Exact stored value `plugin_load_failed_operation` retains `RP-PLUGIN-OPERATIONS-APPLICATION-2555D@1.0.0` under
+  DL-503; this does not assign its referenced bodies or other values.
+
+
+  Exact stored value `plugin_loaded_operation` retains `RP-PLUGIN-OPERATIONS-APPLICATION-2555D@1.0.0` under DL-503;
+  this does not assign its referenced bodies or other values.
+
+
+  Exact stored value `plugin_permission_override_operation` retains `RP-PLUGIN-OPERATIONS-APPLICATION-2555D@1.0.0`
+  under DL-503; this does not assign its referenced bodies or other values.
+
+
+  Exact stored value `plugin_tool_collision_operation` retains `RP-PLUGIN-OPERATIONS-APPLICATION-2555D@1.0.0` under
+  DL-503; this does not assign its referenced bodies or other values.
+
+
+  Exact stored value `plugin_tool_registered_operation` retains `RP-PLUGIN-OPERATIONS-APPLICATION-2555D@1.0.0` under
+  DL-503; this does not assign its referenced bodies or other values.
+
+
+  This paragraph supersedes earlier pending statements only for the exact assigned facets above. All independent
+  source, receipt, referenced-body and backup lifetimes remain with their own owners. Legal/investigation holds,
+  required references, recovery, rollback, maintenance, protected backups and latest-25-run protection override
+  cleanup without granting access. No unexpired/protected eviction for space, no retry anchor renewal, no hold release,
+  admission, native proof or governance clearance is granted.
+
 
   PNC-019 s4r retention binding for `plugin.load_failed` (2026-11-14).
 
-  Event history `retention_policy_ref = RP-OPERATIONAL-2555D@1.0.0`, under Plans/Decision_Log.md#DL-401, Plans/Decision_Log.md#DL-418.
 
-  Use the existing policy object unchanged: {"anchor_kind": "terminal_transition", "cardinality_scope": "project", "expiry_action": "compact", "max_cardinality": 2000000, "overflow_action": "fail_closed", "ttl_seconds": 220752000}.
+  Event history selects Application = RP-PLUGIN-OPERATIONS-APPLICATION-2555D@1.0.0 (anchor_kind=terminal_transition,
+  cardinality_scope=instance), Project = RP-OPERATIONAL-2555D@1.0.0 (anchor_kind=terminal_transition, cardinality_scope=project)
+  as recorded by Plans/Decision_Log.md#DL-2351, under Plans/Decision_Log.md#DL-401, Plans/Decision_Log.md#DL-418.
 
-  Only an already owner-supported application edition selects `RP-PLUGIN-OPERATIONS-APPLICATION-2555D@1.0.0`; Project records select the Project policy and never count in both allowances.
 
-  Exact stored value `plugin_hook_blocked_operation` retains `RP-PLUGIN-HOOK-APPLICATION-90D@1.0.0` under DL-503; this does not assign its referenced bodies or other values.
+  Use the existing policy object unchanged: {"anchor_kind": "terminal_transition", "cardinality_scope": "project",
+  "expiry_action": "compact", "max_cardinality": 2000000, "overflow_action": "fail_closed", "ttl_seconds": 220752000}.
 
-  Exact stored value `plugin_hook_error_operation` retains `RP-PLUGIN-HOOK-APPLICATION-90D@1.0.0` under DL-503; this does not assign its referenced bodies or other values.
 
-  Exact stored value `plugin_hook_invoked_operation` retains `RP-PLUGIN-HOOK-APPLICATION-90D@1.0.0` under DL-503; this does not assign its referenced bodies or other values.
+  Only an already owner-supported application edition selects `RP-PLUGIN-OPERATIONS-APPLICATION-2555D@1.0.0`; Project
+  records select the Project policy and never count in both allowances.
 
-  Exact stored value `plugin_load_failed_operation` retains `RP-PLUGIN-OPERATIONS-APPLICATION-2555D@1.0.0` under DL-503; this does not assign its referenced bodies or other values.
 
-  Exact stored value `plugin_loaded_operation` retains `RP-PLUGIN-OPERATIONS-APPLICATION-2555D@1.0.0` under DL-503; this does not assign its referenced bodies or other values.
+  Exact stored value `plugin_hook_blocked_operation` retains `RP-PLUGIN-HOOK-APPLICATION-90D@1.0.0` under DL-503;
+  this does not assign its referenced bodies or other values.
 
-  Exact stored value `plugin_permission_override_operation` retains `RP-PLUGIN-OPERATIONS-APPLICATION-2555D@1.0.0` under DL-503; this does not assign its referenced bodies or other values.
 
-  Exact stored value `plugin_tool_collision_operation` retains `RP-PLUGIN-OPERATIONS-APPLICATION-2555D@1.0.0` under DL-503; this does not assign its referenced bodies or other values.
+  Exact stored value `plugin_hook_error_operation` retains `RP-PLUGIN-HOOK-APPLICATION-90D@1.0.0` under DL-503;
+  this does not assign its referenced bodies or other values.
 
-  Exact stored value `plugin_tool_registered_operation` retains `RP-PLUGIN-OPERATIONS-APPLICATION-2555D@1.0.0` under DL-503; this does not assign its referenced bodies or other values.
 
-  This paragraph supersedes earlier pending statements only for the exact assigned facets above. All independent source, receipt, referenced-body and backup lifetimes remain with their own owners. Legal/investigation holds, required references, recovery, rollback, maintenance, protected backups and latest-25-run protection override cleanup without granting access. No unexpired/protected eviction for space, no retry anchor renewal, no hold release, admission, native proof or governance clearance is granted.
+  Exact stored value `plugin_hook_invoked_operation` retains `RP-PLUGIN-HOOK-APPLICATION-90D@1.0.0` under DL-503;
+  this does not assign its referenced bodies or other values.
+
+
+  Exact stored value `plugin_load_failed_operation` retains `RP-PLUGIN-OPERATIONS-APPLICATION-2555D@1.0.0` under
+  DL-503; this does not assign its referenced bodies or other values.
+
+
+  Exact stored value `plugin_loaded_operation` retains `RP-PLUGIN-OPERATIONS-APPLICATION-2555D@1.0.0` under DL-503;
+  this does not assign its referenced bodies or other values.
+
+
+  Exact stored value `plugin_permission_override_operation` retains `RP-PLUGIN-OPERATIONS-APPLICATION-2555D@1.0.0`
+  under DL-503; this does not assign its referenced bodies or other values.
+
+
+  Exact stored value `plugin_tool_collision_operation` retains `RP-PLUGIN-OPERATIONS-APPLICATION-2555D@1.0.0` under
+  DL-503; this does not assign its referenced bodies or other values.
+
+
+  Exact stored value `plugin_tool_registered_operation` retains `RP-PLUGIN-OPERATIONS-APPLICATION-2555D@1.0.0` under
+  DL-503; this does not assign its referenced bodies or other values.
+
+
+  This paragraph supersedes earlier pending statements only for the exact assigned facets above. All independent
+  source, receipt, referenced-body and backup lifetimes remain with their own owners. Legal/investigation holds,
+  required references, recovery, rollback, maintenance, protected backups and latest-25-run protection override
+  cleanup without granting access. No unexpired/protected eviction for space, no retry anchor renewal, no hold release,
+  admission, native proof or governance clearance is granted.
+
 
   PNC-019 s4r retention binding for `plugin.loaded` (2026-11-14).
 
-  Event history `retention_policy_ref = RP-OPERATIONAL-2555D@1.0.0`, under Plans/Decision_Log.md#DL-401, Plans/Decision_Log.md#DL-418.
 
-  Use the existing policy object unchanged: {"anchor_kind": "terminal_transition", "cardinality_scope": "project", "expiry_action": "compact", "max_cardinality": 2000000, "overflow_action": "fail_closed", "ttl_seconds": 220752000}.
+  Event history selects Application = RP-PLUGIN-OPERATIONS-APPLICATION-2555D@1.0.0 (anchor_kind=terminal_transition,
+  cardinality_scope=instance), Project = RP-OPERATIONAL-2555D@1.0.0 (anchor_kind=terminal_transition, cardinality_scope=project)
+  as recorded by Plans/Decision_Log.md#DL-2351, under Plans/Decision_Log.md#DL-401, Plans/Decision_Log.md#DL-418.
 
-  Only an already owner-supported application edition selects `RP-PLUGIN-OPERATIONS-APPLICATION-2555D@1.0.0`; Project records select the Project policy and never count in both allowances.
 
-  Exact stored value `plugin_hook_blocked_operation` retains `RP-PLUGIN-HOOK-APPLICATION-90D@1.0.0` under DL-503; this does not assign its referenced bodies or other values.
+  Use the existing policy object unchanged: {"anchor_kind": "terminal_transition", "cardinality_scope": "project",
+  "expiry_action": "compact", "max_cardinality": 2000000, "overflow_action": "fail_closed", "ttl_seconds": 220752000}.
 
-  Exact stored value `plugin_hook_error_operation` retains `RP-PLUGIN-HOOK-APPLICATION-90D@1.0.0` under DL-503; this does not assign its referenced bodies or other values.
 
-  Exact stored value `plugin_hook_invoked_operation` retains `RP-PLUGIN-HOOK-APPLICATION-90D@1.0.0` under DL-503; this does not assign its referenced bodies or other values.
+  Only an already owner-supported application edition selects `RP-PLUGIN-OPERATIONS-APPLICATION-2555D@1.0.0`; Project
+  records select the Project policy and never count in both allowances.
 
-  Exact stored value `plugin_load_failed_operation` retains `RP-PLUGIN-OPERATIONS-APPLICATION-2555D@1.0.0` under DL-503; this does not assign its referenced bodies or other values.
 
-  Exact stored value `plugin_loaded_operation` retains `RP-PLUGIN-OPERATIONS-APPLICATION-2555D@1.0.0` under DL-503; this does not assign its referenced bodies or other values.
+  Exact stored value `plugin_hook_blocked_operation` retains `RP-PLUGIN-HOOK-APPLICATION-90D@1.0.0` under DL-503;
+  this does not assign its referenced bodies or other values.
 
-  Exact stored value `plugin_permission_override_operation` retains `RP-PLUGIN-OPERATIONS-APPLICATION-2555D@1.0.0` under DL-503; this does not assign its referenced bodies or other values.
 
-  Exact stored value `plugin_tool_collision_operation` retains `RP-PLUGIN-OPERATIONS-APPLICATION-2555D@1.0.0` under DL-503; this does not assign its referenced bodies or other values.
+  Exact stored value `plugin_hook_error_operation` retains `RP-PLUGIN-HOOK-APPLICATION-90D@1.0.0` under DL-503;
+  this does not assign its referenced bodies or other values.
 
-  Exact stored value `plugin_tool_registered_operation` retains `RP-PLUGIN-OPERATIONS-APPLICATION-2555D@1.0.0` under DL-503; this does not assign its referenced bodies or other values.
 
-  This paragraph supersedes earlier pending statements only for the exact assigned facets above. All independent source, receipt, referenced-body and backup lifetimes remain with their own owners. Legal/investigation holds, required references, recovery, rollback, maintenance, protected backups and latest-25-run protection override cleanup without granting access. No unexpired/protected eviction for space, no retry anchor renewal, no hold release, admission, native proof or governance clearance is granted.
+  Exact stored value `plugin_hook_invoked_operation` retains `RP-PLUGIN-HOOK-APPLICATION-90D@1.0.0` under DL-503;
+  this does not assign its referenced bodies or other values.
+
+
+  Exact stored value `plugin_load_failed_operation` retains `RP-PLUGIN-OPERATIONS-APPLICATION-2555D@1.0.0` under
+  DL-503; this does not assign its referenced bodies or other values.
+
+
+  Exact stored value `plugin_loaded_operation` retains `RP-PLUGIN-OPERATIONS-APPLICATION-2555D@1.0.0` under DL-503;
+  this does not assign its referenced bodies or other values.
+
+
+  Exact stored value `plugin_permission_override_operation` retains `RP-PLUGIN-OPERATIONS-APPLICATION-2555D@1.0.0`
+  under DL-503; this does not assign its referenced bodies or other values.
+
+
+  Exact stored value `plugin_tool_collision_operation` retains `RP-PLUGIN-OPERATIONS-APPLICATION-2555D@1.0.0` under
+  DL-503; this does not assign its referenced bodies or other values.
+
+
+  Exact stored value `plugin_tool_registered_operation` retains `RP-PLUGIN-OPERATIONS-APPLICATION-2555D@1.0.0` under
+  DL-503; this does not assign its referenced bodies or other values.
+
+
+  This paragraph supersedes earlier pending statements only for the exact assigned facets above. All independent
+  source, receipt, referenced-body and backup lifetimes remain with their own owners. Legal/investigation holds,
+  required references, recovery, rollback, maintenance, protected backups and latest-25-run protection override
+  cleanup without granting access. No unexpired/protected eviction for space, no retry anchor renewal, no hold release,
+  admission, native proof or governance clearance is granted.
+
 
   PNC-019 s4r retention binding for `plugin.permission.override` (2026-11-14).
 
-  Event history `retention_policy_ref = RP-OPERATIONAL-2555D@1.0.0`, under Plans/Decision_Log.md#DL-401, Plans/Decision_Log.md#DL-418.
 
-  Use the existing policy object unchanged: {"anchor_kind": "terminal_transition", "cardinality_scope": "project", "expiry_action": "compact", "max_cardinality": 2000000, "overflow_action": "fail_closed", "ttl_seconds": 220752000}.
+  Event history selects Application = RP-PLUGIN-OPERATIONS-APPLICATION-2555D@1.0.0 (anchor_kind=terminal_transition,
+  cardinality_scope=instance), Project = RP-OPERATIONAL-2555D@1.0.0 (anchor_kind=terminal_transition, cardinality_scope=project)
+  as recorded by Plans/Decision_Log.md#DL-2351, under Plans/Decision_Log.md#DL-401, Plans/Decision_Log.md#DL-418.
 
-  Only an already owner-supported application edition selects `RP-PLUGIN-OPERATIONS-APPLICATION-2555D@1.0.0`; Project records select the Project policy and never count in both allowances.
 
-  Exact stored value `plugin_hook_blocked_operation` retains `RP-PLUGIN-HOOK-APPLICATION-90D@1.0.0` under DL-503; this does not assign its referenced bodies or other values.
+  Use the existing policy object unchanged: {"anchor_kind": "terminal_transition", "cardinality_scope": "project",
+  "expiry_action": "compact", "max_cardinality": 2000000, "overflow_action": "fail_closed", "ttl_seconds": 220752000}.
 
-  Exact stored value `plugin_hook_error_operation` retains `RP-PLUGIN-HOOK-APPLICATION-90D@1.0.0` under DL-503; this does not assign its referenced bodies or other values.
 
-  Exact stored value `plugin_hook_invoked_operation` retains `RP-PLUGIN-HOOK-APPLICATION-90D@1.0.0` under DL-503; this does not assign its referenced bodies or other values.
+  Only an already owner-supported application edition selects `RP-PLUGIN-OPERATIONS-APPLICATION-2555D@1.0.0`; Project
+  records select the Project policy and never count in both allowances.
 
-  Exact stored value `plugin_load_failed_operation` retains `RP-PLUGIN-OPERATIONS-APPLICATION-2555D@1.0.0` under DL-503; this does not assign its referenced bodies or other values.
 
-  Exact stored value `plugin_loaded_operation` retains `RP-PLUGIN-OPERATIONS-APPLICATION-2555D@1.0.0` under DL-503; this does not assign its referenced bodies or other values.
+  Exact stored value `plugin_hook_blocked_operation` retains `RP-PLUGIN-HOOK-APPLICATION-90D@1.0.0` under DL-503;
+  this does not assign its referenced bodies or other values.
 
-  Exact stored value `plugin_permission_override_operation` retains `RP-PLUGIN-OPERATIONS-APPLICATION-2555D@1.0.0` under DL-503; this does not assign its referenced bodies or other values.
 
-  Exact stored value `plugin_tool_collision_operation` retains `RP-PLUGIN-OPERATIONS-APPLICATION-2555D@1.0.0` under DL-503; this does not assign its referenced bodies or other values.
+  Exact stored value `plugin_hook_error_operation` retains `RP-PLUGIN-HOOK-APPLICATION-90D@1.0.0` under DL-503;
+  this does not assign its referenced bodies or other values.
 
-  Exact stored value `plugin_tool_registered_operation` retains `RP-PLUGIN-OPERATIONS-APPLICATION-2555D@1.0.0` under DL-503; this does not assign its referenced bodies or other values.
 
-  This paragraph supersedes earlier pending statements only for the exact assigned facets above. All independent source, receipt, referenced-body and backup lifetimes remain with their own owners. Legal/investigation holds, required references, recovery, rollback, maintenance, protected backups and latest-25-run protection override cleanup without granting access. No unexpired/protected eviction for space, no retry anchor renewal, no hold release, admission, native proof or governance clearance is granted.
+  Exact stored value `plugin_hook_invoked_operation` retains `RP-PLUGIN-HOOK-APPLICATION-90D@1.0.0` under DL-503;
+  this does not assign its referenced bodies or other values.
+
+
+  Exact stored value `plugin_load_failed_operation` retains `RP-PLUGIN-OPERATIONS-APPLICATION-2555D@1.0.0` under
+  DL-503; this does not assign its referenced bodies or other values.
+
+
+  Exact stored value `plugin_loaded_operation` retains `RP-PLUGIN-OPERATIONS-APPLICATION-2555D@1.0.0` under DL-503;
+  this does not assign its referenced bodies or other values.
+
+
+  Exact stored value `plugin_permission_override_operation` retains `RP-PLUGIN-OPERATIONS-APPLICATION-2555D@1.0.0`
+  under DL-503; this does not assign its referenced bodies or other values.
+
+
+  Exact stored value `plugin_tool_collision_operation` retains `RP-PLUGIN-OPERATIONS-APPLICATION-2555D@1.0.0` under
+  DL-503; this does not assign its referenced bodies or other values.
+
+
+  Exact stored value `plugin_tool_registered_operation` retains `RP-PLUGIN-OPERATIONS-APPLICATION-2555D@1.0.0` under
+  DL-503; this does not assign its referenced bodies or other values.
+
+
+  This paragraph supersedes earlier pending statements only for the exact assigned facets above. All independent
+  source, receipt, referenced-body and backup lifetimes remain with their own owners. Legal/investigation holds,
+  required references, recovery, rollback, maintenance, protected backups and latest-25-run protection override
+  cleanup without granting access. No unexpired/protected eviction for space, no retry anchor renewal, no hold release,
+  admission, native proof or governance clearance is granted.
+
 
   PNC-019 s4r retention binding for `plugin.tool.collision` (2026-11-14).
 
-  Event history `retention_policy_ref = RP-OPERATIONAL-2555D@1.0.0`, under Plans/Decision_Log.md#DL-401, Plans/Decision_Log.md#DL-418.
 
-  Use the existing policy object unchanged: {"anchor_kind": "terminal_transition", "cardinality_scope": "project", "expiry_action": "compact", "max_cardinality": 2000000, "overflow_action": "fail_closed", "ttl_seconds": 220752000}.
+  Event history selects Application = RP-PLUGIN-OPERATIONS-APPLICATION-2555D@1.0.0 (anchor_kind=terminal_transition,
+  cardinality_scope=instance), Project = RP-OPERATIONAL-2555D@1.0.0 (anchor_kind=terminal_transition, cardinality_scope=project)
+  as recorded by Plans/Decision_Log.md#DL-2351, under Plans/Decision_Log.md#DL-401, Plans/Decision_Log.md#DL-418.
 
-  Only an already owner-supported application edition selects `RP-PLUGIN-OPERATIONS-APPLICATION-2555D@1.0.0`; Project records select the Project policy and never count in both allowances.
 
-  Exact stored value `plugin_hook_blocked_operation` retains `RP-PLUGIN-HOOK-APPLICATION-90D@1.0.0` under DL-503; this does not assign its referenced bodies or other values.
+  Use the existing policy object unchanged: {"anchor_kind": "terminal_transition", "cardinality_scope": "project",
+  "expiry_action": "compact", "max_cardinality": 2000000, "overflow_action": "fail_closed", "ttl_seconds": 220752000}.
 
-  Exact stored value `plugin_hook_error_operation` retains `RP-PLUGIN-HOOK-APPLICATION-90D@1.0.0` under DL-503; this does not assign its referenced bodies or other values.
 
-  Exact stored value `plugin_hook_invoked_operation` retains `RP-PLUGIN-HOOK-APPLICATION-90D@1.0.0` under DL-503; this does not assign its referenced bodies or other values.
+  Only an already owner-supported application edition selects `RP-PLUGIN-OPERATIONS-APPLICATION-2555D@1.0.0`; Project
+  records select the Project policy and never count in both allowances.
 
-  Exact stored value `plugin_load_failed_operation` retains `RP-PLUGIN-OPERATIONS-APPLICATION-2555D@1.0.0` under DL-503; this does not assign its referenced bodies or other values.
 
-  Exact stored value `plugin_loaded_operation` retains `RP-PLUGIN-OPERATIONS-APPLICATION-2555D@1.0.0` under DL-503; this does not assign its referenced bodies or other values.
+  Exact stored value `plugin_hook_blocked_operation` retains `RP-PLUGIN-HOOK-APPLICATION-90D@1.0.0` under DL-503;
+  this does not assign its referenced bodies or other values.
 
-  Exact stored value `plugin_permission_override_operation` retains `RP-PLUGIN-OPERATIONS-APPLICATION-2555D@1.0.0` under DL-503; this does not assign its referenced bodies or other values.
 
-  Exact stored value `plugin_tool_collision_operation` retains `RP-PLUGIN-OPERATIONS-APPLICATION-2555D@1.0.0` under DL-503; this does not assign its referenced bodies or other values.
+  Exact stored value `plugin_hook_error_operation` retains `RP-PLUGIN-HOOK-APPLICATION-90D@1.0.0` under DL-503;
+  this does not assign its referenced bodies or other values.
 
-  Exact stored value `plugin_tool_registered_operation` retains `RP-PLUGIN-OPERATIONS-APPLICATION-2555D@1.0.0` under DL-503; this does not assign its referenced bodies or other values.
 
-  This paragraph supersedes earlier pending statements only for the exact assigned facets above. All independent source, receipt, referenced-body and backup lifetimes remain with their own owners. Legal/investigation holds, required references, recovery, rollback, maintenance, protected backups and latest-25-run protection override cleanup without granting access. No unexpired/protected eviction for space, no retry anchor renewal, no hold release, admission, native proof or governance clearance is granted.
+  Exact stored value `plugin_hook_invoked_operation` retains `RP-PLUGIN-HOOK-APPLICATION-90D@1.0.0` under DL-503;
+  this does not assign its referenced bodies or other values.
+
+
+  Exact stored value `plugin_load_failed_operation` retains `RP-PLUGIN-OPERATIONS-APPLICATION-2555D@1.0.0` under
+  DL-503; this does not assign its referenced bodies or other values.
+
+
+  Exact stored value `plugin_loaded_operation` retains `RP-PLUGIN-OPERATIONS-APPLICATION-2555D@1.0.0` under DL-503;
+  this does not assign its referenced bodies or other values.
+
+
+  Exact stored value `plugin_permission_override_operation` retains `RP-PLUGIN-OPERATIONS-APPLICATION-2555D@1.0.0`
+  under DL-503; this does not assign its referenced bodies or other values.
+
+
+  Exact stored value `plugin_tool_collision_operation` retains `RP-PLUGIN-OPERATIONS-APPLICATION-2555D@1.0.0` under
+  DL-503; this does not assign its referenced bodies or other values.
+
+
+  Exact stored value `plugin_tool_registered_operation` retains `RP-PLUGIN-OPERATIONS-APPLICATION-2555D@1.0.0` under
+  DL-503; this does not assign its referenced bodies or other values.
+
+
+  This paragraph supersedes earlier pending statements only for the exact assigned facets above. All independent
+  source, receipt, referenced-body and backup lifetimes remain with their own owners. Legal/investigation holds,
+  required references, recovery, rollback, maintenance, protected backups and latest-25-run protection override
+  cleanup without granting access. No unexpired/protected eviction for space, no retry anchor renewal, no hold release,
+  admission, native proof or governance clearance is granted.
+
 
   PNC-019 s4r retention binding for `plugin.tool.registered` (2026-11-14).
 
-  Event history `retention_policy_ref = RP-OPERATIONAL-2555D@1.0.0`, under Plans/Decision_Log.md#DL-401, Plans/Decision_Log.md#DL-418.
 
-  Use the existing policy object unchanged: {"anchor_kind": "terminal_transition", "cardinality_scope": "project", "expiry_action": "compact", "max_cardinality": 2000000, "overflow_action": "fail_closed", "ttl_seconds": 220752000}.
-
-  Only an already owner-supported application edition selects `RP-PLUGIN-OPERATIONS-APPLICATION-2555D@1.0.0`; Project records select the Project policy and never count in both allowances.
-
-  Exact stored value `plugin_hook_blocked_operation` retains `RP-PLUGIN-HOOK-APPLICATION-90D@1.0.0` under DL-503; this does not assign its referenced bodies or other values.
-
-  Exact stored value `plugin_hook_error_operation` retains `RP-PLUGIN-HOOK-APPLICATION-90D@1.0.0` under DL-503; this does not assign its referenced bodies or other values.
-
-  Exact stored value `plugin_hook_invoked_operation` retains `RP-PLUGIN-HOOK-APPLICATION-90D@1.0.0` under DL-503; this does not assign its referenced bodies or other values.
-
-  Exact stored value `plugin_load_failed_operation` retains `RP-PLUGIN-OPERATIONS-APPLICATION-2555D@1.0.0` under DL-503; this does not assign its referenced bodies or other values.
-
-  Exact stored value `plugin_loaded_operation` retains `RP-PLUGIN-OPERATIONS-APPLICATION-2555D@1.0.0` under DL-503; this does not assign its referenced bodies or other values.
-
-  Exact stored value `plugin_permission_override_operation` retains `RP-PLUGIN-OPERATIONS-APPLICATION-2555D@1.0.0` under DL-503; this does not assign its referenced bodies or other values.
-
-  Exact stored value `plugin_tool_collision_operation` retains `RP-PLUGIN-OPERATIONS-APPLICATION-2555D@1.0.0` under DL-503; this does not assign its referenced bodies or other values.
-
-  Exact stored value `plugin_tool_registered_operation` retains `RP-PLUGIN-OPERATIONS-APPLICATION-2555D@1.0.0` under DL-503; this does not assign its referenced bodies or other values.
-
-  This paragraph supersedes earlier pending statements only for the exact assigned facets above. All independent source, receipt, referenced-body and backup lifetimes remain with their own owners. Legal/investigation holds, required references, recovery, rollback, maintenance, protected backups and latest-25-run protection override cleanup without granting access. No unexpired/protected eviction for space, no retry anchor renewal, no hold release, admission, native proof or governance clearance is granted.
+  Event history selects Application = RP-PLUGIN-OPERATIONS-APPLICATION-2555D@1.0.0 (anchor_kind=terminal_transition,
+  cardinality_scope=instance), Project = RP-OPERATIONAL-2555D@1.0.0 (anchor_kind=terminal_transition, cardinality_scope=project)
+  as recorded by Plans/Decision_Log.md#DL-2351, under Plans/Decision_Log.md#DL-401, Plans/Decision_Log.md#DL-418.
 
 
-  Current selected assignment (2026-11-19): plugin.hook.blocked@1.0.0 is registered for application_or_project in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2348. Its event history selects RP-TELEMETRY-90D@1.0.0; Plans/storage-plan.md#SP-671 owns the event policy's existing anchors, counts, holds and deletion rules. Separate stored-value assignment: plugin_hook_blocked_operation uses RP-PLUGIN-HOOK-APPLICATION-90D@1.0.0 under Plans/Decision_Log.md#DL-503; this assigns that stored value, not event history. Separate stored-value assignment: plugin_hook_error_operation uses RP-PLUGIN-HOOK-APPLICATION-90D@1.0.0 under Plans/Decision_Log.md#DL-503; this assigns that stored value, not event history. Separate stored-value assignment: plugin_hook_invoked_operation uses RP-PLUGIN-HOOK-APPLICATION-90D@1.0.0 under Plans/Decision_Log.md#DL-503; this assigns that stored value, not event history. Separate stored-value assignment: plugin_load_failed_operation uses RP-PLUGIN-OPERATIONS-APPLICATION-2555D@1.0.0 under Plans/Decision_Log.md#DL-503; this assigns that stored value, not event history. Separate stored-value assignment: plugin_loaded_operation uses RP-PLUGIN-OPERATIONS-APPLICATION-2555D@1.0.0 under Plans/Decision_Log.md#DL-503; this assigns that stored value, not event history. Separate stored-value assignment: plugin_permission_override_operation uses RP-PLUGIN-OPERATIONS-APPLICATION-2555D@1.0.0 under Plans/Decision_Log.md#DL-503; this assigns that stored value, not event history. Separate stored-value assignment: plugin_tool_collision_operation uses RP-PLUGIN-OPERATIONS-APPLICATION-2555D@1.0.0 under Plans/Decision_Log.md#DL-503; this assigns that stored value, not event history. Separate stored-value assignment: plugin_tool_registered_operation uses RP-PLUGIN-OPERATIONS-APPLICATION-2555D@1.0.0 under Plans/Decision_Log.md#DL-503; this assigns that stored value, not event history. Original sources and coherent backups retain their independent owner policies; the event lifetime is not transferred to them. Current append/publication still requires the exact selected schema/scope, original custody, current permission, receipt and required producer adoption. Actual missing registration or unresolved required custody refuses; native execution remains NOT_RUN. No native adoption, new retention choice or governance seal follows.
-  Current selected assignment (2026-11-19): plugin.hook.error@1.0.0 is registered for application_or_project in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2349. Its event history selects RP-TELEMETRY-90D@1.0.0; Plans/storage-plan.md#SP-671 owns the event policy's existing anchors, counts, holds and deletion rules. Separate stored-value assignment: plugin_hook_blocked_operation uses RP-PLUGIN-HOOK-APPLICATION-90D@1.0.0 under Plans/Decision_Log.md#DL-503; this assigns that stored value, not event history. Separate stored-value assignment: plugin_hook_error_operation uses RP-PLUGIN-HOOK-APPLICATION-90D@1.0.0 under Plans/Decision_Log.md#DL-503; this assigns that stored value, not event history. Separate stored-value assignment: plugin_hook_invoked_operation uses RP-PLUGIN-HOOK-APPLICATION-90D@1.0.0 under Plans/Decision_Log.md#DL-503; this assigns that stored value, not event history. Separate stored-value assignment: plugin_load_failed_operation uses RP-PLUGIN-OPERATIONS-APPLICATION-2555D@1.0.0 under Plans/Decision_Log.md#DL-503; this assigns that stored value, not event history. Separate stored-value assignment: plugin_loaded_operation uses RP-PLUGIN-OPERATIONS-APPLICATION-2555D@1.0.0 under Plans/Decision_Log.md#DL-503; this assigns that stored value, not event history. Separate stored-value assignment: plugin_permission_override_operation uses RP-PLUGIN-OPERATIONS-APPLICATION-2555D@1.0.0 under Plans/Decision_Log.md#DL-503; this assigns that stored value, not event history. Separate stored-value assignment: plugin_tool_collision_operation uses RP-PLUGIN-OPERATIONS-APPLICATION-2555D@1.0.0 under Plans/Decision_Log.md#DL-503; this assigns that stored value, not event history. Separate stored-value assignment: plugin_tool_registered_operation uses RP-PLUGIN-OPERATIONS-APPLICATION-2555D@1.0.0 under Plans/Decision_Log.md#DL-503; this assigns that stored value, not event history. Original sources and coherent backups retain their independent owner policies; the event lifetime is not transferred to them. Current append/publication still requires the exact selected schema/scope, original custody, current permission, receipt and required producer adoption. Actual missing registration or unresolved required custody refuses; native execution remains NOT_RUN. No native adoption, new retention choice or governance seal follows.
-  Current selected assignment (2026-11-19): plugin.hook.invoked@1.0.0 is registered for application_or_project in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2350. Its event history selects RP-TELEMETRY-90D@1.0.0; Plans/storage-plan.md#SP-671 owns the event policy's existing anchors, counts, holds and deletion rules. Separate stored-value assignment: plugin_hook_blocked_operation uses RP-PLUGIN-HOOK-APPLICATION-90D@1.0.0 under Plans/Decision_Log.md#DL-503; this assigns that stored value, not event history. Separate stored-value assignment: plugin_hook_error_operation uses RP-PLUGIN-HOOK-APPLICATION-90D@1.0.0 under Plans/Decision_Log.md#DL-503; this assigns that stored value, not event history. Separate stored-value assignment: plugin_hook_invoked_operation uses RP-PLUGIN-HOOK-APPLICATION-90D@1.0.0 under Plans/Decision_Log.md#DL-503; this assigns that stored value, not event history. Separate stored-value assignment: plugin_load_failed_operation uses RP-PLUGIN-OPERATIONS-APPLICATION-2555D@1.0.0 under Plans/Decision_Log.md#DL-503; this assigns that stored value, not event history. Separate stored-value assignment: plugin_loaded_operation uses RP-PLUGIN-OPERATIONS-APPLICATION-2555D@1.0.0 under Plans/Decision_Log.md#DL-503; this assigns that stored value, not event history. Separate stored-value assignment: plugin_permission_override_operation uses RP-PLUGIN-OPERATIONS-APPLICATION-2555D@1.0.0 under Plans/Decision_Log.md#DL-503; this assigns that stored value, not event history. Separate stored-value assignment: plugin_tool_collision_operation uses RP-PLUGIN-OPERATIONS-APPLICATION-2555D@1.0.0 under Plans/Decision_Log.md#DL-503; this assigns that stored value, not event history. Separate stored-value assignment: plugin_tool_registered_operation uses RP-PLUGIN-OPERATIONS-APPLICATION-2555D@1.0.0 under Plans/Decision_Log.md#DL-503; this assigns that stored value, not event history. Original sources and coherent backups retain their independent owner policies; the event lifetime is not transferred to them. Current append/publication still requires the exact selected schema/scope, original custody, current permission, receipt and required producer adoption. Actual missing registration or unresolved required custody refuses; native execution remains NOT_RUN. No native adoption, new retention choice or governance seal follows.
-  Current selected assignment (2026-11-19): plugin.load_failed@1.0.0 is registered for application_or_project in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2351. Its event history selects RP-OPERATIONAL-2555D@1.0.0; Plans/storage-plan.md#SP-671 owns the event policy's existing anchors, counts, holds and deletion rules. Separate stored-value assignment: plugin_hook_blocked_operation uses RP-PLUGIN-HOOK-APPLICATION-90D@1.0.0 under Plans/Decision_Log.md#DL-503; this assigns that stored value, not event history. Separate stored-value assignment: plugin_hook_error_operation uses RP-PLUGIN-HOOK-APPLICATION-90D@1.0.0 under Plans/Decision_Log.md#DL-503; this assigns that stored value, not event history. Separate stored-value assignment: plugin_hook_invoked_operation uses RP-PLUGIN-HOOK-APPLICATION-90D@1.0.0 under Plans/Decision_Log.md#DL-503; this assigns that stored value, not event history. Separate stored-value assignment: plugin_load_failed_operation uses RP-PLUGIN-OPERATIONS-APPLICATION-2555D@1.0.0 under Plans/Decision_Log.md#DL-503; this assigns that stored value, not event history. Separate stored-value assignment: plugin_loaded_operation uses RP-PLUGIN-OPERATIONS-APPLICATION-2555D@1.0.0 under Plans/Decision_Log.md#DL-503; this assigns that stored value, not event history. Separate stored-value assignment: plugin_permission_override_operation uses RP-PLUGIN-OPERATIONS-APPLICATION-2555D@1.0.0 under Plans/Decision_Log.md#DL-503; this assigns that stored value, not event history. Separate stored-value assignment: plugin_tool_collision_operation uses RP-PLUGIN-OPERATIONS-APPLICATION-2555D@1.0.0 under Plans/Decision_Log.md#DL-503; this assigns that stored value, not event history. Separate stored-value assignment: plugin_tool_registered_operation uses RP-PLUGIN-OPERATIONS-APPLICATION-2555D@1.0.0 under Plans/Decision_Log.md#DL-503; this assigns that stored value, not event history. Original sources and coherent backups retain their independent owner policies; the event lifetime is not transferred to them. Current append/publication still requires the exact selected schema/scope, original custody, current permission, receipt and required producer adoption. Actual missing registration or unresolved required custody refuses; native execution remains NOT_RUN. No native adoption, new retention choice or governance seal follows.
-  Current selected assignment (2026-11-19): plugin.loaded@1.0.0 is registered for application_or_project in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2352. Its event history selects RP-OPERATIONAL-2555D@1.0.0; Plans/storage-plan.md#SP-671 owns the event policy's existing anchors, counts, holds and deletion rules. Separate stored-value assignment: plugin_hook_blocked_operation uses RP-PLUGIN-HOOK-APPLICATION-90D@1.0.0 under Plans/Decision_Log.md#DL-503; this assigns that stored value, not event history. Separate stored-value assignment: plugin_hook_error_operation uses RP-PLUGIN-HOOK-APPLICATION-90D@1.0.0 under Plans/Decision_Log.md#DL-503; this assigns that stored value, not event history. Separate stored-value assignment: plugin_hook_invoked_operation uses RP-PLUGIN-HOOK-APPLICATION-90D@1.0.0 under Plans/Decision_Log.md#DL-503; this assigns that stored value, not event history. Separate stored-value assignment: plugin_load_failed_operation uses RP-PLUGIN-OPERATIONS-APPLICATION-2555D@1.0.0 under Plans/Decision_Log.md#DL-503; this assigns that stored value, not event history. Separate stored-value assignment: plugin_loaded_operation uses RP-PLUGIN-OPERATIONS-APPLICATION-2555D@1.0.0 under Plans/Decision_Log.md#DL-503; this assigns that stored value, not event history. Separate stored-value assignment: plugin_permission_override_operation uses RP-PLUGIN-OPERATIONS-APPLICATION-2555D@1.0.0 under Plans/Decision_Log.md#DL-503; this assigns that stored value, not event history. Separate stored-value assignment: plugin_tool_collision_operation uses RP-PLUGIN-OPERATIONS-APPLICATION-2555D@1.0.0 under Plans/Decision_Log.md#DL-503; this assigns that stored value, not event history. Separate stored-value assignment: plugin_tool_registered_operation uses RP-PLUGIN-OPERATIONS-APPLICATION-2555D@1.0.0 under Plans/Decision_Log.md#DL-503; this assigns that stored value, not event history. Original sources and coherent backups retain their independent owner policies; the event lifetime is not transferred to them. Current append/publication still requires the exact selected schema/scope, original custody, current permission, receipt and required producer adoption. Actual missing registration or unresolved required custody refuses; native execution remains NOT_RUN. No native adoption, new retention choice or governance seal follows.
-  Current selected assignment (2026-11-19): plugin.permission.override@1.0.0 is registered for application_or_project in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2353. Its event history selects RP-OPERATIONAL-2555D@1.0.0; Plans/storage-plan.md#SP-671 owns the event policy's existing anchors, counts, holds and deletion rules. Separate stored-value assignment: plugin_hook_blocked_operation uses RP-PLUGIN-HOOK-APPLICATION-90D@1.0.0 under Plans/Decision_Log.md#DL-503; this assigns that stored value, not event history. Separate stored-value assignment: plugin_hook_error_operation uses RP-PLUGIN-HOOK-APPLICATION-90D@1.0.0 under Plans/Decision_Log.md#DL-503; this assigns that stored value, not event history. Separate stored-value assignment: plugin_hook_invoked_operation uses RP-PLUGIN-HOOK-APPLICATION-90D@1.0.0 under Plans/Decision_Log.md#DL-503; this assigns that stored value, not event history. Separate stored-value assignment: plugin_load_failed_operation uses RP-PLUGIN-OPERATIONS-APPLICATION-2555D@1.0.0 under Plans/Decision_Log.md#DL-503; this assigns that stored value, not event history. Separate stored-value assignment: plugin_loaded_operation uses RP-PLUGIN-OPERATIONS-APPLICATION-2555D@1.0.0 under Plans/Decision_Log.md#DL-503; this assigns that stored value, not event history. Separate stored-value assignment: plugin_permission_override_operation uses RP-PLUGIN-OPERATIONS-APPLICATION-2555D@1.0.0 under Plans/Decision_Log.md#DL-503; this assigns that stored value, not event history. Separate stored-value assignment: plugin_tool_collision_operation uses RP-PLUGIN-OPERATIONS-APPLICATION-2555D@1.0.0 under Plans/Decision_Log.md#DL-503; this assigns that stored value, not event history. Separate stored-value assignment: plugin_tool_registered_operation uses RP-PLUGIN-OPERATIONS-APPLICATION-2555D@1.0.0 under Plans/Decision_Log.md#DL-503; this assigns that stored value, not event history. Original sources and coherent backups retain their independent owner policies; the event lifetime is not transferred to them. Current append/publication still requires the exact selected schema/scope, original custody, current permission, receipt and required producer adoption. Actual missing registration or unresolved required custody refuses; native execution remains NOT_RUN. No native adoption, new retention choice or governance seal follows.
-  Current selected assignment (2026-11-19): plugin.tool.collision@1.0.0 is registered for application_or_project in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2354. Its event history selects RP-OPERATIONAL-2555D@1.0.0; Plans/storage-plan.md#SP-671 owns the event policy's existing anchors, counts, holds and deletion rules. Separate stored-value assignment: plugin_hook_blocked_operation uses RP-PLUGIN-HOOK-APPLICATION-90D@1.0.0 under Plans/Decision_Log.md#DL-503; this assigns that stored value, not event history. Separate stored-value assignment: plugin_hook_error_operation uses RP-PLUGIN-HOOK-APPLICATION-90D@1.0.0 under Plans/Decision_Log.md#DL-503; this assigns that stored value, not event history. Separate stored-value assignment: plugin_hook_invoked_operation uses RP-PLUGIN-HOOK-APPLICATION-90D@1.0.0 under Plans/Decision_Log.md#DL-503; this assigns that stored value, not event history. Separate stored-value assignment: plugin_load_failed_operation uses RP-PLUGIN-OPERATIONS-APPLICATION-2555D@1.0.0 under Plans/Decision_Log.md#DL-503; this assigns that stored value, not event history. Separate stored-value assignment: plugin_loaded_operation uses RP-PLUGIN-OPERATIONS-APPLICATION-2555D@1.0.0 under Plans/Decision_Log.md#DL-503; this assigns that stored value, not event history. Separate stored-value assignment: plugin_permission_override_operation uses RP-PLUGIN-OPERATIONS-APPLICATION-2555D@1.0.0 under Plans/Decision_Log.md#DL-503; this assigns that stored value, not event history. Separate stored-value assignment: plugin_tool_collision_operation uses RP-PLUGIN-OPERATIONS-APPLICATION-2555D@1.0.0 under Plans/Decision_Log.md#DL-503; this assigns that stored value, not event history. Separate stored-value assignment: plugin_tool_registered_operation uses RP-PLUGIN-OPERATIONS-APPLICATION-2555D@1.0.0 under Plans/Decision_Log.md#DL-503; this assigns that stored value, not event history. Original sources and coherent backups retain their independent owner policies; the event lifetime is not transferred to them. Current append/publication still requires the exact selected schema/scope, original custody, current permission, receipt and required producer adoption. Actual missing registration or unresolved required custody refuses; native execution remains NOT_RUN. No native adoption, new retention choice or governance seal follows.
-  Current selected assignment (2026-11-19): plugin.tool.registered@1.0.0 is registered for application_or_project in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2355. Its event history selects RP-OPERATIONAL-2555D@1.0.0; Plans/storage-plan.md#SP-671 owns the event policy's existing anchors, counts, holds and deletion rules. Separate stored-value assignment: plugin_hook_blocked_operation uses RP-PLUGIN-HOOK-APPLICATION-90D@1.0.0 under Plans/Decision_Log.md#DL-503; this assigns that stored value, not event history. Separate stored-value assignment: plugin_hook_error_operation uses RP-PLUGIN-HOOK-APPLICATION-90D@1.0.0 under Plans/Decision_Log.md#DL-503; this assigns that stored value, not event history. Separate stored-value assignment: plugin_hook_invoked_operation uses RP-PLUGIN-HOOK-APPLICATION-90D@1.0.0 under Plans/Decision_Log.md#DL-503; this assigns that stored value, not event history. Separate stored-value assignment: plugin_load_failed_operation uses RP-PLUGIN-OPERATIONS-APPLICATION-2555D@1.0.0 under Plans/Decision_Log.md#DL-503; this assigns that stored value, not event history. Separate stored-value assignment: plugin_loaded_operation uses RP-PLUGIN-OPERATIONS-APPLICATION-2555D@1.0.0 under Plans/Decision_Log.md#DL-503; this assigns that stored value, not event history. Separate stored-value assignment: plugin_permission_override_operation uses RP-PLUGIN-OPERATIONS-APPLICATION-2555D@1.0.0 under Plans/Decision_Log.md#DL-503; this assigns that stored value, not event history. Separate stored-value assignment: plugin_tool_collision_operation uses RP-PLUGIN-OPERATIONS-APPLICATION-2555D@1.0.0 under Plans/Decision_Log.md#DL-503; this assigns that stored value, not event history. Separate stored-value assignment: plugin_tool_registered_operation uses RP-PLUGIN-OPERATIONS-APPLICATION-2555D@1.0.0 under Plans/Decision_Log.md#DL-503; this assigns that stored value, not event history. Original sources and coherent backups retain their independent owner policies; the event lifetime is not transferred to them. Current append/publication still requires the exact selected schema/scope, original custody, current permission, receipt and required producer adoption. Actual missing registration or unresolved required custody refuses; native execution remains NOT_RUN. No native adoption, new retention choice or governance seal follows.
+  Use the existing policy object unchanged: {"anchor_kind": "terminal_transition", "cardinality_scope": "project",
+  "expiry_action": "compact", "max_cardinality": 2000000, "overflow_action": "fail_closed", "ttl_seconds": 220752000}.
+
+
+  Only an already owner-supported application edition selects `RP-PLUGIN-OPERATIONS-APPLICATION-2555D@1.0.0`; Project
+  records select the Project policy and never count in both allowances.
+
+
+  Exact stored value `plugin_hook_blocked_operation` retains `RP-PLUGIN-HOOK-APPLICATION-90D@1.0.0` under DL-503;
+  this does not assign its referenced bodies or other values.
+
+
+  Exact stored value `plugin_hook_error_operation` retains `RP-PLUGIN-HOOK-APPLICATION-90D@1.0.0` under DL-503;
+  this does not assign its referenced bodies or other values.
+
+
+  Exact stored value `plugin_hook_invoked_operation` retains `RP-PLUGIN-HOOK-APPLICATION-90D@1.0.0` under DL-503;
+  this does not assign its referenced bodies or other values.
+
+
+  Exact stored value `plugin_load_failed_operation` retains `RP-PLUGIN-OPERATIONS-APPLICATION-2555D@1.0.0` under
+  DL-503; this does not assign its referenced bodies or other values.
+
+
+  Exact stored value `plugin_loaded_operation` retains `RP-PLUGIN-OPERATIONS-APPLICATION-2555D@1.0.0` under DL-503;
+  this does not assign its referenced bodies or other values.
+
+
+  Exact stored value `plugin_permission_override_operation` retains `RP-PLUGIN-OPERATIONS-APPLICATION-2555D@1.0.0`
+  under DL-503; this does not assign its referenced bodies or other values.
+
+
+  Exact stored value `plugin_tool_collision_operation` retains `RP-PLUGIN-OPERATIONS-APPLICATION-2555D@1.0.0` under
+  DL-503; this does not assign its referenced bodies or other values.
+
+
+  Exact stored value `plugin_tool_registered_operation` retains `RP-PLUGIN-OPERATIONS-APPLICATION-2555D@1.0.0` under
+  DL-503; this does not assign its referenced bodies or other values.
+
+
+  This paragraph supersedes earlier pending statements only for the exact assigned facets above. All independent
+  source, receipt, referenced-body and backup lifetimes remain with their own owners. Legal/investigation holds,
+  required references, recovery, rollback, maintenance, protected backups and latest-25-run protection override
+  cleanup without granting access. No unexpired/protected eviction for space, no retry anchor renewal, no hold release,
+  admission, native proof or governance clearance is granted.
+
+
+
+  Current selected assignment (2026-11-19): plugin.hook.blocked@1.0.0 is registered for application_or_project in
+  Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2348. Its event history selects Application
+  = RP-PLUGIN-HOOK-APPLICATION-90D@1.0.0 (anchor_kind=creation, cardinality_scope=instance), Project = RP-TELEMETRY-90D@1.0.0
+  (anchor_kind=creation, cardinality_scope=project); Plans/storage-plan.md#SP-671 owns the event policy''s existing
+  anchors, counts, holds and deletion rules. Separate stored-value assignment: plugin_hook_blocked_operation uses
+  RP-PLUGIN-HOOK-APPLICATION-90D@1.0.0 under Plans/Decision_Log.md#DL-503; this assigns that stored value, not event
+  history. Separate stored-value assignment: plugin_hook_error_operation uses RP-PLUGIN-HOOK-APPLICATION-90D@1.0.0
+  under Plans/Decision_Log.md#DL-503; this assigns that stored value, not event history. Separate stored-value assignment:
+  plugin_hook_invoked_operation uses RP-PLUGIN-HOOK-APPLICATION-90D@1.0.0 under Plans/Decision_Log.md#DL-503; this
+  assigns that stored value, not event history. Separate stored-value assignment: plugin_load_failed_operation uses
+  RP-PLUGIN-OPERATIONS-APPLICATION-2555D@1.0.0 under Plans/Decision_Log.md#DL-503; this assigns that stored value,
+  not event history. Separate stored-value assignment: plugin_loaded_operation uses RP-PLUGIN-OPERATIONS-APPLICATION-2555D@1.0.0
+  under Plans/Decision_Log.md#DL-503; this assigns that stored value, not event history. Separate stored-value assignment:
+  plugin_permission_override_operation uses RP-PLUGIN-OPERATIONS-APPLICATION-2555D@1.0.0 under Plans/Decision_Log.md#DL-503;
+  this assigns that stored value, not event history. Separate stored-value assignment: plugin_tool_collision_operation
+  uses RP-PLUGIN-OPERATIONS-APPLICATION-2555D@1.0.0 under Plans/Decision_Log.md#DL-503; this assigns that stored
+  value, not event history. Separate stored-value assignment: plugin_tool_registered_operation uses RP-PLUGIN-OPERATIONS-APPLICATION-2555D@1.0.0
+  under Plans/Decision_Log.md#DL-503; this assigns that stored value, not event history. Original sources and coherent
+  backups retain their independent owner policies; the event lifetime is not transferred to them. Current append/publication
+  still requires the exact selected schema/scope, original custody, current permission, receipt and required producer
+  adoption. Actual missing registration or unresolved required custody refuses; native execution remains NOT_RUN.
+  No native adoption, new retention choice or governance seal follows.
+
+  Current selected assignment (2026-11-19): plugin.hook.error@1.0.0 is registered for application_or_project in
+  Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2349. Its event history selects Application
+  = RP-PLUGIN-HOOK-APPLICATION-90D@1.0.0 (anchor_kind=creation, cardinality_scope=instance), Project = RP-TELEMETRY-90D@1.0.0
+  (anchor_kind=creation, cardinality_scope=project); Plans/storage-plan.md#SP-671 owns the event policy''s existing
+  anchors, counts, holds and deletion rules. Separate stored-value assignment: plugin_hook_blocked_operation uses
+  RP-PLUGIN-HOOK-APPLICATION-90D@1.0.0 under Plans/Decision_Log.md#DL-503; this assigns that stored value, not event
+  history. Separate stored-value assignment: plugin_hook_error_operation uses RP-PLUGIN-HOOK-APPLICATION-90D@1.0.0
+  under Plans/Decision_Log.md#DL-503; this assigns that stored value, not event history. Separate stored-value assignment:
+  plugin_hook_invoked_operation uses RP-PLUGIN-HOOK-APPLICATION-90D@1.0.0 under Plans/Decision_Log.md#DL-503; this
+  assigns that stored value, not event history. Separate stored-value assignment: plugin_load_failed_operation uses
+  RP-PLUGIN-OPERATIONS-APPLICATION-2555D@1.0.0 under Plans/Decision_Log.md#DL-503; this assigns that stored value,
+  not event history. Separate stored-value assignment: plugin_loaded_operation uses RP-PLUGIN-OPERATIONS-APPLICATION-2555D@1.0.0
+  under Plans/Decision_Log.md#DL-503; this assigns that stored value, not event history. Separate stored-value assignment:
+  plugin_permission_override_operation uses RP-PLUGIN-OPERATIONS-APPLICATION-2555D@1.0.0 under Plans/Decision_Log.md#DL-503;
+  this assigns that stored value, not event history. Separate stored-value assignment: plugin_tool_collision_operation
+  uses RP-PLUGIN-OPERATIONS-APPLICATION-2555D@1.0.0 under Plans/Decision_Log.md#DL-503; this assigns that stored
+  value, not event history. Separate stored-value assignment: plugin_tool_registered_operation uses RP-PLUGIN-OPERATIONS-APPLICATION-2555D@1.0.0
+  under Plans/Decision_Log.md#DL-503; this assigns that stored value, not event history. Original sources and coherent
+  backups retain their independent owner policies; the event lifetime is not transferred to them. Current append/publication
+  still requires the exact selected schema/scope, original custody, current permission, receipt and required producer
+  adoption. Actual missing registration or unresolved required custody refuses; native execution remains NOT_RUN.
+  No native adoption, new retention choice or governance seal follows.
+
+  Current selected assignment (2026-11-19): plugin.hook.invoked@1.0.0 is registered for application_or_project in
+  Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2350. Its event history selects Application
+  = RP-PLUGIN-HOOK-APPLICATION-90D@1.0.0 (anchor_kind=creation, cardinality_scope=instance), Project = RP-TELEMETRY-90D@1.0.0
+  (anchor_kind=creation, cardinality_scope=project); Plans/storage-plan.md#SP-671 owns the event policy''s existing
+  anchors, counts, holds and deletion rules. Separate stored-value assignment: plugin_hook_blocked_operation uses
+  RP-PLUGIN-HOOK-APPLICATION-90D@1.0.0 under Plans/Decision_Log.md#DL-503; this assigns that stored value, not event
+  history. Separate stored-value assignment: plugin_hook_error_operation uses RP-PLUGIN-HOOK-APPLICATION-90D@1.0.0
+  under Plans/Decision_Log.md#DL-503; this assigns that stored value, not event history. Separate stored-value assignment:
+  plugin_hook_invoked_operation uses RP-PLUGIN-HOOK-APPLICATION-90D@1.0.0 under Plans/Decision_Log.md#DL-503; this
+  assigns that stored value, not event history. Separate stored-value assignment: plugin_load_failed_operation uses
+  RP-PLUGIN-OPERATIONS-APPLICATION-2555D@1.0.0 under Plans/Decision_Log.md#DL-503; this assigns that stored value,
+  not event history. Separate stored-value assignment: plugin_loaded_operation uses RP-PLUGIN-OPERATIONS-APPLICATION-2555D@1.0.0
+  under Plans/Decision_Log.md#DL-503; this assigns that stored value, not event history. Separate stored-value assignment:
+  plugin_permission_override_operation uses RP-PLUGIN-OPERATIONS-APPLICATION-2555D@1.0.0 under Plans/Decision_Log.md#DL-503;
+  this assigns that stored value, not event history. Separate stored-value assignment: plugin_tool_collision_operation
+  uses RP-PLUGIN-OPERATIONS-APPLICATION-2555D@1.0.0 under Plans/Decision_Log.md#DL-503; this assigns that stored
+  value, not event history. Separate stored-value assignment: plugin_tool_registered_operation uses RP-PLUGIN-OPERATIONS-APPLICATION-2555D@1.0.0
+  under Plans/Decision_Log.md#DL-503; this assigns that stored value, not event history. Original sources and coherent
+  backups retain their independent owner policies; the event lifetime is not transferred to them. Current append/publication
+  still requires the exact selected schema/scope, original custody, current permission, receipt and required producer
+  adoption. Actual missing registration or unresolved required custody refuses; native execution remains NOT_RUN.
+  No native adoption, new retention choice or governance seal follows.
+
+  Current selected assignment (2026-11-19): plugin.load_failed@1.0.0 is registered for application_or_project in
+  Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2351. Its event history selects Application
+  = RP-PLUGIN-OPERATIONS-APPLICATION-2555D@1.0.0 (anchor_kind=terminal_transition, cardinality_scope=instance),
+  Project = RP-OPERATIONAL-2555D@1.0.0 (anchor_kind=terminal_transition, cardinality_scope=project); Plans/storage-plan.md#SP-671
+  owns the event policy''s existing anchors, counts, holds and deletion rules. Separate stored-value assignment:
+  plugin_hook_blocked_operation uses RP-PLUGIN-HOOK-APPLICATION-90D@1.0.0 under Plans/Decision_Log.md#DL-503; this
+  assigns that stored value, not event history. Separate stored-value assignment: plugin_hook_error_operation uses
+  RP-PLUGIN-HOOK-APPLICATION-90D@1.0.0 under Plans/Decision_Log.md#DL-503; this assigns that stored value, not event
+  history. Separate stored-value assignment: plugin_hook_invoked_operation uses RP-PLUGIN-HOOK-APPLICATION-90D@1.0.0
+  under Plans/Decision_Log.md#DL-503; this assigns that stored value, not event history. Separate stored-value assignment:
+  plugin_load_failed_operation uses RP-PLUGIN-OPERATIONS-APPLICATION-2555D@1.0.0 under Plans/Decision_Log.md#DL-503;
+  this assigns that stored value, not event history. Separate stored-value assignment: plugin_loaded_operation uses
+  RP-PLUGIN-OPERATIONS-APPLICATION-2555D@1.0.0 under Plans/Decision_Log.md#DL-503; this assigns that stored value,
+  not event history. Separate stored-value assignment: plugin_permission_override_operation uses RP-PLUGIN-OPERATIONS-APPLICATION-2555D@1.0.0
+  under Plans/Decision_Log.md#DL-503; this assigns that stored value, not event history. Separate stored-value assignment:
+  plugin_tool_collision_operation uses RP-PLUGIN-OPERATIONS-APPLICATION-2555D@1.0.0 under Plans/Decision_Log.md#DL-503;
+  this assigns that stored value, not event history. Separate stored-value assignment: plugin_tool_registered_operation
+  uses RP-PLUGIN-OPERATIONS-APPLICATION-2555D@1.0.0 under Plans/Decision_Log.md#DL-503; this assigns that stored
+  value, not event history. Original sources and coherent backups retain their independent owner policies; the event
+  lifetime is not transferred to them. Current append/publication still requires the exact selected schema/scope,
+  original custody, current permission, receipt and required producer adoption. Actual missing registration or unresolved
+  required custody refuses; native execution remains NOT_RUN. No native adoption, new retention choice or governance
+  seal follows.
+
+  Current selected assignment (2026-11-19): plugin.loaded@1.0.0 is registered for application_or_project in Plans/event_family_registry.json,
+  as recorded by Plans/Decision_Log.md#DL-2352. Its event history selects Application = RP-PLUGIN-OPERATIONS-APPLICATION-2555D@1.0.0
+  (anchor_kind=terminal_transition, cardinality_scope=instance), Project = RP-OPERATIONAL-2555D@1.0.0 (anchor_kind=terminal_transition,
+  cardinality_scope=project); Plans/storage-plan.md#SP-671 owns the event policy''s existing anchors, counts, holds
+  and deletion rules. Separate stored-value assignment: plugin_hook_blocked_operation uses RP-PLUGIN-HOOK-APPLICATION-90D@1.0.0
+  under Plans/Decision_Log.md#DL-503; this assigns that stored value, not event history. Separate stored-value assignment:
+  plugin_hook_error_operation uses RP-PLUGIN-HOOK-APPLICATION-90D@1.0.0 under Plans/Decision_Log.md#DL-503; this
+  assigns that stored value, not event history. Separate stored-value assignment: plugin_hook_invoked_operation
+  uses RP-PLUGIN-HOOK-APPLICATION-90D@1.0.0 under Plans/Decision_Log.md#DL-503; this assigns that stored value,
+  not event history. Separate stored-value assignment: plugin_load_failed_operation uses RP-PLUGIN-OPERATIONS-APPLICATION-2555D@1.0.0
+  under Plans/Decision_Log.md#DL-503; this assigns that stored value, not event history. Separate stored-value assignment:
+  plugin_loaded_operation uses RP-PLUGIN-OPERATIONS-APPLICATION-2555D@1.0.0 under Plans/Decision_Log.md#DL-503;
+  this assigns that stored value, not event history. Separate stored-value assignment: plugin_permission_override_operation
+  uses RP-PLUGIN-OPERATIONS-APPLICATION-2555D@1.0.0 under Plans/Decision_Log.md#DL-503; this assigns that stored
+  value, not event history. Separate stored-value assignment: plugin_tool_collision_operation uses RP-PLUGIN-OPERATIONS-APPLICATION-2555D@1.0.0
+  under Plans/Decision_Log.md#DL-503; this assigns that stored value, not event history. Separate stored-value assignment:
+  plugin_tool_registered_operation uses RP-PLUGIN-OPERATIONS-APPLICATION-2555D@1.0.0 under Plans/Decision_Log.md#DL-503;
+  this assigns that stored value, not event history. Original sources and coherent backups retain their independent
+  owner policies; the event lifetime is not transferred to them. Current append/publication still requires the exact
+  selected schema/scope, original custody, current permission, receipt and required producer adoption. Actual missing
+  registration or unresolved required custody refuses; native execution remains NOT_RUN. No native adoption, new
+  retention choice or governance seal follows.
+
+  Current selected assignment (2026-11-19): plugin.permission.override@1.0.0 is registered for application_or_project
+  in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2353. Its event history selects Application
+  = RP-PLUGIN-OPERATIONS-APPLICATION-2555D@1.0.0 (anchor_kind=terminal_transition, cardinality_scope=instance),
+  Project = RP-OPERATIONAL-2555D@1.0.0 (anchor_kind=terminal_transition, cardinality_scope=project); Plans/storage-plan.md#SP-671
+  owns the event policy''s existing anchors, counts, holds and deletion rules. Separate stored-value assignment:
+  plugin_hook_blocked_operation uses RP-PLUGIN-HOOK-APPLICATION-90D@1.0.0 under Plans/Decision_Log.md#DL-503; this
+  assigns that stored value, not event history. Separate stored-value assignment: plugin_hook_error_operation uses
+  RP-PLUGIN-HOOK-APPLICATION-90D@1.0.0 under Plans/Decision_Log.md#DL-503; this assigns that stored value, not event
+  history. Separate stored-value assignment: plugin_hook_invoked_operation uses RP-PLUGIN-HOOK-APPLICATION-90D@1.0.0
+  under Plans/Decision_Log.md#DL-503; this assigns that stored value, not event history. Separate stored-value assignment:
+  plugin_load_failed_operation uses RP-PLUGIN-OPERATIONS-APPLICATION-2555D@1.0.0 under Plans/Decision_Log.md#DL-503;
+  this assigns that stored value, not event history. Separate stored-value assignment: plugin_loaded_operation uses
+  RP-PLUGIN-OPERATIONS-APPLICATION-2555D@1.0.0 under Plans/Decision_Log.md#DL-503; this assigns that stored value,
+  not event history. Separate stored-value assignment: plugin_permission_override_operation uses RP-PLUGIN-OPERATIONS-APPLICATION-2555D@1.0.0
+  under Plans/Decision_Log.md#DL-503; this assigns that stored value, not event history. Separate stored-value assignment:
+  plugin_tool_collision_operation uses RP-PLUGIN-OPERATIONS-APPLICATION-2555D@1.0.0 under Plans/Decision_Log.md#DL-503;
+  this assigns that stored value, not event history. Separate stored-value assignment: plugin_tool_registered_operation
+  uses RP-PLUGIN-OPERATIONS-APPLICATION-2555D@1.0.0 under Plans/Decision_Log.md#DL-503; this assigns that stored
+  value, not event history. Original sources and coherent backups retain their independent owner policies; the event
+  lifetime is not transferred to them. Current append/publication still requires the exact selected schema/scope,
+  original custody, current permission, receipt and required producer adoption. Actual missing registration or unresolved
+  required custody refuses; native execution remains NOT_RUN. No native adoption, new retention choice or governance
+  seal follows.
+
+  Current selected assignment (2026-11-19): plugin.tool.collision@1.0.0 is registered for application_or_project
+  in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2354. Its event history selects Application
+  = RP-PLUGIN-OPERATIONS-APPLICATION-2555D@1.0.0 (anchor_kind=terminal_transition, cardinality_scope=instance),
+  Project = RP-OPERATIONAL-2555D@1.0.0 (anchor_kind=terminal_transition, cardinality_scope=project); Plans/storage-plan.md#SP-671
+  owns the event policy''s existing anchors, counts, holds and deletion rules. Separate stored-value assignment:
+  plugin_hook_blocked_operation uses RP-PLUGIN-HOOK-APPLICATION-90D@1.0.0 under Plans/Decision_Log.md#DL-503; this
+  assigns that stored value, not event history. Separate stored-value assignment: plugin_hook_error_operation uses
+  RP-PLUGIN-HOOK-APPLICATION-90D@1.0.0 under Plans/Decision_Log.md#DL-503; this assigns that stored value, not event
+  history. Separate stored-value assignment: plugin_hook_invoked_operation uses RP-PLUGIN-HOOK-APPLICATION-90D@1.0.0
+  under Plans/Decision_Log.md#DL-503; this assigns that stored value, not event history. Separate stored-value assignment:
+  plugin_load_failed_operation uses RP-PLUGIN-OPERATIONS-APPLICATION-2555D@1.0.0 under Plans/Decision_Log.md#DL-503;
+  this assigns that stored value, not event history. Separate stored-value assignment: plugin_loaded_operation uses
+  RP-PLUGIN-OPERATIONS-APPLICATION-2555D@1.0.0 under Plans/Decision_Log.md#DL-503; this assigns that stored value,
+  not event history. Separate stored-value assignment: plugin_permission_override_operation uses RP-PLUGIN-OPERATIONS-APPLICATION-2555D@1.0.0
+  under Plans/Decision_Log.md#DL-503; this assigns that stored value, not event history. Separate stored-value assignment:
+  plugin_tool_collision_operation uses RP-PLUGIN-OPERATIONS-APPLICATION-2555D@1.0.0 under Plans/Decision_Log.md#DL-503;
+  this assigns that stored value, not event history. Separate stored-value assignment: plugin_tool_registered_operation
+  uses RP-PLUGIN-OPERATIONS-APPLICATION-2555D@1.0.0 under Plans/Decision_Log.md#DL-503; this assigns that stored
+  value, not event history. Original sources and coherent backups retain their independent owner policies; the event
+  lifetime is not transferred to them. Current append/publication still requires the exact selected schema/scope,
+  original custody, current permission, receipt and required producer adoption. Actual missing registration or unresolved
+  required custody refuses; native execution remains NOT_RUN. No native adoption, new retention choice or governance
+  seal follows.
+
+  Current selected assignment (2026-11-19): plugin.tool.registered@1.0.0 is registered for application_or_project
+  in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2355. Its event history selects Application
+  = RP-PLUGIN-OPERATIONS-APPLICATION-2555D@1.0.0 (anchor_kind=terminal_transition, cardinality_scope=instance),
+  Project = RP-OPERATIONAL-2555D@1.0.0 (anchor_kind=terminal_transition, cardinality_scope=project); Plans/storage-plan.md#SP-671
+  owns the event policy''s existing anchors, counts, holds and deletion rules. Separate stored-value assignment:
+  plugin_hook_blocked_operation uses RP-PLUGIN-HOOK-APPLICATION-90D@1.0.0 under Plans/Decision_Log.md#DL-503; this
+  assigns that stored value, not event history. Separate stored-value assignment: plugin_hook_error_operation uses
+  RP-PLUGIN-HOOK-APPLICATION-90D@1.0.0 under Plans/Decision_Log.md#DL-503; this assigns that stored value, not event
+  history. Separate stored-value assignment: plugin_hook_invoked_operation uses RP-PLUGIN-HOOK-APPLICATION-90D@1.0.0
+  under Plans/Decision_Log.md#DL-503; this assigns that stored value, not event history. Separate stored-value assignment:
+  plugin_load_failed_operation uses RP-PLUGIN-OPERATIONS-APPLICATION-2555D@1.0.0 under Plans/Decision_Log.md#DL-503;
+  this assigns that stored value, not event history. Separate stored-value assignment: plugin_loaded_operation uses
+  RP-PLUGIN-OPERATIONS-APPLICATION-2555D@1.0.0 under Plans/Decision_Log.md#DL-503; this assigns that stored value,
+  not event history. Separate stored-value assignment: plugin_permission_override_operation uses RP-PLUGIN-OPERATIONS-APPLICATION-2555D@1.0.0
+  under Plans/Decision_Log.md#DL-503; this assigns that stored value, not event history. Separate stored-value assignment:
+  plugin_tool_collision_operation uses RP-PLUGIN-OPERATIONS-APPLICATION-2555D@1.0.0 under Plans/Decision_Log.md#DL-503;
+  this assigns that stored value, not event history. Separate stored-value assignment: plugin_tool_registered_operation
+  uses RP-PLUGIN-OPERATIONS-APPLICATION-2555D@1.0.0 under Plans/Decision_Log.md#DL-503; this assigns that stored
+  value, not event history. Original sources and coherent backups retain their independent owner policies; the event
+  lifetime is not transferred to them. Current append/publication still requires the exact selected schema/scope,
+  original custody, current permission, receipt and required producer adoption. Actual missing registration or unresolved
+  required custody refuses; native execution remains NOT_RUN. No native adoption, new retention choice or governance
+  seal follows.'
 gui_related: false
 gui_classification_reason: Defines persisted contract behavior and no visual presentation.
-depends_on: [DL-045, DL-076, SP-278, SP-286, SP-291, SP-336, SP-337, SP-340]
+depends_on:
+- DL-045
+- DL-076
+- SP-278
+- SP-286
+- SP-291
+- SP-336
+- SP-337
+- SP-340
 unblocks: []
 acceptance_criteria:
 - Exact-family schema and semantic checks pass; no event is emitted before separate admission.
-validation_surfaces: [scripts/pm-dg6b-event-contracts.py]
+validation_surfaces:
+- scripts/pm-dg6b-event-contracts.py
 risk_class: event_authority
 reasoning_tier: high
 context_scope: event_authority_dg6b
 source_lineage:
 - Plans/Decision_Log.md#DL-045
 - reports/event-authority-20261104/DG6B.md
-implementation_surfaces: [Plans/storage-plan.md, Plans/dg6b_event_contracts.schema.json]
-node_compile_hint: {mode: contract_only, create_worknodes: false}
+implementation_surfaces:
+- Plans/storage-plan.md
+- Plans/dg6b_event_contracts.schema.json
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
 ```
 
 
@@ -2402,151 +2833,413 @@ plan_unit_id: SP-672
 unit_type: contract
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: |-
-  DG6B Persona individual persistence contracts. Newly authored exact-family technical contracts under DL-045, prepared without admission; existing P-060, UCC-214, CV-365 and canonical runtime identity govern behavior.
+canonical_text: 'DG6B Persona individual persistence contracts. Newly authored exact-family technical contracts
+  under DL-045, prepared without admission; existing P-060, UCC-214, CV-365 and canonical runtime identity govern
+  behavior.
+
 
   PNC-019 s4r retention binding for `persona.created` (2026-11-14).
 
-  Event history `retention_policy_ref = RP-AUTHORITY-INDEFINITE@1.0.0`, under Plans/Decision_Log.md#DL-401.
 
-  Use the existing policy object unchanged: {"anchor_kind": "creation", "cardinality_scope": null, "expiry_action": "none", "max_cardinality": null, "overflow_action": "fail_closed", "ttl_seconds": null}.
+  Event history selects Application = RP-AUTHORITY-INDEFINITE@1.0.0 (anchor_kind=creation, cardinality_scope=null),
+  Project = RP-AUTHORITY-INDEFINITE@1.0.0 (anchor_kind=creation, cardinality_scope=null) as recorded by Plans/Decision_Log.md#DL-2344,
+  under Plans/Decision_Log.md#DL-401.
 
-  Exact stored value `persona_created_operation` retains `RP-CONFIG-CURRENT@1.0.0` under DL-504; this does not assign its referenced bodies or other values.
 
-  Exact stored value `persona_deleted_operation` retains `RP-CONFIG-CURRENT@1.0.0` under DL-504; this does not assign its referenced bodies or other values.
+  Use the existing policy object unchanged: {"anchor_kind": "creation", "cardinality_scope": null, "expiry_action":
+  "none", "max_cardinality": null, "overflow_action": "fail_closed", "ttl_seconds": null}.
 
-  Exact stored value `persona_exported_operation` retains `RP-CONFIG-CURRENT@1.0.0` under DL-504; this does not assign its referenced bodies or other values.
 
-  Exact stored value `persona_imported_operation` retains `RP-CONFIG-CURRENT@1.0.0` under DL-504; this does not assign its referenced bodies or other values.
+  Exact stored value `persona_created_operation` retains `RP-CONFIG-CURRENT@1.0.0` under DL-504; this does not assign
+  its referenced bodies or other values.
 
-  Exact stored value `persona_selected_operation` retains `RP-CONFIG-CURRENT@1.0.0` under DL-504; this does not assign its referenced bodies or other values.
 
-  Exact stored value `persona_updated_operation` retains `RP-CONFIG-CURRENT@1.0.0` under DL-504; this does not assign its referenced bodies or other values.
+  Exact stored value `persona_deleted_operation` retains `RP-CONFIG-CURRENT@1.0.0` under DL-504; this does not assign
+  its referenced bodies or other values.
 
-  This paragraph supersedes earlier pending statements only for the exact assigned facets above. All independent source, receipt, referenced-body and backup lifetimes remain with their own owners. Legal/investigation holds, required references, recovery, rollback, maintenance, protected backups and latest-25-run protection override cleanup without granting access. No unexpired/protected eviction for space, no retry anchor renewal, no hold release, admission, native proof or governance clearance is granted.
+
+  Exact stored value `persona_exported_operation` retains `RP-CONFIG-CURRENT@1.0.0` under DL-504; this does not
+  assign its referenced bodies or other values.
+
+
+  Exact stored value `persona_imported_operation` retains `RP-CONFIG-CURRENT@1.0.0` under DL-504; this does not
+  assign its referenced bodies or other values.
+
+
+  Exact stored value `persona_selected_operation` retains `RP-CONFIG-CURRENT@1.0.0` under DL-504; this does not
+  assign its referenced bodies or other values.
+
+
+  Exact stored value `persona_updated_operation` retains `RP-CONFIG-CURRENT@1.0.0` under DL-504; this does not assign
+  its referenced bodies or other values.
+
+
+  This paragraph supersedes earlier pending statements only for the exact assigned facets above. All independent
+  source, receipt, referenced-body and backup lifetimes remain with their own owners. Legal/investigation holds,
+  required references, recovery, rollback, maintenance, protected backups and latest-25-run protection override
+  cleanup without granting access. No unexpired/protected eviction for space, no retry anchor renewal, no hold release,
+  admission, native proof or governance clearance is granted.
+
 
   PNC-019 s4r retention binding for `persona.deleted` (2026-11-14).
 
-  Event history `retention_policy_ref = RP-AUTHORITY-INDEFINITE@1.0.0`, under Plans/Decision_Log.md#DL-401.
 
-  Use the existing policy object unchanged: {"anchor_kind": "creation", "cardinality_scope": null, "expiry_action": "none", "max_cardinality": null, "overflow_action": "fail_closed", "ttl_seconds": null}.
+  Event history selects Application = RP-AUTHORITY-INDEFINITE@1.0.0 (anchor_kind=creation, cardinality_scope=null),
+  Project = RP-AUTHORITY-INDEFINITE@1.0.0 (anchor_kind=creation, cardinality_scope=null) as recorded by Plans/Decision_Log.md#DL-2344,
+  under Plans/Decision_Log.md#DL-401.
 
-  Exact stored value `persona_created_operation` retains `RP-CONFIG-CURRENT@1.0.0` under DL-504; this does not assign its referenced bodies or other values.
 
-  Exact stored value `persona_deleted_operation` retains `RP-CONFIG-CURRENT@1.0.0` under DL-504; this does not assign its referenced bodies or other values.
+  Use the existing policy object unchanged: {"anchor_kind": "creation", "cardinality_scope": null, "expiry_action":
+  "none", "max_cardinality": null, "overflow_action": "fail_closed", "ttl_seconds": null}.
 
-  Exact stored value `persona_exported_operation` retains `RP-CONFIG-CURRENT@1.0.0` under DL-504; this does not assign its referenced bodies or other values.
 
-  Exact stored value `persona_imported_operation` retains `RP-CONFIG-CURRENT@1.0.0` under DL-504; this does not assign its referenced bodies or other values.
+  Exact stored value `persona_created_operation` retains `RP-CONFIG-CURRENT@1.0.0` under DL-504; this does not assign
+  its referenced bodies or other values.
 
-  Exact stored value `persona_selected_operation` retains `RP-CONFIG-CURRENT@1.0.0` under DL-504; this does not assign its referenced bodies or other values.
 
-  Exact stored value `persona_updated_operation` retains `RP-CONFIG-CURRENT@1.0.0` under DL-504; this does not assign its referenced bodies or other values.
+  Exact stored value `persona_deleted_operation` retains `RP-CONFIG-CURRENT@1.0.0` under DL-504; this does not assign
+  its referenced bodies or other values.
 
-  This paragraph supersedes earlier pending statements only for the exact assigned facets above. All independent source, receipt, referenced-body and backup lifetimes remain with their own owners. Legal/investigation holds, required references, recovery, rollback, maintenance, protected backups and latest-25-run protection override cleanup without granting access. No unexpired/protected eviction for space, no retry anchor renewal, no hold release, admission, native proof or governance clearance is granted.
+
+  Exact stored value `persona_exported_operation` retains `RP-CONFIG-CURRENT@1.0.0` under DL-504; this does not
+  assign its referenced bodies or other values.
+
+
+  Exact stored value `persona_imported_operation` retains `RP-CONFIG-CURRENT@1.0.0` under DL-504; this does not
+  assign its referenced bodies or other values.
+
+
+  Exact stored value `persona_selected_operation` retains `RP-CONFIG-CURRENT@1.0.0` under DL-504; this does not
+  assign its referenced bodies or other values.
+
+
+  Exact stored value `persona_updated_operation` retains `RP-CONFIG-CURRENT@1.0.0` under DL-504; this does not assign
+  its referenced bodies or other values.
+
+
+  This paragraph supersedes earlier pending statements only for the exact assigned facets above. All independent
+  source, receipt, referenced-body and backup lifetimes remain with their own owners. Legal/investigation holds,
+  required references, recovery, rollback, maintenance, protected backups and latest-25-run protection override
+  cleanup without granting access. No unexpired/protected eviction for space, no retry anchor renewal, no hold release,
+  admission, native proof or governance clearance is granted.
+
 
   PNC-019 s4r retention binding for `persona.exported` (2026-11-14).
 
-  Event history `retention_policy_ref = RP-AUTHORITY-INDEFINITE@1.0.0`, under Plans/Decision_Log.md#DL-401.
 
-  Use the existing policy object unchanged: {"anchor_kind": "creation", "cardinality_scope": null, "expiry_action": "none", "max_cardinality": null, "overflow_action": "fail_closed", "ttl_seconds": null}.
+  Event history selects Application = RP-AUTHORITY-INDEFINITE@1.0.0 (anchor_kind=creation, cardinality_scope=null),
+  Project = RP-AUTHORITY-INDEFINITE@1.0.0 (anchor_kind=creation, cardinality_scope=null) as recorded by Plans/Decision_Log.md#DL-2344,
+  under Plans/Decision_Log.md#DL-401.
 
-  Exact stored value `persona_created_operation` retains `RP-CONFIG-CURRENT@1.0.0` under DL-504; this does not assign its referenced bodies or other values.
 
-  Exact stored value `persona_deleted_operation` retains `RP-CONFIG-CURRENT@1.0.0` under DL-504; this does not assign its referenced bodies or other values.
+  Use the existing policy object unchanged: {"anchor_kind": "creation", "cardinality_scope": null, "expiry_action":
+  "none", "max_cardinality": null, "overflow_action": "fail_closed", "ttl_seconds": null}.
 
-  Exact stored value `persona_exported_operation` retains `RP-CONFIG-CURRENT@1.0.0` under DL-504; this does not assign its referenced bodies or other values.
 
-  Exact stored value `persona_imported_operation` retains `RP-CONFIG-CURRENT@1.0.0` under DL-504; this does not assign its referenced bodies or other values.
+  Exact stored value `persona_created_operation` retains `RP-CONFIG-CURRENT@1.0.0` under DL-504; this does not assign
+  its referenced bodies or other values.
 
-  Exact stored value `persona_selected_operation` retains `RP-CONFIG-CURRENT@1.0.0` under DL-504; this does not assign its referenced bodies or other values.
 
-  Exact stored value `persona_updated_operation` retains `RP-CONFIG-CURRENT@1.0.0` under DL-504; this does not assign its referenced bodies or other values.
+  Exact stored value `persona_deleted_operation` retains `RP-CONFIG-CURRENT@1.0.0` under DL-504; this does not assign
+  its referenced bodies or other values.
 
-  This paragraph supersedes earlier pending statements only for the exact assigned facets above. All independent source, receipt, referenced-body and backup lifetimes remain with their own owners. Legal/investigation holds, required references, recovery, rollback, maintenance, protected backups and latest-25-run protection override cleanup without granting access. No unexpired/protected eviction for space, no retry anchor renewal, no hold release, admission, native proof or governance clearance is granted.
+
+  Exact stored value `persona_exported_operation` retains `RP-CONFIG-CURRENT@1.0.0` under DL-504; this does not
+  assign its referenced bodies or other values.
+
+
+  Exact stored value `persona_imported_operation` retains `RP-CONFIG-CURRENT@1.0.0` under DL-504; this does not
+  assign its referenced bodies or other values.
+
+
+  Exact stored value `persona_selected_operation` retains `RP-CONFIG-CURRENT@1.0.0` under DL-504; this does not
+  assign its referenced bodies or other values.
+
+
+  Exact stored value `persona_updated_operation` retains `RP-CONFIG-CURRENT@1.0.0` under DL-504; this does not assign
+  its referenced bodies or other values.
+
+
+  This paragraph supersedes earlier pending statements only for the exact assigned facets above. All independent
+  source, receipt, referenced-body and backup lifetimes remain with their own owners. Legal/investigation holds,
+  required references, recovery, rollback, maintenance, protected backups and latest-25-run protection override
+  cleanup without granting access. No unexpired/protected eviction for space, no retry anchor renewal, no hold release,
+  admission, native proof or governance clearance is granted.
+
 
   PNC-019 s4r retention binding for `persona.imported` (2026-11-14).
 
-  Event history `retention_policy_ref = RP-AUTHORITY-INDEFINITE@1.0.0`, under Plans/Decision_Log.md#DL-401.
 
-  Use the existing policy object unchanged: {"anchor_kind": "creation", "cardinality_scope": null, "expiry_action": "none", "max_cardinality": null, "overflow_action": "fail_closed", "ttl_seconds": null}.
+  Event history selects Application = RP-AUTHORITY-INDEFINITE@1.0.0 (anchor_kind=creation, cardinality_scope=null),
+  Project = RP-AUTHORITY-INDEFINITE@1.0.0 (anchor_kind=creation, cardinality_scope=null) as recorded by Plans/Decision_Log.md#DL-2344,
+  under Plans/Decision_Log.md#DL-401.
 
-  Exact stored value `persona_created_operation` retains `RP-CONFIG-CURRENT@1.0.0` under DL-504; this does not assign its referenced bodies or other values.
 
-  Exact stored value `persona_deleted_operation` retains `RP-CONFIG-CURRENT@1.0.0` under DL-504; this does not assign its referenced bodies or other values.
+  Use the existing policy object unchanged: {"anchor_kind": "creation", "cardinality_scope": null, "expiry_action":
+  "none", "max_cardinality": null, "overflow_action": "fail_closed", "ttl_seconds": null}.
 
-  Exact stored value `persona_exported_operation` retains `RP-CONFIG-CURRENT@1.0.0` under DL-504; this does not assign its referenced bodies or other values.
 
-  Exact stored value `persona_imported_operation` retains `RP-CONFIG-CURRENT@1.0.0` under DL-504; this does not assign its referenced bodies or other values.
+  Exact stored value `persona_created_operation` retains `RP-CONFIG-CURRENT@1.0.0` under DL-504; this does not assign
+  its referenced bodies or other values.
 
-  Exact stored value `persona_selected_operation` retains `RP-CONFIG-CURRENT@1.0.0` under DL-504; this does not assign its referenced bodies or other values.
 
-  Exact stored value `persona_updated_operation` retains `RP-CONFIG-CURRENT@1.0.0` under DL-504; this does not assign its referenced bodies or other values.
+  Exact stored value `persona_deleted_operation` retains `RP-CONFIG-CURRENT@1.0.0` under DL-504; this does not assign
+  its referenced bodies or other values.
 
-  This paragraph supersedes earlier pending statements only for the exact assigned facets above. All independent source, receipt, referenced-body and backup lifetimes remain with their own owners. Legal/investigation holds, required references, recovery, rollback, maintenance, protected backups and latest-25-run protection override cleanup without granting access. No unexpired/protected eviction for space, no retry anchor renewal, no hold release, admission, native proof or governance clearance is granted.
+
+  Exact stored value `persona_exported_operation` retains `RP-CONFIG-CURRENT@1.0.0` under DL-504; this does not
+  assign its referenced bodies or other values.
+
+
+  Exact stored value `persona_imported_operation` retains `RP-CONFIG-CURRENT@1.0.0` under DL-504; this does not
+  assign its referenced bodies or other values.
+
+
+  Exact stored value `persona_selected_operation` retains `RP-CONFIG-CURRENT@1.0.0` under DL-504; this does not
+  assign its referenced bodies or other values.
+
+
+  Exact stored value `persona_updated_operation` retains `RP-CONFIG-CURRENT@1.0.0` under DL-504; this does not assign
+  its referenced bodies or other values.
+
+
+  This paragraph supersedes earlier pending statements only for the exact assigned facets above. All independent
+  source, receipt, referenced-body and backup lifetimes remain with their own owners. Legal/investigation holds,
+  required references, recovery, rollback, maintenance, protected backups and latest-25-run protection override
+  cleanup without granting access. No unexpired/protected eviction for space, no retry anchor renewal, no hold release,
+  admission, native proof or governance clearance is granted.
+
 
   PNC-019 s4r retention binding for `persona.selected` (2026-11-14).
 
-  Event history `retention_policy_ref = RP-AUTHORITY-INDEFINITE@1.0.0`, under Plans/Decision_Log.md#DL-401.
 
-  Use the existing policy object unchanged: {"anchor_kind": "creation", "cardinality_scope": null, "expiry_action": "none", "max_cardinality": null, "overflow_action": "fail_closed", "ttl_seconds": null}.
+  Event history selects Application = RP-AUTHORITY-INDEFINITE@1.0.0 (anchor_kind=creation, cardinality_scope=null),
+  Project = RP-AUTHORITY-INDEFINITE@1.0.0 (anchor_kind=creation, cardinality_scope=null) as recorded by Plans/Decision_Log.md#DL-2344,
+  under Plans/Decision_Log.md#DL-401.
 
-  Exact stored value `persona_created_operation` retains `RP-CONFIG-CURRENT@1.0.0` under DL-504; this does not assign its referenced bodies or other values.
 
-  Exact stored value `persona_deleted_operation` retains `RP-CONFIG-CURRENT@1.0.0` under DL-504; this does not assign its referenced bodies or other values.
+  Use the existing policy object unchanged: {"anchor_kind": "creation", "cardinality_scope": null, "expiry_action":
+  "none", "max_cardinality": null, "overflow_action": "fail_closed", "ttl_seconds": null}.
 
-  Exact stored value `persona_exported_operation` retains `RP-CONFIG-CURRENT@1.0.0` under DL-504; this does not assign its referenced bodies or other values.
 
-  Exact stored value `persona_imported_operation` retains `RP-CONFIG-CURRENT@1.0.0` under DL-504; this does not assign its referenced bodies or other values.
+  Exact stored value `persona_created_operation` retains `RP-CONFIG-CURRENT@1.0.0` under DL-504; this does not assign
+  its referenced bodies or other values.
 
-  Exact stored value `persona_selected_operation` retains `RP-CONFIG-CURRENT@1.0.0` under DL-504; this does not assign its referenced bodies or other values.
 
-  Exact stored value `persona_updated_operation` retains `RP-CONFIG-CURRENT@1.0.0` under DL-504; this does not assign its referenced bodies or other values.
+  Exact stored value `persona_deleted_operation` retains `RP-CONFIG-CURRENT@1.0.0` under DL-504; this does not assign
+  its referenced bodies or other values.
 
-  This paragraph supersedes earlier pending statements only for the exact assigned facets above. All independent source, receipt, referenced-body and backup lifetimes remain with their own owners. Legal/investigation holds, required references, recovery, rollback, maintenance, protected backups and latest-25-run protection override cleanup without granting access. No unexpired/protected eviction for space, no retry anchor renewal, no hold release, admission, native proof or governance clearance is granted.
+
+  Exact stored value `persona_exported_operation` retains `RP-CONFIG-CURRENT@1.0.0` under DL-504; this does not
+  assign its referenced bodies or other values.
+
+
+  Exact stored value `persona_imported_operation` retains `RP-CONFIG-CURRENT@1.0.0` under DL-504; this does not
+  assign its referenced bodies or other values.
+
+
+  Exact stored value `persona_selected_operation` retains `RP-CONFIG-CURRENT@1.0.0` under DL-504; this does not
+  assign its referenced bodies or other values.
+
+
+  Exact stored value `persona_updated_operation` retains `RP-CONFIG-CURRENT@1.0.0` under DL-504; this does not assign
+  its referenced bodies or other values.
+
+
+  This paragraph supersedes earlier pending statements only for the exact assigned facets above. All independent
+  source, receipt, referenced-body and backup lifetimes remain with their own owners. Legal/investigation holds,
+  required references, recovery, rollback, maintenance, protected backups and latest-25-run protection override
+  cleanup without granting access. No unexpired/protected eviction for space, no retry anchor renewal, no hold release,
+  admission, native proof or governance clearance is granted.
+
 
   PNC-019 s4r retention binding for `persona.updated` (2026-11-14).
 
-  Event history `retention_policy_ref = RP-AUTHORITY-INDEFINITE@1.0.0`, under Plans/Decision_Log.md#DL-401.
 
-  Use the existing policy object unchanged: {"anchor_kind": "creation", "cardinality_scope": null, "expiry_action": "none", "max_cardinality": null, "overflow_action": "fail_closed", "ttl_seconds": null}.
-
-  Exact stored value `persona_created_operation` retains `RP-CONFIG-CURRENT@1.0.0` under DL-504; this does not assign its referenced bodies or other values.
-
-  Exact stored value `persona_deleted_operation` retains `RP-CONFIG-CURRENT@1.0.0` under DL-504; this does not assign its referenced bodies or other values.
-
-  Exact stored value `persona_exported_operation` retains `RP-CONFIG-CURRENT@1.0.0` under DL-504; this does not assign its referenced bodies or other values.
-
-  Exact stored value `persona_imported_operation` retains `RP-CONFIG-CURRENT@1.0.0` under DL-504; this does not assign its referenced bodies or other values.
-
-  Exact stored value `persona_selected_operation` retains `RP-CONFIG-CURRENT@1.0.0` under DL-504; this does not assign its referenced bodies or other values.
-
-  Exact stored value `persona_updated_operation` retains `RP-CONFIG-CURRENT@1.0.0` under DL-504; this does not assign its referenced bodies or other values.
-
-  This paragraph supersedes earlier pending statements only for the exact assigned facets above. All independent source, receipt, referenced-body and backup lifetimes remain with their own owners. Legal/investigation holds, required references, recovery, rollback, maintenance, protected backups and latest-25-run protection override cleanup without granting access. No unexpired/protected eviction for space, no retry anchor renewal, no hold release, admission, native proof or governance clearance is granted.
+  Event history selects Application = RP-AUTHORITY-INDEFINITE@1.0.0 (anchor_kind=creation, cardinality_scope=null),
+  Project = RP-AUTHORITY-INDEFINITE@1.0.0 (anchor_kind=creation, cardinality_scope=null) as recorded by Plans/Decision_Log.md#DL-2344,
+  under Plans/Decision_Log.md#DL-401.
 
 
-  Current selected assignment (2026-11-19): persona.created@1.0.0 is registered for application_or_project in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2341. Its event history selects RP-AUTHORITY-INDEFINITE@1.0.0; Plans/storage-plan.md#SP-672 owns the event policy's existing anchors, counts, holds and deletion rules. Separate stored-value assignment: persona_created_operation uses RP-CONFIG-CURRENT@1.0.0 under Plans/Decision_Log.md#DL-504; this assigns that stored value, not event history. Separate stored-value assignment: persona_deleted_operation uses RP-CONFIG-CURRENT@1.0.0 under Plans/Decision_Log.md#DL-504; this assigns that stored value, not event history. Separate stored-value assignment: persona_exported_operation uses RP-CONFIG-CURRENT@1.0.0 under Plans/Decision_Log.md#DL-504; this assigns that stored value, not event history. Separate stored-value assignment: persona_imported_operation uses RP-CONFIG-CURRENT@1.0.0 under Plans/Decision_Log.md#DL-504; this assigns that stored value, not event history. Separate stored-value assignment: persona_selected_operation uses RP-CONFIG-CURRENT@1.0.0 under Plans/Decision_Log.md#DL-504; this assigns that stored value, not event history. Separate stored-value assignment: persona_updated_operation uses RP-CONFIG-CURRENT@1.0.0 under Plans/Decision_Log.md#DL-504; this assigns that stored value, not event history. Original sources and coherent backups retain their independent owner policies; the event lifetime is not transferred to them. Current append/publication still requires the exact selected schema/scope, original custody, current permission, receipt and required producer adoption. Actual missing registration or unresolved required custody refuses; native execution remains NOT_RUN. No native adoption, new retention choice or governance seal follows.
-  Current selected assignment (2026-11-19): persona.deleted@1.0.0 is registered for application_or_project in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2342. Its event history selects RP-AUTHORITY-INDEFINITE@1.0.0; Plans/storage-plan.md#SP-672 owns the event policy's existing anchors, counts, holds and deletion rules. Separate stored-value assignment: persona_created_operation uses RP-CONFIG-CURRENT@1.0.0 under Plans/Decision_Log.md#DL-504; this assigns that stored value, not event history. Separate stored-value assignment: persona_deleted_operation uses RP-CONFIG-CURRENT@1.0.0 under Plans/Decision_Log.md#DL-504; this assigns that stored value, not event history. Separate stored-value assignment: persona_exported_operation uses RP-CONFIG-CURRENT@1.0.0 under Plans/Decision_Log.md#DL-504; this assigns that stored value, not event history. Separate stored-value assignment: persona_imported_operation uses RP-CONFIG-CURRENT@1.0.0 under Plans/Decision_Log.md#DL-504; this assigns that stored value, not event history. Separate stored-value assignment: persona_selected_operation uses RP-CONFIG-CURRENT@1.0.0 under Plans/Decision_Log.md#DL-504; this assigns that stored value, not event history. Separate stored-value assignment: persona_updated_operation uses RP-CONFIG-CURRENT@1.0.0 under Plans/Decision_Log.md#DL-504; this assigns that stored value, not event history. Original sources and coherent backups retain their independent owner policies; the event lifetime is not transferred to them. Current append/publication still requires the exact selected schema/scope, original custody, current permission, receipt and required producer adoption. Actual missing registration or unresolved required custody refuses; native execution remains NOT_RUN. No native adoption, new retention choice or governance seal follows.
-  Current selected assignment (2026-11-19): persona.exported@1.0.0 is registered for application_or_project in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2343. Its event history selects RP-AUTHORITY-INDEFINITE@1.0.0; Plans/storage-plan.md#SP-672 owns the event policy's existing anchors, counts, holds and deletion rules. Separate stored-value assignment: persona_created_operation uses RP-CONFIG-CURRENT@1.0.0 under Plans/Decision_Log.md#DL-504; this assigns that stored value, not event history. Separate stored-value assignment: persona_deleted_operation uses RP-CONFIG-CURRENT@1.0.0 under Plans/Decision_Log.md#DL-504; this assigns that stored value, not event history. Separate stored-value assignment: persona_exported_operation uses RP-CONFIG-CURRENT@1.0.0 under Plans/Decision_Log.md#DL-504; this assigns that stored value, not event history. Separate stored-value assignment: persona_imported_operation uses RP-CONFIG-CURRENT@1.0.0 under Plans/Decision_Log.md#DL-504; this assigns that stored value, not event history. Separate stored-value assignment: persona_selected_operation uses RP-CONFIG-CURRENT@1.0.0 under Plans/Decision_Log.md#DL-504; this assigns that stored value, not event history. Separate stored-value assignment: persona_updated_operation uses RP-CONFIG-CURRENT@1.0.0 under Plans/Decision_Log.md#DL-504; this assigns that stored value, not event history. Original sources and coherent backups retain their independent owner policies; the event lifetime is not transferred to them. Current append/publication still requires the exact selected schema/scope, original custody, current permission, receipt and required producer adoption. Actual missing registration or unresolved required custody refuses; native execution remains NOT_RUN. No native adoption, new retention choice or governance seal follows.
-  Current selected assignment (2026-11-19): persona.imported@1.0.0 is registered for application_or_project in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2344. Its event history selects RP-AUTHORITY-INDEFINITE@1.0.0; Plans/storage-plan.md#SP-672 owns the event policy's existing anchors, counts, holds and deletion rules. Separate stored-value assignment: persona_created_operation uses RP-CONFIG-CURRENT@1.0.0 under Plans/Decision_Log.md#DL-504; this assigns that stored value, not event history. Separate stored-value assignment: persona_deleted_operation uses RP-CONFIG-CURRENT@1.0.0 under Plans/Decision_Log.md#DL-504; this assigns that stored value, not event history. Separate stored-value assignment: persona_exported_operation uses RP-CONFIG-CURRENT@1.0.0 under Plans/Decision_Log.md#DL-504; this assigns that stored value, not event history. Separate stored-value assignment: persona_imported_operation uses RP-CONFIG-CURRENT@1.0.0 under Plans/Decision_Log.md#DL-504; this assigns that stored value, not event history. Separate stored-value assignment: persona_selected_operation uses RP-CONFIG-CURRENT@1.0.0 under Plans/Decision_Log.md#DL-504; this assigns that stored value, not event history. Separate stored-value assignment: persona_updated_operation uses RP-CONFIG-CURRENT@1.0.0 under Plans/Decision_Log.md#DL-504; this assigns that stored value, not event history. Original sources and coherent backups retain their independent owner policies; the event lifetime is not transferred to them. Current append/publication still requires the exact selected schema/scope, original custody, current permission, receipt and required producer adoption. Actual missing registration or unresolved required custody refuses; native execution remains NOT_RUN. No native adoption, new retention choice or governance seal follows.
-  Current selected assignment (2026-11-19): persona.selected@1.0.0 is registered for application_or_project in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2345. Its event history selects RP-AUTHORITY-INDEFINITE@1.0.0; Plans/storage-plan.md#SP-672 owns the event policy's existing anchors, counts, holds and deletion rules. Separate stored-value assignment: persona_created_operation uses RP-CONFIG-CURRENT@1.0.0 under Plans/Decision_Log.md#DL-504; this assigns that stored value, not event history. Separate stored-value assignment: persona_deleted_operation uses RP-CONFIG-CURRENT@1.0.0 under Plans/Decision_Log.md#DL-504; this assigns that stored value, not event history. Separate stored-value assignment: persona_exported_operation uses RP-CONFIG-CURRENT@1.0.0 under Plans/Decision_Log.md#DL-504; this assigns that stored value, not event history. Separate stored-value assignment: persona_imported_operation uses RP-CONFIG-CURRENT@1.0.0 under Plans/Decision_Log.md#DL-504; this assigns that stored value, not event history. Separate stored-value assignment: persona_selected_operation uses RP-CONFIG-CURRENT@1.0.0 under Plans/Decision_Log.md#DL-504; this assigns that stored value, not event history. Separate stored-value assignment: persona_updated_operation uses RP-CONFIG-CURRENT@1.0.0 under Plans/Decision_Log.md#DL-504; this assigns that stored value, not event history. Original sources and coherent backups retain their independent owner policies; the event lifetime is not transferred to them. Current append/publication still requires the exact selected schema/scope, original custody, current permission, receipt and required producer adoption. Actual missing registration or unresolved required custody refuses; native execution remains NOT_RUN. No native adoption, new retention choice or governance seal follows.
-  Current selected assignment (2026-11-19): persona.updated@1.0.0 is registered for application_or_project in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2346. Its event history selects RP-AUTHORITY-INDEFINITE@1.0.0; Plans/storage-plan.md#SP-672 owns the event policy's existing anchors, counts, holds and deletion rules. Separate stored-value assignment: persona_created_operation uses RP-CONFIG-CURRENT@1.0.0 under Plans/Decision_Log.md#DL-504; this assigns that stored value, not event history. Separate stored-value assignment: persona_deleted_operation uses RP-CONFIG-CURRENT@1.0.0 under Plans/Decision_Log.md#DL-504; this assigns that stored value, not event history. Separate stored-value assignment: persona_exported_operation uses RP-CONFIG-CURRENT@1.0.0 under Plans/Decision_Log.md#DL-504; this assigns that stored value, not event history. Separate stored-value assignment: persona_imported_operation uses RP-CONFIG-CURRENT@1.0.0 under Plans/Decision_Log.md#DL-504; this assigns that stored value, not event history. Separate stored-value assignment: persona_selected_operation uses RP-CONFIG-CURRENT@1.0.0 under Plans/Decision_Log.md#DL-504; this assigns that stored value, not event history. Separate stored-value assignment: persona_updated_operation uses RP-CONFIG-CURRENT@1.0.0 under Plans/Decision_Log.md#DL-504; this assigns that stored value, not event history. Original sources and coherent backups retain their independent owner policies; the event lifetime is not transferred to them. Current append/publication still requires the exact selected schema/scope, original custody, current permission, receipt and required producer adoption. Actual missing registration or unresolved required custody refuses; native execution remains NOT_RUN. No native adoption, new retention choice or governance seal follows.
+  Use the existing policy object unchanged: {"anchor_kind": "creation", "cardinality_scope": null, "expiry_action":
+  "none", "max_cardinality": null, "overflow_action": "fail_closed", "ttl_seconds": null}.
+
+
+  Exact stored value `persona_created_operation` retains `RP-CONFIG-CURRENT@1.0.0` under DL-504; this does not assign
+  its referenced bodies or other values.
+
+
+  Exact stored value `persona_deleted_operation` retains `RP-CONFIG-CURRENT@1.0.0` under DL-504; this does not assign
+  its referenced bodies or other values.
+
+
+  Exact stored value `persona_exported_operation` retains `RP-CONFIG-CURRENT@1.0.0` under DL-504; this does not
+  assign its referenced bodies or other values.
+
+
+  Exact stored value `persona_imported_operation` retains `RP-CONFIG-CURRENT@1.0.0` under DL-504; this does not
+  assign its referenced bodies or other values.
+
+
+  Exact stored value `persona_selected_operation` retains `RP-CONFIG-CURRENT@1.0.0` under DL-504; this does not
+  assign its referenced bodies or other values.
+
+
+  Exact stored value `persona_updated_operation` retains `RP-CONFIG-CURRENT@1.0.0` under DL-504; this does not assign
+  its referenced bodies or other values.
+
+
+  This paragraph supersedes earlier pending statements only for the exact assigned facets above. All independent
+  source, receipt, referenced-body and backup lifetimes remain with their own owners. Legal/investigation holds,
+  required references, recovery, rollback, maintenance, protected backups and latest-25-run protection override
+  cleanup without granting access. No unexpired/protected eviction for space, no retry anchor renewal, no hold release,
+  admission, native proof or governance clearance is granted.
+
+
+
+  Current selected assignment (2026-11-19): persona.created@1.0.0 is registered for application_or_project in Plans/event_family_registry.json,
+  as recorded by Plans/Decision_Log.md#DL-2341. Its event history selects Application = RP-AUTHORITY-INDEFINITE@1.0.0
+  (anchor_kind=creation, cardinality_scope=null), Project = RP-AUTHORITY-INDEFINITE@1.0.0 (anchor_kind=creation,
+  cardinality_scope=null); Plans/storage-plan.md#SP-672 owns the event policy''s existing anchors, counts, holds
+  and deletion rules. Separate stored-value assignment: persona_created_operation uses RP-CONFIG-CURRENT@1.0.0 under
+  Plans/Decision_Log.md#DL-504; this assigns that stored value, not event history. Separate stored-value assignment:
+  persona_deleted_operation uses RP-CONFIG-CURRENT@1.0.0 under Plans/Decision_Log.md#DL-504; this assigns that stored
+  value, not event history. Separate stored-value assignment: persona_exported_operation uses RP-CONFIG-CURRENT@1.0.0
+  under Plans/Decision_Log.md#DL-504; this assigns that stored value, not event history. Separate stored-value assignment:
+  persona_imported_operation uses RP-CONFIG-CURRENT@1.0.0 under Plans/Decision_Log.md#DL-504; this assigns that
+  stored value, not event history. Separate stored-value assignment: persona_selected_operation uses RP-CONFIG-CURRENT@1.0.0
+  under Plans/Decision_Log.md#DL-504; this assigns that stored value, not event history. Separate stored-value assignment:
+  persona_updated_operation uses RP-CONFIG-CURRENT@1.0.0 under Plans/Decision_Log.md#DL-504; this assigns that stored
+  value, not event history. Original sources and coherent backups retain their independent owner policies; the event
+  lifetime is not transferred to them. Current append/publication still requires the exact selected schema/scope,
+  original custody, current permission, receipt and required producer adoption. Actual missing registration or unresolved
+  required custody refuses; native execution remains NOT_RUN. No native adoption, new retention choice or governance
+  seal follows.
+
+  Current selected assignment (2026-11-19): persona.deleted@1.0.0 is registered for application_or_project in Plans/event_family_registry.json,
+  as recorded by Plans/Decision_Log.md#DL-2342. Its event history selects Application = RP-AUTHORITY-INDEFINITE@1.0.0
+  (anchor_kind=creation, cardinality_scope=null), Project = RP-AUTHORITY-INDEFINITE@1.0.0 (anchor_kind=creation,
+  cardinality_scope=null); Plans/storage-plan.md#SP-672 owns the event policy''s existing anchors, counts, holds
+  and deletion rules. Separate stored-value assignment: persona_created_operation uses RP-CONFIG-CURRENT@1.0.0 under
+  Plans/Decision_Log.md#DL-504; this assigns that stored value, not event history. Separate stored-value assignment:
+  persona_deleted_operation uses RP-CONFIG-CURRENT@1.0.0 under Plans/Decision_Log.md#DL-504; this assigns that stored
+  value, not event history. Separate stored-value assignment: persona_exported_operation uses RP-CONFIG-CURRENT@1.0.0
+  under Plans/Decision_Log.md#DL-504; this assigns that stored value, not event history. Separate stored-value assignment:
+  persona_imported_operation uses RP-CONFIG-CURRENT@1.0.0 under Plans/Decision_Log.md#DL-504; this assigns that
+  stored value, not event history. Separate stored-value assignment: persona_selected_operation uses RP-CONFIG-CURRENT@1.0.0
+  under Plans/Decision_Log.md#DL-504; this assigns that stored value, not event history. Separate stored-value assignment:
+  persona_updated_operation uses RP-CONFIG-CURRENT@1.0.0 under Plans/Decision_Log.md#DL-504; this assigns that stored
+  value, not event history. Original sources and coherent backups retain their independent owner policies; the event
+  lifetime is not transferred to them. Current append/publication still requires the exact selected schema/scope,
+  original custody, current permission, receipt and required producer adoption. Actual missing registration or unresolved
+  required custody refuses; native execution remains NOT_RUN. No native adoption, new retention choice or governance
+  seal follows.
+
+  Current selected assignment (2026-11-19): persona.exported@1.0.0 is registered for application_or_project in Plans/event_family_registry.json,
+  as recorded by Plans/Decision_Log.md#DL-2343. Its event history selects Application = RP-AUTHORITY-INDEFINITE@1.0.0
+  (anchor_kind=creation, cardinality_scope=null), Project = RP-AUTHORITY-INDEFINITE@1.0.0 (anchor_kind=creation,
+  cardinality_scope=null); Plans/storage-plan.md#SP-672 owns the event policy''s existing anchors, counts, holds
+  and deletion rules. Separate stored-value assignment: persona_created_operation uses RP-CONFIG-CURRENT@1.0.0 under
+  Plans/Decision_Log.md#DL-504; this assigns that stored value, not event history. Separate stored-value assignment:
+  persona_deleted_operation uses RP-CONFIG-CURRENT@1.0.0 under Plans/Decision_Log.md#DL-504; this assigns that stored
+  value, not event history. Separate stored-value assignment: persona_exported_operation uses RP-CONFIG-CURRENT@1.0.0
+  under Plans/Decision_Log.md#DL-504; this assigns that stored value, not event history. Separate stored-value assignment:
+  persona_imported_operation uses RP-CONFIG-CURRENT@1.0.0 under Plans/Decision_Log.md#DL-504; this assigns that
+  stored value, not event history. Separate stored-value assignment: persona_selected_operation uses RP-CONFIG-CURRENT@1.0.0
+  under Plans/Decision_Log.md#DL-504; this assigns that stored value, not event history. Separate stored-value assignment:
+  persona_updated_operation uses RP-CONFIG-CURRENT@1.0.0 under Plans/Decision_Log.md#DL-504; this assigns that stored
+  value, not event history. Original sources and coherent backups retain their independent owner policies; the event
+  lifetime is not transferred to them. Current append/publication still requires the exact selected schema/scope,
+  original custody, current permission, receipt and required producer adoption. Actual missing registration or unresolved
+  required custody refuses; native execution remains NOT_RUN. No native adoption, new retention choice or governance
+  seal follows.
+
+  Current selected assignment (2026-11-19): persona.imported@1.0.0 is registered for application_or_project in Plans/event_family_registry.json,
+  as recorded by Plans/Decision_Log.md#DL-2344. Its event history selects Application = RP-AUTHORITY-INDEFINITE@1.0.0
+  (anchor_kind=creation, cardinality_scope=null), Project = RP-AUTHORITY-INDEFINITE@1.0.0 (anchor_kind=creation,
+  cardinality_scope=null); Plans/storage-plan.md#SP-672 owns the event policy''s existing anchors, counts, holds
+  and deletion rules. Separate stored-value assignment: persona_created_operation uses RP-CONFIG-CURRENT@1.0.0 under
+  Plans/Decision_Log.md#DL-504; this assigns that stored value, not event history. Separate stored-value assignment:
+  persona_deleted_operation uses RP-CONFIG-CURRENT@1.0.0 under Plans/Decision_Log.md#DL-504; this assigns that stored
+  value, not event history. Separate stored-value assignment: persona_exported_operation uses RP-CONFIG-CURRENT@1.0.0
+  under Plans/Decision_Log.md#DL-504; this assigns that stored value, not event history. Separate stored-value assignment:
+  persona_imported_operation uses RP-CONFIG-CURRENT@1.0.0 under Plans/Decision_Log.md#DL-504; this assigns that
+  stored value, not event history. Separate stored-value assignment: persona_selected_operation uses RP-CONFIG-CURRENT@1.0.0
+  under Plans/Decision_Log.md#DL-504; this assigns that stored value, not event history. Separate stored-value assignment:
+  persona_updated_operation uses RP-CONFIG-CURRENT@1.0.0 under Plans/Decision_Log.md#DL-504; this assigns that stored
+  value, not event history. Original sources and coherent backups retain their independent owner policies; the event
+  lifetime is not transferred to them. Current append/publication still requires the exact selected schema/scope,
+  original custody, current permission, receipt and required producer adoption. Actual missing registration or unresolved
+  required custody refuses; native execution remains NOT_RUN. No native adoption, new retention choice or governance
+  seal follows.
+
+  Current selected assignment (2026-11-19): persona.selected@1.0.0 is registered for application_or_project in Plans/event_family_registry.json,
+  as recorded by Plans/Decision_Log.md#DL-2345. Its event history selects Application = RP-AUTHORITY-INDEFINITE@1.0.0
+  (anchor_kind=creation, cardinality_scope=null), Project = RP-AUTHORITY-INDEFINITE@1.0.0 (anchor_kind=creation,
+  cardinality_scope=null); Plans/storage-plan.md#SP-672 owns the event policy''s existing anchors, counts, holds
+  and deletion rules. Separate stored-value assignment: persona_created_operation uses RP-CONFIG-CURRENT@1.0.0 under
+  Plans/Decision_Log.md#DL-504; this assigns that stored value, not event history. Separate stored-value assignment:
+  persona_deleted_operation uses RP-CONFIG-CURRENT@1.0.0 under Plans/Decision_Log.md#DL-504; this assigns that stored
+  value, not event history. Separate stored-value assignment: persona_exported_operation uses RP-CONFIG-CURRENT@1.0.0
+  under Plans/Decision_Log.md#DL-504; this assigns that stored value, not event history. Separate stored-value assignment:
+  persona_imported_operation uses RP-CONFIG-CURRENT@1.0.0 under Plans/Decision_Log.md#DL-504; this assigns that
+  stored value, not event history. Separate stored-value assignment: persona_selected_operation uses RP-CONFIG-CURRENT@1.0.0
+  under Plans/Decision_Log.md#DL-504; this assigns that stored value, not event history. Separate stored-value assignment:
+  persona_updated_operation uses RP-CONFIG-CURRENT@1.0.0 under Plans/Decision_Log.md#DL-504; this assigns that stored
+  value, not event history. Original sources and coherent backups retain their independent owner policies; the event
+  lifetime is not transferred to them. Current append/publication still requires the exact selected schema/scope,
+  original custody, current permission, receipt and required producer adoption. Actual missing registration or unresolved
+  required custody refuses; native execution remains NOT_RUN. No native adoption, new retention choice or governance
+  seal follows.
+
+  Current selected assignment (2026-11-19): persona.updated@1.0.0 is registered for application_or_project in Plans/event_family_registry.json,
+  as recorded by Plans/Decision_Log.md#DL-2346. Its event history selects Application = RP-AUTHORITY-INDEFINITE@1.0.0
+  (anchor_kind=creation, cardinality_scope=null), Project = RP-AUTHORITY-INDEFINITE@1.0.0 (anchor_kind=creation,
+  cardinality_scope=null); Plans/storage-plan.md#SP-672 owns the event policy''s existing anchors, counts, holds
+  and deletion rules. Separate stored-value assignment: persona_created_operation uses RP-CONFIG-CURRENT@1.0.0 under
+  Plans/Decision_Log.md#DL-504; this assigns that stored value, not event history. Separate stored-value assignment:
+  persona_deleted_operation uses RP-CONFIG-CURRENT@1.0.0 under Plans/Decision_Log.md#DL-504; this assigns that stored
+  value, not event history. Separate stored-value assignment: persona_exported_operation uses RP-CONFIG-CURRENT@1.0.0
+  under Plans/Decision_Log.md#DL-504; this assigns that stored value, not event history. Separate stored-value assignment:
+  persona_imported_operation uses RP-CONFIG-CURRENT@1.0.0 under Plans/Decision_Log.md#DL-504; this assigns that
+  stored value, not event history. Separate stored-value assignment: persona_selected_operation uses RP-CONFIG-CURRENT@1.0.0
+  under Plans/Decision_Log.md#DL-504; this assigns that stored value, not event history. Separate stored-value assignment:
+  persona_updated_operation uses RP-CONFIG-CURRENT@1.0.0 under Plans/Decision_Log.md#DL-504; this assigns that stored
+  value, not event history. Original sources and coherent backups retain their independent owner policies; the event
+  lifetime is not transferred to them. Current append/publication still requires the exact selected schema/scope,
+  original custody, current permission, receipt and required producer adoption. Actual missing registration or unresolved
+  required custody refuses; native execution remains NOT_RUN. No native adoption, new retention choice or governance
+  seal follows.'
 gui_related: false
 gui_classification_reason: Defines persisted owner contracts, not new visual presentation.
-depends_on: [DL-045, DL-076, SP-278, SP-286, CV-339, SP-291, SP-336, CV-365, SP-337, SP-340]
+depends_on:
+- DL-045
+- DL-076
+- SP-278
+- SP-286
+- CV-339
+- SP-291
+- SP-336
+- CV-365
+- SP-337
+- SP-340
 unblocks: []
 acceptance_criteria:
 - Exact-family positive and negative oracles pass; admission and retention remain separately gated.
-validation_surfaces: [scripts/pm-dg6b-event-contracts.py]
+validation_surfaces:
+- scripts/pm-dg6b-event-contracts.py
 risk_class: event_authority
 reasoning_tier: high
 context_scope: event_authority_dg6b
 source_lineage:
 - Plans/Decision_Log.md#DL-045
 - reports/event-authority-20261104/DG6B.md
-implementation_surfaces: [Plans/storage-plan.md, Plans/dg6b_event_contracts.schema.json]
-node_compile_hint: {mode: contract_only, create_worknodes: false}
+implementation_surfaces:
+- Plans/storage-plan.md
+- Plans/dg6b_event_contracts.schema.json
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
 ```
 
 #### `persona.created` — newly authored persistence binding, 1.0.0
@@ -2645,7 +3338,7 @@ Historical preparation snapshot (2026-11-19, stale wording in received dfea17a6c
 
 This contract applies only to `persona.selected`, semantic owner P-124. Scope is **application_or_project**, explicitly selected by the current `persona_select_request_v2` operation under UCC-214/CV-365 and P-060. Application scope requires actual owning server_id, scope_partition=app and required-present null project_id/project_home_server_id/named_plan_id. Project scope requires actual Project/Home Server and scope_partition=project~ plus unpadded base64url of exact UTF-8 project_id. The event envelope’s Project/Server/storage instance and payload scope must agree. Library owner mutations/export use the actual library/settings-home application owner; Project definitions use their actual Project. Selection uses the actual scoped Settings target and may select a permitted library Persona from a Project. A Project home cannot be selected from No project. Original Client context is descriptive, never a fabricated Project, thread, run, node or attempt. Definition home, reach and runtime override scope are separate identities.
 
-The sole producer `handlers::persona::select` authenticates the selected command input/result and actual home/reach/CAS/permission/Stop generations before effect and immediately before append. Separate writer/schema/retention admission is mandatory; preparation grants none and required unadmitted event writers block their effects. The existing owner durably binds its fresh 128-bit operation_id and input digest before effect, commits the original authorized whole-record/selection/export result and readback, then prepares `persona_selected_operation.v1:<storage_instance_id>:<scope_key>:<operation_id>` before event append. Missing original completion remains pending; no cross-store atomicity is assumed. New key scope_key is compact UTF-8 JSON `[server_id, scope_partition]` from the original request, so different real Servers cannot share app keys. Preserve original operation_id, source/result receipt, actor, revision and timestamp; one key with different input/semantic bytes conflicts. An observing retry may not mint a source operation or repeat its effect. Observe only the selected result of cmd.persona.select for the original explicit Settings resolver target. P-060 supplies Everywhere, Computer, optional Project and thread defaults; Models supplies requested/effective resolution. A No-project target admits only library reach that includes No project; Only these projects refuses there. The existing persona_select_result_v2 remains the exact selected closed owner result. Its authenticated owner_result_ref resolves the newly authored closed persona_selected_resolution record (CV-691), preserving operation_id/persona_id/result/selection-target joins. That frozen record and the event use requested_persona, effective_persona, persona_selection_source, selection_reason, persona_override_scope, persona_override_owner_id and runtime_snapshot_ref/runtime_snapshot_sha256. These fields are not added to the pinned generic command result root. The snapshot carries the complete canonical applied/skipped controls and applicable execution identity. Metadata selection has no invented run/thread; an actual execution context must carry its real joins. History and conversion never recompute an earlier selection from current Settings. The separate resolution is held by the existing selected owner-result custody behind owner_result_ref. Measure the complete Storage canonical MessagePack encoded resolution value independently of both the event body and the operation. A complete value at or below 16,384 bytes may be inline; above that limit the existing SP-337 payload store holds the complete original resolution before the owner result is acknowledged. Its closed physical carrier is persona_selected_resolution_storage: schema_id/schema_version plus payload_ref (BLAKE3 id, encoded byte_size and application/msgpack), bounded to 16,384 encoded bytes. The source adapter supplies the independently authenticated physical value and resolved bytes; readers verify current access, durability, exact BLAKE3/size/media/bytes, canonical decode/re-encode, the closed logical schema and typed agreement with the original owner result and frozen selection. Missing, foreign, deleted or conflicting resolution custody refuses append, retry, history and recovery. This reuses SP-337 and the existing owner result, adds no stored family and leaves retention pending; externalizing the event or operation alone never proves this separate limit.
+The sole producer `handlers::persona::select` authenticates the selected command input/result and actual home/reach/CAS/permission/Stop generations before effect and immediately before append. Separate writer/schema/retention admission is mandatory; preparation grants none and required unadmitted event writers block their effects. The existing owner durably binds its fresh 128-bit operation_id and input digest before effect, commits the original authorized whole-record/selection/export result and readback, then prepares `persona_selected_operation.v1:<storage_instance_id>:<scope_key>:<operation_id>` before event append. Missing original completion remains pending; no cross-store atomicity is assumed. New key scope_key is compact UTF-8 JSON `[server_id, scope_partition]` from the original request, so different real Servers cannot share app keys. Preserve original operation_id, source/result receipt, actor, revision and timestamp; one key with different input/semantic bytes conflicts. An observing retry may not mint a source operation or repeat its effect. Observe only the selected result of cmd.persona.select for the original explicit Settings resolver target. P-060 supplies Everywhere, Computer, optional Project and thread defaults; Models supplies requested/effective resolution. A No-project target admits only library reach that includes No project; Only these projects refuses there. The existing persona_select_result_v2 remains the exact selected closed owner result. Its authenticated owner_result_ref resolves the newly authored closed persona_selected_resolution record (CV-691), preserving operation_id/persona_id/result/selection-target joins. That frozen record and the event use requested_persona, effective_persona, persona_selection_source, selection_reason, persona_override_scope, persona_override_owner_id and runtime_snapshot_ref/runtime_snapshot_sha256. These fields are not added to the pinned generic command result root. The snapshot carries the complete canonical applied/skipped controls and applicable execution identity. Metadata selection has no invented run/thread; an actual execution context must carry its real joins. History and conversion never recompute an earlier selection from current Settings. The separate resolution is held by the existing selected owner-result custody behind owner_result_ref. Measure the complete Storage canonical MessagePack encoded resolution value independently of both the event body and the operation. A complete value at or below 16,384 bytes may be inline; above that limit the existing SP-337 payload store holds the complete original resolution before the owner result is acknowledged. Its closed physical carrier is persona_selected_resolution_storage: schema_id/schema_version plus payload_ref (BLAKE3 id, encoded byte_size and application/msgpack), bounded to 16,384 encoded bytes. The source adapter supplies the independently authenticated physical value and resolved bytes; readers verify current access, durability, exact BLAKE3/size/media/bytes, canonical decode/re-encode, the closed logical schema and typed agreement with the original owner result and frozen selection. Missing, foreign, deleted or conflicting resolution custody refuses append, retry, history and recovery. This reuses SP-337 and the existing owner result, adds no stored family and Historical preparation snapshot (2026-11-19, received 2bda6aeed0): «leaves retention pending»; externalizing the event or operation alone never proves this separate limit.
 
 Identity: SHA-256 the compact UTF-8 JSON ordered array `["persona.selected", storage_instance_id, scope_key, operation_id, revision]` without whitespace. `event_id = "evt_persona_selected_" + hex(digest)` and For application scope, `idempotency_key = application@1:{hex(server_id)}:{hex(owner_operation_id)}` exactly as CV-366; server_id is the genuine original owning Server and owner_operation_id is the original source operation_id. Hex means lowercase encoding of complete UTF-8 scalar bytes, without normalization or truncation. For Project scope only, `idempotency_key = "persona.selected:" + hex(digest)`. Require exact EventRecord event_type/version/schema route, envelope event_id/idempotency, occurred_at_utc=payload.ts and actor_ref from original authenticated custody. Require every payload identity/home/reach/source/revision/hash/Client/return join to the immutable original request/result; payload assertions cannot grant authority. `revision` is the frozen owner result revision (for deletion, the removed revision), not a retry counter. Body transport obeys SP-337 without introducing another payload authority. Before any payload field is read, validate its exact JSON type against this family’s closed schema on both the actual inline EventRecord body and the independently authenticated source. Numbers follow CV-1100 beside CV-317 and CV-366: raw input goes through the shared current JSON parser, every schema integer slot holds an exact integer within that slot's own schema bounds (fractional/exponent spellings, leading zeros, negative zero, boolean-as-integer and string-number forms refuse), and the producer projection must have exact RFC 8785 JCS bytes before any effect, so an integer the JCS route cannot encode exactly refuses; SP-1100 beside SP-236 and SP-337 keeps the EventRecord and payload bytes in general typed MessagePack, the operation value in its application profile and Storage sequence_id an exact uint64. Timestamps follow CV-1101: occurred_at_utc and payload.ts take the EventRecord profile, and Storage-assigned observed_at_utc and persisted_at_utc take CV-253's uppercase-Z profile, with every string preserved exactly. A retained original is verified by the write-time recipe SP-1101 selects from its sealed custody, never by request data. Never trim or case-fold identities or hashes. Join every copied value by type-exact canonical bytes, including the caller-owned retry body; Storage-assigned sequence and times remain outside that retry body. Closed source, history, Storage and payload-store proof adapters require actual JSON booleans for every flag before testing its value: only true grants authority and only false clears a negative fence.
 

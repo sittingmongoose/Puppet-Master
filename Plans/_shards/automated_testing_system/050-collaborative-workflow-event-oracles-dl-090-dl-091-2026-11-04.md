@@ -2,9 +2,9 @@
 
 Source: `Plans/Automated_Testing_System.md`
 
-Source lines: L7533-L9658
+Source lines: L7544-L9702
 
-Source SHA256: `e1c8a84c145a3aaaa0738971f76db5fa0bf94f59c0149e76f4131e8579a6971d`
+Source SHA256: `a3028640b73729884c6b3d1a0f095289513e4f76e61af711c233858bf005dc7c`
 
 ---
 
@@ -1848,7 +1848,7 @@ source_lineage:
 
 ### ATS-305 — DCH
 
-DCH per-family contract oracles (prepared without admission). Every non-blocked DCH row owns both Project/application fixtures in Plans/dch_event_contract_fixtures.json. scripts/pm_dch_events.py validates each positive, negates every required field, extra properties, wrong version, scope mismatch, same-identity changed-content conflict and cross-scope identity separation. The checker also verifies exact family adoption and absence from registry. Required native oracles for EACH event: retry after lost ack returns first receipt/no second effect; crash before/after body, append and receipt; semantic mismatch conflict; stale/current-source/permission/deletion denial; SP-278 frontier CAS race and publication fencing; coherent restore/tombstone replay; unsupported edition; withdrawal/rebuild. These are authored obligations, NOT_RUN. Each per-family SP unit separately binds its domain projector/checkpoint with source-order, CAS/shadow publication, replay and withdrawal. Native execution remains NOT_RUN. Retention acceptance remains PENDING_RETENTION_DECISION and cannot authorize deletion.
+DCH per-family contract oracles (prepared without admission). Every non-blocked DCH row owns both Project/application fixtures in Plans/dch_event_contract_fixtures.json. scripts/pm_dch_events.py validates each positive, negates every required field, extra properties, wrong version, scope mismatch, same-identity changed-content conflict and cross-scope identity separation. The checker also verifies exact family adoption and absence from registry. Required native oracles for EACH event: retry after lost ack returns first receipt/no second effect; crash before/after body, append and receipt; semantic mismatch conflict; stale/current-source/permission/deletion denial; SP-278 frontier CAS race and publication fencing; coherent restore/tombstone replay; unsupported edition; withdrawal/rebuild. These are authored obligations, NOT_RUN. Each per-family SP unit separately binds its domain projector/checkpoint with source-order, CAS/shadow publication, replay and withdrawal. Native execution remains NOT_RUN. Historical preparation snapshot (2026-11-19, received 2bda6aeed0): «Retention acceptance remains PENDING_RETENTION_DECISION» and cannot authorize deletion.
 
 Review round 1 adds independent CV-365 encode/decode partition equality (p1, punctuation, exact Unicode and non-normalization cases), CV-366 application keys with original Server/operation identity and rejection of application dch: keys, and same-operation same-result/conflicting-digest/unavailable-dedupe oracles. Every Project fixture now uses project~cDE for p1; dependent identities are recomputed. For chat.thread_archived both editions cover manual active/suspended to archived, expected/committed revision joins, existing catalog selection/no-active-run guards, and reject automatic origin, stale/changed source, creating/already-archived/deleted predecessors, active run and absent readback. These are static contract fixtures; native command/receipt/storage execution remains NOT_RUN.
 
@@ -1885,8 +1885,9 @@ canonical_text: '### ATS-305 — DCH
   body, append and receipt; semantic mismatch conflict; stale/current-source/permission/deletion denial; SP-278
   frontier CAS race and publication fencing; coherent restore/tombstone replay; unsupported edition; withdrawal/rebuild.
   These are authored obligations, NOT_RUN. Each per-family SP unit separately binds its domain projector/checkpoint
-  with source-order, CAS/shadow publication, replay and withdrawal. Native execution remains NOT_RUN. Retention
-  acceptance remains PENDING_RETENTION_DECISION and cannot authorize deletion.
+  with source-order, CAS/shadow publication, replay and withdrawal. Native execution remains NOT_RUN. Historical
+  preparation snapshot (2026-11-19, received 2bda6aeed0): «Retention acceptance remains PENDING_RETENTION_DECISION»
+  and cannot authorize deletion.
 
 
   Review round 1 adds independent CV-365 encode/decode partition equality (p1, punctuation, exact Unicode and non-normalization
@@ -1951,11 +1952,11 @@ canonical_text: '### ATS-305 — DCH
   custody. All seventeen families exercise numeric aliases 1/1.0/1e0 and -0/0, invalid JSON 01, and wrong-type strings,
   null, arrays and nested objects; declared integer slots reject non-integer runtime types (CV-1100 current_integer;
   SP-1100 storage_uint64 for Storage metadata) before joins, and SP-1100 physical encoding preserves the float type,
-  so an alias never shares an integer''s commitment or reference. Every guard-removal variant preserves every
-  unrelated rule. A missing-generation mutant may substitute only an explicit independent lookup witness and must
-  continue all remaining joins; withdrawn-state, last-event and publication-id containment controls must still refuse
-  in every family. Never return early success to prove a guard. Preserve all earlier round findings and negative
-  fixtures; native execution and Stop remain unchanged.
+  so an alias never shares an integer''s commitment or reference. Every guard-removal variant preserves every unrelated
+  rule. A missing-generation mutant may substitute only an explicit independent lookup witness and must continue
+  all remaining joins; withdrawn-state, last-event and publication-id containment controls must still refuse in
+  every family. Never return early success to prove a guard. Preserve all earlier round findings and negative fixtures;
+  native execution and Stop remain unchanged.
 
 
   Review round 6 requires UUID-format/type validation for every actual Storage context before source reads, with
@@ -1964,13 +1965,12 @@ canonical_text: '### ATS-305 — DCH
   payload and publication integers retain their owner bounds. Retained originals select their protected original
   recipe as refined by round 7. Producer route availability (CV-1100 qualified JCS over the CV-317 projection) is
   separate from logical integer admission; physical bytes follow SP-1100 type-preserving encoding, and retained-dispatch
-  (SP-1101) changes belong to the shared sweep. Test owner endpoints, successors and
-  MessagePack overflow with structured refusals and no exception-as-rejection path. Both terminal-test families
-  accept historically valid inline/reference/compatibility/second-Store starts after live-state changes and refuse
-  independently forged, withdrawn and foreign starts under current custody. Sweep all eleven Astra defect classes,
-  including numeric aliases and wrong-type forms, and rerun the complete guard table serially, one family and one
-  guard or named duplicate set at a time. Preserve all earlier guards and witnesses; never use early success to
-  prove a rule. Stop remains held for Jared and native execution remains NOT_RUN.
+  (SP-1101) changes belong to the shared sweep. Test owner endpoints, successors and MessagePack overflow with structured
+  refusals and no exception-as-rejection path. Both terminal-test families accept historically valid inline/reference/compatibility/second-Store
+  starts after live-state changes and refuse independently forged, withdrawn and foreign starts under current custody.
+  Sweep all eleven Astra defect classes, including numeric aliases and wrong-type forms, and rerun the complete
+  guard table serially, one family and one guard or named duplicate set at a time. Preserve all earlier guards and
+  witnesses; never use early success to prove a rule. Stop remains held for Jared and native execution remains NOT_RUN.
 
 
   Review round 7 requires C7-B1 and sweep S1/S2 in every applicable family. Plans/dch_retained_history_fixtures.json
@@ -2001,26 +2001,25 @@ canonical_text: '### ATS-305 — DCH
   admission still requires completed isolation evidence.
 
 
-  Sweep part 2B adopts the shared CV-1101 check and SP-1101 dispatch. Every DCH validator is
-  pm_event_datetime.datetime_validator over the complete outer schema (scripts/pm_dch_formats.py composes it with the
-  DCH HTTPS URI grammar); negatives show the shared predicate''s own refusal through the validator at occurred_at_utc,
-  observed_at_utc, persisted_at_utc, ts and retired_at_utc. The timestamp battery records per-field expectations: the
-  EventRecord profile for occurred_at_utc, CV-253 storage_utc_z for observed_at_utc and persisted_at_utc, and the
-  registered predicate with the owner-schema terminal-Z pattern for ts and retired_at_utc; year 0000, lowercase t and
-  legitimate leap seconds are owner-valid. Retained strict-v3 originals whose timestamps CV-1101 refuses are
-  owner-invalid and refuse; owner-valid strict-v3 originals and checkpoints (legitimate leap second, lowercase t, long
-  fraction) are retained positives with sealed receipts. Retained reads compose RetainedDispatcher once; an original
-  of a Store outside the sealed custody refuses (RN05) and an unsupported receipt recipe refuses (RN06), each with a
-  single-row witness. Run python3 scripts/pm_event_numbers.py --self-test and python3
-  scripts/pm_event_datetime_inventory.py and credit exactly what they report; the shared inventory must classify the
-  lane''s resources before installation.'
+  Sweep part 2B adopts the shared CV-1101 check and SP-1101 dispatch. Every DCH validator is pm_event_datetime.datetime_validator
+  over the complete outer schema (scripts/pm_dch_formats.py composes it with the DCH HTTPS URI grammar); negatives
+  show the shared predicate''s own refusal through the validator at occurred_at_utc, observed_at_utc, persisted_at_utc,
+  ts and retired_at_utc. The timestamp battery records per-field expectations: the EventRecord profile for occurred_at_utc,
+  CV-253 storage_utc_z for observed_at_utc and persisted_at_utc, and the registered predicate with the owner-schema
+  terminal-Z pattern for ts and retired_at_utc; year 0000, lowercase t and legitimate leap seconds are owner-valid.
+  Retained strict-v3 originals whose timestamps CV-1101 refuses are owner-invalid and refuse; owner-valid strict-v3
+  originals and checkpoints (legitimate leap second, lowercase t, long fraction) are retained positives with sealed
+  receipts. Retained reads compose RetainedDispatcher once; an original of a Store outside the sealed custody refuses
+  (RN05) and an unsupported receipt recipe refuses (RN06), each with a single-row witness. Run python3 scripts/pm_event_numbers.py
+  --self-test and python3 scripts/pm_event_datetime_inventory.py and credit exactly what they report; the shared
+  inventory must classify the lane''s resources before installation.'
 gui_related: false
 gui_classification_reason: Owns event data and persistence contract.
 depends_on: []
 unblocks: []
 acceptance_criteria:
-- Exact family schema, identity, scope, receipt, replay, custody and withdrawal checks pass; membership remains
-  absent.
+- 'Exact family schema, identity, scope, receipt, replay, custody and withdrawal checks pass; Historical preparation
+  snapshot (2026-11-19, received 2bda6aeed0): «membership remains absent».'
 - Review-round-2 acceptance rejects the independently mutated forbidden policy, body, retry, source and outcome
   cases applicable to this exact family; native evidence remains NOT_RUN.
 - All ten standing-check mutations fail the full checker for each prepared family; selected/registered schemas agree
@@ -2058,6 +2057,40 @@ owner_hints:
 ```
 
 
+
+Current selected assignment (2026-11-19): bundle.selection_forward_blocked@1.0.0 is registered for application_or_project in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2231. Its event history selects Application = RP-AUTHORITY-INDEFINITE@1.0.0 (anchor_kind=creation, cardinality_scope=null), Project = RP-AUTHORITY-INDEFINITE@1.0.0 (anchor_kind=creation, cardinality_scope=null); exact original and checkpoint bindings retain their existing Storage assignments. Registry membership supplies no producer adoption or native-installation proof. Missing-registration refusal applies only if the exact current registration is absent.
+
+Current selected assignment (2026-11-19): bundle.selection_sent_to_chat@1.0.0 is registered for application_or_project in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2232. Its event history selects Application = RP-AUTHORITY-INDEFINITE@1.0.0 (anchor_kind=creation, cardinality_scope=null), Project = RP-AUTHORITY-INDEFINITE@1.0.0 (anchor_kind=creation, cardinality_scope=null); exact original and checkpoint bindings retain their existing Storage assignments. Registry membership supplies no producer adoption or native-installation proof. Missing-registration refusal applies only if the exact current registration is absent.
+
+Current selected assignment (2026-11-19): chat.message@1.0.0 is registered for application_or_project in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2239. Its event history selects Application = RP-CHAT-THREAD-LIFETIME@1.0.0 (anchor_kind=explicit_delete, cardinality_scope=thread), Project = RP-CHAT-THREAD-LIFETIME@1.0.0 (anchor_kind=explicit_delete, cardinality_scope=thread); exact original and checkpoint bindings retain their existing Storage assignments. Registry membership supplies no producer adoption or native-installation proof. Missing-registration refusal applies only if the exact current registration is absent.
+
+Current selected assignment (2026-11-19): chat.thread_archived@1.0.0 is registered for application_or_project in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2241. Its event history selects Application = RP-CHAT-THREAD-LIFETIME@1.0.0 (anchor_kind=explicit_delete, cardinality_scope=thread), Project = RP-CHAT-THREAD-LIFETIME@1.0.0 (anchor_kind=explicit_delete, cardinality_scope=thread); exact original and checkpoint bindings retain their existing Storage assignments. Registry membership supplies no producer adoption or native-installation proof. Missing-registration refusal applies only if the exact current registration is absent.
+
+Current selected assignment (2026-11-19): chat.thread_created@1.0.0 is registered for application_or_project in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2242. Its event history selects Application = RP-CHAT-THREAD-LIFETIME@1.0.0 (anchor_kind=explicit_delete, cardinality_scope=thread), Project = RP-CHAT-THREAD-LIFETIME@1.0.0 (anchor_kind=explicit_delete, cardinality_scope=thread); exact original and checkpoint bindings retain their existing Storage assignments. Registry membership supplies no producer adoption or native-installation proof. Missing-registration refusal applies only if the exact current registration is absent.
+
+Current selected assignment (2026-11-19): chat.thread_deleted@1.0.0 is registered for application_or_project in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2243. Its event history selects Application = RP-AUTHORITY-INDEFINITE@1.0.0 (anchor_kind=creation, cardinality_scope=null), Project = RP-AUTHORITY-INDEFINITE@1.0.0 (anchor_kind=creation, cardinality_scope=null); exact original and checkpoint bindings retain their existing Storage assignments. Registry membership supplies no producer adoption or native-installation proof. Missing-registration refusal applies only if the exact current registration is absent.
+
+Current selected assignment (2026-11-19): chat.thread_worktree_bound@1.0.0 is registered for application_or_project in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2244. Its event history selects Application = RP-CHAT-THREAD-LIFETIME@1.0.0 (anchor_kind=explicit_delete, cardinality_scope=thread), Project = RP-CHAT-THREAD-LIFETIME@1.0.0 (anchor_kind=explicit_delete, cardinality_scope=thread); exact original and checkpoint bindings retain their existing Storage assignments. Registry membership supplies no producer adoption or native-installation proof. Missing-registration refusal applies only if the exact current registration is absent.
+
+Current selected assignment (2026-11-19): chat.thread_worktree_create_failed@1.0.0 is registered for application_or_project in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2245. Its event history selects Application = RP-CHAT-THREAD-LIFETIME@1.0.0 (anchor_kind=explicit_delete, cardinality_scope=thread), Project = RP-CHAT-THREAD-LIFETIME@1.0.0 (anchor_kind=explicit_delete, cardinality_scope=thread); exact original and checkpoint bindings retain their existing Storage assignments. Registry membership supplies no producer adoption or native-installation proof. Missing-registration refusal applies only if the exact current registration is absent.
+
+Current selected assignment (2026-11-19): chat.thread_worktree_merge_failed@1.0.0 is registered for application_or_project in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2246. Its event history selects Application = RP-CHAT-THREAD-LIFETIME@1.0.0 (anchor_kind=explicit_delete, cardinality_scope=thread), Project = RP-CHAT-THREAD-LIFETIME@1.0.0 (anchor_kind=explicit_delete, cardinality_scope=thread); exact original and checkpoint bindings retain their existing Storage assignments. Registry membership supplies no producer adoption or native-installation proof. Missing-registration refusal applies only if the exact current registration is absent.
+
+Current selected assignment (2026-11-19): chat.thread_worktree_merged@1.0.0 is registered for application_or_project in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2247. Its event history selects Application = RP-CHAT-THREAD-LIFETIME@1.0.0 (anchor_kind=explicit_delete, cardinality_scope=thread), Project = RP-CHAT-THREAD-LIFETIME@1.0.0 (anchor_kind=explicit_delete, cardinality_scope=thread); exact original and checkpoint bindings retain their existing Storage assignments. Registry membership supplies no producer adoption or native-installation proof. Missing-registration refusal applies only if the exact current registration is absent.
+
+Current selected assignment (2026-11-19): chat.thread_worktree_pr_created@1.0.0 is registered for application_or_project in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2248. Its event history selects Application = RP-CHAT-THREAD-LIFETIME@1.0.0 (anchor_kind=explicit_delete, cardinality_scope=thread), Project = RP-CHAT-THREAD-LIFETIME@1.0.0 (anchor_kind=explicit_delete, cardinality_scope=thread); exact original and checkpoint bindings retain their existing Storage assignments. Registry membership supplies no producer adoption or native-installation proof. Missing-registration refusal applies only if the exact current registration is absent.
+
+Current selected assignment (2026-11-19): chat.thread_worktree_pr_failed@1.0.0 is registered for application_or_project in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2249. Its event history selects Application = RP-CHAT-THREAD-LIFETIME@1.0.0 (anchor_kind=explicit_delete, cardinality_scope=thread), Project = RP-CHAT-THREAD-LIFETIME@1.0.0 (anchor_kind=explicit_delete, cardinality_scope=thread); exact original and checkpoint bindings retain their existing Storage assignments. Registry membership supplies no producer adoption or native-installation proof. Missing-registration refusal applies only if the exact current registration is absent.
+
+Current selected assignment (2026-11-19): chat.thread_worktree_pre_merge_test_failed@1.0.0 is registered for application_or_project in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2250. Its event history selects Application = RP-CHAT-THREAD-LIFETIME@1.0.0 (anchor_kind=explicit_delete, cardinality_scope=thread), Project = RP-CHAT-THREAD-LIFETIME@1.0.0 (anchor_kind=explicit_delete, cardinality_scope=thread); exact original and checkpoint bindings retain their existing Storage assignments. Registry membership supplies no producer adoption or native-installation proof. Missing-registration refusal applies only if the exact current registration is absent.
+
+Current selected assignment (2026-11-19): chat.thread_worktree_pre_merge_test_passed@1.0.0 is registered for application_or_project in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2251. Its event history selects Application = RP-CHAT-THREAD-LIFETIME@1.0.0 (anchor_kind=explicit_delete, cardinality_scope=thread), Project = RP-CHAT-THREAD-LIFETIME@1.0.0 (anchor_kind=explicit_delete, cardinality_scope=thread); exact original and checkpoint bindings retain their existing Storage assignments. Registry membership supplies no producer adoption or native-installation proof. Missing-registration refusal applies only if the exact current registration is absent.
+
+Current selected assignment (2026-11-19): chat.thread_worktree_pre_merge_test_started@1.0.0 is registered for application_or_project in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2252. Its event history selects Application = RP-CHAT-THREAD-LIFETIME@1.0.0 (anchor_kind=explicit_delete, cardinality_scope=thread), Project = RP-CHAT-THREAD-LIFETIME@1.0.0 (anchor_kind=explicit_delete, cardinality_scope=thread); exact original and checkpoint bindings retain their existing Storage assignments. Registry membership supplies no producer adoption or native-installation proof. Missing-registration refusal applies only if the exact current registration is absent.
+
+Current selected assignment (2026-11-19): chat.thread_worktree_renamed@1.0.0 is registered for application_or_project in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2253. Its event history selects Application = RP-CHAT-THREAD-LIFETIME@1.0.0 (anchor_kind=explicit_delete, cardinality_scope=thread), Project = RP-CHAT-THREAD-LIFETIME@1.0.0 (anchor_kind=explicit_delete, cardinality_scope=thread); exact original and checkpoint bindings retain their existing Storage assignments. Registry membership supplies no producer adoption or native-installation proof. Missing-registration refusal applies only if the exact current registration is absent.
+
+Current selected assignment (2026-11-19): chat.thread_worktree_unbound@1.0.0 is registered for application_or_project in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2254. Its event history selects Application = RP-CHAT-THREAD-LIFETIME@1.0.0 (anchor_kind=explicit_delete, cardinality_scope=thread), Project = RP-CHAT-THREAD-LIFETIME@1.0.0 (anchor_kind=explicit_delete, cardinality_scope=thread); exact original and checkpoint bindings retain their existing Storage assignments. Registry membership supplies no producer adoption or native-installation proof. Missing-registration refusal applies only if the exact current registration is absent.
 ### ATS-306 — Stop request, saved outcome and retirement contract oracles
 
 DL-406 and DL-427 govern the exact family chat.response_stop_requested, checked separately by python3 scripts/pm_dch_stop.py. Plans/dch_stop_contract_fixtures.json supplies independent Project/application request, original accepted assistant-turn/work, actual-Store record commitment and cancellation/timeout observations. Plans/dch_stop_request.schema.json and Plans/dch_stop_outcome.schema.json are closed, all references are resolved eagerly, and existing mandatory format validation is enforced. Cases cover schema presence/closure, exact types and LF/format refusals; actual original target/identity/actor/time joins; current replay-only refusal and retained compatibility/history; exact CV-366 application keys and encoded Project partitions; caller-semantic retries excluding Storage metadata; verified full-body/pointer limits and SP-337 custody; actual original Storage metadata; three-second cancellation versus timeout and exact saved outcome time; result CAS/repeat/conflict and restart/recovery model readback; and saved-outcome plus separate-user-action queue barriers. Acknowledgement/display-only success is refused. Every negative starts from a valid case and changes one invariant on the surface being tested; dependent keys, references, copies and commitments remain coherent. Exceptions and successful exits never count as refusal. New real guards need negatives. Every Stop refusal is a named st_* guard-table row (or a reused DCH row), proved by the shared guard-isolation tool through scripts/pm-dch-guard-tables.py; number recipes follow CV-1100/SP-1100 (scripts/pm_event_numbers.py) and timestamps the shared CV-1101 check (scripts/pm_event_datetime.py through scripts/pm_dch_formats.py); the Stop contract has one current edition, so SP-1101 dispatch selects no earlier recipe. Witnesses accept a legitimate leap second, lowercase t and year 0000 at ts and outcome_at_utc and show the shared predicate's own refusal for hour 24, a false leap second and trailing LF; do not introduce another lane serializer/format grammar.

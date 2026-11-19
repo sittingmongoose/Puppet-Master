@@ -2,9 +2,9 @@
 
 Source: `Plans/storage-plan.md`
 
-Source lines: L20238-L23861
+Source lines: L20493-L24262
 
-Source SHA256: `a80ebad269f3f3a87c644ee23b21cdd62ef64ccad2fbe4377e8bd190614fdf31`
+Source SHA256: `8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537`
 
 ---
 
@@ -32,11 +32,12 @@ plan_unit_id: SP-2500
 unit_type: interface_contract
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: 'NEWLY AUTHORED Storage binding for browser.workspace.closed@1.0.0 under DL-046: admission, writer cutoff
-  and dedupe before append, SP-286 v2 custody with synced first receipt, SP-278 filtered checkpoint browser_workspace_closed_index_checkpoint
+canonical_text: 'NEWLY AUTHORED Storage binding for browser.workspace.closed@1.0.0 under DL-046: admission, writer
+  cutoff and dedupe before append, SP-286 v2 custody with synced first receipt, SP-278 filtered checkpoint browser_workspace_closed_index_checkpoint
   with nine-field durable token and CAS advance, read-only consumer browser.workspace_inventory.workspace_closed.v1@1.0.0,
-  event retention RP-AUTHORITY-INDEFINITE@1.0.0 per SP-262, checkpoint RP-PROJECTION-3GEN, SP-1101 sealed-receipt retained
-  reads and withdrawal. Nothing is admitted.'
+  event retention RP-AUTHORITY-INDEFINITE@1.0.0 per SP-262, checkpoint RP-PROJECTION-3GEN, SP-1101 sealed-receipt
+  retained reads and withdrawal. Historical preparation snapshot (2026-11-19, received 2bda6aeed0): «Nothing is
+  admitted».'
 gui_related: false
 gui_classification_reason: Storage persistence, custody and derived-read contract; no presentation behavior.
 depends_on:
@@ -83,6 +84,8 @@ negative_constraints:
 - No sibling checkpoint, alias, durable Browser projection or replay effect.
 ```
 
+
+Current selected assignment (2026-11-19): browser.workspace.closed@1.0.0 is registered for project_only in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2208. Its event history selects RP-AUTHORITY-INDEFINITE@1.0.0; exact original and checkpoint bindings retain their existing Storage assignments. Registry membership supplies no producer adoption or native-installation proof. Missing-registration refusal applies only if the exact current registration is absent.
 ### SP-2501 - `browser.page.created` append, custody, checkpoint and withdrawal
 
 **Newly authored Storage binding under DL-046** for `browser.page.created`@1.0.0, prepared without admission. It adopts Section 15 `#browser-program-event-authority-page-created`, CV-2501, SP-286/CV-339 v2 first-receipt custody, SP-236 physical bytes, SP-278 and DL-076, SP-1101 retained dispatch and SP-262's retention assignment by name. The existing `event_record_index`, dedupe and `event_append_receipt_custody` keep their owners; no sibling binding is reused.
@@ -105,9 +108,10 @@ status: accepted
 owner_doc: Plans/storage-plan.md
 canonical_text: 'NEWLY AUTHORED Storage binding for browser.page.created@1.0.0 under DL-046: admission, writer cutoff
   and dedupe before append, SP-286 v2 custody with synced first receipt, SP-278 filtered checkpoint browser_page_created_index_checkpoint
-  with nine-field durable token and CAS advance, read-only consumer browser.page_history.page_created.v1@1.0.0, event
-  retention RP-AUTHORITY-INDEFINITE@1.0.0 per SP-262, checkpoint RP-PROJECTION-3GEN, SP-1101 sealed-receipt retained reads
-  and withdrawal. Nothing is admitted.'
+  with nine-field durable token and CAS advance, read-only consumer browser.page_history.page_created.v1@1.0.0,
+  event retention RP-AUTHORITY-INDEFINITE@1.0.0 per SP-262, checkpoint RP-PROJECTION-3GEN, SP-1101 sealed-receipt
+  retained reads and withdrawal. Historical preparation snapshot (2026-11-19, received 2bda6aeed0): «Nothing is
+  admitted».'
 gui_related: false
 gui_classification_reason: Storage persistence, custody and derived-read contract; no presentation behavior.
 depends_on:
@@ -154,6 +158,8 @@ negative_constraints:
 - No sibling checkpoint, alias, durable Browser projection or replay effect.
 ```
 
+
+Current selected assignment (2026-11-19): browser.page.created@1.0.0 is registered for project_only in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2169. Its event history selects RP-AUTHORITY-INDEFINITE@1.0.0; exact original and checkpoint bindings retain their existing Storage assignments. Registry membership supplies no producer adoption or native-installation proof. Missing-registration refusal applies only if the exact current registration is absent.
 ### SP-2502 - `browser.page.activated` append, custody, checkpoint and withdrawal
 
 **Newly authored Storage binding under DL-046** for `browser.page.activated`@1.0.0, prepared without admission. It adopts Section 15 `#browser-program-event-authority-page-activated`, CV-2502, SP-286/CV-339 v2 first-receipt custody, SP-236 physical bytes, SP-278 and DL-076, SP-1101 retained dispatch and SP-262's retention assignment by name. The existing `event_record_index`, dedupe and `event_append_receipt_custody` keep their owners; no sibling binding is reused.
@@ -174,11 +180,12 @@ plan_unit_id: SP-2502
 unit_type: interface_contract
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: 'NEWLY AUTHORED Storage binding for browser.page.activated@1.0.0 under DL-046: admission, writer cutoff
-  and dedupe before append, SP-286 v2 custody with synced first receipt, SP-278 filtered checkpoint browser_page_activated_index_checkpoint
-  with nine-field durable token and CAS advance, read-only consumer browser.page_history.page_activated.v1@1.0.0, event
-  retention RP-AUTHORITY-INDEFINITE@1.0.0 per SP-262, checkpoint RP-PROJECTION-3GEN, SP-1101 sealed-receipt retained reads
-  and withdrawal. Nothing is admitted.'
+canonical_text: 'NEWLY AUTHORED Storage binding for browser.page.activated@1.0.0 under DL-046: admission, writer
+  cutoff and dedupe before append, SP-286 v2 custody with synced first receipt, SP-278 filtered checkpoint browser_page_activated_index_checkpoint
+  with nine-field durable token and CAS advance, read-only consumer browser.page_history.page_activated.v1@1.0.0,
+  event retention RP-AUTHORITY-INDEFINITE@1.0.0 per SP-262, checkpoint RP-PROJECTION-3GEN, SP-1101 sealed-receipt
+  retained reads and withdrawal. Historical preparation snapshot (2026-11-19, received 2bda6aeed0): «Nothing is
+  admitted».'
 gui_related: false
 gui_classification_reason: Storage persistence, custody and derived-read contract; no presentation behavior.
 depends_on:
@@ -225,6 +232,8 @@ negative_constraints:
 - No sibling checkpoint, alias, durable Browser projection or replay effect.
 ```
 
+
+Current selected assignment (2026-11-19): browser.page.activated@1.0.0 is registered for project_only in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2167. Its event history selects RP-AUTHORITY-INDEFINITE@1.0.0; exact original and checkpoint bindings retain their existing Storage assignments. Registry membership supplies no producer adoption or native-installation proof. Missing-registration refusal applies only if the exact current registration is absent.
 ### SP-2503 - `browser.page.closed` append, custody, checkpoint and withdrawal
 
 **Newly authored Storage binding under DL-046** for `browser.page.closed`@1.0.0, prepared without admission. It adopts Section 15 `#browser-program-event-authority-page-closed`, CV-2503, SP-286/CV-339 v2 first-receipt custody, SP-236 physical bytes, SP-278 and DL-076, SP-1101 retained dispatch and SP-262's retention assignment by name. The existing `event_record_index`, dedupe and `event_append_receipt_custody` keep their owners; no sibling binding is reused.
@@ -245,11 +254,11 @@ plan_unit_id: SP-2503
 unit_type: interface_contract
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: 'NEWLY AUTHORED Storage binding for browser.page.closed@1.0.0 under DL-046: admission, writer cutoff and
-  dedupe before append, SP-286 v2 custody with synced first receipt, SP-278 filtered checkpoint browser_page_closed_index_checkpoint
-  with nine-field durable token and CAS advance, read-only consumer browser.page_history.page_closed.v1@1.0.0, event retention
-  RP-AUTHORITY-INDEFINITE@1.0.0 per SP-262, checkpoint RP-PROJECTION-3GEN, SP-1101 sealed-receipt retained reads and withdrawal.
-  Nothing is admitted.'
+canonical_text: 'NEWLY AUTHORED Storage binding for browser.page.closed@1.0.0 under DL-046: admission, writer cutoff
+  and dedupe before append, SP-286 v2 custody with synced first receipt, SP-278 filtered checkpoint browser_page_closed_index_checkpoint
+  with nine-field durable token and CAS advance, read-only consumer browser.page_history.page_closed.v1@1.0.0, event
+  retention RP-AUTHORITY-INDEFINITE@1.0.0 per SP-262, checkpoint RP-PROJECTION-3GEN, SP-1101 sealed-receipt retained
+  reads and withdrawal. Historical preparation snapshot (2026-11-19, received 2bda6aeed0): «Nothing is admitted».'
 gui_related: false
 gui_classification_reason: Storage persistence, custody and derived-read contract; no presentation behavior.
 depends_on:
@@ -296,6 +305,8 @@ negative_constraints:
 - No sibling checkpoint, alias, durable Browser projection or replay effect.
 ```
 
+
+Current selected assignment (2026-11-19): browser.page.closed@1.0.0 is registered for project_only in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2168. Its event history selects RP-AUTHORITY-INDEFINITE@1.0.0; exact original and checkpoint bindings retain their existing Storage assignments. Registry membership supplies no producer adoption or native-installation proof. Missing-registration refusal applies only if the exact current registration is absent.
 ### SP-2504 - `browser.controller_lease.granted` append, custody, checkpoint and withdrawal
 
 **Newly authored Storage binding under DL-046** for `browser.controller_lease.granted`@1.0.0, prepared without admission. It adopts Section 15 `#browser-program-event-authority-controller-lease-granted`, CV-2504, SP-286/CV-339 v2 first-receipt custody, SP-236 physical bytes, SP-278 and DL-076, SP-1101 retained dispatch and SP-262's retention assignment by name. The existing `event_record_index`, dedupe and `event_append_receipt_custody` keep their owners; no sibling binding is reused.
@@ -316,11 +327,12 @@ plan_unit_id: SP-2504
 unit_type: interface_contract
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: 'NEWLY AUTHORED Storage binding for browser.controller_lease.granted@1.0.0 under DL-046: admission, writer
-  cutoff and dedupe before append, SP-286 v2 custody with synced first receipt, SP-278 filtered checkpoint browser_controller_lease_granted_index_checkpoint
-  with nine-field durable token and CAS advance, read-only consumer browser.controller_history.controller_lease_granted.v1@1.0.0,
-  event retention RP-AUTHORITY-INDEFINITE@1.0.0 per SP-262, checkpoint RP-PROJECTION-3GEN, SP-1101 sealed-receipt retained
-  reads and withdrawal. Nothing is admitted.'
+canonical_text: 'NEWLY AUTHORED Storage binding for browser.controller_lease.granted@1.0.0 under DL-046: admission,
+  writer cutoff and dedupe before append, SP-286 v2 custody with synced first receipt, SP-278 filtered checkpoint
+  browser_controller_lease_granted_index_checkpoint with nine-field durable token and CAS advance, read-only consumer
+  browser.controller_history.controller_lease_granted.v1@1.0.0, event retention RP-AUTHORITY-INDEFINITE@1.0.0 per
+  SP-262, checkpoint RP-PROJECTION-3GEN, SP-1101 sealed-receipt retained reads and withdrawal. Historical preparation
+  snapshot (2026-11-19, received 2bda6aeed0): «Nothing is admitted».'
 gui_related: false
 gui_classification_reason: Storage persistence, custody and derived-read contract; no presentation behavior.
 depends_on:
@@ -367,6 +379,8 @@ negative_constraints:
 - No sibling checkpoint, alias, durable Browser projection or replay effect.
 ```
 
+
+Current selected assignment (2026-11-19): browser.controller_lease.granted@1.0.0 is registered for project_only in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2158. Its event history selects RP-AUTHORITY-INDEFINITE@1.0.0; exact original and checkpoint bindings retain their existing Storage assignments. Registry membership supplies no producer adoption or native-installation proof. Missing-registration refusal applies only if the exact current registration is absent.
 ### SP-2505 - `browser.controller_lease.renewed` append, custody, checkpoint and withdrawal
 
 **Newly authored Storage binding under DL-046** for `browser.controller_lease.renewed`@1.0.0, prepared without admission. It adopts Section 15 `#browser-program-event-authority-controller-lease-renewed`, CV-2505, SP-286/CV-339 v2 first-receipt custody, SP-236 physical bytes, SP-278 and DL-076, SP-1101 retained dispatch and SP-262's retention assignment by name. The existing `event_record_index`, dedupe and `event_append_receipt_custody` keep their owners; no sibling binding is reused.
@@ -387,11 +401,12 @@ plan_unit_id: SP-2505
 unit_type: interface_contract
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: 'NEWLY AUTHORED Storage binding for browser.controller_lease.renewed@1.0.0 under DL-046: admission, writer
-  cutoff and dedupe before append, SP-286 v2 custody with synced first receipt, SP-278 filtered checkpoint browser_controller_lease_renewed_index_checkpoint
-  with nine-field durable token and CAS advance, read-only consumer browser.controller_history.controller_lease_renewed.v1@1.0.0,
-  event retention RP-AUTHORITY-INDEFINITE@1.0.0 per SP-262, checkpoint RP-PROJECTION-3GEN, SP-1101 sealed-receipt retained
-  reads and withdrawal. Nothing is admitted.'
+canonical_text: 'NEWLY AUTHORED Storage binding for browser.controller_lease.renewed@1.0.0 under DL-046: admission,
+  writer cutoff and dedupe before append, SP-286 v2 custody with synced first receipt, SP-278 filtered checkpoint
+  browser_controller_lease_renewed_index_checkpoint with nine-field durable token and CAS advance, read-only consumer
+  browser.controller_history.controller_lease_renewed.v1@1.0.0, event retention RP-AUTHORITY-INDEFINITE@1.0.0 per
+  SP-262, checkpoint RP-PROJECTION-3GEN, SP-1101 sealed-receipt retained reads and withdrawal. Historical preparation
+  snapshot (2026-11-19, received 2bda6aeed0): «Nothing is admitted».'
 gui_related: false
 gui_classification_reason: Storage persistence, custody and derived-read contract; no presentation behavior.
 depends_on:
@@ -438,6 +453,8 @@ negative_constraints:
 - No sibling checkpoint, alias, durable Browser projection or replay effect.
 ```
 
+
+Current selected assignment (2026-11-19): browser.controller_lease.renewed@1.0.0 is registered for project_only in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2160. Its event history selects RP-AUTHORITY-INDEFINITE@1.0.0; exact original and checkpoint bindings retain their existing Storage assignments. Registry membership supplies no producer adoption or native-installation proof. Missing-registration refusal applies only if the exact current registration is absent.
 ### SP-2506 - `browser.controller_lease.lost` append, custody, checkpoint and withdrawal
 
 **Newly authored Storage binding under DL-046** for `browser.controller_lease.lost`@1.0.0, prepared without admission. It adopts Section 15 `#browser-program-event-authority-controller-lease-lost`, CV-2506, SP-286/CV-339 v2 first-receipt custody, SP-236 physical bytes, SP-278 and DL-076, SP-1101 retained dispatch and SP-262's retention assignment by name. The existing `event_record_index`, dedupe and `event_append_receipt_custody` keep their owners; no sibling binding is reused.
@@ -458,11 +475,12 @@ plan_unit_id: SP-2506
 unit_type: interface_contract
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: 'NEWLY AUTHORED Storage binding for browser.controller_lease.lost@1.0.0 under DL-046: admission, writer
-  cutoff and dedupe before append, SP-286 v2 custody with synced first receipt, SP-278 filtered checkpoint browser_controller_lease_lost_index_checkpoint
-  with nine-field durable token and CAS advance, read-only consumer browser.controller_history.controller_lease_lost.v1@1.0.0,
-  event retention RP-AUTHORITY-INDEFINITE@1.0.0 per SP-262, checkpoint RP-PROJECTION-3GEN, SP-1101 sealed-receipt retained
-  reads and withdrawal. Nothing is admitted.'
+canonical_text: 'NEWLY AUTHORED Storage binding for browser.controller_lease.lost@1.0.0 under DL-046: admission,
+  writer cutoff and dedupe before append, SP-286 v2 custody with synced first receipt, SP-278 filtered checkpoint
+  browser_controller_lease_lost_index_checkpoint with nine-field durable token and CAS advance, read-only consumer
+  browser.controller_history.controller_lease_lost.v1@1.0.0, event retention RP-AUTHORITY-INDEFINITE@1.0.0 per SP-262,
+  checkpoint RP-PROJECTION-3GEN, SP-1101 sealed-receipt retained reads and withdrawal. Historical preparation snapshot
+  (2026-11-19, received 2bda6aeed0): «Nothing is admitted».'
 gui_related: false
 gui_classification_reason: Storage persistence, custody and derived-read contract; no presentation behavior.
 depends_on:
@@ -509,6 +527,8 @@ negative_constraints:
 - No sibling checkpoint, alias, durable Browser projection or replay effect.
 ```
 
+
+Current selected assignment (2026-11-19): browser.controller_lease.lost@1.0.0 is registered for project_only in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2159. Its event history selects RP-AUTHORITY-INDEFINITE@1.0.0; exact original and checkpoint bindings retain their existing Storage assignments. Registry membership supplies no producer adoption or native-installation proof. Missing-registration refusal applies only if the exact current registration is absent.
 ### SP-2507 - `browser.controller_lease.takeover_requested` append, custody, checkpoint and withdrawal
 
 **Newly authored Storage binding under DL-046** for `browser.controller_lease.takeover_requested`@1.0.0, prepared without admission. It adopts Section 15 `#browser-program-event-authority-controller-lease-takeover-requested`, CV-2507, SP-286/CV-339 v2 first-receipt custody, SP-236 physical bytes, SP-278 and DL-076, SP-1101 retained dispatch and SP-262's retention assignment by name. The existing `event_record_index`, dedupe and `event_append_receipt_custody` keep their owners; no sibling binding is reused.
@@ -529,11 +549,12 @@ plan_unit_id: SP-2507
 unit_type: interface_contract
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: 'NEWLY AUTHORED Storage binding for browser.controller_lease.takeover_requested@1.0.0 under DL-046: admission,
-  writer cutoff and dedupe before append, SP-286 v2 custody with synced first receipt, SP-278 filtered checkpoint browser_controller_lease_takeover_requested_index_checkpoint
-  with nine-field durable token and CAS advance, read-only consumer browser.controller_history.controller_lease_takeover_requested.v1@1.0.0,
-  event retention RP-AUTHORITY-INDEFINITE@1.0.0 per SP-262, checkpoint RP-PROJECTION-3GEN, SP-1101 sealed-receipt retained
-  reads and withdrawal. Nothing is admitted.'
+canonical_text: 'NEWLY AUTHORED Storage binding for browser.controller_lease.takeover_requested@1.0.0 under DL-046:
+  admission, writer cutoff and dedupe before append, SP-286 v2 custody with synced first receipt, SP-278 filtered
+  checkpoint browser_controller_lease_takeover_requested_index_checkpoint with nine-field durable token and CAS
+  advance, read-only consumer browser.controller_history.controller_lease_takeover_requested.v1@1.0.0, event retention
+  RP-AUTHORITY-INDEFINITE@1.0.0 per SP-262, checkpoint RP-PROJECTION-3GEN, SP-1101 sealed-receipt retained reads
+  and withdrawal. Historical preparation snapshot (2026-11-19, received 2bda6aeed0): «Nothing is admitted».'
 gui_related: false
 gui_classification_reason: Storage persistence, custody and derived-read contract; no presentation behavior.
 depends_on:
@@ -580,6 +601,8 @@ negative_constraints:
 - No sibling checkpoint, alias, durable Browser projection or replay effect.
 ```
 
+
+Current selected assignment (2026-11-19): browser.controller_lease.takeover_requested@1.0.0 is registered for project_only in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2162. Its event history selects RP-AUTHORITY-INDEFINITE@1.0.0; exact original and checkpoint bindings retain their existing Storage assignments. Registry membership supplies no producer adoption or native-installation proof. Missing-registration refusal applies only if the exact current registration is absent.
 ### SP-2508 - `browser.controller_lease.takeover_completed` append, custody, checkpoint and withdrawal
 
 **Newly authored Storage binding under DL-046** for `browser.controller_lease.takeover_completed`@1.0.0, prepared without admission. It adopts Section 15 `#browser-program-event-authority-controller-lease-takeover-completed`, CV-2508, SP-286/CV-339 v2 first-receipt custody, SP-236 physical bytes, SP-278 and DL-076, SP-1101 retained dispatch and SP-262's retention assignment by name. The existing `event_record_index`, dedupe and `event_append_receipt_custody` keep their owners; no sibling binding is reused.
@@ -600,11 +623,12 @@ plan_unit_id: SP-2508
 unit_type: interface_contract
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: 'NEWLY AUTHORED Storage binding for browser.controller_lease.takeover_completed@1.0.0 under DL-046: admission,
-  writer cutoff and dedupe before append, SP-286 v2 custody with synced first receipt, SP-278 filtered checkpoint browser_controller_lease_takeover_completed_index_checkpoint
-  with nine-field durable token and CAS advance, read-only consumer browser.controller_history.controller_lease_takeover_completed.v1@1.0.0,
-  event retention RP-AUTHORITY-INDEFINITE@1.0.0 per SP-262, checkpoint RP-PROJECTION-3GEN, SP-1101 sealed-receipt retained
-  reads and withdrawal. Nothing is admitted.'
+canonical_text: 'NEWLY AUTHORED Storage binding for browser.controller_lease.takeover_completed@1.0.0 under DL-046:
+  admission, writer cutoff and dedupe before append, SP-286 v2 custody with synced first receipt, SP-278 filtered
+  checkpoint browser_controller_lease_takeover_completed_index_checkpoint with nine-field durable token and CAS
+  advance, read-only consumer browser.controller_history.controller_lease_takeover_completed.v1@1.0.0, event retention
+  RP-AUTHORITY-INDEFINITE@1.0.0 per SP-262, checkpoint RP-PROJECTION-3GEN, SP-1101 sealed-receipt retained reads
+  and withdrawal. Historical preparation snapshot (2026-11-19, received 2bda6aeed0): «Nothing is admitted».'
 gui_related: false
 gui_classification_reason: Storage persistence, custody and derived-read contract; no presentation behavior.
 depends_on:
@@ -651,6 +675,8 @@ negative_constraints:
 - No sibling checkpoint, alias, durable Browser projection or replay effect.
 ```
 
+
+Current selected assignment (2026-11-19): browser.controller_lease.takeover_completed@1.0.0 is registered for project_only in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2161. Its event history selects RP-AUTHORITY-INDEFINITE@1.0.0; exact original and checkpoint bindings retain their existing Storage assignments. Registry membership supplies no producer adoption or native-installation proof. Missing-registration refusal applies only if the exact current registration is absent.
 ### SP-2509 - `browser.navigation.generation_changed` append, custody, checkpoint and withdrawal
 
 **Newly authored Storage binding under DL-046** for `browser.navigation.generation_changed`@1.0.0, prepared without admission. It adopts Section 15 `#browser-program-event-authority-navigation-generation-changed`, CV-2509, SP-286/CV-339 v2 first-receipt custody, SP-236 physical bytes, SP-278 and DL-076, SP-1101 retained dispatch and SP-262's retention assignment by name. The existing `event_record_index`, dedupe and `event_append_receipt_custody` keep their owners; no sibling binding is reused.
@@ -672,10 +698,11 @@ unit_type: interface_contract
 status: accepted
 owner_doc: Plans/storage-plan.md
 canonical_text: 'NEWLY AUTHORED Storage binding for browser.navigation.generation_changed@1.0.0 under DL-046: admission,
-  writer cutoff and dedupe before append, SP-286 v2 custody with synced first receipt, SP-278 filtered checkpoint browser_navigation_generation_changed_index_checkpoint
-  with nine-field durable token and CAS advance, read-only consumer browser.page_history.navigation_generation_changed.v1@1.0.0,
-  event retention RP-AUTHORITY-INDEFINITE@1.0.0 per SP-262, checkpoint RP-PROJECTION-3GEN, SP-1101 sealed-receipt retained
-  reads and withdrawal. Nothing is admitted.'
+  writer cutoff and dedupe before append, SP-286 v2 custody with synced first receipt, SP-278 filtered checkpoint
+  browser_navigation_generation_changed_index_checkpoint with nine-field durable token and CAS advance, read-only
+  consumer browser.page_history.navigation_generation_changed.v1@1.0.0, event retention RP-AUTHORITY-INDEFINITE@1.0.0
+  per SP-262, checkpoint RP-PROJECTION-3GEN, SP-1101 sealed-receipt retained reads and withdrawal. Historical preparation
+  snapshot (2026-11-19, received 2bda6aeed0): «Nothing is admitted».'
 gui_related: false
 gui_classification_reason: Storage persistence, custody and derived-read contract; no presentation behavior.
 depends_on:
@@ -722,6 +749,8 @@ negative_constraints:
 - No sibling checkpoint, alias, durable Browser projection or replay effect.
 ```
 
+
+Current selected assignment (2026-11-19): browser.navigation.generation_changed@1.0.0 is registered for project_only in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2166. Its event history selects RP-AUTHORITY-INDEFINITE@1.0.0; exact original and checkpoint bindings retain their existing Storage assignments. Registry membership supplies no producer adoption or native-installation proof. Missing-registration refusal applies only if the exact current registration is absent.
 ### SP-2510 - `browser.document.generation_changed` append, custody, checkpoint and withdrawal
 
 **Newly authored Storage binding under DL-046** for `browser.document.generation_changed`@1.0.0, prepared without admission. It adopts Section 15 `#browser-program-event-authority-document-generation-changed`, CV-2510, SP-286/CV-339 v2 first-receipt custody, SP-236 physical bytes, SP-278 and DL-076, SP-1101 retained dispatch and SP-262's retention assignment by name. The existing `event_record_index`, dedupe and `event_append_receipt_custody` keep their owners; no sibling binding is reused.
@@ -743,10 +772,11 @@ unit_type: interface_contract
 status: accepted
 owner_doc: Plans/storage-plan.md
 canonical_text: 'NEWLY AUTHORED Storage binding for browser.document.generation_changed@1.0.0 under DL-046: admission,
-  writer cutoff and dedupe before append, SP-286 v2 custody with synced first receipt, SP-278 filtered checkpoint browser_document_generation_changed_index_checkpoint
-  with nine-field durable token and CAS advance, read-only consumer browser.page_history.document_generation_changed.v1@1.0.0,
-  event retention RP-AUTHORITY-INDEFINITE@1.0.0 per SP-262, checkpoint RP-PROJECTION-3GEN, SP-1101 sealed-receipt retained
-  reads and withdrawal. Nothing is admitted.'
+  writer cutoff and dedupe before append, SP-286 v2 custody with synced first receipt, SP-278 filtered checkpoint
+  browser_document_generation_changed_index_checkpoint with nine-field durable token and CAS advance, read-only
+  consumer browser.page_history.document_generation_changed.v1@1.0.0, event retention RP-AUTHORITY-INDEFINITE@1.0.0
+  per SP-262, checkpoint RP-PROJECTION-3GEN, SP-1101 sealed-receipt retained reads and withdrawal. Historical preparation
+  snapshot (2026-11-19, received 2bda6aeed0): «Nothing is admitted».'
 gui_related: false
 gui_classification_reason: Storage persistence, custody and derived-read contract; no presentation behavior.
 depends_on:
@@ -793,6 +823,8 @@ negative_constraints:
 - No sibling checkpoint, alias, durable Browser projection or replay effect.
 ```
 
+
+Current selected assignment (2026-11-19): browser.document.generation_changed@1.0.0 is registered for project_only in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2163. Its event history selects RP-AUTHORITY-INDEFINITE@1.0.0; exact original and checkpoint bindings retain their existing Storage assignments. Registry membership supplies no producer adoption or native-installation proof. Missing-registration refusal applies only if the exact current registration is absent.
 ### SP-2511 - `browser.representation.captured` append, custody, checkpoint and withdrawal
 
 **Newly authored Storage binding under DL-046** for `browser.representation.captured`@1.0.0, prepared without admission. It adopts Section 15 `#browser-program-event-authority-representation-captured`, CV-2511, SP-286/CV-339 v2 first-receipt custody, SP-236 physical bytes, SP-278 and DL-076, SP-1101 retained dispatch and SP-262's retention assignment by name. The existing `event_record_index`, dedupe and `event_append_receipt_custody` keep their owners; no sibling binding is reused.
@@ -813,11 +845,12 @@ plan_unit_id: SP-2511
 unit_type: interface_contract
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: 'NEWLY AUTHORED Storage binding for browser.representation.captured@1.0.0 under DL-046: admission, writer
-  cutoff and dedupe before append, SP-286 v2 custody with synced first receipt, SP-278 filtered checkpoint browser_representation_captured_index_checkpoint
-  with nine-field durable token and CAS advance, read-only consumer browser.representation_history.representation_captured.v1@1.0.0,
-  event retention RP-AUTHORITY-INDEFINITE@1.0.0 per SP-262, checkpoint RP-PROJECTION-3GEN, SP-1101 sealed-receipt retained
-  reads and withdrawal. Nothing is admitted.'
+canonical_text: 'NEWLY AUTHORED Storage binding for browser.representation.captured@1.0.0 under DL-046: admission,
+  writer cutoff and dedupe before append, SP-286 v2 custody with synced first receipt, SP-278 filtered checkpoint
+  browser_representation_captured_index_checkpoint with nine-field durable token and CAS advance, read-only consumer
+  browser.representation_history.representation_captured.v1@1.0.0, event retention RP-AUTHORITY-INDEFINITE@1.0.0
+  per SP-262, checkpoint RP-PROJECTION-3GEN, SP-1101 sealed-receipt retained reads and withdrawal. Historical preparation
+  snapshot (2026-11-19, received 2bda6aeed0): «Nothing is admitted».'
 gui_related: false
 gui_classification_reason: Storage persistence, custody and derived-read contract; no presentation behavior.
 depends_on:
@@ -864,6 +897,8 @@ negative_constraints:
 - No sibling checkpoint, alias, durable Browser projection or replay effect.
 ```
 
+
+Current selected assignment (2026-11-19): browser.representation.captured@1.0.0 is registered for project_only in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2190. Its event history selects RP-AUTHORITY-INDEFINITE@1.0.0; exact original and checkpoint bindings retain their existing Storage assignments. Registry membership supplies no producer adoption or native-installation proof. Missing-registration refusal applies only if the exact current registration is absent.
 ### SP-2512 - `browser.representation.delta_created` append, custody, checkpoint and withdrawal
 
 **Newly authored Storage binding under DL-046** for `browser.representation.delta_created`@1.0.0, prepared without admission. It adopts Section 15 `#browser-program-event-authority-representation-delta-created`, CV-2512, SP-286/CV-339 v2 first-receipt custody, SP-236 physical bytes, SP-278 and DL-076, SP-1101 retained dispatch and SP-262's retention assignment by name. The existing `event_record_index`, dedupe and `event_append_receipt_custody` keep their owners; no sibling binding is reused.
@@ -885,10 +920,11 @@ unit_type: interface_contract
 status: accepted
 owner_doc: Plans/storage-plan.md
 canonical_text: 'NEWLY AUTHORED Storage binding for browser.representation.delta_created@1.0.0 under DL-046: admission,
-  writer cutoff and dedupe before append, SP-286 v2 custody with synced first receipt, SP-278 filtered checkpoint browser_representation_delta_created_index_checkpoint
-  with nine-field durable token and CAS advance, read-only consumer browser.representation_history.representation_delta_created.v1@1.0.0,
-  event retention RP-AUTHORITY-INDEFINITE@1.0.0 per SP-262, checkpoint RP-PROJECTION-3GEN, SP-1101 sealed-receipt retained
-  reads and withdrawal. Nothing is admitted.'
+  writer cutoff and dedupe before append, SP-286 v2 custody with synced first receipt, SP-278 filtered checkpoint
+  browser_representation_delta_created_index_checkpoint with nine-field durable token and CAS advance, read-only
+  consumer browser.representation_history.representation_delta_created.v1@1.0.0, event retention RP-AUTHORITY-INDEFINITE@1.0.0
+  per SP-262, checkpoint RP-PROJECTION-3GEN, SP-1101 sealed-receipt retained reads and withdrawal. Historical preparation
+  snapshot (2026-11-19, received 2bda6aeed0): «Nothing is admitted».'
 gui_related: false
 gui_classification_reason: Storage persistence, custody and derived-read contract; no presentation behavior.
 depends_on:
@@ -935,6 +971,8 @@ negative_constraints:
 - No sibling checkpoint, alias, durable Browser projection or replay effect.
 ```
 
+
+Current selected assignment (2026-11-19): browser.representation.delta_created@1.0.0 is registered for project_only in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2191. Its event history selects RP-AUTHORITY-INDEFINITE@1.0.0; exact original and checkpoint bindings retain their existing Storage assignments. Registry membership supplies no producer adoption or native-installation proof. Missing-registration refusal applies only if the exact current registration is absent.
 ### SP-2513 - `browser.representation.queried` append, custody, checkpoint and withdrawal
 
 **Newly authored Storage binding under DL-046** for `browser.representation.queried`@1.0.0, prepared without admission. It adopts Section 15 `#browser-program-event-authority-representation-queried`, CV-2513, SP-286/CV-339 v2 first-receipt custody, SP-236 physical bytes, SP-278 and DL-076, SP-1101 retained dispatch and SP-262's retention assignment by name. The existing `event_record_index`, dedupe and `event_append_receipt_custody` keep their owners; no sibling binding is reused.
@@ -955,11 +993,12 @@ plan_unit_id: SP-2513
 unit_type: interface_contract
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: 'NEWLY AUTHORED Storage binding for browser.representation.queried@1.0.0 under DL-046: admission, writer
-  cutoff and dedupe before append, SP-286 v2 custody with synced first receipt, SP-278 filtered checkpoint browser_representation_queried_index_checkpoint
-  with nine-field durable token and CAS advance, read-only consumer browser.representation_history.representation_queried.v1@1.0.0,
-  event retention RP-AUTHORITY-INDEFINITE@1.0.0 per SP-262, checkpoint RP-PROJECTION-3GEN, SP-1101 sealed-receipt retained
-  reads and withdrawal. Nothing is admitted.'
+canonical_text: 'NEWLY AUTHORED Storage binding for browser.representation.queried@1.0.0 under DL-046: admission,
+  writer cutoff and dedupe before append, SP-286 v2 custody with synced first receipt, SP-278 filtered checkpoint
+  browser_representation_queried_index_checkpoint with nine-field durable token and CAS advance, read-only consumer
+  browser.representation_history.representation_queried.v1@1.0.0, event retention RP-AUTHORITY-INDEFINITE@1.0.0
+  per SP-262, checkpoint RP-PROJECTION-3GEN, SP-1101 sealed-receipt retained reads and withdrawal. Historical preparation
+  snapshot (2026-11-19, received 2bda6aeed0): «Nothing is admitted».'
 gui_related: false
 gui_classification_reason: Storage persistence, custody and derived-read contract; no presentation behavior.
 depends_on:
@@ -1006,6 +1045,8 @@ negative_constraints:
 - No sibling checkpoint, alias, durable Browser projection or replay effect.
 ```
 
+
+Current selected assignment (2026-11-19): browser.representation.queried@1.0.0 is registered for project_only in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2193. Its event history selects RP-AUTHORITY-INDEFINITE@1.0.0; exact original and checkpoint bindings retain their existing Storage assignments. Registry membership supplies no producer adoption or native-installation proof. Missing-registration refusal applies only if the exact current registration is absent.
 ### SP-2514 - `browser.representation.invalidated` append, custody, checkpoint and withdrawal
 
 **Newly authored Storage binding under DL-046** for `browser.representation.invalidated`@1.0.0, prepared without admission. It adopts Section 15 `#browser-program-event-authority-representation-invalidated`, CV-2514, SP-286/CV-339 v2 first-receipt custody, SP-236 physical bytes, SP-278 and DL-076, SP-1101 retained dispatch and SP-262's retention assignment by name. The existing `event_record_index`, dedupe and `event_append_receipt_custody` keep their owners; no sibling binding is reused.
@@ -1027,10 +1068,11 @@ unit_type: interface_contract
 status: accepted
 owner_doc: Plans/storage-plan.md
 canonical_text: 'NEWLY AUTHORED Storage binding for browser.representation.invalidated@1.0.0 under DL-046: admission,
-  writer cutoff and dedupe before append, SP-286 v2 custody with synced first receipt, SP-278 filtered checkpoint browser_representation_invalidated_index_checkpoint
-  with nine-field durable token and CAS advance, read-only consumer browser.representation_history.representation_invalidated.v1@1.0.0,
-  event retention RP-AUTHORITY-INDEFINITE@1.0.0 per SP-262, checkpoint RP-PROJECTION-3GEN, SP-1101 sealed-receipt retained
-  reads and withdrawal. Nothing is admitted.'
+  writer cutoff and dedupe before append, SP-286 v2 custody with synced first receipt, SP-278 filtered checkpoint
+  browser_representation_invalidated_index_checkpoint with nine-field durable token and CAS advance, read-only consumer
+  browser.representation_history.representation_invalidated.v1@1.0.0, event retention RP-AUTHORITY-INDEFINITE@1.0.0
+  per SP-262, checkpoint RP-PROJECTION-3GEN, SP-1101 sealed-receipt retained reads and withdrawal. Historical preparation
+  snapshot (2026-11-19, received 2bda6aeed0): «Nothing is admitted».'
 gui_related: false
 gui_classification_reason: Storage persistence, custody and derived-read contract; no presentation behavior.
 depends_on:
@@ -1077,6 +1119,8 @@ negative_constraints:
 - No sibling checkpoint, alias, durable Browser projection or replay effect.
 ```
 
+
+Current selected assignment (2026-11-19): browser.representation.invalidated@1.0.0 is registered for project_only in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2192. Its event history selects RP-AUTHORITY-INDEFINITE@1.0.0; exact original and checkpoint bindings retain their existing Storage assignments. Registry membership supplies no producer adoption or native-installation proof. Missing-registration refusal applies only if the exact current registration is absent.
 ### SP-2515 - `browser.script.compile_started` append, custody, checkpoint and withdrawal
 
 **Newly authored Storage binding under DL-046** for `browser.script.compile_started`@1.0.0, prepared without admission. It adopts Section 15 `#browser-program-event-authority-script-compile-started`, CV-2515, SP-286/CV-339 v2 first-receipt custody, SP-236 physical bytes, SP-278 and DL-076, SP-1101 retained dispatch and SP-262's retention assignment by name. The existing `event_record_index`, dedupe and `event_append_receipt_custody` keep their owners; no sibling binding is reused.
@@ -1097,11 +1141,12 @@ plan_unit_id: SP-2515
 unit_type: interface_contract
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: 'NEWLY AUTHORED Storage binding for browser.script.compile_started@1.0.0 under DL-046: admission, writer
-  cutoff and dedupe before append, SP-286 v2 custody with synced first receipt, SP-278 filtered checkpoint browser_script_compile_started_index_checkpoint
-  with nine-field durable token and CAS advance, read-only consumer browser.program_inspect.script_compile_started.v1@1.0.0,
-  event retention RP-RUNTIME-365D@1.0.0 per SP-262, checkpoint RP-PROJECTION-3GEN, SP-1101 sealed-receipt retained reads
-  and withdrawal. Nothing is admitted.'
+canonical_text: 'NEWLY AUTHORED Storage binding for browser.script.compile_started@1.0.0 under DL-046: admission,
+  writer cutoff and dedupe before append, SP-286 v2 custody with synced first receipt, SP-278 filtered checkpoint
+  browser_script_compile_started_index_checkpoint with nine-field durable token and CAS advance, read-only consumer
+  browser.program_inspect.script_compile_started.v1@1.0.0, event retention RP-RUNTIME-365D@1.0.0 per SP-262, checkpoint
+  RP-PROJECTION-3GEN, SP-1101 sealed-receipt retained reads and withdrawal. Historical preparation snapshot (2026-11-19,
+  received 2bda6aeed0): «Nothing is admitted».'
 gui_related: false
 gui_classification_reason: Storage persistence, custody and derived-read contract; no presentation behavior.
 depends_on:
@@ -1148,6 +1193,8 @@ negative_constraints:
 - No sibling checkpoint, alias, durable Browser projection or replay effect.
 ```
 
+
+Current selected assignment (2026-11-19): browser.script.compile_started@1.0.0 is registered for project_only in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2204. Its event history selects RP-RUNTIME-365D@1.0.0; exact original and checkpoint bindings retain their existing Storage assignments. Registry membership supplies no producer adoption or native-installation proof. Missing-registration refusal applies only if the exact current registration is absent.
 ### SP-2516 - `browser.script.compiled` append, custody, checkpoint and withdrawal
 
 **Newly authored Storage binding under DL-046** for `browser.script.compiled`@1.0.0, prepared without admission. It adopts Section 15 `#browser-program-event-authority-script-compiled`, CV-2516, SP-286/CV-339 v2 first-receipt custody, SP-236 physical bytes, SP-278 and DL-076, SP-1101 retained dispatch and SP-262's retention assignment by name. The existing `event_record_index`, dedupe and `event_append_receipt_custody` keep their owners; no sibling binding is reused.
@@ -1168,11 +1215,11 @@ plan_unit_id: SP-2516
 unit_type: interface_contract
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: 'NEWLY AUTHORED Storage binding for browser.script.compiled@1.0.0 under DL-046: admission, writer cutoff
-  and dedupe before append, SP-286 v2 custody with synced first receipt, SP-278 filtered checkpoint browser_script_compiled_index_checkpoint
+canonical_text: 'NEWLY AUTHORED Storage binding for browser.script.compiled@1.0.0 under DL-046: admission, writer
+  cutoff and dedupe before append, SP-286 v2 custody with synced first receipt, SP-278 filtered checkpoint browser_script_compiled_index_checkpoint
   with nine-field durable token and CAS advance, read-only consumer browser.program_inspect.script_compiled.v1@1.0.0,
-  event retention RP-RUNTIME-365D@1.0.0 per SP-262, checkpoint RP-PROJECTION-3GEN, SP-1101 sealed-receipt retained reads
-  and withdrawal. Nothing is admitted.'
+  event retention RP-RUNTIME-365D@1.0.0 per SP-262, checkpoint RP-PROJECTION-3GEN, SP-1101 sealed-receipt retained
+  reads and withdrawal. Historical preparation snapshot (2026-11-19, received 2bda6aeed0): «Nothing is admitted».'
 gui_related: false
 gui_classification_reason: Storage persistence, custody and derived-read contract; no presentation behavior.
 depends_on:
@@ -1219,6 +1266,8 @@ negative_constraints:
 - No sibling checkpoint, alias, durable Browser projection or replay effect.
 ```
 
+
+Current selected assignment (2026-11-19): browser.script.compiled@1.0.0 is registered for project_only in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2205. Its event history selects RP-RUNTIME-365D@1.0.0; exact original and checkpoint bindings retain their existing Storage assignments. Registry membership supplies no producer adoption or native-installation proof. Missing-registration refusal applies only if the exact current registration is absent.
 ### SP-2517 - `browser.script.compile_failed` append, custody, checkpoint and withdrawal
 
 **Newly authored Storage binding under DL-046** for `browser.script.compile_failed`@1.0.0, prepared without admission. It adopts Section 15 `#browser-program-event-authority-script-compile-failed`, CV-2517, SP-286/CV-339 v2 first-receipt custody, SP-236 physical bytes, SP-278 and DL-076, SP-1101 retained dispatch and SP-262's retention assignment by name. The existing `event_record_index`, dedupe and `event_append_receipt_custody` keep their owners; no sibling binding is reused.
@@ -1239,11 +1288,12 @@ plan_unit_id: SP-2517
 unit_type: interface_contract
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: 'NEWLY AUTHORED Storage binding for browser.script.compile_failed@1.0.0 under DL-046: admission, writer
-  cutoff and dedupe before append, SP-286 v2 custody with synced first receipt, SP-278 filtered checkpoint browser_script_compile_failed_index_checkpoint
-  with nine-field durable token and CAS advance, read-only consumer browser.program_inspect.script_compile_failed.v1@1.0.0,
-  event retention RP-RUNTIME-365D@1.0.0 per SP-262, checkpoint RP-PROJECTION-3GEN, SP-1101 sealed-receipt retained reads
-  and withdrawal. Nothing is admitted.'
+canonical_text: 'NEWLY AUTHORED Storage binding for browser.script.compile_failed@1.0.0 under DL-046: admission,
+  writer cutoff and dedupe before append, SP-286 v2 custody with synced first receipt, SP-278 filtered checkpoint
+  browser_script_compile_failed_index_checkpoint with nine-field durable token and CAS advance, read-only consumer
+  browser.program_inspect.script_compile_failed.v1@1.0.0, event retention RP-RUNTIME-365D@1.0.0 per SP-262, checkpoint
+  RP-PROJECTION-3GEN, SP-1101 sealed-receipt retained reads and withdrawal. Historical preparation snapshot (2026-11-19,
+  received 2bda6aeed0): «Nothing is admitted».'
 gui_related: false
 gui_classification_reason: Storage persistence, custody and derived-read contract; no presentation behavior.
 depends_on:
@@ -1290,6 +1340,8 @@ negative_constraints:
 - No sibling checkpoint, alias, durable Browser projection or replay effect.
 ```
 
+
+Current selected assignment (2026-11-19): browser.script.compile_failed@1.0.0 is registered for project_only in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2203. Its event history selects RP-RUNTIME-365D@1.0.0; exact original and checkpoint bindings retain their existing Storage assignments. Registry membership supplies no producer adoption or native-installation proof. Missing-registration refusal applies only if the exact current registration is absent.
 ### SP-2518 - `browser.execution_strategy.selected` append, custody, checkpoint and withdrawal
 
 **Newly authored Storage binding under DL-046** for `browser.execution_strategy.selected`@1.0.0, prepared without admission. It adopts Section 15 `#browser-program-event-authority-execution-strategy-selected`, CV-2518, SP-286/CV-339 v2 first-receipt custody, SP-236 physical bytes, SP-278 and DL-076, SP-1101 retained dispatch and SP-262's retention assignment by name. The existing `event_record_index`, dedupe and `event_append_receipt_custody` keep their owners; no sibling binding is reused.
@@ -1311,10 +1363,11 @@ unit_type: interface_contract
 status: accepted
 owner_doc: Plans/storage-plan.md
 canonical_text: 'NEWLY AUTHORED Storage binding for browser.execution_strategy.selected@1.0.0 under DL-046: admission,
-  writer cutoff and dedupe before append, SP-286 v2 custody with synced first receipt, SP-278 filtered checkpoint browser_execution_strategy_selected_index_checkpoint
-  with nine-field durable token and CAS advance, read-only consumer browser.routing_history.execution_strategy_selected.v1@1.0.0,
-  event retention RP-AUTHORITY-INDEFINITE@1.0.0 per SP-262, checkpoint RP-PROJECTION-3GEN, SP-1101 sealed-receipt retained
-  reads and withdrawal. Nothing is admitted.'
+  writer cutoff and dedupe before append, SP-286 v2 custody with synced first receipt, SP-278 filtered checkpoint
+  browser_execution_strategy_selected_index_checkpoint with nine-field durable token and CAS advance, read-only
+  consumer browser.routing_history.execution_strategy_selected.v1@1.0.0, event retention RP-AUTHORITY-INDEFINITE@1.0.0
+  per SP-262, checkpoint RP-PROJECTION-3GEN, SP-1101 sealed-receipt retained reads and withdrawal. Historical preparation
+  snapshot (2026-11-19, received 2bda6aeed0): «Nothing is admitted».'
 gui_related: false
 gui_classification_reason: Storage persistence, custody and derived-read contract; no presentation behavior.
 depends_on:
@@ -1361,6 +1414,8 @@ negative_constraints:
 - No sibling checkpoint, alias, durable Browser projection or replay effect.
 ```
 
+
+Current selected assignment (2026-11-19): browser.execution_strategy.selected@1.0.0 is registered for project_only in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2165. Its event history selects RP-AUTHORITY-INDEFINITE@1.0.0; exact original and checkpoint bindings retain their existing Storage assignments. Registry membership supplies no producer adoption or native-installation proof. Missing-registration refusal applies only if the exact current registration is absent.
 ### SP-2519 - `browser.execution_strategy.fallback_selected` append, custody, checkpoint and withdrawal
 
 **Newly authored Storage binding under DL-046** for `browser.execution_strategy.fallback_selected`@1.0.0, prepared without admission. It adopts Section 15 `#browser-program-event-authority-execution-strategy-fallback-selected`, CV-2519, SP-286/CV-339 v2 first-receipt custody, SP-236 physical bytes, SP-278 and DL-076, SP-1101 retained dispatch and SP-262's retention assignment by name. The existing `event_record_index`, dedupe and `event_append_receipt_custody` keep their owners; no sibling binding is reused.
@@ -1381,11 +1436,12 @@ plan_unit_id: SP-2519
 unit_type: interface_contract
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: 'NEWLY AUTHORED Storage binding for browser.execution_strategy.fallback_selected@1.0.0 under DL-046: admission,
-  writer cutoff and dedupe before append, SP-286 v2 custody with synced first receipt, SP-278 filtered checkpoint browser_execution_strategy_fallback_selected_index_checkpoint
-  with nine-field durable token and CAS advance, read-only consumer browser.routing_history.execution_strategy_fallback_selected.v1@1.0.0,
-  event retention RP-AUTHORITY-INDEFINITE@1.0.0 per SP-262, checkpoint RP-PROJECTION-3GEN, SP-1101 sealed-receipt retained
-  reads and withdrawal. Nothing is admitted.'
+canonical_text: 'NEWLY AUTHORED Storage binding for browser.execution_strategy.fallback_selected@1.0.0 under DL-046:
+  admission, writer cutoff and dedupe before append, SP-286 v2 custody with synced first receipt, SP-278 filtered
+  checkpoint browser_execution_strategy_fallback_selected_index_checkpoint with nine-field durable token and CAS
+  advance, read-only consumer browser.routing_history.execution_strategy_fallback_selected.v1@1.0.0, event retention
+  RP-AUTHORITY-INDEFINITE@1.0.0 per SP-262, checkpoint RP-PROJECTION-3GEN, SP-1101 sealed-receipt retained reads
+  and withdrawal. Historical preparation snapshot (2026-11-19, received 2bda6aeed0): «Nothing is admitted».'
 gui_related: false
 gui_classification_reason: Storage persistence, custody and derived-read contract; no presentation behavior.
 depends_on:
@@ -1432,6 +1488,8 @@ negative_constraints:
 - No sibling checkpoint, alias, durable Browser projection or replay effect.
 ```
 
+
+Current selected assignment (2026-11-19): browser.execution_strategy.fallback_selected@1.0.0 is registered for project_only in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2164. Its event history selects RP-AUTHORITY-INDEFINITE@1.0.0; exact original and checkpoint bindings retain their existing Storage assignments. Registry membership supplies no producer adoption or native-installation proof. Missing-registration refusal applies only if the exact current registration is absent.
 ### SP-2520 - `browser.program.started` append, custody, checkpoint and withdrawal
 
 **Newly authored Storage binding under DL-046** for `browser.program.started`@1.0.0, prepared without admission. It adopts Section 15 `#browser-program-event-authority-program-started`, CV-2520, SP-286/CV-339 v2 first-receipt custody, SP-236 physical bytes, SP-278 and DL-076, SP-1101 retained dispatch and SP-262's retention assignment by name. The existing `event_record_index`, dedupe and `event_append_receipt_custody` keep their owners; no sibling binding is reused.
@@ -1452,11 +1510,11 @@ plan_unit_id: SP-2520
 unit_type: interface_contract
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: 'NEWLY AUTHORED Storage binding for browser.program.started@1.0.0 under DL-046: admission, writer cutoff
-  and dedupe before append, SP-286 v2 custody with synced first receipt, SP-278 filtered checkpoint browser_program_started_index_checkpoint
+canonical_text: 'NEWLY AUTHORED Storage binding for browser.program.started@1.0.0 under DL-046: admission, writer
+  cutoff and dedupe before append, SP-286 v2 custody with synced first receipt, SP-278 filtered checkpoint browser_program_started_index_checkpoint
   with nine-field durable token and CAS advance, read-only consumer browser.program_inspect.program_started.v1@1.0.0,
-  event retention RP-RUNTIME-365D@1.0.0 per SP-262, checkpoint RP-PROJECTION-3GEN, SP-1101 sealed-receipt retained reads
-  and withdrawal. Nothing is admitted.'
+  event retention RP-RUNTIME-365D@1.0.0 per SP-262, checkpoint RP-PROJECTION-3GEN, SP-1101 sealed-receipt retained
+  reads and withdrawal. Historical preparation snapshot (2026-11-19, received 2bda6aeed0): «Nothing is admitted».'
 gui_related: false
 gui_classification_reason: Storage persistence, custody and derived-read contract; no presentation behavior.
 depends_on:
@@ -1503,6 +1561,8 @@ negative_constraints:
 - No sibling checkpoint, alias, durable Browser projection or replay effect.
 ```
 
+
+Current selected assignment (2026-11-19): browser.program.started@1.0.0 is registered for project_only in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2181. Its event history selects RP-RUNTIME-365D@1.0.0; exact original and checkpoint bindings retain their existing Storage assignments. Registry membership supplies no producer adoption or native-installation proof. Missing-registration refusal applies only if the exact current registration is absent.
 ### SP-2521 - `browser.program.checkpointed` append, custody, checkpoint and withdrawal
 
 **Newly authored Storage binding under DL-046** for `browser.program.checkpointed`@1.0.0, prepared without admission. It adopts Section 15 `#browser-program-event-authority-program-checkpointed`, CV-2521, SP-286/CV-339 v2 first-receipt custody, SP-236 physical bytes, SP-278 and DL-076, SP-1101 retained dispatch and SP-262's retention assignment by name. The existing `event_record_index`, dedupe and `event_append_receipt_custody` keep their owners; no sibling binding is reused.
@@ -1523,11 +1583,12 @@ plan_unit_id: SP-2521
 unit_type: interface_contract
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: 'NEWLY AUTHORED Storage binding for browser.program.checkpointed@1.0.0 under DL-046: admission, writer
-  cutoff and dedupe before append, SP-286 v2 custody with synced first receipt, SP-278 filtered checkpoint browser_program_checkpointed_index_checkpoint
-  with nine-field durable token and CAS advance, read-only consumer browser.program_inspect.program_checkpointed.v1@1.0.0,
-  event retention RP-RUNTIME-365D@1.0.0 per SP-262, checkpoint RP-PROJECTION-3GEN, SP-1101 sealed-receipt retained reads
-  and withdrawal. Nothing is admitted.'
+canonical_text: 'NEWLY AUTHORED Storage binding for browser.program.checkpointed@1.0.0 under DL-046: admission,
+  writer cutoff and dedupe before append, SP-286 v2 custody with synced first receipt, SP-278 filtered checkpoint
+  browser_program_checkpointed_index_checkpoint with nine-field durable token and CAS advance, read-only consumer
+  browser.program_inspect.program_checkpointed.v1@1.0.0, event retention RP-RUNTIME-365D@1.0.0 per SP-262, checkpoint
+  RP-PROJECTION-3GEN, SP-1101 sealed-receipt retained reads and withdrawal. Historical preparation snapshot (2026-11-19,
+  received 2bda6aeed0): «Nothing is admitted».'
 gui_related: false
 gui_classification_reason: Storage persistence, custody and derived-read contract; no presentation behavior.
 depends_on:
@@ -1574,6 +1635,8 @@ negative_constraints:
 - No sibling checkpoint, alias, durable Browser projection or replay effect.
 ```
 
+
+Current selected assignment (2026-11-19): browser.program.checkpointed@1.0.0 is registered for project_only in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2171. Its event history selects RP-RUNTIME-365D@1.0.0; exact original and checkpoint bindings retain their existing Storage assignments. Registry membership supplies no producer adoption or native-installation proof. Missing-registration refusal applies only if the exact current registration is absent.
 ### SP-2522 - `browser.program.paused` append, custody, checkpoint and withdrawal
 
 **Newly authored Storage binding under DL-046** for `browser.program.paused`@1.0.0, prepared without admission. It adopts Section 15 `#browser-program-event-authority-program-paused`, CV-2522, SP-286/CV-339 v2 first-receipt custody, SP-236 physical bytes, SP-278 and DL-076, SP-1101 retained dispatch and SP-262's retention assignment by name. The existing `event_record_index`, dedupe and `event_append_receipt_custody` keep their owners; no sibling binding is reused.
@@ -1594,11 +1657,11 @@ plan_unit_id: SP-2522
 unit_type: interface_contract
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: 'NEWLY AUTHORED Storage binding for browser.program.paused@1.0.0 under DL-046: admission, writer cutoff
-  and dedupe before append, SP-286 v2 custody with synced first receipt, SP-278 filtered checkpoint browser_program_paused_index_checkpoint
-  with nine-field durable token and CAS advance, read-only consumer browser.program_inspect.program_paused.v1@1.0.0, event
-  retention RP-RUNTIME-365D@1.0.0 per SP-262, checkpoint RP-PROJECTION-3GEN, SP-1101 sealed-receipt retained reads and
-  withdrawal. Nothing is admitted.'
+canonical_text: 'NEWLY AUTHORED Storage binding for browser.program.paused@1.0.0 under DL-046: admission, writer
+  cutoff and dedupe before append, SP-286 v2 custody with synced first receipt, SP-278 filtered checkpoint browser_program_paused_index_checkpoint
+  with nine-field durable token and CAS advance, read-only consumer browser.program_inspect.program_paused.v1@1.0.0,
+  event retention RP-RUNTIME-365D@1.0.0 per SP-262, checkpoint RP-PROJECTION-3GEN, SP-1101 sealed-receipt retained
+  reads and withdrawal. Historical preparation snapshot (2026-11-19, received 2bda6aeed0): «Nothing is admitted».'
 gui_related: false
 gui_classification_reason: Storage persistence, custody and derived-read contract; no presentation behavior.
 depends_on:
@@ -1645,6 +1708,8 @@ negative_constraints:
 - No sibling checkpoint, alias, durable Browser projection or replay effect.
 ```
 
+
+Current selected assignment (2026-11-19): browser.program.paused@1.0.0 is registered for project_only in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2174. Its event history selects RP-RUNTIME-365D@1.0.0; exact original and checkpoint bindings retain their existing Storage assignments. Registry membership supplies no producer adoption or native-installation proof. Missing-registration refusal applies only if the exact current registration is absent.
 ### SP-2523 - `browser.program.resumed` append, custody, checkpoint and withdrawal
 
 **Newly authored Storage binding under DL-046** for `browser.program.resumed`@1.0.0, prepared without admission. It adopts Section 15 `#browser-program-event-authority-program-resumed`, CV-2523, SP-286/CV-339 v2 first-receipt custody, SP-236 physical bytes, SP-278 and DL-076, SP-1101 retained dispatch and SP-262's retention assignment by name. The existing `event_record_index`, dedupe and `event_append_receipt_custody` keep their owners; no sibling binding is reused.
@@ -1665,11 +1730,11 @@ plan_unit_id: SP-2523
 unit_type: interface_contract
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: 'NEWLY AUTHORED Storage binding for browser.program.resumed@1.0.0 under DL-046: admission, writer cutoff
-  and dedupe before append, SP-286 v2 custody with synced first receipt, SP-278 filtered checkpoint browser_program_resumed_index_checkpoint
+canonical_text: 'NEWLY AUTHORED Storage binding for browser.program.resumed@1.0.0 under DL-046: admission, writer
+  cutoff and dedupe before append, SP-286 v2 custody with synced first receipt, SP-278 filtered checkpoint browser_program_resumed_index_checkpoint
   with nine-field durable token and CAS advance, read-only consumer browser.program_inspect.program_resumed.v1@1.0.0,
-  event retention RP-RUNTIME-365D@1.0.0 per SP-262, checkpoint RP-PROJECTION-3GEN, SP-1101 sealed-receipt retained reads
-  and withdrawal. Nothing is admitted.'
+  event retention RP-RUNTIME-365D@1.0.0 per SP-262, checkpoint RP-PROJECTION-3GEN, SP-1101 sealed-receipt retained
+  reads and withdrawal. Historical preparation snapshot (2026-11-19, received 2bda6aeed0): «Nothing is admitted».'
 gui_related: false
 gui_classification_reason: Storage persistence, custody and derived-read contract; no presentation behavior.
 depends_on:
@@ -1716,6 +1781,8 @@ negative_constraints:
 - No sibling checkpoint, alias, durable Browser projection or replay effect.
 ```
 
+
+Current selected assignment (2026-11-19): browser.program.resumed@1.0.0 is registered for project_only in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2175. Its event history selects RP-RUNTIME-365D@1.0.0; exact original and checkpoint bindings retain their existing Storage assignments. Registry membership supplies no producer adoption or native-installation proof. Missing-registration refusal applies only if the exact current registration is absent.
 ### SP-2524 - `browser.program.completed` append, custody, checkpoint and withdrawal
 
 **Newly authored Storage binding under DL-046** for `browser.program.completed`@1.0.0, prepared without admission. It adopts Section 15 `#browser-program-event-authority-program-completed`, CV-2524, SP-286/CV-339 v2 first-receipt custody, SP-236 physical bytes, SP-278 and DL-076, SP-1101 retained dispatch and SP-262's retention assignment by name. The existing `event_record_index`, dedupe and `event_append_receipt_custody` keep their owners; no sibling binding is reused.
@@ -1736,11 +1803,11 @@ plan_unit_id: SP-2524
 unit_type: interface_contract
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: 'NEWLY AUTHORED Storage binding for browser.program.completed@1.0.0 under DL-046: admission, writer cutoff
-  and dedupe before append, SP-286 v2 custody with synced first receipt, SP-278 filtered checkpoint browser_program_completed_index_checkpoint
+canonical_text: 'NEWLY AUTHORED Storage binding for browser.program.completed@1.0.0 under DL-046: admission, writer
+  cutoff and dedupe before append, SP-286 v2 custody with synced first receipt, SP-278 filtered checkpoint browser_program_completed_index_checkpoint
   with nine-field durable token and CAS advance, read-only consumer browser.program_inspect.program_completed.v1@1.0.0,
-  event retention RP-RUNTIME-365D@1.0.0 per SP-262, checkpoint RP-PROJECTION-3GEN, SP-1101 sealed-receipt retained reads
-  and withdrawal. Nothing is admitted.'
+  event retention RP-RUNTIME-365D@1.0.0 per SP-262, checkpoint RP-PROJECTION-3GEN, SP-1101 sealed-receipt retained
+  reads and withdrawal. Historical preparation snapshot (2026-11-19, received 2bda6aeed0): «Nothing is admitted».'
 gui_related: false
 gui_classification_reason: Storage persistence, custody and derived-read contract; no presentation behavior.
 depends_on:
@@ -1787,6 +1854,8 @@ negative_constraints:
 - No sibling checkpoint, alias, durable Browser projection or replay effect.
 ```
 
+
+Current selected assignment (2026-11-19): browser.program.completed@1.0.0 is registered for project_only in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2172. Its event history selects RP-RUNTIME-365D@1.0.0; exact original and checkpoint bindings retain their existing Storage assignments. Registry membership supplies no producer adoption or native-installation proof. Missing-registration refusal applies only if the exact current registration is absent.
 ### SP-2525 - `browser.program.failed` append, custody, checkpoint and withdrawal
 
 **Newly authored Storage binding under DL-046** for `browser.program.failed`@1.0.0, prepared without admission. It adopts Section 15 `#browser-program-event-authority-program-failed`, CV-2525, SP-286/CV-339 v2 first-receipt custody, SP-236 physical bytes, SP-278 and DL-076, SP-1101 retained dispatch and SP-262's retention assignment by name. The existing `event_record_index`, dedupe and `event_append_receipt_custody` keep their owners; no sibling binding is reused.
@@ -1807,11 +1876,11 @@ plan_unit_id: SP-2525
 unit_type: interface_contract
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: 'NEWLY AUTHORED Storage binding for browser.program.failed@1.0.0 under DL-046: admission, writer cutoff
-  and dedupe before append, SP-286 v2 custody with synced first receipt, SP-278 filtered checkpoint browser_program_failed_index_checkpoint
-  with nine-field durable token and CAS advance, read-only consumer browser.program_inspect.program_failed.v1@1.0.0, event
-  retention RP-RUNTIME-365D@1.0.0 per SP-262, checkpoint RP-PROJECTION-3GEN, SP-1101 sealed-receipt retained reads and
-  withdrawal. Nothing is admitted.'
+canonical_text: 'NEWLY AUTHORED Storage binding for browser.program.failed@1.0.0 under DL-046: admission, writer
+  cutoff and dedupe before append, SP-286 v2 custody with synced first receipt, SP-278 filtered checkpoint browser_program_failed_index_checkpoint
+  with nine-field durable token and CAS advance, read-only consumer browser.program_inspect.program_failed.v1@1.0.0,
+  event retention RP-RUNTIME-365D@1.0.0 per SP-262, checkpoint RP-PROJECTION-3GEN, SP-1101 sealed-receipt retained
+  reads and withdrawal. Historical preparation snapshot (2026-11-19, received 2bda6aeed0): «Nothing is admitted».'
 gui_related: false
 gui_classification_reason: Storage persistence, custody and derived-read contract; no presentation behavior.
 depends_on:
@@ -1858,6 +1927,8 @@ negative_constraints:
 - No sibling checkpoint, alias, durable Browser projection or replay effect.
 ```
 
+
+Current selected assignment (2026-11-19): browser.program.failed@1.0.0 is registered for project_only in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2173. Its event history selects RP-RUNTIME-365D@1.0.0; exact original and checkpoint bindings retain their existing Storage assignments. Registry membership supplies no producer adoption or native-installation proof. Missing-registration refusal applies only if the exact current registration is absent.
 ### SP-2526 - `browser.program.cancelled` append, custody, checkpoint and withdrawal
 
 **Newly authored Storage binding under DL-046** for `browser.program.cancelled`@1.0.0, prepared without admission. It adopts Section 15 `#browser-program-event-authority-program-cancelled`, CV-2526, SP-286/CV-339 v2 first-receipt custody, SP-236 physical bytes, SP-278 and DL-076, SP-1101 retained dispatch and SP-262's retention assignment by name. The existing `event_record_index`, dedupe and `event_append_receipt_custody` keep their owners; no sibling binding is reused.
@@ -1878,11 +1949,11 @@ plan_unit_id: SP-2526
 unit_type: interface_contract
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: 'NEWLY AUTHORED Storage binding for browser.program.cancelled@1.0.0 under DL-046: admission, writer cutoff
-  and dedupe before append, SP-286 v2 custody with synced first receipt, SP-278 filtered checkpoint browser_program_cancelled_index_checkpoint
+canonical_text: 'NEWLY AUTHORED Storage binding for browser.program.cancelled@1.0.0 under DL-046: admission, writer
+  cutoff and dedupe before append, SP-286 v2 custody with synced first receipt, SP-278 filtered checkpoint browser_program_cancelled_index_checkpoint
   with nine-field durable token and CAS advance, read-only consumer browser.program_inspect.program_cancelled.v1@1.0.0,
-  event retention RP-RUNTIME-365D@1.0.0 per SP-262, checkpoint RP-PROJECTION-3GEN, SP-1101 sealed-receipt retained reads
-  and withdrawal. Nothing is admitted.'
+  event retention RP-RUNTIME-365D@1.0.0 per SP-262, checkpoint RP-PROJECTION-3GEN, SP-1101 sealed-receipt retained
+  reads and withdrawal. Historical preparation snapshot (2026-11-19, received 2bda6aeed0): «Nothing is admitted».'
 gui_related: false
 gui_classification_reason: Storage persistence, custody and derived-read contract; no presentation behavior.
 depends_on:
@@ -1929,6 +2000,8 @@ negative_constraints:
 - No sibling checkpoint, alias, durable Browser projection or replay effect.
 ```
 
+
+Current selected assignment (2026-11-19): browser.program.cancelled@1.0.0 is registered for project_only in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2170. Its event history selects RP-RUNTIME-365D@1.0.0; exact original and checkpoint bindings retain their existing Storage assignments. Registry membership supplies no producer adoption or native-installation proof. Missing-registration refusal applies only if the exact current registration is absent.
 ### SP-2527 - `browser.program.segment.started` append, custody, checkpoint and withdrawal
 
 **Newly authored Storage binding under DL-046** for `browser.program.segment.started`@1.0.0, prepared without admission. It adopts Section 15 `#browser-program-event-authority-program-segment-started`, CV-2527, SP-286/CV-339 v2 first-receipt custody, SP-236 physical bytes, SP-278 and DL-076, SP-1101 retained dispatch and SP-262's retention assignment by name. The existing `event_record_index`, dedupe and `event_append_receipt_custody` keep their owners; no sibling binding is reused.
@@ -1949,11 +2022,12 @@ plan_unit_id: SP-2527
 unit_type: interface_contract
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: 'NEWLY AUTHORED Storage binding for browser.program.segment.started@1.0.0 under DL-046: admission, writer
-  cutoff and dedupe before append, SP-286 v2 custody with synced first receipt, SP-278 filtered checkpoint browser_program_segment_started_index_checkpoint
-  with nine-field durable token and CAS advance, read-only consumer browser.program_inspect.program_segment_started.v1@1.0.0,
-  event retention RP-RUNTIME-365D@1.0.0 per SP-262, checkpoint RP-PROJECTION-3GEN, SP-1101 sealed-receipt retained reads
-  and withdrawal. Nothing is admitted.'
+canonical_text: 'NEWLY AUTHORED Storage binding for browser.program.segment.started@1.0.0 under DL-046: admission,
+  writer cutoff and dedupe before append, SP-286 v2 custody with synced first receipt, SP-278 filtered checkpoint
+  browser_program_segment_started_index_checkpoint with nine-field durable token and CAS advance, read-only consumer
+  browser.program_inspect.program_segment_started.v1@1.0.0, event retention RP-RUNTIME-365D@1.0.0 per SP-262, checkpoint
+  RP-PROJECTION-3GEN, SP-1101 sealed-receipt retained reads and withdrawal. Historical preparation snapshot (2026-11-19,
+  received 2bda6aeed0): «Nothing is admitted».'
 gui_related: false
 gui_classification_reason: Storage persistence, custody and derived-read contract; no presentation behavior.
 depends_on:
@@ -2000,6 +2074,8 @@ negative_constraints:
 - No sibling checkpoint, alias, durable Browser projection or replay effect.
 ```
 
+
+Current selected assignment (2026-11-19): browser.program.segment.started@1.0.0 is registered for project_only in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2179. Its event history selects RP-RUNTIME-365D@1.0.0; exact original and checkpoint bindings retain their existing Storage assignments. Registry membership supplies no producer adoption or native-installation proof. Missing-registration refusal applies only if the exact current registration is absent.
 ### SP-2528 - `browser.program.segment.checkpointed` append, custody, checkpoint and withdrawal
 
 **Newly authored Storage binding under DL-046** for `browser.program.segment.checkpointed`@1.0.0, prepared without admission. It adopts Section 15 `#browser-program-event-authority-program-segment-checkpointed`, CV-2528, SP-286/CV-339 v2 first-receipt custody, SP-236 physical bytes, SP-278 and DL-076, SP-1101 retained dispatch and SP-262's retention assignment by name. The existing `event_record_index`, dedupe and `event_append_receipt_custody` keep their owners; no sibling binding is reused.
@@ -2021,10 +2097,11 @@ unit_type: interface_contract
 status: accepted
 owner_doc: Plans/storage-plan.md
 canonical_text: 'NEWLY AUTHORED Storage binding for browser.program.segment.checkpointed@1.0.0 under DL-046: admission,
-  writer cutoff and dedupe before append, SP-286 v2 custody with synced first receipt, SP-278 filtered checkpoint browser_program_segment_checkpointed_index_checkpoint
-  with nine-field durable token and CAS advance, read-only consumer browser.program_inspect.program_segment_checkpointed.v1@1.0.0,
-  event retention RP-RUNTIME-365D@1.0.0 per SP-262, checkpoint RP-PROJECTION-3GEN, SP-1101 sealed-receipt retained reads
-  and withdrawal. Nothing is admitted.'
+  writer cutoff and dedupe before append, SP-286 v2 custody with synced first receipt, SP-278 filtered checkpoint
+  browser_program_segment_checkpointed_index_checkpoint with nine-field durable token and CAS advance, read-only
+  consumer browser.program_inspect.program_segment_checkpointed.v1@1.0.0, event retention RP-RUNTIME-365D@1.0.0
+  per SP-262, checkpoint RP-PROJECTION-3GEN, SP-1101 sealed-receipt retained reads and withdrawal. Historical preparation
+  snapshot (2026-11-19, received 2bda6aeed0): «Nothing is admitted».'
 gui_related: false
 gui_classification_reason: Storage persistence, custody and derived-read contract; no presentation behavior.
 depends_on:
@@ -2071,6 +2148,8 @@ negative_constraints:
 - No sibling checkpoint, alias, durable Browser projection or replay effect.
 ```
 
+
+Current selected assignment (2026-11-19): browser.program.segment.checkpointed@1.0.0 is registered for project_only in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2176. Its event history selects RP-RUNTIME-365D@1.0.0; exact original and checkpoint bindings retain their existing Storage assignments. Registry membership supplies no producer adoption or native-installation proof. Missing-registration refusal applies only if the exact current registration is absent.
 ### SP-2529 - `browser.program.segment.completed` append, custody, checkpoint and withdrawal
 
 **Newly authored Storage binding under DL-046** for `browser.program.segment.completed`@1.0.0, prepared without admission. It adopts Section 15 `#browser-program-event-authority-program-segment-completed`, CV-2529, SP-286/CV-339 v2 first-receipt custody, SP-236 physical bytes, SP-278 and DL-076, SP-1101 retained dispatch and SP-262's retention assignment by name. The existing `event_record_index`, dedupe and `event_append_receipt_custody` keep their owners; no sibling binding is reused.
@@ -2091,11 +2170,12 @@ plan_unit_id: SP-2529
 unit_type: interface_contract
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: 'NEWLY AUTHORED Storage binding for browser.program.segment.completed@1.0.0 under DL-046: admission, writer
-  cutoff and dedupe before append, SP-286 v2 custody with synced first receipt, SP-278 filtered checkpoint browser_program_segment_completed_index_checkpoint
-  with nine-field durable token and CAS advance, read-only consumer browser.program_inspect.program_segment_completed.v1@1.0.0,
-  event retention RP-RUNTIME-365D@1.0.0 per SP-262, checkpoint RP-PROJECTION-3GEN, SP-1101 sealed-receipt retained reads
-  and withdrawal. Nothing is admitted.'
+canonical_text: 'NEWLY AUTHORED Storage binding for browser.program.segment.completed@1.0.0 under DL-046: admission,
+  writer cutoff and dedupe before append, SP-286 v2 custody with synced first receipt, SP-278 filtered checkpoint
+  browser_program_segment_completed_index_checkpoint with nine-field durable token and CAS advance, read-only consumer
+  browser.program_inspect.program_segment_completed.v1@1.0.0, event retention RP-RUNTIME-365D@1.0.0 per SP-262,
+  checkpoint RP-PROJECTION-3GEN, SP-1101 sealed-receipt retained reads and withdrawal. Historical preparation snapshot
+  (2026-11-19, received 2bda6aeed0): «Nothing is admitted».'
 gui_related: false
 gui_classification_reason: Storage persistence, custody and derived-read contract; no presentation behavior.
 depends_on:
@@ -2142,6 +2222,8 @@ negative_constraints:
 - No sibling checkpoint, alias, durable Browser projection or replay effect.
 ```
 
+
+Current selected assignment (2026-11-19): browser.program.segment.completed@1.0.0 is registered for project_only in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2177. Its event history selects RP-RUNTIME-365D@1.0.0; exact original and checkpoint bindings retain their existing Storage assignments. Registry membership supplies no producer adoption or native-installation proof. Missing-registration refusal applies only if the exact current registration is absent.
 ### SP-2530 - `browser.program.segment.failed` append, custody, checkpoint and withdrawal
 
 **Newly authored Storage binding under DL-046** for `browser.program.segment.failed`@1.0.0, prepared without admission. It adopts Section 15 `#browser-program-event-authority-program-segment-failed`, CV-2530, SP-286/CV-339 v2 first-receipt custody, SP-236 physical bytes, SP-278 and DL-076, SP-1101 retained dispatch and SP-262's retention assignment by name. The existing `event_record_index`, dedupe and `event_append_receipt_custody` keep their owners; no sibling binding is reused.
@@ -2162,11 +2244,12 @@ plan_unit_id: SP-2530
 unit_type: interface_contract
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: 'NEWLY AUTHORED Storage binding for browser.program.segment.failed@1.0.0 under DL-046: admission, writer
-  cutoff and dedupe before append, SP-286 v2 custody with synced first receipt, SP-278 filtered checkpoint browser_program_segment_failed_index_checkpoint
-  with nine-field durable token and CAS advance, read-only consumer browser.program_inspect.program_segment_failed.v1@1.0.0,
-  event retention RP-RUNTIME-365D@1.0.0 per SP-262, checkpoint RP-PROJECTION-3GEN, SP-1101 sealed-receipt retained reads
-  and withdrawal. Nothing is admitted.'
+canonical_text: 'NEWLY AUTHORED Storage binding for browser.program.segment.failed@1.0.0 under DL-046: admission,
+  writer cutoff and dedupe before append, SP-286 v2 custody with synced first receipt, SP-278 filtered checkpoint
+  browser_program_segment_failed_index_checkpoint with nine-field durable token and CAS advance, read-only consumer
+  browser.program_inspect.program_segment_failed.v1@1.0.0, event retention RP-RUNTIME-365D@1.0.0 per SP-262, checkpoint
+  RP-PROJECTION-3GEN, SP-1101 sealed-receipt retained reads and withdrawal. Historical preparation snapshot (2026-11-19,
+  received 2bda6aeed0): «Nothing is admitted».'
 gui_related: false
 gui_classification_reason: Storage persistence, custody and derived-read contract; no presentation behavior.
 depends_on:
@@ -2213,6 +2296,8 @@ negative_constraints:
 - No sibling checkpoint, alias, durable Browser projection or replay effect.
 ```
 
+
+Current selected assignment (2026-11-19): browser.program.segment.failed@1.0.0 is registered for project_only in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2178. Its event history selects RP-RUNTIME-365D@1.0.0; exact original and checkpoint bindings retain their existing Storage assignments. Registry membership supplies no producer adoption or native-installation proof. Missing-registration refusal applies only if the exact current registration is absent.
 ### SP-2531 - `browser.program.segment.timed_out` append, custody, checkpoint and withdrawal
 
 **Newly authored Storage binding under DL-046** for `browser.program.segment.timed_out`@1.0.0, prepared without admission. It adopts Section 15 `#browser-program-event-authority-program-segment-timed-out`, CV-2531, SP-286/CV-339 v2 first-receipt custody, SP-236 physical bytes, SP-278 and DL-076, SP-1101 retained dispatch and SP-262's retention assignment by name. The existing `event_record_index`, dedupe and `event_append_receipt_custody` keep their owners; no sibling binding is reused.
@@ -2233,11 +2318,12 @@ plan_unit_id: SP-2531
 unit_type: interface_contract
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: 'NEWLY AUTHORED Storage binding for browser.program.segment.timed_out@1.0.0 under DL-046: admission, writer
-  cutoff and dedupe before append, SP-286 v2 custody with synced first receipt, SP-278 filtered checkpoint browser_program_segment_timed_out_index_checkpoint
-  with nine-field durable token and CAS advance, read-only consumer browser.program_inspect.program_segment_timed_out.v1@1.0.0,
-  event retention RP-RUNTIME-365D@1.0.0 per SP-262, checkpoint RP-PROJECTION-3GEN, SP-1101 sealed-receipt retained reads
-  and withdrawal. Nothing is admitted.'
+canonical_text: 'NEWLY AUTHORED Storage binding for browser.program.segment.timed_out@1.0.0 under DL-046: admission,
+  writer cutoff and dedupe before append, SP-286 v2 custody with synced first receipt, SP-278 filtered checkpoint
+  browser_program_segment_timed_out_index_checkpoint with nine-field durable token and CAS advance, read-only consumer
+  browser.program_inspect.program_segment_timed_out.v1@1.0.0, event retention RP-RUNTIME-365D@1.0.0 per SP-262,
+  checkpoint RP-PROJECTION-3GEN, SP-1101 sealed-receipt retained reads and withdrawal. Historical preparation snapshot
+  (2026-11-19, received 2bda6aeed0): «Nothing is admitted».'
 gui_related: false
 gui_classification_reason: Storage persistence, custody and derived-read contract; no presentation behavior.
 depends_on:
@@ -2284,6 +2370,8 @@ negative_constraints:
 - No sibling checkpoint, alias, durable Browser projection or replay effect.
 ```
 
+
+Current selected assignment (2026-11-19): browser.program.segment.timed_out@1.0.0 is registered for project_only in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2180. Its event history selects RP-RUNTIME-365D@1.0.0; exact original and checkpoint bindings retain their existing Storage assignments. Registry membership supplies no producer adoption or native-installation proof. Missing-registration refusal applies only if the exact current registration is absent.
 ### SP-2532 - `browser.program.timeout.stopped` append, custody, checkpoint and withdrawal
 
 **Newly authored Storage binding under DL-046** for `browser.program.timeout.stopped`@1.0.0, prepared without admission. It adopts Section 15 `#browser-program-event-authority-program-timeout-stopped`, CV-2532, SP-286/CV-339 v2 first-receipt custody, SP-236 physical bytes, SP-278 and DL-076, SP-1101 retained dispatch and SP-262's retention assignment by name. The existing `event_record_index`, dedupe and `event_append_receipt_custody` keep their owners; no sibling binding is reused.
@@ -2304,11 +2392,12 @@ plan_unit_id: SP-2532
 unit_type: interface_contract
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: 'NEWLY AUTHORED Storage binding for browser.program.timeout.stopped@1.0.0 under DL-046: admission, writer
-  cutoff and dedupe before append, SP-286 v2 custody with synced first receipt, SP-278 filtered checkpoint browser_program_timeout_stopped_index_checkpoint
-  with nine-field durable token and CAS advance, read-only consumer browser.program_inspect.program_timeout_stopped.v1@1.0.0,
-  event retention RP-RUNTIME-365D@1.0.0 per SP-262, checkpoint RP-PROJECTION-3GEN, SP-1101 sealed-receipt retained reads
-  and withdrawal. Nothing is admitted.'
+canonical_text: 'NEWLY AUTHORED Storage binding for browser.program.timeout.stopped@1.0.0 under DL-046: admission,
+  writer cutoff and dedupe before append, SP-286 v2 custody with synced first receipt, SP-278 filtered checkpoint
+  browser_program_timeout_stopped_index_checkpoint with nine-field durable token and CAS advance, read-only consumer
+  browser.program_inspect.program_timeout_stopped.v1@1.0.0, event retention RP-RUNTIME-365D@1.0.0 per SP-262, checkpoint
+  RP-PROJECTION-3GEN, SP-1101 sealed-receipt retained reads and withdrawal. Historical preparation snapshot (2026-11-19,
+  received 2bda6aeed0): «Nothing is admitted».'
 gui_related: false
 gui_classification_reason: Storage persistence, custody and derived-read contract; no presentation behavior.
 depends_on:
@@ -2355,6 +2444,8 @@ negative_constraints:
 - No sibling checkpoint, alias, durable Browser projection or replay effect.
 ```
 
+
+Current selected assignment (2026-11-19): browser.program.timeout.stopped@1.0.0 is registered for project_only in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2184. Its event history selects RP-RUNTIME-365D@1.0.0; exact original and checkpoint bindings retain their existing Storage assignments. Registry membership supplies no producer adoption or native-installation proof. Missing-registration refusal applies only if the exact current registration is absent.
 ### SP-2533 - `browser.program.timeout.effects_reconciled` append, custody, checkpoint and withdrawal
 
 **Newly authored Storage binding under DL-046** for `browser.program.timeout.effects_reconciled`@1.0.0, prepared without admission. It adopts Section 15 `#browser-program-event-authority-program-timeout-effects-reconciled`, CV-2533, SP-286/CV-339 v2 first-receipt custody, SP-236 physical bytes, SP-278 and DL-076, SP-1101 retained dispatch and SP-262's retention assignment by name. The existing `event_record_index`, dedupe and `event_append_receipt_custody` keep their owners; no sibling binding is reused.
@@ -2375,11 +2466,12 @@ plan_unit_id: SP-2533
 unit_type: interface_contract
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: 'NEWLY AUTHORED Storage binding for browser.program.timeout.effects_reconciled@1.0.0 under DL-046: admission,
-  writer cutoff and dedupe before append, SP-286 v2 custody with synced first receipt, SP-278 filtered checkpoint browser_program_timeout_effects_reconciled_index_checkpoint
-  with nine-field durable token and CAS advance, read-only consumer browser.program_inspect.program_timeout_effects_reconciled.v1@1.0.0,
-  event retention RP-RUNTIME-365D@1.0.0 per SP-262, checkpoint RP-PROJECTION-3GEN, SP-1101 sealed-receipt retained reads
-  and withdrawal. Nothing is admitted.'
+canonical_text: 'NEWLY AUTHORED Storage binding for browser.program.timeout.effects_reconciled@1.0.0 under DL-046:
+  admission, writer cutoff and dedupe before append, SP-286 v2 custody with synced first receipt, SP-278 filtered
+  checkpoint browser_program_timeout_effects_reconciled_index_checkpoint with nine-field durable token and CAS advance,
+  read-only consumer browser.program_inspect.program_timeout_effects_reconciled.v1@1.0.0, event retention RP-RUNTIME-365D@1.0.0
+  per SP-262, checkpoint RP-PROJECTION-3GEN, SP-1101 sealed-receipt retained reads and withdrawal. Historical preparation
+  snapshot (2026-11-19, received 2bda6aeed0): «Nothing is admitted».'
 gui_related: false
 gui_classification_reason: Storage persistence, custody and derived-read contract; no presentation behavior.
 depends_on:
@@ -2426,6 +2518,8 @@ negative_constraints:
 - No sibling checkpoint, alias, durable Browser projection or replay effect.
 ```
 
+
+Current selected assignment (2026-11-19): browser.program.timeout.effects_reconciled@1.0.0 is registered for project_only in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2183. Its event history selects RP-RUNTIME-365D@1.0.0; exact original and checkpoint bindings retain their existing Storage assignments. Registry membership supplies no producer adoption or native-installation proof. Missing-registration refusal applies only if the exact current registration is absent.
 ### SP-2534 - `browser.program.timeout.effect_state_unknown` append, custody, checkpoint and withdrawal
 
 **Newly authored Storage binding under DL-046** for `browser.program.timeout.effect_state_unknown`@1.0.0, prepared without admission. It adopts Section 15 `#browser-program-event-authority-program-timeout-effect-state-unknown`, CV-2534, SP-286/CV-339 v2 first-receipt custody, SP-236 physical bytes, SP-278 and DL-076, SP-1101 retained dispatch and SP-262's retention assignment by name. The existing `event_record_index`, dedupe and `event_append_receipt_custody` keep their owners; no sibling binding is reused.
@@ -2446,11 +2540,12 @@ plan_unit_id: SP-2534
 unit_type: interface_contract
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: 'NEWLY AUTHORED Storage binding for browser.program.timeout.effect_state_unknown@1.0.0 under DL-046: admission,
-  writer cutoff and dedupe before append, SP-286 v2 custody with synced first receipt, SP-278 filtered checkpoint browser_program_timeout_effect_state_unknown_index_checkpoint
-  with nine-field durable token and CAS advance, read-only consumer browser.program_inspect.program_timeout_effect_state_unknown.v1@1.0.0,
-  event retention RP-RUNTIME-365D@1.0.0 per SP-262, checkpoint RP-PROJECTION-3GEN, SP-1101 sealed-receipt retained reads
-  and withdrawal. Nothing is admitted.'
+canonical_text: 'NEWLY AUTHORED Storage binding for browser.program.timeout.effect_state_unknown@1.0.0 under DL-046:
+  admission, writer cutoff and dedupe before append, SP-286 v2 custody with synced first receipt, SP-278 filtered
+  checkpoint browser_program_timeout_effect_state_unknown_index_checkpoint with nine-field durable token and CAS
+  advance, read-only consumer browser.program_inspect.program_timeout_effect_state_unknown.v1@1.0.0, event retention
+  RP-RUNTIME-365D@1.0.0 per SP-262, checkpoint RP-PROJECTION-3GEN, SP-1101 sealed-receipt retained reads and withdrawal.
+  Historical preparation snapshot (2026-11-19, received 2bda6aeed0): «Nothing is admitted».'
 gui_related: false
 gui_classification_reason: Storage persistence, custody and derived-read contract; no presentation behavior.
 depends_on:
@@ -2497,6 +2592,8 @@ negative_constraints:
 - No sibling checkpoint, alias, durable Browser projection or replay effect.
 ```
 
+
+Current selected assignment (2026-11-19): browser.program.timeout.effect_state_unknown@1.0.0 is registered for project_only in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2182. Its event history selects RP-RUNTIME-365D@1.0.0; exact original and checkpoint bindings retain their existing Storage assignments. Registry membership supplies no producer adoption or native-installation proof. Missing-registration refusal applies only if the exact current registration is absent.
 ### SP-2535 - `browser.program_workspace.created` append, custody, checkpoint and withdrawal
 
 **Newly authored Storage binding under DL-046** for `browser.program_workspace.created`@1.0.0, prepared without admission. It adopts Section 15 `#browser-program-event-authority-program-workspace-created`, CV-2535, SP-286/CV-339 v2 first-receipt custody, SP-236 physical bytes, SP-278 and DL-076, SP-1101 retained dispatch and SP-262's retention assignment by name. The existing `event_record_index`, dedupe and `event_append_receipt_custody` keep their owners; no sibling binding is reused.
@@ -2517,11 +2614,12 @@ plan_unit_id: SP-2535
 unit_type: interface_contract
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: 'NEWLY AUTHORED Storage binding for browser.program_workspace.created@1.0.0 under DL-046: admission, writer
-  cutoff and dedupe before append, SP-286 v2 custody with synced first receipt, SP-278 filtered checkpoint browser_program_workspace_created_index_checkpoint
-  with nine-field durable token and CAS advance, read-only consumer browser.program_inspect.program_workspace_created.v1@1.0.0,
-  event retention RP-RUNTIME-365D@1.0.0 per SP-262, checkpoint RP-PROJECTION-3GEN, SP-1101 sealed-receipt retained reads
-  and withdrawal. Nothing is admitted.'
+canonical_text: 'NEWLY AUTHORED Storage binding for browser.program_workspace.created@1.0.0 under DL-046: admission,
+  writer cutoff and dedupe before append, SP-286 v2 custody with synced first receipt, SP-278 filtered checkpoint
+  browser_program_workspace_created_index_checkpoint with nine-field durable token and CAS advance, read-only consumer
+  browser.program_inspect.program_workspace_created.v1@1.0.0, event retention RP-RUNTIME-365D@1.0.0 per SP-262,
+  checkpoint RP-PROJECTION-3GEN, SP-1101 sealed-receipt retained reads and withdrawal. Historical preparation snapshot
+  (2026-11-19, received 2bda6aeed0): «Nothing is admitted».'
 gui_related: false
 gui_classification_reason: Storage persistence, custody and derived-read contract; no presentation behavior.
 depends_on:
@@ -2568,6 +2666,8 @@ negative_constraints:
 - No sibling checkpoint, alias, durable Browser projection or replay effect.
 ```
 
+
+Current selected assignment (2026-11-19): browser.program_workspace.created@1.0.0 is registered for project_only in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2187. Its event history selects RP-RUNTIME-365D@1.0.0; exact original and checkpoint bindings retain their existing Storage assignments. Registry membership supplies no producer adoption or native-installation proof. Missing-registration refusal applies only if the exact current registration is absent.
 ### SP-2536 - `browser.program_workspace.updated` append, custody, checkpoint and withdrawal
 
 **Newly authored Storage binding under DL-046** for `browser.program_workspace.updated`@1.0.0, prepared without admission. It adopts Section 15 `#browser-program-event-authority-program-workspace-updated`, CV-2536, SP-286/CV-339 v2 first-receipt custody, SP-236 physical bytes, SP-278 and DL-076, SP-1101 retained dispatch and SP-262's retention assignment by name. The existing `event_record_index`, dedupe and `event_append_receipt_custody` keep their owners; no sibling binding is reused.
@@ -2588,11 +2688,12 @@ plan_unit_id: SP-2536
 unit_type: interface_contract
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: 'NEWLY AUTHORED Storage binding for browser.program_workspace.updated@1.0.0 under DL-046: admission, writer
-  cutoff and dedupe before append, SP-286 v2 custody with synced first receipt, SP-278 filtered checkpoint browser_program_workspace_updated_index_checkpoint
-  with nine-field durable token and CAS advance, read-only consumer browser.program_inspect.program_workspace_updated.v1@1.0.0,
-  event retention RP-RUNTIME-365D@1.0.0 per SP-262, checkpoint RP-PROJECTION-3GEN, SP-1101 sealed-receipt retained reads
-  and withdrawal. Nothing is admitted.'
+canonical_text: 'NEWLY AUTHORED Storage binding for browser.program_workspace.updated@1.0.0 under DL-046: admission,
+  writer cutoff and dedupe before append, SP-286 v2 custody with synced first receipt, SP-278 filtered checkpoint
+  browser_program_workspace_updated_index_checkpoint with nine-field durable token and CAS advance, read-only consumer
+  browser.program_inspect.program_workspace_updated.v1@1.0.0, event retention RP-RUNTIME-365D@1.0.0 per SP-262,
+  checkpoint RP-PROJECTION-3GEN, SP-1101 sealed-receipt retained reads and withdrawal. Historical preparation snapshot
+  (2026-11-19, received 2bda6aeed0): «Nothing is admitted».'
 gui_related: false
 gui_classification_reason: Storage persistence, custody and derived-read contract; no presentation behavior.
 depends_on:
@@ -2639,6 +2740,8 @@ negative_constraints:
 - No sibling checkpoint, alias, durable Browser projection or replay effect.
 ```
 
+
+Current selected assignment (2026-11-19): browser.program_workspace.updated@1.0.0 is registered for project_only in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2189. Its event history selects RP-RUNTIME-365D@1.0.0; exact original and checkpoint bindings retain their existing Storage assignments. Registry membership supplies no producer adoption or native-installation proof. Missing-registration refusal applies only if the exact current registration is absent.
 ### SP-2537 - `browser.program_workspace.checkpointed` append, custody, checkpoint and withdrawal
 
 **Newly authored Storage binding under DL-046** for `browser.program_workspace.checkpointed`@1.0.0, prepared without admission. It adopts Section 15 `#browser-program-event-authority-program-workspace-checkpointed`, CV-2537, SP-286/CV-339 v2 first-receipt custody, SP-236 physical bytes, SP-278 and DL-076, SP-1101 retained dispatch and SP-262's retention assignment by name. The existing `event_record_index`, dedupe and `event_append_receipt_custody` keep their owners; no sibling binding is reused.
@@ -2660,10 +2763,11 @@ unit_type: interface_contract
 status: accepted
 owner_doc: Plans/storage-plan.md
 canonical_text: 'NEWLY AUTHORED Storage binding for browser.program_workspace.checkpointed@1.0.0 under DL-046: admission,
-  writer cutoff and dedupe before append, SP-286 v2 custody with synced first receipt, SP-278 filtered checkpoint browser_program_workspace_checkpointed_index_checkpoint
-  with nine-field durable token and CAS advance, read-only consumer browser.program_inspect.program_workspace_checkpointed.v1@1.0.0,
-  event retention RP-RUNTIME-365D@1.0.0 per SP-262, checkpoint RP-PROJECTION-3GEN, SP-1101 sealed-receipt retained reads
-  and withdrawal. Nothing is admitted.'
+  writer cutoff and dedupe before append, SP-286 v2 custody with synced first receipt, SP-278 filtered checkpoint
+  browser_program_workspace_checkpointed_index_checkpoint with nine-field durable token and CAS advance, read-only
+  consumer browser.program_inspect.program_workspace_checkpointed.v1@1.0.0, event retention RP-RUNTIME-365D@1.0.0
+  per SP-262, checkpoint RP-PROJECTION-3GEN, SP-1101 sealed-receipt retained reads and withdrawal. Historical preparation
+  snapshot (2026-11-19, received 2bda6aeed0): «Nothing is admitted».'
 gui_related: false
 gui_classification_reason: Storage persistence, custody and derived-read contract; no presentation behavior.
 depends_on:
@@ -2710,6 +2814,8 @@ negative_constraints:
 - No sibling checkpoint, alias, durable Browser projection or replay effect.
 ```
 
+
+Current selected assignment (2026-11-19): browser.program_workspace.checkpointed@1.0.0 is registered for project_only in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2185. Its event history selects RP-RUNTIME-365D@1.0.0; exact original and checkpoint bindings retain their existing Storage assignments. Registry membership supplies no producer adoption or native-installation proof. Missing-registration refusal applies only if the exact current registration is absent.
 ### SP-2538 - `browser.program_workspace.spilled` append, custody, checkpoint and withdrawal
 
 **Newly authored Storage binding under DL-046** for `browser.program_workspace.spilled`@1.0.0, prepared without admission. It adopts Section 15 `#browser-program-event-authority-program-workspace-spilled`, CV-2538, SP-286/CV-339 v2 first-receipt custody, SP-236 physical bytes, SP-278 and DL-076, SP-1101 retained dispatch and SP-262's retention assignment by name. The existing `event_record_index`, dedupe and `event_append_receipt_custody` keep their owners; no sibling binding is reused.
@@ -2730,11 +2836,12 @@ plan_unit_id: SP-2538
 unit_type: interface_contract
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: 'NEWLY AUTHORED Storage binding for browser.program_workspace.spilled@1.0.0 under DL-046: admission, writer
-  cutoff and dedupe before append, SP-286 v2 custody with synced first receipt, SP-278 filtered checkpoint browser_program_workspace_spilled_index_checkpoint
-  with nine-field durable token and CAS advance, read-only consumer browser.program_inspect.program_workspace_spilled.v1@1.0.0,
-  event retention RP-RUNTIME-365D@1.0.0 per SP-262, checkpoint RP-PROJECTION-3GEN, SP-1101 sealed-receipt retained reads
-  and withdrawal. Nothing is admitted.'
+canonical_text: 'NEWLY AUTHORED Storage binding for browser.program_workspace.spilled@1.0.0 under DL-046: admission,
+  writer cutoff and dedupe before append, SP-286 v2 custody with synced first receipt, SP-278 filtered checkpoint
+  browser_program_workspace_spilled_index_checkpoint with nine-field durable token and CAS advance, read-only consumer
+  browser.program_inspect.program_workspace_spilled.v1@1.0.0, event retention RP-RUNTIME-365D@1.0.0 per SP-262,
+  checkpoint RP-PROJECTION-3GEN, SP-1101 sealed-receipt retained reads and withdrawal. Historical preparation snapshot
+  (2026-11-19, received 2bda6aeed0): «Nothing is admitted».'
 gui_related: false
 gui_classification_reason: Storage persistence, custody and derived-read contract; no presentation behavior.
 depends_on:
@@ -2781,6 +2888,8 @@ negative_constraints:
 - No sibling checkpoint, alias, durable Browser projection or replay effect.
 ```
 
+
+Current selected assignment (2026-11-19): browser.program_workspace.spilled@1.0.0 is registered for project_only in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2188. Its event history selects RP-RUNTIME-365D@1.0.0; exact original and checkpoint bindings retain their existing Storage assignments. Registry membership supplies no producer adoption or native-installation proof. Missing-registration refusal applies only if the exact current registration is absent.
 ### SP-2539 - `browser.program_workspace.closed` append, custody, checkpoint and withdrawal
 
 **Newly authored Storage binding under DL-046** for `browser.program_workspace.closed`@1.0.0, prepared without admission. It adopts Section 15 `#browser-program-event-authority-program-workspace-closed`, CV-2539, SP-286/CV-339 v2 first-receipt custody, SP-236 physical bytes, SP-278 and DL-076, SP-1101 retained dispatch and SP-262's retention assignment by name. The existing `event_record_index`, dedupe and `event_append_receipt_custody` keep their owners; no sibling binding is reused.
@@ -2801,11 +2910,12 @@ plan_unit_id: SP-2539
 unit_type: interface_contract
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: 'NEWLY AUTHORED Storage binding for browser.program_workspace.closed@1.0.0 under DL-046: admission, writer
-  cutoff and dedupe before append, SP-286 v2 custody with synced first receipt, SP-278 filtered checkpoint browser_program_workspace_closed_index_checkpoint
-  with nine-field durable token and CAS advance, read-only consumer browser.program_inspect.program_workspace_closed.v1@1.0.0,
-  event retention RP-RUNTIME-365D@1.0.0 per SP-262, checkpoint RP-PROJECTION-3GEN, SP-1101 sealed-receipt retained reads
-  and withdrawal. Nothing is admitted.'
+canonical_text: 'NEWLY AUTHORED Storage binding for browser.program_workspace.closed@1.0.0 under DL-046: admission,
+  writer cutoff and dedupe before append, SP-286 v2 custody with synced first receipt, SP-278 filtered checkpoint
+  browser_program_workspace_closed_index_checkpoint with nine-field durable token and CAS advance, read-only consumer
+  browser.program_inspect.program_workspace_closed.v1@1.0.0, event retention RP-RUNTIME-365D@1.0.0 per SP-262, checkpoint
+  RP-PROJECTION-3GEN, SP-1101 sealed-receipt retained reads and withdrawal. Historical preparation snapshot (2026-11-19,
+  received 2bda6aeed0): «Nothing is admitted».'
 gui_related: false
 gui_classification_reason: Storage persistence, custody and derived-read contract; no presentation behavior.
 depends_on:
@@ -2852,6 +2962,8 @@ negative_constraints:
 - No sibling checkpoint, alias, durable Browser projection or replay effect.
 ```
 
+
+Current selected assignment (2026-11-19): browser.program_workspace.closed@1.0.0 is registered for project_only in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2186. Its event history selects RP-RUNTIME-365D@1.0.0; exact original and checkpoint bindings retain their existing Storage assignments. Registry membership supplies no producer adoption or native-installation proof. Missing-registration refusal applies only if the exact current registration is absent.
 ### SP-2540 - `browser.screenshot.model_attachment_selected` append, custody, checkpoint and withdrawal
 
 **Newly authored Storage binding under DL-046** for `browser.screenshot.model_attachment_selected`@1.0.0, prepared without admission. It adopts Section 15 `#browser-program-event-authority-screenshot-model-attachment-selected`, CV-2540, SP-286/CV-339 v2 first-receipt custody, SP-236 physical bytes, SP-278 and DL-076, SP-1101 retained dispatch and SP-262's retention assignment by name. The existing `event_record_index`, dedupe and `event_append_receipt_custody` keep their owners; no sibling binding is reused.
@@ -2872,11 +2984,12 @@ plan_unit_id: SP-2540
 unit_type: interface_contract
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: 'NEWLY AUTHORED Storage binding for browser.screenshot.model_attachment_selected@1.0.0 under DL-046: admission,
-  writer cutoff and dedupe before append, SP-286 v2 custody with synced first receipt, SP-278 filtered checkpoint browser_screenshot_model_attachment_selected_index_checkpoint
-  with nine-field durable token and CAS advance, read-only consumer browser.routing_history.screenshot_model_attachment_selected.v1@1.0.0,
-  event retention RP-AUTHORITY-INDEFINITE@1.0.0 per SP-262, checkpoint RP-PROJECTION-3GEN, SP-1101 sealed-receipt retained
-  reads and withdrawal. Nothing is admitted.'
+canonical_text: 'NEWLY AUTHORED Storage binding for browser.screenshot.model_attachment_selected@1.0.0 under DL-046:
+  admission, writer cutoff and dedupe before append, SP-286 v2 custody with synced first receipt, SP-278 filtered
+  checkpoint browser_screenshot_model_attachment_selected_index_checkpoint with nine-field durable token and CAS
+  advance, read-only consumer browser.routing_history.screenshot_model_attachment_selected.v1@1.0.0, event retention
+  RP-AUTHORITY-INDEFINITE@1.0.0 per SP-262, checkpoint RP-PROJECTION-3GEN, SP-1101 sealed-receipt retained reads
+  and withdrawal. Historical preparation snapshot (2026-11-19, received 2bda6aeed0): «Nothing is admitted».'
 gui_related: false
 gui_classification_reason: Storage persistence, custody and derived-read contract; no presentation behavior.
 depends_on:
@@ -2923,6 +3036,8 @@ negative_constraints:
 - No sibling checkpoint, alias, durable Browser projection or replay effect.
 ```
 
+
+Current selected assignment (2026-11-19): browser.screenshot.model_attachment_selected@1.0.0 is registered for project_only in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2201. Its event history selects RP-AUTHORITY-INDEFINITE@1.0.0; exact original and checkpoint bindings retain their existing Storage assignments. Registry membership supplies no producer adoption or native-installation proof. Missing-registration refusal applies only if the exact current registration is absent.
 ### SP-2541 - `browser.screenshot.skipped` append, custody, checkpoint and withdrawal
 
 **Newly authored Storage binding under DL-046** for `browser.screenshot.skipped`@1.0.0, prepared without admission. It adopts Section 15 `#browser-program-event-authority-screenshot-skipped`, CV-2541, SP-286/CV-339 v2 first-receipt custody, SP-236 physical bytes, SP-278 and DL-076, SP-1101 retained dispatch and SP-262's retention assignment by name. The existing `event_record_index`, dedupe and `event_append_receipt_custody` keep their owners; no sibling binding is reused.
@@ -2943,11 +3058,12 @@ plan_unit_id: SP-2541
 unit_type: interface_contract
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: 'NEWLY AUTHORED Storage binding for browser.screenshot.skipped@1.0.0 under DL-046: admission, writer cutoff
-  and dedupe before append, SP-286 v2 custody with synced first receipt, SP-278 filtered checkpoint browser_screenshot_skipped_index_checkpoint
+canonical_text: 'NEWLY AUTHORED Storage binding for browser.screenshot.skipped@1.0.0 under DL-046: admission, writer
+  cutoff and dedupe before append, SP-286 v2 custody with synced first receipt, SP-278 filtered checkpoint browser_screenshot_skipped_index_checkpoint
   with nine-field durable token and CAS advance, read-only consumer browser.routing_history.screenshot_skipped.v1@1.0.0,
-  event retention RP-AUTHORITY-INDEFINITE@1.0.0 per SP-262, checkpoint RP-PROJECTION-3GEN, SP-1101 sealed-receipt retained
-  reads and withdrawal. Nothing is admitted.'
+  event retention RP-AUTHORITY-INDEFINITE@1.0.0 per SP-262, checkpoint RP-PROJECTION-3GEN, SP-1101 sealed-receipt
+  retained reads and withdrawal. Historical preparation snapshot (2026-11-19, received 2bda6aeed0): «Nothing is
+  admitted».'
 gui_related: false
 gui_classification_reason: Storage persistence, custody and derived-read contract; no presentation behavior.
 depends_on:
@@ -2994,6 +3110,8 @@ negative_constraints:
 - No sibling checkpoint, alias, durable Browser projection or replay effect.
 ```
 
+
+Current selected assignment (2026-11-19): browser.screenshot.skipped@1.0.0 is registered for project_only in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2202. Its event history selects RP-AUTHORITY-INDEFINITE@1.0.0; exact original and checkpoint bindings retain their existing Storage assignments. Registry membership supplies no producer adoption or native-installation proof. Missing-registration refusal applies only if the exact current registration is absent.
 ### SP-2542 - `browser.route.fetch_selected` append, custody, checkpoint and withdrawal
 
 **Newly authored Storage binding under DL-046** for `browser.route.fetch_selected`@1.0.0, prepared without admission. It adopts Section 15 `#browser-program-event-authority-route-fetch-selected`, CV-2542, SP-286/CV-339 v2 first-receipt custody, SP-236 physical bytes, SP-278 and DL-076, SP-1101 retained dispatch and SP-262's retention assignment by name. The existing `event_record_index`, dedupe and `event_append_receipt_custody` keep their owners; no sibling binding is reused.
@@ -3014,11 +3132,12 @@ plan_unit_id: SP-2542
 unit_type: interface_contract
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: 'NEWLY AUTHORED Storage binding for browser.route.fetch_selected@1.0.0 under DL-046: admission, writer
-  cutoff and dedupe before append, SP-286 v2 custody with synced first receipt, SP-278 filtered checkpoint browser_route_fetch_selected_index_checkpoint
-  with nine-field durable token and CAS advance, read-only consumer browser.routing_history.route_fetch_selected.v1@1.0.0,
-  event retention RP-AUTHORITY-INDEFINITE@1.0.0 per SP-262, checkpoint RP-PROJECTION-3GEN, SP-1101 sealed-receipt retained
-  reads and withdrawal. Nothing is admitted.'
+canonical_text: 'NEWLY AUTHORED Storage binding for browser.route.fetch_selected@1.0.0 under DL-046: admission,
+  writer cutoff and dedupe before append, SP-286 v2 custody with synced first receipt, SP-278 filtered checkpoint
+  browser_route_fetch_selected_index_checkpoint with nine-field durable token and CAS advance, read-only consumer
+  browser.routing_history.route_fetch_selected.v1@1.0.0, event retention RP-AUTHORITY-INDEFINITE@1.0.0 per SP-262,
+  checkpoint RP-PROJECTION-3GEN, SP-1101 sealed-receipt retained reads and withdrawal. Historical preparation snapshot
+  (2026-11-19, received 2bda6aeed0): «Nothing is admitted».'
 gui_related: false
 gui_classification_reason: Storage persistence, custody and derived-read contract; no presentation behavior.
 depends_on:
@@ -3065,6 +3184,8 @@ negative_constraints:
 - No sibling checkpoint, alias, durable Browser projection or replay effect.
 ```
 
+
+Current selected assignment (2026-11-19): browser.route.fetch_selected@1.0.0 is registered for project_only in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2195. Its event history selects RP-AUTHORITY-INDEFINITE@1.0.0; exact original and checkpoint bindings retain their existing Storage assignments. Registry membership supplies no producer adoption or native-installation proof. Missing-registration refusal applies only if the exact current registration is absent.
 ### SP-2543 - `browser.route.browser_escalated` append, custody, checkpoint and withdrawal
 
 **Newly authored Storage binding under DL-046** for `browser.route.browser_escalated`@1.0.0, prepared without admission. It adopts Section 15 `#browser-program-event-authority-route-browser-escalated`, CV-2543, SP-286/CV-339 v2 first-receipt custody, SP-236 physical bytes, SP-278 and DL-076, SP-1101 retained dispatch and SP-262's retention assignment by name. The existing `event_record_index`, dedupe and `event_append_receipt_custody` keep their owners; no sibling binding is reused.
@@ -3085,11 +3206,12 @@ plan_unit_id: SP-2543
 unit_type: interface_contract
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: 'NEWLY AUTHORED Storage binding for browser.route.browser_escalated@1.0.0 under DL-046: admission, writer
-  cutoff and dedupe before append, SP-286 v2 custody with synced first receipt, SP-278 filtered checkpoint browser_route_browser_escalated_index_checkpoint
-  with nine-field durable token and CAS advance, read-only consumer browser.routing_history.route_browser_escalated.v1@1.0.0,
-  event retention RP-AUTHORITY-INDEFINITE@1.0.0 per SP-262, checkpoint RP-PROJECTION-3GEN, SP-1101 sealed-receipt retained
-  reads and withdrawal. Nothing is admitted.'
+canonical_text: 'NEWLY AUTHORED Storage binding for browser.route.browser_escalated@1.0.0 under DL-046: admission,
+  writer cutoff and dedupe before append, SP-286 v2 custody with synced first receipt, SP-278 filtered checkpoint
+  browser_route_browser_escalated_index_checkpoint with nine-field durable token and CAS advance, read-only consumer
+  browser.routing_history.route_browser_escalated.v1@1.0.0, event retention RP-AUTHORITY-INDEFINITE@1.0.0 per SP-262,
+  checkpoint RP-PROJECTION-3GEN, SP-1101 sealed-receipt retained reads and withdrawal. Historical preparation snapshot
+  (2026-11-19, received 2bda6aeed0): «Nothing is admitted».'
 gui_related: false
 gui_classification_reason: Storage persistence, custody and derived-read contract; no presentation behavior.
 depends_on:
@@ -3136,6 +3258,8 @@ negative_constraints:
 - No sibling checkpoint, alias, durable Browser projection or replay effect.
 ```
 
+
+Current selected assignment (2026-11-19): browser.route.browser_escalated@1.0.0 is registered for project_only in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2194. Its event history selects RP-AUTHORITY-INDEFINITE@1.0.0; exact original and checkpoint bindings retain their existing Storage assignments. Registry membership supplies no producer adoption or native-installation proof. Missing-registration refusal applies only if the exact current registration is absent.
 ### SP-2544 - `browser.routine.generated` append, custody, checkpoint and withdrawal
 
 **Newly authored Storage binding under DL-046** for `browser.routine.generated`@1.0.0, prepared without admission. It adopts Section 15 `#browser-program-event-authority-routine-generated`, CV-2544, SP-286/CV-339 v2 first-receipt custody, SP-236 physical bytes, SP-278 and DL-076, SP-1101 retained dispatch and SP-262's retention assignment by name. The existing `event_record_index`, dedupe and `event_append_receipt_custody` keep their owners; no sibling binding is reused.
@@ -3156,11 +3280,12 @@ plan_unit_id: SP-2544
 unit_type: interface_contract
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: 'NEWLY AUTHORED Storage binding for browser.routine.generated@1.0.0 under DL-046: admission, writer cutoff
-  and dedupe before append, SP-286 v2 custody with synced first receipt, SP-278 filtered checkpoint browser_routine_generated_index_checkpoint
+canonical_text: 'NEWLY AUTHORED Storage binding for browser.routine.generated@1.0.0 under DL-046: admission, writer
+  cutoff and dedupe before append, SP-286 v2 custody with synced first receipt, SP-278 filtered checkpoint browser_routine_generated_index_checkpoint
   with nine-field durable token and CAS advance, read-only consumer browser.routine_history.routine_generated.v1@1.0.0,
-  event retention RP-AUTHORITY-INDEFINITE@1.0.0 per SP-262, checkpoint RP-PROJECTION-3GEN, SP-1101 sealed-receipt retained
-  reads and withdrawal. Nothing is admitted.'
+  event retention RP-AUTHORITY-INDEFINITE@1.0.0 per SP-262, checkpoint RP-PROJECTION-3GEN, SP-1101 sealed-receipt
+  retained reads and withdrawal. Historical preparation snapshot (2026-11-19, received 2bda6aeed0): «Nothing is
+  admitted».'
 gui_related: false
 gui_classification_reason: Storage persistence, custody and derived-read contract; no presentation behavior.
 depends_on:
@@ -3207,6 +3332,8 @@ negative_constraints:
 - No sibling checkpoint, alias, durable Browser projection or replay effect.
 ```
 
+
+Current selected assignment (2026-11-19): browser.routine.generated@1.0.0 is registered for project_only in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2197. Its event history selects RP-AUTHORITY-INDEFINITE@1.0.0; exact original and checkpoint bindings retain their existing Storage assignments. Registry membership supplies no producer adoption or native-installation proof. Missing-registration refusal applies only if the exact current registration is absent.
 ### SP-2545 - `browser.routine.validated` append, custody, checkpoint and withdrawal
 
 **Newly authored Storage binding under DL-046** for `browser.routine.validated`@1.0.0, prepared without admission. It adopts Section 15 `#browser-program-event-authority-routine-validated`, CV-2545, SP-286/CV-339 v2 first-receipt custody, SP-236 physical bytes, SP-278 and DL-076, SP-1101 retained dispatch and SP-262's retention assignment by name. The existing `event_record_index`, dedupe and `event_append_receipt_custody` keep their owners; no sibling binding is reused.
@@ -3227,11 +3354,12 @@ plan_unit_id: SP-2545
 unit_type: interface_contract
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: 'NEWLY AUTHORED Storage binding for browser.routine.validated@1.0.0 under DL-046: admission, writer cutoff
-  and dedupe before append, SP-286 v2 custody with synced first receipt, SP-278 filtered checkpoint browser_routine_validated_index_checkpoint
+canonical_text: 'NEWLY AUTHORED Storage binding for browser.routine.validated@1.0.0 under DL-046: admission, writer
+  cutoff and dedupe before append, SP-286 v2 custody with synced first receipt, SP-278 filtered checkpoint browser_routine_validated_index_checkpoint
   with nine-field durable token and CAS advance, read-only consumer browser.routine_history.routine_validated.v1@1.0.0,
-  event retention RP-AUTHORITY-INDEFINITE@1.0.0 per SP-262, checkpoint RP-PROJECTION-3GEN, SP-1101 sealed-receipt retained
-  reads and withdrawal. Nothing is admitted.'
+  event retention RP-AUTHORITY-INDEFINITE@1.0.0 per SP-262, checkpoint RP-PROJECTION-3GEN, SP-1101 sealed-receipt
+  retained reads and withdrawal. Historical preparation snapshot (2026-11-19, received 2bda6aeed0): «Nothing is
+  admitted».'
 gui_related: false
 gui_classification_reason: Storage persistence, custody and derived-read contract; no presentation behavior.
 depends_on:
@@ -3278,6 +3406,8 @@ negative_constraints:
 - No sibling checkpoint, alias, durable Browser projection or replay effect.
 ```
 
+
+Current selected assignment (2026-11-19): browser.routine.validated@1.0.0 is registered for project_only in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2200. Its event history selects RP-AUTHORITY-INDEFINITE@1.0.0; exact original and checkpoint bindings retain their existing Storage assignments. Registry membership supplies no producer adoption or native-installation proof. Missing-registration refusal applies only if the exact current registration is absent.
 ### SP-2546 - `browser.routine.promoted` append, custody, checkpoint and withdrawal
 
 **Newly authored Storage binding under DL-046** for `browser.routine.promoted`@1.0.0, prepared without admission. It adopts Section 15 `#browser-program-event-authority-routine-promoted`, CV-2546, SP-286/CV-339 v2 first-receipt custody, SP-236 physical bytes, SP-278 and DL-076, SP-1101 retained dispatch and SP-262's retention assignment by name. The existing `event_record_index`, dedupe and `event_append_receipt_custody` keep their owners; no sibling binding is reused.
@@ -3298,11 +3428,12 @@ plan_unit_id: SP-2546
 unit_type: interface_contract
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: 'NEWLY AUTHORED Storage binding for browser.routine.promoted@1.0.0 under DL-046: admission, writer cutoff
-  and dedupe before append, SP-286 v2 custody with synced first receipt, SP-278 filtered checkpoint browser_routine_promoted_index_checkpoint
+canonical_text: 'NEWLY AUTHORED Storage binding for browser.routine.promoted@1.0.0 under DL-046: admission, writer
+  cutoff and dedupe before append, SP-286 v2 custody with synced first receipt, SP-278 filtered checkpoint browser_routine_promoted_index_checkpoint
   with nine-field durable token and CAS advance, read-only consumer browser.routine_history.routine_promoted.v1@1.0.0,
-  event retention RP-AUTHORITY-INDEFINITE@1.0.0 per SP-262, checkpoint RP-PROJECTION-3GEN, SP-1101 sealed-receipt retained
-  reads and withdrawal. Nothing is admitted.'
+  event retention RP-AUTHORITY-INDEFINITE@1.0.0 per SP-262, checkpoint RP-PROJECTION-3GEN, SP-1101 sealed-receipt
+  retained reads and withdrawal. Historical preparation snapshot (2026-11-19, received 2bda6aeed0): «Nothing is
+  admitted».'
 gui_related: false
 gui_classification_reason: Storage persistence, custody and derived-read contract; no presentation behavior.
 depends_on:
@@ -3349,6 +3480,8 @@ negative_constraints:
 - No sibling checkpoint, alias, durable Browser projection or replay effect.
 ```
 
+
+Current selected assignment (2026-11-19): browser.routine.promoted@1.0.0 is registered for project_only in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2199. Its event history selects RP-AUTHORITY-INDEFINITE@1.0.0; exact original and checkpoint bindings retain their existing Storage assignments. Registry membership supplies no producer adoption or native-installation proof. Missing-registration refusal applies only if the exact current registration is absent.
 ### SP-2547 - `browser.routine.invalidated` append, custody, checkpoint and withdrawal
 
 **Newly authored Storage binding under DL-046** for `browser.routine.invalidated`@1.0.0, prepared without admission. It adopts Section 15 `#browser-program-event-authority-routine-invalidated`, CV-2547, SP-286/CV-339 v2 first-receipt custody, SP-236 physical bytes, SP-278 and DL-076, SP-1101 retained dispatch and SP-262's retention assignment by name. The existing `event_record_index`, dedupe and `event_append_receipt_custody` keep their owners; no sibling binding is reused.
@@ -3372,8 +3505,9 @@ owner_doc: Plans/storage-plan.md
 canonical_text: 'NEWLY AUTHORED Storage binding for browser.routine.invalidated@1.0.0 under DL-046: admission, writer
   cutoff and dedupe before append, SP-286 v2 custody with synced first receipt, SP-278 filtered checkpoint browser_routine_invalidated_index_checkpoint
   with nine-field durable token and CAS advance, read-only consumer browser.routine_history.routine_invalidated.v1@1.0.0,
-  event retention RP-AUTHORITY-INDEFINITE@1.0.0 per SP-262, checkpoint RP-PROJECTION-3GEN, SP-1101 sealed-receipt retained
-  reads and withdrawal. Nothing is admitted.'
+  event retention RP-AUTHORITY-INDEFINITE@1.0.0 per SP-262, checkpoint RP-PROJECTION-3GEN, SP-1101 sealed-receipt
+  retained reads and withdrawal. Historical preparation snapshot (2026-11-19, received 2bda6aeed0): «Nothing is
+  admitted».'
 gui_related: false
 gui_classification_reason: Storage persistence, custody and derived-read contract; no presentation behavior.
 depends_on:
@@ -3420,6 +3554,8 @@ negative_constraints:
 - No sibling checkpoint, alias, durable Browser projection or replay effect.
 ```
 
+
+Current selected assignment (2026-11-19): browser.routine.invalidated@1.0.0 is registered for project_only in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2198. Its event history selects RP-AUTHORITY-INDEFINITE@1.0.0; exact original and checkpoint bindings retain their existing Storage assignments. Registry membership supplies no producer adoption or native-installation proof. Missing-registration refusal applies only if the exact current registration is absent.
 ### SP-2548 - `browser.routine.disabled` append, custody, checkpoint and withdrawal
 
 **Newly authored Storage binding under DL-046** for `browser.routine.disabled`@1.0.0, prepared without admission. It adopts Section 15 `#browser-program-event-authority-routine-disabled`, CV-2548, SP-286/CV-339 v2 first-receipt custody, SP-236 physical bytes, SP-278 and DL-076, SP-1101 retained dispatch and SP-262's retention assignment by name. The existing `event_record_index`, dedupe and `event_append_receipt_custody` keep their owners; no sibling binding is reused.
@@ -3440,11 +3576,12 @@ plan_unit_id: SP-2548
 unit_type: interface_contract
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: 'NEWLY AUTHORED Storage binding for browser.routine.disabled@1.0.0 under DL-046: admission, writer cutoff
-  and dedupe before append, SP-286 v2 custody with synced first receipt, SP-278 filtered checkpoint browser_routine_disabled_index_checkpoint
+canonical_text: 'NEWLY AUTHORED Storage binding for browser.routine.disabled@1.0.0 under DL-046: admission, writer
+  cutoff and dedupe before append, SP-286 v2 custody with synced first receipt, SP-278 filtered checkpoint browser_routine_disabled_index_checkpoint
   with nine-field durable token and CAS advance, read-only consumer browser.routine_history.routine_disabled.v1@1.0.0,
-  event retention RP-AUTHORITY-INDEFINITE@1.0.0 per SP-262, checkpoint RP-PROJECTION-3GEN, SP-1101 sealed-receipt retained
-  reads and withdrawal. Nothing is admitted.'
+  event retention RP-AUTHORITY-INDEFINITE@1.0.0 per SP-262, checkpoint RP-PROJECTION-3GEN, SP-1101 sealed-receipt
+  retained reads and withdrawal. Historical preparation snapshot (2026-11-19, received 2bda6aeed0): «Nothing is
+  admitted».'
 gui_related: false
 gui_classification_reason: Storage persistence, custody and derived-read contract; no presentation behavior.
 depends_on:
@@ -3491,6 +3628,8 @@ negative_constraints:
 - No sibling checkpoint, alias, durable Browser projection or replay effect.
 ```
 
+
+Current selected assignment (2026-11-19): browser.routine.disabled@1.0.0 is registered for project_only in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2196. Its event history selects RP-AUTHORITY-INDEFINITE@1.0.0; exact original and checkpoint bindings retain their existing Storage assignments. Registry membership supplies no producer adoption or native-installation proof. Missing-registration refusal applies only if the exact current registration is absent.
 ### SP-2549 - `browser.session.reconstructed_on_host` append, custody, checkpoint and withdrawal
 
 **Newly authored Storage binding under DL-046** for `browser.session.reconstructed_on_host`@1.0.0, prepared without admission. It adopts Section 15 `#browser-program-event-authority-session-reconstructed-on-host`, CV-2549, SP-286/CV-339 v2 first-receipt custody, SP-236 physical bytes, SP-278 and DL-076, SP-1101 retained dispatch and SP-262's retention assignment by name. The existing `event_record_index`, dedupe and `event_append_receipt_custody` keep their owners; no sibling binding is reused.
@@ -3512,10 +3651,11 @@ unit_type: interface_contract
 status: accepted
 owner_doc: Plans/storage-plan.md
 canonical_text: 'NEWLY AUTHORED Storage binding for browser.session.reconstructed_on_host@1.0.0 under DL-046: admission,
-  writer cutoff and dedupe before append, SP-286 v2 custody with synced first receipt, SP-278 filtered checkpoint browser_session_reconstructed_on_host_index_checkpoint
-  with nine-field durable token and CAS advance, read-only consumer browser.handoff_history.session_reconstructed_on_host.v1@1.0.0,
-  event retention RP-AUTHORITY-INDEFINITE@1.0.0 per SP-262, checkpoint RP-PROJECTION-3GEN, SP-1101 sealed-receipt retained
-  reads and withdrawal. Nothing is admitted.'
+  writer cutoff and dedupe before append, SP-286 v2 custody with synced first receipt, SP-278 filtered checkpoint
+  browser_session_reconstructed_on_host_index_checkpoint with nine-field durable token and CAS advance, read-only
+  consumer browser.handoff_history.session_reconstructed_on_host.v1@1.0.0, event retention RP-AUTHORITY-INDEFINITE@1.0.0
+  per SP-262, checkpoint RP-PROJECTION-3GEN, SP-1101 sealed-receipt retained reads and withdrawal. Historical preparation
+  snapshot (2026-11-19, received 2bda6aeed0): «Nothing is admitted».'
 gui_related: false
 gui_classification_reason: Storage persistence, custody and derived-read contract; no presentation behavior.
 depends_on:
@@ -3562,6 +3702,8 @@ negative_constraints:
 - No sibling checkpoint, alias, durable Browser projection or replay effect.
 ```
 
+
+Current selected assignment (2026-11-19): browser.session.reconstructed_on_host@1.0.0 is registered for project_only in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2207. Its event history selects RP-AUTHORITY-INDEFINITE@1.0.0; exact original and checkpoint bindings retain their existing Storage assignments. Registry membership supplies no producer adoption or native-installation proof. Missing-registration refusal applies only if the exact current registration is absent.
 ### SP-2550 - `browser.session.interrupted` append, custody, checkpoint and withdrawal
 
 **Newly authored Storage binding under DL-046** for `browser.session.interrupted`@1.0.0, prepared without admission. It adopts Section 15 `#browser-program-event-authority-session-interrupted`, CV-2550, SP-286/CV-339 v2 first-receipt custody, SP-236 physical bytes, SP-278 and DL-076, SP-1101 retained dispatch and SP-262's retention assignment by name. The existing `event_record_index`, dedupe and `event_append_receipt_custody` keep their owners; no sibling binding is reused.
@@ -3585,8 +3727,9 @@ owner_doc: Plans/storage-plan.md
 canonical_text: 'NEWLY AUTHORED Storage binding for browser.session.interrupted@1.0.0 under DL-046: admission, writer
   cutoff and dedupe before append, SP-286 v2 custody with synced first receipt, SP-278 filtered checkpoint browser_session_interrupted_index_checkpoint
   with nine-field durable token and CAS advance, read-only consumer browser.handoff_history.session_interrupted.v1@1.0.0,
-  event retention RP-AUTHORITY-INDEFINITE@1.0.0 per SP-262, checkpoint RP-PROJECTION-3GEN, SP-1101 sealed-receipt retained
-  reads and withdrawal. Nothing is admitted.'
+  event retention RP-AUTHORITY-INDEFINITE@1.0.0 per SP-262, checkpoint RP-PROJECTION-3GEN, SP-1101 sealed-receipt
+  retained reads and withdrawal. Historical preparation snapshot (2026-11-19, received 2bda6aeed0): «Nothing is
+  admitted».'
 gui_related: false
 gui_classification_reason: Storage persistence, custody and derived-read contract; no presentation behavior.
 depends_on:
@@ -3632,3 +3775,6 @@ negative_constraints:
 - No admission, registry append, native execution or PNC-019 clearance.
 - No sibling checkpoint, alias, durable Browser projection or replay effect.
 ```
+
+
+Current selected assignment (2026-11-19): browser.session.interrupted@1.0.0 is registered for project_only in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2206. Its event history selects RP-AUTHORITY-INDEFINITE@1.0.0; exact original and checkpoint bindings retain their existing Storage assignments. Registry membership supplies no producer adoption or native-installation proof. Missing-registration refusal applies only if the exact current registration is absent.

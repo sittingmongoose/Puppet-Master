@@ -33138,7 +33138,7 @@ DL-406 and DL-427 authorize this newly authored saved result on the actual assis
 
 The record is immutable per (actual Storage instance, Server, scope partition, Computer, thread, assistant turn, Stop request). SP-627 defines its exact key and physical custody. Commit absent-to-present by whole-value CAS and verified durable readback; an identical repeat returns the saved result, differing result bytes conflict and never overwrite it. cancelled requires verified all-target stopping within the original three-second grace; timeout requires the original grace to have expired with targeted work unresolved. Stop delivery alone proves neither. The canonical outcome and pending-operation first-receipt/source custody survive restart and coherent backup recovery; never reconstruct an outcome from the request event, partial reply, live state or missing row. A missing or unresolved outcome holds the queue. Historical reads validate the written schema/recipe and exact original request/source/Storage custody with current authorization, deletion and hold checks, irrespective of later turn state. They cannot cancel anything, release the queue or make a partial reply complete.
 
-DL-427 requires the replacement to be fully specified and verified to survive restart and recovery before old outcome names retire. ATS-306 specifies these verification obligations; static models are contract evidence only and native execution remains NOT_RUN. SP-628 records the three separate conditional retirement applications and preserves original readable bytes. The saved record's retention_policy_ref is PENDING_RETENTION_DECISION; the exact question is recorded in SP-627 and Plans/dch_stop_contracts.json. This unit chooses no lifetime or deletion exception.
+DL-427 requires the replacement to be fully specified and verified to survive restart and recovery before old outcome names retire. ATS-306 specifies these verification obligations; static models are contract evidence only and native execution remains NOT_RUN. SP-628 records the three separate conditional retirement applications and preserves original readable bytes. The saved record's Historical preparation snapshot (2026-11-19, received 2bda6aeed0): «retention_policy_ref is PENDING_RETENTION_DECISION»; the exact question is recorded in SP-627 and Plans/dch_stop_contracts.json. This unit chooses no lifetime or deletion exception.
 
 ```yaml
 plan_unit_id: ACD-628
@@ -33177,9 +33177,9 @@ canonical_text: '### ACD-628 — saved assistant-turn Stop outcome
   DL-427 requires the replacement to be fully specified and verified to survive restart and recovery before old
   outcome names retire. ATS-306 specifies these verification obligations; static models are contract evidence only
   and native execution remains NOT_RUN. SP-628 records the three separate conditional retirement applications and
-  preserves original readable bytes. The saved record''s retention_policy_ref is PENDING_RETENTION_DECISION; the
-  exact question is recorded in SP-627 and Plans/dch_stop_contracts.json. This unit chooses no lifetime or deletion
-  exception.'
+  preserves original readable bytes. The saved record''s Historical preparation snapshot (2026-11-19, received 2bda6aeed0):
+  «retention_policy_ref is PENDING_RETENTION_DECISION»; the exact question is recorded in SP-627 and Plans/dch_stop_contracts.json.
+  This unit chooses no lifetime or deletion exception.'
 gui_related: true
 gui_classification_reason: Governs visible reply Stop and queue behavior.
 depends_on:
@@ -33214,6 +33214,8 @@ owner_hints:
 - Plans/assistant-chat-design.md
 ```
 
+
+Current selected assignment (2026-11-19): chat.response_stop_requested@1.0.0 is registered for application_or_project in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2240. Its event history selects Application = RP-CHAT-THREAD-LIFETIME@1.0.0 (anchor_kind=explicit_delete, cardinality_scope=thread), Project = RP-CHAT-THREAD-LIFETIME@1.0.0 (anchor_kind=explicit_delete, cardinality_scope=thread); exact original and checkpoint bindings retain their existing Storage assignments. Registry membership supplies no producer adoption or native-installation proof. Missing-registration refusal applies only if the exact current registration is absent.
 ### ACD-571 - Bundle Revision Requested Event Semantics
 
 ```yaml
@@ -33238,7 +33240,8 @@ depends_on:
 - ACD-050
 unblocks: []
 acceptance_criteria:
-- This exact family remains unadmitted until individual admission; no sibling inference.
+- 'Historical preparation snapshot (2026-11-19, received 2bda6aeed0): «This exact family remains unadmitted until
+  individual admission; no sibling inference».'
 - Static contract fixtures pass; native execution remains NOT_RUN.
 validation_surfaces:
 - python3 scripts/pm_bundle_revision_events.py
@@ -33262,6 +33265,8 @@ negative_constraints:
 - No event admission, new UI behavior, retention choice, native execution proof or governance seal.
 ```
 
+
+Current selected assignment (2026-11-19): bundle.revision_requested@1.0.0 is registered for project_only in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2229. Its event history selects RP-AUTHORITY-INDEFINITE@1.0.0; exact original and checkpoint bindings retain their existing Storage assignments. Registry membership supplies no producer adoption or native-installation proof. Missing-registration refusal applies only if the exact current registration is absent.
 ### ACD-572 - Bundle Revision Started Event Semantics
 
 ```yaml
@@ -33286,7 +33291,8 @@ depends_on:
 - ACD-050
 unblocks: []
 acceptance_criteria:
-- This exact family remains unadmitted until individual admission; no sibling inference.
+- 'Historical preparation snapshot (2026-11-19, received 2bda6aeed0): «This exact family remains unadmitted until
+  individual admission; no sibling inference».'
 - Static contract fixtures pass; native execution remains NOT_RUN.
 validation_surfaces:
 - python3 scripts/pm_bundle_revision_events.py
@@ -33310,6 +33316,8 @@ negative_constraints:
 - No event admission, new UI behavior, retention choice, native execution proof or governance seal.
 ```
 
+
+Current selected assignment (2026-11-19): bundle.revision_started@1.0.0 is registered for project_only in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2230. Its event history selects RP-AUTHORITY-INDEFINITE@1.0.0; exact original and checkpoint bindings retain their existing Storage assignments. Registry membership supplies no producer adoption or native-installation proof. Missing-registration refusal applies only if the exact current registration is absent.
 ### ACD-573 - Bundle Revision Completed Event Semantics
 
 ```yaml
@@ -33334,7 +33342,8 @@ depends_on:
 - ACD-050
 unblocks: []
 acceptance_criteria:
-- This exact family remains unadmitted until individual admission; no sibling inference.
+- 'Historical preparation snapshot (2026-11-19, received 2bda6aeed0): «This exact family remains unadmitted until
+  individual admission; no sibling inference».'
 - Static contract fixtures pass; native execution remains NOT_RUN.
 validation_surfaces:
 - python3 scripts/pm_bundle_revision_events.py
@@ -33358,6 +33367,8 @@ negative_constraints:
 - No event admission, new UI behavior, retention choice, native execution proof or governance seal.
 ```
 
+
+Current selected assignment (2026-11-19): bundle.revision_completed@1.0.0 is registered for project_only in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2227. Its event history selects RP-AUTHORITY-INDEFINITE@1.0.0; exact original and checkpoint bindings retain their existing Storage assignments. Registry membership supplies no producer adoption or native-installation proof. Missing-registration refusal applies only if the exact current registration is absent.
 ### ACD-574 - Bundle Revision Interrupted Event Semantics
 
 ```yaml
@@ -33382,7 +33393,8 @@ depends_on:
 - ACD-050
 unblocks: []
 acceptance_criteria:
-- This exact family remains unadmitted until individual admission; no sibling inference.
+- 'Historical preparation snapshot (2026-11-19, received 2bda6aeed0): «This exact family remains unadmitted until
+  individual admission; no sibling inference».'
 - Static contract fixtures pass; native execution remains NOT_RUN.
 validation_surfaces:
 - python3 scripts/pm_bundle_revision_events.py
@@ -33405,3 +33417,5 @@ preserved_exact_tokens:
 negative_constraints:
 - No event admission, new UI behavior, retention choice, native execution proof or governance seal.
 ```
+
+Current selected assignment (2026-11-19): bundle.revision_interrupted@1.0.0 is registered for project_only in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2228. Its event history selects RP-AUTHORITY-INDEFINITE@1.0.0; exact original and checkpoint bindings retain their existing Storage assignments. Registry membership supplies no producer adoption or native-installation proof. Missing-registration refusal applies only if the exact current registration is absent.

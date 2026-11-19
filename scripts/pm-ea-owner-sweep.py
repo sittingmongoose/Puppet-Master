@@ -70,6 +70,7 @@ def section(ref):
     return start, end, "\n".join(body.splitlines()[start - 1:end])
 
 
+@lru_cache(maxsize=2048)
 def clauses(ref):
     """Decode YAML wrapping, while retaining physical line bounds and exact bytes."""
     first, _, body = section(ref)
@@ -79,19 +80,20 @@ def clauses(ref):
     for block in blocks:
         data = yaml.compose(block[1])
         offset = first + body[:block.start(1)].count("\n")
-        if isinstance(data, yaml.MappingNode):
-            for key, value in data.value:
-                if key.value not in ("canonical_text", "acceptance_criteria", "negative_constraints"):
-                    continue
-                values = value.value if isinstance(value, yaml.SequenceNode) else [value]
-                for node in values:
-                    if not isinstance(node, yaml.ScalarNode):
-                        continue
-                    for paragraph in node.value.splitlines():
-                        if paragraph.strip():
-                            result.append(dict(text=paragraph.strip(), field=key.value,
-                                               line_start=offset + node.start_mark.line,
-                                               line_end=offset + node.end_mark.line))
+        def visit(node, field):
+            if isinstance(node, yaml.MappingNode):
+                for key, child in node.value:
+                    visit(child, field + "/" + key.value if field else key.value)
+            elif isinstance(node, yaml.SequenceNode):
+                for child in node.value:
+                    visit(child, field)
+            elif isinstance(node, yaml.ScalarNode):
+                for paragraph in re.split(r"\n\s*\n", node.value):
+                    if paragraph.strip():
+                        result.append(dict(text=paragraph.strip(), field=field,
+                                           line_start=offset + node.start_mark.line,
+                                           line_end=offset + node.end_mark.line))
+        visit(data, "")
         residual = residual.replace(block[0], "\n" * block[0].count("\n"))
     for i, line in enumerate(residual.splitlines(), first):
         if line.strip() and not line.startswith(("#", "ContractRef:")):
@@ -112,6 +114,145 @@ def sentences(value):
     return re.split(r"(?<=[.!?])\s+(?=[A-Z`])", value)
 
 
+def active_text(value):
+    """Remove only explicitly bounded history, never the following live clause."""
+    value = re.sub(r"Historical preparation snapshot \(20\d\d-\d\d-\d\d[^)]*\): «.*?»", "", value, flags=re.S)
+    if HISTORY.search(value):
+        current = re.search(r"Current (?:selected assignment|registration|retention|scope)", value)
+        return value[current.start():] if current else ""
+    return value
+
+
+@lru_cache(maxsize=1)
+def owner_index():
+    # Routing only: the live section is always resolved and read independently.
+    return {row["plan_unit_id"]: row["source_location"]["path"]
+            for row in (json.loads(line) for line in text("Plans/.plan_index/plan_units.jsonl").splitlines() if line.strip())}
+
+
+def graded_owner_refs(preparation, event):
+    """Visit all named canonical Markdown evidence owners, including graded roles."""
+    refs = set()
+    def walk(value):
+        if isinstance(value, dict):
+            path, unit = value.get("path", "").split("@", 1)[0], value.get("unit")
+            if path.startswith("Plans/") and path.endswith(".md") and unit:
+                unit = unit.removeprefix("heading:").removeprefix("#")
+                # Prepared generic labels have already been bound by the current
+                # assessment. Only an actual, resolvable named section is an owner.
+                try:
+                    section(path + "#" + unit)
+                except ValueError:
+                    if re.fullmatch(r"[A-Z][A-Z0-9]*-\d+", unit):
+                        raise
+                else:
+                    refs.add(path + "#" + unit)
+            for child in value.values():
+                walk(child)
+        elif isinstance(value, list):
+            for child in value:
+                walk(child)
+    walk(preparation.get("cells", {}))
+    walk(load(REPORT + "/depth/" + event + ".json")["rows"][0]["cells"])
+    source = preparation.get("grade_source", {})
+    path = source.get("path") if isinstance(source, dict) else source
+    if path:
+        grade = load(path)
+        matching = [row for row in grade.get("rows", []) if row.get("event_type") == event]
+        for row in matching:
+            walk(row.get("cells", {}))
+    for unit in preparation.get("current_owner_units", []):
+        if re.fullmatch(r"[A-Z][A-Z0-9]*-\d+", unit):
+            owner = owner_index().get(unit)
+            if not owner:
+                raise ValueError("graded owner absent from unit routing index: " + unit)
+            section(owner + "#" + unit)
+            refs.add(owner + "#" + unit)
+    return refs
+
+
+def scope_policies(row):
+    versions = row.get("payload_versions") or []
+    if versions:
+        return {v["scope_kind"]: v.get("retention_policy_ref", row.get("retention_policy_ref", {})) for v in versions}
+    return {row["scope_policy"].removesuffix("_only"): row.get("retention_policy_ref", {})}
+
+
+def policy_name(policy):
+    return (policy["policy_id"] + "@" + policy["policy_version"] if policy.get("policy_id")
+            else policy.get("setting_key", "ai.usage.usage-retention"))
+
+
+def scope_assignment(row, policies):
+    parts = []
+    for scope, selection in sorted(scope_policies(row).items()):
+        name = policy_name(selection)
+        policy = policies.get(selection.get("policy_id"), {})
+        details = ("anchor_kind=" + str(policy.get("anchor_kind")) + ", cardinality_scope=" + (str(policy["cardinality_scope"]) if policy.get("cardinality_scope") is not None else "null")
+                   if policy else "anchor=" + str(selection.get("anchor")))
+        parts.append(scope.capitalize() + " = " + name + " (" + details + ")")
+    return ", ".join(parts)
+
+
+def scope_clause_problem(value, row):
+    selections = scope_policies(row)
+    if len(selections) < 2:
+        return False
+    value = active_text(value)
+    names = {policy_name(p) for p in selections.values()}
+    if not any(name in value for name in names):
+        return False
+    if not re.search(r"event history|history retention|retention_policy_ref|(?:this|exact) family.{0,80}retention", value, re.I):
+        return False
+    # Separate source/checkpoint lifetimes are not event-history assignments.
+    if re.search(r"(?:original|checkpoint|stored.value|application source)", value, re.I) and not re.search(r"event history|history retention", value, re.I):
+        return False
+    if len(names) == 1 and re.search(r"both (?:application and project|scopes)|application and project|project and application", value, re.I):
+        return False
+    scope_names = "|".join(re.escape(scope) for scope in selections)
+    labels = list(re.finditer(r"\b(" + scope_names + r")(?=\s*(?:=|editions?\b|scopes?\b|versions?\b|event history\b|history\b|retention\b))", value, re.I))
+    found = {}
+    for i, label in enumerate(labels):
+        stop = labels[i+1].start() if i+1 < len(labels) else len(value)
+        found.setdefault(label[1].lower(), []).append(value[label.end():stop])
+    return any(not any(policy_name(policy) in clause for clause in found.get(scope, []))
+               for scope, policy in selections.items())
+
+
+LIVE_CLAIM = re.compile(r"missing_event_registration|\bnot registered\b|\bunadmitted\b|\bquarantin\w*|"
+                        r"\b(?:admission|membership|registration).{0,65}\b(?:absent|fenced|pending)\b|"
+                        r"Nothing is admitted|\bpending\b|\bRT must\b|PENDING_RETENTION", re.I)
+
+
+def additional_live_claims(value):
+    for sentence in sentences(active_text(value)):
+        if HISTORY.search(sentence.strip()):
+            continue
+        if not LIVE_CLAIM.search(sentence):
+            continue
+        if re.match(r"^(?:If|When)\b", sentence.strip(), re.I):
+            continue
+        if re.search(r"^(?:At preparation before|Preparation outcome \().*20\d\d-\d\d-\d\d", sentence):
+            continue
+        # These conditions test absent input, native implementation or a runtime
+        # state; they do not claim this admitted registry row is absent.
+        if re.search(r"Missing-registration refusal applies only if|only if the exact current|"
+                     r"this registered family is not refused|does not fence|no longer|"
+                     r"only while.{0,80}registration.{0,30}absent|refuses only an absent exact registration|retention pending blocks admission|"
+                     r"remain disabled while.{0,90}(?:family|registration).{0,35}(?:is )?absent|"
+                     r"(?:if|when).{0,140}(?:unregistered|registration.{0,30}absent)|"
+                     r"(?:native|installation|implementation).{0,65}(?:pending|fenced)|"
+                     r"\bpending_(?:request|operation|checkpoint)|pending (?:request|operation|CAS)", sentence, re.I):
+            continue
+        if re.search(r"\b(?:family|membership|admission|registration|current writes)\s+(?:remains?|is|are|stay|stays)\s+"
+                     r"(?:unadmitted|quarantined|not registered|absent|fenced|prepared without admission|missing_event_registration)|"
+                     r"static admission oracle still returns\s+`?missing_event_registration|"
+                     r"Nothing is admitted|RT (?:still )?must (?:decide/confirm|materialize)|"
+                     r"retention_policy_ref\s*(?:=|is|:)\s*`?PENDING_RETENTION_DECISION|"
+                     r"\b(?:retention|policy|assignment)\s+(?:remains?\s+|is\s+)?(?:PENDING_RETENTION|pending|unresolved)", sentence, re.I):
+            yield "active_graded_owner_claim", sentence
+
+
 def stale_sentences(value, scope):
     retention_context = bool(re.search(r"retention|RP-[A-Z]|PENDING_RETENTION", value, re.I))
     value = re.sub(r"Historical preparation snapshot \(20\d\d-\d\d-\d\d[^)]*\): «.*?»", "", value)
@@ -123,7 +264,11 @@ def stale_sentences(value, scope):
         # A dated, explicitly historical suffix is not a current prescription.
         history = re.search(r"Historical (?:preparation|snapshot|registry|membership).{0,160}?20\d\d-\d\d-\d\d", sentence, re.I)
         active = sentence[:history.start()] if history else sentence
+        if re.match(r"^(?:If|When)\b", active.strip(), re.I):
+            continue
         if re.search(r"where explicitly marked", active, re.I):
+            continue
+        if re.search(r"(?:only while|remain disabled while).{0,90}(?:registration|family).{0,35}(?:is )?absent", active, re.I):
             continue
         if re.search(r"Missing-registration refusal applies only if|this registered family is not refused|"
                      r"only if the exact current|(?:only|when|if) (?:the )?(?:actual|exact).*registration.*absent", active, re.I):
@@ -174,12 +319,14 @@ def main():
     assert len(ready) == 299
     registry = {r["event_type"]: r for r in load("Plans/event_family_registry.json")["families"]}
     stored = {r["family_id"]: r for r in load("Plans/storage_value_registry.json")["families"]}
-    findings, signals, owners, decisions, revisions = [], [], [], [], []
+    policies = {p["policy_id"]: p for p in load("Plans/storage_value_registry.json")["retention_policies"]}
+    findings, signals, owners, decisions, revisions, claim_audit = [], [], [], [], [], []
     scope_cache = {}
     for event, preparation in sorted(ready.items()):
         row = registry[event]
         delta = preparation.get("retention_delta", {})
         refs = {row["semantic_owner_doc"], row["payload_owner_doc"]}
+        refs.update(graded_owner_refs(preparation, event))
         refs.update(ref for ref in row["source_refs"] if ref.startswith("Plans/storage-plan.md#"))
         if delta.get("owner"):
             refs.add(delta["owner"])
@@ -193,13 +340,49 @@ def main():
                                section_sha256=hashlib.sha256(body.encode()).hexdigest()))
             for clause in clauses(ref):
                 value = clause["text"]
+                if clause["field"].endswith("preserved_exact_tokens"):
+                    continue  # A declared token is not a present-tense assertion.
                 mentioned = {name for name in re.findall(r"\b[a-z][a-z0-9_]*(?:\.[a-z][a-z0-9_]*)+\b", value)
                              if name in registry}
+                if LIVE_CLAIM.search(value):
+                    claim_audit.append(dict(event_type=event, ref=ref, field=clause['field'],
+                                            line_start=clause['line_start'], line_end=clause['line_end'],
+                                            text=value, active_text=active_text(value), named_subjects=sorted(mentioned)))
                 if mentioned and event not in mentioned:
+                    for subject in sorted(mentioned & ready.keys()):
+                        other = dict(event_type=subject, lane=ready[subject]['lane'], ref=ref,
+                                     field=clause['field'], line_start=clause['line_start'], line_end=clause['line_end'])
+                        for kind, sentence in additional_live_claims(value):
+                            findings.append(dict(other, kind=kind, sentence=sentence))
+                        for kind, sentence in stale_sentences(value, registry[subject]['scope_policy']):
+                            findings.append(dict(other, kind=kind, sentence=sentence))
+                        if scope_clause_problem(value, registry[subject]):
+                            findings.append(dict(other, kind='dual_scope_retention_clause', sentence=value,
+                                                 expected=scope_assignment(registry[subject], policies)))
                     continue
                 base = dict(event_type=event, lane=preparation["lane"], ref=ref,
                             field=clause["field"], line_start=clause["line_start"], line_end=clause["line_end"],
                             clause_sha256=hashlib.sha256(value.encode()).hexdigest())
+                for kind, sentence in additional_live_claims(value):
+                    findings.append(dict(base, kind=kind, sentence=sentence))
+                active = active_text(value)
+                selections = scope_policies(row)
+                if scope_clause_problem(value, row):
+                    findings.append(dict(base, kind="dual_scope_retention_clause", sentence=value,
+                                         expected=scope_assignment(row, policies)))
+                if len(selections) > 1 and re.search(r"event history selects|(?:this|exact) family.{0,80}retention", active, re.I):
+                    expected = scope_assignment(row, policies)
+                    if "Current selected assignment" in active and expected not in active:
+                        findings.append(dict(base, kind="dual_scope_retention_assignment", sentence=value,
+                                             expected=expected))
+                    record = load("reports/event-authority-20260911/admission-records/" + event + ".json")
+                    _, _, decision_text = section(record["decision_ref"])
+                    for scope, selection in selections.items():
+                        token = policy_name(selection)
+                        selected_scope = re.search(r"\b" + re.escape(scope) + r" `[^`]+` \((.*?)(?:, producer )", decision_text, re.S)
+                        if not selected_scope or token not in selected_scope[1]:
+                            findings.append(dict(base, kind="scope_policy_not_in_governing_decision", sentence=value,
+                                                 scope=scope, expected=token, decision=record["decision_ref"]))
                 if SIGNAL.search(value):
                     record = dict(base, historical=bool(HISTORY.search(value)),
                                   matched_sentences=[sentence for sentence in sentences(value) if SIGNAL.search(sentence)])
@@ -211,7 +394,7 @@ def main():
                     subject, version, family_scope, decision, policy = selected.groups()
                     selected_row = registry.get(subject, {})
                     rp = selected_row.get("retention_policy_ref", {})
-                    expected = (rp["policy_id"] + "@" + rp["policy_version"]) if rp.get("policy_id") else rp.get("setting_key", "ai.usage.usage-retention")
+                    expected = scope_assignment(selected_row, policies) if len(scope_policies(selected_row)) > 1 else policy_name(rp)
                     admission = load("reports/event-authority-20260911/admission-records/" + subject + ".json")
                     _, _, decision_body = section(decision)
                     if (version != selected_row.get("family_revision") or family_scope != selected_row.get("scope_policy")
@@ -271,7 +454,7 @@ def main():
     assert len(revisions) == 8
     result = dict(schema_id="pm.ea.owner_sweep.v1", admitted_families=len(ready),
                   input_revision=REVISION or "working_tree", script_sha256=hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
-                  selected_sections=len(owners), owners=owners, signals=signals,
+                  selected_sections=len(owners), owners=owners, signals=signals, claim_audit=claim_audit,
                   retention_citations=decisions, decision_scopes=scope_cache, revisions=revisions, findings=findings,
                   by_lane={lane:dict(families=len({x['event_type'] for x in findings if x['lane']==lane}),
                                      findings=sum(x['lane']==lane for x in findings))
