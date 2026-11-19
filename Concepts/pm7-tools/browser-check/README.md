@@ -257,7 +257,7 @@ FO-61: Later must remain uncommitted and unconfirmed before the first comparison
 const LOADER = '<your surface selector>';    // the element your lane owns
 export default async function (t) {
 	await t.app.open();                      // fresh load: cache-buster, o55=off, default look, default viewport, waits for ready
-	await t.app.look('nier-dark');           // one of the ten looks, not persisted; waits out NieR's switch-on
+	await t.app.look('nier-dark');           // one of the ten looks, not persisted; waits out NieR's switch-on, cover and input hold
 	await t.app.resetLayout();               // block Home's localStorage writes and clear them
 	await t.visible(LOADER, 'loader on top');
 	await t.still(LOADER, 'NieR loader still');                         // compositor frames, not a rAF probe
@@ -266,6 +266,8 @@ export default async function (t) {
 	await t.crop('loader', LOADER, 'loader at 16 px: eyes read through the band');
 }
 ```
+
+`t.app.look()` returns once the requested look is painted **and** the page's own `PM_LOOK_COVERED()` is false. The NieR reboot paints the new look under a pointer-transparent plate and holds trusted presses until the plate's reveal, so a painted look can come before the page takes input back: a click in between is swallowed while a hit-test already lands on its control (KIT-LOOKCOVER). The wait is bounded at 20 s and adds no sleep; a cover that never clears fails the test with `look <name> cover clears`, naming the plate or the transition that still holds the pointer, instead of letting a later click vanish.
 
 `t.app.open()` resets the saved look and the viewport only at the boundary between checks: a test's **first** open starts from the default saved look and the config viewport, 1920×1080. The next document clears its own storage before any page script — which also removes the look the outgoing page saved on pagehide — so a look or a viewport left by the check before it does not change this one. **Later opens in the same test keep both** the storage and the viewport, so a reopen or reload stand-in still sees what the check saved (the product saves on pagehide). A size the test asks for — `t.viewport(...)`, `page.setViewportSize(...)`, or `t.newContext({ viewport })` — is kept. The previous check's media emulation (`t.emulate`) is cleared at the boundary too, so a leaked Reduced Motion does not remove the next check's transition hold. `t.app.look` still does not persist; `t.app.resetLayout()` clears the saved layout (and drops that page's hidden writes) for a check that wants a clean layout without opening again.
 

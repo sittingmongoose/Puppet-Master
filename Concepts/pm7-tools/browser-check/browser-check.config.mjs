@@ -203,6 +203,24 @@ export default (ctx) => {
 				// NieR's switch-on plays a transition first; wait for the painted state rather than a fixed time
 				await f0.waitForFunction(([want, m]) => { const theme = document.documentElement.getAttribute('data-theme') || ''; const nier = !!(window.PM_NIER && PM_NIER.on()) || theme.startsWith('nier'); return nier === want && theme.endsWith('-' + m); }, [family === 'nier', mode], { timeout: 20000 }).catch(() => {});
 				await t.page.waitForTimeout(500);
+				// The painted look can come before the page takes input back: the NieR reboot's plate is pointer-transparent
+				// over the page and holds trusted presses until its reveal, so a click sent in between is swallowed while a
+				// hit-test already lands on the control (KIT-LOOKCOVER). Wait for the page's own cover signal — the same
+				// task that releases the hold sets the plate's pointer-events to none — and fail loudly if it never clears.
+				const coverMs = 20000, coverAt = Date.now();
+				try {
+					await f0.waitForFunction(() => !(window.PM_LOOK_COVERED && PM_LOOK_COVERED()), null, { timeout: coverMs });
+				} catch (e) {
+					const cover = await f0.evaluate(() => {
+						const say = (el) => { if (!el) return null; const b = el.getBoundingClientRect(); return `#${el.id || el.className || el.tagName}${el.id ? '' : '.' + String(el.className?.baseVal ?? el.className)} at ${[b.left, b.top, b.width, b.height].map((v) => Math.round(v)).join(',')}${el.style && el.style.pointerEvents ? `, pointer-events ${el.style.pointerEvents}` : ', pointer-events not released'}`; };
+						const plate = document.getElementById('o55np-reboot'), calm = document.getElementById('o55np-calm');
+						const busy = !!(window.PM_THEME_TRANSITION && PM_THEME_TRANSITION.busy && PM_THEME_TRANSITION.busy());
+						return { theme: document.documentElement.getAttribute('data-theme') || '', busy, plate: say(plate), calm: say(calm) };
+					}).catch(() => null);
+					const held = cover ? [cover.plate && 'the NieR reboot plate ' + cover.plate, cover.calm && 'the calm cover ' + cover.calm, cover.busy && 'PM_THEME_TRANSITION.busy()'].filter(Boolean).join('; ') : '';
+					await t.check(`look ${name} cover clears`, false, `PM_LOOK_COVERED() stayed true for ${coverMs} ms with the pointer held${held ? ' by ' + held : ''}${cover && cover.theme ? ` (data-theme ${cover.theme})` : ''}; a press sent now would be lost`, { hard: true });
+				}
+				t.log(`look ${name}: cover clear (PM_LOOK_COVERED() false) ${Date.now() - coverAt} ms after the painted state`);
 				const got = await f0.evaluate(state);
 				const ok = paintedLookHeld(name, got);
 				return t.check(`look ${name} applied`, ok, `data-theme ${got.theme}, NieR ${got.nier ? 'on' : 'off'}`);
