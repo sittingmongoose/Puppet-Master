@@ -552,7 +552,8 @@ def verify_witnesses(reference_v, entries, raw_store=None, controls=None):
     """Reference-check EVERY witness result, including carried raw and replay evidence.
 
     Missing evidence is an explicit failed check, never an unverifiable success.
-    The caller may reconstruct legacy evidence with --verify-report first.
+    The caller may reconstruct legacy evidence first with
+    scripts/pm_goal_dg5_reverify.py.
     """
     import base64
     raw_store = _WIT['store'] if raw_store is None else raw_store

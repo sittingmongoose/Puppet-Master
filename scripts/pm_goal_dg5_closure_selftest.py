@@ -121,6 +121,25 @@ class Witnesses(unittest.TestCase):
         missing = c.verify_witnesses(v, {clause: entry}, {})
         self.assertEqual((missing['passed'], missing['failed'], missing['unverifiable']), (0, 1, 0))
 
+    def test_raw_witness_with_matching_digest_but_wrong_fingerprint_refused(self):
+        import pm_goal_go2_closure as go2
+        schema = {'type': 'object', 'properties': {'n': {'type': 'integer'}}}
+        v = c.closure_validator(jsonschema.Draft202012Validator(schema), 'selftest-fingerprint')
+        value = {'n': True}
+        raw = pickle.dumps(value, protocol=5)
+        clause = next(x for x in c.go.locations(c.go.errors_of(v, value)) if x.endswith('/n/type'))
+        # Pickle digest matches the stored raw witness, but the entry's semantic
+        # value fingerprint names a different value: the witness must be refused.
+        entry = dict(cls='KILLED', input_sha256=hashlib.sha256(raw).hexdigest(),
+                     input_value_sha256=go2.value_sha({'n': 7}))
+        result = c.verify_witnesses(v, {clause: entry}, {clause: raw})
+        self.assertEqual((result['passed'], result['failed'], result['unverifiable']), (0, 1, 0))
+        self.assertIn('value fingerprint', result['failures'][0]['problem'])
+        # With the fingerprint of the stored value the same raw witness passes.
+        entry['input_value_sha256'] = go2.value_sha(value)
+        accepted = c.verify_witnesses(v, {clause: entry}, {clause: raw})
+        self.assertEqual((accepted['passed'], accepted['failed'], accepted['unverifiable']), (1, 0, 0))
+
     def test_selected_pair_not_first_confirmed_pair(self):
         from unittest.mock import patch
         target = 'dg5-root:pair/type'
