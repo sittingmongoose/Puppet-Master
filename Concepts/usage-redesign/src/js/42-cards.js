@@ -1224,9 +1224,11 @@
       var dx = event.deltaX || (event.shiftKey ? event.deltaY : 0);
       var dy = event.shiftKey ? 0 : event.deltaY;
       /* Mark in wheel dispatch when the pane has room in that direction. A passive listener lets Chromium
-         keep scrolling on the compositor. The scroll listener covers movement this range check missed. */
-      if ((dy < 0 && top > 0) || (dy > 0 && top < boardEl.scrollHeight - boardEl.clientHeight) ||
-          (dx < 0 && left > 0) || (dx > 0 && left < boardEl.scrollWidth - boardEl.clientWidth)) {
+         keep scrolling on the compositor. The scroll listener covers movement this range check missed.
+         R123 P-2: scrollHeight and clientHeight are whole pixels and scrollTop is not, so at the bottom the
+         difference can exceed the real maximum by under a pixel: room means at least one whole pixel. */
+      if ((dy < 0 && top >= 1) || (dy > 0 && boardEl.scrollHeight - boardEl.clientHeight - top >= 1) ||
+          (dx < 0 && left >= 1) || (dx > 0 && boardEl.scrollWidth - boardEl.clientWidth - left >= 1)) {
         startWheel([event.clientX, event.clientY]);
         return;
       }
