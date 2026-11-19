@@ -5,8 +5,8 @@
  "merge": "admission-merge-2",
  "registry": {
   "path": "Plans/event_family_registry.json",
-  "revision": "2026-11-18.2",
-  "sha256": "ec21cf1a5b42b3e68a5564a847b4798dff968612d11d438bc7075b89196f9602",
+  "revision": "2026-11-19.48",
+  "sha256": "bfe9ccec0938e9f9fe7830059761e53acf545f939013b4e575340bd6c54f0ce6",
   "family_count": 518,
   "row_pointer": "#/families/355"
  },
@@ -22,7 +22,7 @@
     "membership_version": {
      "status": "PASS",
      "representation": "exact_registry_membership",
-     "finding": "Currently registered at 2026-11-18.2 as #/families/355 (canonical row SHA-256 c09b7bcf120ab7694b79e51ba93f9c5b05d19b34e55a809a7ecc3233ae3c65d3). Original one-family admission checkpoints remain in the family record and immutable Git source.",
+     "finding": "Currently registered at 2026-11-19.48 as #/families/355, canonical row SHA-256 c09b7bcf120ab7694b79e51ba93f9c5b05d19b34e55a809a7ecc3233ae3c65d3. Original one-family append checkpoints remain preserved.",
      "evidence": [
       {
        "path": "Plans/event_family_registry.json",
@@ -238,22 +238,44 @@
        "path": "Plans/FinalGUISpec.md",
        "unit": "F3-714",
        "line_start": 54748,
-       "line_end": 54748,
-       "quote": "Current selected assignment (2026-11-19): concern.updated@2.0.0 is registered for project_only in Plans/event_family_registry.json,",
+       "line_end": 54759,
+       "quote": "  Current selected assignment (2026-11-19): concern.updated@2.0.0 is registered for project_only in Plans/event_family_registry.json,\n  as recorded by Plans/Decision_Log.md#DL-2273. Its event history selects RP-AUTHORITY-INDEFINITE@1.0.0; Plans/FinalGUISpec.md#F3-714\n  owns the event policy''s existing anchors, counts, holds and deletion rules. Separate stored-value assignment:\n  concern_updated_checkpoint uses RP-PROJECTION-3GEN@1.0.0 under Plans/Decision_Log.md#DL-500; this assigns that\n  stored value, not event history. Separate stored-value assignment: concern_updated_operation uses RP-OPERATIONAL-2555D@1.0.0\n  under Plans/Decision_Log.md#DL-501; this assigns that stored value, not event history. Separate checkpoint assignment:\n  concern_updated_checkpoint uses RP-PROJECTION-3GEN@1.0.0 under its existing Plans/FinalGUISpec.md#F3-714 contract;\n  checkpoint retention grants no event/source deletion. Original sources and coherent backups retain their independent\n  owner policies; the event lifetime is not transferred to them. Current append/publication still requires the exact\n  selected schema/scope, original custody, current permission, receipt and required producer adoption. Actual missing\n  registration or unresolved required custody refuses; native execution remains NOT_RUN. No native adoption, new\n  retention choice or governance seal follows.'",
        "quote_check": "exact",
        "quote_scope": "unit F3-714, Plans/FinalGUISpec.md:54528-54794",
        "file_sha256": "73d2fdbe5d89e1c00d558530c568133646e6c4496956e28ca59efbe50391faa3",
        "source_citation": {
         "path": "Plans/FinalGUISpec.md",
         "unit": "F3-714",
-        "line_start": 54221,
-        "line_end": 54221,
-        "quote": "\\ binding for `concern.updated` (2026-11-14).\\n\\nEvent history `retention_policy_ref = RP-AUTHORITY-INDEFINITE@1.0.0`,\\",
-        "file_sha256": "483180446b9ea96a38be9d03c75a9b126212e08b8266917f8c76e1fc17f2797f"
+        "line_start": 54748,
+        "line_end": 54748,
+        "quote": "Current selected assignment (2026-11-19): concern.updated@2.0.0 is registered for project_only in Plans/event_family_registry.json,",
+        "quote_check": "exact",
+        "quote_scope": "unit F3-714, Plans/FinalGUISpec.md@10ba97e699d51287673d6f1db4d994f54c59b4ed:54528-54794",
+        "file_sha256": "73d2fdbe5d89e1c00d558530c568133646e6c4496956e28ca59efbe50391faa3",
+        "source_citation": {
+         "path": "Plans/FinalGUISpec.md",
+         "unit": "F3-714",
+         "line_start": 54221,
+         "line_end": 54221,
+         "quote": "\\ binding for `concern.updated` (2026-11-14).\\n\\nEvent history `retention_policy_ref = RP-AUTHORITY-INDEFINITE@1.0.0`,\\",
+         "file_sha256": "483180446b9ea96a38be9d03c75a9b126212e08b8266917f8c76e1fc17f2797f"
+        },
+        "locator_maintenance": {
+         "authority": "MERGE2-FIX4",
+         "reason": "Re-cite the same accepted retention claim at its current exact owner assignment; event and source/checkpoint authority remain separate."
+        },
+        "commit": "10ba97e699d51287673d6f1db4d994f54c59b4ed",
+        "sha256": "73d2fdbe5d89e1c00d558530c568133646e6c4496956e28ca59efbe50391faa3",
+        "line": 54748
        },
-       "locator_maintenance": {
-        "authority": "MERGE2-FIX4",
-        "reason": "Re-cite the same accepted retention claim at its current exact owner assignment; event and source/checkpoint authority remain separate."
+       "retention_range_maintenance": {
+        "authority": "MERGE3-POSTFIX / post-landing Astra findings",
+        "source_commit": "ebb947f9e95adc04042f05a0be94bd111c0c7a4e",
+        "old_quote": "Current selected assignment (2026-11-19): concern.updated@2.0.0 is registered for project_only in Plans/event_family_registry.json,",
+        "old_path": "Plans/FinalGUISpec.md",
+        "old_unit": "F3-714",
+        "old_line_start": 54748,
+        "reason": "Complete current wrapped assignment inside its original unit."
        }
       }
      ],
@@ -659,10 +681,9 @@
   "row_pointer": "#/families/355"
  },
  "evidence_maintenance": {
-  "authority": "MERGE2-FIX4 items 1/2/3",
-  "source_commit": "2bda6aeed03daea26c4d79dfb7568fc145aac29e",
-  "source_assessment_sha256": "30fc1e48d970ff0f690c0a90e42d515653f8adb604a649fa539fdf93d66c2404",
-  "native_execution": "NOT_RUN",
-  "verdicts_changed": false
+  "authority": "MERGE3-POSTFIX / post-landing Astra findings",
+  "source_commit": "ebb947f9e95adc04042f05a0be94bd111c0c7a4e",
+  "source_assessment_sha256": "de1ff24c89171e9a79a1d4e436f702c75f4d96a5c1a8b59c4e899b82c013c279",
+  "native_execution": "NOT_RUN"
  }
 }
