@@ -2,9 +2,9 @@
 
 Source: `Plans/storage-plan.md`
 
-Source lines: L46102-L53290
+Source lines: L46102-L53260
 
-Source SHA256: `73ee6d097e08d31fd93301d05d2cd2632dd46e5a22ba3ea405ffadda4a0a9db2`
+Source SHA256: `51edc1394ab24ca53a2a021dce3c3c9a1be0f43e2292d901ad56e4b0063a3ebf`
 
 ---
 
@@ -2692,33 +2692,27 @@ plan_unit_id: SP-640
 unit_type: contract
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: "doctor.custom_headless.checked Storage adoption.\nThis exact family adopts Plans/newtools.md#N2-217 in\
-  \ full, including SP-286/CV-339 original receipt/full-value custody and SP-278/DL-076 checkpoint semantics.\
-  \ The only new stored value is projector.checkpoint.ds15.doctor_custom_headless_checked:{project_id}\
-  \ with closed schema Plans/ds15_doctor_custom_headless_checked_checkpoint.schema.json and reader reader.ds15.doctor_custom_headless_checked.v1@1.0.0.\
-  \ No source body is duplicated. retention_policy_ref = PENDING_RETENTION_DECISION for event and checkpoint;\
-  \ do not admit or enable writes/advance. Original log and first receipt retain their existing Storage\
-  \ custody, backup and recovery requirements. This is a newly authored owner contract, never evidence\
-  \ of existing implementation.\nPhysical storage profile: derived redb, coordination_and_storage budget\
-  \ group, messagepack_canonical, at most 16384 encoded bytes (SP-339/SP-340); oversize refuses before\
-  \ commit. Budget eviction permits only rebuildable derived data and never deletes canonical sources\
-  \ or assigns retention.\nRound 7 doctor.custom_headless.checked: adopt the exact authenticated retained-reader,\
-  \ per-row original Storage joins and exact authority types in Plans/newtools.md#N2-217. No checkpoint/rebuild\
-  \ bypasses original payload/version, outcome, coherent backup, receipt or current disclosure/withdrawal\
-  \ fences. Historical replay-only originals remain readable; append/retry policy stays writer-only.\n\
-  \nPNC-019 s4r retention binding for `doctor.custom_headless.checked` (2026-11-14).\n\nEvent history\
-  \ `retention_policy_ref = RP-OPERATIONAL-2555D@1.0.0`, under DL-401, DL-500.\n\nUse the existing policy\
-  \ object unchanged: {\"anchor_kind\": \"terminal_transition\", \"cardinality_scope\": \"project\", \"\
-  expiry_action\": \"compact\", \"max_cardinality\": 2000000, \"overflow_action\": \"fail_closed\", \"\
-  ttl_seconds\": 220752000}.\n\nExact stored value `ds15_doctor_custom_headless_checked_checkpoint` retains\
-  \ `RP-PROJECTION-3GEN@1.0.0` under DL-500; this does not assign its referenced bodies or other values.\n\
-  \nExisting `ds15_doctor_custom_headless_checked_checkpoint` retains `RP-PROJECTION-3GEN@1.0.0`; derived\
-  \ retention grants no source keepalive.\n\nThis paragraph supersedes earlier pending statements only\
-  \ for the exact assigned facets above. All independent source, receipt, referenced-body and backup lifetimes\
-  \ remain with their own owners. Legal/investigation holds, required references, recovery, rollback,\
-  \ maintenance, protected backups and latest-25-run protection override cleanup without granting access.\
-  \ No unexpired/protected eviction for space, no retry anchor renewal, no hold release, admission, native\
-  \ proof or governance clearance is granted.\n"
+canonical_text: |-
+  doctor.custom_headless.checked Storage adoption.
+  This exact family adopts Plans/newtools.md#N2-217 in full, including SP-286/CV-339 original receipt/full-value custody and SP-278/DL-076 checkpoint semantics. The only new stored value is projector.checkpoint.ds15.doctor_custom_headless_checked:{project_id} with closed schema Plans/ds15_doctor_custom_headless_checked_checkpoint.schema.json and reader reader.ds15.doctor_custom_headless_checked.v1@1.0.0. No source body is duplicated. Historical preparation status (2026-11-18 snapshot at 0f2a90ece5; superseded by the current assignment below): retention_policy_ref = PENDING_RETENTION_DECISION for event and checkpoint; do not admit or enable writes/advance. Original log and first receipt retain their existing Storage custody, backup and recovery requirements. This is a newly authored owner contract, never evidence of existing implementation.
+  Physical storage profile: derived redb, coordination_and_storage budget group, messagepack_canonical, at most 16384 encoded bytes (SP-339/SP-340); oversize refuses before commit. Budget eviction permits only rebuildable derived data and never deletes canonical sources or assigns retention.
+  Round 7 doctor.custom_headless.checked: adopt the exact authenticated retained-reader, per-row original Storage joins and exact authority types in Plans/newtools.md#N2-217. No checkpoint/rebuild bypasses original payload/version, outcome, coherent backup, receipt or current disclosure/withdrawal fences. Historical replay-only originals remain readable; append/retry policy stays writer-only.
+
+  PNC-019 s4r retention binding for `doctor.custom_headless.checked` (2026-11-14).
+
+  Event history `retention_policy_ref = RP-OPERATIONAL-2555D@1.0.0`, under DL-401, DL-500.
+
+  Use the existing policy object unchanged: {"anchor_kind": "terminal_transition", "cardinality_scope": "project", "expiry_action": "compact", "max_cardinality": 2000000, "overflow_action": "fail_closed", "ttl_seconds": 220752000}.
+
+  Exact stored value `ds15_doctor_custom_headless_checked_checkpoint` retains `RP-PROJECTION-3GEN@1.0.0` under DL-500; this does not assign its referenced bodies or other values.
+
+  Existing `ds15_doctor_custom_headless_checked_checkpoint` retains `RP-PROJECTION-3GEN@1.0.0`; derived retention grants no source keepalive.
+
+  This paragraph supersedes earlier pending statements only for the exact assigned facets above. All independent source, receipt, referenced-body and backup lifetimes remain with their own owners. Legal/investigation holds, required references, recovery, rollback, maintenance, protected backups and latest-25-run protection override cleanup without granting access. No unexpired/protected eviction for space, no retry anchor renewal, no hold release, admission, native proof or governance clearance is granted.
+
+
+  Current retention (2026-11-19): doctor.custom_headless.checked event history has retention_policy_ref = RP-OPERATIONAL-2555D@1.0.0, under Plans/Decision_Log.md#DL-401, Plans/Decision_Log.md#DL-500. The separate ds15_doctor_custom_headless_checked_checkpoint checkpoint uses RP-PROJECTION-3GEN@1.0.0, under Plans/Decision_Log.md#DL-500. Use the existing assigned policy anchors, dependencies, holds and deletion rules; no new duration, count eviction or deletion authority is chosen here.
+  Current registration (2026-11-19): Plans/Decision_Log.md#DL-2294 registers only doctor.custom_headless.checked; consult the exact live row and selected version in Plans/event_family_registry.json. The preparation-time pending marker above does not fence an already registered family whose retention is assigned. Absence, an unsupported selected version, missing required producer adoption, authorization or original custody still refuses append/publication. Native execution remains NOT_RUN; membership grants no owner adoption, effect, checkpoint permission or governance seal.
 gui_related: false
 gui_classification_reason: Durable event contract only; existing presentation is consumed.
 depends_on:
@@ -2803,32 +2797,27 @@ plan_unit_id: SP-642
 unit_type: contract
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: "live.session.started Storage adoption.\nThis exact family adopts Plans/newtools.md#N2-219 in full, including\
-  \ SP-286/CV-339 original receipt/full-value custody and SP-278/DL-076 checkpoint semantics. The only\
-  \ new stored value is projector.checkpoint.ds15.live_session_started:{project_id} with closed schema\
-  \ Plans/ds15_live_session_started_checkpoint.schema.json and reader reader.ds15.live_session_started.v1@1.0.0.\
-  \ No source body is duplicated. retention_policy_ref = PENDING_RETENTION_DECISION for event and checkpoint;\
-  \ do not admit or enable writes/advance. Original log and first receipt retain their existing Storage\
-  \ custody, backup and recovery requirements. This is a newly authored owner contract, never evidence\
-  \ of existing implementation.\nPhysical storage profile: derived redb, coordination_and_storage budget\
-  \ group, messagepack_canonical, at most 16384 encoded bytes (SP-339/SP-340); oversize refuses before\
-  \ commit. Budget eviction permits only rebuildable derived data and never deletes canonical sources\
-  \ or assigns retention.\nRound 7 live.session.started: adopt the exact authenticated retained-reader,\
-  \ per-row original Storage joins and exact authority types in Plans/newtools.md#N2-219. No checkpoint/rebuild\
-  \ bypasses original payload/version, outcome, coherent backup, receipt or current disclosure/withdrawal\
-  \ fences. Historical replay-only originals remain readable; append/retry policy stays writer-only.\n\
-  \nPNC-019 s4r retention binding for `live.session.started` (2026-11-14).\n\nEvent history `retention_policy_ref\
-  \ = RP-RUNTIME-365D@1.0.0`, under DL-401, DL-500.\n\nUse the existing policy object unchanged: {\"anchor_kind\"\
-  : \"run_completion\", \"cardinality_scope\": \"run\", \"expiry_action\": \"compact\", \"max_cardinality\"\
-  : 1000000, \"overflow_action\": \"roll_successor\", \"ttl_seconds\": 31536000}.\n\nExact stored value\
-  \ `ds15_live_session_started_checkpoint` retains `RP-PROJECTION-3GEN@1.0.0` under DL-500; this does\
-  \ not assign its referenced bodies or other values.\n\nExisting `ds15_live_session_started_checkpoint`\
-  \ retains `RP-PROJECTION-3GEN@1.0.0`; derived retention grants no source keepalive.\n\nThis paragraph\
-  \ supersedes earlier pending statements only for the exact assigned facets above. All independent source,\
-  \ receipt, referenced-body and backup lifetimes remain with their own owners. Legal/investigation holds,\
-  \ required references, recovery, rollback, maintenance, protected backups and latest-25-run protection\
-  \ override cleanup without granting access. No unexpired/protected eviction for space, no retry anchor\
-  \ renewal, no hold release, admission, native proof or governance clearance is granted.\n"
+canonical_text: |-
+  live.session.started Storage adoption.
+  This exact family adopts Plans/newtools.md#N2-219 in full, including SP-286/CV-339 original receipt/full-value custody and SP-278/DL-076 checkpoint semantics. The only new stored value is projector.checkpoint.ds15.live_session_started:{project_id} with closed schema Plans/ds15_live_session_started_checkpoint.schema.json and reader reader.ds15.live_session_started.v1@1.0.0. No source body is duplicated. Historical preparation status (2026-11-18 snapshot at 0f2a90ece5; superseded by the current assignment below): retention_policy_ref = PENDING_RETENTION_DECISION for event and checkpoint; do not admit or enable writes/advance. Original log and first receipt retain their existing Storage custody, backup and recovery requirements. This is a newly authored owner contract, never evidence of existing implementation.
+  Physical storage profile: derived redb, coordination_and_storage budget group, messagepack_canonical, at most 16384 encoded bytes (SP-339/SP-340); oversize refuses before commit. Budget eviction permits only rebuildable derived data and never deletes canonical sources or assigns retention.
+  Round 7 live.session.started: adopt the exact authenticated retained-reader, per-row original Storage joins and exact authority types in Plans/newtools.md#N2-219. No checkpoint/rebuild bypasses original payload/version, outcome, coherent backup, receipt or current disclosure/withdrawal fences. Historical replay-only originals remain readable; append/retry policy stays writer-only.
+
+  PNC-019 s4r retention binding for `live.session.started` (2026-11-14).
+
+  Event history `retention_policy_ref = RP-RUNTIME-365D@1.0.0`, under DL-401, DL-500.
+
+  Use the existing policy object unchanged: {"anchor_kind": "run_completion", "cardinality_scope": "run", "expiry_action": "compact", "max_cardinality": 1000000, "overflow_action": "roll_successor", "ttl_seconds": 31536000}.
+
+  Exact stored value `ds15_live_session_started_checkpoint` retains `RP-PROJECTION-3GEN@1.0.0` under DL-500; this does not assign its referenced bodies or other values.
+
+  Existing `ds15_live_session_started_checkpoint` retains `RP-PROJECTION-3GEN@1.0.0`; derived retention grants no source keepalive.
+
+  This paragraph supersedes earlier pending statements only for the exact assigned facets above. All independent source, receipt, referenced-body and backup lifetimes remain with their own owners. Legal/investigation holds, required references, recovery, rollback, maintenance, protected backups and latest-25-run protection override cleanup without granting access. No unexpired/protected eviction for space, no retry anchor renewal, no hold release, admission, native proof or governance clearance is granted.
+
+
+  Current retention (2026-11-19): live.session.started event history has retention_policy_ref = RP-RUNTIME-365D@1.0.0, under Plans/Decision_Log.md#DL-401, Plans/Decision_Log.md#DL-500. The separate ds15_live_session_started_checkpoint checkpoint uses RP-PROJECTION-3GEN@1.0.0, under Plans/Decision_Log.md#DL-500. Use the existing assigned policy anchors, dependencies, holds and deletion rules; no new duration, count eviction or deletion authority is chosen here.
+  Current registration (2026-11-19): Plans/Decision_Log.md#DL-2322 registers only live.session.started; consult the exact live row and selected version in Plans/event_family_registry.json. The preparation-time pending marker above does not fence an already registered family whose retention is assigned. Absence, an unsupported selected version, missing required producer adoption, authorization or original custody still refuses append/publication. Native execution remains NOT_RUN; membership grants no owner adoption, effect, checkpoint permission or governance seal.
 gui_related: false
 gui_classification_reason: Durable event contract only; existing presentation is consumed.
 depends_on:
@@ -2865,31 +2854,27 @@ plan_unit_id: SP-643
 unit_type: contract
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: "live.step.updated Storage adoption.\nThis exact family adopts Plans/newtools.md#N2-220 in full, including\
-  \ SP-286/CV-339 original receipt/full-value custody and SP-278/DL-076 checkpoint semantics. The only\
-  \ new stored value is projector.checkpoint.ds15.live_step_updated:{project_id} with closed schema Plans/ds15_live_step_updated_checkpoint.schema.json\
-  \ and reader reader.ds15.live_step_updated.v1@1.0.0. No source body is duplicated. retention_policy_ref\
-  \ = PENDING_RETENTION_DECISION for event and checkpoint; do not admit or enable writes/advance. Original\
-  \ log and first receipt retain their existing Storage custody, backup and recovery requirements. This\
-  \ is a newly authored owner contract, never evidence of existing implementation.\nPhysical storage profile:\
-  \ derived redb, coordination_and_storage budget group, messagepack_canonical, at most 16384 encoded\
-  \ bytes (SP-339/SP-340); oversize refuses before commit. Budget eviction permits only rebuildable derived\
-  \ data and never deletes canonical sources or assigns retention.\nRound 7 live.step.updated: adopt the\
-  \ exact authenticated retained-reader, per-row original Storage joins and exact authority types in Plans/newtools.md#N2-220.\
-  \ No checkpoint/rebuild bypasses original payload/version, outcome, coherent backup, receipt or current\
-  \ disclosure/withdrawal fences. Historical replay-only originals remain readable; append/retry policy\
-  \ stays writer-only.\n\nPNC-019 s4r retention binding for `live.step.updated` (2026-11-14).\n\nEvent\
-  \ history `retention_policy_ref = RP-RUNTIME-365D@1.0.0`, under DL-401, DL-500.\n\nUse the existing\
-  \ policy object unchanged: {\"anchor_kind\": \"run_completion\", \"cardinality_scope\": \"run\", \"\
-  expiry_action\": \"compact\", \"max_cardinality\": 1000000, \"overflow_action\": \"roll_successor\"\
-  , \"ttl_seconds\": 31536000}.\n\nExact stored value `ds15_live_step_updated_checkpoint` retains `RP-PROJECTION-3GEN@1.0.0`\
-  \ under DL-500; this does not assign its referenced bodies or other values.\n\nExisting `ds15_live_step_updated_checkpoint`\
-  \ retains `RP-PROJECTION-3GEN@1.0.0`; derived retention grants no source keepalive.\n\nThis paragraph\
-  \ supersedes earlier pending statements only for the exact assigned facets above. All independent source,\
-  \ receipt, referenced-body and backup lifetimes remain with their own owners. Legal/investigation holds,\
-  \ required references, recovery, rollback, maintenance, protected backups and latest-25-run protection\
-  \ override cleanup without granting access. No unexpired/protected eviction for space, no retry anchor\
-  \ renewal, no hold release, admission, native proof or governance clearance is granted.\n"
+canonical_text: |-
+  live.step.updated Storage adoption.
+  This exact family adopts Plans/newtools.md#N2-220 in full, including SP-286/CV-339 original receipt/full-value custody and SP-278/DL-076 checkpoint semantics. The only new stored value is projector.checkpoint.ds15.live_step_updated:{project_id} with closed schema Plans/ds15_live_step_updated_checkpoint.schema.json and reader reader.ds15.live_step_updated.v1@1.0.0. No source body is duplicated. Historical preparation status (2026-11-18 snapshot at 0f2a90ece5; superseded by the current assignment below): retention_policy_ref = PENDING_RETENTION_DECISION for event and checkpoint; do not admit or enable writes/advance. Original log and first receipt retain their existing Storage custody, backup and recovery requirements. This is a newly authored owner contract, never evidence of existing implementation.
+  Physical storage profile: derived redb, coordination_and_storage budget group, messagepack_canonical, at most 16384 encoded bytes (SP-339/SP-340); oversize refuses before commit. Budget eviction permits only rebuildable derived data and never deletes canonical sources or assigns retention.
+  Round 7 live.step.updated: adopt the exact authenticated retained-reader, per-row original Storage joins and exact authority types in Plans/newtools.md#N2-220. No checkpoint/rebuild bypasses original payload/version, outcome, coherent backup, receipt or current disclosure/withdrawal fences. Historical replay-only originals remain readable; append/retry policy stays writer-only.
+
+  PNC-019 s4r retention binding for `live.step.updated` (2026-11-14).
+
+  Event history `retention_policy_ref = RP-RUNTIME-365D@1.0.0`, under DL-401, DL-500.
+
+  Use the existing policy object unchanged: {"anchor_kind": "run_completion", "cardinality_scope": "run", "expiry_action": "compact", "max_cardinality": 1000000, "overflow_action": "roll_successor", "ttl_seconds": 31536000}.
+
+  Exact stored value `ds15_live_step_updated_checkpoint` retains `RP-PROJECTION-3GEN@1.0.0` under DL-500; this does not assign its referenced bodies or other values.
+
+  Existing `ds15_live_step_updated_checkpoint` retains `RP-PROJECTION-3GEN@1.0.0`; derived retention grants no source keepalive.
+
+  This paragraph supersedes earlier pending statements only for the exact assigned facets above. All independent source, receipt, referenced-body and backup lifetimes remain with their own owners. Legal/investigation holds, required references, recovery, rollback, maintenance, protected backups and latest-25-run protection override cleanup without granting access. No unexpired/protected eviction for space, no retry anchor renewal, no hold release, admission, native proof or governance clearance is granted.
+
+
+  Current retention (2026-11-19): live.step.updated event history has retention_policy_ref = RP-RUNTIME-365D@1.0.0, under Plans/Decision_Log.md#DL-401, Plans/Decision_Log.md#DL-500. The separate ds15_live_step_updated_checkpoint checkpoint uses RP-PROJECTION-3GEN@1.0.0, under Plans/Decision_Log.md#DL-500. Use the existing assigned policy anchors, dependencies, holds and deletion rules; no new duration, count eviction or deletion authority is chosen here.
+  Current registration (2026-11-19): Plans/Decision_Log.md#DL-2323 registers only live.step.updated; consult the exact live row and selected version in Plans/event_family_registry.json. The preparation-time pending marker above does not fence an already registered family whose retention is assigned. Absence, an unsupported selected version, missing required producer adoption, authorization or original custody still refuses append/publication. Native execution remains NOT_RUN; membership grants no owner adoption, effect, checkpoint permission or governance seal.
 gui_related: false
 gui_classification_reason: Durable event contract only; existing presentation is consumed.
 depends_on:
@@ -2926,32 +2911,27 @@ plan_unit_id: SP-644
 unit_type: contract
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: "live.artifact.created Storage adoption.\nThis exact family adopts Plans/newtools.md#N2-221 in full, including\
-  \ SP-286/CV-339 original receipt/full-value custody and SP-278/DL-076 checkpoint semantics. The only\
-  \ new stored value is projector.checkpoint.ds15.live_artifact_created:{project_id} with closed schema\
-  \ Plans/ds15_live_artifact_created_checkpoint.schema.json and reader reader.ds15.live_artifact_created.v1@1.0.0.\
-  \ No source body is duplicated. retention_policy_ref = PENDING_RETENTION_DECISION for event and checkpoint;\
-  \ do not admit or enable writes/advance. Original log and first receipt retain their existing Storage\
-  \ custody, backup and recovery requirements. This is a newly authored owner contract, never evidence\
-  \ of existing implementation.\nPhysical storage profile: derived redb, coordination_and_storage budget\
-  \ group, messagepack_canonical, at most 16384 encoded bytes (SP-339/SP-340); oversize refuses before\
-  \ commit. Budget eviction permits only rebuildable derived data and never deletes canonical sources\
-  \ or assigns retention.\nRound 7 live.artifact.created: adopt the exact authenticated retained-reader,\
-  \ per-row original Storage joins and exact authority types in Plans/newtools.md#N2-221. No checkpoint/rebuild\
-  \ bypasses original payload/version, outcome, coherent backup, receipt or current disclosure/withdrawal\
-  \ fences. Historical replay-only originals remain readable; append/retry policy stays writer-only.\n\
-  \nPNC-019 s4r retention binding for `live.artifact.created` (2026-11-14).\n\nEvent history `retention_policy_ref\
-  \ = RP-RUNTIME-365D@1.0.0`, under DL-401, DL-500.\n\nUse the existing policy object unchanged: {\"anchor_kind\"\
-  : \"run_completion\", \"cardinality_scope\": \"run\", \"expiry_action\": \"compact\", \"max_cardinality\"\
-  : 1000000, \"overflow_action\": \"roll_successor\", \"ttl_seconds\": 31536000}.\n\nExact stored value\
-  \ `ds15_live_artifact_created_checkpoint` retains `RP-PROJECTION-3GEN@1.0.0` under DL-500; this does\
-  \ not assign its referenced bodies or other values.\n\nExisting `ds15_live_artifact_created_checkpoint`\
-  \ retains `RP-PROJECTION-3GEN@1.0.0`; derived retention grants no source keepalive.\n\nThis paragraph\
-  \ supersedes earlier pending statements only for the exact assigned facets above. All independent source,\
-  \ receipt, referenced-body and backup lifetimes remain with their own owners. Legal/investigation holds,\
-  \ required references, recovery, rollback, maintenance, protected backups and latest-25-run protection\
-  \ override cleanup without granting access. No unexpired/protected eviction for space, no retry anchor\
-  \ renewal, no hold release, admission, native proof or governance clearance is granted.\n"
+canonical_text: |-
+  live.artifact.created Storage adoption.
+  This exact family adopts Plans/newtools.md#N2-221 in full, including SP-286/CV-339 original receipt/full-value custody and SP-278/DL-076 checkpoint semantics. The only new stored value is projector.checkpoint.ds15.live_artifact_created:{project_id} with closed schema Plans/ds15_live_artifact_created_checkpoint.schema.json and reader reader.ds15.live_artifact_created.v1@1.0.0. No source body is duplicated. Historical preparation status (2026-11-18 snapshot at 0f2a90ece5; superseded by the current assignment below): retention_policy_ref = PENDING_RETENTION_DECISION for event and checkpoint; do not admit or enable writes/advance. Original log and first receipt retain their existing Storage custody, backup and recovery requirements. This is a newly authored owner contract, never evidence of existing implementation.
+  Physical storage profile: derived redb, coordination_and_storage budget group, messagepack_canonical, at most 16384 encoded bytes (SP-339/SP-340); oversize refuses before commit. Budget eviction permits only rebuildable derived data and never deletes canonical sources or assigns retention.
+  Round 7 live.artifact.created: adopt the exact authenticated retained-reader, per-row original Storage joins and exact authority types in Plans/newtools.md#N2-221. No checkpoint/rebuild bypasses original payload/version, outcome, coherent backup, receipt or current disclosure/withdrawal fences. Historical replay-only originals remain readable; append/retry policy stays writer-only.
+
+  PNC-019 s4r retention binding for `live.artifact.created` (2026-11-14).
+
+  Event history `retention_policy_ref = RP-RUNTIME-365D@1.0.0`, under DL-401, DL-500.
+
+  Use the existing policy object unchanged: {"anchor_kind": "run_completion", "cardinality_scope": "run", "expiry_action": "compact", "max_cardinality": 1000000, "overflow_action": "roll_successor", "ttl_seconds": 31536000}.
+
+  Exact stored value `ds15_live_artifact_created_checkpoint` retains `RP-PROJECTION-3GEN@1.0.0` under DL-500; this does not assign its referenced bodies or other values.
+
+  Existing `ds15_live_artifact_created_checkpoint` retains `RP-PROJECTION-3GEN@1.0.0`; derived retention grants no source keepalive.
+
+  This paragraph supersedes earlier pending statements only for the exact assigned facets above. All independent source, receipt, referenced-body and backup lifetimes remain with their own owners. Legal/investigation holds, required references, recovery, rollback, maintenance, protected backups and latest-25-run protection override cleanup without granting access. No unexpired/protected eviction for space, no retry anchor renewal, no hold release, admission, native proof or governance clearance is granted.
+
+
+  Current retention (2026-11-19): live.artifact.created event history has retention_policy_ref = RP-RUNTIME-365D@1.0.0, under Plans/Decision_Log.md#DL-401, Plans/Decision_Log.md#DL-500. The separate ds15_live_artifact_created_checkpoint checkpoint uses RP-PROJECTION-3GEN@1.0.0, under Plans/Decision_Log.md#DL-500. Use the existing assigned policy anchors, dependencies, holds and deletion rules; no new duration, count eviction or deletion authority is chosen here.
+  Current registration (2026-11-19): Plans/Decision_Log.md#DL-2319 registers only live.artifact.created; consult the exact live row and selected version in Plans/event_family_registry.json. The preparation-time pending marker above does not fence an already registered family whose retention is assigned. Absence, an unsupported selected version, missing required producer adoption, authorization or original custody still refuses append/publication. Native execution remains NOT_RUN; membership grants no owner adoption, effect, checkpoint permission or governance seal.
 gui_related: false
 gui_classification_reason: Durable event contract only; existing presentation is consumed.
 depends_on:
@@ -2988,32 +2968,27 @@ plan_unit_id: SP-645
 unit_type: contract
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: "live.session.completed Storage adoption.\nThis exact family adopts Plans/newtools.md#N2-222 in full,\
-  \ including SP-286/CV-339 original receipt/full-value custody and SP-278/DL-076 checkpoint semantics.\
-  \ The only new stored value is projector.checkpoint.ds15.live_session_completed:{project_id} with closed\
-  \ schema Plans/ds15_live_session_completed_checkpoint.schema.json and reader reader.ds15.live_session_completed.v1@1.0.0.\
-  \ No source body is duplicated. retention_policy_ref = PENDING_RETENTION_DECISION for event and checkpoint;\
-  \ do not admit or enable writes/advance. Original log and first receipt retain their existing Storage\
-  \ custody, backup and recovery requirements. This is a newly authored owner contract, never evidence\
-  \ of existing implementation.\nPhysical storage profile: derived redb, coordination_and_storage budget\
-  \ group, messagepack_canonical, at most 16384 encoded bytes (SP-339/SP-340); oversize refuses before\
-  \ commit. Budget eviction permits only rebuildable derived data and never deletes canonical sources\
-  \ or assigns retention.\nRound 7 live.session.completed: adopt the exact authenticated retained-reader,\
-  \ per-row original Storage joins and exact authority types in Plans/newtools.md#N2-222. No checkpoint/rebuild\
-  \ bypasses original payload/version, outcome, coherent backup, receipt or current disclosure/withdrawal\
-  \ fences. Historical replay-only originals remain readable; append/retry policy stays writer-only.\n\
-  \nPNC-019 s4r retention binding for `live.session.completed` (2026-11-14).\n\nEvent history `retention_policy_ref\
-  \ = RP-RUNTIME-365D@1.0.0`, under DL-401, DL-500.\n\nUse the existing policy object unchanged: {\"anchor_kind\"\
-  : \"run_completion\", \"cardinality_scope\": \"run\", \"expiry_action\": \"compact\", \"max_cardinality\"\
-  : 1000000, \"overflow_action\": \"roll_successor\", \"ttl_seconds\": 31536000}.\n\nExact stored value\
-  \ `ds15_live_session_completed_checkpoint` retains `RP-PROJECTION-3GEN@1.0.0` under DL-500; this does\
-  \ not assign its referenced bodies or other values.\n\nExisting `ds15_live_session_completed_checkpoint`\
-  \ retains `RP-PROJECTION-3GEN@1.0.0`; derived retention grants no source keepalive.\n\nThis paragraph\
-  \ supersedes earlier pending statements only for the exact assigned facets above. All independent source,\
-  \ receipt, referenced-body and backup lifetimes remain with their own owners. Legal/investigation holds,\
-  \ required references, recovery, rollback, maintenance, protected backups and latest-25-run protection\
-  \ override cleanup without granting access. No unexpired/protected eviction for space, no retry anchor\
-  \ renewal, no hold release, admission, native proof or governance clearance is granted.\n"
+canonical_text: |-
+  live.session.completed Storage adoption.
+  This exact family adopts Plans/newtools.md#N2-222 in full, including SP-286/CV-339 original receipt/full-value custody and SP-278/DL-076 checkpoint semantics. The only new stored value is projector.checkpoint.ds15.live_session_completed:{project_id} with closed schema Plans/ds15_live_session_completed_checkpoint.schema.json and reader reader.ds15.live_session_completed.v1@1.0.0. No source body is duplicated. Historical preparation status (2026-11-18 snapshot at 0f2a90ece5; superseded by the current assignment below): retention_policy_ref = PENDING_RETENTION_DECISION for event and checkpoint; do not admit or enable writes/advance. Original log and first receipt retain their existing Storage custody, backup and recovery requirements. This is a newly authored owner contract, never evidence of existing implementation.
+  Physical storage profile: derived redb, coordination_and_storage budget group, messagepack_canonical, at most 16384 encoded bytes (SP-339/SP-340); oversize refuses before commit. Budget eviction permits only rebuildable derived data and never deletes canonical sources or assigns retention.
+  Round 7 live.session.completed: adopt the exact authenticated retained-reader, per-row original Storage joins and exact authority types in Plans/newtools.md#N2-222. No checkpoint/rebuild bypasses original payload/version, outcome, coherent backup, receipt or current disclosure/withdrawal fences. Historical replay-only originals remain readable; append/retry policy stays writer-only.
+
+  PNC-019 s4r retention binding for `live.session.completed` (2026-11-14).
+
+  Event history `retention_policy_ref = RP-RUNTIME-365D@1.0.0`, under DL-401, DL-500.
+
+  Use the existing policy object unchanged: {"anchor_kind": "run_completion", "cardinality_scope": "run", "expiry_action": "compact", "max_cardinality": 1000000, "overflow_action": "roll_successor", "ttl_seconds": 31536000}.
+
+  Exact stored value `ds15_live_session_completed_checkpoint` retains `RP-PROJECTION-3GEN@1.0.0` under DL-500; this does not assign its referenced bodies or other values.
+
+  Existing `ds15_live_session_completed_checkpoint` retains `RP-PROJECTION-3GEN@1.0.0`; derived retention grants no source keepalive.
+
+  This paragraph supersedes earlier pending statements only for the exact assigned facets above. All independent source, receipt, referenced-body and backup lifetimes remain with their own owners. Legal/investigation holds, required references, recovery, rollback, maintenance, protected backups and latest-25-run protection override cleanup without granting access. No unexpired/protected eviction for space, no retry anchor renewal, no hold release, admission, native proof or governance clearance is granted.
+
+
+  Current retention (2026-11-19): live.session.completed event history has retention_policy_ref = RP-RUNTIME-365D@1.0.0, under Plans/Decision_Log.md#DL-401, Plans/Decision_Log.md#DL-500. The separate ds15_live_session_completed_checkpoint checkpoint uses RP-PROJECTION-3GEN@1.0.0, under Plans/Decision_Log.md#DL-500. Use the existing assigned policy anchors, dependencies, holds and deletion rules; no new duration, count eviction or deletion authority is chosen here.
+  Current registration (2026-11-19): Plans/Decision_Log.md#DL-2320 registers only live.session.completed; consult the exact live row and selected version in Plans/event_family_registry.json. The preparation-time pending marker above does not fence an already registered family whose retention is assigned. Absence, an unsupported selected version, missing required producer adoption, authorization or original custody still refuses append/publication. Native execution remains NOT_RUN; membership grants no owner adoption, effect, checkpoint permission or governance seal.
 gui_related: false
 gui_classification_reason: Durable event contract only; existing presentation is consumed.
 depends_on:
@@ -3050,32 +3025,27 @@ plan_unit_id: SP-646
 unit_type: contract
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: "live.session.degraded Storage adoption.\nThis exact family adopts Plans/newtools.md#N2-223 in full, including\
-  \ SP-286/CV-339 original receipt/full-value custody and SP-278/DL-076 checkpoint semantics. The only\
-  \ new stored value is projector.checkpoint.ds15.live_session_degraded:{project_id} with closed schema\
-  \ Plans/ds15_live_session_degraded_checkpoint.schema.json and reader reader.ds15.live_session_degraded.v1@1.0.0.\
-  \ No source body is duplicated. retention_policy_ref = PENDING_RETENTION_DECISION for event and checkpoint;\
-  \ do not admit or enable writes/advance. Original log and first receipt retain their existing Storage\
-  \ custody, backup and recovery requirements. This is a newly authored owner contract, never evidence\
-  \ of existing implementation.\nPhysical storage profile: derived redb, coordination_and_storage budget\
-  \ group, messagepack_canonical, at most 16384 encoded bytes (SP-339/SP-340); oversize refuses before\
-  \ commit. Budget eviction permits only rebuildable derived data and never deletes canonical sources\
-  \ or assigns retention.\nRound 7 live.session.degraded: adopt the exact authenticated retained-reader,\
-  \ per-row original Storage joins and exact authority types in Plans/newtools.md#N2-223. No checkpoint/rebuild\
-  \ bypasses original payload/version, outcome, coherent backup, receipt or current disclosure/withdrawal\
-  \ fences. Historical replay-only originals remain readable; append/retry policy stays writer-only.\n\
-  \nPNC-019 s4r retention binding for `live.session.degraded` (2026-11-14).\n\nEvent history `retention_policy_ref\
-  \ = RP-RUNTIME-365D@1.0.0`, under DL-401, DL-500.\n\nUse the existing policy object unchanged: {\"anchor_kind\"\
-  : \"run_completion\", \"cardinality_scope\": \"run\", \"expiry_action\": \"compact\", \"max_cardinality\"\
-  : 1000000, \"overflow_action\": \"roll_successor\", \"ttl_seconds\": 31536000}.\n\nExact stored value\
-  \ `ds15_live_session_degraded_checkpoint` retains `RP-PROJECTION-3GEN@1.0.0` under DL-500; this does\
-  \ not assign its referenced bodies or other values.\n\nExisting `ds15_live_session_degraded_checkpoint`\
-  \ retains `RP-PROJECTION-3GEN@1.0.0`; derived retention grants no source keepalive.\n\nThis paragraph\
-  \ supersedes earlier pending statements only for the exact assigned facets above. All independent source,\
-  \ receipt, referenced-body and backup lifetimes remain with their own owners. Legal/investigation holds,\
-  \ required references, recovery, rollback, maintenance, protected backups and latest-25-run protection\
-  \ override cleanup without granting access. No unexpired/protected eviction for space, no retry anchor\
-  \ renewal, no hold release, admission, native proof or governance clearance is granted.\n"
+canonical_text: |-
+  live.session.degraded Storage adoption.
+  This exact family adopts Plans/newtools.md#N2-223 in full, including SP-286/CV-339 original receipt/full-value custody and SP-278/DL-076 checkpoint semantics. The only new stored value is projector.checkpoint.ds15.live_session_degraded:{project_id} with closed schema Plans/ds15_live_session_degraded_checkpoint.schema.json and reader reader.ds15.live_session_degraded.v1@1.0.0. No source body is duplicated. Historical preparation status (2026-11-18 snapshot at 0f2a90ece5; superseded by the current assignment below): retention_policy_ref = PENDING_RETENTION_DECISION for event and checkpoint; do not admit or enable writes/advance. Original log and first receipt retain their existing Storage custody, backup and recovery requirements. This is a newly authored owner contract, never evidence of existing implementation.
+  Physical storage profile: derived redb, coordination_and_storage budget group, messagepack_canonical, at most 16384 encoded bytes (SP-339/SP-340); oversize refuses before commit. Budget eviction permits only rebuildable derived data and never deletes canonical sources or assigns retention.
+  Round 7 live.session.degraded: adopt the exact authenticated retained-reader, per-row original Storage joins and exact authority types in Plans/newtools.md#N2-223. No checkpoint/rebuild bypasses original payload/version, outcome, coherent backup, receipt or current disclosure/withdrawal fences. Historical replay-only originals remain readable; append/retry policy stays writer-only.
+
+  PNC-019 s4r retention binding for `live.session.degraded` (2026-11-14).
+
+  Event history `retention_policy_ref = RP-RUNTIME-365D@1.0.0`, under DL-401, DL-500.
+
+  Use the existing policy object unchanged: {"anchor_kind": "run_completion", "cardinality_scope": "run", "expiry_action": "compact", "max_cardinality": 1000000, "overflow_action": "roll_successor", "ttl_seconds": 31536000}.
+
+  Exact stored value `ds15_live_session_degraded_checkpoint` retains `RP-PROJECTION-3GEN@1.0.0` under DL-500; this does not assign its referenced bodies or other values.
+
+  Existing `ds15_live_session_degraded_checkpoint` retains `RP-PROJECTION-3GEN@1.0.0`; derived retention grants no source keepalive.
+
+  This paragraph supersedes earlier pending statements only for the exact assigned facets above. All independent source, receipt, referenced-body and backup lifetimes remain with their own owners. Legal/investigation holds, required references, recovery, rollback, maintenance, protected backups and latest-25-run protection override cleanup without granting access. No unexpired/protected eviction for space, no retry anchor renewal, no hold release, admission, native proof or governance clearance is granted.
+
+
+  Current retention (2026-11-19): live.session.degraded event history has retention_policy_ref = RP-RUNTIME-365D@1.0.0, under Plans/Decision_Log.md#DL-401, Plans/Decision_Log.md#DL-500. The separate ds15_live_session_degraded_checkpoint checkpoint uses RP-PROJECTION-3GEN@1.0.0, under Plans/Decision_Log.md#DL-500. Use the existing assigned policy anchors, dependencies, holds and deletion rules; no new duration, count eviction or deletion authority is chosen here.
+  Current registration (2026-11-19): Plans/Decision_Log.md#DL-2321 registers only live.session.degraded; consult the exact live row and selected version in Plans/event_family_registry.json. The preparation-time pending marker above does not fence an already registered family whose retention is assigned. Absence, an unsupported selected version, missing required producer adoption, authorization or original custody still refuses append/publication. Native execution remains NOT_RUN; membership grants no owner adoption, effect, checkpoint permission or governance seal.
 gui_related: false
 gui_classification_reason: Durable event contract only; existing presentation is consumed.
 depends_on:

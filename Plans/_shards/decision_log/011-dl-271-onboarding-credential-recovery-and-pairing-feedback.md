@@ -2,9 +2,9 @@
 
 Source: `Plans/Decision_Log.md`
 
-Source lines: L28747-L54006
+Source lines: L28747-L54007
 
-Source SHA256: `5dd4c1cd91fe17a768bd531e1faceeff6929ce1ef0bea84169da853f26f85559`
+Source SHA256: `bbb5129a160ebb3457158440db52e83f35c827c2d97db53a88a022a7a9876747`
 
 ---
 
@@ -11574,6 +11574,7 @@ canonical_text: |-
   - tests/test_pm_ea_admission_mode.py (12,132 bytes, ADMIT-MODE; later lane, SHA-256 79bdd9535cbef7aa63d1fd74a3b61ee153bbe573e519ba02b38b7d2a6922ebb0)
 
   The two DL-413 files (tests/test_event_authority_holding_bucket.py, tests/test_pm_coordination_events.py) and tests/test_pm_browser_event_admission.py were already named; merge 2 only edits them. Any later Event Authority lane may add test files or fixtures of the same kind, each listed by exact path in its merge record. This changes no owner contract, registry, validator, admission record or governance seal.
+  Correction dated 2026-11-19 (MERGE2-FIX2, round-0 Sol finding 2): the 12,132-byte pin for tests/test_pm_ea_admission_mode.py, SHA-256 79bdd9535cbef7aa63d1fd74a3b61ee153bbe573e519ba02b38b7d2a6922ebb0, records INT4's snapshot. The delivered FIX2 file is 43,391 bytes, SHA-256 640805557ca5bd62f49fe5b1776ca5f7eb1f572052670e272badc9acd153aa6e. This appends the delivered pin and preserves Jared's original decision text and the historical snapshot.
 gui_related: false
 gui_classification_reason: Records which repository test files are tracked; no visible control or layout changes.
 depends_on: [DL-413, DL-045]

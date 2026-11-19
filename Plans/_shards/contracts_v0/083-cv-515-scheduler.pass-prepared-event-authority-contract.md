@@ -2,9 +2,9 @@
 
 Source: `Plans/Contracts_V0.md`
 
-Source lines: L38584-L41699
+Source lines: L38084-L41217
 
-Source SHA256: `4ae2225d8ed19b6df971b6c32797aae6882d175264ff2c2e9a2045650d735e67`
+Source SHA256: `2a9090efcaefbc3b0e85c2155255e078125e4d05a933e115ca931c6566b8b74b`
 
 ---
 
@@ -725,8 +725,11 @@ status: accepted
 owner_doc: Plans/Contracts_V0.md
 canonical_text: |-
   doctor.custom_headless.checked closed payload.
-  Exact schema pm.ds15.doctor_custom_headless_checked.payload.v1 at Plans/ds15_doctor_custom_headless_checked.schema.json, revision 1.0.0; closed checkpoint Plans/ds15_doctor_custom_headless_checked_checkpoint.schema.json. Adopt the entire family-specific producer, scope, identity, replay, custody, transitions and withdrawal contract Plans/newtools.md#N2-217, with Plans/storage-plan.md#SP-640. Unknown fields or versions refuse; no alias, admission or native proof. retention_policy_ref = PENDING_RETENTION_DECISION.
+  Exact schema pm.ds15.doctor_custom_headless_checked.payload.v1 at Plans/ds15_doctor_custom_headless_checked.schema.json, revision 1.0.0; closed checkpoint Plans/ds15_doctor_custom_headless_checked_checkpoint.schema.json. Adopt the entire family-specific producer, scope, identity, replay, custody, transitions and withdrawal contract Plans/newtools.md#N2-217, with Plans/storage-plan.md#SP-640. Unknown fields or versions refuse; no alias, admission or native proof. Historical preparation status (2026-11-18 snapshot at 0f2a90ece5; superseded by the current assignment below): retention_policy_ref = PENDING_RETENTION_DECISION.
   Round 7 doctor.custom_headless.checked: adopt Plans/newtools.md#N2-217 retained-reader policy, custody on every operation, exact authority types and per-row Storage joins. Plans/ds15_authority_context.schema.json is the closed side-input boundary; schema/value acceptance alone is not custody.
+
+  Current retention (2026-11-19): doctor.custom_headless.checked event history has retention_policy_ref = RP-OPERATIONAL-2555D@1.0.0, under Plans/Decision_Log.md#DL-401, Plans/Decision_Log.md#DL-500. The separate ds15_doctor_custom_headless_checked_checkpoint checkpoint uses RP-PROJECTION-3GEN@1.0.0, under Plans/Decision_Log.md#DL-500. Use the existing assigned policy anchors, dependencies, holds and deletion rules; no new duration, count eviction or deletion authority is chosen here.
+  Current registration (2026-11-19): Plans/Decision_Log.md#DL-2294 registers only doctor.custom_headless.checked; consult the exact live row and selected version in Plans/event_family_registry.json. The preparation-time pending marker above does not fence an already registered family whose retention is assigned. Absence, an unsupported selected version, missing required producer adoption, authorization or original custody still refuses append/publication. Native execution remains NOT_RUN; membership grants no owner adoption, effect, checkpoint permission or governance seal.
 gui_related: false
 gui_classification_reason: Durable event contract only; existing presentation is consumed.
 depends_on:
@@ -813,8 +816,11 @@ status: accepted
 owner_doc: Plans/Contracts_V0.md
 canonical_text: |-
   live.session.started closed payload.
-  Exact schema pm.ds15.live_session_started.payload.v1 at Plans/ds15_live_session_started.schema.json, revision 1.0.0; closed checkpoint Plans/ds15_live_session_started_checkpoint.schema.json. Adopt the entire family-specific producer, scope, identity, replay, custody, transitions and withdrawal contract Plans/newtools.md#N2-219, with Plans/storage-plan.md#SP-642. Unknown fields or versions refuse; no alias, admission or native proof. retention_policy_ref = PENDING_RETENTION_DECISION.
+  Exact schema pm.ds15.live_session_started.payload.v1 at Plans/ds15_live_session_started.schema.json, revision 1.0.0; closed checkpoint Plans/ds15_live_session_started_checkpoint.schema.json. Adopt the entire family-specific producer, scope, identity, replay, custody, transitions and withdrawal contract Plans/newtools.md#N2-219, with Plans/storage-plan.md#SP-642. Unknown fields or versions refuse; no alias, admission or native proof. Historical preparation status (2026-11-18 snapshot at 0f2a90ece5; superseded by the current assignment below): retention_policy_ref = PENDING_RETENTION_DECISION.
   Round 7 live.session.started: adopt Plans/newtools.md#N2-219 retained-reader policy, custody on every operation, exact authority types and per-row Storage joins. Plans/ds15_authority_context.schema.json is the closed side-input boundary; schema/value acceptance alone is not custody.
+
+  Current retention (2026-11-19): live.session.started event history has retention_policy_ref = RP-RUNTIME-365D@1.0.0, under Plans/Decision_Log.md#DL-401, Plans/Decision_Log.md#DL-500. The separate ds15_live_session_started_checkpoint checkpoint uses RP-PROJECTION-3GEN@1.0.0, under Plans/Decision_Log.md#DL-500. Use the existing assigned policy anchors, dependencies, holds and deletion rules; no new duration, count eviction or deletion authority is chosen here.
+  Current registration (2026-11-19): Plans/Decision_Log.md#DL-2322 registers only live.session.started; consult the exact live row and selected version in Plans/event_family_registry.json. The preparation-time pending marker above does not fence an already registered family whose retention is assigned. Absence, an unsupported selected version, missing required producer adoption, authorization or original custody still refuses append/publication. Native execution remains NOT_RUN; membership grants no owner adoption, effect, checkpoint permission or governance seal.
 gui_related: false
 gui_classification_reason: Durable event contract only; existing presentation is consumed.
 depends_on:
@@ -853,8 +859,11 @@ status: accepted
 owner_doc: Plans/Contracts_V0.md
 canonical_text: |-
   live.step.updated closed payload.
-  Exact schema pm.ds15.live_step_updated.payload.v1 at Plans/ds15_live_step_updated.schema.json, revision 1.0.0; closed checkpoint Plans/ds15_live_step_updated_checkpoint.schema.json. Adopt the entire family-specific producer, scope, identity, replay, custody, transitions and withdrawal contract Plans/newtools.md#N2-220, with Plans/storage-plan.md#SP-643. Unknown fields or versions refuse; no alias, admission or native proof. retention_policy_ref = PENDING_RETENTION_DECISION.
+  Exact schema pm.ds15.live_step_updated.payload.v1 at Plans/ds15_live_step_updated.schema.json, revision 1.0.0; closed checkpoint Plans/ds15_live_step_updated_checkpoint.schema.json. Adopt the entire family-specific producer, scope, identity, replay, custody, transitions and withdrawal contract Plans/newtools.md#N2-220, with Plans/storage-plan.md#SP-643. Unknown fields or versions refuse; no alias, admission or native proof. Historical preparation status (2026-11-18 snapshot at 0f2a90ece5; superseded by the current assignment below): retention_policy_ref = PENDING_RETENTION_DECISION.
   Round 7 live.step.updated: adopt Plans/newtools.md#N2-220 retained-reader policy, custody on every operation, exact authority types and per-row Storage joins. Plans/ds15_authority_context.schema.json is the closed side-input boundary; schema/value acceptance alone is not custody.
+
+  Current retention (2026-11-19): live.step.updated event history has retention_policy_ref = RP-RUNTIME-365D@1.0.0, under Plans/Decision_Log.md#DL-401, Plans/Decision_Log.md#DL-500. The separate ds15_live_step_updated_checkpoint checkpoint uses RP-PROJECTION-3GEN@1.0.0, under Plans/Decision_Log.md#DL-500. Use the existing assigned policy anchors, dependencies, holds and deletion rules; no new duration, count eviction or deletion authority is chosen here.
+  Current registration (2026-11-19): Plans/Decision_Log.md#DL-2323 registers only live.step.updated; consult the exact live row and selected version in Plans/event_family_registry.json. The preparation-time pending marker above does not fence an already registered family whose retention is assigned. Absence, an unsupported selected version, missing required producer adoption, authorization or original custody still refuses append/publication. Native execution remains NOT_RUN; membership grants no owner adoption, effect, checkpoint permission or governance seal.
 gui_related: false
 gui_classification_reason: Durable event contract only; existing presentation is consumed.
 depends_on:
@@ -893,8 +902,11 @@ status: accepted
 owner_doc: Plans/Contracts_V0.md
 canonical_text: |-
   live.artifact.created closed payload.
-  Exact schema pm.ds15.live_artifact_created.payload.v1 at Plans/ds15_live_artifact_created.schema.json, revision 1.0.0; closed checkpoint Plans/ds15_live_artifact_created_checkpoint.schema.json. Adopt the entire family-specific producer, scope, identity, replay, custody, transitions and withdrawal contract Plans/newtools.md#N2-221, with Plans/storage-plan.md#SP-644. Unknown fields or versions refuse; no alias, admission or native proof. retention_policy_ref = PENDING_RETENTION_DECISION.
+  Exact schema pm.ds15.live_artifact_created.payload.v1 at Plans/ds15_live_artifact_created.schema.json, revision 1.0.0; closed checkpoint Plans/ds15_live_artifact_created_checkpoint.schema.json. Adopt the entire family-specific producer, scope, identity, replay, custody, transitions and withdrawal contract Plans/newtools.md#N2-221, with Plans/storage-plan.md#SP-644. Unknown fields or versions refuse; no alias, admission or native proof. Historical preparation status (2026-11-18 snapshot at 0f2a90ece5; superseded by the current assignment below): retention_policy_ref = PENDING_RETENTION_DECISION.
   Round 7 live.artifact.created: adopt Plans/newtools.md#N2-221 retained-reader policy, custody on every operation, exact authority types and per-row Storage joins. Plans/ds15_authority_context.schema.json is the closed side-input boundary; schema/value acceptance alone is not custody.
+
+  Current retention (2026-11-19): live.artifact.created event history has retention_policy_ref = RP-RUNTIME-365D@1.0.0, under Plans/Decision_Log.md#DL-401, Plans/Decision_Log.md#DL-500. The separate ds15_live_artifact_created_checkpoint checkpoint uses RP-PROJECTION-3GEN@1.0.0, under Plans/Decision_Log.md#DL-500. Use the existing assigned policy anchors, dependencies, holds and deletion rules; no new duration, count eviction or deletion authority is chosen here.
+  Current registration (2026-11-19): Plans/Decision_Log.md#DL-2319 registers only live.artifact.created; consult the exact live row and selected version in Plans/event_family_registry.json. The preparation-time pending marker above does not fence an already registered family whose retention is assigned. Absence, an unsupported selected version, missing required producer adoption, authorization or original custody still refuses append/publication. Native execution remains NOT_RUN; membership grants no owner adoption, effect, checkpoint permission or governance seal.
 gui_related: false
 gui_classification_reason: Durable event contract only; existing presentation is consumed.
 depends_on:
@@ -933,8 +945,11 @@ status: accepted
 owner_doc: Plans/Contracts_V0.md
 canonical_text: |-
   live.session.completed closed payload.
-  Exact schema pm.ds15.live_session_completed.payload.v1 at Plans/ds15_live_session_completed.schema.json, revision 1.0.0; closed checkpoint Plans/ds15_live_session_completed_checkpoint.schema.json. Adopt the entire family-specific producer, scope, identity, replay, custody, transitions and withdrawal contract Plans/newtools.md#N2-222, with Plans/storage-plan.md#SP-645. Unknown fields or versions refuse; no alias, admission or native proof. retention_policy_ref = PENDING_RETENTION_DECISION.
+  Exact schema pm.ds15.live_session_completed.payload.v1 at Plans/ds15_live_session_completed.schema.json, revision 1.0.0; closed checkpoint Plans/ds15_live_session_completed_checkpoint.schema.json. Adopt the entire family-specific producer, scope, identity, replay, custody, transitions and withdrawal contract Plans/newtools.md#N2-222, with Plans/storage-plan.md#SP-645. Unknown fields or versions refuse; no alias, admission or native proof. Historical preparation status (2026-11-18 snapshot at 0f2a90ece5; superseded by the current assignment below): retention_policy_ref = PENDING_RETENTION_DECISION.
   Round 7 live.session.completed: adopt Plans/newtools.md#N2-222 retained-reader policy, custody on every operation, exact authority types and per-row Storage joins. Plans/ds15_authority_context.schema.json is the closed side-input boundary; schema/value acceptance alone is not custody.
+
+  Current retention (2026-11-19): live.session.completed event history has retention_policy_ref = RP-RUNTIME-365D@1.0.0, under Plans/Decision_Log.md#DL-401, Plans/Decision_Log.md#DL-500. The separate ds15_live_session_completed_checkpoint checkpoint uses RP-PROJECTION-3GEN@1.0.0, under Plans/Decision_Log.md#DL-500. Use the existing assigned policy anchors, dependencies, holds and deletion rules; no new duration, count eviction or deletion authority is chosen here.
+  Current registration (2026-11-19): Plans/Decision_Log.md#DL-2320 registers only live.session.completed; consult the exact live row and selected version in Plans/event_family_registry.json. The preparation-time pending marker above does not fence an already registered family whose retention is assigned. Absence, an unsupported selected version, missing required producer adoption, authorization or original custody still refuses append/publication. Native execution remains NOT_RUN; membership grants no owner adoption, effect, checkpoint permission or governance seal.
 gui_related: false
 gui_classification_reason: Durable event contract only; existing presentation is consumed.
 depends_on:
@@ -973,8 +988,11 @@ status: accepted
 owner_doc: Plans/Contracts_V0.md
 canonical_text: |-
   live.session.degraded closed payload.
-  Exact schema pm.ds15.live_session_degraded.payload.v1 at Plans/ds15_live_session_degraded.schema.json, revision 1.0.0; closed checkpoint Plans/ds15_live_session_degraded_checkpoint.schema.json. Adopt the entire family-specific producer, scope, identity, replay, custody, transitions and withdrawal contract Plans/newtools.md#N2-223, with Plans/storage-plan.md#SP-646. Unknown fields or versions refuse; no alias, admission or native proof. retention_policy_ref = PENDING_RETENTION_DECISION.
+  Exact schema pm.ds15.live_session_degraded.payload.v1 at Plans/ds15_live_session_degraded.schema.json, revision 1.0.0; closed checkpoint Plans/ds15_live_session_degraded_checkpoint.schema.json. Adopt the entire family-specific producer, scope, identity, replay, custody, transitions and withdrawal contract Plans/newtools.md#N2-223, with Plans/storage-plan.md#SP-646. Unknown fields or versions refuse; no alias, admission or native proof. Historical preparation status (2026-11-18 snapshot at 0f2a90ece5; superseded by the current assignment below): retention_policy_ref = PENDING_RETENTION_DECISION.
   Round 7 live.session.degraded: adopt Plans/newtools.md#N2-223 retained-reader policy, custody on every operation, exact authority types and per-row Storage joins. Plans/ds15_authority_context.schema.json is the closed side-input boundary; schema/value acceptance alone is not custody.
+
+  Current retention (2026-11-19): live.session.degraded event history has retention_policy_ref = RP-RUNTIME-365D@1.0.0, under Plans/Decision_Log.md#DL-401, Plans/Decision_Log.md#DL-500. The separate ds15_live_session_degraded_checkpoint checkpoint uses RP-PROJECTION-3GEN@1.0.0, under Plans/Decision_Log.md#DL-500. Use the existing assigned policy anchors, dependencies, holds and deletion rules; no new duration, count eviction or deletion authority is chosen here.
+  Current registration (2026-11-19): Plans/Decision_Log.md#DL-2321 registers only live.session.degraded; consult the exact live row and selected version in Plans/event_family_registry.json. The preparation-time pending marker above does not fence an already registered family whose retention is assigned. Absence, an unsupported selected version, missing required producer adoption, authorization or original custody still refuses append/publication. Native execution remains NOT_RUN; membership grants no owner adoption, effect, checkpoint permission or governance seal.
 gui_related: false
 gui_classification_reason: Durable event contract only; existing presentation is consumed.
 depends_on:

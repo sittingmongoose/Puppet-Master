@@ -1,45 +1,45 @@
 # Shard Index: Plans/newtools.md
 
-Generated: 2026-11-13T00:34:44Z
+Generated: 2026-11-19T01:05:58Z
 
-Source SHA256: `178bb7506499c09d2b5ceb3e4658c14b098132679aa10284d8ee12dd8e7ef64e`
+Source SHA256: `c2ca1879b1480cde1a62aa1b8674e1fa9666fd35ba6ab26ceb5e0ff4b067f821`
 
 Manifest: [`manifest.json`](manifest.json)
 
 ## Shards
 
-- [001 - Preamble](001-preamble.md) L1-L4 `539c77ecf3096ed9ffdf46ad68ac69bff27e5ee2b2c678d24a65fe66a982d2e9`
-- [002 - Plan Document Status](002-plan-document-status.md) L6-L14 `bb9891e8f8843f06d4b58df6c3d8713b8901841330618e187564139820d166ef`
-- [003 - Rewrite alignment (2026-02-21)](003-rewrite-alignment-2026-02-21.md) L16-L34 `6afff03ec4795fa535b56accbdb426136e759504a34426d6e555212564192b29`
-- [004 - DRY Method Compliance](004-dry-method-compliance.md) L35-L69 `bbe8f08b21a3bf963a94c22fdcc3736b246754f1d1a3b00d32ac0eedc9d8fc8b`
-- [005 - Table of Contents](005-table-of-contents.md) L71-L95 `24e99cf5a3e0c7d411e359671a6e4edb8f7975bb6c6a7aa23206e35687c2d94f`
-- [006 - 1. Executive Summary](006-1.-executive-summary.md) L97-L114 `f66d4f69ee780eabfb98afcfc379200bf1132a4eb72a28d811ffc1ba1e54eb28`
-- [007 - 2. Relationship to Other Plans](007-2.-relationship-to-other-plans.md) L116-L127 `c5b664ef03ad462d78e23884cd6e87e6bcf836e816ec263c4c22d80e8bfabed1`
-- [008 - 3. Problem Statement](008-3.-problem-statement.md) L129-L135 `e1171bc07a190674b055cd083eff608fef13e24878d8a2d7cd262e78a84dc27c`
-- [009 - 4. Goals](009-4.-goals.md) L137-L150 `1561747830f8403286ba3913514c548765bf247332c56ab9705557281a788788`
-- [010 - 5. Design Overview](010-5.-design-overview.md) L152-L166 `5e45b9ef1b33cf55f9d53fb59bbaac63a61527a00acd73915cd9f4040cc55e8b`
-- [011 - 6. Framework & Tool Discovery (DRY)](011-6.-framework-tool-discovery-dry.md) L168-L228 `04a001ef1b3091ca7c0e82239f8bd1d9684a00c8d342b835b28ecb65100a37c3`
-- [012 - 7. Interviewer Flow Changes](012-7.-interviewer-flow-changes.md) L230-L257 `19971920eb55c970efd696a04b6f3bcc3ef756d95fb576c7ba7166660bcc6c73`
-- [013 - 8. MCP Support and GUI Settings](013-8.-mcp-support-and-gui-settings.md) L259-L330 `f217737610f14ee9670da54180ef1cd1ffae618e5704e0d59bbfad680950b8bb`
-- [014 - 9. Custom Headless GUI Tool](014-9.-custom-headless-gui-tool.md) L331-L359 `b081b55d4145ea67d7b253e7138e25346909c9510e08d753ce390fed864d9599`
-- [015 - 10. Integration with Test Strategy & Plans](015-10.-integration-with-test-strategy-plans.md) L361-L386 `52787c52684764a9ff0073e728623b68a8222a542d8ec8cc914ac7d8626f6e19`
-- [016 - 11. Implementation Checklist](016-11.-implementation-checklist.md) L388-L409 `8237058e76c94e45bb7e0423fcd42e70215139734dd71a81c565392b43ec8b1a`
-- [017 - 12. Gaps, Risks, and DRY Notes](017-12.-gaps-risks-and-dry-notes.md) L411-L573 `5e533f248039c00ce9a97274fb2a1a6bf2631f21172af54b57edb0c29a0fab13`
-- [018 - 12.7 Crews and Subagent Communication Enhancements for Tool Discovery](018-12.7-crews-and-subagent-communication-enhancements-for-tool-disc.md) L575-L587 `e3779e40eaa8ca8aa5727d21ab7f83ff89aaa7fc35752361ecccab125d2808f6`
-- [019 - 12.8 Lifecycle and Quality Enhancements for Tool Discovery](019-12.8-lifecycle-and-quality-enhancements-for-tool-discovery.md) L588-L600 `b972cc8e46d296cefd9c6094ad71145d7d4608d36cbdda09b427212a9797f329`
-- [020 - 13. Evidence-in-Chat Contract and Flow (research-evidence-media-chat)](020-13.-evidence-in-chat-contract-and-flow-research-evidence-media-c.md) L601-L703 `d6504a9169dfe6813d18bf6fee1242f647281a4ec9b0a799d8d3abe3661d11aa`
-- [021 - 14. Live Visualization Execution Architecture (research-live-visualization)](021-14.-live-visualization-execution-architecture-research-live-visu.md) L705-L870 `2d49c038280781c7b07fe299c843b0e4dbe6c94f82c6ea4098df17edf2d4d498`
-- [022 - 14.5 Mobile Testing Stacks (research-mobile-testing-stacks)](022-14.5-mobile-testing-stacks-research-mobile-testing-stacks.md) L872-L967 `75f1a5fcb3bea69d5c2a9f668a40ac33165bbb6dce1b92156242feb96940b2fd`
-- [023 - 14.6 Preview, Build, Docker, and Actions Contracts](023-14.6-preview-build-docker-and-actions-contracts.md) L969-L1161 `aa7d675f31b48b22b9f62c4c1bf2d50caba247b8d9a3a51751391a186d99cfb8`
-- [024 - 15. References](024-15.-references.md) L1163-L1300 `2c1d5f11176901bd6006eafa79cdf54197afbfacd360b2a7687440e0c9835a1c`
-- [025 - Owner / Consumer Map](025-owner-consumer-map.md) L1302-L1306 `dd755de6d34bd215340b0653786f2a5c1881c33c6547cb3bfb4e837912cf2257`
-- [026 - PlanUnits](026-planunits.md) L1308-L8598 `e1c08c603925909f986de392985526a8d061f18f6d4ebea0591f87c8ae071141`
-- [027 - Migration Coverage](027-migration-coverage.md) L8600-L8610 `d710693f220d7d9db985772011d0d4620564303bd1234df77e36f8e6594b07e0`
-- [028 - FABLE Deferred Action Concrete Repair Addendum - 2026-07-08](028-fable-deferred-action-concrete-repair-addendum-2026-07-08.md) L8612-L8674 `e61b7fbdff82e71ee17bf732377ebd30e6b45e6ca613b2e344390b1ed01f47f9`
-- [029 - Platform capability catalog and evaluation contract](029-platform-capability-catalog-and-evaluation-contract.md) L8677-L8683 `ec0bf3682470919bc48f3f47e1d361c3c054e9d2557e2bfcf434c2c90e405bf9`
-- [030 - Remaining Runtime Doctor Ownership Addendum (2026-08-14)](030-remaining-runtime-doctor-ownership-addendum-2026-08-14.md) L8685-L8722 `cd8bdb66d8b40bd1a7da51115a799571e69d14a75ce4b02437e8ba2b0c37ea9d`
-- [031 - Doctor registry, router, and projection contract addendum (2026-08-31)](031-doctor-registry-router-and-projection-contract-addendum-2026-08-.md) L8724-L8871 `d37866e2e10e1bfb58f065a024574d768a1fce50ed63dc8040fc709d14957690`
-- [032 - Server command-gap Doctor action closure (2026-09-01)](032-server-command-gap-doctor-action-closure-2026-09-01.md) L8873-L8930 `f45c15426d169f6bf9b1dad84fd3bfbec48a54f039b5ee5f1a6e68171c220c7b`
-- [033 - Forge/Backup/tsnet Doctor consumer addendum - 2026-09-01](033-forge-backup-tsnet-doctor-consumer-addendum-2026-09-01.md) L8932-L9005 `ccf9ef2aa0c6cb03ea70f989b27d845942daa7e0411d1dbfdd9dd092de5e4a8e`
-- [034 - Platform capability original decision authority](034-platform-capability-original-decision-authority.md) L9006-L9024 `9de0538f528cff43f3c66bd9a2a684d3b2a27749c953bc06c21988363dfd2627`
-- [035 - Platform capability consumer roles and frozen-context use](035-platform-capability-consumer-roles-and-frozen-context-use.md) L9027-L9475 `02f590b484d820876302db2ca090bf4bb1fd5ba2d6425705be5e14a8acbe4ad7`
+- [001 - Preamble](001-preamble.md) L1-L4 `c0acea246757eef4a7d31b656fe8189926a408e80897b538f83b38c4460271da`
+- [002 - Plan Document Status](002-plan-document-status.md) L6-L14 `90c8399ec7c9741c76c2ecd9a569b72fd0f11dff932173acdca04503c44ddd8d`
+- [003 - Rewrite alignment (2026-02-21)](003-rewrite-alignment-2026-02-21.md) L16-L34 `ac51c53e37075ec4f2cb4d3eeade2a634fb9fbb1418db825df4de85a3835d05f`
+- [004 - DRY Method Compliance](004-dry-method-compliance.md) L35-L69 `1ef360047cb677aca1282086c854f794cb48746593f4c337f2414170b25b1810`
+- [005 - Table of Contents](005-table-of-contents.md) L71-L95 `2494f5b99b7e48b41db72d77db7b25e7e346eb7aac6b5d63725ac13a710bef8f`
+- [006 - 1. Executive Summary](006-1.-executive-summary.md) L97-L114 `9d0b8fb1dd4bb45e19b7fad3e0942fea4146fd7fffecb545176cc91668e07ecd`
+- [007 - 2. Relationship to Other Plans](007-2.-relationship-to-other-plans.md) L116-L127 `33ef3e8fdd325e55d1c885cd007dc8543ce3717d71df1c0af34db163f5872028`
+- [008 - 3. Problem Statement](008-3.-problem-statement.md) L129-L135 `d3e7b61553ff04bd04f51d6a400218bb3326375b51d565223852d97770c628ee`
+- [009 - 4. Goals](009-4.-goals.md) L137-L150 `ebd31ba05b7008e51a8527de3a8cc8cb07066dc3c9f9f89b8bb2f3d31765e072`
+- [010 - 5. Design Overview](010-5.-design-overview.md) L152-L166 `2c97f35ed87b4272f766f5b811f8fdc1d96d227a394c29b73b6a5d4a2094e95b`
+- [011 - 6. Framework & Tool Discovery (DRY)](011-6.-framework-tool-discovery-dry.md) L168-L228 `4dce2d3f695742109191864fa0ff84180cc5d0c9fd64a7de5d8f2da7623c6372`
+- [012 - 7. Interviewer Flow Changes](012-7.-interviewer-flow-changes.md) L230-L257 `9c898cb5e8316dde7841846adddd60639fd6830b5b296c644022a6d0e58c025d`
+- [013 - 8. MCP Support and GUI Settings](013-8.-mcp-support-and-gui-settings.md) L259-L330 `f61c2ddb52b6f358150e1ee4a0180fd19d8ef07dad5f77b5831faaa1932caa50`
+- [014 - 9. Custom Headless GUI Tool](014-9.-custom-headless-gui-tool.md) L331-L359 `2f0b407ec72bff0ef4e879f5aebc556c19f11d24612cc5e1616ad01ef0ba7a7d`
+- [015 - 10. Integration with Test Strategy & Plans](015-10.-integration-with-test-strategy-plans.md) L361-L386 `8e97cd8670b34e0b27f2d38d371a16547f6d86ef40078bc73f0b6d4a14fee53c`
+- [016 - 11. Implementation Checklist](016-11.-implementation-checklist.md) L388-L409 `295a8b9445327ac20c7f79261cffbd12128d84b567f6d869857770e5866254c7`
+- [017 - 12. Gaps, Risks, and DRY Notes](017-12.-gaps-risks-and-dry-notes.md) L411-L573 `886c4a9b0f357b722a79af21324c177e8c2583623d1c22979931045a433cd953`
+- [018 - 12.7 Crews and Subagent Communication Enhancements for Tool Discovery](018-12.7-crews-and-subagent-communication-enhancements-for-tool-disc.md) L575-L587 `11bb8fa200672acf695c004dee4c82dfe6170ad0a348dbde101a93192066f359`
+- [019 - 12.8 Lifecycle and Quality Enhancements for Tool Discovery](019-12.8-lifecycle-and-quality-enhancements-for-tool-discovery.md) L588-L600 `1811c31556bd7d5a66d72837f009c75975073d7451cda80ea9b945959982e64a`
+- [020 - 13. Evidence-in-Chat Contract and Flow (research-evidence-media-chat)](020-13.-evidence-in-chat-contract-and-flow-research-evidence-media-c.md) L601-L703 `ac94cd546c6447a679372a44e47cc28685011c714eca9657a693b0dfa63bf657`
+- [021 - 14. Live Visualization Execution Architecture (research-live-visualization)](021-14.-live-visualization-execution-architecture-research-live-visu.md) L705-L870 `d4fb67daaa03cf3afec710022e7c0ee705d71cd59be3afa9ef557c4bb6b89ef1`
+- [022 - 14.5 Mobile Testing Stacks (research-mobile-testing-stacks)](022-14.5-mobile-testing-stacks-research-mobile-testing-stacks.md) L872-L967 `1ccb90a8034234a108863f50897c8646ea72fbc24b6c6c9e9308da22ef16989b`
+- [023 - 14.6 Preview, Build, Docker, and Actions Contracts](023-14.6-preview-build-docker-and-actions-contracts.md) L969-L1161 `c2f8afddc69ceca0be9ff34b4026a9a1871fc4476d9dfed33209f70c83ca8e73`
+- [024 - 15. References](024-15.-references.md) L1163-L1300 `53ea341d89b545e72ae78f1646f3cc211fe239665f44733fa34a7aed09dbb427`
+- [025 - Owner / Consumer Map](025-owner-consumer-map.md) L1302-L1306 `0e6fd577e7c77d97f94b3b01a0e617491e4fa37976648cb571f1c32bb035285f`
+- [026 - PlanUnits](026-planunits.md) L1308-L8598 `58b6758829ac8cb0150881d822edf9b3fca1f92d2dcd2b068cec05681becc88c`
+- [027 - Migration Coverage](027-migration-coverage.md) L8600-L8610 `c54ba40ace2739f3c1c5f6c1fd80aa5a780f16be27780879aa3e0a3139fe3d19`
+- [028 - FABLE Deferred Action Concrete Repair Addendum - 2026-07-08](028-fable-deferred-action-concrete-repair-addendum-2026-07-08.md) L8612-L8674 `b86d8e03652d29a565bab6a5d6b99235e6cd6a21681554b116fb3457c1ca23da`
+- [029 - Platform capability catalog and evaluation contract](029-platform-capability-catalog-and-evaluation-contract.md) L8677-L8683 `276383df027ffa8d454fbeacf075ed066c56ae323ccc44fd05668fd47ed92db2`
+- [030 - Remaining Runtime Doctor Ownership Addendum (2026-08-14)](030-remaining-runtime-doctor-ownership-addendum-2026-08-14.md) L8685-L8722 `547af25eb5b963b76213d3fc19ddf08b03be330384d621e4509742d70d8423c3`
+- [031 - Doctor registry, router, and projection contract addendum (2026-08-31)](031-doctor-registry-router-and-projection-contract-addendum-2026-08-.md) L8724-L8871 `84bf877e16347ed5b24ef5e337fc3da974d1d2f9d6480aff8dd425d6b7ec9d1c`
+- [032 - Server command-gap Doctor action closure (2026-09-01)](032-server-command-gap-doctor-action-closure-2026-09-01.md) L8873-L8930 `21616e9669ab08feb8284586114e9f8a191f62cc69c40b95bf73ee6707870671`
+- [033 - Forge/Backup/tsnet Doctor consumer addendum - 2026-09-01](033-forge-backup-tsnet-doctor-consumer-addendum-2026-09-01.md) L8932-L9005 `1354bcef91a2d51df40a7afdb7a5cea9c13d03fe76b46f73b48d9a3cc3b504f8`
+- [034 - Platform capability original decision authority](034-platform-capability-original-decision-authority.md) L9006-L9024 `9d4ed5047c8d64b6c1217c80c94d734c532ee4a459365a5e55f9b052a0c90061`
+- [035 - Platform capability consumer roles and frozen-context use](035-platform-capability-consumer-roles-and-frozen-context-use.md) L9027-L9493 `6ec967f021854d445f75b2e8216b2358a9435e69bdbd4823c8058cf8cc9a0ec2`
