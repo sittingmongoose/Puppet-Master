@@ -32571,8 +32571,8 @@ canonical_text: 'crew.board_message_posted@1.0.0 consumes its exact closed paylo
   PNC-019 s4r retention binding for `crew.board_message_posted` (2026-11-14).
 
 
-  Event history selects Application = RP-COORDINATION-180D@1.0.0 (anchor_kind=run_completion, cardinality_scope=project),
-  Project = RP-COORDINATION-180D@1.0.0 (anchor_kind=run_completion, cardinality_scope=project) as recorded by Plans/Decision_Log.md#DL-2282,
+  Event history selects Application = RP-COORDINATION-180D@1.0.0 (anchor_kind=run_completion, count in the SP-351 Server counterpart bucket),
+  Project = RP-COORDINATION-180D@1.0.0 (anchor_kind=run_completion, count in the Project partition) as recorded by Plans/Decision_Log.md#DL-2280,
   under DL-085.
 
 
@@ -32628,7 +32628,7 @@ owner_hints:
 
 PNC-019 s4r retention binding for `crew.board_message_posted` (2026-11-14).
 
-Event history selects Application = RP-COORDINATION-180D@1.0.0 (anchor_kind=run_completion, cardinality_scope=project), Project = RP-COORDINATION-180D@1.0.0 (anchor_kind=run_completion, cardinality_scope=project) as recorded by Plans/Decision_Log.md#DL-2282, under DL-085.
+Event history selects Application = RP-COORDINATION-180D@1.0.0 (anchor_kind=run_completion, count in the SP-351 Server counterpart bucket), Project = RP-COORDINATION-180D@1.0.0 (anchor_kind=run_completion, count in the Project partition) as recorded by Plans/Decision_Log.md#DL-2280, under DL-085.
 
 Use the existing policy object unchanged: {"anchor_kind": "run_completion", "cardinality_scope": "project", "expiry_action": "compact", "max_cardinality": 1000000, "overflow_action": "evict_oldest_eligible", "ttl_seconds": 15552000}.
 
@@ -32637,11 +32637,11 @@ The cited Storage integration is present in this batch base. Existing original r
 This paragraph supersedes earlier pending statements only for the exact assigned facets above. All independent source, receipt, referenced-body and backup lifetimes remain with their own owners. Legal/investigation holds, required references, recovery, rollback, maintenance, protected backups and latest-25-run protection override cleanup without granting access. No unexpired/protected eviction for space, no retry anchor renewal, no hold release, admission, native proof or governance clearance is granted.
 
 
-Current selected assignment (2026-11-19): crew.board_message_posted@1.0.0 is registered for application_or_project in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2280. Its event history selects Application = RP-COORDINATION-180D@1.0.0 (anchor_kind=run_completion, cardinality_scope=project), Project = RP-COORDINATION-180D@1.0.0 (anchor_kind=run_completion, cardinality_scope=project); exact original and checkpoint bindings retain their existing Storage assignments. Registry membership supplies no producer adoption or native-installation proof. Missing-registration refusal applies only if the exact current registration is absent.
+Current selected assignment (2026-11-19): crew.board_message_posted@1.0.0 is registered for application_or_project in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2280. Its event history selects Application = RP-COORDINATION-180D@1.0.0 (anchor_kind=run_completion, count in the SP-351 Server counterpart bucket), Project = RP-COORDINATION-180D@1.0.0 (anchor_kind=run_completion, count in the Project partition); exact original and checkpoint bindings retain their existing Storage assignments. Registry membership supplies no producer adoption or native-installation proof. Missing-registration refusal applies only if the exact current registration is absent.
 
-Current selected assignment (2026-11-19): crew.board_message_read@1.0.0 is registered for application_or_project in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2281. Its event history selects Application = RP-COORDINATION-180D@1.0.0 (anchor_kind=run_completion, cardinality_scope=project), Project = RP-COORDINATION-180D@1.0.0 (anchor_kind=run_completion, cardinality_scope=project); exact original and checkpoint bindings retain their existing Storage assignments. Registry membership supplies no producer adoption or native-installation proof. Missing-registration refusal applies only if the exact current registration is absent.
+Current selected assignment (2026-11-19): crew.board_message_read@1.0.0 is registered for application_or_project in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2281. Its event history selects Application = RP-COORDINATION-180D@1.0.0 (anchor_kind=run_completion, count in the SP-351 Server counterpart bucket), Project = RP-COORDINATION-180D@1.0.0 (anchor_kind=run_completion, count in the Project partition); exact original and checkpoint bindings retain their existing Storage assignments. Registry membership supplies no producer adoption or native-installation proof. Missing-registration refusal applies only if the exact current registration is absent.
 
-Current selected assignment (2026-11-19): crew.board_messages_archived@1.0.0 is registered for application_or_project in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2282. Its event history selects Application = RP-COORDINATION-180D@1.0.0 (anchor_kind=run_completion, cardinality_scope=project), Project = RP-COORDINATION-180D@1.0.0 (anchor_kind=run_completion, cardinality_scope=project); exact original and checkpoint bindings retain their existing Storage assignments. Registry membership supplies no producer adoption or native-installation proof. Missing-registration refusal applies only if the exact current registration is absent.
+Current selected assignment (2026-11-19): crew.board_messages_archived@1.0.0 is registered for application_or_project in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2282. Its event history selects Application = RP-COORDINATION-180D@1.0.0 (anchor_kind=run_completion, count in the SP-351 Server counterpart bucket), Project = RP-COORDINATION-180D@1.0.0 (anchor_kind=run_completion, count in the Project partition); exact original and checkpoint bindings retain their existing Storage assignments. Registry membership supplies no producer adoption or native-installation proof. Missing-registration refusal applies only if the exact current registration is absent.
 ### OSI-682 — crew.board_message_read
 
 **OSI-682: `crew.board_message_read@1.0.0` — newly authored owner contract (DL-045), prepared without admission.** This exact family alone adopts the contract below. No current append is allowed until its own registry admission and required native gates. Current payload minima remain in Contracts; this closed definition refines them without admitting a sibling.
@@ -32682,8 +32682,8 @@ canonical_text: 'crew.board_message_read@1.0.0 consumes its exact closed payload
   PNC-019 s4r retention binding for `crew.board_message_read` (2026-11-14).
 
 
-  Event history selects Application = RP-COORDINATION-180D@1.0.0 (anchor_kind=run_completion, cardinality_scope=project),
-  Project = RP-COORDINATION-180D@1.0.0 (anchor_kind=run_completion, cardinality_scope=project) as recorded by Plans/Decision_Log.md#DL-2281,
+  Event history selects Application = RP-COORDINATION-180D@1.0.0 (anchor_kind=run_completion, count in the SP-351 Server counterpart bucket),
+  Project = RP-COORDINATION-180D@1.0.0 (anchor_kind=run_completion, count in the Project partition) as recorded by Plans/Decision_Log.md#DL-2281,
   under DL-085.
 
 
@@ -32739,7 +32739,7 @@ owner_hints:
 
 PNC-019 s4r retention binding for `crew.board_message_read` (2026-11-14).
 
-Event history selects Application = RP-COORDINATION-180D@1.0.0 (anchor_kind=run_completion, cardinality_scope=project), Project = RP-COORDINATION-180D@1.0.0 (anchor_kind=run_completion, cardinality_scope=project) as recorded by Plans/Decision_Log.md#DL-2281, under DL-085.
+Event history selects Application = RP-COORDINATION-180D@1.0.0 (anchor_kind=run_completion, count in the SP-351 Server counterpart bucket), Project = RP-COORDINATION-180D@1.0.0 (anchor_kind=run_completion, count in the Project partition) as recorded by Plans/Decision_Log.md#DL-2281, under DL-085.
 
 Use the existing policy object unchanged: {"anchor_kind": "run_completion", "cardinality_scope": "project", "expiry_action": "compact", "max_cardinality": 1000000, "overflow_action": "evict_oldest_eligible", "ttl_seconds": 15552000}.
 
@@ -32748,7 +32748,7 @@ The cited Storage integration is present in this batch base. Existing original r
 This paragraph supersedes earlier pending statements only for the exact assigned facets above. All independent source, receipt, referenced-body and backup lifetimes remain with their own owners. Legal/investigation holds, required references, recovery, rollback, maintenance, protected backups and latest-25-run protection override cleanup without granting access. No unexpired/protected eviction for space, no retry anchor renewal, no hold release, admission, native proof or governance clearance is granted.
 
 
-Current selected assignment (2026-11-19): crew.board_message_read@1.0.0 is registered for application_or_project in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2281. Its event history selects Application = RP-COORDINATION-180D@1.0.0 (anchor_kind=run_completion, cardinality_scope=project), Project = RP-COORDINATION-180D@1.0.0 (anchor_kind=run_completion, cardinality_scope=project); exact original and checkpoint bindings retain their existing Storage assignments. Registry membership supplies no producer adoption or native-installation proof. Missing-registration refusal applies only if the exact current registration is absent.
+Current selected assignment (2026-11-19): crew.board_message_read@1.0.0 is registered for application_or_project in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2281. Its event history selects Application = RP-COORDINATION-180D@1.0.0 (anchor_kind=run_completion, count in the SP-351 Server counterpart bucket), Project = RP-COORDINATION-180D@1.0.0 (anchor_kind=run_completion, count in the Project partition); exact original and checkpoint bindings retain their existing Storage assignments. Registry membership supplies no producer adoption or native-installation proof. Missing-registration refusal applies only if the exact current registration is absent.
 ### OSI-683 — crew.board_messages_archived
 
 **OSI-683: `crew.board_messages_archived@1.0.0` — newly authored owner contract (DL-045), prepared without admission.** This exact family alone adopts the contract below. No current append is allowed until its own registry admission and required native gates. Current payload minima remain in Contracts; this closed definition refines them without admitting a sibling.
@@ -32789,8 +32789,8 @@ canonical_text: 'crew.board_messages_archived@1.0.0 consumes its exact closed pa
   PNC-019 s4r retention binding for `crew.board_messages_archived` (2026-11-14).
 
 
-  Event history selects Application = RP-COORDINATION-180D@1.0.0 (anchor_kind=run_completion, cardinality_scope=project),
-  Project = RP-COORDINATION-180D@1.0.0 (anchor_kind=run_completion, cardinality_scope=project) as recorded by Plans/Decision_Log.md#DL-2282,
+  Event history selects Application = RP-COORDINATION-180D@1.0.0 (anchor_kind=run_completion, count in the SP-351 Server counterpart bucket),
+  Project = RP-COORDINATION-180D@1.0.0 (anchor_kind=run_completion, count in the Project partition) as recorded by Plans/Decision_Log.md#DL-2282,
   under DL-085.
 
 
@@ -32846,7 +32846,7 @@ owner_hints:
 
 PNC-019 s4r retention binding for `crew.board_messages_archived` (2026-11-14).
 
-Event history selects Application = RP-COORDINATION-180D@1.0.0 (anchor_kind=run_completion, cardinality_scope=project), Project = RP-COORDINATION-180D@1.0.0 (anchor_kind=run_completion, cardinality_scope=project) as recorded by Plans/Decision_Log.md#DL-2282, under DL-085.
+Event history selects Application = RP-COORDINATION-180D@1.0.0 (anchor_kind=run_completion, count in the SP-351 Server counterpart bucket), Project = RP-COORDINATION-180D@1.0.0 (anchor_kind=run_completion, count in the Project partition) as recorded by Plans/Decision_Log.md#DL-2282, under DL-085.
 
 Use the existing policy object unchanged: {"anchor_kind": "run_completion", "cardinality_scope": "project", "expiry_action": "compact", "max_cardinality": 1000000, "overflow_action": "evict_oldest_eligible", "ttl_seconds": 15552000}.
 
@@ -32855,7 +32855,7 @@ The cited Storage integration is present in this batch base. Existing original r
 This paragraph supersedes earlier pending statements only for the exact assigned facets above. All independent source, receipt, referenced-body and backup lifetimes remain with their own owners. Legal/investigation holds, required references, recovery, rollback, maintenance, protected backups and latest-25-run protection override cleanup without granting access. No unexpired/protected eviction for space, no retry anchor renewal, no hold release, admission, native proof or governance clearance is granted.
 
 
-Current selected assignment (2026-11-19): crew.board_messages_archived@1.0.0 is registered for application_or_project in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2282. Its event history selects Application = RP-COORDINATION-180D@1.0.0 (anchor_kind=run_completion, cardinality_scope=project), Project = RP-COORDINATION-180D@1.0.0 (anchor_kind=run_completion, cardinality_scope=project); exact original and checkpoint bindings retain their existing Storage assignments. Registry membership supplies no producer adoption or native-installation proof. Missing-registration refusal applies only if the exact current registration is absent.
+Current selected assignment (2026-11-19): crew.board_messages_archived@1.0.0 is registered for application_or_project in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2282. Its event history selects Application = RP-COORDINATION-180D@1.0.0 (anchor_kind=run_completion, count in the SP-351 Server counterpart bucket), Project = RP-COORDINATION-180D@1.0.0 (anchor_kind=run_completion, count in the Project partition); exact original and checkpoint bindings retain their existing Storage assignments. Registry membership supplies no producer adoption or native-installation proof. Missing-registration refusal applies only if the exact current registration is absent.
 ### OSI-684 — parser.error
 
 **OSI-684: `parser.error@1.0.0` — newly authored owner contract (DL-045), prepared without admission.** This exact family alone adopts the contract below. No current append is allowed until its own registry admission and required native gates. Current payload minima remain in Contracts; this closed definition refines them without admitting a sibling.
