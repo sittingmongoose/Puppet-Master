@@ -2,9 +2,9 @@
 
 Source: `Plans/Decision_Log.md`
 
-Source lines: L28747-L56028
+Source lines: L28747-L56091
 
-Source SHA256: `14989cd8bd8911b8fd4bf736f1556dee0244a9d8bab67366798792789b07c922`
+Source SHA256: `983ef8ddf7a554830408607ea87fda034bc5ad09acd03046e718b119eb08de18`
 
 ---
 
@@ -27287,6 +27287,69 @@ preserved_exact_tokens:
 - 9238a245b7b4646789fdb5c6313c03a9cfb38bb0925d5aca43573cafc1621549
 - 2026-11-19.31
 - 2026-11-19.32
+negative_constraints:
+- No new admission, producer adoption, native execution claim or governance seal.
+```
+
+### DL-2483: Event Authority corrects chat.thread_worktree_merge_failed (merge 3 post-landing)
+
+```yaml
+plan_unit_id: DL-2483
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: 'Correction for chat.thread_worktree_merge_failed only, under DL-077 and DL-400, resolving post-landing Astra
+  finding(s) [4]. The original admission authority remains Plans/Decision_Log.md#DL-2246; this entry records no new admission,
+  verdict, policy choice or producer adoption. Current row canonical SHA-256 190fae6ef8a3c1b450956caf184fdfe94abb2ea693f972fe69afaa60b03abaf0.
+  Its scope is application_or_project. Payload editions: application `pm.dch_event.chat_thread_worktree_merge_failed.application.v1`
+  (RP-CHAT-THREAD-LIFETIME@1.0.0, producer requires_owner_adoption); project `pm.dch_event.chat_thread_worktree_merge_failed.project.v1`
+  (RP-CHAT-THREAD-LIFETIME@1.0.0, producer requires_owner_adoption).
+
+
+  The correction moves the full registry from 2026-11-19.32, 518 families, SHA-256 933fee106c1f2e8ec6fa92edacefa0e79e3d8009af012211bbb6da9629274dbf,
+  to 2026-11-19.33, 518 families, SHA-256 7cc50d05d0bc2be46b342a12cd9edc62d6f65b1c65753aa137777666fad86790, without changing
+  another family. Revision witness: reports/event-authority-20261116/admission-merge-3/corrections/chat.thread_worktree_merge_failed.json.
+  Depth assessment: reports/event-authority-20261116/admission-merge-2/depth/chat.thread_worktree_merge_failed.json, SHA-256
+  f6c6c2acec549822c9e9a81f02a3dc9469c905a0eea3d03416c2d817be1e962c.
+
+
+  The original append checkpoints are preserved: before 2026-11-16.109 SHA-256 5cbdd36b80bcbabf07c7c154bdf07c2997c844034bafa1cf62e7173f1ad5f768;
+  after 2026-11-16.110 SHA-256 69a5268981b96a4c8fdad192a8f2c2c905f10517b839edc449b4ace930686bdc. Existing semantic owner Plans/assistant-chat-design.md#ACD-618,
+  payload owner Plans/Contracts_V0.md#CV-638, resource Plans/dch_event_payloads/chat_thread_worktree_merge_failed.schema.json#/$defs/project
+  retain their contracts. Current citations were re-read from existing canonical text; original citations, records and decision
+  entries remain in the named Git predecessor. Native execution remains NOT_RUN. Required producer adoption, permissions,
+  original custody and receipt/publication fences remain required.'
+gui_related: false
+gui_classification_reason: Maintains one existing event admission and its evidence.
+depends_on:
+- DL-077
+- DL-400
+- DL-2246
+unblocks: []
+acceptance_criteria:
+- Exactly one family is corrected and the original append checkpoints remain authenticated.
+- The correction witness and current DL-077 record match their named Git editions.
+validation_surfaces:
+- python3 scripts/pm-ea-record-chain.py
+- python3 scripts/pm-ea-postfix-check.py
+- python3 scripts/pm-ea-retention-citation-check.py
+risk_class: event_authority_admission
+reasoning_tier: high
+context_scope: event_authority_pnc019_merge3_postfix
+implementation_surfaces:
+- Plans/event_family_registry.json
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/MERGE2-POSTLAND-astra62max/REVIEW.md
+- Plans/Decision_Log.md#DL-2246
+preserved_exact_tokens:
+- chat.thread_worktree_merge_failed
+- 190fae6ef8a3c1b450956caf184fdfe94abb2ea693f972fe69afaa60b03abaf0
+- 2026-11-19.32
+- 2026-11-19.33
 negative_constraints:
 - No new admission, producer adoption, native execution claim or governance seal.
 ```
