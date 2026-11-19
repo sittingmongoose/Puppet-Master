@@ -1,0 +1,155 @@
+{
+ "schema_id": "pm.ea.postfix_revision.v1",
+ "authority": "MERGE3-POSTFIX / post-landing Astra findings",
+ "event_type": "bundle.revision_interrupted",
+ "findings": [
+  1,
+  4
+ ],
+ "source_commit": "d4291dbc610ac52be006715bafb5c3f67d66b7b0",
+ "original_admission_decision_ref": "Plans/Decision_Log.md#DL-2228",
+ "decision_ref": "Plans/Decision_Log.md#DL-2465",
+ "registry_before": {
+  "revision": "2026-11-19.14",
+  "sha256": "c4e35f945de8a1d9214e916f88ce8087d27ee8d0a9dddfe2d7dbbfee515f7839",
+  "family_count": 518
+ },
+ "registry_after": {
+  "revision": "2026-11-19.15",
+  "sha256": "8e6cc59ee8d72e750f3a51928eb5aefa91164ad4ffa9babb0ee8e681f5801f66",
+  "family_count": 518
+ },
+ "before_row": {
+  "family_id": "event-family-bundle-revision-interrupted",
+  "family_revision": "1.0.0",
+  "event_type": "bundle.revision_interrupted",
+  "scope_policy": "project_only",
+  "semantic_owner_doc": "Plans/assistant-chat-design.md#ACD-574",
+  "payload_owner_doc": "Plans/Contracts_V0.md#CV-593",
+  "payload_schema_id": "https://puppetmaster.local/schemas/event_payloads/bundle_revision/revision_interrupted.schema.json",
+  "payload_schema_ref": {
+   "path": "Plans/event_payloads/bundle_revision/revision_interrupted.schema.json",
+   "json_pointer": "#",
+   "schema_id": "https://puppetmaster.local/schemas/event_payloads/bundle_revision/revision_interrupted.schema.json"
+  },
+  "legacy": {
+   "aliases": [],
+   "admitted_extensions": [],
+   "identity_json_pointers": {
+    "project_id": [
+     "/payload/project_id"
+    ],
+    "thread_id": [
+     "/payload/thread_id"
+    ]
+   },
+   "referenced_event_id_pointer": null,
+   "redaction": {
+    "mode": "reject_unhandled_secrets",
+    "transform_id": null,
+    "transform_version": null
+   }
+  },
+  "source_refs": [
+   "Plans/assistant-chat-design.md#ACD-574",
+   "Plans/Contracts_V0.md#CV-593",
+   "Plans/event_payloads/bundle_revision/revision_interrupted.schema.json#",
+   "reports/event-authority-20261116/admission-merge-2/readiness-list.json"
+  ],
+  "retention_policy_ref": {
+   "registry_schema_id": "pm.storage_value_registry.v2",
+   "policy_id": "RP-AUTHORITY-INDEFINITE",
+   "policy_version": "1.0.0"
+  }
+ },
+ "registry_row": {
+  "family_id": "event-family-bundle-revision-interrupted",
+  "family_revision": "1.0.0",
+  "event_type": "bundle.revision_interrupted",
+  "scope_policy": "project_only",
+  "semantic_owner_doc": "Plans/assistant-chat-design.md#ACD-574",
+  "payload_owner_doc": "Plans/Contracts_V0.md#CV-593",
+  "payload_schema_id": "pm.event_payload.bundle.revision_interrupted.v1",
+  "payload_schema_ref": {
+   "path": "Plans/event_payloads/bundle_revision/revision_interrupted.schema.json",
+   "json_pointer": "#",
+   "schema_id": "https://puppetmaster.local/schemas/event_payloads/bundle_revision/revision_interrupted.schema.json"
+  },
+  "legacy": {
+   "aliases": [],
+   "admitted_extensions": [],
+   "identity_json_pointers": {
+    "project_id": [
+     "/payload/project_id"
+    ],
+    "thread_id": [
+     "/payload/thread_id"
+    ]
+   },
+   "referenced_event_id_pointer": null,
+   "redaction": {
+    "mode": "reject_unhandled_secrets",
+    "transform_id": null,
+    "transform_version": null
+   }
+  },
+  "source_refs": [
+   "Plans/assistant-chat-design.md#ACD-574",
+   "Plans/Contracts_V0.md#CV-593",
+   "Plans/event_payloads/bundle_revision/revision_interrupted.schema.json#",
+   "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+   "Plans/dcw_event_contract_fixtures.json#/families/3/positive/event/payload_schema_id"
+  ],
+  "retention_policy_ref": {
+   "registry_schema_id": "pm.storage_value_registry.v2",
+   "policy_id": "RP-AUTHORITY-INDEFINITE",
+   "policy_version": "1.0.0"
+  }
+ },
+ "predecessor_record_sha256": "df030e7dcc2675ddd99ab35e943ca228b2f801fb63d1ac8953e244e3788cfae7",
+ "predecessor_assessment_sha256": "b370ca32f0be25f600f5035e5751790672fba457e0178845111063fd36d66e88",
+ "applied_record_sha256": "76d7b82ae8b5b3b0b2af03fc0b1323e4eabad6a72dda5507a19dd50acec5d7a7",
+ "applied_assessment_sha256": "b704eb0789fa335c43858e0a2dee1857a4f0c9558628da815b4854d63668e640",
+ "citation_changes": [
+  {
+   "ordinal": 0,
+   "old": {
+    "path": "Plans/storage-plan.md",
+    "unit": "SP-578",
+    "line_start": 55228,
+    "line_end": 55228,
+    "quote": "Current selected assignment (2026-11-19): bundle.revision_interrupted@1.0.0 is registered for project_only in",
+    "quote_check": "exact",
+    "quote_scope": "unit SP-578, Plans/storage-plan.md:55133-55272",
+    "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+    "source_citation": {
+     "path": "Plans/storage-plan.md",
+     "unit": "SP-578",
+     "line_start": 55006,
+     "line_end": 55006,
+     "quote": "\\ history `retention_policy_ref = RP-AUTHORITY-INDEFINITE@1.0.0`, under DL-401, DL-508.\\n\\nUse the existing\\",
+     "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+    },
+    "locator_maintenance": {
+     "authority": "MERGE2-FIX4",
+     "reason": "Re-cite the same accepted retention claim at its current exact owner assignment; event and source/checkpoint authority remain separate."
+    }
+   },
+   "replacement": {
+    "path": "Plans/storage-plan.md",
+    "unit": "SP-578",
+    "line_start": 55230,
+    "line_end": 55238,
+    "quote": "  Current selected assignment (2026-11-19): bundle.revision_interrupted@1.0.0 is registered for project_only in\n  Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2228. Its event history selects RP-AUTHORITY-INDEFINITE@1.0.0;\n  Plans/storage-plan.md#SP-578 owns the event policy''s existing anchors, counts, holds and deletion rules. Separate\n  stored-value assignment: revision_run uses RP-CHAT-THREAD-LIFETIME@1.0.0 under Plans/Decision_Log.md#DL-508; this\n  assigns that stored value, not event history. Original sources and coherent backups retain their independent owner\n  policies; the event lifetime is not transferred to them. Current append/publication still requires the exact selected\n  schema/scope, original custody, current permission, receipt and required producer adoption. Actual missing registration\n  or unresolved required custody refuses; native execution remains NOT_RUN. No native adoption, new retention choice\n  or governance seal follows.'",
+    "quote_check": "exact",
+    "quote_scope": "unit SP-578, Plans/storage-plan.md:55135-55274"
+   },
+   "reason": "Complete current wrapped assignment inside its original unit."
+  }
+ ],
+ "review": {
+  "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/MERGE2-POSTLAND-astra62max/REVIEW.md",
+  "sha256": "757539cf93c9ffe264ceabc42273ef7afe1582bf161fbe0a826a4b6bf18b6d21"
+ },
+ "native_execution": "NOT_RUN"
+}
