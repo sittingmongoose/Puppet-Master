@@ -1,0 +1,109 @@
+{
+ "schema_id": "pm.ea.postfix_revision.v1",
+ "authority": "MERGE3-POSTFIX / post-landing Astra findings",
+ "event_type": "auth.github.disconnected",
+ "findings": [
+  7
+ ],
+ "source_commit": "f096c053b390e74ce5c1fc162a812d97310b64eb",
+ "original_admission_decision_ref": "Plans/Decision_Log.md#DL-2147",
+ "decision_ref": "Plans/Decision_Log.md#DL-2453",
+ "registry_before": {
+  "revision": "2026-11-19.2",
+  "sha256": "244b18ca98faba7e4e6470cced27b0436888bb452f08ccbc7863e04cabc8b9cc",
+  "family_count": 518
+ },
+ "registry_after": {
+  "revision": "2026-11-19.3",
+  "sha256": "58bcbc79d11729d29c5a93b96eb10d8d58c36d65335ad28f0856276b8e69c6ea",
+  "family_count": 518
+ },
+ "before_row": {
+  "family_id": "event-family-auth-github-disconnected",
+  "family_revision": "1.0.0",
+  "event_type": "auth.github.disconnected",
+  "scope_policy": "application_only",
+  "semantic_owner_doc": "Plans/GitHub_API_Auth_and_Flows.md#GAAAF-079",
+  "payload_owner_doc": "Plans/Contracts_V0.md#CV-690",
+  "payload_schema_id": "https://puppetmaster.local/schemas/dg6b_event_contracts/1.0.0/schema.json#/$defs/auth_github_disconnected",
+  "payload_schema_ref": {
+   "path": "Plans/dg6b_event_contracts.schema.json",
+   "json_pointer": "#/$defs/auth_github_disconnected",
+   "schema_id": "https://puppetmaster.local/schemas/dg6b_event_contracts/1.0.0/schema.json#/$defs/auth_github_disconnected"
+  },
+  "legacy": {
+   "aliases": [],
+   "admitted_extensions": [],
+   "identity_json_pointers": {
+    "project_id": [],
+    "thread_id": []
+   },
+   "referenced_event_id_pointer": null,
+   "redaction": {
+    "mode": "reject_unhandled_secrets",
+    "transform_id": null,
+    "transform_version": null
+   }
+  },
+  "source_refs": [
+   "Plans/GitHub_API_Auth_and_Flows.md#GAAAF-079",
+   "Plans/Contracts_V0.md#CV-690",
+   "Plans/dg6b_event_contracts.schema.json#/$defs/auth_github_disconnected",
+   "reports/event-authority-20261116/admission-merge-2/readiness-list.json"
+  ],
+  "retention_policy_ref": {
+   "registry_schema_id": "pm.storage_value_registry.v2",
+   "policy_id": "RP-OPERATIONAL-SECURITY-APPLICATION-2555D",
+   "policy_version": "1.0.0"
+  }
+ },
+ "registry_row": {
+  "family_id": "event-family-auth-github-disconnected",
+  "family_revision": "1.0.0",
+  "event_type": "auth.github.disconnected",
+  "scope_policy": "application_only",
+  "semantic_owner_doc": "Plans/GitHub_API_Auth_and_Flows.md#GAAAF-079",
+  "payload_owner_doc": "Plans/Contracts_V0.md#CV-690",
+  "payload_schema_id": "https://puppetmaster.local/schemas/dg6b_event_contracts/1.0.0/schema.json#/$defs/auth_github_disconnected",
+  "payload_schema_ref": {
+   "path": "Plans/dg6b_event_contracts.schema.json",
+   "json_pointer": "#/$defs/auth_github_disconnected",
+   "schema_id": "https://puppetmaster.local/schemas/dg6b_event_contracts/1.0.0/schema.json#/$defs/auth_github_disconnected"
+  },
+  "legacy": {
+   "aliases": [],
+   "admitted_extensions": [],
+   "identity_json_pointers": {
+    "project_id": [],
+    "thread_id": []
+   },
+   "referenced_event_id_pointer": null,
+   "redaction": {
+    "mode": "reject_unhandled_secrets",
+    "transform_id": null,
+    "transform_version": null
+   }
+  },
+  "source_refs": [
+   "Plans/GitHub_API_Auth_and_Flows.md#GAAAF-079",
+   "Plans/Contracts_V0.md#CV-690",
+   "Plans/dg6b_event_contracts.schema.json#/$defs/auth_github_disconnected",
+   "reports/event-authority-20261116/admission-merge-2/readiness-list.json"
+  ],
+  "retention_policy_ref": {
+   "registry_schema_id": "pm.storage_value_registry.v2",
+   "policy_id": "RP-OPERATIONAL-SECURITY-APPLICATION-2555D",
+   "policy_version": "1.0.0"
+  }
+ },
+ "predecessor_record_sha256": "f04e4f4962ed7fa7d8c0b66e64ecd06472b641245002ce1623c1abbeac21d311",
+ "predecessor_assessment_sha256": "7456a9145714b5526d7e0614e4ec3914183327e06ec2fda771499770f53c0ade",
+ "applied_record_sha256": "776498969efb7d1c542e460edf70edcd96e1ebf7d86d939239245506b322e7ef",
+ "applied_assessment_sha256": "c65264b82a2a64f0ce4fb85828011fc8b19e88dc2fa159041d91b8d3c3651441",
+ "citation_changes": [],
+ "review": {
+  "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/MERGE2-POSTLAND-astra62max/REVIEW.md",
+  "sha256": "757539cf93c9ffe264ceabc42273ef7afe1582bf161fbe0a826a4b6bf18b6d21"
+ },
+ "native_execution": "NOT_RUN"
+}
