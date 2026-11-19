@@ -62,6 +62,7 @@
 // --set chat=<url>    the chat alone (its standalone build): no Settings, no onboarding window; looks by PM56_DEMO.setTheme
 // Both surfaces (--set sandbox=0 and 1). No Stop chip, or a change that did not happen, fails as "could not judge".
 import { traceWindow } from '../helpers/frame-trace.mjs';
+import { traceJudgeable } from '../helpers/trace-guard.mjs';
 import { muteSound, parkPointer } from '../helpers/quiet-page.mjs';
 
 // One Working run, driven and sampled inside the page; returns every frame's sample, the marks and the flips.
@@ -661,8 +662,12 @@ export default async function (t) {
 		await t.page.waitForTimeout(4000);
 		let x = null, err = '';
 		try { x = await traceWindow(cdp, { ms: 3000, url: f.url() }); } catch (e) { err = String(e && e.message || e); }
-		const it = x && x.dispatched ? (x.dispatched.animationiteration || 0) : null;
-		await t.check('rest: no animationiteration event is dispatched on Home in 3 s', it === 0, x ? `${it} dispatched in ${x.secs} s (main frames ${x.mainFrames.perSec}/s)` : `no trace: ${err}: could not judge`);
+		// A trace that names no renderer main thread reads 0 dispatched animationiteration events, and the row would PASS
+		// without measuring (PM7PERF-STOPCHIP-NO-RENDERER-READS-ZERO, TB6 item 4): could not judge, never a pass.
+		const guard = traceJudgeable(x);
+		const it = guard.ok ? ((x.dispatched && x.dispatched.animationiteration) || 0) : null;
+		await t.check('rest: no animationiteration event is dispatched on Home in 3 s', guard.ok && it === 0,
+			!guard.ok ? `${guard.why}${err ? ' (' + err + ')' : ''}` : `${it} dispatched in ${x.secs} s (main frames ${x.mainFrames.perSec}/s)`);
 		await cdp.detach().catch(() => {});
 	}
 
