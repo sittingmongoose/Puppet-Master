@@ -3,8 +3,8 @@
  "event_type": "auth.github.failed",
  "family_id": "event-family-auth-github-failed",
  "implementation_receipt_sha256": "dceb7f21436cbe126c23822e62caa1b6dedcb45fefae3005c1804576ca34d827",
- "decision_ref": "Plans/Decision_Log.md#DL-2148",
- "decision_section_sha256": "c91968195f600df7478c91f5f539d2b1286c18009d095844a334d51b238f6906",
+ "decision_ref": "Plans/Decision_Log.md#DL-2454",
+ "decision_section_sha256": "e5da6f0ef36302533149d99a63fcd360d680219091ebeac53a6802970eb8b866",
  "registry_before": {
   "revision": "2026-11-16.11",
   "sha256": "8e33379963ef36eab321738cc63d1b8da69882db8ab203c8060fee085a455389",
@@ -18,7 +18,7 @@
  "registry_row_sha256": "d6ea21fb565a0dd737fef672e1bba9449619490511f69536962d292865adda58",
  "depth_assessment": {
   "path": "reports/event-authority-20261116/admission-merge-2/depth/auth.github.failed.json",
-  "sha256": "95b499ce1c0d31d3808867288d60d9ce6e3133f462af176b64912f3e6f13547f"
+  "sha256": "70e13e4707cc808a41cd539f73711c184e123e9a6af790dff2aa3a9a0213211e"
  },
  "admission_landing": {
   "branch": "plans/ea-merge2-apply-20261116",
@@ -37,11 +37,13 @@
   "Written under DL-077. The seal check recomputes completeness from the pinned assessment; the two fields ending in _at_recording are informational only."
  ],
  "evidence_maintenance": {
-  "authority": "MERGE2-FIX4",
-  "source_commit": "2bda6aeed03daea26c4d79dfb7568fc145aac29e",
-  "source_record_sha256": "cd79349a5f2c93b1ac17184676b89f20a928e95710da450cfa30c13fb1fbb4f0",
-  "source_assessment_sha256": "9d6dea85881d619af83659341cdaac17e7219f1db7f69a8e7e248d0defd24473",
-  "source_decision_section_sha256": "8734078953bb933ec59c321e054fc1c5d149b7252d68258dbe1716460d5d7d77",
+  "authority": "MERGE3-POSTFIX / post-landing Astra findings",
+  "source_commit": "24099c31d7d340dab65f56f8410b81f9cbff52e3",
+  "source_record_sha256": "00f30c70657077f9a26dda8933b5e20e65daa8d83cdab4cd8bfdbdcd71de0f94",
+  "source_assessment_sha256": "95b499ce1c0d31d3808867288d60d9ce6e3133f462af176b64912f3e6f13547f",
+  "source_decision_section_sha256": "c91968195f600df7478c91f5f539d2b1286c18009d095844a334d51b238f6906",
   "original_registry_checkpoints_preserved": true
- }
+ },
+ "original_admission_decision_ref": "Plans/Decision_Log.md#DL-2148",
+ "postfix_correction": "reports/event-authority-20261116/admission-merge-3/corrections/auth.github.failed.json"
 }
