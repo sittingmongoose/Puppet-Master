@@ -7039,10 +7039,10 @@
     {
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
-        "False": 654,
+        "False": 655,
         "True": 235
       },
-      "heading_count": 1129,
+      "heading_count": 1130,
       "implementation_surfaces": [
         ".claude/CLAUDE.md",
         ".gitignore",
@@ -7183,9 +7183,9 @@
         "scripts/pm_wiring_inventory.py",
         "tests/test_pm_wiring_vocabulary.py"
       ],
-      "line_count": 56280,
+      "line_count": 56343,
       "path": "Plans/Decision_Log.md",
-      "plan_unit_count": 889,
+      "plan_unit_count": 890,
       "plan_unit_ids": [
         "DL-400",
         "DL-401",
@@ -8075,7 +8075,8 @@
         "DL-2483",
         "DL-2484",
         "DL-2485",
-        "DL-2486"
+        "DL-2486",
+        "DL-2487"
       ],
       "reasoning_tiers": [
         "high",
@@ -8278,15 +8279,15 @@
         "workflow_verification_exception_route_drift",
         "working_activity_behaviour_drift"
       ],
-      "sha256": "7f069b3dd591904dd56e4909ac066d44b23975342564cf85e208fde0f1abed80",
+      "sha256": "0c646906d67028bcaa1fac29a54c49d631b6676e0eefa2fc099d6f5f214bc915",
       "source_preserving_unit_ids": [],
       "status_counts": {
-        "accepted": 889
+        "accepted": 890
       },
       "title": "Decision Log",
       "unit_type_counts": {
         "compatibility_disposition": 1,
-        "decision": 773,
+        "decision": 774,
         "decision_record": 24,
         "requirement": 91
       },
@@ -25125,7 +25126,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-11-19T23:36:55Z",
+  "generated_at_utc": "2026-11-19T23:37:57Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {
@@ -25133,13 +25134,13 @@
     "docs_with_plan_units": 96,
     "docs_without_plan_units": 0,
     "gui_related_counts": {
-      "False": 5570,
+      "False": 5571,
       "True": 3935
     },
-    "plan_unit_count": 9505,
+    "plan_unit_count": 9506,
     "source_preserving_unit_count": 0,
     "status_counts": {
-      "accepted": 9225,
+      "accepted": 9226,
       "draft": 47,
       "retired": 205,
       "superseded": 28
@@ -25173,7 +25174,7 @@
       "contract": 203,
       "contract_requirement": 3,
       "data_contract": 8,
-      "decision": 796,
+      "decision": 797,
       "decision_record": 24,
       "deferred_enhancement": 8,
       "delta_contract": 1,
