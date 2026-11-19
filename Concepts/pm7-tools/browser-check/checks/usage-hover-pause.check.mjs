@@ -508,10 +508,26 @@ async function pointerDeparture(t, f, label, park) {
 		r.stop = () => { running=false; sc.removeEventListener('wheel',wheel); sc.removeEventListener('scroll',scroll); document.removeEventListener('pointerout',leave,true); document.removeEventListener('pmu-op-end',end); return {...r,stop:undefined,final:read()}; };
 	});
 	await t.page.mouse.wheel(0,1);
-	await f.waitForFunction(() => {
-		const r = window.__uhpDeparture;
-		return r.scrolls.some((s) => s.held && s.top > r.top);
-	});
+	// TB6 item 3: a loaded host can delay the wheel's scroll past the wait. Catch it and report the group as could not
+	// judge instead of aborting the whole check at ~71 of 158 rows (the same class as the real VM abort at keyboardPause).
+	let started = true;
+	try {
+		await f.waitForFunction(() => {
+			const r = window.__uhpDeparture;
+			return r.scrolls.some((s) => s.held && s.top > r.top);
+		}, null, { timeout: 10000 });
+	} catch (e) { started = false; }
+	if (!started) {
+		const rec = await f.evaluate(() => window.__uhpDeparture.stop());
+		const why = 'could not judge: the trusted wheel never scrolled the board with its wheel marker within 10 s';
+		t.log(label + 'R107 departure: ' + JSON.stringify({ start: 'the wheel never scrolled the held board', wheels: rec.wheels.length, scrolls: rec.scrolls.length, top: rec.top }));
+		await t.check(label + 'R107 could judge: trusted wheel on a lit column, direct departure during the hold, old point still on the plot', false, why);
+		await t.check(label + 'R107 no column, provider, donut or card light returns while the pointer remains outside the board', false, why);
+		await park();
+		await f.evaluate((on) => { PM7_USAGE.setRoomDetail('overview','glance'); if(on) PMU.live.resume(); },liveWasOn);
+		await t.page.waitForTimeout(4500);
+		return rec;
+	}
 	await t.page.mouse.move(outside.x,outside.y);
 	await t.page.waitForTimeout(900);
 	const rec = await f.evaluate(() => window.__uhpDeparture.stop());
@@ -592,10 +608,27 @@ async function keyboardPause(t, f, label, park) {
 			r.stop = () => { running = false; markers.disconnect(); sc.removeEventListener('wheel', wheel); sc.removeEventListener('scroll', scroll); document.removeEventListener('keydown', keydown, true); document.removeEventListener('pointermove', move, true); document.removeEventListener('pmu-op-end', end); return {...r, stop: undefined, point, after: read()}; };
 		}, {key, mode});
 		await t.page.mouse.wheel(0, 1);
-		await f.waitForFunction(() => {
-			const r = window.__uhpKeyboard;
-			return r.scrolls.some((s) => s.op === 'wheel' && s.top > r.pre.top);
-		});
+		// TB6 item 3: the real VM abort in stream F's batch 13 was this wait (usage-hover-pause.check.mjs:570 then), not
+		// only pointerDeparture's. Catch it, mark the group could not judge, and let the rest of the check run.
+		let rolled = true;
+		try {
+			await f.waitForFunction(() => {
+				const r = window.__uhpKeyboard;
+				return r.scrolls.some((s) => s.op === 'wheel' && s.top > r.pre.top);
+			}, null, { timeout: 10000 });
+		} catch (e) { rolled = false; }
+		if (!rolled) {
+			const rec = await f.evaluate(() => window.__uhpKeyboard.stop()); records.push(rec);
+			const why = 'could not judge: the trusted wheel never scrolled the pane with its wheel marker within 10 s';
+			t.log(S + 'the wheel never scrolled the pane: ' + JSON.stringify({ pre: rec.pre.top, scrolls: rec.scrolls.slice(0, 3), wheels: rec.wheels.length }));
+			await t.check(S + 'could judge Skyline hover before its wheel deadline on a second trusted wheel inside the keyboard gesture', false, why);
+			await t.check(S + 'Skyline stays visually neutral inside the keyboard gesture until the original wheel deadline', false, why);
+			await t.check(S + 'could judge: applied provider, trusted wheel moves the pane, M/R on another focused card within 150 ms, gesture held past pause, trusted Escape and still pointer', false, why);
+			await t.check(S + 'main provider selection stays unchanged while the keyboard gesture owns the board', false, why);
+			await t.check(S + 'after Escape one lifecycle return releases the engine while main provider selection stays unchanged', false, why);
+			await park();
+			continue;
+		}
 		// Keep the second tick on the already latched axis: a horizontal tick can queue behind the keyboard work.
 		await Promise.all([t.page.keyboard.down(key), t.page.mouse.wheel(0, 1)]);
 		await t.page.keyboard.up(key);
@@ -687,8 +720,20 @@ async function wheelProxies(t, f, label, park) {
 		});
 		if (kind === 'already fading glow') {
 			await t.page.mouse.move(next.x, next.y);
-			await f.waitForFunction(() => [...document.querySelectorAll('#pmh-glow > i:not(.pmh-glow-on)')]
-				.some((el) => +getComputedStyle(el).opacity > 0.15), null, { timeout: 2000 });
+			// TB6 item 3: the same uncaught wait class; on a loaded host the next card's glow can fade before 2 s.
+			let fading = true;
+			try {
+				await f.waitForFunction(() => [...document.querySelectorAll('#pmh-glow > i:not(.pmh-glow-on)')]
+					.some((el) => +getComputedStyle(el).opacity > 0.15), null, { timeout: 2000 });
+			} catch (e) { fading = false; }
+			if (!fading) {
+				await f.evaluate(() => window.__usageProxies.stop());
+				const why = 'could not judge: no fading glow appeared at the next card within 2 s';
+				await t.check(S + 'could judge visible proxy opacity before trusted real scroll with the pointer still', false, why);
+				await t.check(S + 'no fixed glow or frame proxy remains visible in the moving hold', false, why);
+				await t.check(S + 'hover glow returns at the card now under the pointer', false, why);
+				continue;
+			}
 		}
 		// Stay within the chosen card while moving enough to distinguish the fixed old box from the scrolling one.
 		for (const delta of [24, 24, 24, 24, 24, 24]) {
