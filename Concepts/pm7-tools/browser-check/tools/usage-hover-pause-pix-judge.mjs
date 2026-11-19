@@ -1,0 +1,61 @@
+// Judge diagnostics/usage-hover-pause-pix's shots where main's page does not hold still between its own loads.
+// For each state (<name>-A1.png main, <name>-B.png the pause's page, <name>-A2.png main again) the frame is cut into
+// 16 px cells; a cell where A1 and A2 differ anywhere is a cell main's page itself varies in (live text, a toast, the
+// status bar's clock), widened by one cell. The pause changed a pixel only where B differs from A1 in a cell main holds
+// still in; the verdict per state is that count (0 = no pixel changed where main's page holds still), with the share of
+// the frame main varies in and its boxes.
+//   node tools/usage-hover-pause-pix-judge.mjs <shots dir> [--json out.json]
+import { readFileSync, readdirSync, existsSync, writeFileSync } from 'node:fs';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
+import { decodePng } from '../../../onboarding/opus-5.5/tools/pm7_parity_png.mjs';
+
+const G = 16;
+export function stillJudge(a1png, a2png, bpng, rect = null) {
+	const a1 = decodePng(a1png), a2 = decodePng(a2png), b = decodePng(bpng), W = a1.width, H = a1.height;
+	const cw = Math.ceil(W / G), ch = Math.ceil(H / G), vary = new Uint8Array(cw * ch);
+	const px = (img, i) => img.data[i] | (img.data[i + 1] << 8) | (img.data[i + 2] << 16);
+	for (let y = 0; y < H; y++) for (let x = 0; x < W; x++) { const i = (y * W + x) * 4; if (px(a1, i) !== px(a2, i)) vary[Math.floor(y / G) * cw + Math.floor(x / G)] = 1; }
+	const wide = new Uint8Array(cw * ch);
+	for (let cy = 0; cy < ch; cy++) for (let cx = 0; cx < cw; cx++) if (vary[cy * cw + cx]) for (let dy = -1; dy <= 1; dy++) for (let dx = -1; dx <= 1; dx++) { const x = cx + dx, y = cy + dy; if (x >= 0 && y >= 0 && x < cw && y < ch) wide[y * cw + x] = 1; }
+	let changed = 0, maxDelta = 0, bounds = null, varyCells = 0;
+	const hit = new Uint32Array(cw * ch);
+	for (let k = 0; k < wide.length; k++) varyCells += wide[k];
+	for (let y = 0; y < H; y++) for (let x = 0; x < W; x++) {
+		if (rect && (x < rect[0] || y < rect[1] || x >= rect[2] || y >= rect[3])) continue;
+		if (wide[Math.floor(y / G) * cw + Math.floor(x / G)]) continue;
+		const i = (y * W + x) * 4;
+		if (px(a1, i) === px(b, i)) continue;
+		changed++; hit[Math.floor(y / G) * cw + Math.floor(x / G)]++;
+		for (let c = 0; c < 3; c++) maxDelta = Math.max(maxDelta, Math.abs(a1.data[i + c] - b.data[i + c]));
+		bounds = bounds ? [Math.min(bounds[0], x), Math.min(bounds[1], y), Math.max(bounds[2], x), Math.max(bounds[3], y)] : [x, y, x, y];
+	}
+	// cells merged by touch into boxes, largest first: where main varies, and where the pause's page changed a pixel
+	const merge = (on, weight) => {
+		const seen = new Uint8Array(cw * ch), boxes = [];
+		for (let k = 0; k < on.length; k++) {
+			if (!on[k] || seen[k]) continue;
+			const q = [k]; seen[k] = 1; let x0 = cw, y0 = ch, x1 = 0, y1 = 0, n = 0;
+			while (q.length) { const c = q.pop(), cx = c % cw, cy = (c - cx) / cw; n += weight ? weight[c] : 1; x0 = Math.min(x0, cx); y0 = Math.min(y0, cy); x1 = Math.max(x1, cx); y1 = Math.max(y1, cy);
+				for (let dy = -1; dy <= 1; dy++) for (let dx = -1; dx <= 1; dx++) { const x = cx + dx, y = cy + dy, j = y * cw + x; if (x >= 0 && y >= 0 && x < cw && y < ch && on[j] && !seen[j]) { seen[j] = 1; q.push(j); } } }
+			boxes.push({ n, box: [x0 * G, y0 * G, (x1 + 1) * G, (y1 + 1) * G] });
+		}
+		return boxes.sort((p, q) => q.n - p.n).slice(0, 8).map((x) => weight ? [x.n].concat(x.box) : x.box);
+	};
+	return { changed, maxDelta, bounds, changedBoxes: merge(hit, hit), varyShare: Math.round(varyCells / (cw * ch) * 10000) / 100, varyBoxes: merge(vary) };
+}
+
+if (process.argv[1] === fileURLToPath(import.meta.url)) {
+	const dir = process.argv[2], out = process.argv.indexOf('--json') > 0 ? process.argv[process.argv.indexOf('--json') + 1] : null;
+	const rows = [];
+	for (const f of readdirSync(dir).filter((n) => n.endsWith('-A1.png')).sort()) {
+		const name = f.slice(0, -'-A1.png'.length), p = (t) => path.join(dir, `${name}-${t}.png`);
+		if (!existsSync(p('B')) || !existsSync(p('A2'))) { rows.push({ name, identical: true }); console.log(`${name}: B and A2 not kept (identical to A1 when shot)`); continue; }
+		const j = stillJudge(readFileSync(p('A1')), readFileSync(p('A2')), readFileSync(p('B')));
+		rows.push({ name, ...j });
+		console.log(`${name}: ${j.changed} px changed where main holds still (max delta ${j.maxDelta}${j.changed ? ', boxes [px, x0, y0, x1, y1] ' + JSON.stringify(j.changedBoxes) : ''}); main varies in ${j.varyShare} % of the frame: ${JSON.stringify(j.varyBoxes)}`);
+	}
+	console.log(`SUMMARY: ${rows.filter((r) => r.identical || r.changed === 0).length} of ${rows.length} states: no pixel changed where main holds still`);
+	if (out) writeFileSync(out, JSON.stringify(rows, null, 1));
+	process.exit(rows.every((r) => r.identical || r.changed === 0) ? 0 : 1);
+}
