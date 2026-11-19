@@ -100,6 +100,7 @@ tests/
 !/tests/test_pm_orchestrator_c12.py
 !/tests/test_pm_pnc019_s4o1.py
 !/tests/test_pm_ea_admission_mode.py
+!/tests/test_pm_ea_usage_retention_check.py
 # Fixture files the repository-wide gates read. run-gates and audit-governance fail on missing
 # files without them, so a checkout that does not have them cannot reproduce a landing check.
 # Each directory is opened only far enough to name its files one by one, the same way the test

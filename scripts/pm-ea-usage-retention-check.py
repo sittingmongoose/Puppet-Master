@@ -13,11 +13,17 @@ from pathlib import Path
 import pm_ea_admission_rows as rows
 
 
-def check() -> dict:
+def comparable(row: dict) -> dict:
+    """The row's registry content, excluding the source list that records where it was derived."""
+    return {key: value for key, value in row.items() if key != "source_refs"}
+
+
+def check(registry: dict | None = None) -> dict:
     readiness = rows.load_module("usage_retention_readiness", "scripts/pm-implementation-readiness.py")
     writer = rows.load_module("usage_retention_writer", "scripts/pm-ea-admission-writer.py")
     schema = rows.load(rows.REGISTRY_SCHEMA)
-    registry = rows.load("Plans/event_family_registry.json")
+    if registry is None:
+        registry = rows.load("Plans/event_family_registry.json")
     checks = {}
     diagnostics = readiness.event_family_registry_data_failures(
         registry, schema, path_label="Plans/event_family_registry.json", include_residuals=False)
@@ -57,13 +63,26 @@ def check() -> dict:
         "policy_id": "RP-RUNTIME-365D", "policy_version": "1.0.0"
     }) == "RP-RUNTIME-365D@1.0.0"
 
-    # Append only in memory. The count checkpoint is separately approved at admission.
-    candidate = copy.deepcopy(registry)
-    candidate["families"].append(row)
-    appended_diagnostics = readiness.event_family_registry_data_failures(
-        candidate, schema, path_label="usage-proof", include_residuals=False)
-    checks["derived_row_registry_checks_pass"] = all(
-        f["error"] == "event_family_registry_kernel_row_count_mismatch" for f in appended_diagnostics)
+    # Two registry states are legitimate: usage.event is admitted (one registered row) or still
+    # prepared (absent). The admitted row is bound and compared with the derivation; only the
+    # prepared state is proved by an in-memory append, whose sole allowed diagnostic is the
+    # kernel count checkpoint that admission separately approves. Never append a second family.
+    registered = [f for f in registry["families"] if f["event_type"] == "usage.event"]
+    checks["usage_event_registered_at_most_once"] = len(registered) <= 1
+    appended_diagnostics: list[dict] = []
+    if registered:
+        candidate = registry
+        usage_index = registry["families"].index(registered[0])
+        checks["registered_usage_row_matches_derived"] = comparable(registered[0]) == comparable(row)
+        checks["derived_row_registry_checks_pass"] = not rows.schema_failures(registered[0])
+    else:
+        candidate = copy.deepcopy(registry)
+        candidate["families"].append(row)
+        usage_index = len(candidate["families"]) - 1
+        appended_diagnostics = readiness.event_family_registry_data_failures(
+            candidate, schema, path_label="usage-proof", include_residuals=False)
+        checks["derived_row_registry_checks_pass"] = all(
+            f["error"] == "event_family_registry_kernel_row_count_mismatch" for f in appended_diagnostics)
 
     negatives = []
     good = readiness.event_family_usage_retention_ref()
@@ -77,7 +96,7 @@ def check() -> dict:
         expected = "event_family_registry_setting_retention_" + suffix
         for location in ("top", "application", "project"):
             mutated = copy.deepcopy(candidate)
-            target = mutated["families"][-1]
+            target = mutated["families"][usage_index]
             if location == "top":
                 target["retention_policy_ref"] = ref
             else:
@@ -115,7 +134,8 @@ def check() -> dict:
         checks[field + "_refused"] = actual == "event_family_registry_setting_retention_policy_id_forbidden"
 
     return dict(status="pass" if all(checks.values()) else "fail", checks=checks,
-                existing_registry_rows=len(registry["families"]), registry_diagnostics=diagnostics,
+                existing_registry_rows=len(registry["families"]), registered_usage_rows=len(registered),
+                registry_diagnostics=diagnostics,
                 appended_diagnostics=appended_diagnostics, usage_row=row, provenance=provenance,
                 negatives=negatives)
 
