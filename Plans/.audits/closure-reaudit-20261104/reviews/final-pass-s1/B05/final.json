@@ -1,0 +1,19 @@
+{
+  "astra": [
+    {
+      "file": "review-astra-max-rs1b05.jsonl",
+      "model": "gpt-6.2-astra (max)"
+    }
+  ],
+  "recheck_commit": "df303e4707c1036bc30e56838c1502eaa9cee585",
+  "sol": [
+    {
+      "file": "review-sol-max-rs1b05.jsonl",
+      "model": "gpt-6.2-sol (max)"
+    }
+  ],
+  "worker": {
+    "file": "worker/records.jsonl",
+    "model": "Sol (sol-c-fp-judge2)"
+  }
+}
