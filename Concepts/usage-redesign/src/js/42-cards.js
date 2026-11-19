@@ -1108,8 +1108,10 @@
     };
     var pauseHover = function (el) {
       var under = el.querySelector(':scope > .pmu-card:hover');
-      /* Only the live board's head is held, and only from ordinary hover (a gesture's marker already moved its head). */
-      var head = under && el === b.el() && el.getAttribute('data-op') === null && !el.hasAttribute('data-wheel-handoff') &&
+      /* Only the live board's head is held, only when the pause begins (wheelAt is not set yet: a board mounted later in
+         the burst never showed its hover, so holding would add a head layout it never had), and only from ordinary
+         hover (a gesture's marker already moved its head). */
+      var head = under && !wheelAt && el === b.el() && el.getAttribute('data-op') === null && !el.hasAttribute('data-wheel-handoff') &&
         under.querySelector(':scope > .pmu-cardhead');
       if (head && head !== wheelHeld) { releaseHeld(); head.setAttribute('data-wheel-held', ''); wheelHeld = head; }
       var tools = under && under.querySelector(':scope > .pmu-cardhead > .pmu-cardtools');
