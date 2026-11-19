@@ -154,7 +154,7 @@ def decision_entry(number, event, row, before, after, record, depth_path, depth_
         implementation_surfaces=[REGISTRY], node_compile_hint=dict(mode='owner_contract_only',create_worknodes=False,create_nodeseeds=False),
         source_lineage=[review, original], preserved_exact_tokens=[event,canonical(row),before['revision'],after['revision']],
         negative_constraints=['No new admission, producer adoption, native execution claim or governance seal.'])
-    return '\n### '+number+': Event Authority corrects '+event+' (merge 3 post-landing)\n\n```yaml\n'+yaml.safe_dump(data, sort_keys=False, allow_unicode=True, width=120)+'```\n\n'
+    return '### '+number+': Event Authority corrects '+event+' (merge 3 post-landing)\n\n```yaml\n'+yaml.safe_dump(data, sort_keys=False, allow_unicode=True, width=120)+'```\n\n'
 
 
 def apply_one(plan, event, decision):
