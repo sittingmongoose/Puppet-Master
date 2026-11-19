@@ -4,15 +4,15 @@
     "build_order_available": true,
     "build_order_blocked_node_count": 0,
     "cycle_blocker_count": 0,
-    "depends_on_edge_count": 27352,
+    "depends_on_edge_count": 27356,
     "downstream_blocked_node_count": 0,
-    "edge_count": 30577,
-    "node_count": 9478,
+    "edge_count": 30581,
+    "node_count": 9479,
     "true_cycle_component_count": 0,
     "unblocks_edge_count": 3225,
     "unresolved_reference_count": 0
   },
-  "generated_at_utc": "2026-11-19T22:04:09Z",
+  "generated_at_utc": "2026-11-19T22:07:01Z",
   "gui_related_units": {
     "count": 3935,
     "units": [
@@ -8690,8 +8690,8 @@
         "source_location": {
           "heading": "CV-1461 - session_prompt.admitted Resolved Payload And Owner Contract",
           "heading_level": 3,
-          "heading_line": 52779,
-          "line": 52781,
+          "heading_line": 52782,
+          "line": 52784,
           "path": "Plans/Contracts_V0.md"
         }
       },
@@ -8701,8 +8701,8 @@
         "source_location": {
           "heading": "CV-1462 - session_prompt.cancelled Resolved Payload And Owner Contract",
           "heading_level": 3,
-          "heading_line": 52867,
-          "line": 52869,
+          "heading_line": 52870,
+          "line": 52872,
           "path": "Plans/Contracts_V0.md"
         }
       },
@@ -8712,8 +8712,8 @@
         "source_location": {
           "heading": "CV-1463 - session_prompt.expired Resolved Payload And Owner Contract",
           "heading_level": 3,
-          "heading_line": 52955,
-          "line": 52957,
+          "heading_line": 52958,
+          "line": 52960,
           "path": "Plans/Contracts_V0.md"
         }
       },
@@ -8723,8 +8723,8 @@
         "source_location": {
           "heading": "CV-1464 - session_prompt.rejected Resolved Payload And Owner Contract",
           "heading_level": 3,
-          "heading_line": 53043,
-          "line": 53045,
+          "heading_line": 53046,
+          "line": 53048,
           "path": "Plans/Contracts_V0.md"
         }
       },
@@ -9119,8 +9119,8 @@
         "source_location": {
           "heading": "CV-3200 — config.validation.passed: saved tier-start setup-check history (E8-6 B)",
           "heading_level": 3,
-          "heading_line": 57525,
-          "line": 57547,
+          "heading_line": 57528,
+          "line": 57550,
           "path": "Plans/Contracts_V0.md"
         }
       },
@@ -9130,8 +9130,8 @@
         "source_location": {
           "heading": "CV-3201 — config.validation.warning: saved tier-start setup-check history (E8-6 B)",
           "heading_level": 3,
-          "heading_line": 57588,
-          "line": 57610,
+          "heading_line": 57591,
+          "line": 57613,
           "path": "Plans/Contracts_V0.md"
         }
       },
@@ -36542,8 +36542,8 @@
         "source_location": {
           "heading": "SP-330 - The v2 Home Layout Record, Its Transaction And The Migration From v1",
           "heading_level": 3,
-          "heading_line": 33809,
-          "line": 33811,
+          "heading_line": 33811,
+          "line": 33813,
           "path": "Plans/storage-plan.md"
         }
       },
@@ -36553,8 +36553,8 @@
         "source_location": {
           "heading": "SP-331 - Terminal Appearance Storage",
           "heading_level": 3,
-          "heading_line": 33974,
-          "line": 33976,
+          "heading_line": 33976,
+          "line": 33978,
           "path": "Plans/storage-plan.md"
         }
       },
@@ -36564,8 +36564,8 @@
         "source_location": {
           "heading": "SP-332 - Terminal Records Re-Scoped To One Session Per Tab, And Saved Scrollback",
           "heading_level": 3,
-          "heading_line": 34096,
-          "line": 34098,
+          "heading_line": 34098,
+          "line": 34100,
           "path": "Plans/storage-plan.md"
         }
       },
@@ -36575,8 +36575,8 @@
         "source_location": {
           "heading": "SP-333 - Editor Appearance And Wallpaper Settings Levels",
           "heading_level": 3,
-          "heading_line": 34195,
-          "line": 34197,
+          "heading_line": 34197,
+          "line": 34199,
           "path": "Plans/storage-plan.md"
         }
       },
@@ -36586,8 +36586,8 @@
         "source_location": {
           "heading": "SP-338 - Render-Ready Chat Pages And The Open-Path Gate",
           "heading_level": 3,
-          "heading_line": 34568,
-          "line": 34570,
+          "heading_line": 34570,
+          "line": 34572,
           "path": "Plans/storage-plan.md"
         }
       },
@@ -36597,8 +36597,8 @@
         "source_location": {
           "heading": "SP-339 - No Always-On JSON Copies; Dump, Inspect, Tail And Export",
           "heading_level": 3,
-          "heading_line": 34634,
-          "line": 34636,
+          "heading_line": 34636,
+          "line": 34638,
           "path": "Plans/storage-plan.md"
         }
       },
@@ -36608,8 +36608,8 @@
         "source_location": {
           "heading": "SP-340 - redb Value Limits, Two Files, Quick Repair And Scheduled Compaction",
           "heading_level": 3,
-          "heading_line": 34708,
-          "line": 34710,
+          "heading_line": 34710,
+          "line": 34712,
           "path": "Plans/storage-plan.md"
         }
       },
@@ -36619,8 +36619,8 @@
         "source_location": {
           "heading": "SP-341 - Parquet Archive, DuckDB On Demand And Kept Usage History",
           "heading_level": 3,
-          "heading_line": 34761,
-          "line": 34763,
+          "heading_line": 34763,
+          "line": 34765,
           "path": "Plans/storage-plan.md"
         }
       },
@@ -36630,8 +36630,8 @@
         "source_location": {
           "heading": "SP-656 — Preview subject UI and runtime identity mapping",
           "heading_level": 3,
-          "heading_line": 50529,
-          "line": 50531,
+          "heading_line": 50531,
+          "line": 50533,
           "path": "Plans/storage-plan.md"
         }
       },
@@ -43309,10 +43309,10 @@
   "no_final_node_queues_created": true,
   "no_worknodes_created": true,
   "nodeseed_candidates_created": false,
-  "plan_unit_count": 9478,
+  "plan_unit_count": 9479,
   "risk_and_reasoning_summary": {
     "reasoning_tier_counts": {
-      "high": 4792,
+      "high": 4793,
       "low": 10,
       "medium": 36,
       "standard": 4640
@@ -44566,6 +44566,7 @@
       "event_authority_original_custody_and_scope": 33,
       "event_authority_payload_depth_drift": 1,
       "event_authority_registration_checkpoint_drift": 1,
+      "event_authority_retention": 1,
       "event_authority_revision": 8,
       "event_authority_seal_check_drift": 1,
       "event_catalog_payload_owner_drift": 1,
@@ -47570,7 +47571,7 @@
     "source_preserving_unit_count": 0,
     "source_preserving_units": [],
     "status_counts": {
-      "accepted": 9198,
+      "accepted": 9199,
       "draft": 47,
       "retired": 205,
       "superseded": 28
@@ -47604,7 +47605,7 @@
       "contract": 203,
       "contract_requirement": 3,
       "data_contract": 8,
-      "decision": 769,
+      "decision": 770,
       "decision_record": 24,
       "deferred_enhancement": 8,
       "delta_contract": 1,
