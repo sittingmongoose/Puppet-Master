@@ -42,7 +42,9 @@
         "quote_line": 20190,
         "file_sha256": "898b797f80997142cd47deca748db26c4170172f76f9baed3494b1ee6227c474",
         "quote_check": "exact"
-       }
+       },
+       "unit": "#/families/307",
+       "quote_scope": "unit #/families/307, Plans/event_family_registry.json:20231-20270"
       }
      ]
     },
@@ -614,9 +616,9 @@
   "row_pointer": "#/families/307"
  },
  "evidence_maintenance": {
-  "authority": "MERGE2-FIX1 findings 1/3/5",
-  "source_commit": "0c904de00426b0089ba5d56349fda8ea16cc9f88",
-  "source_assessment_sha256": "a3f0f744edef4a7a1aa98e430c6ac5450c70f41925b3fb89c82c4a51e6d23eca",
+  "authority": "MERGE2-FIX2 findings 1/2/3",
+  "source_commit": "0f2a90ece55d4bafd163b19a05cd3c4eda91b9c1",
+  "source_assessment_sha256": "39e7513ee56972400bdfec62d46795e17d5a8bea874fbea06168f973222f2616",
   "native_execution": "NOT_RUN",
   "verdicts_changed": false
  }

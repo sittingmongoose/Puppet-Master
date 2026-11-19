@@ -4,7 +4,7 @@
  "family_id": "event-family-crew-board-message-posted",
  "implementation_receipt_sha256": "dceb7f21436cbe126c23822e62caa1b6dedcb45fefae3005c1804576ca34d827",
  "decision_ref": "Plans/Decision_Log.md#DL-2280",
- "decision_section_sha256": "d06273474f14580962d717f1206e883d86d24991d53280dc94b06dffa63dc374",
+ "decision_section_sha256": "d6e0a7f194e62471f2d903e0f3628fbcd5dd56689bf50f86eba80ce8b9402b56",
  "registry_before": {
   "revision": "2026-11-16.143",
   "sha256": "966928cf1eb74cfa35c8d0d880689188232e2b197242c262f2dcf578573639f9",
@@ -18,7 +18,7 @@
  "registry_row_sha256": "88d2fd472b0c5745d663f975d2959775febfe44c6b7805021725f30f2ac93b94",
  "depth_assessment": {
   "path": "reports/event-authority-20261116/admission-merge-2/depth/crew.board_message_posted.json",
-  "sha256": "00a2c770e06bec4fa023fbf5802a83d7c1ce6a98d282e14655aefe4e244c6726"
+  "sha256": "7228b3862cbbf67a0c1ba9a74f8cbe799d92541810a69bfea5e9573004d1344f"
  },
  "admission_landing": {
   "branch": "plans/ea-merge2-apply-20261116",
@@ -37,11 +37,11 @@
   "Written under DL-077. The seal check recomputes completeness from the pinned assessment; the two fields ending in _at_recording are informational only."
  ],
  "evidence_maintenance": {
-  "authority": "MERGE2-FIX1",
-  "source_commit": "0c904de00426b0089ba5d56349fda8ea16cc9f88",
-  "source_record_sha256": "e0e8d2fe1db523ed6bf1fe375711a67ffd06180278014d5ade28eb7d13b5cca0",
-  "source_assessment_sha256": "3bcf21a0d346c25a7e97a6802d97a316b6789dfd1cbf99fb5d66a3350b8181cb",
-  "source_decision_section_sha256": "51a3b3e732c32b0f410510900a3f003b2ca3c87bba0ccbc62dc10839ca966ab2",
+  "authority": "MERGE2-FIX2",
+  "source_commit": "0f2a90ece55d4bafd163b19a05cd3c4eda91b9c1",
+  "source_record_sha256": "9abfd6e36c6b3b612ae2015091b481b174a80e57ba81f91b93af0e454aa49fa6",
+  "source_assessment_sha256": "00a2c770e06bec4fa023fbf5802a83d7c1ce6a98d282e14655aefe4e244c6726",
+  "source_decision_section_sha256": "d06273474f14580962d717f1206e883d86d24991d53280dc94b06dffa63dc374",
   "original_registry_checkpoints_preserved": true
  }
 }

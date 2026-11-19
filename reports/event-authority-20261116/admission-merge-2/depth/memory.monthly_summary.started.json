@@ -42,7 +42,9 @@
         "quote_line": 26940,
         "file_sha256": "1cd7260484925a02560fbd624a84b3504e8913323a68bb9f5c8a0e80552d3353",
         "quote_check": "exact"
-       }
+       },
+       "unit": "#/families/414",
+       "quote_scope": "unit #/families/414, Plans/event_family_registry.json:26982-27024"
       }
      ]
     },
@@ -57,7 +59,7 @@
        "line_start": 48558,
        "line_end": 48559,
        "quote": "Semantic owner is Plans/assistant-memory-subsystem.md section 7.2, as amended by DL-402, DL-403 and\\\n  \\ DL-446. This",
-       "file_sha256": "73ee6d097e08d31fd93301d05d2cd2632dd46e5a22ba3ea405ffadda4a0a9db2",
+       "file_sha256": "51edc1394ab24ca53a2a021dce3c3c9a1be0f43e2292d901ad56e4b0063a3ebf",
        "quote_check": "exact",
        "quote_scope": "unit SP-639, Plans/storage-plan.md:48549-48778",
        "source_citation": {
@@ -75,7 +77,7 @@
        "line_start": 48606,
        "line_end": 48607,
        "quote": "DL-446 answers\\\n  \\ DL-403 for this exact job",
-       "file_sha256": "73ee6d097e08d31fd93301d05d2cd2632dd46e5a22ba3ea405ffadda4a0a9db2",
+       "file_sha256": "51edc1394ab24ca53a2a021dce3c3c9a1be0f43e2292d901ad56e4b0063a3ebf",
        "quote_check": "exact",
        "quote_scope": "unit SP-639, Plans/storage-plan.md:48549-48778",
        "source_citation": {
@@ -106,7 +108,7 @@
        "line_start": 48559,
        "line_end": 48559,
        "quote": "unit owns this family's payload and storage contract. Its producer is MemoryMaintenance.monthly_summary.started.v1@1.0.0",
-       "file_sha256": "73ee6d097e08d31fd93301d05d2cd2632dd46e5a22ba3ea405ffadda4a0a9db2",
+       "file_sha256": "51edc1394ab24ca53a2a021dce3c3c9a1be0f43e2292d901ad56e4b0063a3ebf",
        "quote_check": "exact",
        "quote_scope": "unit SP-639, Plans/storage-plan.md:48549-48778",
        "source_citation": {
@@ -126,7 +128,7 @@
        "quote": "A current-writer retained EventRecord carries the unchanged CV-339 full-value commitment",
        "quote_check": "exact",
        "quote_scope": "unit SP-639, Plans/storage-plan.md:48549-48778",
-       "file_sha256": "73ee6d097e08d31fd93301d05d2cd2632dd46e5a22ba3ea405ffadda4a0a9db2",
+       "file_sha256": "51edc1394ab24ca53a2a021dce3c3c9a1be0f43e2292d901ad56e4b0063a3ebf",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-639",
@@ -155,7 +157,7 @@
        "line_start": 48579,
        "line_end": 48580,
        "quote": "all declared fields required, additionalProperties=false, version=1.0.0, payload_ref=null. Completed\\\n  \\ status/result",
-       "file_sha256": "73ee6d097e08d31fd93301d05d2cd2632dd46e5a22ba3ea405ffadda4a0a9db2",
+       "file_sha256": "51edc1394ab24ca53a2a021dce3c3c9a1be0f43e2292d901ad56e4b0063a3ebf",
        "quote_check": "exact",
        "quote_scope": "unit SP-639, Plans/storage-plan.md:48549-48778",
        "source_citation": {
@@ -186,7 +188,7 @@
        "line_start": 48587,
        "line_end": 48588,
        "quote": "idempotency_key=\\\"memory-maintenance:\\\"+the same lower-hex digest.\\\n  \\ The caller-supplied semantic EventRecord fields",
-       "file_sha256": "73ee6d097e08d31fd93301d05d2cd2632dd46e5a22ba3ea405ffadda4a0a9db2",
+       "file_sha256": "51edc1394ab24ca53a2a021dce3c3c9a1be0f43e2292d901ad56e4b0063a3ebf",
        "quote_check": "exact",
        "quote_scope": "unit SP-639, Plans/storage-plan.md:48549-48778",
        "source_citation": {
@@ -217,7 +219,7 @@
        "line_start": 48591,
        "line_end": 48592,
        "quote": "Current append and retry refuse projector_replay_only as replay_only_not_appendable, before any original\\\n  \\ return",
-       "file_sha256": "73ee6d097e08d31fd93301d05d2cd2632dd46e5a22ba3ea405ffadda4a0a9db2",
+       "file_sha256": "51edc1394ab24ca53a2a021dce3c3c9a1be0f43e2292d901ad56e4b0063a3ebf",
        "quote_check": "exact",
        "quote_scope": "unit SP-639, Plans/storage-plan.md:48549-48778",
        "source_citation": {
@@ -250,7 +252,7 @@
        "quote": "- RP-OPERATIONAL-2555D@1.0.0",
        "quote_check": "exact",
        "quote_scope": "unit SP-639, Plans/storage-plan.md:48549-48778",
-       "file_sha256": "73ee6d097e08d31fd93301d05d2cd2632dd46e5a22ba3ea405ffadda4a0a9db2",
+       "file_sha256": "51edc1394ab24ca53a2a021dce3c3c9a1be0f43e2292d901ad56e4b0063a3ebf",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-639",
@@ -268,7 +270,7 @@
        "quote": "\\ exact stored value `memory_monthly_summary_operation` uses `RP-MEMORY-MAINTENANCE-APPLICATION-2555D@1.0.0`\\",
        "quote_check": "exact",
        "quote_scope": "unit SP-639, Plans/storage-plan.md:48549-48778",
-       "file_sha256": "73ee6d097e08d31fd93301d05d2cd2632dd46e5a22ba3ea405ffadda4a0a9db2",
+       "file_sha256": "51edc1394ab24ca53a2a021dce3c3c9a1be0f43e2292d901ad56e4b0063a3ebf",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-639",
@@ -297,7 +299,7 @@
        "line_start": 48641,
        "line_end": 48642,
        "quote": "and root; mismatches fail. Preserve\\\n  \\ BRS-031 coherent canonical memory/operation/receipt/EventRecord boundaries;",
-       "file_sha256": "73ee6d097e08d31fd93301d05d2cd2632dd46e5a22ba3ea405ffadda4a0a9db2",
+       "file_sha256": "51edc1394ab24ca53a2a021dce3c3c9a1be0f43e2292d901ad56e4b0063a3ebf",
        "quote_check": "exact",
        "quote_scope": "unit SP-639, Plans/storage-plan.md:48549-48778",
        "source_citation": {
@@ -328,7 +330,7 @@
        "line_start": 48577,
        "line_end": 48578,
        "quote": "transaction\\\n  \\ accepted -> started -> effect_committed -> completed. The payload is its own closed definition Plans/memory_maintenance_event_payloads.schema.json#/$defs/memory_monthly",
-       "file_sha256": "73ee6d097e08d31fd93301d05d2cd2632dd46e5a22ba3ea405ffadda4a0a9db2",
+       "file_sha256": "51edc1394ab24ca53a2a021dce3c3c9a1be0f43e2292d901ad56e4b0063a3ebf",
        "quote_check": "exact",
        "quote_scope": "unit SP-639, Plans/storage-plan.md:48549-48778",
        "source_citation": {
@@ -346,7 +348,7 @@
        "line_start": 48606,
        "line_end": 48607,
        "quote": "DL-446 answers\\\n  \\ DL-403 for this exact job",
-       "file_sha256": "73ee6d097e08d31fd93301d05d2cd2632dd46e5a22ba3ea405ffadda4a0a9db2",
+       "file_sha256": "51edc1394ab24ca53a2a021dce3c3c9a1be0f43e2292d901ad56e4b0063a3ebf",
        "quote_check": "exact",
        "quote_scope": "unit SP-639, Plans/storage-plan.md:48549-48778",
        "source_citation": {
@@ -377,7 +379,7 @@
        "line_start": 48636,
        "line_end": 48637,
        "quote": "This family's exact reader reader.memory.monthly_summary.started.history.v1@1.0.0\\\n  \\ explicitly adopts SP-278: reader.storage.event_record_index@1.0.0,",
-       "file_sha256": "73ee6d097e08d31fd93301d05d2cd2632dd46e5a22ba3ea405ffadda4a0a9db2",
+       "file_sha256": "51edc1394ab24ca53a2a021dce3c3c9a1be0f43e2292d901ad56e4b0063a3ebf",
        "quote_check": "exact",
        "quote_scope": "unit SP-639, Plans/storage-plan.md:48549-48778",
        "source_citation": {
@@ -408,7 +410,7 @@
        "line_start": 48656,
        "line_end": 48657,
        "quote": "authorized historical reads. Withdrawal first fences this family's command/writer, retains unresolved\\\n  \\ original",
-       "file_sha256": "73ee6d097e08d31fd93301d05d2cd2632dd46e5a22ba3ea405ffadda4a0a9db2",
+       "file_sha256": "51edc1394ab24ca53a2a021dce3c3c9a1be0f43e2292d901ad56e4b0063a3ebf",
        "quote_check": "exact",
        "quote_scope": "unit SP-639, Plans/storage-plan.md:48549-48778",
        "source_citation": {
@@ -426,7 +428,7 @@
        "line_start": 48688,
        "line_end": 48689,
        "quote": "Reader dispatch follows\\\n  \\ SP-1101: each retained canonical original",
-       "file_sha256": "73ee6d097e08d31fd93301d05d2cd2632dd46e5a22ba3ea405ffadda4a0a9db2",
+       "file_sha256": "51edc1394ab24ca53a2a021dce3c3c9a1be0f43e2292d901ad56e4b0063a3ebf",
        "quote_check": "exact",
        "quote_scope": "unit SP-639, Plans/storage-plan.md:48549-48778",
        "source_citation": {
@@ -457,7 +459,7 @@
        "line_start": 48556,
        "line_end": 48556,
        "quote": "canonical_text: \"Newly authored owner contract under DL-045 for exactly memory.monthly_summary.started@1.0.0, prepared",
-       "file_sha256": "73ee6d097e08d31fd93301d05d2cd2632dd46e5a22ba3ea405ffadda4a0a9db2",
+       "file_sha256": "51edc1394ab24ca53a2a021dce3c3c9a1be0f43e2292d901ad56e4b0063a3ebf",
        "quote_check": "exact",
        "quote_scope": "unit SP-639, Plans/storage-plan.md:48549-48778",
        "source_citation": {
@@ -475,7 +477,7 @@
        "line_start": 48556,
        "line_end": 48556,
        "quote": "canonical_text: \"Newly authored owner contract under DL-045 for exactly memory.monthly_summary.started@1.0.0, prepared",
-       "file_sha256": "73ee6d097e08d31fd93301d05d2cd2632dd46e5a22ba3ea405ffadda4a0a9db2",
+       "file_sha256": "51edc1394ab24ca53a2a021dce3c3c9a1be0f43e2292d901ad56e4b0063a3ebf",
        "quote_check": "exact",
        "quote_scope": "unit SP-639, Plans/storage-plan.md:48549-48778",
        "source_citation": {
@@ -620,9 +622,9 @@
   "row_pointer": "#/families/414"
  },
  "evidence_maintenance": {
-  "authority": "MERGE2-FIX1 findings 1/3/5",
-  "source_commit": "0c904de00426b0089ba5d56349fda8ea16cc9f88",
-  "source_assessment_sha256": "98ebc36bf677e124e292b34908b1b307b23c634ca2500ec70e3f02e03441be7a",
+  "authority": "MERGE2-FIX2 findings 1/2/3",
+  "source_commit": "0f2a90ece55d4bafd163b19a05cd3c4eda91b9c1",
+  "source_assessment_sha256": "7db02cb14ec2f2f787d55db547b2e7a76d769bfc15970bf28d0849d1d385b09a",
   "native_execution": "NOT_RUN",
   "verdicts_changed": false
  }

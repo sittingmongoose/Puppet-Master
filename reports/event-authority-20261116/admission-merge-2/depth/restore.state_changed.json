@@ -42,7 +42,9 @@
         "quote_line": 29128,
         "file_sha256": "83ee98616bc80d5cf211e7ec7e6b71e27c18a0a62645eec00bd8c98d0bd422b4",
         "quote_check": "exact"
-       }
+       },
+       "unit": "#/families/452",
+       "quote_scope": "unit #/families/452, Plans/event_family_registry.json:29175-29257"
       }
      ]
     },
@@ -147,7 +149,7 @@
       },
       {
        "path": "Plans/event_payloads/w3e/restore_state_changed.schema.json",
-       "unit": "#/",
+       "unit": "#",
        "line_start": 3,
        "line_end": 3,
        "quote": "\"additionalProperties\": false,",
@@ -161,6 +163,11 @@
         "line_end": 3,
         "quote": "\"additionalProperties\": false,",
         "file_sha256": "6c5cc9064a204eb184bd860bc79981735d0375fad1da42a7cae39b02bb46ced4"
+       },
+       "json_pointer": "#",
+       "locator_maintenance": {
+        "authority": "MERGE2-FIX2",
+        "reason": "The source uses #/ as a root label; current RFC 6901 root is #, matching the declared root schema, without changing its subject."
        }
       }
      ],
@@ -259,12 +266,12 @@
       {
        "path": "Plans/Contracts_V0.md",
        "unit": "CV-1410",
-       "line_start": 48912,
-       "line_end": 48912,
+       "line_start": 48430,
+       "line_end": 48430,
        "quote": "retention_policy_ref=RP-OPERATIONAL-2555D@1.0.0 under the Storage Project first-save anchor adapter (each entry starts its clock at its own saved state change), sharing the existing 2,000,000-entry seven-year Project allowance; application editions take retention_policy_ref=RP-OPERATIONAL-SECURITY-APPLICATION-2555D@1.0.0 in the one separate 2,000,000-entry application allowance app:operational_sec",
-       "file_sha256": "4ae2225d8ed19b6df971b6c32797aae6882d175264ff2c2e9a2045650d735e67",
+       "file_sha256": "2a9090efcaefbc3b0e85c2155255e078125e4d05a933e115ca931c6566b8b74b",
        "quote_check": "exact",
-       "quote_scope": "unit CV-1410, Plans/Contracts_V0.md:48894-48954",
+       "quote_scope": "unit CV-1410, Plans/Contracts_V0.md:48412-48472",
        "source_citation": {
         "path": "Plans/Contracts_V0.md",
         "unit": "CV-1410",
@@ -277,12 +284,12 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-1410",
-       "line_start": 70416,
-       "line_end": 70416,
+       "line_start": 70386,
+       "line_end": 70386,
        "quote": "retention_policy_ref=RP-OPERATIONAL-2555D@1.0.0 under the Storage Project first-save anchor adapter (each entry starts its clock at its own saved state change), sharing the existing 2,000,000-entry seven-year Project allowance; application editions take retention_policy_ref=RP-OPERATIONAL-SECURITY-APPLICATION-2555D@1.0.0 in the one separate 2,000,000-entry application allowance app:operational_sec",
-       "file_sha256": "73ee6d097e08d31fd93301d05d2cd2632dd46e5a22ba3ea405ffadda4a0a9db2",
+       "file_sha256": "51edc1394ab24ca53a2a021dce3c3c9a1be0f43e2292d901ad56e4b0063a3ebf",
        "quote_check": "exact",
-       "quote_scope": "unit SP-1410, Plans/storage-plan.md:70404-70492",
+       "quote_scope": "unit SP-1410, Plans/storage-plan.md:70374-70462",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-1410",
@@ -388,12 +395,12 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-1410",
-       "line_start": 70430,
-       "line_end": 70430,
+       "line_start": 70400,
+       "line_end": 70400,
        "quote": "The exact checkpoint in derived redb checkpoints is w3e_restore_state_changed_checkpoint.v1:{hex(storage_instance_id)}:{scope_partition}:{hex(server_id)}",
-       "file_sha256": "73ee6d097e08d31fd93301d05d2cd2632dd46e5a22ba3ea405ffadda4a0a9db2",
+       "file_sha256": "51edc1394ab24ca53a2a021dce3c3c9a1be0f43e2292d901ad56e4b0063a3ebf",
        "quote_check": "exact",
-       "quote_scope": "unit SP-1410, Plans/storage-plan.md:70404-70492",
+       "quote_scope": "unit SP-1410, Plans/storage-plan.md:70374-70462",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-1410",
@@ -450,12 +457,12 @@
       {
        "path": "Plans/Contracts_V0.md",
        "unit": "CV-1410",
-       "line_start": 48912,
-       "line_end": 48912,
+       "line_start": 48430,
+       "line_end": 48430,
        "quote": "Phase 2 (2026-11-13) runs the executable synthetic oracles of this family in scripts/pm_w3e_event_oracles.py; every refusal is one named single-predicate row of a generated Method B guard table (scripts/pm_w3e_table_*.py) proved by the gated shared scripts/pm_guard_isolation.py through scripts/pm-w3e-guard-proof.py, and rows no input can refuse first stay alone in their own table with a written pr",
-       "file_sha256": "4ae2225d8ed19b6df971b6c32797aae6882d175264ff2c2e9a2045650d735e67",
+       "file_sha256": "2a9090efcaefbc3b0e85c2155255e078125e4d05a933e115ca931c6566b8b74b",
        "quote_check": "exact",
-       "quote_scope": "unit CV-1410, Plans/Contracts_V0.md:48894-48954",
+       "quote_scope": "unit CV-1410, Plans/Contracts_V0.md:48412-48472",
        "source_citation": {
         "path": "Plans/Contracts_V0.md",
         "unit": "CV-1410",
@@ -596,9 +603,9 @@
   "row_pointer": "#/families/452"
  },
  "evidence_maintenance": {
-  "authority": "MERGE2-FIX1 findings 1/3/5",
-  "source_commit": "0c904de00426b0089ba5d56349fda8ea16cc9f88",
-  "source_assessment_sha256": "b0ba0749cafd9b5d8261965271c7aae8e0febc14f159fb0173cf3296ad6dadcf",
+  "authority": "MERGE2-FIX2 findings 1/2/3",
+  "source_commit": "0f2a90ece55d4bafd163b19a05cd3c4eda91b9c1",
+  "source_assessment_sha256": "b1d19b43c20228b7946ec9a8439b65579f11f6d169b772ccec0ddd1c654b4090",
   "native_execution": "NOT_RUN",
   "verdicts_changed": false
  }

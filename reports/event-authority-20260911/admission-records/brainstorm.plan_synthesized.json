@@ -4,7 +4,7 @@
  "family_id": "event-family-brainstorm-plan-synthesized",
  "implementation_receipt_sha256": "dceb7f21436cbe126c23822e62caa1b6dedcb45fefae3005c1804576ca34d827",
  "decision_ref": "Plans/Decision_Log.md#DL-2152",
- "decision_section_sha256": "06a3cf353028aae0a4291af6f6b794914f5c312bca708f9ffc07a7cb596d78be",
+ "decision_section_sha256": "cc3e46df028968e92e2f83942555223f4c609b23419550cfa97675dcc424f428",
  "registry_before": {
   "revision": "2026-11-16.15",
   "sha256": "649a883bd178a82914e9a81dcf4fabad50674ea048652f8d9c0ec1a0209d6a60",
@@ -18,7 +18,7 @@
  "registry_row_sha256": "bc45dbc74a2dfd4a104829c608eb9136b4da167dfc9ef37811b8c4d5d571e0c9",
  "depth_assessment": {
   "path": "reports/event-authority-20261116/admission-merge-2/depth/brainstorm.plan_synthesized.json",
-  "sha256": "e02c576c42fae13dab520c325e1200ee00b391e73d7146249657a5f5453f0605"
+  "sha256": "c739871cc02212852ae719c29a3629114f55c54df42bd30d1e5aaa0dc67c2c9a"
  },
  "admission_landing": {
   "branch": "plans/ea-merge2-apply-20261116",
@@ -37,11 +37,11 @@
   "Written under DL-077. The seal check recomputes completeness from the pinned assessment; the two fields ending in _at_recording are informational only."
  ],
  "evidence_maintenance": {
-  "authority": "MERGE2-FIX1",
-  "source_commit": "0c904de00426b0089ba5d56349fda8ea16cc9f88",
-  "source_record_sha256": "fff5b6c57583277f6a2d51a0a7d29994c760afe11b56c4446f6cace5f1f24161",
-  "source_assessment_sha256": "6544bcf2e43941c35b12f184f2aeeb4b7d64529b378f54b9a9bb5d5ede641d51",
-  "source_decision_section_sha256": "f89da84ed023e3a5bc286afd2fbb69f80ab64f9b382afedd42d31207a03b1ee8",
+  "authority": "MERGE2-FIX2",
+  "source_commit": "0f2a90ece55d4bafd163b19a05cd3c4eda91b9c1",
+  "source_record_sha256": "66ee11436b26227991102ce130536aa97205fd7e4eeb1ebf0ea1334d49700773",
+  "source_assessment_sha256": "e02c576c42fae13dab520c325e1200ee00b391e73d7146249657a5f5453f0605",
+  "source_decision_section_sha256": "06a3cf353028aae0a4291af6f6b794914f5c312bca708f9ffc07a7cb596d78be",
   "original_registry_checkpoints_preserved": true
  }
 }

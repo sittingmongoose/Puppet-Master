@@ -4,7 +4,7 @@
  "family_id": "event-family-approval-requested",
  "implementation_receipt_sha256": "dceb7f21436cbe126c23822e62caa1b6dedcb45fefae3005c1804576ca34d827",
  "decision_ref": "Plans/Decision_Log.md#DL-2143",
- "decision_section_sha256": "06f4b9597a834f4aea04e28b30561b38c92667047590a8b12324be2261c9c810",
+ "decision_section_sha256": "4073ec43caab1bbd2e7a70b3b5f9230bbd2b77fa423b59bad0eb9ff1c801cbdb",
  "registry_before": {
   "revision": "2026-11-16.6",
   "sha256": "a079144181bcfafa6c45738cc135e641957e63119c8b1d66c88f805e2fb026f3",
@@ -18,7 +18,7 @@
  "registry_row_sha256": "8bb7728dfcb8172f2ff162a77a219e2429d47b0beea57e5e9a01511651c2fb45",
  "depth_assessment": {
   "path": "reports/event-authority-20261116/admission-merge-2/depth/approval.requested.json",
-  "sha256": "f9f0f40700a6df5a47f56be7a441ef597d81f8d54401c99fd623040406fdd420"
+  "sha256": "828fc1aa40a1acf8db36052b56afad2abdf3bc16ccbd880576ab487d01208f2f"
  },
  "admission_landing": {
   "branch": "plans/ea-merge2-apply-20261116",
@@ -37,11 +37,11 @@
   "Written under DL-077. The seal check recomputes completeness from the pinned assessment; the two fields ending in _at_recording are informational only."
  ],
  "evidence_maintenance": {
-  "authority": "MERGE2-FIX1",
-  "source_commit": "0c904de00426b0089ba5d56349fda8ea16cc9f88",
-  "source_record_sha256": "44443c98be3e03c57c072384e858828bb618e340eaa88f26b1eb800f14689a3f",
-  "source_assessment_sha256": "b8c6da5458a7f77ee80f13e8ade0cf78f83f91b30fea87ef389466f6c93025e0",
-  "source_decision_section_sha256": "4b21c8eadda383bf431dbdc64bb01dbaec4505c271ef618c5c7f8d546a732a2c",
+  "authority": "MERGE2-FIX2",
+  "source_commit": "0f2a90ece55d4bafd163b19a05cd3c4eda91b9c1",
+  "source_record_sha256": "071adac00e21a44db68dcc6064dacb293bb372b81eac4351c7142b92035e13c5",
+  "source_assessment_sha256": "f9f0f40700a6df5a47f56be7a441ef597d81f8d54401c99fd623040406fdd420",
+  "source_decision_section_sha256": "06f4b9597a834f4aea04e28b30561b38c92667047590a8b12324be2261c9c810",
   "original_registry_checkpoints_preserved": true
  }
 }

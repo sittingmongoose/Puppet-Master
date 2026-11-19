@@ -42,7 +42,9 @@
         "quote_line": 19856,
         "file_sha256": "62e684ac6cdad2b4b498431542cf068e6e7120d08cca74b470028abc1d1b05ee",
         "quote_check": "exact"
-       }
+       },
+       "unit": "#/families/299",
+       "quote_scope": "unit #/families/299, Plans/event_family_registry.json:19897-19938"
       }
      ]
     },
@@ -103,12 +105,12 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-1358",
-       "line_start": 76867,
-       "line_end": 76867,
+       "line_start": 76837,
+       "line_end": 76837,
        "quote": "It adopts SP-286/CV-339 first receipt/full-value v2 and SP-336/SP-347 durability explicitly. Coherent mandatory backup restores the operation, complete original source, receipt controls and payload pa",
        "quote_check": "exact",
-       "quote_scope": "unit SP-1358, Plans/storage-plan.md:76858-76919",
-       "file_sha256": "73ee6d097e08d31fd93301d05d2cd2632dd46e5a22ba3ea405ffadda4a0a9db2",
+       "quote_scope": "unit SP-1358, Plans/storage-plan.md:76828-76889",
+       "file_sha256": "51edc1394ab24ca53a2a021dce3c3c9a1be0f43e2292d901ad56e4b0063a3ebf",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-1358",
@@ -188,12 +190,12 @@
       {
        "path": "Plans/Contracts_V0.md",
        "unit": "CV-1358",
-       "line_start": 54543,
-       "line_end": 54543,
+       "line_start": 54061,
+       "line_end": 54061,
        "quote": "This EventRecord 2.0.0 family keeps its closed payload inline (payload_ref null): only the EventRecord 3.0.0 successor materializes the SP-337 event-payload reference route and this family has not ado",
        "quote_check": "exact",
-       "quote_scope": "unit CV-1358, Plans/Contracts_V0.md:54533-54590",
-       "file_sha256": "4ae2225d8ed19b6df971b6c32797aae6882d175264ff2c2e9a2045650d735e67",
+       "quote_scope": "unit CV-1358, Plans/Contracts_V0.md:54051-54108",
+       "file_sha256": "2a9090efcaefbc3b0e85c2155255e078125e4d05a933e115ca931c6566b8b74b",
        "source_citation": {
         "path": "Plans/Contracts_V0.md",
         "unit": "CV-1358",
@@ -219,12 +221,12 @@
       {
        "path": "Plans/Contracts_V0.md",
        "unit": "CV-1358",
-       "line_start": 54542,
-       "line_end": 54542,
+       "line_start": 54060,
+       "line_end": 54060,
        "quote": "The canonical operation ID is bsd-op@1:<hex(original_source_id)>:<hex(transition_component)>:<hex(subject_id)>; every component is an exact string from the authentic original source, never a caller as",
        "quote_check": "exact",
-       "quote_scope": "unit CV-1358, Plans/Contracts_V0.md:54533-54590",
-       "file_sha256": "4ae2225d8ed19b6df971b6c32797aae6882d175264ff2c2e9a2045650d735e67",
+       "quote_scope": "unit CV-1358, Plans/Contracts_V0.md:54051-54108",
+       "file_sha256": "2a9090efcaefbc3b0e85c2155255e078125e4d05a933e115ca931c6566b8b74b",
        "source_citation": {
         "path": "Plans/Contracts_V0.md",
         "unit": "CV-1358",
@@ -237,12 +239,12 @@
       {
        "path": "Plans/Contracts_V0.md",
        "unit": "CV-1358",
-       "line_start": 54542,
-       "line_end": 54542,
+       "line_start": 54060,
+       "line_end": 54060,
        "quote": "This family adopts by name the shared CV-1100/SP-1100 number rules (current_integer, storage_uint64, producer_semantic_digest, qualified_jcs, storage_value_bytes and full_value_commitment), the CV-110",
        "quote_check": "exact",
-       "quote_scope": "unit CV-1358, Plans/Contracts_V0.md:54533-54590",
-       "file_sha256": "4ae2225d8ed19b6df971b6c32797aae6882d175264ff2c2e9a2045650d735e67",
+       "quote_scope": "unit CV-1358, Plans/Contracts_V0.md:54051-54108",
+       "file_sha256": "2a9090efcaefbc3b0e85c2155255e078125e4d05a933e115ca931c6566b8b74b",
        "source_citation": {
         "path": "Plans/Contracts_V0.md",
         "unit": "CV-1358",
@@ -371,12 +373,12 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-1358",
-       "line_start": 76868,
-       "line_end": 76868,
+       "line_start": 76838,
+       "line_end": 76838,
        "quote": "RP-RUNTIME-365D\", \"policy_version\": \"1.0.0\"}. A pending retention marker is never a valid production registry reference. Every complete encoded value must stay at or below 16 KiB; SP-337 externalizes ",
        "quote_check": "exact",
-       "quote_scope": "unit SP-1358, Plans/storage-plan.md:76858-76919",
-       "file_sha256": "73ee6d097e08d31fd93301d05d2cd2632dd46e5a22ba3ea405ffadda4a0a9db2",
+       "quote_scope": "unit SP-1358, Plans/storage-plan.md:76828-76889",
+       "file_sha256": "51edc1394ab24ca53a2a021dce3c3c9a1be0f43e2292d901ad56e4b0063a3ebf",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-1358",
@@ -554,12 +556,12 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-1358",
-       "line_start": 76869,
-       "line_end": 76869,
+       "line_start": 76839,
+       "line_end": 76839,
        "quote": "Inclusive restart rechecks the last exact event/frame/offset; replay produces no review, advice delivery, notification, Usage charge, canonical write or new event.",
        "quote_check": "exact",
-       "quote_scope": "unit SP-1358, Plans/storage-plan.md:76858-76919",
-       "file_sha256": "73ee6d097e08d31fd93301d05d2cd2632dd46e5a22ba3ea405ffadda4a0a9db2",
+       "quote_scope": "unit SP-1358, Plans/storage-plan.md:76828-76889",
+       "file_sha256": "51edc1394ab24ca53a2a021dce3c3c9a1be0f43e2292d901ad56e4b0063a3ebf",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-1358",
@@ -794,9 +796,9 @@
   "row_pointer": "#/families/299"
  },
  "evidence_maintenance": {
-  "authority": "MERGE2-FIX1 findings 1/3/5",
-  "source_commit": "0c904de00426b0089ba5d56349fda8ea16cc9f88",
-  "source_assessment_sha256": "633c562592697982c61fa4b0fd82c4368f1780ca4e210fa5a4f24edb5e97e21b",
+  "authority": "MERGE2-FIX2 findings 1/2/3",
+  "source_commit": "0f2a90ece55d4bafd163b19a05cd3c4eda91b9c1",
+  "source_assessment_sha256": "0710f53fb4911814cb6dcde58cf47a5ecead0026122fa37f376a9f0e82ab3dad",
   "native_execution": "NOT_RUN",
   "verdicts_changed": false
  }

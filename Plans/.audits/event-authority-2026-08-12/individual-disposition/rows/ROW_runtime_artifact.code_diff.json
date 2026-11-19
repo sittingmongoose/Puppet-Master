@@ -3,7 +3,7 @@
   "bucket": "confirmed_persisted_unregistered",
   "july_classification": "confirmed_persisted_unregistered",
   "disposition": "KEEP_REGISTERED",
-  "disposition_rationale": "DL-039 Step 9 individual adjudication at 2026-09-11T16:55:03.900393+00:00: Diff artifacts require changed paths and preserve base/result/content references; a path list alone does not establish safe raw-content custody. Materialized schema pm.runtime_artifact.code_diff.schema.v1 was freshly resolved; type-specific required fields: changed_paths. Retention additionally requires a genuine product choice: the owner explicitly recommends but does not assign indefinite event retention. This row is CARD for that unanswered choice; all listed technical binding gaps remain admission work after the decision. Jared answered EA-S09-EXEC-RUNTIME-ARTIFACT-RETENTION with option A on 2026-09-23 (Plans/Decision_Log.md#DL-075): the 19 runtime-artifact event histories take RP-AUTHORITY-INDEFINITE for the time their full contracts are admitted (Plans/Runtime_Artifacts_Panel.md:2472; Plans/storage-plan.md:17260). Applied at 2026-09-24T21:08:23Z: the retention cell is now PASS for that assignment and the row returns to KEEP_QUARANTINED as unfinished technical contract work. Each full contract must still make the embedded text and any applicable deletion requirement explicit before admission, and every other listed binding gap remains. No registry admission, binding definition or depth pass is inferred. Application: reports/event-authority-20260911/step-09-card-answer-application-20260924.json. Registered at registry revision 2026-11-16.243 in admission merge 2 under DL-078, DL-096 and DL-400 (decision Plans/Decision_Log.md#DL-2379); DL-077 admission record reports/event-authority-20260911/admission-records/runtime_artifact.code_diff.json. Disposition KEEP_QUARANTINED -> KEEP_REGISTERED, evidence cells membership_version, owner_doc, producer, closed_payload_schema, scope_identity, replay_idempotency, retention, redaction_custody, transitions, consumers_checkpoints, compatibility_withdrawal, positive_negative_oracles projected with twelve PASS cells from the family's admission depth assessment reports/event-authority-20261116/admission-merge-2/depth/runtime_artifact.code_diff.json (sha256 64712f48227524d740f8a503a152c7a24b9d379bd8281842e7fbe0772cc50f1b); bucket, cohort pins, July classification and every other field are unchanged; no seal or owner choice.",
+  "disposition_rationale": "DL-039 Step 9 individual adjudication at 2026-09-11T16:55:03.900393+00:00: Diff artifacts require changed paths and preserve base/result/content references; a path list alone does not establish safe raw-content custody. Materialized schema pm.runtime_artifact.code_diff.schema.v1 was freshly resolved; type-specific required fields: changed_paths. Retention additionally requires a genuine product choice: the owner explicitly recommends but does not assign indefinite event retention. This row is CARD for that unanswered choice; all listed technical binding gaps remain admission work after the decision. Jared answered EA-S09-EXEC-RUNTIME-ARTIFACT-RETENTION with option A on 2026-09-23 (Plans/Decision_Log.md#DL-075): the 19 runtime-artifact event histories take RP-AUTHORITY-INDEFINITE for the time their full contracts are admitted (Plans/Runtime_Artifacts_Panel.md:2472; Plans/storage-plan.md:17260). Applied at 2026-09-24T21:08:23Z: the retention cell is now PASS for that assignment and the row returns to KEEP_QUARANTINED as unfinished technical contract work. Each full contract must still make the embedded text and any applicable deletion requirement explicit before admission, and every other listed binding gap remains. No registry admission, binding definition or depth pass is inferred. Application: reports/event-authority-20260911/step-09-card-answer-application-20260924.json. Registered at registry revision 2026-11-16.243 in admission merge 2 under DL-078, DL-096 and DL-400 (decision Plans/Decision_Log.md#DL-2379); DL-077 admission record reports/event-authority-20260911/admission-records/runtime_artifact.code_diff.json. Disposition KEEP_QUARANTINED -> KEEP_REGISTERED, evidence cells membership_version, owner_doc, producer, closed_payload_schema, scope_identity, replay_idempotency, retention, redaction_custody, transitions, consumers_checkpoints, compatibility_withdrawal, positive_negative_oracles projected with twelve PASS cells from the family's admission depth assessment reports/event-authority-20261116/admission-merge-2/depth/runtime_artifact.code_diff.json (sha256 1abdb32832af682e8ec0a992ec0ac20850053fe8c9bf994329dac68ec24d8f13); bucket, cohort pins, July classification and every other field are unchanged; no seal or owner choice. Evidence maintenance 2026-11-19 (MERGE2-FIX2): current assessment digest and locators are projected by the writer; original one-family append checkpoints remain in the DL-077 record and immutable Git history. No new admission or verdict change.",
   "evidence": {
     "owner_doc": {
       "status": "PASS",
@@ -12,37 +12,37 @@
     },
     "producer": {
       "status": "PASS",
-      "citation": "Plans/Runtime_Artifacts_Panel.md:3804; Plans/Runtime_Artifacts_Panel.md:3806; Plans/Contracts_V0.md:41857",
+      "citation": "Plans/Runtime_Artifacts_Panel.md:3804; Plans/Runtime_Artifacts_Panel.md:3806; Plans/Contracts_V0.md:41376",
       "note": "RAP-104 binds the producer and source/append/first-receipt/publication order. CV-524 explicitly adopts SP-337 for bounded inline and external payload custody."
     },
     "membership_version": {
       "status": "PASS",
-      "citation": "Plans/event_family_registry.json:29813-29866",
-      "note": "Registered at registry revision 2026-11-16.243 as #/families/461 (canonical row SHA-256 b5bd0918017efdc1f38fcf625641724a58791344571da26b2b0a9aa926a61cf6); before this commit the family was absent."
+      "citation": "Plans/event_family_registry.json:29863-29916",
+      "note": "Currently registered at 2026-11-18.2 as #/families/461 (canonical row SHA-256 b5bd0918017efdc1f38fcf625641724a58791344571da26b2b0a9aa926a61cf6). Original one-family admission checkpoints remain in the family record and immutable Git source."
     },
     "closed_payload_schema": {
       "status": "PASS",
-      "citation": "Plans/Contracts_V0.md:41856",
+      "citation": "Plans/Contracts_V0.md:41375",
       "note": "CV-524 preserves the exact closed logical payload schema; inline or authenticated external bytes resolve to that same object."
     },
     "scope_identity": {
       "status": "PASS",
-      "citation": "Plans/Runtime_Artifacts_Panel.md:3805; Plans/Contracts_V0.md:41857",
+      "citation": "Plans/Runtime_Artifacts_Panel.md:3805; Plans/Contracts_V0.md:41376",
       "note": "RAP-104 binds exact Project identity, joins and idempotency. The four-member tuple remains unchanged; CV joins resolve the logical payload."
     },
     "replay_idempotency": {
       "status": "PASS",
-      "citation": "Plans/Runtime_Artifacts_Panel.md:3806; Plans/Contracts_V0.md:41857",
+      "citation": "Plans/Runtime_Artifacts_Panel.md:3806; Plans/Contracts_V0.md:41376",
       "note": "RAP-104 preserves original SP-286/CV-339 full-value v2 event/eleven-field receipt and refuses changed semantic identity without a second effect."
     },
     "retention": {
       "status": "PASS",
-      "citation": "Plans/storage-plan.md:54071; Plans/Runtime_Artifacts_Panel.md:3808",
+      "citation": "Plans/storage-plan.md:53534; Plans/Runtime_Artifacts_Panel.md:3808",
       "note": "RAP-104 retains event history under DL-075. SP-524 preserves source-coupled index retention and applies 3GEN only to checkpoint generations."
     },
     "redaction_custody": {
       "status": "PASS",
-      "citation": "Plans/Runtime_Artifacts_Panel.md:3808; Plans/Contracts_V0.md:41857",
+      "citation": "Plans/Runtime_Artifacts_Panel.md:3808; Plans/Contracts_V0.md:41376",
       "note": "RAP-104 binds original seglog/receipt custody, backup/restore and current authorization/deletion checks. CV-524 adds pack-byte durability and retention without changing linked-body policy."
     },
     "transitions": {
@@ -52,7 +52,7 @@
     },
     "consumers_checkpoints": {
       "status": "PASS",
-      "citation": "Plans/storage-plan.md:54069; Plans/storage-plan.md:54070",
+      "citation": "Plans/storage-plan.md:53532; Plans/storage-plan.md:53533",
       "note": "SP-524 binds this exact stateless history reader, installed SP-278 key/schema/generation and atomic CAS, plus nine-field durable-token limits; it persists no token."
     },
     "compatibility_withdrawal": {
@@ -62,7 +62,7 @@
     },
     "positive_negative_oracles": {
       "status": "PASS",
-      "citation": "Plans/runtime_artifact_event_drafts.json:91; Plans/Runtime_Artifacts_Panel.md:3795; Plans/storage-plan.md:54060; Plans/Contracts_V0.md:41848; Plans/runtime_artifact_code_diff.schema.json:3; Plans/Automated_Testing_System.md:11266; Plans/Automated_Testing_System.md:11267; scripts/pm-runtime-artifact-event-drafts.py:464; scripts/pm-runtime-artifact-event-drafts.py:953; scripts/pm-runtime-artifact-event-drafts.py:935; scripts/pm-runtime-artifact-event-drafts.py:1076; scripts/pm_runtime_artifact_table_history.py:21; scripts/pm_runtime_artifact_c12.py:331; scripts/pm_runtime_artifact_c12.py:418; scripts/pm_runtime_artifact_c12.py:432; scripts/pm-runtime-artifact-c12-closure.py:176; scripts/pm-runtime-artifact-c12-closure.py:378; scripts/pm-runtime-artifact-c12-closure.py:430; scripts/pm-runtime-artifact-c12-closure.py:564",
+      "citation": "Plans/runtime_artifact_event_drafts.json:91; Plans/Runtime_Artifacts_Panel.md:3795; Plans/storage-plan.md:53523; Plans/Contracts_V0.md:41367; Plans/runtime_artifact_code_diff.schema.json:3; Plans/Automated_Testing_System.md:11266; Plans/Automated_Testing_System.md:11267; scripts/pm-runtime-artifact-event-drafts.py:464; scripts/pm-runtime-artifact-event-drafts.py:953; scripts/pm-runtime-artifact-event-drafts.py:935; scripts/pm-runtime-artifact-event-drafts.py:1076; scripts/pm_runtime_artifact_table_history.py:21; scripts/pm_runtime_artifact_c12.py:331; scripts/pm_runtime_artifact_c12.py:418; scripts/pm_runtime_artifact_c12.py:432; scripts/pm-runtime-artifact-c12-closure.py:176; scripts/pm-runtime-artifact-c12-closure.py:378; scripts/pm-runtime-artifact-c12-closure.py:430; scripts/pm-runtime-artifact-c12-closure.py:564",
       "note": "Exact-family C12 PASS from reports/event-authority-20261114/C12-DR-self-grade.json"
     }
   },

@@ -42,7 +42,9 @@
         "quote_line": 21199,
         "file_sha256": "c538effdf00626511ac849ebfe41afd36c80a9986b29b7b8b399701067a107f0",
         "quote_check": "exact"
-       }
+       },
+       "unit": "#/families/322",
+       "quote_scope": "unit #/families/322, Plans/event_family_registry.json:21240-21325"
       }
      ]
     },
@@ -152,12 +154,12 @@
       {
        "path": "Plans/Contracts_V0.md",
        "unit": "CV-647",
-       "line_start": 37682,
-       "line_end": 37682,
+       "line_start": 37182,
+       "line_end": 37182,
        "quote": "Plans/dch_stop_request.schema.json selects closed Project",
        "quote_check": "exact",
-       "quote_scope": "unit CV-647, Plans/Contracts_V0.md:37680-37773",
-       "file_sha256": "4ae2225d8ed19b6df971b6c32797aae6882d175264ff2c2e9a2045650d735e67",
+       "quote_scope": "unit CV-647, Plans/Contracts_V0.md:37180-37273",
+       "file_sha256": "2a9090efcaefbc3b0e85c2155255e078125e4d05a933e115ca931c6566b8b74b",
        "source_citation": {
         "path": "Plans/Contracts_V0.md",
         "unit": "CV-647",
@@ -224,7 +226,7 @@
        "quote": "Every component joins the actual record and original request/source; the Storage instance is independently read.",
        "quote_check": "exact",
        "quote_scope": "unit SP-627, Plans/storage-plan.md:44978-45131",
-       "file_sha256": "73ee6d097e08d31fd93301d05d2cd2632dd46e5a22ba3ea405ffadda4a0a9db2",
+       "file_sha256": "51edc1394ab24ca53a2a021dce3c3c9a1be0f43e2292d901ad56e4b0063a3ebf",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-627",
@@ -268,12 +270,12 @@
       {
        "path": "Plans/Contracts_V0.md",
        "unit": "CV-647",
-       "line_start": 37684,
-       "line_end": 37684,
+       "line_start": 37184,
+       "line_end": 37184,
        "quote": "excluding only Storage-assigned sequence_id, observed_at_utc and persisted_at_utc",
        "quote_check": "exact",
-       "quote_scope": "unit CV-647, Plans/Contracts_V0.md:37680-37773",
-       "file_sha256": "4ae2225d8ed19b6df971b6c32797aae6882d175264ff2c2e9a2045650d735e67",
+       "quote_scope": "unit CV-647, Plans/Contracts_V0.md:37180-37273",
+       "file_sha256": "2a9090efcaefbc3b0e85c2155255e078125e4d05a933e115ca931c6566b8b74b",
        "source_citation": {
         "path": "Plans/Contracts_V0.md",
         "unit": "CV-647",
@@ -304,7 +306,7 @@
        "quote": "Event history `retention_policy_ref = RP-CHAT-THREAD-LIFETIME@1.0.0`, under DL-401.",
        "quote_check": "exact",
        "quote_scope": "unit SP-627, Plans/storage-plan.md:44978-45131",
-       "file_sha256": "73ee6d097e08d31fd93301d05d2cd2632dd46e5a22ba3ea405ffadda4a0a9db2",
+       "file_sha256": "51edc1394ab24ca53a2a021dce3c3c9a1be0f43e2292d901ad56e4b0063a3ebf",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-627",
@@ -330,12 +332,12 @@
       {
        "path": "Plans/Contracts_V0.md",
        "unit": "CV-647",
-       "line_start": 37682,
-       "line_end": 37682,
+       "line_start": 37182,
+       "line_end": 37182,
        "quote": "References contain no credentials, instructions, transcript bodies, raw output or newly copied evidence.",
        "quote_check": "exact",
-       "quote_scope": "unit CV-647, Plans/Contracts_V0.md:37680-37773",
-       "file_sha256": "4ae2225d8ed19b6df971b6c32797aae6882d175264ff2c2e9a2045650d735e67",
+       "quote_scope": "unit CV-647, Plans/Contracts_V0.md:37180-37273",
+       "file_sha256": "2a9090efcaefbc3b0e85c2155255e078125e4d05a933e115ca931c6566b8b74b",
        "source_citation": {
         "path": "Plans/Contracts_V0.md",
         "unit": "CV-647",
@@ -353,7 +355,7 @@
        "quote": "Backup/restore must recover canonical request bytes",
        "quote_check": "exact",
        "quote_scope": "unit SP-627, Plans/storage-plan.md:44978-45131",
-       "file_sha256": "73ee6d097e08d31fd93301d05d2cd2632dd46e5a22ba3ea405ffadda4a0a9db2",
+       "file_sha256": "51edc1394ab24ca53a2a021dce3c3c9a1be0f43e2292d901ad56e4b0063a3ebf",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-627",
@@ -433,7 +435,7 @@
        "quote": "The exact passive operating consumer is reader.chat.response_stop_requested@1.0.0",
        "quote_check": "exact",
        "quote_scope": "unit SP-627, Plans/storage-plan.md:44978-45131",
-       "file_sha256": "73ee6d097e08d31fd93301d05d2cd2632dd46e5a22ba3ea405ffadda4a0a9db2",
+       "file_sha256": "51edc1394ab24ca53a2a021dce3c3c9a1be0f43e2292d901ad56e4b0063a3ebf",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-627",
@@ -451,7 +453,7 @@
        "quote": "SP-278 owns source-order advance, complete captured coverage and frontier/predecessor CAS with index rows atomically",
        "quote_check": "exact",
        "quote_scope": "unit SP-627, Plans/storage-plan.md:44978-45131",
-       "file_sha256": "73ee6d097e08d31fd93301d05d2cd2632dd46e5a22ba3ea405ffadda4a0a9db2",
+       "file_sha256": "51edc1394ab24ca53a2a021dce3c3c9a1be0f43e2292d901ad56e4b0063a3ebf",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-627",
@@ -477,12 +479,12 @@
       {
        "path": "Plans/Contracts_V0.md",
        "unit": "CV-647",
-       "line_start": 37686,
-       "line_end": 37686,
+       "line_start": 37235,
+       "line_end": 37235,
        "quote": "Writer withdrawal cuts this exact family off before new operations",
        "quote_check": "exact",
-       "quote_scope": "unit CV-647, Plans/Contracts_V0.md:37680-37773",
-       "file_sha256": "4ae2225d8ed19b6df971b6c32797aae6882d175264ff2c2e9a2045650d735e67",
+       "quote_scope": "unit CV-647, Plans/Contracts_V0.md:37180-37273",
+       "file_sha256": "2a9090efcaefbc3b0e85c2155255e078125e4d05a933e115ca931c6566b8b74b",
        "source_citation": {
         "path": "Plans/Contracts_V0.md",
         "unit": "CV-647",
@@ -500,7 +502,7 @@
        "quote": "native restart/recovery verification is NOT_RUN, so no applied runtime cutoff is claimed.",
        "quote_check": "exact",
        "quote_scope": "unit SP-628, Plans/storage-plan.md:45132-45201",
-       "file_sha256": "73ee6d097e08d31fd93301d05d2cd2632dd46e5a22ba3ea405ffadda4a0a9db2",
+       "file_sha256": "51edc1394ab24ca53a2a021dce3c3c9a1be0f43e2292d901ad56e4b0063a3ebf",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-628",
@@ -513,12 +515,12 @@
       {
        "path": "Plans/Contracts_V0.md",
        "unit": "CV-647",
-       "line_start": 37684,
-       "line_end": 37684,
+       "line_start": 37222,
+       "line_end": 37222,
        "quote": "The Stop contract has one current edition",
        "quote_check": "exact",
-       "quote_scope": "unit CV-647, Plans/Contracts_V0.md:37680-37773",
-       "file_sha256": "4ae2225d8ed19b6df971b6c32797aae6882d175264ff2c2e9a2045650d735e67",
+       "quote_scope": "unit CV-647, Plans/Contracts_V0.md:37180-37273",
+       "file_sha256": "2a9090efcaefbc3b0e85c2155255e078125e4d05a933e115ca931c6566b8b74b",
        "source_citation": {
         "path": "Plans/Contracts_V0.md",
         "unit": "CV-647",
@@ -582,15 +584,15 @@
        }
       },
       {
-       "line": 37684,
+       "line": 37222,
        "path": "Plans/Contracts_V0.md",
        "quote": "The Stop contract has one current edition",
        "unit": "CV-647",
-       "line_start": 37684,
-       "line_end": 37684,
+       "line_start": 37222,
+       "line_end": 37222,
        "quote_check": "exact",
-       "quote_scope": "unit CV-647, Plans/Contracts_V0.md:37680-37773",
-       "file_sha256": "4ae2225d8ed19b6df971b6c32797aae6882d175264ff2c2e9a2045650d735e67",
+       "quote_scope": "unit CV-647, Plans/Contracts_V0.md:37180-37273",
+       "file_sha256": "2a9090efcaefbc3b0e85c2155255e078125e4d05a933e115ca931c6566b8b74b",
        "source_citation": {
         "line": 34363,
         "path": "Plans/Contracts_V0.md",
@@ -610,7 +612,7 @@
        "line_end": 44980,
        "quote_check": "exact",
        "quote_scope": "unit SP-627, Plans/storage-plan.md:44978-45131",
-       "file_sha256": "73ee6d097e08d31fd93301d05d2cd2632dd46e5a22ba3ea405ffadda4a0a9db2",
+       "file_sha256": "51edc1394ab24ca53a2a021dce3c3c9a1be0f43e2292d901ad56e4b0063a3ebf",
        "source_citation": {
         "line": 37982,
         "path": "Plans/storage-plan.md",
@@ -720,9 +722,9 @@
   "row_pointer": "#/families/322"
  },
  "evidence_maintenance": {
-  "authority": "MERGE2-FIX1 findings 1/3/5",
-  "source_commit": "0c904de00426b0089ba5d56349fda8ea16cc9f88",
-  "source_assessment_sha256": "25fe205b2b80ae7f77b71ccaf66f4e200e8e3fe3eec6afd8b0af5519be32a7d1",
+  "authority": "MERGE2-FIX2 findings 1/2/3",
+  "source_commit": "0f2a90ece55d4bafd163b19a05cd3c4eda91b9c1",
+  "source_assessment_sha256": "1ed591f7959e055426aa74e632d26363e824a3317de5acbaa55137a7a3efb8af",
   "native_execution": "NOT_RUN",
   "verdicts_changed": false
  }

@@ -42,7 +42,9 @@
         "quote_line": 27441,
         "file_sha256": "ddd13c68da7fa3a27809383be4338ae4a9e2b47ac399fdb0b806ee8fae366f5a",
         "quote_check": "exact"
-       }
+       },
+       "unit": "#/families/424",
+       "quote_scope": "unit #/families/424, Plans/event_family_registry.json:27488-27569"
       }
      ]
     },
@@ -92,7 +94,7 @@
        "line_end": 36477,
        "quote": "The sole producer `handlers::persona::delete` authenticates the selected command input/result and actual home/reach/CAS/permission/Stop generations before effect and immediately before append. Separat",
        "excerpt_sha256": "6ff1f4bc6fd24f030ee7da1fb7efc61d3e67d6552ff7b216c85c38035bb7e3ac",
-       "file_sha256": "73ee6d097e08d31fd93301d05d2cd2632dd46e5a22ba3ea405ffadda4a0a9db2",
+       "file_sha256": "51edc1394ab24ca53a2a021dce3c3c9a1be0f43e2292d901ad56e4b0063a3ebf",
        "quote_check": "exact",
        "quote_scope": "unit SP-672, Plans/storage-plan.md:36315-36588",
        "excerpt_digest_convention": "literal_quote",
@@ -113,7 +115,7 @@
        "line_end": 36486,
        "quote": "`persona.deleted` explicitly adopts **SP-286**, **CV-339**, **SP-291** full-value v2 first-AppendReceipt custody and **SP-336** current sync/barrier rules. Source result/body/readback precedes observa",
        "excerpt_sha256": "e0f3e8d66b54d5b95af83c82b377864348e73143e8b7a3bfd8201f33bdd2a4b5",
-       "file_sha256": "73ee6d097e08d31fd93301d05d2cd2632dd46e5a22ba3ea405ffadda4a0a9db2",
+       "file_sha256": "51edc1394ab24ca53a2a021dce3c3c9a1be0f43e2292d901ad56e4b0063a3ebf",
        "quote_check": "exact",
        "quote_scope": "unit SP-672, Plans/storage-plan.md:36315-36588",
        "excerpt_digest_convention": "literal_quote",
@@ -134,7 +136,7 @@
        "line_end": 36484,
        "quote": "For `persona.deleted`, the newly authored physical operation binding measures the complete canonical MessagePack value, independently of EventRecord body size. The closed `persona_deleted_operation` s",
        "excerpt_sha256": "ca5120fddb0706946cb296881edd5563f953458d0d3b69fa4ec9054826a4ad37",
-       "file_sha256": "73ee6d097e08d31fd93301d05d2cd2632dd46e5a22ba3ea405ffadda4a0a9db2",
+       "file_sha256": "51edc1394ab24ca53a2a021dce3c3c9a1be0f43e2292d901ad56e4b0063a3ebf",
        "quote_check": "exact",
        "quote_scope": "unit SP-672, Plans/storage-plan.md:36315-36588",
        "excerpt_digest_convention": "literal_quote",
@@ -170,7 +172,7 @@
        "excerpt_sha256": "7877c5b56d36d3cba5749d9bac0791491056747b488fc9fa06a7a07a374849af",
        "file_sha256": "9b9fbeee2937faaee144ce94e1a17c463087badf7cd2d3b0021a60a87be860fe",
        "quote_check": "exact",
-       "quote_scope": "document",
+       "quote_scope": "unit #/$defs/persona_deleted, Plans/dg6b_event_contracts.schema.json:5310-5662",
        "excerpt_digest_convention": "literal_quote",
        "source_citation": {
         "path": "Plans/dg6b_event_contracts.schema.json",
@@ -180,7 +182,8 @@
         "quote": "    \"persona_deleted\": {",
         "excerpt_sha256": "7877c5b56d36d3cba5749d9bac0791491056747b488fc9fa06a7a07a374849af",
         "file_sha256": "9b9fbeee2937faaee144ce94e1a17c463087badf7cd2d3b0021a60a87be860fe"
-       }
+       },
+       "json_pointer": "#/$defs/persona_deleted"
       },
       {
        "path": "scripts/pm-dg6b-event-contracts.py",
@@ -244,7 +247,7 @@
        "line_end": 36456,
        "quote": "application@1:{hex(server_id)}:{hex(owner_operation_id)}",
        "excerpt_sha256": "f021b441a447da8dc6d75d05b73da15284e77fb8544fd86b7d77fb6639093933",
-       "file_sha256": "73ee6d097e08d31fd93301d05d2cd2632dd46e5a22ba3ea405ffadda4a0a9db2",
+       "file_sha256": "51edc1394ab24ca53a2a021dce3c3c9a1be0f43e2292d901ad56e4b0063a3ebf",
        "quote_check": "exact",
        "quote_scope": "unit SP-672, Plans/storage-plan.md:36315-36588",
        "excerpt_digest_convention": "literal_quote",
@@ -320,7 +323,7 @@
        "line_end": 36481,
        "quote": "`persona.deleted` selects current-writer `replay_policy=dedupe_by_idempotency_key`",
        "excerpt_sha256": "0cadd347eb0ca01bba8e030313ecf66e4c6a994506c0f7687f94bf05b9d4a72c",
-       "file_sha256": "73ee6d097e08d31fd93301d05d2cd2632dd46e5a22ba3ea405ffadda4a0a9db2",
+       "file_sha256": "51edc1394ab24ca53a2a021dce3c3c9a1be0f43e2292d901ad56e4b0063a3ebf",
        "quote_check": "exact",
        "quote_scope": "unit SP-672, Plans/storage-plan.md:36315-36588",
        "excerpt_digest_convention": "literal_quote",
@@ -439,7 +442,7 @@
        "quote": "\\ history `retention_policy_ref = RP-AUTHORITY-INDEFINITE@1.0.0`, under DL-401, DL-504.\\n\\nUse the existing\\",
        "quote_check": "exact",
        "quote_scope": "unit SP-672, Plans/storage-plan.md:36315-36588",
-       "file_sha256": "73ee6d097e08d31fd93301d05d2cd2632dd46e5a22ba3ea405ffadda4a0a9db2",
+       "file_sha256": "51edc1394ab24ca53a2a021dce3c3c9a1be0f43e2292d901ad56e4b0063a3ebf",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-672",
@@ -469,7 +472,7 @@
        "line_end": 36467,
        "quote": "Custody: the Persona owner keeps original whole definitions, removed-version/source evidence, selected Settings result, frozen runtime snapshot or export/import receipts under existing access and dele",
        "excerpt_sha256": "407f1f904bfa8854613d9f2d481d9f3a4783a61c484a28b01808589222bf6b7a",
-       "file_sha256": "73ee6d097e08d31fd93301d05d2cd2632dd46e5a22ba3ea405ffadda4a0a9db2",
+       "file_sha256": "51edc1394ab24ca53a2a021dce3c3c9a1be0f43e2292d901ad56e4b0063a3ebf",
        "quote_check": "exact",
        "quote_scope": "unit SP-672, Plans/storage-plan.md:36315-36588",
        "excerpt_digest_convention": "literal_quote",
@@ -545,7 +548,7 @@
        "line_end": 36486,
        "quote": "`persona.deleted` explicitly adopts **SP-286**, **CV-339**, **SP-291** full-value v2 first-AppendReceipt custody and **SP-336** current sync/barrier rules. Source result/body/readback precedes observa",
        "excerpt_sha256": "e0f3e8d66b54d5b95af83c82b377864348e73143e8b7a3bfd8201f33bdd2a4b5",
-       "file_sha256": "73ee6d097e08d31fd93301d05d2cd2632dd46e5a22ba3ea405ffadda4a0a9db2",
+       "file_sha256": "51edc1394ab24ca53a2a021dce3c3c9a1be0f43e2292d901ad56e4b0063a3ebf",
        "quote_check": "exact",
        "quote_scope": "unit SP-672, Plans/storage-plan.md:36315-36588",
        "excerpt_digest_convention": "literal_quote",
@@ -600,7 +603,7 @@
        "line_end": 36488,
        "quote": "Consumer **`consumer.persona_deleted.history@1.0.0`** serves the existing authenticated Persona command/audit history only. It explicitly adopts **SP-278** using `projector.storage.event_record_index@",
        "excerpt_sha256": "ea10036f77c2b1e587d3288685e9dc62273361c4eb5d741aedf67eb6a8c8909a",
-       "file_sha256": "73ee6d097e08d31fd93301d05d2cd2632dd46e5a22ba3ea405ffadda4a0a9db2",
+       "file_sha256": "51edc1394ab24ca53a2a021dce3c3c9a1be0f43e2292d901ad56e4b0063a3ebf",
        "quote_check": "exact",
        "quote_scope": "unit SP-672, Plans/storage-plan.md:36315-36588",
        "excerpt_digest_convention": "literal_quote",
@@ -634,7 +637,7 @@
        "line_end": 36469,
        "quote": "Compatibility: current readers accept only this exact supported version and canonical Persona names. Older Project request/result definitions retain their exact historical schema; the explicitly selec",
        "excerpt_sha256": "0e0452804a7a5fbdb04a49d243d43d2492c568442b1656ed7e7fd3c8bc799a08",
-       "file_sha256": "73ee6d097e08d31fd93301d05d2cd2632dd46e5a22ba3ea405ffadda4a0a9db2",
+       "file_sha256": "51edc1394ab24ca53a2a021dce3c3c9a1be0f43e2292d901ad56e4b0063a3ebf",
        "quote_check": "exact",
        "quote_scope": "unit SP-672, Plans/storage-plan.md:36315-36588",
        "excerpt_digest_convention": "literal_quote",
@@ -806,9 +809,9 @@
   "row_pointer": "#/families/424"
  },
  "evidence_maintenance": {
-  "authority": "MERGE2-FIX1 findings 1/3/5",
-  "source_commit": "0c904de00426b0089ba5d56349fda8ea16cc9f88",
-  "source_assessment_sha256": "4f06a57c2c35066d1156ccae21a06ae0d70d0017e0e9c25bbd390fb70ba3f9ca",
+  "authority": "MERGE2-FIX2 findings 1/2/3",
+  "source_commit": "0f2a90ece55d4bafd163b19a05cd3c4eda91b9c1",
+  "source_assessment_sha256": "a5a2ba827fe25278673a348253009c0680958e61eaba46989ac7c3fa8b28598a",
   "native_execution": "NOT_RUN",
   "verdicts_changed": false
  }

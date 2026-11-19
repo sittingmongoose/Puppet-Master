@@ -25,6 +25,12 @@ Three stages, each a pure function of the repository tree and the pinned inputs:
     ``admission_record_problems`` and the registry with readiness's checks,
     and prints the verdict per family.
 
+``refresh-dispositions``
+    Reprojects the existing merge-2 CPU ledger rows and their mirrors from
+    current accepted depth assessments. It changes no admission, verdict,
+    holding bucket or original append checkpoint. ``--check`` independently
+    verifies the current assessment digest and each registry span's family.
+
 The writer never edits the frozen validator, Spec Lock, ``Plans/.evidence``
 or ``Plans/auto_decisions.jsonl``, never regenerates shards or the plan
 index (one regeneration per merge, run by the merge), never pushes and never
@@ -315,6 +321,42 @@ def unit_span(text: str, unit: str) -> tuple[int, int] | None:
     return _split_and_spans(text)[1].get(unit)
 
 
+def heading_span(text: str, title: str) -> tuple[int, int] | None:
+    """An exactly named Markdown section, excluding fenced YAML headings."""
+    headings = []
+    fenced = False
+    lines = text.splitlines()
+    for index, line in enumerate(lines):
+        if FENCE_LINE.match(line):
+            fenced = not fenced
+        match = HEADING_PARTS.fullmatch(line) if not fenced else None
+        if match:
+            headings.append((index, len(match[1]), match[2]))
+    def slug(value: str) -> str:
+        return re.sub(r"\s+", "-", re.sub(r"[^\w\s-]", "", value.lower())).strip("-")
+    found = [(index, level) for index, level, name in headings
+             if name == title or (title.startswith("#") and slug(name) == title[1:])]
+    if not found and title.startswith("#"):
+        anchors = [i for i, line in enumerate(lines)
+                   if re.fullmatch(r'\s*<a\s+(?:id|name)=["\']' + re.escape(title[1:])
+                                   + r'["\']\s*>\s*</a>\s*', line)]
+        if len(anchors) == 1:
+            first = anchors[0]
+            following = [(index, level) for index, level, _ in headings if first < index <= first + 3]
+            if following:
+                heading, level = following[0]
+                last = next((index for index, other, _ in headings if index > heading and other <= level), len(lines))
+                # The next family's explicit anchor precedes its heading.
+                while last > first and (not lines[last - 1].strip() or lines[last - 1].lstrip().startswith("<a ")):
+                    last -= 1
+                return first + 1, last
+    if len(found) != 1:
+        return None
+    first, level = found[0]
+    last = next((index for index, other, _ in headings if index > first and other <= level), len(lines))
+    return first + 1, last
+
+
 def relocate(text: str, quote: str, want: int, span: tuple[int, int] | None) -> tuple[int, int, str] | None:
     """(line_start, line_end, quote_check) of the quotation inside span (the whole text when span is None).
 
@@ -341,7 +383,8 @@ def relocate(text: str, quote: str, want: int, span: tuple[int, int] | None) -> 
     return None
 
 
-def refresh_evidence(item: dict, *, digest_convention: str = "whole_line", source_commit: str | None = None) -> dict:
+def refresh_evidence(item: dict, *, digest_convention: str = "whole_line", source_commit: str | None = None,
+                     event_type: str | None = None, criterion: str | None = None) -> dict:
     """Re-read one cited quotation at the current tree; relocate it inside its own unit or fail closed."""
     rel = item.get("path")
     if isinstance(rel, str) and Path(rel).is_absolute():
@@ -391,14 +434,48 @@ def refresh_evidence(item: dict, *, digest_convention: str = "whole_line", sourc
         if not unit:
             raise Gap(f"line-only evidence has no declared unit bound: {rel}")
     span = None
+    if rel.endswith(".md") and isinstance(unit, str):
+        if unit.startswith("heading:") or unit.startswith("#"):
+            span = heading_span(text, unit.removeprefix("heading:"))
+            if span is None:
+                raise Gap(f"evidence heading has no single declared span: {rel}#{unit}")
+        elif not re.fullmatch(r"[A-Z][A-Z0-9]*-[0-9]+", unit):
+            span = heading_span(text, unit)
+    if rel.endswith(".json"):
+        from pm_ea_evidence_projection import family_span, inferred_event, pointer_span, quote_in_pointer
+        try:
+            pointer = item.get("json_pointer") or unit
+            if isinstance(pointer, str) and "#" in pointer:
+                pointer = "#" + pointer.split("#", 1)[1]
+            if pointer == "#/" and "json_pointer" not in item:
+                document = json.loads(text, parse_int=str, parse_float=str)
+                if isinstance(document, dict) and "" not in document:
+                    pointer = "#"
+                    out["unit"] = unit = "#"
+                    out["json_pointer"] = "#"
+            subject = event_type or inferred_event(text, pointer, quote)
+            bound = (family_span(text, subject, pointer,
+                                 criterion if rel.startswith("reports/") else None) if subject else None)
+            if not bound and isinstance(pointer, str) and pointer.startswith("#/"):
+                bound = pointer, pointer_span(text, pointer)
+        except ValueError as exc:
+            raise Gap(str(exc)) from exc
+        if bound:
+            unit, span = bound
+            out["unit"] = unit
+            out["json_pointer"] = unit
+            if quote and not quote_in_pointer(text, unit, quote):
+                raise Gap(f"cited quotation is outside its exact JSON unit: {rel}{unit}")
     if (rel.startswith("Plans/") and rel.endswith(".md") and isinstance(unit, str)
             and re.fullmatch(r"[A-Z][A-Z0-9]*-[0-9]+", unit)):
         if unit_ref(unit) not in (None, rel + "#" + unit):
             raise Gap(f"evidence unit {unit} is not declared by {rel}")
-        if unit_ref(unit) is not None:
-            span = unit_span(text, unit)
-            if span is None:
-                raise Gap(f"evidence unit {unit} has no single declared span in {rel}")
+        span = unit_span(text, unit)
+        if span is None:
+            raise Gap(f"evidence unit {unit} has no single declared span in {rel}")
+    if rel.startswith("Plans/") and rel.endswith(".md") and span is None:
+        if unit or _split_and_spans(text)[1]:
+            raise Gap(f"canonical Markdown evidence needs a resolvable unit or heading bound: {rel}#{unit}")
     if isinstance(quote, str) and quote:
         want = item.get("line_start") if isinstance(item.get("line_start"), int) else 1
         found = relocate(text, quote, want, span)
@@ -413,6 +490,8 @@ def refresh_evidence(item: dict, *, digest_convention: str = "whole_line", sourc
         out["quote"] = quote
         if "line" in out:
             out["line"] = found[0]
+        if "quote_line" in out:
+            out["quote_line"] = found[0]
         if "excerpt_sha256" in item:
             convention = item.get("excerpt_digest_convention", digest_convention)
             if convention not in ("whole_line", "literal_quote"):
@@ -487,7 +566,7 @@ def carried_cells(grade: dict, grade_ref: dict, *, lane: str | None = None) -> d
                 if e.get("path") == "Plans/orchestrator-subagent-integration.md":
                     e.setdefault("unit", original["owner_unit"])
         evidence = [refresh_evidence(e, digest_convention=convention,
-                                   source_commit=source_commit)
+                                   source_commit=source_commit, event_type=grade["event_type"], criterion=field)
                     for e in cell.get("evidence") or [] if isinstance(e, dict)]
         if not any(str(e.get("path", "")).startswith("Plans/") for e in evidence):
             raise Gap(f"{field} PASS carries no Plans evidence")
@@ -532,6 +611,8 @@ def write_text(rel: str, text: str, *, crlf: bool = False) -> None:
         # Decision_Log is rewritten for each family. Retaining every prior split
         # document makes a resumed, otherwise bounded batch exceed its 2 GiB cap.
         _SPLIT_CACHE.pop(id(previous), None)
+        from pm_ea_evidence_projection import forget
+        forget(previous)
     _TEXT_HASH_CACHE.pop(rel, None)
 
 
@@ -706,11 +787,17 @@ def membership_cell(fam: dict, ctx: dict) -> dict:
     }
 
 
-def ledger_cell(cell: dict) -> dict:
+def ledger_cell(cell: dict, event_type: str | None = None) -> dict:
     """One individual-disposition evidence cell from a depth cell: PASS, Plans citations first, the finding."""
     spans = []
     for item in sorted(cell["evidence"], key=lambda e: not str(e.get("path", "")).startswith("Plans/")):
         start, end = item.get("line_start"), item.get("line_end")
+        if item.get("path") == REGISTRY and event_type:
+            registry = load(REGISTRY)
+            matches = [row for row in registry["families"] if row["event_type"] == event_type]
+            if len(matches) != 1:
+                raise Gap("ledger registry subject is not unique: " + event_type)
+            start, end, _ = row_lines(file_text(REGISTRY), matches[0]["family_id"])
         span = f"{item['path']}:{start}" if start == end or end is None else f"{item['path']}:{start}-{end}"
         if start is None:
             span = item["path"]
@@ -719,6 +806,101 @@ def ledger_cell(cell: dict) -> dict:
     if not spans or not spans[0].startswith("Plans/"):
         raise SystemExit("a projected ledger cell needs a Plans citation first")
     return {"status": "PASS", "citation": "; ".join(spans), "note": cell.get("finding") or ""}
+
+
+def project_disposition(row: dict, assessment: dict, assessment_path: str, digest: str) -> dict:
+    """Refresh an existing registration's projection, preserving its append checkpoints."""
+    event_type = row["event_type"]
+    subjects = assessment.get("rows", [])
+    if len(subjects) != 1 or subjects[0].get("event_type") != event_type:
+        raise Gap("disposition assessment subject differs: " + event_type)
+    cells = subjects[0]["cells"]
+    if set(cells) != set(EVIDENCE_FIELDS) or any(cells[k].get("status") != "PASS" for k in EVIDENCE_FIELDS):
+        raise Gap("disposition assessment is not twelve PASS cells: " + event_type)
+    if row.get("disposition") != "KEEP_REGISTERED":
+        raise Gap("evidence maintenance cannot change a disposition: " + event_type)
+    result = copy.deepcopy(row)
+    result["evidence"] = {field: ledger_cell(cells[field], event_type) for field in row["evidence"]}
+    pattern = re.escape(assessment_path) + r" \(sha256 ([0-9a-f]{64})\)"
+    rationale, count = re.subn(pattern, lambda _: assessment_path + " (sha256 " + digest + ")",
+                               row["disposition_rationale"])
+    if count != 1:
+        raise Gap("disposition must have exactly one current assessment pin: " + event_type)
+    note = (" Evidence maintenance 2026-11-19 (MERGE2-FIX2): current assessment digest and locators "
+            "are projected by the writer; original one-family append checkpoints remain in the "
+            "DL-077 record and immutable Git history. No new admission or verdict change.")
+    if note not in rationale:
+        rationale += note
+    result["disposition_rationale"] = rationale
+    return result
+
+
+def disposition_problems(row: dict, assessment_path: str) -> list[str]:
+    """Check the live assessment digest and every projected registry span's subject."""
+    problems = []
+    digest = sha256_file(REPO / assessment_path)
+    pins = re.findall(re.escape(assessment_path) + r" \(sha256 ([0-9a-f]{64})\)",
+                      row.get("disposition_rationale", ""))
+    if pins != [digest]:
+        problems.append("assessment_digest_mismatch")
+    text = file_text(REGISTRY)
+    lines = text.splitlines()
+    subject = '"event_type": "' + row["event_type"] + '"'
+    membership_count = 0
+    for field, cell in row.get("evidence", {}).items():
+        for first, last in re.findall(re.escape(REGISTRY) + r":([0-9]+)(?:-([0-9]+))?", cell.get("citation", "")):
+            start, end = int(first), int(last or first)
+            if field == "membership_version":
+                membership_count += 1
+            if not 1 <= start <= end <= len(lines) or subject not in "\n".join(lines[start - 1:end]):
+                problems.append(field + ":registry_span_omits_family")
+    if not membership_count:
+        problems.append("membership_registry_span_missing")
+    return problems
+
+
+def refresh_dispositions(args) -> int:
+    """Reproject existing CPU rows and mirrors; --check makes no changes."""
+    folder = args.report_dir.rstrip("/")
+    names = {item["event_type"] for item in load(folder + "/readiness-list.json")["ready"]}
+    lines = read_raw(LEDGER).splitlines(keepends=True)
+    updates = []
+    errors = []
+    for index, line in enumerate(lines):
+        if not line.strip():
+            continue
+        row = json.loads(line)
+        event_type = row.get("event_type")
+        if event_type not in names:
+            continue
+        path = folder + "/depth/" + event_type + ".json"
+        mirror = f"{LEDGER_ROWS}/ROW_{event_type}.json"
+        before_mirror = load(mirror)
+        if before_mirror != row:
+            raise Gap("disposition mirror disagrees before maintenance: " + event_type)
+        assessment = load(path)
+        projected = project_disposition(row, assessment, path, sha256_file(REPO / path))
+        problems = disposition_problems(row if args.check else projected, path)
+        if args.check and projected != row:
+            problems.append("projection_differs_from_current_assessment")
+        if problems:
+            errors.append({"event_type": event_type, "problems": problems})
+        updates.append((index, mirror, projected))
+    if len(updates) != 191:
+        raise Gap(f"expected the 191 merge-2 CPU dispositions, found {len(updates)}")
+    result = {"status": "fail" if errors else "pass", "checked": len(updates), "errors": errors,
+              "check_only": args.check, "original_registry_checkpoints_preserved": True}
+    if not args.check and not errors:
+        for index, mirror, row in updates:
+            # Canonicalize only the refreshed rows/mirrors to LF. Untouched
+            # ledger lines retain their original bytes and historical editions.
+            lines[index] = json.dumps(row, ensure_ascii=False) + "\n"
+            write_text(mirror, json.dumps(row, indent=2, ensure_ascii=False) + "\n")
+        write_text(LEDGER, "".join(lines))
+    if args.out:
+        Path(args.out).write_text(json.dumps(result, indent=2) + "\n", encoding="utf-8")
+    print(json.dumps(result))
+    return int(bool(errors))
 
 
 def apply_family(fam: dict, dl: str, args, state: dict) -> list[str]:
@@ -845,7 +1027,7 @@ def apply_family(fam: dict, dl: str, args, state: dict) -> list[str]:
         ledger_row["disposition"] = "KEEP_REGISTERED"
         if "provisional" in ledger_row:
             ledger_row["provisional"] = False
-        ledger_row["evidence"] = {field: ledger_cell(cells[field]) for field in evidence}  # the row's own key order
+        ledger_row["evidence"] = {field: ledger_cell(cells[field], et) for field in evidence}  # the row's own key order
         ledger_row["disposition_rationale"] = ledger_row["disposition_rationale"] + sentence
         lines[hits[0]] = json.dumps(ledger_row, ensure_ascii=False) + ending
         before_lines = read_raw(LEDGER).split("\n")
@@ -1119,6 +1301,11 @@ def main(argv=None) -> int:
     v.add_argument("--manifest", required=True)
     v.add_argument("--out", default="")
     v.set_defaults(func=verify)
+    d = sub.add_parser("refresh-dispositions", help="refresh existing CPU evidence projections without admission")
+    d.add_argument("--report-dir", default="reports/event-authority-20261116/admission-merge-2")
+    d.add_argument("--check", action="store_true")
+    d.add_argument("--out", default="")
+    d.set_defaults(func=refresh_dispositions)
     args = parser.parse_args(argv)
     return args.func(args)
 

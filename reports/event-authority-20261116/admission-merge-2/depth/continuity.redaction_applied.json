@@ -42,7 +42,9 @@
         "quote_line": 24206,
         "file_sha256": "fe3eecc18bd8a5e6efa8d5a9cb43dcd5fb782f0c300cd4ab9c63c2f85fc8a09c",
         "quote_check": "exact"
-       }
+       },
+       "unit": "#/families/360",
+       "quote_scope": "unit #/families/360, Plans/event_family_registry.json:24247-24287"
       }
      ]
     },
@@ -72,12 +74,12 @@
       {
        "path": "Plans/Contracts_V0.md",
        "unit": "CV-1602",
-       "line_start": 25592,
-       "line_end": 25592,
+       "line_start": 25080,
+       "line_end": 25080,
        "quote": "Exact payload schema:",
-       "file_sha256": "4ae2225d8ed19b6df971b6c32797aae6882d175264ff2c2e9a2045650d735e67",
+       "file_sha256": "2a9090efcaefbc3b0e85c2155255e078125e4d05a933e115ca931c6566b8b74b",
        "quote_check": "exact",
-       "quote_scope": "unit CV-1602, Plans/Contracts_V0.md:25590-25643",
+       "quote_scope": "unit CV-1602, Plans/Contracts_V0.md:25078-25131",
        "source_citation": {
         "path": "Plans/Contracts_V0.md",
         "unit": "CV-1602",
@@ -121,12 +123,12 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-1602",
-       "line_start": 76229,
-       "line_end": 76229,
+       "line_start": 76199,
+       "line_end": 76199,
        "quote": "SP-286/CV-339 full-value v2",
-       "file_sha256": "73ee6d097e08d31fd93301d05d2cd2632dd46e5a22ba3ea405ffadda4a0a9db2",
+       "file_sha256": "51edc1394ab24ca53a2a021dce3c3c9a1be0f43e2292d901ad56e4b0063a3ebf",
        "quote_check": "exact",
-       "quote_scope": "unit SP-1602, Plans/storage-plan.md:76225-76292",
+       "quote_scope": "unit SP-1602, Plans/storage-plan.md:76195-76262",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-1602",
@@ -152,12 +154,12 @@
       {
        "path": "Plans/Contracts_V0.md",
        "unit": "CV-1602",
-       "line_start": 25592,
-       "line_end": 25592,
+       "line_start": 25080,
+       "line_end": 25080,
        "quote": "The root is closed.",
-       "file_sha256": "4ae2225d8ed19b6df971b6c32797aae6882d175264ff2c2e9a2045650d735e67",
+       "file_sha256": "2a9090efcaefbc3b0e85c2155255e078125e4d05a933e115ca931c6566b8b74b",
        "quote_check": "exact",
-       "quote_scope": "unit CV-1602, Plans/Contracts_V0.md:25590-25643",
+       "quote_scope": "unit CV-1602, Plans/Contracts_V0.md:25078-25131",
        "source_citation": {
         "path": "Plans/Contracts_V0.md",
         "unit": "CV-1602",
@@ -183,12 +185,12 @@
       {
        "path": "Plans/Contracts_V0.md",
        "unit": "CV-1602",
-       "line_start": 25594,
-       "line_end": 25594,
+       "line_start": 25082,
+       "line_end": 25082,
        "quote": "scope_kind=project",
-       "file_sha256": "4ae2225d8ed19b6df971b6c32797aae6882d175264ff2c2e9a2045650d735e67",
+       "file_sha256": "2a9090efcaefbc3b0e85c2155255e078125e4d05a933e115ca931c6566b8b74b",
        "quote_check": "exact",
-       "quote_scope": "unit CV-1602, Plans/Contracts_V0.md:25590-25643",
+       "quote_scope": "unit CV-1602, Plans/Contracts_V0.md:25078-25131",
        "source_citation": {
         "path": "Plans/Contracts_V0.md",
         "unit": "CV-1602",
@@ -201,12 +203,12 @@
       {
        "path": "Plans/Contracts_V0.md",
        "unit": "CV-1602",
-       "line_start": 25596,
-       "line_end": 25596,
+       "line_start": 25084,
+       "line_end": 25084,
        "quote": "identity bytes are",
-       "file_sha256": "4ae2225d8ed19b6df971b6c32797aae6882d175264ff2c2e9a2045650d735e67",
+       "file_sha256": "2a9090efcaefbc3b0e85c2155255e078125e4d05a933e115ca931c6566b8b74b",
        "quote_check": "exact",
-       "quote_scope": "unit CV-1602, Plans/Contracts_V0.md:25590-25643",
+       "quote_scope": "unit CV-1602, Plans/Contracts_V0.md:25078-25131",
        "source_citation": {
         "path": "Plans/Contracts_V0.md",
         "unit": "CV-1602",
@@ -232,12 +234,12 @@
       {
        "path": "Plans/Contracts_V0.md",
        "unit": "CV-1602",
-       "line_start": 25596,
-       "line_end": 25596,
+       "line_start": 25084,
+       "line_end": 25084,
        "quote": "Same tuple and body return the original full result",
-       "file_sha256": "4ae2225d8ed19b6df971b6c32797aae6882d175264ff2c2e9a2045650d735e67",
+       "file_sha256": "2a9090efcaefbc3b0e85c2155255e078125e4d05a933e115ca931c6566b8b74b",
        "quote_check": "exact",
-       "quote_scope": "unit CV-1602, Plans/Contracts_V0.md:25590-25643",
+       "quote_scope": "unit CV-1602, Plans/Contracts_V0.md:25078-25131",
        "source_citation": {
         "path": "Plans/Contracts_V0.md",
         "unit": "CV-1602",
@@ -250,12 +252,12 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-1602",
-       "line_start": 76237,
-       "line_end": 76237,
+       "line_start": 76207,
+       "line_end": 76207,
        "quote": "Rebuild reads retained authentic originals",
-       "file_sha256": "73ee6d097e08d31fd93301d05d2cd2632dd46e5a22ba3ea405ffadda4a0a9db2",
+       "file_sha256": "51edc1394ab24ca53a2a021dce3c3c9a1be0f43e2292d901ad56e4b0063a3ebf",
        "quote_check": "exact",
-       "quote_scope": "unit SP-1602, Plans/storage-plan.md:76225-76292",
+       "quote_scope": "unit SP-1602, Plans/storage-plan.md:76195-76262",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-1602",
@@ -281,12 +283,12 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-1602",
-       "line_start": 76239,
-       "line_end": 76239,
+       "line_start": 76209,
+       "line_end": 76209,
        "quote": "RP-AUTHORITY-INDEFINITE@1.0.0",
-       "file_sha256": "73ee6d097e08d31fd93301d05d2cd2632dd46e5a22ba3ea405ffadda4a0a9db2",
+       "file_sha256": "51edc1394ab24ca53a2a021dce3c3c9a1be0f43e2292d901ad56e4b0063a3ebf",
        "quote_check": "exact",
-       "quote_scope": "unit SP-1602, Plans/storage-plan.md:76225-76292",
+       "quote_scope": "unit SP-1602, Plans/storage-plan.md:76195-76262",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-1602",
@@ -299,12 +301,12 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-1602",
-       "line_start": 76239,
-       "line_end": 76239,
+       "line_start": 76209,
+       "line_end": 76209,
        "quote": "RP-PROJECTION-3GEN@1.0.0",
-       "file_sha256": "73ee6d097e08d31fd93301d05d2cd2632dd46e5a22ba3ea405ffadda4a0a9db2",
+       "file_sha256": "51edc1394ab24ca53a2a021dce3c3c9a1be0f43e2292d901ad56e4b0063a3ebf",
        "quote_check": "exact",
-       "quote_scope": "unit SP-1602, Plans/storage-plan.md:76225-76292",
+       "quote_scope": "unit SP-1602, Plans/storage-plan.md:76195-76262",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-1602",
@@ -330,12 +332,12 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-1602",
-       "line_start": 76239,
-       "line_end": 76239,
+       "line_start": 76209,
+       "line_end": 76209,
        "quote": "mandatory coherent backup/restore",
-       "file_sha256": "73ee6d097e08d31fd93301d05d2cd2632dd46e5a22ba3ea405ffadda4a0a9db2",
+       "file_sha256": "51edc1394ab24ca53a2a021dce3c3c9a1be0f43e2292d901ad56e4b0063a3ebf",
        "quote_check": "exact",
-       "quote_scope": "unit SP-1602, Plans/storage-plan.md:76225-76292",
+       "quote_scope": "unit SP-1602, Plans/storage-plan.md:76195-76262",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-1602",
@@ -348,12 +350,12 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-1602",
-       "line_start": 76239,
-       "line_end": 76239,
+       "line_start": 76209,
+       "line_end": 76209,
        "quote": "Raw secrets, prompts, outputs",
-       "file_sha256": "73ee6d097e08d31fd93301d05d2cd2632dd46e5a22ba3ea405ffadda4a0a9db2",
+       "file_sha256": "51edc1394ab24ca53a2a021dce3c3c9a1be0f43e2292d901ad56e4b0063a3ebf",
        "quote_check": "exact",
-       "quote_scope": "unit SP-1602, Plans/storage-plan.md:76225-76292",
+       "quote_scope": "unit SP-1602, Plans/storage-plan.md:76195-76262",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-1602",
@@ -397,12 +399,12 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-1602",
-       "line_start": 76233,
-       "line_end": 76233,
+       "line_start": 76203,
+       "line_end": 76203,
        "quote": "Replay of the same event is a no-op",
-       "file_sha256": "73ee6d097e08d31fd93301d05d2cd2632dd46e5a22ba3ea405ffadda4a0a9db2",
+       "file_sha256": "51edc1394ab24ca53a2a021dce3c3c9a1be0f43e2292d901ad56e4b0063a3ebf",
        "quote_check": "exact",
-       "quote_scope": "unit SP-1602, Plans/storage-plan.md:76225-76292",
+       "quote_scope": "unit SP-1602, Plans/storage-plan.md:76195-76262",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-1602",
@@ -428,12 +430,12 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-1602",
-       "line_start": 76227,
-       "line_end": 76227,
+       "line_start": 76197,
+       "line_end": 76197,
        "quote": "operating audit-only reader",
-       "file_sha256": "73ee6d097e08d31fd93301d05d2cd2632dd46e5a22ba3ea405ffadda4a0a9db2",
+       "file_sha256": "51edc1394ab24ca53a2a021dce3c3c9a1be0f43e2292d901ad56e4b0063a3ebf",
        "quote_check": "exact",
-       "quote_scope": "unit SP-1602, Plans/storage-plan.md:76225-76292",
+       "quote_scope": "unit SP-1602, Plans/storage-plan.md:76195-76262",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-1602",
@@ -446,12 +448,12 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-1602",
-       "line_start": 76235,
-       "line_end": 76235,
+       "line_start": 76205,
+       "line_end": 76205,
        "quote": "explicitly adopt SP-278",
-       "file_sha256": "73ee6d097e08d31fd93301d05d2cd2632dd46e5a22ba3ea405ffadda4a0a9db2",
+       "file_sha256": "51edc1394ab24ca53a2a021dce3c3c9a1be0f43e2292d901ad56e4b0063a3ebf",
        "quote_check": "exact",
-       "quote_scope": "unit SP-1602, Plans/storage-plan.md:76225-76292",
+       "quote_scope": "unit SP-1602, Plans/storage-plan.md:76195-76262",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-1602",
@@ -464,12 +466,12 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-1602",
-       "line_start": 76235,
-       "line_end": 76235,
+       "line_start": 76205,
+       "line_end": 76205,
        "quote": "Persist only SP-278",
-       "file_sha256": "73ee6d097e08d31fd93301d05d2cd2632dd46e5a22ba3ea405ffadda4a0a9db2",
+       "file_sha256": "51edc1394ab24ca53a2a021dce3c3c9a1be0f43e2292d901ad56e4b0063a3ebf",
        "quote_check": "exact",
-       "quote_scope": "unit SP-1602, Plans/storage-plan.md:76225-76292",
+       "quote_scope": "unit SP-1602, Plans/storage-plan.md:76195-76262",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-1602",
@@ -495,12 +497,12 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-1602",
-       "line_start": 76241,
-       "line_end": 76241,
+       "line_start": 76211,
+       "line_end": 76211,
        "quote": "Unknown versions are unavailable",
-       "file_sha256": "73ee6d097e08d31fd93301d05d2cd2632dd46e5a22ba3ea405ffadda4a0a9db2",
+       "file_sha256": "51edc1394ab24ca53a2a021dce3c3c9a1be0f43e2292d901ad56e4b0063a3ebf",
        "quote_check": "exact",
-       "quote_scope": "unit SP-1602, Plans/storage-plan.md:76225-76292",
+       "quote_scope": "unit SP-1602, Plans/storage-plan.md:76195-76262",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-1602",
@@ -513,12 +515,12 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-1602",
-       "line_start": 76241,
-       "line_end": 76241,
+       "line_start": 76211,
+       "line_end": 76211,
        "quote": "Withdrawal first cuts off",
-       "file_sha256": "73ee6d097e08d31fd93301d05d2cd2632dd46e5a22ba3ea405ffadda4a0a9db2",
+       "file_sha256": "51edc1394ab24ca53a2a021dce3c3c9a1be0f43e2292d901ad56e4b0063a3ebf",
        "quote_check": "exact",
-       "quote_scope": "unit SP-1602, Plans/storage-plan.md:76225-76292",
+       "quote_scope": "unit SP-1602, Plans/storage-plan.md:76195-76262",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-1602",
@@ -692,9 +694,9 @@
   "row_pointer": "#/families/360"
  },
  "evidence_maintenance": {
-  "authority": "MERGE2-FIX1 findings 1/3/5",
-  "source_commit": "0c904de00426b0089ba5d56349fda8ea16cc9f88",
-  "source_assessment_sha256": "aca9922d890330030153348303d056dbc75f10b15873f198b08e287931af6043",
+  "authority": "MERGE2-FIX2 findings 1/2/3",
+  "source_commit": "0f2a90ece55d4bafd163b19a05cd3c4eda91b9c1",
+  "source_assessment_sha256": "385a17796737d29c221b71f847c4bf4cec6c360f383e776aaa44c7dc72cc1bd9",
   "native_execution": "NOT_RUN",
   "verdicts_changed": false
  }

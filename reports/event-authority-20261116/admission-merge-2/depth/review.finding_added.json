@@ -42,7 +42,9 @@
         "quote_line": 29312,
         "file_sha256": "8caa77849778bef5649b20de052938c9da0169c6d7b8c02c9ff2adfc23cfd3f8",
         "quote_check": "exact"
-       }
+       },
+       "unit": "#/families/454",
+       "quote_scope": "unit #/families/454, Plans/event_family_registry.json:29359-29459"
       }
      ]
     },
@@ -75,13 +77,13 @@
       {
        "path": "Plans/Contracts_V0.md",
        "unit": "CV-476",
-       "line_start": 34620,
-       "line_end": 34620,
+       "line_start": 34108,
+       "line_end": 34108,
        "quote": "### CV-476 - The closed review.finding_added payload",
        "excerpt_sha256": "b237a5aa7db187f4c645c18e605b026c9be95b0d80b9216248f4707de0e66f9f",
-       "file_sha256": "4ae2225d8ed19b6df971b6c32797aae6882d175264ff2c2e9a2045650d735e67",
+       "file_sha256": "2a9090efcaefbc3b0e85c2155255e078125e4d05a933e115ca931c6566b8b74b",
        "quote_check": "exact",
-       "quote_scope": "unit CV-476, Plans/Contracts_V0.md:34620-34701",
+       "quote_scope": "unit CV-476, Plans/Contracts_V0.md:34108-34189",
        "excerpt_digest_convention": "whole_line",
        "source_citation": {
         "path": "Plans/Contracts_V0.md",
@@ -134,7 +136,7 @@
        "line_end": 36642,
        "quote": "**Durable prepared-source physical binding (B1; newly authored owner contract under DL-090).** `collaboration_prepared_source` is a canonical, non-rebuildable registered Storage value. Its key is `col",
        "excerpt_sha256": "c95c3c3c51a4b8b2346fca7a9b4330f0d568a72464bdeec9ba1939f029377c9c",
-       "file_sha256": "73ee6d097e08d31fd93301d05d2cd2632dd46e5a22ba3ea405ffadda4a0a9db2",
+       "file_sha256": "51edc1394ab24ca53a2a021dce3c3c9a1be0f43e2292d901ad56e4b0063a3ebf",
        "quote_check": "exact",
        "quote_scope": "unit SP-460, Plans/storage-plan.md:36597-36766",
        "excerpt_digest_convention": "whole_line",
@@ -157,7 +159,7 @@
        "excerpt_sha256": "9340faaa8ee68e885a1ed7a95d70bdfbcdfc1442238f1e7dd7dd9f7bcc37a824",
        "file_sha256": "98899450caabd072e9e7658ff985bbfe455e45fff537066e60d0d2d0873de9ee",
        "quote_check": "exact",
-       "quote_scope": "document",
+       "quote_scope": "unit #/$defs/review_finding_added_project, Plans/collaboration_prepared_sources.schema.json:5352-5516",
        "excerpt_digest_convention": "whole_line",
        "source_citation": {
         "path": "Plans/collaboration_prepared_sources.schema.json",
@@ -167,7 +169,8 @@
         "quote": "\"review_finding_added_project\": {",
         "excerpt_sha256": "9340faaa8ee68e885a1ed7a95d70bdfbcdfc1442238f1e7dd7dd9f7bcc37a824",
         "file_sha256": "98899450caabd072e9e7658ff985bbfe455e45fff537066e60d0d2d0873de9ee"
-       }
+       },
+       "json_pointer": "#/$defs/review_finding_added_project"
       }
      ],
      "carried_from": {
@@ -185,13 +188,13 @@
       {
        "path": "Plans/Contracts_V0.md",
        "unit": "CV-476",
-       "line_start": 34620,
-       "line_end": 34620,
+       "line_start": 34108,
+       "line_end": 34108,
        "quote": "### CV-476 - The closed review.finding_added payload",
        "excerpt_sha256": "b237a5aa7db187f4c645c18e605b026c9be95b0d80b9216248f4707de0e66f9f",
-       "file_sha256": "4ae2225d8ed19b6df971b6c32797aae6882d175264ff2c2e9a2045650d735e67",
+       "file_sha256": "2a9090efcaefbc3b0e85c2155255e078125e4d05a933e115ca931c6566b8b74b",
        "quote_check": "exact",
-       "quote_scope": "unit CV-476, Plans/Contracts_V0.md:34620-34701",
+       "quote_scope": "unit CV-476, Plans/Contracts_V0.md:34108-34189",
        "excerpt_digest_convention": "whole_line",
        "source_citation": {
         "path": "Plans/Contracts_V0.md",
@@ -212,7 +215,7 @@
        "excerpt_sha256": "dcaf8dd02ee18824cbab3ca975513197f15ef30dbbef5fa628d7946ae70cf856",
        "file_sha256": "e2f52f6fe8e254a5a8e0cf286d9d43a0dc3bb08f965f20df80f91838d4e0f721",
        "quote_check": "exact",
-       "quote_scope": "document",
+       "quote_scope": "unit #/$defs/review_finding_added, Plans/collaboration_event_payloads.schema.json:4505-4603",
        "excerpt_digest_convention": "whole_line",
        "source_citation": {
         "path": "Plans/collaboration_event_payloads.schema.json",
@@ -222,18 +225,19 @@
         "quote": "\"review_finding_added\": {",
         "excerpt_sha256": "dcaf8dd02ee18824cbab3ca975513197f15ef30dbbef5fa628d7946ae70cf856",
         "file_sha256": "e2f52f6fe8e254a5a8e0cf286d9d43a0dc3bb08f965f20df80f91838d4e0f721"
-       }
+       },
+       "json_pointer": "#/$defs/review_finding_added"
       },
       {
        "path": "Plans/Contracts_V0.md",
        "unit": "CV-460",
-       "line_start": 33359,
-       "line_end": 33359,
+       "line_start": 32847,
+       "line_end": 32847,
        "quote": "**Numeric interpretation.** SP-460 defines one canonical numeric serialization for the new semantic/snapshot commitments and base-10 identity subjects; no string/boolean coercion or native-codec chang",
        "excerpt_sha256": "19f801cd04e589d5af8436a03b8a38c7849ad9d7444ada14b9ffe49eb653c195",
-       "file_sha256": "4ae2225d8ed19b6df971b6c32797aae6882d175264ff2c2e9a2045650d735e67",
+       "file_sha256": "2a9090efcaefbc3b0e85c2155255e078125e4d05a933e115ca931c6566b8b74b",
        "quote_check": "exact",
-       "quote_scope": "unit CV-460, Plans/Contracts_V0.md:33270-33364",
+       "quote_scope": "unit CV-460, Plans/Contracts_V0.md:32758-32852",
        "excerpt_digest_convention": "whole_line",
        "source_citation": {
         "path": "Plans/Contracts_V0.md",
@@ -248,13 +252,13 @@
       {
        "path": "Plans/Contracts_V0.md",
        "unit": "CV-460",
-       "line_start": 33276,
-       "line_end": 33276,
+       "line_start": 32764,
+       "line_end": 32764,
        "quote": "Calendar and range validity is CV-1101's shared date-time predicate",
        "excerpt_sha256": "b6d94a71700acf19030a08995805b96be947091f28dacce232294e8b03b8dbbd",
-       "file_sha256": "4ae2225d8ed19b6df971b6c32797aae6882d175264ff2c2e9a2045650d735e67",
+       "file_sha256": "2a9090efcaefbc3b0e85c2155255e078125e4d05a933e115ca931c6566b8b74b",
        "quote_check": "exact",
-       "quote_scope": "unit CV-460, Plans/Contracts_V0.md:33270-33364",
+       "quote_scope": "unit CV-460, Plans/Contracts_V0.md:32758-32852",
        "excerpt_digest_convention": "whole_line",
        "source_citation": {
         "path": "Plans/Contracts_V0.md",
@@ -307,7 +311,7 @@
        "line_end": 38150,
        "quote": "**Identity.** The subject is `collaboration_run_id`, `finding_id`; `owner_operation_id`, `idempotency_key` and `event_id` follow SP-460's recipe with it. The `finding_id` is the identity; findings tha",
        "excerpt_sha256": "0fd79adc8b685921e4c56612e8bda497c0f2f996f1c9e4252f3e01e6ae0f18d7",
-       "file_sha256": "73ee6d097e08d31fd93301d05d2cd2632dd46e5a22ba3ea405ffadda4a0a9db2",
+       "file_sha256": "51edc1394ab24ca53a2a021dce3c3c9a1be0f43e2292d901ad56e4b0063a3ebf",
        "quote_check": "exact",
        "quote_scope": "unit SP-476, Plans/storage-plan.md:38148-38239",
        "excerpt_digest_convention": "whole_line",
@@ -324,13 +328,13 @@
       {
        "path": "Plans/Contracts_V0.md",
        "unit": "CV-460",
-       "line_start": 33278,
-       "line_end": 33278,
+       "line_start": 32766,
+       "line_end": 32766,
        "quote": "7. **EventRecord joins.** A collaborative EventRecord has `scope_kind` equal to the payload's; `project_id`, `thread_id` and `idempotency_key` equal to the payload's; `run_id` equal to `collaboration_",
        "excerpt_sha256": "90ee722ebcd72613a597842c03b4c55147ef2338824c645bba681ea3c0eb45fe",
-       "file_sha256": "4ae2225d8ed19b6df971b6c32797aae6882d175264ff2c2e9a2045650d735e67",
+       "file_sha256": "2a9090efcaefbc3b0e85c2155255e078125e4d05a933e115ca931c6566b8b74b",
        "quote_check": "exact",
-       "quote_scope": "unit CV-460, Plans/Contracts_V0.md:33270-33364",
+       "quote_scope": "unit CV-460, Plans/Contracts_V0.md:32758-32852",
        "excerpt_digest_convention": "whole_line",
        "source_citation": {
         "path": "Plans/Contracts_V0.md",
@@ -349,7 +353,7 @@
        "line_end": 36640,
        "quote": "These commitments are DC's own recipe v1",
        "excerpt_sha256": "2e923f7ccd7b35a2ba7e01f4f315d185f5b8b4e0803306c5af12c63dab9ea718",
-       "file_sha256": "73ee6d097e08d31fd93301d05d2cd2632dd46e5a22ba3ea405ffadda4a0a9db2",
+       "file_sha256": "51edc1394ab24ca53a2a021dce3c3c9a1be0f43e2292d901ad56e4b0063a3ebf",
        "quote_check": "exact",
        "quote_scope": "unit SP-460, Plans/storage-plan.md:36597-36766",
        "excerpt_digest_convention": "whole_line",
@@ -404,7 +408,7 @@
        "line_end": 38156,
        "quote": "**Producer and first receipt.** `CollaborationRuntime` calls `storage.collaboration_append.v1@1.0.0` from `CollaborationRuntime.release_finding(FindingNormalized)` after the owner commit that holds th",
        "excerpt_sha256": "6f1ead1bba67f0e5fc112dcf22b18a22f5dcf7f0e8ebf2e9de6fb57ab0f04300",
-       "file_sha256": "73ee6d097e08d31fd93301d05d2cd2632dd46e5a22ba3ea405ffadda4a0a9db2",
+       "file_sha256": "51edc1394ab24ca53a2a021dce3c3c9a1be0f43e2292d901ad56e4b0063a3ebf",
        "quote_check": "exact",
        "quote_scope": "unit SP-476, Plans/storage-plan.md:38148-38239",
        "excerpt_digest_convention": "whole_line",
@@ -425,7 +429,7 @@
        "line_end": 36630,
        "quote": "**Admission order.** `storage.collaboration_append.v1@1.0.0` admits one event at a time under the existing Storage append-writer lock: (1) **exact retry**: the dedupe identity `(scope_partition, event",
        "excerpt_sha256": "698c6fcc9384e3336477533be811e86fca7df3081ebb5bee772527b65862e825",
-       "file_sha256": "73ee6d097e08d31fd93301d05d2cd2632dd46e5a22ba3ea405ffadda4a0a9db2",
+       "file_sha256": "51edc1394ab24ca53a2a021dce3c3c9a1be0f43e2292d901ad56e4b0063a3ebf",
        "quote_check": "exact",
        "quote_scope": "unit SP-460, Plans/storage-plan.md:36597-36766",
        "excerpt_digest_convention": "whole_line",
@@ -501,7 +505,7 @@
        "line_end": 36662,
        "quote": "**Retention.** Events: kept as long as the run's chat exists (DL-092, DL-292). The chat is the payload's `thread_id`. The structured reference in every prepared row is `{registry_schema_id: pm.storage",
        "excerpt_sha256": "8501696afa7b8a28598658729da8594b40a96c56c4cbbcb2fd9668dcdccd55e6",
-       "file_sha256": "73ee6d097e08d31fd93301d05d2cd2632dd46e5a22ba3ea405ffadda4a0a9db2",
+       "file_sha256": "51edc1394ab24ca53a2a021dce3c3c9a1be0f43e2292d901ad56e4b0063a3ebf",
        "quote_check": "exact",
        "quote_scope": "unit SP-460, Plans/storage-plan.md:36597-36766",
        "excerpt_digest_convention": "whole_line",
@@ -524,7 +528,7 @@
        "excerpt_sha256": "daa70de01d0f78c263da8a05a17af2962627491ab1f8e29e38e626b1df77029f",
        "file_sha256": "b04c18aad61bb76c24b887ff5ded4cdc751b902c16a8c914ad7e62c009281642",
        "quote_check": "exact",
-       "quote_scope": "document",
+       "quote_scope": "unit #/retention_policies, Plans/storage_value_registry.json:94-781",
        "excerpt_digest_convention": "whole_line",
        "source_citation": {
         "path": "Plans/storage_value_registry.json",
@@ -534,7 +538,8 @@
         "quote": "\"policy_id\": \"RP-CHAT-THREAD-LIFETIME\"",
         "excerpt_sha256": "daa70de01d0f78c263da8a05a17af2962627491ab1f8e29e38e626b1df77029f",
         "file_sha256": "5f588f0aedddefe10864c536bfeb261da5833ef1a894c3f43706e07e7c6c79da"
-       }
+       },
+       "json_pointer": "#/retention_policies"
       },
       {
        "path": "Plans/storage-plan.md",
@@ -543,7 +548,7 @@
        "line_end": 36662,
        "quote": "The object is present on the current base; each family still requires its separate event admission.",
        "excerpt_sha256": "8501696afa7b8a28598658729da8594b40a96c56c4cbbcb2fd9668dcdccd55e6",
-       "file_sha256": "73ee6d097e08d31fd93301d05d2cd2632dd46e5a22ba3ea405ffadda4a0a9db2",
+       "file_sha256": "51edc1394ab24ca53a2a021dce3c3c9a1be0f43e2292d901ad56e4b0063a3ebf",
        "quote_check": "exact",
        "quote_scope": "unit SP-460, Plans/storage-plan.md:36597-36766",
        "excerpt_digest_convention": "whole_line",
@@ -629,7 +634,7 @@
        "line_end": 36660,
        "quote": "**Custody and redaction.** The 18 families' EventRecords in seglog are their only history: canonical, included in the canonical backup (BRS-033's application custody for application scope), never rebu",
        "excerpt_sha256": "c4fc68837d0d631d96b920ad97bcf082eb190bba27831afe2ade8198e64fb8ba",
-       "file_sha256": "73ee6d097e08d31fd93301d05d2cd2632dd46e5a22ba3ea405ffadda4a0a9db2",
+       "file_sha256": "51edc1394ab24ca53a2a021dce3c3c9a1be0f43e2292d901ad56e4b0063a3ebf",
        "quote_check": "exact",
        "quote_scope": "unit SP-460, Plans/storage-plan.md:36597-36766",
        "excerpt_digest_convention": "whole_line",
@@ -663,7 +668,7 @@
        "line_end": 38152,
        "quote": "**Admission checks, in order.** SP-460's common run checks (a payload naming a non-Review run fails `lineage_mismatch`); status `active` (`run_state_invalid`); `target_hashes` equal the run's frozen p",
        "excerpt_sha256": "608cbf96bbcd18e683e7dd2a4c87e9d5b2a9496264d7c3778a4dc6f03db5a25f",
-       "file_sha256": "73ee6d097e08d31fd93301d05d2cd2632dd46e5a22ba3ea405ffadda4a0a9db2",
+       "file_sha256": "51edc1394ab24ca53a2a021dce3c3c9a1be0f43e2292d901ad56e4b0063a3ebf",
        "quote_check": "exact",
        "quote_scope": "unit SP-476, Plans/storage-plan.md:38148-38239",
        "excerpt_digest_convention": "whole_line",
@@ -684,7 +689,7 @@
        "line_end": 36632,
        "quote": "**Common run checks.** For every family except `collaboration.created`, `collaboration.started` and `collaboration.configuration_changed`, step (5) first applies, in order: the run has a `collaboratio",
        "excerpt_sha256": "035a50e1df77d0989118af48533124d37fd14abf105978656c0255c1a65ad5bd",
-       "file_sha256": "73ee6d097e08d31fd93301d05d2cd2632dd46e5a22ba3ea405ffadda4a0a9db2",
+       "file_sha256": "51edc1394ab24ca53a2a021dce3c3c9a1be0f43e2292d901ad56e4b0063a3ebf",
        "quote_check": "exact",
        "quote_scope": "unit SP-460, Plans/storage-plan.md:36597-36766",
        "excerpt_digest_convention": "whole_line",
@@ -718,7 +723,7 @@
        "line_end": 38154,
        "quote": "**Consumers and checkpoint.** `storage.collaboration_projector.v1@1.0.0` applies it to the finding row (collaboration_finding_projection.v1): adds the finding row, undisposed, and advances the scope p",
        "excerpt_sha256": "c2d7ff70bf76b5a64e21e5f8bc7bbc1a945231b73a5eb68dbf54f4f472b0bed8",
-       "file_sha256": "73ee6d097e08d31fd93301d05d2cd2632dd46e5a22ba3ea405ffadda4a0a9db2",
+       "file_sha256": "51edc1394ab24ca53a2a021dce3c3c9a1be0f43e2292d901ad56e4b0063a3ebf",
        "quote_check": "exact",
        "quote_scope": "unit SP-476, Plans/storage-plan.md:38148-38239",
        "excerpt_digest_convention": "whole_line",
@@ -739,7 +744,7 @@
        "line_end": 36652,
        "quote": "**Physical projection composition (B2).** Section 2.3.1's keyed composition applies here by the same rule: the eight independent registry entries are `collaboration_projector_checkpoint` and `collabor",
        "excerpt_sha256": "54996a0f2b05031608cd4bf339269915c39810707020062ed2bf515eeaa9e104",
-       "file_sha256": "73ee6d097e08d31fd93301d05d2cd2632dd46e5a22ba3ea405ffadda4a0a9db2",
+       "file_sha256": "51edc1394ab24ca53a2a021dce3c3c9a1be0f43e2292d901ad56e4b0063a3ebf",
        "quote_check": "exact",
        "quote_scope": "unit SP-460, Plans/storage-plan.md:36597-36766",
        "excerpt_digest_convention": "whole_line",
@@ -760,7 +765,7 @@
        "line_end": 36654,
        "quote": "**Checkpoint semantic joins (B6).** In addition to shape, every read/advance compares outer, token and source-selection Storage identities, decodes and re-encodes the exact Project partition, compares",
        "excerpt_sha256": "42602fdd2a9e1f8ad680fca13850ef9f18fe2014aa076f08ff7aa07fccf3c76f",
-       "file_sha256": "73ee6d097e08d31fd93301d05d2cd2632dd46e5a22ba3ea405ffadda4a0a9db2",
+       "file_sha256": "51edc1394ab24ca53a2a021dce3c3c9a1be0f43e2292d901ad56e4b0063a3ebf",
        "quote_check": "exact",
        "quote_scope": "unit SP-460, Plans/storage-plan.md:36597-36766",
        "excerpt_digest_convention": "whole_line",
@@ -815,7 +820,7 @@
        "line_end": 36664,
        "quote": "**Replay, rebuild and withdrawal.** Replay runs in canonical seglog order from the checkpoint's inclusive cursor and only rebuilds projection rows: no message delivery, dispatch, card, notification, c",
        "excerpt_sha256": "b6e6a62c6e3c51f9cb1f7ec61dba5e894dba20fe45547fbf039e0ab2f7cba40c",
-       "file_sha256": "73ee6d097e08d31fd93301d05d2cd2632dd46e5a22ba3ea405ffadda4a0a9db2",
+       "file_sha256": "51edc1394ab24ca53a2a021dce3c3c9a1be0f43e2292d901ad56e4b0063a3ebf",
        "quote_check": "exact",
        "quote_scope": "unit SP-460, Plans/storage-plan.md:36597-36766",
        "excerpt_digest_convention": "whole_line",
@@ -836,7 +841,7 @@
        "line_end": 36640,
        "quote": "is read only through the shared `RetainedDispatcher`",
        "excerpt_sha256": "2e923f7ccd7b35a2ba7e01f4f315d185f5b8b4e0803306c5af12c63dab9ea718",
-       "file_sha256": "73ee6d097e08d31fd93301d05d2cd2632dd46e5a22ba3ea405ffadda4a0a9db2",
+       "file_sha256": "51edc1394ab24ca53a2a021dce3c3c9a1be0f43e2292d901ad56e4b0063a3ebf",
        "quote_check": "exact",
        "quote_scope": "unit SP-460, Plans/storage-plan.md:36597-36766",
        "excerpt_digest_convention": "whole_line",
@@ -1155,9 +1160,9 @@
   "row_pointer": "#/families/454"
  },
  "evidence_maintenance": {
-  "authority": "MERGE2-FIX1 findings 1/3/5",
-  "source_commit": "0c904de00426b0089ba5d56349fda8ea16cc9f88",
-  "source_assessment_sha256": "398eb1e3f7328cf47470bb727e69b2d33dbd41a3ecaed69869c283f6b0614aa0",
+  "authority": "MERGE2-FIX2 findings 1/2/3",
+  "source_commit": "0f2a90ece55d4bafd163b19a05cd3c4eda91b9c1",
+  "source_assessment_sha256": "f58f4f76b21a4eb568ef99240d6edc27a588f69477c426d677a0cbff47491545",
   "native_execution": "NOT_RUN",
   "verdicts_changed": false
  }

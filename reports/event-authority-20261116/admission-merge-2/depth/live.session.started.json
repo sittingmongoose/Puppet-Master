@@ -42,7 +42,9 @@
         "quote_line": 26512,
         "file_sha256": "05e7c00788b54466b504773636fd331d2b8f17147dcdbc0e29cc9f153f144d11",
         "quote_check": "exact"
-       }
+       },
+       "unit": "#/families/404",
+       "quote_scope": "unit #/families/404, Plans/event_family_registry.json:26553-26598"
       }
      ]
     },
@@ -54,12 +56,12 @@
       {
        "path": "Plans/newtools.md",
        "unit": "N2-219",
-       "line_start": 9212,
-       "line_end": 9212,
+       "line_start": 9215,
+       "line_end": 9215,
        "quote": "live.session.started 1.0.0 — newly authored owner contract, prepared without admission.",
        "quote_check": "exact",
-       "quote_scope": "unit N2-219, Plans/newtools.md:9212-9264",
-       "file_sha256": "178bb7506499c09d2b5ceb3e4658c14b098132679aa10284d8ee12dd8e7ef64e",
+       "quote_scope": "unit N2-219, Plans/newtools.md:9215-9270",
+       "file_sha256": "c2ca1879b1480cde1a62aa1b8674e1fa9666fd35ba6ab26ceb5e0ff4b067f821",
        "source_citation": {
         "path": "Plans/newtools.md",
         "unit": "N2-219",
@@ -85,12 +87,12 @@
       {
        "path": "Plans/newtools.md",
        "unit": "N2-219",
-       "line_start": 9222,
-       "line_end": 9222,
+       "line_start": 9225,
+       "line_end": 9225,
        "quote": "Producer: Unified live-visualization orchestrator launch hook. After successful target launch, record its actual target identity before reporting session start to chat. Do not emit",
        "quote_check": "exact",
-       "quote_scope": "unit N2-219, Plans/newtools.md:9212-9264",
-       "file_sha256": "178bb7506499c09d2b5ceb3e4658c14b098132679aa10284d8ee12dd8e7ef64e",
+       "quote_scope": "unit N2-219, Plans/newtools.md:9215-9270",
+       "file_sha256": "c2ca1879b1480cde1a62aa1b8674e1fa9666fd35ba6ab26ceb5e0ff4b067f821",
        "source_citation": {
         "path": "Plans/newtools.md",
         "unit": "N2-219",
@@ -103,12 +105,12 @@
       {
        "path": "Plans/newtools.md",
        "unit": "N2-219",
-       "line_start": 9233,
-       "line_end": 9233,
+       "line_start": 9236,
+       "line_end": 9236,
        "quote": "Round 7 authenticated history for live.session.started: retained read, checkpoint and rebuild accept supported 1.0.0 originals written with projector_replay_only as well as dedupe_",
        "quote_check": "exact",
-       "quote_scope": "unit N2-219, Plans/newtools.md:9212-9264",
-       "file_sha256": "178bb7506499c09d2b5ceb3e4658c14b098132679aa10284d8ee12dd8e7ef64e",
+       "quote_scope": "unit N2-219, Plans/newtools.md:9215-9270",
+       "file_sha256": "c2ca1879b1480cde1a62aa1b8674e1fa9666fd35ba6ab26ceb5e0ff4b067f821",
        "source_citation": {
         "path": "Plans/newtools.md",
         "unit": "N2-219",
@@ -183,12 +185,12 @@
       {
        "path": "Plans/newtools.md",
        "unit": "N2-219",
-       "line_start": 9223,
-       "line_end": 9223,
+       "line_start": 9226,
+       "line_end": 9226,
        "quote": "Idempotency key is sha256(canonical MessagePack array [\"live.session.started\", \"1.0.0\", actual project_id, live_session_id]); the ordered tuple is unambiguous, never delimiter conc",
        "quote_check": "exact",
-       "quote_scope": "unit N2-219, Plans/newtools.md:9212-9264",
-       "file_sha256": "178bb7506499c09d2b5ceb3e4658c14b098132679aa10284d8ee12dd8e7ef64e",
+       "quote_scope": "unit N2-219, Plans/newtools.md:9215-9270",
+       "file_sha256": "c2ca1879b1480cde1a62aa1b8674e1fa9666fd35ba6ab26ceb5e0ff4b067f821",
        "source_citation": {
         "path": "Plans/newtools.md",
         "unit": "N2-219",
@@ -214,12 +216,12 @@
       {
        "path": "Plans/newtools.md",
        "unit": "N2-219",
-       "line_start": 9226,
-       "line_end": 9226,
+       "line_start": 9229,
+       "line_end": 9229,
        "quote": "Replay: event delivery and passive reads execute no external action; exact duplicates leave the index state unchanged. Actual original run/Doctor source custody plus canonical even",
        "quote_check": "exact",
-       "quote_scope": "unit N2-219, Plans/newtools.md:9212-9264",
-       "file_sha256": "178bb7506499c09d2b5ceb3e4658c14b098132679aa10284d8ee12dd8e7ef64e",
+       "quote_scope": "unit N2-219, Plans/newtools.md:9215-9270",
+       "file_sha256": "c2ca1879b1480cde1a62aa1b8674e1fa9666fd35ba6ab26ceb5e0ff4b067f821",
        "source_citation": {
         "path": "Plans/newtools.md",
         "unit": "N2-219",
@@ -232,12 +234,12 @@
       {
        "path": "Plans/newtools.md",
        "unit": "N2-219",
-       "line_start": 9233,
-       "line_end": 9233,
+       "line_start": 9236,
+       "line_end": 9236,
        "quote": "Round 7 authenticated history for live.session.started: retained read, checkpoint and rebuild accept supported 1.0.0 originals written with projector_replay_only as well as dedupe_",
        "quote_check": "exact",
-       "quote_scope": "unit N2-219, Plans/newtools.md:9212-9264",
-       "file_sha256": "178bb7506499c09d2b5ceb3e4658c14b098132679aa10284d8ee12dd8e7ef64e",
+       "quote_scope": "unit N2-219, Plans/newtools.md:9215-9270",
+       "file_sha256": "c2ca1879b1480cde1a62aa1b8674e1fa9666fd35ba6ab26ceb5e0ff4b067f821",
        "source_citation": {
         "path": "Plans/newtools.md",
         "unit": "N2-219",
@@ -263,12 +265,12 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-642",
-       "line_start": 48912,
-       "line_end": 48912,
-       "quote": "\\ = RP-RUNTIME-365D@1.0.0`, under DL-401, DL-500.\\n\\nUse the existing policy object unchanged: {\\\"anchor_kind\\\"\\",
+       "line_start": 48899,
+       "line_end": 48901,
+       "quote": "= RP-RUNTIME-365D@1.0.0`, under DL-401, DL-500.\n\n  Use the existing policy object unchanged: {\"anchor_kind\"",
        "quote_check": "exact",
-       "quote_scope": "unit SP-642, Plans/storage-plan.md:48890-48951",
-       "file_sha256": "73ee6d097e08d31fd93301d05d2cd2632dd46e5a22ba3ea405ffadda4a0a9db2",
+       "quote_scope": "unit SP-642, Plans/storage-plan.md:48884-48940",
+       "file_sha256": "51edc1394ab24ca53a2a021dce3c3c9a1be0f43e2292d901ad56e4b0063a3ebf",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-642",
@@ -276,6 +278,19 @@
         "line_end": 48913,
         "quote": "\\ = RP-RUNTIME-365D@1.0.0`, under DL-401, DL-500.\\n\\nUse the existing policy object unchanged: {\\\"anchor_kind\\\"\\",
         "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+       },
+       "reanchor": {
+        "method": "exact_normalized",
+        "reason": "Whitespace, line wrapping, YAML quoting/escaping or Markdown escaping only; searched the cited unit.",
+        "unit": "SP-642",
+        "old_quote": "\\ = RP-RUNTIME-365D@1.0.0`, under DL-401, DL-500.\\n\\nUse the existing policy object unchanged: {\\\"anchor_kind\\\"\\",
+        "new_quote": "= RP-RUNTIME-365D@1.0.0`, under DL-401, DL-500.\n\n  Use the existing policy object unchanged: {\"anchor_kind\"",
+        "normalizations": [
+         "whitespace/line wrapping",
+         "YAML quoting/escaping",
+         "Markdown escaping"
+        ],
+        "owner_change_commit": "ea68abacca470d9dd49885294f5bd5c4d0771024"
        }
       }
      ],
@@ -294,12 +309,12 @@
       {
        "path": "Plans/newtools.md",
        "unit": "N2-219",
-       "line_start": 9228,
-       "line_end": 9228,
+       "line_start": 9231,
+       "line_end": 9231,
        "quote": "backup/restore covers original log, receipts and the source closure; mandatory original custody missing or unverifiable fences retry and disclosure. The derived checkpoint is rebui",
        "quote_check": "exact",
-       "quote_scope": "unit N2-219, Plans/newtools.md:9212-9264",
-       "file_sha256": "178bb7506499c09d2b5ceb3e4658c14b098132679aa10284d8ee12dd8e7ef64e",
+       "quote_scope": "unit N2-219, Plans/newtools.md:9215-9270",
+       "file_sha256": "c2ca1879b1480cde1a62aa1b8674e1fa9666fd35ba6ab26ceb5e0ff4b067f821",
        "source_citation": {
         "path": "Plans/newtools.md",
         "unit": "N2-219",
@@ -312,12 +327,12 @@
       {
        "path": "Plans/newtools.md",
        "unit": "N2-219",
-       "line_start": 9233,
-       "line_end": 9233,
+       "line_start": 9236,
+       "line_end": 9236,
        "quote": "Round 7 authenticated history for live.session.started: retained read, checkpoint and rebuild accept supported 1.0.0 originals written with projector_replay_only as well as dedupe_",
        "quote_check": "exact",
-       "quote_scope": "unit N2-219, Plans/newtools.md:9212-9264",
-       "file_sha256": "178bb7506499c09d2b5ceb3e4658c14b098132679aa10284d8ee12dd8e7ef64e",
+       "quote_scope": "unit N2-219, Plans/newtools.md:9215-9270",
+       "file_sha256": "c2ca1879b1480cde1a62aa1b8674e1fa9666fd35ba6ab26ceb5e0ff4b067f821",
        "source_citation": {
         "path": "Plans/newtools.md",
         "unit": "N2-219",
@@ -343,12 +358,12 @@
       {
        "path": "Plans/newtools.md",
        "unit": "N2-219",
-       "line_start": 9222,
-       "line_end": 9222,
+       "line_start": 9225,
+       "line_end": 9225,
        "quote": "Producer: Unified live-visualization orchestrator launch hook. After successful target launch, record its actual target identity before reporting session start to chat. Do not emit",
        "quote_check": "exact",
-       "quote_scope": "unit N2-219, Plans/newtools.md:9212-9264",
-       "file_sha256": "178bb7506499c09d2b5ceb3e4658c14b098132679aa10284d8ee12dd8e7ef64e",
+       "quote_scope": "unit N2-219, Plans/newtools.md:9215-9270",
+       "file_sha256": "c2ca1879b1480cde1a62aa1b8674e1fa9666fd35ba6ab26ceb5e0ff4b067f821",
        "source_citation": {
         "path": "Plans/newtools.md",
         "unit": "N2-219",
@@ -374,12 +389,12 @@
       {
        "path": "Plans/newtools.md",
        "unit": "N2-219",
-       "line_start": 9227,
-       "line_end": 9227,
+       "line_start": 9230,
+       "line_end": 9230,
        "quote": "reader.ds15.live_session_started.v1@1.0.0, operating as Chat live_run_card started reader, reads only this exact admitted event type at 1.0.0. It adopts SP-278 by name and DL-076's",
        "quote_check": "exact",
-       "quote_scope": "unit N2-219, Plans/newtools.md:9212-9264",
-       "file_sha256": "178bb7506499c09d2b5ceb3e4658c14b098132679aa10284d8ee12dd8e7ef64e",
+       "quote_scope": "unit N2-219, Plans/newtools.md:9215-9270",
+       "file_sha256": "c2ca1879b1480cde1a62aa1b8674e1fa9666fd35ba6ab26ceb5e0ff4b067f821",
        "source_citation": {
         "path": "Plans/newtools.md",
         "unit": "N2-219",
@@ -392,12 +407,12 @@
       {
        "path": "Plans/newtools.md",
        "unit": "N2-219",
-       "line_start": 9233,
-       "line_end": 9233,
+       "line_start": 9236,
+       "line_end": 9236,
        "quote": "Round 7 authenticated history for live.session.started: retained read, checkpoint and rebuild accept supported 1.0.0 originals written with projector_replay_only as well as dedupe_",
        "quote_check": "exact",
-       "quote_scope": "unit N2-219, Plans/newtools.md:9212-9264",
-       "file_sha256": "178bb7506499c09d2b5ceb3e4658c14b098132679aa10284d8ee12dd8e7ef64e",
+       "quote_scope": "unit N2-219, Plans/newtools.md:9215-9270",
+       "file_sha256": "c2ca1879b1480cde1a62aa1b8674e1fa9666fd35ba6ab26ceb5e0ff4b067f821",
        "source_citation": {
         "path": "Plans/newtools.md",
         "unit": "N2-219",
@@ -423,12 +438,12 @@
       {
        "path": "Plans/newtools.md",
        "unit": "N2-219",
-       "line_start": 9221,
-       "line_end": 9221,
+       "line_start": 9224,
+       "line_end": 9224,
        "quote": "withdrawal definition was found for live.session.started. This family is explicitly inside DL-045's exact scope. No sibling definition is adopted.",
        "quote_check": "exact",
-       "quote_scope": "unit N2-219, Plans/newtools.md:9212-9264",
-       "file_sha256": "178bb7506499c09d2b5ceb3e4658c14b098132679aa10284d8ee12dd8e7ef64e",
+       "quote_scope": "unit N2-219, Plans/newtools.md:9215-9270",
+       "file_sha256": "c2ca1879b1480cde1a62aa1b8674e1fa9666fd35ba6ab26ceb5e0ff4b067f821",
        "source_citation": {
         "path": "Plans/newtools.md",
         "unit": "N2-219",
@@ -441,12 +456,12 @@
       {
        "path": "Plans/newtools.md",
        "unit": "N2-219",
-       "line_start": 9233,
-       "line_end": 9233,
+       "line_start": 9236,
+       "line_end": 9236,
        "quote": "Round 7 authenticated history for live.session.started: retained read, checkpoint and rebuild accept supported 1.0.0 originals written with projector_replay_only as well as dedupe_",
        "quote_check": "exact",
-       "quote_scope": "unit N2-219, Plans/newtools.md:9212-9264",
-       "file_sha256": "178bb7506499c09d2b5ceb3e4658c14b098132679aa10284d8ee12dd8e7ef64e",
+       "quote_scope": "unit N2-219, Plans/newtools.md:9215-9270",
+       "file_sha256": "c2ca1879b1480cde1a62aa1b8674e1fa9666fd35ba6ab26ceb5e0ff4b067f821",
        "source_citation": {
         "path": "Plans/newtools.md",
         "unit": "N2-219",
@@ -472,12 +487,12 @@
       {
        "path": "Plans/newtools.md",
        "unit": "N2-219",
-       "line_start": 9231,
-       "line_end": 9231,
+       "line_start": 9234,
+       "line_end": 9234,
        "quote": "Oracles: ATS-322 and scripts/pm-ds15-event-contracts.py exercise this exact closed payload and checkpoint identity. Native obligations: original-outcome/append crash boundaries, re",
        "quote_check": "exact",
-       "quote_scope": "unit N2-219, Plans/newtools.md:9212-9264",
-       "file_sha256": "178bb7506499c09d2b5ceb3e4658c14b098132679aa10284d8ee12dd8e7ef64e",
+       "quote_scope": "unit N2-219, Plans/newtools.md:9215-9270",
+       "file_sha256": "c2ca1879b1480cde1a62aa1b8674e1fa9666fd35ba6ab26ceb5e0ff4b067f821",
        "source_citation": {
         "path": "Plans/newtools.md",
         "unit": "N2-219",
@@ -490,12 +505,12 @@
       {
        "path": "Plans/newtools.md",
        "unit": "N2-219",
-       "line_start": 9233,
-       "line_end": 9233,
+       "line_start": 9236,
+       "line_end": 9236,
        "quote": "Round 7 authenticated history for live.session.started: retained read, checkpoint and rebuild accept supported 1.0.0 originals written with projector_replay_only as well as dedupe_",
        "quote_check": "exact",
-       "quote_scope": "unit N2-219, Plans/newtools.md:9212-9264",
-       "file_sha256": "178bb7506499c09d2b5ceb3e4658c14b098132679aa10284d8ee12dd8e7ef64e",
+       "quote_scope": "unit N2-219, Plans/newtools.md:9215-9270",
+       "file_sha256": "c2ca1879b1480cde1a62aa1b8674e1fa9666fd35ba6ab26ceb5e0ff4b067f821",
        "source_citation": {
         "path": "Plans/newtools.md",
         "unit": "N2-219",
@@ -524,9 +539,9 @@
   "row_pointer": "#/families/404"
  },
  "evidence_maintenance": {
-  "authority": "MERGE2-FIX1 findings 1/3/5",
-  "source_commit": "0c904de00426b0089ba5d56349fda8ea16cc9f88",
-  "source_assessment_sha256": "4a682b6a8cd4995e737d6c87ee27d25646a5fc33d315326ef29a73dc6fa5af2f",
+  "authority": "MERGE2-FIX2 findings 1/2/3",
+  "source_commit": "0f2a90ece55d4bafd163b19a05cd3c4eda91b9c1",
+  "source_assessment_sha256": "8bdb4eb8920831da0d6c0f6ea566baebc443eb55eefd450804db13c0fae1c44c",
   "native_execution": "NOT_RUN",
   "verdicts_changed": false
  }

@@ -42,7 +42,9 @@
         "quote_line": 33364,
         "file_sha256": "cfa10c4f1f5f5d303e9d209aae38b1628a8a5c9943f1ba952526e373f3efa02b",
         "quote_check": "exact"
-       }
+       },
+       "unit": "#/families/514",
+       "quote_scope": "unit #/families/514, Plans/event_family_registry.json:33411-33452"
       }
      ]
     },
@@ -54,12 +56,12 @@
       {
        "path": "Plans/Contracts_V0.md",
        "unit": "CV-597",
-       "line_start": 43083,
-       "line_end": 43084,
+       "line_start": 42601,
+       "line_end": 42602,
        "quote": "Semantic owner is current\\\n  \\ Plans/Planning_Wizard.md#PWIZ-002,",
-       "file_sha256": "4ae2225d8ed19b6df971b6c32797aae6882d175264ff2c2e9a2045650d735e67",
+       "file_sha256": "2a9090efcaefbc3b0e85c2155255e078125e4d05a933e115ca931c6566b8b74b",
        "quote_check": "exact",
-       "quote_scope": "unit CV-597, Plans/Contracts_V0.md:43074-43296",
+       "quote_scope": "unit CV-597, Plans/Contracts_V0.md:42592-42814",
        "source_citation": {
         "path": "Plans/Contracts_V0.md",
         "unit": "CV-597",
@@ -85,12 +87,12 @@
       {
        "path": "Plans/Contracts_V0.md",
        "unit": "CV-597",
-       "line_start": 43105,
-       "line_end": 43106,
+       "line_start": 42623,
+       "line_end": 42624,
        "quote": "Producer emitter.wizard_unblocked@1.0.0\\\n  \\ is the responsible Planning Wizard component's observer of its original",
-       "file_sha256": "4ae2225d8ed19b6df971b6c32797aae6882d175264ff2c2e9a2045650d735e67",
+       "file_sha256": "2a9090efcaefbc3b0e85c2155255e078125e4d05a933e115ca931c6566b8b74b",
        "quote_check": "exact",
-       "quote_scope": "unit CV-597, Plans/Contracts_V0.md:43074-43296",
+       "quote_scope": "unit CV-597, Plans/Contracts_V0.md:42592-42814",
        "source_citation": {
         "path": "Plans/Contracts_V0.md",
         "unit": "CV-597",
@@ -116,12 +118,12 @@
       {
        "path": "Plans/Contracts_V0.md",
        "unit": "CV-597",
-       "line_start": 43098,
-       "line_end": 43099,
+       "line_start": 42616,
+       "line_end": 42617,
        "quote": "All properties of Plans/event_payloads/planning_wizard/wizard_unblocked.schema.json\\\n  \\ are required-present, root",
-       "file_sha256": "4ae2225d8ed19b6df971b6c32797aae6882d175264ff2c2e9a2045650d735e67",
+       "file_sha256": "2a9090efcaefbc3b0e85c2155255e078125e4d05a933e115ca931c6566b8b74b",
        "quote_check": "exact",
-       "quote_scope": "unit CV-597, Plans/Contracts_V0.md:43074-43296",
+       "quote_scope": "unit CV-597, Plans/Contracts_V0.md:42592-42814",
        "source_citation": {
         "path": "Plans/Contracts_V0.md",
         "unit": "CV-597",
@@ -165,12 +167,12 @@
       {
        "path": "Plans/Contracts_V0.md",
        "unit": "CV-597",
-       "line_start": 43122,
-       "line_end": 43122,
+       "line_start": 42640,
+       "line_end": 42640,
        "quote": "NEW identity recipe",
        "quote_check": "exact",
-       "quote_scope": "unit CV-597, Plans/Contracts_V0.md:43074-43296",
-       "file_sha256": "4ae2225d8ed19b6df971b6c32797aae6882d175264ff2c2e9a2045650d735e67",
+       "quote_scope": "unit CV-597, Plans/Contracts_V0.md:42592-42814",
+       "file_sha256": "2a9090efcaefbc3b0e85c2155255e078125e4d05a933e115ca931c6566b8b74b",
        "source_citation": {
         "path": "Plans/Contracts_V0.md",
         "unit": "CV-597",
@@ -196,12 +198,12 @@
       {
        "path": "Plans/Contracts_V0.md",
        "unit": "CV-597",
-       "line_start": 43128,
-       "line_end": 43129,
+       "line_start": 42646,
+       "line_end": 42647,
        "quote": "Retry compares exactly the producer-owned semantic fields enumerated\\\n  \\ by CV-339: event_type, scope_kind, project_id,",
-       "file_sha256": "4ae2225d8ed19b6df971b6c32797aae6882d175264ff2c2e9a2045650d735e67",
+       "file_sha256": "2a9090efcaefbc3b0e85c2155255e078125e4d05a933e115ca931c6566b8b74b",
        "quote_check": "exact",
-       "quote_scope": "unit CV-597, Plans/Contracts_V0.md:43074-43296",
+       "quote_scope": "unit CV-597, Plans/Contracts_V0.md:42592-42814",
        "source_citation": {
         "path": "Plans/Contracts_V0.md",
         "unit": "CV-597",
@@ -227,12 +229,12 @@
       {
        "path": "Plans/Contracts_V0.md",
        "unit": "CV-597",
-       "line_start": 43249,
-       "line_end": 43249,
+       "line_start": 42767,
+       "line_end": 42767,
        "quote": "Event history `retention_policy_ref = RP-AUTHORITY-INDEFINITE@1.0.0`, under DL-401.\\n\\nUse the existing\\",
        "quote_check": "exact",
-       "quote_scope": "unit CV-597, Plans/Contracts_V0.md:43074-43296",
-       "file_sha256": "4ae2225d8ed19b6df971b6c32797aae6882d175264ff2c2e9a2045650d735e67",
+       "quote_scope": "unit CV-597, Plans/Contracts_V0.md:42592-42814",
+       "file_sha256": "2a9090efcaefbc3b0e85c2155255e078125e4d05a933e115ca931c6566b8b74b",
        "source_citation": {
         "path": "Plans/Contracts_V0.md",
         "unit": "CV-597",
@@ -258,12 +260,12 @@
       {
        "path": "Plans/Contracts_V0.md",
        "unit": "CV-597",
-       "line_start": 43160,
-       "line_end": 43161,
+       "line_start": 42678,
+       "line_end": 42679,
        "quote": "NEW original custody source wizard_unblocked_evidence\\\n  \\ is materialized in Plans/storage_value_registry.json under",
-       "file_sha256": "4ae2225d8ed19b6df971b6c32797aae6882d175264ff2c2e9a2045650d735e67",
+       "file_sha256": "2a9090efcaefbc3b0e85c2155255e078125e4d05a933e115ca931c6566b8b74b",
        "quote_check": "exact",
-       "quote_scope": "unit CV-597, Plans/Contracts_V0.md:43074-43296",
+       "quote_scope": "unit CV-597, Plans/Contracts_V0.md:42592-42814",
        "source_citation": {
         "path": "Plans/Contracts_V0.md",
         "unit": "CV-597",
@@ -289,12 +291,12 @@
       {
        "path": "Plans/Contracts_V0.md",
        "unit": "CV-597",
-       "line_start": 43143,
-       "line_end": 43144,
+       "line_start": 42661,
+       "line_end": 42662,
        "quote": "The planning component's immutable\\\n  \\ conditions_cleared observation identifies the complete required conditions",
-       "file_sha256": "4ae2225d8ed19b6df971b6c32797aae6882d175264ff2c2e9a2045650d735e67",
+       "file_sha256": "2a9090efcaefbc3b0e85c2155255e078125e4d05a933e115ca931c6566b8b74b",
        "quote_check": "exact",
-       "quote_scope": "unit CV-597, Plans/Contracts_V0.md:43074-43296",
+       "quote_scope": "unit CV-597, Plans/Contracts_V0.md:42592-42814",
        "source_citation": {
         "path": "Plans/Contracts_V0.md",
         "unit": "CV-597",
@@ -320,12 +322,12 @@
       {
        "path": "Plans/Contracts_V0.md",
        "unit": "CV-597",
-       "line_start": 43194,
-       "line_end": 43195,
+       "line_start": 42712,
+       "line_end": 42713,
        "quote": "NEW passive operating consumer\\\n  \\ reader.wizard_unblocked_history@1.0.0 selects only wizard.unblocked at this exact",
-       "file_sha256": "4ae2225d8ed19b6df971b6c32797aae6882d175264ff2c2e9a2045650d735e67",
+       "file_sha256": "2a9090efcaefbc3b0e85c2155255e078125e4d05a933e115ca931c6566b8b74b",
        "quote_check": "exact",
-       "quote_scope": "unit CV-597, Plans/Contracts_V0.md:43074-43296",
+       "quote_scope": "unit CV-597, Plans/Contracts_V0.md:42592-42814",
        "source_citation": {
         "path": "Plans/Contracts_V0.md",
         "unit": "CV-597",
@@ -351,12 +353,12 @@
       {
        "path": "Plans/Contracts_V0.md",
        "unit": "CV-597",
-       "line_start": 43219,
-       "line_end": 43219,
+       "line_start": 42737,
+       "line_end": 42737,
        "quote": "Compatibility/withdrawal for wizard.unblocked alone: dispatch only explicitly supported exact family/schema/version;",
        "quote_check": "exact",
-       "quote_scope": "unit CV-597, Plans/Contracts_V0.md:43074-43296",
-       "file_sha256": "4ae2225d8ed19b6df971b6c32797aae6882d175264ff2c2e9a2045650d735e67",
+       "quote_scope": "unit CV-597, Plans/Contracts_V0.md:42592-42814",
+       "file_sha256": "2a9090efcaefbc3b0e85c2155255e078125e4d05a933e115ca931c6566b8b74b",
        "source_citation": {
         "path": "Plans/Contracts_V0.md",
         "unit": "CV-597",
@@ -369,12 +371,12 @@
       {
        "path": "Plans/Contracts_V0.md",
        "unit": "CV-597",
-       "line_start": 43191,
-       "line_end": 43192,
+       "line_start": 42709,
+       "line_end": 42710,
        "quote": "Under CV-1101, ts and occurred_at_utc use pm_event_datetime.date_time with the EventRecord\\\n  \\ profile; under CV-253,",
-       "file_sha256": "4ae2225d8ed19b6df971b6c32797aae6882d175264ff2c2e9a2045650d735e67",
+       "file_sha256": "2a9090efcaefbc3b0e85c2155255e078125e4d05a933e115ca931c6566b8b74b",
        "quote_check": "exact",
-       "quote_scope": "unit CV-597, Plans/Contracts_V0.md:43074-43296",
+       "quote_scope": "unit CV-597, Plans/Contracts_V0.md:42592-42814",
        "source_citation": {
         "path": "Plans/Contracts_V0.md",
         "unit": "CV-597",
@@ -436,13 +438,13 @@
       {
        "path": "Plans/Contracts_V0.md",
        "unit": "CV-597",
-       "line_start": 43098,
-       "line_end": 43099,
+       "line_start": 42616,
+       "line_end": 42617,
        "quote": "All properties of Plans/event_payloads/planning_wizard/wizard_unblocked.schema.json\\\n  \\ are required-present, root",
-       "file_sha256": "4ae2225d8ed19b6df971b6c32797aae6882d175264ff2c2e9a2045650d735e67",
+       "file_sha256": "2a9090efcaefbc3b0e85c2155255e078125e4d05a933e115ca931c6566b8b74b",
        "quote_check": "exact",
        "evidence_role": "Exact canonical subject of the existing whole-definition oracle proof; test execution evidence remains the separately cited scripts.",
-       "quote_scope": "unit CV-597, Plans/Contracts_V0.md:43074-43296",
+       "quote_scope": "unit CV-597, Plans/Contracts_V0.md:42592-42814",
        "source_citation": {
         "path": "Plans/Contracts_V0.md",
         "unit": "CV-597",
@@ -670,9 +672,9 @@
   "row_pointer": "#/families/514"
  },
  "evidence_maintenance": {
-  "authority": "MERGE2-FIX1 findings 1/3/5",
-  "source_commit": "0c904de00426b0089ba5d56349fda8ea16cc9f88",
-  "source_assessment_sha256": "5c04873881bb17f0a5925b9704d48a7b68ef062b35b8040003e5ae344f4b902d",
+  "authority": "MERGE2-FIX2 findings 1/2/3",
+  "source_commit": "0f2a90ece55d4bafd163b19a05cd3c4eda91b9c1",
+  "source_assessment_sha256": "8fe2c9361222437eef5b54666865c250159ad7608043c33dac02e13501e279e5",
   "native_execution": "NOT_RUN",
   "verdicts_changed": false
  }

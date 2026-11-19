@@ -42,7 +42,9 @@
         "quote_line": 33321,
         "file_sha256": "72d43d91c0f10ded3cbca67ef3a157bd65dec0ed3eecfbd04a301283a61aaf19",
         "quote_check": "exact"
-       }
+       },
+       "unit": "#/families/513",
+       "quote_scope": "unit #/families/513, Plans/event_family_registry.json:33368-33410"
       }
      ]
     },
@@ -72,12 +74,12 @@
       {
        "path": "Plans/Contracts_V0.md",
        "unit": "CV-594",
-       "line_start": 42702,
-       "line_end": 42709,
+       "line_start": 42220,
+       "line_end": 42227,
        "quote": "wizard.opened Payload And Identity\n\n```yaml\nplan_unit_id: CV-594\nunit_type: requirement\nstatus: accepted\nowner_doc: Plans/Contracts_V0.md\ncanonical_text: 'wizard.opened has the closed p",
        "quote_check": "exact",
-       "quote_scope": "unit CV-594, Plans/Contracts_V0.md:42702-42774",
-       "file_sha256": "4ae2225d8ed19b6df971b6c32797aae6882d175264ff2c2e9a2045650d735e67",
+       "quote_scope": "unit CV-594, Plans/Contracts_V0.md:42220-42292",
+       "file_sha256": "2a9090efcaefbc3b0e85c2155255e078125e4d05a933e115ca931c6566b8b74b",
        "source_citation": {
         "path": "Plans/Contracts_V0.md",
         "unit": "CV-594",
@@ -103,12 +105,12 @@
       {
        "path": "Plans/Contracts_V0.md",
        "unit": "CV-594",
-       "line_start": 42743,
-       "line_end": 42743,
+       "line_start": 42261,
+       "line_end": 42261,
        "quote": "NEW SP-337 event-body binding for wizard.opened under DL-045: measure the complete logical body using the exact SP-026 canonical MessagePack bytes Storage stores, never JSON character or serialized JS",
        "quote_check": "exact",
-       "quote_scope": "unit CV-594, Plans/Contracts_V0.md:42702-42774",
-       "file_sha256": "4ae2225d8ed19b6df971b6c32797aae6882d175264ff2c2e9a2045650d735e67",
+       "quote_scope": "unit CV-594, Plans/Contracts_V0.md:42220-42292",
+       "file_sha256": "2a9090efcaefbc3b0e85c2155255e078125e4d05a933e115ca931c6566b8b74b",
        "source_citation": {
         "path": "Plans/Contracts_V0.md",
         "unit": "CV-594",
@@ -120,13 +122,13 @@
       },
       {
        "path": "Plans/storage-plan.md",
-       "unit": "Wizard Opened Original Custody",
-       "line_start": 54697,
-       "line_end": 54697,
+       "unit": "heading:Wizard Opened Original Custody",
+       "line_start": 54650,
+       "line_end": 54650,
        "quote": "SP-286/CV-339 full-value v2 receipt resolution, SP-336/SP-347 durability and Case L-2/SP-026/SP-236 SeglogFrameV2 bytes. Order is exact-family admission/current owner guards, original s",
        "quote_check": "exact",
-       "quote_scope": "document",
-       "file_sha256": "73ee6d097e08d31fd93301d05d2cd2632dd46e5a22ba3ea405ffadda4a0a9db2",
+       "quote_scope": "unit heading:Wizard Opened Original Custody, Plans/storage-plan.md:54644-54660",
+       "file_sha256": "51edc1394ab24ca53a2a021dce3c3c9a1be0f43e2292d901ad56e4b0063a3ebf",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "Wizard Opened Original Custody",
@@ -134,17 +136,21 @@
         "line_end": 55187,
         "quote": "SP-286/CV-339 full-value v2 receipt resolution, SP-336/SP-347 durability and Case L-2/SP-026/SP-236 SeglogFrameV2 bytes. Order is exact-family admission/current owner guards, original s",
         "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+       },
+       "locator_maintenance": {
+        "authority": "MERGE2-FIX2 / R1 Astra real-input lineage evidence",
+        "reason": "Bind the existing claim to its exact named owner or preserved original section, without a sibling fallback or verdict change."
        }
       },
       {
        "path": "Plans/storage-plan.md",
-       "unit": "Wizard Opened Original Custody",
-       "line_start": 54693,
-       "line_end": 54693,
+       "unit": "heading:Wizard Opened Original Custody",
+       "line_start": 54646,
+       "line_end": 54646,
        "quote": "For this exact source family, SP-340 binds the canonical redb file, runs_and_goals storage group and its existing 4 GiB advisory canonical budget, with max_value_bytes=16384.",
        "quote_check": "exact",
-       "quote_scope": "document",
-       "file_sha256": "73ee6d097e08d31fd93301d05d2cd2632dd46e5a22ba3ea405ffadda4a0a9db2",
+       "quote_scope": "unit heading:Wizard Opened Original Custody, Plans/storage-plan.md:54644-54660",
+       "file_sha256": "51edc1394ab24ca53a2a021dce3c3c9a1be0f43e2292d901ad56e4b0063a3ebf",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "Wizard Opened Original Custody",
@@ -152,17 +158,21 @@
         "line_end": 55183,
         "quote": "For this exact source family, SP-340 binds the canonical redb file, runs_and_goals storage group and its existing 4 GiB advisory canonical budget, with max_value_bytes=16384.",
         "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+       },
+       "locator_maintenance": {
+        "authority": "MERGE2-FIX2 / R1 Astra real-input lineage evidence",
+        "reason": "Bind the existing claim to its exact named owner or preserved original section, without a sibling fallback or verdict change."
        }
       },
       {
        "path": "Plans/Contracts_V0.md",
        "unit": "CV-594",
-       "line_start": 42743,
-       "line_end": 42743,
+       "line_start": 42261,
+       "line_end": 42261,
        "quote": "NEW SP-337 event-body binding for wizard.opened under DL-045: measure the complete logical body using the exact SP-026 canonical MessagePack bytes Storage stores, never JSON character or serialized JS",
        "quote_check": "exact",
-       "quote_scope": "unit CV-594, Plans/Contracts_V0.md:42702-42774",
-       "file_sha256": "4ae2225d8ed19b6df971b6c32797aae6882d175264ff2c2e9a2045650d735e67",
+       "quote_scope": "unit CV-594, Plans/Contracts_V0.md:42220-42292",
+       "file_sha256": "2a9090efcaefbc3b0e85c2155255e078125e4d05a933e115ca931c6566b8b74b",
        "source_citation": {
         "path": "Plans/Contracts_V0.md",
         "unit": "CV-594",
@@ -175,12 +185,12 @@
       {
        "path": "Plans/Contracts_V0.md",
        "unit": "CV-594",
-       "line_start": 42743,
-       "line_end": 42743,
+       "line_start": 42261,
+       "line_end": 42261,
        "quote": "NEW SP-337 event-body binding for wizard.opened under DL-045: measure the complete logical body using the exact SP-026 canonical MessagePack bytes Storage stores, never JSON charac",
        "quote_check": "exact",
-       "quote_scope": "unit CV-594, Plans/Contracts_V0.md:42702-42774",
-       "file_sha256": "4ae2225d8ed19b6df971b6c32797aae6882d175264ff2c2e9a2045650d735e67",
+       "quote_scope": "unit CV-594, Plans/Contracts_V0.md:42220-42292",
+       "file_sha256": "2a9090efcaefbc3b0e85c2155255e078125e4d05a933e115ca931c6566b8b74b",
        "source_citation": {
         "path": "Plans/Contracts_V0.md",
         "unit": "CV-594",
@@ -309,12 +319,12 @@
       {
        "path": "Plans/Contracts_V0.md",
        "unit": "CV-594",
-       "line_start": 42720,
-       "line_end": 42721,
+       "line_start": 42238,
+       "line_end": 42239,
        "quote": "NEW identity recipe for this exact family: digest is lowercase SHA-256 of UTF-8 compact JSON [\"wizard.opened\",project_id,planning_run_id,thread_id,request_id]\n  with ensure_ascii=false ",
        "quote_check": "exact",
-       "quote_scope": "unit CV-594, Plans/Contracts_V0.md:42702-42774",
-       "file_sha256": "4ae2225d8ed19b6df971b6c32797aae6882d175264ff2c2e9a2045650d735e67",
+       "quote_scope": "unit CV-594, Plans/Contracts_V0.md:42220-42292",
+       "file_sha256": "2a9090efcaefbc3b0e85c2155255e078125e4d05a933e115ca931c6566b8b74b",
        "source_citation": {
         "path": "Plans/Contracts_V0.md",
         "unit": "CV-594",
@@ -327,12 +337,12 @@
       {
        "path": "Plans/Contracts_V0.md",
        "unit": "CV-594",
-       "line_start": 42711,
-       "line_end": 42713,
+       "line_start": 42229,
+       "line_end": 42231,
        "quote": "scope_kind=project;\n  envelope project_id/thread_id equal the actual source child and payload; run_id/node_id/attempt_id and requested/effective\n  account refs are null because this obs",
        "quote_check": "exact",
-       "quote_scope": "unit CV-594, Plans/Contracts_V0.md:42702-42774",
-       "file_sha256": "4ae2225d8ed19b6df971b6c32797aae6882d175264ff2c2e9a2045650d735e67",
+       "quote_scope": "unit CV-594, Plans/Contracts_V0.md:42220-42292",
+       "file_sha256": "2a9090efcaefbc3b0e85c2155255e078125e4d05a933e115ca931c6566b8b74b",
        "source_citation": {
         "path": "Plans/Contracts_V0.md",
         "unit": "CV-594",
@@ -358,12 +368,12 @@
       {
        "path": "Plans/Contracts_V0.md",
        "unit": "CV-594",
-       "line_start": 42743,
-       "line_end": 42743,
+       "line_start": 42261,
+       "line_end": 42261,
        "quote": "NEW SP-337 event-body binding for wizard.opened under DL-045: measure the complete logical body using the exact SP-026 canonical MessagePack bytes Storage stores, never JSON character or serialized JS",
        "quote_check": "exact",
-       "quote_scope": "unit CV-594, Plans/Contracts_V0.md:42702-42774",
-       "file_sha256": "4ae2225d8ed19b6df971b6c32797aae6882d175264ff2c2e9a2045650d735e67",
+       "quote_scope": "unit CV-594, Plans/Contracts_V0.md:42220-42292",
+       "file_sha256": "2a9090efcaefbc3b0e85c2155255e078125e4d05a933e115ca931c6566b8b74b",
        "source_citation": {
         "path": "Plans/Contracts_V0.md",
         "unit": "CV-594",
@@ -376,12 +386,12 @@
       {
        "path": "Plans/Contracts_V0.md",
        "unit": "CV-594",
-       "line_start": 42727,
-       "line_end": 42728,
+       "line_start": 42245,
+       "line_end": 42246,
        "quote": "replay_only_not_appendable. Passive readers cannot emit. Observe the existing successful open result for\n  the real Project and actual current PlanningRun intake child, after owner rout",
        "quote_check": "exact",
-       "quote_scope": "unit CV-594, Plans/Contracts_V0.md:42702-42774",
-       "file_sha256": "4ae2225d8ed19b6df971b6c32797aae6882d175264ff2c2e9a2045650d735e67",
+       "quote_scope": "unit CV-594, Plans/Contracts_V0.md:42220-42292",
+       "file_sha256": "2a9090efcaefbc3b0e85c2155255e078125e4d05a933e115ca931c6566b8b74b",
        "source_citation": {
         "path": "Plans/Contracts_V0.md",
         "unit": "CV-594",
@@ -437,13 +447,13 @@
      "evidence": [
       {
        "path": "Plans/storage-plan.md",
-       "unit": "Wizard Opened Original Custody",
-       "line_start": 54699,
-       "line_end": 54699,
+       "unit": "heading:Wizard Opened Original Custody",
+       "line_start": 54652,
+       "line_end": 54652,
        "quote": "Mandatory coherent backup includes this non-rebuildable source, original command/child/seed/context evidence, seglog permanent identities and SP-286 original full-value receipt custody ",
        "quote_check": "exact",
-       "quote_scope": "document",
-       "file_sha256": "73ee6d097e08d31fd93301d05d2cd2632dd46e5a22ba3ea405ffadda4a0a9db2",
+       "quote_scope": "unit heading:Wizard Opened Original Custody, Plans/storage-plan.md:54644-54660",
+       "file_sha256": "51edc1394ab24ca53a2a021dce3c3c9a1be0f43e2292d901ad56e4b0063a3ebf",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "Wizard Opened Original Custody",
@@ -451,6 +461,10 @@
         "line_end": 55189,
         "quote": "Mandatory coherent backup includes this non-rebuildable source, original command/child/seed/context evidence, seglog permanent identities and SP-286 original full-value receipt custody ",
         "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+       },
+       "locator_maintenance": {
+        "authority": "MERGE2-FIX2 / R1 Astra real-input lineage evidence",
+        "reason": "Bind the existing claim to its exact named owner or preserved original section, without a sibling fallback or verdict change."
        }
       },
       {
@@ -473,13 +487,13 @@
       },
       {
        "path": "Plans/storage-plan.md",
-       "unit": "Wizard Opened Original Custody",
-       "line_start": 54693,
-       "line_end": 54693,
+       "unit": "heading:Wizard Opened Original Custody",
+       "line_start": 54646,
+       "line_end": 54646,
        "quote": "For this exact source family, SP-340 binds the canonical redb file, runs_and_goals storage group and its existing 4 GiB advisory canonical budget, with max_value_bytes=16384.",
        "quote_check": "exact",
-       "quote_scope": "document",
-       "file_sha256": "73ee6d097e08d31fd93301d05d2cd2632dd46e5a22ba3ea405ffadda4a0a9db2",
+       "quote_scope": "unit heading:Wizard Opened Original Custody, Plans/storage-plan.md:54644-54660",
+       "file_sha256": "51edc1394ab24ca53a2a021dce3c3c9a1be0f43e2292d901ad56e4b0063a3ebf",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "Wizard Opened Original Custody",
@@ -487,6 +501,10 @@
         "line_end": 55183,
         "quote": "For this exact source family, SP-340 binds the canonical redb file, runs_and_goals storage group and its existing 4 GiB advisory canonical budget, with max_value_bytes=16384.",
         "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+       },
+       "locator_maintenance": {
+        "authority": "MERGE2-FIX2 / R1 Astra real-input lineage evidence",
+        "reason": "Bind the existing claim to its exact named owner or preserved original section, without a sibling fallback or verdict change."
        }
       },
       {
@@ -553,13 +571,13 @@
      "evidence": [
       {
        "path": "Plans/storage-plan.md",
-       "unit": "Wizard Opened Original Custody",
-       "line_start": 54701,
-       "line_end": 54701,
+       "unit": "heading:Wizard Opened Original Custody",
+       "line_start": 54654,
+       "line_end": 54654,
        "quote": "SP-278, `projector.storage.event_record_index@1.0.0`, `reader.storage.event_record_index@1.0.0`, `event_record_index_checkpoint.v1:{storage_instance_id}` and `pm.storage_value.event_rec",
        "quote_check": "exact",
-       "quote_scope": "document",
-       "file_sha256": "73ee6d097e08d31fd93301d05d2cd2632dd46e5a22ba3ea405ffadda4a0a9db2",
+       "quote_scope": "unit heading:Wizard Opened Original Custody, Plans/storage-plan.md:54644-54660",
+       "file_sha256": "51edc1394ab24ca53a2a021dce3c3c9a1be0f43e2292d901ad56e4b0063a3ebf",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "Wizard Opened Original Custody",
@@ -567,17 +585,21 @@
         "line_end": 55191,
         "quote": "SP-278, `projector.storage.event_record_index@1.0.0`, `reader.storage.event_record_index@1.0.0`, `event_record_index_checkpoint.v1:{storage_instance_id}` and `pm.storage_value.event_rec",
         "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+       },
+       "locator_maintenance": {
+        "authority": "MERGE2-FIX2 / R1 Astra real-input lineage evidence",
+        "reason": "Bind the existing claim to its exact named owner or preserved original section, without a sibling fallback or verdict change."
        }
       },
       {
        "path": "Plans/storage-plan.md",
-       "unit": "Wizard Opened Original Custody",
-       "line_start": 54701,
-       "line_end": 54701,
+       "unit": "heading:Wizard Opened Original Custody",
+       "line_start": 54654,
+       "line_end": 54654,
        "quote": "event_record_index_checkpoint.v1:{storage_instance_id}` and `pm.storage_value.event_record_index_checkpoint.v1@1.0.0`. The generic projector atomically commits index rows and its prior-",
        "quote_check": "exact",
-       "quote_scope": "document",
-       "file_sha256": "73ee6d097e08d31fd93301d05d2cd2632dd46e5a22ba3ea405ffadda4a0a9db2",
+       "quote_scope": "unit heading:Wizard Opened Original Custody, Plans/storage-plan.md:54644-54660",
+       "file_sha256": "51edc1394ab24ca53a2a021dce3c3c9a1be0f43e2292d901ad56e4b0063a3ebf",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "Wizard Opened Original Custody",
@@ -585,6 +607,10 @@
         "line_end": 55191,
         "quote": "event_record_index_checkpoint.v1:{storage_instance_id}` and `pm.storage_value.event_record_index_checkpoint.v1@1.0.0`. The generic projector atomically commits index rows and its prior-",
         "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+       },
+       "locator_maintenance": {
+        "authority": "MERGE2-FIX2 / R1 Astra real-input lineage evidence",
+        "reason": "Bind the existing claim to its exact named owner or preserved original section, without a sibling fallback or verdict change."
        }
       },
       {
@@ -621,12 +647,12 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "Wizard Opened Original Custody",
-       "line_start": 54686,
-       "line_end": 54686,
+       "line_start": 54656,
+       "line_end": 54656,
        "quote": "Withdrawal cuts off this exact writer admission first, drains or fences pending original slots under their original receipt gates, then withdraws `reader.wizard_opened_history@1.0.0` fr",
        "quote_check": "exact",
-       "quote_scope": "document",
-       "file_sha256": "73ee6d097e08d31fd93301d05d2cd2632dd46e5a22ba3ea405ffadda4a0a9db2",
+       "quote_scope": "unit Wizard Opened Original Custody, Plans/storage-plan.md:54644-54660",
+       "file_sha256": "51edc1394ab24ca53a2a021dce3c3c9a1be0f43e2292d901ad56e4b0063a3ebf",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "Wizard Opened Original Custody",
@@ -638,13 +664,13 @@
       },
       {
        "path": "Plans/storage-plan.md",
-       "unit": "Wizard Opened Original Custody",
-       "line_start": 54703,
-       "line_end": 54703,
+       "unit": "heading:Wizard Opened Original Custody",
+       "line_start": 54656,
+       "line_end": 54656,
        "quote": "replacement reader explicitly supports retained schemas and authenticates complete SP-278 coverage/current root/generation/frontier before publication; gaps, stale CAS/tokens, unsupport",
        "quote_check": "exact",
-       "quote_scope": "document",
-       "file_sha256": "73ee6d097e08d31fd93301d05d2cd2632dd46e5a22ba3ea405ffadda4a0a9db2",
+       "quote_scope": "unit heading:Wizard Opened Original Custody, Plans/storage-plan.md:54644-54660",
+       "file_sha256": "51edc1394ab24ca53a2a021dce3c3c9a1be0f43e2292d901ad56e4b0063a3ebf",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "Wizard Opened Original Custody",
@@ -652,6 +678,10 @@
         "line_end": 55193,
         "quote": "replacement reader explicitly supports retained schemas and authenticates complete SP-278 coverage/current root/generation/frontier before publication; gaps, stale CAS/tokens, unsupport",
         "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+       },
+       "locator_maintenance": {
+        "authority": "MERGE2-FIX2 / R1 Astra real-input lineage evidence",
+        "reason": "Bind the existing claim to its exact named owner or preserved original section, without a sibling fallback or verdict change."
        }
       },
       {
@@ -675,12 +705,12 @@
       {
        "path": "Plans/Contracts_V0.md",
        "unit": "CV-253",
-       "line_start": 20820,
-       "line_end": 20820,
+       "line_start": 20308,
+       "line_end": 20308,
        "quote": "persisted timestamps are UTC ISO-8601 values with Z",
        "quote_check": "exact",
-       "quote_scope": "unit CV-253, Plans/Contracts_V0.md:20811-20860",
-       "file_sha256": "4ae2225d8ed19b6df971b6c32797aae6882d175264ff2c2e9a2045650d735e67",
+       "quote_scope": "unit CV-253, Plans/Contracts_V0.md:20299-20348",
+       "file_sha256": "2a9090efcaefbc3b0e85c2155255e078125e4d05a933e115ca931c6566b8b74b",
        "source_citation": {
         "path": "Plans/Contracts_V0.md",
         "unit": "CV-253",
@@ -994,9 +1024,9 @@
   "row_pointer": "#/families/513"
  },
  "evidence_maintenance": {
-  "authority": "MERGE2-FIX1 findings 1/3/5",
-  "source_commit": "0c904de00426b0089ba5d56349fda8ea16cc9f88",
-  "source_assessment_sha256": "641ff4c50aabebcb35a19450cc373c39ed61f29a0baff16e4eebb419b35a719a",
+  "authority": "MERGE2-FIX2 findings 1/2/3",
+  "source_commit": "0f2a90ece55d4bafd163b19a05cd3c4eda91b9c1",
+  "source_assessment_sha256": "f371088cc413e2a472dda61a48f411b1d14ebff19d9c38a6c35e205224d34566",
   "native_execution": "NOT_RUN",
   "verdicts_changed": false
  }

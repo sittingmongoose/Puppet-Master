@@ -178,13 +178,13 @@
       {
        "path": "Plans/event_family_registry.json",
        "json_pointer": "#/families/18",
-       "line_start": 1224,
-       "line_end": 1224,
+       "line_start": 1221,
+       "line_end": 1284,
        "quote": "\"event_type\": \"goal.tool_check_recorded\"",
        "quote_line": 1224,
        "file_sha256": "ec21cf1a5b42b3e68a5564a847b4798dff968612d11d438bc7075b89196f9602",
        "quote_check": "exact",
-       "quote_scope": "document",
+       "quote_scope": "unit #/families/18, Plans/event_family_registry.json:1221-1284",
        "source_citation": {
         "path": "Plans/event_family_registry.json",
         "json_pointer": "#/families/18",
@@ -193,7 +193,8 @@
         "quote": "\"event_type\": \"goal.tool_check_recorded\"",
         "quote_line": 1224,
         "file_sha256": "774f6d49c5662d6115e42b880c855b5d415fd3eb234627e7405a3f493bd83204"
-       }
+       },
+       "unit": "#/families/18"
       }
      ]
     },
@@ -273,13 +274,13 @@
       {
        "path": "Plans/Contracts_V0.md",
        "unit": "CV-426",
-       "line_start": 44405,
-       "line_end": 44405,
+       "line_start": 43923,
+       "line_end": 43923,
        "quote": "whole historical reader resource",
        "excerpt_sha256": "65708c42e8d56c51633dc54c51112add0a2750befa7067aa1219eef9e444195f",
-       "file_sha256": "4ae2225d8ed19b6df971b6c32797aae6882d175264ff2c2e9a2045650d735e67",
+       "file_sha256": "2a9090efcaefbc3b0e85c2155255e078125e4d05a933e115ca931c6566b8b74b",
        "quote_check": "exact",
-       "quote_scope": "unit CV-426, Plans/Contracts_V0.md:44363-44406",
+       "quote_scope": "unit CV-426, Plans/Contracts_V0.md:43881-43924",
        "excerpt_digest_convention": "whole_line",
        "source_citation": {
         "path": "Plans/Contracts_V0.md",
@@ -350,13 +351,13 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-433",
-       "line_start": 55709,
-       "line_end": 55709,
+       "line_start": 55679,
+       "line_end": 55679,
        "quote": "Repeated reads recompute",
        "excerpt_sha256": "2903add84cb90fb6135786d512e6897dd084279584d9923dae7f5bb724547d8d",
-       "file_sha256": "73ee6d097e08d31fd93301d05d2cd2632dd46e5a22ba3ea405ffadda4a0a9db2",
+       "file_sha256": "51edc1394ab24ca53a2a021dce3c3c9a1be0f43e2292d901ad56e4b0063a3ebf",
        "quote_check": "exact",
-       "quote_scope": "unit SP-433, Plans/storage-plan.md:55653-55714",
+       "quote_scope": "unit SP-433, Plans/storage-plan.md:55623-55684",
        "excerpt_digest_convention": "whole_line",
        "source_citation": {
         "path": "Plans/storage-plan.md",
@@ -384,13 +385,13 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-433",
-       "line_start": 55709,
-       "line_end": 55709,
+       "line_start": 55679,
+       "line_end": 55679,
        "quote": "RP-AUTHORITY-INDEFINITE",
        "excerpt_sha256": "2903add84cb90fb6135786d512e6897dd084279584d9923dae7f5bb724547d8d",
-       "file_sha256": "73ee6d097e08d31fd93301d05d2cd2632dd46e5a22ba3ea405ffadda4a0a9db2",
+       "file_sha256": "51edc1394ab24ca53a2a021dce3c3c9a1be0f43e2292d901ad56e4b0063a3ebf",
        "quote_check": "exact",
-       "quote_scope": "unit SP-433, Plans/storage-plan.md:55653-55714",
+       "quote_scope": "unit SP-433, Plans/storage-plan.md:55623-55684",
        "excerpt_digest_convention": "whole_line",
        "source_citation": {
         "path": "Plans/storage-plan.md",
@@ -418,13 +419,13 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-433",
-       "line_start": 55709,
-       "line_end": 55709,
+       "line_start": 55679,
+       "line_end": 55679,
        "quote": "Reject unhandled secrets",
        "excerpt_sha256": "2903add84cb90fb6135786d512e6897dd084279584d9923dae7f5bb724547d8d",
-       "file_sha256": "73ee6d097e08d31fd93301d05d2cd2632dd46e5a22ba3ea405ffadda4a0a9db2",
+       "file_sha256": "51edc1394ab24ca53a2a021dce3c3c9a1be0f43e2292d901ad56e4b0063a3ebf",
        "quote_check": "exact",
-       "quote_scope": "unit SP-433, Plans/storage-plan.md:55653-55714",
+       "quote_scope": "unit SP-433, Plans/storage-plan.md:55623-55684",
        "excerpt_digest_convention": "whole_line",
        "source_citation": {
         "path": "Plans/storage-plan.md",
@@ -486,13 +487,13 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-433",
-       "line_start": 55709,
-       "line_end": 55709,
+       "line_start": 55679,
+       "line_end": 55679,
        "quote": "SP-339 pm inspect / F3-666 call",
        "excerpt_sha256": "2903add84cb90fb6135786d512e6897dd084279584d9923dae7f5bb724547d8d",
-       "file_sha256": "73ee6d097e08d31fd93301d05d2cd2632dd46e5a22ba3ea405ffadda4a0a9db2",
+       "file_sha256": "51edc1394ab24ca53a2a021dce3c3c9a1be0f43e2292d901ad56e4b0063a3ebf",
        "quote_check": "exact",
-       "quote_scope": "unit SP-433, Plans/storage-plan.md:55653-55714",
+       "quote_scope": "unit SP-433, Plans/storage-plan.md:55623-55684",
        "excerpt_digest_convention": "whole_line",
        "source_citation": {
         "path": "Plans/storage-plan.md",
@@ -520,13 +521,13 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-433",
-       "line_start": 55711,
-       "line_end": 55711,
+       "line_start": 55681,
+       "line_end": 55681,
        "quote": "withdrawal",
        "excerpt_sha256": "2ea19d576c9dec67b3ede6361600ed38c3df6cf2d190d4a06ba3218e98751cb0",
-       "file_sha256": "73ee6d097e08d31fd93301d05d2cd2632dd46e5a22ba3ea405ffadda4a0a9db2",
+       "file_sha256": "51edc1394ab24ca53a2a021dce3c3c9a1be0f43e2292d901ad56e4b0063a3ebf",
        "quote_check": "exact",
-       "quote_scope": "unit SP-433, Plans/storage-plan.md:55653-55714",
+       "quote_scope": "unit SP-433, Plans/storage-plan.md:55623-55684",
        "excerpt_digest_convention": "whole_line",
        "source_citation": {
         "path": "Plans/storage-plan.md",
@@ -712,9 +713,9 @@
   }
  ],
  "evidence_maintenance": {
-  "authority": "MERGE2-FIX1 finding 3",
-  "source_commit": "0c904de00426b0089ba5d56349fda8ea16cc9f88",
-  "source_assessment_sha256": "eb5c86003ee479ad9b6bf07e18d2c6e19c663d50e320c0e2bda5d7f7b02098bc",
+  "authority": "MERGE2-FIX2 findings 1/2/3",
+  "source_commit": "0f2a90ece55d4bafd163b19a05cd3c4eda91b9c1",
+  "source_assessment_sha256": "d3efb5341dc00336f43485b54ef8e1f98eb0b693d9dcd0371283080680f617d5",
   "native_execution": "NOT_RUN",
   "verdicts_changed": false
  }

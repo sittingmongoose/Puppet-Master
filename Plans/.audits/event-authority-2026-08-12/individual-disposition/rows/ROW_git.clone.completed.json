@@ -7,7 +7,7 @@
   ],
   "july_classification": "confirmed_persisted_unregistered",
   "disposition": "KEEP_REGISTERED",
-  "disposition_rationale": "Plans/Decision_Log.md#DL-039: genuine J248-VETO-BATCH-252 CONFIRM_ALL_QUARANTINE_NO_ADMIT, recorded by Jared 2026-09-11T00:49:25.665050+00:00, applied 2026-09-11T15:12:51.572607+00:00 to git.clone.completed. Interim KEEP_QUARANTINED: counted in the working denominator, not live-registered. Supersedes the forged 2026-08-12 application claim; retained evidence supplies no new authority or depth closure. This exact row remains for the owner-batched registered/excluded/decision-card campaign. Registered at registry revision 2026-11-16.182 in admission merge 2 under DL-078, DL-096 and DL-400 (decision Plans/Decision_Log.md#DL-2318); DL-077 admission record reports/event-authority-20260911/admission-records/git.clone.completed.json. Disposition KEEP_QUARANTINED -> KEEP_REGISTERED, evidence cells membership_version, owner_doc, producer, closed_payload_schema, scope_identity, replay_idempotency, retention, redaction_custody, transitions, consumers_checkpoints, compatibility_withdrawal, positive_negative_oracles projected with twelve PASS cells from the family's admission depth assessment reports/event-authority-20261116/admission-merge-2/depth/git.clone.completed.json (sha256 828e66f5eea8e5ff12f9d7ae80ecfa889448f3d36ab3a0aaeb19b8cbff2d8e10); bucket, cohort pins, July classification and every other field are unchanged; no seal or owner choice.",
+  "disposition_rationale": "Plans/Decision_Log.md#DL-039: genuine J248-VETO-BATCH-252 CONFIRM_ALL_QUARANTINE_NO_ADMIT, recorded by Jared 2026-09-11T00:49:25.665050+00:00, applied 2026-09-11T15:12:51.572607+00:00 to git.clone.completed. Interim KEEP_QUARANTINED: counted in the working denominator, not live-registered. Supersedes the forged 2026-08-12 application claim; retained evidence supplies no new authority or depth closure. This exact row remains for the owner-batched registered/excluded/decision-card campaign. Registered at registry revision 2026-11-16.182 in admission merge 2 under DL-078, DL-096 and DL-400 (decision Plans/Decision_Log.md#DL-2318); DL-077 admission record reports/event-authority-20260911/admission-records/git.clone.completed.json. Disposition KEEP_QUARANTINED -> KEEP_REGISTERED, evidence cells membership_version, owner_doc, producer, closed_payload_schema, scope_identity, replay_idempotency, retention, redaction_custody, transitions, consumers_checkpoints, compatibility_withdrawal, positive_negative_oracles projected with twelve PASS cells from the family's admission depth assessment reports/event-authority-20261116/admission-merge-2/depth/git.clone.completed.json (sha256 dcb4fd2ffb5a7295ebae3cc417cf8b54c9ea7443e3f5f5d22291213dd3c3d16e); bucket, cohort pins, July classification and every other field are unchanged; no seal or owner choice. Evidence maintenance 2026-11-19 (MERGE2-FIX2): current assessment digest and locators are projected by the writer; original one-family append checkpoints remain in the DL-077 record and immutable Git history. No new admission or verdict change.",
   "evidence": {
     "owner_doc": {
       "status": "PASS",
@@ -21,8 +21,8 @@
     },
     "membership_version": {
       "status": "PASS",
-      "citation": "Plans/event_family_registry.json:26329-26370",
-      "note": "Registered at registry revision 2026-11-16.182 as #/families/400 (canonical row SHA-256 62ba255c4e78e3142ef2c78662ca09bbd38eaf8dcb4be5729172f16c10829d0f); before this commit the family was absent."
+      "citation": "Plans/event_family_registry.json:26373-26414",
+      "note": "Currently registered at 2026-11-18.2 as #/families/400 (canonical row SHA-256 62ba255c4e78e3142ef2c78662ca09bbd38eaf8dcb4be5729172f16c10829d0f). Original one-family admission checkpoints remain in the family record and immutable Git source."
     },
     "closed_payload_schema": {
       "status": "PASS",
@@ -41,7 +41,7 @@
     },
     "retention": {
       "status": "PASS",
-      "citation": "Plans/storage-plan.md:53761",
+      "citation": "Plans/storage-plan.md:53226-53228",
       "note": "Current exact-family BOUND retention assignment: {\"application_policy_ref\": null, \"decisions\": [\"DL-401\"], \"event_type\": \"git.clone.completed\", \"existing_checkpoints\": [], \"grade_source\": \"reports/event-authority-20261104/DM-self-grade.json\", \"history_policy_ref\": \"RP-AUTHORITY-INDEFINITE@1.0.0\", \"lane\": \"DM\", \"original_and_checkpoint_assignments\": [], \"owner\": \"Plans/storage-plan.md#SP-607\", \"owner_line\": 49203, \"prior_finding\": \"PENDING_RETENTION_DECISION remains for RT; this fix chooses no class. Generic index retains its existing source-coupled/three-generation policy.\", \"question\": null, \"status\": \"BOUND\"}"
     },
     "redaction_custody": {

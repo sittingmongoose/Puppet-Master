@@ -4,7 +4,7 @@
  "family_id": "event-family-collaboration-paused",
  "implementation_receipt_sha256": "dceb7f21436cbe126c23822e62caa1b6dedcb45fefae3005c1804576ca34d827",
  "decision_ref": "Plans/Decision_Log.md#DL-2264",
- "decision_section_sha256": "9f75f4c4db40e07da2d15628f3e166ae4553995de47ada6c4a58bfdb76c04bb9",
+ "decision_section_sha256": "0ab4d51c90a859716283c66d4c0259b07bc681ca96a9df988965d156ae3436bb",
  "registry_before": {
   "revision": "2026-11-16.127",
   "sha256": "73c6650cfdb2802f52900a9378c7af86f843ad3ccdd31f7fb485ec4c4a234fb2",
@@ -18,7 +18,7 @@
  "registry_row_sha256": "3f467c0b2a315808e0efca741c92662fcc7f5c4ac4b432a7b698ed95414fffb6",
  "depth_assessment": {
   "path": "reports/event-authority-20261116/admission-merge-2/depth/collaboration.paused.json",
-  "sha256": "6f31e5158cc8f296e5a9427402add2a6b7cdf457ddc825e027e8ef88372d3717"
+  "sha256": "717e98a6dbbc547ff404aead7ee6b817c285c4e2d9baa7c7c94e33af05d95890"
  },
  "admission_landing": {
   "branch": "plans/ea-merge2-apply-20261116",
@@ -37,11 +37,11 @@
   "Written under DL-077. The seal check recomputes completeness from the pinned assessment; the two fields ending in _at_recording are informational only."
  ],
  "evidence_maintenance": {
-  "authority": "MERGE2-FIX1",
-  "source_commit": "0c904de00426b0089ba5d56349fda8ea16cc9f88",
-  "source_record_sha256": "8345c55ad5ca5f368197f84d90cfb4928732116b3ce370e5cf13966aabc43fc4",
-  "source_assessment_sha256": "901b554097db9221d2416b70f278666566cacfe644539aa592f05ce5aa5fd15f",
-  "source_decision_section_sha256": "6f7bf30256b26387daf1d5d3c92ec0e17310d7a5d98eff5f1c478b040452e9c8",
+  "authority": "MERGE2-FIX2",
+  "source_commit": "0f2a90ece55d4bafd163b19a05cd3c4eda91b9c1",
+  "source_record_sha256": "4a82706e458a75a7a02837f621355c18b25d4fbb066007f167f3f44fbc5a0eb0",
+  "source_assessment_sha256": "6f31e5158cc8f296e5a9427402add2a6b7cdf457ddc825e027e8ef88372d3717",
+  "source_decision_section_sha256": "9f75f4c4db40e07da2d15628f3e166ae4553995de47ada6c4a58bfdb76c04bb9",
   "original_registry_checkpoints_preserved": true
  }
 }

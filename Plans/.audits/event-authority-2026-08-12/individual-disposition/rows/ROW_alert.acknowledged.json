@@ -7,66 +7,66 @@
   ],
   "july_classification": "confirmed_persisted_unregistered",
   "disposition": "KEEP_REGISTERED",
-  "disposition_rationale": "Plans/Decision_Log.md#DL-039: genuine J248-VETO-BATCH-252 CONFIRM_ALL_QUARANTINE_NO_ADMIT, recorded by Jared 2026-09-11T00:49:25.665050+00:00, applied 2026-09-11T15:12:51.572607+00:00 to alert.acknowledged. Interim KEEP_QUARANTINED: counted in the working denominator, not live-registered. Supersedes the forged 2026-08-12 application claim; retained evidence supplies no new authority or depth closure. This exact row remains for the owner-batched registered/excluded/decision-card campaign. Registered at registry revision 2026-11-16.1 in admission merge 2 under DL-078, DL-096 and DL-400 (decision Plans/Decision_Log.md#DL-2137); DL-077 admission record reports/event-authority-20260911/admission-records/alert.acknowledged.json. Disposition KEEP_QUARANTINED -> KEEP_REGISTERED, evidence cells membership_version, owner_doc, producer, closed_payload_schema, scope_identity, replay_idempotency, retention, redaction_custody, transitions, consumers_checkpoints, compatibility_withdrawal, positive_negative_oracles projected with twelve PASS cells from the family's admission depth assessment reports/event-authority-20261116/admission-merge-2/depth/alert.acknowledged.json (sha256 e28fb01ee099b111d00110731e5719faeb509a72e91496011a52e4e2ca855c1e); bucket, cohort pins, July classification and every other field are unchanged; no seal or owner choice.",
+  "disposition_rationale": "Plans/Decision_Log.md#DL-039: genuine J248-VETO-BATCH-252 CONFIRM_ALL_QUARANTINE_NO_ADMIT, recorded by Jared 2026-09-11T00:49:25.665050+00:00, applied 2026-09-11T15:12:51.572607+00:00 to alert.acknowledged. Interim KEEP_QUARANTINED: counted in the working denominator, not live-registered. Supersedes the forged 2026-08-12 application claim; retained evidence supplies no new authority or depth closure. This exact row remains for the owner-batched registered/excluded/decision-card campaign. Registered at registry revision 2026-11-16.1 in admission merge 2 under DL-078, DL-096 and DL-400 (decision Plans/Decision_Log.md#DL-2137); DL-077 admission record reports/event-authority-20260911/admission-records/alert.acknowledged.json. Disposition KEEP_QUARANTINED -> KEEP_REGISTERED, evidence cells membership_version, owner_doc, producer, closed_payload_schema, scope_identity, replay_idempotency, retention, redaction_custody, transitions, consumers_checkpoints, compatibility_withdrawal, positive_negative_oracles projected with twelve PASS cells from the family's admission depth assessment reports/event-authority-20261116/admission-merge-2/depth/alert.acknowledged.json (sha256 01770fd8951dfd3ef8b88c711212ed5052a038b0bb5571c83ec1834d90897adb); bucket, cohort pins, July classification and every other field are unchanged; no seal or owner choice. Evidence maintenance 2026-11-19 (MERGE2-FIX2): current assessment digest and locators are projected by the writer; original one-family append checkpoints remain in the DL-077 record and immutable Git history. No new admission or verdict change.",
   "evidence": {
     "owner_doc": {
       "status": "PASS",
-      "citation": "Plans/storage-plan.md:49952-49953; Plans/Contracts_V0.md:40056",
+      "citation": "Plans/storage-plan.md:49921-49922; Plans/Contracts_V0.md:39574",
       "note": "The family has its own current semantic/payload/Storage routes, with existing creator and product authority preserved."
     },
     "producer": {
       "status": "PASS",
-      "citation": "Plans/storage-plan.md:49953-49954; Plans/storage-plan.md:49980-49981",
+      "citation": "Plans/storage-plan.md:49922-49923; Plans/storage-plan.md:49949-49950",
       "note": "The exact handler and original commit/append/first receipt/terminal ordering adopt SP-286/CV-339 full-value v2 custody; native authenticity remains NOT_RUN."
     },
     "membership_version": {
       "status": "PASS",
-      "citation": "Plans/event_family_registry.json:15487-15527",
-      "note": "Registered at registry revision 2026-11-16.1 as #/families/219 (canonical row SHA-256 74132ab0dc5b7d03eb099989109c8060ba33bf082fc9107ad3a5f1c544e6e1ba); before this commit the family was absent."
+      "citation": "Plans/event_family_registry.json:15531-15571",
+      "note": "Currently registered at 2026-11-18.2 as #/families/219 (canonical row SHA-256 74132ab0dc5b7d03eb099989109c8060ba33bf082fc9107ad3a5f1c544e6e1ba). Original one-family admission checkpoints remain in the family record and immutable Git source."
     },
     "closed_payload_schema": {
       "status": "PASS",
-      "citation": "Plans/event_payloads/attention/alert_acknowledged.schema.json:8; Plans/event_payloads/attention/alert_acknowledged.schema.json:10; Plans/Contracts_V0.md:40056",
+      "citation": "Plans/event_payloads/attention/alert_acknowledged.schema.json:8; Plans/event_payloads/attention/alert_acknowledged.schema.json:10; Plans/Contracts_V0.md:39574",
       "note": "The exact closed current payload and value companions are coherent; identifier patterns reject trailing LF. No historical reader authorizes current writes."
     },
     "scope_identity": {
       "status": "PASS",
-      "citation": "Plans/storage-plan.md:49960-49961; Plans/storage-plan.md:49961-49962",
+      "citation": "Plans/storage-plan.md:49929-49930; Plans/storage-plan.md:49930-49931",
       "note": "Project-only EventRecord 2.0.0, the exact original identity recipe and subject/actor/record joins are independently bound; no default or application Project is inferred."
     },
     "replay_idempotency": {
       "status": "PASS",
-      "citation": "Plans/storage-plan.md:49967-49968; Plans/storage-plan.md:49986-49987; Plans/storage-plan.md:50071-50073; scripts/pm-alert-event-contracts-check.py:243",
+      "citation": "Plans/storage-plan.md:49936-49937; Plans/storage-plan.md:49955-49956; Plans/storage-plan.md:50040-50042; scripts/pm-alert-event-contracts-check.py:243",
       "note": "SP-660 retains exact original identity, payload and result custody. Restored schema ranges admit earlier valid revisions; independent admission evidence selects the existing exact MessagePack retry recipe. Edition/source forgeries refuse; current writer guards remain."
     },
     "retention": {
       "status": "PASS",
-      "citation": "Plans/storage-plan.md:50094",
+      "citation": "Plans/storage-plan.md:50063",
       "note": "Current exact-family BOUND retention assignment: {\"application_policy_ref\": null, \"decisions\": [\"DL-401\", \"DL-500\", \"DL-501\", \"DL-505\"], \"event_type\": \"alert.acknowledged\", \"existing_checkpoints\": [{\"family_id\": \"alert_acknowledged_checkpoint\", \"policy_ref\": \"RP-PROJECTION-3GEN@1.0.0\"}], \"grade_source\": \"reports/event-authority-20261104/DG6A.self-grade.json\", \"history_policy_ref\": \"RP-AUTHORITY-INDEFINITE@1.0.0\", \"lane\": \"DG6A\", \"original_and_checkpoint_assignments\": [{\"decision\": \"DL-500\", \"family_id\": \"alert_acknowledged_checkpoint\", \"policy_ref\": \"RP-PROJECTION-3GEN@1.0.0\"}, {\"decision\": \"DL-501\", \"family_id\": \"alert_acknowledged_operation\", \"policy_ref\": \"RP-OPERATIONAL-2555D@1.0.0\"}, {\"decision\": \"DL-505\", \"family_id\": \"shared_alert_state\", \"policy_ref\": \"RP-CONFIG-CURRENT@1.0.0\"}, {\"decision\": \"DL-505\", \"family_id\": \"shared_alert_rule_state\", \"policy_ref\": \"RP-CONFIG-CURRENT@1.0.0\"}], \"owner\": \"Plans/storage-plan.md#SP-660\", \"owner_line\": 45531, \"prior_finding\": \"Event, original operation and History checkpoint remain explicitly PENDING_RETENTION_DECISION; no new retention policy is chosen.\", \"question\": null, \"status\": \"BOUND\"}"
     },
     "redaction_custody": {
       "status": "PASS",
-      "citation": "Plans/storage-plan.md:49987-49988; Plans/storage-plan.md:49990-49991; Plans/alert_event_contracts/alert_acknowledged.fixtures.json:13924; scripts/pm-alert-event-contracts-check.py:349",
+      "citation": "Plans/storage-plan.md:49956-49957; Plans/storage-plan.md:49959-49960; Plans/alert_event_contracts/alert_acknowledged.fixtures.json:13924; scripts/pm-alert-event-contracts-check.py:349",
       "note": "Original non-rebuildable evidence, coherent backup/restore and current membership/source/deletion checks are bound; immutable refs never grant access."
     },
     "transitions": {
       "status": "PASS",
-      "citation": "Plans/storage-plan.md:49956",
+      "citation": "Plans/storage-plan.md:49925",
       "note": "Exact existing action/birth predicates, preconditions, refusal/no-change paths and original committed outcome are bound without granting sibling actions."
     },
     "consumers_checkpoints": {
       "status": "PASS",
-      "citation": "Plans/storage-plan.md:49996; Plans/storage-plan.md:49999-50000; Plans/storage-plan.md:49975-49976",
+      "citation": "Plans/storage-plan.md:49965; Plans/storage-plan.md:49968-49969; Plans/storage-plan.md:49944-49945",
       "note": "The exact passive History projector/reader adopts SP-278/DL-076 durable token, full-value CAS, bounded frontier and complete-response read-through/rebuild."
     },
     "compatibility_withdrawal": {
       "status": "PASS",
-      "citation": "Plans/storage-plan.md:50013; Plans/storage-plan.md:50018; scripts/pm-alert-event-contracts-check.py:872; scripts/pm_dg6a_custody.py:324",
+      "citation": "Plans/storage-plan.md:49982; Plans/storage-plan.md:49987; scripts/pm-alert-event-contracts-check.py:872; scripts/pm_dg6a_custody.py:324",
       "note": "SP-660 retains exact original identity, payload and result custody. Restored schema ranges admit earlier valid revisions; independent admission evidence selects the existing exact MessagePack retry recipe. Edition/source forgeries refuse; current writer guards remain. Sweep part 2B (gated NUMRULE head 58c2816ff3): the retained edition and its exact frozen validator are selected by SP-1101 custody (RetainedDispatcher over Storage's sealed original, exact binding, installed recipe tuple pinning the edition's schema bytes, recomputed commitment/family/identity), never by caller evidence; unavailable, unsealed, foreign or unsupported originals refuse without fallback, and a skipped format check never authenticates invalid history (CV-1101)."
     },
     "positive_negative_oracles": {
       "status": "PASS",
-      "citation": "Plans/Automated_Testing_System.md:10617; Plans/storage-plan.md:50026-50027; Plans/alert_event_contracts/alert_acknowledged.fixtures.json:13924; reports/event-authority-20261114/C12-DG6A.md:9; scripts/pm_dg6a_c12_closure.py:961; scripts/pm_dg6a_c12_closure.py:1578; scripts/pm_dg6a_c12_closure.py:1445; scripts/pm_dg6a_c12_closure.py:933; scripts/pm_dg6a_c12_closure.py:1624; scripts/pm-dg6a-c12-entailed.py:109; scripts/pm-dg6a-c12-split-equivalence.py:105; scripts/pm_dg6a_phase_groups.py:2; scripts/pm-alert-event-contracts-check.py:575; scripts/pm-dg6a-guard-tables.py:472",
+      "citation": "Plans/Automated_Testing_System.md:10617; Plans/storage-plan.md:49995-49996; Plans/alert_event_contracts/alert_acknowledged.fixtures.json:13924; reports/event-authority-20261114/C12-DG6A.md:9; scripts/pm_dg6a_c12_closure.py:961; scripts/pm_dg6a_c12_closure.py:1578; scripts/pm_dg6a_c12_closure.py:1445; scripts/pm_dg6a_c12_closure.py:933; scripts/pm_dg6a_c12_closure.py:1624; scripts/pm-dg6a-c12-entailed.py:109; scripts/pm-dg6a-c12-split-equivalence.py:105; scripts/pm_dg6a_phase_groups.py:2; scripts/pm-alert-event-contracts-check.py:575; scripts/pm-dg6a-guard-tables.py:472",
       "note": "C12-DG6A (PNC-019 S4, 2026-11-15): PASS under the scope's whole-definition Method B route at head 6ead4f4885. Every DG6A guard table holds at most eight rows (s4o2's phase groups, generalized) and the unchanged gated tool 004bdedd63 proves every reachable row; the twenty entailed rows each sit alone in a table with a checked premise and construction attempts through the unchanged checker functions. For this family the unchanged complete checker runs under scripts/pm_dg6a_c12_closure.py: 568 reachable owner clauses (payload, operation, checkpoint and the custody-selected frozen editions), 0 uncovered; 924 exact clause kills at the consuming row with clause cut, whole-definition row cut and restoration (664 also first-refused at that row by the unchanged consuming function); 7 non-targeting proposals uncredited. Registry copies: 313 exact storage_schema refusals. Copy joins: 2344 exact single-row kills; multi-row and unconstrained changes listed separately, uncredited. Retained custody: 77 exact HC/RQ refusals across missing, foreign, ambiguous, replaced and foreign-recipe receipts, 2144 store snapshots, 0 changed. Timestamps: the shared CV-1101 corpus at 5 evaluated date-time clauses (EventRecord) and at the retained observed/persisted (storage_utc_z) and acknowledged_at_utc (EventRecord) instants, 0 disagreements. Numbers: the shared corpus runs with 0 disagreements and 4,400-digit integers reach every evaluated integer slot without an exception. Native NOT_RUN; admission ABSENT; independent review NOT_RUN; the shared whole-Plans date-time inventory gate stays blocked by its listed stale-citation tool issue."
     }
   },

@@ -42,7 +42,9 @@
         "quote_line": 29086,
         "file_sha256": "9c712be717d4c5d02dc6bbd1206e5ac6f2ddcaef9ac1b4197314cc3f8f0bf5c7",
         "quote_check": "exact"
-       }
+       },
+       "unit": "#/families/451",
+       "quote_scope": "unit #/families/451, Plans/event_family_registry.json:29133-29174"
       }
      ]
     },
@@ -54,12 +56,12 @@
       {
        "path": "Plans/Contracts_V0.md",
        "unit": "CV-608",
-       "line_start": 35199,
-       "line_end": 35199,
+       "line_start": 34687,
+       "line_end": 34687,
        "quote": "Newly authored owner contract under DL-045 for requirements.clarification_requested@1.0.0 only",
        "quote_check": "exact",
-       "quote_scope": "unit CV-608, Plans/Contracts_V0.md:35191-35229",
-       "file_sha256": "4ae2225d8ed19b6df971b6c32797aae6882d175264ff2c2e9a2045650d735e67",
+       "quote_scope": "unit CV-608, Plans/Contracts_V0.md:34679-34720",
+       "file_sha256": "2a9090efcaefbc3b0e85c2155255e078125e4d05a933e115ca931c6566b8b74b",
        "source_citation": {
         "path": "Plans/Contracts_V0.md",
         "unit": "CV-608",
@@ -90,7 +92,7 @@
        "quote": "For requirements.clarification_requested alone, the newly authored original-source custody",
        "quote_check": "exact",
        "quote_scope": "unit SP-588, Plans/storage-plan.md:38751-38943",
-       "file_sha256": "73ee6d097e08d31fd93301d05d2cd2632dd46e5a22ba3ea405ffadda4a0a9db2",
+       "file_sha256": "51edc1394ab24ca53a2a021dce3c3c9a1be0f43e2292d901ad56e4b0063a3ebf",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-588",
@@ -115,12 +117,12 @@
      "evidence": [
       {
        "path": "Plans/dt_event_contracts.schema.json",
-       "unit": "Plans/dt_event_contracts.schema.json#/$defs/requirements_clarification_requested",
+       "unit": "#/$defs/requirements_clarification_requested",
        "line_start": 2581,
        "line_end": 2581,
        "quote": "\"const\": \"pm.event_payload.requirements_clarification_requested.v1\"",
        "quote_check": "exact",
-       "quote_scope": "document",
+       "quote_scope": "unit #/$defs/requirements_clarification_requested, Plans/dt_event_contracts.schema.json:2567-2616",
        "file_sha256": "8e0a2dfcc209567e50e82b03572529f02a990d85da4863a7fbc27abd53258213",
        "source_citation": {
         "path": "Plans/dt_event_contracts.schema.json",
@@ -129,7 +131,8 @@
         "line_end": 2581,
         "quote": "\"const\": \"pm.event_payload.requirements_clarification_requested.v1\"",
         "file_sha256": "8e0a2dfcc209567e50e82b03572529f02a990d85da4863a7fbc27abd53258213"
-       }
+       },
+       "json_pointer": "#/$defs/requirements_clarification_requested"
       },
       {
        "path": "scripts/pm-dt-event-contracts.py",
@@ -170,12 +173,12 @@
       {
        "path": "Plans/Contracts_V0.md",
        "unit": "CV-608",
-       "line_start": 35205,
-       "line_end": 35205,
+       "line_start": 34693,
+       "line_end": 34693,
        "quote": "For requirements.clarification_requested alone, the shared CV-1100, SP-1100, SP-1101 and CV-1101 owner units apply",
        "quote_check": "exact",
-       "quote_scope": "unit CV-608, Plans/Contracts_V0.md:35191-35229",
-       "file_sha256": "4ae2225d8ed19b6df971b6c32797aae6882d175264ff2c2e9a2045650d735e67",
+       "quote_scope": "unit CV-608, Plans/Contracts_V0.md:34679-34720",
+       "file_sha256": "2a9090efcaefbc3b0e85c2155255e078125e4d05a933e115ca931c6566b8b74b",
        "source_citation": {
         "path": "Plans/Contracts_V0.md",
         "unit": "CV-608",
@@ -204,7 +207,7 @@
        "line_start": 38860,
        "line_end": 38861,
        "quote": "For requirements.clarification_requested\\\n  \\ alone, source codec",
-       "file_sha256": "73ee6d097e08d31fd93301d05d2cd2632dd46e5a22ba3ea405ffadda4a0a9db2",
+       "file_sha256": "51edc1394ab24ca53a2a021dce3c3c9a1be0f43e2292d901ad56e4b0063a3ebf",
        "quote_check": "exact",
        "quote_scope": "unit SP-588, Plans/storage-plan.md:38751-38943",
        "source_citation": {
@@ -232,12 +235,12 @@
       {
        "path": "Plans/Contracts_V0.md",
        "unit": "CV-608",
-       "line_start": 35203,
-       "line_end": 35203,
+       "line_start": 34691,
+       "line_end": 34691,
        "quote": "For requirements.clarification_requested alone, current writer and retry paths refuse",
        "quote_check": "exact",
-       "quote_scope": "unit CV-608, Plans/Contracts_V0.md:35191-35229",
-       "file_sha256": "4ae2225d8ed19b6df971b6c32797aae6882d175264ff2c2e9a2045650d735e67",
+       "quote_scope": "unit CV-608, Plans/Contracts_V0.md:34679-34720",
+       "file_sha256": "2a9090efcaefbc3b0e85c2155255e078125e4d05a933e115ca931c6566b8b74b",
        "source_citation": {
         "path": "Plans/Contracts_V0.md",
         "unit": "CV-608",
@@ -286,12 +289,12 @@
       {
        "path": "Plans/Contracts_V0.md",
        "unit": "CV-608",
-       "line_start": 35205,
-       "line_end": 35205,
+       "line_start": 34693,
+       "line_end": 34693,
        "quote": "For requirements.clarification_requested alone, the shared CV-1100, SP-1100, SP-1101 and CV-1101 owner units apply",
        "quote_check": "exact",
-       "quote_scope": "unit CV-608, Plans/Contracts_V0.md:35191-35229",
-       "file_sha256": "4ae2225d8ed19b6df971b6c32797aae6882d175264ff2c2e9a2045650d735e67",
+       "quote_scope": "unit CV-608, Plans/Contracts_V0.md:34679-34720",
+       "file_sha256": "2a9090efcaefbc3b0e85c2155255e078125e4d05a933e115ca931c6566b8b74b",
        "source_citation": {
         "path": "Plans/Contracts_V0.md",
         "unit": "CV-608",
@@ -322,7 +325,7 @@
        "quote": "\\nEvent history `retention_policy_ref = RP-AUTHORITY-INDEFINITE@1.0.0`, under DL-401, DL-507.\\n\\nUse\\",
        "quote_check": "exact",
        "quote_scope": "unit SP-588, Plans/storage-plan.md:38751-38943",
-       "file_sha256": "73ee6d097e08d31fd93301d05d2cd2632dd46e5a22ba3ea405ffadda4a0a9db2",
+       "file_sha256": "51edc1394ab24ca53a2a021dce3c3c9a1be0f43e2292d901ad56e4b0063a3ebf",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-588",
@@ -351,7 +354,7 @@
        "line_start": 38834,
        "line_end": 38835,
        "quote": "Source stages, original owner outcomes, referenced bodies and full-value receipt custody form one\\\n  \\ mandatory coherent backup closure.",
-       "file_sha256": "73ee6d097e08d31fd93301d05d2cd2632dd46e5a22ba3ea405ffadda4a0a9db2",
+       "file_sha256": "51edc1394ab24ca53a2a021dce3c3c9a1be0f43e2292d901ad56e4b0063a3ebf",
        "quote_check": "exact",
        "quote_scope": "unit SP-588, Plans/storage-plan.md:38751-38943",
        "source_citation": {
@@ -379,12 +382,12 @@
       {
        "path": "Plans/Contracts_V0.md",
        "unit": "CV-608",
-       "line_start": 35202,
-       "line_end": 35202,
+       "line_start": 34690,
+       "line_end": 34690,
        "quote": "For requirements.clarification_requested alone, the explicit lifecycle transition is",
        "quote_check": "exact",
-       "quote_scope": "unit CV-608, Plans/Contracts_V0.md:35191-35229",
-       "file_sha256": "4ae2225d8ed19b6df971b6c32797aae6882d175264ff2c2e9a2045650d735e67",
+       "quote_scope": "unit CV-608, Plans/Contracts_V0.md:34679-34720",
+       "file_sha256": "2a9090efcaefbc3b0e85c2155255e078125e4d05a933e115ca931c6566b8b74b",
        "source_citation": {
         "path": "Plans/Contracts_V0.md",
         "unit": "CV-608",
@@ -413,7 +416,7 @@
        "line_start": 38841,
        "line_end": 38842,
        "quote": "For requirements.clarification_requested\\\n  \\ alone, its SP-278/DL-076 checkpoint",
-       "file_sha256": "73ee6d097e08d31fd93301d05d2cd2632dd46e5a22ba3ea405ffadda4a0a9db2",
+       "file_sha256": "51edc1394ab24ca53a2a021dce3c3c9a1be0f43e2292d901ad56e4b0063a3ebf",
        "quote_check": "exact",
        "quote_scope": "unit SP-588, Plans/storage-plan.md:38751-38943",
        "source_citation": {
@@ -464,7 +467,7 @@
        "quote": "Withdrawal first cuts off this family's append admission",
        "quote_check": "exact",
        "quote_scope": "unit SP-588, Plans/storage-plan.md:38751-38943",
-       "file_sha256": "73ee6d097e08d31fd93301d05d2cd2632dd46e5a22ba3ea405ffadda4a0a9db2",
+       "file_sha256": "51edc1394ab24ca53a2a021dce3c3c9a1be0f43e2292d901ad56e4b0063a3ebf",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-588",
@@ -495,12 +498,12 @@
       {
        "path": "Plans/Contracts_V0.md",
        "unit": "CV-608",
-       "line_start": 35205,
-       "line_end": 35205,
+       "line_start": 34693,
+       "line_end": 34693,
        "quote": "For requirements.clarification_requested alone, the shared CV-1100, SP-1100, SP-1101 and CV-1101 owner units apply",
        "quote_check": "exact",
-       "quote_scope": "unit CV-608, Plans/Contracts_V0.md:35191-35229",
-       "file_sha256": "4ae2225d8ed19b6df971b6c32797aae6882d175264ff2c2e9a2045650d735e67",
+       "quote_scope": "unit CV-608, Plans/Contracts_V0.md:34679-34720",
+       "file_sha256": "2a9090efcaefbc3b0e85c2155255e078125e4d05a933e115ca931c6566b8b74b",
        "source_citation": {
         "path": "Plans/Contracts_V0.md",
         "unit": "CV-608",
@@ -546,9 +549,9 @@
        "line_start": 82793,
        "path": "Plans/dt_event_contract_fixtures.json",
        "quote": "\"producer_semantic_digest\": \"b5f1c867432f98800f46cb5225b00dfecce0a66d5e8347139a73d05f37e8bef5\"",
-       "unit": "requirements.clarification_requested retry_oracle",
+       "unit": "#/families/8",
        "quote_check": "exact",
-       "quote_scope": "document",
+       "quote_scope": "unit #/families/8, Plans/dt_event_contract_fixtures.json:74751-83326",
        "file_sha256": "b3432bfcdfc68263dcf0b00b8ed0c7d9ee518ed63f4132e146edc18ceca40365",
        "source_citation": {
         "line_end": 82793,
@@ -557,7 +560,8 @@
         "quote": "\"producer_semantic_digest\": \"b5f1c867432f98800f46cb5225b00dfecce0a66d5e8347139a73d05f37e8bef5\"",
         "unit": "requirements.clarification_requested retry_oracle",
         "file_sha256": "b3432bfcdfc68263dcf0b00b8ed0c7d9ee518ed63f4132e146edc18ceca40365"
-       }
+       },
+       "json_pointer": "#/families/8"
       },
       {
        "line_end": 38872,
@@ -567,7 +571,7 @@
        "unit": "SP-588",
        "quote_check": "exact",
        "quote_scope": "unit SP-588, Plans/storage-plan.md:38751-38943",
-       "file_sha256": "73ee6d097e08d31fd93301d05d2cd2632dd46e5a22ba3ea405ffadda4a0a9db2",
+       "file_sha256": "51edc1394ab24ca53a2a021dce3c3c9a1be0f43e2292d901ad56e4b0063a3ebf",
        "source_citation": {
         "line_end": 38872,
         "line_start": 38872,
@@ -704,9 +708,9 @@
   "row_pointer": "#/families/451"
  },
  "evidence_maintenance": {
-  "authority": "MERGE2-FIX1 findings 1/3/5",
-  "source_commit": "0c904de00426b0089ba5d56349fda8ea16cc9f88",
-  "source_assessment_sha256": "1c6ab6dd1c3cbc2ad4d17ffabae77338fd9c8ac7f57dc69dbf9e24983d637bc0",
+  "authority": "MERGE2-FIX2 findings 1/2/3",
+  "source_commit": "0f2a90ece55d4bafd163b19a05cd3c4eda91b9c1",
+  "source_assessment_sha256": "90643965b9b1c01c5a94ce077584f1d5c2c7a8981909d372684503ad3d3f1685",
   "native_execution": "NOT_RUN",
   "verdicts_changed": false
  }

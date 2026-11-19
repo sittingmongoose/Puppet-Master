@@ -4,7 +4,7 @@
  "family_id": "event-family-subagent-spawned",
  "implementation_receipt_sha256": "dceb7f21436cbe126c23822e62caa1b6dedcb45fefae3005c1804576ca34d827",
  "decision_ref": "Plans/Decision_Log.md#DL-2419",
- "decision_section_sha256": "c00a9e367a0ec4c2472f82d19b0daa5c620e7f38beb33ccf57a70fed432e252d",
+ "decision_section_sha256": "fcb4c3764915c405a4284fe1ba1657ea76d55618d1846854ec61e95a7fc56bfc",
  "registry_before": {
   "revision": "2026-11-16.282",
   "sha256": "faecfba1542fb4218c633a3f22423f3f29217493fdffe7c16cc69295ec41bf96",
@@ -18,7 +18,7 @@
  "registry_row_sha256": "cfde926a36068d0fd584c5aa38b229b46971e4ea3a7b3b8e31b404f80511b5e3",
  "depth_assessment": {
   "path": "reports/event-authority-20261116/admission-merge-2/depth/subagent.spawned.json",
-  "sha256": "cec12f546c7df17517afa28bd3b94a8730bcdec0858fc1521e6da60966b1ec63"
+  "sha256": "59f8b434f2805d13d2b7e153f7c59ec438f14490278aab440092e515ede47f27"
  },
  "admission_landing": {
   "branch": "plans/ea-merge2-apply-20261116",
@@ -37,11 +37,11 @@
   "Written under DL-077. The seal check recomputes completeness from the pinned assessment; the two fields ending in _at_recording are informational only."
  ],
  "evidence_maintenance": {
-  "authority": "MERGE2-FIX1",
-  "source_commit": "0c904de00426b0089ba5d56349fda8ea16cc9f88",
-  "source_record_sha256": "b356e5661cdbb5394acaf1f42d685a9fbac8d7f1c8c0ea451085f7475b72cb4d",
-  "source_assessment_sha256": "f02ccd4b00e76cc2ef83ca3461bc23c5fca0ee3101d99885ebd80f46e55049b2",
-  "source_decision_section_sha256": "e611602f60214a216ba8a4c6f213c69d94f11c1c56a84448ffb0abed811ea5df",
+  "authority": "MERGE2-FIX2",
+  "source_commit": "0f2a90ece55d4bafd163b19a05cd3c4eda91b9c1",
+  "source_record_sha256": "9c0f807a9e6566968f5e460d09754c134047fffba6f750dde56e54d7c8db8bd0",
+  "source_assessment_sha256": "cec12f546c7df17517afa28bd3b94a8730bcdec0858fc1521e6da60966b1ec63",
+  "source_decision_section_sha256": "c00a9e367a0ec4c2472f82d19b0daa5c620e7f38beb33ccf57a70fed432e252d",
   "original_registry_checkpoints_preserved": true
  }
 }

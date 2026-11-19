@@ -42,7 +42,9 @@
         "quote_line": 15994,
         "file_sha256": "e427220da5356ca78cbf6e2c36126be4824956f64c37df5c344494856750ea04",
         "quote_check": "exact"
-       }
+       },
+       "unit": "#/families/231",
+       "quote_scope": "unit #/families/231, Plans/event_family_registry.json:16035-16073"
       }
      ]
     },
@@ -92,7 +94,7 @@
        "line_end": 35893,
        "quote": "The sole producer `github_api device-flow poll response handler` first validates actual source/permission/receipt ownership, the closed payload and installed writer/schema/retention admissio",
        "excerpt_sha256": "395e87ffce3d85c733b3339f867d9d61133fd87625be1711e38e6b1b42531186",
-       "file_sha256": "73ee6d097e08d31fd93301d05d2cd2632dd46e5a22ba3ea405ffadda4a0a9db2",
+       "file_sha256": "51edc1394ab24ca53a2a021dce3c3c9a1be0f43e2292d901ad56e4b0063a3ebf",
        "quote_check": "exact",
        "quote_scope": "unit SP-670, Plans/storage-plan.md:35677-35914",
        "excerpt_digest_convention": "literal_quote",
@@ -113,7 +115,7 @@
        "line_end": 35900,
        "quote": "For `auth.github.token.polling`, the newly authored physical operation binding measures the complete canonical MessagePack value, independently of EventRecord body size. The closed `auth_github_token_",
        "excerpt_sha256": "28e7833eedcff1ce9f578aa7750a7a5c54f88b80a60621c1f4f0ba45c179d8db",
-       "file_sha256": "73ee6d097e08d31fd93301d05d2cd2632dd46e5a22ba3ea405ffadda4a0a9db2",
+       "file_sha256": "51edc1394ab24ca53a2a021dce3c3c9a1be0f43e2292d901ad56e4b0063a3ebf",
        "quote_check": "exact",
        "quote_scope": "unit SP-670, Plans/storage-plan.md:35677-35914",
        "excerpt_digest_convention": "literal_quote",
@@ -149,7 +151,7 @@
        "excerpt_sha256": "0fb8b3888d6402c773a76332b44eb55563776de18bf88c8c72630919ce9434f7",
        "file_sha256": "9b9fbeee2937faaee144ce94e1a17c463087badf7cd2d3b0021a60a87be860fe",
        "quote_check": "exact",
-       "quote_scope": "document",
+       "quote_scope": "unit #/$defs/auth_github_token_polling, Plans/dg6b_event_contracts.schema.json:1339-1435",
        "excerpt_digest_convention": "literal_quote",
        "source_citation": {
         "path": "Plans/dg6b_event_contracts.schema.json",
@@ -159,7 +161,8 @@
         "quote": "    \"auth_github_token_polling\": {",
         "excerpt_sha256": "0fb8b3888d6402c773a76332b44eb55563776de18bf88c8c72630919ce9434f7",
         "file_sha256": "9b9fbeee2937faaee144ce94e1a17c463087badf7cd2d3b0021a60a87be860fe"
-       }
+       },
+       "json_pointer": "#/$defs/auth_github_token_polling"
       },
       {
        "path": "scripts/pm-dg6b-event-contracts.py",
@@ -223,7 +226,7 @@
        "line_end": 35803,
        "quote": "application@1:{hex(server_id)}:{hex(owner_operation_id)}",
        "excerpt_sha256": "f021b441a447da8dc6d75d05b73da15284e77fb8544fd86b7d77fb6639093933",
-       "file_sha256": "73ee6d097e08d31fd93301d05d2cd2632dd46e5a22ba3ea405ffadda4a0a9db2",
+       "file_sha256": "51edc1394ab24ca53a2a021dce3c3c9a1be0f43e2292d901ad56e4b0063a3ebf",
        "quote_check": "exact",
        "quote_scope": "unit SP-670, Plans/storage-plan.md:35677-35914",
        "excerpt_digest_convention": "literal_quote",
@@ -299,7 +302,7 @@
        "line_end": 35897,
        "quote": "`auth.github.token.polling` selects current-writer `replay_policy=dedupe_by_idempotency_key`",
        "excerpt_sha256": "5f3e1dc02df31875e20d69992faed819c06ff6f88e82b5dc468c4caf5c61c46c",
-       "file_sha256": "73ee6d097e08d31fd93301d05d2cd2632dd46e5a22ba3ea405ffadda4a0a9db2",
+       "file_sha256": "51edc1394ab24ca53a2a021dce3c3c9a1be0f43e2292d901ad56e4b0063a3ebf",
        "quote_check": "exact",
        "quote_scope": "unit SP-670, Plans/storage-plan.md:35677-35914",
        "excerpt_digest_convention": "literal_quote",
@@ -418,7 +421,7 @@
        "quote": "\\ binding for `auth.github.token.polling` (2026-11-14).\\n\\nEvent history `retention_policy_ref = RP-OPERATIONAL-2555D@1.0.0`,\\",
        "quote_check": "exact",
        "quote_scope": "unit SP-670, Plans/storage-plan.md:35677-35914",
-       "file_sha256": "73ee6d097e08d31fd93301d05d2cd2632dd46e5a22ba3ea405ffadda4a0a9db2",
+       "file_sha256": "51edc1394ab24ca53a2a021dce3c3c9a1be0f43e2292d901ad56e4b0063a3ebf",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-670",
@@ -436,7 +439,7 @@
        "quote": "\\ retains `RP-OPERATIONAL-SECURITY-APPLICATION-2555D@1.0.0` under DL-502; this does not assign its referenced\\",
        "quote_check": "exact",
        "quote_scope": "unit SP-670, Plans/storage-plan.md:35677-35914",
-       "file_sha256": "73ee6d097e08d31fd93301d05d2cd2632dd46e5a22ba3ea405ffadda4a0a9db2",
+       "file_sha256": "51edc1394ab24ca53a2a021dce3c3c9a1be0f43e2292d901ad56e4b0063a3ebf",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-670",
@@ -466,7 +469,7 @@
        "line_end": 35814,
        "quote": "Custody: the operation record holds only the closed payload, actual actor/scope and original receipt reference. Credential secret custody remains github_api/OS-store only; plugin original re",
        "excerpt_sha256": "aa80c6b160a9250e49c5e912cd520b75dff4581b36a98cebbea3f95bfd629f4e",
-       "file_sha256": "73ee6d097e08d31fd93301d05d2cd2632dd46e5a22ba3ea405ffadda4a0a9db2",
+       "file_sha256": "51edc1394ab24ca53a2a021dce3c3c9a1be0f43e2292d901ad56e4b0063a3ebf",
        "quote_check": "exact",
        "quote_scope": "unit SP-670, Plans/storage-plan.md:35677-35914",
        "excerpt_digest_convention": "literal_quote",
@@ -576,7 +579,7 @@
        "line_end": 35904,
        "quote": "Consumer **`consumer.auth_github_token_polling.history@1.0.0`** serves only the existing authenticated GitHub auth health/history reader. It explicitly adopts **SP-278** and reads through `p",
        "excerpt_sha256": "76f2c538f44ddfef275cbe3e6a8430ab9f990fce0f12ee15b482fecd2427b7c1",
-       "file_sha256": "73ee6d097e08d31fd93301d05d2cd2632dd46e5a22ba3ea405ffadda4a0a9db2",
+       "file_sha256": "51edc1394ab24ca53a2a021dce3c3c9a1be0f43e2292d901ad56e4b0063a3ebf",
        "quote_check": "exact",
        "quote_scope": "unit SP-670, Plans/storage-plan.md:35677-35914",
        "excerpt_digest_convention": "literal_quote",
@@ -610,7 +613,7 @@
        "line_end": 35816,
        "quote": "Compatibility: no legacy tuple or unversioned sketch can be a native writer; unsupported version quarantines before append/read. A versioned migration must retain original ID/receipt and ver",
        "excerpt_sha256": "ee71b229878797ef387c1f44922417b4202c3cf67fbddac43ca0f064a7c0d439",
-       "file_sha256": "73ee6d097e08d31fd93301d05d2cd2632dd46e5a22ba3ea405ffadda4a0a9db2",
+       "file_sha256": "51edc1394ab24ca53a2a021dce3c3c9a1be0f43e2292d901ad56e4b0063a3ebf",
        "quote_check": "exact",
        "quote_scope": "unit SP-670, Plans/storage-plan.md:35677-35914",
        "excerpt_digest_convention": "literal_quote",
@@ -782,9 +785,9 @@
   "row_pointer": "#/families/231"
  },
  "evidence_maintenance": {
-  "authority": "MERGE2-FIX1 findings 1/3/5",
-  "source_commit": "0c904de00426b0089ba5d56349fda8ea16cc9f88",
-  "source_assessment_sha256": "9008a3418cc0d939d0cb81cf8e3fa6b04ea5594bef9ee267f6848b6fd8091d96",
+  "authority": "MERGE2-FIX2 findings 1/2/3",
+  "source_commit": "0f2a90ece55d4bafd163b19a05cd3c4eda91b9c1",
+  "source_assessment_sha256": "46e1707c9e1fbecb47a3b38da85a9b8590bf6e0985d011d689013f4bcf2e7715",
   "native_execution": "NOT_RUN",
   "verdicts_changed": false
  }

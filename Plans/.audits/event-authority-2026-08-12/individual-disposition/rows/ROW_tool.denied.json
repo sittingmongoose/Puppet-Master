@@ -3,36 +3,36 @@
   "bucket": "confirmed_persisted_unregistered",
   "july_classification": "confirmed_persisted_unregistered",
   "disposition": "KEEP_REGISTERED",
-  "disposition_rationale": "Plans/Decision_Log.md#DL-039: genuine J248-VETO-BATCH-252 CONFIRM_ALL_QUARANTINE_NO_ADMIT, recorded by Jared 2026-09-11T00:49:25.665050+00:00, applied 2026-09-11T15:12:51.572607+00:00 to tool.denied. Interim KEEP_QUARANTINED: counted in the working denominator, not live-registered. Supersedes the forged 2026-08-12 application claim; retained evidence supplies no new authority or depth closure. This exact row remains for the owner-batched registered/excluded/decision-card campaign. Registered at registry revision 2026-11-16.289 in admission merge 2 under DL-078, DL-096 and DL-400 (decision Plans/Decision_Log.md#DL-2425); DL-077 admission record reports/event-authority-20260911/admission-records/tool.denied.json. Disposition KEEP_QUARANTINED -> KEEP_REGISTERED, evidence cells membership_version, owner_doc, producer, closed_payload_schema, scope_identity, replay_idempotency, retention, redaction_custody, transitions, consumers_checkpoints, compatibility_withdrawal, positive_negative_oracles projected with twelve PASS cells from the family's admission depth assessment reports/event-authority-20261116/admission-merge-2/depth/tool.denied.json (sha256 fc10fa12ca2f5eacb0c3463ee222386b0e77c72c8eb008af69bd1575379fb598); bucket, cohort pins, July classification and every other field are unchanged; no seal or owner choice.",
+  "disposition_rationale": "Plans/Decision_Log.md#DL-039: genuine J248-VETO-BATCH-252 CONFIRM_ALL_QUARANTINE_NO_ADMIT, recorded by Jared 2026-09-11T00:49:25.665050+00:00, applied 2026-09-11T15:12:51.572607+00:00 to tool.denied. Interim KEEP_QUARANTINED: counted in the working denominator, not live-registered. Supersedes the forged 2026-08-12 application claim; retained evidence supplies no new authority or depth closure. This exact row remains for the owner-batched registered/excluded/decision-card campaign. Registered at registry revision 2026-11-16.289 in admission merge 2 under DL-078, DL-096 and DL-400 (decision Plans/Decision_Log.md#DL-2425); DL-077 admission record reports/event-authority-20260911/admission-records/tool.denied.json. Disposition KEEP_QUARANTINED -> KEEP_REGISTERED, evidence cells membership_version, owner_doc, producer, closed_payload_schema, scope_identity, replay_idempotency, retention, redaction_custody, transitions, consumers_checkpoints, compatibility_withdrawal, positive_negative_oracles projected with twelve PASS cells from the family's admission depth assessment reports/event-authority-20261116/admission-merge-2/depth/tool.denied.json (sha256 3a5f6f03c35ad0176f7202d277096eb745d4ea950787ad2bf43635678479c682); bucket, cohort pins, July classification and every other field are unchanged; no seal or owner choice. Evidence maintenance 2026-11-19 (MERGE2-FIX2): current assessment digest and locators are projected by the writer; original one-family append checkpoints remain in the DL-077 record and immutable Git history. No new admission or verdict change.",
   "evidence": {
     "owner_doc": {
       "status": "PASS",
-      "citation": "Plans/Contracts_V0.md:35277",
+      "citation": "Plans/Contracts_V0.md:34768",
       "note": "CV-610/SP-590 govern this exact family independently."
     },
     "producer": {
       "status": "PASS",
-      "citation": "Plans/Contracts_V0.md:35277; Plans/Tools.md:1496; Plans/FileSafe.md:2845",
+      "citation": "Plans/Contracts_V0.md:34774; Plans/Tools.md:1496; Plans/FileSafe.md:2845",
       "note": "DL-430 resolves F1: only policy/user refusal emits tool.denied before dispatch. FileSafe saves its dedicated refusal entry and emits no tool.denied; reason and allowed recovery actions stay visible, no execution failure or automatic retry."
     },
     "membership_version": {
       "status": "PASS",
-      "citation": "Plans/event_family_registry.json:32871-32962",
-      "note": "Registered at registry revision 2026-11-16.289 as #/families/507 (canonical row SHA-256 89cba62d04987d23e2bf771d959863f9c273a01b36e75580f6a32d56dd34ed9c); before this commit the family was absent."
+      "citation": "Plans/event_family_registry.json:32921-33012",
+      "note": "Currently registered at 2026-11-18.2 as #/families/507 (canonical row SHA-256 89cba62d04987d23e2bf771d959863f9c273a01b36e75580f6a32d56dd34ed9c). Original one-family admission checkpoints remain in the family record and immutable Git source."
     },
     "closed_payload_schema": {
       "status": "PASS",
-      "citation": "Plans/dt_event_contracts.schema.json:3180; Plans/Contracts_V0.md:35283; Plans/Contracts_V0.md:35285; scripts/pm-dt-event-contracts.py:198; scripts/pm-dt-event-contracts.py:214",
+      "citation": "Plans/dt_event_contracts.schema.json:3180; Plans/Contracts_V0.md:34774; Plans/Contracts_V0.md:34776; scripts/pm-dt-event-contracts.py:198; scripts/pm-dt-event-contracts.py:214",
       "note": "Exact closed payload/source schemas and 41 Storage mirrors validate; every patterned identifier is guarded by exact length or full-match termination and trailing-LF refusal cases. Sweep part 2B: every format: date-time field of the payload, sources and checkpoint runs the shared registered CV-1101 predicate (EventRecord profile; 7 owner-valid forms accepted and 15 malformed forms refused per populated field), and every integer slot takes only an exact integer through the shared current_integer within its own owner bounds (integral floats and values past the maximum refused)."
     },
     "scope_identity": {
       "status": "PASS",
-      "citation": "Plans/Contracts_V0.md:35283",
+      "citation": "Plans/Contracts_V0.md:34774",
       "note": "F2: blocked_sequence, approval_scope_key, ordered actions and effective permission snapshot join the original frozen source in both scope editions."
     },
     "replay_idempotency": {
       "status": "PASS",
-      "citation": "Plans/Contracts_V0.md:35282; Plans/Contracts_V0.md:35285; scripts/pm-dt-event-contracts.py:515; scripts/pm-dt-event-contracts.py:882",
+      "citation": "Plans/Contracts_V0.md:34773; Plans/Contracts_V0.md:34776; scripts/pm-dt-event-contracts.py:515; scripts/pm-dt-event-contracts.py:882",
       "note": "Original full-value retry/conflict custody remains; both current writer and retry refuse projector_replay_only as replay_only_not_appendable. Sweep part 2B: the producer digest is the shared producer_semantic_digest over the unchanged CV-317 projection (pinned bytes unchanged), and the current writer qualifies it before append: an exact integer the JCS route cannot preserve (2^53+1, 2^60, u64 max, a 4,400-digit integer) refuses number_domain at SV36 and the retry route has no digest (AM02); 2^53 is accepted; retained originals with those integers stay readable through SP-1101 custody (F16 closed)."
     },
     "retention": {
@@ -47,7 +47,7 @@
     },
     "transitions": {
       "status": "PASS",
-      "citation": "Plans/Contracts_V0.md:35277; Plans/Tools.md:1496; Plans/FileSafe.md:2845",
+      "citation": "Plans/Contracts_V0.md:34774; Plans/Tools.md:1496; Plans/FileSafe.md:2845",
       "note": "DL-430 resolves F1: only policy/user refusal emits tool.denied before dispatch. FileSafe saves its dedicated refusal entry and emits no tool.denied; reason and allowed recovery actions stay visible, no execution failure or automatic retry."
     },
     "consumers_checkpoints": {
@@ -57,7 +57,7 @@
     },
     "compatibility_withdrawal": {
       "status": "PASS",
-      "citation": "Plans/storage-plan.md:38993; Plans/Contracts_V0.md:35285; scripts/pm-dt-event-contracts.py:1224",
+      "citation": "Plans/storage-plan.md:38993; Plans/Contracts_V0.md:34776; scripts/pm-dt-event-contracts.py:1224",
       "note": "Version/withdrawal/read gates and governed source rebuild remain; no zero reset or history rewrite. Sweep part 2B (SP-1101): the historical reader resolves the sealed original and its frozen recipe and resources through the shared RetainedDispatcher for the binding the record claims (HR13); no caller-supplied original, flag or schema selects or narrows the recipe, and owner-valid broad timestamps stay readable with their exact spelling."
     },
     "positive_negative_oracles": {

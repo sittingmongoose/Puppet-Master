@@ -42,7 +42,9 @@
         "quote_line": 32874,
         "file_sha256": "b70b778d811fc11bf541106f1e536da2240ab22e2f5cbddfa09ec2d8b2641611",
         "quote_check": "exact"
-       }
+       },
+       "unit": "#/families/507",
+       "quote_scope": "unit #/families/507, Plans/event_family_registry.json:32921-33012"
       }
      ]
     },
@@ -54,12 +56,12 @@
       {
        "path": "Plans/Contracts_V0.md",
        "unit": "CV-610",
-       "line_start": 35277,
-       "line_end": 35277,
+       "line_start": 34768,
+       "line_end": 34768,
        "quote": "Newly authored owner contract under DL-045 for tool.denied@1.0.0 only",
        "quote_check": "exact",
-       "quote_scope": "unit CV-610, Plans/Contracts_V0.md:35269-35309",
-       "file_sha256": "4ae2225d8ed19b6df971b6c32797aae6882d175264ff2c2e9a2045650d735e67",
+       "quote_scope": "unit CV-610, Plans/Contracts_V0.md:34760-34800",
+       "file_sha256": "2a9090efcaefbc3b0e85c2155255e078125e4d05a933e115ca931c6566b8b74b",
        "source_citation": {
         "path": "Plans/Contracts_V0.md",
         "unit": "CV-610",
@@ -86,11 +88,11 @@
        "path": "Plans/Contracts_V0.md",
        "unit": "CV-610",
        "quote": "DL-430 resolves FileSafe non-emission: a FileSafe block saves only its dedicated FileSafe refusal entry, never tool.denied.",
-       "line_start": 35277,
-       "line_end": 35277,
+       "line_start": 34774,
+       "line_end": 34774,
        "quote_check": "exact",
-       "quote_scope": "unit CV-610, Plans/Contracts_V0.md:35269-35309",
-       "file_sha256": "4ae2225d8ed19b6df971b6c32797aae6882d175264ff2c2e9a2045650d735e67",
+       "quote_scope": "unit CV-610, Plans/Contracts_V0.md:34760-34800",
+       "file_sha256": "2a9090efcaefbc3b0e85c2155255e078125e4d05a933e115ca931c6566b8b74b",
        "source_citation": {
         "path": "Plans/Contracts_V0.md",
         "unit": "CV-610",
@@ -102,13 +104,13 @@
       },
       {
        "path": "Plans/Tools.md",
-       "unit": "section 12",
+       "unit": "heading:12. Implementation checklist (ordered for implementation plan)",
        "quote": "Per DL-430, save only the dedicated FileSafe refusal entry for a FileSafe block; do not emit `tool.denied`.",
        "line_start": 1496,
        "line_end": 1496,
        "quote_check": "exact",
-       "quote_scope": "document",
-       "file_sha256": "71c6920b3d7d5974d2b69814640300405bef873087fda23a02bbaef57c6c0035",
+       "quote_scope": "unit heading:12. Implementation checklist (ordered for implementation plan), Plans/Tools.md:1489-1512",
+       "file_sha256": "c53e1f511323d2b029b93798ac3080a116f00947920912fe9c933393c4d2d22e",
        "source_citation": {
         "path": "Plans/Tools.md",
         "unit": "section 12",
@@ -116,16 +118,20 @@
         "line_start": 1496,
         "line_end": 1496,
         "file_sha256": "71c6920b3d7d5974d2b69814640300405bef873087fda23a02bbaef57c6c0035"
+       },
+       "locator_maintenance": {
+        "authority": "MERGE2-FIX2 / R1 Astra real-input lineage evidence",
+        "reason": "Bind the existing claim to its exact named owner or preserved original section, without a sibling fallback or verdict change."
        }
       },
       {
        "path": "Plans/FileSafe.md",
-       "unit": "Runtime Blocked-State Integration Addendum",
+       "unit": "heading:2. Recovery options",
        "quote": "Per DL-430, a FileSafe block saves only its dedicated FileSafe refusal entry and never emits `tool.denied`",
        "line_start": 2845,
        "line_end": 2845,
        "quote_check": "exact",
-       "quote_scope": "document",
+       "quote_scope": "unit heading:2. Recovery options, Plans/FileSafe.md:2842-2862",
        "file_sha256": "89becad1a1bce7ab45ca2d49609e6364167aa8470ed0165926afcbd64e400f2c",
        "source_citation": {
         "path": "Plans/FileSafe.md",
@@ -134,6 +140,10 @@
         "line_start": 2845,
         "line_end": 2845,
         "file_sha256": "89becad1a1bce7ab45ca2d49609e6364167aa8470ed0165926afcbd64e400f2c"
+       },
+       "locator_maintenance": {
+        "authority": "MERGE2-FIX2 / R1 Astra real-input lineage evidence",
+        "reason": "Bind the existing claim to its exact named owner or preserved original section, without a sibling fallback or verdict change."
        }
       }
      ],
@@ -151,12 +161,12 @@
      "evidence": [
       {
        "path": "Plans/dt_event_contracts.schema.json",
-       "unit": "Plans/dt_event_contracts.schema.json#/$defs/tool_denied",
+       "unit": "#/$defs/tool_denied",
        "line_start": 3180,
        "line_end": 3180,
        "quote": "\"const\": \"pm.event_payload.tool_denied.v1\"",
        "quote_check": "exact",
-       "quote_scope": "document",
+       "quote_scope": "unit #/$defs/tool_denied, Plans/dt_event_contracts.schema.json:3155-3611",
        "file_sha256": "8e0a2dfcc209567e50e82b03572529f02a990d85da4863a7fbc27abd53258213",
        "source_citation": {
         "path": "Plans/dt_event_contracts.schema.json",
@@ -165,17 +175,18 @@
         "line_end": 3180,
         "quote": "\"const\": \"pm.event_payload.tool_denied.v1\"",
         "file_sha256": "8e0a2dfcc209567e50e82b03572529f02a990d85da4863a7fbc27abd53258213"
-       }
+       },
+       "json_pointer": "#/$defs/tool_denied"
       },
       {
        "path": "Plans/Contracts_V0.md",
        "unit": "CV-610",
-       "line_start": 35283,
-       "line_end": 35283,
+       "line_start": 34774,
+       "line_end": 34774,
        "quote": "The closed payload carries blocked_reason_code, failure_class, ordered allowed_action_ids, headless_denied, permission_snapshot_id and executed_at_all=false.",
        "quote_check": "exact",
-       "quote_scope": "unit CV-610, Plans/Contracts_V0.md:35269-35309",
-       "file_sha256": "4ae2225d8ed19b6df971b6c32797aae6882d175264ff2c2e9a2045650d735e67",
+       "quote_scope": "unit CV-610, Plans/Contracts_V0.md:34760-34800",
+       "file_sha256": "2a9090efcaefbc3b0e85c2155255e078125e4d05a933e115ca931c6566b8b74b",
        "source_citation": {
         "path": "Plans/Contracts_V0.md",
         "unit": "CV-610",
@@ -224,12 +235,12 @@
       {
        "path": "Plans/Contracts_V0.md",
        "unit": "CV-610",
-       "line_start": 35285,
-       "line_end": 35285,
+       "line_start": 34776,
+       "line_end": 34776,
        "quote": "For tool.denied alone, the shared CV-1100, SP-1100, SP-1101 and CV-1101 owner units apply",
        "quote_check": "exact",
-       "quote_scope": "unit CV-610, Plans/Contracts_V0.md:35269-35309",
-       "file_sha256": "4ae2225d8ed19b6df971b6c32797aae6882d175264ff2c2e9a2045650d735e67",
+       "quote_scope": "unit CV-610, Plans/Contracts_V0.md:34760-34800",
+       "file_sha256": "2a9090efcaefbc3b0e85c2155255e078125e4d05a933e115ca931c6566b8b74b",
        "source_citation": {
         "path": "Plans/Contracts_V0.md",
         "unit": "CV-610",
@@ -255,12 +266,12 @@
       {
        "path": "Plans/Contracts_V0.md",
        "unit": "CV-610",
-       "line_start": 35283,
-       "line_end": 35283,
+       "line_start": 34774,
+       "line_end": 34774,
        "quote": "All mapping fields and both blocked-episode fields join before exactly before append",
        "quote_check": "exact",
-       "quote_scope": "unit CV-610, Plans/Contracts_V0.md:35269-35309",
-       "file_sha256": "4ae2225d8ed19b6df971b6c32797aae6882d175264ff2c2e9a2045650d735e67",
+       "quote_scope": "unit CV-610, Plans/Contracts_V0.md:34760-34800",
+       "file_sha256": "2a9090efcaefbc3b0e85c2155255e078125e4d05a933e115ca931c6566b8b74b",
        "source_citation": {
         "path": "Plans/Contracts_V0.md",
         "unit": "CV-610",
@@ -286,12 +297,12 @@
       {
        "path": "Plans/Contracts_V0.md",
        "unit": "CV-610",
-       "line_start": 35282,
-       "line_end": 35282,
+       "line_start": 34773,
+       "line_end": 34773,
        "quote": "For tool.denied alone, current writer and retry paths refuse",
        "quote_check": "exact",
-       "quote_scope": "unit CV-610, Plans/Contracts_V0.md:35269-35309",
-       "file_sha256": "4ae2225d8ed19b6df971b6c32797aae6882d175264ff2c2e9a2045650d735e67",
+       "quote_scope": "unit CV-610, Plans/Contracts_V0.md:34760-34800",
+       "file_sha256": "2a9090efcaefbc3b0e85c2155255e078125e4d05a933e115ca931c6566b8b74b",
        "source_citation": {
         "path": "Plans/Contracts_V0.md",
         "unit": "CV-610",
@@ -340,12 +351,12 @@
       {
        "path": "Plans/Contracts_V0.md",
        "unit": "CV-610",
-       "line_start": 35285,
-       "line_end": 35285,
+       "line_start": 34776,
+       "line_end": 34776,
        "quote": "For tool.denied alone, the shared CV-1100, SP-1100, SP-1101 and CV-1101 owner units apply",
        "quote_check": "exact",
-       "quote_scope": "unit CV-610, Plans/Contracts_V0.md:35269-35309",
-       "file_sha256": "4ae2225d8ed19b6df971b6c32797aae6882d175264ff2c2e9a2045650d735e67",
+       "quote_scope": "unit CV-610, Plans/Contracts_V0.md:34760-34800",
+       "file_sha256": "2a9090efcaefbc3b0e85c2155255e078125e4d05a933e115ca931c6566b8b74b",
        "source_citation": {
         "path": "Plans/Contracts_V0.md",
         "unit": "CV-610",
@@ -376,7 +387,7 @@
        "quote": "retention_policy_ref = RP-RUNTIME-365D",
        "quote_check": "exact",
        "quote_scope": "unit SP-590, Plans/storage-plan.md:38985-39026",
-       "file_sha256": "73ee6d097e08d31fd93301d05d2cd2632dd46e5a22ba3ea405ffadda4a0a9db2",
+       "file_sha256": "51edc1394ab24ca53a2a021dce3c3c9a1be0f43e2292d901ad56e4b0063a3ebf",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-590",
@@ -425,7 +436,7 @@
        "quote": "Source stages, original owner outcomes, referenced bodies and full-value receipt custody form one mandatory coherent backup closure.",
        "quote_check": "exact",
        "quote_scope": "unit SP-590, Plans/storage-plan.md:38985-39026",
-       "file_sha256": "73ee6d097e08d31fd93301d05d2cd2632dd46e5a22ba3ea405ffadda4a0a9db2",
+       "file_sha256": "51edc1394ab24ca53a2a021dce3c3c9a1be0f43e2292d901ad56e4b0063a3ebf",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-590",
@@ -452,11 +463,11 @@
        "path": "Plans/Contracts_V0.md",
        "unit": "CV-610",
        "quote": "DL-430 resolves FileSafe non-emission: a FileSafe block saves only its dedicated FileSafe refusal entry, never tool.denied.",
-       "line_start": 35277,
-       "line_end": 35277,
+       "line_start": 34774,
+       "line_end": 34774,
        "quote_check": "exact",
-       "quote_scope": "unit CV-610, Plans/Contracts_V0.md:35269-35309",
-       "file_sha256": "4ae2225d8ed19b6df971b6c32797aae6882d175264ff2c2e9a2045650d735e67",
+       "quote_scope": "unit CV-610, Plans/Contracts_V0.md:34760-34800",
+       "file_sha256": "2a9090efcaefbc3b0e85c2155255e078125e4d05a933e115ca931c6566b8b74b",
        "source_citation": {
         "path": "Plans/Contracts_V0.md",
         "unit": "CV-610",
@@ -468,13 +479,13 @@
       },
       {
        "path": "Plans/Tools.md",
-       "unit": "section 12",
+       "unit": "heading:12. Implementation checklist (ordered for implementation plan)",
        "quote": "Per DL-430, save only the dedicated FileSafe refusal entry for a FileSafe block; do not emit `tool.denied`.",
        "line_start": 1496,
        "line_end": 1496,
        "quote_check": "exact",
-       "quote_scope": "document",
-       "file_sha256": "71c6920b3d7d5974d2b69814640300405bef873087fda23a02bbaef57c6c0035",
+       "quote_scope": "unit heading:12. Implementation checklist (ordered for implementation plan), Plans/Tools.md:1489-1512",
+       "file_sha256": "c53e1f511323d2b029b93798ac3080a116f00947920912fe9c933393c4d2d22e",
        "source_citation": {
         "path": "Plans/Tools.md",
         "unit": "section 12",
@@ -482,16 +493,20 @@
         "line_start": 1496,
         "line_end": 1496,
         "file_sha256": "71c6920b3d7d5974d2b69814640300405bef873087fda23a02bbaef57c6c0035"
+       },
+       "locator_maintenance": {
+        "authority": "MERGE2-FIX2 / R1 Astra real-input lineage evidence",
+        "reason": "Bind the existing claim to its exact named owner or preserved original section, without a sibling fallback or verdict change."
        }
       },
       {
        "path": "Plans/FileSafe.md",
-       "unit": "Runtime Blocked-State Integration Addendum",
+       "unit": "heading:2. Recovery options",
        "quote": "Per DL-430, a FileSafe block saves only its dedicated FileSafe refusal entry and never emits `tool.denied`",
        "line_start": 2845,
        "line_end": 2845,
        "quote_check": "exact",
-       "quote_scope": "document",
+       "quote_scope": "unit heading:2. Recovery options, Plans/FileSafe.md:2842-2862",
        "file_sha256": "89becad1a1bce7ab45ca2d49609e6364167aa8470ed0165926afcbd64e400f2c",
        "source_citation": {
         "path": "Plans/FileSafe.md",
@@ -500,6 +515,10 @@
         "line_start": 2845,
         "line_end": 2845,
         "file_sha256": "89becad1a1bce7ab45ca2d49609e6364167aa8470ed0165926afcbd64e400f2c"
+       },
+       "locator_maintenance": {
+        "authority": "MERGE2-FIX2 / R1 Astra real-input lineage evidence",
+        "reason": "Bind the existing claim to its exact named owner or preserved original section, without a sibling fallback or verdict change."
        }
       }
      ],
@@ -523,7 +542,7 @@
        "quote": "For tool.denied alone, its SP-278/DL-076 checkpoint",
        "quote_check": "exact",
        "quote_scope": "unit SP-590, Plans/storage-plan.md:38985-39026",
-       "file_sha256": "73ee6d097e08d31fd93301d05d2cd2632dd46e5a22ba3ea405ffadda4a0a9db2",
+       "file_sha256": "51edc1394ab24ca53a2a021dce3c3c9a1be0f43e2292d901ad56e4b0063a3ebf",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-590",
@@ -572,7 +591,7 @@
        "quote": "Withdrawal first cuts off this family's append admission",
        "quote_check": "exact",
        "quote_scope": "unit SP-590, Plans/storage-plan.md:38985-39026",
-       "file_sha256": "73ee6d097e08d31fd93301d05d2cd2632dd46e5a22ba3ea405ffadda4a0a9db2",
+       "file_sha256": "51edc1394ab24ca53a2a021dce3c3c9a1be0f43e2292d901ad56e4b0063a3ebf",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-590",
@@ -603,12 +622,12 @@
       {
        "path": "Plans/Contracts_V0.md",
        "unit": "CV-610",
-       "line_start": 35285,
-       "line_end": 35285,
+       "line_start": 34776,
+       "line_end": 34776,
        "quote": "For tool.denied alone, the shared CV-1100, SP-1100, SP-1101 and CV-1101 owner units apply",
        "quote_check": "exact",
-       "quote_scope": "unit CV-610, Plans/Contracts_V0.md:35269-35309",
-       "file_sha256": "4ae2225d8ed19b6df971b6c32797aae6882d175264ff2c2e9a2045650d735e67",
+       "quote_scope": "unit CV-610, Plans/Contracts_V0.md:34760-34800",
+       "file_sha256": "2a9090efcaefbc3b0e85c2155255e078125e4d05a933e115ca931c6566b8b74b",
        "source_citation": {
         "path": "Plans/Contracts_V0.md",
         "unit": "CV-610",
@@ -654,9 +673,9 @@
        "line_start": 103857,
        "path": "Plans/dt_event_contract_fixtures.json",
        "quote": "\"producer_semantic_digest\": \"adc41858b6ae79d17050c9606b8a0cb74c934b542b12a2cc78fe71f3626b8df4\"",
-       "unit": "tool.denied retry_oracle",
+       "unit": "#/families/10",
        "quote_check": "exact",
-       "quote_scope": "document",
+       "quote_scope": "unit #/families/10, Plans/dt_event_contract_fixtures.json:92113-104501",
        "file_sha256": "b3432bfcdfc68263dcf0b00b8ed0c7d9ee518ed63f4132e146edc18ceca40365",
        "source_citation": {
         "line_end": 103857,
@@ -665,7 +684,8 @@
         "quote": "\"producer_semantic_digest\": \"adc41858b6ae79d17050c9606b8a0cb74c934b542b12a2cc78fe71f3626b8df4\"",
         "unit": "tool.denied retry_oracle",
         "file_sha256": "b3432bfcdfc68263dcf0b00b8ed0c7d9ee518ed63f4132e146edc18ceca40365"
-       }
+       },
+       "json_pointer": "#/families/10"
       },
       {
        "line_end": 38997,
@@ -675,7 +695,7 @@
        "unit": "SP-590",
        "quote_check": "exact",
        "quote_scope": "unit SP-590, Plans/storage-plan.md:38985-39026",
-       "file_sha256": "73ee6d097e08d31fd93301d05d2cd2632dd46e5a22ba3ea405ffadda4a0a9db2",
+       "file_sha256": "51edc1394ab24ca53a2a021dce3c3c9a1be0f43e2292d901ad56e4b0063a3ebf",
        "source_citation": {
         "line_end": 38997,
         "line_start": 38997,
@@ -812,9 +832,9 @@
   "row_pointer": "#/families/507"
  },
  "evidence_maintenance": {
-  "authority": "MERGE2-FIX1 findings 1/3/5",
-  "source_commit": "0c904de00426b0089ba5d56349fda8ea16cc9f88",
-  "source_assessment_sha256": "fc10fa12ca2f5eacb0c3463ee222386b0e77c72c8eb008af69bd1575379fb598",
+  "authority": "MERGE2-FIX2 findings 1/2/3",
+  "source_commit": "0f2a90ece55d4bafd163b19a05cd3c4eda91b9c1",
+  "source_assessment_sha256": "0acaed2f7cc523a987487fc46b5e5ebce0ea0ed0d05dd123b5b8160a15a99789",
   "native_execution": "NOT_RUN",
   "verdicts_changed": false
  }

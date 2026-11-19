@@ -42,7 +42,9 @@
         "quote_line": 18090,
         "file_sha256": "57e7ad0485d3a89f5a499239944576d8c0b13423fe173864a758ac7b33261324",
         "quote_check": "exact"
-       }
+       },
+       "unit": "#/families/265",
+       "quote_scope": "unit #/families/265, Plans/event_family_registry.json:18131-18185"
       }
      ]
     },
@@ -58,7 +60,7 @@
        "line_end": 1850,
        "quote": "\"semantic_owner_ref\": \"Plans/Section15_MVP_Promoted_Features_Spec.md#browser-program-event-authority-program-timeout-effects-reconciled\"",
        "quote_check": "exact",
-       "quote_scope": "document",
+       "quote_scope": "unit #/rows/35, Plans/browser_event_admission.json:1845-1898",
        "file_sha256": "d9a149ada1bd49c26a1218563027c33d72b56a2a788d28a386505833545a78da",
        "source_citation": {
         "path": "Plans/browser_event_admission.json",
@@ -67,7 +69,8 @@
         "line_end": 1841,
         "quote": "\"semantic_owner_ref\": \"Plans/Section15_MVP_Promoted_Features_Spec.md#browser-program-event-authority-program-timeout-effects-reconciled\"",
         "file_sha256": "4b881b0b906c521c70fa4d4a7b14f0fdd6ac8a17324c28f0b58d33c34174fff9"
-       }
+       },
+       "json_pointer": "#/rows/35"
       },
       {
        "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
@@ -76,8 +79,8 @@
        "line_end": 12942,
        "quote": "**Newly authored technical owner definition under DL-046**, limited to `browser.program.timeout.effects_reconciled`",
        "quote_check": "exact",
-       "quote_scope": "document",
-       "file_sha256": "140caa73848b1a688465f9f69c11a07a6d866208c8997f4cbf88a0bb475eb86d",
+       "quote_scope": "unit #browser-program-event-authority-program-timeout-effects-reconciled, Plans/Section15_MVP_Promoted_Features_Spec.md:12939-12954",
+       "file_sha256": "192c7a3ebba02013a6ca5d6db7a1ecc5d019219635dcc3c1388e5e2fcf304f85",
        "source_citation": {
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
         "unit": "#browser-program-event-authority-program-timeout-effects-reconciled",
@@ -107,8 +110,8 @@
        "line_end": 12948,
        "quote": "The sole producer is `BrowserRuntimeService.program`, publishing through `BrowserRuntimeService.program.publish.program_timeout_effects_reconciled@1.0.0`",
        "quote_check": "exact",
-       "quote_scope": "document",
-       "file_sha256": "140caa73848b1a688465f9f69c11a07a6d866208c8997f4cbf88a0bb475eb86d",
+       "quote_scope": "unit #browser-program-event-authority-program-timeout-effects-reconciled, Plans/Section15_MVP_Promoted_Features_Spec.md:12939-12954",
+       "file_sha256": "192c7a3ebba02013a6ca5d6db7a1ecc5d019219635dcc3c1388e5e2fcf304f85",
        "source_citation": {
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
         "unit": "#browser-program-event-authority-program-timeout-effects-reconciled",
@@ -125,8 +128,8 @@
        "line_end": 12948,
        "quote": "ordinary EventRecord append, first AppendReceipt issued and synced under SP-286/CV-339",
        "quote_check": "exact",
-       "quote_scope": "document",
-       "file_sha256": "140caa73848b1a688465f9f69c11a07a6d866208c8997f4cbf88a0bb475eb86d",
+       "quote_scope": "unit #browser-program-event-authority-program-timeout-effects-reconciled, Plans/Section15_MVP_Promoted_Features_Spec.md:12939-12954",
+       "file_sha256": "192c7a3ebba02013a6ca5d6db7a1ecc5d019219635dcc3c1388e5e2fcf304f85",
        "source_citation": {
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
         "unit": "#browser-program-event-authority-program-timeout-effects-reconciled",
@@ -144,7 +147,7 @@
        "quote": "`storage.first_append_receipt.issue.v2` issues the eleven-field first receipt",
        "quote_check": "exact",
        "quote_scope": "unit SP-2533, Plans/storage-plan.md:22636-22706",
-       "file_sha256": "73ee6d097e08d31fd93301d05d2cd2632dd46e5a22ba3ea405ffadda4a0a9db2",
+       "file_sha256": "51edc1394ab24ca53a2a021dce3c3c9a1be0f43e2292d901ad56e4b0063a3ebf",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-2533",
@@ -174,7 +177,7 @@
        "line_end": 4225,
        "quote": "\"$id\": \"pm.browser_event.program_timeout_effects_reconciled.schema.v1\"",
        "quote_check": "exact",
-       "quote_scope": "document",
+       "quote_scope": "unit #/$defs/program_timeout_effects_reconciled, Plans/browser_event_payloads.schema.json:4223-4362",
        "file_sha256": "329f7794326afef1e8a528130877fd1f817e109c254a976fdd7d9062a96e378f",
        "source_citation": {
         "path": "Plans/browser_event_payloads.schema.json",
@@ -183,17 +186,18 @@
         "line_end": 4225,
         "quote": "\"$id\": \"pm.browser_event.program_timeout_effects_reconciled.schema.v1\"",
         "file_sha256": "329f7794326afef1e8a528130877fd1f817e109c254a976fdd7d9062a96e378f"
-       }
+       },
+       "json_pointer": "#/$defs/program_timeout_effects_reconciled"
       },
       {
        "path": "Plans/Contracts_V0.md",
        "unit": "CV-2533",
-       "line_start": 29039,
-       "line_end": 29039,
+       "line_start": 28527,
+       "line_end": 28527,
        "quote": "`Plans/browser_event_payloads.schema.json#/$defs/program_timeout_effects_reconciled` (`pm.browser_event.program_timeout_effects_reconciled.schema.v1`) is its closed payload",
        "quote_check": "exact",
-       "quote_scope": "unit CV-2533, Plans/Contracts_V0.md:29037-29101",
-       "file_sha256": "4ae2225d8ed19b6df971b6c32797aae6882d175264ff2c2e9a2045650d735e67",
+       "quote_scope": "unit CV-2533, Plans/Contracts_V0.md:28525-28589",
+       "file_sha256": "2a9090efcaefbc3b0e85c2155255e078125e4d05a933e115ca931c6566b8b74b",
        "source_citation": {
         "path": "Plans/Contracts_V0.md",
         "unit": "CV-2533",
@@ -219,12 +223,12 @@
       {
        "path": "Plans/Contracts_V0.md",
        "unit": "CV-2533",
-       "line_start": 29041,
-       "line_end": 29041,
+       "line_start": 28529,
+       "line_end": 28529,
        "quote": "`scope_kind=project` only, with `scope_partition=project~base64url_no_pad(UTF8(project_id))`",
        "quote_check": "exact",
-       "quote_scope": "unit CV-2533, Plans/Contracts_V0.md:29037-29101",
-       "file_sha256": "4ae2225d8ed19b6df971b6c32797aae6882d175264ff2c2e9a2045650d735e67",
+       "quote_scope": "unit CV-2533, Plans/Contracts_V0.md:28525-28589",
+       "file_sha256": "2a9090efcaefbc3b0e85c2155255e078125e4d05a933e115ca931c6566b8b74b",
        "source_citation": {
         "path": "Plans/Contracts_V0.md",
         "unit": "CV-2533",
@@ -237,12 +241,12 @@
       {
        "path": "Plans/Contracts_V0.md",
        "unit": "CV-2533",
-       "line_start": 29043,
-       "line_end": 29043,
+       "line_start": 28531,
+       "line_end": 28531,
        "quote": "`event_id` is `evt_browser_` ",
        "quote_check": "exact",
-       "quote_scope": "unit CV-2533, Plans/Contracts_V0.md:29037-29101",
-       "file_sha256": "4ae2225d8ed19b6df971b6c32797aae6882d175264ff2c2e9a2045650d735e67",
+       "quote_scope": "unit CV-2533, Plans/Contracts_V0.md:28525-28589",
+       "file_sha256": "2a9090efcaefbc3b0e85c2155255e078125e4d05a933e115ca931c6566b8b74b",
        "source_citation": {
         "path": "Plans/Contracts_V0.md",
         "unit": "CV-2533",
@@ -268,12 +272,12 @@
       {
        "path": "Plans/Contracts_V0.md",
        "unit": "CV-2533",
-       "line_start": 29045,
-       "line_end": 29045,
+       "line_start": 28533,
+       "line_end": 28533,
        "quote": "Every current write selects `replay_policy=dedupe_by_idempotency_key`",
        "quote_check": "exact",
-       "quote_scope": "unit CV-2533, Plans/Contracts_V0.md:29037-29101",
-       "file_sha256": "4ae2225d8ed19b6df971b6c32797aae6882d175264ff2c2e9a2045650d735e67",
+       "quote_scope": "unit CV-2533, Plans/Contracts_V0.md:28525-28589",
+       "file_sha256": "2a9090efcaefbc3b0e85c2155255e078125e4d05a933e115ca931c6566b8b74b",
        "source_citation": {
         "path": "Plans/Contracts_V0.md",
         "unit": "CV-2533",
@@ -291,7 +295,7 @@
        "quote": "A lost-ack retry returns the original receipt from `storage.first_append_receipt.resolve.v2`",
        "quote_check": "exact",
        "quote_scope": "unit SP-2533, Plans/storage-plan.md:22636-22706",
-       "file_sha256": "73ee6d097e08d31fd93301d05d2cd2632dd46e5a22ba3ea405ffadda4a0a9db2",
+       "file_sha256": "51edc1394ab24ca53a2a021dce3c3c9a1be0f43e2292d901ad56e4b0063a3ebf",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-2533",
@@ -321,7 +325,7 @@
        "line_end": 1889,
        "quote": "\"policy_id\": \"RP-RUNTIME-365D\"",
        "quote_check": "exact",
-       "quote_scope": "document",
+       "quote_scope": "unit #/rows/35, Plans/browser_event_admission.json:1845-1898",
        "file_sha256": "d9a149ada1bd49c26a1218563027c33d72b56a2a788d28a386505833545a78da",
        "source_citation": {
         "path": "Plans/browser_event_admission.json",
@@ -330,7 +334,8 @@
         "line_end": 1880,
         "quote": "\"policy_id\": \"RP-RUNTIME-365D\"",
         "file_sha256": "4b881b0b906c521c70fa4d4a7b14f0fdd6ac8a17324c28f0b58d33c34174fff9"
-       }
+       },
+       "json_pointer": "#/rows/35"
       },
       {
        "path": "Plans/Decision_Log.md@0c904de00426b0089ba5d56349fda8ea16cc9f88",
@@ -368,7 +373,7 @@
        "quote": "The checkpoint uses `RP-PROJECTION-3GEN@1.0.0`",
        "quote_check": "exact",
        "quote_scope": "unit SP-2533, Plans/storage-plan.md:22636-22706",
-       "file_sha256": "73ee6d097e08d31fd93301d05d2cd2632dd46e5a22ba3ea405ffadda4a0a9db2",
+       "file_sha256": "51edc1394ab24ca53a2a021dce3c3c9a1be0f43e2292d901ad56e4b0063a3ebf",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-2533",
@@ -398,8 +403,8 @@
        "line_end": 12954,
        "quote": "protected `AuthBrowserSession` identity and content never appear",
        "quote_check": "exact",
-       "quote_scope": "document",
-       "file_sha256": "140caa73848b1a688465f9f69c11a07a6d866208c8997f4cbf88a0bb475eb86d",
+       "quote_scope": "unit #browser-program-event-authority-program-timeout-effects-reconciled, Plans/Section15_MVP_Promoted_Features_Spec.md:12939-12954",
+       "file_sha256": "192c7a3ebba02013a6ca5d6db7a1ecc5d019219635dcc3c1388e5e2fcf304f85",
        "source_citation": {
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
         "unit": "#browser-program-event-authority-program-timeout-effects-reconciled",
@@ -417,7 +422,7 @@
        "quote": "Storage holds the original record, its custody v2 first receipt and its sealed SP-1101 write receipt under",
        "quote_check": "exact",
        "quote_scope": "unit SP-2533, Plans/storage-plan.md:22636-22706",
-       "file_sha256": "73ee6d097e08d31fd93301d05d2cd2632dd46e5a22ba3ea405ffadda4a0a9db2",
+       "file_sha256": "51edc1394ab24ca53a2a021dce3c3c9a1be0f43e2292d901ad56e4b0063a3ebf",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-2533",
@@ -447,8 +452,8 @@
        "line_end": 12946,
        "quote": "The entitling owner transition is `timeout_effects_reconciled`",
        "quote_check": "exact",
-       "quote_scope": "document",
-       "file_sha256": "140caa73848b1a688465f9f69c11a07a6d866208c8997f4cbf88a0bb475eb86d",
+       "quote_scope": "unit #browser-program-event-authority-program-timeout-effects-reconciled, Plans/Section15_MVP_Promoted_Features_Spec.md:12939-12954",
+       "file_sha256": "192c7a3ebba02013a6ca5d6db7a1ecc5d019219635dcc3c1388e5e2fcf304f85",
        "source_citation": {
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
         "unit": "#browser-program-event-authority-program-timeout-effects-reconciled",
@@ -465,8 +470,8 @@
        "line_end": 12946,
        "quote": "Only a transition the owner has committed emits",
        "quote_check": "exact",
-       "quote_scope": "document",
-       "file_sha256": "140caa73848b1a688465f9f69c11a07a6d866208c8997f4cbf88a0bb475eb86d",
+       "quote_scope": "unit #browser-program-event-authority-program-timeout-effects-reconciled, Plans/Section15_MVP_Promoted_Features_Spec.md:12939-12954",
+       "file_sha256": "192c7a3ebba02013a6ca5d6db7a1ecc5d019219635dcc3c1388e5e2fcf304f85",
        "source_citation": {
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
         "unit": "#browser-program-event-authority-program-timeout-effects-reconciled",
@@ -497,7 +502,7 @@
        "quote": "Derived family `browser_program_timeout_effects_reconciled_index_checkpoint`",
        "quote_check": "exact",
        "quote_scope": "unit SP-2533, Plans/storage-plan.md:22636-22706",
-       "file_sha256": "73ee6d097e08d31fd93301d05d2cd2632dd46e5a22ba3ea405ffadda4a0a9db2",
+       "file_sha256": "51edc1394ab24ca53a2a021dce3c3c9a1be0f43e2292d901ad56e4b0063a3ebf",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-2533",
@@ -515,7 +520,7 @@
        "quote": "It explicitly adopts SP-278",
        "quote_check": "exact",
        "quote_scope": "unit SP-2533, Plans/storage-plan.md:22636-22706",
-       "file_sha256": "73ee6d097e08d31fd93301d05d2cd2632dd46e5a22ba3ea405ffadda4a0a9db2",
+       "file_sha256": "51edc1394ab24ca53a2a021dce3c3c9a1be0f43e2292d901ad56e4b0063a3ebf",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-2533",
@@ -533,7 +538,7 @@
        "quote": "It stores only the nine-field durable read token (DL-076), never `redb_snapshot_id`",
        "quote_check": "exact",
        "quote_scope": "unit SP-2533, Plans/storage-plan.md:22636-22706",
-       "file_sha256": "73ee6d097e08d31fd93301d05d2cd2632dd46e5a22ba3ea405ffadda4a0a9db2",
+       "file_sha256": "51edc1394ab24ca53a2a021dce3c3c9a1be0f43e2292d901ad56e4b0063a3ebf",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-2533",
@@ -582,7 +587,7 @@
        "quote": "A reviewed withdrawal first cuts off writers (checked before dedupe",
        "quote_check": "exact",
        "quote_scope": "unit SP-2533, Plans/storage-plan.md:22636-22706",
-       "file_sha256": "73ee6d097e08d31fd93301d05d2cd2632dd46e5a22ba3ea405ffadda4a0a9db2",
+       "file_sha256": "51edc1394ab24ca53a2a021dce3c3c9a1be0f43e2292d901ad56e4b0063a3ebf",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-2533",
@@ -600,7 +605,7 @@
        "quote": "A retained `browser.program.timeout.effects_reconciled` original is read under the recipe named by the one write",
        "quote_check": "exact",
        "quote_scope": "unit SP-2533, Plans/storage-plan.md:22636-22706",
-       "file_sha256": "73ee6d097e08d31fd93301d05d2cd2632dd46e5a22ba3ea405ffadda4a0a9db2",
+       "file_sha256": "51edc1394ab24ca53a2a021dce3c3c9a1be0f43e2292d901ad56e4b0063a3ebf",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-2533",
@@ -678,9 +683,9 @@
   "row_pointer": "#/families/265"
  },
  "evidence_maintenance": {
-  "authority": "MERGE2-FIX1 findings 1/3/5",
-  "source_commit": "0c904de00426b0089ba5d56349fda8ea16cc9f88",
-  "source_assessment_sha256": "20b3095f8cb88e9937dd936ad83609a598113381a526645288e0a66017e3822a",
+  "authority": "MERGE2-FIX2 findings 1/2/3",
+  "source_commit": "0f2a90ece55d4bafd163b19a05cd3c4eda91b9c1",
+  "source_assessment_sha256": "aea73d0f70bd6f3a6805e4e348a9459a6f1137520d70e98942a4893913b0830e",
   "native_execution": "NOT_RUN",
   "verdicts_changed": false
  }

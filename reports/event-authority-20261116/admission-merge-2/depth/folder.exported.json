@@ -42,7 +42,9 @@
         "quote_line": 26020,
         "file_sha256": "b504e7ab23121122f905e15ed026d6d287aca02b6069c673f49487dc4a2608a0",
         "quote_check": "exact"
-       }
+       },
+       "unit": "#/families/393",
+       "quote_scope": "unit #/families/393, Plans/event_family_registry.json:26061-26101"
       }
      ]
     },
@@ -103,12 +105,12 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-560",
-       "line_start": 52176,
-       "line_end": 52176,
+       "line_start": 52146,
+       "line_end": 52146,
        "quote": "Append uses only the frozen settled payload/identity and current native admission.",
        "quote_check": "exact",
-       "quote_scope": "unit SP-560, Plans/storage-plan.md:52098-52531",
-       "file_sha256": "73ee6d097e08d31fd93301d05d2cd2632dd46e5a22ba3ea405ffadda4a0a9db2",
+       "quote_scope": "unit SP-560, Plans/storage-plan.md:52068-52501",
+       "file_sha256": "51edc1394ab24ca53a2a021dce3c3c9a1be0f43e2292d901ad56e4b0063a3ebf",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-560",
@@ -232,12 +234,12 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-560",
-       "line_start": 52183,
-       "line_end": 52183,
+       "line_start": 52153,
+       "line_end": 52153,
        "quote": "Missing original full value, v2 witness or native domain evidence fences;",
        "quote_check": "exact",
-       "quote_scope": "unit SP-560, Plans/storage-plan.md:52098-52531",
-       "file_sha256": "73ee6d097e08d31fd93301d05d2cd2632dd46e5a22ba3ea405ffadda4a0a9db2",
+       "quote_scope": "unit SP-560, Plans/storage-plan.md:52068-52501",
+       "file_sha256": "51edc1394ab24ca53a2a021dce3c3c9a1be0f43e2292d901ad56e4b0063a3ebf",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-560",
@@ -299,12 +301,12 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-560",
-       "line_start": 52526,
-       "line_end": 52526,
+       "line_start": 52496,
+       "line_end": 52496,
        "quote": "Event history `retention_policy_ref = RP-AUTHORITY-INDEFINITE@1.0.0`, under DL-401.",
        "quote_check": "exact",
-       "quote_scope": "unit SP-560, Plans/storage-plan.md:52098-52531",
-       "file_sha256": "73ee6d097e08d31fd93301d05d2cd2632dd46e5a22ba3ea405ffadda4a0a9db2",
+       "quote_scope": "unit SP-560, Plans/storage-plan.md:52068-52501",
+       "file_sha256": "51edc1394ab24ca53a2a021dce3c3c9a1be0f43e2292d901ad56e4b0063a3ebf",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-560",
@@ -348,12 +350,12 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-560",
-       "line_start": 52113,
-       "line_end": 52113,
+       "line_start": 52083,
+       "line_end": 52083,
        "quote": "physical companion through their own F unit.",
        "quote_check": "exact",
-       "quote_scope": "unit SP-560, Plans/storage-plan.md:52098-52531",
-       "file_sha256": "73ee6d097e08d31fd93301d05d2cd2632dd46e5a22ba3ea405ffadda4a0a9db2",
+       "quote_scope": "unit SP-560, Plans/storage-plan.md:52068-52501",
+       "file_sha256": "51edc1394ab24ca53a2a021dce3c3c9a1be0f43e2292d901ad56e4b0063a3ebf",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-560",
@@ -384,12 +386,12 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-560",
-       "line_start": 52224,
-       "line_end": 52224,
+       "line_start": 52194,
+       "line_end": 52194,
        "quote": "The actual redb value validates operation_custody_value or family_control_value: either that exact",
        "quote_check": "exact",
-       "quote_scope": "unit SP-560, Plans/storage-plan.md:52098-52531",
-       "file_sha256": "73ee6d097e08d31fd93301d05d2cd2632dd46e5a22ba3ea405ffadda4a0a9db2",
+       "quote_scope": "unit SP-560, Plans/storage-plan.md:52068-52501",
+       "file_sha256": "51edc1394ab24ca53a2a021dce3c3c9a1be0f43e2292d901ad56e4b0063a3ebf",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-560",
@@ -513,12 +515,12 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-560",
-       "line_start": 52204,
-       "line_end": 52204,
+       "line_start": 52174,
+       "line_end": 52174,
        "quote": "Active-to-draining CAS closes new command acceptance,",
        "quote_check": "exact",
-       "quote_scope": "unit SP-560, Plans/storage-plan.md:52098-52531",
-       "file_sha256": "73ee6d097e08d31fd93301d05d2cd2632dd46e5a22ba3ea405ffadda4a0a9db2",
+       "quote_scope": "unit SP-560, Plans/storage-plan.md:52068-52501",
+       "file_sha256": "51edc1394ab24ca53a2a021dce3c3c9a1be0f43e2292d901ad56e4b0063a3ebf",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-560",
@@ -549,12 +551,12 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-560",
-       "line_start": 52252,
-       "line_end": 52252,
+       "line_start": 52222,
+       "line_end": 52222,
        "quote": "A large family-control drain set uses the same complete-value reference",
        "quote_check": "exact",
-       "quote_scope": "unit SP-560, Plans/storage-plan.md:52098-52531",
-       "file_sha256": "73ee6d097e08d31fd93301d05d2cd2632dd46e5a22ba3ea405ffadda4a0a9db2",
+       "quote_scope": "unit SP-560, Plans/storage-plan.md:52068-52501",
+       "file_sha256": "51edc1394ab24ca53a2a021dce3c3c9a1be0f43e2292d901ad56e4b0063a3ebf",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-560",
@@ -585,12 +587,12 @@
       {
        "path": "Plans/Contracts_V0.md",
        "unit": "CV-560",
-       "line_start": 41234,
-       "line_end": 41234,
+       "line_start": 40752,
+       "line_end": 40752,
        "quote": "write-time edition and frozen resource manifest come only from Storage's sealed issuance custody, never from",
-       "file_sha256": "4ae2225d8ed19b6df971b6c32797aae6882d175264ff2c2e9a2045650d735e67",
+       "file_sha256": "2a9090efcaefbc3b0e85c2155255e078125e4d05a933e115ca931c6566b8b74b",
        "quote_check": "exact",
-       "quote_scope": "unit CV-560, Plans/Contracts_V0.md:41171-41269",
+       "quote_scope": "unit CV-560, Plans/Contracts_V0.md:40689-40787",
        "source_citation": {
         "path": "Plans/Contracts_V0.md",
         "unit": "CV-560",
@@ -633,12 +635,12 @@
       },
       {
        "path": "Plans/filemanager_event_contract_fixtures.json",
-       "unit": "F-159",
+       "unit": "#/rows/9",
        "line_start": 801083,
        "line_end": 801083,
        "quote": "\"name\": \"round7:settled-time\"",
        "quote_check": "exact",
-       "quote_scope": "document",
+       "quote_scope": "unit #/rows/9, Plans/filemanager_event_contract_fixtures.json:789496-877102",
        "file_sha256": "12c9ef8a9d0eeae1190d2fab95bb7b8b4cf6e56f23554bcfabf3d8d1bf4fa1f9",
        "source_citation": {
         "path": "Plans/filemanager_event_contract_fixtures.json",
@@ -647,7 +649,8 @@
         "line_end": 801083,
         "quote": "\"name\": \"round7:settled-time\"",
         "file_sha256": "12c9ef8a9d0eeae1190d2fab95bb7b8b4cf6e56f23554bcfabf3d8d1bf4fa1f9"
-       }
+       },
+       "json_pointer": "#/rows/9"
       },
       {
        "path": "scripts/pm-filemanager-event-contracts.py",
@@ -724,12 +727,12 @@
       {
        "path": "Plans/Contracts_V0.md",
        "unit": "CV-560",
-       "line_start": 41213,
-       "line_end": 41213,
+       "line_start": 40731,
+       "line_end": 40731,
        "quote": "Numbers follow CV-1100, SP-1100 and SP-1101 beside the existing CV-317, CV-339, SP-236, SP-286, SP-337 and",
-       "file_sha256": "4ae2225d8ed19b6df971b6c32797aae6882d175264ff2c2e9a2045650d735e67",
+       "file_sha256": "2a9090efcaefbc3b0e85c2155255e078125e4d05a933e115ca931c6566b8b74b",
        "quote_check": "exact",
-       "quote_scope": "unit CV-560, Plans/Contracts_V0.md:41171-41269",
+       "quote_scope": "unit CV-560, Plans/Contracts_V0.md:40689-40787",
        "source_citation": {
         "path": "Plans/Contracts_V0.md",
         "unit": "CV-560",
@@ -796,12 +799,12 @@
       {
        "path": "Plans/Contracts_V0.md",
        "unit": "CV-560",
-       "line_start": 41225,
-       "line_end": 41225,
+       "line_start": 40743,
+       "line_end": 40743,
        "quote": "Timestamps follow CV-1101 beside CV-253. Every format: date-time of these routes is checked by the shared",
-       "file_sha256": "4ae2225d8ed19b6df971b6c32797aae6882d175264ff2c2e9a2045650d735e67",
+       "file_sha256": "2a9090efcaefbc3b0e85c2155255e078125e4d05a933e115ca931c6566b8b74b",
        "quote_check": "exact",
-       "quote_scope": "unit CV-560, Plans/Contracts_V0.md:41171-41269",
+       "quote_scope": "unit CV-560, Plans/Contracts_V0.md:40689-40787",
        "source_citation": {
         "path": "Plans/Contracts_V0.md",
         "unit": "CV-560",
@@ -938,9 +941,9 @@
   "row_pointer": "#/families/393"
  },
  "evidence_maintenance": {
-  "authority": "MERGE2-FIX1 findings 1/3/5",
-  "source_commit": "0c904de00426b0089ba5d56349fda8ea16cc9f88",
-  "source_assessment_sha256": "19dc12584a82ef9b0ced38e8cb7eb208361de1e31bcba7f226448216221e8d75",
+  "authority": "MERGE2-FIX2 findings 1/2/3",
+  "source_commit": "0f2a90ece55d4bafd163b19a05cd3c4eda91b9c1",
+  "source_assessment_sha256": "a726b92a3bcdbe42c933d9e92a8019094a013bec8ab250118321ea887ce0754e",
   "native_execution": "NOT_RUN",
   "verdicts_changed": false
  }

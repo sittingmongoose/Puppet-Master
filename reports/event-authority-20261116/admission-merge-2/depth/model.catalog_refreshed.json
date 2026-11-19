@@ -42,7 +42,9 @@
         "quote_line": 27148,
         "file_sha256": "4acb8cf26b8e84ca4b61a033c288ae8d779f776fd1d809e841e1d208f31070d4",
         "quote_check": "exact"
-       }
+       },
+       "unit": "#/families/419",
+       "quote_scope": "unit #/families/419, Plans/event_family_registry.json:27195-27277"
       }
      ]
     },
@@ -281,12 +283,12 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-602",
-       "line_start": 52952,
-       "line_end": 52952,
+       "line_start": 52922,
+       "line_end": 52922,
        "quote": "\\ binding for `model.catalog_refreshed` (2026-11-14).\\n\\nEvent history `retention_policy_ref = RP-TELEMETRY-90D@1.0.0`,\\",
        "quote_check": "exact",
-       "quote_scope": "unit SP-602, Plans/storage-plan.md:52784-52991",
-       "file_sha256": "73ee6d097e08d31fd93301d05d2cd2632dd46e5a22ba3ea405ffadda4a0a9db2",
+       "quote_scope": "unit SP-602, Plans/storage-plan.md:52754-52961",
+       "file_sha256": "51edc1394ab24ca53a2a021dce3c3c9a1be0f43e2292d901ad56e4b0063a3ebf",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-602",
@@ -299,12 +301,12 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-602",
-       "line_start": 52956,
-       "line_end": 52956,
+       "line_start": 52926,
+       "line_end": 52926,
        "quote": "\\ application edition selects `RP-MODEL-CATALOG-APPLICATION-90D@1.0.0`; Project records select the Project\\",
        "quote_check": "exact",
-       "quote_scope": "unit SP-602, Plans/storage-plan.md:52784-52991",
-       "file_sha256": "73ee6d097e08d31fd93301d05d2cd2632dd46e5a22ba3ea405ffadda4a0a9db2",
+       "quote_scope": "unit SP-602, Plans/storage-plan.md:52754-52961",
+       "file_sha256": "51edc1394ab24ca53a2a021dce3c3c9a1be0f43e2292d901ad56e4b0063a3ebf",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-602",
@@ -848,9 +850,9 @@
   "row_pointer": "#/families/419"
  },
  "evidence_maintenance": {
-  "authority": "MERGE2-FIX1 findings 1/3/5",
-  "source_commit": "0c904de00426b0089ba5d56349fda8ea16cc9f88",
-  "source_assessment_sha256": "7a26f106d5db57f97e621d1896ad8452497e8a82ff5e028b869ea9de93627edc",
+  "authority": "MERGE2-FIX2 findings 1/2/3",
+  "source_commit": "0f2a90ece55d4bafd163b19a05cd3c4eda91b9c1",
+  "source_assessment_sha256": "30bace4b36f439bbe58ae11e9025ae65dd60a2531df9d9560cf7e142000f323d",
   "native_execution": "NOT_RUN",
   "verdicts_changed": false
  }

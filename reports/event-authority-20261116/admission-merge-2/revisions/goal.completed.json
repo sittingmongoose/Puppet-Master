@@ -206,13 +206,13 @@
       {
        "path": "Plans/event_family_registry.json",
        "json_pointer": "#/families/9",
-       "line_start": 710,
-       "line_end": 710,
+       "line_start": 707,
+       "line_end": 798,
        "quote": "\"event_type\": \"goal.completed\"",
-       "quote_line": 627,
+       "quote_line": 710,
        "file_sha256": "ec21cf1a5b42b3e68a5564a847b4798dff968612d11d438bc7075b89196f9602",
        "quote_check": "exact",
-       "quote_scope": "document",
+       "quote_scope": "unit #/families/9, Plans/event_family_registry.json:707-798",
        "source_citation": {
         "path": "Plans/event_family_registry.json",
         "json_pointer": "#/families/9",
@@ -221,7 +221,8 @@
         "quote": "\"event_type\": \"goal.completed\"",
         "quote_line": 627,
         "file_sha256": "a634791fb3f7ebaaa86f5b9c37971ac150ab7454f32c92043ab9de1e308be10b"
-       }
+       },
+       "unit": "#/families/9"
       }
      ]
     },
@@ -232,13 +233,13 @@
      "evidence": [
       {
        "path": "Plans/Goal_Runtime_System.md",
-       "line_start": 8527,
-       "line_end": 8527,
+       "line_start": 9195,
+       "line_end": 9195,
        "quote": "Newly authored",
-       "excerpt_sha256": "953ea3ff89cb4ad6ee7f69b8b44b899bb2b8fb75e3e764382201095457ac5c9d",
+       "excerpt_sha256": "1e7f3cc7edde4ed048e005b8b68fec89479fdb22bfe7150e79c69f49c512280d",
        "file_sha256": "122f980eb82a138dc71713eede5caa472a2d2d9ce404fab798698f8a38f5ca3e",
        "quote_check": "exact",
-       "quote_scope": "document",
+       "quote_scope": "unit GRS-204, Plans/Goal_Runtime_System.md:9188-9251",
        "excerpt_digest_convention": "whole_line",
        "source_citation": {
         "path": "Plans/Goal_Runtime_System.md",
@@ -247,6 +248,11 @@
         "quote": "Newly authored",
         "excerpt_sha256": "953ea3ff89cb4ad6ee7f69b8b44b899bb2b8fb75e3e764382201095457ac5c9d",
         "file_sha256": "122f980eb82a138dc71713eede5caa472a2d2d9ce404fab798698f8a38f5ca3e"
+       },
+       "unit": "GRS-204",
+       "locator_maintenance": {
+        "authority": "MERGE2-FIX2 / R1 Astra real-input lineage evidence",
+        "reason": "Bind the existing claim to its exact named owner or preserved original section, without a sibling fallback or verdict change."
        }
       }
      ],
@@ -270,7 +276,7 @@
        "excerpt_sha256": "82ed927c4c6ef7e9422345f530656e28c5cad06f7582c058ba633dbad8ea2f63",
        "file_sha256": "122f980eb82a138dc71713eede5caa472a2d2d9ce404fab798698f8a38f5ca3e",
        "quote_check": "exact",
-       "quote_scope": "document",
+       "quote_scope": "unit GRS-1121, Plans/Goal_Runtime_System.md:9586-9695",
        "excerpt_digest_convention": "whole_line",
        "source_citation": {
         "path": "Plans/Goal_Runtime_System.md",
@@ -279,6 +285,11 @@
         "quote": "prepared without admission. GRS-204 adopts owner.goal.lifecycle.completed.v1@1.0.0, pm.goal.host.completed_source.v1",
         "excerpt_sha256": "82ed927c4c6ef7e9422345f530656e28c5cad06f7582c058ba633dbad8ea2f63",
         "file_sha256": "122f980eb82a138dc71713eede5caa472a2d2d9ce404fab798698f8a38f5ca3e"
+       },
+       "unit": "GRS-1121",
+       "locator_maintenance": {
+        "authority": "MERGE2-FIX2 / R1 Astra real-input lineage evidence",
+        "reason": "Bind the existing claim to its exact named owner or preserved original section, without a sibling fallback or verdict change."
        }
       },
       {
@@ -289,7 +300,7 @@
        "excerpt_sha256": "ed1f556ae8a67416f23d77673e94492edfe80411ec811944f5616a99abc0c94b",
        "file_sha256": "122f980eb82a138dc71713eede5caa472a2d2d9ce404fab798698f8a38f5ca3e",
        "quote_check": "exact",
-       "quote_scope": "document",
+       "quote_scope": "unit GRS-1121, Plans/Goal_Runtime_System.md:9586-9695",
        "excerpt_digest_convention": "whole_line",
        "source_citation": {
         "path": "Plans/Goal_Runtime_System.md",
@@ -298,6 +309,11 @@
         "quote": "SP-287 body transaction and SP-286 first receipt/full-value v2 resolution. It is not authorized by the blocked",
         "excerpt_sha256": "ed1f556ae8a67416f23d77673e94492edfe80411ec811944f5616a99abc0c94b",
         "file_sha256": "122f980eb82a138dc71713eede5caa472a2d2d9ce404fab798698f8a38f5ca3e"
+       },
+       "unit": "GRS-1121",
+       "locator_maintenance": {
+        "authority": "MERGE2-FIX2 / R1 Astra real-input lineage evidence",
+        "reason": "Bind the existing claim to its exact named owner or preserved original section, without a sibling fallback or verdict change."
        }
       },
       {
@@ -308,7 +324,7 @@
        "excerpt_sha256": "b84465843672f234f72f3d2b0a331d1b78c3bade8c11c3890ecbb03aef05edf6",
        "file_sha256": "122f980eb82a138dc71713eede5caa472a2d2d9ce404fab798698f8a38f5ca3e",
        "quote_check": "exact",
-       "quote_scope": "document",
+       "quote_scope": "unit GRS-1122, Plans/Goal_Runtime_System.md:9696-9802",
        "excerpt_digest_convention": "whole_line",
        "source_citation": {
         "path": "Plans/Goal_Runtime_System.md",
@@ -317,6 +333,11 @@
         "quote": "completion route, prepared without admission. GRS-065 and GRS-204 adopt owner.goal.lifecycle.approved_exception.v1@1.0.0,",
         "excerpt_sha256": "b84465843672f234f72f3d2b0a331d1b78c3bade8c11c3890ecbb03aef05edf6",
         "file_sha256": "122f980eb82a138dc71713eede5caa472a2d2d9ce404fab798698f8a38f5ca3e"
+       },
+       "unit": "GRS-1122",
+       "locator_maintenance": {
+        "authority": "MERGE2-FIX2 / R1 Astra real-input lineage evidence",
+        "reason": "Bind the existing claim to its exact named owner or preserved original section, without a sibling fallback or verdict change."
        }
       },
       {
@@ -327,7 +348,7 @@
        "excerpt_sha256": "75ad56367b9ec79fbc062968c2f6293ae70749bcf20fc1f104366fa15480f0f1",
        "file_sha256": "122f980eb82a138dc71713eede5caa472a2d2d9ce404fab798698f8a38f5ca3e",
        "quote_check": "exact",
-       "quote_scope": "document",
+       "quote_scope": "unit GRS-086, Plans/Goal_Runtime_System.md:8655-8737",
        "excerpt_digest_convention": "whole_line",
        "source_citation": {
         "path": "Plans/Goal_Runtime_System.md",
@@ -336,6 +357,11 @@
         "quote": "owner.goal.body.mutation@1.0.0",
         "excerpt_sha256": "75ad56367b9ec79fbc062968c2f6293ae70749bcf20fc1f104366fa15480f0f1",
         "file_sha256": "122f980eb82a138dc71713eede5caa472a2d2d9ce404fab798698f8a38f5ca3e"
+       },
+       "unit": "GRS-086",
+       "locator_maintenance": {
+        "authority": "MERGE2-FIX2 / R1 Astra real-input lineage evidence",
+        "reason": "Bind the existing claim to its exact named owner or preserved original section, without a sibling fallback or verdict change."
        }
       }
      ],
@@ -459,9 +485,9 @@
        "line_end": 31288,
        "quote": "producer_semantic_digest",
        "excerpt_sha256": "fd37890467198baf231e0cbdd064f06a8744bc255978d7ae2750dc08e6482456",
-       "file_sha256": "73ee6d097e08d31fd93301d05d2cd2632dd46e5a22ba3ea405ffadda4a0a9db2",
+       "file_sha256": "51edc1394ab24ca53a2a021dce3c3c9a1be0f43e2292d901ad56e4b0063a3ebf",
        "quote_check": "exact",
-       "quote_scope": "document",
+       "quote_scope": "unit SP-310, Plans/storage-plan.md:31274-31440",
        "excerpt_digest_convention": "whole_line",
        "source_citation": {
         "path": "Plans/storage-plan.md",
@@ -470,6 +496,11 @@
         "quote": "producer_semantic_digest",
         "excerpt_sha256": "674034dd386336032c0f8822fa258a1a135d775bb5015cd7575c89c301430bd9",
         "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+       },
+       "unit": "SP-310",
+       "locator_maintenance": {
+        "authority": "MERGE2-FIX2 / R1 Astra real-input lineage evidence",
+        "reason": "Bind the existing claim to its exact named owner or preserved original section, without a sibling fallback or verdict change."
        }
       }
      ],
@@ -491,9 +522,9 @@
        "line_end": 30687,
        "quote": "RP-AUTHORITY-INDEFINITE",
        "excerpt_sha256": "e7351981e6845a22e7fe6ae338e52a1fa3c16a2d8b28752f60b5b01fa1469422",
-       "file_sha256": "73ee6d097e08d31fd93301d05d2cd2632dd46e5a22ba3ea405ffadda4a0a9db2",
+       "file_sha256": "51edc1394ab24ca53a2a021dce3c3c9a1be0f43e2292d901ad56e4b0063a3ebf",
        "quote_check": "exact",
-       "quote_scope": "document",
+       "quote_scope": "unit SP-305, Plans/storage-plan.md:30560-30724",
        "excerpt_digest_convention": "whole_line",
        "source_citation": {
         "path": "Plans/storage-plan.md",
@@ -502,6 +533,11 @@
         "quote": "RP-AUTHORITY-INDEFINITE",
         "excerpt_sha256": "a009bffbf68539df571c200041e114c8efc887e799e677590bb2a7bff3b66227",
         "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+       },
+       "unit": "SP-305",
+       "locator_maintenance": {
+        "authority": "MERGE2-FIX2 / R1 Astra real-input lineage evidence",
+        "reason": "Bind the existing claim to its exact named owner or preserved original section, without a sibling fallback or verdict change."
        }
       }
      ],
@@ -523,9 +559,9 @@
        "line_end": 25109,
        "quote": "reject-unhandled-secrets",
        "excerpt_sha256": "e78e054986bb33bf378bfa76d47deabf3efdf3784a56f99438dc6d5d1d5d09e8",
-       "file_sha256": "73ee6d097e08d31fd93301d05d2cd2632dd46e5a22ba3ea405ffadda4a0a9db2",
+       "file_sha256": "51edc1394ab24ca53a2a021dce3c3c9a1be0f43e2292d901ad56e4b0063a3ebf",
        "quote_check": "exact",
-       "quote_scope": "document",
+       "quote_scope": "unit SP-271, Plans/storage-plan.md:25015-25119",
        "excerpt_digest_convention": "whole_line",
        "source_citation": {
         "path": "Plans/storage-plan.md",
@@ -534,6 +570,11 @@
         "quote": "reject-unhandled-secrets",
         "excerpt_sha256": "6b09c2097761a7e87b182e03b95d294883a269cf3dfe070abdafdc64a8a30cea",
         "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+       },
+       "unit": "SP-271",
+       "locator_maintenance": {
+        "authority": "MERGE2-FIX2 / R1 Astra real-input lineage evidence",
+        "reason": "Bind the existing claim to its exact named owner or preserved original section, without a sibling fallback or verdict change."
        }
       }
      ],
@@ -557,7 +598,7 @@
        "excerpt_sha256": "e81e7a6fae48dc868fd6c1ae832729548e50c3a425272facb3fd6a324d1534f4",
        "file_sha256": "122f980eb82a138dc71713eede5caa472a2d2d9ce404fab798698f8a38f5ca3e",
        "quote_check": "exact",
-       "quote_scope": "document",
+       "quote_scope": "unit GRS-204, Plans/Goal_Runtime_System.md:9188-9251",
        "excerpt_digest_convention": "whole_line",
        "source_citation": {
         "path": "Plans/Goal_Runtime_System.md",
@@ -566,6 +607,11 @@
         "quote": "Exact ordinary completion predicates",
         "excerpt_sha256": "e81e7a6fae48dc868fd6c1ae832729548e50c3a425272facb3fd6a324d1534f4",
         "file_sha256": "122f980eb82a138dc71713eede5caa472a2d2d9ce404fab798698f8a38f5ca3e"
+       },
+       "unit": "GRS-204",
+       "locator_maintenance": {
+        "authority": "MERGE2-FIX2 / R1 Astra real-input lineage evidence",
+        "reason": "Bind the existing claim to its exact named owner or preserved original section, without a sibling fallback or verdict change."
        }
       }
      ],
@@ -583,13 +629,13 @@
      "evidence": [
       {
        "path": "Plans/storage-plan.md",
-       "line_start": 55521,
-       "line_end": 55521,
+       "line_start": 55491,
+       "line_end": 55491,
        "quote": "Current Activity/body/history/continuation consume",
        "excerpt_sha256": "a87d9a8d9f5768f03bfd31be801d4d2d038dae0d858f8061b7456967daa7dc72",
-       "file_sha256": "73ee6d097e08d31fd93301d05d2cd2632dd46e5a22ba3ea405ffadda4a0a9db2",
+       "file_sha256": "51edc1394ab24ca53a2a021dce3c3c9a1be0f43e2292d901ad56e4b0063a3ebf",
        "quote_check": "exact",
-       "quote_scope": "document",
+       "quote_scope": "unit SP-430, Plans/storage-plan.md:55438-55496",
        "excerpt_digest_convention": "whole_line",
        "source_citation": {
         "path": "Plans/storage-plan.md",
@@ -598,6 +644,11 @@
         "quote": "Current Activity/body/history/continuation consume",
         "excerpt_sha256": "a87d9a8d9f5768f03bfd31be801d4d2d038dae0d858f8061b7456967daa7dc72",
         "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+       },
+       "unit": "SP-430",
+       "locator_maintenance": {
+        "authority": "MERGE2-FIX2 / R1 Astra real-input lineage evidence",
+        "reason": "The existing cell explicitly names SP-430. Its historical generic quotation landed in a sibling section; cite the exact owner named by the claim, preserving original source evidence and verdict."
        }
       }
      ],
@@ -619,9 +670,9 @@
        "line_end": 31294,
        "quote": "withdrawal",
        "excerpt_sha256": "88601db51850d209028e541b7c452517f389ca0482e0e6fe9ba28a751be231a1",
-       "file_sha256": "73ee6d097e08d31fd93301d05d2cd2632dd46e5a22ba3ea405ffadda4a0a9db2",
+       "file_sha256": "51edc1394ab24ca53a2a021dce3c3c9a1be0f43e2292d901ad56e4b0063a3ebf",
        "quote_check": "exact",
-       "quote_scope": "document",
+       "quote_scope": "unit SP-310, Plans/storage-plan.md:31274-31440",
        "excerpt_digest_convention": "whole_line",
        "source_citation": {
         "path": "Plans/storage-plan.md",
@@ -630,6 +681,11 @@
         "quote": "withdrawal",
         "excerpt_sha256": "ba2df9d5cba876e7865ed21669b986c1e109c4dea8ef2aa4d19b4b1ffae74022",
         "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+       },
+       "unit": "SP-310",
+       "locator_maintenance": {
+        "authority": "MERGE2-FIX2 / R1 Astra real-input lineage evidence",
+        "reason": "Bind the existing claim to its exact named owner or preserved original section, without a sibling fallback or verdict change."
        }
       }
      ],
@@ -913,14 +969,14 @@
       },
       {
        "path": "Plans/Goal_Runtime_System.md",
-       "line_start": 8527,
-       "line_end": 8527,
+       "line_start": 9195,
+       "line_end": 9195,
        "quote": "Newly authored",
-       "excerpt_sha256": "953ea3ff89cb4ad6ee7f69b8b44b899bb2b8fb75e3e764382201095457ac5c9d",
+       "excerpt_sha256": "1e7f3cc7edde4ed048e005b8b68fec89479fdb22bfe7150e79c69f49c512280d",
        "file_sha256": "122f980eb82a138dc71713eede5caa472a2d2d9ce404fab798698f8a38f5ca3e",
        "role": "Canonical subject of the existing executable oracle proof; checker evidence and verdict are unchanged.",
        "quote_check": "exact",
-       "quote_scope": "document",
+       "quote_scope": "unit GRS-204, Plans/Goal_Runtime_System.md:9188-9251",
        "excerpt_digest_convention": "whole_line",
        "source_citation": {
         "path": "Plans/Goal_Runtime_System.md",
@@ -930,6 +986,11 @@
         "excerpt_sha256": "953ea3ff89cb4ad6ee7f69b8b44b899bb2b8fb75e3e764382201095457ac5c9d",
         "file_sha256": "122f980eb82a138dc71713eede5caa472a2d2d9ce404fab798698f8a38f5ca3e",
         "role": "Canonical subject of the existing executable oracle proof; checker evidence and verdict are unchanged."
+       },
+       "unit": "GRS-204",
+       "locator_maintenance": {
+        "authority": "MERGE2-FIX2 / R1 Astra real-input lineage evidence",
+        "reason": "Bind the existing claim to its exact named owner or preserved original section, without a sibling fallback or verdict change."
        }
       }
      ],
@@ -944,9 +1005,9 @@
   }
  ],
  "evidence_maintenance": {
-  "authority": "MERGE2-FIX1 finding 3",
-  "source_commit": "0c904de00426b0089ba5d56349fda8ea16cc9f88",
-  "source_assessment_sha256": "6ea09d67c4bee998bd2dc4d356717fe61f6d395c7c9bdcf49132169881e2a7ee",
+  "authority": "MERGE2-FIX2 findings 1/2/3",
+  "source_commit": "0f2a90ece55d4bafd163b19a05cd3c4eda91b9c1",
+  "source_assessment_sha256": "75ee434f54570fc02afca276ff1e850710cfc0f508f92aae528a1b57011ffc76",
   "native_execution": "NOT_RUN",
   "verdicts_changed": false
  }

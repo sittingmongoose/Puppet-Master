@@ -42,7 +42,9 @@
         "quote_line": 28918,
         "file_sha256": "fc569b0ee6e216371c480d426a64c1f97694bb5a1800ac62f3bb37e8e4465c36",
         "quote_check": "exact"
-       }
+       },
+       "unit": "#/families/447",
+       "quote_scope": "unit #/families/447, Plans/event_family_registry.json:28965-29006"
       }
      ]
     },
@@ -133,7 +135,7 @@
       },
       {
        "path": "Plans/event_payloads/w3e/remote_access_route_migration_state_changed.schema.json",
-       "unit": "#/",
+       "unit": "#",
        "line_start": 3,
        "line_end": 3,
        "quote": "\"additionalProperties\": false,",
@@ -147,6 +149,11 @@
         "line_end": 3,
         "quote": "\"additionalProperties\": false,",
         "file_sha256": "dd0172197d39489ae38f47e0053dea1826b63b2f44f35b06182a9bfdebef5d87"
+       },
+       "json_pointer": "#",
+       "locator_maintenance": {
+        "authority": "MERGE2-FIX2",
+        "reason": "The source uses #/ as a root label; current RFC 6901 root is #, matching the declared root schema, without changing its subject."
        }
       }
      ],
@@ -245,12 +252,12 @@
       {
        "path": "Plans/Contracts_V0.md",
        "unit": "CV-1406",
-       "line_start": 48668,
-       "line_end": 48668,
+       "line_start": 48186,
+       "line_end": 48186,
        "quote": "retention_policy_ref=RP-OPERATIONAL-SECURITY-APPLICATION-2555D@1.0.0 (DL-455, E-CARDS-3 item 3.a, option A), application editions only, kept seven years (220,752,000 seconds) from the original saved change, never restarted by retry, reprocessing or restore, in the one separate 2,000,000-entry application allowance app:operational_security (fail_closed overflow, hold eligible; only expired unprotec",
-       "file_sha256": "4ae2225d8ed19b6df971b6c32797aae6882d175264ff2c2e9a2045650d735e67",
+       "file_sha256": "2a9090efcaefbc3b0e85c2155255e078125e4d05a933e115ca931c6566b8b74b",
        "quote_check": "exact",
-       "quote_scope": "unit CV-1406, Plans/Contracts_V0.md:48649-48710",
+       "quote_scope": "unit CV-1406, Plans/Contracts_V0.md:48167-48228",
        "source_citation": {
         "path": "Plans/Contracts_V0.md",
         "unit": "CV-1406",
@@ -263,12 +270,12 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-1406",
-       "line_start": 70061,
-       "line_end": 70061,
+       "line_start": 70031,
+       "line_end": 70031,
        "quote": "retention_policy_ref=RP-OPERATIONAL-SECURITY-APPLICATION-2555D@1.0.0 (DL-455, E-CARDS-3 item 3.a, option A), application editions only, kept seven years (220,752,000 seconds) from the original saved change, never restarted by retry, reprocessing or restore, in the one separate 2,000,000-entry application allowance app:operational_security (fail_closed overflow, hold eligible; only expired unprotec",
-       "file_sha256": "73ee6d097e08d31fd93301d05d2cd2632dd46e5a22ba3ea405ffadda4a0a9db2",
+       "file_sha256": "51edc1394ab24ca53a2a021dce3c3c9a1be0f43e2292d901ad56e4b0063a3ebf",
        "quote_check": "exact",
-       "quote_scope": "unit SP-1406, Plans/storage-plan.md:70050-70138",
+       "quote_scope": "unit SP-1406, Plans/storage-plan.md:70020-70108",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-1406",
@@ -374,12 +381,12 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-1406",
-       "line_start": 70075,
-       "line_end": 70075,
+       "line_start": 70045,
+       "line_end": 70045,
        "quote": "The exact checkpoint in derived redb checkpoints is w3e_remote_access_route_migration_state_changed_checkpoint.v1:{hex(storage_instance_id)}:{scope_partition}:{hex(server_id)}",
-       "file_sha256": "73ee6d097e08d31fd93301d05d2cd2632dd46e5a22ba3ea405ffadda4a0a9db2",
+       "file_sha256": "51edc1394ab24ca53a2a021dce3c3c9a1be0f43e2292d901ad56e4b0063a3ebf",
        "quote_check": "exact",
-       "quote_scope": "unit SP-1406, Plans/storage-plan.md:70050-70138",
+       "quote_scope": "unit SP-1406, Plans/storage-plan.md:70020-70108",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-1406",
@@ -436,12 +443,12 @@
       {
        "path": "Plans/Contracts_V0.md",
        "unit": "CV-1406",
-       "line_start": 48668,
-       "line_end": 48668,
+       "line_start": 48186,
+       "line_end": 48186,
        "quote": "Phase 2 (2026-11-13) runs the executable synthetic oracles of this family in scripts/pm_w3e_event_oracles.py; every refusal is one named single-predicate row of a generated Method B guard table (scripts/pm_w3e_table_*.py) proved by the gated shared scripts/pm_guard_isolation.py through scripts/pm-w3e-guard-proof.py, and rows no input can refuse first stay alone in their own table with a written pr",
-       "file_sha256": "4ae2225d8ed19b6df971b6c32797aae6882d175264ff2c2e9a2045650d735e67",
+       "file_sha256": "2a9090efcaefbc3b0e85c2155255e078125e4d05a933e115ca931c6566b8b74b",
        "quote_check": "exact",
-       "quote_scope": "unit CV-1406, Plans/Contracts_V0.md:48649-48710",
+       "quote_scope": "unit CV-1406, Plans/Contracts_V0.md:48167-48228",
        "source_citation": {
         "path": "Plans/Contracts_V0.md",
         "unit": "CV-1406",
@@ -582,9 +589,9 @@
   "row_pointer": "#/families/447"
  },
  "evidence_maintenance": {
-  "authority": "MERGE2-FIX1 findings 1/3/5",
-  "source_commit": "0c904de00426b0089ba5d56349fda8ea16cc9f88",
-  "source_assessment_sha256": "1d64328acf1873f73fb6f3a35aea68682bdd2732071b794896cf9bf5ca6c0071",
+  "authority": "MERGE2-FIX2 findings 1/2/3",
+  "source_commit": "0f2a90ece55d4bafd163b19a05cd3c4eda91b9c1",
+  "source_assessment_sha256": "66508b4602c9431eb2c9c0ded45ed44c054f0e07015b107f69e10af4768643f4",
   "native_execution": "NOT_RUN",
   "verdicts_changed": false
  }

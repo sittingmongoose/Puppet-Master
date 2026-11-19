@@ -42,7 +42,9 @@
         "quote_line": 28708,
         "file_sha256": "29dfd5a15d548fe0299279d538fda18c1cf1c0958430c9a926a76ea7ee948254",
         "quote_check": "exact"
-       }
+       },
+       "unit": "#/families/442",
+       "quote_scope": "unit #/families/442, Plans/event_family_registry.json:28755-28796"
       }
      ]
     },
@@ -263,12 +265,12 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-606",
-       "line_start": 53193,
-       "line_end": 53195,
+       "line_start": 53163,
+       "line_end": 53165,
        "quote": "binding for `project.created` (2026-11-14).\n\n  Event history `retention_policy_ref = RP-AUTHORITY-INDEFINITE@1.0.0`,",
        "quote_check": "exact",
-       "quote_scope": "unit SP-606, Plans/storage-plan.md:53165-53227",
-       "file_sha256": "73ee6d097e08d31fd93301d05d2cd2632dd46e5a22ba3ea405ffadda4a0a9db2",
+       "quote_scope": "unit SP-606, Plans/storage-plan.md:53135-53197",
+       "file_sha256": "51edc1394ab24ca53a2a021dce3c3c9a1be0f43e2292d901ad56e4b0063a3ebf",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-606",
@@ -797,9 +799,9 @@
   "row_pointer": "#/families/442"
  },
  "evidence_maintenance": {
-  "authority": "MERGE2-FIX1 findings 1/3/5",
-  "source_commit": "0c904de00426b0089ba5d56349fda8ea16cc9f88",
-  "source_assessment_sha256": "8556a10b260682631b6e2c5c04b7cbde5a9b575ea9885bd64019ee0123d30771",
+  "authority": "MERGE2-FIX2 findings 1/2/3",
+  "source_commit": "0f2a90ece55d4bafd163b19a05cd3c4eda91b9c1",
+  "source_assessment_sha256": "b2e2d1a901413aa27eb98fadbeb006c214cb9af8265fe83761c7157a69187060",
   "native_execution": "NOT_RUN",
   "verdicts_changed": false
  }

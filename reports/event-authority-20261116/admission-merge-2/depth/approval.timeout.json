@@ -42,7 +42,9 @@
         "quote_line": 15792,
         "file_sha256": "f4db9a7626b94ac38d17b1fc3c9634a401fc84220e0edba2b2cef57de270c27e",
         "quote_check": "exact"
-       }
+       },
+       "unit": "#/families/226",
+       "quote_scope": "unit #/families/226, Plans/event_family_registry.json:15833-15878"
       }
      ]
     },
@@ -54,12 +56,12 @@
       {
        "path": "Plans/Contracts_V0.md",
        "unit": "CV-603",
-       "line_start": 35004,
-       "line_end": 35004,
+       "line_start": 34492,
+       "line_end": 34492,
        "quote": "Newly authored owner contract under DL-045 for approval.timeout@1.0.0 only",
        "quote_check": "exact",
-       "quote_scope": "unit CV-603, Plans/Contracts_V0.md:34996-35033",
-       "file_sha256": "4ae2225d8ed19b6df971b6c32797aae6882d175264ff2c2e9a2045650d735e67",
+       "quote_scope": "unit CV-603, Plans/Contracts_V0.md:34484-34521",
+       "file_sha256": "2a9090efcaefbc3b0e85c2155255e078125e4d05a933e115ca931c6566b8b74b",
        "source_citation": {
         "path": "Plans/Contracts_V0.md",
         "unit": "CV-603",
@@ -90,7 +92,7 @@
        "quote": "For approval.timeout alone, the newly authored original-source custody",
        "quote_check": "exact",
        "quote_scope": "unit SP-583, Plans/storage-plan.md:38547-38586",
-       "file_sha256": "73ee6d097e08d31fd93301d05d2cd2632dd46e5a22ba3ea405ffadda4a0a9db2",
+       "file_sha256": "51edc1394ab24ca53a2a021dce3c3c9a1be0f43e2292d901ad56e4b0063a3ebf",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-583",
@@ -115,12 +117,12 @@
      "evidence": [
       {
        "path": "Plans/dt_event_contracts.schema.json",
-       "unit": "Plans/dt_event_contracts.schema.json#/$defs/approval_timeout",
+       "unit": "#/$defs/approval_timeout",
        "line_start": 913,
        "line_end": 913,
        "quote": "\"const\": \"pm.event_payload.approval_timeout.v1\"",
        "quote_check": "exact",
-       "quote_scope": "document",
+       "quote_scope": "unit #/$defs/approval_timeout, Plans/dt_event_contracts.schema.json:899-953",
        "file_sha256": "8e0a2dfcc209567e50e82b03572529f02a990d85da4863a7fbc27abd53258213",
        "source_citation": {
         "path": "Plans/dt_event_contracts.schema.json",
@@ -129,7 +131,8 @@
         "line_end": 913,
         "quote": "\"const\": \"pm.event_payload.approval_timeout.v1\"",
         "file_sha256": "8e0a2dfcc209567e50e82b03572529f02a990d85da4863a7fbc27abd53258213"
-       }
+       },
+       "json_pointer": "#/$defs/approval_timeout"
       },
       {
        "path": "scripts/pm-dt-event-contracts.py",
@@ -170,12 +173,12 @@
       {
        "path": "Plans/Contracts_V0.md",
        "unit": "CV-603",
-       "line_start": 35009,
-       "line_end": 35009,
+       "line_start": 34497,
+       "line_end": 34497,
        "quote": "For approval.timeout alone, the shared CV-1100, SP-1100, SP-1101 and CV-1101 owner units apply",
        "quote_check": "exact",
-       "quote_scope": "unit CV-603, Plans/Contracts_V0.md:34996-35033",
-       "file_sha256": "4ae2225d8ed19b6df971b6c32797aae6882d175264ff2c2e9a2045650d735e67",
+       "quote_scope": "unit CV-603, Plans/Contracts_V0.md:34484-34521",
+       "file_sha256": "2a9090efcaefbc3b0e85c2155255e078125e4d05a933e115ca931c6566b8b74b",
        "source_citation": {
         "path": "Plans/Contracts_V0.md",
         "unit": "CV-603",
@@ -206,7 +209,7 @@
        "quote": "For approval.timeout alone, source codec",
        "quote_check": "exact",
        "quote_scope": "unit SP-583, Plans/storage-plan.md:38547-38586",
-       "file_sha256": "73ee6d097e08d31fd93301d05d2cd2632dd46e5a22ba3ea405ffadda4a0a9db2",
+       "file_sha256": "51edc1394ab24ca53a2a021dce3c3c9a1be0f43e2292d901ad56e4b0063a3ebf",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-583",
@@ -255,12 +258,12 @@
       {
        "path": "Plans/Contracts_V0.md",
        "unit": "CV-603",
-       "line_start": 35009,
-       "line_end": 35009,
+       "line_start": 34497,
+       "line_end": 34497,
        "quote": "For approval.timeout alone, the shared CV-1100, SP-1100, SP-1101 and CV-1101 owner units apply",
        "quote_check": "exact",
-       "quote_scope": "unit CV-603, Plans/Contracts_V0.md:34996-35033",
-       "file_sha256": "4ae2225d8ed19b6df971b6c32797aae6882d175264ff2c2e9a2045650d735e67",
+       "quote_scope": "unit CV-603, Plans/Contracts_V0.md:34484-34521",
+       "file_sha256": "2a9090efcaefbc3b0e85c2155255e078125e4d05a933e115ca931c6566b8b74b",
        "source_citation": {
         "path": "Plans/Contracts_V0.md",
         "unit": "CV-603",
@@ -286,12 +289,12 @@
       {
        "path": "Plans/Contracts_V0.md",
        "unit": "CV-603",
-       "line_start": 35008,
-       "line_end": 35008,
+       "line_start": 34496,
+       "line_end": 34496,
        "quote": "For approval.timeout alone, current writer and retry paths refuse",
        "quote_check": "exact",
-       "quote_scope": "unit CV-603, Plans/Contracts_V0.md:34996-35033",
-       "file_sha256": "4ae2225d8ed19b6df971b6c32797aae6882d175264ff2c2e9a2045650d735e67",
+       "quote_scope": "unit CV-603, Plans/Contracts_V0.md:34484-34521",
+       "file_sha256": "2a9090efcaefbc3b0e85c2155255e078125e4d05a933e115ca931c6566b8b74b",
        "source_citation": {
         "path": "Plans/Contracts_V0.md",
         "unit": "CV-603",
@@ -358,12 +361,12 @@
       {
        "path": "Plans/Contracts_V0.md",
        "unit": "CV-603",
-       "line_start": 35009,
-       "line_end": 35009,
+       "line_start": 34497,
+       "line_end": 34497,
        "quote": "For approval.timeout alone, the shared CV-1100, SP-1100, SP-1101 and CV-1101 owner units apply",
        "quote_check": "exact",
-       "quote_scope": "unit CV-603, Plans/Contracts_V0.md:34996-35033",
-       "file_sha256": "4ae2225d8ed19b6df971b6c32797aae6882d175264ff2c2e9a2045650d735e67",
+       "quote_scope": "unit CV-603, Plans/Contracts_V0.md:34484-34521",
+       "file_sha256": "2a9090efcaefbc3b0e85c2155255e078125e4d05a933e115ca931c6566b8b74b",
        "source_citation": {
         "path": "Plans/Contracts_V0.md",
         "unit": "CV-603",
@@ -394,7 +397,7 @@
        "quote": "retention_policy_ref = RP-AUTHORITY-INDEFINITE",
        "quote_check": "exact",
        "quote_scope": "unit SP-583, Plans/storage-plan.md:38547-38586",
-       "file_sha256": "73ee6d097e08d31fd93301d05d2cd2632dd46e5a22ba3ea405ffadda4a0a9db2",
+       "file_sha256": "51edc1394ab24ca53a2a021dce3c3c9a1be0f43e2292d901ad56e4b0063a3ebf",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-583",
@@ -443,7 +446,7 @@
        "quote": "Source stages, original owner outcomes, referenced bodies and full-value receipt custody form one mandatory coherent backup closure.",
        "quote_check": "exact",
        "quote_scope": "unit SP-583, Plans/storage-plan.md:38547-38586",
-       "file_sha256": "73ee6d097e08d31fd93301d05d2cd2632dd46e5a22ba3ea405ffadda4a0a9db2",
+       "file_sha256": "51edc1394ab24ca53a2a021dce3c3c9a1be0f43e2292d901ad56e4b0063a3ebf",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-583",
@@ -469,12 +472,12 @@
       {
        "path": "Plans/Contracts_V0.md",
        "unit": "CV-603",
-       "line_start": 35007,
-       "line_end": 35007,
+       "line_start": 34495,
+       "line_end": 34495,
        "quote": "For approval.timeout alone, the explicit lifecycle transition is",
        "quote_check": "exact",
-       "quote_scope": "unit CV-603, Plans/Contracts_V0.md:34996-35033",
-       "file_sha256": "4ae2225d8ed19b6df971b6c32797aae6882d175264ff2c2e9a2045650d735e67",
+       "quote_scope": "unit CV-603, Plans/Contracts_V0.md:34484-34521",
+       "file_sha256": "2a9090efcaefbc3b0e85c2155255e078125e4d05a933e115ca931c6566b8b74b",
        "source_citation": {
         "path": "Plans/Contracts_V0.md",
         "unit": "CV-603",
@@ -523,7 +526,7 @@
        "quote": "For approval.timeout alone, its SP-278/DL-076 checkpoint",
        "quote_check": "exact",
        "quote_scope": "unit SP-583, Plans/storage-plan.md:38547-38586",
-       "file_sha256": "73ee6d097e08d31fd93301d05d2cd2632dd46e5a22ba3ea405ffadda4a0a9db2",
+       "file_sha256": "51edc1394ab24ca53a2a021dce3c3c9a1be0f43e2292d901ad56e4b0063a3ebf",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-583",
@@ -572,7 +575,7 @@
        "quote": "Withdrawal first cuts off this family's append admission",
        "quote_check": "exact",
        "quote_scope": "unit SP-583, Plans/storage-plan.md:38547-38586",
-       "file_sha256": "73ee6d097e08d31fd93301d05d2cd2632dd46e5a22ba3ea405ffadda4a0a9db2",
+       "file_sha256": "51edc1394ab24ca53a2a021dce3c3c9a1be0f43e2292d901ad56e4b0063a3ebf",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-583",
@@ -603,12 +606,12 @@
       {
        "path": "Plans/Contracts_V0.md",
        "unit": "CV-603",
-       "line_start": 35009,
-       "line_end": 35009,
+       "line_start": 34497,
+       "line_end": 34497,
        "quote": "For approval.timeout alone, the shared CV-1100, SP-1100, SP-1101 and CV-1101 owner units apply",
        "quote_check": "exact",
-       "quote_scope": "unit CV-603, Plans/Contracts_V0.md:34996-35033",
-       "file_sha256": "4ae2225d8ed19b6df971b6c32797aae6882d175264ff2c2e9a2045650d735e67",
+       "quote_scope": "unit CV-603, Plans/Contracts_V0.md:34484-34521",
+       "file_sha256": "2a9090efcaefbc3b0e85c2155255e078125e4d05a933e115ca931c6566b8b74b",
        "source_citation": {
         "path": "Plans/Contracts_V0.md",
         "unit": "CV-603",
@@ -654,9 +657,9 @@
        "line_start": 34409,
        "path": "Plans/dt_event_contract_fixtures.json",
        "quote": "\"producer_semantic_digest\": \"c1146e4fe02864e5d4fe6ae1fd8de8631cf611bf76bdbf8f0b96a2a499883cea\"",
-       "unit": "approval.timeout retry_oracle",
+       "unit": "#/families/3",
        "quote_check": "exact",
-       "quote_scope": "document",
+       "quote_scope": "unit #/families/3, Plans/dt_event_contract_fixtures.json:26249-34940",
        "file_sha256": "b3432bfcdfc68263dcf0b00b8ed0c7d9ee518ed63f4132e146edc18ceca40365",
        "source_citation": {
         "line_end": 34409,
@@ -665,7 +668,8 @@
         "quote": "\"producer_semantic_digest\": \"c1146e4fe02864e5d4fe6ae1fd8de8631cf611bf76bdbf8f0b96a2a499883cea\"",
         "unit": "approval.timeout retry_oracle",
         "file_sha256": "b3432bfcdfc68263dcf0b00b8ed0c7d9ee518ed63f4132e146edc18ceca40365"
-       }
+       },
+       "json_pointer": "#/families/3"
       },
       {
        "line_end": 38559,
@@ -675,7 +679,7 @@
        "unit": "SP-583",
        "quote_check": "exact",
        "quote_scope": "unit SP-583, Plans/storage-plan.md:38547-38586",
-       "file_sha256": "73ee6d097e08d31fd93301d05d2cd2632dd46e5a22ba3ea405ffadda4a0a9db2",
+       "file_sha256": "51edc1394ab24ca53a2a021dce3c3c9a1be0f43e2292d901ad56e4b0063a3ebf",
        "source_citation": {
         "line_end": 38559,
         "line_start": 38559,
@@ -812,9 +816,9 @@
   "row_pointer": "#/families/226"
  },
  "evidence_maintenance": {
-  "authority": "MERGE2-FIX1 findings 1/3/5",
-  "source_commit": "0c904de00426b0089ba5d56349fda8ea16cc9f88",
-  "source_assessment_sha256": "4836b75a5b1acf301014b874c6d21a43777fc9ced9781e71fcd77f6ce95b5150",
+  "authority": "MERGE2-FIX2 findings 1/2/3",
+  "source_commit": "0f2a90ece55d4bafd163b19a05cd3c4eda91b9c1",
+  "source_assessment_sha256": "973a724d394d3a90fce0a37cd0e95d8c890f75c7aaf39e69d95d10e7eac8a9eb",
   "native_execution": "NOT_RUN",
   "verdicts_changed": false
  }

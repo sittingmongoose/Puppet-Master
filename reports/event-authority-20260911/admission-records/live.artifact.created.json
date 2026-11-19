@@ -4,7 +4,7 @@
  "family_id": "event-family-live-artifact-created",
  "implementation_receipt_sha256": "dceb7f21436cbe126c23822e62caa1b6dedcb45fefae3005c1804576ca34d827",
  "decision_ref": "Plans/Decision_Log.md#DL-2319",
- "decision_section_sha256": "8bb688bc5ec17b80429d1ddce678aeb8a2eefe7ba1a08493130e9abf433d11ae",
+ "decision_section_sha256": "11cdc4b7d66fc79a618789566e92898b0dd9d8b6984c7dc0828b1d8201356713",
  "registry_before": {
   "revision": "2026-11-16.182",
   "sha256": "42b629830598d98e34a6bf96e95b33bea4cbc9b78a361ea4a515f49d8e511285",
@@ -18,7 +18,7 @@
  "registry_row_sha256": "a923ee9ea95bcd7a766c4d670429990f87ab830f47f131071b1c102860c5cee0",
  "depth_assessment": {
   "path": "reports/event-authority-20261116/admission-merge-2/depth/live.artifact.created.json",
-  "sha256": "26987ff47ac19fa88aa3bdab4b70c0e787ab4e0fe02fa571ef35e45f9679c423"
+  "sha256": "d8420d0f286dfb0f05c28d0929628318b8dfd46dc4a7c23b4d1241833e707487"
  },
  "admission_landing": {
   "branch": "plans/ea-merge2-apply-20261116",
@@ -37,11 +37,11 @@
   "Written under DL-077. The seal check recomputes completeness from the pinned assessment; the two fields ending in _at_recording are informational only."
  ],
  "evidence_maintenance": {
-  "authority": "MERGE2-FIX1",
-  "source_commit": "0c904de00426b0089ba5d56349fda8ea16cc9f88",
-  "source_record_sha256": "9d232c618b64f592282db863dbf1522b9f6193147c25a029e901b6592e3caae3",
-  "source_assessment_sha256": "593c924f56f6bb2932a1a8d50c8a014d0b8282756725cdff201d82c37f0c60f5",
-  "source_decision_section_sha256": "34de4bd41aff2230f8b2f427c7eb7bd5011ceba7d5baa036a3b303a9356514f1",
+  "authority": "MERGE2-FIX2",
+  "source_commit": "0f2a90ece55d4bafd163b19a05cd3c4eda91b9c1",
+  "source_record_sha256": "70b7e71df03a2557de7a915ac36d31d399e50b1b2ecfd53f095704337229fd54",
+  "source_assessment_sha256": "26987ff47ac19fa88aa3bdab4b70c0e787ab4e0fe02fa571ef35e45f9679c423",
+  "source_decision_section_sha256": "8bb688bc5ec17b80429d1ddce678aeb8a2eefe7ba1a08493130e9abf433d11ae",
   "original_registry_checkpoints_preserved": true
  }
 }

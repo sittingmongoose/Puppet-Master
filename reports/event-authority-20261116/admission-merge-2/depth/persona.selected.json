@@ -42,7 +42,9 @@
         "quote_line": 27687,
         "file_sha256": "ea1accd9c780cb07c828e1c94e7731ae7b36b7ac81d24981367579020db027b6",
         "quote_check": "exact"
-       }
+       },
+       "unit": "#/families/427",
+       "quote_scope": "unit #/families/427, Plans/event_family_registry.json:27734-27815"
       }
      ]
     },
@@ -92,7 +94,7 @@
        "line_end": 36546,
        "quote": "The sole producer `handlers::persona::select` authenticates the selected command input/result and actual home/reach/CAS/permission/Stop generations before effect and immediately before append. Separat",
        "excerpt_sha256": "da04ee3ab0c8f238b15dcf739d1eb03e9eaf7c5d175dce6f2acc2fde85e58983",
-       "file_sha256": "73ee6d097e08d31fd93301d05d2cd2632dd46e5a22ba3ea405ffadda4a0a9db2",
+       "file_sha256": "51edc1394ab24ca53a2a021dce3c3c9a1be0f43e2292d901ad56e4b0063a3ebf",
        "quote_check": "exact",
        "quote_scope": "unit SP-672, Plans/storage-plan.md:36315-36588",
        "excerpt_digest_convention": "literal_quote",
@@ -113,7 +115,7 @@
        "line_end": 36555,
        "quote": "`persona.selected` explicitly adopts **SP-286**, **CV-339**, **SP-291** full-value v2 first-AppendReceipt custody and **SP-336** current sync/barrier rules. Source result/body/readback precedes observ",
        "excerpt_sha256": "a4a84d469239a1b35d582980e7eff45354552a5ca35344172b36bf27530fef4d",
-       "file_sha256": "73ee6d097e08d31fd93301d05d2cd2632dd46e5a22ba3ea405ffadda4a0a9db2",
+       "file_sha256": "51edc1394ab24ca53a2a021dce3c3c9a1be0f43e2292d901ad56e4b0063a3ebf",
        "quote_check": "exact",
        "quote_scope": "unit SP-672, Plans/storage-plan.md:36315-36588",
        "excerpt_digest_convention": "literal_quote",
@@ -134,7 +136,7 @@
        "line_end": 36553,
        "quote": "For `persona.selected`, the newly authored physical operation binding measures the complete canonical MessagePack value, independently of EventRecord body size. The closed `persona_selected_operation`",
        "excerpt_sha256": "678bc352192a7dcb1fb9f07d633c13bb5f41774dfb2787ea5d0752d2a0fac674",
-       "file_sha256": "73ee6d097e08d31fd93301d05d2cd2632dd46e5a22ba3ea405ffadda4a0a9db2",
+       "file_sha256": "51edc1394ab24ca53a2a021dce3c3c9a1be0f43e2292d901ad56e4b0063a3ebf",
        "quote_check": "exact",
        "quote_scope": "unit SP-672, Plans/storage-plan.md:36315-36588",
        "excerpt_digest_convention": "literal_quote",
@@ -170,7 +172,7 @@
        "excerpt_sha256": "3f7100c8a506139df39663057f226af8032851032b080559fcaf130487b86bf2",
        "file_sha256": "9b9fbeee2937faaee144ce94e1a17c463087badf7cd2d3b0021a60a87be860fe",
        "quote_check": "exact",
-       "quote_scope": "document",
+       "quote_scope": "unit #/$defs/persona_selected, Plans/dg6b_event_contracts.schema.json:8022-8551",
        "excerpt_digest_convention": "literal_quote",
        "source_citation": {
         "path": "Plans/dg6b_event_contracts.schema.json",
@@ -180,7 +182,8 @@
         "quote": "    \"persona_selected\": {",
         "excerpt_sha256": "3f7100c8a506139df39663057f226af8032851032b080559fcaf130487b86bf2",
         "file_sha256": "9b9fbeee2937faaee144ce94e1a17c463087badf7cd2d3b0021a60a87be860fe"
-       }
+       },
+       "json_pointer": "#/$defs/persona_selected"
       },
       {
        "path": "Plans/Personas.md",
@@ -265,7 +268,7 @@
        "line_end": 36456,
        "quote": "application@1:{hex(server_id)}:{hex(owner_operation_id)}",
        "excerpt_sha256": "f021b441a447da8dc6d75d05b73da15284e77fb8544fd86b7d77fb6639093933",
-       "file_sha256": "73ee6d097e08d31fd93301d05d2cd2632dd46e5a22ba3ea405ffadda4a0a9db2",
+       "file_sha256": "51edc1394ab24ca53a2a021dce3c3c9a1be0f43e2292d901ad56e4b0063a3ebf",
        "quote_check": "exact",
        "quote_scope": "unit SP-672, Plans/storage-plan.md:36315-36588",
        "excerpt_digest_convention": "literal_quote",
@@ -341,7 +344,7 @@
        "line_end": 36550,
        "quote": "`persona.selected` selects current-writer `replay_policy=dedupe_by_idempotency_key`",
        "excerpt_sha256": "529b74c3991284a643afd53023cfe230d7dfdd8590961192a678d5817d0dd0f8",
-       "file_sha256": "73ee6d097e08d31fd93301d05d2cd2632dd46e5a22ba3ea405ffadda4a0a9db2",
+       "file_sha256": "51edc1394ab24ca53a2a021dce3c3c9a1be0f43e2292d901ad56e4b0063a3ebf",
        "quote_check": "exact",
        "quote_scope": "unit SP-672, Plans/storage-plan.md:36315-36588",
        "excerpt_digest_convention": "literal_quote",
@@ -460,7 +463,7 @@
        "quote": "\\ history `retention_policy_ref = RP-AUTHORITY-INDEFINITE@1.0.0`, under DL-401, DL-504.\\n\\nUse the existing\\",
        "quote_check": "exact",
        "quote_scope": "unit SP-672, Plans/storage-plan.md:36315-36588",
-       "file_sha256": "73ee6d097e08d31fd93301d05d2cd2632dd46e5a22ba3ea405ffadda4a0a9db2",
+       "file_sha256": "51edc1394ab24ca53a2a021dce3c3c9a1be0f43e2292d901ad56e4b0063a3ebf",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-672",
@@ -490,7 +493,7 @@
        "line_end": 36467,
        "quote": "Custody: the Persona owner keeps original whole definitions, removed-version/source evidence, selected Settings result, frozen runtime snapshot or export/import receipts under existing access and dele",
        "excerpt_sha256": "407f1f904bfa8854613d9f2d481d9f3a4783a61c484a28b01808589222bf6b7a",
-       "file_sha256": "73ee6d097e08d31fd93301d05d2cd2632dd46e5a22ba3ea405ffadda4a0a9db2",
+       "file_sha256": "51edc1394ab24ca53a2a021dce3c3c9a1be0f43e2292d901ad56e4b0063a3ebf",
        "quote_check": "exact",
        "quote_scope": "unit SP-672, Plans/storage-plan.md:36315-36588",
        "excerpt_digest_convention": "literal_quote",
@@ -587,7 +590,7 @@
        "line_end": 36555,
        "quote": "`persona.selected` explicitly adopts **SP-286**, **CV-339**, **SP-291** full-value v2 first-AppendReceipt custody and **SP-336** current sync/barrier rules. Source result/body/readback precedes observ",
        "excerpt_sha256": "a4a84d469239a1b35d582980e7eff45354552a5ca35344172b36bf27530fef4d",
-       "file_sha256": "73ee6d097e08d31fd93301d05d2cd2632dd46e5a22ba3ea405ffadda4a0a9db2",
+       "file_sha256": "51edc1394ab24ca53a2a021dce3c3c9a1be0f43e2292d901ad56e4b0063a3ebf",
        "quote_check": "exact",
        "quote_scope": "unit SP-672, Plans/storage-plan.md:36315-36588",
        "excerpt_digest_convention": "literal_quote",
@@ -621,7 +624,7 @@
        "line_end": 36557,
        "quote": "Consumer **`consumer.persona_selected.history@1.0.0`** serves the existing authenticated Persona command/audit history only. It explicitly adopts **SP-278** using `projector.storage.event_record_index",
        "excerpt_sha256": "19acc4e796e4008d3819201fa04d0f57c48e9157c447bea5517a4c88fe9e43cc",
-       "file_sha256": "73ee6d097e08d31fd93301d05d2cd2632dd46e5a22ba3ea405ffadda4a0a9db2",
+       "file_sha256": "51edc1394ab24ca53a2a021dce3c3c9a1be0f43e2292d901ad56e4b0063a3ebf",
        "quote_check": "exact",
        "quote_scope": "unit SP-672, Plans/storage-plan.md:36315-36588",
        "excerpt_digest_convention": "literal_quote",
@@ -655,7 +658,7 @@
        "line_end": 36469,
        "quote": "Compatibility: current readers accept only this exact supported version and canonical Persona names. Older Project request/result definitions retain their exact historical schema; the explicitly selec",
        "excerpt_sha256": "0e0452804a7a5fbdb04a49d243d43d2492c568442b1656ed7e7fd3c8bc799a08",
-       "file_sha256": "73ee6d097e08d31fd93301d05d2cd2632dd46e5a22ba3ea405ffadda4a0a9db2",
+       "file_sha256": "51edc1394ab24ca53a2a021dce3c3c9a1be0f43e2292d901ad56e4b0063a3ebf",
        "quote_check": "exact",
        "quote_scope": "unit SP-672, Plans/storage-plan.md:36315-36588",
        "excerpt_digest_convention": "literal_quote",
@@ -827,9 +830,9 @@
   "row_pointer": "#/families/427"
  },
  "evidence_maintenance": {
-  "authority": "MERGE2-FIX1 findings 1/3/5",
-  "source_commit": "0c904de00426b0089ba5d56349fda8ea16cc9f88",
-  "source_assessment_sha256": "8e8be565339a5b4fb9b3728f30f8f97c7a6a26165ab0acb853914db6d30ecc5a",
+  "authority": "MERGE2-FIX2 findings 1/2/3",
+  "source_commit": "0f2a90ece55d4bafd163b19a05cd3c4eda91b9c1",
+  "source_assessment_sha256": "7bd4d2f82aa450d794f97eac02d7926dbd95a0351f92dfa5f948913f6b389cd9",
   "native_execution": "NOT_RUN",
   "verdicts_changed": false
  }

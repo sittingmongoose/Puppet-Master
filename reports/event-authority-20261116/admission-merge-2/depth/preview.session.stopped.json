@@ -42,7 +42,9 @@
         "quote_line": 28623,
         "file_sha256": "55ce648c196bd112443beba7591c9d35ffd7fbbf33483e819d0de706d54ef073",
         "quote_check": "exact"
-       }
+       },
+       "unit": "#/families/440",
+       "quote_scope": "unit #/families/440, Plans/event_family_registry.json:28670-28712"
       }
      ]
     },
@@ -54,12 +56,12 @@
       {
        "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
        "unit": "SMPFS-317",
-       "line_start": 16456,
-       "line_end": 16456,
+       "line_start": 16477,
+       "line_end": 16477,
        "quote": "preview.session.stopped owner contract",
        "quote_check": "exact",
-       "quote_scope": "unit SMPFS-317, Plans/Section15_MVP_Promoted_Features_Spec.md:16456-16510",
-       "file_sha256": "140caa73848b1a688465f9f69c11a07a6d866208c8997f4cbf88a0bb475eb86d",
+       "quote_scope": "unit SMPFS-317, Plans/Section15_MVP_Promoted_Features_Spec.md:16477-16534",
+       "file_sha256": "192c7a3ebba02013a6ca5d6db7a1ecc5d019219635dcc3c1388e5e2fcf304f85",
        "source_citation": {
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
         "unit": "SMPFS-317",
@@ -85,12 +87,12 @@
       {
        "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
        "unit": "SMPFS-317",
-       "line_start": 16466,
-       "line_end": 16466,
+       "line_start": 16487,
+       "line_end": 16487,
        "quote": "Producer: PreviewSession owner consumes cmd.orchestrator.preview_stop and records actual runtime closure as runtime_state closed after managed resources settle. UI restore intent s",
        "quote_check": "exact",
-       "quote_scope": "unit SMPFS-317, Plans/Section15_MVP_Promoted_Features_Spec.md:16456-16510",
-       "file_sha256": "140caa73848b1a688465f9f69c11a07a6d866208c8997f4cbf88a0bb475eb86d",
+       "quote_scope": "unit SMPFS-317, Plans/Section15_MVP_Promoted_Features_Spec.md:16477-16534",
+       "file_sha256": "192c7a3ebba02013a6ca5d6db7a1ecc5d019219635dcc3c1388e5e2fcf304f85",
        "source_citation": {
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
         "unit": "SMPFS-317",
@@ -103,12 +105,12 @@
       {
        "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
        "unit": "SMPFS-317",
-       "line_start": 16479,
-       "line_end": 16479,
+       "line_start": 16500,
+       "line_end": 16500,
        "quote": "Round 7 authenticated history for preview.session.stopped: retained read, checkpoint and rebuild accept supported 1.0.0 originals written with projector_replay_only as well as dedu",
        "quote_check": "exact",
-       "quote_scope": "unit SMPFS-317, Plans/Section15_MVP_Promoted_Features_Spec.md:16456-16510",
-       "file_sha256": "140caa73848b1a688465f9f69c11a07a6d866208c8997f4cbf88a0bb475eb86d",
+       "quote_scope": "unit SMPFS-317, Plans/Section15_MVP_Promoted_Features_Spec.md:16477-16534",
+       "file_sha256": "192c7a3ebba02013a6ca5d6db7a1ecc5d019219635dcc3c1388e5e2fcf304f85",
        "source_citation": {
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
         "unit": "SMPFS-317",
@@ -183,12 +185,12 @@
       {
        "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
        "unit": "SMPFS-317",
-       "line_start": 16468,
-       "line_end": 16468,
+       "line_start": 16489,
+       "line_end": 16489,
        "quote": "Idempotency key is sha256(canonical MessagePack array [\"preview.session.stopped\", \"1.0.0\", actual project_id, preview_subject_id, preview_session_id, preview_revision]). Changed by",
        "quote_check": "exact",
-       "quote_scope": "unit SMPFS-317, Plans/Section15_MVP_Promoted_Features_Spec.md:16456-16510",
-       "file_sha256": "140caa73848b1a688465f9f69c11a07a6d866208c8997f4cbf88a0bb475eb86d",
+       "quote_scope": "unit SMPFS-317, Plans/Section15_MVP_Promoted_Features_Spec.md:16477-16534",
+       "file_sha256": "192c7a3ebba02013a6ca5d6db7a1ecc5d019219635dcc3c1388e5e2fcf304f85",
        "source_citation": {
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
         "unit": "SMPFS-317",
@@ -214,12 +216,12 @@
       {
        "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
        "unit": "SMPFS-317",
-       "line_start": 16471,
-       "line_end": 16471,
+       "line_start": 16492,
+       "line_end": 16492,
        "quote": "Replay: lost acknowledgement returns original receipt, event_id and frozen payload; retry uses original outcome custody without repeating capture, thread creation, launch, stop, re",
        "quote_check": "exact",
-       "quote_scope": "unit SMPFS-317, Plans/Section15_MVP_Promoted_Features_Spec.md:16456-16510",
-       "file_sha256": "140caa73848b1a688465f9f69c11a07a6d866208c8997f4cbf88a0bb475eb86d",
+       "quote_scope": "unit SMPFS-317, Plans/Section15_MVP_Promoted_Features_Spec.md:16477-16534",
+       "file_sha256": "192c7a3ebba02013a6ca5d6db7a1ecc5d019219635dcc3c1388e5e2fcf304f85",
        "source_citation": {
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
         "unit": "SMPFS-317",
@@ -232,12 +234,12 @@
       {
        "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
        "unit": "SMPFS-317",
-       "line_start": 16479,
-       "line_end": 16479,
+       "line_start": 16500,
+       "line_end": 16500,
        "quote": "Round 7 authenticated history for preview.session.stopped: retained read, checkpoint and rebuild accept supported 1.0.0 originals written with projector_replay_only as well as dedu",
        "quote_check": "exact",
-       "quote_scope": "unit SMPFS-317, Plans/Section15_MVP_Promoted_Features_Spec.md:16456-16510",
-       "file_sha256": "140caa73848b1a688465f9f69c11a07a6d866208c8997f4cbf88a0bb475eb86d",
+       "quote_scope": "unit SMPFS-317, Plans/Section15_MVP_Promoted_Features_Spec.md:16477-16534",
+       "file_sha256": "192c7a3ebba02013a6ca5d6db7a1ecc5d019219635dcc3c1388e5e2fcf304f85",
        "source_citation": {
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
         "unit": "SMPFS-317",
@@ -263,12 +265,12 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-654",
-       "line_start": 49689,
-       "line_end": 49689,
+       "line_start": 49659,
+       "line_end": 49659,
        "quote": "\\ = RP-TELEMETRY-90D@1.0.0`, under DL-401, DL-415, DL-421, DL-500.\\n\\nUse the existing policy object\\",
        "quote_check": "exact",
-       "quote_scope": "unit SP-654, Plans/storage-plan.md:49666-49731",
-       "file_sha256": "73ee6d097e08d31fd93301d05d2cd2632dd46e5a22ba3ea405ffadda4a0a9db2",
+       "quote_scope": "unit SP-654, Plans/storage-plan.md:49636-49701",
+       "file_sha256": "51edc1394ab24ca53a2a021dce3c3c9a1be0f43e2292d901ad56e4b0063a3ebf",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-654",
@@ -294,12 +296,12 @@
       {
        "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
        "unit": "SMPFS-317",
-       "line_start": 16473,
-       "line_end": 16473,
+       "line_start": 16494,
+       "line_end": 16494,
        "quote": "backup/restore of the full original source/log/receipt closure. Checkpoints are derived and grant no access. Every read rechecks current subject/thread/Project permissions and sour",
        "quote_check": "exact",
-       "quote_scope": "unit SMPFS-317, Plans/Section15_MVP_Promoted_Features_Spec.md:16456-16510",
-       "file_sha256": "140caa73848b1a688465f9f69c11a07a6d866208c8997f4cbf88a0bb475eb86d",
+       "quote_scope": "unit SMPFS-317, Plans/Section15_MVP_Promoted_Features_Spec.md:16477-16534",
+       "file_sha256": "192c7a3ebba02013a6ca5d6db7a1ecc5d019219635dcc3c1388e5e2fcf304f85",
        "source_citation": {
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
         "unit": "SMPFS-317",
@@ -312,12 +314,12 @@
       {
        "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
        "unit": "SMPFS-317",
-       "line_start": 16479,
-       "line_end": 16479,
+       "line_start": 16500,
+       "line_end": 16500,
        "quote": "Round 7 authenticated history for preview.session.stopped: retained read, checkpoint and rebuild accept supported 1.0.0 originals written with projector_replay_only as well as dedu",
        "quote_check": "exact",
-       "quote_scope": "unit SMPFS-317, Plans/Section15_MVP_Promoted_Features_Spec.md:16456-16510",
-       "file_sha256": "140caa73848b1a688465f9f69c11a07a6d866208c8997f4cbf88a0bb475eb86d",
+       "quote_scope": "unit SMPFS-317, Plans/Section15_MVP_Promoted_Features_Spec.md:16477-16534",
+       "file_sha256": "192c7a3ebba02013a6ca5d6db7a1ecc5d019219635dcc3c1388e5e2fcf304f85",
        "source_citation": {
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
         "unit": "SMPFS-317",
@@ -343,12 +345,12 @@
       {
        "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
        "unit": "SMPFS-317",
-       "line_start": 16466,
-       "line_end": 16466,
+       "line_start": 16487,
+       "line_end": 16487,
        "quote": "Producer: PreviewSession owner consumes cmd.orchestrator.preview_stop and records actual runtime closure as runtime_state closed after managed resources settle. UI restore intent s",
        "quote_check": "exact",
-       "quote_scope": "unit SMPFS-317, Plans/Section15_MVP_Promoted_Features_Spec.md:16456-16510",
-       "file_sha256": "140caa73848b1a688465f9f69c11a07a6d866208c8997f4cbf88a0bb475eb86d",
+       "quote_scope": "unit SMPFS-317, Plans/Section15_MVP_Promoted_Features_Spec.md:16477-16534",
+       "file_sha256": "192c7a3ebba02013a6ca5d6db7a1ecc5d019219635dcc3c1388e5e2fcf304f85",
        "source_citation": {
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
         "unit": "SMPFS-317",
@@ -374,12 +376,12 @@
       {
        "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
        "unit": "SMPFS-317",
-       "line_start": 16472,
-       "line_end": 16472,
+       "line_start": 16493,
+       "line_end": 16493,
        "quote": "reader.ds15.preview_session_stopped.v1@1.0.0, operating as Preview subject history reader, reads only preview.session.stopped@1.0.0. It adopts SP-278 by name and DL-076 nine-field ",
        "quote_check": "exact",
-       "quote_scope": "unit SMPFS-317, Plans/Section15_MVP_Promoted_Features_Spec.md:16456-16510",
-       "file_sha256": "140caa73848b1a688465f9f69c11a07a6d866208c8997f4cbf88a0bb475eb86d",
+       "quote_scope": "unit SMPFS-317, Plans/Section15_MVP_Promoted_Features_Spec.md:16477-16534",
+       "file_sha256": "192c7a3ebba02013a6ca5d6db7a1ecc5d019219635dcc3c1388e5e2fcf304f85",
        "source_citation": {
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
         "unit": "SMPFS-317",
@@ -392,12 +394,12 @@
       {
        "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
        "unit": "SMPFS-317",
-       "line_start": 16479,
-       "line_end": 16479,
+       "line_start": 16500,
+       "line_end": 16500,
        "quote": "Round 7 authenticated history for preview.session.stopped: retained read, checkpoint and rebuild accept supported 1.0.0 originals written with projector_replay_only as well as dedu",
        "quote_check": "exact",
-       "quote_scope": "unit SMPFS-317, Plans/Section15_MVP_Promoted_Features_Spec.md:16456-16510",
-       "file_sha256": "140caa73848b1a688465f9f69c11a07a6d866208c8997f4cbf88a0bb475eb86d",
+       "quote_scope": "unit SMPFS-317, Plans/Section15_MVP_Promoted_Features_Spec.md:16477-16534",
+       "file_sha256": "192c7a3ebba02013a6ca5d6db7a1ecc5d019219635dcc3c1388e5e2fcf304f85",
        "source_citation": {
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
         "unit": "SMPFS-317",
@@ -423,12 +425,12 @@
       {
        "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
        "unit": "SMPFS-317",
-       "line_start": 16476,
-       "line_end": 16476,
+       "line_start": 16497,
+       "line_end": 16497,
        "quote": "withdrawal: exact 1.0.0 event/reader only; refuse unknown fields/version before effects or checkpoint. No alias or deployed event predecessor is assumed. Value migrations are expli",
        "quote_check": "exact",
-       "quote_scope": "unit SMPFS-317, Plans/Section15_MVP_Promoted_Features_Spec.md:16456-16510",
-       "file_sha256": "140caa73848b1a688465f9f69c11a07a6d866208c8997f4cbf88a0bb475eb86d",
+       "quote_scope": "unit SMPFS-317, Plans/Section15_MVP_Promoted_Features_Spec.md:16477-16534",
+       "file_sha256": "192c7a3ebba02013a6ca5d6db7a1ecc5d019219635dcc3c1388e5e2fcf304f85",
        "source_citation": {
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
         "unit": "SMPFS-317",
@@ -441,12 +443,12 @@
       {
        "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
        "unit": "SMPFS-317",
-       "line_start": 16479,
-       "line_end": 16479,
+       "line_start": 16500,
+       "line_end": 16500,
        "quote": "Round 7 authenticated history for preview.session.stopped: retained read, checkpoint and rebuild accept supported 1.0.0 originals written with projector_replay_only as well as dedu",
        "quote_check": "exact",
-       "quote_scope": "unit SMPFS-317, Plans/Section15_MVP_Promoted_Features_Spec.md:16456-16510",
-       "file_sha256": "140caa73848b1a688465f9f69c11a07a6d866208c8997f4cbf88a0bb475eb86d",
+       "quote_scope": "unit SMPFS-317, Plans/Section15_MVP_Promoted_Features_Spec.md:16477-16534",
+       "file_sha256": "192c7a3ebba02013a6ca5d6db7a1ecc5d019219635dcc3c1388e5e2fcf304f85",
        "source_citation": {
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
         "unit": "SMPFS-317",
@@ -472,12 +474,12 @@
       {
        "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
        "unit": "SMPFS-317",
-       "line_start": 16477,
-       "line_end": 16477,
+       "line_start": 16498,
+       "line_end": 16498,
        "quote": "Oracles: ATS-329 and exact family cases in Plans/ds15_event_contract_fixtures.json execute via scripts/pm-ds15-event-contracts.py: valid/invalid transition, scope joins, original r",
        "quote_check": "exact",
-       "quote_scope": "unit SMPFS-317, Plans/Section15_MVP_Promoted_Features_Spec.md:16456-16510",
-       "file_sha256": "140caa73848b1a688465f9f69c11a07a6d866208c8997f4cbf88a0bb475eb86d",
+       "quote_scope": "unit SMPFS-317, Plans/Section15_MVP_Promoted_Features_Spec.md:16477-16534",
+       "file_sha256": "192c7a3ebba02013a6ca5d6db7a1ecc5d019219635dcc3c1388e5e2fcf304f85",
        "source_citation": {
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
         "unit": "SMPFS-317",
@@ -490,12 +492,12 @@
       {
        "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
        "unit": "SMPFS-317",
-       "line_start": 16479,
-       "line_end": 16479,
+       "line_start": 16500,
+       "line_end": 16500,
        "quote": "Round 7 authenticated history for preview.session.stopped: retained read, checkpoint and rebuild accept supported 1.0.0 originals written with projector_replay_only as well as dedu",
        "quote_check": "exact",
-       "quote_scope": "unit SMPFS-317, Plans/Section15_MVP_Promoted_Features_Spec.md:16456-16510",
-       "file_sha256": "140caa73848b1a688465f9f69c11a07a6d866208c8997f4cbf88a0bb475eb86d",
+       "quote_scope": "unit SMPFS-317, Plans/Section15_MVP_Promoted_Features_Spec.md:16477-16534",
+       "file_sha256": "192c7a3ebba02013a6ca5d6db7a1ecc5d019219635dcc3c1388e5e2fcf304f85",
        "source_citation": {
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
         "unit": "SMPFS-317",
@@ -524,9 +526,9 @@
   "row_pointer": "#/families/440"
  },
  "evidence_maintenance": {
-  "authority": "MERGE2-FIX1 findings 1/3/5",
-  "source_commit": "0c904de00426b0089ba5d56349fda8ea16cc9f88",
-  "source_assessment_sha256": "f01fd4517122fb7225a3948e300886458f8857cbd46f4f70c8e552fe2b08c3f5",
+  "authority": "MERGE2-FIX2 findings 1/2/3",
+  "source_commit": "0f2a90ece55d4bafd163b19a05cd3c4eda91b9c1",
+  "source_assessment_sha256": "889f24b30f9deaeaea2aa1f85811426ff03ef52caf45053e4ed0adf9b5a8a0a0",
   "native_execution": "NOT_RUN",
   "verdicts_changed": false
  }

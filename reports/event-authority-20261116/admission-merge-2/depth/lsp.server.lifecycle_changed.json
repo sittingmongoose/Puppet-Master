@@ -42,7 +42,9 @@
         "quote_line": 26604,
         "file_sha256": "25832fba956cded523c755637507a71f107ddfa11bc3202b8a9b6a4bdf942f02",
         "quote_check": "exact"
-       }
+       },
+       "unit": "#/families/406",
+       "quote_scope": "unit #/families/406, Plans/event_family_registry.json:26645-26686"
       }
      ]
     },
@@ -263,12 +265,12 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-601",
-       "line_start": 52749,
-       "line_end": 52751,
+       "line_start": 52719,
+       "line_end": 52721,
        "quote": "RP-TELEMETRY-90D@1.0.0`, under DL-401, DL-415.\n\n  Use the existing policy object unchanged: {\"anchor_kind\"",
        "quote_check": "exact",
-       "quote_scope": "unit SP-601, Plans/storage-plan.md:52719-52783",
-       "file_sha256": "73ee6d097e08d31fd93301d05d2cd2632dd46e5a22ba3ea405ffadda4a0a9db2",
+       "quote_scope": "unit SP-601, Plans/storage-plan.md:52689-52753",
+       "file_sha256": "51edc1394ab24ca53a2a021dce3c3c9a1be0f43e2292d901ad56e4b0063a3ebf",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-601",
@@ -797,9 +799,9 @@
   "row_pointer": "#/families/406"
  },
  "evidence_maintenance": {
-  "authority": "MERGE2-FIX1 findings 1/3/5",
-  "source_commit": "0c904de00426b0089ba5d56349fda8ea16cc9f88",
-  "source_assessment_sha256": "b875d17245c941deb615e8ee8aef4c1182567b36f6615f40f3ebe8bdcbb0ab77",
+  "authority": "MERGE2-FIX2 findings 1/2/3",
+  "source_commit": "0f2a90ece55d4bafd163b19a05cd3c4eda91b9c1",
+  "source_assessment_sha256": "e3550052e5d0c0cc2721f47f726b7bc778d1174cb5db9f4024c628b4f8e316b5",
   "native_execution": "NOT_RUN",
   "verdicts_changed": false
  }

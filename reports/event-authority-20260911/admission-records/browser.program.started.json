@@ -4,7 +4,7 @@
  "family_id": "event-family-browser-program-started",
  "implementation_receipt_sha256": "dceb7f21436cbe126c23822e62caa1b6dedcb45fefae3005c1804576ca34d827",
  "decision_ref": "Plans/Decision_Log.md#DL-2181",
- "decision_section_sha256": "a719d4533ea89a7192476f82e5330b0b94185d0d6ec2a6722186f0beab14dd15",
+ "decision_section_sha256": "5d7911efc02a599cc89fd29396da2219d46fd4705556a491e9d6006241e5d882",
  "registry_before": {
   "revision": "2026-11-16.44",
   "sha256": "0ee0f20720295e5f6928d6f4298d91a4b542d5a7e8cb804c8d39e47c0af8cfcf",
@@ -18,7 +18,7 @@
  "registry_row_sha256": "159798489a225717c0628fcb39fca466ab94b71b8a46c02916adafaee59f42ce",
  "depth_assessment": {
   "path": "reports/event-authority-20261116/admission-merge-2/depth/browser.program.started.json",
-  "sha256": "27d4007a95c5898aba357174df2697115ee8c55bcf9528750ea17548eddc53ca"
+  "sha256": "5d072419957a8adb7c75374bdb40231e63804064ac846c9c26e5d174c5c7b2e2"
  },
  "admission_landing": {
   "branch": "plans/ea-merge2-apply-20261116",
@@ -37,11 +37,11 @@
   "Written under DL-077. The seal check recomputes completeness from the pinned assessment; the two fields ending in _at_recording are informational only."
  ],
  "evidence_maintenance": {
-  "authority": "MERGE2-FIX1",
-  "source_commit": "0c904de00426b0089ba5d56349fda8ea16cc9f88",
-  "source_record_sha256": "891466c4151e37655baa4eba9cd250362f2d6ec58f6e344a02bc405967c4675d",
-  "source_assessment_sha256": "c589dfa8afbe06f806aa1de9993d0efee17f958229151e7a80e80986f297c1af",
-  "source_decision_section_sha256": "17607a703527bad7510b56096e91b1dfcc9764b51ba0d37907f2a8babb6fac34",
+  "authority": "MERGE2-FIX2",
+  "source_commit": "0f2a90ece55d4bafd163b19a05cd3c4eda91b9c1",
+  "source_record_sha256": "b437e6cd9f9549686bccbdc449dc2d24a4175b597168679c61ff0c92e3394e43",
+  "source_assessment_sha256": "27d4007a95c5898aba357174df2697115ee8c55bcf9528750ea17548eddc53ca",
+  "source_decision_section_sha256": "a719d4533ea89a7192476f82e5330b0b94185d0d6ec2a6722186f0beab14dd15",
   "original_registry_checkpoints_preserved": true
  }
 }

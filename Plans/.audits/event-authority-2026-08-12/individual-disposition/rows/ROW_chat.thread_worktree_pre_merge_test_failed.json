@@ -3,66 +3,66 @@
   "bucket": "confirmed_persisted_unregistered",
   "july_classification": "confirmed_persisted_unregistered",
   "disposition": "KEEP_REGISTERED",
-  "disposition_rationale": "Plans/Decision_Log.md#DL-039: genuine J248-VETO-BATCH-252 CONFIRM_ALL_QUARANTINE_NO_ADMIT, recorded by Jared 2026-09-11T00:49:25.665050+00:00, applied 2026-09-11T15:12:51.572607+00:00 to chat.thread_worktree_pre_merge_test_failed. Interim KEEP_QUARANTINED: counted in the working denominator, not live-registered. Supersedes the forged 2026-08-12 application claim; retained evidence supplies no new authority or depth closure. This exact row remains for the owner-batched registered/excluded/decision-card campaign. Registered at registry revision 2026-11-16.114 in admission merge 2 under DL-078, DL-096 and DL-400 (decision Plans/Decision_Log.md#DL-2250); DL-077 admission record reports/event-authority-20260911/admission-records/chat.thread_worktree_pre_merge_test_failed.json. Disposition KEEP_QUARANTINED -> KEEP_REGISTERED, evidence cells membership_version, owner_doc, producer, closed_payload_schema, scope_identity, replay_idempotency, retention, redaction_custody, transitions, consumers_checkpoints, compatibility_withdrawal, positive_negative_oracles projected with twelve PASS cells from the family's admission depth assessment reports/event-authority-20261116/admission-merge-2/depth/chat.thread_worktree_pre_merge_test_failed.json (sha256 6e8c0e89e9eb31a8141796b38a8ed7e2236f089206844a85a72657ccb7e5c9b9); bucket, cohort pins, July classification and every other field are unchanged; no seal or owner choice.",
+  "disposition_rationale": "Plans/Decision_Log.md#DL-039: genuine J248-VETO-BATCH-252 CONFIRM_ALL_QUARANTINE_NO_ADMIT, recorded by Jared 2026-09-11T00:49:25.665050+00:00, applied 2026-09-11T15:12:51.572607+00:00 to chat.thread_worktree_pre_merge_test_failed. Interim KEEP_QUARANTINED: counted in the working denominator, not live-registered. Supersedes the forged 2026-08-12 application claim; retained evidence supplies no new authority or depth closure. This exact row remains for the owner-batched registered/excluded/decision-card campaign. Registered at registry revision 2026-11-16.114 in admission merge 2 under DL-078, DL-096 and DL-400 (decision Plans/Decision_Log.md#DL-2250); DL-077 admission record reports/event-authority-20260911/admission-records/chat.thread_worktree_pre_merge_test_failed.json. Disposition KEEP_QUARANTINED -> KEEP_REGISTERED, evidence cells membership_version, owner_doc, producer, closed_payload_schema, scope_identity, replay_idempotency, retention, redaction_custody, transitions, consumers_checkpoints, compatibility_withdrawal, positive_negative_oracles projected with twelve PASS cells from the family's admission depth assessment reports/event-authority-20261116/admission-merge-2/depth/chat.thread_worktree_pre_merge_test_failed.json (sha256 ed0cd2156f0cf64ff47dffa138c7a0ad77fdc73b9e5759b2aae97c645ccaf0e7); bucket, cohort pins, July classification and every other field are unchanged; no seal or owner choice. Evidence maintenance 2026-11-19 (MERGE2-FIX2): current assessment digest and locators are projected by the writer; original one-family append checkpoints remain in the DL-077 record and immutable Git history. No new admission or verdict change.",
   "evidence": {
     "owner_doc": {
       "status": "PASS",
-      "citation": "Plans/assistant-chat-design.md:32540",
+      "citation": "Plans/assistant-chat-design.md:32565",
       "note": "ACD-622/CV-642/SP-622 explicitly govern this exact family at 1.0.0; admission is still required."
     },
     "producer": {
       "status": "PASS",
-      "citation": "Plans/assistant-chat-design.md:32540",
+      "citation": "Plans/assistant-chat-design.md:32565",
       "note": "ACD-622 names the exact producer and original intent/commit/append/first-receipt ordering, adopting SP-286/CV-339."
     },
     "membership_version": {
       "status": "PASS",
-      "citation": "Plans/event_family_registry.json:22065-22151",
-      "note": "Registered at registry revision 2026-11-16.114 as #/families/332 (canonical row SHA-256 3821251061e9ac2bba69ed482263d13beb3296c5109d98ae08f37fa15538f4e5); before this commit the family was absent."
+      "citation": "Plans/event_family_registry.json:22109-22195",
+      "note": "Currently registered at 2026-11-18.2 as #/families/332 (canonical row SHA-256 3821251061e9ac2bba69ed482263d13beb3296c5109d98ae08f37fa15538f4e5). Original one-family admission checkpoints remain in the family record and immutable Git source."
     },
     "closed_payload_schema": {
       "status": "PASS",
-      "citation": "Plans/Contracts_V0.md:36913; Plans/Contracts_V0.md:36915",
+      "citation": "Plans/Contracts_V0.md:36413; Plans/Contracts_V0.md:36464",
       "note": "CV-642 selects closed Project/application logical bodies with unchanged attachment/provenance bounds, SP-337 actual encoded-byte cap and exact authorized body-reference path; full checker covers both editions."
     },
     "scope_identity": {
       "status": "PASS",
-      "citation": "Plans/Contracts_V0.md:36913; Plans/storage-plan.md:43146; Plans/storage-plan.md:43148",
+      "citation": "Plans/Contracts_V0.md:36450; Plans/Contracts_V0.md:36449; Plans/storage-plan.md:43147; Plans/storage-plan.md:43149",
       "note": "SP-622 verifies the actual Storage instance in every event identity and original-record commitment. Both payload editions, two independent Stores, and coherent foreign identities exercise history and checkpoint paths; Server/Computer/thread and Project/application key joins remain explicit."
     },
     "replay_idempotency": {
       "status": "PASS",
-      "citation": "Plans/Contracts_V0.md:36913; Plans/storage-plan.md:43132; Plans/Contracts_V0.md:36917; Plans/Contracts_V0.md:36919",
+      "citation": "Plans/Contracts_V0.md:36413; Plans/storage-plan.md:43133; Plans/Contracts_V0.md:36482; Plans/Contracts_V0.md:36494",
       "note": "CV-642 selects dedupe_by_idempotency_key, refuses compatibility-only replay before append/retry, compares the exact 21 owner semantic fields while excluding Storage metadata, and retains independent global event-ID integrity."
     },
     "retention": {
       "status": "PASS",
-      "citation": "Plans/storage-plan.md:43426",
+      "citation": "Plans/storage-plan.md:43427",
       "note": "Current exact-family BOUND retention assignment: {\"application_policy_ref\": null, \"decisions\": [\"DL-401\"], \"event_type\": \"chat.thread_worktree_pre_merge_test_failed\", \"existing_checkpoints\": [{\"family_id\": \"dch_chat_thread_worktree_pre_merge_test_failed_checkpoint\", \"policy_ref\": \"RP-PROJECTION-3GEN@1.0.0\"}], \"grade_source\": \"reports/event-authority-20261104/DCH-self-grade.json\", \"history_policy_ref\": \"RP-CHAT-THREAD-LIFETIME@1.0.0\", \"lane\": \"DCH\", \"original_and_checkpoint_assignments\": [], \"owner\": \"Plans/storage-plan.md#SP-622\", \"owner_line\": 38725, \"prior_finding\": \"SP-622 leaves the exact source policy object assignment pending RT and adopts RP-PROJECTION-3GEN for the derived checkpoint. No expiry is authorized.\", \"question\": null, \"status\": \"BOUND\"}"
     },
     "redaction_custody": {
       "status": "PASS",
-      "citation": "Plans/storage-plan.md:43132",
+      "citation": "Plans/storage-plan.md:43133",
       "note": "SP-622 binds original producer custody, coherent backup/restore, no secrets/ref-only source and current permission/deletion checks."
     },
     "transitions": {
       "status": "PASS",
-      "citation": "Plans/assistant-chat-design.md:32540; Plans/assistant-chat-design.md:32542; Plans/assistant-chat-design.md:32544",
+      "citation": "Plans/assistant-chat-design.md:32565; Plans/assistant-chat-design.md:32567; Plans/assistant-chat-design.md:32569",
       "note": "ACD-622 states the exact original outcome and transition barrier; SP-622 limits projection to that owner transition and current canonical state."
     },
     "consumers_checkpoints": {
       "status": "PASS",
-      "citation": "Plans/storage-plan.md:43136; Plans/storage-plan.md:43132; Plans/storage-plan.md:43144; Plans/Automated_Testing_System.md:9380; Plans/storage-plan.md:43146; scripts/pm_dch_events.py:46",
+      "citation": "Plans/storage-plan.md:43137; Plans/storage-plan.md:43133; Plans/storage-plan.md:43145; Plans/Automated_Testing_System.md:9380; Plans/storage-plan.md:43147; scripts/pm_dch_events.py:46",
       "note": "SP-622 retains its exact reader/projector/key/schema and SP-278 CAS/source obligations. The complete current/history value and physical pointer obey SP-340; verified SP-337 references handle large values. Original edition, custody and actual-instance joins precede publication. Native execution remains NOT_RUN."
     },
     "compatibility_withdrawal": {
       "status": "PASS",
-      "citation": "Plans/storage-plan.md:43132; Plans/Contracts_V0.md:36913; Plans/storage-plan.md:43146; Plans/storage-plan.md:43152; Plans/Contracts_V0.md:36921; scripts/pm_dch_events.py:410",
+      "citation": "Plans/storage-plan.md:43133; Plans/Contracts_V0.md:36413; Plans/storage-plan.md:43147; Plans/storage-plan.md:43153; Plans/Contracts_V0.md:36497; scripts/pm_dch_events.py:410",
       "note": "Every retained source, saved retry original, checkpoint/history value and terminal start is resolved through the shared SP-1101 RetainedDispatcher: one selection from the sealed write custody (RN01-RN06; a Store outside the custody is unavailable and an uninstalled recipe unsupported, with no fallback), then the frozen verifier of that recipe tuple with its original schema/type/domain/bytes, the CV-1101 date-time predicate on the pinned original resources and current custody. Caller recipe flags, forged bytes and withdrawal cannot bypass it."
     },
     "positive_negative_oracles": {
       "status": "PASS",
-      "citation": "Plans/assistant-chat-design.md:32540; Plans/Contracts_V0.md:36913; Plans/storage-plan.md:43132; scripts/pm_dch_events.py:1071; scripts/pm_dch_events.py:1097; scripts/pm_dch_worktree.py:147; scripts/pm_dch_schema_coverage.py:356",
+      "citation": "Plans/assistant-chat-design.md:32565; Plans/Contracts_V0.md:36435; Plans/storage-plan.md:43133; scripts/pm_dch_events.py:1071; scripts/pm_dch_events.py:1097; scripts/pm_dch_worktree.py:147; scripts/pm_dch_schema_coverage.py:356",
       "note": "Exact-family C12 PASS from reports/event-authority-20261114/c12-ch1/C12-GRADES.json"
     }
   },

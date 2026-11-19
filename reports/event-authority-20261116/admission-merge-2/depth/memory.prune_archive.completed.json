@@ -42,7 +42,9 @@
         "quote_line": 26982,
         "file_sha256": "a518084eb4de997795b8a1df403d9f86cd6d422e2d7c377f2367fa81181ca84d",
         "quote_check": "exact"
-       }
+       },
+       "unit": "#/families/415",
+       "quote_scope": "unit #/families/415, Plans/event_family_registry.json:27025-27067"
       }
      ]
     },
@@ -54,12 +56,12 @@
       {
        "path": "Plans/Contracts_V0.md",
        "unit": "CV-658",
-       "line_start": 39015,
-       "line_end": 39015,
+       "line_start": 38515,
+       "line_end": 38515,
        "quote": "Semantic owner is Plans/assistant-memory-subsystem.md section 7.2, as amended by DL-402, DL-403 and DL-447. This",
        "quote_check": "exact",
-       "quote_scope": "unit CV-658, Plans/Contracts_V0.md:39006-39148",
-       "file_sha256": "4ae2225d8ed19b6df971b6c32797aae6882d175264ff2c2e9a2045650d735e67",
+       "quote_scope": "unit CV-658, Plans/Contracts_V0.md:38506-38648",
+       "file_sha256": "2a9090efcaefbc3b0e85c2155255e078125e4d05a933e115ca931c6566b8b74b",
        "source_citation": {
         "path": "Plans/Contracts_V0.md",
         "unit": "CV-658",
@@ -72,12 +74,12 @@
       {
        "path": "Plans/Contracts_V0.md",
        "unit": "CV-658",
-       "line_start": 39069,
-       "line_end": 39069,
+       "line_start": 38569,
+       "line_end": 38569,
        "quote": "DL-447 answers DL-403 for this exact job",
        "quote_check": "exact",
-       "quote_scope": "unit CV-658, Plans/Contracts_V0.md:39006-39148",
-       "file_sha256": "4ae2225d8ed19b6df971b6c32797aae6882d175264ff2c2e9a2045650d735e67",
+       "quote_scope": "unit CV-658, Plans/Contracts_V0.md:38506-38648",
+       "file_sha256": "2a9090efcaefbc3b0e85c2155255e078125e4d05a933e115ca931c6566b8b74b",
        "source_citation": {
         "path": "Plans/Contracts_V0.md",
         "unit": "CV-658",
@@ -103,12 +105,12 @@
       {
        "path": "Plans/Contracts_V0.md",
        "unit": "CV-658",
-       "line_start": 39016,
-       "line_end": 39016,
+       "line_start": 38516,
+       "line_end": 38516,
        "quote": "unit owns this family''s payload and storage contract. Its producer is MemoryMaintenance.prune_archive.completed.v1@1.0.0",
        "quote_check": "exact",
-       "quote_scope": "unit CV-658, Plans/Contracts_V0.md:39006-39148",
-       "file_sha256": "4ae2225d8ed19b6df971b6c32797aae6882d175264ff2c2e9a2045650d735e67",
+       "quote_scope": "unit CV-658, Plans/Contracts_V0.md:38506-38648",
+       "file_sha256": "2a9090efcaefbc3b0e85c2155255e078125e4d05a933e115ca931c6566b8b74b",
        "source_citation": {
         "path": "Plans/Contracts_V0.md",
         "unit": "CV-658",
@@ -124,7 +126,7 @@
        "line_start": 47954,
        "line_end": 47955,
        "quote": "A current-writer retained EventRecord\\\n  \\ carries the unchanged CV-339 full-value commitment",
-       "file_sha256": "73ee6d097e08d31fd93301d05d2cd2632dd46e5a22ba3ea405ffadda4a0a9db2",
+       "file_sha256": "51edc1394ab24ca53a2a021dce3c3c9a1be0f43e2292d901ad56e4b0063a3ebf",
        "quote_check": "exact",
        "quote_scope": "unit SP-636, Plans/storage-plan.md:47801-48059",
        "source_citation": {
@@ -152,12 +154,12 @@
       {
        "path": "Plans/Contracts_V0.md",
        "unit": "CV-658",
-       "line_start": 39037,
-       "line_end": 39037,
+       "line_start": 38537,
+       "line_end": 38537,
        "quote": "all declared fields required, additionalProperties=false, version=1.0.0, payload_ref=null. Completed status/result",
        "quote_check": "exact",
-       "quote_scope": "unit CV-658, Plans/Contracts_V0.md:39006-39148",
-       "file_sha256": "4ae2225d8ed19b6df971b6c32797aae6882d175264ff2c2e9a2045650d735e67",
+       "quote_scope": "unit CV-658, Plans/Contracts_V0.md:38506-38648",
+       "file_sha256": "2a9090efcaefbc3b0e85c2155255e078125e4d05a933e115ca931c6566b8b74b",
        "source_citation": {
         "path": "Plans/Contracts_V0.md",
         "unit": "CV-658",
@@ -183,12 +185,12 @@
       {
        "path": "Plans/Contracts_V0.md",
        "unit": "CV-658",
-       "line_start": 39046,
-       "line_end": 39046,
+       "line_start": 38546,
+       "line_end": 38546,
        "quote": "idempotency_key=\"memory-maintenance:\"+the same lower-hex digest. The caller-supplied semantic EventRecord fields",
        "quote_check": "exact",
-       "quote_scope": "unit CV-658, Plans/Contracts_V0.md:39006-39148",
-       "file_sha256": "4ae2225d8ed19b6df971b6c32797aae6882d175264ff2c2e9a2045650d735e67",
+       "quote_scope": "unit CV-658, Plans/Contracts_V0.md:38506-38648",
+       "file_sha256": "2a9090efcaefbc3b0e85c2155255e078125e4d05a933e115ca931c6566b8b74b",
        "source_citation": {
         "path": "Plans/Contracts_V0.md",
         "unit": "CV-658",
@@ -214,12 +216,12 @@
       {
        "path": "Plans/Contracts_V0.md",
        "unit": "CV-658",
-       "line_start": 39050,
-       "line_end": 39050,
+       "line_start": 38550,
+       "line_end": 38550,
        "quote": "Current append and retry refuse projector_replay_only as replay_only_not_appendable, before any original return",
        "quote_check": "exact",
-       "quote_scope": "unit CV-658, Plans/Contracts_V0.md:39006-39148",
-       "file_sha256": "4ae2225d8ed19b6df971b6c32797aae6882d175264ff2c2e9a2045650d735e67",
+       "quote_scope": "unit CV-658, Plans/Contracts_V0.md:38506-38648",
+       "file_sha256": "2a9090efcaefbc3b0e85c2155255e078125e4d05a933e115ca931c6566b8b74b",
        "source_citation": {
         "path": "Plans/Contracts_V0.md",
         "unit": "CV-658",
@@ -250,7 +252,7 @@
        "quote": "\\ (2026-11-14).\\n\\nEvent history `retention_policy_ref = RP-OPERATIONAL-2555D@1.0.0`, under DL-401,\\",
        "quote_check": "exact",
        "quote_scope": "unit SP-636, Plans/storage-plan.md:47801-48059",
-       "file_sha256": "73ee6d097e08d31fd93301d05d2cd2632dd46e5a22ba3ea405ffadda4a0a9db2",
+       "file_sha256": "51edc1394ab24ca53a2a021dce3c3c9a1be0f43e2292d901ad56e4b0063a3ebf",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-636",
@@ -268,7 +270,7 @@
        "quote": "\\ the already named exact stored value `memory_prune_archive_operation` uses `RP-MEMORY-MAINTENANCE-APPLICATION-2555D@1.0.0`\\",
        "quote_check": "exact",
        "quote_scope": "unit SP-636, Plans/storage-plan.md:47801-48059",
-       "file_sha256": "73ee6d097e08d31fd93301d05d2cd2632dd46e5a22ba3ea405ffadda4a0a9db2",
+       "file_sha256": "51edc1394ab24ca53a2a021dce3c3c9a1be0f43e2292d901ad56e4b0063a3ebf",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-636",
@@ -294,12 +296,12 @@
       {
        "path": "Plans/Contracts_V0.md",
        "unit": "CV-658",
-       "line_start": 39082,
-       "line_end": 39082,
+       "line_start": 38582,
+       "line_end": 38582,
        "quote": "and root; mismatches fail. Preserve BRS-031 coherent canonical memory/operation/receipt/EventRecord boundaries;",
        "quote_check": "exact",
-       "quote_scope": "unit CV-658, Plans/Contracts_V0.md:39006-39148",
-       "file_sha256": "4ae2225d8ed19b6df971b6c32797aae6882d175264ff2c2e9a2045650d735e67",
+       "quote_scope": "unit CV-658, Plans/Contracts_V0.md:38506-38648",
+       "file_sha256": "2a9090efcaefbc3b0e85c2155255e078125e4d05a933e115ca931c6566b8b74b",
        "source_citation": {
         "path": "Plans/Contracts_V0.md",
         "unit": "CV-658",
@@ -325,12 +327,12 @@
       {
        "path": "Plans/Contracts_V0.md",
        "unit": "CV-658",
-       "line_start": 39036,
-       "line_end": 39036,
+       "line_start": 38536,
+       "line_end": 38536,
        "quote": "transaction accepted -> started -> effect_committed -> completed. The payload is its own closed definition Plans/memory_maintenance_event_payloads.schema.json#/$defs/memory_prune_a",
        "quote_check": "exact",
-       "quote_scope": "unit CV-658, Plans/Contracts_V0.md:39006-39148",
-       "file_sha256": "4ae2225d8ed19b6df971b6c32797aae6882d175264ff2c2e9a2045650d735e67",
+       "quote_scope": "unit CV-658, Plans/Contracts_V0.md:38506-38648",
+       "file_sha256": "2a9090efcaefbc3b0e85c2155255e078125e4d05a933e115ca931c6566b8b74b",
        "source_citation": {
         "path": "Plans/Contracts_V0.md",
         "unit": "CV-658",
@@ -343,12 +345,12 @@
       {
        "path": "Plans/Contracts_V0.md",
        "unit": "CV-658",
-       "line_start": 39069,
-       "line_end": 39069,
+       "line_start": 38569,
+       "line_end": 38569,
        "quote": "DL-447 answers DL-403 for this exact job",
        "quote_check": "exact",
-       "quote_scope": "unit CV-658, Plans/Contracts_V0.md:39006-39148",
-       "file_sha256": "4ae2225d8ed19b6df971b6c32797aae6882d175264ff2c2e9a2045650d735e67",
+       "quote_scope": "unit CV-658, Plans/Contracts_V0.md:38506-38648",
+       "file_sha256": "2a9090efcaefbc3b0e85c2155255e078125e4d05a933e115ca931c6566b8b74b",
        "source_citation": {
         "path": "Plans/Contracts_V0.md",
         "unit": "CV-658",
@@ -374,12 +376,12 @@
       {
        "path": "Plans/Contracts_V0.md",
        "unit": "CV-658",
-       "line_start": 39077,
-       "line_end": 39077,
+       "line_start": 38577,
+       "line_end": 38577,
        "quote": "This family''s exact reader reader.memory.prune_archive.completed.history.v1@1.0.0 explicitly adopts SP-278: reader.storage.event_record_index@1.0.0,",
        "quote_check": "exact",
-       "quote_scope": "unit CV-658, Plans/Contracts_V0.md:39006-39148",
-       "file_sha256": "4ae2225d8ed19b6df971b6c32797aae6882d175264ff2c2e9a2045650d735e67",
+       "quote_scope": "unit CV-658, Plans/Contracts_V0.md:38506-38648",
+       "file_sha256": "2a9090efcaefbc3b0e85c2155255e078125e4d05a933e115ca931c6566b8b74b",
        "source_citation": {
         "path": "Plans/Contracts_V0.md",
         "unit": "CV-658",
@@ -405,12 +407,12 @@
       {
        "path": "Plans/Contracts_V0.md",
        "unit": "CV-658",
-       "line_start": 39099,
-       "line_end": 39099,
+       "line_start": 38599,
+       "line_end": 38599,
        "quote": "authorized historical reads. Withdrawal first fences this family''s command/writer, retains unresolved original",
        "quote_check": "exact",
-       "quote_scope": "unit CV-658, Plans/Contracts_V0.md:39006-39148",
-       "file_sha256": "4ae2225d8ed19b6df971b6c32797aae6882d175264ff2c2e9a2045650d735e67",
+       "quote_scope": "unit CV-658, Plans/Contracts_V0.md:38506-38648",
+       "file_sha256": "2a9090efcaefbc3b0e85c2155255e078125e4d05a933e115ca931c6566b8b74b",
        "source_citation": {
         "path": "Plans/Contracts_V0.md",
         "unit": "CV-658",
@@ -426,7 +428,7 @@
        "line_start": 47962,
        "line_end": 47963,
        "quote": "Reader dispatch follows\\\n  \\ SP-1101: each retained canonical original",
-       "file_sha256": "73ee6d097e08d31fd93301d05d2cd2632dd46e5a22ba3ea405ffadda4a0a9db2",
+       "file_sha256": "51edc1394ab24ca53a2a021dce3c3c9a1be0f43e2292d901ad56e4b0063a3ebf",
        "quote_check": "exact",
        "quote_scope": "unit SP-636, Plans/storage-plan.md:47801-48059",
        "source_citation": {
@@ -454,12 +456,12 @@
       {
        "path": "Plans/Contracts_V0.md",
        "unit": "CV-658",
-       "line_start": 39013,
-       "line_end": 39013,
+       "line_start": 38513,
+       "line_end": 38513,
        "quote": "canonical_text: 'Newly authored owner contract under DL-045 for exactly memory.prune_archive.completed@1.0.0, prepared",
        "quote_check": "exact",
-       "quote_scope": "unit CV-658, Plans/Contracts_V0.md:39006-39148",
-       "file_sha256": "4ae2225d8ed19b6df971b6c32797aae6882d175264ff2c2e9a2045650d735e67",
+       "quote_scope": "unit CV-658, Plans/Contracts_V0.md:38506-38648",
+       "file_sha256": "2a9090efcaefbc3b0e85c2155255e078125e4d05a933e115ca931c6566b8b74b",
        "source_citation": {
         "path": "Plans/Contracts_V0.md",
         "unit": "CV-658",
@@ -472,12 +474,12 @@
       {
        "path": "Plans/Contracts_V0.md",
        "unit": "CV-658",
-       "line_start": 39013,
-       "line_end": 39013,
+       "line_start": 38513,
+       "line_end": 38513,
        "quote": "canonical_text: 'Newly authored owner contract under DL-045 for exactly memory.prune_archive.completed@1.0.0, prepared",
        "quote_check": "exact",
-       "quote_scope": "unit CV-658, Plans/Contracts_V0.md:39006-39148",
-       "file_sha256": "4ae2225d8ed19b6df971b6c32797aae6882d175264ff2c2e9a2045650d735e67",
+       "quote_scope": "unit CV-658, Plans/Contracts_V0.md:38506-38648",
+       "file_sha256": "2a9090efcaefbc3b0e85c2155255e078125e4d05a933e115ca931c6566b8b74b",
        "source_citation": {
         "path": "Plans/Contracts_V0.md",
         "unit": "CV-658",
@@ -620,9 +622,9 @@
   "row_pointer": "#/families/415"
  },
  "evidence_maintenance": {
-  "authority": "MERGE2-FIX1 findings 1/3/5",
-  "source_commit": "0c904de00426b0089ba5d56349fda8ea16cc9f88",
-  "source_assessment_sha256": "32a28d19ff3a64a34589df8a30db0eb63d7ec2981a4d3af31b322c3a82e9474a",
+  "authority": "MERGE2-FIX2 findings 1/2/3",
+  "source_commit": "0f2a90ece55d4bafd163b19a05cd3c4eda91b9c1",
+  "source_assessment_sha256": "b47da5cd4ca15b366e90387ee3eb89560f5fc008f49977618e2ba816c4680e1c",
   "native_execution": "NOT_RUN",
   "verdicts_changed": false
  }
