@@ -721,6 +721,8 @@ class SchemaCatalog:
         self.bindings = []
         self._make_registry()
         self._inventory()
+        self._format_free = format_checker is None and not any(
+            type(node) is dict and 'format' in node for node in self.nodes.values())
 
     def _make_registry(self):
         resources = []
@@ -1194,7 +1196,7 @@ class SchemaCatalog:
         self.guards[guard_id] = replace(self.guards[guard_id], invariant=invariant, evidence=evidence)
         self.bindings.append({"guard": guard_id, "invariant": asdict(invariant), "evidence": evidence})
 
-    def mutated(self, cuts: frozenset[str]):
+    def mutated(self, cuts: frozenset[str], *, view_cache=None):
         docs, frames, aliases = self._reference_frames()
         for gid in sorted(cuts):
             guard = self.guards.get(gid)
@@ -1245,7 +1247,16 @@ class SchemaCatalog:
                 # Only single-atom negative contexts reach this point. Compound
                 # negative contexts are unclassified, never broad false cuts.
                 node.setdefault("allOf", []).append(False)
-        return SchemaView(docs, self.roots, self.formats, aliases, self.approved_entries)
+        if view_cache is None or not self._format_free:
+            return SchemaView(docs, self.roots, self.formats, aliases, self.approved_entries)
+        # Key the prepared view, including resolved occurrence mappings. Never
+        # reuse a validator containing a caller-supplied format callback.
+        key = (cuts, digest(docs), self.roots, tuple(aliases.items()), tuple(self.approved_entries.items()))
+        if key not in view_cache:
+            view_cache[key] = SchemaView(docs, self.roots, self.formats, aliases, self.approved_entries)
+            if len(view_cache) > 32:
+                del view_cache[next(iter(view_cache))]
+        return view_cache[key]
 
 
 class SchemaView:
@@ -1451,7 +1462,7 @@ class GuardTable:
     def guards(self):
         return types.MappingProxyType(self._original)
 
-    def _bind(self, value, context, cuts):
+    def _bind(self, value, context, cuts, *, view_cache=None):
         if self._bound or not set(cuts) <= self._original.keys():
             raise IsolationError('table reused or unknown guard cut')
         self._root, self._context, self._bound = value, context, True
@@ -1460,7 +1471,7 @@ class GuardTable:
         self._entries = {name: replace(row, predicate=_always_pass) if name in cuts else row
                          for name, row in self._original.items()}
         if self._schema:
-            self._schema.bind(cuts)
+            self._schema.bind(cuts, view_cache)
 
     def _test(self, row, value, context):
         caller = sys._getframe(1)
@@ -1538,6 +1549,7 @@ class GuardTable:
         _GUARD_TRACES[self] = {'calls': [], 'refused_at': None}
         if self._schema:
             self._schema.view = None
+            self._schema.view_cache = None
             self._schema.consumed.clear()
 
 
@@ -3146,7 +3158,7 @@ class _SchemaPredicate:
     def __call__(self, value, context):
         # Preserve applicators and selectors; weaken only the OTHER supported
         # assertions. Unknown forms never reach PASS or grant any cut credit.
-        view = self.binding.catalog.mutated(frozenset(self.binding.active - {self.guard.id}))
+        view = self.binding.mutated(frozenset(self.binding.active - {self.guard.id}))
         selected = self.binding.selectors[self.guard.entry_uri](value, context)
         return None if view.validator(self.guard.entry_uri).is_valid(selected) else self.guard.refusal_code or self.guard.id
 
@@ -3157,11 +3169,17 @@ class _SchemaBinding:
         if set(selectors) != set(catalog.roots):
             raise IsolationError('schema selectors must bind every complete consumed root exactly once')
         self.active = {g.id for g in catalog.guards.values() if g.classification == 'guard'}
-        self.view = None
+        self.view = self.view_cache = None
         self.consumed = set()
 
-    def bind(self, cuts):
-        self.view = self.catalog.mutated(frozenset(set(cuts) & self.active))
+    def mutated(self, cuts):
+        if type(self.catalog) is SchemaCatalog and self.view_cache is not None:
+            return self.catalog.mutated(cuts, view_cache=self.view_cache)
+        return self.catalog.mutated(cuts)
+
+    def bind(self, cuts, view_cache):
+        self.view_cache = view_cache
+        self.view = self.mutated(frozenset(set(cuts) & self.active))
 
     def validate(self, table, entry, value, context):
         if entry not in self.selectors:
@@ -3270,6 +3288,17 @@ def run(suite: Suite, *, memory: MemoryGate | None = None, progress=None, demons
     shared_certified = True
     case_snapshots, anchored_snapshots = {}, {}
     last_trace = {}             # guard-call trace of the latest full checker run
+    schema_views, schema_library_files = {}, {}
+    schema_library_roots = tuple(Path(sys.modules[name].__file__).resolve().parent
+                                 for name in ('jsonschema', 'referencing'))
+
+    def schema_library_file(filename):
+        if filename not in schema_library_files:
+            source = Path(filename)
+            resolved = source.resolve() if source.is_absolute() else None
+            schema_library_files[filename] = (resolved is not None and not resolved.is_relative_to(root) and
+                any(resolved.is_relative_to(directory) for directory in schema_library_roots))
+        return schema_library_files[filename]
     def certify_shared(*, reset=False):
         nonlocal shared_snapshot, shared_certified
         if reset and suite.reset:
@@ -3372,7 +3401,9 @@ def run(suite: Suite, *, memory: MemoryGate | None = None, progress=None, demons
         certify_shared(reset=True)
         report['evaluations'] += 1
         table = case.table
-        table._bind(value, case.context, cuts)
+        table._bind(value, case.context, cuts, view_cache=schema_views)
+        format_free_schema = (table._schema is not None and type(table._schema.catalog) is SchemaCatalog and
+                              table._schema.catalog._format_free)
         events, exceptions = [], {}
         instructions, opnames = {}, {}
         predicates = [fn.__func__ if inspect.ismethod(fn) else fn for fn in _predicate_functions(table)]
@@ -3380,7 +3411,9 @@ def run(suite: Suite, *, memory: MemoryGate | None = None, progress=None, demons
         path_cache = {}
         engine_name = str(engine)
         # C8-U1: a purity checkpoint is due after any instruction outside PURITY_SAFE_OPCODES, and at every
-        # call, return and exception event. pending[0] carries "an instruction that may have changed the graph ran".
+        # untrusted call, return and exception event. Format-free validation's engine and library
+        # plumbing can defer the checkpoint to the next checker event or _test's final comparison.
+        # pending[0] carries "an instruction that may have changed the graph ran".
         pending = [True]
         def trace(frame, event, arg):
             if event == 'call' and frame.f_code in predicate_codes:
@@ -3398,8 +3431,11 @@ def run(suite: Suite, *, memory: MemoryGate | None = None, progress=None, demons
                     error = 'registered predicate entered outside its engine evaluation: ' + frame.f_code.co_name
                     table._errors.append(error)
                     raise IsolationError(error)
+            filename = frame.f_code.co_filename
             if table._in_predicate and table._purity_before is not None:
-                if event in ('opcode', 'line'):
+                if format_free_schema and (filename == engine_name or schema_library_file(filename)):
+                    pending[0] = True
+                elif event in ('opcode', 'line'):
                     if pending[0]:
                         table._check_purity(value, case.context)
                         pending[0] = False
@@ -3413,7 +3449,6 @@ def run(suite: Suite, *, memory: MemoryGate | None = None, progress=None, demons
                     # call, return and exception: always, and an untraced callee's work stays pending for its caller.
                     table._check_purity(value, case.context)
                 frame.f_trace_opcodes = True
-            filename = frame.f_code.co_filename
             if filename == engine_name:
                 return None
             if filename not in path_cache:

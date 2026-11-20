@@ -33,6 +33,27 @@ def reference_keys(fragment):
 
 
 class GuardEngineTests(unittest.TestCase):
+    def test_ddbg_schema_view_reuse(self):
+        builds = 0
+
+        def profile(frame, event, arg):
+            nonlocal builds
+            if event != 'call':
+                return
+            if frame.f_code is guard.SchemaView.__init__.__code__:
+                builds += 1
+
+        suite = ddbg.retry_request_suite()
+        previous = sys.getprofile()
+        sys.setprofile(profile)
+        try:
+            report = guard.run(suite)
+        finally:
+            sys.setprofile(previous)
+        self.assertEqual(report['status'], 'PASS', report['failures'])
+        self.assertEqual((len(report['rows']), report['evaluations']), (7, 198))
+        self.assertLess(builds, report['evaluations'] // 2)
+
     def test_run_case_verdict_and_restoration(self):
         suite = ddbg.retry_request_suite()
         negative = next(n for n in suite.negatives if n.target == 'retry.authorization')
