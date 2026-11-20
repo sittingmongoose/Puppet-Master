@@ -5,8 +5,8 @@
  "merge": "admission-merge-2",
  "registry": {
   "path": "Plans/event_family_registry.json",
-  "revision": "2026-11-18.2",
-  "sha256": "ec21cf1a5b42b3e68a5564a847b4798dff968612d11d438bc7075b89196f9602",
+  "revision": "2026-11-19.114",
+  "sha256": "ecf895ca73272015369da480ea240f6312eef1fff6ae6f04d079915c968fbe90",
   "family_count": 518,
   "row_pointer": "#/families/483"
  },
@@ -22,7 +22,7 @@
     "membership_version": {
      "status": "PASS",
      "representation": "exact_registry_membership",
-     "finding": "Currently registered at 2026-11-18.2 as #/families/483 (canonical row SHA-256 784b0389f974bd16a2e3f0dc8429e265a70b74dfb912b0f1e3a355e3022aaea7). Original one-family admission checkpoints remain in the family record and immutable Git source.",
+     "finding": "Currently registered at 2026-11-19.114 as #/families/483, canonical row SHA-256 4c462457ceb518cdc1aac4c92d8a8abafd13597ead80dad3759485f7dbe0bad8. Original one-family append checkpoints remain preserved.",
      "evidence": [
       {
        "path": "Plans/event_family_registry.json",
@@ -266,23 +266,45 @@
       {
        "path": "Plans/Contracts_V0.md",
        "unit": "CV-1416",
-       "line_start": 51584,
-       "line_end": 51584,
-       "quote": "Current selected assignment (2026-11-19): server.discovery_expired@1.0.0 is registered for application_only in",
-       "file_sha256": "58dee182ea2dd8dd358d27912280fa9113c3d1d8fd68b1c0c5d51b6f906d73c8",
+       "line_start": 51587,
+       "line_end": 51593,
+       "quote": "  Current selected assignment (2026-11-19): server.discovery_expired@1.0.0 is registered for application_only in\n  Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2401. Its event history selects RP-ROUTINE-OBSERVATION-APPLICATION-90D@1.0.0;\n  Plans/storage-plan.md#SP-1416 owns the event policy''s existing anchors, counts, holds and deletion rules. Original\n  sources and coherent backups retain their independent owner policies; the event lifetime is not transferred to\n  them. Current append/publication still requires the exact selected schema/scope, original custody, current permission,\n  receipt and required producer adoption. Actual missing registration or unresolved required custody refuses; native\n  execution remains NOT_RUN. No native adoption, new retention choice or governance seal follows.'",
        "quote_check": "exact",
-       "quote_scope": "unit CV-1416, Plans/Contracts_V0.md:51552-51632",
+       "quote_scope": "unit CV-1416, Plans/Contracts_V0.md:51555-51635",
+       "file_sha256": "77879920f56eb692b9d2ddcf47c1c2421e0c426e2ccd911e183895f8195c45b3",
        "source_citation": {
         "path": "Plans/Contracts_V0.md",
         "unit": "CV-1416",
-        "line_start": 49275,
-        "line_end": 49275,
-        "quote": "retention_policy_ref=RP-ROUTINE-OBSERVATION-APPLICATION-90D@1.0.0 (DL-454, E-CARDS-3 item 2.a, option A), application editions only, kept 90 days (7,776,000 seconds) from the first successful save that survives a restart, never restarted by retry, reprocessing or restore, in the one separate 2,000,000-entry application allowance app:routine_observation (fail_closed overflow, hold eligible; only ex",
-        "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a"
+        "line_start": 51584,
+        "line_end": 51584,
+        "quote": "Current selected assignment (2026-11-19): server.discovery_expired@1.0.0 is registered for application_only in",
+        "file_sha256": "58dee182ea2dd8dd358d27912280fa9113c3d1d8fd68b1c0c5d51b6f906d73c8",
+        "quote_check": "exact",
+        "quote_scope": "unit CV-1416, Plans/Contracts_V0.md@10ba97e699d51287673d6f1db4d994f54c59b4ed:51552-51632",
+        "source_citation": {
+         "path": "Plans/Contracts_V0.md",
+         "unit": "CV-1416",
+         "line_start": 49275,
+         "line_end": 49275,
+         "quote": "retention_policy_ref=RP-ROUTINE-OBSERVATION-APPLICATION-90D@1.0.0 (DL-454, E-CARDS-3 item 2.a, option A), application editions only, kept 90 days (7,776,000 seconds) from the first successful save that survives a restart, never restarted by retry, reprocessing or restore, in the one separate 2,000,000-entry application allowance app:routine_observation (fail_closed overflow, hold eligible; only ex",
+         "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a"
+        },
+        "locator_maintenance": {
+         "authority": "MERGE2-FIX4",
+         "reason": "Re-cite the same accepted retention claim at its current exact owner assignment; event and source/checkpoint authority remain separate."
+        },
+        "commit": "10ba97e699d51287673d6f1db4d994f54c59b4ed",
+        "sha256": "58dee182ea2dd8dd358d27912280fa9113c3d1d8fd68b1c0c5d51b6f906d73c8",
+        "line": 51584
        },
-       "locator_maintenance": {
-        "authority": "MERGE2-FIX4",
-        "reason": "Re-cite the same accepted retention claim at its current exact owner assignment; event and source/checkpoint authority remain separate."
+       "retention_range_maintenance": {
+        "authority": "MERGE3-POSTFIX / post-landing Astra findings",
+        "source_commit": "a2836bb9cbe40ed7dd9c6523a228744ba4aaadfa",
+        "old_quote": "Current selected assignment (2026-11-19): server.discovery_expired@1.0.0 is registered for application_only in",
+        "old_path": "Plans/Contracts_V0.md",
+        "old_unit": "CV-1416",
+        "old_line_start": 51584,
+        "reason": "Complete current wrapped assignment inside its original unit."
        }
       },
       {
@@ -611,10 +633,9 @@
   "row_pointer": "#/families/483"
  },
  "evidence_maintenance": {
-  "authority": "MERGE2-FIX4 items 1/2/3",
-  "source_commit": "2bda6aeed03daea26c4d79dfb7568fc145aac29e",
-  "source_assessment_sha256": "0406354cefd5a89a288f1ebfb77465f7c70c8292bf12fe023874e31b86ee0208",
-  "native_execution": "NOT_RUN",
-  "verdicts_changed": false
+  "authority": "MERGE3-POSTFIX / post-landing Astra findings",
+  "source_commit": "a2836bb9cbe40ed7dd9c6523a228744ba4aaadfa",
+  "source_assessment_sha256": "0e2cb4656fc03f46e254aceded2ab97d2a50fe914402b33ccced98562a958593",
+  "native_execution": "NOT_RUN"
  }
 }

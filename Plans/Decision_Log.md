@@ -61027,3 +61027,64 @@ negative_constraints:
 - No new admission, producer adoption, native execution claim or governance seal.
 ```
 
+### DL-2564: Event Authority corrects server.discovery_expired (merge 3 post-landing)
+
+```yaml
+plan_unit_id: DL-2564
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: 'Correction for server.discovery_expired only, under DL-077 and DL-400, resolving post-landing Astra finding(s)
+  [1, 4]. The original admission authority remains Plans/Decision_Log.md#DL-2401; this entry records no new admission, verdict,
+  policy choice or producer adoption. Current row canonical SHA-256 4c462457ceb518cdc1aac4c92d8a8abafd13597ead80dad3759485f7dbe0bad8.
+  Its scope is application_only. Payload editions: application `pm.event_payload.server.discovery_expired.v1` (RP-ROUTINE-OBSERVATION-APPLICATION-90D@1.0.0,
+  producer requires_owner_adoption).
+
+
+  The correction moves the full registry from 2026-11-19.113, 518 families, SHA-256 42b286d9b8dc6201f9167f59a074c7c200c9b8edb683e0543c9aedb937449436,
+  to 2026-11-19.114, 518 families, SHA-256 ecf895ca73272015369da480ea240f6312eef1fff6ae6f04d079915c968fbe90, without changing
+  another family. Revision witness: reports/event-authority-20261116/admission-merge-3/corrections/server.discovery_expired.json.
+  Depth assessment: reports/event-authority-20261116/admission-merge-2/depth/server.discovery_expired.json, SHA-256 a07051e546ffa67a7179360a51963cfeacf7c3980864e17294b39e1e35792c38.
+
+
+  The original append checkpoints are preserved: before 2026-11-16.264 SHA-256 f381dc68caa04c23af1387852ea2d777e92e1c98ebd66c4477e8990f8f3a741b;
+  after 2026-11-16.265 SHA-256 060bb50648dc83e055a180406cdea14992b1ea0173df2bee699ef8b3799350fd. Existing semantic owner Plans/Server_System.md#SRV-1416,
+  payload owner Plans/Contracts_V0.md#CV-1416, resource Plans/event_payloads/w3e/server_discovery_expired.schema.json# retain
+  their contracts. Current citations were re-read from existing canonical text; original citations, records and decision entries
+  remain in the named Git predecessor. Native execution remains NOT_RUN. Required producer adoption, permissions, original
+  custody and receipt/publication fences remain required.'
+gui_related: false
+gui_classification_reason: Maintains one existing event admission and its evidence.
+depends_on:
+- DL-077
+- DL-400
+- DL-2401
+unblocks: []
+acceptance_criteria:
+- Exactly one family is corrected and the original append checkpoints remain authenticated.
+- The correction witness and current DL-077 record match their named Git editions.
+validation_surfaces:
+- python3 scripts/pm-ea-record-chain.py
+- python3 scripts/pm-ea-postfix-check.py
+- python3 scripts/pm-ea-retention-citation-check.py
+risk_class: event_authority_admission
+reasoning_tier: high
+context_scope: event_authority_pnc019_merge3_postfix
+implementation_surfaces:
+- Plans/event_family_registry.json
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/MERGE2-POSTLAND-astra62max/REVIEW.md
+- Plans/Decision_Log.md#DL-2401
+preserved_exact_tokens:
+- server.discovery_expired
+- 4c462457ceb518cdc1aac4c92d8a8abafd13597ead80dad3759485f7dbe0bad8
+- 2026-11-19.113
+- 2026-11-19.114
+negative_constraints:
+- No new admission, producer adoption, native execution claim or governance seal.
+```
+
