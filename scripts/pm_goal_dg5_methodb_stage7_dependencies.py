@@ -141,7 +141,25 @@ def reserve_cas(directory):
                 source=[source(U, 1187, 1188, 1195, 1197), source(ST, 1657, 1664, 1674)])
 
 
+def scope_project(directory):
+    world, goal, _, admission, _ = pilot.updated._upto(directory / 'scope', 'freeze')
+    progress = pilot.updated.progress(world, goal, pilot.updated.op_of(admission))
+    good = dict(progress['producer_input'])
+    handle = world.storage.reserve('TEST_ONLY:stage7:scope', {'source': 'stage7'})
+    control = pilot.call((world, world.storage.append, (handle, [good]), {}), 'valid project scope',
+                         sweep.Collector(judge=False))
+    verdict(control)
+    row, dep = site(189, ST), site(473, ST)
+    fixture = world, world.storage.append, (handle, [dict(good, project_id='')]), {}
+    result = check_later(fixture, 'empty project scope', row, 'scope/project_id',
+                         dep, 'append/event/schema/project_id')
+    return dict(row=row, dependency=dep, control=control, trials=result,
+                source=[source(ST, 189, 190, 473, 1455, 1486),
+                        source('Plans/event_record.schema.json', 165, 177, 178, 185, 186, 187)])
+
+
 CHECKS = {
+    'scope_project': scope_project,
     'reserve_cas': reserve_cas,
     'objective': objective,
 }
