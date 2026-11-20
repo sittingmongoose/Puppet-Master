@@ -58,6 +58,8 @@ def edit_example(go, document, path, change):
 def update_fixture(route, path):
     import pm_goal_dg_u_oracles as oracle
 
+    if route.startswith('logical/'):
+        return stored_logical_fixture(oracle, route.partition('/')[2], path)
     if route in ('approval_request', 'approval_resolution'):
         return approval_fixture(oracle, route, path)
     if route in ('metadata_intent', 'reserve_pending'):
@@ -164,6 +166,41 @@ def update_fixture(route, path):
     if route == 'oracle_receipt':
         return w, lambda: w.body.read_receipt_private(request, 'oracle')
     raise ValueError(route)
+
+
+def stored_logical_fixture(oracle, definition, path):
+    o = oracle.O
+    world, goal = oracle._goal(path)
+    scope = goal['scope']
+    project, goal_id = scope['project_id'], scope['goal_id']
+    birth_receipt, = world.storage.snapshot()['cells'][o.T_RECEIPT]
+    bodies = {
+        'storage_body': (o.T_BODY, o.body_key(project, goal_id)),
+        'StorageBodyControlV2': (o.T_CONTROL, o.control_key(project, goal_id)),
+        'storage_revision': (o.T_REV, o.rev_key(project, goal_id, 1)),
+        'storage_origin': (o.T_ORIGIN, o.origin_key(project, goal_id, 1)),
+        'storage_receipt': (o.T_RECEIPT, birth_receipt),
+    }
+    if definition in bodies:
+        family, key = bodies[definition]
+        owner, reference = world.body, world.body.ROOTS[family]
+    else:
+        _, admission = oracle.run_direct(world, goal)
+        operation = oracle.op_of(admission)
+        if definition == 'StorageTerminal':
+            family, owner = o.T_TERMINAL, world.sir
+            key = o.upd_key(family, scope, operation)
+            reference = o.UPDATE_URI + '#/$defs/StorageTerminal'
+        else:
+            family = {'StorageSourceAudit': o.T_SOURCE, 'StorageProgress': o.T_PROGRESS,
+                      'StorageInputContent': o.T_INPUT}[definition]
+            owner = world.source
+            key = o.upd_key(family, scope, operation) if family != o.T_PROGRESS else o.head_key(scope, operation)
+            reference = owner.ROOTS[family]
+    require(reference.endswith('#/$defs/' + definition), 'storage reader uses a different definition')
+    cell = world.storage.cell(family, key)
+    require(cell is not None, 'original command did not write the chosen wrapper')
+    return world, lambda: owner.unwrap_row(family, key, cell['value'], reference)
 
 
 TERMINAL_RESULT_ROUTES = {
@@ -1736,6 +1773,35 @@ def producer_rule_implication(nodes, name, path, errors, locations, validator, d
                 premise='The EventRecord timestamp parser requires a nonempty string and checks the same format.')
 
 
+def stored_progress_implication(nodes, name, path, control, errors, locations, go, validator, example):
+    prefix = NORMALIZED.removesuffix('NormalizedIdentity')
+    wrapper = nodes[prefix + 'StorageProgress']['node']
+    selector = wrapper['properties']['record']
+    require('record' in wrapper['required'] and
+            [{k: v for k, v in branch.items() if k != 'x-pm-oracle-id'} for branch in selector['oneOf']] ==
+            [{'$ref': prefix + 'Progress'}, {'$ref': prefix + 'ProgressHead'}],
+            'the original storage wrapper no longer uses the same Progress definition')
+    head = nodes[prefix + 'ProgressHead']['node']
+    phases = nodes[prefix + 'Progress']['node']['oneOf']
+    require('schema_id' in head['required'] and all('schema_id' in branch['required'] and
+            branch['properties']['schema_id']['const'] != head['properties']['schema_id']['const']
+            for branch in phases), 'a phase could also validate as ProgressHead')
+    require(go.locations(errors) == set(example['storage_progress_messages']),
+            'the exact stored Progress messages changed')
+    error, = errors
+    require(tuple(error.absolute_path) == ('record',) and
+            tuple(error.absolute_schema_path) == ('properties', 'record', 'oneOf'),
+            'invalid Progress did not refuse in its stored record')
+    selected = [child for child in error.context if tuple(child.absolute_schema_path)[:4] ==
+                ('properties', 'record', 'oneOf', 0)]
+
+    def unwrapped(listing):
+        return {(keyword, at[1:], rule) for keyword, at, rule in locations(listing)}
+
+    return progress_implication(nodes, name, path[1:], control['record'], selected, unwrapped, go, validator,
+                                example['progress_implication'])
+
+
 def progress_implication(nodes, name, path, control, errors, locations, go, validator, expected):
     prefix = NORMALIZED.removesuffix('NormalizedIdentity')
     progress = nodes[prefix + 'Progress']['node']
@@ -2263,6 +2329,9 @@ def test_rules(plain, bank, document, ident, exact_ids, examples, disabled_check
         elif cut and 'terminal_result_implication' in example:
             record.update(cls='COVERED_LATER', implication=terminal_result_implication(
                 nodes, name, path, cut, go, locations, validator, example['terminal_result_implication']))
+        elif cut and 'storage_progress_messages' in example:
+            record.update(cls='COVERED_LATER', implication=stored_progress_implication(
+                nodes, name, path, control, cut, locations, go, validator, example))
         elif cut and 'progress_implication' in example:
             record.update(cls='COVERED_LATER', implication=progress_implication(
                 nodes, name, path, control, cut, locations, go, validator, example['progress_implication']))
@@ -2359,6 +2428,18 @@ def main():
     started = time.monotonic()
     source = args.source.resolve()
     declare = json.loads(args.declaration.read_text())
+    if shared_name := declare.get('use_same_logical_examples'):
+        relative = Path(shared_name)
+        require(declare['row'] == 'dg5/dgu/physical/logical/schema' and
+                len(relative.parts) == 2 and relative.parts[0] in ('goal-methodb-stage3', 'goal-methodb-stage5'),
+                'shared examples require the original logical reader')
+        shared = json.loads((HERE.parent / 'reports/event-authority-20261114' / relative).read_text())
+        require(all(declare[key] == shared[key] for key in ('family', 'source', 'census_sha256', 'root')) and
+                not ({'examples', 'accepted_branches'} & declare.keys()),
+                'shared logical examples require the same root, source and family')
+        declare['examples'] = shared['examples']
+        if 'accepted_branches' in shared:
+            declare['accepted_branches'] = shared['accepted_branches']
     if declare.get('use_guard_result_examples'):
         shared = json.loads((args.declaration.parent / 'certified-guard-result.json').read_text())
         require(shared['row'] == 'dg5/guard/result/schema' and
@@ -2405,7 +2486,8 @@ def main():
     census_row, = [item for item in census['rows'] if item['row'] == row]
     root = census['roots'][ident]
     terminal_case = row == 'dg5/dgu/sir/terminal/result/schema' and declare['route'] in TERMINAL_RESULT_ROUTES
-    require((census_row['root_ids'] == [ident] or terminal_case and ident in census_row['root_ids']) and
+    stored_logical = row == 'dg5/dgu/physical/logical/schema' and declare['route'].startswith('logical/')
+    require((census_row['root_ids'] == [ident] or (terminal_case or stored_logical) and ident in census_row['root_ids']) and
             not root.get('inventory_variants'), 'ambiguous root inventory')
     require(declare['family'] == census['family'] and declare['site'] in census_row['sites'], 'census owner site changed')
     sys.path.insert(0, str(source / 'scripts'))
@@ -2448,8 +2530,11 @@ def main():
         require({(obs['root'], obs['registry_sha256']) for run in check.runs for obs in run['observations']}
                 == {(ident, root['registry_sha256'])}, 'root or registry differs from the census')
         source_audit = None
-        if row == 'dg5/dgu/source/capture/source/schema':
-            source_audit = source_audit_checks(plain, actual_bank, accepted, census, args.declaration, args.disable_check)
+        if ident == SOURCE_AUDIT_ROOT:
+            source_declaration = args.declaration
+            if stored_logical:
+                source_declaration = args.declaration.parent / 'updated-source-audit.json'
+            source_audit = source_audit_checks(plain, actual_bank, accepted, census, source_declaration, args.disable_check)
         clauses, gaps = test_rules(plain, actual_bank, accepted, ident, root['clause_ids'],
                                    declare['examples'], args.disable_check, declare.get('accepted_branches'), source_audit)
         report.update(clauses=clauses, gaps=gaps)

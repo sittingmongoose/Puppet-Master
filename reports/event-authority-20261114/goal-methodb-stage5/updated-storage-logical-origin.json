@@ -1,0 +1,13 @@
+{
+  "census_sha256": "647eb062f2b9f8438e26716e3e058e1ac61193a2c266bbf12f4664495598fab7",
+  "family": "goal.updated",
+  "root": "dg5:8dcda5653d68d66f",
+  "route": "logical/storage_origin",
+  "row": "dg5/dgu/physical/logical/schema",
+  "site": [
+    "scripts/pm_goal_dg_u_owners.py",
+    693
+  ],
+  "source": "8ea40bf4c895fc17fd560e731a16558fe16051c0",
+  "use_same_logical_examples": "goal-methodb-stage3/updated-objective-origin.json"
+}
