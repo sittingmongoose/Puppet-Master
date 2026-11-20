@@ -5,6 +5,7 @@ from unittest.mock import patch
 import uuid
 
 import pm_goal_dg_u_owners as original
+from pm_goal_own_c_oracles import utc
 
 from pm_goal_dg_u_owners import (
     A, CAP, CONTRACTS_URI, MEDIA, NR, QUALIFICATION, hexk, msgpack,
@@ -93,9 +94,8 @@ class ApprovalOwner(original.ApprovalOwner):
                            created_at_utc=w.now(), expires_at_utc=w.selected_expiry)
             self.validate('ApprovalRequest', request, where + '/request')
             expiry = request['expires_at_utc']
-            if expiry is not None:
-                # U3 also excludes leap seconds and year zero from these timestamps.
-                require(where + '/expiry_time', expiry[17:19] != '60' and expiry[:4] != '0000')
+            require(where + '/created_time', utc(request['created_at_utc']))
+            require(where + '/expiry_time', expiry is None or utc(expiry))
             ctx = dict(request=dict(request, target=dict(target, scope=dict(scope))))
             w.boundary(method, 'before_release', ctx)
             final = where + '/final'
@@ -221,6 +221,7 @@ class ApprovalOwner(original.ApprovalOwner):
             require(where + '/approval_owner_epoch', core['approval_owner_epoch'] == self.owner_epoch)
             require(where + '/approval_revoked', not core['revoked'])
             now = w.now()
+            require(where + '/decision_time', utc(now))
             expiry = request['expires_at_utc']
             if decision == 'approved' and expiry is not None:
                 require(where + '/approval_expired', utc_order(now) < utc_order(expiry))
