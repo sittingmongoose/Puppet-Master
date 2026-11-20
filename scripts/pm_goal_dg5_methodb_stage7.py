@@ -35,8 +35,25 @@ def reinstall(directory, negative):
     return world, world.installation.reinstall, (), {}
 
 
+def reservation_retry(directory, negative):
+    world, goal = updated._goal(directory)
+    first = updated.O.direct_request(world, goal, 'first')
+    second = updated.O.direct_request(world, goal, 'second')
+    first_admission, _ = world.command.admit_and_capture(first)
+    second_admission, _ = world.command.admit_and_capture(second)
+    world.command.reserve(first_admission)
+    scope = goal['scope']
+    current = world.body.read_private(scope, 'stage7')
+    pending = current['control']['pending']
+    if negative:
+        source = world.source.read_source(scope, updated.op_of(second_admission), 'stage7')
+        pending = world.command._pending(second_admission, source, current, 'stage7')
+    return world, world.body.reserve, (scope, pending, lambda control: []), {}
+
+
 # The explicit lines match the input matrix. Validate the observed location on every run.
 CASES = {
+    'reservation-retry': (OWNERS, 1173, 'dgu/body/reserve/conflicting_reservation', reservation_retry),
     'reinstall': (OWNERS, 493, 'dgu/installation/not_withdrawn', reinstall),
 }
 
