@@ -3547,6 +3547,7 @@
     "DL-450",
     "DL-410",
     "DL-093",
+    "DL-2596",
     "ACD-221",
     "F3-477",
     "F3-460",
@@ -53822,6 +53823,11 @@
       "edge_type": "depends_on",
       "from": "DL-2595",
       "to": "DL-400"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "DL-2596",
+      "to": "DL-078"
     },
     {
       "edge_type": "depends_on",
@@ -164624,7 +164630,7 @@
       "to": "F3-395"
     }
   ],
-  "generated_at_utc": "2026-11-21T12:47:48Z",
+  "generated_at_utc": "2026-11-22T20:33:05Z",
   "nodes": [
     {
       "context_scope": "residual_plan_standardization",
@@ -218041,6 +218047,23 @@
       "unit_type": "decision"
     },
     {
+      "context_scope": "event_authority_pnc019_merge3",
+      "gui_related": false,
+      "owner_doc": "Plans/Decision_Log.md",
+      "plan_unit_id": "DL-2596",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority_evidence_maintenance",
+      "source_location": {
+        "heading": "DL-2596: Event Authority corrects the retained Goal created coverage citation",
+        "heading_level": 3,
+        "heading_line": 63005,
+        "line": 63007,
+        "path": "Plans/Decision_Log.md"
+      },
+      "status": "accepted",
+      "unit_type": "decision"
+    },
+    {
       "context_scope": "event_authority_pnc019_merge3_dt_application_count",
       "gui_related": false,
       "owner_doc": "Plans/Decision_Log.md",
@@ -218050,8 +218073,8 @@
       "source_location": {
         "heading": "DL-2597: Queue and tool histories outside a Project have separate Application counts",
         "heading_level": 3,
-        "heading_line": 63005,
-        "line": 63007,
+        "heading_line": 63050,
+        "line": 63052,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -218067,8 +218090,8 @@
       "source_location": {
         "heading": "DL-2598: Event Authority cites the approved safe_point.created count",
         "heading_level": 3,
-        "heading_line": 63052,
-        "line": 63054,
+        "heading_line": 63097,
+        "line": 63099,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -218084,8 +218107,8 @@
       "source_location": {
         "heading": "DL-2599: Event Authority cites the approved safe_point.restored count",
         "heading_level": 3,
-        "heading_line": 63113,
-        "line": 63115,
+        "heading_line": 63158,
+        "line": 63160,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -328122,10 +328145,10 @@
     "build_order_available": true,
     "build_order_blocked_node_count": 0,
     "cycle_blocker_count": 0,
-    "depends_on_edge_count": 27775,
+    "depends_on_edge_count": 27776,
     "downstream_blocked_node_count": 0,
-    "edge_count": 31000,
-    "node_count": 9617,
+    "edge_count": 31001,
+    "node_count": 9618,
     "true_cycle_component_count": 0,
     "unblocks_edge_count": 3225,
     "unresolved_reference_count": 0

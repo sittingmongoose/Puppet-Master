@@ -7039,10 +7039,10 @@
     {
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
-        "False": 766,
+        "False": 767,
         "True": 235
       },
-      "heading_count": 1241,
+      "heading_count": 1242,
       "implementation_surfaces": [
         ".claude/CLAUDE.md",
         ".gitignore",
@@ -7183,9 +7183,9 @@
         "scripts/pm_wiring_inventory.py",
         "tests/test_pm_wiring_vocabulary.py"
       ],
-      "line_count": 63172,
+      "line_count": 63217,
       "path": "Plans/Decision_Log.md",
-      "plan_unit_count": 1001,
+      "plan_unit_count": 1002,
       "plan_unit_ids": [
         "DL-400",
         "DL-401",
@@ -8185,6 +8185,7 @@
         "DL-2593",
         "DL-2594",
         "DL-2595",
+        "DL-2596",
         "DL-2597",
         "DL-2598",
         "DL-2599"
@@ -8269,6 +8270,7 @@
         "event_authority_checkpoint_approval_drift",
         "event_authority_checkpoint_drift",
         "event_authority_decision_drift",
+        "event_authority_evidence_maintenance",
         "event_authority_landing_granularity_drift",
         "event_authority_registration_checkpoint_drift",
         "event_authority_retention",
@@ -8390,15 +8392,15 @@
         "workflow_verification_exception_route_drift",
         "working_activity_behaviour_drift"
       ],
-      "sha256": "f3d5dadc3d0167515e273c4168fd817c62c31565daa1f5044e6fdcb450029fea",
+      "sha256": "b2246da9b2f0f646bdc428693402cb157b9e91f8f667ee80bffb8fcf2bf7bcc0",
       "source_preserving_unit_ids": [],
       "status_counts": {
-        "accepted": 1001
+        "accepted": 1002
       },
       "title": "Decision Log",
       "unit_type_counts": {
         "compatibility_disposition": 1,
-        "decision": 885,
+        "decision": 886,
         "decision_record": 24,
         "requirement": 91
       },
@@ -8513,6 +8515,7 @@
         "scripts/pm-shared-runtime-storage-materialize.py",
         "scripts/pm7-build-check.py",
         "scripts/pm7-canon-check.py",
+        "scripts/pm_goal_created_retained_closure_test.py",
         "scripts/pm_s3bo_ext_sl_deletion.py",
         "scripts/pm_s3bo_ext_sr2_capture.py",
         "scripts/pm_w3b_event_oracles.py"
@@ -25239,7 +25242,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-11-21T12:47:48Z",
+  "generated_at_utc": "2026-11-22T20:33:05Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {
@@ -25247,13 +25250,13 @@
     "docs_with_plan_units": 96,
     "docs_without_plan_units": 0,
     "gui_related_counts": {
-      "False": 5682,
+      "False": 5683,
       "True": 3935
     },
-    "plan_unit_count": 9617,
+    "plan_unit_count": 9618,
     "source_preserving_unit_count": 0,
     "status_counts": {
-      "accepted": 9337,
+      "accepted": 9338,
       "draft": 47,
       "retired": 205,
       "superseded": 28
@@ -25287,7 +25290,7 @@
       "contract": 203,
       "contract_requirement": 3,
       "data_contract": 8,
-      "decision": 908,
+      "decision": 909,
       "decision_record": 24,
       "deferred_enhancement": 8,
       "delta_contract": 1,
