@@ -113,7 +113,20 @@ def event_record(directory, negative):
     return world, S.validate_event_record, (event, 'append/event'), {}
 
 
+def frame_event_record(directory, negative):
+    world, _, outcome = source.started(source.Suite(directory))
+    event = outcome['original_append']['event']
+    header = S.canonical(S.event_header(event))
+    if negative:
+        event['correlation_id'] = ''
+    payload = S.canonical(event)
+    prefix = S._prefix(len(header), len(payload), 0, 1, event['sequence_id'], S.crc32(header), S.crc32(payload))
+    return world, S.decode_frame, (prefix + header + payload, 0), dict(
+        generation=1, prior_sequence=None, prior_control=False)
+
+
 CASES = {
+    'frame-event-record': (pilot.STORAGE, 581, 'Corrupt:event_record:frame/event/schema/correlation_id', frame_event_record),
     'event-record': (pilot.STORAGE, 473, 'append/event/schema/correlation_id', event_record),
     'frame-payload': (pilot.STORAGE, 441, 'frame/payload_cap', frame_payload),
     'frame-header': (pilot.STORAGE, 440, 'frame/header_cap', frame_header),
