@@ -151,6 +151,9 @@ def update_fixture(route, path):
         if route == 'inspect_receipt_recheck':
             check_inspection_receipt_source(oracle.O, w)
         return w, lambda: inspect.inspect(event_request, actor, permission)
+    if route in ('audit_progress_result', 'audit_terminal_result'):
+        selection = 'current_progress' if route == 'audit_progress_result' else 'terminal_members'
+        return w, oracle._audit_call(w, goal, admission, selection)
     if route in ('audit_current_request', 'audit_terminal_request'):
         check_projected_request_source(w, oracle.O.CONSUMER_URI, route)
         selection = 'current_progress' if route == 'audit_current_request' else 'terminal_members'
@@ -2105,7 +2108,7 @@ def source_audit_trial(plain, nodes, validator, go, document, name, field, trial
     return result
 
 
-def test_rules(plain, bank, document, ident, exact_ids, examples, disabled_check, branches=None, source_audit=None):
+def test_rules(plain, bank, document, ident, exact_ids, examples, disabled_check, branches=None, source_audit=None, reader_sources=None):
     import pm_goal_dg5_closure as closure
     import pm_goal_go_schema_closure as go
 
@@ -2140,6 +2143,13 @@ def test_rules(plain, bank, document, ident, exact_ids, examples, disabled_check
         require(not list(plain.iter_errors(control)), f'{name}: branch control refused')
         guard = closure._guard_for_location(name)
         disable = () if disabled_check == 'rule' else {guard}
+        if 'reader_case' in example:
+            from pm_goal_dg5_methodb_reader_results import READER_ROOTS, reader_trial
+
+            require(ident in READER_ROOTS and reader_sources is not None, 'unexpected reader result rule')
+            result[name] = reader_trial(plain, bank, go, validator, ident, nodes, name, inventory[name],
+                                        control, example, disable, reader_sources, locations)
+            continue
         if 'terminal_case' in example:
             from pm_goal_dg5_methodb_stored_terminal import terminal_rule_trial
 
@@ -2487,7 +2497,10 @@ def main():
     root = census['roots'][ident]
     terminal_case = row == 'dg5/dgu/sir/terminal/result/schema' and declare['route'] in TERMINAL_RESULT_ROUTES
     stored_logical = row == 'dg5/dgu/physical/logical/schema' and declare['route'].startswith('logical/')
-    require((census_row['root_ids'] == [ident] or (terminal_case or stored_logical) and ident in census_row['root_ids']) and
+    audit_case = row == 'dg5/dgu/reader/audit/result/schema' and declare['route'] in (
+        'audit_progress_result', 'audit_terminal_result')
+    require((census_row['root_ids'] == [ident] or
+             (terminal_case or stored_logical or audit_case) and ident in census_row['root_ids']) and
             not root.get('inventory_variants'), 'ambiguous root inventory')
     require(declare['family'] == census['family'] and declare['site'] in census_row['sites'], 'census owner site changed')
     sys.path.insert(0, str(source / 'scripts'))
@@ -2535,8 +2548,15 @@ def main():
             if stored_logical:
                 source_declaration = args.declaration.parent / 'updated-source-audit.json'
             source_audit = source_audit_checks(plain, actual_bank, accepted, census, source_declaration, args.disable_check)
-        clauses, gaps = test_rules(plain, actual_bank, accepted, ident, root['clause_ids'],
-                                   declare['examples'], args.disable_check, declare.get('accepted_branches'), source_audit)
+        reader_sources = None
+        if audit_case:
+            from pm_goal_dg5_methodb_reader_results import READER_ROOTS, run_reader_children
+
+            fields = {example['field'] for example in declare['examples'].values() if example['reader_case'] == 'projected'}
+            reader_sources = run_reader_children(plain, actual_bank, accepted, census, declare, args.disable_check,
+                                                 HERE.parent, READER_ROOTS[ident], sorted(fields))
+        clauses, gaps = test_rules(plain, actual_bank, accepted, ident, root['clause_ids'], declare['examples'],
+                                   args.disable_check, declare.get('accepted_branches'), source_audit, reader_sources)
         report.update(clauses=clauses, gaps=gaps)
         if 'later_refusal' in declare:
             report['checked_later_refusal'] = declare['later_refusal']
