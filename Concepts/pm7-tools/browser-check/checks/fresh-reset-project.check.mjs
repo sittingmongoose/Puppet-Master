@@ -81,12 +81,6 @@ export default async function (t) {
   const look = String(t.args.look || 'basic-dark').split('-');
   const cycles = Math.max(1, Number(t.args.cycles || 2));
   await t.viewport(1920, 1080);
-  if (a.sandboxed()) {
-    /* pre-existing on main in T3's sandbox, not FO-230's cause: a screen the page's own timer settles (Creating's work
-       finishing) focuses its heading without user activation, which the sandbox's permissions policy refuses and logs.
-       Allowed by its exact message so any other console error still fails the check. */
-    t.cfg.consoleErrors.allow.push(/Permissions policy violation: focus-without-user-activation/);
-  }
   const bad = [];
   let madeId = null;
 
@@ -140,4 +134,10 @@ export default async function (t) {
       await t.shot(`fo230-after-reset-${surface}-${look.join('-')}`, `FO-230 fixed: after Reset > Progress on a fresh visit, ${DEFAULT_PROJECT} selected, ${look.join(' ')} (${surface}), 1920x1080`);
     }
   }
+  /* pre-existing on main in T3's sandbox, not FO-230's cause: a screen the page's own timer settles (Creating's work
+     finishing) focuses its heading without user activation, which the sandbox's permissions policy refuses and logs.
+     Consumed here by its exact message — any other console error still fails — so the run-wide console check after
+     this test sees only what the test left. A run that stopped early on the bite never reaches this, and the console
+     line is reported beside the bite, as on main. */
+  if (a.sandboxed()) await t.noConsoleErrors('console (sandbox focus policy)', { allow: [/Permissions policy violation: focus-without-user-activation/] });
 }
