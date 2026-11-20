@@ -32,7 +32,15 @@ def registry_duplicate(directory, negative):
     return world, world.registry.register, (owner, owner.role), {}
 
 
+def registry_role_match(directory, negative):
+    world = start_world(directory)
+    owner = world.owners['native']
+    role = 'TEST_ONLY:unrelated-role' if negative else owner.role
+    return world, world.registry.owner, (owner.owner_id, role), {}
+
+
 CASES = {
+    'registry-role-match': (ADAPTERS, 330, 'registry/role', registry_role_match),
     'registry-duplicate': (ADAPTERS, 322, 'registry/duplicate_id', registry_duplicate),
     'registry-role-type': (ADAPTERS, 321, 'registry/role_type', registry_role_type),
 }
