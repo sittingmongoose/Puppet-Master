@@ -111,7 +111,10 @@ def fixture(declare, route, directory):
                 target = families['workflow_head'], owner.s1.head_key(args[0])
         elif method == '_filesafe_invocation':
             realm, operation, _ = args
-            selector = 'BindingSelector' if family == 'executor_filesafe_invocation_binding' else 'JournalSelector'
+            selector = {
+                'executor_filesafe_invocation_binding': 'BindingSelector',
+                'executor_filesafe_journal_origin': 'OriginSelector',
+            }.get(family, 'JournalSelector')
             physical_family = world.seeder.seed('filesafe_consumer', realm + selector)['family_id']
             target = physical_family, world.filesafe.key(physical_family, operation)
         else:
@@ -519,6 +522,45 @@ def binding_selection_implication(nodes, name, path, cut):
                 premise='The string alternative and the selected branch impose the same rule on this field.')
 
 
+def filesafe_selector_implication(nodes, name, path, cut):
+    from pm_goal_go_schema_closure import locations
+
+    location, word = name.rsplit('/', 1)
+    defs = location.split('#', 1)[0] + '#/$defs/'
+    base = defs + 'SourceSelector'
+    owner = defs + 'FileSafeJournalOrigin'
+    role, field = path
+    require(role in ('binding', 'prior_origin') and field in ('family_id', 'schema_id', 'schema_version')
+            and location == base + '/properties/' + field and word in ('type', 'minLength'),
+            'unexpected original FileSafe selector field')
+    source = nodes[base]['node']
+    base_field = source['properties'][field]
+    require(field in source['required'] and base_field['type'] == 'string' and base_field['minLength'] == 1
+            and {reach['ipath'] for reach in nodes[location]['reach']} ==
+            {('binding', field), ('prior_origin', field), ('resolved_original_result', field)},
+            'the original selector now has other uses')
+    journal = nodes[owner]['node']['properties']
+    require(journal['binding']['$ref'].endswith('#/$defs/BindingSelector')
+            and all(journal[key]['anyOf'][0]['$ref'].endswith('#/$defs/OriginSelector')
+                    for key in ('prior_origin', 'resolved_original_result')),
+            'the journal origin selects different original selectors')
+    fixed = {}
+    for selected_role, selected_type in (('binding', 'BindingSelector'), ('prior_origin', 'OriginSelector')):
+        inherited, narrowed = nodes[defs + selected_type]['node']['allOf']
+        value = narrowed['properties'][field]['const']
+        require(inherited['$ref'].endswith('#/$defs/SourceSelector') and type(value) is str and len(value) >= 1,
+                'a FileSafe selector no longer fixes a nonempty identifier')
+        fixed[selected_role] = f'{defs}{selected_type}/allOf/1/properties/{field}/const'
+    covering = fixed[role]
+    expected = {covering}
+    if role == 'prior_origin':
+        union = owner + '/properties/prior_origin/anyOf'
+        expected.update((union, union + '/1/type'))
+    require(locations(cut) == expected, 'the independent fixed FileSafe selector rule must still refuse')
+    return dict(source=owner, covering_rule=covering,
+                premise='Every reachable selector role fixes this field to a nonempty string.')
+
+
 def rule_path(document, path):
     prefix = path[:2] if path[:2] == ['content', 'checkpoint'] else []
     offset = len(prefix)
@@ -542,6 +584,14 @@ def literal_rules(plain, bank, accepted, ident, ids, examples, disabled_check, s
     else:
         validator = closure.closure_validator(plain, ident, bank)
         nodes, walked = closure._clause_inventory(validator)
+        if plain.schema['$ref'].endswith('#/$defs/FileSafeJournalOrigin'):
+            # The original not error prints its child schema. Use original nodes
+            # so that the validation message retains that exact schema text.
+            locations = {id(plain._resolver.lookup(location).contents): location
+                         for location in nodes if location != '#'}
+            nodes, walked = closure._scoped_census(
+                plain, ident, bank, lambda _bank, node: locations.get(id(node)))
+            validator = scoped_validator(plain, nodes)
     if disabled_check == 'inventory':
         examples = dict(list(examples.items())[1:])
     require(walked == ids,
@@ -642,6 +692,8 @@ def literal_rules(plain, bank, accepted, ident, ids, examples, disabled_check, s
             record.update(cls='COVERED_LATER', implication=origin_afterimages_implication(nodes, name, path, cut))
         elif example.get('binding_implication'):
             record.update(cls='COVERED_LATER', implication=binding_selection_implication(nodes, name, path, cut))
+        elif example.get('filesafe_selector_implication'):
+            record.update(cls='COVERED_LATER', implication=filesafe_selector_implication(nodes, name, path, cut))
         elif example.get('nullable_enum'):
             location, word = name.rsplit('/', 1)
             node = nodes[location]['node']
@@ -1001,7 +1053,8 @@ def run(args):
             scoped = ':sha256:' in ids[0].split('#', 1)[0]
             if reference or scoped or any(set(example) & {'vacuous', 'intent_selector', 'intent_implication',
                                                           'nullable_enum', 'append_acknowledgment_nonempty',
-                                                          'origin_afterimages_implication', 'binding_implication'}
+                                                          'origin_afterimages_implication', 'binding_implication',
+                                                          'filesafe_selector_implication'}
                              for example in examples.values()):
                 clauses = literal_rules(plain, bank, accepted, ident, ids, examples, args.disable_check, scoped)
             else:
