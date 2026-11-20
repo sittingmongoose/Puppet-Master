@@ -186,7 +186,13 @@ def _census_traps(traps):
         error_contains='duplicate merges different fields/predicates or overlapping sets')
     invariants['source'] = invariants['source'].replace(
         "g.Guard('b',g.Invariant('/x','nonnegative')", "g.Guard('b',g.Invariant('/x','at least zero')")
-    return [source, metadata, repeated, wrong_root, duplicate, graph, constructor, restoration, tracing, invariants]
+    # The final uncovered-guard check clears every proof. Observe the vector
+    # before that cleanup so a false intermediate proof cannot be hidden.
+    unwitnessed = dict(fixtures['missing-negative'], id='unwitnessed-vector-proof', static_pass=True,
+        expected='A vector without any own negative remains unproved before final failure clearing.',
+        vector_proofs={'x': True, 'y': False})
+    return [source, metadata, repeated, wrong_root, duplicate, graph, constructor,
+            restoration, tracing, invariants, unwitnessed]
 
 
 def _schema_suite(g, trap, root):
@@ -417,12 +423,19 @@ def exercise(g, memory, *, scratch=None):
                     untouched = {name: getattr(importlib.import_module(name.rpartition('.')[0]), name.rpartition('.')[2]) for name in trap.get('stdlib_untouched', [])}
                     try:
                         suite = _code_suite(g, trap, root) if trap['kind'] == 'code' else _schema_suite(g, trap, root)
+                        run_options = dict(memory=memory, demonstrate_runtime=bool(trap.get('runtime_behind_static')))
+                        if 'vector_proofs' in trap:
+                            row['vector_proofs'] = {}
+                            def record_progress(partial):
+                                vector = partial['rows'][-1]
+                                row['vector_proofs'][vector['id']] = vector['proved']
+                            run_options['progress'] = record_progress
                         if trap.get('random_seed') is not None:
                             # The global generator is external state no snapshot watches; seed it for a fixed schedule.
                             saved_random = random.getstate()
                             random.seed(trap['random_seed'])
                             try:
-                                result = g.run(suite, memory=memory, demonstrate_runtime=bool(trap.get('runtime_behind_static')))
+                                result = g.run(suite, **run_options)
                             finally:
                                 random.setstate(saved_random)
                         elif trap.get('occupied_trace'):
@@ -431,7 +444,7 @@ def exercise(g, memory, *, scratch=None):
                             previous = sys.gettrace()
                             try:
                                 sys.settrace(existing_trace)
-                                result = g.run(suite, memory=memory)
+                                result = g.run(suite, **run_options)
                                 row['trace_preserved'] = sys.gettrace() is existing_trace
                             finally:
                                 sys.settrace(previous)
@@ -439,9 +452,9 @@ def exercise(g, memory, *, scratch=None):
                             # MemoryGate already holds its real clock. Only the fixture consumes these ticks.
                             ticks = iter(range(1, sys.maxsize))
                             with patch.object(g.time, 'monotonic', lambda: next(ticks)):
-                                result = g.run(suite, memory=memory)
+                                result = g.run(suite, **run_options)
                         else:
-                            result = g.run(suite, memory=memory, demonstrate_runtime=bool(trap.get('runtime_behind_static')))
+                            result = g.run(suite, **run_options)
                         if trap.get('repeat'):
                             row['repeat_report'] = g.run(suite, memory=memory, demonstrate_runtime=bool(trap.get('runtime_behind_static')))
                         if trap.get('state_observation'):
@@ -477,6 +490,8 @@ def exercise(g, memory, *, scratch=None):
                         row['caught'] = row['caught'] and any(trap['failure_reason'] in f.get('reasons', []) for f in result['failures'])
                     if trap.get('error_contains'):
                         row['caught'] = row['caught'] and any(trap['error_contains'] in f.get('error', '') for f in result['failures'])
+                    if 'vector_proofs' in trap:
+                        row['caught'] = row['caught'] and row['vector_proofs'] == trap['vector_proofs']
                     if trap.get('occupied_trace'):
                         row['caught'] = row['caught'] and row.get('trace_preserved') is True
                     if trap.get('static_pass'):
