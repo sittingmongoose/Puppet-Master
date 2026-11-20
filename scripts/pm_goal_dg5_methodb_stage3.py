@@ -106,6 +106,22 @@ def update_fixture(route, path):
                     admission, current, where=where))
 
         return w, capture
+    if route == 'publish_receipted':
+        request = oracle.O.direct_request(w, goal, 'Publication after its first receipt')
+        admission = w.command.run(request, stop_after='freeze')
+        op = oracle.op_of(admission)
+        w.storage.faults = oracle.S.FaultPlan(cut='after_first_receipt')
+        try:
+            w.producer.publish(goal['scope'], op)
+        except oracle.S.Crash:
+            pass
+        else:
+            raise ValueError('the first receipt did not stop the original publication call')
+        w.storage.faults = oracle.S.FaultPlan()
+        require(w.storage.reservation_state('goal-update-append:' + op)['state'] == 'receipted',
+                'publication example has no durable first receipt')
+        check_publication_reused(w, oracle.O.UPDATE_URI)
+        return w, lambda: w.producer.publish(goal['scope'], op)
     _, admission = oracle.run_direct(w, goal)
     progress = oracle.progress(w, goal, oracle.op_of(admission))
     request = progress['body_commit']['receipt_request']
@@ -242,6 +258,24 @@ def check_receipt_request_reused(body):
             reader.index(forwards[0]) < reader.index(forwards[1]), 'receipt reader no longer validates the same request twice')
     require("self.bank.validate(BODY_URI + '#/$defs/receipt_read_request', request, where + '/receipt_request')"
             in private, 'receipt request definition changed')
+
+
+def check_publication_reused(world, uri):
+    publication = inspect.getsource(world.producer.publish)
+    advance = inspect.getsource(world.source.advance)
+    writes = inspect.getsource(world.source.progress_writes)
+    require("phase='event_issued', publication=publication)" in publication and
+            'w.source.advance(scope, op, record,' in publication and
+            'self.progress_writes(scope, op, record,' in advance and
+            "self.bank.validate(UPDATE_URI + '#/$defs/Progress', record, 'dgu/progress')" in writes,
+            'publication forwarding to progress changed')
+    require(world.producer.bank is world.source.bank, 'publication and progress use different schema banks')
+    branches = world.source.bank.documents[uri]['$defs']['Progress']['oneOf']
+    issued, = [branch for branch in branches if branch['properties']['phase'] == {'const': 'event_issued'}]
+    require(all('const' in branch['properties']['phase'] for branch in branches) and
+            'publication' in issued['required'] and
+            issued['properties']['publication'] == {'$ref': uri + '#/$defs/OriginalPublication'},
+            'event-issued progress no longer revalidates the same publication')
 
 
 def check_f5a_stored_document(module, world, context, intent, control, route):
@@ -660,6 +694,26 @@ def body_receipt_implication(nodes, name, path, errors, locations):
                 premise='The revision selects either the null branch or the same 64-character hash rule.')
 
 
+def receipt_timestamp_implication(nodes, name, path, errors, locations, validator):
+    from pm_goal_test_numrule import DT
+
+    schema_node = name.removesuffix('/minLength')
+    format_id = schema_node + '/format'
+    node = nodes[schema_node]['node']
+    checker, _ = validator.format_checker.checkers['date-time']
+    require(name.endswith('/AppendReceipt/properties/acknowledged_at_utc/minLength') and
+            path == ['first_append_receipt', 'acknowledged_at_utc'] and
+            node['minLength'] == 1 and node['format'] == 'date-time',
+            'receipt timestamp length rule changed')
+    require(checker.__module__ == DT.__name__ and DT._DATE_TIME.fullmatch('') is None and
+            not validator.format_checker.conforms('', 'date-time') and
+            locations(errors) == {('format', tuple(path), format_id)},
+            'the remaining receipt format rule did not refuse the empty timestamp')
+    return dict(source=format_id, same_document_path=path,
+                implementation='scripts/pm_event_datetime.py:63',
+                premise='The only string with length less than one is empty. The pinned date-time format refuses it.')
+
+
 def test_rules(plain, bank, document, ident, exact_ids, examples, disabled_check, branches=None):
     import pm_goal_dg5_closure as closure
     import pm_goal_go_schema_closure as go
@@ -770,6 +824,9 @@ def test_rules(plain, bank, document, ident, exact_ids, examples, disabled_check
         elif cut and example.get('approval_implication'):
             record.update(cls='COVERED_LATER', implication=approval_implication(
                 nodes, name, path, cut, locations, validator))
+        elif cut and example.get('receipt_timestamp_implication'):
+            record.update(cls='COVERED_LATER', implication=receipt_timestamp_implication(
+                nodes, name, path, cut, locations, validator))
         elif cut:
             gaps[name] = record
             continue
@@ -844,6 +901,7 @@ def main():
         'dg5/f5a/control/schema': ('f5a_control_check', 'f5a/control_bytes'),
         'dg5/dgu/reader/receipt/receipt_request/schema': (
             'receipt_recheck', 'dgu/reader/receipt/final/receipt_request/schema/'),
+        'dg5/dgu/producer/publish/publication/schema': ('publish_receipted', 'dgu/progress/schema/'),
     }.get(row)
     if 'later_refusal' in declare:
         require((declare['route'], declare['later_refusal']) == later_route,
