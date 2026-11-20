@@ -2,9 +2,9 @@
 
 Source: `Plans/Decision_Log.md`
 
-Source lines: L28747-L57880
+Source lines: L28747-L57941
 
-Source SHA256: `94e34508b4cf5bc35b2b10f4a3720afb12782b56b2ba08b9a4b51f7ed7c6c20d`
+Source SHA256: `97b13471b9256b57a9e5864d53c264523a578a2530b59b6b116b1f4307b7dfc1`
 
 ---
 
@@ -29139,6 +29139,67 @@ preserved_exact_tokens:
 - 54e1abbcc503563b793b7aa09ea236135655c50c8c10aee0e8c8997956957128
 - 2026-11-19.61
 - 2026-11-19.62
+negative_constraints:
+- No new admission, producer adoption, native execution claim or governance seal.
+```
+
+### DL-2513: Event Authority corrects dev.session.stopped (merge 3 post-landing)
+
+```yaml
+plan_unit_id: DL-2513
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: 'Correction for dev.session.stopped only, under DL-077 and DL-400, resolving post-landing Astra finding(s)
+  [4]. The original admission authority remains Plans/Decision_Log.md#DL-2292; this entry records no new admission, verdict,
+  policy choice or producer adoption. Current row canonical SHA-256 843aa676280bfd1bdd4f736630939c403c9643da0b11755313e0bac1e64364c0.
+  Its scope is project_only. Payload editions: project `pm.ds15.dev_session_stopped.payload.v1` (RP-TELEMETRY-90D@1.0.0, producer
+  requires_owner_adoption).
+
+
+  The correction moves the full registry from 2026-11-19.62, 518 families, SHA-256 154a68452efc5d59a16ee8195ff7fca466f560ae9438e06dba81275d52e2e77b,
+  to 2026-11-19.63, 518 families, SHA-256 891737d3b86a446b33d68969e7c490b34d1efbd6543a0c0de0e26cd30d973a09, without changing
+  another family. Revision witness: reports/event-authority-20261116/admission-merge-3/corrections/dev.session.stopped.json.
+  Depth assessment: reports/event-authority-20261116/admission-merge-2/depth/dev.session.stopped.json, SHA-256 02f35ed7416e68787b8aac4d008898fe54590c3316b225d27dbba63ba6c6b2f8.
+
+
+  The original append checkpoints are preserved: before 2026-11-16.155 SHA-256 4739a1bf2d1bc83c53ee74ef3eb4a6589945ea45a9becaabc12b5f76724ca10a;
+  after 2026-11-16.156 SHA-256 b4a7c7623a0a7a9a428deddafd0566ba4d58a4bb93480d969e47d8bd86e0d879. Existing semantic owner Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-313,
+  payload owner Plans/Contracts_V0.md#CV-670, resource Plans/ds15_dev_session_stopped.schema.json# retain their contracts.
+  Current citations were re-read from existing canonical text; original citations, records and decision entries remain in
+  the named Git predecessor. Native execution remains NOT_RUN. Required producer adoption, permissions, original custody and
+  receipt/publication fences remain required.'
+gui_related: false
+gui_classification_reason: Maintains one existing event admission and its evidence.
+depends_on:
+- DL-077
+- DL-400
+- DL-2292
+unblocks: []
+acceptance_criteria:
+- Exactly one family is corrected and the original append checkpoints remain authenticated.
+- The correction witness and current DL-077 record match their named Git editions.
+validation_surfaces:
+- python3 scripts/pm-ea-record-chain.py
+- python3 scripts/pm-ea-postfix-check.py
+- python3 scripts/pm-ea-retention-citation-check.py
+risk_class: event_authority_admission
+reasoning_tier: high
+context_scope: event_authority_pnc019_merge3_postfix
+implementation_surfaces:
+- Plans/event_family_registry.json
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/MERGE2-POSTLAND-astra62max/REVIEW.md
+- Plans/Decision_Log.md#DL-2292
+preserved_exact_tokens:
+- dev.session.stopped
+- 843aa676280bfd1bdd4f736630939c403c9643da0b11755313e0bac1e64364c0
+- 2026-11-19.62
+- 2026-11-19.63
 negative_constraints:
 - No new admission, producer adoption, native execution claim or governance seal.
 ```
