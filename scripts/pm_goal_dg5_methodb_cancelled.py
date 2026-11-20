@@ -460,6 +460,65 @@ def origin_afterimages_implication(nodes, name, path, cut):
                 premise='The required issuer method selects exactly one of the two disjoint afterimage forms.')
 
 
+def binding_selection_implication(nodes, name, path, cut):
+    from pm_goal_go_schema_closure import locations
+
+    location, word = name.rsplit('/', 1)
+    anchor = location.split('#', 1)[0] + '#/$defs/BindingSelection'
+    owner = nodes[anchor]['node']
+    conditions = owner['allOf']
+    require(len(path) == 2 and path[0] == 'record' and path[1] in (
+        'actual_active_run_ref', 'original_pending_binding_candidate_sha256', 'association_count'),
+        'unexpected binding-selection implication field')
+    field = path[1]
+    direct = anchor + '/properties/' + field
+    disposition = 'no_execution_association'
+    require({'disposition', field, 'original_pending_binding_operation_id'} <= set(owner['required'])
+            and owner['properties']['disposition']['enum'] ==
+            [disposition, 'bound_plan_requires_owner_settlement', 'workflow_requires_owner_disposition']
+            and conditions[0]['if']['properties']['disposition']['const'] == disposition
+            and conditions[1]['if']['properties']['original_pending_binding_operation_id']['type'] == 'null',
+            'the binding selection conditions changed')
+    if field == 'association_count':
+        fixed = [conditions[0][branch]['properties'][field]['const'] for branch in ('then', 'else')]
+        covering = anchor + '/allOf/0/then/properties/association_count/const'
+        require(location == direct and word in ('type', 'minimum') and fixed == [0, 1]
+                and owner['properties'][field]['type'] == 'integer'
+                and owner['properties'][field]['minimum'] == 0 and locations(cut) == {covering},
+                'the independent association count constant must still refuse')
+        return dict(source=anchor + '/allOf/0', covering_rule=covering,
+                    premise='Each disposition fixes the count to a nonnegative integer.')
+
+    index = 0 if field == 'actual_active_run_ref' else 1
+    branch = conditions[index]
+    non_null, null = owner['properties'][field]['oneOf']
+
+    def keywords(node):
+        return {key: value for key, value in node.items() if key != 'x-pm-oracle-id'}
+
+    require(keywords(non_null) == keywords(branch['else']['properties'][field])
+            and keywords(null) == keywords(branch['then']['properties'][field]) == {'type': 'null'}
+            and non_null['type'] == 'string', 'the selected field has different schema alternatives')
+    source = f'{anchor}/allOf/{index}'
+    else_field = source + '/else/properties/' + field
+    covering = else_field + '/type'
+    if location == direct and word == 'oneOf':
+        require(locations(cut) == {covering}, 'the selected string type must still refuse')
+        return dict(source=source, covering_rule=covering,
+                    premise='The required selector chooses one of the same two disjoint alternatives.')
+
+    union = direct + '/oneOf'
+    require(word in ('minLength', 'pattern') and word in non_null
+            and location in (else_field, union + '/0'), 'unexpected duplicate rule')
+    if location == else_field:
+        remaining = {union, union + '/0/' + word, union + '/1/type'}
+    else:
+        remaining = {else_field + '/' + word}
+    require(locations(cut) == remaining, 'the other copy of the selected string rule must still refuse')
+    return dict(source=source, covering_rules=sorted(remaining),
+                premise='The string alternative and the selected branch impose the same rule on this field.')
+
+
 def rule_path(document, path):
     prefix = path[:2] if path[:2] == ['content', 'checkpoint'] else []
     offset = len(prefix)
@@ -581,6 +640,8 @@ def literal_rules(plain, bank, accepted, ident, ids, examples, disabled_check, s
             record.update(cls='COVERED_LATER', implication=scope_proof_implication(nodes, name, path, cut))
         elif example.get('origin_afterimages_implication'):
             record.update(cls='COVERED_LATER', implication=origin_afterimages_implication(nodes, name, path, cut))
+        elif example.get('binding_implication'):
+            record.update(cls='COVERED_LATER', implication=binding_selection_implication(nodes, name, path, cut))
         elif example.get('nullable_enum'):
             location, word = name.rsplit('/', 1)
             node = nodes[location]['node']
@@ -940,7 +1001,7 @@ def run(args):
             scoped = ':sha256:' in ids[0].split('#', 1)[0]
             if reference or scoped or any(set(example) & {'vacuous', 'intent_selector', 'intent_implication',
                                                           'nullable_enum', 'append_acknowledgment_nonempty',
-                                                          'origin_afterimages_implication'}
+                                                          'origin_afterimages_implication', 'binding_implication'}
                              for example in examples.values()):
                 clauses = literal_rules(plain, bank, accepted, ident, ids, examples, args.disable_check, scoped)
             else:
