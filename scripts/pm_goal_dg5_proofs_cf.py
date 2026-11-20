@@ -9,6 +9,18 @@ MESSAGEPACK = [
 ]
 
 PROOFS = {
+    'dg5/current/guard/schema': {
+        'kind': 'entailed-by-final-current-guard',
+        'families': [FAMILY],
+        'depends_on': ['dg5/current_final/guard/schema'],
+        'sites': [(WORLD, line) for line in (614, 622, 1247, 1266)],
+        'argument': (
+            'The reader passes its first accepted GuardReadResult unchanged to the same '
+            'validator before returning. Disabling only the entry check reached the final '
+            'check with the identical invalid document. Restoring the entry check repeated '
+            'its exact original message.'
+        ),
+    },
     'dg5/f5d/evidence/schema': {
         'kind': 'entailed-by-outer-append-evidence',
         'families': [FAMILY],
