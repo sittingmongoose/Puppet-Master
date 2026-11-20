@@ -11,6 +11,7 @@ import pm_goal_dg5_methodb_stage7 as pilot
 
 FAMILY = "goal.cancelled"
 C1 = "scripts/pm_goal_dg_ca_c1.py"
+STORAGE = "scripts/pm_goal_test_storage.py"
 
 
 def audit_permission(directory, negative):
@@ -37,9 +38,20 @@ def occurrence(directory, negative):
     return world, route.freeze_event, (), {}
 
 
+def storage_cas(directory, negative):
+    world, _ = cancelled.c1_route(cancelled.Suite(directory))
+    world.root = world.storage.root
+    table, key = "TEST_ONLY:stage8", "one_cell"
+    world.write([world.put(table, key, {"label": "first"})])
+    version = world.cell(table, key)["version"]
+    write = world.put(table, key, {"label": "second"}, expected=version + int(negative))
+    return world, world.storage.transact, ([write],), {}
+
+
 CASES = {
     "audit-permission": (C1, 833, "C1/audit_read/audit_permission", audit_permission),
     "occurrence": (C1, 562, "C1/freeze_event/accepted_occurrence", occurrence),
+    "storage-cas": (STORAGE, 1657, "tx/cas_version", storage_cas),
 }
 
 
