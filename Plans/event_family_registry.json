@@ -2,7 +2,7 @@
   "$schema": "https://puppetmaster.local/schemas/event_family_registry/1.0.0/event_family_registry.schema.json",
   "schema_id": "pm.event_family_registry.v1",
   "schema_version": "2.0.0",
-  "registry_revision": "2026-11-19.77",
+  "registry_revision": "2026-11-19.78",
   "owner_doc": "Plans/storage-plan.md#case-l-5-eventrecord-persistence-legacy-normalization-and-dedupe",
   "unknown_event_disposition": "quarantine_without_checkpoint_advance",
   "families": [
@@ -27292,10 +27292,10 @@
       "family_id": "event-family-panel-redocked",
       "family_revision": "2.0.0",
       "event_type": "panel.redocked",
-      "scope_policy": "project_only",
+      "scope_policy": "application_or_project",
       "semantic_owner_doc": "Plans/FinalGUISpec.md#F3-704",
       "payload_owner_doc": "Plans/Contracts_V0.md#CV-684",
-      "payload_schema_id": "https://puppetmaster.local/schemas/event_payloads/panel_redocked/2.0.0",
+      "payload_schema_id": "pm.event.panel_redocked.v2",
       "payload_schema_ref": {
         "path": "Plans/event_payloads/panel_redocked_v2.schema.json",
         "json_pointer": "#",
@@ -27321,13 +27321,56 @@
         "Plans/FinalGUISpec.md#F3-704",
         "Plans/Contracts_V0.md#CV-684",
         "Plans/event_payloads/panel_redocked_v2.schema.json#",
-        "reports/event-authority-20261116/admission-merge-2/readiness-list.json"
+        "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+        "Plans/panel_event_contracts/panel_redocked.fixtures.json#/payload_cases/9/value/schema_id",
+        "Plans/panel_event_contracts/panel_redocked.fixtures.json#/payload_cases/0/value/schema_id"
       ],
       "retention_policy_ref": {
         "registry_schema_id": "pm.storage_value_registry.v2",
         "policy_id": "RP-AUTHORITY-INDEFINITE",
         "policy_version": "1.0.0"
-      }
+      },
+      "payload_selection_policy": "exact_scope_and_schema_id_no_fallback",
+      "payload_versions": [
+        {
+          "scope_kind": "application",
+          "payload_schema_id": "pm.event.panel_redocked.v2",
+          "payload_schema_ref": {
+            "path": "Plans/event_payloads/panel_redocked_v2.schema.json",
+            "json_pointer": "#",
+            "schema_id": "https://puppetmaster.local/schemas/event_payloads/panel_redocked/2.0.0"
+          },
+          "retention_policy_ref": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-AUTHORITY-INDEFINITE",
+            "policy_version": "1.0.0"
+          },
+          "source_graph_ref": "Plans/Contracts_V0.md#CV-366",
+          "producer_admission": "requires_owner_adoption",
+          "append_owner_ref": "Plans/FinalGUISpec.md#F3-704",
+          "read_owner_ref": "Plans/FinalGUISpec.md#F3-704",
+          "backup_owner_ref": "Plans/Backup_Restore_System.md#BRS-033"
+        },
+        {
+          "scope_kind": "project",
+          "payload_schema_id": "pm.event.panel_redocked.v2",
+          "payload_schema_ref": {
+            "path": "Plans/event_payloads/panel_redocked_v2.schema.json",
+            "json_pointer": "#",
+            "schema_id": "https://puppetmaster.local/schemas/event_payloads/panel_redocked/2.0.0"
+          },
+          "retention_policy_ref": {
+            "registry_schema_id": "pm.storage_value_registry.v2",
+            "policy_id": "RP-AUTHORITY-INDEFINITE",
+            "policy_version": "1.0.0"
+          },
+          "source_graph_ref": "Plans/Contracts_V0.md#CV-366",
+          "producer_admission": "requires_owner_adoption",
+          "append_owner_ref": "Plans/FinalGUISpec.md#F3-704",
+          "read_owner_ref": "Plans/FinalGUISpec.md#F3-704",
+          "backup_owner_ref": "Plans/Backup_Restore_System.md#BRS-033"
+        }
+      ]
     },
     {
       "family_id": "event-family-panel-undocked",
