@@ -62,8 +62,8 @@ def update_fixture(route, path):
         return approval_fixture(oracle, route, path)
     if route in ('metadata_intent', 'reserve_pending'):
         return body_change_fixture(oracle, route, path)
-    if route in TERMINAL_RESULT_ROUTES:
-        return terminal_result_fixture(oracle, route, path)
+    if route in TERMINAL_RESULT_ROUTES or route == 'stored_terminal':
+        return terminal_result_fixture(oracle, 'terminal_succeeded' if route == 'stored_terminal' else route, path)
     w = oracle.world(path)
     if route == 'body_start':
         captured = []
@@ -2074,6 +2074,13 @@ def test_rules(plain, bank, document, ident, exact_ids, examples, disabled_check
         require(not list(plain.iter_errors(control)), f'{name}: branch control refused')
         guard = closure._guard_for_location(name)
         disable = () if disabled_check == 'rule' else {guard}
+        if 'terminal_case' in example:
+            from pm_goal_dg5_methodb_stored_terminal import terminal_rule_trial
+
+            require(ident == 'dg5:9c17854a57867b18', 'unexpected stored terminal rule')
+            result[name] = terminal_rule_trial(plain, nodes, validator, go, name, example, control, disable,
+                                                locations, inventory[name])
+            continue
         if 'source_audit_field' in example:
             require(ident == SOURCE_AUDIT_ROOT and source_audit, 'unexpected SourceAudit assigned test')
             field = example['source_audit_field']
