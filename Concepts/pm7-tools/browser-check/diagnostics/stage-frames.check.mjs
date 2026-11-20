@@ -26,12 +26,34 @@
 // Welcome (welcome-awake), is woken first by a real pointer journey. Screens are walked in an order that adds and removes props (0, 6, 1, 4, 1,
 // 1-2 then 0).
 // Writes <out>/<look>/<nn>-<screen>-<variant>.png (the stage's box; .b.png the same state 20 frames later), .dom.txt (the stage's DOM: elements with their
-// attributes sorted, text, ids renamed in order of appearance) and <out>/index.json. Headless; one browser.
+// attributes sorted, text, ids renamed in order of appearance) and <out>/index.json, and first <out>/matrix.json: what the
+// run was asked for (the requested looks x screens x variants, named as the files are, and the freeze settings), which
+// tools/stage-frames-compare.mjs judges both runs against (PM7PERF-STAGEFRAMES-EMPTY-INDEX: an empty or partial index
+// compared as a pass). A file's number is its place in the matrix, so a capture that fails leaves its own name missing
+// instead of renumbering the later ones; the run's last row passes only when every capture of the matrix was written.
+// Headless; one browser.
 import fs from 'node:fs';
 import path from 'node:path';
 import { muteSound } from '../helpers/quiet-page.mjs';
 
 const ALL = ['basic', 'friendly', 'retro', 'glass', 'nier'].flatMap((f) => [`${f}-light`, `${f}-dark`]);
+
+// The screens' names in a walk: the first Welcome is Pip asleep, a later one woken (welcome-awake)
+export function screenNames(screens) {
+	let welcomes = 0;
+	return screens.map((s) => s + (s === 'welcome' ? (welcomes++ > 0 ? '-awake' : '-asleep') : ''));
+}
+
+// A capture's file name: its place in the look's walk (screen si, variant vi of nv), the screen's name and the variant
+const captureFile = (si, vi, nv, name, variant) => `${String(si * nv + vi + 1).padStart(2, '0')}-${name}-${variant}`;
+
+// What a run is asked to capture, in its file names: per look, every screen of the walk x every variant, numbered in
+// that order (exported for tools/stage-frames-compare.selftest.mjs)
+export function captureMatrix({ looks, screens, variants }) {
+	const names = screenNames(screens), out = [];
+	for (const look of looks) names.forEach((name, si) => variants.forEach((variant, vi) => out.push({ look, file: captureFile(si, vi, variants.length, name, variant), screen: name, variant })));
+	return out;
+}
 
 const STAGE = () => { const host = document.querySelector('#pm-o55-onboarding .o55-stage'); return host && host.__pipStage; };
 
@@ -156,6 +178,9 @@ export default async function (t) {
 	const motion = String(t.args.motion || '');
 	if (motion === 'reduce') await t.emulate({ reducedMotion: 'reduce' });
 	fs.mkdirSync(out, { recursive: true });
+	const live = t.args.live === '1' || t.args.live === 1, repaint = t.args.repaint === '1' || t.args.repaint === 1, nudge = t.args.nudge === '1' || t.args.nudge === 1;
+	const plan = captureMatrix({ looks, screens, variants }), names = screenNames(screens);
+	fs.writeFileSync(path.join(out, 'matrix.json'), JSON.stringify({ version: 1, looks, screens, variants, frames, cssT, motion, repaint, nudge, live, expected: plan }, null, 1));
 	const index = [];
 	for (const look of looks) {
 		// a fresh load per look: the first Welcome then shows Pip asleep, as a person first sees it
@@ -170,11 +195,11 @@ export default async function (t) {
 		if (!ok) { await t.check(`${look}: the look is applied`, false, 'not applied'); continue; }
 		await t.page.waitForTimeout(Number(t.args.lookSettle ?? 5000));
 		fs.mkdirSync(path.join(out, look), { recursive: true });
-		let n = 0, welcomes = 0;
-		for (const screen of screens) {
+		let n = 0;
+		for (const [si, screen] of screens.entries()) {
+			const name = names[si], awake = name === 'welcome-awake';
 			const at = await f.evaluate((id) => { try { window.O55.ui.go(id, { noHistory: true }); } catch (e) { return String(e); } return window.O55.S.sess.screen; }, screen);
 			if (at !== screen) { await t.check(`${look} ${screen}: the screen opened`, false, String(at)); continue; }
-			const awake = screen === 'welcome' && welcomes++ > 0;
 			/* (Welcome puts Pip to sleep until a real arrival, and it sleeps on through later screens until one: past the first
 			   Welcome every screen is woken by the same pointer journey, so Pip is awake there as a person sees it) */
 			if (awake || screen !== 'welcome') {
@@ -185,17 +210,15 @@ export default async function (t) {
 			}
 			await t.page.waitForTimeout(Number(t.args.viewSettle ?? 6000));
 			await f.waitForFunction(SETTLED, null, { timeout: 10000, polling: 250 }).catch(() => t.log(`${look} ${screen}: NOTE not settled after 16 s; captured as it was`));
-			const name = screen + (screen === 'welcome' ? (awake ? '-awake' : '-asleep') : '');
-			for (const v of variants) {
+			for (const [vi, v] of variants.entries()) {
 				if (v === 'quiet') await f.evaluate(() => { const host = document.querySelector('#pm-o55-onboarding .o55-stage'); host.__pipStage.say('', null, true); });
 				if (v === 'tip') await f.evaluate(() => { const host = document.querySelector('#pm-o55-onboarding .o55-stage'); host.__pipStage.tip({ id: 'stage-frames-tip', title: 'A note on this', text: 'What this choice means, written out in a few words.' }, true); });
 				/* (live=1: no freeze at all, the stage as it is at rest, swaying; for how a part is drawn at rest, not for a
 				   pixel comparison: two pictures of a swaying stage differ) */
-				const live = t.args.live === '1' || t.args.live === 1;
-				const err = live ? '' : await f.evaluate(FREEZE, { t: 40, blink: v === 'blink', frames, cssT, repaint: t.args.repaint === '1' || t.args.repaint === 1, nudge: t.args.nudge === '1' || t.args.nudge === 1 });
+				const err = live ? '' : await f.evaluate(FREEZE, { t: 40, blink: v === 'blink', frames, cssT, repaint, nudge });
 				if (err) { await t.check(`${look} ${name} ${v}: frozen`, false, err); await f.evaluate(THAW); continue; }
 				const info = await f.evaluate(INFO), dom = await f.evaluate(DOM);
-				const file = `${String(++n).padStart(2, '0')}-${name}-${v}`;
+				const file = captureFile(si, vi, variants.length, name, v); n++;
 				const b = info.box;
 				/* (pictures with Playwright's animations 'disabled': every endless CSS animation drawn in its own base state and every
 				   finite one finished, the same in any build. Parked at one time through the Web Animations API instead, the blinking
@@ -219,5 +242,6 @@ export default async function (t) {
 		if (motion) await t.check(`${look}: the stage ran under Reduced Motion (${motion})`, red.app && red.stage, JSON.stringify(red));
 	}
 	fs.writeFileSync(path.join(out, 'index.json'), JSON.stringify(index, null, 1));
-	await t.check('stage frames written', index.length > 0, `${index.length} captures in ${out}`);
+	const written = new Set(index.map((e) => `${e.look}/${e.file}`)), lost = plan.filter((e) => !written.has(`${e.look}/${e.file}`));
+	await t.check('stage frames written: every capture of the matrix', index.length > 0 && !lost.length, `${index.length} of ${plan.length} captures in ${out}${lost.length ? `; not written: ${lost.slice(0, 8).map((e) => `${e.look}/${e.file}`).join(', ')}${lost.length > 8 ? ` and ${lost.length - 8} more` : ''}` : ''}`);
 }

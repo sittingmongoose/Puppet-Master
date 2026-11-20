@@ -1,6 +1,6 @@
 // Compares two folders written by diagnostics/stage-frames.check.mjs (a base build and a changed one): per capture,
 // whether the stage's pixels are the same and whether its DOM is the same, and where they differ.
-//   node tools/stage-frames-compare.mjs <base dir> <changed dir> [--also <second base dir>] [--json <file>]
+//   node tools/stage-frames-compare.mjs <base dir> <changed dir> [--also <second base dir>] [--json <file>] [--no-matrix]
 // Pixels: the PNGs decoded and compared exactly (RGB); a difference is reported with its pixel count, its largest
 // channel step and its bounding box. DOM: the .dom.txt files compared line by line; a difference is reported with its
 // first differing line from each side. A capture whose first pictures differ but where one of the changed build's two
@@ -8,8 +8,16 @@
 // same state (its .b.png, 20 frames later in the same run, and, with --also, a second run's two) is within the base's own
 // variation (the compositor's: two runs of one build
 // with the same DOM differ by a level or a few in places), and the capture is reported as within the base's variation
-// when every pixel is. Exit 0 when every capture of the base is in the changed folder and its DOM is the same and its
+// when every pixel is. Exit 0 when every capture of the run's matrix is in both folders and its DOM is the same and its
 // pixels are the same (or, with --also, within the base's variation), 1 otherwise.
+// What was asked for (PM7PERF-STAGEFRAMES-EMPTY-INDEX): the base's index alone said nothing about what the run was asked
+// to capture, so an empty index compared as "0 captures" and a partial one as the part it had, both with exit 0. Now an
+// empty index is refused, and each run's <dir>/matrix.json (written by the diagnostic: the requested looks x screens x
+// variants, named as the files are, and the freeze settings) is judged: both runs asked for the same thing, and every
+// capture of it in both indexes and on disk; a base capture that is not there is MISSING base, a changed one MISSING
+// changed. A run made before the matrix was written is refused unless --no-matrix, which compares the base's index
+// alone and says so. A live run (--set live=1: nothing frozen, animations running) is not a pixel comparison: refused.
+// Exit 2: could not judge (usage, an empty index, no matrix, two different requests, a live run).
 import fs from 'node:fs';
 import path from 'node:path';
 import zlib from 'node:zlib';
@@ -63,15 +71,41 @@ function dom(a, b) {
 	return { same: true };
 }
 
+const flag = (k) => process.argv.includes(k);
 const [baseDir, changedDir] = process.argv.slice(2).filter((x, i, all) => !x.startsWith('--') && !['--json', '--also'].includes(all[i - 1]));
 const jsonAt = process.argv.indexOf('--json'), jsonOut = jsonAt > 0 ? process.argv[jsonAt + 1] : null;
 const alsoAt = process.argv.indexOf('--also'), also = alsoAt > 0 ? process.argv[alsoAt + 1] : null;
-if (!baseDir || !changedDir) { console.error('usage: node tools/stage-frames-compare.mjs <base dir> <changed dir> [--json <file>]'); process.exit(2); }
-const index = JSON.parse(fs.readFileSync(path.join(baseDir, 'index.json'), 'utf8'));
+const noMatrix = flag('--no-matrix');
+const refuse = (why) => { console.log(`COULD NOT JUDGE: ${why}`); process.exit(2); };
+if (!baseDir || !changedDir) { console.error('usage: node tools/stage-frames-compare.mjs <base dir> <changed dir> [--also <second base dir>] [--json <file>] [--no-matrix]'); process.exit(2); }
+const readJson = (dir, name) => { const f = path.join(dir, name); if (!fs.existsSync(f)) return null; try { return JSON.parse(fs.readFileSync(f, 'utf8')); } catch (e) { refuse(`${f} is not JSON: ${e.message}`); } };
+const baseIndex = readJson(baseDir, 'index.json'), changedIndex = readJson(changedDir, 'index.json');
+if (!Array.isArray(baseIndex)) refuse(`no index in the base run (${path.join(baseDir, 'index.json')})`);
+if (!baseIndex.length) refuse(`the base run's index is empty (${path.join(baseDir, 'index.json')}): nothing to compare`);
+if (!Array.isArray(changedIndex)) refuse(`no index in the changed run (${path.join(changedDir, 'index.json')})`);
+const key = (e) => `${e.look}/${e.file}`;
+const baseListed = new Map(baseIndex.map((e) => [key(e), e])), changedListed = new Set(changedIndex.map(key));
+// the request both runs were made for
+const SETTINGS = ['looks', 'screens', 'variants', 'frames', 'cssT', 'motion', 'repaint', 'nudge', 'live'];
+let index = baseIndex, matrixNote = 'capture matrix not checked (--no-matrix): the base\'s index alone';
+if (!noMatrix) {
+	const bm = readJson(baseDir, 'matrix.json'), cm = readJson(changedDir, 'matrix.json');
+	if (!bm || !cm) refuse(`no capture matrix (matrix.json) in the ${!bm ? 'base' : 'changed'} run: a run made before the diagnostic wrote one; --no-matrix compares the base's index alone`);
+	const differs = SETTINGS.filter((k) => JSON.stringify(bm[k]) !== JSON.stringify(cm[k]));
+	if (differs.length) refuse(`the two runs were asked for different things: ${differs.map((k) => `${k} ${JSON.stringify(bm[k])} vs ${JSON.stringify(cm[k])}`).join('; ')}`);
+	if (bm.live) refuse('a live run (--set live=1): pictures of a swaying stage with its animations running are not compared to the pixel');
+	if (!Array.isArray(bm.expected) || !bm.expected.length) refuse('the capture matrix asks for nothing');
+	if (JSON.stringify(bm.expected.map(key)) !== JSON.stringify((cm.expected || []).map(key))) refuse('the two runs\' capture matrices name different captures');
+	index = bm.expected.map((e) => ({ ...e, ...(baseListed.get(key(e)) || {}) }));
+	matrixNote = `capture matrix checked: ${bm.looks.length} looks x ${bm.screens.length} screens x ${bm.variants.length} variants = ${bm.expected.length}`;
+}
+const extra = noMatrix ? [] : baseIndex.filter((e) => !index.some((x) => key(x) === key(e)));
 const rows = []; let px = 0, dm = 0, missing = 0, within = 0, matched = 0;
 for (const e of index) {
 	const a = path.join(baseDir, e.look, e.file), b = path.join(changedDir, e.look, e.file);
-	if (!fs.existsSync(b + '.png') || !fs.existsSync(b + '.dom.txt')) { missing++; rows.push({ ...e, missing: true }); continue; }
+	const gone = (dir, listed) => (listed ? '' : 'not in its index') || ['.png', '.b.png', '.dom.txt'].filter((x) => !fs.existsSync(path.join(dir, e.look, e.file) + x)).join(', ');
+	const goneBase = gone(baseDir, baseListed.has(key(e))), goneChanged = gone(changedDir, changedListed.has(key(e)));
+	if (goneBase || goneChanged) { missing++; rows.push({ ...e, missing: [goneBase && `base: ${goneBase}`, goneChanged && `changed: ${goneChanged}`].filter(Boolean).join('; ') }); continue; }
 	/* the base's other pictures of this state: its second picture in the same run (.b.png) and both of the --also run's */
 	const refs = [a + '.b.png'].concat(also ? [path.join(also, e.look, e.file) + '.png', path.join(also, e.look, e.file) + '.b.png'] : []).filter((f) => fs.existsSync(f)).map((f) => fs.readFileSync(f));
 	const p = pixels(fs.readFileSync(a + '.png'), fs.readFileSync(b + '.png'), refs);
@@ -86,10 +120,13 @@ for (const e of index) {
 	if (p.same) px++; if (d.same) dm++;
 	rows.push({ look: e.look, file: e.file, props: e.props, target: e.target, pixels: p, dom: d });
 }
-const bad = rows.filter((r) => r.missing || (!r.pixels.same && !r.pixels.matched && !r.pixels.within) || !r.dom.same);
-console.log(`${index.length} captures: pixels the same in ${px} (first pictures), in ${matched} more one picture of each build is the same, within the base's own variation in ${within} more; DOM the same in ${dm}; missing ${missing}`);
+for (const e of extra) rows.push({ ...e, extra: true });
+const bad = rows.filter((r) => r.missing || r.extra || (!r.pixels.same && !r.pixels.matched && !r.pixels.within) || !r.dom.same);
+console.log(matrixNote);
+console.log(`${index.length} captures: pixels the same in ${px} (first pictures), in ${matched} more one picture of each build is the same, within the base's own variation in ${within} more; DOM the same in ${dm}; missing ${missing}${extra.length ? `; not asked for ${extra.length}` : ''}`);
 for (const r of bad) {
-	if (r.missing) { console.log(`MISSING ${r.look}/${r.file}`); continue; }
+	if (r.missing) { console.log(`MISSING ${r.look}/${r.file} (${r.missing})`); continue; }
+	if (r.extra) { console.log(`EXTRA  ${r.look}/${r.file}: in the base's index but not in its capture matrix`); continue; }
 	if (!r.pixels.same && !r.pixels.matched && !r.pixels.within) console.log(`PIXELS ${r.look}/${r.file}: ${r.pixels.size || `${r.pixels.n} px differ, up to ${r.pixels.max} a channel, box ${r.pixels.box.join(',')}; outside the base's variation (${r.pixels.refs} more pictures of it) ${r.pixels.outside} px, up to ${r.pixels.outsideMax}`}`);
 	if (!r.dom.same) console.log(`DOM    ${r.look}/${r.file}: line ${r.dom.line} (${r.dom.lines})\n  base:    ${r.dom.base}\n  changed: ${r.dom.changed}`);
 }
