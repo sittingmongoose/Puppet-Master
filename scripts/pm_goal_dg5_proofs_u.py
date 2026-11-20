@@ -386,6 +386,16 @@ PROOFS = {
             'const reader_binding and string bounds). The identical value cannot newly fail '
             'the identical constraints, so no complete inspect call can make this row refuse '
             'alone. It closes by this proof once the inspect event schema row is closed.')),
+    'dg5/dgu/reader/receipt/receipt_request/schema': dict(
+        kind='entailed-by-final-receipt-request',
+        families=['goal.updated'],
+        depends_on=['dg5/dgu/reader/receipt/final/receipt_request/schema'],
+        sites=[(U, 1371), (U, 1386), (U, 1392), ('Plans/goal_body_custody.schema.json', 720)],
+        argument=(
+            'Both receipt reads pass the original request to the same read_receipt_private '
+            'validation using the same schema. The complete call reaches the final '
+            'request validation with identical invalid data when just the first check '
+            'is disabled, and restoring that check repeats the original refusal.')),
     'dg5/oracle/receipt_request/schema': dict(
         kind='entailed-by-progress-schema',
         families=['goal.updated'],
