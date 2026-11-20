@@ -563,5 +563,41 @@ def exercise(g, *, scratch=None):
     case("tb4-token-only-in-html-comment-is-not-prose", lambda f: f.update(owner=owner("AA-001", "Owner text.\n\n<!-- live token -->", ["live token"])),
          status="findings", exit_code=2, verify=lambda r: r["witness_exact_tokens"][0]["fires"] and r["witness_exact_tokens"][0]["units_with_token_in_prose"] == [])
     case("tb4-token-in-prose-beside-a-comment-control", lambda f: f.update(owner=owner("AA-001", "Required live token.\n\n<!-- a note -->", ["live token"])), verify=no_ambiguity)
+    # T86/T135: only open paragraphs can continue outdented, including at columns 1–3.
+    def lazy_fence(prefix, lazy, column=2):
+        example = " " * column + "~~~~\n"
+        return (prefix + lazy + "\n" + example + '## AA-001 — Owner\n\nRequired live token.\n'
+                'preserved_exact_tokens: ["live token"]\n' + example)
+
+    nonparagraph = {
+        "indented-code": "- a\n\n      code\n", "atx": "- # Heading\n",
+        "fence-close": "- ```\n  code\n  ```\n", "empty-item": "-\n",
+        "setext": "- a\n  ---\n", "html": "- <div>\n", "thematic": "- ***\n",
+    }
+    for form, prefix in nonparagraph.items():
+        for indent in (0, 1):
+            case(f"lazy-after-{form}-indent-{indent}-ends-item",
+                 lambda f: f.update(owner=lazy_fence(prefix, " " * indent + "outside")),
+                 status="vacuous_with_findings", exit_code=2, verify=missing_target)
+    for indent in (1, 2):
+        case(f"lazy-after-ordered-fence-indent-{indent}-ends-item",
+             lambda f: f.update(owner=lazy_fence("1. ```\n   code\n   ```\n", " " * indent + "outside", 3)),
+             status="vacuous_with_findings", exit_code=2, verify=missing_target)
+    case("lazy-after-wide-item-indent-3-ends-item",
+         lambda f: f.update(owner=clean + "\n10. # Heading\n   outside\n    ## AA-001 — Code\n"),
+         verify=lambda r: not r["configuration_findings"])
+    for form, prefix, lazy, column in (
+        ("paragraph", "- text\n", " outside", 2),
+        ("ordered-paragraph", "1. text\n", "  outside", 3),
+        ("quoted-paragraph", "- > text\n", "outside", 2),
+        ("setext-lookalike", "- text\n", "===\noutside", 2),
+        ("closed-comment", "- <!-- c -->\n  text\n", "outside", 2),
+        ("closed-pi", "- <?p ?>\n  text\n", "outside", 2),
+        ("closed-script", "- <script>s</script>\n  text\n", "outside", 2),
+        ("closed-multiline-comment", "- <!-- c\n  -->\n  text\n", "outside", 2),
+    ):
+        case("lazy-" + form + "-keeps-item", lambda f: f.update(owner=lazy_fence(prefix, lazy, column)),
+             verify=lambda r: r["witness_exact_tokens"][0]["units_with_both"] == ["AA-001"])
+
     return {"schema_id": "pm.ledger_compile_witness.self_test.v1", "status": "pass" if all(row["caught"] for row in rows) else "findings",
             "caught": sum(row["caught"] for row in rows), "tests": rows}

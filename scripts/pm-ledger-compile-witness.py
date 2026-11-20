@@ -151,32 +151,79 @@ def _item_content_column(item, line: str) -> int:
     return len(item.group(1)) + len(item.group(2)) + gap
 
 
+def _item_continues(lines: list[str], marker: int, stop: int, column: int) -> bool:
+    """Check that outdented lines between an item marker and a candidate continuation are lazy paragraph lines."""
+    paragraph = False
+    fence = html_end = None
+    html_to_blank = False
+    for index in range(marker, stop):
+        raw = lines[index].expandtabs(4)
+        if not raw.strip():
+            paragraph = html_to_blank = False
+            continue
+        if index != marker and _indent(raw) < column:
+            # A setext underline cannot be lazy. Outdented equals signs are paragraph
+            # text, and outdented dashes are already covered by the thematic break rule.
+            if not paragraph or _block_start(raw):
+                return False
+            continue
+        line = raw[column:]
+        while QUOTE_MARK.match(line):
+            line = QUOTE_MARK.sub("", line, count=1)
+        if fence is not None:
+            if fence.fullmatch(line):
+                fence = None
+            continue
+        if html_end is not None:
+            if html_end.search(line):
+                html_end = None
+            continue
+        if html_to_blank:
+            continue
+        if _indent(line) >= 4:
+            continue
+        opening = FENCE_OPEN.match(line)
+        if opening and not (opening[2][0] == "`" and "`" in opening[3]):
+            fence = re.compile(r" {0,3}" + re.escape(opening[2][0]) + "{" + str(len(opening[2])) + r",}[ \t]*")
+            paragraph = False
+            continue
+        ended = next((done for begin, done in HTML_ENDED if begin.match(line)), None)
+        if ended is not None:
+            html_end = None if ended.search(line) else ended
+            paragraph = False
+            continue
+        if HTML_BLANK_ENDED.match(line) or (not paragraph and HTML_TAG_LINE.match(line)):
+            paragraph, html_to_blank = False, True
+            continue
+        paragraph = bool(line.strip() and not any_head(line) and not THEMATIC.match(line)
+                         and not (paragraph and SETEXT_UNDER.match(line)))
+    return True
+
+
 def list_item_column(lines: list[str], i: int):
-    """The content column of the list item line i continues, or None (T49). Walks back over blank lines and lines
-    indented past column 0 to the nearest list-item marker line; line i continues that item only when it is indented
-    to at least the item's content column. T62 (REVIEW-etools-tb3-opus findings 3 and 4): any line between the item
-    and line i that comes right after a blank line and sits left of the item's content column has ended the item
-    (CommonMark: ' b' after a blank line under '- a' is a new paragraph, so a fence after it is top-level); a column-0
-    line right after a non-blank line that opens no block of its own is a lazy continuation of the item's paragraph
-    and does not end the walk; any other non-marker line at column 0 ends it. Tabs count to 4-column stops."""
+    """Return the content column of the list item continued by line i, if any.
+
+    A nonblank line before the candidate can be outdented only while it continues
+    an open paragraph. Tabs count to four-column stops.
+    """
     ind = _indent(lines[i])
     if ind == 0:
         return None
     for j in range(i - 1, -1, -1):
-        line = lines[j]
+        line = lines[j].expandtabs(4)
         if not line.strip():
             continue
-        item = LIST_ITEM.match(line.expandtabs(4))
-        if item:
-            column = _item_content_column(item, line.expandtabs(4))
+        item = LIST_ITEM.match(line)
+        if item and not THEMATIC.match(line):
+            column = _item_content_column(item, line)
             if column > ind:
                 return None
-            if any(lines[k].strip() and not lines[k - 1].strip() and _indent(lines[k]) < column for k in range(j + 1, i + 1)):
-                return None
+            # Replay the item's blocks only if a line could have ended the item.
+            if any(line.strip() and _indent(line) < column for line in lines[j + 1:i]):
+                if not _item_continues(lines, j, i, column):
+                    return None
             return column
-        if _indent(line) == 0:
-            if j > 0 and lines[j - 1].strip() and not _block_start(line):
-                continue
+        if _indent(line) == 0 and _block_start(line):
             return None
     return None
 
