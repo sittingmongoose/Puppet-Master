@@ -263,7 +263,37 @@ def proposal(directory):
                         source('scripts/pm_goal_dg_u_oracles.py', 1265, 1272, 1273)])
 
 
+
+def isolate_proposal_owner(directory, line, expected, schema_code, change):
+    world, _, original, _ = pilot.updated._proposal(directory / 'original')
+    control = deepcopy(original)
+    control['command_instance_id'] += ':stage7-isolation'
+    positive = pilot.call((world, world.sir.admit_proposal, (control,), {}),
+                         'schema-valid original proposal', sweep.Collector(judge=False))
+    verdict(positive)
+    invalid = deepcopy(control)
+    change(invalid)
+    owner = site(line)
+    fixture = world, world.sir.admit_proposal, (invalid,), {}
+    result = options(fixture, expected + ' via proposal admission', dict(
+        baseline=(), proposal_schema_disabled=(PROPOSAL,), owner_check_disabled=(owner,), restored=()))
+    verdict(result['baseline'], PROPOSAL, schema_code)
+    verdict(result['proposal_schema_disabled'], owner, expected)
+    verdict(result['owner_check_disabled'], PROPOSAL, schema_code)
+    verdict(result['restored'], PROPOSAL, schema_code)
+    return dict(row=owner, dependency=PROPOSAL, control=positive, trials=result,
+                source=[source(U, line, 770, 773), source(PROPOSAL_SCHEMA, 36, 61, 92)])
+
+
+def proposal_key(directory):
+    def non_string_key(proposal):
+        proposal['target']['scope'][1] = 'stage7 test'
+    return isolate_proposal_owner(directory, 170, 'dgu/jcs/key',
+                                  'dgu/sir/proposal/schema/target/scope', non_string_key)
+
+
 CHECKS = {
+    'proposal_key': proposal_key,
     'proposal': proposal,
     'frame_shape': frame_shape,
     'event_type': event_type,
