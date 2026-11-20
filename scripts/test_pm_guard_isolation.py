@@ -143,6 +143,34 @@ class GuardEngineTests(unittest.TestCase):
                                 capture_output=True, text=True, cwd=ROOT)
         self.assertEqual(result.returncode, 0, result.stderr or result.stdout[:1000])
 
+    def test_ddbg_data_bindings_and_shared_predicates(self):
+        original = ddbg.payload_target_bound_suite()
+        negative = next(n for n in original.negatives if n.target == 'payload.target_sha256_hex')
+        control = next(c for c in original.controls if c.id == negative.control)
+        source = ROOT / 'scripts/guard-isolation/ddbg_data_bindings_fixture.py'
+        spec = importlib.util.spec_from_file_location('ddbg_data_bindings_fixture', source)
+        module = importlib.util.module_from_spec(spec)
+        sys.modules[spec.name] = module
+        self.addCleanup(sys.modules.pop, spec.name)
+        spec.loader.exec_module(module)
+        declarations = [
+            guard.NonGuard(str(source.relative_to(ROOT)), factory, 'return',
+                           'return g.Case(table, check, context)', 'Return the fresh case.')
+            for factory in ('get_case', 'unpack_case')
+        ]
+        for factory, inactive in ((module.get_case, module.via_unpack_and_loop),
+                                  (module.unpack_case, module.via_get)):
+            with self.subTest(factory=factory.__name__):
+                suite = guard.Suite('DDBG target digest', factory, [control], [negative],
+                                    (source,), ROOT, non_guards=declarations)
+                scan = guard.static_scan(suite, factory(control.value).table)
+                self.assertTrue(any(not site['non_guard'] and site['function'] == inactive.__name__
+                                    for site in scan['sites']))
+                suite.other_suite_predicates = (inactive,)
+                report = guard.run(suite)
+                self.assertEqual(report['status'], 'PASS', report['failures'])
+                self.assertEqual([row['id'] for row in report['rows'] if row['proved']], [negative.target])
+
     def test_ddbg_short_circuit_digest(self):
         original = ddbg.payload_target_bound_suite()
         negative = next(n for n in original.negatives if n.target == 'payload.target_sha256_hex')

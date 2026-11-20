@@ -1671,6 +1671,9 @@ class Suite:
     reset_seams: list[NonGuard] = field(default_factory=list)
     # C8-G3: extra uncut baseline runs per case, each compared with the baseline outcome and trace.
     baseline_repeats: int = 0
+    # Source-backed module predicates registered by another suite in the same checker closure.
+    # Their bodies undergo predicate purity review and may not execute in this suite's checker.
+    other_suite_predicates: tuple[Callable[..., str | None], ...] = ()
 
 
 # Every form the outside-predicate scan accepts without a declaration, with its
@@ -1769,6 +1772,7 @@ def static_scan(suite, table):
     """Conservative census only. Nothing here authorizes a Python cut."""
     root = Path(suite.repository_root).resolve()
     trusted = Path(__file__).resolve()
+    declared_paths = {(root / p).resolve() for p in suite.checker_modules}
     pending = [(root / p).resolve() for p in suite.checker_modules]
     if not pending:
         raise IsolationError('checker_modules must name the complete source closure')
@@ -1776,6 +1780,16 @@ def static_scan(suite, table):
     if suite.reset:
         pending.append(Path(_function_key(suite.reset)[0]))
     predicate_functions = {_function_key(fn): fn.__func__ if inspect.ismethod(fn) else fn for fn in _predicate_functions(table)}
+    active_keys = set(predicate_functions)
+    inactive_keys = set()
+    for fn in suite.other_suite_predicates:
+        key = _function_key(fn)
+        if (type(fn) is not types.FunctionType or fn.__qualname__ != fn.__name__ or
+                fn.__globals__.get(fn.__name__) is not fn or Path(key[0]) not in declared_paths or
+                key in predicate_functions):
+            raise IsolationError('other suite predicate must be a distinct module function in checker_modules')
+        predicate_functions[key] = fn
+        inactive_keys.add(key)
     predicate_keys = set(predicate_functions)
     located_predicates = set()
     files, sites, imports, errors = {}, [], [], []
@@ -1963,9 +1977,66 @@ def static_scan(suite, table):
                 return data_expression(part.value, names, calls)
             if isinstance(part, ast.Constant):
                 return True
+            if isinstance(part, (ast.Tuple, ast.List, ast.Set)):
+                return all(data_expression(element, names, calls) for element in part.elts)
             if isinstance(part, ast.Call):
-                return isinstance(part.func, ast.Name) and part.func.id in calls - shadowed and not origins(part.func) and all(data_expression(a, names, calls) for a in part.args)
+                callee = part.func
+                if isinstance(callee, ast.Name):
+                    pure = callee.id in calls - shadowed - {'type'} and not origins(callee)
+                else:
+                    pure = (isinstance(callee, ast.Attribute) and callee.attr in pure_methods and
+                            data_expression(callee.value, names, calls))
+                return pure and all(data_expression(a, names, calls) for a in part.args) and all(
+                    kw.arg is not None and data_expression(kw.value, names, calls) for kw in part.keywords)
             return False
+
+        def data_target_names(target):
+            return {part.id for part in ast.walk(target)
+                    if isinstance(part, ast.Name) and isinstance(part.ctx, ast.Store)}
+
+        def predicate_data_names(node, calls):
+            # A name must have data provenance at every binding site. Starting with all candidate locals
+            # and removing uncertain binders supports rebinding within a loop without trusting a global,
+            # a pattern capture or an assignment with an unreviewed source.
+            parameters = {*node.args.posonlyargs, *node.args.args, *node.args.kwonlyargs}
+            sources, uncertain = {arg.arg: [] for arg in parameters}, set()
+            reviewed = set(parameters)
+
+            def bind(target, source, unpack_literal):
+                reviewed.add(target)
+                if isinstance(target, ast.Name):
+                    sources.setdefault(target.id, []).append(source)
+                elif isinstance(target, ast.Starred):
+                    bind(target.value, source, False)
+                elif isinstance(target, (ast.Tuple, ast.List)):
+                    if unpack_literal and isinstance(source, (ast.Tuple, ast.List)) and len(target.elts) == len(source.elts) and not any(
+                            isinstance(part, ast.Starred) for part in target.elts):
+                        for item, expression in zip(target.elts, source.elts):
+                            bind(item, expression, True)
+                    else:
+                        for item in target.elts:
+                            bind(item, source, False)
+
+            parts = list(ast.walk(node))
+            for part in parts:
+                if isinstance(part, (ast.Assign, ast.AnnAssign)):
+                    targets = part.targets if isinstance(part, ast.Assign) else [part.target]
+                    for target in targets:
+                        bind(target, part.value, True)
+                elif isinstance(part, ast.For):
+                    bind(part.target, part.iter, False)
+                elif isinstance(part, ast.comprehension):
+                    # Comprehension targets live in their own lexical scope.
+                    reviewed.update(ast.walk(part.target))
+            for part in parts:
+                if part is not node and part not in reviewed:
+                    uncertain.update(_names_bound_by(part))
+            names = sources.keys() - uncertain
+            while True:
+                reduced = {name for name in names if all(data_expression(expr, names, calls) for expr in sources[name])}
+                if reduced == names:
+                    return names
+                names = reduced
         def immutable_data_import(node):
             """C8-U2: `from m import A, B` at module scope, where m is one repository module (not a package) and each
             name is, in m's own source, bound exactly once by a top-level `NAME = literal` of immutable literals (no
@@ -2181,21 +2252,34 @@ def static_scan(suite, table):
                     function = predicate_functions[key]
                     certified_calls = {name for name, binding in pure_builtins.items()
                                        if function.__globals__.get(name, function.__builtins__.get(name)) is binding}
-                    data_names = {a.arg for a in [*node.args.posonlyargs, *node.args.args, *node.args.kwonlyargs]}
-                    for part in ast.walk(node):
-                        if isinstance(part, ast.Assign) and data_expression(part.value, data_names, certified_calls):
-                            data_names.update(t.id for t in part.targets if isinstance(t, ast.Name))
+                    data_names = predicate_data_names(node, certified_calls)
                     # Only the predicate body; defaults/decorators are not predicates.
-                    def predicate_body(part):
+                    def predicate_body(part, names):
                         if isinstance(part, (ast.FunctionDef, ast.AsyncFunctionDef, ast.ClassDef, ast.Lambda)):
                             errors.append({'kind': 'nested_predicate_code', 'path': _relative(path, root), 'line': part.lineno})
                             return
                         exempt.add(part)
-                        predicate_data[part] = (data_names, certified_calls)
-                        for child in ast.iter_child_nodes(part):
-                            predicate_body(child)
+                        predicate_data[part] = (names, certified_calls)
+                        if isinstance(part, (ast.ListComp, ast.SetComp, ast.DictComp, ast.GeneratorExp)):
+                            for generator in part.generators:
+                                exempt.add(generator)
+                                predicate_body(generator.iter, names)
+                                target_names = data_target_names(generator.target)
+                                if data_expression(generator.iter, names, certified_calls):
+                                    names = names | target_names
+                                else:
+                                    names = names - target_names
+                                predicate_body(generator.target, names)
+                                for test in generator.ifs:
+                                    predicate_body(test, names)
+                            expressions = (part.key, part.value) if isinstance(part, ast.DictComp) else (part.elt,)
+                            for expression in expressions:
+                                predicate_body(expression, names)
+                        else:
+                            for child in ast.iter_child_nodes(part):
+                                predicate_body(child, names)
                     for statement in node.body:
-                        predicate_body(statement)
+                        predicate_body(statement, data_names)
         for node in ast.walk(tree):
             if isinstance(node, ast.stmt) and type(node).__name__ not in {
                 'AnnAssign', 'Assert', 'Assign', 'AsyncFor', 'AsyncFunctionDef', 'AsyncWith', 'AugAssign', 'Break',
@@ -2871,7 +2955,8 @@ def static_scan(suite, table):
             errors.append({'kind': 'predicate_source_not_found', 'path': path, 'line': line, 'function': function})
     return {'status': 'FAIL' if errors or any(not s['non_guard'] for s in sites) else 'PASS',
             'files': sorted(files.values(), key=lambda f: f['path']), 'imports': imports,
-            'sites': sites, 'errors': errors, 'predicate_functions': sorted([list(k) for k in predicate_keys]),
+            'sites': sites, 'errors': errors, 'predicate_functions': sorted([list(k) for k in active_keys]),
+            **({'other_suite_predicates': sorted([list(k) for k in inactive_keys])} if inactive_keys else {}),
             'automatic_totals': {form: {'count': automatic[form], 'reason': TOTAL_FORMS[form]} for form in sorted(automatic)},
             'review': 'Every non-guard reason and each predicate body versus its declared field/predicate needs review.'}
 
@@ -3342,6 +3427,7 @@ def run(suite: Suite, *, memory: MemoryGate | None = None, progress=None, demons
     case_snapshots, anchored_snapshots = {}, {}
     last_trace = {}             # guard-call trace of the latest full checker run
     schema_views, schema_library_files = {}, {}
+    inactive_codes = set()
     schema_library_roots = tuple(Path(sys.modules[name].__file__).resolve().parent
                                  for name in ('jsonschema', 'referencing'))
 
@@ -3469,6 +3555,10 @@ def run(suite: Suite, *, memory: MemoryGate | None = None, progress=None, demons
         # pending[0] carries "an instruction that may have changed the graph ran".
         pending = [True]
         def trace(frame, event, arg):
+            if event == 'call' and frame.f_code in inactive_codes:
+                error = 'other suite predicate entered this checker: ' + frame.f_code.co_name
+                table._errors.append(error)
+                raise IsolationError(error)
             if event == 'call' and frame.f_code in predicate_codes:
                 parent = frame.f_back
                 row = parent.f_locals.get('row') if parent else None
@@ -3625,6 +3715,7 @@ def run(suite: Suite, *, memory: MemoryGate | None = None, progress=None, demons
             fail('hidden_static_sites', sites=[], errors=stops)
             fail('static_error_stop', stage='before the factory', errors=sorted({e['kind'] for e in stops}))
             raise _StaticStop()
+        inactive_codes.update(fn.__code__ for fn in suite.other_suite_predicates)
         initial = fresh(_fixture_copy(suite.controls[0].value))
         guards = dict(initial.table.guards)
         report['inventory'] = signature
