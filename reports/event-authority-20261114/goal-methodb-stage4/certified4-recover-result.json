@@ -1,0 +1,2024 @@
+{
+  "accepted_branches": {
+    "armed": {
+      "action_authority": "none",
+      "event_appended": false,
+      "native_changed": false,
+      "outcome": "no_append",
+      "reason": "current_source_unavailable",
+      "standard_receipt_preserved": true
+    },
+    "event_durable": {
+      "action_authority": "none",
+      "commit": null,
+      "event_phase": {
+        "key": "goal_certified_event_eventphase.v1:544553545f4f4e4c592d70726f6a6563742dceb2cc81:544553545f4f4e4c593a676f616c5f72756e3aceb12d65cc812df09fa68a:544553545f4f4e4c593a6f7065726174696f6e3a6365727469666965643a31",
+        "sha256": "b1ebf50d6399ae0350819d7cc49e95b2ea2217e3193f812761a6dacfdad61f11"
+      },
+      "intent": {
+        "key": "goal_certified_event_intent.v1:544553545f4f4e4c592d70726f6a6563742dceb2cc81:544553545f4f4e4c593a676f616c5f72756e3aceb12d65cc812df09fa68a:544553545f4f4e4c593a6f7065726174696f6e3a6365727469666965643a31",
+        "sha256": "8ca4f39fde91f169cea2f64851267ba1e152fb035ba23b4e788f0d11a4006c48"
+      },
+      "known_phase": "event_durable",
+      "operation_id": "TEST_ONLY:operation:certified:1",
+      "outcome": "pending_unknown",
+      "reason": "native_unknown",
+      "release": null,
+      "scope": {
+        "goal_id": "TEST_ONLY:goal:1",
+        "goal_run_id": "TEST_ONLY:goal_run:\u03b1-e\u0301-\ud83e\udd8a",
+        "project_id": "TEST_ONLY-project-\u03b2\u0301",
+        "scope_partition": "project~VEVTVF9PTkxZLXByb2plY3QtzrLMgQ",
+        "storage_instance_id": "ef9ca531-41d6-4d1d-a235-99a0794b3b5c",
+        "work_graph_id": "TEST_ONLY:work_graph:1"
+      }
+    },
+    "native_committed": {
+      "action_authority": "none",
+      "commit": {
+        "key": "goal_certified_event_commit.v1:544553545f4f4e4c592d70726f6a6563742dceb2cc81:544553545f4f4e4c593a676f616c5f72756e3aceb12d65cc812df09fa68a:544553545f4f4e4c593a6f7065726174696f6e3a6365727469666965643a31",
+        "sha256": "8421ab1b32196c1e1af4d457d68af989f8752f334540f2807f39a2bffc0714c4"
+      },
+      "event_phase": {
+        "key": "goal_certified_event_eventphase.v1:544553545f4f4e4c592d70726f6a6563742dceb2cc81:544553545f4f4e4c593a676f616c5f72756e3aceb12d65cc812df09fa68a:544553545f4f4e4c593a6f7065726174696f6e3a6365727469666965643a31",
+        "sha256": "b1ebf50d6399ae0350819d7cc49e95b2ea2217e3193f812761a6dacfdad61f11"
+      },
+      "intent": {
+        "key": "goal_certified_event_intent.v1:544553545f4f4e4c592d70726f6a6563742dceb2cc81:544553545f4f4e4c593a676f616c5f72756e3aceb12d65cc812df09fa68a:544553545f4f4e4c593a6f7065726174696f6e3a6365727469666965643a31",
+        "sha256": "8ca4f39fde91f169cea2f64851267ba1e152fb035ba23b4e788f0d11a4006c48"
+      },
+      "known_phase": "native_committed",
+      "operation_id": "TEST_ONLY:operation:certified:1",
+      "outcome": "pending_unknown",
+      "reason": "release_unknown",
+      "release": null,
+      "scope": {
+        "goal_id": "TEST_ONLY:goal:1",
+        "goal_run_id": "TEST_ONLY:goal_run:\u03b1-e\u0301-\ud83e\udd8a",
+        "project_id": "TEST_ONLY-project-\u03b2\u0301",
+        "scope_partition": "project~VEVTVF9PTkxZLXByb2plY3QtzrLMgQ",
+        "storage_instance_id": "ef9ca531-41d6-4d1d-a235-99a0794b3b5c",
+        "work_graph_id": "TEST_ONLY:work_graph:1"
+      }
+    },
+    "released": {
+      "action_authority": "none",
+      "authority": {
+        "birth": {
+          "initial_control_epoch": 0,
+          "initial_control_key": "goal_certified_event_control.v1:544553545f4f4e4c592d70726f6a6563742dceb2cc81:544553545f4f4e4c593a676f616c5f72756e3aceb12d65cc812df09fa68a",
+          "initial_phase": "empty",
+          "issued_at_utc": "2026-11-20T13:09:39.153Z",
+          "original_native_birth": {
+            "key": "wf:VEVTVF9PTkxZLXByb2plY3QtzrLMgQ:VEVTVF9PTkxZOmdvYWxfcnVuOs6xLWXMgS3wn6aK",
+            "sha256": "7847e941da432622690da7ff9668baae0fea57aed02c28f5dd38f5c1dd1e0188"
+          },
+          "owner": {
+            "operation_id": "TEST_ONLY:operation:birth",
+            "owner_epoch": 1,
+            "owner_id": "TEST_ONLY:owner:coordinator:b2c23481-6655-4cc3-b7e3-6f3aa47fe6b1"
+          },
+          "profile_sha256": "0055de6c0e113173d2c4f1a1b2a3d9268681241b528ab6f24304fcfb4b163845",
+          "scope": {
+            "goal_id": "TEST_ONLY:goal:1",
+            "goal_run_id": "TEST_ONLY:goal_run:\u03b1-e\u0301-\ud83e\udd8a",
+            "project_id": "TEST_ONLY-project-\u03b2\u0301",
+            "scope_partition": "project~VEVTVF9PTkxZLXByb2plY3QtzrLMgQ",
+            "storage_instance_id": "ef9ca531-41d6-4d1d-a235-99a0794b3b5c",
+            "work_graph_id": "TEST_ONLY:work_graph:1"
+          },
+          "transaction_id": "TEST_ONLY:tx:ef9ca531-41d6-4d1d-a235-99a0794b3b5c:1"
+        },
+        "commit": {
+          "clocks": {
+            "expected_goal_run_revision": 6,
+            "expected_workflow_control_revision": 6,
+            "goal_run_revision": 7,
+            "observed_goal_revision": 3,
+            "whole_unchanged_goal_argument_sha256": "69da25eab7ede579782e17063a60723fce47455dfa2d90bac29b70b4c2777ab1",
+            "workflow_control_revision": 7
+          },
+          "d01_head": {
+            "key": "wf:VEVTVF9PTkxZLXByb2plY3QtzrLMgQ:VEVTVF9PTkxZOmdvYWxfcnVuOs6xLWXMgS3wn6aK:7",
+            "sha256": "630feabcf2802cb5f8a5db678bab94b1458970f596bfd779f084451cf7ab39cc"
+          },
+          "d01_origin": {
+            "key": "wf:VEVTVF9PTkxZLXByb2plY3QtzrLMgQ:VEVTVF9PTkxZOmdvYWxfcnVuOs6xLWXMgS3wn6aK:7",
+            "sha256": "356a800eedd4d2dcbfa14495ae57e604bef5951647fe24ba02fc12188d18e053"
+          },
+          "d01_update": {
+            "key": "wf:VEVTVF9PTkxZLXByb2plY3QtzrLMgQ:VEVTVF9PTkxZOmdvYWxfcnVuOs6xLWXMgS3wn6aK:7",
+            "sha256": "6467f24f73f5a14e4a96b22e282343d4d303109e9689bdf5a6320189ee391286"
+          },
+          "event_phase": {
+            "key": "goal_certified_event_eventphase.v1:544553545f4f4e4c592d70726f6a6563742dceb2cc81:544553545f4f4e4c593a676f616c5f72756e3aceb12d65cc812df09fa68a:544553545f4f4e4c593a6f7065726174696f6e3a6365727469666965643a31",
+            "sha256": "b1ebf50d6399ae0350819d7cc49e95b2ea2217e3193f812761a6dacfdad61f11"
+          },
+          "intent": {
+            "key": "goal_certified_event_intent.v1:544553545f4f4e4c592d70726f6a6563742dceb2cc81:544553545f4f4e4c593a676f616c5f72756e3aceb12d65cc812df09fa68a:544553545f4f4e4c593a6f7065726174696f6e3a6365727469666965643a31",
+            "sha256": "8ca4f39fde91f169cea2f64851267ba1e152fb035ba23b4e788f0d11a4006c48"
+          },
+          "issued_at_utc": "2026-11-20T13:09:39.949Z",
+          "native_after_body": {
+            "key": "wf:VEVTVF9PTkxZLXByb2plY3QtzrLMgQ:VEVTVF9PTkxZOmdvYWxfcnVuOs6xLWXMgS3wn6aK",
+            "sha256": "72490fc8e7377979c449f96f5565e62de4a686e24fc8eed6f9830554e31929d5"
+          },
+          "native_after_control": {
+            "key": "wf:VEVTVF9PTkxZLXByb2plY3QtzrLMgQ:VEVTVF9PTkxZOmdvYWxfcnVuOs6xLWXMgS3wn6aK",
+            "sha256": "d3e52edfaa755a46587a3be8c459770b98581555dee844f4a3b81d4192ddbe54"
+          },
+          "native_origin": {
+            "key": "workflow_standard_origin.v1:544553545f4f4e4c592d70726f6a6563742dceb2cc81:544553545f4f4e4c593a676f616c5f72756e3aceb12d65cc812df09fa68a:544553545f4f4e4c593a6f7065726174696f6e3a6365727469666965643a31",
+            "sha256": "7ca266493750d313056a643428b3a7b18bd52a339f0284869262732265ec16c5"
+          },
+          "native_result": {
+            "key": "workflow_standard_result.v1:544553545f4f4e4c592d70726f6a6563742dceb2cc81:544553545f4f4e4c593a676f616c5f72756e3aceb12d65cc812df09fa68a:544553545f4f4e4c593a6f7065726174696f6e3a6365727469666965643a31",
+            "sha256": "5e2cb393ef5eea6fd2674b36359acf7e3f40d493333e3b8f302e7d5813c78cb9"
+          },
+          "owner": {
+            "operation_id": "TEST_ONLY:operation:certified:1",
+            "owner_epoch": 1,
+            "owner_id": "TEST_ONLY:owner:coordinator:b2c23481-6655-4cc3-b7e3-6f3aa47fe6b1"
+          },
+          "scope": {
+            "goal_id": "TEST_ONLY:goal:1",
+            "goal_run_id": "TEST_ONLY:goal_run:\u03b1-e\u0301-\ud83e\udd8a",
+            "project_id": "TEST_ONLY-project-\u03b2\u0301",
+            "scope_partition": "project~VEVTVF9PTkxZLXByb2plY3QtzrLMgQ",
+            "storage_instance_id": "ef9ca531-41d6-4d1d-a235-99a0794b3b5c",
+            "work_graph_id": "TEST_ONLY:work_graph:1"
+          },
+          "standard_capture_origin": {
+            "key": "workflow_standard_capture_origin.v1:544553545f4f4e4c592d70726f6a6563742dceb2cc81:544553545f4f4e4c593a676f616c5f72756e3aceb12d65cc812df09fa68a",
+            "sha256": "677363fb5eff0214d8c1e49748304e740969f90cc52f2c6ce4464bf116fa8ec2"
+          },
+          "transaction_id": "TEST_ONLY:tx:ef9ca531-41d6-4d1d-a235-99a0794b3b5c:10",
+          "whole_native_published_union_sha256": "e0096a7522dc5add09e00e9a6c7672e3463ea99fb192de378bacb9bc592abcdd"
+        },
+        "event_phase": {
+          "active_group_sha256": "5b5b05775d3815247f3b3fa0e901bf34ec6f37df9aefc7438c71ed6768a9e0fb",
+          "all_member_custody_sha256": "12ed2ff99a2cc69b60e707539dbcb38958b14776e4819ed0a09e2d6650012001",
+          "event_id": "goal_run.certified.v3:2996f4a51712609ae5ebdb9a1c61f2c68b6277cf2741445c3e8d9db5a8ed41bf",
+          "first_custody": {
+            "key": "custody_v2:goal_run.certified.v3:2996f4a51712609ae5ebdb9a1c61f2c68b6277cf2741445c3e8d9db5a8ed41bf",
+            "sha256": "b64a6e752b2331183b3f20c70023d3c1408504d65c67b4cca312a3ab53a1447d"
+          },
+          "idempotency_key": "goal_run.certified.v3:30:TEST_ONLY:goal_run:\u03b1-e\u0301-\ud83e\udd8a93:TEST_ONLY:standard-certification:544553545f4f4e4c593a676f616c5f72756e3aceb12d65cc812df09fa68a9:certified1:61:7",
+          "intent": {
+            "key": "goal_certified_event_intent.v1:544553545f4f4e4c592d70726f6a6563742dceb2cc81:544553545f4f4e4c593a676f616c5f72756e3aceb12d65cc812df09fa68a:544553545f4f4e4c593a6f7065726174696f6e3a6365727469666965643a31",
+            "sha256": "8ca4f39fde91f169cea2f64851267ba1e152fb035ba23b4e788f0d11a4006c48"
+          },
+          "issued_at_utc": "2026-11-20T13:09:39.806Z",
+          "original_event_value_sha256": "d06ce267a4991c284e1a0c04121ecd2190334f8f75808f3a62f4d98b3e982345",
+          "original_full_value_result_sha256": "97283e34e7d7d1ad09818472da2b85805a19ae70ba2448efcc77e97d90039001",
+          "owner": {
+            "operation_id": "TEST_ONLY:operation:certified:1",
+            "owner_epoch": 1,
+            "owner_id": "TEST_ONLY:owner:coordinator:b2c23481-6655-4cc3-b7e3-6f3aa47fe6b1"
+          },
+          "producer_semantic_digest": "91e56300f1d90b46fea29e9e2e2f8f3f14f14fe6b9e4864446098936c8e7cf95",
+          "scope": {
+            "goal_id": "TEST_ONLY:goal:1",
+            "goal_run_id": "TEST_ONLY:goal_run:\u03b1-e\u0301-\ud83e\udd8a",
+            "project_id": "TEST_ONLY-project-\u03b2\u0301",
+            "scope_partition": "project~VEVTVF9PTkxZLXByb2plY3QtzrLMgQ",
+            "storage_instance_id": "ef9ca531-41d6-4d1d-a235-99a0794b3b5c",
+            "work_graph_id": "TEST_ONLY:work_graph:1"
+          },
+          "transaction_id": "TEST_ONLY:tx:ef9ca531-41d6-4d1d-a235-99a0794b3b5c:9",
+          "whole_first_append_receipt_sha256": "b75e73724688e36e9e6e5ea27ceeb5eed4c40ead3ddb1d2644e199a69a0975af",
+          "whole_producer25_sha256": "66bedd020b2890b0562266c3a8a44e7a08391c38c6584de74c6cec1049e9a4ae"
+        },
+        "intent": {
+          "candidate_commitments": {
+            "producer_semantic_digest": "91e56300f1d90b46fea29e9e2e2f8f3f14f14fe6b9e4864446098936c8e7cf95",
+            "whole_native_candidate_sha256": "c7921595ddfa3ba72577e49134e175003aaf6e30cab2f749e470909e21c5531b",
+            "whole_producer25_sha256": "66bedd020b2890b0562266c3a8a44e7a08391c38c6584de74c6cec1049e9a4ae"
+          },
+          "certification_receipt_ref": "TEST_ONLY:standard-certification:544553545f4f4e4c593a676f616c5f72756e3aceb12d65cc812df09fa68a",
+          "clocks": {
+            "expected_goal_run_revision": 6,
+            "expected_workflow_control_revision": 6,
+            "goal_run_revision": 7,
+            "observed_goal_revision": 3,
+            "whole_unchanged_goal_argument_sha256": "69da25eab7ede579782e17063a60723fce47455dfa2d90bac29b70b4c2777ab1",
+            "workflow_control_revision": 7
+          },
+          "event_id": "goal_run.certified.v3:2996f4a51712609ae5ebdb9a1c61f2c68b6277cf2741445c3e8d9db5a8ed41bf",
+          "idempotency_key": "goal_run.certified.v3:30:TEST_ONLY:goal_run:\u03b1-e\u0301-\ud83e\udd8a93:TEST_ONLY:standard-certification:544553545f4f4e4c593a676f616c5f72756e3aceb12d65cc812df09fa68a9:certified1:61:7",
+          "installed_profile_sha256": "0055de6c0e113173d2c4f1a1b2a3d9268681241b528ab6f24304fcfb4b163845",
+          "native_before_body": {
+            "key": "wf:VEVTVF9PTkxZLXByb2plY3QtzrLMgQ:VEVTVF9PTkxZOmdvYWxfcnVuOs6xLWXMgS3wn6aK",
+            "sha256": "6a2322bb3a77976458b4607f8b940167f8fca220ebfa456c470b2949c3f1bff9"
+          },
+          "native_before_control": {
+            "key": "wf:VEVTVF9PTkxZLXByb2plY3QtzrLMgQ:VEVTVF9PTkxZOmdvYWxfcnVuOs6xLWXMgS3wn6aK",
+            "sha256": "3491082878f8d5ac782712a70ab2efd39af7936a8d056d0ca4a1e72f8a3ef64a"
+          },
+          "native_before_head": {
+            "key": "wf:VEVTVF9PTkxZLXByb2plY3QtzrLMgQ:VEVTVF9PTkxZOmdvYWxfcnVuOs6xLWXMgS3wn6aK:6",
+            "sha256": "7458bcc425acd84e5d9cd083937c01fc84309d4b5a2b72055ec2a0e9838aeab5"
+          },
+          "original_birth": {
+            "key": "goal_certified_event_birth.v1:544553545f4f4e4c592d70726f6a6563742dceb2cc81:544553545f4f4e4c593a676f616c5f72756e3aceb12d65cc812df09fa68a",
+            "sha256": "0b2ea1dc8876c978e05f1798ad7baae8ceb9b6defbace88db8bea8bbc48e5bbb"
+          },
+          "original_occurred_at_utc": "2026-11-11T12:00:00.250+01:00",
+          "owner": {
+            "operation_id": "TEST_ONLY:operation:certified:1",
+            "owner_epoch": 1,
+            "owner_id": "TEST_ONLY:owner:coordinator:b2c23481-6655-4cc3-b7e3-6f3aa47fe6b1"
+          },
+          "scope": {
+            "goal_id": "TEST_ONLY:goal:1",
+            "goal_run_id": "TEST_ONLY:goal_run:\u03b1-e\u0301-\ud83e\udd8a",
+            "project_id": "TEST_ONLY-project-\u03b2\u0301",
+            "scope_partition": "project~VEVTVF9PTkxZLXByb2plY3QtzrLMgQ",
+            "storage_instance_id": "ef9ca531-41d6-4d1d-a235-99a0794b3b5c",
+            "work_graph_id": "TEST_ONLY:work_graph:1"
+          },
+          "source_commitments": {
+            "original_certification_source_sha256": "3f04b6f65dbeeb3ee2567f544fb2654b2e7f5e069721d2cac9c93254c1f9ddb1",
+            "whole_goal_argument_sha256": "69da25eab7ede579782e17063a60723fce47455dfa2d90bac29b70b4c2777ab1",
+            "whole_identity_input_sha256": "3bce0941a4de50b04325d67097779ff94aa63d8a7f2d35042671a2a636e8a340",
+            "whole_identity_result_sha256": "f1856522cdf79fb4afb50ecfd3a088b056dd9dc1d4f72136cf696b79b11bf491",
+            "whole_producer_source_sha256": "caa46be8920503a5254134d8547ca1b53a01743ebeeac046c0657ceb4d7f8b8c",
+            "whole_standard_durable_read_sha256": "1b1779c71a8f83e31728b6c32bcf248358b6fa2a95b072b5a452b2d88f616580"
+          },
+          "standard_capture_origin": {
+            "key": "workflow_standard_capture_origin.v1:544553545f4f4e4c592d70726f6a6563742dceb2cc81:544553545f4f4e4c593a676f616c5f72756e3aceb12d65cc812df09fa68a",
+            "sha256": "677363fb5eff0214d8c1e49748304e740969f90cc52f2c6ce4464bf116fa8ec2"
+          },
+          "transaction_id": "TEST_ONLY:tx:ef9ca531-41d6-4d1d-a235-99a0794b3b5c:8"
+        },
+        "origin": {
+          "commit": {
+            "key": "goal_certified_event_commit.v1:544553545f4f4e4c592d70726f6a6563742dceb2cc81:544553545f4f4e4c593a676f616c5f72756e3aceb12d65cc812df09fa68a:544553545f4f4e4c593a6f7065726174696f6e3a6365727469666965643a31",
+            "sha256": "8421ab1b32196c1e1af4d457d68af989f8752f334540f2807f39a2bffc0714c4"
+          },
+          "event_phase": {
+            "key": "goal_certified_event_eventphase.v1:544553545f4f4e4c592d70726f6a6563742dceb2cc81:544553545f4f4e4c593a676f616c5f72756e3aceb12d65cc812df09fa68a:544553545f4f4e4c593a6f7065726174696f6e3a6365727469666965643a31",
+            "sha256": "b1ebf50d6399ae0350819d7cc49e95b2ea2217e3193f812761a6dacfdad61f11"
+          },
+          "intent": {
+            "key": "goal_certified_event_intent.v1:544553545f4f4e4c592d70726f6a6563742dceb2cc81:544553545f4f4e4c593a676f616c5f72756e3aceb12d65cc812df09fa68a:544553545f4f4e4c593a6f7065726174696f6e3a6365727469666965643a31",
+            "sha256": "8ca4f39fde91f169cea2f64851267ba1e152fb035ba23b4e788f0d11a4006c48"
+          },
+          "issued_at_utc": "2026-11-20T13:09:39.949Z",
+          "issuer_method": "owner.workflow.certified_event.commit_native.v1",
+          "owner": {
+            "operation_id": "TEST_ONLY:operation:certified:1",
+            "owner_epoch": 1,
+            "owner_id": "TEST_ONLY:owner:coordinator:b2c23481-6655-4cc3-b7e3-6f3aa47fe6b1"
+          },
+          "scope": {
+            "goal_id": "TEST_ONLY:goal:1",
+            "goal_run_id": "TEST_ONLY:goal_run:\u03b1-e\u0301-\ud83e\udd8a",
+            "project_id": "TEST_ONLY-project-\u03b2\u0301",
+            "scope_partition": "project~VEVTVF9PTkxZLXByb2plY3QtzrLMgQ",
+            "storage_instance_id": "ef9ca531-41d6-4d1d-a235-99a0794b3b5c",
+            "work_graph_id": "TEST_ONLY:work_graph:1"
+          },
+          "transaction_id": "TEST_ONLY:tx:ef9ca531-41d6-4d1d-a235-99a0794b3b5c:10"
+        },
+        "release": {
+          "commit": {
+            "key": "goal_certified_event_commit.v1:544553545f4f4e4c592d70726f6a6563742dceb2cc81:544553545f4f4e4c593a676f616c5f72756e3aceb12d65cc812df09fa68a:544553545f4f4e4c593a6f7065726174696f6e3a6365727469666965643a31",
+            "sha256": "8421ab1b32196c1e1af4d457d68af989f8752f334540f2807f39a2bffc0714c4"
+          },
+          "event_phase": {
+            "key": "goal_certified_event_eventphase.v1:544553545f4f4e4c592d70726f6a6563742dceb2cc81:544553545f4f4e4c593a676f616c5f72756e3aceb12d65cc812df09fa68a:544553545f4f4e4c593a6f7065726174696f6e3a6365727469666965643a31",
+            "sha256": "b1ebf50d6399ae0350819d7cc49e95b2ea2217e3193f812761a6dacfdad61f11"
+          },
+          "intent": {
+            "key": "goal_certified_event_intent.v1:544553545f4f4e4c592d70726f6a6563742dceb2cc81:544553545f4f4e4c593a676f616c5f72756e3aceb12d65cc812df09fa68a:544553545f4f4e4c593a6f7065726174696f6e3a6365727469666965643a31",
+            "sha256": "8ca4f39fde91f169cea2f64851267ba1e152fb035ba23b4e788f0d11a4006c48"
+          },
+          "issued_at_utc": "2026-11-20T13:09:40.161Z",
+          "origin": {
+            "key": "goal_certified_event_origin.v1:544553545f4f4e4c592d70726f6a6563742dceb2cc81:544553545f4f4e4c593a676f616c5f72756e3aceb12d65cc812df09fa68a:544553545f4f4e4c593a6f7065726174696f6e3a6365727469666965643a31",
+            "sha256": "46d77a673629502e6670f654620008342c7cf6c044cc9c8974745dc8f1b734f6"
+          },
+          "original_event_id": "goal_run.certified.v3:2996f4a51712609ae5ebdb9a1c61f2c68b6277cf2741445c3e8d9db5a8ed41bf",
+          "owner": {
+            "operation_id": "TEST_ONLY:operation:certified:1",
+            "owner_epoch": 1,
+            "owner_id": "TEST_ONLY:owner:coordinator:b2c23481-6655-4cc3-b7e3-6f3aa47fe6b1"
+          },
+          "scope": {
+            "goal_id": "TEST_ONLY:goal:1",
+            "goal_run_id": "TEST_ONLY:goal_run:\u03b1-e\u0301-\ud83e\udd8a",
+            "project_id": "TEST_ONLY-project-\u03b2\u0301",
+            "scope_partition": "project~VEVTVF9PTkxZLXByb2plY3QtzrLMgQ",
+            "storage_instance_id": "ef9ca531-41d6-4d1d-a235-99a0794b3b5c",
+            "work_graph_id": "TEST_ONLY:work_graph:1"
+          },
+          "transaction_id": "TEST_ONLY:tx:ef9ca531-41d6-4d1d-a235-99a0794b3b5c:11",
+          "whole_post_native_readback_sha256": "04540b8f5b17ba11765b56c392ba60eed257a499782d5fe05e5c2166f5735857",
+          "whole_release_current_sources_sha256": "c0702f24a7af3bd91e7da26e9825f34575a4dddcc9c34337ee872ebb20a29117"
+        }
+      },
+      "outcome": "original_complete"
+    }
+  },
+  "census_sha256": "cdeb7440041a74b33c0e5af00d25c046e867481f3643818f0f3453882b51503f",
+  "examples": {
+    "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/Birth/closed_members": {
+      "control_name": "released",
+      "member": [
+        "add",
+        "methodb_extra"
+      ],
+      "path": [
+        "authority",
+        "birth"
+      ]
+    },
+    "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/Birth/properties/initial_control_epoch/const": {
+      "control_name": "released",
+      "path": [
+        "authority",
+        "birth",
+        "initial_control_epoch"
+      ],
+      "value": "TEST_ONLY:invalid"
+    },
+    "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/Birth/properties/initial_control_key/minLength": {
+      "control_name": "released",
+      "path": [
+        "authority",
+        "birth",
+        "initial_control_key"
+      ],
+      "value": ""
+    },
+    "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/Birth/properties/initial_control_key/type": {
+      "control_name": "released",
+      "path": [
+        "authority",
+        "birth",
+        "initial_control_key"
+      ],
+      "value": false
+    },
+    "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/Birth/properties/initial_phase/const": {
+      "control_name": "released",
+      "path": [
+        "authority",
+        "birth",
+        "initial_phase"
+      ],
+      "value": "TEST_ONLY:invalid"
+    },
+    "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/Birth/properties/issued_at_utc/format": {
+      "control_name": "released",
+      "path": [
+        "authority",
+        "birth",
+        "issued_at_utc"
+      ],
+      "value": "not-a-valid-value"
+    },
+    "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/Birth/properties/issued_at_utc/type": {
+      "control_name": "released",
+      "path": [
+        "authority",
+        "birth",
+        "issued_at_utc"
+      ],
+      "value": false
+    },
+    "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/Birth/properties/profile_sha256/pattern": {
+      "control_name": "released",
+      "path": [
+        "authority",
+        "birth",
+        "profile_sha256"
+      ],
+      "value": "not-a-valid-value"
+    },
+    "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/Birth/properties/profile_sha256/type": {
+      "control_name": "released",
+      "path": [
+        "authority",
+        "birth",
+        "profile_sha256"
+      ],
+      "value": false
+    },
+    "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/Birth/properties/transaction_id/minLength": {
+      "control_name": "released",
+      "path": [
+        "authority",
+        "birth",
+        "transaction_id"
+      ],
+      "value": ""
+    },
+    "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/Birth/properties/transaction_id/type": {
+      "control_name": "released",
+      "path": [
+        "authority",
+        "birth",
+        "transaction_id"
+      ],
+      "value": false
+    },
+    "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/Birth/required": {
+      "control_name": "released",
+      "member": [
+        "remove",
+        "scope"
+      ],
+      "path": [
+        "authority",
+        "birth"
+      ]
+    },
+    "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/Birth/type": {
+      "control_name": "released",
+      "path": [
+        "authority",
+        "birth"
+      ],
+      "value": false
+    },
+    "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/CandidateCommitments/closed_members": {
+      "control_name": "released",
+      "member": [
+        "add",
+        "methodb_extra"
+      ],
+      "path": [
+        "authority",
+        "intent",
+        "candidate_commitments"
+      ]
+    },
+    "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/CandidateCommitments/properties/producer_semantic_digest/pattern": {
+      "control_name": "released",
+      "path": [
+        "authority",
+        "intent",
+        "candidate_commitments",
+        "producer_semantic_digest"
+      ],
+      "value": "not-a-valid-value"
+    },
+    "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/CandidateCommitments/properties/producer_semantic_digest/type": {
+      "control_name": "released",
+      "path": [
+        "authority",
+        "intent",
+        "candidate_commitments",
+        "producer_semantic_digest"
+      ],
+      "value": false
+    },
+    "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/CandidateCommitments/properties/whole_native_candidate_sha256/pattern": {
+      "control_name": "released",
+      "path": [
+        "authority",
+        "intent",
+        "candidate_commitments",
+        "whole_native_candidate_sha256"
+      ],
+      "value": "not-a-valid-value"
+    },
+    "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/CandidateCommitments/properties/whole_native_candidate_sha256/type": {
+      "control_name": "released",
+      "path": [
+        "authority",
+        "intent",
+        "candidate_commitments",
+        "whole_native_candidate_sha256"
+      ],
+      "value": false
+    },
+    "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/CandidateCommitments/properties/whole_producer25_sha256/pattern": {
+      "control_name": "released",
+      "path": [
+        "authority",
+        "intent",
+        "candidate_commitments",
+        "whole_producer25_sha256"
+      ],
+      "value": "not-a-valid-value"
+    },
+    "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/CandidateCommitments/properties/whole_producer25_sha256/type": {
+      "control_name": "released",
+      "path": [
+        "authority",
+        "intent",
+        "candidate_commitments",
+        "whole_producer25_sha256"
+      ],
+      "value": false
+    },
+    "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/CandidateCommitments/required": {
+      "control_name": "released",
+      "member": [
+        "remove",
+        "whole_producer25_sha256"
+      ],
+      "path": [
+        "authority",
+        "intent",
+        "candidate_commitments"
+      ]
+    },
+    "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/CandidateCommitments/type": {
+      "control_name": "released",
+      "path": [
+        "authority",
+        "intent",
+        "candidate_commitments"
+      ],
+      "value": false
+    },
+    "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/Clocks/closed_members": {
+      "control_name": "released",
+      "member": [
+        "add",
+        "methodb_extra"
+      ],
+      "path": [
+        "authority",
+        "intent",
+        "clocks"
+      ]
+    },
+    "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/Clocks/properties/expected_goal_run_revision/minimum": {
+      "control_name": "released",
+      "path": [
+        "authority",
+        "intent",
+        "clocks",
+        "expected_goal_run_revision"
+      ],
+      "value": -1
+    },
+    "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/Clocks/properties/expected_goal_run_revision/type": {
+      "control_name": "released",
+      "path": [
+        "authority",
+        "intent",
+        "clocks",
+        "expected_goal_run_revision"
+      ],
+      "value": false
+    },
+    "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/Clocks/properties/expected_workflow_control_revision/minimum": {
+      "control_name": "released",
+      "path": [
+        "authority",
+        "intent",
+        "clocks",
+        "expected_workflow_control_revision"
+      ],
+      "value": -1
+    },
+    "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/Clocks/properties/expected_workflow_control_revision/type": {
+      "control_name": "released",
+      "path": [
+        "authority",
+        "intent",
+        "clocks",
+        "expected_workflow_control_revision"
+      ],
+      "value": false
+    },
+    "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/Clocks/properties/goal_run_revision/minimum": {
+      "control_name": "released",
+      "path": [
+        "authority",
+        "intent",
+        "clocks",
+        "goal_run_revision"
+      ],
+      "value": -1
+    },
+    "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/Clocks/properties/goal_run_revision/type": {
+      "control_name": "released",
+      "path": [
+        "authority",
+        "intent",
+        "clocks",
+        "goal_run_revision"
+      ],
+      "value": false
+    },
+    "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/Clocks/properties/observed_goal_revision/minimum": {
+      "control_name": "released",
+      "path": [
+        "authority",
+        "intent",
+        "clocks",
+        "observed_goal_revision"
+      ],
+      "value": -1
+    },
+    "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/Clocks/properties/observed_goal_revision/type": {
+      "control_name": "released",
+      "path": [
+        "authority",
+        "intent",
+        "clocks",
+        "observed_goal_revision"
+      ],
+      "value": false
+    },
+    "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/Clocks/properties/whole_unchanged_goal_argument_sha256/pattern": {
+      "control_name": "released",
+      "path": [
+        "authority",
+        "intent",
+        "clocks",
+        "whole_unchanged_goal_argument_sha256"
+      ],
+      "value": "not-a-valid-value"
+    },
+    "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/Clocks/properties/whole_unchanged_goal_argument_sha256/type": {
+      "control_name": "released",
+      "path": [
+        "authority",
+        "intent",
+        "clocks",
+        "whole_unchanged_goal_argument_sha256"
+      ],
+      "value": false
+    },
+    "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/Clocks/properties/workflow_control_revision/minimum": {
+      "control_name": "released",
+      "path": [
+        "authority",
+        "intent",
+        "clocks",
+        "workflow_control_revision"
+      ],
+      "value": -1
+    },
+    "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/Clocks/properties/workflow_control_revision/type": {
+      "control_name": "released",
+      "path": [
+        "authority",
+        "intent",
+        "clocks",
+        "workflow_control_revision"
+      ],
+      "value": false
+    },
+    "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/Clocks/required": {
+      "control_name": "released",
+      "member": [
+        "remove",
+        "expected_goal_run_revision"
+      ],
+      "path": [
+        "authority",
+        "intent",
+        "clocks"
+      ]
+    },
+    "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/Clocks/type": {
+      "control_name": "released",
+      "path": [
+        "authority",
+        "intent",
+        "clocks"
+      ],
+      "value": false
+    },
+    "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/Commit/closed_members": {
+      "control_name": "released",
+      "member": [
+        "add",
+        "methodb_extra"
+      ],
+      "path": [
+        "authority",
+        "commit"
+      ]
+    },
+    "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/Commit/properties/issued_at_utc/format": {
+      "control_name": "released",
+      "path": [
+        "authority",
+        "commit",
+        "issued_at_utc"
+      ],
+      "value": "not-a-valid-value"
+    },
+    "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/Commit/properties/issued_at_utc/type": {
+      "control_name": "released",
+      "path": [
+        "authority",
+        "commit",
+        "issued_at_utc"
+      ],
+      "value": false
+    },
+    "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/Commit/properties/transaction_id/minLength": {
+      "control_name": "released",
+      "path": [
+        "authority",
+        "commit",
+        "transaction_id"
+      ],
+      "value": ""
+    },
+    "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/Commit/properties/transaction_id/type": {
+      "control_name": "released",
+      "path": [
+        "authority",
+        "commit",
+        "transaction_id"
+      ],
+      "value": false
+    },
+    "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/Commit/properties/whole_native_published_union_sha256/pattern": {
+      "control_name": "released",
+      "path": [
+        "authority",
+        "commit",
+        "whole_native_published_union_sha256"
+      ],
+      "value": "not-a-valid-value"
+    },
+    "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/Commit/properties/whole_native_published_union_sha256/type": {
+      "control_name": "released",
+      "path": [
+        "authority",
+        "commit",
+        "whole_native_published_union_sha256"
+      ],
+      "value": false
+    },
+    "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/Commit/required": {
+      "control_name": "released",
+      "member": [
+        "remove",
+        "scope"
+      ],
+      "path": [
+        "authority",
+        "commit"
+      ]
+    },
+    "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/Commit/type": {
+      "control_name": "released",
+      "path": [
+        "authority",
+        "commit"
+      ],
+      "value": false
+    },
+    "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/CompleteMetadata/closed_members": {
+      "control_name": "released",
+      "member": [
+        "add",
+        "methodb_extra"
+      ],
+      "path": []
+    },
+    "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/CompleteMetadata/properties/action_authority/const": {
+      "control_name": "released",
+      "path": [
+        "action_authority"
+      ],
+      "value": "TEST_ONLY:invalid"
+    },
+    "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/CompleteMetadata/properties/outcome/const": {
+      "control_name": "released",
+      "path": [
+        "outcome"
+      ],
+      "value": "TEST_ONLY:invalid"
+    },
+    "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/CompleteMetadata/required": {
+      "control_name": "released",
+      "member": [
+        "remove",
+        "outcome"
+      ],
+      "path": []
+    },
+    "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/CompleteMetadata/type": {
+      "control_name": "armed",
+      "path": [],
+      "value": false
+    },
+    "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/EventPhase/closed_members": {
+      "control_name": "released",
+      "member": [
+        "add",
+        "methodb_extra"
+      ],
+      "path": [
+        "authority",
+        "event_phase"
+      ]
+    },
+    "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/EventPhase/properties/active_group_sha256/pattern": {
+      "control_name": "released",
+      "path": [
+        "authority",
+        "event_phase",
+        "active_group_sha256"
+      ],
+      "value": "not-a-valid-value"
+    },
+    "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/EventPhase/properties/active_group_sha256/type": {
+      "control_name": "released",
+      "path": [
+        "authority",
+        "event_phase",
+        "active_group_sha256"
+      ],
+      "value": false
+    },
+    "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/EventPhase/properties/all_member_custody_sha256/pattern": {
+      "control_name": "released",
+      "path": [
+        "authority",
+        "event_phase",
+        "all_member_custody_sha256"
+      ],
+      "value": "not-a-valid-value"
+    },
+    "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/EventPhase/properties/all_member_custody_sha256/type": {
+      "control_name": "released",
+      "path": [
+        "authority",
+        "event_phase",
+        "all_member_custody_sha256"
+      ],
+      "value": false
+    },
+    "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/EventPhase/properties/event_id/minLength": {
+      "control_name": "released",
+      "path": [
+        "authority",
+        "event_phase",
+        "event_id"
+      ],
+      "value": ""
+    },
+    "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/EventPhase/properties/event_id/type": {
+      "control_name": "released",
+      "path": [
+        "authority",
+        "event_phase",
+        "event_id"
+      ],
+      "value": false
+    },
+    "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/EventPhase/properties/idempotency_key/minLength": {
+      "control_name": "released",
+      "path": [
+        "authority",
+        "event_phase",
+        "idempotency_key"
+      ],
+      "value": ""
+    },
+    "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/EventPhase/properties/idempotency_key/type": {
+      "control_name": "released",
+      "path": [
+        "authority",
+        "event_phase",
+        "idempotency_key"
+      ],
+      "value": false
+    },
+    "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/EventPhase/properties/issued_at_utc/format": {
+      "control_name": "released",
+      "path": [
+        "authority",
+        "event_phase",
+        "issued_at_utc"
+      ],
+      "value": "not-a-valid-value"
+    },
+    "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/EventPhase/properties/issued_at_utc/type": {
+      "control_name": "released",
+      "path": [
+        "authority",
+        "event_phase",
+        "issued_at_utc"
+      ],
+      "value": false
+    },
+    "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/EventPhase/properties/original_event_value_sha256/pattern": {
+      "control_name": "released",
+      "path": [
+        "authority",
+        "event_phase",
+        "original_event_value_sha256"
+      ],
+      "value": "not-a-valid-value"
+    },
+    "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/EventPhase/properties/original_event_value_sha256/type": {
+      "control_name": "released",
+      "path": [
+        "authority",
+        "event_phase",
+        "original_event_value_sha256"
+      ],
+      "value": false
+    },
+    "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/EventPhase/properties/original_full_value_result_sha256/pattern": {
+      "control_name": "released",
+      "path": [
+        "authority",
+        "event_phase",
+        "original_full_value_result_sha256"
+      ],
+      "value": "not-a-valid-value"
+    },
+    "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/EventPhase/properties/original_full_value_result_sha256/type": {
+      "control_name": "released",
+      "path": [
+        "authority",
+        "event_phase",
+        "original_full_value_result_sha256"
+      ],
+      "value": false
+    },
+    "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/EventPhase/properties/producer_semantic_digest/pattern": {
+      "control_name": "released",
+      "path": [
+        "authority",
+        "event_phase",
+        "producer_semantic_digest"
+      ],
+      "value": "not-a-valid-value"
+    },
+    "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/EventPhase/properties/producer_semantic_digest/type": {
+      "control_name": "released",
+      "path": [
+        "authority",
+        "event_phase",
+        "producer_semantic_digest"
+      ],
+      "value": false
+    },
+    "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/EventPhase/properties/transaction_id/minLength": {
+      "control_name": "released",
+      "path": [
+        "authority",
+        "event_phase",
+        "transaction_id"
+      ],
+      "value": ""
+    },
+    "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/EventPhase/properties/transaction_id/type": {
+      "control_name": "released",
+      "path": [
+        "authority",
+        "event_phase",
+        "transaction_id"
+      ],
+      "value": false
+    },
+    "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/EventPhase/properties/whole_first_append_receipt_sha256/pattern": {
+      "control_name": "released",
+      "path": [
+        "authority",
+        "event_phase",
+        "whole_first_append_receipt_sha256"
+      ],
+      "value": "not-a-valid-value"
+    },
+    "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/EventPhase/properties/whole_first_append_receipt_sha256/type": {
+      "control_name": "released",
+      "path": [
+        "authority",
+        "event_phase",
+        "whole_first_append_receipt_sha256"
+      ],
+      "value": false
+    },
+    "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/EventPhase/properties/whole_producer25_sha256/pattern": {
+      "control_name": "released",
+      "path": [
+        "authority",
+        "event_phase",
+        "whole_producer25_sha256"
+      ],
+      "value": "not-a-valid-value"
+    },
+    "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/EventPhase/properties/whole_producer25_sha256/type": {
+      "control_name": "released",
+      "path": [
+        "authority",
+        "event_phase",
+        "whole_producer25_sha256"
+      ],
+      "value": false
+    },
+    "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/EventPhase/required": {
+      "control_name": "released",
+      "member": [
+        "remove",
+        "scope"
+      ],
+      "path": [
+        "authority",
+        "event_phase"
+      ]
+    },
+    "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/EventPhase/type": {
+      "control_name": "released",
+      "path": [
+        "authority",
+        "event_phase"
+      ],
+      "value": false
+    },
+    "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/Intent/closed_members": {
+      "control_name": "released",
+      "member": [
+        "add",
+        "methodb_extra"
+      ],
+      "path": [
+        "authority",
+        "intent"
+      ]
+    },
+    "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/Intent/properties/certification_receipt_ref/minLength": {
+      "control_name": "released",
+      "path": [
+        "authority",
+        "intent",
+        "certification_receipt_ref"
+      ],
+      "value": ""
+    },
+    "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/Intent/properties/certification_receipt_ref/type": {
+      "control_name": "released",
+      "path": [
+        "authority",
+        "intent",
+        "certification_receipt_ref"
+      ],
+      "value": false
+    },
+    "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/Intent/properties/event_id/minLength": {
+      "control_name": "released",
+      "path": [
+        "authority",
+        "intent",
+        "event_id"
+      ],
+      "value": ""
+    },
+    "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/Intent/properties/event_id/type": {
+      "control_name": "released",
+      "path": [
+        "authority",
+        "intent",
+        "event_id"
+      ],
+      "value": false
+    },
+    "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/Intent/properties/idempotency_key/minLength": {
+      "control_name": "released",
+      "path": [
+        "authority",
+        "intent",
+        "idempotency_key"
+      ],
+      "value": ""
+    },
+    "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/Intent/properties/idempotency_key/type": {
+      "control_name": "released",
+      "path": [
+        "authority",
+        "intent",
+        "idempotency_key"
+      ],
+      "value": false
+    },
+    "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/Intent/properties/installed_profile_sha256/pattern": {
+      "control_name": "released",
+      "path": [
+        "authority",
+        "intent",
+        "installed_profile_sha256"
+      ],
+      "value": "not-a-valid-value"
+    },
+    "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/Intent/properties/installed_profile_sha256/type": {
+      "control_name": "released",
+      "path": [
+        "authority",
+        "intent",
+        "installed_profile_sha256"
+      ],
+      "value": false
+    },
+    "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/Intent/properties/original_occurred_at_utc/format": {
+      "control_name": "released",
+      "path": [
+        "authority",
+        "intent",
+        "original_occurred_at_utc"
+      ],
+      "value": "not-a-valid-value"
+    },
+    "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/Intent/properties/original_occurred_at_utc/type": {
+      "control_name": "released",
+      "path": [
+        "authority",
+        "intent",
+        "original_occurred_at_utc"
+      ],
+      "value": false
+    },
+    "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/Intent/properties/transaction_id/minLength": {
+      "control_name": "released",
+      "path": [
+        "authority",
+        "intent",
+        "transaction_id"
+      ],
+      "value": ""
+    },
+    "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/Intent/properties/transaction_id/type": {
+      "control_name": "released",
+      "path": [
+        "authority",
+        "intent",
+        "transaction_id"
+      ],
+      "value": false
+    },
+    "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/Intent/required": {
+      "control_name": "released",
+      "member": [
+        "remove",
+        "scope"
+      ],
+      "path": [
+        "authority",
+        "intent"
+      ]
+    },
+    "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/Intent/type": {
+      "control_name": "released",
+      "path": [
+        "authority",
+        "intent"
+      ],
+      "value": false
+    },
+    "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/NoAppend/closed_members": {
+      "control_name": "armed",
+      "member": [
+        "add",
+        "methodb_extra"
+      ],
+      "path": []
+    },
+    "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/NoAppend/properties/action_authority/const": {
+      "control_name": "armed",
+      "path": [
+        "action_authority"
+      ],
+      "value": "TEST_ONLY:invalid"
+    },
+    "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/NoAppend/properties/event_appended/const": {
+      "control_name": "armed",
+      "path": [
+        "event_appended"
+      ],
+      "value": true
+    },
+    "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/NoAppend/properties/native_changed/const": {
+      "control_name": "armed",
+      "path": [
+        "native_changed"
+      ],
+      "value": true
+    },
+    "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/NoAppend/properties/outcome/const": {
+      "control_name": "armed",
+      "path": [
+        "outcome"
+      ],
+      "value": "TEST_ONLY:invalid"
+    },
+    "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/NoAppend/properties/reason/enum": {
+      "control_name": "armed",
+      "path": [
+        "reason"
+      ],
+      "value": "TEST_ONLY:invalid"
+    },
+    "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/NoAppend/properties/standard_receipt_preserved/const": {
+      "control_name": "armed",
+      "path": [
+        "standard_receipt_preserved"
+      ],
+      "value": false
+    },
+    "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/NoAppend/required": {
+      "control_name": "armed",
+      "member": [
+        "remove",
+        "outcome"
+      ],
+      "path": []
+    },
+    "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/NoAppend/type": {
+      "control_name": "armed",
+      "path": [],
+      "value": false
+    },
+    "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/Origin/closed_members": {
+      "control_name": "released",
+      "member": [
+        "add",
+        "methodb_extra"
+      ],
+      "path": [
+        "authority",
+        "origin"
+      ]
+    },
+    "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/Origin/properties/issued_at_utc/format": {
+      "control_name": "released",
+      "path": [
+        "authority",
+        "origin",
+        "issued_at_utc"
+      ],
+      "value": "not-a-valid-value"
+    },
+    "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/Origin/properties/issued_at_utc/type": {
+      "control_name": "released",
+      "path": [
+        "authority",
+        "origin",
+        "issued_at_utc"
+      ],
+      "value": false
+    },
+    "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/Origin/properties/issuer_method/const": {
+      "control_name": "released",
+      "path": [
+        "authority",
+        "origin",
+        "issuer_method"
+      ],
+      "value": "TEST_ONLY:invalid"
+    },
+    "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/Origin/properties/transaction_id/minLength": {
+      "control_name": "released",
+      "path": [
+        "authority",
+        "origin",
+        "transaction_id"
+      ],
+      "value": ""
+    },
+    "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/Origin/properties/transaction_id/type": {
+      "control_name": "released",
+      "path": [
+        "authority",
+        "origin",
+        "transaction_id"
+      ],
+      "value": false
+    },
+    "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/Origin/required": {
+      "control_name": "released",
+      "member": [
+        "remove",
+        "scope"
+      ],
+      "path": [
+        "authority",
+        "origin"
+      ]
+    },
+    "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/Origin/type": {
+      "control_name": "released",
+      "path": [
+        "authority",
+        "origin"
+      ],
+      "value": false
+    },
+    "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/Owner/closed_members": {
+      "control_name": "released",
+      "member": [
+        "add",
+        "methodb_extra"
+      ],
+      "path": [
+        "authority",
+        "birth",
+        "owner"
+      ]
+    },
+    "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/Owner/properties/operation_id/minLength": {
+      "control_name": "released",
+      "path": [
+        "authority",
+        "birth",
+        "owner",
+        "operation_id"
+      ],
+      "value": ""
+    },
+    "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/Owner/properties/operation_id/type": {
+      "control_name": "released",
+      "path": [
+        "authority",
+        "birth",
+        "owner",
+        "operation_id"
+      ],
+      "value": false
+    },
+    "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/Owner/properties/owner_epoch/minimum": {
+      "control_name": "released",
+      "path": [
+        "authority",
+        "birth",
+        "owner",
+        "owner_epoch"
+      ],
+      "value": -1
+    },
+    "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/Owner/properties/owner_epoch/type": {
+      "control_name": "released",
+      "path": [
+        "authority",
+        "birth",
+        "owner",
+        "owner_epoch"
+      ],
+      "value": false
+    },
+    "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/Owner/properties/owner_id/minLength": {
+      "control_name": "released",
+      "path": [
+        "authority",
+        "birth",
+        "owner",
+        "owner_id"
+      ],
+      "value": ""
+    },
+    "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/Owner/properties/owner_id/type": {
+      "control_name": "released",
+      "path": [
+        "authority",
+        "birth",
+        "owner",
+        "owner_id"
+      ],
+      "value": false
+    },
+    "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/Owner/required": {
+      "control_name": "released",
+      "member": [
+        "remove",
+        "owner_id"
+      ],
+      "path": [
+        "authority",
+        "birth",
+        "owner"
+      ]
+    },
+    "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/Owner/type": {
+      "control_name": "released",
+      "path": [
+        "authority",
+        "birth",
+        "owner"
+      ],
+      "value": false
+    },
+    "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/RecoveryResult/oneOf": {
+      "control_name": "armed",
+      "path": [],
+      "value": false
+    },
+    "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/Release/closed_members": {
+      "control_name": "released",
+      "member": [
+        "add",
+        "methodb_extra"
+      ],
+      "path": [
+        "authority",
+        "release"
+      ]
+    },
+    "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/Release/properties/issued_at_utc/format": {
+      "control_name": "released",
+      "path": [
+        "authority",
+        "release",
+        "issued_at_utc"
+      ],
+      "value": "not-a-valid-value"
+    },
+    "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/Release/properties/issued_at_utc/type": {
+      "control_name": "released",
+      "path": [
+        "authority",
+        "release",
+        "issued_at_utc"
+      ],
+      "value": false
+    },
+    "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/Release/properties/original_event_id/minLength": {
+      "control_name": "released",
+      "path": [
+        "authority",
+        "release",
+        "original_event_id"
+      ],
+      "value": ""
+    },
+    "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/Release/properties/original_event_id/type": {
+      "control_name": "released",
+      "path": [
+        "authority",
+        "release",
+        "original_event_id"
+      ],
+      "value": false
+    },
+    "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/Release/properties/transaction_id/minLength": {
+      "control_name": "released",
+      "path": [
+        "authority",
+        "release",
+        "transaction_id"
+      ],
+      "value": ""
+    },
+    "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/Release/properties/transaction_id/type": {
+      "control_name": "released",
+      "path": [
+        "authority",
+        "release",
+        "transaction_id"
+      ],
+      "value": false
+    },
+    "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/Release/properties/whole_post_native_readback_sha256/pattern": {
+      "control_name": "released",
+      "path": [
+        "authority",
+        "release",
+        "whole_post_native_readback_sha256"
+      ],
+      "value": "not-a-valid-value"
+    },
+    "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/Release/properties/whole_post_native_readback_sha256/type": {
+      "control_name": "released",
+      "path": [
+        "authority",
+        "release",
+        "whole_post_native_readback_sha256"
+      ],
+      "value": false
+    },
+    "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/Release/properties/whole_release_current_sources_sha256/pattern": {
+      "control_name": "released",
+      "path": [
+        "authority",
+        "release",
+        "whole_release_current_sources_sha256"
+      ],
+      "value": "not-a-valid-value"
+    },
+    "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/Release/properties/whole_release_current_sources_sha256/type": {
+      "control_name": "released",
+      "path": [
+        "authority",
+        "release",
+        "whole_release_current_sources_sha256"
+      ],
+      "value": false
+    },
+    "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/Release/required": {
+      "control_name": "released",
+      "member": [
+        "remove",
+        "scope"
+      ],
+      "path": [
+        "authority",
+        "release"
+      ]
+    },
+    "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/Release/type": {
+      "control_name": "released",
+      "path": [
+        "authority",
+        "release"
+      ],
+      "value": false
+    },
+    "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/RetainedAuthority/closed_members": {
+      "control_name": "released",
+      "member": [
+        "add",
+        "methodb_extra"
+      ],
+      "path": [
+        "authority"
+      ]
+    },
+    "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/RetainedAuthority/required": {
+      "control_name": "released",
+      "member": [
+        "remove",
+        "birth"
+      ],
+      "path": [
+        "authority"
+      ]
+    },
+    "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/RetainedAuthority/type": {
+      "control_name": "released",
+      "path": [
+        "authority"
+      ],
+      "value": false
+    },
+    "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/Scope/closed_members": {
+      "control_name": "event_durable",
+      "member": [
+        "add",
+        "methodb_extra"
+      ],
+      "path": [
+        "scope"
+      ]
+    },
+    "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/Scope/properties/goal_id/minLength": {
+      "control_name": "event_durable",
+      "path": [
+        "scope",
+        "goal_id"
+      ],
+      "value": ""
+    },
+    "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/Scope/properties/goal_id/type": {
+      "control_name": "event_durable",
+      "path": [
+        "scope",
+        "goal_id"
+      ],
+      "value": false
+    },
+    "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/Scope/properties/goal_run_id/minLength": {
+      "control_name": "event_durable",
+      "path": [
+        "scope",
+        "goal_run_id"
+      ],
+      "value": ""
+    },
+    "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/Scope/properties/goal_run_id/type": {
+      "control_name": "event_durable",
+      "path": [
+        "scope",
+        "goal_run_id"
+      ],
+      "value": false
+    },
+    "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/Scope/properties/project_id/minLength": {
+      "control_name": "event_durable",
+      "path": [
+        "scope",
+        "project_id"
+      ],
+      "value": ""
+    },
+    "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/Scope/properties/project_id/type": {
+      "control_name": "event_durable",
+      "path": [
+        "scope",
+        "project_id"
+      ],
+      "value": false
+    },
+    "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/Scope/properties/scope_partition/minLength": {
+      "control_name": "event_durable",
+      "path": [
+        "scope",
+        "scope_partition"
+      ],
+      "value": ""
+    },
+    "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/Scope/properties/scope_partition/type": {
+      "control_name": "event_durable",
+      "path": [
+        "scope",
+        "scope_partition"
+      ],
+      "value": false
+    },
+    "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/Scope/properties/storage_instance_id/minLength": {
+      "control_name": "event_durable",
+      "path": [
+        "scope",
+        "storage_instance_id"
+      ],
+      "value": ""
+    },
+    "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/Scope/properties/storage_instance_id/type": {
+      "control_name": "event_durable",
+      "path": [
+        "scope",
+        "storage_instance_id"
+      ],
+      "value": false
+    },
+    "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/Scope/properties/work_graph_id/minLength": {
+      "control_name": "event_durable",
+      "path": [
+        "scope",
+        "work_graph_id"
+      ],
+      "value": ""
+    },
+    "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/Scope/properties/work_graph_id/type": {
+      "control_name": "event_durable",
+      "path": [
+        "scope",
+        "work_graph_id"
+      ],
+      "value": false
+    },
+    "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/Scope/required": {
+      "control_name": "event_durable",
+      "member": [
+        "remove",
+        "project_id"
+      ],
+      "path": [
+        "scope"
+      ]
+    },
+    "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/Scope/type": {
+      "control_name": "event_durable",
+      "path": [
+        "scope"
+      ],
+      "value": false
+    },
+    "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/Selector/closed_members": {
+      "control_name": "event_durable",
+      "member": [
+        "add",
+        "methodb_extra"
+      ],
+      "path": [
+        "intent"
+      ]
+    },
+    "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/Selector/properties/key/minLength": {
+      "control_name": "event_durable",
+      "path": [
+        "intent",
+        "key"
+      ],
+      "value": ""
+    },
+    "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/Selector/properties/key/type": {
+      "control_name": "event_durable",
+      "path": [
+        "intent",
+        "key"
+      ],
+      "value": false
+    },
+    "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/Selector/properties/sha256/pattern": {
+      "control_name": "event_durable",
+      "path": [
+        "intent",
+        "sha256"
+      ],
+      "value": "not-a-valid-value"
+    },
+    "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/Selector/properties/sha256/type": {
+      "control_name": "event_durable",
+      "path": [
+        "intent",
+        "sha256"
+      ],
+      "value": false
+    },
+    "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/Selector/required": {
+      "control_name": "event_durable",
+      "member": [
+        "remove",
+        "key"
+      ],
+      "path": [
+        "intent"
+      ]
+    },
+    "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/Selector/type": {
+      "control_name": "event_durable",
+      "path": [
+        "intent"
+      ],
+      "value": false
+    },
+    "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/SourceCommitments/closed_members": {
+      "control_name": "released",
+      "member": [
+        "add",
+        "methodb_extra"
+      ],
+      "path": [
+        "authority",
+        "intent",
+        "source_commitments"
+      ]
+    },
+    "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/SourceCommitments/properties/original_certification_source_sha256/pattern": {
+      "control_name": "released",
+      "path": [
+        "authority",
+        "intent",
+        "source_commitments",
+        "original_certification_source_sha256"
+      ],
+      "value": "not-a-valid-value"
+    },
+    "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/SourceCommitments/properties/original_certification_source_sha256/type": {
+      "control_name": "released",
+      "path": [
+        "authority",
+        "intent",
+        "source_commitments",
+        "original_certification_source_sha256"
+      ],
+      "value": false
+    },
+    "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/SourceCommitments/properties/whole_goal_argument_sha256/pattern": {
+      "control_name": "released",
+      "path": [
+        "authority",
+        "intent",
+        "source_commitments",
+        "whole_goal_argument_sha256"
+      ],
+      "value": "not-a-valid-value"
+    },
+    "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/SourceCommitments/properties/whole_goal_argument_sha256/type": {
+      "control_name": "released",
+      "path": [
+        "authority",
+        "intent",
+        "source_commitments",
+        "whole_goal_argument_sha256"
+      ],
+      "value": false
+    },
+    "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/SourceCommitments/properties/whole_identity_input_sha256/pattern": {
+      "control_name": "released",
+      "path": [
+        "authority",
+        "intent",
+        "source_commitments",
+        "whole_identity_input_sha256"
+      ],
+      "value": "not-a-valid-value"
+    },
+    "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/SourceCommitments/properties/whole_identity_input_sha256/type": {
+      "control_name": "released",
+      "path": [
+        "authority",
+        "intent",
+        "source_commitments",
+        "whole_identity_input_sha256"
+      ],
+      "value": false
+    },
+    "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/SourceCommitments/properties/whole_identity_result_sha256/pattern": {
+      "control_name": "released",
+      "path": [
+        "authority",
+        "intent",
+        "source_commitments",
+        "whole_identity_result_sha256"
+      ],
+      "value": "not-a-valid-value"
+    },
+    "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/SourceCommitments/properties/whole_identity_result_sha256/type": {
+      "control_name": "released",
+      "path": [
+        "authority",
+        "intent",
+        "source_commitments",
+        "whole_identity_result_sha256"
+      ],
+      "value": false
+    },
+    "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/SourceCommitments/properties/whole_producer_source_sha256/pattern": {
+      "control_name": "released",
+      "path": [
+        "authority",
+        "intent",
+        "source_commitments",
+        "whole_producer_source_sha256"
+      ],
+      "value": "not-a-valid-value"
+    },
+    "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/SourceCommitments/properties/whole_producer_source_sha256/type": {
+      "control_name": "released",
+      "path": [
+        "authority",
+        "intent",
+        "source_commitments",
+        "whole_producer_source_sha256"
+      ],
+      "value": false
+    },
+    "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/SourceCommitments/properties/whole_standard_durable_read_sha256/pattern": {
+      "control_name": "released",
+      "path": [
+        "authority",
+        "intent",
+        "source_commitments",
+        "whole_standard_durable_read_sha256"
+      ],
+      "value": "not-a-valid-value"
+    },
+    "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/SourceCommitments/properties/whole_standard_durable_read_sha256/type": {
+      "control_name": "released",
+      "path": [
+        "authority",
+        "intent",
+        "source_commitments",
+        "whole_standard_durable_read_sha256"
+      ],
+      "value": false
+    },
+    "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/SourceCommitments/required": {
+      "control_name": "released",
+      "member": [
+        "remove",
+        "original_certification_source_sha256"
+      ],
+      "path": [
+        "authority",
+        "intent",
+        "source_commitments"
+      ]
+    },
+    "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/SourceCommitments/type": {
+      "control_name": "released",
+      "path": [
+        "authority",
+        "intent",
+        "source_commitments"
+      ],
+      "value": false
+    },
+    "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/Unknown/closed_members": {
+      "control_name": "event_durable",
+      "member": [
+        "add",
+        "methodb_extra"
+      ],
+      "path": []
+    },
+    "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/Unknown/properties/action_authority/const": {
+      "control_name": "event_durable",
+      "path": [
+        "action_authority"
+      ],
+      "value": "TEST_ONLY:invalid"
+    },
+    "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/Unknown/properties/commit/anyOf": {
+      "control_name": "event_durable",
+      "path": [
+        "commit"
+      ],
+      "value": false
+    },
+    "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/Unknown/properties/commit/anyOf/1/type": {
+      "control_name": "event_durable",
+      "path": [
+        "commit"
+      ],
+      "value": false
+    },
+    "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/Unknown/properties/event_phase/anyOf": {
+      "control_name": "event_durable",
+      "path": [
+        "event_phase"
+      ],
+      "value": false
+    },
+    "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/Unknown/properties/event_phase/anyOf/1/type": {
+      "control_name": "event_durable",
+      "path": [
+        "event_phase"
+      ],
+      "value": false
+    },
+    "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/Unknown/properties/intent/anyOf": {
+      "control_name": "event_durable",
+      "path": [
+        "intent"
+      ],
+      "value": false
+    },
+    "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/Unknown/properties/intent/anyOf/1/type": {
+      "control_name": "event_durable",
+      "path": [
+        "intent"
+      ],
+      "value": false
+    },
+    "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/Unknown/properties/known_phase/enum": {
+      "control_name": "event_durable",
+      "path": [
+        "known_phase"
+      ],
+      "value": "TEST_ONLY:invalid"
+    },
+    "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/Unknown/properties/operation_id/minLength": {
+      "control_name": "event_durable",
+      "path": [
+        "operation_id"
+      ],
+      "value": ""
+    },
+    "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/Unknown/properties/operation_id/type": {
+      "control_name": "event_durable",
+      "path": [
+        "operation_id"
+      ],
+      "value": false
+    },
+    "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/Unknown/properties/outcome/const": {
+      "control_name": "event_durable",
+      "path": [
+        "outcome"
+      ],
+      "value": "TEST_ONLY:invalid"
+    },
+    "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/Unknown/properties/reason/enum": {
+      "control_name": "event_durable",
+      "path": [
+        "reason"
+      ],
+      "value": "TEST_ONLY:invalid"
+    },
+    "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/Unknown/properties/release/anyOf": {
+      "control_name": "event_durable",
+      "path": [
+        "release"
+      ],
+      "value": false
+    },
+    "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/Unknown/properties/release/anyOf/1/type": {
+      "control_name": "event_durable",
+      "path": [
+        "release"
+      ],
+      "value": false
+    },
+    "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/Unknown/required": {
+      "control_name": "event_durable",
+      "member": [
+        "remove",
+        "outcome"
+      ],
+      "path": []
+    },
+    "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v1.schema.json#/$defs/Unknown/type": {
+      "control_name": "armed",
+      "path": [],
+      "value": false
+    }
+  },
+  "family": "goal_run.certified",
+  "root": "dg5:2966dc55ce3e2dc8",
+  "route": "recover",
+  "row": "dg5/recover/result/schema",
+  "site": [
+    "scripts/pm_goal_dg_cf2_world.py",
+    1352
+  ],
+  "source": "76e7a4f279d974b3635eaf22b08e07967dbbf2ae"
+}
