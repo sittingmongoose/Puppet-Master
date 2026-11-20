@@ -429,3 +429,20 @@ PROOFS['dg5/start/origin/schema'] = dict(
         'after bypass, and the restored early refusal.'
     ),
 )
+
+PROOFS['dg5/start/original_append/schema'] = dict(
+    kind='entailment',
+    families=['goal_run.started'],
+    depends_on=['dg5/start/publication_result/schema'],
+    sites=[('scripts/pm_goal_dg_s_start.py', 1026), ('scripts/pm_goal_dg_s_start.py', 1029), ('scripts/pm_goal_dg_s_start.py', 1030), ('scripts/pm_goal_dg_s_start.py', 1036), ('scripts/pm_goal_dg_s_start.py', 1040), ('scripts/pm_goal_dg_s_start.py', 1042)],
+    argument=(
+        'The FullOriginalAppend document checked at 1029 is assigned to the required '
+        'PublicationResult.original_append member at 1040 and checked at 1042 in the same '
+        'commit_start call. Publication processing uses this document to build other values, '
+        'and leaves its JSON intact. In v3 and native v7 the required member resolves to the '
+        'identical FullOriginalAppend definition. If the call reaches the result check after '
+        'bypassing the early one, the same document must satisfy that definition. The three '
+        'exact-root replays record the byte-equal documents, exact validation message, and '
+        'restored early refusal.'
+    ),
+)
