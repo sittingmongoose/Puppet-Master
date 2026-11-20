@@ -1,0 +1,41 @@
+{
+  "fixtures": [
+    {
+      "edit": [
+        1,
+        [],
+        [
+          "add",
+          "gc_extra_member"
+        ]
+      ],
+      "edition": "v7",
+      "error": [
+        [],
+        "additionalProperties"
+      ],
+      "hash_seed": 3,
+      "root": "dg5:bd999acd71cd1f68",
+      "route": "issue/activation_source:completion_requirements"
+    },
+    {
+      "edit": [
+        1,
+        [],
+        [
+          "add",
+          "gc_extra_member"
+        ]
+      ],
+      "edition": "v3",
+      "error": [
+        [],
+        "additionalProperties"
+      ],
+      "hash_seed": 8,
+      "root": "dg5:fc92353c96c8e6ba",
+      "route": "issue/activation_source:completion_requirements"
+    }
+  ],
+  "row": "dg5/issue/activation_source:completion_requirements/schema"
+}
