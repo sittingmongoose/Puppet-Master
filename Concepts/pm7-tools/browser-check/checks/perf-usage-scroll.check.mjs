@@ -9,8 +9,8 @@
 // Per look (default Basic Dark) and surface:
 //   1. the pane has its own scrolling layer: a layer in the DevTools layer tree whose node is #pmuScroll and which is
 //      taller than the pane (its scrolled contents). Red on origin/main 1a109a026b (no layer), green after (837x1650).
-//   2. main-thread paint while the wheel turns (the trace's paint + pre-paint + layerize, ms a second, helpers/frame-
-//      trace.mjs): four windows of real wheel input, each exactly 48 ticks of 40 px (--set ticks=) with the pointer at the
+//   2. main-thread paint while the wheel turns (the trace's paint + pre-paint + layerize + PAC, ms a second, helpers/
+//      frame-trace.mjs; PAC is PaintArtifactCompositor, its own group since PM7PERF-FRAMETRACE-PAC-AS-PAINT): four windows of real wheel input, each exactly 48 ticks of 40 px (--set ticks=) with the pointer at the
 //      page's centre, starting at the board's top and turning every 12 ticks, traced from the first tick to 400 ms after
 //      the last (at most 8 s): every window scrolls the same way, never sits at an end (frame-cost's 30-tick turns did,
 //      and measured almost nothing), and is not diluted by idle time; in the order as built, control, control, as built. The control is the same page with the pane's hint taken away by a trial sheet (will-change: auto), which is
@@ -28,7 +28,8 @@
 //      the control's is logged as WARNING (a rest trace that lost data says so).
 // A pane that did not scroll in a window, or a window that stayed partial after two retakes (Chrome reported lost trace
 // data, the compositor drew under 10 frames a second while the wheel turned, or the 48 ticks did not fit in 8 s), fails
-// as "could not judge".
+// as "could not judge". So does a window whose trace names no renderer main thread: its paint reads 0, and one such
+// as-built window halves the mean, so the ratio could pass unmeasured (PM7PERF-NO-RENDERER-READS-ZERO, R124 O-1).
 // Both surfaces (the kit's sandbox switch).   --set looks=basic-dark,glass-dark   --set ratio=0.85   --set rm=1 (Reduced
 // Motion)   --set settle=<ms> (25000)
 // Bar for this check (test-tool-bar.md, written before its first review): a finding stops work only if it is shown on
@@ -120,7 +121,7 @@ export default async function (t) {
 					await park(); await t.page.waitForTimeout(1500);
 				}
 				const whole = !x.dataLoss && x.drawn.perSec >= 10 && ticks === TICKS;
-				const paint = (x.split.paint || 0) + (x.split.prepaint || 0) + (x.split.layerize || 0);
+				const paint = (x.split.paint || 0) + (x.split.prepaint || 0) + (x.split.layerize || 0) + (x.split.pac || 0);
 				const w = { name, whole, lost, ticks, secs: x.secs, renderer: x.renderer ? x.renderer.pid : null, frames: x.mainFrames.perSec, paint: Math.round(paint), main: Math.round(x.cost.main), dropped: x.frames.droppedPerSec, full: x.frames.notPresentedPerSec, partial: x.frames.partialPerSec, unknown: x.frames.presentationUnknownPerSec, drawn: x.drawn.perSec, scrolls: x.dispatched.scroll || 0, restFrames: rest.mainFrames.renderedPerSec, restLost: !!rest.dataLoss, from: at.top, to: top };
 				windows.push(w);
 				t.log(`${S}${name}: paint ${w.paint} ms/s, main ${w.main} ms/s, dropped ${w.dropped}/s (not presented ${w.full}, partial ${w.partial}, presentation unknown ${w.unknown}), drawn ${w.drawn}/s over ${w.secs} s, main frames ${w.frames}/s (renderer ${w.renderer}), ${w.ticks} ticks, ${w.scrolls} scroll events (${w.from} -> ${w.to} px) | at rest ${w.restFrames} rendered main frames/s${lost.length ? ' | taken again: ' + lost.join(', ') : ''}`);

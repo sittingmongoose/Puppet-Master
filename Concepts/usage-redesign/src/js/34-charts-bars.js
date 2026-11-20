@@ -818,7 +818,8 @@
     var hot = function (i) {
       var D = c._dh, cvx = c.el.querySelector('.pmu-dc-v'), capx = c.el.querySelector('.pmu-dc-c');
       $$('path[data-mark="arc"]', c.el).forEach(function (p, j) { p.classList.toggle('is-dim', i != null && j !== i); });
-      $$('.pmu-dl-row', c.el).forEach(function (r) { r.classList.toggle('is-hot', i != null && +r.getAttribute('data-i') === i); });
+      /* The aggregate footer has no model index; null must not coerce to model zero. */
+      $$('.pmu-dl-row', c.el).forEach(function (r) { r.classList.toggle('is-hot', i != null && r.hasAttribute('data-i') && +r.getAttribute('data-i') === i); });
       if (!cvx || !capx) return;
       if (i == null || !D.arcs[i]) { cvx.textContent = D.centreVal; capx.textContent = D.centreCap; return; }
       var x = D.arcs[i];

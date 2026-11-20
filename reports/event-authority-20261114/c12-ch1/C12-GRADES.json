@@ -1,0 +1,621 @@
+{
+  "lane": "CH1",
+  "rows": [
+    {
+      "after": "PASS",
+      "assessment_kind": "worker_self_grade",
+      "before": "PARTIAL",
+      "criterion": "positive_negative_oracles",
+      "criterion_number": 12,
+      "event_type": "chat.thread_worktree_bound",
+      "global_datetime_scan": "FAIL_PRE_EXISTING_EXCLUSION_CITATION",
+      "implementation_head": "ce483b6976f45b4b07de8b69b8fd4b322f4ff789",
+      "scope": "Static C12 implementation closure only; other cells unchanged; blind review and native execution NOT_RUN.",
+      "source_quotes": [
+        {
+          "line": 32119,
+          "path": "Plans/assistant-chat-design.md",
+          "quote": "Newly authored owner contract under DL-045",
+          "unit": "ACD-616"
+        },
+        {
+          "line": 32848,
+          "path": "Plans/Contracts_V0.md",
+          "quote": "Newly authored closed payload contract",
+          "unit": "CV-636"
+        },
+        {
+          "line": 35284,
+          "path": "Plans/storage-plan.md",
+          "quote": "Newly authored persistence/read contract",
+          "unit": "SP-616"
+        },
+        {
+          "line": 1066,
+          "path": "scripts/pm_dch_events.py",
+          "quote": "def current_record_valid(",
+          "unit": null
+        },
+        {
+          "line": 1092,
+          "path": "scripts/pm_dch_events.py",
+          "quote": "def worktree_event_outcome(",
+          "unit": null
+        },
+        {
+          "line": 147,
+          "path": "scripts/pm_dch_worktree.py",
+          "quote": "def check_original(",
+          "unit": null
+        },
+        {
+          "line": 278,
+          "path": "scripts/pm_dch_schema_coverage.py",
+          "quote": "def run(m,selected=None):",
+          "unit": null
+        }
+      ],
+      "source_report": "reports/event-authority-20261114/c12-ch1/SUMMARY.json"
+    },
+    {
+      "after": "PASS",
+      "assessment_kind": "worker_self_grade",
+      "before": "PARTIAL",
+      "criterion": "positive_negative_oracles",
+      "criterion_number": 12,
+      "event_type": "chat.thread_worktree_create_failed",
+      "global_datetime_scan": "FAIL_PRE_EXISTING_EXCLUSION_CITATION",
+      "implementation_head": "ce483b6976f45b4b07de8b69b8fd4b322f4ff789",
+      "scope": "Static C12 implementation closure only; other cells unchanged; blind review and native execution NOT_RUN.",
+      "source_quotes": [
+        {
+          "line": 32186,
+          "path": "Plans/assistant-chat-design.md",
+          "quote": "Newly authored owner contract under DL-045",
+          "unit": "ACD-617"
+        },
+        {
+          "line": 32972,
+          "path": "Plans/Contracts_V0.md",
+          "quote": "Newly authored closed payload contract",
+          "unit": "CV-637"
+        },
+        {
+          "line": 35508,
+          "path": "Plans/storage-plan.md",
+          "quote": "Newly authored persistence/read contract",
+          "unit": "SP-617"
+        },
+        {
+          "line": 1066,
+          "path": "scripts/pm_dch_events.py",
+          "quote": "def current_record_valid(",
+          "unit": null
+        },
+        {
+          "line": 1092,
+          "path": "scripts/pm_dch_events.py",
+          "quote": "def worktree_event_outcome(",
+          "unit": null
+        },
+        {
+          "line": 147,
+          "path": "scripts/pm_dch_worktree.py",
+          "quote": "def check_original(",
+          "unit": null
+        },
+        {
+          "line": 278,
+          "path": "scripts/pm_dch_schema_coverage.py",
+          "quote": "def run(m,selected=None):",
+          "unit": null
+        }
+      ],
+      "source_report": "reports/event-authority-20261114/c12-ch1/SUMMARY.json"
+    },
+    {
+      "after": "PASS",
+      "assessment_kind": "worker_self_grade",
+      "before": "PARTIAL",
+      "criterion": "positive_negative_oracles",
+      "criterion_number": 12,
+      "event_type": "chat.thread_worktree_merge_failed",
+      "global_datetime_scan": "FAIL_PRE_EXISTING_EXCLUSION_CITATION",
+      "implementation_head": "ce483b6976f45b4b07de8b69b8fd4b322f4ff789",
+      "scope": "Static C12 implementation closure only; other cells unchanged; blind review and native execution NOT_RUN.",
+      "source_quotes": [
+        {
+          "line": 32253,
+          "path": "Plans/assistant-chat-design.md",
+          "quote": "Newly authored owner contract under DL-045",
+          "unit": "ACD-618"
+        },
+        {
+          "line": 33096,
+          "path": "Plans/Contracts_V0.md",
+          "quote": "Newly authored closed payload contract",
+          "unit": "CV-638"
+        },
+        {
+          "line": 35732,
+          "path": "Plans/storage-plan.md",
+          "quote": "Newly authored persistence/read contract",
+          "unit": "SP-618"
+        },
+        {
+          "line": 1066,
+          "path": "scripts/pm_dch_events.py",
+          "quote": "def current_record_valid(",
+          "unit": null
+        },
+        {
+          "line": 1092,
+          "path": "scripts/pm_dch_events.py",
+          "quote": "def worktree_event_outcome(",
+          "unit": null
+        },
+        {
+          "line": 147,
+          "path": "scripts/pm_dch_worktree.py",
+          "quote": "def check_original(",
+          "unit": null
+        },
+        {
+          "line": 278,
+          "path": "scripts/pm_dch_schema_coverage.py",
+          "quote": "def run(m,selected=None):",
+          "unit": null
+        }
+      ],
+      "source_report": "reports/event-authority-20261114/c12-ch1/SUMMARY.json"
+    },
+    {
+      "after": "PASS",
+      "assessment_kind": "worker_self_grade",
+      "before": "PARTIAL",
+      "criterion": "positive_negative_oracles",
+      "criterion_number": 12,
+      "event_type": "chat.thread_worktree_merged",
+      "global_datetime_scan": "FAIL_PRE_EXISTING_EXCLUSION_CITATION",
+      "implementation_head": "ce483b6976f45b4b07de8b69b8fd4b322f4ff789",
+      "scope": "Static C12 implementation closure only; other cells unchanged; blind review and native execution NOT_RUN.",
+      "source_quotes": [
+        {
+          "line": 32320,
+          "path": "Plans/assistant-chat-design.md",
+          "quote": "Newly authored owner contract under DL-045",
+          "unit": "ACD-619"
+        },
+        {
+          "line": 33220,
+          "path": "Plans/Contracts_V0.md",
+          "quote": "Newly authored closed payload contract",
+          "unit": "CV-639"
+        },
+        {
+          "line": 35956,
+          "path": "Plans/storage-plan.md",
+          "quote": "Newly authored persistence/read contract",
+          "unit": "SP-619"
+        },
+        {
+          "line": 1066,
+          "path": "scripts/pm_dch_events.py",
+          "quote": "def current_record_valid(",
+          "unit": null
+        },
+        {
+          "line": 1092,
+          "path": "scripts/pm_dch_events.py",
+          "quote": "def worktree_event_outcome(",
+          "unit": null
+        },
+        {
+          "line": 147,
+          "path": "scripts/pm_dch_worktree.py",
+          "quote": "def check_original(",
+          "unit": null
+        },
+        {
+          "line": 278,
+          "path": "scripts/pm_dch_schema_coverage.py",
+          "quote": "def run(m,selected=None):",
+          "unit": null
+        }
+      ],
+      "source_report": "reports/event-authority-20261114/c12-ch1/SUMMARY.json"
+    },
+    {
+      "after": "PASS",
+      "assessment_kind": "worker_self_grade",
+      "before": "PARTIAL",
+      "criterion": "positive_negative_oracles",
+      "criterion_number": 12,
+      "event_type": "chat.thread_worktree_pr_created",
+      "global_datetime_scan": "FAIL_PRE_EXISTING_EXCLUSION_CITATION",
+      "implementation_head": "ce483b6976f45b4b07de8b69b8fd4b322f4ff789",
+      "scope": "Static C12 implementation closure only; other cells unchanged; blind review and native execution NOT_RUN.",
+      "source_quotes": [
+        {
+          "line": 32387,
+          "path": "Plans/assistant-chat-design.md",
+          "quote": "Newly authored owner contract under DL-045",
+          "unit": "ACD-620"
+        },
+        {
+          "line": 33344,
+          "path": "Plans/Contracts_V0.md",
+          "quote": "Newly authored closed payload contract",
+          "unit": "CV-640"
+        },
+        {
+          "line": 36180,
+          "path": "Plans/storage-plan.md",
+          "quote": "Newly authored persistence/read contract",
+          "unit": "SP-620"
+        },
+        {
+          "line": 1066,
+          "path": "scripts/pm_dch_events.py",
+          "quote": "def current_record_valid(",
+          "unit": null
+        },
+        {
+          "line": 1092,
+          "path": "scripts/pm_dch_events.py",
+          "quote": "def worktree_event_outcome(",
+          "unit": null
+        },
+        {
+          "line": 147,
+          "path": "scripts/pm_dch_worktree.py",
+          "quote": "def check_original(",
+          "unit": null
+        },
+        {
+          "line": 278,
+          "path": "scripts/pm_dch_schema_coverage.py",
+          "quote": "def run(m,selected=None):",
+          "unit": null
+        }
+      ],
+      "source_report": "reports/event-authority-20261114/c12-ch1/SUMMARY.json"
+    },
+    {
+      "after": "PASS",
+      "assessment_kind": "worker_self_grade",
+      "before": "PARTIAL",
+      "criterion": "positive_negative_oracles",
+      "criterion_number": 12,
+      "event_type": "chat.thread_worktree_pr_failed",
+      "global_datetime_scan": "FAIL_PRE_EXISTING_EXCLUSION_CITATION",
+      "implementation_head": "ce483b6976f45b4b07de8b69b8fd4b322f4ff789",
+      "scope": "Static C12 implementation closure only; other cells unchanged; blind review and native execution NOT_RUN.",
+      "source_quotes": [
+        {
+          "line": 32453,
+          "path": "Plans/assistant-chat-design.md",
+          "quote": "Newly authored owner contract under DL-045",
+          "unit": "ACD-621"
+        },
+        {
+          "line": 33468,
+          "path": "Plans/Contracts_V0.md",
+          "quote": "Newly authored closed payload contract",
+          "unit": "CV-641"
+        },
+        {
+          "line": 36404,
+          "path": "Plans/storage-plan.md",
+          "quote": "Newly authored persistence/read contract",
+          "unit": "SP-621"
+        },
+        {
+          "line": 1066,
+          "path": "scripts/pm_dch_events.py",
+          "quote": "def current_record_valid(",
+          "unit": null
+        },
+        {
+          "line": 1092,
+          "path": "scripts/pm_dch_events.py",
+          "quote": "def worktree_event_outcome(",
+          "unit": null
+        },
+        {
+          "line": 147,
+          "path": "scripts/pm_dch_worktree.py",
+          "quote": "def check_original(",
+          "unit": null
+        },
+        {
+          "line": 278,
+          "path": "scripts/pm_dch_schema_coverage.py",
+          "quote": "def run(m,selected=None):",
+          "unit": null
+        }
+      ],
+      "source_report": "reports/event-authority-20261114/c12-ch1/SUMMARY.json"
+    },
+    {
+      "after": "PASS",
+      "assessment_kind": "worker_self_grade",
+      "before": "PARTIAL",
+      "criterion": "positive_negative_oracles",
+      "criterion_number": 12,
+      "event_type": "chat.thread_worktree_pre_merge_test_failed",
+      "global_datetime_scan": "FAIL_PRE_EXISTING_EXCLUSION_CITATION",
+      "implementation_head": "ce483b6976f45b4b07de8b69b8fd4b322f4ff789",
+      "scope": "Static C12 implementation closure only; other cells unchanged; blind review and native execution NOT_RUN.",
+      "source_quotes": [
+        {
+          "line": 32520,
+          "path": "Plans/assistant-chat-design.md",
+          "quote": "Newly authored owner contract under DL-045",
+          "unit": "ACD-622"
+        },
+        {
+          "line": 33592,
+          "path": "Plans/Contracts_V0.md",
+          "quote": "Newly authored closed payload contract",
+          "unit": "CV-642"
+        },
+        {
+          "line": 36628,
+          "path": "Plans/storage-plan.md",
+          "quote": "Newly authored persistence/read contract",
+          "unit": "SP-622"
+        },
+        {
+          "line": 1066,
+          "path": "scripts/pm_dch_events.py",
+          "quote": "def current_record_valid(",
+          "unit": null
+        },
+        {
+          "line": 1092,
+          "path": "scripts/pm_dch_events.py",
+          "quote": "def worktree_event_outcome(",
+          "unit": null
+        },
+        {
+          "line": 147,
+          "path": "scripts/pm_dch_worktree.py",
+          "quote": "def check_original(",
+          "unit": null
+        },
+        {
+          "line": 278,
+          "path": "scripts/pm_dch_schema_coverage.py",
+          "quote": "def run(m,selected=None):",
+          "unit": null
+        }
+      ],
+      "source_report": "reports/event-authority-20261114/c12-ch1/SUMMARY.json"
+    },
+    {
+      "after": "PASS",
+      "assessment_kind": "worker_self_grade",
+      "before": "PARTIAL",
+      "criterion": "positive_negative_oracles",
+      "criterion_number": 12,
+      "event_type": "chat.thread_worktree_pre_merge_test_passed",
+      "global_datetime_scan": "FAIL_PRE_EXISTING_EXCLUSION_CITATION",
+      "implementation_head": "ce483b6976f45b4b07de8b69b8fd4b322f4ff789",
+      "scope": "Static C12 implementation closure only; other cells unchanged; blind review and native execution NOT_RUN.",
+      "source_quotes": [
+        {
+          "line": 32614,
+          "path": "Plans/assistant-chat-design.md",
+          "quote": "Newly authored owner contract under DL-045",
+          "unit": "ACD-623"
+        },
+        {
+          "line": 33721,
+          "path": "Plans/Contracts_V0.md",
+          "quote": "Newly authored closed payload contract",
+          "unit": "CV-643"
+        },
+        {
+          "line": 36853,
+          "path": "Plans/storage-plan.md",
+          "quote": "Newly authored persistence/read contract",
+          "unit": "SP-623"
+        },
+        {
+          "line": 1066,
+          "path": "scripts/pm_dch_events.py",
+          "quote": "def current_record_valid(",
+          "unit": null
+        },
+        {
+          "line": 1092,
+          "path": "scripts/pm_dch_events.py",
+          "quote": "def worktree_event_outcome(",
+          "unit": null
+        },
+        {
+          "line": 147,
+          "path": "scripts/pm_dch_worktree.py",
+          "quote": "def check_original(",
+          "unit": null
+        },
+        {
+          "line": 278,
+          "path": "scripts/pm_dch_schema_coverage.py",
+          "quote": "def run(m,selected=None):",
+          "unit": null
+        }
+      ],
+      "source_report": "reports/event-authority-20261114/c12-ch1/SUMMARY.json"
+    },
+    {
+      "after": "PASS",
+      "assessment_kind": "worker_self_grade",
+      "before": "PARTIAL",
+      "criterion": "positive_negative_oracles",
+      "criterion_number": 12,
+      "event_type": "chat.thread_worktree_pre_merge_test_started",
+      "global_datetime_scan": "FAIL_PRE_EXISTING_EXCLUSION_CITATION",
+      "implementation_head": "ce483b6976f45b4b07de8b69b8fd4b322f4ff789",
+      "scope": "Static C12 implementation closure only; other cells unchanged; blind review and native execution NOT_RUN.",
+      "source_quotes": [
+        {
+          "line": 32703,
+          "path": "Plans/assistant-chat-design.md",
+          "quote": "Newly authored owner contract under DL-045",
+          "unit": "ACD-624"
+        },
+        {
+          "line": 33850,
+          "path": "Plans/Contracts_V0.md",
+          "quote": "Newly authored closed payload contract",
+          "unit": "CV-644"
+        },
+        {
+          "line": 37078,
+          "path": "Plans/storage-plan.md",
+          "quote": "Newly authored persistence/read contract",
+          "unit": "SP-624"
+        },
+        {
+          "line": 1066,
+          "path": "scripts/pm_dch_events.py",
+          "quote": "def current_record_valid(",
+          "unit": null
+        },
+        {
+          "line": 1092,
+          "path": "scripts/pm_dch_events.py",
+          "quote": "def worktree_event_outcome(",
+          "unit": null
+        },
+        {
+          "line": 147,
+          "path": "scripts/pm_dch_worktree.py",
+          "quote": "def check_original(",
+          "unit": null
+        },
+        {
+          "line": 278,
+          "path": "scripts/pm_dch_schema_coverage.py",
+          "quote": "def run(m,selected=None):",
+          "unit": null
+        }
+      ],
+      "source_report": "reports/event-authority-20261114/c12-ch1/SUMMARY.json"
+    },
+    {
+      "after": "PASS",
+      "assessment_kind": "worker_self_grade",
+      "before": "PARTIAL",
+      "criterion": "positive_negative_oracles",
+      "criterion_number": 12,
+      "event_type": "chat.thread_worktree_renamed",
+      "global_datetime_scan": "FAIL_PRE_EXISTING_EXCLUSION_CITATION",
+      "implementation_head": "ce483b6976f45b4b07de8b69b8fd4b322f4ff789",
+      "scope": "Static C12 implementation closure only; other cells unchanged; blind review and native execution NOT_RUN.",
+      "source_quotes": [
+        {
+          "line": 32771,
+          "path": "Plans/assistant-chat-design.md",
+          "quote": "Newly authored owner contract under DL-045",
+          "unit": "ACD-625"
+        },
+        {
+          "line": 33979,
+          "path": "Plans/Contracts_V0.md",
+          "quote": "Newly authored closed payload contract",
+          "unit": "CV-645"
+        },
+        {
+          "line": 37308,
+          "path": "Plans/storage-plan.md",
+          "quote": "Newly authored persistence/read contract",
+          "unit": "SP-625"
+        },
+        {
+          "line": 1066,
+          "path": "scripts/pm_dch_events.py",
+          "quote": "def current_record_valid(",
+          "unit": null
+        },
+        {
+          "line": 1092,
+          "path": "scripts/pm_dch_events.py",
+          "quote": "def worktree_event_outcome(",
+          "unit": null
+        },
+        {
+          "line": 147,
+          "path": "scripts/pm_dch_worktree.py",
+          "quote": "def check_original(",
+          "unit": null
+        },
+        {
+          "line": 278,
+          "path": "scripts/pm_dch_schema_coverage.py",
+          "quote": "def run(m,selected=None):",
+          "unit": null
+        }
+      ],
+      "source_report": "reports/event-authority-20261114/c12-ch1/SUMMARY.json"
+    },
+    {
+      "after": "PASS",
+      "assessment_kind": "worker_self_grade",
+      "before": "PARTIAL",
+      "criterion": "positive_negative_oracles",
+      "criterion_number": 12,
+      "event_type": "chat.thread_worktree_unbound",
+      "global_datetime_scan": "FAIL_PRE_EXISTING_EXCLUSION_CITATION",
+      "implementation_head": "ce483b6976f45b4b07de8b69b8fd4b322f4ff789",
+      "scope": "Static C12 implementation closure only; other cells unchanged; blind review and native execution NOT_RUN.",
+      "source_quotes": [
+        {
+          "line": 32838,
+          "path": "Plans/assistant-chat-design.md",
+          "quote": "Newly authored owner contract under DL-045",
+          "unit": "ACD-626"
+        },
+        {
+          "line": 34103,
+          "path": "Plans/Contracts_V0.md",
+          "quote": "Newly authored closed payload contract",
+          "unit": "CV-646"
+        },
+        {
+          "line": 37532,
+          "path": "Plans/storage-plan.md",
+          "quote": "Newly authored persistence/read contract",
+          "unit": "SP-626"
+        },
+        {
+          "line": 1066,
+          "path": "scripts/pm_dch_events.py",
+          "quote": "def current_record_valid(",
+          "unit": null
+        },
+        {
+          "line": 1092,
+          "path": "scripts/pm_dch_events.py",
+          "quote": "def worktree_event_outcome(",
+          "unit": null
+        },
+        {
+          "line": 147,
+          "path": "scripts/pm_dch_worktree.py",
+          "quote": "def check_original(",
+          "unit": null
+        },
+        {
+          "line": 278,
+          "path": "scripts/pm_dch_schema_coverage.py",
+          "quote": "def run(m,selected=None):",
+          "unit": null
+        }
+      ],
+      "source_report": "reports/event-authority-20261114/c12-ch1/SUMMARY.json"
+    }
+  ]
+}

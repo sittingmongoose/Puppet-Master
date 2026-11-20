@@ -1,0 +1,582 @@
+{
+  "schema_version": "2.0.0",
+  "oracle_units": [
+    "ATS-1110",
+    "ATS-1111",
+    "ATS-1112"
+  ],
+  "claim": "TEST_ONLY bounded original-owner store; never actual installation or complete native integration.",
+  "rule": "Each negative starts from the valid baseline case of its family and changes exactly one fact; every dependent copy and digest stays coherent. Paths address the case: world = the owner store, request = the caller input; $op is the case's operation id. Further one-defect cases (scope components, typed aliases, timestamps, faults, projection, token, transaction and stored-part boundaries) are built in scripts/pm_goal_own_a_oracles.py and listed in its guard_negative_inventory.",
+  "writer_negatives": [
+    {
+      "id": "old_profile",
+      "path": [
+        "world",
+        "registration",
+        "profile"
+      ],
+      "value": "pm.executor.workflow_source.all_writers.v7",
+      "refusal": "registration/profile"
+    },
+    {
+      "id": "forged_profile_digest",
+      "path": [
+        "world",
+        "registration",
+        "profile_sha256"
+      ],
+      "value": "0000000000000000000000000000000000000000000000000000000000000000",
+      "refusal": "registration/profile"
+    },
+    {
+      "id": "forged_birth_operation",
+      "path": [
+        "world",
+        "birth",
+        "original_registration"
+      ],
+      "value": "forged",
+      "refusal": "birth/original"
+    },
+    {
+      "id": "forged_birth_profile",
+      "path": [
+        "world",
+        "birth",
+        "profile"
+      ],
+      "value": "forged",
+      "refusal": "birth/profile"
+    },
+    {
+      "id": "writer_not_registered",
+      "path": [
+        "world",
+        "registration",
+        "writers"
+      ],
+      "value": [],
+      "refusal": "registration/writer"
+    },
+    {
+      "id": "foreign_birth",
+      "path": [
+        "world",
+        "birth",
+        "scope",
+        "project_id"
+      ],
+      "value": "project:beta",
+      "refusal": "birth/scope"
+    },
+    {
+      "id": "request_scope_foreign_goal",
+      "path": [
+        "request",
+        "scope",
+        "goal_id"
+      ],
+      "value": "goal:9",
+      "refusal": "birth/scope"
+    },
+    {
+      "id": "request_route_unknown",
+      "path": [
+        "request",
+        "route"
+      ],
+      "value": "cmd.runtime.replan",
+      "refusal": "request/schema"
+    },
+    {
+      "id": "permission_denied",
+      "path": [
+        "world",
+        "authority",
+        "permission"
+      ],
+      "value": false,
+      "refusal": "authority/permission"
+    },
+    {
+      "id": "recovery_held",
+      "path": [
+        "world",
+        "authority",
+        "recovery_hold"
+      ],
+      "value": true,
+      "refusal": "authority/recovery"
+    },
+    {
+      "id": "storage_readonly",
+      "path": [
+        "world",
+        "authority",
+        "storage_writable"
+      ],
+      "value": false,
+      "refusal": "authority/storage"
+    },
+    {
+      "id": "writer_withdrawn",
+      "path": [
+        "world",
+        "authority",
+        "writer_withdrawn"
+      ],
+      "value": true,
+      "refusal": "writer/withdrawal"
+    },
+    {
+      "id": "missing_native",
+      "path": [
+        "world",
+        "native"
+      ],
+      "value": null,
+      "refusal": "native/exists",
+      "delete": true
+    },
+    {
+      "id": "missing_cause",
+      "path": [
+        "world",
+        "causes",
+        "$op"
+      ],
+      "value": null,
+      "refusal": "cause/exists",
+      "delete": true
+    },
+    {
+      "id": "missing_goal",
+      "path": [
+        "world",
+        "goal"
+      ],
+      "value": null,
+      "refusal": "goal/exists",
+      "delete": true
+    },
+    {
+      "id": "expected_revision_string",
+      "path": [
+        "request",
+        "expected_goal_run_revision"
+      ],
+      "value": "3",
+      "refusal": "request/schema"
+    },
+    {
+      "id": "stale_expected_revision",
+      "path": [
+        "request",
+        "expected_goal_run_revision"
+      ],
+      "value": 2,
+      "refusal": "native/revision"
+    },
+    {
+      "id": "cause_foreign_operation",
+      "path": [
+        "world",
+        "causes",
+        "$op",
+        "operation_id"
+      ],
+      "value": "op:other",
+      "refusal": "cause/operation"
+    },
+    {
+      "id": "cause_stale_revision",
+      "path": [
+        "world",
+        "causes",
+        "$op",
+        "native_revision"
+      ],
+      "value": 2,
+      "refusal": "cause/revision"
+    },
+    {
+      "id": "cause_wrong_kind",
+      "path": [
+        "world",
+        "causes",
+        "$op",
+        "kind"
+      ],
+      "value": "unrelated",
+      "refusal": "cause/kind"
+    },
+    {
+      "id": "cause_wrong_issuer",
+      "path": [
+        "world",
+        "causes",
+        "$op",
+        "issuer"
+      ],
+      "value": "owner.unrelated",
+      "refusal": "cause/issuer"
+    },
+    {
+      "id": "cause_incomplete",
+      "path": [
+        "world",
+        "causes",
+        "$op",
+        "complete"
+      ],
+      "value": false,
+      "refusal": "cause/complete"
+    },
+    {
+      "id": "cause_unresolved",
+      "path": [
+        "world",
+        "causes",
+        "$op",
+        "unresolved"
+      ],
+      "value": [
+        "effect:7"
+      ],
+      "refusal": "cause/unresolved"
+    },
+    {
+      "id": "cause_evidence_replaced",
+      "path": [
+        "world",
+        "causes",
+        "$op",
+        "evidence"
+      ],
+      "value": [
+        "evidence:other"
+      ],
+      "refusal": "cause/evidence"
+    },
+    {
+      "id": "current_replay_only",
+      "path": [
+        "request",
+        "event",
+        "replay_policy"
+      ],
+      "value": "projector_replay_only",
+      "refusal": "event/replay_policy"
+    },
+    {
+      "id": "wrong_append_family",
+      "path": [
+        "request",
+        "late_append_family"
+      ],
+      "value": "goal.completed",
+      "refusal": "event/dispatch"
+    },
+    {
+      "id": "wrong_family",
+      "path": [
+        "request",
+        "event",
+        "event_type"
+      ],
+      "value": "goal_run.replanned",
+      "refusal": "event/family"
+    },
+    {
+      "id": "payload_event_name",
+      "path": [
+        "request",
+        "event",
+        "payload",
+        "event_name"
+      ],
+      "value": "goal_run.cancelled",
+      "refusal": "event/payload_schema"
+    },
+    {
+      "id": "envelope_foreign_project",
+      "path": [
+        "request",
+        "event",
+        "project_id"
+      ],
+      "value": "project:beta",
+      "refusal": "event/scope"
+    },
+    {
+      "id": "envelope_foreign_run",
+      "path": [
+        "request",
+        "event",
+        "run_id"
+      ],
+      "value": "run:9",
+      "refusal": "event/run"
+    },
+    {
+      "id": "payload_foreign_project",
+      "path": [
+        "request",
+        "event",
+        "payload",
+        "project_id"
+      ],
+      "value": "project:beta",
+      "refusal": "event/payload_scope"
+    },
+    {
+      "id": "payload_foreign_run",
+      "path": [
+        "request",
+        "event",
+        "payload",
+        "payload",
+        "goal_run_id"
+      ],
+      "value": "run:9",
+      "refusal": "event/payload_run"
+    },
+    {
+      "id": "payload_stale_goal_revision",
+      "path": [
+        "request",
+        "event",
+        "payload",
+        "goal_revision"
+      ],
+      "value": 1,
+      "refusal": "event/goal_revision"
+    },
+    {
+      "id": "payload_expected_mismatch",
+      "path": [
+        "request",
+        "event",
+        "payload",
+        "expected_goal_run_revision"
+      ],
+      "value": 2,
+      "refusal": "event/expected"
+    },
+    {
+      "id": "payload_successor_jump",
+      "path": [
+        "request",
+        "event",
+        "payload",
+        "goal_run_revision"
+      ],
+      "value": 6,
+      "refusal": "event/successor"
+    },
+    {
+      "id": "forged_event_id",
+      "path": [
+        "request",
+        "event",
+        "event_id"
+      ],
+      "value": "goal_run.forged.v1:0",
+      "refusal": "event/identity"
+    },
+    {
+      "id": "forged_key",
+      "path": [
+        "request",
+        "event",
+        "idempotency_key"
+      ],
+      "value": "forged",
+      "refusal": "event/key"
+    },
+    {
+      "id": "forged_inner_key",
+      "path": [
+        "request",
+        "event",
+        "payload",
+        "idempotency_key"
+      ],
+      "value": "forged",
+      "refusal": "event/inner_key"
+    },
+    {
+      "id": "join_requested_account",
+      "path": [
+        "request",
+        "event",
+        "requested_account_ref"
+      ],
+      "value": "account:other",
+      "refusal": "event/join/requested_account_ref"
+    },
+    {
+      "id": "join_effective_account",
+      "path": [
+        "request",
+        "event",
+        "effective_account_ref"
+      ],
+      "value": "account:other",
+      "refusal": "event/join/effective_account_ref"
+    },
+    {
+      "id": "join_actor",
+      "path": [
+        "request",
+        "event",
+        "actor_ref"
+      ],
+      "value": "actor:other",
+      "refusal": "event/join/actor_ref"
+    },
+    {
+      "id": "join_correlation",
+      "path": [
+        "request",
+        "event",
+        "correlation_id"
+      ],
+      "value": "correlation:other",
+      "refusal": "event/join/correlation_id"
+    },
+    {
+      "id": "forged_digest",
+      "path": [
+        "request",
+        "supplied_digest"
+      ],
+      "value": "0000000000000000000000000000000000000000000000000000000000000000",
+      "refusal": "event/digest"
+    },
+    {
+      "id": "final_native_changed",
+      "path": [
+        "request",
+        "final_change"
+      ],
+      "value": "native",
+      "refusal": "final/native"
+    },
+    {
+      "id": "final_permission_changed",
+      "path": [
+        "request",
+        "final_change"
+      ],
+      "value": "permission",
+      "refusal": "final/permission"
+    },
+    {
+      "id": "final_source_changed",
+      "path": [
+        "request",
+        "final_change"
+      ],
+      "value": "source",
+      "refusal": "final/source"
+    }
+  ],
+  "family_negatives": {
+    "goal_run.stopped": [
+      {
+        "id": "route_of_other_family",
+        "path": [
+          "request",
+          "route"
+        ],
+        "value": "scheduler.run_block",
+        "refusal": "route"
+      },
+      {
+        "id": "failed_required_flush",
+        "path": [
+          "world",
+          "causes",
+          "$op",
+          "required_flush"
+        ],
+        "value": false,
+        "refusal": "cause/required_flush"
+      },
+      {
+        "id": "settlement_census_mismatch",
+        "path": [
+          "world",
+          "causes",
+          "$op",
+          "settlement_refs"
+        ],
+        "value": [
+          "safestop:settle:other"
+        ],
+        "refusal": "cause/settlements"
+      },
+      {
+        "id": "unresolved_safe_point",
+        "path": [
+          "world",
+          "causes",
+          "$op",
+          "safe_point"
+        ],
+        "value": "safe_point:foreign",
+        "refusal": "cause/safe_point"
+      }
+    ],
+    "goal_run.blocked": [
+      {
+        "id": "route_of_other_family",
+        "path": [
+          "request",
+          "route"
+        ],
+        "value": "cmd.orchestrator.pause",
+        "refusal": "route"
+      },
+      {
+        "id": "forged_block_receipt",
+        "path": [
+          "request",
+          "event",
+          "payload",
+          "payload",
+          "block_receipt_ref"
+        ],
+        "value": "permission_denial:forged",
+        "refusal": "cause/receipt"
+      },
+      {
+        "id": "reason_mismatch",
+        "path": [
+          "request",
+          "event",
+          "payload",
+          "payload",
+          "blocked_reason_code"
+        ],
+        "value": "storage_blocked",
+        "refusal": "cause/reason"
+      },
+      {
+        "id": "preserved_work_mismatch",
+        "path": [
+          "request",
+          "event",
+          "payload",
+          "payload",
+          "preserved_work_refs"
+        ],
+        "value": [
+          "worknode:other"
+        ],
+        "refusal": "cause/preserved_work"
+      }
+    ]
+  }
+}

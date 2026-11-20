@@ -14,6 +14,7 @@ No table module imports this file, so the guard tool scans only the table.
 """
 import copy
 import importlib
+from pm_dg6a_phase_groups import ALIASES
 
 PREFIX = 'pm_dg6a_table_'
 RECORDER = None
@@ -25,6 +26,11 @@ def rows(phase):
     """The phase's (row, predicate) list in declared table order."""
     entries = _ROWS.get(phase)
     if entries is None:
+        if phase in ALIASES:
+            entries = _ROWS[phase] = [row for part in ALIASES[phase] for row in rows(part)]
+            _FIELDS[phase] = tuple(dict.fromkeys(
+                field for part in ALIASES[phase] for field in _FIELDS[part]))
+            return entries
         module = importlib.import_module(PREFIX + phase)
         case = module.case(None)
         entries = _ROWS[phase] = [(name, guard.predicate) for name, guard in case.table.guards.items()]
@@ -48,6 +54,12 @@ def _record(phase, observed, refusals):
 def first(phase, **facts):
     """First refusing row's code (early-return chain), or None."""
     observed = observation(phase, facts)
+    if phase in ALIASES:
+        for part in ALIASES[phase]:
+            code = first(part, **{key: observed[key] for key in fields(part)})
+            if code is not None:
+                return code
+        return None
     refusal = None
     for name, predicate in rows(phase):
         code = predicate(observed, None)
@@ -61,6 +73,9 @@ def first(phase, **facts):
 def every(phase, **facts):
     """Every refusing row's code in table order (collect-all site)."""
     observed = observation(phase, facts)
+    if phase in ALIASES:
+        return [code for part in ALIASES[phase]
+                for code in every(part, **{key: observed[key] for key in fields(part)})]
     refusals = []
     for name, predicate in rows(phase):
         code = predicate(observed, None)

@@ -2,8 +2,8 @@
   "event_type": "runtime_artifact.api_web_call",
   "bucket": "confirmed_persisted_unregistered",
   "july_classification": "confirmed_persisted_unregistered",
-  "disposition": "KEEP_QUARANTINED",
-  "disposition_rationale": "DL-039 Step 9 individual adjudication at 2026-09-11T16:55:03.900393+00:00: Web-call artifacts require operation discriminators and redacted request/response refs; arbitrary non-empty payloads are forbidden. Materialized schema pm.runtime_artifact.api_web_call.schema.v1 was freshly resolved; type-specific required fields: source_system, redacted_request_ref, redacted_response_ref, web_operation, tool_id, operation_input, invocation, success, provider_fallback_occurred. Retention additionally requires a genuine product choice: the owner explicitly recommends but does not assign indefinite event retention. This row is CARD for that unanswered choice; all listed technical binding gaps remain admission work after the decision. Jared answered EA-S09-EXEC-RUNTIME-ARTIFACT-RETENTION with option A on 2026-09-23 (Plans/Decision_Log.md#DL-075): the 19 runtime-artifact event histories take RP-AUTHORITY-INDEFINITE for the time their full contracts are admitted (Plans/Runtime_Artifacts_Panel.md:2472; Plans/storage-plan.md:17260). Applied at 2026-09-24T21:08:23Z: the retention cell is now PASS for that assignment and the row returns to KEEP_QUARANTINED as unfinished technical contract work. Each full contract must still make the embedded text and any applicable deletion requirement explicit before admission, and every other listed binding gap remains. No registry admission, binding definition or depth pass is inferred. Application: reports/event-authority-20260911/step-09-card-answer-application-20260924.json.",
+  "disposition": "KEEP_REGISTERED",
+  "disposition_rationale": "DL-039 Step 9 individual adjudication at 2026-09-11T16:55:03.900393+00:00: Web-call artifacts require operation discriminators and redacted request/response refs; arbitrary non-empty payloads are forbidden. Materialized schema pm.runtime_artifact.api_web_call.schema.v1 was freshly resolved; type-specific required fields: source_system, redacted_request_ref, redacted_response_ref, web_operation, tool_id, operation_input, invocation, success, provider_fallback_occurred. Retention additionally requires a genuine product choice: the owner explicitly recommends but does not assign indefinite event retention. This row is CARD for that unanswered choice; all listed technical binding gaps remain admission work after the decision. Jared answered EA-S09-EXEC-RUNTIME-ARTIFACT-RETENTION with option A on 2026-09-23 (Plans/Decision_Log.md#DL-075): the 19 runtime-artifact event histories take RP-AUTHORITY-INDEFINITE for the time their full contracts are admitted (Plans/Runtime_Artifacts_Panel.md:2472; Plans/storage-plan.md:17260). Applied at 2026-09-24T21:08:23Z: the retention cell is now PASS for that assignment and the row returns to KEEP_QUARANTINED as unfinished technical contract work. Each full contract must still make the embedded text and any applicable deletion requirement explicit before admission, and every other listed binding gap remains. No registry admission, binding definition or depth pass is inferred. Application: reports/event-authority-20260911/step-09-card-answer-application-20260924.json. Registered at registry revision 2026-11-16.239 in admission merge 2 under DL-078, DL-096 and DL-400 (decision Plans/Decision_Log.md#DL-2375); DL-077 admission record reports/event-authority-20260911/admission-records/runtime_artifact.api_web_call.json. Disposition KEEP_QUARANTINED -> KEEP_REGISTERED, evidence cells membership_version, owner_doc, producer, closed_payload_schema, scope_identity, replay_idempotency, retention, redaction_custody, transitions, consumers_checkpoints, compatibility_withdrawal, positive_negative_oracles projected with twelve PASS cells from the family's admission depth assessment reports/event-authority-20261116/admission-merge-2/depth/runtime_artifact.api_web_call.json (sha256 143af8e6a36e5f77575e7ca65710e76860e1afa5f4bf9181485f60ddc4bd053a); bucket, cohort pins, July classification and every other field are unchanged; no seal or owner choice. Evidence maintenance 2026-11-19 (MERGE2-FIX2): current assessment digest and locators are projected by the writer; original one-family append checkpoints remain in the DL-077 record and immutable Git history. No new admission or verdict change.",
   "working_bucket": "confirmed_persisted_unregistered",
   "cohort_pins": [
     "july248"
@@ -11,63 +11,63 @@
   "evidence": {
     "owner_doc": {
       "status": "PASS",
-      "citation": "Plans/Runtime_Artifacts_Panel.md:300-304",
-      "note": "The panel explicitly declares itself schema owner for the runtime-artifact envelope and per-type payload split."
+      "citation": "Plans/Runtime_Artifacts_Panel.md:3641",
+      "note": "RAP-100, SP-520 and CV-520 explicitly govern this exact Project-edition family and version, with ATS-260 oracles."
     },
     "producer": {
-      "status": "OWNER_REQUIRED",
-      "citation": null,
-      "note": "No exact current Plans authority found for concrete emitting component and append boundary of `runtime_artifact.api_web_call`; this value is withheld rather than inferred."
+      "status": "PASS",
+      "citation": "Plans/Runtime_Artifacts_Panel.md:3642; Plans/Runtime_Artifacts_Panel.md:3644; Plans/Contracts_V0.md:43839",
+      "note": "RAP-100 binds the producer and source/append/first-receipt/publication order. CV-520 explicitly adopts SP-337 for bounded inline and external payload custody."
     },
     "membership_version": {
-      "status": "OWNER_REQUIRED",
-      "citation": null,
-      "note": "EventRecord 2.0.0 and per-type schema versions do not establish versioned Event Authority registry membership for `runtime_artifact.api_web_call`; no assigned registry token is cited."
+      "status": "PASS",
+      "citation": "Plans/event_family_registry.json:29647-29700",
+      "note": "Currently registered at 2026-11-18.2 as #/families/457 (canonical row SHA-256 8546c08071cc1f13b0944ec521bf2a01782032ba70d203c0c033c992d779d6a5). Original one-family admission checkpoints remain in the family record and immutable Git source."
     },
     "closed_payload_schema": {
       "status": "PASS",
-      "citation": "Plans/runtime_artifact_api_web_call.schema.json:1-107",
-      "note": "The exact per-type schema fixes the v1 schema ID, rejects additional envelope properties, requires stable identity/projection/retention/routing fields, and binds type_payload to its closed definition."
+      "citation": "Plans/Contracts_V0.md:43838",
+      "note": "CV-520 preserves the exact closed logical payload schema; inline or authenticated external bytes resolve to that same object."
     },
     "scope_identity": {
       "status": "PASS",
-      "citation": "Plans/Runtime_Artifacts_Panel.md:2031-2033",
-      "note": "The contract requires project scope, a non-empty owning project ID, and the canonical EventRecord index identity."
+      "citation": "Plans/Runtime_Artifacts_Panel.md:3643; Plans/Contracts_V0.md:43839",
+      "note": "RAP-100 binds exact Project identity, joins and idempotency. The four-member tuple remains unchanged; CV joins resolve the logical payload."
     },
     "replay_idempotency": {
       "status": "PASS",
-      "citation": "Plans/Runtime_Artifacts_Panel.md:2035",
-      "note": "The contract pins lifetime identity, selected replay policy, dedupe failure semantics, and projector-only replay limits."
+      "citation": "Plans/Runtime_Artifacts_Panel.md:3644; Plans/Contracts_V0.md:43839",
+      "note": "RAP-100 preserves original SP-286/CV-339 full-value v2 event/eleven-field receipt and refuses changed semantic identity without a second effect."
     },
     "retention": {
       "status": "PASS",
-      "citation": "Plans/Runtime_Artifacts_Panel.md:2472",
-      "note": "DL-075 assigns RP-AUTHORITY-INDEFINITE to runtime_artifact.api_web_call for the time its full contract is admitted; Plans/storage-plan.md:17260 records the same Case L-3 assignment. Retention only: DL-075 requires the full contract to make the retained embedded text and any applicable deletion requirement explicit before admission; that precondition is still open and no evidence cell in this row records it as met. Retention grants no access to a linked body, and artifact bodies, original receipts, restore points, Usage and source records keep their own policies. No registry row, binding or admission follows."
+      "citation": "Plans/storage-plan.md:54006; Plans/Runtime_Artifacts_Panel.md:3646",
+      "note": "RAP-100 retains event history under DL-075. SP-520 preserves source-coupled index retention and applies 3GEN only to checkpoint generations."
     },
     "redaction_custody": {
       "status": "PASS",
-      "citation": "Plans/Runtime_Artifacts_Panel.md:286,300-304",
-      "note": "The exact per-type payload requires redacted request/response refs under the panel-owned schema boundary."
+      "citation": "Plans/Runtime_Artifacts_Panel.md:3646; Plans/Contracts_V0.md:43839",
+      "note": "RAP-100 binds original seglog/receipt custody, backup/restore and current authorization/deletion checks. CV-520 adds pack-byte durability and retention without changing linked-body policy."
     },
     "transitions": {
-      "status": "OWNER_REQUIRED",
-      "citation": null,
-      "note": "No exact current Plans authority found for allowed lifecycle transition semantics of `runtime_artifact.api_web_call`; this value is withheld rather than inferred."
+      "status": "PASS",
+      "citation": "Plans/Runtime_Artifacts_Panel.md:3641; Plans/Runtime_Artifacts_Panel.md:3644",
+      "note": "RAP-100 implements its exact Option 2 transition behind source/receipt/publication barriers. No source action is redispatched."
     },
     "consumers_checkpoints": {
       "status": "PASS",
-      "citation": "Plans/Runtime_Artifacts_Panel.md:2029-2035",
-      "note": "The durable-state addendum defines canonical history, projector-only replay, and atomic projection checkpoint behavior."
+      "citation": "Plans/storage-plan.md:54004; Plans/storage-plan.md:54005",
+      "note": "SP-520 binds this exact stateless history reader, installed SP-278 key/schema/generation and atomic CAS, plus nine-field durable-token limits; it persists no token."
     },
     "compatibility_withdrawal": {
       "status": "PASS",
-      "citation": "Plans/Runtime_Artifacts_Panel.md:286",
-      "note": "The exact payload rule identifies web_input and blocked_reason_code as compatibility aliases normalized before persistence."
+      "citation": "Plans/Runtime_Artifacts_Panel.md:3647",
+      "note": "RAP-100 specifies exact-version refusal and writer admission cutoff, receipt preservation, reader dependency withdrawal and authorized rebuild without effects."
     },
     "positive_negative_oracles": {
-      "status": "OWNER_REQUIRED",
-      "citation": null,
-      "note": "No exact current Plans authority found for complete positive and negative acceptance oracles of `runtime_artifact.api_web_call`; this value is withheld rather than inferred."
+      "status": "PASS",
+      "citation": "Plans/runtime_artifact_event_drafts.json:7; Plans/Runtime_Artifacts_Panel.md:3633; Plans/storage-plan.md:53995; Plans/Contracts_V0.md:43830; Plans/runtime_artifact_api_web_call.schema.json:3; Plans/Automated_Testing_System.md:12040; Plans/Automated_Testing_System.md:12041; scripts/pm-runtime-artifact-event-drafts.py:464; scripts/pm-runtime-artifact-event-drafts.py:953; scripts/pm-runtime-artifact-event-drafts.py:935; scripts/pm-runtime-artifact-event-drafts.py:1076; scripts/pm_runtime_artifact_table_history.py:21; scripts/pm_runtime_artifact_c12.py:331; scripts/pm_runtime_artifact_c12.py:418; scripts/pm_runtime_artifact_c12.py:432; scripts/pm-runtime-artifact-c12-closure.py:176; scripts/pm-runtime-artifact-c12-closure.py:378; scripts/pm-runtime-artifact-c12-closure.py:430; scripts/pm-runtime-artifact-c12-closure.py:564",
+      "note": "Exact-family C12 PASS from reports/event-authority-20261114/C12-DR-self-grade.json"
     }
   },
   "citations_checked": [

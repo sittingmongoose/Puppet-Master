@@ -1,0 +1,2610 @@
+{
+  "all_other_admissions_unchanged": true,
+  "allocation_inventory": {
+    "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/merge2-apply/evidence/split-dl-inventory-final.json",
+    "refs_checked": 950,
+    "sha256": "0e11edac2032d754aa9788e06178c17772f2c42e75ae6aabfae1b7e74a9a60cc"
+  },
+  "applied_baseline": "74a9f2acf53fd54e307a58e804c6650ee6de657c",
+  "decision": {
+    "answer_verbatim": "Land without them",
+    "answered_local": "2026-11-17 about 20:35 EST",
+    "answered_utc": "2026-11-18 about 01:35Z",
+    "authority_path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/ANSWERS_MERGE2-SPLIT_20261117.md",
+    "authority_sha256": "d4723e065acc5804ba1cbc73d60d94c63aadb78e21d7ccea93bb597f9f35eb68",
+    "boundary_only": true,
+    "coordinator_reading_attribution": "pm7-build; coordinator reading, not additional quoted words from Jared",
+    "id": "DL-2443",
+    "per_family_requirements": "Plans/Decision_Log.md#DL-400 unchanged"
+  },
+  "deferred_families": [
+    {
+      "disposition": "deferred_to_merge_3",
+      "event_type": "goal.cancelled",
+      "family_revision": "3.0.0",
+      "main_row_preexists": true,
+      "merge2_family_decision": false,
+      "merge2_new_admission": false,
+      "merge2_s5b_action": false,
+      "row_equals_main": true,
+      "row_sha256": "004700890b9fcd524a18313d86a417fc55f9ba8fe1385a96cff39cdece62a7ca",
+      "selected_payload_resources": [
+        {
+          "equals_main": true,
+          "path": "Plans/application_workflow_contracts.schema.json",
+          "sha256": "2cf0d5972765362907d6d4eb05eb7bc0f06cdf5e15d6a89e777f38f4b7ebab82"
+        },
+        {
+          "equals_main": true,
+          "path": "Plans/event_payloads/goal_runtime/goal_cancelled.schema.json",
+          "sha256": "e28da76018950a661d6b8219849145358d53398e1d89143e2d8878050c78efeb"
+        }
+      ]
+    },
+    {
+      "disposition": "deferred_to_merge_3",
+      "event_type": "goal.updated",
+      "family_revision": "3.0.0",
+      "main_row_preexists": true,
+      "merge2_family_decision": false,
+      "merge2_new_admission": false,
+      "merge2_s5b_action": false,
+      "row_equals_main": true,
+      "row_sha256": "39ffada6782c7128105e1217e61a60a0bed3593bb204298a8346d8a6858525e5",
+      "selected_payload_resources": [
+        {
+          "equals_main": true,
+          "path": "Plans/application_workflow_contracts.schema.json",
+          "sha256": "2cf0d5972765362907d6d4eb05eb7bc0f06cdf5e15d6a89e777f38f4b7ebab82"
+        },
+        {
+          "equals_main": true,
+          "path": "Plans/event_payloads/goal_runtime/goal_updated.schema.json",
+          "sha256": "4ebd847ed1f328a2433f72bab4cd447a56f48a82e696ae02b2b36ee5062f8aea"
+        }
+      ]
+    },
+    {
+      "disposition": "deferred_to_merge_3",
+      "event_type": "goal_run.cancelled",
+      "family_revision": "3.0.0",
+      "main_row_preexists": true,
+      "merge2_family_decision": false,
+      "merge2_new_admission": false,
+      "merge2_s5b_action": false,
+      "row_equals_main": true,
+      "row_sha256": "0f6af3fdd2fecd1d3ac85ee63c304c513fa3e69e87c03cda4d9668b15a509295",
+      "selected_payload_resources": [
+        {
+          "equals_main": true,
+          "path": "Plans/application_workflow_contracts.schema.json",
+          "sha256": "2cf0d5972765362907d6d4eb05eb7bc0f06cdf5e15d6a89e777f38f4b7ebab82"
+        },
+        {
+          "equals_main": true,
+          "path": "Plans/executor_cancellation_contracts/schemas/goal-run-cancelled.v3.schema.json",
+          "sha256": "d9414fc79ed8c3c7c14d70f0f120ad0378e2efb11de8c2126ab22e4a72771e7f"
+        }
+      ]
+    },
+    {
+      "disposition": "deferred_to_merge_3",
+      "event_type": "goal_run.certified",
+      "family_revision": "3.0.0",
+      "main_row_preexists": true,
+      "merge2_family_decision": false,
+      "merge2_new_admission": false,
+      "merge2_s5b_action": false,
+      "row_equals_main": true,
+      "row_sha256": "f58cc6a74676d7d3266c0a45f1a7f07a7e9f12e9782ca2c837f840070df7654e",
+      "selected_payload_resources": [
+        {
+          "equals_main": true,
+          "path": "Plans/workflow_standard_source_contracts/schemas/goal-run-certified.v3.schema.json",
+          "sha256": "cc89ad280b70f4f3895569c177af1d6a50b17205efcf88ffd7416e25fa4a8895"
+        }
+      ]
+    },
+    {
+      "disposition": "deferred_to_merge_3",
+      "event_type": "goal_run.started",
+      "family_revision": "3.0.0",
+      "main_row_preexists": true,
+      "merge2_family_decision": false,
+      "merge2_new_admission": false,
+      "merge2_s5b_action": false,
+      "row_equals_main": true,
+      "row_sha256": "07e73148314cddef2732f81b0788545591cec9558238e479366e771d4b842d11",
+      "selected_payload_resources": [
+        {
+          "equals_main": true,
+          "path": "Plans/application_workflow_contracts.schema.json",
+          "sha256": "2cf0d5972765362907d6d4eb05eb7bc0f06cdf5e15d6a89e777f38f4b7ebab82"
+        },
+        {
+          "equals_main": true,
+          "path": "Plans/executor_cancellation_contracts/schemas/goal-run-started.v3.schema.json",
+          "sha256": "2cba0de288750206d9fd7c38f1498f16314fda508d7e866b036e2a0f50a67e0f"
+        }
+      ]
+    }
+  ],
+  "explanation": "All five already exist on main with identical rows and selected payload resources. No merge2 action was applied for them. Only their five planned definition confirmations leave this batch; historical main rows are preserved.",
+  "main_baseline": "bb8cd0e8730c04b1983f3a4d0394dde110f0b198",
+  "planned_s5b_after": [
+    "goal.blocked",
+    "goal.completed",
+    "goal.evidence_captured",
+    "goal.receipt_recorded",
+    "goal.tool_check_recorded",
+    "goal_run.blocked",
+    "goal_run.replanned",
+    "goal_run.stopped"
+  ],
+  "planned_s5b_before": [
+    "goal.blocked",
+    "goal.cancelled",
+    "goal.completed",
+    "goal.evidence_captured",
+    "goal.receipt_recorded",
+    "goal.tool_check_recorded",
+    "goal.updated",
+    "goal_run.blocked",
+    "goal_run.cancelled",
+    "goal_run.certified",
+    "goal_run.replanned",
+    "goal_run.started",
+    "goal_run.stopped"
+  ],
+  "recorded_at": "2026-11-18T01:57:45Z",
+  "registry": {
+    "revision": "2026-11-16.306",
+    "sha256": "774f6d49c5662d6115e42b880c855b5d415fd3eb234627e7405a3f493bd83204",
+    "unchanged": true
+  },
+  "removed_from_planned_s5b": [
+    "goal.cancelled",
+    "goal.updated",
+    "goal_run.cancelled",
+    "goal_run.certified",
+    "goal_run.started"
+  ],
+  "retained_admissions": [
+    {
+      "decision": "DL-2137",
+      "event_type": "alert.acknowledged",
+      "record": "reports/event-authority-20260911/admission-records/alert.acknowledged.json",
+      "record_sha256": "028695f69a69b247ee209c46a1306681b67d3fd024263f889280df0ecd2dd2a6",
+      "row_sha256": "74132ab0dc5b7d03eb099989109c8060ba33bf082fc9107ad3a5f1c544e6e1ba",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2138",
+      "event_type": "alert.dismissed",
+      "record": "reports/event-authority-20260911/admission-records/alert.dismissed.json",
+      "record_sha256": "843ea1499fea134ffed8d279f18ae9ef0eefdc7c70f38d9f5b11f8b79884e75c",
+      "row_sha256": "17fcf11b5e2f264edeb43ff5c4f901965c6c1d037829fe006a8026db1f98323b",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2139",
+      "event_type": "alert.rule_muted",
+      "record": "reports/event-authority-20260911/admission-records/alert.rule_muted.json",
+      "record_sha256": "5c20a72025c5377a547a7fd0d72f6f9be1251a0478efc38612136a8be487b4d1",
+      "row_sha256": "62106cffcafc018ce4e7efb15438e35bb66d0a4825e488eea59149913df42b8a",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2140",
+      "event_type": "alert.snoozed",
+      "record": "reports/event-authority-20260911/admission-records/alert.snoozed.json",
+      "record_sha256": "32b5f00b813cf746df86864ff7de7ee83de3caff5b09ad7014091d596943bf07",
+      "row_sha256": "94a87a700ce0daad575221e59cfea1a7e16a205db9c01469760f227b311bfe2c",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2141",
+      "event_type": "approval.denied",
+      "record": "reports/event-authority-20260911/admission-records/approval.denied.json",
+      "record_sha256": "5b949c684411c8a2f39b16520a5c592306cbd91f2e4847e121ce8b286ecdc60d",
+      "row_sha256": "35a2da011f49c011efa5fdcbf90a42623d2092c7c35b816ec6e4a7e61dd6e23d",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2142",
+      "event_type": "approval.granted",
+      "record": "reports/event-authority-20260911/admission-records/approval.granted.json",
+      "record_sha256": "2ccbb32f1a9564adc585ac8ae7cd6bcdce298c4b659fe1e139d16b9947268e85",
+      "row_sha256": "dc1b28e29a2e74a6ee2cdd929795f083f73b66d4b757876450a2e9182c80f1c3",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2143",
+      "event_type": "approval.requested",
+      "record": "reports/event-authority-20260911/admission-records/approval.requested.json",
+      "record_sha256": "44443c98be3e03c57c072384e858828bb618e340eaa88f26b1eb800f14689a3f",
+      "row_sha256": "8bb7728dfcb8172f2ff162a77a219e2429d47b0beea57e5e9a01511651c2fb45",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2144",
+      "event_type": "approval.timeout",
+      "record": "reports/event-authority-20260911/admission-records/approval.timeout.json",
+      "record_sha256": "72311679483c1b41e290eb3b461354f79678eed4841118a0dce7a189f40d4b4a",
+      "row_sha256": "6e7b755ec48cc3f1d60205760ee252e575be3efa4ce7af065835335b207337ab",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2145",
+      "event_type": "auth.github.authenticated",
+      "record": "reports/event-authority-20260911/admission-records/auth.github.authenticated.json",
+      "record_sha256": "39763a5d3b6eeb25b8327f09528f70176ada03fe9c5abf1f319dc0ed12c59396",
+      "row_sha256": "45d76ab72af9bb40d91d94aba64dbb156f89b975d4cf2c52ce9620575cd8ea2f",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2146",
+      "event_type": "auth.github.device_code.issued",
+      "record": "reports/event-authority-20260911/admission-records/auth.github.device_code.issued.json",
+      "record_sha256": "5bb4bd7d8fe498c79fb4dd4b410f2174613234f2fff9c940e17a02ceca987d51",
+      "row_sha256": "eef79a3bf7a03fc95cc5441135b8476eecde4b3edac6110a773b1263fab66ff7",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2147",
+      "event_type": "auth.github.disconnected",
+      "record": "reports/event-authority-20260911/admission-records/auth.github.disconnected.json",
+      "record_sha256": "bbbd5d8e2c749866b27ce436b18e1bd92d07c687c41cbd2fbf0eff4125720c94",
+      "row_sha256": "053efdcca8aa9d86143238bee746aae575fcdc66865ad21469291b17a66f922d",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2148",
+      "event_type": "auth.github.failed",
+      "record": "reports/event-authority-20260911/admission-records/auth.github.failed.json",
+      "record_sha256": "9adedae0628be9558643236a9181eab865698872d40de0d3eaf59e55ffe68a1b",
+      "row_sha256": "d6ea21fb565a0dd737fef672e1bba9449619490511f69536962d292865adda58",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2149",
+      "event_type": "auth.github.token.polling",
+      "record": "reports/event-authority-20260911/admission-records/auth.github.token.polling.json",
+      "record_sha256": "099ae61e7ebaf5e2fb1ca05cdedd920c4367599b6a1c1013aa354c19ee475c6b",
+      "row_sha256": "1393c12ad4ff4ce7374c2eb807b13ef66ad4bbea322f720ea88e4275b000f0e4",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2150",
+      "event_type": "backup.destination_changed",
+      "record": "reports/event-authority-20260911/admission-records/backup.destination_changed.json",
+      "record_sha256": "7d4cf16c0bf9a9d52de77f88278bbe322b7dc97e56fb35eccc4e4b19209c6695",
+      "row_sha256": "a5a7944e8403c1f025ae12052f47d2f8ba91d02062f4ee758bda28b5f094ee98",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2151",
+      "event_type": "backup.state_changed",
+      "record": "reports/event-authority-20260911/admission-records/backup.state_changed.json",
+      "record_sha256": "b52bdedd02ff74d42558d42f9e3789e47598b884021d123754aa254f8e1b8210",
+      "row_sha256": "2e26388c1d5974d5ec7c8e9bfe0d5b9460db7605c188c508d4ed30bcf708ab32",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2152",
+      "event_type": "brainstorm.plan_synthesized",
+      "record": "reports/event-authority-20260911/admission-records/brainstorm.plan_synthesized.json",
+      "record_sha256": "fff5b6c57583277f6a2d51a0a7d29994c760afe11b56c4446f6cace5f1f24161",
+      "row_sha256": "bc45dbc74a2dfd4a104829c608eb9136b4da167dfc9ef37811b8c4d5d571e0c9",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2153",
+      "event_type": "brainstorm.proposal_added",
+      "record": "reports/event-authority-20260911/admission-records/brainstorm.proposal_added.json",
+      "record_sha256": "17737afbd409ae08da81f655bf6af9627cf1bb32497e4c21a70ac76e50c32733",
+      "row_sha256": "563c4ee6c10133e7e6d7e7801d8744e4495fec8b53525463e6a9a45f78b26ae4",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2154",
+      "event_type": "brainstorm.vote_added",
+      "record": "reports/event-authority-20260911/admission-records/brainstorm.vote_added.json",
+      "record_sha256": "be136d1c70867f01a21ccca9daca4fec0d531263ecb93c777a72969b3f4ea61a",
+      "row_sha256": "6319e92c8ecb7754eaef52b9b2c938f6b6de99cbee4676dc6ffddc27b408cee3",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2155",
+      "event_type": "browser.context_captured",
+      "record": "reports/event-authority-20260911/admission-records/browser.context_captured.json",
+      "record_sha256": "1561995975f6bf63189a4a74a2819147fce476c611887272611f140c173ece3e",
+      "row_sha256": "1877201127ce7bd56e678636df559d819347611ad0b761fc4bb4d24a9db73dd9",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2156",
+      "event_type": "browser.context_share_revoked",
+      "record": "reports/event-authority-20260911/admission-records/browser.context_share_revoked.json",
+      "record_sha256": "e851824c0dba990d1ee4f14a2d9837938eff87bc1edf18dbd990b845a7ebbf31",
+      "row_sha256": "620d220923c921849b3e600c1daf579a65af643d8e929600b99cbad35f1b9820",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2157",
+      "event_type": "browser.context_shared",
+      "record": "reports/event-authority-20260911/admission-records/browser.context_shared.json",
+      "record_sha256": "89f919daedf0a8b70002a91529bbba82b11cd8d6cb52ec9c7f02715eaed4bc83",
+      "row_sha256": "609e928478ec586468e5e4e7a847d58d227be526fe65e5edcdf3e2839b5f52c7",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2158",
+      "event_type": "browser.controller_lease.granted",
+      "record": "reports/event-authority-20260911/admission-records/browser.controller_lease.granted.json",
+      "record_sha256": "6aac7874ba8f39cd01257ca7ca82a4f9b159f8dd73bf3b6e1173c7228b89746f",
+      "row_sha256": "97630be8142209371b8f0164484787a71fa0a2ad7d71f337d882fa7c3d286ac6",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2159",
+      "event_type": "browser.controller_lease.lost",
+      "record": "reports/event-authority-20260911/admission-records/browser.controller_lease.lost.json",
+      "record_sha256": "b1cb7e1205923145eb1374e4971121dcddebf0ac8e00a723ed0bb65d84804631",
+      "row_sha256": "bb94655c9e8d3469dbec78e92d02a9ab6ea2891c7432fab3bc15f15a207eda3c",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2160",
+      "event_type": "browser.controller_lease.renewed",
+      "record": "reports/event-authority-20260911/admission-records/browser.controller_lease.renewed.json",
+      "record_sha256": "f7d538959d364634ed48d014635f0b12a7153d0f0db126065e3da687faa29cf4",
+      "row_sha256": "f1c90d0d4aaf16a6804fa3b39e8c1f677c02fedaba40269b040611e30b92c0f0",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2161",
+      "event_type": "browser.controller_lease.takeover_completed",
+      "record": "reports/event-authority-20260911/admission-records/browser.controller_lease.takeover_completed.json",
+      "record_sha256": "6906a03d4c2f4dd37d15b536b6337a642770c6dc90a3238ed7b0144c71bee034",
+      "row_sha256": "fe900bad594083c512b60a8771aec9cea5da094e314639495d5c9fbcb056ef2a",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2162",
+      "event_type": "browser.controller_lease.takeover_requested",
+      "record": "reports/event-authority-20260911/admission-records/browser.controller_lease.takeover_requested.json",
+      "record_sha256": "3514df908a326767de0301cf8ad4e8ff5747a09cb4fe036694d58bfe276529b6",
+      "row_sha256": "2de7907f6686966438318de2e2de59a42897d15e1f5e6bbc7b11367f0d6da2f6",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2163",
+      "event_type": "browser.document.generation_changed",
+      "record": "reports/event-authority-20260911/admission-records/browser.document.generation_changed.json",
+      "record_sha256": "124339a48f032dde038699e0707b62652cc10fad2bc95a929481c4acb20eb897",
+      "row_sha256": "deb9ed506bdb8f632967c13d67dca65c67f8a77ddc48269ecab4572d7ee61417",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2164",
+      "event_type": "browser.execution_strategy.fallback_selected",
+      "record": "reports/event-authority-20260911/admission-records/browser.execution_strategy.fallback_selected.json",
+      "record_sha256": "5ddd5a2ec17f68e1d8649d104e9e3b60e37d4ed8898559f2ea761bd39ab94165",
+      "row_sha256": "fc88462a3c92f529b1157b00f0bc82585a0ba1d3beaeb9354699dc5c4d2311e6",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2165",
+      "event_type": "browser.execution_strategy.selected",
+      "record": "reports/event-authority-20260911/admission-records/browser.execution_strategy.selected.json",
+      "record_sha256": "d8a39af47231a6e93439d4bf0d8078273f1f199597a9e30bcb0bcda59070ffca",
+      "row_sha256": "a30ce93313734c2dab1255b012f24df179bbd87cef194ad6e16cd161dc148f0b",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2166",
+      "event_type": "browser.navigation.generation_changed",
+      "record": "reports/event-authority-20260911/admission-records/browser.navigation.generation_changed.json",
+      "record_sha256": "53ef85a56826e4e9aa709f970ab93bba02137faf0d57f3148482cc7e1b1611e5",
+      "row_sha256": "d83b5131176aeb354d07cd04487ef3e5ff42c8b7426d7e6d020bcb90fd3e89db",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2167",
+      "event_type": "browser.page.activated",
+      "record": "reports/event-authority-20260911/admission-records/browser.page.activated.json",
+      "record_sha256": "233f3094feb9d30d90f46ab3fb2c7e8bcd25ed3d4fc5409fb24f0f1204a543bd",
+      "row_sha256": "623992b5e74006fd1c6e4fbcd8fa1927824c382dbc955731a0e02cf69fb548d6",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2168",
+      "event_type": "browser.page.closed",
+      "record": "reports/event-authority-20260911/admission-records/browser.page.closed.json",
+      "record_sha256": "eb00012397a0a864569c36da4a71d232faa564415c964036f7e06df6e1ad6992",
+      "row_sha256": "a67ee9f9f860cd299f2b6a00a794cf721e8fc728b74d1cb734579aa5c0300f02",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2169",
+      "event_type": "browser.page.created",
+      "record": "reports/event-authority-20260911/admission-records/browser.page.created.json",
+      "record_sha256": "ab22788e5315a8aa4d5b097f2aadb56fafd1b84f3f1cec710f774049276df9f3",
+      "row_sha256": "da27d5e2f3227be41076b1515edfb4b41afd99c562d4ca96e56345193b68b5d8",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2170",
+      "event_type": "browser.program.cancelled",
+      "record": "reports/event-authority-20260911/admission-records/browser.program.cancelled.json",
+      "record_sha256": "43074bf122c8e8d3e4dd0e4dc01001ad20fd47ee1e9848dc976d3c762061eefc",
+      "row_sha256": "7f4c6f5204e21f394da1064a55b4d101efcdd2803520fbea559763a7b5be090a",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2171",
+      "event_type": "browser.program.checkpointed",
+      "record": "reports/event-authority-20260911/admission-records/browser.program.checkpointed.json",
+      "record_sha256": "c2ef02759b593ba47a73c11f54b74f0cb13b653e9bb4e5e409119be1b4b854bb",
+      "row_sha256": "77b661c54774e42cb7b492fcffd7afcbf764b5983b286325eb0b213025dfc0a3",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2172",
+      "event_type": "browser.program.completed",
+      "record": "reports/event-authority-20260911/admission-records/browser.program.completed.json",
+      "record_sha256": "7e995d1c85d95dc9a0790d31cce8dacbc739c3857d6042f01d2deb571825ab41",
+      "row_sha256": "9ec7bd74d280d047d28507603689d6cab7b1717b35468f86faf61be87e8fc7d0",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2173",
+      "event_type": "browser.program.failed",
+      "record": "reports/event-authority-20260911/admission-records/browser.program.failed.json",
+      "record_sha256": "af4dd553b259daaae84b9dcf0e28087e2bc85fb608228af8607f00a73858abf2",
+      "row_sha256": "f01ce38569c8733d543a6f987f0ecfc69a5c1fa3c65e284e3238d22a3cc4b374",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2174",
+      "event_type": "browser.program.paused",
+      "record": "reports/event-authority-20260911/admission-records/browser.program.paused.json",
+      "record_sha256": "b3f444638057eeca5a94970c0e5867ea16b0e3e7149d38279e9246d5fd77913d",
+      "row_sha256": "bc72fb75fb312211c7d152875709a2d181ecb0882c5d5f98e78bcfbefcb4b671",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2175",
+      "event_type": "browser.program.resumed",
+      "record": "reports/event-authority-20260911/admission-records/browser.program.resumed.json",
+      "record_sha256": "ce4dbdeb7cae791f3f31ba4850c39fe60a2873fad1fee6039038e774d8ed5291",
+      "row_sha256": "048c642d510cd1650703edd4871f345f9d5d4907c9edf94fa4d1a1506503ff2a",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2176",
+      "event_type": "browser.program.segment.checkpointed",
+      "record": "reports/event-authority-20260911/admission-records/browser.program.segment.checkpointed.json",
+      "record_sha256": "8c229566ff8cced100a95f93f09b6de32fbbbb47e7b327684eb0061fe720d6f2",
+      "row_sha256": "e1527f3fce8eb5216581ea4bb61eb39f1ee07a4f1a94130e9d88c17e558b56d3",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2177",
+      "event_type": "browser.program.segment.completed",
+      "record": "reports/event-authority-20260911/admission-records/browser.program.segment.completed.json",
+      "record_sha256": "b3b2fd1b642784d5fb8a853c2358aa67d9ba04e0693937418e3b7a0fbbdde026",
+      "row_sha256": "8501d2e0c82e9052f6d56e212aa679e20fa7bcd77812fe580dce07507a291880",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2178",
+      "event_type": "browser.program.segment.failed",
+      "record": "reports/event-authority-20260911/admission-records/browser.program.segment.failed.json",
+      "record_sha256": "265bf846593e2c22d0841dd41e3f81ec095579cbc12b5d1f4828315899cce32a",
+      "row_sha256": "17ae0ce6449c063794ea6d37dd516f0d991ed2b99254871505f757fb72014ec2",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2179",
+      "event_type": "browser.program.segment.started",
+      "record": "reports/event-authority-20260911/admission-records/browser.program.segment.started.json",
+      "record_sha256": "38e3a71c6781d47df655976f552c8f28ca573d39cc44d0a674e3702c29e8cab4",
+      "row_sha256": "03c7bfe5e97e22a2de62ab3f40541b6ea9b5076c40637405cebceeb6847d095e",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2180",
+      "event_type": "browser.program.segment.timed_out",
+      "record": "reports/event-authority-20260911/admission-records/browser.program.segment.timed_out.json",
+      "record_sha256": "7e6d9c72ff59081bba7f302bf8fb7b532b0acd6b1bc1904aa8417e6c4898c4a6",
+      "row_sha256": "1554b0f6df6d0cd0f2eea4f840e48613936380934d4398c698ff9bad78a27b9e",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2181",
+      "event_type": "browser.program.started",
+      "record": "reports/event-authority-20260911/admission-records/browser.program.started.json",
+      "record_sha256": "891466c4151e37655baa4eba9cd250362f2d6ec58f6e344a02bc405967c4675d",
+      "row_sha256": "159798489a225717c0628fcb39fca466ab94b71b8a46c02916adafaee59f42ce",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2182",
+      "event_type": "browser.program.timeout.effect_state_unknown",
+      "record": "reports/event-authority-20260911/admission-records/browser.program.timeout.effect_state_unknown.json",
+      "record_sha256": "dfbc2be50c0151a0355d784a351a7a8fb68a61f660d66444dca7c451a78971aa",
+      "row_sha256": "454e7594f7411ee6f7e8911558afb629a166554b630057629162d3bbb38410f7",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2183",
+      "event_type": "browser.program.timeout.effects_reconciled",
+      "record": "reports/event-authority-20260911/admission-records/browser.program.timeout.effects_reconciled.json",
+      "record_sha256": "99ba2e7bf0917284d5d593b174c4c4ede0c82452874d3cd54abf7453d90c487d",
+      "row_sha256": "7cd162982ec4b7172d9c19a3870adf1b85b4aacc993b123ad21a7e06f344b029",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2184",
+      "event_type": "browser.program.timeout.stopped",
+      "record": "reports/event-authority-20260911/admission-records/browser.program.timeout.stopped.json",
+      "record_sha256": "fdb261ae5c12e942d9609639e32ed53335d6328a0a61160b0fa9f0d725def8cf",
+      "row_sha256": "48a67d05e2994db1737cef40e243ad304d37100d7adfe0052d76cd7526881ced",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2185",
+      "event_type": "browser.program_workspace.checkpointed",
+      "record": "reports/event-authority-20260911/admission-records/browser.program_workspace.checkpointed.json",
+      "record_sha256": "1802ac89437a368ac750cda01ba993ffe63e2108a4beceb7629978f080be8728",
+      "row_sha256": "5b8e448115a3332600ec4cad1bfae9c41a4f0ad963d918f1e4d2dca88f77df19",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2186",
+      "event_type": "browser.program_workspace.closed",
+      "record": "reports/event-authority-20260911/admission-records/browser.program_workspace.closed.json",
+      "record_sha256": "ef49aad36c25e460af1d472d7bdc0347ed5e0b15434587e251d73881c6cef0c7",
+      "row_sha256": "33faeb1cd48dc45c9e316a70981bd6b39ea8688054e0fc6502d3f2226a4cc147",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2187",
+      "event_type": "browser.program_workspace.created",
+      "record": "reports/event-authority-20260911/admission-records/browser.program_workspace.created.json",
+      "record_sha256": "13c3f4244c4126b068863a2985f18cf047c4a70c613718ddc7bbf8a437c3741b",
+      "row_sha256": "b9a1187824e5b20e49a296978a969d292a4663e9d56be9afdccc6cf21f65f53f",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2188",
+      "event_type": "browser.program_workspace.spilled",
+      "record": "reports/event-authority-20260911/admission-records/browser.program_workspace.spilled.json",
+      "record_sha256": "425b41ee42b30c9150f4dfb6e0babfcf07bc2bd4f248e72fd605a9d5698f4665",
+      "row_sha256": "ad7fd9a0dbda37b17f23ca89f8e17db39170b06c269abae6a0a7846f9e58c155",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2189",
+      "event_type": "browser.program_workspace.updated",
+      "record": "reports/event-authority-20260911/admission-records/browser.program_workspace.updated.json",
+      "record_sha256": "4a6c4b49b712f9e05a4a101a0e3fdc34c6d7dec5529e2a74f4a93f14204d98dd",
+      "row_sha256": "6ab4e96e7dde50bd23bd8d7afb24f61fe074c4c8d6a17b066eb4028405cc84a6",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2190",
+      "event_type": "browser.representation.captured",
+      "record": "reports/event-authority-20260911/admission-records/browser.representation.captured.json",
+      "record_sha256": "3bd78ca29edd45abc0dd4853597cb9b04844233d867f965e22530a040b9b1b78",
+      "row_sha256": "18cc870acf20d9ecb22de068142cb4e5afcbd8475239e9d470779b9582c3d03f",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2191",
+      "event_type": "browser.representation.delta_created",
+      "record": "reports/event-authority-20260911/admission-records/browser.representation.delta_created.json",
+      "record_sha256": "3e20b4863ef1e5cac68ba4ad3451190932be40c656461f002a914335c2edc8b9",
+      "row_sha256": "f5d50eb46c628941e72e5a3012b115a126a339bf2728b840fb6a4c44f75de5a6",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2192",
+      "event_type": "browser.representation.invalidated",
+      "record": "reports/event-authority-20260911/admission-records/browser.representation.invalidated.json",
+      "record_sha256": "6007c7e96ac081be1a950c1566b36c7a477df74c753fbb55ae67212bd5894c45",
+      "row_sha256": "5edac3d28ddb33bd9c93ff7712e739215718de196b407949c098abe2d1ffa626",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2193",
+      "event_type": "browser.representation.queried",
+      "record": "reports/event-authority-20260911/admission-records/browser.representation.queried.json",
+      "record_sha256": "91e0db624fc4b179f46badbf6957804bc95c35bbb1b042ee924b43e63b3fad09",
+      "row_sha256": "7cd838e41e0c50d243035477c28d6a349c950ff1d01fb6981295fc0d5ad3cf3f",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2194",
+      "event_type": "browser.route.browser_escalated",
+      "record": "reports/event-authority-20260911/admission-records/browser.route.browser_escalated.json",
+      "record_sha256": "e46e8f2158ac3aa94f37757566c5410c48462141a1aff107d84c919debdb91c3",
+      "row_sha256": "4157eff1bcd2d9752d563e62ece89c3dec5b8d1d3ae4dc1e4edfb34c948cd400",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2195",
+      "event_type": "browser.route.fetch_selected",
+      "record": "reports/event-authority-20260911/admission-records/browser.route.fetch_selected.json",
+      "record_sha256": "fda3cf7ba64a1fc746d0b99f9a2f6614f3ac239c6b76390df5f856bc63c4a67a",
+      "row_sha256": "e2b7d5c7b19150939cfdf511ec3f4e1975173b6ca658f95d06e79f8fb6aae06a",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2196",
+      "event_type": "browser.routine.disabled",
+      "record": "reports/event-authority-20260911/admission-records/browser.routine.disabled.json",
+      "record_sha256": "21e77940e371cfba502753d6ef80f2d70c93da35bec288ed3ef21d71bee63494",
+      "row_sha256": "29d97b2d0cdc3108e502ff9b094c20fee7af9263a2780393d57c7dc40d96d8d8",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2197",
+      "event_type": "browser.routine.generated",
+      "record": "reports/event-authority-20260911/admission-records/browser.routine.generated.json",
+      "record_sha256": "3159aa28e3f598af62dab3d503d8e48389b3122e0b59961843aa5584ac27c6c6",
+      "row_sha256": "124b882f7da097c053552e8e5695c6ddee42de9f32d3a6548d9cfb4d98ed1ad6",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2198",
+      "event_type": "browser.routine.invalidated",
+      "record": "reports/event-authority-20260911/admission-records/browser.routine.invalidated.json",
+      "record_sha256": "baf16b5cb824fd367fc8e0f1a07e26d696a937761ede4fb57437b6f8a8fbe8c3",
+      "row_sha256": "859a5db2a625d28f40e9c322c8a1f91f7d9b9d9387642bbeb6227e653201f530",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2199",
+      "event_type": "browser.routine.promoted",
+      "record": "reports/event-authority-20260911/admission-records/browser.routine.promoted.json",
+      "record_sha256": "282eec68cc56464897fdaf3182e55ed975ef7307224a7001c5830c01d75de1e5",
+      "row_sha256": "dd0f61b3026d5e919db0169c9288a0692a40a57ca6339e97d4dbf80b4fa49114",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2200",
+      "event_type": "browser.routine.validated",
+      "record": "reports/event-authority-20260911/admission-records/browser.routine.validated.json",
+      "record_sha256": "b6e205a5ac21a3c38f97509b589c44844f9a67861a33dcc65979828adce7a514",
+      "row_sha256": "af545f617a8e30be0100bbc43276fedebe506234fb6c25755b1d75938b6c2f94",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2201",
+      "event_type": "browser.screenshot.model_attachment_selected",
+      "record": "reports/event-authority-20260911/admission-records/browser.screenshot.model_attachment_selected.json",
+      "record_sha256": "0f93a3cca9339fd6385a9c3bf61917441c9583128339c748d8f9d153a0142667",
+      "row_sha256": "37d0fe6a0de382038d874e0cde4554a5660f6698a4b7e4ef960842be6ce5e833",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2202",
+      "event_type": "browser.screenshot.skipped",
+      "record": "reports/event-authority-20260911/admission-records/browser.screenshot.skipped.json",
+      "record_sha256": "0ad29a5129d68b3b904ed010a7f966b35e6e27c9c04772ce96e51c06940e65ed",
+      "row_sha256": "ee6bfd7da23d71eb80d5916b70860b7735da23df3ec3a2bee4bc65c84d2806f8",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2203",
+      "event_type": "browser.script.compile_failed",
+      "record": "reports/event-authority-20260911/admission-records/browser.script.compile_failed.json",
+      "record_sha256": "5f6ceba1c55089a70a6f3354af35c1c0c71d03274e89d1e544e0b490c048bc3b",
+      "row_sha256": "3a0d8419897a6a01bd61eb4c697a6b40509da79da5882c420b5c53da40e0c702",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2204",
+      "event_type": "browser.script.compile_started",
+      "record": "reports/event-authority-20260911/admission-records/browser.script.compile_started.json",
+      "record_sha256": "97deb5a05c80c5d0bcf7b1876f5c649b6cbf2946e33da64a5404b159b787b619",
+      "row_sha256": "4f19aaba3394c5670e7db14542f70df4b0f2ed1ed62e85ecb56f510f31d8dc30",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2205",
+      "event_type": "browser.script.compiled",
+      "record": "reports/event-authority-20260911/admission-records/browser.script.compiled.json",
+      "record_sha256": "9e6f38aaf769466f1756f7c76196c6abcc7e5d2690d13c0504bbdf83b2911b6b",
+      "row_sha256": "e627575bd8eb9d37dac63d142bdfd2e1b94b1dea6765ecbd912978ba3be39adf",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2206",
+      "event_type": "browser.session.interrupted",
+      "record": "reports/event-authority-20260911/admission-records/browser.session.interrupted.json",
+      "record_sha256": "09a0fe571227e2320928e4b52f37feec4dea1f843398ffffd731f735c0a3e7e3",
+      "row_sha256": "00c5efca3b0d436ac483196225d530b1090a9ae03413f2de4a83a5219fa6f405",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2207",
+      "event_type": "browser.session.reconstructed_on_host",
+      "record": "reports/event-authority-20260911/admission-records/browser.session.reconstructed_on_host.json",
+      "record_sha256": "d615fbf4e2af9e791a536865ee69769ff9e55ba51c54c3b5569bf843cefb1f63",
+      "row_sha256": "15034bb7a33fa6df8a56d8dded9044295c39c38c248a7dd5eb75ae59d9b5f64f",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2208",
+      "event_type": "browser.workspace.closed",
+      "record": "reports/event-authority-20260911/admission-records/browser.workspace.closed.json",
+      "record_sha256": "3d811f67feec7fe10978b3b4cfa75f069792fdb00579f87f3de0dedea9279d32",
+      "row_sha256": "b49e8e4c21f33385830e6a0d3bacc572cc934b9c403f3147064a9f397329e8b5",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2209",
+      "event_type": "bsd.advice_emitted",
+      "record": "reports/event-authority-20260911/admission-records/bsd.advice_emitted.json",
+      "record_sha256": "2bc9bfdc95f58cf308bc45941a04c1d13bfd3701f7e62f1a85f2347211567f58",
+      "row_sha256": "f2a59cf822ea1694d352c5954029df04543c31bfc987d8301e85257a0d470165",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2210",
+      "event_type": "bsd.assignment_paused",
+      "record": "reports/event-authority-20260911/admission-records/bsd.assignment_paused.json",
+      "record_sha256": "6cc417aac89b43850cca3adfa4afd4a30d6dde151efb722f630231c007f4acba",
+      "row_sha256": "f85dc3293e33b09188f5a1e17f6a8d59134f7c049683ad90be220213ff26436e",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2211",
+      "event_type": "bsd.assignment_resumed",
+      "record": "reports/event-authority-20260911/admission-records/bsd.assignment_resumed.json",
+      "record_sha256": "c555f443c525ceb337541ee2e1d4a6e29d46c32e65ba8314e8c01abefde4f9cb",
+      "row_sha256": "1d2ac89fcf0b232b42cddc06556065e20fe0e3d07d535d59f2e1e6fda2655dfe",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2212",
+      "event_type": "bsd.assignment_started",
+      "record": "reports/event-authority-20260911/admission-records/bsd.assignment_started.json",
+      "record_sha256": "ee61d4f60c1e5dd3a5f558a231f14c5d3ff36b9a5193168d384e909f7d55cf1b",
+      "row_sha256": "cd39c708ca68e62ec664c5d37777007868f4a3d9350a8da79896543f56179e2b",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2213",
+      "event_type": "bsd.assignment_stopped",
+      "record": "reports/event-authority-20260911/admission-records/bsd.assignment_stopped.json",
+      "record_sha256": "60882facfc9919b1ad131c9a942ee276930a84ad3154db1810444c7bbd8ea41f",
+      "row_sha256": "2134e368b15ab4622f40af47f15e606853687adfdde52c203223c89b6dfafd9e",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2214",
+      "event_type": "bsd.finding_cleared",
+      "record": "reports/event-authority-20260911/admission-records/bsd.finding_cleared.json",
+      "record_sha256": "f3e84120313b93141ee90a65f770ece3adc8fcd845deb685d7ddb633decea9b7",
+      "row_sha256": "8ad29c36092a867797047af97af988c5f26e3df6e8fdc0662db3918a26a4e242",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2215",
+      "event_type": "bsd.finding_held",
+      "record": "reports/event-authority-20260911/admission-records/bsd.finding_held.json",
+      "record_sha256": "918abdb23136c3cadc5aeb543f4fdc8f9c2cb2cac4ef175e6995b8e13014d583",
+      "row_sha256": "5aba06220dab7fcc70081fb36ca4319fee570b69dd59489b94228ae82fa6f6b7",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2216",
+      "event_type": "bsd.finding_reconfirmed",
+      "record": "reports/event-authority-20260911/admission-records/bsd.finding_reconfirmed.json",
+      "record_sha256": "a4ec65370925b4d90589b15077bfab4cd910f09b927de3e460a996b96cdc4e23",
+      "row_sha256": "c05e5588973307f08fb27f5614ca29233dc49feaaac87347cca5dab7577d9856",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2217",
+      "event_type": "bsd.finding_suppressed",
+      "record": "reports/event-authority-20260911/admission-records/bsd.finding_suppressed.json",
+      "record_sha256": "88f1cca0f58754bd5ab440d3e92568392b1c3dc56dbd7ecddbcd9ccd5ab3cc22",
+      "row_sha256": "e6b19ff3d70daf0d0088450be614775ac9ec38126bf7206b04e62d6260c4d082",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2218",
+      "event_type": "bsd.output_quarantined",
+      "record": "reports/event-authority-20260911/admission-records/bsd.output_quarantined.json",
+      "record_sha256": "bfe238380d0019cfa931f0801cfe3bc467024f644d104dda9ce2109066300835",
+      "row_sha256": "e42ebf0861a8369a0746b9dba2b44c3955e3bfbd0bd8138749546702843511ff",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2219",
+      "event_type": "bsd.policy_changed",
+      "record": "reports/event-authority-20260911/admission-records/bsd.policy_changed.json",
+      "record_sha256": "0bb7c8f33d91e0a2b69a92026428d56744cc6b3942d83a94cd71f1e0689b4b5d",
+      "row_sha256": "ce84e66496191e903c97ba3c64fc081f0ade7db6ac36ee042b0de0c05eb7d50f",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2220",
+      "event_type": "bsd.review_failed",
+      "record": "reports/event-authority-20260911/admission-records/bsd.review_failed.json",
+      "record_sha256": "ab3199d3a375cefb91f6c367e2844e44474395e6c6fc276ccda157a77e5ac7b4",
+      "row_sha256": "c0618eb010d0930ce6f1dab9dd6c9189b54e168bd31e9d3365c53f74f5fc1fea",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2221",
+      "event_type": "bsd.review_started",
+      "record": "reports/event-authority-20260911/admission-records/bsd.review_started.json",
+      "record_sha256": "d11e6e08e732d7ef318c0e619d4c94fb25ecefc30cba3b6ec14d83a3ecca3511",
+      "row_sha256": "aca7822847735dad0136b2cafe325f9b7bee63eae2672bd0a9af2524c4788ceb",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2222",
+      "event_type": "bsd.review_timed_out",
+      "record": "reports/event-authority-20260911/admission-records/bsd.review_timed_out.json",
+      "record_sha256": "5cb4ee62bb2dc2391714a970d08f2ee7f2b179441b0c23ee4d7a959a93a831a3",
+      "row_sha256": "faa5fdd6ee52430fa96f01477da29c9ac8c5646572896538333b7203316e1f59",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2223",
+      "event_type": "bsd.workflow_binding_created",
+      "record": "reports/event-authority-20260911/admission-records/bsd.workflow_binding_created.json",
+      "record_sha256": "60b89e2167c2809616c8b05b46a803610a45f0329441b078a95764c53d7b8a1b",
+      "row_sha256": "176bfe3cd85b483a8fff5c428656bf0dcfb2677f77844c2c232cc0483a6e91ba",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2224",
+      "event_type": "bundle.annotation_state_changed",
+      "record": "reports/event-authority-20260911/admission-records/bundle.annotation_state_changed.json",
+      "record_sha256": "1864b0968040f0c9ffabad2b38436964f648373ef517ef607f52c0561f0f123e",
+      "row_sha256": "79bcbe1a2264a8c24a53edb9553c6a0a8d4179e7e81fb064d7e3ede6cab9a7db",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2225",
+      "event_type": "bundle.note_created",
+      "record": "reports/event-authority-20260911/admission-records/bundle.note_created.json",
+      "record_sha256": "ff5d13f47d97100819bea3651d4bd15133436dc74c314b5e6faa0aab5da05b16",
+      "row_sha256": "1bacce2a35120e6b59569955456000f26a71a5558fd294e56474b33e9979fc2d",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2226",
+      "event_type": "bundle.note_status_changed",
+      "record": "reports/event-authority-20260911/admission-records/bundle.note_status_changed.json",
+      "record_sha256": "13f7b16629e5979e0e61bf6b2eee51a7247a08dd163d29b649c643ac9677676b",
+      "row_sha256": "1b49dead8f0c9ea8bc47ebdba5b30ab957cdf34215e721a83bb0776e7853a312",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2227",
+      "event_type": "bundle.revision_completed",
+      "record": "reports/event-authority-20260911/admission-records/bundle.revision_completed.json",
+      "record_sha256": "b833241ef571767c0f3cfa42f1fa9171f8df79c5a5caa7962d961670cdc8696b",
+      "row_sha256": "9cdfb2276083bd695f75d273bdf60ce6ef7ba4556cc3eb6de789aa8ce03ca3d1",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2228",
+      "event_type": "bundle.revision_interrupted",
+      "record": "reports/event-authority-20260911/admission-records/bundle.revision_interrupted.json",
+      "record_sha256": "63644c9709a919d28ea04a41a4228668a2e44da945300ed51a326be3768a42e6",
+      "row_sha256": "b3d870e7d614d8f497e34f2144a69a42fcb5a060d9ba681071a91b0a493f657a",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2229",
+      "event_type": "bundle.revision_requested",
+      "record": "reports/event-authority-20260911/admission-records/bundle.revision_requested.json",
+      "record_sha256": "b02f82221eecc0e109ec6ffb3bd005fb50880b7cb68a3f8624bcb48a1739dd01",
+      "row_sha256": "02869639dc964a764e53eb798c2dc7fb022e51306c91527df56c8c78a122c989",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2230",
+      "event_type": "bundle.revision_started",
+      "record": "reports/event-authority-20260911/admission-records/bundle.revision_started.json",
+      "record_sha256": "3f7e77fe1a6266b5cba6ae5f0bedd6da45e47c476c6152be64dbd83648582af2",
+      "row_sha256": "c2f91b1fc40081bb261c04b6308d5bd5f384b65c5adead7d03f950f35466acb5",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2231",
+      "event_type": "bundle.selection_forward_blocked",
+      "record": "reports/event-authority-20260911/admission-records/bundle.selection_forward_blocked.json",
+      "record_sha256": "68569a3716e4c62d666bf45e9947ba6aed51cbd4f18bee9a95654826f5757d73",
+      "row_sha256": "43594d3dee7a946d7bc34f46481353ec88f3163e077e41c27b8576fcc7ff3695",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2232",
+      "event_type": "bundle.selection_sent_to_chat",
+      "record": "reports/event-authority-20260911/admission-records/bundle.selection_sent_to_chat.json",
+      "record_sha256": "9b5c452179e230ab74d13f0e9afe3c381407ee930912dbb4c4880c20956827ee",
+      "row_sha256": "5056dba6d6238f6c5fc611fd2a8a594c981500bb8bbc1c69069d2718610f7adb",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2233",
+      "event_type": "catalog.install.completed",
+      "record": "reports/event-authority-20260911/admission-records/catalog.install.completed.json",
+      "record_sha256": "18b08a619436f14f2afb683904c3e96f6f6525bc3d5bab2fb20ca82efe5d1706",
+      "row_sha256": "bbe37e678a4269b6a01666de7103842a7bd4955c9c0b87fc7447c9badb8856e8",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2234",
+      "event_type": "catalog.install.started",
+      "record": "reports/event-authority-20260911/admission-records/catalog.install.started.json",
+      "record_sha256": "0210e44bd98b6ec1100e0c329ee380aaee5af6cf57b8c9ced831bd0b46e0cd26",
+      "row_sha256": "e5f67999c70dd41c0b2efce723bf55fff3f700f4c15474d023df17d426a4577f",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2235",
+      "event_type": "catalog.remove.completed",
+      "record": "reports/event-authority-20260911/admission-records/catalog.remove.completed.json",
+      "record_sha256": "136dc494770a74518ccbe3b6d9d29d2c5e698ec4f56448b6f817c6594c869c0d",
+      "row_sha256": "0e30a801f20c9ed0a27bdc3be562a5ca78dc940a918c0c301f083416456f30c5",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2236",
+      "event_type": "catalog.remove.started",
+      "record": "reports/event-authority-20260911/admission-records/catalog.remove.started.json",
+      "record_sha256": "7dbdd452d9dd9eaeae52cc20c82dacfa107f34d56d6321e0abd5c85c59dab4f6",
+      "row_sha256": "bf4d385c55c157c3b504c923a3ae9025ea91be5b83f5adc30d44a1c9f3ef7c05",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2237",
+      "event_type": "catalog.update.completed",
+      "record": "reports/event-authority-20260911/admission-records/catalog.update.completed.json",
+      "record_sha256": "6477c367609c859fad08af067e904473cbb76dfef87df3caeddd78df9f71b97a",
+      "row_sha256": "704ff3bcf1ca5894e0635a24b1a5809cdce915b713f4cd9dc04592fc44a35503",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2238",
+      "event_type": "catalog.update.started",
+      "record": "reports/event-authority-20260911/admission-records/catalog.update.started.json",
+      "record_sha256": "eff4f5168e93ea4b9249f65e0ec8b31f5972c7608fae88170f3d7e97a586d6cf",
+      "row_sha256": "2cb70bab7c6f6f8ee9eecf645449b6cd1b00a0880f18db2a4870efb111fcad43",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2239",
+      "event_type": "chat.message",
+      "record": "reports/event-authority-20260911/admission-records/chat.message.json",
+      "record_sha256": "cb110175ffc1f623027b20e6a1cf5711fcc2ff9c4d7ebe5dc22d0e4be27b11ce",
+      "row_sha256": "dadbeac944e679bdcf2441de64fa0bccf469040824f741c71fd10920b98782e0",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2240",
+      "event_type": "chat.response_stop_requested",
+      "record": "reports/event-authority-20260911/admission-records/chat.response_stop_requested.json",
+      "record_sha256": "7f9632cd339ffc420717ef896e079bd61b6906c0a9fb4e537faa9c72683b9b53",
+      "row_sha256": "c6f7ddf0dcde3bfdacd596a38bdb7f7383bb0f6b91d323ac4160e0a402047304",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2241",
+      "event_type": "chat.thread_archived",
+      "record": "reports/event-authority-20260911/admission-records/chat.thread_archived.json",
+      "record_sha256": "4ecb9b3455bf16a8b0c2bde4f48464d7558c38ec053e2fc3860290745cc14634",
+      "row_sha256": "fc9b24cc562a314e5b9a364d8ead1055a761791233a49b6ad8cf53d143408bb6",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2242",
+      "event_type": "chat.thread_created",
+      "record": "reports/event-authority-20260911/admission-records/chat.thread_created.json",
+      "record_sha256": "96c427e6704f1b09649215f42f6e0d4bf8a6c8bfb120a6282ef537a1bf0ec3b6",
+      "row_sha256": "eb54296d348cc34bb6fbe7337ac1d2b09076086ee450e7eea60655976da19fc2",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2243",
+      "event_type": "chat.thread_deleted",
+      "record": "reports/event-authority-20260911/admission-records/chat.thread_deleted.json",
+      "record_sha256": "90fb8b068ba4506369f664d4e4631d2628c3414375525c5621eb97528d33c8bc",
+      "row_sha256": "e4d01e434e04caf46b91cbbd69499c371b62fae458d732bcdde5d5fad9d4e13e",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2244",
+      "event_type": "chat.thread_worktree_bound",
+      "record": "reports/event-authority-20260911/admission-records/chat.thread_worktree_bound.json",
+      "record_sha256": "fc49fcc73f9c49b3609ae9df16819a2b094752306f8408e3c0088f331c81d943",
+      "row_sha256": "5c081c7d539d18c586b310355a67d273f7a23acb5c4b7a859d571256ad280ebc",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2245",
+      "event_type": "chat.thread_worktree_create_failed",
+      "record": "reports/event-authority-20260911/admission-records/chat.thread_worktree_create_failed.json",
+      "record_sha256": "e2bf1ce95a0bdc0d45b5377f7f4e3746d8d39bf622f210d4644289351d233e7b",
+      "row_sha256": "9238a245b7b4646789fdb5c6313c03a9cfb38bb0925d5aca43573cafc1621549",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2246",
+      "event_type": "chat.thread_worktree_merge_failed",
+      "record": "reports/event-authority-20260911/admission-records/chat.thread_worktree_merge_failed.json",
+      "record_sha256": "28a401529258838eb65d07ac293216e9be12ab2e7b58e4f5ff5f7d9aa32bca41",
+      "row_sha256": "190fae6ef8a3c1b450956caf184fdfe94abb2ea693f972fe69afaa60b03abaf0",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2247",
+      "event_type": "chat.thread_worktree_merged",
+      "record": "reports/event-authority-20260911/admission-records/chat.thread_worktree_merged.json",
+      "record_sha256": "69583f98cbd88ccda603c0e00b29e5b3bdd193456a8e219f6128f3a4918db853",
+      "row_sha256": "1bc4a5a898763576d87be4cfe16dd69eca27628ace5d770f6b7fc6f060a27ece",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2248",
+      "event_type": "chat.thread_worktree_pr_created",
+      "record": "reports/event-authority-20260911/admission-records/chat.thread_worktree_pr_created.json",
+      "record_sha256": "ca5bf11fef1bc56c81656188cc78662a81a68efcf01a7360bef5305b54dd5ace",
+      "row_sha256": "b5aa45c4e4edfccc28764739da88cf19aedc733a92fd02a989be15a8df13feb8",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2249",
+      "event_type": "chat.thread_worktree_pr_failed",
+      "record": "reports/event-authority-20260911/admission-records/chat.thread_worktree_pr_failed.json",
+      "record_sha256": "60908cff419804e242cc94e33737d937c39e06bc9ff87d9977fe75ac9adca88b",
+      "row_sha256": "41aa05fbccf1c7b270f4e8b631c0bce8bb580ccabff4f88d509612972ebebcc4",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2250",
+      "event_type": "chat.thread_worktree_pre_merge_test_failed",
+      "record": "reports/event-authority-20260911/admission-records/chat.thread_worktree_pre_merge_test_failed.json",
+      "record_sha256": "65a76919f4dcc107b5591a62460f8dac65332f5f16936d53459e33d889567596",
+      "row_sha256": "3821251061e9ac2bba69ed482263d13beb3296c5109d98ae08f37fa15538f4e5",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2251",
+      "event_type": "chat.thread_worktree_pre_merge_test_passed",
+      "record": "reports/event-authority-20260911/admission-records/chat.thread_worktree_pre_merge_test_passed.json",
+      "record_sha256": "b8ac2387eed5578efd64b2a0b79f5b29ee4ee6de4c6b8fac4384499f84499fee",
+      "row_sha256": "82ad3232455910fcef5f49d79d69d4709149b509695f7b275367c8313ac425ee",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2252",
+      "event_type": "chat.thread_worktree_pre_merge_test_started",
+      "record": "reports/event-authority-20260911/admission-records/chat.thread_worktree_pre_merge_test_started.json",
+      "record_sha256": "4bebdfa518d0b9be5ed3a19ab557134a7756f21033798f0514dbe4bbe257c42c",
+      "row_sha256": "c77544816e9b8cf969200eac1437b4fc99bf28eb349890c23079d302f410bb93",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2253",
+      "event_type": "chat.thread_worktree_renamed",
+      "record": "reports/event-authority-20260911/admission-records/chat.thread_worktree_renamed.json",
+      "record_sha256": "08bc36997184d852969d59e451a2f9afc5bcded5a63e59fd0b06b6ae045eaef5",
+      "row_sha256": "1c627370ad36e4b8eb9d3e2da2a7e9f5d4834e83d98f3348bb7b7c1119dedf5b",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2254",
+      "event_type": "chat.thread_worktree_unbound",
+      "record": "reports/event-authority-20260911/admission-records/chat.thread_worktree_unbound.json",
+      "record_sha256": "a4f360d8a11bb7f76c46ef1a71bbea491a7bd4ea8cff840bd9b89536d8f636c3",
+      "row_sha256": "99cee1a9498a8fc0856e015840e7aa13c80c61148e5e9701a523f6206aaf3fd1",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2255",
+      "event_type": "collaboration.artifact_added",
+      "record": "reports/event-authority-20260911/admission-records/collaboration.artifact_added.json",
+      "record_sha256": "7d5911e51cf1af1b2dcabfc1ea857ed93aed6537046a00a45540dcad7b2a581e",
+      "row_sha256": "83ff7042108bee2be1a4f85377d1c9162e1938e4fd7e8c2bee2e2a2c291d3b33",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2256",
+      "event_type": "collaboration.cancelled",
+      "record": "reports/event-authority-20260911/admission-records/collaboration.cancelled.json",
+      "record_sha256": "8140a3e6b41018d934bd7a04f0facbce73e91c9488baf7397ad5dda548727bc8",
+      "row_sha256": "a20f2f01589c1e51eeceda7866ab32b211748236e1f5f209600e2bc9199ff152",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2257",
+      "event_type": "collaboration.completed",
+      "record": "reports/event-authority-20260911/admission-records/collaboration.completed.json",
+      "record_sha256": "487e11587ce49ea56929164ece949d64ea07c8da152765a7d7b83e297e143bf5",
+      "row_sha256": "2cb13a7c5669dfce273179868ba30dc5ed1adf7fad0e392e9007027ecb1247fd",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2258",
+      "event_type": "collaboration.configuration_changed",
+      "record": "reports/event-authority-20260911/admission-records/collaboration.configuration_changed.json",
+      "record_sha256": "1af845756d0b5d736a72f398282b11f2d502b034eb6b06f2cb1de6a5cc0aaec2",
+      "row_sha256": "13681a3632c7e15f69b4fe7e97c0b8a1649e75703ec44c61d1815957a06a8e96",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2259",
+      "event_type": "collaboration.created",
+      "record": "reports/event-authority-20260911/admission-records/collaboration.created.json",
+      "record_sha256": "68bbcf4b4e1d0ddc58678588f9aead23c1013609922f92740b80b1954da3cbaf",
+      "row_sha256": "d9d72c06bbfddd1c42626d7fc3d6bcf79a1a43862249cf55e1b8c6fef1872682",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2260",
+      "event_type": "collaboration.failed",
+      "record": "reports/event-authority-20260911/admission-records/collaboration.failed.json",
+      "record_sha256": "e109dabb1c20676386bacc9f52f72cc4e48fff579dfd9787ec95fa7993edda79",
+      "row_sha256": "f1189e6e489a564913e4a4bc316149f8fe0605a2a06dbb99a6d6bb4068722d35",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2261",
+      "event_type": "collaboration.message_added",
+      "record": "reports/event-authority-20260911/admission-records/collaboration.message_added.json",
+      "record_sha256": "36425500282976ef3d42789259035e004a7c41199d255f4497c063def9842315",
+      "row_sha256": "d8986b00c4a377f02663de17a7f8bc073a0cf3918e63eaa8bdd5e22e1dfe79c5",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2262",
+      "event_type": "collaboration.participant_completed",
+      "record": "reports/event-authority-20260911/admission-records/collaboration.participant_completed.json",
+      "record_sha256": "3f135a5b6ab74760558992d5791b59a056014bbfe089dad081f056c797747eb0",
+      "row_sha256": "029c65f7c3dc6b0c5434afde727bead04a5de07009b4b20602f85ff2ed9180e0",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2263",
+      "event_type": "collaboration.participant_started",
+      "record": "reports/event-authority-20260911/admission-records/collaboration.participant_started.json",
+      "record_sha256": "18951d912b0fb846912788ef7ee6c35f14b0ed0e19a228bb3ddbcce3884ba7fe",
+      "row_sha256": "73775ca36919e4309e924e9e8b3f9103f462e1e2ecc4708be449ad617902c520",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2264",
+      "event_type": "collaboration.paused",
+      "record": "reports/event-authority-20260911/admission-records/collaboration.paused.json",
+      "record_sha256": "8345c55ad5ca5f368197f84d90cfb4928732116b3ce370e5cf13966aabc43fc4",
+      "row_sha256": "3f467c0b2a315808e0efca741c92662fcc7f5c4ac4b432a7b698ed95414fffb6",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2265",
+      "event_type": "collaboration.resumed",
+      "record": "reports/event-authority-20260911/admission-records/collaboration.resumed.json",
+      "record_sha256": "ad136201d3ff965b8ee0d2d281e3a38762ddf1f5b62e6e9bfe64f8aa1a865133",
+      "row_sha256": "2b99e2a35729f736fece5e532bb246b5927f163e9e9f798b2e942fc8181a7244",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2266",
+      "event_type": "collaboration.started",
+      "record": "reports/event-authority-20260911/admission-records/collaboration.started.json",
+      "record_sha256": "804488b7dbef2998d8e6f8599a092f4489c9bbaf9137988be0934469fd999050",
+      "row_sha256": "4ad22f2974f6ef35969d07512af53d3280cce86e8649ddee55f1a5e5a071cb2c",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2267",
+      "event_type": "concern.assigned",
+      "record": "reports/event-authority-20260911/admission-records/concern.assigned.json",
+      "record_sha256": "678c714bb087c377129759378490dad3accba83624706b951c3e097fb497ba16",
+      "row_sha256": "d2284f5c66367380f135f59bee31ee474022114836c9711f0608c3d57535f1bf",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2268",
+      "event_type": "concern.created",
+      "record": "reports/event-authority-20260911/admission-records/concern.created.json",
+      "record_sha256": "556fcf83b53af4a7ba02cd32587c8243b95c0335adc90668acb17ff6abeff5df",
+      "row_sha256": "99327ea273530958f5d6875f2e190a3e962896093f632bb7cb89488cf221773e",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2269",
+      "event_type": "concern.evidence_linked",
+      "record": "reports/event-authority-20260911/admission-records/concern.evidence_linked.json",
+      "record_sha256": "cf0347643dd24fbb768ad482704ee354338b638176e183701777d39807757225",
+      "row_sha256": "b55f068779f19caa1a4b791d15d70d912d550f98e8a394475dcbd1d34d8160be",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2270",
+      "event_type": "concern.promoted",
+      "record": "reports/event-authority-20260911/admission-records/concern.promoted.json",
+      "record_sha256": "4a3da47b899e524682f81c41d2049228ae0e269235037b6ebf59cb621250ce2f",
+      "row_sha256": "14121dbe9c1d9334255c11148a223fa8b444981c17778cf729e69f3515183232",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2271",
+      "event_type": "concern.reopened",
+      "record": "reports/event-authority-20260911/admission-records/concern.reopened.json",
+      "record_sha256": "06ae74f4262a384a46df510a8860e80c4f88146cddb57fc51a1418b10d280f68",
+      "row_sha256": "9db0fab6e7a58273e93c30d3cfa2d84807a5f873ac8f2c3a6df4184af911c837",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2272",
+      "event_type": "concern.resolved",
+      "record": "reports/event-authority-20260911/admission-records/concern.resolved.json",
+      "record_sha256": "374ed3c0e96a9695c9f140c41c2ca11ecbfd429228cfe429a47f108445086201",
+      "row_sha256": "10ba2f562e4872dddf3ace9fcacd8d93811510adc10ee7e806afaffafbf48882",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2273",
+      "event_type": "concern.updated",
+      "record": "reports/event-authority-20260911/admission-records/concern.updated.json",
+      "record_sha256": "51c19ee51b8a626864e63079dae8a1aaa96727f83b6abc6b214d37e5e5595e0a",
+      "row_sha256": "c09b7bcf120ab7694b79e51ba93f9c5b05d19b34e55a809a7ecc3233ae3c65d3",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2274",
+      "event_type": "config.migrated",
+      "record": "reports/event-authority-20260911/admission-records/config.migrated.json",
+      "record_sha256": "b96ed2e1105b33fd1a33a5f8f1e8e669db3d53a89fb1b14bbd230148849112df",
+      "row_sha256": "328044b5b0ad713ba06da6e000d1fcdb8298c278ccd822b47d63c1cc291746fe",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2275",
+      "event_type": "config.validation.failed",
+      "record": "reports/event-authority-20260911/admission-records/config.validation.failed.json",
+      "record_sha256": "84816416d0efd7b5f1224ffacc414e23a7d99962c68a235a0db3f7062a547cdd",
+      "row_sha256": "0e53df63671b3dd669822ff99b602921531b26833f9bf7eef729db0a866c9c6b",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2276",
+      "event_type": "continuity.actor_identified",
+      "record": "reports/event-authority-20260911/admission-records/continuity.actor_identified.json",
+      "record_sha256": "78bdf5d23964ecfe84eea9c8cb8f99edc0d15991e20b5a589e34ed0281a737fa",
+      "row_sha256": "3ff33c973472a628ad95fc42d08aeacea1d057d52c7ec5974bbb92de9464d23b",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2277",
+      "event_type": "continuity.provenance_recorded",
+      "record": "reports/event-authority-20260911/admission-records/continuity.provenance_recorded.json",
+      "record_sha256": "6f2e0be19af39323fee92050a4ec850ed022fd29d9e544197afdb32c1a7317a4",
+      "row_sha256": "418b701748d8cfb3e619e10c75613f81bec3d83b5e16dd037298e910978c9416",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2278",
+      "event_type": "continuity.redaction_applied",
+      "record": "reports/event-authority-20260911/admission-records/continuity.redaction_applied.json",
+      "record_sha256": "8c0d0adee3ed9e41489d4c3eadb5934a125c51bbfa03c47fe012d848e473ae86",
+      "row_sha256": "6f50a6f81aec5d7f3469bd8369f629719c1dbcabceb8dbf14178d8a8b40490dd",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2279",
+      "event_type": "continuity.replay_checkpointed",
+      "record": "reports/event-authority-20260911/admission-records/continuity.replay_checkpointed.json",
+      "record_sha256": "0a1468248db5c459be42c6147daf4a5ff3631eff7bdf5072b8317a9c0866ad26",
+      "row_sha256": "6cd4922957d5c284ca6eda418ae891f39dcdc9d8b971f2ea7cdaaa590762b19f",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2280",
+      "event_type": "crew.board_message_posted",
+      "record": "reports/event-authority-20260911/admission-records/crew.board_message_posted.json",
+      "record_sha256": "e0e8d2fe1db523ed6bf1fe375711a67ffd06180278014d5ade28eb7d13b5cca0",
+      "row_sha256": "88d2fd472b0c5745d663f975d2959775febfe44c6b7805021725f30f2ac93b94",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2281",
+      "event_type": "crew.board_message_read",
+      "record": "reports/event-authority-20260911/admission-records/crew.board_message_read.json",
+      "record_sha256": "e8653d73611fa685299d98984684a149bf469b0fe7d8a12a46c314b343930b3a",
+      "row_sha256": "8abcdbb4e6ecfdf8f50c19bfcbcc5e86c9d513cc64ef1bf3313359c9ec6d9c6b",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2282",
+      "event_type": "crew.board_messages_archived",
+      "record": "reports/event-authority-20260911/admission-records/crew.board_messages_archived.json",
+      "record_sha256": "9fd8733ea9ee66042d855690dfe10c12c632d85c83ce84c781135af4810b0f5b",
+      "row_sha256": "17113182526b3d0faea48419594bd8dadf233ce175e6c531fd17ebd14870f354",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2283",
+      "event_type": "debug.investigation.context_item_added",
+      "record": "reports/event-authority-20260911/admission-records/debug.investigation.context_item_added.json",
+      "record_sha256": "4468d68378eec827510fc454c8d06b232ea392bc457e29fcf717dc218878d1d8",
+      "row_sha256": "3e0ea2c28125bac7e42e8643fe98e12cd7c3e89b19d2e73408772b1b1cabbe38",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2284",
+      "event_type": "debug.investigation.context_item_state_changed",
+      "record": "reports/event-authority-20260911/admission-records/debug.investigation.context_item_state_changed.json",
+      "record_sha256": "df3a3f6be6b50f107097aa36a67fda574a4a02b8559a715fa6162fdac23aa5b7",
+      "row_sha256": "8dc77992ec6fbfb3a4a8f5caecf96b2f9eaa4a1e532e34e53618ae1b0d7a0e61",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2285",
+      "event_type": "debug.investigation.exported",
+      "record": "reports/event-authority-20260911/admission-records/debug.investigation.exported.json",
+      "record_sha256": "b782d540d326ae0ae2acf0b75bc9c394a6ddca7eaa1924760cc5a130e7c29cb1",
+      "row_sha256": "c8b97878f44489abe187ef7dafaf85ce8dd5177eed33fcbadc71f44929fb6f98",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2286",
+      "event_type": "debug.investigation.imported",
+      "record": "reports/event-authority-20260911/admission-records/debug.investigation.imported.json",
+      "record_sha256": "2e576e4bdda3f21267d5d0bdfa83db46d1814f0341f31255acfd808fc2241bae",
+      "row_sha256": "36db74477afe14cc19a6b6b21521132f3fb46ff077bbe037e9cc2dd0c5704dd6",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2287",
+      "event_type": "debug.investigation.started",
+      "record": "reports/event-authority-20260911/admission-records/debug.investigation.started.json",
+      "record_sha256": "603b0995730ff30948ffd5f3215c518aca4fc294719f484cd8a75edec2cad93d",
+      "row_sha256": "368a012ef4af0bb969779fd599c199861943f39b8222733274cf8d37a59f7b7b",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2288",
+      "event_type": "debug.investigation.target_bound",
+      "record": "reports/event-authority-20260911/admission-records/debug.investigation.target_bound.json",
+      "record_sha256": "d478e26629967682d01713d9a184861876d752498fee58255206ac10e90c3672",
+      "row_sha256": "43e27751a1071f2c3b58bf2f7304e9f82514c7d03622c092792a49f953a0a492",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2289",
+      "event_type": "debug.investigation.verification_recorded",
+      "record": "reports/event-authority-20260911/admission-records/debug.investigation.verification_recorded.json",
+      "record_sha256": "d323d42a72846bcbfaa5185a511863be99b240ad0871e58e14b972afa603c861",
+      "row_sha256": "c715ad566c840c3fe70c81f14ccd7fd3f989d6c03b4a0bf5c73a1eb294020151",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2290",
+      "event_type": "dev.session.restarting",
+      "record": "reports/event-authority-20260911/admission-records/dev.session.restarting.json",
+      "record_sha256": "e5fbd63a7dc1049d3026ef7352572cd0ff54caa463129f1d76cd1a69dad13f8f",
+      "row_sha256": "6cc16e13ee1606ebd0e2808ad565848a01346a1d023733982cff7c7817c262f2",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2291",
+      "event_type": "dev.session.started",
+      "record": "reports/event-authority-20260911/admission-records/dev.session.started.json",
+      "record_sha256": "bf284bbdb378201cca5b0a024bda1126eeadf8e12bd6f75c26a5045379d4c601",
+      "row_sha256": "54e1abbcc503563b793b7aa09ea236135655c50c8c10aee0e8c8997956957128",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2292",
+      "event_type": "dev.session.stopped",
+      "record": "reports/event-authority-20260911/admission-records/dev.session.stopped.json",
+      "record_sha256": "5735659b97c723b39659b2c1666dc5805778202bce283b2b6fcd73bc2f473cac",
+      "row_sha256": "843aa676280bfd1bdd4f736630939c403c9643da0b11755313e0bac1e64364c0",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2293",
+      "event_type": "dev.session.stopping",
+      "record": "reports/event-authority-20260911/admission-records/dev.session.stopping.json",
+      "record_sha256": "e84c68d31880baedd2a046f5ce7f67f65e1c683a188cc0cec851e1e2bc02b1b4",
+      "row_sha256": "a19c87a3184b60c758dbdcd8ceffde2cc6866211654178594e7ed7d2f58333cb",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2294",
+      "event_type": "doctor.custom_headless.checked",
+      "record": "reports/event-authority-20260911/admission-records/doctor.custom_headless.checked.json",
+      "record_sha256": "838815f22f43dedd09a900356a80a2afb0788e6bd4d10989f5ce783e545724d3",
+      "row_sha256": "33d3505655db2bc52e8f14b04be4ebeb5dc4eb9e11a892339ada8d8a1aa99876",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2295",
+      "event_type": "file.copied",
+      "record": "reports/event-authority-20260911/admission-records/file.copied.json",
+      "record_sha256": "a9efd8b2ffce17c5746e44f35c8f38d1b07d1b17c5e54700377126d4c25a687d",
+      "row_sha256": "6c4c2f216b5fcd9c5e85efb62c92d2be6fb2867c9d8e8434971da4a2582569a0",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2296",
+      "event_type": "file.created",
+      "record": "reports/event-authority-20260911/admission-records/file.created.json",
+      "record_sha256": "70c94ae0530bc01ea977eeb3e448ed704d8513321ee7284659e312801c271d33",
+      "row_sha256": "2249c80942f20705dfe144209220b364c5b28e9d5ea494613df4377276cb89b0",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2297",
+      "event_type": "file.deleted",
+      "record": "reports/event-authority-20260911/admission-records/file.deleted.json",
+      "record_sha256": "9fd8bd764a07c520493e8d5513264977fe82556fc2828649c55fde19cc3efc9f",
+      "row_sha256": "d032bb0874823935478616e1ce6e3eeaf1b11ea593d05b94fa9bde3ea730acf0",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2298",
+      "event_type": "file.exported",
+      "record": "reports/event-authority-20260911/admission-records/file.exported.json",
+      "record_sha256": "81a3261e594168d1bd1b159f9da0626851b20eabf86966e7b1348f01bcf86715",
+      "row_sha256": "42e2464a7eee9ca6df922471207d0e5bc1b01b697012d10c9aae3f9299e3b92b",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2299",
+      "event_type": "file.moved",
+      "record": "reports/event-authority-20260911/admission-records/file.moved.json",
+      "record_sha256": "465ec835555471bf399834d47347453cc00005a2677cb2df1d8cfa530d1575e0",
+      "row_sha256": "9e834e640374ccdc4fa974304b6859661447f4485d46f1ff45f75b056720c082",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2300",
+      "event_type": "file.renamed",
+      "record": "reports/event-authority-20260911/admission-records/file.renamed.json",
+      "record_sha256": "77063de9b38cc546234d29006e7dfc807e79cc62c6c1705dd74bc1b7041fe387",
+      "row_sha256": "809d18d7c909575f0a10b547bf765c6f07145c3f7301698d47fcd266755b78f7",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2301",
+      "event_type": "filesafe.command_denied",
+      "record": "reports/event-authority-20260911/admission-records/filesafe.command_denied.json",
+      "record_sha256": "c25c95d76eedbd26c5948231977a60bb02273f4830023c5dedfb238309e48580",
+      "row_sha256": "dc5d2e57eac4127858f6f27149100664db008d7c2e0d74a286dcbb2f538e4d41",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2302",
+      "event_type": "filesafe.destructive_override_denied",
+      "record": "reports/event-authority-20260911/admission-records/filesafe.destructive_override_denied.json",
+      "record_sha256": "5d6d980c6ee8a8a3e42bfb708affc442934b1657fe2e6fbae45dfdc81463ccc7",
+      "row_sha256": "859170d0c67fbaf390bb13fde8b64011dbfe807d049e510a892651f28bb008cd",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2303",
+      "event_type": "filesafe.destructive_override_granted",
+      "record": "reports/event-authority-20260911/admission-records/filesafe.destructive_override_granted.json",
+      "record_sha256": "80c11356f70a247318b0c9e201c74c25d092cd4fc42e3d3c1bbd78d12d3c3f16",
+      "row_sha256": "39cdfcc6ffba98aa4fc2288563d760db81497c9bac060d2203f4c654cce7c30a",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2304",
+      "event_type": "filesafe.destructive_override_requested",
+      "record": "reports/event-authority-20260911/admission-records/filesafe.destructive_override_requested.json",
+      "record_sha256": "b69201d9ba89d50167946fdf1c12c800d65edf62babc9bce196b6375b589fefd",
+      "row_sha256": "d43468637f353979cefd64a75e14a7cffea801dac6fc85345f627baa0b5d02fd",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2305",
+      "event_type": "filesafe.guard_init_failed",
+      "record": "reports/event-authority-20260911/admission-records/filesafe.guard_init_failed.json",
+      "record_sha256": "85fabbf5d0bbb8e650e9852c343dc9fca151bfd916e6e2c98d3437d9ca3cd74d",
+      "row_sha256": "f2f44153e03536ee5ca4b3af9bcea174b88fa3868a8e3027c1414af46d945c03",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2306",
+      "event_type": "filesafe.path_denied",
+      "record": "reports/event-authority-20260911/admission-records/filesafe.path_denied.json",
+      "record_sha256": "783b22c92cde5ddabd3feb406b011f4e6d8b8ed5c4aeb11a3000d2a8c4ab7470",
+      "row_sha256": "7df8429f25c768e5a8889c2e1e0420ca383fe39745b87bb9552c746b46c68bb2",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2307",
+      "event_type": "filesafe.policy_degraded",
+      "record": "reports/event-authority-20260911/admission-records/filesafe.policy_degraded.json",
+      "record_sha256": "6c3485bf7f584a38bbe8cc3c63e1139fec722005c613da1865e9c5d00daad457",
+      "row_sha256": "5e86a1bddc6459c0adfe91481137086c47f34fa4431af2d85ab3123014fb53e8",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2308",
+      "event_type": "folder.copied",
+      "record": "reports/event-authority-20260911/admission-records/folder.copied.json",
+      "record_sha256": "a35b039f67bad547a930ba064920b0312abf4f30c642d2049155373eed0fbf03",
+      "row_sha256": "4ac2909070b1909d73fb6cb3dd27e3a1a52a4dcbfdc3a4bc80eee5de23dc9fde",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2309",
+      "event_type": "folder.created",
+      "record": "reports/event-authority-20260911/admission-records/folder.created.json",
+      "record_sha256": "5f2544eb770a06e138e5c592500cfed9059a9293027c8754443d1a46d3c8e1e6",
+      "row_sha256": "855a6291c98603cde01ff0bf5b04f3c087a512f77ad21fcd014ae9bafca6761e",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2310",
+      "event_type": "folder.deleted",
+      "record": "reports/event-authority-20260911/admission-records/folder.deleted.json",
+      "record_sha256": "d2729df0a4b5b4a70be764241cc1a912a1af92cdf897ad65de1fabb37d5807ab",
+      "row_sha256": "f074ba2b5624c2fe734d714881d7547948396dc621511941068d3320da723543",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2311",
+      "event_type": "folder.exported",
+      "record": "reports/event-authority-20260911/admission-records/folder.exported.json",
+      "record_sha256": "0e0afc4a74162e5f06003abae509dcf4de064e009f55dc4f157920587391f1e4",
+      "row_sha256": "f8fa2a27bca06c3bbd040af086d2148f78e85567400b3e4f43b698e30d12e319",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2312",
+      "event_type": "folder.moved",
+      "record": "reports/event-authority-20260911/admission-records/folder.moved.json",
+      "record_sha256": "1b6c36a484bae068265aed23fcbc3a391063d9877dd06eb129ee0de0f13cec5c",
+      "row_sha256": "5628f95593a65880063fa6f60d2b58178a875f30fde03a06ce71a4baea62fb6d",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2313",
+      "event_type": "folder.renamed",
+      "record": "reports/event-authority-20260911/admission-records/folder.renamed.json",
+      "record_sha256": "71eb9de654d30df7375be1b323b38635fd4f0f6dedc8076d3f68fc24f948967d",
+      "row_sha256": "d5f96b9a8b41b4be376bf8dcc8be81bba4c89eba0d992ceb2216f27c59356c74",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2314",
+      "event_type": "format.applied",
+      "record": "reports/event-authority-20260911/admission-records/format.applied.json",
+      "record_sha256": "6b60b3b6bd918554f933894ba9aeb98fc81270ad084bf77d8ce3d921d61723d0",
+      "row_sha256": "487efc2cdb59eff1837040937bb6008dea36754688fbda85bcd829936659a79f",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2315",
+      "event_type": "gate.evaluation_started",
+      "record": "reports/event-authority-20260911/admission-records/gate.evaluation_started.json",
+      "record_sha256": "9a682834c74a749008af2ccb1928dfa2bd43dd952dba35d5efff8f8f917f46c5",
+      "row_sha256": "32b65e61e6e92bdacdabc3e331ee19bf0f89889c9ac73d18941224f2b5bd2c02",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2316",
+      "event_type": "gate.failed",
+      "record": "reports/event-authority-20260911/admission-records/gate.failed.json",
+      "record_sha256": "14e9d4b80b9fdeb84db4f662d001e5141b91b4d9cd14be0459e550070ee43076",
+      "row_sha256": "3102ebc183e82833dd9355c70163aad7ea8ed59a443c3372591af10ee2297d15",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2317",
+      "event_type": "gate.passed",
+      "record": "reports/event-authority-20260911/admission-records/gate.passed.json",
+      "record_sha256": "b64f2f084cbba85446170bf0dd85fccb9e65d46e0ab7c1c0a8d4aca8b09b03cf",
+      "row_sha256": "dc47a039ce3d79448a72cf0b3476115391176f5d6ffe001e3ed58d1dca831632",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2318",
+      "event_type": "git.clone.completed",
+      "record": "reports/event-authority-20260911/admission-records/git.clone.completed.json",
+      "record_sha256": "df2b80011d2425a056bc5c0ae70a1c31092b5ff012977283cf7c6b204193f046",
+      "row_sha256": "62ba255c4e78e3142ef2c78662ca09bbd38eaf8dcb4be5729172f16c10829d0f",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2319",
+      "event_type": "live.artifact.created",
+      "record": "reports/event-authority-20260911/admission-records/live.artifact.created.json",
+      "record_sha256": "9d232c618b64f592282db863dbf1522b9f6193147c25a029e901b6592e3caae3",
+      "row_sha256": "a923ee9ea95bcd7a766c4d670429990f87ab830f47f131071b1c102860c5cee0",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2320",
+      "event_type": "live.session.completed",
+      "record": "reports/event-authority-20260911/admission-records/live.session.completed.json",
+      "record_sha256": "16ac3babbd20da3b25f7daf9f5ce72fdbdf0946bdc932cab70ff0b327fdc65d1",
+      "row_sha256": "91cfa83c27cf5a901210a0ab91ea80f03941dd105dbafade788b28b33ae14059",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2321",
+      "event_type": "live.session.degraded",
+      "record": "reports/event-authority-20260911/admission-records/live.session.degraded.json",
+      "record_sha256": "91e8615aa4f8f58aac2a96a7a53a1f9801cdb76a92217ca005bde03353de162c",
+      "row_sha256": "b8c57c9840bcee9ea7b4d9075e76ed6a106d8afb865cdc9eb578eec77af58fc5",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2322",
+      "event_type": "live.session.started",
+      "record": "reports/event-authority-20260911/admission-records/live.session.started.json",
+      "record_sha256": "143871b29afaafaf2ec8f6687db918def9843bfa333b17285d84f103542dda73",
+      "row_sha256": "970cc745644d57c08690ed5287e30e0f9c798abb119d49d7b62b0f295404498e",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2323",
+      "event_type": "live.step.updated",
+      "record": "reports/event-authority-20260911/admission-records/live.step.updated.json",
+      "record_sha256": "3411bbf786437702115d83d7a12d365e8fcf15fe0151a9ae71728f133696d624",
+      "row_sha256": "c9f9e5af2ac4d798d48132b5d3b0237b938c215d5229582b0b08abac8110f142",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2324",
+      "event_type": "lsp.server.lifecycle_changed",
+      "record": "reports/event-authority-20260911/admission-records/lsp.server.lifecycle_changed.json",
+      "record_sha256": "a7641e0ae729c7d90646790379d00b996d3339244bbe8a7258242be17dc96b9d",
+      "row_sha256": "e04114cc46980eb61993066e21f11f0ffd6bbb5d805b47278c06bde836eb5910",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2325",
+      "event_type": "memory.dedup_sweep.completed",
+      "record": "reports/event-authority-20260911/admission-records/memory.dedup_sweep.completed.json",
+      "record_sha256": "8343491f6e14d749ffc6c0f5e9cba37838cebc759d9812476d9650b23629050e",
+      "row_sha256": "3b3afaf81b4814e2a1c310988f66342541daf09901a1fc4e5b5d876d1415b15e",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2326",
+      "event_type": "memory.dedup_sweep.started",
+      "record": "reports/event-authority-20260911/admission-records/memory.dedup_sweep.started.json",
+      "record_sha256": "d5c6abbded12e392766fb738c43a07b31d4aa4377e45236af998e3f86eb27924",
+      "row_sha256": "19398fa67dd8d872007cd3fe80e2cb4deb739c9afb7e0e3058ffc5b4c0db415f",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2327",
+      "event_type": "memory.index.lexical.rebuild.completed",
+      "record": "reports/event-authority-20260911/admission-records/memory.index.lexical.rebuild.completed.json",
+      "record_sha256": "8b323356adb268483474b8123e5366884cb992c0cd61d2fd367e9891c0bcc5d6",
+      "row_sha256": "19dae3fd37958bdbb7c39ec876582c74fb0966ea3333e4e89827455a121cc9f6",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2328",
+      "event_type": "memory.index.lexical.rebuild.started",
+      "record": "reports/event-authority-20260911/admission-records/memory.index.lexical.rebuild.started.json",
+      "record_sha256": "8273cd2ab710a96a41acde7c67e1273f6d61e24d5f3ec6cca3d678f4274e1c3f",
+      "row_sha256": "d266a0650df5dbdef2c93671bf116415e66f3ec2f2bfd8ad5c4e026f1d14e65d",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2329",
+      "event_type": "memory.index.semantic.rebuild.completed",
+      "record": "reports/event-authority-20260911/admission-records/memory.index.semantic.rebuild.completed.json",
+      "record_sha256": "2e9115913fbf13307852a86404cef7f13b4486b419bb6f6a097276b7f77db41f",
+      "row_sha256": "b4399cbef5f8fd14f6d83960003f0d6b37239f747839970d243d5cd785a95592",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2330",
+      "event_type": "memory.index.semantic.rebuild.started",
+      "record": "reports/event-authority-20260911/admission-records/memory.index.semantic.rebuild.started.json",
+      "record_sha256": "adb775ddb429761e2a89ea7910ca3e8219180cfafbf06daaca34f8ba0f905969",
+      "row_sha256": "fe0b8875f1718a2dbe0a6112de118122832fae2c83a33b606d4484eeaa656c27",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2331",
+      "event_type": "memory.monthly_summary.completed",
+      "record": "reports/event-authority-20260911/admission-records/memory.monthly_summary.completed.json",
+      "record_sha256": "6575f239af46d819e179823866b7c0fdb65c611bd9eba231dea1619b0b71f1e1",
+      "row_sha256": "2020a398c603184689e62a0fac3404a350fa07505ad4bb5928e50218fe1f1f6d",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2332",
+      "event_type": "memory.monthly_summary.started",
+      "record": "reports/event-authority-20260911/admission-records/memory.monthly_summary.started.json",
+      "record_sha256": "4c4fbc1845cf843ac57cdea48fa7f28467985adc545695a8115852b7eeb2b3eb",
+      "row_sha256": "8dae2d66d4bd401c3a2ef31ada9a35d5996159c14ba7bbbcb8edff045a456540",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2333",
+      "event_type": "memory.prune_archive.completed",
+      "record": "reports/event-authority-20260911/admission-records/memory.prune_archive.completed.json",
+      "record_sha256": "5f8e9de074150c5c9526af79d530140e3489e4310f9733b2219b525660c937a7",
+      "row_sha256": "cacc8471e40339fbab4d67dc63c784a2be01511de66110ebbf91858ea96318ed",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2334",
+      "event_type": "memory.prune_archive.started",
+      "record": "reports/event-authority-20260911/admission-records/memory.prune_archive.started.json",
+      "record_sha256": "e64c71e9f488646005d379ec17bee4bad051cf052e305d526acd17378e8a5bcc",
+      "row_sha256": "09c6499f2e9ac4b21ec9fa5c5cbede71e0e64550bbaba414d52e2c9645f450ed",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2335",
+      "event_type": "memory.verification_sweep.completed",
+      "record": "reports/event-authority-20260911/admission-records/memory.verification_sweep.completed.json",
+      "record_sha256": "47af5964adc41288058e907ad33a0cd294652efb6be2c0b2d4fe8c5ff51635df",
+      "row_sha256": "080831e7154e4f9b5d033778ae35706083794eec68220b538e38c4acb18917e6",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2336",
+      "event_type": "memory.verification_sweep.started",
+      "record": "reports/event-authority-20260911/admission-records/memory.verification_sweep.started.json",
+      "record_sha256": "b9d1de70f3bb058e12850748dad3297efa51ea44cdf03e691c3a17dc19c0e07f",
+      "row_sha256": "212658ba2b21f48f5d2a7185bec52f54822707a25e2b75d88d7f646e3d4c0d8b",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2337",
+      "event_type": "model.catalog_refreshed",
+      "record": "reports/event-authority-20260911/admission-records/model.catalog_refreshed.json",
+      "record_sha256": "dd2bd9513ec7869e5f07e0ec9d44eb7a95836ce58121535c6161e25a0db3b0b0",
+      "row_sha256": "84bbfad129f762ac02993231fe8ea86b11996ab4ee5371bd04f1c8ad0a7788a6",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2338",
+      "event_type": "panel.redocked",
+      "record": "reports/event-authority-20260911/admission-records/panel.redocked.json",
+      "record_sha256": "c104c43c1c6feb6a94c81cb03bd03bc7eccbf366ff12974ef5c8414441559a8c",
+      "row_sha256": "db5919dd49d1b7555ce3d4cc44eba7169f25edd41202817e14de828c800efb71",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2339",
+      "event_type": "panel.undocked",
+      "record": "reports/event-authority-20260911/admission-records/panel.undocked.json",
+      "record_sha256": "1f3d3e08d85cda9781fc7b3df3a7cf58e967c53db5fd052f3efd1aeec96804d4",
+      "row_sha256": "801a6c2050b305b13c5ec4cad2f04d05ceee6eaa8425fc70d52441fb4a4eb359",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2340",
+      "event_type": "parser.error",
+      "record": "reports/event-authority-20260911/admission-records/parser.error.json",
+      "record_sha256": "5bcab1d52e1f08d0d406bf7a6801b56383ae3ffb9d6b9fd3184b852905b4bf34",
+      "row_sha256": "7fc66efe4920cda2828be7e2c63d5b7623b7f8141574cbe178dc7489e09da98f",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2341",
+      "event_type": "persona.created",
+      "record": "reports/event-authority-20260911/admission-records/persona.created.json",
+      "record_sha256": "af2c693a3b09ecc02aaf618a48cbdedaa3f2ceae47da10c715c4525df8258458",
+      "row_sha256": "c9fe0bbb51b66d9f757fc0c9e1a15d378a86b9d141907aae9621e9f9c1738b09",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2342",
+      "event_type": "persona.deleted",
+      "record": "reports/event-authority-20260911/admission-records/persona.deleted.json",
+      "record_sha256": "cbc7fce04cb4dc845db0c0560a8d2cdc136200437156dfc6198be8d868e7470c",
+      "row_sha256": "4c046a3523f34e71a48ca0fa256868fb988bd868d4abc3238c1eb9cafe7bbe6d",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2343",
+      "event_type": "persona.exported",
+      "record": "reports/event-authority-20260911/admission-records/persona.exported.json",
+      "record_sha256": "90f152ca488d365943cd10db488f42b12026e7878cf7b0447aaed5b3959530ad",
+      "row_sha256": "67e5dad8d422d24bde3636d41fdc1c40072de15499bf6ad4230ebf744ec9555a",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2344",
+      "event_type": "persona.imported",
+      "record": "reports/event-authority-20260911/admission-records/persona.imported.json",
+      "record_sha256": "4fb432aac3ad3809d74ca8e14f55f506602367f7477d43132ea60d4a0602ad7a",
+      "row_sha256": "52232b55d7b3b9ba2f6ba544fe49a40fd0847ed6c22579edd3e47a41536f9c19",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2345",
+      "event_type": "persona.selected",
+      "record": "reports/event-authority-20260911/admission-records/persona.selected.json",
+      "record_sha256": "b6606838bf492d11e35d88a01adf251fb4af2ac54a50e3c34d185a8fcd81ad00",
+      "row_sha256": "98e927ee1728fbf5cb2cf4f0db9f149f1254571dc0c704fdb3f5f3749da076e3",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2346",
+      "event_type": "persona.updated",
+      "record": "reports/event-authority-20260911/admission-records/persona.updated.json",
+      "record_sha256": "2c3bdb6801723f78148a3fcadae19baa628689e739a401035513373a144fb766",
+      "row_sha256": "e08a93ea2753f97e8d27ad215fda5097124550becbcd2b0df26de1970579f21d",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2347",
+      "event_type": "phase.force_completed",
+      "record": "reports/event-authority-20260911/admission-records/phase.force_completed.json",
+      "record_sha256": "1ed169f397fa1322dab1dd46131202da6a9912a5c2a7b1a3b3561ab3469f43f8",
+      "row_sha256": "c3b2d6d043431d1b6e7eacfcf885e005bb2b5cde5913f29c79b55a6e326749d6",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2348",
+      "event_type": "plugin.hook.blocked",
+      "record": "reports/event-authority-20260911/admission-records/plugin.hook.blocked.json",
+      "record_sha256": "5824ddf5e921fddae27e2f8dc49b66bb54a02a9d83c2e271b6a723f6ad1bb39a",
+      "row_sha256": "378401b9f0721580bebddc322285824e13adf8b314171a2b96923f68b4fa99c9",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2349",
+      "event_type": "plugin.hook.error",
+      "record": "reports/event-authority-20260911/admission-records/plugin.hook.error.json",
+      "record_sha256": "07a3b61c4734181b08d0c7ccb179d050195f3d6b0a24e14890c9be799644159c",
+      "row_sha256": "0a491af1a7d00246283ba81900364bb71649ae6466bf158f3f6d593a03a3342e",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2350",
+      "event_type": "plugin.hook.invoked",
+      "record": "reports/event-authority-20260911/admission-records/plugin.hook.invoked.json",
+      "record_sha256": "5833e47a4e7707481bccdce884d9099cb9dac7968d91e1a31717c4574194d9d1",
+      "row_sha256": "7d5820abc8785c2db913c1ee0d273fc3fd86426607b88e38de43cc222f0b34b2",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2351",
+      "event_type": "plugin.load_failed",
+      "record": "reports/event-authority-20260911/admission-records/plugin.load_failed.json",
+      "record_sha256": "5e5ff8ded4e9c36dd7480653a0de40b22245a8cca1a69fdafb212f844eed47f0",
+      "row_sha256": "e00800aaeafc360372292350dcb42f5c1bb12356350fc2ab5a71363caa28a08c",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2352",
+      "event_type": "plugin.loaded",
+      "record": "reports/event-authority-20260911/admission-records/plugin.loaded.json",
+      "record_sha256": "728e8ebac9469b330d33de680dcaf277b3ae16838e1b440f4515de7f5b5367ec",
+      "row_sha256": "47a1abfa9994bd6e342d364b3b48896d5ed342832002467cac8af32ed25c723b",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2353",
+      "event_type": "plugin.permission.override",
+      "record": "reports/event-authority-20260911/admission-records/plugin.permission.override.json",
+      "record_sha256": "93f46b0102b5bc8424f778cb0040938817fd36eb24530504e65d1e69639e64da",
+      "row_sha256": "996291f7753a2237399ff00bcaf85e5799181d267a53e9f9d9fd25694a351e17",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2354",
+      "event_type": "plugin.tool.collision",
+      "record": "reports/event-authority-20260911/admission-records/plugin.tool.collision.json",
+      "record_sha256": "e136911febf162f1097057c830596c44a8831a0b146cef43654456a9c10cce7f",
+      "row_sha256": "3b960902f5974f0fdca9b722ecaf0d931df2d788360cf6e4fc62807b8893848a",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2355",
+      "event_type": "plugin.tool.registered",
+      "record": "reports/event-authority-20260911/admission-records/plugin.tool.registered.json",
+      "record_sha256": "b0314dffc75abec0735d7645290996c10916a6af2314e3db21c8bf4b3c52f95d",
+      "row_sha256": "fb45e6e0f865806b2c61450c8cf4d6e1921b0c8b9974cefaadf45080cfda84f5",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2356",
+      "event_type": "preview.session.refreshed",
+      "record": "reports/event-authority-20260911/admission-records/preview.session.refreshed.json",
+      "record_sha256": "88da90d21ad2f7b0bf295fa6cd8eac7c9b861a8785099a364dada992d7a7a2b5",
+      "row_sha256": "caabe5a07628e79be67a7bd7f17a847e0251a91108dd55e192e1f410a61d8d46",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2357",
+      "event_type": "preview.session.started",
+      "record": "reports/event-authority-20260911/admission-records/preview.session.started.json",
+      "record_sha256": "9a179f51a0a9adbf7786fb0092e515ed31fbcf3dd39366023a8bf555e7c7dad9",
+      "row_sha256": "e627698877884db59923390e84e8aaccc889c9cb827f634b3b9acf08633a1e96",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2358",
+      "event_type": "preview.session.stopped",
+      "record": "reports/event-authority-20260911/admission-records/preview.session.stopped.json",
+      "record_sha256": "8dec7cc457eb774e46dca3987bc6b4d31bcbb4f130d1d52cd0623868f6639d44",
+      "row_sha256": "76f612e6daa5d4fda5ac512abbdc56668b5e5fa736bf40f39c5bc1037ed1c42e",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2359",
+      "event_type": "project.added",
+      "record": "reports/event-authority-20260911/admission-records/project.added.json",
+      "record_sha256": "aa074e6673af2ac60b87efbdde3624f5840dd31c18230bcbeb4308e98acb03d4",
+      "row_sha256": "3ecba89e708cb4be6778516c481026d98bb9bf7a2895442abd8e4e44e8477dac",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2360",
+      "event_type": "project.created",
+      "record": "reports/event-authority-20260911/admission-records/project.created.json",
+      "record_sha256": "d677edd0fe1b4bedbc89519d84d0ce9d5e41ea4b99d315c13c2f79014e1f389a",
+      "row_sha256": "e2aca8f32cf140ad445f74c8a23eaee3aaf3015338e094e81484362966396993",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2361",
+      "event_type": "remote_access.private_endpoint_state_changed",
+      "record": "reports/event-authority-20260911/admission-records/remote_access.private_endpoint_state_changed.json",
+      "record_sha256": "69f7895319638dd363a6aa5c3d6dba5c337f4c8605128ac8dd3e06527e75e921",
+      "row_sha256": "edc1ce8c3f9bfba8923f0d91c74c1d0ba91339719567bc972ab2c73c423bf929",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2362",
+      "event_type": "remote_access.proxy_state_changed",
+      "record": "reports/event-authority-20260911/admission-records/remote_access.proxy_state_changed.json",
+      "record_sha256": "b29416532ce70f11aee585b5fd7e76c17f7c93eb4cbfdd3827ad4311f61c4688",
+      "row_sha256": "572a528b5455c376cdb0cbec54cd55ab795145d66683d60bcd6c4f47a36ea49b",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2363",
+      "event_type": "remote_access.public_security_violation_detected",
+      "record": "reports/event-authority-20260911/admission-records/remote_access.public_security_violation_detected.json",
+      "record_sha256": "6e4f086c144d79321797a1243c36e1b6be23e3fc775406f0048192f4dc7e5c29",
+      "row_sha256": "aa27848fab631cebb702feb587e6ddc2d23aaf492c9f62ee0739a055a59bd392",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2364",
+      "event_type": "remote_access.remote_link_state_changed",
+      "record": "reports/event-authority-20260911/admission-records/remote_access.remote_link_state_changed.json",
+      "record_sha256": "f526dd21d4b41dec1c784cf6fbd2fea67292e39338edd6c524600e34ba36ce85",
+      "row_sha256": "5e8cea5e84db98b5f8a24abf7079e70a4f174a4157d4000e100c0c29a7584684",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2365",
+      "event_type": "remote_access.route_migration_state_changed",
+      "record": "reports/event-authority-20260911/admission-records/remote_access.route_migration_state_changed.json",
+      "record_sha256": "79682442d6959bcfad4b2d6ee6661363c23cd739f15acde656d4184d58dbaf2d",
+      "row_sha256": "a882bdabd9184828d5e7325f258e0071cab18a5367fba263ae4453e05af203f5",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2366",
+      "event_type": "remote_access.route_preference_changed",
+      "record": "reports/event-authority-20260911/admission-records/remote_access.route_preference_changed.json",
+      "record_sha256": "39be138acb874c5d0dfc3f0d52f4ced37caa47cb02b59593683d4d22272e8cd1",
+      "row_sha256": "40f3de2ed48bb83b2e53943e9094bcc82b494356952ec652afa05316da9bf9ea",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2367",
+      "event_type": "remote_access.route_state_changed",
+      "record": "reports/event-authority-20260911/admission-records/remote_access.route_state_changed.json",
+      "record_sha256": "6ae0a923185e47bd997584015e2f455a5a1cec68ea9e4f06bd155548499841ff",
+      "row_sha256": "a3956980736e792a174e69494d59199dfbf636dd398a43bd6bbd82dda804284c",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2368",
+      "event_type": "remote_access.route_test_completed",
+      "record": "reports/event-authority-20260911/admission-records/remote_access.route_test_completed.json",
+      "record_sha256": "2aff40158a20c2c8b184bb6fbfb3bfc642f23f2762e6a19b839349fd5e08d2ff",
+      "row_sha256": "7074696c01245268ccb42009354b6920d5809af44a1b52d43080005f599ad64a",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2369",
+      "event_type": "requirements.clarification_requested",
+      "record": "reports/event-authority-20260911/admission-records/requirements.clarification_requested.json",
+      "record_sha256": "b99f99c61f67ce3a784d047f5c5d9c7a4966d2f44878672a741e29d6ce289b28",
+      "row_sha256": "311b7c719b8a2d2bb85a45bbdacdfd7fd7f5d36a28282630e4ddc0bd38d65293",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2370",
+      "event_type": "restore.state_changed",
+      "record": "reports/event-authority-20260911/admission-records/restore.state_changed.json",
+      "record_sha256": "f673fa47b9a4101f0124872190229b2541ff46704ebc10fcd37d8e2d27db71a3",
+      "row_sha256": "b075b7d95e309aefe0e7a4e563930bd2d53300d8cd1b038cd92633a92f3c9281",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2371",
+      "event_type": "review.artifact_finalized",
+      "record": "reports/event-authority-20260911/admission-records/review.artifact_finalized.json",
+      "record_sha256": "0021ea4924a5555356b5083b64de1b7b62d5ca3c7438df25b31eab4b047522fd",
+      "row_sha256": "87952be49876fdb54bd56d9d43d48253c05d2a1139e1404bd766d552daa24cc7",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2372",
+      "event_type": "review.finding_added",
+      "record": "reports/event-authority-20260911/admission-records/review.finding_added.json",
+      "record_sha256": "260df254ff1fc8a2ab3db6d2bcb07b0f12819fbc8c34c529f5f6791e52d6a3f0",
+      "row_sha256": "46c92aa969999810d903d4f66ebf33e8d4278cfee500ff4eee9b84e3cb62e278",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2373",
+      "event_type": "review.finding_dispositioned",
+      "record": "reports/event-authority-20260911/admission-records/review.finding_dispositioned.json",
+      "record_sha256": "39ea96ecbf01ae5276c2b5b65483a9cff138db5a0f128a6a4cc7aafd57ff1601",
+      "row_sha256": "36d7d261229988f8b096e61e79b23871781197da47d8638e4b3448bbcff5a00e",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2374",
+      "event_type": "run.background_enqueued",
+      "record": "reports/event-authority-20260911/admission-records/run.background_enqueued.json",
+      "record_sha256": "e35bd25218cb9dd8ce040aca102514387b7077fe606cd21c941ef23b6149760a",
+      "row_sha256": "bb343a49d02cb302cc3b17a18b4812718d89d2273ba36113c62b31fe9cceb082",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2375",
+      "event_type": "runtime_artifact.api_web_call",
+      "record": "reports/event-authority-20260911/admission-records/runtime_artifact.api_web_call.json",
+      "record_sha256": "654f012525cc93bf26f01f6f09e5d3ff5aac393c1937d6881813546abf456baf",
+      "row_sha256": "8546c08071cc1f13b0944ec521bf2a01782032ba70d203c0c033c992d779d6a5",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2376",
+      "event_type": "runtime_artifact.artifact_version",
+      "record": "reports/event-authority-20260911/admission-records/runtime_artifact.artifact_version.json",
+      "record_sha256": "4eb81eff63ea63b25b135277aa81ffd6e6e40cf979613d7e0d39311f8749f8b1",
+      "row_sha256": "7710d20ae8c591e9bed569982e1025240cdd3e8fb4f865880a8308a6efbe17e9",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2377",
+      "event_type": "runtime_artifact.before_after_snapshot",
+      "record": "reports/event-authority-20260911/admission-records/runtime_artifact.before_after_snapshot.json",
+      "record_sha256": "62c961503db8e9f863ccf95529f591212117f9355f7ae7cca80858520929703e",
+      "row_sha256": "d567980459942cbb08434d16d123a5069cc7ca4913fe854eb95bb3bf5a33511d",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2378",
+      "event_type": "runtime_artifact.browser_recording",
+      "record": "reports/event-authority-20260911/admission-records/runtime_artifact.browser_recording.json",
+      "record_sha256": "01b60ce3cde05608fe8e2de2c3ac94e58f3a69436e1250f23f24282d2a34de7a",
+      "row_sha256": "5db1625ff05fad91e4444aeeb89cac44cb23a388fb10ab35336709509b410d22",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2379",
+      "event_type": "runtime_artifact.code_diff",
+      "record": "reports/event-authority-20260911/admission-records/runtime_artifact.code_diff.json",
+      "record_sha256": "84067c43bd6e6ec7e4fd5e32927108ce9765fda098ac971e3ebadd6ce1b96a11",
+      "row_sha256": "b5bd0918017efdc1f38fcf625641724a58791344571da26b2b0a9aa926a61cf6",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2380",
+      "event_type": "runtime_artifact.context_snapshot",
+      "record": "reports/event-authority-20260911/admission-records/runtime_artifact.context_snapshot.json",
+      "record_sha256": "e4463b9ed6dfb1f8734ff54c4efc4a942fd1509199744f254ecd37af1df74703",
+      "row_sha256": "da3258a4f9f4a88589530f3e363e6cf4fa0fe3fb3b757a8a78da8c8e36b404b5",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2381",
+      "event_type": "runtime_artifact.cost_usage",
+      "record": "reports/event-authority-20260911/admission-records/runtime_artifact.cost_usage.json",
+      "record_sha256": "e92e6cd7cb898fa4b98b6890a196bc86c8cd8852d6108e633f40d8b11b4a675e",
+      "row_sha256": "22ad6be8ef9bfa3a5c5ebc57cf8639ff52a6c3483f9dd320f9fbaf90dba4d915",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2382",
+      "event_type": "runtime_artifact.document",
+      "record": "reports/event-authority-20260911/admission-records/runtime_artifact.document.json",
+      "record_sha256": "e670d679879e3289baf9f61593656463dee8cdfde1e6a9728ec1b4f1c9211b57",
+      "row_sha256": "4bb783b17eb74c44d483858f6827b8bed3c9cba4f3675401462d9fe78318b60d",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2383",
+      "event_type": "runtime_artifact.evidence",
+      "record": "reports/event-authority-20260911/admission-records/runtime_artifact.evidence.json",
+      "record_sha256": "fe4d156f980d80604535919afbd55d86c26e273f2b5ede40704afcd00e7a17a8",
+      "row_sha256": "a55fa8da4b4d4b47592fa89a5e99713bba8e0190f64a826255ebd350826e329c",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2384",
+      "event_type": "runtime_artifact.failed_attempts",
+      "record": "reports/event-authority-20260911/admission-records/runtime_artifact.failed_attempts.json",
+      "record_sha256": "ee009eb0fa03a2c91a562933eec355918032a1593178adf9b8e6e4f2c975013f",
+      "row_sha256": "84d1affbf71df7b4270c5e82e66b785e9050efdafb4ac31e685e01c203b386f4",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2385",
+      "event_type": "runtime_artifact.hitl_approval",
+      "record": "reports/event-authority-20260911/admission-records/runtime_artifact.hitl_approval.json",
+      "record_sha256": "15987c16e8c4be0234edefe5589daf2e2c99e510ef21aaa3cffde9e60f5ba60e",
+      "row_sha256": "9981e31c7258b317aab2dc566062536947a6f90ce95369bf4ae0094322d693f4",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2386",
+      "event_type": "runtime_artifact.implementation_plan",
+      "record": "reports/event-authority-20260911/admission-records/runtime_artifact.implementation_plan.json",
+      "record_sha256": "99c3f6f44070472984d859778c89a371752a8022696f338d68113ef03535633e",
+      "row_sha256": "060e21d6a2b91f9d0bf17995c6e85c79d65555afc244846b19729e642994d101",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2387",
+      "event_type": "runtime_artifact.reasoning_summary",
+      "record": "reports/event-authority-20260911/admission-records/runtime_artifact.reasoning_summary.json",
+      "record_sha256": "22bf72f76ac58f3bab397aee0b215db9841e5df8bd1b0ccfbff556e2b0ad3864",
+      "row_sha256": "7cdd422e8d6a872345a78e7bef233776c2d48a0b44c2fbbecddb554fbed50529",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2388",
+      "event_type": "runtime_artifact.restore_point",
+      "record": "reports/event-authority-20260911/admission-records/runtime_artifact.restore_point.json",
+      "record_sha256": "a2df0731818f5097855b6c747b8bf335f4f2e6e8d0cdecd061389c5eaf6da64b",
+      "row_sha256": "cd7d46e7b8684d6d27e6d37c5a46809cb10a8125d23830d1266611789654d907",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2389",
+      "event_type": "runtime_artifact.screenshot",
+      "record": "reports/event-authority-20260911/admission-records/runtime_artifact.screenshot.json",
+      "record_sha256": "f743d9e03cdcde4c3c1bf33667a02bf4efe09257b7096b1824a90e2aba31581c",
+      "row_sha256": "3ff7306c11807c3505fcdab5e7e455a730a754eecbffefb4db748b3aaff7a4ec",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2390",
+      "event_type": "runtime_artifact.subagent_lineage",
+      "record": "reports/event-authority-20260911/admission-records/runtime_artifact.subagent_lineage.json",
+      "record_sha256": "71a6e48b19eb9b09b37c28c0dc7e474bcfd38a1f61da77309f10fd558e5cca79",
+      "row_sha256": "e76be754eea8f77a3aff4220b09baeedb95730876b9e0905bbbd54d6eff3b253",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2391",
+      "event_type": "runtime_artifact.suggested_next_steps",
+      "record": "reports/event-authority-20260911/admission-records/runtime_artifact.suggested_next_steps.json",
+      "record_sha256": "e90c667dd09d5468fdda92715c1459bb62ced4ea52c10e46ae273de3ef5f4174",
+      "row_sha256": "7993f5c0cc2e293683e7acb4acca5c39a99c87e4856c2b47fea3b8a715cf85e5",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2392",
+      "event_type": "runtime_artifact.tool_llm_trace",
+      "record": "reports/event-authority-20260911/admission-records/runtime_artifact.tool_llm_trace.json",
+      "record_sha256": "69b2696072516fbe79ad62616c99c11c9fa66798f4628f3a4a9a04e14ee9eec9",
+      "row_sha256": "b1449a814b50da2bee1679b178784ecbdb06469fbd3b24ccc0aab2b2a38dc449",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2393",
+      "event_type": "runtime_artifact.validation_test",
+      "record": "reports/event-authority-20260911/admission-records/runtime_artifact.validation_test.json",
+      "record_sha256": "bf8a9974fede5888ae4bf89356915e64b7df462266a099828786f70ffa4e3e16",
+      "row_sha256": "f7d09843aaad3e272bb67c80648d884b2ae3e248373e783db6be02cd7f032083",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2394",
+      "event_type": "safe_point.created",
+      "record": "reports/event-authority-20260911/admission-records/safe_point.created.json",
+      "record_sha256": "d37e63bce1c0b462662ea6ad08e2b2797b384ed6e832eec31d7f53deaef51688",
+      "row_sha256": "6f93e46a3b0e227ff39ac4327352fb364bac964c6cc9770fdd0bb7a57a86d532",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2395",
+      "event_type": "safe_point.restored",
+      "record": "reports/event-authority-20260911/admission-records/safe_point.restored.json",
+      "record_sha256": "6fc5cafa3ef30a3e1cb8bd7e8f3bbaff54df5ea948225e4ee9101345dedfc3ef",
+      "row_sha256": "e25baaef13bce352937a53e2b62beddf8b19e9244bbc3b51367a1a58f31169a7",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2396",
+      "event_type": "server.catalog_changed",
+      "record": "reports/event-authority-20260911/admission-records/server.catalog_changed.json",
+      "record_sha256": "1e5113c64ce640bf2b5170b83a71811c969af24170ef78a366d47b5b08e7fbbf",
+      "row_sha256": "e372bebb8b799b718c12ead0e5d21921f230e305bc9483987b3fea9cf64121ba",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2397",
+      "event_type": "server.client_pairing_state_changed",
+      "record": "reports/event-authority-20260911/admission-records/server.client_pairing_state_changed.json",
+      "record_sha256": "1b2b535c7ce2e95d516758e154a57d45fb070a2b671071f5b29abcf302f8b896",
+      "row_sha256": "ffba409de20d71e36bbf0738fba9f9c2d17c988faa1e8e9f78556e3946c5d189",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2398",
+      "event_type": "server.client_revoked",
+      "record": "reports/event-authority-20260911/admission-records/server.client_revoked.json",
+      "record_sha256": "cc944474cbf5916dfc92bb35a920911f4c2eeefca5c48a7fa3c4c3581335b457",
+      "row_sha256": "049ad0efbaead45ded15ef0a6ccb0094f0b0c55306f5c8d7a031505054462fb5",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2399",
+      "event_type": "server.client_trust_changed",
+      "record": "reports/event-authority-20260911/admission-records/server.client_trust_changed.json",
+      "record_sha256": "995fbdbe65f5e5f3f2f0c39bf212518e368ae0781fd0c5c4bdb9d298de492cf6",
+      "row_sha256": "76e7fa041a26c3087f6938c5f452b8e9afcafa677e8d62a336cfbff8883a444b",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2400",
+      "event_type": "server.connection_state_changed",
+      "record": "reports/event-authority-20260911/admission-records/server.connection_state_changed.json",
+      "record_sha256": "5b4e6c51575fe191a4712e1d0921f4486e98c166e717ac68f9648c66a0b7ceb2",
+      "row_sha256": "97153533759ce022cdb23cd93a9bc05b5719707d477cc86ebae15e929c64f3b6",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2401",
+      "event_type": "server.discovery_expired",
+      "record": "reports/event-authority-20260911/admission-records/server.discovery_expired.json",
+      "record_sha256": "31a862e7d49b79d6d97c7e98e015b02393a6a2d907d7897ca5a0c1cee6741e9c",
+      "row_sha256": "784b0389f974bd16a2e3f0dc8429e265a70b74dfb912b0f1e3a355e3022aaea7",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2402",
+      "event_type": "server.discovery_observed",
+      "record": "reports/event-authority-20260911/admission-records/server.discovery_observed.json",
+      "record_sha256": "e3cc9ce8cb04cde6c30ee303c0347d103a4e18d3321ad4e8c21c6411b0818c20",
+      "row_sha256": "7e8c73e39fd85b12d2ac996257a8753169d9455e8b5423b1c2484a9911139033",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2403",
+      "event_type": "server.endpoint_changed",
+      "record": "reports/event-authority-20260911/admission-records/server.endpoint_changed.json",
+      "record_sha256": "41330457c3cf3d8a60c3988f4c15600a6f813c3755af2ce7c7b5014bb96bdfdd",
+      "row_sha256": "8e028050d1f994e5c29b30a67b7c2de44160175596cc4f93610528fd927b8fb8",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2404",
+      "event_type": "server.identity_mismatch_detected",
+      "record": "reports/event-authority-20260911/admission-records/server.identity_mismatch_detected.json",
+      "record_sha256": "ac41a96c8b631ff993cb7dcd258d8567891056907e7bb1916336ec1f981643da",
+      "row_sha256": "69cf01ad7ddbf15412cea3e7a18573de11775d5a7d6196afefdede068b8ca83c",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2405",
+      "event_type": "subagent.budget_warning",
+      "record": "reports/event-authority-20260911/admission-records/subagent.budget_warning.json",
+      "record_sha256": "44574ecc86ddc30c1e184aaab5daa2fb7ea18bed4f095040043f1fcd005e79db",
+      "row_sha256": "96709a665348da6db9039237df09dc93f35ac086ebc4337a29ecc4b00ad353ea",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2406",
+      "event_type": "subagent.cancelled",
+      "record": "reports/event-authority-20260911/admission-records/subagent.cancelled.json",
+      "record_sha256": "a9ccad04145a82f7e5a7fe9f7d479e0420d0a8278e5a1bb988bc16286e611122",
+      "row_sha256": "fef6829a47c5c419f70c636d8e1ec6a90a95f5145cb3e42be60b2d131b316e26",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2407",
+      "event_type": "subagent.completed",
+      "record": "reports/event-authority-20260911/admission-records/subagent.completed.json",
+      "record_sha256": "4b1858f76773daf6ca0eaca6345de1baeee6e6558d6cd325f883eeae3e9304c7",
+      "row_sha256": "cad72ecee524e2c3e2d19dc4b7203f177e110d47531569d0f17ad755395b716b",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2408",
+      "event_type": "subagent.context_warning",
+      "record": "reports/event-authority-20260911/admission-records/subagent.context_warning.json",
+      "record_sha256": "0ce4554abfd38bb14046fb4c1c4ac374fc5b2fa83e8aad7810cc1910f24ae48f",
+      "row_sha256": "1c706257f2b7f7f87eec11fec69442c1b751f6b52502097de087c166ee747cf9",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2409",
+      "event_type": "subagent.escalated",
+      "record": "reports/event-authority-20260911/admission-records/subagent.escalated.json",
+      "record_sha256": "ca201d9e488fbb4c6c04171c9e9b1ffc23af58859a660ae9a1062f14451d575d",
+      "row_sha256": "60536efe2eed93c99e06013dd7dfd5f4329fa06a43edf62ebeaed26a93e91e7c",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2410",
+      "event_type": "subagent.failed",
+      "record": "reports/event-authority-20260911/admission-records/subagent.failed.json",
+      "record_sha256": "55d2b6fd5a48cf0b4a27145f0593b5522990f4b7bbfea21db9c51b7aaf192554",
+      "row_sha256": "dfabd2a70f6911fc9b21c4c559fe24b21b2365e131ab5c272549e559d9cb56d8",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2411",
+      "event_type": "subagent.message_received",
+      "record": "reports/event-authority-20260911/admission-records/subagent.message_received.json",
+      "record_sha256": "c06a41fd110dbd34fe917e759be7db6f98b3c080eb111e36024d5a1926df9626",
+      "row_sha256": "bf82daa6416fb7875a277dee109504c4e726bdb74482748a40f6468b67e4236c",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2412",
+      "event_type": "subagent.message_sent",
+      "record": "reports/event-authority-20260911/admission-records/subagent.message_sent.json",
+      "record_sha256": "828df68305b49447673ce12f39aeccb2833ecb05e49946ceb2146103698d6612",
+      "row_sha256": "e5f2aadea9ef68174a95b795382ebc679dce2532d3527dbb0f16ebe2053f0e9d",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2413",
+      "event_type": "subagent.model_switched",
+      "record": "reports/event-authority-20260911/admission-records/subagent.model_switched.json",
+      "record_sha256": "d9e82af7321c5717ffcd5d2d947052ac98a88b258800b91a5ce7a168321c165b",
+      "row_sha256": "cd246d470ac5983ce089e48101e00149d43e0dfab8b1e2a5abaf7276b9e68562",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2414",
+      "event_type": "subagent.output_truncated",
+      "record": "reports/event-authority-20260911/admission-records/subagent.output_truncated.json",
+      "record_sha256": "487028f5150052d07db29627e7062144e050ccf00f7f2acb62d3b1a49960138b",
+      "row_sha256": "5f50c7c0655de87a50e4e9f822b9c2ee2bdef043d18de723ef019ab1eaced4f0",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2415",
+      "event_type": "subagent.paused",
+      "record": "reports/event-authority-20260911/admission-records/subagent.paused.json",
+      "record_sha256": "e53f73d1b7c7a42232776ab130915ed07b49c658edcdf091b4c72502face72a8",
+      "row_sha256": "d01f6dcab5ba3478bb3e40bffc1906b53209b10d5dd4e796690db0c039428ae6",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2416",
+      "event_type": "subagent.progress",
+      "record": "reports/event-authority-20260911/admission-records/subagent.progress.json",
+      "record_sha256": "1591a5d403fbaabc15ccd4649b14e7e7f8aca89b9df54a5f8820c5a50da9d2f9",
+      "row_sha256": "646c986ed9da2f4174790cc768b48ba71244a1729e0eac791ecf299fddf5edef",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2417",
+      "event_type": "subagent.resumed",
+      "record": "reports/event-authority-20260911/admission-records/subagent.resumed.json",
+      "record_sha256": "a37c79e2722f619c11718bb36cd595b357795a8e9ac84f6924cda2f620292fcb",
+      "row_sha256": "74a0ef08ddb54fdf058e3d4e9679aab99e94ac6b937fb8de10e7adf90af20597",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2418",
+      "event_type": "subagent.retried",
+      "record": "reports/event-authority-20260911/admission-records/subagent.retried.json",
+      "record_sha256": "50d07313d85703a6dbf8de5472d9698786b6e21691271779a8c5606767214c4d",
+      "row_sha256": "31f0012f07287535d8f618fe869c3547f67d3702b9e0e1032bdf71fa70a55b1d",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2419",
+      "event_type": "subagent.spawned",
+      "record": "reports/event-authority-20260911/admission-records/subagent.spawned.json",
+      "record_sha256": "b356e5661cdbb5394acaf1f42d685a9fbac8d7f1c8c0ea451085f7475b72cb4d",
+      "row_sha256": "cfde926a36068d0fd584c5aa38b229b46971e4ea3a7b3b8e31b404f80511b5e3",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2420",
+      "event_type": "subagent.started",
+      "record": "reports/event-authority-20260911/admission-records/subagent.started.json",
+      "record_sha256": "82226ece22a3dcf7c176bf80a4b78546ab71f67cd40000c05ce0730a1a1ac6aa",
+      "row_sha256": "b719a10ab0e15556b56b4990f286cf3bdbd84db1d0973751b2e7f3c7c49d91a2",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2421",
+      "event_type": "subagent.timeout",
+      "record": "reports/event-authority-20260911/admission-records/subagent.timeout.json",
+      "record_sha256": "bdb833df31479f10229d2857c46bf15bd1705e35607365a530dcd96f6e38906c",
+      "row_sha256": "ba2378ca28556ff877339088cc8c0fe374cc7af9afcd20c5386964e695ab8907",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2422",
+      "event_type": "subagent.tool_called",
+      "record": "reports/event-authority-20260911/admission-records/subagent.tool_called.json",
+      "record_sha256": "bd18dd443fa556ddc5a2bab8c819a0163e9715a7546f38f44adaa62e8b0e9f29",
+      "row_sha256": "aa3c245eb3e25fbf6fc62482fcdfa8b540a7e1aef53dd5289e94cb22f030b312",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2423",
+      "event_type": "subagent.tool_completed",
+      "record": "reports/event-authority-20260911/admission-records/subagent.tool_completed.json",
+      "record_sha256": "306eb55ce0766aea9f4227d9ebea0b01c1b2ee36e65ecd7b7f2a851fc5a4e627",
+      "row_sha256": "2609a323fb6b7a155486fa5f28928e50b6caecbaa50cc7ebe9a39c975ecaa36d",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2424",
+      "event_type": "tool.custom_headless.skipped",
+      "record": "reports/event-authority-20260911/admission-records/tool.custom_headless.skipped.json",
+      "record_sha256": "6389314693f6fee2a3d9fed279e32925ca7da0278230b8b7c5fce1352b864c2c",
+      "row_sha256": "7e9409c3d30ec2dace5028ca9e79b060d5eec521d5a73cdf482ab30d956fe1f1",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2425",
+      "event_type": "tool.denied",
+      "record": "reports/event-authority-20260911/admission-records/tool.denied.json",
+      "record_sha256": "574b8736d154790cfafb67f109d0cc0a8f9f978e8992cfe7531b9acf4902e896",
+      "row_sha256": "89cba62d04987d23e2bf771d959863f9c273a01b36e75580f6a32d56dd34ed9c",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2426",
+      "event_type": "tool.execution_completed",
+      "record": "reports/event-authority-20260911/admission-records/tool.execution_completed.json",
+      "record_sha256": "0cf6b91d15cbbc86609792a95deb2f60bbac02ee530ef0118ec839cd163a37da",
+      "row_sha256": "930dd1d98a271acb881ed8ef22d0bd3bfcd0dab9785de14c7cd7791c9f8bb17b",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2427",
+      "event_type": "tool.execution_started",
+      "record": "reports/event-authority-20260911/admission-records/tool.execution_started.json",
+      "record_sha256": "17a23f9084b9bb5cc1245b0ecf54468b7b47c8d3b19047d263d5fea2ceea8dae",
+      "row_sha256": "ce16c5e3dff7493472ba315fc6b25393d03b62cbf015c218bf097e8fc1d28903",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2428",
+      "event_type": "tool.invoked",
+      "record": "reports/event-authority-20260911/admission-records/tool.invoked.json",
+      "record_sha256": "4c4f6bf3eaccef854e8c45c9310f948d656749b7ce40afd38e1d9441dc0c003d",
+      "row_sha256": "c94926c36b67ec83687fc29e4801ada77c08bcc961e9e978b4b1b5b4ba38167c",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2429",
+      "event_type": "wizard.blocked",
+      "record": "reports/event-authority-20260911/admission-records/wizard.blocked.json",
+      "record_sha256": "142015b86628aa63af7adcde39371ab9b92a93d027d7092da2196b5032d6eaef",
+      "row_sha256": "18060fa2cdaf043c295673847413073a5843eba70cab782900ba9c22816223aa",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2430",
+      "event_type": "wizard.deferred_payload.loaded",
+      "record": "reports/event-authority-20260911/admission-records/wizard.deferred_payload.loaded.json",
+      "record_sha256": "fdf2b76302814b785e59c699197b39124b922c6a0aa94756c97ad659a76bcd36",
+      "row_sha256": "ba4ac5c9ddacee0d8ec0709b67fc2fc62356d22851b82f13439ea8d93dd6106c",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2431",
+      "event_type": "wizard.opened",
+      "record": "reports/event-authority-20260911/admission-records/wizard.opened.json",
+      "record_sha256": "a6d02e14406e9f63cb526ddd02804651ca0e04fdd573b63b8d2bb7a4c3e23398",
+      "row_sha256": "77189d762cf0ea5991bdc22f9afaba03a86efe6dd104c6b13b8c3cfd69946cf7",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2432",
+      "event_type": "wizard.unblocked",
+      "record": "reports/event-authority-20260911/admission-records/wizard.unblocked.json",
+      "record_sha256": "eecff9c080bd0cb622eb1f6f433ab7493e638a11b99d095e8094f738b8175c69",
+      "row_sha256": "a0a8872b36095114b6439cf24ae6569f8f07f8c8c7e4ae6de9d593c11348c68a",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2433",
+      "event_type": "worktree.created",
+      "record": "reports/event-authority-20260911/admission-records/worktree.created.json",
+      "record_sha256": "be3c4400620858d14c3e72fc7e801d20bb3b3759fc164bb8260596973eec7abd",
+      "row_sha256": "0ace2a481d833affade0a0a505be70731de643f9061083e5fbfea0bfb35a7df6",
+      "unchanged": true
+    },
+    {
+      "decision": "DL-2434",
+      "event_type": "worktree.deleted",
+      "record": "reports/event-authority-20260911/admission-records/worktree.deleted.json",
+      "record_sha256": "34f63a3bc3e8dfb27c8e4fd46b8b73da84747dc24c947534f9169d95eca88b72",
+      "row_sha256": "f983a55a20bd53f586d38569837ce2394edf2b949d1b5afd6186e4a65297099f",
+      "unchanged": true
+    }
+  ],
+  "retained_s5b": [
+    {
+      "assessment": "reports/event-authority-20261116/admission-merge-2/revisions/goal.blocked.json",
+      "event_type": "goal.blocked",
+      "sha256": "cd60f7dd0d9655168eacd7bdf97c71d1851c049005485c28af525d2bfaaa9dd5"
+    },
+    {
+      "assessment": "reports/event-authority-20261116/admission-merge-2/revisions/goal.completed.json",
+      "event_type": "goal.completed",
+      "sha256": "6ea09d67c4bee998bd2dc4d356717fe61f6d395c7c9bdcf49132169881e2a7ee"
+    },
+    {
+      "assessment": "reports/event-authority-20261116/admission-merge-2/revisions/goal.evidence_captured.json",
+      "event_type": "goal.evidence_captured",
+      "sha256": "0866c9ab66cc73e49ed5b842570a9d8df6a2914803ea96737b08a371ab1441c0"
+    },
+    {
+      "assessment": "reports/event-authority-20261116/admission-merge-2/revisions/goal.receipt_recorded.json",
+      "event_type": "goal.receipt_recorded",
+      "sha256": "ad6f7c2ed6f2af575f9e97bfd74926ce7631adb063102f1d30996091840a4a1a"
+    },
+    {
+      "assessment": "reports/event-authority-20261116/admission-merge-2/revisions/goal.tool_check_recorded.json",
+      "event_type": "goal.tool_check_recorded",
+      "sha256": "eb5c86003ee479ad9b6bf07e18d2c6e19c663d50e320c0e2bda5d7f7b02098bc"
+    },
+    {
+      "assessment": "reports/event-authority-20261116/admission-merge-2/revisions/goal_run.blocked.json",
+      "event_type": "goal_run.blocked",
+      "sha256": "c826ecdb8e14a77b73f7e744acc7a71c977aefe9e0847419cfe1356540c01fb0"
+    },
+    {
+      "assessment": "reports/event-authority-20261116/admission-merge-2/revisions/goal_run.replanned.json",
+      "event_type": "goal_run.replanned",
+      "sha256": "d221137f6088b22dfffcf81b152eb0c0cc7819d421833ee9d0e770fd0d4f39b3"
+    },
+    {
+      "assessment": "reports/event-authority-20261116/admission-merge-2/revisions/goal_run.stopped.json",
+      "event_type": "goal_run.stopped",
+      "sha256": "c99832d1eafd45c4784e3bca54d52c2e421ac4c42d6ff27a37982ea20504f07d"
+    }
+  ],
+  "schema_id": "pm.assurance.event_authority.merge2_batch_split.v1",
+  "totals": {
+    "applied_deferred_actions": 0,
+    "deferred": 5,
+    "new_admissions": 298,
+    "registry_families": 517,
+    "registry_rows_deleted": 0,
+    "removed_planned_confirmations": 5,
+    "retained_s5b": 8
+  }
+}

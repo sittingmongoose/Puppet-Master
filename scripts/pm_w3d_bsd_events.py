@@ -32,7 +32,7 @@ sys.path.insert(0, str(ROOT / 'scripts'))
 
 import blake3  # noqa: E402
 import msgpack  # noqa: E402
-from jsonschema import Draft202012Validator  # noqa: E402
+from jsonschema import Draft202012Validator, FormatChecker  # noqa: E402
 from referencing import Registry, Resource  # noqa: E402
 from referencing.jsonschema import DRAFT202012  # noqa: E402
 
@@ -91,8 +91,18 @@ CHECKPOINT_VALIDATORS = {f['slug']: Draft202012Validator({'$ref': f'{BSD_ID}#/$d
                          for f in spec.FAMILIES}
 WRAPPER_VALIDATORS = {f['slug']: Draft202012Validator({'$ref': f'{BSD_ID}#/$defs/source_{f["source_kind"]}'}, registry=REGISTRY)
                       for f in spec.FAMILIES}
-HEAD_VALIDATORS = {f['slug']: Draft202012Validator({'$ref': f'{BSD_ID}#/$defs/head_{f["source_kind"]}'}, registry=REGISTRY)
-                   for f in spec.FAMILIES if f['source_kind'] != 'review_start'}
+HEAD_VALIDATORS = {kind: Draft202012Validator({'$ref': f'{BSD_ID}#/$defs/head_{kind}'}, registry=REGISTRY)
+                   for kind in ('policy', 'workflow_binding', 'assignment', 'review_cycle', 'finding', 'quarantine')}
+PROJECTION_VALIDATORS = {f['slug']: Draft202012Validator({'$ref': f'{BSD_ID}#/$defs/{f["slug"]}_projection'}, registry=REGISTRY)
+                         for f in spec.FAMILIES}
+FORMATS = FormatChecker()
+# Every integer-typed payload field per family (including nullable unions), from the closed payload schemas.
+PAYLOAD_INTEGERS = {
+    f['slug']: tuple(field for field, schema in SCHEMAS['bsd_event_payloads']['$defs'][f['slug']]['properties'].items()
+                     if any(branch.get('type') == 'integer' for branch in schema.get('oneOf', [schema])))
+    for f in spec.FAMILIES}
+CATALOG = {pol['policy_id']: pol for pol in json.loads((ROOT / 'Plans/storage_value_registry.json').read_text())['retention_policies']}
+CANDIDATES = {row['family_id']: row for row in json.loads((ROOT / 'Plans/bsd_event_storage_candidates.json').read_text())['candidate_rows']}
 LOGICAL_VALIDATORS = {kind: Draft202012Validator({'$ref': f'{LOGICAL_ID}#/$defs/bsd_{kind}'}, registry=REGISTRY)
                       for kind in ('policy', 'workflow_binding', 'assignment', 'review_cycle', 'finding', 'quarantine')}
 START_BODY_VALIDATOR = Draft202012Validator({'$ref': f'{BSD_ID}#/$defs/review_start'}, registry=REGISTRY)
@@ -153,9 +163,7 @@ def uint64_ok(value):
 
 
 def clock_ok(value, profile):
-    """date_time accepts the string under the owner profile and returns it unchanged."""
-    if type(value) is not str:
-        return False
+    """date_time accepts the string under the owner profile and returns it unchanged (it refuses non-strings itself)."""
     try:
         return date_time(value, profile=profile) == value
     except Refusal:
@@ -280,6 +288,8 @@ def base_native(fam):
         'review_cycle_id': 'cycle-0001' if slug in rows_spec.REVIEW_CHAIN else None,
         'writer_generation': 3, 'redaction_profile': 'secret_refs_only',
         'facts': copy.deepcopy(fam['positive_facts']),
+        'refs': {k: v for k, v in fam['base_refs'].items() if k not in spec.FACT_REFS},
+        'protected': dict(spec.PROTECTED),
     }
     return native
 
@@ -289,77 +299,78 @@ def make_payload(fam, cap, W):
     f = cap['facts']
     op = W['operation_id']
     payload = {'schema_id': fam['payload_schema_id'], 'schema_version': '1.0.0',
-               'project_id': PROJECT, 'owner_operation_id': op, 'source_state_ref': W['wrapper_ref'],
+               'project_id': cap['scope']['project_id'], 'owner_operation_id': op, 'source_state_ref': W['wrapper_ref'],
                'policy_revision': cap['policy_revision'], 'binding_id': cap['binding_id'],
                'bsd_assignment_id': cap['bsd_assignment_id'], 'primary_run_id': cap['primary_run_id'],
                'epoch': cap['epoch'], 'primary_generation': cap['primary_generation'],
                'review_cycle_id': cap['review_cycle_id'], 'primary_run_mutated': False, 'authority_granted': False}
+    r = cap['refs']
     finding = {'bsd_finding_id': 'finding-0001', 'finding_key': W['finding_key'],
-               'finding_ref': 'pmref:finding.body.0001'}
+               'finding_ref': r.get('finding_ref')}
     if slug == 'advice_emitted':
         payload.update(finding, severity=f['finding_severity'], delivery_basis=f['delivery_basis'],
                        presentation_weight='aside' if (f['finding_severity'] == 'nit' or f['cooldown_routed']) else 'note',
                        raised_against_generation=3, latest_checked_generation=5,
-                       emission_boundary_ref='pmref:boundary.0001', stale=f['stale_decision'],
+                       emission_boundary_ref=r.get('emission_boundary_ref'), stale=f['stale_decision'],
                        unreconfirmed=f['unreconfirmed_decision'])
     elif slug == 'assignment_paused':
         payload.update(previous_state=f['prior_assignment_state'] if f['prior_assignment_state'] != 'paused' else 'reviewing',
-                       state='paused', pause_cause=f['pause_cause'], pause_source_ref='pmref:pause.source.0001')
+                       state='paused', pause_cause=f['pause_cause'], pause_source_ref=r.get('pause_source_ref'))
     elif slug == 'assignment_resumed':
-        payload.update(previous_state='paused', previous_pause_cause='user',
-                       resume_source_ref='pmref:resume.source.0001', cursor_ref='pmref:cursor.0007')
+        payload.update(previous_state='paused', previous_pause_cause=f['prior_pause_cause'],
+                       resume_source_ref=r.get('resume_source_ref'), cursor_ref=r.get('cursor_ref'))
     elif slug == 'assignment_started':
         payload.update(stage_id='stage-0001', effective_mode=f['resolved_mode'] if f['resolved_mode'] in ('Auto', 'On') else 'Auto',
-                       assignment_ref='pmref:assignment.body.0001', cursor_ref='pmref:cursor.0004',
+                       assignment_ref=r.get('assignment_ref'), cursor_ref=r.get('cursor_ref'),
                        stable_prefix_hash=sha(b'W3D stable prefix'), requested_effective_snapshot_ref=f['snapshot_ref'],
-                       read_only_tool_profile_id='profile-bsd-read-only')
+                       read_only_tool_profile_id=f['read_only_tool_profile_id'])
     elif slug == 'assignment_stopped':
         payload.update(previous_state=f['prior_assignment_state'] if f['prior_assignment_state'] != 'stopped' else 'reviewing',
-                       state='stopped', stop_source_ref='pmref:stop.source.0001', cursor_ref='pmref:cursor.0007')
+                       state='stopped', stop_source_ref=r.get('stop_source_ref'), cursor_ref=r.get('cursor_ref'))
     elif slug == 'finding_cleared':
         payload.update(finding, previous_state=f['prior_finding_state'] if f['prior_finding_state'] in ('held', 'reconfirming') else 'held',
                        clear_basis=f['clear_basis'], raised_against_generation=3, latest_checked_generation=5,
-                       clear_source_ref='pmref:clear.source.0001')
+                       clear_source_ref=r.get('clear_source_ref'))
     elif slug == 'finding_held':
         payload.update(finding, severity=f['finding_severity'], raised_against_generation=3,
                        hold_basis='asynchronous_high_severity' if f['hold_basis'] == 'async_high' else 'terminal_nit',
                        evidence_fingerprint=W['evidence_fingerprint'])
     elif slug == 'finding_reconfirmed':
-        payload.update(finding, previous_state='held', previous_severity=f['prior_severity'],
+        payload.update(finding, previous_state=f['prior_finding_state'], previous_severity=f['prior_severity'],
                        severity=f['finding_severity'], raised_against_generation=f['raised_against_generation'],
                        latest_checked_generation=f['latest_checked_generation'],
                        reconfirmation_count=f['reconfirmation_count'],
-                       reconfirmation_source_ref='pmref:reconfirm.source.0001')
+                       reconfirmation_source_ref=r.get('reconfirmation_source_ref'))
     elif slug == 'finding_suppressed':
         payload.update(finding, suppression_reason='duplicate_suppressed' if f['suppression_kind'] == 'duplicate' else 'content_free_suppressed',
-                       severity='concern', evidence_fingerprint=W['evidence_fingerprint'],
-                       suppression_source_ref='pmref:suppress.source.0001')
+                       severity=f['finding_severity'], evidence_fingerprint=W['evidence_fingerprint'],
+                       suppression_source_ref=r.get('suppression_source_ref'))
     elif slug == 'output_quarantined':
-        payload.update(quarantine_id='quarantine-0001', quarantine_ref='pmref:quarantine.body.0001',
+        payload.update(quarantine_id='quarantine-0001', quarantine_ref=r.get('quarantine_ref'),
                        reason='malformed_output', payload_hash=sha(b'W3D quarantined output'),
-                       retained_payload_ref='pmref:quarantine.retained.0001',
+                       retained_payload_ref=r.get('retained_payload_ref'),
                        consecutive_quarantine_count=f['consecutive_quarantine_count'],
                        reset_attempted=False, terminal_action=f['terminal_action'])
     elif slug == 'policy_changed':
         payload.update(policy_id='policy-0001', previous_policy_revision=f['actual_prior_revision'],
-                       changed_fields=list(f['claimed_changed_fields']), policy_ref='pmref:policy.body.0001',
-                       policy_change_source_ref='pmref:policy.change.0001')
+                       changed_fields=list(f['claimed_changed_fields']), policy_ref=r.get('policy_ref'),
+                       policy_change_source_ref=r.get('policy_change_source_ref'))
     elif slug == 'review_failed':
-        payload.update(result='failed', review_ref='pmref:review.body.0001',
-                       failure_source_ref='pmref:failure.source.0001', failure_reason_ref='pmref:failure.reason.0001',
-                       usage_attempt_ref=None)
+        payload.update(result='failed', review_ref=r.get('review_ref'),
+                       failure_source_ref=r.get('failure_source_ref'), failure_reason_ref=r.get('failure_reason_ref'),
+                       usage_attempt_ref=r.get('usage_attempt_ref'))
     elif slug == 'review_started':
         payload.update(review_start_ref=W['wrapper_ref'], trigger_kind=f['trigger_kind'],
-                       input_manifest_ref='pmref:manifest.0001', redaction_receipt_ref='pmref:redaction.0001',
+                       input_manifest_ref=r.get('input_manifest_ref'), redaction_receipt_ref=r.get('redaction_receipt_ref'),
                        frozen_boundary=f['frozen_boundary'], usage_attempt_ref=None)
     elif slug == 'review_timed_out':
-        payload.update(result='timed_out', review_ref='pmref:review.body.0001',
-                       timeout_source_ref='pmref:timeout.source.0001', deadline_ref='pmref:deadline.0001',
-                       usage_attempt_ref=None)
+        payload.update(result='timed_out', review_ref=r.get('review_ref'),
+                       timeout_source_ref=r.get('timeout_source_ref'), deadline_ref=r.get('deadline_ref'),
+                       usage_attempt_ref=r.get('usage_attempt_ref'))
     elif slug == 'workflow_binding_created':
-        payload.update(workflow_kind='assistant', workflow_id='workflow-0001', binding_revision=2,
-                       previous_binding_ref=f['previous_binding_ref'], binding_ref='pmref:binding.body.0001',
-                       binding_source_ref='pmref:binding.source.0001')
+        payload.update(workflow_kind='assistant', workflow_id='workflow-0001', binding_revision=f['binding_revision'],
+                       previous_binding_ref=f['previous_binding_ref'], binding_ref=r.get('binding_ref'),
+                       binding_source_ref=r.get('binding_source_ref'))
     return payload
 
 
@@ -405,35 +416,35 @@ def logical_body(fam, cap, W):
                 'retain_transcript': True, 'project_watch_instructions_ref': None, 'stage_defaults_ref': None,
                 'revision': cap['policy_revision']}
     if kind == 'workflow_binding':
-        return {'schema_id': 'pm.bsd.workflow_binding.v1', 'schema_version': '1.0.0', 'binding_id': 'binding-0001',
+        return {'schema_id': 'pm.bsd.workflow_binding.v1', 'schema_version': '1.0.0', 'binding_id': cap['binding_id'],
                 'workflow_kind': 'assistant', 'workflow_id': 'workflow-0001', 'policy_revision': cap['policy_revision'],
                 'stage_bindings': [{'stage_id': 'stage-0001', 'stage_mode': 'auto'}], 'created_at': ts}
     if kind == 'assignment':
-        return {'schema_id': 'pm.bsd.assignment.v1', 'schema_version': '1.0.0', 'bsd_assignment_id': 'assignment-0001',
-                'binding_id': 'binding-0001', 'stage_id': 'stage-0001', 'primary_run_id': 'run-1',
+        return {'schema_id': 'pm.bsd.assignment.v1', 'schema_version': '1.0.0', 'bsd_assignment_id': cap['bsd_assignment_id'],
+                'binding_id': cap['binding_id'], 'stage_id': 'stage-0001', 'primary_run_id': cap['primary_run_id'],
                 'advisor_attempt_id': 'attempt-0001', 'epoch': cap['epoch'], 'cursor': 'cursor-0007',
                 'stable_prefix_hash': sha(b'W3D stable prefix'),
                 'requested_effective_snapshot_ref': 'pmref:snapshot.frozen.0001', 'state': 'reviewing'}
     if kind == 'finding':
         body = {'schema_id': 'pm.bsd.finding.v1', 'schema_version': '1.0.0', 'bsd_finding_id': 'finding-0001',
-                'finding_key': W['finding_key'], 'assignment_id': 'assignment-0001',
+                'finding_key': W['finding_key'], 'assignment_id': cap['bsd_assignment_id'],
                 'raised_against_generation': 3, 'latest_checked_generation': 5, 'severity': 'concern',
-                'claim': 'redacted claim ref', 'affected_object_refs': ['pmref:object.a'],
+                'claim': 'claim body ' + cap['protected']['claim'], 'affected_object_refs': ['pmref:object.a'],
                 'rule_or_constraint_refs': ['pmref:rule.a'], 'evidence_refs': ['pmref:evidence.newer.0001'],
                 'state': 'held', 'reconfirmation_count': 1, 'closed_reason': None,
                 'created_at': ts, 'updated_at': ts}
         return body
     if kind == 'quarantine':
         return {'schema_id': 'pm.bsd.quarantine.v1', 'schema_version': '1.0.0', 'quarantine_id': 'quarantine-0001',
-                'assignment_id': 'assignment-0001', 'review_cycle_id': 'cycle-0001', 'reason': 'malformed_output',
-                'payload_hash': sha(b'W3D quarantined output'), 'retained_payload_ref': 'pmref:quarantine.retained.0001',
+                'assignment_id': cap['bsd_assignment_id'], 'review_cycle_id': cap['review_cycle_id'], 'reason': 'malformed_output',
+                'payload_hash': sha(b'W3D quarantined output'), 'retained_payload_ref': cap['refs'].get('retained_payload_ref'),
                 'reset_attempted': False, 'terminal_action': f['terminal_action'], 'created_at': ts}
     if kind == 'review_cycle':
-        return {'schema_id': 'pm.bsd.review_cycle.v1', 'schema_version': '1.0.0', 'review_cycle_id': 'cycle-0001',
-                'bsd_assignment_id': 'assignment-0001', 'trigger_kind': 'pre_first_material_mutation',
-                'trigger_reason': 'reason-0001', 'primary_generation': 4, 'input_manifest_ref': 'pmref:manifest.0001',
+        return {'schema_id': 'pm.bsd.review_cycle.v1', 'schema_version': '1.0.0', 'review_cycle_id': cap['review_cycle_id'],
+                'bsd_assignment_id': cap['bsd_assignment_id'], 'trigger_kind': 'pre_first_material_mutation',
+                'trigger_reason': 'reason-0001', 'primary_generation': cap['primary_generation'], 'input_manifest_ref': 'pmref:manifest.0001',
                 'result': 'failed' if fam['slug'] == 'review_failed' else 'timed_out',
-                'usage_attempt_ref': None, 'latency_ms': None, 'created_at': ts,
+                'usage_attempt_ref': cap['refs'].get('usage_attempt_ref'), 'latency_ms': None, 'created_at': ts,
                 'frozen_boundary': False, 'no_call_reason': None}
     if kind == 'review_start':
         return start_body(cap, W)
@@ -448,7 +459,8 @@ def start_body(cap, W):
             'bsd_assignment_id': cap['bsd_assignment_id'], 'primary_run_id': cap['primary_run_id'],
             'epoch': cap['epoch'], 'primary_generation': cap['primary_generation'],
             'review_cycle_id': 'cycle-0001', 'trigger_kind': f.get('trigger_kind', 'pre_first_material_mutation'),
-            'input_manifest_ref': 'pmref:manifest.0001', 'redaction_receipt_ref': 'pmref:redaction.0001',
+            'input_manifest_ref': cap['refs'].get('input_manifest_ref', 'pmref:manifest.0001'),
+            'redaction_receipt_ref': cap['refs'].get('redaction_receipt_ref', 'pmref:redaction.0001'),
             'frozen_boundary': f.get('frozen_boundary', False), 'assignment_ref': 'pmref:assignment.body.0001',
             'binding_ref': 'pmref:binding.body.0001', 'admission_ref': 'pmref:admission.accepted.0001',
             'origin_context_ref': 'pmref:origin.context.0001', 'cursor_ref': 'pmref:cursor.0004',
@@ -507,6 +519,10 @@ RECIPE = RecipeTuple('pm.event.v0', '2.0.0', 'bsd-w3d-payload', '1.0.0', 'Back_S
                      'pm.event_family_registry', 'bsd-key@1 (CV-1350..1364)', 'CV-317 producer_semantic_digest (CV-1100)',
                      EVENT_VALUE, 'CV-339 full value v2', 'SP-1365 source identity row', 'SP-337 pending pack',
                      sha(b'W3D bsd-w3d-v1 frozen resources: payload schemas, bsd_event_storage_contracts, event_record 2.0.0'))
+LIVE_RECIPE = RecipeTuple(RECIPE.envelope_schema_id, RECIPE.envelope_schema_version, RECIPE.payload_schema_id,
+                          '1.1.0', RECIPE.owner_source_id, 'W3D-1.1.0', RECIPE.registry_revision, RECIPE.identity_recipe,
+                          RECIPE.producer_recipe, RECIPE.physical_profile, RECIPE.full_value_profile,
+                          RECIPE.local_source_profile, RECIPE.payload_profile, sha(b'W3D bsd-w3d-v1.1 live edition'))
 UNKNOWN_RECIPE = RecipeTuple(RECIPE.envelope_schema_id, RECIPE.envelope_schema_version, RECIPE.payload_schema_id,
                              RECIPE.payload_schema_version, RECIPE.owner_source_id, RECIPE.owner_edition,
                              RECIPE.registry_revision, RECIPE.identity_recipe, 'unknown-producer-recipe',
@@ -543,11 +559,20 @@ def build(fam, muts=None, variant=None, empty=False, external=False):
     W['meta'] = meta
     env = hook(m, 'envelope', make_envelope(fam, cap, payload, meta), W)
     W['env'] = env
+    W['owner_objects'] = hook(m, 'owner_objects', owner_registry(fam), W)
     W['admission'] = hook(m, 'admission', {
-        'cutoff': False, 'physical': True, 'registry': {(fam['event_type'], fam['payload_schema_id'], '1.0.0')},
-        'dedupe_available': True, 'permission': True, 'registered_owner': fam['producer'],
+        # Storage governance cutoffs, SP-318 physical table, dedupe watermark, write grants and Stop settlements are
+        # looked up for this exact family/operation class; another family's or class's entry never decides.
+        'cutoffs': [{'event_type': 'bsd.other.event', 'recorded_by': 'storage_governance'}],
+        'physical': dict({name: 'admitted' for name in physical_families(fam)}, bsd_other_operation='pending'),
+        'registry': {(fam['event_type'], fam['payload_schema_id'], '1.0.0')},
+        'dedupe_index': {'indexed_through': 6}, 'log_tail': 6,
+        'grants': [(native['actor_ref'], fam['producer'], 'read'), (native['actor_ref'], fam['producer'], 'write'),
+                   (native['actor_ref'], 'OtherOwner.service@1.0.0', 'write')],
+        'registered_owner': fam['producer'],
         'live_owner': fam['producer'], 'writer_generation': 3, 'live_writer_generation': 3,
-        'stop': 'allow', 'live_epoch': 2, 'resolved_mode': facts.get('resolved_mode', 'Auto')}, W)
+        'stop': {fam['producer']: 'allow', 'OtherOwner.service@1.0.0': 'refuse'},
+        'live_epoch': 2, 'resolved_mode': facts.get('resolved_mode', 'Auto')}, W)
     intent = hook(m, 'intent', {k: env[k] for k in PRODUCER_FIELDS if k in env}, W)
     W['intent'] = intent
     raw, ref = pack_for(intent)
@@ -583,9 +608,13 @@ def build(fam, muts=None, variant=None, empty=False, external=False):
     build_retry(fam, env, digest, W, m)
     build_publication(fam, env, W, m, empty)
     build_read(fam, env, W, m)
-    W['replay'] = hook(m, 'replay', {e: [] for e in rows_spec.EFFECTS}, W)
-    W['withdraw'] = hook(m, 'withdraw', {'cutoff_recorded': True, 'pending_drained': True,
-                                         'selector_withdrawn': True, 'advanced': 0, 'appended': 0}, W)
+    W['replay'] = hook(m, 'replay', {'impl': 'correct', 'sinks': {e: [] for e in rows_spec.EFFECTS}}, W)
+    build_withdrawal(fam, env, W, m)
+    build_rebuild(fam, env, W, m)
+    build_backup(fam, env, W, m)
+    build_retention(fam, env, W, m)
+    W['producer'] = hook(m, 'producer', {'impl': 'correct', 'crash_points': list(CRASH_POINTS) + (
+        ['dispatch'] if slug == 'review_started' else [])}, W)
     hook(m, 'authentic_source', W['native'], W)
     return W
 
@@ -673,31 +702,33 @@ def build_custody(fam, env, digest, W, m):
     W['head_expected'] = hook(m, 'head_expected', copy.deepcopy(W['head_prior']), W)
     W['head_key'] = hook(m, 'head_key', f'bsd_head_{hk}.v1:{partition_for(PROJECT)}:{hexs(W["capture"]["subject_id"])}', W)
     W['head_published'] = hook(m, 'head_published', False, W)
+    W['operation_complete'] = hook(m, 'operation_complete', dict(
+        copy.deepcopy(W['operation']), state='complete',
+        first_append_receipt=copy.deepcopy(W['custody']['first_append_receipt'])), W)
 
 
 def build_retry(fam, env, digest, W, m):
     retry_env = copy.deepcopy(env)
     retry_env['observed_at_utc'] = '2026-11-01T08:05:00Z'
     retry_env['sequence_id'] = 99
+    key = (partition_for(PROJECT), fam['event_type'], env['idempotency_key'])
+    store = {'log': [copy.deepcopy(env), unrelated_record(8)],
+             'receipt_index': {W['receipt_ref']: copy.deepcopy(W['custody'])}, 'remote': []}
     W['retry'] = hook(m, 'retry', {
-        'env': retry_env, 'registry': W['admission']['registry'], 'dedupe_available': True,
-        'dedupe': {(partition_for(PROJECT), fam['event_type'], env['idempotency_key']):
-                   {'digest': digest, 'receipt': W['receipt_ref']}},
-        'result': {'receipt': copy.deepcopy(W['custody']['first_append_receipt']), 'remote_operations': 0},
-        'original_custody_available': True}, W)
+        'env': retry_env, 'registry': W['admission']['registry'],
+        'dedupe': {'entries': {key: {'digest': digest, 'receipt_ref': W['receipt_ref']}}, 'indexed_through': 8},
+        'store': store, 'impl': 'correct',
+        'client_ack': copy.deepcopy(W['custody']['first_append_receipt'])}, W)
     if 'retry_original_digest' in m:
         # An independently sealed original with the same semantic number spelling.
         # Useful for isolating exact integer validation from idempotency comparison.
-        key = (partition_for(PROJECT), fam['event_type'], env['idempotency_key'])
-        W['retry']['dedupe'][key]['digest'] = digest_or_none(W['retry']['env'])
+        W['retry']['dedupe']['entries'][key]['digest'] = digest_or_none(W['retry']['env'])
 
 
 def build_publication(fam, env, W, m, empty):
     slug = fam['slug']
     partition = partition_for(PROJECT)
-    record_m = env
-    record_u = unrelated_record(8)
-    log = [] if empty else [record_m, record_u]
+    log = [] if empty else [unrelated_record(6), env, unrelated_record(8)]
     W['log'] = hook(m, 'log', log, W)
     selection = {'storage_instance_id': STORAGE, 'current_ref': 'storage/seglog/CURRENT',
                  'current_bytes_sha256': sha(b'CURRENT'), 'selected_segment_generation': 3,
@@ -732,10 +763,15 @@ def build_publication(fam, env, W, m, empty):
     W['request'] = hook(m, 'request', {
         'expected_revision': W['pred']['index_read_token']['frontier_revision'],
         'expected_hash': binding_hash(W['pred']), 'fence': 'fence-0042', 'live_token': copy.deepcopy(live),
-        'scanned': [] if empty else [r['sequence_id'] for r in log], 'disclosed': [],
+        'scanned': [] if empty else [r['sequence_id'] for r in W['log'] if type(r) is dict], 'disclosed': [],
         'empty_proof': empty}, W)
     W['storage_fence'] = 'fence-0042'
-    W['generic_index_complete'] = hook(m, 'generic_index', True, W)
+    W['generic_index'] = hook(m, 'generic_index', {'covered_through': 0 if empty else 8, 'excluded': []}, W)
+    W['event_locators'] = hook(m, 'event_locators', {
+        event_locator(r): (STORAGE, r.get('sequence_id'), r.get('event_id')) for r in W['log'] if type(r) is dict}, W)
+    _prefix, _corrupt, family = scan_view(W)
+    W['projection'] = hook(m, 'projection', projection_of(fam, family[-1]) if family else None, W)
+    W['projection_key'] = hook(m, 'projection_key', f'bsd_{slug}_projection.v1:{partition}:{hexs(W["operation_id"])}', W)
 
 
 def build_read(fam, env, W, m):
@@ -753,28 +789,155 @@ def build_read(fam, env, W, m):
         'sealed': [{'original_ref': original_ref, 'binding': copy.deepcopy(binding), 'recipe': RECIPE}],
         'stored': {original_ref: {'record': record_bytes, 'source_row': W['settle']['row'], 'custody': W['custody'],
                                   'pack': W['pack']}},
-        'reader_writes_receipt': False, 'reader_alters_bytes': False, 'withdrawn': False, 'permission': True,
-        'deleted': False, 'ref_available': True, 'live_capability': True, 'caller_override': False,
-        'backup_coherent': True}, W)
+        'reader': 'reader.bsd.' + fam['slug'] + '@1.0.0',
+        'selectors': {fam['event_type']: 'active', 'bsd.other.event': 'withdrawn'},
+        'access_grants': [('reader.bsd.' + fam['slug'] + '@1.0.0', original_ref),
+                          ('reader.bsd.' + fam['slug'] + '@1.0.0', 'pmref:other.original')],
+        'tombstones': ['pmref:other.deleted.body'],
+        'body_ref': W['logical_pack']['ref'],
+        'live_capability': True, 'caller_override': False, 'live_recipe': None}, W)
+
+
+# --- PNC-019 s4d: owner objects, projection, behavioural models ----------------------------------------
+def owner_registry(fam):
+    """Owner-held objects that payload references must resolve, built from the authentic base (never from the decision).
+
+    Besides each authentic object it holds a second valid object of the same kind/subject (join witnesses), decoys of
+    another kind, subject or Project (resolution witnesses), and an owner-issued reference that embeds protected
+    content (redaction witness).
+    """
+    subject = SUBJECTS[fam['source_kind']]
+    reg = {}
+
+    def put(ref, kind, subject_id=subject, project_id=PROJECT):
+        reg[ref] = {'kind': kind, 'subject_id': subject_id, 'project_id': project_id}
+    for field, ref in fam['base_refs'].items():
+        kind = spec.REF_KINDS[field]
+        base = ref if ref is not None else spec.USAGE_ATTEMPT_REF
+        put(base, kind)
+        put(base + '.alt', kind)
+        put(f'pmref:decoy.kind.{field}', 'unrelated_object')
+        put(f'pmref:decoy.subject.{field}', kind, subject_id=subject + '-other')
+        put(f'pmref:decoy.project.{field}', kind, project_id='project-B')
+        put(f'{base}.{spec.PROTECTED["claim"]}', kind)
+    return reg
+
+
+def physical_families(fam):
+    return (f'bsd_{fam["slug"]}_operation', f'bsd_{fam["slug"]}_projection', f'bsd_{fam["slug"]}_checkpoint',
+            f'bsd_source_{fam["source_kind"]}')
+
+
+def event_locator(record):
+    return f'pmref:storage.event.{STORAGE}.{record.get("sequence_id")}'
+
+
+def projection_of(fam, record):
+    payload = record.get('payload') if type(record.get('payload')) is dict else {}
+    return {'schema_id': f'pm.bsd.event_projection.{fam["slug"]}.v1', 'schema_version': '1.0.0',
+            'project_id': record.get('project_id'), 'event_type': record.get('event_type'),
+            'owner_operation_id': payload.get('owner_operation_id'), 'event_id': record.get('event_id'),
+            'sequence_id': record.get('sequence_id'), 'source_state_ref': payload.get('source_state_ref'),
+            'source_event_ref': event_locator(record)}
+
+
+def frame_verified(record):
+    """A scanned frame is usable only when it is a complete valid EventRecord; anything else is unverifiable."""
+    return ENVELOPE_VALIDATOR.is_valid(record)
+
+
+def build_withdrawal(fam, env, W, m):
+    lost = dict(copy.deepcopy(W['operation']), owner_operation_id=W['operation_id'] + '.lost')
+    W['withdraw'] = hook(m, 'withdraw', {
+        'impl': 'correct',
+        'governance': {'cutoffs': [{'event_type': 'bsd.other.event', 'recorded_by': 'storage_governance'}],
+                       'selectors': {fam['event_type']: 'active', 'bsd.other.event': 'active'}},
+        # One issued pending operation whose original receipt exists, one whose custody is lost.
+        'pending': [{'operation': copy.deepcopy(W['operation']), 'custody': copy.deepcopy(W['custody'])},
+                    {'operation': lost, 'custody': None}],
+        'publication': {'consumer_id': f'projector.bsd.{fam["slug"]}@1.0.0', 'state': 'current'},
+        'log': copy.deepcopy(W['log'])}, W)
+
+
+def build_rebuild(fam, env, W, m):
+    W['rebuild'] = hook(m, 'rebuild', {
+        'impl': 'correct',
+        'successor': {'event_type': fam['event_type'], 'reader': f'reader.bsd.{fam["slug"]}@1.1.0',
+                      'version': '1.1.0', 'admitted_by': 'storage_governance'},
+        'withdrawn_reader': f'reader.bsd.{fam["slug"]}@1.0.0',
+        'canonical': {'log': copy.deepcopy(W['log']),
+                      'operations': {W['operation_key']: copy.deepcopy(W['operation_complete'])},
+                      'sources': {W['wrapper_ref']: copy.deepcopy(W['wrapper'])},
+                      'heads': {W['head_key']: copy.deepcopy(W['head'])}},
+        'derived': {W['projection_key']: copy.deepcopy(W['projection']), W['checkpoint_key']: copy.deepcopy(W['cand'])},
+        'lost': [], 'sinks': {e: [] for e in rows_spec.EFFECTS}}, W)
+
+
+def _pack_bytes(pack):
+    parts = _pack_parts(pack.get('ref'))
+    return pack['store'].get(parts[3]) if parts else None
+
+
+def build_backup(fam, env, W, m):
+    cut = 'cut-0007'
+    parts = {
+        'source_wrapper': {'ref': W['wrapper_ref'], 'value': copy.deepcopy(W['wrapper'])},
+        'logical_pack': {'ref': W['logical_pack']['ref'], 'bytes': _pack_bytes(W['logical_pack'])},
+        'operation': {'ref': W['operation_key'], 'value': copy.deepcopy(W['operation_complete'])},
+        'payload_pack': {'ref': W['pack']['ref'], 'bytes': _pack_bytes(W['pack'])},
+        'receipt_custody': {'ref': W['receipt_ref'], 'value': copy.deepcopy(W['custody'])},
+        'head': {'ref': W['head_key'], 'value': copy.deepcopy(W['head'])},
+        'controls': {'ref': 'storage/seglog/CURRENT', 'value': {'storage_instance_id': STORAGE, 'manifest_generation': 5}},
+    }
+    if W['review_chain']:
+        parts['start_wrapper'] = {'ref': W['start_wrapper_ref'], 'value': copy.deepcopy(W['start_wrapper'])}
+        parts['start_pack'] = {'ref': W['start_pack']['ref'], 'bytes': _pack_bytes(W['start_pack'])}
+    for part in parts.values():
+        part['cut_id'] = cut
+    W['backup'] = hook(m, 'backup', {'cut_id': cut, 'parts': parts, 'impl': 'correct'}, W)
+
+
+def build_retention(fam, env, W, m):
+    backed = fam['assignment_backed']
+    W['retention'] = hook(m, 'retention', {
+        'policy_ref': copy.deepcopy(fam['retention']),
+        'bound_ref': copy.deepcopy(CANDIDATES[f'bsd_{fam["slug"]}_operation']['event_retention_policy_ref']),
+        'derived': {k: copy.deepcopy(CANDIDATES[f'bsd_{fam["slug"]}_{k}']['retention_policy_ref'])
+                    for k in ('operation', 'projection', 'checkpoint')},
+        'record': {'event_id': env['event_id'], 'primary_run_id': W['payload_view'].get('primary_run_id'),
+                   'project_id': PROJECT, 'appended_at': '2026-11-01T08:00:02Z'},
+        'runs': {'run-1': {'state': 'completed', 'completed_at': '2026-11-02T00:00:00Z'},
+                 'run-2': {'state': 'completed', 'completed_at': '2026-11-20T00:00:00Z'}},
+        'history': [{'op': 'retry', 'at': '2026-12-01T00:00:00Z'}, {'op': 'replay', 'at': '2027-01-15T00:00:00Z'},
+                    {'op': 'restore', 'at': '2027-03-01T00:00:00Z'}],
+        'catalog': CATALOG,
+        'holds': [], 'counts': {'run': 10, 'project': 100} if backed else {'run': 0, 'project': 10_000_000},
+        'now': '2027-06-01T00:00:00Z' if backed else '2034-06-01T00:00:00Z',
+        'pressure': False, 'deletion': None, 'impl': 'correct'}, W)
+
+
+CRASH_POINTS = ('packs', 'source_and_operation', 'append', 'receipt', 'settle', 'result')
+CRASH_ORDER = CRASH_POINTS
 
 
 # --- observations -----------------------------------------------------------
 def obs_admission(W):
     a, env, native = W['admission'], W['env'], W['native']
     fam = W['fam']
-    out = {'AD01_cutoff': a['cutoff'] is False,
+    out = {'AD01_cutoff': not any(c.get('event_type') == fam['event_type'] for c in a['cutoffs']),
            'AD01_registration': (
                fam['event_type'], fam['payload_schema_id'], '1.0.0') in a['registry'],
-           'AD02_physical_admission': a['physical'] is True,
+           'AD02_physical_admission': all(a['physical'].get(name) == 'admitted' for name in physical_families(fam)),
            'AD03_replay_writer': env.get('replay_policy') != 'projector_replay_only',
            'AD04_scope_kind': native['scope']['scope_kind'] == 'project',
            'AD04_project_scope': same(native['scope']['project_id'], PROJECT),
            'AD05_actor': same(W['capture'].get('actor_ref'), native['actor_ref']),
-           'AD06_dedupe_available': a['dedupe_available'] is True,
-           'AD07_current_write_permission': a['permission'] is True,
+           'AD06_dedupe_available': a['dedupe_index']['indexed_through'] >= a['log_tail'],
+           'AD07_current_write_permission': (native['actor_ref'], fam['producer'], 'write') in a['grants'],
            'AD08_current_owner': same(a['live_owner'], native['owner']),
            'AD09_current_writer_generation': same(a['live_writer_generation'], native['writer_generation']),
-           'AD10_current_stop': a['stop'] == 'allow'}
+           'AD09_writer_generation_domain': ok(current_integer, native['writer_generation'], minimum=0),
+           'AD10_current_stop': a['stop'].get(fam['producer']) == 'allow'}
     if fam['assignment_backed']:
         out['AD11_current_epoch'] = same(a['live_epoch'], native['epoch'])
     return out
@@ -798,31 +961,31 @@ def obs_envelope(W):
     inline_ok = True
     if type(payload) is dict and env.get('payload_ref') is None:
         size = encoded_len(payload, EVENT_VALUE)
-        inline_ok = size is not None and size <= INLINE_LIMIT
-    string_parts = {k: v for k, v in env.items() if type(v) is str} if type(env) is dict else {}
+        # A payload the Storage profile cannot encode at all is a number/type row's defect, not an oversize.
+        inline_ok = size is None or size <= INLINE_LIMIT
+    string_parts = {k: v for k, v in env.items() if type(v) is str}
     meta_size = encoded_len(string_parts, EVENT_VALUE)
-    migration = env.get('migration')
+    migration = env.get('migration') if type(env.get('migration')) is dict else {}
     pseq = env.get('producer_sequence_id')
     return {
-        'EN01_envelope_schema': type(env) is dict and ENVELOPE_VALIDATOR.is_valid(env),
+        'EN01_envelope_schema': ENVELOPE_VALIDATOR.is_valid(env),
         'EN02_occurred_clock': clock_ok(env.get('occurred_at_utc'), EVENT_RECORD),
         'EN03_observed_clock': clock_ok(env.get('observed_at_utc'), STORAGE_UTC_Z),
         'EN04_persisted_clock': clock_ok(env.get('persisted_at_utc'), STORAGE_UTC_Z),
         'EN05_sequence_uint64': uint64_ok(env.get('sequence_id')),
-        'EN06_producer_sequence': pseq is None or (type(pseq) is int and ok(current_integer, pseq, minimum=0)),
+        'EN06_producer_sequence': pseq is None or ok(current_integer, pseq, minimum=0),
         'EN07_producer_qualified': digest_or_none(env) is not None,
         'EN08_family': env.get('event_type') == fam['event_type'],
         'EN09_payload_schema': env.get('payload_schema_id') == fam['payload_schema_id'],
         'EN10_redaction_join': same(env.get('redaction_profile'), native['redaction_profile']),
         'EN11_inline_size': inline_ok,
         'EN12_payload_route': (payload is None) != (env.get('payload_ref') is None),
-        'EN13_migration_null': type(migration) is dict and migration.get('migration_id') is None,
-        **{f'EN13_migration_{k}': type(migration) is dict and migration.get(k) is None
-           for k in rows_spec.MIGRATION_FIELDS},
+        'EN13_migration_null': migration.get('migration_id') is None,
+        **{f'EN13_migration_{k}': migration.get(k) is None for k in rows_spec.MIGRATION_FIELDS},
         'EN14_sequence_join': same(env.get('sequence_id'), meta['sequence_id']),
         'EN15_observed_join': same(env.get('observed_at_utc'), meta['observed_at_utc']),
         'EN16_persisted_join': same(env.get('persisted_at_utc'), meta['persisted_at_utc']),
-        'EN17_metadata_size': meta_size is not None and meta_size <= INLINE_LIMIT,
+        'EN17_metadata_size': meta_size is None or meta_size <= INLINE_LIMIT,
         'EN18_replay_policy': env.get('replay_policy') == 'dedupe_by_idempotency_key',
     }
 
@@ -835,7 +998,7 @@ def obs_joins(W):
         out['JN01_run_join'] = same(env.get('run_id'), native['primary_run_id'])
     else:
         out['JN01_run_null'] = env.get('run_id') is None
-    out['JN02_project_join'] = type(env.get('project_id')) is str and env.get('project_id') == PROJECT
+    out['JN02_project_join'] = same(env.get('project_id'), PROJECT)
     for i, field in enumerate(rows_spec.ENVELOPE_JOINS, 3):
         out[f'JN{i:02d}_{field}_join'] = same(env.get(field), native[field])
     return out
@@ -844,22 +1007,23 @@ def obs_joins(W):
 def obs_identity(W):
     env, native = W['env'], W['native']
     fam = W['fam']
-    eid = env.get('event_id')
-    key = env.get('idempotency_key')
+    eid = env.get('event_id') if type(env.get('event_id')) is str else ''
+    key = env.get('idempotency_key') if type(env.get('idempotency_key')) is str else ''
     ep = _identity_parts(eid, 5)
     kp = _identity_parts(key, 3)
     op = W['operation_id']
     authentic_op = operation_for(native['original_source_id'], fam['event_type'], native['subject_id'])
+    # A component of a wrong-arity identity is absent ([]), never an index error.
     return {
-        'ID01_event_prefix': type(eid) is str and eid.startswith('bsd-event@1:'),
-        'ID03_event_storage': len(ep) == 5 and ep[1] == hexs(STORAGE),
-        'ID04_event_type': len(ep) == 5 and ep[2] == hexs(fam['event_type']),
-        'ID05_event_project': len(ep) == 5 and ep[3] == hexs(PROJECT),
-        'ID06_event_operation': len(ep) == 5 and ep[4] == hexs(op),
+        'ID01_event_prefix': eid.startswith('bsd-event@1:'),
+        'ID03_event_storage': ep[1:2] == [hexs(STORAGE)],
+        'ID04_event_type': ep[2:3] == [hexs(fam['event_type'])],
+        'ID05_event_project': ep[3:4] == [hexs(PROJECT)],
+        'ID06_event_operation': ep[4:5] == [hexs(op)],
         'ID07_operation_recipe': op == authentic_op,
-        'ID08_key_prefix': type(key) is str and key.startswith('bsd-key@1:'),
-        'ID10_key_project': len(kp) == 3 and kp[1] == hexs(PROJECT),
-        'ID11_key_operation': len(kp) == 3 and kp[2] == hexs(op),
+        'ID08_key_prefix': key.startswith('bsd-key@1:'),
+        'ID10_key_project': kp[1:2] == [hexs(PROJECT)],
+        'ID11_key_operation': kp[2:3] == [hexs(op)],
         'ID12_partition_recipe': native['scope']['scope_partition'] == partition_for(PROJECT),
     }
 
@@ -881,9 +1045,16 @@ def _payload_field_spec(fam, field):
     return schema
 
 
+def dispatched_payload(W):
+    """The payload exactly as the envelope carries it; derivations never read the builder's private copy."""
+    env = W['env']
+    payload = env.get('payload') if type(env) is dict else None
+    return payload if type(payload) is dict else {}
+
+
 def obs_payload(W):
     fam = W['fam']
-    payload = W['payload_view']
+    payload = dispatched_payload(W)
     native = W['native']
     out = {}
     if type(payload) is not dict:
@@ -915,7 +1086,7 @@ def obs_payload(W):
         if kw == 'const':
             out[name] = present and type(value) is type(spec_['const']) and value == spec_['const']
         elif kw == 'enum':
-            out[name] = present and type(value) is str and value in spec_['enum']
+            out[name] = present and value in spec_['enum']  # every enum member is a string; no other type compares equal
         elif kw == 'type':
             if 'oneOf' in spec_:
                 out[name] = present and JOIN_FIELD_VALIDATORS.get(fam['slug'], {}).get(field, Draft202012Validator(
@@ -926,7 +1097,7 @@ def obs_payload(W):
                 out[name] = present and value is None
             else:
                 want = {'string': str, 'integer': int, 'boolean': bool}.get(spec_.get('type'))
-                out[name] = present and want is not None and type(value) is want
+                out[name] = present and type(value) is want
         elif kw in ('minimum', 'maximum'):
             if type(value) is not int:
                 out[name] = True
@@ -956,7 +1127,7 @@ def obs_payload(W):
 def obs_source(W):
     fam = W['fam']
     wrapper, native = W['wrapper'], W['native']
-    payload = W['payload_view']
+    payload = dispatched_payload(W)
     out = {
         'SR01_wrapper_schema': WRAPPER_VALIDATORS[fam['slug']].is_valid(wrapper),
         'SR02_wrapper_subject': same(wrapper.get('subject_id'), payload.get(fam['subject_field'])),
@@ -1051,7 +1222,7 @@ def obs_operation(W):
         'OP04_operation_project': op.get('project_id') == PROJECT,
         'OP05_operation_event': same(op.get('event_id'), env.get('event_id')),
         'OP06_operation_key_join': same(op.get('idempotency_key'), env.get('idempotency_key')),
-        'OP07_operation_digest': same(op.get('producer_semantic_digest'), digest_or_none(env)),
+        'OP07_operation_digest': digest_or_none(env) is None or same(op.get('producer_semantic_digest'), digest_or_none(env)),
         'OP08_operation_state': op.get('state') == 'pending_event',
         'OP09_pending_not_current': W['head_published'] is False,
         'OP10_operation_source_ref': same(op.get('source_state_ref'), W['wrapper_ref']),
@@ -1060,13 +1231,11 @@ def obs_operation(W):
 
 def obs_operation_size(W):
     size = encoded_len(W['operation'], EVENT_VALUE)
-    return {'OZ01_operation_size': size is not None and size <= INLINE_LIMIT}
+    return {'OZ01_operation_size': size is None or size <= INLINE_LIMIT}
 
 
 def _pack_parts(ref):
-    if type(ref) is not str:
-        return None
-    parts = ref.split(':')
+    parts = ref.split(':') if type(ref) is str else []
     if len(parts) != 6 or parts[0] != 'pm-payload-ref' or parts[1] != 'v1' or parts[2] != 'blake3':
         return None
     return parts
@@ -1140,8 +1309,7 @@ def obs_receipt(W):
         'RC05_custody_key': same(custody.get('idempotency_key'), env.get('idempotency_key')),
         'RC06_custody_digest': same(custody.get('producer_semantic_digest'), digest_or_none(env)),
         'RC07_custody_storage': custody.get('storage_instance_id') == STORAGE,
-        'RC08_full_value': commitment is not None and same(
-            custody.get('original_event_value_commitment', {}).get('sha256'), commitment),
+        'RC08_full_value': same(custody.get('original_event_value_commitment', {}).get('sha256'), commitment),
         'RC09_receipt_event': same(receipt.get('event_id'), env.get('event_id')),
         'RC10_receipt_sequence': same(receipt.get('sequence_id'), W['meta']['sequence_id']),
         'RC11_receipt_sequence_uint64': uint64_ok(receipt.get('sequence_id')),
@@ -1167,25 +1335,64 @@ def obs_receipt(W):
         'RC26_head_committed': W['wrapper_ref'] in W['committed_wrappers'],
         'RC26_head_subject': same(head.get('subject_id'), W['native']['subject_id']),
     })
+    complete, pending = W['operation_complete'], W['operation']
+    original_receipt = custody.get('first_append_receipt')
+    out.update({
+        'RC27_head_schema': HEAD_VALIDATORS[head_kind(fam)].is_valid(head),
+        'RC28_operation_complete_schema': OPERATION_VALIDATORS[fam['slug']].is_valid(complete),
+        'RC29_operation_receipt_join': same(complete.get('first_append_receipt'), original_receipt),
+        'RC30_head_receipt_join': same(head.get('first_append_receipt'), original_receipt),
+        'RC31_operation_complete_identity': same(
+            {k: v for k, v in complete.items() if k not in ('state', 'first_append_receipt')},
+            {k: v for k, v in pending.items() if k not in ('state', 'first_append_receipt')}),
+    })
     return out
+
+
+def run_retry(R, key):
+    """Run the retry implementation on a private copy of the Storage store; return (result, store after)."""
+    store = copy.deepcopy(R['store'])
+    impl = R.get('impl', 'correct')
+    entry = R['dedupe']['entries'].get(key)
+    custody = store['receipt_index'].get(entry['receipt_ref']) if entry else None
+    result = {'receipt': copy.deepcopy(custody['first_append_receipt']) if type(custody) is dict else None}
+    if impl == 'from_client':
+        result = {'receipt': copy.deepcopy(R.get('client_ack'))}
+    elif impl == 'fresh_receipt' and result['receipt'] is not None:
+        result['receipt'] = dict(result['receipt'], sequence_id=99, segment_name='seg-000099')
+    elif impl == 'remote_call':
+        store['remote'].append('provider.review.dispatch')
+    elif impl == 'reappend':
+        store['log'].append(copy.deepcopy(R['env']))
+    elif impl == 'mint_custody':
+        store['receipt_index']['pmref:receipt.retry'] = dict(copy.deepcopy(custody or {}), group_digest=sha(b'retry'))
+    return result, store
 
 
 def obs_retry(W):
     fam, R = W['fam'], W['retry']
     env = R['env']
-    entry = R['dedupe'].get((partition_for(PROJECT), fam['event_type'], W['env']['idempotency_key']))
+    key = (partition_for(PROJECT), fam['event_type'], W['env']['idempotency_key'])
+    entry = R['dedupe']['entries'].get(key)
+    store = R['store']
+    tail = max((r.get('sequence_id') for r in store['log'] if type(r.get('sequence_id')) is int), default=0)
+    custody = store['receipt_index'].get(entry['receipt_ref']) if entry else None
+    custody_ok = type(custody) is dict and same(custody.get('event_id'), W['env'].get('event_id'))
+    result, after = run_retry(R, key)
     return {
         'RT01_retry_not_replay_only': env.get('replay_policy') != 'projector_replay_only',
         'RT02_retry_membership': (fam['event_type'], fam['payload_schema_id'], '1.0.0') in R['registry'],
-        'RT03_retry_dedupe_available': R['dedupe_available'] is True,
+        'RT03_retry_dedupe_available': R['dedupe']['indexed_through'] >= tail,
         'RT04_retry_original_found': entry is not None,
         'RT05_retry_digest_equal': entry is None or same(entry.get('digest'), digest_or_none(env)),
-        'RT06_retry_receipt_original': same(R['result']['receipt'], W['custody']['first_append_receipt']),
-        'RT07_retry_no_remote': R['result']['remote_operations'] == 0 and type(R['result']['remote_operations']) is int,
-        'RT08_original_retry_custody': R['original_custody_available'] is True,
+        'RT06_retry_receipt_original': not custody_ok or same(result['receipt'], custody['first_append_receipt']),
+        'RT07_retry_no_remote': same(after['remote'], store['remote']),
+        'RT08_original_retry_custody': entry is None or custody_ok,
         'RT09_retry_envelope_schema': ENVELOPE_VALIDATOR.is_valid(env),
         'RT10_retry_producer_sequence': env.get('producer_sequence_id') is None or ok(
             current_integer, env.get('producer_sequence_id'), minimum=0),
+        'RT11_retry_no_new_event': same(after['log'], store['log']),
+        'RT12_retry_no_new_receipt': same(after['receipt_index'], store['receipt_index']),
     }
 
 
@@ -1212,12 +1419,12 @@ def obs_checkpoint(W):
     out[f'CP{nxt:02d}_token_uint64'] = uint64_ok(uint_slots[0])
     for field, value in zip(rows_spec.CHECKPOINT_INTEGERS, uint_slots[1:]):
         out[f'CP{nxt:02d}_uint64_' + field] = uint64_ok(value)
+    for name, value in (('token', token.get('storage_instance_id')), ('selection', selection.get('storage_instance_id'))):
+        out[f'CP27_{name}_storage_uuid'] = FORMATS.conforms(value, 'uuid')
+    size = encoded_len(cand, INDEX_BINDING)
+    # A value the Storage profile cannot encode at all is the uint64/schema rows' defect, not an oversize.
+    out['CZ01_checkpoint_size'] = size is None or size <= INLINE_LIMIT
     return out
-
-
-def obs_checkpoint_size(W):
-    size = encoded_len(W['cand'], INDEX_BINDING)
-    return {'CZ01_checkpoint_size': size is not None and size <= INLINE_LIMIT}
 
 
 def obs_checkpoint_type(W):
@@ -1234,25 +1441,56 @@ def obs_checkpoint_snapshot(W):
     return {'CP06_token_snapshot': set(token) == set(rows_spec.TOKEN_FIELDS) | {'source_selection'}}
 
 
+def scan_view(W):
+    """The verified survivor prefix of the captured log and the family records within it."""
+    prefix, corrupt = [], False
+    for record in W['log']:
+        if not frame_verified(record):
+            corrupt = True
+            break
+        prefix.append(record)
+    fam = W['fam']
+    family = [r for r in prefix if r.get('event_type') == fam['event_type'] and r.get('project_id') == PROJECT]
+    return prefix, corrupt, family
+
+
 def obs_scan(W):
-    cand, request, log = W['cand'], W['request'], W['log']
-    matched = [r for r in log if r.get('event_id') == cand.get('last_matched_event_id')]
-    last_seq = log[-1]['sequence_id'] if log else None
-    pred_seq = W['pred'].get('last_scanned_sequence')
-    no_regress = last_seq is None or pred_seq is None or last_seq >= pred_seq
-    cursor_ok = same(cand.get('last_matched_event_id'), W['env']['event_id'] if log else None)
+    cand, request, log, pred = W['cand'], W['request'], W['log'], W['pred']
+    prefix, corrupt, family = scan_view(W)
+    pred_seq = pred.get('last_scanned_sequence')
+    seqs = [r.get('sequence_id') for r in log if type(r) is dict]
+    scanned = request.get('scanned') or []
+    record = family[-1] if family else None
+    expected_event = record.get('event_id') if record else None
+    expected_seq = prefix[-1].get('sequence_id') if prefix else (pred_seq if corrupt else None)
+    cand_seq = cand.get('last_scanned_sequence')
+    matched = [r for r in log if type(r) is dict and r.get('event_id') == cand.get('last_matched_event_id')]
+    cursor_ok = same(cand.get('last_matched_event_id'), expected_event)
+    custodies = [c for c in W['receipt_index'].values()
+                 if type(c) is dict and expected_event is not None and c.get('event_id') == expected_event]
+    one = custodies[0] if len(custodies) == 1 else None
+    covered = W['generic_index'].get('covered_through')
+    covered = covered if type(covered) is int else -1
+    try:
+        stored_commitment = full_value_commitment(matched[0]) if len(matched) == 1 else None
+    except Refusal:
+        stored_commitment = None
+    after = (lambda s: pred_seq is None or (type(s) is int and s > pred_seq))
     return {
-        'SC01_generic_source': W['generic_index_complete'] is True,
-        'SC02_coverage_complete': same(request.get('scanned'), [r['sequence_id'] for r in log]),
+        'SC01_generic_source': all(type(s) is int and s <= covered for s in seqs) and not W['generic_index'].get('excluded'),
+        'SC02_coverage_complete': [s for s in scanned if after(s)] == [s for s in seqs if after(s)],
         'SC03_cursor_event': cursor_ok,
-        'SC04_cursor_sequence': same(cand.get('last_scanned_sequence'), last_seq),
-        'SC04_no_regression': no_regress,
-        'SC05_cursor_unique': not log or not cursor_ok or len(matched) == 1,
-        'SC05_cursor_value': not log or not cursor_ok or len(matched) != 1 or same(value_hash(matched[0]), value_hash(W['env'])),
-        'SC06_matched_verified': bool(W['receipt_index']),
-        'SC06_custody_event': same(W['custody'].get('event_id'), W['env'].get('event_id')),
+        'SC04_cursor_sequence': same(cand_seq, expected_seq),
+        'SC04_no_regression': cand_seq is None or pred_seq is None or cand_seq >= pred_seq,
+        'SC05_cursor_value': one is None or not cursor_ok or len(matched) != 1 or same(
+            one.get('original_event_value_commitment', {}).get('sha256'), stored_commitment),
+        'SC05_cursor_unique': not log or not cursor_ok or expected_event is None or len(matched) == 1,
+        'SC06_matched_verified': expected_event is None or len(custodies) == 1,
+        'SC06_custody_event': one is None or record is None or same(one.get('idempotency_key'), record.get('idempotency_key')),
         'SC07_no_second_disclosure': W['env']['event_id'] not in request.get('disclosed', []),
         'SC08_empty_proof': bool(log) or request.get('empty_proof') is True,
+        'SC09_degraded_state': cand.get('publication_state') == ('degraded' if corrupt else 'current'),
+        'SC10_inclusive_restart': pred_seq is None or pred_seq not in seqs or scanned[:1] == [pred_seq],
     }
 
 
@@ -1266,7 +1504,37 @@ def obs_cas(W):
         'CS04_prior_unchanged': same(W['actual_prior'], pred),
         'CS05_siblings_preserved': same(W['siblings_after'], W['siblings_before']),
         'CS06_fence_current': request.get('fence') == W['storage_fence'],
+        'CS07_publication_not_withdrawn': pred.get('publication_state') != 'withdrawn',
     }
+
+
+def obs_projection(W):
+    fam = W['fam']
+    _prefix, _corrupt, family = scan_view(W)
+    proj = W['projection']
+    record = family[-1] if family else None
+    names = [r[0] for r in rows_spec.SHARED['projection'][1]]
+    if record is None:
+        return {name: proj is None for name in names}
+    proj = proj if type(proj) is dict else {}
+    payload = record.get('payload') if type(record.get('payload')) is dict else {}
+    op = payload.get('owner_operation_id')
+    return {
+        'PJ01_projection_schema': PROJECTION_VALIDATORS[fam['slug']].is_valid(proj),
+        'PJ02_projection_key': W['projection_key'] == (
+            f'bsd_{fam["slug"]}_projection.v1:{partition_for(PROJECT)}:{hexs(op if type(op) is str else "")}'),
+        'PJ03_projection_event': same(proj.get('event_id'), record.get('event_id')),
+        'PJ04_projection_sequence': same(proj.get('sequence_id'), record.get('sequence_id')),
+        'PJ05_projection_operation': same(proj.get('owner_operation_id'), op),
+        'PJ06_projection_source': same(proj.get('source_state_ref'), payload.get('source_state_ref')),
+        'PJ07_projection_event_ref': W['event_locators'].get(proj.get('source_event_ref')) == (
+            STORAGE, record.get('sequence_id'), record.get('event_id')),
+    }
+
+
+def obs_projection_size(W):
+    size = encoded_len(W['projection'], INDEX_BINDING) if W['projection'] is not None else 0
+    return {'PJ08_projection_size': size is not None and size <= INLINE_LIMIT}
 
 
 def frozen_verify(original, pack_store=None):
@@ -1278,8 +1546,6 @@ def frozen_verify(original, pack_store=None):
     except Refusal:
         return False
     b = original.binding
-    if type(record) is not dict:
-        return False
     digest = digest_or_none(record)
     try:
         commitment = full_value_commitment(record)
@@ -1288,18 +1554,9 @@ def frozen_verify(original, pack_store=None):
     fam = spec.BY_SLUG.get(b.event_type.split('.', 1)[1]) if type(b.event_type) is str else None
     if fam is None:
         return False
-    payload = record.get('payload')
-    if payload is None and record.get('payload_ref') is not None:
-        parts = _pack_parts(record.get('payload_ref'))
-        raw = (pack_store or {}).get(parts[3]) if parts else None
-        if raw is None:
-            return False
-        try:
-            resolved = decode_storage_value(raw, profile=EVENT_VALUE)
-        except Refusal:
-            return False
-        payload = resolved.get('payload') if type(resolved) is dict else None
-    payload = payload if type(payload) is dict else {}
+    # EventRecord 2.0.0 edition: the payload is inline (payload_ref null); a missing payload object is an
+    # envelope-schema and payload-schema failure below, never a reference to resolve.
+    payload = record.get('payload') if type(record.get('payload')) is dict else {}
     envelope_ok = ENVELOPE_VALIDATOR.is_valid(record)
     payload_ok = PAYLOAD_VALIDATORS[fam['slug']].is_valid(payload)
     clocks_ok = (clock_ok(record.get('occurred_at_utc'), EVENT_RECORD)
@@ -1315,10 +1572,10 @@ def frozen_verify(original, pack_store=None):
                   and (record.get('producer_sequence_id') is None or ok(
                       current_integer, record.get('producer_sequence_id'), minimum=0))
                   and all(ok(current_integer, payload[k], minimum=0)
-                          for k in ('policy_revision', 'epoch', 'primary_generation') if payload.get(k) is not None))
+                          for k in PAYLOAD_INTEGERS[fam['slug']] if payload.get(k) is not None))
     return (envelope_ok and payload_ok and clocks_ok and identity_ok and numbers_ok
             and record.get('event_id') == b.event_id and record.get('idempotency_key') == b.idempotency_key
-            and record.get('event_type') == b.event_type and digest is not None and digest == b.source_commitment
+            and record.get('event_type') == b.event_type and digest == b.source_commitment
             and source_row.get('owner_operation_id') == b.owner_operation_id
             and custody.get('original_event_value_commitment', {}).get('sha256') == commitment
             and custody.get('event_id') == b.event_id)
@@ -1332,7 +1589,11 @@ def world_recipes(R):
     ref = R['original_ref']
     pack = R['stored'].get(ref, {}).get('pack', {})
     store = pack.get('store', {})
-    return {RECIPE: FrozenRecipe(lambda original: frozen_verify(original, store))}
+    recipes = {RECIPE: FrozenRecipe(lambda original: frozen_verify(original, store))}
+    if R.get('live_recipe') is not None:
+        # A newer current writer edition is installed; it never verifies an original sealed under RECIPE.
+        recipes[R['live_recipe']] = FrozenRecipe(lambda original: False)
+    return recipes
 
 
 class SealedOwner:
@@ -1368,9 +1629,12 @@ def perform_retained_read(R):
     bytes_before = Rc['stored'].get(ref, {}).get('record')
     recipes = world_recipes(Rc)
     sel = [s for s in sealed_before if s['original_ref'] == ref]
-    selection_ok = (len(sel) == 1 and same(sel[0]['binding'], Rc['expected']) and sel[0]['recipe'] in recipes)
+    # HI01-HI04 decide presence, uniqueness, the binding and the recipe first. `selected` only decides whether the
+    # verification runs, so that HI05 never re-counts one of their defects (it is used negated: HI05 = not selected
+    # or verified).
+    selected = len(sel) == 1 and same(sel[0]['binding'], Rc['expected']) and sel[0]['recipe'] in recipes
     verified = True
-    if selection_ok:
+    if selected:
         stored = Rc['stored'].get(ref)
         if stored is None:
             verified = False
@@ -1397,7 +1661,7 @@ def perform_retained_read(R):
     bytes_after = Rc['stored'].get(ref, {}).get('record')
     bytes_preserved = bytes_after == bytes_before
     no_receipt_created = Rc['sealed'] == sealed_before
-    return selection_ok, verified, bytes_preserved, no_receipt_created
+    return selected, verified, bytes_preserved, no_receipt_created
 
 
 def obs_history(W):
@@ -1413,17 +1677,15 @@ def obs_history(W):
     out['HI05_original_verifies'] = (not selection_ok) or verified
     out['HI06_bytes_preserved'] = bytes_preserved
     out['HI07_no_receipt_created'] = no_receipt_created
-    out['HI09_reader_enabled'] = R['withdrawn'] is False
-    out['HI10_permission'] = R['permission'] is True
-    out['HI11_not_deleted'] = R['deleted'] is False
-    out['HI12_ref_available'] = R['ref_available'] is True
+    out['HI09_reader_enabled'] = R['selectors'].get(W['fam']['event_type']) == 'active'
+    out['HI10_permission'] = (R['reader'], ref) in R['access_grants']
+    out['HI11_not_deleted'] = ref not in R['tombstones']
+    out['HI12_ref_available'] = _digest_of(R['body_ref']) in W['logical_pack']['store']
     out['HI13_retained_recipe'] = R['caller_override'] is False
-    out['HI14_backup_coherent'] = R['backup_coherent'] is True
+    out['HI14_backup_coherent'] = all(obs_restore_all(W).values())
+    out['HI08_not_foreign'] = same(R['expected'].get('storage_instance_id'), STORAGE)
+    out['HI11_body_not_deleted'] = R['body_ref'] not in R['tombstones']
     return out
-
-
-def obs_foreign_entailed(W):
-    return {'HI08_not_foreign': W['read']['expected'].get('storage_instance_id') == STORAGE}
 
 
 def dispatcher_agrees(W):
@@ -1443,77 +1705,674 @@ def dispatcher_agrees(W):
     return accepted == selection_ok
 
 
+def run_replay(W):
+    """Replay the captured log through the projector with instrumented effect sinks; return (sinks, derived)."""
+    fam, R = W['fam'], W['replay']
+    sinks = copy.deepcopy(R['sinks'])
+    derived = {}
+    impl = R.get('impl', 'correct')
+    for record in W['log']:
+        if not frame_verified(record) or record.get('event_type') != fam['event_type']:
+            continue
+        if impl == 'skip_projection':
+            continue
+        payload = record.get('payload') if type(record.get('payload')) is dict else {}
+        key = f'bsd_{fam["slug"]}_projection.v1:{partition_for(PROJECT)}:{hexs(str(payload.get("owner_operation_id")))}'
+        derived[key] = projection_of(fam, record)
+    if impl.startswith('effect:'):
+        sinks[impl.split(':', 1)[1]].append('replay:' + impl)
+    return sinks, derived
+
+
 def obs_replay(W):
-    return {f'RP{i:02d}_no_{e}': W['replay'][e] == [] for i, e in enumerate(rows_spec.EFFECTS, 1)}
+    sinks, derived = run_replay(W)
+    _prefix, _corrupt, family = scan_view(W)
+    out = {f'RP{i:02d}_no_{e}': same(sinks[e], W['replay']['sinks'][e]) for i, e in enumerate(rows_spec.EFFECTS, 1)}
+    expected = {W['projection_key']: W['projection']} if family else {}
+    out[f'RP{len(rows_spec.EFFECTS) + 1:02d}_projection_rebuilt'] = same(derived, expected)
+    return out
+
+
+WITHDRAWAL_ORDER = ('cutoff', 'drain', 'selector', 'invalidate')
+
+
+def run_withdrawal(W):
+    """Run the withdrawal procedure on a private copy of governance state; return (state after, trace)."""
+    fam = W['fam']
+    D = copy.deepcopy(W['withdraw'])
+    impl = D['impl']
+    trace = []
+
+    def cutoff():
+        if impl == 'skip_cutoff':
+            return
+        D['governance']['cutoffs'].append({
+            'event_type': 'bsd.other.family' if impl == 'cutoff_other_family' else fam['event_type'],
+            'recorded_by': 'caller' if impl == 'cutoff_local' else 'storage_governance'})
+        trace.append('cutoff')
+
+    def drain():
+        if impl == 'skip_drain':
+            return
+        for item in D['pending']:
+            op = item['operation']
+            if type(item['custody']) is dict and impl == 'drain_drop_available':
+                op.update(state='unavailable')
+            elif type(item['custody']) is dict and impl == 'drain_wrong_state':
+                op.update(state='settled', first_append_receipt=copy.deepcopy(item['custody']['first_append_receipt']))
+            elif type(item['custody']) is dict and impl == 'drain_wrong_receipt':
+                op.update(state='complete', first_append_receipt=dict(
+                    copy.deepcopy(item['custody']['first_append_receipt']), segment_name='seg-000099'))
+            elif type(item['custody']) is dict:
+                op.update(state='complete', first_append_receipt=copy.deepcopy(item['custody']['first_append_receipt']))
+            elif impl == 'fabricate_success':
+                op.update(state='complete', first_append_receipt=dict(
+                    copy.deepcopy(W['custody']['first_append_receipt']), sequence_id=99, segment_name='seg-000099'))
+            else:
+                op.update(state='unavailable')
+        trace.append('drain')
+
+    def selector():
+        if impl == 'skip_selector':
+            return
+        D['governance']['selectors'][fam['event_type']] = 'withdrawn'
+        trace.append('selector')
+
+    def invalidate():
+        if impl == 'skip_invalidate':
+            return
+        D['publication']['state'] = 'withdrawn'
+        trace.append('invalidate')
+    steps = [cutoff, drain, selector, invalidate]
+    if impl == 'selector_first':
+        steps = [selector, cutoff, drain, invalidate]
+    for step in steps:
+        step()
+    if impl == 'emit_event':
+        D['log'].append(dict(unrelated_record(9), event_type=fam['event_type'] + '_withdrawn'))
+    return D, trace
+
+
+def _drain_honest(item, original):
+    op = item['operation']
+    if op.get('state') == 'pending_event':
+        return True  # WD02's defect, not a fabricated settlement
+    if type(original['custody']) is dict:
+        return op.get('state') == 'complete' and same(op.get('first_append_receipt'),
+                                                       original['custody']['first_append_receipt'])
+    return op.get('state') == 'unavailable'
 
 
 def obs_withdrawal(W):
-    D = W['withdraw']
-    return {'WD01_cutoff_recorded': D['cutoff_recorded'] is True,
-            'WD02_pending_drained': D['pending_drained'] is True,
-            'WD03_selector_withdrawn': D['selector_withdrawn'] is True,
-            'WD04_no_advance': D['advanced'] == 0 and type(D['advanced']) is int,
-            'WD05_no_event_created': D['appended'] == 0 and type(D['appended']) is int}
+    fam = W['fam']
+    before = W['withdraw']
+    D, trace = run_withdrawal(W)
+    performed = [s for s in trace if s in WITHDRAWAL_ORDER]
+    return {
+        'WD01_cutoff_recorded': any(c.get('event_type') == fam['event_type'] and c.get('recorded_by') == 'storage_governance'
+                                    for c in D['governance']['cutoffs']),
+        'WD02_pending_drained': all(item['operation'].get('state') != 'pending_event' for item in D['pending']),
+        'WD03_selector_withdrawn': D['governance']['selectors'].get(fam['event_type']) == 'withdrawn',
+        'WD04_publication_invalidated': D['publication'].get('state') == 'withdrawn',
+        'WD05_no_event_created': same(D['log'], before['log']),
+        'WD06_order': performed == [s for s in WITHDRAWAL_ORDER if s in performed],
+        'WD07_drain_honest': all(_drain_honest(item, original) for item, original in zip(D['pending'], before['pending'])),
+    }
+
+
+def successor_admitted(fam, successor):
+    return (successor.get('admitted_by') == 'storage_governance' and successor.get('event_type') == fam['event_type']
+            and successor.get('version') != '1.0.0')
+
+
+def run_rebuild(W):
+    """Rebuild derived rows under the successor reader on a private copy; return the outcome."""
+    fam = W['fam']
+    B = copy.deepcopy(W['rebuild'])
+    impl = B['impl']
+    out = {'status': None, 'derived': {}, 'canonical': B['canonical'], 'sinks': B['sinks']}
+    if not successor_admitted(fam, B['successor']) and impl != 'ignore_admission':
+        out['status'] = 'refused'
+        return out
+    family = [r for r in B['canonical']['log'] if frame_verified(r) and r.get('event_type') == fam['event_type']]
+    if any(r.get('event_id') in B['lost'] for r in family) and impl != 'report_empty':
+        out['status'] = 'unavailable'
+        return out
+    for record in family:
+        if record.get('event_id') in B['lost']:
+            continue
+        proj = projection_of(fam, record)
+        if impl == 'wrong_projection':
+            proj = dict(proj, sequence_id=proj['sequence_id'] + 1)
+        key = f'bsd_{fam["slug"]}_projection.v1:{partition_for(PROJECT)}:{hexs(str(proj["owner_operation_id"]))}'
+        out['derived'][key] = {'projection': proj, 'event_id': record.get('event_id'),
+                               'reader': B['withdrawn_reader'] if impl == 'old_reader' else B['successor']['reader']}
+    out['status'] = 'rebuilt'
+    if impl == 'rewrite_canonical' and family:
+        index = out['canonical']['log'].index(family[0])
+        out['canonical']['log'][index] = dict(family[0], actor_ref='pmref:actor.rebuilt')
+    if impl == 'drop_operation':
+        out['canonical']['operations'] = {}
+    if impl.startswith('effect:'):
+        out['sinks'][impl.split(':', 1)[1]].append('rebuild:' + impl)
+    return out
+
+
+def obs_rebuild(W):
+    fam, B = W['fam'], W['rebuild']
+    out = run_rebuild(W)
+    family = {r.get('event_id'): r for r in B['canonical']['log']
+              if frame_verified(r) and r.get('event_type') == fam['event_type']}
+    lost = [e for e in family if e in B['lost']]
+    return {
+        'RB01_successor_admitted': successor_admitted(fam, B['successor']) or (
+            out['status'] == 'refused' and not out['derived']),
+        'RB02_canonical_preserved': same(out['canonical']['log'], B['canonical']['log']),
+        'RB03_derived_only': all(same(out['canonical'][k], B['canonical'][k]) for k in ('operations', 'sources', 'heads')),
+        'RB04_lost_source_unavailable': not lost or (out['status'] == 'unavailable' and not out['derived']),
+        'RB05_no_fresh_effects': same(out['sinks'], B['sinks']),
+        'RB06_successor_reader': all(row['reader'] == B['successor']['reader'] for row in out['derived'].values()),
+        'RB07_derived_rebuilt': all(row['event_id'] in family and same(row['projection'], projection_of(fam, family[row['event_id']]))
+                                    for row in out['derived'].values()),
+    }
+
+
+def run_restore(B):
+    restored = copy.deepcopy(B['parts'])
+    if B.get('impl') == 'alter_bytes' and 'payload_pack' in restored and type(restored['payload_pack'].get('bytes')) is bytes:
+        restored['payload_pack']['bytes'] += b'\x00'
+    return restored
+
+
+def _digest_of(ref):
+    parts = _pack_parts(ref)
+    return parts[3] if parts else None
+
+
+def _blake(data):
+    return blake3.blake3(data).hexdigest() if type(data) is bytes else None
+
+
+def obs_restore_parts(W, parts):
+    B = W['backup']
+    P = B['parts']
+    out = {}
+    for part in parts:
+        out[f'RS_{part}_present'] = part in P
+        out[f'RS_{part}_cut'] = part not in P or P[part].get('cut_id') == B['cut_id']
+    return out
+
+
+def obs_restore(W):
+    B = W['backup']
+    P = B['parts']
+    out = obs_restore_parts(W, rows_spec.RESTORE_PARTS)
+    v = {k: (P[k].get('value') if type(P[k].get('value')) is dict else {}) for k in P}
+    has = lambda *names: all(n in P for n in names)  # noqa: E731
+    out.update({
+        'RS_operation_source': not has('operation', 'source_wrapper') or same(v['operation'].get('source_state_ref'), P['source_wrapper'].get('ref')),
+        'RS_custody_event': not has('operation', 'receipt_custody') or same(v['receipt_custody'].get('event_id'), v['operation'].get('event_id')),
+        'RS_payload_pack_digest': not has('operation', 'payload_pack') or _blake(P['payload_pack'].get('bytes')) == _digest_of(v['operation'].get('payload_ref')),
+        'RS_logical_pack_digest': not has('source_wrapper', 'logical_pack') or _blake(P['logical_pack'].get('bytes')) == _digest_of(v['source_wrapper'].get('logical_payload_ref')),
+        'RS_head_source': not has('head', 'source_wrapper') or same(v['head'].get('current_source_ref'), P['source_wrapper'].get('ref')),
+        'RS_head_receipt': not has('head', 'receipt_custody') or same(v['head'].get('first_append_receipt'), v['receipt_custody'].get('first_append_receipt')),
+        'RS_controls_selection': not has('controls', 'receipt_custody') or same(v['controls'].get('storage_instance_id'), v['receipt_custody'].get('storage_instance_id')),
+        'RS_restored_equal': same(run_restore(B), P),
+    })
+    return out
+
+
+def obs_restore_review_chain(W):
+    P = W['backup']['parts']
+    out = obs_restore_parts(W, rows_spec.RESTORE_CHAIN_PARTS)
+    wrapper = P.get('start_wrapper', {}).get('value') if type(P.get('start_wrapper', {}).get('value')) is dict else {}
+    out['RS_start_pack_digest'] = not ('start_wrapper' in P and 'start_pack' in P) or (
+        _blake(P['start_pack'].get('bytes')) == _digest_of(wrapper.get('logical_payload_ref')))
+    return out
+
+
+def obs_restore_all(W):
+    out = obs_restore(W)
+    if W['review_chain']:
+        out.update(obs_restore_review_chain(W))
+    return out
+
+
+def _instant(text):
+    import datetime as _dt
+    return _dt.datetime.fromisoformat(text.replace('Z', '+00:00')) if type(text) is str else None
+
+
+def retention_decision(Rt, with_history=True):
+    """The Storage retention evaluation for this family record under the bound catalog policy (the model under test)."""
+    import datetime as _dt
+    impl = Rt.get('impl', 'correct')
+    policy = Rt['catalog'].get(Rt['policy_ref'].get('policy_id'))
+    d = {'anchor': None, 'expires_at': None, 'eligible_age': False, 'eligible': False, 'overflow_action': None,
+         'deleted': [], 'removed': False, 'new_record_refused': False, 'evicted': []}
+    if policy is None:
+        return d
+    now = _instant(Rt['now'])
+    if policy['retention_mode'] == 'fixed_ttl' and policy['anchor_kind'] == 'run_completion':
+        run_id = Rt['record'].get('primary_run_id')
+        if impl == 'wrong_run':
+            run_id = 'run-2'
+        run = Rt['runs'].get(run_id)
+        anchor = run['completed_at'] if run and run.get('state') == 'completed' else None
+        if impl == 'anchor_from_append':
+            anchor = Rt['record']['appended_at']
+        if impl == 'fabricate_anchor' and anchor is None:
+            anchor = Rt['now']
+        anchorless_eligible = impl == 'eligible_without_anchor' and anchor is None
+        if impl == 'restart_on_history' and with_history and Rt['history']:
+            anchor = max(h['at'] for h in Rt['history'])
+        d['anchor'] = anchor
+        if anchor is not None:
+            expires = _instant(anchor) + _dt.timedelta(seconds=policy['ttl_seconds'])
+            d['expires_at'] = expires.isoformat()
+            d['eligible_age'] = now > expires if impl == 'exclusive_boundary' else now >= expires
+        held = bool(Rt['holds']) and policy['hold_eligible'] and impl != 'ignore_holds'
+        d['eligible'] = (d['eligible_age'] and not held) or anchorless_eligible
+        limits = [(policy['cardinality_scope'], policy['max_cardinality'])] + [
+            (x['cardinality_scope'], x['max_cardinality']) for x in policy['additional_cardinality_limits']]
+        if any(Rt['counts'].get(scope, 0) > limit for scope, limit in limits):
+            d['overflow_action'] = 'fail_closed' if impl == 'refuse_on_overflow' else policy['overflow_action']
+            d['deleted'] = ['oldest-unexpired'] if impl == 'evict_on_overflow' else []
+    elif policy['retention_mode'] == 'indefinite':
+        appended = _instant(Rt['record']['appended_at'])
+        if impl == 'age_expiry':
+            d['eligible'] = d['eligible_age'] = now >= appended + _dt.timedelta(days=2555)
+        if impl == 'count_evict' and Rt['counts'].get('project', 0) > 2_000_000:
+            d['deleted'] = ['oldest']
+        d['removed'] = Rt['deletion'] == 'delete_project_data' or (
+            impl == 'delete_on_remove' and Rt['deletion'] == 'remove_from_list')
+        if Rt['pressure']:
+            d['new_record_refused'] = impl != 'accept_on_pressure'
+            d['evicted'] = ['oldest'] if impl == 'evict_on_pressure' else []
+    return d
+
+
+DERIVED_POLICIES = {'operation': 'RP-EVENT-IDENTITY-APPROOT', 'projection': 'RP-PROJECTION-3GEN', 'checkpoint': 'RP-PROJECTION-3GEN'}
+
+
+def _retention_common(W):
+    import datetime as _dt
+    Rt = W['retention']
+    policy = Rt['catalog'].get(Rt['policy_ref'].get('policy_id'))
+    out = {'RN01_policy_bound': same(Rt['policy_ref'], Rt['bound_ref']),
+           'RN02_policy_in_catalog': policy is not None and policy.get('policy_version') == Rt['policy_ref'].get('policy_version')}
+    return Rt, policy, out
+
+
+def obs_retention_runtime(W):
+    import datetime as _dt
+    Rt, policy, out = _retention_common(W)
+    d, fresh = retention_decision(Rt), retention_decision(Rt, with_history=False)
+    run = Rt['runs'].get(Rt['record'].get('primary_run_id'))
+    completed = bool(run) and run.get('state') == 'completed'
+    live = policy is not None and policy.get('retention_mode') == 'fixed_ttl' and policy.get('anchor_kind') == 'run_completion'
+    anchor = _instant(d['anchor'])
+    limits = [(policy['cardinality_scope'], policy['max_cardinality'])] + [
+        (x['cardinality_scope'], x['max_cardinality']) for x in policy['additional_cardinality_limits']] if live else []
+    over = any(Rt['counts'].get(scope, 0) > limit for scope, limit in limits)
+    out.update({
+        'RN03_anchor_run': not live or not completed or same(fresh['anchor'], run['completed_at']),
+        'RN04_no_fabricated_anchor': not live or completed or (fresh['anchor'] is None and fresh['eligible'] is False),
+        'RN05_no_restart': same(d['anchor'], fresh['anchor']),
+        'RN06_ttl_inclusive': not live or anchor is None or d['eligible_age'] is (
+            _instant(Rt['now']) >= anchor + _dt.timedelta(seconds=policy['ttl_seconds'])),
+        'RN07_hold_override': not Rt['holds'] or d['eligible'] is False,
+        'RN08_cap_rolls_successor': not over or d['overflow_action'] == 'roll_successor',
+        'RN08_cap_keeps_history': not over or d['deleted'] == [],
+    })
+    out.update({f'RN{13 + i}_{k}_policy': Rt['derived'].get(k, {}).get('policy_id') == DERIVED_POLICIES[k]
+                for i, k in enumerate(('operation', 'projection', 'checkpoint'))})
+    return out
+
+
+def obs_retention_indefinite(W):
+    Rt, policy, out = _retention_common(W)
+    d = retention_decision(Rt)
+    out.update({
+        'RN09_no_age_expiry': d['eligible'] is False,
+        'RN10_no_count_expiry': d['deleted'] == [],
+        'RN11_explicit_delete_only': d['removed'] is (Rt['deletion'] == 'delete_project_data'),
+        'RN12_pressure_refuses_new': not Rt['pressure'] or d['new_record_refused'] is True,
+        'RN12_pressure_keeps_history': not Rt['pressure'] or d['evicted'] == [],
+    })
+    out.update({f'RN{13 + i}_{k}_policy': Rt['derived'].get(k, {}).get('policy_id') == DERIVED_POLICIES[k]
+                for i, k in enumerate(('operation', 'projection', 'checkpoint'))})
+    return out
+
+
+def frozen_intent(W, packs):
+    """The append record recovered from the durable frozen intent pack plus Storage-assigned metadata."""
+    digest = _pack_parts(W['pack']['ref'])[3]
+    raw = packs.get(digest)
+    try:
+        intent = decode_storage_value(raw, profile=EVENT_VALUE)  # a missing pack (None) is a shared physical refusal
+    except Refusal:
+        return None
+    return dict(copy.deepcopy(W['env']), **intent)
+
+
+def run_producer(W, crash_after=None):
+    """Execute the producer order over a durable store; stop at crash_after (only durable state survives).
+
+    Returns (trace, cuts, durable). cuts hold a durable snapshot after every step, plus one inside a step for an
+    implementation that splits an atomic commit.
+    """
+    fam = W['fam']
+    impl = W['producer']['impl']
+    op_key, receipt_ref = W['operation_key'], W['receipt_ref']
+    D = {'packs': {}, 'wrappers': {}, 'operations': {}, 'head': copy.deepcopy(W['head_prior']), 'log': [],
+         'custody': {}, 'results': {}, 'dispatch': []}
+    trace, cuts = [], []
+
+    def cut(label):
+        cuts.append((label, copy.deepcopy(D)))
+
+    late = {'payload_pack_late': W['pack'], 'body_pack_late': W['logical_pack']}.get(impl)
+
+    def put(pack):
+        digest = _pack_parts(pack['ref'])[3]
+        D['packs'][digest] = pack['store'].get(digest)
+
+    def packs():
+        for pack in (W['pack'], W['logical_pack']):
+            if pack is not late:
+                put(pack)
+
+    def source():
+        D['wrappers'][W['wrapper_ref']] = copy.deepcopy(W['wrapper'])
+        if impl == 'split_commit':
+            cut('source_and_operation:inside')
+        D['operations'][op_key] = copy.deepcopy(W['operation'])
+        if impl == 'head_early':
+            D['head'] = copy.deepcopy(W['head'])
+
+    def append():
+        if late is not None:
+            put(late)
+        record = frozen_intent(W, D['packs'])
+        if record is not None:
+            D['log'].append(record)
+        if impl == 'expose_early':
+            D['results'][op_key] = {'status': 'accepted', 'receipt': None}
+        if impl == 'dispatch_early' and fam['slug'] == 'review_started':
+            D['dispatch'].append('provider.review')
+
+    def receipt():
+        D['custody'][receipt_ref] = copy.deepcopy(W['custody'])
+
+    def settle():
+        op = D['operations'][op_key]
+        receipt_value = None if impl == 'complete_without_receipt' else copy.deepcopy(
+            D['custody'][receipt_ref]['first_append_receipt'])
+        op.update(state='complete', first_append_receipt=receipt_value)
+        if impl == 'head_separate':
+            cut('settle:inside')
+        D['head'] = copy.deepcopy(W['head'])
+
+    def result():
+        D['results'][op_key] = {'status': 'accepted',
+                                'receipt': copy.deepcopy(D['operations'][op_key].get('first_append_receipt'))}
+
+    def dispatch():
+        if not D['dispatch']:
+            D['dispatch'].append('provider.review')
+    steps = [('packs', packs), ('source_and_operation', source), ('append', append), ('receipt', receipt),
+             ('settle', settle), ('result', result)]
+    if impl == 'result_first':
+        steps[4], steps[5] = steps[5], steps[4]
+    if fam['slug'] == 'review_started':
+        steps.append(('dispatch', dispatch))
+    for name, step in steps:
+        step()
+        trace.append(name)
+        cut(name)
+        if name == crash_after:
+            break
+    return trace, cuts, D
+
+
+def recover(W, durable):
+    """Recovery from durable state only: resume the frozen pending event or resolve original custody."""
+    fam = W['fam']
+    impl = W['producer']['impl']
+    op_key, receipt_ref = W['operation_key'], W['receipt_ref']
+    D = copy.deepcopy(durable)
+    op = D['operations'].get(op_key)
+    D['unavailable'] = False
+    if op is None:
+        if impl == 'fabricate_on_recover' and frozen_intent(W, D['packs']) is not None:
+            # Re-run a never-committed transition from leftover packs: a fresh, coherent but unaccepted outcome.
+            D['operations'][op_key] = copy.deepcopy(W['operation_complete'])
+            D['log'].append(frozen_intent(W, D['packs']))
+            D['custody'][receipt_ref] = copy.deepcopy(W['custody'])
+            D['head'] = copy.deepcopy(W['head'])
+            D['results'][op_key] = {'status': 'accepted', 'receipt': copy.deepcopy(W['custody']['first_append_receipt'])}
+        return D
+    key = W['env']['idempotency_key']
+    if op.get('state') == 'pending_event':
+        frames = [r for r in D['log'] if r.get('idempotency_key') == key]
+        if not frames or impl == 'reappend':
+            record = frozen_intent(W, D['packs'])
+            if record is None:
+                D['unavailable'] = True
+                return D
+            if impl == 'rederive':
+                record = dict(record, correlation_id='corr-rederived-from-live-state')
+            D['log'].append(record)
+        if receipt_ref not in D['custody']:
+            custody = copy.deepcopy(W['custody'])
+            if impl == 'remint':
+                custody['first_append_receipt'] = dict(custody['first_append_receipt'], segment_name='seg-000099')
+            D['custody'][receipt_ref] = custody
+        receipt_value = None if impl == 'complete_without_receipt' else copy.deepcopy(
+            D['custody'][receipt_ref]['first_append_receipt'])
+        op.update(state='complete', first_append_receipt=receipt_value)
+        D['head'] = copy.deepcopy(W['head'])
+    if op_key not in D['results'] and impl != 'forget_result':
+        D['results'][op_key] = {'status': 'accepted', 'receipt': copy.deepcopy(op.get('first_append_receipt'))}
+    if fam['slug'] == 'review_started' and (not D['dispatch'] or impl == 'redispatch'):
+        D['dispatch'].append('provider.review')
+    return D
+
+
+def _refs_durable(D, W):
+    for op in D['operations'].values():
+        if _digest_of(op.get('payload_ref')) not in D['packs']:
+            return False
+    for wrapper in D['wrappers'].values():
+        if _digest_of(wrapper.get('logical_payload_ref')) not in D['packs']:
+            return False
+    return True
+
+
+def obs_crash(W):
+    fam = W['fam']
+    op_key, key = W['operation_key'], W['env']['idempotency_key']
+    _trace, base_cuts, base = run_producer(W)
+    labels = [label for label, _ in base_cuts]
+    first_receipt = labels.index('receipt') if 'receipt' in labels else len(labels)
+    pre = [D for _label, D in base_cuts[:first_receipt]]
+    post = [D for _label, D in base_cuts[first_receipt:]]
+    recovered = []
+    for point in W['producer']['crash_points']:
+        _t, _c, durable = run_producer(W, crash_after=point)
+        recovered.append((durable, recover(W, durable)))
+    intent_digest = _pack_parts(W['pack']['ref'])[3]
+    raw = W['pack']['store'].get(intent_digest)
+    intent = decode_storage_value(raw, profile=EVENT_VALUE) if raw is not None else {}
+    frames = lambda D: [r for r in D['log'] if r.get('idempotency_key') == key]  # noqa: E731
+    finals = [base] + [R for _d, R in recovered if not R.get('unavailable') and op_key in R['operations']]
+
+    def outcome(D):
+        op = D['operations'].get(op_key, {})
+        return (sorted({r.get('event_id') for r in frames(D)}), op.get('state'), D['head'].get('current_source_ref'),
+                D['results'].get(op_key, {}).get('status'))
+
+    def preserved(durable, R):
+        if op_key not in durable['operations']:
+            return not R['operations'] and not R['log'] and not R['results']
+        return R.get('unavailable') is True or outcome(R) == outcome(base)
+    valid = lambda D: (OPERATION_VALIDATORS[fam['slug']].is_valid(D['operations'].get(op_key))  # noqa: E731
+                       and HEAD_VALIDATORS[head_kind(fam)].is_valid(D['head']))
+    return {
+        'CR01_packs_before_refs': all(_refs_durable(D, W) for _l, D in base_cuts),
+        'CR02_source_op_atomic': all((W['wrapper_ref'] in D['wrappers']) == (op_key in D['operations']) for _l, D in base_cuts),
+        'CR03_head_prior_until_receipt': all(same(D['head'], W['head_prior'])
+                                             for _l, D in base_cuts if D['operations'].get(op_key, {}).get('state') != 'complete'),
+        'CR05_frozen_intent': all(same({k: r.get(k) for k in intent}, intent) for D in finals for r in frames(D)),
+        'CR06_single_append': all(len(frames(D)) == 1 for D in finals),
+        'CR07_original_receipt': all(same(D['custody'].get(W['receipt_ref'], {}).get('first_append_receipt'),
+                                          W['custody']['first_append_receipt']) for D in finals),
+        'CR08_complete_before_result': all(op_key not in D['results'] or D['operations'].get(op_key, {}).get('state') == 'complete'
+                                           for D in [D for _l, D in base_cuts] + finals),
+        'CR09_head_with_operation': all(same(D['head'], W['head'])
+                                        for D in [D for _l, D in base_cuts] + finals
+                                        if D['operations'].get(op_key, {}).get('state') == 'complete'),
+        'CR10_outcome_preserved': all(preserved(durable, R) for durable, R in recovered),
+        'CR11_settled_values_valid': all(valid(D) for D in finals),
+    }
+
+
+def obs_crash_review_start(W):
+    op_key = W['operation_key']
+    _trace, base_cuts, base = run_producer(W)
+    recovered = [recover(W, run_producer(W, crash_after=p)[2]) for p in W['producer']['crash_points']]
+    settled = lambda D: D['operations'].get(op_key, {}).get('state') == 'complete' and W['receipt_ref'] in D['custody']  # noqa: E731
+    return {'CD01_dispatch_after_receipt': all(not D['dispatch'] or settled(D) for _l, D in base_cuts)
+            and all(len(R['dispatch']) <= 1 for R in recovered)}
+
+
+def owner_expected(field, src, W):
+    native, fam = W['native'], W['fam']
+    kind = src[0]
+    if kind == 'scope':
+        return native['scope'].get('project_id')
+    if kind == 'operation':
+        return W['operation_id']
+    if kind == 'fact':
+        return native['facts'].get(src[1])
+    if kind == 'fact_map':
+        return src[2].get(native['facts'].get(src[1]))
+    if kind == 'body':
+        return stored_logical_body(W).get(src[1])
+    if kind == 'start':
+        start = W.get('start_body')
+        return start.get(src[1]) if type(start) is dict else None
+    if kind == 'ref':
+        return native['refs'].get(field)
+    if kind == 'evidence':
+        return W['evidence_fingerprint']
+    if kind == 'null':
+        return None
+    raise KeyError(kind)
+
+
+def stored_logical_body(W):
+    raw = _pack_bytes(W['logical_pack'])
+    if raw is None:
+        return {}
+    try:
+        body = decode_storage_value(raw, profile=EVENT_VALUE)
+    except Refusal:
+        return {}
+    return body if type(body) is dict else {}
+
+
+def body_expected(field, W):
+    native = W['native']
+    if field in ('bsd_finding_id', 'quarantine_id'):
+        return native['subject_id']
+    if field == 'assignment_id':
+        return native['bsd_assignment_id']
+    if field == 'project_id':
+        return native['scope'].get('project_id')
+    if field == 'revision':
+        return native['policy_revision']
+    if field == 'finding_key':
+        return W['finding_key']
+    return native[field]
+
+
+def obs_body(W):
+    body = stored_logical_body(W)
+    return {f'BJ_{f}': f not in body or same(body[f], body_expected(f, W))
+            for f in rows_spec.BODY_JOINS[W['fam']['source_kind']]}
+
+
+def obs_owner(W):
+    fam, native = W['fam'], W['native']
+    payload = dispatched_payload(W)
+    registry = W['owner_objects']
+    out = {}
+    for field, src in fam['owner_sources']:
+        present = field in payload
+        value = payload.get(field)
+        out[f'OW_{field}_join'] = not present or same(value, owner_expected(field, src, W))
+        if field in spec.REF_KINDS and src[0] != 'null':
+            obj = registry.get(value) if type(value) is str else None
+            checked = present and value is not None
+            out[f'OW_{field}_resolved'] = not checked or obj is not None
+            out[f'OW_{field}_kind'] = not checked or obj is None or obj['kind'] == spec.REF_KINDS[field]
+            out[f'OW_{field}_subject'] = not checked or obj is None or same(obj['subject_id'], native['subject_id'])
+            out[f'OW_{field}_project'] = not checked or obj is None or same(obj['project_id'], native['scope'].get('project_id'))
+    return out
+
+
+def _strings(node):
+    if type(node) is str:
+        yield node
+    elif type(node) is dict:
+        for k, v in node.items():
+            yield from _strings(k)
+            yield from _strings(v)
+    elif type(node) is list:
+        for v in node:
+            yield from _strings(v)
+
+
+def obs_redaction(W):
+    tokens = list(W['native']['protected'].values())
+    env = W['env'] if type(W['env']) is dict else {}
+    meta = {k: v for k, v in env.items() if k != 'payload'}
+    return {'RD01_payload_no_protected': not any(tok in s for s in _strings(dispatched_payload(W)) for tok in tokens),
+            'RD02_envelope_no_protected': not any(tok in s for s in _strings(meta) for tok in tokens)}
+
+
+OBSERVERS = {
+    'admission': obs_admission, 'admission_config': obs_admission, 'eligibility': obs_eligibility,
+    'envelope': obs_envelope, 'joins': obs_joins, 'joins_config': obs_joins, 'identity': obs_identity,
+    'start_body_review_started': obs_start_body, 'start_premature_result_entailed': obs_start_premature_result_entailed,
+    'operation': obs_operation, 'operation_size': obs_operation_size, 'pack': obs_pack, 'redaction': obs_redaction,
+    'receipt': obs_receipt, 'retry': obs_retry, 'checkpoint': obs_checkpoint, 'scan': obs_scan, 'cas': obs_cas,
+    'projection': obs_projection, 'projection_size_entailed': obs_projection_size, 'history': obs_history,
+    'replay': obs_replay, 'withdrawal': obs_withdrawal, 'rebuild': obs_rebuild, 'restore': obs_restore,
+    'restore_review_chain': obs_restore_review_chain, 'retention_runtime': obs_retention_runtime,
+    'retention_indefinite': obs_retention_indefinite, 'crash': obs_crash, 'crash_review_start': obs_crash_review_start,
+    'event_arity_entailed': obs_event_arity, 'key_arity_entailed': obs_key_arity,
+    'checkpoint_type_entailed': obs_checkpoint_type, 'checkpoint_consumer_entailed': obs_checkpoint_consumer,
+    'checkpoint_snapshot_entailed': obs_checkpoint_snapshot,
+}
 
 
 def observe(phase, W):
     phase = rows_spec.base_phase(phase)
-    if phase in ('admission', 'admission_config'):
-        return obs_admission(W)
-    if phase == 'eligibility':
-        return obs_eligibility(W)
-    if phase == 'envelope':
-        return obs_envelope(W)
-    if phase in ('joins', 'joins_config'):
-        return obs_joins(W)
-    if phase == 'identity':
-        return obs_identity(W)
+    if phase in OBSERVERS:
+        return OBSERVERS[phase](W)
     if phase.startswith('payload_'):
         return obs_payload(W)
+    if phase.startswith('owner_'):
+        return obs_owner(W)
+    if phase.startswith('body_'):
+        return obs_body(W)
     if phase.startswith('source_logical_schema_entailed_'):
         return obs_source_logical_schema_entailed(W)
     if phase.startswith('source_'):
         return obs_source(W)
-    if phase == 'start_body_review_started':
-        return obs_start_body(W)
-    if phase == 'start_premature_result_entailed':
-        return obs_start_premature_result_entailed(W)
-    if phase == 'operation':
-        return obs_operation(W)
-    if phase == 'operation_size_entailed':
-        return obs_operation_size(W)
-    if phase == 'pack':
-        return obs_pack(W)
-    if phase == 'receipt':
-        return obs_receipt(W)
-    if phase == 'retry':
-        return obs_retry(W)
-    if phase == 'checkpoint':
-        return obs_checkpoint(W)
-    if phase == 'checkpoint_size_entailed':
-        return obs_checkpoint_size(W)
-    if phase == 'scan':
-        return obs_scan(W)
-    if phase == 'cas':
-        return obs_cas(W)
-    if phase == 'history':
-        return obs_history(W)
-    if phase == 'replay':
-        return obs_replay(W)
-    if phase == 'withdrawal':
-        return obs_withdrawal(W)
-    if phase == 'event_arity_entailed':
-        return obs_event_arity(W)
-    if phase == 'key_arity_entailed':
-        return obs_key_arity(W)
-    if phase == 'checkpoint_type_entailed':
-        return obs_checkpoint_type(W)
-    if phase == 'checkpoint_consumer_entailed':
-        return obs_checkpoint_consumer(W)
-    if phase == 'checkpoint_snapshot_entailed':
-        return obs_checkpoint_snapshot(W)
-    if phase == 'foreign_original_entailed':
-        return obs_foreign_entailed(W)
     raise KeyError(phase)
 
 
@@ -1599,12 +2458,80 @@ def big_integer():
     return BIG
 
 
+EXPAND_FIELD = {'finding': 'claim', 'assignment': 'cursor', 'policy': 'model_selection', 'review_cycle': 'trigger_reason',
+                'review_start': 'trigger_reason', 'workflow_binding': 'stage_bindings'}
+
+
 def _expand_body(body, W):
-    """Externalize an oversized logical body via SP-337: expand one unbounded string field."""
-    for k in ('claim', 'cursor', 'model_selection', 'trigger_reason', 'reason', 'workflow_id'):
-        if k in body and type(body[k]) is str:
-            body[k] = 'c' * 17000
-            return
+    """An oversized logical body (above 16 KiB) still travels by its SP-337 pack: expand one field no join reads."""
+    field = EXPAND_FIELD[W['fam']['source_kind']]
+    if field == 'stage_bindings':
+        body[field] = [{'stage_id': f'stage-{i:05d}', 'stage_mode': 'auto'} for i in range(900)]
+    else:
+        body[field] = 'c' * 17000
+
+
+
+LINKED = {'thread_id': 'thread-linked', 'requested_account_ref': 'pmref:account.requested',
+          'effective_account_ref': 'pmref:account.effective', 'actor_ref': 'pmref:actor.linked',
+          'correlation_id': 'corr-linked', 'causation_event_id': 'evt-cause-0001', 'parent_event_id': 'evt-parent-0001',
+          'node_id': 'node-0001', 'attempt_id': 'attempt-0001'}
+
+
+def _linked(native, W):
+    """Every joined envelope copy has a distinct non-null authentic value, so a join reading the wrong field fails."""
+    native.update(copy.deepcopy(LINKED))
+
+
+def _usage_attempt(native, W):
+    native['refs']['usage_attempt_ref'] = spec.USAGE_ATTEMPT_REF
+
+
+def _corrupt_record(seq):
+    record = unrelated_record(seq)
+    del record['schema_id']
+    return record
+
+
+def _zero_match():
+    return {'log': lambda log, W: [unrelated_record(6), unrelated_record(7), unrelated_record(8)],
+            'cand': setp('last_matched_event_id', None)}
+
+
+def _degraded():
+    return {'log': lambda log, W: [log[0], log[1], _corrupt_record(8)],
+            'cand': lambda c, W: c.update(last_scanned_sequence=7, publication_state='degraded')}
+
+
+def _lost_source(B, W):
+    B['lost'] = [W['env']['event_id']]
+
+
+def _compose(*fns):
+    def fn(obj, W):
+        for f in fns:
+            f(obj, W)
+    return fn
+
+
+def retention_worlds(fam):
+    """Valid retention worlds for the family's bound policy (each is a positive)."""
+    if fam['assignment_backed']:
+        return {
+            'before-expiry': {},
+            'at-inclusive-boundary': {'retention': setp('now', '2027-11-02T00:00:00Z')},
+            'after-expiry': {'retention': setp('now', '2028-01-01T00:00:00Z')},
+            'hold-blocks-expiry': {'retention': lambda r, W: r.update(now='2028-01-01T00:00:00Z', holds=['legal_hold'])},
+            'overflow-rolls-successor': {'retention': setp('counts', 'run', 1_000_001)},
+            'project-overflow-rolls-successor': {'retention': setp('counts', 'project', 5_000_001)},
+            'nonterminal-run-no-anchor': {'retention': setp('runs', 'run-1', {'state': 'running', 'completed_at': None})},
+        }
+    return {
+        'indefinite-far-future': {},
+        'explicit-project-delete': {'retention': setp('deletion', 'delete_project_data')},
+        'remove-from-list-keeps': {'retention': setp('deletion', 'remove_from_list')},
+        'pressure-refuses-new': {'retention': setp('pressure', True)},
+    }
 
 
 def positives(fam):
@@ -1613,7 +2540,8 @@ def positives(fam):
         dict(id='append/fresh-after-separate-admission', path='append', muts={}),
         dict(id='append/broad-occurred-profile', path='append',
              muts={'native': setp('occurred_at_utc', '2026-11-01t10:00:00.123456789-05:00')}),
-        dict(id='append/external-payload-route', path='append', muts={'logical_body': _expand_body}),
+        *([dict(id='append/external-payload-route', path='append', muts={'logical_body': _expand_body})]
+          if fam['source_kind'] in EXPAND_FIELD else []),
         dict(id='settle/first-receipt-history-committed', path='settle', muts={}),
         dict(id='settle/receipt-clock-offset-accepted', path='settle',
              muts={'receipt': setp('acknowledged_at_utc', '2026-11-01T08:00:02.5+00:00')}),
@@ -1626,12 +2554,31 @@ def positives(fam):
         dict(id='publish/actual-empty-source', path='publish', muts={}, empty=True),
         dict(id='read/retained-original', path='read', muts={}),
         dict(id='read/retained-after-live-epoch-and-writer-change', path='read',
-             muts={'admission': lambda a, W: a.update(live_epoch=9, live_writer_generation=9, stop='refuse')}),
+             muts={'admission': lambda a, W: a.update(live_epoch=9, live_writer_generation=9,
+                                                      stop={W['fam']['producer']: 'refuse'})}),
+        dict(id='read/retained-after-live-recipe-change', path='read', muts={'read': setp('live_recipe', LIVE_RECIPE)}),
+        dict(id='append/linked-distinct-copies', path='append', muts={'native': _linked}),
+        dict(id='retry/lost-ack-original-result', path='retry', muts={'retry': setp('client_ack', None)}),
+        dict(id='publish/zero-match-nonempty-range', path='publish', muts=_zero_match()),
+        dict(id='publish/degraded-survivor-range', path='publish', muts=_degraded()),
+        dict(id='rebuild/admitted-successor', path='rebuild', muts={}),
+        dict(id='rebuild/lost-source-unavailable', path='rebuild', muts={'rebuild': _lost_source}),
+        dict(id='rebuild/unadmitted-successor-refused', path='rebuild',
+             muts={'rebuild': setp('successor', 'admitted_by', 'caller')}),
+        dict(id='restore/coherent-cut', path='restore', muts={}),
+        dict(id='crash/all-cut-points', path='crash', muts={}),
         dict(id='read/retained-projector-replay-only-original', path='read',
              muts={'envelope': setp('replay_policy', 'projector_replay_only')}),
         dict(id='replay/no-effect', path='replay', muts={}),
         dict(id='withdraw/consumer-withdrawn', path='withdraw', muts={}),
     ]
+    out += [dict(id=f'crash/after-{point}', path='crash', muts={'producer': setp('crash_points', [point])})
+            for point in CRASH_POINTS]
+    out += [dict(id=f'retention/{name}', path='retention', muts=muts) for name, muts in retention_worlds(fam).items()]
+    if 'usage_attempt_ref' in fam['base_refs']:
+        out.append(dict(id='append/variant-usage-attempt-recorded', path='append', muts={'native': _usage_attempt}))
+    if fam['slug'] == 'assignment_started':
+        out.append(dict(id='append/variant-effective-mode-On', path='append', muts={}, variant={'resolved_mode': 'On'}))
     # Named valid variants that activate each conditional semantic basis.
     seen = set()
     for name, _inv, _fn, _target, _neg, variant in fam['semantic']:
@@ -1663,25 +2610,37 @@ def shared_negatives(fam):
     big = big_integer()
     N = []
 
-    def add(row, path, muts, label='', multi=False, variant=None, empty=False, external=False):
+    def add(row, path, muts, label='', multi=False, variant=None, empty=False, external=False, phase=None):
         N.append(dict(row=row, path=path, muts=muts, label=label, multi=multi, variant=variant,
-                      empty=empty, external=external))
+                      empty=empty, external=external, **({'phase': phase} if phase else {})))
 
     # admission
-    add('AD01_cutoff', 'append', {'admission': setp('cutoff', True)}, 'cutoff with registry retained')
+    add('AD01_cutoff', 'append', {'admission': lambda a, W: a['cutoffs'].append(
+        {'event_type': W['fam']['event_type'], 'recorded_by': 'storage_governance'})}, 'exact-family cutoff, registry retained')
     add('AD04_scope_kind', 'append', {'native': setp('scope', 'scope_kind', 'application')}, 'scope kind differs')
     add('AD01_registration', 'append', {'admission': setp('registry', set())}, 'membership absent')
-    add('AD02_physical_admission', 'append', {'admission': setp('physical', False)}, 'SP-318 still pending')
+    add('AD02_physical_admission', 'append', {'admission': lambda a, W: a['physical'].__setitem__(
+        f'bsd_{W["fam"]["slug"]}_checkpoint', 'pending')}, 'one SP-318 physical family still pending')
     add('AD03_replay_writer', 'append', {'envelope': setp('replay_policy', 'projector_replay_only')})
     add('AD04_project_scope', 'append', {'native': setp('scope', 'project_id', 'project-B')}, 'scope project differs')
     add('AD05_actor', 'append', {'capture': setp('actor_ref', 'pmref:actor.other')}, 'captured actor differs from owner')
-    add('AD06_dedupe_available', 'append', {'admission': setp('dedupe_available', False)})
-    add('AD07_current_write_permission', 'append', {'admission': setp('permission', False)}, 'reader access stays valid')
+    add('AD06_dedupe_available', 'append', {'admission': setp('dedupe_index', 'indexed_through', 5)},
+        'dedupe index behind the log tail')
+    add('AD07_current_write_permission', 'append', {'admission': lambda a, W: a.__setitem__('grants', [
+        g for g in a['grants'] if not (g[1] == W['fam']['producer'] and g[2] == 'write')])}, 'reader access stays valid')
     add('AD08_current_owner', 'append', {'admission': setp('live_owner', 'OtherOwner.service@1.0.0')})
+    add('AD09_current_writer_generation', 'append', {'admission': setp('live_writer_generation', 3.0)},
+        'live generation is the float 3.0 equal in value to the owner 3')
     add('AD09_current_writer_generation', 'append', {'admission': setp('live_writer_generation', 4)})
-    add('AD10_current_stop', 'append', {'admission': setp('stop', 'refuse')}, 'effective Stop for this operation class')
+    add('AD09_writer_generation_domain', 'append', {'native': setp('writer_generation', 3.0),
+                                                    'admission': setp('live_writer_generation', 3.0)},
+        'matching float spelling on both sides')
+    add('AD10_current_stop', 'append', {'admission': lambda a, W: a['stop'].__setitem__(W['fam']['producer'], 'refuse')},
+        'effective Stop for this operation class')
     if backed:
         add('AD11_current_epoch', 'append', {'admission': setp('live_epoch', 3)}, 'live epoch advanced after capture')
+        add('payload.epoch.type', 'append', {'native': setp('epoch', 2.0), 'admission': setp('live_epoch', 2.0)},
+            'matching float owner epoch reaches its payload copy', phase='payload')
     if fam['slug'] == 'assignment_started':
         add('EL01_not_off', 'append', {'admission': setp('resolved_mode', 'Off')}, 'genuine frozen Off resolution')
     # envelope
@@ -1705,6 +2664,11 @@ def shared_negatives(fam):
     add('EN09_payload_schema', 'append', {'envelope': setp('payload_schema_id', 'pm.event_payload.other.v1')})
     add('EN10_redaction_join', 'append', {'envelope': setp('redaction_profile', 'no_secrets')})
     add('EN11_inline_size', 'append', {'envelope': setp('payload', 'extra_body', 'x' * 17000)}, 'inline body above 16 KiB')
+    add('EN11_inline_size', 'append', {'native': setp('binding_id', 'binding-' + 'b' * 17000)},
+        'long authentic binding identity: complete inline payload above 16 KiB')
+    for label, value in (('string payload', 'payload'), ('array payload', []), ('number payload', 7),
+                         ('boolean payload', True), ('null payload', None)):
+        add('EN01_envelope_schema', 'append', {'envelope': setp('payload', value)}, label, multi=True)
     add('EN12_payload_route', 'append', {'envelope': setp('payload_ref', 'pm-payload-ref:v1:blake3:' + '0' * 64 + ':10:application/msgpack')},
         'both inline body and reference present')
     add('EN13_migration_null', 'append', {'envelope': setp('migration', 'migration_id', 'migration-1')})
@@ -1727,7 +2691,14 @@ def shared_negatives(fam):
                  'correlation_id': 'corr-other', 'causation_event_id': 'evt-other', 'parent_event_id': 'evt-parent',
                  'node_id': 'node-1', 'attempt_id': 'attempt-1'}[field]
         add(f'JN{i:02d}_{field}_join', 'append', {'envelope': setp(field, value)})
+        neighbour = rows_spec.ENVELOPE_JOINS[(i - 3 + 1) % len(rows_spec.ENVELOPE_JOINS)]
+        add(f'JN{i:02d}_{field}_join', 'append', {'native': _linked, 'envelope': setp(field, LINKED[neighbour])},
+            f'linked copies: carries the authentic {neighbour}')
     # identity
+    add('ID03_event_storage', 'append', {'envelope': lambda e, W: e.__setitem__('event_id', e['event_id'].rsplit(':', 1)[0])},
+        'event_id with four components', multi=True)
+    add('ID10_key_project', 'append', {'envelope': lambda e, W: e.__setitem__('idempotency_key', e['idempotency_key'].rsplit(':', 1)[0])},
+        'idempotency_key with two components', multi=True)
     add('ID01_event_prefix', 'append', {'envelope': lambda e, W: e.__setitem__('event_id', 'bsd-event@2:' + e['event_id'].split(':', 1)[1])})
     for row, index, value in (('ID03_event_storage', 1, OTHER_STORAGE), ('ID04_event_type', 2, 'bsd.other.event'),
                               ('ID05_event_project', 3, 'project-B'), ('ID06_event_operation', 4, 'bsd-op@1:00:00:00')):
@@ -1738,6 +2709,8 @@ def shared_negatives(fam):
     add('ID10_key_project', 'append', {'envelope': _sub_key_component(1, 'project-B')})
     add('ID11_key_operation', 'append', {'envelope': _sub_key_component(2, 'bsd-op@1:00:00:00')})
     add('ID12_partition_recipe', 'append', {'native': setp('scope', 'scope_partition', PROJECT)}, 'raw project id, no project~')
+    add('RD02_envelope_no_protected', 'append', {'native': setp('correlation_id', 'corr-' + spec.PROTECTED['transcript'])},
+        'protected transcript text in envelope metadata')
     return N
 
 
@@ -1799,8 +2772,15 @@ def shared_negatives_storage(fam):
         'acknowledged_at_utc': '2026-11-01T08:00:02.5Z'})}, 'complete state on a fresh append')
     add('OP09_pending_not_current', 'append', {'head_published': True}, 'head published before barrier receipt')
     add('OP10_operation_source_ref', 'append', {'operation': setp('source_state_ref', 'pmref:wrapper.other.0001')})
+    add('OZ01_operation_size', 'append', {'native': setp('original_source_id', 'pmref:source.' + 'a' * 1700)},
+        'long authentic original source: operation above 16 KiB, envelope metadata within EN17')
     # pack
     add('PK01_pack_present', 'append', {'pack': setp('store', {})})
+    for label, mutate in (('reference version v2', lambda r: r.replace(':v1:', ':v2:', 1)),
+                          ('reference algorithm sha256', lambda r: r.replace(':blake3:', ':sha256:', 1)),
+                          ('reference with five parts', lambda r: r.rsplit(':', 1)[0])):
+        add('PK01_pack_present', 'append', {'pack': lambda p, W, mutate=mutate: p.__setitem__('ref', mutate(p['ref']))},
+            label, multi=True)
     add('PK02_pack_digest', 'append', {'pack': lambda p, W: p.update(ref=p['ref'].replace(p['ref'].split(':')[3], sha(b'substituted-digest')),
                                                                       store={sha(b'substituted-digest'): next(iter(p['store'].values()))})})
     add('PK03_pack_size', 'append', {'pack': lambda p, W: p.update(ref=':'.join(p['ref'].split(':')[:4] + [str(int(p['ref'].split(':')[4]) + 1), PACK_MEDIA]))})
@@ -1847,18 +2827,35 @@ def shared_negatives_storage(fam):
     add('RC26_head_committed', 'settle', {'committed_wrappers': lambda r, W: (r.pop(W['wrapper_ref']), None)},
         'correct head source absent from committed store')
     add('RC26_head_subject', 'settle', {'head': setp('subject_id', 'subject-other')}, 'head subject differs')
+    add('RC25_head_cas', 'settle', {'head_expected': setp('stale_member', 'x')}, 'expected prior head carries an extra member')
     add('RC25_head_cas', 'settle', {'head_expected': lambda h, W: h.__setitem__('current_source_ref', 'pmref:wrapper.stale')})
+    add('RC27_head_schema', 'settle', {'head': setp('extension', 1)}, 'closed head extra member')
+    add('RC28_operation_complete_schema', 'settle', {'operation_complete': setp('state', 'settled')}, 'state outside the closed enum')
+    add('RC29_operation_receipt_join', 'settle', {'operation_complete': setp('first_append_receipt', 'segment_name', 'seg-000099')},
+        'complete operation stores another receipt')
+    add('RC30_head_receipt_join', 'settle', {'head': setp('first_append_receipt', 'segment_name', 'seg-000099')},
+        'head stores another receipt')
+    add('RC31_operation_complete_identity', 'settle', {'operation_complete': setp('source_state_ref', 'pmref:wrapper.other.0001')},
+        'settlement rewrites a pending field')
     add('RC26_head_source_join', 'settle', {'head': setp('current_source_ref', 'pmref:wrapper.other.0001')},
         'coherent wrapper for a different subject')
     # retry
     add('RT01_retry_not_replay_only', 'retry', {'retry': setp('env', 'replay_policy', 'projector_replay_only')})
     add('RT02_retry_membership', 'retry', {'retry': setp('registry', set())})
-    add('RT03_retry_dedupe_available', 'retry', {'retry': setp('dedupe_available', False)})
-    add('RT04_retry_original_found', 'retry', {'retry': setp('dedupe', {})})
+    add('RT03_retry_dedupe_available', 'retry', {'retry': setp('dedupe', 'indexed_through', 7)}, 'dedupe index behind tail')
+    add('RT04_retry_original_found', 'retry', {'retry': setp('dedupe', 'entries', {})})
     add('RT05_retry_digest_equal', 'retry', {'retry': setp('env', 'payload', 'extra_body', 'changed')}, 'same key, different body')
-    add('RT06_retry_receipt_original', 'retry', {'retry': setp('result', 'receipt', 'sequence_id', 9)}, 'a new receipt minted')
-    add('RT07_retry_no_remote', 'retry', {'retry': setp('result', 'remote_operations', 1)})
-    add('RT08_original_retry_custody', 'retry', {'retry': setp('original_custody_available', False)})
+    add('RT06_retry_receipt_original', 'retry', {'retry': setp('impl', 'fresh_receipt')}, 'implementation returns a fresh receipt')
+    add('RT06_retry_receipt_original', 'retry', {'retry': lambda r, W: r.update(impl='from_client', client_ack=None)},
+        'lost ack: implementation answers from client state')
+    add('RT07_retry_no_remote', 'retry', {'retry': setp('impl', 'remote_call')}, 'implementation dispatches a provider call')
+    add('RT08_original_retry_custody', 'retry', {'retry': lambda r, W: r['store']['receipt_index'].clear()},
+        'original receipt custody lost')
+    add('RT08_original_retry_custody', 'retry', {'retry': lambda r, W: r['store']['receipt_index'].__setitem__(
+        W['receipt_ref'], dict(copy.deepcopy(W['custody']), event_id='bsd-event@1:00'))},
+        'resolved custody belongs to another event')
+    add('RT11_retry_no_new_event', 'retry', {'retry': setp('impl', 'reappend')}, 'implementation appends again')
+    add('RT12_retry_no_new_receipt', 'retry', {'retry': setp('impl', 'mint_custody')}, 'implementation mints receipt custody')
     add('RT09_retry_envelope_schema', 'retry', {'retry': setp('env', 'extension', 1)}, 'retry envelope extra member')
     add('RT10_retry_producer_sequence', 'retry', {'retry': setp('env', 'producer_sequence_id', 1.0),
         'retry_original_digest': None}, 'retry float integer with coherent dedupe digest')
@@ -1885,21 +2882,36 @@ def shared_negatives_storage(fam):
         add('CP26_uint64_' + field, 'publish',
             {'cand': setp('index_read_token', 'source_selection', field, 3.0),
              'live': setp('source_selection', field, 3.0)}, 'float spelling in candidate and live')
+    add('CP27_token_storage_uuid', 'publish', {'cand': setp('index_read_token', 'storage_instance_id', 'storage-A'),
+                                               'live': setp('storage_instance_id', 'storage-A')}, 'non-uuid in candidate and live')
+    add('CP27_selection_storage_uuid', 'publish',
+        {'cand': setp('index_read_token', 'source_selection', 'storage_instance_id', 'storage-A'),
+         'live': setp('source_selection', 'storage_instance_id', 'storage-A')}, 'non-uuid selection in candidate and live')
+    add('CZ01_checkpoint_size', 'publish', {'cand': setp('index_read_token', 'index_dataset_name', 'd' * 17000),
+                                            'live': setp('index_dataset_name', 'd' * 17000)}, 'long joined live control')
     # scan
-    add('SC01_generic_source', 'publish', {'generic_index': False}, 'incomplete generic index')
-    add('SC02_coverage_complete', 'publish', {'request': setp('scanned', [7])}, 'filtered maximum presented as coverage')
+    add('SC01_generic_source', 'publish', {'generic_index': setp('covered_through', 7)}, 'generic index behind the scanned tail')
+    add('SC02_coverage_complete', 'publish', {'request': setp('scanned', [6, 8])}, 'a verified nonmatch skipped')
     add('SC03_cursor_event', 'publish', {'cand': setp('last_matched_event_id', 'other-event')})
     add('SC04_cursor_sequence', 'publish', {'cand': setp('last_scanned_sequence', 9)})
-    add('SC05_cursor_value', 'publish', {'log': lambda log, W: [dict(W['env'], actor_ref='pmref:actor.other'), log[1]]},
-        'stored match bytes differ from the original')
+    add('SC05_cursor_value', 'publish', {'log': lambda log, W: [log[0], dict(W['env'], actor_ref='pmref:actor.other'), log[2]]},
+        'stored match bytes differ from the original custody commitment')
     add('SC06_matched_verified', 'publish', {'receipt_index': lambda i, W: {}})
     add('SC07_no_second_disclosure', 'publish', {'request': lambda r, W: r.__setitem__('disclosed', [W['env']['event_id']])})
     add('SC08_empty_proof', 'publish', {'request': setp('empty_proof', False)}, 'empty claim without inventory proof', empty=True)
     add('SC04_no_regression', 'publish', {'pred': setp('last_scanned_sequence', 9)}, 'cursor regresses behind prior')
     add('SC05_cursor_unique', 'publish',
-        {'log': lambda log, W: [log[0], log[0], log[1]], 'request': setp('scanned', [7, 7, 8])},
+        {'log': lambda log, W: [log[0], log[1], log[1], log[2]], 'request': setp('scanned', [6, 7, 7, 8])},
         'two stored matches for one selected event')
-    add('SC06_custody_event', 'publish', {'custody': setp('event_id', 'bsd-event@1:00')}, 'receipt index present but other event')
+    add('SC06_custody_event', 'publish', {'receipt_index': lambda i, W: {k: dict(v, idempotency_key='bsd-key@1:00')
+                                                                         for k, v in i.items()}},
+        'resolved custody carries another key')
+    add('SC09_degraded_state', 'publish', dict(_degraded(), cand=setp('last_scanned_sequence', 7)),
+        'unverifiable frame skipped as current')
+    add('SC04_cursor_sequence', 'publish', dict(_degraded(), cand=setp('publication_state', 'degraded')),
+        'degraded but cursor advanced past the unverifiable frame')
+    add('SC10_inclusive_restart', 'publish', {'request': setp('scanned', [7, 8])}, 'retained prior cursor frame not rescanned')
+    add('SC04_cursor_sequence', 'publish', {'log': _degraded()['log']}, 'unverifiable frame skipped: current past it', multi=True)
     # cas
     add('CS01_expected_revision', 'publish', {'request': setp('expected_revision', 6)})
     add('CS02_revision_step', 'publish', {'cand': setp('index_read_token', 'frontier_revision', 9),
@@ -1909,6 +2921,19 @@ def shared_negatives_storage(fam):
         'actual old checkpoint changed before commit')
     add('CS05_siblings_preserved', 'publish', {'siblings_after': setp('projection_rows', 2)})
     add('CS06_fence_current', 'publish', {'request': setp('fence', 'fence-0041')})
+    add('CS07_publication_not_withdrawn', 'publish', {'pred': setp('publication_state', 'withdrawn')}, 'advance a withdrawn publication')
+    # projection
+    add('PJ01_projection_schema', 'publish', {'projection': setp('extension', 1)}, 'closed projection extra member')
+    add('PJ02_projection_key', 'publish', {'projection_key': lambda k, W: k.replace(partition_for(PROJECT), 'raw-partition')})
+    add('PJ03_projection_event', 'publish', {'projection': setp('event_id', 'bsd-event@1:00')})
+    add('PJ04_projection_sequence', 'publish', {'projection': setp('sequence_id', 9)})
+    add('PJ05_projection_operation', 'publish', {'projection': setp('owner_operation_id', 'bsd-op@1:00:00:00')})
+    add('PJ06_projection_source', 'publish', {'projection': setp('source_state_ref', 'pmref:wrapper.other.0001')})
+    add('PJ07_projection_event_ref', 'publish', {'projection': setp('source_event_ref', f'pmref:storage.event.{STORAGE}.8')},
+        'locator resolves the unrelated record')
+    # The projection_key hook runs after the projection is derived; it plants a projection the zero-match range never matched.
+    add('PJ01_projection_schema', 'publish', dict(_zero_match(), projection_key=lambda k, W: W.__setitem__(
+        'projection', projection_of(W['fam'], W['env']))), 'projection fabricated for a zero-match range', multi=True)
     # history (SP-1101 retained read)
     add('HI01_receipt_present', 'read', {'read': setp('sealed', [])}, 'missing receipt')
     add('HI02_receipt_unique', 'read', {'read': lambda r, W: r['sealed'].append(copy.deepcopy(r['sealed'][0]))}, 'ambiguous: sealed twice')
@@ -1935,24 +2960,203 @@ def shared_negatives_storage(fam):
         for field, value in (('epoch', 2.0), ('primary_generation', 4.0)):
             add('HI05_original_verifies', 'read', {'read': frozen_defect(field, value, payload=True)},
                 'frozen payload integer ' + field)
+    payload0 = make_payload_for(fam)
+    for field in PAYLOAD_INTEGERS[fam['slug']]:
+        if field in ('policy_revision', 'epoch', 'primary_generation') or type(payload0.get(field)) is not int:
+            continue
+        add('HI05_original_verifies', 'read', {'read': frozen_defect(field, float(payload0[field]), payload=True)},
+            'frozen family payload integer ' + field)
     add('HI06_bytes_preserved', 'read', {'read': setp('reader_kind', 'alters_bytes')}, 'reader alters stored bytes')
     add('HI07_no_receipt_created', 'read', {'read': setp('reader_kind', 'writes_receipt')}, 'reader mints a receipt while reading')
-    add('HI09_reader_enabled', 'read', {'read': setp('withdrawn', True)})
-    add('HI10_permission', 'read', {'read': setp('permission', False)})
-    add('HI11_not_deleted', 'read', {'read': setp('deleted', True)})
-    add('HI12_ref_available', 'read', {'read': setp('ref_available', False)})
+    add('HI09_reader_enabled', 'read', {'read': lambda r, W: r['selectors'].__setitem__(W['fam']['event_type'], 'withdrawn')},
+        'family selector withdrawn under governance')
+    add('HI10_permission', 'read', {'read': lambda r, W: r.__setitem__('access_grants', [
+        g for g in r['access_grants'] if g[1] != r['original_ref']])}, 'reader access revoked for this original only')
+    add('HI11_not_deleted', 'read', {'read': lambda r, W: r['tombstones'].append(r['original_ref'])}, 'original tombstoned')
+    add('HI11_body_not_deleted', 'read', {'read': lambda r, W: r['tombstones'].append(r['body_ref'])}, 'linked body tombstoned')
+    add('HI12_ref_available', 'read', {'read': setp('body_ref', 'pm-payload-ref:v1:blake3:' + '0' * 64 + ':10:application/msgpack')},
+        'linked body reference resolves no stored bytes')
+    add('HI08_not_foreign', 'read', {'read': _foreign_original}, 'coherent original sealed by another Storage instance')
+    for label, mutate in (('frozen custody event', _stored('custody', 'event_id', 'bsd-event@1:00')),
+                          ('frozen source row operation', _stored('source_row', 'owner_operation_id', 'bsd-op@1:00:00:00')),
+                          ('frozen custody commitment', _stored_commitment),
+                          ('frozen source commitment', _bound_commitment),
+                          ('frozen event type', frozen_defect('event_type', _sibling_type(fam))),
+                          ('frozen envelope extra member', frozen_defect('extension', 1)),
+                          ('frozen binding event id', _bound_field('event_id', 'bsd-event@1:' + '00' * 8)),
+                          ('frozen binding key', _bound_field('idempotency_key', 'bsd-key@1:' + '00' * 8)),
+                          ('frozen binding and custody name another event id',
+                           _compose(_bound_field('event_id', 'bsd-event@1:' + '00' * 8),
+                                    _stored('custody', 'event_id', 'bsd-event@1:' + '00' * 8))),
+                          ('frozen record not an object', _stored_record_bytes([1, 2, 3])),
+                          ('frozen unknown family', _bound_field('event_type', 'bsd.unknown_family'))):
+        add('HI05_original_verifies', 'read', {'read': mutate}, label)
     add('HI13_retained_recipe', 'read', {'read': setp('caller_override', True)}, 'caller-chosen recipe override')
-    add('HI14_backup_coherent', 'read', {'read': setp('backup_coherent', False)}, 'one required source missing from the backup cut')
-    # replay
+    add('HI14_backup_coherent', 'read', {'backup': lambda b, W: b['parts'].__delitem__('head')}, 'one required source missing from the backup cut')
+    # replay (instrumented replay model)
     for i, e in enumerate(rows_spec.EFFECTS, 1):
-        add(f'RP{i:02d}_no_{e}', 'replay', {'replay': setp(e, [f'{e}:1'])})
-    # withdrawal
-    add('WD01_cutoff_recorded', 'withdraw', {'withdraw': setp('cutoff_recorded', False)})
-    add('WD02_pending_drained', 'withdraw', {'withdraw': setp('pending_drained', False)})
-    add('WD03_selector_withdrawn', 'withdraw', {'withdraw': setp('selector_withdrawn', False)})
-    add('WD04_no_advance', 'withdraw', {'withdraw': setp('advanced', 1)})
-    add('WD05_no_event_created', 'withdraw', {'withdraw': setp('appended', 1)})
+        add(f'RP{i:02d}_no_{e}', 'replay', {'replay': setp('impl', f'effect:{e}')}, f'implementation performs {e}')
+    add(f'RP{len(rows_spec.EFFECTS) + 1:02d}_projection_rebuilt', 'replay', {'replay': setp('impl', 'skip_projection')},
+        'implementation skips the derived projection')
+    # withdrawal model
+    for row, impl in (('WD01_cutoff_recorded', 'skip_cutoff'), ('WD01_cutoff_recorded', 'cutoff_local'),
+                      ('WD01_cutoff_recorded', 'cutoff_other_family'), ('WD02_pending_drained', 'skip_drain'),
+                      ('WD03_selector_withdrawn', 'skip_selector'), ('WD04_publication_invalidated', 'skip_invalidate'),
+                      ('WD05_no_event_created', 'emit_event'), ('WD06_order', 'selector_first'),
+                      ('WD07_drain_honest', 'fabricate_success'), ('WD07_drain_honest', 'drain_wrong_receipt'),
+                      ('WD07_drain_honest', 'drain_drop_available'), ('WD07_drain_honest', 'drain_wrong_state')):
+        add(row, 'withdraw', {'withdraw': setp('impl', impl)}, f'implementation {impl}')
+    # rebuild model
+    add('RB01_successor_admitted', 'rebuild', {'rebuild': lambda b, W: (b.update(impl='ignore_admission'),
+                                                                        b['successor'].update(admitted_by='caller'))},
+        'successor recorded by a caller, rebuild runs anyway')
+    for row, impl in (('RB02_canonical_preserved', 'rewrite_canonical'), ('RB03_derived_only', 'drop_operation'),
+                      ('RB05_no_fresh_effects', 'effect:review_dispatch'), ('RB06_successor_reader', 'old_reader'),
+                      ('RB07_derived_rebuilt', 'wrong_projection')):
+        add(row, 'rebuild', {'rebuild': setp('impl', impl)}, f'implementation {impl}')
+    add('RB04_lost_source_unavailable', 'rebuild', {'rebuild': _compose(_lost_source, setp('impl', 'report_empty'))},
+        'lost source reported as an empty rebuild')
+    for field, value in (('event_type', 'bsd.other.event'), ('version', '1.0.0')):
+        add('RB01_successor_admitted', 'rebuild', {'rebuild': lambda b, W, field=field, value=value: (
+            b.update(impl='ignore_admission'), b['successor'].update(**{field: value}))},
+            f'successor {field} is not an admitted successor of this family')
+    add('RB01_successor_admitted', 'rebuild', {'rebuild': _compose(_lost_source, lambda b, W: (
+        b.update(impl='ignore_admission'), b['successor'].update(admitted_by='caller')))},
+        'unadmitted rebuild ran and reported the lost source unavailable')
+    # restore model
+    for part in rows_spec.RESTORE_PARTS + (rows_spec.RESTORE_CHAIN_PARTS if fam['slug'] in rows_spec.REVIEW_CHAIN else ()):
+        add(f'RS_{part}_present', 'restore', {'backup': lambda b, W, part=part: b['parts'].__delitem__(part)}, 'part missing from the cut')
+        add(f'RS_{part}_cut', 'restore', {'backup': lambda b, W, part=part: b['parts'][part].__setitem__('cut_id', 'cut-0006')},
+            'part substituted from another cut')
+    for row, part, path_, value in (
+            ('RS_operation_source', 'operation', ('value', 'source_state_ref'), 'pmref:wrapper.other.0001'),
+            ('RS_custody_event', 'receipt_custody', ('value', 'event_id'), 'bsd-event@1:00'),
+            ('RS_head_source', 'head', ('value', 'current_source_ref'), 'pmref:wrapper.other.0001'),
+            ('RS_head_receipt', 'head', ('value', 'first_append_receipt', 'segment_name'), 'seg-000099'),
+            ('RS_controls_selection', 'controls', ('value', 'storage_instance_id'), OTHER_STORAGE)):
+        add(row, 'restore', {'backup': lambda b, W, part=part, path_=path_, value=value: setp(*path_, value)(b['parts'][part], W)})
+    for row, part in (('RS_payload_pack_digest', 'payload_pack'), ('RS_logical_pack_digest', 'logical_pack')) + (
+            (('RS_start_pack_digest', 'start_pack'),) if fam['slug'] in rows_spec.REVIEW_CHAIN else ()):
+        add(row, 'restore', {'backup': lambda b, W, part=part: b['parts'][part].__setitem__(
+            'bytes', b['parts'][part]['bytes'] + b'x')}, 'backed-up pack bytes differ from the reference')
+    add('RS_restored_equal', 'restore', {'backup': setp('impl', 'alter_bytes')}, 'restore writes altered bytes')
+    # retention model
+    for row, label, muts in retention_negatives(fam):
+        N.append(dict(row=row, path='retention', muts=muts, label=label, multi=False, variant=None, empty=False,
+                      phase='retention'))
+    # producer crash model
+    for row, impl in (('CR01_packs_before_refs', 'payload_pack_late'), ('CR01_packs_before_refs', 'body_pack_late'),
+                      ('CR02_source_op_atomic', 'split_commit'),
+                      ('CR03_head_prior_until_receipt', 'head_early'), ('CR08_complete_before_result', 'expose_early'),
+                      ('CR05_frozen_intent', 'rederive'), ('CR06_single_append', 'reappend'),
+                      ('CR07_original_receipt', 'remint'), ('CR08_complete_before_result', 'result_first'),
+                      ('CR09_head_with_operation', 'head_separate'), ('CR10_outcome_preserved', 'forget_result'),
+                      ('CR10_outcome_preserved', 'fabricate_on_recover'),
+                      ('CR11_settled_values_valid', 'complete_without_receipt')):
+        add(row, 'crash', {'producer': setp('impl', impl)}, f'implementation {impl}')
+    if fam['slug'] == 'review_started':
+        for impl in ('dispatch_early', 'redispatch'):
+            N.append(dict(row='CD01_dispatch_after_receipt', path='crash', muts={'producer': setp('impl', impl)},
+                          label=f'implementation {impl}', multi=False, variant=None, empty=False,
+                          phase='crash_review_start'))
     return N
+
+
+def _foreign_original(R, W):
+    record = copy.deepcopy(W['env'])
+    record['event_id'] = event_id_for(OTHER_STORAGE, W['fam']['event_type'], PROJECT, W['operation_id'])
+    for binding in (R['expected'], R['sealed'][0]['binding']):
+        binding['storage_instance_id'] = OTHER_STORAGE
+    retained_original_record(R, record)
+
+
+def _stored(part, field, value):
+    def mutate(R, W):
+        stored = R['stored'][R['original_ref']]
+        stored[part] = dict(copy.deepcopy(stored[part]), **{field: value})
+    return mutate
+
+
+def _stored_commitment(R, W):
+    stored = R['stored'][R['original_ref']]
+    custody = stored['custody'] = copy.deepcopy(stored['custody'])
+    custody['original_event_value_commitment']['sha256'] = sha(b'other commitment')
+
+
+def _bound_field(field, value):
+    def mutate(R, W):
+        for binding in (R['expected'], R['sealed'][0]['binding']):
+            binding[field] = value
+    return mutate
+
+
+def _stored_record_bytes(value):
+    def mutate(R, W):
+        R['stored'][R['original_ref']]['record'] = storage_value_bytes(value, profile=EVENT_VALUE)
+    return mutate
+
+
+def _bound_commitment(R, W):
+    for binding in (R['expected'], R['sealed'][0]['binding']):
+        binding['source_commitment'] = sha(b'other source commitment')
+
+
+def _sibling_type(fam):
+    return next(f['event_type'] for f in spec.FAMILIES if f['slug'] != fam['slug'])
+
+
+def retention_negatives(fam):
+    other = {'registry_schema_id': 'pm.storage_value_registry.v2', 'policy_id': 'RP-OPERATIONAL-2555D', 'policy_version': '1.0.0'}
+    if not fam['assignment_backed']:
+        other = dict(other, policy_id='RP-RUNTIME-365D')
+    unknown = {'registry_schema_id': 'pm.storage_value_registry.v2', 'policy_id': 'RP-UNKNOWN', 'policy_version': '1.0.0'}
+    out = [('RN01_policy_bound', 'record carries another catalog policy', {'retention': setp('policy_ref', other)}),
+           ('RN02_policy_in_catalog', 'bound policy absent from the catalog',
+            {'retention': lambda r, W: r.update(policy_ref=dict(unknown), bound_ref=dict(unknown))}),
+           ('RN02_policy_in_catalog', 'bound policy version absent from the catalog',
+            {'retention': lambda r, W: r.update(policy_ref=dict(r['policy_ref'], policy_version='2.0.0'),
+                                                bound_ref=dict(r['policy_ref'], policy_version='2.0.0'))})]
+    for i, kind in enumerate(('operation', 'projection', 'checkpoint')):
+        out.append((f'RN{13 + i}_{kind}_policy', f'{kind} row bound to the event policy',
+                    {'retention': lambda r, W, kind=kind: r['derived'].__setitem__(kind, copy.deepcopy(r['policy_ref']))}))
+    if fam['assignment_backed']:
+        out += [
+            ('RN03_anchor_run', 'anchor from the append time', {'retention': setp('impl', 'anchor_from_append')}),
+            ('RN03_anchor_run', 'anchor from another run', {'retention': setp('impl', 'wrong_run')}),
+            ('RN04_no_fabricated_anchor', 'nonterminal run, anchor fabricated',
+             {'retention': lambda r, W: r.update(impl='fabricate_anchor', runs=dict(r['runs'], **{
+                 'run-1': {'state': 'running', 'completed_at': None}}))}),
+            ('RN05_no_restart', 'retry/replay/restore restarts the anchor', {'retention': setp('impl', 'restart_on_history')}),
+            ('RN06_ttl_inclusive', 'exclusive boundary at exactly anchor plus ttl',
+             {'retention': lambda r, W: r.update(impl='exclusive_boundary', now='2027-11-02T00:00:00Z')}),
+            ('RN07_hold_override', 'hold ignored after expiry',
+             {'retention': lambda r, W: r.update(impl='ignore_holds', now='2028-01-01T00:00:00Z', holds=['legal_hold'])}),
+            ('RN08_cap_rolls_successor', 'overflow refuses instead of rolling a successor',
+             {'retention': lambda r, W: (r.update(impl='refuse_on_overflow'), r['counts'].update(run=1_000_001))}),
+            ('RN08_cap_keeps_history', 'overflow evicts unexpired history',
+             {'retention': lambda r, W: (r.update(impl='evict_on_overflow'), r['counts'].update(run=1_000_001))}),
+            ('RN04_no_fabricated_anchor', 'nonterminal run, record marked eligible without an anchor',
+             {'retention': lambda r, W: r.update(impl='eligible_without_anchor', runs=dict(r['runs'], **{
+                 'run-1': {'state': 'running', 'completed_at': None}}))}),
+        ]
+    else:
+        out += [
+            ('RN09_no_age_expiry', 'age expiry applied to indefinite history', {'retention': setp('impl', 'age_expiry')}),
+            ('RN10_no_count_expiry', 'count eviction applied to indefinite history', {'retention': setp('impl', 'count_evict')}),
+            ('RN11_explicit_delete_only', 'Remove project from list deletes history',
+             {'retention': lambda r, W: r.update(impl='delete_on_remove', deletion='remove_from_list')}),
+            ('RN12_pressure_refuses_new', 'pressure accepts the new record',
+             {'retention': lambda r, W: r.update(impl='accept_on_pressure', pressure=True)}),
+            ('RN12_pressure_keeps_history', 'pressure evicts existing history',
+             {'retention': lambda r, W: r.update(impl='evict_on_pressure', pressure=True)}),
+        ]
+    return out
+
+
+def _resolved_field(spec_):
+    if '$ref' in spec_:
+        return SCHEMAS['bsd_event_payloads']['$defs'][spec_['$ref'].split('/')[-1]]
+    return spec_
 
 
 def _payload_witness(fam, field, kw, spec_):
@@ -2022,10 +3226,13 @@ def family_negatives(fam):
             continue
         _, field, kw = name.split('.', 2)
         add('payload', name, 'append', {'payload': _payload_witness(fam, field, kw, schema['properties'][field])}, kw)
+        if kw == 'no_linebreak' and 'pattern' not in _resolved_field(schema['properties'][field]):
+            add('payload', name, 'append', {'payload': setp(field, 'identifier\r0001')}, 'carriage return in an identifier')
     # wrong-type forms for const/enum/boolean field values (type confusion, standing item 11)
     for field, spec_ in schema['properties'].items():
         if 'const' in spec_ and spec_['const'] is False:
             add('payload', f'payload.{field}.const', 'append', {'payload': setp(field, 'false')}, 'string boolean', multi=False)
+            add('payload', f'payload.{field}.const', 'append', {'payload': setp(field, 0)}, 'integer 0 equals False in Python', multi=False)
         if 'enum' in spec_:
             add('payload', f'payload.{field}.enum', 'append', {'payload': setp(field, 7)}, 'wrong type number')
     # wrapper custody rows SR01-SR07
@@ -2135,7 +3342,72 @@ def family_negatives(fam):
                 else:
                     mut = setp(field, -1)
                 add('start_body_review_started', name, 'append', {'start_body': mut}, 'value')
+    # stored logical body identity joins (SP-1365)
+    body0 = logical_body(fam, build(fam)['capture'], build(fam))
+    for field in rows_spec.BODY_JOINS[fam['source_kind']]:
+        value = body0.get(field)
+        alt = value + 1 if type(value) is int else (sha(b'alternative body key') if field == 'finding_key' else str(value) + '-alt')
+        if field == 'finding_key':
+            alt = 'bsd-finding@1:' + sha(b'alternative body key')
+        add('body', f'BJ_{field}', 'append', {'logical_body': setp(field, alt)},
+            'stored body identity differs from the authentic source')
+    # owner joins: one schema-valid substitution per joined field, four resolution defects per reference field
+    payload0 = make_payload_for(fam)
+    redaction_done = False
+    for field, src in fam['owner_sources']:
+        add('owner', f'OW_{field}_join', 'append', {'payload': setp(field, _owner_alternative(fam, field, payload0.get(field)))},
+            'schema-valid value differs from the authentic owner source')
+        if field not in spec.REF_KINDS or src[0] == 'null':
+            continue
+        for row, decoy in (('resolved', f'pmref:unregistered.{field}'), ('kind', f'pmref:decoy.kind.{field}'),
+                           ('subject', f'pmref:decoy.subject.{field}'), ('project', f'pmref:decoy.project.{field}')):
+            add('owner', f'OW_{field}_{row}', 'append', {'native': _authentic_ref(field, src, decoy)},
+                f'authentic owner decision names a {row}-defective object')
+        base = fam['base_refs'].get(field)
+        if not redaction_done and base is not None and src[0] in ('ref', 'start', 'body'):
+            add('redaction', 'RD01_payload_no_protected', 'append',
+                {'native': _authentic_ref(field, src, f'{base}.{spec.PROTECTED["claim"]}')},
+                'owner-issued reference embeds protected claim text')
+            redaction_done = True
     return N
+
+
+_PAYLOAD0 = {}
+
+
+def make_payload_for(fam):
+    if fam['slug'] not in _PAYLOAD0:
+        _PAYLOAD0[fam['slug']] = copy.deepcopy(build(fam)['payload_view'])
+    return _PAYLOAD0[fam['slug']]
+
+
+def _owner_alternative(fam, field, value):
+    schema = SCHEMAS['bsd_event_payloads']['$defs'][fam['slug']]['properties'][field]
+    if field in spec.REF_KINDS:
+        return value + '.alt' if type(value) is str else spec.USAGE_ATTEMPT_REF
+    if 'enum' in schema:
+        return next(e for e in schema['enum'] if e != value)
+    if type(value) is bool:
+        return not value
+    if type(value) is int:
+        return value + 1
+    if type(value) is list:
+        return ['mode'] if value != ['mode'] else ['trigger_sensitivity']
+    if type(value) is str and len(value) == 64 and all(c in '0123456789abcdef' for c in value):
+        return sha(b'alternative ' + field.encode())
+    return value + '-alt'
+
+
+def _authentic_ref(field, src, value):
+    """Change the authentic owner decision's reference so every derived copy (payload, body, start) follows it."""
+    def fn(native, W):
+        if src[0] == 'fact':
+            key, companion = spec.FACT_REFS[field]
+            native['facts'][key] = value
+            native['facts'][companion] = value
+        else:
+            native['refs'][field] = value
+    return fn
 
 
 def all_cases(fam):
@@ -2143,10 +3415,10 @@ def all_cases(fam):
     for p in positives(fam):
         out.append(dict(p, kind='positive'))
     for n in shared_negatives(fam) + shared_negatives_storage(fam):
-        phase = rows_spec.phase_name(_phase_of(n['row']), fam)
+        phase = rows_spec.phase_name(n.get('phase') or _phase_of(n['row']), fam)
         out.append(dict(n, kind='negative', phase=phase, id=f"{n['row']}/{n['label'] or 'single defect'}"))
     for n in family_negatives(fam):
-        phase = rows_spec.phase_name(n['phase'], fam) if n['phase'] in ('payload', 'source') else n['phase']
+        phase = rows_spec.phase_name(n['phase'], fam) if n['phase'] in ('payload', 'source', 'owner', 'body') else n['phase']
         out.append(dict(n, kind='negative', phase=phase, id=f"{n['row']}/{n['label'] or 'single defect'}"))
     return out
 
@@ -2205,6 +3477,7 @@ def main(argv=None):
         only = args[args.index('--family') + 1]
     out_path = Path(args[args.index('--json') + 1]) if '--json' in args else None
     summary = dict(families=0, positives=0, negatives=0, single_row=0, multi_row=0, mismatches=[], unresolved_refs=[])
+    assert not (refused := admission_failures([f['event_type'] for f in spec.FAMILIES if only is None or f['event_type'] == only])), ('admission mode refused', refused)
     coverage = {}
     with exact_integer_digits():
         summary['unresolved_refs'] = resolve_every_ref()
@@ -2227,23 +3500,10 @@ def main(argv=None):
                 summary['single_row' if single else 'multi_row'] += 1
                 if single:
                     witnessed.setdefault(f"{case['phase']}/{case['row']}", []).append(case['id'])
-            for phase_name, (_t, rows) in rows_spec.all_phases().items():
-                if phase_name.startswith(('payload_', 'source_')) and not phase_name.endswith(fam['slug']):
-                    continue
-                if phase_name == 'start_body_review_started' and fam['slug'] != 'review_started':
-                    continue
+            for phase_name in rows_spec.family_phase_names(fam):
                 if '_entailed' in phase_name:
                     continue
-                if phase_name == 'eligibility' and fam['slug'] != 'assignment_started':
-                    continue
-                if phase_name == 'admission_config' and fam['assignment_backed']:
-                    continue
-                if phase_name == 'admission' and not fam['assignment_backed']:
-                    continue
-                if phase_name == 'joins_config' and fam['assignment_backed']:
-                    continue
-                if phase_name == 'joins' and not fam['assignment_backed']:
-                    continue
+                rows = rows_spec.all_phases()[phase_name][1]
                 for r in rows:
                     if r[0] == 'PK10_source_updated_clock' and fam['source_kind'] != 'finding':
                         continue  # only finding has updated_at
@@ -2261,6 +3521,12 @@ def main(argv=None):
     print(json.dumps({k: (v if k != 'mismatches' else v[:40]) for k, v in summary.items() if k != 'rows_witnessed'},
                      indent=1, default=str))
     return 0 if summary['status'] == 'pass' else 1
+
+
+def admission_failures(event_types):
+    """Refuse any selected prepared family registered outside its exact complete DL-077 admission."""
+    import pm_ea_admission_mode as admission_mode
+    return admission_mode.gate_failures(admission_mode.verdicts(event_types, root=ROOT))
 
 
 if __name__ == '__main__':

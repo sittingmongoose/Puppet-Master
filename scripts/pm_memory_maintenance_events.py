@@ -110,6 +110,18 @@ def table_refusal(phase, facts):
 
 
 def require(phase, /, **facts):
+    # C12 isolates every implied row. The original refusal sites keep their
+    # entry points and evaluation order; each child reads only its own facts.
+    if phase in pm_memory_tables.PHASE_SPLITS:
+        fields = set()
+        for child in pm_memory_tables.PHASE_SPLITS[phase]:
+            table_rows(child)
+            fields.update(_TABLE_FIELDS[child])
+        if set(facts) != fields:
+            raise KeyError('observation fields differ from split table FIELDS: ' + phase)
+        for child in pm_memory_tables.PHASE_SPLITS[phase]:
+            require(child, **{key: facts[key] for key in _TABLE_FIELDS[child]})
+        return
     refusal = table_refusal(phase, facts)
     if refusal is not None:
         raise TableRefusal(phase, *refusal)
@@ -1925,7 +1937,7 @@ def main():
     contracts = load('Plans/memory_maintenance_contracts.json'); fixtures = load('Plans/memory_maintenance_event_fixtures.json')
     registered = {x['event_type'] for x in load('Plans/event_family_registry.json')['families']}
     assert len(contracts['families']) == 8 and len(contracts['blocked_rows']) == 0
-    assert not registered.intersection(x['event_type'] for x in contracts['families'])
+    assert not (refused := unadmitted_registrations(registered, [x['event_type'] for x in contracts['families']])), ('registered outside DL-077 admission', refused)
     for filename in ('event_payloads', 'operation', 'rebuild_target', 'event_record'):
         Draft202012Validator.check_schema(load('Plans/memory_maintenance_' + filename + '.schema.json'))
     # Every factory requires its rows in table order; every declared phase has its module.
@@ -2014,7 +2026,39 @@ def main():
                       'guard_table_witnesses': witnesses, 'shared_number_corpus': shared_numbers,
                       'guard_tables': {'phases': len(TABLE_PHASES), 'rows': sum(len(table_rows(p)) for p in TABLE_PHASES),
                                        'order': 'every factory requires its rows in table order'},
-                      'native': 'NOT_RUN', 'admission': 'ABSENT', 'retention': 'PENDING_RETENTION_DECISION'}, indent=2))
+                      'native': 'NOT_RUN', **admission_report(families)}, indent=2))
+
+
+
+def unadmitted_registrations(registered, event_types):
+    """{event type: refusal code} for each named family on the registry other than as its exact DL-077 admission.
+
+    Admission-aware mode (PNC-019 stream E; scripts/pm_ea_admission_mode.py): before admission the families stay
+    off the registry; after it, only each family's own record-bound admission may register it. Every other
+    registration keeps the preparation refusal, now naming the admission-mode code.
+    """
+    import pm_ea_admission_mode as admission_mode
+    named = sorted(set(registered).intersection(event_types))
+    return {et: v['code'] for et, v in admission_mode.verdicts(named, root=ROOT).items() if v['mode'] != 'admitted'}
+
+
+def admission_report(event_types):
+    """Output metadata from the exact DL-077 verdicts; preparation keeps its pending labels."""
+    import pm_ea_admission_mode as admission_mode
+    results = admission_mode.verdicts(event_types, root=ROOT)
+    failures = admission_mode.gate_failures(results)
+    assert not failures, ('admission mode refused', failures)
+    counts = admission_mode.summary(results)['counts']
+    label = 'ABSENT' if not counts['admitted'] else 'RECORD_BOUND' if not counts['prepared'] else 'ABSENT_AND_RECORD_BOUND'
+    rows = {row['event_type']: row for row in admission_mode.load_registry(ROOT)['families']}
+    retention = {}
+    for event, mode in sorted(results.items()):
+        if mode['mode'] == 'prepared':
+            retention[event] = 'PENDING_RETENTION_DECISION'
+        else:
+            ref = rows[event]['retention_policy_ref']
+            retention[event] = 'RECORD_BOUND:' + ref['policy_id'] + '@' + ref['policy_version']
+    return dict(admission=label, retention=retention, admission_counts=counts)
 
 
 if __name__ == '__main__':

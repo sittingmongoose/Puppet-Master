@@ -2,9 +2,9 @@
 
 Source: `Plans/Goal_Runtime_System.md`
 
-Source lines: L6561-L6634
+Source lines: L6598-L6671
 
-Source SHA256: `7c5f108f750b470546632e08a20b98563509857f0d7d18a2b6cefeea28aec347`
+Source SHA256: `459390e9235103074acbe528858e3ebb3aed895608f13756678ceb34bfb71f47`
 
 ---
 

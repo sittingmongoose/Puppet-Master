@@ -354,6 +354,7 @@ POSITIVE_FACTS = {
     },
     'assignment_resumed': {
         'resume_accepted': True, 'prior_assignment_state': 'paused', 'resulting_pause_cause': None,
+        'prior_pause_cause': 'user',
         'resume_cursor': 'cursor-0007', 'retained_cursor': 'cursor-0007',
         'primary_mutation': None, 'mandatory_role_satisfied': False,
     },
@@ -361,6 +362,7 @@ POSITIVE_FACTS = {
         'run_stage_occupied': False, 'resolved_mode': 'Auto', 'seeded_generation': 4,
         'current_generation': 4, 'snapshot_ref': 'pmref:snapshot.frozen.0001',
         'frozen_snapshot_ref': 'pmref:snapshot.frozen.0001', 'tool_profile_read_only': True,
+        'read_only_tool_profile_id': 'profile-bsd-read-only',
         'primary_mutation': None, 'mandatory_role_satisfied': False,
     },
     'assignment_stopped': {
@@ -379,7 +381,7 @@ POSITIVE_FACTS = {
         'next_preamble_includes_key': True, 'primary_mutation': None, 'mandatory_role_satisfied': False,
     },
     'finding_reconfirmed': {
-        'reconfirmed_key': 'finding-key-0001', 'held_key': 'finding-key-0001',
+        'reconfirmed_key': 'finding-key-0001', 'held_key': 'finding-key-0001', 'prior_finding_state': 'held',
         'latest_checked_generation': 5, 'raised_against_generation': 3, 'review_reraises_key': True,
         'reconfirmation_count': 2, 'prior_count': 1, 'finding_severity': 'concern',
         'prior_severity': 'concern', 'evidence_ref': 'pmref:evidence.newer.0001',
@@ -387,7 +389,7 @@ POSITIVE_FACTS = {
         'mandatory_role_satisfied': False,
     },
     'finding_suppressed': {
-        'suppression_kind': 'duplicate', 'key_unchanged': True, 'evidence_unchanged': True,
+        'suppression_kind': 'duplicate', 'key_unchanged': True, 'evidence_unchanged': True, 'finding_severity': 'concern',
         'severity_escalates': False, 'concrete_reason': False, 'accepted_budget_consumed': False,
         'cooldown_eligible_concern_dropped': False, 'closed_key_reopened': False,
         'primary_mutation': None, 'mandatory_role_satisfied': False,
@@ -421,12 +423,130 @@ POSITIVE_FACTS = {
         'mandatory_role_satisfied': False,
     },
     'workflow_binding_created': {
-        'binding_accepted': True, 'stage_in_mapping': True, 'past_review_rewritten': False,
+        'binding_accepted': True, 'stage_in_mapping': True, 'past_review_rewritten': False, 'binding_revision': 2,
         'previous_binding_ref': 'pmref:binding.previous.0001',
         'actual_previous_binding_ref': 'pmref:binding.previous.0001',
         'off_stage_assignment_created': False, 'primary_mutation': None, 'mandatory_role_satisfied': False,
     },
 }
+
+
+# --- PNC-019 s4d: authentic owner sources for every non-constant payload field ---------------------
+# CV-135x: "Every source reference is a typed opaque locator and still requires original custody, schema/version,
+# source identity and access validation; a matching string or digest is never source authority." Each payload field
+# that is not already joined elsewhere (subject ids: SR02/ID07; policy/binding/assignment/run/epoch/generation/review
+# ids: payload_*_source_join; finding_key: finding operands; source_state_ref: SR06; review_start_ref: SR start join)
+# is joined here to its authentic owner source, and every reference field must resolve an owner object of its kind,
+# subject and Project.
+REF_KINDS = {
+    'finding_ref': 'finding_body', 'emission_boundary_ref': 'step_boundary', 'pause_source_ref': 'pause_source',
+    'resume_source_ref': 'resume_source', 'cursor_ref': 'assignment_cursor', 'assignment_ref': 'assignment_body',
+    'requested_effective_snapshot_ref': 'frozen_snapshot', 'stop_source_ref': 'stop_source',
+    'clear_source_ref': 'clear_source', 'reconfirmation_source_ref': 'reconfirmation_source',
+    'suppression_source_ref': 'suppression_source', 'quarantine_ref': 'quarantine_body',
+    'retained_payload_ref': 'retained_output', 'policy_ref': 'policy_body',
+    'policy_change_source_ref': 'policy_change_source', 'review_ref': 'review_body',
+    'failure_source_ref': 'failure_source', 'failure_reason_ref': 'failure_reason',
+    'input_manifest_ref': 'input_manifest', 'redaction_receipt_ref': 'redaction_receipt',
+    'timeout_source_ref': 'timeout_source', 'deadline_ref': 'review_deadline', 'binding_ref': 'binding_body',
+    'binding_source_ref': 'binding_source', 'previous_binding_ref': 'binding_body', 'usage_attempt_ref': 'usage_attempt',
+}
+# The authentic reference values the owner decision carries (native refs); facts-sourced refs live in the facts.
+BASE_REFS = {
+    'advice_emitted': {'finding_ref': 'pmref:finding.body.0001', 'emission_boundary_ref': 'pmref:boundary.0001'},
+    'assignment_paused': {'pause_source_ref': 'pmref:pause.source.0001'},
+    'assignment_resumed': {'resume_source_ref': 'pmref:resume.source.0001', 'cursor_ref': 'pmref:cursor.0007'},
+    'assignment_started': {'assignment_ref': 'pmref:assignment.body.0001', 'cursor_ref': 'pmref:cursor.0004',
+                           'requested_effective_snapshot_ref': 'pmref:snapshot.frozen.0001'},
+    'assignment_stopped': {'stop_source_ref': 'pmref:stop.source.0001', 'cursor_ref': 'pmref:cursor.0007'},
+    'finding_cleared': {'finding_ref': 'pmref:finding.body.0001', 'clear_source_ref': 'pmref:clear.source.0001'},
+    'finding_held': {'finding_ref': 'pmref:finding.body.0001'},
+    'finding_reconfirmed': {'finding_ref': 'pmref:finding.body.0001',
+                            'reconfirmation_source_ref': 'pmref:reconfirm.source.0001'},
+    'finding_suppressed': {'finding_ref': 'pmref:finding.body.0001',
+                           'suppression_source_ref': 'pmref:suppress.source.0001'},
+    'output_quarantined': {'quarantine_ref': 'pmref:quarantine.body.0001',
+                           'retained_payload_ref': 'pmref:quarantine.retained.0001'},
+    'policy_changed': {'policy_ref': 'pmref:policy.body.0001', 'policy_change_source_ref': 'pmref:policy.change.0001'},
+    'review_failed': {'review_ref': 'pmref:review.body.0001', 'failure_source_ref': 'pmref:failure.source.0001',
+                      'failure_reason_ref': 'pmref:failure.reason.0001', 'usage_attempt_ref': None},
+    'review_started': {'input_manifest_ref': 'pmref:manifest.0001', 'redaction_receipt_ref': 'pmref:redaction.0001'},
+    'review_timed_out': {'review_ref': 'pmref:review.body.0001', 'timeout_source_ref': 'pmref:timeout.source.0001',
+                         'deadline_ref': 'pmref:deadline.0001', 'usage_attempt_ref': None},
+    'workflow_binding_created': {'binding_ref': 'pmref:binding.body.0001',
+                                 'binding_source_ref': 'pmref:binding.source.0001',
+                                 'previous_binding_ref': 'pmref:binding.previous.0001'},
+}
+# Reference fields whose authentic value is an owner fact rather than native refs: (fact key, companion fact key).
+FACT_REFS = {'requested_effective_snapshot_ref': ('snapshot_ref', 'frozen_snapshot_ref'),
+             'previous_binding_ref': ('previous_binding_ref', 'actual_previous_binding_ref')}
+# A recorded provider usage attempt (valid variant for terminal review families).
+USAGE_ATTEMPT_REF = 'pmref:usage.attempt.0001'
+_SCOPE, _OP = ('project_id', ('scope',)), ('owner_operation_id', ('operation',))
+OWNER_SOURCES = {
+    'advice_emitted': [_SCOPE, _OP, ('severity', ('fact', 'finding_severity')), ('finding_ref', ('ref',)),
+                       ('delivery_basis', ('fact', 'delivery_basis')),
+                       ('raised_against_generation', ('body', 'raised_against_generation')),
+                       ('latest_checked_generation', ('body', 'latest_checked_generation')),
+                       ('emission_boundary_ref', ('ref',))],
+    'assignment_paused': [_SCOPE, _OP, ('previous_state', ('fact', 'prior_assignment_state')),
+                          ('pause_cause', ('fact', 'pause_cause')), ('pause_source_ref', ('ref',))],
+    'assignment_resumed': [_SCOPE, _OP, ('previous_pause_cause', ('fact', 'prior_pause_cause')),
+                           ('resume_source_ref', ('ref',)), ('cursor_ref', ('ref',))],
+    'assignment_started': [_SCOPE, _OP, ('stage_id', ('body', 'stage_id')), ('effective_mode', ('fact', 'resolved_mode')),
+                           ('assignment_ref', ('ref',)), ('cursor_ref', ('ref',)),
+                           ('stable_prefix_hash', ('body', 'stable_prefix_hash')),
+                           ('requested_effective_snapshot_ref', ('fact', 'snapshot_ref')),
+                           ('read_only_tool_profile_id', ('fact', 'read_only_tool_profile_id'))],
+    'assignment_stopped': [_SCOPE, _OP, ('previous_state', ('fact', 'prior_assignment_state')),
+                           ('stop_source_ref', ('ref',)), ('cursor_ref', ('ref',))],
+    'finding_cleared': [_SCOPE, _OP, ('previous_state', ('fact', 'prior_finding_state')),
+                        ('clear_basis', ('fact', 'clear_basis')),
+                        ('raised_against_generation', ('body', 'raised_against_generation')),
+                        ('latest_checked_generation', ('body', 'latest_checked_generation')),
+                        ('finding_ref', ('ref',)), ('clear_source_ref', ('ref',))],
+    'finding_held': [_SCOPE, _OP, ('severity', ('fact', 'finding_severity')),
+                     ('raised_against_generation', ('body', 'raised_against_generation')),
+                     ('hold_basis', ('fact_map', 'hold_basis', {'async_high': 'asynchronous_high_severity',
+                                                                'terminal_nit': 'terminal_nit'})),
+                     ('finding_ref', ('ref',)), ('evidence_fingerprint', ('evidence',))],
+    'finding_reconfirmed': [_SCOPE, _OP, ('previous_state', ('fact', 'prior_finding_state')),
+                            ('previous_severity', ('fact', 'prior_severity')), ('severity', ('fact', 'finding_severity')),
+                            ('raised_against_generation', ('fact', 'raised_against_generation')),
+                            ('latest_checked_generation', ('fact', 'latest_checked_generation')),
+                            ('reconfirmation_count', ('fact', 'reconfirmation_count')),
+                            ('finding_ref', ('ref',)), ('reconfirmation_source_ref', ('ref',))],
+    'finding_suppressed': [_SCOPE, _OP, ('suppression_reason', ('fact_map', 'suppression_kind', {
+                               'duplicate': 'duplicate_suppressed', 'content_free': 'content_free_suppressed'})),
+                           ('severity', ('fact', 'finding_severity')), ('evidence_fingerprint', ('evidence',)),
+                           ('finding_ref', ('ref',)), ('suppression_source_ref', ('ref',))],
+    'output_quarantined': [_SCOPE, _OP, ('quarantine_ref', ('ref',)), ('reason', ('body', 'reason')),
+                           ('payload_hash', ('body', 'payload_hash')),
+                           ('retained_payload_ref', ('body', 'retained_payload_ref')),
+                           ('consecutive_quarantine_count', ('fact', 'consecutive_quarantine_count')),
+                           ('reset_attempted', ('body', 'reset_attempted')),
+                           ('terminal_action', ('body', 'terminal_action'))],
+    'policy_changed': [_SCOPE, _OP, ('previous_policy_revision', ('fact', 'actual_prior_revision')),
+                       ('changed_fields', ('fact', 'claimed_changed_fields')), ('policy_ref', ('ref',)),
+                       ('policy_change_source_ref', ('ref',))],
+    'review_failed': [_SCOPE, _OP, ('review_ref', ('ref',)), ('failure_source_ref', ('ref',)),
+                      ('failure_reason_ref', ('ref',)), ('usage_attempt_ref', ('body', 'usage_attempt_ref'))],
+    'review_started': [_SCOPE, _OP, ('trigger_kind', ('start', 'trigger_kind')),
+                       ('input_manifest_ref', ('start', 'input_manifest_ref')),
+                       ('redaction_receipt_ref', ('start', 'redaction_receipt_ref')),
+                       ('frozen_boundary', ('start', 'frozen_boundary')), ('usage_attempt_ref', ('null',))],
+    'review_timed_out': [_SCOPE, _OP, ('review_ref', ('ref',)), ('timeout_source_ref', ('ref',)),
+                         ('deadline_ref', ('ref',)), ('usage_attempt_ref', ('body', 'usage_attempt_ref'))],
+    'workflow_binding_created': [_SCOPE, _OP, ('workflow_kind', ('body', 'workflow_kind')),
+                                 ('workflow_id', ('body', 'workflow_id')), ('binding_revision', ('fact', 'binding_revision')),
+                                 ('previous_binding_ref', ('fact', 'previous_binding_ref')), ('binding_ref', ('ref',)),
+                                 ('binding_source_ref', ('ref',))],
+}
+# Protected content the owner holds (claim, transcript, raw output, instructions, auth session). It may live in its
+# owner's private pack body; it must never appear in an event payload or envelope (BSD-135x section 8, CV-135x).
+PROTECTED = {'claim': 'PROTECTEDclaimTextQ7', 'transcript': 'PROTECTEDadvisorTranscriptK2',
+             'raw_output': 'PROTECTEDrawOutputZ9', 'instructions': 'PROTECTEDwatchInstructionsM4',
+             'auth_session': 'PROTECTEDauthSessionSecretB3'}
 
 
 def _load(path):
@@ -457,6 +577,8 @@ def load_families():
             'semantic': SEMANTIC[slug],
             'positive_facts': POSITIVE_FACTS[slug],
             'owner_units': fam['owner_units'],
+            'owner_sources': OWNER_SOURCES[slug],
+            'base_refs': BASE_REFS[slug],
         })
     return out
 

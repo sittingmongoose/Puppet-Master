@@ -1,0 +1,248 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "pm.setup_validation_event_contracts.v1",
+  "title": "E8-6 B: prepared tier-start pass and warning payloads",
+  "description": "Closed technical contracts only. E9-2 A binds RP-RUNTIME-365D@1.0.0 under DL-086; merge-2 admission remains pending. Finding enums and outcome precedence preserve OSI-109.",
+  "$defs": {
+    "config_validation_passed": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "project_id",
+        "storage_instance_id",
+        "server_id",
+        "run_id",
+        "thread_id",
+        "operation_id",
+        "node_id",
+        "schema_version",
+        "scope",
+        "occurrence",
+        "occurred_at_utc",
+        "tier_type",
+        "findings",
+        "schema_id",
+        "status"
+      ],
+      "properties": {
+        "project_id": {
+          "type": "string",
+          "pattern": "^[^\\r\\n]+(?![\\s\\S])"
+        },
+        "storage_instance_id": {
+          "type": "string",
+          "pattern": "^[^\\r\\n]+(?![\\s\\S])"
+        },
+        "server_id": {
+          "type": "string",
+          "pattern": "^[^\\r\\n]+(?![\\s\\S])"
+        },
+        "run_id": {
+          "type": "string",
+          "pattern": "^[^\\r\\n]+(?![\\s\\S])"
+        },
+        "thread_id": {
+          "type": "string",
+          "pattern": "^[^\\r\\n]+(?![\\s\\S])"
+        },
+        "operation_id": {
+          "type": "string",
+          "pattern": "^[^\\r\\n]+(?![\\s\\S])"
+        },
+        "node_id": {
+          "type": "string",
+          "pattern": "^[^\\r\\n]+(?![\\s\\S])"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "scope": {
+          "const": "project"
+        },
+        "occurrence": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "occurred_at_utc": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "tier_type": {
+          "enum": [
+            "Phase",
+            "Task",
+            "Subtask"
+          ]
+        },
+        "findings": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "category",
+              "severity",
+              "message",
+              "suggestion"
+            ],
+            "properties": {
+              "category": {
+                "enum": [
+                  "ConfigWiring",
+                  "GuiBackendMapping",
+                  "BackendGuiMapping",
+                  "OperationSequence",
+                  "KnownGaps"
+                ]
+              },
+              "severity": {
+                "enum": [
+                  "Critical",
+                  "Major",
+                  "Minor",
+                  "Info"
+                ]
+              },
+              "message": {
+                "type": "string",
+                "pattern": "^[^\\r\\n]+(?![\\s\\S])"
+              },
+              "suggestion": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              }
+            }
+          }
+        },
+        "schema_id": {
+          "const": "pm.event_payload.config_validation_passed.v1"
+        },
+        "status": {
+          "const": "Pass"
+        }
+      }
+    },
+    "config_validation_warning": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "project_id",
+        "storage_instance_id",
+        "server_id",
+        "run_id",
+        "thread_id",
+        "operation_id",
+        "node_id",
+        "schema_version",
+        "scope",
+        "occurrence",
+        "occurred_at_utc",
+        "tier_type",
+        "findings",
+        "schema_id",
+        "status"
+      ],
+      "properties": {
+        "project_id": {
+          "type": "string",
+          "pattern": "^[^\\r\\n]+(?![\\s\\S])"
+        },
+        "storage_instance_id": {
+          "type": "string",
+          "pattern": "^[^\\r\\n]+(?![\\s\\S])"
+        },
+        "server_id": {
+          "type": "string",
+          "pattern": "^[^\\r\\n]+(?![\\s\\S])"
+        },
+        "run_id": {
+          "type": "string",
+          "pattern": "^[^\\r\\n]+(?![\\s\\S])"
+        },
+        "thread_id": {
+          "type": "string",
+          "pattern": "^[^\\r\\n]+(?![\\s\\S])"
+        },
+        "operation_id": {
+          "type": "string",
+          "pattern": "^[^\\r\\n]+(?![\\s\\S])"
+        },
+        "node_id": {
+          "type": "string",
+          "pattern": "^[^\\r\\n]+(?![\\s\\S])"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "scope": {
+          "const": "project"
+        },
+        "occurrence": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "occurred_at_utc": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "tier_type": {
+          "enum": [
+            "Phase",
+            "Task",
+            "Subtask"
+          ]
+        },
+        "findings": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "category",
+              "severity",
+              "message",
+              "suggestion"
+            ],
+            "properties": {
+              "category": {
+                "enum": [
+                  "ConfigWiring",
+                  "GuiBackendMapping",
+                  "BackendGuiMapping",
+                  "OperationSequence",
+                  "KnownGaps"
+                ]
+              },
+              "severity": {
+                "enum": [
+                  "Critical",
+                  "Major",
+                  "Minor",
+                  "Info"
+                ]
+              },
+              "message": {
+                "type": "string",
+                "pattern": "^[^\\r\\n]+(?![\\s\\S])"
+              },
+              "suggestion": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              }
+            }
+          }
+        },
+        "schema_id": {
+          "const": "pm.event_payload.config_validation_warning.v1"
+        },
+        "status": {
+          "const": "Warning"
+        }
+      }
+    }
+  }
+}

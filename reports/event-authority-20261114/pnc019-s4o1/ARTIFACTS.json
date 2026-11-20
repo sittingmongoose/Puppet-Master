@@ -1,0 +1,26 @@
+{
+  "implementation_head": "bfafb7e515d7c1a40da0f42f4eb106db170466c0",
+  "schema-evidence.tar.gz": {
+    "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/s4o1/schema-evidence.tar.gz",
+    "sha256": "4f756583766b23054e4c918b538b6379b079dcdc0003739e4b9838f624115fc5",
+    "bytes": 14268392
+  },
+  "owner-evidence.tar.gz": {
+    "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/s4o1/owner-evidence.tar.gz",
+    "sha256": "af37096ebc099081b8eef2fb33636a4452808e2eee246556f2f9194fffb26618",
+    "bytes": 704663,
+    "files": 168
+  },
+  "counts": {
+    "controls": 228,
+    "proposals": 9936,
+    "expected_refusal_kills": 9761,
+    "non_targeting_proposals": 175,
+    "full_owner_single_clause_flips": 4984,
+    "required_phase_rows": 2119,
+    "atomic_phase_rows": 1841,
+    "full_owner_reverified": 1841,
+    "retained_store_observations": 67930
+  },
+  "grade_boundary": "All 94 C12 grades PARTIAL; full-family C12 and integration review remain unclosed."
+}

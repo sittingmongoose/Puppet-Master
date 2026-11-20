@@ -1,0 +1,79 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://puppetmaster.local/proposals/goal_certified_event_append_phase.v2.schema.json",
+  "$defs": {
+    "WholeGroupMember": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "event",
+        "custody",
+        "full_value_result"
+      ],
+      "properties": {
+        "event": {
+          "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json"
+        },
+        "custody": {
+          "$ref": "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/custody_v2"
+        },
+        "full_value_result": {
+          "$ref": "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/full_value_result"
+        }
+      }
+    },
+    "AppendEvidence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "active_durable_group",
+        "members",
+        "target_event_id"
+      ],
+      "properties": {
+        "active_durable_group": {
+          "$ref": "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/active_durable_group"
+        },
+        "members": {
+          "type": "array",
+          "items": {
+            "$ref": "https://puppetmaster.local/proposals/goal_certified_event_append_phase.v2.schema.json#/$defs/WholeGroupMember"
+          },
+          "minItems": 1
+        },
+        "target_event_id": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "AppendedHeld": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "outcome",
+        "evidence",
+        "event_phase",
+        "control",
+        "certification_visible"
+      ],
+      "properties": {
+        "outcome": {
+          "const": "event_durable_held"
+        },
+        "evidence": {
+          "$ref": "https://puppetmaster.local/proposals/goal_certified_event_append_phase.v2.schema.json#/$defs/AppendEvidence"
+        },
+        "event_phase": {
+          "$ref": "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v2.schema.json#/$defs/EventPhase"
+        },
+        "control": {
+          "$ref": "https://puppetmaster.local/proposals/goal_certified_event_coordinator.v2.schema.json#/$defs/Control"
+        },
+        "certification_visible": {
+          "const": false
+        }
+      }
+    }
+  }
+}

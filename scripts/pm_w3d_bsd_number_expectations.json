@@ -274,9 +274,9 @@
      "envelope_schema_invalid"
     ],
     "payload_integer": [
-     "envelope",
-     "EN11_inline_size",
-     "inline_body_oversize"
+     "payload_advice_emitted",
+     "payload.policy_revision.type",
+     "payload_policy_revision_type_invalid"
     ],
     "producer_original": [
      "history",
@@ -303,9 +303,9 @@
      "envelope_schema_invalid"
     ],
     "payload_integer": [
-     "envelope",
-     "EN11_inline_size",
-     "inline_body_oversize"
+     "payload_advice_emitted",
+     "payload.policy_revision.type",
+     "payload_policy_revision_type_invalid"
     ],
     "producer_original": [
      "history",
@@ -336,9 +336,9 @@
      "envelope_schema_invalid"
     ],
     "payload_integer": [
-     "envelope",
-     "EN11_inline_size",
-     "inline_body_oversize"
+     "payload_advice_emitted",
+     "payload.policy_revision.type",
+     "payload_policy_revision_type_invalid"
     ],
     "producer_original": [
      "history",
@@ -395,9 +395,9 @@
      "envelope_schema_invalid"
     ],
     "payload_integer": [
-     "envelope",
-     "EN11_inline_size",
-     "inline_body_oversize"
+     "payload_advice_emitted",
+     "payload.policy_revision.type",
+     "payload_policy_revision_type_invalid"
     ],
     "producer_original": [
      "history",
@@ -424,9 +424,9 @@
      "envelope_schema_invalid"
     ],
     "payload_integer": [
-     "envelope",
-     "EN11_inline_size",
-     "inline_body_oversize"
+     "payload_advice_emitted",
+     "payload.policy_revision.type",
+     "payload_policy_revision_type_invalid"
     ],
     "producer_original": [
      "history",
@@ -453,9 +453,9 @@
      "envelope_schema_invalid"
     ],
     "payload_integer": [
-     "envelope",
-     "EN11_inline_size",
-     "inline_body_oversize"
+     "payload_advice_emitted",
+     "payload.policy_revision.type",
+     "payload_policy_revision_type_invalid"
     ],
     "producer_original": [
      "history",
@@ -482,9 +482,9 @@
      "envelope_schema_invalid"
     ],
     "payload_integer": [
-     "envelope",
-     "EN11_inline_size",
-     "inline_body_oversize"
+     "payload_advice_emitted",
+     "payload.policy_revision.type",
+     "payload_policy_revision_type_invalid"
     ],
     "producer_original": [
      "history",
@@ -515,9 +515,9 @@
      "envelope_schema_invalid"
     ],
     "payload_integer": [
-     "envelope",
-     "EN11_inline_size",
-     "inline_body_oversize"
+     "payload_advice_emitted",
+     "payload.policy_revision.type",
+     "payload_policy_revision_type_invalid"
     ],
     "producer_original": [
      "history",
@@ -927,9 +927,9 @@
      "envelope_schema_invalid"
     ],
     "payload_integer": [
-     "envelope",
-     "EN11_inline_size",
-     "inline_body_oversize"
+     "payload_advice_emitted",
+     "payload.policy_revision.type",
+     "payload_policy_revision_type_invalid"
     ],
     "producer_original": [
      "history",
@@ -2583,9 +2583,9 @@
      "envelope_schema_invalid"
     ],
     "payload_integer": [
-     "envelope",
-     "EN11_inline_size",
-     "inline_body_oversize"
+     "payload_advice_emitted",
+     "payload.policy_revision.type",
+     "payload_policy_revision_type_invalid"
     ],
     "producer_original": [
      "history",
@@ -2641,9 +2641,9 @@
      "envelope_schema_invalid"
     ],
     "payload_integer": [
-     "envelope",
-     "EN11_inline_size",
-     "inline_body_oversize"
+     "payload_advice_emitted",
+     "payload.policy_revision.type",
+     "payload_policy_revision_type_invalid"
     ],
     "producer_original": [
      "history",
@@ -2884,9 +2884,9 @@
      "envelope_schema_invalid"
     ],
     "payload_integer": [
-     "envelope",
-     "EN11_inline_size",
-     "inline_body_oversize"
+     "payload_advice_emitted",
+     "payload.policy_revision.type",
+     "payload_policy_revision_type_invalid"
     ],
     "producer_original": [
      "history",
@@ -2913,9 +2913,9 @@
      "envelope_schema_invalid"
     ],
     "payload_integer": [
-     "envelope",
-     "EN11_inline_size",
-     "inline_body_oversize"
+     "payload_advice_emitted",
+     "payload.policy_revision.type",
+     "payload_policy_revision_type_invalid"
     ],
     "producer_original": [
      "history",
@@ -2942,9 +2942,9 @@
      "envelope_schema_invalid"
     ],
     "payload_integer": [
-     "envelope",
-     "EN11_inline_size",
-     "inline_body_oversize"
+     "payload_advice_emitted",
+     "payload.policy_revision.type",
+     "payload_policy_revision_type_invalid"
     ],
     "producer_original": [
      "history",
@@ -2971,9 +2971,9 @@
      "envelope_schema_invalid"
     ],
     "payload_integer": [
-     "envelope",
-     "EN11_inline_size",
-     "inline_body_oversize"
+     "payload_advice_emitted",
+     "payload.policy_revision.type",
+     "payload_policy_revision_type_invalid"
     ],
     "producer_original": [
      "history",
@@ -2991,5 +2991,36 @@
    "routes": null,
    "note": "parser/API only: no materialized scalar slot"
   }
+ },
+ "pnc019_s4d_changes": {
+  "route": "payload_integer",
+  "cases": [
+   "bad-token-'-0.0'",
+   "bad-token-'1.0'",
+   "bad-token-'1e-7'",
+   "bad-token-'1e0'",
+   "bad-token-'1e20'",
+   "current-slot-exponent",
+   "current-slot-fraction",
+   "int-decimal",
+   "parse-exponent--2.5E-3",
+   "parse-exponent-1E+5",
+   "parse-exponent-1E5",
+   "parse-exponent-1e+2",
+   "slot--0.0",
+   "slot-1.0",
+   "slot-1e0"
+  ],
+  "from_": [
+   "envelope",
+   "EN11_inline_size",
+   "inline_body_oversize"
+  ],
+  "to": [
+   "payload_advice_emitted",
+   "payload.policy_revision.type",
+   "payload_policy_revision_type_invalid"
+  ],
+  "reason": "These tokens materialize a non-integer JSON number (Decimal). The Storage profile cannot encode it, which EN11 used to report as an inline oversize; EN11 now leaves an unencodable payload to the number/type rows, so the first refusal is the exact JSON integer type row of policy_revision. Transcribed from the value type, not from a shared helper."
  }
 }

@@ -2128,7 +2128,7 @@ def validate(root: Path = ROOT) -> dict[str, Any]:
     failures += owner_unit_failures(root)
     failures += ledger_failures(root)
     member, admitted = registry_membership_failures(root)
-    failures += member
+    failures += member + admission_mode_failures(root, admitted)
     fr = fixture_report(root)
     failures += fr["failures"]
     failures += ats_failures(root)
@@ -2140,7 +2140,7 @@ def validate(root: Path = ROOT) -> dict[str, Any]:
         "status": "pass" if not failures else "fail",
         "claim_boundary": CLAIM_BOUNDARY,
         "families": len(EVENT_TYPES),
-        "admitted_families": admitted,
+        "admitted_families": [et for et in admitted if not any(f.get("admission_mode") and f.get("event_type") == et for f in failures)],
         "prepared_rows": len(load(LEDGER_PATH, root)["rows"]),
         "counts": fr["counts"],
         "stored_sizes": stored_size_report(root),
@@ -2774,10 +2774,11 @@ def integrity_cases(root=ROOT):
     rowpatch("validation_case_ids_unknown",lambda r:r["validation_case_ids"].append("unknown_case"))
     rowpatch("admitted_without_authority_ref",lambda r:r.update(admission_status="admitted_static_contract",authority_contract_ref=""))
     ledger=load(LEDGER_PATH,root)
-    case("registry_membership_failures","prepared_family_in_registry",REGISTRY_PATH,lambda d:d["families"].append(copy.deepcopy(ledger["rows"][0]["registry_row"])))
+    # Admission-aware mode: these two fixtures build their own tree for family 0 (absent_row_0, prepared_row_0).
+    case("registry_membership_failures","prepared_family_in_registry",REGISTRY_PATH,lambda d:(absent_row_0(d,ledger),d["families"].append(copy.deepcopy(ledger["rows"][0]["registry_row"]))),lambda o:prepared_row_0(o,ledger))
     def admitted(overrides):
         l=copy.deepcopy(ledger);l["rows"][0].update(admission_status="admitted_static_contract",authority_contract_ref="fixture:authority");overrides[LEDGER_PATH]=l
-    case("registry_membership_failures","admitted_ledger_row_missing_from_registry",REGISTRY_PATH,lambda d:None,admitted)
+    case("registry_membership_failures","admitted_ledger_row_missing_from_registry",REGISTRY_PATH,lambda d:absent_row_0(d,ledger),admitted)
     def differs(d):
         row=copy.deepcopy(ledger["rows"][0]["registry_row"]);row["family_revision"]="2.0.0";d["families"].append(row)
     case("registry_membership_failures","admitted_row_differs_from_prepared",REGISTRY_PATH,differs,admitted)
@@ -2932,6 +2933,40 @@ def main(argv: list[str] | None = None) -> int:
     else:
         print(json.dumps({k: rep[k] for k in ("status", "families", "prepared_rows", "admitted_families", "counts", "admission_blockers")} | {"failure_count": len(rep["failures"]), "first_failures": rep["failures"][:10]}, indent=2, sort_keys=True))
     return 0 if rep["status"] == "pass" else 1
+
+
+# --- admission-aware mode (PNC-019 stream E, ADMIT-MODE2) ----------------------------------------------------
+
+def absent_row_0(registry, ledger):
+    """An integrity fixture's own tree: the registry without ledger family 0 (a prepared tree for that family)."""
+    registry["families"] = [f for f in registry["families"] if f.get("event_type") != ledger["rows"][0]["event_type"]]
+
+
+def prepared_row_0(overrides, ledger):
+    """An integrity fixture's own tree: ledger family 0 prepared, not admitted."""
+    l = copy.deepcopy(ledger)
+    l["rows"][0]["admission_status"] = "prepared_not_admitted"
+    l["rows"][0].pop("authority_contract_ref", None)
+    overrides[LEDGER_PATH] = l
+
+
+def admission_mode_failures(root: Path = ROOT, admitted=()) -> list[dict[str, Any]]:
+    """A ledger-admitted family counts as registered only through its exact, complete DL-077 admission record.
+
+    Admission-aware mode (T222/T225; scripts/pm_ea_admission_mode.py), over the rows registry_membership_failures
+    accepted as admitted (IM01/IM02). Any other registration is a prepared family's: it fails with the table's own
+    prepared_family_in_registry code and the admission-mode code attached; no new code is added.
+    """
+    import pm_ea_admission_mode as admission_mode
+    registry = load(REGISTRY_PATH, root)
+    ledger = {r["event_type"]: r for r in load(LEDGER_PATH, root)["rows"]}
+    fails = []
+    for et in admitted:
+        mode = admission_mode.verdict(et, root=root, registry=registry, prepared_row=ledger[et]["registry_row"])
+        if mode["mode"] != "admitted":
+            fails.append({"check": "prepared_family_in_registry", "event_type": et,
+                          "admission_mode": mode.get("code", "not_registered_under_its_event_type")})
+    return fails
 
 
 if __name__ == "__main__":

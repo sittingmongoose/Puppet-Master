@@ -46,9 +46,13 @@ def main():
     fixture = json.loads((ROOT / FIXTURE).read_text())
     families = {case['event_type'] for case in fixture['cases']}
     rows, failures = [], []
+    # Admission-aware mode: the checker judges each registered family by its DL-077 record, so the
+    # disposable tree carries the record inputs too (scripts/pm_ea_admission_mode.py:inputs).
+    import pm_ea_admission_mode as admission_mode
+    inputs = sorted(set(INPUTS) | set(admission_mode.inputs(sorted(families), ROOT)))
     with tempfile.TemporaryDirectory(prefix='pm-ddbg-standing-') as directory:
         scratch = Path(directory)
-        for relative in INPUTS:
+        for relative in inputs:
             destination = scratch / relative
             destination.parent.mkdir(parents=True, exist_ok=True)
             shutil.copyfile(ROOT / relative, destination)

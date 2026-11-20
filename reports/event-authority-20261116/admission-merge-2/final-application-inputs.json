@@ -1,0 +1,26 @@
+{
+  "admission_maps": [
+    {
+      "path": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/merge2-apply/evidence/admission-298-commits.json",
+      "sha256": "c1fe01627a6fcbc5facc17443467bcad3b41df6b16a1fa17ea35c7b25368cd41"
+    },
+    {
+      "path": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/merge2-apply/evidence/admission-usage-reporting-map.json",
+      "sha256": "304f8d075d6b5199f4ccc54062998610fee5cd0fc30a7b624bd609ff5363ee30"
+    }
+  ],
+  "final_census": {
+    "path": "reports/event-authority-20261116/admission-merge-2/final-census.json",
+    "sha256": "7c914bdaaa02d70f541f617d261196b5b3e3ed029833bdff4b2726895befcf2f"
+  },
+  "schema_id": "pm.assurance.event_authority.final_application_inputs.v1",
+  "source_checkpoint": "826e6cb4d4a50e8c2635c4003576b4c0248bed6f",
+  "split_census": {
+    "path": "reports/event-authority-20261116/admission-merge-2/merge2-batch-split.json",
+    "sha256": "a69185e51439394a2b25f7f9b24011221aac4866ac71b61a271b2fe521096ec5"
+  },
+  "usage_readiness": {
+    "path": "reports/event-authority-20261116/admission-merge-2/usage-readiness-list.json",
+    "sha256": "12d02f10f2c0ce60f70b96f939ae7fe576dab5e0e04a80ace55df50ddc66493e"
+  }
+}

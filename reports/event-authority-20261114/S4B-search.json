@@ -1,0 +1,971 @@
+{
+ "base": "3c33510c576d87a9ad512c4519d417e4fd4441df",
+ "families": {
+  "browser.controller_lease.granted": {
+   "binding_identifier_hits": {
+    "browser_controller_lease_granted_checkpoint": [],
+    "browser_controller_lease_granted_index_checkpoint": [],
+    "consumer.browser.controller_lease.granted": [],
+    "projector.browser.controller_lease.granted": [],
+    "storage.browser_controller_lease_granted": []
+   },
+   "exact_name_hits": {
+    "Plans/Decision_Log.md": 1,
+    "Plans/Section15_MVP_Promoted_Features_Spec.md": 1,
+    "Plans/browser_event_admission.json": 1,
+    "Plans/browser_event_admission_candidates.json": 1,
+    "Plans/browser_event_admission_fixtures.json": 2,
+    "Plans/browser_event_payloads.schema.json": 1,
+    "Plans/ds_original_custody.json": 1,
+    "scripts/pm_ds_p2a_cases.py": 5
+   }
+  },
+  "browser.controller_lease.lost": {
+   "binding_identifier_hits": {
+    "browser_controller_lease_lost_checkpoint": [],
+    "browser_controller_lease_lost_index_checkpoint": [],
+    "consumer.browser.controller_lease.lost": [],
+    "projector.browser.controller_lease.lost": [],
+    "storage.browser_controller_lease_lost": []
+   },
+   "exact_name_hits": {
+    "Plans/Decision_Log.md": 1,
+    "Plans/Section15_MVP_Promoted_Features_Spec.md": 1,
+    "Plans/browser_event_admission.json": 1,
+    "Plans/browser_event_admission_candidates.json": 1,
+    "Plans/browser_event_admission_fixtures.json": 2,
+    "Plans/browser_event_payloads.schema.json": 1,
+    "Plans/ds_original_custody.json": 1
+   }
+  },
+  "browser.controller_lease.renewed": {
+   "binding_identifier_hits": {
+    "browser_controller_lease_renewed_checkpoint": [],
+    "browser_controller_lease_renewed_index_checkpoint": [],
+    "consumer.browser.controller_lease.renewed": [],
+    "projector.browser.controller_lease.renewed": [],
+    "storage.browser_controller_lease_renewed": []
+   },
+   "exact_name_hits": {
+    "Plans/Decision_Log.md": 1,
+    "Plans/Section15_MVP_Promoted_Features_Spec.md": 1,
+    "Plans/browser_event_admission.json": 1,
+    "Plans/browser_event_admission_candidates.json": 1,
+    "Plans/browser_event_admission_fixtures.json": 2,
+    "Plans/browser_event_payloads.schema.json": 1,
+    "Plans/ds_original_custody.json": 1
+   }
+  },
+  "browser.controller_lease.takeover_completed": {
+   "binding_identifier_hits": {
+    "browser_controller_lease_takeover_completed_checkpoint": [],
+    "browser_controller_lease_takeover_completed_index_checkpoint": [],
+    "consumer.browser.controller_lease.takeover_completed": [],
+    "projector.browser.controller_lease.takeover_completed": [],
+    "storage.browser_controller_lease_takeover_completed": []
+   },
+   "exact_name_hits": {
+    "Plans/Decision_Log.md": 1,
+    "Plans/Section15_MVP_Promoted_Features_Spec.md": 1,
+    "Plans/browser_event_admission.json": 1,
+    "Plans/browser_event_admission_candidates.json": 1,
+    "Plans/browser_event_admission_fixtures.json": 2,
+    "Plans/browser_event_payloads.schema.json": 1,
+    "Plans/ds_original_custody.json": 1,
+    "scripts/pm_ds_p2a_cases.py": 1
+   }
+  },
+  "browser.controller_lease.takeover_requested": {
+   "binding_identifier_hits": {
+    "browser_controller_lease_takeover_requested_checkpoint": [],
+    "browser_controller_lease_takeover_requested_index_checkpoint": [],
+    "consumer.browser.controller_lease.takeover_requested": [],
+    "projector.browser.controller_lease.takeover_requested": [],
+    "storage.browser_controller_lease_takeover_requested": []
+   },
+   "exact_name_hits": {
+    "Plans/Decision_Log.md": 1,
+    "Plans/Section15_MVP_Promoted_Features_Spec.md": 1,
+    "Plans/browser_event_admission.json": 1,
+    "Plans/browser_event_admission_candidates.json": 1,
+    "Plans/browser_event_admission_fixtures.json": 2,
+    "Plans/browser_event_payloads.schema.json": 1,
+    "Plans/ds_original_custody.json": 1,
+    "scripts/pm_ds_p2a_cases.py": 1
+   }
+  },
+  "browser.document.generation_changed": {
+   "binding_identifier_hits": {
+    "browser_document_generation_changed_checkpoint": [],
+    "browser_document_generation_changed_index_checkpoint": [],
+    "consumer.browser.document.generation_changed": [],
+    "projector.browser.document.generation_changed": [],
+    "storage.browser_document_generation_changed": []
+   },
+   "exact_name_hits": {
+    "Plans/Decision_Log.md": 1,
+    "Plans/Section15_MVP_Promoted_Features_Spec.md": 1,
+    "Plans/Wiring_Matrix.production.json": 2,
+    "Plans/browser_event_admission.json": 2,
+    "Plans/browser_event_admission_candidates.json": 1,
+    "Plans/browser_event_admission_fixtures.json": 2,
+    "Plans/browser_event_payloads.schema.json": 1,
+    "Plans/ds_original_custody.json": 1,
+    "scripts/pm-browser-event-admission.py": 1
+   }
+  },
+  "browser.execution_strategy.fallback_selected": {
+   "binding_identifier_hits": {
+    "browser_execution_strategy_fallback_selected_checkpoint": [],
+    "browser_execution_strategy_fallback_selected_index_checkpoint": [],
+    "consumer.browser.execution_strategy.fallback_selected": [],
+    "projector.browser.execution_strategy.fallback_selected": [],
+    "storage.browser_execution_strategy_fallback_selected": []
+   },
+   "exact_name_hits": {
+    "Plans/Decision_Log.md": 1,
+    "Plans/Section15_MVP_Promoted_Features_Spec.md": 1,
+    "Plans/browser_event_admission.json": 1,
+    "Plans/browser_event_admission_candidates.json": 1,
+    "Plans/browser_event_admission_fixtures.json": 2,
+    "Plans/browser_event_payloads.schema.json": 1,
+    "Plans/ds_original_custody.json": 1
+   }
+  },
+  "browser.execution_strategy.selected": {
+   "binding_identifier_hits": {
+    "browser_execution_strategy_selected_checkpoint": [],
+    "browser_execution_strategy_selected_index_checkpoint": [],
+    "consumer.browser.execution_strategy.selected": [],
+    "projector.browser.execution_strategy.selected": [],
+    "storage.browser_execution_strategy_selected": []
+   },
+   "exact_name_hits": {
+    "Plans/Decision_Log.md": 1,
+    "Plans/Section15_MVP_Promoted_Features_Spec.md": 1,
+    "Plans/browser_event_admission.json": 1,
+    "Plans/browser_event_admission_candidates.json": 1,
+    "Plans/browser_event_admission_fixtures.json": 2,
+    "Plans/browser_event_payloads.schema.json": 1,
+    "Plans/ds_original_custody.json": 1
+   }
+  },
+  "browser.navigation.generation_changed": {
+   "binding_identifier_hits": {
+    "browser_navigation_generation_changed_checkpoint": [],
+    "browser_navigation_generation_changed_index_checkpoint": [],
+    "consumer.browser.navigation.generation_changed": [],
+    "projector.browser.navigation.generation_changed": [],
+    "storage.browser_navigation_generation_changed": []
+   },
+   "exact_name_hits": {
+    "Plans/Decision_Log.md": 1,
+    "Plans/Section15_MVP_Promoted_Features_Spec.md": 1,
+    "Plans/Wiring_Matrix.production.json": 2,
+    "Plans/browser_event_admission.json": 2,
+    "Plans/browser_event_admission_candidates.json": 1,
+    "Plans/browser_event_admission_fixtures.json": 2,
+    "Plans/browser_event_payloads.schema.json": 1,
+    "Plans/ds_original_custody.json": 2,
+    "scripts/pm-browser-event-admission.py": 1,
+    "scripts/pm_ds_p2a_cases.py": 1,
+    "tests/test_pm_browser_event_admission.py": 1
+   }
+  },
+  "browser.page.activated": {
+   "binding_identifier_hits": {
+    "browser_page_activated_checkpoint": [],
+    "browser_page_activated_index_checkpoint": [],
+    "consumer.browser.page.activated": [],
+    "projector.browser.page.activated": [],
+    "storage.browser_page_activated": []
+   },
+   "exact_name_hits": {
+    "Plans/Decision_Log.md": 1,
+    "Plans/Section15_MVP_Promoted_Features_Spec.md": 1,
+    "Plans/Wiring_Matrix.production.json": 2,
+    "Plans/browser_event_admission.json": 2,
+    "Plans/browser_event_admission_candidates.json": 1,
+    "Plans/browser_event_admission_fixtures.json": 2,
+    "Plans/browser_event_payloads.schema.json": 1,
+    "Plans/ds_original_custody.json": 2,
+    "scripts/pm_ds_p2a_cases.py": 1,
+    "tests/test_pm_browser_event_admission.py": 1
+   }
+  },
+  "browser.page.closed": {
+   "binding_identifier_hits": {
+    "browser_page_closed_checkpoint": [],
+    "browser_page_closed_index_checkpoint": [],
+    "consumer.browser.page.closed": [],
+    "projector.browser.page.closed": [],
+    "storage.browser_page_closed": []
+   },
+   "exact_name_hits": {
+    "Plans/Decision_Log.md": 1,
+    "Plans/Section15_MVP_Promoted_Features_Spec.md": 1,
+    "Plans/Wiring_Matrix.production.json": 2,
+    "Plans/browser_event_admission.json": 2,
+    "Plans/browser_event_admission_candidates.json": 1,
+    "Plans/browser_event_admission_fixtures.json": 2,
+    "Plans/browser_event_payloads.schema.json": 1,
+    "Plans/ds_original_custody.json": 1
+   }
+  },
+  "browser.page.created": {
+   "binding_identifier_hits": {
+    "browser_page_created_checkpoint": [],
+    "browser_page_created_index_checkpoint": [],
+    "consumer.browser.page.created": [],
+    "projector.browser.page.created": [],
+    "storage.browser_page_created": []
+   },
+   "exact_name_hits": {
+    "Plans/Decision_Log.md": 1,
+    "Plans/Section15_MVP_Promoted_Features_Spec.md": 1,
+    "Plans/Wiring_Matrix.production.json": 2,
+    "Plans/browser_event_admission.json": 2,
+    "Plans/browser_event_admission_candidates.json": 1,
+    "Plans/browser_event_admission_fixtures.json": 2,
+    "Plans/browser_event_payloads.schema.json": 1,
+    "Plans/ds_original_custody.json": 3,
+    "tests/test_pm_browser_event_admission.py": 2
+   }
+  },
+  "browser.program.cancelled": {
+   "binding_identifier_hits": {
+    "browser_program_cancelled_checkpoint": [],
+    "browser_program_cancelled_index_checkpoint": [],
+    "consumer.browser.program.cancelled": [],
+    "projector.browser.program.cancelled": [],
+    "storage.browser_program_cancelled": []
+   },
+   "exact_name_hits": {
+    "Plans/Decision_Log.md": 1,
+    "Plans/Section15_MVP_Promoted_Features_Spec.md": 1,
+    "Plans/Wiring_Matrix.production.json": 4,
+    "Plans/browser_event_admission.json": 3,
+    "Plans/browser_event_admission_candidates.json": 1,
+    "Plans/browser_event_admission_fixtures.json": 2,
+    "Plans/browser_event_payloads.schema.json": 1,
+    "Plans/ds_original_custody.json": 1
+   }
+  },
+  "browser.program.checkpointed": {
+   "binding_identifier_hits": {
+    "browser_program_checkpointed_checkpoint": [],
+    "browser_program_checkpointed_index_checkpoint": [],
+    "consumer.browser.program.checkpointed": [],
+    "projector.browser.program.checkpointed": [],
+    "storage.browser_program_checkpointed": []
+   },
+   "exact_name_hits": {
+    "Plans/Decision_Log.md": 1,
+    "Plans/Section15_MVP_Promoted_Features_Spec.md": 1,
+    "Plans/Wiring_Matrix.production.json": 2,
+    "Plans/browser_event_admission.json": 2,
+    "Plans/browser_event_admission_candidates.json": 1,
+    "Plans/browser_event_admission_fixtures.json": 2,
+    "Plans/browser_event_payloads.schema.json": 1,
+    "Plans/ds_original_custody.json": 1
+   }
+  },
+  "browser.program.completed": {
+   "binding_identifier_hits": {
+    "browser_program_completed_checkpoint": [],
+    "browser_program_completed_index_checkpoint": [],
+    "consumer.browser.program.completed": [],
+    "projector.browser.program.completed": [],
+    "storage.browser_program_completed": []
+   },
+   "exact_name_hits": {
+    "Plans/Decision_Log.md": 1,
+    "Plans/Section15_MVP_Promoted_Features_Spec.md": 1,
+    "Plans/Wiring_Matrix.production.json": 2,
+    "Plans/browser_event_admission.json": 2,
+    "Plans/browser_event_admission_candidates.json": 1,
+    "Plans/browser_event_admission_fixtures.json": 2,
+    "Plans/browser_event_payloads.schema.json": 1,
+    "Plans/ds_original_custody.json": 1,
+    "scripts/pm_ds_p2a_cases.py": 1,
+    "tests/test_pm_browser_event_admission.py": 1
+   }
+  },
+  "browser.program.failed": {
+   "binding_identifier_hits": {
+    "browser_program_failed_checkpoint": [],
+    "browser_program_failed_index_checkpoint": [],
+    "consumer.browser.program.failed": [],
+    "projector.browser.program.failed": [],
+    "storage.browser_program_failed": []
+   },
+   "exact_name_hits": {
+    "Plans/Decision_Log.md": 1,
+    "Plans/Section15_MVP_Promoted_Features_Spec.md": 1,
+    "Plans/Wiring_Matrix.production.json": 2,
+    "Plans/browser_event_admission.json": 2,
+    "Plans/browser_event_admission_candidates.json": 1,
+    "Plans/browser_event_admission_fixtures.json": 2,
+    "Plans/browser_event_payloads.schema.json": 1,
+    "Plans/ds_original_custody.json": 1,
+    "scripts/pm_ds_p2a_cases.py": 1
+   }
+  },
+  "browser.program.paused": {
+   "binding_identifier_hits": {
+    "browser_program_paused_checkpoint": [],
+    "browser_program_paused_index_checkpoint": [],
+    "consumer.browser.program.paused": [],
+    "projector.browser.program.paused": [],
+    "storage.browser_program_paused": []
+   },
+   "exact_name_hits": {
+    "Plans/Decision_Log.md": 1,
+    "Plans/Section15_MVP_Promoted_Features_Spec.md": 1,
+    "Plans/Wiring_Matrix.production.json": 2,
+    "Plans/browser_event_admission.json": 2,
+    "Plans/browser_event_admission_candidates.json": 1,
+    "Plans/browser_event_admission_fixtures.json": 2,
+    "Plans/browser_event_payloads.schema.json": 1,
+    "Plans/ds_original_custody.json": 1,
+    "scripts/pm-browser-event-admission.py": 1
+   }
+  },
+  "browser.program.resumed": {
+   "binding_identifier_hits": {
+    "browser_program_resumed_checkpoint": [],
+    "browser_program_resumed_index_checkpoint": [],
+    "consumer.browser.program.resumed": [],
+    "projector.browser.program.resumed": [],
+    "storage.browser_program_resumed": []
+   },
+   "exact_name_hits": {
+    "Plans/Decision_Log.md": 1,
+    "Plans/Section15_MVP_Promoted_Features_Spec.md": 1,
+    "Plans/Wiring_Matrix.production.json": 2,
+    "Plans/browser_event_admission.json": 2,
+    "Plans/browser_event_admission_candidates.json": 1,
+    "Plans/browser_event_admission_fixtures.json": 2,
+    "Plans/browser_event_payloads.schema.json": 1,
+    "Plans/ds_original_custody.json": 1,
+    "scripts/pm-browser-event-admission.py": 1
+   }
+  },
+  "browser.program.segment.checkpointed": {
+   "binding_identifier_hits": {
+    "browser_program_segment_checkpointed_checkpoint": [],
+    "browser_program_segment_checkpointed_index_checkpoint": [],
+    "consumer.browser.program.segment.checkpointed": [],
+    "projector.browser.program.segment.checkpointed": [],
+    "storage.browser_program_segment_checkpointed": []
+   },
+   "exact_name_hits": {
+    "Plans/Decision_Log.md": 1,
+    "Plans/Section15_MVP_Promoted_Features_Spec.md": 1,
+    "Plans/browser_event_admission.json": 1,
+    "Plans/browser_event_admission_candidates.json": 1,
+    "Plans/browser_event_admission_fixtures.json": 2,
+    "Plans/browser_event_payloads.schema.json": 1,
+    "Plans/ds_original_custody.json": 1
+   }
+  },
+  "browser.program.segment.completed": {
+   "binding_identifier_hits": {
+    "browser_program_segment_completed_checkpoint": [],
+    "browser_program_segment_completed_index_checkpoint": [],
+    "consumer.browser.program.segment.completed": [],
+    "projector.browser.program.segment.completed": [],
+    "storage.browser_program_segment_completed": []
+   },
+   "exact_name_hits": {
+    "Plans/Decision_Log.md": 1,
+    "Plans/Section15_MVP_Promoted_Features_Spec.md": 1,
+    "Plans/browser_event_admission.json": 1,
+    "Plans/browser_event_admission_candidates.json": 1,
+    "Plans/browser_event_admission_fixtures.json": 2,
+    "Plans/browser_event_payloads.schema.json": 1,
+    "Plans/ds_original_custody.json": 1
+   }
+  },
+  "browser.program.segment.failed": {
+   "binding_identifier_hits": {
+    "browser_program_segment_failed_checkpoint": [],
+    "browser_program_segment_failed_index_checkpoint": [],
+    "consumer.browser.program.segment.failed": [],
+    "projector.browser.program.segment.failed": [],
+    "storage.browser_program_segment_failed": []
+   },
+   "exact_name_hits": {
+    "Plans/Decision_Log.md": 1,
+    "Plans/Section15_MVP_Promoted_Features_Spec.md": 1,
+    "Plans/browser_event_admission.json": 1,
+    "Plans/browser_event_admission_candidates.json": 1,
+    "Plans/browser_event_admission_fixtures.json": 2,
+    "Plans/browser_event_payloads.schema.json": 1,
+    "Plans/ds_original_custody.json": 1
+   }
+  },
+  "browser.program.segment.started": {
+   "binding_identifier_hits": {
+    "browser_program_segment_started_checkpoint": [],
+    "browser_program_segment_started_index_checkpoint": [],
+    "consumer.browser.program.segment.started": [],
+    "projector.browser.program.segment.started": [],
+    "storage.browser_program_segment_started": []
+   },
+   "exact_name_hits": {
+    "Plans/Decision_Log.md": 1,
+    "Plans/Section15_MVP_Promoted_Features_Spec.md": 1,
+    "Plans/browser_event_admission.json": 1,
+    "Plans/browser_event_admission_candidates.json": 1,
+    "Plans/browser_event_admission_fixtures.json": 2,
+    "Plans/browser_event_payloads.schema.json": 1,
+    "Plans/ds_original_custody.json": 1
+   }
+  },
+  "browser.program.segment.timed_out": {
+   "binding_identifier_hits": {
+    "browser_program_segment_timed_out_checkpoint": [],
+    "browser_program_segment_timed_out_index_checkpoint": [],
+    "consumer.browser.program.segment.timed_out": [],
+    "projector.browser.program.segment.timed_out": [],
+    "storage.browser_program_segment_timed_out": []
+   },
+   "exact_name_hits": {
+    "Plans/Decision_Log.md": 1,
+    "Plans/Section15_MVP_Promoted_Features_Spec.md": 1,
+    "Plans/browser_event_admission.json": 1,
+    "Plans/browser_event_admission_candidates.json": 1,
+    "Plans/browser_event_admission_fixtures.json": 2,
+    "Plans/browser_event_payloads.schema.json": 1,
+    "Plans/ds_original_custody.json": 1,
+    "scripts/pm_ds_p2a_cases.py": 1
+   }
+  },
+  "browser.program.started": {
+   "binding_identifier_hits": {
+    "browser_program_started_checkpoint": [],
+    "browser_program_started_index_checkpoint": [],
+    "consumer.browser.program.started": [],
+    "projector.browser.program.started": [],
+    "storage.browser_program_started": []
+   },
+   "exact_name_hits": {
+    "Plans/Decision_Log.md": 1,
+    "Plans/Section15_MVP_Promoted_Features_Spec.md": 1,
+    "Plans/Wiring_Matrix.production.json": 2,
+    "Plans/browser_event_admission.json": 2,
+    "Plans/browser_event_admission_candidates.json": 1,
+    "Plans/browser_event_admission_fixtures.json": 2,
+    "Plans/browser_event_payloads.schema.json": 1,
+    "Plans/ds_original_custody.json": 1,
+    "scripts/pm_ds_p2a_cases.py": 4,
+    "scripts/pm_ds_shared_runtime_controls.py": 1
+   }
+  },
+  "browser.program.timeout.effect_state_unknown": {
+   "binding_identifier_hits": {
+    "browser_program_timeout_effect_state_unknown_checkpoint": [],
+    "browser_program_timeout_effect_state_unknown_index_checkpoint": [],
+    "consumer.browser.program.timeout.effect_state_unknown": [],
+    "projector.browser.program.timeout.effect_state_unknown": [],
+    "storage.browser_program_timeout_effect_state_unknown": []
+   },
+   "exact_name_hits": {
+    "Plans/Decision_Log.md": 1,
+    "Plans/Section15_MVP_Promoted_Features_Spec.md": 1,
+    "Plans/browser_event_admission.json": 1,
+    "Plans/browser_event_admission_candidates.json": 1,
+    "Plans/browser_event_admission_fixtures.json": 2,
+    "Plans/browser_event_payloads.schema.json": 1,
+    "Plans/ds_original_custody.json": 1
+   }
+  },
+  "browser.program.timeout.effects_reconciled": {
+   "binding_identifier_hits": {
+    "browser_program_timeout_effects_reconciled_checkpoint": [],
+    "browser_program_timeout_effects_reconciled_index_checkpoint": [],
+    "consumer.browser.program.timeout.effects_reconciled": [],
+    "projector.browser.program.timeout.effects_reconciled": [],
+    "storage.browser_program_timeout_effects_reconciled": []
+   },
+   "exact_name_hits": {
+    "Plans/Decision_Log.md": 1,
+    "Plans/Section15_MVP_Promoted_Features_Spec.md": 1,
+    "Plans/browser_event_admission.json": 1,
+    "Plans/browser_event_admission_candidates.json": 1,
+    "Plans/browser_event_admission_fixtures.json": 2,
+    "Plans/browser_event_payloads.schema.json": 1,
+    "Plans/ds_original_custody.json": 1
+   }
+  },
+  "browser.program.timeout.stopped": {
+   "binding_identifier_hits": {
+    "browser_program_timeout_stopped_checkpoint": [],
+    "browser_program_timeout_stopped_index_checkpoint": [],
+    "consumer.browser.program.timeout.stopped": [],
+    "projector.browser.program.timeout.stopped": [],
+    "storage.browser_program_timeout_stopped": []
+   },
+   "exact_name_hits": {
+    "Plans/Decision_Log.md": 1,
+    "Plans/Section15_MVP_Promoted_Features_Spec.md": 1,
+    "Plans/browser_event_admission.json": 1,
+    "Plans/browser_event_admission_candidates.json": 1,
+    "Plans/browser_event_admission_fixtures.json": 2,
+    "Plans/browser_event_payloads.schema.json": 1,
+    "Plans/ds_original_custody.json": 1
+   }
+  },
+  "browser.program_workspace.checkpointed": {
+   "binding_identifier_hits": {
+    "browser_program_workspace_checkpointed_checkpoint": [],
+    "browser_program_workspace_checkpointed_index_checkpoint": [],
+    "consumer.browser.program_workspace.checkpointed": [],
+    "projector.browser.program_workspace.checkpointed": [],
+    "storage.browser_program_workspace_checkpointed": []
+   },
+   "exact_name_hits": {
+    "Plans/Decision_Log.md": 1,
+    "Plans/Section15_MVP_Promoted_Features_Spec.md": 1,
+    "Plans/browser_event_admission.json": 1,
+    "Plans/browser_event_admission_candidates.json": 1,
+    "Plans/browser_event_admission_fixtures.json": 2,
+    "Plans/browser_event_payloads.schema.json": 1,
+    "Plans/ds_original_custody.json": 1
+   }
+  },
+  "browser.program_workspace.closed": {
+   "binding_identifier_hits": {
+    "browser_program_workspace_closed_checkpoint": [],
+    "browser_program_workspace_closed_index_checkpoint": [],
+    "consumer.browser.program_workspace.closed": [],
+    "projector.browser.program_workspace.closed": [],
+    "storage.browser_program_workspace_closed": []
+   },
+   "exact_name_hits": {
+    "Plans/Decision_Log.md": 1,
+    "Plans/Section15_MVP_Promoted_Features_Spec.md": 1,
+    "Plans/browser_event_admission.json": 1,
+    "Plans/browser_event_admission_candidates.json": 1,
+    "Plans/browser_event_admission_fixtures.json": 2,
+    "Plans/browser_event_payloads.schema.json": 1,
+    "Plans/ds_original_custody.json": 1
+   }
+  },
+  "browser.program_workspace.created": {
+   "binding_identifier_hits": {
+    "browser_program_workspace_created_checkpoint": [],
+    "browser_program_workspace_created_index_checkpoint": [],
+    "consumer.browser.program_workspace.created": [],
+    "projector.browser.program_workspace.created": [],
+    "storage.browser_program_workspace_created": []
+   },
+   "exact_name_hits": {
+    "Plans/Decision_Log.md": 1,
+    "Plans/Section15_MVP_Promoted_Features_Spec.md": 1,
+    "Plans/browser_event_admission.json": 1,
+    "Plans/browser_event_admission_candidates.json": 1,
+    "Plans/browser_event_admission_fixtures.json": 2,
+    "Plans/browser_event_payloads.schema.json": 1,
+    "Plans/ds_original_custody.json": 1
+   }
+  },
+  "browser.program_workspace.spilled": {
+   "binding_identifier_hits": {
+    "browser_program_workspace_spilled_checkpoint": [],
+    "browser_program_workspace_spilled_index_checkpoint": [],
+    "consumer.browser.program_workspace.spilled": [],
+    "projector.browser.program_workspace.spilled": [],
+    "storage.browser_program_workspace_spilled": []
+   },
+   "exact_name_hits": {
+    "Plans/Decision_Log.md": 1,
+    "Plans/Section15_MVP_Promoted_Features_Spec.md": 1,
+    "Plans/browser_event_admission.json": 1,
+    "Plans/browser_event_admission_candidates.json": 1,
+    "Plans/browser_event_admission_fixtures.json": 2,
+    "Plans/browser_event_payloads.schema.json": 1,
+    "Plans/ds_original_custody.json": 1
+   }
+  },
+  "browser.program_workspace.updated": {
+   "binding_identifier_hits": {
+    "browser_program_workspace_updated_checkpoint": [],
+    "browser_program_workspace_updated_index_checkpoint": [],
+    "consumer.browser.program_workspace.updated": [],
+    "projector.browser.program_workspace.updated": [],
+    "storage.browser_program_workspace_updated": []
+   },
+   "exact_name_hits": {
+    "Plans/Decision_Log.md": 1,
+    "Plans/Section15_MVP_Promoted_Features_Spec.md": 1,
+    "Plans/browser_event_admission.json": 1,
+    "Plans/browser_event_admission_candidates.json": 1,
+    "Plans/browser_event_admission_fixtures.json": 2,
+    "Plans/browser_event_payloads.schema.json": 1,
+    "Plans/ds_original_custody.json": 1
+   }
+  },
+  "browser.representation.captured": {
+   "binding_identifier_hits": {
+    "browser_representation_captured_checkpoint": [],
+    "browser_representation_captured_index_checkpoint": [],
+    "consumer.browser.representation.captured": [],
+    "projector.browser.representation.captured": [],
+    "storage.browser_representation_captured": []
+   },
+   "exact_name_hits": {
+    "Plans/Decision_Log.md": 1,
+    "Plans/Section15_MVP_Promoted_Features_Spec.md": 1,
+    "Plans/Wiring_Matrix.production.json": 2,
+    "Plans/browser_event_admission.json": 2,
+    "Plans/browser_event_admission_candidates.json": 1,
+    "Plans/browser_event_admission_fixtures.json": 2,
+    "Plans/browser_event_payloads.schema.json": 1,
+    "Plans/ds_original_custody.json": 1,
+    "scripts/pm_ds_p2a_cases.py": 4
+   }
+  },
+  "browser.representation.delta_created": {
+   "binding_identifier_hits": {
+    "browser_representation_delta_created_checkpoint": [],
+    "browser_representation_delta_created_index_checkpoint": [],
+    "consumer.browser.representation.delta_created": [],
+    "projector.browser.representation.delta_created": [],
+    "storage.browser_representation_delta_created": []
+   },
+   "exact_name_hits": {
+    "Plans/Decision_Log.md": 1,
+    "Plans/Section15_MVP_Promoted_Features_Spec.md": 1,
+    "Plans/Wiring_Matrix.production.json": 2,
+    "Plans/browser_event_admission.json": 2,
+    "Plans/browser_event_admission_candidates.json": 1,
+    "Plans/browser_event_admission_fixtures.json": 2,
+    "Plans/browser_event_payloads.schema.json": 1,
+    "Plans/ds_original_custody.json": 1
+   }
+  },
+  "browser.representation.invalidated": {
+   "binding_identifier_hits": {
+    "browser_representation_invalidated_checkpoint": [],
+    "browser_representation_invalidated_index_checkpoint": [],
+    "consumer.browser.representation.invalidated": [],
+    "projector.browser.representation.invalidated": [],
+    "storage.browser_representation_invalidated": []
+   },
+   "exact_name_hits": {
+    "Plans/Decision_Log.md": 1,
+    "Plans/Section15_MVP_Promoted_Features_Spec.md": 1,
+    "Plans/browser_event_admission.json": 1,
+    "Plans/browser_event_admission_candidates.json": 1,
+    "Plans/browser_event_admission_fixtures.json": 2,
+    "Plans/browser_event_payloads.schema.json": 1,
+    "Plans/ds_original_custody.json": 1,
+    "scripts/pm_ds_p2a_cases.py": 1
+   }
+  },
+  "browser.representation.queried": {
+   "binding_identifier_hits": {
+    "browser_representation_queried_checkpoint": [],
+    "browser_representation_queried_index_checkpoint": [],
+    "consumer.browser.representation.queried": [],
+    "projector.browser.representation.queried": [],
+    "storage.browser_representation_queried": []
+   },
+   "exact_name_hits": {
+    "Plans/Decision_Log.md": 1,
+    "Plans/Section15_MVP_Promoted_Features_Spec.md": 1,
+    "Plans/Wiring_Matrix.production.json": 2,
+    "Plans/browser_event_admission.json": 2,
+    "Plans/browser_event_admission_candidates.json": 1,
+    "Plans/browser_event_admission_fixtures.json": 2,
+    "Plans/browser_event_payloads.schema.json": 1,
+    "Plans/ds_original_custody.json": 1
+   }
+  },
+  "browser.route.browser_escalated": {
+   "binding_identifier_hits": {
+    "browser_route_browser_escalated_checkpoint": [],
+    "browser_route_browser_escalated_index_checkpoint": [],
+    "consumer.browser.route.browser_escalated": [],
+    "projector.browser.route.browser_escalated": [],
+    "storage.browser_route_browser_escalated": []
+   },
+   "exact_name_hits": {
+    "Plans/Decision_Log.md": 1,
+    "Plans/Section15_MVP_Promoted_Features_Spec.md": 1,
+    "Plans/browser_event_admission.json": 1,
+    "Plans/browser_event_admission_candidates.json": 1,
+    "Plans/browser_event_admission_fixtures.json": 2,
+    "Plans/browser_event_payloads.schema.json": 1,
+    "Plans/ds_original_custody.json": 1
+   }
+  },
+  "browser.route.fetch_selected": {
+   "binding_identifier_hits": {
+    "browser_route_fetch_selected_checkpoint": [],
+    "browser_route_fetch_selected_index_checkpoint": [],
+    "consumer.browser.route.fetch_selected": [],
+    "projector.browser.route.fetch_selected": [],
+    "storage.browser_route_fetch_selected": []
+   },
+   "exact_name_hits": {
+    "Plans/Decision_Log.md": 1,
+    "Plans/Section15_MVP_Promoted_Features_Spec.md": 1,
+    "Plans/browser_event_admission.json": 1,
+    "Plans/browser_event_admission_candidates.json": 1,
+    "Plans/browser_event_admission_fixtures.json": 2,
+    "Plans/browser_event_payloads.schema.json": 1,
+    "Plans/ds_original_custody.json": 1,
+    "tests/test_pm_browser_event_admission.py": 1
+   }
+  },
+  "browser.routine.disabled": {
+   "binding_identifier_hits": {
+    "browser_routine_disabled_checkpoint": [],
+    "browser_routine_disabled_index_checkpoint": [],
+    "consumer.browser.routine.disabled": [],
+    "projector.browser.routine.disabled": [],
+    "storage.browser_routine_disabled": []
+   },
+   "exact_name_hits": {
+    "Plans/Decision_Log.md": 1,
+    "Plans/Section15_MVP_Promoted_Features_Spec.md": 1,
+    "Plans/browser_event_admission.json": 1,
+    "Plans/browser_event_admission_candidates.json": 1,
+    "Plans/browser_event_admission_fixtures.json": 2,
+    "Plans/browser_event_payloads.schema.json": 1,
+    "Plans/ds_original_custody.json": 1
+   }
+  },
+  "browser.routine.generated": {
+   "binding_identifier_hits": {
+    "browser_routine_generated_checkpoint": [],
+    "browser_routine_generated_index_checkpoint": [],
+    "consumer.browser.routine.generated": [],
+    "projector.browser.routine.generated": [],
+    "storage.browser_routine_generated": []
+   },
+   "exact_name_hits": {
+    "Plans/Decision_Log.md": 1,
+    "Plans/Section15_MVP_Promoted_Features_Spec.md": 1,
+    "Plans/browser_event_admission.json": 1,
+    "Plans/browser_event_admission_candidates.json": 1,
+    "Plans/browser_event_admission_fixtures.json": 2,
+    "Plans/browser_event_payloads.schema.json": 1,
+    "Plans/ds_original_custody.json": 1
+   }
+  },
+  "browser.routine.invalidated": {
+   "binding_identifier_hits": {
+    "browser_routine_invalidated_checkpoint": [],
+    "browser_routine_invalidated_index_checkpoint": [],
+    "consumer.browser.routine.invalidated": [],
+    "projector.browser.routine.invalidated": [],
+    "storage.browser_routine_invalidated": []
+   },
+   "exact_name_hits": {
+    "Plans/Decision_Log.md": 1,
+    "Plans/Section15_MVP_Promoted_Features_Spec.md": 1,
+    "Plans/browser_event_admission.json": 1,
+    "Plans/browser_event_admission_candidates.json": 1,
+    "Plans/browser_event_admission_fixtures.json": 2,
+    "Plans/browser_event_payloads.schema.json": 1,
+    "Plans/ds_original_custody.json": 1
+   }
+  },
+  "browser.routine.promoted": {
+   "binding_identifier_hits": {
+    "browser_routine_promoted_checkpoint": [],
+    "browser_routine_promoted_index_checkpoint": [],
+    "consumer.browser.routine.promoted": [],
+    "projector.browser.routine.promoted": [],
+    "storage.browser_routine_promoted": []
+   },
+   "exact_name_hits": {
+    "Plans/Decision_Log.md": 1,
+    "Plans/Section15_MVP_Promoted_Features_Spec.md": 1,
+    "Plans/browser_event_admission.json": 1,
+    "Plans/browser_event_admission_candidates.json": 1,
+    "Plans/browser_event_admission_fixtures.json": 2,
+    "Plans/browser_event_payloads.schema.json": 1,
+    "Plans/ds_original_custody.json": 1
+   }
+  },
+  "browser.routine.validated": {
+   "binding_identifier_hits": {
+    "browser_routine_validated_checkpoint": [],
+    "browser_routine_validated_index_checkpoint": [],
+    "consumer.browser.routine.validated": [],
+    "projector.browser.routine.validated": [],
+    "storage.browser_routine_validated": []
+   },
+   "exact_name_hits": {
+    "Plans/Decision_Log.md": 1,
+    "Plans/Section15_MVP_Promoted_Features_Spec.md": 1,
+    "Plans/browser_event_admission.json": 1,
+    "Plans/browser_event_admission_candidates.json": 1,
+    "Plans/browser_event_admission_fixtures.json": 2,
+    "Plans/browser_event_payloads.schema.json": 1,
+    "Plans/ds_original_custody.json": 1
+   }
+  },
+  "browser.screenshot.model_attachment_selected": {
+   "binding_identifier_hits": {
+    "browser_screenshot_model_attachment_selected_checkpoint": [],
+    "browser_screenshot_model_attachment_selected_index_checkpoint": [],
+    "consumer.browser.screenshot.model_attachment_selected": [],
+    "projector.browser.screenshot.model_attachment_selected": [],
+    "storage.browser_screenshot_model_attachment_selected": []
+   },
+   "exact_name_hits": {
+    "Plans/Decision_Log.md": 1,
+    "Plans/Section15_MVP_Promoted_Features_Spec.md": 1,
+    "Plans/browser_event_admission.json": 1,
+    "Plans/browser_event_admission_candidates.json": 1,
+    "Plans/browser_event_admission_fixtures.json": 2,
+    "Plans/browser_event_payloads.schema.json": 1,
+    "Plans/ds_original_custody.json": 1,
+    "scripts/pm-browser-event-admission.py": 1
+   }
+  },
+  "browser.screenshot.skipped": {
+   "binding_identifier_hits": {
+    "browser_screenshot_skipped_checkpoint": [],
+    "browser_screenshot_skipped_index_checkpoint": [],
+    "consumer.browser.screenshot.skipped": [],
+    "projector.browser.screenshot.skipped": [],
+    "storage.browser_screenshot_skipped": []
+   },
+   "exact_name_hits": {
+    "Plans/Decision_Log.md": 1,
+    "Plans/Section15_MVP_Promoted_Features_Spec.md": 1,
+    "Plans/browser_event_admission.json": 1,
+    "Plans/browser_event_admission_candidates.json": 1,
+    "Plans/browser_event_admission_fixtures.json": 2,
+    "Plans/browser_event_payloads.schema.json": 1,
+    "Plans/ds_original_custody.json": 1
+   }
+  },
+  "browser.script.compile_failed": {
+   "binding_identifier_hits": {
+    "browser_script_compile_failed_checkpoint": [],
+    "browser_script_compile_failed_index_checkpoint": [],
+    "consumer.browser.script.compile_failed": [],
+    "projector.browser.script.compile_failed": [],
+    "storage.browser_script_compile_failed": []
+   },
+   "exact_name_hits": {
+    "Plans/Decision_Log.md": 1,
+    "Plans/Section15_MVP_Promoted_Features_Spec.md": 1,
+    "Plans/browser_event_admission.json": 1,
+    "Plans/browser_event_admission_candidates.json": 1,
+    "Plans/browser_event_admission_fixtures.json": 2,
+    "Plans/browser_event_payloads.schema.json": 1,
+    "Plans/ds_original_custody.json": 1
+   }
+  },
+  "browser.script.compile_started": {
+   "binding_identifier_hits": {
+    "browser_script_compile_started_checkpoint": [],
+    "browser_script_compile_started_index_checkpoint": [],
+    "consumer.browser.script.compile_started": [],
+    "projector.browser.script.compile_started": [],
+    "storage.browser_script_compile_started": []
+   },
+   "exact_name_hits": {
+    "Plans/Decision_Log.md": 1,
+    "Plans/Section15_MVP_Promoted_Features_Spec.md": 1,
+    "Plans/browser_event_admission.json": 1,
+    "Plans/browser_event_admission_candidates.json": 1,
+    "Plans/browser_event_admission_fixtures.json": 2,
+    "Plans/browser_event_payloads.schema.json": 1,
+    "Plans/ds_original_custody.json": 1,
+    "scripts/pm_ds_p2a_cases.py": 2
+   }
+  },
+  "browser.script.compiled": {
+   "binding_identifier_hits": {
+    "browser_script_compiled_checkpoint": [],
+    "browser_script_compiled_index_checkpoint": [],
+    "consumer.browser.script.compiled": [],
+    "projector.browser.script.compiled": [],
+    "storage.browser_script_compiled": []
+   },
+   "exact_name_hits": {
+    "Plans/Decision_Log.md": 1,
+    "Plans/Section15_MVP_Promoted_Features_Spec.md": 1,
+    "Plans/browser_event_admission.json": 1,
+    "Plans/browser_event_admission_candidates.json": 1,
+    "Plans/browser_event_admission_fixtures.json": 2,
+    "Plans/browser_event_payloads.schema.json": 1,
+    "Plans/ds_original_custody.json": 1
+   }
+  },
+  "browser.session.interrupted": {
+   "binding_identifier_hits": {
+    "browser_session_interrupted_checkpoint": [],
+    "browser_session_interrupted_index_checkpoint": [],
+    "consumer.browser.session.interrupted": [],
+    "projector.browser.session.interrupted": [],
+    "storage.browser_session_interrupted": []
+   },
+   "exact_name_hits": {
+    "Plans/Decision_Log.md": 1,
+    "Plans/Section15_MVP_Promoted_Features_Spec.md": 1,
+    "Plans/browser_event_admission.json": 1,
+    "Plans/browser_event_admission_candidates.json": 1,
+    "Plans/browser_event_admission_fixtures.json": 2,
+    "Plans/browser_event_payloads.schema.json": 1,
+    "Plans/ds_original_custody.json": 1
+   }
+  },
+  "browser.session.reconstructed_on_host": {
+   "binding_identifier_hits": {
+    "browser_session_reconstructed_on_host_checkpoint": [],
+    "browser_session_reconstructed_on_host_index_checkpoint": [],
+    "consumer.browser.session.reconstructed_on_host": [],
+    "projector.browser.session.reconstructed_on_host": [],
+    "storage.browser_session_reconstructed_on_host": []
+   },
+   "exact_name_hits": {
+    "Plans/Decision_Log.md": 1,
+    "Plans/Section15_MVP_Promoted_Features_Spec.md": 1,
+    "Plans/browser_event_admission.json": 1,
+    "Plans/browser_event_admission_candidates.json": 1,
+    "Plans/browser_event_admission_fixtures.json": 2,
+    "Plans/browser_event_payloads.schema.json": 1,
+    "Plans/ds_original_custody.json": 1,
+    "scripts/pm-browser-event-admission.py": 1
+   }
+  },
+  "browser.workspace.closed": {
+   "binding_identifier_hits": {
+    "browser_workspace_closed_checkpoint": [],
+    "browser_workspace_closed_index_checkpoint": [],
+    "consumer.browser.workspace.closed": [],
+    "projector.browser.workspace.closed": [],
+    "storage.browser_workspace_closed": []
+   },
+   "exact_name_hits": {
+    "Plans/Decision_Log.md": 1,
+    "Plans/Section15_MVP_Promoted_Features_Spec.md": 1,
+    "Plans/Wiring_Matrix.production.json": 2,
+    "Plans/browser_event_admission.json": 2,
+    "Plans/browser_event_admission_candidates.json": 1,
+    "Plans/browser_event_admission_fixtures.json": 2,
+    "Plans/browser_event_payloads.schema.json": 1,
+    "Plans/card2_event_fixtures.json": 20,
+    "Plans/ds_original_custody.json": 2,
+    "scripts/pm_ds_browser_harness_faults.py": 1,
+    "scripts/pm_ds_p2a_cases.py": 1,
+    "scripts/pm_ds_p2b_cases.py": 1,
+    "tests/test_pm_browser_event_admission.py": 2
+   }
+  }
+ },
+ "method": "exact dotted-token match (browser.<segments>) per file; binding-identifier substrings per family",
+ "scope": "git ls-files Plans scripts tests, excluding Plans/_shards/, Plans/.plan_index/, Plans/.plan_migration/, Plans/.audits/, Plans/.evidence/, Plans/ledgers/",
+ "scope_files_read": 5512
+}

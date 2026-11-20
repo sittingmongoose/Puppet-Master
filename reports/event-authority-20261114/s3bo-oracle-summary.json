@@ -1,0 +1,635 @@
+{
+ "implementation_commit": "7cf4b11e0d86a247f4c84cbc11371a45ea551c96",
+ "scope": "bounded executable evidence; full criterion-12 closure is incomplete",
+ "guards": {
+  "flips": 98,
+  "max_rows": 8,
+  "proved": 98,
+  "rows": 98,
+  "scope": "Only real table predicates are scanned/cut. Projection/helper semantics are checked by the complete lane matrix and reviewed separately.",
+  "status": "pass",
+  "stays": 368,
+  "tables": 28,
+  "tool_sha256": "e8038992eabbe067c8bcba8d48824b97fbb6b5b7e69cbfe28a669f939a96c0b8",
+  "unproved": []
+ },
+ "matrix": {
+  "status": "pass",
+  "controls": 90,
+  "negatives": 1719,
+  "mutation_table": [
+   {
+    "guard": "envelope_schema",
+    "killed": 522,
+    "mutations": 522,
+    "survived": 0
+   },
+   {
+    "guard": "payload_schema",
+    "killed": 212,
+    "mutations": 212,
+    "survived": 0
+   },
+   {
+    "guard": "integer_domain",
+    "killed": 15,
+    "mutations": 15,
+    "survived": 0
+   },
+   {
+    "guard": "storage_sequence",
+    "killed": 18,
+    "mutations": 18,
+    "survived": 0
+   },
+   {
+    "guard": "physical_value",
+    "killed": 18,
+    "mutations": 18,
+    "survived": 0
+   },
+   {
+    "guard": "producer_jcs",
+    "killed": 18,
+    "mutations": 18,
+    "survived": 0
+   },
+   {
+    "guard": "source_time",
+    "killed": 18,
+    "mutations": 18,
+    "survived": 0
+   },
+   {
+    "guard": "storage_time",
+    "killed": 18,
+    "mutations": 18,
+    "survived": 0
+   },
+   {
+    "guard": "ack_time",
+    "killed": 18,
+    "mutations": 18,
+    "survived": 0
+   },
+   {
+    "guard": "scope_partition",
+    "killed": 18,
+    "mutations": 18,
+    "survived": 0
+   },
+   {
+    "guard": "project_join",
+    "killed": 9,
+    "mutations": 9,
+    "survived": 0
+   },
+   {
+    "guard": "payload_project",
+    "killed": 8,
+    "mutations": 8,
+    "survived": 0
+   },
+   {
+    "guard": "application_key",
+    "killed": 5,
+    "mutations": 5,
+    "survived": 0
+   },
+   {
+    "guard": "event_identity",
+    "killed": 7,
+    "mutations": 7,
+    "survived": 0
+   },
+   {
+    "guard": "subject_identity",
+    "killed": 5,
+    "mutations": 5,
+    "survived": 0
+   },
+   {
+    "guard": "thread_join",
+    "killed": 1,
+    "mutations": 1,
+    "survived": 0
+   },
+   {
+    "guard": "pending_copy",
+    "killed": 18,
+    "mutations": 18,
+    "survived": 0
+   },
+   {
+    "guard": "receipt_event",
+    "killed": 18,
+    "mutations": 18,
+    "survived": 0
+   },
+   {
+    "guard": "receipt_sequence",
+    "killed": 18,
+    "mutations": 18,
+    "survived": 0
+   },
+   {
+    "guard": "receipt_full_value",
+    "killed": 18,
+    "mutations": 18,
+    "survived": 0
+   },
+   {
+    "guard": "history_copy",
+    "killed": 18,
+    "mutations": 18,
+    "survived": 0
+   },
+   {
+    "guard": "retry_receipt",
+    "killed": 18,
+    "mutations": 18,
+    "survived": 0
+   },
+   {
+    "guard": "retry_effects",
+    "killed": 18,
+    "mutations": 18,
+    "survived": 0
+   },
+   {
+    "guard": "replay_policy",
+    "killed": 18,
+    "mutations": 18,
+    "survived": 0
+   },
+   {
+    "guard": "record_cas",
+    "killed": 18,
+    "mutations": 18,
+    "survived": 0
+   },
+   {
+    "guard": "append_order",
+    "killed": 18,
+    "mutations": 18,
+    "survived": 0
+   },
+   {
+    "guard": "receipt_order",
+    "killed": 18,
+    "mutations": 18,
+    "survived": 0
+   },
+   {
+    "guard": "raw_order",
+    "killed": 2,
+    "mutations": 2,
+    "survived": 0
+   },
+   {
+    "guard": "materialize_order",
+    "killed": 1,
+    "mutations": 1,
+    "survived": 0
+   },
+   {
+    "guard": "attest_order",
+    "killed": 1,
+    "mutations": 1,
+    "survived": 0
+   },
+   {
+    "guard": "source_preserved",
+    "killed": 8,
+    "mutations": 8,
+    "survived": 0
+   },
+   {
+    "guard": "stored_token",
+    "killed": 18,
+    "mutations": 18,
+    "survived": 0
+   },
+   {
+    "guard": "live_snapshot",
+    "killed": 18,
+    "mutations": 18,
+    "survived": 0
+   },
+   {
+    "guard": "token_join",
+    "killed": 18,
+    "mutations": 18,
+    "survived": 0
+   },
+   {
+    "guard": "source_selection",
+    "killed": 18,
+    "mutations": 18,
+    "survived": 0
+   },
+   {
+    "guard": "coverage",
+    "killed": 18,
+    "mutations": 18,
+    "survived": 0
+   },
+   {
+    "guard": "read_permission",
+    "killed": 18,
+    "mutations": 18,
+    "survived": 0
+   },
+   {
+    "guard": "deletion_fence",
+    "killed": 18,
+    "mutations": 18,
+    "survived": 0
+   },
+   {
+    "guard": "sealed_dispatch",
+    "killed": 90,
+    "mutations": 90,
+    "survived": 0
+   },
+   {
+    "guard": "store_snapshot",
+    "killed": 18,
+    "mutations": 18,
+    "survived": 0
+   },
+   {
+    "guard": "writer_cutoff",
+    "killed": 18,
+    "mutations": 18,
+    "survived": 0
+   },
+   {
+    "guard": "reader_fence",
+    "killed": 18,
+    "mutations": 18,
+    "survived": 0
+   },
+   {
+    "guard": "restore_time",
+    "killed": 3,
+    "mutations": 3,
+    "survived": 0
+   },
+   {
+    "guard": "restore_epoch",
+    "killed": 1,
+    "mutations": 1,
+    "survived": 0
+   },
+   {
+    "guard": "restore_capability",
+    "killed": 3,
+    "mutations": 3,
+    "survived": 0
+   },
+   {
+    "guard": "anchor_monotone",
+    "killed": 1,
+    "mutations": 1,
+    "survived": 0
+   },
+   {
+    "guard": "floor_unavailable",
+    "killed": 1,
+    "mutations": 1,
+    "survived": 0
+   },
+   {
+    "guard": "aftermath_receipt",
+    "killed": 1,
+    "mutations": 1,
+    "survived": 0
+   },
+   {
+    "guard": "aftermath_owner",
+    "killed": 1,
+    "mutations": 1,
+    "survived": 0
+   },
+   {
+    "guard": "aftermath_generation",
+    "killed": 1,
+    "mutations": 1,
+    "survived": 0
+   },
+   {
+    "guard": "aftermath_restart",
+    "killed": 1,
+    "mutations": 1,
+    "survived": 0
+   },
+   {
+    "guard": "reference_seq",
+    "killed": 1,
+    "mutations": 1,
+    "survived": 0
+   },
+   {
+    "guard": "reference_type",
+    "killed": 1,
+    "mutations": 1,
+    "survived": 0
+   },
+   {
+    "guard": "reference_event",
+    "killed": 1,
+    "mutations": 1,
+    "survived": 0
+   },
+   {
+    "guard": "reference_segment",
+    "killed": 1,
+    "mutations": 1,
+    "survived": 0
+   },
+   {
+    "guard": "quarantine_export",
+    "killed": 2,
+    "mutations": 2,
+    "survived": 0
+   },
+   {
+    "guard": "anchor_receipt",
+    "killed": 1,
+    "mutations": 1,
+    "survived": 0
+   },
+   {
+    "guard": "auxiliary_schema",
+    "killed": 79,
+    "mutations": 79,
+    "survived": 0
+   },
+   {
+    "guard": "auxiliary_time",
+    "killed": 2,
+    "mutations": 2,
+    "survived": 0
+   },
+   {
+    "guard": "emitter",
+    "killed": 7,
+    "mutations": 7,
+    "survived": 0
+   },
+   {
+    "guard": "deletion_ordinal",
+    "killed": 2,
+    "mutations": 2,
+    "survived": 0
+   },
+   {
+    "guard": "quarantine_occurrence",
+    "killed": 2,
+    "mutations": 2,
+    "survived": 0
+   },
+   {
+    "guard": "corrupt_terminal",
+    "killed": 1,
+    "mutations": 1,
+    "survived": 0
+   },
+   {
+    "guard": "dedupe_available",
+    "killed": 18,
+    "mutations": 18,
+    "survived": 0
+   },
+   {
+    "guard": "request_digest",
+    "killed": 18,
+    "mutations": 18,
+    "survived": 0
+   },
+   {
+    "guard": "withdrawal_order",
+    "killed": 18,
+    "mutations": 18,
+    "survived": 0
+   },
+   {
+    "guard": "passive_reads",
+    "killed": 18,
+    "mutations": 18,
+    "survived": 0
+   },
+   {
+    "guard": "platform_marker",
+    "killed": 2,
+    "mutations": 2,
+    "survived": 0
+   },
+   {
+    "guard": "deletion_edge",
+    "killed": 2,
+    "mutations": 2,
+    "survived": 0
+   },
+   {
+    "guard": "quarantine_edge",
+    "killed": 2,
+    "mutations": 2,
+    "survived": 0
+   },
+   {
+    "guard": "purge_holds",
+    "killed": 1,
+    "mutations": 1,
+    "survived": 0
+   },
+   {
+    "guard": "payload_pattern",
+    "killed": 18,
+    "mutations": 18,
+    "survived": 0
+   },
+   {
+    "guard": "auxiliary_pattern",
+    "killed": 2,
+    "mutations": 2,
+    "survived": 0
+   },
+   {
+    "guard": "run_context",
+    "killed": 1,
+    "mutations": 1,
+    "survived": 0
+   },
+   {
+    "guard": "node_context",
+    "killed": 1,
+    "mutations": 1,
+    "survived": 0
+   },
+   {
+    "guard": "restore_digest",
+    "killed": 3,
+    "mutations": 3,
+    "survived": 0
+   },
+   {
+    "guard": "receipt_schema",
+    "killed": 18,
+    "mutations": 18,
+    "survived": 0
+   },
+   {
+    "guard": "receipt_numbers",
+    "killed": 18,
+    "mutations": 18,
+    "survived": 0
+   },
+   {
+    "guard": "token_schema",
+    "killed": 18,
+    "mutations": 18,
+    "survived": 0
+   },
+   {
+    "guard": "token_numbers",
+    "killed": 18,
+    "mutations": 18,
+    "survived": 0
+   },
+   {
+    "guard": "quarantine_delete_image",
+    "killed": 6,
+    "mutations": 6,
+    "survived": 0
+   },
+   {
+    "guard": "resolution_state",
+    "killed": 2,
+    "mutations": 2,
+    "survived": 0
+   },
+   {
+    "guard": "resolution_subject",
+    "killed": 2,
+    "mutations": 2,
+    "survived": 0
+   },
+   {
+    "guard": "resolution_event_id",
+    "killed": 2,
+    "mutations": 2,
+    "survived": 0
+   },
+   {
+    "guard": "resolution_key",
+    "killed": 2,
+    "mutations": 2,
+    "survived": 0
+   },
+   {
+    "guard": "resolution_receipt_count",
+    "killed": 2,
+    "mutations": 2,
+    "survived": 0
+   },
+   {
+    "guard": "resolution_receipt_event",
+    "killed": 2,
+    "mutations": 2,
+    "survived": 0
+   },
+   {
+    "guard": "resolution_receipt_sequence",
+    "killed": 2,
+    "mutations": 2,
+    "survived": 0
+   },
+   {
+    "guard": "resolution_commitment",
+    "killed": 2,
+    "mutations": 2,
+    "survived": 0
+   },
+   {
+    "guard": "resolution_barrier",
+    "killed": 2,
+    "mutations": 2,
+    "survived": 0
+   },
+   {
+    "guard": "resolution_receipt_schema",
+    "killed": 2,
+    "mutations": 2,
+    "survived": 0
+   },
+   {
+    "guard": "resolution_numbers",
+    "killed": 2,
+    "mutations": 2,
+    "survived": 0
+   },
+   {
+    "guard": "resolution_time",
+    "killed": 2,
+    "mutations": 2,
+    "survived": 0
+   },
+   {
+    "guard": "resolution_effect_event",
+    "killed": 2,
+    "mutations": 2,
+    "survived": 0
+   },
+   {
+    "guard": "resolution_effect_state",
+    "killed": 2,
+    "mutations": 2,
+    "survived": 0
+   },
+   {
+    "guard": "resolution_effect_input",
+    "killed": 2,
+    "mutations": 2,
+    "survived": 0
+   },
+   {
+    "guard": "resolution_effect_output",
+    "killed": 2,
+    "mutations": 2,
+    "survived": 0
+   },
+   {
+    "guard": "resolution_effect_time",
+    "killed": 2,
+    "mutations": 2,
+    "survived": 0
+   }
+  ]
+ },
+ "batteries": {
+  "status": "pass",
+  "cases": 1071,
+  "passed": 1071
+ },
+ "criterion12": {
+  "PASS": 0,
+  "PARTIAL": 14
+ },
+ "quarantine_custody": "PASS after E8-5 B / SP-2211",
+ "global_datetime_inventory": "FAIL: T219 pre-existing missing generated-shard citation",
+ "native_producer_execution": "NOT_RUN",
+ "repository_gates": {
+  "status": "fail",
+  "failed_check_groups": 12,
+  "own_ATS2206_surface_error": "fixed in 7cf4b11e0d86a247f4c84cbc11371a45ea551c96",
+  "targeted_lint_path_refs_own_failures": 0,
+  "remaining_targeted_lint_path_refs": "6 omitted sparse audit references",
+  "known_digit_limit_issues": [
+   "T212",
+   "T213"
+  ],
+  "global_datetime_inventory_issue": "T219"
+ }
+}

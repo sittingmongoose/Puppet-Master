@@ -1,0 +1,90 @@
+{
+ "status": "pass",
+ "owner_revision": "working_tree",
+ "normalized": [
+  {
+   "lanes": [
+    "DM"
+   ],
+   "grade_source": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+   "owner_path": "Plans/storage-plan.md",
+   "unit": "SP-607",
+   "old_quote": "\\ binding for `git.clone.completed` (2026-11-14).\\n\\nEvent history `retention_policy_ref = RP-AUTHORITY-INDEFINITE@1.0.0`,\\",
+   "matches": 1,
+   "grade_pointers": [
+    "/ready/181/cells/retention/evidence/0"
+   ],
+   "new_quote": "binding for `git.clone.completed` (2026-11-14).\n\n  Event history `retention_policy_ref = RP-AUTHORITY-INDEFINITE@1.0.0`,",
+   "line_start": 53258,
+   "line_end": 53260,
+   "normalization": "whitespace_line_wrapping_yaml_quoting_markdown_escaping"
+  },
+  {
+   "lanes": [
+    "DM"
+   ],
+   "grade_source": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+   "owner_path": "Plans/storage-plan.md",
+   "unit": "SP-601",
+   "old_quote": "\\ RP-TELEMETRY-90D@1.0.0`, under DL-401, DL-415.\\n\\nUse the existing policy object unchanged: {\\\"anchor_kind\\\"\\",
+   "matches": 1,
+   "grade_pointers": [
+    "/ready/187/cells/retention/evidence/0"
+   ],
+   "new_quote": "RP-TELEMETRY-90D@1.0.0`, under DL-401, DL-415.\n\n  Use the existing policy object unchanged: {\"anchor_kind\"",
+   "line_start": 52751,
+   "line_end": 52753,
+   "normalization": "whitespace_line_wrapping_yaml_quoting_markdown_escaping"
+  },
+  {
+   "lanes": [
+    "DM"
+   ],
+   "grade_source": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+   "owner_path": "Plans/storage-plan.md",
+   "unit": "SP-605",
+   "old_quote": "\\ binding for `project.added` (2026-11-14).\\n\\nEvent history `retention_policy_ref = RP-AUTHORITY-INDEFINITE@1.0.0`,\\",
+   "matches": 1,
+   "grade_pointers": [
+    "/ready/222/cells/retention/evidence/0"
+   ],
+   "new_quote": "binding for `project.added` (2026-11-14).\n\n  Event history `retention_policy_ref = RP-AUTHORITY-INDEFINITE@1.0.0`,",
+   "line_start": 53132,
+   "line_end": 53134,
+   "normalization": "whitespace_line_wrapping_yaml_quoting_markdown_escaping"
+  },
+  {
+   "lanes": [
+    "DM"
+   ],
+   "grade_source": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+   "owner_path": "Plans/storage-plan.md",
+   "unit": "SP-606",
+   "old_quote": "\\ binding for `project.created` (2026-11-14).\\n\\nEvent history `retention_policy_ref = RP-AUTHORITY-INDEFINITE@1.0.0`,\\",
+   "matches": 1,
+   "grade_pointers": [
+    "/ready/223/cells/retention/evidence/0"
+   ],
+   "new_quote": "binding for `project.created` (2026-11-14).\n\n  Event history `retention_policy_ref = RP-AUTHORITY-INDEFINITE@1.0.0`,",
+   "line_start": 53195,
+   "line_end": 53197,
+   "normalization": "whitespace_line_wrapping_yaml_quoting_markdown_escaping"
+  }
+ ],
+ "re_cited": [],
+ "unresolved": [],
+ "counts": {
+  "scanned": 4,
+  "already_exact": 0,
+  "exact_normalized": 4,
+  "re_cited": 0,
+  "unresolved": 0
+ },
+ "changed_grade_files": [],
+ "owner_sha256": "7c263abcd24e12e537b77bcfc41510b607c20036e5cd9dcdb742490c83f347ac",
+ "historical_input": {
+  "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+  "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792"
+ },
+ "note": "Searches only each cited unit. Replacement evidence for composed retention quotations is stored here. No historical admission input or assessment is rewritten; no grade verdict changes."
+}

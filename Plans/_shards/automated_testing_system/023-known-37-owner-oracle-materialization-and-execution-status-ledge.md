@@ -2,9 +2,9 @@
 
 Source: `Plans/Automated_Testing_System.md`
 
-Source lines: L2608-L2879
+Source lines: L2608-L2880
 
-Source SHA256: `a14faaeeff125d0ccc2775d3f1bcc4372b8ff689a01b632bcd508e52a2e5d14e`
+Source SHA256: `a3028640b73729884c6b3d1a0f095289513e4f76e61af711c233858bf005dc7c`
 
 ---
 
@@ -65,7 +65,8 @@ For exactly `EA-UND-0005-GOAL`, the following source-dated pair and common-v2 st
 - `EA-UND-0018-GOAL-POS` — `NOT_EXECUTABLE_UNDER_THIS_TRANSACTION` — From `verifying`, validate certification receipt, complete WorkNode receipts, passing/waived validators, empty risks, and commit `certified`.
 - `EA-UND-0018-GOAL-NEG` — `NOT_EXECUTABLE_UNDER_THIS_TRANSACTION` — Reject worker/projection claim, missing receipt, incomplete WorkNode refs, certified with risks, exception without risk+approval, failed validator, or wrong source state.
 - `EA-UND-0019-GOAL-POS` — `NOT_EXECUTABLE_UNDER_THIS_TRANSACTION` — Replan failed-verification run to a distinct WorkGraph, increment generation, disposition every affected node, and commit `repairing`.
-- `EA-UND-0019-GOAL-NEG` — `NOT_EXECUTABLE_UNDER_THIS_TRANSACTION` — Reject same graph refs, skipped generation, unpaired affected node, unknown disposition/action, ready/terminal source, or WorkNode dispatch from this event itself.
+- `EA-UND-0019-GOAL-NEG` — `NOT_EXECUTABLE_UNDER_THIS_TRANSACTION`
+  - Amended 2026-11-14 (DL-080 option 1): this pair describes v2 only; ATS-3100 (`scripts/pm_goal_run_replan_oracles.py`) supersedes it for current goal_run.replanned v3 writes. — Reject same graph refs, skipped generation, unpaired affected node, unknown disposition/action, ready/terminal source, or WorkNode dispatch from this event itself.
 - `EA-UND-0020-GOAL-POS` — `NOT_EXECUTABLE_UNDER_THIS_TRANSACTION` — At `start_event_pending`, validate activation receipt and exact accepted active requests, append once, then atomically expose `active/running`. Alias `GoalRunStarted` normalizes with evidence.
 - `EA-UND-0020-GOAL-NEG` — `NOT_EXECUTABLE_UNDER_THIS_TRANSACTION` — Reject partial/mixed required set, mutation requests under read-only mode, missing authority/identity/budget/storage proof, `BuildStarted`, duplicate with different digest, or any pre-append dispatch/charge.
 - `EA-UND-0021-GOAL-POS` — `NOT_EXECUTABLE_UNDER_THIS_TRANSACTION` — Stop a running GoalRun with settled children and validated safe point; projection becomes fenced resumable `stopped`.
@@ -123,7 +124,7 @@ For exactly `EA-UND-0005-GOAL`, the following source-dated pair and common-v2 st
 - `CAP-POS-006 not requested` — `NOT_EXECUTABLE_UNDER_THIS_TRANSACTION` — `requested_state=not_requested` yields only `effective_state=not_evaluated`, `degradation_reason=none`, null selection fields, and an empty evidence array.
 - `CAP-POS-007 deterministic bytes` — `NOT_EXECUTABLE_UNDER_THIS_TRANSACTION` — Two evaluations with byte-identical frozen catalog and evidence inputs produce identical sorted evidence, payload canonical JSON, and EventRecord producer semantic digest.
 - `CAP-POS-008 historical replay` — `NOT_EXECUTABLE_UNDER_THIS_TRANSACTION` — An event referencing a known superseded immutable revision validates and replays against that revision without recomputation against the active revision.
-- `CAP-POS-009 admitted legacy alias` — `NOT_EXECUTABLE_UNDER_THIS_TRANSACTION` — One owner-approved `capability_key` alias and complete typed evidence sidecar normalize to the exact v2 ref/payload and record migration provenance.
+- `CAP-POS-009 admitted legacy alias` — `RETIRED_NO_PRE_RELEASE_INPUT` — Retired 2026-11-15 (admission merge 2 plan fix). It needed a stored v1 `platform.capability_evaluated` payload, a legacy `capability_key` alias and a typed evidence sidecar, and none can exist: Puppet Master has not been released, so nothing was ever saved in the v1 shape, and no owner text defines the sidecar. Jared's written answer to card E8-4 (2026-11-14, `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/ANSWERS_E-CARDS-8_20261114.md`) says records under shapes retired before the product is built cannot exist, so they need no reader, keep-rule or migration. A v1-shaped input takes `CAP-NEG-012`'s defined outcome, quarantine without checkpoint or event, which ATS-3900 executes. This positive is no longer an obligation; no other case changes.
 - `CAP-POS-010 scope identities` — `NOT_EXECUTABLE_UNDER_THIS_TRANSACTION` — Application evaluation persists outer `project_id=null`; project evaluation persists its one exact project ID; neither duplicates the field inside the payload.
 - `CAP-NEG-001 open capability identity` — `NOT_EXECUTABLE_UNDER_THIS_TRANSACTION` — raw `capability_key`, display name, unknown ID, or missing catalog tuple used instead of `capability_ref`
 - `CAP-NEG-002 stale new-write revision` — `NOT_EXECUTABLE_UNDER_THIS_TRANSACTION` — new evaluation begins with a superseded, retired, missing, or mutated catalog revision

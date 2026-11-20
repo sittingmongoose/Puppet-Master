@@ -1,0 +1,757 @@
+{
+ "schema_id": "pm.assurance.event_authority.admission_depth_assessment.v1",
+ "assessment_kind": "admission_twelve_criteria",
+ "writer": "pm-ea-admission-writer.v1",
+ "merge": "admission-merge-2",
+ "registry": {
+  "path": "Plans/event_family_registry.json",
+  "revision": "2026-11-18.2",
+  "sha256": "ec21cf1a5b42b3e68a5564a847b4798dff968612d11d438bc7075b89196f9602",
+  "family_count": 518,
+  "row_pointer": "#/families/398"
+ },
+ "base_commit": "45b4ccf25270c486dbc682805cd455ce4ca25fb0",
+ "rubric": "Step 8 depth matrix, twelve criteria (DL-077); PASS needs Plans/ evidence",
+ "native_execution": "NOT_RUN",
+ "rows": [
+  {
+   "event_type": "gate.failed",
+   "family_id": "event-family-gate-failed",
+   "family_revision": "1.0.0",
+   "cells": {
+    "membership_version": {
+     "status": "PASS",
+     "representation": "exact_registry_membership",
+     "finding": "Currently registered at 2026-11-18.2 as #/families/398 (canonical row SHA-256 3102ebc183e82833dd9355c70163aad7ea8ed59a443c3372591af10ee2297d15). Original one-family admission checkpoints remain in the family record and immutable Git source.",
+     "evidence": [
+      {
+       "path": "Plans/event_family_registry.json",
+       "json_pointer": "#/families/398",
+       "line_start": 26275,
+       "line_end": 26323,
+       "quote": "\"event_type\": \"gate.failed\"",
+       "quote_line": 26278,
+       "file_sha256": "ec21cf1a5b42b3e68a5564a847b4798dff968612d11d438bc7075b89196f9602",
+       "quote_check": "exact",
+       "source_citation": {
+        "path": "Plans/event_family_registry.json",
+        "json_pointer": "#/families/398",
+        "line_start": 26231,
+        "line_end": 26279,
+        "quote": "\"event_type\": \"gate.failed\"",
+        "quote_line": 26234,
+        "file_sha256": "33b9b7879026ac0d730f2d731d984c773531b86bca1b3b5b79035451226153c7",
+        "quote_check": "exact"
+       },
+       "unit": "#/families/398",
+       "quote_scope": "unit #/families/398, Plans/event_family_registry.json:26275-26323"
+      }
+     ]
+    },
+    "owner_doc": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "CV-606/SP-586 govern this exact family independently.",
+     "evidence": [
+      {
+       "path": "Plans/Contracts_V0.md",
+       "unit": "CV-606",
+       "line_start": 35488,
+       "line_end": 35488,
+       "quote": "Newly authored owner contract under DL-045 for gate.failed@1.0.0 only",
+       "quote_check": "exact",
+       "quote_scope": "unit CV-606, Plans/Contracts_V0.md:35480-35518",
+       "file_sha256": "58dee182ea2dd8dd358d27912280fa9113c3d1d8fd68b1c0c5d51b6f906d73c8",
+       "source_citation": {
+        "path": "Plans/Contracts_V0.md",
+        "unit": "CV-606",
+        "line_start": 35121,
+        "line_end": 35121,
+        "quote": "Newly authored owner contract under DL-045 for gate.failed@1.0.0 only",
+        "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a"
+       }
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "owner_doc",
+      "status": "PASS"
+     }
+    },
+    "producer": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "Exact original-owner/source custody, prepare/outcome/publication and SP-286/CV-339 receipt ordering remain explicit.",
+     "evidence": [
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-586",
+       "line_start": 39800,
+       "line_end": 39800,
+       "quote": "For gate.failed alone, the newly authored original-source custody",
+       "quote_check": "exact",
+       "quote_scope": "unit SP-586, Plans/storage-plan.md:39791-39833",
+       "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+       "source_citation": {
+        "path": "Plans/storage-plan.md",
+        "unit": "SP-586",
+        "line_start": 38678,
+        "line_end": 38678,
+        "quote": "For gate.failed alone, the newly authored original-source custody",
+        "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+       }
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "producer",
+      "status": "PASS"
+     }
+    },
+    "closed_payload_schema": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "Exact closed payload/source schemas and 41 Storage mirrors validate; every patterned identifier is guarded by exact length or full-match termination and trailing-LF refusal cases. Sweep part 2B: every format: date-time field of the payload, sources and checkpoint runs the shared registered CV-1101 predicate (EventRecord profile; 7 owner-valid forms accepted and 15 malformed forms refused per populated field), and every integer slot takes only an exact integer through the shared current_integer within its own owner bounds (integral floats and values past the maximum refused).",
+     "evidence": [
+      {
+       "path": "Plans/dt_event_contracts.schema.json",
+       "unit": "#/$defs/gate_failed",
+       "line_start": 1846,
+       "line_end": 1846,
+       "quote": "\"const\": \"pm.event_payload.gate_failed.v1\"",
+       "quote_check": "exact",
+       "quote_scope": "unit #/$defs/gate_failed, Plans/dt_event_contracts.schema.json:1831-1968",
+       "file_sha256": "8e0a2dfcc209567e50e82b03572529f02a990d85da4863a7fbc27abd53258213",
+       "source_citation": {
+        "path": "Plans/dt_event_contracts.schema.json",
+        "unit": "Plans/dt_event_contracts.schema.json#/$defs/gate_failed",
+        "line_start": 1846,
+        "line_end": 1846,
+        "quote": "\"const\": \"pm.event_payload.gate_failed.v1\"",
+        "file_sha256": "8e0a2dfcc209567e50e82b03572529f02a990d85da4863a7fbc27abd53258213"
+       },
+       "json_pointer": "#/$defs/gate_failed"
+      },
+      {
+       "path": "Plans/Contracts_V0.md",
+       "unit": "CV-606",
+       "line_start": 35493,
+       "line_end": 35493,
+       "quote": "Exposing either scalar requires both dispatch fields and the matching node_id.",
+       "quote_check": "exact",
+       "quote_scope": "unit CV-606, Plans/Contracts_V0.md:35480-35518",
+       "file_sha256": "58dee182ea2dd8dd358d27912280fa9113c3d1d8fd68b1c0c5d51b6f906d73c8",
+       "source_citation": {
+        "path": "Plans/Contracts_V0.md",
+        "unit": "CV-606",
+        "line_start": 35126,
+        "line_end": 35126,
+        "quote": "Exposing either scalar requires both dispatch fields and the matching node_id.",
+        "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a"
+       }
+      },
+      {
+       "path": "scripts/pm-dt-event-contracts.py",
+       "unit": "sweep2b",
+       "line_start": 198,
+       "line_end": 198,
+       "quote": "DATE_TIME_FORMAT = format_checker(profile=EVENT_RECORD)",
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "file_sha256": "06a44e8c91c14473c6c555c87e6818149a98570fc2721424b071eebc729f680f",
+       "source_citation": {
+        "path": "scripts/pm-dt-event-contracts.py",
+        "unit": "sweep2b",
+        "line_start": 198,
+        "line_end": 198,
+        "quote": "DATE_TIME_FORMAT = format_checker(profile=EVENT_RECORD)",
+        "file_sha256": "47d57d00c34def0c241ccf8e0e982fa4c3782f6a4ad4fa16070ba473197eb152"
+       }
+      },
+      {
+       "path": "scripts/pm-dt-event-contracts.py",
+       "unit": "sweep2b",
+       "line_start": 214,
+       "line_end": 214,
+       "quote": "Draft202012Validator, type_checker=Draft202012Validator.TYPE_CHECKER.redefine('integer', exact_integer_type))",
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "file_sha256": "06a44e8c91c14473c6c555c87e6818149a98570fc2721424b071eebc729f680f",
+       "source_citation": {
+        "path": "scripts/pm-dt-event-contracts.py",
+        "unit": "sweep2b",
+        "line_start": 214,
+        "line_end": 214,
+        "quote": "Draft202012Validator, type_checker=Draft202012Validator.TYPE_CHECKER.redefine('integer', exact_integer_type))",
+        "file_sha256": "47d57d00c34def0c241ccf8e0e982fa4c3782f6a4ad4fa16070ba473197eb152"
+       }
+      },
+      {
+       "path": "Plans/Contracts_V0.md",
+       "unit": "CV-606",
+       "line_start": 35494,
+       "line_end": 35494,
+       "quote": "For gate.failed alone, the shared CV-1100, SP-1100, SP-1101 and CV-1101 owner units apply",
+       "quote_check": "exact",
+       "quote_scope": "unit CV-606, Plans/Contracts_V0.md:35480-35518",
+       "file_sha256": "58dee182ea2dd8dd358d27912280fa9113c3d1d8fd68b1c0c5d51b6f906d73c8",
+       "source_citation": {
+        "path": "Plans/Contracts_V0.md",
+        "unit": "CV-606",
+        "line_start": 35127,
+        "line_end": 35127,
+        "quote": "For gate.failed alone, the shared CV-1100, SP-1100, SP-1101 and CV-1101 owner units apply",
+        "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a"
+       }
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "closed_payload_schema",
+      "status": "PASS"
+     }
+    },
+    "scope_identity": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "Original subject, encoded Project scope and applicable distinct CV-366 app identity/codec are enforced.",
+     "evidence": [
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-586",
+       "line_start": 39802,
+       "line_end": 39802,
+       "quote": "For gate.failed alone, source codec",
+       "quote_check": "exact",
+       "quote_scope": "unit SP-586, Plans/storage-plan.md:39791-39833",
+       "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+       "source_citation": {
+        "path": "Plans/storage-plan.md",
+        "unit": "SP-586",
+        "line_start": 38680,
+        "line_end": 38680,
+        "quote": "For gate.failed alone, source codec",
+        "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+       }
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "scope_identity",
+      "status": "PASS"
+     }
+    },
+    "replay_idempotency": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "Original full-value retry/conflict custody remains; both current writer and retry refuse projector_replay_only as replay_only_not_appendable. Sweep part 2B: the producer digest is the shared producer_semantic_digest over the unchanged CV-317 projection (pinned bytes unchanged), and the current writer qualifies it before append: an exact integer the JCS route cannot preserve (2^53+1, 2^60, u64 max, a 4,400-digit integer) refuses number_domain at SV36 and the retry route has no digest (AM02); 2^53 is accepted; retained originals with those integers stay readable through SP-1101 custody (F16 closed).",
+     "evidence": [
+      {
+       "path": "Plans/Contracts_V0.md",
+       "unit": "CV-606",
+       "line_start": 35492,
+       "line_end": 35492,
+       "quote": "For gate.failed alone, current writer and retry paths refuse",
+       "quote_check": "exact",
+       "quote_scope": "unit CV-606, Plans/Contracts_V0.md:35480-35518",
+       "file_sha256": "58dee182ea2dd8dd358d27912280fa9113c3d1d8fd68b1c0c5d51b6f906d73c8",
+       "source_citation": {
+        "path": "Plans/Contracts_V0.md",
+        "unit": "CV-606",
+        "line_start": 35125,
+        "line_end": 35125,
+        "quote": "For gate.failed alone, current writer and retry paths refuse",
+        "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a"
+       }
+      },
+      {
+       "path": "scripts/pm-dt-event-contracts.py",
+       "unit": "sweep2b",
+       "line_start": 515,
+       "line_end": 515,
+       "quote": "return pm_event_numbers.producer_semantic_digest(event)",
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "file_sha256": "06a44e8c91c14473c6c555c87e6818149a98570fc2721424b071eebc729f680f",
+       "source_citation": {
+        "path": "scripts/pm-dt-event-contracts.py",
+        "unit": "sweep2b",
+        "line_start": 515,
+        "line_end": 515,
+        "quote": "return pm_event_numbers.producer_semantic_digest(event)",
+        "file_sha256": "47d57d00c34def0c241ccf8e0e982fa4c3782f6a4ad4fa16070ba473197eb152"
+       }
+      },
+      {
+       "path": "scripts/pm-dt-event-contracts.py",
+       "unit": "sweep2b",
+       "line_start": 882,
+       "line_end": 882,
+       "quote": "yield 'src_replay', {'historical': historical, 'replay_policy': event['replay_policy'], 'producer_refusal': producer_refusal(event)}",
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "file_sha256": "06a44e8c91c14473c6c555c87e6818149a98570fc2721424b071eebc729f680f",
+       "source_citation": {
+        "path": "scripts/pm-dt-event-contracts.py",
+        "unit": "sweep2b",
+        "line_start": 882,
+        "line_end": 882,
+        "quote": "yield 'src_replay', {'historical': historical, 'replay_policy': event['replay_policy'], 'producer_refusal': producer_refusal(event)}",
+        "file_sha256": "47d57d00c34def0c241ccf8e0e982fa4c3782f6a4ad4fa16070ba473197eb152"
+       }
+      },
+      {
+       "path": "Plans/Contracts_V0.md",
+       "unit": "CV-606",
+       "line_start": 35494,
+       "line_end": 35494,
+       "quote": "For gate.failed alone, the shared CV-1100, SP-1100, SP-1101 and CV-1101 owner units apply",
+       "quote_check": "exact",
+       "quote_scope": "unit CV-606, Plans/Contracts_V0.md:35480-35518",
+       "file_sha256": "58dee182ea2dd8dd358d27912280fa9113c3d1d8fd68b1c0c5d51b6f906d73c8",
+       "source_citation": {
+        "path": "Plans/Contracts_V0.md",
+        "unit": "CV-606",
+        "line_start": 35127,
+        "line_end": 35127,
+        "quote": "For gate.failed alone, the shared CV-1100, SP-1100, SP-1101 and CV-1101 owner units apply",
+        "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a"
+       }
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "replay_idempotency",
+      "status": "PASS"
+     }
+    },
+    "retention": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "Existing exact policy and SP-349 counterpart binding, original anchor and holds are preserved. Sweep part 2B (CV-1101): the retention age compares exact instants after the shared predicate (offsets, complete fractions; RT05/RT06 refuse a malformed time) instead of host datetime arithmetic.",
+     "evidence": [
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-586",
+       "line_start": 39809,
+       "line_end": 39809,
+       "quote": "Current selected assignment (2026-11-19): gate.failed@1.0.0 is registered for project_only in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2316. Its event history selects RP-RUNTIME-365D@1.0.0; Plans/storage-plan.md#SP-586 owns the event policy's existing anchors, counts, holds and deletion rules. Original sources and coherent backups retain their independent owner policies; the event lifetime is not transferred to them. Current append/publication still requires the exact selected schema/scope, original custody, current permission, receipt and required producer adoption. Actual missing registration or unresolved required custody refuses; native execution remains NOT_RUN. No native adoption, new retention choice or governance seal follows.",
+       "quote_check": "exact",
+       "quote_scope": "unit SP-586, Plans/storage-plan.md:39791-39833",
+       "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+       "source_citation": {
+        "path": "Plans/storage-plan.md",
+        "unit": "SP-586",
+        "line_start": 38677,
+        "line_end": 38677,
+        "quote": "retention_policy_ref = RP-RUNTIME-365D",
+        "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+       },
+       "locator_maintenance": {
+        "authority": "MERGE2-FIX3",
+        "reason": "Re-cite the same accepted retention claim at its current exact owner assignment; event and source/checkpoint authority remain separate."
+       }
+      },
+      {
+       "path": "scripts/pm-dt-event-contracts.py",
+       "unit": "sweep2b",
+       "line_start": 2486,
+       "line_end": 2486,
+       "quote": "now_refusal, now = exact_instant(value['now'])",
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "file_sha256": "06a44e8c91c14473c6c555c87e6818149a98570fc2721424b071eebc729f680f",
+       "source_citation": {
+        "path": "scripts/pm-dt-event-contracts.py",
+        "unit": "sweep2b",
+        "line_start": 2486,
+        "line_end": 2486,
+        "quote": "now_refusal, now = exact_instant(value['now'])",
+        "file_sha256": "47d57d00c34def0c241ccf8e0e982fa4c3782f6a4ad4fa16070ba473197eb152"
+       }
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "retention",
+      "status": "PASS"
+     }
+    },
+    "redaction_custody": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "Redacted metadata, permission-checked references and coherent original source/receipt backup closure remain explicit.",
+     "evidence": [
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-586",
+       "line_start": 39800,
+       "line_end": 39800,
+       "quote": "Source stages, original owner outcomes, referenced bodies and full-value receipt custody form one mandatory coherent backup closure.",
+       "quote_check": "exact",
+       "quote_scope": "unit SP-586, Plans/storage-plan.md:39791-39833",
+       "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+       "source_citation": {
+        "path": "Plans/storage-plan.md",
+        "unit": "SP-586",
+        "line_start": 38678,
+        "line_end": 38678,
+        "quote": "Source stages, original owner outcomes, referenced bodies and full-value receipt custody form one mandatory coherent backup closure.",
+        "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+       }
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "redaction_custody",
+      "status": "PASS"
+     }
+    },
+    "transitions": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "Exact-family original before/outcome predicates and publication barrier are checked, with no repeated side effects.",
+     "evidence": [
+      {
+       "path": "Plans/Contracts_V0.md",
+       "unit": "CV-606",
+       "line_start": 35491,
+       "line_end": 35491,
+       "quote": "For gate.failed alone, the explicit lifecycle transition is",
+       "quote_check": "exact",
+       "quote_scope": "unit CV-606, Plans/Contracts_V0.md:35480-35518",
+       "file_sha256": "58dee182ea2dd8dd358d27912280fa9113c3d1d8fd68b1c0c5d51b6f906d73c8",
+       "source_citation": {
+        "path": "Plans/Contracts_V0.md",
+        "unit": "CV-606",
+        "line_start": 35124,
+        "line_end": 35124,
+        "quote": "For gate.failed alone, the explicit lifecycle transition is",
+        "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a"
+       }
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "transitions",
+      "status": "PASS"
+     }
+    },
+    "consumers_checkpoints": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "Exact-family SP-278 adoption and complete globally examined prefix/CAS remain; full-string token hashes and source Storage identity are now enforced, including a coherent foreign-token negative.",
+     "evidence": [
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-586",
+       "line_start": 39801,
+       "line_end": 39801,
+       "quote": "For gate.failed alone, its SP-278/DL-076 checkpoint",
+       "quote_check": "exact",
+       "quote_scope": "unit SP-586, Plans/storage-plan.md:39791-39833",
+       "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+       "source_citation": {
+        "path": "Plans/storage-plan.md",
+        "unit": "SP-586",
+        "line_start": 38679,
+        "line_end": 38679,
+        "quote": "For gate.failed alone, its SP-278/DL-076 checkpoint",
+        "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+       }
+      },
+      {
+       "path": "scripts/pm_dt_table_cp_token.py",
+       "unit": "CP14_token_storage",
+       "line_start": 20,
+       "line_end": 20,
+       "quote": "def CP14_token_storage(value, context):",
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "file_sha256": "3ffbb77f1d1cebde79dcad3337caf1c9909400c6711478d09f5f15d1f4b361fc",
+       "source_citation": {
+        "path": "scripts/pm_dt_table_cp_token.py",
+        "unit": "CP14_token_storage",
+        "line_start": 20,
+        "line_end": 20,
+        "quote": "def CP14_token_storage(value, context):",
+        "file_sha256": "3ffbb77f1d1cebde79dcad3337caf1c9909400c6711478d09f5f15d1f4b361fc"
+       }
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "consumers_checkpoints",
+      "status": "PASS"
+     }
+    },
+    "compatibility_withdrawal": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "Version/withdrawal/read gates and governed source rebuild remain; no zero reset or history rewrite. Sweep part 2B (SP-1101): the historical reader resolves the sealed original and its frozen recipe and resources through the shared RetainedDispatcher for the binding the record claims (HR13); no caller-supplied original, flag or schema selects or narrows the recipe, and owner-valid broad timestamps stay readable with their exact spelling.",
+     "evidence": [
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-586",
+       "line_start": 39799,
+       "line_end": 39799,
+       "quote": "Withdrawal first cuts off this family's append admission",
+       "quote_check": "exact",
+       "quote_scope": "unit SP-586, Plans/storage-plan.md:39791-39833",
+       "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+       "source_citation": {
+        "path": "Plans/storage-plan.md",
+        "unit": "SP-586",
+        "line_start": 38677,
+        "line_end": 38677,
+        "quote": "Withdrawal first cuts off this family's append admission",
+        "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+       }
+      },
+      {
+       "path": "scripts/pm-dt-event-contracts.py",
+       "unit": "sweep2b",
+       "line_start": 1224,
+       "line_end": 1224,
+       "quote": "custody = _CUSTODY['dispatcher'].resolve(original_ref(completed, event), binding, disclose=lambda b: True)",
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "file_sha256": "06a44e8c91c14473c6c555c87e6818149a98570fc2721424b071eebc729f680f",
+       "source_citation": {
+        "path": "scripts/pm-dt-event-contracts.py",
+        "unit": "sweep2b",
+        "line_start": 1224,
+        "line_end": 1224,
+        "quote": "custody = _CUSTODY['dispatcher'].resolve(original_ref(completed, event), binding, disclose=lambda b: True)",
+        "file_sha256": "47d57d00c34def0c241ccf8e0e982fa4c3782f6a4ad4fa16070ba473197eb152"
+       }
+      },
+      {
+       "path": "Plans/Contracts_V0.md",
+       "unit": "CV-606",
+       "line_start": 35494,
+       "line_end": 35494,
+       "quote": "For gate.failed alone, the shared CV-1100, SP-1100, SP-1101 and CV-1101 owner units apply",
+       "quote_check": "exact",
+       "quote_scope": "unit CV-606, Plans/Contracts_V0.md:35480-35518",
+       "file_sha256": "58dee182ea2dd8dd358d27912280fa9113c3d1d8fd68b1c0c5d51b6f906d73c8",
+       "source_citation": {
+        "path": "Plans/Contracts_V0.md",
+        "unit": "CV-606",
+        "line_start": 35127,
+        "line_end": 35127,
+        "quote": "For gate.failed alone, the shared CV-1100, SP-1100, SP-1101 and CV-1101 owner units apply",
+        "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a"
+       }
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "compatibility_withdrawal",
+      "status": "PASS"
+     }
+    },
+    "positive_negative_oracles": {
+     "status": "PASS",
+     "representation": "integrated_criterion12_delta",
+     "finding": "Exact-family C12 PASS from reports/event-authority-20261114/C12-DT-self-grade.json",
+     "evidence": [
+      {
+       "line_end": 9168,
+       "line_start": 9168,
+       "path": "Plans/Automated_Testing_System.md",
+       "quote": "For gate.failed alone, round-1 fixtures refuse",
+       "unit": "ATS-293",
+       "quote_check": "exact",
+       "quote_scope": "unit ATS-293, Plans/Automated_Testing_System.md:9155-9193",
+       "file_sha256": "a3028640b73729884c6b3d1a0f095289513e4f76e61af711c233858bf005dc7c",
+       "source_citation": {
+        "line_end": 9157,
+        "line_start": 9157,
+        "path": "Plans/Automated_Testing_System.md",
+        "quote": "For gate.failed alone, round-1 fixtures refuse",
+        "unit": "ATS-293",
+        "file_sha256": "e1c8a84c145a3aaaa0738971f76db5fa0bf94f59c0149e76f4131e8579a6971d"
+       }
+      },
+      {
+       "line_end": 63902,
+       "line_start": 63902,
+       "path": "Plans/dt_event_contract_fixtures.json",
+       "quote": "\"producer_semantic_digest\": \"6e31cfb4c73d84cf10a59a3da8382c045865c72975128f8f0715d291fb55cf00\"",
+       "unit": "#/families/6",
+       "quote_check": "exact",
+       "quote_scope": "unit #/families/6, Plans/dt_event_contract_fixtures.json:54140-64453",
+       "file_sha256": "b3432bfcdfc68263dcf0b00b8ed0c7d9ee518ed63f4132e146edc18ceca40365",
+       "source_citation": {
+        "line_end": 63902,
+        "line_start": 63902,
+        "path": "Plans/dt_event_contract_fixtures.json",
+        "quote": "\"producer_semantic_digest\": \"6e31cfb4c73d84cf10a59a3da8382c045865c72975128f8f0715d291fb55cf00\"",
+        "unit": "gate.failed retry_oracle",
+        "file_sha256": "b3432bfcdfc68263dcf0b00b8ed0c7d9ee518ed63f4132e146edc18ceca40365"
+       },
+       "json_pointer": "#/families/6"
+      },
+      {
+       "line_end": 39803,
+       "line_start": 39803,
+       "path": "Plans/storage-plan.md",
+       "quote": "For gate.failed, boolean authority/context flags are exact booleans",
+       "unit": "SP-586",
+       "quote_check": "exact",
+       "quote_scope": "unit SP-586, Plans/storage-plan.md:39791-39833",
+       "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+       "source_citation": {
+        "line_end": 38681,
+        "line_start": 38681,
+        "path": "Plans/storage-plan.md",
+        "quote": "For gate.failed, boolean authority/context flags are exact booleans",
+        "unit": "SP-586",
+        "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+       }
+      },
+      {
+       "line_end": 2572,
+       "line_start": 2572,
+       "path": "scripts/pm-dt-event-contracts.py",
+       "quote": "def family_checks(c, inputs, check):",
+       "unit": "complete original suite",
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "file_sha256": "06a44e8c91c14473c6c555c87e6818149a98570fc2721424b071eebc729f680f",
+       "source_citation": {
+        "line_end": 2572,
+        "line_start": 2572,
+        "path": "scripts/pm-dt-event-contracts.py",
+        "quote": "def family_checks(c, inputs, check):",
+        "unit": "complete original suite",
+        "file_sha256": "47d57d00c34def0c241ccf8e0e982fa4c3782f6a4ad4fa16070ba473197eb152"
+       }
+      },
+      {
+       "line_end": 1388,
+       "line_start": 1388,
+       "path": "scripts/pm-dt-event-contracts.py",
+       "quote": "def retained_custody_checks(c, f, schemas, check):",
+       "unit": "sealed receipt and store",
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "file_sha256": "06a44e8c91c14473c6c555c87e6818149a98570fc2721424b071eebc729f680f",
+       "source_citation": {
+        "line_end": 1388,
+        "line_start": 1388,
+        "path": "scripts/pm-dt-event-contracts.py",
+        "quote": "def retained_custody_checks(c, f, schemas, check):",
+        "unit": "sealed receipt and store",
+        "file_sha256": "47d57d00c34def0c241ccf8e0e982fa4c3782f6a4ad4fa16070ba473197eb152"
+       }
+      },
+      {
+       "line_end": 242,
+       "line_start": 242,
+       "path": "scripts/pm_dt_c12_schema.py",
+       "quote": "def schema_witnesses(dt, inputs, out):",
+       "unit": "whole-definition covering",
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "file_sha256": "95ecbab453e7816c3fe3fa6863a6ae0aab2cf0a238636cdd52a7e62af99a8870",
+       "source_citation": {
+        "line_end": 242,
+        "line_start": 242,
+        "path": "scripts/pm_dt_c12_schema.py",
+        "quote": "def schema_witnesses(dt, inputs, out):",
+        "unit": "whole-definition covering",
+        "file_sha256": "95ecbab453e7816c3fe3fa6863a6ae0aab2cf0a238636cdd52a7e62af99a8870"
+       }
+      },
+      {
+       "line_end": 44,
+       "line_start": 44,
+       "path": "scripts/pm-dt-c12-closure.py",
+       "quote": "check(schema['uncontrolled_rules'] == 0",
+       "unit": "coverage control",
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "file_sha256": "fedacd8204d3579d61670ce2156b078fd3e2325b18ea7e74c1457b00eee96404",
+       "source_citation": {
+        "line_end": 44,
+        "line_start": 44,
+        "path": "scripts/pm-dt-c12-closure.py",
+        "quote": "check(schema['uncontrolled_rules'] == 0",
+        "unit": "coverage control",
+        "file_sha256": "fedacd8204d3579d61670ce2156b078fd3e2325b18ea7e74c1457b00eee96404"
+       }
+      },
+      {
+       "line_end": 2260,
+       "line_start": 2260,
+       "path": "scripts/pm-dt-event-contracts.py",
+       "quote": "def number_corpus_checks(c, f, schemas, check):",
+       "unit": "shared numbers",
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "file_sha256": "06a44e8c91c14473c6c555c87e6818149a98570fc2721424b071eebc729f680f",
+       "source_citation": {
+        "line_end": 2260,
+        "line_start": 2260,
+        "path": "scripts/pm-dt-event-contracts.py",
+        "quote": "def number_corpus_checks(c, f, schemas, check):",
+        "unit": "shared numbers",
+        "file_sha256": "47d57d00c34def0c241ccf8e0e982fa4c3782f6a4ad4fa16070ba473197eb152"
+       }
+      },
+      {
+       "line_end": 2111,
+       "line_start": 2111,
+       "path": "scripts/pm-dt-event-contracts.py",
+       "quote": "def datetime_checks(c, f, schemas, check):",
+       "unit": "shared datetime",
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "file_sha256": "06a44e8c91c14473c6c555c87e6818149a98570fc2721424b071eebc729f680f",
+       "source_citation": {
+        "line_end": 2111,
+        "line_start": 2111,
+        "path": "scripts/pm-dt-event-contracts.py",
+        "quote": "def datetime_checks(c, f, schemas, check):",
+        "unit": "shared datetime",
+        "file_sha256": "47d57d00c34def0c241ccf8e0e982fa4c3782f6a4ad4fa16070ba473197eb152"
+       }
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "positive_negative_oracles",
+      "status": "PASS"
+     }
+    }
+   }
+  }
+ ],
+ "source_registry": {
+  "path": "Plans/event_family_registry.json",
+  "revision": "2026-11-16.180",
+  "sha256": "33b9b7879026ac0d730f2d731d984c773531b86bca1b3b5b79035451226153c7",
+  "family_count": 399,
+  "row_pointer": "#/families/398"
+ },
+ "evidence_maintenance": {
+  "authority": "MERGE2-FIX4 items 1/2/3",
+  "source_commit": "2bda6aeed03daea26c4d79dfb7568fc145aac29e",
+  "source_assessment_sha256": "8bccd5bd351d7f760a5f37563c85bba8937b009cfea7ead1e13178aff899b6fe",
+  "native_execution": "NOT_RUN",
+  "verdicts_changed": false
+ }
+}

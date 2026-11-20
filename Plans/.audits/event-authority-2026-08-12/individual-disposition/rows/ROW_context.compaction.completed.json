@@ -2,68 +2,68 @@
   "event_type": "context.compaction.completed",
   "bucket": "confirmed_persisted_unregistered",
   "july_classification": "confirmed_persisted_unregistered",
-  "disposition": "NEEDS_MORE_EVIDENCE",
-  "disposition_rationale": "Plans/Decision_Log.md#DL-039: COMPACT-001 ESCALATE_AS_PERSISTED_FAMILY applied 2026-09-11T14:10:58.582468+00:00. Restore context.compaction.completed to the working persisted-unregistered census population. Escalation remains blocked pending owner-backed EventRecord/seglog authority and the complete event-specific EA contract in Step 6; retained Profile B evidence gaps are unchanged. No live-registry admission or depth closure. Superseded note 2026-11-04T18:09:32Z (lane DS): this July row is kept as the historical record. The family was registered in Step 6 (b240dd93e2, registry 2026-09-11.1), the production wiring now declares expected_event_types [\"context.compaction.completed\"] for catalog.chat_compact_context (the repair COMPACT-001 asked for), and its DL-077 admission record reports/event-authority-20260911/admission-records/context.compaction.completed.json, pinned to reports/event-authority-20261104/depth-b1-seal-families.json with twelve PASS cells, supersedes this row under DL-077 (Plans/.audits/event-authority-2026-08-12/INDIVIDUAL_DISPOSITION_SCHEMA.md: a completely recorded post-August admission takes its depth from that record and its old row stays as written). Disposition and evidence below are unchanged. Application: reports/event-authority-20261104/ds-step6-compaction-ledger-note.json. Cycle-2 correction (DS-SOL2-03): the current admission-record target is honestly 11/12, so the prior DL-077 supersession note is registration/application history and supplies no current complete-depth proof. The historical disposition and evidence, registration, Jared membership decision and exact AUG/July pins remain unchanged. See reports/event-authority-20261104/ds-fix2-depth-retraction.json and ds-fix2-regrade-application.json. Complete guard-removal witnesses remain open.",
+  "disposition": "KEEP_REGISTERED",
+  "disposition_rationale": "Plans/Decision_Log.md#DL-039: COMPACT-001 ESCALATE_AS_PERSISTED_FAMILY applied 2026-09-11T14:10:58.582468+00:00. Restore context.compaction.completed to the working persisted-unregistered census population. Escalation remains blocked pending owner-backed EventRecord/seglog authority and the complete event-specific EA contract in Step 6; retained Profile B evidence gaps are unchanged. No live-registry admission or depth closure. Superseded note 2026-11-04T18:09:32Z (lane DS): this July row is kept as the historical record. The family was registered in Step 6 (b240dd93e2, registry 2026-09-11.1), the production wiring now declares expected_event_types [\"context.compaction.completed\"] for catalog.chat_compact_context (the repair COMPACT-001 asked for), and its DL-077 admission record reports/event-authority-20260911/admission-records/context.compaction.completed.json, pinned to reports/event-authority-20261104/depth-b1-seal-families.json with twelve PASS cells, supersedes this row under DL-077 (Plans/.audits/event-authority-2026-08-12/INDIVIDUAL_DISPOSITION_SCHEMA.md: a completely recorded post-August admission takes its depth from that record and its old row stays as written). Disposition and evidence below are unchanged. Application: reports/event-authority-20261104/ds-step6-compaction-ledger-note.json. Cycle-2 correction (DS-SOL2-03): the current admission-record target is honestly 11/12, so the prior DL-077 supersession note is registration/application history and supplies no current complete-depth proof. The historical disposition and evidence, registration, Jared membership decision and exact AUG/July pins remain unchanged. See reports/event-authority-20261104/ds-fix2-depth-retraction.json and ds-fix2-regrade-application.json. Complete guard-removal witnesses remain open. PNC-019 S2 (2026-11-14T19:37:42Z): registered in Step 6 under DL-040 (b240dd93e2) and admitted through its DL-077 record. Disposition NEEDS_MORE_EVIDENCE -> KEEP_REGISTERED, evidence cells membership_version, owner_doc, producer, closed_payload_schema, scope_identity, replay_idempotency, retention, redaction_custody, transitions, consumers_checkpoints, compatibility_withdrawal, positive_negative_oracles projected from the lane regrade with twelve PASS cells in reports/event-authority-20261114/s2-depth-post-august.json (sha256 0a260712a116532a824b81dd497f0cc72f97b4fc1a5cd41ace8db8cdf7dd6c0a); bucket, cohort pins, July classification and every other field are unchanged; no registry change, admission, seal or owner choice.",
   "evidence": {
     "owner_doc": {
-      "status": "OWNER_REQUIRED",
-      "citation": null,
-      "note": "The checked Plans citations do not explicitly name the acceptance authority empowered to approve or withdraw `context.compaction.completed`."
+      "status": "PASS",
+      "citation": "Plans/event_family_registry.json:2879; Plans/event_family_registry.json:2880; Plans/assistant-chat-design.md:26311; Plans/assistant-chat-design.md:26332; Plans/Decision_Log.md:431",
+      "note": "Both anchors are #ACD-461, which binds the owner contract directly above it: Assistant Chat semantic/payload owner, Prompt Pipeline policy, SIR operation/lease/replay, Storage append/projection/retention. DL-040 records Jared's approval of these identifiers. ACD-461's 2026-11-04 rewording on this branch keeps both anchors. (PNC-019 S2 regrade, reports/event-authority-20261114/s2-depth-post-august.json.)"
     },
     "producer": {
-      "status": "FAIL",
-      "citation": "Plans/Wiring_Matrix.production.json:2807-2860",
-      "note": "Production wiring names handlers::chat::compact_context but explicitly declares no persisted event and requires that the command emit no unexpected persisted domain event, contradicting this event token."
+      "status": "PASS",
+      "citation": "Plans/assistant-chat-design.md:26313; Plans/storage-plan.md:19858; Plans/storage-plan.md:19860; Plans/Wiring_Matrix.production.json:18190",
+      "note": "ACD-461 names producer assistant_chat.compaction_commit.v1 at the commit step, reached by cmd.chat.compact_context via handlers::chat::compact_context and by PP-078 automatic compaction. SP-259 orders prepare/verify, fence recheck, barrier append as the logical commit marker, then visibility. Recovery reconciles through seglog/dedupe, never the AppendReceipt, so SP-286 adoption is not triggered. Production wiring now declares the event. (PNC-019 S2 regrade, reports/event-authority-20261114/s2-depth-post-august.json.)"
     },
     "membership_version": {
-      "status": "FAIL",
-      "citation": null,
-      "note": "The checked citations name this event or its trigger but do not provide versioned registry membership for `context.compaction.completed`."
+      "status": "PASS",
+      "citation": "Plans/event_family_registry.json:2877; Plans/event_family_registry.json:2878; Plans/event_family_registry.json:2888; Plans/event_family_registry.json:2889; Plans/event_payload_context_compaction_completed.schema.json:3; Plans/event_payload_context_compaction_completed.schema.json:34; Plans/storage-plan.md:19856",
+      "note": "Registry 2026-11-04.1 row 39 registers event-family-context-compaction-completed at 1.0.0, project_only, with no payload_versions, aliases or extensions. The ref resolves to the schema whose $id equals payload_schema_id, schema_version const 1.0.0. SP-259 admits exactly this one family. (PNC-019 S2 regrade, reports/event-authority-20261114/s2-depth-post-august.json.)"
     },
     "closed_payload_schema": {
-      "status": "FAIL",
-      "citation": null,
-      "note": "The checked citations do not define an exhaustive, closed payload schema for `context.compaction.completed`; minimum fields or command arguments are not a closed event schema."
+      "status": "PASS",
+      "citation": "Plans/event_payload_context_compaction_completed.schema.json:7; Plans/event_payload_context_compaction_completed.schema.json:31; Plans/assistant-chat-design.md:26313",
+      "note": "The v1 payload root is closed (additionalProperties false) with 19 required bounded content-free fields and const schema_id/version; no retired structure is involved. (PNC-019 S2 regrade, reports/event-authority-20261114/s2-depth-post-august.json.)"
     },
     "scope_identity": {
-      "status": "FAIL",
-      "citation": null,
-      "note": "The checked command citation scopes the triggering command but does not state that the emitted `context.compaction.completed` payload carries the same identity; event scope therefore fails closed without inference."
+      "status": "PASS",
+      "citation": "Plans/event_family_registry.json:2878; Plans/event_family_registry.json:2895; Plans/assistant-chat-design.md:26315; Plans/storage-plan.md:19862; Plans/storage-plan.md:19887; Plans/Contracts_V0.md:26754; Plans/Decision_Log.md:30163",
+      "note": "Project-only with exact Project/thread payload-envelope equality and SP-259 idempotency/event-id formulas. Current ACD-461 and CV-329 explicitly keep application compaction as owner operation/result receipts and a non-admitted payload/source candidate. App event emission remains missing_event_registration/non-emitting until separate Event Authority admission and complete adoption; no Project event append/replay/checkpoint is borrowed. (PNC-019 S2 regrade, reports/event-authority-20261114/s2-depth-post-august.json.)"
     },
     "replay_idempotency": {
-      "status": "FAIL",
-      "citation": null,
-      "note": "The checked citations provide no event-specific replay or duplicate-application rule for `context.compaction.completed`."
+      "status": "PASS",
+      "citation": "Plans/storage-plan.md:19862; Plans/storage-plan.md:19860; Plans/Shared_Integration_Runtime.md:2093",
+      "note": "replay_policy=dedupe_by_idempotency_key with app-root dedupe; retries return the first prepared semantic bytes; a different digest is idempotency_conflict; lost acknowledgement reconciles and returns the original completion; replay is projection-only with no helper, tool, billing or derived event (SIR-038). (PNC-019 S2 regrade, reports/event-authority-20261114/s2-depth-post-august.json.)"
     },
     "retention": {
-      "status": "FAIL",
-      "citation": null,
-      "note": "The checked citations provide no event-specific retention duration or deletion rule for `context.compaction.completed`."
+      "status": "PASS",
+      "citation": "Plans/event_family_registry.json:2915; Plans/storage-plan.md:19868; Plans/Decision_Log.md:433",
+      "note": "Event and identity/dedupe evidence keep RP-AUTHORITY-INDEFINITE@1.0.0 for the app-root lifetime (DL-040, including after thread deletion); detailed receipts keep their own rules; derived detail/checkpoint stay RP-PROJECTION-3GEN. No open retention choice. (PNC-019 S2 regrade, reports/event-authority-20261114/s2-depth-post-august.json.)"
     },
     "redaction_custody": {
-      "status": "FAIL",
-      "citation": null,
-      "note": "The checked citations provide no complete event-specific redaction and custody rule for `context.compaction.completed`."
+      "status": "PASS",
+      "citation": "Plans/storage-plan.md:19868; Plans/assistant-chat-design.md:26321",
+      "note": "Inline-only content-free payload, pre-append redaction and ownership checks on every envelope field and ref, opaque non-capability receipt refs, owner-held detailed custody, permission-checked audit access, typed unavailable for deleted or expired receipts. (PNC-019 S2 regrade, reports/event-authority-20261114/s2-depth-post-august.json.)"
     },
     "transitions": {
-      "status": "FAIL",
-      "citation": null,
-      "note": "The checked citations do not close the allowed predecessor/successor transition set for `context.compaction.completed`."
+      "status": "PASS",
+      "citation": "Plans/assistant-chat-design.md:26317; Plans/storage-plan.md:19860",
+      "note": "Only a candidate passing every PP-078 fence and gain predicate with a durable Storage commit marker is a completion; no-op, soft-defer, cancel, stale, denial, helper failure and precommit interruption emit nothing; precommit failure keeps the prior head. (PNC-019 S2 regrade, reports/event-authority-20261114/s2-depth-post-august.json.)"
     },
     "consumers_checkpoints": {
-      "status": "FAIL",
-      "citation": null,
-      "note": "The checked citations do not identify every consumer and checkpoint-advance rule for `context.compaction.completed`."
+      "status": "PASS",
+      "citation": "Plans/assistant-chat-design.md:26319; Plans/storage-plan.md:19864; Plans/storage-plan.md:19866; Plans/Decision_Log.md:433",
+      "note": "Consumer assistant_chat.focused_thread_detail.compaction.v1@1.0.0 and projector assistant_chat.focused_thread_projector.v1@1.0.0; key replay_snapshot_checkpoint.v1:{environment_id}:thread_detail:{checkpoint_id}; effect and checkpoint in one redb transaction; Case L-2 survivor currentness; rebuild from retained events. An equivalent complete checkpoint, not SP-278 by name, with no stored token (rubric: equivalent complete checkpoint). (PNC-019 S2 regrade, reports/event-authority-20261114/s2-depth-post-august.json.)"
     },
     "compatibility_withdrawal": {
-      "status": "FAIL",
-      "citation": null,
-      "note": "The checked citations provide no complete compatibility and withdrawal contract for `context.compaction.completed`."
+      "status": "PASS",
+      "citation": "Plans/assistant-chat-design.md:26321; Plans/storage-plan.md:19870",
+      "note": "No alias, extension or local-receipt backfill; a valid unsupported future-version record is left untouched while the consumer halts with unsupported_schema_version. Withdrawal stops new append first, keeps audit bytes, fences publication and needs an owner-validated read path; StorageMigrationCoordinator is the only migration actor. (PNC-019 S2 regrade, reports/event-authority-20261114/s2-depth-post-august.json.)"
     },
     "positive_negative_oracles": {
       "status": "PASS",
-      "citation": "Plans/Automated_Testing_System.md:1371-1398",
-      "note": "ATS-017 directly specifies successful completion and negative failed/cancelled/degraded result checks for the exact compaction lifecycle."
+      "citation": "Plans/context_compaction_completion_contract_fixtures.json:85; Plans/context_compaction_completion_contract_fixtures.json:440; Plans/storage-plan.md:19870; Plans/Automated_Testing_System.md:1420; Plans/shared_runtime_command_contract_fixtures.json:1445; Plans/Automated_Testing_System.md:3924; Plans/event_authority_ds_round2_fixtures.json:18; Plans/event_payload_context_compaction_completed.schema.json:42; Plans/Automated_Testing_System.md:14156; Plans/Automated_Testing_System.md:14161; scripts/pm-validate-pm7-gui-fixtures.py:556",
+      "note": "PASS. Owner fixtures plus generated guard tables: every refusal of the family checkers is one row (198 tables, 746 rows; 718 proved by the gated tool, 28 alone with path:line proofs). P2A 186/186 and P2B 51/51 witnesses pass, with CV-1101 times and SP-1101 sealed retained dispatch. The batch-2 gate and reviews closed the last reasons (ATS-2300). Native NOT_RUN. (PNC-019 S2 regrade, reports/event-authority-20261114/s2-depth-post-august.json.)"
     }
   },
   "citations_checked": [
@@ -108,7 +108,8 @@
   "quality_notes": [
     "Deepened field-by-field without inference. Blocking source conflict: UI_Command_Catalog/ATS assert a persisted compaction lifecycle while production wiring requires a no-persist receipt and no unexpected persisted event.",
     "2026-11-04T20:31:21Z: lane DS-FIX1 corrected the application times mirrored in this row to the evidenced times of their application commits (2026-11-04T18:45:00Z -> 2026-11-04T18:09:32Z for ds-step6-compaction-ledger-note.json). The recorded times were later than the commits that applied them (review DS-SOL-04). The original application records are unchanged; see reports/event-authority-20261104/ds-fix1-application-time-correction.json.",
-    "Cycle-2 correction (DS-SOL2-03): the current admission-record target is honestly 11/12, so the prior DL-077 supersession note is registration/application history and supplies no current complete-depth proof. The historical disposition and evidence, registration, Jared membership decision and exact AUG/July pins remain unchanged. See reports/event-authority-20261104/ds-fix2-depth-retraction.json and ds-fix2-regrade-application.json. Complete guard-removal witnesses remain open."
+    "Cycle-2 correction (DS-SOL2-03): the current admission-record target is honestly 11/12, so the prior DL-077 supersession note is registration/application history and supplies no current complete-depth proof. The historical disposition and evidence, registration, Jared membership decision and exact AUG/July pins remain unchanged. See reports/event-authority-20261104/ds-fix2-depth-retraction.json and ds-fix2-regrade-application.json. Complete guard-removal witnesses remain open.",
+    "PNC-019 S2 (2026-11-14T19:37:42Z): registered in Step 6 under DL-040 (b240dd93e2) and admitted through its DL-077 record. Disposition NEEDS_MORE_EVIDENCE -> KEEP_REGISTERED, evidence cells membership_version, owner_doc, producer, closed_payload_schema, scope_identity, replay_idempotency, retention, redaction_custody, transitions, consumers_checkpoints, compatibility_withdrawal, positive_negative_oracles projected from the lane regrade with twelve PASS cells in reports/event-authority-20261114/s2-depth-post-august.json (sha256 0a260712a116532a824b81dd497f0cc72f97b4fc1a5cd41ace8db8cdf7dd6c0a); bucket, cohort pins, July classification and every other field are unchanged; no registry change, admission, seal or owner choice."
   ],
   "cohort_pins": [
     "july248"

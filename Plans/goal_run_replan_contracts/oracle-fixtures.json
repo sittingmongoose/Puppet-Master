@@ -1,0 +1,98 @@
+{
+ "schema_id": "pm.goal_run_replan.oracle_fixtures.v1",
+ "status": "canonical_test_fixture_prepared_without_admission",
+ "owner_refs": [
+  "Plans/Automated_Testing_System.md#ATS-3100"
+ ],
+ "rule": "Each positive is a compact spec; scripts/pm_goal_run_replan_oracles.py builds its complete sealed boundary inputs (command, publication, retry, reducer and retained read) with every derived copy recomputed by the shared calls, and derives one-defect negatives from them (negatives() in that script). Expected results are exact: a positive is accepted by every row; a negative is refused first at its named row. Native execution is NOT_RUN; these are owner-contract oracles, not runtime evidence.",
+ "positives": [
+  {
+   "id": "pos-blocked-continue",
+   "source_status": "blocked",
+   "next_action": "continue_running",
+   "before_revision": 7,
+   "generation": 2,
+   "goal_revision": 5,
+   "affected": 2
+  },
+  {
+   "id": "pos-running-repair",
+   "source_status": "running",
+   "next_action": "repair",
+   "before_revision": 3,
+   "generation": 0,
+   "goal_revision": 2,
+   "affected": 1
+  },
+  {
+   "id": "pos-provisional-begin-verification",
+   "source_status": "provisional_success",
+   "next_action": "begin_verification",
+   "before_revision": 11,
+   "generation": 4,
+   "goal_revision": 9,
+   "affected": 3
+  },
+  {
+   "id": "pos-verifying-continue",
+   "source_status": "verifying",
+   "next_action": "continue_running",
+   "before_revision": 12,
+   "generation": 5,
+   "goal_revision": 9,
+   "affected": 2
+  },
+  {
+   "id": "pos-failed-verification-remain-blocked",
+   "source_status": "failed_verification",
+   "next_action": "remain_blocked",
+   "before_revision": 6,
+   "generation": 1,
+   "goal_revision": 4,
+   "affected": 2
+  },
+  {
+   "id": "pos-repairing-stop",
+   "source_status": "repairing",
+   "next_action": "stop",
+   "before_revision": 21,
+   "generation": 7,
+   "goal_revision": 3,
+   "affected": 4
+  },
+  {
+   "id": "pos-stopped-resumable",
+   "source_status": "stopped",
+   "next_action": "repair",
+   "before_revision": 9,
+   "generation": 3,
+   "goal_revision": 6,
+   "affected": 2,
+   "stop_resumable": true
+  },
+  {
+   "id": "pos-stopped-resume-proof",
+   "source_status": "stopped",
+   "next_action": "continue_running",
+   "before_revision": 10,
+   "generation": 3,
+   "goal_revision": 6,
+   "affected": 2,
+   "stop_resumable": false,
+   "changed_admission_proof": true
+  },
+  {
+   "id": "pos-generation-max",
+   "source_status": "running",
+   "next_action": "continue_running",
+   "before_revision": 40,
+   "generation": 4294967294,
+   "goal_revision": 8,
+   "affected": 1
+  }
+ ],
+ "recipe_vectors": {
+  "pos-blocked-continue": "pm.goal-runtime-event.v3:74f311282be8d994c17276b03ab866763138ec64321d90dcdaa9c93d93c0baad"
+ },
+ "recipe_vector_rule": "Each vector is the SP-3100 key of that positive, computed independently of the checker: the twelve-member preimage is an array of ASCII strings and integers below 2^53, whose RFC 8785 serialization is compact JSON; the key is pm.goal-runtime-event.v3: plus the lowercase SHA-256 of those bytes. Preimage for pos-blocked-continue: [\"pm.goal-runtime-event-idempotency.v3\",\"project:proj-replan\",\"goal_run.replanned\",\"proj-replan\",\"goal-7\",5,7,8,\"run-42\",3,\"wg-3\",\"continue_running\"]"
+}

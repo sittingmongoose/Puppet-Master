@@ -1978,7 +1978,18 @@ def _run(fixtures=None, event_type=None, p2a=None):
                             for c in bases.values() if 'event' in c]):
                     errors.append({'missing_positive': [f['event_type'], scope, path]})
     without = sorted(r['id'] for r in ROWS if r['id'] not in refused_rows and r['id'] not in ENTAILED)
-    return {'status': 'FAIL' if errors else 'PASS', 'native_execution': 'NOT_RUN', 'admission': 'ABSENT',
+    # Admission-aware mode (T222/T225): a registered card-2 family passes only as its exact, complete DL-077
+    # admission (scripts/pm_ea_admission_mode.py); an unregistered one is still a prepared draft.
+    import pm_ea_admission_mode as admission_mode
+    modes = admission_mode.verdicts([f['event_type'] for f in load('card2_event_contracts.json')['families']
+                                     if event_type is None or f['event_type'] == event_type], root=ROOT)
+    errors.extend({'admission_mode': [et, v['code']]} for et, v in sorted(modes.items()) if v['mode'] == 'refused')
+    admission = admission_mode.summary(modes)
+    return {'status': 'FAIL' if errors else 'PASS', 'native_execution': 'NOT_RUN',
+            'admission': ('ABSENT' if not admission['admitted'] and not admission['refused'] else
+                          'RECORD_BOUND' if not admission['refused'] else 'REFUSED'),
+            'admission_mode': {'prepared': admission['prepared'], 'admitted': admission['admitted'],
+                               'refused': admission['refused']},
             'positives': len(bases), 'p2a_controls': controls, 'negatives': len(witnesses), 'rows': len(ROWS),
             'tables': len(TABLES), 'entailed_rows': sorted(ENTAILED), 'rows_refused_first': len(refused_rows),
             'rows_without_first_refusal_in_this_run': without, 'recipe_composition': composition,

@@ -108,7 +108,25 @@ def p2a_witnesses(family=None):
             yield control
 
 
+def c12_witnesses(family=None):
+    from pm_dcw_c12_cases import cases
+    for witness in cases():
+        if family and witness['family']!=family:continue
+        yield witness
+        if 'repair' in witness:
+            yield dict(witness,id=witness['id']+'/control',value=copy.deepcopy(witness['repair']),expected='accept',target=None)
+
+
 def invoke(witness):
+    if witness.get('kind')=='sealed':
+        # The independent store sealed exactly this scenario's originals; restored after the call.
+        import pm_dcw_number_custody as custody
+        saved=dict(custody._ISSUED)
+        try:
+            m.install_fixture_originals(copy.deepcopy(witness['value']))
+            return invoke(dict(witness,kind=None))
+        finally:
+            custody._ISSUED.clear();custody._ISSUED.update(saved)
     if witness.get('kind')=='binding':
         m.index_binding(witness['value'])
         return 'accept'
@@ -136,7 +154,7 @@ def collect(family=None, progress=None, items=None):
     collection=dict(controls={}, negatives={}, aliases={}, mismatches=[], untracked=[], cuts=[], counts={})
     from itertools import chain
     from pm_dcw_preflight_guard_cases import cases as preflight_cases
-    for w in (items if items is not None else chain(witnesses(family), number_witnesses(family), preflight_cases(), p2a_witnesses(family))):
+    for w in (items if items is not None else chain(witnesses(family), number_witnesses(family), preflight_cases(), p2a_witnesses(family), c12_witnesses(family))):
         recorded=[]; rows.RECORDER=recorded
         try:
             actual=invoke(w)

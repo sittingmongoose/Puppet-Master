@@ -1184,7 +1184,7 @@
       drop(Array.prototype.slice.call(g.querySelectorAll(':scope > .pmu-card')));
       /* the old board element empties into the hidden spare (40-board.js), never leaves the scroll pane, and carries no
          animation into its next life as the live board (every one still on the element is cancelled) */
-      if (o.ghost) { gAnims.concat(mg && mg.fade && mg.fade.cancel ? [mg.fade] : [], g.getAnimations ? g.getAnimations() : []).forEach(function (x) { if (x) { try { x.cancel(); } catch (error) {} } }); g.textContent = ''; g.hidden = true; g.className = 'pmu-board'; g.removeAttribute('style'); ['data-film', 'data-op', 'data-held', 'data-hold-bodies'].forEach(function (a) { g.removeAttribute(a); }); }
+      if (o.ghost) { gAnims.concat(mg && mg.fade && mg.fade.cancel ? [mg.fade] : [], g.getAnimations ? g.getAnimations() : []).forEach(function (x) { if (x) { try { x.cancel(); } catch (error) {} } }); g.textContent = ''; g.hidden = true; g.className = 'pmu-board'; g.removeAttribute('style'); ['data-film', 'data-op', 'data-wheel-handoff', 'data-held', 'data-hold-bodies'].forEach(function (a) { g.removeAttribute(a); }); }
       else g.remove();
     };
     var mg = moment && moment.ghost && moment.ghost.el === g ? moment.ghost : null;

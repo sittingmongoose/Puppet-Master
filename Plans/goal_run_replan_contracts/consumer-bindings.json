@@ -1,0 +1,157 @@
+{
+ "schema_id": "pm.goal_run_replan.consumer_bindings.v1",
+ "status": "canonical_owner_contract_prepared_without_admission",
+ "owner_refs": [
+  "Plans/Goal_Runtime_System.md#GRS-3101",
+  "Plans/storage-plan.md#SP-3102",
+  "Plans/Contracts_V0.md#CV-3101"
+ ],
+ "rule": "One mandatory per-Workflow-run run-history projection over the complete SP-278 global prefix. Each run's accepted row set is fixed by the authentic installed profile of its original Workflow birth, read from the original WorkflowBirth and combined Enrollment custody, never from a row, a caller or a payload. A row of a family the birth profile does not list is unsupported and halts before the row; it is never skipped, cast or reinterpreted. No two readers each stop at the other's row: one reducer applies the branch of the run's birth.",
+ "birth_profiles": {
+  "pm.executor.workflow_source.all_writers.v7": {
+   "owner": "Plans/Goal_Runtime_System.md#GRS-085",
+   "accepted_rows": [
+    "goal_run.started",
+    "goal_run.cancelled",
+    "goal_run.certified"
+   ],
+   "halts": [
+    "goal_run.replanned",
+    "goal_run.blocked",
+    "goal_run.stopped"
+   ],
+   "note": "Unchanged GRS-085 branch; no existing generation reinterpreted."
+  },
+  "pm.executor.workflow_source.all_writers.stop_block.v1": {
+   "owner": "Plans/Goal_Runtime_System.md#GRS-202",
+   "accepted_rows": [
+    "goal_run.started",
+    "goal_run.cancelled",
+    "goal_run.certified",
+    "goal_run.blocked",
+    "goal_run.stopped"
+   ],
+   "halts": [
+    "goal_run.replanned"
+   ],
+   "note": "GRS-202 branch for births whose source edition lists EP-200's writers. That edition lists no Replan writer, so a replanned row on such a birth is unsupported; its blocked or stopped run leaves only by D06 cancellation."
+  },
+  "pm.executor.workflow_source.all_writers.v8": {
+   "owner": "Plans/Goal_Runtime_System.md#GRS-3101",
+   "accepted_rows": [
+    "goal_run.started",
+    "goal_run.replanned",
+    "goal_run.certified",
+    "goal_run.cancelled"
+   ],
+   "halts": [
+    "goal_run.blocked",
+    "goal_run.stopped"
+   ],
+   "note": "The v8 descriptor lists no EP-200 writer, so blocked and stopped Event rows cannot come from a v8 birth; a v8 run reaches blocked or stopped native status only through a replanned row whose next_action is remain_blocked or stop, and leaves it through a later replanned row or D06."
+  }
+ },
+ "v8_row_sources": {
+  "goal_run.started": {
+   "registry_family_revision": "3.0.0",
+   "payload_schema_id": "pm.goal_runtime_event.goal_run_started.schema.v3",
+   "payload_schema_path": "Plans/executor_cancellation_contracts/schemas/goal-run-started.v3.schema.json",
+   "source_profile": "v8 workflow_start_original.v2 coordinator under native-v8/fresh-profile-methods.json#/workflow_start_methods",
+   "methods": [
+    "owner.workflow.activation.commit_start.v2",
+    "owner.storage.workflow_start.commit_original.v2",
+    "owner.workflow.activation.read_started_current.v2",
+    "owner.workflow.activation.recover_start.v2"
+   ],
+   "method_map": {
+    "path": "Plans/goal_run_replan_contracts/source-v8/native-v8/fresh-profile-methods.json",
+    "sha256": "bb7409db3c963e3f22ce8a923f0b192b7c2e45a07d052143e2b9365306040323"
+   },
+   "rule": "Same registered started-v3 payload and identity recipe (GRS-079); the row is authenticated against the v8 birth's whole native roots, never the v7 roots, and a v7 started consumer is not cast to it."
+  },
+  "goal_run.cancelled": {
+   "registry_family_revision": "3.0.0",
+   "payload_schema_id": "pm.goal_runtime_event.goal_run_cancelled.schema.v3",
+   "payload_schema_path": "Plans/executor_cancellation_contracts/schemas/goal-run-cancelled.v3.schema.json",
+   "source_profile": "v8 positive D06 cancellation under native-v8/fresh-profile-methods.json#/positive_workflow_cancel_methods",
+   "methods": [
+    "owner.workflow.executor_cancel.read_current_disposition.v3",
+    "owner.workflow.executor_cancel.prepare_disposition.v3",
+    "owner.workflow.executor_cancel.publish_disposition.v3",
+    "owner.workflow.executor_cancel.recover_disposition.v3",
+    "owner.workflow.executor_cancel.read_disposition.v3",
+    "owner.workflow.executor_cancel.read_retained_disposition.v3"
+   ],
+   "method_map": {
+    "path": "Plans/goal_run_replan_contracts/source-v8/native-v8/fresh-profile-methods.json",
+    "sha256": "bb7409db3c963e3f22ce8a923f0b192b7c2e45a07d052143e2b9365306040323"
+   },
+   "rule": "Same registered cancelled-v3 payload and recipe (GRS-080); the full original D06 source union of the v8 birth is required (cancellation-dependencies.json). The limited execution revocation of STOP-PROTOCOL.md is never a cancelled row."
+  },
+  "goal_run.certified": {
+   "registry_family_revision": "3.0.0",
+   "payload_schema_id": "pm.goal_runtime_event.goal_run_certified.schema.v3",
+   "payload_schema_path": "Plans/workflow_standard_source_contracts/schemas/goal-run-certified.v3.schema.json",
+   "source_profile": "pm.goal_run_certified.producer_source.v3 with the v8 coordinator",
+   "methods": [
+    "owner.workflow.certified_event.derive_original_identity.v1",
+    "owner.workflow.certified_event.prepare.v1",
+    "owner.storage.certified_event.arm.v1",
+    "owner.storage.certified_event.append_held.v1",
+    "owner.workflow.certified_event.commit_native.v1",
+    "owner.storage.certified_event.readback_held.v1",
+    "owner.workflow.certified_event.release.v1",
+    "owner.workflow.certified_event.read_current.v1",
+    "owner.workflow.certified_event.recover_original.v1",
+    "owner.workflow.certified_event.read_retained.v1",
+    "owner.executor.certified_event.enroll_fresh_birth.v1",
+    "owner.storage.certified_event.read_guard.v1"
+   ],
+   "producer_component": {
+    "path": "Plans/goal_run_replan_contracts/source-v8/producer-combined/installed-profile.json",
+    "sha256": "6cbe4ea29c16e4539c52458abd3e4aca208bd8d6e4618e8e94e516c241c8b116",
+    "installed_contract_digest": "5eed2713286ea610cb57be70e8b86411b6ed303c4ff0af25fe6a26172254c150"
+   },
+   "method_map": {
+    "path": "Plans/goal_run_replan_contracts/source-v8/coordinator/methods.json",
+    "sha256": "0fcbaf3ac2d8e3ada439942d35313bc8568c9f0abe70195f41e7607d8246d723"
+   },
+   "rule": "Same registered certified-v3 payload (GRS-084); the row is authenticated against the v8 coordinator and producer_source.v3 custody (append-first). The v7 certified consumer bound to producer_source.v2 prepare.v2 (GRS-085) is not cast to it."
+  },
+  "goal_run.replanned": {
+   "registry_family_revision": "3.0.0 (prepared; the registry keeps 2.0.0 until S5b)",
+   "payload_schema_id": "pm.goal_runtime_event.goal_run_replanned.schema.v3",
+   "payload_schema_path": "Plans/event_payloads/goal_runtime/goal_run_replanned.v3.schema.json",
+   "source_profile": "v8 Replan writer owner.executor.workflow_run.replan.v1 (EP-3101)",
+   "methods": [
+    "draft.replan.prepare.v3",
+    "draft.replan.apply_native.v3",
+    "draft.replan.finalize_producer.v3",
+    "draft.replan.append_original.v3",
+    "draft.replan.complete.v3",
+    "draft.replan.observe.v3",
+    "draft.replan.read_original.v3",
+    "draft.replan.release.v3",
+    "draft.replan.reconcile.v3",
+    "draft.replan.project.v3"
+   ],
+   "method_map": {
+    "path": "Plans/goal_run_replan_contracts/source-v8/replan/methods.json",
+    "sha256": "75815566b87223e50b2381264933e8151303c867e6304089469dd1772d9b9ec8"
+   },
+   "consumer_successor": {
+    "path": "Plans/goal_run_replan_contracts/source-v8/schemas/replan-consumer.v4.schema.json",
+    "sha256": "1da161c504c1c87624293faef49ac4d7a66f2331470e1e76c840d31274488a8a",
+    "use": "source lineage for the replanned row's original source joins; the canon reducer value is projection.schema.json"
+   },
+   "rule": "Each replanned row binds the actual application, completion and their origins, the observer origin, SP-286 first custody and the full Event to its exact graph generation, Workflow clocks and D-R19 successor (GRS-3100)."
+  }
+ },
+ "never": [
+  "cast a v7 consumer, checkpoint or generation to a v8 birth",
+  "accept a row because its payload validates",
+  "skip an unsupported relevant row",
+  "infer the birth profile from a row or a request",
+  "treat the limited execution revocation result as cancelled or stopped"
+ ]
+}

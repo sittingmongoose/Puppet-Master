@@ -1,0 +1,321 @@
+{
+ "by_expectation": {
+  "accepted_by_both": 20528,
+  "datetime": 3832,
+  "schema": 2200
+ },
+ "by_field": [
+  {
+   "expect": "accepted_by_both",
+   "family": "brainstorm.plan_synthesized",
+   "field": "event.observed_at_utc",
+   "runs": 1022
+  },
+  {
+   "expect": "datetime",
+   "family": "brainstorm.plan_synthesized",
+   "field": "event.observed_at_utc",
+   "runs": 306
+  },
+  {
+   "expect": "accepted_by_both",
+   "family": "brainstorm.plan_synthesized",
+   "field": "event.persisted_at_utc",
+   "runs": 1022
+  },
+  {
+   "expect": "datetime",
+   "family": "brainstorm.plan_synthesized",
+   "field": "event.persisted_at_utc",
+   "runs": 306
+  },
+  {
+   "expect": "accepted_by_both",
+   "family": "brainstorm.plan_synthesized",
+   "field": "payload.synthesized_at_utc",
+   "runs": 1002
+  },
+  {
+   "expect": "datetime",
+   "family": "brainstorm.plan_synthesized",
+   "field": "payload.synthesized_at_utc",
+   "runs": 20
+  },
+  {
+   "expect": "schema",
+   "family": "brainstorm.plan_synthesized",
+   "field": "payload.synthesized_at_utc",
+   "runs": 306
+  },
+  {
+   "expect": "accepted_by_both",
+   "family": "brainstorm.plan_synthesized",
+   "field": "source.owner_record.created_at",
+   "runs": 1126
+  },
+  {
+   "expect": "datetime",
+   "family": "brainstorm.plan_synthesized",
+   "field": "source.owner_record.created_at",
+   "runs": 20
+  },
+  {
+   "expect": "schema",
+   "family": "brainstorm.plan_synthesized",
+   "field": "source.owner_record.created_at",
+   "runs": 182
+  },
+  {
+   "expect": "accepted_by_both",
+   "family": "brainstorm.proposal_added",
+   "field": "event.observed_at_utc",
+   "runs": 1022
+  },
+  {
+   "expect": "datetime",
+   "family": "brainstorm.proposal_added",
+   "field": "event.observed_at_utc",
+   "runs": 306
+  },
+  {
+   "expect": "accepted_by_both",
+   "family": "brainstorm.proposal_added",
+   "field": "event.persisted_at_utc",
+   "runs": 1022
+  },
+  {
+   "expect": "datetime",
+   "family": "brainstorm.proposal_added",
+   "field": "event.persisted_at_utc",
+   "runs": 306
+  },
+  {
+   "expect": "accepted_by_both",
+   "family": "brainstorm.proposal_added",
+   "field": "payload.added_at_utc",
+   "runs": 1002
+  },
+  {
+   "expect": "datetime",
+   "family": "brainstorm.proposal_added",
+   "field": "payload.added_at_utc",
+   "runs": 20
+  },
+  {
+   "expect": "schema",
+   "family": "brainstorm.proposal_added",
+   "field": "payload.added_at_utc",
+   "runs": 306
+  },
+  {
+   "expect": "accepted_by_both",
+   "family": "brainstorm.vote_added",
+   "field": "event.observed_at_utc",
+   "runs": 1022
+  },
+  {
+   "expect": "datetime",
+   "family": "brainstorm.vote_added",
+   "field": "event.observed_at_utc",
+   "runs": 306
+  },
+  {
+   "expect": "accepted_by_both",
+   "family": "brainstorm.vote_added",
+   "field": "event.persisted_at_utc",
+   "runs": 1022
+  },
+  {
+   "expect": "datetime",
+   "family": "brainstorm.vote_added",
+   "field": "event.persisted_at_utc",
+   "runs": 306
+  },
+  {
+   "expect": "accepted_by_both",
+   "family": "brainstorm.vote_added",
+   "field": "payload.cast_at_utc",
+   "runs": 1002
+  },
+  {
+   "expect": "datetime",
+   "family": "brainstorm.vote_added",
+   "field": "payload.cast_at_utc",
+   "runs": 20
+  },
+  {
+   "expect": "schema",
+   "family": "brainstorm.vote_added",
+   "field": "payload.cast_at_utc",
+   "runs": 306
+  },
+  {
+   "expect": "accepted_by_both",
+   "family": "review.artifact_finalized",
+   "field": "event.observed_at_utc",
+   "runs": 1022
+  },
+  {
+   "expect": "datetime",
+   "family": "review.artifact_finalized",
+   "field": "event.observed_at_utc",
+   "runs": 306
+  },
+  {
+   "expect": "accepted_by_both",
+   "family": "review.artifact_finalized",
+   "field": "event.persisted_at_utc",
+   "runs": 1022
+  },
+  {
+   "expect": "datetime",
+   "family": "review.artifact_finalized",
+   "field": "event.persisted_at_utc",
+   "runs": 306
+  },
+  {
+   "expect": "accepted_by_both",
+   "family": "review.artifact_finalized",
+   "field": "payload.finalized_at_utc",
+   "runs": 1002
+  },
+  {
+   "expect": "datetime",
+   "family": "review.artifact_finalized",
+   "field": "payload.finalized_at_utc",
+   "runs": 20
+  },
+  {
+   "expect": "schema",
+   "family": "review.artifact_finalized",
+   "field": "payload.finalized_at_utc",
+   "runs": 306
+  },
+  {
+   "expect": "accepted_by_both",
+   "family": "review.artifact_finalized",
+   "field": "source.owner_record.created_at",
+   "runs": 1126
+  },
+  {
+   "expect": "datetime",
+   "family": "review.artifact_finalized",
+   "field": "source.owner_record.created_at",
+   "runs": 20
+  },
+  {
+   "expect": "schema",
+   "family": "review.artifact_finalized",
+   "field": "source.owner_record.created_at",
+   "runs": 182
+  },
+  {
+   "expect": "accepted_by_both",
+   "family": "review.finding_added",
+   "field": "event.observed_at_utc",
+   "runs": 1022
+  },
+  {
+   "expect": "datetime",
+   "family": "review.finding_added",
+   "field": "event.observed_at_utc",
+   "runs": 306
+  },
+  {
+   "expect": "accepted_by_both",
+   "family": "review.finding_added",
+   "field": "event.persisted_at_utc",
+   "runs": 1022
+  },
+  {
+   "expect": "datetime",
+   "family": "review.finding_added",
+   "field": "event.persisted_at_utc",
+   "runs": 306
+  },
+  {
+   "expect": "accepted_by_both",
+   "family": "review.finding_added",
+   "field": "payload.added_at_utc",
+   "runs": 1002
+  },
+  {
+   "expect": "datetime",
+   "family": "review.finding_added",
+   "field": "payload.added_at_utc",
+   "runs": 20
+  },
+  {
+   "expect": "schema",
+   "family": "review.finding_added",
+   "field": "payload.added_at_utc",
+   "runs": 306
+  },
+  {
+   "expect": "accepted_by_both",
+   "family": "review.finding_dispositioned",
+   "field": "event.observed_at_utc",
+   "runs": 1022
+  },
+  {
+   "expect": "datetime",
+   "family": "review.finding_dispositioned",
+   "field": "event.observed_at_utc",
+   "runs": 306
+  },
+  {
+   "expect": "accepted_by_both",
+   "family": "review.finding_dispositioned",
+   "field": "event.persisted_at_utc",
+   "runs": 1022
+  },
+  {
+   "expect": "datetime",
+   "family": "review.finding_dispositioned",
+   "field": "event.persisted_at_utc",
+   "runs": 306
+  },
+  {
+   "expect": "accepted_by_both",
+   "family": "review.finding_dispositioned",
+   "field": "payload.dispositioned_at_utc",
+   "runs": 1002
+  },
+  {
+   "expect": "datetime",
+   "family": "review.finding_dispositioned",
+   "field": "payload.dispositioned_at_utc",
+   "runs": 20
+  },
+  {
+   "expect": "schema",
+   "family": "review.finding_dispositioned",
+   "field": "payload.dispositioned_at_utc",
+   "runs": 306
+  }
+ ],
+ "failures": 0,
+ "pins": {
+  "Plans/application_workflow_contracts.schema.json": "2cf0d5972765362907d6d4eb05eb7bc0f06cdf5e15d6a89e777f38f4b7ebab82",
+  "Plans/collaboration_event_contract_fixtures.json": "e7db7d13edeeed914781ec6e5af7ea8907fd03602f0a6249d5b2c0254313cd70",
+  "Plans/collaboration_event_payloads.schema.json": "e2f52f6fe8e254a5a8e0cf286d9d43a0dc3bb08f965f20df80f91838d4e0f721",
+  "Plans/collaboration_prepared_sources.schema.json": "98899450caabd072e9e7658ff985bbfe455e45fff537066e60d0d2d0873de9ee",
+  "Plans/collaboration_projection_contracts.schema.json": "7ba64d26654e43544b3a75bc53be78634d21bcacb73a62112a0a304e0a6d84e8",
+  "Plans/collaborative_workflows_contracts.schema.json": "99dc64f79b872620c6b852dbb118ed9c5f68f177d0adf9b742af6123b791f4e3",
+  "Plans/event_record.schema.json": "bda87b247d841e058758136731734e515ae947f2261b5f90370015603d3bd353",
+  "Plans/shared_integration_runtime.schema.json": "0e41d89065463e0581357a514ad3d2510d6db8a3e9356dcd23f717f5db4118f5",
+  "scripts/pm-dc-c12-check.py": "eb1f5c1e4b81240187c31a9051523ac45b5f53104818cddac1f9008777df79af",
+  "scripts/pm_collaboration_events.py": "48852ffb211beb7be3a04fba9db68de1844ef8d4c200d45e559ef8e053be6da3",
+  "scripts/pm_dc_c12_clauses.py": "1c13aa862c2cdf84f944a9e2fa71ee10a1622c99d17c8987c4344c5889c08448",
+  "scripts/pm_dc_c12_datetime.py": "c60ecc1925f61be48a180366a31bd93bd71667a1b3370e86df849ece0e672814",
+  "scripts/pm_dc_c12_joins.py": "01ef16bb8bbd0a86e4b151c1cee537f501ee4ab91fa56b045d0920e6c7d0183f",
+  "scripts/pm_dc_c12_retained.py": "38a1934d9abf00e6ce8d863111b2d6e2947fb3d4216c84d7589be604cfe4c126",
+  "scripts/pm_event_datetime.py": "e09d1a18b8c198dc4fc54d9b7017aff47eeaf3a02366c61c64c61e6df3b7995e",
+  "scripts/pm_event_datetime_timestamp_battery.json": "f2a1a55d7f1ef2fe630b7f1fbf5f4b8167958a2d353daf30f7879498a82ef46e",
+  "scripts/pm_event_numbers.py": "31ae47086bacad7f078239baa9e9ec3a5118472298a9e26e878dcf2534819444",
+  "scripts/pm_guard_isolation.py": "e8038992eabbe067c8bcba8d48824b97fbb6b5b7e69cbfe28a669f939a96c0b8"
+ },
+ "runs": 26560,
+ "schema": "pm.pnc019.c12_dc2.datetime.v1",
+ "status": "pass"
+}

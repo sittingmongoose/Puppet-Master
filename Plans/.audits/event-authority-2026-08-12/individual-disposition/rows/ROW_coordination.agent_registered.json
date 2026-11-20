@@ -6,68 +6,68 @@
     "july248"
   ],
   "working_bucket": "confirmed_persisted_unregistered",
-  "disposition": "KEEP_QUARANTINED",
-  "disposition_rationale": "Plans/Decision_Log.md#DL-039: genuine J248-VETO-BATCH-252 CONFIRM_ALL_QUARANTINE_NO_ADMIT, recorded by Jared 2026-09-11T00:49:25.665050+00:00, applied 2026-09-11T15:12:51.572607+00:00 to coordination.agent_registered. Interim KEEP_QUARANTINED: counted in the working denominator, not live-registered. Supersedes the forged 2026-08-12 application claim; retained evidence supplies no new authority or depth closure. This exact row remains for the owner-batched registered/excluded/decision-card campaign. Registered at registry revision 2026-09-25.1 in its own Storage admission landing under DL-078 and DL-045 (decision Plans/Decision_Log.md#DL-094); DL-077 admission record reports/event-authority-20260911/admission-records/coordination.agent_registered.json. The seal check judges this family by that record (INDIVIDUAL_DISPOSITION_SCHEMA.md, DL-077 note); the bucket, disposition, cohort pins and retained evidence stay as written, since the frozen schema has no registered J248 value.",
+  "disposition": "KEEP_REGISTERED",
+  "disposition_rationale": "Plans/Decision_Log.md#DL-039: genuine J248-VETO-BATCH-252 CONFIRM_ALL_QUARANTINE_NO_ADMIT, recorded by Jared 2026-09-11T00:49:25.665050+00:00, applied 2026-09-11T15:12:51.572607+00:00 to coordination.agent_registered. Interim KEEP_QUARANTINED: counted in the working denominator, not live-registered. Supersedes the forged 2026-08-12 application claim; retained evidence supplies no new authority or depth closure. This exact row remains for the owner-batched registered/excluded/decision-card campaign. Registered at registry revision 2026-09-25.1 in its own Storage admission landing under DL-078 and DL-045 (decision Plans/Decision_Log.md#DL-094); DL-077 admission record reports/event-authority-20260911/admission-records/coordination.agent_registered.json. The seal check judges this family by that record (INDIVIDUAL_DISPOSITION_SCHEMA.md, DL-077 note); the bucket, disposition, cohort pins and retained evidence stay as written, since the frozen schema has no registered J248 value. PNC-019 S2 (2026-11-14T19:37:42Z): registered in its Step 9 landing under DL-093/DL-094 and admitted through its DL-077 record. Disposition KEEP_QUARANTINED -> KEEP_REGISTERED, evidence cells membership_version, owner_doc, producer, closed_payload_schema, scope_identity, replay_idempotency, retention, redaction_custody, transitions, consumers_checkpoints, compatibility_withdrawal, positive_negative_oracles projected from the lane regrade with twelve PASS cells in reports/event-authority-20261114/s2-depth-post-august.json (sha256 0a260712a116532a824b81dd497f0cc72f97b4fc1a5cd41ace8db8cdf7dd6c0a); bucket, cohort pins, July classification and every other field are unchanged; no registry change, admission, seal or owner choice.",
   "evidence": {
     "owner_doc": {
       "status": "PASS",
-      "citation": "Plans/storage-plan.md:514-548",
-      "note": "Storage expressly owns the durable coordination record/projection boundary containing this exact event family."
+      "citation": "Plans/event_family_registry.json:3035; Plans/event_family_registry.json:3036; Plans/orchestrator-subagent-integration.md:3801-3802; Plans/orchestrator-subagent-integration.md:3804; Plans/orchestrator-subagent-integration.md:3886; Plans/Contracts_V0.md:7996; Plans/Contracts_V0.md:8007",
+      "note": "semantic_owner_doc resolves to the OSI anchor coordination-event-authority-dl-045-2026-09-25, the section that holds OSI-438 and names itself the semantic owner of this family; payload_owner_doc resolves to the Contracts anchor holding CV-353, whose table maps agent_registered to the registered schema ID. Neither anchor is stale or disclaims its role (clarification 1). (PNC-019 S2 regrade, reports/event-authority-20261114/s2-depth-post-august.json.)"
     },
     "producer": {
       "status": "PASS",
-      "citation": "Plans/storage_value_registry.json:5233-5244",
-      "note": "The registry names the exact coordination event family and explicitly assigns AgentCoordinator, platform hook/event adapters, and the coordination mirror exporter as producers."
+      "citation": "Plans/orchestrator-subagent-integration.md:3812; Plans/orchestrator-subagent-integration.md:3816; Plans/orchestrator-subagent-integration.md:3826; Plans/storage-plan.md:28161; Plans/storage-plan.md:28205; Plans/storage-plan.md:28211; Plans/coordination_event_admission.json:44",
+      "note": "Sole appender AgentCoordinator.register_agent(RegisterAgent), called by the Orchestrator once before node execution, through storage.coordination_append.v1@1.0.0. No owner body precedes the append; Storage admits, appends and issues the first AppendReceipt; execution starts only after it returns, with a join recheck at that boundary. OSI-438 and SP-320 adopt SP-286/CV-339 resolve.v2 by name; SP-320 disclaims reliance on resolve_full_value.v1. (PNC-019 S2 regrade, reports/event-authority-20261114/s2-depth-post-august.json.)"
     },
     "membership_version": {
-      "status": "FAIL",
-      "citation": null,
-      "note": "No cited authority admits this exact token to an active, versioned Event Authority registry membership."
+      "status": "PASS",
+      "citation": "Plans/event_family_registry.json:5; Plans/event_family_registry.json:3031; Plans/event_family_registry.json:3032; Plans/event_family_registry.json:3034; Plans/event_family_registry.json:3041; Plans/event_family_registry.json:3044; Plans/coordination_event_payloads.schema.json:131; Plans/coordination_event_payloads.schema.json:153-155; Plans/coordination_event_admission.json:40; Plans/coordination_event_admission.json:172; Plans/storage-plan.md:28236",
+      "note": "Registry 2026-09-25.1 row #/families/42 registers event-family-coordination-agent-registered at 1.0.0, project_only, no aliases or extensions; #/$defs/agent_registered carries $id pm.coordination_event.agent_registered.schema.v1 and schema_version 1.0.0. The row equals the ledger's prepared row (canonical SHA-256 1602bb6d...3b40, recomputed here); the six sibling rows stay prepared_not_admitted and unregistered. (PNC-019 S2 regrade, reports/event-authority-20261114/s2-depth-post-august.json.)"
     },
     "closed_payload_schema": {
-      "status": "FAIL",
-      "citation": null,
-      "note": "No cited storage-owned schema closes every persisted payload field for this exact token."
+      "status": "PASS",
+      "citation": "Plans/coordination_event_payloads.schema.json:129-140; Plans/coordination_event_payloads.schema.json:133; Plans/coordination_event_payloads.schema.json:167-169; Plans/coordination_event_payloads.schema.json:170-173; Plans/Contracts_V0.md:8016; Plans/Contracts_V0.md:8020; Plans/Contracts_V0.md:8021; Plans/Contracts_V0.md:7961; Plans/orchestrator-subagent-integration.md:3847",
+      "note": "#/$defs/agent_registered is closed (additionalProperties false over the envelope fields plus model_id and started_at_utc), requires schema_version 1.0.0, agent_type and started_at_utc, fixes agent_revision to 1 and a key ending :1, and admits no expected_previous_revision, last_applied_event_id, operation field or null (CV-353 rules 1-5; OSI-438: registration carries no operation). (PNC-019 S2 regrade, reports/event-authority-20261114/s2-depth-post-august.json.)"
     },
     "scope_identity": {
       "status": "PASS",
-      "citation": "Plans/Contracts_V0.md:2917-2949",
-      "note": "The exact coordination event is bound to the PM lineage envelope and project/run/agent identity fields."
+      "citation": "Plans/event_family_registry.json:3034; Plans/event_family_registry.json:3048; Plans/Contracts_V0.md:8025; Plans/storage-plan.md:28173; Plans/storage-plan.md:28174; Plans/storage-plan.md:28175; Plans/orchestrator-subagent-integration.md:3810; Plans/storage-plan.md:28176",
+      "note": "project_only with envelope pointers for project, thread, run and node; CV-353 rule 8 fixes scope_kind project, envelope identity equal to the payload, null attempt, the family schema ID and occurred_at_utc = started_at_utc. SP-320 defines the idempotency key with recovery epoch and revision, the evt_coordination_ SHA-256 event ID, fixed lineage, and agent_id allocation from fresh entropy (OSI-438: never registered again). (PNC-019 S2 regrade, reports/event-authority-20261114/s2-depth-post-august.json.)"
     },
     "replay_idempotency": {
       "status": "PASS",
-      "citation": "Plans/storage-plan.md:535-539",
-      "note": "The PM append path requires an idempotency key and expected revision, with append/projection CAS and stale-write rejection."
+      "citation": "Plans/storage-plan.md:28163; Plans/storage-plan.md:28207; Plans/orchestrator-subagent-integration.md:3826; Plans/storage-plan.md:28234; Plans/storage-plan.md:28193; Plans/coordination_event_admission.json:47",
+      "note": "Dedupe identity (scope_partition, event_type, idempotency_key) plus producer digest: an exact retry returns the original event and result, a changed digest is idempotency_conflict and never appends. A lost acknowledgement returns the resolve.v2 receipt with nothing new appended; an uncertain append stays fenced; retries carry the same prepared bytes; replay rebuilds projection rows only and re-runs no effect. (PNC-019 S2 regrade, reports/event-authority-20261114/s2-depth-post-august.json.)"
     },
     "retention": {
       "status": "PASS",
-      "citation": "Plans/storage_value_registry.json:5318",
-      "note": "The exact coordination_event_records family binds to RP-COORDINATION-180D here; the checked policy definition at lines 302-315 fixes its 180-day TTL anchored at run completion."
+      "citation": "Plans/event_family_registry.json:3082; Plans/storage_value_registry.json:329-333; Plans/storage_value_registry.json:333-336; Plans/storage_value_registry.json:337; Plans/storage_value_registry.json:11437; Plans/storage-plan.md:28227; Plans/storage-plan.md:28228; Plans/storage-plan.md:28229; Plans/storage_value_registry.json:12730; Plans/orchestrator-subagent-integration.md:3845",
+      "note": "The row binds RP-COORDINATION-180D@1.0.0 (fixed TTL 15552000 s from run_completion, 1,000,000 per project, compact). SP-320 binds run_completion to the Run's first durable terminal canonical record and keeps records of an unresolved Run unexpired; the projections and checkpoint use RP-PROJECTION-3GEN@1.0.0 with bounded same-key generations. No policy changes and no open retention choice. (PNC-019 S2 regrade, reports/event-authority-20261114/s2-depth-post-august.json.)"
     },
     "redaction_custody": {
       "status": "PASS",
-      "citation": "Plans/storage-plan.md:508",
-      "note": "The storage-owned persisted-value boundary forbids raw secrets and restricts sensitive data to redacted or external-custody references."
+      "citation": "Plans/event_family_registry.json:3062; Plans/Contracts_V0.md:8025; Plans/storage-plan.md:28215; Plans/storage-plan.md:28216; Plans/storage-plan.md:28223; Plans/storage-plan.md:28209; Plans/storage_value_registry.json:11406; Plans/orchestrator-subagent-integration.md:3869",
+      "note": "reject_unhandled_secrets and no_secrets; the payload holds IDs, platform, model_id and a timestamp only, and worktree_path becomes worktree_id. SP-320: the EventRecords are the only, canonical history in the mandatory backup, first receipts sit in SP-286 custody, projections are derived and rebuilt after restore, restored work is never fresh, and readers apply current Project and thread permission and deletion tombstones before disclosure. (PNC-019 S2 regrade, reports/event-authority-20261114/s2-depth-post-august.json.)"
     },
     "transitions": {
-      "status": "FAIL",
-      "citation": null,
-      "note": "No cited contract closes the complete legal transition set for this exact token."
+      "status": "PASS",
+      "citation": "Plans/storage-plan.md:28184; Plans/storage-plan.md:28186; Plans/storage-plan.md:28191; Plans/storage-plan.md:28167; Plans/orchestrator-subagent-integration.md:3847; Plans/orchestrator-subagent-integration.md:3826; Plans/storage-plan.md:28676; Plans/storage-plan.md:28238",
+      "note": "SP-320's table admits registration only as an agent's first event (revision 1, no expected previous revision), creating the row as queued with lineage fixed; a repeat is already_registered, or already_terminal after the terminal event, before the revision rule, unless an exact retry. Barriers: execution and the revision-2 initial operation wait for the first receipt; read-back waits for coverage; admission is one event at a time under the writer lock. (PNC-019 S2 regrade, reports/event-authority-20261114/s2-depth-post-august.json.)"
     },
     "consumers_checkpoints": {
       "status": "PASS",
-      "citation": "Plans/storage-plan.md:528-546",
-      "note": "Storage names the authoritative coordination projections/checkpoint and requires authority consumers to use them rather than mirrors."
+      "citation": "Plans/storage-plan.md:28105; Plans/storage-plan.md:28107; Plans/storage-plan.md:28117; Plans/storage-plan.md:28137; Plans/storage-plan.md:28141; Plans/storage-plan.md:28144; Plans/storage-plan.md:28197; Plans/coordination_projection_contracts.schema.json:820-822; Plans/coordination_projection_contracts.schema.json:1246-1259; Plans/storage_value_registry.json:12689",
+      "note": "storage.coordination_projector.v1@1.0.0 is the only direct consumer and adopts SP-278's checkpoint and reader by name; key projector.checkpoint.coordination:{project_id}, closed value coordination_projector_checkpoint.v1@1.0.0 storing the nine-field durable token (no redb_snapshot_id, DL-076); rows and checkpoint commit in one redb transaction under prior-value CAS; five versioned readers check state, admitted types, coverage and publication; governed rebuild. (PNC-019 S2 regrade, reports/event-authority-20261114/s2-depth-post-august.json.)"
     },
     "compatibility_withdrawal": {
-      "status": "FAIL",
-      "citation": null,
-      "note": "No cited authority defines compatibility acceptance and an explicit withdrawal or sunset condition for this exact token."
+      "status": "PASS",
+      "citation": "Plans/Contracts_V0.md:8018; Plans/orchestrator-subagent-integration.md:3865; Plans/storage_value_registry.json:11399; Plans/storage-plan.md:28154; Plans/storage-plan.md:28237; Plans/storage-plan.md:28236",
+      "note": "Compatibility: no aliases, legacy extensions or sketch fields; the JSON state files are mirror inputs, never migration authority; a later payload needs a new CV-353 definition and version, and readers reject unsupported versions. Withdrawal (SP-320, per family): new registrations refused, current core withdrawn once, projector and readers fenced, successor rebuilt from kept seglog and custody; no zero-cursor reset, sibling reuse or seglog deletion. (PNC-019 S2 regrade, reports/event-authority-20261114/s2-depth-post-august.json.)"
     },
     "positive_negative_oracles": {
-      "status": "FAIL",
-      "citation": null,
-      "note": "No cited complete positive-emission and negative-non-emission oracle pair exists for this exact token."
+      "status": "PASS",
+      "citation": "Plans/Automated_Testing_System.md:5440; Plans/Automated_Testing_System.md:5454; Plans/Automated_Testing_System.md:5433; Plans/Automated_Testing_System.md:5466; Plans/coordination_event_contract_fixtures.json:868-875; Plans/coordination_event_contract_fixtures.json:908-914; Plans/coordination_event_contract_fixtures.json:2171-2178; Plans/coordination_event_contract_fixtures.json:2559-2561; Plans/coordination_event_contract_fixtures.json:3308-3310; Plans/coordination_event_contract_fixtures.json:4412; Plans/coordination_event_admission.json:80-83",
+      "note": "ATS-058 and the fixtures give this family 10 positive and 12 negative payloads by layer, its own valid EventRecord with 4 join negatives, identity vectors (revision 1, new recovery epoch) and 5 transition sequences, all named in its ledger row; static checker scripts/pm_coordination_events.py; COORD-APPEND-01 and the shared obligations authored NOT_RUN. This grader re-derived the registration cases without a discrepancy. (PNC-019 S2 regrade, reports/event-authority-20261114/s2-depth-post-august.json.)"
     }
   },
   "citations_checked": [
@@ -130,7 +130,8 @@
   "source_overlay": "UnregOverlay06",
   "provisional": false,
   "quality_notes": [
-    "Deepened against the binding IndividualDisposition schema: immutable cohort and working bucket recorded; owner key normalized; UNKNOWN statuses resolved fail-closed; every PASS carries a concrete Plans citation; no owner or producer inferred."
+    "Deepened against the binding IndividualDisposition schema: immutable cohort and working bucket recorded; owner key normalized; UNKNOWN statuses resolved fail-closed; every PASS carries a concrete Plans citation; no owner or producer inferred.",
+    "PNC-019 S2 (2026-11-14T19:37:42Z): registered in its Step 9 landing under DL-093/DL-094 and admitted through its DL-077 record. Disposition KEEP_QUARANTINED -> KEEP_REGISTERED, evidence cells membership_version, owner_doc, producer, closed_payload_schema, scope_identity, replay_idempotency, retention, redaction_custody, transitions, consumers_checkpoints, compatibility_withdrawal, positive_negative_oracles projected from the lane regrade with twelve PASS cells in reports/event-authority-20261114/s2-depth-post-august.json (sha256 0a260712a116532a824b81dd497f0cc72f97b4fc1a5cd41ace8db8cdf7dd6c0a); bucket, cohort pins, July classification and every other field are unchanged; no registry change, admission, seal or owner choice."
   ],
   "applied_at_utc": "2026-09-11T15:12:51.572607+00:00",
   "phase1_application": {

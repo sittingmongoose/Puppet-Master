@@ -1,0 +1,65 @@
+{
+ "status": "PASS",
+ "frozen_bytes_unchanged": true,
+ "pinned_files": 144,
+ "runs": [
+  {
+   "script": "/home/sittingmongoose/PM-Experiments/event-authority-step08-restore-paired-phases-20260911/v2/test_phases.py",
+   "source_sha256": "cb3753b6af51385734f371b8aeceb5f1bd6bc039bb5bda4f015af0227a8cc358",
+   "exit_code": 0,
+   "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/s3ao/pinned-regressions-v29/event-authority-step08-restore-paired-phases-20260911-test_phases.log",
+   "log_sha256": "6d09ec497908323ebb8c903595bf55f005abfa784bc4806eda560589683ca9ff"
+  },
+  {
+   "script": "/home/sittingmongoose/PM-Experiments/event-authority-step08-restore-paired-phases-20260911/v2/check_final_boundaries.py",
+   "source_sha256": "cd4d81476d08d844fb1a2d2a7d7d039fd84b4b4f6f66cf91eee4592067cce260",
+   "exit_code": 0,
+   "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/s3ao/pinned-regressions-v29/event-authority-step08-restore-paired-phases-20260911-check_final_boundaries.log",
+   "log_sha256": "b9040ed7e8cfe27130354d7e64dd87de1b7deaa7888ae37d3ee13140e365e23e"
+  },
+  {
+   "script": "/home/sittingmongoose/PM-Experiments/event-authority-step08-pending-recovery-20260912/v3/test_creation.py",
+   "source_sha256": "4ddc2e427219f95858b0e4e1559eea41ead2930abadb11b2c70da9d622283ecf",
+   "exit_code": 0,
+   "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/s3ao/pinned-regressions-v29/event-authority-step08-pending-recovery-20260912-test_creation.log",
+   "log_sha256": "ea2ebaaf670a2932f7b80116510b5dbbd57598dea37c7223f8edb2a1d8ec4e81"
+  },
+  {
+   "script": "/home/sittingmongoose/PM-Experiments/event-authority-step08-pending-recovery-20260912/v3/test_deletion.py",
+   "source_sha256": "5e7a3dc612c9db6c797b3132876342422c2df100337d3ad3f77ac2be8424cd75",
+   "exit_code": 0,
+   "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/s3ao/pinned-regressions-v29/event-authority-step08-pending-recovery-20260912-test_deletion.log",
+   "log_sha256": "034a95869e658fbd2c9682c8554af510da599c264565cfc0df542029194a3075"
+  },
+  {
+   "script": "/home/sittingmongoose/PM-Experiments/event-authority-step08-pending-recovery-20260912/v3/test_final_receipt_fence.py",
+   "source_sha256": "cc9dbbe4d9972a9eafb80daf661c9456ac806516c6dda57f70f39bdc55928421",
+   "exit_code": 0,
+   "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/s3ao/pinned-regressions-v29/event-authority-step08-pending-recovery-20260912-test_final_receipt_fence.log",
+   "log_sha256": "00626c638bc4652a189d6cce4906cb1dacc71a93d8700ccc3cb500e697643101"
+  },
+  {
+   "script": "/home/sittingmongoose/PM-Experiments/event-authority-step08-pending-recovery-20260912/v3/test_preappend.py",
+   "source_sha256": "c256dabf35442fb552a41f6137a76db1b1e8fe3a0310f44f95b706988a194e6f",
+   "exit_code": 0,
+   "log": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/s3ao/pinned-regressions-v29/event-authority-step08-pending-recovery-20260912-test_preappend.log",
+   "log_sha256": "a0b2e3e11ce1d0bbfb41f20c0ef0cdd25f26c73da113444d7c2e0bb985a3e2f7"
+  }
+ ],
+ "guard_credit": 0,
+ "mutation_kill_credit": 0,
+ "native_execution": "NOT_RUN",
+ "evidence": {
+  "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/s3ao/pinned-regressions-v29/regressions.json",
+  "sha256": "cdd08a936536e76c6567088656167054065342fb64d150c4131031b8d86cb6b8"
+ },
+ "case_counts": {
+  "unchanged_original_regressions": 199,
+  "retained_phase_cases": 99,
+  "final_boundary_cases": 58,
+  "pending_creation": 30,
+  "pending_deletion": 38,
+  "pending_final_receipt_fence": 44,
+  "pending_preappend": 42
+ }
+}

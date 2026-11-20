@@ -8,7 +8,10 @@ before its suite runs. Credit is copied from the tool's own report rows; this dr
 
 Usage: python3 scripts/pm-ds15-guard-tables.py --out <dir> [--phase <phase>]... [--collect-only]
        [--save-collection <file>] [--load-collection <file>] [--flips]
-       [--negative-limit N] [--control-limit N]
+       [--negative-limit N] [--control-limit N] [--family F]
+
+--family F (C12-DS15) runs the tool on each table one family reaches with only that family's own controls and
+negatives (pm_ds15_guard_suites.family_slot), so every proved row is proved by that family's own witnesses.
 """
 import argparse
 import gzip
@@ -36,6 +39,7 @@ def main():
     parser.add_argument('--max-rss', type=int, default=6144)
     parser.add_argument('--pause-when-low', type=int, default=10)
     parser.add_argument('--resume-at', type=int, default=11)
+    parser.add_argument('--family', help='tool runs with only this family\'s own controls and negatives')
     args = parser.parse_args()
     args.out.mkdir(parents=True, exist_ok=True)
     started = time.monotonic()
@@ -57,6 +61,7 @@ def main():
             args.save_collection.write_bytes(pickle.dumps(dict(inputs=inputs, collected=collected, findings=findings,
                                                                counts=counts, collect_seconds=collect_seconds), protocol=5))
     summary = dict(tool_sha256=inputs['scripts/pm_guard_isolation.py'], source_sha256=inputs, collect_seconds=collect_seconds,
+                   family=args.family,
                    counts=counts, findings=findings, negative_limit=args.negative_limit, control_limit=args.control_limit,
                    suites=[])
     phases = sorted(p.stem[len(suites.TABLE_PREFIX):] for p in (root / 'scripts').glob(suites.TABLE_PREFIX + '*.py'))
@@ -65,6 +70,10 @@ def main():
         if args.phase and phase not in args.phase:
             continue
         slot = collected.get(phase, dict(controls={}, negatives={}))
+        if args.family:
+            slot = suites.family_slot(slot, args.family)
+            if not slot['controls'] and not slot['negatives']:
+                continue  # this family never reaches the table
         rows = [name for name, _, _ in suites.table_rows(phase)]
         controls, negatives = list(slot['controls'].values()), list(slot['negatives'].values())
         entry = dict(phase=phase, rows=rows, controls=len(controls), negatives=len(negatives),
@@ -105,6 +114,8 @@ def main():
         summary['suites'].append(entry)
     summary['seconds'] = round(time.monotonic() - started, 1)
     name = 'summary.json' if not args.phase else 'summary-' + hashlib.sha256(' '.join(args.phase).encode()).hexdigest()[:12] + '.json'
+    if args.family:
+        name = 'summary-' + args.family + '.json'
     (args.out / name).write_text(json.dumps(summary, indent=1, sort_keys=True, default=str) + '\n')
     bad = [s for s in summary['suites'] if s.get('tool_status') not in (None, 'PASS') or s['lane_matrix'] or s['rows_without_negative']]
     open_findings = [f for f in findings if f['kind'] != 'excluded_from_table_proof']

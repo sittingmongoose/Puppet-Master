@@ -418,13 +418,50 @@ def u1n_predecessor(d):
     return w, lambda: w.body.read_body(g['scope'], g['user'], g['user_permission'])
 
 
-@case('U1', 'U1/N/unrepresentable_integer', 'negative', 'dgu/jcs/jcs_binary64')
+@case('U1', 'U1/N/unrepresentable_integer', 'negative', 'dgu/jcs/jcs_decimal')
 def u1n_integer(d):
+    # T248 / CV-1100: 2^64 is exact in binary64, but its emitted JCS decimal
+    # changes the integer. Lead decision 1116065722-90e4 corrects the old
+    # safe-ceiling classification; the complete negative stays unchanged.
     w = world(d)
     g = O.birth_goal(w)
     req = O.direct_request(w, g, 'x')
     req['expected_revision'] = 2 ** 64
     return w, lambda: w.command.run(req)
+
+
+def _revision_admission(d, revision):
+    w = world(d)
+    goal = O.birth_goal(w)
+    request = O.direct_request(w, goal, 'JCS route qualification')
+    request['expected_revision'] = revision
+    return w, request
+
+
+@case('U1', 'U1/P/expected_revision_2p53', 'positive')
+def u1p_jcs_2p53(d):
+    w, request = _revision_admission(d, 2 ** 53)
+    admitted = w.sir.admit(request)
+    check('2p53/admitted_exact_revision', admitted['request']['expected_revision'] == 2 ** 53)
+    return dict(boundary='sir.admit', expected_revision=2 ** 53, accepted=True)
+
+
+@case('U1', 'U1/N/expected_revision_2p53_plus_1', 'negative', 'dgu/jcs/jcs_binary64')
+def u1n_jcs_2p53_plus_1(d):
+    w, request = _revision_admission(d, 2 ** 53 + 1)
+    return w, lambda: w.sir.admit(request)
+
+
+@case('U1', 'U1/N/expected_revision_2p60', 'negative', 'dgu/jcs/jcs_decimal')
+def u1n_jcs_2p60(d):
+    w, request = _revision_admission(d, 2 ** 60)
+    return w, lambda: w.sir.admit(request)
+
+
+@case('U1', 'U1/N/expected_revision_4400_digits', 'negative', 'dgu/jcs/jcs_binary64')
+def u1n_jcs_4400_digits(d):
+    w, request = _revision_admission(d, 10 ** 4400 - 1)
+    return w, lambda: w.sir.admit(request)
 
 
 @case('U1', 'U1/N/objective_4001_scalars', 'negative', 'dgu/sir/request/schema/objective_text')
@@ -1225,10 +1262,16 @@ def u5n_agent_author(d):
     return w, lambda: w.approvals.capture(prop['command_instance_id'])
 
 
-@case('U5', 'U5/N/target_uuid_malformed', 'negative', 'dgu/hitl/capture/storage_uuid')
+@case('U5', 'U5/N/target_uuid_malformed', 'negative', 'dgu/sir/proposal/schema/target/scope/storage_instance_id')
 def u5n_uuid(d):
-    w, g, prop, ap = _proposal(d, target_storage=lambda sid: sid.replace('-', ''))
-    return w, lambda: w.approvals.capture(prop['command_instance_id'])
+    # T246: the schema-valid proposal is the control. A malformed UUID is
+    # rejected by SIR's original schema before any HITL capture can receive it;
+    # it cannot witness the downstream guard without forging an admitted source.
+    w, g, prop, ap = _proposal(d)
+    malformed = copy.deepcopy(prop)
+    malformed['command_instance_id'] += ':malformed-uuid'
+    malformed['target']['scope']['storage_instance_id'] = g['scope']['storage_instance_id'].replace('-', '')
+    return w, lambda: w.sir.admit_proposal(malformed)
 
 
 @case('U5', 'U5/N/target_uuid_case_folded', 'negative', 'dgu/hitl/capture/foreign_storage')

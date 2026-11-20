@@ -1,0 +1,565 @@
+{
+ "schema_id": "pm.assurance.event_authority.admission_depth_assessment.v1",
+ "assessment_kind": "admission_twelve_criteria",
+ "writer": "pm-ea-admission-writer.v1",
+ "merge": "admission-merge-2",
+ "registry": {
+  "path": "Plans/event_family_registry.json",
+  "revision": "2026-11-18.2",
+  "sha256": "ec21cf1a5b42b3e68a5564a847b4798dff968612d11d438bc7075b89196f9602",
+  "family_count": 518,
+  "row_pointer": "#/families/376"
+ },
+ "base_commit": "45b4ccf25270c486dbc682805cd455ce4ca25fb0",
+ "rubric": "Step 8 depth matrix, twelve criteria (DL-077); PASS needs Plans/ evidence",
+ "native_execution": "NOT_RUN",
+ "rows": [
+  {
+   "event_type": "doctor.custom_headless.checked",
+   "family_id": "event-family-doctor-custom-headless-checked",
+   "family_revision": "1.0.0",
+   "cells": {
+    "membership_version": {
+     "status": "PASS",
+     "representation": "exact_registry_membership",
+     "finding": "Currently registered at 2026-11-18.2 as #/families/376 (canonical row SHA-256 33d3505655db2bc52e8f14b04be4ebeb5dc4eb9e11a892339ada8d8a1aa99876). Original one-family admission checkpoints remain in the family record and immutable Git source.",
+     "evidence": [
+      {
+       "path": "Plans/event_family_registry.json",
+       "json_pointer": "#/families/376",
+       "line_start": 25061,
+       "line_end": 25103,
+       "quote": "\"event_type\": \"doctor.custom_headless.checked\"",
+       "quote_line": 25064,
+       "file_sha256": "ec21cf1a5b42b3e68a5564a847b4798dff968612d11d438bc7075b89196f9602",
+       "quote_check": "exact",
+       "source_citation": {
+        "path": "Plans/event_family_registry.json",
+        "json_pointer": "#/families/376",
+        "line_start": 25017,
+        "line_end": 25059,
+        "quote": "\"event_type\": \"doctor.custom_headless.checked\"",
+        "quote_line": 25020,
+        "file_sha256": "339e1107b6de8e3ceb3604049b3f9d66ee9b08c3fbea9d616af025398454e6cd",
+        "quote_check": "exact"
+       },
+       "unit": "#/families/376",
+       "quote_scope": "unit #/families/376, Plans/event_family_registry.json:25061-25103"
+      }
+     ]
+    },
+    "owner_doc": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "doctor.custom_headless.checked has its own current owner doc contract; F1/F2/F3 and exact-type controls execute against this head.",
+     "evidence": [
+      {
+       "path": "Plans/newtools.md",
+       "unit": "N2-217",
+       "line_start": 9111,
+       "line_end": 9111,
+       "quote": "doctor.custom_headless.checked 1.0.0 — newly authored owner contract, prepared without admission.",
+       "quote_check": "exact",
+       "quote_scope": "unit N2-217, Plans/newtools.md:9111-9297",
+       "file_sha256": "80b5387d878fad45dde8a532ffa6a83a129ca3c630eab20f448ab782e12c2bf8",
+       "source_citation": {
+        "path": "Plans/newtools.md",
+        "unit": "N2-217",
+        "line_start": 9111,
+        "line_end": 9111,
+        "quote": "doctor.custom_headless.checked 1.0.0 — newly authored owner contract, prepared without admission.",
+        "file_sha256": "178bb7506499c09d2b5ceb3e4658c14b098132679aa10284d8ee12dd8e7ef64e"
+       }
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "owner_doc",
+      "status": "PASS"
+     }
+    },
+    "producer": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "doctor.custom_headless.checked has its own current producer contract; F1/F2/F3 and exact-type controls execute against this head.",
+     "evidence": [
+      {
+       "path": "Plans/newtools.md",
+       "unit": "N2-217",
+       "line_start": 9126,
+       "line_end": 9127,
+       "quote": "Producer: CheckRegistry Doctor custom-headless detection. Each actual Doctor invocation records exactly one detection\n  outcome after config inspection. Valid registers CustomHeadles",
+       "quote_check": "whitespace_normalized",
+       "quote_scope": "unit N2-217, Plans/newtools.md:9111-9297",
+       "file_sha256": "80b5387d878fad45dde8a532ffa6a83a129ca3c630eab20f448ab782e12c2bf8",
+       "source_citation": {
+        "path": "Plans/newtools.md",
+        "unit": "N2-217",
+        "line_start": 9121,
+        "line_end": 9121,
+        "quote": "Producer: CheckRegistry Doctor custom-headless detection. Each actual Doctor invocation records exactly one detection outcome after config inspection. Valid registers CustomHeadles",
+        "file_sha256": "178bb7506499c09d2b5ceb3e4658c14b098132679aa10284d8ee12dd8e7ef64e"
+       }
+      },
+      {
+       "path": "Plans/newtools.md",
+       "unit": "N2-217",
+       "line_start": 9214,
+       "line_end": 9215,
+       "quote": "Round 7 authenticated history for doctor.custom_headless.checked: retained read, checkpoint and rebuild accept\n  supported 1.0.0 originals written with projector_replay_only as well",
+       "quote_check": "whitespace_normalized",
+       "quote_scope": "unit N2-217, Plans/newtools.md:9111-9297",
+       "file_sha256": "80b5387d878fad45dde8a532ffa6a83a129ca3c630eab20f448ab782e12c2bf8",
+       "source_citation": {
+        "path": "Plans/newtools.md",
+        "unit": "N2-217",
+        "line_start": 9132,
+        "line_end": 9132,
+        "quote": "Round 7 authenticated history for doctor.custom_headless.checked: retained read, checkpoint and rebuild accept supported 1.0.0 originals written with projector_replay_only as well ",
+        "file_sha256": "178bb7506499c09d2b5ceb3e4658c14b098132679aa10284d8ee12dd8e7ef64e"
+       }
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "producer",
+      "status": "PASS"
+     }
+    },
+    "closed_payload_schema": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "doctor.custom_headless.checked has its own current closed payload schema contract; F1/F2/F3 and exact-type controls execute against this head.",
+     "evidence": [
+      {
+       "path": "Plans/ds15_doctor_custom_headless_checked.schema.json",
+       "unit": "root",
+       "line_start": 3,
+       "line_end": 3,
+       "quote": "\"additionalProperties\": false,",
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "file_sha256": "fdc41cfb966a54c21cf17533080f9a9d7a42a3806cadcd102f5cce5aab976daa",
+       "source_citation": {
+        "path": "Plans/ds15_doctor_custom_headless_checked.schema.json",
+        "unit": "root",
+        "line_start": 3,
+        "line_end": 3,
+        "quote": "\"additionalProperties\": false,",
+        "file_sha256": "fdc41cfb966a54c21cf17533080f9a9d7a42a3806cadcd102f5cce5aab976daa"
+       }
+      },
+      {
+       "path": "Plans/ds15_doctor_custom_headless_checked.schema.json",
+       "unit": "root",
+       "line_start": 12,
+       "line_end": 12,
+       "quote": "\"const\": \"1.0.0\"",
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "file_sha256": "fdc41cfb966a54c21cf17533080f9a9d7a42a3806cadcd102f5cce5aab976daa",
+       "source_citation": {
+        "path": "Plans/ds15_doctor_custom_headless_checked.schema.json",
+        "unit": "root",
+        "line_start": 12,
+        "line_end": 12,
+        "quote": "\"const\": \"1.0.0\"",
+        "file_sha256": "fdc41cfb966a54c21cf17533080f9a9d7a42a3806cadcd102f5cce5aab976daa"
+       }
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "closed_payload_schema",
+      "status": "PASS"
+     }
+    },
+    "scope_identity": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "doctor.custom_headless.checked has its own current scope identity contract; F1/F2/F3 and exact-type controls execute against this head.",
+     "evidence": [
+      {
+       "path": "Plans/newtools.md",
+       "unit": "N2-217",
+       "line_start": 9132,
+       "line_end": 9134,
+       "quote": "Idempotency key is sha256(canonical MessagePack\n  array [\"doctor.custom_headless.checked\", \"1.0.0\", actual project_id, doctor_invocation_id]); the ordered tuple\n  is unambiguous, never",
+       "quote_check": "whitespace_normalized",
+       "quote_scope": "unit N2-217, Plans/newtools.md:9111-9297",
+       "file_sha256": "80b5387d878fad45dde8a532ffa6a83a129ca3c630eab20f448ab782e12c2bf8",
+       "source_citation": {
+        "path": "Plans/newtools.md",
+        "unit": "N2-217",
+        "line_start": 9122,
+        "line_end": 9122,
+        "quote": "Idempotency key is sha256(canonical MessagePack array [\"doctor.custom_headless.checked\", \"1.0.0\", actual project_id, doctor_invocation_id]); the ordered tuple is unambiguous, never",
+        "file_sha256": "178bb7506499c09d2b5ceb3e4658c14b098132679aa10284d8ee12dd8e7ef64e"
+       }
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "scope_identity",
+      "status": "PASS"
+     }
+    },
+    "replay_idempotency": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "doctor.custom_headless.checked has its own current replay idempotency contract; F1/F2/F3 and exact-type controls execute against this head.",
+     "evidence": [
+      {
+       "path": "Plans/newtools.md",
+       "unit": "N2-217",
+       "line_start": 9151,
+       "line_end": 9152,
+       "quote": "Replay: event delivery and passive reads execute no external action; exact duplicates leave the index state unchanged.\n  Actual original run/Doctor source custody plus canonical even",
+       "quote_check": "whitespace_normalized",
+       "quote_scope": "unit N2-217, Plans/newtools.md:9111-9297",
+       "file_sha256": "80b5387d878fad45dde8a532ffa6a83a129ca3c630eab20f448ab782e12c2bf8",
+       "source_citation": {
+        "path": "Plans/newtools.md",
+        "unit": "N2-217",
+        "line_start": 9125,
+        "line_end": 9125,
+        "quote": "Replay: event delivery and passive reads execute no external action; exact duplicates leave the index state unchanged. Actual original run/Doctor source custody plus canonical even",
+        "file_sha256": "178bb7506499c09d2b5ceb3e4658c14b098132679aa10284d8ee12dd8e7ef64e"
+       }
+      },
+      {
+       "path": "Plans/newtools.md",
+       "unit": "N2-217",
+       "line_start": 9214,
+       "line_end": 9215,
+       "quote": "Round 7 authenticated history for doctor.custom_headless.checked: retained read, checkpoint and rebuild accept\n  supported 1.0.0 originals written with projector_replay_only as well",
+       "quote_check": "whitespace_normalized",
+       "quote_scope": "unit N2-217, Plans/newtools.md:9111-9297",
+       "file_sha256": "80b5387d878fad45dde8a532ffa6a83a129ca3c630eab20f448ab782e12c2bf8",
+       "source_citation": {
+        "path": "Plans/newtools.md",
+        "unit": "N2-217",
+        "line_start": 9132,
+        "line_end": 9132,
+        "quote": "Round 7 authenticated history for doctor.custom_headless.checked: retained read, checkpoint and rebuild accept supported 1.0.0 originals written with projector_replay_only as well ",
+        "file_sha256": "178bb7506499c09d2b5ceb3e4658c14b098132679aa10284d8ee12dd8e7ef64e"
+       }
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "replay_idempotency",
+      "status": "PASS"
+     }
+    },
+    "retention": {
+     "status": "PASS",
+     "representation": "integrated_retention_delta",
+     "finding": "Current exact-family BOUND retention assignment: {\"application_policy_ref\": null, \"decisions\": [\"DL-401\", \"DL-500\"], \"event_type\": \"doctor.custom_headless.checked\", \"existing_checkpoints\": [{\"family_id\": \"ds15_doctor_custom_headless_checked_checkpoint\", \"policy_ref\": \"RP-PROJECTION-3GEN@1.0.0\"}], \"grade_source\": \"reports/event-authority-20261104/DS15-self-grade.json\", \"history_policy_ref\": \"RP-OPERATIONAL-2555D@1.0.0\", \"lane\": \"DS15\", \"original_and_checkpoint_assignments\": [{\"decision\": \"DL-500\", \"family_id\": \"ds15_doctor_custom_headless_checked_checkpoint\", \"policy_ref\": \"RP-PROJECTION-3GEN@1.0.0\"}], \"owner\": \"Plans/storage-plan.md#SP-640\", \"owner_line\": 44375, \"prior_finding\": \"Event/checkpoint retention remains explicitly PENDING_RETENTION_DECISION for RT.\", \"question\": null, \"status\": \"BOUND\"}",
+     "evidence": [
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-640",
+       "line_start": 49050,
+       "line_end": 49050,
+       "quote": "Current selected assignment (2026-11-19): doctor.custom_headless.checked@1.0.0 is registered for project_only",
+       "quote_check": "exact",
+       "quote_scope": "unit SP-640, Plans/storage-plan.md:48984-49090",
+       "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+       "source_citation": {
+        "path": "Plans/storage-plan.md",
+        "unit": "SP-640",
+        "line_start": 48802,
+        "line_end": 48802,
+        "quote": "\\ `retention_policy_ref = RP-OPERATIONAL-2555D@1.0.0`, under DL-401, DL-500.\\n\\nUse the existing policy\\",
+        "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+       },
+       "reanchor": {
+        "method": "exact_normalized",
+        "reason": "Whitespace, line wrapping, YAML quoting/escaping or Markdown escaping only; searched the cited unit.",
+        "unit": "SP-640",
+        "old_quote": "\\ `retention_policy_ref = RP-OPERATIONAL-2555D@1.0.0`, under DL-401, DL-500.\\n\\nUse the existing policy\\",
+        "new_quote": "`retention_policy_ref = RP-OPERATIONAL-2555D@1.0.0`, under DL-401, DL-500.\n\n  Use the existing policy",
+        "normalizations": [
+         "whitespace/line wrapping",
+         "YAML quoting/escaping",
+         "Markdown escaping"
+        ],
+        "owner_change_commit": "ea68abacca470d9dd49885294f5bd5c4d0771024"
+       },
+       "locator_maintenance": {
+        "authority": "MERGE2-FIX4",
+        "reason": "Re-cite the same accepted retention claim at its current exact owner assignment; event and source/checkpoint authority remain separate."
+       }
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "retention",
+      "status": "PASS"
+     }
+    },
+    "redaction_custody": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "doctor.custom_headless.checked has its own current redaction custody contract; F1/F2/F3 and exact-type controls execute against this head.",
+     "evidence": [
+      {
+       "path": "Plans/newtools.md",
+       "unit": "N2-217",
+       "line_start": 9169,
+       "line_end": 9171,
+       "quote": "backup/restore covers original\n  log, receipts and the source closure; mandatory original custody missing or unverifiable fences retry and disclosure.\n  The derived checkpoint is rebui",
+       "quote_check": "whitespace_normalized",
+       "quote_scope": "unit N2-217, Plans/newtools.md:9111-9297",
+       "file_sha256": "80b5387d878fad45dde8a532ffa6a83a129ca3c630eab20f448ab782e12c2bf8",
+       "source_citation": {
+        "path": "Plans/newtools.md",
+        "unit": "N2-217",
+        "line_start": 9127,
+        "line_end": 9127,
+        "quote": "backup/restore covers original log, receipts and the source closure; mandatory original custody missing or unverifiable fences retry and disclosure. The derived checkpoint is rebui",
+        "file_sha256": "178bb7506499c09d2b5ceb3e4658c14b098132679aa10284d8ee12dd8e7ef64e"
+       }
+      },
+      {
+       "path": "Plans/newtools.md",
+       "unit": "N2-217",
+       "line_start": 9214,
+       "line_end": 9215,
+       "quote": "Round 7 authenticated history for doctor.custom_headless.checked: retained read, checkpoint and rebuild accept\n  supported 1.0.0 originals written with projector_replay_only as well",
+       "quote_check": "whitespace_normalized",
+       "quote_scope": "unit N2-217, Plans/newtools.md:9111-9297",
+       "file_sha256": "80b5387d878fad45dde8a532ffa6a83a129ca3c630eab20f448ab782e12c2bf8",
+       "source_citation": {
+        "path": "Plans/newtools.md",
+        "unit": "N2-217",
+        "line_start": 9132,
+        "line_end": 9132,
+        "quote": "Round 7 authenticated history for doctor.custom_headless.checked: retained read, checkpoint and rebuild accept supported 1.0.0 originals written with projector_replay_only as well ",
+        "file_sha256": "178bb7506499c09d2b5ceb3e4658c14b098132679aa10284d8ee12dd8e7ef64e"
+       }
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "redaction_custody",
+      "status": "PASS"
+     }
+    },
+    "transitions": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "doctor.custom_headless.checked has its own current transitions contract; F1/F2/F3 and exact-type controls execute against this head.",
+     "evidence": [
+      {
+       "path": "Plans/newtools.md",
+       "unit": "N2-217",
+       "line_start": 9126,
+       "line_end": 9127,
+       "quote": "Producer: CheckRegistry Doctor custom-headless detection. Each actual Doctor invocation records exactly one detection\n  outcome after config inspection. Valid registers CustomHeadles",
+       "quote_check": "whitespace_normalized",
+       "quote_scope": "unit N2-217, Plans/newtools.md:9111-9297",
+       "file_sha256": "80b5387d878fad45dde8a532ffa6a83a129ca3c630eab20f448ab782e12c2bf8",
+       "source_citation": {
+        "path": "Plans/newtools.md",
+        "unit": "N2-217",
+        "line_start": 9121,
+        "line_end": 9121,
+        "quote": "Producer: CheckRegistry Doctor custom-headless detection. Each actual Doctor invocation records exactly one detection outcome after config inspection. Valid registers CustomHeadles",
+        "file_sha256": "178bb7506499c09d2b5ceb3e4658c14b098132679aa10284d8ee12dd8e7ef64e"
+       }
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "transitions",
+      "status": "PASS"
+     }
+    },
+    "consumers_checkpoints": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "doctor.custom_headless.checked has its own current consumers checkpoints contract; F1/F2/F3 and exact-type controls execute against this head.",
+     "evidence": [
+      {
+       "path": "Plans/newtools.md",
+       "unit": "N2-217",
+       "line_start": 9155,
+       "line_end": 9156,
+       "quote": "reader.ds15.doctor_custom_headless_checked.v1@1.0.0, operating as Doctor detection outcome reader, reads\n  only this exact admitted event type at 1.0.0. It adopts SP-278 by name and",
+       "quote_check": "whitespace_normalized",
+       "quote_scope": "unit N2-217, Plans/newtools.md:9111-9297",
+       "file_sha256": "80b5387d878fad45dde8a532ffa6a83a129ca3c630eab20f448ab782e12c2bf8",
+       "source_citation": {
+        "path": "Plans/newtools.md",
+        "unit": "N2-217",
+        "line_start": 9126,
+        "line_end": 9126,
+        "quote": "reader.ds15.doctor_custom_headless_checked.v1@1.0.0, operating as Doctor detection outcome reader, reads only this exact admitted event type at 1.0.0. It adopts SP-278 by name and ",
+        "file_sha256": "178bb7506499c09d2b5ceb3e4658c14b098132679aa10284d8ee12dd8e7ef64e"
+       }
+      },
+      {
+       "path": "Plans/newtools.md",
+       "unit": "N2-217",
+       "line_start": 9214,
+       "line_end": 9215,
+       "quote": "Round 7 authenticated history for doctor.custom_headless.checked: retained read, checkpoint and rebuild accept\n  supported 1.0.0 originals written with projector_replay_only as well",
+       "quote_check": "whitespace_normalized",
+       "quote_scope": "unit N2-217, Plans/newtools.md:9111-9297",
+       "file_sha256": "80b5387d878fad45dde8a532ffa6a83a129ca3c630eab20f448ab782e12c2bf8",
+       "source_citation": {
+        "path": "Plans/newtools.md",
+        "unit": "N2-217",
+        "line_start": 9132,
+        "line_end": 9132,
+        "quote": "Round 7 authenticated history for doctor.custom_headless.checked: retained read, checkpoint and rebuild accept supported 1.0.0 originals written with projector_replay_only as well ",
+        "file_sha256": "178bb7506499c09d2b5ceb3e4658c14b098132679aa10284d8ee12dd8e7ef64e"
+       }
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "consumers_checkpoints",
+      "status": "PASS"
+     }
+    },
+    "compatibility_withdrawal": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "doctor.custom_headless.checked has its own current compatibility withdrawal contract; F1/F2/F3 and exact-type controls execute against this head. Sweep part 2B: retained readers select the frozen recipe only through SP-1101 (sealed write custody, then the shared RetainedDispatcher), and the frozen recipe carries the CV-1101 profiles; owner-valid history stays readable and forged, unsealed, unsupported or wrong-family selections refuse.",
+     "evidence": [
+      {
+       "path": "Plans/newtools.md",
+       "unit": "N2-217",
+       "line_start": 9123,
+       "line_end": 9124,
+       "quote": "withdrawal definition was found for doctor.custom_headless.checked.\n  This family is explicitly inside DL-045''s exact scope. No sibling definition is adopted.",
+       "quote_check": "exact",
+       "quote_scope": "unit N2-217, Plans/newtools.md:9111-9297",
+       "file_sha256": "80b5387d878fad45dde8a532ffa6a83a129ca3c630eab20f448ab782e12c2bf8",
+       "source_citation": {
+        "path": "Plans/newtools.md",
+        "unit": "N2-217",
+        "line_start": 9120,
+        "line_end": 9120,
+        "quote": "withdrawal definition was found for doctor.custom_headless.checked. This family is explicitly inside DL-045's exact scope. No sibling definition is adopted.",
+        "file_sha256": "178bb7506499c09d2b5ceb3e4658c14b098132679aa10284d8ee12dd8e7ef64e"
+       },
+       "reanchor": {
+        "method": "exact_normalized",
+        "reason": "Whitespace, line wrapping, YAML quoting/escaping or Markdown escaping only; searched the cited unit.",
+        "unit": "N2-217",
+        "old_quote": "withdrawal definition was found for doctor.custom_headless.checked. This family is explicitly inside DL-045's exact scope. No sibling definition is adopted.",
+        "new_quote": "withdrawal definition was found for doctor.custom_headless.checked.\n  This family is explicitly inside DL-045''s exact scope. No sibling definition is adopted.",
+        "normalizations": [
+         "whitespace/line wrapping",
+         "YAML quoting/escaping",
+         "Markdown escaping"
+        ],
+        "owner_change_commit": "ca51e78d48b283861d77e4b5b947c1ea880e5fc0"
+       }
+      },
+      {
+       "path": "Plans/newtools.md",
+       "unit": "N2-217",
+       "line_start": 9214,
+       "line_end": 9215,
+       "quote": "Round 7 authenticated history for doctor.custom_headless.checked: retained read, checkpoint and rebuild accept\n  supported 1.0.0 originals written with projector_replay_only as well",
+       "quote_check": "whitespace_normalized",
+       "quote_scope": "unit N2-217, Plans/newtools.md:9111-9297",
+       "file_sha256": "80b5387d878fad45dde8a532ffa6a83a129ca3c630eab20f448ab782e12c2bf8",
+       "source_citation": {
+        "path": "Plans/newtools.md",
+        "unit": "N2-217",
+        "line_start": 9132,
+        "line_end": 9132,
+        "quote": "Round 7 authenticated history for doctor.custom_headless.checked: retained read, checkpoint and rebuild accept supported 1.0.0 originals written with projector_replay_only as well ",
+        "file_sha256": "178bb7506499c09d2b5ceb3e4658c14b098132679aa10284d8ee12dd8e7ef64e"
+       }
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "compatibility_withdrawal",
+      "status": "PASS"
+     }
+    },
+    "positive_negative_oracles": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "Cycle-8 independent review accepted the residual constructions. Sweep part 2A: every refusal is a guard-table row and the gated tool proves every provable row; S-N1 adopted. Sweep part 2B: S-FMT1 (CV-1101 through the shared predicate, EventRecord and storage_utc_z profiles) and S-N2 (SP-1101 selection and RetainedDispatcher resolution) adopted with their witnesses; JSON Schema keyword cuts are not ported.",
+     "evidence": [
+      {
+       "path": "Plans/newtools.md",
+       "unit": "N2-217",
+       "line_start": 9191,
+       "line_end": 9192,
+       "quote": "Oracles: ATS-320 and scripts/pm-ds15-event-contracts.py exercise this exact closed payload and checkpoint identity.\n  Native obligations: original-outcome/append crash boundaries, re",
+       "quote_check": "whitespace_normalized",
+       "quote_scope": "unit N2-217, Plans/newtools.md:9111-9297",
+       "file_sha256": "80b5387d878fad45dde8a532ffa6a83a129ca3c630eab20f448ab782e12c2bf8",
+       "source_citation": {
+        "path": "Plans/newtools.md",
+        "unit": "N2-217",
+        "line_start": 9130,
+        "line_end": 9130,
+        "quote": "Oracles: ATS-320 and scripts/pm-ds15-event-contracts.py exercise this exact closed payload and checkpoint identity. Native obligations: original-outcome/append crash boundaries, re",
+        "file_sha256": "178bb7506499c09d2b5ceb3e4658c14b098132679aa10284d8ee12dd8e7ef64e"
+       }
+      },
+      {
+       "path": "Plans/newtools.md",
+       "unit": "N2-217",
+       "line_start": 9214,
+       "line_end": 9215,
+       "quote": "Round 7 authenticated history for doctor.custom_headless.checked: retained read, checkpoint and rebuild accept\n  supported 1.0.0 originals written with projector_replay_only as well",
+       "quote_check": "whitespace_normalized",
+       "quote_scope": "unit N2-217, Plans/newtools.md:9111-9297",
+       "file_sha256": "80b5387d878fad45dde8a532ffa6a83a129ca3c630eab20f448ab782e12c2bf8",
+       "source_citation": {
+        "path": "Plans/newtools.md",
+        "unit": "N2-217",
+        "line_start": 9132,
+        "line_end": 9132,
+        "quote": "Round 7 authenticated history for doctor.custom_headless.checked: retained read, checkpoint and rebuild accept supported 1.0.0 originals written with projector_replay_only as well ",
+        "file_sha256": "178bb7506499c09d2b5ceb3e4658c14b098132679aa10284d8ee12dd8e7ef64e"
+       }
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "positive_negative_oracles",
+      "status": "PASS"
+     }
+    }
+   }
+  }
+ ],
+ "source_registry": {
+  "path": "Plans/event_family_registry.json",
+  "revision": "2026-11-16.158",
+  "sha256": "339e1107b6de8e3ceb3604049b3f9d66ee9b08c3fbea9d616af025398454e6cd",
+  "family_count": 377,
+  "row_pointer": "#/families/376"
+ },
+ "evidence_maintenance": {
+  "authority": "MERGE2-FIX4 items 1/2/3",
+  "source_commit": "2bda6aeed03daea26c4d79dfb7568fc145aac29e",
+  "source_assessment_sha256": "f2426c053f9611f0fd42b782734bd9ecd66390beb4fd4dfd9f92540fa3ca6d20",
+  "native_execution": "NOT_RUN",
+  "verdicts_changed": false
+ }
+}

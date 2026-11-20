@@ -21,6 +21,7 @@ from referencing import Registry, Resource
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "scripts"))
+from pm_pnc019_currentness import event_authority_denominator_status  # noqa: E402 - the denominator state comes from the installed edition
 from pm_contract_formats import FormatChecker
 import pm_event_payload_route as body_route
 import pm_ds_retained as retained
@@ -1037,7 +1038,7 @@ def validate(*, payloads_only=False):
         "positive_cases": len(fixtures["valid"]), "negative_cases": len(fixtures["invalid"]),
         "command_event_bindings_checked": len(command_bindings),
         "single_family_authority_reports": authority_reports,
-        "global_event_denominator": "UNKNOWN_OPEN", "runtime_producer_proven": False, "governance_sealed": False,
+        "global_event_denominator": event_authority_denominator_status(ROOT), "runtime_producer_proven": False, "governance_sealed": False,
         "failures": failures,
     }
 

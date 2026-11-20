@@ -149,7 +149,14 @@ def wildcard_probe(row, document, root, cache):
     key = ("wildcard_probe", *inv.node_key(row))
     if key in cache:
         return cache[key]
-    resource = inv.at(document, row["resource_pointer"])
+    # Resources embedded in this same file under an $id only one of them claims (inventory rule, T228).
+    # A node inside one, whose recorded resource is the whole (non-schema) file, takes the innermost such
+    # resource as its root: that is its base URI (JSON Schema 2020-12 Core 8.2.1), and the probe neither
+    # registers nor walks the rest of a large bank file for it.
+    embedded = inv.embedded_resources(document)
+    root_pointer = row["resource_pointer"] or max(
+        (p for p in embedded.values() if p and (row["pointer"] + "/").startswith(p + "/")), key=len, default="")
+    resource = inv.at(document, root_pointer)
     base = _dialect_validator(resource)
     spec = specification_with(base.META_SCHEMA["$id"])
     bank, locations, sources, references = {}, {}, {}, {}
@@ -179,11 +186,15 @@ def wildcard_probe(row, document, root, cache):
         declare(value, frozenset())
         return uri
 
-    uri = register(row["path"], row["resource_pointer"], resource)
+    uri = register(row["path"], root_pointer, resource)
+    # The other same-file resources are registered only when a reference requests one.
 
     def offline_load(requested):
         # This callback constructs the offline bank. It is never installed in
         # the validator that executes the battery.
+        if embedded.get(requested) is not None:
+            register(row["path"], embedded[requested], inv.at(document, embedded[requested]), (requested,))
+            return bank[requested]
         path = unquote(urlsplit(requested).path).lstrip("/")
         if not path.startswith("Plans/") or ".." in path.split("/"):
             raise ValueError("source reference is not an offline Plans resource: " + requested)
@@ -193,7 +204,7 @@ def wildcard_probe(row, document, root, cache):
         return bank[requested]
 
     discovery = Registry(retrieve=offline_load).with_resources(bank.items()).crawl()
-    relative = row["pointer"][len(row["resource_pointer"]):]
+    relative = row["pointer"][len(root_pointer):]
     resolved = discovery.resolver(uri).lookup("#" + relative)
     visited = set()
     # The closure: every dialect declared over a reachable node, and every

@@ -154,6 +154,11 @@ def envelope_ok(c, d, original_recipe, retry=True, historical=False, append=Fals
         return False
     if not context_ok(c, d.get('original_context'), recipe=original_recipe):
         return False
+    # A new append joins the owner record to the CURRENT transition (d2_env_c below), so its current context first
+    # passes the same closed deck-2 context schema. C12-DS15: a retained-reader carrier (the history base) at the
+    # envelope boundary has no current transition and raised KeyError here instead of refusing.
+    if not retry and not context_ok(c, d.get('context')):
+        return False
     scope = p.get('scope', {'kind': 'project', 'project_id': p.get('project_id')})
     event_schema = read('Plans/event_record.schema.json')
     if (not valid('sch_envelope_v1' if historical else 'sch_envelope', event_schema, e, recipe)
@@ -267,7 +272,7 @@ def main():
     assert {c['event_type'] for c in contracts} == {f['event_type'] for f in fixtures} == DECIDED_FAMILIES
     c = next(c for c in contracts if c['event_type'] == args.family)
     f = next(f for f in fixtures if f['event_type'] == args.family)
-    assert args.family not in {r['event_type'] for r in read('Plans/event_family_registry.json')['families']}
+    assert (refused := registration_refusal(args.family, read('Plans/event_family_registry.json'))) is None, refused
     for path in (c['payload_schema_ref'], c['checkpoint_schema_ref'], 'Plans/ds15_deck2_context.schema.json', 'Plans/ds15_deck2_sources.schema.json'):
         base.validator(read(path))  # Eager reference closure, including unused branches.
     assert read(c['payload_schema_ref'])['additionalProperties'] is False
@@ -324,6 +329,19 @@ def main():
                       'negative_cases': negatives, 'policy_cases': policy_count,
                       'reference_closure_cases': len(f.get('schema_cases', [])), 'native_execution': 'NOT_RUN',
                       'membership': 'ABSENT'}))
+
+
+def registration_refusal(event, registry):
+    """None while `event` is unregistered (prepared) or registered as its exact, complete DL-077 admission.
+
+    Admission-aware mode (PNC-019 stream E; scripts/pm_ea_admission_mode.py): any other registration keeps the
+    preparation refusal, naming the admission-mode code.
+    """
+    if not any(r.get('event_type') == event for r in registry['families']):
+        return None
+    import pm_ea_admission_mode as admission_mode
+    mode = admission_mode.verdict(event, root=ROOT, registry=registry)
+    return None if mode['mode'] == 'admitted' else event + ': admission mode refused: ' + mode['code']
 
 
 if __name__ == '__main__':

@@ -151,10 +151,14 @@ const RECORDER = (cfg) => {
 	}, j.options); };
 	// PM_BUSY.idle: wrap the owner's function to witness its entry (the scheduler's handling is untouched), and, for a
 	// selftest, drop one owner's real requests there, picked by the owner's own function names (plain text, not the
-	// classifier above), as the review's Glass omission did
-	const omitHit = { usage: (s) => /\bat idleStill\b/.test(s), theme: (s) => /\bat whenIdle\b/.test(s), census: (s) => /\bat censusSchedule\b/.test(s),
+	// classifier above), as the review's Glass omission did. The census owner is one build file with two admissions: a
+	// hover census step (censusSchedule) and the removal walk queueRemoved asks for one frame after a removal. An
+	// owner-wide omission has to drop both, or a removal walk pending at the press stands in for a census step in the
+	// same-job rows and the omission control passes (R119, PM7PERF-IDLEDRAG-OMIT-CENSUS-SCOPE).
+	const omitHit = { usage: (s) => /\bat idleStill\b/.test(s), theme: (s) => /\bat whenIdle\b/.test(s),
+		census: (s) => /\bat censusSchedule\b/.test(s) || ownerOf(s) === 'census',
 		glass: (s) => s.includes('prewarmSoon') && s.includes('syncStripNow') }[cfg.omit] || null;
-	if (omitHit) window.__pmIdleOmit = { key: cfg.omit, count: 0 };
+	if (omitHit) window.__pmIdleOmit = { key: cfg.omit, count: 0, paths: {} };
 	let tokens = 0, busy;
 	Object.defineProperty(window, 'PM_BUSY', { configurable: true, enumerable: true, get() { return busy; }, set(value) {
 		busy = value;
@@ -164,7 +168,15 @@ const RECORDER = (cfg) => {
 			if (typeof real !== 'function') { idle = real; return; }
 			R.hooked = true;
 			idle = function (fn, ...rest) {
-				if (omitHit && omitHit(new Error().stack || '')) { window.__pmIdleOmit.count++; return { cancel() {} }; }
+				if (omitHit) {
+					const stack = new Error().stack || '';
+					if (omitHit(stack)) {
+						const o = window.__pmIdleOmit; o.count++;
+						const p = cfg.omit === 'census' ? (/\bat censusSchedule\b/.test(stack) ? 'censusSchedule' : 'queueRemoved') : 'requests';
+						o.paths[p] = (o.paths[p] || 0) + 1;
+						return { cancel() {} };
+					}
+				}
 				if (typeof fn !== 'function') return real.call(this, fn, ...rest);
 				const token = ++tokens;
 				/* bound at admission: the asker's owner, or the shared admission's other jobs (sound, hover) */
@@ -466,8 +478,9 @@ export const tests = {
 		const keys = owners.map((o) => o.key);
 		await f.waitForFunction((ks) => { const p = window.__pmIdleRec.pending(); return ks.every((k) => p.some((j) => j.owner === k)); }, keys, { timeout: 15000 }).catch(() => {});
 		if (omit && owners.some((o) => o.key === omit)) {   // only where that owner queues work (Glass: a Glass look)
-			const n = await f.evaluate(() => window.__pmIdleOmit?.count || 0);
-			t.log(`SELFTEST ${look}: ${n} real ${nameOf(omit)} requests suppressed at the shared admission`);
+			const o = await f.evaluate(() => window.__pmIdleOmit || { count: 0, paths: {} });
+			const n = o.count || 0;
+			t.log(`SELFTEST ${look}: ${n} real ${nameOf(omit)} requests suppressed at the shared admission${o.paths && Object.keys(o.paths).length ? ` (${Object.entries(o.paths).map(([p, k]) => `${p}: ${k}`).join(', ')})` : ''}`);
 			await t.check(`selftest ${look}: the ${nameOf(omit)} omission actually suppressed real requests`, n > 0, String(n));
 		}
 		const usage = await holdDrag(t, f, '#leftPanelResizer|#chatResizer', `${look} Usage`, keys, leak && keys.includes(leak) ? leak : null, early && keys.includes(early.key) ? early : null, release && keys.includes(release.key) ? release : null, flicker && keys.includes(flicker.key) ? flicker : null, readd && keys.includes(readd.key) ? readd : null);

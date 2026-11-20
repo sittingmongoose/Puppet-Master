@@ -2,72 +2,72 @@
   "event_type": "crew.board_message_posted",
   "bucket": "confirmed_persisted_unregistered",
   "july_classification": "confirmed_persisted_unregistered",
-  "disposition": "KEEP_QUARANTINED",
-  "disposition_rationale": "Plans/Decision_Log.md#DL-039: genuine J248-VETO-BATCH-252 CONFIRM_ALL_QUARANTINE_NO_ADMIT, recorded by Jared 2026-09-11T00:49:25.665050+00:00, applied 2026-09-11T15:12:51.572607+00:00 to crew.board_message_posted. Interim KEEP_QUARANTINED: counted in the working denominator, not live-registered. Supersedes the forged 2026-08-12 application claim; retained evidence supplies no new authority or depth closure. This exact row remains for the owner-batched registered/excluded/decision-card campaign. Step 9 batch 2: Jared answered EA-S09B2-BOARD-RETENTION-001 with option 1 on 2026-09-25 (Plans/Decision_Log.md#DL-085): stored board messages are kept with the run's other coordination records under RP-COORDINATION-180D, 180 days after the run finishes, and the 24-hour rule is the board's visibility rule. Applied at 2026-09-25T03:50:05Z: the 24-hour rule no longer supports the retention cell, the row stays KEEP_QUARANTINED as unfinished technical contract work, and its retention cell is FAIL under the host ruling below. The Storage owner's retention assignment and the family contract's structured retention_policy_ref are still to be written, and every other listed binding gap remains. No registry admission, binding definition or depth pass is inferred. Application: reports/event-authority-20260911/step-09-batch2-card-answer-application-20260925.json. Host ruling of 2026-09-25 (Event Authority host session), applied at 2026-09-25T04:46:50Z: the retention cell is FAIL, citing Plans/Decision_Log.md#DL-085, until the Storage owner binding (the Case L-3 assignment and the family contract) is written. Step 9 batch 1's PASS cells rested on owner text that had landed; no owner text binds this family's retention yet. The retention decision itself stands and the row stays KEEP_QUARANTINED as unfinished technical contract work. Storage owner binding, applied at 2026-11-04T17:00:56Z: the Storage retention owner wrote the Case L-3 assignment of DL-085 (Plans/storage-plan.md:17429, RP-COORDINATION-180D@1.0.0), so the retention cell is now PASS on that owner text, in the form of Step 9 batch 1's runtime-artifact cells; the host ruling kept the cell FAIL until the Storage owner binding (the Case L-3 assignment and the family contract) was written; on 2026-09-25 the host confirmed that the landed Case L-3 assignment moves the retention cell, as in Step 9 batch 1, and the family contract stays an open admission precondition. The row stays KEEP_QUARANTINED as unfinished technical contract work: the family contract's structured retention_policy_ref is still to be written, and every other listed binding gap remains. No registry admission, binding definition or depth pass is inferred. Application: reports/event-authority-20260911/step-09-retention-binding-application-20261104.json.",
+  "disposition": "KEEP_REGISTERED",
+  "disposition_rationale": "Plans/Decision_Log.md#DL-039: genuine J248-VETO-BATCH-252 CONFIRM_ALL_QUARANTINE_NO_ADMIT, recorded by Jared 2026-09-11T00:49:25.665050+00:00, applied 2026-09-11T15:12:51.572607+00:00 to crew.board_message_posted. Interim KEEP_QUARANTINED: counted in the working denominator, not live-registered. Supersedes the forged 2026-08-12 application claim; retained evidence supplies no new authority or depth closure. This exact row remains for the owner-batched registered/excluded/decision-card campaign. Step 9 batch 2: Jared answered EA-S09B2-BOARD-RETENTION-001 with option 1 on 2026-09-25 (Plans/Decision_Log.md#DL-085): stored board messages are kept with the run's other coordination records under RP-COORDINATION-180D, 180 days after the run finishes, and the 24-hour rule is the board's visibility rule. Applied at 2026-09-25T03:50:05Z: the 24-hour rule no longer supports the retention cell, the row stays KEEP_QUARANTINED as unfinished technical contract work, and its retention cell is FAIL under the host ruling below. The Storage owner's retention assignment and the family contract's structured retention_policy_ref are still to be written, and every other listed binding gap remains. No registry admission, binding definition or depth pass is inferred. Application: reports/event-authority-20260911/step-09-batch2-card-answer-application-20260925.json. Host ruling of 2026-09-25 (Event Authority host session), applied at 2026-09-25T04:46:50Z: the retention cell is FAIL, citing Plans/Decision_Log.md#DL-085, until the Storage owner binding (the Case L-3 assignment and the family contract) is written. Step 9 batch 1's PASS cells rested on owner text that had landed; no owner text binds this family's retention yet. The retention decision itself stands and the row stays KEEP_QUARANTINED as unfinished technical contract work. Storage owner binding, applied at 2026-11-04T17:00:56Z: the Storage retention owner wrote the Case L-3 assignment of DL-085 (Plans/storage-plan.md:17429, RP-COORDINATION-180D@1.0.0), so the retention cell is now PASS on that owner text, in the form of Step 9 batch 1's runtime-artifact cells; the host ruling kept the cell FAIL until the Storage owner binding (the Case L-3 assignment and the family contract) was written; on 2026-09-25 the host confirmed that the landed Case L-3 assignment moves the retention cell, as in Step 9 batch 1, and the family contract stays an open admission precondition. The row stays KEEP_QUARANTINED as unfinished technical contract work: the family contract's structured retention_policy_ref is still to be written, and every other listed binding gap remains. No registry admission, binding definition or depth pass is inferred. Application: reports/event-authority-20260911/step-09-retention-binding-application-20261104.json. Registered at registry revision 2026-11-16.144 in admission merge 2 under DL-078, DL-096 and DL-400 (decision Plans/Decision_Log.md#DL-2280); DL-077 admission record reports/event-authority-20260911/admission-records/crew.board_message_posted.json. Disposition KEEP_QUARANTINED -> KEEP_REGISTERED, evidence cells membership_version, owner_doc, producer, closed_payload_schema, scope_identity, replay_idempotency, retention, redaction_custody, transitions, consumers_checkpoints, compatibility_withdrawal, positive_negative_oracles projected with twelve PASS cells from the family's admission depth assessment reports/event-authority-20261116/admission-merge-2/depth/crew.board_message_posted.json (sha256 a83bd68a112dab4b3597d532e6efe132eca594bc1886963931697970daff55a4); bucket, cohort pins, July classification and every other field are unchanged; no seal or owner choice. Evidence maintenance 2026-11-19 (MERGE2-FIX2): current assessment digest and locators are projected by the writer; original one-family append checkpoints remain in the DL-077 record and immutable Git history. No new admission or verdict change.",
   "working_bucket": "confirmed_persisted_unregistered",
   "cohort_pins": [
     "july248"
   ],
   "evidence": {
     "owner_doc": {
-      "status": "OWNER_REQUIRED",
-      "citation": null,
-      "note": "No exact current Plans authority found for explicit semantic acceptance owner of `crew.board_message_posted`; this value is withheld rather than inferred."
+      "status": "PASS",
+      "citation": "Plans/orchestrator-subagent-integration.md:32534",
+      "note": "OSI-681 explicitly binds this exact-family criterion in the assessed source; static contract/oracles pass, native execution remains NOT_RUN."
     },
     "producer": {
       "status": "PASS",
-      "citation": "Plans/orchestrator-subagent-integration.md:4601-4606",
-      "note": "The cited append path explicitly emits crew.board_message_posted from the Orchestrator crew-board write flow."
+      "citation": "Plans/orchestrator-subagent-integration.md:32542; Plans/orchestrator-subagent-integration.md:32540",
+      "note": "OSI-681 explicitly binds this exact-family criterion in the assessed source; static contract/oracles pass, native execution remains NOT_RUN."
     },
     "membership_version": {
-      "status": "OWNER_REQUIRED",
-      "citation": null,
-      "note": "No exact current Plans authority found for versioned individual registry membership of `crew.board_message_posted`; this value is withheld rather than inferred."
+      "status": "PASS",
+      "citation": "Plans/event_family_registry.json:24329-24417",
+      "note": "Currently registered at 2026-11-18.2 as #/families/362 (canonical row SHA-256 88d2fd472b0c5745d663f975d2959775febfe44c6b7805021725f30f2ac93b94). Original one-family admission checkpoints remain in the family record and immutable Git source."
     },
     "closed_payload_schema": {
-      "status": "OWNER_REQUIRED",
-      "citation": null,
-      "note": "No exact current Plans authority found for exhaustive closed payload schema of `crew.board_message_posted`; this value is withheld rather than inferred."
+      "status": "PASS",
+      "citation": "Plans/orchestrator-subagent-integration.md:32536; Plans/storage-plan.md:35855",
+      "note": "OSI-681 and SP-720 bind this family's closed member under landed SP-320: additionalProperties false at the root, schema_version and no stored schema_id, copied from the file value_schema_ref names. Static contract and oracles pass; native execution remains NOT_RUN."
     },
     "scope_identity": {
       "status": "PASS",
-      "citation": "Plans/Contracts_V0.md:2953-2969",
-      "note": "The exact row and mandatory crew lineage fields pin run, thread, crew, parent, and child identity."
+      "citation": "Plans/orchestrator-subagent-integration.md:32546",
+      "note": "OSI-681 explicitly binds this exact-family criterion in the assessed source; static contract/oracles pass, native execution remains NOT_RUN."
     },
     "replay_idempotency": {
-      "status": "OWNER_REQUIRED",
-      "citation": null,
-      "note": "No exact current Plans authority found for replay policy and idempotency identity of `crew.board_message_posted`; this value is withheld rather than inferred."
+      "status": "PASS",
+      "citation": "Plans/orchestrator-subagent-integration.md:32546",
+      "note": "OSI-681 explicitly binds this exact-family criterion in the assessed source; static contract/oracles pass, native execution remains NOT_RUN."
     },
     "retention": {
       "status": "PASS",
-      "citation": "Plans/storage-plan.md:17429",
-      "note": "DL-085 assigns RP-COORDINATION-180D@1.0.0 (Plans/storage_value_registry.json:330) to crew.board_message_posted for the time its full contract is admitted: its stored records are kept with the run's other coordination records, 180 days after the run finishes, at most 1,000,000 coordination records per project, oldest eligible first; the 24-hour rule is the board's visibility rule, not byte retention. Retention only: the full contract must still carry the structured retention_policy_ref and say how message subjects and text are protected before admission, and coordination_event_records gains this event in its key shape only in this family's own admission landing; that precondition is still open and no evidence cell in this row records it as met. No registry row, binding or admission follows."
+      "citation": "Plans/orchestrator-subagent-integration.md:32640",
+      "note": "Current exact-family BOUND retention assignment: {\"application_policy_ref\": null, \"decisions\": [\"DL-085\"], \"event_type\": \"crew.board_message_posted\", \"existing_checkpoints\": [], \"grade_source\": \"reports/event-authority-20261104/DO.self-grade.json\", \"history_policy_ref\": \"RP-COORDINATION-180D@1.0.0\", \"lane\": \"DO\", \"original_and_checkpoint_assignments\": [], \"owner\": \"Plans/orchestrator-subagent-integration.md#OSI-681\", \"owner_line\": 32530, \"prior_finding\": \"Named DL-084/085/086 assignment remains dependent on the cited unlanded Storage integration and Q1/Q3; no retention or deletion policy chosen.\", \"question\": null, \"status\": \"BOUND\"}"
     },
     "redaction_custody": {
-      "status": "OWNER_REQUIRED",
-      "citation": null,
-      "note": "No exact current Plans authority found for redaction duties and custody owner of `crew.board_message_posted`; this value is withheld rather than inferred."
+      "status": "PASS",
+      "citation": "Plans/orchestrator-subagent-integration.md:32550",
+      "note": "OSI-681 explicitly binds this exact-family criterion in the assessed source; static contract/oracles pass, native execution remains NOT_RUN."
     },
     "transitions": {
       "status": "PASS",
-      "citation": "Plans/orchestrator-subagent-integration.md:3813-3869",
-      "note": "The canonical board lifecycle explicitly defines message creation/posting behavior."
+      "citation": "Plans/orchestrator-subagent-integration.md:32542",
+      "note": "OSI-681 explicitly binds this exact-family criterion in the assessed source; static contract/oracles pass, native execution remains NOT_RUN."
     },
     "consumers_checkpoints": {
-      "status": "OWNER_REQUIRED",
-      "citation": null,
-      "note": "No exact current Plans authority found for named consumers and checkpoint behavior of `crew.board_message_posted`; this value is withheld rather than inferred."
+      "status": "PASS",
+      "citation": "Plans/orchestrator-subagent-integration.md:32548",
+      "note": "OSI-681 binds this family's reader and its SP-278 EventRecord-index checkpoint. A committed inventory (Plans/orchestrator_checkpoint_field_inventory.json) gives every field of every checkpoint value the lane writes one row, derived (with its source, its exact-type guard and code and a registered single-defect negative) or free (with its schema bound, a reason and refused forms); the checker regenerates the field list from the schemas and fails on an unrowed field, a stale row or a stale bound. Every derived field, including the segment identity, source selection, generation identity, index-row cursor and row copies of the event, is compared with its source by exact type with its own code and a single-defect negative on every positive; recapture_history derives each one; native execution remains NOT_RUN."
     },
     "compatibility_withdrawal": {
-      "status": "OWNER_REQUIRED",
-      "citation": null,
-      "note": "The canonical-board versus optional-mirror boundary does not define compatibility acceptance, normalization, and withdrawal/sunset for `crew.board_message_posted`; no such rule is inferred."
+      "status": "PASS",
+      "citation": "Plans/orchestrator-subagent-integration.md:32552; Plans/orchestrator-subagent-integration.md:32554; Plans/orchestrator-subagent-integration.md:32546",
+      "note": "OSI-681 explicitly binds this exact-family criterion in the assessed source; static contract/oracles pass, native execution remains NOT_RUN."
     },
     "positive_negative_oracles": {
-      "status": "OWNER_REQUIRED",
-      "citation": null,
-      "note": "No exact current Plans authority found for complete positive and negative acceptance oracles of `crew.board_message_posted`; this value is withheld rather than inferred."
+      "status": "PASS",
+      "citation": "Plans/orchestrator-subagent-integration.md:32532; Plans/orchestrator-subagent-integration.md:32556; /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/c12-do/schema-final/schema-matrix.json; /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/c12-do/oracle-coverage-matrix.json",
+      "note": "Exact-family C12 PASS from reports/event-authority-20261114/C12-DO.self-grade.json"
     }
   },
   "citations_checked": [

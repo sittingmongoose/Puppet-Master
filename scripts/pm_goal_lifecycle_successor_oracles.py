@@ -1,14 +1,18 @@
 #!/usr/bin/env python3
-"""ATS-213 static successor predicates. No native source or admission is asserted."""
+"""ATS-213 bounded predicates; ATS-1113..1115 supply whole protocol oracles. No native installation/admission."""
 import copy
 import hashlib
 import json
+import re
 import sys
-from pm_goal_oracle_common import ROOT, Audit, Gates, load, validator, schema_registry, canonical, revision_text, integer_number, append_result, append_guards, print_result
+from pm_goal_oracle_common import ROOT, Audit, Gates, load, schema_registry, canonical, current_revision_text, revision_text, current_integer_number as integer_number, append_result, append_guards, print_result
+from pm_goal_gc_adapter import validator  # CV-1100 current integers and ECMA patterns (PNC-019 GC)
 
 def identity(family,v):
+ """SP-429/SP-1121 recipe. The payload schema (current integers, CV-1100) refuses a non-integer revision first;
+ only when that schema row is removed does a float reach here, and the pre-CV-1100 decimal spelling applies."""
  fields=['storage_instance_id','project_id','thread_id','goal_id']
- values=[v[k] for k in fields]+[revision_text(v['before_revision']),v['continuation_id'],v['owning_run_id'],v['next_attempt_ref']]
+ values=[v[k] for k in fields]+[(current_revision_text if integer_number(v['before_revision']) else revision_text)(v['before_revision']),v['continuation_id'],v['owning_run_id'],v['next_attempt_ref']]
  d=hashlib.sha256(json.dumps(['pm.'+family+'.lifecycle.v1','project']+values,separators=(',',':'),ensure_ascii=False).encode()).hexdigest()
  return family+'.v1:'+d,family+'.lifecycle.v1:'+d
 
@@ -16,6 +20,7 @@ def predicates(family,c,v,disabled=()):
  g=Gates(disabled);p=c['payload'];before=c['before'];after=c['after'];source=c['source']
  g.schema(v,p,family+'/schema')
  if g.errors:return g.errors
+ # CV-1100: these are current v3 writes, so every owner integer is a current integer (no 3.0, 3e0 or true).
  for field in ('project_id','thread_id','goal_id'):
   g.require('lifecycle/identity/'+field,p[field]==before[field]==after[field]==source[field])
  g.require('lifecycle/revision_cas',integer_number(before['revision']) and p['before_revision']==before['revision'])
@@ -48,7 +53,9 @@ def predicates(family,c,v,disabled=()):
   g.require('completed/ordinary_route',source['completion_route']=='ordinary')
   g.require('completed/evidence',p['completion_evidence_refs']==source['caller_completion_evidence_refs'])
   g.require('completed/todo_identity',source['todo_snapshot']['list_id']==source['current_todo_list_id'] and integer_number(source['todo_snapshot']['revision']) and integer_number(source['current_todo_revision']) and source['todo_snapshot']['revision']==source['current_todo_revision'])
-  g.require('completed/todo_barrier',all(type(t['required']) is bool and (not t['required'] or t['status']=='done' or (t['status']=='skipped' and t['accepted_skip_ref'])) for t in source['todo_snapshot']['items']))
+  g.require('completed/todo_status_type',all(type(t['status']) is str and t['status'] in ('pending','in_progress','completed','blocked','skipped') for t in source['todo_snapshot']['items']))
+  g.require('completed/accepted_skip_type',all(t['accepted_skip_ref'] is None or (type(t['accepted_skip_ref']) is str and len(t['accepted_skip_ref']) >= 1 and re.fullmatch(r'[^\r\n]+',t['accepted_skip_ref']) is not None) for t in source['todo_snapshot']['items']))
+  g.require('completed/todo_barrier',all(type(t['required']) is bool and (not t['required'] or t['status']=='completed' or (t['status']=='skipped' and t['accepted_skip_ref'] is not None)) for t in source['todo_snapshot']['items']))
   g.require('completed/admitted_work',all(w['status']=='settled' for w in source['admitted_work']))
   g.require('completed/bound_plan',source['bound_plan_status'] in ('none','settled'))
   if source['origin_kind']=='internal_workflow':
@@ -69,6 +76,6 @@ def main():
   for case in f['replay_cases']:
    if append_result(case)!=case['expected']:audit.failures.append(family+'/replay/'+case['id'])
    audit.case(family+'/replay/'+case['id'],append_guards,case,case['expected'] in ('append_new','return_original_receipt'))
- result=audit.run();result['activation']='REFUSED_UNBOUND_ORIGINAL_HOST_SOURCE'
+ result=audit.run();result['activation']='REFUSED_UNINSTALLED_ORIGINAL_HOST_SOURCE_AND_V3_SELECTOR'
  return print_result(result,sys.argv)
 if __name__=='__main__':sys.exit(main())

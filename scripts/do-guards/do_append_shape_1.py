@@ -16,6 +16,8 @@ def event_storage_sequence(value, context):
 
 
 def replay_only_not_appendable(value, context):
+    if not isinstance(value['event'], dict):
+        return None  # the earlier EventRecord schema owns its root type
     policy = value['event'].get('replay_policy')
     if value['historical'] is True:
         return None
@@ -23,6 +25,8 @@ def replay_only_not_appendable(value, context):
 
 
 def family_current_replay_policy(value, context):
+    if not isinstance(value['event'], dict):
+        return None  # field inspection requires the earlier object precondition
     policy = value['event'].get('replay_policy')
     if policy == 'projector_replay_only' or policy == 'dedupe_by_idempotency_key':
         return None

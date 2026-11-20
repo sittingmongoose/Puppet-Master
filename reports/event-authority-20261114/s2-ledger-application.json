@@ -1,0 +1,135 @@
+{
+ "application_id": "EA-PNC019-S2-LEDGER-ROWS",
+ "applied_at_utc": "2026-11-14T19:37:42Z",
+ "applied_by": "claude-opus-5.5:ea-pnc-s2-20261114",
+ "branch": "plans/ea-pnc-s2-20261114",
+ "applied_on_revision": "965d68fc384be5610696d3838d039e65ce56daa9",
+ "authority_refs": [
+  "Plans/Decision_Log.md#DL-039",
+  "Plans/Decision_Log.md#DL-414",
+  "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019-SCOPE/PLAN.md#F3"
+ ],
+ "depth_assessment": {
+  "path": "reports/event-authority-20261114/s2-depth-post-august.json",
+  "sha256": "0a260712a116532a824b81dd497f0cc72f97b4fc1a5cd41ace8db8cdf7dd6c0a"
+ },
+ "rows": [
+  {
+   "event_type": "context.compaction.completed",
+   "row_path": "Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_context.compaction.completed.json",
+   "before_sha256": "bded9943fe09f20e018ddd206bd9c8a8872a26afeb643b378694e725670b0ba9",
+   "after_sha256": "8a8f7b2a98c03d963d67565b99424a7f16945aca87814cbd9b7511ef70698bb0",
+   "ledger_line": 71,
+   "line_ending": "LF",
+   "disposition_before": "NEEDS_MORE_EVIDENCE",
+   "disposition_after": "KEEP_REGISTERED",
+   "cells_written": [
+    "membership_version",
+    "owner_doc",
+    "producer",
+    "closed_payload_schema",
+    "scope_identity",
+    "replay_idempotency",
+    "retention",
+    "redaction_custody",
+    "transitions",
+    "consumers_checkpoints",
+    "compatibility_withdrawal",
+    "positive_negative_oracles"
+   ],
+   "changed_fields": [
+    "disposition",
+    "disposition_rationale",
+    "evidence",
+    "quality_notes"
+   ]
+  },
+  {
+   "event_type": "coordination.agent_registered",
+   "row_path": "Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_coordination.agent_registered.json",
+   "before_sha256": "37dbe02fd0b31fdef9a5269ab64d12fc2480d85a3c66c66c61a8a89d0018959f",
+   "after_sha256": "3a749fe0f6bc816216a1b591b42def3007e0a1a2ac1cf82ed8298ed906c4d306",
+   "ledger_line": 78,
+   "line_ending": "CRLF",
+   "disposition_before": "KEEP_QUARANTINED",
+   "disposition_after": "KEEP_REGISTERED",
+   "cells_written": [
+    "membership_version",
+    "owner_doc",
+    "producer",
+    "closed_payload_schema",
+    "scope_identity",
+    "replay_idempotency",
+    "retention",
+    "redaction_custody",
+    "transitions",
+    "consumers_checkpoints",
+    "compatibility_withdrawal",
+    "positive_negative_oracles"
+   ],
+   "changed_fields": [
+    "disposition",
+    "disposition_rationale",
+    "evidence",
+    "quality_notes"
+   ]
+  },
+  {
+   "event_type": "terminal.workgroup_moved",
+   "row_path": "Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_terminal.workgroup_moved.json",
+   "before_sha256": "08063c252d46f9d414be5b24c67fdbfd5ea3d1c23a85a10091001365c06f440c",
+   "after_sha256": "4dca4a8a577e3298f7e468e9d882582f4050d404e9ad49f8ed6a4845ba16ba5e",
+   "ledger_line": 279,
+   "line_ending": "CRLF",
+   "disposition_before": "KEEP_REGISTERED",
+   "disposition_after": "KEEP_REGISTERED",
+   "cells_written": [
+    "consumers_checkpoints",
+    "positive_negative_oracles"
+   ],
+   "changed_fields": [
+    "disposition_rationale",
+    "evidence",
+    "quality_notes"
+   ]
+  },
+  {
+   "event_type": "workspace.layout_changed",
+   "row_path": "Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_workspace.layout_changed.json",
+   "before_sha256": "97ddc00044ac9cb52867a122119d52648c467f0b3ddadb31c255f2c1affa9f99",
+   "after_sha256": "07e298398cc70d8e7b77d1d056665d82abb5035011e1198192dde6ee117c2739",
+   "ledger_line": 295,
+   "line_ending": "CRLF",
+   "disposition_before": "KEEP_REGISTERED",
+   "disposition_after": "KEEP_REGISTERED",
+   "cells_written": [
+    "positive_negative_oracles"
+   ],
+   "changed_fields": [
+    "disposition_rationale",
+    "evidence",
+    "quality_notes"
+   ]
+  }
+ ],
+ "files": {
+  "Plans/.audits/event-authority-2026-08-12/individual-disposition/LEDGER.jsonl": {
+   "before_sha256": "c5f28f3e295303b8b754d3ba0eddbb42d79c844622b980acf31cd0ed6323735d",
+   "after_sha256": "fff2c2b72bb1b3545dae68bb75b0e163b497777f4e063e549d305227a3d46fd5",
+   "lines_changed": 4
+  }
+ },
+ "boundaries": {
+  "registry_changed": false,
+  "bucket_changed": false,
+  "cohort_pins_changed": false,
+  "census_adjudication_changed": false,
+  "bulk_registration": false,
+  "analogy_used": false,
+  "inference_used": false,
+  "validator_changed": false,
+  "owner_choice_changed": false,
+  "seal_claimed": false
+ },
+ "note": "A completely recorded post-August admission already supersedes its old row in the frozen check (DL-077); these rows now also state the registered disposition themselves, so the row and the record agree. COVERAGE.json is not regenerated."
+}

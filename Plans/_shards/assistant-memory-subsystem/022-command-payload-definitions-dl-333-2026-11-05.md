@@ -2,9 +2,9 @@
 
 Source: `Plans/assistant-memory-subsystem.md`
 
-Source lines: L3421-L4936
+Source lines: L3421-L4950
 
-Source SHA256: `6fb2d744ee0ee1ba56c1bc0bbc38d8996e8bc0af660efe7d4bbdd21ac67e9911`
+Source SHA256: `bef912af3f908a962527eb2a58e3d50af7eb741092d247beebc773e1314587d8`
 
 ---
 
@@ -955,8 +955,7 @@ plan_unit_id: AMS-100
 unit_type: requirement
 status: accepted
 owner_doc: Plans/assistant-memory-subsystem.md
-canonical_text: 'Newly authored owner contract under DL-045 for exactly memory.dedup_sweep.completed@1.0.0, prepared
-  without admission. Per-family current-canon search and negative evidence: reports/event-authority-20261104/DMEM-search.json.
+canonical_text: 'Newly authored owner contract under DL-045 for exactly memory.dedup_sweep.completed@1.0.0, prepared without admission before the 2026-11-18 registration. Per-family current-canon search and negative evidence: reports/event-authority-20261104/DMEM-search.json.
   Reuse UCC-085''s cmd.chat.memory.dedup_sweep Project command and AMS section 7.2, with AMS-054 scope separation.
   This edition is project_only: actual Project permission and canonical corpus are required. It does not narrow
   or expand AMS-054''s app memory; app-thread events require their own owner binding. Merge only identical embed_text_hash
@@ -970,7 +969,9 @@ canonical_text: 'Newly authored owner contract under DL-045 for exactly memory.d
   joins are governed by CV-650; persistence and read-only history by SP-630. Existing pinned protection, claim verification,
   NullMemoryProvider and locked-rule rules survive. Automatic deletion is forbidden by DL-445; only the user deletes memories. Native emission and recovery are NOT_RUN.
 
-  DL-444 and DL-445 apply E-CARDS-2 Card 6.a and 6.b option A. Among owner-eligible identical embed_text_hash memories, keep the oldest by original created_at, breaking a tie by the unchanging note ID (lexical id order). Preserve every original EvidenceRef and the merge record identifying every original and the survivor; the survivor retains the union of evidence references. Archive the other eligible originals with their original identities, evidence references, versions and links to the survivor intact. They remain available in history and are never automatically deleted. Only the user deletes memories. Pinned memories stay excluded; skip any merge that pin protection forbids. These decisions do not broaden existing eligibility or scope, admit a writer, settle operation retention or bypass start custody. Scores for separate archive jobs do not select a duplicate survivor. Source E-CARDS-2 as presented, Card 6 options A, SHA-256 6db25be3dd290ab0083af482383e469a78dc109a037ad0fd0ece5d8f15679b30; decision-answers/E-CARDS-2.as-presented-6db25be3.md and ANSWERS_E-CARDS-2_20261105.md under /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104; DL-444 through DL-447, landed in Plans/Decision_Log.md on main.'
+  DL-444 and DL-445 apply E-CARDS-2 Card 6.a and 6.b option A. Among owner-eligible identical embed_text_hash memories, keep the oldest by original created_at, breaking a tie by the unchanging note ID (lexical id order). Preserve every original EvidenceRef and the merge record identifying every original and the survivor; the survivor retains the union of evidence references. Archive the other eligible originals with their original identities, evidence references, versions and links to the survivor intact. They remain available in history and are never automatically deleted. Only the user deletes memories. Pinned memories stay excluded; skip any merge that pin protection forbids. These decisions do not broaden existing eligibility or scope, admit a writer, settle operation retention or bypass start custody. Scores for separate archive jobs do not select a duplicate survivor. Source E-CARDS-2 as presented, Card 6 options A, SHA-256 6db25be3dd290ab0083af482383e469a78dc109a037ad0fd0ece5d8f15679b30; decision-answers/E-CARDS-2.as-presented-6db25be3.md and ANSWERS_E-CARDS-2_20261105.md under /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104; DL-444 through DL-447, landed in Plans/Decision_Log.md on main.
+
+  Current membership (2026-11-18) — memory.dedup_sweep.completed@1.0.0 is individually registered in Plans/event_family_registry.json. Missing-registration refusal applies only if the exact current family/version/scope registration is absent; this registered family is not refused as missing_event_registration or family_not_admitted merely because it was prepared without admission. Append and checkpoint advance still require every existing schema, scope, retention, original-source, receipt, permission and withdrawal check specified here. Registry membership supplies no native execution proof or additional action authority.'
 gui_related: false
 gui_classification_reason: Typed events, identity, custody and recovery; no visual behavior.
 depends_on:
@@ -979,7 +980,7 @@ depends_on:
 - AMS-054
 unblocks: []
 acceptance_criteria:
-- Exact family remains quarantined until its own admission and retention resolution.
+- Exact family is registered; quarantine for missing registration applies only while its exact registration is absent, and existing retention and other append/projection checks remain mandatory.
 - Schema, identity, custody, replay and withdrawal match this unit.
 validation_surfaces:
 - python3 scripts/pm_memory_maintenance_events.py
@@ -995,7 +996,7 @@ source_lineage:
 - reports/event-authority-20261104/DMEM-search.json
 preserved_exact_tokens: []
 negative_constraints:
-- No admission, automatic deletion, app-scope expansion or native proof.
+- Preparation itself grants no admission, automatic deletion, app-scope expansion or native proof.
 ```
 
 
@@ -1006,8 +1007,7 @@ plan_unit_id: AMS-101
 unit_type: requirement
 status: accepted
 owner_doc: Plans/assistant-memory-subsystem.md
-canonical_text: 'Newly authored owner contract under DL-045 for exactly memory.dedup_sweep.started@1.0.0, prepared
-  without admission. Per-family current-canon search and negative evidence: reports/event-authority-20261104/DMEM-search.json.
+canonical_text: 'Newly authored owner contract under DL-045 for exactly memory.dedup_sweep.started@1.0.0, prepared without admission before the 2026-11-18 registration. Per-family current-canon search and negative evidence: reports/event-authority-20261104/DMEM-search.json.
   Reuse UCC-085''s cmd.chat.memory.dedup_sweep Project command and AMS section 7.2, with AMS-054 scope separation.
   This edition is project_only: actual Project permission and canonical corpus are required. It does not narrow
   or expand AMS-054''s app memory; app-thread events require their own owner binding. Merge only identical embed_text_hash
@@ -1022,7 +1022,9 @@ canonical_text: 'Newly authored owner contract under DL-045 for exactly memory.d
   rules survive. Automatic deletion is forbidden by DL-445; only the user deletes memories. Native emission and recovery
   are NOT_RUN.
 
-  DL-444 and DL-445 apply E-CARDS-2 Card 6.a and 6.b option A. Among owner-eligible identical embed_text_hash memories, keep the oldest by original created_at, breaking a tie by the unchanging note ID (lexical id order). Preserve every original EvidenceRef and the merge record identifying every original and the survivor; the survivor retains the union of evidence references. Archive the other eligible originals with their original identities, evidence references, versions and links to the survivor intact. They remain available in history and are never automatically deleted. Only the user deletes memories. Pinned memories stay excluded; skip any merge that pin protection forbids. These decisions do not broaden existing eligibility or scope, admit a writer, settle operation retention or bypass start custody. Scores for separate archive jobs do not select a duplicate survivor. Source E-CARDS-2 as presented, Card 6 options A, SHA-256 6db25be3dd290ab0083af482383e469a78dc109a037ad0fd0ece5d8f15679b30; decision-answers/E-CARDS-2.as-presented-6db25be3.md and ANSWERS_E-CARDS-2_20261105.md under /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104; DL-444 through DL-447, landed in Plans/Decision_Log.md on main.'
+  DL-444 and DL-445 apply E-CARDS-2 Card 6.a and 6.b option A. Among owner-eligible identical embed_text_hash memories, keep the oldest by original created_at, breaking a tie by the unchanging note ID (lexical id order). Preserve every original EvidenceRef and the merge record identifying every original and the survivor; the survivor retains the union of evidence references. Archive the other eligible originals with their original identities, evidence references, versions and links to the survivor intact. They remain available in history and are never automatically deleted. Only the user deletes memories. Pinned memories stay excluded; skip any merge that pin protection forbids. These decisions do not broaden existing eligibility or scope, admit a writer, settle operation retention or bypass start custody. Scores for separate archive jobs do not select a duplicate survivor. Source E-CARDS-2 as presented, Card 6 options A, SHA-256 6db25be3dd290ab0083af482383e469a78dc109a037ad0fd0ece5d8f15679b30; decision-answers/E-CARDS-2.as-presented-6db25be3.md and ANSWERS_E-CARDS-2_20261105.md under /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104; DL-444 through DL-447, landed in Plans/Decision_Log.md on main.
+
+  Current membership (2026-11-18) — memory.dedup_sweep.started@1.0.0 is individually registered in Plans/event_family_registry.json. Missing-registration refusal applies only if the exact current family/version/scope registration is absent; this registered family is not refused as missing_event_registration or family_not_admitted merely because it was prepared without admission. Append and checkpoint advance still require every existing schema, scope, retention, original-source, receipt, permission and withdrawal check specified here. Registry membership supplies no native execution proof or additional action authority.'
 gui_related: false
 gui_classification_reason: Typed events, identity, custody and recovery; no visual behavior.
 depends_on:
@@ -1031,7 +1033,7 @@ depends_on:
 - AMS-054
 unblocks: []
 acceptance_criteria:
-- Exact family remains quarantined until its own admission and retention resolution.
+- Exact family is registered; quarantine for missing registration applies only while its exact registration is absent, and existing retention and other append/projection checks remain mandatory.
 - Schema, identity, custody, replay and withdrawal match this unit.
 validation_surfaces:
 - python3 scripts/pm_memory_maintenance_events.py
@@ -1047,7 +1049,7 @@ source_lineage:
 - reports/event-authority-20261104/DMEM-search.json
 preserved_exact_tokens: []
 negative_constraints:
-- No admission, automatic deletion, app-scope expansion or native proof.
+- Preparation itself grants no admission, automatic deletion, app-scope expansion or native proof.
 ```
 
 
@@ -1059,7 +1061,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/assistant-memory-subsystem.md
 canonical_text: 'Newly authored owner contract under DL-045 for exactly memory.index.lexical.rebuild.completed@1.0.0,
-  prepared without admission. Per-family current-canon search and negative evidence: reports/event-authority-20261104/DMEM-search.json.
+  prepared without admission before the 2026-11-18 registration. Per-family current-canon search and negative evidence: reports/event-authority-20261104/DMEM-search.json.
   Reuse UCC-085''s cmd.chat.memory.rebuild_lexical_index Project command and AMS section 7.2, with AMS-054 scope
   separation. This edition is project_only: actual Project permission and canonical corpus are required. It does
   not narrow or expand AMS-054''s app memory; app-thread events require their own owner binding. Rebuild Tantivy
@@ -1074,7 +1076,9 @@ canonical_text: 'Newly authored owner contract under DL-045 for exactly memory.i
   opaque authorized result refs, never gist text, prompts, embeddings, paths, secrets or EvidenceRef bodies. Event
   fields and all payload joins are governed by CV-652; persistence and read-only history by SP-632. Existing pinned
   protection, claim verification, NullMemoryProvider and locked-rule rules survive. Policy-dependent deletion remains
-  unavailable until Jared settles it. Native emission and recovery are NOT_RUN.'
+  unavailable until Jared settles it. Native emission and recovery are NOT_RUN.
+
+  Current membership (2026-11-18) — memory.index.lexical.rebuild.completed@1.0.0 is individually registered in Plans/event_family_registry.json. Missing-registration refusal applies only if the exact current family/version/scope registration is absent; this registered family is not refused as missing_event_registration or family_not_admitted merely because it was prepared without admission. Append and checkpoint advance still require every existing schema, scope, retention, original-source, receipt, permission and withdrawal check specified here. Registry membership supplies no native execution proof or additional action authority.'
 gui_related: false
 gui_classification_reason: Typed events, identity, custody and recovery; no visual behavior.
 depends_on:
@@ -1083,7 +1087,7 @@ depends_on:
 - AMS-054
 unblocks: []
 acceptance_criteria:
-- Exact family remains quarantined until its own admission and retention resolution.
+- Exact family is registered; quarantine for missing registration applies only while its exact registration is absent, and existing retention and other append/projection checks remain mandatory.
 - Schema, identity, custody, replay and withdrawal match this unit.
 validation_surfaces:
 - python3 scripts/pm_memory_maintenance_events.py
@@ -1099,7 +1103,7 @@ source_lineage:
 - reports/event-authority-20261104/DMEM-search.json
 preserved_exact_tokens: []
 negative_constraints:
-- No admission, deletion-policy decision, app-scope expansion or native proof.
+- Preparation itself grants no admission, deletion-policy decision, app-scope expansion or native proof.
 ```
 
 
@@ -1111,7 +1115,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/assistant-memory-subsystem.md
 canonical_text: 'Newly authored owner contract under DL-045 for exactly memory.index.lexical.rebuild.started@1.0.0,
-  prepared without admission. Per-family current-canon search and negative evidence: reports/event-authority-20261104/DMEM-search.json.
+  prepared without admission before the 2026-11-18 registration. Per-family current-canon search and negative evidence: reports/event-authority-20261104/DMEM-search.json.
   Reuse UCC-085''s cmd.chat.memory.rebuild_lexical_index Project command and AMS section 7.2, with AMS-054 scope
   separation. This edition is project_only: actual Project permission and canonical corpus are required. It does
   not narrow or expand AMS-054''s app memory; app-thread events require their own owner binding. Rebuild Tantivy
@@ -1126,7 +1130,9 @@ canonical_text: 'Newly authored owner contract under DL-045 for exactly memory.i
   gist text, prompts, embeddings, paths, secrets or EvidenceRef bodies. Event fields and all payload joins are governed
   by CV-653; persistence and read-only history by SP-633. Existing pinned protection, claim verification, NullMemoryProvider
   and locked-rule rules survive. Policy-dependent deletion remains unavailable until Jared settles it. Native emission
-  and recovery are NOT_RUN.'
+  and recovery are NOT_RUN.
+
+  Current membership (2026-11-18) — memory.index.lexical.rebuild.started@1.0.0 is individually registered in Plans/event_family_registry.json. Missing-registration refusal applies only if the exact current family/version/scope registration is absent; this registered family is not refused as missing_event_registration or family_not_admitted merely because it was prepared without admission. Append and checkpoint advance still require every existing schema, scope, retention, original-source, receipt, permission and withdrawal check specified here. Registry membership supplies no native execution proof or additional action authority.'
 gui_related: false
 gui_classification_reason: Typed events, identity, custody and recovery; no visual behavior.
 depends_on:
@@ -1135,7 +1141,7 @@ depends_on:
 - AMS-054
 unblocks: []
 acceptance_criteria:
-- Exact family remains quarantined until its own admission and retention resolution.
+- Exact family is registered; quarantine for missing registration applies only while its exact registration is absent, and existing retention and other append/projection checks remain mandatory.
 - Schema, identity, custody, replay and withdrawal match this unit.
 validation_surfaces:
 - python3 scripts/pm_memory_maintenance_events.py
@@ -1151,7 +1157,7 @@ source_lineage:
 - reports/event-authority-20261104/DMEM-search.json
 preserved_exact_tokens: []
 negative_constraints:
-- No admission, deletion-policy decision, app-scope expansion or native proof.
+- Preparation itself grants no admission, deletion-policy decision, app-scope expansion or native proof.
 ```
 
 
@@ -1163,7 +1169,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/assistant-memory-subsystem.md
 canonical_text: 'Newly authored owner contract under DL-045 for exactly memory.index.semantic.rebuild.completed@1.0.0,
-  prepared without admission. Per-family current-canon search and negative evidence: reports/event-authority-20261104/DMEM-search.json.
+  prepared without admission before the 2026-11-18 registration. Per-family current-canon search and negative evidence: reports/event-authority-20261104/DMEM-search.json.
   Reuse UCC-085''s cmd.chat.memory.rebuild_semantic_index Project command and AMS section 7.2, with AMS-054 scope
   separation. This edition is project_only: actual Project permission and canonical corpus are required. It does
   not narrow or expand AMS-054''s app memory; app-thread events require their own owner binding. Re-embed deterministic
@@ -1178,7 +1184,9 @@ canonical_text: 'Newly authored owner contract under DL-045 for exactly memory.i
   are opaque authorized result refs, never gist text, prompts, embeddings, paths, secrets or EvidenceRef bodies.
   Event fields and all payload joins are governed by CV-654; persistence and read-only history by SP-634. Existing
   pinned protection, claim verification, NullMemoryProvider and locked-rule rules survive. Policy-dependent deletion
-  remains unavailable until Jared settles it. Native emission and recovery are NOT_RUN.'
+  remains unavailable until Jared settles it. Native emission and recovery are NOT_RUN.
+
+  Current membership (2026-11-18) — memory.index.semantic.rebuild.completed@1.0.0 is individually registered in Plans/event_family_registry.json. Missing-registration refusal applies only if the exact current family/version/scope registration is absent; this registered family is not refused as missing_event_registration or family_not_admitted merely because it was prepared without admission. Append and checkpoint advance still require every existing schema, scope, retention, original-source, receipt, permission and withdrawal check specified here. Registry membership supplies no native execution proof or additional action authority.'
 gui_related: false
 gui_classification_reason: Typed events, identity, custody and recovery; no visual behavior.
 depends_on:
@@ -1187,7 +1195,7 @@ depends_on:
 - AMS-054
 unblocks: []
 acceptance_criteria:
-- Exact family remains quarantined until its own admission and retention resolution.
+- Exact family is registered; quarantine for missing registration applies only while its exact registration is absent, and existing retention and other append/projection checks remain mandatory.
 - Schema, identity, custody, replay and withdrawal match this unit.
 validation_surfaces:
 - python3 scripts/pm_memory_maintenance_events.py
@@ -1203,7 +1211,7 @@ source_lineage:
 - reports/event-authority-20261104/DMEM-search.json
 preserved_exact_tokens: []
 negative_constraints:
-- No admission, deletion-policy decision, app-scope expansion or native proof.
+- Preparation itself grants no admission, deletion-policy decision, app-scope expansion or native proof.
 ```
 
 
@@ -1215,7 +1223,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/assistant-memory-subsystem.md
 canonical_text: 'Newly authored owner contract under DL-045 for exactly memory.index.semantic.rebuild.started@1.0.0,
-  prepared without admission. Per-family current-canon search and negative evidence: reports/event-authority-20261104/DMEM-search.json.
+  prepared without admission before the 2026-11-18 registration. Per-family current-canon search and negative evidence: reports/event-authority-20261104/DMEM-search.json.
   Reuse UCC-085''s cmd.chat.memory.rebuild_semantic_index Project command and AMS section 7.2, with AMS-054 scope
   separation. This edition is project_only: actual Project permission and canonical corpus are required. It does
   not narrow or expand AMS-054''s app memory; app-thread events require their own owner binding. Re-embed deterministic
@@ -1230,7 +1238,9 @@ canonical_text: 'Newly authored owner contract under DL-045 for exactly memory.i
   gist text, prompts, embeddings, paths, secrets or EvidenceRef bodies. Event fields and all payload joins are governed
   by CV-655; persistence and read-only history by SP-635. Existing pinned protection, claim verification, NullMemoryProvider
   and locked-rule rules survive. Policy-dependent deletion remains unavailable until Jared settles it. Native emission
-  and recovery are NOT_RUN.'
+  and recovery are NOT_RUN.
+
+  Current membership (2026-11-18) — memory.index.semantic.rebuild.started@1.0.0 is individually registered in Plans/event_family_registry.json. Missing-registration refusal applies only if the exact current family/version/scope registration is absent; this registered family is not refused as missing_event_registration or family_not_admitted merely because it was prepared without admission. Append and checkpoint advance still require every existing schema, scope, retention, original-source, receipt, permission and withdrawal check specified here. Registry membership supplies no native execution proof or additional action authority.'
 gui_related: false
 gui_classification_reason: Typed events, identity, custody and recovery; no visual behavior.
 depends_on:
@@ -1239,7 +1249,7 @@ depends_on:
 - AMS-054
 unblocks: []
 acceptance_criteria:
-- Exact family remains quarantined until its own admission and retention resolution.
+- Exact family is registered; quarantine for missing registration applies only while its exact registration is absent, and existing retention and other append/projection checks remain mandatory.
 - Schema, identity, custody, replay and withdrawal match this unit.
 validation_surfaces:
 - python3 scripts/pm_memory_maintenance_events.py
@@ -1255,7 +1265,7 @@ source_lineage:
 - reports/event-authority-20261104/DMEM-search.json
 preserved_exact_tokens: []
 negative_constraints:
-- No admission, deletion-policy decision, app-scope expansion or native proof.
+- Preparation itself grants no admission, deletion-policy decision, app-scope expansion or native proof.
 ```
 
 
@@ -1267,7 +1277,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/assistant-memory-subsystem.md
 canonical_text: 'Newly authored owner contract under DL-045 for exactly memory.verification_sweep.completed@1.0.0,
-  prepared without admission. Per-family current-canon search and negative evidence: reports/event-authority-20261104/DMEM-search.json.
+  prepared without admission before the 2026-11-18 registration. Per-family current-canon search and negative evidence: reports/event-authority-20261104/DMEM-search.json.
   Reuse UCC-085''s cmd.chat.memory.verification_sweep Project command and AMS section 7.2, with AMS-054 scope separation.
   This edition is project_only: actual Project permission and canonical corpus are required. It does not narrow
   or expand AMS-054''s app memory; app-thread events require their own owner binding. Re-evaluate each claim under
@@ -1282,7 +1292,9 @@ canonical_text: 'Newly authored owner contract under DL-045 for exactly memory.v
   opaque authorized result refs, never gist text, prompts, embeddings, paths, secrets or EvidenceRef bodies. Event
   fields and all payload joins are governed by CV-656; persistence and read-only history by SP-636. Existing pinned
   protection, claim verification, NullMemoryProvider and locked-rule rules survive. Policy-dependent deletion remains
-  unavailable until Jared settles it. Native emission and recovery are NOT_RUN.'
+  unavailable until Jared settles it. Native emission and recovery are NOT_RUN.
+
+  Current membership (2026-11-18) — memory.verification_sweep.completed@1.0.0 is individually registered in Plans/event_family_registry.json. Missing-registration refusal applies only if the exact current family/version/scope registration is absent; this registered family is not refused as missing_event_registration or family_not_admitted merely because it was prepared without admission. Append and checkpoint advance still require every existing schema, scope, retention, original-source, receipt, permission and withdrawal check specified here. Registry membership supplies no native execution proof or additional action authority.'
 gui_related: false
 gui_classification_reason: Typed events, identity, custody and recovery; no visual behavior.
 depends_on:
@@ -1291,7 +1303,7 @@ depends_on:
 - AMS-054
 unblocks: []
 acceptance_criteria:
-- Exact family remains quarantined until its own admission and retention resolution.
+- Exact family is registered; quarantine for missing registration applies only while its exact registration is absent, and existing retention and other append/projection checks remain mandatory.
 - Schema, identity, custody, replay and withdrawal match this unit.
 validation_surfaces:
 - python3 scripts/pm_memory_maintenance_events.py
@@ -1307,7 +1319,7 @@ source_lineage:
 - reports/event-authority-20261104/DMEM-search.json
 preserved_exact_tokens: []
 negative_constraints:
-- No admission, deletion-policy decision, app-scope expansion or native proof.
+- Preparation itself grants no admission, deletion-policy decision, app-scope expansion or native proof.
 ```
 
 
@@ -1319,7 +1331,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/assistant-memory-subsystem.md
 canonical_text: 'Newly authored owner contract under DL-045 for exactly memory.verification_sweep.started@1.0.0,
-  prepared without admission. Per-family current-canon search and negative evidence: reports/event-authority-20261104/DMEM-search.json.
+  prepared without admission before the 2026-11-18 registration. Per-family current-canon search and negative evidence: reports/event-authority-20261104/DMEM-search.json.
   Reuse UCC-085''s cmd.chat.memory.verification_sweep Project command and AMS section 7.2, with AMS-054 scope separation.
   This edition is project_only: actual Project permission and canonical corpus are required. It does not narrow
   or expand AMS-054''s app memory; app-thread events require their own owner binding. Re-evaluate each claim under
@@ -1334,7 +1346,9 @@ canonical_text: 'Newly authored owner contract under DL-045 for exactly memory.v
   prompts, embeddings, paths, secrets or EvidenceRef bodies. Event fields and all payload joins are governed by
   CV-657; persistence and read-only history by SP-637. Existing pinned protection, claim verification, NullMemoryProvider
   and locked-rule rules survive. Policy-dependent deletion remains unavailable until Jared settles it. Native emission
-  and recovery are NOT_RUN.'
+  and recovery are NOT_RUN.
+
+  Current membership (2026-11-18) — memory.verification_sweep.started@1.0.0 is individually registered in Plans/event_family_registry.json. Missing-registration refusal applies only if the exact current family/version/scope registration is absent; this registered family is not refused as missing_event_registration or family_not_admitted merely because it was prepared without admission. Append and checkpoint advance still require every existing schema, scope, retention, original-source, receipt, permission and withdrawal check specified here. Registry membership supplies no native execution proof or additional action authority.'
 gui_related: false
 gui_classification_reason: Typed events, identity, custody and recovery; no visual behavior.
 depends_on:
@@ -1343,7 +1357,7 @@ depends_on:
 - AMS-054
 unblocks: []
 acceptance_criteria:
-- Exact family remains quarantined until its own admission and retention resolution.
+- Exact family is registered; quarantine for missing registration applies only while its exact registration is absent, and existing retention and other append/projection checks remain mandatory.
 - Schema, identity, custody, replay and withdrawal match this unit.
 validation_surfaces:
 - python3 scripts/pm_memory_maintenance_events.py
@@ -1359,7 +1373,7 @@ source_lineage:
 - reports/event-authority-20261104/DMEM-search.json
 preserved_exact_tokens: []
 negative_constraints:
-- No admission, deletion-policy decision, app-scope expansion or native proof.
+- Preparation itself grants no admission, deletion-policy decision, app-scope expansion or native proof.
 ```
 
 

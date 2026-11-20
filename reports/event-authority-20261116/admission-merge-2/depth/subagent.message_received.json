@@ -1,0 +1,526 @@
+{
+ "schema_id": "pm.assurance.event_authority.admission_depth_assessment.v1",
+ "assessment_kind": "admission_twelve_criteria",
+ "writer": "pm-ea-admission-writer.v1",
+ "merge": "admission-merge-2",
+ "registry": {
+  "path": "Plans/event_family_registry.json",
+  "revision": "2026-11-18.2",
+  "sha256": "ec21cf1a5b42b3e68a5564a847b4798dff968612d11d438bc7075b89196f9602",
+  "family_count": 518,
+  "row_pointer": "#/families/493"
+ },
+ "base_commit": "45b4ccf25270c486dbc682805cd455ce4ca25fb0",
+ "rubric": "Step 8 depth matrix, twelve criteria (DL-077); PASS needs Plans/ evidence",
+ "native_execution": "NOT_RUN",
+ "rows": [
+  {
+   "event_type": "subagent.message_received",
+   "family_id": "event-family-subagent-message-received",
+   "family_revision": "1.0.0",
+   "cells": {
+    "membership_version": {
+     "status": "PASS",
+     "representation": "exact_registry_membership",
+     "finding": "Currently registered at 2026-11-18.2 as #/families/493 (canonical row SHA-256 bf82daa6416fb7875a277dee109504c4e726bdb74482748a40f6468b67e4236c). Original one-family admission checkpoints remain in the family record and immutable Git source.",
+     "evidence": [
+      {
+       "path": "Plans/event_family_registry.json",
+       "json_pointer": "#/families/493",
+       "line_start": 31749,
+       "line_end": 31835,
+       "quote": "\"event_type\": \"subagent.message_received\"",
+       "quote_line": 31752,
+       "file_sha256": "ec21cf1a5b42b3e68a5564a847b4798dff968612d11d438bc7075b89196f9602",
+       "quote_check": "exact",
+       "source_citation": {
+        "path": "Plans/event_family_registry.json",
+        "json_pointer": "#/families/493",
+        "line_start": 31699,
+        "line_end": 31785,
+        "quote": "\"event_type\": \"subagent.message_received\"",
+        "quote_line": 31702,
+        "file_sha256": "89ed3c5511e32d95962b9ad65b69c1c4b9a00f5204eecbc971b12818d8afac06",
+        "quote_check": "exact"
+       },
+       "unit": "#/families/493",
+       "quote_scope": "unit #/families/493, Plans/event_family_registry.json:31749-31835"
+      }
+     ]
+    },
+    "owner_doc": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "OSI-692 explicitly binds this exact-family criterion in the assessed source; static contract/oracles pass, native execution remains NOT_RUN.",
+     "evidence": [
+      {
+       "path": "Plans/orchestrator-subagent-integration.md",
+       "unit": "OSI-692",
+       "line_start": 33669,
+       "line_end": 33669,
+       "quote": "**OSI-692: `subagent.message_received@1.0.0` — newly authored owner contract (DL-045), prepared without admission.** This exact family alone adopts the contract below. No current a",
+       "quote_check": "exact",
+       "quote_scope": "unit OSI-692, Plans/orchestrator-subagent-integration.md:33667-33776",
+       "file_sha256": "e4a8b15da392eff022e41f72d3c5fa81f892eefeeae53f8719fdd96d03712baf",
+       "source_citation": {
+        "path": "Plans/orchestrator-subagent-integration.md",
+        "unit": "OSI-692",
+        "line_start": 33383,
+        "line_end": 33383,
+        "quote": "**OSI-692: `subagent.message_received@1.0.0` — newly authored owner contract (DL-045), prepared without admission.** This exact family alone adopts the contract below. No current a",
+        "file_sha256": "b39393943cd0f6532f76acdc63eb4152c4cea49b337972fb49705a7e9bfc2365"
+       }
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "owner_doc",
+      "status": "PASS"
+     }
+    },
+    "producer": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "OSI-692 explicitly binds this exact-family criterion in the assessed source; static contract/oracles pass, native execution remains NOT_RUN.",
+     "evidence": [
+      {
+       "path": "Plans/orchestrator-subagent-integration.md",
+       "unit": "OSI-692",
+       "line_start": 33673,
+       "line_end": 33673,
+       "quote": "**Producer and ordering.** `Child response collector / record response` owns the occurrence. Predicate: running|awaiting_parent|blocked -> same state; preserve turn_index and respo",
+       "quote_check": "exact",
+       "quote_scope": "unit OSI-692, Plans/orchestrator-subagent-integration.md:33667-33776",
+       "file_sha256": "e4a8b15da392eff022e41f72d3c5fa81f892eefeeae53f8719fdd96d03712baf",
+       "source_citation": {
+        "path": "Plans/orchestrator-subagent-integration.md",
+        "unit": "OSI-692",
+        "line_start": 33387,
+        "line_end": 33387,
+        "quote": "**Producer and ordering.** `Child response collector / record response` owns the occurrence. Predicate: running|awaiting_parent|blocked -> same state; preserve turn_index and respo",
+        "file_sha256": "b39393943cd0f6532f76acdc63eb4152c4cea49b337972fb49705a7e9bfc2365"
+       }
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "producer",
+      "status": "PASS"
+     }
+    },
+    "closed_payload_schema": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "OSI-692 explicitly binds this exact-family criterion in the assessed source; static contract/oracles pass, native execution remains NOT_RUN.",
+     "evidence": [
+      {
+       "path": "Plans/orchestrator-subagent-integration.md",
+       "unit": "OSI-692",
+       "line_start": 33671,
+       "line_end": 33671,
+       "quote": "**Payload and scope.** `Plans/orchestrator_event_payloads.schema.json#/$defs/subagent_message_received` (`pm.event_payload.subagent_message_received.v1@1.0.0`) is the closed payloa",
+       "quote_check": "exact",
+       "quote_scope": "unit OSI-692, Plans/orchestrator-subagent-integration.md:33667-33776",
+       "file_sha256": "e4a8b15da392eff022e41f72d3c5fa81f892eefeeae53f8719fdd96d03712baf",
+       "source_citation": {
+        "path": "Plans/orchestrator-subagent-integration.md",
+        "unit": "OSI-692",
+        "line_start": 33385,
+        "line_end": 33385,
+        "quote": "**Payload and scope.** `Plans/orchestrator_event_payloads.schema.json#/$defs/subagent_message_received` (`pm.event_payload.subagent_message_received.v1@1.0.0`) is the closed payloa",
+        "file_sha256": "b39393943cd0f6532f76acdc63eb4152c4cea49b337972fb49705a7e9bfc2365"
+       }
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "closed_payload_schema",
+      "status": "PASS"
+     }
+    },
+    "scope_identity": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "OSI-692 explicitly binds this exact-family criterion in the assessed source; static contract/oracles pass, native execution remains NOT_RUN.",
+     "evidence": [
+      {
+       "path": "Plans/orchestrator-subagent-integration.md",
+       "unit": "OSI-692",
+       "line_start": 33675,
+       "line_end": 33675,
+       "quote": "**Identity and replay.** scope_partition is `app` or the exact EventRecord project~ encoding. Project identity preimage remains `JCS([\"ea-do-v1\",scope_partition,server_id,thread_id",
+       "quote_check": "exact",
+       "quote_scope": "unit OSI-692, Plans/orchestrator-subagent-integration.md:33667-33776",
+       "file_sha256": "e4a8b15da392eff022e41f72d3c5fa81f892eefeeae53f8719fdd96d03712baf",
+       "source_citation": {
+        "path": "Plans/orchestrator-subagent-integration.md",
+        "unit": "OSI-692",
+        "line_start": 33389,
+        "line_end": 33389,
+        "quote": "**Identity and replay.** scope_partition is `app` or the exact EventRecord project~ encoding. Project identity preimage remains `JCS([\"ea-do-v1\",scope_partition,server_id,thread_id",
+        "file_sha256": "b39393943cd0f6532f76acdc63eb4152c4cea49b337972fb49705a7e9bfc2365"
+       }
+      },
+      {
+       "path": "Plans/orchestrator-subagent-integration.md",
+       "unit": "OSI-692",
+       "line_start": 33675,
+       "line_end": 33675,
+       "quote": "The current writing recipe is `ea-do-rfc8785-v2`; only new writes use it.",
+       "quote_check": "exact",
+       "quote_scope": "unit OSI-692, Plans/orchestrator-subagent-integration.md:33667-33776",
+       "file_sha256": "e4a8b15da392eff022e41f72d3c5fa81f892eefeeae53f8719fdd96d03712baf",
+       "source_citation": {
+        "path": "Plans/orchestrator-subagent-integration.md",
+        "unit": "OSI-692",
+        "line_start": 33389,
+        "line_end": 33389,
+        "quote": "The current writing recipe is `ea-do-rfc8785-v2`; only new writes use it.",
+        "file_sha256": "b39393943cd0f6532f76acdc63eb4152c4cea49b337972fb49705a7e9bfc2365"
+       }
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "scope_identity",
+      "status": "PASS"
+     }
+    },
+    "replay_idempotency": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "OSI-692 explicitly binds this exact-family criterion in the assessed source; static contract/oracles pass, native execution remains NOT_RUN.",
+     "evidence": [
+      {
+       "path": "Plans/orchestrator-subagent-integration.md",
+       "unit": "OSI-692",
+       "line_start": 33675,
+       "line_end": 33675,
+       "quote": "**Identity and replay.** scope_partition is `app` or the exact EventRecord project~ encoding. Project identity preimage remains `JCS([\"ea-do-v1\",scope_partition,server_id,thread_id",
+       "quote_check": "exact",
+       "quote_scope": "unit OSI-692, Plans/orchestrator-subagent-integration.md:33667-33776",
+       "file_sha256": "e4a8b15da392eff022e41f72d3c5fa81f892eefeeae53f8719fdd96d03712baf",
+       "source_citation": {
+        "path": "Plans/orchestrator-subagent-integration.md",
+        "unit": "OSI-692",
+        "line_start": 33389,
+        "line_end": 33389,
+        "quote": "**Identity and replay.** scope_partition is `app` or the exact EventRecord project~ encoding. Project identity preimage remains `JCS([\"ea-do-v1\",scope_partition,server_id,thread_id",
+        "file_sha256": "b39393943cd0f6532f76acdc63eb4152c4cea49b337972fb49705a7e9bfc2365"
+       }
+      },
+      {
+       "path": "Plans/orchestrator-subagent-integration.md",
+       "unit": "OSI-692",
+       "line_start": 33675,
+       "line_end": 33675,
+       "quote": "Recovery verifies the original and returns its exact complete receipt before any retry;",
+       "quote_check": "exact",
+       "quote_scope": "unit OSI-692, Plans/orchestrator-subagent-integration.md:33667-33776",
+       "file_sha256": "e4a8b15da392eff022e41f72d3c5fa81f892eefeeae53f8719fdd96d03712baf",
+       "source_citation": {
+        "path": "Plans/orchestrator-subagent-integration.md",
+        "unit": "OSI-692",
+        "line_start": 33389,
+        "line_end": 33389,
+        "quote": "Recovery verifies the original and returns its exact complete receipt before any retry;",
+        "file_sha256": "b39393943cd0f6532f76acdc63eb4152c4cea49b337972fb49705a7e9bfc2365"
+       }
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "replay_idempotency",
+      "status": "PASS"
+     }
+    },
+    "retention": {
+     "status": "PASS",
+     "representation": "integrated_retention_delta",
+     "finding": "Current exact-family BOUND retention assignment: {\"application_policy_ref\": null, \"decisions\": [\"DL-084\"], \"event_type\": \"subagent.message_received\", \"existing_checkpoints\": [], \"grade_source\": \"reports/event-authority-20261104/DO.self-grade.json\", \"history_policy_ref\": \"RP-CHAT-THREAD-LIFETIME@1.0.0\", \"lane\": \"DO\", \"original_and_checkpoint_assignments\": [], \"owner\": \"Plans/orchestrator-subagent-integration.md#OSI-692\", \"owner_line\": 33379, \"prior_finding\": \"Named DL-084/085/086 assignment remains dependent on the cited unlanded Storage integration and Q1/Q3; no retention or deletion policy chosen.\", \"question\": null, \"status\": \"BOUND\"}",
+     "evidence": [
+      {
+       "path": "Plans/orchestrator-subagent-integration.md",
+       "unit": "OSI-692",
+       "line_start": 33776,
+       "line_end": 33776,
+       "quote": "Current selected assignment (2026-11-19): subagent.message_received@1.0.0 is registered for application_or_project in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2411. Its event history selects Application = RP-CHAT-THREAD-LIFETIME@1.0.0 (anchor_kind=explicit_delete, cardinality_scope=thread), Project = RP-CHAT-THREAD-LIFETIME@1.0.0 (anchor_kind=explicit_delete, cardinality_scope=thread); exact original and checkpoint bindings retain their existing Storage assignments. Registry membership supplies no producer adoption or native-installation proof. Missing-registration refusal applies only if the exact current registration is absent.",
+       "quote_check": "exact",
+       "quote_scope": "unit OSI-692, Plans/orchestrator-subagent-integration.md:33667-33776",
+       "file_sha256": "e4a8b15da392eff022e41f72d3c5fa81f892eefeeae53f8719fdd96d03712baf",
+       "source_citation": {
+        "path": "Plans/orchestrator-subagent-integration.md",
+        "unit": "OSI-692",
+        "line_start": 33449,
+        "line_end": 33449,
+        "quote": "Event history `retention_policy_ref = RP-CHAT-THREAD-LIFETIME@1.0.0`, under DL-084.",
+        "file_sha256": "b39393943cd0f6532f76acdc63eb4152c4cea49b337972fb49705a7e9bfc2365"
+       },
+       "locator_maintenance": {
+        "authority": "MERGE2-FIX4",
+        "reason": "Re-cite the same accepted retention claim at its current exact owner assignment; event and source/checkpoint authority remain separate."
+       }
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "retention",
+      "status": "PASS"
+     }
+    },
+    "redaction_custody": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "OSI-692 explicitly binds this exact-family criterion in the assessed source; static contract/oracles pass, native execution remains NOT_RUN.",
+     "evidence": [
+      {
+       "path": "Plans/orchestrator-subagent-integration.md",
+       "unit": "OSI-692",
+       "line_start": 33679,
+       "line_end": 33679,
+       "quote": "**Retention and custody.** `retention_policy_ref = RP-CHAT-THREAD-LIFETIME@1.0.0` under DL-084, as materialized in the landed `Plans/storage_value_registry.json` (Storage retention landing `4d52bd2758526cd0e8a56358baaa73049c1d4bdd`), report `reports/eve",
+       "quote_check": "exact",
+       "quote_scope": "unit OSI-692, Plans/orchestrator-subagent-integration.md:33667-33776",
+       "file_sha256": "e4a8b15da392eff022e41f72d3c5fa81f892eefeeae53f8719fdd96d03712baf",
+       "source_citation": {
+        "path": "Plans/orchestrator-subagent-integration.md",
+        "unit": "OSI-692",
+        "line_start": 33393,
+        "line_end": 33393,
+        "quote": "**Retention and custody.** `retention_policy_ref = RP-CHAT-THREAD-LIFETIME@1.0.0` under DL-084, as materialized in the landed `Plans/storage_value_registry.json` (Storage retention landing `4d52bd2758526cd0e8a56358baaa73049c1d4bdd`), report `reports/eve",
+        "file_sha256": "b39393943cd0f6532f76acdc63eb4152c4cea49b337972fb49705a7e9bfc2365"
+       }
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "redaction_custody",
+      "status": "PASS"
+     }
+    },
+    "transitions": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "OSI-692 explicitly binds this exact-family criterion in the assessed source; static contract/oracles pass, native execution remains NOT_RUN.",
+     "evidence": [
+      {
+       "path": "Plans/orchestrator-subagent-integration.md",
+       "unit": "OSI-692",
+       "line_start": 33673,
+       "line_end": 33673,
+       "quote": "**Producer and ordering.** `Child response collector / record response` owns the occurrence. Predicate: running|awaiting_parent|blocked -> same state; preserve turn_index and respo",
+       "quote_check": "exact",
+       "quote_scope": "unit OSI-692, Plans/orchestrator-subagent-integration.md:33667-33776",
+       "file_sha256": "e4a8b15da392eff022e41f72d3c5fa81f892eefeeae53f8719fdd96d03712baf",
+       "source_citation": {
+        "path": "Plans/orchestrator-subagent-integration.md",
+        "unit": "OSI-692",
+        "line_start": 33387,
+        "line_end": 33387,
+        "quote": "**Producer and ordering.** `Child response collector / record response` owns the occurrence. Predicate: running|awaiting_parent|blocked -> same state; preserve turn_index and respo",
+        "file_sha256": "b39393943cd0f6532f76acdc63eb4152c4cea49b337972fb49705a7e9bfc2365"
+       }
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "transitions",
+      "status": "PASS"
+     }
+    },
+    "consumers_checkpoints": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "OSI-692 binds this family's reader and its SP-278 EventRecord-index checkpoint. A committed inventory (Plans/orchestrator_checkpoint_field_inventory.json) gives every field of every checkpoint value the lane writes one row, derived (with its source, its exact-type guard and code and a registered single-defect negative) or free (with its schema bound, a reason and refused forms); the checker regenerates the field list from the schemas and fails on an unrowed field, a stale row or a stale bound. Every derived field, including the segment identity, source selection, generation identity, index-row cursor and row copies of the event, is compared with its source by exact type with its own code and a single-defect negative on every positive; recapture_history derives each one; native execution remains NOT_RUN.",
+     "evidence": [
+      {
+       "path": "Plans/orchestrator-subagent-integration.md",
+       "unit": "OSI-692",
+       "line_start": 33677,
+       "line_end": 33677,
+       "quote": "**Operating consumer and checkpoint.** `reader.orchestrator.subagent_message_received.history.v1@1.0.0` serves the existing child history inspector for this exact family. It explic",
+       "quote_check": "exact",
+       "quote_scope": "unit OSI-692, Plans/orchestrator-subagent-integration.md:33667-33776",
+       "file_sha256": "e4a8b15da392eff022e41f72d3c5fa81f892eefeeae53f8719fdd96d03712baf",
+       "source_citation": {
+        "path": "Plans/orchestrator-subagent-integration.md",
+        "unit": "OSI-692",
+        "line_start": 33391,
+        "line_end": 33391,
+        "quote": "**Operating consumer and checkpoint.** `reader.orchestrator.subagent_message_received.history.v1@1.0.0` serves the existing child history inspector for this exact family. It explic",
+        "file_sha256": "b39393943cd0f6532f76acdc63eb4152c4cea49b337972fb49705a7e9bfc2365"
+       }
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "consumers_checkpoints",
+      "status": "PASS"
+     }
+    },
+    "compatibility_withdrawal": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "OSI-692 explicitly binds this exact-family criterion in the assessed source; static contract/oracles pass, native execution remains NOT_RUN.",
+     "evidence": [
+      {
+       "path": "Plans/orchestrator-subagent-integration.md",
+       "unit": "OSI-692",
+       "line_start": 33681,
+       "line_end": 33681,
+       "quote": "**Compatibility and withdrawal.** Accept only this exact schema/version; old sketches or aliases do not self-upgrade or become lawful history. A historical read requires proof of i",
+       "quote_check": "exact",
+       "quote_scope": "unit OSI-692, Plans/orchestrator-subagent-integration.md:33667-33776",
+       "file_sha256": "e4a8b15da392eff022e41f72d3c5fa81f892eefeeae53f8719fdd96d03712baf",
+       "source_citation": {
+        "path": "Plans/orchestrator-subagent-integration.md",
+        "unit": "OSI-692",
+        "line_start": 33395,
+        "line_end": 33395,
+        "quote": "**Compatibility and withdrawal.** Accept only this exact schema/version; old sketches or aliases do not self-upgrade or become lawful history. A historical read requires proof of i",
+        "file_sha256": "b39393943cd0f6532f76acdc63eb4152c4cea49b337972fb49705a7e9bfc2365"
+       }
+      },
+      {
+       "path": "Plans/orchestrator-subagent-integration.md",
+       "unit": "OSI-692",
+       "line_start": 33683,
+       "line_end": 33683,
+       "quote": "**Historical-read admission oracle — subagent.message_received.** Newly authored exact-family binding uses the closed `Plans/orchestrator_historical_read.schema.json` witness with ",
+       "quote_check": "exact",
+       "quote_scope": "unit OSI-692, Plans/orchestrator-subagent-integration.md:33667-33776",
+       "file_sha256": "e4a8b15da392eff022e41f72d3c5fa81f892eefeeae53f8719fdd96d03712baf",
+       "source_citation": {
+        "path": "Plans/orchestrator-subagent-integration.md",
+        "unit": "OSI-692",
+        "line_start": 33397,
+        "line_end": 33397,
+        "quote": "**Historical-read admission oracle — subagent.message_received.** Newly authored exact-family binding uses the closed `Plans/orchestrator_historical_read.schema.json` witness with ",
+        "file_sha256": "b39393943cd0f6532f76acdc63eb4152c4cea49b337972fb49705a7e9bfc2365"
+       }
+      },
+      {
+       "path": "Plans/orchestrator-subagent-integration.md",
+       "unit": "OSI-692",
+       "line_start": 33675,
+       "line_end": 33675,
+       "quote": "A custody refusal, or missing, unverified, contradictory, unsupported or foreign recipe evidence, refuses.",
+       "quote_check": "exact",
+       "quote_scope": "unit OSI-692, Plans/orchestrator-subagent-integration.md:33667-33776",
+       "file_sha256": "e4a8b15da392eff022e41f72d3c5fa81f892eefeeae53f8719fdd96d03712baf",
+       "source_citation": {
+        "path": "Plans/orchestrator-subagent-integration.md",
+        "unit": "OSI-692",
+        "line_start": 33389,
+        "line_end": 33389,
+        "quote": "A custody refusal, or missing, unverified, contradictory, unsupported or foreign recipe evidence, refuses.",
+        "file_sha256": "b39393943cd0f6532f76acdc63eb4152c4cea49b337972fb49705a7e9bfc2365"
+       }
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "compatibility_withdrawal",
+      "status": "PASS"
+     }
+    },
+    "positive_negative_oracles": {
+     "status": "PASS",
+     "representation": "integrated_criterion12_delta",
+     "finding": "Exact-family C12 PASS from reports/event-authority-20261114/C12-DO.self-grade.json",
+     "evidence": [
+      {
+       "path": "Plans/orchestrator-subagent-integration.md",
+       "line": 33667,
+       "sha256": "e4a8b15da392eff022e41f72d3c5fa81f892eefeeae53f8719fdd96d03712baf",
+       "file_sha256": "e4a8b15da392eff022e41f72d3c5fa81f892eefeeae53f8719fdd96d03712baf",
+       "unit": "OSI-692",
+       "line_start": 33667,
+       "line_end": 33667,
+       "quote_check": "exact",
+       "quote": "### OSI-692 — subagent.message_received",
+       "quote_scope": "unit OSI-692, Plans/orchestrator-subagent-integration.md:33667-33776",
+       "source_citation": {
+        "path": "Plans/orchestrator-subagent-integration.md",
+        "line": 33073,
+        "sha256": "fa6173a2d85cbb5e63635c4044e792a2db27ab19a1a592fb0ed47d0649fc2dd1",
+        "file_sha256": "fa6173a2d85cbb5e63635c4044e792a2db27ab19a1a592fb0ed47d0649fc2dd1",
+        "unit": "OSI-692",
+        "commit": "e14b1332904a7d67b3184b732c3c77bcabe5088f",
+        "quote": "### OSI-692 — subagent.message_received",
+        "line_start": 33073,
+        "line_end": 33073,
+        "quote_check": "exact",
+        "quote_scope": "unit OSI-692, Plans/orchestrator-subagent-integration.md@e14b1332904a7d67b3184b732c3c77bcabe5088f:33073-33122"
+       }
+      },
+      {
+       "path": "Plans/orchestrator-subagent-integration.md",
+       "line": 33685,
+       "quote": "**Oracles.** ATS-360 and `Plans/orchestrator_event_contract_fixtures.json` select only `subagent.message_received` cases. Positive payload and negative missing-required/unknown-field/foreign-scope/schema-version cases run via `python3 scripts/pm-orchestrator-event-contracts.py`. Native NOT_RUN obligations: full-value uncertain receipt retry/conflict, producer predicate and canonical-effect ordering, restore entropy, current token/source/access fences, deletion/hold deadline, version/withdrawal races and replay without the effect named above. Static payload success never certifies those native obligations.",
+       "sha256": "e4a8b15da392eff022e41f72d3c5fa81f892eefeeae53f8719fdd96d03712baf",
+       "line_start": 33685,
+       "line_end": 33685,
+       "quote_check": "exact",
+       "quote_scope": "unit OSI-692, Plans/orchestrator-subagent-integration.md:33667-33776",
+       "file_sha256": "e4a8b15da392eff022e41f72d3c5fa81f892eefeeae53f8719fdd96d03712baf",
+       "unit": "OSI-692",
+       "source_citation": {
+        "path": "Plans/orchestrator-subagent-integration.md",
+        "line": 33091,
+        "quote": "**Oracles.** ATS-360 and `Plans/orchestrator_event_contract_fixtures.json` select only `subagent.message_received` cases. Positive payload and negative missing-required/unknown-field/foreign-scope/schema-version cases run via `python3 scripts/pm-orchestrator-event-contracts.py`. Native NOT_RUN obligations: full-value uncertain receipt retry/conflict, producer predicate and canonical-effect ordering, restore entropy, current token/source/access fences, deletion/hold deadline, version/withdrawal races and replay without the effect named above. Static payload success never certifies those native obligations.",
+        "sha256": "fa6173a2d85cbb5e63635c4044e792a2db27ab19a1a592fb0ed47d0649fc2dd1",
+        "line_start": 33091,
+        "line_end": 33091,
+        "file_sha256": "fa6173a2d85cbb5e63635c4044e792a2db27ab19a1a592fb0ed47d0649fc2dd1",
+        "unit": "OSI-692",
+        "commit": "e14b1332904a7d67b3184b732c3c77bcabe5088f",
+        "quote_check": "exact",
+        "quote_scope": "unit OSI-692, Plans/orchestrator-subagent-integration.md@e14b1332904a7d67b3184b732c3c77bcabe5088f:33073-33122"
+       }
+      },
+      {
+       "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/c12-do/schema-final/schema-matrix.json",
+       "route": "payload:subagent.message_received",
+       "file_sha256": "f4bc3b1cbc50d7ac7999955022221010db420fc3ba8e5574547e78fab34e043b"
+      },
+      {
+       "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/c12-do/oracle-coverage-matrix.json",
+       "file_sha256": "2dd8af0b38129c4c6fcbd722b9eb2f36ce6c4008cced0c9b2f2f56682a6764c8"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "positive_negative_oracles",
+      "status": "PASS"
+     }
+    }
+   }
+  }
+ ],
+ "source_registry": {
+  "path": "Plans/event_family_registry.json",
+  "revision": "2026-11-16.275",
+  "sha256": "89ed3c5511e32d95962b9ad65b69c1c4b9a00f5204eecbc971b12818d8afac06",
+  "family_count": 494,
+  "row_pointer": "#/families/493"
+ },
+ "evidence_maintenance": {
+  "authority": "MERGE2-FIX4 items 1/2/3",
+  "source_commit": "2bda6aeed03daea26c4d79dfb7568fc145aac29e",
+  "source_assessment_sha256": "6b89fb3eea0e3eabe7f907150a9f56212ffe9ecd10b550a835ca6a92a2c5eb77",
+  "native_execution": "NOT_RUN",
+  "verdicts_changed": false
+ }
+}

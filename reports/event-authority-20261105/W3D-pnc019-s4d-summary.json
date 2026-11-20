@@ -1,0 +1,361 @@
+{
+ "schema_id": "pm.w3d.bsd.pnc019_s4d_summary.v1",
+ "lane": "PNC-019 s4d (stream E)",
+ "head_before_report": "8810cb2381",
+ "status": "pass",
+ "criterion_12": "PASS",
+ "native_execution": "NOT_RUN",
+ "membership": "ABSENT",
+ "checker": {
+  "path": "scripts/pm_w3d_bsd_events.py",
+  "output_sha256": "2d0b3e52ad45d4912df72586ab47ba2c6fb6103b8a6197d83056357e2a17b21d",
+  "status": "pass",
+  "families": 15,
+  "positives": 576,
+  "negatives": 7199,
+  "single_row": 7109,
+  "declared_multi_row": 90,
+  "mismatches": 0,
+  "unresolved_refs": 0
+ },
+ "guard_tool": {
+  "path": "scripts/pm_w3d_bsd_guard_chunked.py (gated scripts/pm_guard_isolation.py, unedited)",
+  "output_sha256": "606bc2f1bc3c8f6fddadf59d9fafa5fcdc2a0916afeff9ee4ddad5867bdf08c9",
+  "suites": 292,
+  "status_counts": {
+   "PASS": 292
+  },
+  "reused": 17,
+  "tables_total": 314,
+  "entailed_tables": 22,
+  "max_rows_per_table": 8
+ },
+ "derivation_mutations": {
+  "path": "scripts/pm_w3d_bsd_derivation_mutations.py",
+  "output_sha256": "5e3f4e4a8951cc472ab9db9044a4d88b1ece3eb83b4d05281f8491135b706a67",
+  "status": "pass",
+  "mutations": 441,
+  "counts": {
+   "killed": 406,
+   "killed_joint": 20,
+   "entailed": 8,
+   "gate": 3,
+   "not_mutated": 4
+  },
+  "model_functions_listed_not_mutated": [
+   "run_retry",
+   "run_replay",
+   "run_withdrawal",
+   "run_rebuild",
+   "run_restore",
+   "run_producer",
+   "recover",
+   "retention_decision",
+   "SealedOwner.authenticated_original"
+  ]
+ },
+ "strict_mutation_proof": {
+  "path": "scripts/pm_w3d_bsd_mutation_proof.py",
+  "output_sha256": "f179c51be99e8585c17592c00ccb8fa755369b3960c81987cdd1562dfaf8ba4a",
+  "status": "pass",
+  "groups": {
+   "table-site": {
+    "killed": 12,
+    "total": 12
+   },
+   "duplicate": {
+    "killed": 2,
+    "total": 2
+   },
+   "recheck": {
+    "killed": 15,
+    "total": 15
+   },
+   "own": {
+    "killed": 10,
+    "total": 10
+   }
+  }
+ },
+ "slot_corpus": {
+  "path": "scripts/pm_w3d_bsd_slot_corpus.py",
+  "output_sha256": "9221772e8864fc5b4d4ab6185a719dd8638704d6008b4f020c02c3976b2088d6",
+  "status": "pass",
+  "number_values": 145,
+  "date_time_values": 24,
+  "totals": {
+   "slots": 35,
+   "runs": 46268,
+   "accepted": 23402,
+   "refused": 22866,
+   "mismatches": 0,
+   "exceptions": 0
+  },
+  "slots": [
+   "checkpoint.frontier_revision",
+   "checkpoint.manifest_generation",
+   "checkpoint.recovery_epoch",
+   "checkpoint.selected_segment_generation",
+   "envelope.observed_at_utc",
+   "envelope.occurred_at_utc",
+   "envelope.persisted_at_utc",
+   "envelope.producer_sequence_id",
+   "envelope.sequence_id",
+   "owner.epoch",
+   "owner.writer_generation",
+   "payload.binding_revision",
+   "payload.latest_checked_generation",
+   "payload.policy_revision",
+   "payload.primary_generation",
+   "payload.raised_against_generation",
+   "receipt.acknowledged_at_utc",
+   "receipt.byte_offset",
+   "receipt.durable_end_offset",
+   "receipt.manifest_generation",
+   "receipt.segment_generation",
+   "receipt.sequence_id",
+   "retained.observed_at_utc",
+   "retained.occurred_at_utc",
+   "retained.payload.binding_revision",
+   "retained.payload.latest_checked_generation",
+   "retained.payload.policy_revision",
+   "retained.payload.primary_generation",
+   "retained.payload.raised_against_generation",
+   "retained.persisted_at_utc",
+   "retained.producer_sequence_id",
+   "retained.sequence_id",
+   "retry.producer_sequence_id",
+   "source_body.created_at",
+   "source_body.updated_at"
+  ]
+ },
+ "number_routes": {
+  "path": "scripts/pm_w3d_bsd_numbers.py",
+  "output_sha256": "95f3e99aeb628fcdf06ad5f717a30824787791c68828975b1bf6337f5035d90b",
+  "status": "pass",
+  "complete_checker_routes": {
+   "producer_append": {
+    "boundary": "append",
+    "runs": 130,
+    "accepted": 37,
+    "refused": 93,
+    "mismatches": 0,
+    "untracked": 0
+   },
+   "sequence_append": {
+    "boundary": "append",
+    "runs": 130,
+    "accepted": 86,
+    "refused": 44,
+    "mismatches": 0,
+    "untracked": 0
+   },
+   "payload_integer": {
+    "boundary": "append",
+    "runs": 130,
+    "accepted": 35,
+    "refused": 95,
+    "mismatches": 0,
+    "untracked": 0
+   },
+   "producer_original": {
+    "boundary": "read",
+    "runs": 130,
+    "accepted": 37,
+    "refused": 93,
+    "mismatches": 0,
+    "untracked": 0
+   },
+   "producer_retry": {
+    "boundary": "retry",
+    "runs": 130,
+    "accepted": 37,
+    "refused": 93,
+    "mismatches": 0,
+    "untracked": 0
+   }
+  }
+ },
+ "plan_coverage": {
+  "path": "scripts/pm_w3d_bsd_plan_coverage.py",
+  "output": "reports/event-authority-20261105/W3D-plan-coverage.json",
+  "output_sha256": "7643d1ea3c4de80ff3a98efae4d49e5891206f5dcac0192f36da27cad437ed9a",
+  "status": "pass",
+  "totals": {
+   "guards": 2324,
+   "covered": 2279,
+   "entailed_only": 45,
+   "uncovered": 0,
+   "positives_planned": 110,
+   "positives_covered": 110
+  }
+ },
+ "crash_model": {
+  "rows": [
+   "CR01_packs_before_refs",
+   "CR02_source_op_atomic",
+   "CR03_head_prior_until_receipt",
+   "CR05_frozen_intent",
+   "CR06_single_append",
+   "CR07_original_receipt",
+   "CR08_complete_before_result",
+   "CR09_head_with_operation",
+   "CR10_outcome_preserved",
+   "CR11_settled_values_valid",
+   "CD01_dispatch_after_receipt"
+  ],
+  "note": "run_producer / recover: every cut and recovery"
+ },
+ "retry_model": {
+  "rows": [
+   "RT01_retry_not_replay_only",
+   "RT02_retry_membership",
+   "RT03_retry_dedupe_available",
+   "RT04_retry_original_found",
+   "RT05_retry_digest_equal",
+   "RT06_retry_receipt_original",
+   "RT07_retry_no_remote",
+   "RT08_original_retry_custody",
+   "RT09_retry_envelope_schema",
+   "RT10_retry_producer_sequence",
+   "RT11_retry_no_new_event",
+   "RT12_retry_no_new_receipt"
+  ],
+  "note": "run_retry on a Storage store snapshot"
+ },
+ "replay_model": {
+  "rows": [
+   "RP01_no_review_dispatch",
+   "RP02_no_tool_call",
+   "RP03_no_usage_charge",
+   "RP04_no_transcript_note",
+   "RP05_no_notification",
+   "RP06_no_canonical_lifecycle_write",
+   "RP07_no_event_append",
+   "RP08_projection_rebuilt"
+  ],
+  "note": "run_replay with instrumented effect sinks"
+ },
+ "withdrawal_model": {
+  "rows": [
+   "WD01_cutoff_recorded",
+   "WD02_pending_drained",
+   "WD03_selector_withdrawn",
+   "WD04_publication_invalidated",
+   "WD05_no_event_created",
+   "WD06_order",
+   "WD07_drain_honest",
+   "HI09_reader_enabled",
+   "CS07_publication_not_withdrawn",
+   "RB01_successor_admitted",
+   "RB02_canonical_preserved",
+   "RB03_derived_only",
+   "RB04_lost_source_unavailable",
+   "RB05_no_fresh_effects",
+   "RB06_successor_reader",
+   "RB07_derived_rebuilt"
+  ],
+  "note": "run_withdrawal on governance state; run_rebuild under an admitted successor"
+ },
+ "restore_model": {
+  "rows": [
+   "RS_controls_cut",
+   "RS_controls_present",
+   "RS_controls_selection",
+   "RS_custody_event",
+   "RS_head_cut",
+   "RS_head_present",
+   "RS_head_receipt",
+   "RS_head_source",
+   "RS_logical_pack_cut",
+   "RS_logical_pack_digest",
+   "RS_logical_pack_present",
+   "RS_operation_cut",
+   "RS_operation_present",
+   "RS_operation_source",
+   "RS_payload_pack_cut",
+   "RS_payload_pack_digest",
+   "RS_payload_pack_present",
+   "RS_receipt_custody_cut",
+   "RS_receipt_custody_present",
+   "RS_restored_equal",
+   "RS_source_wrapper_cut",
+   "RS_source_wrapper_present",
+   "RS_start_pack_cut",
+   "RS_start_pack_digest",
+   "RS_start_pack_present",
+   "RS_start_wrapper_cut",
+   "RS_start_wrapper_present",
+   "HI14_backup_coherent"
+  ],
+  "note": "backup cut and restore"
+ },
+ "retention_model": {
+  "rows": [
+   "RN01_policy_bound",
+   "RN02_policy_in_catalog",
+   "RN03_anchor_run",
+   "RN04_no_fabricated_anchor",
+   "RN05_no_restart",
+   "RN06_ttl_inclusive",
+   "RN07_hold_override",
+   "RN08_cap_keeps_history",
+   "RN08_cap_rolls_successor",
+   "RN09_no_age_expiry",
+   "RN10_no_count_expiry",
+   "RN11_explicit_delete_only",
+   "RN12_pressure_keeps_history",
+   "RN12_pressure_refuses_new",
+   "RN13_operation_policy",
+   "RN14_projection_policy",
+   "RN15_checkpoint_policy"
+  ],
+  "note": "retention_decision against the Storage retention catalog"
+ },
+ "owner_joins": {
+  "rows": 161,
+  "body_joins": [
+   "BJ_assignment_id",
+   "BJ_binding_id",
+   "BJ_bsd_assignment_id",
+   "BJ_bsd_finding_id",
+   "BJ_epoch",
+   "BJ_finding_key",
+   "BJ_policy_revision",
+   "BJ_primary_generation",
+   "BJ_primary_run_id",
+   "BJ_project_id",
+   "BJ_quarantine_id",
+   "BJ_review_cycle_id",
+   "BJ_revision"
+  ],
+  "redaction": [
+   "RD01_payload_no_protected",
+   "RD02_envelope_no_protected"
+  ]
+ },
+ "entailed_tables": [
+  "checkpoint_consumer_entailed",
+  "checkpoint_snapshot_entailed",
+  "checkpoint_type_entailed",
+  "event_arity_entailed",
+  "key_arity_entailed",
+  "projection_size_entailed",
+  "source_logical_schema_entailed_advice_emitted",
+  "source_logical_schema_entailed_assignment_paused",
+  "source_logical_schema_entailed_assignment_resumed",
+  "source_logical_schema_entailed_assignment_started",
+  "source_logical_schema_entailed_assignment_stopped",
+  "source_logical_schema_entailed_finding_cleared",
+  "source_logical_schema_entailed_finding_held",
+  "source_logical_schema_entailed_finding_reconfirmed",
+  "source_logical_schema_entailed_finding_suppressed",
+  "source_logical_schema_entailed_output_quarantined",
+  "source_logical_schema_entailed_policy_changed",
+  "source_logical_schema_entailed_review_failed",
+  "source_logical_schema_entailed_review_started",
+  "source_logical_schema_entailed_review_timed_out",
+  "source_logical_schema_entailed_workflow_binding_created",
+  "start_premature_result_entailed"
+ ]
+}

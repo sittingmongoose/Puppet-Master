@@ -3,6 +3,7 @@
 import hashlib
 import json
 import copy
+from pathlib import Path
 
 AUTHORITY_REF = "Plans/Decision_Log.md#DL-039"
 DECISION_ID = "EMIT-PERSIST-026"
@@ -36,13 +37,36 @@ EVENT_EDITION_DELTAS = {
 }
 
 
+def reviewed_s5b_predecessors(rows):
+    """Compare exact DL-2435..2442 successors using their pinned predecessor bytes.
+
+    The pins are the reviewed merge-2 editions, not live assessment hashes. A
+    changed field cannot be hidden by this projection. Older rows pass through
+    to the existing historical checks, which still enforce their own pins.
+    """
+    pins = json.loads(Path(__file__).with_name("pm_ea_reviewed_successors.json").read_text())["families"]
+    result = []
+    for row in rows:
+        pin = pins.get(row.get("family_id"))
+        digest = hashlib.sha256(json.dumps(row, sort_keys=True, separators=(',', ':')).encode()).hexdigest()
+        if pin and digest == pin["successor_sha256"]:
+            before = pin["predecessor_row"]
+            actual = hashlib.sha256(json.dumps(before, sort_keys=True, separators=(',', ':')).encode()).hexdigest()
+            if actual != pin["predecessor_sha256"] or before["family_id"] != row["family_id"]:
+                raise ValueError("invalid reviewed S5b predecessor pin: " + row["family_id"])
+            result.append(copy.deepcopy(before))
+        else:
+            result.append(copy.deepcopy(row))
+    return result
+
+
 def legacy_registry_rows(rows):
     """Project exact approved selector additions out of the historical pin.
 
     Unknown edits, changed app admission, or changed Project payload bytes fail;
     this is not a governance rebaseline or a general metadata exemption.
     """
-    result = copy.deepcopy(rows)
+    result = reviewed_s5b_predecessors(rows)
     for row in result:
         ident = row.get('family_id')
         if ident in EVENT_EDITION_DELTAS and 'payload_versions' in row:

@@ -499,7 +499,7 @@ for (const surface of ['normal', 'sandbox']) {
 		try {
 			await f.locator('#pm-settings-root .domain-link[data-domain="code"]').first().click();
 			await f.waitForFunction(() => window.__pscSelectAll.ready, null, { timeout: 5000 });
-			await t.page.keyboard.press('Control+A');
+			await t.page.keyboard.press('ControlOrMeta+A');
 			const r = await f.evaluate(() => { const { stop, ...r } = window.__pscSelectAll; return { ...r, selectedTerminal: getSelection().toString().includes('Terminal colors') }; });
 			t.log(`${surface} Select All: pending ${r.before} -> ${r.after}, Terminal look pending ${r.targetPending}, chapter focus ${r.chapterFocus}, selected Terminal colors ${r.selectedTerminal}`);
 			await t.check(`${surface}: Select All reached the chapter button while Terminal look was pending`, r.seen && r.chapterFocus && r.before > 0 && r.targetPending, JSON.stringify(r));
@@ -549,7 +549,7 @@ for (const surface of ['normal', 'sandbox']) {
 			try {
 				await f.locator('#pm-settings-root .domain-link[data-domain="code"]').first().click();
 				await f.waitForFunction(() => window.__pscEditing.ready, null, { timeout: 5000 });
-				await t.page.keyboard.press('Control+A');
+				await t.page.keyboard.press('ControlOrMeta+A');
 				const r = await f.evaluate(() => { const { stop, selection, ...r } = window.__pscEditing; return { ...r, selected: selection() }; });
 				t.log(`${surface} ${kind} Select All: pending ${r.before} -> ${r.after}, focused ${r.focused}, default prevented ${r.prevented}`);
 				await t.check(`${surface} ${kind}: Select All reached the editor with pending lists`, r.seen && r.focused && r.before > 0, JSON.stringify(r));

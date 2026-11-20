@@ -521,14 +521,21 @@ FOLLOWERS = {'env_scope': 'env_scope_entailed', 'tr_browser_a': 'tr_browser_a_en
              'tr_dev_a': 'tr_dev_a_entailed', 'tr_preview_b': 'tr_preview_b_entailed',
              'tr_preview_origin': 'tr_preview_origin_entailed', 'd2_env_b': 'd2_env_b_entailed',
              'd2_env_storage': 'd2_env_storage_entailed', 'd2_env_c': 'd2_env_c_entailed',
-             'd2_pl_gate': 'd2_pl_gate_entailed', 'rd_resolve': 'rd_resolve_entailed'}
+             'd2_pl_gate': 'd2_pl_gate_entailed',
+             # C12-DS15: one singleton table per entailed dispatcher row, in the former table order.
+             'rd_resolve': ('rd_resolve_entailed_sx03', 'rd_resolve_entailed_sx04', 'rd_resolve_entailed_sx06',
+                            'rd_resolve_entailed_sx07')}
 
 
 def refused(phase, **facts):
     if refusal(phase, facts) is not None:
         return True
-    follower = FOLLOWERS.get(phase)
-    return follower is not None and refusal(follower, facts) is not None
+    followers = FOLLOWERS.get(phase, ())
+    # One follower table, or a chain of singleton follower tables evaluated in order (the first refusing one stops).
+    for follower in (followers,) if isinstance(followers, str) else followers:
+        if refusal(follower, facts) is not None:
+            return True
+    return False
 
 
 def table_order_errors():
@@ -1346,6 +1353,22 @@ def refuse():
     return {'result': 'REFUSE', 'effects': 0}
 
 
+def claimed_range(first, last, rows):
+    """first..last as the list the rows are compared with, never longer than the rows themselves.
+
+    C12-DS15: list(range(first, last + 1)) was materialized from the claimed Storage bounds, so a valid uint64
+    last_sequence of 2^64-1 raised OverflowError and a large one would exhaust memory before the rows refused. A
+    claimed range longer than the rows cannot equal them: it is kept as a non-list observation, unequal to every
+    row list, so each comparison refuses exactly when it did before. An empty claimed range stays [].
+    """
+    count = last - first + 1
+    if count <= 0:
+        return []
+    if count <= len(rows):
+        return list(range(first, last + 1))
+    return {'claimed_first': first, 'claimed_last': last, 'longer_than_rows': len(rows)}
+
+
 # Ordinary new-write selection stays separate from retained reads (SP-1101, batch 2 fix 1): a new append
 # ('payload', 'envelope_boundary') is written by the writer's own recipe, ds15-v1, and reads no receipt.
 NEW_WRITE_OPS = ('payload', 'envelope_boundary')
@@ -1521,7 +1544,7 @@ def evaluate(c, op, d):
                    storage_instance_id=d['storage_instance_id'], source_token=source['index_read_token'], token=token,
                    source_last_sequence=source['last_sequence'], selected_high=d['selected_high'],
                    source_sequences=[r['sequence'] for r in source_rows],
-                   expected_source_sequences=list(range(source['first_sequence'], source['last_sequence'] + 1)),
+                   expected_source_sequences=claimed_range(source['first_sequence'], source['last_sequence'], source_rows),
                    row_partitions=[r['scope_partition'] for r in source_rows],
                    expected_row_partitions=[partition_of('application' if r['scope']['kind'] == 'app' else 'project',
                                                          r['scope']['project_id']) for r in source_rows]):
@@ -1549,7 +1572,7 @@ def evaluate(c, op, d):
                     expected_rows=[r for r in source_rows if low <= r['sequence'] <= high],
                     through_sequence_id=cp['through_sequence_id'], scan_high=high, selected_high=d['selected_high'])
                 or refused('cp_range_entailed', row_sequences=[r['sequence'] for r in rows],
-                           expected_row_sequences=list(range(low, high + 1)))):
+                           expected_row_sequences=claimed_range(low, high, rows))):
             return refuse()
         if prior is not None and (
                 schema_refused('sch_prior_checkpoint', validator(read(c['checkpoint_schema_ref'])), prior)
@@ -2003,7 +2026,7 @@ def main():
     for c in contracts:
         name = c['event_type']
         assert c['numeric_schema_profile_ref'] == 'Plans/ds15_integer_domain.schema.json'
-        assert name not in json.dumps(registry), name + ' unexpectedly admitted'
+        assert (refused := admission_text_refusal(name, registry)) is None, name + ' unexpectedly admitted' + refused
         v = validator(read(c['payload_schema_ref']))
         f = next(f for f in fixtures if f['event_type'] == name)
         v.validate(f['positive']); count += 1
@@ -2082,5 +2105,23 @@ def main():
     assert not problems, ('sweep part 2B witnesses', problems)
     sealed = original_custody()
     print(json.dumps({'status':'pass','families':len(contracts),'payload_oracles':count,'semantic_oracles':semantic_count,'reference_closure_oracles':schema_count,'predicate_oracles':predicate_count,'value_oracles':value_cases,'guard_proof_oracles':guard_proofs,'numeric_oracles':numeric_cases,'sweep_p2a_witnesses':len(p2a_cases),'sweep_p2b_witnesses':len(p2b_cases),'sealed_originals':sum(len(v) for v in sealed['sealed'].values()),'custody_stores':len(sealed['stores']),'native_execution':'NOT_RUN'}))
+
+
+def admission_text_refusal(name, registry):
+    """None while `name` is nowhere in the registry, or only in its own exact, complete DL-077 admission row.
+
+    Admission-aware mode (PNC-019 stream E; scripts/pm_ea_admission_mode.py): the preparation guard refuses the
+    family name anywhere in the registry text. After admission its own record-bound row may carry it; every other
+    occurrence (another row, an alias, a registration without its record) is still refused, with the reason.
+    """
+    if name not in json.dumps(registry):
+        return None
+    import pm_ea_admission_mode as admission_mode
+    mode = admission_mode.verdict(name, root=ROOT, registry=registry)
+    if mode['mode'] != 'admitted':
+        return ' (admission mode ' + mode['mode'] + ': ' + mode.get('code', 'not_registered_under_its_event_type') + ')'
+    rest = dict(registry, families=[f for f in registry['families'] if f.get('event_type') != name])
+    return None if name not in json.dumps(rest) else ' (named outside its admitted row)'
+
 
 if __name__ == '__main__': main()

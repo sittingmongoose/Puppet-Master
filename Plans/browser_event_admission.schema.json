@@ -330,7 +330,7 @@
           },
           "authority_contract_ref": {
             "type": "string",
-            "pattern": "^Plans/[a-z0-9_]+\\.schema\\.json#/x-pm-event-authority-binding$"
+            "pattern": "^Plans/(?:[a-z0-9_]+\\.schema\\.json#/x-pm-event-authority-binding|storage-plan\\.md#SP-[1-9][0-9]*)$"
           }
         },
         "allOf": [{

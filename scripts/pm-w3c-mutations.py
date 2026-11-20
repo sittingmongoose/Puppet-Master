@@ -119,6 +119,14 @@ def main():
     shutil.copytree(ROOT / 'scripts', work / 'scripts')
     # The Corpus registry refuses symlinked paths: copy Plans without its derived trees (shards, index, audits, migration, evidence).
     shutil.copytree(ROOT / 'Plans', work / 'Plans', ignore=shutil.ignore_patterns('_shards', '.plan_index', '.audits', '.plan_migration', '.evidence'))
+    # Admission-aware mode: the checker judges each registered family by its DL-077 record, so the tree also
+    # carries the record inputs (records, depth files, landing record, frozen seal check; pm_ea_admission_mode.inputs).
+    import pm_ea_admission_mode as admission_mode
+    import pm_w3c_families
+    for relative in admission_mode.inputs(sorted(pm_w3c_families.FAMILIES), ROOT):
+        if not (work / relative).exists():
+            (work / relative).parent.mkdir(parents=True, exist_ok=True)
+            shutil.copyfile(ROOT / relative, work / relative)
     results, baselines, bad = [], {}, False
     for mid, guard, path, old, new, family, scenario_path, kind in MUTATIONS:
         if args.only and mid not in args.only:

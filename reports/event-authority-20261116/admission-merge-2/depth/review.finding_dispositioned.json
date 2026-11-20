@@ -1,0 +1,1169 @@
+{
+ "schema_id": "pm.assurance.event_authority.admission_depth_assessment.v1",
+ "assessment_kind": "admission_twelve_criteria",
+ "writer": "pm-ea-admission-writer.v1",
+ "merge": "admission-merge-2",
+ "registry": {
+  "path": "Plans/event_family_registry.json",
+  "revision": "2026-11-18.2",
+  "sha256": "ec21cf1a5b42b3e68a5564a847b4798dff968612d11d438bc7075b89196f9602",
+  "family_count": 518,
+  "row_pointer": "#/families/455"
+ },
+ "base_commit": "45b4ccf25270c486dbc682805cd455ce4ca25fb0",
+ "rubric": "Step 8 depth matrix, twelve criteria (DL-077); PASS needs Plans/ evidence",
+ "native_execution": "NOT_RUN",
+ "rows": [
+  {
+   "event_type": "review.finding_dispositioned",
+   "family_id": "event-family-review-finding-dispositioned",
+   "family_revision": "1.0.0",
+   "cells": {
+    "membership_version": {
+     "status": "PASS",
+     "representation": "exact_registry_membership",
+     "finding": "Currently registered at 2026-11-18.2 as #/families/455 (canonical row SHA-256 36d7d261229988f8b096e61e79b23871781197da47d8638e4b3448bbcff5a00e). Original one-family admission checkpoints remain in the family record and immutable Git source.",
+     "evidence": [
+      {
+       "path": "Plans/event_family_registry.json",
+       "json_pointer": "#/families/455",
+       "line_start": 29460,
+       "line_end": 29560,
+       "quote": "\"event_type\": \"review.finding_dispositioned\"",
+       "quote_line": 29463,
+       "file_sha256": "ec21cf1a5b42b3e68a5564a847b4798dff968612d11d438bc7075b89196f9602",
+       "quote_check": "exact",
+       "source_citation": {
+        "path": "Plans/event_family_registry.json",
+        "json_pointer": "#/families/455",
+        "line_start": 29410,
+        "line_end": 29510,
+        "quote": "\"event_type\": \"review.finding_dispositioned\"",
+        "quote_line": 29413,
+        "file_sha256": "17bafc740144ba7b28698704240d9f279477696107e03991f8e3de99e971663f",
+        "quote_check": "exact"
+       },
+       "unit": "#/families/455",
+       "quote_scope": "unit #/families/455, Plans/event_family_registry.json:29460-29560"
+      }
+     ]
+    },
+    "owner_doc": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "CWR-122/CV-477/SP-477/ATS-247 are the separately authored owner contracts of this exact family; shared rules are explicitly adopted.",
+     "evidence": [
+      {
+       "path": "Plans/Collaborative_Workflows.md",
+       "unit": "CWR-122",
+       "line_start": 5348,
+       "line_end": 5348,
+       "quote": "### CWR-122 - The review.finding_dispositioned event contract",
+       "excerpt_sha256": "35f1fa95ac5140c0e8ab80f767db9546e0c21a170ae9db34468f4ad66823672c",
+       "file_sha256": "9f2fc88b6c26b47547fb14139cf459e1be01bb13ec4e8db0c8ca00755b4f922b",
+       "quote_check": "exact",
+       "quote_scope": "unit CWR-122, Plans/Collaborative_Workflows.md:5348-5437",
+       "excerpt_digest_convention": "whole_line",
+       "source_citation": {
+        "path": "Plans/Collaborative_Workflows.md",
+        "unit": "CWR-122",
+        "line_start": 5348,
+        "line_end": 5348,
+        "quote": "### CWR-122 - The review.finding_dispositioned event contract",
+        "excerpt_sha256": "35f1fa95ac5140c0e8ab80f767db9546e0c21a170ae9db34468f4ad66823672c",
+        "file_sha256": "9f2fc88b6c26b47547fb14139cf459e1be01bb13ec4e8db0c8ca00755b4f922b"
+       }
+      },
+      {
+       "path": "Plans/Contracts_V0.md",
+       "unit": "CV-477",
+       "line_start": 35061,
+       "line_end": 35061,
+       "quote": "### CV-477 - The closed review.finding_dispositioned payload",
+       "excerpt_sha256": "b1bb2816c02c8363d7a1b1c9a3b2aeae70b4838903458648bf34dcda05f90d0e",
+       "file_sha256": "58dee182ea2dd8dd358d27912280fa9113c3d1d8fd68b1c0c5d51b6f906d73c8",
+       "quote_check": "exact",
+       "quote_scope": "unit CV-477, Plans/Contracts_V0.md:35061-35150",
+       "excerpt_digest_convention": "whole_line",
+       "source_citation": {
+        "path": "Plans/Contracts_V0.md",
+        "unit": "CV-477",
+        "line_start": 34702,
+        "line_end": 34702,
+        "quote": "### CV-477 - The closed review.finding_dispositioned payload",
+        "excerpt_sha256": "b1bb2816c02c8363d7a1b1c9a3b2aeae70b4838903458648bf34dcda05f90d0e",
+        "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a"
+       }
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "owner_doc",
+      "status": "PASS"
+     }
+    },
+    "producer": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "Original typed records, native currentness, complete roster/requiredness, nested app contexts, attempts, artifacts, Plan results and Review evidence join field by field before prepared append/recovery. SP-460 adopts explicit V2 app wrappers and original custody. Native execution is NOT_RUN.",
+     "evidence": [
+      {
+       "path": "Plans/Collaborative_Workflows.md",
+       "unit": "CWR-122",
+       "line_start": 5356,
+       "line_end": 5356,
+       "quote": "**Producer and order.** The entry point is `CollaborationRuntime.record_adjudication(FindingAdjudicated)`, newly named here under DL-090. The owner commits the final disposition with the prepared even",
+       "excerpt_sha256": "71b0e6c533e101cffea6280ae2f679f5cea1ab4a8c084033251bf9a4de98ddbc",
+       "file_sha256": "9f2fc88b6c26b47547fb14139cf459e1be01bb13ec4e8db0c8ca00755b4f922b",
+       "quote_check": "exact",
+       "quote_scope": "unit CWR-122, Plans/Collaborative_Workflows.md:5348-5437",
+       "excerpt_digest_convention": "whole_line",
+       "source_citation": {
+        "path": "Plans/Collaborative_Workflows.md",
+        "unit": "CWR-122",
+        "line_start": 5356,
+        "line_end": 5356,
+        "quote": "**Producer and order.** The entry point is `CollaborationRuntime.record_adjudication(FindingAdjudicated)`, newly named here under DL-090. The owner commits the final disposition with the prepared even",
+        "excerpt_sha256": "71b0e6c533e101cffea6280ae2f679f5cea1ab4a8c084033251bf9a4de98ddbc",
+        "file_sha256": "9f2fc88b6c26b47547fb14139cf459e1be01bb13ec4e8db0c8ca00755b4f922b"
+       }
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-460",
+       "line_start": 37754,
+       "line_end": 37754,
+       "quote": "**Durable prepared-source physical binding (B1; newly authored owner contract under DL-090).** `collaboration_prepared_source` is a canonical, non-rebuildable registered Storage value. Its key is `col",
+       "excerpt_sha256": "c95c3c3c51a4b8b2346fca7a9b4330f0d568a72464bdeec9ba1939f029377c9c",
+       "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+       "quote_check": "exact",
+       "quote_scope": "unit SP-460, Plans/storage-plan.md:37709-37878",
+       "excerpt_digest_convention": "whole_line",
+       "source_citation": {
+        "path": "Plans/storage-plan.md",
+        "unit": "SP-460",
+        "line_start": 36642,
+        "line_end": 36642,
+        "quote": "**Durable prepared-source physical binding (B1; newly authored owner contract under DL-090).** `collaboration_prepared_source` is a canonical, non-rebuildable registered Storage value. Its key is `col",
+        "excerpt_sha256": "c95c3c3c51a4b8b2346fca7a9b4330f0d568a72464bdeec9ba1939f029377c9c",
+        "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+       }
+      },
+      {
+       "path": "Plans/collaboration_prepared_sources.schema.json",
+       "unit": "#/$defs/review_finding_dispositioned_project",
+       "line_start": 5692,
+       "line_end": 5692,
+       "quote": "\"review_finding_dispositioned_project\": {",
+       "excerpt_sha256": "dad58710a1ad1a1ed90730af00cb761bfe76167c68f6098ea2329ce11b6112ee",
+       "file_sha256": "98899450caabd072e9e7658ff985bbfe455e45fff537066e60d0d2d0873de9ee",
+       "quote_check": "exact",
+       "quote_scope": "unit #/$defs/review_finding_dispositioned_project, Plans/collaboration_prepared_sources.schema.json:5692-5856",
+       "excerpt_digest_convention": "whole_line",
+       "source_citation": {
+        "path": "Plans/collaboration_prepared_sources.schema.json",
+        "unit": "#/$defs/review_finding_dispositioned_project",
+        "line_start": 5692,
+        "line_end": 5692,
+        "quote": "\"review_finding_dispositioned_project\": {",
+        "excerpt_sha256": "dad58710a1ad1a1ed90730af00cb761bfe76167c68f6098ea2329ce11b6112ee",
+        "file_sha256": "98899450caabd072e9e7658ff985bbfe455e45fff537066e60d0d2d0873de9ee"
+       },
+       "json_pointer": "#/$defs/review_finding_dispositioned_project"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "producer",
+      "status": "PASS"
+     }
+    },
+    "closed_payload_schema": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "Both closed scope editions resolve eagerly. Identifier/hash grammar, exact field types and inline/reference body routing are exercised. Every payload integer slot passes the shared current_integer (PN01) and the family timestamp the shared CV-1101 predicate with the storage_utc_z profile (PR03); numeric vectors remain v1 lineage tests and refuse as current input.",
+     "evidence": [
+      {
+       "path": "Plans/Contracts_V0.md",
+       "unit": "CV-477",
+       "line_start": 35061,
+       "line_end": 35061,
+       "quote": "### CV-477 - The closed review.finding_dispositioned payload",
+       "excerpt_sha256": "b1bb2816c02c8363d7a1b1c9a3b2aeae70b4838903458648bf34dcda05f90d0e",
+       "file_sha256": "58dee182ea2dd8dd358d27912280fa9113c3d1d8fd68b1c0c5d51b6f906d73c8",
+       "quote_check": "exact",
+       "quote_scope": "unit CV-477, Plans/Contracts_V0.md:35061-35150",
+       "excerpt_digest_convention": "whole_line",
+       "source_citation": {
+        "path": "Plans/Contracts_V0.md",
+        "unit": "CV-477",
+        "line_start": 34702,
+        "line_end": 34702,
+        "quote": "### CV-477 - The closed review.finding_dispositioned payload",
+        "excerpt_sha256": "b1bb2816c02c8363d7a1b1c9a3b2aeae70b4838903458648bf34dcda05f90d0e",
+        "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a"
+       }
+      },
+      {
+       "path": "Plans/collaboration_event_payloads.schema.json",
+       "unit": "#/$defs/review_finding_dispositioned",
+       "line_start": 4707,
+       "line_end": 4707,
+       "quote": "\"review_finding_dispositioned\": {",
+       "excerpt_sha256": "17dd35a1f53b8d4f51aee76780b227e85f091c2f5cf8b129a188ac66068fcc92",
+       "file_sha256": "e2f52f6fe8e254a5a8e0cf286d9d43a0dc3bb08f965f20df80f91838d4e0f721",
+       "quote_check": "exact",
+       "quote_scope": "unit #/$defs/review_finding_dispositioned, Plans/collaboration_event_payloads.schema.json:4707-4818",
+       "excerpt_digest_convention": "whole_line",
+       "source_citation": {
+        "path": "Plans/collaboration_event_payloads.schema.json",
+        "unit": "#/$defs/review_finding_dispositioned",
+        "line_start": 4707,
+        "line_end": 4707,
+        "quote": "\"review_finding_dispositioned\": {",
+        "excerpt_sha256": "17dd35a1f53b8d4f51aee76780b227e85f091c2f5cf8b129a188ac66068fcc92",
+        "file_sha256": "e2f52f6fe8e254a5a8e0cf286d9d43a0dc3bb08f965f20df80f91838d4e0f721"
+       },
+       "json_pointer": "#/$defs/review_finding_dispositioned"
+      },
+      {
+       "path": "Plans/Contracts_V0.md",
+       "unit": "CV-460",
+       "line_start": 33615,
+       "line_end": 33615,
+       "quote": "**Numeric interpretation.** SP-460 defines one canonical numeric serialization for the new semantic/snapshot commitments and base-10 identity subjects; no string/boolean coercion or native-codec chang",
+       "excerpt_sha256": "19f801cd04e589d5af8436a03b8a38c7849ad9d7444ada14b9ffe49eb653c195",
+       "file_sha256": "58dee182ea2dd8dd358d27912280fa9113c3d1d8fd68b1c0c5d51b6f906d73c8",
+       "quote_check": "exact",
+       "quote_scope": "unit CV-460, Plans/Contracts_V0.md:33519-33656",
+       "excerpt_digest_convention": "whole_line",
+       "source_citation": {
+        "path": "Plans/Contracts_V0.md",
+        "unit": "CV-460",
+        "line_start": 33359,
+        "line_end": 33359,
+        "quote": "**Numeric interpretation.** SP-460 defines one canonical numeric serialization for the new semantic/snapshot commitments and base-10 identity subjects; no string/boolean coercion or native-codec chang",
+        "excerpt_sha256": "19f801cd04e589d5af8436a03b8a38c7849ad9d7444ada14b9ffe49eb653c195",
+        "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a"
+       }
+      },
+      {
+       "path": "Plans/Contracts_V0.md",
+       "unit": "CV-460",
+       "line_start": 33525,
+       "line_end": 33525,
+       "quote": "Calendar and range validity is CV-1101's shared date-time predicate",
+       "excerpt_sha256": "b6d94a71700acf19030a08995805b96be947091f28dacce232294e8b03b8dbbd",
+       "file_sha256": "58dee182ea2dd8dd358d27912280fa9113c3d1d8fd68b1c0c5d51b6f906d73c8",
+       "quote_check": "exact",
+       "quote_scope": "unit CV-460, Plans/Contracts_V0.md:33519-33656",
+       "excerpt_digest_convention": "whole_line",
+       "source_citation": {
+        "path": "Plans/Contracts_V0.md",
+        "unit": "CV-460",
+        "line_start": 33276,
+        "line_end": 33276,
+        "quote": "Calendar and range validity is CV-1101's shared date-time predicate",
+        "excerpt_sha256": "b6d94a71700acf19030a08995805b96be947091f28dacce232294e8b03b8dbbd",
+        "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a"
+       }
+      },
+      {
+       "path": "scripts/pm_collaboration_events.py",
+       "unit": "payload_rejection",
+       "line_start": 621,
+       "line_end": 621,
+       "quote": "code = refusal(\"payload_numbers\"",
+       "excerpt_sha256": "efd71fe4b8e668ff419572de1f10604478e2edfbf48e8efd9dff946a1f212fec",
+       "file_sha256": "96227fbc85823c029ca9473e164acfecf160f53b711fcf48dc3e0f077e05e814",
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "excerpt_digest_convention": "whole_line",
+       "source_citation": {
+        "path": "scripts/pm_collaboration_events.py",
+        "unit": "payload_rejection",
+        "line_start": 621,
+        "line_end": 621,
+        "quote": "code = refusal(\"payload_numbers\"",
+        "excerpt_sha256": "efd71fe4b8e668ff419572de1f10604478e2edfbf48e8efd9dff946a1f212fec",
+        "file_sha256": "48852ffb211beb7be3a04fba9db68de1844ef8d4c200d45e559ef8e053be6da3"
+       }
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "closed_payload_schema",
+      "status": "PASS"
+     }
+    },
+    "scope_identity": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "Own family/subject/envelope identities and independent original instance, Server, thread, roster and output-versus-launching-Plan facts are checked. Identity preimages use the shared qualified_jcs over exact subject integers; current integer slots, Storage uint64 fields and EVENT_VALUE/APP_PHYSICAL bytes use the shared CV-1100/SP-1100 calls.",
+     "evidence": [
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-477",
+       "line_start": 39354,
+       "line_end": 39354,
+       "quote": "**Identity.** The subject is `collaboration_run_id`, `finding_id`; `owner_operation_id`, `idempotency_key` and `event_id` follow SP-460's recipe with it. The `finding_id` is the identity: one final di",
+       "excerpt_sha256": "6968172bd790dbe18e9f6f7d969d65fa61809a806675c76d3294564c2473e3b2",
+       "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+       "quote_check": "exact",
+       "quote_scope": "unit SP-477, Plans/storage-plan.md:39352-39442",
+       "excerpt_digest_convention": "whole_line",
+       "source_citation": {
+        "path": "Plans/storage-plan.md",
+        "unit": "SP-477",
+        "line_start": 38242,
+        "line_end": 38242,
+        "quote": "**Identity.** The subject is `collaboration_run_id`, `finding_id`; `owner_operation_id`, `idempotency_key` and `event_id` follow SP-460's recipe with it. The `finding_id` is the identity: one final di",
+        "excerpt_sha256": "6968172bd790dbe18e9f6f7d969d65fa61809a806675c76d3294564c2473e3b2",
+        "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+       }
+      },
+      {
+       "path": "Plans/Contracts_V0.md",
+       "unit": "CV-460",
+       "line_start": 33527,
+       "line_end": 33527,
+       "quote": "7. **EventRecord joins.** A collaborative EventRecord has `scope_kind` equal to the payload's; `project_id`, `thread_id` and `idempotency_key` equal to the payload's; `run_id` equal to `collaboration_",
+       "excerpt_sha256": "90ee722ebcd72613a597842c03b4c55147ef2338824c645bba681ea3c0eb45fe",
+       "file_sha256": "58dee182ea2dd8dd358d27912280fa9113c3d1d8fd68b1c0c5d51b6f906d73c8",
+       "quote_check": "exact",
+       "quote_scope": "unit CV-460, Plans/Contracts_V0.md:33519-33656",
+       "excerpt_digest_convention": "whole_line",
+       "source_citation": {
+        "path": "Plans/Contracts_V0.md",
+        "unit": "CV-460",
+        "line_start": 33278,
+        "line_end": 33278,
+        "quote": "7. **EventRecord joins.** A collaborative EventRecord has `scope_kind` equal to the payload's; `project_id`, `thread_id` and `idempotency_key` equal to the payload's; `run_id` equal to `collaboration_",
+        "excerpt_sha256": "90ee722ebcd72613a597842c03b4c55147ef2338824c645bba681ea3c0eb45fe",
+        "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a"
+       }
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-460",
+       "line_start": 37752,
+       "line_end": 37752,
+       "quote": "These commitments are DC's own recipe v1",
+       "excerpt_sha256": "2e923f7ccd7b35a2ba7e01f4f315d185f5b8b4e0803306c5af12c63dab9ea718",
+       "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+       "quote_check": "exact",
+       "quote_scope": "unit SP-460, Plans/storage-plan.md:37709-37878",
+       "excerpt_digest_convention": "whole_line",
+       "source_citation": {
+        "path": "Plans/storage-plan.md",
+        "unit": "SP-460",
+        "line_start": 36640,
+        "line_end": 36640,
+        "quote": "These commitments are DC's own recipe v1",
+        "excerpt_sha256": "2e923f7ccd7b35a2ba7e01f4f315d185f5b8b4e0803306c5af12c63dab9ea718",
+        "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+       }
+      },
+      {
+       "path": "scripts/pm_collaboration_events.py",
+       "unit": "jcs",
+       "line_start": 327,
+       "line_end": 327,
+       "quote": "return qualified_jcs(value).decode(\"utf-8\")",
+       "excerpt_sha256": "bb683dc6554817333dac6d87ba4ebc4dddc14336b0e0cdcbb091471c75d7eb77",
+       "file_sha256": "96227fbc85823c029ca9473e164acfecf160f53b711fcf48dc3e0f077e05e814",
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "excerpt_digest_convention": "whole_line",
+       "source_citation": {
+        "path": "scripts/pm_collaboration_events.py",
+        "unit": "jcs",
+        "line_start": 327,
+        "line_end": 327,
+        "quote": "return qualified_jcs(value).decode(\"utf-8\")",
+        "excerpt_sha256": "bb683dc6554817333dac6d87ba4ebc4dddc14336b0e0cdcbb091471c75d7eb77",
+        "file_sha256": "48852ffb211beb7be3a04fba9db68de1844ef8d4c200d45e559ef8e053be6da3"
+       }
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "scope_identity",
+      "status": "PASS"
+     }
+    },
+    "replay_idempotency": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "Semantic digest excludes Storage-assigned metadata; exact retry returns the original identity/result. Replay-only is refused by current append/retry and accepted for a retained valid compatibility original.",
+     "evidence": [
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-477",
+       "line_start": 39360,
+       "line_end": 39360,
+       "quote": "**Producer and first receipt.** `CollaborationRuntime` calls `storage.collaboration_append.v1@1.0.0` from `CollaborationRuntime.record_adjudication(FindingAdjudicated)` after the owner commit that hol",
+       "excerpt_sha256": "f6bfac5f8bec569c49edb6d95b23bfbf2ba3cd073a0a809abcdcb5a783dcda14",
+       "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+       "quote_check": "exact",
+       "quote_scope": "unit SP-477, Plans/storage-plan.md:39352-39442",
+       "excerpt_digest_convention": "whole_line",
+       "source_citation": {
+        "path": "Plans/storage-plan.md",
+        "unit": "SP-477",
+        "line_start": 38248,
+        "line_end": 38248,
+        "quote": "**Producer and first receipt.** `CollaborationRuntime` calls `storage.collaboration_append.v1@1.0.0` from `CollaborationRuntime.record_adjudication(FindingAdjudicated)` after the owner commit that hol",
+        "excerpt_sha256": "f6bfac5f8bec569c49edb6d95b23bfbf2ba3cd073a0a809abcdcb5a783dcda14",
+        "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+       }
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-460",
+       "line_start": 37742,
+       "line_end": 37742,
+       "quote": "**Admission order.** `storage.collaboration_append.v1@1.0.0` admits one event at a time under the existing Storage append-writer lock: (1) **exact retry**: the dedupe identity `(scope_partition, event",
+       "excerpt_sha256": "698c6fcc9384e3336477533be811e86fca7df3081ebb5bee772527b65862e825",
+       "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+       "quote_check": "exact",
+       "quote_scope": "unit SP-460, Plans/storage-plan.md:37709-37878",
+       "excerpt_digest_convention": "whole_line",
+       "source_citation": {
+        "path": "Plans/storage-plan.md",
+        "unit": "SP-460",
+        "line_start": 36630,
+        "line_end": 36630,
+        "quote": "**Admission order.** `storage.collaboration_append.v1@1.0.0` admits one event at a time under the existing Storage append-writer lock: (1) **exact retry**: the dedupe identity `(scope_partition, event",
+        "excerpt_sha256": "698c6fcc9384e3336477533be811e86fca7df3081ebb5bee772527b65862e825",
+        "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+       }
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "replay_idempotency",
+      "status": "PASS"
+     }
+    },
+    "retention": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "The own family contract and SP-460 select the exact RP-CHAT-THREAD-LIFETIME@1.0.0 object now materialized on the rebased main, with DL-404 record lifetime and independent custody preserved.",
+     "evidence": [
+      {
+       "path": "Plans/Collaborative_Workflows.md",
+       "unit": "CWR-122",
+       "line_start": 5348,
+       "line_end": 5348,
+       "quote": "### CWR-122 - The review.finding_dispositioned event contract",
+       "excerpt_sha256": "35f1fa95ac5140c0e8ab80f767db9546e0c21a170ae9db34468f4ad66823672c",
+       "file_sha256": "9f2fc88b6c26b47547fb14139cf459e1be01bb13ec4e8db0c8ca00755b4f922b",
+       "quote_check": "exact",
+       "quote_scope": "unit CWR-122, Plans/Collaborative_Workflows.md:5348-5437",
+       "excerpt_digest_convention": "whole_line",
+       "source_citation": {
+        "path": "Plans/Collaborative_Workflows.md",
+        "unit": "CWR-122",
+        "line_start": 5348,
+        "line_end": 5348,
+        "quote": "### CWR-122 - The review.finding_dispositioned event contract",
+        "excerpt_sha256": "35f1fa95ac5140c0e8ab80f767db9546e0c21a170ae9db34468f4ad66823672c",
+        "file_sha256": "9f2fc88b6c26b47547fb14139cf459e1be01bb13ec4e8db0c8ca00755b4f922b"
+       }
+      },
+      {
+       "path": "Plans/Collaborative_Workflows.md",
+       "unit": "CWR-105",
+       "line_start": 3784,
+       "line_end": 3784,
+       "quote": "- **Record lifetime answer.** Run, participant, transcript, proposal and finding records in both scopes, including vote and disposition custody attached to those owners, live as long as their chat exi",
+       "excerpt_sha256": "b137c8f29e61e42dc72358b512060198bb74fc98206f665d9f0e1e0f7362300f",
+       "file_sha256": "9f2fc88b6c26b47547fb14139cf459e1be01bb13ec4e8db0c8ca00755b4f922b",
+       "quote_check": "exact",
+       "quote_scope": "unit CWR-105, Plans/Collaborative_Workflows.md:3774-3867",
+       "excerpt_digest_convention": "whole_line",
+       "source_citation": {
+        "path": "Plans/Collaborative_Workflows.md",
+        "unit": "CWR-105",
+        "line_start": 3784,
+        "line_end": 3784,
+        "quote": "- **Record lifetime answer.** Run, participant, transcript, proposal and finding records in both scopes, including vote and disposition custody attached to those owners, live as long as their chat exi",
+        "excerpt_sha256": "b137c8f29e61e42dc72358b512060198bb74fc98206f665d9f0e1e0f7362300f",
+        "file_sha256": "9f2fc88b6c26b47547fb14139cf459e1be01bb13ec4e8db0c8ca00755b4f922b"
+       }
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-460",
+       "line_start": 37774,
+       "line_end": 37774,
+       "quote": "**Retention.** Events: kept as long as the run's chat exists (DL-092, DL-292). The chat is the payload's `thread_id`. The structured reference in every prepared row is `{registry_schema_id: pm.storage",
+       "excerpt_sha256": "8501696afa7b8a28598658729da8594b40a96c56c4cbbcb2fd9668dcdccd55e6",
+       "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+       "quote_check": "exact",
+       "quote_scope": "unit SP-460, Plans/storage-plan.md:37709-37878",
+       "excerpt_digest_convention": "whole_line",
+       "source_citation": {
+        "path": "Plans/storage-plan.md",
+        "unit": "SP-460",
+        "line_start": 36662,
+        "line_end": 36662,
+        "quote": "**Retention.** Events: kept as long as the run's chat exists (DL-092, DL-292). The chat is the payload's `thread_id`. The structured reference in every prepared row is `{registry_schema_id: pm.storage",
+        "excerpt_sha256": "8501696afa7b8a28598658729da8594b40a96c56c4cbbcb2fd9668dcdccd55e6",
+        "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+       }
+      },
+      {
+       "path": "Plans/storage_value_registry.json",
+       "unit": "#/retention_policies",
+       "line_start": 558,
+       "line_end": 558,
+       "quote": "\"policy_id\": \"RP-CHAT-THREAD-LIFETIME\"",
+       "excerpt_sha256": "daa70de01d0f78c263da8a05a17af2962627491ab1f8e29e38e626b1df77029f",
+       "file_sha256": "b04c18aad61bb76c24b887ff5ded4cdc751b902c16a8c914ad7e62c009281642",
+       "quote_check": "exact",
+       "quote_scope": "unit #/retention_policies, Plans/storage_value_registry.json:94-781",
+       "excerpt_digest_convention": "whole_line",
+       "source_citation": {
+        "path": "Plans/storage_value_registry.json",
+        "unit": "#/retention_policies",
+        "line_start": 558,
+        "line_end": 558,
+        "quote": "\"policy_id\": \"RP-CHAT-THREAD-LIFETIME\"",
+        "excerpt_sha256": "daa70de01d0f78c263da8a05a17af2962627491ab1f8e29e38e626b1df77029f",
+        "file_sha256": "5f588f0aedddefe10864c536bfeb261da5833ef1a894c3f43706e07e7c6c79da"
+       },
+       "json_pointer": "#/retention_policies"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-460",
+       "line_start": 37774,
+       "line_end": 37774,
+       "quote": "The object is present on the current base; each family still requires its separate event admission.",
+       "excerpt_sha256": "8501696afa7b8a28598658729da8594b40a96c56c4cbbcb2fd9668dcdccd55e6",
+       "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+       "quote_check": "exact",
+       "quote_scope": "unit SP-460, Plans/storage-plan.md:37709-37878",
+       "excerpt_digest_convention": "whole_line",
+       "source_citation": {
+        "path": "Plans/storage-plan.md",
+        "unit": "SP-460",
+        "line_start": 36662,
+        "line_end": 36662,
+        "quote": "The object is present on the current base; each family still requires its separate event admission.",
+        "excerpt_sha256": "8501696afa7b8a28598658729da8594b40a96c56c4cbbcb2fd9668dcdccd55e6",
+        "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+       }
+      },
+      {
+       "path": "Plans/Decision_Log.md@0c904de00426b0089ba5d56349fda8ea16cc9f88",
+       "unit": "DL-404",
+       "line_start": 6566,
+       "line_end": 6566,
+       "quote": "### DL-404 - Collaborative run records live as long as their chat",
+       "excerpt_sha256": "eba772d58a28d38942329f33927450a0833f3f54286d3d65835ce97353de71fc",
+       "file_sha256": "de39dfd0788226c8df09671900d2fefcd37ac40fdaa4a3d295fab10fe1d3b131",
+       "quote_check": "exact",
+       "quote_scope": "unit DL-404, Plans/Decision_Log.md:6566-6623",
+       "excerpt_digest_convention": "whole_line",
+       "source_citation": {
+        "path": "Plans/Decision_Log.md",
+        "unit": "DL-404",
+        "line_start": 6566,
+        "line_end": 6566,
+        "quote": "### DL-404 - Collaborative run records live as long as their chat",
+        "excerpt_sha256": "eba772d58a28d38942329f33927450a0833f3f54286d3d65835ce97353de71fc",
+        "file_sha256": "263209cac1c5ad4622162cd25ad8b9ec679f2b829cfa8216bcfea771d5eb3456"
+       },
+       "current_citation": {
+        "path": "Plans/Decision_Log.md",
+        "unit": "DL-404",
+        "line_start": 6566,
+        "line_end": 6566,
+        "quote": "### DL-404 - Collaborative run records live as long as their chat",
+        "quote_scope": "unit DL-404, Plans/Decision_Log.md:6566-6623",
+        "excerpt_sha256": "eba772d58a28d38942329f33927450a0833f3f54286d3d65835ce97353de71fc"
+       },
+       "source_commit": "0c904de00426b0089ba5d56349fda8ea16cc9f88"
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "retention",
+      "status": "PASS"
+     }
+    },
+    "redaction_custody": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "Events/projections carry no user text; canonical typed sources preserve original owner data/text custody and independent artifact/receipt retention. Coherent backup/restore, original-source verification, current permissions and blind phases are explicit.",
+     "evidence": [
+      {
+       "path": "Plans/Collaborative_Workflows.md",
+       "unit": "CWR-122",
+       "line_start": 5358,
+       "line_end": 5358,
+       "quote": "**Text and custody.** Text protection (DL-090). Dissent and the adjudication's reasoning are text and stay in the finding record; the event carries counts, the closed disposition and refs only. Its de",
+       "excerpt_sha256": "1977ece2c8420d52b297d988a425e16c49172955bb1a562fc4b25704f100ad82",
+       "file_sha256": "9f2fc88b6c26b47547fb14139cf459e1be01bb13ec4e8db0c8ca00755b4f922b",
+       "quote_check": "exact",
+       "quote_scope": "unit CWR-122, Plans/Collaborative_Workflows.md:5348-5437",
+       "excerpt_digest_convention": "whole_line",
+       "source_citation": {
+        "path": "Plans/Collaborative_Workflows.md",
+        "unit": "CWR-122",
+        "line_start": 5358,
+        "line_end": 5358,
+        "quote": "**Text and custody.** Text protection (DL-090). Dissent and the adjudication's reasoning are text and stay in the finding record; the event carries counts, the closed disposition and refs only. Its de",
+        "excerpt_sha256": "1977ece2c8420d52b297d988a425e16c49172955bb1a562fc4b25704f100ad82",
+        "file_sha256": "9f2fc88b6c26b47547fb14139cf459e1be01bb13ec4e8db0c8ca00755b4f922b"
+       }
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-460",
+       "line_start": 37772,
+       "line_end": 37772,
+       "quote": "**Custody and redaction.** The 18 families' EventRecords in seglog are their only history: canonical, included in the canonical backup (BRS-033's application custody for application scope), never rebu",
+       "excerpt_sha256": "c4fc68837d0d631d96b920ad97bcf082eb190bba27831afe2ade8198e64fb8ba",
+       "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+       "quote_check": "exact",
+       "quote_scope": "unit SP-460, Plans/storage-plan.md:37709-37878",
+       "excerpt_digest_convention": "whole_line",
+       "source_citation": {
+        "path": "Plans/storage-plan.md",
+        "unit": "SP-460",
+        "line_start": 36660,
+        "line_end": 36660,
+        "quote": "**Custody and redaction.** The 18 families' EventRecords in seglog are their only history: canonical, included in the canonical backup (BRS-033's application custody for application scope), never rebu",
+        "excerpt_sha256": "c4fc68837d0d631d96b920ad97bcf082eb190bba27831afe2ade8198e64fb8ba",
+        "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+       }
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "redaction_custody",
+      "status": "PASS"
+     }
+    },
+    "transitions": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "Family-specific ordered guards and independent frozen pre-states pass. Authoritative definition requiredness, actual waiver state and exact recorded output identities govern completion; explicit Chat Room End remains supported.",
+     "evidence": [
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-477",
+       "line_start": 39356,
+       "line_end": 39356,
+       "quote": "**Admission checks, in order.** SP-460's common run checks; status `active` (`run_state_invalid`); the finding has a `review.finding_added` event (`unknown_finding`) and no disposition (`already_dispo",
+       "excerpt_sha256": "a1e1cc0ea8e47fda717148c0653025cf803fc6a4a385abe6c861b4b612c0ba62",
+       "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+       "quote_check": "exact",
+       "quote_scope": "unit SP-477, Plans/storage-plan.md:39352-39442",
+       "excerpt_digest_convention": "whole_line",
+       "source_citation": {
+        "path": "Plans/storage-plan.md",
+        "unit": "SP-477",
+        "line_start": 38244,
+        "line_end": 38244,
+        "quote": "**Admission checks, in order.** SP-460's common run checks; status `active` (`run_state_invalid`); the finding has a `review.finding_added` event (`unknown_finding`) and no disposition (`already_dispo",
+        "excerpt_sha256": "a1e1cc0ea8e47fda717148c0653025cf803fc6a4a385abe6c861b4b612c0ba62",
+        "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+       }
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-460",
+       "line_start": 37744,
+       "line_end": 37744,
+       "quote": "**Common run checks.** For every family except `collaboration.created`, `collaboration.started` and `collaboration.configuration_changed`, step (5) first applies, in order: the run has a `collaboratio",
+       "excerpt_sha256": "035a50e1df77d0989118af48533124d37fd14abf105978656c0255c1a65ad5bd",
+       "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+       "quote_check": "exact",
+       "quote_scope": "unit SP-460, Plans/storage-plan.md:37709-37878",
+       "excerpt_digest_convention": "whole_line",
+       "source_citation": {
+        "path": "Plans/storage-plan.md",
+        "unit": "SP-460",
+        "line_start": 36632,
+        "line_end": 36632,
+        "quote": "**Common run checks.** For every family except `collaboration.created`, `collaboration.started` and `collaboration.configuration_changed`, step (5) first applies, in order: the run has a `collaboratio",
+        "excerpt_sha256": "035a50e1df77d0989118af48533124d37fd14abf105978656c0255c1a65ad5bd",
+        "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+       }
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "transitions",
+      "status": "PASS"
+     }
+    },
+    "consumers_checkpoints": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "Eight independent physical derived registrations plus exact keyed composition bind the checkpoint/seven projections. Full Storage instance/token/frontier/partition/cursor/event/coverage semantic joins are checked; native token authentication/CAS remain NOT_RUN.",
+     "evidence": [
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-477",
+       "line_start": 39358,
+       "line_end": 39358,
+       "quote": "**Consumers and checkpoint.** `storage.collaboration_projector.v1@1.0.0` applies it to the finding row (collaboration_finding_projection.v1): the final disposition, confidence and dissent count, and a",
+       "excerpt_sha256": "53d26f043ca5950e89af14ddc0384299d9f7bd7e0c74e23b3995f7ed4a99dd63",
+       "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+       "quote_check": "exact",
+       "quote_scope": "unit SP-477, Plans/storage-plan.md:39352-39442",
+       "excerpt_digest_convention": "whole_line",
+       "source_citation": {
+        "path": "Plans/storage-plan.md",
+        "unit": "SP-477",
+        "line_start": 38246,
+        "line_end": 38246,
+        "quote": "**Consumers and checkpoint.** `storage.collaboration_projector.v1@1.0.0` applies it to the finding row (collaboration_finding_projection.v1): the final disposition, confidence and dissent count, and a",
+        "excerpt_sha256": "53d26f043ca5950e89af14ddc0384299d9f7bd7e0c74e23b3995f7ed4a99dd63",
+        "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+       }
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-460",
+       "line_start": 37764,
+       "line_end": 37764,
+       "quote": "**Physical projection composition (B2).** Section 2.3.1's keyed composition applies here by the same rule: the eight independent registry entries are `collaboration_projector_checkpoint` and `collabor",
+       "excerpt_sha256": "54996a0f2b05031608cd4bf339269915c39810707020062ed2bf515eeaa9e104",
+       "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+       "quote_check": "exact",
+       "quote_scope": "unit SP-460, Plans/storage-plan.md:37709-37878",
+       "excerpt_digest_convention": "whole_line",
+       "source_citation": {
+        "path": "Plans/storage-plan.md",
+        "unit": "SP-460",
+        "line_start": 36652,
+        "line_end": 36652,
+        "quote": "**Physical projection composition (B2).** Section 2.3.1's keyed composition applies here by the same rule: the eight independent registry entries are `collaboration_projector_checkpoint` and `collabor",
+        "excerpt_sha256": "54996a0f2b05031608cd4bf339269915c39810707020062ed2bf515eeaa9e104",
+        "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+       }
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-460",
+       "line_start": 37766,
+       "line_end": 37766,
+       "quote": "**Checkpoint semantic joins (B6).** In addition to shape, every read/advance compares outer, token and source-selection Storage identities, decodes and re-encodes the exact Project partition, compares",
+       "excerpt_sha256": "42602fdd2a9e1f8ad680fca13850ef9f18fe2014aa076f08ff7aa07fccf3c76f",
+       "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+       "quote_check": "exact",
+       "quote_scope": "unit SP-460, Plans/storage-plan.md:37709-37878",
+       "excerpt_digest_convention": "whole_line",
+       "source_citation": {
+        "path": "Plans/storage-plan.md",
+        "unit": "SP-460",
+        "line_start": 36654,
+        "line_end": 36654,
+        "quote": "**Checkpoint semantic joins (B6).** In addition to shape, every read/advance compares outer, token and source-selection Storage identities, decodes and re-encodes the exact Project partition, compares",
+        "excerpt_sha256": "42602fdd2a9e1f8ad680fca13850ef9f18fe2014aa076f08ff7aa07fccf3c76f",
+        "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+       }
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "consumers_checkpoints",
+      "status": "PASS"
+     }
+    },
+    "compatibility_withdrawal": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "Writer cutoff, reader fencing and governed rebuild preserve captured original source history without alias/backfill. Live-state-change, withdrawn and forged cases run. Retained and checkpoint last-event reads resolve one frozen v1 recipe through the shared RetainedDispatcher from sealed custody (SP-1101); integral-float, negative-zero and uint64 originals stay readable, while coherent forgeries, unsealed or unsupported originals, a disclosed epoch differing from custody and CV-1101-invalid originals refuse.",
+     "evidence": [
+      {
+       "path": "Plans/Collaborative_Workflows.md",
+       "unit": "CWR-122",
+       "line_start": 5360,
+       "line_end": 5360,
+       "quote": "**Withdrawal.** While it is withdrawn new Review runs are refused; an active Review cannot record dispositions and cannot finalize. SP-477 states the fences.",
+       "excerpt_sha256": "849f47e5248d9fd8d4e42026e7c269472826dee6d31734407ea3b2b67d0945a2",
+       "file_sha256": "9f2fc88b6c26b47547fb14139cf459e1be01bb13ec4e8db0c8ca00755b4f922b",
+       "quote_check": "exact",
+       "quote_scope": "unit CWR-122, Plans/Collaborative_Workflows.md:5348-5437",
+       "excerpt_digest_convention": "whole_line",
+       "source_citation": {
+        "path": "Plans/Collaborative_Workflows.md",
+        "unit": "CWR-122",
+        "line_start": 5360,
+        "line_end": 5360,
+        "quote": "**Withdrawal.** While it is withdrawn new Review runs are refused; an active Review cannot record dispositions and cannot finalize. SP-477 states the fences.",
+        "excerpt_sha256": "849f47e5248d9fd8d4e42026e7c269472826dee6d31734407ea3b2b67d0945a2",
+        "file_sha256": "9f2fc88b6c26b47547fb14139cf459e1be01bb13ec4e8db0c8ca00755b4f922b"
+       }
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-460",
+       "line_start": 37776,
+       "line_end": 37776,
+       "quote": "**Replay, rebuild and withdrawal.** Replay runs in canonical seglog order from the checkpoint's inclusive cursor and only rebuilds projection rows: no message delivery, dispatch, card, notification, c",
+       "excerpt_sha256": "b6e6a62c6e3c51f9cb1f7ec61dba5e894dba20fe45547fbf039e0ab2f7cba40c",
+       "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+       "quote_check": "exact",
+       "quote_scope": "unit SP-460, Plans/storage-plan.md:37709-37878",
+       "excerpt_digest_convention": "whole_line",
+       "source_citation": {
+        "path": "Plans/storage-plan.md",
+        "unit": "SP-460",
+        "line_start": 36664,
+        "line_end": 36664,
+        "quote": "**Replay, rebuild and withdrawal.** Replay runs in canonical seglog order from the checkpoint's inclusive cursor and only rebuilds projection rows: no message delivery, dispatch, card, notification, c",
+        "excerpt_sha256": "b6e6a62c6e3c51f9cb1f7ec61dba5e894dba20fe45547fbf039e0ab2f7cba40c",
+        "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+       }
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-460",
+       "line_start": 37752,
+       "line_end": 37752,
+       "quote": "is read only through the shared `RetainedDispatcher`",
+       "excerpt_sha256": "2e923f7ccd7b35a2ba7e01f4f315d185f5b8b4e0803306c5af12c63dab9ea718",
+       "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+       "quote_check": "exact",
+       "quote_scope": "unit SP-460, Plans/storage-plan.md:37709-37878",
+       "excerpt_digest_convention": "whole_line",
+       "source_citation": {
+        "path": "Plans/storage-plan.md",
+        "unit": "SP-460",
+        "line_start": 36640,
+        "line_end": 36640,
+        "quote": "is read only through the shared `RetainedDispatcher`",
+        "excerpt_sha256": "2e923f7ccd7b35a2ba7e01f4f315d185f5b8b4e0803306c5af12c63dab9ea718",
+        "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+       }
+      },
+      {
+       "path": "scripts/pm_collaboration_events.py",
+       "unit": "historical_rejection",
+       "line_start": 1135,
+       "line_end": 1135,
+       "quote": "dispatch, custody_epoch = dispatch_original(record, context[\"storage_instance_id\"], root)",
+       "excerpt_sha256": "1cb8e7e5e180a435d71f1abcd815c202869260698311a0298da5ffaa447297cf",
+       "file_sha256": "96227fbc85823c029ca9473e164acfecf160f53b711fcf48dc3e0f077e05e814",
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "excerpt_digest_convention": "whole_line",
+       "source_citation": {
+        "path": "scripts/pm_collaboration_events.py",
+        "unit": "historical_rejection",
+        "line_start": 1135,
+        "line_end": 1135,
+        "quote": "dispatch, custody_epoch = dispatch_original(record, context[\"storage_instance_id\"], root)",
+        "excerpt_sha256": "1cb8e7e5e180a435d71f1abcd815c202869260698311a0298da5ffaa447297cf",
+        "file_sha256": "48852ffb211beb7be3a04fba9db68de1844ef8d4c200d45e559ef8e053be6da3"
+       }
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "compatibility_withdrawal",
+      "status": "PASS"
+     }
+    },
+    "positive_negative_oracles": {
+     "status": "PASS",
+     "representation": "executable_static_oracle",
+     "finding": "Executable static oracle complete under the W3H whole-definition route, with the tool at 3e3bcca547. Every guard row is the checker's real predicate on the gated tool (fresh run at this lane: 340/340 rows in 121 tables, 0 masked, 0 rows without a negative). Clause ledger for this family (envelope 68, payload:application 56, payload:project 54, source 294; slots run at 201f11feb0 (4)): 472 literal clause cuts, 342 killed by the exact expected refusal disappearing in the complete checker, 73 INVALID (the checker raised under the cut; listed separately with the row-level flip), 4 detected only by a control or constructed valid base, 53 with written mechanical proofs, 0 covered on another boundary of this family (same literal schema node), 0 survived, 0 open; 1508/1520 witnesses refused first at their schema row; 0 restoration failures. Shared checkpoint boundary: 380 cuts, 0 open. Join copies: 80 sides, 41 witnessed in the gated collection, 25 by the mutation search, 14 with a written reason, 0 open. Retained reads: sealed store byte-identical across every read, 0 seals, 10 receipt negatives (missing, ambiguous, other original). Date-time corpus: 3984 runs, 0 disagreements. Date-time inventory gate: NOT_RUN at this branch's base (it passes on current main since S1's T198 refresh, and the base predates that refresh); every timestamp field here calls the shared date_time predicate directly. Owner clauses: 25 CWR/CV/SP clauses each mapped to the rows that decide them (reports/event-authority-20261114/DC-c12-dc2/coverage-matrix.json). Full checker and self-test pass. Native execution stays NOT_RUN and membership ABSENT; neither lowers the static grade (c12scope PLAN).",
+     "evidence": [
+      {
+       "path": "Plans/Automated_Testing_System.md",
+       "unit": "ATS-230",
+       "line_start": 7590,
+       "line_end": 7590,
+       "quote": "Criterion-12 closure (PNC-019, lanes C12-DC1 for the twelve `collaboration.*` families and C12-DC2 for the BrainStorm and Review families) keeps every guard table and row and adds per-clause evidence for the whole-definition schema rows. Each schema occurrence (PS01 payload, SO03 prepared source, WR01 application wrapper, EV01 EventRecord, CK01 projection checkpoint) stays one row that validates the complete closed definition. `python3 scripts/pm-dc-c12-check.py clauses --out <dir>` inventories, per family and boundary, every keyword clause that row's validator evaluates, following `$ref`, with the clause's literal schema location; builds witnesses from the checker's own valid probes in which the row reports exactly one error (one value changed, or one member replaced by a value valid at its own schema node, another control's or generated, or an enclosing object set so an `if` branch applies); requires each witness's first refusal in the complete checker to be that schema row; then removes each clause in place from the schema the checker reads, reruns its witnesses and the family's controls through the complete checker, and restores it. Only disappearance of the exact expected refusal is a kill. A cut that raises is INVALID, and one that only a control detects is recorded apart. A clause no witness can isolate needs a written mechanical proof: an implying pattern, enum or const, the definition or edition the route selects, or an `if` branch a const fixes. `joins` lists, for every equality join row, a single-copy witness for each copy, from the gated collection and a lexical-class mutation search over each family's valid probes. `retained` snapshots the sealed custody store around every historical and checkpoint read and adds the missing, ambiguous and other-original receipt negatives. `datetime` runs the shared timestamp battery, with a calendar supplement, at every family timestamp field through the complete checker, with expectations composed from the owner pattern and the shared `date_time` profile.",
+       "excerpt_sha256": "be582c2ef62c1c1138d8d6d947b823a56d052d1aaf1e01b49260384eb8272f98",
+       "file_sha256": "a3028640b73729884c6b3d1a0f095289513e4f76e61af711c233858bf005dc7c",
+       "quote_check": "exact",
+       "quote_scope": "unit ATS-230, Plans/Automated_Testing_System.md:7548-7680",
+       "excerpt_digest_convention": "whole_line",
+       "source_citation": {
+        "path": "Plans/Automated_Testing_System.md",
+        "unit": "ATS-230",
+        "line_start": 7579,
+        "line_end": 7579,
+        "quote": "Criterion-12 closure (PNC-019, lanes C12-DC1 for the twelve `collaboration.*` families and C12-DC2 for the BrainStorm and Review families) keeps every guard table and row and adds per-clause evidence for the whole-definition schema rows. Each schema occurrence (PS01 payload, SO03 prepared source, WR01 application wrapper, EV01 EventRecord, CK01 projection checkpoint) stays one row that validates the complete closed definition. `python3 scripts/pm-dc-c12-check.py clauses --out <dir>` inventories, per family and boundary, every keyword clause that row's validator evaluates, following `$ref`, with the clause's literal schema location; builds witnesses from the checker's own valid probes in which the row reports exactly one error (one value changed, or one member replaced by a value valid at its own schema node, another control's or generated, or an enclosing object set so an `if` branch applies); requires each witness's first refusal in the complete checker to be that schema row; then removes each clause in place from the schema the checker reads, reruns its witnesses and the family's controls through the complete checker, and restores it. Only disappearance of the exact expected refusal is a kill. A cut that raises is INVALID, and one that only a control detects is recorded apart. A clause no witness can isolate needs a written mechanical proof: an implying pattern, enum or const, the definition or edition the route selects, or an `if` branch a const fixes. `joins` lists, for every equality join row, a single-copy witness for each copy, from the gated collection and a lexical-class mutation search over each family's valid probes. `retained` snapshots the sealed custody store around every historical and checkpoint read and adds the missing, ambiguous and other-original receipt negatives. `datetime` runs the shared timestamp battery, with a calendar supplement, at every family timestamp field through the complete checker, with expectations composed from the owner pattern and the shared `date_time` profile.",
+        "excerpt_sha256": "be582c2ef62c1c1138d8d6d947b823a56d052d1aaf1e01b49260384eb8272f98",
+        "file_sha256": "e1c8a84c145a3aaaa0738971f76db5fa0bf94f59c0149e76f4131e8579a6971d"
+       }
+      },
+      {
+       "path": "Plans/Automated_Testing_System.md",
+       "unit": "ATS-230",
+       "line_start": 7611,
+       "line_end": 7611,
+       "quote": "  Criterion-12 closure adds per-clause witnesses, clause cuts and restorations for the whole-definition schema",
+       "excerpt_sha256": "d1799dc1020d1a601af9412bec0495761bd835f43368e6f36333207c400da110",
+       "file_sha256": "a3028640b73729884c6b3d1a0f095289513e4f76e61af711c233858bf005dc7c",
+       "quote_check": "exact",
+       "quote_scope": "unit ATS-230, Plans/Automated_Testing_System.md:7548-7680",
+       "excerpt_digest_convention": "whole_line",
+       "source_citation": {
+        "path": "Plans/Automated_Testing_System.md",
+        "unit": "ATS-230",
+        "line_start": 7600,
+        "line_end": 7600,
+        "quote": "  Criterion-12 closure adds per-clause witnesses, clause cuts and restorations for the whole-definition schema",
+        "excerpt_sha256": "d1799dc1020d1a601af9412bec0495761bd835f43368e6f36333207c400da110",
+        "file_sha256": "e1c8a84c145a3aaaa0738971f76db5fa0bf94f59c0149e76f4131e8579a6971d"
+       }
+      },
+      {
+       "path": "scripts/pm-dc-c12-check.py",
+       "unit": "cmd_clauses",
+       "line_start": 69,
+       "line_end": 69,
+       "quote": "def cmd_clauses(a):",
+       "excerpt_sha256": "ad19baf4f8f257c4b6cc0ec9ec096da04f8c7fdce375a26a58e44acc52304e80",
+       "file_sha256": "176b63d7b5283f8ea71ccb70481011bf4c8883865b41c83a8efccdacd17fde9b",
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "excerpt_digest_convention": "whole_line",
+       "source_citation": {
+        "path": "scripts/pm-dc-c12-check.py",
+        "unit": "cmd_clauses",
+        "line_start": 69,
+        "line_end": 69,
+        "quote": "def cmd_clauses(a):",
+        "excerpt_sha256": "ad19baf4f8f257c4b6cc0ec9ec096da04f8c7fdce375a26a58e44acc52304e80",
+        "file_sha256": "176b63d7b5283f8ea71ccb70481011bf4c8883865b41c83a8efccdacd17fde9b"
+       }
+      },
+      {
+       "path": "scripts/pm-dc-c12-check.py",
+       "unit": "tool_version",
+       "line_start": 52,
+       "line_end": 52,
+       "quote": "def tool_version():",
+       "excerpt_sha256": "07daed2b8037598e0bf2ee84d4776c0fa6b529997a1d73a2628fe69f4a7b23b2",
+       "file_sha256": "176b63d7b5283f8ea71ccb70481011bf4c8883865b41c83a8efccdacd17fde9b",
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "excerpt_digest_convention": "whole_line",
+       "source_citation": {
+        "path": "scripts/pm-dc-c12-check.py",
+        "unit": "tool_version",
+        "line_start": 52,
+        "line_end": 52,
+        "quote": "def tool_version():",
+        "excerpt_sha256": "07daed2b8037598e0bf2ee84d4776c0fa6b529997a1d73a2628fe69f4a7b23b2",
+        "file_sha256": "176b63d7b5283f8ea71ccb70481011bf4c8883865b41c83a8efccdacd17fde9b"
+       }
+      },
+      {
+       "path": "scripts/pm_dc_c12_clauses.py",
+       "unit": "run_slot",
+       "line_start": 1200,
+       "line_end": 1200,
+       "quote": "def run_slot(fam, boundary, slot, per_site=3, route_kills=3, progress=None, pool=None, bounded=False):",
+       "excerpt_sha256": "48c8ed8a40835a9693610d71d7e1eceefd368d04a84de830acdda7d864e64739",
+       "file_sha256": "771b9b42d1bf7f6f85f9cbf71f9b92c6245e1f06ea4709be3f26cbcc73130435",
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "excerpt_digest_convention": "whole_line",
+       "source_citation": {
+        "path": "scripts/pm_dc_c12_clauses.py",
+        "unit": "run_slot",
+        "line_start": 1200,
+        "line_end": 1200,
+        "quote": "def run_slot(fam, boundary, slot, per_site=3, route_kills=3, progress=None, pool=None, bounded=False):",
+        "excerpt_sha256": "48c8ed8a40835a9693610d71d7e1eceefd368d04a84de830acdda7d864e64739",
+        "file_sha256": "771b9b42d1bf7f6f85f9cbf71f9b92c6245e1f06ea4709be3f26cbcc73130435"
+       }
+      },
+      {
+       "path": "scripts/pm_dc_c12_clauses.py",
+       "unit": "cut_status",
+       "line_start": 2183,
+       "line_end": 2183,
+       "quote": "def cut_status(entry):",
+       "excerpt_sha256": "ab2fb51dc7bba04fd478f8c90d916871e00c7ed3ea81cb128da9f13f210c8db8",
+       "file_sha256": "771b9b42d1bf7f6f85f9cbf71f9b92c6245e1f06ea4709be3f26cbcc73130435",
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "excerpt_digest_convention": "whole_line",
+       "source_citation": {
+        "path": "scripts/pm_dc_c12_clauses.py",
+        "unit": "cut_status",
+        "line_start": 2183,
+        "line_end": 2183,
+        "quote": "def cut_status(entry):",
+        "excerpt_sha256": "ab2fb51dc7bba04fd478f8c90d916871e00c7ed3ea81cb128da9f13f210c8db8",
+        "file_sha256": "771b9b42d1bf7f6f85f9cbf71f9b92c6245e1f06ea4709be3f26cbcc73130435"
+       }
+      },
+      {
+       "path": "scripts/pm_dc_c12_clauses.py",
+       "unit": "implication",
+       "line_start": 1703,
+       "line_end": 1703,
+       "quote": "def implication(site, slot_sites_by_node, boundary):",
+       "excerpt_sha256": "eac380baed60eb69eb9b55363df36482564431f4cf68b77da834b20beadfd6c8",
+       "file_sha256": "771b9b42d1bf7f6f85f9cbf71f9b92c6245e1f06ea4709be3f26cbcc73130435",
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "excerpt_digest_convention": "whole_line",
+       "source_citation": {
+        "path": "scripts/pm_dc_c12_clauses.py",
+        "unit": "implication",
+        "line_start": 1703,
+        "line_end": 1703,
+        "quote": "def implication(site, slot_sites_by_node, boundary):",
+        "excerpt_sha256": "eac380baed60eb69eb9b55363df36482564431f4cf68b77da834b20beadfd6c8",
+        "file_sha256": "771b9b42d1bf7f6f85f9cbf71f9b92c6245e1f06ea4709be3f26cbcc73130435"
+       }
+      },
+      {
+       "path": "scripts/pm_dc_c12_clauses.py",
+       "unit": "_finite_domain_proofs",
+       "line_start": 1988,
+       "line_end": 1988,
+       "quote": "def _finite_domain_proofs(site, slot_sites_by_node):",
+       "excerpt_sha256": "347324d7e9d133301ca97dabc4f05f81b0d8264a000623f1f9457feeb579c5ca",
+       "file_sha256": "771b9b42d1bf7f6f85f9cbf71f9b92c6245e1f06ea4709be3f26cbcc73130435",
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "excerpt_digest_convention": "whole_line",
+       "source_citation": {
+        "path": "scripts/pm_dc_c12_clauses.py",
+        "unit": "_finite_domain_proofs",
+        "line_start": 1988,
+        "line_end": 1988,
+        "quote": "def _finite_domain_proofs(site, slot_sites_by_node):",
+        "excerpt_sha256": "347324d7e9d133301ca97dabc4f05f81b0d8264a000623f1f9457feeb579c5ca",
+        "file_sha256": "771b9b42d1bf7f6f85f9cbf71f9b92c6245e1f06ea4709be3f26cbcc73130435"
+       }
+      },
+      {
+       "path": "scripts/pm_dc_c12_joins.py",
+       "unit": "search",
+       "line_start": 173,
+       "line_end": 173,
+       "quote": "def search(families, rows_by_phase, cap_per_side=2):",
+       "excerpt_sha256": "7324393e0d3fcc744d3eda617d1adc0c7a8e0f336fcabc4b2fd6f2ba1d548e11",
+       "file_sha256": "01ef16bb8bbd0a86e4b151c1cee537f501ee4ab91fa56b045d0920e6c7d0183f",
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "excerpt_digest_convention": "whole_line",
+       "source_citation": {
+        "path": "scripts/pm_dc_c12_joins.py",
+        "unit": "search",
+        "line_start": 173,
+        "line_end": 173,
+        "quote": "def search(families, rows_by_phase, cap_per_side=2):",
+        "excerpt_sha256": "7324393e0d3fcc744d3eda617d1adc0c7a8e0f336fcabc4b2fd6f2ba1d548e11",
+        "file_sha256": "01ef16bb8bbd0a86e4b151c1cee537f501ee4ab91fa56b045d0920e6c7d0183f"
+       }
+      },
+      {
+       "path": "scripts/pm_dc_c12_retained.py",
+       "unit": "run",
+       "line_start": 135,
+       "line_end": 135,
+       "quote": "def run(families):",
+       "excerpt_sha256": "40dca2332f3ad265bd9dbb018fc02da6bfcf4aa73707e0ca54316ff984ea67b1",
+       "file_sha256": "38a1934d9abf00e6ce8d863111b2d6e2947fb3d4216c84d7589be604cfe4c126",
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "excerpt_digest_convention": "whole_line",
+       "source_citation": {
+        "path": "scripts/pm_dc_c12_retained.py",
+        "unit": "run",
+        "line_start": 135,
+        "line_end": 135,
+        "quote": "def run(families):",
+        "excerpt_sha256": "40dca2332f3ad265bd9dbb018fc02da6bfcf4aa73707e0ca54316ff984ea67b1",
+        "file_sha256": "38a1934d9abf00e6ce8d863111b2d6e2947fb3d4216c84d7589be604cfe4c126"
+       }
+      },
+      {
+       "path": "scripts/pm_dc_c12_datetime.py",
+       "unit": "run",
+       "line_start": 90,
+       "line_end": 90,
+       "quote": "def run(families):",
+       "excerpt_sha256": "40dca2332f3ad265bd9dbb018fc02da6bfcf4aa73707e0ca54316ff984ea67b1",
+       "file_sha256": "c60ecc1925f61be48a180366a31bd93bd71667a1b3370e86df849ece0e672814",
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "excerpt_digest_convention": "whole_line",
+       "source_citation": {
+        "path": "scripts/pm_dc_c12_datetime.py",
+        "unit": "run",
+        "line_start": 90,
+        "line_end": 90,
+        "quote": "def run(families):",
+        "excerpt_sha256": "40dca2332f3ad265bd9dbb018fc02da6bfcf4aa73707e0ca54316ff984ea67b1",
+        "file_sha256": "c60ecc1925f61be48a180366a31bd93bd71667a1b3370e86df849ece0e672814"
+       }
+      },
+      {
+       "path": "scripts/pm_collaboration_events.py",
+       "unit": "table_refusals",
+       "line_start": 136,
+       "line_end": 136,
+       "quote": "def table_refusals(phase, facts, first=True):",
+       "excerpt_sha256": "5e2ada3c4caa79038f9362f507cae7a1a1912be63b4755516dd2f5df9a2dfd8c",
+       "file_sha256": "96227fbc85823c029ca9473e164acfecf160f53b711fcf48dc3e0f077e05e814",
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "excerpt_digest_convention": "whole_line",
+       "source_citation": {
+        "path": "scripts/pm_collaboration_events.py",
+        "unit": "table_refusals",
+        "line_start": 136,
+        "line_end": 136,
+        "quote": "def table_refusals(phase, facts, first=True):",
+        "excerpt_sha256": "5e2ada3c4caa79038f9362f507cae7a1a1912be63b4755516dd2f5df9a2dfd8c",
+        "file_sha256": "48852ffb211beb7be3a04fba9db68de1844ef8d4c200d45e559ef8e053be6da3"
+       }
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "positive_negative_oracles",
+      "status": "PASS"
+     }
+    }
+   }
+  }
+ ],
+ "source_registry": {
+  "path": "Plans/event_family_registry.json",
+  "revision": "2026-11-16.237",
+  "sha256": "17bafc740144ba7b28698704240d9f279477696107e03991f8e3de99e971663f",
+  "family_count": 456,
+  "row_pointer": "#/families/455"
+ },
+ "evidence_maintenance": {
+  "authority": "MERGE2-FIX4 items 1/2/3",
+  "source_commit": "2bda6aeed03daea26c4d79dfb7568fc145aac29e",
+  "source_assessment_sha256": "694c85fa8b8570ff2779784d40e82ca6b1a7109e6db8b67e6288ec6c42964ac3",
+  "native_execution": "NOT_RUN",
+  "verdicts_changed": false
+ }
+}

@@ -1742,5 +1742,1833 @@
         ]
       }
     }
+  },
+  {
+    "node": [
+      "Plans/goal_run_stop_block_contracts/consumer-resource-bank.json",
+      "json",
+      "/started_current_workflow_native_activation/resources/51/schema/$defs/TargetRefs"
+    ],
+    "value_schema_sha256": "17952a23334a9bd47e313976211d8bb42fcbd6fd17d01febf5e78aff495d4d81",
+    "role": "SafeRef",
+    "reason": "TargetRefs maps target names to the existing non-secret SafeRef reference string. SafeRef accepts 592 of the 653 battery timestamps and 14 of the 16 fixed controls, so it does not decide the string and cannot authorize a non-timestamp role. Reviewed as an owner-schema observation: `profile: owner_schema` keeps the original validation and installs no timestamp overlay. No non-timestamp role is claimed. Mirrors the reviewed record for Plans/shared_integration_runtime_expansion_contracts.schema.json#/$defs/TargetRefs: this frozen copy's value schema equals that record's once $id values and $ref base URIs are normalized, and nothing else (scripts/pm-int4-d2-wildcard-role-mirror.py; INT4 D2, pm-ea-lead decision 2026-11-15).",
+    "classification": "other_owner_observation",
+    "citation": {
+      "path": "Plans/goal_run_stop_block_contracts/consumer-resource-bank.json",
+      "pointer": "/started_current_workflow_native_activation/resources/51/schema/$defs/SafeRef",
+      "value": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 512,
+        "pattern": "^(?!/)(?![A-Za-z]:[\\\\/])(?!file:)(?!.*(?:password|passwd|secret|cookie|private_key|api_key|access_token|refresh_token)=)[A-Za-z0-9][A-Za-z0-9._:/#?&=-]*$"
+      }
+    }
+  },
+  {
+    "node": [
+      "Plans/goal_run_stop_block_contracts/consumer-resource-bank.json",
+      "json",
+      "/started_current_workflow_native_activation/resources/51/schema/$defs/SafeParameters"
+    ],
+    "value_schema_sha256": "6dc8035fdfaed6efa43e80e3d1821b7aae662d98fea60e04de423336d70ca8d0",
+    "role": "safe_parameter_value",
+    "reason": "SafeParameters maps parameter names to a single value union: a SafeRef string, a boolean, an integer or null. The cited union accepts 592 of the 653 battery timestamps, through its SafeRef branch, and 14 of the 16 fixed controls, so it does not decide the string and cannot authorize a non-timestamp role. Reviewed as an owner-schema observation: `profile: owner_schema` keeps the original validation and installs no timestamp overlay. No non-timestamp role is claimed. Mirrors the reviewed record for Plans/shared_integration_runtime_expansion_contracts.schema.json#/$defs/SafeParameters: this frozen copy's value schema equals that record's once $id values and $ref base URIs are normalized, and nothing else (scripts/pm-int4-d2-wildcard-role-mirror.py; INT4 D2, pm-ea-lead decision 2026-11-15).",
+    "classification": "other_owner_observation",
+    "citation": {
+      "path": "Plans/goal_run_stop_block_contracts/consumer-resource-bank.json",
+      "pointer": "/started_current_workflow_native_activation/resources/51/schema/$defs/SafeParameters/additionalProperties",
+      "value": {
+        "oneOf": [
+          {
+            "$ref": "https://puppetmaster.local/proposals/stop_block.v1/started_current_workflow_native_activation/b685d252df0b20a47d28986f6314488490d08e0ac807163b9e422a81facc6949.schema.json#/$defs/SafeRef"
+          },
+          {
+            "type": "boolean"
+          },
+          {
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "node": [
+      "Plans/goal_run_stop_block_contracts/consumer-resource-bank.json",
+      "json",
+      "/started_current_goal_controls/resources/14/schema/$defs/TargetRefs"
+    ],
+    "value_schema_sha256": "aae5a5e80f12a08fa4f88120bb40e8c30a07324183cb50208eacd6c42143b8cc",
+    "role": "SafeRef",
+    "reason": "TargetRefs maps target names to the existing non-secret SafeRef reference string. SafeRef accepts 592 of the 653 battery timestamps and 14 of the 16 fixed controls, so it does not decide the string and cannot authorize a non-timestamp role. Reviewed as an owner-schema observation: `profile: owner_schema` keeps the original validation and installs no timestamp overlay. No non-timestamp role is claimed. Mirrors the reviewed record for Plans/shared_integration_runtime_expansion_contracts.schema.json#/$defs/TargetRefs: this frozen copy's value schema equals that record's once $id values and $ref base URIs are normalized, and nothing else (scripts/pm-int4-d2-wildcard-role-mirror.py; INT4 D2, pm-ea-lead decision 2026-11-15).",
+    "classification": "other_owner_observation",
+    "citation": {
+      "path": "Plans/goal_run_stop_block_contracts/consumer-resource-bank.json",
+      "pointer": "/started_current_goal_controls/resources/14/schema/$defs/SafeRef",
+      "value": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 512,
+        "pattern": "^(?!/)(?![A-Za-z]:[\\\\/])(?!file:)(?!.*(?:password|passwd|secret|cookie|private_key|api_key|access_token|refresh_token)=)[A-Za-z0-9][A-Za-z0-9._:/#?&=-]*$"
+      }
+    }
+  },
+  {
+    "node": [
+      "Plans/goal_run_stop_block_contracts/consumer-resource-bank.json",
+      "json",
+      "/started_current_goal_controls/resources/14/schema/$defs/SafeParameters"
+    ],
+    "value_schema_sha256": "688b9b2eb97235e22c2eb0dc31b995824095cd11514de234ae1af4fee9f4c2b7",
+    "role": "safe_parameter_value",
+    "reason": "SafeParameters maps parameter names to a single value union: a SafeRef string, a boolean, an integer or null. The cited union accepts 592 of the 653 battery timestamps, through its SafeRef branch, and 14 of the 16 fixed controls, so it does not decide the string and cannot authorize a non-timestamp role. Reviewed as an owner-schema observation: `profile: owner_schema` keeps the original validation and installs no timestamp overlay. No non-timestamp role is claimed. Mirrors the reviewed record for Plans/shared_integration_runtime_expansion_contracts.schema.json#/$defs/SafeParameters: this frozen copy's value schema equals that record's once $id values and $ref base URIs are normalized, and nothing else (scripts/pm-int4-d2-wildcard-role-mirror.py; INT4 D2, pm-ea-lead decision 2026-11-15).",
+    "classification": "other_owner_observation",
+    "citation": {
+      "path": "Plans/goal_run_stop_block_contracts/consumer-resource-bank.json",
+      "pointer": "/started_current_goal_controls/resources/14/schema/$defs/SafeParameters/additionalProperties",
+      "value": {
+        "oneOf": [
+          {
+            "$ref": "https://puppetmaster.local/proposals/stop_block.v1/started_current_goal_controls/b685d252df0b20a47d28986f6314488490d08e0ac807163b9e422a81facc6949.schema.json#/$defs/SafeRef"
+          },
+          {
+            "type": "boolean"
+          },
+          {
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "node": [
+      "Plans/goal_run_stop_block_contracts/consumer-resource-bank.json",
+      "json",
+      "/started_current_goal_controls/resources/16/schema/$defs/permission_snapshot_record/properties/resolved_permissions"
+    ],
+    "value_schema_sha256": "e7dbd85e3db9bc065d71b5bbff3a9b771762f98ee5f48d54e09af7dc71c5594e",
+    "role": "resolved_permission_record",
+    "reason": "The actual map value is the resolved permission-state object, with requested/effective state, resolution, source, downgrade reason and boolean effective value. It has no timestamp role. The containing minProperties requires explicit review rather than a singleton-refusal inference. Mirrors the reviewed record for Plans/executor_cancellation_contracts/schemas/original-permission-snapshot.v1.schema.json#/properties/resolved_permissions: this frozen copy's value schema equals that record's once $id values and $ref base URIs are normalized, and nothing else (scripts/pm-int4-d2-wildcard-role-mirror.py; INT4 D2, pm-ea-lead decision 2026-11-15).",
+    "citation": {
+      "path": "Plans/goal_run_stop_block_contracts/consumer-resource-bank.json",
+      "pointer": "/started_current_goal_controls/resources/16/schema/$defs/permission_snapshot_record/properties/resolved_permissions/additionalProperties",
+      "value": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "requested_permission_state",
+          "effective_permission_state",
+          "downgrade_reason",
+          "resolution",
+          "source",
+          "effective_value"
+        ],
+        "properties": {
+          "requested_permission_state": {
+            "enum": [
+              "allow",
+              "deny",
+              "ask",
+              "unset"
+            ]
+          },
+          "effective_permission_state": {
+            "enum": [
+              "allow",
+              "deny",
+              "ask"
+            ]
+          },
+          "downgrade_reason": {
+            "$ref": "https://puppetmaster.local/proposals/stop_block.v1/started_current_goal_controls/66bc55f0daa99a504860df28a53b33417a1717db5dbf2fadf6b9d4de8aa0b114.schema.json#/$defs/nullable_non_empty_string"
+          },
+          "resolution": {
+            "enum": [
+              "allow",
+              "deny",
+              "ask"
+            ]
+          },
+          "source": {
+            "enum": [
+              "preset",
+              "project",
+              "user_override",
+              "session"
+            ]
+          },
+          "effective_value": {
+            "type": "boolean"
+          }
+        },
+        "allOf": [
+          {
+            "if": {
+              "properties": {
+                "resolution": {
+                  "const": "allow"
+                }
+              },
+              "required": [
+                "resolution"
+              ]
+            },
+            "then": {
+              "properties": {
+                "effective_permission_state": {
+                  "const": "allow"
+                },
+                "effective_value": {
+                  "const": true
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "resolution": {
+                  "enum": [
+                    "deny",
+                    "ask"
+                  ]
+                }
+              },
+              "required": [
+                "resolution"
+              ]
+            },
+            "then": {
+              "properties": {
+                "effective_value": {
+                  "const": false
+                }
+              }
+            }
+          }
+        ]
+      }
+    }
+  },
+  {
+    "node": [
+      "Plans/goal_run_stop_block_contracts/consumer-resource-bank.json",
+      "json",
+      "/started_current_goal_controls/resources/33/schema/$defs/TargetRefs"
+    ],
+    "value_schema_sha256": "22becc28371c0aa7d177a3c25de0e625f6b693da71938835c7825b8de4aabb77",
+    "role": "SafeRef",
+    "reason": "TargetRefs maps target names to the existing non-secret SafeRef reference string. SafeRef accepts 592 of the 653 battery timestamps and 14 of the 16 fixed controls, so it does not decide the string and cannot authorize a non-timestamp role. Reviewed as an owner-schema observation: `profile: owner_schema` keeps the original validation and installs no timestamp overlay. No non-timestamp role is claimed. Mirrors the reviewed record for Plans/shared_integration_runtime_expansion_contracts.schema.json#/$defs/TargetRefs: this frozen copy's value schema equals that record's once $id values and $ref base URIs are normalized, and nothing else (scripts/pm-int4-d2-wildcard-role-mirror.py; INT4 D2, pm-ea-lead decision 2026-11-15).",
+    "classification": "other_owner_observation",
+    "citation": {
+      "path": "Plans/goal_run_stop_block_contracts/consumer-resource-bank.json",
+      "pointer": "/started_current_goal_controls/resources/14/schema/$defs/SafeRef",
+      "value": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 512,
+        "pattern": "^(?!/)(?![A-Za-z]:[\\\\/])(?!file:)(?!.*(?:password|passwd|secret|cookie|private_key|api_key|access_token|refresh_token)=)[A-Za-z0-9][A-Za-z0-9._:/#?&=-]*$"
+      }
+    }
+  },
+  {
+    "node": [
+      "Plans/goal_run_stop_block_contracts/consumer-resource-bank.json",
+      "json",
+      "/started_current_goal_controls/resources/33/schema/$defs/SafeParameters"
+    ],
+    "value_schema_sha256": "a580cd64e6a91659289a503d877dd9966bdcc63c7f2d0ded382479607cba37d6",
+    "role": "safe_parameter_value",
+    "reason": "SafeParameters maps parameter names to a single value union: a SafeRef string, a boolean, an integer or null. The cited union accepts 592 of the 653 battery timestamps, through its SafeRef branch, and 14 of the 16 fixed controls, so it does not decide the string and cannot authorize a non-timestamp role. Reviewed as an owner-schema observation: `profile: owner_schema` keeps the original validation and installs no timestamp overlay. No non-timestamp role is claimed. Mirrors the reviewed record for Plans/shared_integration_runtime_expansion_contracts.schema.json#/$defs/SafeParameters: this frozen copy's value schema equals that record's once $id values and $ref base URIs are normalized, and nothing else (scripts/pm-int4-d2-wildcard-role-mirror.py; INT4 D2, pm-ea-lead decision 2026-11-15).",
+    "classification": "other_owner_observation",
+    "citation": {
+      "path": "Plans/goal_run_stop_block_contracts/consumer-resource-bank.json",
+      "pointer": "/started_current_goal_controls/resources/33/schema/$defs/SafeParameters/additionalProperties",
+      "value": {
+        "oneOf": [
+          {
+            "$ref": "https://puppetmaster.local/proposals/stop_block.v1/started_current_goal_controls/b685d252df0b20a47d28986f6314488490d08e0ac807163b9e422a81facc6949.schema.json#/$defs/SafeRef"
+          },
+          {
+            "type": "boolean"
+          },
+          {
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "node": [
+      "Plans/goal_run_stop_block_contracts/consumer-resource-bank.json",
+      "json",
+      "/cancelled_native_consumer/resources/51/schema/$defs/TargetRefs"
+    ],
+    "value_schema_sha256": "0eb2e43be287539ac6f74213f0b37cdbd4e89cfca2912a58b9c48cd6aba7f71c",
+    "role": "SafeRef",
+    "reason": "TargetRefs maps target names to the existing non-secret SafeRef reference string. SafeRef accepts 592 of the 653 battery timestamps and 14 of the 16 fixed controls, so it does not decide the string and cannot authorize a non-timestamp role. Reviewed as an owner-schema observation: `profile: owner_schema` keeps the original validation and installs no timestamp overlay. No non-timestamp role is claimed. Mirrors the reviewed record for Plans/shared_integration_runtime_expansion_contracts.schema.json#/$defs/TargetRefs: this frozen copy's value schema equals that record's once $id values and $ref base URIs are normalized, and nothing else (scripts/pm-int4-d2-wildcard-role-mirror.py; INT4 D2, pm-ea-lead decision 2026-11-15).",
+    "classification": "other_owner_observation",
+    "citation": {
+      "path": "Plans/goal_run_stop_block_contracts/consumer-resource-bank.json",
+      "pointer": "/cancelled_native_consumer/resources/51/schema/$defs/SafeRef",
+      "value": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 512,
+        "pattern": "^(?!/)(?![A-Za-z]:[\\\\/])(?!file:)(?!.*(?:password|passwd|secret|cookie|private_key|api_key|access_token|refresh_token)=)[A-Za-z0-9][A-Za-z0-9._:/#?&=-]*$"
+      }
+    }
+  },
+  {
+    "node": [
+      "Plans/goal_run_stop_block_contracts/consumer-resource-bank.json",
+      "json",
+      "/cancelled_native_consumer/resources/51/schema/$defs/SafeParameters"
+    ],
+    "value_schema_sha256": "630b7b6f1a10c02986e7b4dc9ad73cb2b4b32a35cdda62c219c9b082ecce195a",
+    "role": "safe_parameter_value",
+    "reason": "SafeParameters maps parameter names to a single value union: a SafeRef string, a boolean, an integer or null. The cited union accepts 592 of the 653 battery timestamps, through its SafeRef branch, and 14 of the 16 fixed controls, so it does not decide the string and cannot authorize a non-timestamp role. Reviewed as an owner-schema observation: `profile: owner_schema` keeps the original validation and installs no timestamp overlay. No non-timestamp role is claimed. Mirrors the reviewed record for Plans/shared_integration_runtime_expansion_contracts.schema.json#/$defs/SafeParameters: this frozen copy's value schema equals that record's once $id values and $ref base URIs are normalized, and nothing else (scripts/pm-int4-d2-wildcard-role-mirror.py; INT4 D2, pm-ea-lead decision 2026-11-15).",
+    "classification": "other_owner_observation",
+    "citation": {
+      "path": "Plans/goal_run_stop_block_contracts/consumer-resource-bank.json",
+      "pointer": "/cancelled_native_consumer/resources/51/schema/$defs/SafeParameters/additionalProperties",
+      "value": {
+        "oneOf": [
+          {
+            "$ref": "https://puppetmaster.local/proposals/stop_block.v1/cancelled_native_consumer/b685d252df0b20a47d28986f6314488490d08e0ac807163b9e422a81facc6949.schema.json#/$defs/SafeRef"
+          },
+          {
+            "type": "boolean"
+          },
+          {
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "node": [
+      "Plans/goal_run_stop_block_contracts/consumer-resource-bank.json",
+      "json",
+      "/cancelled_native_consumer/resources/82/schema/$defs/TargetRefs"
+    ],
+    "value_schema_sha256": "c12f8d5f61757b3e59b4d297e3eebd08703fecadc0b53570ca18ecf487f5a6b8",
+    "role": "SafeRef",
+    "reason": "TargetRefs maps target names to the existing non-secret SafeRef reference string. SafeRef accepts 592 of the 653 battery timestamps and 14 of the 16 fixed controls, so it does not decide the string and cannot authorize a non-timestamp role. Reviewed as an owner-schema observation: `profile: owner_schema` keeps the original validation and installs no timestamp overlay. No non-timestamp role is claimed. Mirrors the reviewed record for Plans/shared_integration_runtime_expansion_contracts.schema.json#/$defs/TargetRefs: this frozen copy's value schema equals that record's once $id values and $ref base URIs are normalized, and nothing else (scripts/pm-int4-d2-wildcard-role-mirror.py; INT4 D2, pm-ea-lead decision 2026-11-15).",
+    "classification": "other_owner_observation",
+    "citation": {
+      "path": "Plans/goal_run_stop_block_contracts/consumer-resource-bank.json",
+      "pointer": "/cancelled_native_consumer/resources/51/schema/$defs/SafeRef",
+      "value": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 512,
+        "pattern": "^(?!/)(?![A-Za-z]:[\\\\/])(?!file:)(?!.*(?:password|passwd|secret|cookie|private_key|api_key|access_token|refresh_token)=)[A-Za-z0-9][A-Za-z0-9._:/#?&=-]*$"
+      }
+    }
+  },
+  {
+    "node": [
+      "Plans/goal_run_stop_block_contracts/consumer-resource-bank.json",
+      "json",
+      "/cancelled_native_consumer/resources/82/schema/$defs/SafeParameters"
+    ],
+    "value_schema_sha256": "dc37b64a6ccfa630b36df6be359e771712b371b31b2185fa3292295353b64dc4",
+    "role": "safe_parameter_value",
+    "reason": "SafeParameters maps parameter names to a single value union: a SafeRef string, a boolean, an integer or null. The cited union accepts 592 of the 653 battery timestamps, through its SafeRef branch, and 14 of the 16 fixed controls, so it does not decide the string and cannot authorize a non-timestamp role. Reviewed as an owner-schema observation: `profile: owner_schema` keeps the original validation and installs no timestamp overlay. No non-timestamp role is claimed. Mirrors the reviewed record for Plans/shared_integration_runtime_expansion_contracts.schema.json#/$defs/SafeParameters: this frozen copy's value schema equals that record's once $id values and $ref base URIs are normalized, and nothing else (scripts/pm-int4-d2-wildcard-role-mirror.py; INT4 D2, pm-ea-lead decision 2026-11-15).",
+    "classification": "other_owner_observation",
+    "citation": {
+      "path": "Plans/goal_run_stop_block_contracts/consumer-resource-bank.json",
+      "pointer": "/cancelled_native_consumer/resources/82/schema/$defs/SafeParameters/additionalProperties",
+      "value": {
+        "oneOf": [
+          {
+            "$ref": "https://puppetmaster.local/proposals/stop_block.v1/cancelled_native_consumer/b685d252df0b20a47d28986f6314488490d08e0ac807163b9e422a81facc6949.schema.json#/$defs/SafeRef"
+          },
+          {
+            "type": "boolean"
+          },
+          {
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "node": [
+      "Plans/goal_run_stop_block_contracts/consumer-resource-bank.json",
+      "json",
+      "/cancelled_native_consumer/resources/98/schema/properties/resolved_permissions"
+    ],
+    "value_schema_sha256": "89df8df54bb73fbbb71a485e371f3a734a2e79bef09ee1f6f6d821a08a2f9164",
+    "role": "resolved_permission_record",
+    "reason": "The actual map value is the resolved permission-state object, with requested/effective state, resolution, source, downgrade reason and boolean effective value. It has no timestamp role. The containing minProperties requires explicit review rather than a singleton-refusal inference. Mirrors the reviewed record for Plans/executor_cancellation_contracts/schemas/original-permission-snapshot.v1.schema.json#/properties/resolved_permissions: this frozen copy's value schema equals that record's once $id values and $ref base URIs are normalized, and nothing else (scripts/pm-int4-d2-wildcard-role-mirror.py; INT4 D2, pm-ea-lead decision 2026-11-15).",
+    "citation": {
+      "path": "Plans/goal_run_stop_block_contracts/consumer-resource-bank.json",
+      "pointer": "/cancelled_native_consumer/resources/98/schema/properties/resolved_permissions/additionalProperties",
+      "value": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "requested_permission_state",
+          "effective_permission_state",
+          "downgrade_reason",
+          "resolution",
+          "source",
+          "effective_value"
+        ],
+        "properties": {
+          "requested_permission_state": {
+            "enum": [
+              "allow",
+              "deny",
+              "ask",
+              "unset"
+            ]
+          },
+          "effective_permission_state": {
+            "enum": [
+              "allow",
+              "deny",
+              "ask"
+            ]
+          },
+          "downgrade_reason": {
+            "$ref": "https://puppetmaster.local/proposals/stop_block.v1/cancelled_native_consumer/9c114c9dc6c2c63649420a62483cce0ead1c8533b503e4737d508585d762ef27.schema.json#/$defs/nullable_non_empty_string"
+          },
+          "resolution": {
+            "enum": [
+              "allow",
+              "deny",
+              "ask"
+            ]
+          },
+          "source": {
+            "enum": [
+              "preset",
+              "project",
+              "user_override",
+              "session"
+            ]
+          },
+          "effective_value": {
+            "type": "boolean"
+          }
+        },
+        "allOf": [
+          {
+            "if": {
+              "properties": {
+                "resolution": {
+                  "const": "allow"
+                }
+              },
+              "required": [
+                "resolution"
+              ]
+            },
+            "then": {
+              "properties": {
+                "effective_permission_state": {
+                  "const": "allow"
+                },
+                "effective_value": {
+                  "const": true
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "resolution": {
+                  "enum": [
+                    "deny",
+                    "ask"
+                  ]
+                }
+              },
+              "required": [
+                "resolution"
+              ]
+            },
+            "then": {
+              "properties": {
+                "effective_value": {
+                  "const": false
+                }
+              }
+            }
+          }
+        ]
+      }
+    }
+  },
+  {
+    "node": [
+      "Plans/goal_run_stop_block_contracts/consumer-resource-bank.json",
+      "json",
+      "/cancelled_native_consumer/resources/99/schema/properties/resolved_permissions"
+    ],
+    "value_schema_sha256": "066e113c3021b316f3dcfa9b6a07b5049edb68cfc44e4d84be4bc2058f3a5e04",
+    "role": "resolved_permission_record",
+    "reason": "The actual map value is the resolved permission-state object, with requested/effective state, resolution, source, downgrade reason and boolean effective value. It has no timestamp role. The containing minProperties requires explicit review rather than a singleton-refusal inference. Mirrors the reviewed record for Plans/executor_cancellation_contracts/schemas/original-permission-snapshot.v1.schema.json#/properties/resolved_permissions: this frozen copy's value schema equals that record's once $id values and $ref base URIs are normalized, and nothing else (scripts/pm-int4-d2-wildcard-role-mirror.py; INT4 D2, pm-ea-lead decision 2026-11-15).",
+    "citation": {
+      "path": "Plans/goal_run_stop_block_contracts/consumer-resource-bank.json",
+      "pointer": "/cancelled_native_consumer/resources/99/schema/properties/resolved_permissions/additionalProperties",
+      "value": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "requested_permission_state",
+          "effective_permission_state",
+          "downgrade_reason",
+          "resolution",
+          "source",
+          "effective_value"
+        ],
+        "properties": {
+          "requested_permission_state": {
+            "enum": [
+              "allow",
+              "deny",
+              "ask",
+              "unset"
+            ]
+          },
+          "effective_permission_state": {
+            "enum": [
+              "allow",
+              "deny",
+              "ask"
+            ]
+          },
+          "downgrade_reason": {
+            "$ref": "https://puppetmaster.local/proposals/stop_block.v1/cancelled_native_consumer/9c114c9dc6c2c63649420a62483cce0ead1c8533b503e4737d508585d762ef27.schema.json#/$defs/nullable_non_empty_string"
+          },
+          "resolution": {
+            "enum": [
+              "allow",
+              "deny",
+              "ask"
+            ]
+          },
+          "source": {
+            "enum": [
+              "preset",
+              "project",
+              "user_override",
+              "session"
+            ]
+          },
+          "effective_value": {
+            "type": "boolean"
+          }
+        },
+        "allOf": [
+          {
+            "if": {
+              "properties": {
+                "resolution": {
+                  "const": "allow"
+                }
+              },
+              "required": [
+                "resolution"
+              ]
+            },
+            "then": {
+              "properties": {
+                "effective_permission_state": {
+                  "const": "allow"
+                },
+                "effective_value": {
+                  "const": true
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "resolution": {
+                  "enum": [
+                    "deny",
+                    "ask"
+                  ]
+                }
+              },
+              "required": [
+                "resolution"
+              ]
+            },
+            "then": {
+              "properties": {
+                "effective_value": {
+                  "const": false
+                }
+              }
+            }
+          }
+        ]
+      }
+    }
+  },
+  {
+    "node": [
+      "Plans/goal_run_stop_block_contracts/consumer-resource-bank.json",
+      "json",
+      "/cancelled_goal_consumer/resources/14/schema/$defs/TargetRefs"
+    ],
+    "value_schema_sha256": "241b228bf043065aa3260ab1e9c5f5758879c4c8184129f96c09c467bbf8d23f",
+    "role": "SafeRef",
+    "reason": "TargetRefs maps target names to the existing non-secret SafeRef reference string. SafeRef accepts 592 of the 653 battery timestamps and 14 of the 16 fixed controls, so it does not decide the string and cannot authorize a non-timestamp role. Reviewed as an owner-schema observation: `profile: owner_schema` keeps the original validation and installs no timestamp overlay. No non-timestamp role is claimed. Mirrors the reviewed record for Plans/shared_integration_runtime_expansion_contracts.schema.json#/$defs/TargetRefs: this frozen copy's value schema equals that record's once $id values and $ref base URIs are normalized, and nothing else (scripts/pm-int4-d2-wildcard-role-mirror.py; INT4 D2, pm-ea-lead decision 2026-11-15).",
+    "classification": "other_owner_observation",
+    "citation": {
+      "path": "Plans/goal_run_stop_block_contracts/consumer-resource-bank.json",
+      "pointer": "/cancelled_goal_consumer/resources/14/schema/$defs/SafeRef",
+      "value": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 512,
+        "pattern": "^(?!/)(?![A-Za-z]:[\\\\/])(?!file:)(?!.*(?:password|passwd|secret|cookie|private_key|api_key|access_token|refresh_token)=)[A-Za-z0-9][A-Za-z0-9._:/#?&=-]*$"
+      }
+    }
+  },
+  {
+    "node": [
+      "Plans/goal_run_stop_block_contracts/consumer-resource-bank.json",
+      "json",
+      "/cancelled_goal_consumer/resources/14/schema/$defs/SafeParameters"
+    ],
+    "value_schema_sha256": "de10b0524e92b95b4f4375dd66a45c56610f4b8f8fd5fa67dba5574ce0a51780",
+    "role": "safe_parameter_value",
+    "reason": "SafeParameters maps parameter names to a single value union: a SafeRef string, a boolean, an integer or null. The cited union accepts 592 of the 653 battery timestamps, through its SafeRef branch, and 14 of the 16 fixed controls, so it does not decide the string and cannot authorize a non-timestamp role. Reviewed as an owner-schema observation: `profile: owner_schema` keeps the original validation and installs no timestamp overlay. No non-timestamp role is claimed. Mirrors the reviewed record for Plans/shared_integration_runtime_expansion_contracts.schema.json#/$defs/SafeParameters: this frozen copy's value schema equals that record's once $id values and $ref base URIs are normalized, and nothing else (scripts/pm-int4-d2-wildcard-role-mirror.py; INT4 D2, pm-ea-lead decision 2026-11-15).",
+    "classification": "other_owner_observation",
+    "citation": {
+      "path": "Plans/goal_run_stop_block_contracts/consumer-resource-bank.json",
+      "pointer": "/cancelled_goal_consumer/resources/14/schema/$defs/SafeParameters/additionalProperties",
+      "value": {
+        "oneOf": [
+          {
+            "$ref": "https://puppetmaster.local/proposals/stop_block.v1/cancelled_goal_consumer/b685d252df0b20a47d28986f6314488490d08e0ac807163b9e422a81facc6949.schema.json#/$defs/SafeRef"
+          },
+          {
+            "type": "boolean"
+          },
+          {
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "node": [
+      "Plans/goal_run_stop_block_contracts/consumer-resource-bank.json",
+      "json",
+      "/cancelled_goal_consumer/resources/16/schema/$defs/permission_snapshot_record/properties/resolved_permissions"
+    ],
+    "value_schema_sha256": "9c4be5b9f42ff297c537bcfe7d4461fd508e0a9d7f3ec8f6f387c722cf3acf9a",
+    "role": "resolved_permission_record",
+    "reason": "The actual map value is the resolved permission-state object, with requested/effective state, resolution, source, downgrade reason and boolean effective value. It has no timestamp role. The containing minProperties requires explicit review rather than a singleton-refusal inference. Mirrors the reviewed record for Plans/executor_cancellation_contracts/schemas/original-permission-snapshot.v1.schema.json#/properties/resolved_permissions: this frozen copy's value schema equals that record's once $id values and $ref base URIs are normalized, and nothing else (scripts/pm-int4-d2-wildcard-role-mirror.py; INT4 D2, pm-ea-lead decision 2026-11-15).",
+    "citation": {
+      "path": "Plans/goal_run_stop_block_contracts/consumer-resource-bank.json",
+      "pointer": "/cancelled_goal_consumer/resources/16/schema/$defs/permission_snapshot_record/properties/resolved_permissions/additionalProperties",
+      "value": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "requested_permission_state",
+          "effective_permission_state",
+          "downgrade_reason",
+          "resolution",
+          "source",
+          "effective_value"
+        ],
+        "properties": {
+          "requested_permission_state": {
+            "enum": [
+              "allow",
+              "deny",
+              "ask",
+              "unset"
+            ]
+          },
+          "effective_permission_state": {
+            "enum": [
+              "allow",
+              "deny",
+              "ask"
+            ]
+          },
+          "downgrade_reason": {
+            "$ref": "https://puppetmaster.local/proposals/stop_block.v1/cancelled_goal_consumer/66bc55f0daa99a504860df28a53b33417a1717db5dbf2fadf6b9d4de8aa0b114.schema.json#/$defs/nullable_non_empty_string"
+          },
+          "resolution": {
+            "enum": [
+              "allow",
+              "deny",
+              "ask"
+            ]
+          },
+          "source": {
+            "enum": [
+              "preset",
+              "project",
+              "user_override",
+              "session"
+            ]
+          },
+          "effective_value": {
+            "type": "boolean"
+          }
+        },
+        "allOf": [
+          {
+            "if": {
+              "properties": {
+                "resolution": {
+                  "const": "allow"
+                }
+              },
+              "required": [
+                "resolution"
+              ]
+            },
+            "then": {
+              "properties": {
+                "effective_permission_state": {
+                  "const": "allow"
+                },
+                "effective_value": {
+                  "const": true
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "resolution": {
+                  "enum": [
+                    "deny",
+                    "ask"
+                  ]
+                }
+              },
+              "required": [
+                "resolution"
+              ]
+            },
+            "then": {
+              "properties": {
+                "effective_value": {
+                  "const": false
+                }
+              }
+            }
+          }
+        ]
+      }
+    }
+  },
+  {
+    "node": [
+      "Plans/goal_run_stop_block_contracts/consumer-resource-bank.json",
+      "json",
+      "/cancelled_goal_consumer/resources/30/schema/$defs/TargetRefs"
+    ],
+    "value_schema_sha256": "46cb7bb688279c16068893fd2659cf7d80916c73e538ec310eb2d1f0adc3d204",
+    "role": "SafeRef",
+    "reason": "TargetRefs maps target names to the existing non-secret SafeRef reference string. SafeRef accepts 592 of the 653 battery timestamps and 14 of the 16 fixed controls, so it does not decide the string and cannot authorize a non-timestamp role. Reviewed as an owner-schema observation: `profile: owner_schema` keeps the original validation and installs no timestamp overlay. No non-timestamp role is claimed. Mirrors the reviewed record for Plans/shared_integration_runtime_expansion_contracts.schema.json#/$defs/TargetRefs: this frozen copy's value schema equals that record's once $id values and $ref base URIs are normalized, and nothing else (scripts/pm-int4-d2-wildcard-role-mirror.py; INT4 D2, pm-ea-lead decision 2026-11-15).",
+    "classification": "other_owner_observation",
+    "citation": {
+      "path": "Plans/goal_run_stop_block_contracts/consumer-resource-bank.json",
+      "pointer": "/cancelled_goal_consumer/resources/14/schema/$defs/SafeRef",
+      "value": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 512,
+        "pattern": "^(?!/)(?![A-Za-z]:[\\\\/])(?!file:)(?!.*(?:password|passwd|secret|cookie|private_key|api_key|access_token|refresh_token)=)[A-Za-z0-9][A-Za-z0-9._:/#?&=-]*$"
+      }
+    }
+  },
+  {
+    "node": [
+      "Plans/goal_run_stop_block_contracts/consumer-resource-bank.json",
+      "json",
+      "/cancelled_goal_consumer/resources/30/schema/$defs/SafeParameters"
+    ],
+    "value_schema_sha256": "922de09800ca4117c984b40978d66e9456168891eca9d3cb943dce5f8a3fd174",
+    "role": "safe_parameter_value",
+    "reason": "SafeParameters maps parameter names to a single value union: a SafeRef string, a boolean, an integer or null. The cited union accepts 592 of the 653 battery timestamps, through its SafeRef branch, and 14 of the 16 fixed controls, so it does not decide the string and cannot authorize a non-timestamp role. Reviewed as an owner-schema observation: `profile: owner_schema` keeps the original validation and installs no timestamp overlay. No non-timestamp role is claimed. Mirrors the reviewed record for Plans/shared_integration_runtime_expansion_contracts.schema.json#/$defs/SafeParameters: this frozen copy's value schema equals that record's once $id values and $ref base URIs are normalized, and nothing else (scripts/pm-int4-d2-wildcard-role-mirror.py; INT4 D2, pm-ea-lead decision 2026-11-15).",
+    "classification": "other_owner_observation",
+    "citation": {
+      "path": "Plans/goal_run_stop_block_contracts/consumer-resource-bank.json",
+      "pointer": "/cancelled_goal_consumer/resources/30/schema/$defs/SafeParameters/additionalProperties",
+      "value": {
+        "oneOf": [
+          {
+            "$ref": "https://puppetmaster.local/proposals/stop_block.v1/cancelled_goal_consumer/b685d252df0b20a47d28986f6314488490d08e0ac807163b9e422a81facc6949.schema.json#/$defs/SafeRef"
+          },
+          {
+            "type": "boolean"
+          },
+          {
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "node": [
+      "Plans/goal_run_stop_block_contracts/consumer-resource-bank.json",
+      "json",
+      "/cancelled_filesafe_consumer/resources/14/schema/$defs/TargetRefs"
+    ],
+    "value_schema_sha256": "fa64ec29d65983cb3ff7cf5886a69d0c5124b22ef9f6be1322eb5c9ab3a70fc0",
+    "role": "SafeRef",
+    "reason": "TargetRefs maps target names to the existing non-secret SafeRef reference string. SafeRef accepts 592 of the 653 battery timestamps and 14 of the 16 fixed controls, so it does not decide the string and cannot authorize a non-timestamp role. Reviewed as an owner-schema observation: `profile: owner_schema` keeps the original validation and installs no timestamp overlay. No non-timestamp role is claimed. Mirrors the reviewed record for Plans/shared_integration_runtime_expansion_contracts.schema.json#/$defs/TargetRefs: this frozen copy's value schema equals that record's once $id values and $ref base URIs are normalized, and nothing else (scripts/pm-int4-d2-wildcard-role-mirror.py; INT4 D2, pm-ea-lead decision 2026-11-15).",
+    "classification": "other_owner_observation",
+    "citation": {
+      "path": "Plans/goal_run_stop_block_contracts/consumer-resource-bank.json",
+      "pointer": "/cancelled_filesafe_consumer/resources/37/schema/$defs/SafeRef",
+      "value": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 512,
+        "pattern": "^(?!/)(?![A-Za-z]:[\\\\/])(?!file:)(?!.*(?:password|passwd|secret|cookie|private_key|api_key|access_token|refresh_token)=)[A-Za-z0-9][A-Za-z0-9._:/#?&=-]*$"
+      }
+    }
+  },
+  {
+    "node": [
+      "Plans/goal_run_stop_block_contracts/consumer-resource-bank.json",
+      "json",
+      "/cancelled_filesafe_consumer/resources/14/schema/$defs/SafeParameters"
+    ],
+    "value_schema_sha256": "a28df4528458980f0cd94ccc7216c365452e372811f3bc58b21d1984a862d180",
+    "role": "safe_parameter_value",
+    "reason": "SafeParameters maps parameter names to a single value union: a SafeRef string, a boolean, an integer or null. The cited union accepts 592 of the 653 battery timestamps, through its SafeRef branch, and 14 of the 16 fixed controls, so it does not decide the string and cannot authorize a non-timestamp role. Reviewed as an owner-schema observation: `profile: owner_schema` keeps the original validation and installs no timestamp overlay. No non-timestamp role is claimed. Mirrors the reviewed record for Plans/shared_integration_runtime_expansion_contracts.schema.json#/$defs/SafeParameters: this frozen copy's value schema equals that record's once $id values and $ref base URIs are normalized, and nothing else (scripts/pm-int4-d2-wildcard-role-mirror.py; INT4 D2, pm-ea-lead decision 2026-11-15).",
+    "classification": "other_owner_observation",
+    "citation": {
+      "path": "Plans/goal_run_stop_block_contracts/consumer-resource-bank.json",
+      "pointer": "/cancelled_filesafe_consumer/resources/14/schema/$defs/SafeParameters/additionalProperties",
+      "value": {
+        "oneOf": [
+          {
+            "$ref": "https://puppetmaster.local/proposals/stop_block.v1/cancelled_filesafe_consumer/b685d252df0b20a47d28986f6314488490d08e0ac807163b9e422a81facc6949.schema.json#/$defs/SafeRef"
+          },
+          {
+            "type": "boolean"
+          },
+          {
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "node": [
+      "Plans/goal_run_stop_block_contracts/consumer-resource-bank.json",
+      "json",
+      "/cancelled_filesafe_consumer/resources/37/schema/$defs/TargetRefs"
+    ],
+    "value_schema_sha256": "b463519e2ab8f6b2ab1b432699f11c20aace325bc4c1340935bd428dc1bc3394",
+    "role": "SafeRef",
+    "reason": "TargetRefs maps target names to the existing non-secret SafeRef reference string. SafeRef accepts 592 of the 653 battery timestamps and 14 of the 16 fixed controls, so it does not decide the string and cannot authorize a non-timestamp role. Reviewed as an owner-schema observation: `profile: owner_schema` keeps the original validation and installs no timestamp overlay. No non-timestamp role is claimed. Mirrors the reviewed record for Plans/shared_integration_runtime_expansion_contracts.schema.json#/$defs/TargetRefs: this frozen copy's value schema equals that record's once $id values and $ref base URIs are normalized, and nothing else (scripts/pm-int4-d2-wildcard-role-mirror.py; INT4 D2, pm-ea-lead decision 2026-11-15).",
+    "classification": "other_owner_observation",
+    "citation": {
+      "path": "Plans/goal_run_stop_block_contracts/consumer-resource-bank.json",
+      "pointer": "/cancelled_filesafe_consumer/resources/37/schema/$defs/SafeRef",
+      "value": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 512,
+        "pattern": "^(?!/)(?![A-Za-z]:[\\\\/])(?!file:)(?!.*(?:password|passwd|secret|cookie|private_key|api_key|access_token|refresh_token)=)[A-Za-z0-9][A-Za-z0-9._:/#?&=-]*$"
+      }
+    }
+  },
+  {
+    "node": [
+      "Plans/goal_run_stop_block_contracts/consumer-resource-bank.json",
+      "json",
+      "/cancelled_filesafe_consumer/resources/37/schema/$defs/SafeParameters"
+    ],
+    "value_schema_sha256": "e9dc9294fc289740562ae805ebce03b15c917496fa12f0a671183cc5a8bd7da4",
+    "role": "safe_parameter_value",
+    "reason": "SafeParameters maps parameter names to a single value union: a SafeRef string, a boolean, an integer or null. The cited union accepts 592 of the 653 battery timestamps, through its SafeRef branch, and 14 of the 16 fixed controls, so it does not decide the string and cannot authorize a non-timestamp role. Reviewed as an owner-schema observation: `profile: owner_schema` keeps the original validation and installs no timestamp overlay. No non-timestamp role is claimed. Mirrors the reviewed record for Plans/shared_integration_runtime_expansion_contracts.schema.json#/$defs/SafeParameters: this frozen copy's value schema equals that record's once $id values and $ref base URIs are normalized, and nothing else (scripts/pm-int4-d2-wildcard-role-mirror.py; INT4 D2, pm-ea-lead decision 2026-11-15).",
+    "classification": "other_owner_observation",
+    "citation": {
+      "path": "Plans/goal_run_stop_block_contracts/consumer-resource-bank.json",
+      "pointer": "/cancelled_filesafe_consumer/resources/37/schema/$defs/SafeParameters/additionalProperties",
+      "value": {
+        "oneOf": [
+          {
+            "$ref": "https://puppetmaster.local/proposals/stop_block.v1/cancelled_filesafe_consumer/b685d252df0b20a47d28986f6314488490d08e0ac807163b9e422a81facc6949.schema.json#/$defs/SafeRef"
+          },
+          {
+            "type": "boolean"
+          },
+          {
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "node": [
+      "Plans/goal_run_stop_block_contracts/consumer-resource-bank.json",
+      "json",
+      "/cancelled_filesafe_consumer/resources/50/schema/properties/resolved_permissions"
+    ],
+    "value_schema_sha256": "7f5b1ddea7c4e36836ce643b15338efe4efb8842b11e9d10558b2b7c7fa7a6f5",
+    "role": "resolved_permission_record",
+    "reason": "The actual map value is the resolved permission-state object, with requested/effective state, resolution, source, downgrade reason and boolean effective value. It has no timestamp role. The containing minProperties requires explicit review rather than a singleton-refusal inference. Mirrors the reviewed record for Plans/executor_cancellation_contracts/schemas/original-permission-snapshot.v1.schema.json#/properties/resolved_permissions: this frozen copy's value schema equals that record's once $id values and $ref base URIs are normalized, and nothing else (scripts/pm-int4-d2-wildcard-role-mirror.py; INT4 D2, pm-ea-lead decision 2026-11-15).",
+    "citation": {
+      "path": "Plans/goal_run_stop_block_contracts/consumer-resource-bank.json",
+      "pointer": "/cancelled_filesafe_consumer/resources/50/schema/properties/resolved_permissions/additionalProperties",
+      "value": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "requested_permission_state",
+          "effective_permission_state",
+          "downgrade_reason",
+          "resolution",
+          "source",
+          "effective_value"
+        ],
+        "properties": {
+          "requested_permission_state": {
+            "enum": [
+              "allow",
+              "deny",
+              "ask",
+              "unset"
+            ]
+          },
+          "effective_permission_state": {
+            "enum": [
+              "allow",
+              "deny",
+              "ask"
+            ]
+          },
+          "downgrade_reason": {
+            "$ref": "https://puppetmaster.local/proposals/stop_block.v1/cancelled_filesafe_consumer/9c114c9dc6c2c63649420a62483cce0ead1c8533b503e4737d508585d762ef27.schema.json#/$defs/nullable_non_empty_string"
+          },
+          "resolution": {
+            "enum": [
+              "allow",
+              "deny",
+              "ask"
+            ]
+          },
+          "source": {
+            "enum": [
+              "preset",
+              "project",
+              "user_override",
+              "session"
+            ]
+          },
+          "effective_value": {
+            "type": "boolean"
+          }
+        },
+        "allOf": [
+          {
+            "if": {
+              "properties": {
+                "resolution": {
+                  "const": "allow"
+                }
+              },
+              "required": [
+                "resolution"
+              ]
+            },
+            "then": {
+              "properties": {
+                "effective_permission_state": {
+                  "const": "allow"
+                },
+                "effective_value": {
+                  "const": true
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "resolution": {
+                  "enum": [
+                    "deny",
+                    "ask"
+                  ]
+                }
+              },
+              "required": [
+                "resolution"
+              ]
+            },
+            "then": {
+              "properties": {
+                "effective_value": {
+                  "const": false
+                }
+              }
+            }
+          }
+        ]
+      }
+    }
+  },
+  {
+    "node": [
+      "Plans/goal_run_stop_block_contracts/consumer-resource-bank.json",
+      "json",
+      "/cancelled_filesafe_consumer/resources/51/schema/properties/resolved_permissions"
+    ],
+    "value_schema_sha256": "4993c2ca5dfcb419f671503d1f1d4b278e856709a8058b308bb403d6e86b383e",
+    "role": "resolved_permission_record",
+    "reason": "The actual map value is the resolved permission-state object, with requested/effective state, resolution, source, downgrade reason and boolean effective value. It has no timestamp role. The containing minProperties requires explicit review rather than a singleton-refusal inference. Mirrors the reviewed record for Plans/executor_cancellation_contracts/schemas/original-permission-snapshot.v1.schema.json#/properties/resolved_permissions: this frozen copy's value schema equals that record's once $id values and $ref base URIs are normalized, and nothing else (scripts/pm-int4-d2-wildcard-role-mirror.py; INT4 D2, pm-ea-lead decision 2026-11-15).",
+    "citation": {
+      "path": "Plans/goal_run_stop_block_contracts/consumer-resource-bank.json",
+      "pointer": "/cancelled_filesafe_consumer/resources/51/schema/properties/resolved_permissions/additionalProperties",
+      "value": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "requested_permission_state",
+          "effective_permission_state",
+          "downgrade_reason",
+          "resolution",
+          "source",
+          "effective_value"
+        ],
+        "properties": {
+          "requested_permission_state": {
+            "enum": [
+              "allow",
+              "deny",
+              "ask",
+              "unset"
+            ]
+          },
+          "effective_permission_state": {
+            "enum": [
+              "allow",
+              "deny",
+              "ask"
+            ]
+          },
+          "downgrade_reason": {
+            "$ref": "https://puppetmaster.local/proposals/stop_block.v1/cancelled_filesafe_consumer/9c114c9dc6c2c63649420a62483cce0ead1c8533b503e4737d508585d762ef27.schema.json#/$defs/nullable_non_empty_string"
+          },
+          "resolution": {
+            "enum": [
+              "allow",
+              "deny",
+              "ask"
+            ]
+          },
+          "source": {
+            "enum": [
+              "preset",
+              "project",
+              "user_override",
+              "session"
+            ]
+          },
+          "effective_value": {
+            "type": "boolean"
+          }
+        },
+        "allOf": [
+          {
+            "if": {
+              "properties": {
+                "resolution": {
+                  "const": "allow"
+                }
+              },
+              "required": [
+                "resolution"
+              ]
+            },
+            "then": {
+              "properties": {
+                "effective_permission_state": {
+                  "const": "allow"
+                },
+                "effective_value": {
+                  "const": true
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "resolution": {
+                  "enum": [
+                    "deny",
+                    "ask"
+                  ]
+                }
+              },
+              "required": [
+                "resolution"
+              ]
+            },
+            "then": {
+              "properties": {
+                "effective_value": {
+                  "const": false
+                }
+              }
+            }
+          }
+        ]
+      }
+    }
+  },
+  {
+    "node": [
+      "Plans/goal_run_stop_block_contracts/resource-bank.json",
+      "json",
+      "/native/resources/51/schema/$defs/TargetRefs"
+    ],
+    "value_schema_sha256": "3ece2ebbb7587d02450fc94435757843301bcab29d1342e7a0f9a61c54419dd7",
+    "role": "SafeRef",
+    "reason": "TargetRefs maps target names to the existing non-secret SafeRef reference string. SafeRef accepts 592 of the 653 battery timestamps and 14 of the 16 fixed controls, so it does not decide the string and cannot authorize a non-timestamp role. Reviewed as an owner-schema observation: `profile: owner_schema` keeps the original validation and installs no timestamp overlay. No non-timestamp role is claimed. Mirrors the reviewed record for Plans/shared_integration_runtime_expansion_contracts.schema.json#/$defs/TargetRefs: this frozen copy's value schema equals that record's once $id values and $ref base URIs are normalized, and nothing else (scripts/pm-int4-d2-wildcard-role-mirror.py; INT4 D2, pm-ea-lead decision 2026-11-15).",
+    "classification": "other_owner_observation",
+    "citation": {
+      "path": "Plans/goal_run_stop_block_contracts/resource-bank.json",
+      "pointer": "/native/resources/51/schema/$defs/SafeRef",
+      "value": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 512,
+        "pattern": "^(?!/)(?![A-Za-z]:[\\\\/])(?!file:)(?!.*(?:password|passwd|secret|cookie|private_key|api_key|access_token|refresh_token)=)[A-Za-z0-9][A-Za-z0-9._:/#?&=-]*$"
+      }
+    }
+  },
+  {
+    "node": [
+      "Plans/goal_run_stop_block_contracts/resource-bank.json",
+      "json",
+      "/native/resources/51/schema/$defs/SafeParameters"
+    ],
+    "value_schema_sha256": "91d3b48bc5e66ca00b9932230192918095e4686688cf597bb7bac4c7455cc21c",
+    "role": "safe_parameter_value",
+    "reason": "SafeParameters maps parameter names to a single value union: a SafeRef string, a boolean, an integer or null. The cited union accepts 592 of the 653 battery timestamps, through its SafeRef branch, and 14 of the 16 fixed controls, so it does not decide the string and cannot authorize a non-timestamp role. Reviewed as an owner-schema observation: `profile: owner_schema` keeps the original validation and installs no timestamp overlay. No non-timestamp role is claimed. Mirrors the reviewed record for Plans/shared_integration_runtime_expansion_contracts.schema.json#/$defs/SafeParameters: this frozen copy's value schema equals that record's once $id values and $ref base URIs are normalized, and nothing else (scripts/pm-int4-d2-wildcard-role-mirror.py; INT4 D2, pm-ea-lead decision 2026-11-15).",
+    "classification": "other_owner_observation",
+    "citation": {
+      "path": "Plans/goal_run_stop_block_contracts/resource-bank.json",
+      "pointer": "/native/resources/51/schema/$defs/SafeParameters/additionalProperties",
+      "value": {
+        "oneOf": [
+          {
+            "$ref": "https://puppetmaster.local/proposals/stop_block.v1/native/b685d252df0b20a47d28986f6314488490d08e0ac807163b9e422a81facc6949.schema.json#/$defs/SafeRef"
+          },
+          {
+            "type": "boolean"
+          },
+          {
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "node": [
+      "Plans/goal_run_stop_block_contracts/resource-bank.json",
+      "json",
+      "/native/resources/78/schema/properties/resolved_permissions"
+    ],
+    "value_schema_sha256": "675dc8ff3e4a32a425e89af1a5d2b469f49a8c7b27c692e972922062e0686c8a",
+    "role": "resolved_permission_record",
+    "reason": "The actual map value is the resolved permission-state object, with requested/effective state, resolution, source, downgrade reason and boolean effective value. It has no timestamp role. The containing minProperties requires explicit review rather than a singleton-refusal inference. Mirrors the reviewed record for Plans/executor_cancellation_contracts/schemas/original-permission-snapshot.v1.schema.json#/properties/resolved_permissions: this frozen copy's value schema equals that record's once $id values and $ref base URIs are normalized, and nothing else (scripts/pm-int4-d2-wildcard-role-mirror.py; INT4 D2, pm-ea-lead decision 2026-11-15).",
+    "citation": {
+      "path": "Plans/goal_run_stop_block_contracts/resource-bank.json",
+      "pointer": "/native/resources/78/schema/properties/resolved_permissions/additionalProperties",
+      "value": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "requested_permission_state",
+          "effective_permission_state",
+          "downgrade_reason",
+          "resolution",
+          "source",
+          "effective_value"
+        ],
+        "properties": {
+          "requested_permission_state": {
+            "enum": [
+              "allow",
+              "deny",
+              "ask",
+              "unset"
+            ]
+          },
+          "effective_permission_state": {
+            "enum": [
+              "allow",
+              "deny",
+              "ask"
+            ]
+          },
+          "downgrade_reason": {
+            "$ref": "https://puppetmaster.local/proposals/stop_block.v1/native/9c114c9dc6c2c63649420a62483cce0ead1c8533b503e4737d508585d762ef27.schema.json#/$defs/nullable_non_empty_string"
+          },
+          "resolution": {
+            "enum": [
+              "allow",
+              "deny",
+              "ask"
+            ]
+          },
+          "source": {
+            "enum": [
+              "preset",
+              "project",
+              "user_override",
+              "session"
+            ]
+          },
+          "effective_value": {
+            "type": "boolean"
+          }
+        },
+        "allOf": [
+          {
+            "if": {
+              "properties": {
+                "resolution": {
+                  "const": "allow"
+                }
+              },
+              "required": [
+                "resolution"
+              ]
+            },
+            "then": {
+              "properties": {
+                "effective_permission_state": {
+                  "const": "allow"
+                },
+                "effective_value": {
+                  "const": true
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "resolution": {
+                  "enum": [
+                    "deny",
+                    "ask"
+                  ]
+                }
+              },
+              "required": [
+                "resolution"
+              ]
+            },
+            "then": {
+              "properties": {
+                "effective_value": {
+                  "const": false
+                }
+              }
+            }
+          }
+        ]
+      }
+    }
+  },
+  {
+    "node": [
+      "Plans/goal_run_stop_block_contracts/resource-bank.json",
+      "json",
+      "/native/resources/103/schema/$defs/TargetRefs"
+    ],
+    "value_schema_sha256": "7437314bc9d3e214c76de815387e897ebf9ff0e3fe7f029c10fe0399cfe2737d",
+    "role": "SafeRef",
+    "reason": "TargetRefs maps target names to the existing non-secret SafeRef reference string. SafeRef accepts 592 of the 653 battery timestamps and 14 of the 16 fixed controls, so it does not decide the string and cannot authorize a non-timestamp role. Reviewed as an owner-schema observation: `profile: owner_schema` keeps the original validation and installs no timestamp overlay. No non-timestamp role is claimed. Mirrors the reviewed record for Plans/shared_integration_runtime_expansion_contracts.schema.json#/$defs/TargetRefs: this frozen copy's value schema equals that record's once $id values and $ref base URIs are normalized, and nothing else (scripts/pm-int4-d2-wildcard-role-mirror.py; INT4 D2, pm-ea-lead decision 2026-11-15).",
+    "classification": "other_owner_observation",
+    "citation": {
+      "path": "Plans/goal_run_stop_block_contracts/resource-bank.json",
+      "pointer": "/native/resources/51/schema/$defs/SafeRef",
+      "value": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 512,
+        "pattern": "^(?!/)(?![A-Za-z]:[\\\\/])(?!file:)(?!.*(?:password|passwd|secret|cookie|private_key|api_key|access_token|refresh_token)=)[A-Za-z0-9][A-Za-z0-9._:/#?&=-]*$"
+      }
+    }
+  },
+  {
+    "node": [
+      "Plans/goal_run_stop_block_contracts/resource-bank.json",
+      "json",
+      "/native/resources/103/schema/$defs/SafeParameters"
+    ],
+    "value_schema_sha256": "d7b064b3cdf474aa4c09b621ca6768bd20d6c0c6cd28e3e3ffddb5af3f76cbc6",
+    "role": "safe_parameter_value",
+    "reason": "SafeParameters maps parameter names to a single value union: a SafeRef string, a boolean, an integer or null. The cited union accepts 592 of the 653 battery timestamps, through its SafeRef branch, and 14 of the 16 fixed controls, so it does not decide the string and cannot authorize a non-timestamp role. Reviewed as an owner-schema observation: `profile: owner_schema` keeps the original validation and installs no timestamp overlay. No non-timestamp role is claimed. Mirrors the reviewed record for Plans/shared_integration_runtime_expansion_contracts.schema.json#/$defs/SafeParameters: this frozen copy's value schema equals that record's once $id values and $ref base URIs are normalized, and nothing else (scripts/pm-int4-d2-wildcard-role-mirror.py; INT4 D2, pm-ea-lead decision 2026-11-15).",
+    "classification": "other_owner_observation",
+    "citation": {
+      "path": "Plans/goal_run_stop_block_contracts/resource-bank.json",
+      "pointer": "/native/resources/103/schema/$defs/SafeParameters/additionalProperties",
+      "value": {
+        "oneOf": [
+          {
+            "$ref": "https://puppetmaster.local/proposals/stop_block.v1/native/b685d252df0b20a47d28986f6314488490d08e0ac807163b9e422a81facc6949.schema.json#/$defs/SafeRef"
+          },
+          {
+            "type": "boolean"
+          },
+          {
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "node": [
+      "Plans/goal_run_stop_block_contracts/resource-bank.json",
+      "json",
+      "/native/resources/118/schema/properties/resolved_permissions"
+    ],
+    "value_schema_sha256": "9435b1c3afb62bd568504c9e77a4c3ea4e737072fc7d41fdba2044e64b9414b1",
+    "role": "resolved_permission_record",
+    "reason": "The actual map value is the resolved permission-state object, with requested/effective state, resolution, source, downgrade reason and boolean effective value. It has no timestamp role. The containing minProperties requires explicit review rather than a singleton-refusal inference. Mirrors the reviewed record for Plans/executor_cancellation_contracts/schemas/original-permission-snapshot.v1.schema.json#/properties/resolved_permissions: this frozen copy's value schema equals that record's once $id values and $ref base URIs are normalized, and nothing else (scripts/pm-int4-d2-wildcard-role-mirror.py; INT4 D2, pm-ea-lead decision 2026-11-15).",
+    "citation": {
+      "path": "Plans/goal_run_stop_block_contracts/resource-bank.json",
+      "pointer": "/native/resources/118/schema/properties/resolved_permissions/additionalProperties",
+      "value": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "requested_permission_state",
+          "effective_permission_state",
+          "downgrade_reason",
+          "resolution",
+          "source",
+          "effective_value"
+        ],
+        "properties": {
+          "requested_permission_state": {
+            "enum": [
+              "allow",
+              "deny",
+              "ask",
+              "unset"
+            ]
+          },
+          "effective_permission_state": {
+            "enum": [
+              "allow",
+              "deny",
+              "ask"
+            ]
+          },
+          "downgrade_reason": {
+            "$ref": "https://puppetmaster.local/proposals/stop_block.v1/native/9c114c9dc6c2c63649420a62483cce0ead1c8533b503e4737d508585d762ef27.schema.json#/$defs/nullable_non_empty_string"
+          },
+          "resolution": {
+            "enum": [
+              "allow",
+              "deny",
+              "ask"
+            ]
+          },
+          "source": {
+            "enum": [
+              "preset",
+              "project",
+              "user_override",
+              "session"
+            ]
+          },
+          "effective_value": {
+            "type": "boolean"
+          }
+        },
+        "allOf": [
+          {
+            "if": {
+              "properties": {
+                "resolution": {
+                  "const": "allow"
+                }
+              },
+              "required": [
+                "resolution"
+              ]
+            },
+            "then": {
+              "properties": {
+                "effective_permission_state": {
+                  "const": "allow"
+                },
+                "effective_value": {
+                  "const": true
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "resolution": {
+                  "enum": [
+                    "deny",
+                    "ask"
+                  ]
+                }
+              },
+              "required": [
+                "resolution"
+              ]
+            },
+            "then": {
+              "properties": {
+                "effective_value": {
+                  "const": false
+                }
+              }
+            }
+          }
+        ]
+      }
+    }
+  },
+  {
+    "node": [
+      "Plans/goal_run_stop_block_contracts/resource-bank.json",
+      "json",
+      "/goal/resources/14/schema/$defs/TargetRefs"
+    ],
+    "value_schema_sha256": "bb3aca879d3a3286cac24adfd5bcc8d1815b1e745c0f4fffd9e33d291671fc30",
+    "role": "SafeRef",
+    "reason": "TargetRefs maps target names to the existing non-secret SafeRef reference string. SafeRef accepts 592 of the 653 battery timestamps and 14 of the 16 fixed controls, so it does not decide the string and cannot authorize a non-timestamp role. Reviewed as an owner-schema observation: `profile: owner_schema` keeps the original validation and installs no timestamp overlay. No non-timestamp role is claimed. Mirrors the reviewed record for Plans/shared_integration_runtime_expansion_contracts.schema.json#/$defs/TargetRefs: this frozen copy's value schema equals that record's once $id values and $ref base URIs are normalized, and nothing else (scripts/pm-int4-d2-wildcard-role-mirror.py; INT4 D2, pm-ea-lead decision 2026-11-15).",
+    "classification": "other_owner_observation",
+    "citation": {
+      "path": "Plans/goal_run_stop_block_contracts/resource-bank.json",
+      "pointer": "/goal/resources/14/schema/$defs/SafeRef",
+      "value": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 512,
+        "pattern": "^(?!/)(?![A-Za-z]:[\\\\/])(?!file:)(?!.*(?:password|passwd|secret|cookie|private_key|api_key|access_token|refresh_token)=)[A-Za-z0-9][A-Za-z0-9._:/#?&=-]*$"
+      }
+    }
+  },
+  {
+    "node": [
+      "Plans/goal_run_stop_block_contracts/resource-bank.json",
+      "json",
+      "/goal/resources/14/schema/$defs/SafeParameters"
+    ],
+    "value_schema_sha256": "adfedc55612e23960aa2ffa48b62f0e0cfad76ef405421684331fc7d7de26ea2",
+    "role": "safe_parameter_value",
+    "reason": "SafeParameters maps parameter names to a single value union: a SafeRef string, a boolean, an integer or null. The cited union accepts 592 of the 653 battery timestamps, through its SafeRef branch, and 14 of the 16 fixed controls, so it does not decide the string and cannot authorize a non-timestamp role. Reviewed as an owner-schema observation: `profile: owner_schema` keeps the original validation and installs no timestamp overlay. No non-timestamp role is claimed. Mirrors the reviewed record for Plans/shared_integration_runtime_expansion_contracts.schema.json#/$defs/SafeParameters: this frozen copy's value schema equals that record's once $id values and $ref base URIs are normalized, and nothing else (scripts/pm-int4-d2-wildcard-role-mirror.py; INT4 D2, pm-ea-lead decision 2026-11-15).",
+    "classification": "other_owner_observation",
+    "citation": {
+      "path": "Plans/goal_run_stop_block_contracts/resource-bank.json",
+      "pointer": "/goal/resources/14/schema/$defs/SafeParameters/additionalProperties",
+      "value": {
+        "oneOf": [
+          {
+            "$ref": "https://puppetmaster.local/proposals/stop_block.v1/goal/b685d252df0b20a47d28986f6314488490d08e0ac807163b9e422a81facc6949.schema.json#/$defs/SafeRef"
+          },
+          {
+            "type": "boolean"
+          },
+          {
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "node": [
+      "Plans/goal_run_stop_block_contracts/resource-bank.json",
+      "json",
+      "/goal/resources/16/schema/$defs/permission_snapshot_record/properties/resolved_permissions"
+    ],
+    "value_schema_sha256": "c2034a1c92303e90d8f31d378c31986b6312496495f78d9e278888da03ffe09d",
+    "role": "resolved_permission_record",
+    "reason": "The actual map value is the resolved permission-state object, with requested/effective state, resolution, source, downgrade reason and boolean effective value. It has no timestamp role. The containing minProperties requires explicit review rather than a singleton-refusal inference. Mirrors the reviewed record for Plans/executor_cancellation_contracts/schemas/original-permission-snapshot.v1.schema.json#/properties/resolved_permissions: this frozen copy's value schema equals that record's once $id values and $ref base URIs are normalized, and nothing else (scripts/pm-int4-d2-wildcard-role-mirror.py; INT4 D2, pm-ea-lead decision 2026-11-15).",
+    "citation": {
+      "path": "Plans/goal_run_stop_block_contracts/resource-bank.json",
+      "pointer": "/goal/resources/16/schema/$defs/permission_snapshot_record/properties/resolved_permissions/additionalProperties",
+      "value": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "requested_permission_state",
+          "effective_permission_state",
+          "downgrade_reason",
+          "resolution",
+          "source",
+          "effective_value"
+        ],
+        "properties": {
+          "requested_permission_state": {
+            "enum": [
+              "allow",
+              "deny",
+              "ask",
+              "unset"
+            ]
+          },
+          "effective_permission_state": {
+            "enum": [
+              "allow",
+              "deny",
+              "ask"
+            ]
+          },
+          "downgrade_reason": {
+            "$ref": "https://puppetmaster.local/proposals/stop_block.v1/goal/66bc55f0daa99a504860df28a53b33417a1717db5dbf2fadf6b9d4de8aa0b114.schema.json#/$defs/nullable_non_empty_string"
+          },
+          "resolution": {
+            "enum": [
+              "allow",
+              "deny",
+              "ask"
+            ]
+          },
+          "source": {
+            "enum": [
+              "preset",
+              "project",
+              "user_override",
+              "session"
+            ]
+          },
+          "effective_value": {
+            "type": "boolean"
+          }
+        },
+        "allOf": [
+          {
+            "if": {
+              "properties": {
+                "resolution": {
+                  "const": "allow"
+                }
+              },
+              "required": [
+                "resolution"
+              ]
+            },
+            "then": {
+              "properties": {
+                "effective_permission_state": {
+                  "const": "allow"
+                },
+                "effective_value": {
+                  "const": true
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "resolution": {
+                  "enum": [
+                    "deny",
+                    "ask"
+                  ]
+                }
+              },
+              "required": [
+                "resolution"
+              ]
+            },
+            "then": {
+              "properties": {
+                "effective_value": {
+                  "const": false
+                }
+              }
+            }
+          }
+        ]
+      }
+    }
+  },
+  {
+    "node": [
+      "Plans/goal_run_stop_block_contracts/resource-bank.json",
+      "json",
+      "/goal/resources/30/schema/$defs/TargetRefs"
+    ],
+    "value_schema_sha256": "640f45e5cf547a1fdd51e227200d49d38880c7a54d61c568de313e90723d5ded",
+    "role": "SafeRef",
+    "reason": "TargetRefs maps target names to the existing non-secret SafeRef reference string. SafeRef accepts 592 of the 653 battery timestamps and 14 of the 16 fixed controls, so it does not decide the string and cannot authorize a non-timestamp role. Reviewed as an owner-schema observation: `profile: owner_schema` keeps the original validation and installs no timestamp overlay. No non-timestamp role is claimed. Mirrors the reviewed record for Plans/shared_integration_runtime_expansion_contracts.schema.json#/$defs/TargetRefs: this frozen copy's value schema equals that record's once $id values and $ref base URIs are normalized, and nothing else (scripts/pm-int4-d2-wildcard-role-mirror.py; INT4 D2, pm-ea-lead decision 2026-11-15).",
+    "classification": "other_owner_observation",
+    "citation": {
+      "path": "Plans/goal_run_stop_block_contracts/resource-bank.json",
+      "pointer": "/goal/resources/14/schema/$defs/SafeRef",
+      "value": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 512,
+        "pattern": "^(?!/)(?![A-Za-z]:[\\\\/])(?!file:)(?!.*(?:password|passwd|secret|cookie|private_key|api_key|access_token|refresh_token)=)[A-Za-z0-9][A-Za-z0-9._:/#?&=-]*$"
+      }
+    }
+  },
+  {
+    "node": [
+      "Plans/goal_run_stop_block_contracts/resource-bank.json",
+      "json",
+      "/goal/resources/30/schema/$defs/SafeParameters"
+    ],
+    "value_schema_sha256": "63b0b49bcfb38c8150edd4a814d2cfa0e9f35e23f7814d4356c26bdb334408a6",
+    "role": "safe_parameter_value",
+    "reason": "SafeParameters maps parameter names to a single value union: a SafeRef string, a boolean, an integer or null. The cited union accepts 592 of the 653 battery timestamps, through its SafeRef branch, and 14 of the 16 fixed controls, so it does not decide the string and cannot authorize a non-timestamp role. Reviewed as an owner-schema observation: `profile: owner_schema` keeps the original validation and installs no timestamp overlay. No non-timestamp role is claimed. Mirrors the reviewed record for Plans/shared_integration_runtime_expansion_contracts.schema.json#/$defs/SafeParameters: this frozen copy's value schema equals that record's once $id values and $ref base URIs are normalized, and nothing else (scripts/pm-int4-d2-wildcard-role-mirror.py; INT4 D2, pm-ea-lead decision 2026-11-15).",
+    "classification": "other_owner_observation",
+    "citation": {
+      "path": "Plans/goal_run_stop_block_contracts/resource-bank.json",
+      "pointer": "/goal/resources/30/schema/$defs/SafeParameters/additionalProperties",
+      "value": {
+        "oneOf": [
+          {
+            "$ref": "https://puppetmaster.local/proposals/stop_block.v1/goal/b685d252df0b20a47d28986f6314488490d08e0ac807163b9e422a81facc6949.schema.json#/$defs/SafeRef"
+          },
+          {
+            "type": "boolean"
+          },
+          {
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "node": [
+      "Plans/goal_run_stop_block_contracts/resource-bank.json",
+      "json",
+      "/event/resources/51/schema/$defs/TargetRefs"
+    ],
+    "value_schema_sha256": "6071a6287971c57d8cb3b053ddcee5c3062e85b5e5eaba93e8d9e1959775d128",
+    "role": "SafeRef",
+    "reason": "TargetRefs maps target names to the existing non-secret SafeRef reference string. SafeRef accepts 592 of the 653 battery timestamps and 14 of the 16 fixed controls, so it does not decide the string and cannot authorize a non-timestamp role. Reviewed as an owner-schema observation: `profile: owner_schema` keeps the original validation and installs no timestamp overlay. No non-timestamp role is claimed. Mirrors the reviewed record for Plans/shared_integration_runtime_expansion_contracts.schema.json#/$defs/TargetRefs: this frozen copy's value schema equals that record's once $id values and $ref base URIs are normalized, and nothing else (scripts/pm-int4-d2-wildcard-role-mirror.py; INT4 D2, pm-ea-lead decision 2026-11-15).",
+    "classification": "other_owner_observation",
+    "citation": {
+      "path": "Plans/goal_run_stop_block_contracts/resource-bank.json",
+      "pointer": "/event/resources/51/schema/$defs/SafeRef",
+      "value": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 512,
+        "pattern": "^(?!/)(?![A-Za-z]:[\\\\/])(?!file:)(?!.*(?:password|passwd|secret|cookie|private_key|api_key|access_token|refresh_token)=)[A-Za-z0-9][A-Za-z0-9._:/#?&=-]*$"
+      }
+    }
+  },
+  {
+    "node": [
+      "Plans/goal_run_stop_block_contracts/resource-bank.json",
+      "json",
+      "/event/resources/51/schema/$defs/SafeParameters"
+    ],
+    "value_schema_sha256": "6c8ac82774618cf5f1c2c1230678fd5ef320f30b8724a2d63011432eed3d0a5a",
+    "role": "safe_parameter_value",
+    "reason": "SafeParameters maps parameter names to a single value union: a SafeRef string, a boolean, an integer or null. The cited union accepts 592 of the 653 battery timestamps, through its SafeRef branch, and 14 of the 16 fixed controls, so it does not decide the string and cannot authorize a non-timestamp role. Reviewed as an owner-schema observation: `profile: owner_schema` keeps the original validation and installs no timestamp overlay. No non-timestamp role is claimed. Mirrors the reviewed record for Plans/shared_integration_runtime_expansion_contracts.schema.json#/$defs/SafeParameters: this frozen copy's value schema equals that record's once $id values and $ref base URIs are normalized, and nothing else (scripts/pm-int4-d2-wildcard-role-mirror.py; INT4 D2, pm-ea-lead decision 2026-11-15).",
+    "classification": "other_owner_observation",
+    "citation": {
+      "path": "Plans/goal_run_stop_block_contracts/resource-bank.json",
+      "pointer": "/event/resources/51/schema/$defs/SafeParameters/additionalProperties",
+      "value": {
+        "oneOf": [
+          {
+            "$ref": "https://puppetmaster.local/proposals/stop_block.v1/event/b685d252df0b20a47d28986f6314488490d08e0ac807163b9e422a81facc6949.schema.json#/$defs/SafeRef"
+          },
+          {
+            "type": "boolean"
+          },
+          {
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "node": [
+      "Plans/goal_run_stop_block_contracts/resource-bank.json",
+      "json",
+      "/producer/resources/5/schema/$defs/permission_snapshot_record/properties/resolved_permissions"
+    ],
+    "value_schema_sha256": "35544057d06dfbdecc97c2bb0238988c45abc49e9a42c64ad7c5e96fdfc822f0",
+    "role": "resolved_permission_record",
+    "reason": "The actual map value is the resolved permission-state object, with requested/effective state, resolution, source, downgrade reason and boolean effective value. It has no timestamp role. The containing minProperties requires explicit review rather than a singleton-refusal inference. Mirrors the reviewed record for Plans/executor_cancellation_contracts/schemas/original-permission-snapshot.v1.schema.json#/properties/resolved_permissions: this frozen copy's value schema equals that record's once $id values and $ref base URIs are normalized, and nothing else (scripts/pm-int4-d2-wildcard-role-mirror.py; INT4 D2, pm-ea-lead decision 2026-11-15).",
+    "citation": {
+      "path": "Plans/goal_run_stop_block_contracts/resource-bank.json",
+      "pointer": "/producer/resources/5/schema/$defs/permission_snapshot_record/properties/resolved_permissions/additionalProperties",
+      "value": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "requested_permission_state",
+          "effective_permission_state",
+          "downgrade_reason",
+          "resolution",
+          "source",
+          "effective_value"
+        ],
+        "properties": {
+          "requested_permission_state": {
+            "enum": [
+              "allow",
+              "deny",
+              "ask",
+              "unset"
+            ]
+          },
+          "effective_permission_state": {
+            "enum": [
+              "allow",
+              "deny",
+              "ask"
+            ]
+          },
+          "downgrade_reason": {
+            "$ref": "https://puppetmaster.local/proposals/stop_block.v1/producer/66bc55f0daa99a504860df28a53b33417a1717db5dbf2fadf6b9d4de8aa0b114.schema.json#/$defs/nullable_non_empty_string"
+          },
+          "resolution": {
+            "enum": [
+              "allow",
+              "deny",
+              "ask"
+            ]
+          },
+          "source": {
+            "enum": [
+              "preset",
+              "project",
+              "user_override",
+              "session"
+            ]
+          },
+          "effective_value": {
+            "type": "boolean"
+          }
+        },
+        "allOf": [
+          {
+            "if": {
+              "properties": {
+                "resolution": {
+                  "const": "allow"
+                }
+              },
+              "required": [
+                "resolution"
+              ]
+            },
+            "then": {
+              "properties": {
+                "effective_permission_state": {
+                  "const": "allow"
+                },
+                "effective_value": {
+                  "const": true
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "resolution": {
+                  "enum": [
+                    "deny",
+                    "ask"
+                  ]
+                }
+              },
+              "required": [
+                "resolution"
+              ]
+            },
+            "then": {
+              "properties": {
+                "effective_value": {
+                  "const": false
+                }
+              }
+            }
+          }
+        ]
+      }
+    }
   }
 ]

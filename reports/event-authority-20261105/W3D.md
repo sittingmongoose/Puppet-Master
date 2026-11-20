@@ -523,3 +523,50 @@ The remaining criterion-12 limit is explicit: 25 sampled derivations and five sc
 Reproduce findings 1, 2 and 4 with `python3 -B scripts/pm_w3d_bsd_mutation_proof.py --json <scratch>/mutations.json`; finding 3 with `python3 -B scripts/pm_w3d_bsd_numbers.py --json <scratch>/numbers.json`; finding 5 with `python3 scripts/pm_w3d_selfgrade_update.py`. Apply the same 12 GB admission floor and systemd scope to heavy runs, with long-job and foreground waits. The guard command is `python3 -B scripts/pm_w3d_bsd_guard_chunked.py --out-dir <scratch>/guards --reuse-dir <scratch>/nonexistent --cache <scratch>/collect.json --concurrency 4 --summary <scratch>/guard-summary.json`.
 
 Evidence directory: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/W3D/phase2-fix1`. `SHA256SUMS` covers the report, self-grade, compact summaries, full mutation/number/frozen outcomes, guard reports archive, command logs and reproduction scripts. Raw evidence stays outside the repository. The subsequent delivery record identifies the reporting head and both verified push URLs. No owner decision is stopped for Jared.
+
+
+## PNC-019 lane s4d (2026-11-14): 3/8/1 to 11/0/1
+
+Stream E lane s4d (`lanes/PNC019-RUN.md`, PLAN.md S4). Branch `plans/ea-pnc-s4d-20261114` from the unlanded batch-3 integration branch at `3c33510c57`, which contains W3D `030678268a`. Code `dd24161c5c` and `8810cb2381`; owner text `5883656bc0`. No new plan-unit id was minted: only W3D's existing units changed. The gated guard tool and every NUMRULE file are byte-identical to the base.
+
+**Result:** all fifteen families move from **3 PASS / 8 PARTIAL / 1 ABSENT** (45/120/15) to **11 PASS / 0 PARTIAL / 1 ABSENT** (165/0/15). Membership stays ABSENT (admission is PNC-019 S5). Native execution stays NOT_RUN.
+
+### Defects found in the inherited work (location, cause, fix)
+
+| # | Where | Cause | Fix |
+|---|---|---|---|
+| 1 | `scripts/pm_w3d_bsd_events.py` payload derivations | Most payload fields (Project, operation, every reference, severities, states, generations, hashes) could be changed to another schema-valid value and the complete checker still accepted. No row joined them to an authentic source. | OW rows per family (`scripts/pm_w3d_bsd_rows.py:735`, `obs_owner` `scripts/pm_w3d_bsd_events.py:2307`): each non-constant field equals its owner source. Every reference resolves an owner-held object; resolution, kind, subject and Project are separate rows. BJ rows (`:2301`) join the stored logical body's identity fields. |
+| 2 | `operation_size_entailed` (OZ01) | The written proof was false: a 1,700-character authentic original source id gave an 18,265-byte operation while the envelope stayed within EN17, and append accepted it. | OZ01 is a reachable row in the append path (`:1232`) with that witness. |
+| 3 | `checkpoint_size_entailed` (CZ01) | The proof was false: the joined live Storage control strings are unbounded, and publish accepted a 17,000-character dataset name. | CZ01 is a checkpoint row (`:1426`). |
+| 4 | `foreign_original_entailed` (HI08) | The proof was false: a fully coherent original sealed by another Storage instance passed every frozen recomputation, and read accepted it. | HI08 is a history row (`:1686`). |
+| 5 | Admission, retry, replay, withdrawal, backup and generic-index rows | These read fixture flags that no code set (`permission`, `remote_operations`, `replay[e] == []`, `cutoff_recorded`, `backup_coherent`, `generic_index_complete`). | Computed models: gate stores (`:924`); retry on a Storage store snapshot (`:1352`); replay with instrumented sinks (`:1708`); withdrawal on governance state (`:1739`); successor rebuild (`:1828`); backup-cut restore (`:1906`); retention against the Storage catalog (`:1946`); producer crash cuts and recovery (`:2059`, `:2139`). Each implementation defect is its own witness, and the rows observe computed outcomes. |
+| 6 | `SC06_matched_verified` | `bool(receipt_index)`: any custody of any event passed. | The custody of the matched event is looked up; its key and full-value commitment are separate rows (`:1488`). |
+| 7 | Settlement | The published head and the completed operation were never built or schema-validated. | RC27-RC31 (`:1341`). |
+| 8 | `frozen_verify` | Its integer domain named only three payload fields: a retained `raised_against_generation` of `1.0` was accepted. Three binding clauses had no witness (recheck 2, note 1). | Every integer field from the family schema (`PAYLOAD_INTEGERS`, `:100`). Witnesses for custody event, source-row operation, event type, binding event id and key, envelope-only defects and unknown family. |
+| 9 | Envelope/payload | Observations read the builder's private payload, not the dispatched envelope payload. An unencodable payload was reported as an inline oversize. | `dispatched_payload`. EN11 leaves unencodable payloads to the number and type rows; a clean EN11 witness uses a long authentic binding id. |
+| 10 | `Plans/storage-plan.md` SP-1360, SP-1364 | The text said `source event retention is independently "PENDING_RETENTION_DECISION"`, contradicting the DL-453 binding the candidates and BSD-1360/1364 carry. | Bound to `RP-AUTHORITY-INDEFINITE@1.0.0` (DL-453 item 1.a) (`5883656bc0`). |
+| 11 | CV-1350..1364, BSD-1350..1364 section 12, ATS-1230, 46 acceptance criteria | The text said "phase 2 adopts their reviewed helper" and "Criterion 12 is PARTIAL ... phase 1". | CV units adopt CV-1100/SP-1100, CV-1101 and SP-1101 by name. They state the owner joins and the inline-only EventRecord 2.0.0 payload: SP-337 says only the 3.0.0 successor materializes the reference route. Section 12 and ATS-1230 describe the executed evidence. |
+
+### Evidence at the code head
+
+| Check | Exit | Result |
+|---|---:|---|
+| Complete checker `scripts/pm_w3d_bsd_events.py` | 0 | pass. 15 families, 576 positives, 7,199 negatives (7,109 single-row, 90 declared multi-row), 0 mismatches, 0 unresolved refs. Every row of every family has a single-defect witness. |
+| Gated guard tool (`pm_w3d_bsd_guard_chunked.py`, concurrency 4, each child in its 2G scope) | 0 | 292/292 witness suites PASS. 17 reused only where the table SHA-256 and suite input digests were identical. 314 tables (22 entailed, each alone with its proof), 2,092 rows, at most 8 rows per table. |
+| Systematic derivation mutations `pm_w3d_bsd_derivation_mutations.py` | 0 | 441 sites: 406 strict kills (a witness is accepted), 20 joint kills at declared duplicate sites (each site alone refuses; the joint cut accepts), 3 readiness gates, 8 entailed observers, 4 non-decision helpers listed, **0 survivors**. |
+| Strict proof `pm_w3d_bsd_mutation_proof.py` (the recheck's 15 plus fix-1's own 10) | 0 | Table sites 12/12, duplicates 2/2, recheck 15/15, own 10/10. |
+| Per-slot corpus `pm_w3d_bsd_slot_corpus.py` | 0 | 35 slot kinds over 15 families, 46,268 runs, 0 mismatches, 0 exceptions. Number values: 145 materialized plus 35 parser-only. 24 distinct date-time values, each with its corpus outcome per profile. |
+| Number routes `pm_w3d_bsd_numbers.py` | 0 | 5 routes × 130 runs, 0 mismatches. 15 payload_integer expectations moved from EN11 to `payload.policy_revision.type`, recorded in the manifest's `pnc019_s4d_changes`. |
+| Plan coverage `pm_w3d_bsd_plan_coverage.py` | 0 | 2,324/2,324 plan guards: 2,279 mapped to witnessed reachable rows and 45 only to entailed tables. 110/110 planned positives; the retention plan is covered in every family (`W3D-plan-coverage.json`). |
+| Shared numbers self-test (`--scope numbers`) | 0 | pass, 276 positives / 304 negatives. |
+| Shard check / index validate pinned to `3c33510c57` | 0 / 0 | 4,067 shards, 99 sources; index pass, 0 failures. Regeneration touched only the storage-plan, contracts_v0 and automated_testing_system trees and `.plan_index`. |
+| Date-time inventory gate | 1 | Fails closed with 4 rows, all under `Plans/.audits` (outside this sparse checkout); none names a W3D file. Recorded, not credited. |
+
+Per-function mutation counts, the joint-kill duplicate rows and every run output are in the lane report `drafts/PNC019/s4d/REPORT.md` on the evidence share, with `SHA256SUMS`. The result summary is `W3D-pnc019-s4d-summary.json`; the regrade is `W3D-self-grade.json` and its quote audit `W3D-self-grade-audit-pnc019.json` (510/510 quotes match at their lines).
+
+### Not claimed
+
+- **Not runtime evidence:** these are synthetic oracles with models standing in for Storage and the owner implementation. Native execution is NOT_RUN.
+- **Not admission:** registry membership and the SP-318 physical, migration and budget prerequisites remain separate.
+- **Models not mutated:** the implementation stand-ins (`run_*`, `recover`, `retention_decision`, `SealedOwner`) are listed, not mutated; their defect branches are the witnesses.
+- **Review:** independent review precedes admission.

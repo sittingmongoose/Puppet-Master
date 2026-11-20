@@ -1,0 +1,864 @@
+{
+ "schema_id": "pm.assurance.event_authority.admission_depth_assessment.v1",
+ "assessment_kind": "admission_twelve_criteria",
+ "writer": "pm-ea-admission-writer.v1",
+ "merge": "admission-merge-2",
+ "registry": {
+  "path": "Plans/event_family_registry.json",
+  "revision": "2026-11-18.2",
+  "sha256": "ec21cf1a5b42b3e68a5564a847b4798dff968612d11d438bc7075b89196f9602",
+  "family_count": 518,
+  "row_pointer": "#/families/388"
+ },
+ "base_commit": "45b4ccf25270c486dbc682805cd455ce4ca25fb0",
+ "rubric": "Step 8 depth matrix, twelve criteria (DL-077); PASS needs Plans/ evidence",
+ "native_execution": "NOT_RUN",
+ "rows": [
+  {
+   "event_type": "filesafe.path_denied",
+   "family_id": "event-family-filesafe-path-denied",
+   "family_revision": "2.0.0",
+   "cells": {
+    "membership_version": {
+     "status": "PASS",
+     "representation": "exact_registry_membership",
+     "finding": "Currently registered at 2026-11-18.2 as #/families/388 (canonical row SHA-256 7df8429f25c768e5a8889c2e1e0420ca383fe39745b87bb9552c746b46c68bb2). Original one-family admission checkpoints remain in the family record and immutable Git source.",
+     "evidence": [
+      {
+       "path": "Plans/event_family_registry.json",
+       "json_pointer": "#/families/388",
+       "line_start": 25770,
+       "line_end": 25853,
+       "quote": "\"event_type\": \"filesafe.path_denied\"",
+       "quote_line": 25773,
+       "file_sha256": "ec21cf1a5b42b3e68a5564a847b4798dff968612d11d438bc7075b89196f9602",
+       "quote_check": "exact",
+       "source_citation": {
+        "path": "Plans/event_family_registry.json",
+        "json_pointer": "#/families/388",
+        "line_start": 25726,
+        "line_end": 25809,
+        "quote": "\"event_type\": \"filesafe.path_denied\"",
+        "quote_line": 25729,
+        "file_sha256": "3ea6f3955d6e738628baac1c812191ab15cf218d8ef1feaef43e0d16bfa4f20a",
+        "quote_check": "exact"
+       },
+       "unit": "#/families/388",
+       "quote_scope": "unit #/families/388, Plans/event_family_registry.json:25770-25853"
+      }
+     ]
+    },
+    "owner_doc": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "CV-555/SP-555 explicitly own this exact family and route current FileSafe semantics through F2-213; the new original-source interfaces are separately named.",
+     "evidence": [
+      {
+       "path": "Plans/Contracts_V0.md",
+       "unit": "CV-555",
+       "line_start": 45715,
+       "line_end": 45715,
+       "quote": "**Newly authored owner contract",
+       "excerpt_sha256": "8ef132798eecc752105453551b6edc674e90ba76b1ce2a51462a4d44cfcc7c8c",
+       "file_sha256": "58dee182ea2dd8dd358d27912280fa9113c3d1d8fd68b1c0c5d51b6f906d73c8",
+       "quote_check": "exact",
+       "quote_scope": "unit CV-555, Plans/Contracts_V0.md:45677-45759",
+       "excerpt_digest_convention": "literal_quote",
+       "source_citation": {
+        "path": "Plans/Contracts_V0.md",
+        "unit": "CV-555",
+        "line_start": 43757,
+        "line_end": 43757,
+        "quote": "**Newly authored owner contract",
+        "excerpt_sha256": "8ef132798eecc752105453551b6edc674e90ba76b1ce2a51462a4d44cfcc7c8c",
+        "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a"
+       }
+      },
+      {
+       "path": "Plans/Contracts_V0.md",
+       "unit": "CV-555",
+       "line_start": 45727,
+       "line_end": 45727,
+       "quote": "**Exact original source graph (second pass).**",
+       "excerpt_sha256": "62b0ca804c854fa8c4203559ac9bd702e9bca0840da771a3c65cf1cbb950cdde",
+       "file_sha256": "58dee182ea2dd8dd358d27912280fa9113c3d1d8fd68b1c0c5d51b6f906d73c8",
+       "quote_check": "exact",
+       "quote_scope": "unit CV-555, Plans/Contracts_V0.md:45677-45759",
+       "excerpt_digest_convention": "literal_quote",
+       "source_citation": {
+        "path": "Plans/Contracts_V0.md",
+        "unit": "CV-555",
+        "line_start": 43769,
+        "line_end": 43769,
+        "quote": "**Exact original source graph (second pass).**",
+        "excerpt_sha256": "62b0ca804c854fa8c4203559ac9bd702e9bca0840da771a3c65cf1cbb950cdde",
+        "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a"
+       }
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "owner_doc",
+      "status": "PASS"
+     }
+    },
+    "producer": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "CV-555 selects its exact producer, separate Project/application original-source roots and ordered lifecycle; SP-555 explicitly adopts SP-286/CV-339 full-value v2 before terminal publication. Native methods remain specified_unimplemented.",
+     "evidence": [
+      {
+       "path": "Plans/Contracts_V0.md",
+       "unit": "CV-555",
+       "line_start": 45727,
+       "line_end": 45727,
+       "quote": "**Exact original source graph (second pass).**",
+       "excerpt_sha256": "62b0ca804c854fa8c4203559ac9bd702e9bca0840da771a3c65cf1cbb950cdde",
+       "file_sha256": "58dee182ea2dd8dd358d27912280fa9113c3d1d8fd68b1c0c5d51b6f906d73c8",
+       "quote_check": "exact",
+       "quote_scope": "unit CV-555, Plans/Contracts_V0.md:45677-45759",
+       "excerpt_digest_convention": "literal_quote",
+       "source_citation": {
+        "path": "Plans/Contracts_V0.md",
+        "unit": "CV-555",
+        "line_start": 43769,
+        "line_end": 43769,
+        "quote": "**Exact original source graph (second pass).**",
+        "excerpt_sha256": "62b0ca804c854fa8c4203559ac9bd702e9bca0840da771a3c65cf1cbb950cdde",
+        "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a"
+       }
+      },
+      {
+       "path": "Plans/Contracts_V0.md",
+       "unit": "CV-555",
+       "line_start": 45735,
+       "line_end": 45735,
+       "quote": "**Lifecycle barriers for",
+       "excerpt_sha256": "5c1392ad6829f11c045389ef84f772dc37bfcdd3cc819356765055ea9b04fbfb",
+       "file_sha256": "58dee182ea2dd8dd358d27912280fa9113c3d1d8fd68b1c0c5d51b6f906d73c8",
+       "quote_check": "exact",
+       "quote_scope": "unit CV-555, Plans/Contracts_V0.md:45677-45759",
+       "excerpt_digest_convention": "literal_quote",
+       "source_citation": {
+        "path": "Plans/Contracts_V0.md",
+        "unit": "CV-555",
+        "line_start": 43777,
+        "line_end": 43777,
+        "quote": "**Lifecycle barriers for",
+        "excerpt_sha256": "5c1392ad6829f11c045389ef84f772dc37bfcdd3cc819356765055ea9b04fbfb",
+        "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a"
+       }
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-555",
+       "line_start": 56056,
+       "line_end": 56056,
+       "quote": "**Ordered producer and custody.**",
+       "excerpt_sha256": "231cb7973757ab8bc3a8e344fcd3b93bfcc4510cbb98bad2dc9aef6a8a073d6c",
+       "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+       "quote_check": "exact",
+       "quote_scope": "unit SP-555, Plans/storage-plan.md:55971-56081",
+       "excerpt_digest_convention": "literal_quote",
+       "source_citation": {
+        "path": "Plans/storage-plan.md",
+        "unit": "SP-555",
+        "line_start": 55683,
+        "line_end": 55683,
+        "quote": "**Ordered producer and custody.**",
+        "excerpt_sha256": "231cb7973757ab8bc3a8e344fcd3b93bfcc4510cbb98bad2dc9aef6a8a073d6c",
+        "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+       }
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "producer",
+      "status": "PASS"
+     }
+    },
+    "closed_payload_schema": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "Own closed 2.0.0 payload selects this exact family and preserves current Project/application semantics. Original Project source resources remain immutable; prepared snapshot versions retain original string types and override scopes use the current discriminated union.",
+     "evidence": [
+      {
+       "path": "Plans/event_payloads/filesafe_path_denied_v2.schema.json",
+       "unit": "CV-555",
+       "line_start": 3,
+       "line_end": 3,
+       "quote": "\"additionalProperties\": false",
+       "excerpt_sha256": "4fe655e121901a2a09025263b26e06f69e0ca93dd03150f78ec63bbf08fa421a",
+       "file_sha256": "5e79f00d2f82e6017b36a5a0db254f0cc34a33fb74e4998dd89473fe66179cf1",
+       "quote_check": "exact",
+       "quote_scope": "document",
+       "excerpt_digest_convention": "literal_quote",
+       "source_citation": {
+        "path": "Plans/event_payloads/filesafe_path_denied_v2.schema.json",
+        "unit": "CV-555",
+        "line_start": 3,
+        "line_end": 3,
+        "quote": "\"additionalProperties\": false",
+        "excerpt_sha256": "4fe655e121901a2a09025263b26e06f69e0ca93dd03150f78ec63bbf08fa421a",
+        "file_sha256": "5e79f00d2f82e6017b36a5a0db254f0cc34a33fb74e4998dd89473fe66179cf1"
+       }
+      },
+      {
+       "path": "Plans/Contracts_V0.md",
+       "unit": "CV-555",
+       "line_start": 45715,
+       "line_end": 45715,
+       "quote": "**Newly authored owner contract",
+       "excerpt_sha256": "8ef132798eecc752105453551b6edc674e90ba76b1ce2a51462a4d44cfcc7c8c",
+       "file_sha256": "58dee182ea2dd8dd358d27912280fa9113c3d1d8fd68b1c0c5d51b6f906d73c8",
+       "quote_check": "exact",
+       "quote_scope": "unit CV-555, Plans/Contracts_V0.md:45677-45759",
+       "excerpt_digest_convention": "literal_quote",
+       "source_citation": {
+        "path": "Plans/Contracts_V0.md",
+        "unit": "CV-555",
+        "line_start": 43757,
+        "line_end": 43757,
+        "quote": "**Newly authored owner contract",
+        "excerpt_sha256": "8ef132798eecc752105453551b6edc674e90ba76b1ce2a51462a4d44cfcc7c8c",
+        "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a"
+       }
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "closed_payload_schema",
+      "status": "PASS"
+     }
+    },
+    "scope_identity": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "CV-555/SP-555 bind exact event-id/key recipes and full envelope/source/subject/Server/Host/root joins. The closed EventRecord uses scope_kind/project_id; application never borrows a Project or node/attempt. Own full original-source join positives/negatives pass.",
+     "evidence": [
+      {
+       "path": "Plans/Contracts_V0.md",
+       "unit": "CV-555",
+       "line_start": 45719,
+       "line_end": 45719,
+       "quote": "**Scope and joins.**",
+       "excerpt_sha256": "356c919262c63b2dd5a2bad6965f8004d148d8c38b97a2dbd521e7b09142b16d",
+       "file_sha256": "58dee182ea2dd8dd358d27912280fa9113c3d1d8fd68b1c0c5d51b6f906d73c8",
+       "quote_check": "exact",
+       "quote_scope": "unit CV-555, Plans/Contracts_V0.md:45677-45759",
+       "excerpt_digest_convention": "literal_quote",
+       "source_citation": {
+        "path": "Plans/Contracts_V0.md",
+        "unit": "CV-555",
+        "line_start": 43761,
+        "line_end": 43761,
+        "quote": "**Scope and joins.**",
+        "excerpt_sha256": "356c919262c63b2dd5a2bad6965f8004d148d8c38b97a2dbd521e7b09142b16d",
+        "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a"
+       }
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-555",
+       "line_start": 56058,
+       "line_end": 56058,
+       "quote": "**Identity and replay.**",
+       "excerpt_sha256": "034db3a68c887aa6cc2b0edc84154ffc1cc637de2a1eaa4193ac07fca6897749",
+       "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+       "quote_check": "exact",
+       "quote_scope": "unit SP-555, Plans/storage-plan.md:55971-56081",
+       "excerpt_digest_convention": "literal_quote",
+       "source_citation": {
+        "path": "Plans/storage-plan.md",
+        "unit": "SP-555",
+        "line_start": 55685,
+        "line_end": 55685,
+        "quote": "**Identity and replay.**",
+        "excerpt_sha256": "034db3a68c887aa6cc2b0edc84154ffc1cc637de2a1eaa4193ac07fca6897749",
+        "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+       }
+      },
+      {
+       "path": "Plans/Contracts_V0.md",
+       "unit": "CV-555",
+       "line_start": 45747,
+       "line_end": 45747,
+       "quote": "For this family, event scope_kind/project_id/thread_id/run_id/node_id/attempt_id",
+       "excerpt_sha256": "f47b120453aaecf4c6f89b6cedba1f5e546b1d1a318620eab8101bb2c624a94d",
+       "file_sha256": "58dee182ea2dd8dd358d27912280fa9113c3d1d8fd68b1c0c5d51b6f906d73c8",
+       "quote_check": "exact",
+       "quote_scope": "unit CV-555, Plans/Contracts_V0.md:45677-45759",
+       "excerpt_digest_convention": "literal_quote",
+       "source_citation": {
+        "path": "Plans/Contracts_V0.md",
+        "unit": "CV-555",
+        "line_start": 43789,
+        "line_end": 43789,
+        "quote": "For this family, event scope_kind/project_id/thread_id/run_id/node_id/attempt_id",
+        "excerpt_sha256": "f47b120453aaecf4c6f89b6cedba1f5e546b1d1a318620eab8101bb2c624a94d",
+        "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a"
+       }
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "scope_identity",
+      "status": "PASS"
+     }
+    },
+    "replay_idempotency": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "SP-555 resolves the lifetime tuple and semantic digest to the unchanged original complete event and first receipt. Changed digest conflicts; missing authoritative dedupe/source fences with zero new effect. Own protocol cases pass.",
+     "evidence": [
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-555",
+       "line_start": 56058,
+       "line_end": 56058,
+       "quote": "**Identity and replay.**",
+       "excerpt_sha256": "034db3a68c887aa6cc2b0edc84154ffc1cc637de2a1eaa4193ac07fca6897749",
+       "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+       "quote_check": "exact",
+       "quote_scope": "unit SP-555, Plans/storage-plan.md:55971-56081",
+       "excerpt_digest_convention": "literal_quote",
+       "source_citation": {
+        "path": "Plans/storage-plan.md",
+        "unit": "SP-555",
+        "line_start": 55685,
+        "line_end": 55685,
+        "quote": "**Identity and replay.**",
+        "excerpt_sha256": "034db3a68c887aa6cc2b0edc84154ffc1cc637de2a1eaa4193ac07fca6897749",
+        "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+       }
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-555",
+       "line_start": 56072,
+       "line_end": 56072,
+       "quote": "**Exact original/issued joins for",
+       "excerpt_sha256": "7d30fbf28de19e08f8c5e6fc7bd3bb139095e767453b0ece4a0b3dc7e4307b1e",
+       "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+       "quote_check": "exact",
+       "quote_scope": "unit SP-555, Plans/storage-plan.md:55971-56081",
+       "excerpt_digest_convention": "literal_quote",
+       "source_citation": {
+        "path": "Plans/storage-plan.md",
+        "unit": "SP-555",
+        "line_start": 55699,
+        "line_end": 55699,
+        "quote": "**Exact original/issued joins for",
+        "excerpt_sha256": "7d30fbf28de19e08f8c5e6fc7bd3bb139095e767453b0ece4a0b3dc7e4307b1e",
+        "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+       }
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-555",
+       "line_start": 56068,
+       "line_end": 56068,
+       "quote": "**Recovery and withdrawal authority for `filesafe.path_denied`",
+       "excerpt_sha256": "c95370aaecf4e52058f565b18ebca3d4679b22a4bc8d7f0ab46246582c75a0c4",
+       "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+       "quote_check": "exact",
+       "quote_scope": "unit SP-555, Plans/storage-plan.md:55971-56081",
+       "excerpt_digest_convention": "literal_quote",
+       "source_citation": {
+        "path": "Plans/storage-plan.md",
+        "unit": "SP-555",
+        "line_start": 55695,
+        "line_end": 55695,
+        "quote": "**Recovery and withdrawal authority for `filesafe.path_denied`",
+        "excerpt_sha256": "c95370aaecf4e52058f565b18ebca3d4679b22a4bc8d7f0ab46246582c75a0c4",
+        "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+       }
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-555",
+       "line_start": 56068,
+       "line_end": 56068,
+       "quote": "**Recovery and withdrawal authority for `filesafe.path_denied`",
+       "excerpt_sha256": "c95370aaecf4e52058f565b18ebca3d4679b22a4bc8d7f0ab46246582c75a0c4",
+       "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+       "quote_check": "exact",
+       "quote_scope": "unit SP-555, Plans/storage-plan.md:55971-56081",
+       "excerpt_digest_convention": "literal_quote",
+       "source_citation": {
+        "path": "Plans/storage-plan.md",
+        "unit": "SP-555",
+        "line_start": 55695,
+        "line_end": 55695,
+        "quote": "**Recovery and withdrawal authority for `filesafe.path_denied`",
+        "excerpt_sha256": "c95370aaecf4e52058f565b18ebca3d4679b22a4bc8d7f0ab46246582c75a0c4",
+        "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+       }
+      },
+      {
+       "path": "Plans/Contracts_V0.md",
+       "unit": "CV-555",
+       "quote": "**Current-writer eligibility for `filesafe.path_denied` (review round 2).**",
+       "line_start": 45721,
+       "line_end": 45721,
+       "excerpt_sha256": "5f986c4bf88ab6ecb401a9c073f0c20abafea497c84dff5c74a210a71b4e47f8",
+       "file_sha256": "58dee182ea2dd8dd358d27912280fa9113c3d1d8fd68b1c0c5d51b6f906d73c8",
+       "quote_check": "exact",
+       "quote_scope": "unit CV-555, Plans/Contracts_V0.md:45677-45759",
+       "excerpt_digest_convention": "literal_quote",
+       "source_citation": {
+        "path": "Plans/Contracts_V0.md",
+        "unit": "CV-555",
+        "quote": "**Current-writer eligibility for `filesafe.path_denied` (review round 2).**",
+        "line_start": 43763,
+        "line_end": 43763,
+        "excerpt_sha256": "5f986c4bf88ab6ecb401a9c073f0c20abafea497c84dff5c74a210a71b4e47f8",
+        "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a"
+       }
+      },
+      {
+       "path": "Plans/Contracts_V0.md",
+       "unit": "CV-555",
+       "quote": "**Current-writer eligibility for `filesafe.path_denied` (review round 2).**",
+       "line_start": 45721,
+       "line_end": 45721,
+       "excerpt_sha256": "5f986c4bf88ab6ecb401a9c073f0c20abafea497c84dff5c74a210a71b4e47f8",
+       "file_sha256": "58dee182ea2dd8dd358d27912280fa9113c3d1d8fd68b1c0c5d51b6f906d73c8",
+       "quote_check": "exact",
+       "quote_scope": "unit CV-555, Plans/Contracts_V0.md:45677-45759",
+       "excerpt_digest_convention": "literal_quote",
+       "source_citation": {
+        "path": "Plans/Contracts_V0.md",
+        "unit": "CV-555",
+        "quote": "**Current-writer eligibility for `filesafe.path_denied` (review round 2).**",
+        "line_start": 43763,
+        "line_end": 43763,
+        "excerpt_sha256": "5f986c4bf88ab6ecb401a9c073f0c20abafea497c84dff5c74a210a71b4e47f8",
+        "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a"
+       }
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "replay_idempotency",
+      "status": "PASS"
+     }
+    },
+    "retention": {
+     "status": "PASS",
+     "representation": "integrated_retention_delta",
+     "finding": "Current exact-family BOUND retention assignment: {\"application_policy_ref\": \"RP-FILESAFE-DENIED-PATH-APPLICATION-2555D@1.0.0\", \"decisions\": [\"DL-426\", \"DL-464\"], \"event_type\": \"filesafe.path_denied\", \"existing_checkpoints\": [], \"grade_source\": \"reports/event-authority-20261104/DF.self-grade.json\", \"history_policy_ref\": \"RP-OPERATIONAL-2555D@1.0.0\", \"lane\": \"DF\", \"original_and_checkpoint_assignments\": [], \"owner\": \"Plans/storage-plan.md#SP-555\", \"owner_line\": 51219, \"prior_finding\": \"SP-555 applies Card 2 2.e/DL-426: Project history uses RP-OPERATIONAL-2555D with exact expiry/protection/deletion rules. Application counting/deletion rules remain PENDING_RETENTION_DECISION, as the answer expressly requires; no Project rule is inferred for them.\", \"question\": null, \"status\": \"BOUND\"}",
+     "evidence": [
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-555",
+       "line_start": 56013,
+       "line_end": 56013,
+       "quote": "Current selected assignment (2026-11-19): filesafe.path_denied@2.0.0 is registered for application_or_project",
+       "quote_check": "exact",
+       "quote_scope": "unit SP-555, Plans/storage-plan.md:55971-56081",
+       "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+       "source_citation": {
+        "path": "Plans/storage-plan.md",
+        "unit": "SP-555",
+        "line_start": 55691,
+        "line_end": 55691,
+        "quote": "**Retention — Card 2 item 2.e, DL-426 (review round 7).** Project-scoped `filesafe.path_denied` is seven-year troubleshooting history: `retention_policy_ref = RP-OPERATIONAL-2555D`, reusing the exact existing Storage registry object (fixed_ttl, terminal_transition, 220752000 seconds = 2,555 days, 2,000,000 records per Project, fail_closed overflow, hold_eligible, compact expiry). For this binding the terminal-transition anchor is the saved original refusal or startup-failure result at its first successful durable save, never a retry, reprocessing, recovery, later append or observation time. Expiry is inclusive at that anchor plus 2,555 days. Remove only expired entries that no investigation, active reference, recovery or backup protects; existing legal holds, preserved/recent-run, rollback and maintenance references still override eligibility. If full and no entry may expire, refuse new entries rather than evict an unexpired or protected row. The extra troubleshooting entry may disappear only after expiry and protection checks; its original approval or action result keeps its own lifetime. Supporting approvals, source snapshots and recovery logs retain their own policies. Jared answered \"i approve all of it\"; the presented deck maps approve all to option A. The accepted answer is landed in `Plans/Decision_Log.md#DL-426` (batch 1); this unit applies its exact option A and shared conditions. This applies exactly item 2.e and Card 2's shared conditions. It adds no counting or deletion rule for future entries outside Projects. **Application scope remains PENDING_RETENTION_DECISION and may not record this event until exact approved rules exist.** Exact remaining question: What counting scope, capacity/overflow behavior and deletion/protection rules govern application-scoped `filesafe.path_denied` history? A Project policy must not be inferred for it. No original body, snapshot, transaction, generic index or checkpoint lifetime is reopened.",
+        "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+       },
+       "locator_maintenance": {
+        "authority": "MERGE2-FIX4",
+        "reason": "Re-cite the same accepted retention claim at its current exact owner assignment; event and source/checkpoint authority remain separate."
+       }
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-555",
+       "line_start": 56013,
+       "line_end": 56013,
+       "quote": "Current selected assignment (2026-11-19): filesafe.path_denied@2.0.0 is registered for application_or_project",
+       "quote_check": "exact",
+       "quote_scope": "unit SP-555, Plans/storage-plan.md:55971-56081",
+       "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+       "source_citation": {
+        "path": "Plans/storage-plan.md",
+        "unit": "SP-555",
+        "line_start": 55638,
+        "line_end": 55638,
+        "quote": "\\ selects `RP-FILESAFE-DENIED-PATH-APPLICATION-2555D@1.0.0`; Project records select the Project policy\\",
+        "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+       },
+       "locator_maintenance": {
+        "authority": "MERGE2-FIX4",
+        "reason": "Re-cite the same accepted retention claim at its current exact owner assignment; event and source/checkpoint authority remain separate."
+       }
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "retention",
+      "status": "PASS"
+     }
+    },
+    "redaction_custody": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "CV-555 now validates the selected original itself and its own commitment before a recursive exact-type complete join, on current acceptance and body reads. Own both-scope wrong selected-bank types refuse. Issued-only history and original typed commitments are preserved; native custody/permissions/backup remain NOT_RUN.",
+     "evidence": [
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-555",
+       "line_start": 56062,
+       "line_end": 56062,
+       "quote": "**Redaction and custody.**",
+       "excerpt_sha256": "8296c6aac065df812febb80a254a528c45dd22d35e8bcd8004a440343a19647d",
+       "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+       "quote_check": "exact",
+       "quote_scope": "unit SP-555, Plans/storage-plan.md:55971-56081",
+       "excerpt_digest_convention": "literal_quote",
+       "source_citation": {
+        "path": "Plans/storage-plan.md",
+        "unit": "SP-555",
+        "line_start": 55689,
+        "line_end": 55689,
+        "quote": "**Redaction and custody.**",
+        "excerpt_sha256": "8296c6aac065df812febb80a254a528c45dd22d35e8bcd8004a440343a19647d",
+        "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+       }
+      },
+      {
+       "path": "Plans/Contracts_V0.md",
+       "unit": "CV-555",
+       "line_start": 45731,
+       "line_end": 45731,
+       "quote": "The source's original_request, original_result, writer_epoch",
+       "excerpt_sha256": "de1002a443a05f71d88cc27b17bbf29fb758718f7b9c1a9a14a48d3e3331133a",
+       "file_sha256": "58dee182ea2dd8dd358d27912280fa9113c3d1d8fd68b1c0c5d51b6f906d73c8",
+       "quote_check": "exact",
+       "quote_scope": "unit CV-555, Plans/Contracts_V0.md:45677-45759",
+       "excerpt_digest_convention": "literal_quote",
+       "source_citation": {
+        "path": "Plans/Contracts_V0.md",
+        "unit": "CV-555",
+        "line_start": 43773,
+        "line_end": 43773,
+        "quote": "The source's original_request, original_result, writer_epoch",
+        "excerpt_sha256": "de1002a443a05f71d88cc27b17bbf29fb758718f7b9c1a9a14a48d3e3331133a",
+        "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a"
+       }
+      },
+      {
+       "path": "Plans/Contracts_V0.md",
+       "unit": "CV-555",
+       "line_start": 45754,
+       "line_end": 45754,
+       "quote": "**Selected-original custody for `filesafe.path_denied` (review round 7, R6-B1).**",
+       "excerpt_sha256": "b8b209035c1beaf640a18b4cb80ae01179e49d5a44f6f74e8b14f8f4387e6433",
+       "file_sha256": "58dee182ea2dd8dd358d27912280fa9113c3d1d8fd68b1c0c5d51b6f906d73c8",
+       "quote_check": "exact",
+       "quote_scope": "unit CV-555, Plans/Contracts_V0.md:45677-45759",
+       "excerpt_digest_convention": "literal_quote",
+       "source_citation": {
+        "path": "Plans/Contracts_V0.md",
+        "unit": "CV-555",
+        "line_start": 43796,
+        "line_end": 43796,
+        "quote": "**Selected-original custody for `filesafe.path_denied` (review round 7, R6-B1).**",
+        "excerpt_sha256": "b8b209035c1beaf640a18b4cb80ae01179e49d5a44f6f74e8b14f8f4387e6433",
+        "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a"
+       }
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "redaction_custody",
+      "status": "PASS"
+     }
+    },
+    "transitions": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "CV-555 has this family's lifecycle table, concrete source/body/admission/append/first-receipt/terminal barriers and same-operation recovery. Its domain outcome is preserved; passive replay never performs the command, grant, capture, restore or hold-clear action.",
+     "evidence": [
+      {
+       "path": "Plans/Contracts_V0.md",
+       "unit": "CV-555",
+       "line_start": 45717,
+       "line_end": 45717,
+       "quote": "**Producer and transition.**",
+       "excerpt_sha256": "ee1d0a638e1624393c06de0b82057a27503f09f98cecc617f1ce225d0529eeb1",
+       "file_sha256": "58dee182ea2dd8dd358d27912280fa9113c3d1d8fd68b1c0c5d51b6f906d73c8",
+       "quote_check": "exact",
+       "quote_scope": "unit CV-555, Plans/Contracts_V0.md:45677-45759",
+       "excerpt_digest_convention": "literal_quote",
+       "source_citation": {
+        "path": "Plans/Contracts_V0.md",
+        "unit": "CV-555",
+        "line_start": 43759,
+        "line_end": 43759,
+        "quote": "**Producer and transition.**",
+        "excerpt_sha256": "ee1d0a638e1624393c06de0b82057a27503f09f98cecc617f1ce225d0529eeb1",
+        "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a"
+       }
+      },
+      {
+       "path": "Plans/Contracts_V0.md",
+       "unit": "CV-555",
+       "line_start": 45735,
+       "line_end": 45735,
+       "quote": "**Lifecycle barriers for",
+       "excerpt_sha256": "5c1392ad6829f11c045389ef84f772dc37bfcdd3cc819356765055ea9b04fbfb",
+       "file_sha256": "58dee182ea2dd8dd358d27912280fa9113c3d1d8fd68b1c0c5d51b6f906d73c8",
+       "quote_check": "exact",
+       "quote_scope": "unit CV-555, Plans/Contracts_V0.md:45677-45759",
+       "excerpt_digest_convention": "literal_quote",
+       "source_citation": {
+        "path": "Plans/Contracts_V0.md",
+        "unit": "CV-555",
+        "line_start": 43777,
+        "line_end": 43777,
+        "quote": "**Lifecycle barriers for",
+        "excerpt_sha256": "5c1392ad6829f11c045389ef84f772dc37bfcdd3cc819356765055ea9b04fbfb",
+        "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a"
+       }
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "transitions",
+      "status": "PASS"
+     }
+    },
+    "consumers_checkpoints": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "SP-555 explicitly adopts SP-278 for its exact versioned ephemeral history reader, with none_required family checkpoint, generic durable nine-field token, live snapshot, atomic projection/frontier CAS and source-generation rebuild fences.",
+     "evidence": [
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-555",
+       "line_start": 56060,
+       "line_end": 56060,
+       "quote": "**Exact consumer and checkpoint.**",
+       "excerpt_sha256": "c24eda101413e36fba51ca3419bd8f48dd9b7412408bd931bbcb152dc6a87ff6",
+       "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+       "quote_check": "exact",
+       "quote_scope": "unit SP-555, Plans/storage-plan.md:55971-56081",
+       "excerpt_digest_convention": "literal_quote",
+       "source_citation": {
+        "path": "Plans/storage-plan.md",
+        "unit": "SP-555",
+        "line_start": 55687,
+        "line_end": 55687,
+        "quote": "**Exact consumer and checkpoint.**",
+        "excerpt_sha256": "c24eda101413e36fba51ca3419bd8f48dd9b7412408bd931bbcb152dc6a87ff6",
+        "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+       }
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "consumers_checkpoints",
+      "status": "PASS"
+     }
+    },
+    "compatibility_withdrawal": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "SP-555/CV-555 preserve old dispatch/original Project resources, cut off writer admission, reconcile original pending operations, fence own reader/index generations and require verified retained-survivor rebuild before publication. Unknown versions/sources remain unavailable.",
+     "evidence": [
+      {
+       "path": "Plans/Contracts_V0.md",
+       "unit": "CV-555",
+       "line_start": 45725,
+       "line_end": 45725,
+       "quote": "**Compatibility.**",
+       "excerpt_sha256": "1f2549a6c617bebc1dfaf68610c6d1dcf58a05ee350ae8c170ee238fece5f094",
+       "file_sha256": "58dee182ea2dd8dd358d27912280fa9113c3d1d8fd68b1c0c5d51b6f906d73c8",
+       "quote_check": "exact",
+       "quote_scope": "unit CV-555, Plans/Contracts_V0.md:45677-45759",
+       "excerpt_digest_convention": "literal_quote",
+       "source_citation": {
+        "path": "Plans/Contracts_V0.md",
+        "unit": "CV-555",
+        "line_start": 43767,
+        "line_end": 43767,
+        "quote": "**Compatibility.**",
+        "excerpt_sha256": "1f2549a6c617bebc1dfaf68610c6d1dcf58a05ee350ae8c170ee238fece5f094",
+        "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a"
+       }
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-555",
+       "line_start": 56066,
+       "line_end": 56066,
+       "quote": "**Withdrawal and rebuild.**",
+       "excerpt_sha256": "de37570b4c3d81147182c5b59fa0fbebea4c6b2277b590040a69dab7ce530304",
+       "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+       "quote_check": "exact",
+       "quote_scope": "unit SP-555, Plans/storage-plan.md:55971-56081",
+       "excerpt_digest_convention": "literal_quote",
+       "source_citation": {
+        "path": "Plans/storage-plan.md",
+        "unit": "SP-555",
+        "line_start": 55693,
+        "line_end": 55693,
+        "quote": "**Withdrawal and rebuild.**",
+        "excerpt_sha256": "de37570b4c3d81147182c5b59fa0fbebea4c6b2277b590040a69dab7ce530304",
+        "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+       }
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-555",
+       "line_start": 56068,
+       "line_end": 56068,
+       "quote": "**Recovery and withdrawal authority for `filesafe.path_denied`",
+       "excerpt_sha256": "c95370aaecf4e52058f565b18ebca3d4679b22a4bc8d7f0ab46246582c75a0c4",
+       "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+       "quote_check": "exact",
+       "quote_scope": "unit SP-555, Plans/storage-plan.md:55971-56081",
+       "excerpt_digest_convention": "literal_quote",
+       "source_citation": {
+        "path": "Plans/storage-plan.md",
+        "unit": "SP-555",
+        "line_start": 55695,
+        "line_end": 55695,
+        "quote": "**Recovery and withdrawal authority for `filesafe.path_denied`",
+        "excerpt_sha256": "c95370aaecf4e52058f565b18ebca3d4679b22a4bc8d7f0ab46246582c75a0c4",
+        "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+       }
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-555",
+       "line_start": 56068,
+       "line_end": 56068,
+       "quote": "**Recovery and withdrawal authority for `filesafe.path_denied`",
+       "excerpt_sha256": "c95370aaecf4e52058f565b18ebca3d4679b22a4bc8d7f0ab46246582c75a0c4",
+       "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+       "quote_check": "exact",
+       "quote_scope": "unit SP-555, Plans/storage-plan.md:55971-56081",
+       "excerpt_digest_convention": "literal_quote",
+       "source_citation": {
+        "path": "Plans/storage-plan.md",
+        "unit": "SP-555",
+        "line_start": 55695,
+        "line_end": 55695,
+        "quote": "**Recovery and withdrawal authority for `filesafe.path_denied`",
+        "excerpt_sha256": "c95370aaecf4e52058f565b18ebca3d4679b22a4bc8d7f0ab46246582c75a0c4",
+        "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+       }
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "compatibility_withdrawal",
+      "status": "PASS"
+     }
+    },
+    "positive_negative_oracles": {
+     "status": "PASS",
+     "representation": "executable_static_family_oracles",
+     "finding": "Complete original DF suite, whole-definition Method B schema/branch coverage with exact refusal, clause cut/restoration and no unresolved clauses; source/tool/case-bound 355-row proof plus 48 checked singleton entailments. Independently sealed retained original/store and copy-join evidence. Shared number corpus and all DF date-time boundaries replayed. Global inventory infrastructure remains separately blocked; native NOT_RUN.",
+     "evidence": [
+      {
+       "excerpt_sha256": "3b454bc062d5fb974b662a9fc5e2e511013802cf4e32b4b650aa9cea6633ec9e",
+       "file_sha256": "58dee182ea2dd8dd358d27912280fa9113c3d1d8fd68b1c0c5d51b6f906d73c8",
+       "line_end": 45717,
+       "line_start": 45717,
+       "path": "Plans/Contracts_V0.md",
+       "quote": "**Producer and transition.** `FileSafe path guard before file effect` is the sole semantic producer. Canonicalize existing path or nearest existing parent, verify actual root and recheck TOCTOU before effect. Refusal leaves the file untouched and preserves the denial code and permission/scope refs. ",
+       "quote_check": "exact",
+       "unit": "CV-555",
+       "quote_scope": "unit CV-555, Plans/Contracts_V0.md:45677-45759",
+       "excerpt_digest_convention": "literal_quote",
+       "source_citation": {
+        "excerpt_sha256": "3b454bc062d5fb974b662a9fc5e2e511013802cf4e32b4b650aa9cea6633ec9e",
+        "file_sha256": "e90982fd28f1120e5f55e072d26f80ed89ce0f43052b5b0763408c67ac057e7a",
+        "line_end": 43759,
+        "line_start": 43759,
+        "path": "Plans/Contracts_V0.md",
+        "quote": "**Producer and transition.** `FileSafe path guard before file effect` is the sole semantic producer. Canonicalize existing path or nearest existing parent, verify actual root and recheck TOCTOU before effect. Refusal leaves the file untouched and preserves the denial code and permission/scope refs. ",
+        "unit": "CV-555"
+       }
+      },
+      {
+       "excerpt_sha256": "1962beb7381faf8cbb1116702f4a2950641bc4399e797b2ec3c9dbf6b81ffc18",
+       "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+       "line_end": 56072,
+       "line_start": 56072,
+       "path": "Plans/storage-plan.md",
+       "quote": "**Exact original/issued joins for `filesafe.path_denied`.** Adopt the complete source graph `Plans/filesafe_event_sources/filesafe_path_denied.contract.json` and `CV-555` lifecycle table. Before append, resolve its own original source under the actual storage_instance_id/writer epoch and verify ever",
+       "quote_check": "exact",
+       "unit": "SP-555",
+       "quote_scope": "unit SP-555, Plans/storage-plan.md:55971-56081",
+       "excerpt_digest_convention": "literal_quote",
+       "source_citation": {
+        "excerpt_sha256": "1962beb7381faf8cbb1116702f4a2950641bc4399e797b2ec3c9dbf6b81ffc18",
+        "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707",
+        "line_end": 55699,
+        "line_start": 55699,
+        "path": "Plans/storage-plan.md",
+        "quote": "**Exact original/issued joins for `filesafe.path_denied`.** Adopt the complete source graph `Plans/filesafe_event_sources/filesafe_path_denied.contract.json` and `CV-555` lifecycle table. Before append, resolve its own original source under the actual storage_instance_id/writer epoch and verify ever",
+        "unit": "SP-555"
+       }
+      },
+      {
+       "excerpt_sha256": "df0d9dfd918cacc62aa08714fdafc8cab4365fbef740fefccac6d61a42d6a694",
+       "file_sha256": "a3028640b73729884c6b3d1a0f095289513e4f76e61af711c233858bf005dc7c",
+       "line_end": 12347,
+       "line_start": 12347,
+       "path": "Plans/Automated_Testing_System.md",
+       "quote": "**Sweep part 2A/2B oracle certification.** Every refusal of both complete checkers for the families above is one named row of a generated Method B guard table (204 tables, 405 rows; `python3 scripts/pm-filesafe-table-generate.py --check` keeps them current). `python3 scripts/pm-filesafe-guard-tables",
+       "quote_check": "exact",
+       "unit": "ATS-277",
+       "quote_scope": "unit ATS-277, Plans/Automated_Testing_System.md:12260-12353",
+       "excerpt_digest_convention": "literal_quote",
+       "source_citation": {
+        "excerpt_sha256": "df0d9dfd918cacc62aa08714fdafc8cab4365fbef740fefccac6d61a42d6a694",
+        "file_sha256": "e1c8a84c145a3aaaa0738971f76db5fa0bf94f59c0149e76f4131e8579a6971d",
+        "line_end": 11565,
+        "line_start": 11565,
+        "path": "Plans/Automated_Testing_System.md",
+        "quote": "**Sweep part 2A/2B oracle certification.** Every refusal of both complete checkers for the families above is one named row of a generated Method B guard table (204 tables, 405 rows; `python3 scripts/pm-filesafe-table-generate.py --check` keeps them current). `python3 scripts/pm-filesafe-guard-tables",
+        "unit": "ATS-277"
+       }
+      }
+     ],
+     "carried_from": {
+      "path": "reports/event-authority-20261116/admission-merge-2/readiness-list.json",
+      "sha256": "9662c60d40d2b247567d6007779c36ea6f450c77a2649f176ef42f62c028f792",
+      "field": "positive_negative_oracles",
+      "status": "PASS"
+     }
+    }
+   }
+  }
+ ],
+ "source_registry": {
+  "path": "Plans/event_family_registry.json",
+  "revision": "2026-11-16.170",
+  "sha256": "3ea6f3955d6e738628baac1c812191ab15cf218d8ef1feaef43e0d16bfa4f20a",
+  "family_count": 389,
+  "row_pointer": "#/families/388"
+ },
+ "evidence_maintenance": {
+  "authority": "MERGE2-FIX4 items 1/2/3",
+  "source_commit": "2bda6aeed03daea26c4d79dfb7568fc145aac29e",
+  "source_assessment_sha256": "ed083f7fae40a72cbb36aa292b0b2704cdd0f21adc04adc58369c91d9a4b5928",
+  "native_execution": "NOT_RUN",
+  "verdicts_changed": false
+ }
+}

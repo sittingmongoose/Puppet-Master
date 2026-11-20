@@ -254,6 +254,18 @@
        taken during the rest found nothing: re-measure and look again (a page switch slides the new page in while the
        outgoing page stays hit-testable, and the Usage room plays its entrance after it, both rests) */
     function restEnded() { scopeDirty = rectsDirty = geomDirty = true; recheckSoon(); setTimeout(afterFrameSoon, 400); }
+    /* Usage's wheel pause (PERF-USAGE-HOVER, usage 42-cards.js bindTools) ends without a body class or a pointer move */
+    document.addEventListener('pmu-op-end', restEnded);
+    /* Clear this board's light on its first wheel-driven scroll. Fixed layers still carry the old viewport rect,
+       including layers that already started their ordinary fade. Other boards keep their light. */
+    document.addEventListener('pmu-op-start', function (event) {
+      var board = event.detail && event.detail.board;
+      if (!board) return;
+      if (hover && board.contains(hover)) { swapHover(hover, null, isReduced()); hover = null; }
+      lit.forEach(function (s) { if (board.contains(s.el)) { unlight(s); lit.delete(s); } });
+      hideBoardProxies(board);
+      recheckSoon();
+    });
 
     function gestureRest() {
       var b = document.body;
@@ -820,7 +832,27 @@
       document.body.appendChild(glowEl);
       return glowEl;
     }
-    function glowOn(L, on) { if (L.on !== on) { L.el.classList.toggle('pmh-glow-on', on); L.on = on; stats.writes++; } }
+    function hideBoardProxies(board) {
+      GL.forEach(function (layer, i) {
+        if (!layer.host || !board.contains(layer.host)) return;
+        layer.el.classList.add('pmh-proxy-cut');
+        glowOn(layer, false);
+        layer.host = null;
+        if (glowCur === i) { glowLastOff = i; glowCur = -1; }
+        stats.writes++;
+      });
+      if (FR.host && board.contains(FR.host)) {
+        frameEl.classList.add('pmh-proxy-cut');
+        frameOff(-Infinity);
+        FR.host = null; FR.offAt = -Infinity;
+        stats.writes++;
+      }
+    }
+    function glowOn(L, on) {
+      if (L.on === on) return;
+      if (on) L.el.classList.remove('pmh-proxy-cut');
+      L.el.classList.toggle('pmh-glow-on', on); L.on = on; stats.writes++;
+    }
     function glowUpdate(hc, vis) {
       var s = hover ? st(hover) : null, tok = s ? tk(s.kind) : null;
       var target = s && tok.glow && hc ? hover : null;
@@ -858,18 +890,23 @@
       var m = Math.round(d * k);
       return cur + (Math.abs(m) >= 1 ? m : (d > 0 ? 1 : -1));
     }
+    function frameOff(now) {
+      if (!FR.on) return;
+      frameEl.classList.remove('pmh-frame-on', 'pmh-frame-travel', 'pmh-frame-press');
+      FR.on = FR.travel = FR.press = false; FR.offAt = now; stats.writes++;
+    }
     function frameUpdate(hc, vis, dt, reduced, now) {
       var s = hover ? st(hover) : null, tok = s ? tk(s.kind) : null;
       var target = s && tok.frame && hc ? hover : null;
       if (!target) {
-        if (FR.on) { frameEl.classList.remove('pmh-frame-on', 'pmh-frame-travel', 'pmh-frame-press'); FR.on = false; FR.travel = false; FR.press = false; FR.offAt = now; FR.host = null; stats.writes++; }
+        frameOff(now); // Keep its last host while the frame's opacity can still be visible.
         return false;
       }
       ensureFrame();
       if (!frameEl) return false;
       var b = boxFor(hc), gx = b.l + (tok.follow ? s.wx : 0), gy = b.t + (tok.follow ? s.wy : 0), gw = b.w, gh = b.h;
       var far = false;
-      if (FR.host !== target) {
+      if (!FR.on || FR.host !== target) {
         if (frameEl.getAttribute('data-pmh-kind') !== s.kind) frameEl.setAttribute('data-pmh-kind', s.kind);
         far = tok.fmax > 0 && Math.max(Math.abs(gx - FR.x), Math.abs(gy - FR.y)) > tok.fmax;
         FR.host = target;
@@ -885,7 +922,7 @@
       /* .pmh-frame-new: the frame met this target anew (placed, not travelled), so a look can play an arrival there;
          it stays until the frame next travels */
       if (snap !== FR.fresh && (snap || FR.x !== gx || FR.y !== gy)) { frameEl.classList.toggle('pmh-frame-new', snap); FR.fresh = snap; stats.writes++; }
-      if (!FR.on) { FR.on = true; frameEl.classList.add('pmh-frame-on'); stats.writes++; }
+      if (!FR.on) { FR.on = true; frameEl.classList.remove('pmh-proxy-cut'); frameEl.classList.add('pmh-frame-on'); stats.writes++; }
       if (snap) { FR.x = gx; FR.y = gy; FR.w = gw; FR.h = gh; FR.vx = FR.vy = FR.vw = FR.vh = 0; }
       else if (tok.fhz > 0) {
         FR.acc += dt;

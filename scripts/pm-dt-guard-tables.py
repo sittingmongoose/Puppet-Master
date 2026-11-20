@@ -13,6 +13,7 @@ import argparse
 import gzip
 import hashlib
 import json
+import pickle
 from pathlib import Path
 import sys
 import time
@@ -34,6 +35,8 @@ def main():
     parser.add_argument('--phase', action='append', help='run the tool only for these phases (repeatable)')
     parser.add_argument('--out', type=Path, required=True)
     parser.add_argument('--collect-only', action='store_true')
+    parser.add_argument('--save-collection', type=Path, help='save source-pinned observations; never cached verdicts')
+    parser.add_argument('--load-collection', type=Path, help='load observations only if every source pin matches')
     parser.add_argument('--per-row', type=int, default=5)
     parser.add_argument('--max-controls', type=int, default=4)
     parser.add_argument('--max-rss', type=int, default=4096)
@@ -42,9 +45,29 @@ def main():
     args = parser.parse_args()
     args.out.mkdir(parents=True, exist_ok=True)
     started = time.monotonic()
-    segments, findings = suites.collect(set(args.family) if args.family else None)
+    sources = [*suites.ROOT.glob('scripts/pm_dt*.py'), *suites.ROOT.glob('scripts/pm-dt*.py'),
+        suites.ROOT/'scripts/pm_guard_isolation.py', suites.ROOT/'scripts/pm_event_numbers.py',
+        suites.ROOT/'scripts/pm_event_datetime.py', *suites.ROOT.glob('Plans/dt*.json'),
+        suites.ROOT/'Plans/storage_value_registry.json', suites.ROOT/'Plans/event_record.schema.json',
+        suites.ROOT/'Plans/event_append_receipt_contracts.schema.json', suites.ROOT/'Plans/event_number_recipe_corpus.json']
+    pins = {str(p.relative_to(suites.ROOT)): hashlib.sha256(p.read_bytes()).hexdigest() for p in sorted(set(sources))}
+    collection = args.load_collection or (args.out / '.collection.pickle')
+    if collection.exists():
+        saved = pickle.loads(collection.read_bytes())
+        if saved['source_pins'] != pins or saved['families'] != args.family:
+            raise SystemExit('collection source or family pins differ; refusing stale observations')
+        segments, findings = saved['segments'], saved['findings']
+    else:
+        if args.load_collection:
+            raise SystemExit('requested collection does not exist')
+        segments, findings = suites.collect(set(args.family) if args.family else None)
+    if args.save_collection:
+        args.save_collection.parent.mkdir(parents=True, exist_ok=True)
+        args.save_collection.write_bytes(pickle.dumps(dict(source_pins=pins, families=args.family,
+            segments=segments, findings=findings), protocol=5))
     phases = suites.classify(segments)
     summary = dict(tool_sha256=hashlib.sha256((suites.ROOT / 'scripts/pm_guard_isolation.py').read_bytes()).hexdigest(),
+                   source_pins=pins,
                    checker_sha256=hashlib.sha256((suites.ROOT / 'scripts/pm-dt-event-contracts.py').read_bytes()).hexdigest(),
                    witness_calls=len(segments), refused_calls=sum(1 for s in segments if any(r[2] for r in s['records'])),
                    collect_seconds=round(time.monotonic() - started, 1), findings=findings, phases=[])

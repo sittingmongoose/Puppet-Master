@@ -454,6 +454,14 @@ def main():
         implied_reasons=IMPLIED, schema_sites_unmapped=unmapped,
         retention_cells=cells, retention_mismatches=bad_cells,
         per_family=per_family, failures=failures[:200], failure_count=len(failures))
+    # Admission-aware mode (T222/T225): the oracles model membership synthetically; the live registry may
+    # hold a family only as its exact, complete DL-077 admission (scripts/pm_ea_admission_mode.py).
+    import pm_ea_admission_mode as admission_mode
+    result['admission_mode'], refused = admission_mode.lane_gate(m.FAMILIES, ROOT)
+    if refused:
+        result['status'] = 'fail'
+        result['failures'] = result['failures'] + [dict(case='admission_mode', why=line) for line in refused]
+        result['failure_count'] += len(refused)
     if not args.skip_numbers:
         import pm_w3g_numbers as numbers
         result['numbers'] = numbers.run()

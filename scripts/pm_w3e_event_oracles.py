@@ -536,8 +536,7 @@ def predecessor_record(family, after):
 # (payload field, source kind, argument). Source kinds: 'after'/'before' read that original record (null when the
 # record is absent), 'subject' reads the after record or, for a removal, the last fenced before record, 'role' reads
 # the fixed authority_evidence role, 'fact' reads the manifest's own field, 'change' derives created/updated/removed
-# from which records are present (BRS-1400/SRV-1418). A payload field listed in UNJOINED has no owner_fact source
-# today; it is schema-checked only and recorded as a contract gap in the report.
+# from which records are present (BRS-1400/SRV-1418). RESULT_FIELDS closes the original-result manifest joins.
 JOINS = {
     'backup.destination_changed': (
         ('backup_destination_id', 'subject', 'backup_destination_id'),
@@ -626,6 +625,20 @@ JOINS = {
         ('observed_fingerprint', 'after', 'observed_fingerprint'), ('detection_id', 'fact', 'immutable_fact_id'),
         ('mismatch_evidence_ref', 'role', 'mismatch_detection')),
 }
+# PNC019 S4: these original-result fields are now mandatory owner_fact members.
+# They are issued with the manifest and covered by append_source_authentic; no
+# value is inferred from the presented payload while checking an append.
+RESULT_FIELDS = {
+    'remote_access.public_security_violation_detected': ('server_endpoint_id', 'violated_control'),
+    'remote_access.remote_link_state_changed': ('remote_route_id', 'provider_ref'),
+    'remote_access.route_migration_state_changed': ('migration_receipt_ref',),
+    'restore.state_changed': ('restore_receipt_ref',),
+    'server.catalog_changed': ('catalog_ref',),
+    'server.endpoint_changed': ('endpoint_ref', 'prior_endpoint_ref'),
+}
+for _family, _fields in RESULT_FIELDS.items():
+    JOINS[_family] += tuple((field, 'fact', field) for field in _fields)
+
 COMMON_PAYLOAD = ('schema_id', 'schema_version', 'scope_kind', 'project_id', 'server_id', 'owner_operation_id',
                   'source_custody_ref', 'source_evidence_ref')
 # Payload fields fixed by a const in both the payload and the owner record (server.discovery_observed grants_trust:
@@ -721,6 +734,9 @@ def build_source(family, scope, with_before):
         'source_schema_uri': PAYLOAD_SCHEMA[family]['$defs']['owner_fact']['properties']['source_schema_uri']['const'],
         'source_recipe_ref': 'recipe:' + slug + ':owner-edition-1', 'authority_evidence': roles,
     }
+    for field in RESULT_FIELDS.get(family, ()):
+        source[field] = ('endpoint-ref:manual-01:5' if with_before and field == 'prior_endpoint_ref'
+                         else UNJOINED_VALUES[(family, field)])
     source['scope_kind'], source['project_id'] = record_scope(family, source)
     if 'change_kind' in PAYLOAD_SCHEMA[family]['$defs']['owner_fact']['properties']:
         source['change_kind'] = join_source(source, 'change', None)
@@ -4074,6 +4090,7 @@ def main(argv=None):
     parser.add_argument('--json', help='write the summary here as well')
     parser.add_argument('--fail-fast', action='store_true', help='stop at the first failure (mutation runs)')
     args = parser.parse_args(argv)
+    assert not (refused := admission_failures(FAMILIES)), ('admission mode refused', refused)
     eager = {rel: eager_refs(RESOURCES[rel]) for rel in RESOURCE_FILES
              if rel.startswith('Plans/event_payloads/') or rel in ('Plans/event_record.schema.json',)}
     eager['receipt custody_v2'] = eager_refs({'$ref': RECEIPT_ID + '#/$defs/custody_v2'})
@@ -4146,6 +4163,12 @@ def main(argv=None):
     print(text if not failures else json.dumps({k: summary[k] for k in ('status', 'failure_count', 'failures')},
                                                indent=1, default=str)[:20000])
     return 0 if not failures else 1
+
+
+def admission_failures(event_types):
+    """Refuse any selected prepared family registered outside its exact complete DL-077 admission."""
+    import pm_ea_admission_mode as admission_mode
+    return admission_mode.gate_failures(admission_mode.verdicts(event_types, root=ROOT))
 
 
 if __name__ == '__main__':

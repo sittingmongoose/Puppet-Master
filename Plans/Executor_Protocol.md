@@ -7727,6 +7727,11 @@ negative_constraints:
 
 ContractRef: ContractName:Plans/executor_cancellation_contracts/methods.json, ContractName:Plans/executor_cancellation_contracts/realm-entry-boundaries.json, ContractName:Plans/executor_cancellation_contracts/physical-families.json, ContractName:Plans/executor_cancellation_schema_resources.json
 
+
+**DG-OWN-A adoption.** Fresh stop/block adoption: EP-1110 supplies a separately named whole fresh source edition; EP-1111/EP-1112 are its original stop/block participants. Every v7/retained branch of this unit stays unchanged.
+
+Amended 2026-11-14 (DL-080 option 1, PNC-019 lane rv8b): on a genuine `all_writers.v8` birth (EP-3100) the Workflow writer list also names `owner.executor.workflow_run.replan.v1` (EP-3101), the optional/replanned materialization route this adoption excludes; D01 `update_workflow` observes that writer's native application and never issues it. Every other birth keeps the exclusion and RequiredOtherWorkflowWriterSource=false.
+
 ### EP-119 - Original bounded safe-stop, FileSafe and disposable Process sources
 
 These contracts define the selected original native source obligations. The complete schema and method declarations reside under `Plans/executor_cancellation_contracts/`. Exact original-owner authority, source availability and current fences remain required in addition to schema validity. Native execution is not established by this adoption.
@@ -8772,6 +8777,9 @@ gui_classification_reason: Original source, native authority/custody, schema, st
 ```
 
 ContractRef: ContractName:Plans/Executor_Protocol.md#EP-124, ContractName:Plans/Plan_Document_System.md#PDS-003, ContractName:Plans/goal_certified_event_coordinator_contracts/protocol.md, ContractName:Plans/goal_run_certified_consumer_contracts/protocol.md, ContractName:Plans/goal_certified_family_composition.json
+
+
+**DG-OWN-A adoption.** Fresh stop/block adoption: EP-1110 supplies a separately named whole fresh source edition; EP-1111/EP-1112 are its original stop/block participants. Every v7/retained branch of this unit stays unchanged.
 
 ## Assistant turn presentation stream (2026-09-27)
 
@@ -10047,7 +10055,7 @@ command_payload_definitions:
       judgments:
         - key: command_kind
           choice: domain_action
-          gap_note: "Canon requires command_kind metadata on recovery commands (UI_Command_Catalog.md:6852) but states no value for this command; domain_action because it emits goal.replanned (Wiring_Matrix.production.json catalog.runtime_replan)."
+          gap_note: "Canon requires command_kind metadata on recovery commands (UI_Command_Catalog.md:6852) but states no value for this command; domain_action because its effect is the goal_run.replanned Event that EP-3101's Replan writer appends on an all_writers.v8 birth (Wiring_Matrix.production.json catalog.runtime_replan, amended 2026-11-14); goal.replanned is historical-only (GRS-070) and never its effect."
         - key: disabled_reason_codes
           choice: [blocked_state_required, stale_projection]
           gap_note: "No catalog row states disabled reasons for this command; chosen from the closed set: it needs the live blocked episode that exposes its allowed_action_id (UI_Command_Catalog.md:1246), and a stale blocked_sequence or projection refuses (UI_Command_Catalog.md:1220)."
@@ -12290,7 +12298,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Executor_Protocol.md
 canonical_text: |-
-  Newly authored owner contract under DL-045, written for DL-080 (2026-11-04). It is the Workflow writer listing DL-080 requires for goal_run.stopped and goal_run.blocked, Project edition only. Two writers are named: owner.executor.workflow_run.stop.v1, entered from handlers::orchestrator::pause (cmd.orchestrator.pause) and handlers::runtime::abort_run (cmd.runtime.abort_run); and owner.executor.workflow_run.block.v1, entered from the Executor scheduler when a run-level block is admitted. Each moves the native Workflow body status once, under the D01 update_workflow observation, and its own event follows in the order below. Installation: EP-118 keeps refusing every unlisted writer (RequiredOtherWorkflowWriterSource=false), and the all_writers.v7 descriptor (EP-124) lists neither writer, so neither can run on any existing birth. They become available only on a fresh Workflow source edition whose all-writers descriptor lists them; that edition is a separate dependency this unit does not author, and no existing birth is enrolled or cast.
+  Newly authored owner contract under DL-045, written for DL-080 (2026-11-04). It is the Workflow writer listing DL-080 requires for goal_run.stopped and goal_run.blocked, Project edition only. Two writers are named: owner.executor.workflow_run.stop.v1, entered from handlers::orchestrator::pause (cmd.orchestrator.pause) and handlers::runtime::abort_run (cmd.runtime.abort_run); and owner.executor.workflow_run.block.v1, entered from the Executor scheduler when a run-level block is admitted. Each moves the native Workflow body status once, under the D01 update_workflow observation, and its own event follows in the order below. Installation: EP-118 keeps refusing every unlisted writer (RequiredOtherWorkflowWriterSource=false), and the all_writers.v7 descriptor (EP-124) lists neither writer, so neither can run on any existing birth. They become available only on a fresh Workflow source edition whose all-writers descriptor lists them; the complete newly authored edition is EP-1110, with separate EP-1111 stop and EP-1112 block original source/method/result protocols, and no existing birth is enrolled or cast.
 gui_related: false
 gui_classification_reason: Defines event, writer, persistence or projection contracts; no visual surface.
 split_recommended: false
@@ -12340,7 +12348,7 @@ owner_hints:
 - Plans/Executor_Protocol.md
 ```
 
-**Why a listing and not an installation.** DL-080 says "Each contract names the family's writer, which the Workflow writer list lacks today". EP-118 lists the original materialized, stage-entrypoint, prepare-start, prestart-abort, original-start and D06 writers and refuses every other one; EP-124 binds the entire `all_writers.v7` descriptor before birth. Naming the two writers here closes the listing gap; installing them needs a fresh Workflow source edition with these writers in its descriptor, and that edition is not written here.
+**Why a listing and not an installation.** DL-080 says "Each contract names the family's writer, which the Workflow writer list lacks today". EP-118 lists the original materialized, stage-entrypoint, prepare-start, prestart-abort, original-start and D06 writers and refuses every other one; EP-124 binds the entire `all_writers.v7` descriptor before birth. Naming the two writers here closes the listing gap; installing them needs a fresh Workflow source edition with these writers in its descriptor, and that edition is now authored by EP-1110 with exact resource-bank/method bindings. No existing birth is changed.
 
 **Stop writer order** (`owner.executor.workflow_run.stop.v1`).
 1. Admission at the writer's final predicate: current Project permission for the command, writer-capable Storage, no recovery hold, the native status is one D-R21 source (`ready`, `running`, `provisional_success`, `verifying`, `failed_verification`, `repairing`, `blocked`, or `stopped` with new settlement or recovery evidence), and the expected GoalRun revision is current.
@@ -12359,6 +12367,262 @@ owner_hints:
 **Search (DL-045).** Scope: EP-116..124, EP-132, GRS-026, GRS-027, GRS-071, GRS-075, GRS-079..085, SP-309..317, CV-340, `Plans/Wiring_Matrix.production.json` rows `catalog.orchestrator_pause` and `catalog.runtime_abort_run`, `Plans/workflow_standard_source_contracts/` and the Known-37 matrix rows EA-UND-0016 and EA-UND-0021. Found: both wiring rows expect `goal_run.stopped`; EP-118 refuses unlisted writers; no unit names a stop or block writer, method or entrypoint. These two writer identities are newly authored.
 
 ContractRef: ContractName:Plans/Executor_Protocol.md#EP-118, ContractName:Plans/Executor_Protocol.md#EP-124, ContractName:Plans/Goal_Runtime_System.md#GRS-200, ContractName:Plans/Goal_Runtime_System.md#GRS-201, ContractName:Plans/Decision_Log.md#DL-080
+
+### EP-1110 - Fresh original stop/block all-writers source edition
+
+```yaml
+plan_unit_id: EP-1110
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Executor_Protocol.md
+canonical_text: Newly authored DL-045 owner contract for the exact Project goal_run.stopped and goal_run.blocked
+  source installation required by DL-080. Adopt the complete SB0/SB1 source protocol, profile.json, separate
+  literal resource realms, whole fresh namespace/resource map and methods under Plans/goal_run_stop_block_contracts/.
+  The distinct pm.executor.workflow_source.all_writers.stop_block.v1 descriptor incorporates every EP-124 native/producer/coordinator
+  participant and complete original method/argument/final predicates, plus exactly the stop and block original
+  owners. Original D01 adds only original_run_stop and original_run_block with their full origin/publication
+  roots. Fix the entire descriptor and authentic exhaustive writer registrations before genuine original native
+  birth; coissue native/D01/coordinator initial controls under absent-key CAS. No serialized profile, hash or
+  installed flag is a source installation. EP-118 and EP-124 adopt this edition only for those genuine fresh
+  births; their v7 and retained routes remain byte-exact. The separately gated Replan all_writers.v8 name and
+  behavior are not used. This is prepared without admission and native execution remains NOT_RUN.
+gui_related: false
+gui_classification_reason: Defines original event/source/custody and passive projection contracts without a
+  visual surface.
+split_recommended: false
+depends_on:
+- EP-118
+- EP-124
+- SP-1110
+- SP-1111
+- CV-1110
+unblocks: []
+acceptance_criteria:
+- Exact original installed profile and full source census are independently authenticated at every entry and
+  final held boundary.
+- Old v7 births and every historical realm refuse casting or retrospective enrollment.
+- Every inherited participant retains its complete original owner semantics; new namespace substitutions never
+  replace a whole argument with selectors.
+validation_surfaces:
+- Plans/goal_run_stop_block_contracts/protocol.md
+- Plans/goal_run_stop_block_contracts/contracts.schema.json
+- python3 scripts/pm_goal_own_a_oracles.py
+- python3 scripts/pm-plan-index.py validate
+risk_class: original_stop_block_source_custody_and_publication
+reasoning_tier: high
+context_scope: event_authority_dg_own_a_20261105
+implementation_surfaces:
+- Plans/Executor_Protocol.md
+- Plans/goal_run_stop_block_contracts/
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+- Plans/Decision_Log.md#DL-080
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DG-sol/REVIEW-cycle3.md#work-the-drafting-lead-can-assign-under-dl-045
+negative_constraints:
+- No application stopped edition, old-birth enrollment, registry/admission/Decision Log change or retention
+  policy.
+- No native installation/execution, runtime/readiness, WorkNode, NodeSeed or governance qualification.
+```
+
+ContractRef: ContractName:Plans/Executor_Protocol.md#EP-118, ContractName:Plans/Executor_Protocol.md#EP-124, ContractName:Plans/storage-plan.md#SP-1110, ContractName:Plans/storage-plan.md#SP-1111, ContractName:Plans/Contracts_V0.md#CV-1110
+
+
+### EP-1111 - Original goal_run.stopped source and terminal publication
+
+```yaml
+plan_unit_id: EP-1111
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Executor_Protocol.md
+canonical_text: Newly authored DL-045 owner contract for exactly goal_run.stopped Project v3. EP-200 adopts
+  SB2 in Plans/goal_run_stop_block_contracts/protocol.md and the separate StopIntent/StopControl/StopNativeResult/StopOrigin/StopResult
+  roots and complete method tuples. The actual pause or abort command admits owner.executor.workflow_run.stop.v1
+  on a genuine EP-1110 birth, authenticates D01/native revision and complete current sources, then obtains the
+  bounded safe-stop owner complete original effect census, settlement dispositions, required flush and safe-point
+  authority. Freeze the complete original Event before native publication. Commit original native stopped revision
+  +1, source control and D01 lineage atomically under full preimage CAS; Goal body/context and activation clocks
+  are preserved. Append only the frozen own-family Event, resolve SP-286 original eleven-field receipt plus
+  strict v2 full-value custody independently, then publish the original command terminal result. Native-only/Event-only/unknown
+  states remain pending. Same-operation recovery never repeats effects, native revision or timestamps; semantic
+  conflicts refuse, and current replay-only writes refuse before dedupe. Retained lawful originals use actual
+  write-time source and current disclosure authority without new-writer gates.
+gui_related: false
+gui_classification_reason: Defines original event/source/custody and passive projection contracts without a
+  visual surface.
+split_recommended: false
+depends_on:
+- EP-1110
+- GRS-200
+- SP-426
+- SP-1110
+- CV-420
+unblocks: []
+acceptance_criteria:
+- Every legal/repeated/illegal D-R21 status and original settlement/safe-point source is checked independently.
+- Cause, native/D01, Event/first receipt and terminal publication preserve the acyclic original phase order.
+- Writer withdrawal prevents fresh append while already-issued original custody remains independently resolvable.
+validation_surfaces:
+- Plans/goal_run_stop_block_contracts/protocol.md
+- Plans/goal_run_stop_block_contracts/contracts.schema.json
+- python3 scripts/pm_goal_own_a_oracles.py
+- python3 scripts/pm-plan-index.py validate
+risk_class: original_stop_block_source_custody_and_publication
+reasoning_tier: high
+context_scope: event_authority_dg_own_a_20261105
+implementation_surfaces:
+- Plans/Executor_Protocol.md
+- Plans/goal_run_stop_block_contracts/
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+- Plans/Decision_Log.md#DL-080
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DG-sol/REVIEW-cycle3.md#work-the-drafting-lead-can-assign-under-dl-045
+negative_constraints:
+- No application stopped edition, old-birth enrollment, registry/admission/Decision Log change or retention
+  policy.
+- No native installation/execution, runtime/readiness, WorkNode, NodeSeed or governance qualification.
+```
+
+ContractRef: ContractName:Plans/Executor_Protocol.md#EP-1110, ContractName:Plans/Goal_Runtime_System.md#GRS-200, ContractName:Plans/storage-plan.md#SP-426, ContractName:Plans/storage-plan.md#SP-1110, ContractName:Plans/Contracts_V0.md#CV-420
+
+
+### EP-1112 - Original goal_run.blocked source and scheduler result
+
+```yaml
+plan_unit_id: EP-1112
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Executor_Protocol.md
+canonical_text: Newly authored DL-045 owner contract for exactly goal_run.blocked Project v3. EP-200 adopts
+  SB3 in Plans/goal_run_stop_block_contracts/protocol.md and the separate BlockIntent/BlockControl/BlockNativeResult/BlockOrigin/BlockResult
+  roots and complete method tuples. Only the actual scheduler run-block operation enters owner.executor.workflow_run.block.v1
+  on a genuine EP-1110 birth. Independently resolve the cause owner full original receipt, applicable current
+  authority and preserved work; no caller reference/hash supplies receipt authenticity. Freeze the complete
+  CV-421 Event. Native blocked revision +1, own control and D01 lineage commit atomically under complete preimage
+  CAS with Goal body and activation clocks preserved. Append exact own family, obtain actual SP-286 first eleven-field
+  receipt and strict v2 full-value custody, then publish scheduler pass outcome. No command result or allowed-action
+  dispatch is introduced. This block family independently adopts immutable original retry/recovery, semantic
+  conflict, current replay-only refusal, write-time retained source and writer/reader withdrawal rules in SB3/SB4.
+gui_related: false
+gui_classification_reason: Defines original event/source/custody and passive projection contracts without a
+  visual surface.
+split_recommended: false
+depends_on:
+- EP-1110
+- GRS-201
+- SP-427
+- SP-1111
+- CV-421
+unblocks: []
+acceptance_criteria:
+- Every legal/repeated/illegal D-R16 edge and exact original cause receipt is authenticated.
+- Preserved work absence requires genuine before-mutation evidence; no allowed action is dispatched.
+- No native-only, Event-only or unknown result is published as scheduler success.
+validation_surfaces:
+- Plans/goal_run_stop_block_contracts/protocol.md
+- Plans/goal_run_stop_block_contracts/contracts.schema.json
+- python3 scripts/pm_goal_own_a_oracles.py
+- python3 scripts/pm-plan-index.py validate
+risk_class: original_stop_block_source_custody_and_publication
+reasoning_tier: high
+context_scope: event_authority_dg_own_a_20261105
+implementation_surfaces:
+- Plans/Executor_Protocol.md
+- Plans/goal_run_stop_block_contracts/
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+- Plans/Decision_Log.md#DL-080
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DG-sol/REVIEW-cycle3.md#work-the-drafting-lead-can-assign-under-dl-045
+negative_constraints:
+- No application stopped edition, old-birth enrollment, registry/admission/Decision Log change or retention
+  policy.
+- No native installation/execution, runtime/readiness, WorkNode, NodeSeed or governance qualification.
+```
+
+ContractRef: ContractName:Plans/Executor_Protocol.md#EP-1110, ContractName:Plans/Goal_Runtime_System.md#GRS-201, ContractName:Plans/storage-plan.md#SP-427, ContractName:Plans/storage-plan.md#SP-1111, ContractName:Plans/Contracts_V0.md#CV-421
+
+### EP-1120 - Original approved exception Workflow decision and result mapping
+
+```yaml
+plan_unit_id: EP-1120
+unit_type: owner_contract
+status: accepted
+owner_doc: Plans/Executor_Protocol.md
+canonical_text: 'Newly authored original Workflow verification-exception source, pm.workflow.approved_verification_exception.v1,
+  under DL-045 and DL-081. GRS-1122 and CV-1122 bind the exact Project/Goal/run and original workgraph/controller.
+  Original graph/requirements, WorkNode results, validator evidence, acceptance dispositions, existing source-control/safe-point/rollback
+  records and complete residual-risk set are independently resolved. Child-Goal requirements are authentically empty
+  under GRS-052/075. Workers and reviewers cannot issue the final decision. Unknown, extra, missing, duplicate or
+  foreign requirements refuse before custody.
+
+
+  Each actual non-passing verification item is joined to the exact HITL-1120 request and still-valid Project-owner
+  approval; no request-supplied smaller required set is trusted. Original outcome remains failed|blocked|skipped
+  with evidence and explicit disposition, never a fabricated pass. The original controller issues certified_with_approved_exception
+  with truthful completed_with_approved_verification_exception, certifier/approver and full risk/disposition refs.
+  It commits the distinct original exception result/receipt under SP-1122 before Goal completion consumes it. All
+  current permissions, Stop, graph/currentness, recovery and mutation-custody guards survive; an exception is no
+  bypass of an unresolved effect or non-verification safety guard.
+
+
+  This is a new distinct source/result mapping, not a cast into pm.workflow.standard_source, native-v7 all_writers,
+  prepare.v2 or Standard goal_run.certified. Existing Workflow GoalRun status/transition and clean certification
+  schemas stay exact; the exception result does not by itself append an event or invent a new enum. Actual native
+  source installation must explicitly include this result mapping before it is callable. The Goal host consumes
+  the original exception receipt through GRS-1122''s separate method and applies all current completion barriers
+  and shared metadata CAS. Lost acknowledgments resolve the exact original result and never repeat certification
+  or Goal body work. SP-1122 supplies custody/backup/withdrawal and ATS-1115 the route-specific suite. Native execution
+  remains NOT_RUN.
+
+
+  The exact issuer method is owner.workflow.approved_verification_exception.issue.v1@1.0.0 in CV-1122''s provider
+  bank. SP-1122''s separate goal_verification_exception_receipt row commits the original exception source and result
+  before the Goal host consumes its receipt. This is a distinct canonical Workflow receipt, not the Goal lifecycle
+  result or a Standard certification row. Same-key issue/recovery resolves the exact original receipt; unavailable
+  or unknown issue returns no success-shaped receipt.'
+gui_related: false
+gui_classification_reason: Original lifecycle source, receipt custody and protocol predicates.
+depends_on:
+- GRS-1122
+- DL-081
+unblocks: []
+acceptance_criteria:
+- Independently resolved original source, complete identity and receipt bytes gate every applicable boundary.
+- No partial effect is repeated or promoted to success after an unknown outcome.
+- Prepared without admission; existing historical resources and policies remain exact.
+validation_surfaces:
+- Plans/goal_lifecycle_host_contracts/schemas/contracts.schema.json
+- Plans/goal_lifecycle_host_contracts/methods.json
+- python3 scripts/pm_goal_own_b_oracles.py
+- python3 scripts/pm-plan-index.py validate
+risk_class: goal_lifecycle_original_authority
+reasoning_tier: high
+context_scope: dg_own_b_20261105
+implementation_surfaces:
+- Plans/Executor_Protocol.md
+- Plans/goal_lifecycle_host_contracts/schemas/contracts.schema.json
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DG-sol/REVIEW-cycle3.md
+preserved_exact_tokens: []
+negative_constraints:
+- No registry/admission, new retention policy, native proof, WorkNode, readiness or governance seal.
+```
 
 ## DG-OWN-C original source and boundary contracts (2026-11-05)
 
@@ -12618,3 +12882,143 @@ negative_constraints:
 - No registry family append, admission record, Decision Log change, governance reseal or native execution.
 - Never infer a binding, policy, source authority or migration from a sibling family.
 ```
+
+## Workflow Replan v8 source adoption and writer (PNC-019 lane rv8b, 2026-11-14)
+
+### EP-3100 - Fresh all_writers.v8 source adoption and installation boundary
+
+```yaml
+plan_unit_id: EP-3100
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Executor_Protocol.md
+canonical_text: |-
+  Newly authored owner contract under DL-045, written for DL-080 option 1 (PNC-019 lane rv8b, 2026-11-14). It adopts the frozen Workflow source pm.executor.workflow_source.all_writers.v8 (external root /mnt/Cursor/PM-Experiments/goal-replan-combined-source-20260921/v3/, manifest SHA-256 9ed8ba4f825939cc59b37941aafe1068be7ed2d6ada87c0e3b8eaa3b5225896e, frozen installed_contract_digest 2d69459c1e5ff9c39c3ed234f8b21cd68621b9420b80c1ac9442794a1e4e4155), accepted by the independent review of 2026-11-14 (ACCEPT_WITH_NOTES), as one fresh Workflow source edition for ordinary native execution, original Standard certification and original goal_run.replanned publication. Placement: 74 operative members are byte-identical under Plans/goal_run_replan_contracts/source-v8/ at their package-relative paths; the other 1,433 descriptor members resolve only against the frozen root, each authenticated by its preimage SHA-256, never against canon or a newer same-ID resource. Adoption applies the nine explicit corrections C1..C9 of Plans/goal_run_replan_contracts/adoption.json (payload successor, idempotency preimage, descriptor representation, append durability precedence, numbers and date-time, Goal body physical edition, cancel routed to D06, replay recipe, unified run history); no other frozen member is changed, repinned or reinterpreted. Representation: the canon adoption digest is SHA-256 of the sorted-key compact UTF-8 JSON adoption descriptor (CV-352 rule), recorded in adoption-digest.txt; the frozen digest keeps its pretty-printed-bytes rule; the two are distinct and neither substitutes for the other or for a v6 or v7 birth digest. Installation: only a genuine original Workflow birth installs v8, with WorkflowBirth.installed_contract_digest and the combined Enrollment equal to the adoption digest, after every exact method, participant, codec, physical selector, recovery, backup, retention and deletion guard is installed. No v3, v6, v7 or all_writers.stop_block.v1 birth is enrolled, upgraded, cast or late-enrolled. The v8 certified component pm.goal_run_certified.producer_source.v3 and the v8 started, cancelled and source-control dependencies are bound by full original-scope correspondence to their own frozen originals, not by repinning to the v7 certified family. Native installation, runtime execution and Event admission remain NOT_RUN.
+gui_related: false
+gui_classification_reason: Defines event, writer, persistence or projection contracts; no visual surface.
+split_recommended: false
+depends_on:
+- EP-118
+- EP-122
+- EP-124
+- CV-352
+- CV-3100
+- DL-080
+- DL-045
+unblocks: []
+acceptance_criteria:
+- Every placed member equals its frozen manifest entry and, where listed, its preimage whole_members entry, byte for byte; the frozen preimage SHA-256 equals 2d69459c1e5ff9c39c3ed234f8b21cd68621b9420b80c1ac9442794a1e4e4155.
+- The adoption digest is recomputed from the adoption descriptor under the CV-352 rule and equals adoption-digest.txt; it differs from the frozen digest and is the only digest a v8 birth may record.
+- No member outside corrections C1..C9 differs from its frozen bytes, and every correction names its frozen member, its canon replacement and its owner unit.
+- No existing birth of another profile is enrolled, cast or late-enrolled, and no v8 header describes a v7 body.
+- Static acceptance establishes no installed native authority, native cancellation, runtime execution, Event depth or readiness.
+validation_surfaces:
+- Plans/goal_run_replan_contracts/adoption.json
+- Plans/goal_run_replan_contracts/adoption-digest.txt
+- Plans/goal_run_replan_contracts/source-v8/manifest.json
+- Plans/goal_run_replan_contracts/source-v8/installed-profile-preimage.json
+- python3 scripts/pm_goal_run_replan_oracles.py
+- python3 scripts/pm-plan-index.py validate
+risk_class: unlisted_workflow_writer_admission
+reasoning_tier: high
+context_scope: workflow_all_writers_v8_adoption
+implementation_surfaces:
+- Plans/Executor_Protocol.md
+- Plans/goal_run_replan_contracts
+node_compile_hint:
+  mode: source_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-080
+- Plans/Decision_Log.md#DL-045
+- /mnt/Cursor/PM-Experiments/goal-replan-combined-source-20260921/v3/manifest.json (sha256 9ed8ba4f825939cc59b37941aafe1068be7ed2d6ada87c0e3b8eaa3b5225896e)
+- /mnt/Cursor/PM-Experiments/goal-replan-combined-root-review-20260921/v3/REVIEW.md (ACCEPT_WITH_NOTES, adoption items 1 to 8 and T-REPLAY)
+preserved_exact_tokens:
+- "pm.executor.workflow_source.all_writers.v8"
+- "2d69459c1e5ff9c39c3ed234f8b21cd68621b9420b80c1ac9442794a1e4e4155"
+- "9ed8ba4f825939cc59b37941aafe1068be7ed2d6ada87c0e3b8eaa3b5225896e"
+negative_constraints:
+- No enrollment, upgrade or cast of an existing birth, and no edit of a frozen member outside C1..C9.
+- No claim of native installation, runtime execution, native cancellation or Event admission.
+owner_hints:
+- Plans/Executor_Protocol.md
+```
+
+**Why only part of the package is copied.** The frozen package is about 188 MB, mostly composition banks, pinned inputs and original resource banks that authenticate lineage. Copying it would add raw source lineage to this repository. The operative members (protocols, method maps, participant tuples, profile, physical families, stored routes, the nineteen whole schemas, the draft payload and its graph-patch source) are placed; the rest is pinned by the descriptor's own hashes, as the v6 package pins its external source manifest (`Plans/workflow_standard_source_contracts/README.md`).
+
+**Replay (T-REPLAY, correction C8).** The review found that rerunning `compose_whole_banks.py` reorders `changes` in 49 of 1,241 ledger rows, which changes one descriptor member's digest without changing meaning. Adoption therefore authenticates the frozen bytes and never replays authoring scripts or refreshes the descriptor; a future replay must keep the frozen ledger or define a stable order before a newly reviewed descriptor exists. The tool issue is filed in the program's tool-issue list.
+
+**What stays open.** Native installation, original issuer authentication, transaction, codec, flush, interleaving, restore and effect tests, and full native cancellation are separately NOT_RUN. A fresh edition that also lists the EP-200 stop and block writers is not written (GRS-3101).
+
+ContractRef: ContractName:Plans/Executor_Protocol.md#EP-118, ContractName:Plans/Executor_Protocol.md#EP-124, ContractName:Plans/Contracts_V0.md#CV-352, ContractName:Plans/Executor_Protocol.md#EP-3101, ContractName:Plans/Decision_Log.md#DL-080
+
+### EP-3101 - Workflow Replan writer
+
+```yaml
+plan_unit_id: EP-3101
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Executor_Protocol.md
+canonical_text: |-
+  Newly authored owner contract under DL-045, written for DL-080 option 1 (PNC-019 lane rv8b, 2026-11-14). It is the Workflow writer listing DL-080 requires for goal_run.replanned, Project edition only. One writer is named: owner.executor.workflow_run.replan.v1, whose entrypoints are exactly the frozen v8 methods draft.replan.prepare.v3, apply_native.v3, finalize_producer.v3, append_original.v3, complete.v3, observe.v3, read_original.v3 and release.v3 in that order, with draft.replan.reconcile.v3 for recovery, draft.replan.project.v3 for the projection participant and draft.replan.enroll_profile.v3 at genuine birth (Plans/goal_run_replan_contracts/source-v8/replan/methods.json). It is reached from handlers::runtime::replan (cmd.runtime.replan) for a live blocked episode whose allowed_action_ids contain replan, and from the bounded manager's own replan decision; each route supplies a genuine BoundedManagerResult, and neither the command nor the writer chooses the graph or the action. Installation: EP-118 keeps refusing every unlisted writer (RequiredOtherWorkflowWriterSource=false); the writer exists only on a genuine all_writers.v8 birth (EP-3100) and claims the run's one exclusive combined slot (combined.claim.v1) before prepare. Order: claim; prepare (complete NativeApplySource, prospective candidates and the durable ProducerIntent before any effect); one native transaction applies graph, RequiredSet, WorkNode dispositions, born members, the checked u32 generation +1 and the native body revision +1; finalize the producer with only the applied graph-patch joins; append through ordinary Storage with SP-286 first-AppendReceipt and CV-339 custody under SP-336/SP-347 durability (C4); complete; observe (D01 observer only); read and project; release, which clears only the publication fence. The command result (RuntimeReplanResult, EP-236) is published only after the first receipt; receipt_ref names it. A next_action of cancel is refused before prepare (C7). A refusal after native application keeps every genuine earlier effect and reports recovery_required, never rollback; a lost acknowledgement resolves from SP-286 retained receipt custody; nothing re-dispatches, re-applies or mints a new event value. Typed args and refusal codes of cmd.runtime.replan are unchanged (EP-236); on a birth without the installed writer the command refuses handler_unavailable and emits nothing.
+gui_related: false
+gui_classification_reason: Defines event, writer, persistence or projection contracts; no visual surface.
+split_recommended: false
+depends_on:
+- EP-118
+- EP-119
+- EP-236
+- EP-3100
+- SP-286
+- SP-3100
+- SP-3101
+- DL-080
+- DL-045
+unblocks: []
+acceptance_criteria:
+- Only owner.executor.workflow_run.replan.v1 appends goal_run.replanned, only on a v8 birth, and only after native application and producer finalization.
+- The writer orders claim, prepare, native application, finalization, append with SP-286 first receipt, completion, observation, read and release; no step is reordered or skipped.
+- cmd.runtime.replan keeps its typed args (run_id, blocked_sequence, allowed_action_id, node_id, attempt_id?) and closed error codes; it requires allowed_action_id replan on a live blocked episode and refuses handler_unavailable on a birth without the writer.
+- next_action cancel is refused before prepare; the writer never performs cancellation, SchedulerStop or effect cleanup.
+- A lost acknowledgement resolves through SP-286 retained receipt resolution; the writer never re-applies native state, advances another generation or mints a new key or timestamp.
+validation_surfaces:
+- Plans/goal_run_replan_contracts/adoption.json
+- Plans/goal_run_replan_contracts/cancellation-dependencies.json
+- Plans/goal_run_replan_contracts/oracle-fixtures.json
+- python3 scripts/pm_goal_run_replan_oracles.py
+- python3 scripts/pm-command-payload-defs-check.py
+- python3 scripts/pm-plan-index.py validate
+risk_class: unlisted_workflow_writer_admission
+reasoning_tier: high
+context_scope: workflow_run_replan_writer
+implementation_surfaces:
+- Plans/Executor_Protocol.md
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-080
+- Plans/Decision_Log.md#DL-045
+- /mnt/Cursor/PM-Experiments/goal-replan-combined-root-review-20260921/v3/REVIEW.md (adoption items 2 and 7)
+preserved_exact_tokens:
+- "owner.executor.workflow_run.replan.v1"
+- "RequiredOtherWorkflowWriterSource=false"
+- "cmd.runtime.replan"
+negative_constraints:
+- No completion, certification, cancellation, stop, resume-without-replan or ownership-transfer writer.
+- No enrollment of an existing birth and no application-scope writer.
+owner_hints:
+- Plans/Executor_Protocol.md
+```
+
+**Why a listing and an installation together.** EP-200 could only name its writers, because no edition listed them. The v8 descriptor already registers the Replan methods and participants before birth, so naming the principal here and adopting the descriptor in EP-3100 closes both the listing and the installation contract. Native installation itself stays NOT_RUN.
+
+**The command route.** `cmd.runtime.replan` is a Blocked run action (`Plans/Wiring_Matrix.production.json` row `catalog.runtime_replan`). Its handler checks the blocked episode identity (`run_id`, `node_id`, `blocked_sequence`, `allowed_action_id = replan`, `attempt_id` only after an attempt exists), Project permission and that the run's birth installed this writer; then it asks the bounded manager for a decision and hands that decision to the writer. A stale `blocked_sequence` refuses `stale_projection`; no live blocked episode refuses `blocked_state_required`; a missing writer refuses `handler_unavailable`. Its declared effect is the `goal_run.replanned` Event; `goal.replanned` is historical-only (GRS-070) and is never its effect or an alias.
+
+**Separate cancellation.** Full original cancellation (`record_cancellation`, SchedulerStop, native cancel result and origin, effect cleanup and D06) is a separate genuine dependency (`Plans/goal_run_replan_contracts/cancellation-dependencies.json`). The limited execution revocation of the v8 Stop protocol never counts as it.
+
+**Search (DL-045).** Scope: EP-116..124, EP-200, EP-236, GRS-070, GRS-079..085, GRS-200..202, SP-286, SP-309..317, the Known-37 matrix row EA-UND-0019-GOAL, `Plans/workflow_standard_source_contracts/`, `Plans/goal_run_stop_block_contracts/` and the wiring row `catalog.runtime_replan`. Found: EP-118 excludes the optional/replanned materialization route; no unit names a Replan writer, method or entrypoint; the wiring row expected the historical `goal.replanned`. The writer identity is newly authored.
+
+ContractRef: ContractName:Plans/Executor_Protocol.md#EP-118, ContractName:Plans/Executor_Protocol.md#EP-3100, ContractName:Plans/Executor_Protocol.md#EP-236, ContractName:Plans/Goal_Runtime_System.md#GRS-3100, ContractName:Plans/Decision_Log.md#DL-080

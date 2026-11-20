@@ -1,0 +1,35 @@
+{
+  "datetime_inventory_failures": 650,
+  "datetime_inventory_followup": "lead NUMRULE-FINAL on the published final head; no PASS claimed",
+  "datetime_inventory_status": "fail",
+  "deferred_goal_families": [
+    "goal.cancelled",
+    "goal.updated",
+    "goal_run.cancelled",
+    "goal_run.certified",
+    "goal_run.started"
+  ],
+  "frozen_errors": [
+    "fresh_census_denominator_not_closed"
+  ],
+  "index": {
+    "failures": 24,
+    "new_failures": 0,
+    "status": "fail"
+  },
+  "new_admissions": 299,
+  "post_august_errors": 0,
+  "records_complete": 299,
+  "recount_members": 249,
+  "recount_open": 0,
+  "registry": {
+    "family_count": 518,
+    "revision": "2026-11-18.1",
+    "sha256": "aa6188dd713badcfa9c902d24d917b764b23a6a9e2290bdb58de8776a2f79a5e"
+  },
+  "retained_s5b": 8,
+  "scope": "admission census; not global gate certification",
+  "source_checkpoint": "826e6cb4d4a50e8c2635c4003576b4c0248bed6f",
+  "source_core_worktree_unset": true,
+  "status": "pass"
+}

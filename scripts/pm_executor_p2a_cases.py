@@ -38,7 +38,7 @@ def seed_document(case, family, shapes):
 
 def action(case, contract, family, shapes, existing, root):
     """A zero-argument callable running the witness through the complete checker route it names."""
-    from pm_executor_event_contracts import validate, identity, contract_integrity, identity_replay_facts
+    from pm_executor_event_contracts import validate, identity, contract_integrity, identity_replay_facts, with_registered
     import pm_executor_schema_refs as refs
     route = case['route']
     document = sem.mutate(seed_document(case, family, shapes), case.get('changes', []))
@@ -71,7 +71,8 @@ def action(case, contract, family, shapes, existing, root):
     if route == 'contract_integrity':
         cases = [row for row in shapes if row['event_type'] == contract['event_type']]
         cases = [row for row in cases if row['expected'] in document.get('keep_expected', ['accept', 'reject'])]
-        registry = set(existing) | set(document.get('admitted', []))
+        # 'admitted' names a family the witness registers without its own DL-077 admission (IC03).
+        registry = with_registered(existing, document.get('admitted', []))
         return lambda: contract_integrity(mutated, registry, cases)
     if route == 'stock_schema':
         return lambda: sem.stock_schema_validate(contract['schema_ref'], document['payload'])

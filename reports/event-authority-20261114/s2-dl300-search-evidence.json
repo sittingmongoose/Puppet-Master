@@ -1,0 +1,607 @@
+{
+ "schema_id": "pm.event_authority.dl411_search_evidence.v1",
+ "lane": "PNC-019 S2",
+ "base_commit": "3c33510c576d87a9ad512c4519d417e4fd4441df",
+ "authority": "Plans/Decision_Log.md#DL-411 (E-CARDS-1 4b A): documented search per name, reuse existing owner definitions first, label anything new as new.",
+ "method": "git grep -n -F for each exact event type over Plans/ at the base commit, excluding generated Plans/_shards/**, Plans/.plan_index/**, Plans/.plan_migration/** and audit ledgers Plans/.audits/**; each hit with path, line, text and the file SHA-256 at the base.",
+ "families": {
+  "settings.layer.changed": {
+   "exact_name_hits": 57,
+   "hit_files": [
+    "Plans/Contracts_V0.md",
+    "Plans/Decision_Log.md",
+    "Plans/Settings_System.md",
+    "Plans/UI_Command_Catalog.md",
+    "Plans/UI_Wiring_Rules.md",
+    "Plans/Wiring_Matrix.md",
+    "Plans/Wiring_Matrix.production.exclusions.json",
+    "Plans/Wiring_Matrix.production.json",
+    "Plans/event_family_registry.json",
+    "Plans/small_owner_event_fixtures.json",
+    "Plans/storage-plan.md",
+    "Plans/touch_closure.json"
+   ],
+   "hits": [
+    {
+     "path": "Plans/Contracts_V0.md",
+     "line": 29290,
+     "text": "The attached table is the closed event/app-source selection policy. Its CompactionCompletionApplicationV1 shape and source are non-emitting candidates only: context.compaction.completed remains project_only, DL-300 admits no app edition, an",
+     "file_sha256": "4623d6a821793daf4f7eaeeecbb64981e0a86fcd21d2f483f414d14bebe1982f"
+    },
+    {
+     "path": "Plans/Decision_Log.md",
+     "line": 4487,
+     "text": "| **G22** | A panel popped out or put back; a setting or the theme changed. | 4 | Keep | What the registered siblings (layout changes, `settings.layer.changed`) use. Card **2d** decides which Settings names survive. |",
+     "file_sha256": "4786829200ddebe6bd0a9f53638e04f2fbc15169224d89c8129ff3e6585559ca"
+    },
+    {
+     "path": "Plans/Decision_Log.md",
+     "line": 4598,
+     "text": "### DL-408: Every Settings change uses settings.layer.changed",
+     "file_sha256": "4786829200ddebe6bd0a9f53638e04f2fbc15169224d89c8129ff3e6585559ca"
+    },
+    {
+     "path": "Plans/Decision_Log.md",
+     "line": 4610,
+     "text": "- **A (recommended):** one name. Every Settings change, including the DRY guard, the memory switch and theme changes, is recorded only as `settings.layer.changed`. `settings.updated` and `settings.theme.updated` are retired as superseded; r",
+     "file_sha256": "4786829200ddebe6bd0a9f53638e04f2fbc15169224d89c8129ff3e6585559ca"
+    },
+    {
+     "path": "Plans/Decision_Log.md",
+     "line": 4664,
+     "text": "`assistant_plan.schedule_invalidated`; `docker.compose.scenario.saved`, `.edited`, `.run`, `.deleted`; `execution_window.created`, `.updated`, `.invalidated`; `goal.continuation_evaluated`; `named_plan.created`, `.renamed`, `.archived`, `.r",
+     "file_sha256": "4786829200ddebe6bd0a9f53638e04f2fbc15169224d89c8129ff3e6585559ca"
+    },
+    {
+     "path": "Plans/Decision_Log.md",
+     "line": 6388,
+     "text": "\\ back; a setting or the theme changed. | 4 | Keep | What the registered siblings (layout changes, `settings.layer.changed`)\\",
+     "file_sha256": "4786829200ddebe6bd0a9f53638e04f2fbc15169224d89c8129ff3e6585559ca"
+    },
+    {
+     "path": "Plans/Decision_Log.md",
+     "line": 6795,
+     "text": "### DL-408 - Every Settings change uses settings.layer.changed",
+     "file_sha256": "4786829200ddebe6bd0a9f53638e04f2fbc15169224d89c8129ff3e6585559ca"
+    },
+    {
+     "path": "Plans/Decision_Log.md",
+     "line": 6803,
+     "text": "Settings change, including the DRY guard, the memory switch and theme changes, is recorded only as `settings.layer.changed`.",
+     "file_sha256": "4786829200ddebe6bd0a9f53638e04f2fbc15169224d89c8129ff3e6585559ca"
+    },
+    {
+     "path": "Plans/Decision_Log.md",
+     "line": 6995,
+     "text": "`.dependency_changed`, `.reordered`, `.removed_from_current_list`; `settings.layer.changed`; `approval.chat_tool_requested`;",
+     "file_sha256": "4786829200ddebe6bd0a9f53638e04f2fbc15169224d89c8129ff3e6585559ca"
+    },
+    {
+     "path": "Plans/Decision_Log.md",
+     "line": 30154,
+     "text": "registers settings.layer.changed (Plans/Settings_System.md#SSYS-060), approval.chat_tool_requested and",
+     "file_sha256": "4786829200ddebe6bd0a9f53638e04f2fbc15169224d89c8129ff3e6585559ca"
+    },
+    {
+     "path": "Plans/Decision_Log.md",
+     "line": 30171,
+     "text": "- \"Plans/event_family_registry.json is registry revision 2026-11-04.1 with 46 families: the 43 of 2026-10-09.1, eleven of them Goal families with the exact CV-366 scope-selector edition, plus settings.layer.changed, approval.chat_tool_reque",
+     "file_sha256": "4786829200ddebe6bd0a9f53638e04f2fbc15169224d89c8129ff3e6585559ca"
+    },
+    {
+     "path": "Plans/Decision_Log.md",
+     "line": 30203,
+     "text": "- \"settings.layer.changed\"",
+     "file_sha256": "4786829200ddebe6bd0a9f53638e04f2fbc15169224d89c8129ff3e6585559ca"
+    },
+    {
+     "path": "Plans/Settings_System.md",
+     "line": 1684,
+     "text": "The settings.layer.changed family (registered by DL-300) is application_only: changed setting IDs, level/key, redacted summaries,",
+     "file_sha256": "1af47aaad8b82ee9d56aef4f7977741f2e347e7946dfdaf7184eab7340667660"
+    },
+    {
+     "path": "Plans/Settings_System.md",
+     "line": 1752,
+     "text": "- settings.layer.changed",
+     "file_sha256": "1af47aaad8b82ee9d56aef4f7977741f2e347e7946dfdaf7184eab7340667660"
+    },
+    {
+     "path": "Plans/Settings_System.md",
+     "line": 2312,
+     "text": "Settings semantically registers the five command IDs in SSYS-018 and the six route-only UI action IDs in SSYS-019. Central command/catalog/wiring owners must consume those exact contracts; until they do, the action is disabled with `command",
+     "file_sha256": "1af47aaad8b82ee9d56aef4f7977741f2e347e7946dfdaf7184eab7340667660"
+    },
+    {
+     "path": "Plans/Settings_System.md",
+     "line": 2314,
+     "text": "Under DL-408 (superseding DL-041's naming answer), the sole Settings change event is `settings.layer.changed` with exact setting identity `app.agent_rules.dry_method_default_guard` and the existing `transaction_id` from `pm.settings_transac",
+     "file_sha256": "1af47aaad8b82ee9d56aef4f7977741f2e347e7946dfdaf7184eab7340667660"
+    },
+    {
+     "path": "Plans/UI_Command_Catalog.md",
+     "line": 6234,
+     "text": "closes wiring. DL-407 and AMS-130/CV-785/SP-765 replace the seven command history spellings with memory.gist_state_changed once per successful real mutation; requested or failed verification and no-ops retain only their command results. Und",
+     "file_sha256": "41c8e1cbfe830c3f357d6befa4fd268af9e8f1bc8ee03fb6492f45433d61ecb1"
+    },
+    {
+     "path": "Plans/UI_Command_Catalog.md",
+     "line": 6270,
+     "text": "- settings.layer.changed",
+     "file_sha256": "41c8e1cbfe830c3f357d6befa4fd268af9e8f1bc8ee03fb6492f45433d61ecb1"
+    },
+    {
+     "path": "Plans/UI_Command_Catalog.md",
+     "line": 6279,
+     "text": "- settings.updated is retired as superseded by settings.layer.changed under DL-408.",
+     "file_sha256": "41c8e1cbfe830c3f357d6befa4fd268af9e8f1bc8ee03fb6492f45433d61ecb1"
+    },
+    {
+     "path": "Plans/UI_Command_Catalog.md",
+     "line": 7914,
+     "text": "The sole Settings change event identity for this change is settings.layer.changed, carrying that exact setting key and",
+     "file_sha256": "41c8e1cbfe830c3f357d6befa4fd268af9e8f1bc8ee03fb6492f45433d61ecb1"
+    },
+    {
+     "path": "Plans/UI_Command_Catalog.md",
+     "line": 7947,
+     "text": "- Under DL-408, settings.layer.changed records preserve app.agent_rules.dry_method_default_guard and the existing committed",
+     "file_sha256": "41c8e1cbfe830c3f357d6befa4fd268af9e8f1bc8ee03fb6492f45433d61ecb1"
+    },
+    {
+     "path": "Plans/UI_Command_Catalog.md",
+     "line": 8652,
+     "text": "**DL-408:** All four theme mutations below record only `settings.layer.changed`; `settings.theme.updated` is retired as superseded. Existing Settings transactions and owner-adoption prerequisites apply.",
+     "file_sha256": "41c8e1cbfe830c3f357d6befa4fd268af9e8f1bc8ee03fb6492f45433d61ecb1"
+    },
+    {
+     "path": "Plans/UI_Command_Catalog.md",
+     "line": 8656,
+     "text": "| `cmd.theme.set_mode` | `project_id?`, `scope`, `mode` (`light`, `dark`, or `auto`), `expected_theme_revision`, `idempotency_key` | `theme_revision`, `effective_mode`, `effective_variant` (resolved theme; in `auto` it tracks OS `prefers-co",
+     "file_sha256": "41c8e1cbfe830c3f357d6befa4fd268af9e8f1bc8ee03fb6492f45433d61ecb1"
+    },
+    {
+     "path": "Plans/UI_Command_Catalog.md",
+     "line": 8657,
+     "text": "| `cmd.theme.set_accent` | `project_id?`, `scope`, `accent_token`, `expected_theme_revision`, `idempotency_key` | `theme_revision`, `effective_accent_token` | `invalid_args`, `stale_projection` | `settings.layer.changed` (DL-408) |",
+     "file_sha256": "41c8e1cbfe830c3f357d6befa4fd268af9e8f1bc8ee03fb6492f45433d61ecb1"
+    },
+    {
+     "path": "Plans/UI_Command_Catalog.md",
+     "line": 8658,
+     "text": "| `cmd.theme.set_density` | `project_id?`, `scope`, `density`, `expected_theme_revision`, `idempotency_key` | `theme_revision`, `effective_density` | `invalid_args`, `stale_projection` | `settings.layer.changed` (DL-408) |",
+     "file_sha256": "41c8e1cbfe830c3f357d6befa4fd268af9e8f1bc8ee03fb6492f45433d61ecb1"
+    },
+    {
+     "path": "Plans/UI_Command_Catalog.md",
+     "line": 8659,
+     "text": "| `cmd.theme.reset` | `project_id?`, `scope`, `expected_theme_revision`, `idempotency_key` | `theme_revision`, `reset_scope` | `stale_projection`, `permission_denied` | `settings.layer.changed` (DL-408) |",
+     "file_sha256": "41c8e1cbfe830c3f357d6befa4fd268af9e8f1bc8ee03fb6492f45433d61ecb1"
+    },
+    {
+     "path": "Plans/UI_Command_Catalog.md",
+     "line": 8741,
+     "text": "canonical_text: 'DL-408 retires settings.theme.updated as superseded by settings.layer.changed, the sole Settings change event including theme changes; existing owner-adoption requirements remain. The FABLE GUI command repair registers miss",
+     "file_sha256": "41c8e1cbfe830c3f357d6befa4fd268af9e8f1bc8ee03fb6492f45433d61ecb1"
+    },
+    {
+     "path": "Plans/UI_Command_Catalog.md",
+     "line": 8751,
+     "text": "dispatch no cmd.theme.* and emit no settings.layer.changed: the pre-paint reads the one resolved Everywhere/Device/actual-Project",
+     "file_sha256": "41c8e1cbfe830c3f357d6befa4fd268af9e8f1bc8ee03fb6492f45433d61ecb1"
+    },
+    {
+     "path": "Plans/UI_Command_Catalog.md",
+     "line": 8788,
+     "text": "pair, and the application's start and onboarding's look previews dispatch no cmd.theme.* and emit no settings.layer.changed",
+     "file_sha256": "41c8e1cbfe830c3f357d6befa4fd268af9e8f1bc8ee03fb6492f45433d61ecb1"
+    },
+    {
+     "path": "Plans/UI_Wiring_Rules.md",
+     "line": 978,
+     "text": "Under DL-408 (replacing DL-041's naming answer), the DRY default-guard toggle may use the existing preview/apply transaction sequence only after the exact owner-key-to-valid-setting-ID and writer mapping is proven; until then, `owner_contra",
+     "file_sha256": "ce6744fcba9d14aa1c2f0d384b23c3db1cb65e097e8af357f5a33e33375c6b09"
+    },
+    {
+     "path": "Plans/Wiring_Matrix.md",
+     "line": 4396,
+     "text": "preserving enabled | disabled_by_user and default enabled. The sole Settings change event spelling is settings.layer.changed;",
+     "file_sha256": "b7ed4b1c3437a68b97a5ec79bce60e0c2d172b0d1c6821dffad8113ff6f382e2"
+    },
+    {
+     "path": "Plans/Wiring_Matrix.md",
+     "line": 4404,
+     "text": "command dispatch and setting writes; naming agreement alone cannot enable the action. Until the existing owner-adoption prerequisites are satisfied, no settings.layer.changed EventRecord is emitted. Assistant Chat and run-detail DRY disclos",
+     "file_sha256": "b7ed4b1c3437a68b97a5ec79bce60e0c2d172b0d1c6821dffad8113ff6f382e2"
+    },
+    {
+     "path": "Plans/Wiring_Matrix.md",
+     "line": 4436,
+     "text": "- Only settings.layer.changed records that change under DL-408 and existing owner-adoption prerequisites,",
+     "file_sha256": "b7ed4b1c3437a68b97a5ec79bce60e0c2d172b0d1c6821dffad8113ff6f382e2"
+    },
+    {
+     "path": "Plans/Wiring_Matrix.production.exclusions.json",
+     "line": 326,
+     "text": "\"cmd.settings.agent_rules.dry_method_default_guard.set\": \"DL-041 / UCC-104 / WM-040: retired per-setting command; no primary handler, production row or dispatch alias. DL-408 replaces DL-041's naming answer: only settings.layer.changed reco",
+     "file_sha256": "beb1555d7b5ceaa7a59afe6c095115a013203a4cf9b1c13d0333a2f1695f03e9"
+    },
+    {
+     "path": "Plans/Wiring_Matrix.production.json",
+     "line": 71473,
+     "text": "\"settings.layer.changed\"",
+     "file_sha256": "1a108366e5aed7f3f710b7c8c163e0b786bd908bf113764fa8310209d93b27b6"
+    },
+    {
+     "path": "Plans/Wiring_Matrix.production.json",
+     "line": 71489,
+     "text": "\"settings.layer.changed\"",
+     "file_sha256": "1a108366e5aed7f3f710b7c8c163e0b786bd908bf113764fa8310209d93b27b6"
+    },
+    {
+     "path": "Plans/Wiring_Matrix.production.json",
+     "line": 71522,
+     "text": "\"requirement\": \"Assert cmd.theme.reset emits settings.layer.changed with command_id, origin, correlation_id, and handler target.\"",
+     "file_sha256": "1a108366e5aed7f3f710b7c8c163e0b786bd908bf113764fa8310209d93b27b6"
+    },
+    {
+     "path": "Plans/Wiring_Matrix.production.json",
+     "line": 71526,
+     "text": "\"Assert cmd.theme.reset emits settings.layer.changed with command_id, origin, correlation_id, and handler target.\"",
+     "file_sha256": "1a108366e5aed7f3f710b7c8c163e0b786bd908bf113764fa8310209d93b27b6"
+    },
+    {
+     "path": "Plans/Wiring_Matrix.production.json",
+     "line": 71535,
+     "text": "\"settings.layer.changed\"",
+     "file_sha256": "1a108366e5aed7f3f710b7c8c163e0b786bd908bf113764fa8310209d93b27b6"
+    },
+    {
+     "path": "Plans/Wiring_Matrix.production.json",
+     "line": 71551,
+     "text": "\"settings.layer.changed\"",
+     "file_sha256": "1a108366e5aed7f3f710b7c8c163e0b786bd908bf113764fa8310209d93b27b6"
+    },
+    {
+     "path": "Plans/Wiring_Matrix.production.json",
+     "line": 71584,
+     "text": "\"requirement\": \"Assert cmd.theme.set_accent emits settings.layer.changed with command_id, origin, correlation_id, and handler target.\"",
+     "file_sha256": "1a108366e5aed7f3f710b7c8c163e0b786bd908bf113764fa8310209d93b27b6"
+    },
+    {
+     "path": "Plans/Wiring_Matrix.production.json",
+     "line": 71588,
+     "text": "\"Assert cmd.theme.set_accent emits settings.layer.changed with command_id, origin, correlation_id, and handler target.\"",
+     "file_sha256": "1a108366e5aed7f3f710b7c8c163e0b786bd908bf113764fa8310209d93b27b6"
+    },
+    {
+     "path": "Plans/Wiring_Matrix.production.json",
+     "line": 71597,
+     "text": "\"settings.layer.changed\"",
+     "file_sha256": "1a108366e5aed7f3f710b7c8c163e0b786bd908bf113764fa8310209d93b27b6"
+    },
+    {
+     "path": "Plans/Wiring_Matrix.production.json",
+     "line": 71613,
+     "text": "\"settings.layer.changed\"",
+     "file_sha256": "1a108366e5aed7f3f710b7c8c163e0b786bd908bf113764fa8310209d93b27b6"
+    },
+    {
+     "path": "Plans/Wiring_Matrix.production.json",
+     "line": 71646,
+     "text": "\"requirement\": \"Assert cmd.theme.set_density emits settings.layer.changed with command_id, origin, correlation_id, and handler target.\"",
+     "file_sha256": "1a108366e5aed7f3f710b7c8c163e0b786bd908bf113764fa8310209d93b27b6"
+    },
+    {
+     "path": "Plans/Wiring_Matrix.production.json",
+     "line": 71650,
+     "text": "\"Assert cmd.theme.set_density emits settings.layer.changed with command_id, origin, correlation_id, and handler target.\"",
+     "file_sha256": "1a108366e5aed7f3f710b7c8c163e0b786bd908bf113764fa8310209d93b27b6"
+    },
+    {
+     "path": "Plans/Wiring_Matrix.production.json",
+     "line": 71659,
+     "text": "\"settings.layer.changed\"",
+     "file_sha256": "1a108366e5aed7f3f710b7c8c163e0b786bd908bf113764fa8310209d93b27b6"
+    },
+    {
+     "path": "Plans/Wiring_Matrix.production.json",
+     "line": 71676,
+     "text": "\"settings.layer.changed\"",
+     "file_sha256": "1a108366e5aed7f3f710b7c8c163e0b786bd908bf113764fa8310209d93b27b6"
+    },
+    {
+     "path": "Plans/Wiring_Matrix.production.json",
+     "line": 71709,
+     "text": "\"requirement\": \"Assert cmd.theme.set_mode emits settings.layer.changed with command_id, origin, correlation_id, and handler target.\"",
+     "file_sha256": "1a108366e5aed7f3f710b7c8c163e0b786bd908bf113764fa8310209d93b27b6"
+    },
+    {
+     "path": "Plans/Wiring_Matrix.production.json",
+     "line": 71713,
+     "text": "\"Assert cmd.theme.set_mode emits settings.layer.changed with command_id, origin, correlation_id, and handler target.\"",
+     "file_sha256": "1a108366e5aed7f3f710b7c8c163e0b786bd908bf113764fa8310209d93b27b6"
+    },
+    {
+     "path": "Plans/event_family_registry.json",
+     "line": 3089,
+     "text": "\"event_type\": \"settings.layer.changed\",",
+     "file_sha256": "443ae71d7e6326c3673a409f63950b9f33713c67f43c256fed6efa1c0d03a653"
+    },
+    {
+     "path": "Plans/small_owner_event_fixtures.json",
+     "line": 91315,
+     "text": "\"settings.layer.changed\"",
+     "file_sha256": "c400982ac4c50cdf825c611c35b4ccd27e3ef1a9023700856143bf0957ad4b79"
+    },
+    {
+     "path": "Plans/small_owner_event_fixtures.json",
+     "line": 91347,
+     "text": "\"value\": \"Only settings.layer.changed is supported.\"",
+     "file_sha256": "c400982ac4c50cdf825c611c35b4ccd27e3ef1a9023700856143bf0957ad4b79"
+    },
+    {
+     "path": "Plans/storage-plan.md",
+     "line": 17629,
+     "text": "**Names given no rule.** Eleven of the table's names leave it under Jared's Card 2 answers and get no rule here, because a retired name is never admitted: `browser.session.navigated` and `browser.session.resized` (G10), which DL-405 retires",
+     "file_sha256": "955d7fb440299fd63a0735130db45cb7b4826067df3498d471d40ffcd2c3575a"
+    },
+    {
+     "path": "Plans/storage-plan.md",
+     "line": 30382,
+     "text": "settings.layer.changed is application-only (registered by DL-300), carrying level/key/changed IDs/revisions/hash/redacted summary and receipt refs; a Project level is metadata, not a second scope envelope. DL-408 retires settings.updated an",
+     "file_sha256": "955d7fb440299fd63a0735130db45cb7b4826067df3498d471d40ffcd2c3575a"
+    },
+    {
+     "path": "Plans/storage-plan.md",
+     "line": 30427,
+     "text": "- settings.layer.changed",
+     "file_sha256": "955d7fb440299fd63a0735130db45cb7b4826067df3498d471d40ffcd2c3575a"
+    },
+    {
+     "path": "Plans/touch_closure.json",
+     "line": 3182,
+     "text": "\"DL-408: historical settings.agent_rules.dry_method_default_guard.updated remains read-only lineage without automatic aliasing or payload rewrite; only settings.layer.changed may record future Settings changes under SSYS-060/DL-300 and exis",
+     "file_sha256": "0b45921146844d442acedb2a2c3bc88b88e1d56691b8843cdca233aff0499a94"
+    }
+   ],
+   "reused_owner_definitions": [
+    "Plans/event_family_registry.json (row event-family-settings-layer-changed, 1.0.0, application_only, RP-AUTHORITY-INDEFINITE)",
+    "Plans/settings_system_contracts.schema.json#/$defs/settings_layer_changed_payload_v1 (closed payload, unchanged)",
+    "Plans/Settings_System.md#SSYS-060 (sole writers per level, per-setting CAS, history, settings.layer.changed semantics)",
+    "Plans/storage-plan.md#SP-348 (level keys, own rows, level head with writer/role generation, snapshots, backup)",
+    "Plans/Contracts_V0.md#CV-366 (application idempotency key, partition rule)",
+    "Plans/Decision_Log.md#DL-408 (sole Settings change event; retirements)",
+    "Plans/storage-plan.md#SP-278, #SP-286, #SP-337; Plans/Contracts_V0.md#CV-317, #CV-339, #CV-1100, #CV-1101; Plans/storage-plan.md#SP-1100, #SP-1101"
+   ],
+   "negative_evidence_and_new_parts": "No exact producer component, commit/append/first-receipt ordering, event_id or idempotency recipe, publication custody, consumer or checkpoint, read-time access rule or writer/reader withdrawal for this event existed at the base (SSYS-060 says only that native emission stays disabled until its producer is adopted). No Server-side sole writer is named for Device, provider or account levels. New: CV-2300, SP-2300, the ea_s2_settings_layer_changed_publication row and Plans/event_payloads/s2/settings_layer_changed.schema.json."
+  },
+  "approval.chat_tool_requested": {
+   "exact_name_hits": 10,
+   "hit_files": [
+    "Plans/Contracts_V0.md",
+    "Plans/Decision_Log.md",
+    "Plans/Permissions_System.md",
+    "Plans/event_family_registry.json"
+   ],
+   "hits": [
+    {
+     "path": "Plans/Contracts_V0.md",
+     "line": 25228,
+     "text": "Contracts_V0 defines FileSafe fail-closed security EventRecord payloads for filesafe.guard_init_failed, filesafe.command_denied, filesafe.path_denied, filesafe.destructive_override_requested, filesafe.destructive_override_granted, filesafe.",
+     "file_sha256": "4623d6a821793daf4f7eaeeecbb64981e0a86fcd21d2f483f414d14bebe1982f"
+    },
+    {
+     "path": "Plans/Contracts_V0.md",
+     "line": 29290,
+     "text": "The attached table is the closed event/app-source selection policy. Its CompactionCompletionApplicationV1 shape and source are non-emitting candidates only: context.compaction.completed remains project_only, DL-300 admits no app edition, an",
+     "file_sha256": "4623d6a821793daf4f7eaeeecbb64981e0a86fcd21d2f483f414d14bebe1982f"
+    },
+    {
+     "path": "Plans/Decision_Log.md",
+     "line": 4664,
+     "text": "`assistant_plan.schedule_invalidated`; `docker.compose.scenario.saved`, `.edited`, `.run`, `.deleted`; `execution_window.created`, `.updated`, `.invalidated`; `goal.continuation_evaluated`; `named_plan.created`, `.renamed`, `.archived`, `.r",
+     "file_sha256": "4786829200ddebe6bd0a9f53638e04f2fbc15169224d89c8129ff3e6585559ca"
+    },
+    {
+     "path": "Plans/Decision_Log.md",
+     "line": 6995,
+     "text": "`.dependency_changed`, `.reordered`, `.removed_from_current_list`; `settings.layer.changed`; `approval.chat_tool_requested`;",
+     "file_sha256": "4786829200ddebe6bd0a9f53638e04f2fbc15169224d89c8129ff3e6585559ca"
+    },
+    {
+     "path": "Plans/Decision_Log.md",
+     "line": 30154,
+     "text": "registers settings.layer.changed (Plans/Settings_System.md#SSYS-060), approval.chat_tool_requested and",
+     "file_sha256": "4786829200ddebe6bd0a9f53638e04f2fbc15169224d89c8129ff3e6585559ca"
+    },
+    {
+     "path": "Plans/Decision_Log.md",
+     "line": 30171,
+     "text": "- \"Plans/event_family_registry.json is registry revision 2026-11-04.1 with 46 families: the 43 of 2026-10-09.1, eleven of them Goal families with the exact CV-366 scope-selector edition, plus settings.layer.changed, approval.chat_tool_reque",
+     "file_sha256": "4786829200ddebe6bd0a9f53638e04f2fbc15169224d89c8129ff3e6585559ca"
+    },
+    {
+     "path": "Plans/Decision_Log.md",
+     "line": 30204,
+     "text": "- \"approval.chat_tool_requested\"",
+     "file_sha256": "4786829200ddebe6bd0a9f53638e04f2fbc15169224d89c8129ff3e6585559ca"
+    },
+    {
+     "path": "Plans/Permissions_System.md",
+     "line": 10417,
+     "text": "tool asks use a distinct thread/tool/request/target-bound approval contract (approval.chat_tool_requested/resolved, registered by DL-300; producers still require owner adoption)",
+     "file_sha256": "2cdd733d8301618bfe11517ee6fbe463e4ffc3481fda81aa4ba27f1bf120d357"
+    },
+    {
+     "path": "Plans/Permissions_System.md",
+     "line": 10654,
+     "text": "- approval.chat_tool_requested/resolved",
+     "file_sha256": "2cdd733d8301618bfe11517ee6fbe463e4ffc3481fda81aa4ba27f1bf120d357"
+    },
+    {
+     "path": "Plans/event_family_registry.json",
+     "line": 3150,
+     "text": "\"event_type\": \"approval.chat_tool_requested\",",
+     "file_sha256": "443ae71d7e6326c3673a409f63950b9f33713c67f43c256fed6efa1c0d03a653"
+    }
+   ],
+   "reused_owner_definitions": [
+    "Plans/event_family_registry.json (row event-family-approval-chat-tool-requested, 1.0.0, application_or_project, two payload versions)",
+    "Plans/automation_authority_contracts.schema.json#/$defs/ChatToolApprovalRequest (closed payload, unchanged)",
+    "Plans/Permissions_System.md#PS-145 (typed app tool-ask contract through the shared approval host)",
+    "Plans/human-in-the-loop.md#HITL-038 (one host, typed envelopes, human vs mode vs grant authority)",
+    "Plans/storage-plan.md#SP-353 and Plans/storage_value_registry.json chat_tool_approval_application (the application source record)",
+    "Plans/Contracts_V0.md#CV-366 (application identity; thread/tool/target-bound approval payloads distinct from node approvals)",
+    "Plans/storage-plan.md#SP-278, #SP-286, #SP-337; Plans/Contracts_V0.md#CV-317, #CV-339, #CV-1100, #CV-1101; Plans/storage-plan.md#SP-1101"
+   ],
+   "negative_evidence_and_new_parts": "No exact emitter, ordering against the approval record commit, event_id or idempotency recipe, publication custody, reader, read-time access or withdrawal existed at the base. No Project source record existed (SP-353 binds only chat_tool_approval_application). The registry legacy identity pointer /payload/scope/project_id does not resolve in the payload (Case L-5 normalization only). New: CV-2301, SP-2301, SP-2303 (chat_tool_approval_project), their registry rows and schemas."
+  },
+  "approval.chat_tool_resolved": {
+   "exact_name_hits": 20,
+   "hit_files": [
+    "Plans/Contracts_V0.md",
+    "Plans/Decision_Log.md",
+    "Plans/Executor_Protocol.md",
+    "Plans/Wiring_Matrix.production.json",
+    "Plans/automation_authority_contract_fixtures.json",
+    "Plans/event_family_registry.json",
+    "Plans/human-in-the-loop.md",
+    "Plans/projects_refresh_command_bindings.json",
+    "Plans/projects_refresh_fix_contracts.schema.json"
+   ],
+   "hits": [
+    {
+     "path": "Plans/Contracts_V0.md",
+     "line": 25228,
+     "text": "Contracts_V0 defines FileSafe fail-closed security EventRecord payloads for filesafe.guard_init_failed, filesafe.command_denied, filesafe.path_denied, filesafe.destructive_override_requested, filesafe.destructive_override_granted, filesafe.",
+     "file_sha256": "4623d6a821793daf4f7eaeeecbb64981e0a86fcd21d2f483f414d14bebe1982f"
+    },
+    {
+     "path": "Plans/Decision_Log.md",
+     "line": 4664,
+     "text": "`assistant_plan.schedule_invalidated`; `docker.compose.scenario.saved`, `.edited`, `.run`, `.deleted`; `execution_window.created`, `.updated`, `.invalidated`; `goal.continuation_evaluated`; `named_plan.created`, `.renamed`, `.archived`, `.r",
+     "file_sha256": "4786829200ddebe6bd0a9f53638e04f2fbc15169224d89c8129ff3e6585559ca"
+    },
+    {
+     "path": "Plans/Decision_Log.md",
+     "line": 6996,
+     "text": "`approval.chat_tool_resolved`.",
+     "file_sha256": "4786829200ddebe6bd0a9f53638e04f2fbc15169224d89c8129ff3e6585559ca"
+    },
+    {
+     "path": "Plans/Decision_Log.md",
+     "line": 30155,
+     "text": "approval.chat_tool_resolved (Plans/Permissions_System.md#PS-145), and gives eleven Goal event families the exact",
+     "file_sha256": "4786829200ddebe6bd0a9f53638e04f2fbc15169224d89c8129ff3e6585559ca"
+    },
+    {
+     "path": "Plans/Decision_Log.md",
+     "line": 30171,
+     "text": "- \"Plans/event_family_registry.json is registry revision 2026-11-04.1 with 46 families: the 43 of 2026-10-09.1, eleven of them Goal families with the exact CV-366 scope-selector edition, plus settings.layer.changed, approval.chat_tool_reque",
+     "file_sha256": "4786829200ddebe6bd0a9f53638e04f2fbc15169224d89c8129ff3e6585559ca"
+    },
+    {
+     "path": "Plans/Decision_Log.md",
+     "line": 30205,
+     "text": "- \"approval.chat_tool_resolved\"",
+     "file_sha256": "4786829200ddebe6bd0a9f53638e04f2fbc15169224d89c8129ff3e6585559ca"
+    },
+    {
+     "path": "Plans/Executor_Protocol.md",
+     "line": 9401,
+     "text": "gap_note: \"The catalog requires command_kind metadata on recovery commands (UCC-095, UI_Command_Catalog.md:6852) but states no value for cmd.runtime.approve; domain_action because approval resolves the blocked episode (node.unblocked, Wirin",
+     "file_sha256": "abd395ea9120a1e020240c663816cd390aac571f804a4ff6b97accb2b456ddf3"
+    },
+    {
+     "path": "Plans/Executor_Protocol.md",
+     "line": 9589,
+     "text": "gap_note: \"The catalog requires command_kind metadata on recovery commands (UCC-095, UI_Command_Catalog.md:6852) but states no value for cmd.runtime.decline; domain_action because decline resolves the blocked episode (a recorded receipt; Wi",
+     "file_sha256": "abd395ea9120a1e020240c663816cd390aac571f804a4ff6b97accb2b456ddf3"
+    },
+    {
+     "path": "Plans/Wiring_Matrix.production.json",
+     "line": 61434,
+     "text": "\"Branch policy (HITL-038): expected_event_types applies to the legacy Orchestrator node branch only. Application/Project chat-tool decisions emit only approval.chat_tool_resolved with the existing ChatToolApprovalResult payload after actual",
+     "file_sha256": "1a108366e5aed7f3f710b7c8c163e0b786bd908bf113764fa8310209d93b27b6"
+    },
+    {
+     "path": "Plans/Wiring_Matrix.production.json",
+     "line": 61496,
+     "text": "\"Branch policy (HITL-038): expected_event_types applies to the legacy Orchestrator node branch only. Application/Project chat-tool decisions emit only approval.chat_tool_resolved with the existing ChatToolApprovalResult payload after actual",
+     "file_sha256": "1a108366e5aed7f3f710b7c8c163e0b786bd908bf113764fa8310209d93b27b6"
+    },
+    {
+     "path": "Plans/Wiring_Matrix.production.json",
+     "line": 61520,
+     "text": "\"Branch policy (HITL-038): expected_event_types applies to the legacy Orchestrator node branch only. Application/Project chat-tool decisions emit only approval.chat_tool_resolved with the existing ChatToolApprovalResult payload after actual",
+     "file_sha256": "1a108366e5aed7f3f710b7c8c163e0b786bd908bf113764fa8310209d93b27b6"
+    },
+    {
+     "path": "Plans/Wiring_Matrix.production.json",
+     "line": 61577,
+     "text": "\"Branch policy (HITL-038): expected_event_types applies to the legacy Orchestrator node branch only. Application/Project chat-tool decisions emit only approval.chat_tool_resolved with the existing ChatToolApprovalResult payload after actual",
+     "file_sha256": "1a108366e5aed7f3f710b7c8c163e0b786bd908bf113764fa8310209d93b27b6"
+    },
+    {
+     "path": "Plans/automation_authority_contract_fixtures.json",
+     "line": 4785,
+     "text": "\"approval.chat_tool_resolved\"",
+     "file_sha256": "c6b6324f25d108cba510798ef4a8b7487a9990661c07032ff43c084573d9cc12"
+    },
+    {
+     "path": "Plans/automation_authority_contract_fixtures.json",
+     "line": 5338,
+     "text": "\"approval.chat_tool_resolved\"",
+     "file_sha256": "c6b6324f25d108cba510798ef4a8b7487a9990661c07032ff43c084573d9cc12"
+    },
+    {
+     "path": "Plans/event_family_registry.json",
+     "line": 3230,
+     "text": "\"event_type\": \"approval.chat_tool_resolved\",",
+     "file_sha256": "443ae71d7e6326c3673a409f63950b9f33713c67f43c256fed6efa1c0d03a653"
+    },
+    {
+     "path": "Plans/human-in-the-loop.md",
+     "line": 2739,
+     "text": "RuntimeApproveV3Request and RuntimeDeclineV3Request select a closed union of the historical run_id/node_id/blocked_sequence/optional attempt_id payload and a discriminated chat_tool decision carrying its exact command, request digest/revisi",
+     "file_sha256": "1cdfb7b5831131f91336e60315b7ae325a3cf2e112724c4d2ec06a6349a0ba58"
+    },
+    {
+     "path": "Plans/projects_refresh_command_bindings.json",
+     "line": 20558,
+     "text": "\"event_policy\": \"HITL-038 branch policy: legacy node approve emits node.unblocked, node decline retains its receipt-only disposition. Chat-tool decisions select approval.chat_tool_resolved with ChatToolApprovalResult and require actual owne",
+     "file_sha256": "6cdbc8daffb51742d680c70a882169ebfbc709cbe7a4b40910c9ceea1cd9ee30"
+    },
+    {
+     "path": "Plans/projects_refresh_command_bindings.json",
+     "line": 20603,
+     "text": "\"event_policy\": \"HITL-038 branch policy: legacy node approve emits node.unblocked, node decline retains its receipt-only disposition. Chat-tool decisions select approval.chat_tool_resolved with ChatToolApprovalResult and require actual owne",
+     "file_sha256": "6cdbc8daffb51742d680c70a882169ebfbc709cbe7a4b40910c9ceea1cd9ee30"
+    },
+    {
+     "path": "Plans/projects_refresh_fix_contracts.schema.json",
+     "line": 1968,
+     "text": "\"approval.chat_tool_resolved\"",
+     "file_sha256": "4d49c1e996b7fb6ce1b52937cdd93c29a76eb5881ecb3fb4a33a7b1bed5dde89"
+    },
+    {
+     "path": "Plans/projects_refresh_fix_contracts.schema.json",
+     "line": 2237,
+     "text": "\"approval.chat_tool_resolved\"",
+     "file_sha256": "4d49c1e996b7fb6ce1b52937cdd93c29a76eb5881ecb3fb4a33a7b1bed5dde89"
+    }
+   ],
+   "reused_owner_definitions": [
+    "Plans/event_family_registry.json (row event-family-approval-chat-tool-resolved, 1.0.0, application_or_project, two payload versions)",
+    "Plans/automation_authority_contracts.schema.json#/$defs/ChatToolApprovalResult (closed payload, unchanged)",
+    "Plans/human-in-the-loop.md#HITL-038 (RuntimeApproveV3/DeclineV3 chat_tool branch selects approval.chat_tool_resolved; never node.unblocked)",
+    "Plans/Executor_Protocol.md cmd.runtime.approve/decline v3 chat_tool fields; Plans/projects_refresh_fix_contracts.schema.json RuntimeApproveV3ToolRequest",
+    "Plans/Wiring_Matrix.production.json branch policy (chat-tool decisions emit only approval.chat_tool_resolved after producer adoption)",
+    "Plans/storage-plan.md#SP-353 chat_tool_approval_application (decision pending/approved/declined/expired/cancelled, resolution_ref)",
+    "Plans/storage-plan.md#SP-278, #SP-286, #SP-337; Plans/Contracts_V0.md#CV-317, #CV-339, #CV-1100, #CV-1101; Plans/storage-plan.md#SP-1101"
+   ],
+   "negative_evidence_and_new_parts": "No ordering barrier between the decision commit and the append, no request-to-resolution pairing rule, no definition of request_sha256, no single-resolution identity, publication custody, reader or withdrawal existed at the base. New: CV-2302 (including request_sha256), SP-2302, the ea_s2_approval_chat_tool_resolved_publication row and its schema."
+  }
+ }
+}

@@ -1,0 +1,3572 @@
+{
+ "schema_id": "pm.assurance.event_authority.step08_current_depth.v1",
+ "assessment_id": "EA-PNC019-C12-SS-20261115",
+ "assessed_tree": {
+  "branch": "plans/ea-pnc-c12-ss-20261114",
+  "commit": "6cdf64e143"
+ },
+ "registry": {
+  "path": "Plans/event_family_registry.json",
+  "revision": "2026-11-04.1",
+  "sha256": "443ae71d7e6326c3673a409f63950b9f33713c67f43c256fed6efa1c0d03a653",
+  "families": 46
+ },
+ "supersedes": {
+  "path": "reports/event-authority-20261114/depth-s3bo-registered-families.json",
+  "note": "Supersedes these five rows only."
+ },
+ "scope": "PNC-019 step S4 criterion-12 closure lane C12-SS: the platform, seglog, Boot, integrity and recovery families.",
+ "status_meaning": {
+  "PASS": "Current owner text explicitly supports the criterion for this exact family at its registered version, including explicit adoption of any shared prerequisite it depends on. Never native or runtime proof.",
+  "PARTIAL": "Some exact or listed evidence exists, but a required part is unbound, unadopted, or explicitly left open by owner text.",
+  "ABSENT": "No binding for the criterion in the inspected owner surfaces; generic rules and broad labels do not count.",
+  "CONFLICT": "The only exact contract conflicts with current owner precedence, and no current disposition resolves it."
+ },
+ "dispositions_meaning": {
+  "CURRENT_WRITER": "Emitted under a current owner contract.",
+  "HISTORICAL_ONLY": "An owner unit prohibits current writes and defines a historical read contract.",
+  "UNDISPOSITIONED": "No current-writer contract for the registered version and no historical-only disposition."
+ },
+ "method": {
+  "rubric": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08-depth42-20260924/rubric.md, unchanged, plus the stream E oracle bar (criterion 12 PASS needs guard-tool proof).",
+  "grading": "Criterion 12 PASS requires the full C12-SS bundle (matrix, batteries, corpus, extension evidence) to pass and every row of the family tables to be proved by the gated tool; every quote exact-checked. Other cells carried and re-anchored."
+ },
+ "status_counts": {
+  "PASS": 60
+ },
+ "status_counts_by_criterion": {
+  "membership_version": {
+   "PASS": 5
+  },
+  "owner_doc": {
+   "PASS": 5
+  },
+  "producer": {
+   "PASS": 5
+  },
+  "closed_payload_schema": {
+   "PASS": 5
+  },
+  "scope_identity": {
+   "PASS": 5
+  },
+  "replay_idempotency": {
+   "PASS": 5
+  },
+  "retention": {
+   "PASS": 5
+  },
+  "redaction_custody": {
+   "PASS": 5
+  },
+  "transitions": {
+   "PASS": 5
+  },
+  "consumers_checkpoints": {
+   "PASS": 5
+  },
+  "compatibility_withdrawal": {
+   "PASS": 5
+  },
+  "positive_negative_oracles": {
+   "PASS": 5
+  }
+ },
+ "normative_depth_complete_families": [
+  "platform.capability_evaluated",
+  "seglog.event_appended",
+  "storage.boot_recovery",
+  "storage.integrity_detected",
+  "storage.recovery_applied"
+ ],
+ "pass_counts": {
+  "platform.capability_evaluated": 12,
+  "seglog.event_appended": 12,
+  "storage.boot_recovery": 12,
+  "storage.integrity_detected": 12,
+  "storage.recovery_applied": 12
+ },
+ "native_execution": "NOT_RUN for every family",
+ "evidence_items": 271,
+ "quote_check": {
+  "exact": 271
+ },
+ "rows": [
+  {
+   "event_type": "platform.capability_evaluated",
+   "family_id": "event-family-platform-capability-evaluated",
+   "family_revision": "2.0.0",
+   "registry_pointer": "#/families/21",
+   "disposition": "CURRENT_WRITER",
+   "pass_count": 12,
+   "normative_depth_complete": true,
+   "native_execution": "NOT_RUN",
+   "current_owner_units": [
+    "N2-157",
+    "SP-290",
+    "RSC-017",
+    "DL-048",
+    "DL-034 (DP-K37-03)",
+    "SP-286/CV-339 (adopted)",
+    "SP-278 (declared dependency)",
+    "CV-081",
+    "OSI-373",
+    "Platform capability catalog and evaluation contract (newtools l.8672-8678)",
+    "ATS-3900"
+   ],
+   "remaining_gaps": [],
+   "contingency_questions": [],
+   "grading_batch": "c12-ss",
+   "cells": {
+    "membership_version": {
+     "status": "PASS",
+     "representation": "registry_structured",
+     "finding": "Row #/families/21 registers event-family-platform-capability-evaluated@2.0.0 with scope application_or_project and payload_schema_ref to event_payload_platform_capability_evaluated.schema.json#. The file's root $id is .../2.0.0 with schema_version const 2.0.0, and v1 is only a $defs reader. No aliases.",
+     "evidence": [
+      {
+       "path": "Plans/event_family_registry.json",
+       "unit": "#/families/21",
+       "line_start": 1371,
+       "line_end": 1371,
+       "quote": "\"family_id\": \"event-family-platform-capability-evaluated\"",
+       "excerpt_sha256": "b368701be4795bcbf638a54618ada921cf34ad96015effc44251bb0ee08f7484",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/event_family_registry.json",
+       "unit": "#/families/21",
+       "line_start": 1405,
+       "line_end": 1405,
+       "quote": "\"schema_id\": \"https://puppetmaster.local/schemas/event_payloads/platform_capability_evaluated/2.0.0\"",
+       "excerpt_sha256": "41e2d84383566601f926abbea4c28a3172073e772f053eb9896b7b9952445f0f",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/event_payload_platform_capability_evaluated.schema.json",
+       "unit": "#",
+       "line_start": 155,
+       "line_end": 155,
+       "quote": "\"$id\": \"https://puppetmaster.local/schemas/event_payloads/platform_capability_evaluated/2.0.0\"",
+       "excerpt_sha256": "6d6345fbe4cee2681fab3fe62634ff527faa3cb15ee53ad35a335eef4d4fb05b",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/event_payload_platform_capability_evaluated.schema.json",
+       "unit": "#/properties/schema_version",
+       "line_start": 427,
+       "line_end": 427,
+       "quote": "\"const\": \"2.0.0\"",
+       "excerpt_sha256": "f206a78b368b345c07bb0096277e6754e4c89c3f0d5dc5e3dfb56ee190b33edf",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/event_family_registry.json",
+       "unit": "#/families/21",
+       "line_start": 1379,
+       "line_end": 1379,
+       "quote": "\"aliases\": []",
+       "excerpt_sha256": "3a770c67768bb8b1e0618ff18be0bc587ec5a6c80de3cd1818e91c448580f76d",
+       "quote_check": "exact"
+      }
+     ],
+     "prior": {
+      "source": "before.json",
+      "status": "PASS"
+     },
+     "change": "carried",
+     "change_reason": "Cited text re-read at this head; unchanged."
+    },
+    "owner_doc": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "The whole-document semantic anchor newtools.md holds the governing catalog/evaluation contract and N2-157. The Case L-5 payload route is acceptable (clarification 1), and SP-290 owns physical custody. The Contracts catalog row now routes the producer to PlatformCapabilityManager under N2-157.",
+     "evidence": [
+      {
+       "path": "Plans/event_family_registry.json",
+       "unit": "#/families/21",
+       "line_start": 1375,
+       "line_end": 1375,
+       "quote": "\"semantic_owner_doc\": \"Plans/newtools.md\"",
+       "excerpt_sha256": "0ff4bf882c793d53b0d9fcbf6227bf0a0f4d933248f87a7fe28f11afa470e8de",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/newtools.md",
+       "unit": "N2-157",
+       "line_start": 9048,
+       "line_end": 9048,
+       "quote": "plan_unit_id: N2-157",
+       "excerpt_sha256": "230f11da74ddaaa926c861c211dc5030481136b473c3d72edf4800ea3c21d347",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "Case L-5",
+       "line_start": 18135,
+       "line_end": 18135,
+       "quote": "### Case L-5. EventRecord persistence, legacy normalization, and dedupe",
+       "excerpt_sha256": "9ee76de1c36cdeca7642b5a3c7708c1e930ed76a670d813c322adf7c50a537da",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/Contracts_V0.md",
+       "unit": "Runtime event catalog carry-through",
+       "line_start": 949,
+       "line_end": 949,
+       "quote": "PlatformCapabilityManager under N2-157; Doctor routes only",
+       "excerpt_sha256": "b9acd91f939127c5cf338a16dbed4d4d12212a4814ab0e513a6195c0496bd196",
+       "quote_check": "exact"
+      }
+     ],
+     "prior": {
+      "source": "before.json",
+      "status": "PASS"
+     },
+     "change": "carried",
+     "change_reason": "Cited text re-read at this head; unchanged."
+    },
+    "producer": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "The producer is exact. PlatformCapabilityManager's platform.capability_evaluation.v1 and Storage's storage.platform_capability_decision.capture.v1 freeze producer input, publish a pending row and append under the live append owner. Three crash cuts are defined, and assignment/terminal CAS runs after issuance. SP-286/CV-339 resolve_full_value.v1 is explicitly adopted. Emission is currently gated off by the empty active catalog.",
+     "evidence": [
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "Platform capability decision custody",
+       "line_start": 24827,
+       "line_end": 24827,
+       "quote": "Storage's writer is `storage.platform_capability_decision.capture.v1`",
+       "excerpt_sha256": "d542099196a0e496ebf85d15c63d3c78e4591e32d267d18c125c488477574a93",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/newtools.md",
+       "unit": "Platform capability original decision authority",
+       "line_start": 9018,
+       "line_end": 9018,
+       "quote": "Freeze all producer-controlled EventRecord input before append.",
+       "excerpt_sha256": "ed2b95b57fcd7120a54e879794b076b1e1a865c36432557860dd43690aa8a46c",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "Capture, recovery and exact publication",
+       "line_start": 24843,
+       "line_end": 24843,
+       "quote": "Preserve the three cuts: before publication resumes the same intent",
+       "excerpt_sha256": "de335e05b10da018b97ddc30c5e987f0f6fbf0c69528893ccdf571d6d6292d03",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "Capture, recovery and exact publication",
+       "line_start": 24845,
+       "line_end": 24845,
+       "quote": "After independent issuance, explicitly use `storage.first_append_receipt.resolve_full_value.v1` under SP-286/CV-339.",
+       "excerpt_sha256": "31a5e3744a82ca12b84d639fb05c2c207dd8221f39ee2012641ca073811b51ff",
+       "quote_check": "exact"
+      }
+     ],
+     "prior": {
+      "source": "before.json",
+      "status": "PASS"
+     },
+     "change": "carried",
+     "change_reason": "Cited text re-read at this head; unchanged."
+    },
+    "closed_payload_schema": {
+     "status": "PASS",
+     "representation": "registry_structured",
+     "finding": "The v2 root is closed with catalog-referenced capability_ref, closed state enums, degradation reason and evidence refs, per DL-034 DP-K37-03. N2-157 preserves the exact v2 payload and SP-290 keeps it unchanged. v1 is reader-only.",
+     "evidence": [
+      {
+       "path": "Plans/event_payload_platform_capability_evaluated.schema.json",
+       "unit": "#",
+       "line_start": 157,
+       "line_end": 157,
+       "quote": "\"additionalProperties\": false",
+       "excerpt_sha256": "e1b6fd8541ba5542d4a83ba797ad19f93213527609df4f73e3ce1416f8991246",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/Decision_Log.md",
+       "unit": "DL-034 DP-K37-03",
+       "line_start": 311,
+       "line_end": 311,
+       "quote": "Represent `platform.capability_evaluated` with catalog-referenced capability IDs, closed requested/effective evaluation-state enums",
+       "excerpt_sha256": "b8bca1f866f4c596463c81b8e98fbe6e4b210c2c183ef488d84d126d7d4fe2c1",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/newtools.md",
+       "unit": "Platform capability original decision authority",
+       "line_start": 9016,
+       "line_end": 9016,
+       "quote": "Preserve required/preferred/not_requested meanings and v2 payload.",
+       "excerpt_sha256": "2a7cbe4754190ac9550bcb08c903ab29e6f6d5caf214bccbd3cfdff08523756c",
+       "quote_check": "exact"
+      }
+     ],
+     "prior": {
+      "source": "before.json",
+      "status": "PASS"
+     },
+     "change": "carried",
+     "change_reason": "Cited text re-read at this head; unchanged."
+    },
+    "scope_identity": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "application_or_project scope is fixed by the actual original context; account selection cannot derive scope. Event ID and idempotency key are both platform-evaluation:v1: plus SHA-256 of the restricted canonical {domain, storage_instance_id, scope_partition, evaluation_id} object, so the same evaluation ID in different scopes stays distinct. The envelope carries project_id and the payload does not duplicate it.",
+     "evidence": [
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "Platform capability decision custody",
+       "line_start": 24829,
+       "line_end": 24829,
+       "quote": "Event ID and idempotency key are both `platform-evaluation:v1:` plus SHA-256 of the restricted canonical JSON identity object",
+       "excerpt_sha256": "7555fa66baa79327243e071391e84cf265697532fac0e464df92f12fc2c33094",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/newtools.md",
+       "unit": "Platform capability original decision authority",
+       "line_start": 9012,
+       "line_end": 9012,
+       "quote": "Account selection cannot derive scope.",
+       "excerpt_sha256": "1943ac425ca19bf885f7eb8c6ce000a0c37acfe8d168310ab5bd817efff117ac",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/Automated_Testing_System.md",
+       "unit": "Platform capability positive and negative oracles",
+       "line_start": 2724,
+       "line_end": 2724,
+       "quote": "Application evaluation persists outer `project_id=null`; project evaluation persists its one exact project ID; neither duplicates the field inside the payload.",
+       "excerpt_sha256": "3212ebe70dde301042bdc362158493360f761a7cf2476ad4b6291ad23a2bc56e",
+       "quote_check": "exact"
+      }
+     ],
+     "prior": {
+      "source": "before.json",
+      "status": "PASS"
+     },
+     "change": "carried",
+     "change_reason": "Cited text re-read at this head; unchanged."
+    },
+    "replay_idempotency": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "Retry uses the original scoped evaluation identity, and a changed request at the same key refuses. Three crash cuts keep one intent, event and receipt. An already committed retry returns only the exact original receipt without action authority or lifetime extension. Retained work never reruns evaluation or reacquires disposed controls.",
+     "evidence": [
+      {
+       "path": "Plans/newtools.md",
+       "unit": "Platform capability original decision authority",
+       "line_start": 9018,
+       "line_end": 9018,
+       "quote": "Use the original scoped evaluation identity for retry; a changed request at the same key refuses.",
+       "excerpt_sha256": "ed2b95b57fcd7120a54e879794b076b1e1a865c36432557860dd43690aa8a46c",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "Already committed receipt retry",
+       "line_start": 24851,
+       "line_end": 24851,
+       "quote": "An already committed completion retry may return only the exact original AppendReceipt from its authentic retained decision row under the same current Store and final disclosure guards.",
+       "excerpt_sha256": "d788d3916591ea04e3e9d6057ae497c98fd3fb00755084efe03dbf76f6b1b286",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-290",
+       "line_start": 24891,
+       "line_end": 24891,
+       "quote": "plan_unit_id: SP-290",
+       "excerpt_sha256": "11577d8c8c7635c37884c4c46a39ca015f885f94ad2c14a42de40a7c21b5d102",
+       "quote_check": "exact"
+      }
+     ],
+     "prior": {
+      "source": "before.json",
+      "status": "PASS"
+     },
+     "change": "carried",
+     "change_reason": "Cited text re-read at this head; unchanged."
+    },
+    "retention": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "The registered RP-OPERATIONAL-2555D@1.0.0 assignment stands and the SP-291 application-scope seam is closed: the Storage retention owner wrote DL-089 into the operational-policy text as an application-wide count bucket for the application-scoped evaluations; project-scoped evaluations keep their Project bucket, with the unchanged 2,000,000 cap, fail-closed overflow and seven-year period. No retention product choice remains open for this family.",
+     "evidence": [
+      {
+       "path": "Plans/event_family_registry.json",
+       "unit": "#/families/21",
+       "line_start": 1399,
+       "line_end": 1399,
+       "quote": "\"policy_id\": \"RP-OPERATIONAL-2555D\"",
+       "excerpt_sha256": "5c88c70a6b41585c2ef918bf39aa73c5b8b31c0efeeda4af8996eadfb9c81696",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "Known-37 retention assignment",
+       "line_start": 18688,
+       "line_end": 18688,
+       "quote": "| `platform.capability_evaluated`, `storage.boot_recovery`, `storage.compaction_lifecycle_changed`, `storage.recovery_applied` | `RP-OPERATIONAL-2555D@1.0.0` | 4 |",
+       "excerpt_sha256": "dc4c74dc3bad90f8ec62526546f251f7e76243711fa95fdd614f2c401753fb56",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "DL-048 cleanup, backups and gap custody",
+       "line_start": 24863,
+       "line_end": 24863,
+       "quote": "`RP-PLATFORM-DECISION-REFERENCED@1.0.0` is anchored_then_ttl/reference_release/zero TTL",
+       "excerpt_sha256": "56aaf23f2f78d20b48d880af3b041dcd86b9d7cf000558b8aee86a1a103ed386",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/Decision_Log.md",
+       "unit": "DL-048",
+       "line_start": 661,
+       "line_end": 661,
+       "quote": "### DL-048: Platform decision custody follows pending evaluations and retained references",
+       "excerpt_sha256": "c354f95cbdde633eb5634e57d8e561479650975bedeb38fd213a78baafcacb0f",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage_value_registry.json",
+       "unit": "retention_policies RP-OPERATIONAL-2555D",
+       "line_start": 369,
+       "line_end": 369,
+       "quote": "\"cardinality_scope\": \"project\",",
+       "excerpt_sha256": "49740309784fc9046b9b259951706196e1d2c8f5e973c31fd23013aa317126dd",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/event_family_registry.json",
+       "unit": "#/families/21",
+       "line_start": 953,
+       "line_end": 953,
+       "quote": "\"scope_policy\": \"application_or_project\",",
+       "excerpt_sha256": "55b20b8e144f037ea7397f5b2d1f85c5581ab86fbc0319a1647be2003fd993e6",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "Application-wide count buckets under the operational policy (DL-083, DL-089, DL-401)",
+       "line_start": 24967,
+       "line_end": 24967,
+       "quote": "Until 2026-11-04 this section called the count of application-scoped records under `RP-OPERATIONAL-2555D@1.0.0` an unproved policy-owner adapter seam",
+       "excerpt_sha256": "83b14f816b6ee31353a7f1e6354d2abbb25cf907b17d6f38c2fec7e30c847839",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "Application-wide count buckets",
+       "line_start": 24985,
+       "line_end": 24985,
+       "quote": "**Count and overflow.** Each application-wide bucket applies the policy's unchanged values to its own members",
+       "excerpt_sha256": "fd9cfeb9ed4a3dd24cadd1da7c2fdc6c46d3f3d48214d0ca7281f600a74ae24a",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "Application-wide count buckets",
+       "line_start": 24972,
+       "line_end": 24972,
+       "quote": "- `app:platform_capability` (DL-089), a bucket of its own for the application-scoped evaluations of `platform.capability_evaluated`.",
+       "excerpt_sha256": "7b0219d6f390daa126a34d5cabe917228acdb34c33e1ff7532265eb7e06d8f23",
+       "quote_check": "exact"
+      }
+     ],
+     "prior": {
+      "source": "before.json",
+      "status": "PASS"
+     },
+     "change": "carried",
+     "change_reason": "Cited text re-read at this head; unchanged."
+    },
+    "redaction_custody": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "The decision row holds minimal source-owner decision facts, never raw probe, provider or account content. Missing custody is canonical loss requiring mandatory backup. Decision-only backup/restore cannot resurrect cleaned rows, and complete reference-aware cleanup is enumerated. Registration/permission/quarantine/origin authority is rechecked through publication and disclosure, and reads are unavailable once the row or event body is gone.",
+     "evidence": [
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "Platform capability decision custody",
+       "line_start": 24831,
+       "line_end": 24831,
+       "quote": "never raw probe bodies, provider responses, credentials, account content, old transaction controls or source-service history",
+       "excerpt_sha256": "f99d1cff64ed525dc01a710d3f51811a1035ba37317bccacdbab474b281ffd4e",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "Platform capability decision custody",
+       "line_start": 24835,
+       "line_end": 24835,
+       "quote": "Missing/corrupt custody is canonical loss requiring mandatory backup and truthful mutation/history fences",
+       "excerpt_sha256": "bce925493752681e6f437913ffb484ab8144666b5a4880ea43e18563d17e3010",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "DL-048 cleanup, backups and gap custody",
+       "line_start": 24865,
+       "line_end": 24865,
+       "quote": "backups cannot resurrect a lawfully cleaned row",
+       "excerpt_sha256": "5d5a3bed4bb5c3b54805a14d8c1f3d69dd449d3bfce8b03765af650f7c007da2",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "Already committed receipt retry",
+       "line_start": 24853,
+       "line_end": 24853,
+       "quote": "The committed branch authenticates the actual retained row, original receipt join, required installed bindings, current registration/migration/origin/permission/quarantine/backup authority",
+       "excerpt_sha256": "cb4c5c46f2ec6734481eecd85aa96a8eb6f9b29f4730ba1bf0c5d0bc25f1d6ff",
+       "quote_check": "exact"
+      }
+     ],
+     "prior": {
+      "source": "before.json",
+      "status": "PASS"
+     },
+     "change": "carried",
+     "change_reason": "Cited text re-read at this head; unchanged."
+    },
+    "transitions": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "The pending->committed decision states are explicit, with before-publication, after-publication and after-issuance cuts and final pure-predicate fences. Catalog lifecycle (active/deprecated/retired, supersession) is separate and never rewrites admitted decisions. Capture closure preserves pending and committed work, and later refusal preserves genuine independent effects.",
+     "evidence": [
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "Capture, recovery and exact publication",
+       "line_start": 24843,
+       "line_end": 24843,
+       "quote": "after actual first issuance resolves the original receipt without re-minting",
+       "excerpt_sha256": "de335e05b10da018b97ddc30c5e987f0f6fbf0c69528893ccdf571d6d6292d03",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/newtools.md",
+       "unit": "Platform capability original decision authority",
+       "line_start": 9024,
+       "line_end": 9024,
+       "quote": "They do not withdraw a codec, rewrite an admitted decision, start retention, authorize deletion or select a package.",
+       "excerpt_sha256": "752d67ab9de5274e20b4a883207b4b18c6d34d739b52bf4f80426194220137af",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/newtools.md",
+       "unit": "Platform capability original decision authority",
+       "line_start": 9018,
+       "line_end": 9018,
+       "quote": "Retained reads must not reacquire old request/probe/catalog controls, rerun evaluation or claim current installation/health.",
+       "excerpt_sha256": "ed2b95b57fcd7120a54e879794b076b1e1a865c36432557860dd43690aa8a46c",
+       "quote_check": "exact"
+      }
+     ],
+     "prior": {
+      "source": "before.json",
+      "status": "PASS"
+     },
+     "change": "carried",
+     "change_reason": "Cited text re-read at this head; unchanged."
+    },
+    "consumers_checkpoints": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "The passive read output and its read-through marker are closed (never persisted); run-context consumer stays none_required; no current consumer depends on the unavailable aggregate requirement set.",
+     "evidence": [
+      {
+       "path": "Plans/newtools.md",
+       "unit": "Platform capability consumer roles and frozen-context use",
+       "line_start": 9029,
+       "line_end": 9029,
+       "quote": "Their event-bearing inspection uses exactly `storage.platform_capability_decision.read.v1`",
+       "excerpt_sha256": "ba2696a9b656f47406d5dbaf5b370d210db2c69b6f8873b6db49cc18845870f1",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/platform_capability_consumer_contracts.schema.json",
+       "unit": "#/$defs/run_context_result",
+       "line_start": 102,
+       "line_end": 102,
+       "quote": "\"const\": \"none_required\"",
+       "excerpt_sha256": "d41ffd67ed28adccdc3d8c2d509c1671a526d4ed5f1855a0414e98e1bb0aacb9",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "Passive read and complete source coverage",
+       "line_start": 24857,
+       "line_end": 24857,
+       "quote": "Output is the original decision plus complete current read-through marker and action_authority none.",
+       "excerpt_sha256": "43a1ad5990d689a6d5305b0e4a4ee5bf7ee86961f1fc9e3daf9d60f225ba36b6",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-290",
+       "line_start": 24907,
+       "line_end": 24907,
+       "quote": "depends_on: [RSC-017, SP-026, SP-236, SP-237, SP-278, SP-286, CV-339, DL-045, DL-048]",
+       "excerpt_sha256": "395801aa18ad985d7b7b8194c4d1b9408ca94ea311d3447e4915c4f97f5ed761",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/newtools.md",
+       "unit": "Platform capability consumer roles and frozen-context use",
+       "line_start": 9037,
+       "line_end": 9037,
+       "quote": "Without that contract, the aggregate-dependent use is unavailable",
+       "excerpt_sha256": "a82c28175dac5dde079a54a749225708f37e249f8958978c13dbe178f3b912c4",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-2209",
+       "line_start": 24736,
+       "line_end": 24736,
+       "quote": "returns exactly `Plans/platform_capability_decision_read_output.schema.json#/$defs/read_output`",
+       "excerpt_sha256": "d9ba7112b60a4725dc44eac3876d8532686fbaecdceccb01a27adf9baed3407a",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-2209",
+       "line_start": 24736,
+       "line_end": 24736,
+       "quote": "No current consumer uses a multi-capability requirement set",
+       "excerpt_sha256": "d9ba7112b60a4725dc44eac3876d8532686fbaecdceccb01a27adf9baed3407a",
+       "quote_check": "exact"
+      }
+     ],
+     "prior": {
+      "source": "before.json",
+      "status": "PARTIAL"
+     },
+     "change": "upgraded",
+     "change_reason": "SP-2209 (newly authored under DL-045, PNC-019 S3) closes the open part of the prior grade."
+    },
+    "compatibility_withdrawal": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "Compatibility: the exact v1 reader and MIG-PLATFORM-CAPABILITY-EVALUATED-PAYLOAD-001@1.0.0, quarantining unprovable input with no checkpoint advance or remint. Withdrawal: the RSC-017 five-role package map lets capture close (writer cutoff) while retained roles stay. A role is dropped only when complete owners prove no obligation remains, checked at a final target-publication predicate.",
+     "evidence": [
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "Installed operation support, withdrawal and complete obligations",
+       "line_start": 24881,
+       "line_end": 24881,
+       "quote": "Keep exact current v2 event writing and the original v1 payload compatibility reader/migration edge.",
+       "excerpt_sha256": "3acdff56809e47ba39349cd6ac6fd75a8e3c8e0cea4cc6a60ff7f914036e9c33",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "Installed operation support, withdrawal and complete obligations",
+       "line_start": 24879,
+       "line_end": 24879,
+       "quote": "A candidate may omit a role only when the actual complete owners prove no remaining obligation depends on it",
+       "excerpt_sha256": "874426fed8e72d9d51e99da3f30278903f8e6e39d9e51a02664970e37a5114af",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "Installed operation support, withdrawal and complete obligations",
+       "line_start": 24881,
+       "line_end": 24881,
+       "quote": "The selected package may close capture while preserving pending completion, committed retry, passive read and backup/cleanup",
+       "excerpt_sha256": "3acdff56809e47ba39349cd6ac6fd75a8e3c8e0cea4cc6a60ff7f914036e9c33",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/Release_Supply_Chain.md",
+       "unit": "Platform package support carrier and current installation authority",
+       "line_start": 1299,
+       "line_end": 1299,
+       "quote": "All five roles are required and each is exactly `supported|unsupported`",
+       "excerpt_sha256": "b4d51805701311e108dbe1f08ce9c0174e3a625fc3077592fb7e9130cc5c97fe",
+       "quote_check": "exact"
+      }
+     ],
+     "prior": {
+      "source": "before.json",
+      "status": "PASS"
+     },
+     "change": "carried",
+     "change_reason": "Cited text re-read at this head; unchanged."
+    },
+    "positive_negative_oracles": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "ATS-3900 binds the complete executable family boundary in scripts/pm_s3bo_ext_ss_platform.py: every owner branch has a real table predicate, an independently labelled single-defect witness and a gated cut; the full shared corpus runs through the boundary. Proof: 12/12 rows in 2 tables, none unproved. Native execution remains NOT_RUN.",
+     "evidence": [
+      {
+       "path": "Plans/Automated_Testing_System.md",
+       "unit": "ATS-3900",
+       "line_start": 14546,
+       "line_end": 14546,
+       "quote": "For `platform.capability_evaluated`, the N2-157 evaluation is executed over the original request, its independently authenticated context and every supplied source fact",
+       "excerpt_sha256": "80099c60ee0736eb19435bfcf619af2ff4f6edfa0fab28c6d71caf66034a261e",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/Automated_Testing_System.md",
+       "unit": "ATS-3900",
+       "line_start": 14546,
+       "line_end": 14546,
+       "quote": "so the CAP-POS-009 alias positive has no admissible input and its defined outcome, quarantine, is what executes",
+       "excerpt_sha256": "80099c60ee0736eb19435bfcf619af2ff4f6edfa0fab28c6d71caf66034a261e",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/newtools.md",
+       "unit": "N2-157",
+       "line_start": 9016,
+       "line_end": 9016,
+       "quote": "Choose live_runtime_discovery, provider_policy_snapshot, static_platform_baseline in that order; lower valid evidence remains provenance and cannot override.",
+       "excerpt_sha256": "2a7cbe4754190ac9550bcb08c903ab29e6f6d5caf214bccbd3cfdff08523756c",
+       "quote_check": "exact"
+      }
+     ],
+     "prior": {
+      "source": "reports/event-authority-20261114/depth-s3bo-registered-families.json",
+      "status": "PARTIAL"
+     },
+     "change": "upgraded",
+     "change_reason": "The family boundary named as the C12 gap is executed and proved; see the C12-SS report."
+    }
+   },
+   "static_checks_seen": [
+    "scripts/pm-s3bo-check.py matrix / batteries / guards",
+    "scripts/pm-s3bo-check.py run (matrix / batteries / corpus / evidence / guards)"
+   ]
+  },
+  {
+   "event_type": "seglog.event_appended",
+   "family_id": "event-family-seglog-event-appended",
+   "family_revision": "2.0.0",
+   "registry_pointer": "#/families/29",
+   "disposition": "CURRENT_WRITER",
+   "pass_count": 12,
+   "normative_depth_complete": true,
+   "native_execution": "NOT_RUN",
+   "current_owner_units": [
+    "SP-270",
+    "SP-278",
+    "SP-286",
+    "CV-339",
+    "SP-236",
+    "SP-237",
+    "SP-241",
+    "DL-045",
+    "DL-076",
+    "CV-079",
+    "CV-083",
+    "ATS-3900"
+   ],
+   "remaining_gaps": [],
+   "contingency_questions": [],
+   "grading_batch": "c12-ss",
+   "cells": {
+    "membership_version": {
+     "status": "PASS",
+     "representation": "registry_structured",
+     "finding": "Registry row #/families/29 is event-family-seglog-event-appended at family_revision 2.0.0 (registry 2026-11-04.1) with an inline closed payload whose $id equals payload_schema_id (1.0.0); scope inherits_referenced_event; aliases and admitted_extensions are empty. SP-270 preserves this exact membership and adds no alias or field.",
+     "evidence": [
+      {
+       "path": "Plans/event_family_registry.json",
+       "unit": "#/families/29",
+       "line_start": 1954,
+       "line_end": 1954,
+       "quote": "\"family_id\": \"event-family-seglog-event-appended\"",
+       "excerpt_sha256": "c4870c4419f9306f7d49685ba12258d8e9b216323de8c213b2358122ebb2c123",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/event_family_registry.json",
+       "unit": "#/families/29",
+       "line_start": 1955,
+       "line_end": 1955,
+       "quote": "\"family_revision\": \"2.0.0\"",
+       "excerpt_sha256": "111cd773b758e128c7f05e5c41e27c77e807384fd855eaa1cc7533244e50d7a0",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/event_family_registry.json",
+       "unit": "#/families/29",
+       "line_start": 1963,
+       "line_end": 1963,
+       "quote": "\"$id\": \"https://puppetmaster.local/schemas/event_payloads/seglog_event_appended/1.0.0\"",
+       "excerpt_sha256": "3edab7fd4289cfdfac2ed0dc5646f4a7a43f1d388ca60df8c2bc7370ddf90d9a",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/event_family_registry.json",
+       "unit": "#/families/29",
+       "line_start": 2003,
+       "line_end": 2003,
+       "quote": "\"aliases\": []",
+       "excerpt_sha256": "3a770c67768bb8b1e0618ff18be0bc587ec5a6c80de3cd1818e91c448580f76d",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/event_family_registry.json",
+       "unit": "#/families/29",
+       "line_start": 2004,
+       "line_end": 2004,
+       "quote": "\"admitted_extensions\": []",
+       "excerpt_sha256": "dd424afc059193b3bd8ad2f6fd25b4c5ed8adcec4173d1973338bb43aa995ef8",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "Seglog append observability producer and read contract (SP-270)",
+       "line_start": 22193,
+       "line_end": 22193,
+       "quote": "This NEW technical definition under DL-045 preserves event-family-seglog-event-appended@2.0.0",
+       "excerpt_sha256": "715fde5cd75efbfeb41aadd54b3c06a47ba08145cf73ac990af70086ab5882c9",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/event_family_registry.json",
+       "unit": "registry root",
+       "line_start": 5,
+       "line_end": 5,
+       "quote": "\"registry_revision\": \"2026-11-04.1\"",
+       "excerpt_sha256": "da8496155a9419394fba250963763270f32f378f25ea924648d8a044a8cd8414",
+       "quote_check": "exact"
+      }
+     ],
+     "prior": {
+      "source": "before.json",
+      "status": "PASS"
+     },
+     "change": "carried",
+     "change_reason": "Cited text re-read at this head; unchanged."
+    },
+    "owner_doc": {
+     "status": "PASS",
+     "representation": "registry_structured",
+     "finding": "The anchored 2.2.5 section now routes this family's semantics to SP-270, so the governing text is reachable from the anchor (clarification 1).",
+     "evidence": [
+      {
+       "path": "Plans/event_family_registry.json",
+       "unit": "#/families/29",
+       "line_start": 1958,
+       "line_end": 1958,
+       "quote": "\"semantic_owner_doc\": \"Plans/storage-plan.md#225-eventrecord-persistence-boundary\"",
+       "excerpt_sha256": "2ea5a54c96f91d155651114d5790bfb06879c9d03d10a0aa306cd5083a0c2f3e",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/event_family_registry.json",
+       "unit": "#/families/29",
+       "line_start": 1959,
+       "line_end": 1959,
+       "quote": "\"payload_owner_doc\": \"Plans/storage-plan.md#case-l-5-eventrecord-persistence-legacy-normalization-and-dedupe\"",
+       "excerpt_sha256": "9736d8a34e04b138da2e47e3c490029379e8a81e968b5e76c3d2b50a97b96df3",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "2.2.5 EventRecord persistence boundary",
+       "line_start": 478,
+       "line_end": 478,
+       "quote": "This section owns persistence, scope partitioning, replay, dedupe, and legacy normalization, not the envelope schema or producer semantics.",
+       "excerpt_sha256": "236fd0f01030e815abed08dc5daf786a7d09bf34be38273fc61e1e25e30cde04",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "Case L-5",
+       "line_start": 18141,
+       "line_end": 18141,
+       "quote": "each persisted event family has closed `scope_policy = application_only | project_only | application_or_project | inherits_referenced_event`; unknown mapping quarantines;",
+       "excerpt_sha256": "85ef23b8a349208b6eb705230e64701415dce1339e4c342f4d717a2741a4795b",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-270 anchor",
+       "line_start": 22190,
+       "line_end": 22190,
+       "quote": "<a id=\"seglog-append-observability-producer-and-read-contract\"></a>",
+       "excerpt_sha256": "e52b5e1014057dad09c3bcb16d7b913af36b7276ba8e50ea44ba905010f91647",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "Seglog append observability producer and read contract (SP-270)",
+       "line_start": 22197,
+       "line_end": 22197,
+       "quote": "Define storage.seglog_append_observability_writer.v1@1.0.0 as an active Storage append-writer continuation.",
+       "excerpt_sha256": "aa3dfccb0845eafc5480bf17ecfd1757519a9d787fe84157739c6cebdf49e51a",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-2210 and 2.2.5",
+       "line_start": 478,
+       "line_end": 478,
+       "quote": "For the registered `seglog.event_appended` family, whose registry `semantic_owner_doc` anchors here, the semantic owner is SP-270",
+       "excerpt_sha256": "236fd0f01030e815abed08dc5daf786a7d09bf34be38273fc61e1e25e30cde04",
+       "quote_check": "exact"
+      }
+     ],
+     "prior": {
+      "source": "before.json",
+      "status": "PARTIAL"
+     },
+     "change": "upgraded",
+     "change_reason": "SP-2210 and 2.2.5 (newly authored under DL-045, PNC-019 S3) closes the open part of the prior grade."
+    },
+    "producer": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "SP-270 defines the writer storage.seglog_append_observability_writer.v1 and producer storage.seglog_append_observability_producer.v1, source-first ordering (original frame/watermark proof, metadata admission and append with its own barriers and synced receipt, canonical prefix, then disposable checkpoint), and explicitly adopts SP-286/CV-339 resolve.v2, issue.v2 and the full-value resolve_full_value.v1 for original and metadata events.",
+     "evidence": [
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "Seglog append observability producer and read contract (SP-270)",
+       "line_start": 22197,
+       "line_end": 22197,
+       "quote": "Define storage.seglog_append_observability_writer.v1@1.0.0 as an active Storage append-writer continuation.",
+       "excerpt_sha256": "aa3dfccb0845eafc5480bf17ecfd1757519a9d787fe84157739c6cebdf49e51a",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "Seglog append observability producer and read contract (SP-270)",
+       "line_start": 22230,
+       "line_end": 22230,
+       "quote": "For each pending original, order the effects: prove original frame/watermark; admit and durably append/reconcile metadata; then advance the canonical settlement prefix",
+       "excerpt_sha256": "0689e1c3e1ce059f78710def715e3a4f3b6e77142a92ec4ea542dcbdbd62ba96",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "Seglog append observability producer and read contract (SP-270)",
+       "line_start": 22240,
+       "line_end": 22240,
+       "quote": "explicitly adopt SP-286/CV-339's `storage.first_append_receipt.resolve.v2` separately for the original event and its actual metadata event",
+       "excerpt_sha256": "5bb6d737ba03be510e07f98330ef9b9bd7e862d418e57472e757b14ccd82817f",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "Seglog append observability producer and read contract (SP-270)",
+       "line_start": 22242,
+       "line_end": 22242,
+       "quote": "this retained-value path explicitly adopts `storage.first_append_receipt.resolve_full_value.v1`",
+       "excerpt_sha256": "8c4f518f2769d1e0b6ed166e364f45ee10fbb24c47b1974d7fe937ccd9de302a",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "Seglog append observability producer and read contract (SP-270)",
+       "line_start": 22244,
+       "line_end": 22244,
+       "quote": "Only the actual never-issued complete current protected group may first-mint through `storage.first_append_receipt.issue.v2`",
+       "excerpt_sha256": "6d89ae1fe14435f129998718a7367358b118aacf707d0caf7ebad382cf413333",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-270 PlanUnit",
+       "line_start": 22352,
+       "line_end": 22352,
+       "quote": "- Retained original/meta receipt recovery explicitly adopts SP-286/CV-339 original issued custody, genuine",
+       "excerpt_sha256": "f5dc9ae968ba34f1843f56eda2780af6a781d0b6ef04ebb790ebd0fac30aa80f",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "Seglog append observability producer and read contract (SP-270)",
+       "line_start": 22220,
+       "line_end": 22220,
+       "quote": "Metadata success requires its own commit group's single data sync (SP-336)",
+       "excerpt_sha256": "03462b5321d85d698219316cafc5e2ee7808338f0361dd9bdbda9127b0810c22",
+       "quote_check": "exact"
+      }
+     ],
+     "prior": {
+      "source": "before.json",
+      "status": "PASS"
+     },
+     "change": "carried",
+     "change_reason": "Cited text re-read at this head; unchanged."
+    },
+    "closed_payload_schema": {
+     "status": "PASS",
+     "representation": "registry_structured",
+     "finding": "Inline registry schema is closed (additionalProperties false) with five required fields and optional writer_id; SP-270 confirms the payload stays exactly this shape and acquires no schema_version or other field, consistent with current owner precedence.",
+     "evidence": [
+      {
+       "path": "Plans/event_family_registry.json",
+       "unit": "#/families/29",
+       "line_start": 1965,
+       "line_end": 1965,
+       "quote": "\"additionalProperties\": false,",
+       "excerpt_sha256": "1be4b6c3f19530f8ac3978ba46d81790dbfc498fb7af9f83cf88c18415edbc60",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/event_family_registry.json",
+       "unit": "#/families/29",
+       "line_start": 1996,
+       "line_end": 1996,
+       "quote": "\"writer_id\": {",
+       "excerpt_sha256": "5af31a8065f56d1c7af3feca0e0dc0ad8a749a42a03a37a59e9f15202b92b88f",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "Seglog append observability producer and read contract (SP-270)",
+       "line_start": 22193,
+       "line_end": 22193,
+       "quote": "The closed payload has seq,type,event_ref,segment_ref,ts and optional writer_id; it does not acquire schema_version or any other field.",
+       "excerpt_sha256": "715fde5cd75efbfeb41aadd54b3c06a47ba08145cf73ac990af70086ab5882c9",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "Seglog append observability producer and read contract (SP-270)",
+       "line_start": 22303,
+       "line_end": 22303,
+       "quote": "The event payload stays its exact registered inline 1.0.0 shape under current EventRecord 2.0.0.",
+       "excerpt_sha256": "d78b2900aa54732e42feca824704fa740c80a953a09d8248093bfccc5087488b",
+       "quote_check": "exact"
+      }
+     ],
+     "prior": {
+      "source": "before.json",
+      "status": "PASS"
+     },
+     "change": "carried",
+     "change_reason": "Cited text re-read at this head; unchanged."
+    },
+    "scope_identity": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "Scope inherits the referenced original (registry pointer /payload/event_ref); SP-270 fixes identity_digest over [storage_instance_id, original.event_id], the event_id and idempotency_key formulas, payload field mapping and envelope joins (correlation, causation/parent, producer_sequence_id, actor_ref, null domain joins).",
+     "evidence": [
+      {
+       "path": "Plans/event_family_registry.json",
+       "unit": "#/families/29",
+       "line_start": 1957,
+       "line_end": 1957,
+       "quote": "\"scope_policy\": \"inherits_referenced_event\"",
+       "excerpt_sha256": "0d445b7bfa11975b3280c22f43f9174f964e091dbb208bd74cfd87828119130b",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/event_family_registry.json",
+       "unit": "#/families/29",
+       "line_start": 2006,
+       "line_end": 2006,
+       "quote": "\"referenced_event_id_pointer\": \"/payload/event_ref\"",
+       "excerpt_sha256": "6f31ab92dc8aae9d3b2817c055378900c74447adc794064427bb19377731df03",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "Seglog append observability producer and read contract (SP-270)",
+       "line_start": 22211,
+       "line_end": 22211,
+       "quote": "derive identity_digest = SHA256(RFC8785([storage_instance_id, original.event_id])). event_id is evt_seglog_appended_ plus that digest; idempotency_key is seglog.event_appended: plus it.",
+       "excerpt_sha256": "96b2666f8f40fddc373d6ff862b14540a0091ee8cd18d6044f12d544107c35d3",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "Seglog append observability producer and read contract (SP-270)",
+       "line_start": 22218,
+       "line_end": 22218,
+       "quote": "Scope and envelope project_id exactly inherit the referenced original.",
+       "excerpt_sha256": "2415085a675d90a986eaa10834e0a84c5a4e10798d8db670e14b1463f8df7666",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "Seglog append observability producer and read contract (SP-270)",
+       "line_start": 22218,
+       "line_end": 22218,
+       "quote": "correlation_id copies the original; causation_event_id and parent_event_id equal original.event_id. producer_sequence_id equals original.sequence_id.",
+       "excerpt_sha256": "2415085a675d90a986eaa10834e0a84c5a4e10798d8db670e14b1463f8df7666",
+       "quote_check": "exact"
+      }
+     ],
+     "prior": {
+      "source": "before.json",
+      "status": "PASS"
+     },
+     "change": "carried",
+     "change_reason": "Cited text re-read at this head; unchanged."
+    },
+    "replay_idempotency": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "Same identity/digest returns the original result, conflicting digest is idempotency_conflict, unavailable authority dedupe_unavailable; lost acknowledgement returns the stored original receipt; crash cuts rebuild from the canonical prefix without re-emitting; prefix-certified post-expiry reads return already_settled_prefix_certified with no new append; native metadata requires dedupe_by_idempotency_key.",
+     "evidence": [
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "Seglog append observability producer and read contract (SP-270)",
+       "line_start": 22220,
+       "line_end": 22220,
+       "quote": "Same identity/digest returns the original result; conflicting digest is idempotency_conflict; unavailable authority is dedupe_unavailable.",
+       "excerpt_sha256": "03462b5321d85d698219316cafc5e2ee7808338f0361dd9bdbda9127b0810c22",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "Seglog append observability producer and read contract (SP-270)",
+       "line_start": 22244,
+       "line_end": 22244,
+       "quote": "Lost acknowledgement after real issuance returns the exact stored original receipt.",
+       "excerpt_sha256": "6d89ae1fe14435f129998718a7367358b118aacf707d0caf7ebad382cf413333",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "Seglog append observability producer and read contract (SP-270)",
+       "line_start": 22230,
+       "line_end": 22230,
+       "quote": "rebuilds progress from that canonical prefix and current verified tail, without reemitting metadata.",
+       "excerpt_sha256": "0689e1c3e1ce059f78710def715e3a4f3b6e77142a92ec4ea542dcbdbd62ba96",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "Seglog append observability producer and read contract (SP-270)",
+       "line_start": 22258,
+       "line_end": 22258,
+       "quote": "Return already_settled_prefix_certified with the preserved identity and no new AppendReceipt",
+       "excerpt_sha256": "248c58150b4c33234ede60b516ba22274076c5154eda181bbc555bf81aeee1b6",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "Seglog append observability producer and read contract (SP-270)",
+       "line_start": 22323,
+       "line_end": 22323,
+       "quote": "a native metadata record requires dedupe_by_idempotency_key",
+       "excerpt_sha256": "9249d21c9d9e6d02e74d3a13dcc7763b0a33c74bd3f63f8dd127780c4200441d",
+       "quote_check": "exact"
+      }
+     ],
+     "prior": {
+      "source": "before.json",
+      "status": "PASS"
+     },
+     "change": "carried",
+     "change_reason": "Cited text re-read at this head; unchanged."
+    },
+    "retention": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "Registered RP-SEGLOG-7D@1.0.0 with SP-270 anchor rules (own persisted_at_utc, no regeneration); index rows RP-EVENT-INDEX-SOURCE; adoption floor/prefix assigned to RP-AUTHORITY-INDEFINITE under DL-045; both checkpoints RP-PROJECTION-3GEN with exact withdrawal anchor, holds and cleanup. No open retention choice is stated.",
+     "evidence": [
+      {
+       "path": "Plans/event_family_registry.json",
+       "unit": "#/families/29",
+       "line_start": 2019,
+       "line_end": 2019,
+       "quote": "\"policy_id\": \"RP-SEGLOG-7D\"",
+       "excerpt_sha256": "e194840c416f0bce79befdcd854907214c9eecca56fe49311feefe395d036066",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "Seglog append observability producer and read contract (SP-270)",
+       "line_start": 22284,
+       "line_end": 22284,
+       "quote": "The metadata event remains RP-SEGLOG-7D@1.0.0: creation anchor, 604800 seconds, 500000 per actual Storage instance",
+       "excerpt_sha256": "5cbd7f2b81d432282826b32344af2169f9e294776807ae3fdf30702086241490",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "Seglog append observability producer and read contract (SP-270)",
+       "line_start": 22284,
+       "line_end": 22284,
+       "quote": "Index rows for metadata use RP-EVENT-INDEX-SOURCE with THIS metadata event as their source",
+       "excerpt_sha256": "5cbd7f2b81d432282826b32344af2169f9e294776807ae3fdf30702086241490",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "Seglog append observability producer and read contract (SP-270)",
+       "line_start": 22286,
+       "line_end": 22286,
+       "quote": "The new canonical adoption floor and compact mutable settlement prefix map to existing RP-AUTHORITY-INDEFINITE as migration/source-lineage authority.",
+       "excerpt_sha256": "8f9ae6060263206eed64b69b33bd75a82e34bbc57f5585b051ca78da1e5ff49c",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "Seglog append observability producer and read contract (SP-270)",
+       "line_start": 22288,
+       "line_end": 22288,
+       "quote": "Both new disposable checkpoints use RP-PROJECTION-3GEN@1.0.0",
+       "excerpt_sha256": "2d73d4ca2837e6a10182146a5a02b210d2e3170f3bea239c6dc15e69c5dca727",
+       "quote_check": "exact"
+      }
+     ],
+     "prior": {
+      "source": "before.json",
+      "status": "PASS"
+     },
+     "change": "carried",
+     "change_reason": "Cited text re-read at this head; unchanged."
+    },
+    "redaction_custody": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "Beyond shared no-secret rules (redaction_profile=no_secrets; IDs/hashes/cursors only), SP-270 states the original source stays authoritative, floor/prefix restore from mandatory coherent backup or fence, restore captures floor and source identity together, and permissions, deletion tombstones and quarantine apply independently before join/publication and after restore.",
+     "evidence": [
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "Seglog append observability producer and read contract (SP-270)",
+       "line_start": 22299,
+       "line_end": 22299,
+       "quote": "Adoption, checkpoints and diagnostics contain IDs, hashes, bounded cursors and non-capability refs, never source payload copies, credentials, account material or local absolute paths.",
+       "excerpt_sha256": "800061fe38d6581470a82e009c7e07b052ff5d0e9a635041fa0ce19cef2673d4",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "Seglog append observability producer and read contract (SP-270)",
+       "line_start": 22299,
+       "line_end": 22299,
+       "quote": "Source and metadata permissions, deletion tombstones and quarantine custody apply independently before join/publication and after restore.",
+       "excerpt_sha256": "800061fe38d6581470a82e009c7e07b052ff5d0e9a635041fa0ce19cef2673d4",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "Seglog append observability producer and read contract (SP-270)",
+       "line_start": 22201,
+       "line_end": 22201,
+       "quote": "Restore captures floor, source and source identity authority in the same existing canonical boundary.",
+       "excerpt_sha256": "234cb912afca77dc83ee7835922dbbf9da4f91a4b4575d93709fed9beac3b658",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "Seglog append observability producer and read contract (SP-270)",
+       "line_start": 22260,
+       "line_end": 22260,
+       "quote": "Missing/corrupt canonical prefix or floor requires their mandatory coherent backup under the original instance/writer boundary",
+       "excerpt_sha256": "a169f350067c8c6196a040653bc16c03b5a2723cda11c7a07ea63c08b8261369",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "Seglog append observability producer and read contract (SP-270)",
+       "line_start": 22209,
+       "line_end": 22209,
+       "quote": "The original source remains authoritative whether observability subsequently succeeds, fails or is temporarily unavailable.",
+       "excerpt_sha256": "7b03ea746d29a1965144dbe255fdfe83f86d67762918773bc2ebc454676d42cd",
+       "quote_check": "exact"
+      }
+     ],
+     "prior": {
+      "source": "before.json",
+      "status": "PASS"
+     },
+     "change": "carried",
+     "change_reason": "Cited text re-read at this head; unchanged."
+    },
+    "transitions": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "Obligation lifecycle is explicit: proved native post-floor original creates one pending obligation, settled by metadata durability, certified by canonical prefix CAS, then disposable checkpoint; crash cuts at each step are defined. Checkpoints have the single terminal edge current|degraded -> withdrawn with frozen anchor.",
+     "evidence": [
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "Seglog append observability producer and read contract (SP-270)",
+       "line_start": 22203,
+       "line_end": 22203,
+       "quote": "Only new native source appends under the installed writer are obligations.",
+       "excerpt_sha256": "e275f3a56df552677c2fdd2b024fe7c9a8d86e477e38473bd9ec38d9d8a5169c",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "Seglog append observability producer and read contract (SP-270)",
+       "line_start": 22230,
+       "line_end": 22230,
+       "quote": "Crash before metadata durability leaves the obligation pending.",
+       "excerpt_sha256": "0689e1c3e1ce059f78710def715e3a4f3b6e77142a92ec4ea542dcbdbd62ba96",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "Seglog append observability producer and read contract (SP-270)",
+       "line_start": 22234,
+       "line_end": 22234,
+       "quote": "An original obligation and its needed original/meta first-append evidence remain pending for preservation until the canonical prefix covers it",
+       "excerpt_sha256": "a32e80a98684892e7c2b9c0a2bc5783730795e204936319109de227489d5b54c",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "Seglog append observability producer and read contract (SP-270)",
+       "line_start": 22288,
+       "line_end": 22288,
+       "quote": "Their precise terminal edge is current|degraded -> withdrawn; updated_at_utc freezes at first withdrawal and is the terminal anchor.",
+       "excerpt_sha256": "2d73d4ca2837e6a10182146a5a02b210d2e3170f3bea239c6dc15e69c5dca727",
+       "quote_check": "exact"
+      }
+     ],
+     "prior": {
+      "source": "before.json",
+      "status": "PASS"
+     },
+     "change": "carried",
+     "change_reason": "Cited text re-read at this head; unchanged."
+    },
+    "consumers_checkpoints": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "Reader storage.seglog_append_observability_reader.v1@1.0.0 plus three named read bindings, checkpoint key seglog_observability_reader_checkpoint.v1:{storage_instance_id}:{scope_partition} in redb table checkpoints, prior-value CAS, crash/rebuild rules, explicit SP-278 adoption, and the DL-076 amendment storing the nine-field durable token. The earlier sentence still lists redb_snapshot_id but is superseded by the dated amendment.",
+     "evidence": [
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "Seglog append observability producer and read contract (SP-270)",
+       "line_start": 22266,
+       "line_end": 22266,
+       "quote": "Define storage.seglog_append_observability_reader.v1@1.0.0 over the existing event_record_index.v2 output, with NEW seglog_observability_reader_checkpoint.v1:{storage_instance_id}:{scope_partition}.",
+       "excerpt_sha256": "47c4e83ceff91c32a06a268d1985bd4fbe622ac9261b0352f06d1853256aaf4c",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "Seglog append observability producer and read contract (SP-270)",
+       "line_start": 22276,
+       "line_end": 22276,
+       "quote": "stores the nine-field durable read token that SP-278 defines on 2026-09-24, not the whole token: `redb_snapshot_id` is not stored.",
+       "excerpt_sha256": "025a669d44239fe45de64d00a3d424a20ae5dfa687208cde43b3d8d497dd18f3",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "Seglog append observability producer and read contract (SP-270)",
+       "line_start": 22290,
+       "line_end": 22290,
+       "quote": "The two actual redb checkpoint values live in the same database table named checkpoints",
+       "excerpt_sha256": "b8dfaace75357e94e55d887ed720a459f3f15a51127d0a8c20eb53dc90b80838",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "Seglog append observability producer and read contract (SP-270)",
+       "line_start": 22274,
+       "line_end": 22274,
+       "quote": "Crash before commit leaves prior progress; after commit recomputes the same join.",
+       "excerpt_sha256": "7157821f1fc540c12b0b9b668a38292f23a8f7788576c4c87f7101213adef6bd",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-278 DL-076 paragraph",
+       "line_start": 21810,
+       "line_end": 21810,
+       "quote": "(SP-282 Browser reset, SP-270 seglog observability reader, SP-273 Home layout reader and SP-275 restore-point expiry) store the durable token from 2026-09-24",
+       "excerpt_sha256": "44018b711dfc270a298c7c22d669c0c5a4fa1e1429e7e8c0ce7ab7cb89c9378b",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/seglog_append_observability_contracts.schema.json",
+       "unit": "#/$defs/reader_checkpoint/properties/index_read_token",
+       "line_start": 977,
+       "line_end": 977,
+       "quote": "\"index_read_token\": {",
+       "excerpt_sha256": "c78bc57c10930f2fcbe0093764b90d5a8411a2e865435b8cdfa1305a8abac2ac",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-270 (DL-076 fold, SP-2210)",
+       "line_start": 22274,
+       "line_end": 22274,
+       "quote": "and stores the nine-field durable read token (DL-076; SP-2210) as index_read_token",
+       "excerpt_sha256": "7157821f1fc540c12b0b9b668a38292f23a8f7788576c4c87f7101213adef6bd",
+       "quote_check": "exact"
+      }
+     ],
+     "prior": {
+      "source": "before.json",
+      "status": "PASS"
+     },
+     "change": "carried",
+     "change_reason": "Carried PASS; SP-2210 folded the DL-076 amendment into the reader sentence the prior quote cited, so the unit now has one reading."
+    },
+    "compatibility_withdrawal": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "Compatibility: inline 1.0.0 payload under EventRecord 2.0.0; frozen EventRecord 1.0.0/EventEnvelopeV1 via registered normalization only, projector_replay_only never starts the producer. Withdrawal: reader withdrawal fences its own publication; producer withdrawal stops new obligations at an explicit owner-controlled append boundary; successor migration defines its own floor.",
+     "evidence": [
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "Seglog append observability producer and read contract (SP-270)",
+       "line_start": 22303,
+       "line_end": 22303,
+       "quote": "Frozen EventRecord 1.0.0 and EventEnvelopeV1 use only existing registered normalization and unique referenced-event scope evidence.",
+       "excerpt_sha256": "d78b2900aa54732e42feca824704fa740c80a953a09d8248093bfccc5087488b",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "Seglog append observability producer and read contract (SP-270)",
+       "line_start": 22305,
+       "line_end": 22305,
+       "quote": "Read-only consumer withdrawal fences only its own filtered publication.",
+       "excerpt_sha256": "7cb6e9f51a1dffa848f5bd2c4115f4ce31e25af004c1de523ab23eb54c5fb09c",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "Seglog append observability producer and read contract (SP-270)",
+       "line_start": 22305,
+       "line_end": 22305,
+       "quote": "Producer withdrawal stops admitting new observability obligations at an explicit owner-controlled native append boundary",
+       "excerpt_sha256": "7cb6e9f51a1dffa848f5bd2c4115f4ce31e25af004c1de523ab23eb54c5fb09c",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "Seglog append observability producer and read contract (SP-270)",
+       "line_start": 22305,
+       "line_end": 22305,
+       "quote": "An explicit successor migration defines its own floor and compatible semantic mapping",
+       "excerpt_sha256": "7cb6e9f51a1dffa848f5bd2c4115f4ce31e25af004c1de523ab23eb54c5fb09c",
+       "quote_check": "exact"
+      }
+     ],
+     "prior": {
+      "source": "before.json",
+      "status": "PASS"
+     },
+     "change": "carried",
+     "change_reason": "Cited text re-read at this head; unchanged."
+    },
+    "positive_negative_oracles": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "ATS-3900 binds the complete executable family boundary in scripts/pm_s3bo_ext_ss_seglog.py: every owner branch has a real table predicate, an independently labelled single-defect witness and a gated cut; the full shared corpus runs through the boundary. Proof: 11/11 rows in 2 tables, none unproved. Native execution remains NOT_RUN.",
+     "evidence": [
+      {
+       "path": "Plans/Automated_Testing_System.md",
+       "unit": "ATS-3900",
+       "line_start": 14548,
+       "line_end": 14548,
+       "quote": "For `seglog.event_appended`, the SP-270 producer is executed",
+       "excerpt_sha256": "0581c53dd4a563c7bba77b0055ae27ae4c0ada3d8cf48230e9c4d401cc47d42f",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/Automated_Testing_System.md",
+       "unit": "ATS-3900",
+       "line_start": 14548,
+       "line_end": 14548,
+       "quote": "its stored reader tokens carry no `redb_snapshot_id`, its stored-snapshot negatives refuse",
+       "excerpt_sha256": "0581c53dd4a563c7bba77b0055ae27ae4c0ada3d8cf48230e9c4d401cc47d42f",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-270",
+       "line_start": 22278,
+       "line_end": 22278,
+       "quote": "The v4-root pin in `Plans/seglog_append_observability_contract_fixtures.json#/external_joined_subject`",
+       "excerpt_sha256": "4d0c890a0fac07f2a8509cd6e9afd629de285471e6e0139e9d9f33ea9dbfb2c3",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-2210",
+       "line_start": 24781,
+       "line_end": 24781,
+       "quote": "Its relational oracle suite must store that nine-field token, with a stored-snapshot negative, before criterion 12 can pass.",
+       "excerpt_sha256": "0a4b9c3811671ad23dea3aeec7941e3995a5da9db10b1d2f6245f11de80599b1",
+       "quote_check": "exact"
+      }
+     ],
+     "prior": {
+      "source": "reports/event-authority-20261114/depth-s3bo-registered-families.json",
+      "status": "PARTIAL"
+     },
+     "change": "upgraded",
+     "change_reason": "The family boundary named as the C12 gap is executed and proved; see the C12-SS report."
+    }
+   },
+   "static_checks_seen": [
+    "scripts/pm-s3bo-check.py matrix / batteries / guards",
+    "scripts/pm-s3bo-check.py run (matrix / batteries / corpus / evidence / guards)"
+   ]
+  },
+  {
+   "event_type": "storage.boot_recovery",
+   "family_id": "event-family-storage-boot-recovery",
+   "family_revision": "2.0.0",
+   "registry_pointer": "#/families/30",
+   "disposition": "CURRENT_WRITER",
+   "pass_count": 12,
+   "normative_depth_complete": true,
+   "native_execution": "NOT_RUN",
+   "current_owner_units": [
+    "SP-291",
+    "SP-292",
+    "SP-286",
+    "CV-339",
+    "CV-318",
+    "SP-026",
+    "SP-236",
+    "SP-237",
+    "SP-180",
+    "DL-045",
+    "ATS-3900"
+   ],
+   "remaining_gaps": [],
+   "contingency_questions": [],
+   "grading_batch": "c12-ss",
+   "cells": {
+    "membership_version": {
+     "status": "PASS",
+     "representation": "registry_structured",
+     "finding": "Registry #/families/30 is event-family-storage-boot-recovery at 2.0.0 (registry 2026-09-11.2); payload_schema_ref resolves to Plans/event_payload_storage_boot_recovery.schema.json whose root $id is the registered 2.0.0 id; application_only; no aliases or extensions. SP-291 preserves the v2 payload and adds no event type.",
+     "evidence": [
+      {
+       "path": "Plans/event_family_registry.json",
+       "unit": "#/families/30",
+       "line_start": 2024,
+       "line_end": 2024,
+       "quote": "\"family_id\": \"event-family-storage-boot-recovery\"",
+       "excerpt_sha256": "3f9d25e81e422131d1d41ac5a4a16b9d9d9065679423d88945598f6650325e70",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/event_family_registry.json",
+       "unit": "#/families/30",
+       "line_start": 2027,
+       "line_end": 2027,
+       "quote": "\"scope_policy\": \"application_only\"",
+       "excerpt_sha256": "8882ff798705f0804fa0d3696904d304c538a84e572934b080d99874ddc30f52",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/event_family_registry.json",
+       "unit": "#/families/30",
+       "line_start": 2053,
+       "line_end": 2053,
+       "quote": "\"path\": \"Plans/event_payload_storage_boot_recovery.schema.json\"",
+       "excerpt_sha256": "704ab5e57823ed349faacbc82712408245535d0004ba0aa47d0a89e5a89d13ea",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/event_payload_storage_boot_recovery.schema.json",
+       "unit": "root $id",
+       "line_start": 53,
+       "line_end": 53,
+       "quote": "\"$id\": \"https://puppetmaster.local/schemas/event_payloads/storage_boot_recovery/2.0.0\",",
+       "excerpt_sha256": "bce87820674110cd332a7cd04ff2550706d4d8e91dbf767b40fb1a29fd8f6783",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/event_family_registry.json",
+       "unit": "#/families/30",
+       "line_start": 2032,
+       "line_end": 2032,
+       "quote": "\"aliases\": []",
+       "excerpt_sha256": "3a770c67768bb8b1e0618ff18be0bc587ec5a6c80de3cd1818e91c448580f76d",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "Boot recovery aggregate and original producer custody (SP-291)",
+       "line_start": 24957,
+       "line_end": 24957,
+       "quote": "It preserves its current v2 payload, supported v1 reader and exact `MIG-STORAGE-BOOT-RECOVERY-PAYLOAD-001@1.0.0` compatibility edge. It adds no event type",
+       "excerpt_sha256": "76eaa2395f121ca5fde69ba57cffe6fb15ef6ba2222e8d3532ca3f573b216ad1",
+       "quote_check": "exact"
+      }
+     ],
+     "prior": {
+      "source": "before.json",
+      "status": "PASS"
+     },
+     "change": "carried",
+     "change_reason": "Cited text re-read at this head; unchanged."
+    },
+    "owner_doc": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "Both anchors resolve to Case L-5, the generic Storage persistence section; under clarification 1 this is an acceptable route, and Case L-5 is neither stale for 2.0.0 nor disclaiming. Governing family text: Known-37 \"Storage recovery event payloads\", SP-291 and SP-292 (same document), with CV-318 for the Contracts envelope.",
+     "evidence": [
+      {
+       "path": "Plans/event_family_registry.json",
+       "unit": "#/families/30",
+       "line_start": 2028,
+       "line_end": 2028,
+       "quote": "\"semantic_owner_doc\": \"Plans/storage-plan.md#case-l-5-eventrecord-persistence-legacy-normalization-and-dedupe\"",
+       "excerpt_sha256": "fb6030d0535482048af6a39c6b4c8988bebfee4c934d74a384e54cfbbb698b6c",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "Case L-5",
+       "line_start": 18135,
+       "line_end": 18135,
+       "quote": "### Case L-5. EventRecord persistence, legacy normalization, and dedupe",
+       "excerpt_sha256": "9ee76de1c36cdeca7642b5a3c7708c1e930ed76a670d813c322adf7c50a537da",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "Storage recovery event payloads (Known-37)",
+       "line_start": 18742,
+       "line_end": 18742,
+       "quote": "- `storage.boot_recovery`: interrupted kinds are exactly `migration | backup_restore | rotation_truncation | compaction | deletion_quarantine | root_relocation`.",
+       "excerpt_sha256": "7feed3cafeed1ee3f3b15b48525915bda2b36b103b8562ec1ecd63798ae816ba",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "Boot recovery aggregate and original producer custody (SP-291)",
+       "line_start": 24957,
+       "line_end": 24957,
+       "quote": "SP-291 owns the aggregate/source/producer joins below; SP-292 owns earliest original receipt continuity and the floor/anchor publication protocol.",
+       "excerpt_sha256": "76eaa2395f121ca5fde69ba57cffe6fb15ef6ba2222e8d3532ca3f573b216ad1",
+       "quote_check": "exact"
+      }
+     ],
+     "prior": {
+      "source": "before.json",
+      "status": "PASS"
+     },
+     "change": "carried",
+     "change_reason": "Cited text re-read at this head; unchanged."
+    },
+    "producer": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "Producer storage.boot_recovery.publish.v1 with six named source owners; ordering: authenticated capture, aggregate publication/readback, frozen intent, one-member barrier issuance publishing receipt and floor in one transaction, pending-to-anchor completion, settlement with full-value witness. Explicit SP-286/CV-339 adoption of issue.v2, resolve.v2, group_gate.v2, backup_gate.v2 and resolve_full_value.v1; SP-286 names the Boot lane.",
+     "evidence": [
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "Boot earliest receipt continuity and activation (SP-292)",
+       "line_start": 25084,
+       "line_end": 25084,
+       "quote": "The installed producer is exactly `storage.boot_recovery.publish.v1`; reader exactly `storage.boot_recovery.resolve_earliest.v1`.",
+       "excerpt_sha256": "6ab948b7b84ffd7be0af6a73d3a75da9dede58bef8af1201434a01920a9d1dec",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "Boot earliest receipt continuity and activation (SP-292)",
+       "line_start": 25084,
+       "line_end": 25084,
+       "quote": "Required original shared roles are, in order, `storage.first_append_receipt.issue.v2`, `storage.first_append_receipt.resolve.v2`",
+       "excerpt_sha256": "6ab948b7b84ffd7be0af6a73d3a75da9dede58bef8af1201434a01920a9d1dec",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "Boot recovery aggregate and original producer custody (SP-291)",
+       "line_start": 24993,
+       "line_end": 24993,
+       "quote": "Concrete source owners are `StorageMigrationCoordinator`, `StorageRecoveryCoordinator`, `StorageSeglogRecoveryOwner`",
+       "excerpt_sha256": "bc5009124ed2629552e2e18ea292ba5e3ebaf1e3263f1a023bd7a8a1796df683",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "Boot earliest receipt continuity and activation (SP-292)",
+       "line_start": 25100,
+       "line_end": 25100,
+       "quote": "then publishes original receipt row and new floor together in that actual database.",
+       "excerpt_sha256": "52d16ef62ca196b4fc1d427fa96105171c710c954471ff43fd04f5851ef399da",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "Boot recovery aggregate and original producer custody (SP-291)",
+       "line_start": 25015,
+       "line_end": 25015,
+       "quote": "Pending completion requires the exact current complete EventRecord, original frozen input and explicit SP-286/CV-339 original full-value witness with strict stored-v2 receipt.",
+       "excerpt_sha256": "ffda77c566531ec41993a09e28a1185083eb98996a64e73f9966ce702553db0f",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "Boot recovery aggregate and original producer custody (SP-291)",
+       "line_start": 25021,
+       "line_end": 25021,
+       "quote": "Boot uses its own one-member barrier group; unrelated members cannot co-batch silently.",
+       "excerpt_sha256": "1d2182ad9dd1c96a22cf4b5961bd7b28ac766766e8a8dfe4bf12e0fcfe5e9418",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "First append receipt custody (SP-286)",
+       "line_start": 22792,
+       "line_end": 22792,
+       "quote": "For the activated `storage.boot_recovery` lane, SP-291/SP-292 bind positive actual Boot enrollment at every original issuance route",
+       "excerpt_sha256": "8aa8aa3b1b098701f21765ab2853c441da92dcb16b1e5de87d05103dfb7653b2",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "Case L-2 crash-idempotent maintenance",
+       "line_start": 17537,
+       "line_end": 17537,
+       "quote": "Boot recovery completes seglog recovery before redb projectors or mutation admission.",
+       "excerpt_sha256": "51a79f9fa7db6e29a76a7571b7b1357bab8c050e3b112e4333020176cc8f783e",
+       "quote_check": "exact"
+      }
+     ],
+     "prior": {
+      "source": "before.json",
+      "status": "PASS"
+     },
+     "change": "carried",
+     "change_reason": "Cited text re-read at this head; unchanged."
+    },
+    "closed_payload_schema": {
+     "status": "PASS",
+     "representation": "registry_structured",
+     "finding": "Root 2.0.0 schema is closed (additionalProperties false), with const schema_version 2.0.0, bounded sorted-unique arrays and a closed six-kind enum; the frozen 1.0.0 reader lives only under $defs. SP-291 keeps this payload unchanged, so it is compatible with current owner precedence.",
+     "evidence": [
+      {
+       "path": "Plans/event_payload_storage_boot_recovery.schema.json",
+       "unit": "root",
+       "line_start": 55,
+       "line_end": 55,
+       "quote": "\"additionalProperties\": false,",
+       "excerpt_sha256": "e1b6fd8541ba5542d4a83ba797ad19f93213527609df4f73e3ce1416f8991246",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/event_payload_storage_boot_recovery.schema.json",
+       "unit": "root schema_version",
+       "line_start": 132,
+       "line_end": 132,
+       "quote": "\"const\": \"2.0.0\"",
+       "excerpt_sha256": "f206a78b368b345c07bb0096277e6754e4c89c3f0d5dc5e3dfb56ee190b33edf",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "Boot recovery aggregate and original producer custody (SP-291)",
+       "line_start": 25007,
+       "line_end": 25007,
+       "quote": "Arrays remain sorted/unique and bounded at 4096 under the unchanged v2 payload.",
+       "excerpt_sha256": "7c04f9992466c4c12bd82acf8f44dc85e8d0f4b361a84b9ce389690921be59a2",
+       "quote_check": "exact"
+      }
+     ],
+     "prior": {
+      "source": "before.json",
+      "status": "PASS"
+     },
+     "change": "carried",
+     "change_reason": "Cited text re-read at this head; unchanged."
+    },
+    "scope_identity": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "application_only with project_id null; exact W and S digests, event ID boot-recovery:v1:{W}:{recovery_epoch}:{S}, idempotency key, recovery_set_id and application actor are fixed by SP-291; occurrence, correlation and time come from the immutable original occurrence.",
+     "evidence": [
+      {
+       "path": "Plans/event_family_registry.json",
+       "unit": "#/families/30",
+       "line_start": 2027,
+       "line_end": 2027,
+       "quote": "\"scope_policy\": \"application_only\"",
+       "excerpt_sha256": "8882ff798705f0804fa0d3696904d304c538a84e572934b080d99874ddc30f52",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "Boot recovery aggregate and original producer custody (SP-291)",
+       "line_start": 25007,
+       "line_end": 25007,
+       "quote": "The event ID is exactly `boot-recovery:v1:{W}:{recovery_epoch}:{S}`, its idempotency key `boot-recovery:v1:{W}:{recovery_epoch}`",
+       "excerpt_sha256": "7c04f9992466c4c12bd82acf8f44dc85e8d0f4b361a84b9ce389690921be59a2",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "Boot recovery aggregate and original producer custody (SP-291)",
+       "line_start": 25007,
+       "line_end": 25007,
+       "quote": "The original application actor is `storage.boot_recovery.publish.v1:{storage_instance_id}`",
+       "excerpt_sha256": "7c04f9992466c4c12bd82acf8f44dc85e8d0f4b361a84b9ce389690921be59a2",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/Contracts_V0.md",
+       "unit": "Durable append receipt and storage recovery events",
+       "line_start": 25883,
+       "line_end": 25883,
+       "quote": "Application scope requires `project_id=null`; affected project/run/event identities appear only when proven in the payload",
+       "excerpt_sha256": "ddfbfe280a0ce94b1f0e161cdd2aaf6fd8f51bbd0a410af9a213ef3f4eab1bcd",
+       "quote_check": "exact"
+      }
+     ],
+     "prior": {
+      "source": "before.json",
+      "status": "PASS"
+     },
+     "change": "carried",
+     "change_reason": "Cited text re-read at this head; unchanged."
+    },
+    "replay_idempotency": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "Same episode replays its original input/result; a later exact-W episode uses a new epoch/S with direct repeat_of to the earliest original; frozen membership is never refreshed on retry; settled retry returns the pinned retained result; refusals after receipt commit never restamp; no-work settles no_obligation with no EventRecord.",
+     "evidence": [
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "Boot recovery aggregate and original producer custody (SP-291)",
+       "line_start": 25009,
+       "line_end": 25009,
+       "quote": "A same episode replays its original input/result; a genuinely later exact-W episode uses a new epoch/S and a direct `repeat_of` to the earliest matching original event.",
+       "excerpt_sha256": "8b6629b8c24d8c2466e743d0c5cdc51adc9d3e7cbf6669090ca7eff56097a17b",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "Boot recovery aggregate and original producer custody (SP-291)",
+       "line_start": 25001,
+       "line_end": 25001,
+       "quote": "Frozen membership and original producer semantics are never refreshed on retry.",
+       "excerpt_sha256": "6a180eb24e5eeae2eb62b970e5ad6c7dde1995a5e8f6f4da7ac1458fadeff07d",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "Boot earliest receipt continuity and activation (SP-292)",
+       "line_start": 25100,
+       "line_end": 25100,
+       "quote": "A dependent refusal after receipt commit preserves the original row and eleven fields/time without restamping or rollback.",
+       "excerpt_sha256": "52d16ef62ca196b4fc1d427fa96105171c710c954471ff43fd04f5851ef399da",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "Boot recovery aggregate and original producer custody (SP-291)",
+       "line_start": 25007,
+       "line_end": 25007,
+       "quote": "No-work discovery settles `no_obligation` and emits no EventRecord.",
+       "excerpt_sha256": "7c04f9992466c4c12bd82acf8f44dc85e8d0f4b361a84b9ce389690921be59a2",
+       "quote_check": "exact"
+      }
+     ],
+     "prior": {
+      "source": "before.json",
+      "status": "PASS"
+     },
+     "change": "carried",
+     "change_reason": "Cited text re-read at this head; unchanged."
+    },
+    "retention": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "The registered RP-OPERATIONAL-2555D@1.0.0 assignment stands and the SP-291 application-scope seam is closed: the Storage retention owner wrote DL-083 into the operational-policy text as an application-wide count bucket for Boot events and settled/no-obligation aggregate controls, with the unchanged 2,000,000 cap, fail-closed overflow and seven-year period. No retention product choice remains open for this family.",
+     "evidence": [
+      {
+       "path": "Plans/event_family_registry.json",
+       "unit": "#/families/30",
+       "line_start": 1399,
+       "line_end": 1399,
+       "quote": "\"policy_id\": \"RP-OPERATIONAL-2555D\"",
+       "excerpt_sha256": "5c88c70a6b41585c2ef918bf39aa73c5b8b31c0efeeda4af8996eadfb9c81696",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "Boot earliest receipt continuity and activation (SP-292)",
+       "line_start": 25080,
+       "line_end": 25080,
+       "quote": "Current floor and current anchor use the unchanged `RP-EVENT-IDENTITY-APPROOT@1.0.0`",
+       "excerpt_sha256": "2b82f990a88adb8bf186db5aa1599413aa6b83728844c92d7ba4b6e9124528eb",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "Boot earliest receipt continuity and activation (SP-292)",
+       "line_start": 25080,
+       "line_end": 25080,
+       "quote": "The original activation MigrationReceipt remains under its existing `RP-AUTHORITY-INDEFINITE` policy.",
+       "excerpt_sha256": "2b82f990a88adb8bf186db5aa1599413aa6b83728844c92d7ba4b6e9124528eb",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "Application-wide count buckets under the operational policy (DL-083, DL-089, DL-401)",
+       "line_start": 24967,
+       "line_end": 24967,
+       "quote": "Until 2026-11-04 this section called the count of application-scoped records under `RP-OPERATIONAL-2555D@1.0.0` an unproved policy-owner adapter seam",
+       "excerpt_sha256": "83b14f816b6ee31353a7f1e6354d2abbb25cf907b17d6f38c2fec7e30c847839",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "Application-wide count buckets",
+       "line_start": 24985,
+       "line_end": 24985,
+       "quote": "**Count and overflow.** Each application-wide bucket applies the policy's unchanged values to its own members",
+       "excerpt_sha256": "fd9cfeb9ed4a3dd24cadd1da7c2fdc6c46d3f3d48214d0ca7281f600a74ae24a",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "Application-wide count buckets",
+       "line_start": 24971,
+       "line_end": 24971,
+       "quote": "- `app:storage_operational` (DL-083), one bucket for the application-scoped records of `storage.boot_recovery`, `storage.recovery_applied` and `storage.compaction_lifecycle_changed` together.",
+       "excerpt_sha256": "2ea25c17eb63bcaf53cfd785a691b88e2809a14a01d7628091fd321f2b45df91",
+       "quote_check": "exact"
+      }
+     ],
+     "prior": {
+      "source": "before.json",
+      "status": "PASS"
+     },
+     "change": "carried",
+     "change_reason": "Cited text re-read at this head; unchanged."
+    },
+    "redaction_custody": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "Closed non-secret IDs/hashes only (floor carries a no-secrets marker); custody is family-specific: canonical non-rebuildable aggregate, floor in the receipt database with mandatory coherent backup, external anchor never restored or rolled back, whole-Store restore comparison, and earliest reads authenticate root/permission and claim no body availability. Registry marks the external anchor recovery strategy deferred_owner_contract (loss is disclosed as unavailable).",
+     "evidence": [
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "Boot earliest receipt continuity and activation (SP-292)",
+       "line_start": 25074,
+       "line_end": 25074,
+       "quote": "It is canonical, non-rebuildable continuity authority and participates in the same database transaction and coherent mandatory backup as original receipt custody.",
+       "excerpt_sha256": "dc64bb7e1ee869712cf4ea583f94f7ab03830771f534f287b8180aca2679e130",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "Boot earliest receipt continuity and activation (SP-292)",
+       "line_start": 25076,
+       "line_end": 25076,
+       "quote": "Root restore does not restore this outside-root anchor",
+       "excerpt_sha256": "b52b25633b222a4064a4b9356448c633ecafd777ed97d869b09baf4967df2ea6",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "Boot recovery aggregate and original producer custody (SP-291)",
+       "line_start": 25023,
+       "line_end": 25023,
+       "quote": "The coherent image includes the in-root floor with the actual receipt table; it does not copy or roll back the external current anchor.",
+       "excerpt_sha256": "3e99637b9c7daef17fecbae712db7e38837d602bed1eb172741e90bb6f129784",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "Boot earliest receipt continuity and activation (SP-292)",
+       "line_start": 25116,
+       "line_end": 25116,
+       "quote": "It can disclose original identity/receipt metadata after lawful payload and old-source expiry; it claims no body availability",
+       "excerpt_sha256": "197db63ca593aae988e5e743faac1ed117155fdc77b4664e66799d848a64bc6f",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage_value_registry.json",
+       "unit": "boot_recovery_history_anchor",
+       "line_start": 73684,
+       "line_end": 73684,
+       "quote": "\"strategy\": \"deferred_owner_contract\",",
+       "excerpt_sha256": "665045f5c297f09bf6f39a6ec075fd847a4ac9cceff51461b2b0ec1f12c50bad",
+       "quote_check": "exact"
+      }
+     ],
+     "prior": {
+      "source": "before.json",
+      "status": "PASS"
+     },
+     "change": "carried",
+     "change_reason": "Cited text re-read at this head; unchanged."
+    },
+    "transitions": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "The post-restore transition is defined: fresh issuance only through SP-286 fresh-operation admission with the new-epoch set ID; an older restore leaves the floor unavailable and the anchor never rolls back.",
+     "evidence": [
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "Boot recovery aggregate and original producer custody (SP-291)",
+       "line_start": 24961,
+       "line_end": 24961,
+       "quote": "retains current selection, original source membership, original frozen producer input and original issued result through its closed collecting/frozen/issued/settled/no-obligation states",
+       "excerpt_sha256": "a4a61f9bdc81f2d21f28f15bb4304e02bf874608cbe4481f1f16f41104a41ef9",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "Boot earliest receipt continuity and activation (SP-292)",
+       "line_start": 25104,
+       "line_end": 25104,
+       "quote": "Explicit recovery permits only the following original states.",
+       "excerpt_sha256": "3857605cf7e19f3b02ba10fae666d2a9d8b7b76e3b7bcd73cb214ebdaaffceef",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "Boot earliest receipt continuity and activation (SP-292)",
+       "line_start": 25120,
+       "line_end": 25120,
+       "quote": "Fresh producer acceptance after restore and native cold-open reconstruction are not proved by this contract's model.",
+       "excerpt_sha256": "dff745ca8953d540095cee424e311e7fb5c677d0ac90857da61fbbbb8af245dd",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "Boot earliest receipt continuity and activation (SP-292)",
+       "line_start": 25151,
+       "line_end": 25151,
+       "quote": "current external anchor never rolls backward and fresh post-restore producer proof remains unavailable.",
+       "excerpt_sha256": "be3136886e1f71f93d7c9604dcf77ce5ae51e94c70606595ecf558fe3024ef2d",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-2205",
+       "line_start": 24547,
+       "line_end": 24547,
+       "quote": "a Boot issuance is a genuinely new owner operation of `storage.boot_recovery.publish.v1` only when SP-286's",
+       "excerpt_sha256": "a70bca4e9120d953ec68f085afbf1a5c88ba828a39412ad738155fb7c1577df1",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-2205",
+       "line_start": 24547,
+       "line_end": 24547,
+       "quote": "Earliest completeness is never re-established from a restored image or from later receipts",
+       "excerpt_sha256": "a70bca4e9120d953ec68f085afbf1a5c88ba828a39412ad738155fb7c1577df1",
+       "quote_check": "exact"
+      }
+     ],
+     "prior": {
+      "source": "before.json",
+      "status": "PARTIAL"
+     },
+     "change": "upgraded",
+     "change_reason": "SP-2205 (newly authored under DL-045, PNC-019 S3) closes the open part of the prior grade."
+    },
+    "consumers_checkpoints": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "resolve_earliest reads custody without checkpoint; the one event consumer is a passive SP-278 reader with the nine-field token.",
+     "evidence": [
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "Boot earliest receipt continuity and activation (SP-292)",
+       "line_start": 25112,
+       "line_end": 25112,
+       "quote": "`storage.boot_recovery.resolve_earliest.v1` accepts exactly a lowercase 64-hex W digest.",
+       "excerpt_sha256": "2688de78255a34583be48cfddb52af051d8ac3ad83087d2742ed24895aab3c02",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "Boot earliest receipt continuity and activation (SP-292)",
+       "line_start": 25116,
+       "line_end": 25116,
+       "quote": "Reads create no checkpoint, event, repair, cleanup or new original result.",
+       "excerpt_sha256": "197db63ca593aae988e5e743faac1ed117155fdc77b4664e66799d848a64bc6f",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/Contracts_V0.md",
+       "unit": "CV-318",
+       "line_start": 26033,
+       "line_end": 26033,
+       "quote": "gui_classification_reason: Defines shared durability and recovery payloads; GUI consumes disclosure separately.",
+       "excerpt_sha256": "c5a51e1f3bfa296234478ef3934a837f1eafdc39a81c3a15020fba32eabbb99e",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-2205",
+       "line_start": 24549,
+       "line_end": 24549,
+       "quote": "The only consumer of the EventRecords is `reader.storage.boot_recovery_history@1.0.0`",
+       "excerpt_sha256": "31460b44ba38d9a21c57c92fc2060a0b641f8efd82a174450ff23009b409f979",
+       "quote_check": "exact"
+      }
+     ],
+     "prior": {
+      "source": "before.json",
+      "status": "PARTIAL"
+     },
+     "change": "upgraded",
+     "change_reason": "SP-2205 (newly authored under DL-045, PNC-019 S3) closes the open part of the prior grade."
+    },
+    "compatibility_withdrawal": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "Compatibility: exact v1 reader and MIG-STORAGE-BOOT-RECOVERY-PAYLOAD-001 upgrader, never appending a replacement. Withdrawal: SP-292 separates closing new producer admission from retained aggregate completion, earliest reads and backup/recovery roles, which stay installed until a verified compatible successor or lawful release; unrelated issuance stays independent of Boot withdrawal.",
+     "evidence": [
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "Event-specific v1 reader to v2 writer bindings",
+       "line_start": 18714,
+       "line_end": 18714,
+       "quote": "| `storage.boot_recovery` | `Plans/event_payload_storage_boot_recovery.schema.json#/$defs/storage_boot_recovery_1_0_0_compatibility_reader` |",
+       "excerpt_sha256": "15264d6f79e3e4b45925168e139602b5338b00f2909af4532e945ece006e066d",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "Boot earliest receipt continuity and activation (SP-292)",
+       "line_start": 25122,
+       "line_end": 25122,
+       "quote": "Closing new producer admission is not permission to forget original identity/first-receipt history or release unresolved pending custody.",
+       "excerpt_sha256": "84240f21c72deae4b810827f07c1d574aca6335817630cfbc39f9c56021835a4",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "Boot earliest receipt continuity and activation (SP-292)",
+       "line_start": 25122,
+       "line_end": 25122,
+       "quote": "A required schema/reader/receipt/coordinator binding remains installed until a verified compatible successor supplies it",
+       "excerpt_sha256": "84240f21c72deae4b810827f07c1d574aca6335817630cfbc39f9c56021835a4",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "Boot recovery aggregate and original producer custody (SP-291)",
+       "line_start": 25021,
+       "line_end": 25021,
+       "quote": "Unrelated issuance remains independent of Boot-local producer withdrawal and does not acquire a Boot floor requirement.",
+       "excerpt_sha256": "1d2182ad9dd1c96a22cf4b5961bd7b28ac766766e8a8dfe4bf12e0fcfe5e9418",
+       "quote_check": "exact"
+      }
+     ],
+     "prior": {
+      "source": "before.json",
+      "status": "PASS"
+     },
+     "change": "carried",
+     "change_reason": "Cited text re-read at this head; unchanged."
+    },
+    "positive_negative_oracles": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "ATS-3900 binds the complete executable family boundary in scripts/pm_s3bo_ext_ss_boot.py: every owner branch has a real table predicate, an independently labelled single-defect witness and a gated cut; the full shared corpus runs through the boundary. Proof: 12/12 rows in 2 tables, none unproved. Native execution remains NOT_RUN.",
+     "evidence": [
+      {
+       "path": "Plans/Automated_Testing_System.md",
+       "unit": "ATS-3900",
+       "line_start": 14550,
+       "line_end": 14550,
+       "quote": "For `storage.boot_recovery`, the SP-291, SP-292 and SP-2205 boundary is executed",
+       "excerpt_sha256": "e89e79734ea19c9ec2029f291f7514a19db42acab555a41b2fac4dc47923b309",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/Automated_Testing_System.md",
+       "unit": "ATS-3900",
+       "line_start": 14550,
+       "line_end": 14550,
+       "quote": "post-restore issuance only through SP-286 fresh admission, a restored pending intent never first-minting and a surviving exact receipt replayed",
+       "excerpt_sha256": "e89e79734ea19c9ec2029f291f7514a19db42acab555a41b2fac4dc47923b309",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-2205",
+       "line_start": 24547,
+       "line_end": 24547,
+       "quote": "no restored pending Boot intent is first-minted; a surviving exact receipt is replayed as before.",
+       "excerpt_sha256": "a70bca4e9120d953ec68f085afbf1a5c88ba828a39412ad738155fb7c1577df1",
+       "quote_check": "exact"
+      }
+     ],
+     "prior": {
+      "source": "reports/event-authority-20261114/depth-s3bo-registered-families.json",
+      "status": "PARTIAL"
+     },
+     "change": "upgraded",
+     "change_reason": "The family boundary named as the C12 gap is executed and proved; see the C12-SS report."
+    }
+   },
+   "static_checks_seen": [
+    "scripts/pm-s3bo-check.py matrix / batteries / guards",
+    "scripts/pm-s3bo-check.py run (matrix / batteries / corpus / evidence / guards)"
+   ]
+  },
+  {
+   "event_type": "storage.integrity_detected",
+   "family_id": "event-family-storage-integrity-detected",
+   "family_revision": "2.0.0",
+   "registry_pointer": "#/families/33",
+   "disposition": "CURRENT_WRITER",
+   "pass_count": 12,
+   "normative_depth_complete": true,
+   "native_execution": "NOT_RUN",
+   "current_owner_units": [
+    "SP-279",
+    "SP-278",
+    "SP-286",
+    "CV-339",
+    "CV-318",
+    "SP-026",
+    "SP-236",
+    "SP-237",
+    "SP-241",
+    "RAP-045",
+    "DL-045",
+    "ATS-3900"
+   ],
+   "remaining_gaps": [],
+   "contingency_questions": [],
+   "grading_batch": "c12-ss",
+   "cells": {
+    "membership_version": {
+     "status": "PASS",
+     "representation": "registry_structured",
+     "finding": "Registry #/families/33 is event-family-storage-integrity-detected at 2.0.0 (registry 2026-09-11.2); payload_schema_ref resolves to Plans/event_payload_storage_integrity_detected.schema.json whose root $id is the registered 2.0.0 id; application_only; no aliases or extensions. SP-279 \u00a71 restates the exact membership.",
+     "evidence": [
+      {
+       "path": "Plans/event_family_registry.json",
+       "unit": "#/families/33",
+       "line_start": 2379,
+       "line_end": 2379,
+       "quote": "\"family_id\": \"event-family-storage-integrity-detected\"",
+       "excerpt_sha256": "05bf9b1aee50686ae56d511a8e88fe45ae8d1c4c27c1144aeba8ea9dc8b306c8",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/event_family_registry.json",
+       "unit": "#/families/33",
+       "line_start": 2407,
+       "line_end": 2407,
+       "quote": "\"path\": \"Plans/event_payload_storage_integrity_detected.schema.json\"",
+       "excerpt_sha256": "ec91cd1d1139d18665804440db4eb0413c48e2f92962629aa0a6af20eac5d2f8",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/event_payload_storage_integrity_detected.schema.json",
+       "unit": "root $id",
+       "line_start": 133,
+       "line_end": 133,
+       "quote": "\"$id\": \"https://puppetmaster.local/schemas/event_payloads/storage_integrity_detected/2.0.0\",",
+       "excerpt_sha256": "88d0f3c528bcdc42adafff6380466f0e7a6223184f556266bc07787f36a11ac8",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/event_family_registry.json",
+       "unit": "#/families/33",
+       "line_start": 2387,
+       "line_end": 2387,
+       "quote": "\"aliases\": []",
+       "excerpt_sha256": "3a770c67768bb8b1e0618ff18be0bc587ec5a6c80de3cd1818e91c448580f76d",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "Storage integrity finding custody and read contract (SP-279)",
+       "line_start": 24268,
+       "line_end": 24268,
+       "quote": "The existing event-family-storage-integrity-detected has revision 2.0.0, application_only scope, and the separately referenced closed payload",
+       "excerpt_sha256": "8554603ea66c023376665bfc8cc03569c9e1375ebb88219d62f9370d5becd49e",
+       "quote_check": "exact"
+      }
+     ],
+     "prior": {
+      "source": "before.json",
+      "status": "PASS"
+     },
+     "change": "carried",
+     "change_reason": "Cited text re-read at this head; unchanged."
+    },
+    "owner_doc": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "Both anchors resolve to Case L-5 (acceptable generic persistence route under clarification 1), and SP-279 \u00a71 explicitly assigns Case L-5 persistence/normalization while naming the other owners. Governing family text: Known-37 \"Storage recovery event payloads\" and SP-279 (#storage-integrity-finding-custody-and-read-contract).",
+     "evidence": [
+      {
+       "path": "Plans/event_family_registry.json",
+       "unit": "#/families/33",
+       "line_start": 2028,
+       "line_end": 2028,
+       "quote": "\"semantic_owner_doc\": \"Plans/storage-plan.md#case-l-5-eventrecord-persistence-legacy-normalization-and-dedupe\"",
+       "excerpt_sha256": "fb6030d0535482048af6a39c6b4c8988bebfee4c934d74a384e54cfbbb698b6c",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "Storage integrity finding custody and read contract (SP-279)",
+       "line_start": 24268,
+       "line_end": 24268,
+       "quote": "Storage Case L-2 owns byte validation, loss evidence and barriers; Case L-5 owns persistence/normalization; Contracts owns EventRecord and AppendReceipt;",
+       "excerpt_sha256": "8554603ea66c023376665bfc8cc03569c9e1375ebb88219d62f9370d5becd49e",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "Storage integrity finding custody and read contract (SP-279)",
+       "line_start": 24264,
+       "line_end": 24264,
+       "quote": "SP-279 defines the new Storage integrity finding capture/custody and passive read contracts under DL-045.",
+       "excerpt_sha256": "d87fcaf423b0f8799637892a47585de921e12c36f6abd4997223a2bb80c071c9",
+       "quote_check": "exact"
+      }
+     ],
+     "prior": {
+      "source": "before.json",
+      "status": "PASS"
+     },
+     "change": "carried",
+     "change_reason": "Cited text re-read at this head; unchanged."
+    },
+    "producer": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "Producer storage.integrity_finding_capture.v1 in the Storage validation/recovery coordinator; ordering: capture, immutable durable finding, append pending, barrier append (frame sync, manifest/parent sync, first-receipt custody) and verified result. SP-279 explicitly adopts SP-286/CV-339 strict v2 writer, retained readers, resolve_full_value.v1 and the settled-backup gate.",
+     "evidence": [
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "Storage integrity finding custody and read contract (SP-279)",
+       "line_start": 24274,
+       "line_end": 24274,
+       "quote": "The new producer `storage.integrity_finding_capture.v1` runs only in the Storage validation/recovery coordinator",
+       "excerpt_sha256": "db295ec07cdec24e19bdca76569b7922ec6c1e2caf8b25bcd3d1d2bf2c478710",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "Storage integrity finding custody and read contract (SP-279)",
+       "line_start": 24324,
+       "line_end": 24324,
+       "quote": "Transitions are transient capture -> durable finding -> append pending -> verified event/result.",
+       "excerpt_sha256": "5c718b1fd765c3c66e6e9c40b8f8608f4985095054a8c78bb8802e711e0424bb",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "Storage integrity finding custody and read contract (SP-279)",
+       "line_start": 24330,
+       "line_end": 24330,
+       "quote": "Append as durability_class=barrier under Case L-2 and SP-286/CV-339",
+       "excerpt_sha256": "75a875ffe2ea1f562ead846ac79c44a321611e56826158d81f029964c412d421",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "Storage integrity finding custody and read contract (SP-279)",
+       "line_start": 24333,
+       "line_end": 24333,
+       "quote": "SP-279 explicitly adopts SP-286/CV-339's strict v2 writer, retained version readers, full-value resolver and settled-backup gate for Integrity-specific producer completion.",
+       "excerpt_sha256": "54f4084164d45150d303bf7e5f08379c26744d72e37b3da7193f65098dd15498",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "Storage integrity finding custody and read contract (SP-279)",
+       "line_start": 24339,
+       "line_end": 24339,
+       "quote": "open that current event through storage.first_append_receipt.resolve_full_value.v1 on the same actual shared owner.",
+       "excerpt_sha256": "bd40f839185f663df47702c2e99f427c7eb8300370e339678c1064011da8bc2c",
+       "quote_check": "exact"
+      }
+     ],
+     "prior": {
+      "source": "before.json",
+      "status": "PASS"
+     },
+     "change": "carried",
+     "change_reason": "Cited text re-read at this head; unchanged."
+    },
+    "closed_payload_schema": {
+     "status": "PASS",
+     "representation": "registry_structured",
+     "finding": "Root 2.0.0 schema is closed (additionalProperties false) with the seven classes, four precisions and four watermark relations; SP-279 keeps it unchanged and adds no project_id, recovery or receipt fields.",
+     "evidence": [
+      {
+       "path": "Plans/event_payload_storage_integrity_detected.schema.json",
+       "unit": "root",
+       "line_start": 135,
+       "line_end": 135,
+       "quote": "\"additionalProperties\": false,",
+       "excerpt_sha256": "e1b6fd8541ba5542d4a83ba797ad19f93213527609df4f73e3ce1416f8991246",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "Storage integrity finding custody and read contract (SP-279)",
+       "line_start": 24270,
+       "line_end": 24270,
+       "quote": "Payload remains exactly its current schema, including seven failure classes, four precision classes and four watermark relations.",
+       "excerpt_sha256": "81c14654e19efdf8b09a9bdd461aaa7a83b1f5bf4e2a702e42efad5cc2605e2d",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "Storage integrity finding custody and read contract (SP-279)",
+       "line_start": 24270,
+       "line_end": 24270,
+       "quote": "No project_id, recovery action, survivor digest, receipt, disclosure flag or repeat_of is added.",
+       "excerpt_sha256": "81c14654e19efdf8b09a9bdd461aaa7a83b1f5bf4e2a702e42efad5cc2605e2d",
+       "quote_check": "exact"
+      }
+     ],
+     "prior": {
+      "source": "before.json",
+      "status": "PASS"
+     },
+     "change": "carried",
+     "change_reason": "Cited text re-read at this head; unchanged."
+    },
+    "scope_identity": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "input_sha256 over the closed input in canonical_uint_json.v1; integrity_id, event_id evt_storage_integrity_{input_sha256}, idempotency key and dedupe replay policy are exact; application scope with project_id null and partition app; causation/parent null; occurred_at_utc is the frozen first detection time.",
+     "evidence": [
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "Storage integrity finding custody and read contract (SP-279)",
+       "line_start": 24316,
+       "line_end": 24316,
+       "quote": "integrity_id=pm.storage.integrity.v1:{input_sha256}.",
+       "excerpt_sha256": "1805a2058284816d206837df65611a2e9f39e14d0ddcb6200312e6b1128b0124",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "Storage integrity finding custody and read contract (SP-279)",
+       "line_start": 24318,
+       "line_end": 24318,
+       "quote": "New event_id=evt_storage_integrity_{input_sha256}; idempotency_key=storage.integrity_detected:{input_sha256}; replay_policy=dedupe_by_idempotency_key.",
+       "excerpt_sha256": "2591e25b31923160090b6c39b6ec5d8c1f0a6b6ef8710e1c1bd69b340aa23afd",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "Storage integrity finding custody and read contract (SP-279)",
+       "line_start": 24318,
+       "line_end": 24318,
+       "quote": "Envelope scope_kind=application, project_id=null and storage partition app.",
+       "excerpt_sha256": "2591e25b31923160090b6c39b6ec5d8c1f0a6b6ef8710e1c1bd69b340aa23afd",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "Storage integrity finding custody and read contract (SP-279)",
+       "line_start": 24318,
+       "line_end": 24318,
+       "quote": "causation_event_id and parent_event_id are both exactly null for this narrow writer",
+       "excerpt_sha256": "2591e25b31923160090b6c39b6ec5d8c1f0a6b6ef8710e1c1bd69b340aa23afd",
+       "quote_check": "exact"
+      }
+     ],
+     "prior": {
+      "source": "before.json",
+      "status": "PASS"
+     },
+     "change": "carried",
+     "change_reason": "Cited text re-read at this head; unchanged."
+    },
+    "replay_idempotency": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "The same bound input is the same finding with no new episode; the immutable finding is never rewritten, and different input at a bound identity is idempotency_conflict. After the finding exists there is no duplicate append or report rollback: same identity and digest return the original event/result. Lost responses resolve through the retained v2 full-value custody.",
+     "evidence": [
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "Storage integrity finding custody and read contract (SP-279)",
+       "line_start": 24320,
+       "line_end": 24320,
+       "quote": "A later observation of the identical bound input is the same finding; no repeat_of or timestamp-based fresh episode is invented.",
+       "excerpt_sha256": "af24e22afb9e7875d6505f6765358486ed8b4c73da8e5889bd941d554fcf7c1a",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "Storage integrity finding custody and read contract (SP-279)",
+       "line_start": 24310,
+       "line_end": 24310,
+       "quote": "Different input at a bound identity is idempotency_conflict.",
+       "excerpt_sha256": "56fed60dce69cd51be52db0fcbad4656d6d762c8caeb7c7b6a0bda007728bd8d",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "Storage integrity finding custody and read contract (SP-279)",
+       "line_start": 24347,
+       "line_end": 24347,
+       "quote": "Once the semantic event may exist, no duplicate append and no report rollback. Same identity/same producer semantic digest returns original event/result; mismatch conflicts.",
+       "excerpt_sha256": "3674e6807f722ebe0da70a28a2e6fbdc82f19951b6ec576a3f400786c8fceaf8",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "Storage integrity finding custody and read contract (SP-279)",
+       "line_start": 24339,
+       "line_end": 24339,
+       "quote": "Producer completion and settled response retry require the genuine current complete EventRecord under the full current SP-278 source/token",
+       "excerpt_sha256": "bd40f839185f663df47702c2e99f427c7eb8300370e339678c1064011da8bc2c",
+       "quote_check": "exact"
+      }
+     ],
+     "prior": {
+      "source": "before.json",
+      "status": "PASS"
+     },
+     "change": "carried",
+     "change_reason": "Cited text re-read at this head; unchanged."
+    },
+    "retention": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "Registered RP-AUTHORITY-INDEFINITE@1.0.0 for the event; the finding family is explicitly mapped to the same indefinite audit/source-lineage class under DL-045; no checkpoint or projection is owned (the reader is checkpoint-free); holds compose by union and nothing expires by age.",
+     "evidence": [
+      {
+       "path": "Plans/event_family_registry.json",
+       "unit": "#/families/33",
+       "line_start": 2374,
+       "line_end": 2374,
+       "quote": "\"policy_id\": \"RP-AUTHORITY-INDEFINITE\"",
+       "excerpt_sha256": "218a403b240aa548ad151a5d5401bf2a73e2a57cbfe0c0ceb2f649d6f0ebc652",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "Storage integrity finding custody and read contract (SP-279)",
+       "line_start": 24312,
+       "line_end": 24312,
+       "quote": "Map only to the existing RP-AUTHORITY-INDEFINITE@1.0.0 object",
+       "excerpt_sha256": "c00dab58e343a387a1c26dd2ef18e677d183203171b5f06a1b339f5ee3142574",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "Storage integrity finding custody and read contract (SP-279)",
+       "line_start": 24379,
+       "line_end": 24379,
+       "quote": "Since expiry_action=none and max_cardinality=null, neither completion, a hold clear nor age makes a finding deletable.",
+       "excerpt_sha256": "c84e89493acadfcbdad327ae1a4a67368e09e7f5d79d6fb85955f75da92d024d",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "Storage integrity finding custody and read contract (SP-279)",
+       "line_start": 24353,
+       "line_end": 24353,
+       "quote": "The reader never owns a generic checkpoint write or a filtered durable cursor, so no integrity-specific checkpoint family is introduced.",
+       "excerpt_sha256": "b1e11753118b4f5c8136869e505fc3535e1629480df387ad8a1546c5e7cf7829",
+       "quote_check": "exact"
+      }
+     ],
+     "prior": {
+      "source": "before.json",
+      "status": "PASS"
+     },
+     "change": "carried",
+     "change_reason": "Cited text re-read at this head; unchanged."
+    },
+    "redaction_custody": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "The finding holds only closed input, witnesses and first timestamp; raw bytes stay in Seglog/backup/quarantine custody. Mandatory backup includes findings with the event/dedupe boundary, and restore compares an artifact-derived Store. Reads are restricted to the owner, revalidate permission, obey current deletion and survive project deletion without leaking detail.",
+     "evidence": [
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "Storage integrity finding custody and read contract (SP-279)",
+       "line_start": 24308,
+       "line_end": 24308,
+       "quote": "It contains no raw segment/header/payload text, shell output, credentials, decoded message, source path or arbitrary error string.",
+       "excerpt_sha256": "d6330e96336d7b879e28d01e4d1257bcd27090c8d4e8d9430ca2d4e2bc5db3fd",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "Storage integrity finding custody and read contract (SP-279)",
+       "line_start": 24365,
+       "line_end": 24365,
+       "quote": "Root-local finding scan is restricted to the owning Storage process/current authorized reader.",
+       "excerpt_sha256": "d590e40b7f177d501d7df23e3e2fe703f576ec084648003733bdb59fcbfdad80",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "Storage integrity finding custody and read contract (SP-279)",
+       "line_start": 24367,
+       "line_end": 24367,
+       "quote": "Affected event/project detail links obey current deletion and authorization; retain content-free audit identity while suppressing deleted/inaccessible detail.",
+       "excerpt_sha256": "ab7e11b3e79e2ff01152a4c9dffaea0cc620c6a16da582240b7cac1dad3172ad",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "Storage integrity finding custody and read contract (SP-279)",
+       "line_start": 24367,
+       "line_end": 24367,
+       "quote": "Canonical restore includes findings and event/dedupe boundary together; it does not regenerate a missing permanent finding from a projection.",
+       "excerpt_sha256": "ab7e11b3e79e2ff01152a4c9dffaea0cc620c6a16da582240b7cac1dad3172ad",
+       "quote_check": "exact"
+      }
+     ],
+     "prior": {
+      "source": "before.json",
+      "status": "PASS"
+     },
+     "change": "carried",
+     "change_reason": "Cited text re-read at this head; unchanged."
+    },
+    "transitions": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "transient capture -> durable finding -> append pending -> verified event/result, with restart state from finding plus event lookup; an unsafe sink keeps the finding pending and mutation blocked; crash cuts are defined; detection never recovers or advances checkpoints; restored finding-only work stays pending without SP-286 restore admission.",
+     "evidence": [
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "Storage integrity finding custody and read contract (SP-279)",
+       "line_start": 24324,
+       "line_end": 24324,
+       "quote": "Transitions are transient capture -> durable finding -> append pending -> verified event/result.",
+       "excerpt_sha256": "5c718b1fd765c3c66e6e9c40b8f8608f4985095054a8c78bb8802e711e0424bb",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "Storage integrity finding custody and read contract (SP-279)",
+       "line_start": 24328,
+       "line_end": 24328,
+       "quote": "the finding stays pending and mutation blocked.",
+       "excerpt_sha256": "b0e0b4aa5e9924aebf4e242e805621a7c7df5672b2a1d381ab30e64dbd84997c",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "Storage integrity finding custody and read contract (SP-279)",
+       "line_start": 24347,
+       "line_end": 24347,
+       "quote": "Crash before finding durability returns no durable detection success.",
+       "excerpt_sha256": "3674e6807f722ebe0da70a28a2e6fbdc82f19951b6ec576a3f400786c8fceaf8",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "Storage integrity finding custody and read contract (SP-279)",
+       "line_start": 24345,
+       "line_end": 24345,
+       "quote": "without actual SP-286 restore-coordinator admission it stays pending.",
+       "excerpt_sha256": "562f80de5e1b1dc00b14b6b8e0b75a17fceea5a1905e16d6402113822dd7105f",
+       "quote_check": "exact"
+      }
+     ],
+     "prior": {
+      "source": "before.json",
+      "status": "PASS"
+     },
+     "change": "carried",
+     "change_reason": "Cited text re-read at this head; unchanged."
+    },
+    "consumers_checkpoints": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "Exact consumer storage.integrity_history_reader.v1 adopts SP-278 by name (exact read_token over event_record_index_checkpoint.v1), owns no checkpoint by design, and uses snapshot-bound transient pagination with no durable effect; the live token is never persisted, so DL-076 is satisfied. Runtime Artifacts display and recovery coordinator consumption of findings are bound.",
+     "evidence": [
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "Storage integrity finding custody and read contract (SP-279)",
+       "line_start": 24351,
+       "line_end": 24351,
+       "quote": "NEW storage.integrity_history_reader.v1 supplies read-only Runtime Artifacts and History/Ledger detection joins.",
+       "excerpt_sha256": "cd481a5d1822f6f5a592c9d9a2bdbe981a5164ff98c9d637b70e8c887e63429f",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "Storage integrity finding custody and read contract (SP-279)",
+       "line_start": 24353,
+       "line_end": 24353,
+       "quote": "This reader adopts the exact Plans/event_record_index_checkpoint.schema.json#/$defs/read_token",
+       "excerpt_sha256": "b1e11753118b4f5c8136869e505fc3535e1629480df387ad8a1546c5e7cf7829",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "Storage integrity finding custody and read contract (SP-279)",
+       "line_start": 24355,
+       "line_end": 24355,
+       "quote": "Continuation custody is transient reader-session state, never a new durable family.",
+       "excerpt_sha256": "b839d69bfc0a83c3eb9a7151568d4a9c92f6a7430231f644ab323e6ec4145da3",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "Storage integrity finding custody and read contract (SP-279)",
+       "line_start": 24351,
+       "line_end": 24351,
+       "quote": "This exact reader owns no checkpoint advance; its ephemeral examined boundary is not a durable effect attributed to the detection payload.",
+       "excerpt_sha256": "cd481a5d1822f6f5a592c9d9a2bdbe981a5164ff98c9d637b70e8c887e63429f",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/Runtime_Artifacts_Panel.md",
+       "unit": "RAP-045",
+       "line_start": 2080,
+       "line_end": 2080,
+       "quote": "storage.integrity_history_reader.v1 consumes SP-279/SP-278 without owning a checkpoint,",
+       "excerpt_sha256": "fa42b413c6d0d34933238d318cc6f41e2acb3e91ec47094ba3874b864ba33c79",
+       "quote_check": "exact"
+      }
+     ],
+     "prior": {
+      "source": "before.json",
+      "status": "PASS"
+     },
+     "change": "carried",
+     "change_reason": "Cited text re-read at this head; unchanged."
+    },
+    "compatibility_withdrawal": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "Compatibility: only payload/EventRecord 2.0.0 are emitted; v1 goes through MIG-STORAGE-INTEGRITY-DETECTED-PAYLOAD-001 with no backfill or rewrite. Withdrawal: new captures stop, pending findings are drained without deletion, audit read/recovery support stays or a verified successor preserves joins, and disabling a reader discards only ephemeral tokens.",
+     "evidence": [
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "Storage integrity finding custody and read contract (SP-279)",
+       "line_start": 24371,
+       "line_end": 24371,
+       "quote": "Existing MIG-STORAGE-INTEGRITY-DETECTED-PAYLOAD-001@1.0.0 and storage_integrity_detected_v1_upgrade_unresolvable govern v1",
+       "excerpt_sha256": "dfe9c38c507f0301c53b19ce2f93e1dd8c784780ab4b58c25ff47a592493a5fa",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "Storage integrity finding custody and read contract (SP-279)",
+       "line_start": 24373,
+       "line_end": 24373,
+       "quote": "Withdrawal stops new captures, drains/reconciles pending findings without deleting them, and keeps audit read/recovery support",
+       "excerpt_sha256": "9d27537154bb8c2d04d2b1b7b7917eeddf540947f246ca9143cbb7c7e523f9d4",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "Storage integrity finding custody and read contract (SP-279)",
+       "line_start": 24373,
+       "line_end": 24373,
+       "quote": "Disabling a reader discards its ephemeral tokens and does not delete canonical events/findings or shared checkpoints.",
+       "excerpt_sha256": "9d27537154bb8c2d04d2b1b7b7917eeddf540947f246ca9143cbb7c7e523f9d4",
+       "quote_check": "exact"
+      }
+     ],
+     "prior": {
+      "source": "before.json",
+      "status": "PASS"
+     },
+     "change": "carried",
+     "change_reason": "Cited text re-read at this head; unchanged."
+    },
+    "positive_negative_oracles": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "ATS-3900 binds the complete executable family boundary in scripts/pm_s3bo_ext_ss_integrity.py: every owner branch has a real table predicate, an independently labelled single-defect witness and a gated cut; the full shared corpus runs through the boundary. Proof: 16/16 rows in 2 tables, none unproved. Native execution remains NOT_RUN.",
+     "evidence": [
+      {
+       "path": "Plans/Automated_Testing_System.md",
+       "unit": "ATS-3900",
+       "line_start": 14552,
+       "line_end": 14552,
+       "quote": "The full-uint64 downstream route is the shared qualified RFC 8785 digest",
+       "excerpt_sha256": "788124a842b2d02e0655801066cb4d791d63c9e439a961addcea2b947bbb20e3",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/Automated_Testing_System.md",
+       "unit": "ATS-3900",
+       "line_start": 14552,
+       "line_end": 14552,
+       "quote": "The `exact_event` route joins unique UTF-8-byte-sorted refs to header-verified witnesses and corroborating source frames inside the affected ranges, never to advisory index rows.",
+       "excerpt_sha256": "788124a842b2d02e0655801066cb4d791d63c9e439a961addcea2b947bbb20e3",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-279",
+       "line_start": 24391,
+       "line_end": 24391,
+       "quote": "refuses before any effect under CV-1100; the durable finding stays pending under section 5",
+       "excerpt_sha256": "2c1f1df83cc1de992ffe980a07ad562eeec52110e26d57e99f95c440005bb013",
+       "quote_check": "exact"
+      }
+     ],
+     "prior": {
+      "source": "reports/event-authority-20261114/depth-s3bo-registered-families.json",
+      "status": "PARTIAL"
+     },
+     "change": "upgraded",
+     "change_reason": "The family boundary named as the C12 gap is executed and proved; see the C12-SS report."
+    }
+   },
+   "static_checks_seen": [
+    "scripts/pm-s3bo-check.py matrix / batteries / guards",
+    "scripts/pm-s3bo-check.py run (matrix / batteries / corpus / evidence / guards)"
+   ]
+  },
+  {
+   "event_type": "storage.recovery_applied",
+   "family_id": "event-family-storage-recovery-applied",
+   "family_revision": "2.0.0",
+   "registry_pointer": "#/families/34",
+   "disposition": "CURRENT_WRITER",
+   "pass_count": 12,
+   "normative_depth_complete": true,
+   "native_execution": "NOT_RUN",
+   "current_owner_units": [
+    "SP-293",
+    "SP-286",
+    "CV-339",
+    "SP-278",
+    "SP-279",
+    "CV-318",
+    "RAP-045",
+    "SP-026",
+    "SP-236",
+    "SP-237",
+    "DL-045",
+    "ATS-3900"
+   ],
+   "remaining_gaps": [],
+   "contingency_questions": [],
+   "grading_batch": "c12-ss",
+   "cells": {
+    "membership_version": {
+     "status": "PASS",
+     "representation": "registry_structured",
+     "finding": "Registry #/families/34 is event-family-storage-recovery-applied at 2.0.0 (registry 2026-09-11.2); payload_schema_ref resolves to Plans/event_payload_storage_recovery_applied.schema.json whose root $id is the registered 2.0.0 id; application_only; no aliases or extensions. SP-293 keeps the existing event and payload.",
+     "evidence": [
+      {
+       "path": "Plans/event_family_registry.json",
+       "unit": "#/families/34",
+       "line_start": 2413,
+       "line_end": 2413,
+       "quote": "\"family_id\": \"event-family-storage-recovery-applied\"",
+       "excerpt_sha256": "35ae569a2f1708a75b5e11d737667c2ac79a9e4e1bb9537d21925bb7e61c4f57",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/event_family_registry.json",
+       "unit": "#/families/34",
+       "line_start": 2441,
+       "line_end": 2441,
+       "quote": "\"path\": \"Plans/event_payload_storage_recovery_applied.schema.json\"",
+       "excerpt_sha256": "8f7594fdc4004ef1fcd0df4ed09a996db5baede1a4c553996d0ae724f332101b",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/event_payload_storage_recovery_applied.schema.json",
+       "unit": "root $id",
+       "line_start": 129,
+       "line_end": 129,
+       "quote": "\"$id\": \"https://puppetmaster.local/schemas/event_payloads/storage_recovery_applied/2.0.0\",",
+       "excerpt_sha256": "36e1333a5b22e80a9dfec08ee13010b72a347b1cbfb9d69672bc54349963a1f3",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/event_family_registry.json",
+       "unit": "#/families/34",
+       "line_start": 2421,
+       "line_end": 2421,
+       "quote": "\"aliases\": []",
+       "excerpt_sha256": "3a770c67768bb8b1e0618ff18be0bc587ec5a6c80de3cd1818e91c448580f76d",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/event_family_registry.json",
+       "unit": "#/families/34",
+       "line_start": 2422,
+       "line_end": 2422,
+       "quote": "\"admitted_extensions\": []",
+       "excerpt_sha256": "dd424afc059193b3bd8ad2f6fd25b4c5ed8adcec4173d1973338bb43aa995ef8",
+       "quote_check": "exact"
+      }
+     ],
+     "prior": {
+      "source": "before.json",
+      "status": "PASS"
+     },
+     "change": "carried",
+     "change_reason": "Cited text re-read at this head; unchanged."
+    },
+    "owner_doc": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "Both anchors resolve to Case L-5, the generic Storage persistence section (acceptable under clarification 1; not stale for 2.0.0 and not disclaiming). Governing family text: Known-37 \"Storage recovery event payloads\" and \"Recovery original action custody and publication\" (SP-293), with CV-318 for the envelope.",
+     "evidence": [
+      {
+       "path": "Plans/event_family_registry.json",
+       "unit": "#/families/34",
+       "line_start": 2028,
+       "line_end": 2028,
+       "quote": "\"semantic_owner_doc\": \"Plans/storage-plan.md#case-l-5-eventrecord-persistence-legacy-normalization-and-dedupe\"",
+       "excerpt_sha256": "fb6030d0535482048af6a39c6b4c8988bebfee4c934d74a384e54cfbbb698b6c",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "Storage recovery event payloads (Known-37)",
+       "line_start": 18744,
+       "line_end": 18744,
+       "quote": "- `storage.recovery_applied`: action is exactly `adopt_valid_tail | seal_degraded | truncate_unacknowledged_tail | exclude_proven_range | restore_verified_backup | block_mutation`;",
+       "excerpt_sha256": "3f390e5fb4e51101fc14686d865c2346eff5a613d3150deb8bae7125c1323aba",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "Recovery original action custody and publication (SP-293)",
+       "line_start": 25195,
+       "line_end": 25195,
+       "quote": "These are new DL-045 technical bindings for this existing event.",
+       "excerpt_sha256": "156295539ad3403a214ce34bbd5b810bf2b16747bfa2f3fab533a222a7dcc485",
+       "quote_check": "exact"
+      }
+     ],
+     "prior": {
+      "source": "before.json",
+      "status": "PASS"
+     },
+     "change": "carried",
+     "change_reason": "Cited text re-read at this head; unchanged."
+    },
+    "producer": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "StorageRecoveryCoordinator roles capture.v1/publish.v1/read.v1; ordering: frozen admission and prepared capsule, native intent, physical effect, immutable physical receipt, frozen producer input, SP-286/CV-339 shared append (both barriers, issue once, replay), then compact committed update; no projector or mutation before the verified receipt. Explicit full-value and SP-286 restore-occurrence adoption.",
+     "evidence": [
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "Recovery original action custody and publication (SP-293)",
+       "line_start": 25175,
+       "line_end": 25175,
+       "quote": "`storage.recovery_applied.capture.v1`, `storage.recovery_applied.publish.v1` and `storage.recovery_applied.read.v1` are internal roles of the actual StorageRecoveryCoordinator",
+       "excerpt_sha256": "f9d03fc7f6b72ad888e8daeb074c2b001e383835b6d559493a7ffd76dde48735",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "Recovery original action custody and publication (SP-293)",
+       "line_start": 25185,
+       "line_end": 25185,
+       "quote": "The original physical receipt is durably captured before frozen event input and before this event's own AppendReceipt.",
+       "excerpt_sha256": "34946e2ca69137cac0db09d5b216a24753c904466032a432d03d945e6b5d84b3",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "Recovery original action custody and publication (SP-293)",
+       "line_start": 25187,
+       "line_end": 25187,
+       "quote": "Publish only through the actual SP-286/CV-339 shared append owner",
+       "excerpt_sha256": "301527bfcc9b74fe2d22f9f99689a8791e2054536784cccd11a8c8009d006514",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "Recovery original action custody and publication (SP-293)",
+       "line_start": 25187,
+       "line_end": 25187,
+       "quote": "Recovered assignments require explicit original full-value/current-source authority",
+       "excerpt_sha256": "301527bfcc9b74fe2d22f9f99689a8791e2054536784cccd11a8c8009d006514",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "Recovery original action custody and publication (SP-293)",
+       "line_start": 25189,
+       "line_end": 25189,
+       "quote": "the actual Recovery-owner accepted-operation adapter may bind the existing SP-286 transient acceptance to that original completed journal",
+       "excerpt_sha256": "e19a93a1f0c385e19c0483b1eb4949ae981ad3e535e604fbb2bb08889b712f3e",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "Recovery original action custody and publication (SP-293)",
+       "line_start": 25191,
+       "line_end": 25191,
+       "quote": "No projector start, checkpoint advance or mutation-capable continuation precedes the recovery event's verified receipt.",
+       "excerpt_sha256": "1e62bb570cf88ca9e472f2e17dd4734d633cf412841dce6607ba554909bf9692",
+       "quote_check": "exact"
+      }
+     ],
+     "prior": {
+      "source": "before.json",
+      "status": "PASS"
+     },
+     "change": "carried",
+     "change_reason": "Cited text re-read at this head; unchanged."
+    },
+    "closed_payload_schema": {
+     "status": "PASS",
+     "representation": "registry_structured",
+     "finding": "Root 2.0.0 schema is closed (additionalProperties false) and SP-293 keeps it unchanged (payload equals the physical receipt effect projection plus the durability reference); the frozen 1.0.0 reader sits under $defs.",
+     "evidence": [
+      {
+       "path": "Plans/event_payload_storage_recovery_applied.schema.json",
+       "unit": "root",
+       "line_start": 131,
+       "line_end": 131,
+       "quote": "\"additionalProperties\": false,",
+       "excerpt_sha256": "e1b6fd8541ba5542d4a83ba797ad19f93213527609df4f73e3ce1416f8991246",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "Recovery original action custody and publication (SP-293)",
+       "line_start": 25199,
+       "line_end": 25199,
+       "quote": "Payload equals the physical receipt's exact effect projection plus the original durability reference.",
+       "excerpt_sha256": "d7128f7292a0cb681dfc452c30685089f84ee81345329dcfe280c6bd21b12a2f",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "Storage recovery event payloads",
+       "line_start": 18744,
+       "line_end": 18744,
+       "quote": "The exact schema enforces the integrity-link, pre/post hash/length, excluded-range, sequence-gap, survivor-digest, receipt, disclosure, and aftermath cross-products.",
+       "excerpt_sha256": "3f390e5fb4e51101fc14686d865c2346eff5a613d3150deb8bae7125c1323aba",
+       "quote_check": "exact"
+      }
+     ],
+     "prior": {
+      "source": "before.json",
+      "status": "PASS"
+     },
+     "change": "carried",
+     "change_reason": "Cited text re-read at this head; unchanged."
+    },
+    "scope_identity": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "application scope with all project/thread/run/node/attempt/account refs null; recovery_id, event ID evt_storage_recovery_{input_sha256}, idempotency key, correlation ID and durability reference are exact functions of the MP-encoded input and physical receipt digests.",
+     "evidence": [
+      {
+       "path": "Plans/event_family_registry.json",
+       "unit": "#/families/34",
+       "line_start": 2027,
+       "line_end": 2027,
+       "quote": "\"scope_policy\": \"application_only\"",
+       "excerpt_sha256": "8882ff798705f0804fa0d3696904d304c538a84e572934b080d99874ddc30f52",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "Recovery original action custody and publication (SP-293)",
+       "line_start": 25197,
+       "line_end": 25197,
+       "quote": "`recovery_id = pm.storage.recovery.v1:{input_sha256}`. The producer event ID is `evt_storage_recovery_{input_sha256}`, idempotency key is `storage.recovery_applied:{input_sha256}`",
+       "excerpt_sha256": "5e7dbc522ab6203e5e42a474aece12a7034bcccf67968e4904b8c926d8cc6e30",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "Recovery original action custody and publication (SP-293)",
+       "line_start": 25199,
+       "line_end": 25199,
+       "quote": "Project/thread/run/node/attempt/account references, producer sequence, causation/parent and payload_ref are explicitly null for this writer",
+       "excerpt_sha256": "d7128f7292a0cb681dfc452c30685089f84ee81345329dcfe280c6bd21b12a2f",
+       "quote_check": "exact"
+      }
+     ],
+     "prior": {
+      "source": "before.json",
+      "status": "PASS"
+     },
+     "change": "carried",
+     "change_reason": "Cited text re-read at this head; unchanged."
+    },
+    "replay_idempotency": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "Same input with a different prepared result is a conflict; after issuance retries replay the same eleven-field receipt; the publish result is governed by the original receipt; a consumed restore occurrence is never redispatched; replay is dedupe_by_idempotency_key.",
+     "evidence": [
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "Recovery original action custody and publication (SP-293)",
+       "line_start": 25195,
+       "line_end": 25195,
+       "quote": "Same input with a different prepared result is a conflict, not another episode.",
+       "excerpt_sha256": "156295539ad3403a214ce34bbd5b810bf2b16747bfa2f3fab533a222a7dcc485",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "Recovery original action custody and publication (SP-293)",
+       "line_start": 25212,
+       "line_end": 25212,
+       "quote": "Same original receipt governs retry; no newly observed acknowledgment replaces it.",
+       "excerpt_sha256": "ecb657a8997f38098c29b4b6ab4c633adc898db528e1e0e12f29290f2a5c8e35",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "Recovery original action custody and publication (SP-293)",
+       "line_start": 25199,
+       "line_end": 25199,
+       "quote": "Redaction is `no_secrets` and replay is `dedupe_by_idempotency_key`.",
+       "excerpt_sha256": "d7128f7292a0cb681dfc452c30685089f84ee81345329dcfe280c6bd21b12a2f",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "Recovery original action custody and publication (SP-293)",
+       "line_start": 25187,
+       "line_end": 25187,
+       "quote": "so replay the same original eleven-field receipt",
+       "excerpt_sha256": "301527bfcc9b74fe2d22f9f99689a8791e2054536784cccd11a8c8009d006514",
+       "quote_check": "exact"
+      }
+     ],
+     "prior": {
+      "source": "before.json",
+      "status": "PASS"
+     },
+     "change": "carried",
+     "change_reason": "Cited text re-read at this head; unchanged."
+    },
+    "retention": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "The registered RP-OPERATIONAL-2555D@1.0.0 assignment stands and the SP-291 application-scope seam is closed: the Storage retention owner wrote DL-083 into the operational-policy text as an application-wide count bucket for the application-only recovery events, with the unchanged 2,000,000 cap, fail-closed overflow and seven-year period. No retention product choice remains open for this family.",
+     "evidence": [
+      {
+       "path": "Plans/event_family_registry.json",
+       "unit": "#/families/34",
+       "line_start": 2049,
+       "line_end": 2049,
+       "quote": "\"policy_id\": \"RP-OPERATIONAL-2555D\"",
+       "excerpt_sha256": "5c88c70a6b41585c2ef918bf39aa73c5b8b31c0efeeda4af8996eadfb9c81696",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "Recovery original action custody and publication (SP-293)",
+       "line_start": 25218,
+       "line_end": 25218,
+       "quote": "The event remains `RP-OPERATIONAL-2555D@1.0.0`; the five-kind maintenance-history family and every raw intent/source/backup lifetime remain unchanged.",
+       "excerpt_sha256": "b52d5f21cc3c821fe47a952f1e1e5f986b22e605e70e75b9b4722e69015360fa",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage_value_registry.json",
+       "unit": "retention_policies RP-OPERATIONAL-2555D",
+       "line_start": 369,
+       "line_end": 369,
+       "quote": "\"cardinality_scope\": \"project\",",
+       "excerpt_sha256": "49740309784fc9046b9b259951706196e1d2c8f5e973c31fd23013aa317126dd",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "Application-wide count buckets under the operational policy (DL-083, DL-089, DL-401)",
+       "line_start": 24967,
+       "line_end": 24967,
+       "quote": "Until 2026-11-04 this section called the count of application-scoped records under `RP-OPERATIONAL-2555D@1.0.0` an unproved policy-owner adapter seam",
+       "excerpt_sha256": "83b14f816b6ee31353a7f1e6354d2abbb25cf907b17d6f38c2fec7e30c847839",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "Application-wide count buckets",
+       "line_start": 24985,
+       "line_end": 24985,
+       "quote": "**Count and overflow.** Each application-wide bucket applies the policy's unchanged values to its own members",
+       "excerpt_sha256": "fd9cfeb9ed4a3dd24cadd1da7c2fdc6c46d3f3d48214d0ca7281f600a74ae24a",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "Application-wide count buckets",
+       "line_start": 24971,
+       "line_end": 24971,
+       "quote": "- `app:storage_operational` (DL-083), one bucket for the application-scoped records of `storage.boot_recovery`, `storage.recovery_applied` and `storage.compaction_lifecycle_changed` together.",
+       "excerpt_sha256": "2ea25c17eb63bcaf53cfd785a691b88e2809a14a01d7628091fd321f2b45df91",
+       "quote_check": "exact"
+      }
+     ],
+     "prior": {
+      "source": "before.json",
+      "status": "PASS"
+     },
+     "change": "carried",
+     "change_reason": "Cited text re-read at this head; unchanged."
+    },
+    "redaction_custody": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "Compact content-free custody under no-follow confinement is the original holder of action input, physical receipt and frozen event; mandatory backup keeps coherent pending/terminal capsules with journal and receipt boundary; restore cannot rewind committed authority; the passive read joins sources under current permission and returns unavailable when proof or permission is missing.",
+     "evidence": [
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "Recovery original action custody and publication (SP-293)",
+       "line_start": 25218,
+       "line_end": 25218,
+       "quote": "Mandatory backup preserves complete coherent pending/terminal capsules with corresponding original journal and shared receipt boundary.",
+       "excerpt_sha256": "b52d5f21cc3c821fe47a952f1e1e5f986b22e605e70e75b9b4722e69015360fa",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "Recovery original action custody and publication (SP-293)",
+       "line_start": 25218,
+       "line_end": 25218,
+       "quote": "Restore cannot rewind committed authority, erase new pending obligations, replace original receipts or convert old absence into fresh first-mint.",
+       "excerpt_sha256": "b52d5f21cc3c821fe47a952f1e1e5f986b22e605e70e75b9b4722e69015360fa",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "Recovery original action custody and publication (SP-293)",
+       "line_start": 25214,
+       "line_end": 25214,
+       "quote": "Missing required source/proof/permission yields unavailable with no successful result or mutation.",
+       "excerpt_sha256": "7c587f6edbb716857f08d7597a5e2cf91c230c553d3639694a9a851d25845a78",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "Recovery original action custody and publication (SP-293)",
+       "line_start": 25199,
+       "line_end": 25199,
+       "quote": "Redaction is `no_secrets`",
+       "excerpt_sha256": "d7128f7292a0cb681dfc452c30685089f84ee81345329dcfe280c6bd21b12a2f",
+       "quote_check": "exact"
+      }
+     ],
+     "prior": {
+      "source": "before.json",
+      "status": "PASS"
+     },
+     "change": "carried",
+     "change_reason": "Cited text re-read at this head; unchanged."
+    },
+    "transitions": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "The capsule phase table (prepared, effect_started, effect_durable, append_pending, committed, recovery_required) gives each phase its required proof and permitted continuation; the six actions keep their meanings; committed never returns to a pending phase; aftermath follows only the verified receipt.",
+     "evidence": [
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "Recovery original action custody and publication (SP-293)",
+       "line_start": 25205,
+       "line_end": 25205,
+       "quote": "| `effect_durable` | Immutable verified physical receipt durably captured. Freeze the complete original producer input without repeating action. |",
+       "excerpt_sha256": "f82470ddfa75dd8ddbcdd7373543d7a4a26ca11e4677390a489fa21dbe9b253a",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "Recovery original action custody and publication (SP-293)",
+       "line_start": 25207,
+       "line_end": 25207,
+       "quote": "Never return this terminal capsule to recovery_required or any pending phase.",
+       "excerpt_sha256": "eb194f2e2eebc390c156c3c2531db764f569e57770ae76b08ed02939fd1458ae",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "Recovery original action custody and publication (SP-293)",
+       "line_start": 25181,
+       "line_end": 25181,
+       "quote": "Only the six existing actions are accepted.",
+       "excerpt_sha256": "7b01e9a88ed5afabc09832aac88e6ced78d78dff6c451f4f2dceaaa1823d59e9",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/Contracts_V0.md",
+       "unit": "Durable append receipt and storage recovery events",
+       "line_start": 25883,
+       "line_end": 25883,
+       "quote": "Retrying one recovery episode returns the original event/result and never appends a semantic duplicate.",
+       "excerpt_sha256": "ddfbfe280a0ce94b1f0e161cdd2aaf6fd8f51bbd0a410af9a213ef3f4eab1bcd",
+       "quote_check": "exact"
+      }
+     ],
+     "prior": {
+      "source": "before.json",
+      "status": "PASS"
+     },
+     "change": "carried",
+     "change_reason": "Cited text re-read at this head; unchanged."
+    },
+    "consumers_checkpoints": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "The aftermath consumer is named; it reads through SP-278 with the nine-field token and its durable advance is the generic projector's generation and frontier CAS, so restart repeats nothing.",
+     "evidence": [
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "Recovery original action custody and publication (SP-293)",
+       "line_start": 25191,
+       "line_end": 25191,
+       "quote": "The passive read accepts exactly storage_instance_id, recovery_id and event_id",
+       "excerpt_sha256": "1e62bb570cf88ca9e472f2e17dd4734d633cf412841dce6607ba554909bf9692",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "Recovery original action custody and publication (SP-293)",
+       "line_start": 25191,
+       "line_end": 25191,
+       "quote": "current surviving full EventRecord through complete SP-278 source/token",
+       "excerpt_sha256": "1e62bb570cf88ca9e472f2e17dd4734d633cf412841dce6607ba554909bf9692",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "Recovery original action custody and publication (SP-293)",
+       "line_start": 25191,
+       "line_end": 25191,
+       "quote": "The existing coordinator/projector then performs separately idempotent current-proof-gated aftermath",
+       "excerpt_sha256": "1e62bb570cf88ca9e472f2e17dd4734d633cf412841dce6607ba554909bf9692",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "Recovery original action custody and publication (SP-293)",
+       "line_start": 25214,
+       "line_end": 25214,
+       "quote": "The operation is `storage.recovery_applied.read.v1`; action authority is `none` and both effect arrays are empty.",
+       "excerpt_sha256": "7c587f6edbb716857f08d7597a5e2cf91c230c553d3639694a9a851d25845a78",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/Runtime_Artifacts_Panel.md",
+       "unit": "RAP-045",
+       "line_start": 2074,
+       "line_end": 2074,
+       "quote": "Runtime Artifacts consumes EventRecord 2.0 scope, identity, idempotency, replay,",
+       "excerpt_sha256": "55cddda8b3911e881c122561fc8436c3599f0be9dee41ae63123cf867a3ebd40",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-2207",
+       "line_start": 24642,
+       "line_end": 24642,
+       "quote": "that performs the recovery aftermath is exactly `storage.recovery_applied.aftermath.v1`",
+       "excerpt_sha256": "ddd83e7a41171f2963299e689c5948a3a4399943b9fe941f39d976052b89c155",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-2207",
+       "line_start": 24642,
+       "line_end": 24642,
+       "quote": "the aftermath of a recovery event is complete exactly when that checkpoint's frontier covers the event's sequence",
+       "excerpt_sha256": "ddd83e7a41171f2963299e689c5948a3a4399943b9fe941f39d976052b89c155",
+       "quote_check": "exact"
+      }
+     ],
+     "prior": {
+      "source": "before.json",
+      "status": "PARTIAL"
+     },
+     "change": "upgraded",
+     "change_reason": "SP-2207 (newly authored under DL-045, PNC-019 S3) closes the open part of the prior grade."
+    },
+    "compatibility_withdrawal": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "Compatibility: frozen v1 reader and MIG-STORAGE-RECOVERY-APPLIED-PAYLOAD-001 upgrader, unchanged legacy normalization, legacy refs cannot backfill. Withdrawal: new captures stop while pending reconciliation and retained receipt, read and backup support stay until a verified successor or lawful release.",
+     "evidence": [
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "Event-specific v1 reader to v2 writer bindings",
+       "line_start": 18716,
+       "line_end": 18716,
+       "quote": "| `storage.recovery_applied` | `Plans/event_payload_storage_recovery_applied.schema.json#/$defs/storage_recovery_applied_1_0_0_compatibility_reader` |",
+       "excerpt_sha256": "277f0734ecaaa220cfc6a780abc093eba86c686337c2a5272a65857fd2aed5b7",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "Recovery original action custody and publication (SP-293)",
+       "line_start": 25191,
+       "line_end": 25191,
+       "quote": "Legacy normalization, its migration ID and unavailable reason remain unchanged; legacy payload/report refs cannot backfill original physical input or first issuance.",
+       "excerpt_sha256": "1e62bb570cf88ca9e472f2e17dd4734d633cf412841dce6607ba554909bf9692",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "Recovery original action custody and publication (SP-293)",
+       "line_start": 25218,
+       "line_end": 25218,
+       "quote": "Withdrawal stops new captures but preserves actual pending reconciliation and retained receipt/read/backup support until a verified successor",
+       "excerpt_sha256": "b52d5f21cc3c821fe47a952f1e1e5f986b22e605e70e75b9b4722e69015360fa",
+       "quote_check": "exact"
+      }
+     ],
+     "prior": {
+      "source": "before.json",
+      "status": "PASS"
+     },
+     "change": "carried",
+     "change_reason": "Cited text re-read at this head; unchanged."
+    },
+    "positive_negative_oracles": {
+     "status": "PASS",
+     "representation": "exact_normative_owner",
+     "finding": "ATS-3900 binds the complete executable family boundary in scripts/pm_s3bo_ext_ss_recovery.py: every owner branch has a real table predicate, an independently labelled single-defect witness and a gated cut; the full shared corpus runs through the boundary. Proof: 12/12 rows in 2 tables, none unproved. Native execution remains NOT_RUN.",
+     "evidence": [
+      {
+       "path": "Plans/Automated_Testing_System.md",
+       "unit": "ATS-3900",
+       "line_start": 14554,
+       "line_end": 14554,
+       "quote": "For `storage.recovery_applied`, the SP-293 capsule boundary is executed over the six action fixtures",
+       "excerpt_sha256": "194aefb44ff1d74f5a98524041b076ba2127f491f3975e1db6a0c41827bf3995",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/Automated_Testing_System.md",
+       "unit": "ATS-3900",
+       "line_start": 14554,
+       "line_end": 14554,
+       "quote": "and typed unavailable for any missing proof, permission or foreign selector.",
+       "excerpt_sha256": "194aefb44ff1d74f5a98524041b076ba2127f491f3975e1db6a0c41827bf3995",
+       "quote_check": "exact"
+      },
+      {
+       "path": "Plans/storage-plan.md",
+       "unit": "SP-2207",
+       "line_start": 24644,
+       "line_end": 24644,
+       "quote": "`translate_by_semantic_identity` and `activate_verified_target_shadow` are `storage.compaction_lifecycle_changed` tokens and never occur in this payload.",
+       "excerpt_sha256": "649e9c1eb3c48d6a05f2299ceb84d430a0172c960ae083fbd6e22a4c37397840",
+       "quote_check": "exact"
+      }
+     ],
+     "prior": {
+      "source": "reports/event-authority-20261114/depth-s3bo-registered-families.json",
+      "status": "PARTIAL"
+     },
+     "change": "upgraded",
+     "change_reason": "The family boundary named as the C12 gap is executed and proved; see the C12-SS report."
+    }
+   },
+   "static_checks_seen": [
+    "scripts/pm-s3bo-check.py matrix / batteries / guards",
+    "scripts/pm-s3bo-check.py run (matrix / batteries / corpus / evidence / guards)"
+   ]
+  }
+ ],
+ "note": "Native execution remains NOT_RUN for every family.",
+ "guard_proof": {
+  "platform.capability_evaluated": {
+   "tables": [
+    "ss_platform_0",
+    "ss_platform_custody_0"
+   ],
+   "rows": 12,
+   "proved": 12,
+   "unproved": [],
+   "status": [
+    "PASS"
+   ]
+  },
+  "seglog.event_appended": {
+   "tables": [
+    "ss_seglog_0",
+    "ss_seglog_custody_0"
+   ],
+   "rows": 11,
+   "proved": 11,
+   "unproved": [],
+   "status": [
+    "PASS"
+   ]
+  },
+  "storage.boot_recovery": {
+   "tables": [
+    "ss_boot_0",
+    "ss_boot_custody_0"
+   ],
+   "rows": 12,
+   "proved": 12,
+   "unproved": [],
+   "status": [
+    "PASS"
+   ]
+  },
+  "storage.integrity_detected": {
+   "tables": [
+    "ss_integrity_0",
+    "ss_integrity_custody_0"
+   ],
+   "rows": 16,
+   "proved": 16,
+   "unproved": [],
+   "status": [
+    "PASS"
+   ]
+  },
+  "storage.recovery_applied": {
+   "tables": [
+    "ss_recovery_0",
+    "ss_recovery_custody_0"
+   ],
+   "rows": 12,
+   "proved": 12,
+   "unproved": [],
+   "status": [
+    "PASS"
+   ]
+  }
+ },
+ "run_summary": {
+  "batteries": {
+   "cases": 4486,
+   "passed": 4486,
+   "status": "pass"
+  },
+  "corpus": {
+   "cases": 100627,
+   "passed": 100627,
+   "status": "pass"
+  },
+  "evidence": {
+   "status": "pass"
+  },
+  "guards": {
+   "flips": 241,
+   "max_rows": 8,
+   "proved": 241,
+   "rows": 241,
+   "status": "pass",
+   "stays": 1260,
+   "tables": 50,
+   "unproved": []
+  },
+  "matrix": {
+   "controls": 340,
+   "negatives": 2586,
+   "status": "pass"
+  },
+  "status": "pass"
+ }
+}

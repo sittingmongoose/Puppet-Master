@@ -309,7 +309,10 @@ HOST_SCOPE = ':is(#panel-usage,[data-pmu-host])'
 # contract) takes sixteen anchors out: the menu's own motion states, reduced-motion rules and NieR slice copies in
 # 15-menu.css and 90-nier-shell.css: 'rewritten' 2,641.
 # 2642 (lane J, 2026-11-11): the Friendly account switch's hover rule names its two icons in two arms (50-accounts.css)
-HOST_SCOPE_EXPECT = {'rewritten': 2642, 'compound': 20}
+# 2643 (R100 T2, 2026-11-18): the short wheel-return phase is scoped to the current card head.
+# 2644 (R117 P3): the attempt dot's tooltip stacking and painted hover outline get separate rules.
+# 2645 (R117 P4): the discrete pointer-events delay applies only to a visible tool fading in a wheel pause.
+HOST_SCOPE_EXPECT = {'rewritten': 2647, 'compound': 20}
 HOST_AT_GROUPS = ('@media', '@supports', '@container', '@layer')
 _ANCHOR_RX = re.compile(re.escape(HOST_ANCHOR) + r'(?![\w-])')
 

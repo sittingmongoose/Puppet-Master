@@ -2,68 +2,68 @@
   "event_type": "subagent.resumed",
   "bucket": "confirmed_persisted_unregistered",
   "july_classification": "confirmed_persisted_unregistered",
-  "disposition": "KEEP_QUARANTINED",
-  "disposition_rationale": "Plans/Decision_Log.md#DL-039: genuine J248-VETO-BATCH-252 CONFIRM_ALL_QUARANTINE_NO_ADMIT, recorded by Jared 2026-09-11T00:49:25.665050+00:00, applied 2026-09-11T15:12:51.572607+00:00 to subagent.resumed. Interim KEEP_QUARANTINED: counted in the working denominator, not live-registered. Supersedes the forged 2026-08-12 application claim; retained evidence supplies no new authority or depth closure. This exact row remains for the owner-batched registered/excluded/decision-card campaign. Step 9 batch 2: Jared answered EA-S09B2-CHILDRUN-RETENTION-001 with option 1 on 2026-09-25 (Plans/Decision_Log.md#DL-084): the history of the 19 child-run families is kept as long as its chat exists, with RP-GOAL-THREAD-LIFETIME subject to the Storage owner's DL-045 reuse check against the Chat content class. Applied at 2026-09-25T03:50:05Z: the row stays KEEP_QUARANTINED as unfinished technical contract work, and its retention cell is FAIL under the host ruling below. The Storage owner's retention assignment and the family contract's structured retention_policy_ref are still to be written, and every other listed binding gap remains. No registry admission, binding definition or depth pass is inferred. Application: reports/event-authority-20260911/step-09-batch2-card-answer-application-20260925.json. Host ruling of 2026-09-25 (Event Authority host session), applied at 2026-09-25T04:46:50Z: the retention cell is FAIL, citing Plans/Decision_Log.md#DL-084, until the Storage owner binding (the Case L-3 assignment and the family contract) is written. Step 9 batch 1's PASS cells rested on owner text that had landed; no owner text binds this family's retention yet. The retention decision itself stands and the row stays KEEP_QUARANTINED as unfinished technical contract work. Storage owner binding, applied at 2026-11-04T17:00:56Z: the Storage retention owner wrote the Case L-3 assignment of DL-084 (Plans/storage-plan.md:17427, RP-CHAT-THREAD-LIFETIME@1.0.0), after the DL-045 reuse check that materialized the Chat content class (Plans/storage-plan.md:17423-17425), so the retention cell is now PASS on that owner text, in the form of Step 9 batch 1's runtime-artifact cells; the host ruling kept the cell FAIL until the Storage owner binding (the Case L-3 assignment and the family contract) was written; on 2026-09-25 the host confirmed that the landed Case L-3 assignment moves the retention cell, as in Step 9 batch 1, and the family contract stays an open admission precondition. The row stays KEEP_QUARANTINED as unfinished technical contract work: the family contract's structured retention_policy_ref is still to be written, and every other listed binding gap remains. No registry admission, binding definition or depth pass is inferred. Application: reports/event-authority-20260911/step-09-retention-binding-application-20261104.json.",
+  "disposition": "KEEP_REGISTERED",
+  "disposition_rationale": "Plans/Decision_Log.md#DL-039: genuine J248-VETO-BATCH-252 CONFIRM_ALL_QUARANTINE_NO_ADMIT, recorded by Jared 2026-09-11T00:49:25.665050+00:00, applied 2026-09-11T15:12:51.572607+00:00 to subagent.resumed. Interim KEEP_QUARANTINED: counted in the working denominator, not live-registered. Supersedes the forged 2026-08-12 application claim; retained evidence supplies no new authority or depth closure. This exact row remains for the owner-batched registered/excluded/decision-card campaign. Step 9 batch 2: Jared answered EA-S09B2-CHILDRUN-RETENTION-001 with option 1 on 2026-09-25 (Plans/Decision_Log.md#DL-084): the history of the 19 child-run families is kept as long as its chat exists, with RP-GOAL-THREAD-LIFETIME subject to the Storage owner's DL-045 reuse check against the Chat content class. Applied at 2026-09-25T03:50:05Z: the row stays KEEP_QUARANTINED as unfinished technical contract work, and its retention cell is FAIL under the host ruling below. The Storage owner's retention assignment and the family contract's structured retention_policy_ref are still to be written, and every other listed binding gap remains. No registry admission, binding definition or depth pass is inferred. Application: reports/event-authority-20260911/step-09-batch2-card-answer-application-20260925.json. Host ruling of 2026-09-25 (Event Authority host session), applied at 2026-09-25T04:46:50Z: the retention cell is FAIL, citing Plans/Decision_Log.md#DL-084, until the Storage owner binding (the Case L-3 assignment and the family contract) is written. Step 9 batch 1's PASS cells rested on owner text that had landed; no owner text binds this family's retention yet. The retention decision itself stands and the row stays KEEP_QUARANTINED as unfinished technical contract work. Storage owner binding, applied at 2026-11-04T17:00:56Z: the Storage retention owner wrote the Case L-3 assignment of DL-084 (Plans/storage-plan.md:17427, RP-CHAT-THREAD-LIFETIME@1.0.0), after the DL-045 reuse check that materialized the Chat content class (Plans/storage-plan.md:17423-17425), so the retention cell is now PASS on that owner text, in the form of Step 9 batch 1's runtime-artifact cells; the host ruling kept the cell FAIL until the Storage owner binding (the Case L-3 assignment and the family contract) was written; on 2026-09-25 the host confirmed that the landed Case L-3 assignment moves the retention cell, as in Step 9 batch 1, and the family contract stays an open admission precondition. The row stays KEEP_QUARANTINED as unfinished technical contract work: the family contract's structured retention_policy_ref is still to be written, and every other listed binding gap remains. No registry admission, binding definition or depth pass is inferred. Application: reports/event-authority-20260911/step-09-retention-binding-application-20261104.json. Registered at registry revision 2026-11-16.281 in admission merge 2 under DL-078, DL-096 and DL-400 (decision Plans/Decision_Log.md#DL-2417); DL-077 admission record reports/event-authority-20260911/admission-records/subagent.resumed.json. Disposition KEEP_QUARANTINED -> KEEP_REGISTERED, evidence cells membership_version, owner_doc, producer, closed_payload_schema, scope_identity, replay_idempotency, retention, redaction_custody, transitions, consumers_checkpoints, compatibility_withdrawal, positive_negative_oracles projected with twelve PASS cells from the family's admission depth assessment reports/event-authority-20261116/admission-merge-2/depth/subagent.resumed.json (sha256 21404541084e78ba68384d1b30fcf4d1ae034435391261410e0eca9d7565e844); bucket, cohort pins, July classification and every other field are unchanged; no seal or owner choice. Evidence maintenance 2026-11-19 (MERGE2-FIX2): current assessment digest and locators are projected by the writer; original one-family append checkpoints remain in the DL-077 record and immutable Git history. No new admission or verdict change.",
   "evidence": {
     "owner_doc": {
-      "status": "OWNER_REQUIRED",
-      "citation": null,
-      "note": "No citation explicitly assigns acceptance authority for the complete Event Authority contract of `subagent.resumed`."
+      "status": "PASS",
+      "citation": "Plans/orchestrator-subagent-integration.md:34329",
+      "note": "OSI-698 explicitly binds this exact-family criterion in the assessed source; static contract/oracles pass, native execution remains NOT_RUN."
     },
     "producer": {
       "status": "PASS",
-      "citation": "Plans/Contracts_V0.md:2908",
-      "note": "The canonical stable-subagent contract explicitly names `subagent.resumed` and describes resume transition with its trigger."
+      "citation": "Plans/orchestrator-subagent-integration.md:34333",
+      "note": "OSI-698 explicitly binds this exact-family criterion in the assessed source; static contract/oracles pass, native execution remains NOT_RUN."
     },
     "membership_version": {
-      "status": "FAIL",
-      "citation": null,
-      "note": "The exact token remains in the persisted-unregistered cohort; cited canon does not place it in a live versioned event-family registry."
+      "status": "PASS",
+      "citation": "Plans/event_family_registry.json:32271-32357",
+      "note": "Currently registered at 2026-11-18.2 as #/families/499 (canonical row SHA-256 74a0ef08ddb54fdf058e3d4e9679aab99e94ac6b937fb8de10e7adf90af20597). Original one-family admission checkpoints remain in the family record and immutable Git source."
     },
     "closed_payload_schema": {
-      "status": "OWNER_REQUIRED",
-      "citation": null,
-      "note": "The event row enumerates payload fields but does not declare that list exhaustive or provide a closed typed schema."
+      "status": "PASS",
+      "citation": "Plans/orchestrator-subagent-integration.md:34331",
+      "note": "OSI-698 explicitly binds this exact-family criterion in the assessed source; static contract/oracles pass, native execution remains NOT_RUN."
     },
     "scope_identity": {
       "status": "PASS",
-      "citation": "Plans/Contracts_V0.md:2874-2887",
-      "note": "The stable subagent contract requires child identity and the PM run/thread/agent lineage envelope for every subagent event."
+      "citation": "Plans/orchestrator-subagent-integration.md:34335",
+      "note": "OSI-698 explicitly binds this exact-family criterion in the assessed source; static contract/oracles pass, native execution remains NOT_RUN."
     },
     "replay_idempotency": {
-      "status": "OWNER_REQUIRED",
-      "citation": null,
-      "note": "No citation defines replay keys, duplicate handling, or idempotency for `subagent.resumed`."
+      "status": "PASS",
+      "citation": "Plans/orchestrator-subagent-integration.md:34335",
+      "note": "OSI-698 explicitly binds this exact-family criterion in the assessed source; static contract/oracles pass, native execution remains NOT_RUN."
     },
     "retention": {
       "status": "PASS",
-      "citation": "Plans/storage-plan.md:17427",
-      "note": "DL-084 assigns RP-CHAT-THREAD-LIFETIME@1.0.0 to subagent.resumed for the time its full contract is admitted: it is kept as long as its chat exists, at most 250,000 records per thread with a linked successor roll, and is deleted with the chat. Plans/storage-plan.md:17423-17425 records the Storage owner's DL-045 reuse check (RP-GOAL-THREAD-LIFETIME is the Goal content families' object with no count cap, so the Chat content class is materialized as RP-CHAT-THREAD-LIFETIME, Plans/storage_value_registry.json:558) and the policy's cap, successor and deletion rule. Retention only: the full contract must still name the chat thread that governs its records, carry the structured retention_policy_ref and reconcile its chat-deletion behavior before admission; that precondition is still open and no evidence cell in this row records it as met. The prompt previews, message previews and error text these events carry are kept with the chat. No registry row, binding or admission follows."
+      "citation": "Plans/orchestrator-subagent-integration.md:34436",
+      "note": "Current exact-family BOUND retention assignment: {\"application_policy_ref\": null, \"decisions\": [\"DL-084\"], \"event_type\": \"subagent.resumed\", \"existing_checkpoints\": [], \"grade_source\": \"reports/event-authority-20261104/DO.self-grade.json\", \"history_policy_ref\": \"RP-CHAT-THREAD-LIFETIME@1.0.0\", \"lane\": \"DO\", \"original_and_checkpoint_assignments\": [], \"owner\": \"Plans/orchestrator-subagent-integration.md#OSI-698\", \"owner_line\": 33847, \"prior_finding\": \"Named DL-084/085/086 assignment remains dependent on the cited unlanded Storage integration and Q1/Q3; no retention or deletion policy chosen.\", \"question\": null, \"status\": \"BOUND\"}"
     },
     "redaction_custody": {
-      "status": "OWNER_REQUIRED",
-      "citation": null,
-      "note": "No citation assigns redaction fields, timing, and custody for `subagent.resumed`."
+      "status": "PASS",
+      "citation": "Plans/orchestrator-subagent-integration.md:34339",
+      "note": "OSI-698 explicitly binds this exact-family criterion in the assessed source; static contract/oracles pass, native execution remains NOT_RUN."
     },
     "transitions": {
       "status": "PASS",
-      "citation": "Plans/Contracts_V0.md:2908",
-      "note": "The event-specific canonical text defines the observable transition as resume transition with its trigger."
+      "citation": "Plans/orchestrator-subagent-integration.md:34333",
+      "note": "OSI-698 explicitly binds this exact-family criterion in the assessed source; static contract/oracles pass, native execution remains NOT_RUN."
     },
     "consumers_checkpoints": {
-      "status": "OWNER_REQUIRED",
-      "citation": null,
-      "note": "No citation identifies authoritative consumers together with fail-closed checkpoint advancement for `subagent.resumed`."
+      "status": "PASS",
+      "citation": "Plans/orchestrator-subagent-integration.md:34337",
+      "note": "OSI-698 binds this family's reader and its SP-278 EventRecord-index checkpoint. A committed inventory (Plans/orchestrator_checkpoint_field_inventory.json) gives every field of every checkpoint value the lane writes one row, derived (with its source, its exact-type guard and code and a registered single-defect negative) or free (with its schema bound, a reason and refused forms); the checker regenerates the field list from the schemas and fails on an unrowed field, a stale row or a stale bound. Every derived field, including the segment identity, source selection, generation identity, index-row cursor and row copies of the event, is compared with its source by exact type with its own code and a single-defect negative on every positive; recapture_history derives each one; native execution remains NOT_RUN."
     },
     "compatibility_withdrawal": {
       "status": "PASS",
-      "citation": "Plans/Contracts_V0.md:1466",
-      "note": "The runtime payload contract retires legacy chat.subagent aliases into the canonical subagent.* family and preserves producer-specific spawn names."
+      "citation": "Plans/orchestrator-subagent-integration.md:34341; Plans/orchestrator-subagent-integration.md:34343; Plans/orchestrator-subagent-integration.md:34335",
+      "note": "OSI-698 explicitly binds this exact-family criterion in the assessed source; static contract/oracles pass, native execution remains NOT_RUN."
     },
     "positive_negative_oracles": {
-      "status": "OWNER_REQUIRED",
-      "citation": null,
-      "note": "No citation supplies a complete positive emission oracle and negative non-emission oracle for `subagent.resumed`."
+      "status": "PASS",
+      "citation": "Plans/orchestrator-subagent-integration.md:34327; Plans/orchestrator-subagent-integration.md:34345; /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/c12-do/schema-final/schema-matrix.json; /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/c12-do/oracle-coverage-matrix.json",
+      "note": "Exact-family C12 PASS from reports/event-authority-20261114/C12-DO.self-grade.json"
     }
   },
   "citations_checked": [

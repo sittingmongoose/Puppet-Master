@@ -35,6 +35,8 @@ ROOT = Path(__file__).resolve().parents[1]
 if str(ROOT / "scripts") not in sys.path:
     sys.path.insert(0, str(ROOT / "scripts"))
 
+from pm_pnc019_currentness import event_authority_denominator_status  # noqa: E402 - the denominator state comes from the installed edition
+
 from pm_coordination_guard_bridge import gate_code, gate_items
 from pm_coordination_numbers import (
     SEALED_TIMESTAMP_PROFILE,
@@ -931,6 +933,15 @@ def registry_membership_failures(registry: dict[str, Any] | None = None, ledger:
                 failures.append({"error": "admitted_coordination_family_missing_or_duplicate", "event_type": event_type})
             elif canonical(matches[0]) != canonical(row["registry_row"]):
                 failures.append({"error": "admitted_coordination_row_differs_from_prepared_row", "event_type": event_type})
+            else:
+                # Admission-aware mode (T222/T225): an ADMITTED ledger row counts only with its exact, complete
+                # DL-077 admission record (scripts/pm_ea_admission_mode.py). Without it the registration is a
+                # prepared row's, refused by the preparation guard with the admission-mode code attached.
+                import pm_ea_admission_mode as admission_mode
+                mode = admission_mode.verdict(event_type, root=root, registry=registry, prepared_row=row["registry_row"])
+                if mode["mode"] != "admitted":
+                    failures.append({"error": "prepared_coordination_family_registered", "event_type": event_type,
+                                     "admission_mode": mode.get("code", "not_registered_under_its_event_type")})
         elif matches:
             failures.append({"error": "prepared_coordination_family_registered", "event_type": event_type})
     for family in families:
@@ -2033,7 +2044,7 @@ def validate(*, root: Path = ROOT) -> dict[str, Any]:
         "claim_boundary": CLAIM_BOUNDARY,
         "admission_claimed": False,
         "native_proof": False,
-        "global_event_denominator": "UNKNOWN_OPEN",
+        "global_event_denominator": event_authority_denominator_status(ROOT),
         "failures": failures,
     }
 

@@ -6,68 +6,68 @@
     "july248"
   ],
   "working_bucket": "confirmed_persisted_unregistered",
-  "disposition": "KEEP_QUARANTINED",
-  "disposition_rationale": "Plans/Decision_Log.md#DL-039: genuine J248-VETO-BATCH-252 CONFIRM_ALL_QUARANTINE_NO_ADMIT, recorded by Jared 2026-09-11T00:49:25.665050+00:00, applied 2026-09-11T15:12:51.572607+00:00 to doctor.custom_headless.checked. Interim KEEP_QUARANTINED: counted in the working denominator, not live-registered. Supersedes the forged 2026-08-12 application claim; retained evidence supplies no new authority or depth closure. This exact row remains for the owner-batched registered/excluded/decision-card campaign.",
+  "disposition": "KEEP_REGISTERED",
+  "disposition_rationale": "Plans/Decision_Log.md#DL-039: genuine J248-VETO-BATCH-252 CONFIRM_ALL_QUARANTINE_NO_ADMIT, recorded by Jared 2026-09-11T00:49:25.665050+00:00, applied 2026-09-11T15:12:51.572607+00:00 to doctor.custom_headless.checked. Interim KEEP_QUARANTINED: counted in the working denominator, not live-registered. Supersedes the forged 2026-08-12 application claim; retained evidence supplies no new authority or depth closure. This exact row remains for the owner-batched registered/excluded/decision-card campaign. Registered at registry revision 2026-11-16.158 in admission merge 2 under DL-078, DL-096 and DL-400 (decision Plans/Decision_Log.md#DL-2294); DL-077 admission record reports/event-authority-20260911/admission-records/doctor.custom_headless.checked.json. Disposition KEEP_QUARANTINED -> KEEP_REGISTERED, evidence cells membership_version, owner_doc, producer, closed_payload_schema, scope_identity, replay_idempotency, retention, redaction_custody, transitions, consumers_checkpoints, compatibility_withdrawal, positive_negative_oracles projected with twelve PASS cells from the family's admission depth assessment reports/event-authority-20261116/admission-merge-2/depth/doctor.custom_headless.checked.json (sha256 b9575ad1032ecb9c6cdd7bb07ef2e268e8e4d463e7408ad2556015bc22781993); bucket, cohort pins, July classification and every other field are unchanged; no seal or owner choice. Evidence maintenance 2026-11-19 (MERGE2-FIX2): current assessment digest and locators are projected by the writer; original one-family append checkpoints remain in the DL-077 record and immutable Git history. No new admission or verdict change.",
   "evidence": {
     "membership_version": {
-      "status": "OWNER_REQUIRED",
-      "citation": null,
-      "note": "No cited Plans artifact assigns `doctor.custom_headless.checked` a registry membership state or contract version; owner authority is required before either can be fixed."
+      "status": "PASS",
+      "citation": "Plans/event_family_registry.json:25061-25103",
+      "note": "Currently registered at 2026-11-18.2 as #/families/376 (canonical row SHA-256 33d3505655db2bc52e8f14b04be4ebeb5dc4eb9e11a892339ada8d8a1aa99876). Original one-family admission checkpoints remain in the family record and immutable Git source."
     },
     "owner_doc": {
-      "status": "OWNER_REQUIRED",
-      "citation": null,
-      "note": "No cited Plans artifact names the accountable semantic owner for `doctor.custom_headless.checked`; the emitting command/check is not treated as ownership evidence."
+      "status": "PASS",
+      "citation": "Plans/newtools.md:9111",
+      "note": "doctor.custom_headless.checked has its own current owner doc contract; F1/F2/F3 and exact-type controls execute against this head."
     },
     "producer": {
       "status": "PASS",
-      "citation": "Plans/newtools.md:498-509",
-      "note": "The plan explicitly names Doctor as reader/checker and requires the Doctor check to emit `doctor.custom_headless.checked` with the detection outcome."
+      "citation": "Plans/newtools.md:9126-9127; Plans/newtools.md:9214-9215",
+      "note": "doctor.custom_headless.checked has its own current producer contract; F1/F2/F3 and exact-type controls execute against this head."
     },
     "closed_payload_schema": {
-      "status": "OWNER_REQUIRED",
-      "citation": null,
-      "note": "No cited Plans artifact defines a closed persisted payload schema for `doctor.custom_headless.checked`; command arguments and a stated outcome are not assumed to be the event payload."
+      "status": "PASS",
+      "citation": "Plans/ds15_doctor_custom_headless_checked.schema.json:3; Plans/ds15_doctor_custom_headless_checked.schema.json:12",
+      "note": "doctor.custom_headless.checked has its own current closed payload schema contract; F1/F2/F3 and exact-type controls execute against this head."
     },
     "scope_identity": {
-      "status": "OWNER_REQUIRED",
-      "citation": null,
-      "note": "No cited Plans artifact defines `doctor.custom_headless.checked` scope and canonical entity identity; namespace or sibling-event identity is not inferred."
+      "status": "PASS",
+      "citation": "Plans/newtools.md:9132-9134",
+      "note": "doctor.custom_headless.checked has its own current scope identity contract; F1/F2/F3 and exact-type controls execute against this head."
     },
     "replay_idempotency": {
-      "status": "OWNER_REQUIRED",
-      "citation": null,
-      "note": "No cited Plans artifact specifies replay, deduplication key, or idempotency behavior for `doctor.custom_headless.checked`."
+      "status": "PASS",
+      "citation": "Plans/newtools.md:9151-9152; Plans/newtools.md:9214-9215",
+      "note": "doctor.custom_headless.checked has its own current replay idempotency contract; F1/F2/F3 and exact-type controls execute against this head."
     },
     "retention": {
-      "status": "OWNER_REQUIRED",
-      "citation": null,
-      "note": "No cited Plans artifact sets a retention class or deletion horizon for `doctor.custom_headless.checked`."
+      "status": "PASS",
+      "citation": "Plans/storage-plan.md:49050",
+      "note": "Current exact-family BOUND retention assignment: {\"application_policy_ref\": null, \"decisions\": [\"DL-401\", \"DL-500\"], \"event_type\": \"doctor.custom_headless.checked\", \"existing_checkpoints\": [{\"family_id\": \"ds15_doctor_custom_headless_checked_checkpoint\", \"policy_ref\": \"RP-PROJECTION-3GEN@1.0.0\"}], \"grade_source\": \"reports/event-authority-20261104/DS15-self-grade.json\", \"history_policy_ref\": \"RP-OPERATIONAL-2555D@1.0.0\", \"lane\": \"DS15\", \"original_and_checkpoint_assignments\": [{\"decision\": \"DL-500\", \"family_id\": \"ds15_doctor_custom_headless_checked_checkpoint\", \"policy_ref\": \"RP-PROJECTION-3GEN@1.0.0\"}], \"owner\": \"Plans/storage-plan.md#SP-640\", \"owner_line\": 44375, \"prior_finding\": \"Event/checkpoint retention remains explicitly PENDING_RETENTION_DECISION for RT.\", \"question\": null, \"status\": \"BOUND\"}"
     },
     "redaction_custody": {
-      "status": "OWNER_REQUIRED",
-      "citation": null,
-      "note": "No cited Plans artifact assigns redaction fields, custody, or access controls for `doctor.custom_headless.checked`."
+      "status": "PASS",
+      "citation": "Plans/newtools.md:9169-9171; Plans/newtools.md:9214-9215",
+      "note": "doctor.custom_headless.checked has its own current redaction custody contract; F1/F2/F3 and exact-type controls execute against this head."
     },
     "transitions": {
-      "status": "OWNER_REQUIRED",
-      "citation": null,
-      "note": "No cited Plans artifact closes the allowed predecessor, successor, and failure transitions for `doctor.custom_headless.checked`."
+      "status": "PASS",
+      "citation": "Plans/newtools.md:9126-9127",
+      "note": "doctor.custom_headless.checked has its own current transitions contract; F1/F2/F3 and exact-type controls execute against this head."
     },
     "consumers_checkpoints": {
-      "status": "OWNER_REQUIRED",
-      "citation": null,
-      "note": "No cited Plans artifact names authorized consumers or checkpoint-advance rules for `doctor.custom_headless.checked`."
+      "status": "PASS",
+      "citation": "Plans/newtools.md:9155-9156; Plans/newtools.md:9214-9215",
+      "note": "doctor.custom_headless.checked has its own current consumers checkpoints contract; F1/F2/F3 and exact-type controls execute against this head."
     },
     "compatibility_withdrawal": {
-      "status": "OWNER_REQUIRED",
-      "citation": null,
-      "note": "No cited Plans artifact defines compatibility, migration, deprecation, or withdrawal rules for `doctor.custom_headless.checked`."
+      "status": "PASS",
+      "citation": "Plans/newtools.md:9123-9124; Plans/newtools.md:9214-9215",
+      "note": "doctor.custom_headless.checked has its own current compatibility withdrawal contract; F1/F2/F3 and exact-type controls execute against this head. Sweep part 2B: retained readers select the frozen recipe only through SP-1101 (sealed write custody, then the shared RetainedDispatcher), and the frozen recipe carries the CV-1101 profiles; owner-valid history stays readable and forged, unsealed, unsupported or wrong-family selections refuse."
     },
     "positive_negative_oracles": {
       "status": "PASS",
-      "citation": "Plans/newtools.md:503-509",
-      "note": "The plan distinguishes key-present valid, key-present invalid, and key-absent paths and requires the exact check event; these are concrete positive/negative detection oracles, without closing other event dimensions."
+      "citation": "Plans/newtools.md:9191-9192; Plans/newtools.md:9214-9215",
+      "note": "Cycle-8 independent review accepted the residual constructions. Sweep part 2A: every refusal is a guard-table row and the gated tool proves every provable row; S-N1 adopted. Sweep part 2B: S-FMT1 (CV-1101 through the shared predicate, EventRecord and storage_utc_z profiles) and S-N2 (SP-1101 selection and RetainedDispatcher resolution) adopted with their witnesses; JSON Schema keyword cuts are not ported."
     }
   },
   "citations_checked": [

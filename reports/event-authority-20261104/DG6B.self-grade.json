@@ -1,14 +1,14 @@
 {
   "schema_id": "pm.event_authority.depth_assessment.v1",
-  "assessment_id": "DG6B-SWEEP-P2B-20261110",
+  "assessment_id": "DG6B-C12-20261114",
   "assessment_kind": "self_grade_prepared_without_admission",
   "rubric": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08-depth42-20260924/rubric.md",
   "assessed_tree": {
-    "base_commit": "e42ce235b4711325ced818c777f070c3ee0d7952",
+    "base_commit": "7cf56368356da2b7a5ff25f6452cf753ce36bf45",
     "tool_merge": "4842b41e5a986aa96b59df731c08cfa2d1ef1d23",
     "numrule_merge": "3645b416a923f49b6c6f5c03fa5c43f344b77126",
-    "fixed_contract_head": "bd888a1efda365b32d5c78a3296f508e4bb8f604",
-    "description": "Sweep part 2B: the gated shared rules (NUMRULE 58c2816ff3) adopted: CV-1101 date-time profiles per field, CV-1100/SP-1100 numbers and physical profiles, SP-1101 custody dispatch for retained originals; guard tables re-proved on the gated tool. The shared datetime_validator and inventory gate run at batch-2 integration; the Sol/Astra review remains."
+    "fixed_contract_head": "3cf45ab255fc9f540e4ef51ccfbc2a922069be25",
+    "description": "DG6B C12 implementation; original complete suites, authenticated shared datetime boundary, sealed receipt/result custody, schema clause/branch inventory and gated Method B reproof. Global shared inventory failure is separately disclosed."
   },
   "native_execution": "NOT_RUN",
   "rows": [
@@ -31,7 +31,7 @@
           "quote_check": "exact"
         }
       ],
-      "pass_count": 9,
+      "pass_count": 10,
       "normative_depth_complete": false,
       "native_execution": "NOT_RUN",
       "current_owner_units": [
@@ -445,73 +445,43 @@
           "change_reason": "Part 2B: retained originals resolve through SP-1101 sealed custody and the shared RetainedDispatcher (HR01); retained timestamps keep their owner profile; status carried."
         },
         "positive_negative_oracles": {
-          "status": "PARTIAL",
+          "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Every refusal is a named row of a guard table (78 tables, 176 rows), reached only through require(). The gated tool proves 79/79 row cells over the 39 phase tables this family reaches, with 123 distinct single-defect negatives, no masked negative and no unrelated change (3 cell(s) proved with a declared donor negative because this family's own path cannot reach the row). Part 2B witnesses cover the CV-1101 profiles per field, 2^53/uint64 boundaries, 4,400-digit integers, the shared corpus through the complete append route and SP-1101 custody. PARTIAL: the shared datetime_validator boundary and the date-time inventory gate run at batch-2 integration (Addendum 2); native execution NOT_RUN.",
+          "finding": "ATS-335: original exact-family suite passes with the shared inventory-authenticated datetime_validator in append/retry/history, 86 proved row cells (3 declared donors), complete owner-schema clause/cut/restoration witnesses and sealed-store receipt/result reads. Whole-definition Method B scope; no claim of universal per-keyword isolation. Global shared inventory false refusal remains separate; native NOT_RUN.",
           "evidence": [
             {
+              "path": "Plans/Automated_Testing_System.md",
+              "unit": "ATS-335",
+              "line_start": 7399,
+              "line_end": 7399,
+              "quote": "- `auth.github.authenticated`: positive closed payload and original-identity retry; negatives raw secret/extension field, missing operation ID, unsupported version, revision zero, raw redaction,",
+              "excerpt_sha256": "41850ca5a8814b632209a3cc99d0b2e732e9bb8475d19304fa6cab886018d283",
+              "file_sha256": "a14faaeeff125d0ccc2775d3f1bcc4372b8ff689a01b632bcd508e52a2e5d14e",
+              "quote_check": "exact"
+            },
+            {
               "path": "scripts/pm-dg6b-event-contracts.py",
-              "unit": "require",
-              "line_start": 89,
-              "line_end": 89,
-              "quote": "def require(phase, facts):",
-              "excerpt_sha256": "059652ce3cb52923b56d67380ab899f9a99b0ee94faba612312b85f1a6813730",
-              "file_sha256": "363d77d86afaf69f0aec1227684280250d32d0fda376e847800255d013786920",
-              "quote_check": "exact"
-            },
-            {
-              "path": "scripts/pm_dg6b_round9_cases.py",
-              "unit": "family_cases",
-              "line_start": 41,
-              "line_end": 41,
-              "quote": "def family_cases(m, row, schema):",
-              "excerpt_sha256": "e32be7e6c52cb2708395394158815696c87177f4da60e2fa7253761c7cfa8a39",
-              "file_sha256": "9c6d57d0f43a76c35b602962d11826006b3a1db85b6f7b00e56936022f065b48",
-              "quote_check": "exact"
-            },
-            {
-              "path": "scripts/pm_dg6b_p2b_cases.py",
-              "unit": "family_cases",
-              "line_start": 117,
-              "line_end": 117,
-              "quote": "def family_cases(m, row, schema):",
-              "excerpt_sha256": "e32be7e6c52cb2708395394158815696c87177f4da60e2fa7253761c7cfa8a39",
-              "file_sha256": "21bf76da2acce5467e7b5547efdc655f8e3bf18850fd592d2b23078a5a98b85f",
-              "quote_check": "exact"
-            },
-            {
-              "path": "scripts/pm_dg6b_full_oracles.py",
-              "unit": "family_probes",
-              "line_start": 265,
-              "line_end": 265,
-              "quote": "add('account_custody/' + field, 'envelope_source_join', base, bad,",
-              "excerpt_sha256": "81dfe1b8539702ec5b29e6df767a02fe8f9eec595aac898f5fb56733bd0a5b79",
-              "file_sha256": "c80c521743767186718e0c865325e3f58199cbe2779183bbb487dfd9d810c0b7",
-              "quote_check": "exact"
-            },
-            {
-              "path": "scripts/pm_dg6b_full_oracles.py",
-              "unit": "family_probes",
-              "line_start": 378,
-              "line_end": 378,
-              "quote": "add('history_account_custody/' + field, 'envelope_source_join', hbase, bad,",
-              "excerpt_sha256": "b010c907e09530b7ebc760fec1852e0f69c8881d4d8c49e9218e48787e337b84",
-              "file_sha256": "c80c521743767186718e0c865325e3f58199cbe2779183bbb487dfd9d810c0b7",
+              "unit": "enforced_event_record_validator",
+              "line_start": 1081,
+              "line_end": 1081,
+              "quote": "return datetime_validator(load_plan('Plans/event_record.schema.json'), profile=EVENT_RECORD)",
+              "excerpt_sha256": "551307e87e54b661eccfd03c582007025bbf74c7327909d3082213cf26558dd2",
+              "file_sha256": "809a42f2749f7eaa2dad44a2bd6275db6488270171b86e8d0f3950d2df50f180",
               "quote_check": "exact"
             }
           ],
           "prior": {
-            "source": "DG6B.self-grade.json@7c2ac9c7512f7d0d793c2c01640adc353170c18a (sweep part 2A)",
+            "source": "DG6B.self-grade.json@7cf56368356da2b7a5ff25f6452cf753ce36bf45",
             "status": "PARTIAL"
           },
-          "change": "carried",
-          "change_reason": "Part 2B closes S2 (numbers) and S3 (timestamp formats) in the lane; PARTIAL remains only for the shared datetime_validator boundary and inventory gate, which run at batch-2 integration."
+          "change": "upgraded",
+          "change_reason": "Closes the family datetime boundary, complete schema occurrence proof and retained-store observation gaps; global inventory issue is unrelated to this family boundary."
         }
       },
       "remaining_gaps": [
         "Membership absent until separate admission.",
         "Retention remains PENDING_RETENTION_DECISION.",
-        "Batch-2 integration: the shared datetime_validator boundary and the date-time inventory gate over the merged tree (this tree fails the gate on hash drift and unclassified containers; Addendum 2), then the Sol/Astra review."
+        "Integration/review dependency: recorded C12-DT retired-snapshot date-time exclusion; no broad shared-suite PASS. Blind reviews remain with the lead."
       ],
       "static_checks_seen": [
         "Plans/dg6b_event_contract_fixtures.json",
@@ -521,10 +491,11 @@
         "scripts/pm_dg6b_p2b_cases.py",
         "scripts/pm_dg6b_round9_cases.py",
         "scripts/pm_event_datetime.py",
-        "scripts/pm_event_numbers.py"
+        "scripts/pm_event_numbers.py",
+        "scripts/pm-dg6b-c12.py"
       ],
-      "notes": "Static part-2B preparation: the gated shared date-time, number and retained-original rules are adopted and every guard-table row this family reaches is proved on the gated tool. Native execution NOT_RUN. No READY claim before batch-2 integration and review.",
-      "grading_batch": "sweep-p2b",
+      "notes": "C12 only regraded. Other eleven cells carried unchanged; native NOT_RUN, membership/admission and governance unchanged.",
+      "grading_batch": "c12-dg6b",
       "preparation_state": "NOT_READY_REVIEW",
       "prospective_role": "writer_after_separate_admission_and_retention_assignment",
       "prepared_verdict": "NOT_READY"
@@ -548,7 +519,7 @@
           "quote_check": "exact"
         }
       ],
-      "pass_count": 9,
+      "pass_count": 10,
       "normative_depth_complete": false,
       "native_execution": "NOT_RUN",
       "current_owner_units": [
@@ -962,73 +933,43 @@
           "change_reason": "Part 2B: retained originals resolve through SP-1101 sealed custody and the shared RetainedDispatcher (HR01); retained timestamps keep their owner profile; status carried."
         },
         "positive_negative_oracles": {
-          "status": "PARTIAL",
+          "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Every refusal is a named row of a guard table (78 tables, 176 rows), reached only through require(). The gated tool proves 79/79 row cells over the 39 phase tables this family reaches, with 118 distinct single-defect negatives, no masked negative and no unrelated change (3 cell(s) proved with a declared donor negative because this family's own path cannot reach the row). Part 2B witnesses cover the CV-1101 profiles per field, 2^53/uint64 boundaries, 4,400-digit integers, the shared corpus through the complete append route and SP-1101 custody. PARTIAL: the shared datetime_validator boundary and the date-time inventory gate run at batch-2 integration (Addendum 2); native execution NOT_RUN.",
+          "finding": "ATS-335: original exact-family suite passes with the shared inventory-authenticated datetime_validator in append/retry/history, 86 proved row cells (3 declared donors), complete owner-schema clause/cut/restoration witnesses and sealed-store receipt/result reads. Whole-definition Method B scope; no claim of universal per-keyword isolation. Global shared inventory false refusal remains separate; native NOT_RUN.",
           "evidence": [
             {
+              "path": "Plans/Automated_Testing_System.md",
+              "unit": "ATS-335",
+              "line_start": 7400,
+              "line_end": 7400,
+              "quote": "- `auth.github.device_code.issued`: positive closed payload and original-identity retry; negatives raw secret/extension field, missing operation ID, unsupported version, revision zero, raw redaction,",
+              "excerpt_sha256": "35eb1e060b5011df569e2ac8852158215298876ae37960378ff6e2614d8306b7",
+              "file_sha256": "a14faaeeff125d0ccc2775d3f1bcc4372b8ff689a01b632bcd508e52a2e5d14e",
+              "quote_check": "exact"
+            },
+            {
               "path": "scripts/pm-dg6b-event-contracts.py",
-              "unit": "require",
-              "line_start": 89,
-              "line_end": 89,
-              "quote": "def require(phase, facts):",
-              "excerpt_sha256": "059652ce3cb52923b56d67380ab899f9a99b0ee94faba612312b85f1a6813730",
-              "file_sha256": "363d77d86afaf69f0aec1227684280250d32d0fda376e847800255d013786920",
-              "quote_check": "exact"
-            },
-            {
-              "path": "scripts/pm_dg6b_round9_cases.py",
-              "unit": "family_cases",
-              "line_start": 41,
-              "line_end": 41,
-              "quote": "def family_cases(m, row, schema):",
-              "excerpt_sha256": "e32be7e6c52cb2708395394158815696c87177f4da60e2fa7253761c7cfa8a39",
-              "file_sha256": "9c6d57d0f43a76c35b602962d11826006b3a1db85b6f7b00e56936022f065b48",
-              "quote_check": "exact"
-            },
-            {
-              "path": "scripts/pm_dg6b_p2b_cases.py",
-              "unit": "family_cases",
-              "line_start": 117,
-              "line_end": 117,
-              "quote": "def family_cases(m, row, schema):",
-              "excerpt_sha256": "e32be7e6c52cb2708395394158815696c87177f4da60e2fa7253761c7cfa8a39",
-              "file_sha256": "21bf76da2acce5467e7b5547efdc655f8e3bf18850fd592d2b23078a5a98b85f",
-              "quote_check": "exact"
-            },
-            {
-              "path": "scripts/pm_dg6b_full_oracles.py",
-              "unit": "family_probes",
-              "line_start": 265,
-              "line_end": 265,
-              "quote": "add('account_custody/' + field, 'envelope_source_join', base, bad,",
-              "excerpt_sha256": "81dfe1b8539702ec5b29e6df767a02fe8f9eec595aac898f5fb56733bd0a5b79",
-              "file_sha256": "c80c521743767186718e0c865325e3f58199cbe2779183bbb487dfd9d810c0b7",
-              "quote_check": "exact"
-            },
-            {
-              "path": "scripts/pm_dg6b_full_oracles.py",
-              "unit": "family_probes",
-              "line_start": 378,
-              "line_end": 378,
-              "quote": "add('history_account_custody/' + field, 'envelope_source_join', hbase, bad,",
-              "excerpt_sha256": "b010c907e09530b7ebc760fec1852e0f69c8881d4d8c49e9218e48787e337b84",
-              "file_sha256": "c80c521743767186718e0c865325e3f58199cbe2779183bbb487dfd9d810c0b7",
+              "unit": "enforced_event_record_validator",
+              "line_start": 1081,
+              "line_end": 1081,
+              "quote": "return datetime_validator(load_plan('Plans/event_record.schema.json'), profile=EVENT_RECORD)",
+              "excerpt_sha256": "551307e87e54b661eccfd03c582007025bbf74c7327909d3082213cf26558dd2",
+              "file_sha256": "809a42f2749f7eaa2dad44a2bd6275db6488270171b86e8d0f3950d2df50f180",
               "quote_check": "exact"
             }
           ],
           "prior": {
-            "source": "DG6B.self-grade.json@7c2ac9c7512f7d0d793c2c01640adc353170c18a (sweep part 2A)",
+            "source": "DG6B.self-grade.json@7cf56368356da2b7a5ff25f6452cf753ce36bf45",
             "status": "PARTIAL"
           },
-          "change": "carried",
-          "change_reason": "Part 2B closes S2 (numbers) and S3 (timestamp formats) in the lane; PARTIAL remains only for the shared datetime_validator boundary and inventory gate, which run at batch-2 integration."
+          "change": "upgraded",
+          "change_reason": "Closes the family datetime boundary, complete schema occurrence proof and retained-store observation gaps; global inventory issue is unrelated to this family boundary."
         }
       },
       "remaining_gaps": [
         "Membership absent until separate admission.",
         "Retention remains PENDING_RETENTION_DECISION.",
-        "Batch-2 integration: the shared datetime_validator boundary and the date-time inventory gate over the merged tree (this tree fails the gate on hash drift and unclassified containers; Addendum 2), then the Sol/Astra review."
+        "Integration/review dependency: recorded C12-DT retired-snapshot date-time exclusion; no broad shared-suite PASS. Blind reviews remain with the lead."
       ],
       "static_checks_seen": [
         "Plans/dg6b_event_contract_fixtures.json",
@@ -1038,10 +979,11 @@
         "scripts/pm_dg6b_p2b_cases.py",
         "scripts/pm_dg6b_round9_cases.py",
         "scripts/pm_event_datetime.py",
-        "scripts/pm_event_numbers.py"
+        "scripts/pm_event_numbers.py",
+        "scripts/pm-dg6b-c12.py"
       ],
-      "notes": "Static part-2B preparation: the gated shared date-time, number and retained-original rules are adopted and every guard-table row this family reaches is proved on the gated tool. Native execution NOT_RUN. No READY claim before batch-2 integration and review.",
-      "grading_batch": "sweep-p2b",
+      "notes": "C12 only regraded. Other eleven cells carried unchanged; native NOT_RUN, membership/admission and governance unchanged.",
+      "grading_batch": "c12-dg6b",
       "preparation_state": "NOT_READY_REVIEW",
       "prospective_role": "writer_after_separate_admission_and_retention_assignment",
       "prepared_verdict": "NOT_READY"
@@ -1065,7 +1007,7 @@
           "quote_check": "exact"
         }
       ],
-      "pass_count": 9,
+      "pass_count": 10,
       "normative_depth_complete": false,
       "native_execution": "NOT_RUN",
       "current_owner_units": [
@@ -1479,73 +1421,43 @@
           "change_reason": "Part 2B: retained originals resolve through SP-1101 sealed custody and the shared RetainedDispatcher (HR01); retained timestamps keep their owner profile; status carried."
         },
         "positive_negative_oracles": {
-          "status": "PARTIAL",
+          "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Every refusal is a named row of a guard table (78 tables, 176 rows), reached only through require(). The gated tool proves 79/79 row cells over the 39 phase tables this family reaches, with 118 distinct single-defect negatives, no masked negative and no unrelated change (3 cell(s) proved with a declared donor negative because this family's own path cannot reach the row). Part 2B witnesses cover the CV-1101 profiles per field, 2^53/uint64 boundaries, 4,400-digit integers, the shared corpus through the complete append route and SP-1101 custody. PARTIAL: the shared datetime_validator boundary and the date-time inventory gate run at batch-2 integration (Addendum 2); native execution NOT_RUN.",
+          "finding": "ATS-335: original exact-family suite passes with the shared inventory-authenticated datetime_validator in append/retry/history, 86 proved row cells (3 declared donors), complete owner-schema clause/cut/restoration witnesses and sealed-store receipt/result reads. Whole-definition Method B scope; no claim of universal per-keyword isolation. Global shared inventory false refusal remains separate; native NOT_RUN.",
           "evidence": [
             {
+              "path": "Plans/Automated_Testing_System.md",
+              "unit": "ATS-335",
+              "line_start": 7401,
+              "line_end": 7401,
+              "quote": "- `auth.github.disconnected`: positive closed payload and original-identity retry; negatives raw secret/extension field, missing operation ID, unsupported version, revision zero, raw redaction,",
+              "excerpt_sha256": "df71815bffc8fcaa6c5ffec6202851f74bdc8b43dedb21d132fcacbb2052b865",
+              "file_sha256": "a14faaeeff125d0ccc2775d3f1bcc4372b8ff689a01b632bcd508e52a2e5d14e",
+              "quote_check": "exact"
+            },
+            {
               "path": "scripts/pm-dg6b-event-contracts.py",
-              "unit": "require",
-              "line_start": 89,
-              "line_end": 89,
-              "quote": "def require(phase, facts):",
-              "excerpt_sha256": "059652ce3cb52923b56d67380ab899f9a99b0ee94faba612312b85f1a6813730",
-              "file_sha256": "363d77d86afaf69f0aec1227684280250d32d0fda376e847800255d013786920",
-              "quote_check": "exact"
-            },
-            {
-              "path": "scripts/pm_dg6b_round9_cases.py",
-              "unit": "family_cases",
-              "line_start": 41,
-              "line_end": 41,
-              "quote": "def family_cases(m, row, schema):",
-              "excerpt_sha256": "e32be7e6c52cb2708395394158815696c87177f4da60e2fa7253761c7cfa8a39",
-              "file_sha256": "9c6d57d0f43a76c35b602962d11826006b3a1db85b6f7b00e56936022f065b48",
-              "quote_check": "exact"
-            },
-            {
-              "path": "scripts/pm_dg6b_p2b_cases.py",
-              "unit": "family_cases",
-              "line_start": 117,
-              "line_end": 117,
-              "quote": "def family_cases(m, row, schema):",
-              "excerpt_sha256": "e32be7e6c52cb2708395394158815696c87177f4da60e2fa7253761c7cfa8a39",
-              "file_sha256": "21bf76da2acce5467e7b5547efdc655f8e3bf18850fd592d2b23078a5a98b85f",
-              "quote_check": "exact"
-            },
-            {
-              "path": "scripts/pm_dg6b_full_oracles.py",
-              "unit": "family_probes",
-              "line_start": 265,
-              "line_end": 265,
-              "quote": "add('account_custody/' + field, 'envelope_source_join', base, bad,",
-              "excerpt_sha256": "81dfe1b8539702ec5b29e6df767a02fe8f9eec595aac898f5fb56733bd0a5b79",
-              "file_sha256": "c80c521743767186718e0c865325e3f58199cbe2779183bbb487dfd9d810c0b7",
-              "quote_check": "exact"
-            },
-            {
-              "path": "scripts/pm_dg6b_full_oracles.py",
-              "unit": "family_probes",
-              "line_start": 378,
-              "line_end": 378,
-              "quote": "add('history_account_custody/' + field, 'envelope_source_join', hbase, bad,",
-              "excerpt_sha256": "b010c907e09530b7ebc760fec1852e0f69c8881d4d8c49e9218e48787e337b84",
-              "file_sha256": "c80c521743767186718e0c865325e3f58199cbe2779183bbb487dfd9d810c0b7",
+              "unit": "enforced_event_record_validator",
+              "line_start": 1081,
+              "line_end": 1081,
+              "quote": "return datetime_validator(load_plan('Plans/event_record.schema.json'), profile=EVENT_RECORD)",
+              "excerpt_sha256": "551307e87e54b661eccfd03c582007025bbf74c7327909d3082213cf26558dd2",
+              "file_sha256": "809a42f2749f7eaa2dad44a2bd6275db6488270171b86e8d0f3950d2df50f180",
               "quote_check": "exact"
             }
           ],
           "prior": {
-            "source": "DG6B.self-grade.json@7c2ac9c7512f7d0d793c2c01640adc353170c18a (sweep part 2A)",
+            "source": "DG6B.self-grade.json@7cf56368356da2b7a5ff25f6452cf753ce36bf45",
             "status": "PARTIAL"
           },
-          "change": "carried",
-          "change_reason": "Part 2B closes S2 (numbers) and S3 (timestamp formats) in the lane; PARTIAL remains only for the shared datetime_validator boundary and inventory gate, which run at batch-2 integration."
+          "change": "upgraded",
+          "change_reason": "Closes the family datetime boundary, complete schema occurrence proof and retained-store observation gaps; global inventory issue is unrelated to this family boundary."
         }
       },
       "remaining_gaps": [
         "Membership absent until separate admission.",
         "Retention remains PENDING_RETENTION_DECISION.",
-        "Batch-2 integration: the shared datetime_validator boundary and the date-time inventory gate over the merged tree (this tree fails the gate on hash drift and unclassified containers; Addendum 2), then the Sol/Astra review."
+        "Integration/review dependency: recorded C12-DT retired-snapshot date-time exclusion; no broad shared-suite PASS. Blind reviews remain with the lead."
       ],
       "static_checks_seen": [
         "Plans/dg6b_event_contract_fixtures.json",
@@ -1555,10 +1467,11 @@
         "scripts/pm_dg6b_p2b_cases.py",
         "scripts/pm_dg6b_round9_cases.py",
         "scripts/pm_event_datetime.py",
-        "scripts/pm_event_numbers.py"
+        "scripts/pm_event_numbers.py",
+        "scripts/pm-dg6b-c12.py"
       ],
-      "notes": "Static part-2B preparation: the gated shared date-time, number and retained-original rules are adopted and every guard-table row this family reaches is proved on the gated tool. Native execution NOT_RUN. No READY claim before batch-2 integration and review.",
-      "grading_batch": "sweep-p2b",
+      "notes": "C12 only regraded. Other eleven cells carried unchanged; native NOT_RUN, membership/admission and governance unchanged.",
+      "grading_batch": "c12-dg6b",
       "preparation_state": "NOT_READY_REVIEW",
       "prospective_role": "writer_after_separate_admission_and_retention_assignment",
       "prepared_verdict": "NOT_READY"
@@ -1582,7 +1495,7 @@
           "quote_check": "exact"
         }
       ],
-      "pass_count": 9,
+      "pass_count": 10,
       "normative_depth_complete": false,
       "native_execution": "NOT_RUN",
       "current_owner_units": [
@@ -1996,73 +1909,43 @@
           "change_reason": "Part 2B: retained originals resolve through SP-1101 sealed custody and the shared RetainedDispatcher (HR01); retained timestamps keep their owner profile; status carried."
         },
         "positive_negative_oracles": {
-          "status": "PARTIAL",
+          "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Every refusal is a named row of a guard table (78 tables, 176 rows), reached only through require(). The gated tool proves 79/79 row cells over the 39 phase tables this family reaches, with 118 distinct single-defect negatives, no masked negative and no unrelated change (3 cell(s) proved with a declared donor negative because this family's own path cannot reach the row). Part 2B witnesses cover the CV-1101 profiles per field, 2^53/uint64 boundaries, 4,400-digit integers, the shared corpus through the complete append route and SP-1101 custody. PARTIAL: the shared datetime_validator boundary and the date-time inventory gate run at batch-2 integration (Addendum 2); native execution NOT_RUN.",
+          "finding": "ATS-335: original exact-family suite passes with the shared inventory-authenticated datetime_validator in append/retry/history, 86 proved row cells (3 declared donors), complete owner-schema clause/cut/restoration witnesses and sealed-store receipt/result reads. Whole-definition Method B scope; no claim of universal per-keyword isolation. Global shared inventory false refusal remains separate; native NOT_RUN.",
           "evidence": [
             {
+              "path": "Plans/Automated_Testing_System.md",
+              "unit": "ATS-335",
+              "line_start": 7402,
+              "line_end": 7402,
+              "quote": "- `auth.github.failed`: positive closed payload and original-identity retry; negatives raw secret/extension field, missing operation ID, unsupported version, revision zero, raw redaction, malformed",
+              "excerpt_sha256": "c1a36c240d47cc5e315f56f04a8c4e10f3954ff079328126dd892c2a04654d98",
+              "file_sha256": "a14faaeeff125d0ccc2775d3f1bcc4372b8ff689a01b632bcd508e52a2e5d14e",
+              "quote_check": "exact"
+            },
+            {
               "path": "scripts/pm-dg6b-event-contracts.py",
-              "unit": "require",
-              "line_start": 89,
-              "line_end": 89,
-              "quote": "def require(phase, facts):",
-              "excerpt_sha256": "059652ce3cb52923b56d67380ab899f9a99b0ee94faba612312b85f1a6813730",
-              "file_sha256": "363d77d86afaf69f0aec1227684280250d32d0fda376e847800255d013786920",
-              "quote_check": "exact"
-            },
-            {
-              "path": "scripts/pm_dg6b_round9_cases.py",
-              "unit": "family_cases",
-              "line_start": 41,
-              "line_end": 41,
-              "quote": "def family_cases(m, row, schema):",
-              "excerpt_sha256": "e32be7e6c52cb2708395394158815696c87177f4da60e2fa7253761c7cfa8a39",
-              "file_sha256": "9c6d57d0f43a76c35b602962d11826006b3a1db85b6f7b00e56936022f065b48",
-              "quote_check": "exact"
-            },
-            {
-              "path": "scripts/pm_dg6b_p2b_cases.py",
-              "unit": "family_cases",
-              "line_start": 117,
-              "line_end": 117,
-              "quote": "def family_cases(m, row, schema):",
-              "excerpt_sha256": "e32be7e6c52cb2708395394158815696c87177f4da60e2fa7253761c7cfa8a39",
-              "file_sha256": "21bf76da2acce5467e7b5547efdc655f8e3bf18850fd592d2b23078a5a98b85f",
-              "quote_check": "exact"
-            },
-            {
-              "path": "scripts/pm_dg6b_full_oracles.py",
-              "unit": "family_probes",
-              "line_start": 265,
-              "line_end": 265,
-              "quote": "add('account_custody/' + field, 'envelope_source_join', base, bad,",
-              "excerpt_sha256": "81dfe1b8539702ec5b29e6df767a02fe8f9eec595aac898f5fb56733bd0a5b79",
-              "file_sha256": "c80c521743767186718e0c865325e3f58199cbe2779183bbb487dfd9d810c0b7",
-              "quote_check": "exact"
-            },
-            {
-              "path": "scripts/pm_dg6b_full_oracles.py",
-              "unit": "family_probes",
-              "line_start": 378,
-              "line_end": 378,
-              "quote": "add('history_account_custody/' + field, 'envelope_source_join', hbase, bad,",
-              "excerpt_sha256": "b010c907e09530b7ebc760fec1852e0f69c8881d4d8c49e9218e48787e337b84",
-              "file_sha256": "c80c521743767186718e0c865325e3f58199cbe2779183bbb487dfd9d810c0b7",
+              "unit": "enforced_event_record_validator",
+              "line_start": 1081,
+              "line_end": 1081,
+              "quote": "return datetime_validator(load_plan('Plans/event_record.schema.json'), profile=EVENT_RECORD)",
+              "excerpt_sha256": "551307e87e54b661eccfd03c582007025bbf74c7327909d3082213cf26558dd2",
+              "file_sha256": "809a42f2749f7eaa2dad44a2bd6275db6488270171b86e8d0f3950d2df50f180",
               "quote_check": "exact"
             }
           ],
           "prior": {
-            "source": "DG6B.self-grade.json@7c2ac9c7512f7d0d793c2c01640adc353170c18a (sweep part 2A)",
+            "source": "DG6B.self-grade.json@7cf56368356da2b7a5ff25f6452cf753ce36bf45",
             "status": "PARTIAL"
           },
-          "change": "carried",
-          "change_reason": "Part 2B closes S2 (numbers) and S3 (timestamp formats) in the lane; PARTIAL remains only for the shared datetime_validator boundary and inventory gate, which run at batch-2 integration."
+          "change": "upgraded",
+          "change_reason": "Closes the family datetime boundary, complete schema occurrence proof and retained-store observation gaps; global inventory issue is unrelated to this family boundary."
         }
       },
       "remaining_gaps": [
         "Membership absent until separate admission.",
         "Retention remains PENDING_RETENTION_DECISION.",
-        "Batch-2 integration: the shared datetime_validator boundary and the date-time inventory gate over the merged tree (this tree fails the gate on hash drift and unclassified containers; Addendum 2), then the Sol/Astra review."
+        "Integration/review dependency: recorded C12-DT retired-snapshot date-time exclusion; no broad shared-suite PASS. Blind reviews remain with the lead."
       ],
       "static_checks_seen": [
         "Plans/dg6b_event_contract_fixtures.json",
@@ -2072,10 +1955,11 @@
         "scripts/pm_dg6b_p2b_cases.py",
         "scripts/pm_dg6b_round9_cases.py",
         "scripts/pm_event_datetime.py",
-        "scripts/pm_event_numbers.py"
+        "scripts/pm_event_numbers.py",
+        "scripts/pm-dg6b-c12.py"
       ],
-      "notes": "Static part-2B preparation: the gated shared date-time, number and retained-original rules are adopted and every guard-table row this family reaches is proved on the gated tool. Native execution NOT_RUN. No READY claim before batch-2 integration and review.",
-      "grading_batch": "sweep-p2b",
+      "notes": "C12 only regraded. Other eleven cells carried unchanged; native NOT_RUN, membership/admission and governance unchanged.",
+      "grading_batch": "c12-dg6b",
       "preparation_state": "NOT_READY_REVIEW",
       "prospective_role": "writer_after_separate_admission_and_retention_assignment",
       "prepared_verdict": "NOT_READY"
@@ -2099,7 +1983,7 @@
           "quote_check": "exact"
         }
       ],
-      "pass_count": 9,
+      "pass_count": 10,
       "normative_depth_complete": false,
       "native_execution": "NOT_RUN",
       "current_owner_units": [
@@ -2513,73 +2397,43 @@
           "change_reason": "Part 2B: retained originals resolve through SP-1101 sealed custody and the shared RetainedDispatcher (HR01); retained timestamps keep their owner profile; status carried."
         },
         "positive_negative_oracles": {
-          "status": "PARTIAL",
+          "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Every refusal is a named row of a guard table (78 tables, 176 rows), reached only through require(). The gated tool proves 80/80 row cells over the 40 phase tables this family reaches, with 119 distinct single-defect negatives, no masked negative and no unrelated change (3 cell(s) proved with a declared donor negative because this family's own path cannot reach the row). Part 2B witnesses cover the CV-1101 profiles per field, 2^53/uint64 boundaries, 4,400-digit integers, the shared corpus through the complete append route and SP-1101 custody. PARTIAL: the shared datetime_validator boundary and the date-time inventory gate run at batch-2 integration (Addendum 2); native execution NOT_RUN.",
+          "finding": "ATS-335: original exact-family suite passes with the shared inventory-authenticated datetime_validator in append/retry/history, 87 proved row cells (3 declared donors), complete owner-schema clause/cut/restoration witnesses and sealed-store receipt/result reads. Whole-definition Method B scope; no claim of universal per-keyword isolation. Global shared inventory false refusal remains separate; native NOT_RUN.",
           "evidence": [
             {
+              "path": "Plans/Automated_Testing_System.md",
+              "unit": "ATS-335",
+              "line_start": 7403,
+              "line_end": 7403,
+              "quote": "- `auth.github.token.polling`: positive closed payload and original-identity retry; negatives raw secret/extension field, missing operation ID, unsupported version, revision zero, raw redaction,",
+              "excerpt_sha256": "0ce4e49a8d0b4fa6fb1c30bb8d37e7419c0a67e56c19999de433d15121f4d033",
+              "file_sha256": "a14faaeeff125d0ccc2775d3f1bcc4372b8ff689a01b632bcd508e52a2e5d14e",
+              "quote_check": "exact"
+            },
+            {
               "path": "scripts/pm-dg6b-event-contracts.py",
-              "unit": "require",
-              "line_start": 89,
-              "line_end": 89,
-              "quote": "def require(phase, facts):",
-              "excerpt_sha256": "059652ce3cb52923b56d67380ab899f9a99b0ee94faba612312b85f1a6813730",
-              "file_sha256": "363d77d86afaf69f0aec1227684280250d32d0fda376e847800255d013786920",
-              "quote_check": "exact"
-            },
-            {
-              "path": "scripts/pm_dg6b_round9_cases.py",
-              "unit": "family_cases",
-              "line_start": 41,
-              "line_end": 41,
-              "quote": "def family_cases(m, row, schema):",
-              "excerpt_sha256": "e32be7e6c52cb2708395394158815696c87177f4da60e2fa7253761c7cfa8a39",
-              "file_sha256": "9c6d57d0f43a76c35b602962d11826006b3a1db85b6f7b00e56936022f065b48",
-              "quote_check": "exact"
-            },
-            {
-              "path": "scripts/pm_dg6b_p2b_cases.py",
-              "unit": "family_cases",
-              "line_start": 117,
-              "line_end": 117,
-              "quote": "def family_cases(m, row, schema):",
-              "excerpt_sha256": "e32be7e6c52cb2708395394158815696c87177f4da60e2fa7253761c7cfa8a39",
-              "file_sha256": "21bf76da2acce5467e7b5547efdc655f8e3bf18850fd592d2b23078a5a98b85f",
-              "quote_check": "exact"
-            },
-            {
-              "path": "scripts/pm_dg6b_full_oracles.py",
-              "unit": "family_probes",
-              "line_start": 265,
-              "line_end": 265,
-              "quote": "add('account_custody/' + field, 'envelope_source_join', base, bad,",
-              "excerpt_sha256": "81dfe1b8539702ec5b29e6df767a02fe8f9eec595aac898f5fb56733bd0a5b79",
-              "file_sha256": "c80c521743767186718e0c865325e3f58199cbe2779183bbb487dfd9d810c0b7",
-              "quote_check": "exact"
-            },
-            {
-              "path": "scripts/pm_dg6b_full_oracles.py",
-              "unit": "family_probes",
-              "line_start": 378,
-              "line_end": 378,
-              "quote": "add('history_account_custody/' + field, 'envelope_source_join', hbase, bad,",
-              "excerpt_sha256": "b010c907e09530b7ebc760fec1852e0f69c8881d4d8c49e9218e48787e337b84",
-              "file_sha256": "c80c521743767186718e0c865325e3f58199cbe2779183bbb487dfd9d810c0b7",
+              "unit": "enforced_event_record_validator",
+              "line_start": 1081,
+              "line_end": 1081,
+              "quote": "return datetime_validator(load_plan('Plans/event_record.schema.json'), profile=EVENT_RECORD)",
+              "excerpt_sha256": "551307e87e54b661eccfd03c582007025bbf74c7327909d3082213cf26558dd2",
+              "file_sha256": "809a42f2749f7eaa2dad44a2bd6275db6488270171b86e8d0f3950d2df50f180",
               "quote_check": "exact"
             }
           ],
           "prior": {
-            "source": "DG6B.self-grade.json@7c2ac9c7512f7d0d793c2c01640adc353170c18a (sweep part 2A)",
+            "source": "DG6B.self-grade.json@7cf56368356da2b7a5ff25f6452cf753ce36bf45",
             "status": "PARTIAL"
           },
-          "change": "carried",
-          "change_reason": "Part 2B closes S2 (numbers) and S3 (timestamp formats) in the lane; PARTIAL remains only for the shared datetime_validator boundary and inventory gate, which run at batch-2 integration."
+          "change": "upgraded",
+          "change_reason": "Closes the family datetime boundary, complete schema occurrence proof and retained-store observation gaps; global inventory issue is unrelated to this family boundary."
         }
       },
       "remaining_gaps": [
         "Membership absent until separate admission.",
         "Retention remains PENDING_RETENTION_DECISION.",
-        "Batch-2 integration: the shared datetime_validator boundary and the date-time inventory gate over the merged tree (this tree fails the gate on hash drift and unclassified containers; Addendum 2), then the Sol/Astra review."
+        "Integration/review dependency: recorded C12-DT retired-snapshot date-time exclusion; no broad shared-suite PASS. Blind reviews remain with the lead."
       ],
       "static_checks_seen": [
         "Plans/dg6b_event_contract_fixtures.json",
@@ -2589,10 +2443,11 @@
         "scripts/pm_dg6b_p2b_cases.py",
         "scripts/pm_dg6b_round9_cases.py",
         "scripts/pm_event_datetime.py",
-        "scripts/pm_event_numbers.py"
+        "scripts/pm_event_numbers.py",
+        "scripts/pm-dg6b-c12.py"
       ],
-      "notes": "Static part-2B preparation: the gated shared date-time, number and retained-original rules are adopted and every guard-table row this family reaches is proved on the gated tool. Native execution NOT_RUN. No READY claim before batch-2 integration and review.",
-      "grading_batch": "sweep-p2b",
+      "notes": "C12 only regraded. Other eleven cells carried unchanged; native NOT_RUN, membership/admission and governance unchanged.",
+      "grading_batch": "c12-dg6b",
       "preparation_state": "NOT_READY_REVIEW",
       "prospective_role": "writer_after_separate_admission_and_retention_assignment",
       "prepared_verdict": "NOT_READY"
@@ -2616,7 +2471,7 @@
           "quote_check": "exact"
         }
       ],
-      "pass_count": 9,
+      "pass_count": 10,
       "normative_depth_complete": false,
       "native_execution": "NOT_RUN",
       "current_owner_units": [
@@ -3040,73 +2895,43 @@
           "change_reason": "Part 2B: retained originals resolve through SP-1101 sealed custody and the shared RetainedDispatcher (HR01); retained timestamps keep their owner profile; status carried."
         },
         "positive_negative_oracles": {
-          "status": "PARTIAL",
+          "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Every refusal is a named row of a guard table (78 tables, 176 rows), reached only through require(). The gated tool proves 78/78 row cells over the 38 phase tables this family reaches, with 130 distinct single-defect negatives, no masked negative and no unrelated change (1 cell(s) proved with a declared donor negative because this family's own path cannot reach the row). Part 2B witnesses cover the CV-1101 profiles per field, 2^53/uint64 boundaries, 4,400-digit integers, the shared corpus through the complete append route and SP-1101 custody. PARTIAL: the shared datetime_validator boundary and the date-time inventory gate run at batch-2 integration (Addendum 2); native execution NOT_RUN.",
+          "finding": "ATS-335: original exact-family suite passes with the shared inventory-authenticated datetime_validator in append/retry/history, 85 proved row cells (1 declared donors), complete owner-schema clause/cut/restoration witnesses and sealed-store receipt/result reads. Whole-definition Method B scope; no claim of universal per-keyword isolation. Global shared inventory false refusal remains separate; native NOT_RUN.",
           "evidence": [
             {
+              "path": "Plans/Automated_Testing_System.md",
+              "unit": "ATS-335",
+              "line_start": 7404,
+              "line_end": 7404,
+              "quote": "- `plugin.hook.blocked`: positive closed payload and original-identity retry; negatives raw secret/extension field, missing operation ID, unsupported version, revision zero, raw redaction, malformed",
+              "excerpt_sha256": "6254bbc46a6c7b5d2a44ed320a878b6278963a1a431be28aadc2bb5ebd984ab3",
+              "file_sha256": "a14faaeeff125d0ccc2775d3f1bcc4372b8ff689a01b632bcd508e52a2e5d14e",
+              "quote_check": "exact"
+            },
+            {
               "path": "scripts/pm-dg6b-event-contracts.py",
-              "unit": "require",
-              "line_start": 89,
-              "line_end": 89,
-              "quote": "def require(phase, facts):",
-              "excerpt_sha256": "059652ce3cb52923b56d67380ab899f9a99b0ee94faba612312b85f1a6813730",
-              "file_sha256": "363d77d86afaf69f0aec1227684280250d32d0fda376e847800255d013786920",
-              "quote_check": "exact"
-            },
-            {
-              "path": "scripts/pm_dg6b_round9_cases.py",
-              "unit": "family_cases",
-              "line_start": 41,
-              "line_end": 41,
-              "quote": "def family_cases(m, row, schema):",
-              "excerpt_sha256": "e32be7e6c52cb2708395394158815696c87177f4da60e2fa7253761c7cfa8a39",
-              "file_sha256": "9c6d57d0f43a76c35b602962d11826006b3a1db85b6f7b00e56936022f065b48",
-              "quote_check": "exact"
-            },
-            {
-              "path": "scripts/pm_dg6b_p2b_cases.py",
-              "unit": "family_cases",
-              "line_start": 117,
-              "line_end": 117,
-              "quote": "def family_cases(m, row, schema):",
-              "excerpt_sha256": "e32be7e6c52cb2708395394158815696c87177f4da60e2fa7253761c7cfa8a39",
-              "file_sha256": "21bf76da2acce5467e7b5547efdc655f8e3bf18850fd592d2b23078a5a98b85f",
-              "quote_check": "exact"
-            },
-            {
-              "path": "scripts/pm_dg6b_full_oracles.py",
-              "unit": "family_probes",
-              "line_start": 265,
-              "line_end": 265,
-              "quote": "add('account_custody/' + field, 'envelope_source_join', base, bad,",
-              "excerpt_sha256": "81dfe1b8539702ec5b29e6df767a02fe8f9eec595aac898f5fb56733bd0a5b79",
-              "file_sha256": "c80c521743767186718e0c865325e3f58199cbe2779183bbb487dfd9d810c0b7",
-              "quote_check": "exact"
-            },
-            {
-              "path": "scripts/pm_dg6b_full_oracles.py",
-              "unit": "family_probes",
-              "line_start": 378,
-              "line_end": 378,
-              "quote": "add('history_account_custody/' + field, 'envelope_source_join', hbase, bad,",
-              "excerpt_sha256": "b010c907e09530b7ebc760fec1852e0f69c8881d4d8c49e9218e48787e337b84",
-              "file_sha256": "c80c521743767186718e0c865325e3f58199cbe2779183bbb487dfd9d810c0b7",
+              "unit": "enforced_event_record_validator",
+              "line_start": 1081,
+              "line_end": 1081,
+              "quote": "return datetime_validator(load_plan('Plans/event_record.schema.json'), profile=EVENT_RECORD)",
+              "excerpt_sha256": "551307e87e54b661eccfd03c582007025bbf74c7327909d3082213cf26558dd2",
+              "file_sha256": "809a42f2749f7eaa2dad44a2bd6275db6488270171b86e8d0f3950d2df50f180",
               "quote_check": "exact"
             }
           ],
           "prior": {
-            "source": "DG6B.self-grade.json@7c2ac9c7512f7d0d793c2c01640adc353170c18a (sweep part 2A)",
+            "source": "DG6B.self-grade.json@7cf56368356da2b7a5ff25f6452cf753ce36bf45",
             "status": "PARTIAL"
           },
-          "change": "carried",
-          "change_reason": "Part 2B closes S2 (numbers) and S3 (timestamp formats) in the lane; PARTIAL remains only for the shared datetime_validator boundary and inventory gate, which run at batch-2 integration."
+          "change": "upgraded",
+          "change_reason": "Closes the family datetime boundary, complete schema occurrence proof and retained-store observation gaps; global inventory issue is unrelated to this family boundary."
         }
       },
       "remaining_gaps": [
         "Membership absent until separate admission.",
         "Retention remains PENDING_RETENTION_DECISION.",
-        "Batch-2 integration: the shared datetime_validator boundary and the date-time inventory gate over the merged tree (this tree fails the gate on hash drift and unclassified containers; Addendum 2), then the Sol/Astra review."
+        "Integration/review dependency: recorded C12-DT retired-snapshot date-time exclusion; no broad shared-suite PASS. Blind reviews remain with the lead."
       ],
       "static_checks_seen": [
         "Plans/dg6b_event_contract_fixtures.json",
@@ -3116,10 +2941,11 @@
         "scripts/pm_dg6b_p2b_cases.py",
         "scripts/pm_dg6b_round9_cases.py",
         "scripts/pm_event_datetime.py",
-        "scripts/pm_event_numbers.py"
+        "scripts/pm_event_numbers.py",
+        "scripts/pm-dg6b-c12.py"
       ],
-      "notes": "Static part-2B preparation: the gated shared date-time, number and retained-original rules are adopted and every guard-table row this family reaches is proved on the gated tool. Native execution NOT_RUN. No READY claim before batch-2 integration and review.",
-      "grading_batch": "sweep-p2b",
+      "notes": "C12 only regraded. Other eleven cells carried unchanged; native NOT_RUN, membership/admission and governance unchanged.",
+      "grading_batch": "c12-dg6b",
       "preparation_state": "NOT_READY_REVIEW",
       "prospective_role": "writer_after_separate_admission_and_retention_assignment",
       "prepared_verdict": "NOT_READY"
@@ -3143,7 +2969,7 @@
           "quote_check": "exact"
         }
       ],
-      "pass_count": 9,
+      "pass_count": 10,
       "normative_depth_complete": false,
       "native_execution": "NOT_RUN",
       "current_owner_units": [
@@ -3557,73 +3383,43 @@
           "change_reason": "Part 2B: retained originals resolve through SP-1101 sealed custody and the shared RetainedDispatcher (HR01); retained timestamps keep their owner profile; status carried."
         },
         "positive_negative_oracles": {
-          "status": "PARTIAL",
+          "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Every refusal is a named row of a guard table (78 tables, 176 rows), reached only through require(). The gated tool proves 77/77 row cells over the 37 phase tables this family reaches, with 144 distinct single-defect negatives, no masked negative and no unrelated change (1 cell(s) proved with a declared donor negative because this family's own path cannot reach the row). Part 2B witnesses cover the CV-1101 profiles per field, 2^53/uint64 boundaries, 4,400-digit integers, the shared corpus through the complete append route and SP-1101 custody. PARTIAL: the shared datetime_validator boundary and the date-time inventory gate run at batch-2 integration (Addendum 2); native execution NOT_RUN.",
+          "finding": "ATS-335: original exact-family suite passes with the shared inventory-authenticated datetime_validator in append/retry/history, 84 proved row cells (1 declared donors), complete owner-schema clause/cut/restoration witnesses and sealed-store receipt/result reads. Whole-definition Method B scope; no claim of universal per-keyword isolation. Global shared inventory false refusal remains separate; native NOT_RUN.",
           "evidence": [
             {
+              "path": "Plans/Automated_Testing_System.md",
+              "unit": "ATS-335",
+              "line_start": 7405,
+              "line_end": 7405,
+              "quote": "- `plugin.hook.error`: positive closed payload and original-identity retry; negatives raw secret/extension field, missing operation ID, unsupported version, revision zero, raw redaction, malformed",
+              "excerpt_sha256": "a51dd642d6d3cfbb7298fc227976c7f707903da56e0b2947c26cb8ba75a45542",
+              "file_sha256": "a14faaeeff125d0ccc2775d3f1bcc4372b8ff689a01b632bcd508e52a2e5d14e",
+              "quote_check": "exact"
+            },
+            {
               "path": "scripts/pm-dg6b-event-contracts.py",
-              "unit": "require",
-              "line_start": 89,
-              "line_end": 89,
-              "quote": "def require(phase, facts):",
-              "excerpt_sha256": "059652ce3cb52923b56d67380ab899f9a99b0ee94faba612312b85f1a6813730",
-              "file_sha256": "363d77d86afaf69f0aec1227684280250d32d0fda376e847800255d013786920",
-              "quote_check": "exact"
-            },
-            {
-              "path": "scripts/pm_dg6b_round9_cases.py",
-              "unit": "family_cases",
-              "line_start": 41,
-              "line_end": 41,
-              "quote": "def family_cases(m, row, schema):",
-              "excerpt_sha256": "e32be7e6c52cb2708395394158815696c87177f4da60e2fa7253761c7cfa8a39",
-              "file_sha256": "9c6d57d0f43a76c35b602962d11826006b3a1db85b6f7b00e56936022f065b48",
-              "quote_check": "exact"
-            },
-            {
-              "path": "scripts/pm_dg6b_p2b_cases.py",
-              "unit": "family_cases",
-              "line_start": 117,
-              "line_end": 117,
-              "quote": "def family_cases(m, row, schema):",
-              "excerpt_sha256": "e32be7e6c52cb2708395394158815696c87177f4da60e2fa7253761c7cfa8a39",
-              "file_sha256": "21bf76da2acce5467e7b5547efdc655f8e3bf18850fd592d2b23078a5a98b85f",
-              "quote_check": "exact"
-            },
-            {
-              "path": "scripts/pm_dg6b_full_oracles.py",
-              "unit": "family_probes",
-              "line_start": 265,
-              "line_end": 265,
-              "quote": "add('account_custody/' + field, 'envelope_source_join', base, bad,",
-              "excerpt_sha256": "81dfe1b8539702ec5b29e6df767a02fe8f9eec595aac898f5fb56733bd0a5b79",
-              "file_sha256": "c80c521743767186718e0c865325e3f58199cbe2779183bbb487dfd9d810c0b7",
-              "quote_check": "exact"
-            },
-            {
-              "path": "scripts/pm_dg6b_full_oracles.py",
-              "unit": "family_probes",
-              "line_start": 378,
-              "line_end": 378,
-              "quote": "add('history_account_custody/' + field, 'envelope_source_join', hbase, bad,",
-              "excerpt_sha256": "b010c907e09530b7ebc760fec1852e0f69c8881d4d8c49e9218e48787e337b84",
-              "file_sha256": "c80c521743767186718e0c865325e3f58199cbe2779183bbb487dfd9d810c0b7",
+              "unit": "enforced_event_record_validator",
+              "line_start": 1081,
+              "line_end": 1081,
+              "quote": "return datetime_validator(load_plan('Plans/event_record.schema.json'), profile=EVENT_RECORD)",
+              "excerpt_sha256": "551307e87e54b661eccfd03c582007025bbf74c7327909d3082213cf26558dd2",
+              "file_sha256": "809a42f2749f7eaa2dad44a2bd6275db6488270171b86e8d0f3950d2df50f180",
               "quote_check": "exact"
             }
           ],
           "prior": {
-            "source": "DG6B.self-grade.json@7c2ac9c7512f7d0d793c2c01640adc353170c18a (sweep part 2A)",
+            "source": "DG6B.self-grade.json@7cf56368356da2b7a5ff25f6452cf753ce36bf45",
             "status": "PARTIAL"
           },
-          "change": "carried",
-          "change_reason": "Part 2B closes S2 (numbers) and S3 (timestamp formats) in the lane; PARTIAL remains only for the shared datetime_validator boundary and inventory gate, which run at batch-2 integration."
+          "change": "upgraded",
+          "change_reason": "Closes the family datetime boundary, complete schema occurrence proof and retained-store observation gaps; global inventory issue is unrelated to this family boundary."
         }
       },
       "remaining_gaps": [
         "Membership absent until separate admission.",
         "Retention remains PENDING_RETENTION_DECISION.",
-        "Batch-2 integration: the shared datetime_validator boundary and the date-time inventory gate over the merged tree (this tree fails the gate on hash drift and unclassified containers; Addendum 2), then the Sol/Astra review."
+        "Integration/review dependency: recorded C12-DT retired-snapshot date-time exclusion; no broad shared-suite PASS. Blind reviews remain with the lead."
       ],
       "static_checks_seen": [
         "Plans/dg6b_event_contract_fixtures.json",
@@ -3633,10 +3429,11 @@
         "scripts/pm_dg6b_p2b_cases.py",
         "scripts/pm_dg6b_round9_cases.py",
         "scripts/pm_event_datetime.py",
-        "scripts/pm_event_numbers.py"
+        "scripts/pm_event_numbers.py",
+        "scripts/pm-dg6b-c12.py"
       ],
-      "notes": "Static part-2B preparation: the gated shared date-time, number and retained-original rules are adopted and every guard-table row this family reaches is proved on the gated tool. Native execution NOT_RUN. No READY claim before batch-2 integration and review.",
-      "grading_batch": "sweep-p2b",
+      "notes": "C12 only regraded. Other eleven cells carried unchanged; native NOT_RUN, membership/admission and governance unchanged.",
+      "grading_batch": "c12-dg6b",
       "preparation_state": "NOT_READY_REVIEW",
       "prospective_role": "writer_after_separate_admission_and_retention_assignment",
       "prepared_verdict": "NOT_READY"
@@ -3660,7 +3457,7 @@
           "quote_check": "exact"
         }
       ],
-      "pass_count": 9,
+      "pass_count": 10,
       "normative_depth_complete": false,
       "native_execution": "NOT_RUN",
       "current_owner_units": [
@@ -4074,73 +3871,43 @@
           "change_reason": "Part 2B: retained originals resolve through SP-1101 sealed custody and the shared RetainedDispatcher (HR01); retained timestamps keep their owner profile; status carried."
         },
         "positive_negative_oracles": {
-          "status": "PARTIAL",
+          "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Every refusal is a named row of a guard table (78 tables, 176 rows), reached only through require(). The gated tool proves 77/77 row cells over the 37 phase tables this family reaches, with 144 distinct single-defect negatives, no masked negative and no unrelated change (1 cell(s) proved with a declared donor negative because this family's own path cannot reach the row). Part 2B witnesses cover the CV-1101 profiles per field, 2^53/uint64 boundaries, 4,400-digit integers, the shared corpus through the complete append route and SP-1101 custody. PARTIAL: the shared datetime_validator boundary and the date-time inventory gate run at batch-2 integration (Addendum 2); native execution NOT_RUN.",
+          "finding": "ATS-335: original exact-family suite passes with the shared inventory-authenticated datetime_validator in append/retry/history, 84 proved row cells (1 declared donors), complete owner-schema clause/cut/restoration witnesses and sealed-store receipt/result reads. Whole-definition Method B scope; no claim of universal per-keyword isolation. Global shared inventory false refusal remains separate; native NOT_RUN.",
           "evidence": [
             {
+              "path": "Plans/Automated_Testing_System.md",
+              "unit": "ATS-335",
+              "line_start": 7406,
+              "line_end": 7406,
+              "quote": "- `plugin.hook.invoked`: positive closed payload and original-identity retry; negatives raw secret/extension field, missing operation ID, unsupported version, revision zero, raw redaction, malformed",
+              "excerpt_sha256": "b3bbc7c0c6f184f26f3b94ede6cfdd6e9388abd78f6c70f7505937ab0dfcc08c",
+              "file_sha256": "a14faaeeff125d0ccc2775d3f1bcc4372b8ff689a01b632bcd508e52a2e5d14e",
+              "quote_check": "exact"
+            },
+            {
               "path": "scripts/pm-dg6b-event-contracts.py",
-              "unit": "require",
-              "line_start": 89,
-              "line_end": 89,
-              "quote": "def require(phase, facts):",
-              "excerpt_sha256": "059652ce3cb52923b56d67380ab899f9a99b0ee94faba612312b85f1a6813730",
-              "file_sha256": "363d77d86afaf69f0aec1227684280250d32d0fda376e847800255d013786920",
-              "quote_check": "exact"
-            },
-            {
-              "path": "scripts/pm_dg6b_round9_cases.py",
-              "unit": "family_cases",
-              "line_start": 41,
-              "line_end": 41,
-              "quote": "def family_cases(m, row, schema):",
-              "excerpt_sha256": "e32be7e6c52cb2708395394158815696c87177f4da60e2fa7253761c7cfa8a39",
-              "file_sha256": "9c6d57d0f43a76c35b602962d11826006b3a1db85b6f7b00e56936022f065b48",
-              "quote_check": "exact"
-            },
-            {
-              "path": "scripts/pm_dg6b_p2b_cases.py",
-              "unit": "family_cases",
-              "line_start": 117,
-              "line_end": 117,
-              "quote": "def family_cases(m, row, schema):",
-              "excerpt_sha256": "e32be7e6c52cb2708395394158815696c87177f4da60e2fa7253761c7cfa8a39",
-              "file_sha256": "21bf76da2acce5467e7b5547efdc655f8e3bf18850fd592d2b23078a5a98b85f",
-              "quote_check": "exact"
-            },
-            {
-              "path": "scripts/pm_dg6b_full_oracles.py",
-              "unit": "family_probes",
-              "line_start": 265,
-              "line_end": 265,
-              "quote": "add('account_custody/' + field, 'envelope_source_join', base, bad,",
-              "excerpt_sha256": "81dfe1b8539702ec5b29e6df767a02fe8f9eec595aac898f5fb56733bd0a5b79",
-              "file_sha256": "c80c521743767186718e0c865325e3f58199cbe2779183bbb487dfd9d810c0b7",
-              "quote_check": "exact"
-            },
-            {
-              "path": "scripts/pm_dg6b_full_oracles.py",
-              "unit": "family_probes",
-              "line_start": 378,
-              "line_end": 378,
-              "quote": "add('history_account_custody/' + field, 'envelope_source_join', hbase, bad,",
-              "excerpt_sha256": "b010c907e09530b7ebc760fec1852e0f69c8881d4d8c49e9218e48787e337b84",
-              "file_sha256": "c80c521743767186718e0c865325e3f58199cbe2779183bbb487dfd9d810c0b7",
+              "unit": "enforced_event_record_validator",
+              "line_start": 1081,
+              "line_end": 1081,
+              "quote": "return datetime_validator(load_plan('Plans/event_record.schema.json'), profile=EVENT_RECORD)",
+              "excerpt_sha256": "551307e87e54b661eccfd03c582007025bbf74c7327909d3082213cf26558dd2",
+              "file_sha256": "809a42f2749f7eaa2dad44a2bd6275db6488270171b86e8d0f3950d2df50f180",
               "quote_check": "exact"
             }
           ],
           "prior": {
-            "source": "DG6B.self-grade.json@7c2ac9c7512f7d0d793c2c01640adc353170c18a (sweep part 2A)",
+            "source": "DG6B.self-grade.json@7cf56368356da2b7a5ff25f6452cf753ce36bf45",
             "status": "PARTIAL"
           },
-          "change": "carried",
-          "change_reason": "Part 2B closes S2 (numbers) and S3 (timestamp formats) in the lane; PARTIAL remains only for the shared datetime_validator boundary and inventory gate, which run at batch-2 integration."
+          "change": "upgraded",
+          "change_reason": "Closes the family datetime boundary, complete schema occurrence proof and retained-store observation gaps; global inventory issue is unrelated to this family boundary."
         }
       },
       "remaining_gaps": [
         "Membership absent until separate admission.",
         "Retention remains PENDING_RETENTION_DECISION.",
-        "Batch-2 integration: the shared datetime_validator boundary and the date-time inventory gate over the merged tree (this tree fails the gate on hash drift and unclassified containers; Addendum 2), then the Sol/Astra review."
+        "Integration/review dependency: recorded C12-DT retired-snapshot date-time exclusion; no broad shared-suite PASS. Blind reviews remain with the lead."
       ],
       "static_checks_seen": [
         "Plans/dg6b_event_contract_fixtures.json",
@@ -4150,10 +3917,11 @@
         "scripts/pm_dg6b_p2b_cases.py",
         "scripts/pm_dg6b_round9_cases.py",
         "scripts/pm_event_datetime.py",
-        "scripts/pm_event_numbers.py"
+        "scripts/pm_event_numbers.py",
+        "scripts/pm-dg6b-c12.py"
       ],
-      "notes": "Static part-2B preparation: the gated shared date-time, number and retained-original rules are adopted and every guard-table row this family reaches is proved on the gated tool. Native execution NOT_RUN. No READY claim before batch-2 integration and review.",
-      "grading_batch": "sweep-p2b",
+      "notes": "C12 only regraded. Other eleven cells carried unchanged; native NOT_RUN, membership/admission and governance unchanged.",
+      "grading_batch": "c12-dg6b",
       "preparation_state": "NOT_READY_REVIEW",
       "prospective_role": "writer_after_separate_admission_and_retention_assignment",
       "prepared_verdict": "NOT_READY"
@@ -4177,7 +3945,7 @@
           "quote_check": "exact"
         }
       ],
-      "pass_count": 9,
+      "pass_count": 10,
       "normative_depth_complete": false,
       "native_execution": "NOT_RUN",
       "current_owner_units": [
@@ -4591,73 +4359,43 @@
           "change_reason": "Part 2B: retained originals resolve through SP-1101 sealed custody and the shared RetainedDispatcher (HR01); retained timestamps keep their owner profile; status carried."
         },
         "positive_negative_oracles": {
-          "status": "PARTIAL",
+          "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Every refusal is a named row of a guard table (78 tables, 176 rows), reached only through require(). The gated tool proves 77/77 row cells over the 37 phase tables this family reaches, with 126 distinct single-defect negatives, no masked negative and no unrelated change (1 cell(s) proved with a declared donor negative because this family's own path cannot reach the row). Part 2B witnesses cover the CV-1101 profiles per field, 2^53/uint64 boundaries, 4,400-digit integers, the shared corpus through the complete append route and SP-1101 custody. PARTIAL: the shared datetime_validator boundary and the date-time inventory gate run at batch-2 integration (Addendum 2); native execution NOT_RUN.",
+          "finding": "ATS-335: original exact-family suite passes with the shared inventory-authenticated datetime_validator in append/retry/history, 84 proved row cells (1 declared donors), complete owner-schema clause/cut/restoration witnesses and sealed-store receipt/result reads. Whole-definition Method B scope; no claim of universal per-keyword isolation. Global shared inventory false refusal remains separate; native NOT_RUN.",
           "evidence": [
             {
+              "path": "Plans/Automated_Testing_System.md",
+              "unit": "ATS-335",
+              "line_start": 7407,
+              "line_end": 7407,
+              "quote": "- `plugin.load_failed`: positive closed payload and original-identity retry; negatives raw secret/extension field, missing operation ID, unsupported version, revision zero, raw redaction, malformed",
+              "excerpt_sha256": "127551d831ac39ab15fc204fb554c6a9041180a604dfb44a7055def7929cc9f1",
+              "file_sha256": "a14faaeeff125d0ccc2775d3f1bcc4372b8ff689a01b632bcd508e52a2e5d14e",
+              "quote_check": "exact"
+            },
+            {
               "path": "scripts/pm-dg6b-event-contracts.py",
-              "unit": "require",
-              "line_start": 89,
-              "line_end": 89,
-              "quote": "def require(phase, facts):",
-              "excerpt_sha256": "059652ce3cb52923b56d67380ab899f9a99b0ee94faba612312b85f1a6813730",
-              "file_sha256": "363d77d86afaf69f0aec1227684280250d32d0fda376e847800255d013786920",
-              "quote_check": "exact"
-            },
-            {
-              "path": "scripts/pm_dg6b_round9_cases.py",
-              "unit": "family_cases",
-              "line_start": 41,
-              "line_end": 41,
-              "quote": "def family_cases(m, row, schema):",
-              "excerpt_sha256": "e32be7e6c52cb2708395394158815696c87177f4da60e2fa7253761c7cfa8a39",
-              "file_sha256": "9c6d57d0f43a76c35b602962d11826006b3a1db85b6f7b00e56936022f065b48",
-              "quote_check": "exact"
-            },
-            {
-              "path": "scripts/pm_dg6b_p2b_cases.py",
-              "unit": "family_cases",
-              "line_start": 117,
-              "line_end": 117,
-              "quote": "def family_cases(m, row, schema):",
-              "excerpt_sha256": "e32be7e6c52cb2708395394158815696c87177f4da60e2fa7253761c7cfa8a39",
-              "file_sha256": "21bf76da2acce5467e7b5547efdc655f8e3bf18850fd592d2b23078a5a98b85f",
-              "quote_check": "exact"
-            },
-            {
-              "path": "scripts/pm_dg6b_full_oracles.py",
-              "unit": "family_probes",
-              "line_start": 265,
-              "line_end": 265,
-              "quote": "add('account_custody/' + field, 'envelope_source_join', base, bad,",
-              "excerpt_sha256": "81dfe1b8539702ec5b29e6df767a02fe8f9eec595aac898f5fb56733bd0a5b79",
-              "file_sha256": "c80c521743767186718e0c865325e3f58199cbe2779183bbb487dfd9d810c0b7",
-              "quote_check": "exact"
-            },
-            {
-              "path": "scripts/pm_dg6b_full_oracles.py",
-              "unit": "family_probes",
-              "line_start": 378,
-              "line_end": 378,
-              "quote": "add('history_account_custody/' + field, 'envelope_source_join', hbase, bad,",
-              "excerpt_sha256": "b010c907e09530b7ebc760fec1852e0f69c8881d4d8c49e9218e48787e337b84",
-              "file_sha256": "c80c521743767186718e0c865325e3f58199cbe2779183bbb487dfd9d810c0b7",
+              "unit": "enforced_event_record_validator",
+              "line_start": 1081,
+              "line_end": 1081,
+              "quote": "return datetime_validator(load_plan('Plans/event_record.schema.json'), profile=EVENT_RECORD)",
+              "excerpt_sha256": "551307e87e54b661eccfd03c582007025bbf74c7327909d3082213cf26558dd2",
+              "file_sha256": "809a42f2749f7eaa2dad44a2bd6275db6488270171b86e8d0f3950d2df50f180",
               "quote_check": "exact"
             }
           ],
           "prior": {
-            "source": "DG6B.self-grade.json@7c2ac9c7512f7d0d793c2c01640adc353170c18a (sweep part 2A)",
+            "source": "DG6B.self-grade.json@7cf56368356da2b7a5ff25f6452cf753ce36bf45",
             "status": "PARTIAL"
           },
-          "change": "carried",
-          "change_reason": "Part 2B closes S2 (numbers) and S3 (timestamp formats) in the lane; PARTIAL remains only for the shared datetime_validator boundary and inventory gate, which run at batch-2 integration."
+          "change": "upgraded",
+          "change_reason": "Closes the family datetime boundary, complete schema occurrence proof and retained-store observation gaps; global inventory issue is unrelated to this family boundary."
         }
       },
       "remaining_gaps": [
         "Membership absent until separate admission.",
         "Retention remains PENDING_RETENTION_DECISION.",
-        "Batch-2 integration: the shared datetime_validator boundary and the date-time inventory gate over the merged tree (this tree fails the gate on hash drift and unclassified containers; Addendum 2), then the Sol/Astra review."
+        "Integration/review dependency: recorded C12-DT retired-snapshot date-time exclusion; no broad shared-suite PASS. Blind reviews remain with the lead."
       ],
       "static_checks_seen": [
         "Plans/dg6b_event_contract_fixtures.json",
@@ -4667,10 +4405,11 @@
         "scripts/pm_dg6b_p2b_cases.py",
         "scripts/pm_dg6b_round9_cases.py",
         "scripts/pm_event_datetime.py",
-        "scripts/pm_event_numbers.py"
+        "scripts/pm_event_numbers.py",
+        "scripts/pm-dg6b-c12.py"
       ],
-      "notes": "Static part-2B preparation: the gated shared date-time, number and retained-original rules are adopted and every guard-table row this family reaches is proved on the gated tool. Native execution NOT_RUN. No READY claim before batch-2 integration and review.",
-      "grading_batch": "sweep-p2b",
+      "notes": "C12 only regraded. Other eleven cells carried unchanged; native NOT_RUN, membership/admission and governance unchanged.",
+      "grading_batch": "c12-dg6b",
       "preparation_state": "NOT_READY_REVIEW",
       "prospective_role": "writer_after_separate_admission_and_retention_assignment",
       "prepared_verdict": "NOT_READY"
@@ -4694,7 +4433,7 @@
           "quote_check": "exact"
         }
       ],
-      "pass_count": 9,
+      "pass_count": 10,
       "normative_depth_complete": false,
       "native_execution": "NOT_RUN",
       "current_owner_units": [
@@ -5108,73 +4847,43 @@
           "change_reason": "Part 2B: retained originals resolve through SP-1101 sealed custody and the shared RetainedDispatcher (HR01); retained timestamps keep their owner profile; status carried."
         },
         "positive_negative_oracles": {
-          "status": "PARTIAL",
+          "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Every refusal is a named row of a guard table (78 tables, 176 rows), reached only through require(). The gated tool proves 77/77 row cells over the 37 phase tables this family reaches, with 126 distinct single-defect negatives, no masked negative and no unrelated change (1 cell(s) proved with a declared donor negative because this family's own path cannot reach the row). Part 2B witnesses cover the CV-1101 profiles per field, 2^53/uint64 boundaries, 4,400-digit integers, the shared corpus through the complete append route and SP-1101 custody. PARTIAL: the shared datetime_validator boundary and the date-time inventory gate run at batch-2 integration (Addendum 2); native execution NOT_RUN.",
+          "finding": "ATS-335: original exact-family suite passes with the shared inventory-authenticated datetime_validator in append/retry/history, 84 proved row cells (1 declared donors), complete owner-schema clause/cut/restoration witnesses and sealed-store receipt/result reads. Whole-definition Method B scope; no claim of universal per-keyword isolation. Global shared inventory false refusal remains separate; native NOT_RUN.",
           "evidence": [
             {
+              "path": "Plans/Automated_Testing_System.md",
+              "unit": "ATS-335",
+              "line_start": 7408,
+              "line_end": 7408,
+              "quote": "- `plugin.loaded`: positive closed payload and original-identity retry; negatives raw secret/extension field, missing operation ID, unsupported version, revision zero, raw redaction, malformed UTC,",
+              "excerpt_sha256": "75bfff898d729b2ffd5f88fc670f7b7a33944ca61516823d79d724bd8965b783",
+              "file_sha256": "a14faaeeff125d0ccc2775d3f1bcc4372b8ff689a01b632bcd508e52a2e5d14e",
+              "quote_check": "exact"
+            },
+            {
               "path": "scripts/pm-dg6b-event-contracts.py",
-              "unit": "require",
-              "line_start": 89,
-              "line_end": 89,
-              "quote": "def require(phase, facts):",
-              "excerpt_sha256": "059652ce3cb52923b56d67380ab899f9a99b0ee94faba612312b85f1a6813730",
-              "file_sha256": "363d77d86afaf69f0aec1227684280250d32d0fda376e847800255d013786920",
-              "quote_check": "exact"
-            },
-            {
-              "path": "scripts/pm_dg6b_round9_cases.py",
-              "unit": "family_cases",
-              "line_start": 41,
-              "line_end": 41,
-              "quote": "def family_cases(m, row, schema):",
-              "excerpt_sha256": "e32be7e6c52cb2708395394158815696c87177f4da60e2fa7253761c7cfa8a39",
-              "file_sha256": "9c6d57d0f43a76c35b602962d11826006b3a1db85b6f7b00e56936022f065b48",
-              "quote_check": "exact"
-            },
-            {
-              "path": "scripts/pm_dg6b_p2b_cases.py",
-              "unit": "family_cases",
-              "line_start": 117,
-              "line_end": 117,
-              "quote": "def family_cases(m, row, schema):",
-              "excerpt_sha256": "e32be7e6c52cb2708395394158815696c87177f4da60e2fa7253761c7cfa8a39",
-              "file_sha256": "21bf76da2acce5467e7b5547efdc655f8e3bf18850fd592d2b23078a5a98b85f",
-              "quote_check": "exact"
-            },
-            {
-              "path": "scripts/pm_dg6b_full_oracles.py",
-              "unit": "family_probes",
-              "line_start": 265,
-              "line_end": 265,
-              "quote": "add('account_custody/' + field, 'envelope_source_join', base, bad,",
-              "excerpt_sha256": "81dfe1b8539702ec5b29e6df767a02fe8f9eec595aac898f5fb56733bd0a5b79",
-              "file_sha256": "c80c521743767186718e0c865325e3f58199cbe2779183bbb487dfd9d810c0b7",
-              "quote_check": "exact"
-            },
-            {
-              "path": "scripts/pm_dg6b_full_oracles.py",
-              "unit": "family_probes",
-              "line_start": 378,
-              "line_end": 378,
-              "quote": "add('history_account_custody/' + field, 'envelope_source_join', hbase, bad,",
-              "excerpt_sha256": "b010c907e09530b7ebc760fec1852e0f69c8881d4d8c49e9218e48787e337b84",
-              "file_sha256": "c80c521743767186718e0c865325e3f58199cbe2779183bbb487dfd9d810c0b7",
+              "unit": "enforced_event_record_validator",
+              "line_start": 1081,
+              "line_end": 1081,
+              "quote": "return datetime_validator(load_plan('Plans/event_record.schema.json'), profile=EVENT_RECORD)",
+              "excerpt_sha256": "551307e87e54b661eccfd03c582007025bbf74c7327909d3082213cf26558dd2",
+              "file_sha256": "809a42f2749f7eaa2dad44a2bd6275db6488270171b86e8d0f3950d2df50f180",
               "quote_check": "exact"
             }
           ],
           "prior": {
-            "source": "DG6B.self-grade.json@7c2ac9c7512f7d0d793c2c01640adc353170c18a (sweep part 2A)",
+            "source": "DG6B.self-grade.json@7cf56368356da2b7a5ff25f6452cf753ce36bf45",
             "status": "PARTIAL"
           },
-          "change": "carried",
-          "change_reason": "Part 2B closes S2 (numbers) and S3 (timestamp formats) in the lane; PARTIAL remains only for the shared datetime_validator boundary and inventory gate, which run at batch-2 integration."
+          "change": "upgraded",
+          "change_reason": "Closes the family datetime boundary, complete schema occurrence proof and retained-store observation gaps; global inventory issue is unrelated to this family boundary."
         }
       },
       "remaining_gaps": [
         "Membership absent until separate admission.",
         "Retention remains PENDING_RETENTION_DECISION.",
-        "Batch-2 integration: the shared datetime_validator boundary and the date-time inventory gate over the merged tree (this tree fails the gate on hash drift and unclassified containers; Addendum 2), then the Sol/Astra review."
+        "Integration/review dependency: recorded C12-DT retired-snapshot date-time exclusion; no broad shared-suite PASS. Blind reviews remain with the lead."
       ],
       "static_checks_seen": [
         "Plans/dg6b_event_contract_fixtures.json",
@@ -5184,10 +4893,11 @@
         "scripts/pm_dg6b_p2b_cases.py",
         "scripts/pm_dg6b_round9_cases.py",
         "scripts/pm_event_datetime.py",
-        "scripts/pm_event_numbers.py"
+        "scripts/pm_event_numbers.py",
+        "scripts/pm-dg6b-c12.py"
       ],
-      "notes": "Static part-2B preparation: the gated shared date-time, number and retained-original rules are adopted and every guard-table row this family reaches is proved on the gated tool. Native execution NOT_RUN. No READY claim before batch-2 integration and review.",
-      "grading_batch": "sweep-p2b",
+      "notes": "C12 only regraded. Other eleven cells carried unchanged; native NOT_RUN, membership/admission and governance unchanged.",
+      "grading_batch": "c12-dg6b",
       "preparation_state": "NOT_READY_REVIEW",
       "prospective_role": "writer_after_separate_admission_and_retention_assignment",
       "prepared_verdict": "NOT_READY"
@@ -5211,7 +4921,7 @@
           "quote_check": "exact"
         }
       ],
-      "pass_count": 9,
+      "pass_count": 10,
       "normative_depth_complete": false,
       "native_execution": "NOT_RUN",
       "current_owner_units": [
@@ -5625,73 +5335,43 @@
           "change_reason": "Part 2B: retained originals resolve through SP-1101 sealed custody and the shared RetainedDispatcher (HR01); retained timestamps keep their owner profile; status carried."
         },
         "positive_negative_oracles": {
-          "status": "PARTIAL",
+          "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Every refusal is a named row of a guard table (78 tables, 176 rows), reached only through require(). The gated tool proves 77/77 row cells over the 37 phase tables this family reaches, with 126 distinct single-defect negatives, no masked negative and no unrelated change (1 cell(s) proved with a declared donor negative because this family's own path cannot reach the row). Part 2B witnesses cover the CV-1101 profiles per field, 2^53/uint64 boundaries, 4,400-digit integers, the shared corpus through the complete append route and SP-1101 custody. PARTIAL: the shared datetime_validator boundary and the date-time inventory gate run at batch-2 integration (Addendum 2); native execution NOT_RUN.",
+          "finding": "ATS-335: original exact-family suite passes with the shared inventory-authenticated datetime_validator in append/retry/history, 84 proved row cells (1 declared donors), complete owner-schema clause/cut/restoration witnesses and sealed-store receipt/result reads. Whole-definition Method B scope; no claim of universal per-keyword isolation. Global shared inventory false refusal remains separate; native NOT_RUN.",
           "evidence": [
             {
+              "path": "Plans/Automated_Testing_System.md",
+              "unit": "ATS-335",
+              "line_start": 7409,
+              "line_end": 7409,
+              "quote": "- `plugin.permission.override`: positive closed payload and original-identity retry; negatives raw secret/extension field, missing operation ID, unsupported version, revision zero, raw redaction,",
+              "excerpt_sha256": "859326d9c782ba709c047d2a00efc7837d62c011795c9bb5c001d56d31e86b47",
+              "file_sha256": "a14faaeeff125d0ccc2775d3f1bcc4372b8ff689a01b632bcd508e52a2e5d14e",
+              "quote_check": "exact"
+            },
+            {
               "path": "scripts/pm-dg6b-event-contracts.py",
-              "unit": "require",
-              "line_start": 89,
-              "line_end": 89,
-              "quote": "def require(phase, facts):",
-              "excerpt_sha256": "059652ce3cb52923b56d67380ab899f9a99b0ee94faba612312b85f1a6813730",
-              "file_sha256": "363d77d86afaf69f0aec1227684280250d32d0fda376e847800255d013786920",
-              "quote_check": "exact"
-            },
-            {
-              "path": "scripts/pm_dg6b_round9_cases.py",
-              "unit": "family_cases",
-              "line_start": 41,
-              "line_end": 41,
-              "quote": "def family_cases(m, row, schema):",
-              "excerpt_sha256": "e32be7e6c52cb2708395394158815696c87177f4da60e2fa7253761c7cfa8a39",
-              "file_sha256": "9c6d57d0f43a76c35b602962d11826006b3a1db85b6f7b00e56936022f065b48",
-              "quote_check": "exact"
-            },
-            {
-              "path": "scripts/pm_dg6b_p2b_cases.py",
-              "unit": "family_cases",
-              "line_start": 117,
-              "line_end": 117,
-              "quote": "def family_cases(m, row, schema):",
-              "excerpt_sha256": "e32be7e6c52cb2708395394158815696c87177f4da60e2fa7253761c7cfa8a39",
-              "file_sha256": "21bf76da2acce5467e7b5547efdc655f8e3bf18850fd592d2b23078a5a98b85f",
-              "quote_check": "exact"
-            },
-            {
-              "path": "scripts/pm_dg6b_full_oracles.py",
-              "unit": "family_probes",
-              "line_start": 265,
-              "line_end": 265,
-              "quote": "add('account_custody/' + field, 'envelope_source_join', base, bad,",
-              "excerpt_sha256": "81dfe1b8539702ec5b29e6df767a02fe8f9eec595aac898f5fb56733bd0a5b79",
-              "file_sha256": "c80c521743767186718e0c865325e3f58199cbe2779183bbb487dfd9d810c0b7",
-              "quote_check": "exact"
-            },
-            {
-              "path": "scripts/pm_dg6b_full_oracles.py",
-              "unit": "family_probes",
-              "line_start": 378,
-              "line_end": 378,
-              "quote": "add('history_account_custody/' + field, 'envelope_source_join', hbase, bad,",
-              "excerpt_sha256": "b010c907e09530b7ebc760fec1852e0f69c8881d4d8c49e9218e48787e337b84",
-              "file_sha256": "c80c521743767186718e0c865325e3f58199cbe2779183bbb487dfd9d810c0b7",
+              "unit": "enforced_event_record_validator",
+              "line_start": 1081,
+              "line_end": 1081,
+              "quote": "return datetime_validator(load_plan('Plans/event_record.schema.json'), profile=EVENT_RECORD)",
+              "excerpt_sha256": "551307e87e54b661eccfd03c582007025bbf74c7327909d3082213cf26558dd2",
+              "file_sha256": "809a42f2749f7eaa2dad44a2bd6275db6488270171b86e8d0f3950d2df50f180",
               "quote_check": "exact"
             }
           ],
           "prior": {
-            "source": "DG6B.self-grade.json@7c2ac9c7512f7d0d793c2c01640adc353170c18a (sweep part 2A)",
+            "source": "DG6B.self-grade.json@7cf56368356da2b7a5ff25f6452cf753ce36bf45",
             "status": "PARTIAL"
           },
-          "change": "carried",
-          "change_reason": "Part 2B closes S2 (numbers) and S3 (timestamp formats) in the lane; PARTIAL remains only for the shared datetime_validator boundary and inventory gate, which run at batch-2 integration."
+          "change": "upgraded",
+          "change_reason": "Closes the family datetime boundary, complete schema occurrence proof and retained-store observation gaps; global inventory issue is unrelated to this family boundary."
         }
       },
       "remaining_gaps": [
         "Membership absent until separate admission.",
         "Retention remains PENDING_RETENTION_DECISION.",
-        "Batch-2 integration: the shared datetime_validator boundary and the date-time inventory gate over the merged tree (this tree fails the gate on hash drift and unclassified containers; Addendum 2), then the Sol/Astra review."
+        "Integration/review dependency: recorded C12-DT retired-snapshot date-time exclusion; no broad shared-suite PASS. Blind reviews remain with the lead."
       ],
       "static_checks_seen": [
         "Plans/dg6b_event_contract_fixtures.json",
@@ -5701,10 +5381,11 @@
         "scripts/pm_dg6b_p2b_cases.py",
         "scripts/pm_dg6b_round9_cases.py",
         "scripts/pm_event_datetime.py",
-        "scripts/pm_event_numbers.py"
+        "scripts/pm_event_numbers.py",
+        "scripts/pm-dg6b-c12.py"
       ],
-      "notes": "Static part-2B preparation: the gated shared date-time, number and retained-original rules are adopted and every guard-table row this family reaches is proved on the gated tool. Native execution NOT_RUN. No READY claim before batch-2 integration and review.",
-      "grading_batch": "sweep-p2b",
+      "notes": "C12 only regraded. Other eleven cells carried unchanged; native NOT_RUN, membership/admission and governance unchanged.",
+      "grading_batch": "c12-dg6b",
       "preparation_state": "NOT_READY_REVIEW",
       "prospective_role": "writer_after_separate_admission_and_retention_assignment",
       "prepared_verdict": "NOT_READY"
@@ -5728,7 +5409,7 @@
           "quote_check": "exact"
         }
       ],
-      "pass_count": 9,
+      "pass_count": 10,
       "normative_depth_complete": false,
       "native_execution": "NOT_RUN",
       "current_owner_units": [
@@ -6142,73 +5823,43 @@
           "change_reason": "Part 2B: retained originals resolve through SP-1101 sealed custody and the shared RetainedDispatcher (HR01); retained timestamps keep their owner profile; status carried."
         },
         "positive_negative_oracles": {
-          "status": "PARTIAL",
+          "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Every refusal is a named row of a guard table (78 tables, 176 rows), reached only through require(). The gated tool proves 77/77 row cells over the 37 phase tables this family reaches, with 126 distinct single-defect negatives, no masked negative and no unrelated change (1 cell(s) proved with a declared donor negative because this family's own path cannot reach the row). Part 2B witnesses cover the CV-1101 profiles per field, 2^53/uint64 boundaries, 4,400-digit integers, the shared corpus through the complete append route and SP-1101 custody. PARTIAL: the shared datetime_validator boundary and the date-time inventory gate run at batch-2 integration (Addendum 2); native execution NOT_RUN.",
+          "finding": "ATS-335: original exact-family suite passes with the shared inventory-authenticated datetime_validator in append/retry/history, 84 proved row cells (1 declared donors), complete owner-schema clause/cut/restoration witnesses and sealed-store receipt/result reads. Whole-definition Method B scope; no claim of universal per-keyword isolation. Global shared inventory false refusal remains separate; native NOT_RUN.",
           "evidence": [
             {
+              "path": "Plans/Automated_Testing_System.md",
+              "unit": "ATS-335",
+              "line_start": 7410,
+              "line_end": 7410,
+              "quote": "- `plugin.tool.collision`: positive closed payload and original-identity retry; negatives raw secret/extension field, missing operation ID, unsupported version, revision zero, raw redaction,",
+              "excerpt_sha256": "0ada07de5c3488c2a7a59882c4f1175f669546603ea23faeadfc31b2e5e6e977",
+              "file_sha256": "a14faaeeff125d0ccc2775d3f1bcc4372b8ff689a01b632bcd508e52a2e5d14e",
+              "quote_check": "exact"
+            },
+            {
               "path": "scripts/pm-dg6b-event-contracts.py",
-              "unit": "require",
-              "line_start": 89,
-              "line_end": 89,
-              "quote": "def require(phase, facts):",
-              "excerpt_sha256": "059652ce3cb52923b56d67380ab899f9a99b0ee94faba612312b85f1a6813730",
-              "file_sha256": "363d77d86afaf69f0aec1227684280250d32d0fda376e847800255d013786920",
-              "quote_check": "exact"
-            },
-            {
-              "path": "scripts/pm_dg6b_round9_cases.py",
-              "unit": "family_cases",
-              "line_start": 41,
-              "line_end": 41,
-              "quote": "def family_cases(m, row, schema):",
-              "excerpt_sha256": "e32be7e6c52cb2708395394158815696c87177f4da60e2fa7253761c7cfa8a39",
-              "file_sha256": "9c6d57d0f43a76c35b602962d11826006b3a1db85b6f7b00e56936022f065b48",
-              "quote_check": "exact"
-            },
-            {
-              "path": "scripts/pm_dg6b_p2b_cases.py",
-              "unit": "family_cases",
-              "line_start": 117,
-              "line_end": 117,
-              "quote": "def family_cases(m, row, schema):",
-              "excerpt_sha256": "e32be7e6c52cb2708395394158815696c87177f4da60e2fa7253761c7cfa8a39",
-              "file_sha256": "21bf76da2acce5467e7b5547efdc655f8e3bf18850fd592d2b23078a5a98b85f",
-              "quote_check": "exact"
-            },
-            {
-              "path": "scripts/pm_dg6b_full_oracles.py",
-              "unit": "family_probes",
-              "line_start": 265,
-              "line_end": 265,
-              "quote": "add('account_custody/' + field, 'envelope_source_join', base, bad,",
-              "excerpt_sha256": "81dfe1b8539702ec5b29e6df767a02fe8f9eec595aac898f5fb56733bd0a5b79",
-              "file_sha256": "c80c521743767186718e0c865325e3f58199cbe2779183bbb487dfd9d810c0b7",
-              "quote_check": "exact"
-            },
-            {
-              "path": "scripts/pm_dg6b_full_oracles.py",
-              "unit": "family_probes",
-              "line_start": 378,
-              "line_end": 378,
-              "quote": "add('history_account_custody/' + field, 'envelope_source_join', hbase, bad,",
-              "excerpt_sha256": "b010c907e09530b7ebc760fec1852e0f69c8881d4d8c49e9218e48787e337b84",
-              "file_sha256": "c80c521743767186718e0c865325e3f58199cbe2779183bbb487dfd9d810c0b7",
+              "unit": "enforced_event_record_validator",
+              "line_start": 1081,
+              "line_end": 1081,
+              "quote": "return datetime_validator(load_plan('Plans/event_record.schema.json'), profile=EVENT_RECORD)",
+              "excerpt_sha256": "551307e87e54b661eccfd03c582007025bbf74c7327909d3082213cf26558dd2",
+              "file_sha256": "809a42f2749f7eaa2dad44a2bd6275db6488270171b86e8d0f3950d2df50f180",
               "quote_check": "exact"
             }
           ],
           "prior": {
-            "source": "DG6B.self-grade.json@7c2ac9c7512f7d0d793c2c01640adc353170c18a (sweep part 2A)",
+            "source": "DG6B.self-grade.json@7cf56368356da2b7a5ff25f6452cf753ce36bf45",
             "status": "PARTIAL"
           },
-          "change": "carried",
-          "change_reason": "Part 2B closes S2 (numbers) and S3 (timestamp formats) in the lane; PARTIAL remains only for the shared datetime_validator boundary and inventory gate, which run at batch-2 integration."
+          "change": "upgraded",
+          "change_reason": "Closes the family datetime boundary, complete schema occurrence proof and retained-store observation gaps; global inventory issue is unrelated to this family boundary."
         }
       },
       "remaining_gaps": [
         "Membership absent until separate admission.",
         "Retention remains PENDING_RETENTION_DECISION.",
-        "Batch-2 integration: the shared datetime_validator boundary and the date-time inventory gate over the merged tree (this tree fails the gate on hash drift and unclassified containers; Addendum 2), then the Sol/Astra review."
+        "Integration/review dependency: recorded C12-DT retired-snapshot date-time exclusion; no broad shared-suite PASS. Blind reviews remain with the lead."
       ],
       "static_checks_seen": [
         "Plans/dg6b_event_contract_fixtures.json",
@@ -6218,10 +5869,11 @@
         "scripts/pm_dg6b_p2b_cases.py",
         "scripts/pm_dg6b_round9_cases.py",
         "scripts/pm_event_datetime.py",
-        "scripts/pm_event_numbers.py"
+        "scripts/pm_event_numbers.py",
+        "scripts/pm-dg6b-c12.py"
       ],
-      "notes": "Static part-2B preparation: the gated shared date-time, number and retained-original rules are adopted and every guard-table row this family reaches is proved on the gated tool. Native execution NOT_RUN. No READY claim before batch-2 integration and review.",
-      "grading_batch": "sweep-p2b",
+      "notes": "C12 only regraded. Other eleven cells carried unchanged; native NOT_RUN, membership/admission and governance unchanged.",
+      "grading_batch": "c12-dg6b",
       "preparation_state": "NOT_READY_REVIEW",
       "prospective_role": "writer_after_separate_admission_and_retention_assignment",
       "prepared_verdict": "NOT_READY"
@@ -6245,7 +5897,7 @@
           "quote_check": "exact"
         }
       ],
-      "pass_count": 9,
+      "pass_count": 10,
       "normative_depth_complete": false,
       "native_execution": "NOT_RUN",
       "current_owner_units": [
@@ -6659,73 +6311,43 @@
           "change_reason": "Part 2B: retained originals resolve through SP-1101 sealed custody and the shared RetainedDispatcher (HR01); retained timestamps keep their owner profile; status carried."
         },
         "positive_negative_oracles": {
-          "status": "PARTIAL",
+          "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Every refusal is a named row of a guard table (78 tables, 176 rows), reached only through require(). The gated tool proves 77/77 row cells over the 37 phase tables this family reaches, with 126 distinct single-defect negatives, no masked negative and no unrelated change (1 cell(s) proved with a declared donor negative because this family's own path cannot reach the row). Part 2B witnesses cover the CV-1101 profiles per field, 2^53/uint64 boundaries, 4,400-digit integers, the shared corpus through the complete append route and SP-1101 custody. PARTIAL: the shared datetime_validator boundary and the date-time inventory gate run at batch-2 integration (Addendum 2); native execution NOT_RUN.",
+          "finding": "ATS-335: original exact-family suite passes with the shared inventory-authenticated datetime_validator in append/retry/history, 84 proved row cells (1 declared donors), complete owner-schema clause/cut/restoration witnesses and sealed-store receipt/result reads. Whole-definition Method B scope; no claim of universal per-keyword isolation. Global shared inventory false refusal remains separate; native NOT_RUN.",
           "evidence": [
             {
+              "path": "Plans/Automated_Testing_System.md",
+              "unit": "ATS-335",
+              "line_start": 7411,
+              "line_end": 7411,
+              "quote": "- `plugin.tool.registered`: positive closed payload and original-identity retry; negatives raw secret/extension field, missing operation ID, unsupported version, revision zero, raw redaction,",
+              "excerpt_sha256": "0d310d4dbfb6fd082ab135398d597f4617939329dc4a9bebac955cdcea412acf",
+              "file_sha256": "a14faaeeff125d0ccc2775d3f1bcc4372b8ff689a01b632bcd508e52a2e5d14e",
+              "quote_check": "exact"
+            },
+            {
               "path": "scripts/pm-dg6b-event-contracts.py",
-              "unit": "require",
-              "line_start": 89,
-              "line_end": 89,
-              "quote": "def require(phase, facts):",
-              "excerpt_sha256": "059652ce3cb52923b56d67380ab899f9a99b0ee94faba612312b85f1a6813730",
-              "file_sha256": "363d77d86afaf69f0aec1227684280250d32d0fda376e847800255d013786920",
-              "quote_check": "exact"
-            },
-            {
-              "path": "scripts/pm_dg6b_round9_cases.py",
-              "unit": "family_cases",
-              "line_start": 41,
-              "line_end": 41,
-              "quote": "def family_cases(m, row, schema):",
-              "excerpt_sha256": "e32be7e6c52cb2708395394158815696c87177f4da60e2fa7253761c7cfa8a39",
-              "file_sha256": "9c6d57d0f43a76c35b602962d11826006b3a1db85b6f7b00e56936022f065b48",
-              "quote_check": "exact"
-            },
-            {
-              "path": "scripts/pm_dg6b_p2b_cases.py",
-              "unit": "family_cases",
-              "line_start": 117,
-              "line_end": 117,
-              "quote": "def family_cases(m, row, schema):",
-              "excerpt_sha256": "e32be7e6c52cb2708395394158815696c87177f4da60e2fa7253761c7cfa8a39",
-              "file_sha256": "21bf76da2acce5467e7b5547efdc655f8e3bf18850fd592d2b23078a5a98b85f",
-              "quote_check": "exact"
-            },
-            {
-              "path": "scripts/pm_dg6b_full_oracles.py",
-              "unit": "family_probes",
-              "line_start": 265,
-              "line_end": 265,
-              "quote": "add('account_custody/' + field, 'envelope_source_join', base, bad,",
-              "excerpt_sha256": "81dfe1b8539702ec5b29e6df767a02fe8f9eec595aac898f5fb56733bd0a5b79",
-              "file_sha256": "c80c521743767186718e0c865325e3f58199cbe2779183bbb487dfd9d810c0b7",
-              "quote_check": "exact"
-            },
-            {
-              "path": "scripts/pm_dg6b_full_oracles.py",
-              "unit": "family_probes",
-              "line_start": 378,
-              "line_end": 378,
-              "quote": "add('history_account_custody/' + field, 'envelope_source_join', hbase, bad,",
-              "excerpt_sha256": "b010c907e09530b7ebc760fec1852e0f69c8881d4d8c49e9218e48787e337b84",
-              "file_sha256": "c80c521743767186718e0c865325e3f58199cbe2779183bbb487dfd9d810c0b7",
+              "unit": "enforced_event_record_validator",
+              "line_start": 1081,
+              "line_end": 1081,
+              "quote": "return datetime_validator(load_plan('Plans/event_record.schema.json'), profile=EVENT_RECORD)",
+              "excerpt_sha256": "551307e87e54b661eccfd03c582007025bbf74c7327909d3082213cf26558dd2",
+              "file_sha256": "809a42f2749f7eaa2dad44a2bd6275db6488270171b86e8d0f3950d2df50f180",
               "quote_check": "exact"
             }
           ],
           "prior": {
-            "source": "DG6B.self-grade.json@7c2ac9c7512f7d0d793c2c01640adc353170c18a (sweep part 2A)",
+            "source": "DG6B.self-grade.json@7cf56368356da2b7a5ff25f6452cf753ce36bf45",
             "status": "PARTIAL"
           },
-          "change": "carried",
-          "change_reason": "Part 2B closes S2 (numbers) and S3 (timestamp formats) in the lane; PARTIAL remains only for the shared datetime_validator boundary and inventory gate, which run at batch-2 integration."
+          "change": "upgraded",
+          "change_reason": "Closes the family datetime boundary, complete schema occurrence proof and retained-store observation gaps; global inventory issue is unrelated to this family boundary."
         }
       },
       "remaining_gaps": [
         "Membership absent until separate admission.",
         "Retention remains PENDING_RETENTION_DECISION.",
-        "Batch-2 integration: the shared datetime_validator boundary and the date-time inventory gate over the merged tree (this tree fails the gate on hash drift and unclassified containers; Addendum 2), then the Sol/Astra review."
+        "Integration/review dependency: recorded C12-DT retired-snapshot date-time exclusion; no broad shared-suite PASS. Blind reviews remain with the lead."
       ],
       "static_checks_seen": [
         "Plans/dg6b_event_contract_fixtures.json",
@@ -6735,10 +6357,11 @@
         "scripts/pm_dg6b_p2b_cases.py",
         "scripts/pm_dg6b_round9_cases.py",
         "scripts/pm_event_datetime.py",
-        "scripts/pm_event_numbers.py"
+        "scripts/pm_event_numbers.py",
+        "scripts/pm-dg6b-c12.py"
       ],
-      "notes": "Static part-2B preparation: the gated shared date-time, number and retained-original rules are adopted and every guard-table row this family reaches is proved on the gated tool. Native execution NOT_RUN. No READY claim before batch-2 integration and review.",
-      "grading_batch": "sweep-p2b",
+      "notes": "C12 only regraded. Other eleven cells carried unchanged; native NOT_RUN, membership/admission and governance unchanged.",
+      "grading_batch": "c12-dg6b",
       "preparation_state": "NOT_READY_REVIEW",
       "prospective_role": "writer_after_separate_admission_and_retention_assignment",
       "prepared_verdict": "NOT_READY"
@@ -6761,7 +6384,7 @@
           "quote_check": "exact"
         }
       ],
-      "pass_count": 9,
+      "pass_count": 10,
       "normative_depth_complete": false,
       "native_execution": "NOT_RUN",
       "current_owner_units": [
@@ -7198,73 +6821,43 @@
           "change_reason": "Part 2B: retained originals resolve through SP-1101 sealed custody and the shared RetainedDispatcher (HR01); retained timestamps keep their owner profile; status carried."
         },
         "positive_negative_oracles": {
-          "status": "PARTIAL",
+          "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Every refusal is a named row of a guard table (78 tables, 176 rows), reached only through require(). The gated tool proves 118/118 row cells over the 52 phase tables this family reaches, with 176 distinct single-defect negatives, no masked negative and no unrelated change (2 cell(s) proved with a declared donor negative because this family's own path cannot reach the row). Part 2B witnesses cover the CV-1101 profiles per field, 2^53/uint64 boundaries, 4,400-digit integers, the shared corpus through the complete append route and SP-1101 custody. PARTIAL: the shared datetime_validator boundary and the date-time inventory gate run at batch-2 integration (Addendum 2); native execution NOT_RUN.",
+          "finding": "ATS-336: original exact-family suite passes with the shared inventory-authenticated datetime_validator in append/retry/history, 125 proved row cells (2 declared donors), complete owner-schema clause/cut/restoration witnesses and sealed-store receipt/result reads. Whole-definition Method B scope; no claim of universal per-keyword isolation. Global shared inventory false refusal remains separate; native NOT_RUN.",
           "evidence": [
             {
+              "path": "Plans/Automated_Testing_System.md",
+              "unit": "ATS-336",
+              "line_start": 7444,
+              "line_end": 7444,
+              "quote": "- `persona.created`: valid library application and real Project payload/result joins; original-identity retry; exact home/reach/source/revision/readback custody. Negatives: raw body/extension,",
+              "excerpt_sha256": "73af6115baf2a8c41fc1ef7b49dab97a9186b13752ef78f2c0d375c2791e152d",
+              "file_sha256": "a14faaeeff125d0ccc2775d3f1bcc4372b8ff689a01b632bcd508e52a2e5d14e",
+              "quote_check": "exact"
+            },
+            {
               "path": "scripts/pm-dg6b-event-contracts.py",
-              "unit": "require",
-              "line_start": 89,
-              "line_end": 89,
-              "quote": "def require(phase, facts):",
-              "excerpt_sha256": "059652ce3cb52923b56d67380ab899f9a99b0ee94faba612312b85f1a6813730",
-              "file_sha256": "363d77d86afaf69f0aec1227684280250d32d0fda376e847800255d013786920",
-              "quote_check": "exact"
-            },
-            {
-              "path": "scripts/pm_dg6b_round9_cases.py",
-              "unit": "family_cases",
-              "line_start": 41,
-              "line_end": 41,
-              "quote": "def family_cases(m, row, schema):",
-              "excerpt_sha256": "e32be7e6c52cb2708395394158815696c87177f4da60e2fa7253761c7cfa8a39",
-              "file_sha256": "9c6d57d0f43a76c35b602962d11826006b3a1db85b6f7b00e56936022f065b48",
-              "quote_check": "exact"
-            },
-            {
-              "path": "scripts/pm_dg6b_p2b_cases.py",
-              "unit": "family_cases",
-              "line_start": 117,
-              "line_end": 117,
-              "quote": "def family_cases(m, row, schema):",
-              "excerpt_sha256": "e32be7e6c52cb2708395394158815696c87177f4da60e2fa7253761c7cfa8a39",
-              "file_sha256": "21bf76da2acce5467e7b5547efdc655f8e3bf18850fd592d2b23078a5a98b85f",
-              "quote_check": "exact"
-            },
-            {
-              "path": "scripts/pm_dg6b_full_oracles.py",
-              "unit": "family_probes",
-              "line_start": 265,
-              "line_end": 265,
-              "quote": "add('account_custody/' + field, 'envelope_source_join', base, bad,",
-              "excerpt_sha256": "81dfe1b8539702ec5b29e6df767a02fe8f9eec595aac898f5fb56733bd0a5b79",
-              "file_sha256": "c80c521743767186718e0c865325e3f58199cbe2779183bbb487dfd9d810c0b7",
-              "quote_check": "exact"
-            },
-            {
-              "path": "scripts/pm_dg6b_full_oracles.py",
-              "unit": "family_probes",
-              "line_start": 378,
-              "line_end": 378,
-              "quote": "add('history_account_custody/' + field, 'envelope_source_join', hbase, bad,",
-              "excerpt_sha256": "b010c907e09530b7ebc760fec1852e0f69c8881d4d8c49e9218e48787e337b84",
-              "file_sha256": "c80c521743767186718e0c865325e3f58199cbe2779183bbb487dfd9d810c0b7",
+              "unit": "enforced_event_record_validator",
+              "line_start": 1081,
+              "line_end": 1081,
+              "quote": "return datetime_validator(load_plan('Plans/event_record.schema.json'), profile=EVENT_RECORD)",
+              "excerpt_sha256": "551307e87e54b661eccfd03c582007025bbf74c7327909d3082213cf26558dd2",
+              "file_sha256": "809a42f2749f7eaa2dad44a2bd6275db6488270171b86e8d0f3950d2df50f180",
               "quote_check": "exact"
             }
           ],
           "prior": {
-            "source": "DG6B.self-grade.json@7c2ac9c7512f7d0d793c2c01640adc353170c18a (sweep part 2A)",
+            "source": "DG6B.self-grade.json@7cf56368356da2b7a5ff25f6452cf753ce36bf45",
             "status": "PARTIAL"
           },
-          "change": "carried",
-          "change_reason": "Part 2B closes S2 (numbers) and S3 (timestamp formats) in the lane; PARTIAL remains only for the shared datetime_validator boundary and inventory gate, which run at batch-2 integration."
+          "change": "upgraded",
+          "change_reason": "Closes the family datetime boundary, complete schema occurrence proof and retained-store observation gaps; global inventory issue is unrelated to this family boundary."
         }
       },
       "remaining_gaps": [
         "Membership absent until separate admission.",
         "Retention remains PENDING_RETENTION_DECISION.",
-        "Batch-2 integration: the shared datetime_validator boundary and the date-time inventory gate over the merged tree (this tree fails the gate on hash drift and unclassified containers; Addendum 2), then the Sol/Astra review."
+        "Integration/review dependency: recorded C12-DT retired-snapshot date-time exclusion; no broad shared-suite PASS. Blind reviews remain with the lead."
       ],
       "static_checks_seen": [
         "Plans/dg6b_event_contract_fixtures.json",
@@ -7275,10 +6868,11 @@
         "scripts/pm_dg6b_p2b_cases.py",
         "scripts/pm_dg6b_round9_cases.py",
         "scripts/pm_event_datetime.py",
-        "scripts/pm_event_numbers.py"
+        "scripts/pm_event_numbers.py",
+        "scripts/pm-dg6b-c12.py"
       ],
-      "notes": "Static part-2B preparation: the gated shared date-time, number and retained-original rules are adopted and every guard-table row this family reaches is proved on the gated tool. Native execution NOT_RUN. No READY claim before batch-2 integration and review.",
-      "grading_batch": "sweep-p2b",
+      "notes": "C12 only regraded. Other eleven cells carried unchanged; native NOT_RUN, membership/admission and governance unchanged.",
+      "grading_batch": "c12-dg6b",
       "preparation_state": "NOT_READY_REVIEW",
       "prospective_role": "writer_after_separate_admission_and_retention_assignment",
       "prepared_verdict": "NOT_READY"
@@ -7301,7 +6895,7 @@
           "quote_check": "exact"
         }
       ],
-      "pass_count": 9,
+      "pass_count": 10,
       "normative_depth_complete": false,
       "native_execution": "NOT_RUN",
       "current_owner_units": [
@@ -7738,73 +7332,43 @@
           "change_reason": "Part 2B: retained originals resolve through SP-1101 sealed custody and the shared RetainedDispatcher (HR01); retained timestamps keep their owner profile; status carried."
         },
         "positive_negative_oracles": {
-          "status": "PARTIAL",
+          "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Every refusal is a named row of a guard table (78 tables, 176 rows), reached only through require(). The gated tool proves 114/114 row cells over the 54 phase tables this family reaches, with 173 distinct single-defect negatives, no masked negative and no unrelated change (2 cell(s) proved with a declared donor negative because this family's own path cannot reach the row). Part 2B witnesses cover the CV-1101 profiles per field, 2^53/uint64 boundaries, 4,400-digit integers, the shared corpus through the complete append route and SP-1101 custody. PARTIAL: the shared datetime_validator boundary and the date-time inventory gate run at batch-2 integration (Addendum 2); native execution NOT_RUN.",
+          "finding": "ATS-336: original exact-family suite passes with the shared inventory-authenticated datetime_validator in append/retry/history, 121 proved row cells (2 declared donors), complete owner-schema clause/cut/restoration witnesses and sealed-store receipt/result reads. Whole-definition Method B scope; no claim of universal per-keyword isolation. Global shared inventory false refusal remains separate; native NOT_RUN.",
           "evidence": [
             {
+              "path": "Plans/Automated_Testing_System.md",
+              "unit": "ATS-336",
+              "line_start": 7446,
+              "line_end": 7446,
+              "quote": "- `persona.deleted`: valid library application and real Project payload/result joins; original-identity retry; exact home/reach/source/revision/readback custody. Negatives: raw body/extension,",
+              "excerpt_sha256": "155956f09ce6fb26e68cdbb7e59b071532974708cb5a98f363b14a7fd13ffa45",
+              "file_sha256": "a14faaeeff125d0ccc2775d3f1bcc4372b8ff689a01b632bcd508e52a2e5d14e",
+              "quote_check": "exact"
+            },
+            {
               "path": "scripts/pm-dg6b-event-contracts.py",
-              "unit": "require",
-              "line_start": 89,
-              "line_end": 89,
-              "quote": "def require(phase, facts):",
-              "excerpt_sha256": "059652ce3cb52923b56d67380ab899f9a99b0ee94faba612312b85f1a6813730",
-              "file_sha256": "363d77d86afaf69f0aec1227684280250d32d0fda376e847800255d013786920",
-              "quote_check": "exact"
-            },
-            {
-              "path": "scripts/pm_dg6b_round9_cases.py",
-              "unit": "family_cases",
-              "line_start": 41,
-              "line_end": 41,
-              "quote": "def family_cases(m, row, schema):",
-              "excerpt_sha256": "e32be7e6c52cb2708395394158815696c87177f4da60e2fa7253761c7cfa8a39",
-              "file_sha256": "9c6d57d0f43a76c35b602962d11826006b3a1db85b6f7b00e56936022f065b48",
-              "quote_check": "exact"
-            },
-            {
-              "path": "scripts/pm_dg6b_p2b_cases.py",
-              "unit": "family_cases",
-              "line_start": 117,
-              "line_end": 117,
-              "quote": "def family_cases(m, row, schema):",
-              "excerpt_sha256": "e32be7e6c52cb2708395394158815696c87177f4da60e2fa7253761c7cfa8a39",
-              "file_sha256": "21bf76da2acce5467e7b5547efdc655f8e3bf18850fd592d2b23078a5a98b85f",
-              "quote_check": "exact"
-            },
-            {
-              "path": "scripts/pm_dg6b_full_oracles.py",
-              "unit": "family_probes",
-              "line_start": 265,
-              "line_end": 265,
-              "quote": "add('account_custody/' + field, 'envelope_source_join', base, bad,",
-              "excerpt_sha256": "81dfe1b8539702ec5b29e6df767a02fe8f9eec595aac898f5fb56733bd0a5b79",
-              "file_sha256": "c80c521743767186718e0c865325e3f58199cbe2779183bbb487dfd9d810c0b7",
-              "quote_check": "exact"
-            },
-            {
-              "path": "scripts/pm_dg6b_full_oracles.py",
-              "unit": "family_probes",
-              "line_start": 378,
-              "line_end": 378,
-              "quote": "add('history_account_custody/' + field, 'envelope_source_join', hbase, bad,",
-              "excerpt_sha256": "b010c907e09530b7ebc760fec1852e0f69c8881d4d8c49e9218e48787e337b84",
-              "file_sha256": "c80c521743767186718e0c865325e3f58199cbe2779183bbb487dfd9d810c0b7",
+              "unit": "enforced_event_record_validator",
+              "line_start": 1081,
+              "line_end": 1081,
+              "quote": "return datetime_validator(load_plan('Plans/event_record.schema.json'), profile=EVENT_RECORD)",
+              "excerpt_sha256": "551307e87e54b661eccfd03c582007025bbf74c7327909d3082213cf26558dd2",
+              "file_sha256": "809a42f2749f7eaa2dad44a2bd6275db6488270171b86e8d0f3950d2df50f180",
               "quote_check": "exact"
             }
           ],
           "prior": {
-            "source": "DG6B.self-grade.json@7c2ac9c7512f7d0d793c2c01640adc353170c18a (sweep part 2A)",
+            "source": "DG6B.self-grade.json@7cf56368356da2b7a5ff25f6452cf753ce36bf45",
             "status": "PARTIAL"
           },
-          "change": "carried",
-          "change_reason": "Part 2B closes S2 (numbers) and S3 (timestamp formats) in the lane; PARTIAL remains only for the shared datetime_validator boundary and inventory gate, which run at batch-2 integration."
+          "change": "upgraded",
+          "change_reason": "Closes the family datetime boundary, complete schema occurrence proof and retained-store observation gaps; global inventory issue is unrelated to this family boundary."
         }
       },
       "remaining_gaps": [
         "Membership absent until separate admission.",
         "Retention remains PENDING_RETENTION_DECISION.",
-        "Batch-2 integration: the shared datetime_validator boundary and the date-time inventory gate over the merged tree (this tree fails the gate on hash drift and unclassified containers; Addendum 2), then the Sol/Astra review."
+        "Integration/review dependency: recorded C12-DT retired-snapshot date-time exclusion; no broad shared-suite PASS. Blind reviews remain with the lead."
       ],
       "static_checks_seen": [
         "Plans/dg6b_event_contract_fixtures.json",
@@ -7815,10 +7379,11 @@
         "scripts/pm_dg6b_p2b_cases.py",
         "scripts/pm_dg6b_round9_cases.py",
         "scripts/pm_event_datetime.py",
-        "scripts/pm_event_numbers.py"
+        "scripts/pm_event_numbers.py",
+        "scripts/pm-dg6b-c12.py"
       ],
-      "notes": "Static part-2B preparation: the gated shared date-time, number and retained-original rules are adopted and every guard-table row this family reaches is proved on the gated tool. Native execution NOT_RUN. No READY claim before batch-2 integration and review.",
-      "grading_batch": "sweep-p2b",
+      "notes": "C12 only regraded. Other eleven cells carried unchanged; native NOT_RUN, membership/admission and governance unchanged.",
+      "grading_batch": "c12-dg6b",
       "preparation_state": "NOT_READY_REVIEW",
       "prospective_role": "writer_after_separate_admission_and_retention_assignment",
       "prepared_verdict": "NOT_READY"
@@ -7841,7 +7406,7 @@
           "quote_check": "exact"
         }
       ],
-      "pass_count": 9,
+      "pass_count": 10,
       "normative_depth_complete": false,
       "native_execution": "NOT_RUN",
       "current_owner_units": [
@@ -8278,73 +7843,43 @@
           "change_reason": "Part 2B: retained originals resolve through SP-1101 sealed custody and the shared RetainedDispatcher (HR01); retained timestamps keep their owner profile; status carried."
         },
         "positive_negative_oracles": {
-          "status": "PARTIAL",
+          "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Every refusal is a named row of a guard table (78 tables, 176 rows), reached only through require(). The gated tool proves 107/107 row cells over the 49 phase tables this family reaches, with 157 distinct single-defect negatives, no masked negative and no unrelated change (2 cell(s) proved with a declared donor negative because this family's own path cannot reach the row). Part 2B witnesses cover the CV-1101 profiles per field, 2^53/uint64 boundaries, 4,400-digit integers, the shared corpus through the complete append route and SP-1101 custody. PARTIAL: the shared datetime_validator boundary and the date-time inventory gate run at batch-2 integration (Addendum 2); native execution NOT_RUN.",
+          "finding": "ATS-336: original exact-family suite passes with the shared inventory-authenticated datetime_validator in append/retry/history, 114 proved row cells (2 declared donors), complete owner-schema clause/cut/restoration witnesses and sealed-store receipt/result reads. Whole-definition Method B scope; no claim of universal per-keyword isolation. Global shared inventory false refusal remains separate; native NOT_RUN.",
           "evidence": [
             {
+              "path": "Plans/Automated_Testing_System.md",
+              "unit": "ATS-336",
+              "line_start": 7448,
+              "line_end": 7448,
+              "quote": "- `persona.exported`: valid library application and real Project payload/result joins; original-identity retry; exact home/reach/source/revision/readback custody. Negatives: raw body/extension,",
+              "excerpt_sha256": "6cffcf8906d9c5b4ec0074f4816fc5e9487b68fdfbb2e3be78e205d11c1d32cc",
+              "file_sha256": "a14faaeeff125d0ccc2775d3f1bcc4372b8ff689a01b632bcd508e52a2e5d14e",
+              "quote_check": "exact"
+            },
+            {
               "path": "scripts/pm-dg6b-event-contracts.py",
-              "unit": "require",
-              "line_start": 89,
-              "line_end": 89,
-              "quote": "def require(phase, facts):",
-              "excerpt_sha256": "059652ce3cb52923b56d67380ab899f9a99b0ee94faba612312b85f1a6813730",
-              "file_sha256": "363d77d86afaf69f0aec1227684280250d32d0fda376e847800255d013786920",
-              "quote_check": "exact"
-            },
-            {
-              "path": "scripts/pm_dg6b_round9_cases.py",
-              "unit": "family_cases",
-              "line_start": 41,
-              "line_end": 41,
-              "quote": "def family_cases(m, row, schema):",
-              "excerpt_sha256": "e32be7e6c52cb2708395394158815696c87177f4da60e2fa7253761c7cfa8a39",
-              "file_sha256": "9c6d57d0f43a76c35b602962d11826006b3a1db85b6f7b00e56936022f065b48",
-              "quote_check": "exact"
-            },
-            {
-              "path": "scripts/pm_dg6b_p2b_cases.py",
-              "unit": "family_cases",
-              "line_start": 117,
-              "line_end": 117,
-              "quote": "def family_cases(m, row, schema):",
-              "excerpt_sha256": "e32be7e6c52cb2708395394158815696c87177f4da60e2fa7253761c7cfa8a39",
-              "file_sha256": "21bf76da2acce5467e7b5547efdc655f8e3bf18850fd592d2b23078a5a98b85f",
-              "quote_check": "exact"
-            },
-            {
-              "path": "scripts/pm_dg6b_full_oracles.py",
-              "unit": "family_probes",
-              "line_start": 265,
-              "line_end": 265,
-              "quote": "add('account_custody/' + field, 'envelope_source_join', base, bad,",
-              "excerpt_sha256": "81dfe1b8539702ec5b29e6df767a02fe8f9eec595aac898f5fb56733bd0a5b79",
-              "file_sha256": "c80c521743767186718e0c865325e3f58199cbe2779183bbb487dfd9d810c0b7",
-              "quote_check": "exact"
-            },
-            {
-              "path": "scripts/pm_dg6b_full_oracles.py",
-              "unit": "family_probes",
-              "line_start": 378,
-              "line_end": 378,
-              "quote": "add('history_account_custody/' + field, 'envelope_source_join', hbase, bad,",
-              "excerpt_sha256": "b010c907e09530b7ebc760fec1852e0f69c8881d4d8c49e9218e48787e337b84",
-              "file_sha256": "c80c521743767186718e0c865325e3f58199cbe2779183bbb487dfd9d810c0b7",
+              "unit": "enforced_event_record_validator",
+              "line_start": 1081,
+              "line_end": 1081,
+              "quote": "return datetime_validator(load_plan('Plans/event_record.schema.json'), profile=EVENT_RECORD)",
+              "excerpt_sha256": "551307e87e54b661eccfd03c582007025bbf74c7327909d3082213cf26558dd2",
+              "file_sha256": "809a42f2749f7eaa2dad44a2bd6275db6488270171b86e8d0f3950d2df50f180",
               "quote_check": "exact"
             }
           ],
           "prior": {
-            "source": "DG6B.self-grade.json@7c2ac9c7512f7d0d793c2c01640adc353170c18a (sweep part 2A)",
+            "source": "DG6B.self-grade.json@7cf56368356da2b7a5ff25f6452cf753ce36bf45",
             "status": "PARTIAL"
           },
-          "change": "carried",
-          "change_reason": "Part 2B closes S2 (numbers) and S3 (timestamp formats) in the lane; PARTIAL remains only for the shared datetime_validator boundary and inventory gate, which run at batch-2 integration."
+          "change": "upgraded",
+          "change_reason": "Closes the family datetime boundary, complete schema occurrence proof and retained-store observation gaps; global inventory issue is unrelated to this family boundary."
         }
       },
       "remaining_gaps": [
         "Membership absent until separate admission.",
         "Retention remains PENDING_RETENTION_DECISION.",
-        "Batch-2 integration: the shared datetime_validator boundary and the date-time inventory gate over the merged tree (this tree fails the gate on hash drift and unclassified containers; Addendum 2), then the Sol/Astra review."
+        "Integration/review dependency: recorded C12-DT retired-snapshot date-time exclusion; no broad shared-suite PASS. Blind reviews remain with the lead."
       ],
       "static_checks_seen": [
         "Plans/dg6b_event_contract_fixtures.json",
@@ -8355,10 +7890,11 @@
         "scripts/pm_dg6b_p2b_cases.py",
         "scripts/pm_dg6b_round9_cases.py",
         "scripts/pm_event_datetime.py",
-        "scripts/pm_event_numbers.py"
+        "scripts/pm_event_numbers.py",
+        "scripts/pm-dg6b-c12.py"
       ],
-      "notes": "Static part-2B preparation: the gated shared date-time, number and retained-original rules are adopted and every guard-table row this family reaches is proved on the gated tool. Native execution NOT_RUN. No READY claim before batch-2 integration and review.",
-      "grading_batch": "sweep-p2b",
+      "notes": "C12 only regraded. Other eleven cells carried unchanged; native NOT_RUN, membership/admission and governance unchanged.",
+      "grading_batch": "c12-dg6b",
       "preparation_state": "NOT_READY_REVIEW",
       "prospective_role": "writer_after_separate_admission_and_retention_assignment",
       "prepared_verdict": "NOT_READY"
@@ -8381,7 +7917,7 @@
           "quote_check": "exact"
         }
       ],
-      "pass_count": 9,
+      "pass_count": 10,
       "normative_depth_complete": false,
       "native_execution": "NOT_RUN",
       "current_owner_units": [
@@ -8818,73 +8354,43 @@
           "change_reason": "Part 2B: retained originals resolve through SP-1101 sealed custody and the shared RetainedDispatcher (HR01); retained timestamps keep their owner profile; status carried."
         },
         "positive_negative_oracles": {
-          "status": "PARTIAL",
+          "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Every refusal is a named row of a guard table (78 tables, 176 rows), reached only through require(). The gated tool proves 116/116 row cells over the 54 phase tables this family reaches, with 173 distinct single-defect negatives, no masked negative and no unrelated change (2 cell(s) proved with a declared donor negative because this family's own path cannot reach the row). Part 2B witnesses cover the CV-1101 profiles per field, 2^53/uint64 boundaries, 4,400-digit integers, the shared corpus through the complete append route and SP-1101 custody. PARTIAL: the shared datetime_validator boundary and the date-time inventory gate run at batch-2 integration (Addendum 2); native execution NOT_RUN.",
+          "finding": "ATS-336: original exact-family suite passes with the shared inventory-authenticated datetime_validator in append/retry/history, 123 proved row cells (2 declared donors), complete owner-schema clause/cut/restoration witnesses and sealed-store receipt/result reads. Whole-definition Method B scope; no claim of universal per-keyword isolation. Global shared inventory false refusal remains separate; native NOT_RUN.",
           "evidence": [
             {
+              "path": "Plans/Automated_Testing_System.md",
+              "unit": "ATS-336",
+              "line_start": 7450,
+              "line_end": 7450,
+              "quote": "- `persona.imported`: valid library application and real Project payload/result joins; original-identity retry; exact home/reach/source/revision/readback custody. Negatives: raw body/extension,",
+              "excerpt_sha256": "6c1e5a91362c0530544e47c50960b12689689fa931203b1a3df133d2b94f53aa",
+              "file_sha256": "a14faaeeff125d0ccc2775d3f1bcc4372b8ff689a01b632bcd508e52a2e5d14e",
+              "quote_check": "exact"
+            },
+            {
               "path": "scripts/pm-dg6b-event-contracts.py",
-              "unit": "require",
-              "line_start": 89,
-              "line_end": 89,
-              "quote": "def require(phase, facts):",
-              "excerpt_sha256": "059652ce3cb52923b56d67380ab899f9a99b0ee94faba612312b85f1a6813730",
-              "file_sha256": "363d77d86afaf69f0aec1227684280250d32d0fda376e847800255d013786920",
-              "quote_check": "exact"
-            },
-            {
-              "path": "scripts/pm_dg6b_round9_cases.py",
-              "unit": "family_cases",
-              "line_start": 41,
-              "line_end": 41,
-              "quote": "def family_cases(m, row, schema):",
-              "excerpt_sha256": "e32be7e6c52cb2708395394158815696c87177f4da60e2fa7253761c7cfa8a39",
-              "file_sha256": "9c6d57d0f43a76c35b602962d11826006b3a1db85b6f7b00e56936022f065b48",
-              "quote_check": "exact"
-            },
-            {
-              "path": "scripts/pm_dg6b_p2b_cases.py",
-              "unit": "family_cases",
-              "line_start": 117,
-              "line_end": 117,
-              "quote": "def family_cases(m, row, schema):",
-              "excerpt_sha256": "e32be7e6c52cb2708395394158815696c87177f4da60e2fa7253761c7cfa8a39",
-              "file_sha256": "21bf76da2acce5467e7b5547efdc655f8e3bf18850fd592d2b23078a5a98b85f",
-              "quote_check": "exact"
-            },
-            {
-              "path": "scripts/pm_dg6b_full_oracles.py",
-              "unit": "family_probes",
-              "line_start": 265,
-              "line_end": 265,
-              "quote": "add('account_custody/' + field, 'envelope_source_join', base, bad,",
-              "excerpt_sha256": "81dfe1b8539702ec5b29e6df767a02fe8f9eec595aac898f5fb56733bd0a5b79",
-              "file_sha256": "c80c521743767186718e0c865325e3f58199cbe2779183bbb487dfd9d810c0b7",
-              "quote_check": "exact"
-            },
-            {
-              "path": "scripts/pm_dg6b_full_oracles.py",
-              "unit": "family_probes",
-              "line_start": 378,
-              "line_end": 378,
-              "quote": "add('history_account_custody/' + field, 'envelope_source_join', hbase, bad,",
-              "excerpt_sha256": "b010c907e09530b7ebc760fec1852e0f69c8881d4d8c49e9218e48787e337b84",
-              "file_sha256": "c80c521743767186718e0c865325e3f58199cbe2779183bbb487dfd9d810c0b7",
+              "unit": "enforced_event_record_validator",
+              "line_start": 1081,
+              "line_end": 1081,
+              "quote": "return datetime_validator(load_plan('Plans/event_record.schema.json'), profile=EVENT_RECORD)",
+              "excerpt_sha256": "551307e87e54b661eccfd03c582007025bbf74c7327909d3082213cf26558dd2",
+              "file_sha256": "809a42f2749f7eaa2dad44a2bd6275db6488270171b86e8d0f3950d2df50f180",
               "quote_check": "exact"
             }
           ],
           "prior": {
-            "source": "DG6B.self-grade.json@7c2ac9c7512f7d0d793c2c01640adc353170c18a (sweep part 2A)",
+            "source": "DG6B.self-grade.json@7cf56368356da2b7a5ff25f6452cf753ce36bf45",
             "status": "PARTIAL"
           },
-          "change": "carried",
-          "change_reason": "Part 2B closes S2 (numbers) and S3 (timestamp formats) in the lane; PARTIAL remains only for the shared datetime_validator boundary and inventory gate, which run at batch-2 integration."
+          "change": "upgraded",
+          "change_reason": "Closes the family datetime boundary, complete schema occurrence proof and retained-store observation gaps; global inventory issue is unrelated to this family boundary."
         }
       },
       "remaining_gaps": [
         "Membership absent until separate admission.",
         "Retention remains PENDING_RETENTION_DECISION.",
-        "Batch-2 integration: the shared datetime_validator boundary and the date-time inventory gate over the merged tree (this tree fails the gate on hash drift and unclassified containers; Addendum 2), then the Sol/Astra review."
+        "Integration/review dependency: recorded C12-DT retired-snapshot date-time exclusion; no broad shared-suite PASS. Blind reviews remain with the lead."
       ],
       "static_checks_seen": [
         "Plans/dg6b_event_contract_fixtures.json",
@@ -8895,10 +8401,11 @@
         "scripts/pm_dg6b_p2b_cases.py",
         "scripts/pm_dg6b_round9_cases.py",
         "scripts/pm_event_datetime.py",
-        "scripts/pm_event_numbers.py"
+        "scripts/pm_event_numbers.py",
+        "scripts/pm-dg6b-c12.py"
       ],
-      "notes": "Static part-2B preparation: the gated shared date-time, number and retained-original rules are adopted and every guard-table row this family reaches is proved on the gated tool. Native execution NOT_RUN. No READY claim before batch-2 integration and review.",
-      "grading_batch": "sweep-p2b",
+      "notes": "C12 only regraded. Other eleven cells carried unchanged; native NOT_RUN, membership/admission and governance unchanged.",
+      "grading_batch": "c12-dg6b",
       "preparation_state": "NOT_READY_REVIEW",
       "prospective_role": "writer_after_separate_admission_and_retention_assignment",
       "prepared_verdict": "NOT_READY"
@@ -8921,7 +8428,7 @@
           "quote_check": "exact"
         }
       ],
-      "pass_count": 9,
+      "pass_count": 10,
       "normative_depth_complete": false,
       "native_execution": "NOT_RUN",
       "current_owner_units": [
@@ -9368,73 +8875,43 @@
           "change_reason": "Part 2B: retained originals resolve through SP-1101 sealed custody and the shared RetainedDispatcher (HR01); retained timestamps keep their owner profile; status carried."
         },
         "positive_negative_oracles": {
-          "status": "PARTIAL",
+          "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Every refusal is a named row of a guard table (78 tables, 176 rows), reached only through require(). The gated tool proves 137/137 row cells over the 61 phase tables this family reaches, with 217 distinct single-defect negatives, no masked negative and no unrelated change (2 cell(s) proved with a declared donor negative because this family's own path cannot reach the row). Part 2B witnesses cover the CV-1101 profiles per field, 2^53/uint64 boundaries, 4,400-digit integers, the shared corpus through the complete append route and SP-1101 custody. PARTIAL: the shared datetime_validator boundary and the date-time inventory gate run at batch-2 integration (Addendum 2); native execution NOT_RUN.",
+          "finding": "ATS-336: original exact-family suite passes with the shared inventory-authenticated datetime_validator in append/retry/history, 144 proved row cells (2 declared donors), complete owner-schema clause/cut/restoration witnesses and sealed-store receipt/result reads. Whole-definition Method B scope; no claim of universal per-keyword isolation. Global shared inventory false refusal remains separate; native NOT_RUN.",
           "evidence": [
             {
+              "path": "Plans/Automated_Testing_System.md",
+              "unit": "ATS-336",
+              "line_start": 7452,
+              "line_end": 7452,
+              "quote": "- `persona.selected`: valid library application and real Project payload/result joins; original-identity retry; exact home/reach/source/revision/readback custody. Negatives: raw body/extension,",
+              "excerpt_sha256": "e4a6b39bf8b273bdbc7a537b1f0a0c866f642490e514014ec480ee81a5111e7d",
+              "file_sha256": "a14faaeeff125d0ccc2775d3f1bcc4372b8ff689a01b632bcd508e52a2e5d14e",
+              "quote_check": "exact"
+            },
+            {
               "path": "scripts/pm-dg6b-event-contracts.py",
-              "unit": "require",
-              "line_start": 89,
-              "line_end": 89,
-              "quote": "def require(phase, facts):",
-              "excerpt_sha256": "059652ce3cb52923b56d67380ab899f9a99b0ee94faba612312b85f1a6813730",
-              "file_sha256": "363d77d86afaf69f0aec1227684280250d32d0fda376e847800255d013786920",
-              "quote_check": "exact"
-            },
-            {
-              "path": "scripts/pm_dg6b_round9_cases.py",
-              "unit": "family_cases",
-              "line_start": 41,
-              "line_end": 41,
-              "quote": "def family_cases(m, row, schema):",
-              "excerpt_sha256": "e32be7e6c52cb2708395394158815696c87177f4da60e2fa7253761c7cfa8a39",
-              "file_sha256": "9c6d57d0f43a76c35b602962d11826006b3a1db85b6f7b00e56936022f065b48",
-              "quote_check": "exact"
-            },
-            {
-              "path": "scripts/pm_dg6b_p2b_cases.py",
-              "unit": "family_cases",
-              "line_start": 117,
-              "line_end": 117,
-              "quote": "def family_cases(m, row, schema):",
-              "excerpt_sha256": "e32be7e6c52cb2708395394158815696c87177f4da60e2fa7253761c7cfa8a39",
-              "file_sha256": "21bf76da2acce5467e7b5547efdc655f8e3bf18850fd592d2b23078a5a98b85f",
-              "quote_check": "exact"
-            },
-            {
-              "path": "scripts/pm_dg6b_full_oracles.py",
-              "unit": "family_probes",
-              "line_start": 265,
-              "line_end": 265,
-              "quote": "add('account_custody/' + field, 'envelope_source_join', base, bad,",
-              "excerpt_sha256": "81dfe1b8539702ec5b29e6df767a02fe8f9eec595aac898f5fb56733bd0a5b79",
-              "file_sha256": "c80c521743767186718e0c865325e3f58199cbe2779183bbb487dfd9d810c0b7",
-              "quote_check": "exact"
-            },
-            {
-              "path": "scripts/pm_dg6b_full_oracles.py",
-              "unit": "family_probes",
-              "line_start": 378,
-              "line_end": 378,
-              "quote": "add('history_account_custody/' + field, 'envelope_source_join', hbase, bad,",
-              "excerpt_sha256": "b010c907e09530b7ebc760fec1852e0f69c8881d4d8c49e9218e48787e337b84",
-              "file_sha256": "c80c521743767186718e0c865325e3f58199cbe2779183bbb487dfd9d810c0b7",
+              "unit": "enforced_event_record_validator",
+              "line_start": 1081,
+              "line_end": 1081,
+              "quote": "return datetime_validator(load_plan('Plans/event_record.schema.json'), profile=EVENT_RECORD)",
+              "excerpt_sha256": "551307e87e54b661eccfd03c582007025bbf74c7327909d3082213cf26558dd2",
+              "file_sha256": "809a42f2749f7eaa2dad44a2bd6275db6488270171b86e8d0f3950d2df50f180",
               "quote_check": "exact"
             }
           ],
           "prior": {
-            "source": "DG6B.self-grade.json@7c2ac9c7512f7d0d793c2c01640adc353170c18a (sweep part 2A)",
+            "source": "DG6B.self-grade.json@7cf56368356da2b7a5ff25f6452cf753ce36bf45",
             "status": "PARTIAL"
           },
-          "change": "carried",
-          "change_reason": "Part 2B closes S2 (numbers) and S3 (timestamp formats) in the lane; PARTIAL remains only for the shared datetime_validator boundary and inventory gate, which run at batch-2 integration."
+          "change": "upgraded",
+          "change_reason": "Closes the family datetime boundary, complete schema occurrence proof and retained-store observation gaps; global inventory issue is unrelated to this family boundary."
         }
       },
       "remaining_gaps": [
         "Membership absent until separate admission.",
         "Retention remains PENDING_RETENTION_DECISION.",
-        "Batch-2 integration: the shared datetime_validator boundary and the date-time inventory gate over the merged tree (this tree fails the gate on hash drift and unclassified containers; Addendum 2), then the Sol/Astra review."
+        "Integration/review dependency: recorded C12-DT retired-snapshot date-time exclusion; no broad shared-suite PASS. Blind reviews remain with the lead."
       ],
       "static_checks_seen": [
         "Plans/dg6b_event_contract_fixtures.json",
@@ -9445,10 +8922,11 @@
         "scripts/pm_dg6b_p2b_cases.py",
         "scripts/pm_dg6b_round9_cases.py",
         "scripts/pm_event_datetime.py",
-        "scripts/pm_event_numbers.py"
+        "scripts/pm_event_numbers.py",
+        "scripts/pm-dg6b-c12.py"
       ],
-      "notes": "Static part-2B preparation: the gated shared date-time, number and retained-original rules are adopted and every guard-table row this family reaches is proved on the gated tool. Native execution NOT_RUN. No READY claim before batch-2 integration and review.",
-      "grading_batch": "sweep-p2b",
+      "notes": "C12 only regraded. Other eleven cells carried unchanged; native NOT_RUN, membership/admission and governance unchanged.",
+      "grading_batch": "c12-dg6b",
       "preparation_state": "NOT_READY_REVIEW",
       "prospective_role": "writer_after_separate_admission_and_retention_assignment",
       "prepared_verdict": "NOT_READY"
@@ -9471,7 +8949,7 @@
           "quote_check": "exact"
         }
       ],
-      "pass_count": 9,
+      "pass_count": 10,
       "normative_depth_complete": false,
       "native_execution": "NOT_RUN",
       "current_owner_units": [
@@ -9908,73 +9386,43 @@
           "change_reason": "Part 2B: retained originals resolve through SP-1101 sealed custody and the shared RetainedDispatcher (HR01); retained timestamps keep their owner profile; status carried."
         },
         "positive_negative_oracles": {
-          "status": "PARTIAL",
+          "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Every refusal is a named row of a guard table (78 tables, 176 rows), reached only through require(). The gated tool proves 118/118 row cells over the 53 phase tables this family reaches, with 175 distinct single-defect negatives, no masked negative and no unrelated change (2 cell(s) proved with a declared donor negative because this family's own path cannot reach the row). Part 2B witnesses cover the CV-1101 profiles per field, 2^53/uint64 boundaries, 4,400-digit integers, the shared corpus through the complete append route and SP-1101 custody. PARTIAL: the shared datetime_validator boundary and the date-time inventory gate run at batch-2 integration (Addendum 2); native execution NOT_RUN.",
+          "finding": "ATS-336: original exact-family suite passes with the shared inventory-authenticated datetime_validator in append/retry/history, 125 proved row cells (2 declared donors), complete owner-schema clause/cut/restoration witnesses and sealed-store receipt/result reads. Whole-definition Method B scope; no claim of universal per-keyword isolation. Global shared inventory false refusal remains separate; native NOT_RUN.",
           "evidence": [
             {
+              "path": "Plans/Automated_Testing_System.md",
+              "unit": "ATS-336",
+              "line_start": 7454,
+              "line_end": 7454,
+              "quote": "- `persona.updated`: valid library application and real Project payload/result joins; original-identity retry; exact home/reach/source/revision/readback custody. Negatives: raw body/extension,",
+              "excerpt_sha256": "073fd803d7048d95dee48a76bef532d186a418565376381f04b08c72556dd51a",
+              "file_sha256": "a14faaeeff125d0ccc2775d3f1bcc4372b8ff689a01b632bcd508e52a2e5d14e",
+              "quote_check": "exact"
+            },
+            {
               "path": "scripts/pm-dg6b-event-contracts.py",
-              "unit": "require",
-              "line_start": 89,
-              "line_end": 89,
-              "quote": "def require(phase, facts):",
-              "excerpt_sha256": "059652ce3cb52923b56d67380ab899f9a99b0ee94faba612312b85f1a6813730",
-              "file_sha256": "363d77d86afaf69f0aec1227684280250d32d0fda376e847800255d013786920",
-              "quote_check": "exact"
-            },
-            {
-              "path": "scripts/pm_dg6b_round9_cases.py",
-              "unit": "family_cases",
-              "line_start": 41,
-              "line_end": 41,
-              "quote": "def family_cases(m, row, schema):",
-              "excerpt_sha256": "e32be7e6c52cb2708395394158815696c87177f4da60e2fa7253761c7cfa8a39",
-              "file_sha256": "9c6d57d0f43a76c35b602962d11826006b3a1db85b6f7b00e56936022f065b48",
-              "quote_check": "exact"
-            },
-            {
-              "path": "scripts/pm_dg6b_p2b_cases.py",
-              "unit": "family_cases",
-              "line_start": 117,
-              "line_end": 117,
-              "quote": "def family_cases(m, row, schema):",
-              "excerpt_sha256": "e32be7e6c52cb2708395394158815696c87177f4da60e2fa7253761c7cfa8a39",
-              "file_sha256": "21bf76da2acce5467e7b5547efdc655f8e3bf18850fd592d2b23078a5a98b85f",
-              "quote_check": "exact"
-            },
-            {
-              "path": "scripts/pm_dg6b_full_oracles.py",
-              "unit": "family_probes",
-              "line_start": 265,
-              "line_end": 265,
-              "quote": "add('account_custody/' + field, 'envelope_source_join', base, bad,",
-              "excerpt_sha256": "81dfe1b8539702ec5b29e6df767a02fe8f9eec595aac898f5fb56733bd0a5b79",
-              "file_sha256": "c80c521743767186718e0c865325e3f58199cbe2779183bbb487dfd9d810c0b7",
-              "quote_check": "exact"
-            },
-            {
-              "path": "scripts/pm_dg6b_full_oracles.py",
-              "unit": "family_probes",
-              "line_start": 378,
-              "line_end": 378,
-              "quote": "add('history_account_custody/' + field, 'envelope_source_join', hbase, bad,",
-              "excerpt_sha256": "b010c907e09530b7ebc760fec1852e0f69c8881d4d8c49e9218e48787e337b84",
-              "file_sha256": "c80c521743767186718e0c865325e3f58199cbe2779183bbb487dfd9d810c0b7",
+              "unit": "enforced_event_record_validator",
+              "line_start": 1081,
+              "line_end": 1081,
+              "quote": "return datetime_validator(load_plan('Plans/event_record.schema.json'), profile=EVENT_RECORD)",
+              "excerpt_sha256": "551307e87e54b661eccfd03c582007025bbf74c7327909d3082213cf26558dd2",
+              "file_sha256": "809a42f2749f7eaa2dad44a2bd6275db6488270171b86e8d0f3950d2df50f180",
               "quote_check": "exact"
             }
           ],
           "prior": {
-            "source": "DG6B.self-grade.json@7c2ac9c7512f7d0d793c2c01640adc353170c18a (sweep part 2A)",
+            "source": "DG6B.self-grade.json@7cf56368356da2b7a5ff25f6452cf753ce36bf45",
             "status": "PARTIAL"
           },
-          "change": "carried",
-          "change_reason": "Part 2B closes S2 (numbers) and S3 (timestamp formats) in the lane; PARTIAL remains only for the shared datetime_validator boundary and inventory gate, which run at batch-2 integration."
+          "change": "upgraded",
+          "change_reason": "Closes the family datetime boundary, complete schema occurrence proof and retained-store observation gaps; global inventory issue is unrelated to this family boundary."
         }
       },
       "remaining_gaps": [
         "Membership absent until separate admission.",
         "Retention remains PENDING_RETENTION_DECISION.",
-        "Batch-2 integration: the shared datetime_validator boundary and the date-time inventory gate over the merged tree (this tree fails the gate on hash drift and unclassified containers; Addendum 2), then the Sol/Astra review."
+        "Integration/review dependency: recorded C12-DT retired-snapshot date-time exclusion; no broad shared-suite PASS. Blind reviews remain with the lead."
       ],
       "static_checks_seen": [
         "Plans/dg6b_event_contract_fixtures.json",
@@ -9985,10 +9433,11 @@
         "scripts/pm_dg6b_p2b_cases.py",
         "scripts/pm_dg6b_round9_cases.py",
         "scripts/pm_event_datetime.py",
-        "scripts/pm_event_numbers.py"
+        "scripts/pm_event_numbers.py",
+        "scripts/pm-dg6b-c12.py"
       ],
-      "notes": "Static part-2B preparation: the gated shared date-time, number and retained-original rules are adopted and every guard-table row this family reaches is proved on the gated tool. Native execution NOT_RUN. No READY claim before batch-2 integration and review.",
-      "grading_batch": "sweep-p2b",
+      "notes": "C12 only regraded. Other eleven cells carried unchanged; native NOT_RUN, membership/admission and governance unchanged.",
+      "grading_batch": "c12-dg6b",
       "preparation_state": "NOT_READY_REVIEW",
       "prospective_role": "writer_after_separate_admission_and_retention_assignment",
       "prepared_verdict": "NOT_READY"
@@ -9996,10 +9445,9 @@
   ],
   "status_counts": {
     "ABSENT": 19,
-    "PASS": 171,
-    "PARTIAL": 38,
-    "CONFLICT": 0
+    "PASS": 190,
+    "PARTIAL": 19
   },
-  "review_round": "sweep-p2b",
+  "review_round": "criterion-12-implementation",
   "preparation_state": "NOT_READY_REVIEW"
 }

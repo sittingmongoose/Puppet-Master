@@ -59,8 +59,10 @@ phase('src_size', 'source_valid: each original stage is at most 1 MiB in its sou
     ('SV11_completed_size', '/completed', 'the completed stage encodes to at most 1048576 bytes', 'source_stage_too_large',
      "value['completed_size'] > 1048576"),
 ])
-phase('src_stage', 'source_valid: original stage order (the source schema stage clause decides the same fact first).', [
+phase('src_prepared_stage', 'source_valid: the first source role requires the prepared stage; singleton table.', [
     ('SV12_prepared_stage', '/prepared/stage', 'is prepared', 'original_source_refused', "value['prepared_stage'] != 'prepared'"),
+])
+phase('src_completed_stage', 'source_valid: the second source role requires the completed stage; singleton table.', [
     ('SV13_completed_stage', '/completed/stage', 'is completed', 'original_source_refused', "value['completed_stage'] != 'completed'"),
 ])
 phase('src_original', 'source_valid: prepare commitment and immutable closure.', [
@@ -123,6 +125,19 @@ phase('src_context', 'source_valid: payload, occurrence, runtime, Usage and web-
 ])
 
 # ------------------------------------------------------------------ identity
+phase('hr_receipt', 'historical_read: independently sealed first receipt, original binding and E5-2 timestamp profile.', [
+    ('HR14_receipt_present', '/sealed/receipt', 'the original holds a first AppendReceipt object', UNAVAILABLE,
+     "value['receipt_present'] is not True"),
+    ('HR15_receipt_binding', '/sealed/receipt', 'event id and exact Storage sequence equal the independently stored EventRecord', UNAVAILABLE,
+     "value['receipt_present'] is True and value['binding_mismatches'] != []"),
+    ('HR16_ack_date_time', '/sealed/receipt/acknowledged_at_utc', 'satisfies shared CV-1101 EventRecord profile (E5-2)', UNAVAILABLE,
+     "value['receipt_present'] is True and value['ack_refusal'] is not None"),
+])
+phase('hr_receipt_schema', 'historical_read: complete frozen owner AppendReceipt schema, including every keyword.', [
+    ('HR17_receipt_schema', '/sealed/receipt', 'satisfies the complete original owner AppendReceipt schema', UNAVAILABLE,
+     "value['receipt_errors'] != 0"),
+])
+
 phase('id_inputs', 'identity: exact integer subject and original application operation.', [
     ('ID01_blocked_sequence', '/payload/blocked_sequence', 'an identity blocked_sequence is an exact integer in 0..2^64-1 (shared current_integer)', 'schema_refused',
      "value['blocked_in_identity'] is True and value['blocked_valid'] is False"),
