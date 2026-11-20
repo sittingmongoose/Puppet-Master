@@ -326,8 +326,9 @@ PROOFS = {
     'dg5/dgu/inspect/event/schema': dict(
         kind='code-selection',
         families=['goal.updated'],
-        depends_on=[SITE + '1891'],
-        sites=[(U, 1874), (U, 1876), (U, 1891), ('scripts/pm_goal_test_storage.py', 1861),
+        depends_on=['dg5/dgu/producer/freeze/producer_input/schema'],
+        sites=[(U, 1871), (U, 1874), (U, 1876), (U, 1891), ('scripts/pm_goal_test_storage.py', 580),
+               ('scripts/pm_goal_test_storage.py', 1861), ('scripts/pm_goal_test_owner_adapters.py', 83),
                ('Plans/goal_updated_consumer_contracts.schema.json', 497)],
         argument=(
             'inspect validates the selected event against SelectedActiveEvent (:1876: the '
@@ -338,9 +339,9 @@ PROOFS = {
             'verbatim at :1891 (producer25 of the whole event minus storage-assigned fields '
             'against the frozen ProducerInput, pm_goal_test_storage.py:1861): a producer-issued '
             'event carries the freeze-validated payload, and any other event differs from the '
-            'frozen input and refuses there. With this row cut, no event that would fail it '
-            'is accepted; it selects the consumer-schema code and never gates acceptance '
-            'alone. It closes by this proof once :1891 is closed.')),
+            'frozen input and refuses there. The complete call with the selected-event schema '
+            'disabled reaches that type-exact comparison with the extra event field and refuses '
+            'at :1891. Restoring the check repeats the earlier exact validation message.')),
     'dg5/dgu/inspect/observation/schema': dict(
         kind='entailed-by-inspect-construction',
         families=['goal.updated'],
