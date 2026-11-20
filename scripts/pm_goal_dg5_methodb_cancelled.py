@@ -372,7 +372,9 @@ def literal_rules(plain, bank, accepted, ident, ids, examples, disabled_check, s
         nodes, walked = closure._clause_inventory(validator)
     if disabled_check == 'inventory':
         examples = dict(list(examples.items())[1:])
-    require(walked == ids, f'{ident}: installed assertions differ from the census')
+    require(walked == ids,
+            f"{ident}: installed rule list {closure._clause_inventory_pin(walked)['sha256']} "
+            f"differs from pinned rule list {closure._clause_inventory_pin(ids)['sha256']}")
     require(set(walked) == set(examples), 'declared test examples differ from exact inventory')
     require(not list(plain.iter_errors(accepted)) and not go.errors_of(validator, accepted),
             'original and instrumented validators must both accept the valid document')
@@ -505,6 +507,8 @@ class OwnerExample:
             require(site == self.route['site'], f'owner source moved to {site}')
             plain = bank.validator(ref) if realm is None else bank.validator(realm, ref)
             ident, binding = root_binding(closure, bank, plain)
+            if 'realm' in self.route:
+                require(realm == self.route['realm'], f'owner call reached unexpected realm {realm}')
             require(ident == self.route['root'], f'owner call reached unexpected root {ident}')
             if edit and len(result['observations']) + 1 == checks:
                 require(edit not in value, 'test example already has the extra member')
@@ -693,6 +697,26 @@ def publish(source, out, declare, collector, reports, inventories, table_path):
     write(bindings, value)
 
 
+def fresh_root(census, reference, scope, row, route, binding, closure):
+    ident = route['root']
+    if ident not in scope['roots_with_inventory_variants']:
+        require('fresh_literal_sha256' not in route, f'{ident}: the original inventory is exact')
+        return census['roots'][ident]
+
+    matches = [variant for variant in reference['roots'][ident]
+               if variant['bank'] == binding['bank'] and variant['realm'] == route.get('realm')
+               and variant['registry_sha256'] == binding['registry_sha256']
+               and variant['validator_class'] == binding['validator_class']
+               and json.dumps(variant['selector'], sort_keys=True) == binding['schema']
+               and row in variant['sizing_rows']
+               and variant['clause_inventory']['sha256'] == route.get('fresh_literal_sha256')]
+    require(len(matches) == 1, f'{ident}: exactly one fresh bank, realm, selector and rule list must match')
+    variant, = matches
+    require(closure._clause_inventory_pin(variant['clause_ids']) == variant['clause_inventory'],
+            f'{ident}: fresh rule list differs from its published digest')
+    return dict(binding, clause_ids=variant['clause_ids'])
+
+
 def run(args):
     source = args.source.resolve()
     declare = json.loads(args.declaration.read_text())
@@ -710,7 +734,19 @@ def run(args):
             {route['root'] for route in declare['routes']}, 'declared roots differ from the census')
     require({tuple(route['site']) for route in declare['routes']} == {tuple(site) for site in declare['sites']},
             'every census site needs an owner call')
-    require(not census_row['roots_with_inventory_variants'], 'root inventory variants remain unresolved')
+    reference = None
+    if census_row['roots_with_inventory_variants']:
+        expected_sha = declare.get('fresh_reference_sha256')
+        require(args.fresh_reference and sha(args.fresh_reference) == expected_sha,
+                'a conflicting rule list requires the pinned fresh reference')
+        with gzip.open(args.fresh_reference, 'rt') as stream:
+            reference = json.load(stream)
+        require(reference['tools'] == revision and reference['sizing']['sha256'] == declare['census_sha256'],
+                'fresh references use a different closure tool or sizing census')
+        require(set(census_row['roots_with_inventory_variants']) <= set(reference['roots']),
+                'fresh references omit a conflicting root')
+    else:
+        require('fresh_reference_sha256' not in declare, 'the original census is exact for this row')
 
     sys.path.insert(0, str(source / 'scripts'))
     import pm_goal_dg5_closure as closure
@@ -730,8 +766,10 @@ def run(args):
     args.out.mkdir(parents=True)
     started = time.monotonic()
     collector = sweep.Collector()
-    reports, inventories, calls, captured = {}, {}, [], {}
+    reports, inventories, calls, captured = {}, {}, [], []
     result = dict(row=row, source=revision, status='NOT_COVERED', census_sha256=declare['census_sha256'])
+    if reference:
+        result['fresh_reference_sha256'] = declare['fresh_reference_sha256']
     try:
         for index, route in enumerate(declare['routes']):
             directory = args.out / f'fixture-{index}'
@@ -744,25 +782,36 @@ def run(args):
             # edition even when the family-wide sample quota is reached.
             with patch.object(sweep, 'REPLAY_CAP', max(sweep.REPLAY_CAP, len(declare['routes']))):
                 observation, log['store'], log['arguments'] = check.prove(world, action, inputs)
-            captured.setdefault(route['root'], observation)
-        for ident, (plain, bank, accepted, binding) in captured.items():
-            root = census['roots'][ident]
+            if reference:
+                observed = check.trials[0]['observations'][0]
+                log['fresh_literal_sha256'] = route.get('fresh_literal_sha256')
+                require(observed['realm'] == route.get('realm'), 'the fresh reference needs the observed realm')
+            captured.append((route, observation))
+        for route, (plain, bank, accepted, binding) in captured:
+            ident = route['root']
+            if reference is None and ident in reports:
+                continue
+            root = fresh_root(census, reference, census_row, row, route, binding, closure)
             require(all(root[key] == value for key, value in binding.items()),
                     f'owner validator binding changed for {ident}')
             ids = root['clause_ids']
             examples = declare['examples'][ident]
             accepted = declare.get('rule_controls', {}).get(ident, accepted)
             scoped = ':sha256:' in ids[0].split('#', 1)[0]
-            if scoped or any(set(example) & {'vacuous', 'intent_selector', 'intent_implication', 'nullable_enum',
-                                             'append_acknowledgment_nonempty'}
+            if reference or scoped or any(set(example) & {'vacuous', 'intent_selector', 'intent_implication',
+                                                          'nullable_enum', 'append_acknowledgment_nonempty'}
                              for example in examples.values()):
                 clauses = literal_rules(plain, bank, accepted, ident, ids, examples, args.disable_check, scoped)
             else:
                 clauses, gaps = test_rules(plain, bank, accepted, ident, ids, examples, args.disable_check)
                 require(not gaps, f'{ident} needs checked implications for {sorted(gaps)}')
+            inventory = dict(binding, rows=[row], families=[FAMILY], clause_ids=ids,
+                             clause_inventory=closure._clause_inventory_pin(ids))
+            if ident in inventories:
+                require(inventories[ident] == inventory,
+                        f'{ident}: the coverage table needs one exact binding per root ID')
             reports[ident] = clauses
-            inventories[ident] = dict(binding, rows=[row], families=[FAMILY], clause_ids=ids,
-                                      clause_inventory=closure._clause_inventory_pin(ids))
+            inventories[ident] = inventory
         publish(source, args.out, declare, collector, reports, inventories, table_path)
         result['status'] = 'COVERED'
     except ValueError as error:
@@ -779,6 +828,7 @@ if __name__ == '__main__':
     parser.add_argument('--source', type=Path, required=True)
     parser.add_argument('--census', type=Path, required=True)
     parser.add_argument('--declaration', type=Path, required=True)
+    parser.add_argument('--fresh-reference', type=Path)
     parser.add_argument('--out', type=Path, required=True)
     parser.add_argument('--disable-check', choices=('inventory', 'rule', 'row'))
     sys.exit(run(parser.parse_args()))
