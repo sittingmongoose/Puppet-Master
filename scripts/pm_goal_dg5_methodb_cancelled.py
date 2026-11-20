@@ -349,6 +349,7 @@ def append_acknowledgment_nonempty(plain, nodes, name, path, cut):
     require(path in (['record', 'append_receipt', 'acknowledged_at_utc'],
                      ['record', 'first_append_receipt', 'acknowledged_at_utc'],
                      ['result', 'append_receipt', 'acknowledged_at_utc'],
+                     ['record', 'original_publication', 'first_append_receipt', 'acknowledged_at_utc'],
                      ['value', 'event_commitments', 0, 'original_full_value_result',
                       'first_append_receipt', 'acknowledged_at_utc'])
             and source.endswith('#/$defs/AppendReceipt/properties/acknowledged_at_utc')
@@ -740,6 +741,68 @@ def execution_binding_implication(nodes, name, path, cut):
                 premise='The bound-plan field is subject to the same assertion in both locations.')
 
 
+def owner_settlement_implication(nodes, name, path, cut):
+    from pm_goal_go_schema_closure import locations
+
+    require(path[:2] == ['record', 'original_owner_settlement'], 'the settlement field path changed')
+    owner = name.split('#', 1)[0] + '#/$defs/OwnerSettlement'
+    binding = name.split('#', 1)[0] + '#/$defs/ExecutionBinding'
+    schema = nodes[owner]['node']
+    branch, = schema['allOf']
+    require('kind' in schema['required'] and schema['properties']['kind']['enum'] ==
+            ['none_required', 'bound_plan_settled']
+            and branch['if']['properties']['kind']['const'] == 'none_required',
+            'the settlement kind must select the original two branches')
+    source = owner + '/allOf/0'
+    if path[2:] == ['original_execution_binding', 'kind']:
+        kind_rule = binding + '/properties/kind/enum'
+        selected = source + '/then/properties/original_execution_binding/properties/kind/const'
+        ref = schema['properties']['original_execution_binding']['$ref']
+        binding_schema = nodes[owner]['resolver'].lookup(ref).contents
+        require(name == kind_rule and 'original_execution_binding' in schema['required']
+                and binding_schema is nodes[binding]['node'] and 'kind' in binding_schema['required']
+                and nodes[binding]['node']['properties']['kind']['enum'] == ['no_bound_plan', 'bound_plan']
+                and all(branch[side]['properties']['original_execution_binding']['properties']['kind']['const'] == kind
+                        for side, kind in (('then', 'no_bound_plan'), ('else', 'bound_plan')))
+                and locations(cut) == {selected}, 'the settlement must enforce an allowed execution binding kind')
+        return dict(source=source, covering_rule=selected,
+                    premise='Both settlement branches require a binding kind accepted by the enumeration.')
+    if path[2:3] == ['original_execution_binding']:
+        return execution_binding_implication(nodes, name, path[2:], cut)
+
+    require(len(path) == 3, 'the settlement proof expects a single field')
+    field = path[2]
+    require(field in schema['required'], 'the settlement field must be required by both branches')
+
+    def keywords(node):
+        return {key: value for key, value in node.items() if key != 'x-pm-oracle-id'}
+
+    prop = schema['properties'][field]
+    present, absent = prop['oneOf']
+    require(keywords(prop).keys() == {'oneOf'}
+            and keywords(present) == keywords(branch['else']['properties'][field])
+            and present['type'] == 'string'
+            and keywords(absent) == keywords(branch['then']['properties'][field]) == {'type': 'null'},
+            'the original settlement branches must apply the same disjoint field schemas')
+    union = owner + '/properties/' + field + '/oneOf'
+    selected = source + '/else/properties/' + field
+    if name == union:
+        covering = selected + '/type'
+        require(locations(cut) == {covering}, 'the selected settlement field type must still refuse')
+        return dict(source=source, covering_rule=covering,
+                    premise='The required kind chooses one of two disjoint field schemas already enforced in the field.')
+    word = name.rsplit('/', 1)[1]
+    checks = {
+        selected + '/' + word: {union, union + '/0/' + word, union + '/1/type'},
+        union + '/0/' + word: {selected + '/' + word},
+    }
+    require(word in ('minLength', 'pattern') and word in present
+            and name in checks and locations(cut) == checks[name],
+            'the same original settlement field constraint must still refuse')
+    return dict(source=source, covering_rules=sorted(checks[name]),
+                premise='Both locations apply the same string constraint when the settlement field is present.')
+
+
 def rule_path(document, path):
     prefix = path[:2] if path[:2] == ['content', 'checkpoint'] else []
     offset = len(prefix)
@@ -829,7 +892,15 @@ def literal_rules(plain, bank, accepted, ident, ids, examples, disabled_check, s
                                  before=before, cut=cut, restored=restored,
                                  premise='A JSON array has at least zero items. The keyword ignores other types.')
             continue
-        invalid = edit_example(go, control, path, example)
+        edit_path = path
+        if 'edit_path' in example:
+            edit_path = example['edit_path']
+            require(edit_path == ['record', 'original_owner_settlement', 'original_execution_binding']
+                    and path == [*edit_path, 'kind']
+                    and '/OwnerSettlement/allOf/0/' in name
+                    and name.endswith('/original_execution_binding/properties/kind/const'),
+                    'the settlement kind example needs the opposite complete binding')
+        invalid = edit_example(go, control, edit_path, example)
         actual = errors_list(list(plain.iter_errors(invalid)))
         before = go.errors_of(validator, invalid)
         require(any(getattr(error, 'oracle_guard', None) == guard and list(error.absolute_path) == path
@@ -881,6 +952,8 @@ def literal_rules(plain, bank, accepted, ident, ids, examples, disabled_check, s
         elif example.get('workflow_transition_implication'):
             record.update(cls='COVERED_LATER',
                           implication=workflow_transition_implication(plain, nodes, name, path, control, cut))
+        elif example.get('owner_settlement_implication'):
+            record.update(cls='COVERED_LATER', implication=owner_settlement_implication(nodes, name, path, cut))
         elif example.get('execution_binding_implication'):
             record.update(cls='COVERED_LATER', implication=execution_binding_implication(nodes, name, path, cut))
         elif example.get('nullable_enum'):
