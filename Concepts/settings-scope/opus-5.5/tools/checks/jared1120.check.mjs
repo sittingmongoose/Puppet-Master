@@ -91,11 +91,12 @@ export const tests = {
 			const list = row && row.querySelector('.o55-nick'), inp = row && row.querySelector('.o55-nick-input');
 			const r = inp && inp.getBoundingClientRect();
 			const at = r && r.width ? document.elementFromPoint(r.left + r.width / 2, r.top + r.height / 2) : null;
-			return { row: !!row, list: !!list && list.getClientRects().length > 0, words: !!(row && row.querySelector(':scope > .setting-control > .psx-devval')), devview: !!(row && row.classList.contains('psx-devview')), onTop: !!at && at === inp };
+			return { row: !!row, list: !!list && list.getClientRects().length > 0, words: !!(row && row.querySelector(':scope > .setting-control > .psx-devval')), devview: !!(row && row.classList.contains('psx-devview')), onTop: !!at && at === inp, changed: !!(row && (row.classList.contains('is-changed') || row.querySelector('.o55-changed:not(.o55-needed)'))) };
 		}, ID_NICK);
 		await t.check('J1120-1 the Model nicknames row is drawn', s0.row);
 		await t.check('J1120-1 F’s list of nicknames is shown, not the layer’s words in its place', s0.list && !s0.words && !s0.devview, JSON.stringify(s0));
 		await t.check('J1120-1 the Add line’s nickname box is on top where it is drawn', s0.onTop, JSON.stringify(s0));
+		await t.check('J1120-1 with no lines of your own the row starts at its default, not marked Changed', !s0.changed, JSON.stringify(s0));
 		if (!s0.onTop) return;
 		const row = f.locator(`#pm-settings-root [id="setting-${ID_NICK}"]`);
 		await row.locator('.o55-nick-input').click({ timeout: 4000 });
@@ -114,6 +115,14 @@ export const tests = {
 		}, ID_NICK);
 		await t.check(`J1120-1 Add saves “quick” meaning Claude Haiku and shows its line (${s1.page})`, /haiku/i.test(String(s1.page)) && s1.line, JSON.stringify(s1));
 		await t.check(`J1120-1 the layer routes the new line where the value comes from (${s1.note})`, /haiku/i.test(String(s1.world)), JSON.stringify(s1));
+		/* removing the last line of your own: the page goes back to its default, and so does the place the line was kept */
+		await f.locator(`#pm-settings-root [id="setting-${ID_NICK}"] .o55-nick-line[data-nick="quick"] [data-action="pm51-nick-remove"]`).click({ timeout: 4000 }).catch(() => {});
+		await t.page.waitForTimeout(1200);
+		const s2 = await f.evaluate((id) => {
+			const row = document.querySelector(`#pm-settings-root [id="setting-${CSS.escape(id)}"]`), P = window.PSX;
+			return { own: row ? row.querySelectorAll('.o55-nick-line:not(.is-builtin)').length : -1, changed: !!(row && (row.classList.contains('is-changed') || row.querySelector('.o55-changed:not(.o55-needed)'))), everywhere: JSON.stringify(P.getAt(P.W, 'everywhere', null, id)), layerChanged: P.resolve(id, P.S.ctx).changed };
+		}, ID_NICK);
+		await t.check('J1120-1 removing the last line puts the row back to its default: no line of your own, not Changed, nothing kept Everywhere', s2.own === 0 && !s2.changed && !s2.layerChanged && s2.everywhere === undefined, JSON.stringify(s2));
 	},
 
 	'J1120-2 depth: a model row keeps its thinking depth through a project reload': async (t) => {
