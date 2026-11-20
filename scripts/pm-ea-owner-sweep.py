@@ -441,7 +441,7 @@ def postfix_owner_mutations(registry, policies):
         panel=next(x for x in panels if x['event_type']==event)
         admission=load('reports/event-authority-20260911/admission-records/'+event+'.json')
         original=admission['original_admission_decision_ref']
-        refs={row['semantic_owner_doc'],'Plans/storage-plan.md#'+panel['sp'],
+        refs={row['semantic_owner_doc'],row['payload_owner_doc'],'Plans/storage-plan.md#'+panel['sp'],
               'Plans/Automated_Testing_System.md#'+panel['ats']}
         for ref in sorted(refs):
             selected=[x for x in clauses(ref) if 'Current selected assignment' in x['text'] and event+'@' in x['text']]
