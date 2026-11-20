@@ -93,7 +93,21 @@ def original_bytes(directory, negative):
     return world, owner.authenticate, (ref, presented), {}
 
 
+def activation(directory):
+    world = start_world(directory)
+    owner = A.ActivationOwner(A.OwnerRegistry(), owner_id='TEST_ONLY:stage7-activation')
+    owner.birth('subject', 'ready')
+    return world, owner
+
+
+def activation_state(directory, negative):
+    world, owner = activation(directory)
+    state = 'other' if negative else 'ready'
+    return world, owner.transition, ('subject', state, 0, 'active'), {'cause_ref': 'TEST_ONLY:cause'}
+
+
 CASES = {
+    'activation-state': (ADAPTERS, 574, 'activation/cas_state', activation_state),
     'original-bytes': (ADAPTERS, 503, 'original/bytes', original_bytes),
     'withdrawn-reference': (ADAPTERS, 500, 'original/withdrawn', withdrawn_reference),
     'original-ref-type': (ADAPTERS, 497, 'original/ref_type', original_ref_type),
