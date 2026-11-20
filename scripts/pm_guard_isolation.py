@@ -2915,6 +2915,11 @@ def _certified_snapshot(roots, root, *, identities, namespaces=True, input_roots
         if kind in (dict, list, tuple, set, frozenset, bytearray):
             content = (tuple((visit(k), visit(v)) for k, v in obj.items()) if kind is dict else
                        bytes(obj) if kind is bytearray else tuple(visit(v) for v in obj))
+        elif kind is slice:
+            parts = (obj.start, obj.stop, obj.step)
+            if not all(_immutable_literal(part) for part in parts):
+                unsupported(obj, 'mutable slice components')
+            content = tuple(visit(part) for part in parts)
         elif kind is types.FunctionType:
             source = Path(obj.__code__.co_filename).resolve()
             if source == engine:

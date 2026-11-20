@@ -2,6 +2,7 @@
 
 from contextlib import chdir
 from pathlib import Path
+import sys
 import unittest
 
 import pm_debug_investigation_guard_suites as ddbg
@@ -24,12 +25,27 @@ def reference_nodes(document):
     return nodes
 
 
+def reference_keys(fragment):
+    """The original DDBG fragment parser used constant slices."""
+    return [part.replace('~1', '/').replace('~0', '~') for part in fragment[1:].split('/')] if fragment[:1] == '/' else []
+
+
 class GuardEngineTests(unittest.TestCase):
     def test_ddbg_retry_from_repository_root(self):
         with chdir(ROOT):
             report = guard.run(ddbg.retry_request_suite())
         self.assertFalse(report['runtime'], report['runtime'][:1])
         self.assertEqual(report['status'], 'PASS', report['failures'])
+
+    @unittest.skipUnless(sys.version_info >= (3, 14), 'requires CPython constant slices')
+    def test_ddbg_constant_slice_reference_parser(self):
+        doc = next(n.value for n in ddbg.references_suite().negatives if n.id.endswith('missing definition'))
+        fragment = next(node['$ref'] for node in reference_nodes(doc) if '#/' in node.get('$ref', '')).partition('#')[2]
+        self.assertTrue(reference_keys(fragment))
+        self.assertTrue(any(type(value) is slice for value in reference_keys.__code__.co_consts))
+        guard._certified_snapshot([reference_keys.__code__], ROOT, identities=True)
+        with self.assertRaisesRegex(guard.IsolationError, 'slice'):
+            guard._certified_snapshot([slice([], 1)], ROOT, identities=True)
 
     def test_ddbg_reversed_reference_walk(self):
         suite = ddbg.references_suite()
