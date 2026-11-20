@@ -1,0 +1,262 @@
+{
+ "schema_id": "pm.ea.postfix_revision.v1",
+ "authority": "MERGE3-POSTFIX / post-landing Astra findings",
+ "event_type": "plugin.hook.blocked",
+ "findings": [
+  4
+ ],
+ "source_commit": "e758b406bc62888587cd315fcccb6bc485602a3f",
+ "original_admission_decision_ref": "Plans/Decision_Log.md#DL-2348",
+ "decision_ref": "Plans/Decision_Log.md#DL-2538",
+ "registry_before": {
+  "revision": "2026-11-19.87",
+  "sha256": "491faa7f2c7725bb6b5836e0bd135a0547bf53658b3a9d6ef4303aa476788b2c",
+  "family_count": 518
+ },
+ "registry_after": {
+  "revision": "2026-11-19.88",
+  "sha256": "a9719fe5ee4c292f6d19fcfe513a678e1baf5520c9e51bb2af82c395547afc1e",
+  "family_count": 518
+ },
+ "before_row": {
+  "family_id": "event-family-plugin-hook-blocked",
+  "family_revision": "1.0.0",
+  "event_type": "plugin.hook.blocked",
+  "scope_policy": "application_or_project",
+  "semantic_owner_doc": "Plans/Plugins_System.md#PLUG-131",
+  "payload_owner_doc": "Plans/Contracts_V0.md#CV-690",
+  "payload_schema_id": "https://puppetmaster.local/schemas/dg6b_event_contracts/1.0.0/schema.json#/$defs/plugin_hook_blocked",
+  "payload_schema_ref": {
+   "path": "Plans/dg6b_event_contracts.schema.json",
+   "json_pointer": "#/$defs/plugin_hook_blocked",
+   "schema_id": "https://puppetmaster.local/schemas/dg6b_event_contracts/1.0.0/schema.json#/$defs/plugin_hook_blocked"
+  },
+  "legacy": {
+   "aliases": [],
+   "admitted_extensions": [],
+   "identity_json_pointers": {
+    "project_id": [],
+    "thread_id": []
+   },
+   "referenced_event_id_pointer": null,
+   "redaction": {
+    "mode": "reject_unhandled_secrets",
+    "transform_id": null,
+    "transform_version": null
+   }
+  },
+  "source_refs": [
+   "Plans/Plugins_System.md#PLUG-131",
+   "Plans/Contracts_V0.md#CV-690",
+   "Plans/dg6b_event_contracts.schema.json#/$defs/plugin_hook_blocked",
+   "reports/event-authority-20261116/admission-merge-2/readiness-list.json"
+  ],
+  "retention_policy_ref": {
+   "registry_schema_id": "pm.storage_value_registry.v2",
+   "policy_id": "RP-TELEMETRY-90D",
+   "policy_version": "1.0.0"
+  },
+  "payload_versions": [
+   {
+    "scope_kind": "application",
+    "payload_schema_id": "https://puppetmaster.local/schemas/dg6b_event_contracts/1.0.0/schema.json#/$defs/plugin_hook_blocked",
+    "payload_schema_ref": {
+     "path": "Plans/dg6b_event_contracts.schema.json",
+     "json_pointer": "#/$defs/plugin_hook_blocked",
+     "schema_id": "https://puppetmaster.local/schemas/dg6b_event_contracts/1.0.0/schema.json#/$defs/plugin_hook_blocked"
+    },
+    "source_graph_ref": "Plans/Contracts_V0.md#CV-366",
+    "producer_admission": "requires_owner_adoption",
+    "append_owner_ref": "Plans/Plugins_System.md#PLUG-131",
+    "read_owner_ref": "Plans/Plugins_System.md#PLUG-131",
+    "backup_owner_ref": "Plans/Backup_Restore_System.md#BRS-033",
+    "retention_policy_ref": {
+     "registry_schema_id": "pm.storage_value_registry.v2",
+     "policy_id": "RP-PLUGIN-HOOK-APPLICATION-90D",
+     "policy_version": "1.0.0"
+    }
+   },
+   {
+    "scope_kind": "project",
+    "payload_schema_id": "https://puppetmaster.local/schemas/dg6b_event_contracts/1.0.0/schema.json#/$defs/plugin_hook_blocked",
+    "payload_schema_ref": {
+     "path": "Plans/dg6b_event_contracts.schema.json",
+     "json_pointer": "#/$defs/plugin_hook_blocked",
+     "schema_id": "https://puppetmaster.local/schemas/dg6b_event_contracts/1.0.0/schema.json#/$defs/plugin_hook_blocked"
+    },
+    "source_graph_ref": "Plans/Contracts_V0.md#CV-366",
+    "producer_admission": "requires_owner_adoption",
+    "append_owner_ref": "Plans/Plugins_System.md#PLUG-131",
+    "read_owner_ref": "Plans/Plugins_System.md#PLUG-131",
+    "backup_owner_ref": "Plans/Backup_Restore_System.md#BRS-033",
+    "retention_policy_ref": {
+     "registry_schema_id": "pm.storage_value_registry.v2",
+     "policy_id": "RP-TELEMETRY-90D",
+     "policy_version": "1.0.0"
+    }
+   }
+  ],
+  "payload_selection_policy": "exact_scope_and_schema_id_no_fallback"
+ },
+ "registry_row": {
+  "family_id": "event-family-plugin-hook-blocked",
+  "family_revision": "1.0.0",
+  "event_type": "plugin.hook.blocked",
+  "scope_policy": "application_or_project",
+  "semantic_owner_doc": "Plans/Plugins_System.md#PLUG-131",
+  "payload_owner_doc": "Plans/Contracts_V0.md#CV-690",
+  "payload_schema_id": "https://puppetmaster.local/schemas/dg6b_event_contracts/1.0.0/schema.json#/$defs/plugin_hook_blocked",
+  "payload_schema_ref": {
+   "path": "Plans/dg6b_event_contracts.schema.json",
+   "json_pointer": "#/$defs/plugin_hook_blocked",
+   "schema_id": "https://puppetmaster.local/schemas/dg6b_event_contracts/1.0.0/schema.json#/$defs/plugin_hook_blocked"
+  },
+  "legacy": {
+   "aliases": [],
+   "admitted_extensions": [],
+   "identity_json_pointers": {
+    "project_id": [],
+    "thread_id": []
+   },
+   "referenced_event_id_pointer": null,
+   "redaction": {
+    "mode": "reject_unhandled_secrets",
+    "transform_id": null,
+    "transform_version": null
+   }
+  },
+  "source_refs": [
+   "Plans/Plugins_System.md#PLUG-131",
+   "Plans/Contracts_V0.md#CV-690",
+   "Plans/dg6b_event_contracts.schema.json#/$defs/plugin_hook_blocked",
+   "reports/event-authority-20261116/admission-merge-2/readiness-list.json"
+  ],
+  "retention_policy_ref": {
+   "registry_schema_id": "pm.storage_value_registry.v2",
+   "policy_id": "RP-TELEMETRY-90D",
+   "policy_version": "1.0.0"
+  },
+  "payload_versions": [
+   {
+    "scope_kind": "application",
+    "payload_schema_id": "https://puppetmaster.local/schemas/dg6b_event_contracts/1.0.0/schema.json#/$defs/plugin_hook_blocked",
+    "payload_schema_ref": {
+     "path": "Plans/dg6b_event_contracts.schema.json",
+     "json_pointer": "#/$defs/plugin_hook_blocked",
+     "schema_id": "https://puppetmaster.local/schemas/dg6b_event_contracts/1.0.0/schema.json#/$defs/plugin_hook_blocked"
+    },
+    "source_graph_ref": "Plans/Contracts_V0.md#CV-366",
+    "producer_admission": "requires_owner_adoption",
+    "append_owner_ref": "Plans/Plugins_System.md#PLUG-131",
+    "read_owner_ref": "Plans/Plugins_System.md#PLUG-131",
+    "backup_owner_ref": "Plans/Backup_Restore_System.md#BRS-033",
+    "retention_policy_ref": {
+     "registry_schema_id": "pm.storage_value_registry.v2",
+     "policy_id": "RP-PLUGIN-HOOK-APPLICATION-90D",
+     "policy_version": "1.0.0"
+    }
+   },
+   {
+    "scope_kind": "project",
+    "payload_schema_id": "https://puppetmaster.local/schemas/dg6b_event_contracts/1.0.0/schema.json#/$defs/plugin_hook_blocked",
+    "payload_schema_ref": {
+     "path": "Plans/dg6b_event_contracts.schema.json",
+     "json_pointer": "#/$defs/plugin_hook_blocked",
+     "schema_id": "https://puppetmaster.local/schemas/dg6b_event_contracts/1.0.0/schema.json#/$defs/plugin_hook_blocked"
+    },
+    "source_graph_ref": "Plans/Contracts_V0.md#CV-366",
+    "producer_admission": "requires_owner_adoption",
+    "append_owner_ref": "Plans/Plugins_System.md#PLUG-131",
+    "read_owner_ref": "Plans/Plugins_System.md#PLUG-131",
+    "backup_owner_ref": "Plans/Backup_Restore_System.md#BRS-033",
+    "retention_policy_ref": {
+     "registry_schema_id": "pm.storage_value_registry.v2",
+     "policy_id": "RP-TELEMETRY-90D",
+     "policy_version": "1.0.0"
+    }
+   }
+  ],
+  "payload_selection_policy": "exact_scope_and_schema_id_no_fallback"
+ },
+ "predecessor_record_sha256": "c71096e17e682cf8460a3e42d9969543ff3c274262dae37c7f8148f24deeb796",
+ "predecessor_assessment_sha256": "437035581f63574ac67c3abdc98262459dfc4de4c173fce33601a5d0f8155b7d",
+ "applied_record_sha256": "1c3bfde2a1195fb76695c80a972b75b454b5957a3e5d3828fe02365fbc5dbf61",
+ "applied_assessment_sha256": "7c030df83e4750f7a49543761171ad00ef0967a1212ea9da6a9a50071d56d99c",
+ "citation_changes": [
+  {
+   "ordinal": 0,
+   "old": {
+    "path": "Plans/storage-plan.md",
+    "unit": "SP-671",
+    "line_start": 36742,
+    "line_end": 36742,
+    "quote": "Current selected assignment (2026-11-19): plugin.hook.blocked@1.0.0 is registered for application_or_project in",
+    "quote_check": "exact",
+    "quote_scope": "unit SP-671, Plans/storage-plan.md:36278-37145",
+    "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+    "source_citation": {
+     "path": "Plans/storage-plan.md",
+     "unit": "SP-671",
+     "line_start": 35972,
+     "line_end": 35972,
+     "quote": "Event history `retention_policy_ref = RP-TELEMETRY-90D@1.0.0`, under DL-401, DL-419, DL-415, DL-503.\\n\\",
+     "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+    },
+    "locator_maintenance": {
+     "authority": "MERGE2-FIX4",
+     "reason": "Re-cite the same accepted retention claim at its current exact owner assignment; event and source/checkpoint authority remain separate."
+    }
+   },
+   "replacement": {
+    "path": "Plans/storage-plan.md",
+    "unit": "SP-671",
+    "line_start": 36744,
+    "line_end": 36765,
+    "quote": "  Current selected assignment (2026-11-19): plugin.hook.blocked@1.0.0 is registered for application_or_project in\n  Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2348. Its event history selects Application\n  = RP-PLUGIN-HOOK-APPLICATION-90D@1.0.0 (anchor_kind=creation, cardinality_scope=instance), Project = RP-TELEMETRY-90D@1.0.0\n  (anchor_kind=creation, cardinality_scope=project); Plans/storage-plan.md#SP-671 owns the event policy''s existing\n  anchors, counts, holds and deletion rules. Separate stored-value assignment: plugin_hook_blocked_operation uses\n  RP-PLUGIN-HOOK-APPLICATION-90D@1.0.0 under Plans/Decision_Log.md#DL-503; this assigns that stored value, not event\n  history. Separate stored-value assignment: plugin_hook_error_operation uses RP-PLUGIN-HOOK-APPLICATION-90D@1.0.0\n  under Plans/Decision_Log.md#DL-503; this assigns that stored value, not event history. Separate stored-value assignment:\n  plugin_hook_invoked_operation uses RP-PLUGIN-HOOK-APPLICATION-90D@1.0.0 under Plans/Decision_Log.md#DL-503; this\n  assigns that stored value, not event history. Separate stored-value assignment: plugin_load_failed_operation uses\n  RP-PLUGIN-OPERATIONS-APPLICATION-2555D@1.0.0 under Plans/Decision_Log.md#DL-503; this assigns that stored value,\n  not event history. Separate stored-value assignment: plugin_loaded_operation uses RP-PLUGIN-OPERATIONS-APPLICATION-2555D@1.0.0\n  under Plans/Decision_Log.md#DL-503; this assigns that stored value, not event history. Separate stored-value assignment:\n  plugin_permission_override_operation uses RP-PLUGIN-OPERATIONS-APPLICATION-2555D@1.0.0 under Plans/Decision_Log.md#DL-503;\n  this assigns that stored value, not event history. Separate stored-value assignment: plugin_tool_collision_operation\n  uses RP-PLUGIN-OPERATIONS-APPLICATION-2555D@1.0.0 under Plans/Decision_Log.md#DL-503; this assigns that stored\n  value, not event history. Separate stored-value assignment: plugin_tool_registered_operation uses RP-PLUGIN-OPERATIONS-APPLICATION-2555D@1.0.0\n  under Plans/Decision_Log.md#DL-503; this assigns that stored value, not event history. Original sources and coherent\n  backups retain their independent owner policies; the event lifetime is not transferred to them. Current append/publication\n  still requires the exact selected schema/scope, original custody, current permission, receipt and required producer\n  adoption. Actual missing registration or unresolved required custody refuses; native execution remains NOT_RUN.\n  No native adoption, new retention choice or governance seal follows.",
+    "quote_check": "exact",
+    "quote_scope": "unit SP-671, Plans/storage-plan.md:36280-37147"
+   },
+   "reason": "Complete current wrapped assignment inside its original unit."
+  },
+  {
+   "ordinal": 1,
+   "old": {
+    "path": "Plans/storage-plan.md",
+    "unit": "SP-671",
+    "line_start": 36742,
+    "line_end": 36742,
+    "quote": "Current selected assignment (2026-11-19): plugin.hook.blocked@1.0.0 is registered for application_or_project in",
+    "quote_check": "exact",
+    "quote_scope": "unit SP-671, Plans/storage-plan.md:36278-37145",
+    "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+    "source_citation": {
+     "path": "Plans/storage-plan.md",
+     "unit": "SP-671",
+     "line_start": 36096,
+     "line_end": 36096,
+     "quote": "\\ or other values.\\n\\nExact stored value `plugin_hook_invoked_operation` retains `RP-PLUGIN-HOOK-APPLICATION-90D@1.0.0`\\",
+     "file_sha256": "bb2befc61890fac049fc492625ceceaa7d72fc6cc843ab0ce95e34b638392707"
+    },
+    "locator_maintenance": {
+     "authority": "MERGE2-FIX4",
+     "reason": "Re-cite the same accepted retention claim at its current exact owner assignment; event and source/checkpoint authority remain separate."
+    }
+   },
+   "replacement": {
+    "path": "Plans/storage-plan.md",
+    "unit": "SP-671",
+    "line_start": 36744,
+    "line_end": 36765,
+    "quote": "  Current selected assignment (2026-11-19): plugin.hook.blocked@1.0.0 is registered for application_or_project in\n  Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2348. Its event history selects Application\n  = RP-PLUGIN-HOOK-APPLICATION-90D@1.0.0 (anchor_kind=creation, cardinality_scope=instance), Project = RP-TELEMETRY-90D@1.0.0\n  (anchor_kind=creation, cardinality_scope=project); Plans/storage-plan.md#SP-671 owns the event policy''s existing\n  anchors, counts, holds and deletion rules. Separate stored-value assignment: plugin_hook_blocked_operation uses\n  RP-PLUGIN-HOOK-APPLICATION-90D@1.0.0 under Plans/Decision_Log.md#DL-503; this assigns that stored value, not event\n  history. Separate stored-value assignment: plugin_hook_error_operation uses RP-PLUGIN-HOOK-APPLICATION-90D@1.0.0\n  under Plans/Decision_Log.md#DL-503; this assigns that stored value, not event history. Separate stored-value assignment:\n  plugin_hook_invoked_operation uses RP-PLUGIN-HOOK-APPLICATION-90D@1.0.0 under Plans/Decision_Log.md#DL-503; this\n  assigns that stored value, not event history. Separate stored-value assignment: plugin_load_failed_operation uses\n  RP-PLUGIN-OPERATIONS-APPLICATION-2555D@1.0.0 under Plans/Decision_Log.md#DL-503; this assigns that stored value,\n  not event history. Separate stored-value assignment: plugin_loaded_operation uses RP-PLUGIN-OPERATIONS-APPLICATION-2555D@1.0.0\n  under Plans/Decision_Log.md#DL-503; this assigns that stored value, not event history. Separate stored-value assignment:\n  plugin_permission_override_operation uses RP-PLUGIN-OPERATIONS-APPLICATION-2555D@1.0.0 under Plans/Decision_Log.md#DL-503;\n  this assigns that stored value, not event history. Separate stored-value assignment: plugin_tool_collision_operation\n  uses RP-PLUGIN-OPERATIONS-APPLICATION-2555D@1.0.0 under Plans/Decision_Log.md#DL-503; this assigns that stored\n  value, not event history. Separate stored-value assignment: plugin_tool_registered_operation uses RP-PLUGIN-OPERATIONS-APPLICATION-2555D@1.0.0\n  under Plans/Decision_Log.md#DL-503; this assigns that stored value, not event history. Original sources and coherent\n  backups retain their independent owner policies; the event lifetime is not transferred to them. Current append/publication\n  still requires the exact selected schema/scope, original custody, current permission, receipt and required producer\n  adoption. Actual missing registration or unresolved required custody refuses; native execution remains NOT_RUN.\n  No native adoption, new retention choice or governance seal follows.",
+    "quote_check": "exact",
+    "quote_scope": "unit SP-671, Plans/storage-plan.md:36280-37147"
+   },
+   "reason": "Complete current wrapped assignment inside its original unit."
+  }
+ ],
+ "review": {
+  "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/MERGE2-POSTLAND-astra62max/REVIEW.md",
+  "sha256": "757539cf93c9ffe264ceabc42273ef7afe1582bf161fbe0a826a4b6bf18b6d21"
+ },
+ "native_execution": "NOT_RUN"
+}

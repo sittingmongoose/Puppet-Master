@@ -59421,3 +59421,65 @@ negative_constraints:
 - No new admission, producer adoption, native execution claim or governance seal.
 ```
 
+### DL-2538: Event Authority corrects plugin.hook.blocked (merge 3 post-landing)
+
+```yaml
+plan_unit_id: DL-2538
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: 'Correction for plugin.hook.blocked only, under DL-077 and DL-400, resolving post-landing Astra finding(s)
+  [4]. The original admission authority remains Plans/Decision_Log.md#DL-2348; this entry records no new admission, verdict,
+  policy choice or producer adoption. Current row canonical SHA-256 378401b9f0721580bebddc322285824e13adf8b314171a2b96923f68b4fa99c9.
+  Its scope is application_or_project. Payload editions: application `https://puppetmaster.local/schemas/dg6b_event_contracts/1.0.0/schema.json#/$defs/plugin_hook_blocked`
+  (RP-PLUGIN-HOOK-APPLICATION-90D@1.0.0, producer requires_owner_adoption); project `https://puppetmaster.local/schemas/dg6b_event_contracts/1.0.0/schema.json#/$defs/plugin_hook_blocked`
+  (RP-TELEMETRY-90D@1.0.0, producer requires_owner_adoption).
+
+
+  The correction moves the full registry from 2026-11-19.87, 518 families, SHA-256 491faa7f2c7725bb6b5836e0bd135a0547bf53658b3a9d6ef4303aa476788b2c,
+  to 2026-11-19.88, 518 families, SHA-256 a9719fe5ee4c292f6d19fcfe513a678e1baf5520c9e51bb2af82c395547afc1e, without changing
+  another family. Revision witness: reports/event-authority-20261116/admission-merge-3/corrections/plugin.hook.blocked.json.
+  Depth assessment: reports/event-authority-20261116/admission-merge-2/depth/plugin.hook.blocked.json, SHA-256 7c030df83e4750f7a49543761171ad00ef0967a1212ea9da6a9a50071d56d99c.
+
+
+  The original append checkpoints are preserved: before 2026-11-16.211 SHA-256 d9a26f75ceefbb6fc3e0b843a50347d75968b005aad18a3861c76fb845a51b91;
+  after 2026-11-16.212 SHA-256 6278a749b3ac8eb1de3363ea7568ee1e8e3fbd4b61b5aabef4f1916ad8c700f9. Existing semantic owner Plans/Plugins_System.md#PLUG-131,
+  payload owner Plans/Contracts_V0.md#CV-690, resource Plans/dg6b_event_contracts.schema.json#/$defs/plugin_hook_blocked retain
+  their contracts. Current citations were re-read from existing canonical text; original citations, records and decision entries
+  remain in the named Git predecessor. Native execution remains NOT_RUN. Required producer adoption, permissions, original
+  custody and receipt/publication fences remain required.'
+gui_related: false
+gui_classification_reason: Maintains one existing event admission and its evidence.
+depends_on:
+- DL-077
+- DL-400
+- DL-2348
+unblocks: []
+acceptance_criteria:
+- Exactly one family is corrected and the original append checkpoints remain authenticated.
+- The correction witness and current DL-077 record match their named Git editions.
+validation_surfaces:
+- python3 scripts/pm-ea-record-chain.py
+- python3 scripts/pm-ea-postfix-check.py
+- python3 scripts/pm-ea-retention-citation-check.py
+risk_class: event_authority_admission
+reasoning_tier: high
+context_scope: event_authority_pnc019_merge3_postfix
+implementation_surfaces:
+- Plans/event_family_registry.json
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/MERGE2-POSTLAND-astra62max/REVIEW.md
+- Plans/Decision_Log.md#DL-2348
+preserved_exact_tokens:
+- plugin.hook.blocked
+- 378401b9f0721580bebddc322285824e13adf8b314171a2b96923f68b4fa99c9
+- 2026-11-19.87
+- 2026-11-19.88
+negative_constraints:
+- No new admission, producer adoption, native execution claim or governance seal.
+```
+
