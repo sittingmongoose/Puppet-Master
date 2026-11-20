@@ -1,0 +1,247 @@
+{
+  "accepted_branches": {
+    "0": {
+      "at": "2026-11-18T17:41:42.828Z",
+      "disposition": "unknown",
+      "goal_run_id": "TO-grun-aa601990eeb94bec8938",
+      "kind": "d06_cancel",
+      "operation_id": "TEST_ONLY:workflow-op:91898531-5620-4c1a-98bf-d13d09a5f55a",
+      "owner_epoch": 1,
+      "owner_ref": "TEST_ONLY:owner:workflow:016fc14d-5175-4e48-98ed-1a94ad009691",
+      "qualification": "TEST_ONLY",
+      "schema_id": "pm.test_only.workflow_pending_operation.v1",
+      "scope": {
+        "goal_id": "TO-goal-8a2d5f28253c4311a3e6",
+        "project_id": "TO-proj-42f9800eeffa495ba1cc",
+        "storage_instance_id": "49163520-e897-4df2-a027-609030243886",
+        "thread_id": "TO-thr-efdca506a53b46289164"
+      }
+    }
+  },
+  "census_sha256": "aa1159e67c87c9874e95cb4da891ca18dd7218972f30e79228d4e2e27653f96c",
+  "examples": {
+    "https://puppetmaster.local/schemas/goal_own_c/dg-cb/1.0.0/test-only-sources.v1.schema.json#/$defs/Scope/closed_members": {
+      "control_name": "0",
+      "member": [
+        "add",
+        "gc_extra_member"
+      ],
+      "path": [
+        "scope"
+      ]
+    },
+    "https://puppetmaster.local/schemas/goal_own_c/dg-cb/1.0.0/test-only-sources.v1.schema.json#/$defs/Scope/properties/goal_id/minLength": {
+      "control_name": "0",
+      "path": [
+        "scope",
+        "goal_id"
+      ],
+      "value": ""
+    },
+    "https://puppetmaster.local/schemas/goal_own_c/dg-cb/1.0.0/test-only-sources.v1.schema.json#/$defs/Scope/properties/goal_id/type": {
+      "control_name": "0",
+      "path": [
+        "scope",
+        "goal_id"
+      ],
+      "value": null
+    },
+    "https://puppetmaster.local/schemas/goal_own_c/dg-cb/1.0.0/test-only-sources.v1.schema.json#/$defs/Scope/properties/project_id/minLength": {
+      "control_name": "0",
+      "path": [
+        "scope",
+        "project_id"
+      ],
+      "value": ""
+    },
+    "https://puppetmaster.local/schemas/goal_own_c/dg-cb/1.0.0/test-only-sources.v1.schema.json#/$defs/Scope/properties/project_id/type": {
+      "control_name": "0",
+      "path": [
+        "scope",
+        "project_id"
+      ],
+      "value": null
+    },
+    "https://puppetmaster.local/schemas/goal_own_c/dg-cb/1.0.0/test-only-sources.v1.schema.json#/$defs/Scope/properties/storage_instance_id/minLength": {
+      "control_name": "0",
+      "path": [
+        "scope",
+        "storage_instance_id"
+      ],
+      "value": ""
+    },
+    "https://puppetmaster.local/schemas/goal_own_c/dg-cb/1.0.0/test-only-sources.v1.schema.json#/$defs/Scope/properties/storage_instance_id/type": {
+      "control_name": "0",
+      "path": [
+        "scope",
+        "storage_instance_id"
+      ],
+      "value": null
+    },
+    "https://puppetmaster.local/schemas/goal_own_c/dg-cb/1.0.0/test-only-sources.v1.schema.json#/$defs/Scope/properties/thread_id/minLength": {
+      "control_name": "0",
+      "path": [
+        "scope",
+        "thread_id"
+      ],
+      "value": ""
+    },
+    "https://puppetmaster.local/schemas/goal_own_c/dg-cb/1.0.0/test-only-sources.v1.schema.json#/$defs/Scope/properties/thread_id/type": {
+      "control_name": "0",
+      "path": [
+        "scope",
+        "thread_id"
+      ],
+      "value": null
+    },
+    "https://puppetmaster.local/schemas/goal_own_c/dg-cb/1.0.0/test-only-sources.v1.schema.json#/$defs/Scope/required": {
+      "control_name": "0",
+      "member": [
+        "remove",
+        "storage_instance_id"
+      ],
+      "path": [
+        "scope"
+      ]
+    },
+    "https://puppetmaster.local/schemas/goal_own_c/dg-cb/1.0.0/test-only-sources.v1.schema.json#/$defs/Scope/type": {
+      "control_name": "0",
+      "path": [
+        "scope"
+      ],
+      "value": null
+    },
+    "https://puppetmaster.local/schemas/goal_own_c/dg-cb/1.0.0/test-only-sources.v1.schema.json#/$defs/WorkflowPendingOperation/closed_members": {
+      "control_name": "0",
+      "member": [
+        "add",
+        "gc_extra_member"
+      ],
+      "path": []
+    },
+    "https://puppetmaster.local/schemas/goal_own_c/dg-cb/1.0.0/test-only-sources.v1.schema.json#/$defs/WorkflowPendingOperation/properties/at/format": {
+      "control_name": "0",
+      "path": [
+        "at"
+      ],
+      "value": "not-a-date-time"
+    },
+    "https://puppetmaster.local/schemas/goal_own_c/dg-cb/1.0.0/test-only-sources.v1.schema.json#/$defs/WorkflowPendingOperation/properties/at/type": {
+      "control_name": "0",
+      "path": [
+        "at"
+      ],
+      "value": null
+    },
+    "https://puppetmaster.local/schemas/goal_own_c/dg-cb/1.0.0/test-only-sources.v1.schema.json#/$defs/WorkflowPendingOperation/properties/disposition/enum": {
+      "control_name": "0",
+      "path": [
+        "disposition"
+      ],
+      "value": "unknownx"
+    },
+    "https://puppetmaster.local/schemas/goal_own_c/dg-cb/1.0.0/test-only-sources.v1.schema.json#/$defs/WorkflowPendingOperation/properties/goal_run_id/minLength": {
+      "control_name": "0",
+      "path": [
+        "goal_run_id"
+      ],
+      "value": ""
+    },
+    "https://puppetmaster.local/schemas/goal_own_c/dg-cb/1.0.0/test-only-sources.v1.schema.json#/$defs/WorkflowPendingOperation/properties/goal_run_id/type": {
+      "control_name": "0",
+      "path": [
+        "goal_run_id"
+      ],
+      "value": null
+    },
+    "https://puppetmaster.local/schemas/goal_own_c/dg-cb/1.0.0/test-only-sources.v1.schema.json#/$defs/WorkflowPendingOperation/properties/kind/enum": {
+      "control_name": "0",
+      "path": [
+        "kind"
+      ],
+      "value": "d05_safe_stopx"
+    },
+    "https://puppetmaster.local/schemas/goal_own_c/dg-cb/1.0.0/test-only-sources.v1.schema.json#/$defs/WorkflowPendingOperation/properties/operation_id/minLength": {
+      "control_name": "0",
+      "path": [
+        "operation_id"
+      ],
+      "value": ""
+    },
+    "https://puppetmaster.local/schemas/goal_own_c/dg-cb/1.0.0/test-only-sources.v1.schema.json#/$defs/WorkflowPendingOperation/properties/operation_id/type": {
+      "control_name": "0",
+      "path": [
+        "operation_id"
+      ],
+      "value": null
+    },
+    "https://puppetmaster.local/schemas/goal_own_c/dg-cb/1.0.0/test-only-sources.v1.schema.json#/$defs/WorkflowPendingOperation/properties/owner_epoch/minimum": {
+      "control_name": "0",
+      "path": [
+        "owner_epoch"
+      ],
+      "value": -1
+    },
+    "https://puppetmaster.local/schemas/goal_own_c/dg-cb/1.0.0/test-only-sources.v1.schema.json#/$defs/WorkflowPendingOperation/properties/owner_epoch/type": {
+      "control_name": "0",
+      "path": [
+        "owner_epoch"
+      ],
+      "value": 1.5
+    },
+    "https://puppetmaster.local/schemas/goal_own_c/dg-cb/1.0.0/test-only-sources.v1.schema.json#/$defs/WorkflowPendingOperation/properties/owner_ref/minLength": {
+      "control_name": "0",
+      "path": [
+        "owner_ref"
+      ],
+      "value": ""
+    },
+    "https://puppetmaster.local/schemas/goal_own_c/dg-cb/1.0.0/test-only-sources.v1.schema.json#/$defs/WorkflowPendingOperation/properties/owner_ref/type": {
+      "control_name": "0",
+      "path": [
+        "owner_ref"
+      ],
+      "value": null
+    },
+    "https://puppetmaster.local/schemas/goal_own_c/dg-cb/1.0.0/test-only-sources.v1.schema.json#/$defs/WorkflowPendingOperation/properties/qualification/const": {
+      "control_name": "0",
+      "path": [
+        "qualification"
+      ],
+      "value": "TEST_ONLYx"
+    },
+    "https://puppetmaster.local/schemas/goal_own_c/dg-cb/1.0.0/test-only-sources.v1.schema.json#/$defs/WorkflowPendingOperation/properties/schema_id/const": {
+      "control_name": "0",
+      "path": [
+        "schema_id"
+      ],
+      "value": "pm.test_only.workflow_pending_operation.v1x"
+    },
+    "https://puppetmaster.local/schemas/goal_own_c/dg-cb/1.0.0/test-only-sources.v1.schema.json#/$defs/WorkflowPendingOperation/required": {
+      "control_name": "0",
+      "member": [
+        "remove",
+        "schema_id"
+      ],
+      "path": []
+    },
+    "https://puppetmaster.local/schemas/goal_own_c/dg-cb/1.0.0/test-only-sources.v1.schema.json#/$defs/WorkflowPendingOperation/type": {
+      "control_name": "0",
+      "path": [],
+      "value": null
+    }
+  },
+  "family": "goal.cancelled",
+  "occurrence": 1,
+  "reference": "https://puppetmaster.local/schemas/goal_own_c/dg-cb/1.0.0/test-only-sources.v1.schema.json#/$defs/WorkflowPendingOperation",
+  "root": "dg5:b0619cf09e473e9e",
+  "route": "M/commit/source_schema",
+  "row": "dg5/M/commit/source_schema/schema",
+  "site": [
+    "scripts/pm_goal_dg_cb_owners.py",
+    199
+  ],
+  "source": "8ea40bf4c895fc17fd560e731a16558fe16051c0",
+  "transaction": true,
+  "variant": "workflow"
+}

@@ -1,0 +1,298 @@
+{
+  "accepted_branches": {
+    "0": {
+      "admission_id": "TEST_ONLY:callback-admission:cfc39cfa-a2b7-445a-90ae-330fb7bcd1b0",
+      "at": "2026-11-18T16:25:05.049Z",
+      "effect_receipt_ref": null,
+      "owner_epoch": 1,
+      "owner_ref": "TEST_ONLY:owner:scheduling:db4a2240-11bd-4f97-a708-25e28f44738d",
+      "qualification": "TEST_ONLY",
+      "run_epoch": 0,
+      "run_id": "TO-run-fbc647262d6d419f9952",
+      "schema_id": "pm.test_only.scheduler_callback_admission.v1",
+      "scope": {
+        "goal_id": "TO-goal-bef72b6fac354b58ab6a",
+        "project_id": "TO-proj-f1e6a1f84a1b40989aee",
+        "storage_instance_id": "06a33a17-1282-4b10-8364-8467ea1284cf",
+        "thread_id": "TO-thr-42dcd404b56749799cf5"
+      },
+      "state": "admitted",
+      "stop_epoch": 1
+    }
+  },
+  "census_sha256": "aa1159e67c87c9874e95cb4da891ca18dd7218972f30e79228d4e2e27653f96c",
+  "examples": {
+    "https://puppetmaster.local/schemas/goal_own_c/dg-cb/1.0.0/test-only-sources.v1.schema.json#/$defs/SchedulerCallbackAdmission/closed_members": {
+      "control_name": "0",
+      "member": [
+        "add",
+        "gc_extra_member"
+      ],
+      "path": []
+    },
+    "https://puppetmaster.local/schemas/goal_own_c/dg-cb/1.0.0/test-only-sources.v1.schema.json#/$defs/SchedulerCallbackAdmission/properties/admission_id/minLength": {
+      "control_name": "0",
+      "path": [
+        "admission_id"
+      ],
+      "value": ""
+    },
+    "https://puppetmaster.local/schemas/goal_own_c/dg-cb/1.0.0/test-only-sources.v1.schema.json#/$defs/SchedulerCallbackAdmission/properties/admission_id/type": {
+      "control_name": "0",
+      "path": [
+        "admission_id"
+      ],
+      "value": null
+    },
+    "https://puppetmaster.local/schemas/goal_own_c/dg-cb/1.0.0/test-only-sources.v1.schema.json#/$defs/SchedulerCallbackAdmission/properties/at/format": {
+      "control_name": "0",
+      "path": [
+        "at"
+      ],
+      "value": "not-a-date-time"
+    },
+    "https://puppetmaster.local/schemas/goal_own_c/dg-cb/1.0.0/test-only-sources.v1.schema.json#/$defs/SchedulerCallbackAdmission/properties/at/type": {
+      "control_name": "0",
+      "path": [
+        "at"
+      ],
+      "value": null
+    },
+    "https://puppetmaster.local/schemas/goal_own_c/dg-cb/1.0.0/test-only-sources.v1.schema.json#/$defs/SchedulerCallbackAdmission/properties/effect_receipt_ref/oneOf": {
+      "control_name": "0",
+      "path": [
+        "effect_receipt_ref"
+      ],
+      "value": true
+    },
+    "https://puppetmaster.local/schemas/goal_own_c/dg-cb/1.0.0/test-only-sources.v1.schema.json#/$defs/SchedulerCallbackAdmission/properties/effect_receipt_ref/oneOf/0/minLength": {
+      "control_name": "0",
+      "path": [
+        "effect_receipt_ref"
+      ],
+      "value": ""
+    },
+    "https://puppetmaster.local/schemas/goal_own_c/dg-cb/1.0.0/test-only-sources.v1.schema.json#/$defs/SchedulerCallbackAdmission/properties/effect_receipt_ref/oneOf/0/type": {
+      "control_name": "0",
+      "path": [],
+      "selector_messages": [
+        "https://puppetmaster.local/schemas/goal_own_c/dg-cb/1.0.0/test-only-sources.v1.schema.json#/$defs/SchedulerCallbackAdmission/properties/effect_receipt_ref/oneOf"
+      ]
+    },
+    "https://puppetmaster.local/schemas/goal_own_c/dg-cb/1.0.0/test-only-sources.v1.schema.json#/$defs/SchedulerCallbackAdmission/properties/effect_receipt_ref/oneOf/1/type": {
+      "control_name": "0",
+      "path": [
+        "effect_receipt_ref"
+      ],
+      "value": true
+    },
+    "https://puppetmaster.local/schemas/goal_own_c/dg-cb/1.0.0/test-only-sources.v1.schema.json#/$defs/SchedulerCallbackAdmission/properties/owner_epoch/minimum": {
+      "control_name": "0",
+      "path": [
+        "owner_epoch"
+      ],
+      "value": -1
+    },
+    "https://puppetmaster.local/schemas/goal_own_c/dg-cb/1.0.0/test-only-sources.v1.schema.json#/$defs/SchedulerCallbackAdmission/properties/owner_epoch/type": {
+      "control_name": "0",
+      "path": [
+        "owner_epoch"
+      ],
+      "value": 1.5
+    },
+    "https://puppetmaster.local/schemas/goal_own_c/dg-cb/1.0.0/test-only-sources.v1.schema.json#/$defs/SchedulerCallbackAdmission/properties/owner_ref/minLength": {
+      "control_name": "0",
+      "path": [
+        "owner_ref"
+      ],
+      "value": ""
+    },
+    "https://puppetmaster.local/schemas/goal_own_c/dg-cb/1.0.0/test-only-sources.v1.schema.json#/$defs/SchedulerCallbackAdmission/properties/owner_ref/type": {
+      "control_name": "0",
+      "path": [
+        "owner_ref"
+      ],
+      "value": null
+    },
+    "https://puppetmaster.local/schemas/goal_own_c/dg-cb/1.0.0/test-only-sources.v1.schema.json#/$defs/SchedulerCallbackAdmission/properties/qualification/const": {
+      "control_name": "0",
+      "path": [
+        "qualification"
+      ],
+      "value": "TEST_ONLYx"
+    },
+    "https://puppetmaster.local/schemas/goal_own_c/dg-cb/1.0.0/test-only-sources.v1.schema.json#/$defs/SchedulerCallbackAdmission/properties/run_epoch/minimum": {
+      "control_name": "0",
+      "path": [
+        "run_epoch"
+      ],
+      "value": -1
+    },
+    "https://puppetmaster.local/schemas/goal_own_c/dg-cb/1.0.0/test-only-sources.v1.schema.json#/$defs/SchedulerCallbackAdmission/properties/run_epoch/type": {
+      "control_name": "0",
+      "path": [
+        "run_epoch"
+      ],
+      "value": 1.5
+    },
+    "https://puppetmaster.local/schemas/goal_own_c/dg-cb/1.0.0/test-only-sources.v1.schema.json#/$defs/SchedulerCallbackAdmission/properties/run_id/minLength": {
+      "control_name": "0",
+      "path": [
+        "run_id"
+      ],
+      "value": ""
+    },
+    "https://puppetmaster.local/schemas/goal_own_c/dg-cb/1.0.0/test-only-sources.v1.schema.json#/$defs/SchedulerCallbackAdmission/properties/run_id/type": {
+      "control_name": "0",
+      "path": [
+        "run_id"
+      ],
+      "value": null
+    },
+    "https://puppetmaster.local/schemas/goal_own_c/dg-cb/1.0.0/test-only-sources.v1.schema.json#/$defs/SchedulerCallbackAdmission/properties/schema_id/const": {
+      "control_name": "0",
+      "path": [
+        "schema_id"
+      ],
+      "value": "pm.test_only.scheduler_callback_admission.v1x"
+    },
+    "https://puppetmaster.local/schemas/goal_own_c/dg-cb/1.0.0/test-only-sources.v1.schema.json#/$defs/SchedulerCallbackAdmission/properties/state/enum": {
+      "control_name": "0",
+      "path": [
+        "state"
+      ],
+      "value": "admittedx"
+    },
+    "https://puppetmaster.local/schemas/goal_own_c/dg-cb/1.0.0/test-only-sources.v1.schema.json#/$defs/SchedulerCallbackAdmission/properties/stop_epoch/minimum": {
+      "control_name": "0",
+      "path": [
+        "stop_epoch"
+      ],
+      "value": -1
+    },
+    "https://puppetmaster.local/schemas/goal_own_c/dg-cb/1.0.0/test-only-sources.v1.schema.json#/$defs/SchedulerCallbackAdmission/properties/stop_epoch/type": {
+      "control_name": "0",
+      "path": [
+        "stop_epoch"
+      ],
+      "value": 1.5
+    },
+    "https://puppetmaster.local/schemas/goal_own_c/dg-cb/1.0.0/test-only-sources.v1.schema.json#/$defs/SchedulerCallbackAdmission/required": {
+      "control_name": "0",
+      "member": [
+        "remove",
+        "schema_id"
+      ],
+      "path": []
+    },
+    "https://puppetmaster.local/schemas/goal_own_c/dg-cb/1.0.0/test-only-sources.v1.schema.json#/$defs/SchedulerCallbackAdmission/type": {
+      "control_name": "0",
+      "path": [],
+      "value": null
+    },
+    "https://puppetmaster.local/schemas/goal_own_c/dg-cb/1.0.0/test-only-sources.v1.schema.json#/$defs/Scope/closed_members": {
+      "control_name": "0",
+      "member": [
+        "add",
+        "gc_extra_member"
+      ],
+      "path": [
+        "scope"
+      ]
+    },
+    "https://puppetmaster.local/schemas/goal_own_c/dg-cb/1.0.0/test-only-sources.v1.schema.json#/$defs/Scope/properties/goal_id/minLength": {
+      "control_name": "0",
+      "path": [
+        "scope",
+        "goal_id"
+      ],
+      "value": ""
+    },
+    "https://puppetmaster.local/schemas/goal_own_c/dg-cb/1.0.0/test-only-sources.v1.schema.json#/$defs/Scope/properties/goal_id/type": {
+      "control_name": "0",
+      "path": [
+        "scope",
+        "goal_id"
+      ],
+      "value": null
+    },
+    "https://puppetmaster.local/schemas/goal_own_c/dg-cb/1.0.0/test-only-sources.v1.schema.json#/$defs/Scope/properties/project_id/minLength": {
+      "control_name": "0",
+      "path": [
+        "scope",
+        "project_id"
+      ],
+      "value": ""
+    },
+    "https://puppetmaster.local/schemas/goal_own_c/dg-cb/1.0.0/test-only-sources.v1.schema.json#/$defs/Scope/properties/project_id/type": {
+      "control_name": "0",
+      "path": [
+        "scope",
+        "project_id"
+      ],
+      "value": null
+    },
+    "https://puppetmaster.local/schemas/goal_own_c/dg-cb/1.0.0/test-only-sources.v1.schema.json#/$defs/Scope/properties/storage_instance_id/minLength": {
+      "control_name": "0",
+      "path": [
+        "scope",
+        "storage_instance_id"
+      ],
+      "value": ""
+    },
+    "https://puppetmaster.local/schemas/goal_own_c/dg-cb/1.0.0/test-only-sources.v1.schema.json#/$defs/Scope/properties/storage_instance_id/type": {
+      "control_name": "0",
+      "path": [
+        "scope",
+        "storage_instance_id"
+      ],
+      "value": null
+    },
+    "https://puppetmaster.local/schemas/goal_own_c/dg-cb/1.0.0/test-only-sources.v1.schema.json#/$defs/Scope/properties/thread_id/minLength": {
+      "control_name": "0",
+      "path": [
+        "scope",
+        "thread_id"
+      ],
+      "value": ""
+    },
+    "https://puppetmaster.local/schemas/goal_own_c/dg-cb/1.0.0/test-only-sources.v1.schema.json#/$defs/Scope/properties/thread_id/type": {
+      "control_name": "0",
+      "path": [
+        "scope",
+        "thread_id"
+      ],
+      "value": null
+    },
+    "https://puppetmaster.local/schemas/goal_own_c/dg-cb/1.0.0/test-only-sources.v1.schema.json#/$defs/Scope/required": {
+      "control_name": "0",
+      "member": [
+        "remove",
+        "storage_instance_id"
+      ],
+      "path": [
+        "scope"
+      ]
+    },
+    "https://puppetmaster.local/schemas/goal_own_c/dg-cb/1.0.0/test-only-sources.v1.schema.json#/$defs/Scope/type": {
+      "control_name": "0",
+      "path": [
+        "scope"
+      ],
+      "value": null
+    }
+  },
+  "family": "goal.cancelled",
+  "occurrence": 1,
+  "reference": "https://puppetmaster.local/schemas/goal_own_c/dg-cb/1.0.0/test-only-sources.v1.schema.json#/$defs/SchedulerCallbackAdmission",
+  "root": "dg5:d4631a3e6fbe633f",
+  "route": "M/commit/source_schema",
+  "row": "dg5/M/commit/source_schema/schema",
+  "site": [
+    "scripts/pm_goal_dg_cb_owners.py",
+    199
+  ],
+  "source": "8ea40bf4c895fc17fd560e731a16558fe16051c0",
+  "transaction": true,
+  "variant": "scheduler"
+}
