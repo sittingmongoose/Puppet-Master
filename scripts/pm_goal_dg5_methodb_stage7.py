@@ -83,8 +83,14 @@ def storage_cas(directory, negative):
     return storage, storage.transact, ([write],), {}
 
 
+def json_key(directory, negative):
+    storage = updated.O.S.TestOwnerStorage.create(directory / 'storage')
+    return storage, updated.O.A.exact_json, ({1 if negative else '1': 'fixture'},), {}
+
+
 # The explicit lines match the input matrix. Validate the observed location on every run.
 CASES = {
+    'json-key': (ADAPTERS, 421, 'custody/exact_json/key', json_key),
     'storage-cas': (STORAGE, 1657, 'tx/cas_version', storage_cas),
     'terminal-kind': (OWNERS, 803, 'dgu/sir/terminal_immutable', terminal_kind),
     'receipt-intent': (OWNERS, 1210, 'dgu/body/commit/receipt_intent', receipt_intent),
