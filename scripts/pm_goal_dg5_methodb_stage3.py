@@ -60,6 +60,8 @@ def update_fixture(route, path):
 
     if route in ('approval_request', 'approval_resolution'):
         return approval_fixture(oracle, route, path)
+    if route == 'metadata_intent':
+        return metadata_fixture(oracle, path)
     w = oracle.world(path)
     if route == 'body_start':
         captured = []
@@ -170,6 +172,32 @@ def approval_fixture(oracle, route, path):
             return action()
 
     return world, complete
+
+
+def metadata_fixture(oracle, path):
+    captured = []
+    original = oracle.O.GoalBodyOwner.metadata_update
+
+    def before_update(owner, *args, **kwargs):
+        captured.extend((owner, args, kwargs))
+        raise RootCapture
+
+    with patch.object(oracle.O.GoalBodyOwner, 'metadata_update', before_update):
+        try:
+            oracle.u2_paused(path)
+        except RootCapture:
+            pass
+    owner, args, kwargs = captured
+    world = owner.world
+    timestamp = world.now()
+    marker = UUID('acbe756a-f544-4025-8be1-87dd45fb89b6')
+
+    def update():
+        with patch.object(world, 'now', return_value=timestamp), patch.object(oracle.O.uuid, 'uuid4',
+                                                                             return_value=marker):
+            return original(owner, *args, **kwargs)
+
+    return world, update
 
 
 def certified_fixture(route, path):
@@ -724,12 +752,13 @@ def request_implication(nodes, name, path, errors, locations):
     require(node['allOf'][0]['if']['properties']['change_source']['const'] == 'user_direct' and
             [fields(choice) for choice in choices] == [fields(agent), fields(direct)] ==
             [{'type': 'string', 'minLength': 1}, {'type': 'null'}], 'request conditional branches changed')
+    notes = pending_branch_locations(nodes, parent, path, locations(errors))
     if '/else/' in name:
         peer = parent + '/properties/' + member + '/anyOf/0/minLength'
-        require(('minLength', tuple(path), peer) in locations(errors), 'same length rule did not remain')
+        require(('minLength', tuple(path), peer) in notes, 'same length rule did not remain')
     else:
         peer = parent + '/allOf/0/then/properties/' + member + '/type'
-        require(locations(errors) == {('type', tuple(path), peer)}, 'exact direct null rule did not remain')
+        require(notes == {('type', tuple(path), peer)}, 'exact direct null rule did not remain')
     return dict(source=parent + '/allOf/0', independent_rule=peer,
                 reason='Direct requests require null. Every other request requires a nonempty string.')
 
@@ -739,7 +768,8 @@ def origin_implication(nodes, name, path, errors, locations):
     parent = name.split('/allOf/', 1)[0].split('/properties/', 1)[0]
     member = path[-1]
     index, kind = {'bound_plan_ref': (0, 'plan_build'), 'owning_workflow_ref': (1, 'internal_workflow')}[member]
-    require(parent.endswith('#/$defs/origin') and path == ['record', member], 'unexpected origin location')
+    require(parent.endswith('#/$defs/origin') and path in (['record', member], ['origin', member]),
+            'unexpected origin location')
     node = nodes[parent]['node']
     conditional = node['allOf'][index]
     require({'origin_kind', member} <= set(node['required']) and
@@ -750,13 +780,28 @@ def origin_implication(nodes, name, path, errors, locations):
     fields = lambda item: {key: value for key, value in item.items() if key != 'x-pm-oracle-id'}
     require([fields(choice) for choice in choices] == [fields(string), fields(null)] ==
             [{'type': 'string', 'minLength': 1}, {'type': 'null'}], 'origin nullable branches changed')
+    notes = pending_branch_locations(nodes, parent, path, locations(errors))
     if '/then/' in name:
         peer = parent + '/properties/' + member + '/anyOf/0/minLength'
-        require(('minLength', tuple(path), peer) in locations(errors), 'origin string length check did not remain')
+        require(('minLength', tuple(path), peer) in notes, 'origin string length check did not remain')
     else:
         peer = parent + f'/allOf/{index}/else/properties/{member}/type'
-        require(locations(errors) == {('type', tuple(path), peer)}, 'origin null check did not remain')
+        require(notes == {('type', tuple(path), peer)}, 'origin null check did not remain')
     return dict(source=parent + f'/allOf/{index}', independent_rule=peer, nonnull_kind=kind)
+
+
+def pending_branch_locations(nodes, record, path, observed):
+    """Keep the surviving field checks after verifying the enclosing nullable branch."""
+    member = path[0]
+    if member not in ('origin', 'accepted_revision'):
+        return observed
+    parent = record.split('#', 1)[0] + '#/$defs/pending/properties/' + member
+    choices = nodes[parent]['node']['anyOf']
+    require(choices[0]['$ref'] in (record, '#' + record.split('#', 1)[1]) and choices[1]['type'] == 'null',
+            'pending record no longer uses the same optional branch')
+    enclosing = {('anyOf', (member,), parent + '/anyOf'), ('type', (member,), parent + '/anyOf/1/type')}
+    require(enclosing <= observed, 'expected both enclosing nullable messages')
+    return observed - enclosing
 
 
 def body_receipt_implication(nodes, name, path, errors, locations):
@@ -1036,11 +1081,12 @@ def test_rules(plain, bank, document, ident, exact_ids, examples, disabled_check
             bound = name.split('/allOf/',1)[0]
             property_id = bound + '/properties/blocked_reason_ref'
             then = nodes[name.rsplit('/',1)[0]]['node']
-            branches = nodes[property_id]['node']['anyOf']
+            nullable = nodes[property_id]['node']['anyOf']
             require(name == bound + '/allOf/0/then/properties/blocked_reason_ref/minLength' and
-                    path == ['record','blocked_reason_ref'] and other == property_id + '/anyOf/0/minLength' and
-                    then['type'] == branches[0]['type'] == 'string' and branches[1]['type'] == 'null' and
-                    then['minLength'] == branches[0]['minLength'], 'blocked reason rules changed')
+                    path in (['record', 'blocked_reason_ref'], ['after_record', 'blocked_reason_ref']) and
+                    other == property_id + '/anyOf/0/minLength' and
+                    then['type'] == nullable[0]['type'] == 'string' and nullable[1]['type'] == 'null' and
+                    then['minLength'] == nullable[0]['minLength'], 'blocked reason rules changed')
             require(locations(cut) == {
                 ('minLength', tuple(path), other), ('anyOf', tuple(path), property_id + '/anyOf'),
                 ('type', tuple(path), property_id + '/anyOf/1/type'),
