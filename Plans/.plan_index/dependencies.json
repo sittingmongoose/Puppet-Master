@@ -5545,6 +5545,7 @@
     "DL-2569",
     "DL-2570",
     "DL-2571",
+    "DL-2572",
     "DL-451",
     "DL-694",
     "F3-585",
@@ -53339,6 +53340,21 @@
     {
       "edge_type": "depends_on",
       "from": "DL-2571",
+      "to": "DL-400"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "DL-2572",
+      "to": "DL-077"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "DL-2572",
+      "to": "DL-2409"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "DL-2572",
       "to": "DL-400"
     },
     {
@@ -164167,7 +164183,7 @@
       "to": "F3-395"
     }
   ],
-  "generated_at_utc": "2026-11-20T01:40:10Z",
+  "generated_at_utc": "2026-11-20T01:41:02Z",
   "nodes": [
     {
       "context_scope": "residual_plan_standardization",
@@ -217136,6 +217152,23 @@
         "heading_level": 3,
         "heading_line": 61461,
         "line": 61463,
+        "path": "Plans/Decision_Log.md"
+      },
+      "status": "accepted",
+      "unit_type": "decision"
+    },
+    {
+      "context_scope": "event_authority_pnc019_merge3_postfix",
+      "gui_related": false,
+      "owner_doc": "Plans/Decision_Log.md",
+      "plan_unit_id": "DL-2572",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority_admission",
+      "source_location": {
+        "heading": "DL-2572: Event Authority corrects subagent.escalated (merge 3 post-landing)",
+        "heading_level": 3,
+        "heading_line": 61523,
+        "line": 61525,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -327206,10 +327239,10 @@
     "build_order_available": true,
     "build_order_blocked_node_count": 0,
     "cycle_blocker_count": 0,
-    "depends_on_edge_count": 27689,
+    "depends_on_edge_count": 27692,
     "downstream_blocked_node_count": 0,
-    "edge_count": 30914,
-    "node_count": 9590,
+    "edge_count": 30917,
+    "node_count": 9591,
     "true_cycle_component_count": 0,
     "unblocks_edge_count": 3225,
     "unresolved_reference_count": 0
