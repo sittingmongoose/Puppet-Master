@@ -11,6 +11,7 @@ import json
 import multiprocessing
 import os
 from pathlib import Path
+import re
 import shutil
 import sys
 import time
@@ -56,14 +57,54 @@ class Fixture(stage.Fixture):
 
     def variants(self, document):
         yield from super().variants(document)
-        if self.route != 'issue/launch_chain':
-            return
-        ref = self.world.edition.activation + '#/$defs/OriginalSourceBinding'
-        binding = world.skeleton(self.bank, ref)
-        prepared = copy.deepcopy(document['input'])
-        prepared['current_outbox']['record'].update(
-            phase='prepared', activation_receipt=copy.deepcopy(binding), staging_source=binding)
-        yield prepared
+        value = document['input']
+        activation = self.world.edition.activation + '#/$defs/'
+        if self.route.startswith('issue/seven_input:') and value == []:
+            yield [world.skeleton(self.bank, document['schema']['$ref'] + '/items')]
+        elif self.route == 'issue/activation_source:provisioning':
+            filled = copy.deepcopy(value)
+            metadata = filled['source']['record']
+            for field, definition in (
+                ('model_resolution_receipts', 'ModelResolutionMetadata'),
+                ('source_control', 'SourceControlPreflightMetadata'),
+                ('test_capability_reports', 'TestCapabilityMetadata'),
+            ):
+                metadata[field] = [world.skeleton(self.bank, activation + definition)]
+            filled['origin']['record']['source_bindings'] = [
+                world.skeleton(self.bank, activation + 'OriginalSourceBinding')
+            ]
+            yield filled
+        elif self.route == 'issue/launch_chain':
+            binding = world.skeleton(self.bank, activation + 'OriginalSourceBinding')
+            prepared = copy.deepcopy(value)
+            prepared['current_outbox']['record'].update(
+                phase='prepared', activation_receipt=copy.deepcopy(binding), staging_source=binding)
+            yield prepared
+        elif self.route in ('publish_retained', 'publish_result'):
+            yield from self.transition_controls(value)
+
+    def transition_controls(self, value):
+        """Supply the accepted transition branches of the installed D01 schema."""
+        d01 = self.world.edition.d01 + '#/$defs/'
+        update = self.bank.lookup(d01 + 'WorkflowUpdate').contents
+        transition = self.bank.lookup(d01 + 'TransitionCommitment').contents
+        methods = {rule['if']['properties']['rule']['const']:
+                   rule['then']['properties']['original_writer_method']['const']
+                   for rule in transition['allOf']}
+        path = (('original_d01_update', 'record') if self.route == 'publish_retained' else
+                ('d01_lineage', 'workflow', 'update_chain', 0))
+        for rule in update['allOf']:
+            name = rule['if']['properties']['transition']['properties']['rule']['const']
+            variant = copy.deepcopy(value)
+            record = rules.get(variant, path)
+            transition_record = record['transition']
+            if name == transition_record['rule']:
+                continue
+            prior = transition_record['before'] or transition_record['after']
+            transition_record.update(rule=name, before=None if name == 'activation_begin' else copy.deepcopy(prior),
+                                     original_writer_method=methods.get(name, transition_record['original_writer_method']))
+            record['cause'] = rule['then']['properties']['cause']['const']
+            yield variant
 
     def call(self, edit):
         if self.route.startswith(('read_append/', 'read_native/')):
@@ -217,7 +258,7 @@ def error_records(errors):
 
 def finite_implication(validator, nodes, info, keyword, cut, path):
     """Check a co-required finite rule against the compound schema's other rule."""
-    if keyword not in ('type', 'enum', 'minimum', 'minLength', 'maxLength'):
+    if keyword not in ('type', 'enum', 'minimum', 'minLength', 'maxLength', 'pattern'):
         return None
     node = info['node']
     other_at_path = {name for name, seen_path in pilot.located_errors(cut) if seen_path == tuple(path)}
@@ -249,6 +290,9 @@ def finite_implication(validator, nodes, info, keyword, cut, path):
             elif keyword == 'minimum':
                 holds = (inspect.unwrap(validator.VALIDATORS['minimum']) is Draft202012Validator.VALIDATORS['minimum'] and
                          all(type(value) is int and abs(value) <= 2**53 and value >= node[keyword] for value in values))
+            elif keyword == 'pattern':
+                holds = (validator.VALIDATORS['pattern'] is stage.exact_pattern and
+                         all(isinstance(value, str) and re.fullmatch(node[keyword], value) for value in values))
             else:
                 bound = node[keyword]
                 holds = all(isinstance(value, str) and
@@ -264,26 +308,30 @@ def finite_implication(validator, nodes, info, keyword, cut, path):
     return None
 
 
-def outbox_implication(nodes, rule_id, path, cut):
-    """Both branches independently restrict the value to the optional binding schema."""
-    if tuple(path[:-1]) != ('current_outbox', 'record') or path[-1] not in ('activation_receipt', 'staging_source'):
+def conditional_union_implication(nodes, rule_id, path, cut):
+    """Two exhaustive branches already restrict the value to the same union."""
+    field = path[-1] if path else None
+    if tuple(path[:-1]) == ('current_outbox', 'record') and field in ('activation_receipt', 'staging_source'):
+        location = 'https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json#/$defs/StartOutboxIntent'
+        selector, selected = 'phase', 'reserved'
+    elif tuple(path[-2:]) == ('transition', 'before') and '#/$defs/TransitionCommitment/' in rule_id:
+        location = rule_id.split('#/$defs/TransitionCommitment/', 1)[0] + '#/$defs/TransitionCommitment'
+        selector, selected = 'rule', 'activation_begin'
+    else:
         return None
-    field = path[-1]
-    prefix = 'https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json'
-    location = prefix + '#/$defs/StartOutboxIntent'
     member = f'{location}/properties/{field}'
     if rule_id not in (member + '/anyOf', member + '/anyOf/1/type'):
         return None
     node = nodes[location]['node']
-    conditional, = node['allOf']
-    condition = conditional['if']['properties']['phase']
+    conditional = node['allOf'][0]
+    condition = conditional['if']['properties'][selector]
     optional = node['properties'][field]['anyOf']
     required_null = conditional['then']['properties'][field]
     required_object = conditional['else']['properties'][field]
     if not (set(conditional['if']) <= {'properties', 'x-pm-oracle-id'} and
-            list(conditional['if']['properties']) == ['phase'] and condition.get('const') == 'reserved' and
+            list(conditional['if']['properties']) == [selector] and condition.get('const') == selected and
             set(condition) <= {'const', 'x-pm-oracle-id'} and
-            'phase' in node['required'] and field in node['required'] and
+            selector in node['required'] and field in node['required'] and
             len(optional) == 2 and isinstance(required_object.get('$ref'), str) and
             optional[0].get('$ref') == required_object['$ref'] and
             set(optional[0]) <= {'$ref', 'x-pm-oracle-id'} and
@@ -294,8 +342,106 @@ def outbox_implication(nodes, rule_id, path, cut):
     other = required_null['x-pm-oracle-id'] + '/type'
     if (other, tuple(path)) not in pilot.located_errors(cut):
         return None
-    return dict(covering_rule=other, prepared_binding=required_object['$ref'],
-                source=location, premise='The reserved branch requires null and the other branch requires the same binding reference. Both outcomes already accept through one of these two alternatives.')
+    return dict(covering_rule=other, object_branch=required_object['$ref'], selector=selector, selected_value=selected,
+                source=location, premise='The selected branch requires null. The other branch requires the same object reference as the union.')
+
+
+def co_reached(candidate, target, nodes, parent=False):
+    return all(any(peer['ipath'] == (reach['ipath'][:-1] if parent else reach['ipath']) and
+                   rules.applies(peer, rules.scope_of(reach, nodes)) for peer in candidate['reach'])
+               for reach in target['reach'])
+
+
+def member_and_type_implication(plain, nodes, info, name, keyword, cut, path):
+    node = info['node']
+    after = {rule for rule, instance_path in pilot.located_errors(cut) if instance_path == tuple(path)}
+    if keyword in ('additionalProperties', 'unevaluatedProperties'):
+        both = ('additionalProperties', 'unevaluatedProperties')
+        if not all(node.get(field) is False for field in both):
+            return None
+        allowed = {'$comment', '$defs', '$id', '$schema', 'properties', 'required', 'type', 'x-pm-oracle-id', *both}
+        other = name.rsplit('/', 1)[0] + '/' + next(field for field in both if field != keyword)
+        if 'properties' in node and set(node) <= allowed and other in after:
+            return dict(covering_rule=other, properties=sorted(node['properties']),
+                        premise='Both member checks use the same listed properties. This object has no other property applicator.')
+    if keyword == 'type' and node[keyword] in ('object', 'array', 'string', 'boolean', 'null'):
+        same_type = [rule for rule in after if rule != name and rule.endswith('/type')]
+        for rule in sorted(same_type):
+            candidate = nodes.get(rule.rsplit('/', 1)[0])
+            if candidate and candidate['node'].get('type') == node[keyword] and co_reached(candidate, info, nodes):
+                return dict(covering_rule=rule, required_type=node[keyword],
+                            premise='The co-required type rule applies at every occurrence of the disabled rule.')
+    if keyword == 'minLength' and node.get('format') == 'date-time':
+        from pm_goal_own_c_roots import _owner_formats
+        dt = world.NR.DT
+        checker = plain.format_checker.checkers['date-time']
+        expression = dt._DATE_TIME.pattern
+        minimum_width = re._parser.parse(expression, 0).getwidth()[0]
+        other = name.rsplit('/', 1)[0] + '/format'
+        if (checker in [_owner_formats(profile).checkers['date-time'] for profile in dt.PROFILES]
+                and node[keyword] <= minimum_width and other in after):
+            source = Path(dt.__file__)
+            return dict(covering_rule=other, regex=expression, minimum_width=minimum_width,
+                        source=str(source.relative_to(ROOT)), source_sha256=sha(source),
+                        premise='Each owner date-time profile first requires a full match of this grammar.')
+    return None
+
+
+def update_implication(nodes, info, name, keyword, cut, path):
+    """Check the original WorkflowUpdate discriminator and its required cause."""
+    marker = '#/$defs/WorkflowUpdate'
+    if keyword == 'enum' and name.endswith(marker + '/properties/cause/enum'):
+        update = name.split(marker, 1)[0] + marker
+    elif keyword == 'type' and name.endswith('#/$defs/TransitionCommitment/type'):
+        update = name.split('#/$defs/TransitionCommitment/', 1)[0] + marker
+    else:
+        return None
+    entry = nodes.get(update)
+    if entry is None:
+        return None
+    schema = entry['node']
+    members = schema['properties']
+    if not {'cause', 'transition'} <= set(schema['required']):
+        return None
+    transition_ref = members['transition'].get('$ref')
+    if transition_ref != '#/$defs/TransitionCommitment':
+        return None
+    transition = entry['resolver'].lookup(transition_ref)
+    rule_ref = transition.contents['properties']['rule'].get('$ref')
+    if rule_ref != '#/$defs/BoundTransitionRule' or 'rule' not in transition.contents['required']:
+        return None
+    allowed = transition.resolver.lookup(rule_ref).contents['enum']
+    choices = {}
+    def only(node, key):
+        return set(node) - {'x-pm-oracle-id'} == {key}
+    for term in schema['allOf']:
+        condition, action = term['if'], term['then']
+        if not only(condition, 'properties') or set(condition['properties']) != {'transition'}:
+            return None
+        condition = condition['properties']['transition']
+        if not only(condition, 'properties') or set(condition['properties']) != {'rule'}:
+            return None
+        selector = condition['properties']['rule']
+        if not only(selector, 'const'):
+            return None
+        required = action['properties']['cause']
+        choices[selector['const']] = (required['const'], required['x-pm-oracle-id'] + '/const')
+    if len(choices) != len(schema['allOf']) or set(choices) != set(allowed):
+        return None
+    if keyword == 'enum' and name == update + '/properties/cause/enum':
+        if any(value not in members['cause']['enum'] for value, _ in choices.values()):
+            return None
+        after = {rule for rule, here in pilot.located_errors(cut) if here == tuple(path)}
+        if not after.intersection(rule for _, rule in choices.values()):
+            return None
+        return dict(covering_rules=choices, source=update,
+                    premise='Every allowed transition rule requires a cause from the disabled enum.')
+    if keyword == 'type' and co_reached(entry, info, nodes, parent=True):
+        after = {rule for rule, here in pilot.located_errors(cut) if here == tuple(path[:-1]) + ('cause',)}
+        if len({value for value, rule in choices.values() if rule in after}) >= 2:
+            return dict(covering_rules=choices, source=update,
+                        premise='A non-object transition leaves all property-only conditions true. Two of their required causes conflict.')
+    return None
 
 
 def accepted_branch_controls(plain, validator, controls, info, cache):
@@ -337,11 +483,12 @@ def per_rule_candidates(plain, validator, controls, info, keyword, old, cache):
             for path in rules.concrete(control, reach['ipath']):
                 for edit in edits(control, path):
                     yield index, path, edit, 'installed rule'
-                if tuple(path[:-1]) == ('current_outbox', 'record') and path[-1] in ('activation_receipt', 'staging_source'):
+                outbox_field = tuple(path[:-1]) == ('current_outbox', 'record') and path[-1] in ('activation_receipt', 'staging_source')
+                if outbox_field or tuple(path[-2:]) == ('transition', 'before'):
                     for candidate in controls:
                         alternate = rules.get(candidate, path)
                         if alternate is not None:
-                            yield index, path, alternate, 'accepted prepared outbox binding'
+                            yield index, path, alternate, 'value from another accepted branch'
     for index, path in accepted_branch_controls(plain, validator, controls, info, cache):
         for edit in edits(controls[index], path):
             yield index, path, edit, 'accepted branch document'
@@ -378,7 +525,9 @@ def replay_rule(plain, validator, nodes, controls, rule_id, info, keyword, old, 
         implication = None
         if cut:
             implication = (finite_implication(plain, nodes, info, keyword, cut, path) or
-                           outbox_implication(nodes, rule_id, path, cut) or
+                           conditional_union_implication(nodes, rule_id, path, cut) or
+                           member_and_type_implication(plain, nodes, info, rule_id, keyword, cut, path) or
+                           update_implication(nodes, info, rule_id, keyword, cut, path) or
                            stage.regex_implication(plain, node, keyword, rule_id, path, cut))
         record = dict(path=list(path), edit=repr(edit), edit_source=source, control=index,
                       input_sha256=stage.sweep.digest(changed), before=actual, cut=error_records(cut),
