@@ -383,7 +383,10 @@
   }
   /* One line of whole-list actions under the summary: each is a real inventory action, drawn where it is used. */
   function toolbar() {
-    return `<div class="o55-toolbar o55-providers-tools">${PM51.bound.action('ai.usage.provider-health', { label: 'Check every service', icon: 'test' })}${PM51.bound.action('ai.usage.refresh-models', { label: 'Refresh model lists', icon: 'refresh' })}${PM51.bound.action('system.advanced.binary-rescan', { label: 'Find installed apps again', icon: 'search' })}</div>`;
+    /* Refine: there were two "Check every service": this button, which opened a general preview, and a link at the foot
+       of the page, which opened the check itself (services listed, ready, needing a step, free routes, keychain). One
+       is left, here, and it opens the check. It is still the inventory's action row (data-setting-id). */
+    return `<div class="o55-toolbar o55-providers-tools"><span class="o55-bound" data-setting-id="ai.usage.provider-health">${PM51.btn({ label: 'Check every service', icon: 'test', small: true, action: 'pm51-providers-diagnostics' })}</span>${PM51.bound.action('ai.usage.refresh-models', { label: 'Refresh model lists', icon: 'refresh' })}${PM51.bound.action('system.advanced.binary-rescan', { label: 'Find installed apps again', icon: 'search' })}</div>`;
   }
 
   /* Readiness is four separate truths. When all four hold it is one calm line; otherwise the steps, with the next one

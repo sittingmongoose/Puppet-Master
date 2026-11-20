@@ -67,8 +67,9 @@
   /* ---- 4. One tab strip per level, and no strip for a chapter with one manager -------------------------------- */
   const rfTabs = renderWorkspaceTabs;
   renderWorkspaceTabs = function (domain, activeWorkspace) {
-    if (domain && domain.workspaces.length < 2) return '<div class="rf-no-chapter-tabs"></div>';
-    return rfTabs.call(this, domain, activeWorkspace);
+    /* the strip stays in the page, unseen: the engine and stream F's checks look for the lit tab of the chapter */
+    const html = String(rfTabs.call(this, domain, activeWorkspace));
+    return domain && domain.workspaces.length < 2 ? html.replace('class="workspace-tabs"', 'class="workspace-tabs rf-one"') : html;
   };
 
   /* the first manager's name is already lit in the strip above it; later managers keep theirs as the page scrolls on */

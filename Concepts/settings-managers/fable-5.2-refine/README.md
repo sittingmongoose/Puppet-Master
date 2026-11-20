@@ -17,6 +17,17 @@ tools/take.sh <path under Concepts/>   # copy one of PMConcept7's files into ove
 `BASE` names the commit of PMConcept7's sources the overlay sits on. A build of `BASE` with an empty overlay is
 byte-identical to `Concepts/PMConcept7.html` at that commit.
 
+## Checks
+
+```sh
+browser-check run Concepts/settings-managers/fable-5.2-refine/tools --set page=<refined.html> --set before=<PMConcept7.html of the same base>
+```
+
+Eight tests by real clicks (`tools/refine.check.mjs`): the chapter move and old links; Explain; the "On this page"
+column; Servers' Home tab; the one home of a service's switching rules; the example staying in view in Editor and
+Terminal Customize, Customize Pip and Adjust NieR; and **nothing was dropped**: every setting id and every action of
+the unchanged page is still on some page of the refined one (920 settings, 73 views, on 2026-11-20).
+
 ## What changed, everywhere
 
 | Change | Where it is made |
@@ -57,7 +68,7 @@ Nothing a person can do was removed. Each line says where the same thing still i
 | "Topology diagnostics" (counts of servers, devices, routes) | Servers › a server › More options | The tabs themselves; "Check server and devices" at the foot |
 | The status card "Away from home" (Right now, Preferred when away) | Servers › Away From Home | The facts line in the one card |
 | Link "Open Readiness & Doctor" | foot of Servers, Backup & Restore, App Updates | System › Readiness & Doctor |
-| Link "Check every service" | foot of Providers | The button of the same name under the list |
+| Link "Check every service" | foot of Providers | The button of the same name under the list, which now opens that same check (it used to open a general preview) |
 | The switch "Switch accounts by themselves" and the fields Switch when, Warn when, Rest after | Providers › Services › This service | Limits & switching › Each service, on that service's line |
 | Rows "Screenshots" and "Browser status" | Testing & Debug › What it can test | Source Control › Browser & SCM, where they are set |
 | Row "Runs on" (a value, not a choice) | Source Control › Local Tools › a tool | Servers & Remote Access › Home & Location › Runs on |

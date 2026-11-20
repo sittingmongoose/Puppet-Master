@@ -29,7 +29,7 @@
 /* ---- one tab strip per level, at the left ---- */
 #panel-settings .workspace-tabs > .workspace-tab:first-of-type { margin-inline-start: 0; }
 #panel-settings .workspace-tabs > .workspace-tab:last-of-type { margin-inline-end: 0; }
-#panel-settings .rf-no-chapter-tabs { display: none; }
+#panel-settings .workspace-tabs.rf-one { display: none; }
 #panel-settings .workspace-block .pm51-mgr.has-manager-tabs > .manager-tabs.pm51-tabs { align-self: flex-start; justify-content: flex-start; }
 /* the first manager's name is already lit in the strip above it */
 #panel-settings .workspace-separator > .rf-first-title { display: none; }
