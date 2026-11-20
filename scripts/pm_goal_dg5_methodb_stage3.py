@@ -763,6 +763,49 @@ def receipt_timestamp_implication(nodes, name, path, errors, locations, validato
                 premise='The only string with length less than one is empty. The pinned date-time format refuses it.')
 
 
+def producer_rule_implication(nodes, name, path, errors, locations, validator):
+    from pm_goal_test_numrule import DT
+    from pm_goal_test_owner_adapters import _owner_timestamp_properties
+
+    producer = NORMALIZED.removesuffix('NormalizedIdentity') + 'ProducerInput'
+    require(len(path) == 1 and path[0] in ('redaction_profile', 'schema_id', 'schema_version', 'occurred_at_utc'),
+            'unexpected producer implication field')
+    field = path[0]
+    if field != 'occurred_at_utc':
+        value = producer + '/properties/' + field
+        node = nodes[value]['node']
+        keyword = 'enum' if field == 'redaction_profile' else 'const'
+        allowed = node['enum'] if keyword == 'enum' else [node['const']]
+        other = value + '/' + keyword
+        require(name == value + '/type' and node['type'] == 'string' and
+                allowed and all(type(member) is str for member in allowed) and
+                locations(errors) == {(keyword, tuple(path), other)},
+                'producer enumeration or constant no longer implies the string rule')
+        return dict(source=other, same_document_path=path, premise='Every allowed value is a string.')
+
+    root = nodes[producer]['node']
+    date_time = root['properties'][field]['$ref']
+    node = nodes[date_time]['node']
+    keyword = name.rsplit('/', 1)[-1]
+    installed, _ = validator.format_checker.checkers['date-time']
+    require(name == date_time + '/' + keyword and keyword in ('type', 'format', 'minLength') and
+            node['type'] == 'string' and node['minLength'] == 1 and node['format'] == 'date-time' and
+            date_time == 'https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/$defs/date_time_string' and
+            {'event_type', 'payload_schema_id', 'replay_policy', field} <= set(root['required']) and
+            installed.__module__ == DT.__name__, 'producer timestamp routing or format changed')
+    source = inspect.getsource(_owner_timestamp_properties)
+    require("profiles['occurred_at_utc'] = NR.DT.EVENT_RECORD" in source and
+            'NR.DT.date_time(instance[name], profile=profile)' in source and
+            DT._DATE_TIME.fullmatch('') is None, 'producer timestamp profile no longer applies the same parser')
+    profile = producer + '/properties'
+    expected = {('type' if keyword == 'type' else 'format', tuple(path), profile)}
+    if keyword == 'minLength':
+        expected.add(('format', tuple(path), date_time + '/format'))
+    require(locations(errors) == expected, 'producer timestamp did not leave the expected original profile message')
+    return dict(source=profile, same_document_path=path, implementation='scripts/pm_goal_test_owner_adapters.py:199',
+                premise='The EventRecord timestamp parser requires a nonempty string and checks the same format.')
+
+
 IDENTITY = 'https://puppetmaster.local/schemas/full-thread-runtime-contracts.v1.json#/$defs/IdentityEnvelope'
 NORMALIZED = ('https://puppetmaster.local/schemas/goal_update_command_custody/1.0.0/'
               'goal_update_command_custody.schema.json#/$defs/NormalizedIdentity')
@@ -974,6 +1017,9 @@ def test_rules(plain, bank, document, ident, exact_ids, examples, disabled_check
         elif cut and 'normalized_paired_rule' in example:
             record.update(cls='COVERED_LATER', implication=normalized_rule_implication(
                 nodes, name, path, cut, locations, example['normalized_paired_rule']))
+        elif cut and example.get('producer_implication'):
+            record.update(cls='COVERED_LATER', implication=producer_rule_implication(
+                nodes, name, path, cut, locations, validator))
         elif cut:
             gaps[name] = record
             continue
