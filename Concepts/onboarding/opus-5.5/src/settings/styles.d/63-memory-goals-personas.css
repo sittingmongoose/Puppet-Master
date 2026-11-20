@@ -56,7 +56,7 @@ html[data-theme^="retro"] .pm51-popout.o55-mgp-menu.is-described .pm51-menu-item
 #panel-settings .o55-tags { display: grid; gap: 6px; width: min(480px, 100%); min-width: 0; }
 #panel-settings .o55-tags-box { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; min-height: 34px; padding: 4px 6px; border: 1px solid var(--k3-line); border-radius: 8px; background: var(--k3-bg-1); }
 #panel-settings .o55-tags-box:focus-within { border-color: color-mix(in srgb, var(--k3-accent) 60%, transparent); box-shadow: 0 0 0 3px var(--k3-accent-soft); }
-#panel-settings .o55-tags-box .o55-tags-in { flex: 1 1 120px; width: auto; min-width: 100px; height: 26px; padding: 0 4px; border: 0; background: none; box-shadow: none; }
+#panel-settings .o55-tags-box .o55-tags-in { flex: 1 1 min(100%, 5.75em); width: auto; min-width: 0; height: 26px; padding: 0 4px; border: 0; background: none; box-shadow: none; }
 #panel-settings .o55-tag-chip { display: inline-flex; align-items: center; gap: 5px; min-height: 24px; padding: 0 4px 0 9px; border-radius: 6px; border: 1px solid color-mix(in srgb, var(--k3-accent) 45%, transparent); background: var(--k3-accent-soft); color: var(--k3-accent-ink); font-size: 12px; font-weight: 560; }
 #panel-settings .o55-tag-x { display: inline-grid; place-items: center; width: 18px; height: 18px; padding: 0; border: 0; border-radius: 4px; background: none; color: inherit; cursor: pointer; }
 #panel-settings .o55-tag-x:hover { background: color-mix(in srgb, var(--k3-accent) 18%, transparent); }

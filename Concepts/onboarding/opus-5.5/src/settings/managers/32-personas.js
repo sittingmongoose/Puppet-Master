@@ -87,7 +87,7 @@
   const tagKinds = () => o55Options(PM51.setting(S.tags));
   const o55PersonaValueText = PM51.valueText;
   PM51.valueText = (setting, v) => setting && setting.id === S.tags && Array.isArray(v) ? tagText(v.map(String)) : o55PersonaValueText(setting, v);
-  const personaMeta = x => [x.locked ? 'Core · locked' : x.group === 'Bundled' ? 'Bundled' : 'Yours', x.chat === false ? 'helper only' : '', isHidden(x) ? 'hidden' : '', tagList(x).join(', ')].filter(Boolean).join(' · ');
+  const personaMeta = x => [x.locked ? 'Core · locked' : x.group === 'Bundled' ? 'Bundled' : 'Yours', x.chat === false ? 'helper only' : '', isHidden(x) ? 'hidden' : '', tagList(x).map(tagWord).join(', ')].filter(Boolean).join(' · ');
   /* a persona's own number, or "the project's": sliders with a word for where they sit, and a cap that is off at 0 */
   const TUNE = {
     [S.temp]: { min: 0, max: 2, step: 0.1, start: 0.8, ends: ['Predictable', 'Inventive'], word: v => v < 0.3 ? 'Very predictable' : v < 0.6 ? 'Predictable' : v <= 1 ? 'Balanced' : v <= 1.4 ? 'Inventive' : 'Very inventive' },
@@ -192,7 +192,7 @@
       id: ID, rosterTitle: 'Personas', count: view.length,
       add: { action: 'pm51-personas-add', label: 'New persona or import' },
       filter: { placeholder: 'Filter personas', value: (PM51.s().filters || {})[ID] || '' },
-      items: view.map(x => ({ id: x.id, title: x.name, meta: personaMeta(x), avatar: icon(x.locked ? 'lock' : x.group === 'Bundled' ? 'users' : 'user'), selected: x.id === p.id })),
+      items: view.map(x => ({ id: x.id, title: x.name, meta: personaMeta(x), data: { 'filter-text': tagList(x).join(', ') }, avatar: icon(x.locked ? 'lock' : x.group === 'Bundled' ? 'users' : 'user'), selected: x.id === p.id })),
       detail: {
         title: p.name, subtitle: [p.locked ? 'Core persona' : p.group === 'Bundled' ? 'Bundled persona' : 'Your persona', (p.crews || []).length ? `In ${p.crews.join(', ')}` : 'Not in a crew'].join(' · '),
         primary: p.locked ? { label: 'Duplicate to edit', icon: 'copy', action: 'pm51-personas-duplicate', data: { id: p.id } } : { label: 'Try it', icon: 'play', action: 'pm51-personas-try-open', data: { id: p.id } },
@@ -453,9 +453,10 @@
     input.insertAdjacentHTML('beforebegin', next.map(t => tagChip(p, t)).join(''));
     box.querySelector('.o55-tags-suggest').innerHTML = tagSuggest(p, input.value);
     const split = box.closest('.pm51-split');
-    const meta = split?.querySelector(`.resource-row[data-manager="personas"][data-id="${cssEscape(p.id)}"] .resource-row-meta`);
-    if (meta) {
-      meta.textContent = personaMeta(p);
+    const rosterRow = split?.querySelector(`.resource-row[data-manager="personas"][data-id="${cssEscape(p.id)}"]`);
+    if (rosterRow) {
+      rosterRow.querySelector('.resource-row-meta').textContent = personaMeta(p);
+      rosterRow.dataset.filterText = next.join(', ');
       PM51.applyFilters(split);
     }
     showToast('Saved', `Tags for ${p.name}: ${tagText(next)}.`, 'success', 2200);

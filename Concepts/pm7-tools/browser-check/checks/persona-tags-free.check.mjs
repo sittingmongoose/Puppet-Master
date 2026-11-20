@@ -13,6 +13,7 @@ import { setLookBySetting, lookHeld } from '../helpers/settings-look.mjs';
 const LOOKS = ['basic-dark', 'glass-light', 'nier-dark', 'retro-light'];
 const SIZES = [[1280, 900], [740, 900]];
 const SHOT_LOOKS = ['basic-dark', 'glass-light', 'nier-dark'];
+const LAYOUT_LOOKS = ['retro-light', 'basic-dark'];
 const TAGS = 'personas.library.persona-tags';
 const PID = 'custom-ux';                    // Settings UX Reviewer, a seeded custom persona
 const FREE = 'release-notes';               // not a suggested kind
@@ -175,10 +176,69 @@ for (const surface of ['normal', 'sandbox']) {
 				const literalChip = row2.locator(`.o55-tag-chip:has(.o55-tag-x[data-tag="${literal}"]) > span:first-child`);
 				const literalText = await literalChip.allTextContents();
 				await t.check('constructor renders verbatim as a free tag chip', shown(literalText) === shown([literal]), shown(literalText));
+				const label = 'Across phases';
+				const token = 'cross-phase';
+				await row2.getByRole('button', { name: label, exact: true }).click();
+				await filter.pressSequentially(label);
+				const labelIds = await visibleRows.evaluateAll(rs => rs.map(r => r.dataset.id));
+				const labelMeta = await f.locator(`${BODY} .resource-row[data-id="${PID}"] .resource-row-meta`).textContent();
+				await t.check('Filter personas finds the Across phases suggestion by its displayed label',
+					labelIds.includes(PID), shown(labelIds));
+				await t.check('roster meta shows Across phases as the tag label',
+					labelMeta.includes(label) && !labelMeta.includes(token), labelMeta);
+				await filter.fill(token);
+				const tokenIds = await visibleRows.evaluateAll(rs => rs.map(r => r.dataset.id));
+				await t.check('Filter personas also finds Across phases by its stored token', tokenIds.includes(PID), shown(tokenIds));
 				// Persona records are the concept's session state, like every persona field (aliases, tools): the
 				// project projection the tome saves holds settings, not the roster, so a page reload re-seeds it.
 				// The close/reopen above is the persistence this row shares with the other persona fields.
 			};
 		}
+	}
+	for (const look of LAYOUT_LOOKS) {
+		tests[`tag input layout (${surface}, ${look}, 1280x900)`] = async (t) => {
+			if (!t.app.surfaces().includes(surface)) { await t.check(`${surface} surface not asked for`, true); return; }
+			const f = await settings(t, surface, [1280, 900]);
+			await setLookBySetting(t, f, look);
+			await goPersonas(t, f);
+			await openPersona(t, f);
+			const row = tagsRow(f);
+			await row.scrollIntoViewIfNeeded();
+			const input = row.locator('.o55-tags-in');
+			await input.fill('release-readiness');
+			await input.press('Enter');
+			await row.getByRole('button', { name: 'Framework', exact: true }).click();
+			await input.fill('hotfix');
+			await input.press('Enter');
+			await t.equal('the layout fixture has three chips', shown(await chipTexts(row)), shown(['release-readiness', 'Framework', 'hotfix']));
+			const layout = await input.evaluate(el => {
+				const box = el.closest('.o55-tags-box');
+				const chips = [...box.querySelectorAll('.o55-tag-chip')];
+				const last = chips.at(-1);
+				const boxStyle = getComputedStyle(box);
+				const style = getComputedStyle(el);
+				const placeholder = getComputedStyle(el, '::placeholder');
+				const sample = document.createElement('span');
+				sample.style.cssText = 'position:fixed;visibility:hidden;white-space:pre';
+				sample.style.font = placeholder.font;
+				sample.style.letterSpacing = placeholder.letterSpacing;
+				sample.textContent = el.placeholder;
+				document.body.append(sample);
+				const textWidth = sample.getBoundingClientRect().width;
+				sample.remove();
+				const requiredWidth = textWidth + parseFloat(style.paddingLeft) + parseFloat(style.paddingRight);
+				const remainingWidth = box.clientLeft + box.clientWidth - parseFloat(boxStyle.paddingRight)
+					- (last.offsetLeft - box.offsetLeft + last.offsetWidth) - parseFloat(boxStyle.columnGap);
+				const center = node => node.offsetTop + node.offsetHeight / 2;
+				const sameLine = chips.every(chip => Math.abs(center(chip) - center(el)) <= 1);
+				return { sameLine, remainingWidth, requiredWidth, inputWidth: el.clientWidth };
+			});
+			await t.check('Add a tag stays on the chips line when the placeholder fits',
+				layout.remainingWidth >= layout.requiredWidth && layout.sameLine && layout.inputWidth >= layout.requiredWidth, shown(layout));
+			if (t.args.shots) {
+				await t.page.waitForTimeout(2400);
+				await t.crop(`tags-layout-${look}-${surface}`, aboutSection(row), 'three chips and the Add a tag placeholder at 1280×900');
+			}
+		};
 	}
 }
