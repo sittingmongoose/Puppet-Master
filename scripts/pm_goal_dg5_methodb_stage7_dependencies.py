@@ -292,7 +292,16 @@ def proposal_key(directory):
                                   'dgu/sir/proposal/schema/target/scope', non_string_key)
 
 
+
+def proposal_value(directory):
+    def non_json_value(proposal):
+        proposal['target']['objective_text'] = b'stage7 test'
+    return isolate_proposal_owner(directory, 178, 'dgu/jcs/type',
+                                  'dgu/sir/proposal/schema/target/objective_text', non_json_value)
+
+
 CHECKS = {
+    'proposal_value': proposal_value,
     'proposal_key': proposal_key,
     'proposal': proposal,
     'frame_shape': frame_shape,
