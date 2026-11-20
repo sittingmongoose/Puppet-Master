@@ -306,13 +306,43 @@ def clause_name(node, keyword):
     return go.name_of(keyword)
 
 
-def _schema_guard(node, keyword):
-    return common.schema_guard(node, keyword, clause_name=clause_name(node, keyword))
+def _guard_at(location, name):
+    ident = 'schema/' + hashlib.sha256(location.encode()).hexdigest()[:16] + '/' + name
+    common._SCHEMA_LOCATIONS[ident] = location + '/' + name
+    return ident
+
+
+def _clause_identity(node, keyword):
+    name = clause_name(node, keyword)
+    if keyword in _CLOSED_KEYWORDS and name == keyword:
+        location = node.get('x-pm-oracle-id')
+        if location is None:
+            location = json.dumps(node, sort_keys=True)
+        ident = _guard_at(location, name)
+    else:
+        ident = common.schema_guard(node, keyword)
+    return name, ident
 
 
 def _guard_for_location(clause):
-    node, name = clause.rsplit('/', 1)
-    return common.schema_guard({'x-pm-oracle-id': node}, name, clause_name=name)
+    return _guard_at(*clause.rsplit('/', 1))
+
+
+def _member_guard(keyword, guarded):
+    def distinct(v, expected, value, node):
+        name, guard = _clause_identity(node, keyword)
+        if name != keyword:
+            yield from guarded(v, expected, value, node)
+            return
+        _, disabled = common._SCHEMA_CONTEXT.get()
+        if guard in disabled:
+            return
+        legacy = common.schema_guard(node, keyword)
+        for error in guarded(v, expected, value, node):
+            if getattr(error, 'oracle_guard', None) == legacy:
+                error.oracle_guard = guard
+            yield error
+    return distinct
 
 
 def _clause_inventory(validator):
@@ -353,8 +383,9 @@ def guarded_class(cls):
     key = _guard_key(cls)
     if key in _GUARD_MEMO:
         return _GUARD_MEMO[key]
-    keywords = {k: common._keyword_guard(k, getattr(f, '_goal_keyword_source', f), identify=_schema_guard)
-                for k, f in cls.VALIDATORS.items()}
+    keywords = {key: common._keyword_guard(key, function) for key, function in cls.VALIDATORS.items()}
+    for keyword in _CLOSED_KEYWORDS & keywords.keys():
+        keywords[keyword] = _member_guard(keyword, keywords[keyword])
     g = jsonschema.validators.extend(cls, keywords)
     original_evolve = cls.evolve
 
@@ -488,7 +519,7 @@ def memo_agree(reference_v, memo_v, records, seeds):
     first_ident = None
     for info in nodes.values():
         for keyword in go.clauses_of(info['node']):
-            first_ident = _schema_guard(info['node'], keyword)
+            _, first_ident = _clause_identity(info['node'], keyword)
             break
         if first_ident:
             break
@@ -976,7 +1007,7 @@ def _close_one(ident, plain, bank_object, seeds, records, args, carried, donor_s
         _go2.CONTROL_STORE.update(controls)
     try:
         entries, branch_controls, spent = go.close_root(ident, search_v, seeds, budget, carried=carried or None,
-                                                         clause_name=clause_name, nodes=nodes)
+                                                         clause_identity=_clause_identity, nodes=nodes)
         if entries.keys() != set(clauses):
             raise ValueError('closure report does not cover its exact clause inventory')
     finally:
