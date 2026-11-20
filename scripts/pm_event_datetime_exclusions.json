@@ -10193,20 +10193,6 @@
   },
   {
     "path": "Plans/.plan_index/plan_units.jsonl",
-    "origin": "jsonl:2476",
-    "sha256": "a7393e55d6d4006e27956fb0f17ea996b4de41520dbc46a8efe1265a212c20c7",
-    "reason": "Generated PlanUnit/acceptance-index data; quoted contract text mentions timestamp fields without declaring a JSON schema.",
-    "citation": "Plans/.plan_index/plan_units.jsonl#jsonl:2476; scripts/pm-plan-index.py"
-  },
-  {
-    "path": "Plans/.plan_index/plan_units.jsonl",
-    "origin": "jsonl:2499",
-    "sha256": "1aef4c972fcad66126d03d84c52a6070398493a49197a7e93aa92ab13a527e99",
-    "reason": "Generated PlanUnit/acceptance-index data; quoted contract text mentions timestamp fields without declaring a JSON schema.",
-    "citation": "Plans/.plan_index/plan_units.jsonl#jsonl:2499; scripts/pm-plan-index.py"
-  },
-  {
-    "path": "Plans/.plan_index/plan_units.jsonl",
     "origin": "jsonl:4525",
     "sha256": "463e906a29d0a997ec01eafbf286c5bdd859b561a383b6354de8290b31a69d2c",
     "reason": "Generated PlanUnit/acceptance-index data; quoted contract text mentions timestamp fields without declaring a JSON schema.",
@@ -12395,5 +12381,19 @@
     "sha256": "3b994f6bfba8823dd17d8e1f22746e4f61f02ba5fb5a5db88004f420bcf0b3ac",
     "reason": "Current plan-migration snapshot instance/source-lineage data preserved byte for byte from merged main; no JSON schema declaration exists in this exact container.",
     "citation": "Plans/.plan_migration/pds-20261120-001-current-planunit-snapshot/span_map.jsonl#jsonl:9873; Plans/.plan_migration/current_run.json"
+  },
+  {
+    "path": "Plans/.plan_index/plan_units.jsonl",
+    "origin": "jsonl:2476",
+    "sha256": "7bdf43301b564a0c6d1b04f6d9b1ee3c1b83b8817f01893a71917df2a9ce7f12",
+    "reason": "Generated PlanUnit/acceptance-index data; quoted contract text mentions timestamp fields without declaring a JSON schema.",
+    "citation": "Plans/.plan_index/plan_units.jsonl#jsonl:2476; scripts/pm-plan-index.py"
+  },
+  {
+    "path": "Plans/.plan_index/plan_units.jsonl",
+    "origin": "jsonl:2499",
+    "sha256": "2cf88505edd3145c3cfe31bf2516835df18f4ec1ff695f8401a811cc800e248a",
+    "reason": "Generated PlanUnit/acceptance-index data; quoted contract text mentions timestamp fields without declaring a JSON schema.",
+    "citation": "Plans/.plan_index/plan_units.jsonl#jsonl:2499; scripts/pm-plan-index.py"
   }
 ]
