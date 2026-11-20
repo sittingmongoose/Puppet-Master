@@ -4,6 +4,8 @@ import argparse
 import ast
 from collections import Counter, defaultdict
 from contextlib import ExitStack
+import copy
+import inspect
 import gzip
 import json
 import multiprocessing
@@ -13,6 +15,8 @@ import shutil
 import sys
 import time
 from unittest.mock import patch
+
+from jsonschema import Draft202012Validator
 
 import pm_goal_dg5_methodb_stage1 as stage
 
@@ -49,6 +53,17 @@ class Fixture(stage.Fixture):
         entry = owner._originals[reference]
         value = world.A.CODECS[owner.custody_codec][1](entry['raw'])
         return owner.issue, (entry['root'], value)
+
+    def variants(self, document):
+        yield from super().variants(document)
+        if self.route != 'issue/launch_chain':
+            return
+        ref = self.world.edition.activation + '#/$defs/OriginalSourceBinding'
+        binding = world.skeleton(self.bank, ref)
+        prepared = copy.deepcopy(document['input'])
+        prepared['current_outbox']['record'].update(
+            phase='prepared', activation_receipt=copy.deepcopy(binding), staging_source=binding)
+        yield prepared
 
     def call(self, edit):
         if self.route.startswith(('read_append/', 'read_native/')):
@@ -200,9 +215,9 @@ def error_records(errors):
                  keyword=e.validator, message=e.message, context=error_records(e.context)) for e in errors]
 
 
-def finite_type_implication(validator, nodes, info, keyword, cut, path):
-    """A co-required enum or constant can imply a type or a string length."""
-    if keyword not in ('type', 'minLength', 'maxLength'):
+def finite_implication(validator, nodes, info, keyword, cut, path):
+    """Check a co-required finite rule against the compound schema's other rule."""
+    if keyword not in ('type', 'enum', 'minimum', 'minLength', 'maxLength'):
         return None
     node = info['node']
     other_at_path = {name for name, seen_path in pilot.located_errors(cut) if seen_path == tuple(path)}
@@ -213,12 +228,27 @@ def finite_type_implication(validator, nodes, info, keyword, cut, path):
             other = location + '/' + finite
             if finite not in schema or other not in other_at_path:
                 continue
+            if validator.VALIDATORS[finite] is not Draft202012Validator.VALIDATORS[finite]:
+                continue
             values = [schema[finite]] if finite == 'const' else schema[finite]
             if keyword == 'type':
                 types = node[keyword] if isinstance(node[keyword], list) else [node[keyword]]
-                # Numeric equality may admit a representation the type rule refuses.
-                holds = all((value is None or type(value) in (bool, str)) and
-                            any(validator.TYPE_CHECKER.is_type(value, name) for name in types) for value in values)
+
+                def type_ok(value):
+                    if value is None or type(value) in (bool, str):
+                        return any(validator.is_type(value, kind) for kind in types)
+                    if type(value) is int and abs(value) <= 2**53:
+                        return all(any(validator.is_type(number, kind) for kind in types)
+                                   for number in (value, float(value)))
+                    return False
+
+                holds = all(type_ok(value) for value in values)
+            elif keyword == 'enum':
+                holds = (validator.VALIDATORS['enum'] is Draft202012Validator.VALIDATORS['enum'] and
+                         all(isinstance(value, str) and value in node[keyword] for value in values))
+            elif keyword == 'minimum':
+                holds = (inspect.unwrap(validator.VALIDATORS['minimum']) is Draft202012Validator.VALIDATORS['minimum'] and
+                         all(type(value) is int and abs(value) <= 2**53 and value >= node[keyword] for value in values))
             else:
                 bound = node[keyword]
                 holds = all(isinstance(value, str) and
@@ -230,8 +260,42 @@ def finite_type_implication(validator, nodes, info, keyword, cut, path):
         if all(any(candidate['ipath'] == reach['ipath'] and
                    rules.applies(candidate, rules.scope_of(reach, nodes)) for candidate in reaches)
                for reach in info['reach']):
-            return dict(covering_rule=other, premise='Every value allowed by the co-required rule satisfies this rule.')
+            return dict(covering_rule=other, premise='Every JSON value allowed by the co-required rule satisfies this rule.')
     return None
+
+
+def outbox_implication(nodes, rule_id, path, cut):
+    """Both branches independently restrict the value to the optional binding schema."""
+    if tuple(path[:-1]) != ('current_outbox', 'record') or path[-1] not in ('activation_receipt', 'staging_source'):
+        return None
+    field = path[-1]
+    prefix = 'https://puppetmaster.local/proposals/workflow_activation_sources.v4.schema.json'
+    location = prefix + '#/$defs/StartOutboxIntent'
+    member = f'{location}/properties/{field}'
+    if rule_id not in (member + '/anyOf', member + '/anyOf/1/type'):
+        return None
+    node = nodes[location]['node']
+    conditional, = node['allOf']
+    condition = conditional['if']['properties']['phase']
+    optional = node['properties'][field]['anyOf']
+    required_null = conditional['then']['properties'][field]
+    required_object = conditional['else']['properties'][field]
+    if not (set(conditional['if']) <= {'properties', 'x-pm-oracle-id'} and
+            list(conditional['if']['properties']) == ['phase'] and condition.get('const') == 'reserved' and
+            set(condition) <= {'const', 'x-pm-oracle-id'} and
+            'phase' in node['required'] and field in node['required'] and
+            len(optional) == 2 and isinstance(required_object.get('$ref'), str) and
+            optional[0].get('$ref') == required_object['$ref'] and
+            set(optional[0]) <= {'$ref', 'x-pm-oracle-id'} and
+            set(required_object) <= {'$ref', 'x-pm-oracle-id'} and
+            optional[1].get('type') == required_null.get('type') == 'null' and
+            set(optional[1]) <= {'type', 'x-pm-oracle-id'}):
+        return None
+    other = required_null['x-pm-oracle-id'] + '/type'
+    if (other, tuple(path)) not in pilot.located_errors(cut):
+        return None
+    return dict(covering_rule=other, prepared_binding=required_object['$ref'],
+                source=location, premise='The reserved branch requires null and the other branch requires the same binding reference. Both outcomes already accept through one of these two alternatives.')
 
 
 def accepted_branch_controls(plain, validator, controls, info, cache):
@@ -273,6 +337,11 @@ def per_rule_candidates(plain, validator, controls, info, keyword, old, cache):
             for path in rules.concrete(control, reach['ipath']):
                 for edit in edits(control, path):
                     yield index, path, edit, 'installed rule'
+                if tuple(path[:-1]) == ('current_outbox', 'record') and path[-1] in ('activation_receipt', 'staging_source'):
+                    for candidate in controls:
+                        alternate = rules.get(candidate, path)
+                        if alternate is not None:
+                            yield index, path, alternate, 'accepted prepared outbox binding'
     for index, path in accepted_branch_controls(plain, validator, controls, info, cache):
         for edit in edits(controls[index], path):
             yield index, path, edit, 'accepted branch document'
@@ -308,7 +377,8 @@ def replay_rule(plain, validator, nodes, controls, rule_id, info, keyword, old, 
                 f'{rule_id}: individual rule disable or restoration failed')
         implication = None
         if cut:
-            implication = (finite_type_implication(plain, nodes, info, keyword, cut, path) or
+            implication = (finite_implication(plain, nodes, info, keyword, cut, path) or
+                           outbox_implication(nodes, rule_id, path, cut) or
                            stage.regex_implication(plain, node, keyword, rule_id, path, cut))
         record = dict(path=list(path), edit=repr(edit), edit_source=source, control=index,
                       input_sha256=stage.sweep.digest(changed), before=actual, cut=error_records(cut),
