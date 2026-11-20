@@ -787,3 +787,22 @@ PROOFS['dg5/read_current/current_start/schema'] = dict(
         'message.'
     ),
 )
+
+PROOFS['dg5/read_current/final/current_start/schema'] = dict(
+    kind='entailment',
+    families=['goal_run.started'],
+    depends_on=['dg5/read_current/root/schema', 'dg5/d01/current_source/schema'],
+    sites=[('scripts/pm_goal_dg_s_start.py', 404), ('scripts/pm_goal_dg_s_start.py', 405), ('scripts/pm_goal_dg_s_start.py', 406), ('scripts/pm_goal_dg_s_readers.py', 845), ('scripts/pm_goal_dg_s_readers.py', 846), ('scripts/pm_goal_dg_s_readers.py', 848), ('scripts/pm_goal_dg_s_readers.py', 849), ('scripts/pm_goal_dg_s_readers.py', 923), ('scripts/pm_goal_dg_s_readers.py', 933), ('scripts/pm_goal_dg_s_readers.py', 935), ('scripts/pm_goal_dg_s_readers.py', 937)],
+    argument=(
+        'The workflow at 846–847 embeds the unchanged D01 document validated at 404–405. The '
+        'installed CurrentStartSource requires that exact D01 definition and the whole-call '
+        'tests match both D01 documents to their enclosing workflow. The D01 tests exercise all '
+        '1,266 rules of the same definition; the workflow tests exercise the other 68 against '
+        'the original installed schema. The other workflow copy is acquired again, checked by '
+        'the same schema, and compared using type-exact equality at 933. The final result at '
+        '935–937 requires the identical workflow definition. The accepted example records the '
+        'exact document at the result check. With only the selected check disabled the final '
+        'comparison refuses the changed copy. Restoration reproduces the original validation '
+        'message.'
+    ),
+)
