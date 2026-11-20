@@ -5,8 +5,8 @@
  "merge": "admission-merge-2",
  "registry": {
   "path": "Plans/event_family_registry.json",
-  "revision": "2026-11-19.8",
-  "sha256": "1a13be381c92ff687e3f3cc49eed53aa80689e4e36332ab40636685c9b162ccc",
+  "revision": "2026-11-19.145",
+  "sha256": "e9eb5cc0d292efbc6c0b452928ece0a93fb0744be43066ed446128d5d2cd3e30",
   "family_count": 518,
   "row_pointer": "#/families/237"
  },
@@ -22,16 +22,16 @@
     "membership_version": {
      "status": "PASS",
      "representation": "exact_registry_membership",
-     "finding": "Currently registered at 2026-11-19.8 as #/families/237, canonical row SHA-256 1877201127ce7bd56e678636df559d819347611ad0b761fc4bb4d24a9db73dd9. Original one-family append checkpoints remain preserved.",
+     "finding": "Currently registered at 2026-11-19.145 as #/families/237, canonical row SHA-256 1877201127ce7bd56e678636df559d819347611ad0b761fc4bb4d24a9db73dd9. Original one-family append checkpoints remain authenticated by the immutable predecessor and correction chain.",
      "evidence": [
       {
        "path": "Plans/event_family_registry.json",
        "json_pointer": "#/families/237",
-       "line_start": 16502,
-       "line_end": 16587,
+       "line_start": 16504,
+       "line_end": 16589,
        "quote": "\"event_type\": \"browser.context_captured\"",
-       "quote_line": 16505,
-       "file_sha256": "ec21cf1a5b42b3e68a5564a847b4798dff968612d11d438bc7075b89196f9602",
+       "quote_line": 16507,
+       "file_sha256": "e9eb5cc0d292efbc6c0b452928ece0a93fb0744be43066ed446128d5d2cd3e30",
        "quote_check": "exact",
        "source_citation": {
         "path": "Plans/event_family_registry.json",
@@ -44,7 +44,7 @@
         "quote_check": "exact"
        },
        "unit": "#/families/237",
-       "quote_scope": "unit #/families/237, Plans/event_family_registry.json:16502-16587"
+       "quote_scope": "unit #/families/237, Plans/event_family_registry.json:16504-16589"
       }
      ]
     },
@@ -90,7 +90,7 @@
        "line_start": 16087,
        "line_end": 16088,
        "quote": "Producer: Assistant chat capture handoff for cmd.browser.pick_element_for_chat, cmd.browser.add_selection_to_chat\n  and the two selection+screenshot commands (UCC-064). Resolve the e",
-       "quote_check": "whitespace_normalized",
+       "quote_check": "exact",
        "quote_scope": "unit SMPFS-310, Plans/Section15_MVP_Promoted_Features_Spec.md:16070-16297",
        "file_sha256": "b45332b179ca0b17d8a32f21a5b908b7e704e8f7874c01e3981cdbc4e18f98a3",
        "source_citation": {
@@ -108,7 +108,7 @@
        "line_start": 16197,
        "line_end": 16198,
        "quote": "Round 7 authenticated history for browser.context_captured: retained read, checkpoint and rebuild accept supported\n  1.0.0 originals written with projector_replay_only as well as ded",
-       "quote_check": "whitespace_normalized",
+       "quote_check": "exact",
        "quote_scope": "unit SMPFS-310, Plans/Section15_MVP_Promoted_Features_Spec.md:16070-16297",
        "file_sha256": "b45332b179ca0b17d8a32f21a5b908b7e704e8f7874c01e3981cdbc4e18f98a3",
        "source_citation": {
@@ -188,7 +188,7 @@
        "line_start": 16102,
        "line_end": 16103,
        "quote": "Idempotency key is application scope: application@1:{hex(server_id)}:{hex(owner_operation_id)}\n  from the immutable OriginalBrowserTransitionSource.original_operation_id; Project sco",
-       "quote_check": "whitespace_normalized",
+       "quote_check": "exact",
        "quote_scope": "unit SMPFS-310, Plans/Section15_MVP_Promoted_Features_Spec.md:16070-16297",
        "file_sha256": "b45332b179ca0b17d8a32f21a5b908b7e704e8f7874c01e3981cdbc4e18f98a3",
        "source_citation": {
@@ -219,7 +219,7 @@
        "line_start": 16120,
        "line_end": 16121,
        "quote": "Replay: lost acknowledgement returns original receipt, event_id and frozen payload; retry uses original outcome\n  custody without repeating capture, thread creation, launch, stop, re",
-       "quote_check": "whitespace_normalized",
+       "quote_check": "exact",
        "quote_scope": "unit SMPFS-310, Plans/Section15_MVP_Promoted_Features_Spec.md:16070-16297",
        "file_sha256": "b45332b179ca0b17d8a32f21a5b908b7e704e8f7874c01e3981cdbc4e18f98a3",
        "source_citation": {
@@ -237,7 +237,7 @@
        "line_start": 16197,
        "line_end": 16198,
        "quote": "Round 7 authenticated history for browser.context_captured: retained read, checkpoint and rebuild accept supported\n  1.0.0 originals written with projector_replay_only as well as ded",
-       "quote_check": "whitespace_normalized",
+       "quote_check": "exact",
        "quote_scope": "unit SMPFS-310, Plans/Section15_MVP_Promoted_Features_Spec.md:16070-16297",
        "file_sha256": "b45332b179ca0b17d8a32f21a5b908b7e704e8f7874c01e3981cdbc4e18f98a3",
        "source_citation": {
@@ -265,12 +265,12 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-647",
-       "line_start": 49740,
-       "line_end": 49751,
+       "line_start": 49742,
+       "line_end": 49753,
        "quote": "  Current selected assignment (2026-11-19): browser.context_captured@1.0.0 is registered for application_or_project\n  in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2155. Its event history selects Application\n  = RP-CHAT-THREAD-LIFETIME@1.0.0 (anchor_kind=explicit_delete, cardinality_scope=thread), Project = RP-CHAT-THREAD-LIFETIME@1.0.0\n  (anchor_kind=explicit_delete, cardinality_scope=thread); Plans/storage-plan.md#SP-647 owns the event policy''s\n  existing anchors, counts, holds and deletion rules. Separate stored-value assignment: ds15_browser_context_captured_checkpoint\n  uses RP-PROJECTION-3GEN@1.0.0 under Plans/Decision_Log.md#DL-500; this assigns that stored value, not event history.\n  Separate checkpoint assignment: ds15_browser_context_captured_checkpoint uses RP-PROJECTION-3GEN@1.0.0 under its\n  existing Plans/storage-plan.md#SP-647 contract; checkpoint retention grants no event/source deletion. Original\n  sources and coherent backups retain their independent owner policies; the event lifetime is not transferred to\n  them. Current append/publication still requires the exact selected schema/scope, original custody, current permission,\n  receipt and required producer adoption. Actual missing registration or unresolved required custody refuses; native\n  execution remains NOT_RUN. No native adoption, new retention choice or governance seal follows.'",
        "quote_check": "exact",
-       "quote_scope": "unit SP-647, Plans/storage-plan.md:49672-49781",
-       "file_sha256": "c5e2112ec95e84283f155f44f8dc1fdf9cb5be016b4aa9acd29b780f4c1721d5",
+       "quote_scope": "unit SP-647, Plans/storage-plan.md:49674-49783",
+       "file_sha256": "eca9df98001183b2057086c6c7fc14b39c7bb406951f2ea0092062b81f770e6d",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-647",
@@ -278,7 +278,7 @@
         "line_end": 49740,
         "quote": "Current selected assignment (2026-11-19): browser.context_captured@1.0.0 is registered for application_or_project",
         "quote_check": "exact",
-        "quote_scope": "unit SP-647, Plans/storage-plan.md:49672-49781",
+        "quote_scope": "unit SP-647, Plans/storage-plan.md@10ba97e699d51287673d6f1db4d994f54c59b4ed:49672-49781",
         "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
         "source_citation": {
          "path": "Plans/storage-plan.md",
@@ -291,7 +291,10 @@
         "locator_maintenance": {
          "authority": "MERGE2-FIX4",
          "reason": "Re-cite the same accepted retention claim at its current exact owner assignment; event and source/checkpoint authority remain separate."
-        }
+        },
+        "commit": "10ba97e699d51287673d6f1db4d994f54c59b4ed",
+        "sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+        "line": 49740
        },
        "retention_range_maintenance": {
         "authority": "MERGE3-POSTFIX / post-landing Astra findings",
@@ -322,7 +325,7 @@
        "line_start": 16137,
        "line_end": 16139,
        "quote": "backup/restore of the full original source/log/receipt\n  closure. Checkpoints are derived and grant no access. Every read rechecks current subject/thread/Project permissions\n  and sour",
-       "quote_check": "whitespace_normalized",
+       "quote_check": "exact",
        "quote_scope": "unit SMPFS-310, Plans/Section15_MVP_Promoted_Features_Spec.md:16070-16297",
        "file_sha256": "b45332b179ca0b17d8a32f21a5b908b7e704e8f7874c01e3981cdbc4e18f98a3",
        "source_citation": {
@@ -340,7 +343,7 @@
        "line_start": 16197,
        "line_end": 16198,
        "quote": "Round 7 authenticated history for browser.context_captured: retained read, checkpoint and rebuild accept supported\n  1.0.0 originals written with projector_replay_only as well as ded",
-       "quote_check": "whitespace_normalized",
+       "quote_check": "exact",
        "quote_scope": "unit SMPFS-310, Plans/Section15_MVP_Promoted_Features_Spec.md:16070-16297",
        "file_sha256": "b45332b179ca0b17d8a32f21a5b908b7e704e8f7874c01e3981cdbc4e18f98a3",
        "source_citation": {
@@ -371,7 +374,7 @@
        "line_start": 16087,
        "line_end": 16088,
        "quote": "Producer: Assistant chat capture handoff for cmd.browser.pick_element_for_chat, cmd.browser.add_selection_to_chat\n  and the two selection+screenshot commands (UCC-064). Resolve the e",
-       "quote_check": "whitespace_normalized",
+       "quote_check": "exact",
        "quote_scope": "unit SMPFS-310, Plans/Section15_MVP_Promoted_Features_Spec.md:16070-16297",
        "file_sha256": "b45332b179ca0b17d8a32f21a5b908b7e704e8f7874c01e3981cdbc4e18f98a3",
        "source_citation": {
@@ -402,7 +405,7 @@
        "line_start": 16125,
        "line_end": 16126,
        "quote": "reader.ds15.browser_context_captured.v1@1.0.0, operating as Assistant chat browser capture history reader,\n  reads only browser.context_captured@1.0.0. It adopts SP-278 by name and D",
-       "quote_check": "whitespace_normalized",
+       "quote_check": "exact",
        "quote_scope": "unit SMPFS-310, Plans/Section15_MVP_Promoted_Features_Spec.md:16070-16297",
        "file_sha256": "b45332b179ca0b17d8a32f21a5b908b7e704e8f7874c01e3981cdbc4e18f98a3",
        "source_citation": {
@@ -420,7 +423,7 @@
        "line_start": 16197,
        "line_end": 16198,
        "quote": "Round 7 authenticated history for browser.context_captured: retained read, checkpoint and rebuild accept supported\n  1.0.0 originals written with projector_replay_only as well as ded",
-       "quote_check": "whitespace_normalized",
+       "quote_check": "exact",
        "quote_scope": "unit SMPFS-310, Plans/Section15_MVP_Promoted_Features_Spec.md:16070-16297",
        "file_sha256": "b45332b179ca0b17d8a32f21a5b908b7e704e8f7874c01e3981cdbc4e18f98a3",
        "source_citation": {
@@ -451,7 +454,7 @@
        "line_start": 16156,
        "line_end": 16157,
        "quote": "withdrawal: exact 1.0.0 event/reader only; refuse unknown fields/version before effects or checkpoint.\n  No alias or deployed event predecessor is assumed. Value migrations are expli",
-       "quote_check": "whitespace_normalized",
+       "quote_check": "exact",
        "quote_scope": "unit SMPFS-310, Plans/Section15_MVP_Promoted_Features_Spec.md:16070-16297",
        "file_sha256": "b45332b179ca0b17d8a32f21a5b908b7e704e8f7874c01e3981cdbc4e18f98a3",
        "source_citation": {
@@ -469,7 +472,7 @@
        "line_start": 16197,
        "line_end": 16198,
        "quote": "Round 7 authenticated history for browser.context_captured: retained read, checkpoint and rebuild accept supported\n  1.0.0 originals written with projector_replay_only as well as ded",
-       "quote_check": "whitespace_normalized",
+       "quote_check": "exact",
        "quote_scope": "unit SMPFS-310, Plans/Section15_MVP_Promoted_Features_Spec.md:16070-16297",
        "file_sha256": "b45332b179ca0b17d8a32f21a5b908b7e704e8f7874c01e3981cdbc4e18f98a3",
        "source_citation": {
@@ -500,7 +503,7 @@
        "line_start": 16164,
        "line_end": 16165,
        "quote": "Oracles: ATS-327 and exact family cases in Plans/ds15_event_contract_fixtures.json execute via scripts/pm-ds15-event-contracts.py:\n  valid/invalid transition, scope joins, original r",
-       "quote_check": "whitespace_normalized",
+       "quote_check": "exact",
        "quote_scope": "unit SMPFS-310, Plans/Section15_MVP_Promoted_Features_Spec.md:16070-16297",
        "file_sha256": "b45332b179ca0b17d8a32f21a5b908b7e704e8f7874c01e3981cdbc4e18f98a3",
        "source_citation": {
@@ -518,7 +521,7 @@
        "line_start": 16197,
        "line_end": 16198,
        "quote": "Round 7 authenticated history for browser.context_captured: retained read, checkpoint and rebuild accept supported\n  1.0.0 originals written with projector_replay_only as well as ded",
-       "quote_check": "whitespace_normalized",
+       "quote_check": "exact",
        "quote_scope": "unit SMPFS-310, Plans/Section15_MVP_Promoted_Features_Spec.md:16070-16297",
        "file_sha256": "b45332b179ca0b17d8a32f21a5b908b7e704e8f7874c01e3981cdbc4e18f98a3",
        "source_citation": {
@@ -549,9 +552,10 @@
   "row_pointer": "#/families/237"
  },
  "evidence_maintenance": {
-  "authority": "MERGE3-POSTFIX / post-landing Astra findings",
-  "source_commit": "004f3ec9d0d13c129f1b2af4dcb469748a375d59",
-  "source_assessment_sha256": "f0b93973ff2d8dd2443430d476bab87cc5cad986154266ab4529bf1367ba863e",
+  "authority": "MERGE3-POSTFIX final citation maintenance",
+  "source_commit": "92d16bc12e0fa5a198d8e3f30340eab43e380a83",
+  "source_assessment_sha256": "f530967b26f91781d317705f9ff159b39cb0fe12f9c61750fbde3d59ab763107",
+  "verdicts_changed": false,
   "native_execution": "NOT_RUN"
  }
 }

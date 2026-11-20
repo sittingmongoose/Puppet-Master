@@ -5,8 +5,8 @@
  "merge": "admission-merge-2",
  "registry": {
   "path": "Plans/event_family_registry.json",
-  "revision": "2026-11-19.93",
-  "sha256": "72c7dd7165cd8a0733916c2790ecf5e1e75577fe530ade9dbd4e61e9bce0dc4d",
+  "revision": "2026-11-19.145",
+  "sha256": "e9eb5cc0d292efbc6c0b452928ece0a93fb0744be43066ed446128d5d2cd3e30",
   "family_count": 518,
   "row_pointer": "#/families/435"
  },
@@ -22,16 +22,16 @@
     "membership_version": {
      "status": "PASS",
      "representation": "exact_registry_membership",
-     "finding": "Currently registered at 2026-11-19.93 as #/families/435, canonical row SHA-256 996291f7753a2237399ff00bcaf85e5799181d267a53e9f9d9fd25694a351e17. Original one-family append checkpoints remain preserved.",
+     "finding": "Currently registered at 2026-11-19.145 as #/families/435, canonical row SHA-256 996291f7753a2237399ff00bcaf85e5799181d267a53e9f9d9fd25694a351e17. Original one-family append checkpoints remain authenticated by the immutable predecessor and correction chain.",
      "evidence": [
       {
        "path": "Plans/event_family_registry.json",
        "json_pointer": "#/families/435",
-       "line_start": 28344,
-       "line_end": 28423,
+       "line_start": 28445,
+       "line_end": 28524,
        "quote": "\"event_type\": \"plugin.permission.override\"",
-       "quote_line": 28347,
-       "file_sha256": "ec21cf1a5b42b3e68a5564a847b4798dff968612d11d438bc7075b89196f9602",
+       "quote_line": 28448,
+       "file_sha256": "e9eb5cc0d292efbc6c0b452928ece0a93fb0744be43066ed446128d5d2cd3e30",
        "quote_check": "exact",
        "source_citation": {
         "path": "Plans/event_family_registry.json",
@@ -44,7 +44,7 @@
         "quote_check": "exact"
        },
        "unit": "#/families/435",
-       "quote_scope": "unit #/families/435, Plans/event_family_registry.json:28344-28423"
+       "quote_scope": "unit #/families/435, Plans/event_family_registry.json:28445-28524"
       }
      ]
     },
@@ -90,13 +90,13 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-671",
-       "line_start": 37079,
-       "line_end": 37079,
+       "line_start": 37081,
+       "line_end": 37081,
        "quote": "The sole producer `permission.ask override result handler` first validates actual source/permission/receipt ownership, the closed payload and installed writer/schema/retention admission. The",
        "excerpt_sha256": "44433a24eb5a50dd3fa2066bb1e3e62d38235bee94fea94d58db52cf4845e0bc",
-       "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+       "file_sha256": "eca9df98001183b2057086c6c7fc14b39c7bb406951f2ea0092062b81f770e6d",
        "quote_check": "exact",
-       "quote_scope": "unit SP-671, Plans/storage-plan.md:36278-37145",
+       "quote_scope": "unit SP-671, Plans/storage-plan.md:36280-37147",
        "excerpt_digest_convention": "literal_quote",
        "source_citation": {
         "path": "Plans/storage-plan.md",
@@ -111,13 +111,13 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-671",
-       "line_start": 37086,
-       "line_end": 37086,
+       "line_start": 37088,
+       "line_end": 37088,
        "quote": "For `plugin.permission.override`, the newly authored physical operation binding measures the complete canonical MessagePack value, independently of EventRecord body size. The closed `plugin_permission",
        "excerpt_sha256": "4be027370626063a0f026b0af2544a7f30e356b96bde6b804ed623f3be66e76d",
-       "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+       "file_sha256": "eca9df98001183b2057086c6c7fc14b39c7bb406951f2ea0092062b81f770e6d",
        "quote_check": "exact",
-       "quote_scope": "unit SP-671, Plans/storage-plan.md:36278-37145",
+       "quote_scope": "unit SP-671, Plans/storage-plan.md:36280-37147",
        "excerpt_digest_convention": "literal_quote",
        "source_citation": {
         "path": "Plans/storage-plan.md",
@@ -222,13 +222,13 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-671",
-       "line_start": 36966,
-       "line_end": 36966,
+       "line_start": 36968,
+       "line_end": 36968,
        "quote": "application@1:{hex(server_id)}:{hex(owner_operation_id)}",
        "excerpt_sha256": "f021b441a447da8dc6d75d05b73da15284e77fb8544fd86b7d77fb6639093933",
-       "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+       "file_sha256": "eca9df98001183b2057086c6c7fc14b39c7bb406951f2ea0092062b81f770e6d",
        "quote_check": "exact",
-       "quote_scope": "unit SP-671, Plans/storage-plan.md:36278-37145",
+       "quote_scope": "unit SP-671, Plans/storage-plan.md:36280-37147",
        "excerpt_digest_convention": "literal_quote",
        "source_citation": {
         "path": "Plans/storage-plan.md",
@@ -298,13 +298,13 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-671",
-       "line_start": 37083,
-       "line_end": 37083,
+       "line_start": 37085,
+       "line_end": 37085,
        "quote": "`plugin.permission.override` selects current-writer `replay_policy=dedupe_by_idempotency_key`",
        "excerpt_sha256": "2ee8a7ba6134517070d1612764a9eb13fadbe1e0640110f4919cccf2b1382549",
-       "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+       "file_sha256": "eca9df98001183b2057086c6c7fc14b39c7bb406951f2ea0092062b81f770e6d",
        "quote_check": "exact",
-       "quote_scope": "unit SP-671, Plans/storage-plan.md:36278-37145",
+       "quote_scope": "unit SP-671, Plans/storage-plan.md:36280-37147",
        "excerpt_digest_convention": "literal_quote",
        "source_citation": {
         "path": "Plans/storage-plan.md",
@@ -517,13 +517,13 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-671",
-       "line_start": 36977,
-       "line_end": 36977,
+       "line_start": 36979,
+       "line_end": 36979,
        "quote": "Custody: the operation record holds only the closed payload, actual actor/scope and original receipt reference. Credential secret custody remains github_api/OS-store only; plugin original re",
        "excerpt_sha256": "aa80c6b160a9250e49c5e912cd520b75dff4581b36a98cebbea3f95bfd629f4e",
-       "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+       "file_sha256": "eca9df98001183b2057086c6c7fc14b39c7bb406951f2ea0092062b81f770e6d",
        "quote_check": "exact",
-       "quote_scope": "unit SP-671, Plans/storage-plan.md:36278-37145",
+       "quote_scope": "unit SP-671, Plans/storage-plan.md:36280-37147",
        "excerpt_digest_convention": "literal_quote",
        "source_citation": {
         "path": "Plans/storage-plan.md",
@@ -627,13 +627,13 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-671",
-       "line_start": 37090,
-       "line_end": 37090,
+       "line_start": 37092,
+       "line_end": 37092,
        "quote": "Consumer **`consumer.plugin_permission_override.history@1.0.0`** serves only the existing authenticated plugin audit/history reader. It explicitly adopts **SP-278** and reads through `projec",
        "excerpt_sha256": "68d6cc9c7d82149e994dd3ba6410855a9c51200691b818e1cd47caab398a9435",
-       "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+       "file_sha256": "eca9df98001183b2057086c6c7fc14b39c7bb406951f2ea0092062b81f770e6d",
        "quote_check": "exact",
-       "quote_scope": "unit SP-671, Plans/storage-plan.md:36278-37145",
+       "quote_scope": "unit SP-671, Plans/storage-plan.md:36280-37147",
        "excerpt_digest_convention": "literal_quote",
        "source_citation": {
         "path": "Plans/storage-plan.md",
@@ -661,13 +661,13 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-671",
-       "line_start": 36979,
-       "line_end": 36979,
+       "line_start": 36981,
+       "line_end": 36981,
        "quote": "Compatibility: no legacy tuple or unversioned sketch can be a native writer; unsupported version quarantines before append/read. A versioned migration must retain original ID/receipt and ver",
        "excerpt_sha256": "ee71b229878797ef387c1f44922417b4202c3cf67fbddac43ca0f064a7c0d439",
-       "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+       "file_sha256": "eca9df98001183b2057086c6c7fc14b39c7bb406951f2ea0092062b81f770e6d",
        "quote_check": "exact",
-       "quote_scope": "unit SP-671, Plans/storage-plan.md:36278-37145",
+       "quote_scope": "unit SP-671, Plans/storage-plan.md:36280-37147",
        "excerpt_digest_convention": "literal_quote",
        "source_citation": {
         "path": "Plans/storage-plan.md",
@@ -783,7 +783,7 @@
        "line_end": 7410,
        "quote": "- `plugin.permission.override`: positive closed payload and original-identity retry; negatives raw secret/extension field, missing operation ID, unsupported version, revision zero, raw redaction,",
        "excerpt_sha256": "859326d9c782ba709c047d2a00efc7837d62c011795c9bb5c001d56d31e86b47",
-       "file_sha256": "a3028640b73729884c6b3d1a0f095289513e4f76e61af711c233858bf005dc7c",
+       "file_sha256": "9578cb2d7c8a6b000935bb1602650c67ada31d8cbbbad9e3baabee00ec961997",
        "quote_check": "exact",
        "quote_scope": "unit ATS-335, Plans/Automated_Testing_System.md:7372-7417",
        "excerpt_digest_convention": "literal_quote",
@@ -837,9 +837,10 @@
   "row_pointer": "#/families/435"
  },
  "evidence_maintenance": {
-  "authority": "MERGE3-POSTFIX / post-landing Astra findings",
-  "source_commit": "3b8c0d4d138104556b1149cb4a854fc4adfe053d",
-  "source_assessment_sha256": "a9f92c2095de4fdb5aadb2ff5a6fb0796823fd8d79cff8e97716b19912e4e4b8",
+  "authority": "MERGE3-POSTFIX final citation maintenance",
+  "source_commit": "92d16bc12e0fa5a198d8e3f30340eab43e380a83",
+  "source_assessment_sha256": "5fb6263641afd4423cc396b05e9757ead68087435236ea48437bd02af7d1a30f",
+  "verdicts_changed": false,
   "native_execution": "NOT_RUN"
  }
 }

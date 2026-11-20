@@ -5,8 +5,8 @@
  "merge": "admission-merge-2",
  "registry": {
   "path": "Plans/event_family_registry.json",
-  "revision": "2026-11-19.87",
-  "sha256": "491faa7f2c7725bb6b5836e0bd135a0547bf53658b3a9d6ef4303aa476788b2c",
+  "revision": "2026-11-19.145",
+  "sha256": "e9eb5cc0d292efbc6c0b452928ece0a93fb0744be43066ed446128d5d2cd3e30",
   "family_count": 518,
   "row_pointer": "#/families/429"
  },
@@ -22,16 +22,16 @@
     "membership_version": {
      "status": "PASS",
      "representation": "exact_registry_membership",
-     "finding": "Currently registered at 2026-11-19.87 as #/families/429, canonical row SHA-256 8ab63b1646b321c0f86eeba9975f2cde481cb0d1ce3aa8a757be5a7c223a77d4. Original one-family append checkpoints remain preserved.",
+     "finding": "Currently registered at 2026-11-19.145 as #/families/429, canonical row SHA-256 8ab63b1646b321c0f86eeba9975f2cde481cb0d1ce3aa8a757be5a7c223a77d4. Original one-family append checkpoints remain authenticated by the immutable predecessor and correction chain.",
      "evidence": [
       {
        "path": "Plans/event_family_registry.json",
        "json_pointer": "#/families/429",
-       "line_start": 27898,
-       "line_end": 27943,
+       "line_start": 27998,
+       "line_end": 28044,
        "quote": "\"event_type\": \"phase.force_completed\"",
-       "quote_line": 27901,
-       "file_sha256": "ec21cf1a5b42b3e68a5564a847b4798dff968612d11d438bc7075b89196f9602",
+       "quote_line": 28001,
+       "file_sha256": "e9eb5cc0d292efbc6c0b452928ece0a93fb0744be43066ed446128d5d2cd3e30",
        "quote_check": "exact",
        "source_citation": {
         "path": "Plans/event_family_registry.json",
@@ -44,7 +44,7 @@
         "quote_check": "exact"
        },
        "unit": "#/families/429",
-       "quote_scope": "unit #/families/429, Plans/event_family_registry.json:27898-27943"
+       "quote_scope": "unit #/families/429, Plans/event_family_registry.json:27998-28044"
       }
      ]
     },
@@ -61,7 +61,7 @@
        "quote": "**OSI-685: `phase.force_completed@1.0.0` — newly authored owner contract (DL-045), prepared without admission.** This exact family alone adopts the contract below. No current appen",
        "quote_check": "exact",
        "quote_scope": "unit OSI-685, Plans/orchestrator-subagent-integration.md:32934-33006",
-       "file_sha256": "e4a8b15da392eff022e41f72d3c5fa81f892eefeeae53f8719fdd96d03712baf",
+       "file_sha256": "aab3a84daf5765dd55948f63493973b3a79019c6141e475b844cc62f36934c26",
        "source_citation": {
         "path": "Plans/orchestrator-subagent-integration.md",
         "unit": "OSI-685",
@@ -92,7 +92,7 @@
        "quote": "**Producer and ordering.** `Interview PhaseManager / enforce soft cap` owns the occurrence. Predicate: active phase -> force completed only when configured maximum is finite and qu",
        "quote_check": "exact",
        "quote_scope": "unit OSI-685, Plans/orchestrator-subagent-integration.md:32934-33006",
-       "file_sha256": "e4a8b15da392eff022e41f72d3c5fa81f892eefeeae53f8719fdd96d03712baf",
+       "file_sha256": "aab3a84daf5765dd55948f63493973b3a79019c6141e475b844cc62f36934c26",
        "source_citation": {
         "path": "Plans/orchestrator-subagent-integration.md",
         "unit": "OSI-685",
@@ -123,7 +123,7 @@
        "quote": "**Payload and scope.** `Plans/orchestrator_event_payloads.schema.json#/$defs/phase_force_completed` (`pm.event_payload.phase_force_completed.v1@1.0.0`) is the closed payload. Proje",
        "quote_check": "exact",
        "quote_scope": "unit OSI-685, Plans/orchestrator-subagent-integration.md:32934-33006",
-       "file_sha256": "e4a8b15da392eff022e41f72d3c5fa81f892eefeeae53f8719fdd96d03712baf",
+       "file_sha256": "aab3a84daf5765dd55948f63493973b3a79019c6141e475b844cc62f36934c26",
        "source_citation": {
         "path": "Plans/orchestrator-subagent-integration.md",
         "unit": "OSI-685",
@@ -154,7 +154,7 @@
        "quote": "**Identity and replay.** scope_partition is `app` or the exact EventRecord project~ encoding. Identity preimage is `JCS([\"ea-do-v1\",scope_partition,server_id,thread_id,run_id,\"phas",
        "quote_check": "exact",
        "quote_scope": "unit OSI-685, Plans/orchestrator-subagent-integration.md:32934-33006",
-       "file_sha256": "e4a8b15da392eff022e41f72d3c5fa81f892eefeeae53f8719fdd96d03712baf",
+       "file_sha256": "aab3a84daf5765dd55948f63493973b3a79019c6141e475b844cc62f36934c26",
        "source_citation": {
         "path": "Plans/orchestrator-subagent-integration.md",
         "unit": "OSI-685",
@@ -172,7 +172,7 @@
        "quote": "The current writing recipe is `ea-do-rfc8785-v2`; only new writes use it.",
        "quote_check": "exact",
        "quote_scope": "unit OSI-685, Plans/orchestrator-subagent-integration.md:32934-33006",
-       "file_sha256": "e4a8b15da392eff022e41f72d3c5fa81f892eefeeae53f8719fdd96d03712baf",
+       "file_sha256": "aab3a84daf5765dd55948f63493973b3a79019c6141e475b844cc62f36934c26",
        "source_citation": {
         "path": "Plans/orchestrator-subagent-integration.md",
         "unit": "OSI-685",
@@ -203,7 +203,7 @@
        "quote": "**Identity and replay.** scope_partition is `app` or the exact EventRecord project~ encoding. Identity preimage is `JCS([\"ea-do-v1\",scope_partition,server_id,thread_id,run_id,\"phas",
        "quote_check": "exact",
        "quote_scope": "unit OSI-685, Plans/orchestrator-subagent-integration.md:32934-33006",
-       "file_sha256": "e4a8b15da392eff022e41f72d3c5fa81f892eefeeae53f8719fdd96d03712baf",
+       "file_sha256": "aab3a84daf5765dd55948f63493973b3a79019c6141e475b844cc62f36934c26",
        "source_citation": {
         "path": "Plans/orchestrator-subagent-integration.md",
         "unit": "OSI-685",
@@ -221,7 +221,7 @@
        "quote": "Recovery verifies the original and returns its exact complete receipt before any retry;",
        "quote_check": "exact",
        "quote_scope": "unit OSI-685, Plans/orchestrator-subagent-integration.md:32934-33006",
-       "file_sha256": "e4a8b15da392eff022e41f72d3c5fa81f892eefeeae53f8719fdd96d03712baf",
+       "file_sha256": "aab3a84daf5765dd55948f63493973b3a79019c6141e475b844cc62f36934c26",
        "source_citation": {
         "path": "Plans/orchestrator-subagent-integration.md",
         "unit": "OSI-685",
@@ -252,7 +252,7 @@
        "quote": "Event history `retention_policy_ref = RP-RUNTIME-365D@1.0.0`, under DL-086.",
        "quote_check": "exact",
        "quote_scope": "unit OSI-685, Plans/orchestrator-subagent-integration.md:32934-33006",
-       "file_sha256": "e4a8b15da392eff022e41f72d3c5fa81f892eefeeae53f8719fdd96d03712baf",
+       "file_sha256": "aab3a84daf5765dd55948f63493973b3a79019c6141e475b844cc62f36934c26",
        "source_citation": {
         "path": "Plans/orchestrator-subagent-integration.md",
         "unit": "OSI-685",
@@ -283,7 +283,7 @@
        "quote": "**Retention and custody.** `retention_policy_ref = RP-RUNTIME-365D@1.0.0` under DL-086, as materialized in the landed `Plans/storage_value_registry.json` (Storage retention landing `4d52bd2758526cd0e8a56358baaa73049c1d4bdd`), report `reports/event-autho",
        "quote_check": "exact",
        "quote_scope": "unit OSI-685, Plans/orchestrator-subagent-integration.md:32934-33006",
-       "file_sha256": "e4a8b15da392eff022e41f72d3c5fa81f892eefeeae53f8719fdd96d03712baf",
+       "file_sha256": "aab3a84daf5765dd55948f63493973b3a79019c6141e475b844cc62f36934c26",
        "source_citation": {
         "path": "Plans/orchestrator-subagent-integration.md",
         "unit": "OSI-685",
@@ -314,7 +314,7 @@
        "quote": "**Producer and ordering.** `Interview PhaseManager / enforce soft cap` owns the occurrence. Predicate: active phase -> force completed only when configured maximum is finite and qu",
        "quote_check": "exact",
        "quote_scope": "unit OSI-685, Plans/orchestrator-subagent-integration.md:32934-33006",
-       "file_sha256": "e4a8b15da392eff022e41f72d3c5fa81f892eefeeae53f8719fdd96d03712baf",
+       "file_sha256": "aab3a84daf5765dd55948f63493973b3a79019c6141e475b844cc62f36934c26",
        "source_citation": {
         "path": "Plans/orchestrator-subagent-integration.md",
         "unit": "OSI-685",
@@ -345,7 +345,7 @@
        "quote": "**Operating consumer and checkpoint.** `reader.orchestrator.phase_force_completed.history.v1@1.0.0` serves the existing Orchestrator diagnostic inspector for this exact family. It ",
        "quote_check": "exact",
        "quote_scope": "unit OSI-685, Plans/orchestrator-subagent-integration.md:32934-33006",
-       "file_sha256": "e4a8b15da392eff022e41f72d3c5fa81f892eefeeae53f8719fdd96d03712baf",
+       "file_sha256": "aab3a84daf5765dd55948f63493973b3a79019c6141e475b844cc62f36934c26",
        "source_citation": {
         "path": "Plans/orchestrator-subagent-integration.md",
         "unit": "OSI-685",
@@ -376,7 +376,7 @@
        "quote": "**Compatibility and withdrawal.** Accept only this exact schema/version; old sketches or aliases do not self-upgrade or become lawful history. A historical read requires proof of i",
        "quote_check": "exact",
        "quote_scope": "unit OSI-685, Plans/orchestrator-subagent-integration.md:32934-33006",
-       "file_sha256": "e4a8b15da392eff022e41f72d3c5fa81f892eefeeae53f8719fdd96d03712baf",
+       "file_sha256": "aab3a84daf5765dd55948f63493973b3a79019c6141e475b844cc62f36934c26",
        "source_citation": {
         "path": "Plans/orchestrator-subagent-integration.md",
         "unit": "OSI-685",
@@ -394,7 +394,7 @@
        "quote": "**Historical-read admission oracle — phase.force_completed.** Newly authored exact-family binding uses the closed `Plans/orchestrator_historical_read.schema.json` witness with read",
        "quote_check": "exact",
        "quote_scope": "unit OSI-685, Plans/orchestrator-subagent-integration.md:32934-33006",
-       "file_sha256": "e4a8b15da392eff022e41f72d3c5fa81f892eefeeae53f8719fdd96d03712baf",
+       "file_sha256": "aab3a84daf5765dd55948f63493973b3a79019c6141e475b844cc62f36934c26",
        "source_citation": {
         "path": "Plans/orchestrator-subagent-integration.md",
         "unit": "OSI-685",
@@ -412,7 +412,7 @@
        "quote": "A custody refusal, or missing, unverified, contradictory, unsupported or foreign recipe evidence, refuses.",
        "quote_check": "exact",
        "quote_scope": "unit OSI-685, Plans/orchestrator-subagent-integration.md:32934-33006",
-       "file_sha256": "e4a8b15da392eff022e41f72d3c5fa81f892eefeeae53f8719fdd96d03712baf",
+       "file_sha256": "aab3a84daf5765dd55948f63493973b3a79019c6141e475b844cc62f36934c26",
        "source_citation": {
         "path": "Plans/orchestrator-subagent-integration.md",
         "unit": "OSI-685",
@@ -438,8 +438,8 @@
       {
        "path": "Plans/orchestrator-subagent-integration.md",
        "line": 32934,
-       "sha256": "e4a8b15da392eff022e41f72d3c5fa81f892eefeeae53f8719fdd96d03712baf",
-       "file_sha256": "e4a8b15da392eff022e41f72d3c5fa81f892eefeeae53f8719fdd96d03712baf",
+       "sha256": "aab3a84daf5765dd55948f63493973b3a79019c6141e475b844cc62f36934c26",
+       "file_sha256": "aab3a84daf5765dd55948f63493973b3a79019c6141e475b844cc62f36934c26",
        "unit": "OSI-685",
        "line_start": 32934,
        "line_end": 32934,
@@ -464,12 +464,12 @@
        "path": "Plans/orchestrator-subagent-integration.md",
        "line": 32952,
        "quote": "**Oracles.** ATS-360 and `Plans/orchestrator_event_contract_fixtures.json` select only `phase.force_completed` cases. Positive payload and negative missing-required/unknown-field/foreign-scope/schema-version cases run via `python3 scripts/pm-orchestrator-event-contracts.py`. Native NOT_RUN obligations: full-value uncertain receipt retry/conflict, producer predicate and canonical-effect ordering, restore entropy, current token/source/access fences, deletion/hold deadline, version/withdrawal races and replay without the effect named above. Static payload success never certifies those native obligations.",
-       "sha256": "e4a8b15da392eff022e41f72d3c5fa81f892eefeeae53f8719fdd96d03712baf",
+       "sha256": "aab3a84daf5765dd55948f63493973b3a79019c6141e475b844cc62f36934c26",
        "line_start": 32952,
        "line_end": 32952,
        "quote_check": "exact",
        "quote_scope": "unit OSI-685, Plans/orchestrator-subagent-integration.md:32934-33006",
-       "file_sha256": "e4a8b15da392eff022e41f72d3c5fa81f892eefeeae53f8719fdd96d03712baf",
+       "file_sha256": "aab3a84daf5765dd55948f63493973b3a79019c6141e475b844cc62f36934c26",
        "unit": "OSI-685",
        "source_citation": {
         "path": "Plans/orchestrator-subagent-integration.md",
@@ -513,9 +513,10 @@
   "row_pointer": "#/families/429"
  },
  "evidence_maintenance": {
-  "authority": "MERGE3-POSTFIX / post-landing Astra findings",
-  "source_commit": "642430d90e4c183c852b3a3ea4ccac981a960a41",
-  "source_assessment_sha256": "87f6e8a42b6ad1970c9fdb4d06ca05a21bc73f27273b20a68815d0834b813b13",
+  "authority": "MERGE3-POSTFIX final citation maintenance",
+  "source_commit": "92d16bc12e0fa5a198d8e3f30340eab43e380a83",
+  "source_assessment_sha256": "3e17fa7ed3935073c7039f2aa4ede3c391070cb4b3bf14ddd945ddc5a504b880",
+  "verdicts_changed": false,
   "native_execution": "NOT_RUN"
  }
 }

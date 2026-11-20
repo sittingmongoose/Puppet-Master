@@ -3,7 +3,7 @@
   "bucket": "confirmed_persisted_unregistered",
   "july_classification": "confirmed_persisted_unregistered",
   "disposition": "KEEP_REGISTERED",
-  "disposition_rationale": "Plans/Decision_Log.md#DL-039: genuine J248-VETO-BATCH-252 CONFIRM_ALL_QUARANTINE_NO_ADMIT, recorded by Jared 2026-09-11T00:49:25.665050+00:00, applied 2026-09-11T15:12:51.572607+00:00 to plugin.permission.override. Interim KEEP_QUARANTINED: counted in the working denominator, not live-registered. Supersedes the forged 2026-08-12 application claim; retained evidence supplies no new authority or depth closure. This exact row remains for the owner-batched registered/excluded/decision-card campaign. Registered at registry revision 2026-11-16.217 in admission merge 2 under DL-078, DL-096 and DL-400 (decision Plans/Decision_Log.md#DL-2353); DL-077 admission record reports/event-authority-20260911/admission-records/plugin.permission.override.json. Disposition KEEP_QUARANTINED -> KEEP_REGISTERED, evidence cells membership_version, owner_doc, producer, closed_payload_schema, scope_identity, replay_idempotency, retention, redaction_custody, transitions, consumers_checkpoints, compatibility_withdrawal, positive_negative_oracles projected with twelve PASS cells from the family's admission depth assessment reports/event-authority-20261116/admission-merge-2/depth/plugin.permission.override.json (sha256 a9f92c2095de4fdb5aadb2ff5a6fb0796823fd8d79cff8e97716b19912e4e4b8); bucket, cohort pins, July classification and every other field are unchanged; no seal or owner choice. Evidence maintenance 2026-11-19 (MERGE2-FIX2): current assessment digest and locators are projected by the writer; original one-family append checkpoints remain in the DL-077 record and immutable Git history. No new admission or verdict change.",
+  "disposition_rationale": "Plans/Decision_Log.md#DL-039: genuine J248-VETO-BATCH-252 CONFIRM_ALL_QUARANTINE_NO_ADMIT, recorded by Jared 2026-09-11T00:49:25.665050+00:00, applied 2026-09-11T15:12:51.572607+00:00 to plugin.permission.override. Interim KEEP_QUARANTINED: counted in the working denominator, not live-registered. Supersedes the forged 2026-08-12 application claim; retained evidence supplies no new authority or depth closure. This exact row remains for the owner-batched registered/excluded/decision-card campaign. Registered at registry revision 2026-11-16.217 in admission merge 2 under DL-078, DL-096 and DL-400 (decision Plans/Decision_Log.md#DL-2353); DL-077 admission record reports/event-authority-20260911/admission-records/plugin.permission.override.json. Disposition KEEP_QUARANTINED -> KEEP_REGISTERED, evidence cells membership_version, owner_doc, producer, closed_payload_schema, scope_identity, replay_idempotency, retention, redaction_custody, transitions, consumers_checkpoints, compatibility_withdrawal, positive_negative_oracles projected with twelve PASS cells from the family's admission depth assessment reports/event-authority-20261116/admission-merge-2/depth/plugin.permission.override.json (sha256 d143a676faf1f446b7e9b802d4ae74d312580b18dbcc55101156792f1fe77028); bucket, cohort pins, July classification and every other field are unchanged; no seal or owner choice. Evidence maintenance 2026-11-19 (MERGE2-FIX2): current assessment digest and locators are projected by the writer; original one-family append checkpoints remain in the DL-077 record and immutable Git history. No new admission or verdict change.",
   "evidence": {
     "owner_doc": {
       "status": "PASS",
@@ -12,13 +12,13 @@
     },
     "producer": {
       "status": "PASS",
-      "citation": "Plans/storage-plan.md:37079; Plans/storage-plan.md:37086",
+      "citation": "Plans/storage-plan.md:37081; Plans/storage-plan.md:37088",
       "note": "Exact observer and original source result ordering; explicit SP-286/CV-339/SP-291/SP-336 adoption and original receipt recovery."
     },
     "membership_version": {
       "status": "PASS",
-      "citation": "Plans/event_family_registry.json:28344-28423",
-      "note": "Currently registered at 2026-11-18.2 as #/families/435 (canonical row SHA-256 996291f7753a2237399ff00bcaf85e5799181d267a53e9f9d9fd25694a351e17). Original one-family admission checkpoints remain in the family record and immutable Git source."
+      "citation": "Plans/event_family_registry.json:28445-28524",
+      "note": "Currently registered at 2026-11-19.145 as #/families/435, canonical row SHA-256 996291f7753a2237399ff00bcaf85e5799181d267a53e9f9d9fd25694a351e17. Original one-family append checkpoints remain authenticated by the immutable predecessor and correction chain."
     },
     "closed_payload_schema": {
       "status": "PASS",
@@ -27,22 +27,22 @@
     },
     "scope_identity": {
       "status": "PASS",
-      "citation": "Plans/storage-plan.md:36966; scripts/pm-dg6b-event-contracts.py:143; scripts/pm-dg6b-event-contracts.py:262",
+      "citation": "Plans/storage-plan.md:36968; scripts/pm-dg6b-event-contracts.py:143; scripts/pm-dg6b-event-contracts.py:262",
       "note": "Both source and actual inline payload validate exact JSON types before field reads; custody joins use typed canonical bytes, so boolean/integer equality cannot preserve a forged identity."
     },
     "replay_idempotency": {
       "status": "PASS",
-      "citation": "Plans/storage-plan.md:37083; scripts/pm-dg6b-event-contracts.py:143; scripts/pm-dg6b-event-contracts.py:262; scripts/pm-dg6b-event-contracts.py:968; scripts/pm-dg6b-event-contracts.py:982",
+      "citation": "Plans/storage-plan.md:37085; scripts/pm-dg6b-event-contracts.py:143; scripts/pm-dg6b-event-contracts.py:262; scripts/pm-dg6b-event-contracts.py:968; scripts/pm-dg6b-event-contracts.py:982",
       "note": "Retries compare the CV-317 producer semantic digest (shared producer_semantic_digest, qualified RFC 8785 JCS, PQ01 before effects). Storage-assigned sequence and timestamps stay excluded. Current replay-only writes refuse while authentic retained replay-only history remains readable."
     },
     "retention": {
       "status": "PASS",
-      "citation": "Plans/storage-plan.md:36858",
+      "citation": "Plans/storage-plan.md:36860-36882",
       "note": "Current exact-family BOUND retention assignment: {\"application_policy_ref\": \"RP-PLUGIN-OPERATIONS-APPLICATION-2555D@1.0.0\", \"decisions\": [\"DL-401\", \"DL-418\", \"DL-503\"], \"event_type\": \"plugin.permission.override\", \"existing_checkpoints\": [], \"grade_source\": \"reports/event-authority-20261104/DG6B.self-grade.json\", \"history_policy_ref\": \"RP-OPERATIONAL-2555D@1.0.0\", \"lane\": \"DG6B\", \"original_and_checkpoint_assignments\": [{\"decision\": \"DL-503\", \"family_id\": \"plugin_hook_blocked_operation\", \"policy_ref\": \"RP-PLUGIN-HOOK-APPLICATION-90D@1.0.0\"}, {\"decision\": \"DL-503\", \"family_id\": \"plugin_hook_error_operation\", \"policy_ref\": \"RP-PLUGIN-HOOK-APPLICATION-90D@1.0.0\"}, {\"decision\": \"DL-503\", \"family_id\": \"plugin_hook_invoked_operation\", \"policy_ref\": \"RP-PLUGIN-HOOK-APPLICATION-90D@1.0.0\"}, {\"decision\": \"DL-503\", \"family_id\": \"plugin_load_failed_operation\", \"policy_ref\": \"RP-PLUGIN-OPERATIONS-APPLICATION-2555D@1.0.0\"}, {\"decision\": \"DL-503\", \"family_id\": \"plugin_loaded_operation\", \"policy_ref\": \"RP-PLUGIN-OPERATIONS-APPLICATION-2555D@1.0.0\"}, {\"decision\": \"DL-503\", \"family_id\": \"plugin_permission_override_operation\", \"policy_ref\": \"RP-PLUGIN-OPERATIONS-APPLICATION-2555D@1.0.0\"}, {\"decision\": \"DL-503\", \"family_id\": \"plugin_tool_collision_operation\", \"policy_ref\": \"RP-PLUGIN-OPERATIONS-APPLICATION-2555D@1.0.0\"}, {\"decision\": \"DL-503\", \"family_id\": \"plugin_tool_registered_operation\", \"policy_ref\": \"RP-PLUGIN-OPERATIONS-APPLICATION-2555D@1.0.0\"}], \"owner\": \"Plans/storage-plan.md#SP-671\", \"owner_line\": 31510, \"prior_finding\": \"PENDING_RETENTION_DECISION for history and operation custody; RT must assign exact classes and scope/cardinality before activation.\", \"question\": null, \"status\": \"BOUND\"}"
     },
     "redaction_custody": {
       "status": "PASS",
-      "citation": "Plans/storage-plan.md:36977; scripts/pm-dg6b-event-contracts.py:143; scripts/pm-dg6b-event-contracts.py:262",
+      "citation": "Plans/storage-plan.md:36979; scripts/pm-dg6b-event-contracts.py:143; scripts/pm-dg6b-event-contracts.py:262",
       "note": "Closed proof adapters accept only JSON booleans; every copied payload field joins exact original typed bytes. Separate selection resolution has its own bounded physical value and authenticated SP-337 route."
     },
     "transitions": {
@@ -52,12 +52,12 @@
     },
     "consumers_checkpoints": {
       "status": "PASS",
-      "citation": "Plans/storage-plan.md:37090",
+      "citation": "Plans/storage-plan.md:37092",
       "note": "Exact family read-through consumer adopts SP-278 generic index/checkpoint, no private projection; live snapshot fence and nine-field durable token explicitly separated."
     },
     "compatibility_withdrawal": {
       "status": "PASS",
-      "citation": "Plans/storage-plan.md:36979; scripts/pm-dg6b-event-contracts.py:143; scripts/pm-dg6b-event-contracts.py:262; scripts/pm-dg6b-event-contracts.py:491; scripts/pm_dg6b_original_custody.py:192",
+      "citation": "Plans/storage-plan.md:36981; scripts/pm-dg6b-event-contracts.py:143; scripts/pm-dg6b-event-contracts.py:262; scripts/pm-dg6b-event-contracts.py:491; scripts/pm_dg6b_original_custody.py:192",
       "note": "Exact at-write provenance, current reader/access and negative fences require JSON booleans; the retained original resolves through SP-1101 sealed custody and the shared RetainedDispatcher, whose frozen verifier recomputes identity and joins from the sealed bytes (HR01), before its at-write validation and the independent Storage bytes. Retained timestamps keep their owner profile."
     },
     "positive_negative_oracles": {

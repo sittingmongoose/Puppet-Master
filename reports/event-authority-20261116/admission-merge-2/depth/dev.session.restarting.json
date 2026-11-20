@@ -5,8 +5,8 @@
  "merge": "admission-merge-2",
  "registry": {
   "path": "Plans/event_family_registry.json",
-  "revision": "2026-11-19.61",
-  "sha256": "87dbdafc2448d797e3f847f0791f8c6d5b48b1d154955619e995b9ec4ebd30fb",
+  "revision": "2026-11-19.145",
+  "sha256": "e9eb5cc0d292efbc6c0b452928ece0a93fb0744be43066ed446128d5d2cd3e30",
   "family_count": 518,
   "row_pointer": "#/families/372"
  },
@@ -22,16 +22,16 @@
     "membership_version": {
      "status": "PASS",
      "representation": "exact_registry_membership",
-     "finding": "Currently registered at 2026-11-19.61 as #/families/372, canonical row SHA-256 6cc16e13ee1606ebd0e2808ad565848a01346a1d023733982cff7c7817c262f2. Original one-family append checkpoints remain preserved.",
+     "finding": "Currently registered at 2026-11-19.145 as #/families/372, canonical row SHA-256 6cc16e13ee1606ebd0e2808ad565848a01346a1d023733982cff7c7817c262f2. Original one-family append checkpoints remain authenticated by the immutable predecessor and correction chain.",
      "evidence": [
       {
        "path": "Plans/event_family_registry.json",
        "json_pointer": "#/families/372",
-       "line_start": 24869,
-       "line_end": 24916,
+       "line_start": 24882,
+       "line_end": 24929,
        "quote": "\"event_type\": \"dev.session.restarting\"",
-       "quote_line": 24872,
-       "file_sha256": "ec21cf1a5b42b3e68a5564a847b4798dff968612d11d438bc7075b89196f9602",
+       "quote_line": 24885,
+       "file_sha256": "e9eb5cc0d292efbc6c0b452928ece0a93fb0744be43066ed446128d5d2cd3e30",
        "quote_check": "exact",
        "source_citation": {
         "path": "Plans/event_family_registry.json",
@@ -44,7 +44,7 @@
         "quote_check": "exact"
        },
        "unit": "#/families/372",
-       "quote_scope": "unit #/families/372, Plans/event_family_registry.json:24869-24916"
+       "quote_scope": "unit #/families/372, Plans/event_family_registry.json:24882-24929"
       }
      ]
     },
@@ -90,7 +90,7 @@
        "line_start": 16892,
        "line_end": 16893,
        "quote": "Producer: Section15 managed developer-workflow service accepts cmd.dev.restart_session from running or stopped.\n  Commit workflow_state restarting and next workflow_revision for the",
-       "quote_check": "whitespace_normalized",
+       "quote_check": "exact",
        "quote_scope": "unit SMPFS-314, Plans/Section15_MVP_Promoted_Features_Spec.md:16875-17067",
        "file_sha256": "b45332b179ca0b17d8a32f21a5b908b7e704e8f7874c01e3981cdbc4e18f98a3",
        "source_citation": {
@@ -108,7 +108,7 @@
        "line_start": 16982,
        "line_end": 16983,
        "quote": "Round 7 authenticated history for dev.session.restarting: retained read, checkpoint and rebuild accept supported\n  1.0.0 originals written with projector_replay_only as well as dedup",
-       "quote_check": "whitespace_normalized",
+       "quote_check": "exact",
        "quote_scope": "unit SMPFS-314, Plans/Section15_MVP_Promoted_Features_Spec.md:16875-17067",
        "file_sha256": "b45332b179ca0b17d8a32f21a5b908b7e704e8f7874c01e3981cdbc4e18f98a3",
        "source_citation": {
@@ -188,7 +188,7 @@
        "line_start": 16901,
        "line_end": 16902,
        "quote": "Idempotency key is sha256(canonical MessagePack array [\"dev.session.restarting\",\n  \"1.0.0\", actual project_id, dev_session_id, workflow_revision]). Changed bytes at the same identity",
-       "quote_check": "whitespace_normalized",
+       "quote_check": "exact",
        "quote_scope": "unit SMPFS-314, Plans/Section15_MVP_Promoted_Features_Spec.md:16875-17067",
        "file_sha256": "b45332b179ca0b17d8a32f21a5b908b7e704e8f7874c01e3981cdbc4e18f98a3",
        "source_citation": {
@@ -219,7 +219,7 @@
        "line_start": 16918,
        "line_end": 16919,
        "quote": "Replay: lost acknowledgement returns original receipt, event_id and frozen payload; retry uses original outcome\n  custody without repeating capture, thread creation, launch, stop, re",
-       "quote_check": "whitespace_normalized",
+       "quote_check": "exact",
        "quote_scope": "unit SMPFS-314, Plans/Section15_MVP_Promoted_Features_Spec.md:16875-17067",
        "file_sha256": "b45332b179ca0b17d8a32f21a5b908b7e704e8f7874c01e3981cdbc4e18f98a3",
        "source_citation": {
@@ -237,7 +237,7 @@
        "line_start": 16982,
        "line_end": 16983,
        "quote": "Round 7 authenticated history for dev.session.restarting: retained read, checkpoint and rebuild accept supported\n  1.0.0 originals written with projector_replay_only as well as dedup",
-       "quote_check": "whitespace_normalized",
+       "quote_check": "exact",
        "quote_scope": "unit SMPFS-314, Plans/Section15_MVP_Promoted_Features_Spec.md:16875-17067",
        "file_sha256": "b45332b179ca0b17d8a32f21a5b908b7e704e8f7874c01e3981cdbc4e18f98a3",
        "source_citation": {
@@ -270,7 +270,7 @@
        "quote": "  Current selected assignment (2026-11-19): dev.session.restarting@1.0.0 is registered for project_only in Plans/event_family_registry.json,\n  as recorded by Plans/Decision_Log.md#DL-2290. Its event history selects RP-TELEMETRY-90D@1.0.0; Plans/storage-plan.md#SP-651\n  owns the event policy''s existing anchors, counts, holds and deletion rules. Separate stored-value assignment:\n  ds15_dev_session_restarting_checkpoint uses RP-PROJECTION-3GEN@1.0.0 under Plans/Decision_Log.md#DL-500; this\n  assigns that stored value, not event history. Separate stored-value assignment: dev_session_record uses RP-DEBUG-30D@1.0.0\n  under Plans/Decision_Log.md#DL-506; this assigns that stored value, not event history. Separate checkpoint assignment:\n  ds15_dev_session_restarting_checkpoint uses RP-PROJECTION-3GEN@1.0.0 under its existing Plans/storage-plan.md#SP-651\n  contract; checkpoint retention grants no event/source deletion. Original sources and coherent backups retain their\n  independent owner policies; the event lifetime is not transferred to them. Current append/publication still requires\n  the exact selected schema/scope, original custody, current permission, receipt and required producer adoption.\n  Actual missing registration or unresolved required custody refuses; native execution remains NOT_RUN. No native\n  adoption, new retention choice or governance seal follows.'",
        "quote_check": "exact",
        "quote_scope": "unit SP-651, Plans/storage-plan.md:50087-50187",
-       "file_sha256": "1fa333c4ef3aa54859eae354a38973490a4de4ca54b6c8f066b2770f528c3bbb",
+       "file_sha256": "eca9df98001183b2057086c6c7fc14b39c7bb406951f2ea0092062b81f770e6d",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-651",
@@ -325,7 +325,7 @@
        "line_start": 16935,
        "line_end": 16937,
        "quote": "backup/restore of the full original source/log/receipt\n  closure. Checkpoints are derived and grant no access. Every read rechecks current subject/thread/Project permissions\n  and sour",
-       "quote_check": "whitespace_normalized",
+       "quote_check": "exact",
        "quote_scope": "unit SMPFS-314, Plans/Section15_MVP_Promoted_Features_Spec.md:16875-17067",
        "file_sha256": "b45332b179ca0b17d8a32f21a5b908b7e704e8f7874c01e3981cdbc4e18f98a3",
        "source_citation": {
@@ -343,7 +343,7 @@
        "line_start": 16982,
        "line_end": 16983,
        "quote": "Round 7 authenticated history for dev.session.restarting: retained read, checkpoint and rebuild accept supported\n  1.0.0 originals written with projector_replay_only as well as dedup",
-       "quote_check": "whitespace_normalized",
+       "quote_check": "exact",
        "quote_scope": "unit SMPFS-314, Plans/Section15_MVP_Promoted_Features_Spec.md:16875-17067",
        "file_sha256": "b45332b179ca0b17d8a32f21a5b908b7e704e8f7874c01e3981cdbc4e18f98a3",
        "source_citation": {
@@ -374,7 +374,7 @@
        "line_start": 16892,
        "line_end": 16893,
        "quote": "Producer: Section15 managed developer-workflow service accepts cmd.dev.restart_session from running or stopped.\n  Commit workflow_state restarting and next workflow_revision for the",
-       "quote_check": "whitespace_normalized",
+       "quote_check": "exact",
        "quote_scope": "unit SMPFS-314, Plans/Section15_MVP_Promoted_Features_Spec.md:16875-17067",
        "file_sha256": "b45332b179ca0b17d8a32f21a5b908b7e704e8f7874c01e3981cdbc4e18f98a3",
        "source_citation": {
@@ -405,7 +405,7 @@
        "line_start": 16923,
        "line_end": 16924,
        "quote": "reader.ds15.dev_session_restarting.v1@1.0.0, operating as Developer workflow history reader, reads only\n  dev.session.restarting@1.0.0. It adopts SP-278 by name and DL-076 nine-field",
-       "quote_check": "whitespace_normalized",
+       "quote_check": "exact",
        "quote_scope": "unit SMPFS-314, Plans/Section15_MVP_Promoted_Features_Spec.md:16875-17067",
        "file_sha256": "b45332b179ca0b17d8a32f21a5b908b7e704e8f7874c01e3981cdbc4e18f98a3",
        "source_citation": {
@@ -423,7 +423,7 @@
        "line_start": 16982,
        "line_end": 16983,
        "quote": "Round 7 authenticated history for dev.session.restarting: retained read, checkpoint and rebuild accept supported\n  1.0.0 originals written with projector_replay_only as well as dedup",
-       "quote_check": "whitespace_normalized",
+       "quote_check": "exact",
        "quote_scope": "unit SMPFS-314, Plans/Section15_MVP_Promoted_Features_Spec.md:16875-17067",
        "file_sha256": "b45332b179ca0b17d8a32f21a5b908b7e704e8f7874c01e3981cdbc4e18f98a3",
        "source_citation": {
@@ -454,7 +454,7 @@
        "line_start": 16952,
        "line_end": 16953,
        "quote": "withdrawal: exact 1.0.0 event/reader only; refuse unknown fields/version before effects or checkpoint.\n  No alias or deployed event predecessor is assumed. Value migrations are expli",
-       "quote_check": "whitespace_normalized",
+       "quote_check": "exact",
        "quote_scope": "unit SMPFS-314, Plans/Section15_MVP_Promoted_Features_Spec.md:16875-17067",
        "file_sha256": "b45332b179ca0b17d8a32f21a5b908b7e704e8f7874c01e3981cdbc4e18f98a3",
        "source_citation": {
@@ -472,7 +472,7 @@
        "line_start": 16982,
        "line_end": 16983,
        "quote": "Round 7 authenticated history for dev.session.restarting: retained read, checkpoint and rebuild accept supported\n  1.0.0 originals written with projector_replay_only as well as dedup",
-       "quote_check": "whitespace_normalized",
+       "quote_check": "exact",
        "quote_scope": "unit SMPFS-314, Plans/Section15_MVP_Promoted_Features_Spec.md:16875-17067",
        "file_sha256": "b45332b179ca0b17d8a32f21a5b908b7e704e8f7874c01e3981cdbc4e18f98a3",
        "source_citation": {
@@ -503,7 +503,7 @@
        "line_start": 16960,
        "line_end": 16961,
        "quote": "Oracles: ATS-328 and exact family cases in Plans/ds15_event_contract_fixtures.json execute via scripts/pm-ds15-event-contracts.py:\n  valid/invalid transition, scope joins, original r",
-       "quote_check": "whitespace_normalized",
+       "quote_check": "exact",
        "quote_scope": "unit SMPFS-314, Plans/Section15_MVP_Promoted_Features_Spec.md:16875-17067",
        "file_sha256": "b45332b179ca0b17d8a32f21a5b908b7e704e8f7874c01e3981cdbc4e18f98a3",
        "source_citation": {
@@ -521,7 +521,7 @@
        "line_start": 16982,
        "line_end": 16983,
        "quote": "Round 7 authenticated history for dev.session.restarting: retained read, checkpoint and rebuild accept supported\n  1.0.0 originals written with projector_replay_only as well as dedup",
-       "quote_check": "whitespace_normalized",
+       "quote_check": "exact",
        "quote_scope": "unit SMPFS-314, Plans/Section15_MVP_Promoted_Features_Spec.md:16875-17067",
        "file_sha256": "b45332b179ca0b17d8a32f21a5b908b7e704e8f7874c01e3981cdbc4e18f98a3",
        "source_citation": {
@@ -552,9 +552,10 @@
   "row_pointer": "#/families/372"
  },
  "evidence_maintenance": {
-  "authority": "MERGE3-POSTFIX / post-landing Astra findings",
-  "source_commit": "2e45a25e9e4753e46cfe16d8be37d31043717acd",
-  "source_assessment_sha256": "3e107b4235f5d96910057df481fe0f613e54fe4d3ff0c67670cfad967425603e",
+  "authority": "MERGE3-POSTFIX final citation maintenance",
+  "source_commit": "92d16bc12e0fa5a198d8e3f30340eab43e380a83",
+  "source_assessment_sha256": "4204faba1dab9462ae9ff629c50fc68fc5f6729639b7e34000c720746873dcb4",
+  "verdicts_changed": false,
   "native_execution": "NOT_RUN"
  }
 }

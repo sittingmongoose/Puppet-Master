@@ -5,8 +5,8 @@
  "merge": "admission-merge-2",
  "registry": {
   "path": "Plans/event_family_registry.json",
-  "revision": "2026-11-18.2",
-  "sha256": "ec21cf1a5b42b3e68a5564a847b4798dff968612d11d438bc7075b89196f9602",
+  "revision": "2026-11-19.145",
+  "sha256": "e9eb5cc0d292efbc6c0b452928ece0a93fb0744be43066ed446128d5d2cd3e30",
   "family_count": 518,
   "row_pointer": "#/families/300"
  },
@@ -22,16 +22,16 @@
     "membership_version": {
      "status": "PASS",
      "representation": "exact_registry_membership",
-     "finding": "Currently registered at 2026-11-18.2 as #/families/300 (canonical row SHA-256 e42ebf0861a8369a0746b9dba2b44c3955e3bfbd0bd8138749546702843511ff). Original one-family admission checkpoints remain in the family record and immutable Git source.",
+     "finding": "Currently registered at 2026-11-19.145 as #/families/300, canonical row SHA-256 e42ebf0861a8369a0746b9dba2b44c3955e3bfbd0bd8138749546702843511ff. Original one-family append checkpoints remain authenticated by the immutable predecessor and correction chain.",
      "evidence": [
       {
        "path": "Plans/event_family_registry.json",
        "json_pointer": "#/families/300",
-       "line_start": 19939,
-       "line_end": 19980,
+       "line_start": 19941,
+       "line_end": 19982,
        "quote": "\"event_type\": \"bsd.output_quarantined\"",
-       "quote_line": 19942,
-       "file_sha256": "ec21cf1a5b42b3e68a5564a847b4798dff968612d11d438bc7075b89196f9602",
+       "quote_line": 19944,
+       "file_sha256": "e9eb5cc0d292efbc6c0b452928ece0a93fb0744be43066ed446128d5d2cd3e30",
        "quote_check": "exact",
        "source_citation": {
         "path": "Plans/event_family_registry.json",
@@ -44,7 +44,7 @@
         "quote_check": "exact"
        },
        "unit": "#/families/300",
-       "quote_scope": "unit #/families/300, Plans/event_family_registry.json:19939-19980"
+       "quote_scope": "unit #/families/300, Plans/event_family_registry.json:19941-19982"
       }
      ]
     },
@@ -105,12 +105,12 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-1359",
-       "line_start": 78057,
-       "line_end": 78057,
+       "line_start": 78063,
+       "line_end": 78063,
        "quote": "It adopts SP-286/CV-339 first receipt/full-value v2 and SP-336/SP-347 durability explicitly. Coherent mandatory backup restores the operation, complete original source, receipt controls and payload pa",
        "quote_check": "exact",
-       "quote_scope": "unit SP-1359, Plans/storage-plan.md:78048-78109",
-       "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+       "quote_scope": "unit SP-1359, Plans/storage-plan.md:78054-78115",
+       "file_sha256": "eca9df98001183b2057086c6c7fc14b39c7bb406951f2ea0092062b81f770e6d",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-1359",
@@ -190,12 +190,12 @@
       {
        "path": "Plans/Contracts_V0.md",
        "unit": "CV-1359",
-       "line_start": 56975,
-       "line_end": 56975,
+       "line_start": 56978,
+       "line_end": 56978,
        "quote": "This EventRecord 2.0.0 family keeps its closed payload inline (payload_ref null): only the EventRecord 3.0.0 successor materializes the SP-337 event-payload reference route and this family has not ado",
        "quote_check": "exact",
-       "quote_scope": "unit CV-1359, Plans/Contracts_V0.md:56965-57022",
-       "file_sha256": "58dee182ea2dd8dd358d27912280fa9113c3d1d8fd68b1c0c5d51b6f906d73c8",
+       "quote_scope": "unit CV-1359, Plans/Contracts_V0.md:56968-57025",
+       "file_sha256": "77879920f56eb692b9d2ddcf47c1c2421e0c426e2ccd911e183895f8195c45b3",
        "source_citation": {
         "path": "Plans/Contracts_V0.md",
         "unit": "CV-1359",
@@ -221,12 +221,12 @@
       {
        "path": "Plans/Contracts_V0.md",
        "unit": "CV-1359",
-       "line_start": 56974,
-       "line_end": 56974,
+       "line_start": 56977,
+       "line_end": 56977,
        "quote": "The canonical operation ID is bsd-op@1:<hex(original_source_id)>:<hex(transition_component)>:<hex(subject_id)>; every component is an exact string from the authentic original source, never a caller as",
        "quote_check": "exact",
-       "quote_scope": "unit CV-1359, Plans/Contracts_V0.md:56965-57022",
-       "file_sha256": "58dee182ea2dd8dd358d27912280fa9113c3d1d8fd68b1c0c5d51b6f906d73c8",
+       "quote_scope": "unit CV-1359, Plans/Contracts_V0.md:56968-57025",
+       "file_sha256": "77879920f56eb692b9d2ddcf47c1c2421e0c426e2ccd911e183895f8195c45b3",
        "source_citation": {
         "path": "Plans/Contracts_V0.md",
         "unit": "CV-1359",
@@ -239,12 +239,12 @@
       {
        "path": "Plans/Contracts_V0.md",
        "unit": "CV-1359",
-       "line_start": 56974,
-       "line_end": 56974,
+       "line_start": 56977,
+       "line_end": 56977,
        "quote": "This family adopts by name the shared CV-1100/SP-1100 number rules (current_integer, storage_uint64, producer_semantic_digest, qualified_jcs, storage_value_bytes and full_value_commitment), the CV-110",
        "quote_check": "exact",
-       "quote_scope": "unit CV-1359, Plans/Contracts_V0.md:56965-57022",
-       "file_sha256": "58dee182ea2dd8dd358d27912280fa9113c3d1d8fd68b1c0c5d51b6f906d73c8",
+       "quote_scope": "unit CV-1359, Plans/Contracts_V0.md:56968-57025",
+       "file_sha256": "77879920f56eb692b9d2ddcf47c1c2421e0c426e2ccd911e183895f8195c45b3",
        "source_citation": {
         "path": "Plans/Contracts_V0.md",
         "unit": "CV-1359",
@@ -373,12 +373,12 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-1359",
-       "line_start": 78058,
-       "line_end": 78058,
+       "line_start": 78064,
+       "line_end": 78064,
        "quote": "RP-RUNTIME-365D\", \"policy_version\": \"1.0.0\"}. A pending retention marker is never a valid production registry reference. Every complete encoded value must stay at or below 16 KiB; SP-337 externalizes ",
        "quote_check": "exact",
-       "quote_scope": "unit SP-1359, Plans/storage-plan.md:78048-78109",
-       "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+       "quote_scope": "unit SP-1359, Plans/storage-plan.md:78054-78115",
+       "file_sha256": "eca9df98001183b2057086c6c7fc14b39c7bb406951f2ea0092062b81f770e6d",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-1359",
@@ -556,12 +556,12 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-1359",
-       "line_start": 78059,
-       "line_end": 78059,
+       "line_start": 78065,
+       "line_end": 78065,
        "quote": "Inclusive restart rechecks the last exact event/frame/offset; replay produces no review, advice delivery, notification, Usage charge, canonical write or new event.",
        "quote_check": "exact",
-       "quote_scope": "unit SP-1359, Plans/storage-plan.md:78048-78109",
-       "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+       "quote_scope": "unit SP-1359, Plans/storage-plan.md:78054-78115",
+       "file_sha256": "eca9df98001183b2057086c6c7fc14b39c7bb406951f2ea0092062b81f770e6d",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-1359",
@@ -796,10 +796,10 @@
   "row_pointer": "#/families/300"
  },
  "evidence_maintenance": {
-  "authority": "MERGE2-FIX4 items 1/2/3",
-  "source_commit": "2bda6aeed03daea26c4d79dfb7568fc145aac29e",
-  "source_assessment_sha256": "505760daf8c59a93883463c2de3f43e1d92585f30d17217c62d46b32655fe599",
-  "native_execution": "NOT_RUN",
-  "verdicts_changed": false
+  "authority": "MERGE3-POSTFIX final citation maintenance",
+  "source_commit": "92d16bc12e0fa5a198d8e3f30340eab43e380a83",
+  "source_assessment_sha256": "d7c5d362c2c3dd4dda93b9744cfd0be25d593d34e5183e2f1adc35e97c605bd1",
+  "verdicts_changed": false,
+  "native_execution": "NOT_RUN"
  }
 }

@@ -5,8 +5,8 @@
  "merge": "admission-merge-2",
  "registry": {
   "path": "Plans/event_family_registry.json",
-  "revision": "2026-11-18.2",
-  "sha256": "ec21cf1a5b42b3e68a5564a847b4798dff968612d11d438bc7075b89196f9602",
+  "revision": "2026-11-19.145",
+  "sha256": "e9eb5cc0d292efbc6c0b452928ece0a93fb0744be43066ed446128d5d2cd3e30",
   "family_count": 518,
   "row_pointer": "#/families/265"
  },
@@ -22,16 +22,16 @@
     "membership_version": {
      "status": "PASS",
      "representation": "exact_registry_membership",
-     "finding": "Currently registered at 2026-11-18.2 as #/families/265 (canonical row SHA-256 7cd162982ec4b7172d9c19a3870adf1b85b4aacc993b123ad21a7e06f344b029). Original one-family admission checkpoints remain in the family record and immutable Git source.",
+     "finding": "Currently registered at 2026-11-19.145 as #/families/265, canonical row SHA-256 7cd162982ec4b7172d9c19a3870adf1b85b4aacc993b123ad21a7e06f344b029. Original one-family append checkpoints remain authenticated by the immutable predecessor and correction chain.",
      "evidence": [
       {
        "path": "Plans/event_family_registry.json",
        "json_pointer": "#/families/265",
-       "line_start": 18131,
-       "line_end": 18185,
+       "line_start": 18133,
+       "line_end": 18187,
        "quote": "\"event_type\": \"browser.program.timeout.effects_reconciled\"",
-       "quote_line": 18134,
-       "file_sha256": "ec21cf1a5b42b3e68a5564a847b4798dff968612d11d438bc7075b89196f9602",
+       "quote_line": 18136,
+       "file_sha256": "e9eb5cc0d292efbc6c0b452928ece0a93fb0744be43066ed446128d5d2cd3e30",
        "quote_check": "exact",
        "source_citation": {
         "path": "Plans/event_family_registry.json",
@@ -44,7 +44,7 @@
         "quote_check": "exact"
        },
        "unit": "#/families/265",
-       "quote_scope": "unit #/families/265, Plans/event_family_registry.json:18131-18185"
+       "quote_scope": "unit #/families/265, Plans/event_family_registry.json:18133-18187"
       }
      ]
     },
@@ -147,7 +147,7 @@
        "quote": "`storage.first_append_receipt.issue.v2` issues the eleven-field first receipt",
        "quote_check": "exact",
        "quote_scope": "unit SP-2533, Plans/storage-plan.md:22931-23004",
-       "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+       "file_sha256": "eca9df98001183b2057086c6c7fc14b39c7bb406951f2ea0092062b81f770e6d",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-2533",
@@ -197,7 +197,7 @@
        "quote": "`Plans/browser_event_payloads.schema.json#/$defs/program_timeout_effects_reconciled` (`pm.browser_event.program_timeout_effects_reconciled.schema.v1`) is its closed payload",
        "quote_check": "exact",
        "quote_scope": "unit CV-2533, Plans/Contracts_V0.md:29248-29314",
-       "file_sha256": "58dee182ea2dd8dd358d27912280fa9113c3d1d8fd68b1c0c5d51b6f906d73c8",
+       "file_sha256": "77879920f56eb692b9d2ddcf47c1c2421e0c426e2ccd911e183895f8195c45b3",
        "source_citation": {
         "path": "Plans/Contracts_V0.md",
         "unit": "CV-2533",
@@ -228,7 +228,7 @@
        "quote": "`scope_kind=project` only, with `scope_partition=project~base64url_no_pad(UTF8(project_id))`",
        "quote_check": "exact",
        "quote_scope": "unit CV-2533, Plans/Contracts_V0.md:29248-29314",
-       "file_sha256": "58dee182ea2dd8dd358d27912280fa9113c3d1d8fd68b1c0c5d51b6f906d73c8",
+       "file_sha256": "77879920f56eb692b9d2ddcf47c1c2421e0c426e2ccd911e183895f8195c45b3",
        "source_citation": {
         "path": "Plans/Contracts_V0.md",
         "unit": "CV-2533",
@@ -246,7 +246,7 @@
        "quote": "`event_id` is `evt_browser_` ",
        "quote_check": "exact",
        "quote_scope": "unit CV-2533, Plans/Contracts_V0.md:29248-29314",
-       "file_sha256": "58dee182ea2dd8dd358d27912280fa9113c3d1d8fd68b1c0c5d51b6f906d73c8",
+       "file_sha256": "77879920f56eb692b9d2ddcf47c1c2421e0c426e2ccd911e183895f8195c45b3",
        "source_citation": {
         "path": "Plans/Contracts_V0.md",
         "unit": "CV-2533",
@@ -277,7 +277,7 @@
        "quote": "Every current write selects `replay_policy=dedupe_by_idempotency_key`",
        "quote_check": "exact",
        "quote_scope": "unit CV-2533, Plans/Contracts_V0.md:29248-29314",
-       "file_sha256": "58dee182ea2dd8dd358d27912280fa9113c3d1d8fd68b1c0c5d51b6f906d73c8",
+       "file_sha256": "77879920f56eb692b9d2ddcf47c1c2421e0c426e2ccd911e183895f8195c45b3",
        "source_citation": {
         "path": "Plans/Contracts_V0.md",
         "unit": "CV-2533",
@@ -295,7 +295,7 @@
        "quote": "A lost-ack retry returns the original receipt from `storage.first_append_receipt.resolve.v2`",
        "quote_check": "exact",
        "quote_scope": "unit SP-2533, Plans/storage-plan.md:22931-23004",
-       "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+       "file_sha256": "eca9df98001183b2057086c6c7fc14b39c7bb406951f2ea0092062b81f770e6d",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-2533",
@@ -373,7 +373,7 @@
        "quote": "Current selected assignment (2026-11-19): browser.program.timeout.effects_reconciled@1.0.0 is registered for project_only in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2183. Its event history selects RP-RUNTIME-365D@1.0.0; exact original and checkpoint bindings retain their existing Storage assignments. Registry membership supplies no producer adoption or native-installation proof. Missing-registration refusal applies only if the exact current registration is absent.",
        "quote_check": "exact",
        "quote_scope": "unit SP-2533, Plans/storage-plan.md:22931-23004",
-       "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+       "file_sha256": "eca9df98001183b2057086c6c7fc14b39c7bb406951f2ea0092062b81f770e6d",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-2533",
@@ -426,7 +426,7 @@
        "quote": "Storage holds the original record, its custody v2 first receipt and its sealed SP-1101 write receipt under",
        "quote_check": "exact",
        "quote_scope": "unit SP-2533, Plans/storage-plan.md:22931-23004",
-       "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+       "file_sha256": "eca9df98001183b2057086c6c7fc14b39c7bb406951f2ea0092062b81f770e6d",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-2533",
@@ -506,7 +506,7 @@
        "quote": "Derived family `browser_program_timeout_effects_reconciled_index_checkpoint`",
        "quote_check": "exact",
        "quote_scope": "unit SP-2533, Plans/storage-plan.md:22931-23004",
-       "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+       "file_sha256": "eca9df98001183b2057086c6c7fc14b39c7bb406951f2ea0092062b81f770e6d",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-2533",
@@ -524,7 +524,7 @@
        "quote": "It explicitly adopts SP-278",
        "quote_check": "exact",
        "quote_scope": "unit SP-2533, Plans/storage-plan.md:22931-23004",
-       "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+       "file_sha256": "eca9df98001183b2057086c6c7fc14b39c7bb406951f2ea0092062b81f770e6d",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-2533",
@@ -542,7 +542,7 @@
        "quote": "It stores only the nine-field durable read token (DL-076), never `redb_snapshot_id`",
        "quote_check": "exact",
        "quote_scope": "unit SP-2533, Plans/storage-plan.md:22931-23004",
-       "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+       "file_sha256": "eca9df98001183b2057086c6c7fc14b39c7bb406951f2ea0092062b81f770e6d",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-2533",
@@ -591,7 +591,7 @@
        "quote": "A reviewed withdrawal first cuts off writers (checked before dedupe",
        "quote_check": "exact",
        "quote_scope": "unit SP-2533, Plans/storage-plan.md:22931-23004",
-       "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+       "file_sha256": "eca9df98001183b2057086c6c7fc14b39c7bb406951f2ea0092062b81f770e6d",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-2533",
@@ -609,7 +609,7 @@
        "quote": "A retained `browser.program.timeout.effects_reconciled` original is read under the recipe named by the one write",
        "quote_check": "exact",
        "quote_scope": "unit SP-2533, Plans/storage-plan.md:22931-23004",
-       "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+       "file_sha256": "eca9df98001183b2057086c6c7fc14b39c7bb406951f2ea0092062b81f770e6d",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-2533",
@@ -640,7 +640,7 @@
        "quote": "### ATS-2500 - Browser Program prepared families criterion-12 oracles (s4b)",
        "quote_check": "exact",
        "quote_scope": "unit ATS-2500, Plans/Automated_Testing_System.md:15708-15765",
-       "file_sha256": "a3028640b73729884c6b3d1a0f095289513e4f76e61af711c233858bf005dc7c",
+       "file_sha256": "9578cb2d7c8a6b000935bb1602650c67ada31d8cbbbad9e3baabee00ec961997",
        "source_citation": {
         "path": "Plans/Automated_Testing_System.md",
         "unit": "ATS-2500",
@@ -687,10 +687,10 @@
   "row_pointer": "#/families/265"
  },
  "evidence_maintenance": {
-  "authority": "MERGE2-FIX4 items 1/2/3",
-  "source_commit": "2bda6aeed03daea26c4d79dfb7568fc145aac29e",
-  "source_assessment_sha256": "d27b7dd3c2a9d1bc327d65014905af83e6c5b4d0ec61c20ea698aff45d08a321",
-  "native_execution": "NOT_RUN",
-  "verdicts_changed": false
+  "authority": "MERGE3-POSTFIX final citation maintenance",
+  "source_commit": "92d16bc12e0fa5a198d8e3f30340eab43e380a83",
+  "source_assessment_sha256": "accfc424ae125e23f0a021234f28d55ebaaf18baabfd14da8f0da49883148f22",
+  "verdicts_changed": false,
+  "native_execution": "NOT_RUN"
  }
 }

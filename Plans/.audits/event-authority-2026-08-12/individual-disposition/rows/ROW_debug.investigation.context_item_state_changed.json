@@ -3,7 +3,7 @@
   "bucket": "confirmed_persisted_unregistered",
   "july_classification": "confirmed_persisted_unregistered",
   "disposition": "KEEP_REGISTERED",
-  "disposition_rationale": "Plans/Decision_Log.md#DL-039: genuine J248-VETO-BATCH-252 CONFIRM_ALL_QUARANTINE_NO_ADMIT, recorded by Jared 2026-09-11T00:49:25.665050+00:00, applied 2026-09-11T15:12:51.572607+00:00 to debug.investigation.context_item_state_changed. Interim KEEP_QUARANTINED: counted in the working denominator, not live-registered. Supersedes the forged 2026-08-12 application claim; retained evidence supplies no new authority or depth closure. This exact row remains for the owner-batched registered/excluded/decision-card campaign. Registered at registry revision 2026-11-16.148 in admission merge 2 under DL-078, DL-096 and DL-400 (decision Plans/Decision_Log.md#DL-2284); DL-077 admission record reports/event-authority-20260911/admission-records/debug.investigation.context_item_state_changed.json. Disposition KEEP_QUARANTINED -> KEEP_REGISTERED, evidence cells membership_version, owner_doc, producer, closed_payload_schema, scope_identity, replay_idempotency, retention, redaction_custody, transitions, consumers_checkpoints, compatibility_withdrawal, positive_negative_oracles projected with twelve PASS cells from the family's admission depth assessment reports/event-authority-20261116/admission-merge-2/depth/debug.investigation.context_item_state_changed.json (sha256 e11809da4162fe3c18e707ed520f0bc0f95c9cc6b2dfc2ccb4d8912a8637e0c5); bucket, cohort pins, July classification and every other field are unchanged; no seal or owner choice. Evidence maintenance 2026-11-19 (MERGE2-FIX2): current assessment digest and locators are projected by the writer; original one-family append checkpoints remain in the DL-077 record and immutable Git history. No new admission or verdict change.",
+  "disposition_rationale": "Plans/Decision_Log.md#DL-039: genuine J248-VETO-BATCH-252 CONFIRM_ALL_QUARANTINE_NO_ADMIT, recorded by Jared 2026-09-11T00:49:25.665050+00:00, applied 2026-09-11T15:12:51.572607+00:00 to debug.investigation.context_item_state_changed. Interim KEEP_QUARANTINED: counted in the working denominator, not live-registered. Supersedes the forged 2026-08-12 application claim; retained evidence supplies no new authority or depth closure. This exact row remains for the owner-batched registered/excluded/decision-card campaign. Registered at registry revision 2026-11-16.148 in admission merge 2 under DL-078, DL-096 and DL-400 (decision Plans/Decision_Log.md#DL-2284); DL-077 admission record reports/event-authority-20260911/admission-records/debug.investigation.context_item_state_changed.json. Disposition KEEP_QUARANTINED -> KEEP_REGISTERED, evidence cells membership_version, owner_doc, producer, closed_payload_schema, scope_identity, replay_idempotency, retention, redaction_custody, transitions, consumers_checkpoints, compatibility_withdrawal, positive_negative_oracles projected with twelve PASS cells from the family's admission depth assessment reports/event-authority-20261116/admission-merge-2/depth/debug.investigation.context_item_state_changed.json (sha256 d219d32a52437d2364d27587657df5f0db5b9fd08d7b3d8989c327ba1be62bd8); bucket, cohort pins, July classification and every other field are unchanged; no seal or owner choice. Evidence maintenance 2026-11-19 (MERGE2-FIX2): current assessment digest and locators are projected by the writer; original one-family append checkpoints remain in the DL-077 record and immutable Git history. No new admission or verdict change.",
   "evidence": {
     "owner_doc": {
       "status": "PASS",
@@ -17,8 +17,8 @@
     },
     "membership_version": {
       "status": "PASS",
-      "citation": "Plans/event_family_registry.json:24634-24671",
-      "note": "Currently registered at 2026-11-18.2 as #/families/366 (canonical row SHA-256 8dc77992ec6fbfb3a4a8f5caecf96b2f9eaa4a1e532e34e53618ae1b0d7a0e61). Original one-family admission checkpoints remain in the family record and immutable Git source."
+      "citation": "Plans/event_family_registry.json:24647-24684",
+      "note": "Currently registered at 2026-11-19.145 as #/families/366, canonical row SHA-256 8dc77992ec6fbfb3a4a8f5caecf96b2f9eaa4a1e532e34e53618ae1b0d7a0e61. Original one-family append checkpoints remain authenticated by the immutable predecessor and correction chain."
     },
     "closed_payload_schema": {
       "status": "PASS",
@@ -37,7 +37,7 @@
     },
     "retention": {
       "status": "PASS",
-      "citation": "Plans/storage-plan.md:1379",
+      "citation": "Plans/storage-plan.md:1379-1388",
       "note": "Current exact-family BOUND retention assignment: {\"application_policy_ref\": \"RP-DEBUG-APPLICATION-2555D@1.0.0\", \"decisions\": [\"DL-401\", \"DL-416\", \"DL-506\", \"DL-508\"], \"event_type\": \"debug.investigation.context_item_state_changed\", \"existing_checkpoints\": [], \"grade_source\": \"reports/event-authority-20261104/DDBG.self-grade.json\", \"history_policy_ref\": \"RP-OPERATIONAL-2555D@1.0.0\", \"lane\": \"DDBG\", \"original_and_checkpoint_assignments\": [{\"decision\": \"DL-506\", \"family_id\": \"dev_session_record\", \"policy_ref\": \"RP-DEBUG-30D@1.0.0\"}, {\"decision\": \"DL-508\", \"family_id\": \"revision_run\", \"policy_ref\": \"RP-CHAT-THREAD-LIFETIME@1.0.0\"}], \"owner\": \"Plans/storage-plan.md#SP-570\", \"owner_line\": 1057, \"prior_finding\": \"Earlier lane-local PENDING_RETENTION_DECISION adoption is unchanged by this two-decision task. Current Storage G02 now assigns the policy; lane-local integration remains open.\", \"question\": null, \"status\": \"BOUND\"}"
     },
     "redaction_custody": {

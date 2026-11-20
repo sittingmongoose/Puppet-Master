@@ -5,8 +5,8 @@
  "merge": "admission-merge-2",
  "registry": {
   "path": "Plans/event_family_registry.json",
-  "revision": "2026-11-19.23",
-  "sha256": "2540a35477bb7c3fe3d6f12109ea0323c5c902adef5c63bf4119720e7da8e389",
+  "revision": "2026-11-19.145",
+  "sha256": "e9eb5cc0d292efbc6c0b452928ece0a93fb0744be43066ed446128d5d2cd3e30",
   "family_count": 518,
   "row_pointer": "#/families/318"
  },
@@ -22,16 +22,16 @@
     "membership_version": {
      "status": "PASS",
      "representation": "exact_registry_membership",
-     "finding": "Currently registered at 2026-11-19.23 as #/families/318, canonical row SHA-256 bf4d385c55c157c3b504c923a3ae9025ea91be5b83f5adc30d44a1c9f3ef7c05. Original one-family append checkpoints remain preserved.",
+     "finding": "Currently registered at 2026-11-19.145 as #/families/318, canonical row SHA-256 bf4d385c55c157c3b504c923a3ae9025ea91be5b83f5adc30d44a1c9f3ef7c05. Original one-family append checkpoints remain authenticated by the immutable predecessor and correction chain.",
      "evidence": [
       {
        "path": "Plans/event_family_registry.json",
        "json_pointer": "#/families/318",
-       "line_start": 20907,
-       "line_end": 20988,
+       "line_start": 20913,
+       "line_end": 20994,
        "quote": "\"event_type\": \"catalog.remove.started\"",
-       "quote_line": 20910,
-       "file_sha256": "ec21cf1a5b42b3e68a5564a847b4798dff968612d11d438bc7075b89196f9602",
+       "quote_line": 20916,
+       "file_sha256": "e9eb5cc0d292efbc6c0b452928ece0a93fb0744be43066ed446128d5d2cd3e30",
        "quote_check": "exact",
        "source_citation": {
         "path": "Plans/event_family_registry.json",
@@ -44,7 +44,7 @@
         "quote_check": "exact"
        },
        "unit": "#/families/318",
-       "quote_scope": "unit #/families/318, Plans/event_family_registry.json:20907-20988"
+       "quote_scope": "unit #/families/318, Plans/event_family_registry.json:20913-20994"
       }
      ]
     },
@@ -599,9 +599,10 @@
   "row_pointer": "#/families/318"
  },
  "evidence_maintenance": {
-  "authority": "MERGE3-POSTFIX / post-landing Astra findings",
-  "source_commit": "eaca43fab8b24eab0b7d0f843fdd9e8cefc5a4ee",
-  "source_assessment_sha256": "a54bd59b863bc66c74ec7b43d33b31b1439ded3ee1f105fed220c70c749a2855",
+  "authority": "MERGE3-POSTFIX final citation maintenance",
+  "source_commit": "92d16bc12e0fa5a198d8e3f30340eab43e380a83",
+  "source_assessment_sha256": "8a5b8264b3c07415edb7bd1d3e4ba470a21158f1768e8a3f9256f3dc6b795924",
+  "verdicts_changed": false,
   "native_execution": "NOT_RUN"
  }
 }

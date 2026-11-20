@@ -5,8 +5,8 @@
  "merge": "admission-merge-2",
  "registry": {
   "path": "Plans/event_family_registry.json",
-  "revision": "2026-11-19.85",
-  "sha256": "eb53ed285604b976eece78d091b81e913e7e97df368b7c1424bf721c14e4513d",
+  "revision": "2026-11-19.145",
+  "sha256": "e9eb5cc0d292efbc6c0b452928ece0a93fb0744be43066ed446128d5d2cd3e30",
   "family_count": 518,
   "row_pointer": "#/families/427"
  },
@@ -22,16 +22,16 @@
     "membership_version": {
      "status": "PASS",
      "representation": "exact_registry_membership",
-     "finding": "Currently registered at 2026-11-19.85 as #/families/427, canonical row SHA-256 98e927ee1728fbf5cb2cf4f0db9f149f1254571dc0c704fdb3f5f3749da076e3. Original one-family append checkpoints remain preserved.",
+     "finding": "Currently registered at 2026-11-19.145 as #/families/427, canonical row SHA-256 98e927ee1728fbf5cb2cf4f0db9f149f1254571dc0c704fdb3f5f3749da076e3. Original one-family append checkpoints remain authenticated by the immutable predecessor and correction chain.",
      "evidence": [
       {
        "path": "Plans/event_family_registry.json",
        "json_pointer": "#/families/427",
-       "line_start": 27734,
-       "line_end": 27815,
+       "line_start": 27834,
+       "line_end": 27915,
        "quote": "\"event_type\": \"persona.selected\"",
-       "quote_line": 27737,
-       "file_sha256": "ec21cf1a5b42b3e68a5564a847b4798dff968612d11d438bc7075b89196f9602",
+       "quote_line": 27837,
+       "file_sha256": "e9eb5cc0d292efbc6c0b452928ece0a93fb0744be43066ed446128d5d2cd3e30",
        "quote_check": "exact",
        "source_citation": {
         "path": "Plans/event_family_registry.json",
@@ -44,7 +44,7 @@
         "quote_check": "exact"
        },
        "unit": "#/families/427",
-       "quote_scope": "unit #/families/427, Plans/event_family_registry.json:27734-27815"
+       "quote_scope": "unit #/families/427, Plans/event_family_registry.json:27834-27915"
       }
      ]
     },
@@ -90,13 +90,13 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-672",
-       "line_start": 37658,
-       "line_end": 37658,
+       "line_start": 37660,
+       "line_end": 37660,
        "quote": "The sole producer `handlers::persona::select` authenticates the selected command input/result and actual home/reach/CAS/permission/Stop generations before effect and immediately before append. Separat",
        "excerpt_sha256": "da04ee3ab0c8f238b15dcf739d1eb03e9eaf7c5d175dce6f2acc2fde85e58983",
-       "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+       "file_sha256": "eca9df98001183b2057086c6c7fc14b39c7bb406951f2ea0092062b81f770e6d",
        "quote_check": "exact",
-       "quote_scope": "unit SP-672, Plans/storage-plan.md:37146-37700",
+       "quote_scope": "unit SP-672, Plans/storage-plan.md:37148-37702",
        "excerpt_digest_convention": "literal_quote",
        "source_citation": {
         "path": "Plans/storage-plan.md",
@@ -111,13 +111,13 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-672",
-       "line_start": 37667,
-       "line_end": 37667,
+       "line_start": 37669,
+       "line_end": 37669,
        "quote": "`persona.selected` explicitly adopts **SP-286**, **CV-339**, **SP-291** full-value v2 first-AppendReceipt custody and **SP-336** current sync/barrier rules. Source result/body/readback precedes observ",
        "excerpt_sha256": "a4a84d469239a1b35d582980e7eff45354552a5ca35344172b36bf27530fef4d",
-       "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+       "file_sha256": "eca9df98001183b2057086c6c7fc14b39c7bb406951f2ea0092062b81f770e6d",
        "quote_check": "exact",
-       "quote_scope": "unit SP-672, Plans/storage-plan.md:37146-37700",
+       "quote_scope": "unit SP-672, Plans/storage-plan.md:37148-37702",
        "excerpt_digest_convention": "literal_quote",
        "source_citation": {
         "path": "Plans/storage-plan.md",
@@ -132,13 +132,13 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-672",
-       "line_start": 37665,
-       "line_end": 37665,
+       "line_start": 37667,
+       "line_end": 37667,
        "quote": "For `persona.selected`, the newly authored physical operation binding measures the complete canonical MessagePack value, independently of EventRecord body size. The closed `persona_selected_operation`",
        "excerpt_sha256": "678bc352192a7dcb1fb9f07d633c13bb5f41774dfb2787ea5d0752d2a0fac674",
-       "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+       "file_sha256": "eca9df98001183b2057086c6c7fc14b39c7bb406951f2ea0092062b81f770e6d",
        "quote_check": "exact",
-       "quote_scope": "unit SP-672, Plans/storage-plan.md:37146-37700",
+       "quote_scope": "unit SP-672, Plans/storage-plan.md:37148-37702",
        "excerpt_digest_convention": "literal_quote",
        "source_citation": {
         "path": "Plans/storage-plan.md",
@@ -264,13 +264,13 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-672",
-       "line_start": 37568,
-       "line_end": 37568,
+       "line_start": 37570,
+       "line_end": 37570,
        "quote": "application@1:{hex(server_id)}:{hex(owner_operation_id)}",
        "excerpt_sha256": "f021b441a447da8dc6d75d05b73da15284e77fb8544fd86b7d77fb6639093933",
-       "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+       "file_sha256": "eca9df98001183b2057086c6c7fc14b39c7bb406951f2ea0092062b81f770e6d",
        "quote_check": "exact",
-       "quote_scope": "unit SP-672, Plans/storage-plan.md:37146-37700",
+       "quote_scope": "unit SP-672, Plans/storage-plan.md:37148-37702",
        "excerpt_digest_convention": "literal_quote",
        "source_citation": {
         "path": "Plans/storage-plan.md",
@@ -340,13 +340,13 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-672",
-       "line_start": 37662,
-       "line_end": 37662,
+       "line_start": 37664,
+       "line_end": 37664,
        "quote": "`persona.selected` selects current-writer `replay_policy=dedupe_by_idempotency_key`",
        "excerpt_sha256": "529b74c3991284a643afd53023cfe230d7dfdd8590961192a678d5817d0dd0f8",
-       "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+       "file_sha256": "eca9df98001183b2057086c6c7fc14b39c7bb406951f2ea0092062b81f770e6d",
        "quote_check": "exact",
-       "quote_scope": "unit SP-672, Plans/storage-plan.md:37146-37700",
+       "quote_scope": "unit SP-672, Plans/storage-plan.md:37148-37702",
        "excerpt_digest_convention": "literal_quote",
        "source_citation": {
         "path": "Plans/storage-plan.md",
@@ -515,13 +515,13 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-672",
-       "line_start": 37579,
-       "line_end": 37579,
+       "line_start": 37581,
+       "line_end": 37581,
        "quote": "Custody: the Persona owner keeps original whole definitions, removed-version/source evidence, selected Settings result, frozen runtime snapshot or export/import receipts under existing access and dele",
        "excerpt_sha256": "407f1f904bfa8854613d9f2d481d9f3a4783a61c484a28b01808589222bf6b7a",
-       "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+       "file_sha256": "eca9df98001183b2057086c6c7fc14b39c7bb406951f2ea0092062b81f770e6d",
        "quote_check": "exact",
-       "quote_scope": "unit SP-672, Plans/storage-plan.md:37146-37700",
+       "quote_scope": "unit SP-672, Plans/storage-plan.md:37148-37702",
        "excerpt_digest_convention": "literal_quote",
        "source_citation": {
         "path": "Plans/storage-plan.md",
@@ -612,13 +612,13 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-672",
-       "line_start": 37667,
-       "line_end": 37667,
+       "line_start": 37669,
+       "line_end": 37669,
        "quote": "`persona.selected` explicitly adopts **SP-286**, **CV-339**, **SP-291** full-value v2 first-AppendReceipt custody and **SP-336** current sync/barrier rules. Source result/body/readback precedes observ",
        "excerpt_sha256": "a4a84d469239a1b35d582980e7eff45354552a5ca35344172b36bf27530fef4d",
-       "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+       "file_sha256": "eca9df98001183b2057086c6c7fc14b39c7bb406951f2ea0092062b81f770e6d",
        "quote_check": "exact",
-       "quote_scope": "unit SP-672, Plans/storage-plan.md:37146-37700",
+       "quote_scope": "unit SP-672, Plans/storage-plan.md:37148-37702",
        "excerpt_digest_convention": "literal_quote",
        "source_citation": {
         "path": "Plans/storage-plan.md",
@@ -646,13 +646,13 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-672",
-       "line_start": 37669,
-       "line_end": 37669,
+       "line_start": 37671,
+       "line_end": 37671,
        "quote": "Consumer **`consumer.persona_selected.history@1.0.0`** serves the existing authenticated Persona command/audit history only. It explicitly adopts **SP-278** using `projector.storage.event_record_index",
        "excerpt_sha256": "19acc4e796e4008d3819201fa04d0f57c48e9157c447bea5517a4c88fe9e43cc",
-       "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+       "file_sha256": "eca9df98001183b2057086c6c7fc14b39c7bb406951f2ea0092062b81f770e6d",
        "quote_check": "exact",
-       "quote_scope": "unit SP-672, Plans/storage-plan.md:37146-37700",
+       "quote_scope": "unit SP-672, Plans/storage-plan.md:37148-37702",
        "excerpt_digest_convention": "literal_quote",
        "source_citation": {
         "path": "Plans/storage-plan.md",
@@ -680,13 +680,13 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-672",
-       "line_start": 37581,
-       "line_end": 37581,
+       "line_start": 37583,
+       "line_end": 37583,
        "quote": "Compatibility: current readers accept only this exact supported version and canonical Persona names. Older Project request/result definitions retain their exact historical schema; the explicitly selec",
        "excerpt_sha256": "0e0452804a7a5fbdb04a49d243d43d2492c568442b1656ed7e7fd3c8bc799a08",
-       "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+       "file_sha256": "eca9df98001183b2057086c6c7fc14b39c7bb406951f2ea0092062b81f770e6d",
        "quote_check": "exact",
-       "quote_scope": "unit SP-672, Plans/storage-plan.md:37146-37700",
+       "quote_scope": "unit SP-672, Plans/storage-plan.md:37148-37702",
        "excerpt_digest_convention": "literal_quote",
        "source_citation": {
         "path": "Plans/storage-plan.md",
@@ -802,7 +802,7 @@
        "line_end": 7453,
        "quote": "- `persona.selected`: valid library application and real Project payload/result joins; original-identity retry; exact home/reach/source/revision/readback custody. Negatives: raw body/extension,",
        "excerpt_sha256": "e4a6b39bf8b273bdbc7a537b1f0a0c866f642490e514014ec480ee81a5111e7d",
-       "file_sha256": "a3028640b73729884c6b3d1a0f095289513e4f76e61af711c233858bf005dc7c",
+       "file_sha256": "9578cb2d7c8a6b000935bb1602650c67ada31d8cbbbad9e3baabee00ec961997",
        "quote_check": "exact",
        "quote_scope": "unit ATS-336, Plans/Automated_Testing_System.md:7418-7457",
        "excerpt_digest_convention": "literal_quote",
@@ -856,9 +856,10 @@
   "row_pointer": "#/families/427"
  },
  "evidence_maintenance": {
-  "authority": "MERGE3-POSTFIX / post-landing Astra findings",
-  "source_commit": "d4f18f40f3a778bf9248b1315f93ce095641134f",
-  "source_assessment_sha256": "180b8694c17b6439288c623c06f274ecb6450f6fae8177dac1c6a4c7e1c6de91",
+  "authority": "MERGE3-POSTFIX final citation maintenance",
+  "source_commit": "92d16bc12e0fa5a198d8e3f30340eab43e380a83",
+  "source_assessment_sha256": "983ef4ef8bb4ba66635f3271e7b73550348f0c25e1ccc3aa8f8a6d5f67c9f7f3",
+  "verdicts_changed": false,
   "native_execution": "NOT_RUN"
  }
 }

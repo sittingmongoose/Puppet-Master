@@ -5,8 +5,8 @@
  "merge": "admission-merge-2",
  "registry": {
   "path": "Plans/event_family_registry.json",
-  "revision": "2026-11-19.138",
-  "sha256": "d315c0c68afbe54990be7f4514f46ad2a50cba085dbdf43bae6f62bd2455eb36",
+  "revision": "2026-11-19.145",
+  "sha256": "e9eb5cc0d292efbc6c0b452928ece0a93fb0744be43066ed446128d5d2cd3e30",
   "family_count": 518,
   "row_pointer": "#/families/508"
  },
@@ -22,16 +22,16 @@
     "membership_version": {
      "status": "PASS",
      "representation": "exact_registry_membership",
-     "finding": "Currently registered at 2026-11-19.138 as #/families/508, canonical row SHA-256 930dd1d98a271acb881ed8ef22d0bd3bfcd0dab9785de14c7cd7791c9f8bb17b. Original one-family append checkpoints remain preserved.",
+     "finding": "Currently registered at 2026-11-19.145 as #/families/508, canonical row SHA-256 930dd1d98a271acb881ed8ef22d0bd3bfcd0dab9785de14c7cd7791c9f8bb17b. Original one-family append checkpoints remain authenticated by the immutable predecessor and correction chain.",
      "evidence": [
       {
        "path": "Plans/event_family_registry.json",
        "json_pointer": "#/families/508",
-       "line_start": 33013,
-       "line_end": 33101,
+       "line_start": 33170,
+       "line_end": 33258,
        "quote": "\"event_type\": \"tool.execution_completed\"",
-       "quote_line": 33016,
-       "file_sha256": "ec21cf1a5b42b3e68a5564a847b4798dff968612d11d438bc7075b89196f9602",
+       "quote_line": 33173,
+       "file_sha256": "e9eb5cc0d292efbc6c0b452928ece0a93fb0744be43066ed446128d5d2cd3e30",
        "quote_check": "exact",
        "source_citation": {
         "path": "Plans/event_family_registry.json",
@@ -44,7 +44,7 @@
         "quote_check": "exact"
        },
        "unit": "#/families/508",
-       "quote_scope": "unit #/families/508, Plans/event_family_registry.json:33013-33101"
+       "quote_scope": "unit #/families/508, Plans/event_family_registry.json:33170-33258"
       }
      ]
     },
@@ -61,7 +61,7 @@
        "quote": "Newly authored owner contract under DL-045 for tool.execution_completed@1.0.0 only",
        "quote_check": "exact",
        "quote_scope": "unit CV-611, Plans/Contracts_V0.md:35682-35720",
-       "file_sha256": "58dee182ea2dd8dd358d27912280fa9113c3d1d8fd68b1c0c5d51b6f906d73c8",
+       "file_sha256": "77879920f56eb692b9d2ddcf47c1c2421e0c426e2ccd911e183895f8195c45b3",
        "source_citation": {
         "path": "Plans/Contracts_V0.md",
         "unit": "CV-611",
@@ -87,12 +87,12 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-591",
-       "line_start": 40227,
-       "line_end": 40227,
+       "line_start": 40229,
+       "line_end": 40229,
        "quote": "For tool.execution_completed alone, the newly authored original-source custody",
        "quote_check": "exact",
-       "quote_scope": "unit SP-591, Plans/storage-plan.md:40178-40381",
-       "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+       "quote_scope": "unit SP-591, Plans/storage-plan.md:40180-40383",
+       "file_sha256": "eca9df98001183b2057086c6c7fc14b39c7bb406951f2ea0092062b81f770e6d",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-591",
@@ -178,7 +178,7 @@
        "quote": "For tool.execution_completed alone, the shared CV-1100, SP-1100, SP-1101 and CV-1101 owner units apply",
        "quote_check": "exact",
        "quote_scope": "unit CV-611, Plans/Contracts_V0.md:35682-35720",
-       "file_sha256": "58dee182ea2dd8dd358d27912280fa9113c3d1d8fd68b1c0c5d51b6f906d73c8",
+       "file_sha256": "77879920f56eb692b9d2ddcf47c1c2421e0c426e2ccd911e183895f8195c45b3",
        "source_citation": {
         "path": "Plans/Contracts_V0.md",
         "unit": "CV-611",
@@ -204,12 +204,12 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-591",
-       "line_start": 40278,
-       "line_end": 40278,
+       "line_start": 40280,
+       "line_end": 40280,
        "quote": "For tool.execution_completed alone, source codec",
        "quote_check": "exact",
-       "quote_scope": "unit SP-591, Plans/storage-plan.md:40178-40381",
-       "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+       "quote_scope": "unit SP-591, Plans/storage-plan.md:40180-40383",
+       "file_sha256": "eca9df98001183b2057086c6c7fc14b39c7bb406951f2ea0092062b81f770e6d",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-591",
@@ -240,7 +240,7 @@
        "quote": "For tool.execution_completed alone, current writer and retry paths refuse",
        "quote_check": "exact",
        "quote_scope": "unit CV-611, Plans/Contracts_V0.md:35682-35720",
-       "file_sha256": "58dee182ea2dd8dd358d27912280fa9113c3d1d8fd68b1c0c5d51b6f906d73c8",
+       "file_sha256": "77879920f56eb692b9d2ddcf47c1c2421e0c426e2ccd911e183895f8195c45b3",
        "source_citation": {
         "path": "Plans/Contracts_V0.md",
         "unit": "CV-611",
@@ -294,7 +294,7 @@
        "quote": "For tool.execution_completed alone, the shared CV-1100, SP-1100, SP-1101 and CV-1101 owner units apply",
        "quote_check": "exact",
        "quote_scope": "unit CV-611, Plans/Contracts_V0.md:35682-35720",
-       "file_sha256": "58dee182ea2dd8dd358d27912280fa9113c3d1d8fd68b1c0c5d51b6f906d73c8",
+       "file_sha256": "77879920f56eb692b9d2ddcf47c1c2421e0c426e2ccd911e183895f8195c45b3",
        "source_citation": {
         "path": "Plans/Contracts_V0.md",
         "unit": "CV-611",
@@ -422,12 +422,12 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-591",
-       "line_start": 40250,
-       "line_end": 40252,
+       "line_start": 40252,
+       "line_end": 40254,
        "quote": "Source\n  stages, original owner outcomes, referenced bodies and full-value receipt custody form one mandatory coherent\n  backup closure.",
-       "quote_check": "whitespace_normalized",
-       "quote_scope": "unit SP-591, Plans/storage-plan.md:40178-40381",
-       "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+       "quote_check": "exact",
+       "quote_scope": "unit SP-591, Plans/storage-plan.md:40180-40383",
+       "file_sha256": "eca9df98001183b2057086c6c7fc14b39c7bb406951f2ea0092062b81f770e6d",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-591",
@@ -458,7 +458,7 @@
        "quote": "For tool.execution_completed alone, the explicit lifecycle transition is",
        "quote_check": "exact",
        "quote_scope": "unit CV-611, Plans/Contracts_V0.md:35682-35720",
-       "file_sha256": "58dee182ea2dd8dd358d27912280fa9113c3d1d8fd68b1c0c5d51b6f906d73c8",
+       "file_sha256": "77879920f56eb692b9d2ddcf47c1c2421e0c426e2ccd911e183895f8195c45b3",
        "source_citation": {
         "path": "Plans/Contracts_V0.md",
         "unit": "CV-611",
@@ -484,12 +484,12 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-591",
-       "line_start": 40260,
-       "line_end": 40260,
+       "line_start": 40262,
+       "line_end": 40262,
        "quote": "For tool.execution_completed alone, its SP-278/DL-076 checkpoint",
        "quote_check": "exact",
-       "quote_scope": "unit SP-591, Plans/storage-plan.md:40178-40381",
-       "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+       "quote_scope": "unit SP-591, Plans/storage-plan.md:40180-40383",
+       "file_sha256": "eca9df98001183b2057086c6c7fc14b39c7bb406951f2ea0092062b81f770e6d",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-591",
@@ -533,12 +533,12 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-591",
-       "line_start": 40218,
-       "line_end": 40218,
+       "line_start": 40220,
+       "line_end": 40220,
        "quote": "Withdrawal first cuts off this family''s append admission",
        "quote_check": "exact",
-       "quote_scope": "unit SP-591, Plans/storage-plan.md:40178-40381",
-       "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+       "quote_scope": "unit SP-591, Plans/storage-plan.md:40180-40383",
+       "file_sha256": "eca9df98001183b2057086c6c7fc14b39c7bb406951f2ea0092062b81f770e6d",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-591",
@@ -587,7 +587,7 @@
        "quote": "For tool.execution_completed alone, the shared CV-1100, SP-1100, SP-1101 and CV-1101 owner units apply",
        "quote_check": "exact",
        "quote_scope": "unit CV-611, Plans/Contracts_V0.md:35682-35720",
-       "file_sha256": "58dee182ea2dd8dd358d27912280fa9113c3d1d8fd68b1c0c5d51b6f906d73c8",
+       "file_sha256": "77879920f56eb692b9d2ddcf47c1c2421e0c426e2ccd911e183895f8195c45b3",
        "source_citation": {
         "path": "Plans/Contracts_V0.md",
         "unit": "CV-611",
@@ -618,7 +618,7 @@
        "unit": "ATS-295",
        "quote_check": "exact",
        "quote_scope": "unit ATS-295, Plans/Automated_Testing_System.md:9231-9269",
-       "file_sha256": "a3028640b73729884c6b3d1a0f095289513e4f76e61af711c233858bf005dc7c",
+       "file_sha256": "9578cb2d7c8a6b000935bb1602650c67ada31d8cbbbad9e3baabee00ec961997",
        "source_citation": {
         "line_end": 9236,
         "line_start": 9236,
@@ -648,14 +648,14 @@
        "json_pointer": "#/families/11"
       },
       {
-       "line_end": 40289,
-       "line_start": 40289,
+       "line_end": 40291,
+       "line_start": 40291,
        "path": "Plans/storage-plan.md",
        "quote": "For tool.execution_completed, boolean authority/context flags are exact booleans",
        "unit": "SP-591",
        "quote_check": "exact",
-       "quote_scope": "unit SP-591, Plans/storage-plan.md:40178-40381",
-       "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+       "quote_scope": "unit SP-591, Plans/storage-plan.md:40180-40383",
+       "file_sha256": "eca9df98001183b2057086c6c7fc14b39c7bb406951f2ea0092062b81f770e6d",
        "source_citation": {
         "line_end": 39039,
         "line_start": 39039,
@@ -792,9 +792,10 @@
   "row_pointer": "#/families/508"
  },
  "evidence_maintenance": {
-  "authority": "MERGE3-POSTFIX / post-landing Astra findings",
-  "source_commit": "5cef5947c4e532bed72d2da57d031d80f0c11c7a",
-  "source_assessment_sha256": "1aef4cff344d2a32d3da376138dd6bf180f251c5c6f694f919d95d5f062c4c6f",
+  "authority": "MERGE3-POSTFIX final citation maintenance",
+  "source_commit": "92d16bc12e0fa5a198d8e3f30340eab43e380a83",
+  "source_assessment_sha256": "9ab276f25d87cf59c0ce73727ee4bbc1bc726dadd4a07b277996391e2a82b6e8",
+  "verdicts_changed": false,
   "native_execution": "NOT_RUN"
  }
 }

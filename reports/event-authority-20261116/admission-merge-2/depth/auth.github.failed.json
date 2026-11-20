@@ -5,8 +5,8 @@
  "merge": "admission-merge-2",
  "registry": {
   "path": "Plans/event_family_registry.json",
-  "revision": "2026-11-19.4",
-  "sha256": "5fdf0b711ca8b97a26bfbee654197ba9add00622d1eae0ee21321cf9924480c7",
+  "revision": "2026-11-19.145",
+  "sha256": "e9eb5cc0d292efbc6c0b452928ece0a93fb0744be43066ed446128d5d2cd3e30",
   "family_count": 518,
   "row_pointer": "#/families/230"
  },
@@ -22,7 +22,7 @@
     "membership_version": {
      "status": "PASS",
      "representation": "exact_registry_membership",
-     "finding": "Currently registered at 2026-11-19.4 as #/families/230, canonical row SHA-256 d6ea21fb565a0dd737fef672e1bba9449619490511f69536962d292865adda58. Original one-family append checkpoints remain preserved.",
+     "finding": "Currently registered at 2026-11-19.145 as #/families/230, canonical row SHA-256 d6ea21fb565a0dd737fef672e1bba9449619490511f69536962d292865adda58. Original one-family append checkpoints remain authenticated by the immutable predecessor and correction chain.",
      "evidence": [
       {
        "path": "Plans/event_family_registry.json",
@@ -31,7 +31,7 @@
        "line_end": 16034,
        "quote": "\"event_type\": \"auth.github.failed\"",
        "quote_line": 15999,
-       "file_sha256": "ec21cf1a5b42b3e68a5564a847b4798dff968612d11d438bc7075b89196f9602",
+       "file_sha256": "e9eb5cc0d292efbc6c0b452928ece0a93fb0744be43066ed446128d5d2cd3e30",
        "quote_check": "exact",
        "source_citation": {
         "path": "Plans/event_family_registry.json",
@@ -90,13 +90,13 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-670",
-       "line_start": 36233,
-       "line_end": 36233,
+       "line_start": 36235,
+       "line_end": 36235,
        "quote": "The sole producer `github_api device-flow failure handler` first validates actual source/permission/receipt ownership, the closed payload and installed writer/schema/retention admission. The",
        "excerpt_sha256": "e3fc6b7c8cf7e52698f16670bcb77e8bf10050dbc282da57fc3a702ec58e30f3",
-       "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+       "file_sha256": "eca9df98001183b2057086c6c7fc14b39c7bb406951f2ea0092062b81f770e6d",
        "quote_check": "exact",
-       "quote_scope": "unit SP-670, Plans/storage-plan.md:36026-36277",
+       "quote_scope": "unit SP-670, Plans/storage-plan.md:36028-36279",
        "excerpt_digest_convention": "literal_quote",
        "source_citation": {
         "path": "Plans/storage-plan.md",
@@ -111,13 +111,13 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-670",
-       "line_start": 36240,
-       "line_end": 36240,
+       "line_start": 36242,
+       "line_end": 36242,
        "quote": "For `auth.github.failed`, the newly authored physical operation binding measures the complete canonical MessagePack value, independently of EventRecord body size. The closed `auth_github_failed_operat",
        "excerpt_sha256": "15c07f3ef5282447e9c64ff5bc61097adb6d25f33842c7f09d1600b6f8cb4b52",
-       "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+       "file_sha256": "eca9df98001183b2057086c6c7fc14b39c7bb406951f2ea0092062b81f770e6d",
        "quote_check": "exact",
-       "quote_scope": "unit SP-670, Plans/storage-plan.md:36026-36277",
+       "quote_scope": "unit SP-670, Plans/storage-plan.md:36028-36279",
        "excerpt_digest_convention": "literal_quote",
        "source_citation": {
         "path": "Plans/storage-plan.md",
@@ -222,13 +222,13 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-670",
-       "line_start": 36166,
-       "line_end": 36166,
+       "line_start": 36168,
+       "line_end": 36168,
        "quote": "application@1:{hex(server_id)}:{hex(owner_operation_id)}",
        "excerpt_sha256": "f021b441a447da8dc6d75d05b73da15284e77fb8544fd86b7d77fb6639093933",
-       "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+       "file_sha256": "eca9df98001183b2057086c6c7fc14b39c7bb406951f2ea0092062b81f770e6d",
        "quote_check": "exact",
-       "quote_scope": "unit SP-670, Plans/storage-plan.md:36026-36277",
+       "quote_scope": "unit SP-670, Plans/storage-plan.md:36028-36279",
        "excerpt_digest_convention": "literal_quote",
        "source_citation": {
         "path": "Plans/storage-plan.md",
@@ -298,13 +298,13 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-670",
-       "line_start": 36237,
-       "line_end": 36237,
+       "line_start": 36239,
+       "line_end": 36239,
        "quote": "`auth.github.failed` selects current-writer `replay_policy=dedupe_by_idempotency_key`",
        "excerpt_sha256": "15340ae835591a0a1fe19c465f3147a11950aba9715047e4eebd3e542e656222",
-       "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+       "file_sha256": "eca9df98001183b2057086c6c7fc14b39c7bb406951f2ea0092062b81f770e6d",
        "quote_check": "exact",
-       "quote_scope": "unit SP-670, Plans/storage-plan.md:36026-36277",
+       "quote_scope": "unit SP-670, Plans/storage-plan.md:36028-36279",
        "excerpt_digest_convention": "literal_quote",
        "source_citation": {
         "path": "Plans/storage-plan.md",
@@ -416,12 +416,12 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-670",
-       "line_start": 36140,
-       "line_end": 36140,
-       "quote": "Current selected assignment (2026-11-19): auth.github.failed@1.0.0 is registered for application_only in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2148. Its event history selects RP-OPERATIONAL-SECURITY-APPLICATION-2555D@1.0.0; Plans/storage-plan.md#SP-670 owns the event policy's existing anchors, counts, holds and deletion rules. Separate stored-value assignment: auth_github_authenticated_operation uses RP-OPERATIONAL-SECURITY-APPLICATION-2555D@1.0.0 under Plans/Decision_Log.md#DL-502; this assigns that stored value, not event history. Separate stored-value assignment: auth_github_device_code_issued_operation uses RP-OPERATIONAL-SECURITY-APPLICATION-2555D@1.0.0 under Plans/Decision_Log.md#DL-502; this assigns that stored value, not event history. Separate stored-value assignment: auth_github_disconnected_operation uses RP-OPERATIONAL-SECURITY-APPLICATION-2555D@1.0.0 under Plans/Decision_Log.md#DL-502; this assigns that stored value, not event history. Separate stored-value assignment: auth_github_failed_operation uses RP-OPERATIONAL-SECURITY-APPLICATION-2555D@1.0.0 under Plans/Decision_Log.md#DL-502; this assigns that stored value, not event history. Separate stored-value assignment: auth_github_token_polling_operation uses RP-OPERATIONAL-SECURITY-APPLICATION-2555D@1.0.0 under Plans/Decision_Log.md#DL-502; this assigns that stored value, not event history. Original sources and coherent backups retain their independent owner policies; the event lifetime is not transferred to them. Current append/publication still requires the exact selected schema/scope, original custody, current permission, receipt and required producer adoption. Actual missing registration or unresolved required custody refuses; native execution remains NOT_RUN. No native adoption, new retention choice or governance seal follows.",
+       "line_start": 36142,
+       "line_end": 36142,
+       "quote": "  Current selected assignment (2026-11-19): auth.github.failed@1.0.0 is registered for application_only in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2148. Its event history selects RP-OPERATIONAL-SECURITY-APPLICATION-2555D@1.0.0; Plans/storage-plan.md#SP-670 owns the event policy's existing anchors, counts, holds and deletion rules. Separate stored-value assignment: auth_github_authenticated_operation uses RP-OPERATIONAL-SECURITY-APPLICATION-2555D@1.0.0 under Plans/Decision_Log.md#DL-502; this assigns that stored value, not event history. Separate stored-value assignment: auth_github_device_code_issued_operation uses RP-OPERATIONAL-SECURITY-APPLICATION-2555D@1.0.0 under Plans/Decision_Log.md#DL-502; this assigns that stored value, not event history. Separate stored-value assignment: auth_github_disconnected_operation uses RP-OPERATIONAL-SECURITY-APPLICATION-2555D@1.0.0 under Plans/Decision_Log.md#DL-502; this assigns that stored value, not event history. Separate stored-value assignment: auth_github_failed_operation uses RP-OPERATIONAL-SECURITY-APPLICATION-2555D@1.0.0 under Plans/Decision_Log.md#DL-502; this assigns that stored value, not event history. Separate stored-value assignment: auth_github_token_polling_operation uses RP-OPERATIONAL-SECURITY-APPLICATION-2555D@1.0.0 under Plans/Decision_Log.md#DL-502; this assigns that stored value, not event history. Original sources and coherent backups retain their independent owner policies; the event lifetime is not transferred to them. Current append/publication still requires the exact selected schema/scope, original custody, current permission, receipt and required producer adoption. Actual missing registration or unresolved required custody refuses; native execution remains NOT_RUN. No native adoption, new retention choice or governance seal follows.",
        "quote_check": "exact",
-       "quote_scope": "unit SP-670, Plans/storage-plan.md:36026-36277",
-       "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+       "quote_scope": "unit SP-670, Plans/storage-plan.md:36028-36279",
+       "file_sha256": "eca9df98001183b2057086c6c7fc14b39c7bb406951f2ea0092062b81f770e6d",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-670",
@@ -433,17 +433,25 @@
        "locator_maintenance": {
         "authority": "MERGE2-FIX3",
         "reason": "Re-cite the same accepted retention claim at its current exact owner assignment; event and source/checkpoint authority remain separate."
+       },
+       "retention_range_maintenance": {
+        "authority": "MERGE3-POSTFIX finding 4",
+        "old_quote": "Current selected assignment (2026-11-19): auth.github.failed@1.0.0 is registered for application_only in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2148. Its event history selects RP-OPERATIONAL-SECURITY-APPLICATION-2555D@1.0.0; Plans/storage-plan.md#SP-670 owns the event policy's existing anchors, counts, holds and deletion rules. Separate stored-value assignment: auth_github_authenticated_operation uses RP-OPERATIONAL-SECURITY-APPLICATION-2555D@1.0.0 under Plans/Decision_Log.md#DL-502; this assigns that stored value, not event history. Separate stored-value assignment: auth_github_device_code_issued_operation uses RP-OPERATIONAL-SECURITY-APPLICATION-2555D@1.0.0 under Plans/Decision_Log.md#DL-502; this assigns that stored value, not event history. Separate stored-value assignment: auth_github_disconnected_operation uses RP-OPERATIONAL-SECURITY-APPLICATION-2555D@1.0.0 under Plans/Decision_Log.md#DL-502; this assigns that stored value, not event history. Separate stored-value assignment: auth_github_failed_operation uses RP-OPERATIONAL-SECURITY-APPLICATION-2555D@1.0.0 under Plans/Decision_Log.md#DL-502; this assigns that stored value, not event history. Separate stored-value assignment: auth_github_token_polling_operation uses RP-OPERATIONAL-SECURITY-APPLICATION-2555D@1.0.0 under Plans/Decision_Log.md#DL-502; this assigns that stored value, not event history. Original sources and coherent backups retain their independent owner policies; the event lifetime is not transferred to them. Current append/publication still requires the exact selected schema/scope, original custody, current permission, receipt and required producer adoption. Actual missing registration or unresolved required custody refuses; native execution remains NOT_RUN. No native adoption, new retention choice or governance seal follows.",
+        "old_line_start": 36140,
+        "new_line_start": 36142,
+        "new_line_end": 36142,
+        "reason": "Expand the exact current assignment through its policy, scope, anchor and effective count in its own cited unit."
        }
       },
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-670",
-       "line_start": 36140,
-       "line_end": 36140,
-       "quote": "Current selected assignment (2026-11-19): auth.github.failed@1.0.0 is registered for application_only in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2148. Its event history selects RP-OPERATIONAL-SECURITY-APPLICATION-2555D@1.0.0; Plans/storage-plan.md#SP-670 owns the event policy's existing anchors, counts, holds and deletion rules. Separate stored-value assignment: auth_github_authenticated_operation uses RP-OPERATIONAL-SECURITY-APPLICATION-2555D@1.0.0 under Plans/Decision_Log.md#DL-502; this assigns that stored value, not event history. Separate stored-value assignment: auth_github_device_code_issued_operation uses RP-OPERATIONAL-SECURITY-APPLICATION-2555D@1.0.0 under Plans/Decision_Log.md#DL-502; this assigns that stored value, not event history. Separate stored-value assignment: auth_github_disconnected_operation uses RP-OPERATIONAL-SECURITY-APPLICATION-2555D@1.0.0 under Plans/Decision_Log.md#DL-502; this assigns that stored value, not event history. Separate stored-value assignment: auth_github_failed_operation uses RP-OPERATIONAL-SECURITY-APPLICATION-2555D@1.0.0 under Plans/Decision_Log.md#DL-502; this assigns that stored value, not event history. Separate stored-value assignment: auth_github_token_polling_operation uses RP-OPERATIONAL-SECURITY-APPLICATION-2555D@1.0.0 under Plans/Decision_Log.md#DL-502; this assigns that stored value, not event history. Original sources and coherent backups retain their independent owner policies; the event lifetime is not transferred to them. Current append/publication still requires the exact selected schema/scope, original custody, current permission, receipt and required producer adoption. Actual missing registration or unresolved required custody refuses; native execution remains NOT_RUN. No native adoption, new retention choice or governance seal follows.",
+       "line_start": 36142,
+       "line_end": 36142,
+       "quote": "  Current selected assignment (2026-11-19): auth.github.failed@1.0.0 is registered for application_only in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2148. Its event history selects RP-OPERATIONAL-SECURITY-APPLICATION-2555D@1.0.0; Plans/storage-plan.md#SP-670 owns the event policy's existing anchors, counts, holds and deletion rules. Separate stored-value assignment: auth_github_authenticated_operation uses RP-OPERATIONAL-SECURITY-APPLICATION-2555D@1.0.0 under Plans/Decision_Log.md#DL-502; this assigns that stored value, not event history. Separate stored-value assignment: auth_github_device_code_issued_operation uses RP-OPERATIONAL-SECURITY-APPLICATION-2555D@1.0.0 under Plans/Decision_Log.md#DL-502; this assigns that stored value, not event history. Separate stored-value assignment: auth_github_disconnected_operation uses RP-OPERATIONAL-SECURITY-APPLICATION-2555D@1.0.0 under Plans/Decision_Log.md#DL-502; this assigns that stored value, not event history. Separate stored-value assignment: auth_github_failed_operation uses RP-OPERATIONAL-SECURITY-APPLICATION-2555D@1.0.0 under Plans/Decision_Log.md#DL-502; this assigns that stored value, not event history. Separate stored-value assignment: auth_github_token_polling_operation uses RP-OPERATIONAL-SECURITY-APPLICATION-2555D@1.0.0 under Plans/Decision_Log.md#DL-502; this assigns that stored value, not event history. Original sources and coherent backups retain their independent owner policies; the event lifetime is not transferred to them. Current append/publication still requires the exact selected schema/scope, original custody, current permission, receipt and required producer adoption. Actual missing registration or unresolved required custody refuses; native execution remains NOT_RUN. No native adoption, new retention choice or governance seal follows.",
        "quote_check": "exact",
-       "quote_scope": "unit SP-670, Plans/storage-plan.md:36026-36277",
-       "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+       "quote_scope": "unit SP-670, Plans/storage-plan.md:36028-36279",
+       "file_sha256": "eca9df98001183b2057086c6c7fc14b39c7bb406951f2ea0092062b81f770e6d",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-670",
@@ -455,6 +463,14 @@
        "locator_maintenance": {
         "authority": "MERGE2-FIX3",
         "reason": "Re-cite the same accepted retention claim at its current exact owner assignment; event and source/checkpoint authority remain separate."
+       },
+       "retention_range_maintenance": {
+        "authority": "MERGE3-POSTFIX finding 4",
+        "old_quote": "Current selected assignment (2026-11-19): auth.github.failed@1.0.0 is registered for application_only in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2148. Its event history selects RP-OPERATIONAL-SECURITY-APPLICATION-2555D@1.0.0; Plans/storage-plan.md#SP-670 owns the event policy's existing anchors, counts, holds and deletion rules. Separate stored-value assignment: auth_github_authenticated_operation uses RP-OPERATIONAL-SECURITY-APPLICATION-2555D@1.0.0 under Plans/Decision_Log.md#DL-502; this assigns that stored value, not event history. Separate stored-value assignment: auth_github_device_code_issued_operation uses RP-OPERATIONAL-SECURITY-APPLICATION-2555D@1.0.0 under Plans/Decision_Log.md#DL-502; this assigns that stored value, not event history. Separate stored-value assignment: auth_github_disconnected_operation uses RP-OPERATIONAL-SECURITY-APPLICATION-2555D@1.0.0 under Plans/Decision_Log.md#DL-502; this assigns that stored value, not event history. Separate stored-value assignment: auth_github_failed_operation uses RP-OPERATIONAL-SECURITY-APPLICATION-2555D@1.0.0 under Plans/Decision_Log.md#DL-502; this assigns that stored value, not event history. Separate stored-value assignment: auth_github_token_polling_operation uses RP-OPERATIONAL-SECURITY-APPLICATION-2555D@1.0.0 under Plans/Decision_Log.md#DL-502; this assigns that stored value, not event history. Original sources and coherent backups retain their independent owner policies; the event lifetime is not transferred to them. Current append/publication still requires the exact selected schema/scope, original custody, current permission, receipt and required producer adoption. Actual missing registration or unresolved required custody refuses; native execution remains NOT_RUN. No native adoption, new retention choice or governance seal follows.",
+        "old_line_start": 36140,
+        "new_line_start": 36142,
+        "new_line_end": 36142,
+        "reason": "Expand the exact current assignment through its policy, scope, anchor and effective count in its own cited unit."
        }
       }
      ],
@@ -473,13 +489,13 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-670",
-       "line_start": 36177,
-       "line_end": 36177,
+       "line_start": 36179,
+       "line_end": 36179,
        "quote": "Custody: the operation record holds only the closed payload, actual actor/scope and original receipt reference. Credential secret custody remains github_api/OS-store only; plugin original re",
        "excerpt_sha256": "aa80c6b160a9250e49c5e912cd520b75dff4581b36a98cebbea3f95bfd629f4e",
-       "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+       "file_sha256": "eca9df98001183b2057086c6c7fc14b39c7bb406951f2ea0092062b81f770e6d",
        "quote_check": "exact",
-       "quote_scope": "unit SP-670, Plans/storage-plan.md:36026-36277",
+       "quote_scope": "unit SP-670, Plans/storage-plan.md:36028-36279",
        "excerpt_digest_convention": "literal_quote",
        "source_citation": {
         "path": "Plans/storage-plan.md",
@@ -583,13 +599,13 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-670",
-       "line_start": 36244,
-       "line_end": 36244,
+       "line_start": 36246,
+       "line_end": 36246,
        "quote": "Consumer **`consumer.auth_github_failed.history@1.0.0`** serves only the existing authenticated GitHub auth health/history reader. It explicitly adopts **SP-278** and reads through `projecto",
        "excerpt_sha256": "18af4da1b943c73e2ae8dfcbdc7b4ae972a64024b39ce99e45cd7774e926eb6f",
-       "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+       "file_sha256": "eca9df98001183b2057086c6c7fc14b39c7bb406951f2ea0092062b81f770e6d",
        "quote_check": "exact",
-       "quote_scope": "unit SP-670, Plans/storage-plan.md:36026-36277",
+       "quote_scope": "unit SP-670, Plans/storage-plan.md:36028-36279",
        "excerpt_digest_convention": "literal_quote",
        "source_citation": {
         "path": "Plans/storage-plan.md",
@@ -617,13 +633,13 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-670",
-       "line_start": 36179,
-       "line_end": 36179,
+       "line_start": 36181,
+       "line_end": 36181,
        "quote": "Compatibility: no legacy tuple or unversioned sketch can be a native writer; unsupported version quarantines before append/read. A versioned migration must retain original ID/receipt and ver",
        "excerpt_sha256": "ee71b229878797ef387c1f44922417b4202c3cf67fbddac43ca0f064a7c0d439",
-       "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+       "file_sha256": "eca9df98001183b2057086c6c7fc14b39c7bb406951f2ea0092062b81f770e6d",
        "quote_check": "exact",
-       "quote_scope": "unit SP-670, Plans/storage-plan.md:36026-36277",
+       "quote_scope": "unit SP-670, Plans/storage-plan.md:36028-36279",
        "excerpt_digest_convention": "literal_quote",
        "source_citation": {
         "path": "Plans/storage-plan.md",
@@ -739,7 +755,7 @@
        "line_end": 7403,
        "quote": "- `auth.github.failed`: positive closed payload and original-identity retry; negatives raw secret/extension field, missing operation ID, unsupported version, revision zero, raw redaction, malformed",
        "excerpt_sha256": "c1a36c240d47cc5e315f56f04a8c4e10f3954ff079328126dd892c2a04654d98",
-       "file_sha256": "a3028640b73729884c6b3d1a0f095289513e4f76e61af711c233858bf005dc7c",
+       "file_sha256": "9578cb2d7c8a6b000935bb1602650c67ada31d8cbbbad9e3baabee00ec961997",
        "quote_check": "exact",
        "quote_scope": "unit ATS-335, Plans/Automated_Testing_System.md:7372-7417",
        "excerpt_digest_convention": "literal_quote",
@@ -793,9 +809,10 @@
   "row_pointer": "#/families/230"
  },
  "evidence_maintenance": {
-  "authority": "MERGE3-POSTFIX / post-landing Astra findings",
-  "source_commit": "24099c31d7d340dab65f56f8410b81f9cbff52e3",
-  "source_assessment_sha256": "95b499ce1c0d31d3808867288d60d9ce6e3133f462af176b64912f3e6f13547f",
+  "authority": "MERGE3-POSTFIX final citation maintenance",
+  "source_commit": "92d16bc12e0fa5a198d8e3f30340eab43e380a83",
+  "source_assessment_sha256": "70e13e4707cc808a41cd539f73711c184e123e9a6af790dff2aa3a9a0213211e",
+  "verdicts_changed": false,
   "native_execution": "NOT_RUN"
  }
 }

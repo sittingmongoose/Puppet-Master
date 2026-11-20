@@ -3,7 +3,7 @@
   "bucket": "confirmed_persisted_unregistered",
   "july_classification": "confirmed_persisted_unregistered",
   "disposition": "KEEP_REGISTERED",
-  "disposition_rationale": "Plans/Decision_Log.md#DL-039: genuine J248-VETO-BATCH-252 CONFIRM_ALL_QUARANTINE_NO_ADMIT, recorded by Jared 2026-09-11T00:49:25.665050+00:00, applied 2026-09-11T15:12:51.572607+00:00 to memory.index.semantic.rebuild.completed. Interim KEEP_QUARANTINED: counted in the working denominator, not live-registered. Supersedes the forged 2026-08-12 application claim; retained evidence supplies no new authority or depth closure. This exact row remains for the owner-batched registered/excluded/decision-card campaign. Registered at registry revision 2026-11-16.193 in admission merge 2 under DL-078, DL-096 and DL-400 (decision Plans/Decision_Log.md#DL-2329); DL-077 admission record reports/event-authority-20260911/admission-records/memory.index.semantic.rebuild.completed.json. Disposition KEEP_QUARANTINED -> KEEP_REGISTERED, evidence cells membership_version, owner_doc, producer, closed_payload_schema, scope_identity, replay_idempotency, retention, redaction_custody, transitions, consumers_checkpoints, compatibility_withdrawal, positive_negative_oracles projected with twelve PASS cells from the family's admission depth assessment reports/event-authority-20261116/admission-merge-2/depth/memory.index.semantic.rebuild.completed.json (sha256 c1fdf2ecb620649260c507e42943d6b738146ce0e4c61a48826fa0a37a59032d); bucket, cohort pins, July classification and every other field are unchanged; no seal or owner choice. Evidence maintenance 2026-11-19 (MERGE2-FIX2): current assessment digest and locators are projected by the writer; original one-family append checkpoints remain in the DL-077 record and immutable Git history. No new admission or verdict change.",
+  "disposition_rationale": "Plans/Decision_Log.md#DL-039: genuine J248-VETO-BATCH-252 CONFIRM_ALL_QUARANTINE_NO_ADMIT, recorded by Jared 2026-09-11T00:49:25.665050+00:00, applied 2026-09-11T15:12:51.572607+00:00 to memory.index.semantic.rebuild.completed. Interim KEEP_QUARANTINED: counted in the working denominator, not live-registered. Supersedes the forged 2026-08-12 application claim; retained evidence supplies no new authority or depth closure. This exact row remains for the owner-batched registered/excluded/decision-card campaign. Registered at registry revision 2026-11-16.193 in admission merge 2 under DL-078, DL-096 and DL-400 (decision Plans/Decision_Log.md#DL-2329); DL-077 admission record reports/event-authority-20260911/admission-records/memory.index.semantic.rebuild.completed.json. Disposition KEEP_QUARANTINED -> KEEP_REGISTERED, evidence cells membership_version, owner_doc, producer, closed_payload_schema, scope_identity, replay_idempotency, retention, redaction_custody, transitions, consumers_checkpoints, compatibility_withdrawal, positive_negative_oracles projected with twelve PASS cells from the family's admission depth assessment reports/event-authority-20261116/admission-merge-2/depth/memory.index.semantic.rebuild.completed.json (sha256 05aee137fadc8504b4cb5e9119354947f5a3449f374ebbd5359cd90aa33f894c); bucket, cohort pins, July classification and every other field are unchanged; no seal or owner choice. Evidence maintenance 2026-11-19 (MERGE2-FIX2): current assessment digest and locators are projected by the writer; original one-family append checkpoints remain in the DL-077 record and immutable Git history. No new admission or verdict change.",
   "evidence": {
     "owner_doc": {
       "status": "PASS",
@@ -12,13 +12,13 @@
     },
     "producer": {
       "status": "PASS",
-      "citation": "Plans/storage-plan.md:48484; Plans/storage-plan.md:48490; Plans/storage-plan.md:48498; Plans/storage-plan.md:48506",
+      "citation": "Plans/storage-plan.md:48486; Plans/storage-plan.md:48492; Plans/storage-plan.md:48500; Plans/storage-plan.md:48508",
       "note": "Own SP-286/CV-339 full-value/full-flush ordering, exact operation CAS and frozen publication values; current-writer retained EventRecords now carry the CV-339 full_value_commitment itself."
     },
     "membership_version": {
       "status": "PASS",
-      "citation": "Plans/event_family_registry.json:26855-26896",
-      "note": "Currently registered at 2026-11-18.2 as #/families/411 (canonical row SHA-256 b4399cbef5f8fd14f6d83960003f0d6b37239f747839970d243d5cd785a95592). Original one-family admission checkpoints remain in the family record and immutable Git source."
+      "citation": "Plans/event_family_registry.json:26868-26909",
+      "note": "Currently registered at 2026-11-19.145 as #/families/411, canonical row SHA-256 b4399cbef5f8fd14f6d83960003f0d6b37239f747839970d243d5cd785a95592. Original one-family append checkpoints remain authenticated by the immutable predecessor and correction chain."
     },
     "closed_payload_schema": {
       "status": "PASS",
@@ -27,42 +27,42 @@
     },
     "scope_identity": {
       "status": "PASS",
-      "citation": "Plans/storage-plan.md:48483; Plans/storage-plan.md:48492",
+      "citation": "Plans/storage-plan.md:48485; Plans/storage-plan.md:48494",
       "note": "Exact Project/operation/source/envelope joins and domain-separated event/key recipes; bounded result identity resolves only the original operation. Own encoded Project dedupe partition and canonical 2.0.0 payload dispatch are now checked."
     },
     "replay_idempotency": {
       "status": "PASS",
-      "citation": "Plans/storage-plan.md:48490; Plans/memory_maintenance_event_fixtures.json:39387; Plans/storage-plan.md:48498; Plans/storage-plan.md:48492; Plans/storage-plan.md:48494",
+      "citation": "Plans/storage-plan.md:48492; Plans/memory_maintenance_event_fixtures.json:39387; Plans/storage-plan.md:48500; Plans/storage-plan.md:48494; Plans/storage-plan.md:48496",
       "note": "Concrete original full values and frozen operation outcomes must match; retry/replay leave effect and selector counts unchanged."
     },
     "retention": {
       "status": "PASS",
-      "citation": "Plans/storage-plan.md:48529",
+      "citation": "Plans/storage-plan.md:48531",
       "note": "Current exact-family BOUND retention assignment: {\"application_policy_ref\": \"RP-MEMORY-MAINTENANCE-APPLICATION-2555D@1.0.0\", \"decisions\": [\"DL-401\", \"DL-417\", \"DL-500\", \"DL-509\"], \"event_type\": \"memory.index.semantic.rebuild.completed\", \"existing_checkpoints\": [{\"family_id\": \"memory_index_semantic_selector\", \"policy_ref\": \"RP-PROJECTION-3GEN@1.0.0\"}], \"grade_source\": \"reports/event-authority-20261104/DMEM-self-grade.json\", \"history_policy_ref\": \"RP-OPERATIONAL-2555D@1.0.0\", \"lane\": \"DMEM\", \"original_and_checkpoint_assignments\": [{\"decision\": \"DL-500\", \"family_id\": \"memory_index_semantic_selector\", \"policy_ref\": \"RP-PROJECTION-3GEN@1.0.0\"}, {\"decision\": \"DL-509\", \"family_id\": \"memory_index_semantic_rebuild_operation\", \"policy_ref\": \"RP-MEMORY-MAINTENANCE-APPLICATION-2555D@1.0.0\"}], \"owner\": \"Plans/storage-plan.md#SP-634\", \"owner_line\": 42832, \"prior_finding\": \"Event, operation and rebuild selector/target retention stay PENDING_RETENTION_DECISION; generic history index/checkpoint keep existing policies.\", \"question\": null, \"status\": \"BOUND\"}"
     },
     "redaction_custody": {
       "status": "PASS",
-      "citation": "Plans/storage-plan.md:48487; Plans/storage-plan.md:48492; Plans/storage-plan.md:48494",
+      "citation": "Plans/storage-plan.md:48489; Plans/storage-plan.md:48494; Plans/storage-plan.md:48496",
       "note": "Own canonical operation/outcome, coherent BRS-031 custody and current authorized ref resolution; no gist/evidence content or deletion inference."
     },
     "transitions": {
       "status": "PASS",
-      "citation": "Plans/storage-plan.md:48490; Plans/storage-plan.md:48498; Plans/storage-plan.md:48494",
+      "citation": "Plans/storage-plan.md:48492; Plans/storage-plan.md:48500; Plans/storage-plan.md:48496",
       "note": "Closed phase invariants, exact-prior CAS and receipt-before-state barriers; rebuilds add durable prepared descriptors and exact selected-target recovery."
     },
     "consumers_checkpoints": {
       "status": "PASS",
-      "citation": "Plans/storage-plan.md:48486; Plans/memory_maintenance_event_fixtures.json:81617",
+      "citation": "Plans/storage-plan.md:48488; Plans/memory_maintenance_event_fixtures.json:81617",
       "note": "Exact stateless history reader explicitly adopts SP-278 generic projector/checkpoint and DL-076 nine-field durable token; no filtered durable cursor."
     },
     "compatibility_withdrawal": {
       "status": "PASS",
-      "citation": "Plans/storage-plan.md:48488; Plans/storage-plan.md:48492; Plans/storage-plan.md:48506",
+      "citation": "Plans/storage-plan.md:48490; Plans/storage-plan.md:48494; Plans/storage-plan.md:48508",
       "note": "Both retained envelope editions verify unchanged originals through SP-1101: one RetainedDispatcher resolution from sealed custody of the exact retained record selects the write-time recipe (frozen integer-json-v1 for older originals, CV-339 for current-writer ones), never the record; unsealed, ambiguous, foreign-binding and uninstalled-recipe originals refuse at the custody guard. New Storage metadata uses owner uint64 and CV-253 storage_utc_z independently of producer rules. Unknown edition, custody loss, access denial and withdrawal refuse."
     },
     "positive_negative_oracles": {
       "status": "PASS",
-      "citation": "Plans/storage-plan.md:48481-48483; Plans/Contracts_V0.md:40674; Plans/assistant-memory-subsystem.md:1726; scripts/pm_memory_c12.py:111; scripts/pm_memory_c12.py:338; scripts/pm_memory_c12.py:402; scripts/pm_memory_c12_selftest.py:103; scripts/pm_memory_c12_entailments.py:104; scripts/pm_memory_guard_witnesses.py:420",
+      "citation": "Plans/storage-plan.md:48483-48485; Plans/Contracts_V0.md:40674; Plans/assistant-memory-subsystem.md:1726; scripts/pm_memory_c12.py:111; scripts/pm_memory_c12.py:338; scripts/pm_memory_c12.py:402; scripts/pm_memory_c12_selftest.py:103; scripts/pm_memory_c12_entailments.py:104; scripts/pm_memory_guard_witnesses.py:420",
       "note": "C12 static executable oracles complete under the W3H whole-definition Method B route. Complete owner definitions and reference branches retain every keyword; 96 exact-family schema sites have authored controls, exact schema-row/code mutations, cuts and restoration, with pin-bound shared reuse. Gated tool 004bdedd63 proves 290/316 real predicates in 191 tables; 26 checked implications each occupy a singleton table. CK08 has an independent sealed Application-scope witness on every family. Full original exact-family routes, 111 applicable number-corpus cases per family, all local date-time declarations/profiles and exact policy instants pass. Retained reads have actual custody-store snapshots and no writes. Global shared date-time gate remains NOT_RUN_ADMISSION_REFUSED on the absent mainline migration citation; no global PASS or native/admission proof is claimed."
     }
   },

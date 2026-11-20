@@ -5,8 +5,8 @@
  "merge": "admission-merge-2",
  "registry": {
   "path": "Plans/event_family_registry.json",
-  "revision": "2026-11-19.9",
-  "sha256": "21275b6079787147cf8907652912b4983113c77884a85f44142bdb65919507e7",
+  "revision": "2026-11-19.145",
+  "sha256": "e9eb5cc0d292efbc6c0b452928ece0a93fb0744be43066ed446128d5d2cd3e30",
   "family_count": 518,
   "row_pointer": "#/families/238"
  },
@@ -22,16 +22,16 @@
     "membership_version": {
      "status": "PASS",
      "representation": "exact_registry_membership",
-     "finding": "Currently registered at 2026-11-19.9 as #/families/238, canonical row SHA-256 620d220923c921849b3e600c1daf579a65af643d8e929600b99cbad35f1b9820. Original one-family append checkpoints remain preserved.",
+     "finding": "Currently registered at 2026-11-19.145 as #/families/238, canonical row SHA-256 620d220923c921849b3e600c1daf579a65af643d8e929600b99cbad35f1b9820. Original one-family append checkpoints remain authenticated by the immutable predecessor and correction chain.",
      "evidence": [
       {
        "path": "Plans/event_family_registry.json",
        "json_pointer": "#/families/238",
-       "line_start": 16588,
-       "line_end": 16671,
+       "line_start": 16590,
+       "line_end": 16673,
        "quote": "\"event_type\": \"browser.context_share_revoked\"",
-       "quote_line": 16591,
-       "file_sha256": "ec21cf1a5b42b3e68a5564a847b4798dff968612d11d438bc7075b89196f9602",
+       "quote_line": 16593,
+       "file_sha256": "e9eb5cc0d292efbc6c0b452928ece0a93fb0744be43066ed446128d5d2cd3e30",
        "quote_check": "exact",
        "source_citation": {
         "path": "Plans/event_family_registry.json",
@@ -44,7 +44,7 @@
         "quote_check": "exact"
        },
        "unit": "#/families/238",
-       "quote_scope": "unit #/families/238, Plans/event_family_registry.json:16588-16671"
+       "quote_scope": "unit #/families/238, Plans/event_family_registry.json:16590-16673"
       }
      ]
     },
@@ -242,7 +242,7 @@
         "line_end": 18295,
         "quote": "Current selected assignment (2026-11-19): browser.context_share_revoked@1.0.0 is registered for application_or_project",
         "quote_check": "exact",
-        "quote_scope": "unit SMPFS-321, Plans/Section15_MVP_Promoted_Features_Spec.md:18131-18339",
+        "quote_scope": "unit SMPFS-321, Plans/Section15_MVP_Promoted_Features_Spec.md@10ba97e699d51287673d6f1db4d994f54c59b4ed:18131-18339",
         "file_sha256": "b45332b179ca0b17d8a32f21a5b908b7e704e8f7874c01e3981cdbc4e18f98a3",
         "source_citation": {
          "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
@@ -255,7 +255,10 @@
         "locator_maintenance": {
          "authority": "MERGE2-FIX4",
          "reason": "Re-cite the same accepted retention claim at its current exact owner assignment; event and source/checkpoint authority remain separate."
-        }
+        },
+        "commit": "10ba97e699d51287673d6f1db4d994f54c59b4ed",
+        "sha256": "b45332b179ca0b17d8a32f21a5b908b7e704e8f7874c01e3981cdbc4e18f98a3",
+        "line": 18295
        },
        "retention_range_maintenance": {
         "authority": "MERGE3-POSTFIX / post-landing Astra findings",
@@ -613,9 +616,10 @@
   "row_pointer": "#/families/238"
  },
  "evidence_maintenance": {
-  "authority": "MERGE3-POSTFIX / post-landing Astra findings",
-  "source_commit": "4ebb138daffd1e4fe389eb42d35bb4303c1e33d1",
-  "source_assessment_sha256": "7493f75c8ba9ed33617b94932d06e545a12984c0b96fa67fca38a6368527a874",
+  "authority": "MERGE3-POSTFIX final citation maintenance",
+  "source_commit": "92d16bc12e0fa5a198d8e3f30340eab43e380a83",
+  "source_assessment_sha256": "30015562f0884006c46d5f58a083a991829d943427f1478668e865113b712df7",
+  "verdicts_changed": false,
   "native_execution": "NOT_RUN"
  }
 }

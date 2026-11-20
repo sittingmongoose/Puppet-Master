@@ -5,8 +5,8 @@
  "merge": "admission-merge-2",
  "registry": {
   "path": "Plans/event_family_registry.json",
-  "revision": "2026-11-19.77",
-  "sha256": "b115975a43d4b41510c4267443f99af47deb18be58e50ef992822be08cec13cb",
+  "revision": "2026-11-19.145",
+  "sha256": "e9eb5cc0d292efbc6c0b452928ece0a93fb0744be43066ed446128d5d2cd3e30",
   "family_count": 518,
   "row_pointer": "#/families/419"
  },
@@ -22,16 +22,16 @@
     "membership_version": {
      "status": "PASS",
      "representation": "exact_registry_membership",
-     "finding": "Currently registered at 2026-11-19.77 as #/families/419, canonical row SHA-256 84bbfad129f762ac02993231fe8ea86b11996ab4ee5371bd04f1c8ad0a7788a6. Original one-family append checkpoints remain preserved.",
+     "finding": "Currently registered at 2026-11-19.145 as #/families/419, canonical row SHA-256 84bbfad129f762ac02993231fe8ea86b11996ab4ee5371bd04f1c8ad0a7788a6. Original one-family append checkpoints remain authenticated by the immutable predecessor and correction chain.",
      "evidence": [
       {
        "path": "Plans/event_family_registry.json",
        "json_pointer": "#/families/419",
-       "line_start": 27195,
-       "line_end": 27277,
+       "line_start": 27208,
+       "line_end": 27290,
        "quote": "\"event_type\": \"model.catalog_refreshed\"",
-       "quote_line": 27198,
-       "file_sha256": "ec21cf1a5b42b3e68a5564a847b4798dff968612d11d438bc7075b89196f9602",
+       "quote_line": 27211,
+       "file_sha256": "e9eb5cc0d292efbc6c0b452928ece0a93fb0744be43066ed446128d5d2cd3e30",
        "quote_check": "exact",
        "source_citation": {
         "path": "Plans/event_family_registry.json",
@@ -44,7 +44,7 @@
         "quote_check": "exact"
        },
        "unit": "#/families/419",
-       "quote_scope": "unit #/families/419, Plans/event_family_registry.json:27195-27277"
+       "quote_scope": "unit #/families/419, Plans/event_family_registry.json:27208-27290"
       }
      ]
     },
@@ -91,7 +91,7 @@
        "line_end": 10051,
        "quote": "Adopt SP-286 first-AppendReceipt custody and CV-339 full-value v2 successor by name, including SP-336/SP-347 current\n  group-commit rules. Validate admission before append; absent membership, unresolved",
        "file_sha256": "99790d28be8c08ef2ec3e967c4ccdd37229d8184ca708b86330c73bd6071f5b1",
-       "quote_check": "whitespace_normalized",
+       "quote_check": "exact",
        "quote_scope": "unit MS-199, Plans/Models_System.md:10024-10223",
        "source_citation": {
         "path": "Plans/Models_System.md",
@@ -140,7 +140,7 @@
        "line_end": 10071,
        "quote": "Exact envelope joins for model.catalog_refreshed: actor_ref is the non-empty non-secret actor reference retained\n  by the original Models manual or automatic catalog refresh: the accepted cmd.model.refr",
        "file_sha256": "99790d28be8c08ef2ec3e967c4ccdd37229d8184ca708b86330c73bd6071f5b1",
-       "quote_check": "whitespace_normalized",
+       "quote_check": "exact",
        "quote_scope": "unit MS-199, Plans/Models_System.md:10024-10223",
        "source_citation": {
         "path": "Plans/Models_System.md",
@@ -171,7 +171,7 @@
        "line_end": 10071,
        "quote": "Exact envelope joins for model.catalog_refreshed: actor_ref is the non-empty non-secret actor reference retained\n  by the original Models manual or automatic catalog refresh: the accepted cmd.model.refr",
        "file_sha256": "99790d28be8c08ef2ec3e967c4ccdd37229d8184ca708b86330c73bd6071f5b1",
-       "quote_check": "whitespace_normalized",
+       "quote_check": "exact",
        "quote_scope": "unit MS-199, Plans/Models_System.md:10024-10223",
        "source_citation": {
         "path": "Plans/Models_System.md",
@@ -189,7 +189,7 @@
        "line_end": 10058,
        "quote": "Identity digest is SHA-256 of UTF-8 compact JSON array [\"model.catalog_refreshed\", \"1.0.0\", storage_instance_id,\n  payload.project_id, payload.operation_id], with ensure_ascii=false, no whitespace and a",
        "file_sha256": "99790d28be8c08ef2ec3e967c4ccdd37229d8184ca708b86330c73bd6071f5b1",
-       "quote_check": "whitespace_normalized",
+       "quote_check": "exact",
        "quote_scope": "unit MS-199, Plans/Models_System.md:10024-10223",
        "source_citation": {
         "path": "Plans/Models_System.md",
@@ -207,7 +207,7 @@
        "line_end": 10060,
        "quote": "application idempotency_key=application@1:{hex(server_id)}:{hex(owner_operation_id)}\n  exactly under CV-366.",
        "file_sha256": "99790d28be8c08ef2ec3e967c4ccdd37229d8184ca708b86330c73bd6071f5b1",
-       "quote_check": "whitespace_normalized",
+       "quote_check": "exact",
        "quote_scope": "unit MS-199, Plans/Models_System.md:10024-10223",
        "source_citation": {
         "path": "Plans/Models_System.md",
@@ -238,7 +238,7 @@
        "line_end": 10058,
        "quote": "Identity digest is SHA-256 of UTF-8 compact JSON array [\"model.catalog_refreshed\", \"1.0.0\", storage_instance_id,\n  payload.project_id, payload.operation_id], with ensure_ascii=false, no whitespace and a",
        "file_sha256": "99790d28be8c08ef2ec3e967c4ccdd37229d8184ca708b86330c73bd6071f5b1",
-       "quote_check": "whitespace_normalized",
+       "quote_check": "exact",
        "quote_scope": "unit MS-199, Plans/Models_System.md:10024-10223",
        "source_citation": {
         "path": "Plans/Models_System.md",
@@ -288,7 +288,7 @@
        "quote": "  Current selected assignment (2026-11-19): model.catalog_refreshed@1.0.0 is registered for application_or_project\n  in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2337. Its event history selects Application\n  = RP-MODEL-CATALOG-APPLICATION-90D@1.0.0 (anchor_kind=creation, cardinality_scope=instance), Project = RP-TELEMETRY-90D@1.0.0\n  (anchor_kind=creation, cardinality_scope=project); Plans/storage-plan.md#SP-602 owns the event policy''s existing\n  anchors, counts, holds and deletion rules. Original sources and coherent backups retain their independent owner\n  policies; the event lifetime is not transferred to them. Current append/publication still requires the exact selected\n  schema/scope, original custody, current permission, receipt and required producer adoption. Actual missing registration\n  or unresolved required custody refuses; native execution remains NOT_RUN. No native adoption, new retention choice\n  or governance seal follows.'",
        "quote_check": "exact",
        "quote_scope": "unit SP-602, Plans/storage-plan.md:53333-53578",
-       "file_sha256": "1fa333c4ef3aa54859eae354a38973490a4de4ca54b6c8f066b2770f528c3bbb",
+       "file_sha256": "eca9df98001183b2057086c6c7fc14b39c7bb406951f2ea0092062b81f770e6d",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-602",
@@ -332,7 +332,7 @@
        "quote": "  Current selected assignment (2026-11-19): model.catalog_refreshed@1.0.0 is registered for application_or_project\n  in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2337. Its event history selects Application\n  = RP-MODEL-CATALOG-APPLICATION-90D@1.0.0 (anchor_kind=creation, cardinality_scope=instance), Project = RP-TELEMETRY-90D@1.0.0\n  (anchor_kind=creation, cardinality_scope=project); Plans/storage-plan.md#SP-602 owns the event policy''s existing\n  anchors, counts, holds and deletion rules. Original sources and coherent backups retain their independent owner\n  policies; the event lifetime is not transferred to them. Current append/publication still requires the exact selected\n  schema/scope, original custody, current permission, receipt and required producer adoption. Actual missing registration\n  or unresolved required custody refuses; native execution remains NOT_RUN. No native adoption, new retention choice\n  or governance seal follows.'",
        "quote_check": "exact",
        "quote_scope": "unit SP-602, Plans/storage-plan.md:53333-53578",
-       "file_sha256": "1fa333c4ef3aa54859eae354a38973490a4de4ca54b6c8f066b2770f528c3bbb",
+       "file_sha256": "eca9df98001183b2057086c6c7fc14b39c7bb406951f2ea0092062b81f770e6d",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-602",
@@ -388,7 +388,7 @@
        "line_end": 10106,
        "quote": "Profile rationale for model.catalog_refreshed: provider status bodies and sensitive provider/account details remain\n  behind authorized refs; account_id is an opaque Models identifier, never credentials",
        "file_sha256": "99790d28be8c08ef2ec3e967c4ccdd37229d8184ca708b86330c73bd6071f5b1",
-       "quote_check": "whitespace_normalized",
+       "quote_check": "exact",
        "quote_scope": "unit MS-199, Plans/Models_System.md:10024-10223",
        "source_citation": {
         "path": "Plans/Models_System.md",
@@ -450,7 +450,7 @@
        "line_end": 10040,
        "quote": "Producer: shared model capability resolver refresh completion adapter. Capture completion of cmd.model.refresh,\n  or the already specified automatic refresh, after the resolver publishes its exact catal",
        "file_sha256": "99790d28be8c08ef2ec3e967c4ccdd37229d8184ca708b86330c73bd6071f5b1",
-       "quote_check": "whitespace_normalized",
+       "quote_check": "exact",
        "quote_scope": "unit MS-199, Plans/Models_System.md:10024-10223",
        "source_citation": {
         "path": "Plans/Models_System.md",
@@ -481,7 +481,7 @@
        "line_end": 10094,
        "quote": "Operating consumer reader.models.catalog_refresh@1.0.0 uses reader.storage.event_record_index@1.0.0 and projector.storage.event_record_index@1.0.0,\n  explicitly adopting SP-278. It reads this exact even",
        "file_sha256": "99790d28be8c08ef2ec3e967c4ccdd37229d8184ca708b86330c73bd6071f5b1",
-       "quote_check": "whitespace_normalized",
+       "quote_check": "exact",
        "quote_scope": "unit MS-199, Plans/Models_System.md:10024-10223",
        "source_citation": {
         "path": "Plans/Models_System.md",
@@ -499,7 +499,7 @@
        "line_end": 10163,
        "quote": "Checkpoint identity for model.catalog_refreshed: before atomic rebuild publication, validate the nine-field durable\n  token",
        "file_sha256": "99790d28be8c08ef2ec3e967c4ccdd37229d8184ca708b86330c73bd6071f5b1",
-       "quote_check": "whitespace_normalized",
+       "quote_check": "exact",
        "quote_scope": "unit MS-199, Plans/Models_System.md:10024-10223",
        "source_citation": {
         "path": "Plans/Models_System.md",
@@ -548,7 +548,7 @@
        "line_end": 10124,
        "quote": "Compatibility: only this exact 1.0.0 schema is a current writer candidate. Historical names/bytes remain unchanged;\n  unknown future revisions halt the consumer before advance, never normalize by guesse",
        "file_sha256": "99790d28be8c08ef2ec3e967c4ccdd37229d8184ca708b86330c73bd6071f5b1",
-       "quote_check": "whitespace_normalized",
+       "quote_check": "exact",
        "quote_scope": "unit MS-199, Plans/Models_System.md:10024-10223",
        "source_citation": {
         "path": "Plans/Models_System.md",
@@ -579,7 +579,7 @@
        "line_end": 10131,
        "quote": "Exact-family oracle matrix for model.catalog_refreshed: Plans/small_owner_event_fixtures.json owns its full EventRecord,\n  independent original owner operation/result, original eleven-field receipt and",
        "file_sha256": "99790d28be8c08ef2ec3e967c4ccdd37229d8184ca708b86330c73bd6071f5b1",
-       "quote_check": "whitespace_normalized",
+       "quote_check": "exact",
        "quote_scope": "unit MS-199, Plans/Models_System.md:10024-10223",
        "source_citation": {
         "path": "Plans/Models_System.md",
@@ -633,7 +633,7 @@
        "line_end": 10080,
        "quote": "At most 16 KiB stays inline with payload_ref=null. Above 16 KiB,\n  SP-337 owns the pack bytes/index:",
        "file_sha256": "99790d28be8c08ef2ec3e967c4ccdd37229d8184ca708b86330c73bd6071f5b1",
-       "quote_check": "whitespace_normalized",
+       "quote_check": "exact",
        "quote_scope": "unit MS-199, Plans/Models_System.md:10024-10223",
        "source_citation": {
         "path": "Plans/Models_System.md",
@@ -651,7 +651,7 @@
        "line_end": 10163,
        "quote": "Checkpoint identity for model.catalog_refreshed: before atomic rebuild publication, validate the nine-field durable\n  token",
        "file_sha256": "99790d28be8c08ef2ec3e967c4ccdd37229d8184ca708b86330c73bd6071f5b1",
-       "quote_check": "whitespace_normalized",
+       "quote_check": "exact",
        "quote_scope": "unit MS-199, Plans/Models_System.md:10024-10223",
        "source_citation": {
         "path": "Plans/Models_System.md",
@@ -915,9 +915,10 @@
   "row_pointer": "#/families/419"
  },
  "evidence_maintenance": {
-  "authority": "MERGE3-POSTFIX / post-landing Astra findings",
-  "source_commit": "3b3fffd9e43344d70be4938bbbb7817aed2a7332",
-  "source_assessment_sha256": "ef3b9544b12bf0259f1a5f46cabc681ca48cdd917d30303b99f3362cec1543e1",
+  "authority": "MERGE3-POSTFIX final citation maintenance",
+  "source_commit": "92d16bc12e0fa5a198d8e3f30340eab43e380a83",
+  "source_assessment_sha256": "0b6e709790e2c898621b735e39ca03cc71999abdea7b58dd470e7736df438471",
+  "verdicts_changed": false,
   "native_execution": "NOT_RUN"
  }
 }

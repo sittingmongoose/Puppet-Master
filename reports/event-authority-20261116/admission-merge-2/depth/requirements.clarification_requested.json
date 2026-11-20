@@ -5,8 +5,8 @@
  "merge": "admission-merge-2",
  "registry": {
   "path": "Plans/event_family_registry.json",
-  "revision": "2026-11-18.2",
-  "sha256": "ec21cf1a5b42b3e68a5564a847b4798dff968612d11d438bc7075b89196f9602",
+  "revision": "2026-11-19.145",
+  "sha256": "e9eb5cc0d292efbc6c0b452928ece0a93fb0744be43066ed446128d5d2cd3e30",
   "family_count": 518,
   "row_pointer": "#/families/451"
  },
@@ -22,16 +22,16 @@
     "membership_version": {
      "status": "PASS",
      "representation": "exact_registry_membership",
-     "finding": "Currently registered at 2026-11-18.2 as #/families/451 (canonical row SHA-256 311b7c719b8a2d2bb85a45bbdacdfd7fd7f5d36a28282630e4ddc0bd38d65293). Original one-family admission checkpoints remain in the family record and immutable Git source.",
+     "finding": "Currently registered at 2026-11-19.145 as #/families/451, canonical row SHA-256 311b7c719b8a2d2bb85a45bbdacdfd7fd7f5d36a28282630e4ddc0bd38d65293. Original one-family append checkpoints remain authenticated by the immutable predecessor and correction chain.",
      "evidence": [
       {
        "path": "Plans/event_family_registry.json",
        "json_pointer": "#/families/451",
-       "line_start": 29133,
-       "line_end": 29174,
+       "line_start": 29242,
+       "line_end": 29283,
        "quote": "\"event_type\": \"requirements.clarification_requested\"",
-       "quote_line": 29136,
-       "file_sha256": "ec21cf1a5b42b3e68a5564a847b4798dff968612d11d438bc7075b89196f9602",
+       "quote_line": 29245,
+       "file_sha256": "e9eb5cc0d292efbc6c0b452928ece0a93fb0744be43066ed446128d5d2cd3e30",
        "quote_check": "exact",
        "source_citation": {
         "path": "Plans/event_family_registry.json",
@@ -44,7 +44,7 @@
         "quote_check": "exact"
        },
        "unit": "#/families/451",
-       "quote_scope": "unit #/families/451, Plans/event_family_registry.json:29133-29174"
+       "quote_scope": "unit #/families/451, Plans/event_family_registry.json:29242-29283"
       }
      ]
     },
@@ -61,7 +61,7 @@
        "quote": "Newly authored owner contract under DL-045 for requirements.clarification_requested@1.0.0 only",
        "quote_check": "exact",
        "quote_scope": "unit CV-608, Plans/Contracts_V0.md:35558-35601",
-       "file_sha256": "58dee182ea2dd8dd358d27912280fa9113c3d1d8fd68b1c0c5d51b6f906d73c8",
+       "file_sha256": "77879920f56eb692b9d2ddcf47c1c2421e0c426e2ccd911e183895f8195c45b3",
        "source_citation": {
         "path": "Plans/Contracts_V0.md",
         "unit": "CV-608",
@@ -87,12 +87,12 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-588",
-       "line_start": 39886,
-       "line_end": 39886,
+       "line_start": 39888,
+       "line_end": 39888,
        "quote": "For requirements.clarification_requested alone, the newly authored original-source custody",
        "quote_check": "exact",
-       "quote_scope": "unit SP-588, Plans/storage-plan.md:39877-39931",
-       "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+       "quote_scope": "unit SP-588, Plans/storage-plan.md:39879-39933",
+       "file_sha256": "eca9df98001183b2057086c6c7fc14b39c7bb406951f2ea0092062b81f770e6d",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-588",
@@ -178,7 +178,7 @@
        "quote": "For requirements.clarification_requested alone, the shared CV-1100, SP-1100, SP-1101 and CV-1101 owner units apply",
        "quote_check": "exact",
        "quote_scope": "unit CV-608, Plans/Contracts_V0.md:35558-35601",
-       "file_sha256": "58dee182ea2dd8dd358d27912280fa9113c3d1d8fd68b1c0c5d51b6f906d73c8",
+       "file_sha256": "77879920f56eb692b9d2ddcf47c1c2421e0c426e2ccd911e183895f8195c45b3",
        "source_citation": {
         "path": "Plans/Contracts_V0.md",
         "unit": "CV-608",
@@ -204,12 +204,12 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-588",
-       "line_start": 39888,
-       "line_end": 39888,
+       "line_start": 39890,
+       "line_end": 39890,
        "quote": "For requirements.clarification_requested alone, source codec",
-       "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+       "file_sha256": "eca9df98001183b2057086c6c7fc14b39c7bb406951f2ea0092062b81f770e6d",
        "quote_check": "exact",
-       "quote_scope": "unit SP-588, Plans/storage-plan.md:39877-39931",
+       "quote_scope": "unit SP-588, Plans/storage-plan.md:39879-39933",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-588",
@@ -253,7 +253,7 @@
        "quote": "For requirements.clarification_requested alone, current writer and retry paths refuse",
        "quote_check": "exact",
        "quote_scope": "unit CV-608, Plans/Contracts_V0.md:35558-35601",
-       "file_sha256": "58dee182ea2dd8dd358d27912280fa9113c3d1d8fd68b1c0c5d51b6f906d73c8",
+       "file_sha256": "77879920f56eb692b9d2ddcf47c1c2421e0c426e2ccd911e183895f8195c45b3",
        "source_citation": {
         "path": "Plans/Contracts_V0.md",
         "unit": "CV-608",
@@ -307,7 +307,7 @@
        "quote": "For requirements.clarification_requested alone, the shared CV-1100, SP-1100, SP-1101 and CV-1101 owner units apply",
        "quote_check": "exact",
        "quote_scope": "unit CV-608, Plans/Contracts_V0.md:35558-35601",
-       "file_sha256": "58dee182ea2dd8dd358d27912280fa9113c3d1d8fd68b1c0c5d51b6f906d73c8",
+       "file_sha256": "77879920f56eb692b9d2ddcf47c1c2421e0c426e2ccd911e183895f8195c45b3",
        "source_citation": {
         "path": "Plans/Contracts_V0.md",
         "unit": "CV-608",
@@ -333,12 +333,12 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-588",
-       "line_start": 39907,
-       "line_end": 39907,
-       "quote": "Current selected assignment (2026-11-19): requirements.clarification_requested@1.0.0 is registered for project_only in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2369. Its event history selects RP-AUTHORITY-INDEFINITE@1.0.0; Plans/storage-plan.md#SP-588 owns the event policy's existing anchors, counts, holds and deletion rules. Separate stored-value assignment: dt_requirements_clarification_requested_source uses RP-QUESTION-BUDGET-APPLICATION-2555D@1.0.0 under Plans/Decision_Log.md#DL-507; this assigns that stored value, not event history. Separate checkpoint assignment: dt_requirements_clarification_requested_checkpoint uses RP-PROJECTION-3GEN@1.0.0 under its existing Plans/storage-plan.md#SP-588 contract; checkpoint retention grants no event/source deletion. Original sources and coherent backups retain their independent owner policies; the event lifetime is not transferred to them. Current append/publication still requires the exact selected schema/scope, original custody, current permission, receipt and required producer adoption. Actual missing registration or unresolved required custody refuses; native execution remains NOT_RUN. No native adoption, new retention choice or governance seal follows.",
+       "line_start": 39909,
+       "line_end": 39909,
+       "quote": "  Current selected assignment (2026-11-19): requirements.clarification_requested@1.0.0 is registered for project_only in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2369. Its event history selects RP-AUTHORITY-INDEFINITE@1.0.0; Plans/storage-plan.md#SP-588 owns the event policy's existing anchors, counts, holds and deletion rules. Separate stored-value assignment: dt_requirements_clarification_requested_source uses RP-QUESTION-BUDGET-APPLICATION-2555D@1.0.0 under Plans/Decision_Log.md#DL-507; this assigns that stored value, not event history. Separate checkpoint assignment: dt_requirements_clarification_requested_checkpoint uses RP-PROJECTION-3GEN@1.0.0 under its existing Plans/storage-plan.md#SP-588 contract; checkpoint retention grants no event/source deletion. Original sources and coherent backups retain their independent owner policies; the event lifetime is not transferred to them. Current append/publication still requires the exact selected schema/scope, original custody, current permission, receipt and required producer adoption. Actual missing registration or unresolved required custody refuses; native execution remains NOT_RUN. No native adoption, new retention choice or governance seal follows.",
        "quote_check": "exact",
-       "quote_scope": "unit SP-588, Plans/storage-plan.md:39877-39931",
-       "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+       "quote_scope": "unit SP-588, Plans/storage-plan.md:39879-39933",
+       "file_sha256": "eca9df98001183b2057086c6c7fc14b39c7bb406951f2ea0092062b81f770e6d",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-588",
@@ -350,6 +350,14 @@
        "locator_maintenance": {
         "authority": "MERGE2-FIX3",
         "reason": "Re-cite the same accepted retention claim at its current exact owner assignment; event and source/checkpoint authority remain separate."
+       },
+       "retention_range_maintenance": {
+        "authority": "MERGE3-POSTFIX finding 4",
+        "old_quote": "Current selected assignment (2026-11-19): requirements.clarification_requested@1.0.0 is registered for project_only in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2369. Its event history selects RP-AUTHORITY-INDEFINITE@1.0.0; Plans/storage-plan.md#SP-588 owns the event policy's existing anchors, counts, holds and deletion rules. Separate stored-value assignment: dt_requirements_clarification_requested_source uses RP-QUESTION-BUDGET-APPLICATION-2555D@1.0.0 under Plans/Decision_Log.md#DL-507; this assigns that stored value, not event history. Separate checkpoint assignment: dt_requirements_clarification_requested_checkpoint uses RP-PROJECTION-3GEN@1.0.0 under its existing Plans/storage-plan.md#SP-588 contract; checkpoint retention grants no event/source deletion. Original sources and coherent backups retain their independent owner policies; the event lifetime is not transferred to them. Current append/publication still requires the exact selected schema/scope, original custody, current permission, receipt and required producer adoption. Actual missing registration or unresolved required custody refuses; native execution remains NOT_RUN. No native adoption, new retention choice or governance seal follows.",
+        "old_line_start": 39907,
+        "new_line_start": 39909,
+        "new_line_end": 39909,
+        "reason": "Expand the exact current assignment through its policy, scope, anchor and effective count in its own cited unit."
        }
       }
      ],
@@ -368,12 +376,12 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-588",
-       "line_start": 39886,
-       "line_end": 39886,
+       "line_start": 39888,
+       "line_end": 39888,
        "quote": "Source stages, original owner outcomes, referenced bodies and full-value receipt custody form one mandatory coherent backup closure.",
-       "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+       "file_sha256": "eca9df98001183b2057086c6c7fc14b39c7bb406951f2ea0092062b81f770e6d",
        "quote_check": "exact",
-       "quote_scope": "unit SP-588, Plans/storage-plan.md:39877-39931",
+       "quote_scope": "unit SP-588, Plans/storage-plan.md:39879-39933",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-588",
@@ -417,7 +425,7 @@
        "quote": "For requirements.clarification_requested alone, the explicit lifecycle transition is",
        "quote_check": "exact",
        "quote_scope": "unit CV-608, Plans/Contracts_V0.md:35558-35601",
-       "file_sha256": "58dee182ea2dd8dd358d27912280fa9113c3d1d8fd68b1c0c5d51b6f906d73c8",
+       "file_sha256": "77879920f56eb692b9d2ddcf47c1c2421e0c426e2ccd911e183895f8195c45b3",
        "source_citation": {
         "path": "Plans/Contracts_V0.md",
         "unit": "CV-608",
@@ -443,12 +451,12 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-588",
-       "line_start": 39887,
-       "line_end": 39887,
+       "line_start": 39889,
+       "line_end": 39889,
        "quote": "For requirements.clarification_requested alone, its SP-278/DL-076 checkpoint",
-       "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+       "file_sha256": "eca9df98001183b2057086c6c7fc14b39c7bb406951f2ea0092062b81f770e6d",
        "quote_check": "exact",
-       "quote_scope": "unit SP-588, Plans/storage-plan.md:39877-39931",
+       "quote_scope": "unit SP-588, Plans/storage-plan.md:39879-39933",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-588",
@@ -505,12 +513,12 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-588",
-       "line_start": 39885,
-       "line_end": 39885,
+       "line_start": 39887,
+       "line_end": 39887,
        "quote": "Withdrawal first cuts off this family's append admission",
        "quote_check": "exact",
-       "quote_scope": "unit SP-588, Plans/storage-plan.md:39877-39931",
-       "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+       "quote_scope": "unit SP-588, Plans/storage-plan.md:39879-39933",
+       "file_sha256": "eca9df98001183b2057086c6c7fc14b39c7bb406951f2ea0092062b81f770e6d",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-588",
@@ -546,7 +554,7 @@
        "quote": "For requirements.clarification_requested alone, the shared CV-1100, SP-1100, SP-1101 and CV-1101 owner units apply",
        "quote_check": "exact",
        "quote_scope": "unit CV-608, Plans/Contracts_V0.md:35558-35601",
-       "file_sha256": "58dee182ea2dd8dd358d27912280fa9113c3d1d8fd68b1c0c5d51b6f906d73c8",
+       "file_sha256": "77879920f56eb692b9d2ddcf47c1c2421e0c426e2ccd911e183895f8195c45b3",
        "source_citation": {
         "path": "Plans/Contracts_V0.md",
         "unit": "CV-608",
@@ -577,7 +585,7 @@
        "unit": "ATS-294",
        "quote_check": "exact",
        "quote_scope": "unit ATS-294, Plans/Automated_Testing_System.md:9194-9230",
-       "file_sha256": "a3028640b73729884c6b3d1a0f095289513e4f76e61af711c233858bf005dc7c",
+       "file_sha256": "9578cb2d7c8a6b000935bb1602650c67ada31d8cbbbad9e3baabee00ec961997",
        "source_citation": {
         "line_end": 9196,
         "line_start": 9196,
@@ -607,14 +615,14 @@
        "json_pointer": "#/families/8"
       },
       {
-       "line_end": 39889,
-       "line_start": 39889,
+       "line_end": 39891,
+       "line_start": 39891,
        "path": "Plans/storage-plan.md",
        "quote": "For requirements.clarification_requested, boolean authority/context flags are exact booleans",
        "unit": "SP-588",
        "quote_check": "exact",
-       "quote_scope": "unit SP-588, Plans/storage-plan.md:39877-39931",
-       "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+       "quote_scope": "unit SP-588, Plans/storage-plan.md:39879-39933",
+       "file_sha256": "eca9df98001183b2057086c6c7fc14b39c7bb406951f2ea0092062b81f770e6d",
        "source_citation": {
         "line_end": 38872,
         "line_start": 38872,
@@ -751,10 +759,10 @@
   "row_pointer": "#/families/451"
  },
  "evidence_maintenance": {
-  "authority": "MERGE2-FIX4 items 1/2/3",
-  "source_commit": "2bda6aeed03daea26c4d79dfb7568fc145aac29e",
-  "source_assessment_sha256": "dbecc122b4bf6f107b3baed4a76d8d7d07525591eac6b49fdc656cc0ba6f93f1",
-  "native_execution": "NOT_RUN",
-  "verdicts_changed": false
+  "authority": "MERGE3-POSTFIX final citation maintenance",
+  "source_commit": "92d16bc12e0fa5a198d8e3f30340eab43e380a83",
+  "source_assessment_sha256": "24b7636df76deff94b57fbcf0e52bebd8436c2095e8aeddd25801c8bdac2f6ea",
+  "verdicts_changed": false,
+  "native_execution": "NOT_RUN"
  }
 }

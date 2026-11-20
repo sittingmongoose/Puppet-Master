@@ -5,8 +5,8 @@
  "merge": "admission-merge-2",
  "registry": {
   "path": "Plans/event_family_registry.json",
-  "revision": "2026-11-19.106",
-  "sha256": "5b33f1924c0d8875409f5ac6c69de346bcf4c55d4e291a26ade5935d7fdaa3f0",
+  "revision": "2026-11-19.145",
+  "sha256": "e9eb5cc0d292efbc6c0b452928ece0a93fb0744be43066ed446128d5d2cd3e30",
   "family_count": 518,
   "row_pointer": "#/families/450"
  },
@@ -22,16 +22,16 @@
     "membership_version": {
      "status": "PASS",
      "representation": "exact_registry_membership",
-     "finding": "Currently registered at 2026-11-19.106 as #/families/450, canonical row SHA-256 6d15df4bdc64c7b55ad7d3d1e9bd197fa57eab51371847279e8fe1d893e9c1a4. Original one-family append checkpoints remain preserved.",
+     "finding": "Currently registered at 2026-11-19.145 as #/families/450, canonical row SHA-256 6d15df4bdc64c7b55ad7d3d1e9bd197fa57eab51371847279e8fe1d893e9c1a4. Original one-family append checkpoints remain authenticated by the immutable predecessor and correction chain.",
      "evidence": [
       {
        "path": "Plans/event_family_registry.json",
        "json_pointer": "#/families/450",
-       "line_start": 29091,
-       "line_end": 29132,
+       "line_start": 29199,
+       "line_end": 29241,
        "quote": "\"event_type\": \"remote_access.route_test_completed\"",
-       "quote_line": 29094,
-       "file_sha256": "ec21cf1a5b42b3e68a5564a847b4798dff968612d11d438bc7075b89196f9602",
+       "quote_line": 29202,
+       "file_sha256": "e9eb5cc0d292efbc6c0b452928ece0a93fb0744be43066ed446128d5d2cd3e30",
        "quote_check": "exact",
        "source_citation": {
         "path": "Plans/event_family_registry.json",
@@ -44,7 +44,7 @@
         "quote_check": "exact"
        },
        "unit": "#/families/450",
-       "quote_scope": "unit #/families/450, Plans/event_family_registry.json:29091-29132"
+       "quote_scope": "unit #/families/450, Plans/event_family_registry.json:29199-29241"
       }
      ]
     },
@@ -310,12 +310,12 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-1409",
-       "line_start": 71405,
-       "line_end": 71405,
+       "line_start": 71411,
+       "line_end": 71411,
        "quote": "Current selected assignment (2026-11-19): remote_access.route_test_completed@1.0.0 is registered for application_only in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2368. Its event history selects RP-OPERATIONAL-SECURITY-APPLICATION-2555D@1.0.0; exact original and checkpoint bindings retain their existing Storage assignments. Registry membership supplies no producer adoption or native-installation proof. Missing-registration refusal applies only if the exact current registration is absent.",
-       "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+       "file_sha256": "eca9df98001183b2057086c6c7fc14b39c7bb406951f2ea0092062b81f770e6d",
        "quote_check": "exact",
-       "quote_scope": "unit SP-1409, Plans/storage-plan.md:71307-71405",
+       "quote_scope": "unit SP-1409, Plans/storage-plan.md:71313-71411",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-1409",
@@ -425,12 +425,12 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-1409",
-       "line_start": 71338,
-       "line_end": 71338,
+       "line_start": 71344,
+       "line_end": 71344,
        "quote": "The exact checkpoint in derived redb checkpoints is w3e_remote_access_route_test_completed_checkpoint.v1:{hex(storage_instance_id)}:{scope_partition}:{hex(server_id)}",
-       "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+       "file_sha256": "eca9df98001183b2057086c6c7fc14b39c7bb406951f2ea0092062b81f770e6d",
        "quote_check": "exact",
-       "quote_scope": "unit SP-1409, Plans/storage-plan.md:71307-71405",
+       "quote_scope": "unit SP-1409, Plans/storage-plan.md:71313-71411",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-1409",
@@ -487,12 +487,12 @@
       {
        "path": "Plans/Contracts_V0.md",
        "unit": "CV-1409",
-       "line_start": 51005,
-       "line_end": 51009,
+       "line_start": 51008,
+       "line_end": 51012,
        "quote": "Phase 2 (2026-11-13) runs the executable synthetic oracles of\n  this family in scripts/pm_w3e_event_oracles.py; every refusal is one named single-predicate row of a generated\n  Method B guard table (scripts/pm_w3e_table_*.py) proved by the gated shared scripts/pm_guard_isolation.py through\n  scripts/pm-w3e-guard-proof.py, and rows no input can refuse first stay alone in their own table with a written\n  pr",
-       "file_sha256": "58dee182ea2dd8dd358d27912280fa9113c3d1d8fd68b1c0c5d51b6f906d73c8",
-       "quote_check": "whitespace_normalized",
-       "quote_scope": "unit CV-1409, Plans/Contracts_V0.md:50982-51063",
+       "file_sha256": "77879920f56eb692b9d2ddcf47c1c2421e0c426e2ccd911e183895f8195c45b3",
+       "quote_check": "exact",
+       "quote_scope": "unit CV-1409, Plans/Contracts_V0.md:50985-51066",
        "source_citation": {
         "path": "Plans/Contracts_V0.md",
         "unit": "CV-1409",
@@ -633,9 +633,10 @@
   "row_pointer": "#/families/450"
  },
  "evidence_maintenance": {
-  "authority": "MERGE3-POSTFIX / post-landing Astra findings",
-  "source_commit": "bc4c93d6e56efe438765b691a6658323d7fae875",
-  "source_assessment_sha256": "32f4a8223cc88ae85508fb51dd5e1d2488344b7ca0ea5dd1469a3b876d277047",
+  "authority": "MERGE3-POSTFIX final citation maintenance",
+  "source_commit": "92d16bc12e0fa5a198d8e3f30340eab43e380a83",
+  "source_assessment_sha256": "5422f48ae444167e26a9f5889a8a7000448e10034eded7b50c7ce6b03a2a93ea",
+  "verdicts_changed": false,
   "native_execution": "NOT_RUN"
  }
 }

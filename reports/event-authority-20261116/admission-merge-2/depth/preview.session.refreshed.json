@@ -5,8 +5,8 @@
  "merge": "admission-merge-2",
  "registry": {
   "path": "Plans/event_family_registry.json",
-  "revision": "2026-11-19.96",
-  "sha256": "2eaf15ecf3aea6947fc759f074c1f9e908ccfb00e8976556b572449bcf76b8c7",
+  "revision": "2026-11-19.145",
+  "sha256": "e9eb5cc0d292efbc6c0b452928ece0a93fb0744be43066ed446128d5d2cd3e30",
   "family_count": 518,
   "row_pointer": "#/families/438"
  },
@@ -22,16 +22,16 @@
     "membership_version": {
      "status": "PASS",
      "representation": "exact_registry_membership",
-     "finding": "Currently registered at 2026-11-19.96 as #/families/438, canonical row SHA-256 caabe5a07628e79be67a7bd7f17a847e0251a91108dd55e192e1f410a61d8d46. Original one-family append checkpoints remain preserved.",
+     "finding": "Currently registered at 2026-11-19.145 as #/families/438, canonical row SHA-256 caabe5a07628e79be67a7bd7f17a847e0251a91108dd55e192e1f410a61d8d46. Original one-family append checkpoints remain authenticated by the immutable predecessor and correction chain.",
      "evidence": [
       {
        "path": "Plans/event_family_registry.json",
        "json_pointer": "#/families/438",
-       "line_start": 28584,
-       "line_end": 28626,
+       "line_start": 28685,
+       "line_end": 28727,
        "quote": "\"event_type\": \"preview.session.refreshed\"",
-       "quote_line": 28587,
-       "file_sha256": "ec21cf1a5b42b3e68a5564a847b4798dff968612d11d438bc7075b89196f9602",
+       "quote_line": 28688,
+       "file_sha256": "e9eb5cc0d292efbc6c0b452928ece0a93fb0744be43066ed446128d5d2cd3e30",
        "quote_check": "exact",
        "source_citation": {
         "path": "Plans/event_family_registry.json",
@@ -44,7 +44,7 @@
         "quote_check": "exact"
        },
        "unit": "#/families/438",
-       "quote_scope": "unit #/families/438, Plans/event_family_registry.json:28584-28626"
+       "quote_scope": "unit #/families/438, Plans/event_family_registry.json:28685-28727"
       }
      ]
     },
@@ -90,7 +90,7 @@
        "line_start": 17278,
        "line_end": 17279,
        "quote": "Producer: PreviewSession owner commits an actual refresh/hot-reload outcome for a refreshable visible subject\n  (FileManager sections 13/14.6). A browser-backed ordinary session uses",
-       "quote_check": "whitespace_normalized",
+       "quote_check": "exact",
        "quote_scope": "unit SMPFS-316, Plans/Section15_MVP_Promoted_Features_Spec.md:17261-17457",
        "file_sha256": "b45332b179ca0b17d8a32f21a5b908b7e704e8f7874c01e3981cdbc4e18f98a3",
        "source_citation": {
@@ -108,7 +108,7 @@
        "line_start": 17373,
        "line_end": 17374,
        "quote": "Round 7 authenticated history for preview.session.refreshed: retained read, checkpoint and rebuild accept supported\n  1.0.0 originals written with projector_replay_only as well as de",
-       "quote_check": "whitespace_normalized",
+       "quote_check": "exact",
        "quote_scope": "unit SMPFS-316, Plans/Section15_MVP_Promoted_Features_Spec.md:17261-17457",
        "file_sha256": "b45332b179ca0b17d8a32f21a5b908b7e704e8f7874c01e3981cdbc4e18f98a3",
        "source_citation": {
@@ -188,7 +188,7 @@
        "line_start": 17291,
        "line_end": 17292,
        "quote": "Idempotency key is sha256(canonical MessagePack array [\"preview.session.refreshed\",\n  \"1.0.0\", actual project_id, preview_subject_id, preview_session_id, preview_revision]). Changed",
-       "quote_check": "whitespace_normalized",
+       "quote_check": "exact",
        "quote_scope": "unit SMPFS-316, Plans/Section15_MVP_Promoted_Features_Spec.md:17261-17457",
        "file_sha256": "b45332b179ca0b17d8a32f21a5b908b7e704e8f7874c01e3981cdbc4e18f98a3",
        "source_citation": {
@@ -219,7 +219,7 @@
        "line_start": 17308,
        "line_end": 17309,
        "quote": "Replay: lost acknowledgement returns original receipt, event_id and frozen payload; retry uses original outcome\n  custody without repeating capture, thread creation, launch, stop, re",
-       "quote_check": "whitespace_normalized",
+       "quote_check": "exact",
        "quote_scope": "unit SMPFS-316, Plans/Section15_MVP_Promoted_Features_Spec.md:17261-17457",
        "file_sha256": "b45332b179ca0b17d8a32f21a5b908b7e704e8f7874c01e3981cdbc4e18f98a3",
        "source_citation": {
@@ -237,7 +237,7 @@
        "line_start": 17373,
        "line_end": 17374,
        "quote": "Round 7 authenticated history for preview.session.refreshed: retained read, checkpoint and rebuild accept supported\n  1.0.0 originals written with projector_replay_only as well as de",
-       "quote_check": "whitespace_normalized",
+       "quote_check": "exact",
        "quote_scope": "unit SMPFS-316, Plans/Section15_MVP_Promoted_Features_Spec.md:17261-17457",
        "file_sha256": "b45332b179ca0b17d8a32f21a5b908b7e704e8f7874c01e3981cdbc4e18f98a3",
        "source_citation": {
@@ -325,7 +325,7 @@
        "line_start": 17325,
        "line_end": 17327,
        "quote": "backup/restore of the full original source/log/receipt\n  closure. Checkpoints are derived and grant no access. Every read rechecks current subject/thread/Project permissions\n  and sour",
-       "quote_check": "whitespace_normalized",
+       "quote_check": "exact",
        "quote_scope": "unit SMPFS-316, Plans/Section15_MVP_Promoted_Features_Spec.md:17261-17457",
        "file_sha256": "b45332b179ca0b17d8a32f21a5b908b7e704e8f7874c01e3981cdbc4e18f98a3",
        "source_citation": {
@@ -343,7 +343,7 @@
        "line_start": 17373,
        "line_end": 17374,
        "quote": "Round 7 authenticated history for preview.session.refreshed: retained read, checkpoint and rebuild accept supported\n  1.0.0 originals written with projector_replay_only as well as de",
-       "quote_check": "whitespace_normalized",
+       "quote_check": "exact",
        "quote_scope": "unit SMPFS-316, Plans/Section15_MVP_Promoted_Features_Spec.md:17261-17457",
        "file_sha256": "b45332b179ca0b17d8a32f21a5b908b7e704e8f7874c01e3981cdbc4e18f98a3",
        "source_citation": {
@@ -374,7 +374,7 @@
        "line_start": 17278,
        "line_end": 17279,
        "quote": "Producer: PreviewSession owner commits an actual refresh/hot-reload outcome for a refreshable visible subject\n  (FileManager sections 13/14.6). A browser-backed ordinary session uses",
-       "quote_check": "whitespace_normalized",
+       "quote_check": "exact",
        "quote_scope": "unit SMPFS-316, Plans/Section15_MVP_Promoted_Features_Spec.md:17261-17457",
        "file_sha256": "b45332b179ca0b17d8a32f21a5b908b7e704e8f7874c01e3981cdbc4e18f98a3",
        "source_citation": {
@@ -405,7 +405,7 @@
        "line_start": 17313,
        "line_end": 17314,
        "quote": "reader.ds15.preview_session_refreshed.v1@1.0.0, operating as Preview subject history reader, reads only\n  preview.session.refreshed@1.0.0. It adopts SP-278 by name and DL-076 nine-fi",
-       "quote_check": "whitespace_normalized",
+       "quote_check": "exact",
        "quote_scope": "unit SMPFS-316, Plans/Section15_MVP_Promoted_Features_Spec.md:17261-17457",
        "file_sha256": "b45332b179ca0b17d8a32f21a5b908b7e704e8f7874c01e3981cdbc4e18f98a3",
        "source_citation": {
@@ -423,7 +423,7 @@
        "line_start": 17373,
        "line_end": 17374,
        "quote": "Round 7 authenticated history for preview.session.refreshed: retained read, checkpoint and rebuild accept supported\n  1.0.0 originals written with projector_replay_only as well as de",
-       "quote_check": "whitespace_normalized",
+       "quote_check": "exact",
        "quote_scope": "unit SMPFS-316, Plans/Section15_MVP_Promoted_Features_Spec.md:17261-17457",
        "file_sha256": "b45332b179ca0b17d8a32f21a5b908b7e704e8f7874c01e3981cdbc4e18f98a3",
        "source_citation": {
@@ -454,7 +454,7 @@
        "line_start": 17343,
        "line_end": 17344,
        "quote": "withdrawal: exact 1.0.0 event/reader only; refuse unknown fields/version before effects or checkpoint.\n  No alias or deployed event predecessor is assumed. Value migrations are expli",
-       "quote_check": "whitespace_normalized",
+       "quote_check": "exact",
        "quote_scope": "unit SMPFS-316, Plans/Section15_MVP_Promoted_Features_Spec.md:17261-17457",
        "file_sha256": "b45332b179ca0b17d8a32f21a5b908b7e704e8f7874c01e3981cdbc4e18f98a3",
        "source_citation": {
@@ -472,7 +472,7 @@
        "line_start": 17373,
        "line_end": 17374,
        "quote": "Round 7 authenticated history for preview.session.refreshed: retained read, checkpoint and rebuild accept supported\n  1.0.0 originals written with projector_replay_only as well as de",
-       "quote_check": "whitespace_normalized",
+       "quote_check": "exact",
        "quote_scope": "unit SMPFS-316, Plans/Section15_MVP_Promoted_Features_Spec.md:17261-17457",
        "file_sha256": "b45332b179ca0b17d8a32f21a5b908b7e704e8f7874c01e3981cdbc4e18f98a3",
        "source_citation": {
@@ -503,7 +503,7 @@
        "line_start": 17351,
        "line_end": 17352,
        "quote": "Oracles: ATS-329 and exact family cases in Plans/ds15_event_contract_fixtures.json execute via scripts/pm-ds15-event-contracts.py:\n  valid/invalid transition, scope joins, original r",
-       "quote_check": "whitespace_normalized",
+       "quote_check": "exact",
        "quote_scope": "unit SMPFS-316, Plans/Section15_MVP_Promoted_Features_Spec.md:17261-17457",
        "file_sha256": "b45332b179ca0b17d8a32f21a5b908b7e704e8f7874c01e3981cdbc4e18f98a3",
        "source_citation": {
@@ -521,7 +521,7 @@
        "line_start": 17373,
        "line_end": 17374,
        "quote": "Round 7 authenticated history for preview.session.refreshed: retained read, checkpoint and rebuild accept supported\n  1.0.0 originals written with projector_replay_only as well as de",
-       "quote_check": "whitespace_normalized",
+       "quote_check": "exact",
        "quote_scope": "unit SMPFS-316, Plans/Section15_MVP_Promoted_Features_Spec.md:17261-17457",
        "file_sha256": "b45332b179ca0b17d8a32f21a5b908b7e704e8f7874c01e3981cdbc4e18f98a3",
        "source_citation": {
@@ -552,9 +552,10 @@
   "row_pointer": "#/families/438"
  },
  "evidence_maintenance": {
-  "authority": "MERGE3-POSTFIX / post-landing Astra findings",
-  "source_commit": "c3feeb01118ed6aa3942c0b2baa4e14c839f2eb6",
-  "source_assessment_sha256": "6ecde110dfa87e22d52a4885827627961dd869f0e019f32dfd4b0ca7faad48c8",
+  "authority": "MERGE3-POSTFIX final citation maintenance",
+  "source_commit": "92d16bc12e0fa5a198d8e3f30340eab43e380a83",
+  "source_assessment_sha256": "070f892b3848e8946c28383e0d99010e294288c9bd5ab385cb8c0956c5ac1217",
+  "verdicts_changed": false,
   "native_execution": "NOT_RUN"
  }
 }

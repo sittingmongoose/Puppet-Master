@@ -5,8 +5,8 @@
  "merge": "admission-merge-2",
  "registry": {
   "path": "Plans/event_family_registry.json",
-  "revision": "2026-11-18.2",
-  "sha256": "ec21cf1a5b42b3e68a5564a847b4798dff968612d11d438bc7075b89196f9602",
+  "revision": "2026-11-19.145",
+  "sha256": "e9eb5cc0d292efbc6c0b452928ece0a93fb0744be43066ed446128d5d2cd3e30",
   "family_count": 518,
   "row_pointer": "#/families/412"
  },
@@ -22,16 +22,16 @@
     "membership_version": {
      "status": "PASS",
      "representation": "exact_registry_membership",
-     "finding": "Currently registered at 2026-11-18.2 as #/families/412 (canonical row SHA-256 fe0b8875f1718a2dbe0a6112de118122832fae2c83a33b606d4484eeaa656c27). Original one-family admission checkpoints remain in the family record and immutable Git source.",
+     "finding": "Currently registered at 2026-11-19.145 as #/families/412, canonical row SHA-256 fe0b8875f1718a2dbe0a6112de118122832fae2c83a33b606d4484eeaa656c27. Original one-family append checkpoints remain authenticated by the immutable predecessor and correction chain.",
      "evidence": [
       {
        "path": "Plans/event_family_registry.json",
        "json_pointer": "#/families/412",
-       "line_start": 26897,
-       "line_end": 26938,
+       "line_start": 26910,
+       "line_end": 26951,
        "quote": "\"event_type\": \"memory.index.semantic.rebuild.started\"",
-       "quote_line": 26900,
-       "file_sha256": "ec21cf1a5b42b3e68a5564a847b4798dff968612d11d438bc7075b89196f9602",
+       "quote_line": 26913,
+       "file_sha256": "e9eb5cc0d292efbc6c0b452928ece0a93fb0744be43066ed446128d5d2cd3e30",
        "quote_check": "exact",
        "source_citation": {
         "path": "Plans/event_family_registry.json",
@@ -44,7 +44,7 @@
         "quote_check": "exact"
        },
        "unit": "#/families/412",
-       "quote_scope": "unit #/families/412, Plans/event_family_registry.json:26897-26938"
+       "quote_scope": "unit #/families/412, Plans/event_family_registry.json:26910-26951"
       }
      ]
     },
@@ -79,7 +79,7 @@
        "quote": "Newly authored closed payload owner contract for exactly memory.index.semantic.rebuild.started@1.0.0",
        "quote_check": "exact",
        "quote_scope": "unit CV-655, Plans/Contracts_V0.md:40717-40764",
-       "file_sha256": "58dee182ea2dd8dd358d27912280fa9113c3d1d8fd68b1c0c5d51b6f906d73c8",
+       "file_sha256": "77879920f56eb692b9d2ddcf47c1c2421e0c426e2ccd911e183895f8195c45b3",
        "source_citation": {
         "path": "Plans/Contracts_V0.md",
         "unit": "CV-655",
@@ -105,12 +105,12 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-635",
-       "line_start": 48570,
-       "line_end": 48570,
+       "line_start": 48572,
+       "line_end": 48572,
        "quote": "explicitly adopts SP-286 and CV-339 full-value v2 first-AppendReceipt custody: validate admission, append barrier-class SeglogFrameV2 through SP-026/SP-236 with full flush, durably settle or",
-       "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+       "file_sha256": "eca9df98001183b2057086c6c7fc14b39c7bb406951f2ea0092062b81f770e6d",
        "quote_check": "exact",
-       "quote_scope": "unit SP-635, Plans/storage-plan.md:48560-48643",
+       "quote_scope": "unit SP-635, Plans/storage-plan.md:48562-48645",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-635",
@@ -136,12 +136,12 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-635",
-       "line_start": 48576,
-       "line_end": 48576,
+       "line_start": 48578,
+       "line_end": 48578,
        "quote": "Every mutation is a whole-value CAS against the exact prior operation row under the single maintenance writer; request, scope, source, start time and receipt identities never change. started",
-       "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+       "file_sha256": "eca9df98001183b2057086c6c7fc14b39c7bb406951f2ea0092062b81f770e6d",
        "quote_check": "exact",
-       "quote_scope": "unit SP-635, Plans/storage-plan.md:48560-48643",
+       "quote_scope": "unit SP-635, Plans/storage-plan.md:48562-48645",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-635",
@@ -167,12 +167,12 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-635",
-       "line_start": 48584,
-       "line_end": 48584,
+       "line_start": 48586,
+       "line_end": 48586,
        "quote": "Newly authored semantic target/selection custody for this exact family (per-family round-1 search in DMEM-search.json) uses required nullable prepared_target in index_semantic_rebuild. It is",
-       "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+       "file_sha256": "eca9df98001183b2057086c6c7fc14b39c7bb406951f2ea0092062b81f770e6d",
        "quote_check": "exact",
-       "quote_scope": "unit SP-635, Plans/storage-plan.md:48560-48643",
+       "quote_scope": "unit SP-635, Plans/storage-plan.md:48562-48645",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-635",
@@ -198,12 +198,12 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-635",
-       "line_start": 48592,
-       "line_end": 48592,
+       "line_start": 48594,
+       "line_end": 48594,
        "quote": "A current-writer retained EventRecord carries the unchanged CV-339 full-value commitment",
-       "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+       "file_sha256": "eca9df98001183b2057086c6c7fc14b39c7bb406951f2ea0092062b81f770e6d",
        "quote_check": "exact",
-       "quote_scope": "unit SP-635, Plans/storage-plan.md:48560-48643",
+       "quote_scope": "unit SP-635, Plans/storage-plan.md:48562-48645",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-635",
@@ -247,7 +247,7 @@
        "quote": "is a distinct closed definition; schema_version and event_type are exact constants. All listed properties are",
        "quote_check": "exact",
        "quote_scope": "unit CV-655, Plans/Contracts_V0.md:40717-40764",
-       "file_sha256": "58dee182ea2dd8dd358d27912280fa9113c3d1d8fd68b1c0c5d51b6f906d73c8",
+       "file_sha256": "77879920f56eb692b9d2ddcf47c1c2421e0c426e2ccd911e183895f8195c45b3",
        "source_citation": {
         "path": "Plans/Contracts_V0.md",
         "unit": "CV-655",
@@ -273,12 +273,12 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-635",
-       "line_start": 48569,
-       "line_end": 48569,
+       "line_start": 48571,
+       "line_end": 48571,
        "quote": "Identity recipe for this family: use strict UTF-8 canonical JSON of the array [\"pm.memory.maintenance.event.v1\",storage_instance_id,project_id,operation_id,\"memory.index.semantic.rebuild.sta",
-       "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+       "file_sha256": "eca9df98001183b2057086c6c7fc14b39c7bb406951f2ea0092062b81f770e6d",
        "quote_check": "exact",
-       "quote_scope": "unit SP-635, Plans/storage-plan.md:48560-48643",
+       "quote_scope": "unit SP-635, Plans/storage-plan.md:48562-48645",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-635",
@@ -304,12 +304,12 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-635",
-       "line_start": 48578,
-       "line_end": 48578,
+       "line_start": 48580,
+       "line_end": 48580,
        "quote": "Newly authored current-writer boundary for exactly memory.index.semantic.rebuild.started@1.0.0",
-       "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+       "file_sha256": "eca9df98001183b2057086c6c7fc14b39c7bb406951f2ea0092062b81f770e6d",
        "quote_check": "exact",
-       "quote_scope": "unit SP-635, Plans/storage-plan.md:48560-48643",
+       "quote_scope": "unit SP-635, Plans/storage-plan.md:48562-48645",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-635",
@@ -348,12 +348,12 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-635",
-       "line_start": 48576,
-       "line_end": 48576,
+       "line_start": 48578,
+       "line_end": 48578,
        "quote": "Completed payload status/ref/hash and frozen time must equal that row and, when present, the exact retained SP-286 full-value original. Started retries likewise equal the original full value",
-       "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+       "file_sha256": "eca9df98001183b2057086c6c7fc14b39c7bb406951f2ea0092062b81f770e6d",
        "quote_check": "exact",
-       "quote_scope": "unit SP-635, Plans/storage-plan.md:48560-48643",
+       "quote_scope": "unit SP-635, Plans/storage-plan.md:48562-48645",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-635",
@@ -398,12 +398,12 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-635",
-       "line_start": 48584,
-       "line_end": 48584,
+       "line_start": 48586,
+       "line_end": 48586,
        "quote": "Newly authored semantic target/selection custody for this exact family (per-family round-1 search in DMEM-search.json) uses required nullable prepared_target in index_semantic_rebuild. It is",
-       "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+       "file_sha256": "eca9df98001183b2057086c6c7fc14b39c7bb406951f2ea0092062b81f770e6d",
        "quote_check": "exact",
-       "quote_scope": "unit SP-635, Plans/storage-plan.md:48560-48643",
+       "quote_scope": "unit SP-635, Plans/storage-plan.md:48562-48645",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-635",
@@ -429,12 +429,12 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-635",
-       "line_start": 48578,
-       "line_end": 48578,
+       "line_start": 48580,
+       "line_end": 48580,
        "quote": "Newly authored current-writer boundary for exactly memory.index.semantic.rebuild.started@1.0.0",
-       "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+       "file_sha256": "eca9df98001183b2057086c6c7fc14b39c7bb406951f2ea0092062b81f770e6d",
        "quote_check": "exact",
-       "quote_scope": "unit SP-635, Plans/storage-plan.md:48560-48643",
+       "quote_scope": "unit SP-635, Plans/storage-plan.md:48562-48645",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-635",
@@ -461,11 +461,11 @@
        "path": "Plans/storage-plan.md",
        "unit": "SP-635",
        "quote": "Start custody gate for exactly memory.index.semantic.rebuild.started@1.0.0, newly authored owner contract (DMEM fix round 4)",
-       "line_start": 48580,
-       "line_end": 48580,
-       "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+       "line_start": 48582,
+       "line_end": 48582,
+       "file_sha256": "eca9df98001183b2057086c6c7fc14b39c7bb406951f2ea0092062b81f770e6d",
        "quote_check": "exact",
-       "quote_scope": "unit SP-635, Plans/storage-plan.md:48560-48643",
+       "quote_scope": "unit SP-635, Plans/storage-plan.md:48562-48645",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-635",
@@ -492,11 +492,11 @@
        "path": "Plans/storage-plan.md",
        "unit": "SP-635",
        "quote": "Missing, corrupted, mismatched or withdrawn custody refuses with start_receipt_missing, or permission_or_withdrawal for a withdrawal fence",
-       "line_start": 48580,
-       "line_end": 48580,
-       "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+       "line_start": 48582,
+       "line_end": 48582,
+       "file_sha256": "eca9df98001183b2057086c6c7fc14b39c7bb406951f2ea0092062b81f770e6d",
        "quote_check": "exact",
-       "quote_scope": "unit SP-635, Plans/storage-plan.md:48560-48643",
+       "quote_scope": "unit SP-635, Plans/storage-plan.md:48562-48645",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-635",
@@ -535,12 +535,12 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-635",
-       "line_start": 48613,
-       "line_end": 48613,
-       "quote": "Current selected assignment (2026-11-19): memory.index.semantic.rebuild.started@1.0.0 is registered for project_only in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2330. Its event history selects RP-OPERATIONAL-2555D@1.0.0; Plans/storage-plan.md#SP-635 owns the event policy's existing anchors, counts, holds and deletion rules. Separate stored-value assignment: memory_index_semantic_selector uses RP-PROJECTION-3GEN@1.0.0 under Plans/Decision_Log.md#DL-500; this assigns that stored value, not event history. Separate stored-value assignment: memory_index_semantic_rebuild_operation uses RP-MEMORY-MAINTENANCE-APPLICATION-2555D@1.0.0 under Plans/Decision_Log.md#DL-509; this assigns that stored value, not event history. Original sources and coherent backups retain their independent owner policies; the event lifetime is not transferred to them. Current append/publication still requires the exact selected schema/scope, original custody, current permission, receipt and required producer adoption. Actual missing registration or unresolved required custody refuses; native execution remains NOT_RUN. No native adoption, new retention choice or governance seal follows.",
+       "line_start": 48615,
+       "line_end": 48615,
+       "quote": "  Current selected assignment (2026-11-19): memory.index.semantic.rebuild.started@1.0.0 is registered for project_only in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2330. Its event history selects RP-OPERATIONAL-2555D@1.0.0; Plans/storage-plan.md#SP-635 owns the event policy's existing anchors, counts, holds and deletion rules. Separate stored-value assignment: memory_index_semantic_selector uses RP-PROJECTION-3GEN@1.0.0 under Plans/Decision_Log.md#DL-500; this assigns that stored value, not event history. Separate stored-value assignment: memory_index_semantic_rebuild_operation uses RP-MEMORY-MAINTENANCE-APPLICATION-2555D@1.0.0 under Plans/Decision_Log.md#DL-509; this assigns that stored value, not event history. Original sources and coherent backups retain their independent owner policies; the event lifetime is not transferred to them. Current append/publication still requires the exact selected schema/scope, original custody, current permission, receipt and required producer adoption. Actual missing registration or unresolved required custody refuses; native execution remains NOT_RUN. No native adoption, new retention choice or governance seal follows.",
        "quote_check": "exact",
-       "quote_scope": "unit SP-635, Plans/storage-plan.md:48560-48643",
-       "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+       "quote_scope": "unit SP-635, Plans/storage-plan.md:48562-48645",
+       "file_sha256": "eca9df98001183b2057086c6c7fc14b39c7bb406951f2ea0092062b81f770e6d",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-635",
@@ -552,17 +552,25 @@
        "locator_maintenance": {
         "authority": "MERGE2-FIX3",
         "reason": "Re-cite the same accepted retention claim at its current exact owner assignment; event and source/checkpoint authority remain separate."
+       },
+       "retention_range_maintenance": {
+        "authority": "MERGE3-POSTFIX finding 4",
+        "old_quote": "Current selected assignment (2026-11-19): memory.index.semantic.rebuild.started@1.0.0 is registered for project_only in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2330. Its event history selects RP-OPERATIONAL-2555D@1.0.0; Plans/storage-plan.md#SP-635 owns the event policy's existing anchors, counts, holds and deletion rules. Separate stored-value assignment: memory_index_semantic_selector uses RP-PROJECTION-3GEN@1.0.0 under Plans/Decision_Log.md#DL-500; this assigns that stored value, not event history. Separate stored-value assignment: memory_index_semantic_rebuild_operation uses RP-MEMORY-MAINTENANCE-APPLICATION-2555D@1.0.0 under Plans/Decision_Log.md#DL-509; this assigns that stored value, not event history. Original sources and coherent backups retain their independent owner policies; the event lifetime is not transferred to them. Current append/publication still requires the exact selected schema/scope, original custody, current permission, receipt and required producer adoption. Actual missing registration or unresolved required custody refuses; native execution remains NOT_RUN. No native adoption, new retention choice or governance seal follows.",
+        "old_line_start": 48613,
+        "new_line_start": 48615,
+        "new_line_end": 48615,
+        "reason": "Expand the exact current assignment through its policy, scope, anchor and effective count in its own cited unit."
        }
       },
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-635",
-       "line_start": 48613,
-       "line_end": 48613,
-       "quote": "Current selected assignment (2026-11-19): memory.index.semantic.rebuild.started@1.0.0 is registered for project_only in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2330. Its event history selects RP-OPERATIONAL-2555D@1.0.0; Plans/storage-plan.md#SP-635 owns the event policy's existing anchors, counts, holds and deletion rules. Separate stored-value assignment: memory_index_semantic_selector uses RP-PROJECTION-3GEN@1.0.0 under Plans/Decision_Log.md#DL-500; this assigns that stored value, not event history. Separate stored-value assignment: memory_index_semantic_rebuild_operation uses RP-MEMORY-MAINTENANCE-APPLICATION-2555D@1.0.0 under Plans/Decision_Log.md#DL-509; this assigns that stored value, not event history. Original sources and coherent backups retain their independent owner policies; the event lifetime is not transferred to them. Current append/publication still requires the exact selected schema/scope, original custody, current permission, receipt and required producer adoption. Actual missing registration or unresolved required custody refuses; native execution remains NOT_RUN. No native adoption, new retention choice or governance seal follows.",
+       "line_start": 48615,
+       "line_end": 48615,
+       "quote": "  Current selected assignment (2026-11-19): memory.index.semantic.rebuild.started@1.0.0 is registered for project_only in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2330. Its event history selects RP-OPERATIONAL-2555D@1.0.0; Plans/storage-plan.md#SP-635 owns the event policy's existing anchors, counts, holds and deletion rules. Separate stored-value assignment: memory_index_semantic_selector uses RP-PROJECTION-3GEN@1.0.0 under Plans/Decision_Log.md#DL-500; this assigns that stored value, not event history. Separate stored-value assignment: memory_index_semantic_rebuild_operation uses RP-MEMORY-MAINTENANCE-APPLICATION-2555D@1.0.0 under Plans/Decision_Log.md#DL-509; this assigns that stored value, not event history. Original sources and coherent backups retain their independent owner policies; the event lifetime is not transferred to them. Current append/publication still requires the exact selected schema/scope, original custody, current permission, receipt and required producer adoption. Actual missing registration or unresolved required custody refuses; native execution remains NOT_RUN. No native adoption, new retention choice or governance seal follows.",
        "quote_check": "exact",
-       "quote_scope": "unit SP-635, Plans/storage-plan.md:48560-48643",
-       "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+       "quote_scope": "unit SP-635, Plans/storage-plan.md:48562-48645",
+       "file_sha256": "eca9df98001183b2057086c6c7fc14b39c7bb406951f2ea0092062b81f770e6d",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-635",
@@ -574,6 +582,14 @@
        "locator_maintenance": {
         "authority": "MERGE2-FIX3",
         "reason": "Re-cite the same accepted retention claim at its current exact owner assignment; event and source/checkpoint authority remain separate."
+       },
+       "retention_range_maintenance": {
+        "authority": "MERGE3-POSTFIX finding 4",
+        "old_quote": "Current selected assignment (2026-11-19): memory.index.semantic.rebuild.started@1.0.0 is registered for project_only in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2330. Its event history selects RP-OPERATIONAL-2555D@1.0.0; Plans/storage-plan.md#SP-635 owns the event policy's existing anchors, counts, holds and deletion rules. Separate stored-value assignment: memory_index_semantic_selector uses RP-PROJECTION-3GEN@1.0.0 under Plans/Decision_Log.md#DL-500; this assigns that stored value, not event history. Separate stored-value assignment: memory_index_semantic_rebuild_operation uses RP-MEMORY-MAINTENANCE-APPLICATION-2555D@1.0.0 under Plans/Decision_Log.md#DL-509; this assigns that stored value, not event history. Original sources and coherent backups retain their independent owner policies; the event lifetime is not transferred to them. Current append/publication still requires the exact selected schema/scope, original custody, current permission, receipt and required producer adoption. Actual missing registration or unresolved required custody refuses; native execution remains NOT_RUN. No native adoption, new retention choice or governance seal follows.",
+        "old_line_start": 48613,
+        "new_line_start": 48615,
+        "new_line_end": 48615,
+        "reason": "Expand the exact current assignment through its policy, scope, anchor and effective count in its own cited unit."
        }
       }
      ],
@@ -592,12 +608,12 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-635",
-       "line_start": 48573,
-       "line_end": 48573,
+       "line_start": 48575,
+       "line_end": 48575,
        "quote": "Original operation/result, canonical gists, EventRecord and SP-286 receipts join coherent BRS-031 capture/restore boundaries; derived indexes are rebuilt, never backed up as canonical gists",
-       "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+       "file_sha256": "eca9df98001183b2057086c6c7fc14b39c7bb406951f2ea0092062b81f770e6d",
        "quote_check": "exact",
-       "quote_scope": "unit SP-635, Plans/storage-plan.md:48560-48643",
+       "quote_scope": "unit SP-635, Plans/storage-plan.md:48562-48645",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-635",
@@ -623,12 +639,12 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-635",
-       "line_start": 48578,
-       "line_end": 48578,
+       "line_start": 48580,
+       "line_end": 48580,
        "quote": "Recovery rechecks current Project permission and family withdrawal before any original disclosure, including completed operations; refusal returns no output and leaves durable state unchanged.",
-       "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+       "file_sha256": "eca9df98001183b2057086c6c7fc14b39c7bb406951f2ea0092062b81f770e6d",
        "quote_check": "exact",
-       "quote_scope": "unit SP-635, Plans/storage-plan.md:48560-48643",
+       "quote_scope": "unit SP-635, Plans/storage-plan.md:48562-48645",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-635",
@@ -655,11 +671,11 @@
        "path": "Plans/storage-plan.md",
        "unit": "SP-635",
        "quote": "Start custody gate for exactly memory.index.semantic.rebuild.started@1.0.0, newly authored owner contract (DMEM fix round 4)",
-       "line_start": 48580,
-       "line_end": 48580,
-       "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+       "line_start": 48582,
+       "line_end": 48582,
+       "file_sha256": "eca9df98001183b2057086c6c7fc14b39c7bb406951f2ea0092062b81f770e6d",
        "quote_check": "exact",
-       "quote_scope": "unit SP-635, Plans/storage-plan.md:48560-48643",
+       "quote_scope": "unit SP-635, Plans/storage-plan.md:48562-48645",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-635",
@@ -686,11 +702,11 @@
        "path": "Plans/storage-plan.md",
        "unit": "SP-635",
        "quote": "Missing, corrupted, mismatched or withdrawn custody refuses with start_receipt_missing, or permission_or_withdrawal for a withdrawal fence",
-       "line_start": 48580,
-       "line_end": 48580,
-       "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+       "line_start": 48582,
+       "line_end": 48582,
+       "file_sha256": "eca9df98001183b2057086c6c7fc14b39c7bb406951f2ea0092062b81f770e6d",
        "quote_check": "exact",
-       "quote_scope": "unit SP-635, Plans/storage-plan.md:48560-48643",
+       "quote_scope": "unit SP-635, Plans/storage-plan.md:48562-48645",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-635",
@@ -717,11 +733,11 @@
        "path": "Plans/storage-plan.md",
        "unit": "SP-635",
        "quote": "The history reader returns a retained original that verified when written whatever the operation's current live state",
-       "line_start": 48580,
-       "line_end": 48580,
-       "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+       "line_start": 48582,
+       "line_end": 48582,
+       "file_sha256": "eca9df98001183b2057086c6c7fc14b39c7bb406951f2ea0092062b81f770e6d",
        "quote_check": "exact",
-       "quote_scope": "unit SP-635, Plans/storage-plan.md:48560-48643",
+       "quote_scope": "unit SP-635, Plans/storage-plan.md:48562-48645",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-635",
@@ -760,12 +776,12 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-635",
-       "line_start": 48576,
-       "line_end": 48576,
+       "line_start": 48578,
+       "line_end": 48578,
        "quote": "Operation rows use the phase constraints of their closed schema: accepted has no event receipt or outcome; started has only the original start receipt; effect_committed has a complete frozen",
-       "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+       "file_sha256": "eca9df98001183b2057086c6c7fc14b39c7bb406951f2ea0092062b81f770e6d",
        "quote_check": "exact",
-       "quote_scope": "unit SP-635, Plans/storage-plan.md:48560-48643",
+       "quote_scope": "unit SP-635, Plans/storage-plan.md:48562-48645",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-635",
@@ -791,12 +807,12 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-635",
-       "line_start": 48584,
-       "line_end": 48584,
+       "line_start": 48586,
+       "line_end": 48586,
        "quote": "Newly authored semantic target/selection custody for this exact family (per-family round-1 search in DMEM-search.json) uses required nullable prepared_target in index_semantic_rebuild. It is",
-       "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+       "file_sha256": "eca9df98001183b2057086c6c7fc14b39c7bb406951f2ea0092062b81f770e6d",
        "quote_check": "exact",
-       "quote_scope": "unit SP-635, Plans/storage-plan.md:48560-48643",
+       "quote_scope": "unit SP-635, Plans/storage-plan.md:48562-48645",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-635",
@@ -822,12 +838,12 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-635",
-       "line_start": 48578,
-       "line_end": 48578,
+       "line_start": 48580,
+       "line_end": 48580,
        "quote": "Original start custody on every path, including post-completion retry and recovery, follows the start custody gate below.",
-       "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+       "file_sha256": "eca9df98001183b2057086c6c7fc14b39c7bb406951f2ea0092062b81f770e6d",
        "quote_check": "exact",
-       "quote_scope": "unit SP-635, Plans/storage-plan.md:48560-48643",
+       "quote_scope": "unit SP-635, Plans/storage-plan.md:48562-48645",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-635",
@@ -854,11 +870,11 @@
        "path": "Plans/storage-plan.md",
        "unit": "SP-635",
        "quote": "Start custody gate for exactly memory.index.semantic.rebuild.started@1.0.0, newly authored owner contract (DMEM fix round 4)",
-       "line_start": 48580,
-       "line_end": 48580,
-       "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+       "line_start": 48582,
+       "line_end": 48582,
+       "file_sha256": "eca9df98001183b2057086c6c7fc14b39c7bb406951f2ea0092062b81f770e6d",
        "quote_check": "exact",
-       "quote_scope": "unit SP-635, Plans/storage-plan.md:48560-48643",
+       "quote_scope": "unit SP-635, Plans/storage-plan.md:48562-48645",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-635",
@@ -885,11 +901,11 @@
        "path": "Plans/storage-plan.md",
        "unit": "SP-635",
        "quote": "Missing, corrupted, mismatched or withdrawn custody refuses with start_receipt_missing, or permission_or_withdrawal for a withdrawal fence",
-       "line_start": 48580,
-       "line_end": 48580,
-       "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+       "line_start": 48582,
+       "line_end": 48582,
+       "file_sha256": "eca9df98001183b2057086c6c7fc14b39c7bb406951f2ea0092062b81f770e6d",
        "quote_check": "exact",
-       "quote_scope": "unit SP-635, Plans/storage-plan.md:48560-48643",
+       "quote_scope": "unit SP-635, Plans/storage-plan.md:48562-48645",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-635",
@@ -928,12 +944,12 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-635",
-       "line_start": 48572,
-       "line_end": 48572,
+       "line_start": 48574,
+       "line_end": 48574,
        "quote": "Exact consumer reader.memory.index.semantic.rebuild.started.history.v1@1.0.0 is a newly authored stateless read-only binding used by Memory maintenance history and audit lookup for this exac",
-       "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+       "file_sha256": "eca9df98001183b2057086c6c7fc14b39c7bb406951f2ea0092062b81f770e6d",
        "quote_check": "exact",
-       "quote_scope": "unit SP-635, Plans/storage-plan.md:48560-48643",
+       "quote_scope": "unit SP-635, Plans/storage-plan.md:48562-48645",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-635",
@@ -991,12 +1007,12 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-635",
-       "line_start": 48574,
-       "line_end": 48574,
+       "line_start": 48576,
+       "line_end": 48576,
        "quote": "Withdrawal first fences new command acceptance and this family's writer admission, drains or explicitly leaves unresolved existing original operations without reissuing them, then under the",
-       "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+       "file_sha256": "eca9df98001183b2057086c6c7fc14b39c7bb406951f2ea0092062b81f770e6d",
        "quote_check": "exact",
-       "quote_scope": "unit SP-635, Plans/storage-plan.md:48560-48643",
+       "quote_scope": "unit SP-635, Plans/storage-plan.md:48562-48645",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-635",
@@ -1022,12 +1038,12 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-635",
-       "line_start": 48578,
-       "line_end": 48578,
+       "line_start": 48580,
+       "line_end": 48580,
        "quote": "Recovery rechecks current Project permission and family withdrawal before any original disclosure, including completed operations; refusal returns no output and leaves durable state unchanged.",
-       "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+       "file_sha256": "eca9df98001183b2057086c6c7fc14b39c7bb406951f2ea0092062b81f770e6d",
        "quote_check": "exact",
-       "quote_scope": "unit SP-635, Plans/storage-plan.md:48560-48643",
+       "quote_scope": "unit SP-635, Plans/storage-plan.md:48562-48645",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-635",
@@ -1053,12 +1069,12 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-635",
-       "line_start": 48592,
-       "line_end": 48592,
+       "line_start": 48594,
+       "line_end": 48594,
        "quote": "Reader dispatch follows SP-1101: each retained canonical original",
-       "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+       "file_sha256": "eca9df98001183b2057086c6c7fc14b39c7bb406951f2ea0092062b81f770e6d",
        "quote_check": "exact",
-       "quote_scope": "unit SP-635, Plans/storage-plan.md:48560-48643",
+       "quote_scope": "unit SP-635, Plans/storage-plan.md:48562-48645",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-635",
@@ -1097,12 +1113,12 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-635",
-       "line_start": 48567,
-       "line_end": 48569,
+       "line_start": 48569,
+       "line_end": 48571,
        "quote": "|-\n  Newly authored owner contract under DL-045 for exactly memory.index.semantic.rebuild.started@1.0.0; search scope and negative evidence are the family's row in reports/event-authority-20261104/DMEM-search.json. At preparation before the 2026-11-18 registration, the family was absent from event_family_registry.json and quarantined before append or projection. Historical preparation snapshot (2026-11-19, stale wording in received dfea17a6c4): «Retention is PENDING_RETENTION_DECISION: candidate ordinary telemetry (Case L-3, 90 days/2,000,000 per Project) versus audit authority (indefinite/no count eviction); neither is selected.» Unknown policy is materially incomplete and permits no destructive inference. Operation custody has the same pending assignment, and actual native activation is fenced until it resolves.\n  Identity",
-       "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+       "file_sha256": "eca9df98001183b2057086c6c7fc14b39c7bb406951f2ea0092062b81f770e6d",
        "quote_check": "exact",
-       "quote_scope": "unit SP-635, Plans/storage-plan.md:48560-48643",
+       "quote_scope": "unit SP-635, Plans/storage-plan.md:48562-48645",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-635",
@@ -1131,7 +1147,7 @@
        "quote": "canonical_text: Newly authored closed payload owner contract for exactly memory.index.semantic.rebuild.started@1.0.0",
        "quote_check": "exact",
        "quote_scope": "unit CV-655, Plans/Contracts_V0.md:40717-40764",
-       "file_sha256": "58dee182ea2dd8dd358d27912280fa9113c3d1d8fd68b1c0c5d51b6f906d73c8",
+       "file_sha256": "77879920f56eb692b9d2ddcf47c1c2421e0c426e2ccd911e183895f8195c45b3",
        "source_citation": {
         "path": "Plans/Contracts_V0.md",
         "unit": "CV-655",
@@ -1274,10 +1290,10 @@
   "row_pointer": "#/families/412"
  },
  "evidence_maintenance": {
-  "authority": "MERGE2-FIX4 items 1/2/3",
-  "source_commit": "2bda6aeed03daea26c4d79dfb7568fc145aac29e",
-  "source_assessment_sha256": "c3dba73fc35c86bb889e349ecd507a8fb871913337cc9c853071a7d64e95b27a",
-  "native_execution": "NOT_RUN",
-  "verdicts_changed": false
+  "authority": "MERGE3-POSTFIX final citation maintenance",
+  "source_commit": "92d16bc12e0fa5a198d8e3f30340eab43e380a83",
+  "source_assessment_sha256": "9313454e0c73c5901de556cda83c2461cefac78d58ab9e51e024de02f9c7fb89",
+  "verdicts_changed": false,
+  "native_execution": "NOT_RUN"
  }
 }

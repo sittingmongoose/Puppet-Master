@@ -4,7 +4,7 @@
  "family_id": "event-family-gate-passed",
  "implementation_receipt_sha256": "dceb7f21436cbe126c23822e62caa1b6dedcb45fefae3005c1804576ca34d827",
  "decision_ref": "Plans/Decision_Log.md#DL-2317",
- "decision_section_sha256": "3ceaecf51dcfc1e63db13a676e32981729279dc24c0bc98fe1bfa08a6ed22952",
+ "decision_section_sha256": "8dca7a2f1db4a0028200d1d8033d20a8fedafe3e35f4540250759ff12e9477c7",
  "registry_before": {
   "revision": "2026-11-16.180",
   "sha256": "33b9b7879026ac0d730f2d731d984c773531b86bca1b3b5b79035451226153c7",
@@ -18,7 +18,7 @@
  "registry_row_sha256": "dc47a039ce3d79448a72cf0b3476115391176f5d6ffe001e3ed58d1dca831632",
  "depth_assessment": {
   "path": "reports/event-authority-20261116/admission-merge-2/depth/gate.passed.json",
-  "sha256": "e44817cbfe30f651f99ae2d1c7e048ea249259b165bc9cc66b164b82806640e6"
+  "sha256": "89464b82385c44b8fa0a232526c2164e130cfb4b6b0c514ab869c77c548404ef"
  },
  "admission_landing": {
   "branch": "plans/ea-merge2-apply-20261116",
@@ -37,11 +37,11 @@
   "Written under DL-077. The seal check recomputes completeness from the pinned assessment; the two fields ending in _at_recording are informational only."
  ],
  "evidence_maintenance": {
-  "authority": "MERGE2-FIX4",
-  "source_commit": "2bda6aeed03daea26c4d79dfb7568fc145aac29e",
-  "source_record_sha256": "e9df84f3f425b268076de79522e1de1fe153ca34245a7f6df4aa0601e16e6b31",
-  "source_assessment_sha256": "450c400edcd09eb0afa8d856578890b19f1f0ad2bfe73ece53502d3ac921d01b",
-  "source_decision_section_sha256": "28c80cc938b963d3b44f81856478fc6738156f2745e65426d12df0cc28ffa840",
+  "authority": "MERGE3-POSTFIX final citation maintenance",
+  "source_commit": "92d16bc12e0fa5a198d8e3f30340eab43e380a83",
+  "source_record_sha256": "88006cd4899a41d509ea36206fb1a4bbae1e8c368f54f7839cf48e336f7f422f",
+  "source_assessment_sha256": "e44817cbfe30f651f99ae2d1c7e048ea249259b165bc9cc66b164b82806640e6",
+  "source_decision_section_sha256": "3ceaecf51dcfc1e63db13a676e32981729279dc24c0bc98fe1bfa08a6ed22952",
   "original_registry_checkpoints_preserved": true
  }
 }

@@ -5,8 +5,8 @@
  "merge": "admission-merge-2",
  "registry": {
   "path": "Plans/event_family_registry.json",
-  "revision": "2026-11-18.2",
-  "sha256": "ec21cf1a5b42b3e68a5564a847b4798dff968612d11d438bc7075b89196f9602",
+  "revision": "2026-11-19.145",
+  "sha256": "e9eb5cc0d292efbc6c0b452928ece0a93fb0744be43066ed446128d5d2cd3e30",
   "family_count": 518,
   "row_pointer": "#/families/463"
  },
@@ -22,16 +22,16 @@
     "membership_version": {
      "status": "PASS",
      "representation": "exact_registry_membership",
-     "finding": "Currently registered at 2026-11-18.2 as #/families/463 (canonical row SHA-256 22ad6be8ef9bfa3a5c5ebc57cf8639ff52a6c3483f9dd320f9fbaf90dba4d915). Original one-family admission checkpoints remain in the family record and immutable Git source.",
+     "finding": "Currently registered at 2026-11-19.145 as #/families/463, canonical row SHA-256 22ad6be8ef9bfa3a5c5ebc57cf8639ff52a6c3483f9dd320f9fbaf90dba4d915. Original one-family append checkpoints remain authenticated by the immutable predecessor and correction chain.",
      "evidence": [
       {
        "path": "Plans/event_family_registry.json",
        "json_pointer": "#/families/463",
-       "line_start": 29971,
-       "line_end": 30024,
+       "line_start": 30081,
+       "line_end": 30134,
        "quote": "\"event_type\": \"runtime_artifact.cost_usage\"",
-       "quote_line": 29974,
-       "file_sha256": "ec21cf1a5b42b3e68a5564a847b4798dff968612d11d438bc7075b89196f9602",
+       "quote_line": 30084,
+       "file_sha256": "e9eb5cc0d292efbc6c0b452928ece0a93fb0744be43066ed446128d5d2cd3e30",
        "quote_check": "exact",
        "source_citation": {
         "path": "Plans/event_family_registry.json",
@@ -44,7 +44,7 @@
         "quote_check": "exact"
        },
        "unit": "#/families/463",
-       "quote_scope": "unit #/families/463, Plans/event_family_registry.json:29971-30024"
+       "quote_scope": "unit #/families/463, Plans/event_family_registry.json:30081-30134"
       }
      ]
     },
@@ -128,7 +128,7 @@
        "quote": "Explicitly adopt SP-337 store-once packs for this family. Newly authored exact dispatch binding under DL-045: encode the unchanged logical payload as RFC 8785 canonical JSON, UTF-8 without B",
        "quote_check": "exact",
        "quote_scope": "unit CV-526, Plans/Contracts_V0.md:44047-44084",
-       "file_sha256": "58dee182ea2dd8dd358d27912280fa9113c3d1d8fd68b1c0c5d51b6f906d73c8",
+       "file_sha256": "77879920f56eb692b9d2ddcf47c1c2421e0c426e2ccd911e183895f8195c45b3",
        "source_citation": {
         "path": "Plans/Contracts_V0.md",
         "unit": "CV-526",
@@ -159,7 +159,7 @@
        "quote": "Payload dispatch prepared for runtime_artifact.cost_usage@1.0.0 only: Plans/runtime_artifact_cost_usage.schema.json, schema ID pm.runtime_artifact.cost_usage.schema.v1, root object with addi",
        "quote_check": "exact",
        "quote_scope": "unit CV-526, Plans/Contracts_V0.md:44047-44084",
-       "file_sha256": "58dee182ea2dd8dd358d27912280fa9113c3d1d8fd68b1c0c5d51b6f906d73c8",
+       "file_sha256": "77879920f56eb692b9d2ddcf47c1c2421e0c426e2ccd911e183895f8195c45b3",
        "source_citation": {
         "path": "Plans/Contracts_V0.md",
         "unit": "CV-526",
@@ -177,7 +177,7 @@
        "quote": "Newly authored exact provider-hash representation for runtime_artifact.cost_usage under DL-045:",
        "quote_check": "exact",
        "quote_scope": "unit CV-526, Plans/Contracts_V0.md:44047-44084",
-       "file_sha256": "58dee182ea2dd8dd358d27912280fa9113c3d1d8fd68b1c0c5d51b6f906d73c8",
+       "file_sha256": "77879920f56eb692b9d2ddcf47c1c2421e0c426e2ccd911e183895f8195c45b3",
        "source_citation": {
         "path": "Plans/Contracts_V0.md",
         "unit": "CV-526",
@@ -244,7 +244,7 @@
        "quote": "Envelope run_id/attempt_id/thread_id/node_id equal the corresponding payload values or required-present null for absent optional fields; occurred_at_utc equals payload.created_at_utc. actor_",
        "quote_check": "exact",
        "quote_scope": "unit CV-526, Plans/Contracts_V0.md:44047-44084",
-       "file_sha256": "58dee182ea2dd8dd358d27912280fa9113c3d1d8fd68b1c0c5d51b6f906d73c8",
+       "file_sha256": "77879920f56eb692b9d2ddcf47c1c2421e0c426e2ccd911e183895f8195c45b3",
        "source_citation": {
         "path": "Plans/Contracts_V0.md",
         "unit": "CV-526",
@@ -293,7 +293,7 @@
        "quote": "Retries freeze the original payload route/ref/bytes as producer-semantic inputs; no repacking or re-encoding may silently change the original digest or first receipt. Envelope run_id/attempt",
        "quote_check": "exact",
        "quote_scope": "unit CV-526, Plans/Contracts_V0.md:44047-44084",
-       "file_sha256": "58dee182ea2dd8dd358d27912280fa9113c3d1d8fd68b1c0c5d51b6f906d73c8",
+       "file_sha256": "77879920f56eb692b9d2ddcf47c1c2421e0c426e2ccd911e183895f8195c45b3",
        "source_citation": {
         "path": "Plans/Contracts_V0.md",
         "unit": "CV-526",
@@ -319,12 +319,12 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-526",
-       "line_start": 54234,
-       "line_end": 54234,
+       "line_start": 54236,
+       "line_end": 54236,
        "quote": "The reused event_record_index rows retain RP-EVENT-INDEX-SOURCE, source-coupled to the retained EventRecord, with complete target-generation rebuild/remapping at compaction. Only event_recor",
        "quote_check": "exact",
-       "quote_scope": "unit SP-526, Plans/storage-plan.md:54223-54260",
-       "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+       "quote_scope": "unit SP-526, Plans/storage-plan.md:54225-54262",
+       "file_sha256": "eca9df98001183b2057086c6c7fc14b39c7bb406951f2ea0092062b81f770e6d",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-526",
@@ -409,7 +409,7 @@
        "quote": "Pack bytes and index are durable before acknowledgement through SP-337's pack-first sync or same-group segment staging/seal protocol. Retained EventRecord references keep the full logical me",
        "quote_check": "exact",
        "quote_scope": "unit CV-526, Plans/Contracts_V0.md:44047-44084",
-       "file_sha256": "58dee182ea2dd8dd358d27912280fa9113c3d1d8fd68b1c0c5d51b6f906d73c8",
+       "file_sha256": "77879920f56eb692b9d2ddcf47c1c2421e0c426e2ccd911e183895f8195c45b3",
        "source_citation": {
         "path": "Plans/Contracts_V0.md",
         "unit": "CV-526",
@@ -484,12 +484,12 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-526",
-       "line_start": 54232,
-       "line_end": 54232,
+       "line_start": 54234,
+       "line_end": 54234,
        "quote": "The exact physical checkpoint is event_record_index_checkpoint.v1:{storage_instance_id} in the checkpoints table; value pm.storage_value.event_record_index_checkpoint.v1@1.0.0 at Plans/event",
        "quote_check": "exact",
-       "quote_scope": "unit SP-526, Plans/storage-plan.md:54223-54260",
-       "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+       "quote_scope": "unit SP-526, Plans/storage-plan.md:54225-54262",
+       "file_sha256": "eca9df98001183b2057086c6c7fc14b39c7bb406951f2ea0092062b81f770e6d",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-526",
@@ -502,12 +502,12 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-526",
-       "line_start": 54233,
-       "line_end": 54233,
+       "line_start": 54235,
+       "line_end": 54235,
        "quote": "The adopted full-index projector advances rows and frontier atomically in one redb transaction with prior-generation/frontier CAS, as SP-278 requires. The live token has ten fields; any dura",
        "quote_check": "exact",
-       "quote_scope": "unit SP-526, Plans/storage-plan.md:54223-54260",
-       "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+       "quote_scope": "unit SP-526, Plans/storage-plan.md:54225-54262",
+       "file_sha256": "eca9df98001183b2057086c6c7fc14b39c7bb406951f2ea0092062b81f770e6d",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-526",
@@ -599,14 +599,14 @@
        }
       },
       {
-       "line_end": 54223,
-       "line_start": 54223,
+       "line_end": 54225,
+       "line_start": 54225,
        "path": "Plans/storage-plan.md",
        "quote": "### SP-526 — runtime_artifact.cost_usage",
        "unit": "SP-526",
        "quote_check": "exact",
-       "quote_scope": "unit SP-526, Plans/storage-plan.md:54223-54260",
-       "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+       "quote_scope": "unit SP-526, Plans/storage-plan.md:54225-54262",
+       "file_sha256": "eca9df98001183b2057086c6c7fc14b39c7bb406951f2ea0092062b81f770e6d",
        "source_citation": {
         "line_end": 54136,
         "line_start": 54136,
@@ -624,7 +624,7 @@
        "unit": "CV-526",
        "quote_check": "exact",
        "quote_scope": "unit CV-526, Plans/Contracts_V0.md:44047-44084",
-       "file_sha256": "58dee182ea2dd8dd358d27912280fa9113c3d1d8fd68b1c0c5d51b6f906d73c8",
+       "file_sha256": "77879920f56eb692b9d2ddcf47c1c2421e0c426e2ccd911e183895f8195c45b3",
        "source_citation": {
         "line_end": 41920,
         "line_start": 41920,
@@ -660,7 +660,7 @@
        "unit": "ATS-260",
        "quote_check": "exact",
        "quote_scope": "unit ATS-260, Plans/Automated_Testing_System.md:12032-12074",
-       "file_sha256": "a3028640b73729884c6b3d1a0f095289513e4f76e61af711c233858bf005dc7c",
+       "file_sha256": "9578cb2d7c8a6b000935bb1602650c67ada31d8cbbbad9e3baabee00ec961997",
        "source_citation": {
         "line_end": 11266,
         "line_start": 11266,
@@ -678,7 +678,7 @@
        "unit": "ATS-260",
        "quote_check": "exact",
        "quote_scope": "unit ATS-260, Plans/Automated_Testing_System.md:12032-12074",
-       "file_sha256": "a3028640b73729884c6b3d1a0f095289513e4f76e61af711c233858bf005dc7c",
+       "file_sha256": "9578cb2d7c8a6b000935bb1602650c67ada31d8cbbbad9e3baabee00ec961997",
        "source_citation": {
         "line_end": 11267,
         "line_start": 11267,
@@ -923,10 +923,10 @@
   "row_pointer": "#/families/463"
  },
  "evidence_maintenance": {
-  "authority": "MERGE2-FIX4 items 1/2/3",
-  "source_commit": "2bda6aeed03daea26c4d79dfb7568fc145aac29e",
-  "source_assessment_sha256": "6603abd845389fa5c1d5f8a4d11dd754ee5071543a6995a18fae1e0907ea57d9",
-  "native_execution": "NOT_RUN",
-  "verdicts_changed": false
+  "authority": "MERGE3-POSTFIX final citation maintenance",
+  "source_commit": "92d16bc12e0fa5a198d8e3f30340eab43e380a83",
+  "source_assessment_sha256": "fe3572dbc29e08ecf69257b16fcbd04a6458caf24f1102a6d498196b2c86a2e4",
+  "verdicts_changed": false,
+  "native_execution": "NOT_RUN"
  }
 }

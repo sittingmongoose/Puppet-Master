@@ -5,8 +5,8 @@
  "merge": "admission-merge-2",
  "registry": {
   "path": "Plans/event_family_registry.json",
-  "revision": "2026-11-18.2",
-  "sha256": "ec21cf1a5b42b3e68a5564a847b4798dff968612d11d438bc7075b89196f9602",
+  "revision": "2026-11-19.145",
+  "sha256": "e9eb5cc0d292efbc6c0b452928ece0a93fb0744be43066ed446128d5d2cd3e30",
   "family_count": 518,
   "row_pointer": "#/families/506"
  },
@@ -22,16 +22,16 @@
     "membership_version": {
      "status": "PASS",
      "representation": "exact_registry_membership",
-     "finding": "Currently registered at 2026-11-18.2 as #/families/506 (canonical row SHA-256 7e9409c3d30ec2dace5028ca9e79b060d5eec521d5a73cdf482ab30d956fe1f1). Original one-family admission checkpoints remain in the family record and immutable Git source.",
+     "finding": "Currently registered at 2026-11-19.145 as #/families/506, canonical row SHA-256 7e9409c3d30ec2dace5028ca9e79b060d5eec521d5a73cdf482ab30d956fe1f1. Original one-family append checkpoints remain authenticated by the immutable predecessor and correction chain.",
      "evidence": [
       {
        "path": "Plans/event_family_registry.json",
        "json_pointer": "#/families/506",
-       "line_start": 32880,
-       "line_end": 32920,
+       "line_start": 33037,
+       "line_end": 33077,
        "quote": "\"event_type\": \"tool.custom_headless.skipped\"",
-       "quote_line": 32883,
-       "file_sha256": "ec21cf1a5b42b3e68a5564a847b4798dff968612d11d438bc7075b89196f9602",
+       "quote_line": 33040,
+       "file_sha256": "e9eb5cc0d292efbc6c0b452928ece0a93fb0744be43066ed446128d5d2cd3e30",
        "quote_check": "exact",
        "source_citation": {
         "path": "Plans/event_family_registry.json",
@@ -44,7 +44,7 @@
         "quote_check": "exact"
        },
        "unit": "#/families/506",
-       "quote_scope": "unit #/families/506, Plans/event_family_registry.json:32880-32920"
+       "quote_scope": "unit #/families/506, Plans/event_family_registry.json:33037-33077"
       }
      ]
     },
@@ -577,10 +577,10 @@
   "row_pointer": "#/families/506"
  },
  "evidence_maintenance": {
-  "authority": "MERGE2-FIX4 items 1/2/3",
-  "source_commit": "2bda6aeed03daea26c4d79dfb7568fc145aac29e",
-  "source_assessment_sha256": "0c6052f0b7aa8fee974721afd099c583f25765f2bd115a024a5c913d20eba3a3",
-  "native_execution": "NOT_RUN",
-  "verdicts_changed": false
+  "authority": "MERGE3-POSTFIX final citation maintenance",
+  "source_commit": "92d16bc12e0fa5a198d8e3f30340eab43e380a83",
+  "source_assessment_sha256": "4b8e3058bc0667a6dbaf34fe259d32dabf4e988f062d21349107d3dcc38fab88",
+  "verdicts_changed": false,
+  "native_execution": "NOT_RUN"
  }
 }

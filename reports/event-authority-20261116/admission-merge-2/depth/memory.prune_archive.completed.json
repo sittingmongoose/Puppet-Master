@@ -5,8 +5,8 @@
  "merge": "admission-merge-2",
  "registry": {
   "path": "Plans/event_family_registry.json",
-  "revision": "2026-11-18.2",
-  "sha256": "ec21cf1a5b42b3e68a5564a847b4798dff968612d11d438bc7075b89196f9602",
+  "revision": "2026-11-19.145",
+  "sha256": "e9eb5cc0d292efbc6c0b452928ece0a93fb0744be43066ed446128d5d2cd3e30",
   "family_count": 518,
   "row_pointer": "#/families/415"
  },
@@ -22,16 +22,16 @@
     "membership_version": {
      "status": "PASS",
      "representation": "exact_registry_membership",
-     "finding": "Currently registered at 2026-11-18.2 as #/families/415 (canonical row SHA-256 b802b23ae9970fa44e87c5c473b62bf0f6cd5cb181ef3b6831dbf01607f44716). Original one-family admission checkpoints remain in the family record and immutable Git source.",
+     "finding": "Currently registered at 2026-11-19.145 as #/families/415, canonical row SHA-256 b802b23ae9970fa44e87c5c473b62bf0f6cd5cb181ef3b6831dbf01607f44716. Original one-family append checkpoints remain authenticated by the immutable predecessor and correction chain.",
      "evidence": [
       {
        "path": "Plans/event_family_registry.json",
        "json_pointer": "#/families/415",
-       "line_start": 27025,
-       "line_end": 27067,
+       "line_start": 27038,
+       "line_end": 27080,
        "quote": "\"event_type\": \"memory.prune_archive.completed\"",
-       "quote_line": 27028,
-       "file_sha256": "ec21cf1a5b42b3e68a5564a847b4798dff968612d11d438bc7075b89196f9602",
+       "quote_line": 27041,
+       "file_sha256": "e9eb5cc0d292efbc6c0b452928ece0a93fb0744be43066ed446128d5d2cd3e30",
        "quote_check": "exact",
        "source_citation": {
         "path": "Plans/event_family_registry.json",
@@ -44,7 +44,7 @@
         "quote_check": "exact"
        },
        "unit": "#/families/415",
-       "quote_scope": "unit #/families/415, Plans/event_family_registry.json:27025-27067"
+       "quote_scope": "unit #/families/415, Plans/event_family_registry.json:27038-27080"
       }
      ]
     },
@@ -61,7 +61,7 @@
        "quote": "Semantic owner is Plans/assistant-memory-subsystem.md section 7.2, as amended by DL-402, DL-403 and DL-447. This",
        "quote_check": "exact",
        "quote_scope": "unit CV-658, Plans/Contracts_V0.md:40871-40936",
-       "file_sha256": "58dee182ea2dd8dd358d27912280fa9113c3d1d8fd68b1c0c5d51b6f906d73c8",
+       "file_sha256": "77879920f56eb692b9d2ddcf47c1c2421e0c426e2ccd911e183895f8195c45b3",
        "source_citation": {
         "path": "Plans/Contracts_V0.md",
         "unit": "CV-658",
@@ -79,7 +79,7 @@
        "quote": "DL-447 answers DL-403 for this exact job",
        "quote_check": "exact",
        "quote_scope": "unit CV-658, Plans/Contracts_V0.md:40871-40936",
-       "file_sha256": "58dee182ea2dd8dd358d27912280fa9113c3d1d8fd68b1c0c5d51b6f906d73c8",
+       "file_sha256": "77879920f56eb692b9d2ddcf47c1c2421e0c426e2ccd911e183895f8195c45b3",
        "source_citation": {
         "path": "Plans/Contracts_V0.md",
         "unit": "CV-658",
@@ -110,7 +110,7 @@
        "quote": "unit owns this family's payload and storage contract. Its producer is MemoryMaintenance.prune_archive.completed.v1@1.0.0",
        "quote_check": "exact",
        "quote_scope": "unit CV-658, Plans/Contracts_V0.md:40871-40936",
-       "file_sha256": "58dee182ea2dd8dd358d27912280fa9113c3d1d8fd68b1c0c5d51b6f906d73c8",
+       "file_sha256": "77879920f56eb692b9d2ddcf47c1c2421e0c426e2ccd911e183895f8195c45b3",
        "source_citation": {
         "path": "Plans/Contracts_V0.md",
         "unit": "CV-658",
@@ -136,12 +136,12 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-636",
-       "line_start": 48668,
-       "line_end": 48668,
+       "line_start": 48670,
+       "line_end": 48670,
        "quote": "A current-writer retained EventRecord carries the unchanged CV-339 full-value commitment",
-       "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+       "file_sha256": "eca9df98001183b2057086c6c7fc14b39c7bb406951f2ea0092062b81f770e6d",
        "quote_check": "exact",
-       "quote_scope": "unit SP-636, Plans/storage-plan.md:48644-48735",
+       "quote_scope": "unit SP-636, Plans/storage-plan.md:48646-48737",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-636",
@@ -185,7 +185,7 @@
        "quote": "all declared fields required, additionalProperties=false, version=1.0.0, payload_ref=null. Completed status/result",
        "quote_check": "exact",
        "quote_scope": "unit CV-658, Plans/Contracts_V0.md:40871-40936",
-       "file_sha256": "58dee182ea2dd8dd358d27912280fa9113c3d1d8fd68b1c0c5d51b6f906d73c8",
+       "file_sha256": "77879920f56eb692b9d2ddcf47c1c2421e0c426e2ccd911e183895f8195c45b3",
        "source_citation": {
         "path": "Plans/Contracts_V0.md",
         "unit": "CV-658",
@@ -216,7 +216,7 @@
        "quote": "idempotency_key=\"memory-maintenance:\"+the same lower-hex digest. The caller-supplied semantic EventRecord fields",
        "quote_check": "exact",
        "quote_scope": "unit CV-658, Plans/Contracts_V0.md:40871-40936",
-       "file_sha256": "58dee182ea2dd8dd358d27912280fa9113c3d1d8fd68b1c0c5d51b6f906d73c8",
+       "file_sha256": "77879920f56eb692b9d2ddcf47c1c2421e0c426e2ccd911e183895f8195c45b3",
        "source_citation": {
         "path": "Plans/Contracts_V0.md",
         "unit": "CV-658",
@@ -247,7 +247,7 @@
        "quote": "Current append and retry refuse projector_replay_only as replay_only_not_appendable, before any original return",
        "quote_check": "exact",
        "quote_scope": "unit CV-658, Plans/Contracts_V0.md:40871-40936",
-       "file_sha256": "58dee182ea2dd8dd358d27912280fa9113c3d1d8fd68b1c0c5d51b6f906d73c8",
+       "file_sha256": "77879920f56eb692b9d2ddcf47c1c2421e0c426e2ccd911e183895f8195c45b3",
        "source_citation": {
         "path": "Plans/Contracts_V0.md",
         "unit": "CV-658",
@@ -273,12 +273,12 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-636",
-       "line_start": 48705,
-       "line_end": 48705,
-       "quote": "Current selected assignment (2026-11-19): memory.prune_archive.completed@1.0.0 is registered for project_only in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2333. Its event history selects RP-OPERATIONAL-2555D@1.0.0; Plans/storage-plan.md#SP-636 owns the event policy's existing anchors, counts, holds and deletion rules. Separate stored-value assignment: memory_prune_archive_operation uses RP-MEMORY-MAINTENANCE-APPLICATION-2555D@1.0.0 under Plans/Decision_Log.md#DL-509; this assigns that stored value, not event history. Separate stored-value assignment: memory_verification_sweep_operation uses RP-MEMORY-MAINTENANCE-APPLICATION-2555D@1.0.0 under Plans/Decision_Log.md#DL-509; this assigns that stored value, not event history. Original sources and coherent backups retain their independent owner policies; the event lifetime is not transferred to them. Current append/publication still requires the exact selected schema/scope, original custody, current permission, receipt and required producer adoption. Actual missing registration or unresolved required custody refuses; native execution remains NOT_RUN. No native adoption, new retention choice or governance seal follows.",
+       "line_start": 48707,
+       "line_end": 48707,
+       "quote": "  Current selected assignment (2026-11-19): memory.prune_archive.completed@1.0.0 is registered for project_only in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2333. Its event history selects RP-OPERATIONAL-2555D@1.0.0; Plans/storage-plan.md#SP-636 owns the event policy's existing anchors, counts, holds and deletion rules. Separate stored-value assignment: memory_prune_archive_operation uses RP-MEMORY-MAINTENANCE-APPLICATION-2555D@1.0.0 under Plans/Decision_Log.md#DL-509; this assigns that stored value, not event history. Separate stored-value assignment: memory_verification_sweep_operation uses RP-MEMORY-MAINTENANCE-APPLICATION-2555D@1.0.0 under Plans/Decision_Log.md#DL-509; this assigns that stored value, not event history. Original sources and coherent backups retain their independent owner policies; the event lifetime is not transferred to them. Current append/publication still requires the exact selected schema/scope, original custody, current permission, receipt and required producer adoption. Actual missing registration or unresolved required custody refuses; native execution remains NOT_RUN. No native adoption, new retention choice or governance seal follows.",
        "quote_check": "exact",
-       "quote_scope": "unit SP-636, Plans/storage-plan.md:48644-48735",
-       "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+       "quote_scope": "unit SP-636, Plans/storage-plan.md:48646-48737",
+       "file_sha256": "eca9df98001183b2057086c6c7fc14b39c7bb406951f2ea0092062b81f770e6d",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-636",
@@ -290,17 +290,25 @@
        "locator_maintenance": {
         "authority": "MERGE2-FIX3",
         "reason": "Re-cite the same accepted retention claim at its current exact owner assignment; event and source/checkpoint authority remain separate."
+       },
+       "retention_range_maintenance": {
+        "authority": "MERGE3-POSTFIX finding 4",
+        "old_quote": "Current selected assignment (2026-11-19): memory.prune_archive.completed@1.0.0 is registered for project_only in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2333. Its event history selects RP-OPERATIONAL-2555D@1.0.0; Plans/storage-plan.md#SP-636 owns the event policy's existing anchors, counts, holds and deletion rules. Separate stored-value assignment: memory_prune_archive_operation uses RP-MEMORY-MAINTENANCE-APPLICATION-2555D@1.0.0 under Plans/Decision_Log.md#DL-509; this assigns that stored value, not event history. Separate stored-value assignment: memory_verification_sweep_operation uses RP-MEMORY-MAINTENANCE-APPLICATION-2555D@1.0.0 under Plans/Decision_Log.md#DL-509; this assigns that stored value, not event history. Original sources and coherent backups retain their independent owner policies; the event lifetime is not transferred to them. Current append/publication still requires the exact selected schema/scope, original custody, current permission, receipt and required producer adoption. Actual missing registration or unresolved required custody refuses; native execution remains NOT_RUN. No native adoption, new retention choice or governance seal follows.",
+        "old_line_start": 48705,
+        "new_line_start": 48707,
+        "new_line_end": 48707,
+        "reason": "Expand the exact current assignment through its policy, scope, anchor and effective count in its own cited unit."
        }
       },
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-636",
-       "line_start": 48705,
-       "line_end": 48705,
-       "quote": "Current selected assignment (2026-11-19): memory.prune_archive.completed@1.0.0 is registered for project_only in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2333. Its event history selects RP-OPERATIONAL-2555D@1.0.0; Plans/storage-plan.md#SP-636 owns the event policy's existing anchors, counts, holds and deletion rules. Separate stored-value assignment: memory_prune_archive_operation uses RP-MEMORY-MAINTENANCE-APPLICATION-2555D@1.0.0 under Plans/Decision_Log.md#DL-509; this assigns that stored value, not event history. Separate stored-value assignment: memory_verification_sweep_operation uses RP-MEMORY-MAINTENANCE-APPLICATION-2555D@1.0.0 under Plans/Decision_Log.md#DL-509; this assigns that stored value, not event history. Original sources and coherent backups retain their independent owner policies; the event lifetime is not transferred to them. Current append/publication still requires the exact selected schema/scope, original custody, current permission, receipt and required producer adoption. Actual missing registration or unresolved required custody refuses; native execution remains NOT_RUN. No native adoption, new retention choice or governance seal follows.",
+       "line_start": 48707,
+       "line_end": 48707,
+       "quote": "  Current selected assignment (2026-11-19): memory.prune_archive.completed@1.0.0 is registered for project_only in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2333. Its event history selects RP-OPERATIONAL-2555D@1.0.0; Plans/storage-plan.md#SP-636 owns the event policy's existing anchors, counts, holds and deletion rules. Separate stored-value assignment: memory_prune_archive_operation uses RP-MEMORY-MAINTENANCE-APPLICATION-2555D@1.0.0 under Plans/Decision_Log.md#DL-509; this assigns that stored value, not event history. Separate stored-value assignment: memory_verification_sweep_operation uses RP-MEMORY-MAINTENANCE-APPLICATION-2555D@1.0.0 under Plans/Decision_Log.md#DL-509; this assigns that stored value, not event history. Original sources and coherent backups retain their independent owner policies; the event lifetime is not transferred to them. Current append/publication still requires the exact selected schema/scope, original custody, current permission, receipt and required producer adoption. Actual missing registration or unresolved required custody refuses; native execution remains NOT_RUN. No native adoption, new retention choice or governance seal follows.",
        "quote_check": "exact",
-       "quote_scope": "unit SP-636, Plans/storage-plan.md:48644-48735",
-       "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+       "quote_scope": "unit SP-636, Plans/storage-plan.md:48646-48737",
+       "file_sha256": "eca9df98001183b2057086c6c7fc14b39c7bb406951f2ea0092062b81f770e6d",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-636",
@@ -312,6 +320,14 @@
        "locator_maintenance": {
         "authority": "MERGE2-FIX3",
         "reason": "Re-cite the same accepted retention claim at its current exact owner assignment; event and source/checkpoint authority remain separate."
+       },
+       "retention_range_maintenance": {
+        "authority": "MERGE3-POSTFIX finding 4",
+        "old_quote": "Current selected assignment (2026-11-19): memory.prune_archive.completed@1.0.0 is registered for project_only in Plans/event_family_registry.json, as recorded by Plans/Decision_Log.md#DL-2333. Its event history selects RP-OPERATIONAL-2555D@1.0.0; Plans/storage-plan.md#SP-636 owns the event policy's existing anchors, counts, holds and deletion rules. Separate stored-value assignment: memory_prune_archive_operation uses RP-MEMORY-MAINTENANCE-APPLICATION-2555D@1.0.0 under Plans/Decision_Log.md#DL-509; this assigns that stored value, not event history. Separate stored-value assignment: memory_verification_sweep_operation uses RP-MEMORY-MAINTENANCE-APPLICATION-2555D@1.0.0 under Plans/Decision_Log.md#DL-509; this assigns that stored value, not event history. Original sources and coherent backups retain their independent owner policies; the event lifetime is not transferred to them. Current append/publication still requires the exact selected schema/scope, original custody, current permission, receipt and required producer adoption. Actual missing registration or unresolved required custody refuses; native execution remains NOT_RUN. No native adoption, new retention choice or governance seal follows.",
+        "old_line_start": 48705,
+        "new_line_start": 48707,
+        "new_line_end": 48707,
+        "reason": "Expand the exact current assignment through its policy, scope, anchor and effective count in its own cited unit."
        }
       }
      ],
@@ -335,7 +351,7 @@
        "quote": "and root; mismatches fail. Preserve BRS-031 coherent canonical memory/operation/receipt/EventRecord boundaries;",
        "quote_check": "exact",
        "quote_scope": "unit CV-658, Plans/Contracts_V0.md:40871-40936",
-       "file_sha256": "58dee182ea2dd8dd358d27912280fa9113c3d1d8fd68b1c0c5d51b6f906d73c8",
+       "file_sha256": "77879920f56eb692b9d2ddcf47c1c2421e0c426e2ccd911e183895f8195c45b3",
        "source_citation": {
         "path": "Plans/Contracts_V0.md",
         "unit": "CV-658",
@@ -366,7 +382,7 @@
        "quote": "transaction accepted -> started -> effect_committed -> completed. The payload is its own closed definition Plans/memory_maintenance_event_payloads.schema.json#/$defs/memory_prune_a",
        "quote_check": "exact",
        "quote_scope": "unit CV-658, Plans/Contracts_V0.md:40871-40936",
-       "file_sha256": "58dee182ea2dd8dd358d27912280fa9113c3d1d8fd68b1c0c5d51b6f906d73c8",
+       "file_sha256": "77879920f56eb692b9d2ddcf47c1c2421e0c426e2ccd911e183895f8195c45b3",
        "source_citation": {
         "path": "Plans/Contracts_V0.md",
         "unit": "CV-658",
@@ -384,7 +400,7 @@
        "quote": "DL-447 answers DL-403 for this exact job",
        "quote_check": "exact",
        "quote_scope": "unit CV-658, Plans/Contracts_V0.md:40871-40936",
-       "file_sha256": "58dee182ea2dd8dd358d27912280fa9113c3d1d8fd68b1c0c5d51b6f906d73c8",
+       "file_sha256": "77879920f56eb692b9d2ddcf47c1c2421e0c426e2ccd911e183895f8195c45b3",
        "source_citation": {
         "path": "Plans/Contracts_V0.md",
         "unit": "CV-658",
@@ -415,7 +431,7 @@
        "quote": "This family's exact reader reader.memory.prune_archive.completed.history.v1@1.0.0 explicitly adopts SP-278: reader.storage.event_record_index@1.0.0,",
        "quote_check": "exact",
        "quote_scope": "unit CV-658, Plans/Contracts_V0.md:40871-40936",
-       "file_sha256": "58dee182ea2dd8dd358d27912280fa9113c3d1d8fd68b1c0c5d51b6f906d73c8",
+       "file_sha256": "77879920f56eb692b9d2ddcf47c1c2421e0c426e2ccd911e183895f8195c45b3",
        "source_citation": {
         "path": "Plans/Contracts_V0.md",
         "unit": "CV-658",
@@ -459,7 +475,7 @@
        "quote": "authorized historical reads. Withdrawal first fences this family's command/writer, retains unresolved original",
        "quote_check": "exact",
        "quote_scope": "unit CV-658, Plans/Contracts_V0.md:40871-40936",
-       "file_sha256": "58dee182ea2dd8dd358d27912280fa9113c3d1d8fd68b1c0c5d51b6f906d73c8",
+       "file_sha256": "77879920f56eb692b9d2ddcf47c1c2421e0c426e2ccd911e183895f8195c45b3",
        "source_citation": {
         "path": "Plans/Contracts_V0.md",
         "unit": "CV-658",
@@ -485,12 +501,12 @@
       {
        "path": "Plans/storage-plan.md",
        "unit": "SP-636",
-       "line_start": 48668,
-       "line_end": 48668,
+       "line_start": 48670,
+       "line_end": 48670,
        "quote": "Reader dispatch follows SP-1101: each retained canonical original",
-       "file_sha256": "8d92b84427758b88f2d6b3f970a7c7aa542ad9e3fb4afe0b89c4c613e853e537",
+       "file_sha256": "eca9df98001183b2057086c6c7fc14b39c7bb406951f2ea0092062b81f770e6d",
        "quote_check": "exact",
-       "quote_scope": "unit SP-636, Plans/storage-plan.md:48644-48735",
+       "quote_scope": "unit SP-636, Plans/storage-plan.md:48646-48737",
        "source_citation": {
         "path": "Plans/storage-plan.md",
         "unit": "SP-636",
@@ -534,7 +550,7 @@
        "quote": "canonical_text: |-\n  Newly authored owner contract under DL-045 for exactly memory.prune_archive.completed@1.0.0, prepared",
        "quote_check": "exact",
        "quote_scope": "unit CV-658, Plans/Contracts_V0.md:40871-40936",
-       "file_sha256": "58dee182ea2dd8dd358d27912280fa9113c3d1d8fd68b1c0c5d51b6f906d73c8",
+       "file_sha256": "77879920f56eb692b9d2ddcf47c1c2421e0c426e2ccd911e183895f8195c45b3",
        "source_citation": {
         "path": "Plans/Contracts_V0.md",
         "unit": "CV-658",
@@ -561,7 +577,7 @@
        "quote": "canonical_text: |-\n  Newly authored owner contract under DL-045 for exactly memory.prune_archive.completed@1.0.0, prepared",
        "quote_check": "exact",
        "quote_scope": "unit CV-658, Plans/Contracts_V0.md:40871-40936",
-       "file_sha256": "58dee182ea2dd8dd358d27912280fa9113c3d1d8fd68b1c0c5d51b6f906d73c8",
+       "file_sha256": "77879920f56eb692b9d2ddcf47c1c2421e0c426e2ccd911e183895f8195c45b3",
        "source_citation": {
         "path": "Plans/Contracts_V0.md",
         "unit": "CV-658",
@@ -713,10 +729,10 @@
   "row_pointer": "#/families/415"
  },
  "evidence_maintenance": {
-  "authority": "MERGE2-FIX4 items 1/2/3",
-  "source_commit": "2bda6aeed03daea26c4d79dfb7568fc145aac29e",
-  "source_assessment_sha256": "9af4568d6f677985224c75a293799e0477df382105749c6d141195b403f41631",
-  "native_execution": "NOT_RUN",
-  "verdicts_changed": false
+  "authority": "MERGE3-POSTFIX final citation maintenance",
+  "source_commit": "92d16bc12e0fa5a198d8e3f30340eab43e380a83",
+  "source_assessment_sha256": "a423fc67c5852d06141dd548a0b611755d226a522b76295ccab33c114a3983ab",
+  "verdicts_changed": false,
+  "native_execution": "NOT_RUN"
  }
 }
