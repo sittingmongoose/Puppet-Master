@@ -151,6 +151,7 @@ REVIEW_REFERENCE_RE = re.compile(
     r"|\bround[\s-]+(?:one|two|three|four|five|six|seven|eight|nine|ten)[\s-]+(?:review|finding|fix)\b"
     r"|(?<![\w.-])design\.md\s+\d"
     r"|defs-review|\bowner-answers\b|PuppetMaster-Evidence|closure-reaudit|Plans/ledgers/"
+    r"|\bledgers/v\d+/|\bpldg-\d{8}-\d{3}\b"
     r"|\bR\d+-DECISIONS\b|-(?:BRIEF|REPORT|NOTE)\.md\b"
     r"|\bcanon\s+conflict\s+C\d+\b)"
     r"|\bDESIGN(?:\.md)?\s+(?:§\s*|section\s+)?\d")
@@ -4234,6 +4235,16 @@ def build_cases() -> tuple[list[tuple[str, Callable[[Fixture], None], int, set[s
               check=lambda r: [(e.get("command_id"), e.get("field")) for e in review_rows(r)] == [("cmd.docker.image.tag", "args.new_tag.gap_note")])
         def _(fx: Fixture, text=text) -> None:
             tag_args(fx)["new_tag"]["gap_note"] = text
+
+    for reference in ("ledgers/v2/intake/state/matrix.json", "pldg-20260627-001-feature-intake"):
+        @case(f"fail T173: ledger lineage {reference}", 1, {"C11"},
+              kinds={"review_reference_in_definitions_block"})
+        def _(fx: Fixture, reference=reference) -> None:
+            tag_args(fx)["new_tag"]["gap_note"] = f"The field name comes from {reference}"
+
+    @case("pass T173: product ledger names are allowed", 0, set())
+    def _(fx: Fixture) -> None:
+        tag_args(fx)["new_tag"]["gap_note"] = "The ledger_ref may be used by cmd.artifacts.show_in_ledger."
 
     for reference in ("round 2 S1 finding 6", "Round 1 S4 U1", "S3 finding 7", "S2 map item 1",
                       "Sol r6", "Astra r1", "P0c worker", "owner-answers q5", "design.md 4.3",
