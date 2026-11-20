@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 // FO-240. The recording is finalized after browser-check exits, so run this after the recorded check.
 // Accepts home-agents-first-press's native-press.json or switcher-carry-steps's --set dump= output
-// from a Friendly Dark Home or Files rail run with --set film=1. Use --no-pointer-marker.
+// from a Friendly Home or Files rail run with --set film=1. Use --no-pointer-marker.
 import { spawnSync } from 'node:child_process';
 import { readFileSync, writeFileSync } from 'node:fs';
 import { nativeStepLimit } from '../helpers/carry-frames.mjs';
@@ -38,13 +38,13 @@ function firstPress(data) {
 			start: mark(rail ? 'First Explorer to Changed press' : 'First Home to Agents press'),
 			end: mark(rail ? 'Changed settled' : 'Agents settled') + 0.05 };
 	}
-	const eligible = (c) => c.look === 'friendly-dark' && c.mode === 'motion';
+	const eligible = (c) => /^friendly-(dark|light)$/.test(c.look) && c.mode === 'motion';
 	const cell = data.cells?.find((c) => eligible(c) && c.group === 'home') ||
 		data.cells?.find((c) => eligible(c) && c.group === 'rail');
 	const rail = cell?.group === 'rail';
 	const label = cell?.tag + ' single 1', start = mark(label);
 	const press = data.pageMarks?.find((p) => p.label === label);
-	if (!cell || !press) throw new Error('Missing the Friendly Dark first press');
+	if (!cell || !press) throw new Error('Missing the Friendly first press');
 	const strip = rail ? '#sidePanelSlot .pm-segtab' : '.pmw-strip[data-tsm]';
 	const before = cell.smp.rows.findLast((r) => r.k === 'task' && r.now < press.pt && r.s[strip]?.items?.length >= 2)?.s[strip];
 	const rec = cell.data.anims.find((a) => a.strip === strip && a.created >= press.pt && a.created < cell.ends[0]);
@@ -123,12 +123,15 @@ function measure() {
 		return from.right == null || to.right == null ? [] : [{ from, to, step: Math.abs(to.right - from.right) }];
 	});
 	const worst = pairs.reduce((a, b) => !a || b.step > a.step ? b : a, null);
+	const left = pairs.map(({ from, to }) => ({ from, to, step: Math.abs(to.left - from.left) }));
+	const worstLeft = left.reduce((a, b) => !a || b.step > a.step ? b : a, null);
 	const missing = frames.filter((f) => f.right == null);
 	const anchored = (box, slice) => slice.every((f) => f.right != null && Math.abs(f.right - (box.x + box.width)) <= 5);
 	const complete = anchored(from, frames.slice(0, 2)) && anchored(to, frames.slice(-2));
 	const over = pairs.filter((p) => p.step > allow);
-	const ok = Number.isFinite(allow) && complete && !missing.length && !!worst && !over.length;
-	return { verdict: ok ? 'PASS' : 'FAIL', crop: [x, y, w, h], fill, allow, complete, missing, worst, over, frames };
+	const overLeft = left.filter((p) => p.step > allow);
+	const ok = Number.isFinite(allow) && complete && !missing.length && !!worst && !over.length && !overLeft.length;
+	return { verdict: ok ? 'PASS' : 'FAIL', crop: [x, y, w, h], fill, allow, complete, missing, worst, worstLeft, over, overLeft, frames };
 }
 
 function jsonBuffer(buffer) { return JSON.parse(buffer.toString('utf8')); }
@@ -138,6 +141,7 @@ try {
 	const p = result.worst;
 	console.log(`${result.verdict}: ${result.frames.length} native frames, largest right-edge step ${p?.step ?? 'unread'} px` +
 		(p ? ` at F${p.from.frame}→F${p.to.frame}, bound ${result.allow.toFixed(2)} px` : '') +
+		(result.worstLeft ? `, largest left-edge step ${result.worstLeft.step} px` : '') +
 		(!result.complete || result.missing.length ? ' (unread frame or missing settled endpoint)' : ''));
 	process.exitCode = result.verdict === 'PASS' ? 0 : 1;
 } catch (error) {

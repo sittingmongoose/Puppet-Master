@@ -2,9 +2,9 @@
 // selections and quick back-and-forth runs, on the four strips that share the switcher carry (glass.js carry(): the left
 // rail's Files switcher, Home's panel tabs, Settings' chapters, Usage's pages), in every look and under Reduce Motion.
 //
-// The chip is read in a task queued from every frame callback (helpers/chip-sampler.mjs: a MessageChannel message, after
-// the frame's paint, with the timeline's time at the read), beside the page's layout-shift entries, and every carried
-// block's keyframes, start, hold and change are recorded as tab-selection-motion records them (helpers/carry-frames.mjs).
+// The chip is read in a task queued from each frame callback (helpers/chip-sampler.mjs), beside the page's layout-shift
+// entries. Every carried block's keyframes, start, hold and change are recorded as tab-selection-motion records them
+// (helpers/carry-frames.mjs). A task overtaken by a newer frame is discarded.
 // Per look, strip and surface:
 // - motion, every look: after each press the chip rests on the chosen item; no read shows an edge going out and back by
 //   more than 6 px within two frames (FO-234's 120 px one-frame jump was read inside a frame callback, in the before
@@ -18,8 +18,9 @@
 //   the 12e page started it a frame and a half on from then). The drawn frames use when each block and each change were
 //   first drawn (a composited probe in the same commit, carry-frames RECORD), so a change drawn late, already begun, is
 //   a step;
-// - FO-240: during Home's first press, adjacent chip reads more than 80 ms apart also get the single-frame
-//   edge bound. A stalled first activation can skip intermediate positions that the keyframes alone would predict.
+// - FO-240: during Home's first press, a gap of more than 80 ms gets the single-frame edge bound for every observed
+//   step, including intermediate held poses read by the following frame callback. Any gap with no such evidence gets
+//   that bound as one step. For displayed frames, use the native film reader on a recorded single-cell run.
 // - Reduce Motion (the OS's and the page's own): nothing is carried, every read shows the chip on an item (never between
 //   two), and after each press it rests on the chosen item;
 // - FO-232, Reduce Motion: no travel, and no late jump. In every read whose frame paints an item chosen the chip is on that
@@ -40,7 +41,7 @@
 //   --set sandbox=0|1 (both surfaces: run twice)   --set dump=<file.json>   --set raf=1 (also read inside the frame
 //   callback, for comparison, in the dump)   --set film=1 (marks)
 import { RECORD, TAKE, RESET, steps } from '../helpers/carry-frames.mjs';
-import { CHIP_SAMPLER, CHIP_TAKE, CHIP_RESET, chipRows, drawnFrames, modelWitness, trusted, spikes, takeovers, changeStarts, offItems, stripShifts, rmOnChosen, edgeHolds, FRAME } from '../helpers/chip-sampler.mjs';
+import { CHIP_SAMPLER, CHIP_TAKE, CHIP_RESET, chipRows, drawnFrames, heldBetween, presentationSteps, modelWitness, trusted, spikes, takeovers, changeStarts, offItems, stripShifts, rmOnChosen, edgeHolds, FRAME } from '../helpers/chip-sampler.mjs';
 import { setLookBySetting, setMotionApp } from '../helpers/settings-look.mjs';
 import { LOOKS } from '../browser-check.config.mjs';
 
@@ -131,7 +132,8 @@ export const tests = {
 						await t.check(`${tag}: every change is carried (${anims.length} carried blocks, ${presses} presses)`, anims.length >= g.singles.length, `${anims.length}`);
 						const mw = modelWitness(smp, sel, data.anims);
 						await t.check(`${tag}: the keyframe rebuild matches the block the page reads (worst ${mw.worst} px over ${mw.n} reads)`, mw.worst <= 3, `${mw.worst} px`);
-						const fr = drawnFrames(smp, sel, data.anims);
+						const held = heldBetween(smp, sel, data);
+						const fr = drawnFrames(smp, sel, data.anims, held);
 						const st = steps(fr);
 						await t.check(`${tag}: no drawn frame moves the chip further than its own motion (worst excess ${st.worst.excess || 0} px)`, st.bad.length === 0, st.bad.slice(0, 3).map((b) => `t${b.t} ${b.from}->${b.to} moved ${b.moved} allow ${b.allow}`).join('; '));
 						if (g.key === 'home') {
@@ -140,13 +142,14 @@ export const tests = {
 							// or pending play, before it receives a compositor start time.
 							const records = new Map(anims.map((a) => [a.id, a]));
 							const samples = rows.filter((r) => r.now <= ends[0] && !r.stale && (r.heldPose || trusted(r))).map((r) => ({
-								t: r.now, poseTime: r.framePaced ? r.ct : r.t, src: r.src, rec: records.get(r.rec),
+								t: r.now, ts: r.ts, poseTime: r.framePaced ? r.ct : r.t, src: r.src, rec: records.get(r.rec),
 								box: [r.box[0] - r.so[0], r.box[1] - r.so[1], r.box[2], r.box[3]]
 							}));
-							const gap = steps(samples, { presentationGaps: true });
-							await t.check(`${tag}: first press stays within one frame of travel across presentation gaps`, gap.bad.length === 0,
-								gap.gaps.map((x) => `${x.dt} ms at t${x.t}: moved ${x.moved} px, allow ${x.allow} px`).join('; '));
-							cell.presentationGaps = gap.gaps;
+							const gaps = presentationSteps(samples, held);
+							await t.check(`${tag}: first press stays within one frame of travel across presentation gaps`, gaps.every((g) => g.judged.excess <= 0),
+								gaps.map((x) => `${x.dt} ms at t${x.t}: moved ${x.moved} px, allow ${x.allow} px` +
+									(x.held ? ` (${x.held} intermediate held poses, worst excess ${x.judged.excess} px)` : '')).join('; '));
+							cell.presentationGaps = gaps;
 						}
 						const tk = takeovers(data.anims, sel), tkw = tk.reduce((m, x) => Math.max(m, x.worst), 0);
 						await t.check(`${tag}: a block that takes over draws the trip where the block it replaced would (${tk.length} takeovers, worst ${tkw} px)`, tkw <= 1, tk.filter((x) => x.worst > 1).slice(0, 4).map((x) => `rec${x.from}->rec${x.id} ${x.worst} px at t${x.at}${x.lagMs ? `, first drawn ${x.lagMs} ms after it was made` : ''}`).join('; '));
