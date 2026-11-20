@@ -73,12 +73,47 @@ def special_projection_rule(nodes, name, cut, validator, go, require):
     return dict(source=location, premise=proof['proof'])
 
 
+def storage_projection_width(plain, nodes, name, path, cut, go, require):
+    from pm_goal_own_c_oracles import exact_pattern, uuid_string
+
+    source, word = name.rsplit('/', 1)
+    node = nodes[source]['node']
+    if source.endswith('/properties/storage_instance_id'):
+        identity = source.endswith('#/$defs/EventIdentity/properties/storage_instance_id')
+        require(path == (['event_identity', 'storage_instance_id'] if identity else ['storage_instance_id'])
+                and (identity or source.endswith('#/$defs/StorageProjection/properties/storage_instance_id')),
+                'the stored projection UUID has a different source')
+        grammar = '[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}'
+        require(word in ('minLength', 'maxLength', 'format', 'pattern')
+                and node['minLength'] == node['maxLength'] == 36
+                and node['pattern'] == '^' + grammar + '$' and node['format'] == 'uuid'
+                and plain.VALIDATORS['pattern'] is exact_pattern
+                and plain.format_checker.checkers['uuid'][0] is uuid_string
+                and grammar in uuid_string.__code__.co_consts,
+                'the installed UUID predicates no longer use the same 36-character grammar')
+        covering = {source + '/' + member for member in {'pattern', 'format'} - {word}}
+        require(go.locations(cut) == covering, 'the expected matching UUID rules must still refuse')
+        return dict(source=source, covering_rules=sorted(covering),
+                    premise='The two full matches accept exactly the same 36-character UUID grammar.')
+    require(source.endswith('#/$defs/PayloadRef/properties/blake3')
+            and path == ['content', 'event_ref', 'blake3']
+            and word in ('minLength', 'maxLength') and node['minLength'] == node['maxLength'] == 64
+            and node['pattern'] == '^[0-9a-f]{64}$' and plain.VALIDATORS['pattern'] is exact_pattern,
+            'the stored reference digest does not have the declared exact-width pattern')
+    peer = source + '/pattern'
+    require(peer in go.locations(cut), 'the digest pattern must still refuse in the selected content form')
+    return dict(source=source, covering_rules=[peer],
+                premise='The full hexadecimal pattern accepts exactly 64 characters.')
+
+
 def verify_projection_example(plain, validator, nodes, name, example, controls, disabled_check, require, errors_list):
     import pm_goal_dg5_closure as closure
     import pm_goal_go_schema_closure as go
     from pm_goal_dg5_methodb_stage3 import each_error, edit_example
 
-    require(plain.schema['$ref'].endswith(('#/$defs/CombinedStorageProjection', '#/$defs/CancelledProjection')),
+    definition = plain.schema['$ref'].rsplit('#', 1)[1]
+    wrapped = definition == '/$defs/StorageProjection'
+    require(wrapped or definition in ('/$defs/CombinedStorageProjection', '/$defs/CancelledProjection'),
             'these examples are for the cancellation projection definitions')
     control = controls[example['projection_example']]
     invalid = control if example.get('control_only') else edit_example(go, control, example['path'], example)
@@ -108,6 +143,9 @@ def verify_projection_example(plain, validator, nodes, name, example, controls, 
         peers = example['related']
         require(name not in peers and go.locations(cut) & set(peers), f'{name}: expected an independent refusal')
         proof = related_projection_rules(plain, nodes, name, peers, go, closure, require)
+    elif example.get('storage_width'):
+        require(wrapped, 'stored wrapper width proof used outside the legacy decoder')
+        proof = storage_projection_width(plain, nodes, name, example['message_path'], cut, go, require)
     else:
         proof = special_projection_rule(nodes, name, cut, validator, go, require)
     return dict(record, cls='COVERED_LATER', implication=proof)
