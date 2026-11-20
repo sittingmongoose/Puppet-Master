@@ -9,6 +9,21 @@ MESSAGEPACK = [
 ]
 
 PROOFS = {
+    'dg5/append_outer/evidence/schema': {
+        'kind': 'entailed-by-append-result-evidence',
+        'families': [FAMILY],
+        'depends_on': ['dg5/append/result/schema'],
+        'sites': [
+            *((WORLD, line) for line in (932, 1002, 1008, 1010, 1012)),
+            ('Plans/goal_certified_event_coordinator_contracts/schemas/append-phase.v1.schema.json', 65),
+        ],
+        'argument': (
+            'The append response includes the same evidence and requires it to satisfy '
+            'AppendEvidence. The complete call with the earlier check disabled delivered '
+            'the identical invalid evidence to the result schema. The EventPhase write '
+            'matched the accepted control and did not change after validation.'
+        ),
+    },
     'dg5/commit/evidence/schema': {
         'kind': 'entailed-by-final-commit-evidence',
         'families': [FAMILY],
