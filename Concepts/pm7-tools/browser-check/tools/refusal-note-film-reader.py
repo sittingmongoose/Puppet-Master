@@ -6,15 +6,17 @@ rect (layout, its own slide left out), its ground and ink colours, and when the 
 case the reader finds the note's first painted frame (its ground rising at least 0.40 above the box's share just
 before, and to at least 0.45, searched from its
 wall-clock show time mapped onto the film through the press mark: a look's first paint can lag the page's script by up
-to a second) and takes every frame from 0.25 s after it (its own fade-in takes 0.21 s) to 1.75 s (before its own
-fade-out at 2.13 s), and counts the share of the note's box (2 px inset) whose
+to a second). It samples from 0.25 s after first paint for up to 1.50 s, stopping before the note's fade-out on the
+same clock as the show time. It counts the share of the note's box (2 px inset) whose
 pixels are within 40 of its ground (its fill; the text in its ink takes the rest). A frame is WRONG when that share is
-under 0.60: something else is painted over the note. Frames are split into during the entry (before the entry ended) and after it. Usage:
+under 0.60: something else is painted over the note. The logged entry end splits frames on the film clock. Usage:
   tools/refusal-note-film-reader.py <video.mp4> <run folder> <out.json>
 """
 import json, re, subprocess, sys
 
 START, END, OWN_T, TOL, APPEAR = 0.25, 1.75, 0.60, 40, 0.40
+# The o55-reason keyframes in 10-window.css start fading out at 82% of 2600 ms.
+FADE_OUT = 2.6 * 0.82
 
 
 def frames(video, t0, t1, box):
@@ -61,7 +63,8 @@ def main():
         t_js = at + (r['noteWall'] - wall) / 1000
         x, y, w, h = r['rect']
         box = (int(round(off['x'] + x)) + 2, int(round(off['y'] + y)) + 2, int(w) - 4, int(h) - 4)
-        end = ((r['endWall'] - r['noteWall']) / 1000) if r.get('endWall') is not None else 0
+        end_wall = r.get('endWall')
+        entry_end = at + (end_wall - wall) / 1000 if end_wall is not None else None
         # the note's first painted frame: the page can paint well after its script shows the note (a look's first, heavy
         # paint), so the window starts from paint, not from the page's clock
         t = None
@@ -73,12 +76,17 @@ def main():
         if t is None:
             report.append({'tag': r['tag'], 'note': False, 'painted': False}); print(r['tag'], 'note never painted'); continue
         seq = []
-        for ft, f in frames(video, t + START, t + END, box):
-            share = own(f, r['ground'], r['ink'])
-            seq.append({'t': round(ft - t, 3), 'share': round(share, 3), 'entry': (ft - t) < end, 'wrong': share < OWN_T})
+        sample_end = min(t + END, t_js + FADE_OUT)
+        if t + START < sample_end:
+            for ft, f in frames(video, t + START, sample_end, box):
+                if ft >= sample_end:
+                    break
+                share = own(f, r['ground'], r['ink'])
+                seq.append({'t': round(ft - t, 3), 'share': round(share, 3),
+                            'entry': entry_end is not None and ft < entry_end, 'wrong': share < OWN_T})
         wrong = [q for q in seq if q['wrong']]
         report.append({'tag': r['tag'], 'frames': len(seq), 'entryFrames': sum(q['entry'] for q in seq), 'wrong': len(wrong),
-                       'wrongInEntry': sum(q['entry'] for q in wrong), 'minShare': min((q['share'] for q in seq), default=None), 'entryAfterNoteMs': round(end * 1000), 'paintLagMs': round((t - t_js) * 1000), 'seq': seq})
+                       'wrongInEntry': sum(q['entry'] for q in wrong), 'minShare': min((q['share'] for q in seq), default=None), 'entryAfterNoteMs': end_wall - r['noteWall'] if end_wall is not None else 0, 'paintLagMs': round((t - t_js) * 1000), 'seq': seq})
         print(f"{r['tag']}: paint lag {report[-1]['paintLagMs']} ms; {len(seq)} frames ({report[-1]['entryFrames']} in the entry), WRONG {len(wrong)} ({report[-1]['wrongInEntry']} in the entry), min share {report[-1]['minShare']}")
     json.dump(report, open(out, 'w'), indent=1)
 
