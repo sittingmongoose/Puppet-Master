@@ -117,7 +117,9 @@ def update_fixture(route, path):
         return w, lambda: inspect.inspect(event_request, actor, permission)
     if route == 'input':
         return w, oracle._input_call(w, goal, oracle.op_of(admission))
-    if route == 'receipt':
+    if route == 'receipt_recheck':
+        check_receipt_request_reused(w.body)
+    if route in ('receipt', 'receipt_recheck'):
         return w, lambda: w.body.read_receipt(request, actor, permission)
     if route == 'oracle_receipt':
         return w, lambda: w.body.read_receipt_private(request, 'oracle')
@@ -231,6 +233,17 @@ class RootCapture(BaseException):
     pass
 
 
+def check_receipt_request_reused(body):
+    reader = inspect.getsource(body.read_receipt)
+    private = inspect.getsource(body.read_receipt_private)
+    forwards = ('self.read_receipt_private(request, where)',
+                "self.read_receipt_private(request, where + '/final')")
+    require(reader.count('self.read_receipt_private(') == 2 and all(step in reader for step in forwards) and
+            reader.index(forwards[0]) < reader.index(forwards[1]), 'receipt reader no longer validates the same request twice')
+    require("self.bank.validate(BODY_URI + '#/$defs/receipt_read_request', request, where + '/receipt_request')"
+            in private, 'receipt request definition changed')
+
+
 def check_f5a_stored_document(module, world, context, intent, control, route):
     """Check the earlier schema and the later byte comparison for the armed document."""
     name, document, root = ('intent', intent, 'StorageIntent') if route == 'f5a_intent_check' else (
@@ -288,9 +301,14 @@ class OwnerCheck:
         record = dict(errors=[], cut=self.row in tables.CUT, observations=[])
         changed = []
         expected = self.code + '/schema/'  # extra member is rejected at the enclosing object
+        receipt_validation = []
 
         def observe(bank, *args):
             if args[-1] != self.code:
+                if self.declare['route'] == 'receipt_recheck' and args[-1] == 'dgu/reader/receipt/final/receipt_request':
+                    require(receipt_validation == [(bank, args[0], args[-2])],
+                            'final receipt validation received a different reference or request')
+                    record['same_final_receipt_request'] = True
                 return original(bank, *args)
             frame = sys._getframe(1)
             site = [str(Path(frame.f_code.co_filename).relative_to(self.source)), frame.f_lineno]
@@ -302,6 +320,8 @@ class OwnerCheck:
                 require(member not in document, 'test document already has the extra member')
                 changed.append((document, member))
                 document[member] = 'gc'
+            if self.declare['route'] == 'receipt_recheck':
+                receipt_validation.append((bank, args[0], copy.deepcopy(document)))
             validator_args = args[:-1]
             sink = []
             saved = closure.CAPTURE[0]
@@ -450,6 +470,8 @@ class OwnerCheck:
                     require(record['kill'] == 'COVERED_LATER' and self.runs[-2].get('refusal') == later,
                             f"expected later validation {later!r}, got {self.runs[-2].get('refusal')!r}")
                 before, cut, restored = self.runs[-3:]
+                if self.declare['route'] == 'receipt_recheck':
+                    require(cut.get('same_final_receipt_request'), 'final validator did not check the original request')
                 require(before == restored and before['observations'] == cut['observations'] and
                         bool(cut['errors']) == bool(later),
                         'the complete call did not restore the same document and validation message')
@@ -820,6 +842,8 @@ def main():
     later_route = {
         'dg5/f5a/intent/schema': ('f5a_intent_check', 'f5a/intent_bytes'),
         'dg5/f5a/control/schema': ('f5a_control_check', 'f5a/control_bytes'),
+        'dg5/dgu/reader/receipt/receipt_request/schema': (
+            'receipt_recheck', 'dgu/reader/receipt/final/receipt_request/schema/'),
     }.get(row)
     if 'later_refusal' in declare:
         require((declare['route'], declare['later_refusal']) == later_route,
