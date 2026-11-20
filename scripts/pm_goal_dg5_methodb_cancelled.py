@@ -124,6 +124,16 @@ def fixture(declare, route, directory):
     if route['call'] == 'read_preserved_issued':
         return issued_preserved_fixture(world, declare)
     world.build()
+    if route['call'] == 'project_started_record':
+        owner = getattr(world, 'projector_class', projector.Projector)(world)
+        presentation = reader.Presentation(world)
+        require(presentation.start['kind'] == 'original_started', 'the Start input must be an issued start')
+        start = {key: owner.consumer.acquire(handle)[1] for key, handle in presentation.start.items() if key != 'kind'}
+        commit = start['commit']['record']
+        event = world.storage.read_event(commit['event_id'])
+        custody = world.storage.authenticate_receipt(commit['event_id'], commit['first_append_receipt'])
+        owner.check_start_event(start, event, custody)
+        return world, lambda: owner.started_record(start, event, custody), (start, event, custody)
     if route['call'] == 'project_checkpoint':
         owner = world.projector_class(world)
         scope = owner.request()['scope']
@@ -362,12 +372,13 @@ def append_acknowledgment_nonempty(plain, nodes, name, path, cut):
         expected.update((result + '/oneOf', preserved + '/closed_members',
                          preserved + '/required', preserved + '/properties/kind/const'))
     require(path in (['record', 'append_receipt', 'acknowledged_at_utc'],
+                     ['first_append_receipt', 'acknowledged_at_utc'], ['original_event', 'occurred_at_utc'],
                      ['record', 'first_append_receipt', 'acknowledged_at_utc'],
                      ['result', 'append_receipt', 'acknowledged_at_utc'],
                      ['record', 'original_publication', 'first_append_receipt', 'acknowledged_at_utc'],
                      ['value', 'event_commitments', 0, 'original_full_value_result',
                       'first_append_receipt', 'acknowledged_at_utc'])
-            and source.endswith('#/$defs/AppendReceipt/properties/acknowledged_at_utc')
+            and source.endswith(('#/$defs/AppendReceipt/properties/acknowledged_at_utc', '#/$defs/Event_date_time_string'))
             and word == 'minLength' and node[word] == 1 and node['format'] == 'date-time'
             and node['type'] == 'string' and plain.format_checker.checkers['date-time'][0] is utc
             and not utc('') and utc('2026-11-05T09:00:00Z')
@@ -386,6 +397,7 @@ def process_role_or_barrier_enum(nodes, name, path, cut, covering):
         ('invocation', 'role'): ('DispatchInvocation', 'FileSafeInvocation', 'filesafe'),
         (0, 'binding', 'value', 'invocation', 'role'): ('DispatchInvocation', 'FileSafeInvocation', 'filesafe'),
         ('record', 'first_append_receipt', 'durability_class'): ('AppendReceipt', 'FirstBarrier', 'barrier'),
+        ('first_append_receipt', 'durability_class'): ('AppendReceipt', 'FirstBarrier', 'barrier'),
     }
     require(tuple(path) in pairs, 'unexpected enumeration path')
     base, joined, fixed = pairs[tuple(path)]
@@ -407,6 +419,74 @@ def process_role_or_barrier_enum(nodes, name, path, cut, covering):
             and locations(cut) == {covering}, 'the same field must also satisfy its constant rule')
     return dict(source=owner + '/allOf', covering_rule=covering,
                 premise='Both rules apply together on every path to this field. The fixed value belongs to the enumeration.')
+
+
+def projection_event_implication(nodes, name, path, cut, expected):
+    """Check redundant assertions in the projected event document."""
+    import re
+    from pm_goal_go_schema_closure import locations
+
+    peer, = expected
+    source, word = name.rsplit('/', 1)
+    peer_source, peer_word = peer.rsplit('/', 1)
+    rule = nodes[source]['node']
+    other = nodes[peer_source]['node']
+    require(locations(cut) == {peer}, 'the projected event counterpart did not refuse at the expected rule')
+    if source == peer_source and word == 'type' and peer_word in ('enum', 'const'):
+        enum = other['enum'] if peer_word == 'enum' else [other['const']]
+        require(rule['type'] == 'string' and enum and all(type(value) is str for value in enum),
+                'the event enumeration or constant no longer implies the string rule')
+    elif source == peer_source and {word, peer_word} == {'additionalProperties', 'unevaluatedProperties'}:
+        require(path[-2:] == ['original_event', 'payload'] and rule[word] is False and rule[peer_word] is False
+                and 'patternProperties' not in rule and 'allOf' not in rule and 'anyOf' not in rule
+                and 'oneOf' not in rule and '$ref' not in rule and 'dependentSchemas' not in rule,
+                'the two event payload checks no longer close exactly the same members')
+    else:
+        event_node, = [key for key in nodes if key.endswith('#/$defs/TypedOriginalEvent')]
+        base, typed = nodes[event_node]['node']['allOf']
+        record = event_node.removesuffix('/TypedOriginalEvent') + '/EventRecord'
+        require(base['$ref'].endswith('#/$defs/EventRecord'), 'the projected original event changed')
+        if path[-2:] == ['original_event', 'event_type']:
+            fixed = typed['properties']['event_type']['const']
+            require(source == record+'/properties/event_type'
+                    and peer_source == event_node+'/allOf/1/properties/event_type' and peer_word=='const'
+                    and type(fixed) is str and rule['type']=='string' and re.search(rule['pattern'], fixed),
+                    'the typed event constant no longer implies the event name rule')
+        else:
+            payload_base = record + '/properties/payload'
+            ref = typed['properties']['payload']['$ref']
+            require(path[-2:] == ['original_event', 'payload'] and word == peer_word == 'type'
+                    and rule['type'] == other['type'] == 'object' and payload_base in (source, peer_source)
+                    and nodes[source if source != payload_base else peer_source]['node'].get('$id') == ref,
+                    'the projected event payload no longer has both object checks')
+    return dict(source=peer, same_document_path=path,
+                premise='The two rules apply to the same value and the retained rule implies the selected one.')
+
+
+def projection_scope_presence(plain, validator, nodes, name, document, path, disabled):
+    """Show which scope branch a missing scope selector activates."""
+    from pm_goal_go_schema_closure import errors_of, locations
+
+    branch = name.removesuffix('/if/required')
+    event = branch.rsplit('/allOf/', 1)[0]
+    require(path == ['original_event'] and event.endswith('#/$defs/EventRecord')
+            and name == branch + '/if/required' and 'scope_kind' in nodes[event]['node']['required']
+            and nodes[branch + '/if']['node']['required'] == ['scope_kind'], 'the event scope selector changed')
+    application = branch.endswith('/0')
+    condition = 'application' if application else 'project'
+    require(nodes[branch + '/if/properties/scope_kind']['node']['const'] == condition,
+            'the event scope branch selected a different scope')
+    before = errors_of(validator, document)
+    cut = errors_of(validator, document, disabled)
+    restored = errors_of(validator, document)
+    existing = {event+'/required'}
+    branch_message = (branch+'/then/properties/project_id/type' if application else
+                      event.removesuffix('/EventRecord')+'/Event_non_empty_string/type')
+    require(errors_list(list(plain.iter_errors(document))) == errors_list(before) == errors_list(restored)
+            and locations(before) == existing and locations(cut) == existing | {branch_message},
+            f'{name}: scope presence comparison failed: {sorted(locations(before))}, {sorted(locations(cut))}')
+    return dict(cls='SELECTOR_OR_NEGATED', source=name, invalid=document, before=errors_list(before),
+                cut=errors_list(cut), restored=errors_list(restored))
 
 
 def scope_proof_implication(nodes, name, path, cut):
@@ -1001,6 +1081,9 @@ def literal_rules(plain, bank, accepted, ident, ids, examples, disabled_check, s
                     and name.endswith('/original_execution_binding/properties/kind/const'),
                     'the settlement kind example needs the opposite complete binding')
         invalid = edit_example(go, control, edit_path, example)
+        if example.get('projection_scope_presence'):
+            results[name] = projection_scope_presence(plain, validator, nodes, name, invalid, path, disabled)
+            continue
         actual = errors_list(list(plain.iter_errors(invalid)))
         before = go.errors_of(validator, invalid)
         require(any(getattr(error, 'oracle_guard', None) == guard and list(error.absolute_path) == path
@@ -1036,6 +1119,9 @@ def literal_rules(plain, bank, accepted, ident, ids, examples, disabled_check, s
         elif example.get('process_role_or_barrier_enum'):
             record.update(cls='COVERED_LATER', implication=process_role_or_barrier_enum(
                 nodes, name, path, cut, example['process_role_or_barrier_enum']))
+        elif example.get('projection_event_implication'):
+            record.update(cls='COVERED_LATER', implication=projection_event_implication(
+                nodes, name, path, cut, example['projection_event_implication']))
         elif example.get('scope_proof_implication'):
             record.update(cls='COVERED_LATER', implication=scope_proof_implication(nodes, name, path, cut))
         elif example.get('origin_afterimages_implication'):
@@ -1487,6 +1573,11 @@ def run(args):
     require({tuple(route['site']) for route in declare['routes']} == {tuple(site) for site in declare['sites']},
             'every census site needs an owner call')
     reference = None
+    alternate_lists = declare.get('alternate_started_examples', {})
+    if alternate_lists:
+        require(row == 'dg5/projection/started_record/schema'
+                and set(alternate_lists) <= set(census_row['root_ids']),
+                'alternate exact lists belong to the earlier started projection')
     fresh_roots = {route['root'] for route in declare['routes'] if 'fresh_literal_sha256' in route}
     require(set(census_row['roots_with_inventory_variants']) <= fresh_roots,
             'conflicting roots need a published rule list')
@@ -1565,11 +1656,25 @@ def run(args):
             ident = route['root']
             if reference is None and ident in reports:
                 continue
+            examples = declare['examples'][ident]
+            if ident in alternate_lists:
+                # The two earlier banks can retain different retrieval aliases.
+                # Choose a published list only when the entire installed list matches.
+                validator = closure.closure_validator(plain, ident, bank)
+                _, installed = closure._clause_inventory(validator)
+                digest = closure._clause_inventory_pin(installed)['sha256']
+                if digest != route.get('fresh_literal_sha256') and digest in alternate_lists[ident]:
+                    examples = alternate_lists[ident][digest]
+                    route = dict(route, fresh_literal_sha256=digest)
+                    if census['roots'][ident].get('clause_ids') == installed:
+                        route.pop('fresh_literal_sha256')
+                for call in calls:
+                    if call['route']['root'] == ident:
+                        call['verified_literal_sha256'] = digest
             root = fresh_root(census, reference, row, route, binding, closure)
             require(all(root[key] == value for key, value in binding.items()),
                     f'owner validator binding changed for {ident}')
             ids = root['clause_ids']
-            examples = declare['examples'][ident]
             accepted = declare.get('rule_controls', {}).get(ident, accepted)
             scoped = ':sha256:' in ids[0].split('#', 1)[0]
             if reference or scoped or any(set(example) & {'vacuous', 'intent_selector', 'intent_implication',
