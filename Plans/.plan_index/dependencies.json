@@ -5560,6 +5560,7 @@
     "DL-2584",
     "DL-2585",
     "DL-2586",
+    "DL-2587",
     "DL-451",
     "DL-694",
     "F3-585",
@@ -53614,6 +53615,21 @@
     {
       "edge_type": "depends_on",
       "from": "DL-2586",
+      "to": "DL-400"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "DL-2587",
+      "to": "DL-077"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "DL-2587",
+      "to": "DL-2425"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "DL-2587",
       "to": "DL-400"
     },
     {
@@ -164407,7 +164423,7 @@
       "to": "F3-395"
     }
   ],
-  "generated_at_utc": "2026-11-20T01:57:14Z",
+  "generated_at_utc": "2026-11-20T01:58:11Z",
   "nodes": [
     {
       "context_scope": "residual_plan_standardization",
@@ -217648,6 +217664,23 @@
         "heading_level": 3,
         "heading_line": 62391,
         "line": 62393,
+        "path": "Plans/Decision_Log.md"
+      },
+      "status": "accepted",
+      "unit_type": "decision"
+    },
+    {
+      "context_scope": "event_authority_pnc019_merge3_postfix",
+      "gui_related": false,
+      "owner_doc": "Plans/Decision_Log.md",
+      "plan_unit_id": "DL-2587",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority_admission",
+      "source_location": {
+        "heading": "DL-2587: Event Authority corrects tool.denied (merge 3 post-landing)",
+        "heading_level": 3,
+        "heading_line": 62453,
+        "line": 62455,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -327701,10 +327734,10 @@
     "build_order_available": true,
     "build_order_blocked_node_count": 0,
     "cycle_blocker_count": 0,
-    "depends_on_edge_count": 27734,
+    "depends_on_edge_count": 27737,
     "downstream_blocked_node_count": 0,
-    "edge_count": 30959,
-    "node_count": 9605,
+    "edge_count": 30962,
+    "node_count": 9606,
     "true_cycle_component_count": 0,
     "unblocks_edge_count": 3225,
     "unresolved_reference_count": 0
