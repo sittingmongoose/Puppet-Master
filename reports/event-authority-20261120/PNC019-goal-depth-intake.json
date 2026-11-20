@@ -1,0 +1,78 @@
+{
+  "assessment": "PNC019 Goal depth cell intake",
+  "assessment_commit": "61e9c3db469f895af4ee25764326ea58d8dc399f",
+  "cancel_ruling": {
+    "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/state/RULING-goal-cancelled-originals-20261120.md",
+    "sha256": "fabf1f3872f137bea03d0f8a3d26d5a018527f5bca219750f3d0d6cac35995eb"
+  },
+  "carried_source_results": {
+    "cancel-corpus.json": "dc527f5bee41f078636bd1b925db735a4f0f44d21802d8c36ef102b7bc5652e9",
+    "current-readers-resumed.json": "d29c87d033c867c2c93ff9a47504ba98e5474512181d724d912f9dbccb749b0c",
+    "source-oracles-resumed.json": "a7335cf76b91ecb9291e6eae7b0de477c9d8b5ab4c0a7547277ab182856ea078"
+  },
+  "cells": [
+    {
+      "cell": "producer",
+      "criterion": 3,
+      "event_type": "goal.updated",
+      "finding": "Original dispatch and protected approval reach the sole body commit, frozen producer input, first append, full EventRecord and factual terminal. Direct Save, immutable retry, exact expiry, inline and reference custody, separate resolution, and eight current-authority restore refusals passed on the merged source.",
+      "owner_refs": [
+        "HITL-1130",
+        "PS-1130",
+        "SIR-1130",
+        "SP-1130",
+        "CV-1130",
+        "SP-337",
+        "GRS-068"
+      ],
+      "previous": "PARTIAL",
+      "receipts": [
+        "update-complete-calls.json",
+        "update-restore-authority.json"
+      ],
+      "status": "PASS"
+    },
+    {
+      "cell": "compatibility_withdrawal",
+      "criterion": 11,
+      "event_type": "goal.cancelled",
+      "finding": "The historical v2 schema interprets the preserved payload. Original full-value custody refuses unavailable and M6 preserves original pending and Stop bytes in blocked_unresolved. M8/M9 archive, separate withdrawal and replay passed with four independent current-authority refusals under the lead ruling.",
+      "owner_refs": [
+        "GRS-073",
+        "CV-347",
+        "SP-1131",
+        "CV-1131",
+        "APR-1130",
+        "SQR-1130",
+        "SIR-1131",
+        "SP-304",
+        "SP-286"
+      ],
+      "previous": "PARTIAL",
+      "receipts": [
+        "cancel-complete-calls.json",
+        "cancel-originals-ruling.json",
+        "cancel-restore-authority.json"
+      ],
+      "status": "PASS"
+    }
+  ],
+  "evidence_root": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/PNC019/c12-dg5/depth-intake-61e9c3db",
+  "evidence_sha256": {
+    "cancel-complete-calls.json": "92a000c0378ac378b1d25764038b52f2eeebcdfdfd5c7ee33b9bde35130f6098",
+    "cancel-originals-ruling.json": "9009680d74c59205343513b31d25c3c5a7a14206803ce3e8293335f44b596107",
+    "cancel-restore-authority.json": "25e9b6aa088a13448efba6a728f21dc0fc04b994c9f16e5f9966ec41dde6b174",
+    "replay.log": "05cdd876edd5762f9059f974e3a303a9bc387b309d98f47d851eed0ecd0d87ed",
+    "update-complete-calls.json": "ba8b75e9d08f6356705c79852c722f56d062c25ee808c37659b16ab5b61e1a06",
+    "update-restore-authority.json": "74f78e2c7ed0cc145cb2ec15cf7801574059bda3ecf21d1a57f12c3117b280c7"
+  },
+  "frozen_dgu_selections": {
+    "Plans/goal_own_c_contracts/dg-u-adapter-b2-compat-v1/selection.json": "8b1e8e8e98312bbce950efa2891b4f17b4fc77856c3588a6574092f3c54cd80f",
+    "Plans/goal_own_c_contracts/dg-u-successor-v4/selection.json": "fe6141886a06facb6300313b14c053b6b27bdbfdf7b7c95ae1f003e9e398215a"
+  },
+  "native_execution": "NOT_RUN",
+  "plans_tree": "4cc8628e6d4b8bfd300d7a75219cc0bc42b93edc",
+  "qualification": "TEST_ONLY",
+  "source_pins_sha256": "4f23f8fcf73fb905507a4f21e83f5888540f9ae83808712e023a8c39d318b73a",
+  "worker_commit": "7b2651c25b8b7afd15f9b9ace59eb7150800db4e"
+}
