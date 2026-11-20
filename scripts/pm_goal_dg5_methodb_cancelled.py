@@ -328,23 +328,55 @@ def append_acknowledgment_nonempty(plain, nodes, name, path, cut):
     source, word = name.rsplit('/', 1)
     node = nodes[source]['node']
     covering = source + '/format'
-    result, = [where for where in nodes if where.endswith('#/$defs/Result')]
-    schema = nodes[result]['node']
-    require([arm['$ref'] for arm in schema['oneOf']] ==
-            ['#/$defs/CancelledResult', '#/$defs/PreservedResult'],
-            'the Workflow cancel result alternatives changed')
-    preserved = result.removesuffix('/Result') + '/PreservedResult'
-    require(path == ['record', 'append_receipt', 'acknowledged_at_utc']
+    expected = {covering}
+    if path[1:2] == ['append_receipt']:
+        result, = [where for where in nodes if where.endswith('#/$defs/Result')]
+        schema = nodes[result]['node']
+        require([arm['$ref'] for arm in schema['oneOf']] ==
+                ['#/$defs/CancelledResult', '#/$defs/PreservedResult'],
+                'the Workflow cancel result alternatives changed')
+        preserved = result.removesuffix('/Result') + '/PreservedResult'
+        expected.update((result + '/oneOf', preserved + '/closed_members',
+                         preserved + '/required', preserved + '/properties/kind/const'))
+    require(path in (['record', 'append_receipt', 'acknowledged_at_utc'],
+                     ['record', 'first_append_receipt', 'acknowledged_at_utc'])
             and source.endswith('#/$defs/AppendReceipt/properties/acknowledged_at_utc')
             and word == 'minLength' and node[word] == 1 and node['format'] == 'date-time'
             and node['type'] == 'string' and plain.format_checker.checkers['date-time'][0] is utc
             and not utc('') and utc('2026-11-05T09:00:00Z')
-            and locations(cut) == {covering, result + '/oneOf', preserved + '/closed_members',
-                                   preserved + '/required', preserved + '/properties/kind/const'},
+            and locations(cut) == expected,
             'the original acknowledgment time must still refuse the empty string')
     return dict(source=source, covering_rule=covering, validator=utc.__name__,
                 validator_line=utc.__code__.co_firstlineno, validator_sha256=sha(Path(utc.__code__.co_filename)),
                 premise='The required full UTC time match always consumes at least one character.')
+
+
+def process_role_or_barrier_enum(nodes, name, path, cut, covering):
+    from pm_goal_go_schema_closure import locations
+
+    pairs = {
+        ('value', 'invocation', 'role'): ('DispatchInvocation', 'ProcessInvocation', 'process'),
+        ('record', 'first_append_receipt', 'durability_class'): ('AppendReceipt', 'FirstBarrier', 'barrier'),
+    }
+    require(tuple(path) in pairs, 'unexpected enumeration path')
+    base, joined, fixed = pairs[tuple(path)]
+    field = path[-1]
+    enum_source, keyword = name.rsplit('/', 1)
+    const_source = covering.removesuffix('/const')
+    require(keyword == 'enum' and enum_source.endswith(f'#/$defs/{base}/properties/{field}')
+            and covering.endswith(f'#/$defs/{joined}/allOf/1/properties/{field}/const'),
+            'the conjunctive enumeration rule locations changed')
+    owner = const_source.split('/allOf/', 1)[0]
+    inherited, narrowed = nodes[owner]['node']['allOf']
+    enum_info, const_info = nodes[enum_source], nodes[const_source]
+    require(inherited['$ref'].endswith(f'#/$defs/{base}')
+            and narrowed['properties'][field] == const_info['node']
+            and const_info['node']['const'] == fixed and fixed in enum_info['node']['enum']
+            and all({(reach['ipath'], bool(reach['ctx'])) for reach in entry['reach']} ==
+                    {(tuple(path), False)} for entry in (enum_info, const_info))
+            and locations(cut) == {covering}, 'the same field must also satisfy its constant rule')
+    return dict(source=owner + '/allOf', covering_rule=covering,
+                premise='Both rules apply together on every path to this field. The fixed value belongs to the enumeration.')
 
 
 def rule_path(document, path):
@@ -453,6 +485,9 @@ def literal_rules(plain, bank, accepted, ident, ids, examples, disabled_check, s
         elif example.get('append_acknowledgment_nonempty'):
             record.update(cls='COVERED_LATER',
                           implication=append_acknowledgment_nonempty(plain, nodes, name, path, cut))
+        elif example.get('process_role_or_barrier_enum'):
+            record.update(cls='COVERED_LATER', implication=process_role_or_barrier_enum(
+                nodes, name, path, cut, example['process_role_or_barrier_enum']))
         elif example.get('nullable_enum'):
             location, word = name.rsplit('/', 1)
             node = nodes[location]['node']
