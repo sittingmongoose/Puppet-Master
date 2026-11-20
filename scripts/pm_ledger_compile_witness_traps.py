@@ -679,5 +679,27 @@ def exercise(g, *, scratch=None):
          status="error", exit_code=1,
          verify=lambda r: r["error"] == "token exemption needs v1 schema and held/ledger_retired disposition")
 
+    # ASTRA-GW-20261107-01: a quoted comma is part of one registry entry.
+    def flow_registry(f, entries, body, required):
+        f["owner"] = owner("AA-001", body, []).replace("preserved_exact_tokens: []", "preserved_exact_tokens: " + entries)
+        f["atoms"][0]["exact_tokens"] = required
+
+    case("single-quoted-comma-counts-as-one-missing-token",
+         lambda f: flow_registry(f, "[ALPHA, 'comma,token']", "ALPHA and comma token.", ["ALPHA"]),
+         status="findings", exit_code=2,
+         verify=lambda r: r["witness_registry_hygiene"][0]["registry_entries"] == 2
+         and r["witness_registry_hygiene"][0]["entries_absent_from_unit_text"] == ["comma,token"])
+    for form, tokens, entries in (
+        ("single-quoted-escaped-apostrophe", ["chef's, mix"], "[ 'chef''s, mix', ]"),
+        ("double-quoted-escaped-quote", ['say "yes", now'], json.dumps(['say "yes", now'])),
+        ("multiline-mixed", ["comma,token", "plain", "x,y"], "[\n 'comma,token',\n plain,\n \"x,y\"\n]"),
+    ):
+        case(form + "-flow-token-control", lambda f: flow_registry(f, entries, " / ".join(tokens), tokens),
+             verify=lambda r: all(t["units_with_both"] == ["AA-001"] for t in r["witness_exact_tokens"])
+             and r["witness_registry_hygiene"][0]["registry_entries"] == len(tokens))
+    case("malformed-quoted-flow-registry-refused",
+         lambda f: flow_registry(f, "[ALPHA, 'unclosed]", "ALPHA and unclosed.", ["ALPHA"]),
+         status="error", exit_code=1, verify=refused_because("unsupported preserved_exact_tokens flow list"))
+
     return {"schema_id": "pm.ledger_compile_witness.self_test.v1", "status": "pass" if all(row["caught"] for row in rows) else "findings",
             "caught": sum(row["caught"] for row in rows), "tests": rows}

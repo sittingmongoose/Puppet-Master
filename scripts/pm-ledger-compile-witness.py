@@ -471,6 +471,34 @@ def units_in(text: str) -> dict[str, dict]:
     return out
 
 
+FLOW_REGISTRY = re.compile(r"^[ \t]*preserved_exact_tokens:[ \t\r\n]*\[", re.M)
+FLOW_TOKEN = re.compile(
+    r'''[ \t\r\n]*("(?:[^"\\\r\n]|\\.)*"|'(?:[^'\r\n]|'')*'|[^'"\[\],\s][^\[\],\r\n]*?)[ \t\r\n]*(?=[,\]])'''
+)
+FLOW_CLOSE = re.compile(r"[ \t\r\n]*\][ \t]*$", re.M)
+
+
+def _flow_tokens(block: str, pos: int) -> list[str]:
+    tokens = []
+    while not FLOW_CLOSE.match(block, pos):
+        match = FLOW_TOKEN.match(block, pos)
+        if not match:
+            raise ValueError("unsupported preserved_exact_tokens flow list")
+        token = match[1]
+        if token.startswith('"'):
+            try:
+                token = json.loads(token)
+            except json.JSONDecodeError as exc:
+                raise ValueError("unsupported preserved_exact_tokens flow list escape") from exc
+        elif token.startswith("'"):
+            token = token[1:-1].replace("''", "'")
+        tokens.append(token)
+        pos = match.end()
+        if block[pos] == ",":
+            pos += 1
+    return tokens
+
+
 def registry(block: str) -> list[str]:
     """preserved_exact_tokens as inline flow lists or block lists: every occurrence in the unit, in order.
 
@@ -478,9 +506,8 @@ def registry(block: str) -> list[str]:
     is checked as well instead of hiding behind the first.
     """
     found = []
-    for m in re.finditer(r"^\s*preserved_exact_tokens:\s*\[(.*?)\]\s*$", block, flags=re.S | re.M):
-        parts = re.split(r",(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)", m.group(1))
-        found.extend(p.strip().strip('"').strip("'") for p in parts if p.strip())
+    for match in FLOW_REGISTRY.finditer(block):
+        found.extend(_flow_tokens(block, match.end()))
     for m in re.finditer(r"^\s*preserved_exact_tokens:\s*\n((?:\s+-\s.*\n?)+)", block, flags=re.M):
         found.extend(re.sub(r"^\s*-\s*", "", l).strip().strip('"').strip("'") for l in m.group(1).splitlines() if l.strip())
     return list(dict.fromkeys(found))
