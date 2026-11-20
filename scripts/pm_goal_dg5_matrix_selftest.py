@@ -115,6 +115,30 @@ def check_closure_reports():
             assert root['error'] and root['uncovered_clauses'] == [first_id], root
             assert merged(second)['error'], verify
 
+        legacy = first_id.rsplit('/', 1)[0] + '/closed_members'
+        separate = [first_id.rsplit('/', 1)[0] + '/' + keyword
+                    for keyword in ('additionalProperties', 'unevaluatedProperties')]
+        census = Path(td) / 'census.json'
+
+        def pin(ids):
+            return dict(identity='dg5-distinct-keywords-v1', count=len(ids),
+                        sha256=hashlib.sha256('\n'.join(sorted(ids)).encode()).hexdigest())
+
+        def write_census(ids):
+            entry = dict(rows=[row], families=[FAM], clause_ids=ids, clause_inventory=pin(ids))
+            census.write_text(json.dumps(dict(mode='assertion-inventory', roots={'dg5:test': entry})))
+
+        write_report(first, {legacy: dict(cls='KILLED')}, verify=dict(passed=1))
+        assert 'legacy closed_members' in merged(first)['error']
+        write_census([legacy])
+        assert matrix.load_closure([first], [census])[row][0]['error'] is None
+        write_census(separate)
+        assert matrix.load_closure([first], [census])[row][0]['error']
+        assert matrix.load_closure([], [census])[row][0]['error']
+        write_report(first, {x: dict(cls='KILLED') for x in separate},
+                     verify=dict(passed=2), clause_inventory=pin(separate))
+        assert matrix.load_closure([first], [census])[row][0]['error'] is None
+
 
 def check_matrix():
     ok = 'dg5/site/pm_goal_test_owner_adapters.py:75'

@@ -1202,11 +1202,13 @@ def swap_candidates(v, controls, reach, limit=6):
     return out
 
 
-def close_root(root, v, seeds, budget, carried=None, elsewhere=None, deadline=None):
+def close_root(root, v, seeds, budget, carried=None, elsewhere=None, deadline=None,
+               *, clause_name=None, nodes=None):
     carried = carried or {}
     elsewhere = elsewhere or {}
     CURRENT[0] = v
-    nodes = walk(v)
+    if nodes is None:
+        nodes = walk(v)
     by_ipath = collections.defaultdict(list)
     for location, info in nodes.items():
         for reach in info['reach']:
@@ -1226,14 +1228,15 @@ def close_root(root, v, seeds, budget, carried=None, elsewhere=None, deadline=No
             if time.monotonic() - done[1] > 300:  # GO addition: progress line every five minutes
                 done[1] = time.monotonic()
                 print(f'  {root[:60]}: clause {done[0]}/{total}, validations {COUNT[0] - root0}', file=sys.stderr, flush=True)
-            clause = location + '/' + name_of(keyword)
+            name = clause_name(node, keyword) if clause_name else name_of(keyword)
+            clause = location + '/' + name
             if clause in carried:  # --carry: a clause the earlier report did not leave UNCOVERED
                 entries[clause] = carried[clause]
                 continue
             if clause in elsewhere:  # --distinct-from: a witness for this clause exists in another root of every family
                 entries[clause] = dict(cls='SEARCHED_ELSEWHERE', closed_in=elsewhere[clause])
                 continue
-            ident = common.schema_guard(node, keyword)
+            ident = common.schema_guard(node, keyword, clause_name=name)
             if all(r['empty_domain'] for r in info['reach']):
                 entries[clause] = dict(cls='UNREACHABLE', proof='every instance location of the clause is an item of an array '
                                        'whose owner node has maxItems 0 (' + info['reach'][0]['empty_domain'] + '): no valid instance holds an item')
