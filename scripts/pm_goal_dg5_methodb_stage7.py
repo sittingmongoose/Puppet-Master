@@ -5,6 +5,7 @@ import argparse
 import gzip
 import json
 from pathlib import Path
+import sys
 
 import pm_goal_dg5_boundaries as bridge
 import pm_goal_guard_sweep as sweep
@@ -162,14 +163,15 @@ CASES = {
 }
 
 
-def call(fixture, label, collector, *, valid=None, target=None, cut=()):
+def call(fixture, label, collector, *, valid=None, target=None, cut=(), family=FAMILY):
     world, method, args, kwargs = fixture
     action = lambda: method(*args, **kwargs)
+    work = world.work if family == 'goal_run.started' else world.root
     saved = tables.COLLECTOR, tables.CUT, tables.NO_CACHE
     tables.COLLECTOR, tables.CUT, tables.NO_CACHE = collector, frozenset(cut), True
     try:
         result, code = bridge.invoke(
-            label, FAMILY, action, world.root, world=world,
+            label, family, action, work, world=world,
             arguments=dict(receiver=getattr(method, '__self__', None), args=args, kwargs=kwargs),
             original=getattr(method, '__func__', method), valid=valid, target=target,
         )
@@ -180,42 +182,46 @@ def call(fixture, label, collector, *, valid=None, target=None, cut=()):
     return dict(result, code=code, input_sha256=record['input_sha256'], failing=record['failing'])
 
 
-def save_proof(output, collector, row, site, table_report, table_path):
+def save_proof(output, collector, row, site, table_report, table_path, family):
     proof = output / 'proof'
     summary = proof / 'tables'
     write(summary / 'summary.json', [table_report])
     write(summary / 'rows.json', [dict(guard=row, table=table_report['table'],
                                       status='PASS' if table_report['status'] == 'PASS' else 'UNPROVED',
                                       table_status=table_report['status'])])
-    write(proof / 'family-rows.json', {FAMILY: [row]})
+    write(proof / 'family-rows.json', {family: [row]})
     write(proof / 'collection.json', dict(calls=collector.calls, failures=collector.failures,
                                         rows={row: {'sites': [site]}}))
-    paths = [Path(m.__file__) for m in (bridge, sweep, tables, updated)]
-    paths += [ROOT / site[0], table_path, Path(__file__),
-              ROOT / 'scripts/pm_guard_isolation.py']
+    paths = {ROOT / site[0], table_path, Path(__file__), ROOT / 'scripts/pm_guard_isolation.py'}
+    for module in tuple(sys.modules.values()):
+        filename = getattr(module, '__file__', None)
+        if filename:
+            path = Path(filename).resolve()
+            if path.is_relative_to(ROOT / 'scripts') and path.name.startswith('pm_goal') and path.suffix == '.py':
+                paths.add(path)
     write(proof / 'source-bindings.json',
-          {'files': {str(p.relative_to(ROOT)): bridge._file_sha(p) for p in sorted(set(paths))}})
+          {'files': {str(p.relative_to(ROOT)): bridge._file_sha(p) for p in sorted(paths)}})
     for name, value in (('ledger', collector.ledger),
                         ('signatures', [sorted(s) for s in collector.signature_list])):
         with gzip.open(proof / (name + '.json.gz'), 'wt') as stream:
             json.dump(value, stream, sort_keys=True)
 
 
-def run(name, output, *, leave_enabled=False):
-    source, line, expected, make = CASES[name]
+def run(name, output, *, leave_enabled=False, cases=CASES, family=FAMILY):
+    source, line, expected, make = cases[name]
     row = bridge.site_name(source, line)
     site = (source, line)
     output.mkdir(parents=True)
     tables.DISCOVERY = True
     collector = sweep.Collector()
-    label = FAMILY + '/stage7/' + name
-    control = call(make(output / 'valid', False), label + '/valid', collector, valid=True)
+    label = family + '/stage7/' + name
+    control = call(make(output / 'valid', False), label + '/valid', collector, valid=True, family=family)
     fixture = make(output / 'invalid', True)
     negative_label = label + '/invalid'
-    negative = call(fixture, negative_label, collector, valid=False, target=row)
+    negative = call(fixture, negative_label, collector, valid=False, target=row, family=family)
     disabled = call(fixture, negative_label, sweep.Collector(judge=False),
-                    cut=() if leave_enabled else (row,))
-    restored = call(fixture, negative_label, sweep.Collector(judge=False))
+                    cut=() if leave_enabled else (row,), family=family)
+    restored = call(fixture, negative_label, sweep.Collector(judge=False), family=family)
     result = dict(row=row, location=site, expected=expected, control=control,
                   negative=negative, disabled=disabled, restored=restored)
     write(output / 'calls.json', result)
@@ -242,7 +248,7 @@ def run(name, output, *, leave_enabled=False):
         require(report['status'] == 'NOT_RUN' and report['reason'] == 'no control vector', report)
     else:
         require(report['status'] == 'PASS' and report['proved'] == [row], report)
-    save_proof(output, collector, row, site, report, table_path)
+    save_proof(output, collector, row, site, report, table_path, family)
     return result
 
 
