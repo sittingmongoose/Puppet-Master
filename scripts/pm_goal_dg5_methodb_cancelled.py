@@ -25,6 +25,7 @@ from pm_goal_dg5_methodb_stage3 import (
 
 HERE = Path(__file__).resolve().parent
 FAMILY = 'goal_run.cancelled'
+CANDIDATE_ROW = 'dg5/issue/workflow_cancel_event_candidate/schema'
 
 
 class BeforeIssue(BaseException):
@@ -232,7 +233,7 @@ def root_binding(closure, bank, plain):
                        schema=schema, registry_sha256=registry, validator_class=validator)
 
 
-def scoped_validator(plain, nodes, bank=None):
+def scoped_validator(plain, nodes, bank=None, *, exact_locations=None):
     """Keep the original node identities when testing a location-scoped bank.
 
     A copied reference node cannot use this bank's original identity map.
@@ -253,6 +254,8 @@ def scoped_validator(plain, nodes, bank=None):
             location = f'{realm}:sha256:{digest}#{pointer}'
             if location in nodes:
                 locations[node_id] = location
+    if exact_locations is not None:
+        locations.update(exact_locations)
     classes = {}
 
     def keyword_wrapper(word, function):
@@ -1019,11 +1022,18 @@ def rule_path(document, path):
     return path
 
 
-def literal_rules(plain, bank, accepted, ident, ids, examples, disabled_check, scoped, branch_controls=None):
+def literal_rules(plain, bank, accepted, ident, ids, examples, disabled_check, scoped, branch_controls=None,
+                  candidate_source=None):
     import pm_goal_dg5_closure as closure
     import pm_goal_go_schema_closure as go
 
-    if scoped:
+    if candidate_source is not None:
+        from pm_goal_dg5_candidate_examples import inventory
+
+        require(plain.schema['$ref'].endswith('#/$defs/StorageEventCandidate'), 'unexpected candidate schema')
+        nodes, walked, locations = inventory(plain, bank, ident, ids, candidate_source)
+        validator = scoped_validator(plain, nodes, exact_locations=locations)
+    elif scoped:
         nodes, walked = closure._scoped_census(plain, ident, bank, closure._realm_location)
         selected = plain.schema.get('$ref', '').endswith('#/$defs/CombinedStorageProjection')
         validator = scoped_validator(plain, nodes, bank if selected else None)
@@ -1050,6 +1060,12 @@ def literal_rules(plain, bank, accepted, ident, ids, examples, disabled_check, s
     results = {}
     for name in ids:
         example = examples[name]
+        if 'candidate_example' in example:
+            from pm_goal_dg5_candidate_examples import trial
+
+            require(candidate_source is not None, 'candidate example used at a different schema')
+            results[name] = trial(plain, validator, nodes, name, example['candidate_example'], accepted, disabled_check)
+            continue
         if 'projection_example' in example:
             from pm_goal_dg5_projection_examples import verify_projection_example
 
@@ -1561,6 +1577,12 @@ def publish(source, out, declare, collector, reports, inventories, table_path):
         cited.extend(PROOFS[declare['row']]['sites'])
     if declare['row'] == 'dg5/checkpoint/afterimage/schema':
         cited.extend(('scripts/pm_goal_dg_r_projector.py', line) for line in (399, 409, 509, 510, 792, 793))
+    if declare['row'] == CANDIDATE_ROW:
+        cited.extend((path, 1) for path in (
+            'Plans/goal_workflow_cancel_schema_resources.json',
+            'Plans/executor_cancellation_contracts/schemas/workflow-cancel-producer.v1.schema.json',
+            'Plans/executor_cancellation_contracts/schemas/goal-run-cancelled.v3.schema.json',
+        ))
     for relative, _ in cited:
         value['files'][relative] = sha(source / relative)
     write(bindings, value)
@@ -1716,7 +1738,8 @@ def run(args):
                                                           'workflow_transition_implication'}
                              for example in examples.values()):
                 controls = declare.get('projection_controls', {}).get(ident)
-                clauses = literal_rules(plain, bank, accepted, ident, ids, examples, args.disable_check, scoped, controls)
+                clauses = literal_rules(plain, bank, accepted, ident, ids, examples, args.disable_check, scoped, controls,
+                                        candidate_source=source if row == CANDIDATE_ROW else None)
             else:
                 clauses, gaps = test_rules(plain, bank, accepted, ident, ids, examples, args.disable_check)
                 require(not gaps, f'{ident} needs checked implications for {sorted(gaps)}')
