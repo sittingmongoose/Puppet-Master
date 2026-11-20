@@ -5,11 +5,12 @@ import json
 from pathlib import Path
 
 import pm_goal_dg_u_owners as update
-from pm_goal_depth_replay import check, replay, write_evidence
+import pm_goal_depth_provider as provider
+from pm_goal_depth_replay import check, replay, retain_manifests, write_evidence
 
 
 def open_update(path):
-    return update.World(path, create=False)
+    return provider.World(path, create=False)
 
 
 def proposal(world, goal, name, text, *, instruction_text=None):
@@ -40,7 +41,7 @@ def goal_effects(world):
 
 def capture_cases(root):
     seed = root / 'capture-seed'
-    world = update.World(seed)
+    world = provider.World(seed)
     goal = update.birth_goal(world)
     good = proposal(world, goal, 'proposal-valid', 'New objective')
     bad = proposal(world, goal, 'proposal-wrong-instruction', 'New objective',
@@ -59,7 +60,7 @@ def capture_cases(root):
               'Messages did not come from the expected original TEST_ONLY owners')
         if value is not None:
             signed = opened.approvals.state(value['approval_id'])
-            check(signed['request'] == value['request'] and
+            check(signed['request_sha256'] == update.sha(update.msgpack(value['request'])) and
                   value['request']['proposal_request_ref'] == dispatch['proposal_request_ref'] and
                   value['request']['target'] == request['target'],
                   'Approval result was not the original stored request for the dispatch')
@@ -69,8 +70,8 @@ def capture_cases(root):
                     result=value, goal_effects=before)
 
     attestation = replay(
-        root / 'instruction-attestation', seed=seed, open_world=open_update, module=update,
-        function=update.ApprovalOwner.capture, marker="'dgu/hitl/capture/instruction_attests'",
+        root / 'instruction-attestation', seed=seed, open_world=open_update, module=provider,
+        function=provider.ApprovalOwner.check_sources, marker="require(where + '/instruction_attests'",
         code='dgu/hitl/capture/instruction_attests', control=good, negative=bad,
         call=lambda w, p: w.approvals.capture(p['command_instance_id']), verify=verify)
 
@@ -93,12 +94,31 @@ def capture_cases(root):
         control=dict(proposal=good, withdraw_after_capture_checks=False),
         negative=dict(proposal=good, withdraw_after_capture_checks=True),
         call=capture_with_installation, verify=verify_installation)
-    return dict(instruction=attestation, withdrawal=withdrawal)
+
+    def capture_with_surface(opened, arguments):
+        if arguments['remove_approval_surface']:
+            def remove_surface(world, _):
+                current = world.installation.current()
+                world.installation.put('current', dict(current, enrolled_roles=[
+                    role for role in current['enrolled_roles'] if role != 'approval']))
+            opened.inject('hitl.capture', 'before_release', remove_surface)
+        return opened.approvals.capture(arguments['proposal']['command_instance_id'])
+
+    # The surface is checked at entry and again after the last helper.
+    # This distinct final predicate is exercised on otherwise valid sources.
+    surface = replay(
+        root / 'approval-surface', seed=seed, open_world=open_update, module=provider,
+        function=provider.ApprovalOwner.check_live_proposal, marker="require(where + '/approval_surface'",
+        code='dgu/hitl/capture/final/approval_surface',
+        control=dict(proposal=good, remove_approval_surface=False),
+        negative=dict(proposal=good, remove_approval_surface=True),
+        call=capture_with_surface, verify=lambda label, w, args, value: verify(label, w, args['proposal'], value))
+    return dict(instruction=attestation, withdrawal=withdrawal, surface=surface)
 
 
 def decision_cases(root):
     seed = root / 'decision-seed'
-    world = update.World(seed)
+    world = provider.World(seed)
     goal = update.birth_goal(world)
     req, _ = update.agent_request(world, goal, 'New objective', decide=None)
     person = 'TEST_ONLY:approver'
@@ -111,30 +131,36 @@ def decision_cases(root):
 
     def verify(label, opened, arguments, value):
         check(goal_effects(opened) == before, 'Approval decision changed Goal, Event or terminal')
-        original = opened.approvals.state(arguments['approval_id'])
-        check(original['resolution'] == value, 'The observed resolution differs from original owner custody')
+        approval_id = arguments['approval_id']
+        original = opened.approvals.read_request(approval_id, 'goal-depth')
+        key = update.resolution_key(goal['scope'], approval_id)
+        cell = opened.storage.cell(provider.RESOLUTION, key)
+        check((cell['value']['resolution'] if cell else None) == value,
+              'The observed resolution differs from original owner custody')
         if value is not None:
-            check(value['request_sha256'] == update.sha(update.msgpack(original['request'])),
+            check(value['request_sha256'] == update.sha(update.msgpack(original)),
                   'Resolution does not commit to the full original request bytes')
         permission = opened.permissions.state(arguments['person_permission_ref'])
-        return dict(request=original['request'], resolution=value, permission=permission, goal_effects=before)
+        return dict(request=original, resolution=value, permission=permission, goal_effects=before)
 
-    return replay(root / 'person-decision', seed=seed, open_world=open_update, module=update,
-                  function=update.ApprovalOwner.decide, marker="'dgu/hitl/decide/not_person'",
+    return replay(root / 'person-decision', seed=seed, open_world=open_update, module=provider,
+                  function=provider.ApprovalOwner.decide, marker="require(where + '/not_person'",
                   code='dgu/hitl/decide/not_person', control=good, negative=bad,
                   call=lambda w, p: w.approvals.decide(**p), verify=verify)
 
 
 def body_cases(root):
     seed = root / 'mutation-seed'
-    world = update.World(seed)
+    world = provider.World(seed)
     goal = update.birth_goal(world)
     scope = goal['scope']
     request, _ = update.agent_request(world, goal, 'Approved replacement 🌿')
     admission = world.command.run(request, stop_after='reserve')
     operation = admission['normalized_identity']['operation_id']
-    original_approval = world.approvals.state(request['approval_id'])
-    chosen_ref = original_approval['resolution']['protected_person_decision_ref']
+    approval_id = request['approval_id']
+    resolution_key = update.resolution_key(scope, approval_id)
+    original_resolution = world.approvals.read_stored_resolution(scope, approval_id, 'goal-depth')['resolution']
+    chosen_ref = original_resolution['protected_person_decision_ref']
     replacement = 'TEST_ONLY:substituted-person-decision'
     before = goal_effects(world)
     arguments = dict(update_request=request, operation_id=operation)
@@ -143,20 +169,22 @@ def body_cases(root):
         if args['replace_protected_decision']:
             # Change one stored owner fact after the first acceptance check returned.
             def substitute(current, _):
-                selected = current.approvals.state(request['approval_id'])
-                changed = dict(selected['resolution'], protected_person_decision_ref=replacement)
-                current.approvals.put(request['approval_id'], dict(selected, resolution=changed))
+                cell = current.storage.cell(provider.RESOLUTION, resolution_key)
+                row = dict(cell['value'], resolution=dict(original_resolution,
+                                                          protected_person_decision_ref=replacement))
+                current.transact([dict(table=provider.RESOLUTION, key=resolution_key,
+                                       expected=cell['version'], value=row)])
             w.inject('body.commit', 'before_release', substitute)
         return w.command.commit(w.sir.admission(request['command_instance_id']))
 
     def verify(label, opened, args, result):
-        approval = opened.approvals.state(request['approval_id'])
+        resolution = opened.approvals.read_stored_resolution(scope, approval_id, 'goal-depth')['resolution']
         chosen = replacement if args['replace_protected_decision'] else chosen_ref
-        check(approval['resolution'] == dict(original_approval['resolution'], protected_person_decision_ref=chosen),
+        check(resolution == dict(original_resolution, protected_person_decision_ref=chosen),
               'The negative must change only the independently stored protected decision reference')
         if result is None:
             check(goal_effects(opened) == before, 'The final refusal allowed a Goal or publication effect')
-            return dict(approval=approval['resolution'], goal_effects=before)
+            return dict(approval=resolution, goal_effects=before)
         receipt = result['receipt']
         check(receipt['owner_ref'] == opened.body.owner_id and receipt['authority_ref'] == chosen_ref,
               'The body receipt does not name the original sole owner and approval')
@@ -190,7 +218,7 @@ def body_cases(root):
         check(opened.sir.replay(request['command_instance_id'])['terminal'] == terminal and
               goal_effects(opened) == settled_effects,
               'Withdrawal changed the original terminal or a settled Goal effect')
-        return dict(approval=approval['resolution'], source_acceptance=source['acceptance'], body_receipt=receipt,
+        return dict(approval=resolution, source_acceptance=source['acceptance'], body_receipt=receipt,
                     provider_withdrawal=provider_withdrawal,
                     frozen_producer=frozen, event=event, raw_frame_sha256=update.sha(opened.storage.read_frame(event_id)),
                     first_publication=first, terminal=terminal)
@@ -202,46 +230,189 @@ def body_cases(root):
                   negative=dict(arguments, replace_protected_decision=True), call=call, verify=verify)
 
 
-def observe_provider_storage(root):
-    """Record outstanding behavior using the original approvals owner and valid proposals."""
-    world = update.World(root / 'provider-storage')
+def retry_case(root, world_type=provider.World):
+    """HITL-1130/U3: equal original dispatch reuses identity across reopen and target advance."""
+    world = world_type(root)
     goal = update.birth_goal(world)
     short = proposal(world, goal, 'same-dispatch', 'Small approval')
     original = world.sir.admit_proposal(short)
     first = world.approvals.capture(short['command_instance_id'])
     replay_dispatch = world.sir.admit_proposal(copy.deepcopy(short))
-    repeated = world.approvals.capture(short['command_instance_id'])
     check(replay_dispatch == original, 'SIR did not select its original dispatch for an equal retry')
-    large = proposal(world, goal, 'large-proposal', '🌿' * 4000)
-    world.sir.admit_proposal(large)
-    prior_packs = sorted(world.storage.packs)
-    captured = world.approvals.capture(large['command_instance_id'])
-    state = world.approvals.state(captured['approval_id'])
-    stored_cell = world.storage.cell(world.approvals.table, captured['approval_id'])['value']
-    if stored_cell.get('dgu_cell') == 'pack_ref':
-        raw = world.storage.read_pack(stored_cell['payload_ref'], expected_media_type=update.MEDIA)
-        check(raw == update.msgpack(state), 'The generic owner-cell pack did not return its entire original value')
-    return dict(equal_proposal=short, dispatch_id=original['dispatch_id'],
-                first=first, repeated=repeated, equal_capture_replay=first == repeated,
-                large_proposal=large, large_request_bytes=len(update.msgpack(captured['request'])),
-                large_request_sha256=state['request_sha256'], stored_content=state['stored_proposal']['content'],
-                generic_owner_cell_pack=stored_cell.get('payload_ref'),
-                packs_before=prior_packs, packs_after=sorted(world.storage.packs))
+    reopened = world_type(root, create=False)
+    before = reopened.observe_effects()
+    repeated = reopened.approvals.capture(short['command_instance_id'])
+    check(first == repeated, 'Equal dispatch issued a second approval identity')
+    check(reopened.observe_effects() == before, 'Approval retry wrote a second durable value')
+    altered = dict(short, return_route_ref='TEST_ONLY:other-return-route')
+    expect_refusal('dgu/sir/proposal_conflict', lambda: reopened.sir.admit_proposal(altered))
+    check(reopened.observe_effects() == before, 'Conflicting retry wrote a durable value')
+    call_count = len(reopened.recorder.calls)
+    reopened.command.run(update.direct_request(reopened, goal, 'Later objective'))
+    check(not any(call['method'].startswith('hitl.') for call in reopened.recorder.calls[call_count:]),
+          'Direct Save reached HITL')
+    check(reopened.approvals.capture(short['command_instance_id']) == first,
+          'Retry after the Goal advanced replaced or lost the original approval')
+    return dict(dispatch_id=original['dispatch_id'], original_approval=first, replayed_approval=repeated,
+                conflict='dgu/sir/proposal_conflict')
+
+
+def expect_refusal(code, call):
+    try:
+        call()
+    except (update.Refusal, update.S.StorageRefusal) as error:
+        check(update.refusal_code(error) == code, f'Expected {code}, got {error}')
+    else:
+        raise AssertionError(f'Expected refusal {code}, but the call succeeded')
+    return code
+
+
+def expiry_case(root, world_type=provider.World):
+    """HITL-1130/U3–U4: preserve the selected expiry and refuse when it is reached."""
+    world = world_type(root)
+    goal = update.birth_goal(world)
+    world.selected_expiry = '2050-01-02T12:00:00.1000Z'
+    world.now = lambda: '2050-01-02T12:00:00.0999Z'
+    request, sources = update.agent_request(world, goal, 'Time limited objective')
+    approval_id = request['approval_id']
+    live = world.approvals.read_resolution(approval_id, 'goal-depth')
+    check(live['request']['expires_at_utc'] == world.selected_expiry,
+          'The issued approval lost the owner-selected expiry')
+    before = goal_effects(world)
+    world.now = lambda: '2050-01-02T12:00:00.1Z'
+    refusal = expect_refusal('goal-depth/approval_expired', lambda: world.approvals.read_resolution(
+        approval_id, 'goal-depth'))
+    expect_refusal('dgu/source/capture/acceptance/approval_expired', lambda: world.command.admit_and_capture(request))
+    check(goal_effects(world) == before, 'An expired approval reached Goal mutation or publication')
+    return dict(request=live['request'], resolution=live['resolution'], expired=refusal,
+                source_message=sources['agent_message'])
+
+
+def storage_case(root, kind, world_type=provider.World):
+    """SP-1130/U6: validate and resolve the complete selected physical value."""
+    world = world_type(root)
+    goal = update.birth_goal(world)
+    text = '🌿' * 4000 if kind == 'payload_ref' else 'Small replacement'
+    request, lineage = update.agent_request(world, goal, text)
+    approval_id, scope = request['approval_id'], goal['scope']
+    core = world.approvals.state(approval_id)
+    key = update.proposal_key(scope, lineage['proposal']['command_instance_id'])
+    cell = world.storage.cell(provider.PROPOSAL, key)
+    stored = cell['value'] if cell else core['stored_proposal']
+    uri = update.CONTRACTS_URI + '#/$defs/'
+    errors = list(world.approvals.bank.errors(uri + 'StorageProposal', stored))
+    check(not errors, f'Owner schema refused the {kind} proposal at {list(errors[0].absolute_path) if errors else []}')
+    content = stored['content']
+    check(content['kind'] == kind, f'Proposal selected {content["kind"]} instead of {kind}')
+    if kind == 'inline':
+        raw = update.msgpack(content['request'])
+    else:
+        reference = content['reference']
+        raw = world.storage.read_pack(reference, expected_media_type=update.MEDIA)
+        check(reference['byte_size'] == len(raw) > update.CAP, 'Pack does not contain the complete large proposal')
+    check(raw == update.msgpack(lineage['proposal']) and update.sha(raw) == stored['original_request_sha256'],
+          'Stored proposal did not resolve the original submitted bytes')
+    live = world.approvals.read_resolution(approval_id, 'goal-depth')
+    decision_key = update.resolution_key(scope, approval_id)
+    decision = world.storage.cell(provider.RESOLUTION, decision_key)
+    check(decision is not None, 'Missing separately stored content-free approval resolution')
+    wrapper = decision['value']
+    check(not list(world.approvals.bank.errors(uri + 'StorageApprovalResolution', wrapper)),
+          'The stored resolution does not match the owner schema')
+    check(wrapper['resolution'] == live['resolution'] and
+          live['resolution']['request_sha256'] == update.sha(update.msgpack(live['request'])),
+          'Resolution did not commit to the exact ApprovalRequest bytes')
+    world.command.run(request)
+    terminal = world.sir.replay(request['command_instance_id'])['terminal']
+    event_id = terminal['result']['publication']['event_id']
+    first = world.storage.full_value_result(event_id)
+    check(terminal['result']['status'] == 'succeeded' and
+          world.storage.read_event(event_id)['payload']['approval_id'] == approval_id and
+          first['first_append_receipt'] == terminal['result']['publication']['first_append_receipt'] and
+          world.body.read_private(scope, 'goal-depth')['body']['objective_text'] == text,
+          'Original proposal storage did not reach the sole body, first frame and settled result')
+    before = goal_effects(world)
+    if kind == 'payload_ref':
+        path = world.storage.root / 'packs' / reference['blake3']
+        path.rename(path.with_name('held-' + path.name))
+        expect_refusal('pack/present', lambda: world.approvals.read_resolution(approval_id, 'goal-depth'))
+        check(goal_effects(world) == before, 'Missing proposal bytes caused a Goal mutation')
+    world.installation.withdraw()
+    if kind == 'inline':
+        expect_refusal('goal-depth/installation_unavailable', lambda: world.approvals.read_resolution(
+            approval_id, 'goal-depth'))
+    world.threads.delete(scope['project_id'], scope['thread_id'])
+    retained = world.approvals.read_retained_resolution(scope, approval_id, goal['user'], goal['user_permission'])
+    check(retained == wrapper, 'Independent retained decision read depended on live proposal content')
+    world.permissions.revoke(goal['user_permission'])
+    refusal = expect_refusal('dgu/hitl/retained/permission_revoked', lambda: world.approvals.read_retained_resolution(
+        scope, approval_id, goal['user'], goal['user_permission']))
+    return dict(stored_proposal=stored, stored_resolution=wrapper, proposal_bytes=len(raw),
+                first_publication=first, terminal=terminal,
+                retained_permission_refusal=refusal)
+
+
+def decision_storage_case(root, world_type=provider.World):
+    """SP-1130/U6: the content-free original decision has a separate stored value."""
+    world = world_type(root)
+    goal = update.birth_goal(world)
+    request, _ = update.agent_request(world, goal, 'Denied objective', decide='denied')
+    key = update.resolution_key(goal['scope'], request['approval_id'])
+    stored = world.storage.cell(provider.RESOLUTION, key)
+    check(stored is not None, 'No independent StorageApprovalResolution was published')
+    wrapper = stored['value']
+    original = world.approvals.read_request(request['approval_id'], 'goal-depth')
+    check(wrapper['resolution']['request_sha256'] == update.sha(update.msgpack(original)) and
+          wrapper['resolution']['decision'] == 'denied', 'Stored denial lost its original decision or request commitment')
+    refusal = expect_refusal('goal-depth/approval_denied', lambda: world.approvals.read_resolution(
+        request['approval_id'], 'goal-depth'))
+    check(world.approvals.read_retained_resolution(goal['scope'], request['approval_id'], goal['user'],
+                                                   goal['user_permission']) == wrapper,
+          'A truthful denial was unavailable from the independently stored decision')
+    return dict(stored_resolution=wrapper, live_refusal=refusal)
+
+
+def provider_cases(root, world_type=provider.World):
+    return (
+        ('retry', 'Equal dispatch issued a second approval identity',
+         lambda: retry_case(root / 'retry', world_type)),
+        ('expiry', 'The issued approval lost the owner-selected expiry',
+         lambda: expiry_case(root / 'expiry', world_type)),
+        ('inline', "Owner schema refused the inline proposal at ['content']",
+         lambda: storage_case(root / 'inline', 'inline', world_type)),
+        ('payload_ref', "Owner schema refused the payload_ref proposal at ['content']",
+         lambda: storage_case(root / 'payload-ref', 'payload_ref', world_type)),
+        ('decision', 'No independent StorageApprovalResolution was published',
+         lambda: decision_storage_case(root / 'decision-storage', world_type)),
+    )
 
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--out', type=Path, required=True)
     args = parser.parse_args()
-    args.out.mkdir(parents=True)
-    cases = capture_cases(args.out)
-    cases['protected_person'] = decision_cases(args.out)
-    cases['final_approval'] = body_cases(args.out)
-    diagnostics = observe_provider_storage(args.out)
-    write_evidence(args.out / 'update.json', dict(cases=cases, provider_storage_observations=diagnostics))
+    root = args.out.resolve()
+    root.mkdir(parents=True)
+    with retain_manifests(root):
+        cases = capture_cases(root)
+        cases['protected_person'] = decision_cases(root)
+        cases['final_approval'] = body_cases(root)
+        diagnostics = {name: run() for name, _, run in provider_cases(root)}
+        reverted = {}
+        # Select the unchanged DG-U adapter to exercise the same tests with
+        # the new provider behavior reverted.
+        for name, expected, run in provider_cases(root / 'reverted', update.World):
+            try:
+                run()
+            except AssertionError as error:
+                check(str(error) == expected, f'{name}: reverted check failed for another reason: {error}')
+                reverted[name] = str(error)
+            else:
+                raise AssertionError(f'{name}: the reverted adapter passed')
+    write_evidence(root / 'update.json', dict(cases=cases, provider_storage_observations=diagnostics,
+                                             reverted_provider_cases=reverted))
     print(json.dumps(dict(exact_cut_and_restore=len(cases),
-                          identical_proposal_replayed=diagnostics['equal_capture_replay'],
-                          large_proposal_carrier_content=diagnostics['stored_content'])))
+                          provider_storage_cases=sorted(diagnostics))))
 
 
 if __name__ == '__main__':
