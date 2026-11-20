@@ -13,6 +13,7 @@ from pathlib import Path
 import random
 import sys
 import tempfile
+from types import SimpleNamespace
 from unittest.mock import patch
 
 
@@ -163,7 +164,9 @@ def _census_traps(traps):
     graph['non_guards'] = _review_sites('factory', 'The test clock varies one case context for the same input.',
         call_review=['g.time.monotonic()'],
         data_operation=['g.time.monotonic() == 2', 'g.time.monotonic', 'g.time'])
-    return [source, metadata, repeated, wrong_root, duplicate, graph]
+    constructor = dict(id='guard-table-invalid-rows', kind='guard-table-invalid-rows',
+                       expected='GuardTable refuses both duplicate names and a non-Guard row.')
+    return [source, metadata, repeated, wrong_root, duplicate, graph, constructor]
 
 
 def _schema_suite(g, trap, root):
@@ -239,6 +242,20 @@ def _special(g, trap, memory):
         finally:
             table._restore()
         return error == 'require must use the complete bound value and context', {'error': error}
+    if kind == 'guard-table-invalid-rows':
+        def predicate(value, context):
+            return None
+        guard = g.Guard('x', g.Invariant('/x', 'nonnegative'), 'bad_x', predicate)
+        rejected = {}
+        for label, rows in (('duplicate name', [guard, replace(guard, refusal_code='other_x')]),
+                            ('non-Guard row', [guard, SimpleNamespace(name='y')])):
+            try:
+                g.GuardTable(rows)
+            except g.IsolationError as exc:
+                rejected[label] = str(exc)
+            else:
+                rejected[label] = None
+        return all(error == 'duplicate guard name or invalid Guard row' for error in rejected.values()), rejected
     if kind == 'snapshot-scalar-topology':
         left = bytearray(b'a noninterned scalar identity').decode()
         right = bytearray(b'a noninterned scalar identity').decode()
