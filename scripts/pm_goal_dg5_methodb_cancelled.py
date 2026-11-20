@@ -105,12 +105,15 @@ def fixture(declare, route, directory):
             target = args[0], args[3]
         return world, action, (target, args, kwargs)
     world.build()
-    if route['call'] == 'read_checkpoint':
+    if route['call'] in ('read_checkpoint', 'checkpoint_wrapper'):
         owner = world.projector_class(world)
         owner.project()
         owner.cutover()
         key = owner.checkpoint_key(owner.request()['scope'])
         wrapper = world.storage.cell('checkpoints', key)['value']
+        if route['call'] == 'checkpoint_wrapper':
+            logical = owner.read_checkpoint(wrapper)
+            return world, lambda: owner.checkpoint_wrapper(copy.deepcopy(logical)), logical
         return world, lambda: owner.read_checkpoint(wrapper), wrapper
     if route['call'] == 'current_started':
         owner = getattr(world, 'projector_class', projector.Projector)(world)
@@ -206,6 +209,20 @@ def intent_condition(nodes, rule):
     return root
 
 
+def checkpoint_branch_messages(nodes, source, inactive_index):
+    branch = source.split('#', 1)[0] + '#/$defs/StorageCheckpoint/properties/content'
+    variants = nodes[branch]['node']['oneOf']
+    for schema, kind, member in zip(variants, ('inline', 'payload_reference'), ('checkpoint', 'reference'),
+                                    strict=True):
+        require(schema['type'] == 'object' and schema['additionalProperties'] is False
+                and set(schema['required']) == set(schema['properties']) == {'kind', member}
+                and schema['properties']['kind']['const'] == kind,
+                'checkpoint wrapper branch selection changed')
+    inactive = f'{branch}/oneOf/{inactive_index}'
+    return {branch + '/oneOf', inactive + '/closed_members', inactive + '/required',
+            inactive + '/properties/kind/const'}
+
+
 def checkpoint_uuid_implication(plain, nodes, name, path, cut):
     from pm_goal_go_schema_closure import locations
     from pm_goal_own_c_oracles import exact_pattern, uuid_string
@@ -213,7 +230,12 @@ def checkpoint_uuid_implication(plain, nodes, name, path, cut):
     source, word = name.rsplit('/', 1)
     node = nodes[source]['node']
     pattern = '[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}'
-    require(path == ['storage_instance_id'] and source.endswith('/$defs/LogicalCheckpoint/properties/storage_instance_id')
+    nested = path == ['content', 'checkpoint', 'storage_instance_id']
+    definition = source.split('#', 1)[1]
+    require(((nested and definition == '/$defs/LogicalCheckpoint/properties/storage_instance_id')
+             or (path == ['storage_instance_id'] and definition in (
+                 '/$defs/LogicalCheckpoint/properties/storage_instance_id',
+                 '/$defs/StorageCheckpoint/properties/storage_instance_id')))
             and node['pattern'] == '^' + pattern + '$' and node['format'] == 'uuid'
             and node['minLength'] == node['maxLength'] == 36
             and plain.VALIDATORS['pattern'] is exact_pattern
@@ -222,7 +244,10 @@ def checkpoint_uuid_implication(plain, nodes, name, path, cut):
             'the checkpoint UUID predicates changed')
     remaining = {'pattern', 'format'}
     remaining.discard(word)
-    require(locations(cut) == {source + '/' + keyword for keyword in remaining},
+    expected = {source + '/' + keyword for keyword in remaining}
+    if nested:
+        expected |= checkpoint_branch_messages(nodes, source, inactive_index=1)
+    require(locations(cut) == expected,
             'the exact matching UUID rules must still refuse')
     return dict(source=source, covering_rules=sorted(remaining),
                 predicates=[dict(name=method.__name__, line=method.__code__.co_firstlineno,
@@ -231,9 +256,34 @@ def checkpoint_uuid_implication(plain, nodes, name, path, cut):
                 premise='The two full matches define the same UUID grammar and require exactly 36 characters.')
 
 
+def checkpoint_payload_width(plain, nodes, name, path, cut):
+    from pm_goal_go_schema_closure import locations
+    from pm_goal_own_c_oracles import exact_pattern
+
+    source, word = name.rsplit('/', 1)
+    node = nodes[source]['node']
+    covering = source + '/pattern'
+    require(path == ['content', 'reference', 'blake3']
+            and source.endswith('#/$defs/PayloadRef/properties/blake3')
+            and word in ('minLength', 'maxLength') and node['minLength'] == node['maxLength'] == 64
+            and node['pattern'] == '^[0-9a-f]{64}$' and plain.VALIDATORS['pattern'] is exact_pattern
+            and locations(cut) == {covering} | checkpoint_branch_messages(nodes, source, inactive_index=0),
+            'the checkpoint payload width predicates changed')
+    return dict(source=source, covering_rule=covering,
+                predicate_sha256=sha(Path(exact_pattern.__code__.co_filename)),
+                premise='The full hexadecimal match requires exactly 64 characters.')
+
+
 def rule_path(document, path):
-    if path[:2] == ['generations', 'current_generation_id']:
-        return ['generations', document['current_generation_id'], *path[2:]]
+    prefix = path[:2] if path[:2] == ['content', 'checkpoint'] else []
+    offset = len(prefix)
+    if path[offset:offset + 2] == ['generations', 'current_generation_id']:
+        logical = document['content']['checkpoint'] if prefix else document
+        generation = logical['current_generation_id']
+        if generation is None:
+            require(len(logical['generations']) == 1, 'the staged checkpoint needs exactly one generation')
+            generation, = logical['generations']
+        return [*prefix, 'generations', generation, *path[offset + 2:]]
     return path
 
 
@@ -322,6 +372,9 @@ def literal_rules(plain, bank, accepted, ident, ids, examples, disabled_check, s
         elif example.get('checkpoint_uuid'):
             record.update(cls='COVERED_LATER',
                           implication=checkpoint_uuid_implication(plain, nodes, name, path, cut))
+        elif example.get('checkpoint_payload_width'):
+            record.update(cls='COVERED_LATER',
+                          implication=checkpoint_payload_width(plain, nodes, name, path, cut))
         elif example.get('nullable_enum'):
             location, word = name.rsplit('/', 1)
             node = nodes[location]['node']
