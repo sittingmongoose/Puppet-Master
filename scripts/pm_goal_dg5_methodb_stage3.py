@@ -93,6 +93,17 @@ def update_fixture(route, path):
                 return w.sir.admit(document)
 
         return w, admit
+    if route == 'capture_input':
+        request = oracle.O.direct_request(w, goal, 'Stage 3 input capture')
+        admission = w.sir.admit(request)
+        stamp = w.now()
+
+        def capture():
+            with patch.object(w, 'now', return_value=stamp):
+                return w.source.capture(admission, lambda current, where: w.command.acceptance_evidence(
+                    admission, current, where=where))
+
+        return w, capture
     _, admission = oracle.run_direct(w, goal)
     progress = oracle.progress(w, goal, oracle.op_of(admission))
     request = progress['body_commit']['receipt_request']
