@@ -3,6 +3,7 @@
 from contextlib import chdir
 import importlib.util
 from pathlib import Path
+import subprocess
 import sys
 import unittest
 
@@ -37,6 +38,25 @@ class GuardEngineTests(unittest.TestCase):
             report = guard.run(ddbg.retry_request_suite())
         self.assertFalse(report['runtime'], report['runtime'][:1])
         self.assertEqual(report['status'], 'PASS', report['failures'])
+
+    def test_ddbg_preparation_import_boundary(self):
+        source = ROOT / 'scripts/guard-isolation/ddbg_setup_fixture.py'
+        dependency = ROOT / 'scripts/pm_debug_investigation_views.py'
+        errors = guard.prescan_sources(source, search=[str(ROOT / 'scripts')])
+        self.assertTrue(any(Path(e['path']).name == 'pm_event_numbers.py' for e in errors))
+        self.assertEqual(guard.prescan_sources(source, search=[str(ROOT / 'scripts')],
+                                              trusted_setup_sources=[dependency]), [])
+
+        # A declared checker reaching the same import still has a static
+        # dependency census, regardless of the pre-import setup option.
+        suite = ddbg.retry_request_suite()
+        suite.checker_modules = (source,)
+        scan = guard.static_scan(suite, guard.GuardTable([]))
+        self.assertTrue(any(Path(f['path']).name == 'pm_event_numbers.py' for f in scan['files']))
+        result = subprocess.run([sys.executable, '-B', str(ROOT / 'scripts/pm_guard_isolation.py'),
+                                 '--adapter', f'{source}:run_setup', '--trusted-setup-source', str(dependency)],
+                                capture_output=True, text=True, cwd=ROOT)
+        self.assertEqual(result.returncode, 0, result.stderr or result.stdout[:1000])
 
     def test_ddbg_short_circuit_digest(self):
         original = ddbg.payload_target_bound_suite()

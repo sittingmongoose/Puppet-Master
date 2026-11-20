@@ -197,7 +197,7 @@ _PRESCAN_SENSITIVE = frozenset({'eval', 'exec', '__import__', 'getattr', 'global
                                 'getprofile', '__builtins__'})
 
 
-def prescan_sources(start, *, search=None, reset_seams=()):
+def prescan_sources(start, *, search=None, reset_seams=(), trusted_setup_sources=()):
     """T61 (REVIEW-etools-tb3-opus finding 2): before a checker module is imported (the adapter command line, the trap
     loader), its text and the text of every repository module it imports (found from the import statements, resolved
     without executing anything outside the standard library) are scanned for the table-independent stop errors the text
@@ -210,7 +210,8 @@ def prescan_sources(start, *, search=None, reset_seams=()):
     module at any hop as external_binding_chain_read. reset_seams, the declared sources of the start file's reset seams
     when they are known before the import (the trap loader knows them), are held to static_scan's rule: a seam naming a
     certified binding is reset_seam_certified_write. The full static scan still runs after the import; this one can only
-    stop a run, never credit one. Returns the errors (empty when the closure is clean)."""
+    stop a run, never credit one. A reviewed setup source may be excluded only across a function-local import
+    edge. The full checker scan follows those imports regardless of this option. Returns the prescan errors."""
     start = Path(start).resolve()
     trusted = {Path(__file__).resolve()}
     search = [str(start.parent), *(search if search is not None else sys.path)]
@@ -218,6 +219,10 @@ def prescan_sources(start, *, search=None, reset_seams=()):
     # the repository the checker lives in: the nearest directory above it holding .git, else its own directory; only
     # modules inside it are followed (third-party code, wherever it is installed, is the full scan's to resolve)
     home = next((d for d in [start.parent, *start.parents] if (d / '.git').exists()), start.parent)
+    setup_sources = {Path(path).resolve() for path in trusted_setup_sources}
+    for path in setup_sources:
+        if path == start or not path.is_relative_to(home) or path.suffix != '.py' or not path.is_file():
+            raise IsolationError('trusted setup source must be a local dependency .py file: ' + str(path))
     def local(spec):
         origin = getattr(spec, 'origin', None)
         if not origin or origin in ('built-in', 'frozen') or not origin.endswith('.py'):
@@ -237,6 +242,18 @@ def prescan_sources(start, *, search=None, reset_seams=()):
             errors.append({'kind': 'unscannable_module', 'path': str(path), 'reason': type(exc).__name__ + ': ' + str(exc)})
             continue
         parents = {child: node for node in ast.walk(tree) for child in ast.iter_child_nodes(node)}
+        def follow_import(spec, node):
+            found = local(spec)
+            if found is None:
+                return
+            if found in setup_sources:
+                scope = parents.get(node)
+                while scope is not None:
+                    if isinstance(scope, (ast.FunctionDef, ast.AsyncFunctionDef)):
+                        return
+                    scope = parents.get(scope)
+            pending.append(found)
+
         certified = {}
         for node in ast.walk(tree):
             if isinstance(node, ast.Import):
@@ -250,9 +267,7 @@ def prescan_sources(start, *, search=None, reset_seams=()):
                             spec = importlib.machinery.PathFinder.find_spec(name, search)
                         except (ImportError, ValueError):
                             spec = None
-                        found = local(spec)
-                        if found:
-                            pending.append(found)
+                        follow_import(spec, node)
             elif isinstance(node, ast.ImportFrom):
                 if any(alias.name == '*' for alias in node.names):
                     errors.append({'kind': 'star_import', 'path': str(path), 'line': node.lineno, 'source': ast.unparse(node)})
@@ -265,9 +280,7 @@ def prescan_sources(start, *, search=None, reset_seams=()):
                         spec = importlib.machinery.PathFinder.find_spec(name, where)
                     except (ImportError, ValueError):
                         spec = None
-                    found = local(spec)
-                    if found:
-                        pending.append(found)
+                    follow_import(spec, node)
                 if not node.level and base in STDLIB_IMMUTABLE_MODULES:
                     for alias in node.names:
                         try:
@@ -3738,6 +3751,8 @@ def main(argv=None):
     sys.modules.setdefault('pm_guard_isolation', sys.modules[__name__])
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--adapter', help='Python file:factory returning Method B Suite')
+    parser.add_argument('--trusted-setup-source', type=Path, action='append', default=[],
+                        help='reviewed Python dependency to exclude from pre-import scanning at function-local imports only')
     parser.add_argument('--self-test', action='store_true')
     parser.add_argument('--scratch', type=Path, help='self-test scratch parent (default: operating system temporary directory)')
     parser.add_argument('--json', type=Path)
@@ -3750,6 +3765,8 @@ def main(argv=None):
     args = parser.parse_args(argv)
     if args.self_test == bool(args.adapter):
         parser.error('choose exactly one of --self-test or --adapter')
+    if args.self_test and args.trusted_setup_source:
+        parser.error('--trusted-setup-source requires --adapter')
     try:
         memory = MemoryGate(args.max_rss, args.pause_when_low, args.resume_at, args.pause_poll, args.low_timeout)
         memory.check()
@@ -3761,7 +3778,8 @@ def main(argv=None):
             if not sep:
                 raise IsolationError('--adapter requires file:factory')
             # T61: the adapter's source closure is scanned from its text before anything of it is imported
-            stops = [e for e in prescan_sources(Path(path)) if e['kind'] in STATIC_STOP_KINDS]
+            stops = [e for e in prescan_sources(Path(path), trusted_setup_sources=args.trusted_setup_source)
+                     if e['kind'] in STATIC_STOP_KINDS]
             if stops:
                 report = prescan_report(stops)
             else:
@@ -3772,6 +3790,8 @@ def main(argv=None):
                 report = run(getattr(module, factory)(), memory=memory)
     except BaseException as exc:
         report = {'version': 2, 'status': 'FAIL', 'failures': [{'kind': 'setup', 'error': type(exc).__name__ + ': ' + str(exc)}]}
+    if args.trusted_setup_source:
+        report['trusted_setup_sources'] = sorted({str(path.resolve()) for path in args.trusted_setup_source})
     body = json.dumps(report, indent=2, sort_keys=True) + '\n'
     if args.json:
         args.json.write_text(body)
